@@ -1,218 +1,330 @@
-Return-Path: <linux-arm-msm+bounces-90492-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90493-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id CL7KBTMfd2ntcQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90492-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jan 2026 09:00:51 +0100
+	id wCLJMNwhd2lmcgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90493-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jan 2026 09:12:12 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D20E85353
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jan 2026 09:00:50 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F320855C7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jan 2026 09:12:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 8B32230946CD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jan 2026 07:50:50 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 129A130073E8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jan 2026 08:12:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A14731770E;
-	Mon, 26 Jan 2026 07:49:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E79C82F7449;
+	Mon, 26 Jan 2026 08:12:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AmYeYEYe";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="UEqSGAmm"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="NB0MQmEM";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="DlIR+urQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02B8E283FC9
-	for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jan 2026 07:49:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E10327A47F
+	for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jan 2026 08:12:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769413757; cv=none; b=EBiCc3wgiJep09oDavn6MNDqQGbDQRUHBxa8x+MhYg3pQLqSj0S07dqr72bVW5cz3ODpvDkzlPNGItXa9BNi9QRjmx5bsMnsSYpjtU48d2CwI8DYgNLew7WoQ3dVRaOl+SzrwJ6otv11uql8Yxx2nZzTJxAWRo50Ly/JK0uHqDc=
+	t=1769415128; cv=none; b=ceg+h7WjhH7wNobC4FgNuxc+THJxaGGMyJ2+vXaZ06WdJ+wKw2o3qPpmus8x5DOJx1HsFc+MhuchY/c2wtamAwijv541O+h+Tzcy49aUx7htvqsL75CQSrlKr1PGiFq1npOoluSoVT8LiM/xocYckSdyrmAP3Xj34MXhPYGO1hU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769413757; c=relaxed/simple;
-	bh=U3SBm8Q4F2Lqg46nftP77Qbyf63TqJWnGptxyfW3r6I=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=oaI1voO3HKa7S/u7I5kMJ7LnjvAkrhEaXeIR8AFqp+TardB7sx4/8uTVCN6sp2QAb0Na0YRV5w0nvw7Rps4v0BgHcPbw8FCeBVULNocujPgtHqPhqSP+hkUUl15a0GYnTqubhtQZWNIjRIMX0bvWSlLchVzThBHm8o5NROHc3RU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AmYeYEYe; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=UEqSGAmm; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1769415128; c=relaxed/simple;
+	bh=ZwRb3dT/cGaGYFrvTwAatD7KQyxYekQVp/ubs4iaius=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=eLc6KyvoSEoaNpf250IPzY6BpUOOXynNGBT0XU5+Zd/fQdlNR0dfIr+zJ/XSfT5000DxSIc4Rd2z+7D8bvthmLUQX8Mwp6c7ygpzJ0XxAeEdVGXREwjdWb1yiPF0eWzi+c8g6rV5qHdUfnvX7BJMWw9pX8dWrAXedU4JepBzng8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=NB0MQmEM; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=DlIR+urQ; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60PHnTj0032778
-	for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jan 2026 07:49:15 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60Q5ULmM1019118
+	for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jan 2026 08:12:06 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	2hUWnOSTgpb39HiN4iScZAjggx5kZGetEG2O1nLvCqo=; b=AmYeYEYehVtu71H0
-	KIhpYPSDb2kinA3gMeSwg8DB95QS6Kw9LHMGlfF/XhKsvlMc85Sg7s5gTkDI77al
-	xq2OMmGNboe6LCX9N38mSxuB4o7iBUslZIbHvZzA8o1aKhcyxKGYNDLrB2aTBpEP
-	R49pjvjaYI8abpBD4D3xOevnRRo7lUgMW2Z7Xllh89kq2lWaRsJAvff9WM9Raotv
-	sou+/1bS9VhAZijQUmWSrkVasYh1/On/baMRUFOMca99suFQFiswiz4AOAsGYTrL
-	ozsP1rKt6rqxFN4o7wJ696Forka5PrMpg6je/NGTguf4lgocyZBfWYy3M3HVhZLb
-	NrZX5g==
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bvq6uus6y-1
+	x1CMx7e3LYR7pLqgZ7x++uPS48aYhata5WM+yqK19hU=; b=NB0MQmEMglWg19KA
+	ykmdIfJn16iaD7+EOFsEIrFKhjPn4EVq+1LwhOyhm+t7W0FSQoSlCNuxYciJSNip
+	pO4KLhj/lCfOdAotq9Sb5WoyiWktOMcjZzV5DnqBh9eITeeYbLaHM0rYhOGNINRV
+	kqZsGExLq1x6zfAwMhWzw8YNYZkLYdVJ78G6JrprmaxpiPGDciNK7vqFEca3EFLp
+	YorpGeFA/+ZFEeM9zbFb1MpiGjTEOIBGo3uNFckesDxoryVky+oHGMsotN4a2bqN
+	KhYFOmI+4K7LAGKtyxw5+yW2smYa3kHEnNzZgtmM13Y72VOSD8Ivgf8IhkNaroI5
+	0moRDQ==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bx2680bjp-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jan 2026 07:49:15 +0000 (GMT)
-Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-822426d844aso2998109b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 25 Jan 2026 23:49:15 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jan 2026 08:12:06 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-29f1f79d6afso45742835ad.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jan 2026 00:12:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1769413755; x=1770018555; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2hUWnOSTgpb39HiN4iScZAjggx5kZGetEG2O1nLvCqo=;
-        b=UEqSGAmmOVAhri8ONhV2vDZ2fZlCrN4uDGze2CvsnKQGiyKiSY9RHGj7UVRY0GGnhp
-         hqQU4KTcRx1x/iXMzUPd6Mabt8ZqLE49TLgGYK7ehBrO4V19rJxkFmp3nBqab/XAAHSE
-         qLI3IX+OV1z+nGUT0FwD3USbVLSlzDij4PSS7k5nWJbpfOmWAeugiJBrhx32ljHEW9pr
-         W4y5kYMG6kSA6IHO1/gfvLBU4G9CBFlfM+7C/RV8nbqcJ2Z5yQ/CmmW9zuERAmGva29E
-         CCordeEOBOw/MrDxey0WlqKtYIt2RJ1ArdcK/HGFeU+B0uMjtnbqRpS//oFcYp5+KTJH
-         JL3w==
+        d=oss.qualcomm.com; s=google; t=1769415126; x=1770019926; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:cc:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=x1CMx7e3LYR7pLqgZ7x++uPS48aYhata5WM+yqK19hU=;
+        b=DlIR+urQLsodcqFqnaWVgXe+rbx9tq9Pm0hGFxI0katiD5p2vlzi6mA7ztBmLQoFOo
+         zVg+LyVhdxgQY/F2M59TW7pFbXr0/0w/TKnbaU56xsRWGiK6Ee2pWw4Ax4QpZ54iPPwT
+         2iockJsuO0DZ830/PDWEHjqKakAjqeGqSWoIzjXM8YtdLmPe3uHf7VI732028gDTV+hG
+         oAtsvx9qlvA+zuKnPZmqVwDk04gZzOeUESHUu4gc8OWltmDNhaqegTV3WT0lYkkd5LCP
+         gfbjxeA4Y0S+vnj46rQRQ44Uw1gTWl9p+mrmLNDNB47aqO8Bfjg7kYK70DOWlRGIdsPh
+         ZjZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769413755; x=1770018555;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=2hUWnOSTgpb39HiN4iScZAjggx5kZGetEG2O1nLvCqo=;
-        b=XHjufEfz1HdqFhYUbmlaq6Ns17WIWWsX3XAZwEWXfxx575Oo2MVrQhr06iRrxcKmmX
-         XfCrC5lKY1lt+yC4s7z+k5P8F0GJO/YmGxXm/Y8SDJfCSEeFRuY6soY7vsUsed8Er2Aw
-         S1qwiB+mi16ryhpd7OHtG42/djciLNpl1rgNEdnpCygin5DusIjIFZSwQmSK1Q/4z8sj
-         ewT3Dmec/dEHAG6ytv57aNBskFVzoy72rTNzcaGfeAc5VaY8/Pchzehi4M9Mv5OUk30S
-         rVVoprkEnnZl8St8ojf4YerLvaVej7PuEGisFTrNdeOw5wvUEx5ZPOa7QXjXB7ghFs3D
-         llYA==
-X-Forwarded-Encrypted: i=1; AJvYcCWIPNgIYj4ig7xNtWGrxEx6N4kVCqnxVlT/L0o8rDR0xQ4P9kaOCDU/VOGcYie5pVIsIPJlvymhI3narbr+@vger.kernel.org
-X-Gm-Message-State: AOJu0YwCX8wlj/havBZ/uTct7tup4tdDuVp1rBiWoB1KOTH/lHJgljtK
-	Eu4uNYDZnBE1JWusktLiszDgoPa/4VamSDPRPo8CFslTePZYW0QHE4IHxWjJKK7igBNvpnu/r3T
-	yZPbP859ieYXTNxdCa7hlz0qcIus3ZS7iihsWBrEIAnbsSFaka3WkayYfnAqCGHTSpKWL
-X-Gm-Gg: AZuq6aJYbXwzTcJz1RIiC6V8uV4mVoIHlqJVkx8a4Aym2sCMZT3cjxCIp9QJdJf3jXI
-	aE42HotCHV6G4TyfVJkX9z9srg+b7yfR/U6M1N+frWdDUQdLOTi5U5ATscqcOkJE9SnMNfMUL0m
-	W2b+QFv809fPU1ccTmwzTSr19cRooPae1FayyQ+7AInDuUCOGMl1mjySGxMW7iR0GncZlMJhK66
-	rXKrTv5UVAlxFNqvcIcyC6ih74WXATce+ovRbwRZvwNq7YwpC5JteCp4uzdLCiUC4FsidyxvR3F
-	pM71XtMEOquvmurFlEVV5Rmw7kEF6fXshJ+WroVw+6aidJLXIm/AJp3i2eOInvkp6a39ql0g/DG
-	S7GM4MChZ9hVNH+D0hFRPJgh6X2oGnL8/hxbzPgNK0CHvEkHxUiCsn04X5qEvRQD+Xt+Ig+7fcy
-	49
-X-Received: by 2002:a05:6a00:8088:b0:81d:9862:a140 with SMTP id d2e1a72fcca58-8234114ddd6mr3939373b3a.3.1769413754705;
-        Sun, 25 Jan 2026 23:49:14 -0800 (PST)
-X-Received: by 2002:a05:6a00:8088:b0:81d:9862:a140 with SMTP id d2e1a72fcca58-8234114ddd6mr3939338b3a.3.1769413754236;
-        Sun, 25 Jan 2026 23:49:14 -0800 (PST)
-Received: from jiegan-gv.ap.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8234fd9a5a7sm1223418b3a.63.2026.01.25.23.49.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Jan 2026 23:49:13 -0800 (PST)
-From: Jie Gan <jie.gan@oss.qualcomm.com>
-Date: Mon, 26 Jan 2026 15:48:00 +0800
-Subject: [PATCH v11 8/8] arm64: dts: qcom: lemans: add interrupts to CTCU
- device
+        d=1e100.net; s=20230601; t=1769415126; x=1770019926;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:cc:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=x1CMx7e3LYR7pLqgZ7x++uPS48aYhata5WM+yqK19hU=;
+        b=OBKW4Pw5TuIyar5/CEKF77kSXl8WUE+rSVntmOR54h4bXKRRYYHTFI1g8ILOg7Ra5K
+         Z09fcWtwj4evPQzyr+5jxSlYt4wq9gr9p9nyeeOcsZFbDlsEUMEm2p31YO1Tvsn7McfB
+         Y/+JV1IbiLxI77jAey2J3BQB+exFC9i23iuWbaTDRElDpxMjqepUgvUdUHg6KiBj7ZnY
+         +7oXJvsucPIu2PdF8ffzu7iC3bpwMyl/cVPmCTzKoCefqrYe9DArCcugFwcw4d+PZ6Ik
+         zGlRkzvbOVD8sDvAatsoUV7VK7phzcA4sP4LnIcCFohuShHQL/EEwHfWD0wk39E2xp70
+         kt0A==
+X-Forwarded-Encrypted: i=1; AJvYcCXHaq9LPlNEnfqCNsOn3hFYGvzvngoJWwuL2b92X4sNqxEFgkCMaiubf4gmRVANfR2zq3JrvS29pHSbmI53@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx14YnAsMgZK5Ke3mtpeT2J9YTeyn1udJJXrJX+7d6HoVgoDq0d
+	bn6HBRRG//jHCtJUZi1qC79hWobChD0TBpQU+9krXBt0ey9jo+chF3iU/xDTwAh5C63B4lPjBpg
+	mC9C6DuKEREeH/pwmCk+edFaC27NN92huwnTHozCxcXe1wut04bp2Or/CxwFDjZLp556o
+X-Gm-Gg: AZuq6aLjZbhug782sUpq+F87XxitKsyeN64mGFvD+rpbOrvt/TrY2Pu06hi6xmv0GvV
+	nN9nZlWVUhE8goLWnMWLXQ3fzqmD2d7qqX4MFaAM8KeXE7phIP/pOaWAwYFGhZo1+NFT6O2H2yH
+	GD933JN4j/xvmaLEXI4p9EKmBkFS4adDm3OD99QjCbXddVzY/QrgRHScD0cASAFjL/GluhPmnnW
+	B4/pUJ6FfeDPgClaryCozxoJS6RlrYOxzv4+I4KXZc3KVUwTwLR4ErVoaqBiCybXFiQtVLBOAGl
+	541ptb58VwsHT8vimTlRUPTVdE1IVMOZg1HHM5FAV0yhnbSLM3eVXrcIlp5IPtPrgpDQ4QVk60f
+	MvnqG2yo3TevbGR9q9pk0udLOOzcyCE5GqorvUyy/ePwwYW1iKeHc85fSax5FONfJbJHr
+X-Received: by 2002:a17:903:24f:b0:2a7:6f90:8650 with SMTP id d9443c01a7336-2a84530e11fmr36010295ad.55.1769415125752;
+        Mon, 26 Jan 2026 00:12:05 -0800 (PST)
+X-Received: by 2002:a17:903:24f:b0:2a7:6f90:8650 with SMTP id d9443c01a7336-2a84530e11fmr36009995ad.55.1769415125212;
+        Mon, 26 Jan 2026 00:12:05 -0800 (PST)
+Received: from [10.249.16.203] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a802dcd776sm82001135ad.26.2026.01.26.00.12.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 26 Jan 2026 00:12:04 -0800 (PST)
+Message-ID: <dd9cd9dd-3947-4ea9-bdbc-0c655238af46@oss.qualcomm.com>
+Date: Mon, 26 Jan 2026 16:12:01 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260126-enable-byte-cntr-for-ctcu-v11-8-c0af66ba15cf@oss.qualcomm.com>
-References: <20260126-enable-byte-cntr-for-ctcu-v11-0-c0af66ba15cf@oss.qualcomm.com>
-In-Reply-To: <20260126-enable-byte-cntr-for-ctcu-v11-0-c0af66ba15cf@oss.qualcomm.com>
-To: Suzuki K Poulose <suzuki.poulose@arm.com>, Mike Leach <mike.leach@arm.org>,
-        James Clark <james.clark@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
-        Mao Jinlong <jinlong.mao@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, Jie Gan <jie.gan@oss.qualcomm.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1769413706; l=769;
- i=jie.gan@oss.qualcomm.com; s=20250909; h=from:subject:message-id;
- bh=U3SBm8Q4F2Lqg46nftP77Qbyf63TqJWnGptxyfW3r6I=;
- b=c3fl1Yn5d+S/JHZtZgPGa7S7m6K3H/GIa1tLJGLcn+2zhh5RXPn5Yb5BBM24+SyvhJ9NHbxLI
- WUStbQLUzctDbGOvcdjUgxHbg9ibXBmtMIbL9fRjVw0A2+itS9OMGgy
-X-Developer-Key: i=jie.gan@oss.qualcomm.com; a=ed25519;
- pk=3LxxUZRPCNkvPDlWOvXfJNqNO4SfGdy3eghMb8puHuk=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI2MDA2NiBTYWx0ZWRfX2B44JgMVQxdO
- QetEMxL6EVH4DDv+Lk+XtzeDsYwCDC4ZTSD2JT/z2h1zxTEP8w2so7l1mOdrdie/5lCVmKNTWw8
- eNggQwyherdywBkih32L/VTi2FAvCbId0jc5lCsgtIwXZUZGufyqO3bqvJhCEBqOvhHZGuCYX5D
- PD/f5/Erf/3wXrt2qipMlym5F+Lfxobia6d0VL5ueR23VGu+QaMKPQQQvMUX83HfDqi/dYASymm
- MSxiH34n6FO/1zPDjWCNNIDvQ1dl3RBjVVxjf7ue544GXeNVs/uv4llh7YuvPUit8iQhVXuHYtM
- uxaewuXJvxQJE/nNl23D82ETHkWqcE7Lppg8h6VV3oKPBUQc2OLBKeGQNBkF/tPsc/wLSNTNb+v
- TljFTHoUhd5W8InBDBURUDR/oB6UVUiaw/ePwe75Ewvn9aIEonNtrInx8TBTrD4JKggLcyMjYlD
- 8774AwtFkbVqd/4X4JQ==
-X-Authority-Analysis: v=2.4 cv=UqRu9uwB c=1 sm=1 tr=0 ts=69771c7b cx=c_pps
- a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+User-Agent: Mozilla Thunderbird
+Cc: wangao.wang@oss.qualcomm.com, quic_qiweil@quicinc.com,
+        Renjiang Han <renjiang.han@oss.qualcomm.com>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 4/6] media: qcom: iris: Add hierarchical coding support
+ for encoder
+To: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+        Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bod@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+References: <20260109-batch2_iris_encoder_enhancements-v3-0-196855ef32ba@oss.qualcomm.com>
+ <20260109-batch2_iris_encoder_enhancements-v3-4-196855ef32ba@oss.qualcomm.com>
+ <e4afc72c-ed44-c516-a44f-4f727da86248@oss.qualcomm.com>
+Content-Language: en-US
+From: Wangao Wang <wangao.wang@oss.qualcomm.com>
+In-Reply-To: <e4afc72c-ed44-c516-a44f-4f727da86248@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=bIEb4f+Z c=1 sm=1 tr=0 ts=697721d6 cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
  a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=gBkj9RZkAcI1HbXH1KoA:9
- a=QEXdDO2ut3YA:10 a=zc0IvFSfCIW2DFIPzwfm:22
-X-Proofpoint-ORIG-GUID: rZpgEtx_ZVgm-fDJKg4dmbC-OJjUXlxy
-X-Proofpoint-GUID: rZpgEtx_ZVgm-fDJKg4dmbC-OJjUXlxy
+ a=VkNPw1HP01LnGYTKEx00:22 a=65R93-EQ1uaeyMUcKjgA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI2MDA2OSBTYWx0ZWRfX1n4+MDBkwcti
+ 2KAkstPNRqVahAo7pqgnWVgkjOU0Ll7MTCdLovxiqrKsyr7e87OoJfJK3NgRTut0SE4UVZ5q9dm
+ Le+bHnBSq0y6qqPaDKhkKRRoMFr0mPz7yoOvNYC5bg7hgyOw6VD4ACAMhRTwJWtcP67oJBdmle9
+ aMb4cNlJgoRNFIf5NbxtWTF6vmiHITMXnlwTAvxQ1w9iSs5z8dTPTfwksBFyjCge3/iZ51wJIPI
+ VEiJYhVBs+GsMmEs1kKdAG/zfWr0S/Ji9l152OEYbMWXqvfPHskqEL+j9gZPiDKOghXFpxk3605
+ +uZcY/R3Up7KGDStTBgk9MZbPK0t6MtVqwH78PC4OIlzz0TyFyQB/yz1l1p2ShVeIzp35JYuhfN
+ yEguscb7rMldeUmhnLvgygJqg1KugSBusKL50dp8/DhsUh9TgJIDHNFb+640W8/2yQ5EMB6ShcL
+ y6zaXFnjjpL6nGrOSoQ==
+X-Proofpoint-ORIG-GUID: dgtGEDN0b6hLi5iV7LUETlK_h0uXejCq
+X-Proofpoint-GUID: dgtGEDN0b6hLi5iV7LUETlK_h0uXejCq
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
  definitions=2026-01-26_02,2026-01-22_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 suspectscore=0 spamscore=0
- lowpriorityscore=0 phishscore=0 adultscore=0 malwarescore=0 bulkscore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ bulkscore=0 lowpriorityscore=0 malwarescore=0 priorityscore=1501
+ clxscore=1015 spamscore=0 impostorscore=0 suspectscore=0 adultscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2601260066
+ definitions=main-2601260069
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[18];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-90492-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[0.61.12.232:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,qualcomm.com:email,qualcomm.com:dkim];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:mid,oss.qualcomm.com:dkim,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:dkim];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-90493-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FROM_NEQ_ENVFROM(0.00)[wangao.wang@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[jie.gan@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[11];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 3D20E85353
+X-Rspamd-Queue-Id: 2F320855C7
 X-Rspamd-Action: no action
 
-Add interrupts to enable byte-cntr function for TMC ETR devices.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/lemans.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/lemans.dtsi b/arch/arm64/boot/dts/qcom/lemans.dtsi
-index 0b154d57ba24..75a468ddbf53 100644
---- a/arch/arm64/boot/dts/qcom/lemans.dtsi
-+++ b/arch/arm64/boot/dts/qcom/lemans.dtsi
-@@ -2776,6 +2776,9 @@ ctcu@4001000 {
- 			clocks = <&aoss_qmp>;
- 			clock-names = "apb";
- 
-+			interrupts = <GIC_SPI 270 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 262 IRQ_TYPE_EDGE_RISING>;
-+
- 			in-ports {
- 				#address-cells = <1>;
- 				#size-cells = <0>;
+On 2026/1/22 17:38, Dikshita Agarwal wrote:
+>> @@ -116,6 +116,40 @@ static enum platform_inst_fw_cap_type iris_get_cap_id(u32 id)
+>>   		return MARK_LTR;
+>>   	case V4L2_CID_MPEG_VIDEO_B_FRAMES:
+>>   		return B_FRAME;
+>> +	case V4L2_CID_MPEG_VIDEO_H264_HIERARCHICAL_CODING:
+>> +		return LAYER_ENABLE;
+> 
+> Will the same control be used for HEVC as well? I think this is applicable
+> for only H264 encoders.
+> 
+
+H264 flow:
+V4L2_CID_MPEG_VIDEO_H264_HIERARCHICAL_CODING,
+V4L2_CID_MPEG_VIDEO_H264_HIERARCHICAL_CODING_TYPE,
+V4L2_CID_MPEG_VIDEO_H264_HIERARCHICAL_CODING_LAYER
+HEVC flow:
+V4L2_CID_MPEG_VIDEO_HEVC_HIER_CODING_TYPE,
+V4L2_CID_MPEG_VIDEO_HEVC_HIER_CODING_LAYER
+
+LAYER_ENABLE is used for H.264. In the HEVC flow, this flag is 
+considered redundant—once the type is set, layer encoding is implicitly 
+enabled.
+
+>> +int iris_set_bitrate_gen1(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id)
+>> +{
+>> +	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
+>> +	u32 entropy_mode = inst->fw_caps[ENTROPY_MODE].value;
+>> +	u32 bitrate = inst->fw_caps[cap_id].value;
+>> +	u32 hfi_id = inst->fw_caps[cap_id].hfi_id;
+>> +	struct hfi_bitrate hfi_val;
+>> +	u32 max_bitrate;
+>> +
+>> +	if (!(inst->fw_caps[cap_id].flags & CAP_FLAG_CLIENT_SET) && cap_id != BITRATE)
+>> +		return -EINVAL;
+> 
+> Can you pls explain what is this check for?
+> 
+> The layer bitrate should only be set if layer encoding is enabled, isn't it?
+> 
+
+This flag is used to confirm whether the corresponding ctrl has been 
+invoked. A check should also be added to determine whether layer 
+encoding is enabled, while excluding bitrate configuration in 
+non–layer‑encoding scenarios.
+
+>> +	if (inst->codec == V4L2_PIX_FMT_H264) {
+>> +		if (!layer_enable || !inst->fw_caps[LAYER_COUNT_H264].value)
+>> +			return -EINVAL;
+>> +
+>> +		if (inst->fw_caps[LAYER_TYPE_H264].value ==
+>> +			V4L2_MPEG_VIDEO_H264_HIERARCHICAL_CODING_P) {
+>> +			if (inst->hfi_rc_type == HFI_RC_VBR_CFR)
+>> +				layer_type = HFI_HIER_P_HYBRID_LTR;
+>> +			else
+>> +				layer_type = HFI_HIER_P_SLIDING_WINDOW;
+>> +		} else if (inst->fw_caps[LAYER_TYPE_HEVC].value ==
+>> +			V4L2_MPEG_VIDEO_HEVC_HIERARCHICAL_CODING_B) {
+> 
+> why are you checking HEVC layer type for H264 codec? seems like a bug.
+> 
+
+This is a bug and will be fixed in v4.
+
+>> +int iris_set_layer_count_gen1(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id)
+>> +{
+>> +	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
+>> +	struct vb2_queue *sq = v4l2_m2m_get_src_vq(inst->m2m_ctx);
+>> +	struct vb2_queue *dq = v4l2_m2m_get_dst_vq(inst->m2m_ctx);
+>> +	u32 layer_enable = inst->fw_caps[LAYER_ENABLE].value;
+>> +	u32 layer_count = inst->fw_caps[cap_id].value;
+>> +	u32 hfi_id, ret;
+>> +
+>> +	if (!layer_enable || !layer_count)
+>> +		return -EINVAL;
+>> +
+>> +	inst->hfi_layer_count = layer_count;
+>> +
+>> +	if (!vb2_is_streaming(sq) && !vb2_is_streaming(dq)) {
+>> +		hfi_id = HFI_PROPERTY_PARAM_VENC_HIER_P_MAX_NUM_ENH_LAYER;
+> 
+> why the streaming check? and what's the significance of this setting? why
+> this prop is set under streaming check?
+> 
+
+This property needs to be set to the firmware before streaming. It 
+represents the maximum layer count and is static; any dynamically 
+configured layer count later must not exceed this maximum.
+
+>> +
+>> +int iris_set_layer_bitrate(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id)
+>> +{
+>> +	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
+>> +	u32 hfi_id = inst->fw_caps[cap_id].hfi_id;
+>> +	u32 bitrate = inst->fw_caps[cap_id].value;
+>> +
+>> +	/* ignore layer bitrate when total bitrate is set */
+>> +	if (inst->fw_caps[BITRATE].flags & CAP_FLAG_CLIENT_SET)
+>> +		return 0;
+>> +
+> 
+> any streaming check required here?
+> 
+
+A streaming check will be added here.
+
+>> +	{
+>> +		.cap_id = LAYER_TYPE_HEVC,
+>> +		.min = V4L2_MPEG_VIDEO_HEVC_HIERARCHICAL_CODING_B,
+>> +		.max = V4L2_MPEG_VIDEO_HEVC_HIERARCHICAL_CODING_P,
+>> +		.step_or_mask = BIT(V4L2_MPEG_VIDEO_HEVC_HIERARCHICAL_CODING_B) |
+>> +				BIT(V4L2_MPEG_VIDEO_HEVC_HIERARCHICAL_CODING_P),
+>> +		.value = V4L2_MPEG_VIDEO_HEVC_HIERARCHICAL_CODING_P,
+>> +		.hfi_id = HFI_PROP_LAYER_ENCODING_TYPE,
+>> +		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
+>> +		.set = iris_set_layer_type,
+> 
+> layer type depends on layer count so shouldn't you have layer count before
+> layer type in caps? or handle both in same set API?
+> 
+
+In the iris_set_layer_type API, there is a check for the layer count. If 
+the count is 0, layer type will not be set to the firmware.
+
+>> +	/*
+>> +	 * The expression (1 << layers - 2) + 1 accounts for the number of reference
+>> +	 * frames in the Adaptive Hierarchical B-frame encoding case. In this scheme,
+>> +	 * the number of frames in a sub-GOP is related to (2^(number of layers) - 1),
+>> +	 * hence the use of the shift operation.
+>> +	 */
+>> +	if (layer_type == HFI_HIER_B) {
+>> +		if (inst->codec == V4L2_PIX_FMT_HEVC)
+>> +			num_ref	= layer_count;
+>> +		else
+>> +			num_ref = (1 << (layer_count - 2)) + 1;
+>> +	}
+> 
+> were you able to test these different scenarios?
+> 
+
+Okay, I will test the other scenarios.
 
 -- 
-2.34.1
+Best Regards,
+Wangao
 
 
