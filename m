@@ -1,237 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-90537-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90538-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4MOKEu1Sd2mdeAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90537-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jan 2026 12:41:33 +0100
+	id KCFdNkdUd2mdeAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90538-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jan 2026 12:47:19 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF89187B8F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jan 2026 12:41:32 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 09E7287CD2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jan 2026 12:47:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 0BE5F30010E6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jan 2026 11:41:32 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id D92763007217
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jan 2026 11:46:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BE4E332EC4;
-	Mon, 26 Jan 2026 11:41:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="N7CeY/hK"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D918C332EC4;
+	Mon, 26 Jan 2026 11:46:56 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbg150.qq.com (smtpbg150.qq.com [18.132.163.193])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A297302151
-	for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jan 2026 11:41:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84352333729;
+	Mon, 26 Jan 2026 11:46:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.132.163.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769427690; cv=none; b=kQL3xiisBDuVlZHa7vD1d849FjmmOSy3ER3ouFlgXuj/sAq9tIwFOK8IVIrK3hMUMeN/vLX2PzGYt0KiYjvMjRN8Gd2XW0o5KnR8ywJy0Lz/FsGCR+zw3foslxxyHs3d6dGAehALUuQYJA7zKN6dE8UjCY6QReN6ux77fDsfswg=
+	t=1769428016; cv=none; b=Ai6fBHSIBn2e+rOYtoIhlE6xKsvRl1v+mGzdByLJDiHtPa2j1vK7AdchIamnOSQKFnFKFBe15a6gFh2IaSHFf39D54ZaxqylZhS5GW5Ln5ds3JTKL93h6uphAP3Hw+Eoo3CwzqvTjdxgWiYfX/0+p75/G9uWlplU7OK0qD85u6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769427690; c=relaxed/simple;
-	bh=AxiyoaABzXqMP4w/uMab+PrtYh1Z0TFJQkq97Gw4i8Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PPqEn+smlDGPdB7fI8vzP2w9IYa7+R5gyh3GxbAlIuwphH5N5xjw1tYXnDr/JnLs1vJT9Zh36UgQij1NhvA9HmPBtIqx+gb6rw0hk/WF/HJckljg4ealhGVw8hqZhBKs/4vD7j9RF1H8rXOR3OVUjUq44Mz5Lh7gojovdcT7DNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=N7CeY/hK; arc=none smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-435a517be33so2681699f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jan 2026 03:41:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1769427688; x=1770032488; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rN1oSNDkGLBy6EHwhjHDF6Jrov42HwjEw9RdQlJcNw0=;
-        b=N7CeY/hKava6XQQ/h38THONZbwLfrd8ykCvvjqfwdFmS+pBHPJdSfjuMd+EVN4HD/Z
-         pg/fnlUkjlQ5nMT575LsObgYKXv+a+Qna1IHm8/ge+4UT+nwcswITHgmt5RHab7965PK
-         vh462n6WONI3ZQX2IRclp0bTd+c3qHsLzUcvr+Jym2knvMeB3ClEXVhm+aAh1M4irkVz
-         o/rL2K/+9wWGPwX0GYGYedwpw/1IoNzqRV00cQqTi1lgQyN1wQX4v75HmaDd4aHxT/9e
-         auPsRzPHtfa2d68Su6Rb+XGAkejiLTUClBfQ6mnhUG+FAyOYmui2gU6Leri8kf3LlNrB
-         Kucw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769427688; x=1770032488;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rN1oSNDkGLBy6EHwhjHDF6Jrov42HwjEw9RdQlJcNw0=;
-        b=tqtd4LG7ask103KlwmlPGLoIOlQMzyPBKMkQSg6m0Vywj3SPbea0YPKF8kW2f8s5uQ
-         8yScFegnfGQ7fyERgwAeeIhvEf+G5916cCxMRpAYlOtGVCnoWQnH4/HsLYAcBnt4IfaM
-         41wdjK2PsmZFlwx8Bf2YxdDM/utTjXEe+IV1Hs5xi3tPsxMxJ3RZiq4HzLhSwvVofDRM
-         xo8Eqv35Fkzra2oljTGiVM+tSj5J06v9qT2FDlghknE210mafJ3F/hND62yOc3X7eEzP
-         984dwd7ep2w7rhuPh3TFr41cLFMS7rUbIvuacOWgwtaXKq9AhhrHscmkIEVm6iDzf01N
-         l5wQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXgLPMmNVHdWAefFL5O2GaS/5nQoVlxnxowfGHWgj2KT1v+UVM14kbBJkhV3XPmdkn50OZ3UonNgLWsyuVg@vger.kernel.org
-X-Gm-Message-State: AOJu0YxgCV941xBNmrXq81M+zRkWExRd4YtFbyfLkK20DkjgQOOkpK5Y
-	npp2D/D1CWbWGRh/2gPhYRqP4qcVGpoVjJOWUj3hphpk8VUJQ1NMNVSsuz49V/cYCNg=
-X-Gm-Gg: AZuq6aJaM8i5jCQVKczXsikw4BnpqP+Lk7pM0jVcdGyL7TFp0hVtNm3RXLAXhgvmsDG
-	x21odMr3T2xicc2+8EzgJ1lMEYCNVmTSroDUQlZxXy1GiQ3+blAvaeHD8W+F69S0CnPXwrjGFTQ
-	hpN/4pmA2aOfYwrgQtcmtX5nBgCb0I4QNHabS6lpa/WuzeJSd4AWPgico4k5bc25Wjb0a+s1xB/
-	nx+r08BU1+SwFMqDjHtZRtoWvBv8hu+eFxn6r705+FFhgV0DULeWUOzV7ogsZsPc7i0fyan0Hb3
-	NdwDhThunuMQ2Q7IX7+aKqHedeBCVkmx620tqSV1MXQQ8lril1QXVVHC3eqPOi/3FMSFifUXprN
-	/GJLG6qXb29xHnodNWa8HZ1wV48sD+veAxw3c3xfkoP5OC24mt2dedL6Jt4Fg8I3NSFYNeIJCKa
-	4cvunWruqvSiafsmqZulmHUc2uOcJy8BuxKvopJ7epGX9UCZYw3EYE
-X-Received: by 2002:a05:6000:230e:b0:432:c0e6:cfcc with SMTP id ffacd0b85a97d-435ca0ef509mr6845789f8f.23.1769427687426;
-        Mon, 26 Jan 2026 03:41:27 -0800 (PST)
-Received: from [192.168.0.40] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-435b1f73855sm28803758f8f.29.2026.01.26.03.41.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Jan 2026 03:41:26 -0800 (PST)
-Message-ID: <b699fcf5-5cb0-41eb-b9de-e5c6e98aefaa@linaro.org>
-Date: Mon, 26 Jan 2026 11:41:25 +0000
+	s=arc-20240116; t=1769428016; c=relaxed/simple;
+	bh=Ujl9YS0+fZ7IiZ9W7k222CK/XsTemUSZY78aIMY8+Tw=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=vC2xmiCTrPHj5xjkfpdHGztOa/7l8swYk+HvCEQ057Gb4CzUofUoqCkyKUVTUgWPGRi6fSmgEUzjyhm+QfZnJyObtzFMZQTTaNyT1zlM5KoMoe1PonSR5o7XjQuCr1ohiStPeBHufYlLIaHd9M+uQn3jMZyIgRakPw2/iqJjbhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=18.132.163.193
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
+X-QQ-mid: zesmtpgz1t1769427929t1c42b85a
+X-QQ-Originating-IP: Rfa6DbbZm+1vuZAT/eJ6XIX9TSNim9BfhYRpLc/O2Js=
+Received: from [127.0.1.1] ( [183.250.239.212])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 26 Jan 2026 19:45:27 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 6064080622083273045
+EX-QQ-RecipientCnt: 10
+From: Junhao Xie <bigfoot@radxa.com>
+Subject: [PATCH v2 0/2] mtd: devices: Qualcomm SCM storage support
+Date: Mon, 26 Jan 2026 19:44:50 +0800
+Message-Id: <20260126-scm-storage-v2-v2-0-fa045c7e7699@radxa.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/1] media: i2c: ov02c10: Keep power on and use reset
- for power management
-To: Saikiran B <bjsaikiran@gmail.com>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- bod@kernel.org, rfoss@kernel.org, todor.too@gmail.com,
- vladimir.zapolskiy@linaro.org, hansg@kernel.org,
- sakari.ailus@linux.intel.com, mchehab@kernel.org, stable@vger.kernel.org
-References: <20260125171745.484806-1-bjsaikiran@gmail.com>
- <20260126061528.63785-1-bjsaikiran@gmail.com>
- <20260126061528.63785-2-bjsaikiran@gmail.com>
- <ef6cf6c5-3b5d-45f2-af67-0567262a4561@linaro.org>
- <CAAFDt1spRkj7kySCa8P=jehQHbYVT2j+nxLira1vwYkiCJ7LDw@mail.gmail.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Content-Language: en-US
-In-Reply-To: <CAAFDt1spRkj7kySCa8P=jehQHbYVT2j+nxLira1vwYkiCJ7LDw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/3WMTQ6DIBBGr2Jm3WkGag105T0aFwhjZaE00BAbw
+ 92L7rt838/bIXH0nODR7BA5++TDWkFeGrCzWV+M3lUGSbIjITtMdsH0CdHUKksk00431kSjUlB
+ P78iT307hc6g8+2P8Pf1ZHOlfVRZIqJwZ3V23TivbR+M2c7VhgaGU8gNAyoWXrAAAAA==
+X-Change-ID: 20260126-scm-storage-v2-0a4f3e900b88
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Miquel Raynal <miquel.raynal@bootlin.com>, 
+ Richard Weinberger <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-mtd@lists.infradead.org, Xilin Wu <sophon@radxa.com>, 
+ Junhao Xie <bigfoot@radxa.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1769427927; l=2625;
+ i=bigfoot@radxa.com; s=20251219; h=from:subject:message-id;
+ bh=Ujl9YS0+fZ7IiZ9W7k222CK/XsTemUSZY78aIMY8+Tw=;
+ b=eTaCv1zhLOp9/ViZssM8iZQ0NAXPcsbDsYt3CfvHBkhprUeu6zrvnS0FBXELUgVSno2YpGVCQ
+ VsauMzQYCK1CVz1X4SgsZWExaspZy+rQlsWszN+lGw6mFHLIydjMBEJ
+X-Developer-Key: i=bigfoot@radxa.com; a=ed25519;
+ pk=aP5LX0jneuAa4pTVEww/6IbMlyp5VzzCwzcbMt1cpeI=
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpgz:radxa.com:qybglogicsvrsz:qybglogicsvrsz4b-0
+X-QQ-XMAILINFO: NVi1raGH3MCScA7tli4eeDVw+6YKUdFdzzZQG+JoU8clDXJCADv2jo/x
+	Ld+St6/jDBZzBrXT9qO+l11X+JAkK3BQOdyBnSi0O31YDYVwh85IuN70944uICLarikrgYU
+	hbv7+GRHGCrvyitIc9Vs4+L79TpjdjtY6WjhB6JJgbLWjHO++OhZUW4L8r2S4O9p842JfnM
+	/Qe+oyZMPvKCG8yEt16NWI0gcJAxmsKx2ebyQ9GnXSaW4H2+BwcsF9+5Klfs2HzjDxv009z
+	5qgTcsrehcwjxkC5F63bMZSqi9Gtq5UKVdCwxSjyVT7DhpsPSFpUI6KS2RZCI5tYKa8WTqu
+	CuX5umbDlWy2bkZeh/l17V60tuozUnpc9m3UE/jK4LzcmKtT3iMSimQMCxdTHeDg15ROJ77
+	sz5eBnbgtYvcO2q1WOg713eFvg0DlIMt0shiKCIrsxCc2rNddxFcg2PQ0je5DZ7++yuUpsq
+	eUrplPBbMp0+IwvqaOkTS2bSDGbroYacl4Oj7nj6GZfjqy8QOnMNZnA4KEeopLUzX6DjWJb
+	NJD2oYS8go/tDe1XbvHUp6+NUAVwWHV/dfIU0nNJ0DVIy2rhuKBXzjM+HF0frrYUOJxANjc
+	d1TdfXi9GpvlmCKvyJcbrR/THkP6o52lNOopsEmZGqlgRNphFRxrRM1ByUSZJF6LM3JRLuN
+	UQb7eYZO3mZUwIP2WzTp6XLz4R1+MbjjxvwFLMYyXfKb2PSI5/1M0LdltfpZsUehRTs8+Ya
+	iB6ynLnnGz463GCGIIwvNWVpZ1K3ooDGuHDiTtX7rGvYhkR53un6z3f2TQROFjC+MKz5uU/
+	4CaqzUu3EztVEDyFogOaO1VvbtzuaMc199Z3HYce/gnwuBLwARKva7qOJRRxRLt8IHB6DHx
+	xtDSZLJPaOswgRlPUYO0EAam20X6ToBfYsUPTMhaSqR0MKYKvf9zeIrx403AeWjkI7ZoTW/
+	XYM6yRzfLd/eJnU1Ge/WC+Ox4EShWYojFCL6gLAWr9U+n+BuDcVGey0hUl1qZje6uKGD66p
+	7eV8CNEp+2p3FmGu0SaoUAoc5WL5x/AmIQ1GOtzS3XgvESwzjX43Icj3HnB/GmZHpKK8KE8
+	tof0/b8Ee9lV4q15S/AlW16RTgXk8tB6U6ims3O8b98U1K1JTkAIVt9D7yejCp745HcG+WU
+	SAnS
+X-QQ-XMRINFO: MPJ6Tf5t3I/ylTmHUqvI8+Wpn+Gzalws3A==
+X-QQ-RECHKSPAM: 0
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.36 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
+	DMARC_POLICY_SOFTFAIL(0.10)[radxa.com : SPF not aligned (relaxed), No valid DKIM,none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,kernel.org,gmail.com,linaro.org,linux.intel.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_TO(0.00)[gmail.com];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-90537-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[11];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,linaro.org:mid,linaro.org:dkim,0.0.0.36:email]
-X-Rspamd-Queue-Id: CF89187B8F
+	MIME_TRACE(0.00)[0:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	RCVD_COUNT_THREE(0.00)[4];
+	R_DKIM_NA(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[bigfoot@radxa.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	PRECEDENCE_BULK(0.00)[];
+	TAGGED_FROM(0.00)[bounces-90538-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[]
+X-Rspamd-Queue-Id: 09E7287CD2
 X-Rspamd-Action: no action
 
-On 26/01/2026 11:23, Saikiran B wrote:
-> "Where do you get this conclusion from ? Are you inferring it from
-> what you see on the platform or can you point to some known
-> data-source for this ?"
-> 
-> This is determined on the Lenovo Yoga Slim 7x (X1E80100). I tested
-> extensively and found that if I attempt to power-on the sensor less
-> than ~2.3 seconds after power-off, it fails to identify or times out
-> on I2C (brownout behavior). If we wait >2.3s, it works reliably 100%
-> of the time.
+This patch series adds support for accessing storage devices managed by
+Qualcomm TrustZone firmware via SCM (Secure Channel Manager) by
+introducing a new MTD driver.
 
-I don't think we've established the regulator is at fault. That's the 
-feedback I'm giving you here.
+On some Qualcomm platforms, firmware or BIOS-related storage (typically
+SPI NOR flash) is not directly accessible from the non-secure world.
+All read, write, and erase operations must be performed through SCM
+interfaces provided by the secure firmware. As a result, existing MTD
+SPI NOR drivers cannot be used directly on these systems.
 
-I think it is far, far, far more likely the power-on sequence of the 
-sensor needs tweaking.
+This series introduces a new MTD device driver that exposes such
+firmware-managed storage as a standard MTD device in the Linux kernel.
+The driver is built on top of the existing Qualcomm SCM infrastructure
+and integrates with the MTD subsystem to provide a uniform interface to
+userspace.
 
-> 
-> "2 seconds to discharge ? These regulators are PM8010 anyway - so
-> you're saying the PMIC takes two seconds to discharge ?"
-> 
-> Yes. I checked the regulator driver
-> (drivers/regulator/qcom-rpmh-regulator.c) and found that unlike other
-> Qualcomm regulator drivers (e.g., spmi/glink), it currently lacks
-> active_discharge / pull-down support. Without active discharge, the
-> voltage rails float and decay very slowly via leakage current when the
-> load (sensor) is in reset/high-Z.
+This driver has been tested on Radxa Dragon Q6A, based on the Qualcomm
+QCS6490 SoC, with a Winbond W25Q256JWPIQ SPI NOR flash device.
 
+Note that this platform previously used the standard Qualcomm Linux
+firmware, which allowed direct access to the QSPI controller without
+needing this driver. However, we plan to migrate to a Windows-compatible
+firmware which is more feature-complete but restricts direct access.
+Device tree changes for this transition will be sent separately.
 
-Right so looking at the power for this part we have:
+If kernel boots with EL2, access to the SCM storage will be denied. This
+needs more investigation.
 
-&cci1_i2c1 {
-	camera@36 {
-		compatible = "ovti,ov02c10";
-		reg = <0x36>;
+Changes in v2:
+- Convert enum qcom_scm_storage_result to macro definitions
+- Use __qcom_scm_is_call_available() instead of a machine allowlist
+- Add missing __packed annotations and endianness handling
+- Introduce struct qcom_scm_storage_payload to improve readability
+- Always compiled-in qcom_scm_storage_send_cmd() and qcom_scm_storage_init()
+https://lore.kernel.org/lkml/F138514E18CB55B6+20251218180205.930961-1-bigfoot@radxa.com/
 
-		reset-gpios = <&tlmm 237 GPIO_ACTIVE_LOW>;
-		pinctrl-names = "default";
-		pinctrl-0 = <&cam_rgb_default>;
-
-		clocks = <&camcc CAM_CC_MCLK4_CLK>;
-		assigned-clocks = <&camcc CAM_CC_MCLK4_CLK>;
-		assigned-clock-rates = <19200000>;
-
-		orientation = <0>; /* front facing */
-
-		avdd-supply = <&vreg_l7b_2p8>;
-		dvdd-supply = <&vreg_l7b_2p8>;
-		dovdd-supply = <&vreg_cam_1p8>;
-
-		port {
-			ov02e10_ep: endpoint {
-				data-lanes = <1 2>;
-				link-frequencies = /bits/ 64 <400000000>;
-				remote-endpoint = <&csiphy4_ep>;
-			};
-		};
-	};
-};
-
-// qcom standard RPMh -> PMIC LDO regulators
-// these are not the droids you are looking for
-vreg_l7b_2p8: ldo7 {
-	regulator-name = "vreg_l7b_2p8";
-	regulator-min-microvolt = <2800000>;
-	regulator-max-microvolt = <2800000>;
-	regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-};
-
-// this OTOH
-vreg_cam_1p8: regulator-cam-1p8 {
-	compatible = "regulator-fixed";
-
-	regulator-name = "VREG_CAM_1P8";
-	regulator-min-microvolt = <1800000>;
-	regulator-max-microvolt = <1800000>;
-
-	gpio = <&tlmm 91 GPIO_ACTIVE_HIGH>;
-	enable-active-high;
-
-	pinctrl-0 = <&cam_ldo_en>;
-	pinctrl-names = "default";
-};
-
-Dell has used - likely reused - part of the x86 design in the qcom 
-implementation - and toggles 1v8 via a GPIO directly.
-
-If your theory about brown-out is correct then
-
-vreg_cam_1p8: regulator-cam-1p8 {
-	// add this
-	off-on-delay-us = <20000>;
-};
-
-Then please let us know how she goes.
-
+Tested-by: Xilin Wu <sophon@radxa.com>
+Signed-off-by: Junhao Xie <bigfoot@radxa.com>
 ---
-bod
+Junhao Xie (2):
+      firmware: qcom: scm: Add SCM storage interface support
+      mtd: devices: Add Qualcomm SCM storage driver
+
+ drivers/firmware/qcom/qcom_scm.c       | 161 ++++++++++++++++++++
+ drivers/firmware/qcom/qcom_scm.h       |   3 +
+ drivers/mtd/devices/Kconfig            |  17 +++
+ drivers/mtd/devices/Makefile           |   1 +
+ drivers/mtd/devices/qcom_scm_storage.c | 265 +++++++++++++++++++++++++++++++++
+ include/linux/firmware/qcom/qcom_scm.h |  34 +++++
+ 6 files changed, 481 insertions(+)
+---
+base-commit: 63804fed149a6750ffd28610c5c1c98cce6bd377
+change-id: 20260126-scm-storage-v2-0a4f3e900b88
+
+Best regards,
+-- 
+Junhao Xie <bigfoot@radxa.com>
+
 
