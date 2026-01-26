@@ -1,201 +1,234 @@
-Return-Path: <linux-arm-msm+bounces-90499-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90500-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aBL8ASc7d2mMdQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90499-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jan 2026 11:00:07 +0100
+	id 0EQ4MEM7d2mMdQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90500-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jan 2026 11:00:35 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 787CC8652D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jan 2026 11:00:06 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9DBED86536
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jan 2026 11:00:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 6530F300D633
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jan 2026 10:00:05 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 053913001FEF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jan 2026 10:00:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0720832E12D;
-	Mon, 26 Jan 2026 10:00:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABE98221DAE;
+	Mon, 26 Jan 2026 10:00:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="NmTer1ie"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cCBEKBAi";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ej4gTfxf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD29A329E49;
-	Mon, 26 Jan 2026 10:00:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC483033F7
+	for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jan 2026 10:00:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769421603; cv=none; b=f5TTxjw1zFP4xgyUhEkICwuk8Vivt/LOkHaVxUmEFWq+8jnqFXoCQw9+AQ9YL22ppn2cYoH6xQ9vJ/7V5m9J7NQaQyxKSCmd7dtAur6ynGtIhYjQx7vxc+EbIpPE1zjzo6w73jc6tdTba2y1qi7B0V1NCaRhk3mCPHPzG4hm/vk=
+	t=1769421632; cv=none; b=ev6mJ0azDnA+BSXpENmcwTasxWU0hdoTuV1b5STkmQgtm5KO2XmWOKtSIRUY7BJPWPc+pMK7uR6uHbGosb5fGqB9wx2vA+M3VHLcAxLWcmPUTyKIQ/66aZ8JcGrEcbiohIe/yCxQV6OY+4wO7OJNMZEVkOFbIbjokDNegPUPdEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769421603; c=relaxed/simple;
-	bh=8+66ynW/UosBvC/E+PZZmULkSUQHS1YNGDIGs4shhqw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Kdf9+TAoWpIk49DpS7cfNTCLBKzzquI+QiPS+2PTAYY+MZ7nmjMtN8tMpeQoLWjGF+eOaDV6GQhXMyfqmhKjrLSvjQjSLHrxzmnl7biwqmBbWPxfva7seZUc+3ZXSxJUA3hTL38d4NNvZ43ykogIiM6uoq2MfDfI2x0P7AAoWcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=NmTer1ie; arc=none smtp.client-ip=192.198.163.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1769421601; x=1800957601;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=8+66ynW/UosBvC/E+PZZmULkSUQHS1YNGDIGs4shhqw=;
-  b=NmTer1ieWlIOpTqEXaCTGgZnw9ZQIPsQJuCT/9TAvZLDhOVPiWmb4mP5
-   5qhmuU+nkBIbTt0wFvZXw/NDEPUJxxd2W5EUI1F3Fb3VQ5pOzri1Nf1H4
-   LE2u9+fCmG329hDGdp//fXII7iWOtpxY3Fet7vE+0nOVt26zABq//VZzq
-   zHT6O5NSpPB/E+QKfrlZBmk4VHstnxpXK8aujzLbLJlKwMKKnqdH/24Ni
-   m42psYQKb7w4zZA4AeaW6QJC2lequ7yxtE6vOoKyUAvbAstLaXVrX16xx
-   m+sesm6wT4CbTzeqsfGaOxAeCw2UqFfs34DZDZmuIhb+AcxglBJ7L3IQD
-   w==;
-X-CSE-ConnectionGUID: WhTd4SGrTlyoerr4iIgAVg==
-X-CSE-MsgGUID: k9B5vsF5RLKF7qsj6uSZxg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11682"; a="73183351"
-X-IronPort-AV: E=Sophos;i="6.21,254,1763452800"; 
-   d="scan'208";a="73183351"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jan 2026 01:59:55 -0800
-X-CSE-ConnectionGUID: XFLH6wX1QCeVh2rWVMlKBw==
-X-CSE-MsgGUID: lTttj+paRWeICoj+PaAr/w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,254,1763452800"; 
-   d="scan'208";a="212501718"
-Received: from smoticic-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.245.122])
-  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jan 2026 01:59:46 -0800
-Date: Mon, 26 Jan 2026 11:59:43 +0200
-From: Andy Shevchenko <andriy.shevchenko@intel.com>
-To: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Cc: linux-renesas-soc@vger.kernel.org,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Antonio Borneo <antonio.borneo@foss.st.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Boqun Feng <boqun.feng@gmail.com>, Chen-Yu Tsai <wens@kernel.org>,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	David Lechner <dlechner@baylibre.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Jonathan Cameron <jic23@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Konrad Dybcio <konradybcio@kernel.org>, Lee Jones <lee@kernel.org>,
-	Linus Walleij <linusw@kernel.org>,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-doc@vger.kernel.org, linux-gpio@vger.kernel.org,
-	linux-iio@vger.kernel.org, linux-omap@vger.kernel.org,
-	linux-remoteproc@vger.kernel.org, linux-spi@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-sunxi@lists.linux.dev, Mark Brown <broonie@kernel.org>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Nuno =?iso-8859-1?Q?S=E1?= <nuno.sa@analog.com>,
-	Orson Zhai <orsonzhai@gmail.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Samuel Holland <samuel@sholland.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Thomas Gleixner <tglx@kernel.org>, Waiman Long <longman@redhat.com>,
-	Wilken Gottwalt <wilken.gottwalt@posteo.net>,
-	Will Deacon <will@kernel.org>
-Subject: Re: [RFC PATCH 0/4] hwspinlock: refactor headers into public
- provider/consumer pair
-Message-ID: <aXc7DxsqiCGdfzxi@smile.fi.intel.com>
-References: <20260125184654.17843-6-wsa+renesas@sang-engineering.com>
+	s=arc-20240116; t=1769421632; c=relaxed/simple;
+	bh=0nx8zUDWkK9WrQ3HjuMSpxEdNZinAHVQoSH+iyhLpws=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RRiMexTLcEI9Hw2WS70dpM0CWxGszkTeZjnHC1bbYqY9mpWaF7iewu+jpzDnsLEMSIxJ3TR8MUPi6MNXCaC57CzB6ZRvP0x/ykciUUIJkqe+drSB9eF79AU8lNln0ieSW1HCodFEiKlxwM20Gc5HBDZJQ9ZLJOI7iyTI/jAhU0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cCBEKBAi; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ej4gTfxf; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60Q40lVX1361526
+	for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jan 2026 10:00:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	z2NcQNiRQpQSmkaW1sS83QhtWA//oCEj7r8nYuk+mDs=; b=cCBEKBAiAM9UYNh+
+	bwXW90fzwGCbzbdjXsedo1MtwV40rM0/CY8MEZ38ARuMRKLI9fE/cd6N1MVryEM9
+	llGLPxCLduW0JaiQKtH+pKE+C7i8ouMphTBD1YicvnofiBK/c/Uy45qEIjF66nin
+	kvngx7NQs5VyH41j6QNJjL+MWEr/9U3p4GlnLr5IKPIkitpdiHR4r3jR9QpUzvxl
+	qzS1SWEhEedPvW3XDq+fKwvb7IQDfa3zp8jjDqs6GUTbGqox+LdZcCLHlchWgMIr
+	VlhAobO5QU8ibSKP4nUAKoqvHbJRm8KnyIORflU4EL0sRHR598hpOAPI6T2AjfZr
+	1sO6lw==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bx0v30t7v-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jan 2026 10:00:30 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-894662cba4fso12863566d6.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jan 2026 02:00:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1769421630; x=1770026430; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=z2NcQNiRQpQSmkaW1sS83QhtWA//oCEj7r8nYuk+mDs=;
+        b=ej4gTfxf08DCr/XUHW5XkfK6NSuIFPmZuYRB17M8KPv/8SG7b6vssoJBn6YmAvqw1M
+         DUE7trrCr7BZo6DQfbwnLgEKzILNl0vAZdgHfRVr+sGYApRUkA8Cxo88YvtrauGxvavC
+         4xrd2fu5MCb49hrkIE7GStrRDnXeBxNrXlIjCliPq6QzNPFrjkG3qxdYES+/sTuDjyBt
+         KzzSgNUnw7ASVsQQI7Z+V60CBdZSlyL2RZ5V3kwj0rUC3lH48vyBkxfwOox58dpioNC0
+         FhKjC31d+Ib2igE5M6/jPACeFBKdLutxrisBwA3+G7+wOUu0gd49wVB4xbUKk7JkCeh9
+         y4uQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769421630; x=1770026430;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=z2NcQNiRQpQSmkaW1sS83QhtWA//oCEj7r8nYuk+mDs=;
+        b=WFFpnN0+9dUN2h8YRt2GnyHBe3kUN8sbwSDGrpeyfID3lKU98JWusF5wmOwBFjykRC
+         CIwcT+2sXmwAPd9SGEkMuuhdBSROHhhP9TYK6bppxA4FsDzafuWvXIFfBav5uX0awFKl
+         J0aOC8Qq8Fu5/TeObc8ZbBenKcgJUy03AFKjwqy9bGYPzUJhbOYHM/4iszlBBKtb76xr
+         fiQ0a6TdOXDWD9LqiGyxEnUN1+9cTM5mpgcMLdQgiL3vV08WACH2bntlnI1S71QBQPpW
+         oWggYkiZ84JjjIXjEAw5tdkc0mY8VSdhyh1/pMaeJPWOMBVHQy5deNxwdMgv2txceCwM
+         PXeg==
+X-Forwarded-Encrypted: i=1; AJvYcCU/SPY5qe3s9j96AQld00EZV0YbFjreVnjQb3Z080WsMR1SCjNJyJj3zoqAlLfBrEJdNCu4JPb+iLqXPocl@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyui51xmTjgU2k4ZsNujLvaHK3gEedCio+salXOAKrwWKiBNKRX
+	eSKPdZ/4tcaw7MSumxb1aP9xUbi5tt5NaO1B70Skbh7oFqf09k0hlu1qTqOJhUFuGfkPmR+CTab
+	EqnDitwNVK6dzSb/YKB/SBu2vqCGpaizSmFYDKp+yGdO164ejmxSWegj0SvpuC7bpSOmz
+X-Gm-Gg: AZuq6aJGSUeufD9FdBN59PJVUe74nqc3biEzjfVUoDRjti2qtD8uWSdMnrXuk02RYqv
+	Ee6TiNt9jqOXPePYOroDBxXZ86sl2RlLdfLSkbUtwXSPnl0QWBQEL+DGPdOonTXZ9g6OnEYOWmW
+	P0y3QtH5nnblOtQAokEtGqgrRpbhh87I82neZSiDQYHOa4hsQz25vpg/P6N5vhCYM7+HL/dBDl5
+	b2zl4clWMfZPGUX3DxUQPZHEK3ySzriMJED4evlJlm9AR2S0pQ37kLtY4ERhkfmg3GXi4eX26nB
+	9+tqcccB0NS6TIHcfOVtQMdBUvP1H4GQ5JYGfbrzSxp3k6KA50N3qv8MF2icr7KSvLdWSFF944E
+	cNsrz7Bs/z1ysZRxyzel8KiT0S/Ve1QxpppBEaDoLIKJhX4INzFSzzetbTlnpD5S+q1c=
+X-Received: by 2002:a05:6214:3303:b0:889:e38c:d13a with SMTP id 6a1803df08f44-894b07941dfmr34993746d6.5.1769421629532;
+        Mon, 26 Jan 2026 02:00:29 -0800 (PST)
+X-Received: by 2002:a05:6214:3303:b0:889:e38c:d13a with SMTP id 6a1803df08f44-894b07941dfmr34993366d6.5.1769421629019;
+        Mon, 26 Jan 2026 02:00:29 -0800 (PST)
+Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-385da1a6c87sm27374691fa.36.2026.01.26.02.00.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 26 Jan 2026 02:00:28 -0800 (PST)
+Message-ID: <136bf12f-cead-4485-b689-af780c937e2d@oss.qualcomm.com>
+Date: Mon, 26 Jan 2026 11:00:25 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260125184654.17843-6-wsa+renesas@sang-engineering.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 4/7] arm64: dts: qcom: sc8280xp: Add Venus
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+        Bryan O'Donoghue <bod@kernel.org>,
+        Mauro Carvalho Chehab
+ <mchehab@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bjorn Andersson <andersson@kernel.org>,
+        David Heidelberg <david@ixit.cz>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+References: <20260125-iris-sc8280xp-v3-0-d21861a9ea33@oss.qualcomm.com>
+ <20260125-iris-sc8280xp-v3-4-d21861a9ea33@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20260125-iris-sc8280xp-v3-4-d21861a9ea33@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI2MDA4NSBTYWx0ZWRfX4JpeBLW3YEj/
+ 0GNoXbMI0xIAZlvceR05WDz7k9tSvgWzgOSIN+o64y3qUgN1Ssf1H5pYcd3vHdF8xxJlbD+tCYF
+ vzzWoD2EH71/k6pIVwRZFrhRtAGBxyH/ZYeZXy7y+e6or94iQuaOakpJL1p026GlaOFUzVZV6iB
+ RB6Z3bJElABkX+2/ut8IrJCd1G1ERcxJUnBURoi7gkSR3G5Mxr//C4PyWsd/gTybwXV3GyZmgkC
+ baKwG52iYHpmewwOZYcQRE02v2rnDfAFXuUaMm7Pat//lDhI3bFScRs6+62wM4tMvTcrm8imFAm
+ n4Gjk/xuAQOc9hUcGRMSBL3kW+BXNruOyP5lX683mYo2gtY0tZ15u+GDE7M5OpRIgAmFvhPvs9D
+ MksKE6/EI/y7kUHUQ9RS5qWS2f/M8pvkWD/gONCy/j0EXDcVK3nI43w5tMGZDiN2Tbp/uDRKCmo
+ 33VWYHtBMzSjf1B4row==
+X-Proofpoint-GUID: LZAqqQpFi5Vyyi9HWYw8BTXxfIB3_J0b
+X-Proofpoint-ORIG-GUID: LZAqqQpFi5Vyyi9HWYw8BTXxfIB3_J0b
+X-Authority-Analysis: v=2.4 cv=JYyxbEKV c=1 sm=1 tr=0 ts=69773b3e cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
+ a=q7sET-JBz6qvjIJve7kA:9 a=QEXdDO2ut3YA:10 a=1HOtulTD9v-eNWfpl4qZ:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
+ definitions=2026-01-26_02,2026-01-22_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 lowpriorityscore=0 adultscore=0 bulkscore=0 clxscore=1015
+ impostorscore=0 phishscore=0 suspectscore=0 malwarescore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601260085
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,foss.st.com,kernel.org,arndb.de,linux.alibaba.com,gmail.com,baylibre.com,linuxfoundation.org,redhat.com,lwn.net,lists.infradead.org,st-md-mailman.stormreply.com,lists.linux.dev,analog.com,infradead.org,sholland.org,posteo.net];
-	TAGGED_FROM(0.00)[bounces-90499-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	HAS_ORG_HEADER(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[44];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[intel.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	MISSING_XM_UA(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[andriy.shevchenko@intel.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[18];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-90500-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,qualcomm.com:email,qualcomm.com:dkim];
 	TO_DN_SOME(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:dkim,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,smile.fi.intel.com:mid]
-X-Rspamd-Queue-Id: 787CC8652D
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,linaro];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 9DBED86536
 X-Rspamd-Action: no action
 
-On Sun, Jan 25, 2026 at 07:46:51PM +0100, Wolfram Sang wrote:
-> TLDR: I want to create a hwspinlock provider outside of the hwspinlock
-> directory. So, I refactored the headers into a provider/consumer pair.
-> Which seems to me like a reasonable seperation anyhow. No functional
-> changes. My build tests went fine and buildbots are happy, too.
+On 1/25/26 4:33 PM, Dmitry Baryshkov wrote:
+> From: Konrad Dybcio <konradybcio@kernel.org>
 > 
-> Longer explanation:
+> Add the required nodes to enable Venus on sc8280xp.
 > 
-> There is a device (MFIS) in newer Renesas SoCs which combines various
-> things like hwspinlocks, mailboxes and other stuff. Sadly, these are not
-> strictly separated. Registers are kind of mixed and its register
-> unprotection scheme will need one of its own locks. I tried various
-> paths to handle this device (MFD, auxiliary bus) but I concluded that
-> the sub-device dependencies give enough reasons for a single driver in
-> drivers/soc/. So, this series will allow me to instantiate a hwspinlock
-> provider from the other directory.
+> [ bod: added interconnect tags ]
 > 
-> Patches 1+2 do the actual refactoring with a fallback being in place. I
-> used '-B' with git-format-patch in this RFC, so the actual changes are
-> more visible when the headers are moved.
-> 
-> Patch 3 converts all the users. There are not many. We could try to get
-> all the acks for this single patch. Or I can break it into single
-> patches and send them to subsystems. I don't mind.
-> 
-> Patch 4 simply removes the fallback.
-> 
-> Looking forward to comments on this approach. If the hwspinlock
-> maintainers like it as is, I would kindly propose to apply patches 1+2
-> after 7.0-rc1 comes out. This might sound a bit hasty, but a) I want to
-> avoid chasing a moving target and b) this would remove one dependency of
-> the hwspinlock driver I originally intend to upstream, of course.
-> 
-> I would take care of patches 3+4 as needed.
-> 
-> A branch can be found here:
-> 
-> git://git.kernel.org/pub/scm/linux/kernel/git/wsa/linux.git renesas/hwspinlock/refactor-includes
-> 
-> Patches are based on linux-next as of 2026-01-21.
-> 
-> Opinions?
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> [ johan: use sm8350 videocc defines ]
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> [ bod: dropped video encoder/decoder declarations ]
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> [ db: dropped llcc icc, switched to sc8280xp compat, added more freqs ]
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> ---
 
-I don't like the idea of sharing internal stuff. Why would we need to have
-a struct hwspinlock to be visible?
+[...]
 
--- 
-With Best Regards,
-Andy Shevchenko
+> +			venus_opp_table: opp-table {
+> +				compatible = "operating-points-v2";
+> +
+> +				opp-720000000 {
+> +					opp-hz = /bits/ 64 <720000000>;
 
+You need to div3 all of these, otherwise this LOW_SVS OPP
+will actually apply a more-than-TURBO_L1-requiring frequency..
 
+[...]
+> +		videocc: clock-controller@abf0000 {
+> +			compatible = "qcom,sc8280xp-videocc";
+> +			reg = <0 0x0abf0000 0 0x10000>;
+> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK_A>,
+> +				 <&sleep_clk>;
+> +			power-domains = <&rpmhpd SC8280XP_MMCX>;
+> +			required-opps = <&rpmhpd_opp_low_svs>;
+
+AFAICS the PLLs will not turn on if *MX* is at < LOWSVS, but they still
+need to be scaled 1:1 with MMCX as the freuqency rises, so you need to
+wire up 2 power domains to the OPP table
+
+PLL0 supplies core0 (iris) and PLL1 supplies core1 (CVP)
+
+Konrad
 
