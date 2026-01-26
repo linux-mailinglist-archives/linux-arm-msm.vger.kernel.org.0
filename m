@@ -1,175 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-90590-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id uLLZLvqVd2n0iwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90590-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jan 2026 17:27:38 +0100
+	id 0AMXH+qXd2n0iwEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jan 2026 17:35:54 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 60AA98AA8B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jan 2026 17:27:38 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1AF648ABB8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jan 2026 17:35:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 13EDE30818A6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jan 2026 16:25:03 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 3D8F2301CFF6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jan 2026 16:35:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1C04340277;
-	Mon, 26 Jan 2026 16:24:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CF4A34253A;
+	Mon, 26 Jan 2026 16:35:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Cgyc/lsj"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="X2n1ouzp";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="wXk4B3vH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 812C033A9F1;
-	Mon, 26 Jan 2026 16:24:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87BBF340298;
+	Mon, 26 Jan 2026 16:35:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769444699; cv=none; b=TVhZ5B4usOFAKC/KJ3o0S7W8KfAs0eGD05AUCzfxZLRKC7rkTH9q4fOp+fKfSsuoxjyg3Imv8iLiV6K0bIxrVpfsQSRc1fEskuauX3NP5eaSvZI6WMIfwYyO+SkxisqKoF3C3IF0ivmiP8x4cu4fw5hoWuBrK29p0oQnL+m+ggA=
+	t=1769445329; cv=none; b=F2Fzfs2P3sT5JVPmqcGsbCMy77p+avcJKfVIyKZFaBiauB+SBevya1BIcbSncDWShKTH4LFn40G304rQbpsGy6q/nFO0rLH02pxiM5Ks19IHUQHjLb2Jh0w+51UULwzgPZkEbOpT1OttfOPNoDMUYtW0F7I1z3fRpBgulrzGcQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769444699; c=relaxed/simple;
-	bh=+nlZgQe8BQvGe9/2ZtExcDHoXD9HTdQMD0c7ZT4143Y=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=o/pappZWIZcDd/FIX16ybeU3w8Ox3uLj/ReZb6RTVN5Es9A27isjFLRNYkLpC/Tq4fzkPMy7vl3/SC23+j9SjtDnMd9fQM1yFtm8BMW4Yl2shOikHSngV+A48cYbaU8/LS3yiZ7PEVCGpK6u+tdq7Xa1doqHXT+ymzYflEOBga8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Cgyc/lsj; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60QBHPFs2536581;
-	Mon, 26 Jan 2026 16:24:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=IbCbhUQC6Rm
-	KMCr86YPTQwfl0t1JmH7pg8KfTHGd1zU=; b=Cgyc/lsjbUeayxxFKmnXGU0ndXD
-	DfmJ8TrEFx1gtzHAm+IEGupNa2imaiP3AzMQmscjZlnNJlvqSN2yLCXlvo5OsDQN
-	oXU6LXjZRZayjaZYrJIeMfoJy+YAlMtR3AdLOUWZhgdPpXqUN9G/l1gwBmg3en+U
-	AJyq6ENnIh1bAUtXnd00hqHiE/g27NYtRwkja/SNgHu+Tv37Ap4V1iv3zcJ8bZ8z
-	hiZTCi3diT171QRZTpz8DD5iK0XJ8fvAw8qLksEtU2Ybe2TJ6PjOMFgWOOLCFU63
-	NQriUx3QGLp2/0C8PKLbDbCt1h8UQU/4AMKNNqfMN0tHEMKk3hwrRrZHnHQ==
-Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bvwtyck23-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 26 Jan 2026 16:24:53 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 60QGOp7L020937;
-	Mon, 26 Jan 2026 16:24:51 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 4bvq5kweyq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 26 Jan 2026 16:24:51 +0000
-Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 60QGOppw020932;
-	Mon, 26 Jan 2026 16:24:51 GMT
-Received: from bt-iot-sh02-lnx.ap.qualcomm.com (smtphost-taiwan.qualcomm.com [10.249.136.33])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 60QGOpjG020908
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 26 Jan 2026 16:24:51 +0000
-Received: by bt-iot-sh02-lnx.ap.qualcomm.com (Postfix, from userid 4766378)
-	id 52F0823960; Tue, 27 Jan 2026 00:24:50 +0800 (CST)
-From: Mengshi Wu <mengshi.wu@oss.qualcomm.com>
-To: Bartosz Golaszewski <brgl@kernel.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-kernel@vger.kernel.org, shuai.zhang@oss.qualcomm.com,
-        cheng.jiang@oss.qualcomm.com, chezhou@qti.qualcomm.com,
-        wei.deng@oss.qualcomm.com, yiboz@qti.qualcomm.com,
-        Mengshi Wu <mengshi.wu@oss.qualcomm.com>
-Subject: [PATCH v2 2/2] Bluetooth: hci_qca: Enable HFP hardware offload for WCN6855
-Date: Tue, 27 Jan 2026 00:24:44 +0800
-Message-Id: <20260126162444.4194293-3-mengshi.wu@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260126162444.4194293-1-mengshi.wu@oss.qualcomm.com>
-References: <20260126162444.4194293-1-mengshi.wu@oss.qualcomm.com>
+	s=arc-20240116; t=1769445329; c=relaxed/simple;
+	bh=bm8kFrAljREFT7X0OXbNyMmjsEJiPsk99UNFXaev5SE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=hFu3TbGaWQ9DkJx2fkcMYkbyhmmC6EaNaZUpYvRDFWkVP52jLs7ejQUKxm7YIjGBOvxreVH8Jsx5g1Dx2oCGqp1IdvuPgaznqcXKx24tFOjTt5WbWEaWWeS04uZ2fs4FXHSq2ZEd4+HtAVOr3WxiTywSln7Jxaky28usiXwyVyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=X2n1ouzp; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=wXk4B3vH; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
+	h=To:Message-Id:Date:Subject:From; t=1769445294; bh=81qBTX0uQZYtXRZJscu2FoC
+	nk8QfLTOi8lBcM6tJ260=; b=X2n1ouzpSiLpJnv8IX88FPCg6bp3bxAotenQ87q6vU02pEWNNa
+	5uAiPWNIQksnj75IbhuIM5kAKRCjyRQZELX89ymV23CnxxX2TRzceGTwQxPDXzxmDi9RfFAvzll
+	aV0sDmadNZ/ij7sgt9BIgBUBIClcDSfyI9cLabpK2pcUReHd/Y+ZYB++8hgkPvxKnkFmnWQIlwr
+	Y56/84dU6IIXh3AlvUpoXVFs9u0tef5TuDZzbBik58Xv9BfJ+P9s5M2jrypOL/fvL5FiTxqcfRB
+	q7N2gGGM3ZAPEFY18OE1Kf2IFX3zRZbHVBYdaLPzRCSVJKXhClb2sTWaT8qyK+Fegtw==;
+DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
+	h=To:Message-Id:Date:Subject:From; t=1769445294; bh=81qBTX0uQZYtXRZJscu2FoC
+	nk8QfLTOi8lBcM6tJ260=; b=wXk4B3vHUzVmvVN6jqJx3cYS2jL04d7oooi0+f7As5piF/K2Hx
+	KO+qpu4rk36ca4wsWnhw1eAwq3HTePHxx6AQ==;
+From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
+Subject: [PATCH v3 0/7] Initial Redmi Note 8T support and more
+Date: Mon, 26 Jan 2026 17:34:50 +0100
+Message-Id: <20260126-xiaomi-willow-v3-0-aad7b106c311@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ruX935OCqIm9CnSV82vi-2UsjlQDG6zh
-X-Authority-Analysis: v=2.4 cv=BteQAIX5 c=1 sm=1 tr=0 ts=69779555 cx=c_pps
- a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8
- a=RcekqmAwbsI-zVS566AA:9
-X-Proofpoint-ORIG-GUID: ruX935OCqIm9CnSV82vi-2UsjlQDG6zh
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI2MDEzNiBTYWx0ZWRfX0VL+7HB4XpSg
- iOl131BPOgbbxqddjQTxiINlcN0sATbrSGCHiXHzzTy2HW6Dh5xiaO5gHIQFYuGs2oVGOMkgeLi
- i8SEQZc9NpsarnmcFHesiNsUlcOAjxcwmsBKR5fsWZS+chS5haOgweUwFPE05n5hqB0kWKE2kAn
- eWpiDmQt1UHiEbADtUkF4C01vbYlhxzzqsW4lM5a2Is9wk/C9jiBkOOypiVmk8UfowuCkMaPiBl
- ajPiFoO6VxF6Rnp4M0YOuq0m7mzGz1jeF7RLLQ07gugtbO6BcmVj0ZKDxqpPZJOswf3/inp0T7e
- sHnui5pVYj1vwDUAaa9hMCIgyz8DNVsVYK/GgjIpTIoC1TBuA++MEpgReSdFy7buUohAbtUZuY1
- VIo/Dk1am+Q8MW3gfbk0Ati9FKk+uZYbG1s75/qOUCHYQ/ZWIlTTRKVjQcsdCoTROS+QETy5+Ld
- n/8Opoes7JxZvcRidww==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
- definitions=2026-01-26_04,2026-01-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 priorityscore=1501 suspectscore=0 clxscore=1015 phishscore=0
- lowpriorityscore=0 adultscore=0 spamscore=0 bulkscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601260136
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/2XQ32rDIBQG8FcJXs+gp0ZtGKPvMXZhkmN7aBJXT
+ dN/9N1nWgajuxG+A/78jjeWMBImVhc3FnGmRGHMYfVWsHbnxi1y6nJmIEALKSU/kwsD8RP1fTh
+ xpWxVgRdgNLB85zuip/PD+/zKeUdpCvHy4Ge5TH8leJFmyQW3qJTRdm30ym4GR2NPI43bMsQtW
+ 7gZ/hL6lYBMKL1WHhsj2q75R9yfFSMejnnT6dmTDZiSe2xaF+/ZriTAWiqwQpegpLCWA9/H6yV
+ dp+DLfbjm19KeNiGl8nB0fRuGoczHx/IFjUvIlwlNdeGVNI3xvm3Qm87oRnTWalFJ6yvRORRos
+ MLO5Wr3Hwt408yMAQAA
+X-Change-ID: 20260111-xiaomi-willow-448552f02762
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Gabriel Gonzales <semfault@disroot.org>, 
+ Kees Cook <kees@kernel.org>, Tony Luck <tony.luck@intel.com>, 
+ "Guilherme G. Piccoli" <gpiccoli@igalia.com>, 
+ Biswapriyo Nath <nathbappai@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org, 
+ phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
+ linux@mainlining.org, 
+ =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1769445293; l=2505;
+ i=barnabas.czeman@mainlining.org; s=20240730; h=from:subject:message-id;
+ bh=bm8kFrAljREFT7X0OXbNyMmjsEJiPsk99UNFXaev5SE=;
+ b=YQ2CkTN+AjGCRdwRjvHn4DmdFZNG0OOOLEk22YPIrFAWsMg07i6cisXT4nI25pTOhmidvqM0E
+ gMU/DV8gsqnD95qxMipFImZoHqxZzu/Qhz3SC2Wd08t2yIacg85Y2oN
+X-Developer-Key: i=barnabas.czeman@mainlining.org; a=ed25519;
+ pk=TWUSIGgwW/Sn4xnX25nw+lszj1AT/A3bzkahn7EhOFc=
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.84 / 15.00];
+X-Spamd-Result: default: False [0.41 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
+	R_MIXED_CHARSET(1.07)[subject];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1];
+	DMARC_POLICY_ALLOW(-0.50)[mainlining.org,reject];
+	R_DKIM_ALLOW(-0.20)[mainlining.org:s=202507r,mainlining.org:s=202507e];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_TO(0.00)[kernel.org,holtmann.org,gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[12];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-90590-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-90592-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_TO(0.00)[kernel.org,disroot.org,intel.com,igalia.com,gmail.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[3];
+	RCPT_COUNT_TWELVE(0.00)[20];
 	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mengshi.wu@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:mid,qualcomm.com:email,qualcomm.com:dkim];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FROM_NEQ_ENVFROM(0.00)[barnabas.czeman@mainlining.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[mainlining.org:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	RCVD_COUNT_SEVEN(0.00)[10]
-X-Rspamd-Queue-Id: 60AA98AA8B
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,mainlining.org:email,mainlining.org:dkim,mainlining.org:mid,qualcomm.com:email]
+X-Rspamd-Queue-Id: 1AF648ABB8
 X-Rspamd-Action: no action
 
-Add QCA_CAP_HFP_HW_OFFLOAD capability flag to WCN6855 device
-data structures to enable Hands-Free Profile (HFP) hardware
-offload support on these Qualcomm Bluetooth chipsets.
+Redmi Note 8 and 8T are sibling devices the only difference
+is Redmi Note 8T have NFC.
+This patch series is commonizing Redmi Note 8 devicetree
+for a base for both devices.
 
-Signed-off-by: Mengshi Wu <mengshi.wu@oss.qualcomm.com>
+The patch series also contains some fixes for Redmi Note 8:
+- Fix reserved memory ranges, they were wrongly defined.
+- Remove board-id, board-id is not neccessary for the bootloader.
+- Fix reserved-gpio-ranges the reserved ranges was wrongly
+defined what caused the device crash on the boot.
+- Remove unnecessary usb-extcon, gpio102 is related to DisplayPort
+what is not supported by these devices.
+- Use memory-region property for framebuffer.
+
+Depends on:
+[1] https://lore.kernel.org/all/20251229142806.241088-2-krzysztof.kozlowski@oss.qualcomm.com/
+
+Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
 ---
- drivers/bluetooth/hci_qca.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Changes in v3:
+- Remove unit address and label from frambuffer node.
+- Link to v2: https://lore.kernel.org/r/20260116-xiaomi-willow-v2-0-4694feb70cdb@mainlining.org
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index b99fdda88..212a92bbf 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -2155,7 +2155,8 @@ static const struct qca_device_data qca_soc_data_wcn6855 __maybe_unused = {
- 		{ "vddrfa1p2", 257000 },
- 	},
- 	.num_vregs = 6,
--	.capabilities = QCA_CAP_WIDEBAND_SPEECH | QCA_CAP_VALID_LE_STATES,
-+	.capabilities = QCA_CAP_WIDEBAND_SPEECH | QCA_CAP_VALID_LE_STATES |
-+			QCA_CAP_HFP_HW_OFFLOAD,
- };
- 
- static const struct qca_device_data qca_soc_data_wcn7850 __maybe_unused = {
+Changes in v2:
+- Fix copyright in sm6125-xiaomi-ginkgo.dts as requested.
+- Use memory-region property for the framebuffer.
+- Add comment about the NFC.
+- Remove msm-id change in favor of [1].
+- Link to v1: https://lore.kernel.org/r/20260112-xiaomi-willow-v1-0-8e4476897638@mainlining.org
+
+---
+Barnabás Czémán (7):
+      arm64: dts: qcom: sm6125-xiaomi-ginkgo: Remove board-id
+      arm64: dts: qcom: sm6125-xiaomi-ginkgo: Correct reserved memory ranges
+      arm64: dts: qcom: sm6125-xiaomi-ginkgo: Set memory-region for framebuffer
+      arm64: dts: qcom: sm6125-xiaomi-ginkgo: Remove extcon
+      arm64: dts: qcom: sm6125-xiaomi-ginkgo: Fix reserved gpio ranges
+      dt-bindings: arm: qcom: Add Xiaomi Redmi Note 8T
+      arm64: dts: qcom: Add Redmi Note 8T
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |   1 +
+ arch/arm64/boot/dts/qcom/Makefile                  |   3 +-
+ .../boot/dts/qcom/sm6125-xiaomi-ginkgo-common.dtsi | 301 +++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts  | 285 +------------------
+ arch/arm64/boot/dts/qcom/sm6125-xiaomi-willow.dts  |  15 +
+ 5 files changed, 320 insertions(+), 285 deletions(-)
+---
+base-commit: f417b7ffcbef7d76b0d8860518f50dae0e7e5eda
+change-id: 20260111-xiaomi-willow-448552f02762
+prerequisite-message-id: <20251229142806.241088-2-krzysztof.kozlowski@oss.qualcomm.com>
+prerequisite-patch-id: 1bc49c0e2bec1a47667df776e1ab265b0699ea35
+
+Best regards,
 -- 
-2.34.1
+Barnabás Czémán <barnabas.czeman@mainlining.org>
 
 
