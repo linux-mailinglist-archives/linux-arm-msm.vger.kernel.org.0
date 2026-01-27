@@ -1,241 +1,388 @@
-Return-Path: <linux-arm-msm+bounces-90885-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90886-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UJhDOOlAeWmAwAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90885-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 23:49:13 +0100
+	id 4IE7ITdLeWmXwQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90886-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 00:33:11 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 55D669B39C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 23:49:13 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1FDD9B6B7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 00:33:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 8542C304BC34
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 22:48:26 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 4515D300530B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 23:33:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA48329C33F;
-	Tue, 27 Jan 2026 22:48:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B724029DB99;
+	Tue, 27 Jan 2026 23:33:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ie2caQ/2"
+	dkim=pass (2048-bit key) header.d=apitzsch.eu header.i=@apitzsch.eu header.b="b9xim2K2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from www637.your-server.de (www637.your-server.de [168.119.26.117])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF5A62EA743
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jan 2026 22:48:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.48
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769554099; cv=pass; b=k8uRL/BVLf3QZSVLmiiYtlaYU8tPrGh1qImE3F0xytVyHJBtUzPEQJh3qAA3LmNw81u+pXv7MndgBXqFjX6wW/KqhyaqsJjtlS4oOCJNfutzmwbejOqJCGgqjROoOghZR8nQS2ga2ZEs1p5dn03uIi9WyTaHanZtKYHn4418PqM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769554099; c=relaxed/simple;
-	bh=2NL5AU87jw7eHv2qc9bZdWKH47aqOOf4AHFuhvmkk6U=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=Q820cSl3eeFsww1zfBFiPDqVKxIxuN6oPd1nCjYIK3gFlts1Avsttg2Pl7iJ1AHlEhEYhVzpJSWLafsNPBTyNaw4GENk0xkgSV4+PIDv1e452FtqeCZm8B87jxG3siM2+O1GF1N6KH790DZMDStKDQonkAJydbMjgiSujVeMyCM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ie2caQ/2; arc=pass smtp.client-ip=209.85.167.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-59b9fee282dso5735097e87.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jan 2026 14:48:17 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769554096; cv=none;
-        d=google.com; s=arc-20240605;
-        b=azzijZG1e9ZggcdEqIQ99EbrSA0gqKcwC3RxVoDF52FjhqUIakpsBK9Ot3ZFhdR0Qr
-         Olu4Vdh9g5+hi20Nm1QsWFHVnSFXLLzfSzl+KSRNBT/ExKrPgD2GK/CxbQUtO4fu6TjU
-         Aj42Lq+lnwkCeA6MjlJfgKCrethrZ4bsKFNBGmc29JltLtxie9dJnUZCLKBojzx866jo
-         ZRnARZLA3HNYn/btoAwb352pPEYWSR5+5QJnVqZyJ0yEPpFtV8iaanThU28UG8TFaKQm
-         d26ufOpZ8WebRuD1sHJpjjuaISKuC4xF00YodipeLSozo7r0DXtYb76ja8+w+tweAX/V
-         o2qg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=3DRH690mL4UNAvYwFOry8Dvkh4ilXtn44oEglO3OUM4=;
-        fh=4DSx710/R75jCegsRZ6qHzUBAuib6L37GCW1qeOndFc=;
-        b=RaxAssEMbM0cjCYICKItS7GT51TYnKiO6dhhiqBOVW1jNqnCm45sWQ1MptKkOGyF2p
-         TcuyPoTXbm/+DxKawhdYTbq7VfSUe0kpU3phUk1OS3Bu+aRibA+girH7qzoMfIL7dWLC
-         yfU9G7O9AYJREogPEaftXFYHsOJDzV0Rb+J2CN2d/mW2QfFrBdpO2AyDDmL1YnaGmDMz
-         mr7FTmeiJqoKFs0I7xj4Q7ipSRod0W+t9YwXxiHzozP5NVio9AwMiOrOdQuyAzeirM0i
-         m1gpIa6ZZdH5tA80qYPP/LWybfjd7OxNhWJzc0AeC0BeFKqy4mrLaKiH63hLd6EfYi8W
-         hdcw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769554096; x=1770158896; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=3DRH690mL4UNAvYwFOry8Dvkh4ilXtn44oEglO3OUM4=;
-        b=Ie2caQ/268ygSZ/YCuEOKoQldkTcSkViYVSz6a9JNJE9Ue4YSvVO0wLDjvrpfnc9BA
-         gP8lvvMTeKSRox19iV8ipcu7UOUVQ3LT6rgOFLryEySEUHsyrgnn2uDgVHfmBt1eU+3f
-         tMUt6YMZFGcTy1Y8e/XcL+qOV7aQGAvTliGIw8rdX2nXlRS8c8yUg5g8n//LqrY0TMhW
-         BTtwIny/zMdIrcgctoTMPzbBz3odIJeRm5UU542YQTHAWdHaWexyd85aNIvKpAIyl98J
-         vgsDVcs5PWdpDcAr1k8ItEfOCjJ1NOICLvnyHLU0LRHikR0Fgf/Lh2cSBgfbeNbZa1C/
-         l/Cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769554096; x=1770158896;
-        h=to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3DRH690mL4UNAvYwFOry8Dvkh4ilXtn44oEglO3OUM4=;
-        b=TtOsWmgSR77MFskIOjHf1sM5hlY8ww2aRm8mBijU1nVMnXcC1HG83defe/KHlTiUjB
-         C8ZEmdm7Q4HAqM3G30WhQcP19ZOWvKZrKslknYCALLQ2GJJqikzuz5PYettJbBqYAJX3
-         AYTBdL2NQRn1GRXvJzQU6im16A4uNeh8oOqtlu+paLcGrKbxDVCZHfDfgIbBEFulrgvX
-         thNujbDlt69QYIjNZToWd5NswL2YRbfPHpLpzdMoISSbGK+8UpEhaMVnciaB7sXpioAY
-         F4cUH5iUUAhXszAwsShXPC1ram3lrpAo4VOGVo70vXAwFAPApfU6/SL6nTQbwZYo2elT
-         4D/w==
-X-Gm-Message-State: AOJu0YyXURU6IO8bkaWOZxBeKFc38u3tQOxihZjeN0QS36XOX72EkeYn
-	DRMCnaVQXJHevn25I3YNkAo9Esc27c/rA+5zq57IWuJmGTeUjYXlIEQUlwjI2rRQtWklnm8yALn
-	x8GNVeGKPvvDj2HfZWEYJ5RVucaYaIhit+eVv
-X-Gm-Gg: AZuq6aL6KBwjDr/nOhRt7k5pZtxHLJh0OBWbc9p/DXK9ZdoNxBatKZs/5stZ1Cv5Mug
-	sbLC62w4SM22AYTRO30Jr9TbtzjgHdlYcEk3a4rU1KsJoILmKFIOWRpGNZFlZpshkj7OEmIO9oL
-	x+WMDvTDaCA2NK5tYAj2HZAanbBd21kCKbO8yC9Fx/I+prI9tQY1cvUdZiSiv1KiW1ld916pEl4
-	lCs6eW0VRZxgeADvhQT48hLOP/ZQ5fMbB/86LJstgjcyFYszJAywRwp9OwW7A/zB9hquER/TrtQ
-	+BD8OjbS1hYw88EUfBD+KVRY2DX4LNF5vLpcXYs0eEYBI6YKC/ZARZh2fat/IWuevHk=
-X-Received: by 2002:a05:6512:3ba8:b0:59b:7291:9cc2 with SMTP id
- 2adb3069b0e04-59e0413027fmr1255079e87.37.1769554095929; Tue, 27 Jan 2026
- 14:48:15 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 469E1284689;
+	Tue, 27 Jan 2026 23:33:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=168.119.26.117
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769556784; cv=none; b=B/O89BFeJorPL4DPopncTrGhmB1SOY4pBEyjCo4QtwPkLr2e2gQhYI4EtrJjqCNV0ZsNzkMPDILdaaTTr3JoGjpjyRMFkCpWghJYOGA9gv3+FCpkDHj4VEw7YNtaUlmYctTZ135wa+It1fIG3M0io1WKjgY0R5JUo8mMf7Q4VJE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769556784; c=relaxed/simple;
+	bh=rhkKh1SBzCXoXG7SVDKmB/jKb7xuj3po6LOiKqWa68U=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=RmDTQM3yEqVTdsV19XNPK8B9yJy74rlWMpJ1e2mOxTS1viLLDRcfaRXwNJnh7aK7HhqhHCaGaK45Yp9w07qTHlK7xFGeI+fG4qKDhlW+JkRbmfYL99PUrXuSehgrR9xplv7UxxcxPvqx9BcOvJ9s693eS8WN7gwOtOPJYEG2Py8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=apitzsch.eu; spf=pass smtp.mailfrom=apitzsch.eu; dkim=pass (2048-bit key) header.d=apitzsch.eu header.i=@apitzsch.eu header.b=b9xim2K2; arc=none smtp.client-ip=168.119.26.117
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=apitzsch.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=apitzsch.eu
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=apitzsch.eu
+	; s=default2410; h=MIME-Version:Content-Transfer-Encoding:Content-Type:
+	References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID;
+	bh=A1zsHfiNLCHLmtqqqqKp7hDFVmzRNEb7rbTIgSMglMw=; b=b9xim2K2nVlbvrHo3L8VefwrdU
+	r0qocpG0zh6pTRG3uIFgfCa2qil0N8/1bb8cTeMJXAhVo5Xg3W2tsVEC1L8AwJOECRFzebkVUEP3o
+	B2TIQ1JXThZ5w/B2YH3kqJ/giPH21r4v4av0f/rVZt41Ezg+fiu08IM/ICAtW27WDCNunvAFwdEp6
+	gzNDapjLWQguEU1nFwnImxk5zn5hekHl+111wvzpGjSxzPzhxZAaOmnH+Qa5jUUdsUfbUFFWbF40q
+	PPzK0fVyTxuTsnucS/ztbXysjjitdzH4ZI13kswi9Ojw6A0NWvC84qWKOzzD5F5HOJXeYtnq/P8p/
+	XDpNystQ==;
+Received: from sslproxy05.your-server.de ([78.46.172.2])
+	by www637.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96.2)
+	(envelope-from <git@apitzsch.eu>)
+	id 1vks9c-000ICe-3D;
+	Wed, 28 Jan 2026 00:07:25 +0100
+Received: from localhost ([127.0.0.1])
+	by sslproxy05.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <git@apitzsch.eu>)
+	id 1vks9c-000Gf3-15;
+	Wed, 28 Jan 2026 00:07:24 +0100
+Message-ID: <5b1615aeb8a4a7ee5f46a23f148416ec2398bc10.camel@apitzsch.eu>
+Subject: Re: [PATCH v7 2/2] remoteproc: qcom: Use of_reserved_mem_region_*
+ functions for "memory-region"
+From: =?ISO-8859-1?Q?Andr=E9?= Apitzsch <git@apitzsch.eu>
+To: Rob Herring <robh@kernel.org>, Marek Szyprowski
+ <m.szyprowski@samsung.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Mathieu Poirier	
+ <mathieu.poirier@linaro.org>, Shawn Guo <shawnguo@kernel.org>, Sascha Hauer
+	 <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>,
+  Fabio Estevam <festevam@gmail.com>, Geert Uytterhoeven
+ <geert+renesas@glider.be>, Magnus Damm	 <magnus.damm@gmail.com>, Patrice
+ Chotard <patrice.chotard@foss.st.com>,  Maxime Coquelin
+ <mcoquelin.stm32@gmail.com>, Alexandre Torgue
+ <alexandre.torgue@foss.st.com>, Arnaud Pouliquen	
+ <arnaud.pouliquen@foss.st.com>, Peng Fan <peng.fan@nxp.com>, Beleswar Padhi
+	 <b-padhi@ti.com>, linux-remoteproc@vger.kernel.org, imx@lists.linux.dev, 
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	linux-renesas-soc@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com, 	linux-arm-msm@vger.kernel.org
+Date: Wed, 28 Jan 2026 00:07:21 +0100
+In-Reply-To: <CAL_JsqJTrGAJx-fv8OQGDhsLVKavQzzQotssEq_E5f_aJe8bOg@mail.gmail.com>
+References: <20251124182751.507624-1-robh@kernel.org>
+	 <CGME20251127142839eucas1p186846c6c1ea1d9e43369fbba9bb5d17c@eucas1p1.samsung.com>
+	 <20251124182751.507624-2-robh@kernel.org>
+	 <674efe8d-c299-4ce9-bf6b-c1920a5393eb@samsung.com>
+	 <CAL_JsqJTrGAJx-fv8OQGDhsLVKavQzzQotssEq_E5f_aJe8bOg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.2 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Aaron Kling <webgeek1234@gmail.com>
-Date: Tue, 27 Jan 2026 16:48:04 -0600
-X-Gm-Features: AZwV_Qh8YnJ6_dmSvI8GtgI6R1gwxwTVk6nYVEat9vMh5Ny9xjQymMXyzb_wNbg
-Message-ID: <CALHNRZ8qSOZKwmBznRqvAAjMcQ265iEdBXEA2RSkSBViKO=uEA@mail.gmail.com>
-Subject: Questions About SM8550 Support
-To: linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+X-Virus-Scanned: Clear (ClamAV 1.4.3/27893/Tue Jan 27 08:24:09 2026)
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	R_DKIM_ALLOW(-0.20)[apitzsch.eu:s=default2410];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_HAS_DN(0.00)[];
-	TAGGED_FROM(0.00)[bounces-90885-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-90886-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	FROM_HAS_DN(0.00)[];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	DMARC_NA(0.00)[apitzsch.eu];
+	RCPT_COUNT_TWELVE(0.00)[23];
+	FREEMAIL_CC(0.00)[kernel.org,linaro.org,pengutronix.de,gmail.com,glider.be,foss.st.com,nxp.com,ti.com,vger.kernel.org,lists.linux.dev,lists.infradead.org,st-md-mailman.stormreply.com];
 	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_ONE(0.00)[1];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_NONE(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[webgeek1234@gmail.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 55D669B39C
+	DKIM_TRACE(0.00)[apitzsch.eu:+];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[git@apitzsch.eu,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_PROHIBIT(0.00)[5.42.239.224:email,5.39.226.160:email,5.44.118.128:email];
+	MID_RHS_MATCH_FROM(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[5.38.92.0:email,5.42.161.192:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,5.36.213.96:email,samsung.com:email,5.32.65.128:email]
+X-Rspamd-Queue-Id: A1FDD9B6B7
 X-Rspamd-Action: no action
 
-I am working on the AYN Odin 2 qcs8550 series of devices, specifically
-for Android, using mainline kernel drivers. I have come across some
-missing functionality and failures that I would like to inquire about.
+Hi Rob,
 
-* ABL fails to load a dtbo using a baseline dtb unmodified from
-mainline. Using changes described in the gunyah watchdog thread [0], a
-dtbo loads and the devices boot as expected. If any of the changes in
-that post don't exist in the base dtb, abl will fail to load the dtbo
-and go to the bootloader menu. This appears to be an issue in the
-baseline abl code, affecting all devices of that generation. Would it
-be allowable to merge a change adding those changes to the sm8550
-dtsi, allowing an unmodified mainline dtb to work with overlays?
+Am Dienstag, dem 02.12.2025 um 08:15 -0600 schrieb Rob Herring:
+> On Thu, Nov 27, 2025 at 8:28=E2=80=AFAM Marek Szyprowski
+> <m.szyprowski@samsung.com> wrote:
+> >=20
+> > Hi Rob,
+> >=20
+> > On 24.11.2025 19:27, Rob Herring (Arm) wrote:
+> > > Use the newly added of_reserved_mem_region_to_resource() and
+> > > of_reserved_mem_region_count() functions to handle "memory-
+> > > region" properties.
+> > >=20
+> > > The error handling is a bit different in some cases. Often
+> > > "memory-region" is optional, so failed lookup is not an error.
+> > > But then an error in of_reserved_mem_lookup() is treated as an
+> > > error.
+> > > However, that distinction is not really important. Either the
+> > > region is available and usable or it is not. So now, it is just
+> > > of_reserved_mem_region_to_resource() which is checked for an
+> > > error.
+> > >=20
+> > > Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+> >=20
+> > This patch landed in today's linux-next as commit c70b9d5fdcd7
+> > ("remoteproc: qcom: Use of_reserved_mem_region_* functions for
+> > "memory-region""). In my tests I found that it breaks booting of
+> > DragonBoard410c (arch/arm64/boot/dts/qcom/apq8016-sbc.dts) by
+> > causing the NULL pointer dereference. The issue is caused by
+> > replacing devm_ioremap_wc() with devm_ioremap_resource_wc(), which
+> > fails on devm_request_mem_region(), see comment in the code below.
+> > It looks that the error handling is somewhere broken. Here is the
+> > the kernel log:
+> >=20
+> > remoteproc remoteproc0: 4080000.remoteproc is available
+> > qcom-wcnss-pil a204000.remoteproc: error -EBUSY: can't request
+> > region for resource [mem 0x8e200000-0x8e7fffff]
+> > remoteproc remoteproc1: a204000.remoteproc is available
+> > remoteproc remoteproc1: powering up a204000.remoteproc
+> > remoteproc remoteproc1: Booting fw image qcom/apq8016/wcnss.mbn,
+> > size 4111376
+> > Unable to handle kernel paging request at virtual address
+> > fffffffffffffff0
+> > Mem abort info:
+> > ...
+> > Internal error: Oops: 0000000096000046 [#1]=C2=A0 SMP
+> > Modules linked in: cpufreq_powersave qcom_wcnss_pil
+> > cpufreq_conservative
+> > coresight_stm coresight_replicator coresight_tmc coresight_tpiu
+> > stm_core
+> > coresight_funnel coresight_cpu_debug coresight_cti(+) adv7511
+> > coresight
+> > nfc rfkill msm snd_soc_lpass_apq8016 snd_soc_apq8016_sbc
+> > snd_soc_lpass_cpu snd_soc_msm8916_analog snd_soc_msm8916_digital
+> > snd_soc_qcom_common snd_soc_lpass_platform snd_soc_core qrtr
+> > ubwc_config
+> > snd_compress llcc_qcom snd_pcm_dmaengine qcom_q6v5_mss snd_pcm
+> > ocmem
+> > qcom_pil_info qcom_spmi_vadc qcom_camss drm_gpuvm qcom_pon
+> > rtc_pm8xxx
+> > qcom_q6v5 qcom_spmi_temp_alarm venus_core qcom_vadc_common
+> > snd_timer
+> > drm_exec qcom_sysmon snd qcom_common gpu_sched videobuf2_dma_sg
+> > v4l2_mem2mem qcom_glink_smem v4l2_fwnode soundcore drm_dp_aux_bus
+> > qmi_helpers mdt_loader v4l2_async videobuf2_memops videobuf2_v4l2
+> > videodev qnoc_msm8916 videobuf2_common qcom_rng drm_display_helper
+> > mc
+> > qcom_stats rpmsg_ctrl rpmsg_char display_connector ramoops socinfo
+> > rmtfs_mem reed_solomon ax88796b asix usbnet phy_qcom_usb_hs ipv6
+> > libsha1
+> > CPU: 2 UID: 0 PID: 28 Comm: kworker/2:0 Tainted: G W
+> > 6.18.0-rc1+ #16209 PREEMPT
+> > Tainted: [W]=3DWARN
+> > lr : __qcom_mdt_load+0x210/0x304 [mdt_loader]
+> > Call trace:
+> > =C2=A0 __pi_memcpy_generic+0x128/0x22c (P)
+> > =C2=A0 qcom_mdt_load+0x68/0x60c [mdt_loader]
+> > =C2=A0 wcnss_load+0x2c/0x5c [qcom_wcnss_pil]
+> > =C2=A0 rproc_start+0x30/0x1b4
+> > =C2=A0 rproc_boot+0x19c/0x560
+> > =C2=A0 rproc_auto_boot_callback+0x1c/0x34
+> > =C2=A0 request_firmware_work_func+0x4c/0x98
+> > =C2=A0 process_one_work+0x208/0x60c
+> > =C2=A0 worker_thread+0x244/0x388
+> > =C2=A0 kthread+0x150/0x228
+> > =C2=A0 ret_from_fork+0x10/0x20
+> > Code: 927cec03 cb0e0021 8b0e0042 a9411c26 (a900340c)
+> > ---[ end trace 0000000000000000 ]---
+> >=20
+> >=20
+> > > ---
+> > > v7:
+> > > =C2=A0 - Split QCom to separate patch
+> > > ---
+> > > =C2=A0 drivers/remoteproc/qcom_q6v5_adsp.c | 24 ++++------
+> > > =C2=A0 drivers/remoteproc/qcom_q6v5_mss.c=C2=A0 | 60 ++++++++--------=
+------
+> > > ---
+> > > =C2=A0 drivers/remoteproc/qcom_q6v5_pas.c=C2=A0 | 69 +++++++++++-----=
+------
+> > > -------
+> > > =C2=A0 drivers/remoteproc/qcom_q6v5_wcss.c | 25 +++++------
+> > > =C2=A0 drivers/remoteproc/qcom_wcnss.c=C2=A0=C2=A0=C2=A0=C2=A0 | 23 +=
++++------
+> > > =C2=A0 5 files changed, 72 insertions(+), 129 deletions(-)
+> > >=20
+> >=20
+> > > ...
+> >=20
+> > > diff --git a/drivers/remoteproc/qcom_wcnss.c
+> > > b/drivers/remoteproc/qcom_wcnss.c
+> > > index 2c7e519a2254..14005fb049a2 100644
+> > > --- a/drivers/remoteproc/qcom_wcnss.c
+> > > +++ b/drivers/remoteproc/qcom_wcnss.c
+> > > @@ -526,25 +526,20 @@ static int wcnss_request_irq(struct
+> > > qcom_wcnss *wcnss,
+> > >=20
+> > > =C2=A0 static int wcnss_alloc_memory_region(struct qcom_wcnss *wcnss)
+> > > =C2=A0 {
+> > > -=C2=A0=C2=A0=C2=A0=C2=A0 struct reserved_mem *rmem =3D NULL;
+> > > -=C2=A0=C2=A0=C2=A0=C2=A0 struct device_node *node;
+> > > -
+> > > -=C2=A0=C2=A0=C2=A0=C2=A0 node =3D of_parse_phandle(wcnss->dev->of_no=
+de, "memory-
+> > > region", 0);
+> > > -=C2=A0=C2=A0=C2=A0=C2=A0 if (node)
+> > > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 rmem =3D of_reserved_mem_lookup(node);
+> > > -=C2=A0=C2=A0=C2=A0=C2=A0 of_node_put(node);
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0 struct resource res;
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0 int ret;
+> > >=20
+> > > -=C2=A0=C2=A0=C2=A0=C2=A0 if (!rmem) {
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0 ret =3D of_reserved_mem_region_to_resource(=
+wcnss->dev-
+> > > >of_node, 0, &res);
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0 if (ret) {
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 dev_err(wcnss->dev, "unable to resolve memory-
+> > > region\n");
+> > > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 return -EINVAL;
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 return ret;
+> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> > >=20
+> > > -=C2=A0=C2=A0=C2=A0=C2=A0 wcnss->mem_phys =3D wcnss->mem_reloc =3D rm=
+em->base;
+> > > -=C2=A0=C2=A0=C2=A0=C2=A0 wcnss->mem_size =3D rmem->size;
+> > > -=C2=A0=C2=A0=C2=A0=C2=A0 wcnss->mem_region =3D devm_ioremap_wc(wcnss=
+->dev, wcnss-
+> > > >mem_phys, wcnss->mem_size);
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0 wcnss->mem_phys =3D wcnss->mem_reloc =3D re=
+s.start;
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0 wcnss->mem_size =3D resource_size(&res);
+> > > +=C2=A0=C2=A0=C2=A0=C2=A0 wcnss->mem_region =3D devm_ioremap_resource=
+_wc(wcnss->dev,
+> > > &res);
+> >=20
+> > The above line causes the failure. After restoring it to:
+> >=20
+> > wcnss->mem_region =3D devm_ioremap_wc(wcnss->dev, wcnss->mem_phys,
+> > wcnss->mem_size);
+> >=20
+> > the mentioned board boots fine again. I'm not sure about other
+> > drivers,
+> > if they also fail the same way as they might not be used on the
+> > tested
+> > board.
+>=20
+> Other platforms (non-QCom) were tested also use
+> devm_ioremap_resource_wc(). So something else is claiming the same
+> region? Can you dump out /proc/iomem?
+>=20
+> The region is dynamically allocated, so maybe that has something to
+> do with it.
+>=20
+> Rob
 
-* SM8550 does not have cpu opp tables, thus cpufreq does not work. I
-have locally copied the commits from sm8650 and adapted for sm8550,
-and that seems to work okay. But no measuring of bandwidth was done,
-so the numbers are likely not entirely correct. Is there any plan to
-generate correct tables for sm8550?
+the problem seems to persist with 6.19-rc7. On qcom/msm8939-longcheer-
+l9100 (msm8916-based) I still get:
 
-* As part of a series to support the original Odin 2, a patch to
-update sm8550 EAS values was submitted [1]. But that series stalled
-and this was never merged. If this change is valid, which per that
-discussion it appears to be, can it be resubmitted by itself and
-merged?
+> remoteproc remoteproc0: 4080000.remoteproc is available
+> qcom-wcnss-pil a204000.remoteproc: error -EBUSY: can't request region for=
+ resource [mem 0x8e200000-0x8e7fffff]
+> qcom-wcnss-pil a204000.remoteproc: unable to map memory region: [mem 0x8e=
+200000-0x8e7fffff]
+> qcom-wcnss-pil a204000.remoteproc: probe with driver qcom-wcnss-pil faile=
+d with error -16
+> remoteproc remoteproc1: releasing a204000.remoteproc
 
-* Per the mainline kernel device trees and audio topology provide by
-the oem, these devices use primary i2s for the speakers path. There
-was a commit adding clock support for that as part of an hdmi series
-[2], but that seems to have stalled. Is this going to be picked back
-up?
+Maybe parts of your patch should be reverted (as suggested by Marek),
+to fix the regression (i.e. wifi not working) until a proper fix is
+found.
 
-* Inline crypto fails to detect hwkm support. And I see other logs
-online, such as for the sm8550 qrd, that logs the same way my device
-does. I traced the issue to the check for wrapped key support [3]. On
-my devices, the derive call is supported, but the other three calls
-are not. I was pointed at the downstream headers for sm8550 support
-and only derive is listed there, the other three don't appear to be
-used in the downstream driver. Is this expected? And if so, will this
-case be added to the mainline drivers?
 
-* Some gpu related clocks complain about being stuck off during boot,
-causing stack traces, but the gpu does work. I tried to do some
-research into this, but quickly got lost in the weeds and I have no
-idea where to even look.
-[    0.367278] gpu_cc_cxo_clk status stuck at 'off'
-[    0.367962] gpu_cc_hub_cx_int_clk status stuck at 'off'
-[    0.368595] gpu_cc_cx_gmu_clk status stuck at 'off'
-[    0.369245] disp_cc_mdss_ahb1_clk status stuck at 'off'
+On msm8939-longcheer-l9100 the reserved memory regions look similar to
+the ones provided by Marek:
 
-* Sometimes when starting rendering, a bandwidth submission times out,
-then the driver immediately complains that said id was left on the
-queue. I have tried increasing the timeout, but the same sequence
-still happens. Timeout happens, immediately followed by a matching
-unexpected response. Implying that this isn't actually a delay /
-timeout issue.
-[ 1848.517020] platform 3d6a000.gmu:
-[drm:a6xx_hfi_wait_for_msg_interrupt [msm]] *ERROR* Message
-HFI_H2F_MSG_GX_BW_PERF_VOTE id 1015 timed out waiting for response
-[ 1848.518020] platform 3d6a000.gmu: [drm:a6xx_hfi_send_msg [msm]]
-*ERROR* Unexpected message id 1015 on the response queue
+# dmesg | grep mem
+OF: reserved mem: 0x000000008e200000..0x000000008e7fffff (6144 KiB)
+nomap non-reusable wcnss
+OF: reserved mem: 0x000000008e100000..0x000000008e1fffff (1024 KiB)
+nomap non-reusable mba
+OF: reserved mem: 0x000000008df00000..0x000000008e0fffff (2048 KiB)
+nomap non-reusable gps
+OF: reserved mem: 0x0000000086000000..0x00000000862fffff (3072 KiB)
+nomap non-reusable tz-apps@86000000
+OF: reserved mem: 0x0000000086300000..0x00000000863fffff (1024 KiB)
+nomap non-reusable smem@86300000
+OF: reserved mem: 0x0000000086400000..0x00000000864fffff (1024 KiB)
+nomap non-reusable hypervisor@86400000
+OF: reserved mem: 0x0000000086500000..0x000000008667ffff (1536 KiB)
+nomap non-reusable tz@86500000
+OF: reserved mem: 0x0000000086680000..0x00000000866fffff (512 KiB)
+nomap non-reusable reserved@86680000
+OF: reserved mem: 0x0000000086700000..0x00000000867dffff (896 KiB)
+nomap non-reusable rmtfs@86700000
+OF: reserved mem: 0x00000000867e0000..0x00000000867fffff (128 KiB)
+nomap non-reusable rfsa@867e0000
+OF: reserved mem: 0x0000000086800000..0x000000008b7fffff (81920 KiB)
+nomap non-reusable mpss@86800000
+  DMA      [mem 0x0000000040000000-0x00000000ffffffff]
+Early memory node ranges
+  node   0: [mem 0x0000000040000000-0x0000000085ffffff]
+  node   0: [mem 0x0000000086000000-0x000000008b7fffff]
+  node   0: [mem 0x000000008b800000-0x000000008defffff]
+  node   0: [mem 0x000000008df00000-0x000000008e7fffff]
+  node   0: [mem 0x000000008e800000-0x00000000ffffffff]
+Initmem setup node 0 [mem 0x0000000040000000-0x00000000ffffffff]
+software IO TLB: mapped [mem 0x00000000fae00000-0x00000000fb200000]
+(4MB)
+...
 
-* Some 3dmark benchmarks such as solar bay cause a gpu crash. I am
-unsure if this is a kernel problem or userspace, so I'm submitting
-here first. If the consensus is that it's a userspace issue, I'll
-submit it to mesa.
-[ 1860.112008] adreno 3d00000.gpu: [drm:a6xx_irq [msm]] *ERROR* gpu
-fault ring 2 fence a261 status 00EF0585 rb 06df/090f ib1
-00000001512E9000/003d ib2 00000001512E7000/0000
-[ 1860.113122] msm_dpu ae01000.display-controller: [drm:recover_worker
-[msm]] *ERROR* 67.5.10.1: hangcheck recover!
-[ 1860.113238] msm_dpu ae01000.display-controller: [drm:recover_worker
-[msm]] *ERROR* 67.5.10.1: offending task: Thread-23
-(com.futuremark.dmandroid.application)
-[ 1860.258126] revision: 0 (67.5.10.1)
-[ 1860.258132] rb 0: fence:    2884/2884
-[ 1860.258133] rptr:     36
-[ 1860.258134] rb wptr:  36
-[ 1860.258135] rb 1: fence:    -256/-256
-[ 1860.258138] rptr:     0
-[ 1860.258138] rb wptr:  0
-[ 1860.258139] rb 2: fence:    41563/41569
-[ 1860.258140] rptr:     1752
-[ 1860.258140] rb wptr:  2319
-[ 1860.258141] rb 3: fence:    -256/-256
-[ 1860.258141] rptr:     0
-[ 1860.258142] rb wptr:  0
-[ 1860.258146] adreno 3d00000.gpu: [drm:a6xx_recover [msm]] CP_SCRATCH_REG0: 0
-[ 1860.258220] adreno 3d00000.gpu: [drm:a6xx_recover [msm]] CP_SCRATCH_REG1: 0
-[ 1860.258266] adreno 3d00000.gpu: [drm:a6xx_recover [msm]]
-CP_SCRATCH_REG2: 41562
-[ 1860.258310] adreno 3d00000.gpu: [drm:a6xx_recover [msm]] CP_SCRATCH_REG3: 0
-[ 1860.258354] adreno 3d00000.gpu: [drm:a6xx_recover [msm]]
-CP_SCRATCH_REG4: 3736059565
-[ 1860.258399] adreno 3d00000.gpu: [drm:a6xx_recover [msm]]
-CP_SCRATCH_REG5: 3736059565
-[ 1860.258443] adreno 3d00000.gpu: [drm:a6xx_recover [msm]]
-CP_SCRATCH_REG6: 3736059565
-[ 1860.258487] adreno 3d00000.gpu: [drm:a6xx_recover [msm]]
-CP_SCRATCH_REG7: 3736059565
+# cat /proc/iomem
+...
+40000000-85ffffff : System RAM
+  40000000-410fffff : Kernel code
+  41100000-412bffff : reserved
+  412c0000-4154ffff : Kernel data
+  42000000-4200dfff : reserved
+  42200000-42c98fff : reserved
+86000000-8b7fffff : reserved
+8b800000-8defffff : System RAM
+8df00000-8e7fffff : reserved
+  8df00000-8e7fffff : reserved
+8e800000-ffffffff : System RAM
+  fae00000-ff7fffff : reserved
+  ff8ac000-ff8b7fff : reserved
+  ff8b8000-ff8b9fff : reserved
+  ff8ba000-ff9c1fff : reserved
+  ff9c3000-ff9c6fff : reserved
+  ff9c7000-ff9d7fff : reserved
+  ff9d8000-ffa33fff : reserved
+  ffa34000-ffffffff : reserved
 
-Aaron
-
-[0] https://lore.kernel.org/all/91002189-9d9e-48a2-8424-c42705fed3f8@quicinc.com/
-[1] https://lore.kernel.org/all/20240424-ayn-odin2-initial-v1-7-e0aa05c991fd@gmail.com/
-[2] https://lore.kernel.org/all/20251008-topic-sm8x50-next-hdk-i2s-v2-3-6b7d38d4ad5e@linaro.org/
-[3] https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/drivers/firmware/qcom/qcom_scm.c?h=v6.18#n1285
+Best regards,
+Andr=C3=A9
 
