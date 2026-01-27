@@ -1,196 +1,288 @@
-Return-Path: <linux-arm-msm+bounces-90635-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90640-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GNBvNLcneGl7oQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90635-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 03:49:27 +0100
+	id 8AVOEQcseGl7oQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90640-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 04:07:51 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 613CE8F35C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 03:49:27 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB1B38F649
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 04:07:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 84089305569B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 02:47:36 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 19F5D3067A0A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 03:03:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D7A43009E2;
-	Tue, 27 Jan 2026 02:46:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 881DA2EC563;
+	Tue, 27 Jan 2026 03:03:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ffACyxA8"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="hP80O4ut";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="QmoSDQnP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A99A2FDC20;
-	Tue, 27 Jan 2026 02:46:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B9AB2D6E4B
+	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jan 2026 03:03:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769482018; cv=none; b=BkH0vtdVvSezU3ZBvowjk99RXhWVsjqO1wx/quHXtLAXkAW6XSqEm6ofuwSD1dSrxbqOBgnsYQbWC60E2bInYol+RF6fEcgl9FZkyBc+BiVBXFq1mcqpsZTlpsqGrnYqvEpPR3Noi1DjvWn3lrlRnN4qDq5XsMKlMAi7FpDGGYo=
+	t=1769483013; cv=none; b=SLX6ESwHHflTJJ098a/HHxJ+nnrPNetjUgzzYbf692Hd+vYVIq9WEwIiTq5SgAGwdKdGx0+7crS8T8NmKHCF+8O9fmOHZl4b+nDChrjOQbKxDOtdasbK5w+TA62HPOnqw01xhVjn3dJFpPBHtVOPHIkeqo94Z4D2riP3OpRm/Ik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769482018; c=relaxed/simple;
-	bh=WAyXq6i/Hop8CHXfaafDSwwDZIWzCH4CFJHa2PuEV2A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HP9i4oVXtfF6CHMiQRBEtUvh6LjeZVNn3+WjjJihb7w1Minv2i7ucYPDsM8bVixOfo3Yc5+sbdLp26ME5FYOx5X7SDIdjXHhK1qhOvQlm1XXA2p7wKEx2v1bzZ3rbKZYH8jumCpLslZB00KszRRqL4tguonOhdFkMfNlqubdkB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ffACyxA8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCC62C116C6;
-	Tue, 27 Jan 2026 02:46:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769482017;
-	bh=WAyXq6i/Hop8CHXfaafDSwwDZIWzCH4CFJHa2PuEV2A=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ffACyxA8sBSoImQceTHYxoRj/gc+IpFVa3VN0s4Lyo9mX+lxutN+viTx3NkuqS6zZ
-	 br4NR5vbJduWjrN36F7sdVwOMfpKRZHATh7flELAgS1J53WX0AKGk0U/hgAMv5HA62
-	 tDB3y4/itramTIa89XSi2CgilVP+j7riSyslgTyl5pk+eBm6GRnQ2WLXOKuioLJw63
-	 NU1NlJd0T7hoRgB6CvPMV5ykkvi4qGXOs4G5Fn+8asjGSWzA83fq8lCtUGWkwP1Usa
-	 M7dZ7O3vL1vrDki0ovrOx3ZGLxMEu+4SbzqXV6+fsy/jbv2LVSMYwGZAJ+eStsPqDl
-	 78KUjC4Yyflyw==
-Date: Mon, 26 Jan 2026 20:46:54 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Xingjing Deng <micro6947@gmail.com>
-Cc: Greg KH <gregkh@linuxfoundation.org>, srini@kernel.org, 
-	amahesh@qti.qualcomm.com, arnd@arndb.de, dri-devel@lists.freedesktop.org, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, Xingjing Deng <xjdeng@buaa.edu.cn>, 
-	stable@vger.kernel.org
-Subject: Re: [PATCH v5] misc: fastrpc: check qcom_scm_assign_mem() return in
- rpmsg_probe
-Message-ID: <zakyf2md2wgqnnuovyxazdwbdke6k2f6l3zmcstojhqhf2kpd5@zevyqjndkgin>
-References: <20260117140351.875511-1-xjdeng@buaa.edu.cn>
- <2026012631-suffice-enforcer-8553@gregkh>
- <qbuccwnfljpnxvpp7vl4weoecx6ujg3cy2lwwgoz42b3ux5o3k@mi5fxhplgrt7>
- <CAK+ZN9r+oCbSNjSf=yKQHGT9=Cqfw02J+TS3eZaUgrd=PfV7tA@mail.gmail.com>
+	s=arc-20240116; t=1769483013; c=relaxed/simple;
+	bh=GmNqDG50C5kjAf+rA5TEiGCcffG33TrUgVO4YyDdmSM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=oXp8pxM+UfgkfLBE86Qq3l9vbx6UXTT0dsGz2ZQcgPh8mVaI3mbAAZuwy1AQ0nZBKbjYLLXDO6ZvtXShJN6naAzsnwXIRObttMC/ilQ/9OIxHaAg6tVDAlCFPgBRpaSrgz3ki7FDhE8Yep4fmVMXM5LBWB6wmElC+rxr/9fVK2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hP80O4ut; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=QmoSDQnP; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60QKgE7j2733093
+	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jan 2026 03:03:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	YnAwXWL3GpUOqmGUJiuTdNi//qtxXIIbE2DSDpIS5lU=; b=hP80O4utmL7254mA
+	D9x4+vXrJ0TYoP5rgBv7lO4xDPt3MrB9lML2F27eyjGIC9zyLD9K06Eob8zT1/yG
+	sj2P6uhHe0PIr3U4yqWF0Dm5rmluIt9sWf5heQGP0hETp7rWqtNs97iqFFFtUs5j
+	g0b/dbjwfPTRypwWCc2+Da+efV00ms5RDI+FBjb+Lu8nQ86fX5cWtTS16QBYdVso
+	mvWDOmGWmtbKWJ+gAt+OH9UDcAcsAHfgaHUaHz04DGxqSed2rdsJxY9+ak09u3G4
+	NeJOGyKofd7lKyV9vlEtVRNPH877f5LHMhf6Hl5u99/nmGV2+ci+GpA1xz+3bWcO
+	w1ElOA==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bxdv096te-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jan 2026 03:03:30 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-34ac814f308so400213a91.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jan 2026 19:03:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1769483010; x=1770087810; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=YnAwXWL3GpUOqmGUJiuTdNi//qtxXIIbE2DSDpIS5lU=;
+        b=QmoSDQnPdgD7eDCxumHRzhtmV6V2ZYNuAn80odsc0S/K1RORKvwXw00sB/HzAZLBn4
+         fsBom74r1l+RvFCbRIRzEl3JCt9JgYaWgD2aaPUx81vxDbv9xCF/ubCJqjm42OLebZ9y
+         GEXe9oqTP0p/cxU3LeQK+7DZMsUeQ8N8rnJI+Ni6NOyN0VVQRwZYm0BeAoc7aePkDit1
+         K9q8HgJtIdx/lNkHdnGQ24daeIXOnNcokri+j6GsXFuSX6TnFLrq2CnNSa9iCjFVJbAm
+         wxuYNrHuj/MtHu0WsRqSQ9F0hQftr/Bf1BCH7RL2bprktvFuq+YklcjIMdey65fmqmhv
+         et6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769483010; x=1770087810;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=YnAwXWL3GpUOqmGUJiuTdNi//qtxXIIbE2DSDpIS5lU=;
+        b=hkGNRLMGihXUQyrNJDoqKPhTLnlomNfmVmQCQPv2fbWObtDfGpZGQdECfUY/88y/P5
+         h+xQ+W4/MwKZNOWWhHvO5nNXC10hOI9vlWefUM35rjUna0E1GeO7N0HKwNhHiDL2xujw
+         vjcEucers9zbZmdOLUQbDPUpYKmVuLmxfM/uaZsWEdN6bT+lmTiP6F/ihGLqIzk8LNap
+         cE8n31N4/mlOQ1JphR5X7q0S1sAUokI0mtiPtmea174ZG4+VKKf22JzkieBfyf7H0zWu
+         qj0sbbhP5U5JQj1r6wxYnt3ns3tytiWDHH1q7vfu4nxSU/fWYobapnzySe3EeymvRyOT
+         dk7g==
+X-Forwarded-Encrypted: i=1; AJvYcCU/atPcavdH+E9AzrmbxRmu9NR9OHJzfGgYsbQcIepw64YgHjoVGpdBN5f31ARKOkW53ROIpGKrhlQ+GhqQ@vger.kernel.org
+X-Gm-Message-State: AOJu0YxBctp3EVinaKs5tvQUFMf1Pl9hL5bZuCLjfD7rxR5VAHm0hk8n
+	4qTdDc+eLQcjCrQNjEaq64O6Hol2xBUEFp97ycu8S5oYcLDvbZFUJ7V0mPTS8/MQjOVdv9FwVEi
+	6/Yafdf0MZFcvBO6sL2+EdW2WxcICghva8UzousfnP0j6MMe/ikQnDoPY71v+L7g4fl5D
+X-Gm-Gg: AZuq6aKPILOLL00CFbKkDH0i/L1j1v7hQk4eNLHW2hAziVAiTkF8p/rFzVUwyg5jr3S
+	DqL9qWwsiYoUg1LiXao8zIqyQRPKeb5JSsGQr1hvroHfVWK5X28lQh0pPknKPva2aKB5Z6qKPZl
+	gU+PRHJaS1VxMk4TJDXaot5HkhOCfXSPCyOk8AaGPYILf9UiAuNyDjTMlRxWh6X4Iy9yF2GIiTh
+	Ieqdcy3pu2GB3yyS2h7xELSY2X/EIKBQ4gRgEsXzsB372CJ4u5+TPWofhN3Ekxvb5q2XAwImvQQ
+	x72rzMaRYVVNYwjqekmfxhf/NalBej44IdfQq8dDWGTSBPp/fGQbUKOnF6AfYAPJtwshyLVaiDh
+	49QiKAFIf3DHnCJ9ZxQV9H/SKgt+uZQ2LyOSD5I0=
+X-Received: by 2002:a05:6a20:3d84:b0:34f:ec32:6a3c with SMTP id adf61e73a8af0-38ec62de194mr146413637.28.1769483009932;
+        Mon, 26 Jan 2026 19:03:29 -0800 (PST)
+X-Received: by 2002:a05:6a20:3d84:b0:34f:ec32:6a3c with SMTP id adf61e73a8af0-38ec62de194mr146380637.28.1769483009319;
+        Mon, 26 Jan 2026 19:03:29 -0800 (PST)
+Received: from [10.239.133.242] ([114.94.8.21])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c635a425254sm9558200a12.29.2026.01.26.19.03.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 26 Jan 2026 19:03:28 -0800 (PST)
+Message-ID: <e693d33a-5852-451d-b08c-6e822cd1543f@oss.qualcomm.com>
+Date: Tue, 27 Jan 2026 10:50:35 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 7/7] qcom-tgu: Add reset node to initialize
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, andersson@kernel.org,
+        alexander.shishkin@linux.intel.com, mike.leach@linaro.org,
+        suzuki.poulose@arm.com, james.clark@arm.com, krzk+dt@kernel.org,
+        conor+dt@kernel.org
+Cc: linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, coresight@lists.linaro.org,
+        devicetree@vger.kernel.org, gregkh@linuxfoundation.org
+References: <20260109021141.3778421-1-songwei.chai@oss.qualcomm.com>
+ <20260109021141.3778421-8-songwei.chai@oss.qualcomm.com>
+ <7dd40fb6-38a7-4e29-823b-5c0b2c66e3df@oss.qualcomm.com>
+Content-Language: en-US
+From: Songwei Chai <songwei.chai@oss.qualcomm.com>
+In-Reply-To: <7dd40fb6-38a7-4e29-823b-5c0b2c66e3df@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAK+ZN9r+oCbSNjSf=yKQHGT9=Cqfw02J+TS3eZaUgrd=PfV7tA@mail.gmail.com>
+X-Proofpoint-GUID: 5ofCNHEmMEnQ9CLEk9b0Fsq4IsquP3ve
+X-Authority-Analysis: v=2.4 cv=SvedKfO0 c=1 sm=1 tr=0 ts=69782b02 cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=Uz3yg00KUFJ2y2WijEJ4bw==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=aDFzzllK5DXHcxDTN8AA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=iS9zxrgQBfv6-_F4QbHw:22
+X-Proofpoint-ORIG-GUID: 5ofCNHEmMEnQ9CLEk9b0Fsq4IsquP3ve
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI3MDAyNCBTYWx0ZWRfX4fpPR5lWMDHc
+ Nd7YD0diidvUgLXc+JF4ZugK4BnFddqHvGnQnT/g3YKzf7JXFNikkhfUC8XbjmNGYZd0q/2Jwqb
+ 8kFoWsSksAOVpULWt7AwsGbZ3KCRK3ma0IHOnbylD64lIL3n7pwM6wIa7adrwqqF2Rd3PKokGvr
+ i6wSNZ4TsiuF0zy4sscGutAC7jYeYZ0UYo6ZMdTvwjvs2F2XfSNT/+gFmdV42qRmtHWSi4mnsQE
+ sK8F44w+WTcb0XuNtMmNgyzhWt1rHxM6mhxqyOd7lO7z/eNSUxn2q/w5RurmHfChuhykA3YPyqb
+ Abi2RBblhjEmj0x+WIsieLCuTHdZgPWUMv6xOqXI32mX/zubZGsh/4lR0q/pk1Xsi5JWCbpkQRM
+ WM4Xzk4mvDDVQT2JKS79mGrVcDwG3NI5yLcukCzQyirlXtO+j5q78QqlXjOWBoqHEQpcNz4pLV7
+ htdgkJeX3rkMlbHaoiA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.20,FMLib:17.12.100.49
+ definitions=2026-01-27_01,2026-01-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 adultscore=0 clxscore=1015 suspectscore=0 impostorscore=0
+ spamscore=0 phishscore=0 malwarescore=0 bulkscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601270024
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-90635-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-90640-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[10];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[songwei.chai@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,buaa.edu.cn:email]
-X-Rspamd-Queue-Id: 613CE8F35C
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: DB1B38F649
 X-Rspamd-Action: no action
 
-On Tue, Jan 27, 2026 at 10:18:38AM +0800, Xingjing Deng wrote:
-> I identified this issue through static program analysis. All other
-> callers of this function validate its return value, so I believe a
-> validation check should also be added here.
+
+
+On 1/13/2026 7:22 PM, Konrad Dybcio wrote:
+> On 1/9/26 3:11 AM, Songwei Chai wrote:
+>> Add reset node to initialize the value of
+>> priority/condition_decode/condition_select/timer/counter nodes.
+>>
+>> Signed-off-by: Songwei Chai <songwei.chai@oss.qualcomm.com>
+>> ---
+> 
+> [...]
+> 
+>> +/* reset_tgu_store - Reset Trace and Gating Unit (TGU) configuration. */
+>> +static ssize_t reset_tgu_store(struct device *dev,
+>> +			       struct device_attribute *attr, const char *buf,
+>> +			       size_t size)
+>> +{
+>> +	struct tgu_drvdata *drvdata = dev_get_drvdata(dev);
+>> +	unsigned long value;
+>> +	int i, j, ret;
+>> +
+>> +	if (kstrtoul(buf, 0, &value) || value == 0)
+>> +		return -EINVAL;
+> 
+> Your documentation blurb promises that only 1 is accepted, but this is not
+> the case. I think the previous additions had a similar flaw
+
+I’ll fix this to only accept 1 and review the previous additions
+for similar issues.
+
+> 
+>> +
+>> +	if (!drvdata->enable) {
+> 
+> I think this check needs to be made under a lock, otherwise something else
+> may pull the plug inbetween
+Will move "guard(spinlock)(&drvdata->lock);" before "drvdata->enable" check.
+> 
+>> +		ret = pm_runtime_get_sync(drvdata->dev);
+>> +		if (ret < 0) {
+>> +			pm_runtime_put(drvdata->dev);
+>> +			return ret;
+>> +		}
+>> +	}
+>> +
+>> +	guard(spinlock)(&drvdata->lock);
+>> +	TGU_UNLOCK(drvdata->base);
+>> +
+>> +	writel(0, drvdata->base + TGU_CONTROL);
+>> +
+>> +	TGU_LOCK(drvdata->base);
+> 
+> This is tgu_disable()
+will use tgu_disable instead.
+> 
+>> +
+>> +	if (drvdata->value_table->priority)
+>> +		memset(drvdata->value_table->priority, 0,
+>> +			    MAX_PRIORITY * drvdata->max_step *
+>> +				drvdata->max_reg * sizeof(unsigned int));
+>> +
+>> +	if (drvdata->value_table->condition_decode)
+>> +		memset(drvdata->value_table->condition_decode, 0,
+>> +			    drvdata->max_condition_decode * drvdata->max_step *
+>> +				sizeof(unsigned int));
+>> +
+>> +		/* Initialize all condition registers to NOT(value=0x1000000) */
+> 
+> One \t too much
+will update.
+> 
+>> +	for (i = 0; i < drvdata->max_step; i++) {
+>> +		for (j = 0; j < drvdata->max_condition_decode; j++) {
+>> +			drvdata->value_table
+>> +			->condition_decode[calculate_array_location(
+>> +			drvdata, i, TGU_CONDITION_DECODE, j)] =
+>> +			0x1000000;
+> 
+> This is unreadable, take a pointer to condition_decode[]
+sure.
+> 
+>> +		}
+>> +	}
+>> +
+>> +	if (drvdata->value_table->condition_select)
+>> +		memset(drvdata->value_table->condition_select, 0,
+>> +				drvdata->max_condition_select * drvdata->max_step *
+>> +				sizeof(unsigned int));
+>> +
+>> +	if (drvdata->value_table->timer)
+>> +		memset(drvdata->value_table->timer, 0,
+>> +			    (drvdata->max_step) *
+>> +				(drvdata->max_timer) *
+>> +				sizeof(unsigned int));
+>> +
+>> +	if (drvdata->value_table->counter)
+>> +		memset(drvdata->value_table->counter, 0,
+>> +			    (drvdata->max_step) *
+>> +				(drvdata->max_counter) *
+>> +				sizeof(unsigned int));
+> 
+> This is similarly difficult to read with almost random indentation
 > 
 
-I agree with your findings.
+I agree, the indentation hurts readability. I’ll rework this to make the
+expression clearer.
 
-Please drop the dev_err() and mention that you found this through static
-analysis in the commit message.
+> Konrad
 
-Thank you,
-Bjorn
-
-> Bjorn Andersson <andersson@kernel.org> 于2026年1月27日周二 04:53写道：
-> >
-> > On Mon, Jan 26, 2026 at 04:24:55PM +0100, Greg KH wrote:
-> > > On Sat, Jan 17, 2026 at 10:03:51PM +0800, Xingjing Deng wrote:
-> > > > In the SDSP probe path, qcom_scm_assign_mem() is used to assign the
-> > > > reserved memory to the configured VMIDs, but its return value was not
-> > > > checked.
-> > > >
-> > > > Fail the probe if the SCM call fails to avoid continuing with an
-> > > > unexpected/incorrect memory permission configuration.
-> > > >
-> > > > The file has passed the check of checkpatch.
-> > > >
-> > > > Fixes: c3c0363bc72d4 ("misc: fastrpc: support complete DMA pool access to the DSP")
-> > > > Cc: stable@vger.kernel.org # 6.11-rc1
-> > > > Signed-off-by: Xingjing Deng <xjdeng@buaa.edu.cn>
-> > > > ---
-> > > > v5:
-> > > > - Squash the functional change and indentation fix into a single patch.
-> > > > - Link to v4: https://lore.kernel.org/linux-arm-msm/2026011637-statute-showy-2c3f@gregkh/T/#t
-> > > >
-> > > > v4:
-> > > > - Format the indentation
-> > > > - Link to v3: https://lore.kernel.org/linux-arm-msm/20260113084352.72itrloj5w7qb5o3@hu-mojha-hyd.qualcomm.com/T/#t
-> > > >
-> > > > v3:
-> > > > - Add missing linux-kernel@vger.kernel.org to cc list.
-> > > > - Standarlize changelog placement/format.
-> > > > - Link to v2: https://lore.kernel.org/linux-arm-msm/20260113063618.e2ke47gy3hnfi67e@hu-mojha-hyd.qualcomm.com/T/#t
-> > > >
-> > > > v2:
-> > > > - Add Fixes: and Cc: stable tags.
-> > > > - Link to v1: https://lore.kernel.org/linux-arm-msm/20260113022550.4029635-1-xjdeng@buaa.edu.cn/T/#u
-> > > > ---
-> > > >  drivers/misc/fastrpc.c | 9 +++++++--
-> > > >  1 file changed, 7 insertions(+), 2 deletions(-)
-> > > >
-> > > > diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> > > > index fb3b54e05928..d9650efa443f 100644
-> > > > --- a/drivers/misc/fastrpc.c
-> > > > +++ b/drivers/misc/fastrpc.c
-> > > > @@ -2338,8 +2338,13 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
-> > > >             if (!err) {
-> > > >                     src_perms = BIT(QCOM_SCM_VMID_HLOS);
-> > > >
-> > > > -                   qcom_scm_assign_mem(res.start, resource_size(&res), &src_perms,
-> > > > -                               data->vmperms, data->vmcount);
-> > > > +                   err = qcom_scm_assign_mem(res.start, resource_size(&res), &src_perms,
-> > > > +                                   data->vmperms, data->vmcount);
-> > > > +                   if (err) {
-> > > > +                           dev_err(rdev, "Failed to assign memory phys 0x%llx size 0x%llx err %d",
-> > > > +                               res.start, resource_size(&res), err);
-> > >
-> > > Shouldn't the caller function report the error?
-> > >
-> >
-> > That is correct, all codepaths through qcom_scm_assign_mem() will either
-> > be -ENOMEM or print an error message, so we shouldn't print yet another
-> > message in the log here.
-> >
-> > (The usefulness of the error message in qcom_scm_assign_mem() could
-> > certainly be improved, but that's a separate matter/patch).
-> >
-> > > How as this found and tested?
-> > >
-> >
-> > Looking forward to Xingjing's answer here.
-> >
-> > But failing to handle errors here means that we're ignoring the failure
-> > to map memory to the DSP, which will fail us later. So, that part is
-> > correct. Exiting through err_free_data looks good as well.
-> >
-> > Regards,
-> > Bjorn
-> >
-> > > thanks,
-> > >
-> > > greg k-h
-> > >
 
