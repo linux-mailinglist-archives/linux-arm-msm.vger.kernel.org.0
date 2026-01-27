@@ -1,263 +1,214 @@
-Return-Path: <linux-arm-msm+bounces-90660-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90661-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id QAsmFnxqeGk1pwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90660-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 08:34:20 +0100
+	id UGMPFYpveGmjpwEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90661-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 08:55:54 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7814890C17
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 08:34:19 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id BF8C990DDC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 08:55:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 83D8B3004077
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 07:34:16 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 3CFC7304FE24
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 07:54:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFD89278E63;
-	Tue, 27 Jan 2026 07:34:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E30CF32C94A;
+	Tue, 27 Jan 2026 07:54:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="CY5OXmSd"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qBkNyNI8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8E52032D
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jan 2026 07:34:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9C61E520A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jan 2026 07:54:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769499254; cv=none; b=ke88yMCHRujJpx4u/RQYYJNqbSVd+9mr4+0gY0kFKPRAp88fldz3uFuE4A4Sp3e6wzZlWLpKE8FHtV7YCsFf6MhmVEETHOmKSjDqLgEFxWR4gC6ejD9SyjS4EZkAken4Q07YiQAXFs+o9gYMtPo5wMb/Rl4QMnMjSykhluN7NTo=
+	t=1769500474; cv=none; b=G5k4uDhCaXpvvovUvWAZB9XU+YHk1vPdU0y5AAkxET+ZeV229WYOgdVRbSyMi2ye22ohA1TLD2W505wumfx0peoYpNxkn8eHQV/ay9Vg3GJDPJ6iwQuWse92mhCRv/uqKMuHkSQgpP+LLlwU6wC14N1Tvf83utyDZonA/uTqPnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769499254; c=relaxed/simple;
-	bh=9NLZRgwcvV7vzeoUJvZKI0Z59eH2ErVcfn9JkfFxGdo=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=c1jRuiSn9qL5vFaEYFC8BkUuP98/Hh+HqdMDLoYTYvDpepgBvEo6iDRWRB9IEFdNwU2bjt3f90Z0VsER9+dy6AAwEBFmZ/HuSLj0Uh46HXeLLRIqjdBR0PND2z97QtbqV+We4Vs2E3QU+YQ9KbEXSNVGQVAeRxWvBTAMSQiRvqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=CY5OXmSd; arc=none smtp.client-ip=209.85.210.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-8230c839409so4237755b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jan 2026 23:34:13 -0800 (PST)
+	s=arc-20240116; t=1769500474; c=relaxed/simple;
+	bh=x02G9I5G5FI4Stbx+0yop7O4JlcUUn8AQvXMHpX5C4I=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=uCP4Ytc4jj+heGf/qYvCgMv+MWdrd7sqSs75N/gExYeZU2qXJcZnzCl7bL9B23GIQqHGRqVp5B8vOAxfnk59PRtBcTOiGtZYsBgk+21p6XglMKZPj/7YTD9o34rN/kRlOzpBRvYNQBa5+KIi/Cj8v+uh1wLJpp8+DqfrAFzfMcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qBkNyNI8; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-48069a48629so2685935e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jan 2026 23:54:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1769499253; x=1770104053; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=MO/xBk1Z9Sg2T5LDtUgXSRnpiqznRJUad1HNlKnWIEg=;
-        b=CY5OXmSdEiEPf5/upIrSH9qbp2SqkcRlTA9gMLnirnyW/cgSTTqRkx6uuY9SUOiZ38
-         YMiKU8kBUc5bh+C+CYG/JkKRm+Yds8Ns+zYRpLexGljOr+caKaa1gzh5mYAoCr8nYU5G
-         jzwNtdCsq1TYCow1zTItWoS5KnC+gRJ04EIg0=
+        d=linaro.org; s=google; t=1769500471; x=1770105271; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=o/VxnSF8krGk0nRSnDEyD6IFePycjSGM7bgvmgAJYHs=;
+        b=qBkNyNI8TlmJM5gNJHCvaL3kvT+YUbN/DkP8ntJszuh9LSEvsRiqZQAqGnIEQa6cCF
+         AxmLdqTZqhXS20Ocb3TZB26/VuYs9k7/p31fnhPb463ZilDY9/yoFbPrgsKCSN6LRctb
+         v6bfmgPH4ukhfRZJN3+9MgcldHz4S5xR09zrVy9vH8ui2ryKmYceTU6lhlbGU22wczHf
+         lHo7J+d/oFuCRMbNqPFGg7FsTJNbTtr4hORNcgQGZMLINZjxokf6wTFtlel2fb2YRhUq
+         xthnb7fC2azu+qk+tSJsmg5vA6p8o1VX5esf6GIMtJ9URyGuYfmUuJT7ehjqLBjVePT+
+         zS9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769499253; x=1770104053;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MO/xBk1Z9Sg2T5LDtUgXSRnpiqznRJUad1HNlKnWIEg=;
-        b=EuXeJX0pg97g3EXHaHFoPsan4EId5TsO7Os9dEKlyVe+qtMVnRWFcAJDwX+UuJwsjF
-         A5MwTDPj3oLDgi0xWIVGM/slmE2eAVOjKL7gqfKT6fcOx16vfhLrPr9eScGgBnvefn47
-         8sDhfxjm0GTpaGom7za5KqGdxyMGbTRFMQGnJLFHKTjPcKJJRZ7LC+7PchpoEcSlQy3C
-         LDepnjZZRmnTJntv3e9DWZafFYBGcF0RaAizr/N72toBtOS5E9DL7IDldt1hjo9PY76c
-         SjxF9Q71171cChzab7gQlgjAjXcG8RH1P683tNWut3aXwrbPiz0ngFLrQY0fVLyflkbC
-         Jbaw==
-X-Forwarded-Encrypted: i=1; AJvYcCVWFEFNamJc4xiHkVdaYgJgGjh0VtTfzysN50voSlXCNhroctQWm+SmWPFnAzZHf6hhph2LEWGsgwyk+NaR@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy2k4g2K8Q7xkcRMsO50LQZSASKLmBFQ8VpMPBV2YpZ+FDBFGZG
-	WEXQ6/wnnNQVB7XpZUEb12qxdK2NEr9M5pURTIyl3B4hh6aVBzXOqdI6pHbgZnShrw==
-X-Gm-Gg: AZuq6aLTKy2R2VPRnrR3IjuNdSYeou/xH7aAtqAKYbnAWLSNvIHmCQnbhP6kqAtycR4
-	5VjnODYvajzgCeFWR/Tl3tUZYdw5DQFYCx5YAvgcTfXt67xEFYyQQSddrQoC1KCe2onwwoZLplx
-	afndi4zfFrmssMfTnz7NP+X6M2ort02zbOsvUPDaRHYyOa/cLIxWdtzrhO0pazRYuTzW6lmOtc1
-	t0cfEYUJGewunXt0GOqDw2LJtft3Msax0VQytWkO+9CdFqZRPrePzkltMblMEqoSMj2qTigWA3n
-	VD9cbdl1nmknM4c5oVqKrDV3C3C+NMqbs8i7+7yIZkyEjdbiln/5oucY37DHDQ0rWdbBT221kUm
-	cXY7gJfCQ/yfVvd95smZBZbwDtPmZxDWFaiCnKt6ybreEiA5L9X4fuWWxPfM6OHes4sXuAPUtff
-	jAz002jxfX85ceD4s6ILES5jg8GgjqXc3mWhhiQWtTNNTQPg22U2qbJ+qiwLUt6G/EZnn8UhZUs
-	A==
-X-Received: by 2002:a05:6a00:1c99:b0:81f:521c:b640 with SMTP id d2e1a72fcca58-823692e6deamr973608b3a.55.1769499251997;
-        Mon, 26 Jan 2026 23:34:11 -0800 (PST)
-Received: from tigerii.tok.corp.google.com ([2a00:79e0:2031:6:d089:781c:105e:9178])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8231876e718sm11232295b3a.62.2026.01.26.23.34.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Jan 2026 23:34:11 -0800 (PST)
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
-To: Rob Clark <robin.clark@oss.qualcomm.com>
-Cc: Sean Paul <sean@poorly.run>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Tomasz Figa <tfiga@chromium.org>
-Subject: [RFC PATCH] drm: gpu: msm: forbid mem reclaim from reset
-Date: Tue, 27 Jan 2026 16:33:34 +0900
-Message-ID: <20260127073341.2862078-1-senozhatsky@chromium.org>
-X-Mailer: git-send-email 2.53.0.rc1.217.geba53bf80e-goog
+        d=1e100.net; s=20230601; t=1769500471; x=1770105271;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=o/VxnSF8krGk0nRSnDEyD6IFePycjSGM7bgvmgAJYHs=;
+        b=UjTPiXysEolPalqjxLWH9ezRKCC7ZFd8dQ5/7OWRjhdjMD5SPwfziMuFZcnEWE5KtI
+         n5XMsdVKLJJWT3XZONPkN/IbpI/sWfRGg9//GoZjz4CWJIERzbzSXB0vFbB6ht6JHvGY
+         RBXutePB+RDzj/RPXK6av2qLUoUEM2pCGSGA4xx/TvitUmoSd77nFeY0X6ni0df731Tb
+         59AAcJ8BNIJJ2EdOjwspd3cPa/8+jmtzbQqJVwkMDHVcWppcPanacUnZQD8Q0W/aUikn
+         n2gt5/Npv1mqT0/8Xy/QL2fu8akV+P5rPR7O4o8Kz40InI0lhk/YzUU9RoZvAitlP04O
+         2M9Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWFVdvwzxkCMByFr08eWX8g8CJrc6QbySg+FqMnQoDssprBtIU8aGU+Dt1Y/teIqyDVYZWOuk4WxHXFCD7P@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz2GqhIPGaew1f8ZF2vuZgZdVWGW1Z3Oyaju4x+selpMK1zVKui
+	nQx4s2LpgZI//M2Aa0uuMQoR35VycgWnmOl8EznwZn8qeUTUvZl7xTESgoTmudYr2tA=
+X-Gm-Gg: AZuq6aI5JCYEDjl+HFoJwvERfIy4Axl6EblSXp6OTI8S+7fIsQqgsoREw9kIBaZ2c5H
+	hvBLWPoy7Y/HcG0lJFgANdu4wnZRY/C9Cnl5L+Ei19CV13apkKTe2MTx9L4rjKkG3xiUkiOERU7
+	EfEz4L2Vc0JOYEkv266Uuf/KCYiBZy8OmZoMUNJGEN3+yh+I0zKtfvOkelqXSXoN5gcnBfaoWjy
+	TJ/3oWv8ys10bgtzYSDMmTsjxKujBkuF45BTbNGWAWThpps2hInHse0f5PJzq78LGxww0amj20d
+	HnGPa6+DNeIWasdppA7PEEB+p7Sh6zyp2IuATD9oxwuU0tREGCh3n/GZNFre81YRchHYorZh2wm
+	14RHwKVyXPX+LS5r0qky24duzpDX0wFhXodzHSCjRalc+b05HnV4gI56eEUejNPyz3vEtGwMc0k
+	jflT/AYShW9VxWW/T0T60nho+iH576609M/yIDVJTKHJmRe4hMToWC+5gJVtNHX/tu5MefzRgLc
+	w==
+X-Received: by 2002:a05:6000:4028:b0:435:add0:3d76 with SMTP id ffacd0b85a97d-435dd1cb92cmr1128900f8f.56.1769500471311;
+        Mon, 26 Jan 2026 23:54:31 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:3d9:2080:53a6:bd3c:8e65:509d? ([2a01:e0a:3d9:2080:53a6:bd3c:8e65:509d])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-435b1e715bfsm38117952f8f.22.2026.01.26.23.54.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 26 Jan 2026 23:54:30 -0800 (PST)
+Message-ID: <7d9041a3-9d2b-469a-9fa7-89d53bbd2a1f@linaro.org>
+Date: Tue, 27 Jan 2026 08:54:29 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH 1/3] dt-bindings: display: lt9611: Add dsi-port-b property
+To: Hongyang Zhao <hongyang.zhao@thundersoft.com>,
+ Andrzej Hajda <andrzej.hajda@intel.com>, Robert Foss <rfoss@kernel.org>,
+ Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+ Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ Roger Shimizu <rosh@debian.org>
+References: <20260127-rubikpi-next-20260116-v1-0-0286c75150c5@thundersoft.com>
+ <20260127-rubikpi-next-20260116-v1-1-0286c75150c5@thundersoft.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20260127-rubikpi-next-20260116-v1-1-0286c75150c5@thundersoft.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[chromium.org,none];
-	R_MISSING_CHARSET(0.50)[];
-	R_DKIM_ALLOW(-0.20)[chromium.org:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[senozhatsky@chromium.org,linux-arm-msm@vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-90660-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
 	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[chromium.org:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_COUNT_FIVE(0.00)[5];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TAGGED_FROM(0.00)[bounces-90661-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_TO(0.00)[thundersoft.com,intel.com,kernel.org,ideasonboard.com,kwiboo.se,gmail.com,ffwll.ch,linux.intel.com,suse.de];
+	HAS_ORG_HEADER(0.00)[];
 	TO_DN_SOME(0.00)[];
+	DKIM_TRACE(0.00)[linaro.org:+];
+	RCPT_COUNT_TWELVE(0.00)[22];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.1:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,0.0.0.0:email,linaro.org:replyto,linaro.org:dkim,linaro.org:mid,thundersoft.com:email];
+	HAS_REPLYTO(0.00)[neil.armstrong@linaro.org];
+	PRECEDENCE_BULK(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	FROM_NEQ_ENVFROM(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FROM_HAS_DN(0.00)[]
-X-Rspamd-Queue-Id: 7814890C17
+	FORGED_SENDER_MAILLIST(0.00)[];
+	REPLYTO_EQ_FROM(0.00)[]
+X-Rspamd-Queue-Id: BF8C990DDC
 X-Rspamd-Action: no action
 
-We sometimes get into a situtation where GPU hangcheck fails to
-recover GPU:
+On 1/27/26 07:58, Hongyang Zhao wrote:
+> Document the lontium,dsi-port-b property for selecting DSI Port B as
+> the input source instead of the default Port A.
+> 
+> Signed-off-by: Hongyang Zhao <hongyang.zhao@thundersoft.com>
+> Reviewed-by: Roger Shimizu <rosh@debian.org>
+> ---
+>   .../devicetree/bindings/display/bridge/lontium,lt9611.yaml          | 6 ++++++
+>   1 file changed, 6 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/display/bridge/lontium,lt9611.yaml b/Documentation/devicetree/bindings/display/bridge/lontium,lt9611.yaml
+> index 655db8cfdc25..9b7dba4e114c 100644
+> --- a/Documentation/devicetree/bindings/display/bridge/lontium,lt9611.yaml
+> +++ b/Documentation/devicetree/bindings/display/bridge/lontium,lt9611.yaml
+> @@ -37,6 +37,12 @@ properties:
+>     vcc-supply:
+>       description: Regulator for 3.3V IO power.
+>   
+> +  lontium,dsi-port-b:
+> +    type: boolean
+> +    description:
+> +      Use DSI Port B as the input source instead of Port A or Port A + B.
+> +      Required when the DSI is physically connected to Port B.
 
-[..]
-msm_dpu ae01000.display-controller: [drm:hangcheck_handler] *ERROR* (IPv4: 1): hangcheck detected gpu lockup rb 0!
-msm_dpu ae01000.display-controller: [drm:hangcheck_handler] *ERROR* (IPv4: 1): completed fence: 7840161
-msm_dpu ae01000.display-controller: [drm:hangcheck_handler] *ERROR* (IPv4: 1): submitted fence: 7840162
-msm_dpu ae01000.display-controller: [drm:hangcheck_handler] *ERROR* (IPv4: 1): hangcheck detected gpu lockup rb 0!
-msm_dpu ae01000.display-controller: [drm:hangcheck_handler] *ERROR* (IPv4: 1): completed fence: 7840162
-msm_dpu ae01000.display-controller: [drm:hangcheck_handler] *ERROR* (IPv4: 1): submitted fence: 7840163
-[..]
+This is not how this should be solved, the ports links are here for this exact purpose.
 
-The problem is that msm_job worker is blocked on gpu->lock
+port@0 represents port A, port@1 represent port B, so you need to describe the HW correctly
+in the first place.
 
-INFO: task ring0:155 blocked for more than 122 seconds.
-Not tainted 6.6.99-08727-gaac38b365d2c #1
-task:ring0 state:D stack:0 pid:155 ppid:2 flags:0x00000008
-Call trace:
-__switch_to+0x108/0x208
-schedule+0x544/0x11f0
-schedule_preempt_disabled+0x30/0x50
-__mutex_lock_common+0x410/0x850
-__mutex_lock_slowpath+0x28/0x40
-mutex_lock+0x5c/0x90
-msm_job_run+0x9c/0x140
-drm_sched_main+0x514/0x938
-kthread+0x114/0x138
-ret_from_fork+0x10/0x20
+Populate only port1 and in the driver check which ports are population and change the
+configuration.
 
-which is owned by recover worker, which is waiting for DMA fences
-from a memory reclaim path, under the very same gpu->lock
+Neil
 
-INFO: task ring0:155 is blocked on a mutex likely owned by task gpu-worker:154.
-task:gpu-worker state:D stack:0 pid:154 ppid:2 flags:0x00000008
-Call trace:
-__switch_to+0x108/0x208
-schedule+0x544/0x11f0
-schedule_timeout+0x1f8/0x770
-dma_fence_default_wait+0x108/0x218
-dma_fence_wait_timeout+0x6c/0x1c0
-dma_resv_wait_timeout+0xe4/0x118
-active_purge+0x34/0x98
-drm_gem_lru_scan+0x1d0/0x388
-msm_gem_shrinker_scan+0x1cc/0x2e8
-shrink_slab+0x228/0x478
-shrink_node+0x380/0x730
-try_to_free_pages+0x204/0x510
-__alloc_pages_direct_reclaim+0x90/0x158
-__alloc_pages_slowpath+0x1d4/0x4a0
-__alloc_pages+0x9f0/0xc88
-vm_area_alloc_pages+0x17c/0x260
-__vmalloc_node_range+0x1c0/0x420
-kvmalloc_node+0xe8/0x108
-msm_gpu_crashstate_capture+0x1e4/0x280
-recover_worker+0x1c0/0x638
-kthread_worker_fn+0x150/0x2d8
-kthread+0x114/0x138
-
-So no one can make any further progress.
-
-Forbid recover/fault worker to enter memory reclaim (under
-gpu->lock) to address this deadlock scenario.
-
-Cc: Tomasz Figa <tfiga@chromium.org>
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
----
- drivers/gpu/drm/msm/msm_gpu.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
-
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index 995549d0bbbc..ddcd9e1c217a 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -17,6 +17,7 @@
- #include <linux/string_helpers.h>
- #include <linux/devcoredump.h>
- #include <linux/sched/task.h>
-+#include <linux/sched/mm.h>
- 
- /*
-  * Power Management:
-@@ -469,6 +470,7 @@ static void recover_worker(struct kthread_work *work)
- 	struct msm_gem_submit *submit;
- 	struct msm_ringbuffer *cur_ring = gpu->funcs->active_ring(gpu);
- 	char *comm = NULL, *cmd = NULL;
-+	unsigned int noreclaim_flag;
- 	struct task_struct *task;
- 	int i;
- 
-@@ -506,6 +508,8 @@ static void recover_worker(struct kthread_work *work)
- 			msm_gem_vm_unusable(submit->vm);
- 	}
- 
-+	noreclaim_flag = memalloc_noreclaim_save();
-+
- 	get_comm_cmdline(submit, &comm, &cmd);
- 
- 	if (comm && cmd) {
-@@ -524,6 +528,8 @@ static void recover_worker(struct kthread_work *work)
- 	pm_runtime_get_sync(&gpu->pdev->dev);
- 	msm_gpu_crashstate_capture(gpu, submit, NULL, comm, cmd);
- 
-+	memalloc_noreclaim_restore(noreclaim_flag);
-+
- 	kfree(cmd);
- 	kfree(comm);
- 
-@@ -588,6 +594,7 @@ void msm_gpu_fault_crashstate_capture(struct msm_gpu *gpu, struct msm_gpu_fault_
- 	struct msm_gem_submit *submit;
- 	struct msm_ringbuffer *cur_ring = gpu->funcs->active_ring(gpu);
- 	char *comm = NULL, *cmd = NULL;
-+	unsigned int noreclaim_flag;
- 
- 	mutex_lock(&gpu->lock);
- 
-@@ -595,6 +602,8 @@ void msm_gpu_fault_crashstate_capture(struct msm_gpu *gpu, struct msm_gpu_fault_
- 	if (submit && submit->fault_dumped)
- 		goto resume_smmu;
- 
-+	noreclaim_flag = memalloc_noreclaim_save();
-+
- 	if (submit) {
- 		get_comm_cmdline(submit, &comm, &cmd);
- 
-@@ -610,6 +619,8 @@ void msm_gpu_fault_crashstate_capture(struct msm_gpu *gpu, struct msm_gpu_fault_
- 	msm_gpu_crashstate_capture(gpu, submit, fault_info, comm, cmd);
- 	pm_runtime_put_sync(&gpu->pdev->dev);
- 
-+	memalloc_noreclaim_restore(noreclaim_flag);
-+
- 	kfree(cmd);
- 	kfree(comm);
- 
--- 
-2.53.0.rc1.217.geba53bf80e-goog
+> +
+>     ports:
+>       $ref: /schemas/graph.yaml#/properties/ports
+>   
+> 
 
 
