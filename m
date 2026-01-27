@@ -1,441 +1,306 @@
-Return-Path: <linux-arm-msm+bounces-90782-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90783-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id YNVpOKPEeGmltAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90782-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 14:58:59 +0100
+	id aBOjNmfFeGmltAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90783-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 15:02:15 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 547EC953E9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 14:58:59 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D9DA9954AB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 15:02:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 63F9D30B49A3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 13:51:29 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 57A953065D53
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 13:55:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0D9235B63C;
-	Tue, 27 Jan 2026 13:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7254235B62C;
+	Tue, 27 Jan 2026 13:55:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ndufresne-ca.20230601.gappssmtp.com header.i=@ndufresne-ca.20230601.gappssmtp.com header.b="EpNF9iYR"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Bf07ZmAU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+Received: from mail-wr1-f68.google.com (mail-wr1-f68.google.com [209.85.221.68])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5DED35B132
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jan 2026 13:51:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76CD52E9EAC
+	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jan 2026 13:55:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769521883; cv=none; b=ddZrGuilEoeaCgxmJhcPya1Mi0Iv4GRTckOJG76FWbB6jDHTCpeJVyO2lCZL43fOkwmKp87/dfG1CYpbxFlD15b/fu6kHPGrwvS1jZmaByHJOqNR/jjqtUbabkkPLCCqhiLpynnu66Ke05L0g99/YZPGu7bhRSSvhvfjlsxn4ss=
+	t=1769522141; cv=none; b=mlEOXB0TFvctTKsGb7JTqZurIhS4mIYFyHVT2/aT5QZ1eeodqTSYwzx5gsvuGiQEvyVkw85TjmSON08rAIO3zJ73w9Cfx/llFHwKIQWPFqc/+e44c7ByQ5bwEQUFpP2/kE6KEzadlWsyyuhj/ijH45Cs7uXYAV56A8Gb8aeEZ08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769521883; c=relaxed/simple;
-	bh=26a1JMciDcTJ+TZWbqnJJKHWKRs9hvl9k+BGAGE5Hns=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=Pkn73IWwNgPPagRhFhBUIzSxMj1pZSCotVuCWneUc0SmcZZmx35hrZN2Hvlr94XcawYTrVjKLuR5JEI4PgKf3Cb68RZlOcvfp//MSnEh6woU527fDT1akfQbN+Zfu5wifxgTk+oXQMpD2o3kdrh8mDocoM4yVvUvhqNC6EVdi20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ndufresne.ca; spf=pass smtp.mailfrom=ndufresne.ca; dkim=pass (2048-bit key) header.d=ndufresne-ca.20230601.gappssmtp.com header.i=@ndufresne-ca.20230601.gappssmtp.com header.b=EpNF9iYR; arc=none smtp.client-ip=209.85.160.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ndufresne.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ndufresne.ca
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-502f101d1cfso56877091cf.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jan 2026 05:51:21 -0800 (PST)
+	s=arc-20240116; t=1769522141; c=relaxed/simple;
+	bh=5SQOjFLhGEybXrWiy00N6n6VrcuASmRkZiwk6Xb9Qfw=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=XijxcO30Vpll+3qkBo45ZSZt6cw9Ef/0G5ZYLa2kWRLczXBkzeBdrcPIRH4KbBzf2cUH9w3Zb6wYndBnFE8R6oVGr39i+zzIwsudHfX3ce2X1d1rMV8gfRD8wHxSaAfv7ZSggVDfdcp6D3om7I7hrPcg1Q7px6O1foCkpsfkK0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Bf07ZmAU; arc=none smtp.client-ip=209.85.221.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f68.google.com with SMTP id ffacd0b85a97d-43591b55727so5455026f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jan 2026 05:55:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ndufresne-ca.20230601.gappssmtp.com; s=20230601; t=1769521880; x=1770126680; darn=vger.kernel.org;
-        h=mime-version:user-agent:autocrypt:references:in-reply-to:date:cc:to
-         :from:subject:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=TWb9tHCixSdnVfIgDBaxxTLH7WM+nmMGf9vhIY0VeHY=;
-        b=EpNF9iYRJUoF2Zu1QVs0lClzULFFAKGuLbl8JGy6Z+fUMZjOcbdoQvCefzcBYFCV3F
-         tReDNV2jC1X6gYekYxd1qBTJI1uDJhOUSR8+wdA4G9IkInbLhptzdqSs4eLpoK9EhAkU
-         o9J1UQnzDiYjWu8uH8Paw8KHNRaei/coQcOJCXZud3tqhC09WbnyDQtTukeDO80uoVZh
-         Pqjo684jDxWIwtrm+N3drSH+ku1jIuyX6jbHOespN0SwzHhJnaMmTH3V8uCLbcbBi14s
-         z2MizUrtRWus0S1+u8szRU9UEpx2+40PHj6LSQIzTi7dxg9RwtsTQe2t66uivFVlZ3o1
-         tGVQ==
+        d=linaro.org; s=google; t=1769522138; x=1770126938; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/kgLI7MhizMgsKZU+Aw847BhJRGZNY1cPGvaWvEvDlk=;
+        b=Bf07ZmAUocI5EY0cbFzyARSC8gwmmpLL9mcZYK3lMj6ekV+2aRVsiLE8H8n13Lupda
+         jyV1YpBFzg3onAaHLFgKym5TdAmCWG3XjtjheQaBuiRWXDmSGoO8qJ7nDdsCmCo5KHeI
+         EXkvQFvZ+VmJUDPLuAstwwGY59cYHawQsMVMh09lNdM0A/N/X3h2cpTbAJm1tQahjvb5
+         wW5m846tMwaLSh2b/gay7tEIhARE3SibXPA2iChmDeP+Cah8lBX4URfa29Q/UumeX47z
+         5+6VFcdoYPZmRJIAN7XV9hrftD0CPbgzMjSirA8RM6Lq+zfOPW9RV2wGPQ2pSXmzmcCK
+         +5ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769521880; x=1770126680;
-        h=mime-version:user-agent:autocrypt:references:in-reply-to:date:cc:to
-         :from:subject:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1769522138; x=1770126938;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=TWb9tHCixSdnVfIgDBaxxTLH7WM+nmMGf9vhIY0VeHY=;
-        b=kS3dZ/MMM1WRuVV5VUt3Z7zdEKwGC0lm6F1YnHrdwcW5vET1O+4p79AKFnwhoFSjG2
-         7ko5k+80kFuivrNLzCBI+jeDQtYmtpJH5y8fq2SnwkvR8xMJq/L5XiW/3CYgfdC7LYC2
-         8a3I2j5Ejh9jSb/YZ4odbOlhqtJmRZnE7uKjT3jbeF2eh3spr7qtPhEFJWjUsW8VTBma
-         WG5iD3IW/L55/46Ui8PutzGUSZhILs5u4N/YB0vvxORh59eVMg4+y92Bt/sDrQf1bqGI
-         s3ZSPbWhzxChDc/J9xLBQ9jz1mKTcSN4gErm8XMYJOYb+zoVoEIDueZnMMIqipOGq8+z
-         xiCQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWS9CXeSmw6/Uv9/oCmFsgDvJYQhkHz252Ycxdy37XyKgTh5D3tYEDNtV32CWJ4uz/w7rxg+j98BJxpQMJC@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxbb5mCXAdYYdsdeL7xeyw4q8EMe14/cUiKwJxvCQZiay1TX76+
-	bgBkrRyaUzUxNZDUI2QYHyFOZI9VrUGKjSHdSzQB3zcqI1UbtbUY0qASItFo3hSwDyc=
-X-Gm-Gg: AZuq6aIeyuH1HkeGzO/ovpeLVQItvVt1OxVaHXV/11NtkYzzbDPVoCOKH6a26sPzXKD
-	LJySIL/He+GawcVExAJ2gdY9FUDoOS8Om2ncCGiP4XXIYXP21wBxgaVRrGdeXCJlNKsO4coNdVz
-	vpINmFMhF94tISQzk3v3uFww8MlXv1Zac+fxA8PDwc3GE+aD11H2WagJbf6MQNwcUJUXP+QW1TQ
-	EB0q4AcjF4NzODRrP59GqrWAHFb02s7IN27XarEqLVmXQsxdrXGqjnNO0Tor3foYiqA21iRK9EY
-	q9T75VY7Ped9LtOMeKMTTmfXGhBpFC+ldEBFShYygzOWKUtQXSTpE9ySaG28bqkytDU22ViwgNk
-	7el7Q9yl3yGCIB7dri8GPpM08azp0inI7jE/FsIIRmxtfUo08E5m3cp5cguhAuvrQ6xTwMwOhBW
-	BDDLYW59k0NJys/4xP
-X-Received: by 2002:ac8:7f0e:0:b0:4ff:a40c:c6c4 with SMTP id d75a77b69052e-5032f774757mr18752511cf.15.1769521880245;
-        Tue, 27 Jan 2026 05:51:20 -0800 (PST)
-Received: from ?IPv6:2606:6d00:17:7b4b::5ac? ([2606:6d00:17:7b4b::5ac])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-503337f04a3sm4279551cf.5.2026.01.27.05.51.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Jan 2026 05:51:19 -0800 (PST)
-Message-ID: <95ea1872a0afb10265aa675817647d830de42d70.camel@ndufresne.ca>
-Subject: Re: [PATCH 3/7] of/iommu: add multi-map support
-From: Nicolas Dufresne <nicolas@ndufresne.ca>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Vikash Garodia
-	 <vikash.garodia@oss.qualcomm.com>
-Cc: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>, Abhinav Kumar	
- <abhinav.kumar@linux.dev>, Bryan O'Donoghue <bod@kernel.org>, Mauro
- Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski	 <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Saravana Kannan	 <saravanak@kernel.org>, Joerg
- Roedel <joro@8bytes.org>, Will Deacon	 <will@kernel.org>, Robin Murphy
- <robin.murphy@arm.com>, Stefan Schmidt	 <stefan.schmidt@linaro.org>, Hans
- Verkuil <hverkuil@kernel.org>, Krzysztof Kozlowski <krzk@kernel.org>,
- Vishnu Reddy <busanna.reddy@oss.qualcomm.com>, Hans Verkuil	
- <hverkuil+cisco@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-media@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, iommu@lists.linux.dev, Bryan O'Donoghue	
- <bryan.odonoghue@linaro.org>, Charan Teja Kalla
- <charan.kalla@oss.qualcomm.com>,  Vijayanand Jitta
- <vijayanand.jitta@oss.qualcomm.com>
-Date: Tue, 27 Jan 2026 08:51:17 -0500
-In-Reply-To: <hunwsdkmeo6efpv3yt3izkgmarelnubd74dywj3scryxrreq6p@njijwtoyjh46>
-References: <20260126-kaanapali-iris-v1-0-e2646246bfc1@oss.qualcomm.com>
-	 <20260126-kaanapali-iris-v1-3-e2646246bfc1@oss.qualcomm.com>
-	 <hunwsdkmeo6efpv3yt3izkgmarelnubd74dywj3scryxrreq6p@njijwtoyjh46>
-Autocrypt: addr=nicolas@ndufresne.ca; prefer-encrypt=mutual;
- keydata=mDMEaCN2ixYJKwYBBAHaRw8BAQdAM0EHepTful3JOIzcPv6ekHOenE1u0vDG1gdHFrChD
- /e0J05pY29sYXMgRHVmcmVzbmUgPG5pY29sYXNAbmR1ZnJlc25lLmNhPoicBBMWCgBEAhsDBQsJCA
- cCAiICBhUKCQgLAgQWAgMBAh4HAheABQkJZfd1FiEE7w1SgRXEw8IaBG8S2UGUUSlgcvQFAmibrjo
- CGQEACgkQ2UGUUSlgcvQlQwD/RjpU1SZYcKG6pnfnQ8ivgtTkGDRUJ8gP3fK7+XUjRNIA/iXfhXMN
- abIWxO2oCXKf3TdD7aQ4070KO6zSxIcxgNQFtDFOaWNvbGFzIER1ZnJlc25lIDxuaWNvbGFzLmR1Z
- nJlc25lQGNvbGxhYm9yYS5jb20+iJkEExYKAEECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4
- AWIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaCyyxgUJCWX3dQAKCRDZQZRRKWBy9ARJAP96pFmLffZ
- smBUpkyVBfFAf+zq6BJt769R0al3kHvUKdgD9G7KAHuioxD2v6SX7idpIazjzx8b8rfzwTWyOQWHC
- AAS0LU5pY29sYXMgRHVmcmVzbmUgPG5pY29sYXMuZHVmcmVzbmVAZ21haWwuY29tPoiZBBMWCgBBF
- iEE7w1SgRXEw8IaBG8S2UGUUSlgcvQFAmibrGYCGwMFCQll93UFCwkIBwICIgIGFQoJCAsCBBYCAw
- ECHgcCF4AACgkQ2UGUUSlgcvRObgD/YnQjfi4+L8f4fI7p1pPMTwRTcaRdy6aqkKEmKsCArzQBAK8
- bRLv9QjuqsE6oQZra/RB4widZPvphs78H0P6NmpIJ
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-sqPE2tvWLzFfDUXBP4ZG"
-User-Agent: Evolution 3.58.2 (3.58.2-1.fc43) 
+        bh=/kgLI7MhizMgsKZU+Aw847BhJRGZNY1cPGvaWvEvDlk=;
+        b=KuvmlLRSSHDmP4ow2eILwToMru5lsE+V8GFpZH+OQ1Y68zyQipRpGU0/MSSkUbQ9na
+         ldfy2yAvOhNxV+V98yu+IqydtNzq66RMn73fiev27rhDx3VnH4OUJJ3QjGYwAIuBF2vR
+         Iq+pPMpBVCAysSut8/lka2+ifqh2msczzQTITKYq5VJaP5VWbiyX+ZAaduw7bwLU2QYB
+         9DHLXqGWzFPt4MQH6jooBPhegzAn3wavwmUoNKqKVjwr6ef3ITIxNUJwp3mFmvc3Ws8d
+         9iMlySa7swd59H7g5e0BdsbX6uBNUB3009/RF1l/C2su3FxW4S4NyfAxDYTsW9c75zvm
+         5HOA==
+X-Forwarded-Encrypted: i=1; AJvYcCVfRLTB/pA2OFEiJHV2TxhrdNL2rvefd+pAJ/VQtdk521c7bbbGyg3X8H0ToNiiHdhMPtEKA5RCXvxY9eSj@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz39hJCtRhNuGWjaWYr8nMI6FWn9pXU/g5K7DtOg35VPPLFMI/p
+	ZLhw31eviwrSL92fQJ4ZlC+ShiQJVx2cF2xmlgTnBy40c1YcxA+/O3CJ2plUNuuO9ZY=
+X-Gm-Gg: AZuq6aIP9gvrEVPEXy7+x5sn8AjMJx/oSxY+G2tFG2ER9bebGXcnwSlVP0+QMR/rPza
+	SkZs2s8qld+mrKECm/OcPU2fjZqSthbhwPcxZ4Jz3HVX4AhPnH1p354UGZatIEX9jMyo0Tk2L2Q
+	ecUnUqsmT4bS8izQxTI7m90p7s61c0OeJyoXu64cthsEXOq/9+K6LgcneA3VpUTTRajXf82m+hC
+	L34U+osSy/FOmk9hge883bkE0uhBGGAXLwnzFjqy9G7c0kefi/Vx+E0KA83I1Vh1/GDz4QU9zhY
+	4nySH0K3xnq4o4V3XAL6z12EZBiHLziuoMvXbO9TnTEzX6Ve6P1MaONkWjBE4OGD+VtCH+V9NfY
+	V9z1a2SmK5yZcFRKcVjhNOYtQUITwCV2/mB5IZvjBaqPnTiN8zly0KN8jwXqn7YrEfhTV9hmSO2
+	K+bJXvzee5qgPbT0mznk9ggr/KcUnyPKp2+Y0oC/wYmTNGn1wDcGLUQF279rgJPFWTAcbnMf8sx
+	Q==
+X-Received: by 2002:a05:6000:2dc9:b0:432:5b81:480 with SMTP id ffacd0b85a97d-435dd06a466mr2267894f8f.24.1769522137688;
+        Tue, 27 Jan 2026 05:55:37 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:3d9:2080:53a6:bd3c:8e65:509d? ([2a01:e0a:3d9:2080:53a6:bd3c:8e65:509d])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-435b1e717cbsm38798477f8f.24.2026.01.27.05.55.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Jan 2026 05:55:37 -0800 (PST)
+Message-ID: <6e8c3d6b-8cba-42da-bafa-28becfa15d60@linaro.org>
+Date: Tue, 27 Jan 2026 14:55:36 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v2 1/7] dt-bindings: usb: document the Renesas
+ UPD720201/UPD720202 USB 3.0 xHCI Host Controller
+To: Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
+ <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Geert Uytterhoeven <geert+renesas@glider.be>,
+ Magnus Damm <magnus.damm@gmail.com>, Bartosz Golaszewski <brgl@kernel.org>,
+ Manivannan Sadhasivam <mani@kernel.org>, Bjorn Helgaas
+ <bhelgaas@google.com>, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ linux-usb@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+ linux-pci@vger.kernel.org
+References: <20260127-topic-sm8650-ayaneo-pocket-s2-base-v2-0-c55ec1b5d8bf@linaro.org>
+ <20260127-topic-sm8650-ayaneo-pocket-s2-base-v2-1-c55ec1b5d8bf@linaro.org>
+ <CAMuHMdU9HcK3xX=itqe2di1HS1SJvV6=ySqKyrtj7Yr1yXyuqQ@mail.gmail.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <CAMuHMdU9HcK3xX=itqe2di1HS1SJvV6=ySqKyrtj7Yr1yXyuqQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
-	SIGNED_PGP(-2.00)[];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_DKIM_ALLOW(-0.20)[ndufresne-ca.20230601.gappssmtp.com:s=20230601];
-	MIME_GOOD(-0.20)[multipart/signed,text/plain];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
-	DMARC_POLICY_SOFTFAIL(0.10)[ndufresne.ca : SPF not aligned (relaxed), DKIM not aligned (relaxed),none];
+	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-90782-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[26];
-	DKIM_TRACE(0.00)[ndufresne-ca.20230601.gappssmtp.com:+];
-	MIME_TRACE(0.00)[0:+,1:+,2:~];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
+	FREEMAIL_CC(0.00)[kernel.org,oss.qualcomm.com,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch,linuxfoundation.org,glider.be,google.com,vger.kernel.org,lists.freedesktop.org];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
+	RCPT_COUNT_TWELVE(0.00)[28];
+	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-90783-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	HAS_ORG_HEADER(0.00)[];
+	DKIM_TRACE(0.00)[linaro.org:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.0:email,linux-m68k.org:email,devicetree.org:url,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,linaro.org:dkim,linaro.org:email,linaro.org:replyto,linaro.org:mid];
+	HAS_REPLYTO(0.00)[neil.armstrong@linaro.org];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[nicolas@ndufresne.ca,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCVD_COUNT_FIVE(0.00)[5];
+	FROM_NEQ_ENVFROM(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,cisco];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,renesas];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,ndufresne.ca:mid,qualcomm.com:email,ndufresne-ca.20230601.gappssmtp.com:dkim]
-X-Rspamd-Queue-Id: 547EC953E9
+	FORGED_SENDER_MAILLIST(0.00)[];
+	REPLYTO_EQ_FROM(0.00)[]
+X-Rspamd-Queue-Id: D9DA9954AB
 X-Rspamd-Action: no action
-
-
---=-sqPE2tvWLzFfDUXBP4ZG
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
 Hi,
 
-Le mardi 27 janvier 2026 =C3=A0 13:45 +0200, Dmitry Baryshkov a =C3=A9crit=
-=C2=A0:
-> On Mon, Jan 26, 2026 at 05:55:46PM +0530, Vikash Garodia wrote:
-> > From: Charan Teja Kalla <charan.kalla@oss.qualcomm.com>
-> >=20
-> > When multiple mappings are present for an input id, linux matches just
-> > the first one. There is a usecase[1] where all the mappings are to be
-> > maintained in parallel for an iommu-map entry of a same input id.
->=20
-> This contradicts the IOMMU idealogy (at least as far as I understood it
-> fom the maintainers): the device (driver) doesn't control which IOMMUs
-> are getting used. Instead _all_ defined entries should get used. For
-> iommu-map it means that if the map defines several entries for a single
-> function, then all entries should always get mapped.
->=20
-> >=20
-> > Whether multi-map is needed is reported by the callers through the
-> > callback function passed, which is called for every input id match.
-> >=20
-> > Since the requirement in the usecase[1] is for platform devices, not
-> > sure if it is really clean to maintain this decision on the bus type at
-> > the of_iommu layer or further to be from the respective
-> > iommu_driver->impl_ops().
->=20
-> This doesn't tell us, why do you want to control, which entries of the
-> map get used.
->=20
-> >=20
-> > [1]
-> > https://lore.kernel.org/all/20250627-video_cb-v3-0-51e18c0ffbce@quicinc=
-.com/
+On 1/27/26 11:20, Geert Uytterhoeven wrote:
+> Hi Neil,
+> 
+> On Tue, 27 Jan 2026 at 10:57, Neil Armstrong <neil.armstrong@linaro.org> wrote:
+>> Document the Renesas UPD720201/UPD720202 USB 3.0 xHCI Host Controller,
+>> which connects over PCIe and requires specific power supplies to
+> 
+> Here: "requires"...
 
-Since its for an M2M V4L2 device, and its all about having more address spa=
-ce
-according to this link, you may want to use a different iommu domain per m2=
-m
-instances, rather then per device (what is done implicitly). On top of whic=
-h, it
-will ensure memory isolation between instances, making this driver suitable=
- for
-virtualisation. 4Gb per instance (which is also per stream) seems like a lo=
-t of
-memory to me. But like Dmitry says, there is little clarity in what you are
-trying to achieve.
+Sorry I don't understand
 
-Nicolas
+> 
+>> start up.
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+>>   .../bindings/usb/renesas,upd720201-pci.yaml        | 55 ++++++++++++++++++++++
+>>   1 file changed, 55 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/usb/renesas,upd720201-pci.yaml b/Documentation/devicetree/bindings/usb/renesas,upd720201-pci.yaml
+>> new file mode 100644
+>> index 000000000000..df3cdcf44747
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/usb/renesas,upd720201-pci.yaml
+>> @@ -0,0 +1,55 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/usb/renesas,upd720201-pci.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: UPD720201/UPD720202 USB 3.0 xHCI Host Controller (PCIe)
+>> +
+>> +maintainers:
+>> +  - Neil Armstrong <neil.armstrong@linaro.org>
+>> +
+>> +description:
+>> +  UPD720201 USB 3.0 xHCI Host Controller via PCIe x1 Gen2 interface.
+>> +  The UPD720202 up to two downstream ports, while UPD720201 supports up to
+>> +  four downstream USB 3.0 rev1.0 ports.
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: pci1912,0014
+> 
+> Just wondering: how does having a new driver
+> drivers/pci/pwrctrl/pci-pwrctrl-upd720201.c matching against this
+> compatible play well with normal PCI discovery and probing of
+> drivers/usb/host/xhci-pci-renesas.c?
 
-> >=20
-> > Signed-off-by: Charan Teja Kalla <charan.kalla@oss.qualcomm.com>
-> > Signed-off-by: Vijayanand Jitta <vijayanand.jitta@oss.qualcomm.com>
-> > Signed-off-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-> > ---
-> > =C2=A0drivers/iommu/of_iommu.c | 36 ++++++++++++++++++++++++++++-------=
--
-> > =C2=A0drivers/of/base.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 38 =
-++++++++++++++++++++++++++++----------
-> > =C2=A0include/linux/of.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 6 =
-++++++
-> > =C2=A03 files changed, 62 insertions(+), 18 deletions(-)
-> >=20
-> > diff --git a/drivers/iommu/of_iommu.c b/drivers/iommu/of_iommu.c
-> > index
-> > 768eaddf927b0700b2497b08ea21611b1a1b5688..067bb2298973671e1eaf01bb2ea52=
-df3d2
-> > a52a44 100644
-> > --- a/drivers/iommu/of_iommu.c
-> > +++ b/drivers/iommu/of_iommu.c
-> > @@ -16,6 +16,7 @@
-> > =C2=A0#include <linux/pci.h>
-> > =C2=A0#include <linux/slab.h>
-> > =C2=A0#include <linux/fsl/mc.h>
-> > +#include <linux/platform_device.h>
-> > =C2=A0
-> > =C2=A0#include "iommu-priv.h"
-> > =C2=A0
-> > @@ -41,22 +42,41 @@ static int of_iommu_xlate(struct device *dev,
-> > =C2=A0	return ret;
-> > =C2=A0}
-> > =C2=A0
-> > +/*
-> > + * Callback to be called from of_map_id(), that tells if
-> > + * all the mappings for an input id to be maintained in
-> > + * parallel. Should this decission be from further layers,
-> > + * iommu_driver->impl_ops?
-> > + */
-> > +static int of_iommu_configure_cb(struct of_map_id_arg *arg)
-> > +{
-> > +	struct of_phandle_args *iommu_spec =3D &arg->map_args;
-> > +	struct device *dev =3D arg->dev;
-> > +	int err;
-> > +
-> > +	err =3D of_iommu_xlate(dev, iommu_spec);
-> > +	of_node_put(iommu_spec->np);
-> > +
-> > +	/* !iommu_spec->np may be from the bypassed translations */
-> > +	if (!err)
-> > +		err =3D (!arg->multi_map || !iommu_spec->np) ? 0 : -EAGAIN;
-> > +
-> > +	return err;
-> > +}
-> > +
-> > =C2=A0static int of_iommu_configure_dev_id(struct device_node *master_n=
-p,
-> > =C2=A0				=C2=A0=C2=A0=C2=A0=C2=A0 struct device *dev,
-> > =C2=A0				=C2=A0=C2=A0=C2=A0=C2=A0 const u32 *id)
-> > =C2=A0{
-> > =C2=A0	struct of_map_id_arg arg =3D {
-> > =C2=A0		.map_args =3D {},
-> > +		.cb =3D of_iommu_configure_cb,
-> > +		.dev =3D dev,
-> > +		/* Should this be pushed to iommu_driver->impl_ops? */
-> > +		.multi_map =3D dev_is_platform(dev),
-> > =C2=A0	};
-> > -	int err;
-> > -
-> > -	err =3D of_map_iommu_id(master_np, *id, &arg);
-> > -	if (err)
-> > -		return err;
-> > =C2=A0
-> > -	err =3D of_iommu_xlate(dev, &arg.map_args);
-> > -	of_node_put(arg.map_args.np);
-> > -	return err;
-> > +	return of_map_iommu_id(master_np, *id, &arg);
-> > =C2=A0}
-> > =C2=A0
-> > =C2=A0static int of_iommu_configure_dev(struct device_node *master_np,
-> > diff --git a/drivers/of/base.c b/drivers/of/base.c
-> > index
-> > 606bef4f90e7d13bae4f7b0c45acd1755ad89826..a1c3c5954ec7e8eb3753c8fd782a1=
-570f9
-> > eb9c17 100644
-> > --- a/drivers/of/base.c
-> > +++ b/drivers/of/base.c
-> > @@ -2122,14 +2122,21 @@ static bool of_check_bad_map(const __be32 *map,=
- int
-> > len)
-> > =C2=A0	return true;
-> > =C2=A0}
-> > =C2=A0
-> > -static int of_map_id_fill_output(struct of_map_id_arg *arg,
-> > -				 struct device_node *phandle_node, u32
-> > id_or_offset,
-> > -				 const __be32 *out_base, u32 cells,
-> > -				 bool bypass)
-> > +/*
-> > + * Fill the id_out and target for the of_map_id() caller. Also
-> > + * call the callback passed to the of_map_id() as part of the arg
-> > + * that decides if to continue further search.
-> > + */
-> > +static int of_map_id_fill_arg(struct of_map_id_arg *arg,
-> > +			=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 struct device_node *phandle_node, u3=
-2
-> > id_or_offset,
-> > +			=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 const __be32 *out_base, u32 cells,
-> > +			=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bool bypass, bool *multi_id_map)
-> > =C2=A0{
-> > +	int ret;
-> > +
-> > =C2=A0	if (bypass) {
-> > =C2=A0		arg->map_args.args[0] =3D id_or_offset;
-> > -		return 0;
-> > +		goto output;
-> > =C2=A0	}
-> > =C2=A0
-> > =C2=A0	if (arg->map_args.np)
-> > @@ -2145,7 +2152,14 @@ static int of_map_id_fill_output(struct of_map_i=
-d_arg
-> > *arg,
-> > =C2=A0
-> > =C2=A0	arg->map_args.args_count =3D cells;
-> > =C2=A0
-> > -	return 0;
-> > +output:
-> > +	/* pass the output for the callback, callers may further decide */
-> > +	ret =3D=C2=A0 arg->cb ? arg->cb(arg) : 0;
-> > +
-> > +	if (multi_id_map && ret =3D=3D -EAGAIN)
-> > +		*multi_id_map =3D true;
-> > +
-> > +	return ret;
-> > =C2=A0}
-> > =C2=A0
-> > =C2=A0/**
-> > @@ -2179,6 +2193,7 @@ int of_map_id(const struct device_node *np, u32 i=
-d,
-> > const char *map_name,
-> > =C2=A0	int map_bytes, map_len, offset =3D 0;
-> > =C2=A0	bool bad_map =3D false;
-> > =C2=A0	const __be32 *map =3D NULL;
-> > +	bool multi_id_map =3D false;
-> > =C2=A0
-> > =C2=A0	if (!np || !map_name || !arg)
-> > =C2=A0		return -EINVAL;
-> > @@ -2264,23 +2279,26 @@ int of_map_id(const struct device_node *np, u32=
- id,
-> > const char *map_name,
-> > =C2=A0		if (masked_id < id_base || id_off >=3D id_len)
-> > =C2=A0			continue;
-> > =C2=A0
-> > -		ret =3D of_map_id_fill_output(arg, phandle_node, id_off,
-> > out_base, cells, false);
-> > +		ret =3D of_map_id_fill_arg(arg, phandle_node, id_off,
-> > out_base,
-> > +					 cells, false, &multi_id_map);
-> > =C2=A0		if (ret =3D=3D -EAGAIN)
-> > =C2=A0			continue;
-> > =C2=A0
-> > =C2=A0		pr_debug("%pOF: %s, using mask %08x, id-base: %08x, out-
-> > base: %08x, length: %08x, id: %08x -> %08x\n",
-> > =C2=A0			np, map_name, map_mask, id_base,
-> > be32_to_cpup(out_base),
-> > =C2=A0			id_len, id, id_off + be32_to_cpup(out_base));
-> > -		return 0;
-> > +		return ret;
-> > =C2=A0	}
-> > =C2=A0
-> > +	if (multi_id_map)
-> > +		return 0;
-> > +
-> > =C2=A0	pr_info("%pOF: no %s translation for id 0x%x on %pOF\n", np,
-> > map_name,
-> > =C2=A0		id, arg->map_args.np=C2=A0 ? arg->map_args.np : NULL);
-> > =C2=A0
-> > =C2=A0bypass_translation:
-> > =C2=A0	/* Bypasses translation */
-> > -	return of_map_id_fill_output(arg, NULL, id, 0, 0, true);
-> > -
-> > +	return of_map_id_fill_arg(arg, NULL, id, 0, 0, true, NULL);
-> > =C2=A0err_map_len:
-> > =C2=A0	pr_err("%pOF: Error: Bad %s length: %d\n", np, map_name,
-> > map_bytes);
-> > =C2=A0	return -EINVAL;
-> > diff --git a/include/linux/of.h b/include/linux/of.h
-> > index
-> > 9efa6f93712c6024f05476f9fd39f3294f942ec1..abab73a76682351f5635c1127a6c8=
-99917
-> > 525050 100644
-> > --- a/include/linux/of.h
-> > +++ b/include/linux/of.h
-> > @@ -25,6 +25,9 @@
-> > =C2=A0typedef u32 phandle;
-> > =C2=A0typedef u32 ihandle;
-> > =C2=A0
-> > +struct of_map_id_arg;
-> > +typedef int (*of_map_id_cb)(struct of_map_id_arg *arg);
-> > +
-> > =C2=A0struct property {
-> > =C2=A0	char	*name;
-> > =C2=A0	int	length;
-> > @@ -76,6 +79,9 @@ struct of_phandle_args {
-> > =C2=A0
-> > =C2=A0struct of_map_id_arg {
-> > =C2=A0	struct of_phandle_args map_args;
-> > +	of_map_id_cb cb;
-> > +	struct device *dev;
-> > +	bool multi_map;
-> > =C2=A0};
-> > =C2=A0
-> > =C2=A0struct of_phandle_iterator {
-> >=20
-> > --=20
-> > 2.34.1
-> >=20
+In Linux, power control is implemented as a platform device driver,
+so it doesn't collide with the pci driver.
 
---=-sqPE2tvWLzFfDUXBP4ZG
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
+The pci driver won't probe until the device shows up on the bus anyway,
+so he power control will attach as platform for this purpose.
 
------BEGIN PGP SIGNATURE-----
+> 
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +
+>> +  avdd33-supply:
+>> +    description: +3.3 V power supply for analog circuit
+>> +
+>> +  vdd10-supply:
+>> +    description: +1.05 V power supply
+>> +
+>> +  vdd33-supply:
+>> +    description: +3.3 V power supply
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+> 
+> ... but no power supplies are listed here? ...
 
-iHUEABYKAB0WIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaXjC1QAKCRDZQZRRKWBy
-9AdQAP4gtvm3/cBxyYM8uZ50t1efySdzZ/rt1/ZyrL5c2cGZhAD9FLIi6O56sq1S
-VY5E1+gXbEXsbTA/TbUUH5BjQojFPA0=
-=+cdM
------END PGP SIGNATURE-----
+None are stricly required, they can be supplied directly without
+a passive regulator. Not sure they should be required
 
---=-sqPE2tvWLzFfDUXBP4ZG--
+> 
+>> +
+>> +allOf:
+>> +  - $ref: usb-xhci.yaml
+>> +
+>> +additionalProperties: false
+>> +
+>> +examples:
+>> +  - |
+>> +    pcie@0 {
+>> +        reg = <0x0 0x1000>;
+>> +        ranges = <0x02000000 0x0 0x100000 0x10000000 0x0 0x0>;
+>> +        #address-cells = <3>;
+>> +        #size-cells = <2>;
+>> +        device_type = "pci";
+>> +
+>> +        usb@0 {
+> 
+> The actual DTS uses "usb-controller".
+> 
+>> +            compatible = "pci1912,0014";
+>> +            reg = <0x0 0x0 0x0 0x0 0x0>;
+> 
+> ... also not in the example?
+> 
+>> +        };
+>> +    };
+>>
+>> --
+>> 2.34.1
+> 
+> Gr{oetje,eeting}s,
+> 
+>                          Geert
+> 
+> 
+> --
+> Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+> 
+> In personal conversations with technical people, I call myself a hacker. But
+> when I'm talking to journalists I just say "programmer" or something like that.
+>                                  -- Linus Torvalds
+
+Thanks,
+Neil
 
