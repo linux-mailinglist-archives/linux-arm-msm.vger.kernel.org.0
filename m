@@ -1,138 +1,214 @@
-Return-Path: <linux-arm-msm+bounces-90707-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OCyBFSiYeGkWrQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90707-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 11:49:12 +0100
+	id iO6tJlCYeGkWrQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 11:49:52 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B082F9323C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 11:49:11 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id E9FB393268
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 11:49:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 5B0F230C5130
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 10:43:22 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 526CF307DEEB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 10:44:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9EDF34405E;
-	Tue, 27 Jan 2026 10:43:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE77C343D86;
+	Tue, 27 Jan 2026 10:44:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LzpujCWt"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="ZmuuAy4X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C387734106A;
-	Tue, 27 Jan 2026 10:43:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409ED3446B1;
+	Tue, 27 Jan 2026 10:44:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769510596; cv=none; b=pY2lUdhNQ+X6l5dyKoOtcU8+j+nFvUq05r3dCD2ph1+KQrK+kF9sOANGWBSXV0EoE9cE9CUarHw8Ns9hlsGUYhZ38j7SgdIEkw0O3yZTXZnMWX/1iXwjkZCkML+V0ahEXChIhrRcfDAeS3cfLD60Nn0/wi7ZqqjFpxdm+K8TwRE=
+	t=1769510666; cv=none; b=iGu4HQTMmIO8L/KluqFi/Gj4BX0lxy34h3hX0dj3a7WE86B4RRZfEfc5PUwXiKTgliUNfEkuqnEQcn2S657nJIIfOOfbWaQp8OzR5a7jrku9mG8uZf7Bvv8k0IPhTRZ3KCYNDCuG7FFQXpYZMPrGT2/kyckeuAiS/ohMu27vMdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769510596; c=relaxed/simple;
-	bh=jyobfJ96OlW3K4tTEPQRzR6fuXN3a0yGmEi2N6tUdq0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ncpUH6P8qYSf2fKyT+r1oWcj+jGSDCYuim1ZOajHFjmJZ0DkyTWwHXIWSpTmW24tIHBJpDD7xmxXlc2/1b0TW7vmu6EucwY3n8smHwpw2itz+t/MYysMZ1XBcm2CED9EFFNuCYV0fXqeku49QVXjOXdxL9QrUF2Ck5PPDaLcdPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LzpujCWt; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 475F6C16AAE;
-	Tue, 27 Jan 2026 10:43:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769510596;
-	bh=jyobfJ96OlW3K4tTEPQRzR6fuXN3a0yGmEi2N6tUdq0=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=LzpujCWtRfwnE1AK1SESY8tr7XywPhiA0ZixYwF55yoG9RiBkg0vj35Yu73nAbpFj
-	 iH3NUk2CnLG/g3Ot5+P4aYKTiFyiBvcjacIWnIXWSvEc+lETjeeznIgyjsGYHTTlv9
-	 gIV7i/oQt3fcpigu8p057W6PshSnrMdh2Ew1rjO3g6DdvBLBrwiu1Ch0xg0N+qxgw5
-	 thofwu+CYHx6pA7bVksUZsEaZyFAKF2wYBXuS6WlwbbdHQroCRqxb3NvMav0bxrZD4
-	 6b2qrkcllsNEf4gZhgKgpJAtOryAGowu3MCHq/dNCUtKiQPIMmIbZ+QqVMvS6R+cF2
-	 AW+yTt+lqdy9g==
-Message-ID: <2ecfd6ff-8599-442e-aa9b-9e3d1e6c509f@kernel.org>
-Date: Tue, 27 Jan 2026 11:43:12 +0100
+	s=arc-20240116; t=1769510666; c=relaxed/simple;
+	bh=vrKMHfK+jZccgVy53jFWZbkRm0Iff0NWCOMHyQbgupU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=hCcX7x8BuO90+re4Ze6uGZdSB7X9nxNG+7qan4DN/xFP73q6R1IFFr+kWVOk51TWDj7aIoS+2dLBpAUqWlnusw/8qgVtj4SbBxR0oICKbgXlEZTyI9Wtf3OIESeRS2mNrW3tXr5Dbji2vTMDHVwBjwSXggiM9VHVrcyOtWhrvtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=ZmuuAy4X; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1769510657;
+	bh=vrKMHfK+jZccgVy53jFWZbkRm0Iff0NWCOMHyQbgupU=;
+	h=From:To:Cc:Subject:Date:From;
+	b=ZmuuAy4XR4xaY64h4v0IoNHx3qlVSJHc6IQ2HmPWCtZ5uokj9ZEtgbZeXr3HSTIGU
+	 wvumhyLr5qTbPe2EQptpgA6/07ZQNScRK56xJT1QYkgOZ2BX5pNb03zFPKkVKQP8yU
+	 j5Owl5XlBW2W3a8UmIWoko3YsRQQ9+1hGK6NJhRX+9ulZ4pCcNo0mkYCSZV2JxqjZP
+	 BiB7EmQ3LfMune35mElYW349RfnXJ36qDciWzPzS5zQ2ZJi3VVbchoxUXya6tgtZqX
+	 X9QeJJ/9Sx+2fdsMlJjAvkODK7FBFhcy3Eqe4MwYvOwaNXC2PEKwTiRIQu1DNbzTIc
+	 12EjiAcHvjEFA==
+Received: from vignesh-thinkpad.. (unknown [171.76.81.211])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: vignesh)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 99DE217E00AC;
+	Tue, 27 Jan 2026 11:44:13 +0100 (CET)
+From: Vignesh Raman <vignesh.raman@collabora.com>
+To: dri-devel@lists.freedesktop.org
+Cc: daniels@collabora.com,
+	helen.fornazier@gmail.com,
+	airlied@gmail.com,
+	simona.vetter@ffwll.ch,
+	dmitry.baryshkov@oss.qualcomm.com,
+	lumag@kernel.org,
+	robdclark@gmail.com,
+	robin.clark@oss.qualcomm.com,
+	guilherme.gallo@collabora.com,
+	sergi.blanch.torne@collabora.com,
+	valentine.burley@collabora.com,
+	linux-mediatek@lists.infradead.org,
+	linux-amlogic@lists.infradead.org,
+	linux-rockchip@lists.infradead.org,
+	amd-gfx@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org,
+	intel-gfx@lists.freedesktop.org,
+	virtualization@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v1 0/7] drm/ci: add new jobs, uprev IGT and mesa
+Date: Tue, 27 Jan 2026 16:13:55 +0530
+Message-ID: <20260127104406.200505-1-vignesh.raman@collabora.com>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] media: i2c: ov02c10: Use runtime PM autosuspend to
- avoid brownouts
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Saikiran <bjsaikiran@gmail.com>, linux-media@vger.kernel.org
-Cc: linux-arm-msm@vger.kernel.org, rfoss@kernel.org, todor.too@gmail.com,
- bod@kernel.org, vladimir.zapolskiy@linaro.org, sakari.ailus@linux.intel.com,
- mchehab@kernel.org, stable@vger.kernel.org
-References: <20260126173444.10228-1-bjsaikiran@gmail.com>
- <20260126173444.10228-4-bjsaikiran@gmail.com>
- <900cc5dd-c39d-42f6-9531-016f62da81e8@linaro.org>
-From: Hans de Goede <hansg@kernel.org>
-Content-Language: en-US, nl
-In-Reply-To: <900cc5dd-c39d-42f6-9531-016f62da81e8@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [0.34 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[collabora.com,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[collabora.com:s=mail];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-90707-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[vger.kernel.org,kernel.org,gmail.com,linaro.org,linux.intel.com];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FREEMAIL_TO(0.00)[linaro.org,gmail.com,vger.kernel.org];
-	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[collabora.com,gmail.com,ffwll.ch,oss.qualcomm.com,kernel.org,lists.infradead.org,lists.freedesktop.org,vger.kernel.org,lists.linux.dev];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[hansg@kernel.org,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-90709-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[11];
+	RCPT_COUNT_TWELVE(0.00)[20];
+	TO_DN_NONE(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[vignesh.raman@collabora.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[collabora.com:+];
+	NEURAL_HAM(-0.00)[-0.999];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: B082F9323C
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[collabora.com:mid,collabora.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,gitlab.freedesktop.org:url]
+X-Rspamd-Queue-Id: E9FB393268
 X-Rspamd-Action: no action
 
-Hi,
+This series introduces new job to drm-ci for testing the following
+devices:
+- rk3588-rock-5b
 
-On 27-Jan-26 10:46, Bryan O'Donoghue wrote:
-> On 26/01/2026 17:34, Saikiran wrote:
->> On Qualcomm X1E80100 platforms, the OV02C10 sensor experiences brownouts
->> if power-cycled too quickly (< 2.3s) due to slow passive discharge of
->> regulator rails.
->>
->> Implement Runtime PM Autosuspend with a delay of 1000ms. This keeps the
->> regulators enabled for a short duration after the device is closed,
->> preventing costly power-off/power-on cycles during rapid user
->> interactions (e.g., browser permission checks).
-> 
-> But if you try to power the sensor 1.1 seconds later what happens ?
-> 
-> With this commit log this submission is a NAK, for example why do I want this change on an x86 machine ?
-> 
-> We need to root-cause the failure not paper over it.
+Other updates include:
+- Uprev IGT and updating test expectations accordingly.
+- Adapting to recent changes in Mesa CI, such as:
+   - LAVA overlay-based firmware handling
+   - Container/job rule separation
+   - Removal of the python-artifacts job
+   - Use of the Alpine container for LAVA jobs
+   - Various other CI improvements
+- Move bare-metal jobs for apq8016 and apq8096 to LAVA, as these devices
+  are migrated to Collabora LAVA farm.
+- Updating the runner tag for i915: cml (switching from hatch to puff)
+  to improve device availability.
+- Adjusting parallelism in jobs (sm8350-hdk, amly) to better utilize
+  test resources.
+- Fix issues with rebase with external fixes branch.
 
-I agree the commit message needs work.
+Pipeline: https://gitlab.freedesktop.org/vigneshraman/msm/-/pipelines/1591806
+MR: https://gitlab.freedesktop.org/drm/msm/-/merge_requests/213
 
-This is overall a useful change to have though. Even on x86_64
-it is better to keep the sensor enabled when userspace
-does a stop + start stream in quick succession rather then
-needlessly powercycle it.
+mediatek:mt8183 fails and it is reported upstream - https://lore.kernel.org/linux-mediatek/CAAq5pW9o3itC0G16LnJO7KMAQ_XoqXUpB=cuJ_7e3-H11zKd5Q@mail.gmail.com/#r
+Few intel jobs fails, this will be investigated and a seperate patch to update xfails will be sent.
 
-But the commit message needs to explain that this is generally
-a good thing to have to avoid unnecessary delays related to
-power-sequencing when userspace does a stop + start stream in quick
-succession.
+Link to v1: https://lore.kernel.org/dri-devel/20251114030056.1139570-1-vignesh.raman@collabora.com/
 
-Regards,
+Vignesh Raman (7):
+  drm/ci: uprev mesa
+  drm/ci: move qualcomm baremetal jobs to lava
+  drm/ci: reduce sm8350-hdk parallel jobs from 4 to 2
+  drm/ci: i915: cml: update runner tag
+  drm/ci: add rk3588-rock-5b
+  drm/ci: uprev IGT
+  drm/ci: disable rebase when pulling *-external-fixes
 
-Hans
+ MAINTAINERS                                   |   1 +
+ drivers/gpu/drm/ci/arm64.config               |   6 +
+ drivers/gpu/drm/ci/build.sh                   |  13 +-
+ drivers/gpu/drm/ci/build.yml                  |  22 +--
+ drivers/gpu/drm/ci/container.yml              |  28 +++-
+ drivers/gpu/drm/ci/gitlab-ci.yml              |  98 ++++++++++---
+ drivers/gpu/drm/ci/igt_runner.sh              |   6 +-
+ drivers/gpu/drm/ci/image-tags.yml             |  22 +--
+ drivers/gpu/drm/ci/lava-submit.sh             | 101 +++++++-------
+ drivers/gpu/drm/ci/static-checks.yml          |   1 +
+ drivers/gpu/drm/ci/test.yml                   | 119 ++++++++--------
+ .../gpu/drm/ci/xfails/amdgpu-stoney-fails.txt |  16 ++-
+ .../drm/ci/xfails/amdgpu-stoney-flakes.txt    |   7 +
+ drivers/gpu/drm/ci/xfails/i915-amly-fails.txt |  32 +----
+ drivers/gpu/drm/ci/xfails/i915-amly-skips.txt |  65 +++++++++
+ drivers/gpu/drm/ci/xfails/i915-apl-fails.txt  |  24 +---
+ drivers/gpu/drm/ci/xfails/i915-cml-fails.txt  |  29 +---
+ drivers/gpu/drm/ci/xfails/i915-cml-flakes.txt |   7 +
+ drivers/gpu/drm/ci/xfails/i915-glk-fails.txt  |  35 +----
+ drivers/gpu/drm/ci/xfails/i915-glk-skips.txt  | 131 ++++++++++++++++++
+ drivers/gpu/drm/ci/xfails/i915-jsl-fails.txt  |  37 +----
+ drivers/gpu/drm/ci/xfails/i915-jsl-skips.txt  |  50 +++++++
+ drivers/gpu/drm/ci/xfails/i915-kbl-fails.txt  |   4 +
+ drivers/gpu/drm/ci/xfails/i915-tgl-fails.txt  |   5 +-
+ drivers/gpu/drm/ci/xfails/i915-tgl-flakes.txt |   6 +
+ drivers/gpu/drm/ci/xfails/i915-whl-fails.txt  |  16 +--
+ .../drm/ci/xfails/mediatek-mt8173-fails.txt   |  13 +-
+ .../drm/ci/xfails/mediatek-mt8173-flakes.txt  | 119 ++++++++++++++++
+ .../drm/ci/xfails/mediatek-mt8183-fails.txt   |   7 +-
+ .../gpu/drm/ci/xfails/meson-g12b-fails.txt    |   1 +
+ .../gpu/drm/ci/xfails/msm-apq8016-fails.txt   |   4 +
+ .../gpu/drm/ci/xfails/msm-apq8096-fails.txt   |   2 +
+ .../msm-sc7180-trogdor-kingoftown-fails.txt   |   1 +
+ ...sm-sc7180-trogdor-lazor-limozeen-fails.txt |   1 +
+ .../drm/ci/xfails/msm-sm8350-hdk-fails.txt    |   1 +
+ .../drm/ci/xfails/panfrost-mt8183-fails.txt   |   1 +
+ .../drm/ci/xfails/panfrost-rk3288-fails.txt   |   1 +
+ .../drm/ci/xfails/panfrost-rk3399-fails.txt   |   1 +
+ .../drm/ci/xfails/panthor-rk3588-fails.txt    |   5 +
+ .../drm/ci/xfails/panthor-rk3588-skips.txt    |  20 +++
+ .../drm/ci/xfails/rockchip-rk3288-fails.txt   |  14 +-
+ .../drm/ci/xfails/rockchip-rk3288-flakes.txt  |  21 +++
+ .../drm/ci/xfails/rockchip-rk3399-fails.txt   |  12 +-
+ .../drm/ci/xfails/rockchip-rk3399-flakes.txt  |  35 +++++
+ .../drm/ci/xfails/rockchip-rk3588-fails.txt   |  10 ++
+ .../drm/ci/xfails/rockchip-rk3588-skips.txt   |  14 ++
+ .../drm/ci/xfails/virtio_gpu-none-fails.txt   |  50 -------
+ drivers/gpu/drm/ci/xfails/vkms-none-fails.txt |   2 +
+ drivers/gpu/drm/ci/xfails/vkms-none-skips.txt |   3 +
+ 49 files changed, 835 insertions(+), 384 deletions(-)
+ create mode 100644 drivers/gpu/drm/ci/xfails/i915-tgl-flakes.txt
+ create mode 100644 drivers/gpu/drm/ci/xfails/panthor-rk3588-fails.txt
+ create mode 100644 drivers/gpu/drm/ci/xfails/panthor-rk3588-skips.txt
+ create mode 100644 drivers/gpu/drm/ci/xfails/rockchip-rk3588-fails.txt
+ create mode 100644 drivers/gpu/drm/ci/xfails/rockchip-rk3588-skips.txt
+
+-- 
+2.47.3
 
 
