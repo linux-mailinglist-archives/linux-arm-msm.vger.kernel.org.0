@@ -1,83 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-90717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90718-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4MnEHfaYeGkWrQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 11:52:38 +0100
+	id iOWlMm2YeGkWrQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90718-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 11:50:21 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id D09559330C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 11:52:37 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0097993278
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 11:50:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4D6163011F29
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 10:47:09 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 96E42300371C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 10:50:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0C63344D91;
-	Tue, 27 Jan 2026 10:47:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BD60345745;
+	Tue, 27 Jan 2026 10:50:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ADQNyMAi"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FDsXngw7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D27F3446B7
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jan 2026 10:47:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F6C345740;
+	Tue, 27 Jan 2026 10:50:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769510828; cv=none; b=b8XoEKT4Gs7Euu6Ecn+BjokgBxrMgQQpkacQu5P8S4GXTm1BmVvlGl+8eiyXz7oyC3Q2rqAqLAC4uG6kl22OpNYWMuWpliX+/qHI0jVvykD9LgcZcwM0LqzphrmvhrKvMWdL6uUGIkcZm7KooPfiiHwwBsKEj3pSCPQrbHILQWs=
+	t=1769511015; cv=none; b=LtINmD6qhlNxZ5pmP6OioQszNUxD6LGWT3S7WixZuqzxsPN2ENh2KnuP9pJZW84teENovx8LgwJeYmpr+Ek5l31pkSBr3iCXFYl341b8UWKV7muyjeXUC3bsRlWe/v7LHyDFAzfluS05e4DuaiiSezEu/o4Cpx8708hF20Q0bqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769510828; c=relaxed/simple;
-	bh=3jVIysMavNlQaxUbaALgp3fhgpKYtr/JEYcJv8TiAso=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gcjt9RD7FhXl6tJWogD/dcfwkL6JeyMyzvN7JTO8/b3XsBql1i2vnV+GrJpc0ZGzuLxko2DhS3UEAfit2mzWG+p4ZXdZy8rtrrcvQ7BLII7xVjnTN6vgu50RQxb9u7l15Tkg/I/yVIXXNDw2q7mcGxvzVk1g59VjO0PUjn8aBJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ADQNyMAi; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-43590777e22so3348798f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jan 2026 02:47:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1769510825; x=1770115625; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6/MX0Uzp+K02e3Z85XRSxNOGh0OmSKQ62wN9kFEdTMo=;
-        b=ADQNyMAiAVQ7VNxuRE5NFp8fHFP2Nvfly3ew37uKqZwiLd+aIiWhC2VXcTjMjdma3U
-         EFDn154CCecdb94OIpAcNlKxGt/UayUggTpdy7iMYDOPtyloKEMRP2+uJZ1xRH+S5Vo5
-         IEqz7/Eca5fOJ1wswm2Js8RPh674ttcWDTJt5QX3C7R4oBTX+HexhZpukO/iGAfGhAFM
-         mSbNZNRbOfy38vUKjXH75j0Csd/+Svw3lQkKhB6CBWJwRsq2TS5DGpFq1DlENZyMft9A
-         faKUZYzisQhsEa5ypzVDdJWv8ZH7aO3yPKhhpqF417NTAK0gDbziHG17jvsFsL+mwsuE
-         ymGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769510825; x=1770115625;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6/MX0Uzp+K02e3Z85XRSxNOGh0OmSKQ62wN9kFEdTMo=;
-        b=n8MJ4evwuiTlQDurugFa/mRpkAtVtLp2B7NVfXy7LfWareVMbc7eNGIY9tTWlHRQdW
-         T1vg/JOwTylLQTF9jVnlyPIjZ5Z+YM8mex7dkyypjQk1PopvbxuY3sMLzBr4dmE3n60H
-         h3eZDEIywAJe/9H6/pI0Bff9WwwyjXn9YJ+WXcTvWK9I7A+R1u/QtMEDSYJXGtWQdsaG
-         LJTIhfN0yLBR61cxvJKgH/Iplc7y/Fll5SjvGGiA1EePlrQZFOVzKn1oEuTroXqLzJU6
-         A296Aw4H65LbLuS0NY7jFYVg6oL+IMEMqEHh3brz6dVc5OWM8muzy8i/CSVungZPliwS
-         i+Dg==
-X-Gm-Message-State: AOJu0YyMzQF3pImuLjMScD6yoBw0cTv8EYpBo4IpqjEFMkpq87HPrLUT
-	S+YwX0am8GVFETPNfsZ/KuNZRyxauzNyxOES8I6Z3ILs09ORH+w02lTtVshjJUtBmH8=
-X-Gm-Gg: AZuq6aLRgmMEQLTimF8I01/bHdaG/jeenbo4StTRVz+A0lDwsv2IHNc73mVzHrLReXt
-	PE/aPJU/wdsKejL2Xg0w+ePAnsBvvLE94zl+qzjRoXpzSwK4V/GJ5QGhAYcpSdwWn2DnuGa9stR
-	gCuqKy5ZJwIINzIRIsmStsMLFbKYw6Obs81VnOUkfAJG5C5+PbYA1pkVzDcrTXbGwfG/2xSDYN0
-	B2IOuo93XRsOLzvUvBK4ccSp8NAW9f5FhXKPeLeItDs05gXv0e5tEAtQDrafa4nD55BMEjYzjYt
-	rF8kF3YDunZFaZ8D/gJOFGfkXVNMIV0JpzSdD8OjGxubm4pwklo+gBT8GRn4odkEUS/dA9QGCz7
-	6jHXzSoTpwwGVGKv3hfA5PASvVqA27VvQbLTr9VkiPzCtQSdr+Dnau2K5OPEqgVpu08dIR9mvx6
-	EcAE9iPRWyoDC6/wDbXGh0fbhTo8WXztBX3tbaJEjUBExD92oBIHdM2fgJyg0JwWI=
-X-Received: by 2002:a05:6000:1089:b0:435:91b8:e029 with SMTP id ffacd0b85a97d-435dd1bd8b0mr1370455f8f.37.1769510825296;
-        Tue, 27 Jan 2026 02:47:05 -0800 (PST)
-Received: from [192.168.0.40] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-435b1f7c8efsm37797054f8f.42.2026.01.27.02.47.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Jan 2026 02:47:04 -0800 (PST)
-Message-ID: <1576d328-0fca-40c6-8116-cc4e9bb045ca@linaro.org>
-Date: Tue, 27 Jan 2026 10:47:03 +0000
+	s=arc-20240116; t=1769511015; c=relaxed/simple;
+	bh=oCRxYaJ3dVs6zyq2Qx+o3ba3M/+PTiMwsgzMhchJ9mY=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=Lim+Bav5sexHSe2+IuUy+jqlViD3h3G9JJ+zgw0Oovf3iIzl+S7JqLsh1x1O7cW/dQBTXRjiMmeRXfmVP91kyj2D0fxN3mBhmE23fy4W+0SfojLp+OJEHgGZQaHdFCl7tGaOUl3JG6A/jrOPpgulWZH/XgugPI9x193r9U9nR3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FDsXngw7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A45EC116C6;
+	Tue, 27 Jan 2026 10:50:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1769511014;
+	bh=oCRxYaJ3dVs6zyq2Qx+o3ba3M/+PTiMwsgzMhchJ9mY=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=FDsXngw7jeCg5MGaVnnYzMxqSyOZKIcf9+FXM9+wwnx6IAd6WuSIBamk3/ypJPDSH
+	 jH5jwbaGusk57yNf9Zb8W16Ph7xyrVB2pyZtWQAH+biFIG4BlIHNSVBci68a7L83EL
+	 DiL693ZGLC+XNxpuiq2A8vUdwS9X2n/hsOMJen33saCHe/QI3LeLE3EdjFwvoxfE33
+	 6R/iAMUrucUE4c2j4kIzaVuxAX2wT4rfMC5aAFyDLb4vzYRi7Y48pgP4BJHscg445M
+	 GENNuf+LPp2/1dHkwtZU8Co8sxrT40Vu+Jsr62mFyc6lXbsaGfsVm3CXPhBoL9xolS
+	 /um7/jkw/HT8w==
+Message-ID: <b544605d-3952-4c99-aa33-1d7d8bb02a75@kernel.org>
+Date: Tue, 27 Jan 2026 11:50:10 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -87,133 +55,60 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3 2/3] media: i2c: ov02c10: Correct power-on sequence and
  timing
-To: Hans de Goede <hansg@kernel.org>, Saikiran <bjsaikiran@gmail.com>,
- linux-media@vger.kernel.org
+From: Hans de Goede <hansg@kernel.org>
+To: Saikiran <bjsaikiran@gmail.com>, linux-media@vger.kernel.org
 Cc: linux-arm-msm@vger.kernel.org, rfoss@kernel.org, todor.too@gmail.com,
- bod@kernel.org, vladimir.zapolskiy@linaro.org, sakari.ailus@linux.intel.com,
- mchehab@kernel.org, stable@vger.kernel.org
+ bryan.odonoghue@linaro.org, bod@kernel.org, vladimir.zapolskiy@linaro.org,
+ sakari.ailus@linux.intel.com, mchehab@kernel.org, stable@vger.kernel.org
 References: <20260126173444.10228-1-bjsaikiran@gmail.com>
  <20260126173444.10228-3-bjsaikiran@gmail.com>
  <a1108367-30dd-49fb-8a36-bab9a242bd51@kernel.org>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Content-Language: en-US
+Content-Language: en-US, nl
 In-Reply-To: <a1108367-30dd-49fb-8a36-bab9a242bd51@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-90718-lists,linux-arm-msm=lfdr.de];
 	FREEMAIL_CC(0.00)[vger.kernel.org,kernel.org,gmail.com,linaro.org,linux.intel.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_TO(0.00)[kernel.org,gmail.com,vger.kernel.org];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-90717-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[gmail.com,vger.kernel.org];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[11];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[hansg@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,linaro.org:mid,linaro.org:dkim]
-X-Rspamd-Queue-Id: D09559330C
+	RCPT_COUNT_SEVEN(0.00)[11];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 0097993278
 X-Rspamd-Action: no action
 
-On 27/01/2026 10:40, Hans de Goede wrote:
-> Hi,
-> 
-> On 26-Jan-26 18:34, Saikiran wrote:
->> 1. Assert XSHUTDOWN (reset) for 10ms (T1 >= 5ms) before enabling power.
->> 2. Enable regulators and wait 20ms for ramp-up stabilization.
->> 3. Enable clock and wait 10ms for stabilization.
->> 4. De-assert XSHUTDOWN.
->> 5. Wait 20ms (T2 >= 20ms) for sensor boot before I2C access.
->> 6. Perform software reset (0x0103) to ensure clean state.
->>
->> This eliminates potential race conditions and stability issues during cold boot initialization.
->>
->> Tested-on: Lenovo Yoga Slim 7x (Snapdragon X Elite)
->> Fixes: 44f8901 ("media: i2c: add OmniVision OV02C10 sensor driver")
->> Cc: stable@vger.kernel.org
->> Signed-off-by: Saikiran <bjsaikiran@gmail.com>
->> ---
->>   drivers/media/i2c/ov02c10.c | 57 ++++++++++++++++++++++++++++++-------
->>   1 file changed, 46 insertions(+), 11 deletions(-)
->>
->> diff --git a/drivers/media/i2c/ov02c10.c b/drivers/media/i2c/ov02c10.c
->> index fa7cc48b769a..ba8bbb4f433a 100644
->> --- a/drivers/media/i2c/ov02c10.c
->> +++ b/drivers/media/i2c/ov02c10.c
->> @@ -22,6 +22,8 @@
->>   #define OV02C10_CHIP_ID			0x5602
->>   
->>   #define OV02C10_REG_STREAM_CONTROL	CCI_REG8(0x0100)
->> +#define OV02C10_REG_SOFTWARE_RESET	CCI_REG8(0x0103)
->> +#define OV02C10_SOFTWARE_RESET_TRIGGER	0x01
->>   
->>   #define OV02C10_REG_HTS			CCI_REG16(0x380c)
->>   
->> @@ -616,6 +618,13 @@ static int ov02c10_enable_streams(struct v4l2_subdev *sd,
->>   	if (ret)
->>   		goto out;
->>   
->> +	/*
->> +	 * Delay before streaming:
->> +	 * Give the sensor time to process all the register writes and internal
->> +	 * calibration before we assert the STREAM_ON bit.
->> +	 */
->> +	usleep_range(2000, 2500);
->> +
-> 
-> Why? I've never seen any sensor driver do this and AFAICT this
-> is also not mentioned as a requirement in the datasheet.
-> 
->>   	ret = cci_write(ov02c10->regmap, OV02C10_REG_STREAM_CONTROL, 1, NULL);
->>   out:
->>   	if (ret)
->> @@ -660,13 +669,13 @@ static int ov02c10_power_off(struct device *dev)
->>   	struct v4l2_subdev *sd = dev_get_drvdata(dev);
->>   	struct ov02c10 *ov02c10 = to_ov02c10(sd);
->>   
->> -	gpiod_set_value_cansleep(ov02c10->reset, 1);
->> +	if (ov02c10->reset)
->> +		gpiod_set_value_cansleep(ov02c10->reset, 1);
-> 
-> No need to add this if (), gpiod_set_value() will happily
-> take a NULL gpio_desc * and ignore it.
-> 
->> +	clk_disable_unprepare(ov02c10->img_clk);
->>   	regulator_bulk_disable(ARRAY_SIZE(ov02c10_supply_names),
->>   			       ov02c10->supplies);
->>   
->> -	clk_disable_unprepare(ov02c10->img_clk);
->> -
-> 
-> Why? All datasheets say that the clock may be enabled either
-> before or after the regulators there is no need for this change.
-> 
-> 
->>   	return 0;
->>   }
->>   
+Hi,
+
+On 27-Jan-26 11:40, Hans de Goede wrote:
+
+...
+
 >> @@ -676,27 +685,53 @@ static int ov02c10_power_on(struct device *dev)
->>   	struct ov02c10 *ov02c10 = to_ov02c10(sd);
->>   	int ret;
->>   
+>>  	struct ov02c10 *ov02c10 = to_ov02c10(sd);
+>>  	int ret;
+>>  
 >> -	ret = clk_prepare_enable(ov02c10->img_clk);
 >> -	if (ret < 0) {
 >> -		dev_err(dev, "failed to enable imaging clock: %d", ret);
@@ -221,90 +116,19 @@ On 27/01/2026 10:40, Hans de Goede wrote:
 >> +	if (ov02c10->reset) {
 >> +		gpiod_set_value_cansleep(ov02c10->reset, 1);
 >> +		usleep_range(10000, 11000);
->>   	}
+>>  	}
 > 
 > Ack for asserting the reset for 10 ms here, that is the only part
 > of this patch which seems to actually be useful.
-> 
->>   
->>   	ret = regulator_bulk_enable(ARRAY_SIZE(ov02c10_supply_names),
->>   				    ov02c10->supplies);
->>   	if (ret < 0) {
->>   		dev_err(dev, "failed to enable regulators: %d", ret);
->> -		clk_disable_unprepare(ov02c10->img_clk);
->>   		return ret;
->>   	}
->>   
->> +	/* Allow PMIC to ramp and stabilize */
->> +	usleep_range(20000, 22000);
-> 
-> 
-> If the regulators need a delay before stabilizing that should
-> be done by the regulator driver, not here.
-> 
->> +
->> +	ret = clk_prepare_enable(ov02c10->img_clk);
->> +	if (ret < 0) {
->> +		dev_err(dev, "failed to enable imaging clock: %d", ret);
->> +		regulator_bulk_disable(ARRAY_SIZE(ov02c10_supply_names),
->> +				       ov02c10->supplies);
->> +		return ret;
->> +	}
-> 
-> Again no need to change the clk vs regulator enable order.
-> 
->> +
->> +	/* Let the clock stabilise */
->> +	usleep_range(10000, 11000);
-> 
-> Same as with regulators if this is necessary it should be
-> handled by the clk driver.
-> 
->> +
->> +	/* Release hardware reset */
->>   	if (ov02c10->reset) {
->> -		/* Assert reset for at least 2ms on back to back off-on */
->> -		usleep_range(2000, 2200);
-> 
-> Ack for dropping this usleep() since this is now done before
-> enabling the regulators.
-> 
->>   		gpiod_set_value_cansleep(ov02c10->reset, 0);
->> -		usleep_range(5000, 5100);
->> +		/*
->> +		 * Wait for sensor microcontroller to stabilize after reset release.
->> +		 * 20ms prevents black frames during rapid power cycling.
->> +		 */
->> +		usleep_range(20000, 22000);
->> +	}
-> 
-> Why? this is not what the datasheet says.
-> 
->> +
->> +	/* Perform software reset to ensure clean state */
->> +	ret = cci_write(ov02c10->regmap, OV02C10_REG_SOFTWARE_RESET,
->> +			OV02C10_SOFTWARE_RESET_TRIGGER, NULL);
->> +	if (ret) {
->> +		dev_err(dev, "failed to send software reset: %d", ret);
->> +		return ret;
->>   	}
->>   
->> +	/* Wait for software reset to complete */
->> +	usleep_range(5000, 5500);
->> +
-> 
-> Please drop this whole sw-reset thing. We've just hw-reset the sensor
-> so there is no need. Also this should be done in a separate commit
-> if it were to be done at all.
-> 
-> Regards,
-> 
-> Hans
-> 
-> 
 
-To be clear, I was asking for an _experiment_ not a patch ...
+Quick note on this, your commit msg says the datasheet requires 5 ms,
+so 10 seems a bit much for the next version please
+use a usleep_range() with 5 - 7 ms. Or just use fsleep(5000) which
+turns this into a usleep_range() for you.
 
----
-bod
+Regards,
+
+Hans
+
+
 
