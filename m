@@ -1,56 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-90713-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id uA9EOg2YeGkWrQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90713-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 11:48:45 +0100
+	id oMUdBCKYeGkWrQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 11:49:06 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 67EA293200
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 11:48:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8513E9322E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 11:49:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id A28FB308E33A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 10:45:00 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 6836830A48BD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 10:45:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55113343D86;
-	Tue, 27 Jan 2026 10:44:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0AF10344D9F;
+	Tue, 27 Jan 2026 10:44:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="okzC/emD"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="oRmX07F0"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 887E534575D;
-	Tue, 27 Jan 2026 10:44:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3B8A344D9C;
+	Tue, 27 Jan 2026 10:44:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769510680; cv=none; b=IQJjnORivFXVHY2P0sZdPHeX55cmIAu5BYq1awRuMGIJU6gv4TDMIS+m4kgkNlq5bvpEwuG6NN91j4H2Pc/digIYEEldNZaQomtzZ475nzFlZp1WEWdxRtkYHFAGRwJT7H82jLo44haasJ9QO0n3OIyJb11A9szQ4RuCcLTn93E=
+	t=1769510683; cv=none; b=HxP08+A9qzuPNcZnusu/q33bn20USl/aj2Ku/rW5etHSFZqU8a3MF+46kTOAhg8OBFM++/LKAX8LBpzclxLUBeKRFC2clxrK1nxjv/hU/u1+k4Q1/foH96LY55Siyo8eyW+A5vkIR/vIBeEqxT3rFc2IBEqLkH6XUf8TtpIuQh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769510680; c=relaxed/simple;
-	bh=K2y+JopQp3ML1S2HyFFzzOui07CPYp0h2VnhObjlXHY=;
+	s=arc-20240116; t=1769510683; c=relaxed/simple;
+	bh=xhzd/Rzhmres2LNpnqypmTCkifou5yjzvRbrn8viXrM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bNPodiiA6BCKJ9BJOnvE4YAK3m3JiMIHzfT0H+Cnf3lQx1ORqYG1s44efibUrd1A68E3WFP0Vlhzq1IiGiWFqwIs/afUDb1X8ckEtH5/6kGNVgZOPegDz35ZoiaiTI+iM3CAEptI2rriC0IRpmBHj8Dde7wiscpEPykWRNfCVHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=okzC/emD; arc=none smtp.client-ip=148.251.105.195
+	 MIME-Version; b=snloAxcsojzN/+Od8w5xunbH9Gcu1cG+rCB8qmUOblu6mhQqOESr76qlO+7+8fkW6CXLhKHheaOM7F5+LNV1r5wd6H2rYLDgaD74BfPSC25sb18J/FVepkFY6A2CngMecP1gHuNowpT5as0yynUtnJYFdPqpm1a/TmSlB/Kfhbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=oRmX07F0; arc=none smtp.client-ip=148.251.105.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1769510675;
-	bh=K2y+JopQp3ML1S2HyFFzzOui07CPYp0h2VnhObjlXHY=;
+	s=mail; t=1769510680;
+	bh=xhzd/Rzhmres2LNpnqypmTCkifou5yjzvRbrn8viXrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=okzC/emDwg2m0ZwJ8YgnHjUgdkHIkFydWwQPM/eSkAY+6VO8J2a+u5z9puPzvrPIZ
-	 7Pac23Coc06sUKA0H7kiY55KdlmLPP/CYsRByx+gFCP2c063eAM4gQycSsZro60+gZ
-	 helDi4bzLttqkZq7cPT4eZXukQTEmhDe3OOXE25/m+YnrIxGI3WqpsbmI4r7bMxk5p
-	 vqpAn2EUCCPolL/RHhh5Kv1JV/GDtJSeymaYwwbD0FTAHBmKVFtUblmtcEu8r9N59G
-	 qzMCMp/xkzjY1BRYJoKZUxQn4IyvPGgys+c6uZNNQhcehtCGx7R0gKAmmCNdpr2M9L
-	 Nt6WSXThva+6w==
+	b=oRmX07F0an/MPg0IhEhzqVnUz72jroC0O08qmAi0uXOz+f6RNDIlsqUICpsb0x5+I
+	 kpeJbzgxaiL/snZn1Mw+U9DRyq337njQI2LVs+VB8kafSy/mpWxuTT5QAXMiwaZjsZ
+	 S0VW+cZrm1L2erY00eN0akMx+inyfpl0RwPzwi+zK6XFZYhzdyUoXXM3ZjHc3WJhEB
+	 SE5XDNdhmIM6E9/2V3N1s648ZbKICOdp9XYLloykajqbfDTqdr2fH6zOXumxxWZvxs
+	 oYQvBywdTURdqX/U4v6hWpPRTfLEBMNkHHHpat0Px8unYoq061eXcoPU5BYdr2HaVR
+	 dN6cJOCutkx/g==
 Received: from vignesh-thinkpad.. (unknown [171.76.81.211])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: vignesh)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 024C517E00AC;
-	Tue, 27 Jan 2026 11:44:31 +0100 (CET)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 65E0917E0117;
+	Tue, 27 Jan 2026 11:44:36 +0100 (CET)
 From: Vignesh Raman <vignesh.raman@collabora.com>
 To: dri-devel@lists.freedesktop.org
 Cc: daniels@collabora.com,
@@ -72,9 +72,9 @@ Cc: daniels@collabora.com,
 	intel-gfx@lists.freedesktop.org,
 	virtualization@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v1 4/7] drm/ci: i915: cml: update runner tag
-Date: Tue, 27 Jan 2026 16:13:59 +0530
-Message-ID: <20260127104406.200505-5-vignesh.raman@collabora.com>
+Subject: [PATCH v1 5/7] drm/ci: add rk3588-rock-5b
+Date: Tue, 27 Jan 2026 16:14:00 +0530
+Message-ID: <20260127104406.200505-6-vignesh.raman@collabora.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260127104406.200505-1-vignesh.raman@collabora.com>
 References: <20260127104406.200505-1-vignesh.raman@collabora.com>
@@ -100,7 +100,7 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	FREEMAIL_CC(0.00)[collabora.com,gmail.com,ffwll.ch,oss.qualcomm.com,kernel.org,lists.infradead.org,lists.freedesktop.org,vger.kernel.org,lists.linux.dev];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-90713-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-90714-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	RCVD_TLS_LAST(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
@@ -111,52 +111,221 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	DKIM_TRACE(0.00)[collabora.com:+];
 	TO_DN_NONE(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	NEURAL_HAM(-0.00)[-0.982];
+	NEURAL_HAM(-0.00)[-0.995];
 	RCPT_COUNT_TWELVE(0.00)[20];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[collabora.com:email,collabora.com:dkim,collabora.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 67EA293200
+	DBL_BLOCKED_OPENRESOLVER(0.00)[create-clear:email,forked-bo:email,torture-bo:email,master-drop-set-user:email,hotreplug:email,unplug-rescan:email,torture-move:email,forked-move:email,gitlab.freedesktop.org:url,collabora.com:email,collabora.com:dkim,collabora.com:mid,single-bo:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,lists.freedesktop.org:email,lease-uevent:email]
+X-Rspamd-Queue-Id: 8513E9322E
 X-Rspamd-Action: no action
 
-asus-C436FA-Flip-hatch has fewer devices available in the LAVA lab and
-drm-ci uses only 2 DUTs, causing tests to time out. Update drm-ci to
-use puff instead of hatch so the tests can run on 5 DUTs.
-
-Also increase parallel count for amly jobs to 3.
+Add job that executes the IGT test suite for rk3588-rock-5b.
 
 Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
 ---
- drivers/gpu/drm/ci/test.yml | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ MAINTAINERS                                   |  1 +
+ drivers/gpu/drm/ci/arm64.config               |  5 ++++
+ drivers/gpu/drm/ci/build.sh                   |  1 +
+ drivers/gpu/drm/ci/gitlab-ci.yml              |  1 +
+ drivers/gpu/drm/ci/igt_runner.sh              |  2 +-
+ drivers/gpu/drm/ci/test.yml                   | 28 +++++++++++++++++++
+ .../drm/ci/xfails/panthor-rk3588-fails.txt    |  5 ++++
+ .../drm/ci/xfails/panthor-rk3588-skips.txt    | 20 +++++++++++++
+ .../drm/ci/xfails/rockchip-rk3588-fails.txt   | 10 +++++++
+ .../drm/ci/xfails/rockchip-rk3588-skips.txt   | 14 ++++++++++
+ 10 files changed, 86 insertions(+), 1 deletion(-)
+ create mode 100644 drivers/gpu/drm/ci/xfails/panthor-rk3588-fails.txt
+ create mode 100644 drivers/gpu/drm/ci/xfails/panthor-rk3588-skips.txt
+ create mode 100644 drivers/gpu/drm/ci/xfails/rockchip-rk3588-fails.txt
+ create mode 100644 drivers/gpu/drm/ci/xfails/rockchip-rk3588-skips.txt
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index ff92b9cc9435..b0eed114ed29 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2149,6 +2149,7 @@ L:	dri-devel@lists.freedesktop.org
+ S:	Supported
+ T:	git https://gitlab.freedesktop.org/drm/misc/kernel.git
+ F:	Documentation/devicetree/bindings/gpu/arm,mali-valhall-csf.yaml
++F:	drivers/gpu/drm/ci/xfails/panthor*
+ F:	drivers/gpu/drm/panthor/
+ F:	include/uapi/drm/panthor_drm.h
+ 
+diff --git a/drivers/gpu/drm/ci/arm64.config b/drivers/gpu/drm/ci/arm64.config
+index b850b88787ad..5da3913ec8a4 100644
+--- a/drivers/gpu/drm/ci/arm64.config
++++ b/drivers/gpu/drm/ci/arm64.config
+@@ -209,3 +209,8 @@ CONFIG_ARM_TEGRA_DEVFREQ=y
+ CONFIG_TEGRA_SOCTHERM=y
+ CONFIG_DRM_TEGRA_DEBUG=y
+ CONFIG_PWM_TEGRA=y
++
++# For Rockchip rk3588
++CONFIG_DRM_PANTHOR=m
++CONFIG_PHY_ROCKCHIP_NANENG_COMBO_PHY=y
++CONFIG_PHY_ROCKCHIP_SAMSUNG_HDPTX=y
+diff --git a/drivers/gpu/drm/ci/build.sh b/drivers/gpu/drm/ci/build.sh
+index ac5e7ed195cf..5485ea756382 100644
+--- a/drivers/gpu/drm/ci/build.sh
++++ b/drivers/gpu/drm/ci/build.sh
+@@ -19,6 +19,7 @@ if [[ "$KERNEL_ARCH" = "arm64" ]]; then
+     GCC_ARCH="aarch64-linux-gnu"
+     DEBIAN_ARCH="arm64"
+     DEVICE_TREES="arch/arm64/boot/dts/rockchip/rk3399-gru-kevin.dtb"
++    DEVICE_TREES+=" arch/arm64/boot/dts/rockchip/rk3588-rock-5b.dtb"
+     DEVICE_TREES+=" arch/arm64/boot/dts/amlogic/meson-gxl-s805x-libretech-ac.dtb"
+     DEVICE_TREES+=" arch/arm64/boot/dts/allwinner/sun50i-h6-pine-h64.dtb"
+     DEVICE_TREES+=" arch/arm64/boot/dts/amlogic/meson-gxm-khadas-vim2.dtb"
+diff --git a/drivers/gpu/drm/ci/gitlab-ci.yml b/drivers/gpu/drm/ci/gitlab-ci.yml
+index 20e8cbdc39e9..56088c5393cd 100644
+--- a/drivers/gpu/drm/ci/gitlab-ci.yml
++++ b/drivers/gpu/drm/ci/gitlab-ci.yml
+@@ -136,6 +136,7 @@ stages:
+   - meson
+   - msm
+   - panfrost
++  - panthor
+   - powervr
+   - rockchip
+   - software-driver
+diff --git a/drivers/gpu/drm/ci/igt_runner.sh b/drivers/gpu/drm/ci/igt_runner.sh
+index 1c01bda52237..741d30655ab5 100755
+--- a/drivers/gpu/drm/ci/igt_runner.sh
++++ b/drivers/gpu/drm/ci/igt_runner.sh
+@@ -23,7 +23,7 @@ set -e
+ 
+ mkdir -p /lib/modules
+ case "$DRIVER_NAME" in
+-    amdgpu|vkms)
++    amdgpu|vkms|panthor)
+         # Cannot use HWCI_KERNEL_MODULES as at that point we don't have the module in /lib
+         mv /install/modules/lib/modules/* /lib/modules/. || true
+         modprobe --first-time $DRIVER_NAME
 diff --git a/drivers/gpu/drm/ci/test.yml b/drivers/gpu/drm/ci/test.yml
-index 05eccda6bb9e..b7409f8a13a5 100644
+index b7409f8a13a5..f6bee5b67931 100644
 --- a/drivers/gpu/drm/ci/test.yml
 +++ b/drivers/gpu/drm/ci/test.yml
-@@ -258,7 +258,7 @@ i915:glk:
- i915:amly:
-   extends:
-     - .i915
--  parallel: 2
-+  parallel: 3
-   variables:
-     DEVICE_TYPE: asus-C433TA-AJ0005-rammus
-     GPU_VERSION: amly
-@@ -285,11 +285,11 @@ i915:whl:
- i915:cml:
-   extends:
-     - .i915
--  parallel: 2
-+  parallel: 5
-   variables:
--    DEVICE_TYPE: asus-C436FA-Flip-hatch
-+    DEVICE_TYPE: acer-chromebox-cxi4-puff
-     GPU_VERSION: cml
--    RUNNER_TAG: mesa-ci-x86-64-lava-asus-C436FA-Flip-hatch
-+    RUNNER_TAG: mesa-ci-x86-64-lava-acer-chromebox-cxi4-puff
+@@ -206,6 +206,19 @@ msm:sm8350-hdk:
+     KERNEL_IMAGE_TYPE: ""
+     RUNNER_TAG: mesa-ci-x86-64-lava-rk3399-gru-kevin
  
- i915:tgl:
++.rk3588:
++  extends:
++    - .lava-igt:arm64
++    - .rockchip-device
++  parallel: 2
++  variables:
++    DEVICE_TYPE: rk3588-rock-5b
++    GPU_VERSION: rk3588
++    BOOT_METHOD: u-boot
++    KERNEL_IMAGE_NAME: Image
++    KERNEL_IMAGE_TYPE: "image"
++    RUNNER_TAG: mesa-ci-x86-64-lava-rk3588-rock-5b
++
+ rockchip:rk3288:
    extends:
+     - .rk3288
+@@ -226,6 +239,16 @@ panfrost:rk3399:
+     - .rk3399
+     - .panfrost-gpu
+ 
++rockchip:rk3588:
++  extends:
++    - .rk3588
++    - .rockchip-display
++
++panthor:rk3588:
++  extends:
++    - .rk3588
++    - .panthor-gpu
++
+ .i915:
+   extends:
+     - .lava-igt:x86_64
+@@ -354,6 +377,11 @@ amdgpu:stoney:
+   variables:
+     DRIVER_NAME: panfrost
+ 
++.panthor-gpu:
++  stage: panthor
++  variables:
++    DRIVER_NAME: panthor
++
+ .mt8173:
+   extends:
+     - .mediatek-device
+diff --git a/drivers/gpu/drm/ci/xfails/panthor-rk3588-fails.txt b/drivers/gpu/drm/ci/xfails/panthor-rk3588-fails.txt
+new file mode 100644
+index 000000000000..7407bd0128d4
+--- /dev/null
++++ b/drivers/gpu/drm/ci/xfails/panthor-rk3588-fails.txt
+@@ -0,0 +1,5 @@
++core_hotunplug@hotreplug,Fail
++core_hotunplug@hotreplug-lateclose,Fail
++core_hotunplug@hotunplug-rescan,Fail
++core_hotunplug@unplug-rescan,Fail
++core_setmaster@master-drop-set-user,Fail
+diff --git a/drivers/gpu/drm/ci/xfails/panthor-rk3588-skips.txt b/drivers/gpu/drm/ci/xfails/panthor-rk3588-skips.txt
+new file mode 100644
+index 000000000000..b724cf04e3b3
+--- /dev/null
++++ b/drivers/gpu/drm/ci/xfails/panthor-rk3588-skips.txt
+@@ -0,0 +1,20 @@
++# Skip driver specific tests
++^amdgpu.*
++^msm.*
++nouveau_.*
++^v3d.*
++^vc4.*
++^vmwgfx*
++
++# Skip intel specific tests
++gem_.*
++i915_.*
++tools_test.*
++kms_dp_link_training.*
++
++# Panfrost is not a KMS driver, so skip the KMS tests
++kms_.*
++
++# Skip display functionality tests for GPU-only drivers
++dumb_buffer.*
++fbdev.*
+diff --git a/drivers/gpu/drm/ci/xfails/rockchip-rk3588-fails.txt b/drivers/gpu/drm/ci/xfails/rockchip-rk3588-fails.txt
+new file mode 100644
+index 000000000000..a3aac6acb5df
+--- /dev/null
++++ b/drivers/gpu/drm/ci/xfails/rockchip-rk3588-fails.txt
+@@ -0,0 +1,10 @@
++core_setmaster@master-drop-set-user,Fail
++dumb_buffer@create-clear,Crash
++kms_3d,Fail
++kms_cursor_legacy@forked-bo,Fail
++kms_cursor_legacy@forked-move,Fail
++kms_cursor_legacy@single-bo,Fail
++kms_cursor_legacy@single-move,Fail
++kms_cursor_legacy@torture-bo,Fail
++kms_cursor_legacy@torture-move,Fail
++kms_lease@lease-uevent,Fail
+diff --git a/drivers/gpu/drm/ci/xfails/rockchip-rk3588-skips.txt b/drivers/gpu/drm/ci/xfails/rockchip-rk3588-skips.txt
+new file mode 100644
+index 000000000000..a165fccd8a93
+--- /dev/null
++++ b/drivers/gpu/drm/ci/xfails/rockchip-rk3588-skips.txt
+@@ -0,0 +1,14 @@
++# Skip driver specific tests
++^amdgpu.*
++^msm.*
++nouveau_.*
++^panfrost.*
++^v3d.*
++^vc4.*
++^vmwgfx*
++
++# Skip intel specific tests
++gem_.*
++i915_.*
++tools_test.*
++kms_dp_link_training.*
 -- 
 2.47.3
 
