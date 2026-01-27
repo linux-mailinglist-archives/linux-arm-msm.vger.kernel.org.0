@@ -1,145 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-90784-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90785-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sLEKL7bJeGmNtQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90784-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 15:20:38 +0100
+	id EFCnJa7JeGmNtQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90785-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 15:20:30 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1FFFE9588A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 15:20:38 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B9BFD9586C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 15:20:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A609A3084D5C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 14:17:42 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id AA64530055C0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 14:20:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E446C29E114;
-	Tue, 27 Jan 2026 14:17:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qjmw469Q"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F8B335A937;
+	Tue, 27 Jan 2026 14:20:19 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C57284883;
-	Tue, 27 Jan 2026 14:17:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE94529CB52;
+	Tue, 27 Jan 2026 14:20:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769523461; cv=none; b=UvucbLqOxQ8ZHhD5lPd1aXIZJMnieiEx8Y9YrTWM2Lb7KNVi7dOf/Y2TmlVxFy5MfF5s8mA3xHtR7XF9O9vbdchP6eLuX1PzElblX7QvEIaXOubE9/diQ2mi0CUz/44ZzRgXntgniSZVKNIMm+yhPTdGZ+MOvccXV+xB8DS1Zso=
+	t=1769523619; cv=none; b=gpY69ZnqQ0fJPKBV4aBGjh7dg48zDfpysiz6yOYfHq4/AzWGA9AOi9BvPqYDIRfFZTWkWZ4q63wUjJ7PsYO1NrfERVyVbV+n0bf7lxWb+9TFmoFZpG9acqq57HLfnWdwvAFzSut7LoPojgMwrWQ9B7q6vC9vJ3IESqowih1nuaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769523461; c=relaxed/simple;
-	bh=6RbS3lq83MUvqvXbpS/fqmTiQO3rUelLTxFVy+AhT9w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sYDAqERyRWbx1h4419Fufmuuyov5y8QMUWfyCPF7YZMMtYOdA3/hILrltTqe4Cz3CHIj2wEfKlwyUmI+1zjkatdtQM74mnFJjfnBG8tr4BDbXcu3ktOqcxptxt9HnLlLIS861LuVRJ7YrsRLFKKVVz59IqPGSKkDlA4tqNx0NtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qjmw469Q; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 878A7C116C6;
-	Tue, 27 Jan 2026 14:17:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769523461;
-	bh=6RbS3lq83MUvqvXbpS/fqmTiQO3rUelLTxFVy+AhT9w=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Qjmw469Qb8tRmK1hTgMyz5TmDgi2kY/hL8sEeYWOIYG4jrJeBle28BKtG/TuBC+Go
-	 eTSTVc8XnRjIc59p4lgv7geyu62HnwlQYS+ABiW0WtEx/7d7qnHjQfMrVRMl9VGXxi
-	 K9kCvkMEBBNARtpyTYIXQ6cXrEaOPUbX9K0jRCvlagc6q4rsv1XtjD7rsbHvH3yiID
-	 PdFnD63XkcOtbjpXnSh59ihd7BCxFahLg5JaIuGsg4Y+vjEUrjROebHQnvC36X7Pt8
-	 eLLWzKPk9hbs6lzKwsDu/tf26YQ52Deluy3LXaNAaeYlQG0B0648tAcoj6fx7osS2X
-	 KdRqplkHn5nJw==
-Date: Tue, 27 Jan 2026 08:17:40 -0600
-From: Rob Herring <robh@kernel.org>
-To: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Linus Walleij <linusw@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3] dt-bindings: pinctrl: qcom,sm8450-lpass-lpi-pinctrl:
- Add SA8775P and QCS8300 pinctrl
-Message-ID: <20260127141740.GA1574044-robh@kernel.org>
-References: <20260127105511.3917491-1-mohammad.rafi.shaik@oss.qualcomm.com>
+	s=arc-20240116; t=1769523619; c=relaxed/simple;
+	bh=3dbkaF5OVhRQfnw/0d9n1Gzk+2qa9elwJ9BhiZVnO/8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Vy47uylEoJqMDTD/+QfIbwzUJtCjxozNVyxGLkC5K+gczOswtoc4pLJDTjSKhc07AxuADGSLMvYh6av1NQV3aDAvSVxqEw7Dz+69jApbCIlYCGZfVNo81zCGTqgbY54F7dB0T3b1g4EownHYFzC7qrNEoxSNwjxGs7GJsIGVXX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C522F1595;
+	Tue, 27 Jan 2026 06:20:10 -0800 (PST)
+Received: from [10.57.51.176] (unknown [10.57.51.176])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4E1BF3F73F;
+	Tue, 27 Jan 2026 06:20:13 -0800 (PST)
+Message-ID: <78ffd1ce-5408-4bf5-a782-0c4ca14017b1@arm.com>
+Date: Tue, 27 Jan 2026 14:20:09 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260127105511.3917491-1-mohammad.rafi.shaik@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/7] of/iommu: add multi-map support
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+Cc: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>, Bryan O'Donoghue <bod@kernel.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Saravana Kannan <saravanak@kernel.org>,
+ Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+ Stefan Schmidt <stefan.schmidt@linaro.org>,
+ Hans Verkuil <hverkuil@kernel.org>, Krzysztof Kozlowski <krzk@kernel.org>,
+ Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
+ Hans Verkuil <hverkuil+cisco@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, iommu@lists.linux.dev,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Charan Teja Kalla <charan.kalla@oss.qualcomm.com>,
+ Vijayanand Jitta <vijayanand.jitta@oss.qualcomm.com>
+References: <20260126-kaanapali-iris-v1-0-e2646246bfc1@oss.qualcomm.com>
+ <20260126-kaanapali-iris-v1-3-e2646246bfc1@oss.qualcomm.com>
+ <hunwsdkmeo6efpv3yt3izkgmarelnubd74dywj3scryxrreq6p@njijwtoyjh46>
+From: Robin Murphy <robin.murphy@arm.com>
+Content-Language: en-GB
+In-Reply-To: <hunwsdkmeo6efpv3yt3izkgmarelnubd74dywj3scryxrreq6p@njijwtoyjh46>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.16 / 15.00];
-	MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [0.14 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64];
 	MAILLIST(-0.15)[generic];
+	DMARC_POLICY_SOFTFAIL(0.10)[arm.com : SPF not aligned (relaxed), No valid DKIM,none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-90784-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	MISSING_XM_UA(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[10];
+	TAGGED_FROM(0.00)[bounces-90785-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[25];
+	MIME_TRACE(0.00)[0:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,cisco];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[robin.murphy@arm.com,linux-arm-msm@vger.kernel.org];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 1FFFE9588A
+	RCVD_COUNT_FIVE(0.00)[5];
+	R_DKIM_NA(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	MID_RHS_MATCH_FROM(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[arm.com:mid,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: B9BFD9586C
 X-Rspamd-Action: no action
 
-On Tue, Jan 27, 2026 at 04:25:11PM +0530, Mohammad Rafi Shaik wrote:
-> Document compatible for Qualcomm SA8775P and QCS8300 SoC LPASS TLMM
-> pin controller, fully compatible with previous SM8450 generation
-> (same amount of pins and functions).
+On 2026-01-27 11:45 am, Dmitry Baryshkov wrote:
+> On Mon, Jan 26, 2026 at 05:55:46PM +0530, Vikash Garodia wrote:
+>> From: Charan Teja Kalla <charan.kalla@oss.qualcomm.com>
+>>
+>> When multiple mappings are present for an input id, linux matches just
+>> the first one. There is a usecase[1] where all the mappings are to be
+>> maintained in parallel for an iommu-map entry of a same input id.
 > 
-> Signed-off-by: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
-> ---
-> changes in [v3]:
->  - Removed the duplicate driver code patch as suggested by Krzysztof.
->  - Reused the existing SM8490 pinctrl, which is fully compatible with SA8775P and QCS8300.
->  - Link to V2: https://lore.kernel.org/all/20260107192007.500995-1-mohammad.rafi.shaik@oss.qualcomm.com/
-> 
-> changes in [v2]:
->  - Fixed dt-binding errors reported by Krzysztof and Rob.
->  - Added proper slew rate value for wsa2_swr_data GPIO, as suggested by Konrad.
->  - Documented Monaco compatible as suggested by Konrad.
->  - Link to V1: https://lore.kernel.org/all/20251116171656.3105461-1-mohammad.rafi.shaik@oss.qualcomm.com/
-> ---
->  .../pinctrl/qcom,sm8450-lpass-lpi-pinctrl.yaml         | 10 +++++++++-
->  1 file changed, 9 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm8450-lpass-lpi-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm8450-lpass-lpi-pinctrl.yaml
-> index e7565592d..354629c38 100644
-> --- a/Documentation/devicetree/bindings/pinctrl/qcom,sm8450-lpass-lpi-pinctrl.yaml
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm8450-lpass-lpi-pinctrl.yaml
-> @@ -15,7 +15,15 @@ description:
->  
->  properties:
->    compatible:
-> -    const: qcom,sm8450-lpass-lpi-pinctrl
-> +    oneOf:
-> +      - const: qcom,sm8450-lpass-lpi-pinctrl
-> +      - items:
-> +          - enum:
-> +              - qcom,qcs8300-lpass-lpi-pinctrl
-> +              - qcom,sa8775p-lpass-lpi-pinctrl
-> +          - const: qcom,sm8450-lpass-lpi-pinctrl
-> +        minItems: 1
-> +        maxItems: 2
+> This contradicts the IOMMU idealogy (at least as far as I understood it
+> fom the maintainers): the device (driver) doesn't control which IOMMUs
+> are getting used. Instead _all_ defined entries should get used. For
+> iommu-map it means that if the map defines several entries for a single
+> function, then all entries should always get mapped.
 
-No. You are either backwards compatible with sm8450 or you aren't. The 
-h/w is fixed.
+Indeed there is no concept of "multi-map" - if a single input ID 
+represents more than one thing then that notion of "input ID" is 
+fundamentally wrong. A single *device* may have multiple IDs, as in the 
+case of PCI bridge aliasing, but in that case there are multiple things 
+to map.
 
-Rob
+Thanks,
+Robin.
 
