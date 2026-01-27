@@ -1,200 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-90863-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id WPqgL7sDeWkuugEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90863-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 19:28:11 +0100
+	id qLPGN0YMeWnyugEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 20:04:38 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B9CC99058
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 19:28:11 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 882DF9994C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 20:04:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D8C21303B7E6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 18:28:09 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 53EF3301ACCA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 19:02:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0912326D76;
-	Tue, 27 Jan 2026 18:28:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9BFC12620DE;
+	Tue, 27 Jan 2026 19:02:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cd+58DKb"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lfKoWLku"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE09B326958
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jan 2026 18:28:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D4827CB0A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jan 2026 19:02:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769538488; cv=none; b=aSH0cs2Ni/Fl/XhtzXaV1eOukSAO8ayQ4Imr5SWYFkGfNIWIRZQ24MK+9IMZDJ/WfrSYr9yu5ZDN5agco8kUobuOE2ah6W/tvMprz9L8NN3VYDbBCTOB+8kSDWBc0B0W4Ld1UaF9jvkwJcTEREhbsbamfwKhgfUI4vx6KBAslGY=
+	t=1769540540; cv=none; b=GoJOi/dstjUsKAPY6ZIHO0/cbPr+unGAKjTgy8J6lohEuuaTjvfyfnSyZ+8KZdvVDdeGGUT4EJ+2rtkVZm5h+hsQUxCa1kyaIgL2CoUTWQD9MH/LJBCpNjT/eQFF6VI8IBZomwfzg6MAYOZfuCEBC8G/SlBYO3LtS5ZXTGRRnDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769538488; c=relaxed/simple;
-	bh=W7/a56tUf3Lkr+2nWP3N9biS9HWxHhESOTwUsHEZtxE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZGWGy+HmvlqWC5a70AXTglexMwKbrVM6ewm6+a1FeDl+Axz3MysnZgfCrvATB2VgwHIGrlZ+s7hCqCvcauSPD6dvRxeIMjAU8OMdT5wgTiAtQZ7A/0Dk+SrS5WnD+u7kGX5G/AYli867x1av1dWpZHmVcvfRqpalxgBNc16BAEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cd+58DKb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6229BC2BCAF
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jan 2026 18:28:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769538488;
-	bh=W7/a56tUf3Lkr+2nWP3N9biS9HWxHhESOTwUsHEZtxE=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=cd+58DKbaWPU7AeqWOYvcEicYkScsgKVT5c8z+rQgA1RYHT/EZa0Q4sryRYQb2iMz
-	 7olyND3mML/1PJARHEeGCKe6N4eyVFWFtwXLL/VWI0N+TIQ1WBKxr0vf8+wJUfKhMT
-	 1BD5EUj0PA5Mdnva6TjguXn7AHH5HqRdQ975/jc5vxIvL9qoNo6grpgxjhtXPSnDEe
-	 HNNyBYgmA8G5NVVpvNlM9RMwjvhrCSy4N/GUkuPkkVmU4p5loekCFymhYWnvU+lpIW
-	 PD2kfYk23CdVVgBaW0QFIRhpABi6RNj/MvrfmBZpPz1qChDVi+zwpMe00ybc1QcLnS
-	 quNzIHIbQ6NAQ==
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-65808d08423so9090188a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jan 2026 10:28:08 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCVIL/XWWGESWGo1O1F9z9ctsJ61zOwtFcth7SRnc4APmNbG1p8sJdJGnHyR+3Ar3ez2triV10mGnyZKupzP@vger.kernel.org
-X-Gm-Message-State: AOJu0YzdatVkRws2SLTbEJCYEWw1RrUqzCPqZTaNTjrPkyGf2nm/Fgcw
-	ExyMCOGYdYgTqSWxX+kyN9hlRn7qtruRT5TiocTGTF96R5Zk/IHKOamiUV8ac9B1IQEUI8HcxRU
-	4vQjgfZUIDsPHchMqYst4JGiqszTrjw==
-X-Received: by 2002:a17:907:3e14:b0:b88:5002:50c0 with SMTP id
- a640c23a62f3a-b8dab305bf9mr203203466b.20.1769538486920; Tue, 27 Jan 2026
- 10:28:06 -0800 (PST)
+	s=arc-20240116; t=1769540540; c=relaxed/simple;
+	bh=wsTUs7Ugu6sRsPCnLRugfGiJd2KbA6A3fdK52CcU1sY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=D/fyUE+UsDQGT68/K1LvRyD9xvE78/1AdaQ2S/AHM/WseEzotwWAaWGVQzKgQdVI3QYgURLvwb27oShmCiDFJFU8BqWIJT8qztrTs+n6ipSwdk734d7X2AO6Jvv9iWM1jDBpdcH8iriz2vt2wKJ81TIuQOBvMSz/kcOgUH1C5b8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lfKoWLku; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2a0fe77d141so35048615ad.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jan 2026 11:02:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1769540539; x=1770145339; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=rKr/gj4p6dZheadeORZRicBPaAbBWotO+jXxUdB5K+g=;
+        b=lfKoWLku/vUEoT73z38w/GsCgVaCGGe4qqmQO47E6w1U/U4udMd0thR3I+nvdF3fKw
+         WvK3qHY22QGjFQCS6dHdgAvj/W8q4YUwncefnYAKg9P2tBMrKRFgNvEJLIzIFzB4A3MX
+         lTJaMAXESyeN3SWbfAol3Q6CKEar8k0f6Vn1yqnUtjYyH7c92W0qno4DtuDIg/tmbJmi
+         ZL4DIaKUEdJjw5oKGYZExdiIrlV5YvjrHnXzQ3KmmcnncApEgS78vj5nj6MP1Vyw1jfs
+         WNQ4ELL6GKleIT3k1VasDTifr8X9rGlEr4uF+dahmghYO1tNkEHXURqODAyixsSOvFDP
+         +gyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769540539; x=1770145339;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rKr/gj4p6dZheadeORZRicBPaAbBWotO+jXxUdB5K+g=;
+        b=OKHlsXQXZw9B1G1Tx5Wyw8blotTDjnNaxFSPL19NYOLiRetl/piLRhi3y5ynnymyTs
+         +VIbRkCnjNyPR3dsEP6n2ODFcMNeDfpLsvzC/+ft1vDdBkXdPVW/xeAehgP+7QqeTqic
+         SfRY4iQdHBXT5uE6sba3AspbZ3VWScZaVvPSyreGKUW3uo/LY8itc4Xj59ZWCfJHOGH3
+         6BL9QB97Pyp9ekWosGEDhdbOOqYyTFSef9u3WC58DZLns9c6C0jjBDVIsQ5MTIput904
+         Wn9zvByoMGdzRJ2Ilb0DLRM4xs9wd2gLe2g+APKSbEBUagoPNKNIJ3TejNdvVYr7TKTc
+         D7vw==
+X-Forwarded-Encrypted: i=1; AJvYcCW/qkPhauBCVIVqhxnz7wnuwz9htIb6CvGN4LWt3mt7dsepBb1xdOVQBFHuJbVslaWB7TpILWxJs0DGI4Gs@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw8SxC2Px2F8vTLWDF3ELrd/XO+Ma3f+MXFOkAGZvipRj9Ojlva
+	SqSHuKDTp+hXcBr05A7roCZD/ZX3YaSqA5O34CgmR7sDjDtAlWiZdxtM
+X-Gm-Gg: AZuq6aJX19pv9YjJ74GzmZjZtJf1QzmB0Tu919eBS1FFdVBCdkbh3m+rLXt0HAdrUQe
+	Yl56abiT4jL9SrNZoUNrtKLW3+QLIJe/GSvNfLgaGNNwq9Trj4zyG8HhpSShpFFDzvGEehlJZB4
+	PB9Or/ge0dHBOwIFY7mriRagtV3aF5PXJnugxYy60oPnY6oKAyTA+nV1lyaEYAq83nNOsu1CX6R
+	H6N9+WfkHcWg9yQWEgn7y++1ZZigXHdyKtH5b4NB/9sEWFHxVXyW5+q7zAywBqj93W7S1g1mipl
+	pCt1KePrX8u6YjYt2wfRQnmMsrKGYXfsvSpFYDKSOQeCwBy0VN9wbmSMifqI4De63WENWEYLNdb
+	2j+9jjOEOIb+/NQjUJlIi9RF79po0J2nYl1W/5hLMWzm5F6XsycZ/uSvbQWZ6VWRl2EORBmaE8+
+	JLRa2XLqa9UKtJbfLtZDoYnVLZqM3kQfqktGHC
+X-Received: by 2002:a17:903:2b0c:b0:2a0:9970:13fd with SMTP id d9443c01a7336-2a870dd9313mr22301895ad.43.1769540538606;
+        Tue, 27 Jan 2026 11:02:18 -0800 (PST)
+Received: from saikiran-Yoga-Slim-7-14Q8X9 ([2402:e280:3d17:646:6ecf:d9ab:b640:78c0])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a88b4c3d4csm938105ad.56.2026.01.27.11.02.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Jan 2026 11:02:18 -0800 (PST)
+From: Saikiran <bjsaikiran@gmail.com>
+To: broonie@kernel.org,
+	lgirdwood@gmail.com
+Cc: andersson@kernel.org,
+	konrad.dybcio@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	devicetree@vger.kernel.org
+Subject: [PATCH v3 0/2] regulator: qcom-rpmh: Add off-on-delay support
+Date: Wed, 28 Jan 2026 00:32:09 +0530
+Message-ID: <20260127190211.14312-1-bjsaikiran@gmail.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260127105511.3917491-1-mohammad.rafi.shaik@oss.qualcomm.com>
- <20260127141740.GA1574044-robh@kernel.org> <9f5436df-fef7-4921-85b3-b6fe4e942779@oss.qualcomm.com>
-In-Reply-To: <9f5436df-fef7-4921-85b3-b6fe4e942779@oss.qualcomm.com>
-From: Rob Herring <robh@kernel.org>
-Date: Tue, 27 Jan 2026 12:27:55 -0600
-X-Gmail-Original-Message-ID: <CAL_Jsq+YYxWKaD-Xo7L3VUAJ=wvpbfW9GkKn0gcj3AOvMb=Uhg@mail.gmail.com>
-X-Gm-Features: AZwV_QjHB-GlP9dv8BmFRD-SF_vPG5R2x4sdb1do0pgOa5KST72t95IKMHbIpTk
-Message-ID: <CAL_Jsq+YYxWKaD-Xo7L3VUAJ=wvpbfW9GkKn0gcj3AOvMb=Uhg@mail.gmail.com>
-Subject: Re: [PATCH v3] dt-bindings: pinctrl: qcom,sm8450-lpass-lpi-pinctrl:
- Add SA8775P and QCS8300 pinctrl
-To: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Linus Walleij <linusw@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Srinivas Kandagatla <srini@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-90863-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-90864-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_TO(0.00)[kernel.org,gmail.com];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[10];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,mail.gmail.com:mid,qualcomm.com:email]
-X-Rspamd-Queue-Id: 6B9CC99058
+	FREEMAIL_FROM(0.00)[gmail.com];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[bjsaikiran@gmail.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	RCVD_COUNT_FIVE(0.00)[5];
+	NEURAL_HAM(-0.00)[-1.000];
+	TO_DN_NONE(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 882DF9994C
 X-Rspamd-Action: no action
 
-On Tue, Jan 27, 2026 at 12:13=E2=80=AFPM Mohammad Rafi Shaik
-<mohammad.rafi.shaik@oss.qualcomm.com> wrote:
->
->
->
-> On 1/27/2026 7:47 PM, Rob Herring wrote:
-> > On Tue, Jan 27, 2026 at 04:25:11PM +0530, Mohammad Rafi Shaik wrote:
-> >> Document compatible for Qualcomm SA8775P and QCS8300 SoC LPASS TLMM
-> >> pin controller, fully compatible with previous SM8450 generation
-> >> (same amount of pins and functions).
-> >>
-> >> Signed-off-by: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.c=
-om>
-> >> ---
-> >> changes in [v3]:
-> >>   - Removed the duplicate driver code patch as suggested by Krzysztof.
-> >>   - Reused the existing SM8490 pinctrl, which is fully compatible with=
- SA8775P and QCS8300.
-> >>   - Link to V2: https://lore.kernel.org/all/20260107192007.500995-1-mo=
-hammad.rafi.shaik@oss.qualcomm.com/
-> >>
-> >> changes in [v2]:
-> >>   - Fixed dt-binding errors reported by Krzysztof and Rob.
-> >>   - Added proper slew rate value for wsa2_swr_data GPIO, as suggested =
-by Konrad.
-> >>   - Documented Monaco compatible as suggested by Konrad.
-> >>   - Link to V1: https://lore.kernel.org/all/20251116171656.3105461-1-m=
-ohammad.rafi.shaik@oss.qualcomm.com/
-> >> ---
-> >>   .../pinctrl/qcom,sm8450-lpass-lpi-pinctrl.yaml         | 10 ++++++++=
-+-
-> >>   1 file changed, 9 insertions(+), 1 deletion(-)
-> >>
-> >> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm8450-lpa=
-ss-lpi-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm8450=
--lpass-lpi-pinctrl.yaml
-> >> index e7565592d..354629c38 100644
-> >> --- a/Documentation/devicetree/bindings/pinctrl/qcom,sm8450-lpass-lpi-=
-pinctrl.yaml
-> >> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm8450-lpass-lpi-=
-pinctrl.yaml
-> >> @@ -15,7 +15,15 @@ description:
-> >>
-> >>   properties:
-> >>     compatible:
-> >> -    const: qcom,sm8450-lpass-lpi-pinctrl
-> >> +    oneOf:
-> >> +      - const: qcom,sm8450-lpass-lpi-pinctrl
-> >> +      - items:
-> >> +          - enum:
-> >> +              - qcom,qcs8300-lpass-lpi-pinctrl
-> >> +              - qcom,sa8775p-lpass-lpi-pinctrl
-> >> +          - const: qcom,sm8450-lpass-lpi-pinctrl
-> >> +        minItems: 1
-> >> +        maxItems: 2
-> >
-> > No. You are either backwards compatible with sm8450 or you aren't. The
-> > h/w is fixed.
-> >
->
-> ACK,
->
-> Agree,
->
-> Need backward compatibility with sm8450 for both sa8775p and qcs8300 as
-> they must fall back to the sm8450, so initially used enum to pick
-> between the sa8775p and qcs8300 compatibles. I see enum isn=E2=80=99t
-> appropriate here since fixed h/w.
->
-> will use the const instead of enum like below.
->
->   properties:
->     compatible:
-> -    const: qcom,sm8450-lpass-lpi-pinctrl
-> +    oneOf:
-> +      - const: qcom,sm8450-lpass-lpi-pinctrl
-> +      - items:
-> +          - const: qcom,sa8775p-lpass-lpi-pinctrl
-> +          - const: qcom,sm8450-lpass-lpi-pinctrl
-> +
-> +      - items:
-> +          - const: qcom,qcs8300-lpass-lpi-pinctrl
-> +          - const: qcom,sm8450-lpass-lpi-pinctrl
+This series adds support for the standard `regulator-off-on-delay-us`
+property to the Qualcomm RPMh regulator driver and updates the
+corresponding Device Tree bindings.
 
-Sigh, no. The 2 entries can be combined like you had. Just drop
-minItems and maxItems from what you had.
+Motivation:
+On the Lenovo Yoga Slim 7x (Snapdragon X Elite), the camera regulators
+(LDO1, LDO3, LDO7) have large bulk capacitors and rely on passive discharge.
+When these regulators are disabled, the voltage decays very slowly. If
+re-enabled too quickly, the sensor experiences a brownout and fails to
+initialize.
 
-And test your binding before sending it.
+Verification:
+I verified that the core `drivers/regulator/of_regulator.c` does not
+currently parse `regulator-off-on-delay-us` in `of_get_regulation_constraints()`.
+Therefore, the driver must parse this property explicitly and populate
+`rdesc->off_on_delay` so the regulator core can enforce the constraint.
 
-Rob
+Changes in v3:
+- Added Patch 1/2: Update DT bindings to allow `regulator-off-on-delay-us`
+  for `qcom,rpmh-regulator` (Requested by Mark Brown).
+- Updated Patch 2/2: Refined commit message to explicitly mention the
+  passive discharge and bulk capacitor mechanism on the Yoga Slim 7x
+  (Requested by Mark Brown).
+
+Changes in v2:
+- Moved the motivation/context from the cover letter into the commit
+  message of the driver patch.
+
+Saikiran (2):
+  dt-bindings: regulator: qcom,rpmh: Allow regulator-off-on-delay-us
+  regulator: qcom-rpmh: Add support for regulator-off-on-delay-us
 
