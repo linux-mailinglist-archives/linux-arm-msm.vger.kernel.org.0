@@ -1,70 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-90654-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90655-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id QOiUAfdkeGnTpgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90654-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 08:10:47 +0100
+	id IB97E0hleGnTpgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90655-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 08:12:08 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 935FB909E8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 08:10:46 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id E575F90A16
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 08:12:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 2893230041FC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 07:10:46 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C08773011BC1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 07:11:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FA0832B99F;
-	Tue, 27 Jan 2026 07:10:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18D9332C92D;
+	Tue, 27 Jan 2026 07:11:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EZASAtY2"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TZ8orioz"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E54329C74;
-	Tue, 27 Jan 2026 07:10:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9AAD1D9346;
+	Tue, 27 Jan 2026 07:11:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769497845; cv=none; b=eM5NkWcjbNJsLZ1Ww64udEZhCuqWFUMlxoYPphjGopY+cqMl8SFaEQ6nbexwFUUYK9HZzGNuCUjFgy1dT7fKBJrU4sZgcogIHMxuTDZFrG1JpJWujNDYyPAUfrCYwdJ+lC2ApYh53OvNsW2LrMeo/VbLLLYBITMhaajKJQ4mcjw=
+	t=1769497899; cv=none; b=Te2cTMK0+rYmgP6dT/We9JI+fDwfqp7R/575Ent3z+/0BM1ppY7IQICxjQXqx8gZNqZlI0KHdqiuRbNSYvdL6WM0WmTDXC761ei9DU/mhYFvBqQXKoXQtLIXORvwCp0LjtZDdHp2Pbs0xkyywMDKbvj64imKXE+rVGE7L88pv2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769497845; c=relaxed/simple;
-	bh=yTkcis505tVmLiRq0eQhz1yZqVct1c05x3BfbdMPMeA=;
+	s=arc-20240116; t=1769497899; c=relaxed/simple;
+	bh=0Gfr1rwFWCkLVfSLU7RQ4F2QGghqpp1AJelz8j+FtMc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mtqwID3AvcNBtvMOl1CSEQYWpgmpOb0G8KKv5q5nRZCvBPvs8LXgAtInSBuzh5hf5q0fq9DP6wOUWyYrD5WhO0nbA1jRUCIpLDIK1w03m+/gbQBAu1ezHqn3PkGdXGLy00mYT894gRB6w3xUAS5hh660D09XzQlrPP+5MJ8JA+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EZASAtY2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 332FDC116C6;
-	Tue, 27 Jan 2026 07:10:44 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=hv6g2IBrQcCXdIaMOmJld7NFH/MQIX1noZkFbXBr93cTtoU1qH4BWB1lnp69HNgDJyJN+SToEceGlowmhONoW79QUKtmQZTNCumtw79lDMWDlq+yDJYcVADPr7C5OxLfPz9L1PgR3qPAorhwLJbDoXLLM1OIUd/Qz7SRHfnQFW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TZ8orioz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F6EDC116C6;
+	Tue, 27 Jan 2026 07:11:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1769497844;
-	bh=yTkcis505tVmLiRq0eQhz1yZqVct1c05x3BfbdMPMeA=;
+	s=korg; t=1769497898;
+	bh=0Gfr1rwFWCkLVfSLU7RQ4F2QGghqpp1AJelz8j+FtMc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=EZASAtY2j1BEMUjViKbzK+agy09tHmk64JmlX7MlcecYkT/jWFGdM+R/cvZ/6xRO+
-	 zI4WiYuUhTsrTeQSfrlSIYziE+/1IBua0YueqeO9iPhCG/NgktBbuevZ8PsjfB9N9g
-	 6H2N7ogpAuh+hGWdpi/5j5LMgg0pFnfbEXpVX7Yk=
-Date: Tue, 27 Jan 2026 08:10:41 +0100
+	b=TZ8orioz4j2SFqJXJuM8/QzvqywsFCSqwUN33XoGzeACMUnZRDpYARrVTzGBhKGzQ
+	 Q9LGIOXcxcZEfrpcFwY5xLQVvMPVXkViB69nB94alr+rjG6rxQsf3rzqlL0fwzBK7l
+	 1EAf5oZl5bqMmWf+RfonCUAMkG66fkcUhI/c4qvM=
+Date: Tue, 27 Jan 2026 08:11:35 +0100
 From: Greg KH <gregkh@linuxfoundation.org>
 To: Xingjing Deng <micro6947@gmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, srini@kernel.org,
-	amahesh@qti.qualcomm.com, arnd@arndb.de,
+Cc: srini@kernel.org, amahesh@qti.qualcomm.com, arnd@arndb.de,
 	dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org, Xingjing Deng <xjdeng@buaa.edu.cn>,
 	stable@vger.kernel.org
-Subject: Re: [PATCH v5] misc: fastrpc: check qcom_scm_assign_mem() return in
- rpmsg_probe
-Message-ID: <2026012758-sacred-slouchy-45ca@gregkh>
-References: <20260117140351.875511-1-xjdeng@buaa.edu.cn>
- <2026012631-suffice-enforcer-8553@gregkh>
- <qbuccwnfljpnxvpp7vl4weoecx6ujg3cy2lwwgoz42b3ux5o3k@mi5fxhplgrt7>
- <CAK+ZN9r+oCbSNjSf=yKQHGT9=Cqfw02J+TS3eZaUgrd=PfV7tA@mail.gmail.com>
+Subject: Re: [PATCH v3] misc: fastrpc: possible double-free of
+ cctx->remote_heap
+Message-ID: <2026012748-unblock-vacation-70b8@gregkh>
+References: <20260117140959.879035-1-xjdeng@buaa.edu.cn>
+ <2026012641-snazzy-upstate-a815@gregkh>
+ <CAK+ZN9r57ErbhCxX6hR8_G1G+eTh+UajdNftvKkUnyefYm3BhA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAK+ZN9r+oCbSNjSf=yKQHGT9=Cqfw02J+TS3eZaUgrd=PfV7tA@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAK+ZN9r57ErbhCxX6hR8_G1G+eTh+UajdNftvKkUnyefYm3BhA@mail.gmail.com>
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [2.34 / 15.00];
 	MID_END_EQ_FROM_USER_PART(4.00)[];
@@ -72,41 +71,42 @@ X-Spamd-Result: default: False [2.34 / 15.00];
 	DMARC_POLICY_ALLOW(-0.50)[linuxfoundation.org,none];
 	MID_RHS_NOT_FQDN(0.50)[];
 	R_DKIM_ALLOW(-0.20)[linuxfoundation.org:s=korg];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-90654-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-90655-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FREEMAIL_TO(0.00)[gmail.com];
 	MIME_TRACE(0.00)[0:+];
 	DKIM_TRACE(0.00)[linuxfoundation.org:+];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	MISSING_XM_UA(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[gregkh@linuxfoundation.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[10];
+	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,linuxfoundation.org:dkim]
-X-Rspamd-Queue-Id: 935FB909E8
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linuxfoundation.org:dkim]
+X-Rspamd-Queue-Id: E575F90A16
 X-Rspamd-Action: no action
 
-On Tue, Jan 27, 2026 at 10:18:38AM +0800, Xingjing Deng wrote:
-> I identified this issue through static program analysis. All other
-> callers of this function validate its return value, so I believe a
-> validation check should also be added here.
+On Tue, Jan 27, 2026 at 10:19:50AM +0800, Xingjing Deng wrote:
+> This issue was also identified through static program analysis and
+> subsequently verified via manual inspection. I believe I have
+> uncovered a potential risk of abnormal execution here, hence I’m
+> reporting this problem.
 
-Please don't top-post :(
-
-Anyway, you MUST properly document the tools used to find issues like
-this in your changelog text, as our rules require.  Please do so.
+Again, you need to document this fact, please read the rules for
+submitting patches that are found by tools.  And say you have not tested
+this, because that means there is a much lower chance that the change is
+correct.
 
 thanks,
 
