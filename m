@@ -1,270 +1,293 @@
-Return-Path: <linux-arm-msm+bounces-90848-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90849-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id eKCsCBnweGkCuAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90848-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 18:04:25 +0100
+	id KBc1NjPxeGmGuAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90849-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 18:09:07 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 32E1C9824C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 18:04:24 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 71D0598355
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 18:09:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 8B6D3307597E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 17:01:09 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id BCC1D30AF861
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 17:04:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E49F03624A9;
-	Tue, 27 Jan 2026 17:01:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BFDD363C46;
+	Tue, 27 Jan 2026 17:04:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="D4RaFaED";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Abe55SQs"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EXj9+9tF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44EE327FD52
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jan 2026 17:01:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D810A3624BF;
+	Tue, 27 Jan 2026 17:04:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769533268; cv=none; b=DymcvlQpAFnd4VLc6t/I8bcsDb+pafsQ0YsTM0aQcYcoKu54vsTh6D+pJrSkXeJzzNB8J0FfG04x/qkdsBO+nimMPwO+BRX2e7YmRImoQW0o3uzwUwRquhmjJRohVtosql4trj6z13iyX3E7e6azgfwHFHwE9x1gbV5aER7YNbc=
+	t=1769533496; cv=none; b=CAKElr4wbOIBP5AhLaHD0zTsIA4M+WyBnXRsmoSC5lOc2GY17HMhENsqTTWZjaZzaRNXPKWoCnBT8Qhci9Mg7eH6H0O8O1EDUMxUef3GaxnEctAAjX5ckwljC5CUJKBWX+AOpmQPGJe9QlrL3oW+cUXMM2aDDieWf/zmxJ5+QmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769533268; c=relaxed/simple;
-	bh=J2yGHPSTfHwzt35AwU53m7NydZ4+39xVQbnvSnvukfQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Qil9i3pkSH+BokXTqxm9Jk1mn+Tm+N3KEcXbK2Mz+OnXAc0nq/Uu+eslteDb8zonsIIjBqwUGU10ih4X09fh/ToeLEU3grsUa3dflJBBUIJD1vDsvyVt10Bdl5naO1dy9l4aVXHTv7jyiyGgTG+e+lppIgWjKQnK0d30b2y89YY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=D4RaFaED; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Abe55SQs; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60RAbvYB1268765
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jan 2026 17:01:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	MuevM4w2vSJq9WQIfedCt/7HqiIjpe7lqj436dV8Gg0=; b=D4RaFaEDUCI7EB93
-	8Cjp6j4uVWEKKHYc2c6VbAY9t3320ATuSTmR4RNzeVUdgsTXuTIU9lHgOR6bHCQV
-	MGukVNIx9KtwpQJjikhw31jVtihema/0p3Tk/oI2swv2ibCkd6IZWfBDI6iXCfky
-	eJxLkEddu2wTcdn5drJkRwizEGTKe/YGDEg/jotSNehpVRSg5GwO3GeijyWGP0sB
-	v2bu12s+UOFrrW+wwp2jR1lKnHPO690aOssOzC5SvGuR3cQhyh7RsRPB0YlLh51N
-	prOGfexsgnjzpObVg1OmoGaOAJV30wrtUWuQGNHvxJYWs/rVDpTK4FIiXkl6O/J+
-	5Wp1hw==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bxnyatjtb-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jan 2026 17:01:06 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-34cc8bf226cso5984775a91.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jan 2026 09:01:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1769533264; x=1770138064; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=MuevM4w2vSJq9WQIfedCt/7HqiIjpe7lqj436dV8Gg0=;
-        b=Abe55SQsqSKWyrvgMDKyUToQMezNtOqtYHoxWKoQeW0fWBXnuofQcN3mXNB6/hZVJ1
-         Z/uRpoBdrOpo+97GXNqZc1jLETYfuJPO6J+GcoDjloF6YDAgt2fGcmO02DS+OMp7wB76
-         K2M3YtrYVupUxyHVbpUuoIDw4D1fqtMzdDwu0qW9EbIlyZE0DAOnIlAiv2qCTQW7Ic2Y
-         lww0YpbNXmz/XqssPAuaIBmffCC0mVyljeW49HcRkEGgQrr0TVVJnvpL7/yeLI9GT8Hv
-         MZ0sfNdsKMTVokJyXxxE0kFWHjkBV7gzaVnH2vUL6W9qOtVzSRPC+S6tr67ib7Hhs8Q5
-         Tbgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769533264; x=1770138064;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MuevM4w2vSJq9WQIfedCt/7HqiIjpe7lqj436dV8Gg0=;
-        b=ZKZcoco7aH5Jhva+e0w2g9zWVbuuzjdMvJ7FID0D2Z7TLmzuoMgMI5Tr+/axyLzX+9
-         M/4/R/KL2gbSAJ6oUnGS3i+PFspLaOjjTMk2sJB5eRYqd9jmT9oPJuZYqYThyw2REMrk
-         8aocurVzqcyLyBFejQ0NeHnlooc9DuFCbgdYRAoB096+4AagSnzSn6cerD7UZKlqeno4
-         EwadAPSlvhmIxwZNIlc/eU+eYLPtIJ0p14hHuCVdqtuRhFDN668f9KiAdx1WozQzw/8s
-         tygx5GpbuBzO93wBeIp0gKFH0U2lZL+qyIVZTSwasYpPs9yIP0mhfku8p5FuqABtAgH/
-         GB6g==
-X-Forwarded-Encrypted: i=1; AJvYcCUyEps9LiAFNTrtna1RufYlMyCsPJn1Uie3LJ1L0g0esU3sLrie0q1R4zbd4sI2xFZmmteycU2cutEN3R2y@vger.kernel.org
-X-Gm-Message-State: AOJu0YyQ7l0FjzJzJnDCvpZbL6z9wOz1HPc5a3USlPHohZk35qlbhu89
-	IC6OK8t4wO7pJvXR7czLRhcu9w35mu3YHY8nDy7JZiLzFUgRlZKsTX81eqAnUaoU5kUbcXfHkUI
-	J7dQpliRvBF7IwBvyiXLWNqsfyU8mWETHizqas4Wx/yzJB2e+A3EoHgIgn7XEkgwHINsA
-X-Gm-Gg: AZuq6aIYAf+Co/m0SIa4mAF62DOJS1pNe3L0CbNr7uF7odBr+YPR54T1NumF2KNnq4k
-	nLepyJWQ1oS/Emw/j0SHOKaOngnooj439CBfan/wOat3JpIyrBRHk8w1I+ZhpmMjscZQxr9182Y
-	G8HuzDSAMvsdOA0wOPbgel/XgZAQxbHc7mqXub8H35zPJbmH/OQ4pzpctRCIOsysUxdGhLaB0ck
-	QKS4e3zd17go97Ubuaz1X0tT0hZKtoJ1I8WiEIgpM2vvPtX3+QWfRci1Uo5fWnwhiFEOtZfXS2P
-	kwXei2qH4JRo2zsIhLoR5/JLnz6foLd2lOv2Zy+SjzzOwAVvBmrGlgP5V7psWV4YjBApUTc4lEW
-	s4p5Oh2MjTjOjkgGWthlr/5Qk/fnIW+S5URScmCfb6ldj63Cc
-X-Received: by 2002:a17:90b:2d83:b0:34a:a1c1:90a0 with SMTP id 98e67ed59e1d1-353fed87a85mr1951097a91.28.1769533263559;
-        Tue, 27 Jan 2026 09:01:03 -0800 (PST)
-X-Received: by 2002:a17:90b:2d83:b0:34a:a1c1:90a0 with SMTP id 98e67ed59e1d1-353fed87a85mr1951065a91.28.1769533263019;
-        Tue, 27 Jan 2026 09:01:03 -0800 (PST)
-Received: from [192.168.1.5] ([106.212.237.20])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3540f17955asm42951a91.0.2026.01.27.09.01.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Jan 2026 09:01:02 -0800 (PST)
-Message-ID: <e5ad14ca-1a4e-4a2d-9c03-392ea6c3c5c7@oss.qualcomm.com>
-Date: Tue, 27 Jan 2026 22:30:47 +0530
+	s=arc-20240116; t=1769533496; c=relaxed/simple;
+	bh=poCPnd4zFMjtSit8xD03/GV5rPSvHmcbMOzBQ9KlptE=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=bWpdOkedU60TU5nMGi/bolXWf59wRI0TRaHcKQ7Fj5Oy+5bJ2N2ck9gLHKw+oqhm8EZzIbjl58zzcXikQIFb+OZS2wgF1tOrG6YMd1H6OY8MYBiy4NguTLiSYkx0V5fi4wQKmaWATKMZTQJuVR8+mc4L0FZr/WoAk1BdglZ6pJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EXj9+9tF; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CD6BC116C6;
+	Tue, 27 Jan 2026 17:04:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1769533496;
+	bh=poCPnd4zFMjtSit8xD03/GV5rPSvHmcbMOzBQ9KlptE=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=EXj9+9tFbUrcdXOg/gNZ0xtF0AANmEMZn7gE9OmsDvKPWFilOXbzhgganOOqg0a5h
+	 QxlN29XF4sYATOJ+A72JrE4WEjRMG+yw01F0oZNDKW53UG86h7zKvwkJBiU7ezZ7+w
+	 NfjFs7sUmjmzJ4YJprHnkc3Q5Ktdj8tsQql5XfJKIMtRI0SywIyKabPZFe78+eWd5W
+	 DGSSoMZtSGXB7TPPZUoln5ulzw3FTd1anFe6dEDFiphujvDfDFq512lX4TDir6fsk8
+	 myWqw96UvNR6VrKwSLL1zpJJH+3BkoXmA3i/l6GZwlyrb8d4zv9hHMnncTL43nb8BC
+	 gDheOQS+ka2UQ==
+Date: Tue, 27 Jan 2026 11:04:55 -0600
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Magnus Damm <magnus.damm@gmail.com>,
+	Bartosz Golaszewski <brgl@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	linux-usb@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+	linux-pci@vger.kernel.org
+Subject: Re: [PATCH v2 2/7] pci: pwrctrl: add PCI pwrctrl driver for the
+ UPD720201/UPD720202 USB 3.0 xHCI Host Controller
+Message-ID: <20260127170455.GA364177@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] soc: qcom: pd-mapper: Add support for SA8775P and
- QCS8300
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20260127144315.4125110-1-mohammad.rafi.shaik@oss.qualcomm.com>
- <e6broy5txvtit5m4otegrmyip5f2iotr3usnpsi2pzvkpeyakl@t5n4smiovw64>
-Content-Language: en-US
-From: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
-In-Reply-To: <e6broy5txvtit5m4otegrmyip5f2iotr3usnpsi2pzvkpeyakl@t5n4smiovw64>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: TPwzJmBEhP7Zo6zirzL5RbyskCQ5EvfL
-X-Authority-Analysis: v=2.4 cv=JZqxbEKV c=1 sm=1 tr=0 ts=6978ef52 cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=buDgOHdOW+2HB7N8kE10CA==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=kuHux4ygrKcAdbMORpQA:9 a=QEXdDO2ut3YA:10 a=iS9zxrgQBfv6-_F4QbHw:22
-X-Proofpoint-ORIG-GUID: TPwzJmBEhP7Zo6zirzL5RbyskCQ5EvfL
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI3MDEzOCBTYWx0ZWRfX0yc97zlyGH2i
- VpuJsTzoREpCiAy8OdeXpe/cIYa8PnSw5KkpwcTxMg2TCjZab974W3VPvv6QbTh/tkcmy6DVi5g
- 5q2sufDEovU3l9wH6jpXY+UXMdFMxGa8/srM7IPzZ+JLX7qmXh3qpBrsiMpciRDDChXdVzOwKN/
- gatP8UMzF3drGOb78U1mmS1dORf8aQhbbMwyBN+pbZJje0Wj0P9e7MIs6BDsEfP5nG2sCzwqmbK
- uJl2Slfy2LKqx8EG48COGJyNSi2D0SY6kFg7hdIAZwdUI2TMXiKwOsB5P0NJOWiNybJ97B2b3U/
- nTmVP0T080uc6UYOgSsMkiMRUUKkOZgm7CEghEvL13xPKhl50jXRNmT+8JmjR+Ngrbd6RWD3a9k
- fZwN08qELJxK1eMKzakZ4RbV5Hgi6oykdogj3IpMYPP79UIG7BhA/ItcY/F7zf3I/bHYGGg+wth
- 8fza1KVJm5DJxn/+LCw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-01-27_03,2026-01-27_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 suspectscore=0 lowpriorityscore=0
- malwarescore=0 spamscore=0 adultscore=0 clxscore=1011 phishscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2601270138
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260127-topic-sm8650-ayaneo-pocket-s2-base-v2-2-c55ec1b5d8bf@linaro.org>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	TO_DN_SOME(0.00)[];
-	TAGGED_FROM(0.00)[bounces-90848-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-90849-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:mid,oss.qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim];
-	RCPT_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mohammad.rafi.shaik@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[28];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[kernel.org,oss.qualcomm.com,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch,linuxfoundation.org,glider.be,google.com,vger.kernel.org,lists.freedesktop.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROM(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[helgaas@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,renesas];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 32E1C9824C
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 71D0598355
 X-Rspamd-Action: no action
 
+On Tue, Jan 27, 2026 at 10:57:29AM +0100, Neil Armstrong wrote:
+> Add support fo the Renesas UPD720201/UPD720202 USB 3.0 xHCI Host Controller
+> power control which connects over PCIe and requires specific power supplies
+> to start up.
 
+s/fo /for /
 
-On 1/27/2026 8:46 PM, Dmitry Baryshkov wrote:
-> On Tue, Jan 27, 2026 at 08:13:15PM +0530, Mohammad Rafi Shaik wrote:
->> Add support for the Qualcomm SA8775P and QCS8300 SoCs to the
->> protection domain mapper. SA8775P and QCS8300 share the same
->> protection domain configuration as SM8550 with an additional
->> gpdsp domain, except for charger_pd and mpss_pd.
->>
->> Add an entry to the kernel, to avoid the need for userspace to
->> provide this service.
->>
->> Signed-off-by: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
->> ---
->> changes in [v2]:
->>   - Added missing GPDSP power domain configuration as suggested by Dmitry.
->>   - Link to V1: https://lore.kernel.org/all/20251230102508.1491296-1-mohammad.rafi.shaik@oss.qualcomm.com/
->> ---
->>   drivers/soc/qcom/qcom_pd_mapper.c | 24 ++++++++++++++++++++++++
->>   1 file changed, 24 insertions(+)
->>
->> diff --git a/drivers/soc/qcom/qcom_pd_mapper.c b/drivers/soc/qcom/qcom_pd_mapper.c
->> index 1bcbe6968..aec7ff054 100644
->> --- a/drivers/soc/qcom/qcom_pd_mapper.c
->> +++ b/drivers/soc/qcom/qcom_pd_mapper.c
->> @@ -305,6 +305,18 @@ static const struct qcom_pdm_domain_data cdsp_root_pd = {
->>   	.services = { NULL },
->>   };
->>   
->> +static const struct qcom_pdm_domain_data gpdsp_root_pd = {
->> +	.domain = "msm/gpdsp/root_pd",
->> +	.instance_id = 192,
->> +	.services = { NULL },
->> +};
->> +
->> +static const struct qcom_pdm_domain_data gpdsp1_root_pd = {
->> +	.domain = "msm/gpdsp1/root_pd",
->> +	.instance_id = 241,
->> +	.services = { NULL },
->> +};
->> +
->>   static const struct qcom_pdm_domain_data slpi_root_pd = {
->>   	.domain = "msm/slpi/root_pd",
->>   	.instance_id = 90,
->> @@ -401,6 +413,16 @@ static const struct qcom_pdm_domain_data *qcs404_domains[] = {
->>   	NULL,
->>   };
->>   
->> +static const struct qcom_pdm_domain_data *sa8775p_domains[] = {
->> +	&adsp_audio_pd,
->> +	&adsp_root_pd,
->> +	&adsp_sensor_pd,
+In subject, "PCI/pwrctrl: Add ..." to match history (see
+"git log --oneline drivers/pci/pwrctrl/")
+
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+>  drivers/pci/pwrctrl/Kconfig                 | 10 ++++
+>  drivers/pci/pwrctrl/Makefile                |  2 +
+>  drivers/pci/pwrctrl/pci-pwrctrl-upd720201.c | 88 +++++++++++++++++++++++++++++
+>  3 files changed, 100 insertions(+)
 > 
-> I don't see sensors PD in linux-firmware.
+> diff --git a/drivers/pci/pwrctrl/Kconfig b/drivers/pci/pwrctrl/Kconfig
+> index e0f999f299bb..5a94e60d0d3e 100644
+> --- a/drivers/pci/pwrctrl/Kconfig
+> +++ b/drivers/pci/pwrctrl/Kconfig
+> @@ -11,6 +11,16 @@ config PCI_PWRCTRL_PWRSEQ
+>  	select POWER_SEQUENCING
+>  	select PCI_PWRCTRL
+>  
+> +config PCI_PWRCTRL_UPD720201
+> +	tristate "PCI Power Control driver for the UPD720201 USB3 Host Controller"
+> +	select PCI_PWRCTRL
+> +	help
+> +	  Say Y here to enable the PCI Power Control driver of the UPD720201
+> +	  USB3 Host Controller.
+> +
+> +	  The voltage regulators powering the rails of the PCI slots
+> +	  are expected to be defined in the devicetree node of the PCI device.
+
+I assume this is a function of the platform design, not an intrinsic
+feature of UPD720201?  I.e., my guess is that this driver is not
+required for every platform that includes a UPD720201 device?
+
+Maybe this is just another way of asking Mani's question about using
+pwrctrl-slot.  *Every* device requires specific power supplies to
+start up (re patch 1/7), and this driver doesn't appear to depend on
+anything unique about UPD720201.
+
+>  config PCI_PWRCTRL_SLOT
+>  	tristate "PCI Power Control driver for PCI slots"
+>  	select PCI_PWRCTRL
+> diff --git a/drivers/pci/pwrctrl/Makefile b/drivers/pci/pwrctrl/Makefile
+> index 13b02282106c..a99f85de8a3d 100644
+> --- a/drivers/pci/pwrctrl/Makefile
+> +++ b/drivers/pci/pwrctrl/Makefile
+> @@ -5,6 +5,8 @@ pci-pwrctrl-core-y			:= core.o
+>  
+>  obj-$(CONFIG_PCI_PWRCTRL_PWRSEQ)	+= pci-pwrctrl-pwrseq.o
+>  
+> +obj-$(CONFIG_PCI_PWRCTRL_UPD720201)	+= pci-pwrctrl-upd720201.o
+> +
+>  obj-$(CONFIG_PCI_PWRCTRL_SLOT)		+= pci-pwrctrl-slot.o
+>  pci-pwrctrl-slot-y			:= slot.o
+>  
+> diff --git a/drivers/pci/pwrctrl/pci-pwrctrl-upd720201.c b/drivers/pci/pwrctrl/pci-pwrctrl-upd720201.c
+> new file mode 100644
+> index 000000000000..db96bbb69c21
+> --- /dev/null
+> +++ b/drivers/pci/pwrctrl/pci-pwrctrl-upd720201.c
+> @@ -0,0 +1,88 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Based on upd720201.c:
+> + * Copyright (C) 2024 Linaro Ltd.
+> + * Author: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> + */
+> +
+> +#include <linux/device.h>
+> +#include <linux/mod_devicetable.h>
+> +#include <linux/module.h>
+> +#include <linux/pci-pwrctrl.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/regulator/consumer.h>
+> +#include <linux/slab.h>
+> +
+> +struct pci_pwrctrl_upd720201_data {
+> +	struct pci_pwrctrl ctx;
+> +	struct regulator_bulk_data *supplies;
+> +	int num_supplies;
+> +};
+
+To match recent rework of nearby drivers:
+
+s/pci_pwrctrl_upd720201_data/upd720201_pwrctrl/
+s/ctx/pwrctrl/
+
+> +static void devm_pci_pwrctrl_upd720201_power_off(void *data)
+
+and:
+
+s/devm_pci_pwrctrl_upd720201_power_off/devm_upd720201_release/
+s/pci_pwrctrl_upd720201_probe/upd720201_pwrctrl_probe/
+
+Might be more opportunities to be more similar to slot.c and
+pci-pwrctrl-tc9563.c, e.g., adding:
+
+  upd720201->pwrctrl.power_on = ...;
+  upd720201->pwrctrl.power_off = ...;
+
+(would have to be based on pci/pwrctrl branch, which is where this
+patch would be applied)
+
+> +{
+> +	struct pci_pwrctrl_upd720201_data *upd720201 = data;
+> +
+> +	regulator_bulk_disable(upd720201->num_supplies, upd720201->supplies);
+> +	regulator_bulk_free(upd720201->num_supplies, upd720201->supplies);
+> +}
+> +
+> +static int pci_pwrctrl_upd720201_probe(struct platform_device *pdev)
+> +{
+> +	struct pci_pwrctrl_upd720201_data *upd720201;
+> +	struct device *dev = &pdev->dev;
+> +	int ret;
+> +
+> +	upd720201 = devm_kzalloc(dev, sizeof(*upd720201), GFP_KERNEL);
+> +	if (!upd720201)
+> +		return -ENOMEM;
+> +
+> +	ret = of_regulator_bulk_get_all(dev, dev_of_node(dev),
+> +					&upd720201->supplies);
+> +	if (ret < 0) {
+> +		dev_err_probe(dev, ret, "Failed to get upd720201 regulators\n");
+> +		return ret;
+> +	}
+> +
+> +	upd720201->num_supplies = ret;
+> +	ret = regulator_bulk_enable(upd720201->num_supplies, upd720201->supplies);
+> +	if (ret < 0) {
+> +		dev_err_probe(dev, ret, "Failed to enable upd720201 regulators\n");
+> +		regulator_bulk_free(upd720201->num_supplies, upd720201->supplies);
+> +		return ret;
+> +	}
+> +
+> +	ret = devm_add_action_or_reset(dev, devm_pci_pwrctrl_upd720201_power_off,
+> +				       upd720201);
+> +	if (ret)
+> +		return ret;
+> +
+> +	pci_pwrctrl_init(&upd720201->ctx, dev);
+> +
+> +	ret = devm_pci_pwrctrl_device_set_ready(dev, &upd720201->ctx);
+> +	if (ret)
+> +		return dev_err_probe(dev, ret, "Failed to register pwrctrl driver\n");
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct of_device_id pci_pwrctrl_upd720201_of_match[] = {
+> +	{
+> +		.compatible = "pci1912,0014",
+> +	},
+> +	{ }
+> +};
+> +MODULE_DEVICE_TABLE(of, pci_pwrctrl_upd720201_of_match);
+> +
+> +static struct platform_driver pci_pwrctrl_upd720201_driver = {
+> +	.driver = {
+> +		.name = "pci-pwrctrl-upd720201",
+> +		.of_match_table = pci_pwrctrl_upd720201_of_match,
+> +	},
+> +	.probe = pci_pwrctrl_upd720201_probe,
+> +};
+> +module_platform_driver(pci_pwrctrl_upd720201_driver);
+> +
+> +MODULE_AUTHOR("Neil Armstrong <neil.armstrong@linaro.org>");
+> +MODULE_DESCRIPTION("PCI Power Control driver for UPD720201 USB3 Host Controller");
+> +MODULE_LICENSE("GPL");
 > 
->> +	&cdsp_root_pd,
->> +	&gpdsp_root_pd,
->> +	&gpdsp1_root_pd,
->> +	NULL,
->> +};
->> +
->>   static const struct qcom_pdm_domain_data *sc7180_domains[] = {
->>   	&adsp_audio_pd,
->>   	&adsp_root_pd_pdr,
->> @@ -572,6 +594,8 @@ static const struct of_device_id qcom_pdm_domains[] __maybe_unused = {
->>   	{ .compatible = "qcom,qcm2290", .data = qcm2290_domains, },
->>   	{ .compatible = "qcom,qcm6490", .data = sc7280_domains, },
->>   	{ .compatible = "qcom,qcs404", .data = qcs404_domains, },
->> +	{ .compatible = "qcom,qcs8300", .data = sa8775p_domains, },
->> +	{ .compatible = "qcom,sa8775p", .data = sa8775p_domains, },
+> -- 
+> 2.34.1
 > 
-> THis is definitely not correct, QCS8300 and SA8755P have different sets
-> of protection domains.
-> 
-ACK,
-
-Sorry for the incorrect mapping,
-
-will make sure never happen again, will cross check with linux-firmware 
-and update the change
-
-Thank you for highlighting this.
-
-Best Regards,
-Rafi.
-
->>   	{ .compatible = "qcom,sc7180", .data = sc7180_domains, },
->>   	{ .compatible = "qcom,sc7280", .data = sc7280_domains, },
->>   	{ .compatible = "qcom,sc8180x", .data = sc8180x_domains, },
->> -- 
->> 2.34.1
->>
-> 
-
 
