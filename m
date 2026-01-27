@@ -1,179 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-90716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90708-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id WJghOTuYeGkWrQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 11:49:31 +0100
+	id YIj8MwmXeGkWrQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90708-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 11:44:25 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 692C09324C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 11:49:31 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A92D693076
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 11:44:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 51BF330C15E9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 10:45:15 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 17B64300490E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jan 2026 10:44:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65DCC3446B5;
-	Tue, 27 Jan 2026 10:44:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7C2A34253A;
+	Tue, 27 Jan 2026 10:44:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="NJW/8eJ/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mqJ0cCW3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4A5F344DB4;
-	Tue, 27 Jan 2026 10:44:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C459C33CE9B;
+	Tue, 27 Jan 2026 10:44:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769510693; cv=none; b=vEHJT0zBSCkIKXym9DfkIGoR3HQICoHKuzauD/LHbd2X86d9ufX1kgkx5PlnWkT+Z5qZ+ixCHq1OLuGJdIKEFvU04y4dwFu2f6/dXhNoEpIWiBdDLfQpZGytwc6lVz0quS4JZDnmN8jQVYCFibF1pixecM558Erej2SCqF7dHwA=
+	t=1769510663; cv=none; b=KajwtUm4JBhTClru6y246Z/mLC79Af61YZhW4RxpxH/zETXziFqvlJ4yAo1iEgD9XP6KgeftHa+RG0zUKArz3mn+ML9HMrd8JJ9Khf40+tZia/v8CsCXPmZ4XoSDp2GstNtCI6o3FS1JlFMP0cai46l2tf3Um77c9KJDpr1yem0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769510693; c=relaxed/simple;
-	bh=qYSt9bUzQj5PyLabpQbUCQOve2lblO05FC7MGh9qImw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mwb/FNkYSZ6Dd9o3Mzd3CvKOCLxTaSfjureCv8+0dvTKujxNDKHvFCC/9KqN/T5yBE9ayHvBvCP4qQ5GaL++gu++phe2Qxrq5rXR2cfRfry2YOxskrAI2E6I8KYBTQLjThlkPYcfmCuTW/4rGIngYw+etCqSM8NyUkVmqQDjl9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=NJW/8eJ/; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1769510690;
-	bh=qYSt9bUzQj5PyLabpQbUCQOve2lblO05FC7MGh9qImw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NJW/8eJ/0fjsVjkD9hNxyNMHFzxPA7QiELRnVSJ/tBEgwal3OLvg5UWufex+uMvmy
-	 +A+jaYPaDN4FDmi9ILRED9athTHjU4tOhmVaQgeJOtqLYmERrmyK7RGVQw3zsHGzUr
-	 wmo3j+GKT3H2AUHuQHHRGs3vcq2ipDGPhyU8/2SrB48dGXXbZBj7GX806vR8GNDE3J
-	 Cy0s3W4BQN9k8y1e+XBul4S8QX+9gLLESWvuTh/VMA1vMwlQ2e59IRibNpe5zw46/e
-	 ou/ERa3qbe2Loa9C2GUFQDmS1OdQnnVWyDY29Nt86Gd73Izcplr0mM3HpKPoD2trJX
-	 WyZwxbkw0mung==
-Received: from vignesh-thinkpad.. (unknown [171.76.81.211])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: vignesh)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 3A56917E0DB7;
-	Tue, 27 Jan 2026 11:44:46 +0100 (CET)
-From: Vignesh Raman <vignesh.raman@collabora.com>
-To: dri-devel@lists.freedesktop.org
-Cc: daniels@collabora.com,
-	helen.fornazier@gmail.com,
-	airlied@gmail.com,
-	simona.vetter@ffwll.ch,
-	dmitry.baryshkov@oss.qualcomm.com,
-	lumag@kernel.org,
-	robdclark@gmail.com,
-	robin.clark@oss.qualcomm.com,
-	guilherme.gallo@collabora.com,
-	sergi.blanch.torne@collabora.com,
-	valentine.burley@collabora.com,
-	linux-mediatek@lists.infradead.org,
-	linux-amlogic@lists.infradead.org,
-	linux-rockchip@lists.infradead.org,
-	amd-gfx@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org,
-	intel-gfx@lists.freedesktop.org,
-	virtualization@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v1 7/7] drm/ci: disable rebase when pulling *-external-fixes
-Date: Tue, 27 Jan 2026 16:14:02 +0530
-Message-ID: <20260127104406.200505-8-vignesh.raman@collabora.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260127104406.200505-1-vignesh.raman@collabora.com>
-References: <20260127104406.200505-1-vignesh.raman@collabora.com>
+	s=arc-20240116; t=1769510663; c=relaxed/simple;
+	bh=fe6jsoP6wiwv9sD2TLG8dlXjbtoFP2vey4oFqzHNg+c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=NoKiwDea2D9rUEwAU8d1G9oLfo2aPQyIAlELyQqtDkkMEWEg2LDwdkOSCsMhtmh+N4CTsMEgSVNTSJBc3xOp/piuY3bNaSS89b/isEswuj6aEu83KvGSXXy7rEgU0hwzesbSrA2LKOhRDTgpSzbqMYIuMetOhI2il5w7qHfSexI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mqJ0cCW3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 741BEC116C6;
+	Tue, 27 Jan 2026 10:44:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1769510663;
+	bh=fe6jsoP6wiwv9sD2TLG8dlXjbtoFP2vey4oFqzHNg+c=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=mqJ0cCW38jdZM+ndfpp01/k4OxkE03o7a5iaTSCnipPIjbevKLI033Ga4KlUrjse6
+	 bIA5OVsYYgusLaIVu1t47AWk11DCaG7sy2j4D2bq+vyLm1l75HAY2OKa4qp6f4/8ff
+	 GbMx09moY4XDnlDZB60eXfz2/3uP0J2pt0YTmTJU16RTK+qBsyZMQh83Rw2Yjrk8xF
+	 tZxjLIV1zP7H+nCxdBOGmhuf8xy3/aY/Nhh7p0FL1ZFsMqmykRPKa+l+owutKDeT1z
+	 QuZuNhB+H83vpfI7ZhL8MCgFyvOuJMgs/oBoKyODEhqPJMVtyXF3um/sJnbBJTupZx
+	 t/fYrTrztywgA==
+Message-ID: <a51dd748-ae3d-4790-abe9-ec99a35a3152@kernel.org>
+Date: Tue, 27 Jan 2026 11:44:19 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/3] media: i2c: ov02c10: Use runtime PM autosuspend to
+ avoid brownouts
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Saikiran <bjsaikiran@gmail.com>, linux-media@vger.kernel.org
+Cc: linux-arm-msm@vger.kernel.org, rfoss@kernel.org, todor.too@gmail.com,
+ bod@kernel.org, vladimir.zapolskiy@linaro.org, sakari.ailus@linux.intel.com,
+ mchehab@kernel.org, stable@vger.kernel.org
+References: <20260126173444.10228-1-bjsaikiran@gmail.com>
+ <20260126173444.10228-4-bjsaikiran@gmail.com>
+ <900cc5dd-c39d-42f6-9531-016f62da81e8@linaro.org>
+From: Hans de Goede <hansg@kernel.org>
+Content-Language: en-US, nl
+In-Reply-To: <900cc5dd-c39d-42f6-9531-016f62da81e8@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.84 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[collabora.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[collabora.com:s=mail];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[collabora.com,gmail.com,ffwll.ch,oss.qualcomm.com,kernel.org,lists.infradead.org,lists.freedesktop.org,vger.kernel.org,lists.linux.dev];
+	TAGGED_FROM(0.00)[bounces-90708-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[vger.kernel.org,kernel.org,gmail.com,linaro.org,linux.intel.com];
+	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[linaro.org,gmail.com,vger.kernel.org];
+	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-90716-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCVD_TLS_LAST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[vignesh.raman@collabora.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[collabora.com:+];
-	TO_DN_NONE(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[hansg@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	NEURAL_HAM(-0.00)[-0.987];
-	RCPT_COUNT_TWELVE(0.00)[20];
+	RCPT_COUNT_SEVEN(0.00)[11];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[collabora.com:email,collabora.com:dkim,collabora.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,user.name:url]
-X-Rspamd-Queue-Id: 692C09324C
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: A92D693076
 X-Rspamd-Action: no action
 
-CI jobs were rebasing the branch-under-test onto *-external-fixes,
-causing conflicts.
+On 27-Jan-26 10:46, Bryan O'Donoghue wrote:
+> On 26/01/2026 17:34, Saikiran wrote:
+>> On Qualcomm X1E80100 platforms, the OV02C10 sensor experiences brownouts
+>> if power-cycled too quickly (< 2.3s) due to slow passive discharge of
+>> regulator rails.
+>>
+>> Implement Runtime PM Autosuspend with a delay of 1000ms. This keeps the
+>> regulators enabled for a short duration after the device is closed,
+>> preventing costly power-off/power-on cycles during rapid user
+>> interactions (e.g., browser permission checks).
+> 
+> But if you try to power the sensor 1.1 seconds later what happens ?
+> 
+> With this commit log this submission is a NAK, for example why do I want this change on an x86 machine ?
+> 
+> We need to root-cause the failure not paper over it.
 
-Remove the global pull.rebase setting and disable rebase when pulling
-*-external-fixes so they are merged instead.
+p.s.
 
-Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
----
- drivers/gpu/drm/ci/build.sh | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+I also agree that the actual problem with stop + start stream in
+calls quickly after each other still needs to be properly figured
+out and fixed.
 
-diff --git a/drivers/gpu/drm/ci/build.sh b/drivers/gpu/drm/ci/build.sh
-index 5485ea756382..d00d549cbd9c 100644
---- a/drivers/gpu/drm/ci/build.sh
-+++ b/drivers/gpu/drm/ci/build.sh
-@@ -3,9 +3,6 @@
- 
- set -ex
- 
--# Clean up stale rebases that GitLab might not have removed when reusing a checkout dir
--rm -rf .git/rebase-apply
--
- . .gitlab-ci/container/container_pre_build.sh
- 
- # libssl-dev was uninstalled because it was considered an ephemeral package
-@@ -62,25 +59,24 @@ export PATH=$NEWPATH:$PATH
- 
- git config --global user.email "fdo@example.com"
- git config --global user.name "freedesktop.org CI"
--git config --global pull.rebase true
- 
- # cleanup git state on the worker
--rm -rf .git/rebase-merge
-+rm -rf .git/rebase-merge .git/rebase-apply
- 
- # Try to merge fixes from target repo
- if [ "$(git ls-remote --exit-code --heads ${UPSTREAM_REPO} ${TARGET_BRANCH}-external-fixes)" ]; then
--    git pull ${UPSTREAM_REPO} ${TARGET_BRANCH}-external-fixes
-+    git pull --no-rebase ${UPSTREAM_REPO} ${TARGET_BRANCH}-external-fixes
- fi
- 
- # Try to merge fixes from local repo if this isn't a merge request
- # otherwise try merging the fixes from the merge target
- if [ -z "$CI_MERGE_REQUEST_PROJECT_PATH" ]; then
-     if [ "$(git ls-remote --exit-code --heads origin ${TARGET_BRANCH}-external-fixes)" ]; then
--        git pull origin ${TARGET_BRANCH}-external-fixes
-+        git pull --no-rebase origin ${TARGET_BRANCH}-external-fixes
-     fi
- else
-     if [ "$(git ls-remote --exit-code --heads ${CI_MERGE_REQUEST_PROJECT_URL} ${CI_MERGE_REQUEST_TARGET_BRANCH_NAME}-external-fixes)" ]; then
--        git pull ${CI_MERGE_REQUEST_PROJECT_URL} ${CI_MERGE_REQUEST_TARGET_BRANCH_NAME}-external-fixes
-+        git pull --no-rebase ${CI_MERGE_REQUEST_PROJECT_URL} ${CI_MERGE_REQUEST_TARGET_BRANCH_NAME}-external-fixes
-     fi
- fi
- 
--- 
-2.47.3
+Regards,
+
+Hans
+
 
 
