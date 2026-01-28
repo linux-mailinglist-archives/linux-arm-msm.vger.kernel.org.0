@@ -1,242 +1,316 @@
-Return-Path: <linux-arm-msm+bounces-91068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6PvaNtlFemn34wEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 18:22:33 +0100
+	id ON+gOEdOemkp5AEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 18:58:31 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 56940A6C37
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 18:22:33 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 19EADA75D8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 18:58:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 44C6D300B98B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 17:22:32 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id B62A03001599
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 17:55:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DB383242CF;
-	Wed, 28 Jan 2026 17:22:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 502E23612F7;
+	Wed, 28 Jan 2026 17:55:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jE+SG7tU";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="E2kFdDze"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D7zviqvI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06A830BB84
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 17:22:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769620950; cv=none; b=Xu7s4C7Pd7npdAF4jR7Jf45CspvIomj6UVPcNPq7lQI+ql7knbVe+2kEFFN6yqA1mL5momI/KXVZejlMmLllUj9/7qkYMNk4pKaInhJEFXaDF0SQCoI5dhcSGaA7lOeWC+Q/RWo3m83GtAZrtc31+1ZyIygAPU3+1zC6Y+h4QE0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769620950; c=relaxed/simple;
-	bh=E9Xj2lxnS361NI76BlVqnkRkZkKnbzb4k4dW5EKSukY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JeQ/762+dQIph3XYUtaBhFyEXKLC9fdmxf1aOudDBR3cZD5D/j8G2JhXcSFQ1+g57RhAJ+B8C4sYiUECHKqQBnb1q2B0kmQa/KxukWq0aCJAixp1NnA6NAoMy163LVMzVpSogcDgDpT8iIikD0rllU//1Y3zeed+AyjA31u0b8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jE+SG7tU; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=E2kFdDze; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60SH44511407438
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 17:22:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=XpBXhAt3FomOuUH5nhF3KASA
-	2xX++XudCERvYumTHIo=; b=jE+SG7tUnQ8SJW/ZZd2KIA/9pRbaYg5ANjaMev93
-	zdDfOyiu1hw36Dq9oSySyyWGpaQy/Kl6OebZt7AfHsyRXKyah1T0h8km9qmgYFnY
-	JU/ms2TdaHoVXIWhoaRl8TUvYpVAvSC++y5cR0dvuTGIC218IpURFsFUAGAe1j2h
-	LMzJrzcDqVAmB2zJdYOjzpLw6v1YHBwUVlRlm3rfUHyjphyX2LD/O7cAoG0/49z7
-	5C/3D47OrvSEV+L26IxuC20gFBP9k0RmIXe/UUfWMJbU7pJEtcJh2qA4T6PK5YKL
-	B2ytB7o7tIeOC05AzFXZsMO2F6oGs0MskGyCF9414+ipIg==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4byphgg2hn-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 17:22:27 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-8c5e166fb75so31955185a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 09:22:27 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6714B32AACF
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 17:55:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769622904; cv=pass; b=PtVMThO1AuqoDJzVftTvgRbHA0At2fEKhuFNeRJWFOJLIzdp/9cRPuhssgEnvgQSbXEQROdCqe5kS0t632N6ANA9ch2K7V2YXFC3OzIIATOB8etU0ovp1GSaToGBirsd9txrfXP6gCtNIXVS7HlkfmiNGwpJiXrtywQyuQKOzbg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769622904; c=relaxed/simple;
+	bh=NOO9hbQ8CLL3ignR4ssL2tF5jT4Kw3WzIa9FwqenBMA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Zc9pij6AA7t5kMN2Lsdj0T/KsO6wcfLV4pLp3SkOr7KxrSRngi+unqfcLhuYHEgV6WUye4UhDpAJRHiouqAGHcG/I2A2bZJLIXjznr35I9+2YxkYORPKmNKZRSnLvAh4AormuDaZluT+wpjoidmgzCmh494RNZguJXRiZwEzXM8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D7zviqvI; arc=pass smtp.client-ip=209.85.167.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-59b6f267721so48508e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 09:55:02 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1769622900; cv=none;
+        d=google.com; s=arc-20240605;
+        b=b7y33T+kAYraAS1s/AqE+QQii5LaDbORjZ/ZTNWYeHRKTBABT26ZqEfbFw/uQdiLWW
+         COgr5HX/7RpvICE0Q1SZKW4eeYWJu91ZvMmfch9H3PEMbul51GcuqmrPDm+gFMSYlmBz
+         LjykOLye8nSIloBCHNO0rTFMxxF8YJg4UxyalwEt017HxoPb+V/ZHYrreRpMHrnHbl5o
+         HamPsSVnP4UQri+H6RCKz6fqmSpMmrCroWSIw2c0tKSADr5pVH+V0m0mNmCjzM4VcRvM
+         DsTUsPEh0ny/cWblt0be9xCuHWPyKAdmH5ILyyfM7JGnigvsAZsosQBDcvGsxR8QCBNy
+         EN3Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=s/bzjCXj5l70khunrOti4+5Gr8UHVn0/er6X1dgJpVM=;
+        fh=xCDkBesJ2mGyGBJ6IPNMHQJeFO9i82rDjdo1T3Viv04=;
+        b=DWAKLe0Ei3rGxKlkKvppF9tf6SBsBnRi/JKFR2LKnIMpIn2PhcCbrUbgUF3y4ojY3M
+         G2WVZeavBSAOmSL+DrGEX312XjIWu7T3M6SmW28A0YiZjWX08A3rl3sibyKDfrkq6m+k
+         ESvVv9z522nOJUyX2u3d/ha9S7DEEgN6nBzE5I6FubdyoA6YaRHQzjTeTC4hu1ybwjqh
+         Bguh2P7M5vRdNDVKyuwTWkuFw1dMr1qmdx0vkRcWUhFlBM34BQCe5u9JDPVnSnvWZfrn
+         VobuY751ApJ2Juh7+ExTS3G03Q/kboZyLWScCChcIRbSsNVVxw84NOpIUXrlfn97n0R9
+         NyDQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1769620947; x=1770225747; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=XpBXhAt3FomOuUH5nhF3KASA2xX++XudCERvYumTHIo=;
-        b=E2kFdDze8cUh8oZI6HTDnoHhwL4lBerZIVZ/O2ZBuAJYPVYxItZ4iivUQCQ2nJC1bZ
-         v8loF+9QH+PHvgfL3guKBd/ZzED4+1PCyv9okUF18iz6cwDuegbI6EnNmA3nPihwZazN
-         P60akcsuWA/Y9QJ1vw40UcaGkwUDsf4xogG2NuTpu9TgeFhn8eZBt0qxROISt4x3ZHMQ
-         Q6jhgLT1ySP+OGZ+wV0cw6FUnXqhNl/Yt+Pgl3usHfRJVejALzF5NyDpIqCUzGSl2+NP
-         UI/0aP7a516MT/azBb4lKVGfZ8pmWWI0QbFvhOQE/cNSImNz0kU920U5QPB+Qs4OMgAu
-         khQw==
+        d=gmail.com; s=20230601; t=1769622900; x=1770227700; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=s/bzjCXj5l70khunrOti4+5Gr8UHVn0/er6X1dgJpVM=;
+        b=D7zviqvIi+kizYtG403mx+gwQp07dIRNqOFYpl1UAWHmZ3WcfxEalTnlwwIRkqjzZK
+         s2MeD3uFGiRNceY8q4TnNiGop6KLdJmZxH4go54BVAnHB7mz645XbqmN0O8xDRcYWx2l
+         HZ1t55dzv3omkWJanjcoqzniz/7rti5ZywLfqZEexnEFq3iGDCWJMcV10Y/JcT9gdP2f
+         aa71kgvNCkBBtxhZzA/m6VqHwKrFGXE/S5MPAZwpOgT8qln1pLp3XqxsNbEvleXBtv7u
+         uK0QlNdSajsFyo/WlkEqqlqR6q2x2fbDulJGMJB4js409QNFX/cVKRVsn1nQg09tXHNy
+         avdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769620947; x=1770225747;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XpBXhAt3FomOuUH5nhF3KASA2xX++XudCERvYumTHIo=;
-        b=aFb34jVf+ZIxeE+gwbt1Td5gN3gxpBVKMNDpIxC07AEM7gMruxfZ1GYs7f7BpfKysQ
-         Ok0SlY1VlItYtZMvCuOYK/uaTzjnAuqH+bNS3adHDANC5wg44zfsWZRYRB8LaQkZQKxH
-         68NgdTzA8oK3Ez/i5OrdhpTEYEzdd87edmCTSVQYdc+pIUZCeSx3ePcCdTgjIRwCzdbb
-         0IJM1AW8andVyA2yVf51KKdELJ0zPnPHbDxcYeiN2ecvgnvIeSl63NIAxxsXk/4yhOqC
-         DTXghPeA6bkzz/Jbfxsge+sPbYrwb2iAZJsEcGTud4le5yYh1DM3A/ic/DuQTRmQ7lWz
-         MDUw==
-X-Forwarded-Encrypted: i=1; AJvYcCW+Rfcd2YPXC0FsISSB+TvcaEPWsrNjW6rfv0fXHesA4ZL2XmI4Dh80ofvHdu7ezwP7Hz0VqJjvXkl1cLN6@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywj0ZyQMu3fMoQD3PsAZMe/2c21IWjjpRWA19rh1fPTNbP8QV58
-	C1XBr5W7O0zMDkBQivulEhfos5OEjxfw/9RRVkWlMJRBRSMrpZYmuhDVFVmNje+kx+exGvLA1DU
-	cpGviatxvvgb14oCUHyEW5L7ZdtSY97WKF2weXNxP5Jh9mJ7JBaiZpj8Ttw92tl+A+/R3
-X-Gm-Gg: AZuq6aKXalYQFdMURcauZyOCNXsjFeKy8tdxcX1hj5y93krNSexeT9a21zEcD4pFiId
-	IjK0JiJ9NsExUanMQ9e2TjKclM3C4SCXBZCmn/Pyy+ofFMQnMOFVYyMLEry4tYSzjh41TMH3rTd
-	ALKJxgchaxAAQITa1+mMA4qp9Szo/2ICJ6AuHE0DOfzaBnte4c6ntUFWUDuJEF5y7roGClfpJUD
-	CRea1tozbfY2kE170UGSYolZ2E4+zFbVID3mu8ub31U5tBVn7gbTNNGmcw4T9q3cWYO2a5hiMnl
-	a89Qg8Cu3gRvnlLyBCo4EHZTfObPwhjsk83TxUT/UJ8aduEazjER3IMELgcfmAf6Qw6JD2Rz1Ew
-	ezHpkjXdjPTcTdYioqQIZKHur
-X-Received: by 2002:a05:620a:470d:b0:8c3:7e55:cdd9 with SMTP id af79cd13be357-8c70b90a02dmr694135585a.76.1769620946758;
-        Wed, 28 Jan 2026 09:22:26 -0800 (PST)
-X-Received: by 2002:a05:620a:470d:b0:8c3:7e55:cdd9 with SMTP id af79cd13be357-8c70b90a02dmr694131185a.76.1769620946102;
-        Wed, 28 Jan 2026 09:22:26 -0800 (PST)
-Received: from oss.qualcomm.com ([86.121.162.109])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-435e10e4824sm8996607f8f.1.2026.01.28.09.22.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Jan 2026 09:22:25 -0800 (PST)
-Date: Wed, 28 Jan 2026 19:22:23 +0200
-From: Abel Vesa <abel.vesa@oss.qualcomm.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Linus Walleij <linusw@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: document the Eliza Top
- Level Mode Multiplexer
-Message-ID: <aizrc6xysfwzygdsfeuc2raccq7efmwg5bn6v33t2de6ugvzgi@z3ipf3i25ulf>
-References: <20260127-eliza-pinctrl-v2-0-1faf78efdc2e@oss.qualcomm.com>
- <20260127-eliza-pinctrl-v2-1-1faf78efdc2e@oss.qualcomm.com>
- <20260128-hot-camel-of-acumen-eef9f2@quoll>
+        d=1e100.net; s=20230601; t=1769622900; x=1770227700;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=s/bzjCXj5l70khunrOti4+5Gr8UHVn0/er6X1dgJpVM=;
+        b=fMfqC945Lcwdm498aNpONRLViLfmGaAZTD28w2jy7xbN3M+qmEOQeWc91bAsR7JIE9
+         B97ktX6UCO7fpiMBh7LCc5yorCzAxuKjZvLOX1KCwXB5Gt/jnlW10WOcujjIjMQP51HY
+         f46NSZadhVR2hZJquqhIRLA5tWghJcO1UOr7IJ6TdAVRzaML25/iSziPuUG5UJVnsLvM
+         +vMcoUVh/9q56wyV7uowJt0B8/fYE1hWKmSl3eZhk2ENTcqLVxcrZMQ3l5cuGKSPosfY
+         hXwd9IUkjBCeYdN/fgI1DT1JVH6a/60H7qhjBR0K2W4Lgob5ZB6vIjvoT8bOm673jO8C
+         ataA==
+X-Forwarded-Encrypted: i=1; AJvYcCXEPc8dWrZ6u8FYW4YdCR8FtrNyOCc2qT9me9Fmt3rSl8wjEX6SDT+Kuom+I2ySul1OoMdQd4KOWBzicjm0@vger.kernel.org
+X-Gm-Message-State: AOJu0YyuYUz/r2LzYeyxvVBvrpk8pkfmvT0pL4q8EnElXjIiN/ayU+sk
+	gbSiCKx0gQJdxglKyGZJMJ5trfCaJvzUscqtn2WkwWUPTgjzJo0dm+lnfCzZAYtPjm3Xu7/H752
+	6JlfbmoNUxBEf9Rqs8ZvyVG9fLZHweIiJgQ==
+X-Gm-Gg: AZuq6aI7v3htshfkw1Q/E7YQtenjBXipgMj+UxeVo6nj6J3KXAG2UH26QT6ncyxc92O
+	aH0rdFMkdfP1zfh2ASneQEuWn5P7uUSqzv5bf061+ptH7/SzkbnqHB2xxIQzn06KnYeEK3rAgw7
+	ZH+Nebs6bnbBv1YSia3P4rDWq2kNLNAJ2eZXF3K+MYX8qgW3y6En1SyxIm1qAH1mESkioQ7zVEM
+	epmOvgSqVcpyBsr3vTa4pVSuAeswEP5TY91fERfPROn5CRY9Mh7JvFofdlLjraHMGGvIrVfG4dj
+	4sLLBF4LaAGItTzh2jog3yXNcvlqCTojfFTBEI7dAM9Seanp/QkN0p01OqLuxxUFDCaIE20Zt5Y
+	Uu3RBm5DiTpUwLg==
+X-Received: by 2002:ac2:464c:0:b0:59e:6f4:d24c with SMTP id
+ 2adb3069b0e04-59e06f4d35bmr1077546e87.25.1769622900160; Wed, 28 Jan 2026
+ 09:55:00 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260128-hot-camel-of-acumen-eef9f2@quoll>
-X-Proofpoint-ORIG-GUID: qURSvk1wOVe63xtWPVx1yd5a3q29J8sf
-X-Proofpoint-GUID: qURSvk1wOVe63xtWPVx1yd5a3q29J8sf
-X-Authority-Analysis: v=2.4 cv=J/inLQnS c=1 sm=1 tr=0 ts=697a45d3 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=oauzzCmhM186DRC0Y2yWPg==:17
- a=kj9zAlcOel0A:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=gEfo2CItAAAA:8 a=EUspDBNiAAAA:8
- a=3glTqji7Xff0SCUsWbAA:9 a=CjuIK1q_8ugA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
- a=sptkURWiP4Gy88Gu7hUp:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI4MDE0MiBTYWx0ZWRfX95LnnyG/J6Sc
- +fhuPQKi7NscHSBkOVfhBo7nLSunNZ8KNPV9pZxFCiZv0RT7yKc9txL5bO8psq3cGIi5lMNaF7o
- CZl+13m25LQgyrymFTLbTXcN0ag0eTuOS+mQ/DdTlEL++umnJbndzecd6N8msAuq2XjzoVqwRHp
- LLMMoKYW1taO0h32qkzCRRncjJfiQxa9eZzBlLoLSXM7twNjHP++uOMuDD3dt4ShDzPsuEucGOx
- eqrv3d/gCUkuUqVixWPQOuxDZrMVoFWIXU3Tz/CkE87P+v1ONim+KaKrpp3yoqiKagKMXoPXyAW
- EDab2d8g/yELnqT3J+UE5eCvG49r84EnN57UrC+Ahdi1zQ+5HKHwu0y41km9RpJ4qNFEjJkcAXS
- Cdefhs99jH32oGmkGu2zkbxmV8VNPXIeNDspUE9b2zaoj4DeQ2tudxT8vSM6+u2f2jgOdGCPYZB
- AVN5J0ko4DYp58CDRxA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-01-28_03,2026-01-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 malwarescore=0 impostorscore=0 spamscore=0
- clxscore=1015 bulkscore=0 lowpriorityscore=0 priorityscore=1501 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601280142
+References: <CALHNRZ8qSOZKwmBznRqvAAjMcQ265iEdBXEA2RSkSBViKO=uEA@mail.gmail.com>
+ <8c64d188-9e14-43ae-8950-b31347f8eff8@linaro.org> <CACSVV02HKpEGQ6cAhNQ8a0YiT0nXHVD8=yXOfONz=1Amac+z2A@mail.gmail.com>
+In-Reply-To: <CACSVV02HKpEGQ6cAhNQ8a0YiT0nXHVD8=yXOfONz=1Amac+z2A@mail.gmail.com>
+From: Aaron Kling <webgeek1234@gmail.com>
+Date: Wed, 28 Jan 2026 11:54:47 -0600
+X-Gm-Features: AZwV_QhGNb7VCvaxdAsO0b-aiKY2W7WC82ZmNCOp7e2P46a4DTFyYpW8pgy52dg
+Message-ID: <CALHNRZ-4oM9Kpx-umvdYaMXDwBtny5HHpe1PWzFcJ9=3m0s49A@mail.gmail.com>
+Subject: Re: Questions About SM8550 Support
+To: rob.clark@oss.qualcomm.com
+Cc: Neil Armstrong <neil.armstrong@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+X-Spamd-Result: default: False [-2.16 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	TAGGED_FROM(0.00)[bounces-91069-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
 	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-91068-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_THREE(0.00)[4];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:dkim,devicetree.org:url,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[abel.vesa@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[webgeek1234@gmail.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 56940A6C37
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	FREEMAIL_FROM(0.00)[gmail.com]
+X-Rspamd-Queue-Id: 19EADA75D8
 X-Rspamd-Action: no action
 
-On 26-01-28 12:38:32, Krzysztof Kozlowski wrote:
-> On Tue, Jan 27, 2026 at 05:47:36PM +0200, Abel Vesa wrote:
-> > Document the Top Level Mode Multiplexer on the Eliza Platform.
-> > 
-> > Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-> > ---
-> >  .../bindings/pinctrl/qcom,eliza-tlmm.yaml          | 138 +++++++++++++++++++++
-> >  1 file changed, 138 insertions(+)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,eliza-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,eliza-tlmm.yaml
-> > new file mode 100644
-> > index 000000000000..d8b6591caf57
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/pinctrl/qcom,eliza-tlmm.yaml
-> > @@ -0,0 +1,138 @@
-> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/pinctrl/qcom,eliza-tlmm.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: Qualcomm Technologies, Inc. Eliza TLMM block
-> > +
-> > +maintainers:
-> > +  - Abel Vesa <abel.vesa@oss.qualcomm.com>
-> > +
-> > +description:
-> > +  Top Level Mode Multiplexer pin controller in Qualcomm Eliza SoC.
-> > +
-> > +allOf:
-> > +  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
-> > +
-> > +properties:
-> > +  compatible:
-> > +    const: qcom,eliza-tlmm
-> > +
-> > +  reg:
-> > +    maxItems: 1
-> > +
-> > +  interrupts:
-> > +    maxItems: 1
-> > +
-> > +  gpio-reserved-ranges:
-> > +    minItems: 1
-> > +    maxItems: 84
-> 
-> 93
+On Wed, Jan 28, 2026 at 8:46=E2=80=AFAM Rob Clark <rob.clark@oss.qualcomm.c=
+om> wrote:
+>
+> On Wed, Jan 28, 2026 at 12:54=E2=80=AFAM Neil Armstrong
+> <neil.armstrong@linaro.org> wrote:
+> >
+> > Hi,
+> >
+> > On 1/27/26 23:48, Aaron Kling wrote:
+> > > I am working on the AYN Odin 2 qcs8550 series of devices, specificall=
+y
+> > > for Android, using mainline kernel drivers. I have come across some
+> > > missing functionality and failures that I would like to inquire about=
+.
+> > >
+> > > * ABL fails to load a dtbo using a baseline dtb unmodified from
+> > > mainline. Using changes described in the gunyah watchdog thread [0], =
+a
+> > > dtbo loads and the devices boot as expected. If any of the changes in
+> > > that post don't exist in the base dtb, abl will fail to load the dtbo
+> > > and go to the bootloader menu. This appears to be an issue in the
+> > > baseline abl code, affecting all devices of that generation. Would it
+> > > be allowable to merge a change adding those changes to the sm8550
+> > > dtsi, allowing an unmodified mainline dtb to work with overlays?
+> >
+> > Any addition to the DT must be documented in dt-bindings, so if it's ne=
+eded
+> > for boot they should be documented and added for sure.
+> >
+> > >
+> > > * SM8550 does not have cpu opp tables, thus cpufreq does not work. I
+> > > have locally copied the commits from sm8650 and adapted for sm8550,
+> > > and that seems to work okay. But no measuring of bandwidth was done,
+> > > so the numbers are likely not entirely correct. Is there any plan to
+> > > generate correct tables for sm8550?
+> >
+> > Cpufreq works but not the interconnect scaling, so doing the same as sm=
+8650
+> > is fine but since the values were calculated from downstream DT tables,
+> > the same should be done for sm8550.
+> >
+> > >
+> > > * As part of a series to support the original Odin 2, a patch to
+> > > update sm8550 EAS values was submitted [1]. But that series stalled
+> > > and this was never merged. If this change is valid, which per that
+> > > discussion it appears to be, can it be resubmitted by itself and
+> > > merged?
+> >
+> > I missed this patch, please re-submit, I also need to update the ones
+> > for SM8650.
+> >
+> > >
+> > > * Per the mainline kernel device trees and audio topology provide by
+> > > the oem, these devices use primary i2s for the speakers path. There
+> > > was a commit adding clock support for that as part of an hdmi series
+> > > [2], but that seems to have stalled. Is this going to be picked back
+> > > up?
+> >
+> > No, I do not plan to do this work, it required adding callbacks in the
+> > code to handle the clocks like done for the pre-audioreach firmwares.
+> >
+> > >
+> > > * Inline crypto fails to detect hwkm support. And I see other logs
+> > > online, such as for the sm8550 qrd, that logs the same way my device
+> > > does. I traced the issue to the check for wrapped key support [3]. On
+> > > my devices, the derive call is supported, but the other three calls
+> > > are not. I was pointed at the downstream headers for sm8550 support
+> > > and only derive is listed there, the other three don't appear to be
+> > > used in the downstream driver. Is this expected? And if so, will this
+> > > case be added to the mainline drivers?
+> >
+> > Does hwkm work with you remove the last 3 calls ?
+> >
+> > >
+> > > * Some gpu related clocks complain about being stuck off during boot,
+> > > causing stack traces, but the gpu does work. I tried to do some
+> > > research into this, but quickly got lost in the weeds and I have no
+> > > idea where to even look.
+> > > [    0.367278] gpu_cc_cxo_clk status stuck at 'off'
+> > > [    0.367962] gpu_cc_hub_cx_int_clk status stuck at 'off'
+> > > [    0.368595] gpu_cc_cx_gmu_clk status stuck at 'off'
+> > > [    0.369245] disp_cc_mdss_ahb1_clk status stuck at 'off'
+> >
+> > This may be related with the display handoff from ABL, did you add the
+> > plat region to the reserved memories ?
+> >
+> > >
+> > > * Sometimes when starting rendering, a bandwidth submission times out=
+,
+> > > then the driver immediately complains that said id was left on the
+> > > queue. I have tried increasing the timeout, but the same sequence
+> > > still happens. Timeout happens, immediately followed by a matching
+> > > unexpected response. Implying that this isn't actually a delay /
+> > > timeout issue.
+> > > [ 1848.517020] platform 3d6a000.gmu:
+> > > [drm:a6xx_hfi_wait_for_msg_interrupt [msm]] *ERROR* Message
+> > > HFI_H2F_MSG_GX_BW_PERF_VOTE id 1015 timed out waiting for response
+> > > [ 1848.518020] platform 3d6a000.gmu: [drm:a6xx_hfi_send_msg [msm]]
+> > > *ERROR* Unexpected message id 1015 on the response queue
+> >
+> > Weird the timeout was extended for this very purpose
+> >
+> > >
+> > > * Some 3dmark benchmarks such as solar bay cause a gpu crash. I am
+> > > unsure if this is a kernel problem or userspace, so I'm submitting
+> > > here first. If the consensus is that it's a userspace issue, I'll
+> > > submit it to mesa.
+> > > [ 1860.112008] adreno 3d00000.gpu: [drm:a6xx_irq [msm]] *ERROR* gpu
+> > > fault ring 2 fence a261 status 00EF0585 rb 06df/090f ib1
+> > > 00000001512E9000/003d ib2 00000001512E7000/0000
+> > > [ 1860.113122] msm_dpu ae01000.display-controller: [drm:recover_worke=
+r
+> > > [msm]] *ERROR* 67.5.10.1: hangcheck recover!
+> > > [ 1860.113238] msm_dpu ae01000.display-controller: [drm:recover_worke=
+r
+> > > [msm]] *ERROR* 67.5.10.1: offending task: Thread-23
+> > > (com.futuremark.dmandroid.application)
+> > > [ 1860.258126] revision: 0 (67.5.10.1)
+> > > [ 1860.258132] rb 0: fence:    2884/2884
+> > > [ 1860.258133] rptr:     36
+> > > [ 1860.258134] rb wptr:  36
+> > > [ 1860.258135] rb 1: fence:    -256/-256
+> > > [ 1860.258138] rptr:     0
+> > > [ 1860.258138] rb wptr:  0
+> > > [ 1860.258139] rb 2: fence:    41563/41569
+> > > [ 1860.258140] rptr:     1752
+> > > [ 1860.258140] rb wptr:  2319
+> > > [ 1860.258141] rb 3: fence:    -256/-256
+> > > [ 1860.258141] rptr:     0
+> > > [ 1860.258142] rb wptr:  0
+> > > [ 1860.258146] adreno 3d00000.gpu: [drm:a6xx_recover [msm]] CP_SCRATC=
+H_REG0: 0
+> > > [ 1860.258220] adreno 3d00000.gpu: [drm:a6xx_recover [msm]] CP_SCRATC=
+H_REG1: 0
+> > > [ 1860.258266] adreno 3d00000.gpu: [drm:a6xx_recover [msm]]
+> > > CP_SCRATCH_REG2: 41562
+> > > [ 1860.258310] adreno 3d00000.gpu: [drm:a6xx_recover [msm]] CP_SCRATC=
+H_REG3: 0
+> > > [ 1860.258354] adreno 3d00000.gpu: [drm:a6xx_recover [msm]]
+> > > CP_SCRATCH_REG4: 3736059565
+> > > [ 1860.258399] adreno 3d00000.gpu: [drm:a6xx_recover [msm]]
+> > > CP_SCRATCH_REG5: 3736059565
+> > > [ 1860.258443] adreno 3d00000.gpu: [drm:a6xx_recover [msm]]
+> > > CP_SCRATCH_REG6: 3736059565
+> > > [ 1860.258487] adreno 3d00000.gpu: [drm:a6xx_recover [msm]]
+> > > CP_SCRATCH_REG7: 3736059565
+> >
+> > @rob do you have any idea how to solve this crash on a740 ?
+>
+> The clk and a6xx_hfi_wait_for_msg_interrupt errors indicate that
+> something is unhappy about gpu pm.  I'd focus on that first, since
+> that is almost certainly the cause of the later issues.  If things
+> _sorta_ work (rendering UI, etc) you could try removing all but the
+> lowest gpu OPP as an experiment.  Could be that power related problems
+> surface when the GPU ramps up to higher OPPs.
 
-Will fix.
+Things work amazingly well compared to what I was expecting. Using
+mesa staging 26.0 as of yesterday, I'm getting roughly 80% performance
+in the benchmarks that do run, compared to the stock Android. And
+rendering is correct everywhere that I've seen so far. Mesa 25.3.3
+gives about 89% compared to stock, but there are graphical glitches in
+some of the benchmarks.
 
-> 
-> > +
-> > +  gpio-line-names:
-> > +    maxItems: 185
-> 
-> 186, your first GPIO is 0 and last is 185.
+I set gpu max_freq via devfreq to the minimum available frequency and
+ran the failing benchmark again. It completed once, but failed with a
+similar stack trace on the second run. And per sysfs, the gpu did stay
+at that minimum. Of note, that causes the benchmark to fail, but
+rendering does recover and the unit is still usable afterwards.
 
-Actually it is 0 through 184. The 185 is ufs reset.
-
-> 
-> After fixing these two:
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-> 
-
-Thanks! 
+Aaron
 
