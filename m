@@ -1,304 +1,299 @@
-Return-Path: <linux-arm-msm+bounces-90902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90906-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sKHAHwupeWl/yQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 07:13:31 +0100
+	id CHjVE6CzeWkiygEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90906-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 07:58:40 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id EE7279D5CE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 07:13:30 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id AF5589D8C1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 07:58:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id E7140300E62A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 06:13:29 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 850163009036
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 06:58:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DC9D335547;
-	Wed, 28 Jan 2026 06:13:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 311BB326935;
+	Wed, 28 Jan 2026 06:58:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XX5WzGst"
+	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="de5YgG5y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-m1973184.qiye.163.com (mail-m1973184.qiye.163.com [220.197.31.84])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B2F28D84F
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 06:13:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.41
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769580807; cv=pass; b=FFy9vfdunpRtGNbnAT94LJ/GG2s3dnHtux3dKRclNrdF4gR7bXkUADpNNed09fqeg0SlWz98BEg9wTf0DiQWDMMLd44DoZXd5cdtyLhb/lwJu0iA0sFaBDcuPJYlvi7D4eZxJ++GGKGaLc7cdtyIhZOLfDOtR0z0I3fFSjHdnlk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769580807; c=relaxed/simple;
-	bh=tqddoDCLroltCsSKqC6Nf5CllV6GQ/uqEovi0FtQd8g=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=P0aFo5maf6q2DSks5yEPnI+WF8Ne0yVeZVejvphtVjXQmkTTlJapy9+2aMvrAUoWFczDzxC+YVPKFrfkg+CKX7NWFFwFiIzjhFDC1MOtl8sxodpxgYwK/82z4FAkasXVZSp0e9LL7140vSmsVPDgyLyrpJJQPRCO3XHFpigjI44=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XX5WzGst; arc=pass smtp.client-ip=209.85.216.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-353576abcfeso2679781a91.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jan 2026 22:13:25 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769580805; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Sl8UKPti5SpvWLx0jo77DsGANYeVnFrhCKdHadQaGHgtkGBUMTuXuXxnXOCBEHIXEc
-         ZPvnCtnxb+cJ7GuoEKdu5lBlIYhGRAsOEk010zR183cAPXXopZV6dgRWt23g9x6j7pAa
-         JjHfwglFTMEIycgkhorNdqaFLuXFuVovoHgM6uC3UUMXtVzDxraqw988e2RV+26X9xwb
-         hoGJNPcLE4bJZuIho7LpIKp0f0uORIbr8fy4QMC6ClHSN7sSQTizVDphcRUKqjeKJCfo
-         PM8mg6DRLDg66jruhbl+KlIg6TPHZEVQ9x+dLFw3Q1dsqhV4swWapWT68Kgw+3Z5am5o
-         ZsaQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=kMYTavVqOvFc0O1j5E4t/g6tpbD/QV7uvM9acJOgDnQ=;
-        fh=1qgUABY3tHDU9Rn6U8kXMez1mhIAp+t0938hmJkKFLE=;
-        b=QeSvw30o1HpLbYDEXdm37vEkgP1rqm62T2wD9M5xIkh87jp8nDz4cndHeeDqAmaLTD
-         WdDwB56APvylCR3nHYg4iHIvZprtFSTt1iVmB7jebGqw8YLzxb7QOxlfBPg5h3rtsCDB
-         SYv9mqgUcbsX6zDWxpWV4Zwcj3WZu2pM1PElfXywjwEQoW0EdhaRbZSu8aZFZhZPUdhB
-         Nu6lQkFER/1fRLlWQzHkgSvyG66NaLR9PONTUGkP3MjbATwiGDnQXmq9/sYy1F7pF5S0
-         0O6ClVxNp8tSlTzARbrHg4IHoFaH6Jyo+iM+zdNRMiURvfltBjiwlLy17s0rTQY5AOIH
-         vwtg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769580805; x=1770185605; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kMYTavVqOvFc0O1j5E4t/g6tpbD/QV7uvM9acJOgDnQ=;
-        b=XX5WzGstRUTzA2qXpXXtrYpNsmNtcHmyhVt2c0TlBC3ZlD/xY1a+VsgQtw6ALSvoQs
-         IL8w5nCEd5BxtOcUEG2RZq3C7jEuRv57OLN9blAxhJnA5MIpx61csvxFLLbxcdrYrbpi
-         SaVenK7XqvqnMj11h7aurPPGBeZD4Tnf8378W+ASM+CNm3ZmC+vDBsGx/1ypcZ7TLs3O
-         AhUiJ6rsXJQWCbgCv7dnfNpnJYzcgd9MsUz+kRcRDgmAmxYTC3uk3d29U6ipPJ5jN7Fi
-         3L2o1SeDLlj1ZG9sxvsyjhLIXlZpjSCLhn3WEDfEvjjXSJjINkecTNqotNxVAwEWbW9o
-         akvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769580805; x=1770185605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=kMYTavVqOvFc0O1j5E4t/g6tpbD/QV7uvM9acJOgDnQ=;
-        b=SY0FefpQSXtolrrRSsVFuRtxhKcT3lh026xzLqZKVft9DNwGtOogo1frpRKF1ZF5vw
-         9IevQ1xnQ6wejlMlfEvSDCX14eImoHdfgURiZTxDs6aywub/Ugg51pbLqAVhcktqPbRL
-         5R4S/5O9FvKPgD4NrdCJhUp1J/rNZA+veoC2suf6U2XvPi3WVCHOEcDUz+YAbpf60DP2
-         UmHukUaIkKwhwjaZU9+heE57xLZZXyuo1al4pvrYPp5GDAetimERcTsxnXCZvp2s9FCW
-         eT5LQg5wdpn848BNh6BNFbY5SrUbgacw5sXyEnpyZcf5tPdFmx9XgCza2229mkAg4JJb
-         FKHw==
-X-Forwarded-Encrypted: i=1; AJvYcCUANHRj6fAzUu0gB/TA5u0/9yvob/nUhydIz+durbLbATpLyNUFjXBRxFwP3uYscP9e1kuz7pD9sedldUp7@vger.kernel.org
-X-Gm-Message-State: AOJu0YyNyITy3WXlqd/aL5jnn9l+4w3FQ3h7Cn1ZRR2wrGd8FuzYDuRJ
-	BD91/8ZBrz2CGjchjsqKRMSgPgrJSH5KGqYP3UZ3yRD45U/FqZg5u6PHM/e6abKswRzjgY5rYkP
-	R6/F8nN6xRKLPFgUn1Zhb4nuR82CMHn8=
-X-Gm-Gg: AZuq6aKkGnO8eBqoT3QqwAfUyPAQ8XLJSh6ltn8AVcq/K3Cv/DQg6bGYLLEG9IaRrQf
-	vO/oi0WaSioH2/zgWA9cld9/+pS/Cr9AGeIag1S/IWIb/ilA1vznPpfImZPexuX5AoFreOGsEbr
-	7iblwqBComzZJ/Cmsy8Btqgsjqt/pe9civ4mXaX2zTUe2f1fHs77EmRN+WL2U7awyDVRxXtPwg1
-	ICVI/7TWK63YAoxFFlPTz5ENP856dbY0FGl9EkMskfQgJZymsQ7jOxTG3yF8xOvOYyPu/hawYyR
-	SsBwYN8xrvbEDX/20JXgmAxn1hUA
-X-Received: by 2002:a17:90b:1c09:b0:352:ec7b:3cc2 with SMTP id
- 98e67ed59e1d1-353febc19d3mr3681624a91.0.1769580805194; Tue, 27 Jan 2026
- 22:13:25 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4F0938DF9;
+	Wed, 28 Jan 2026 06:58:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.84
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769583516; cv=none; b=llm7aKksMgzJnHV+A1x4MGwrycHE/rh/ck4kjuoSx6/dQetqj4HNGZuM20K9eT7zwkOxPaQfLHj6EnW2D9/8S0vJ3L2PmOXEMinYVkIlFrvN8qivWjN695Oahvz9iZe2XwQ52P4NUIj1KYECS4+vp82LWMXd/m2ni6pcFDVWFjc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769583516; c=relaxed/simple;
+	bh=LsMBBI8dZt9lK7TD9B4uXQKjmlMXrO/V8MQb2+8Pkh0=;
+	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=O0d7tUIckPrHsGwG95TAKRrPhmP7LN3QwMRosFtimWsumjMddtXcH6sR46Sq55kzSVQY1CnvgJhOigi96fhdL6HUZlfRVxtYXleeeQlNIrmLCRBOt8A/hf8UqE/h7GNskbUA5QM1mqS8IUCeuSkjLO7AjPb4lSl0dllHqCJbHFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=de5YgG5y; arc=none smtp.client-ip=220.197.31.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
+Received: from [172.16.12.14] (unknown [58.22.7.114])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 323dec204;
+	Wed, 28 Jan 2026 14:22:51 +0800 (GMT+08:00)
+Message-ID: <33bbb3ec-5659-4d50-a5ff-dafa44e291dd@rock-chips.com>
+Date: Wed, 28 Jan 2026 14:22:50 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260127165024.46156-1-bjsaikiran@gmail.com> <20260127165024.46156-3-bjsaikiran@gmail.com>
- <aXjwtBey0MRP0c7f@kekkonen.localdomain> <hAXW76sxpszN3JpApVO_ntI28dSyCTiDXIE-S1AJDCa7Mbp8-pHbGqhFhTh2FGPdj3TxO9AowyRRan2u8TTO6Q==@protonmail.internalid>
- <CAAFDt1vJtJc+C_J9Gv3SYjs_2zWFXsWqwq29=ig1o2_kSkjwLg@mail.gmail.com> <dbf73780-a33a-4fbf-8569-321b4f4e0a88@kernel.org>
-In-Reply-To: <dbf73780-a33a-4fbf-8569-321b4f4e0a88@kernel.org>
-From: Saikiran B <bjsaikiran@gmail.com>
-Date: Wed, 28 Jan 2026 11:43:13 +0530
-X-Gm-Features: AZwV_Qh31WtryGKOQ1R27LZTnjCf9ALrDGyqgp9cHGYIF0LyFQJIOvAqI2H-CWk
-Message-ID: <CAAFDt1sn=bj+DoJZ37pVkARLHvzyY3M-nU0ehLnJ6DmLXNqawQ@mail.gmail.com>
-Subject: Re: [PATCH v4 2/2] media: i2c: ov02c10: Correct power-on sequence and timing
-To: "Bryan O'Donoghue" <bod@kernel.org>
-Cc: Sakari Ailus <sakari.ailus@linux.intel.com>, linux-media@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, rfoss@kernel.org, todor.too@gmail.com, 
-	bryan.odonoghue@linaro.org, vladimir.zapolskiy@linaro.org, hansg@kernel.org, 
-	mchehab@kernel.org, stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Cc: shawn.lin@rock-chips.com, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
+ <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Geert Uytterhoeven <geert+renesas@glider.be>,
+ Magnus Damm <magnus.damm@gmail.com>, Bartosz Golaszewski <brgl@kernel.org>,
+ Bjorn Helgaas <bhelgaas@google.com>, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ linux-usb@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+ linux-pci@vger.kernel.org
+Subject: Re: [PATCH v2 2/7] pci: pwrctrl: add PCI pwrctrl driver for the
+ UPD720201/UPD720202 USB 3.0 xHCI Host Controller
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+ Manivannan Sadhasivam <mani@kernel.org>
+References: <20260127-topic-sm8650-ayaneo-pocket-s2-base-v2-0-c55ec1b5d8bf@linaro.org>
+ <20260127-topic-sm8650-ayaneo-pocket-s2-base-v2-2-c55ec1b5d8bf@linaro.org>
+ <llbnkm72mgcsrucnp7pdkwbgyzenvhe4kudxkdixplgaoirdem@3q3me34o5drf>
+ <0104896e-44d0-485a-a44e-694864c819b7@linaro.org>
+From: Shawn Lin <shawn.lin@rock-chips.com>
+In-Reply-To: <0104896e-44d0-485a-a44e-694864c819b7@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0a9c0344df9609cckunmfeac2e531bd066
+X-HM-MType: 1
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFDSUNOT01LS0k3V1ktWUFJV1kPCRoVCBIfWUFZGkxLSFZNSUsaHkMZQ01MGB5WFRQJFh
+	oXVRMBExYaEhckFA4PWVdZGBILWUFZTkNVSUlVTFVKSk9ZV1kWGg8SFR0UWUFZT0tIVUpLSEpKQk
+	xVSktLVUpCS0tZBg++
+DKIM-Signature: a=rsa-sha256;
+	b=de5YgG5yXN9uH1U/29igFPjzMtVXZjG11RVK1ox3PS+J0OxMUsWTNCOPROu8id+oUwcmJpuixHyc9xQu9wm+e011mhPVPHSDxOEQqVX7UmuUb4yIv1FjZ8cKPaXr4zOp8OU4D4CKufl7NjYy2zQtn0eUL36w0+D3ewWucOSsJ/4=; s=default; c=relaxed/relaxed; d=rock-chips.com; v=1;
+	bh=MAfz+13K76TPUxvO+5QDm/lgQXp/YWJ9M/nw8Kebqcw=;
+	h=date:mime-version:subject:message-id:from;
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[rock-chips.com,none];
+	R_DKIM_ALLOW(-0.20)[rock-chips.com:s=default];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-90902-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[linux.intel.com,vger.kernel.org,kernel.org,gmail.com,linaro.org];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	TO_DN_SOME(0.00)[];
+	TAGGED_FROM(0.00)[bounces-90906-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	MISSING_XM_UA(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	NEURAL_HAM(-0.00)[-1.000];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[29];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[rock-chips.com:+];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bjsaikiran@gmail.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[shawn.lin@rock-chips.com,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[rock-chips.com,kernel.org,oss.qualcomm.com,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch,linuxfoundation.org,glider.be,google.com,vger.kernel.org,lists.freedesktop.org];
+	NEURAL_HAM(-0.00)[-0.999];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,renesas];
+	MID_RHS_MATCH_FROM(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,intel.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: EE7279D5CE
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,linaro.org:email]
+X-Rspamd-Queue-Id: AF5589D8C1
 X-Rspamd-Action: no action
 
-> Does this reset fix the problem for you though?
+在 2026/01/28 星期三 5:53, Neil Armstrong 写道:
+> On 1/27/26 16:53, Manivannan Sadhasivam wrote:
+>> On Tue, Jan 27, 2026 at 10:57:29AM +0100, Neil Armstrong wrote:
+>>> Add support fo the Renesas UPD720201/UPD720202 USB 3.0 xHCI Host 
+>>> Controller
+>>> power control which connects over PCIe and requires specific power 
+>>> supplies
+>>> to start up.
+>>>
+>>
+>> This driver only handles the supplies. So why can't you use the existing
+>> pwrctrl-slot driver as a fallback?
+> 
+> It would fit with no change, but the name "slot" doesn't match the goal 
+> here,
+> it's not a slot at all, it's an actual pcie IC.
+> 
 
-The reset cleanup in this patch (v4) is for correctness (to match T1), but =
-the
-primary stability fix for my platform is indeed handling the regulator brow=
-nout.
+How about renaming slot.cto something like pci-pwrctrl-simple.c, 
+especially if most power sequences fit into this category? This would 
+follow the naming example seen in other subsystems, such as 
+drivers/mmc/core/pwrseq_simple.c.
 
-> It is also possible active-discharge is not set on the LDOs ... I guess o=
-ne way
-> to know for sure ... is to never turn the regulators off.
+> Neil
+> 
+>>
+>> - Mani
+>>
+>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>>> ---
+>>>   drivers/pci/pwrctrl/Kconfig                 | 10 ++++
+>>>   drivers/pci/pwrctrl/Makefile                |  2 +
+>>>   drivers/pci/pwrctrl/pci-pwrctrl-upd720201.c | 88 ++++++++++++++++++ 
+>>> +++++++++++
+>>>   3 files changed, 100 insertions(+)
+>>>
+>>> diff --git a/drivers/pci/pwrctrl/Kconfig b/drivers/pci/pwrctrl/Kconfig
+>>> index e0f999f299bb..5a94e60d0d3e 100644
+>>> --- a/drivers/pci/pwrctrl/Kconfig
+>>> +++ b/drivers/pci/pwrctrl/Kconfig
+>>> @@ -11,6 +11,16 @@ config PCI_PWRCTRL_PWRSEQ
+>>>       select POWER_SEQUENCING
+>>>       select PCI_PWRCTRL
+>>> +config PCI_PWRCTRL_UPD720201
+>>> +    tristate "PCI Power Control driver for the UPD720201 USB3 Host 
+>>> Controller"
+>>> +    select PCI_PWRCTRL
+>>> +    help
+>>> +      Say Y here to enable the PCI Power Control driver of the 
+>>> UPD720201
+>>> +      USB3 Host Controller.
+>>> +
+>>> +      The voltage regulators powering the rails of the PCI slots
+>>> +      are expected to be defined in the devicetree node of the PCI 
+>>> device.
+>>> +
+>>>   config PCI_PWRCTRL_SLOT
+>>>       tristate "PCI Power Control driver for PCI slots"
+>>>       select PCI_PWRCTRL
+>>> diff --git a/drivers/pci/pwrctrl/Makefile b/drivers/pci/pwrctrl/Makefile
+>>> index 13b02282106c..a99f85de8a3d 100644
+>>> --- a/drivers/pci/pwrctrl/Makefile
+>>> +++ b/drivers/pci/pwrctrl/Makefile
+>>> @@ -5,6 +5,8 @@ pci-pwrctrl-core-y            := core.o
+>>>   obj-$(CONFIG_PCI_PWRCTRL_PWRSEQ)    += pci-pwrctrl-pwrseq.o
+>>> +obj-$(CONFIG_PCI_PWRCTRL_UPD720201)    += pci-pwrctrl-upd720201.o
+>>> +
+>>>   obj-$(CONFIG_PCI_PWRCTRL_SLOT)        += pci-pwrctrl-slot.o
+>>>   pci-pwrctrl-slot-y            := slot.o
+>>> diff --git a/drivers/pci/pwrctrl/pci-pwrctrl-upd720201.c b/drivers/ 
+>>> pci/pwrctrl/pci-pwrctrl-upd720201.c
+>>> new file mode 100644
+>>> index 000000000000..db96bbb69c21
+>>> --- /dev/null
+>>> +++ b/drivers/pci/pwrctrl/pci-pwrctrl-upd720201.c
+>>> @@ -0,0 +1,88 @@
+>>> +// SPDX-License-Identifier: GPL-2.0-only
+>>> +/*
+>>> + * Based on upd720201.c:
+>>> + * Copyright (C) 2024 Linaro Ltd.
+>>> + * Author: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>>> + */
+>>> +
+>>> +#include <linux/device.h>
+>>> +#include <linux/mod_devicetable.h>
+>>> +#include <linux/module.h>
+>>> +#include <linux/pci-pwrctrl.h>
+>>> +#include <linux/platform_device.h>
+>>> +#include <linux/regulator/consumer.h>
+>>> +#include <linux/slab.h>
+>>> +
+>>> +struct pci_pwrctrl_upd720201_data {
+>>> +    struct pci_pwrctrl ctx;
+>>> +    struct regulator_bulk_data *supplies;
+>>> +    int num_supplies;
+>>> +};
+>>> +
+>>> +static void devm_pci_pwrctrl_upd720201_power_off(void *data)
+>>> +{
+>>> +    struct pci_pwrctrl_upd720201_data *upd720201 = data;
+>>> +
+>>> +    regulator_bulk_disable(upd720201->num_supplies, upd720201- 
+>>> >supplies);
+>>> +    regulator_bulk_free(upd720201->num_supplies, upd720201->supplies);
+>>> +}
+>>> +
+>>> +static int pci_pwrctrl_upd720201_probe(struct platform_device *pdev)
+>>> +{
+>>> +    struct pci_pwrctrl_upd720201_data *upd720201;
+>>> +    struct device *dev = &pdev->dev;
+>>> +    int ret;
+>>> +
+>>> +    upd720201 = devm_kzalloc(dev, sizeof(*upd720201), GFP_KERNEL);
+>>> +    if (!upd720201)
+>>> +        return -ENOMEM;
+>>> +
+>>> +    ret = of_regulator_bulk_get_all(dev, dev_of_node(dev),
+>>> +                    &upd720201->supplies);
+>>> +    if (ret < 0) {
+>>> +        dev_err_probe(dev, ret, "Failed to get upd720201 
+>>> regulators\n");
+>>> +        return ret;
+>>> +    }
+>>> +
+>>> +    upd720201->num_supplies = ret;
+>>> +    ret = regulator_bulk_enable(upd720201->num_supplies, upd720201- 
+>>> >supplies);
+>>> +    if (ret < 0) {
+>>> +        dev_err_probe(dev, ret, "Failed to enable upd720201 
+>>> regulators\n");
+>>> +        regulator_bulk_free(upd720201->num_supplies, upd720201- 
+>>> >supplies);
+>>> +        return ret;
+>>> +    }
+>>> +
+>>> +    ret = devm_add_action_or_reset(dev, 
+>>> devm_pci_pwrctrl_upd720201_power_off,
+>>> +                       upd720201);
+>>> +    if (ret)
+>>> +        return ret;
+>>> +
+>>> +    pci_pwrctrl_init(&upd720201->ctx, dev);
+>>> +
+>>> +    ret = devm_pci_pwrctrl_device_set_ready(dev, &upd720201->ctx);
+>>> +    if (ret)
+>>> +        return dev_err_probe(dev, ret, "Failed to register pwrctrl 
+>>> driver\n");
+>>> +
+>>> +    return 0;
+>>> +}
+>>> +
+>>> +static const struct of_device_id pci_pwrctrl_upd720201_of_match[] = {
+>>> +    {
+>>> +        .compatible = "pci1912,0014",
+>>> +    },
+>>> +    { }
+>>> +};
+>>> +MODULE_DEVICE_TABLE(of, pci_pwrctrl_upd720201_of_match);
+>>> +
+>>> +static struct platform_driver pci_pwrctrl_upd720201_driver = {
+>>> +    .driver = {
+>>> +        .name = "pci-pwrctrl-upd720201",
+>>> +        .of_match_table = pci_pwrctrl_upd720201_of_match,
+>>> +    },
+>>> +    .probe = pci_pwrctrl_upd720201_probe,
+>>> +};
+>>> +module_platform_driver(pci_pwrctrl_upd720201_driver);
+>>> +
+>>> +MODULE_AUTHOR("Neil Armstrong <neil.armstrong@linaro.org>");
+>>> +MODULE_DESCRIPTION("PCI Power Control driver for UPD720201 USB3 Host 
+>>> Controller");
+>>> +MODULE_LICENSE("GPL");
+>>>
+>>> -- 
+>>> 2.34.1
+>>>
+>>
+> 
+> 
+> 
 
-You are spot on. My testing confirms exactly this: if the rail doesn't togg=
-le
-(or is given enough time to discharge like right now when I'm using
-delay in my dt) -
-tested and proven in my v2 patchset
-where I kept the regulator on after initial toggle and just handled the cam=
-era
-via software reset - the sensor works perfectly - which confirms that
-the brownout
-is actually happening.
-
-The failure only occurs if we toggle the regulator off and on again too fas=
-t for
-the bulk capacitors to discharge (passive discharge).
-
-Regarding Active Discharge: The `qcom-rpmh-regulator` driver currently lack=
-s
-support for the `regulator-pull-down` property (it doesn't send the require=
-d
-RPMh resource commands). I plan to investigate adding that support separate=
-ly,
-as it would be the ideal long-term fix.
-
-For now, I have submitted a patch series to `linux-regulator` to add
-`regulator-off-on-delay-us` support to the `qcom-rpmh-regulator` driver.
-Mark Brown has already reviewed it and I have just sent v3.
-
-Once that lands, the Yoga Slim 7x DTS will enforce the physical delay at th=
-e
-regulator level, which resolves the brownout cleanly.
-
-This media series (v4) is now purely to ensure the OV02C10 driver follows
-the datasheet power-up sequence correctly, independent of the platform-spec=
-ific
-brownout.
-
-Thanks & Regards,
-Saikiran
-
-On Wed, Jan 28, 2026 at 3:50=E2=80=AFAM Bryan O'Donoghue <bod@kernel.org> w=
-rote:
->
-> On 27/01/2026 17:11, Saikiran B wrote:
-> > Hi Sakari,
-> >
-> > Thanks for the review.
-> >
-> > On Tue, 27 Jan 2026 at 19:07, Sakari Ailus <sakari.ailus@linux.intel.co=
-m> wrote:
-> >>> +     /* Assert reset for 5ms to ensure sensor is in reset state */
-> >>> +     if (ov02c10->reset) {
-> >>> +             gpiod_set_value_cansleep(ov02c10->reset, 1);
-> >> Is this needed? Isn't XSHUTDOWN already asserted here?
-> >
-> > You are correct that "power_off()" asserts the reset line. However,
-> > Hans de Goede (Cc'd) suggested explicitly asserting it here to strictly
-> > enforce the datasheet's T1 timing requirement (Reset low > 5ms) during
-> > the power-on sequence. This ensures the sensor is in a known clean stat=
-e
-> > before power rails are enabled, even if the prior state was inconsisten=
-t.
->
-> The data-sheet doesn't specify 5 milliseconds - it specifies T3 as
-> infinite that is the period between XSHUTDOWN assert and VDD off is
-> called "hardware standby"
->
-> Does this reset fix the problem for you though ?
->
-> We might try this to stop the reset pin floating
->
-> reset-n-pins {
->      pins =3D "gpio237";
->      function =3D "gpio";
->      drive-strength =3D <2>;
->      bias-pull-down;
-> };
->
-> >
-> >>> +             usleep_range(5000, 6000);
-> >>> +     }
-> >
-> >>> -             usleep_range(5000, 5100);
-> >>> +             usleep_range(5000, 5500);
-> >> According to the datasheet you seem to need 8192 XVCLK cycles after
-> >> deasserting XSHUTDOWN before proceeding with I2C access.
-> >
-> > The 5ms delay covers this requirement with a safe margin.
-> > With a standard XVCLK of 19.2 MHz (or even 9.6 MHz), 8192 cycles
-> > takes approximately 0.4ms to 0.8ms.
-> >
-> > The 5ms delay (usleep_range 5000-5500) ensures we are well beyond the
-> > 8192 cycle requirement for any supported clock frequency.
-> >
-> > Thanks & Regards,
-> > Saikiran
->
-> Adding reset to power-on @ 5 milliseconds if it actually fixes the
-> problem is defensible but, be careful about claiming it is being done
-> because of hardware requirements, since the data-sheet doesn't mention th=
-at.
->
-> It sounds to me as if the reset added here isn't ? actually fixing the
-> problem for you ?
->
-> If so we might try
->
-> - Setting bias-pull-down on the reset line
->
-> - Making sure the CCI lines aren't supplying voltage
->    I may have missed but, did you give that a try
->
-> - And again interrogating the PMIC LDO register states
->    to show if the LDO is on/off when we think
->    Since the RPMh is a firmware which takes cast votes
->    if we have messed up sharing say VDD somehow, it is
->    possible power is on when we think it is not.
->
-> - It is also possible active-discharge is not set on the LDOs
->
-> I guess one way to know for sure if XSHUTDOWN or regulators is our
-> problem is to never turn the regulators off.
->
-> bool enabled =3D false;
->
-> power_on() {
->         if (!enabled) {
->                 regulator_bulk_set();
->                 enabled =3D true;
->         }
-> }
->
-> power_off() {
->
-> }
->
-> If we leave all other delays out - nothing in DT, no changes in ov02c10
-> and simply never switch the regulator off, once it has been switched on,
-> we'd have some pretty conclusive evidence if brown-out was a thing.
->
-> How about it ?
->
-> ---
-> bod
 
