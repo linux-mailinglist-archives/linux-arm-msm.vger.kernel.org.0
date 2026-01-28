@@ -1,263 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-90933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90934-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id qHTaK6nceWnI0QEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 10:53:45 +0100
+	id QBtpO6bdeWnI0QEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90934-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 10:57:58 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D2679F06F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 10:53:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B02849F1AB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 10:57:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id CDC7A3011794
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 09:53:43 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id ACD3B304806F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 09:56:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE00334D4F3;
-	Wed, 28 Jan 2026 09:53:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDB7834FF4F;
+	Wed, 28 Jan 2026 09:56:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="YVQzXd3q";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="WAcs8nSP"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="QrsW2B9m";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="Q9zEE5Ok"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DE8734D391
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 09:53:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC91334EF0D;
+	Wed, 28 Jan 2026 09:56:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769594022; cv=none; b=JnXcQWbIY2SucK8JmM+R9PgQ0wcXQzF8v86tIDFG7/aZXhWI/bHTYLG+GlCI1pD19N68K9iEjEjTL08Po0h8kh5PW4AzsUHzLjTy2ycLqV9lmXlq3WiG065mp9EGmH8BakJuGdX0SRvrseYVkkuWAEo6ns67HHGj9BpG3WQijY4=
+	t=1769594166; cv=none; b=mZnQASv82P9yP9zEVz4XJ4CkycUPHLKrnBGDaQPT6y5+TZitrd7Bhc5i89BsMaGvQP+6lZqdZLHis8YOK9n7nQ0JJeV+iw6i2N37nLvuSSrn3DvxJU+R5wEYuqOqXFnInPl+H/1LRWZcVMxlT0hU9c2z1ze1Dk0hj+sBUyHsOiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769594022; c=relaxed/simple;
-	bh=m7VZ+3BHYVPIauZhjdMaB/99DtQmeJlc2TEVCSnnrHU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uh42CeUe3qJxCyyOHt97YyyRm3/FuSAyBGJB4G5qtcfa9LI5XU2PRUO5wW6mte62nDHMa2d9dhVqRDxfZjRlFumbAArQkP7+IFPMjjaFYdf76j4lnJn8jO45GY7f5zySmBA0lqlRFhoPrj2RcnUbDSuu5Y5/6pnYIHI/gHwl7rM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YVQzXd3q; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=WAcs8nSP; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60S9235d1406310
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 09:53:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	nb0VkEE35ZrWPoIyd63vuEpjD+c+2xcVOdZj3nN5YtM=; b=YVQzXd3qU+m5Rs3O
-	71+fMMAnVCAqlHXLH8ZtCHVjEwQYyGHWtx6umRm3XzP7fsDt8WpSwEVgrN+SZEgl
-	YgeTJ7XAUsSTqdr3KM5Q9MBRaShyBqXjJC1fTNZ6w7dj9P+V8T5E7/Z876RAGely
-	g5wPl5R/W5PY0K7hvsWuTr+32VqStE7/3Tb9PZP1nmimqWefYTlwOHWQ9NMkjVS3
-	OM850i7ee8NUDhdyA5UYrAL3G6oEulgZ6aWbuEsg9LBjPrzXtv+WKWtIXm9Hu69Y
-	lvssS08XJYw8o86yxr/RVZz4IHf40IzJEY3rhD3N+Clg6WunMKwj3zCSwMMgoeeH
-	7n8zcA==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4by4dyt8w6-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 09:53:40 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-8946ebb51a0so2274576d6.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 01:53:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1769594019; x=1770198819; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=nb0VkEE35ZrWPoIyd63vuEpjD+c+2xcVOdZj3nN5YtM=;
-        b=WAcs8nSPXXAumFrEtX9TFfhxL/M2piY2/x2fYqTkcVVWC7gfGfFjnn1xkAQmtZohkf
-         XqkVCBdayvawTMrTAe/85a1/8YECxAGO4oMKvl17fWnN/kR45jpBCJVLpSuk1JWX1AMx
-         qOT636QBVARHUUnfJ/EAU5Hz6hGyRE8UuoDF98SMl7ZqQDpx/rI07BatSP9ILUY6Bt/E
-         H1FBpMMbY4CZS8j34f3VK0Tkrnks4lB725FEcpmTlgFjh50lKOzhb23zB53EP9VrXEMr
-         IUasPStldZ384OYrbykSV+dK9/Q1Z1lvzua51ProXdhkh8k/Z8FEtFVdJj5P/xL2Ydh6
-         bf8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769594019; x=1770198819;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nb0VkEE35ZrWPoIyd63vuEpjD+c+2xcVOdZj3nN5YtM=;
-        b=C1x1OdljY/V73pSVDy9G1IO2+QmKmiUyQdBnAK0UVyX8edR5qKQ49tdqy+8mB+sFGz
-         1SVI1AIINJ6Wowk2hhfYUC7kca3pUHwGyy3nUF9SM2j6LNlxSWSe8fe0WC7GRZIbhnK5
-         WxB8RK213HMKT8m+Y3K0DOEEOALCw89FbF+CW1NZ9ESiJV6W+Uq1TWoZ0tSJFV3zCSye
-         7E4vI4X3CW3x2ff/OhFMMhH8CpVYq8AwoCeriH0gRLcuIdLenkRompHB/b4vxehBZ0s4
-         YD99psL3VLg8bsV6xmERsunkCXni31f9F0Kqtao1Kpc0KvWbxijwKC8eoIpFhLsh+jPo
-         ldHQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUsxGTQKcvQ1JtK8sb0l3rnLQOSssDPsFYHvx7h8CfJ/dNwKYnozQ6OQksN48nlnU/SVeTkM6fv2T9oQmfS@vger.kernel.org
-X-Gm-Message-State: AOJu0YyzryDybhVFuiuWdyqLFF/asQxRzQBHT+e9gfdXJ3BXdPBexoRq
-	mDU5pNFy4ggtMISiz3D04+3dYiyYvmlN4oLoUMNSSI22Va7BvjEVIsTEceOm5/dTn/yICzlWqAY
-	802jykpteNsQKFxiA8nn0abdG7DwWiG5KvorC6VAROaHJwBIeBhCheLIb2aD4yKjh1k8gzDuQBN
-	H7
-X-Gm-Gg: AZuq6aJ9e3Rb2/Nh2BI7e5bzaX5icWSAGmkGTbM0wfpV6tunEThlNBaYR01tdAAo0bU
-	jHuxt+CvOx90rbsZm0gOOzn4F7zhOcazrAdgn0UsjM4QOhU9u56LhS9WLGjTyhI/VxXutQkYEVk
-	k3/qqTEQmAFJHItlhOoTeZxhPzuHgwT0/mAyQnVGn/G7CdzoviDqi0izXWiZ2IIxkVCLZcwBWTt
-	eOiY3epT5au0VSfJhG3rfEGtpnNQld/ezfH8YGqHhujt3vJqCMm0EAWMipV7nII2PxU5SuMUuoV
-	si/lYZBd38+TN/Q9pqBKv+FPP5NBi1XQVqxCpa7SEZxfprNFHP5q8qnAgAnvdMM2nqJeYfANA9O
-	yl8thQp0qNlxSgh9G/wlKZo9eJzK0KjQejjiN+k5PzW7LFnJUMfgvlystDwmGkmr6Vss=
-X-Received: by 2002:a05:6214:4c43:b0:894:a22f:6882 with SMTP id 6a1803df08f44-894d7858c31mr10159426d6.3.1769594018788;
-        Wed, 28 Jan 2026 01:53:38 -0800 (PST)
-X-Received: by 2002:a05:6214:4c43:b0:894:a22f:6882 with SMTP id 6a1803df08f44-894d7858c31mr10159286d6.3.1769594018378;
-        Wed, 28 Jan 2026 01:53:38 -0800 (PST)
-Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-658b4256a35sm1361015a12.1.2026.01.28.01.53.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Jan 2026 01:53:37 -0800 (PST)
-Message-ID: <5a773b89-f3f8-486b-af01-3387c99e53e5@oss.qualcomm.com>
-Date: Wed, 28 Jan 2026 10:53:35 +0100
+	s=arc-20240116; t=1769594166; c=relaxed/simple;
+	bh=Tv9VtT/tuyIkVlqTZedEc7eEI3ttMxjU9nyE/1eczKA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=CHRuWLRBBfsuTmbRIGKnDIxvtY/v1owesTtkIdupHaCqAF0h0KUAaUWSsPPGBGW6/UwNQbfglloNjfBPtXKq61KVCqDCXa8dVqzdi8nsfP22s37VBjnXldw+5UYyKpuHtIP0OwZXVRq9ha8WU3usN+EkDfppFlh7T4VBjbg8M1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=QrsW2B9m; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=Q9zEE5Ok; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1769594162;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=y1CkU/HVc2ibILKVdI+xG85Mza9wEmLT+9RFRhOmAis=;
+	b=QrsW2B9mzvVSeDxdgZ58k37uaTiRsEIcoBAj/3gtSMNU7mee/7YgMKb7tLtC2+9pt+ZsCp
+	/Qlw7YGtu+D8w9zI/jfeR02K7jkwCwMNWveGSoXd/HJOxdI03H2J/JQnRpe04zb6hVmOLU
+	6ASRhGEHkhKPaTQohUyYsml+d/vho4+pvTGLFB4mQzQVPIPUPCaLO+RLz6zjpV63cEsMTQ
+	xPtSg7nTryjHvNtvH0FHABPelcg74vSzXfNc+gj5f4lI7wc1/pPrrp58ajIcLLJOSztS03
+	WgEci4Jq4kCqDrMLhEueefUgThJw36YmrOP+31eZ8FgG1BJYks7C45Sn47bQgQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1769594162;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=y1CkU/HVc2ibILKVdI+xG85Mza9wEmLT+9RFRhOmAis=;
+	b=Q9zEE5OkRXme6lpHRO+aeYBAG308JfFrDu40HCchk0mHzXsOfjeI4oWDURKNazVljzm7TQ
+	2JIz0EXhWlqaWlAg==
+To: linux-kernel@vger.kernel.org
+Cc: "Thomas Gleixner" <tglx@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Amit Kucheria <amitk@kernel.org>,
+	Thara Gopinath <thara.gopinath@gmail.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Lukasz Luba <lukasz.luba@arm.com>,
+	linux-pm@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH v2 13/20] thermal/qcom/lmh: Replace IRQF_ONESHOT with IRQF_NO_THREAD
+Date: Wed, 28 Jan 2026 10:55:33 +0100
+Message-ID: <20260128095540.863589-14-bigeasy@linutronix.de>
+In-Reply-To: <20260128095540.863589-1-bigeasy@linutronix.de>
+References: <20260128095540.863589-1-bigeasy@linutronix.de>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFT 2/3] arm64: dts: qcom: glymur: Add USB related nodes
-To: Wesley Cheng <wesley.cheng@oss.qualcomm.com>,
-        Abel Vesa <abel.vesa@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        Pankaj Patil <pankaj.patil@oss.qualcomm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org
-References: <20260113-dts-qcom-glymur-add-usb-support-v1-0-98d6d387df01@oss.qualcomm.com>
- <20260113-dts-qcom-glymur-add-usb-support-v1-2-98d6d387df01@oss.qualcomm.com>
- <01de4054-eebf-4ef3-ad74-c806b208a848@oss.qualcomm.com>
- <6lieos5uudkgynizozrmzrj5ov57frzzl65b2fpanwbhbmehot@z5uhyv4ipyet>
- <4632ad3a-c893-449a-b0d1-48d9c93da7e9@oss.qualcomm.com>
- <86dade1c-3ac4-4352-8dc8-e7acaaf21321@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <86dade1c-3ac4-4352-8dc8-e7acaaf21321@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=XqT3+FF9 c=1 sm=1 tr=0 ts=6979dca4 cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=R5tFhpBbpkMMLyjFO7oA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=pJ04lnu7RYOZP9TFuWaZ:22
-X-Proofpoint-GUID: NnIE8cYFy2olf_AXcg-5hIXaeXh80vUc
-X-Proofpoint-ORIG-GUID: NnIE8cYFy2olf_AXcg-5hIXaeXh80vUc
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI4MDA4MCBTYWx0ZWRfX2badAb58yXCE
- T8wPCzK3WJdNTqXm0Fpp+M2b9DpoknU3nXQg4vXg7Ln59y0qvw+2pvhdD8R1BgbU2qdEcTrk4ec
- 5xF2AMW7wE+AjWVmiIdQunj/pAefFRGwBh+9edLiRg4dxKN+/hrKL4oMHFEPUv9wEKKeOXIAL4H
- dkuyFvsy0nRvSt5OSHuuHVyuIydirXs2/a5UWLar52FRWqumvfHZFnnqnZcVOd8pKzGXjPpLdUM
- yJMasF+EUPr4znogCqQImADQFkIu5qRwKqLjWo1WNAiEEbSxRTW67DoSsImFeIBCC4YILVQ9d6G
- SaaeRIy7n/mTK2gERu2NJMUTKBresNNTY1xKWmI5BSPAUnMrWwpijbCYmF0BMnWuZM/n+lJygMQ
- 4cf6whcO8FgYVLfixigqDySp8jrF+4C3va25sVIj7LYw5c70hX6ujp5kQurcIQS3NHlZHV4Bzlr
- jnATgJK1Hx0Ie5nZpbg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-01-28_02,2026-01-27_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0 bulkscore=0
- priorityscore=1501 clxscore=1015 impostorscore=0 spamscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601280080
+Content-Transfer-Encoding: quoted-printable
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [0.84 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[linutronix.de,none];
+	R_DKIM_ALLOW(-0.20)[linutronix.de:s=2020,linutronix.de:s=2020e];
 	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	FREEMAIL_CC(0.00)[kernel.org,linutronix.de,gmail.com,linaro.org,intel.com,arm.com,vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	TAGGED_FROM(0.00)[bounces-90933-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:mid,oss.qualcomm.com:dkim,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim];
+	TAGGED_FROM(0.00)[bounces-90934-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[3];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[bigeasy@linutronix.de,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 0D2679F06F
+	DKIM_TRACE(0.00)[linutronix.de:+];
+	NEURAL_HAM(-0.00)[-0.997];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,arm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,intel.com:email,linutronix.de:email,linutronix.de:dkim,linutronix.de:mid]
+X-Rspamd-Queue-Id: B02849F1AB
 X-Rspamd-Action: no action
 
-On 1/27/26 11:26 PM, Wesley Cheng wrote:
-> 
-> 
-> On 1/27/2026 3:46 AM, Konrad Dybcio wrote:
->> On 1/27/26 12:41 PM, Abel Vesa wrote:
->>> On 26-01-13 14:13:32, Konrad Dybcio wrote:
->>>> On 1/13/26 1:33 PM, Abel Vesa wrote:
->>>>> From: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
->>>>>
->>>>> The Glymur USB system contains 3 USB type C ports, 1 USB multiport
->>>>> controller and a USB 2.0 only controller. This encompasses 5 SS USB QMP
->>>>> PHYs (3 combo and 2 uni) and 6 M31 eUSB2 PHYs. All controllers are SNPS
->>>>> DWC3 based, so describe them as flattened DWC3 QCOM nodes.
->>>>>
->>>>> Signed-off-by: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
->>>>> Co-developed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
->>>>> Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
->>>>> ---
->>>>
->>>> [...]
->>>>
->>>>> +            snps,dis_u2_susphy_quirk;
->>>>> +            snps,dis_enblslpm_quirk;
->>>>> +            snps,dis_u3_susphy_quirk;
->>>>> +            snps,usb2-lpm-disable;
->>>>
->>>> Other SoCs have a list that's much longer, please consult Wesley if
->>>> this list is enough
->>>
->>> Checked with Wesley. He confirmed that this trimmed list is fine.
->>> He said he dropped the rest since they are related to the power saving
->>> features like USB2/3 LPM (l1 or u1/u2) and we don't seem need those.
->>
->> Is that to say that those erratas were fixed in this hardware?
->>
->> Low-power states of the link are no less than desired is possible..
->>
-> 
-> I think it was misunderstood.  We should keep the same quirks as our previous targets to enable USB LPM support in certain cases.
-> 
-> snps,hird-threshold = /bits/ 8 <0x0>;
-> snps,usb2-gadget-lpm-disable;
-> snps,dis-u1-entry-quirk;
-> snps,dis-u2-entry-quirk;
-> snps,is-utmi-l1-suspend;
-> snps,usb3_lpm_capable;
-> snps,has-lpm-erratum;
-> tx-fifo-resize;
-> snps,dis_u2_susphy_quirk;
-> snps,dis_enblslpm_quirk;
-> snps,usb2-lpm-disable;
-> 
-> There are some questionable ones that I'm on the fence though, which we should consider removing:
-> snps,usb2-lpm-disable
-> snps,usb2-gadget-lpm-disable
-> 
-> USB L1 support is routinely being verified on our devices (in host and device modes), so if its power over performance, we should consider removing the properties to disable USB L1.
+Passing IRQF_ONESHOT ensures that the interrupt source is masked until
+the secondary (threaded) handler is done. If only a primary handler is
+used then the flag makes no sense because the interrupt can not fire
+(again) while its handler is running.
+The flag also disallows force-threading of the primary handler and the
+irq-core will warn about this.
 
-Does the fact that we allow L1 entry impact performance itself, or is
-there some room for improvement in the drivers?
+The intention here was probably not allowing forced-threading.
 
+Replace IRQF_ONESHOT with IRQF_NO_THREAD.
 
- (esp since we're defining the HIRD threshold as well...)
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+---
+Cc: Amit Kucheria <amitk@kernel.org>
+Cc: Thara Gopinath <thara.gopinath@gmail.com>
+Cc: Rafael J. Wysocki <rafael@kernel.org>
+Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc: Zhang Rui <rui.zhang@intel.com>
+Cc: Lukasz Luba <lukasz.luba@arm.com>
+Cc: linux-pm@vger.kernel.org
+Cc: linux-arm-msm@vger.kernel.org
+---
+ drivers/thermal/qcom/lmh.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Wouldn't HIRD threshold be related to *U*1(/2) though?
-I see in the list above you decalred
+diff --git a/drivers/thermal/qcom/lmh.c b/drivers/thermal/qcom/lmh.c
+index ddadcfada5136..3d072b7a4a6dd 100644
+--- a/drivers/thermal/qcom/lmh.c
++++ b/drivers/thermal/qcom/lmh.c
+@@ -220,7 +220,7 @@ static int lmh_probe(struct platform_device *pdev)
+ 	/* Disable the irq and let cpufreq enable it when ready to handle the int=
+errupt */
+ 	irq_set_status_flags(lmh_data->irq, IRQ_NOAUTOEN);
+ 	ret =3D devm_request_irq(dev, lmh_data->irq, lmh_handle_irq,
+-			       IRQF_ONESHOT | IRQF_NO_SUSPEND,
++			       IRQF_NO_THREAD | IRQF_NO_SUSPEND,
+ 			       "lmh-irq", lmh_data);
+ 	if (ret) {
+ 		dev_err(dev, "Error %d registering irq %x\n", ret, lmh_data->irq);
+--=20
+2.51.0
 
-snps,dis-u1-entry-quirk
-snps,dis-u2-entry-quirk
-
-which forbid them
-
-and the threshold is set to 0, so IIUC that means entry is only allowed
-for devices that don't ""really"" suspend
-
-Konrad
 
