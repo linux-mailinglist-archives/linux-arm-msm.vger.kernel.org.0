@@ -1,299 +1,191 @@
-Return-Path: <linux-arm-msm+bounces-90906-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90903-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id CHjVE6CzeWkiygEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90906-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 07:58:40 +0100
+	id wG/TBqqseWm3yQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90903-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 07:28:58 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF5589D8C1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 07:58:39 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6754D9D6DE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 07:28:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 850163009036
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 06:58:38 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 28382303D2CE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 06:27:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 311BB326935;
-	Wed, 28 Jan 2026 06:58:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B2C4337692;
+	Wed, 28 Jan 2026 06:27:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="de5YgG5y"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UsuDvuaN";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Quvj8A6U"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-m1973184.qiye.163.com (mail-m1973184.qiye.163.com [220.197.31.84])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4F0938DF9;
-	Wed, 28 Jan 2026 06:58:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 034D6337689
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 06:27:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769583516; cv=none; b=llm7aKksMgzJnHV+A1x4MGwrycHE/rh/ck4kjuoSx6/dQetqj4HNGZuM20K9eT7zwkOxPaQfLHj6EnW2D9/8S0vJ3L2PmOXEMinYVkIlFrvN8qivWjN695Oahvz9iZe2XwQ52P4NUIj1KYECS4+vp82LWMXd/m2ni6pcFDVWFjc=
+	t=1769581652; cv=none; b=VcWj0awl4LSf8rdzgCxdtzKsR6rx13Rj0wGH4QtXIfiViTA5GGSCEwyoeU6CO3aKHBQ7U6S6m8NUdNF7X8kblWk9QGcAhc7hGb9xmE2Rh7Mdne+9k8kDNLpAHtd8CexQUpETl1B/RvX0Cy2SNKQztw19BWZciJEOFfB8OH6F5eE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769583516; c=relaxed/simple;
-	bh=LsMBBI8dZt9lK7TD9B4uXQKjmlMXrO/V8MQb2+8Pkh0=;
-	h=Message-ID:Date:MIME-Version:Cc:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=O0d7tUIckPrHsGwG95TAKRrPhmP7LN3QwMRosFtimWsumjMddtXcH6sR46Sq55kzSVQY1CnvgJhOigi96fhdL6HUZlfRVxtYXleeeQlNIrmLCRBOt8A/hf8UqE/h7GNskbUA5QM1mqS8IUCeuSkjLO7AjPb4lSl0dllHqCJbHFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=de5YgG5y; arc=none smtp.client-ip=220.197.31.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
-Received: from [172.16.12.14] (unknown [58.22.7.114])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 323dec204;
-	Wed, 28 Jan 2026 14:22:51 +0800 (GMT+08:00)
-Message-ID: <33bbb3ec-5659-4d50-a5ff-dafa44e291dd@rock-chips.com>
-Date: Wed, 28 Jan 2026 14:22:50 +0800
+	s=arc-20240116; t=1769581652; c=relaxed/simple;
+	bh=Xe3KPleQc1zW6csRIiAocjXfU/8aeHv+lJPe+k/UV2M=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=PQsCB6mKt6whyZE2Y6aJKy5GX5xPYr71TIcVUMVG4adKXuuEUG2DkIZNF1fuUVtEopGbSKu7clfDxqCiYiiNOpo455AjBpd5Qs/NazCwKALZSbXI2k19vziBtZXO7OgT/dlA1bA7v9ch4/peErMWwudeUti0X+yPcF6iEDQwHk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UsuDvuaN; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Quvj8A6U; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60S3ZnLH2477239
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 06:27:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=1EqyNg7XrcvdpwaoVaEwAUPHZ4OY5BMwz2o
+	ZWWKTUf4=; b=UsuDvuaNXvanswW4oRBIkC8THHMuPCb/00zMWNQ1lPAJlMkPIkG
+	TEMMtt1oEIJeouG5dVU2DtFOVnqh+8ckvqRKyeyGbni55ES5Wz6W932Wwj+rfpBZ
+	9/Ew4o5F7lsjsmTtUp5UetpS1jhcvJj7Y/SoMFbuqpyW9/OKhKKJDJQe91x/OVUE
+	7Rto3ZBmi4V/0SRSHTggJQ6gjUaLxkRsgZR6eyPnSFd+tIKcDB5TXOSQ5k304p8b
+	HsiQlxPwlh8ulT2PaodiJavSIk1uVrnkgpDbAQkqtpdKM9Z192gNMf6AjORUn2Ph
+	jPURF/8qD2wnWeT2w9EiSF9f3hxjE8U4A5g==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4by20y24be-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 06:27:30 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-34e5a9f0d6aso945812a91.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jan 2026 22:27:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1769581649; x=1770186449; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1EqyNg7XrcvdpwaoVaEwAUPHZ4OY5BMwz2oZWWKTUf4=;
+        b=Quvj8A6UKdwec7eq0IPKxg9iMQnTkRjhFwv8ktXhdfYDso0yX+EwCr7kyiig90FSyZ
+         kDYJMrjKn8TGXhtk+bcXEDo9N2zKTzpCXt+XOrrKT0AOahXt4HygmA1nS0BSqYGbD6hR
+         P7F2HVu8jkXRi9A6pJGw+EM2wbGLTYwP9aBooLC3O1rrD+mycoRTcNSJqOt7tsyWnfOJ
+         moc+a91+3bUaMhKm2SN6iPpqk6x813Kw7Bt4mi0cBHTNkmqbmeyPkan5NhmDY30LKfRA
+         kHKIhqrTvUOldhMQPjuE7aw5/rDqkW8oQ9UpuvmDfv5hh4lpSLc0Md+9A5bRjHQHOmXR
+         qeUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769581649; x=1770186449;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1EqyNg7XrcvdpwaoVaEwAUPHZ4OY5BMwz2oZWWKTUf4=;
+        b=f8CwAjirL5RIGZ0ZjtxsBOxD4iqxuxEwPjYGYQ8FR067Fgr7DN7hQdgT9N+Pjfq7cT
+         KzrJVJHHRkcFTHTMqhF6g/h5Nwb6J5J4AQXcxmV+YmTKZGMhcMRWFuSQmTVmL27nz2jO
+         ovVBkDOoWX/ZaKpl05DFGeql6JIh4Msrez/Q3Iji5rF5dVGBvnvCSwdI2TuqzYqYS9vF
+         TALLLq+wD+K4noYwV1z3zsVpOd+i2zi6fOzg4M+KBsdAX8pLsdVGOncmL/Q27hnPNMZ2
+         +Nu/oeMmE1usaJSA2QsOJWayc8LELnE/CqU4tJAVOGvmHvoAWg2Ay2R9QdvFkPzre4YW
+         7vqw==
+X-Gm-Message-State: AOJu0YxTQAe4SjlQyKpNkiwRYcWcHkA5zGQwFa8Txkb0DQFiA6dljIfH
+	esITZxDW6qBSb3dF0zhyLNrk9GpRmIPijEDfBDEtIpN36s6+ZRV8DNHCNhbcorl0C98pyw1ikDT
+	7+diTi0/X1lN+MIHP0F9V3xvmKcn9T7EirDHrIE453kE4AlFFL0g6LkK09Utc1cP8PP5m
+X-Gm-Gg: AZuq6aIqrIL30XnmAF5JYGNrxsuEwvPq48htFzZ4whfCUV2hIR2cQCQvsvL75r9Xt2h
+	AB0CxeQkLddl72NHWMJml0faSbOkNlvxfCx8f6WYUkf7r/J5D8vIvt5BYLYwZxF79zn3RogCcoe
+	Wq6flFs1o4HZzSSQqycLK6zru1bUt1Y7kwjcWyCWRXMVQoBOtjHvNS81eJqnTmRmruvRSUm+VEJ
+	aHswLut0m+B+Q0PHJ4bG3nDx6TjunO86QlBGabIACz0LjKu1xA47KmGAOlc6PpFepMojgiwEcxp
+	UgrgedK2xf27Q3zilZf2GCy6rJOIhBEQqJ9gV6tRUWmBg4Ihc3THY0mTA0mJI83ZI0DLGdIzbTP
+	AqtBXyTmSwJwGFVi74hpVuHFjvtGif/abjZpMhe0hVfweyy0=
+X-Received: by 2002:a17:90a:e705:b0:34c:2f01:2262 with SMTP id 98e67ed59e1d1-353ff8b3d60mr3462341a91.3.1769581649382;
+        Tue, 27 Jan 2026 22:27:29 -0800 (PST)
+X-Received: by 2002:a17:90a:e705:b0:34c:2f01:2262 with SMTP id 98e67ed59e1d1-353ff8b3d60mr3462325a91.3.1769581648799;
+        Tue, 27 Jan 2026 22:27:28 -0800 (PST)
+Received: from hu-kriskura-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3540f17955asm1276381a91.0.2026.01.27.22.27.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Jan 2026 22:27:28 -0800 (PST)
+From: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+Subject: [PATCH v2 0/2] Flatten usb controller nodes on Talos
+Date: Wed, 28 Jan 2026 11:57:18 +0530
+Message-Id: <20260128062720.437712-1-krishna.kurapati@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Cc: shawn.lin@rock-chips.com, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
- <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
- Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Geert Uytterhoeven <geert+renesas@glider.be>,
- Magnus Damm <magnus.damm@gmail.com>, Bartosz Golaszewski <brgl@kernel.org>,
- Bjorn Helgaas <bhelgaas@google.com>, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
- linux-usb@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
- linux-pci@vger.kernel.org
-Subject: Re: [PATCH v2 2/7] pci: pwrctrl: add PCI pwrctrl driver for the
- UPD720201/UPD720202 USB 3.0 xHCI Host Controller
-To: Neil Armstrong <neil.armstrong@linaro.org>,
- Manivannan Sadhasivam <mani@kernel.org>
-References: <20260127-topic-sm8650-ayaneo-pocket-s2-base-v2-0-c55ec1b5d8bf@linaro.org>
- <20260127-topic-sm8650-ayaneo-pocket-s2-base-v2-2-c55ec1b5d8bf@linaro.org>
- <llbnkm72mgcsrucnp7pdkwbgyzenvhe4kudxkdixplgaoirdem@3q3me34o5drf>
- <0104896e-44d0-485a-a44e-694864c819b7@linaro.org>
-From: Shawn Lin <shawn.lin@rock-chips.com>
-In-Reply-To: <0104896e-44d0-485a-a44e-694864c819b7@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a9c0344df9609cckunmfeac2e531bd066
-X-HM-MType: 1
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFDSUNOT01LS0k3V1ktWUFJV1kPCRoVCBIfWUFZGkxLSFZNSUsaHkMZQ01MGB5WFRQJFh
-	oXVRMBExYaEhckFA4PWVdZGBILWUFZTkNVSUlVTFVKSk9ZV1kWGg8SFR0UWUFZT0tIVUpLSEpKQk
-	xVSktLVUpCS0tZBg++
-DKIM-Signature: a=rsa-sha256;
-	b=de5YgG5yXN9uH1U/29igFPjzMtVXZjG11RVK1ox3PS+J0OxMUsWTNCOPROu8id+oUwcmJpuixHyc9xQu9wm+e011mhPVPHSDxOEQqVX7UmuUb4yIv1FjZ8cKPaXr4zOp8OU4D4CKufl7NjYy2zQtn0eUL36w0+D3ewWucOSsJ/4=; s=default; c=relaxed/relaxed; d=rock-chips.com; v=1;
-	bh=MAfz+13K76TPUxvO+5QDm/lgQXp/YWJ9M/nw8Kebqcw=;
-	h=date:mime-version:subject:message-id:from;
+X-Proofpoint-ORIG-GUID: xhl8HAVb7uRuxD8-EQl9oGquMxa3OQXV
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI4MDA1MCBTYWx0ZWRfX/zYFBxxuRR8i
+ hbqmeMEhQUYH1QrijihGooIorSpf9IvUwNcgXeJw1GG3OIzPSQFc6vWKrHafsRM+7S48NC/Ef1U
+ Kj8tUTweNnIduhMoco2QlkGQ9kcJ8uotwqKdqNz7yLasKo4yDz40zfa9FYEW55PQo37gpWHRirR
+ oLa7QMtvBff/BxFKA+ZlAprjNr9+l9TNi/VXW3Sqc5tJDVeLQ13mJDlV+EyPTXlzZp7fhBBtg8v
+ GxZQzv9BicohzZrSO5gGveIw+qndt5jvR84ZkLyLGWYj/kkK0JsGC3rBMXWOd39PCZoc0veOLZI
+ SeLhnEcP3Im/gE4JtNPhQ1MDYV/7fa7K050m/8xCL+3rDDZsH2XQSi+WnA590cBjl5g1RPVLoyi
+ iHjNS+OhDbZk1mtqreKL6gq+ejHBGG4VqYkrZVHtes4G/a4v2BS/WDtJSTHQXfHkI+vEFjXpjcd
+ 3pGOC/mxIjmaRlgxW5A==
+X-Proofpoint-GUID: xhl8HAVb7uRuxD8-EQl9oGquMxa3OQXV
+X-Authority-Analysis: v=2.4 cv=IKgPywvG c=1 sm=1 tr=0 ts=6979ac52 cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=wwCzRCD4zyfo-UnKcXoA:9
+ a=uKXjsCUrEbL0IQVhDsJ9:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-01-27_05,2026-01-27_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 priorityscore=1501 clxscore=1015 suspectscore=0 impostorscore=0
+ phishscore=0 bulkscore=0 malwarescore=0 lowpriorityscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601280050
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[rock-chips.com,none];
-	R_DKIM_ALLOW(-0.20)[rock-chips.com:s=default];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-90906-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[29];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[rock-chips.com:+];
+	TAGGED_FROM(0.00)[bounces-90903-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[shawn.lin@rock-chips.com,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[rock-chips.com,kernel.org,oss.qualcomm.com,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch,linuxfoundation.org,glider.be,google.com,vger.kernel.org,lists.freedesktop.org];
-	NEURAL_HAM(-0.00)[-0.999];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,renesas];
-	MID_RHS_MATCH_FROM(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,linaro.org:email]
-X-Rspamd-Queue-Id: AF5589D8C1
+	FROM_NEQ_ENVFROM(0.00)[krishna.kurapati@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 6754D9D6DE
 X-Rspamd-Action: no action
 
-在 2026/01/28 星期三 5:53, Neil Armstrong 写道:
-> On 1/27/26 16:53, Manivannan Sadhasivam wrote:
->> On Tue, Jan 27, 2026 at 10:57:29AM +0100, Neil Armstrong wrote:
->>> Add support fo the Renesas UPD720201/UPD720202 USB 3.0 xHCI Host 
->>> Controller
->>> power control which connects over PCIe and requires specific power 
->>> supplies
->>> to start up.
->>>
->>
->> This driver only handles the supplies. So why can't you use the existing
->> pwrctrl-slot driver as a fallback?
-> 
-> It would fit with no change, but the name "slot" doesn't match the goal 
-> here,
-> it's not a slot at all, it's an actual pcie IC.
-> 
+Flatten usb controller node and update to using latest bindings and
+flattened driver approach. While at it, add the wakeup-source property
+to usb controller nodes.
 
-How about renaming slot.cto something like pci-pwrctrl-simple.c, 
-especially if most power sequences fit into this category? This would 
-follow the naming example seen in other subsystems, such as 
-drivers/mmc/core/pwrseq_simple.c.
+Changes in v2:
+Reversed order of patches as per comment from Dmitry
 
-> Neil
-> 
->>
->> - Mani
->>
->>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->>> ---
->>>   drivers/pci/pwrctrl/Kconfig                 | 10 ++++
->>>   drivers/pci/pwrctrl/Makefile                |  2 +
->>>   drivers/pci/pwrctrl/pci-pwrctrl-upd720201.c | 88 ++++++++++++++++++ 
->>> +++++++++++
->>>   3 files changed, 100 insertions(+)
->>>
->>> diff --git a/drivers/pci/pwrctrl/Kconfig b/drivers/pci/pwrctrl/Kconfig
->>> index e0f999f299bb..5a94e60d0d3e 100644
->>> --- a/drivers/pci/pwrctrl/Kconfig
->>> +++ b/drivers/pci/pwrctrl/Kconfig
->>> @@ -11,6 +11,16 @@ config PCI_PWRCTRL_PWRSEQ
->>>       select POWER_SEQUENCING
->>>       select PCI_PWRCTRL
->>> +config PCI_PWRCTRL_UPD720201
->>> +    tristate "PCI Power Control driver for the UPD720201 USB3 Host 
->>> Controller"
->>> +    select PCI_PWRCTRL
->>> +    help
->>> +      Say Y here to enable the PCI Power Control driver of the 
->>> UPD720201
->>> +      USB3 Host Controller.
->>> +
->>> +      The voltage regulators powering the rails of the PCI slots
->>> +      are expected to be defined in the devicetree node of the PCI 
->>> device.
->>> +
->>>   config PCI_PWRCTRL_SLOT
->>>       tristate "PCI Power Control driver for PCI slots"
->>>       select PCI_PWRCTRL
->>> diff --git a/drivers/pci/pwrctrl/Makefile b/drivers/pci/pwrctrl/Makefile
->>> index 13b02282106c..a99f85de8a3d 100644
->>> --- a/drivers/pci/pwrctrl/Makefile
->>> +++ b/drivers/pci/pwrctrl/Makefile
->>> @@ -5,6 +5,8 @@ pci-pwrctrl-core-y            := core.o
->>>   obj-$(CONFIG_PCI_PWRCTRL_PWRSEQ)    += pci-pwrctrl-pwrseq.o
->>> +obj-$(CONFIG_PCI_PWRCTRL_UPD720201)    += pci-pwrctrl-upd720201.o
->>> +
->>>   obj-$(CONFIG_PCI_PWRCTRL_SLOT)        += pci-pwrctrl-slot.o
->>>   pci-pwrctrl-slot-y            := slot.o
->>> diff --git a/drivers/pci/pwrctrl/pci-pwrctrl-upd720201.c b/drivers/ 
->>> pci/pwrctrl/pci-pwrctrl-upd720201.c
->>> new file mode 100644
->>> index 000000000000..db96bbb69c21
->>> --- /dev/null
->>> +++ b/drivers/pci/pwrctrl/pci-pwrctrl-upd720201.c
->>> @@ -0,0 +1,88 @@
->>> +// SPDX-License-Identifier: GPL-2.0-only
->>> +/*
->>> + * Based on upd720201.c:
->>> + * Copyright (C) 2024 Linaro Ltd.
->>> + * Author: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->>> + */
->>> +
->>> +#include <linux/device.h>
->>> +#include <linux/mod_devicetable.h>
->>> +#include <linux/module.h>
->>> +#include <linux/pci-pwrctrl.h>
->>> +#include <linux/platform_device.h>
->>> +#include <linux/regulator/consumer.h>
->>> +#include <linux/slab.h>
->>> +
->>> +struct pci_pwrctrl_upd720201_data {
->>> +    struct pci_pwrctrl ctx;
->>> +    struct regulator_bulk_data *supplies;
->>> +    int num_supplies;
->>> +};
->>> +
->>> +static void devm_pci_pwrctrl_upd720201_power_off(void *data)
->>> +{
->>> +    struct pci_pwrctrl_upd720201_data *upd720201 = data;
->>> +
->>> +    regulator_bulk_disable(upd720201->num_supplies, upd720201- 
->>> >supplies);
->>> +    regulator_bulk_free(upd720201->num_supplies, upd720201->supplies);
->>> +}
->>> +
->>> +static int pci_pwrctrl_upd720201_probe(struct platform_device *pdev)
->>> +{
->>> +    struct pci_pwrctrl_upd720201_data *upd720201;
->>> +    struct device *dev = &pdev->dev;
->>> +    int ret;
->>> +
->>> +    upd720201 = devm_kzalloc(dev, sizeof(*upd720201), GFP_KERNEL);
->>> +    if (!upd720201)
->>> +        return -ENOMEM;
->>> +
->>> +    ret = of_regulator_bulk_get_all(dev, dev_of_node(dev),
->>> +                    &upd720201->supplies);
->>> +    if (ret < 0) {
->>> +        dev_err_probe(dev, ret, "Failed to get upd720201 
->>> regulators\n");
->>> +        return ret;
->>> +    }
->>> +
->>> +    upd720201->num_supplies = ret;
->>> +    ret = regulator_bulk_enable(upd720201->num_supplies, upd720201- 
->>> >supplies);
->>> +    if (ret < 0) {
->>> +        dev_err_probe(dev, ret, "Failed to enable upd720201 
->>> regulators\n");
->>> +        regulator_bulk_free(upd720201->num_supplies, upd720201- 
->>> >supplies);
->>> +        return ret;
->>> +    }
->>> +
->>> +    ret = devm_add_action_or_reset(dev, 
->>> devm_pci_pwrctrl_upd720201_power_off,
->>> +                       upd720201);
->>> +    if (ret)
->>> +        return ret;
->>> +
->>> +    pci_pwrctrl_init(&upd720201->ctx, dev);
->>> +
->>> +    ret = devm_pci_pwrctrl_device_set_ready(dev, &upd720201->ctx);
->>> +    if (ret)
->>> +        return dev_err_probe(dev, ret, "Failed to register pwrctrl 
->>> driver\n");
->>> +
->>> +    return 0;
->>> +}
->>> +
->>> +static const struct of_device_id pci_pwrctrl_upd720201_of_match[] = {
->>> +    {
->>> +        .compatible = "pci1912,0014",
->>> +    },
->>> +    { }
->>> +};
->>> +MODULE_DEVICE_TABLE(of, pci_pwrctrl_upd720201_of_match);
->>> +
->>> +static struct platform_driver pci_pwrctrl_upd720201_driver = {
->>> +    .driver = {
->>> +        .name = "pci-pwrctrl-upd720201",
->>> +        .of_match_table = pci_pwrctrl_upd720201_of_match,
->>> +    },
->>> +    .probe = pci_pwrctrl_upd720201_probe,
->>> +};
->>> +module_platform_driver(pci_pwrctrl_upd720201_driver);
->>> +
->>> +MODULE_AUTHOR("Neil Armstrong <neil.armstrong@linaro.org>");
->>> +MODULE_DESCRIPTION("PCI Power Control driver for UPD720201 USB3 Host 
->>> Controller");
->>> +MODULE_LICENSE("GPL");
->>>
->>> -- 
->>> 2.34.1
->>>
->>
-> 
-> 
-> 
+Link to v1:
+https://lore.kernel.org/all/20260127155537.4088709-1-krishna.kurapati@oss.qualcomm.com/
+
+Krishna Kurapati (2):
+  arm64: dts: qcom: talos: Flatten usb controller nodes
+  arm64: dts: qcom: talos: Mark usb controllers are wakeup capable
+    devices
+
+ arch/arm64/boot/dts/qcom/qcs615-ride.dts | 12 +--
+ arch/arm64/boot/dts/qcom/talos.dtsi      | 97 ++++++++++--------------
+ 2 files changed, 46 insertions(+), 63 deletions(-)
+
+-- 
+2.34.1
 
 
