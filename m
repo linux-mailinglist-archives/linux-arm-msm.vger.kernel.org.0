@@ -1,84 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-90949-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90950-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MIJGL+LneWl60wEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90949-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 11:41:38 +0100
+	id kP4MGRjpeWkF1AEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90950-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 11:46:48 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1FCD09F9DA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 11:41:38 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD6779FA65
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 11:46:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 949CC3002296
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 10:41:23 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 13C8F300CFCC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 10:46:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B18B7274B51;
-	Wed, 28 Jan 2026 10:41:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7639D33123D;
+	Wed, 28 Jan 2026 10:46:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VnlHrM2J"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gOF5g3BE";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="FF7Fy8MR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2730E276028
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 10:41:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E09F285CAD
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 10:46:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769596882; cv=none; b=YdrkDl+CGxSQnaAvKLqZU+ffUIirM2LYsU3UPrJ4Sa2BwahRhaz9Sv8lTH+MdJcTp+I1umP9m6uCD01ofPd1WZwpqS3yy1RpFOB+Iu28Nn6wsD5tCv/57sEixGsScSLH3/HEwymJULTzAT2DUXkiDlm0iFZpn2hPX/ve7qztNqA=
+	t=1769597204; cv=none; b=juaGo+YtW5iiZJdM/tG8R5pjXg+tqwtSG1pmMu4e4ymXfE8dyVzcfIhCt2W0d+rSVUZqQNlnbqgI0iQhmY4B2Btiu/X6rid1yEc2y4SjGCIkg5Uws0omhKfRcASIUWhZHj0AcvBK2g+mlOWUNmU0jHPu6UfrvV7t18g4u1utddM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769596882; c=relaxed/simple;
-	bh=BF1Tk583OYnavcumB+Q/6k0kWYo9Y1pbJOM2dT6gFmY=;
+	s=arc-20240116; t=1769597204; c=relaxed/simple;
+	bh=GJGh78OVgX0ts1MRlePfIfYN27JNf8/NUs11QvP8vmg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XaVMV4+qHE9XvwbXWiVjE+1vI9f2Q+4QSiDcKHWPrbvZ7gu+PW9FgTGj/F5V1CjuqPxUtfRrmf0cLxPZgW48XW1P20Kkb9om2BZhhQZwDhLcNVj9LnPX75GkSVoWAYfbHG9unNVovhKwS4ehFisNdeeJJFqRcvzTgt4VtrX8+Ec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VnlHrM2J; arc=none smtp.client-ip=209.85.208.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-6581327d6baso10292914a12.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 02:41:20 -0800 (PST)
+	 In-Reply-To:Content-Type; b=aK4D0HI4EHadwDn582KxWtCY0ADdGClbUPVVo3CL34hp18KMyM4LY/AIiIjhA1NL4D8Cc4SdsPd+Y0lf3LNfhLKYE1hmTikTyzVIOl1douIfUBBq/0dbr+IcJN5/zaJLnl4M/vyffUuJroUQelJWDLRrNqjSQLRkKJNB3XQxVOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gOF5g3BE; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=FF7Fy8MR; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60S92ci2041996
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 10:46:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	uwa6MspgeDaMnEjEP07Ff+4UbcbAFRdcCQaVvZ4XcUE=; b=gOF5g3BEg5WCkXcu
+	yLt1DdgWflsPzsG8EtgP8KVJsAmq1PpDdc8MM2affS5C2+HhhsiKuvo3SG5nDmfE
+	yGjYipMwLOoc8TnISWYw+BC+HCxTltcbQlKZltRqaMqH6g1C4u8vLTjhyfQGE0UW
+	HwxVgdzAlwPkUTf94vmVaLOj2jXhR3faVdSOLmOUFjTiWqIl0bmwoz8eAxKbEB6W
+	Szp6WB5nclURYHco0p4eoYOLtOmjTYIpFO1ZwiGiA9Hj15t40vN+Ozb8Zfewhaz2
+	BKgwFP8OTqjYPX7CNg96c2satfQIuh5+1LeYFOlvBVFDB3s+6KqPW98SHJTZbO5i
+	uELdTA==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4by355tq1a-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 10:46:40 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-8c6de73fab8so210910785a.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 02:46:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1769596879; x=1770201679; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
+        d=oss.qualcomm.com; s=google; t=1769597200; x=1770202000; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=64aHssFZr7VaxSK0D6/XN0631oo5malDp14UZIFT07M=;
-        b=VnlHrM2JEg6Uz+TMM5YoIigbkc6mWf+dZoQAiHHHj63jmlxqj1uedrDQId1msZFFXw
-         ZTmpDRTlqiBUHE8JMgsVdiLbmZ2WFwJOGcJNtuTt2a+3lqNt0Eja10SPtKa9qP4oEGYD
-         1t3HQBgAyV+8FMRFc085/DuQvA2VkjymVwI9LC+7tGh4DMJAzesdUAshOaMdpu+dLohQ
-         qEsw49MH3do/ftE3X2JygdXv7pOG+w+nnVg7PFIiflt6On05zD9mZoc6zUXv+/C2FvD2
-         QZlsWlpS6YhPrsL9fhduFBpesES6e7zVOBYkqm/Qx6vdv9ZuGLQxGQivJvvufcRuH9U7
-         JLgw==
+        bh=uwa6MspgeDaMnEjEP07Ff+4UbcbAFRdcCQaVvZ4XcUE=;
+        b=FF7Fy8MRAQK06P5Two1UvhISCfdVz7wQANqB3w2EjBQ8/jsKRZJJRrsVfWEFiWotEW
+         zbWRdxSMXYoIaoZtItRdzCck5KeSCTAzq2+9GP1sQBOtMQZ7UnRz5tCSPK7L8z4A/Lme
+         ypx8CP0ffIZqSkJ4Snq14azDlskw2YpAXaLug+EwPynjwKtUOrynbtr2lF3CDJDdt4YI
+         kTG13KpuIUmSG3H4C+VmxTOqprC5RKvtUB4nP0FeJvGre3oBbllZamaOGHBIa9LGGeyM
+         1HD8muL6ll/Ym8mga5G/1wKuXhZQBGg4KVMl67x16YYGgMmcBvWl7VfCMkGFwLoUI8z8
+         lQ8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769596879; x=1770201679;
-        h=content-transfer-encoding:in-reply-to:content-language:from
+        d=1e100.net; s=20230601; t=1769597200; x=1770202000;
+        h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=64aHssFZr7VaxSK0D6/XN0631oo5malDp14UZIFT07M=;
-        b=uvfPgIXORrs93F3YyzDfuWndwNWfP9Xk42knyVe4/hd4blOvgfbT+4XQKJJSqDbftH
-         0va5rWQbZT8rYR70n7YvYG3UUACWHMI2JejkPyp8fsF+RKBkDlkZwJCZPNMRZyUiYhHc
-         MqMLtRGKNaHQvecP2gLolGm4qJUtRGTWyFZpc4lxGk+GYtZgIZ2eCgKV9/HAg0fSQoVI
-         5bOCM4Nig/62LuWoPNiomJlJL9Rtzmp5rHW+O8Mx6rZCuxgONGLUS0e0S5GGJunZ+RjK
-         gh9Fa6UjLNK4l30JwB7Sl16HTkw/i3Eq33QyEHPXdlJjdz6DjW7LAeQDMh9px8uUaYsa
-         dQlA==
-X-Forwarded-Encrypted: i=1; AJvYcCUkA4yIrrX5AWvXFaBfH4p0PhZ7aZE4Gp4RkqBXfzaVMN4snFBMARM4JBfrbjPCKUN7++umGugHaa4KCjev@vger.kernel.org
-X-Gm-Message-State: AOJu0YyTLeeAIOrgf1pkmhV9mC/BhXHKe4yk5/Tbhq7PL8QSq8oBJ6gk
-	vu3Bs/nnDR9uTbdKK7ES71Vc+vwpQTbqPcxQyXUXPJ99QqgdRptx2/dJcnhahBKGKdc=
-X-Gm-Gg: AZuq6aLJjmOXQp3s5FeGG50pRYcVd6EtsGHShYmkFW82zHiZsyOZydED5+QoIQ+kiUK
-	xjyVrRjZP2Ik3QW4y3HtS1DqzNaLqZaqzl6VGRiL18PEdDtQuki67PDEd+ktkTiYd7H444D/6TZ
-	ZwMqiYTAEFQY3DcyQEwF5UgcZ8TeLT/GJyrO1hoSmhmt9mbz5VjU1sdZV1+Y1ckpO8v41pp2hds
-	B+IRmsQyGSSwZnCqHjWyAHhFxuW48RajSyHBxQ6mD5cs2UxfIrRaZvG+Z+sJV8zkY2kZa7eIZ3h
-	eFV046Pf+6mC68IM2gJKdvfsNsQ0duzaXzi3TZBRLM024HEwb0bxBQEr9Z/JAmpPcFzDgCP9jgu
-	iYx7KdO9SrcZrKghicUJMpEIKNvB+mQgTp7TzZBR7vYnVQk0naQDEmt1cap5C9hwY0vqlzMhLnA
-	Wk/nHXTOKbGy6Ckb9X87q85rlTe0LlIJoCSs9r1HjO2tG4tdO1qyxt
-X-Received: by 2002:a17:907:8689:b0:b83:95ca:23e7 with SMTP id a640c23a62f3a-b8dab2c00fdmr351448566b.4.1769596879528;
-        Wed, 28 Jan 2026 02:41:19 -0800 (PST)
-Received: from [192.168.0.40] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8dbf1c0102sm108582866b.51.2026.01.28.02.41.18
+        bh=uwa6MspgeDaMnEjEP07Ff+4UbcbAFRdcCQaVvZ4XcUE=;
+        b=l/E8HodvJ3pfxsP4syrVxivYw3/n0TrMXZ1JOl0qqmM5tqjhOUIHDRJZ2XPJKZE+z+
+         iMQQAuF6bpbPIwRYhfjjxS3VB8kIj/WJFLcFgiksLf6rVdXtgrX15sRa3We1YnNc8y+S
+         TNODFgBwODdZyUvNkxHariADfzvxq9x6yCPF91bkdP3I9PkVAejMVgktZrhAd6S1qCzW
+         VYeNK43000LdyS6Ez6ARoKPn8FWvM+t+IObV4wFY/SRQrQ6AIJoNv82ffD4QjGdtbe7f
+         zAg36aIV61aKfbhoxbavy6MOFGchTfdE+xp3BzwaXMKdInOU4annKL5moeW62SptINQX
+         U5HQ==
+X-Gm-Message-State: AOJu0YxmsycsUmjpLYAc6atxt7lkaD7YZxOZEH1GkJWeCeAM3CGxs46k
+	ygX6WbCwSIDHxp+VriUavLpCun4e4W1jc+agB2XjccUqOzOwFt0DzaxU7dys+v+4TRR0ugVXECm
+	KwoQqwbLAFilF7qcvboD8Hkk6bOB76e4mugVajEUD7pkJ0vLB+zCnxpEVNC3X40Bjdjov
+X-Gm-Gg: AZuq6aIUPrSzjN6nhHx8+iFuDNZ8olvV6GBlRy25QHyx+3AJ4T5N0tzg5slzNJcUfTB
+	iJkywhyQonjVBn1XxY8NpiRvLFuwCm98JNKo6IHvkcoHhFQstR/Ksv6qfDxgbB3nOep79rzFuSw
+	WWjwwdVX4SBEOf4V2WwFG0bmc2NUYnUWOZvWTzRXvW9I8yVf909KYpsPvKHaJruN8FxLO4K4Yg/
+	GKMoTN9ec1VPpmc53t1rrTrW3QKVjpPDTT+qkyhj73qHoEmzq5qaGe7KrdPnnZKWqNTiuIIueyO
+	OCR6VwLYpk74lCUvhENp1F5lXhAjN+ABqQ+SwoOdIs0QdBvoUwXeNmXbdVycUopOFKm/NJM0Zro
+	4VRSuHt17hWvGdKMdG/Cua1ajd38xTQaJdKjQYckSl6JtZuVDZQO0+ufz2WomjzP37ZU=
+X-Received: by 2002:a05:620a:191f:b0:8c5:2ce6:dd4 with SMTP id af79cd13be357-8c714b9360fmr114711585a.2.1769597199843;
+        Wed, 28 Jan 2026 02:46:39 -0800 (PST)
+X-Received: by 2002:a05:620a:191f:b0:8c5:2ce6:dd4 with SMTP id af79cd13be357-8c714b9360fmr114710285a.2.1769597199457;
+        Wed, 28 Jan 2026 02:46:39 -0800 (PST)
+Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8dbef86df9sm114178366b.10.2026.01.28.02.46.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Jan 2026 02:41:19 -0800 (PST)
-Message-ID: <6692ca5f-216f-428c-96b2-511fdd769f04@linaro.org>
-Date: Wed, 28 Jan 2026 10:41:17 +0000
+        Wed, 28 Jan 2026 02:46:38 -0800 (PST)
+Message-ID: <366fe074-3355-4c9b-b60f-4f7de0ba6a0f@oss.qualcomm.com>
+Date: Wed, 28 Jan 2026 11:46:36 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -86,137 +105,116 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/2] media: i2c: ov02c10: Correct power-on sequence and
- timing
-To: Saikiran B <bjsaikiran@gmail.com>, Bryan O'Donoghue <bod@kernel.org>
-Cc: Sakari Ailus <sakari.ailus@linux.intel.com>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, rfoss@kernel.org, todor.too@gmail.com,
- vladimir.zapolskiy@linaro.org, Hans de Goede <hansg@kernel.org>,
- mchehab@kernel.org, stable@vger.kernel.org
-References: <20260127165024.46156-1-bjsaikiran@gmail.com>
- <20260127165024.46156-3-bjsaikiran@gmail.com>
- <aXjwtBey0MRP0c7f@kekkonen.localdomain>
- <hAXW76sxpszN3JpApVO_ntI28dSyCTiDXIE-S1AJDCa7Mbp8-pHbGqhFhTh2FGPdj3TxO9AowyRRan2u8TTO6Q==@protonmail.internalid>
- <CAAFDt1vJtJc+C_J9Gv3SYjs_2zWFXsWqwq29=ig1o2_kSkjwLg@mail.gmail.com>
- <dbf73780-a33a-4fbf-8569-321b4f4e0a88@kernel.org>
- <MZajBkG4hU2kIZFDZbpq0WZOF_tJmASpmGr-7IH_qheO0We0Z45KNZPrQY4UmoqsWKOX3lSx1W_hnLtfKocXPw==@protonmail.internalid>
- <CAAFDt1vmXg9L6axsDN6kpCQKZifOCRxtQeDpmRpHyejS1ORR+Q@mail.gmail.com>
- <92131a67-471e-41e8-83d6-4f802103db7b@kernel.org>
- <CAAFDt1sqh=O-CpxbdcWueyqbiq4qyCrJHVH-_SS+KjEC9CyRhg@mail.gmail.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sm8650: add CPU cache size
+ properties
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20260128-topic-sm8650-upstream-cpu-props-v1-0-9fbb5efe7f07@linaro.org>
+ <20260128-topic-sm8650-upstream-cpu-props-v1-2-9fbb5efe7f07@linaro.org>
 Content-Language: en-US
-In-Reply-To: <CAAFDt1sqh=O-CpxbdcWueyqbiq4qyCrJHVH-_SS+KjEC9CyRhg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20260128-topic-sm8650-upstream-cpu-props-v1-2-9fbb5efe7f07@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=YNWSCBGx c=1 sm=1 tr=0 ts=6979e910 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=eHTvguOgXxrd6O_h2noA:9
+ a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: YtAiZp36aqDr7Lths61kdBDZSxWq6J65
+X-Proofpoint-GUID: YtAiZp36aqDr7Lths61kdBDZSxWq6J65
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI4MDA4NyBTYWx0ZWRfX6cXuZ0R4wdPK
+ Zk8N2WY82NRJ55gAHNUs4I3tVyU5xirrPlaiWR8DMQtAi66zizk/Gx92LEtrkkpkf8mZVfMygE8
+ ZfFuWgnE8HbWPwqcenx0zbSBSdKyZLRxvklepEJRMZGtKeGGoyfQfsOMEpnhLVfe1FIi8d6rgAi
+ cOFrsUzgqJzfg3BiZLiVks1GjMNxcBGmPivkKC6imjGROQQ/fFBk56TiSmTICyVsqqOxd6cOj8y
+ Oe1uIIMi1R7la8V0SUEeziytzzCeAsOYt6A/jREkt36M4vjl8kN+/i1fm3nb/QhXTg6POl/Hbgm
+ ECSNQxJ0aQfzpEj4BlGndN6b9oEKTDl0DoTvDkUBnliOJl/DyjOjBTRiWWKwhcgR1gu8ZKDD61S
+ BraVFFH0CnlZjyPWsKAmTWKbbANcxtafdAeQrq9ok8WKA7ngOv5CYp8StNm4lEEAlOHkgOOa2tf
+ IXDQhquzAN8z6W1aDrg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-01-28_02,2026-01-27_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 phishscore=0 suspectscore=0 lowpriorityscore=0 adultscore=0
+ priorityscore=1501 spamscore=0 impostorscore=0 malwarescore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601280087
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[linux.intel.com,vger.kernel.org,kernel.org,gmail.com,linaro.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_TO(0.00)[gmail.com,kernel.org];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-90949-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[linaro.org:+];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-90950-lists,linux-arm-msm=lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,linaro.org:email,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,0.0.0.0:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,linaro.org:mid,linaro.org:dkim]
-X-Rspamd-Queue-Id: 1FCD09F9DA
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: BD6779FA65
 X-Rspamd-Action: no action
 
-On 28/01/2026 10:19, Saikiran B wrote:
->  > Just to be difficult - I'm specifically asking to test never switching
->  > the regulator off - not having a long delay.
+On 1/28/26 11:33 AM, Neil Armstrong wrote:
+> Add the L1 cache size and its line size (cache-size and
+> cache-line-size) with the corresponding L1-I cache and L1-D cache.
 > 
-> To be absolutely clear:
+> L1 cache is unified, but clidr_el1 register (get_cache_type) tells that
+> L1 cache is separated (CACHE_TYPE_SEPARATE), add i-cache-line-size and
+> d-cache-line-size and cache-line-size of L3 cache is specified.
 > 
-> ***I have tested exactly this.***
+> All cache line sizes were confirmed by checking ccsidr_el1.
 > 
-> In my local v2 testing, I modified the driver to keep the regulators
-> permanently ENABLED and only toggled the software standby/reset lines.
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8650.dtsi | 56 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 56 insertions(+)
 > 
-> Result: The camera was 100% stable over hundreds of cycles.
-> 
-> This isolates the issue:
-> 1. CCI Leaking? No. If CCI were leaking, the "Always On" test would 
-> eventually
->     fail or show instability. It did not.
+> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> index 8671c25dd68f..f8563ec79dc6 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> @@ -75,6 +75,11 @@ cpu0: cpu@0 {
+>  			compatible = "arm,cortex-a520";
+>  			reg = <0 0>;
+>  
+> +			i-cache-size = <65536>;
+> +			i-cache-line-size = <64>;
+> +			d-cache-size = <65536>;
+> +			d-cache-line-size = <64>;
+> +
+>  			clocks = <&cpufreq_hw 0>;
+>  
+>  			power-domains = <&cpu_pd0>;
+> @@ -103,11 +108,15 @@ l2_0: l2-cache {
+>  				cache-level = <2>;
+>  				cache-unified;
+>  				next-level-cache = <&l3_0>;
+> +				cache-size = <262144>;
 
-I have to say, I'm not an electrical engineer by profession but, I don't 
-believe you can make this blanket statement.
+This should be 512 kiB, shared for c0/1, according to a block
+diagram
 
-What is the problem with testing the hypothesis ?
+Everything else lgtm, although I can't find a source for the
+cache*line* sizes
 
-> 2. XSHUTDOWN Floating? No. The "Always On" test relies on XSHUTDOWN working
->     correctly to wake the sensor. It worked perfectly.
-
-Yes I agree there, if always-on shows no failure then XSHUTDOWN isnt' 
-floating.
-
-In which case this patch can be dropped, its not helping.
-
-> The instability ***only*** appears when we physically toggle the PMIC rail.
-> 
->  > Do not believe we have root caused a regulator brown out
->  > Believe we should interrogate the LDO settings
-> 
-> I cannot easily dump raw SPMI registers on my personal machine, but
-> we can derive the LDO state physically from the discharge curve (RC Time 
-> Constant).
-
-?
-
-I gave you code to do just that. If you can iterate sensor and DTS 
-changes - you can use that code to dump out the requested LDO states.
-
-> We know the physics of the PM8550 PMIC:
-> - Active Discharge Resistor (R_active): ~1 kΩ (Typical)
-> - Bulk Capacitance (C_bulk): ~10 µF (Estimated for this rail)
-> 
-> Scenario A: If Active Discharge IS set:
->     Time Constant (T) = R * C = 1000 * 10e-6 = 0.01s (10ms)
->     Complete discharge (5T) would happen in ~50ms.
-> 
-> Scenario B: If Active Discharge is NOT set (Passive Leakage):
->     The rail discharges through the high-impedance sensor (~200kΩ+).
->     Time Constant (T) = 200,000 * 10e-6 = 2.0s.
-> 
-> My measurements show the rail takes ~2.0s to reach the Brownout Threshold
-> (failure point) and ~2.3s to reach a clean 0V (success point).
-> 
-> This 2.3s duration is physically impossible if the Active Discharge bit 
-> was set.
-> It mathematically proves the LDO is in High-Z mode (Passive Discharge).
-> 
-> Here are the specific logs capturing the failure at exactly the 2.0s mark.
-That's great. We should be able to interrogate the PMIC regs and see the 
-state of the LDO configuration - code I've shared with you.
-
-If they show active-state isn't set on one or more of our LDOs then we 
-can write some platform quirk code to set them.
-
-A 2.3 second delay on every start/stop stream is not an acceptable 
-upstream fix.
-
-And please stop top posting !
-
----
-bod
+Konrad
 
