@@ -1,59 +1,92 @@
-Return-Path: <linux-arm-msm+bounces-91076-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91077-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id CDVDB9Z0emmE6wEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91076-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 21:43:02 +0100
+	id UEA6Ne12emmE6wEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91077-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 21:51:57 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3EE78A8BE7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 21:43:01 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 54B82A8D85
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 21:51:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 8A5EC300462E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 20:42:40 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id D45FC300E27E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 20:51:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A77C374720;
-	Wed, 28 Jan 2026 20:42:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D94037649D;
+	Wed, 28 Jan 2026 20:51:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q4cVWJAd"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="I6NQOWhG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D93374191;
-	Wed, 28 Jan 2026 20:42:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E1A318027;
+	Wed, 28 Jan 2026 20:51:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769632959; cv=none; b=WJEYhEey4vMOtfW1Xp9UJ/ihYHMSOi0awO4QayjlyET/6etej3qtyp8t+x+j1kAQDOMvggTCMwlFaDLHG6+wfwZ0OrFq1bob7DFJNnYRoX237sXmzwtM8RLnpn9DZ7kSHk3JSy7TWAGEZc2kV1ZAW8IoZKZGz0oYjD/lTuLd03k=
+	t=1769633513; cv=none; b=CIfCAwV+r21P9KhB7cUsqnSTMyvkInrCPgNgaoiaOakT9S4y/kiFuzKqwTGcGbXmJzRAXcrvmvr0YvpCulyRGfj50/Bpu7tR+Q2myRZX37oxO+vhNF8hDewBzG5sNEu7uPYJfZ6fDP+RQDA7iqAp/PS9kR0I/UhfEKTvNiamHWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769632959; c=relaxed/simple;
-	bh=3SvQmj3H6Jb62dTRhDmtM8PEjbMjvKH4NPOreMNMOnU=;
+	s=arc-20240116; t=1769633513; c=relaxed/simple;
+	bh=ha8O6xBwkZSEe2x4SwRua9ejKFac6uo5R6gUfiFhrL0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rKC/wvPYr71NYwj1eMswM6ar7DQVUxsV8VfK7rQXXkDeuHBvoG3JgliSz+HyM/OSNJ6yda281Te6pA+ram9bTJk3Q2NcNfMeZPO1x3s9gbrZogOqiZ/F9srRAd0FQljdO8xXJPAjN7q61dfejx72gfagBt5mcQ4bE7uGtGPDIWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q4cVWJAd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63082C4CEF1;
-	Wed, 28 Jan 2026 20:42:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769632959;
-	bh=3SvQmj3H6Jb62dTRhDmtM8PEjbMjvKH4NPOreMNMOnU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Q4cVWJAdwkPn3MOumzQcjyVqc9f+Voa1lOlBE5bNijfUC6kAqYiw8IkntWpXMttBP
-	 ZadO3E5v6CR4XbO/O+Vub5iLzE8bnAN/fCONMg7nPcytgGdUW4sKN4VBAwz7JfU9DY
-	 FunYnre0MmowpBfiSBE5yZUzHgCyuTuQy90ZyJmqcScuusftGYA7qBitdVvYob0Uyu
-	 v+IuGU6iyRdA3jWoTpG1t6jmxqc7H8optEbKe+8+TDDa6ql+4AyB7N7gWLpIvvN3jb
-	 28X2pdfWNXEMY6j0ezkjo3uUFWHvPBVQmDyE9cQ1Z6XpspyKFjXeFSqx11uBT1U9sn
-	 mwZDY0bDyLgAQ==
-Date: Wed, 28 Jan 2026 14:42:36 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Junhao Xie <bigfoot@radxa.com>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, 
-	Miquel Raynal <miquel.raynal@bootlin.com>, Richard Weinberger <richard@nod.at>, 
-	Vignesh Raghavendra <vigneshr@ti.com>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-mtd@lists.infradead.org, Xilin Wu <sophon@radxa.com>
-Subject: Re: [PATCH v2 0/2] mtd: devices: Qualcomm SCM storage support
-Message-ID: <x4sxekwxkrylw54rvtnvwjfyfruhd6bd2jlfe5nv4sehbosetn@sxf5wpb3nas2>
-References: <20260126-scm-storage-v2-v2-0-fa045c7e7699@radxa.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=rR77NEKSak6/hjuCcWkDdlJ04OpqOw4dn5ptt2+TlSfTBzyexqUYrFmFKVPGw6VKVmyjjoB2KIS/FlXyWfG1NYe+28P0MGLDFZsRovtCDSXzsyPGG4DIBljR0cMukz8i5fzJcUNGOuz1oly//nCHIFuSmQVcUlKKh8kRZoR8hwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=I6NQOWhG; arc=none smtp.client-ip=198.175.65.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1769633512; x=1801169512;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=ha8O6xBwkZSEe2x4SwRua9ejKFac6uo5R6gUfiFhrL0=;
+  b=I6NQOWhGeAkK+895bW3tbBrhhF2YTnCE/kS+S/MpUoXivlOZugZijLv4
+   29Gr8Yr/ktom6jdU9T2g2u35ByoH8GSFeSDzHFyDio6UvR98e7xSsslwS
+   9eKS2haefkPYsQfyjyH689m43nkGrOQ9OJr0t6hbTuxXMlNNQ4a2Pa1M+
+   Pf/44EckXFy07lFlEGpdKq1LwBHkoSJVMTpmwCxNne07IEytx1X96Fnh5
+   Vuriz90MBdduX8NHdkZuIYGeEj+SeCJHrjwEiwMfxg0C9+QvFojabRrM3
+   mRmHAr2L/rcG/kQ27F+46m/8mjoyAKLFYJ6tAD6562bBWPRm51tu4wpNM
+   w==;
+X-CSE-ConnectionGUID: sKtiKRU8SkWIOryzL7/HTA==
+X-CSE-MsgGUID: 5eWT0QOGR5ikcBRE68r5JA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11685"; a="74707655"
+X-IronPort-AV: E=Sophos;i="6.21,258,1763452800"; 
+   d="scan'208";a="74707655"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Jan 2026 12:51:48 -0800
+X-CSE-ConnectionGUID: ycrchlomTX6zgh1lpCciQw==
+X-CSE-MsgGUID: Zz6Zga9YSyWrIn4dTFUbww==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,258,1763452800"; 
+   d="scan'208";a="207971392"
+Received: from lkp-server01.sh.intel.com (HELO 765f4a05e27f) ([10.239.97.150])
+  by fmviesa007.fm.intel.com with ESMTP; 28 Jan 2026 12:51:41 -0800
+Received: from kbuild by 765f4a05e27f with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1vlCVm-00000000anM-33eF;
+	Wed, 28 Jan 2026 20:51:38 +0000
+Date: Thu, 29 Jan 2026 04:51:33 +0800
+From: kernel test robot <lkp@intel.com>
+To: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>, jic23@kernel.org,
+	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+	agross@kernel.org, andersson@kernel.org, lumag@kernel.org,
+	dmitry.baryshkov@oss.qualcomm.com, konradybcio@kernel.org,
+	daniel.lezcano@linaro.org, sboyd@kernel.org, amitk@kernel.org,
+	thara.gopinath@gmail.com, lee@kernel.org, rafael@kernel.org,
+	subbaraman.narayanamurthy@oss.qualcomm.com,
+	david.collins@oss.qualcomm.com, anjelique.melendez@oss.qualcomm.com,
+	kamal.wadhwa@oss.qualcomm.com
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	rui.zhang@intel.com, lukasz.luba@arm.com,
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-pm@vger.kernel.org, cros-qcom-dts-watchers@chromium.org,
+	jishnu.prakash@oss.qualcomm.com, quic_kotarake@quicinc.com,
+	neil.armstrong@linaro.org
+Subject: Re: [PATCH V9 4/4] thermal: qcom: add support for PMIC5 Gen3 ADC
+ thermal monitoring
+Message-ID: <202601290438.IXYMj3d2-lkp@intel.com>
+References: <20260128112420.695518-5-jishnu.prakash@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,123 +95,133 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260126-scm-storage-v2-v2-0-fa045c7e7699@radxa.com>
+In-Reply-To: <20260128112420.695518-5-jishnu.prakash@oss.qualcomm.com>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [0.34 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
+	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-91076-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-91077-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linaro.org,gmail.com];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	MISSING_XM_UA(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[33];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,radxa.com:email]
-X-Rspamd-Queue-Id: 3EE78A8BE7
+	RCVD_COUNT_FIVE(0.00)[6];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[lkp@intel.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[intel.com:+];
+	NEURAL_HAM(-0.00)[-1.000];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,intel.com:email,intel.com:dkim,intel.com:mid,01.org:url]
+X-Rspamd-Queue-Id: 54B82A8D85
 X-Rspamd-Action: no action
 
-On Mon, Jan 26, 2026 at 07:44:50PM +0800, Junhao Xie wrote:
-> This patch series adds support for accessing storage devices managed by
-> Qualcomm TrustZone firmware via SCM (Secure Channel Manager) by
-> introducing a new MTD driver.
-> 
-> On some Qualcomm platforms, firmware or BIOS-related storage (typically
-> SPI NOR flash) is not directly accessible from the non-secure world.
-> All read, write, and erase operations must be performed through SCM
-> interfaces provided by the secure firmware. As a result, existing MTD
-> SPI NOR drivers cannot be used directly on these systems.
-> 
-> This series introduces a new MTD device driver that exposes such
-> firmware-managed storage as a standard MTD device in the Linux kernel.
-> The driver is built on top of the existing Qualcomm SCM infrastructure
-> and integrates with the MTD subsystem to provide a uniform interface to
-> userspace.
-> 
-> This driver has been tested on Radxa Dragon Q6A, based on the Qualcomm
-> QCS6490 SoC, with a Winbond W25Q256JWPIQ SPI NOR flash device.
-> 
-> Note that this platform previously used the standard Qualcomm Linux
-> firmware, which allowed direct access to the QSPI controller without
-> needing this driver. However, we plan to migrate to a Windows-compatible
-> firmware which is more feature-complete but restricts direct access.
-> Device tree changes for this transition will be sent separately.
-> 
-> If kernel boots with EL2, access to the SCM storage will be denied. This
-> needs more investigation.
-> 
+Hi Jishnu,
 
-Sorry, I missed your reply to me on v1.
+kernel test robot noticed the following build warnings:
 
+[auto build test WARNING on 63804fed149a6750ffd28610c5c1c98cce6bd377]
 
-You replied that this allow your users to update "BIOS" firmware
-directly from Linux, which I can see being more convenient than relying
-on UEFI update capsules, in particular in a development environment.
+url:    https://github.com/intel-lab-lkp/linux/commits/Jishnu-Prakash/dt-bindings-iio-adc-Split-out-QCOM-VADC-channel-properties/20260128-193116
+base:   63804fed149a6750ffd28610c5c1c98cce6bd377
+patch link:    https://lore.kernel.org/r/20260128112420.695518-5-jishnu.prakash%40oss.qualcomm.com
+patch subject: [PATCH V9 4/4] thermal: qcom: add support for PMIC5 Gen3 ADC thermal monitoring
+config: hexagon-allmodconfig (https://download.01.org/0day-ci/archive/20260129/202601290438.IXYMj3d2-lkp@intel.com/config)
+compiler: clang version 17.0.6 (https://github.com/llvm/llvm-project 6009708b4367171ccdbf4b5905cb6a803753fe18)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260129/202601290438.IXYMj3d2-lkp@intel.com/reproduce)
 
-The concern I have with this is that I don't think an end-user of such
-system, has a way to recover from breaking the content on their SPI-NOR.
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202601290438.IXYMj3d2-lkp@intel.com/
 
-As such, exposing such a convenient interface for the end-user to brick
-their devices is probably not a good idea.
+All warnings (new ones prefixed by >>):
 
-I think we should somehow lock the interface down to be read-only by
-default, and perhaps have some mechanism to unlock the write mode (like
-a module parameter expecting the sentence "YES, I DO HAVE THE FIREHOSE
-PROGRAMMER FOR THIS BOARD").
+>> drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c:180:9: warning: variable 'upper_set' is used uninitialized whenever 'if' condition is true [-Wsometimes-uninitialized]
+     180 |                                 if (ret)
+         |                                     ^~~
+   drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c:188:9: note: uninitialized use occurs here
+     188 |                 if (!(upper_set || lower_set))
+         |                       ^~~~~~~~~
+   drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c:180:5: note: remove the 'if' if its condition is always false
+     180 |                                 if (ret)
+         |                                 ^~~~~~~~
+     181 |                                         break;
+         |                                         ~~~~~
+   drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c:171:17: note: initialize the variable 'upper_set' to silence this warning
+     171 |                 bool upper_set, lower_set;
+         |                               ^
+         |                                = 0
+   1 warning generated.
 
 
-I don't believe you answered my question regarding how to access this
-interface from the kernel. On many of these devices we can find the MAC
-addresses of the system in the "DPP" partition. Do you have any ideas
-about how we could access this from within the kernel?
+vim +180 drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c
 
-Regards,
-Bjorn
+   159	
+   160	static void tm_handler_work(struct work_struct *work)
+   161	{
+   162		struct adc_tm5_gen3_chip *adc_tm5 = container_of(work, struct adc_tm5_gen3_chip,
+   163								 tm_handler_work);
+   164		int sdam_index = -1;
+   165		u8 tm_status[2] = { };
+   166		u8 buf[16] = { };
+   167	
+   168		for (int i = 0; i < adc_tm5->nchannels; i++) {
+   169			struct adc_tm5_gen3_channel_props *chan_prop = &adc_tm5->chan_props[i];
+   170			int offset = chan_prop->tm_chan_index;
+   171			bool upper_set, lower_set;
+   172			int ret, temp;
+   173			u16 code;
+   174	
+   175			scoped_guard(adc5_gen3, adc_tm5) {
+   176				if (chan_prop->sdam_index != sdam_index) {
+   177					sdam_index = chan_prop->sdam_index;
+   178					ret = adc5_gen3_tm_status_check(adc_tm5, sdam_index,
+   179									tm_status, buf);
+ > 180					if (ret)
+   181						break;
+   182				}
+   183	
+   184				upper_set = ((tm_status[0] & BIT(offset)) && chan_prop->high_thr_en);
+   185				lower_set = ((tm_status[1] & BIT(offset)) && chan_prop->low_thr_en);
+   186			}
+   187	
+   188			if (!(upper_set || lower_set))
+   189				continue;
+   190	
+   191			code = get_unaligned_le16(&buf[2 * offset]);
+   192			dev_dbg(adc_tm5->dev, "ADC_TM threshold code:%#x\n", code);
+   193	
+   194			ret = adc5_gen3_therm_code_to_temp(adc_tm5->dev,
+   195							   &chan_prop->common_props,
+   196							   code, &temp);
+   197			if (ret) {
+   198				dev_err(adc_tm5->dev,
+   199					"Invalid temperature reading, ret = %d, code=%#x\n",
+   200					ret, code);
+   201				continue;
+   202			}
+   203	
+   204			chan_prop->last_temp = temp;
+   205			chan_prop->last_temp_set = true;
+   206			thermal_zone_device_update(chan_prop->tzd, THERMAL_TRIP_VIOLATED);
+   207		}
+   208	}
+   209	
 
-> Changes in v2:
-> - Convert enum qcom_scm_storage_result to macro definitions
-> - Use __qcom_scm_is_call_available() instead of a machine allowlist
-> - Add missing __packed annotations and endianness handling
-> - Introduce struct qcom_scm_storage_payload to improve readability
-> - Always compiled-in qcom_scm_storage_send_cmd() and qcom_scm_storage_init()
-> https://lore.kernel.org/lkml/F138514E18CB55B6+20251218180205.930961-1-bigfoot@radxa.com/
-> 
-> Tested-by: Xilin Wu <sophon@radxa.com>
-> Signed-off-by: Junhao Xie <bigfoot@radxa.com>
-> ---
-> Junhao Xie (2):
->       firmware: qcom: scm: Add SCM storage interface support
->       mtd: devices: Add Qualcomm SCM storage driver
-> 
->  drivers/firmware/qcom/qcom_scm.c       | 161 ++++++++++++++++++++
->  drivers/firmware/qcom/qcom_scm.h       |   3 +
->  drivers/mtd/devices/Kconfig            |  17 +++
->  drivers/mtd/devices/Makefile           |   1 +
->  drivers/mtd/devices/qcom_scm_storage.c | 265 +++++++++++++++++++++++++++++++++
->  include/linux/firmware/qcom/qcom_scm.h |  34 +++++
->  6 files changed, 481 insertions(+)
-> ---
-> base-commit: 63804fed149a6750ffd28610c5c1c98cce6bd377
-> change-id: 20260126-scm-storage-v2-0a4f3e900b88
-> 
-> Best regards,
-> -- 
-> Junhao Xie <bigfoot@radxa.com>
-> 
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
