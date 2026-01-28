@@ -1,219 +1,280 @@
-Return-Path: <linux-arm-msm+bounces-90924-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90925-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sPBdFcLNeWnfzgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90924-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 09:50:10 +0100
+	id gBr6AUDNeWmOzgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90925-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 09:48:00 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C21F99E6AF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 09:50:09 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC8579E5D9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 09:47:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id C9814306E2F0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 08:47:28 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 5F597301840E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 08:47:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B87B33A9E9;
-	Wed, 28 Jan 2026 08:47:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7A3B33A706;
+	Wed, 28 Jan 2026 08:47:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fkaihsyy";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="LD3FMtPz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aAV7Gp9z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B3B133B6F5
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 08:47:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3DF933A010
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 08:47:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769590032; cv=none; b=S/Q3nuMX631vXC+p1ncH+q0AruKU5WjHUI6TecxMnoGLQrAPCwoVp5dH5nUPzWkPhRhYiq4UvDV1+SuR75vghKMkZyNuBPaUBDA60ws8ut0wgW27zlMZ6LkGzx3sDkygIFv2o/Bv7XzKmMdQR4VVJuqDDxKSnRAM9lDdPlsjOQw=
+	t=1769590043; cv=none; b=FBmJICYzic3HN386ex075qqoBkj342ifmiGQJ//6dVExLr6FkY6UukuSRZ7AL+UTd/n10ImN+n0SL/grw5FOLZ79oRgETb6JXP5pcVqoeD8ErBusJUOt96zlNNnNLeC0Ms3FeGKtUiY335rG0Y8Wbbp7sTpqZMz/91nIWrC+6ho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769590032; c=relaxed/simple;
-	bh=ylcz5FSDejXLscrAzKaX9+cbwcLqyVwvsZ++Oq1bUtE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=iSQwZzkaGYbO2KSlHg9JJ7Jx0ze+oaholuW0Av16DfdkqNhyBp0Nhu4qFWB1HYaAmSWmLHp7pclU8bhJpJMnj5VR+1pa/cBMhlNYfHQ32kX1RSiSA2HhChapHnp4UBlHlkuvLmhZmHG2qcAwsNYmaw4r7AFrztJ/+W4M7umQp1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fkaihsyy; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=LD3FMtPz; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60S6TovL2953452
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 08:47:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	MPGRifHCQwcqLRDHjnRCAFVn4y3dD4oL+zZhUOGVvhI=; b=fkaihsyyXn6cSOWg
-	HvofXbDd8+zxLp+NKwQRTAI51shtN1eoItzJpU9+a1Eja53xJButEQu3iAG4PB3M
-	C3+eqsFTy1hMTkHwqDpF88GmEeD+UFEd8Qd9/UuqDxRADwVNOZnqsTcTcKnM6bdV
-	GbOahVf27EFYvJLp7wSd1gqJ35gcCiqi88Khs93lEHnNvXCaTH0r29MVqgcI2ai0
-	3scenD0ISffObqO0ZPW22s2m/tYFbPtiNKRGKxdjboIY3rsbOhTs1sU9Wn/vxZMR
-	gwfc5lJTQpZxDbr0fzXvdgwMwBZxXaOk9Nob4ciCDu/Sj0ulUjWDCJCe3t0LLapq
-	SF7EqQ==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4by4sjsxj7-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 08:47:09 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2a79164b686so72651965ad.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 00:47:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1769590028; x=1770194828; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MPGRifHCQwcqLRDHjnRCAFVn4y3dD4oL+zZhUOGVvhI=;
-        b=LD3FMtPzabhyrp6UW/o1Vmhp0n1+SuQl3cx/x13Ww4KxzUq/I56yyRbRYLdcUV6GFK
-         3D5agtmk6LXZ9lCZj8Jnk/0JcmvhlnCu/Q9SXq+GEXas9djQJcm+w1NnCPtFg9rvY2Oz
-         sDLKUasadGN+MTZJoDiT/ZedpV5r4sv1rsz7PA/3xDXcYgPO9S62z4LL6o9OP5Up7ojL
-         iFvwEbVocKqv+W82wNqNk+bEshl4zj6hCY5FcvMSeQ5KcqPmCxkO4i3Ttik4kKToBEn+
-         s7YXmfcTB/WrY6WOCDiUQMTktxEayuYuvIysP02tjhGJtONvhH2u7Ndd/MaylegoiSXX
-         I+qg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769590028; x=1770194828;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=MPGRifHCQwcqLRDHjnRCAFVn4y3dD4oL+zZhUOGVvhI=;
-        b=oCMMS5rD6o6J7tD9UANoUC8Kz68kjKJlP+wAfo76r8W+sCERa3t+CvxpWDFxaIupX4
-         2P7iaseEeMqakFxfWv8moxj2vS4F6xHTH7SyhPX347CnZTtcGRgiylzPdbWUGlHwni42
-         L382l10vlvFfvDONg4E59Kq2oDIcKu4UEeXnZOLXC9M8iyGJH/IQ82N/NMAt6F8VRVTp
-         /LCJNmONPhxsDTfIgAftIgeQLhrT8mgnNWIuHSCdwgmiX9LwiN55M8wpKBQH+i5qfxQa
-         R/z3bN1s5GvAZDzMUVbJErE5bSA1xp74akpZ7JUpmTfbwo+S1mej1A/oCm92Q5SeKC+K
-         aUxQ==
-X-Gm-Message-State: AOJu0Ywf0Db82QSJA78/9yQiSG0MIhyOlSrD6sLETUgTOYtESwnftCK6
-	mPdQLzI/HLSEgI10EjDS4O5G4T0f6U6etq/YtB4IWlakLYCVjmfASd43Z2sockEt2vzIiCn+HXx
-	6Dr634NvKxe+4OTE3l/glwGHH7YuFYI7BDfwJj++h/QDZGbXcX5wpybnqLh9Cx0R6BQ63
-X-Gm-Gg: AZuq6aLOnI3o1oaZ2j2CX87k1nISAS/gYo4bTt0zei1MzahvjqdOhpmJFP5yVuwCaW2
-	UOSxgZ+VIvi9rMmd7FtqjlsdbZoNwrXwsS/64i1SK8WE0PePOXBF2Cex835mssdlolBon7klOjZ
-	gEr5wNNdG6X7aa/UH7GEeNm+bN1Q53lsW5kJ1ETMRIM+aGag8VvXuwTHbzNNujOlGLvId1CjUR5
-	IBMKI8nEv8XG+xIHTBSSVCT02qQWHpFbqEs7tvAcERFVLXdO0UwkeT0/QWR8pe+0m63Yt4fPFqM
-	PFl/CdrS7HuuovFr8SYCCGGpsW3gPstENbRfgkHZA5AuEBvQ3q8LLi2wgvUNOQIc+FGJa2BPBE1
-	Ns/+cL+jf9JrmHvtSPy79I+8kHnWXQ4y6mO2+mjQ2C2Q7c90=
-X-Received: by 2002:a17:903:2f87:b0:2a7:ca82:c198 with SMTP id d9443c01a7336-2a870d2cf70mr42149155ad.6.1769590028054;
-        Wed, 28 Jan 2026 00:47:08 -0800 (PST)
-X-Received: by 2002:a17:903:2f87:b0:2a7:ca82:c198 with SMTP id d9443c01a7336-2a870d2cf70mr42148815ad.6.1769590027578;
-        Wed, 28 Jan 2026 00:47:07 -0800 (PST)
-Received: from hu-arakshit-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a88b4c3b1esm16263075ad.63.2026.01.28.00.47.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Jan 2026 00:47:07 -0800 (PST)
-From: Abhinaba Rakshit <abhinaba.rakshit@oss.qualcomm.com>
-Date: Wed, 28 Jan 2026 14:16:43 +0530
-Subject: [PATCH v4 4/4] soc: qcom: ice: Set ICE clk to TURBO on probe
+	s=arc-20240116; t=1769590043; c=relaxed/simple;
+	bh=khrPDqCGTN5tnjPlkTiyZMZqvVOJ9sgSO4C4yr0b8Jo=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XUpDeaQSQAbYHt5+JTHnGkCS1Tjn8/3montxmrJhR5YALB5ueEiomAcNsxjZcl/Si+8e8C+64hkUa9sPWtuAmSjtbXDY/S/onPmKpXSGHYvu1vhoYnbXoCm3reCp4mTncalZekfJ7CqoH+PNljC1h3GlkciwrDq2VJwMGNTtn+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aAV7Gp9z; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A7E5C2BCB1
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 08:47:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1769590043;
+	bh=khrPDqCGTN5tnjPlkTiyZMZqvVOJ9sgSO4C4yr0b8Jo=;
+	h=From:In-Reply-To:References:Date:Subject:To:Cc:From;
+	b=aAV7Gp9zgZdRc7KJh8R8OOeLontofODPP9Ox37X1U4RRytrMXtyFwpHI2uCafsA6O
+	 N4M8SxdUBGEB6GG6wq9mldtPbeI3mWQ5Xhs5LSn4NPXoBCiQuI+RRzQ33rHJwB7ZJ9
+	 mG4MR1ghW1OsEQjStQ9BdK9fclJC7XbBn5Txfz8ZbZwRzM5jv+29aGAdeRRy68ORsq
+	 x22q+CT4ibKqsnVx4xg+c4tPQ/QgrPb4BYkxFqRLxsmkiF8rrDxZcNpUpZM9jwkGXe
+	 IlOgm6h98tLMgRQTmXJUJkYGOrC9P3V5At5uPhTMiH878BkQMhVSuBuu7c+scobBaC
+	 dDFw0NJqx1RVA==
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-59dcd9b89ecso999841e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 00:47:23 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCXHNYBy9+T1jkP9FpC5RR8NxgcnN1CbCpDLyQP3ihXvTDRFxDwGMow+wwbg8n1GOR78kVjVtkVXcQqFr09u@vger.kernel.org
+X-Gm-Message-State: AOJu0YwDL2UTHgwD/fBWTeItzdBVQQCEL4RamBAp31FQy8/4DxRWu0cf
+	6v44VB6B/zc2+TaYHT5RGj1i5KaU8VOyG0SZUvR+lTitbIfqJoIyZLYLuRZTAca942B+S27HYXI
+	llcNgD/9ABZ75d6Gh/koAU3vRq9MOHJrkBAQE1CQr7g==
+X-Received: by 2002:ac2:464c:0:b0:59e:6f4:d224 with SMTP id
+ 2adb3069b0e04-59e06f4d2demr780740e87.26.1769590041709; Wed, 28 Jan 2026
+ 00:47:21 -0800 (PST)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 28 Jan 2026 00:47:19 -0800
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 28 Jan 2026 00:47:19 -0800
+From: Bartosz Golaszewski <brgl@kernel.org>
+In-Reply-To: <20260127-topic-sm8650-ayaneo-pocket-s2-base-v2-2-c55ec1b5d8bf@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260128-enable-ufs-ice-clock-scaling-v4-4-260141e8fce6@oss.qualcomm.com>
-References: <20260128-enable-ufs-ice-clock-scaling-v4-0-260141e8fce6@oss.qualcomm.com>
-In-Reply-To: <20260128-enable-ufs-ice-clock-scaling-v4-0-260141e8fce6@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-        "Martin K. Petersen" <martin.petersen@oracle.com>,
-        Neeraj Soni <neeraj.soni@oss.qualcomm.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-scsi@vger.kernel.org, linux-crypto@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Abhinaba Rakshit <abhinaba.rakshit@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI4MDA3MCBTYWx0ZWRfX/vMNDIm02nQm
- Je+WR2Q70wTxKCE7xKUbNxf1/wRYn+RoCCcTly2ehXJV004VsC0RoQKgQgI9GZDVh4ucdmPBwYo
- OnVymgG+t5XOVWzVmOmz8eg0o6XkzsUYXo7OzLh9aw+tC/ZFulGnWlZvL2vVBg9vLgafxZhmbQ7
- RYfjIsgkKZD3EwnjUbwcUuKspm0TsAwlNKhgru2goODxrFrLma+2UO/GbpZXVyqya3ZI6aQhUYn
- KElx/GPMhLlyjyR/HZn35MXu2gAuodKHav0vXON1MMYq0j6Gc/2OLLWc2FDqqz7/O6rh2txhOmE
- AG3Ywps1IerI5yqCCunq22+fitDXuGM0SvkwAAzusogwXiq0vUgQyUbCJjVAmZO7iQkQPl8t0XB
- xeQJ3l2LkZTCpjWSmkHTgWpIxcZad+11zYccXE3d7POrEvHYgjCVpO6k5w3ZWHirZE0+miP6BiX
- Wc+6uMOaIKRqHZ4lGkg==
-X-Proofpoint-ORIG-GUID: dkeb0RTx7ECK7tij3OSO3h-vSVel9Bc4
-X-Authority-Analysis: v=2.4 cv=KezfcAYD c=1 sm=1 tr=0 ts=6979cd0d cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=u1bwIIJuvd_SIhYoViIA:9
- a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
-X-Proofpoint-GUID: dkeb0RTx7ECK7tij3OSO3h-vSVel9Bc4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-01-28_01,2026-01-27_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 adultscore=0 impostorscore=0 suspectscore=0 malwarescore=0
- clxscore=1015 spamscore=0 bulkscore=0 phishscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601280070
+References: <20260127-topic-sm8650-ayaneo-pocket-s2-base-v2-0-c55ec1b5d8bf@linaro.org>
+ <20260127-topic-sm8650-ayaneo-pocket-s2-base-v2-2-c55ec1b5d8bf@linaro.org>
+Date: Wed, 28 Jan 2026 00:47:19 -0800
+X-Gmail-Original-Message-ID: <CAMRc=MfOjd0RzAma+NgCVZvvaar+Wwe+jH6dYxzJ02h4GEBJdw@mail.gmail.com>
+X-Gm-Features: AZwV_QhXUdGdxJQ8EWE3IEaSkM8UzBdAeGOMqY6dnujEk2icHg1EteXYkrLHpqM
+Message-ID: <CAMRc=MfOjd0RzAma+NgCVZvvaar+Wwe+jH6dYxzJ02h4GEBJdw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/7] pci: pwrctrl: add PCI pwrctrl driver for the
+ UPD720201/UPD720202 USB 3.0 xHCI Host Controller
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Clark <robin.clark@oss.qualcomm.com>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
+	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, 
+	Bartosz Golaszewski <brgl@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-usb@vger.kernel.org, 
+	linux-renesas-soc@vger.kernel.org, linux-pci@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.56 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
+	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-90924-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
+	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_TWELVE(0.00)[28];
+	TAGGED_FROM(0.00)[bounces-90925-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[kernel.org,oss.qualcomm.com,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch,linuxfoundation.org,glider.be,google.com,vger.kernel.org,lists.freedesktop.org];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	MIME_TRACE(0.00)[0:~];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[abhinaba.rakshit@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,qualcomm.com:email,linaro.org:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,renesas];
+	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: C21F99E6AF
+X-Rspamd-Queue-Id: CC8579E5D9
 X-Rspamd-Action: no action
 
-MMC controller lacks a clock scaling mechanism, unlike the UFS
-controller. By default, the MMC controller is set to TURBO mode
-during probe, but the ICE clock remains at XO frequency,
-leading to read/write performance degradation on eMMC.
+On Tue, 27 Jan 2026 10:57:29 +0100, Neil Armstrong
+<neil.armstrong@linaro.org> said:
+> Add support fo the Renesas UPD720201/UPD720202 USB 3.0 xHCI Host Controller
+> power control which connects over PCIe and requires specific power supplies
+> to start up.
+>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+>  drivers/pci/pwrctrl/Kconfig                 | 10 ++++
+>  drivers/pci/pwrctrl/Makefile                |  2 +
+>  drivers/pci/pwrctrl/pci-pwrctrl-upd720201.c | 88 +++++++++++++++++++++++++++++
+>  3 files changed, 100 insertions(+)
+>
+> diff --git a/drivers/pci/pwrctrl/Kconfig b/drivers/pci/pwrctrl/Kconfig
+> index e0f999f299bb..5a94e60d0d3e 100644
+> --- a/drivers/pci/pwrctrl/Kconfig
+> +++ b/drivers/pci/pwrctrl/Kconfig
+> @@ -11,6 +11,16 @@ config PCI_PWRCTRL_PWRSEQ
+>  	select POWER_SEQUENCING
+>  	select PCI_PWRCTRL
+>
+> +config PCI_PWRCTRL_UPD720201
+> +	tristate "PCI Power Control driver for the UPD720201 USB3 Host Controller"
+> +	select PCI_PWRCTRL
+> +	help
+> +	  Say Y here to enable the PCI Power Control driver of the UPD720201
+> +	  USB3 Host Controller.
+> +
+> +	  The voltage regulators powering the rails of the PCI slots
+> +	  are expected to be defined in the devicetree node of the PCI device.
+> +
+>  config PCI_PWRCTRL_SLOT
+>  	tristate "PCI Power Control driver for PCI slots"
+>  	select PCI_PWRCTRL
+> diff --git a/drivers/pci/pwrctrl/Makefile b/drivers/pci/pwrctrl/Makefile
+> index 13b02282106c..a99f85de8a3d 100644
+> --- a/drivers/pci/pwrctrl/Makefile
+> +++ b/drivers/pci/pwrctrl/Makefile
+> @@ -5,6 +5,8 @@ pci-pwrctrl-core-y			:= core.o
+>
+>  obj-$(CONFIG_PCI_PWRCTRL_PWRSEQ)	+= pci-pwrctrl-pwrseq.o
+>
+> +obj-$(CONFIG_PCI_PWRCTRL_UPD720201)	+= pci-pwrctrl-upd720201.o
+> +
+>  obj-$(CONFIG_PCI_PWRCTRL_SLOT)		+= pci-pwrctrl-slot.o
+>  pci-pwrctrl-slot-y			:= slot.o
+>
+> diff --git a/drivers/pci/pwrctrl/pci-pwrctrl-upd720201.c b/drivers/pci/pwrctrl/pci-pwrctrl-upd720201.c
+> new file mode 100644
+> index 000000000000..db96bbb69c21
+> --- /dev/null
+> +++ b/drivers/pci/pwrctrl/pci-pwrctrl-upd720201.c
+> @@ -0,0 +1,88 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Based on upd720201.c:
+> + * Copyright (C) 2024 Linaro Ltd.
+> + * Author: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> + */
+> +
+> +#include <linux/device.h>
+> +#include <linux/mod_devicetable.h>
+> +#include <linux/module.h>
+> +#include <linux/pci-pwrctrl.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/regulator/consumer.h>
+> +#include <linux/slab.h>
+> +
+> +struct pci_pwrctrl_upd720201_data {
+> +	struct pci_pwrctrl ctx;
+> +	struct regulator_bulk_data *supplies;
+> +	int num_supplies;
+> +};
+> +
+> +static void devm_pci_pwrctrl_upd720201_power_off(void *data)
+> +{
+> +	struct pci_pwrctrl_upd720201_data *upd720201 = data;
+> +
+> +	regulator_bulk_disable(upd720201->num_supplies, upd720201->supplies);
+> +	regulator_bulk_free(upd720201->num_supplies, upd720201->supplies);
+> +}
+> +
+> +static int pci_pwrctrl_upd720201_probe(struct platform_device *pdev)
+> +{
+> +	struct pci_pwrctrl_upd720201_data *upd720201;
+> +	struct device *dev = &pdev->dev;
+> +	int ret;
+> +
+> +	upd720201 = devm_kzalloc(dev, sizeof(*upd720201), GFP_KERNEL);
+> +	if (!upd720201)
+> +		return -ENOMEM;
+> +
+> +	ret = of_regulator_bulk_get_all(dev, dev_of_node(dev),
+> +					&upd720201->supplies);
+> +	if (ret < 0) {
+> +		dev_err_probe(dev, ret, "Failed to get upd720201 regulators\n");
 
-To address this, set the ICE clock to TURBO during probe to
-align it with the controller clock. This ensures consistent
-performance and avoids mismatches between the controller
-and ICE clock frequencies.
+dev_err_probe()?
 
-For platforms where ICE is represented as a separate device,
-use the OPP framework to vote for TURBO mode, maintaining
-proper voltage and power domain constraints.
+> +		return ret;
+> +	}
+> +
+> +	upd720201->num_supplies = ret;
+> +	ret = regulator_bulk_enable(upd720201->num_supplies, upd720201->supplies);
+> +	if (ret < 0) {
+> +		dev_err_probe(dev, ret, "Failed to enable upd720201 regulators\n");
+> +		regulator_bulk_free(upd720201->num_supplies, upd720201->supplies);
+> +		return ret;
 
-Signed-off-by: Abhinaba Rakshit <abhinaba.rakshit@oss.qualcomm.com>
----
- drivers/soc/qcom/ice.c | 5 +++++
- 1 file changed, 5 insertions(+)
+Save a line by returning dev_err_probe() here?
 
-diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
-index 90106186c15e644527fdf75a186a2e8adeb299a3..2b0e577fb4c9ed9b746fe70ebccb45da9c52b006 100644
---- a/drivers/soc/qcom/ice.c
-+++ b/drivers/soc/qcom/ice.c
-@@ -689,6 +689,11 @@ static struct qcom_ice *qcom_ice_create(struct device *dev,
- 			engine->max_freq = rate;
- 			dev_pm_opp_put(opp);
- 		}
-+
-+		/* Vote for maximum clock rate for maximum performance */
-+		err = dev_pm_opp_set_rate(dev, INT_MAX);
-+		if (err)
-+			dev_warn(dev, "Failed boosting the ICE clk to TURBO\n");
- 	}
- 
- 	if (!qcom_ice_check_supported(engine))
+> +	}
+> +
+> +	ret = devm_add_action_or_reset(dev, devm_pci_pwrctrl_upd720201_power_off,
+> +				       upd720201);
+> +	if (ret)
+> +		return ret;
+> +
+> +	pci_pwrctrl_init(&upd720201->ctx, dev);
+> +
+> +	ret = devm_pci_pwrctrl_device_set_ready(dev, &upd720201->ctx);
+> +	if (ret)
+> +		return dev_err_probe(dev, ret, "Failed to register pwrctrl driver\n");
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct of_device_id pci_pwrctrl_upd720201_of_match[] = {
+> +	{
+> +		.compatible = "pci1912,0014",
+> +	},
+> +	{ }
+> +};
+> +MODULE_DEVICE_TABLE(of, pci_pwrctrl_upd720201_of_match);
+> +
+> +static struct platform_driver pci_pwrctrl_upd720201_driver = {
+> +	.driver = {
+> +		.name = "pci-pwrctrl-upd720201",
+> +		.of_match_table = pci_pwrctrl_upd720201_of_match,
+> +	},
+> +	.probe = pci_pwrctrl_upd720201_probe,
+> +};
+> +module_platform_driver(pci_pwrctrl_upd720201_driver);
+> +
+> +MODULE_AUTHOR("Neil Armstrong <neil.armstrong@linaro.org>");
+> +MODULE_DESCRIPTION("PCI Power Control driver for UPD720201 USB3 Host Controller");
+> +MODULE_LICENSE("GPL");
+>
+> --
+> 2.34.1
+>
+>
 
--- 
-2.34.1
+Just nits with dev_err_probe(). With these LGTM.
 
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+
+Bartosz
 
