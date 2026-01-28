@@ -1,219 +1,332 @@
-Return-Path: <linux-arm-msm+bounces-91072-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91073-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id dpCJAitZemm35QEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91072-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 19:44:59 +0100
+	id EK7NI3Bfemkc5gEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91073-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 20:11:44 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6A86EA7DB2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 19:44:58 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 213BEA8129
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 20:11:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 522A63013B60
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 18:44:57 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 81D6C3006139
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 19:11:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D93FB36921B;
-	Wed, 28 Jan 2026 18:44:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70A61372B3B;
+	Wed, 28 Jan 2026 19:11:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CB3f5Fgk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14D58336EC5;
-	Wed, 28 Jan 2026 18:44:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C392DB7B4;
+	Wed, 28 Jan 2026 19:11:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769625895; cv=none; b=k4AUA3f8+J3ITKBHEB0NJohFwzDAaMuEHPS8VgZhTfBhKtAP66pVuBUI0oNSegL3eB8SYoonGSfJ821sVvHnbbbYdFRkVyr6ZB1zgqm1i0tkuV6ZwCKMKF4zrABjFb5RLRvqsMONx0G0CzK3GxXWhzFgEZ+AHmO2XA2HmHGRYZo=
+	t=1769627502; cv=none; b=V/AR+2KfGeamY08JQgK9aiahp8w/A8N+eh8RUQ7CecBR1rFl63cWYFmWQS63TOJ1pgnhEHRo//c172AjQG/is2JOT4mL1JnpKGijDHJd6dubaS2DyoqQpwPncavOpVSuXiYArDRl+JWiMbm2PD3Kf7zDnvV5EGykUJ51bRJw8Zk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769625895; c=relaxed/simple;
-	bh=YWYdf9VXH4blRVtgKNmi/VpABd2r97IKD4NwZPdQJw8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eIhMIj4/kOUrt0TzW5MZhLFJL/ROdwkBrzWtRwg+yhPy3ZiMGLFTag52Eok/sFkz2VKisv7DusGVdsF0l+knsBXmewirTmyp+/StOBN7nOI+V1ecWMT1i6iwXkfEd6pirxKD6xzJz4n72sTbq9M72WSXEexJL5bXpgmAAtsYLAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C644B1516;
-	Wed, 28 Jan 2026 10:44:46 -0800 (PST)
-Received: from [10.1.196.85] (e121345-lin.cambridge.arm.com [10.1.196.85])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 12D3B3F5CA;
-	Wed, 28 Jan 2026 10:44:47 -0800 (PST)
-Message-ID: <d6bc7f38-b41d-4e89-b484-0e699981b8b4@arm.com>
-Date: Wed, 28 Jan 2026 18:44:35 +0000
+	s=arc-20240116; t=1769627502; c=relaxed/simple;
+	bh=NFzQy+b5YE6/ausOxwP9tx97FOkk60AadOvGywhrZLk=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=S7GkF/Hw1kVE6G+HKIWImgrkIj/aceT8ATMm1hy1x1ddz+Kh+3hpLYlVTWODnK5Dpyg+O5ukePDQiLvqhoIFfsmKbwOv3udIFruf90lfIJI7lsmNZGYaBz5o4wfuQlGqVfuhyLDNOZG9HjZLb+D6Y/Beo7s+K9TMMd+XcJ7P2eo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CB3f5Fgk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id D4DB0C4CEF1;
+	Wed, 28 Jan 2026 19:11:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1769627501;
+	bh=NFzQy+b5YE6/ausOxwP9tx97FOkk60AadOvGywhrZLk=;
+	h=From:Date:Subject:To:Cc:Reply-To:From;
+	b=CB3f5Fgku52wGhXhqNIhqQ/EwNy6Z7P0QJ/Jes5LIMXvlfqBUZf8rceL5JjGGhPLj
+	 hLTynwlX/zQk+lRnDzJC+csTb1tVFxAuNxF01jpVTqD2tNvbxLT5tT+Ms/sjuVV75L
+	 XfgRiifPjh0fUPtJyZUs+Gv7jJdwUeuo1O+s/Fl0cZQx0KpgMgQn9NsD3nCUi1bNJR
+	 k3ALwdnFWTW5aKDT+8FjnWquwro2zWn0jdqutzfrf/ClG1cQir6fLtWKlp6pP+ppCe
+	 E3kgB64HHkBQ5KOaKHLYbUbjs/6GprUAJN4v9e18psXo6D9Xqh4K7AZyr1qdgNCQgd
+	 Qd2945kpT7/Hw==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5001D46BE9;
+	Wed, 28 Jan 2026 19:11:41 +0000 (UTC)
+From: Aaron Kling via B4 Relay <devnull+webgeek1234.gmail.com@kernel.org>
+Date: Wed, 28 Jan 2026 13:11:28 -0600
+Subject: [PATCH] arm64: dts: qcom: sm8550: Update EAS properties
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] iommu/arm-smmu: Use pm_runtime in fault handlers
-To: Prakash Gupta <prakash.gupta@oss.qualcomm.com>,
- Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
- Rob Clark <robin.clark@oss.qualcomm.com>, Connor Abbott <cwabbott0@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
- Akhil P Oommen <akhilpo@oss.qualcomm.com>,
- Pratyush Brahma <pratyush.brahma@oss.qualcomm.com>,
- Pranjal Shrivastava <praan@google.com>
-References: <20260127-smmu-rpm-v1-1-2ef2f4c85305@oss.qualcomm.com>
- <9fb8f661-a235-4f86-bc10-f80a21a8fa9d@arm.com>
- <00fcbcf2-3f48-410d-88a3-88dc834c1ed7@oss.qualcomm.com>
-From: Robin Murphy <robin.murphy@arm.com>
-Content-Language: en-GB
-In-Reply-To: <00fcbcf2-3f48-410d-88a3-88dc834c1ed7@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260128-sm8550-eas-v1-1-fb80615bed5c@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDQyML3eJcC1NTA93UxGLd5JTEtLSURPM0c3NLJaCGgqLUtMwKsGHRsbW
+ 1AKPAP9lcAAAA
+X-Change-ID: 20260128-sm8550-eas-cdaffda7f779
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Xilin Wu <wuxilin123@gmail.com>, 
+ Aaron Kling <webgeek1234@gmail.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1769627501; l=7171;
+ i=webgeek1234@gmail.com; s=20250217; h=from:subject:message-id;
+ bh=dr/gb4h1i+fv/Qf0FGJkkB3yJSjHPlPUZdd42Eh6dqs=;
+ b=uJKU+Oj3cW/4F1uMKZA6IfGz52NMD0C81hG/yhhZpEL+iceCBY3bwka+rwmYKFQHNNZ0zgRtB
+ yYFVHgIaejFAhD45rGc25xFuChj8h6ocrRnFIhza9v6IS3YyVYiWpHo
+X-Developer-Key: i=webgeek1234@gmail.com; a=ed25519;
+ pk=TQwd6q26txw7bkK7B8qtI/kcAohZc7bHHGSD7domdrU=
+X-Endpoint-Received: by B4 Relay for webgeek1234@gmail.com/20250217 with
+ auth_id=342
+X-Original-From: Aaron Kling <webgeek1234@gmail.com>
+Reply-To: webgeek1234@gmail.com
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.36 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	FREEMAIL_REPLYTO_NEQ_FROM(2.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
-	DMARC_POLICY_SOFTFAIL(0.10)[arm.com : SPF not aligned (relaxed), No valid DKIM,none];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-91072-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,8bytes.org,gmail.com];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-91073-lists,linux-arm-msm=lfdr.de,webgeek1234.gmail.com];
+	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[robin.murphy@arm.com,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_REPLYTO(0.00)[gmail.com];
+	FREEMAIL_CC(0.00)[vger.kernel.org,gmail.com];
 	TO_DN_SOME(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	RCVD_COUNT_FIVE(0.00)[5];
-	R_DKIM_NA(0.00)[];
+	DBL_PROHIBIT(0.00)[0.0.1.44:email];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	MID_RHS_MATCH_FROM(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,arm.com:mid]
-X-Rspamd-Queue-Id: 6A86EA7DB2
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	HAS_REPLYTO(0.00)[webgeek1234@gmail.com];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.100:email,0.0.2.188:email,0.0.0.0:email,0.0.0.200:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,0.0.1.244:email,0.0.1.144:email,0.0.2.88:email]
+X-Rspamd-Queue-Id: 213BEA8129
 X-Rspamd-Action: no action
 
-[ +Pranjal as this might matter for v3 too... ]
+From: Xilin Wu <wuxilin123@gmail.com>
 
-On 28/01/2026 5:56 am, Prakash Gupta wrote:
-> 
-> On 1/27/2026 9:35 PM, Robin Murphy wrote:
->> On 2026-01-27 12:11 pm, Prakash Gupta wrote:
->>> Commit d4a44f0750bb ("iommu/arm-smmu: Invoke pm_runtime across the
->>> driver")
->>> enabled pm_runtime for the arm-smmu device. On systems where the SMMU
->>> sits in a power domain, all register accesses must be done while the
->>> device is runtime-resumed to avoid unclocked register reads and
->>> potential NoC errors.
->>>
->>> So far, this has not been an issue for most SMMU clients because
->>> stall-on-fault is enabled by default. While a translation fault is
->>> being handled, the SMMU stalls further translations for that context
->>> bank, so the fault handler would not race with a powered-down
->>> SMMU.
->>>
->>> Adreno SMMU now disables stall-on-fault in the presence of fault
->>> storms to avoid saturating SMMU resources and hanging the GMU. With
->>> stall-on-fault disabled, the SMMU can generate faults while its power
->>> domain may no longer be enabled, which makes unclocked accesses to
->>> fault-status registers in the SMMU fault handlers possible.
->>
->> At face value, that sounds wrong - how does an SMMU generate a fault,
->> or indeed do anything, when it's powered off? In principle it's
->> possible that the SMMU might signal an interrupt, and is _then_
->> suspended (with the interrupt line somehow remaining asserted, so
->> probably more clock-gated than completely powered down) before the
->> interrupt hander runs, but we rather assume that we're not going to
->> have an unhandled hardware IRQ hanging around for longer than the
->> autosuspend delay.
->>
->> So, judging by the diff below, I guess what you really mean is that in
->> the case of a threaded context IRQ handler, it can take long enough
->> between handling the hardware IRQ and the thread actually running that
->> the SMMU may have suspended in between?
-> 
-> You are correct that the SMMU cannot generate a fault while powered
-> down. A more accurate description of the race condition is as follows:
-> When stall-on-fault is disabled, the faulting transaction does is
-> terminated. This allows the master (the GPU) to complete its work, drop
-> its power vote for the SMMU, and allow the SMMU to suspend. However, the
-> SMMU fault handler may still be waiting to execute on the CPU.
-> If the SMMU suspends before the handler reads the fault registers, an
-> unclocked access occurs. This scenario is significantly more likely when
-> using threaded IRQs due to the scheduling latency involved. I will
-> update the next iteration to reflect this.
-> 
->>
->>> Guard the context and global fault handlers with arm_smmu_rpm_get() /
->>> arm_smmu_rpm_put() so that all SMMU fault register accesses are done
->>> with the SMMU powered.
->>>
->>> Fixes: b13044092c1e ("drm/msm: Temporarily disable stall-on-fault
->>> after a page fault")
->>> Co-developed-by: Pratyush Brahma <pratyush.brahma@oss.qualcomm.com>
->>> Signed-off-by: Pratyush Brahma <pratyush.brahma@oss.qualcomm.com>
->>> Signed-off-by: Prakash Gupta <prakash.gupta@oss.qualcomm.com>
->>> ---
->>>    drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c |  5 ++-
->>>    drivers/iommu/arm/arm-smmu/arm-smmu.c      | 53
->>> ++++++++++++++++++++++--------
->>>    2 files changed, 43 insertions(+), 15 deletions(-)
->>>
->>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>> b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>> index 573085349df3..2d03df72612d 100644
->>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>> @@ -317,6 +317,7 @@ static int qcom_adreno_smmu_init_context(struct
->>> arm_smmu_domain *smmu_domain,
->>>        struct arm_smmu_device *smmu = smmu_domain->smmu;
->>>        struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
->>>        const struct of_device_id *client_match;
->>> +    const struct arm_smmu_impl *impl = qsmmu->data->impl;
->>>        int cbndx = smmu_domain->cfg.cbndx;
->>>        struct adreno_smmu_priv *priv;
->>>    @@ -350,10 +351,12 @@ static int
->>> qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
->>>        priv->get_ttbr1_cfg = qcom_adreno_smmu_get_ttbr1_cfg;
->>>        priv->set_ttbr0_cfg = qcom_adreno_smmu_set_ttbr0_cfg;
->>>        priv->get_fault_info = qcom_adreno_smmu_get_fault_info;
->>> -    priv->set_stall = qcom_adreno_smmu_set_stall;
->>>        priv->set_prr_bit = NULL;
->>>        priv->set_prr_addr = NULL;
->>>    +    if (impl->context_fault_needs_threaded_irq)
->>> +        priv->set_stall = qcom_adreno_smmu_set_stall;
->>> +
->>>        if (of_device_is_compatible(np, "qcom,smmu-500") &&
->>>            !of_device_is_compatible(np, "qcom,sm8250-smmu-500") &&
->>>            of_device_is_compatible(np, "qcom,adreno-smmu")) {
->>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c
->>> b/drivers/iommu/arm/arm-smmu/arm-smmu.c
->>> index 5e690cf85ec9..183f12e45b02 100644
->>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
->>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
->>> @@ -462,10 +462,23 @@ static irqreturn_t arm_smmu_context_fault(int
->>> irq, void *dev)
->>>        int idx = smmu_domain->cfg.cbndx;
->>>        int ret;
->>>    +    if (smmu->impl && smmu->impl->context_fault_needs_threaded_irq) {
->>
->> Why is this conditional on being threaded, if the global fault handler
->> that can never be threaded at all apparently needs it unconditionally?
-> Synchronous runtime PM calls can sleep, which would cause issue if
-> called within a hard IRQ context. This is why I added the conditional
-> check for threaded IRQs.
-> Furthermore, this change only allow the driver to override the
-> stall-on-fault setting when context_fault_needs_threaded_irq is true.
-> Since the unclocked access issue is tied to disabling stall-on-fault,
-> the fix is only logically required for the threaded IRQ path.
-> For the Global Fault handler, which runs in a hard IRQ context, you are
-> right—we cannot safely vote for power there. I will remove the runtime
-> PM call from that section.
+The original values provided by Qualcomm appear to be quite
+inaccurate. Specifically, some heavy gaming tasks could be
+improperly assigned to the A510 cores by the scheduler, resulting
+in a CPU bottleneck. This update to the EAS properties aims to
+enhance the user experience across various scenarios.
 
-Hmm, but then how *do* we actually guarantee that autosuspend doesn't 
-happen to kick in and power down the SMMU just as a hardirq handler 
-runs, when there's some unexpected event? I fear there's a horrible can 
-of worms here...
+The power numbers were obtained using a Type-C power meter, which
+was directly connected to the battery connector on the AYN Odin 2
+motherboard, acting as a fake battery.
 
-Thanks,
-Robin.
+It should be noted that the A715 cores seem less efficient than the
+A710 cores. Therefore, an average value has been assigned to them,
+considering that the A715 and A710 cores share a single cpufreq
+domain.
+
+Cortex-A510 cores:
+441 kHz, 564 mV, 43 mW, 350 Cx
+556 kHz, 580 mV, 59 mW, 346 Cx
+672 kHz, 592 mV, 71 mW, 312 Cx
+787 kHz, 604 mV, 83 mW, 290 Cx
+902 kHz, 608 mV, 96 mW, 288 Cx
+1017 kHz, 624 mV, 107 mW, 264 Cx
+1113 kHz, 636 mV, 117 mW, 252 Cx
+1228 kHz, 652 mV, 130 mW, 240 Cx
+1344 kHz, 668 mV, 146 mW, 235 Cx
+1459 kHz, 688 mV, 155 mW, 214 Cx
+1555 kHz, 704 mV, 166 mW, 205 Cx
+1670 kHz, 724 mV, 178 mW, 192 Cx
+1785 kHz, 744 mV, 197 mW, 189 Cx
+1900 kHz, 764 mV, 221 mW, 190 Cx
+2016 kHz, 784 mV, 243 mW, 188 Cx
+Your dynamic-power-coefficient for cpu 1: 251
+
+Cortex-A715 cores:
+614 kHz, 572 mV, 97 mW, 470 Cx
+729 kHz, 592 mV, 123 mW, 473 Cx
+844 kHz, 608 mV, 152 mW, 486 Cx
+940 kHz, 624 mV, 178 mW, 485 Cx
+1056 kHz, 644 mV, 207 mW, 465 Cx
+1171 kHz, 656 mV, 243 mW, 480 Cx
+1286 kHz, 672 mV, 271 mW, 459 Cx
+1401 kHz, 692 mV, 310 mW, 454 Cx
+1536 kHz, 716 mV, 368 mW, 462 Cx
+1651 kHz, 740 mV, 416 mW, 454 Cx
+1785 kHz, 760 mV, 492 mW, 475 Cx
+1920 kHz, 784 mV, 544 mW, 457 Cx
+2054 kHz, 804 mV, 613 mW, 458 Cx
+2188 kHz, 828 mV, 702 mW, 465 Cx
+2323 kHz, 852 mV, 782 mW, 461 Cx
+2457 kHz, 876 mV, 895 mW, 473 Cx
+2592 kHz, 896 mV, 1020 mW, 490 Cx
+2707 kHz, 920 mV, 1140 mW, 498 Cx
+2803 kHz, 940 mV, 1215 mW, 490 Cx
+Your dynamic-power-coefficient for cpu 3: 472
+
+Cortex-A710 cores:
+614 kHz, 572 mV, 91 mW, 388 Cx
+729 kHz, 592 mV, 116 mW, 424 Cx
+844 kHz, 608 mV, 143 mW, 443 Cx
+940 kHz, 624 mV, 165 mW, 434 Cx
+1056 kHz, 644 mV, 195 mW, 430 Cx
+1171 kHz, 656 mV, 218 mW, 414 Cx
+1286 kHz, 672 mV, 250 mW, 415 Cx
+1401 kHz, 692 mV, 286 mW, 412 Cx
+1536 kHz, 716 mV, 331 mW, 407 Cx
+1651 kHz, 740 mV, 374 mW, 401 Cx
+1785 kHz, 760 mV, 439 mW, 417 Cx
+1920 kHz, 784 mV, 495 mW, 411 Cx
+2054 kHz, 804 mV, 557 mW, 412 Cx
+2188 kHz, 828 mV, 632 mW, 415 Cx
+2323 kHz, 852 mV, 721 mW, 422 Cx
+2457 kHz, 876 mV, 813 mW, 427 Cx
+2592 kHz, 896 mV, 912 mW, 435 Cx
+2707 kHz, 920 mV, 1019 mW, 442 Cx
+2803 kHz, 940 mV, 1087 mW, 436 Cx
+Your dynamic-power-coefficient for cpu 5: 421
+
+Cortex-X3 core:
+729 kHz, 568 mV, 252 mW, 1110 Cx
+864 kHz, 580 mV, 312 mW, 1097 Cx
+998 kHz, 592 mV, 379 mW, 1109 Cx
+1132 kHz, 608 mV, 453 mW, 1099 Cx
+1248 kHz, 624 mV, 517 mW, 1067 Cx
+1363 kHz, 636 mV, 587 mW, 1067 Cx
+1478 kHz, 648 mV, 657 mW, 1058 Cx
+1593 kHz, 664 mV, 739 mW, 1049 Cx
+1708 kHz, 680 mV, 813 mW, 1020 Cx
+1843 kHz, 704 mV, 940 mW, 1021 Cx
+1977 kHz, 724 mV, 1054 mW, 1007 Cx
+2092 kHz, 740 mV, 1201 mW, 1045 Cx
+2227 kHz, 768 mV, 1358 mW, 1029 Cx
+2342 kHz, 788 mV, 1486 mW, 1016 Cx
+2476 kHz, 812 mV, 1711 mW, 1046 Cx
+2592 kHz, 836 mV, 1846 mW, 1014 Cx
+2726 kHz, 856 mV, 2046 mW, 1020 Cx
+2841 kHz, 880 mV, 2266 mW, 1027 Cx
+2956 kHz, 908 mV, 2616 mW, 1074 Cx
+3187 kHz, 956 mV, 3326 mW, 1147 Cx
+Your dynamic-power-coefficient for cpu 7: 1057
+
+7-zip benchmark single-core MIPS:
+2128   4416   4632   6686
+
+Signed-off-by: Xilin Wu <wuxilin123@gmail.com>
+Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
+---
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+index e3f93f4f412ded9583a6bc9215185a0daf5f1b57..7bbbf3109bc2c6e2e6445207cc86c401be482a73 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+@@ -76,8 +76,8 @@ cpu0: cpu@0 {
+ 			power-domains = <&cpu_pd0>;
+ 			power-domain-names = "psci";
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+-			capacity-dmips-mhz = <1024>;
+-			dynamic-power-coefficient = <100>;
++			capacity-dmips-mhz = <326>;
++			dynamic-power-coefficient = <251>;
+ 			#cooling-cells = <2>;
+ 			l2_0: l2-cache {
+ 				compatible = "cache";
+@@ -102,8 +102,8 @@ cpu1: cpu@100 {
+ 			power-domains = <&cpu_pd1>;
+ 			power-domain-names = "psci";
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+-			capacity-dmips-mhz = <1024>;
+-			dynamic-power-coefficient = <100>;
++			capacity-dmips-mhz = <326>;
++			dynamic-power-coefficient = <251>;
+ 			#cooling-cells = <2>;
+ 			l2_100: l2-cache {
+ 				compatible = "cache";
+@@ -123,8 +123,8 @@ cpu2: cpu@200 {
+ 			power-domains = <&cpu_pd2>;
+ 			power-domain-names = "psci";
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+-			capacity-dmips-mhz = <1024>;
+-			dynamic-power-coefficient = <100>;
++			capacity-dmips-mhz = <326>;
++			dynamic-power-coefficient = <251>;
+ 			#cooling-cells = <2>;
+ 			l2_200: l2-cache {
+ 				compatible = "cache";
+@@ -144,8 +144,8 @@ cpu3: cpu@300 {
+ 			power-domains = <&cpu_pd3>;
+ 			power-domain-names = "psci";
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
+-			capacity-dmips-mhz = <1792>;
+-			dynamic-power-coefficient = <270>;
++			capacity-dmips-mhz = <693>;
++			dynamic-power-coefficient = <447>;
+ 			#cooling-cells = <2>;
+ 			l2_300: l2-cache {
+ 				compatible = "cache";
+@@ -165,8 +165,8 @@ cpu4: cpu@400 {
+ 			power-domains = <&cpu_pd4>;
+ 			power-domain-names = "psci";
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
+-			capacity-dmips-mhz = <1792>;
+-			dynamic-power-coefficient = <270>;
++			capacity-dmips-mhz = <693>;
++			dynamic-power-coefficient = <447>;
+ 			#cooling-cells = <2>;
+ 			l2_400: l2-cache {
+ 				compatible = "cache";
+@@ -186,8 +186,8 @@ cpu5: cpu@500 {
+ 			power-domains = <&cpu_pd5>;
+ 			power-domain-names = "psci";
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
+-			capacity-dmips-mhz = <1792>;
+-			dynamic-power-coefficient = <270>;
++			capacity-dmips-mhz = <693>;
++			dynamic-power-coefficient = <447>;
+ 			#cooling-cells = <2>;
+ 			l2_500: l2-cache {
+ 				compatible = "cache";
+@@ -207,8 +207,8 @@ cpu6: cpu@600 {
+ 			power-domains = <&cpu_pd6>;
+ 			power-domain-names = "psci";
+ 			qcom,freq-domain = <&cpufreq_hw 1>;
+-			capacity-dmips-mhz = <1792>;
+-			dynamic-power-coefficient = <270>;
++			capacity-dmips-mhz = <693>;
++			dynamic-power-coefficient = <447>;
+ 			#cooling-cells = <2>;
+ 			l2_600: l2-cache {
+ 				compatible = "cache";
+@@ -228,8 +228,8 @@ cpu7: cpu@700 {
+ 			power-domains = <&cpu_pd7>;
+ 			power-domain-names = "psci";
+ 			qcom,freq-domain = <&cpufreq_hw 2>;
+-			capacity-dmips-mhz = <1894>;
+-			dynamic-power-coefficient = <588>;
++			capacity-dmips-mhz = <1024>;
++			dynamic-power-coefficient = <1057>;
+ 			#cooling-cells = <2>;
+ 			l2_700: l2-cache {
+ 				compatible = "cache";
+
+---
+base-commit: 3f24e4edcd1b8981c6b448ea2680726dedd87279
+change-id: 20260128-sm8550-eas-cdaffda7f779
+
+Best regards,
+-- 
+Aaron Kling <webgeek1234@gmail.com>
+
+
 
