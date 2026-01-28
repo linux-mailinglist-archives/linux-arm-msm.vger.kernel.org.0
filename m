@@ -1,207 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-90993-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90996-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sI6XFfj5eWkE1QEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90993-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 12:58:48 +0100
+	id UO7dFbH4eWkE1QEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90996-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 12:53:21 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 822E9A0F04
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 12:58:47 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 03F22A0E0D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 12:53:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 7E4F33014916
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 11:49:32 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 33B3D302E92C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 11:52:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BDF1330B14;
-	Wed, 28 Jan 2026 11:49:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC81E34BA20;
+	Wed, 28 Jan 2026 11:52:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="enIz24sj"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jvhdreS8";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Yj5vh4G0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96AD8327BE7;
-	Wed, 28 Jan 2026 11:49:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB5E2D9ECB
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 11:52:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769600971; cv=none; b=UrLYW+/FuKIrW4kQW2+3auHS58ZaLZ3JR3xzX6Z4PHPxNUZTp/rpCC3Xu6MGTvcZEM42TFIKFxQQdDU6rWMxhhTylBhurkoOOr/AMV0JRSMAEHReb6B5yxyUcoJinUKiDF8fsWl7bD753G7DN54qfKk2C2vaOcPRFtvuWvOHBFQ=
+	t=1769601143; cv=none; b=GHKxhWlU/FiNlm1l9c8h9av9Y40QAF8t1oAFn21m6cMeetYwZl9gmz/EzedTfOk2HJ/TpfA2FjLo+s9qR1xNV3g2sUPQ7sNktfNzriC2INZJCcM+6NR0Zig1A3z0DHq8Ls387/LyjdjSpSUG8Drz1Il46611JQ9KDLtHP0aXM5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769600971; c=relaxed/simple;
-	bh=k7dNOaHPstkLZ18bbMqe9pvhkQE/fm5+v5E5oHvJ0+I=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GoUjm1g48x4Jm22ZAzBocl0kEhVXMA4Wx5PiOq2ptpJTTeK/3+eZ+tqjd91uIkTN9m1FC++gjiWlunZZ8SuFV71Ri7U3HbxBAkiGL5BfkD2flvM4ycWx+50IM7NejXJF8o2ik223/2tqHGEso3iBlK/h4avXtxEPdVWOCxG+i5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=enIz24sj; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60S927XG3920922;
-	Wed, 28 Jan 2026 11:49:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=ggu29vCh8FG
-	9BLQ+55eQDuvMFV8G4ZMF0zOOXZqB8eA=; b=enIz24sje0UCqEf/yFT4i+8ZZSp
-	+JebnJ2/cgZbo18neaXwZ9xDVw5Ds7fWPvlFWrngJJlLt+Ljcp7OFs7PMn/VEnfR
-	SGArdjBxb7MO+saTX5riYywmK2Ir2HzDKZZW8eUEgB/MXUpTG9wfCenfRu0y5sZs
-	geD0Qj+p9JOXEFS2hgZRn6CcOFT3oqloxnIfG1gfBHod2CE/S508T6E2sWEiCyRO
-	9yrKZlt9dSsMb2R5nkunyTaCWbxdwC4hTz1C9+ilsQ5hVlZq9wanl597t/rQsyZR
-	f6Huoqa3Z2aEi095n6t9GchdYXY/5jZEfgUq4R8z0k++E5jR835THQJvyGA==
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4by211b6aa-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 Jan 2026 11:49:09 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 60SBn5Xv004217;
-	Wed, 28 Jan 2026 11:49:05 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 4bvq5mgshy-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 Jan 2026 11:49:05 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 60SBn5dK004096;
-	Wed, 28 Jan 2026 11:49:05 GMT
-Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-riteshk-hyd.qualcomm.com [10.213.102.118])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 60SBn47D004087
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 Jan 2026 11:49:05 +0000
-Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 2314801)
-	id 3D28F5E6; Wed, 28 Jan 2026 17:19:04 +0530 (+0530)
-From: Ritesh Kumar <quic_riteshk@quicinc.com>
-To: robin.clark@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
-        sean@poorly.run, marijn.suijten@somainline.org,
-        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        tzimmermann@suse.de, airlied@gmail.com, simona@ffwll.ch,
-        robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-        quic_mahap@quicinc.com, andersson@kernel.org, konradybcio@kernel.org,
-        mani@kernel.org, James.Bottomley@HansenPartnership.com,
-        martin.petersen@oracle.com, vkoul@kernel.org, kishon@kernel.org,
-        cros-qcom-dts-watchers@chromium.org
-Cc: Ritesh Kumar <quic_riteshk@quicinc.com>, linux-phy@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org,
-        quic_vproddut@quicinc.com
-Subject: [PATCH v4 2/2] arm64: dts: qcom: lemans: Add eDP ref clock for eDP PHYs
-Date: Wed, 28 Jan 2026 17:18:50 +0530
-Message-ID: <20260128114853.2543416-3-quic_riteshk@quicinc.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260128114853.2543416-1-quic_riteshk@quicinc.com>
-References: <20260128114853.2543416-1-quic_riteshk@quicinc.com>
+	s=arc-20240116; t=1769601143; c=relaxed/simple;
+	bh=8zlMQ2jArJaTXK+RpBQZByBD4YvxrP2KKFaqI56dpcg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fHut50fIv9o0SiZVEIRQNNcuwsFdkxo6Pf7P7MBE2mXRCBRqaD/h2aJPPLay9AWhtRKAJO0JTeTNOS29Z3HzO5LFiZ5oOv84FhKsE5zaA4VDpRZZolZMAnhB8m4F6S77S/5D0zxN7DtYTIpDbEruS1KY9YnEsTOgTludMD2SXEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jvhdreS8; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Yj5vh4G0; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60S91u3p3879263
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 11:52:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	lhscgzuAVSEBkQDVAEe7phBxToampWZjS3PZFnVNOQo=; b=jvhdreS8t1moXxk2
+	12zBrsQOFnhGd5T0aRSVJTUhakvpqZwl6sJ9IouYpvsLMAXTYB7DPMwrHXZbHHZV
+	Wm65QN0P1bjc54YcdnPDLqcQiQWb9fmYQMR0GtNTQLzFL+Fp8KBhhUWOVMiE8g/e
+	dhn/tVXrQnHwh0VJBz40VEEAn0/Je6XpHCt5RESgqztXJlknr+rFTwgygnzQEnTN
+	V6Uoi2JxIHrfRbN+xx0dFflU9pk9j6kk6EtUNYPthJUgTbvcRoRnRQRI3TTiCLMd
+	oTr2Dooc/IpZjhpI9ZsukK4tU/JK+iY7rcoMTB9TqNE0lskD0ikK2N1AeOraIPLP
+	m9a0BA==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4bybyv1a5u-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 11:52:21 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-8c70cb31bcdso15554885a.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 03:52:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1769601141; x=1770205941; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lhscgzuAVSEBkQDVAEe7phBxToampWZjS3PZFnVNOQo=;
+        b=Yj5vh4G0+qS4NYyjqv+uMuGVtvtkXhsKIc0VxuG7dGvAJnVI+vKAVFg/ZkM7QsX4bP
+         uX4K/l13eu34VkqsarzsrvMOCZHpdyNeoiFkcm5vLTBAsfg+mDz0Q6Wsns0wpqkt2L5G
+         uI4OjAykpBtWfWmE5DJVmP56Qo2VDdOcBX+GMoJULrVt70ik+4JwZqkob4xjolv010/A
+         cg34S0NZ2PlXsozmBl/A0kQPRCJXtJ1lWteiVg9KWKVk0UgWtNeHlmqmHk9zeuNWd6j9
+         DIBW2+dzROx2Y193dSAn1gAa3d3haPtb4Pza5zEUyvR+JlNPr8jT8cz3elXGfQFh+dJ8
+         mpyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769601141; x=1770205941;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lhscgzuAVSEBkQDVAEe7phBxToampWZjS3PZFnVNOQo=;
+        b=TxQPIDAka4t93+VijQIfMdSYnWZ4ZEbRoE/guEopnwLtxiINbFyWaPpzhXWtsULEQs
+         hNM6PaovqCjjinPwvuWh1ectaR/QdtyrZFITJzOwQOmQB4WvigjKqVZe013i/2R+Xdw/
+         WLCAWz+RzEkHad04y1LYwCz0ZbmLbvPBOip+D7OhM8M7ckOG9lFLeWeci44IYv3Eta0H
+         dNR/300r0+Pzm43h0SUSXkxXzElTPiXKI61bU7tD+yt4EJZk0LqheIuQDLxWuQ+L0bQj
+         f84QmUIi5YVNgCGEXMhjSsgrPxh1nQLCQKFJaqUuRCwz3m0XnMt6EGkWVevzALIyZ9TZ
+         ipOQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV7eqDv4U3YMSc9WUlQIqrRWNSgwMCUyJeB22j2r9Rp3N8SoKrxspjmNNHEftpHEBhsqLmas7vg5fknSDAR@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx3YV27OoWENRy6IQft/OebHaafrP/qIdqzl+hkeiMcosT9SuRu
+	lxM1B0JF2nyIwhAkRY++T2Sv86H9oN3abotlpm4ySSSQS8MEjxUCAEtzaI8a/TTPyRn+3/mvISR
+	2Qsgux4f/m4OjUVQV93W6KFO1+6j7o+dBwkhNd6bjKA6AIu//JJ2Mbz3dZTgBibUjPYdA
+X-Gm-Gg: AZuq6aLF/u6EC1lJVVaxLwf9uUtX8rA9uIJ37o3sKThzpo5OF/ea3BN8KDeVOVdMvuX
+	ZuJMZuLVLerKsXtRqlOl9Fom2ioucqvMvINwh1znOa1Ga7uDKQRCP6AG56r/plafPbEkFZzCO1f
+	fqZWXGmKh6gUa+nJ7sCuegBbivGj6pX1X2bNFrpEvlKPtRVDD9xxeVjilsAYUXv3/WdGixtk2vV
+	1CQkNxJE273jFCEiJpHIpDKJGZi9YSQEtpu4IK3P7MXkOoW6hUcftAIfymDWvxfVDmXFkSSHe2d
+	nAz4HdJfdpfLC657dri5YhxQ0NCoXtX1ACUU/w6F6zIGK+9t/QfrOaRyKaFVF7YGWDT/VsSNqEX
+	EOMk5kJQSyW3/Uph5bMxPlKgjTGBsmhlWaQGlMJkGbLB+t9o2M8Q+8mFCejqfOV1+5EM=
+X-Received: by 2002:a05:620a:2904:b0:8c6:d3a7:3d1e with SMTP id af79cd13be357-8c714a67607mr127482785a.0.1769601140635;
+        Wed, 28 Jan 2026 03:52:20 -0800 (PST)
+X-Received: by 2002:a05:620a:2904:b0:8c6:d3a7:3d1e with SMTP id af79cd13be357-8c714a67607mr127479785a.0.1769601139956;
+        Wed, 28 Jan 2026 03:52:19 -0800 (PST)
+Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8dbefc8f96sm121649366b.25.2026.01.28.03.52.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 Jan 2026 03:52:19 -0800 (PST)
+Message-ID: <6754527b-d562-490c-be8c-4130b0d7b1b2@oss.qualcomm.com>
+Date: Wed, 28 Jan 2026 12:52:16 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI4MDA5NyBTYWx0ZWRfXxpI0GbnxZH4g
- Ev26p7QuIa7NHS40L8AhWzcLMpfySFik1imRaDWK5ZaUhJrAocm+4IrKxwnRsC5jsemzFawsvxS
- vxOy0mY04PsGZfLwE8vAk8XAvj5pwJtDo2pm/CYNAgn4DKXeBbd0pIEc/rIPagoNo31V88hH7RB
- H9I3jXnchC6ivORa9b37sQ16B0mjyWcM71Ht3xi+nyT/WfSXnpvMNCKlpUR2/J3qiNgaZFf+RyC
- EqYyUBya2g4cDQ1rubYWXA/l7s8f44pbfuzE1z/aRglnCT2hf13QYAzA2irxKRTtitjQfVBloDl
- rorxz1M9A8Y0zoABf1DEO+KDjvebZPgAFJNel8q/b4DXGnn22hZbTrxXHvbaUUTVCb9kkDklGp5
- qqpvwSeHdvMZrMx8l3j5w8cmaPerSLnDPRZrxfHNyGD8P84uH5dr44L0QwpYQbzIsJhDLVpKuGE
- 5lmtJGg+WpWR7xiL9bg==
-X-Authority-Analysis: v=2.4 cv=GuxPO01C c=1 sm=1 tr=0 ts=6979f7b5 cx=c_pps
- a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22 a=COk6AnOGAAAA:8
- a=E4RoOgRz3FB8a9Rhpw4A:9 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: Wl9CNz26fesAUw8OndlCOmQoK3naGOVa
-X-Proofpoint-ORIG-GUID: Wl9CNz26fesAUw8OndlCOmQoK3naGOVa
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 09/10] arm64: dts: qcom: kaanapali: Add support for MM
+ clock controllers for Kaanapali
+To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
+        trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        20260114-knp-remoteproc-v4-0-fcf0b04d01af@oss.qualcomm.com,
+        Taniya Das <taniya.das@oss.qualcomm.com>
+References: <20260127-knp-dts-misc-v4-0-02723207a450@oss.qualcomm.com>
+ <20260127-knp-dts-misc-v4-9-02723207a450@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20260127-knp-dts-misc-v4-9-02723207a450@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: Uv3fgFHGh-_01MpFV3Do9Ryi76R6aJEL
+X-Authority-Analysis: v=2.4 cv=ZZ4Q98VA c=1 sm=1 tr=0 ts=6979f875 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=1wcADfOFAc6XBC1J6XAA:9
+ a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI4MDA5NyBTYWx0ZWRfX8ISn5QcJg+s+
+ dhcY7fy82KXe+ApCdiNWSHbRz58PU5LrEWXtZD6p1jVPZymDAxvBYB8AnWQuL0X8t4HtsEnm9re
+ EqLVuUNs9YK+HkiciBg0sRmc6T1+85IjzTSFsKtrzCegEB9/2TRuDS2XRgdLSROm+7pRC7UoBAy
+ oWu7E6mkOZtpZkzyiXLcTkO8WJtKOl5WeKRmCg4M0VPhlZ5aODqCdtdj4DdoHQXW59Ud4xqM+vA
+ 6e4lxVC8kPTOuQNNpSuCcOP5UuHjywgeft8vRUhxzUfEp1sS6bgJy2E211u4xOiYZyw6tUOlRc+
+ J4UKe6B/OIZUACEsydBG5wlPRFRXIMN/pTOaRx1BPvs0D9spVW5tpsFkDhTYySgIJv9ZpMlKb+P
+ GRjr56Wz+0vXurSu7FbsrtbonPvrdvkHdPcXeP0v/W8FCQZ30I5cEyiPAx0RH94MNf/HcxhF0Nb
+ I7YcaEr9zT+3uhNrddg==
+X-Proofpoint-ORIG-GUID: Uv3fgFHGh-_01MpFV3Do9Ryi76R6aJEL
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-01-28_02,2026-01-27_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0 phishscore=0
- bulkscore=0 impostorscore=0 spamscore=0 clxscore=1015 priorityscore=1501
+ spamscore=0 bulkscore=0 adultscore=0 lowpriorityscore=0 malwarescore=0
+ clxscore=1015 impostorscore=0 suspectscore=0 priorityscore=1501 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601280097
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.84 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[quicinc.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
-	R_DKIM_ALLOW(-0.20)[quicinc.com:s=qcppdkim1];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linux.dev,poorly.run,somainline.org,linux.intel.com,suse.de,gmail.com,ffwll.ch,quicinc.com,HansenPartnership.com,oracle.com,chromium.org];
-	RCPT_COUNT_TWELVE(0.00)[31];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-90993-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	TAGGED_FROM(0.00)[bounces-90996-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,16e0000:email,0.26.219.0:email];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[quic_riteshk@quicinc.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[quicinc.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[aec2a00:email,aec5a00:email,quicinc.com:email,quicinc.com:dkim,quicinc.com:mid,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	RCVD_COUNT_SEVEN(0.00)[10]
-X-Rspamd-Queue-Id: 822E9A0F04
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 03F22A0E0D
 X-Rspamd-Action: no action
 
-The eDP PHY nodes on lemans were missing the reference clock voting.
-This initially went unnoticed because the clock was implicitly enabled
-by the UFS PHY driver, and the eDP PHY happened to rely on that.
+On 1/27/26 9:34 AM, Jingyi Wang wrote:
+> From: Taniya Das <taniya.das@oss.qualcomm.com>
+> 
+> Add the device nodes for the multimedia clock controllers (cambistmclkcc,
+> camcc, dispcc, videocc, gpucc and gxclkctl).
+> 
+> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+> ---
+>  arch/arm64/boot/dts/qcom/kaanapali.dtsi | 111 ++++++++++++++++++++++++++++++++
+>  1 file changed, 111 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/kaanapali.dtsi b/arch/arm64/boot/dts/qcom/kaanapali.dtsi
+> index 050d47691f5c..53e159a58768 100644
+> --- a/arch/arm64/boot/dts/qcom/kaanapali.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/kaanapali.dtsi
+> @@ -3,7 +3,13 @@
+>   * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+>   */
+>  
+> +#include <dt-bindings/clock/qcom,kaanapali-cambistmclkcc.h>
+> +#include <dt-bindings/clock/qcom,kaanapali-camcc.h>
+> +#include <dt-bindings/clock/qcom,kaanapali-dispcc.h>
+>  #include <dt-bindings/clock/qcom,kaanapali-gcc.h>
+> +#include <dt-bindings/clock/qcom,kaanapali-gpucc.h>
+> +#include <dt-bindings/clock/qcom,kaanapali-gxclkctl.h>
+> +#include <dt-bindings/clock/qcom,kaanapali-videocc.h>
+>  #include <dt-bindings/clock/qcom,rpmh.h>
+>  #include <dt-bindings/clock/qcom,sm8750-tcsr.h>
+>  #include <dt-bindings/dma/qcom-gpi.h>
+> @@ -1557,6 +1563,24 @@ aggre_noc: interconnect@16e0000 {
+>  				 <&rpmhcc RPMH_IPA_CLK>;
+>  		};
+>  
+> +		cambistmclkcc: clock-controller@1760000 {
+> +			compatible = "qcom,kaanapali-cambistmclkcc";
+> +			reg = <0x0 0x01760000 0x0 0x6000>;
 
-After commit 77d2fa54a945 ("scsi: ufs: qcom : Refactor phy_power_on/off
-calls"), the UFS driver no longer keeps the reference clock enabled.
-As a result, the eDP PHY fails to power on.
+This should have len=0x8000 (its full reserved length), the current
+size clips some trailing registers
 
-To fix this, add eDP reference clock for eDP PHYs on lemans chipset
-ensuring reference clock is enabled.
+lgtm otherwise
 
-Fixes: e1e3e5673f8d7 ("arm64: dts: qcom: sa8775p: add DisplayPort device nodes")
-Signed-off-by: Ritesh Kumar <quic_riteshk@quicinc.com>
----
- arch/arm64/boot/dts/qcom/lemans.dtsi | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-diff --git a/arch/arm64/boot/dts/qcom/lemans.dtsi b/arch/arm64/boot/dts/qcom/lemans.dtsi
-index 808827b83553..1da8e7fb6775 100644
---- a/arch/arm64/boot/dts/qcom/lemans.dtsi
-+++ b/arch/arm64/boot/dts/qcom/lemans.dtsi
-@@ -5301,9 +5301,11 @@ mdss0_dp0_phy: phy@aec2a00 {
- 				      <0x0 0x0aec2000 0x0 0x1c8>;
- 
- 				clocks = <&dispcc0 MDSS_DISP_CC_MDSS_DPTX0_AUX_CLK>,
--					 <&dispcc0 MDSS_DISP_CC_MDSS_AHB_CLK>;
-+					 <&dispcc0 MDSS_DISP_CC_MDSS_AHB_CLK>,
-+					 <&gcc GCC_EDP_REF_CLKREF_EN>;
- 				clock-names = "aux",
--					      "cfg_ahb";
-+					      "cfg_ahb",
-+					      "ref";
- 
- 				#clock-cells = <1>;
- 				#phy-cells = <0>;
-@@ -5320,9 +5322,11 @@ mdss0_dp1_phy: phy@aec5a00 {
- 				      <0x0 0x0aec5000 0x0 0x1c8>;
- 
- 				clocks = <&dispcc0 MDSS_DISP_CC_MDSS_DPTX1_AUX_CLK>,
--					 <&dispcc0 MDSS_DISP_CC_MDSS_AHB_CLK>;
-+					 <&dispcc0 MDSS_DISP_CC_MDSS_AHB_CLK>,
-+					 <&gcc GCC_EDP_REF_CLKREF_EN>;
- 				clock-names = "aux",
--					      "cfg_ahb";
-+					      "cfg_ahb",
-+					      "ref";
- 
- 				#clock-cells = <1>;
- 				#phy-cells = <0>;
--- 
-2.34.1
-
+Konrad
 
