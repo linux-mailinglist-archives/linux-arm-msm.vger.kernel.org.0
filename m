@@ -1,50 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-90956-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90957-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 0NjlFlLueWkF1AEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90956-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 12:09:06 +0100
+	id 0GMqLr3ueWm41AEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90957-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 12:10:53 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4D03A014D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 12:09:05 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 51491A018C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 12:10:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 6E5913004206
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 11:09:04 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 44C5F300B9FC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 11:10:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1212327BF3;
-	Wed, 28 Jan 2026 11:09:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75CBC31D732;
+	Wed, 28 Jan 2026 11:10:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UoOkDoTx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E96TTmuU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE03524B28;
-	Wed, 28 Jan 2026 11:09:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51EA229C321;
+	Wed, 28 Jan 2026 11:10:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769598543; cv=none; b=tbjAdCaGvojETzjhpudkaRsR+eX61zlxDQJtrGdIndeUmZiRtX2sPmc60U9ECqZ3Kz0nCx7crnA4wuTpthe4q6fwXIijH1s5egZVwMuwjAaoBVlQ+/iywaHENbB3UA58ghASBrHAYKyiEmuxE+xrhJOg0EqAc79yoVwOngwAH6s=
+	t=1769598634; cv=none; b=fxjzkdLq7578626XxEZroyGRZNQqN/4JreG75sOIruOeZG0s4kLmbsc+jJAPnw6og+KHgoVcNp5fgMdtxGMXG2wPKsds1BdyOLi0eiKzsvPDU9D43mBmjoDHWH+d3DhKbHS/WsGNIRqSGDydV2paVmYfK9+Wha+ZW1A0stz94ZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769598543; c=relaxed/simple;
-	bh=C5RVk89QQKjlpMSIOy5flFClNGlbdRmoXjmH506VbBY=;
+	s=arc-20240116; t=1769598634; c=relaxed/simple;
+	bh=j3M0FPMqph7/BNU23Lx+x4vu0DnjXqyNO4kxrYZ/Eps=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TYnTNLp3Qgfmg6eFTeqrFwhsu3H6h3SV132SBt0wCDIs2Ky8NDBX7SfvEnrEbT/uJdtFWA9gC8BXHJkfpUeEXhlm6spfkpE8EoyLnfdeAWmd7ViBl/iwiOZdqKs/CRBf5r5bsmT52f8EpAQoq1v9Xpb3FLO/UC1tfG//KQZo2cs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UoOkDoTx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCA05C16AAE;
-	Wed, 28 Jan 2026 11:09:02 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=psnHyiCXNF5FXnRTtcYgq6M8Mpzn3NKE47UgnNvLvDNizgPnV6diNsZTvGlZo0inEFp8AZFu4/6gu3K2vEe6LkNdrbU9oRtKQH+BZHjALw2NIjM30YuhlEFjskooreAgdXDQS31dY3qU1xUOEgQn+Fv2KpYEHevO1CkboJfYgI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E96TTmuU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BE71C4CEF1;
+	Wed, 28 Jan 2026 11:10:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769598543;
-	bh=C5RVk89QQKjlpMSIOy5flFClNGlbdRmoXjmH506VbBY=;
+	s=k20201202; t=1769598634;
+	bh=j3M0FPMqph7/BNU23Lx+x4vu0DnjXqyNO4kxrYZ/Eps=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UoOkDoTx2Wo8VKyyXcazt/wdup2qqocVDbbHW0FnXq4A2AWoLgB+oyMGOOAf5h3KB
-	 nx5gbfoG0eAYbgO0M9Ou4LMoUBWnn/jY08kX0jPx2sDr+yLsJkEJBADv+gJAwTB7Ng
-	 ae4ZnvsbbxFFdTgFGG+rxpS/wA6QkZMHysvtRNtY6ueDYW0LJdT838IthP0p/7EHCj
-	 5MfiIaqo+CHeZnlnw4ymIDD0u349zME3h4jR39aUk1RItOIZ9jYIWd8iz25cqY2Mtc
-	 M5zX4A+ab7BhVggRaBBvs/QFWtoTKGC+shk0k2z6opuC/w3DyHdMgREau2niHNomHW
-	 +x9jaZhjfgYdw==
-Date: Wed, 28 Jan 2026 12:09:00 +0100
+	b=E96TTmuULe9PIdwibia0L5j/kfgAgTd7qQ5nEEljBpASDk4LHxz4JAhXSnf4G28zb
+	 V7ue5d7E7JT9ZG17Olg27SC4/Zv4/Ms1DJFPsIyHIurdVYGpaHz7tdLRVqzhkmd1mb
+	 96UBu5m5J4vSIpdyI+9l+JeC1k2lOZmHZadFR3AalOxHpX1gUe7NrMXLQSJ/DR/pRq
+	 NPeR9G18rX4lMXTxMULPS9MMang2Ok1fBT2pYYqzNbxdXlFLasv/Y0kThQTCeRFcB8
+	 pJUKCcsl2Hy+8KJcznfcJqfP9b4zhr0YCyDE/BW7eL+/2bKm/iWKBvuwIxp1oyNh6V
+	 NR0zZthQPJsJA==
+Date: Wed, 28 Jan 2026 12:10:31 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Cc: Vikash Garodia <vikash.garodia@oss.qualcomm.com>, 
@@ -55,11 +55,11 @@ Cc: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
 	Stanimir Varbanov <stanimir.varbanov@linaro.org>, linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
 	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 2/4] media: dt-bindings: qcom,sc7280-venus: drop
- non-PAS support
-Message-ID: <20260128-purple-hyrax-of-tenacity-f1d2fa@quoll>
+Subject: Re: [PATCH v3 3/4] media: dt-bindings: qcom-sc7180-venus: move
+ video-firmware here
+Message-ID: <20260128-gifted-ferret-of-pleasure-ebde67@quoll>
 References: <20260127-venus-iris-flip-switch-v3-0-7f37689f4b39@oss.qualcomm.com>
- <20260127-venus-iris-flip-switch-v3-2-7f37689f4b39@oss.qualcomm.com>
+ <20260127-venus-iris-flip-switch-v3-3-7f37689f4b39@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,20 +68,20 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260127-venus-iris-flip-switch-v3-2-7f37689f4b39@oss.qualcomm.com>
+In-Reply-To: <20260127-venus-iris-flip-switch-v3-3-7f37689f4b39@oss.qualcomm.com>
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-90956-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-90957-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
@@ -89,33 +89,32 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: B4D03A014D
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 51491A018C
 X-Rspamd-Action: no action
 
-On Tue, Jan 27, 2026 at 02:23:01PM +0200, Dmitry Baryshkov wrote:
-> The only users of the non-PAS setup on SC7280 platform are the ChromeOS
-> devices, which were cancelled before reaching end users. Iris, the
-> alternative driver for the same hardware, does not support non-PAS
-> setup. It is expected that in future both Venus and Iris devices will
-> use different ABI for non-PAS (EL2) setup.
+On Tue, Jan 27, 2026 at 02:23:02PM +0200, Dmitry Baryshkov wrote:
+> As SC7180 is the only remaining user of the non-TZ / non-PAS setup which
+> uses the video-firmware subnode, move its definition from the common
+> schema to the SC7180-specific one.
 > 
-> In order to declare only the future-proof hardware description drop
-> support for non-PAS setup from the SC7280 Venus schema (breaking almost
-> non-existing SC7280 ChromeOS devices).
-> 
-> The dropped iommus entry reflects the extra stream, which should not be
-> treated in the same way as the main one (which doesn't match the usage
-> described by the iommus definition).
+> These properties do not accurately describe the hardware.  Future
+> platforms that are going to support non-TZ setup will use different
+> semantics and different DT ABI (using the iommu-map property).
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> ---
+>  .../devicetree/bindings/media/qcom,sc7180-venus.yaml      | 15 +++++++++++++++
+>  .../devicetree/bindings/media/qcom,venus-common.yaml      | 15 ---------------
+>  2 files changed, 15 insertions(+), 15 deletions(-)
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
