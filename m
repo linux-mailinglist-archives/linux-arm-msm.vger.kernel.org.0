@@ -1,247 +1,219 @@
-Return-Path: <linux-arm-msm+bounces-91071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91072-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6JOqM8NYeml55QEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 19:43:15 +0100
+	id dpCJAitZemm35QEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91072-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 19:44:59 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21733A7DA9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 19:43:15 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A86EA7DB2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 19:44:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id BF10030432E2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 18:42:24 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 522A63013B60
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 18:44:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E4F0336EC5;
-	Wed, 28 Jan 2026 18:42:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PQjT2Wnw"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D93FB36921B;
+	Wed, 28 Jan 2026 18:44:55 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F0537105B
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 18:42:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.45
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769625744; cv=pass; b=iyTiKqj2z/EaYAVVJfWsF/4m/Kn76DJZQaRDeOpC8yxIJay8Wmr5TfLAEKeFpFcKeD6p5l4ULH1ln6mdeCTP6wQEsS4wlCXplpevtz2YpO4VQLtbnMrPppRM4vJjAODfq0FXP4uRLf1v61Urdm8j3KWgGhN4xRQTp9j0NHoVEkM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769625744; c=relaxed/simple;
-	bh=SSN2ESpT8myS2TGnYD4kekZqjwLGGsC/hCIYKj1miJ8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oP95Zd3D0sRAJmM03O/Dbak1EvtIL3dYKSmthC4bCEZwZ5okjHVb+6748Sr2DY+mput0jZtDtb62AluxIVBEYZYONtBGWcuWbr+VHwl7CBIf/S4Vg0z7GvfCI+M0ig5xj4rfEFvcYThX0iX8QOAKKdZxWba40YS0B1NhhL2+sh8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PQjT2Wnw; arc=pass smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-59de66fdb53so83358e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 10:42:22 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1769625741; cv=none;
-        d=google.com; s=arc-20240605;
-        b=ARVyzypteikqXvQ6PoQWh5nHs1KHxbeTlpNzYKamoz7WfJnS0+aIwh4PLlUGxU25ef
-         usJnhZlGRRQJXCKAwsL6dtWJc/EL1ITSTOA+EX5EuXYjLQf7kSUCdieFpxrKUi3tH9op
-         D4KJviUCmwi9GXeDRMDHqdnofXVzE7Jw0xCuW12+6/Fn1cPc6+ggHb2p33OWPySYJMG6
-         nEGEonWfyLCFlths0YuNeCEVsj0sxGTA6krc8Bw5mPCR1lHUc2GEhKC6vlZKXiGjcEe+
-         YCiwkZxmhK84luC4p1eK2BOGMHfthPtKxbQAQ+SQOmr3nsd8iBiaP+Te6r5/FGAV0YlS
-         PPjQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=QShngfLNwpN56u5U+rPdj8r0Lm7eqOfAdSaQu+jY3S0=;
-        fh=3uB+SAy1WMf9LkfBCjpLONsZCuIziSKmxhXfs/XV4wc=;
-        b=hhjieK3qnyuW/Ny61PPe0lz3RSVNnLxAAtcxdBGEKOKHyf1MuQXNv8mRd6QRYSRdiv
-         I+Dr/EapMS3JmzrluLPtLj5rqUdVRxNSXS8ipEC+D5edjGzNHcHgVs8PxUa6oBtHtgQP
-         ahvXeZJtEjlj0jtuA8yFueWICZFCHuDTCo4W/cATHaYrVl60/9sfUkoE+YY6lvb/S869
-         syIUzQpvH0SYQFT+QvC8iaEfe7zK53bIZrq3MYU0koUbn90a4Ol9I/nJxH9z3FGCKOcE
-         KFQeGTICZdDIewquSlOYbOZ9d+DDp8zYd5PP6SNy+R1QKVGjHQ63rF+9lFGln4tdPlhO
-         d/Dg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769625741; x=1770230541; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QShngfLNwpN56u5U+rPdj8r0Lm7eqOfAdSaQu+jY3S0=;
-        b=PQjT2WnwQsnGW+nu2l9B6/lQWm1+8A5wj8bfoxJzzkLCS346QyVKg7SZQYCBLYZDP8
-         v/5LAb05UzJYulOwPiutisyxwWH7DUaNJATTfPc2MgyG0f+KbfSzO8nE0hmdzkA2fW2J
-         DTcf5Z7KNZqCBd/65AjT2yhz8ipwfqSt6b5tEenVCmKBOcNHkNRvhp5PrKQ4RIPedT/l
-         EfVjB2QI93AA4KNbFKU8PbdndLnz4MoAPyxViOPhXe3911SLAaKerQkZW9VwZYY/SRon
-         OYij0CI/s8yKGiyFx+hFTmoNJzfztEyAtfjVLaUYpogFRrrK2v7r6Hji5xe1NmSbPbfT
-         r5Jg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769625741; x=1770230541;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=QShngfLNwpN56u5U+rPdj8r0Lm7eqOfAdSaQu+jY3S0=;
-        b=tcA9sQ2KDrPWQQp6uKJhADf0lHW5PHYuCrUhC7mT2zo02yh7SOPB01HW+ES8GjeI9X
-         SX8DKylz/nZu+/u/dd5YPxEP9LN9dNDVQkhIaye16JRk/NHhyHfaUBv5nqe8DDX5rfjP
-         gcR3vGOC+Vs4Ya6QefqhSCP6seJ8cpCsq50P7O+Ju/pecjycawBRfpLynVmTCvk7Lx94
-         fTEpuIjwYo7uMvof1Fqct1YpdFCpmrqV2rQOettuqLiDzavYLgbFRQsPf5Yktc0oGpyz
-         eatg+TOT4WNk245kjT4INjeI6ac+lAJTFP/Ir8o+U6qenyW1u0NLJh5QFHdCA0LXrTLY
-         hs8g==
-X-Gm-Message-State: AOJu0Yzf4qVP07abM50VuZ0zBULGGZuIHDsRDD1eJSLQRMCr17e7Lgqj
-	Q6UaCZHkicUzYi7OKNdeTYjx1ruvE9hiGiKO9GfO4tGYEn/e2XRcKUuB1en0DcJ9CUrG3murdTM
-	jNEiV2h1VjxAJUJyrjPhdGxRB6kQEWGXOLvdaddk=
-X-Gm-Gg: AZuq6aKnybW7myqQDCRdXghs40ZOTTWCWkDDnhtXioe/Qpfm5dvFx2eOsBLcKB7VPww
-	OaG/QkAL4/+QFBw39J3DFgD74kW+ObXI/LyVG/j1aHLLFnJnC6FsFQfboDHm/uji/a44muyPpBG
-	SZ2SCyKsNwNauP14PjkfEuRc1RANI3XRckV8hY5tYneN7Lj9loMbM34pLtdACFHSKs8QtAdUupt
-	nuD3eqnJjwDmgzMIXEyYEyRITKfZ/HMCnFo4okuSEEOUQGzQ3ptaSDRNiDnufwDAB5e0z3GqFnf
-	aURs3P1XU2WNMAM7BcJTyrOcCt3Duo9gZli1tUW9fOVJgR0MQcP+XsNPZw9tPRvrpno8pzTrbvu
-	FlbIlF3GT4p7Ngg==
-X-Received: by 2002:a05:6512:10d2:b0:59d:e77e:adb4 with SMTP id
- 2adb3069b0e04-59e040253acmr2690914e87.29.1769625740411; Wed, 28 Jan 2026
- 10:42:20 -0800 (PST)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14D58336EC5;
+	Wed, 28 Jan 2026 18:44:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1769625895; cv=none; b=k4AUA3f8+J3ITKBHEB0NJohFwzDAaMuEHPS8VgZhTfBhKtAP66pVuBUI0oNSegL3eB8SYoonGSfJ821sVvHnbbbYdFRkVyr6ZB1zgqm1i0tkuV6ZwCKMKF4zrABjFb5RLRvqsMONx0G0CzK3GxXWhzFgEZ+AHmO2XA2HmHGRYZo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1769625895; c=relaxed/simple;
+	bh=YWYdf9VXH4blRVtgKNmi/VpABd2r97IKD4NwZPdQJw8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=eIhMIj4/kOUrt0TzW5MZhLFJL/ROdwkBrzWtRwg+yhPy3ZiMGLFTag52Eok/sFkz2VKisv7DusGVdsF0l+knsBXmewirTmyp+/StOBN7nOI+V1ecWMT1i6iwXkfEd6pirxKD6xzJz4n72sTbq9M72WSXEexJL5bXpgmAAtsYLAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C644B1516;
+	Wed, 28 Jan 2026 10:44:46 -0800 (PST)
+Received: from [10.1.196.85] (e121345-lin.cambridge.arm.com [10.1.196.85])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 12D3B3F5CA;
+	Wed, 28 Jan 2026 10:44:47 -0800 (PST)
+Message-ID: <d6bc7f38-b41d-4e89-b484-0e699981b8b4@arm.com>
+Date: Wed, 28 Jan 2026 18:44:35 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CALHNRZ8qSOZKwmBznRqvAAjMcQ265iEdBXEA2RSkSBViKO=uEA@mail.gmail.com>
- <8c64d188-9e14-43ae-8950-b31347f8eff8@linaro.org>
-In-Reply-To: <8c64d188-9e14-43ae-8950-b31347f8eff8@linaro.org>
-From: Aaron Kling <webgeek1234@gmail.com>
-Date: Wed, 28 Jan 2026 12:42:07 -0600
-X-Gm-Features: AZwV_QjqheuLV-SztuyoJ0ZuoR266U6xcHr5DYyQ_S-x2E5m7eIPUh0SSxQkHew
-Message-ID: <CALHNRZ__VTqAZ16Hn9QVN6-tS3eb7mfeY6hzDfw5AmBOHqfKHg@mail.gmail.com>
-Subject: Re: Questions About SM8550 Support
-To: Neil Armstrong <neil.armstrong@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] iommu/arm-smmu: Use pm_runtime in fault handlers
+To: Prakash Gupta <prakash.gupta@oss.qualcomm.com>,
+ Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Connor Abbott <cwabbott0@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ iommu@lists.linux.dev, linux-kernel@vger.kernel.org,
+ Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+ Pratyush Brahma <pratyush.brahma@oss.qualcomm.com>,
+ Pranjal Shrivastava <praan@google.com>
+References: <20260127-smmu-rpm-v1-1-2ef2f4c85305@oss.qualcomm.com>
+ <9fb8f661-a235-4f86-bc10-f80a21a8fa9d@arm.com>
+ <00fcbcf2-3f48-410d-88a3-88dc834c1ed7@oss.qualcomm.com>
+From: Robin Murphy <robin.murphy@arm.com>
+Content-Language: en-GB
+In-Reply-To: <00fcbcf2-3f48-410d-88a3-88dc834c1ed7@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+X-Spamd-Result: default: False [-1.36 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
+	DMARC_POLICY_SOFTFAIL(0.10)[arm.com : SPF not aligned (relaxed), No valid DKIM,none];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWO(0.00)[2];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-91071-lists,linux-arm-msm=lfdr.de];
-	TO_DN_SOME(0.00)[];
-	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[webgeek1234@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	TAGGED_FROM(0.00)[bounces-91072-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,8bytes.org,gmail.com];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,mail.gmail.com:mid]
-X-Rspamd-Queue-Id: 21733A7DA9
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[robin.murphy@arm.com,linux-arm-msm@vger.kernel.org];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	R_DKIM_NA(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	MID_RHS_MATCH_FROM(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,arm.com:mid]
+X-Rspamd-Queue-Id: 6A86EA7DB2
 X-Rspamd-Action: no action
 
-On Wed, Jan 28, 2026 at 2:50=E2=80=AFAM Neil Armstrong
-<neil.armstrong@linaro.org> wrote:
->
-> Hi,
->
-> On 1/27/26 23:48, Aaron Kling wrote:
-> > I am working on the AYN Odin 2 qcs8550 series of devices, specifically
-> > for Android, using mainline kernel drivers. I have come across some
-> > missing functionality and failures that I would like to inquire about.
-> >
-> > * ABL fails to load a dtbo using a baseline dtb unmodified from
-> > mainline. Using changes described in the gunyah watchdog thread [0], a
-> > dtbo loads and the devices boot as expected. If any of the changes in
-> > that post don't exist in the base dtb, abl will fail to load the dtbo
-> > and go to the bootloader menu. This appears to be an issue in the
-> > baseline abl code, affecting all devices of that generation. Would it
-> > be allowable to merge a change adding those changes to the sm8550
-> > dtsi, allowing an unmodified mainline dtb to work with overlays?
->
-> Any addition to the DT must be documented in dt-bindings, so if it's need=
-ed
-> for boot they should be documented and added for sure.
+[ +Pranjal as this might matter for v3 too... ]
 
-I can make the change and see if bindings check reports any new issues
-before uploading.
+On 28/01/2026 5:56 am, Prakash Gupta wrote:
+> 
+> On 1/27/2026 9:35 PM, Robin Murphy wrote:
+>> On 2026-01-27 12:11 pm, Prakash Gupta wrote:
+>>> Commit d4a44f0750bb ("iommu/arm-smmu: Invoke pm_runtime across the
+>>> driver")
+>>> enabled pm_runtime for the arm-smmu device. On systems where the SMMU
+>>> sits in a power domain, all register accesses must be done while the
+>>> device is runtime-resumed to avoid unclocked register reads and
+>>> potential NoC errors.
+>>>
+>>> So far, this has not been an issue for most SMMU clients because
+>>> stall-on-fault is enabled by default. While a translation fault is
+>>> being handled, the SMMU stalls further translations for that context
+>>> bank, so the fault handler would not race with a powered-down
+>>> SMMU.
+>>>
+>>> Adreno SMMU now disables stall-on-fault in the presence of fault
+>>> storms to avoid saturating SMMU resources and hanging the GMU. With
+>>> stall-on-fault disabled, the SMMU can generate faults while its power
+>>> domain may no longer be enabled, which makes unclocked accesses to
+>>> fault-status registers in the SMMU fault handlers possible.
+>>
+>> At face value, that sounds wrong - how does an SMMU generate a fault,
+>> or indeed do anything, when it's powered off? In principle it's
+>> possible that the SMMU might signal an interrupt, and is _then_
+>> suspended (with the interrupt line somehow remaining asserted, so
+>> probably more clock-gated than completely powered down) before the
+>> interrupt hander runs, but we rather assume that we're not going to
+>> have an unhandled hardware IRQ hanging around for longer than the
+>> autosuspend delay.
+>>
+>> So, judging by the diff below, I guess what you really mean is that in
+>> the case of a threaded context IRQ handler, it can take long enough
+>> between handling the hardware IRQ and the thread actually running that
+>> the SMMU may have suspended in between?
+> 
+> You are correct that the SMMU cannot generate a fault while powered
+> down. A more accurate description of the race condition is as follows:
+> When stall-on-fault is disabled, the faulting transaction does is
+> terminated. This allows the master (the GPU) to complete its work, drop
+> its power vote for the SMMU, and allow the SMMU to suspend. However, the
+> SMMU fault handler may still be waiting to execute on the CPU.
+> If the SMMU suspends before the handler reads the fault registers, an
+> unclocked access occurs. This scenario is significantly more likely when
+> using threaded IRQs due to the scheduling latency involved. I will
+> update the next iteration to reflect this.
+> 
+>>
+>>> Guard the context and global fault handlers with arm_smmu_rpm_get() /
+>>> arm_smmu_rpm_put() so that all SMMU fault register accesses are done
+>>> with the SMMU powered.
+>>>
+>>> Fixes: b13044092c1e ("drm/msm: Temporarily disable stall-on-fault
+>>> after a page fault")
+>>> Co-developed-by: Pratyush Brahma <pratyush.brahma@oss.qualcomm.com>
+>>> Signed-off-by: Pratyush Brahma <pratyush.brahma@oss.qualcomm.com>
+>>> Signed-off-by: Prakash Gupta <prakash.gupta@oss.qualcomm.com>
+>>> ---
+>>>    drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c |  5 ++-
+>>>    drivers/iommu/arm/arm-smmu/arm-smmu.c      | 53
+>>> ++++++++++++++++++++++--------
+>>>    2 files changed, 43 insertions(+), 15 deletions(-)
+>>>
+>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>>> b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>>> index 573085349df3..2d03df72612d 100644
+>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+>>> @@ -317,6 +317,7 @@ static int qcom_adreno_smmu_init_context(struct
+>>> arm_smmu_domain *smmu_domain,
+>>>        struct arm_smmu_device *smmu = smmu_domain->smmu;
+>>>        struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
+>>>        const struct of_device_id *client_match;
+>>> +    const struct arm_smmu_impl *impl = qsmmu->data->impl;
+>>>        int cbndx = smmu_domain->cfg.cbndx;
+>>>        struct adreno_smmu_priv *priv;
+>>>    @@ -350,10 +351,12 @@ static int
+>>> qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
+>>>        priv->get_ttbr1_cfg = qcom_adreno_smmu_get_ttbr1_cfg;
+>>>        priv->set_ttbr0_cfg = qcom_adreno_smmu_set_ttbr0_cfg;
+>>>        priv->get_fault_info = qcom_adreno_smmu_get_fault_info;
+>>> -    priv->set_stall = qcom_adreno_smmu_set_stall;
+>>>        priv->set_prr_bit = NULL;
+>>>        priv->set_prr_addr = NULL;
+>>>    +    if (impl->context_fault_needs_threaded_irq)
+>>> +        priv->set_stall = qcom_adreno_smmu_set_stall;
+>>> +
+>>>        if (of_device_is_compatible(np, "qcom,smmu-500") &&
+>>>            !of_device_is_compatible(np, "qcom,sm8250-smmu-500") &&
+>>>            of_device_is_compatible(np, "qcom,adreno-smmu")) {
+>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c
+>>> b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+>>> index 5e690cf85ec9..183f12e45b02 100644
+>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
+>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+>>> @@ -462,10 +462,23 @@ static irqreturn_t arm_smmu_context_fault(int
+>>> irq, void *dev)
+>>>        int idx = smmu_domain->cfg.cbndx;
+>>>        int ret;
+>>>    +    if (smmu->impl && smmu->impl->context_fault_needs_threaded_irq) {
+>>
+>> Why is this conditional on being threaded, if the global fault handler
+>> that can never be threaded at all apparently needs it unconditionally?
+> Synchronous runtime PM calls can sleep, which would cause issue if
+> called within a hard IRQ context. This is why I added the conditional
+> check for threaded IRQs.
+> Furthermore, this change only allow the driver to override the
+> stall-on-fault setting when context_fault_needs_threaded_irq is true.
+> Since the unclocked access issue is tied to disabling stall-on-fault,
+> the fix is only logically required for the threaded IRQ path.
+> For the Global Fault handler, which runs in a hard IRQ context, you are
+> right—we cannot safely vote for power there. I will remove the runtime
+> PM call from that section.
 
-> > * SM8550 does not have cpu opp tables, thus cpufreq does not work. I
-> > have locally copied the commits from sm8650 and adapted for sm8550,
-> > and that seems to work okay. But no measuring of bandwidth was done,
-> > so the numbers are likely not entirely correct. Is there any plan to
-> > generate correct tables for sm8550?
->
-> Cpufreq works but not the interconnect scaling, so doing the same as sm86=
-50
-> is fine but since the values were calculated from downstream DT tables,
-> the same should be done for sm8550.
+Hmm, but then how *do* we actually guarantee that autosuspend doesn't 
+happen to kick in and power down the SMMU just as a hardirq handler 
+runs, when there's some unexpected event? I fear there's a horrible can 
+of worms here...
 
-What am I looking for in the downstream dt? I'm not greatly familiar
-with that layout. But if I get pointed at the right stuff, I can do
-the legwork.
-
-> > * As part of a series to support the original Odin 2, a patch to
-> > update sm8550 EAS values was submitted [1]. But that series stalled
-> > and this was never merged. If this change is valid, which per that
-> > discussion it appears to be, can it be resubmitted by itself and
-> > merged?
->
-> I missed this patch, please re-submit, I also need to update the ones
-> for SM8650.
-
-Ack.
-
-> > * Per the mainline kernel device trees and audio topology provide by
-> > the oem, these devices use primary i2s for the speakers path. There
-> > was a commit adding clock support for that as part of an hdmi series
-> > [2], but that seems to have stalled. Is this going to be picked back
-> > up?
->
-> No, I do not plan to do this work, it required adding callbacks in the
-> code to handle the clocks like done for the pre-audioreach firmwares.
->
-> >
-> > * Inline crypto fails to detect hwkm support. And I see other logs
-> > online, such as for the sm8550 qrd, that logs the same way my device
-> > does. I traced the issue to the check for wrapped key support [3]. On
-> > my devices, the derive call is supported, but the other three calls
-> > are not. I was pointed at the downstream headers for sm8550 support
-> > and only derive is listed there, the other three don't appear to be
-> > used in the downstream driver. Is this expected? And if so, will this
-> > case be added to the mainline drivers?
->
-> Does hwkm work with you remove the last 3 calls ?
-
-I would assume not, since the ufs driver [0] references all four. And
-the plumbing doesn't do any further existence checks and just makes
-the smc calls.
-
-> > * Some gpu related clocks complain about being stuck off during boot,
-> > causing stack traces, but the gpu does work. I tried to do some
-> > research into this, but quickly got lost in the weeds and I have no
-> > idea where to even look.
-> > [    0.367278] gpu_cc_cxo_clk status stuck at 'off'
-> > [    0.367962] gpu_cc_hub_cx_int_clk status stuck at 'off'
-> > [    0.368595] gpu_cc_cx_gmu_clk status stuck at 'off'
-> > [    0.369245] disp_cc_mdss_ahb1_clk status stuck at 'off'
->
-> This may be related with the display handoff from ABL, did you add the
-> plat region to the reserved memories ?
->
-
-I did not, for these logs. Earlier in bringup, I did try to make abl
-leave the display on by adding the splash region, but that just caused
-display corruption before the kernel reset the display controller, so
-I pulled that back out. And I saw a comment somewhere stating that
-seamless handoff is not supported. Is that still the case, or should
-seamless handoff work now? It would be a much nicer user experience if
-it did.
-
-Aaron
-
-[0] https://github.com/torvalds/linux/blob/master/drivers/ufs/host/ufs-qcom=
-.c#L311-L314
+Thanks,
+Robin.
 
