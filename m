@@ -1,166 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-91074-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91075-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id IKLkK2pqemkm6AEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91074-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 20:58:34 +0100
+	id YADkH0Jzemme6gEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91075-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 21:36:18 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 131FEA854D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 20:58:34 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D6BBFA8AA1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 21:36:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 06FEE3015A61
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 19:58:33 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E5A5D3082CEA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 20:31:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9380E37419D;
-	Wed, 28 Jan 2026 19:58:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1378937418D;
+	Wed, 28 Jan 2026 20:31:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RPxBva2h"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hxfXdXs0"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F3C22D0600;
-	Wed, 28 Jan 2026 19:58:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3398374187;
+	Wed, 28 Jan 2026 20:31:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769630309; cv=none; b=TQBvnwICix65CD/T9xl93oyyBfxHheDF3LyglUXWxavuMAL+pKwSHVJWhuUX9vvAkEl4oYaikkdDpAtIJFIq5IRhv+4hDPiPii6H4AODZk0luz/pliPpObp1gHpV64dZ5RE70Sapns3QYv2ga+asbP7S4ve6h+PJtmLL69hyVDw=
+	t=1769632297; cv=none; b=uTNuU4prRry+88OgSibscc+qffPMzpV2LgM5cicIrhzRiWSN7HGqpe2ry0KnUFWvcH2gtx7JDV4dhcMbqYmy6+BBCyh02s9pXSpAMApLIPVIphFyxUxWzLOswJyUBRrrRWyWfGW3VUPT2WYAMWHrwp5GX9FdAas5dMFgecEZyvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769630309; c=relaxed/simple;
-	bh=7qvrPaZJEkTbmC5kVXFt4tdXAsdAjGyaK1iYdaCFHqs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=A2elVOgK64WPFjga1jVkB1J0DUmIJHQ1t91Qv5ObMS9VJz5MCBSVnc17RW8vjlOmKVKsnbp9TX6/ATcD8F97KqYSGzC48CmdDLxjIaIySYOyvVnX9KJel0c4c3j8SGqPugMAWJOPk8hMGGSj99Nxx17IThSXQ27fCDDlOlxRX9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RPxBva2h; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2A70C4CEF1;
-	Wed, 28 Jan 2026 19:58:26 +0000 (UTC)
+	s=arc-20240116; t=1769632297; c=relaxed/simple;
+	bh=zAqUqPi+IJHuKdMpXct3vGpjh9gKEStrN87eWkKsWY4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=o5uh/78SdCJ7Y6a4CeUt4//chlB9rjROQsVU3O7VaHT+sWXBFpGIs2JVvWLBuKS92i8Ji193oN0mC8XN72Nj2Ieoe4LXjDet4z60ZpvTrf8Id+V5lz/R7XMoIB++ipEhTcTt5fWPWgP2SUsFTxxeA/t/qzaHveLH+tS04SF92mA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hxfXdXs0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 970CEC4CEF1;
+	Wed, 28 Jan 2026 20:31:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769630309;
-	bh=7qvrPaZJEkTbmC5kVXFt4tdXAsdAjGyaK1iYdaCFHqs=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=RPxBva2hlYMPd4m5Dn7mbeWpJ3YgYVziHgDtxbl/K2uvuQyQDBeV13Qi0GRxURWJJ
-	 Wft9GgPuzviKzEcR7xOTiQ4nPQPU4LxfnDy+qI2z2WpF9lLUvhfWEPPZRMcaf/Eayy
-	 jEhW0j84JaA2hgBacpMYj8caTHftPM6qJoHAflQmO7Kk2+fzUb6j9+o+bkUm1WI4Rg
-	 0eDM7cE2EKs5JeFnxzVBf/n/UYoAsU8RfhSKtMZa4/zu/PQX/DJhw95ubWJgs3pyhL
-	 jyRIYLpf8A6HuzdFpVWwUpAS35eTpZgcb/lozAuxPh957IdzpEcyEoal60jgKRR/rD
-	 eyueLRKGma9RA==
-Message-ID: <eda9a855-912f-48ac-974d-09d557a24bda@kernel.org>
-Date: Wed, 28 Jan 2026 20:58:25 +0100
+	s=k20201202; t=1769632296;
+	bh=zAqUqPi+IJHuKdMpXct3vGpjh9gKEStrN87eWkKsWY4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=hxfXdXs01pXHiAmQc0/u1JpjsRZXtWGwuifttmwBRE4g3GpE17c1CMG7INg5kYmRH
+	 I8itvJwrMvZq2hIEfdCVob/BcZpXt0F7CPE0y0gcYvb4ZVDQmw0v5ct6qt2d33ICvj
+	 5iohKgkktwBdHip7agMiraRtYPexXj0o9ls8xuyRD4F8T0eRcAsshse4ISB9qFjFRn
+	 bnfqM2WyDlUrbRkFLbQ6xwQUJdVWyUb64IOP3EaQqeWHwtWNOGuQX3c6LnO2FVDauN
+	 fIa6jkUCpYvUh/aYlMRIMvbIVvdfFYLWSQp0d3kqgCEsBSBXLChhTIXrPTn3cmrFAU
+	 wkG0/gKWhTNVA==
+Date: Wed, 28 Jan 2026 14:31:33 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Miquel Raynal <miquel.raynal@bootlin.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	Junhao Xie <bigfoot@radxa.com>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Richard Weinberger <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, linux-mtd@lists.infradead.org, 
+	Xilin Wu <sophon@radxa.com>
+Subject: Re: [PATCH v2 0/2] mtd: devices: Qualcomm SCM storage support
+Message-ID: <njrzcyhdkohsmnlisdzu25b6obqotjjrzlrs42jhq5bhlz6qco@mdk5blghdqbc>
+References: <20260126-scm-storage-v2-v2-0-fa045c7e7699@radxa.com>
+ <d0652707-c983-4deb-981c-b1584168e330@oss.qualcomm.com>
+ <875x8ln7tk.fsf@bootlin.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: document the Eliza Top Level
- Mode Multiplexer
-To: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Linus Walleij
- <linusw@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260127-eliza-pinctrl-v2-0-1faf78efdc2e@oss.qualcomm.com>
- <20260127-eliza-pinctrl-v2-1-1faf78efdc2e@oss.qualcomm.com>
- <20260128-hot-camel-of-acumen-eef9f2@quoll>
- <aizrc6xysfwzygdsfeuc2raccq7efmwg5bn6v33t2de6ugvzgi@z3ipf3i25ulf>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <aizrc6xysfwzygdsfeuc2raccq7efmwg5bn6v33t2de6ugvzgi@z3ipf3i25ulf>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <875x8ln7tk.fsf@bootlin.com>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-91074-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-91075-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	MISSING_XM_UA(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCPT_COUNT_SEVEN(0.00)[10];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 131FEA854D
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: D6BBFA8AA1
 X-Rspamd-Action: no action
 
-On 28/01/2026 18:22, Abel Vesa wrote:
->>
->>> +
->>> +  gpio-line-names:
->>> +    maxItems: 185
->>
->> 186, your first GPIO is 0 and last is 185.
+On Wed, Jan 28, 2026 at 03:13:59PM +0100, Miquel Raynal wrote:
+> Hello,
 > 
-> Actually it is 0 through 184. The 185 is ufs reset.
-
-Then the gpio pattern is not correct.
-
+> >> Junhao Xie (2):
+> >>       firmware: qcom: scm: Add SCM storage interface support
+> >>       mtd: devices: Add Qualcomm SCM storage driver
+> >> 
+> >>  drivers/firmware/qcom/qcom_scm.c       | 161 ++++++++++++++++++++
+> >>  drivers/firmware/qcom/qcom_scm.h       |   3 +
+> >>  drivers/mtd/devices/Kconfig            |  17 +++
+> >>  drivers/mtd/devices/Makefile           |   1 +
+> >>  drivers/mtd/devices/qcom_scm_storage.c | 265 +++++++++++++++++++++++++++++++++
+> >>  include/linux/firmware/qcom/qcom_scm.h |  34 +++++
+> >>  6 files changed, 481 insertions(+)
+> >> ---
+> >> base-commit: 63804fed149a6750ffd28610c5c1c98cce6bd377
+> >
+> > This is 6.19-rc7, please rebase on linux-next/master (the series
+> > doesn't currently apply because this base is essentially a full release
+> > behind)
 > 
->>
->> After fixing these two:
->>
->> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Best regards,
-Krzysztof
+> If I may, I even skipped the mail entirely because it was not about mtd
+> in the end. There is a single big patch labelled "firmware: qcom:". I
+> believe the series would better be split in smaller chunks. Typically
+> one for the storage support and another one for the firmware part, at
+> least.
+> 
+
+The firmware patch adds wrappers for the secure world interface, which
+without the MTD driver will lack consumers of the API - i.e. I'd prefer
+not to pick that part, or parts thereof, alone.
+
+So I think it does make sense to introduce the two parts together in one
+series (if you have any requests for splitting the MTD patch up in any
+way I have no objections).
+
+This leaves us with the practical problem of getting it merged, which I
+believe would best be handled by me picking the firmware patch and
+sharing this in an immutable branch with you, once we're happy with the
+set (which won't be for 6.20).
+
+I hope you're okay with such plan?
+
+Regards,
+Bjorn
+
+> Thanks,
+> Miquèl
 
