@@ -1,100 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-90972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 2Ii4IhHyeWnT1AEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 12:25:05 +0100
+	id CABCGvryeWnT1AEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 12:28:58 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 96A80A049B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 12:25:04 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B3C6A0655
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 12:28:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 1D207300A5BC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 11:24:56 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id F02C03089F41
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 11:25:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B55202FB0BA;
-	Wed, 28 Jan 2026 11:24:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF87B34A775;
+	Wed, 28 Jan 2026 11:25:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="NEZ1O9C1";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="blXiCWjk"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="QIeDPzan";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="OU2KxILa"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEC2D339844
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 11:24:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64A0734D383
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 11:25:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769599495; cv=none; b=tLyU6N/sHRmhgCMtjKsRUGKxDyKW+AOZPdCmawgCwuYdTk+h1Sl9QVUUKEUJp35APocQf9ggtHlgF5YhWHtXkjnm0hfR/RVvEACJxGab2cs5khkipVt1YLQX7Rt/c9qZaL/j9FtF+L0roFFjOfjOPLNrGPT6KCzXYi9yrAqXomE=
+	t=1769599507; cv=none; b=EbgchA4nU5sYOk1m9qhais1Q7JHkkjUZusjW9IjtMTn86AtQ21i4kHZdkTKd2uS1i8arQYANBJQywHfChMUZKx53pBuAdXrJVyGXOnxe1c7OCPUeH6Rn1ANu7vcKg8fo5sNz6x2UR/iDG1kNtA9oZ1FUdJeAacQR5V7aeedgQQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769599495; c=relaxed/simple;
-	bh=CbgzOaYDkc3bXhiSUZkzlP8DjhXVBP0eRFGEsmWlQbQ=;
+	s=arc-20240116; t=1769599507; c=relaxed/simple;
+	bh=0k7H37+zug5opDdoeWI3/3ruPxuiDSi0u6QQ1NepEtU=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=KjdK2cdeXAJLvSo/kdTXK25jbPOVm6Pax10sJus7p94+OkkFx6kT98rhADrsa/Q3rjNdkBHBybnOd8oLtHO22orm7G/5O2WSoD0cxfe/BZLJ4S8s6U7CTBkGRLPDI20aADkhPccG/mdzjqHeGYlm7LgG7dKdPVxth9JIWAP+vz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=NEZ1O9C1; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=blXiCWjk; arc=none smtp.client-ip=205.220.168.131
+	 MIME-Version; b=fwcbhEt8i3OymSohCVnJF6O9nxNpmrP7kU353t+M42vw8Sr3Fv1nbULMzbYYA1TEggLXUowhKAG5Jf9EbopkF+71RMsEVrLx+M82pswP4c2esCG6f4xQk/pjlX8MFzXlf6C8kr+FovndyMaLQIMynD8Y0I5iFw9Gm0Pqk/8A8KI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=QIeDPzan; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=OU2KxILa; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60S92eL4042090
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 11:24:53 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60S91ox93442236
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 11:25:02 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=yRCNcS5A6Eu
-	GBIPJ6FqXwxvOo4jjK2JrobpZz5iBr1c=; b=NEZ1O9C1xjmXUug5MGg9HJlfDQZ
-	VLfM7SzWKCQhIf3apuStnyMQF5RT1FWABL2S0tqvYAqQ6g/GndyzTQTtC6dW4Ajv
-	pX14Qf4R83YEZiLuX+ylcwSNse+uB26O8ZoQqXqd5a9+Sm+Bkqt0CgJD0Eg6dmIt
-	Qzv13YpxZ0tih04/8idz9dQTw88A4ZQx/yZBaIT6gPIF+u4bvPYzDQiXVXGSDDaQ
-	97whNgBIQdeXFyQvZcOWT/oNCvozwxU0G6vgeNBZfhreqoxnPHAuW2PzXgX3jSM/
-	j9flU9UXYPO8ab2Wt1q2m9ukTd8d1GLuRdXZnS1eveYZrw2Z8G4IOS0DhfQ==
+	:mime-version:references:subject:to; s=qcppdkim1; bh=3KWVi4Y5EfG
+	LqCGxzxYMqVhko38niAHTJr8Kb3uj2IM=; b=QIeDPzanyXhiPmLSEyowr4SEg5k
+	QedBzXxncLliOZNGUsFBPTZsjC1BIZdTUl4q1ym/xb0kuIEiG0+Wxz9X6ch1z4nn
+	8aXa8/ki8FPXbqIlltplrYq4xOjN5eDh1VZ+wIUH0QtcfYUF5vamZTgdgDsp80Fm
+	I7g6nXOvY9XOTJpXLxgTS8j/dRDusmgdLikeB+HgffmVpTELFcGD54a2Z5iT1Xry
+	iuS/vP9uK7DIOyZqJciqhQACPcb7zR4Z7d9XRY5VEqut+pxSRKBazA699fzprCvq
+	cAkkMYlezhdYIoTRXkp/bBWnWOq0ZjJ3NK9TzcCc+OR/58zG/fMI1tbVn4w==
 Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4by355ttpx-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4byanahenp-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 11:24:52 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-b5edecdf94eso18708171a12.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 03:24:52 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 11:25:02 +0000 (GMT)
+Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-c5291b89733so4024928a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 03:25:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1769599492; x=1770204292; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1769599502; x=1770204302; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yRCNcS5A6EuGBIPJ6FqXwxvOo4jjK2JrobpZz5iBr1c=;
-        b=blXiCWjkjDlrOiP8vQnH3fkTVOL05cLzr5Bw9CW47lR3+mfxzleoW4xgHhZv/x40QB
-         xSyHYB+xaPNiteTE+lPVoq/Xm0DMsAnZVExA9cyAfuDqZObpM0mjXc541V8fEvX4Sn8A
-         NqJNLa7yOv52kYW6GhleiVaIpOxm17qWsSLGLugQ2Lr+q/e0kJIWMyR8Wz7FauXGRgSX
-         8VKwdkQ5dhVlI9XlVZuPo5B2HaBSEMsoq4ie3RBEZx79+knNHvksF9cmrrl3VrLFZ3vM
-         6037EC/BSYyTUkUdA4wfO4Ko6s+YUqhe7nGs+DUUD6hWUVUkaRwlr2nm/bdwWQfhidbj
-         7+Nw==
+        bh=3KWVi4Y5EfGLqCGxzxYMqVhko38niAHTJr8Kb3uj2IM=;
+        b=OU2KxILaq6xNVoAFQd18FVQYPlC4sgIRpNzrdfxZzDWe6+7c0dWNR5TGLyEnN5Wu8E
+         YrK7sig19OULwF0gjxAXaLpK0yR3+IsS7izmENZ3jUW4GLKPirPxnmuopVii0Rqr8gF9
+         AbKVD8HPjutTGnb0eJRPVaPI7laEnWYtJBz8Fai6llWhAeTVodU6eMd1GvYzKTgTRpc4
+         hs1zubULxCoKJpXWm307zqyLgbiJxfP9kcDnS5jFRzmmIj6kQssq2NaZF/Zw3HcP9ex+
+         bJd86uvg4a4ry8u2/irdBDp2kWIOtUoFgHFd93y0bWVRY4on0P13YKHLt/MbokQ2R2iH
+         ugsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769599492; x=1770204292;
+        d=1e100.net; s=20230601; t=1769599502; x=1770204302;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=yRCNcS5A6EuGBIPJ6FqXwxvOo4jjK2JrobpZz5iBr1c=;
-        b=d0wtPKUxbZgGfiTdW4P7Gb6w4dkFF++9ObV5wjFbu2kqSj1LvcMaMmlNADsDbuuy9M
-         SXKO3Gh9Jm3/FIudzOtrQybew40/PPewa1A/Ygl+hjLbN/5LDuPK/YwNNgaWlZtbhs1B
-         qMG87WZpOkXvV187lkWMoFOC8AEtHly86BSm+Zsl7pmE7J57GevO70ZuyYemezP13g1Z
-         kwP7iEWMLuphD7Tl47hbbpCfcmuPOYC3TpO+530f1vcA7Fobx/luW+N+yewbvWKDdU4c
-         9yGgzy3qfTqxtcAerYxAyPE9md7G2XGvJeem4W0Wlw+x9YBdGdgQfHI7kjyxXTJe2cRc
-         KeBA==
-X-Forwarded-Encrypted: i=1; AJvYcCWBvtsfam48WDmRuNpJAu7IXa5q5lHKhnlZvCLpyBCHX8BgT/8iHt1jXPg4z0WfiavhpdefAgSHrYGZbUw3@vger.kernel.org
-X-Gm-Message-State: AOJu0YzwEkqroqyobDerwkTM1TvER98eQ+1Tgy541d66reiuHyG1RUJD
-	YN0/M2kCU5a2E4dwlsgI94W1Ffw7ZWLpTA2DX8BU5PsA6greIICrr28sD7tv2incV2/wY5BtQKX
-	ClLMHXB58jL2pEeHaPIQtWWlWMJ0l8Yqg+KKEtAO7JIO6TaP0PVxrOfxH6C49FrzerPj1
-X-Gm-Gg: AZuq6aJGaZeOLeKDYJlT1U214wFj9jqJzyutRpsAxd+ZGblXeQF5zV64s4WyUG1xZpq
-	3rz2zGENbfGcEWAd3eiWwhJ5fc5gdopdd7OWs61HoYeR03M4adVKzBDxbZvr8IL0GSlmOHwZMab
-	8/bsKkbHAV2U9Cl8CHux1do41cBfvnzTq2wc2RvFP1SMss65p3KNhTuDjKARG8ghJp/mPe8K/Vg
-	zYBc5+Cg1wXInK4u0I/FCIrQl+Hc3l7IcmwKyVyydMkJhnhF41psTaEMbMRAnam/9NkANTyOlPJ
-	yc+aOgDPTMGxMmH1a9CwyoYweQrop03iZxOrRmAfYkAJX/rWEz5Vqg1tXggA9V84RLvt9uaM582
-	RTzidSCrxPw/qYCIiAKYvXQSQeqHrkDPHVB+HUzwnrIYA
-X-Received: by 2002:a05:6a20:9f03:b0:35f:46d3:f28e with SMTP id adf61e73a8af0-38ec6555b6amr4437351637.43.1769599491997;
-        Wed, 28 Jan 2026 03:24:51 -0800 (PST)
-X-Received: by 2002:a05:6a20:9f03:b0:35f:46d3:f28e with SMTP id adf61e73a8af0-38ec6555b6amr4437315637.43.1769599491459;
-        Wed, 28 Jan 2026 03:24:51 -0800 (PST)
+        bh=3KWVi4Y5EfGLqCGxzxYMqVhko38niAHTJr8Kb3uj2IM=;
+        b=an8gJI0MkBuiE89wLmlrzy7yrc3UB2MHBgZvqRkO5NcAVrrGnRqsiaYVVWD18QOP+E
+         oLeyS777fV+GqaSisbo1yLSE7EyOcBG+QpF3zFe6tMf9lYfkaAevj4xudhex4+opSoVx
+         /mD5XCHQ1HorxwlD2FXsQ02xeXklvm9F9DNC30/3NB3ncLfLNf3j1SKwBLCHCccEmBr9
+         yRk7+NMPqUH8lgvWZQW0eA9Cb809kG3ecb3rVzUaUx/AHfDJGgbtLEJn9DMD3PP/UZen
+         owvyzVhVrtO+N3IRRMbApFTaR5Y55oJhpLAZlhAtBibBr+hR6et5l5bQDL/YqBtYuphj
+         VEhw==
+X-Forwarded-Encrypted: i=1; AJvYcCXaiJabQRXsdPo2/9CujqWfw25ln7mTODM4NAY3bbGGhLWO9mvlknP95/Ols1HLkR6gyRAV65VZpkeFL/5C@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzov5n+YPyI+bAvyt1o4HNC+mU92fgF8wE0gjhubejSNHsHrP7e
+	jrtQA9KqQOWF4bZYyj/2WW0IiIiHg2OeknA+gePHuznzgRFf2d3mVmaJsYWKBFFlaP/1deHZ7hg
+	T0VNjTSZ9hgTaqrATMwOUwEnqSKAX267GL7UZKU3KUB2amvNCL2Zcj/pV4Yc+dsdf51mp
+X-Gm-Gg: AZuq6aL2bP5xtWoDE1g+CsLt7vvdZEGp7nRCh2Qd3W9hrCCxkZDLFKqwKnEQuY9qAh5
+	p/2P2UlfO0aB25kml0wpOq7r3W9L38YIQt34HlJnNcg/Acym2h766XtVBy0GMSH6iYyK4Hi0ojx
+	uAZEfPKYUJItwyDtqGV/JMBGaGq7ZRod98aMLvUrhVa9geLLg+gnr/iNHiuFbntvPum3rnHxc/8
+	cZzyFCDf5jUiEyl3cdQhWQSYaEUrYIAeJ+TKN16IZDfObuGVUgaSUAdl/yopNMw/dZpzv79lT6h
+	Qc3c0qJpAJdA5e9MAEX25D+6AspUr+gNQTMA487XygzF5YXQQWvCxoO11FGzTcQ5cJ7ijQk6Nr7
+	Qm7uISNL+yug0Z4OJScf7areFE/iadgUMKI909ICJ2gxx
+X-Received: by 2002:a05:6a20:43a9:b0:38d:fe2a:4b0a with SMTP id adf61e73a8af0-38ec6323b81mr4818490637.33.1769599501159;
+        Wed, 28 Jan 2026 03:25:01 -0800 (PST)
+X-Received: by 2002:a05:6a20:43a9:b0:38d:fe2a:4b0a with SMTP id adf61e73a8af0-38ec6323b81mr4818430637.33.1769599500296;
+        Wed, 28 Jan 2026 03:25:00 -0800 (PST)
 Received: from hu-jprakash-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a88b4c40a8sm21984605ad.51.2026.01.28.03.24.42
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a88b4c40a8sm21984605ad.51.2026.01.28.03.24.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Jan 2026 03:24:51 -0800 (PST)
+        Wed, 28 Jan 2026 03:24:59 -0800 (PST)
 From: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
 To: jic23@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
         agross@kernel.org, andersson@kernel.org, lumag@kernel.org,
@@ -109,12 +109,10 @@ Cc: rui.zhang@intel.com, lukasz.luba@arm.com, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
         cros-qcom-dts-watchers@chromium.org, jishnu.prakash@oss.qualcomm.com,
         quic_kotarake@quicinc.com, neil.armstrong@linaro.org,
-        stephan.gerhold@linaro.org,
-        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Subject: [PATCH V9 2/4] dt-bindings: iio: adc: Add support for QCOM PMIC5 Gen3 ADC
-Date: Wed, 28 Jan 2026 16:54:18 +0530
-Message-Id: <20260128112420.695518-3-jishnu.prakash@oss.qualcomm.com>
+        stephan.gerhold@linaro.org
+Subject: [PATCH V9 3/4] iio: adc: Add support for QCOM PMIC5 Gen3 ADC
+Date: Wed, 28 Jan 2026 16:54:19 +0530
+Message-Id: <20260128112420.695518-4-jishnu.prakash@oss.qualcomm.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20260128112420.695518-1-jishnu.prakash@oss.qualcomm.com>
 References: <20260128112420.695518-1-jishnu.prakash@oss.qualcomm.com>
@@ -125,29 +123,29 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=YNWSCBGx c=1 sm=1 tr=0 ts=6979f204 cx=c_pps
+X-Proofpoint-GUID: 2Obfvd4CVWVSITP-pLTn7zZ6GtlcCE2X
+X-Proofpoint-ORIG-GUID: 2Obfvd4CVWVSITP-pLTn7zZ6GtlcCE2X
+X-Authority-Analysis: v=2.4 cv=N58k1m9B c=1 sm=1 tr=0 ts=6979f20e cx=c_pps
  a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
  a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=gEfo2CItAAAA:8 a=i0EeH86SAAAA:8
- a=YrMGt2jeDSw4g2R_97MA:9 a=_Vgx9l1VpLgwpw_dHYaR:22 a=sptkURWiP4Gy88Gu7hUp:22
-X-Proofpoint-ORIG-GUID: 2CC2cgVuABpKUDyDpbuo1vPjpGsc5-AL
-X-Proofpoint-GUID: 2CC2cgVuABpKUDyDpbuo1vPjpGsc5-AL
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI4MDA5MyBTYWx0ZWRfX0ocOuxOupmGr
- gr5/noqMdfmJ+Nbo28m2fhIOulxyXjs23cgPjWql0hG01x4ok4Nbm5pfWXRjR/HQ03FPgSPwuzh
- GJUv9LQrVyRxbiW/MG1mmQxoayjCpUA15a3YTect8GHdUHNT0s2zxJ944D6Gt5lIqKK+pOIkDbS
- u9w7IwGb/+RqRAGo8UkG66rCCdDT2u++PdKu9BbzCFYjWZrZKwVlsODd5i9mQBSjqRa6nEgIe0a
- rXQ35GrK8ciBITdutinJyUonX4DmTsbyEK2Y4vmTcrQJxaVyIVqBBWcvHztaLI+JIf8qEb9D7Z3
- 0tX/s502AslpnGR49FrEmcP6IdUUf4AR5zdMtJbpYuIuz8YbUFR9QIRmpmRaehZq2Jii3EoPShw
- IkK54JP+rJcW4B44TXLJDp1Gm61JZVpj/fOlca0DZW/igyDCTk7bOFzG3e+bpqJq4kB+U3EEHwV
- TpDg5QytYZzqLlPKWGA==
+ a=EUspDBNiAAAA:8 a=hLksN_2OI4otqoaXwe4A:9 a=_Vgx9l1VpLgwpw_dHYaR:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI4MDA5MyBTYWx0ZWRfX9xHmimqCATiD
+ BNRk8jKwIprn/yc2hP7h276h8yp2g/cWzeFEQKlihFnKizF69Q3U4BxGq+bBRjKNhZT0pOkqcQG
+ m2LKXexsVEta2NH9vTZ4fbPywY1/Z5r3GGCwoUYL4qPOlBQ5K6ZRixPEf7T50OojhVtFdI1csNA
+ NoOF4QhAWuWSGHXvivAb3ARKTIxGFxR0m82pg5UDeoZ/eYmvutTbesL7mBvS8sC+jJGR4lz01y0
+ 052O8QhP2i7S4PeyWgIiZm0Ui0O6tF+OcObISznh+685pHQVh7hSYIqJsmiEQHa3VLuFZ3+tmU3
+ XXZJvd/5U5VGg/lWiW561bK59N0/Rtlx3zkh0nj6VAmQXT9A09RFA+yTlZEo2IXm+hSvNFN87qX
+ qhpHrhfeGidnEWe9/nhvOg1vH2j08pquvS1Cm57TgW6WPlYB5fxqHddmI2VERIyWssBlDjTrs1v
+ u0Wji7/Cw33p/clmtSA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-01-28_02,2026-01-27_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 suspectscore=0 lowpriorityscore=0 adultscore=0
- priorityscore=1501 spamscore=0 impostorscore=0 malwarescore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601280093
+ spamscore=0 suspectscore=0 lowpriorityscore=0 priorityscore=1501
+ malwarescore=0 bulkscore=0 adultscore=0 clxscore=1015 impostorscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2601280093
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [0.84 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
@@ -155,296 +153,1300 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-90972-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[33];
-	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-90974-lists,linux-arm-msm=lfdr.de];
 	FREEMAIL_TO(0.00)[kernel.org,oss.qualcomm.com,linaro.org,gmail.com];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	MIME_TRACE(0.00)[0:+];
 	FROM_NEQ_ENVFROM(0.00)[jishnu.prakash@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	PRECEDENCE_BULK(0.00)[];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	TO_DN_NONE(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	DBL_PROHIBIT(0.00)[0.0.0.3:email,0.0.0.44:email,0.0.0.203:email,0.0.35.40:email];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:mid,oss.qualcomm.com:dkim,devicetree.org:url,qualcomm.com:email,qualcomm.com:dkim,huawei.com:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,78f:email,0.0.0.103:email];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
+	PRECEDENCE_BULK(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	TO_DN_SOME(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[31];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 96A80A049B
+X-Rspamd-Queue-Id: 7B3C6A0655
 X-Rspamd-Action: no action
 
-For the PMIC5-Gen3 type PMICs, ADC peripheral is present in HW for the
-following PMICs: PMK8550, PM8550, PM8550B and PM8550VX PMICs.
+The ADC architecture on PMIC5 Gen3 is similar to that on PMIC5 Gen2,
+with all SW communication to ADC going through PMK8550 which
+communicates with other PMICs through PBS.
 
-It is similar to PMIC5-Gen2, with SW communication to ADCs on all PMICs
-going through PBS(Programmable Boot Sequence) firmware through a single
-register interface. This interface is implemented on SDAM (Shared
-Direct Access Memory) peripherals on the master PMIC PMK8550 rather
-than a dedicated ADC peripheral.
+One major difference is that the register interface used here is that
+of an SDAM (Shared Direct Access Memory) peripheral present on PMK8550.
+There may be more than one SDAM used for ADC5 Gen3 and each has eight
+channels, which may be used for either immediate reads (same functionality
+as previous PMIC5 and PMIC5 Gen2 ADC peripherals) or recurring measurements
+(same as ADC_TM functionality).
 
-Add documentation for PMIC5 Gen3 ADC and update SPMI PMIC bindings to
-allow ADC5 Gen3 as adc@ subnode.
+By convention, we reserve the first channel of the first SDAM for all
+immediate reads and use the remaining channels across all SDAMs for
+ADC_TM monitoring functionality.
 
-Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Add support for PMIC5 Gen3 ADC driver for immediate read functionality.
+ADC_TM is implemented as an auxiliary thermal driver under this ADC
+driver.
+
 Signed-off-by: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
 ---
+Changes since v8:
+- Dropped the common module (drivers/iio/adc/qcom-adc5-gen3-common.c) and moved
+  all of its contents to drivers/iio/adc/qcom-spmi-adc5-gen3.c as suggested by Dmitry.
+- Made following changes to address Dmitry's comment to use module_auxiliary_driver()
+  in auxiliary driver patch, by simplifying auxiliary device structures:
+  - Added function pointer for TM interrupt handler callback under struct adc5_chip
+    (to be called in case of TM interrupt on first SDAM), to replace the
+    tm_event_notify() callback.
+  - Add new exported function (adc5_gen3_register_tm_event_notifier()) to be called
+    by TM auxiliary driver in its probe to initialize the above callback function.
+  - Updated adc5_gen3_isr() to call this TM callback function instead of
+    tm_event_notify() callback from the wrapper struct adc_tm5_auxiliary_drv.
+  - Completely dropped the above wrapper struct definition.
+- Made following changes to address Jonathan's comments:
+  - Updated header files included in drivers/iio/adc/qcom-spmi-adc5-gen3.c and 
+    include/linux/iio/adc/qcom-adc5-gen3-common.h to follow IWYU (include-what-you-use)
+    principles.
+  - Dropped comment inside adc5_chip struct definition describing mutex lock.
+- Dropped ADC5_GEN3_TEMP_ALARM_LITE channel as it had some inaccuracy issue, which
+  is being debugged internally. Will add it in a separate patch along with channel user.
+- Replaced dev_err() with dev_err_probe() in adc5_get_fw_data.
+
 Changes since v7:
-- Dropped ADC5 GEN3 channel macro definitions from bindings, based
-  on discussion with Krzysztof concluded here: 
-  https://lore.kernel.org/all/d10e2eea-4b86-4e1a-b7a0-54c55907a605@oss.qualcomm.com/,
-  to be added separately in other patches.
-- Fixed quotes to use only double quotes for "#address-cells",
-  "#size-cells" and "#io-channel-cells" properties, to address Krzysztof's
-  comment.
-- Removed inclusion of ADC channel macro header files from ADC5 Gen3 example
-  and replaced the macros used in the "reg" properties in channel nodes
-  with the actual hex values.
-- Removed update made under `reg` property in
-  Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc-common.yaml
-  which referenced ADC macro binding files, to align with change made
-  in patch 1 of this series.
+- Addressed following comments from Jonathan:
+  - Included regmap header file in drivers/iio/adc/qcom-adc5-gen3-common.c.
+  - Increased comment wrap length in adc5_gen3_configure() and 
+    struct adc5_chip definition.
+  - Updated error checks in adc5_gen3_isr() to remove NULL check for
+    adrv_tm and keep (!adrv_tm->tm_event_notify) error check alone
+	  within if() condition.
+  - Removed sid initialization in adc5_gen3_get_fw_channel_data()
+- Added definitions for ADC channel macros used in adc5_gen3_chans_pmic[]
+  in include/linux/iio/adc/qcom-adc5-gen3-common.h instead of 
+  include/dt-bindings/iio/adc/qcom,spmi-vadc.h, as this latter file
+  will be moved out of bindings folder in a separate change. Also
+  removed its inclusion in drivers/iio/adc/qcom-spmi-adc5-gen3.c.
+- Cleaned up local variable declarations in adc5_gen3_isr() and
+  adc5_gen3_get_fw_channel_data() and added local variable for
+  adc->dev in adc5_get_fw_data().
+- Fixed error message after platform_get_irq() call in adc5_gen3_probe()
+  to print IRQ number correctly.
+- Added a check in adc5_gen3_get_fw_channel_data() to exit with error
+  if ADC channel value obtained from `reg` channel property is not
+  among the supported ones in the array adc5_gen3_chans_pmic[].
+- Corrected the value used in checking for max valid ADC channel value,
+  in adc5_gen3_get_fw_channel_data().
 
 Changes since v6:
-- Updated SPMI PMIC bindings to allow ADC5 Gen3 as adc@ subnode, to address
-  Neil's comment.
+- Addressed following comments from Jonathan:
+  - Moved functions exported in drivers/iio/adc/qcom-adc5-gen3-common.c
+    into namespace "QCOM_SPMI_ADC5_GEN3".
+  - Increased line wrap length for comments.
+  - Added local variable for adc->dev in adc5_gen3_isr().
+  - Shifted debug print showing IRQ status registers in adc5_gen3_isr()
+    to before tm_status[] check.
+  - Fixed indentation and brackets in adc5_gen3_get_fw_channel_data().
+  - Cleaned up array formatting in adc5_gen3_data_pmic struct.
+  - Used scoped variant of device_for_each_child_node() in adc5_get_fw_data().
+  - Updated auxiliary device cleanup handling to fix memory freeing
+    issues, by adding empty auxiliary device release function.
+  - Used devm_mutex_init() in adc5_gen3_probe().
+  - Updated virtual channel macro name from V_CHAN to ADC5_GEN3_V_CHAN.
+  - Set IIO device name to "spmi-adc5-gen3".
+- Added __acquires and __releases macros for exported mutex lock
+  and unlock functions in drivers/iio/adc/qcom-spmi-adc5-gen3.c.
+- Added error check to fail probe in case adding auxiliary TM device fails.
 - Replaced 2025 copyright in newly added files with yearless copyright,
   following new internal guidelines.
-- Collected Acked-by tag from Jonathan.
 
 Changes since v5:
-- Addressed following comments from Krzysztof:
-  - Increased line wrap length for top-level device description.
-  - Added more details in binding description explaining how number
-    of SDAM peripherals used for ADC is allocated per SoC.
-  - Dropped "interrupt-names" property.
-  - Moved `required` block to after the list of all properties.
-  - Dropped | from patternProperties description.
-  - Renamed per-PMIC binding files listing ADC channel macro names.
 - Addressed following comments from Jonathan:
-  - Moved ref before description, under patternProperties.
-  - Arranged enum under qcom,hw-settle-time as groups of 8.
+  - Corrected line wrap length in Kconfig and driver files.
+  - Replaced usleep_range() with fsleep() in adc5_gen3_poll_wait_hs()
+  - Corrected all files to follow kernel-doc formatting fully.
+  - Removed IIO_CHAN_INFO_RAW case in adc5_gen3_read_raw()
+  - Cleaned up formatting in adc5_gen3_data_pmic struct and in other
+    struct definitions.
+  - Updated adc5_gen3_add_aux_tm_device() to keep errors alone out of line.
+  - Split mutex function exported to ADC_TM driver into separate functions
+    for acquiring and releasing mutex.
+  - Removed num_sdams member from struct adc5_chip.
+  - Fixed dev_err_probe() print in adc5_gen3_probe().
+  - Updated logic for acquiring IRQ numbers to account for removing
+    "interrupt-names" DT property.
+- Included bitfield.h header file in drivers/iio/adc/qcom-adc5-gen3-common.c
+  to fix kernel bot error.
 
 Changes since v4:
-- Added ADC5 Gen3 documentation in a separate new file to avoid complicating
-  existing VADC documentation file further to accomodate this device, as
-  suggested by reviewers.
+- Moved out common funtions from newly added .h file into a separate .c
+  file to avoid duplicating them and updated interrupt name, as suggested
+  by Krzysztof. Updated namespace export symbol statement to have a string
+  as second argument to follow framework change.
 
 Changes since v3:
-- Added ADC5 Gen3 documentation changes in existing qcom,spmi-vadc.yaml file
-  instead of adding separate file and updated top-level constraints in documentation
-  file based on discussion with reviewers.
-- Dropped default SID definitions.
-- Addressed other reviewer comments.
-
-Changes since v2:
-- Moved ADC5 Gen3 documentation into a separate new file.
+- Split out TM functionality into auxiliary driver in separate patch and
+  added required changes in main driver, as suggested by Dmitry.
+- Addressed other reviewer comments in main driver patch. 
 
 Changes since v1:
-- Updated properties separately for all compatibles to clarify usage
-  of new properties and updates in usage of old properties for ADC5 Gen3.
-- Avoided updating 'adc7' name to 'adc5 gen2' and just left a comment
-  mentioning this convention.
-- Used predefined channel IDs in individual PMIC channel definitions
-  instead of numeric IDs.
+- Removed datashet_name usage and implemented read_label() function
+- In probe, updated channel property in iio_chan_spec from individual
+  channel to virtual channel and set indexed property to 1, due to the
+  above change.
+- Updated order of checks in ISR
+- Removed the driver remove callback and replaced with callbacks in a
+  devm_add_action call in probe.
 - Addressed other comments from reviewers.
 
- .../bindings/iio/adc/qcom,spmi-adc5-gen3.yaml | 151 ++++++++++++++++++
- .../bindings/iio/adc/qcom,spmi-vadc.yaml      |   2 +
- .../bindings/mfd/qcom,spmi-pmic.yaml          |   1 +
- 3 files changed, 154 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/iio/adc/qcom,spmi-adc5-gen3.yaml
+ drivers/iio/adc/Kconfig                       |  26 +
+ drivers/iio/adc/Makefile                      |   1 +
+ drivers/iio/adc/qcom-spmi-adc5-gen3.c         | 860 ++++++++++++++++++
+ include/linux/iio/adc/qcom-adc5-gen3-common.h | 211 +++++
+ 4 files changed, 1098 insertions(+)
+ create mode 100644 drivers/iio/adc/qcom-spmi-adc5-gen3.c
+ create mode 100644 include/linux/iio/adc/qcom-adc5-gen3-common.h
 
-diff --git a/Documentation/devicetree/bindings/iio/adc/qcom,spmi-adc5-gen3.yaml b/Documentation/devicetree/bindings/iio/adc/qcom,spmi-adc5-gen3.yaml
-new file mode 100644
-index 000000000000..149f4af8f4b8
---- /dev/null
-+++ b/Documentation/devicetree/bindings/iio/adc/qcom,spmi-adc5-gen3.yaml
-@@ -0,0 +1,151 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/iio/adc/qcom,spmi-adc5-gen3.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Qualcomm's SPMI PMIC ADC5 Gen3
-+
-+maintainers:
-+  - Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
-+
-+description: |
-+  SPMI PMIC5 Gen3 voltage ADC (ADC) provides interface to clients to read
-+  voltage. It is a 16-bit sigma-delta ADC. It also performs the same thermal
-+  monitoring function as the existing ADC_TM devices.
-+
-+  The interface is implemented on SDAM (Shared Direct Access Memory) peripherals
-+  on the master PMIC rather than a dedicated ADC peripheral. The number of PMIC
-+  SDAM peripherals allocated for ADC is not correlated with the PMIC used, it is
-+  programmed in FW (PBS) and is fixed per SOC, based on the SOC requirements.
-+  All boards using a particular (SOC + master PMIC) combination will have the
-+  same number of ADC SDAMs supported on that PMIC.
-+
-+properties:
-+  compatible:
-+    const: qcom,spmi-adc5-gen3
-+
-+  reg:
-+    items:
-+      - description: SDAM0 base address in the SPMI PMIC register map
-+      - description: SDAM1 base address
-+    minItems: 1
-+
-+  "#address-cells":
-+    const: 1
-+
-+  "#size-cells":
-+    const: 0
-+
-+  "#io-channel-cells":
-+    const: 1
-+
-+  "#thermal-sensor-cells":
-+    const: 1
-+
-+  interrupts:
-+    items:
-+      - description: SDAM0 end of conversion (EOC) interrupt
-+      - description: SDAM1 EOC interrupt
-+    minItems: 1
-+
-+patternProperties:
-+  "^channel@[0-9a-f]+$":
-+    type: object
-+    unevaluatedProperties: false
-+    $ref: /schemas/iio/adc/qcom,spmi-vadc-common.yaml
-+    description:
-+      Represents the external channels which are connected to the ADC.
-+
-+    properties:
-+      qcom,decimation:
-+        enum: [ 85, 340, 1360 ]
-+        default: 1360
-+
-+      qcom,hw-settle-time:
-+        enum: [ 15, 100, 200, 300, 400, 500, 600, 700,
-+                1000, 2000, 4000, 8000, 16000, 32000, 64000, 128000 ]
-+        default: 15
-+
-+      qcom,avg-samples:
-+        enum: [ 1, 2, 4, 8, 16 ]
-+        default: 1
-+
-+      qcom,adc-tm:
-+        description:
-+          ADC_TM is a threshold monitoring feature in HW which can be enabled
-+          on any ADC channel, to trigger an IRQ for threshold violation. In
-+          earlier ADC generations, it was implemented in a separate device
-+          (documented in Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm5.yaml.)
-+          In Gen3, this feature can be enabled in the same ADC device for any
-+          channel and threshold monitoring and IRQ triggering are handled in FW
-+          (PBS) instead of another dedicated HW block.
-+          This property indicates ADC_TM monitoring is done on this channel.
-+        type: boolean
-+
-+required:
-+  - compatible
-+  - reg
-+  - "#address-cells"
-+  - "#size-cells"
-+  - "#io-channel-cells"
-+  - interrupts
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+
-+    pmic {
-+      #address-cells = <1>;
-+      #size-cells = <0>;
-+
-+      adc@9000 {
-+        compatible = "qcom,spmi-adc5-gen3";
-+        reg = <0x9000>, <0x9100>;
-+        interrupts = <0x0 0x90 0x1 IRQ_TYPE_EDGE_RISING>,
-+                      <0x0 0x91 0x1 IRQ_TYPE_EDGE_RISING>;
-+        #address-cells = <1>;
-+        #size-cells = <0>;
-+        #io-channel-cells = <1>;
-+        #thermal-sensor-cells = <1>;
-+
-+        /* PMK8550 Channel nodes */
-+        channel@3 {
-+          reg = <0x3>;
-+          label = "pmk8550_die_temp";
-+          qcom,pre-scaling = <1 1>;
-+        };
-+
-+        channel@44 {
-+          reg = <0x44>;
-+          label = "pmk8550_xo_therm";
-+          qcom,pre-scaling = <1 1>;
-+          qcom,ratiometric;
-+          qcom,hw-settle-time = <200>;
-+          qcom,adc-tm;
-+        };
-+
-+        /* PM8550 Channel nodes */
-+        channel@103 {
-+          reg = <0x103>;
-+          label = "pm8550_die_temp";
-+          qcom,pre-scaling = <1 1>;
-+        };
-+
-+        /* PM8550B Channel nodes */
-+        channel@78f {
-+          reg = <0x78f>;
-+          label = "pm8550b_vbat_sns_qbg";
-+          qcom,pre-scaling = <1 3>;
-+        };
-+
-+        /* PM8550VS_C Channel nodes */
-+        channel@203 {
-+          reg = <0x203>;
-+          label = "pm8550vs_c_die_temp";
-+          qcom,pre-scaling = <1 1>;
-+        };
-+      };
-+    };
-diff --git a/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml b/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
-index 16c80709a3ee..72188041e8b5 100644
---- a/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
-+++ b/Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc.yaml
-@@ -15,6 +15,8 @@ description: |
-   voltage. The VADC is a 15-bit sigma-delta ADC.
-   SPMI PMIC5/PMIC7 voltage ADC (ADC) provides interface to clients to read
-   voltage. The VADC is a 16-bit sigma-delta ADC.
-+  Note that PMIC7 ADC is the generation between PMIC5 and PMIC5 Gen3 ADC,
-+  it can be considered like PMIC5 Gen2.
+diff --git a/drivers/iio/adc/Kconfig b/drivers/iio/adc/Kconfig
+index 58da8255525e..5300e9236ba8 100644
+--- a/drivers/iio/adc/Kconfig
++++ b/drivers/iio/adc/Kconfig
+@@ -1329,6 +1329,32 @@ config QCOM_SPMI_ADC5
+ 	  To compile this driver as a module, choose M here: the module will
+ 	  be called qcom-spmi-adc5.
  
- properties:
-   compatible:
-diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-index 65c80e3b4500..cc5de26bbf57 100644
---- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-+++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
-@@ -129,6 +129,7 @@ patternProperties:
-   "^adc@[0-9a-f]+$":
-     type: object
-     oneOf:
-+      - $ref: /schemas/iio/adc/qcom,spmi-adc5-gen3.yaml#
-       - $ref: /schemas/iio/adc/qcom,spmi-iadc.yaml#
-       - $ref: /schemas/iio/adc/qcom,spmi-rradc.yaml#
-       - $ref: /schemas/iio/adc/qcom,spmi-vadc.yaml#
++config QCOM_SPMI_ADC5_GEN3
++	tristate "Qualcomm Technologies Inc. SPMI PMIC5 GEN3 ADC"
++	depends on SPMI && THERMAL
++	select REGMAP_SPMI
++	select QCOM_VADC_COMMON
++	select AUXILIARY_BUS
++	help
++	  IIO Voltage PMIC5 Gen3 ADC driver for Qualcomm Technologies Inc.
++
++	  The driver supports reading multiple channels. The ADC is a 16-bit
++	  sigma-delta ADC. The hardware supports calibrated results for
++	  conversion requests and clients include reading phone power supply
++	  voltage, on board system thermistors connected to the PMIC ADC,
++	  PMIC die temperature, charger temperature, battery current, USB
++	  voltage input and voltage signals connected to supported PMIC GPIO
++	  pins. The hardware supports internal pull-up for thermistors and can
++	  choose between a 30k, 100k or 400k ohm pull up using the ADC channels.
++
++	  In addition, the same driver supports ADC thermal monitoring devices
++	  too. They appear as thermal zones with multiple trip points. A thermal
++	  client sets threshold temperature for both warm and cool trips and
++	  gets updated when a threshold is reached.
++
++	  To compile this driver as a module, choose M here: the module will
++	  be called qcom-spmi-adc5-gen3.
++
+ config RCAR_GYRO_ADC
+ 	tristate "Renesas R-Car GyroADC driver"
+ 	depends on ARCH_RCAR_GEN2 || COMPILE_TEST
+diff --git a/drivers/iio/adc/Makefile b/drivers/iio/adc/Makefile
+index 7cc8f9a12f76..cb1874fd7912 100644
+--- a/drivers/iio/adc/Makefile
++++ b/drivers/iio/adc/Makefile
+@@ -113,6 +113,7 @@ obj-$(CONFIG_PAC1934) += pac1934.o
+ obj-$(CONFIG_PALMAS_GPADC) += palmas_gpadc.o
+ obj-$(CONFIG_QCOM_PM8XXX_XOADC) += qcom-pm8xxx-xoadc.o
+ obj-$(CONFIG_QCOM_SPMI_ADC5) += qcom-spmi-adc5.o
++obj-$(CONFIG_QCOM_SPMI_ADC5_GEN3) += qcom-spmi-adc5-gen3.o
+ obj-$(CONFIG_QCOM_SPMI_IADC) += qcom-spmi-iadc.o
+ obj-$(CONFIG_QCOM_SPMI_RRADC) += qcom-spmi-rradc.o
+ obj-$(CONFIG_QCOM_SPMI_VADC) += qcom-spmi-vadc.o
+diff --git a/drivers/iio/adc/qcom-spmi-adc5-gen3.c b/drivers/iio/adc/qcom-spmi-adc5-gen3.c
+new file mode 100644
+index 000000000000..f8168a14b907
+--- /dev/null
++++ b/drivers/iio/adc/qcom-spmi-adc5-gen3.c
+@@ -0,0 +1,860 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
++ */
++
++#include <linux/auxiliary_bus.h>
++#include <linux/bitfield.h>
++#include <linux/bits.h>
++#include <linux/cleanup.h>
++#include <linux/completion.h>
++#include <linux/container_of.h>
++#include <linux/delay.h>
++#include <linux/device.h>
++#include <linux/device/devres.h>
++#include <linux/dev_printk.h>
++#include <linux/err.h>
++#include <linux/export.h>
++#include <linux/iio/adc/qcom-adc5-gen3-common.h>
++#include <linux/iio/iio.h>
++#include <linux/interrupt.h>
++#include <linux/kernel.h>
++#include <linux/module.h>
++#include <linux/mod_devicetable.h>
++#include <linux/mutex.h>
++#include <linux/platform_device.h>
++#include <linux/property.h>
++#include <linux/regmap.h>
++#include <linux/types.h>
++#include <linux/unaligned.h>
++
++#define ADC5_GEN3_VADC_SDAM			0x0
++
++struct adc5_chip;
++
++/**
++ * struct adc5_channel_prop - ADC channel structure
++ * @common_props: structure with ADC channel properties (common to TM usage).
++ * @adc_tm: indicates TM type if the channel is used for TM measurements.
++ * @chip: pointer to top-level ADC device structure.
++ */
++struct adc5_channel_prop {
++	struct adc5_channel_common_prop common_props;
++	int adc_tm;
++	struct adc5_chip *chip;
++};
++
++/**
++ * struct adc5_chip - ADC private structure.
++ * @dev: SPMI ADC5 Gen3 device.
++ * @dev_data: Top-level ADC device data.
++ * @nchannels: number of ADC channels.
++ * @chan_props: array of ADC channel properties.
++ * @iio_chans: array of IIO channels specification.
++ * @complete: ADC result notification after interrupt is received.
++ * @lock: ADC lock for access to the peripheral, to prevent concurrent
++ *	requests from multiple clients.
++ * @data: software configuration data.
++ * @n_tm_channels: number of ADC channels used for TM measurements.
++ * @handler: TM callback to be called for threshold violation interrupt
++ *	on first SDAM.
++ * @tm_aux: pointer to auxiliary TM device.
++ */
++struct adc5_chip {
++	struct device *dev;
++	struct adc5_device_data dev_data;
++	unsigned int nchannels;
++	struct adc5_channel_prop *chan_props;
++	struct iio_chan_spec *iio_chans;
++	struct completion complete;
++	struct mutex lock;
++	const struct adc5_data *data;
++	unsigned int n_tm_channels;
++	void (*handler)(struct auxiliary_device *tm_aux);
++	struct auxiliary_device *tm_aux;
++};
++
++int adc5_gen3_read(struct adc5_device_data *adc, unsigned int sdam_index,
++		   u16 offset, u8 *data, int len)
++{
++	return regmap_bulk_read(adc->regmap,
++				adc->base[sdam_index].base_addr + offset,
++				data, len);
++}
++EXPORT_SYMBOL_NS_GPL(adc5_gen3_read, "QCOM_SPMI_ADC5_GEN3");
++
++int adc5_gen3_write(struct adc5_device_data *adc, unsigned int sdam_index,
++		    u16 offset, u8 *data, int len)
++{
++	return regmap_bulk_write(adc->regmap,
++				 adc->base[sdam_index].base_addr + offset,
++				 data, len);
++}
++EXPORT_SYMBOL_NS_GPL(adc5_gen3_write, "QCOM_SPMI_ADC5_GEN3");
++
++static int adc5_gen3_read_voltage_data(struct adc5_chip *adc, u16 *data)
++{
++	u8 rslt[2];
++	int ret;
++
++	ret = adc5_gen3_read(&adc->dev_data, ADC5_GEN3_VADC_SDAM,
++			     ADC5_GEN3_CH_DATA0(0), rslt, sizeof(rslt));
++	if (ret)
++		return ret;
++
++	*data = get_unaligned_le16(rslt);
++
++	if (*data == ADC5_USR_DATA_CHECK) {
++		dev_err(adc->dev, "Invalid data:%#x\n", *data);
++		return -EINVAL;
++	}
++
++	dev_dbg(adc->dev, "voltage raw code:%#x\n", *data);
++
++	return 0;
++}
++
++void adc5_gen3_update_dig_param(struct adc5_channel_common_prop *prop, u8 *data)
++{
++	/* Update calibration select and decimation ratio select */
++	*data &= ~(ADC5_GEN3_DIG_PARAM_CAL_SEL_MASK | ADC5_GEN3_DIG_PARAM_DEC_RATIO_SEL_MASK);
++	*data |= FIELD_PREP(ADC5_GEN3_DIG_PARAM_CAL_SEL_MASK, prop->cal_method);
++	*data |= FIELD_PREP(ADC5_GEN3_DIG_PARAM_DEC_RATIO_SEL_MASK, prop->decimation);
++}
++EXPORT_SYMBOL_NS_GPL(adc5_gen3_update_dig_param, "QCOM_SPMI_ADC5_GEN3");
++
++#define ADC5_GEN3_READ_CONFIG_REGS 7
++
++static int adc5_gen3_configure(struct adc5_chip *adc,
++			       struct adc5_channel_common_prop *prop)
++{
++	u8 buf[ADC5_GEN3_READ_CONFIG_REGS];
++	u8 conv_req = 0;
++	int ret;
++
++	ret = adc5_gen3_read(&adc->dev_data, ADC5_GEN3_VADC_SDAM, ADC5_GEN3_SID,
++			     buf, sizeof(buf));
++	if (ret)
++		return ret;
++
++	/* Write SID */
++	buf[0] = FIELD_PREP(ADC5_GEN3_SID_MASK, prop->sid);
++
++	/*
++	 * Use channel 0 by default for immediate conversion and to indicate
++	 * there is an actual conversion request
++	 */
++	buf[1] = ADC5_GEN3_CHAN_CONV_REQ | 0;
++
++	buf[2] = ADC5_GEN3_TIME_IMMEDIATE;
++
++	/* Digital param selection */
++	adc5_gen3_update_dig_param(prop, &buf[3]);
++
++	/* Update fast average sample value */
++	buf[4] = FIELD_PREP(ADC5_GEN3_FAST_AVG_CTL_SAMPLES_MASK,
++			    prop->avg_samples) | ADC5_GEN3_FAST_AVG_CTL_EN;
++
++	/* Select ADC channel */
++	buf[5] = prop->channel;
++
++	/* Select HW settle delay for channel */
++	buf[6] = FIELD_PREP(ADC5_GEN3_HW_SETTLE_DELAY_MASK,
++			    prop->hw_settle_time_us);
++
++	reinit_completion(&adc->complete);
++
++	ret = adc5_gen3_write(&adc->dev_data, ADC5_GEN3_VADC_SDAM, ADC5_GEN3_SID,
++			      buf, sizeof(buf));
++	if (ret)
++		return ret;
++
++	conv_req = ADC5_GEN3_CONV_REQ_REQ;
++	return adc5_gen3_write(&adc->dev_data, ADC5_GEN3_VADC_SDAM,
++			       ADC5_GEN3_CONV_REQ, &conv_req, sizeof(conv_req));
++}
++
++/*
++ * Worst case delay from PBS in readying handshake bit  can be up to 15ms, when
++ * PBS is busy running other simultaneous transactions, while in the best case,
++ * it is already ready at this point. Assigning polling delay and retry count
++ * accordingly.
++ */
++
++#define ADC5_GEN3_HS_DELAY_US			100
++#define ADC5_GEN3_HS_RETRY_COUNT		150
++
++int adc5_gen3_poll_wait_hs(struct adc5_device_data *adc,
++			   unsigned int sdam_index)
++{
++	u8 conv_req = ADC5_GEN3_CONV_REQ_REQ;
++	int ret, count;
++	u8 status = 0;
++
++	for (count = 0; count < ADC5_GEN3_HS_RETRY_COUNT; count++) {
++		ret = adc5_gen3_read(adc, sdam_index, ADC5_GEN3_HS, &status, sizeof(status));
++		if (ret)
++			return ret;
++
++		if (status == ADC5_GEN3_HS_READY) {
++			ret = adc5_gen3_read(adc, sdam_index, ADC5_GEN3_CONV_REQ,
++					     &conv_req, sizeof(conv_req));
++			if (ret)
++				return ret;
++
++			if (!conv_req)
++				return 0;
++		}
++
++		fsleep(ADC5_GEN3_HS_DELAY_US);
++	}
++
++	pr_err("Setting HS ready bit timed out, sdam_index:%d, status:%#x\n",
++	       sdam_index, status);
++	return -ETIMEDOUT;
++}
++EXPORT_SYMBOL_NS_GPL(adc5_gen3_poll_wait_hs, "QCOM_SPMI_ADC5_GEN3");
++
++int adc5_gen3_status_clear(struct adc5_device_data *adc,
++			   int sdam_index, u16 offset, u8 *val, int len)
++{
++	u8 value;
++	int ret;
++
++	ret = adc5_gen3_write(adc, sdam_index, offset, val, len);
++	if (ret)
++		return ret;
++
++	/* To indicate conversion request is only to clear a status */
++	value = 0;
++	ret = adc5_gen3_write(adc, sdam_index, ADC5_GEN3_PERPH_CH, &value,
++			      sizeof(value));
++	if (ret)
++		return ret;
++
++	value = ADC5_GEN3_CONV_REQ_REQ;
++	return adc5_gen3_write(adc, sdam_index, ADC5_GEN3_CONV_REQ, &value,
++			      sizeof(value));
++}
++EXPORT_SYMBOL_NS_GPL(adc5_gen3_status_clear, "QCOM_SPMI_ADC5_GEN3");
++
++/*
++ * Worst case delay from PBS for conversion time can be up to 500ms, when PBS
++ * has timed out twice, once for the initial attempt and once for a retry of
++ * the same transaction.
++ */
++
++#define ADC5_GEN3_CONV_TIMEOUT_MS	501
++
++static int adc5_gen3_do_conversion(struct adc5_chip *adc,
++				   struct adc5_channel_common_prop *prop,
++				   u16 *data_volt)
++{
++	unsigned long rc;
++	int ret;
++	u8 val;
++
++	guard(mutex)(&adc->lock);
++	ret = adc5_gen3_poll_wait_hs(&adc->dev_data, ADC5_GEN3_VADC_SDAM);
++	if (ret)
++		return ret;
++
++	ret = adc5_gen3_configure(adc, prop);
++	if (ret) {
++		dev_err(adc->dev, "ADC configure failed with %d\n", ret);
++		return ret;
++	}
++
++	/* No support for polling mode at present */
++	rc = wait_for_completion_timeout(&adc->complete,
++					 msecs_to_jiffies(ADC5_GEN3_CONV_TIMEOUT_MS));
++	if (!rc) {
++		dev_err(adc->dev, "Reading ADC channel %s timed out\n",
++			prop->label);
++		return -ETIMEDOUT;
++	}
++
++	ret = adc5_gen3_read_voltage_data(adc, data_volt);
++	if (ret)
++		return ret;
++
++	val = BIT(0);
++	return adc5_gen3_status_clear(&adc->dev_data, ADC5_GEN3_VADC_SDAM,
++				      ADC5_GEN3_EOC_CLR, &val, 1);
++}
++
++static irqreturn_t adc5_gen3_isr(int irq, void *dev_id)
++{
++	struct adc5_chip *adc = dev_id;
++	struct device *dev = adc->dev;
++	struct auxiliary_device *adev;
++	u8 status, eoc_status, val;
++	u8 tm_status[2];
++	int ret;
++
++	ret = adc5_gen3_read(&adc->dev_data, ADC5_GEN3_VADC_SDAM,
++			     ADC5_GEN3_STATUS1, &status, sizeof(status));
++	if (ret) {
++		dev_err(dev, "adc read status1 failed with %d\n", ret);
++		return IRQ_HANDLED;
++	}
++
++	ret = adc5_gen3_read(&adc->dev_data, ADC5_GEN3_VADC_SDAM,
++			     ADC5_GEN3_EOC_STS, &eoc_status, sizeof(eoc_status));
++	if (ret) {
++		dev_err(dev, "adc read eoc status failed with %d\n", ret);
++		return IRQ_HANDLED;
++	}
++
++	if (status & ADC5_GEN3_STATUS1_CONV_FAULT) {
++		dev_err_ratelimited(dev,
++				    "Unexpected conversion fault, status:%#x, eoc_status:%#x\n",
++				    status, eoc_status);
++		val = ADC5_GEN3_CONV_ERR_CLR_REQ;
++		adc5_gen3_status_clear(&adc->dev_data, ADC5_GEN3_VADC_SDAM,
++				       ADC5_GEN3_CONV_ERR_CLR, &val, 1);
++		return IRQ_HANDLED;
++	}
++
++	/* CHAN0 is the preconfigured channel for immediate conversion */
++	if (eoc_status & ADC5_GEN3_EOC_CHAN_0)
++		complete(&adc->complete);
++
++	ret = adc5_gen3_read(&adc->dev_data, ADC5_GEN3_VADC_SDAM,
++			     ADC5_GEN3_TM_HIGH_STS, tm_status, sizeof(tm_status));
++	if (ret) {
++		dev_err(dev, "adc read TM status failed with %d\n", ret);
++		return IRQ_HANDLED;
++	}
++
++	dev_dbg(dev, "Interrupt status:%#x, EOC status:%#x, high:%#x, low:%#x\n",
++		status, eoc_status, tm_status[0], tm_status[1]);
++
++	if (tm_status[0] || tm_status[1]) {
++		adev = adc->tm_aux;
++		if (!adev || !adev->dev.driver) {
++			dev_err(dev, "adc_tm auxiliary device not initialized\n");
++			return IRQ_HANDLED;
++		}
++
++		adc->handler(adev);
++	}
++
++	return IRQ_HANDLED;
++}
++
++static int adc5_gen3_fwnode_xlate(struct iio_dev *indio_dev,
++				  const struct fwnode_reference_args *iiospec)
++{
++	struct adc5_chip *adc = iio_priv(indio_dev);
++	int i, v_channel;
++
++	for (i = 0; i < adc->nchannels; i++) {
++		v_channel = ADC5_GEN3_V_CHAN(adc->chan_props[i].common_props);
++		if (v_channel == iiospec->args[0])
++			return i;
++	}
++
++	return -ENOENT;
++}
++
++static int adc5_gen3_read_raw(struct iio_dev *indio_dev,
++			      struct iio_chan_spec const *chan, int *val,
++			      int *val2, long mask)
++{
++	struct adc5_chip *adc = iio_priv(indio_dev);
++	struct adc5_channel_common_prop *prop;
++	u16 adc_code_volt;
++	int ret;
++
++	prop = &adc->chan_props[chan->address].common_props;
++
++	switch (mask) {
++	case IIO_CHAN_INFO_PROCESSED:
++		ret = adc5_gen3_do_conversion(adc, prop, &adc_code_volt);
++		if (ret)
++			return ret;
++
++		ret = qcom_adc5_hw_scale(prop->scale_fn_type, prop->prescale,
++					 adc->data, adc_code_volt, val);
++		if (ret)
++			return ret;
++
++		return IIO_VAL_INT;
++	default:
++		return -EINVAL;
++	}
++}
++
++static int adc5_gen3_read_label(struct iio_dev *indio_dev,
++				const struct iio_chan_spec *chan, char *label)
++{
++	struct adc5_chip *adc = iio_priv(indio_dev);
++	struct adc5_channel_prop *prop;
++
++	prop = &adc->chan_props[chan->address];
++	return sprintf(label, "%s\n", prop->common_props.label);
++}
++
++static const struct iio_info adc5_gen3_info = {
++	.read_raw = adc5_gen3_read_raw,
++	.read_label = adc5_gen3_read_label,
++	.fwnode_xlate = adc5_gen3_fwnode_xlate,
++};
++
++struct adc5_channels {
++	unsigned int prescale_index;
++	enum iio_chan_type type;
++	long info_mask;
++	enum vadc_scale_fn_type scale_fn_type;
++};
++
++/* In these definitions, _pre refers to an index into adc5_prescale_ratios. */
++#define ADC5_CHAN(_type, _mask, _pre, _scale)	\
++	{						\
++		.prescale_index = _pre,			\
++		.type = _type,				\
++		.info_mask = _mask,			\
++		.scale_fn_type = _scale,		\
++	},						\
++
++#define ADC5_CHAN_TEMP(_pre, _scale)		\
++	ADC5_CHAN(IIO_TEMP, BIT(IIO_CHAN_INFO_PROCESSED), _pre, _scale)	\
++
++#define ADC5_CHAN_VOLT(_pre, _scale)		\
++	ADC5_CHAN(IIO_VOLTAGE, BIT(IIO_CHAN_INFO_PROCESSED), _pre, _scale)	\
++
++#define ADC5_CHAN_CUR(_pre, _scale)		\
++	ADC5_CHAN(IIO_CURRENT, BIT(IIO_CHAN_INFO_PROCESSED), _pre, _scale)	\
++
++static const struct adc5_channels adc5_gen3_chans_pmic[ADC5_MAX_CHANNEL] = {
++	[ADC5_GEN3_REF_GND]		= ADC5_CHAN_VOLT(0, SCALE_HW_CALIB_DEFAULT)
++	[ADC5_GEN3_1P25VREF]		= ADC5_CHAN_VOLT(0, SCALE_HW_CALIB_DEFAULT)
++	[ADC5_GEN3_VPH_PWR]		= ADC5_CHAN_VOLT(1, SCALE_HW_CALIB_DEFAULT)
++	[ADC5_GEN3_VBAT_SNS_QBG]	= ADC5_CHAN_VOLT(1, SCALE_HW_CALIB_DEFAULT)
++	[ADC5_GEN3_USB_SNS_V_16]	= ADC5_CHAN_TEMP(8, SCALE_HW_CALIB_DEFAULT)
++	[ADC5_GEN3_VIN_DIV16_MUX]	= ADC5_CHAN_TEMP(8, SCALE_HW_CALIB_DEFAULT)
++	[ADC5_GEN3_DIE_TEMP]		= ADC5_CHAN_TEMP(0,
++						SCALE_HW_CALIB_PMIC_THERM_PM7)
++	[ADC5_GEN3_AMUX1_THM_100K_PU]	= ADC5_CHAN_TEMP(0,
++					SCALE_HW_CALIB_THERM_100K_PU_PM7)
++	[ADC5_GEN3_AMUX2_THM_100K_PU]	= ADC5_CHAN_TEMP(0,
++					SCALE_HW_CALIB_THERM_100K_PU_PM7)
++	[ADC5_GEN3_AMUX3_THM_100K_PU]	= ADC5_CHAN_TEMP(0,
++					SCALE_HW_CALIB_THERM_100K_PU_PM7)
++	[ADC5_GEN3_AMUX4_THM_100K_PU]	= ADC5_CHAN_TEMP(0,
++					SCALE_HW_CALIB_THERM_100K_PU_PM7)
++	[ADC5_GEN3_AMUX5_THM_100K_PU]	= ADC5_CHAN_TEMP(0,
++					SCALE_HW_CALIB_THERM_100K_PU_PM7)
++	[ADC5_GEN3_AMUX6_THM_100K_PU]	= ADC5_CHAN_TEMP(0,
++					SCALE_HW_CALIB_THERM_100K_PU_PM7)
++	[ADC5_GEN3_AMUX1_GPIO_100K_PU]	= ADC5_CHAN_TEMP(0,
++					SCALE_HW_CALIB_THERM_100K_PU_PM7)
++	[ADC5_GEN3_AMUX2_GPIO_100K_PU]	= ADC5_CHAN_TEMP(0,
++					SCALE_HW_CALIB_THERM_100K_PU_PM7)
++	[ADC5_GEN3_AMUX3_GPIO_100K_PU]	= ADC5_CHAN_TEMP(0,
++					SCALE_HW_CALIB_THERM_100K_PU_PM7)
++	[ADC5_GEN3_AMUX4_GPIO_100K_PU]	= ADC5_CHAN_TEMP(0,
++					SCALE_HW_CALIB_THERM_100K_PU_PM7)
++};
++
++static int adc5_gen3_get_fw_channel_data(struct adc5_chip *adc,
++					 struct adc5_channel_prop *prop,
++					 struct fwnode_handle *fwnode)
++{
++	const char *name = fwnode_get_name(fwnode);
++	const struct adc5_data *data = adc->data;
++	struct device *dev = adc->dev;
++	const char *channel_name;
++	u32 chan, value, sid;
++	u32 varr[2];
++	int ret;
++
++	ret = fwnode_property_read_u32(fwnode, "reg", &chan);
++	if (ret < 0)
++		return dev_err_probe(dev, ret, "invalid channel number %s\n",
++				     name);
++
++	/*
++	 * Value read from "reg" is virtual channel number
++	 * virtual channel number = sid << 8 | channel number
++	 */
++	sid = FIELD_GET(ADC5_GEN3_VIRTUAL_SID_MASK, chan);
++	chan = FIELD_GET(ADC5_GEN3_CHANNEL_MASK, chan);
++
++	if (chan > ADC5_MAX_CHANNEL)
++		return dev_err_probe(dev, -EINVAL,
++				     "%s invalid channel number %d\n",
++				     name, chan);
++
++	prop->common_props.channel = chan;
++	prop->common_props.sid = sid;
++
++	if (!adc->data->adc_chans[chan].info_mask)
++		return dev_err_probe(dev, -EINVAL, "Channel %#x not supported\n", chan);
++
++	channel_name = name;
++	fwnode_property_read_string(fwnode, "label", &channel_name);
++	prop->common_props.label = channel_name;
++
++	value = data->decimation[ADC5_DECIMATION_DEFAULT];
++	fwnode_property_read_u32(fwnode, "qcom,decimation", &value);
++	ret = qcom_adc5_decimation_from_dt(value, data->decimation);
++	if (ret < 0)
++		return dev_err_probe(dev, ret, "%#x invalid decimation %d\n",
++				     chan, value);
++	prop->common_props.decimation = ret;
++
++	prop->common_props.prescale = adc->data->adc_chans[chan].prescale_index;
++	ret = fwnode_property_read_u32_array(fwnode, "qcom,pre-scaling", varr, 2);
++	if (!ret) {
++		ret = qcom_adc5_prescaling_from_dt(varr[0], varr[1]);
++		if (ret < 0)
++			return dev_err_probe(dev, ret,
++					     "%#x invalid pre-scaling <%d %d>\n",
++					     chan, varr[0], varr[1]);
++		prop->common_props.prescale = ret;
++	}
++
++	value = data->hw_settle_1[VADC_DEF_HW_SETTLE_TIME];
++	fwnode_property_read_u32(fwnode, "qcom,hw-settle-time", &value);
++	ret = qcom_adc5_hw_settle_time_from_dt(value, data->hw_settle_1);
++	if (ret < 0)
++		return dev_err_probe(dev, ret,
++				     "%#x invalid hw-settle-time %d us\n",
++				     chan, value);
++	prop->common_props.hw_settle_time_us = ret;
++
++	value = BIT(VADC_DEF_AVG_SAMPLES);
++	fwnode_property_read_u32(fwnode, "qcom,avg-samples", &value);
++	ret = qcom_adc5_avg_samples_from_dt(value);
++	if (ret < 0)
++		return dev_err_probe(dev, ret, "%#x invalid avg-samples %d\n",
++				     chan, value);
++	prop->common_props.avg_samples = ret;
++
++	if (fwnode_property_read_bool(fwnode, "qcom,ratiometric"))
++		prop->common_props.cal_method = ADC5_RATIOMETRIC_CAL;
++	else
++		prop->common_props.cal_method = ADC5_ABSOLUTE_CAL;
++
++	prop->adc_tm = fwnode_property_read_bool(fwnode, "qcom,adc-tm");
++	if (prop->adc_tm) {
++		adc->n_tm_channels++;
++		if (adc->n_tm_channels > (adc->dev_data.num_sdams * 8 - 1))
++			return dev_err_probe(dev, -EINVAL,
++					     "Number of TM nodes %u greater than channels supported:%u\n",
++					     adc->n_tm_channels,
++					     adc->dev_data.num_sdams * 8 - 1);
++	}
++
++	return 0;
++}
++
++static const struct adc5_data adc5_gen3_data_pmic = {
++	.full_scale_code_volt = 0x70e4,
++	.adc_chans = adc5_gen3_chans_pmic,
++	.info = &adc5_gen3_info,
++	.decimation = (unsigned int [ADC5_DECIMATION_SAMPLES_MAX])
++			   { 85, 340, 1360 },
++	.hw_settle_1 = (unsigned int [VADC_HW_SETTLE_SAMPLES_MAX])
++			   { 15, 100, 200, 300,
++			     400, 500, 600, 700,
++			     1000, 2000, 4000, 8000,
++			     16000, 32000, 64000, 128000 },
++};
++
++static const struct of_device_id adc5_match_table[] = {
++	{
++		.compatible = "qcom,spmi-adc5-gen3",
++		.data = &adc5_gen3_data_pmic,
++	},
++	{ }
++};
++MODULE_DEVICE_TABLE(of, adc5_match_table);
++
++static int adc5_get_fw_data(struct adc5_chip *adc)
++{
++	const struct adc5_channels *adc_chan;
++	struct adc5_channel_prop *chan_props;
++	struct iio_chan_spec *iio_chan;
++	struct device *dev = adc->dev;
++	unsigned int index = 0;
++	int ret;
++
++	adc->nchannels = device_get_child_node_count(dev);
++	if (!adc->nchannels)
++		return dev_err_probe(dev, -EINVAL, "No ADC channels found\n");
++
++	adc->iio_chans = devm_kcalloc(dev, adc->nchannels,
++				      sizeof(*adc->iio_chans), GFP_KERNEL);
++	if (!adc->iio_chans)
++		return -ENOMEM;
++
++	adc->chan_props = devm_kcalloc(dev, adc->nchannels,
++				       sizeof(*adc->chan_props), GFP_KERNEL);
++	if (!adc->chan_props)
++		return -ENOMEM;
++
++	chan_props = adc->chan_props;
++	adc->n_tm_channels = 0;
++	iio_chan = adc->iio_chans;
++	adc->data = device_get_match_data(dev);
++
++	device_for_each_child_node_scoped(dev, child) {
++		ret = adc5_gen3_get_fw_channel_data(adc, chan_props, child);
++		if (ret)
++			return ret;
++
++		chan_props->chip = adc;
++		adc_chan = &adc->data->adc_chans[chan_props->common_props.channel];
++		chan_props->common_props.scale_fn_type = adc_chan->scale_fn_type;
++
++		iio_chan->channel = ADC5_GEN3_V_CHAN(chan_props->common_props);
++		iio_chan->info_mask_separate = adc_chan->info_mask;
++		iio_chan->type = adc_chan->type;
++		iio_chan->address = index;
++		iio_chan->indexed = 1;
++		iio_chan++;
++		chan_props++;
++		index++;
++	}
++
++	return 0;
++}
++
++static void adc5_gen3_uninit_aux(void *data)
++{
++	auxiliary_device_uninit(data);
++}
++
++static void adc5_gen3_delete_aux(void *data)
++{
++	auxiliary_device_delete(data);
++}
++
++static void adc5_gen3_aux_device_release(struct device *dev) {}
++
++static int adc5_gen3_add_aux_tm_device(struct adc5_chip *adc)
++{
++	struct tm5_aux_dev_wrapper *aux_device;
++	int i, ret, i_tm = 0;
++
++	aux_device = devm_kzalloc(adc->dev, sizeof(*aux_device), GFP_KERNEL);
++	if (!aux_device)
++		return -ENOMEM;
++
++	aux_device->aux_dev.name = "adc5_tm_gen3";
++	aux_device->aux_dev.dev.parent = adc->dev;
++	aux_device->aux_dev.dev.release = adc5_gen3_aux_device_release;
++
++	aux_device->tm_props = devm_kcalloc(adc->dev, adc->n_tm_channels,
++					    sizeof(*aux_device->tm_props),
++					    GFP_KERNEL);
++	if (!aux_device->tm_props)
++		return -ENOMEM;
++
++	aux_device->dev_data = &adc->dev_data;
++
++	for (i = 0; i < adc->nchannels; i++) {
++		if (!adc->chan_props[i].adc_tm)
++			continue;
++		aux_device->tm_props[i_tm] = adc->chan_props[i].common_props;
++		i_tm++;
++	}
++
++	device_set_of_node_from_dev(&aux_device->aux_dev.dev, adc->dev);
++
++	aux_device->n_tm_channels = adc->n_tm_channels;
++
++	ret = auxiliary_device_init(&aux_device->aux_dev);
++	if (ret)
++		return ret;
++
++	ret = devm_add_action_or_reset(adc->dev, adc5_gen3_uninit_aux,
++				       &aux_device->aux_dev);
++	if (ret)
++		return ret;
++
++	ret = auxiliary_device_add(&aux_device->aux_dev);
++	if (ret)
++		return ret;
++	ret = devm_add_action_or_reset(adc->dev, adc5_gen3_delete_aux,
++				       &aux_device->aux_dev);
++	if (ret)
++		return ret;
++
++	adc->tm_aux = &aux_device->aux_dev;
++
++	return 0;
++}
++
++void adc5_gen3_mutex_lock(struct device *dev)
++	__acquires(&adc->lock)
++{
++	struct iio_dev *indio_dev = dev_get_drvdata(dev->parent);
++	struct adc5_chip *adc = iio_priv(indio_dev);
++
++	mutex_lock(&adc->lock);
++}
++EXPORT_SYMBOL_NS_GPL(adc5_gen3_mutex_lock, "QCOM_SPMI_ADC5_GEN3");
++
++void adc5_gen3_mutex_unlock(struct device *dev)
++	__releases(&adc->lock)
++{
++	struct iio_dev *indio_dev = dev_get_drvdata(dev->parent);
++	struct adc5_chip *adc = iio_priv(indio_dev);
++
++	mutex_unlock(&adc->lock);
++}
++EXPORT_SYMBOL_NS_GPL(adc5_gen3_mutex_unlock, "QCOM_SPMI_ADC5_GEN3");
++
++int adc5_gen3_get_scaled_reading(struct device *dev,
++				 struct adc5_channel_common_prop *common_props,
++				 int *val)
++{
++	struct iio_dev *indio_dev = dev_get_drvdata(dev->parent);
++	struct adc5_chip *adc = iio_priv(indio_dev);
++	u16 adc_code_volt;
++	int ret;
++
++	ret = adc5_gen3_do_conversion(adc, common_props, &adc_code_volt);
++	if (ret)
++		return ret;
++
++	return qcom_adc5_hw_scale(common_props->scale_fn_type,
++				  common_props->prescale,
++				  adc->data, adc_code_volt, val);
++}
++EXPORT_SYMBOL_NS_GPL(adc5_gen3_get_scaled_reading, "QCOM_SPMI_ADC5_GEN3");
++
++int adc5_gen3_therm_code_to_temp(struct device *dev,
++				 struct adc5_channel_common_prop *common_props,
++				 u16 code, int *val)
++{
++	struct iio_dev *indio_dev = dev_get_drvdata(dev->parent);
++	struct adc5_chip *adc = iio_priv(indio_dev);
++
++	return qcom_adc5_hw_scale(common_props->scale_fn_type,
++				  common_props->prescale,
++				  adc->data, code, val);
++}
++EXPORT_SYMBOL_NS_GPL(adc5_gen3_therm_code_to_temp, "QCOM_SPMI_ADC5_GEN3");
++
++void adc5_gen3_register_tm_event_notifier(struct device *dev,
++					  void (*handler)(struct auxiliary_device *))
++{
++	struct iio_dev *indio_dev = dev_get_drvdata(dev->parent);
++	struct adc5_chip *adc = iio_priv(indio_dev);
++
++	adc->handler = handler;
++}
++EXPORT_SYMBOL_NS_GPL(adc5_gen3_register_tm_event_notifier, "QCOM_SPMI_ADC5_GEN3");
++
++static int adc5_gen3_probe(struct platform_device *pdev)
++{
++	struct device *dev = &pdev->dev;
++	struct iio_dev *indio_dev;
++	struct adc5_chip *adc;
++	struct regmap *regmap;
++	int ret, i;
++	u32 *reg;
++
++	regmap = dev_get_regmap(dev->parent, NULL);
++	if (!regmap)
++		return -ENODEV;
++
++	indio_dev = devm_iio_device_alloc(dev, sizeof(*adc));
++	if (!indio_dev)
++		return -ENOMEM;
++
++	adc = iio_priv(indio_dev);
++	adc->dev_data.regmap = regmap;
++	adc->dev = dev;
++
++	ret = device_property_count_u32(dev, "reg");
++	if (ret < 0)
++		return ret;
++
++	adc->dev_data.num_sdams = ret;
++
++	reg = devm_kcalloc(dev, adc->dev_data.num_sdams, sizeof(u32),
++			   GFP_KERNEL);
++	if (!reg)
++		return -ENOMEM;
++
++	ret = device_property_read_u32_array(dev, "reg", reg,
++					     adc->dev_data.num_sdams);
++	if (ret)
++		return dev_err_probe(dev, ret,
++				     "Failed to read reg property\n");
++
++	adc->dev_data.base = devm_kcalloc(dev, adc->dev_data.num_sdams,
++					  sizeof(*adc->dev_data.base),
++					  GFP_KERNEL);
++	if (!adc->dev_data.base)
++		return -ENOMEM;
++
++	platform_set_drvdata(pdev, indio_dev);
++	init_completion(&adc->complete);
++	ret = devm_mutex_init(dev, &adc->lock);
++	if (ret)
++		return ret;
++
++	for (i = 0; i < adc->dev_data.num_sdams; i++) {
++		adc->dev_data.base[i].base_addr = reg[i];
++
++		ret = platform_get_irq(pdev, i);
++		if (ret < 0)
++			return dev_err_probe(dev, ret,
++					     "Getting IRQ %d failed\n", i);
++
++		adc->dev_data.base[i].irq = ret;
++
++		adc->dev_data.base[i].irq_name = devm_kasprintf(dev, GFP_KERNEL,
++								"sdam%d", i);
++		if (!adc->dev_data.base[i].irq_name)
++			return -ENOMEM;
++	}
++
++	ret = devm_request_irq(dev, adc->dev_data.base[ADC5_GEN3_VADC_SDAM].irq,
++			       adc5_gen3_isr, 0,
++			       adc->dev_data.base[ADC5_GEN3_VADC_SDAM].irq_name,
++			       adc);
++	if (ret)
++		return dev_err_probe(dev, ret,
++				     "Failed to request SDAM%d irq\n",
++				     ADC5_GEN3_VADC_SDAM);
++
++	ret = adc5_get_fw_data(adc);
++	if (ret)
++		return ret;
++
++	if (adc->n_tm_channels > 0) {
++		ret = adc5_gen3_add_aux_tm_device(adc);
++		if (ret)
++			dev_err_probe(dev, ret,
++				      "Failed to add auxiliary TM device\n");
++	}
++
++	indio_dev->name = "spmi-adc5-gen3";
++	indio_dev->modes = INDIO_DIRECT_MODE;
++	indio_dev->info = &adc5_gen3_info;
++	indio_dev->channels = adc->iio_chans;
++	indio_dev->num_channels = adc->nchannels;
++
++	return devm_iio_device_register(dev, indio_dev);
++}
++
++static struct platform_driver adc5_gen3_driver = {
++	.driver = {
++		.name = "qcom-spmi-adc5-gen3",
++		.of_match_table = adc5_match_table,
++	},
++	.probe = adc5_gen3_probe,
++};
++module_platform_driver(adc5_gen3_driver);
++
++MODULE_DESCRIPTION("Qualcomm Technologies Inc. PMIC5 Gen3 ADC driver");
++MODULE_LICENSE("GPL");
++MODULE_IMPORT_NS("QCOM_SPMI_ADC5_GEN3");
+diff --git a/include/linux/iio/adc/qcom-adc5-gen3-common.h b/include/linux/iio/adc/qcom-adc5-gen3-common.h
+new file mode 100644
+index 000000000000..89c552a77341
+--- /dev/null
++++ b/include/linux/iio/adc/qcom-adc5-gen3-common.h
+@@ -0,0 +1,211 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
++ *
++ * Code used in the main and auxiliary Qualcomm PMIC voltage ADCs
++ * of type ADC5 Gen3.
++ */
++
++#ifndef QCOM_ADC5_GEN3_COMMON_H
++#define QCOM_ADC5_GEN3_COMMON_H
++
++#include <linux/auxiliary_bus.h>
++#include <linux/bitfield.h>
++#include <linux/bits.h>
++#include <linux/device.h>
++#include <linux/iio/adc/qcom-vadc-common.h>
++#include <linux/regmap.h>
++#include <linux/types.h>
++
++#define ADC5_GEN3_HS				0x45
++#define ADC5_GEN3_HS_BUSY			BIT(7)
++#define ADC5_GEN3_HS_READY			BIT(0)
++
++#define ADC5_GEN3_STATUS1			0x46
++#define ADC5_GEN3_STATUS1_CONV_FAULT		BIT(7)
++#define ADC5_GEN3_STATUS1_THR_CROSS		BIT(6)
++#define ADC5_GEN3_STATUS1_EOC			BIT(0)
++
++#define ADC5_GEN3_TM_EN_STS			0x47
++#define ADC5_GEN3_TM_HIGH_STS			0x48
++#define ADC5_GEN3_TM_LOW_STS			0x49
++
++#define ADC5_GEN3_EOC_STS			0x4a
++#define ADC5_GEN3_EOC_CHAN_0			BIT(0)
++
++#define ADC5_GEN3_EOC_CLR			0x4b
++#define ADC5_GEN3_TM_HIGH_STS_CLR		0x4c
++#define ADC5_GEN3_TM_LOW_STS_CLR		0x4d
++#define ADC5_GEN3_CONV_ERR_CLR			0x4e
++#define ADC5_GEN3_CONV_ERR_CLR_REQ		BIT(0)
++
++#define ADC5_GEN3_SID				0x4f
++#define ADC5_GEN3_SID_MASK			GENMASK(3, 0)
++
++#define ADC5_GEN3_PERPH_CH			0x50
++#define ADC5_GEN3_CHAN_CONV_REQ			BIT(7)
++
++#define ADC5_GEN3_TIMER_SEL			0x51
++#define ADC5_GEN3_TIME_IMMEDIATE		0x1
++
++#define ADC5_GEN3_DIG_PARAM			0x52
++#define ADC5_GEN3_DIG_PARAM_CAL_SEL_MASK	GENMASK(5, 4)
++#define ADC5_GEN3_DIG_PARAM_DEC_RATIO_SEL_MASK	GENMASK(3, 2)
++
++#define ADC5_GEN3_FAST_AVG			0x53
++#define ADC5_GEN3_FAST_AVG_CTL_EN		BIT(7)
++#define ADC5_GEN3_FAST_AVG_CTL_SAMPLES_MASK	GENMASK(2, 0)
++
++#define ADC5_GEN3_ADC_CH_SEL_CTL		0x54
++#define ADC5_GEN3_DELAY_CTL			0x55
++#define ADC5_GEN3_HW_SETTLE_DELAY_MASK		GENMASK(3, 0)
++
++#define ADC5_GEN3_CH_EN				0x56
++#define ADC5_GEN3_HIGH_THR_INT_EN		BIT(1)
++#define ADC5_GEN3_LOW_THR_INT_EN		BIT(0)
++
++#define ADC5_GEN3_LOW_THR0			0x57
++#define ADC5_GEN3_LOW_THR1			0x58
++#define ADC5_GEN3_HIGH_THR0			0x59
++#define ADC5_GEN3_HIGH_THR1			0x5a
++
++#define ADC5_GEN3_CH_DATA0(channel)	(0x5c + (channel) * 2)
++#define ADC5_GEN3_CH_DATA1(channel)	(0x5d + (channel) * 2)
++
++#define ADC5_GEN3_CONV_REQ			0xe5
++#define ADC5_GEN3_CONV_REQ_REQ			BIT(0)
++
++#define ADC5_GEN3_VIRTUAL_SID_MASK		GENMASK(15, 8)
++#define ADC5_GEN3_CHANNEL_MASK			GENMASK(7, 0)
++#define ADC5_GEN3_V_CHAN(x)		\
++	(FIELD_PREP(ADC5_GEN3_VIRTUAL_SID_MASK, (x).sid) | (x).channel)
++
++/* ADC channels for PMIC5 Gen3 */
++#define ADC5_GEN3_REF_GND			0x00
++#define ADC5_GEN3_1P25VREF			0x01
++#define ADC5_GEN3_DIE_TEMP			0x03
++#define ADC5_GEN3_USB_SNS_V_16			0x11
++#define ADC5_GEN3_VIN_DIV16_MUX			0x12
++#define ADC5_GEN3_VPH_PWR			0x8e
++#define ADC5_GEN3_VBAT_SNS_QBG			0x8f
++/* 100k pull-up channels */
++#define ADC5_GEN3_AMUX1_THM_100K_PU		0x44
++#define ADC5_GEN3_AMUX2_THM_100K_PU		0x45
++#define ADC5_GEN3_AMUX3_THM_100K_PU		0x46
++#define ADC5_GEN3_AMUX4_THM_100K_PU		0x47
++#define ADC5_GEN3_AMUX5_THM_100K_PU		0x48
++#define ADC5_GEN3_AMUX6_THM_100K_PU		0x49
++#define ADC5_GEN3_AMUX1_GPIO_100K_PU		0x4a
++#define ADC5_GEN3_AMUX2_GPIO_100K_PU		0x4b
++#define ADC5_GEN3_AMUX3_GPIO_100K_PU		0x4c
++#define ADC5_GEN3_AMUX4_GPIO_100K_PU		0x4d
++
++#define ADC5_MAX_CHANNEL			0xc0
++
++enum adc5_cal_method {
++	ADC5_NO_CAL = 0,
++	ADC5_RATIOMETRIC_CAL,
++	ADC5_ABSOLUTE_CAL,
++};
++
++enum adc5_time_select {
++	MEAS_INT_DISABLE = 0,
++	MEAS_INT_IMMEDIATE,
++	MEAS_INT_50MS,
++	MEAS_INT_100MS,
++	MEAS_INT_1S,
++	MEAS_INT_NONE,
++};
++
++/**
++ * struct adc5_sdam_data - data per SDAM allocated for adc usage
++ * @base_addr: base address for the ADC SDAM peripheral.
++ * @irq_name: ADC IRQ name.
++ * @irq: ADC IRQ number.
++ */
++struct adc5_sdam_data {
++	u16 base_addr;
++	const char *irq_name;
++	int irq;
++};
++
++/**
++ * struct adc5_device_data - Top-level ADC device data
++ * @regmap: ADC peripheral register map field.
++ * @base: array of SDAM data.
++ * @num_sdams: number of ADC SDAM peripherals.
++ */
++struct adc5_device_data {
++	struct regmap *regmap;
++	struct adc5_sdam_data *base;
++	int num_sdams;
++};
++
++/**
++ * struct adc5_channel_common_prop - ADC channel properties (common to ADC and TM).
++ * @channel: channel number, refer to the channel list.
++ * @cal_method: calibration method.
++ * @decimation: sampling rate supported for the channel.
++ * @sid: ID of PMIC owning the channel.
++ * @label: Channel name used in device tree.
++ * @prescale: channel scaling performed on the input signal.
++ * @hw_settle_time_us: the time between AMUX being configured and the
++ *	start of conversion in uS.
++ * @avg_samples: ability to provide single result from the ADC
++ *	that is an average of multiple measurements.
++ * @scale_fn_type: Represents the scaling function to convert voltage
++ *	physical units desired by the client for the channel.
++ */
++struct adc5_channel_common_prop {
++	unsigned int channel;
++	enum adc5_cal_method cal_method;
++	unsigned int decimation;
++	unsigned int sid;
++	const char *label;
++	unsigned int prescale;
++	unsigned int hw_settle_time_us;
++	unsigned int avg_samples;
++	enum vadc_scale_fn_type scale_fn_type;
++};
++
++/**
++ * struct tm5_aux_dev_wrapper - wrapper structure around TM auxiliary device
++ * @aux_dev: TM auxiliary device structure.
++ * @dev_data: Top-level ADC device data.
++ * @tm_props: Array of common ADC channel properties for TM channels.
++ * @n_tm_channels: number of TM channels.
++ */
++struct tm5_aux_dev_wrapper {
++	struct auxiliary_device aux_dev;
++	struct adc5_device_data *dev_data;
++	struct adc5_channel_common_prop *tm_props;
++	unsigned int n_tm_channels;
++};
++
++int adc5_gen3_read(struct adc5_device_data *adc, unsigned int sdam_index,
++		   u16 offset, u8 *data, int len);
++
++int adc5_gen3_write(struct adc5_device_data *adc, unsigned int sdam_index,
++		    u16 offset, u8 *data, int len);
++
++int adc5_gen3_poll_wait_hs(struct adc5_device_data *adc,
++			   unsigned int sdam_index);
++
++void adc5_gen3_update_dig_param(struct adc5_channel_common_prop *prop,
++				u8 *data);
++
++int adc5_gen3_status_clear(struct adc5_device_data *adc,
++			   int sdam_index, u16 offset, u8 *val, int len);
++
++void adc5_gen3_mutex_lock(struct device *dev);
++void adc5_gen3_mutex_unlock(struct device *dev);
++int adc5_gen3_get_scaled_reading(struct device *dev,
++				 struct adc5_channel_common_prop *common_props,
++				 int *val);
++int adc5_gen3_therm_code_to_temp(struct device *dev,
++				 struct adc5_channel_common_prop *common_props,
++				 u16 code, int *val);
++void adc5_gen3_register_tm_event_notifier(struct device *dev,
++					  void (*handler)(struct auxiliary_device *));
++
++#endif /* QCOM_ADC5_GEN3_COMMON_H */
 -- 
 2.25.1
 
