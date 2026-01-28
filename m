@@ -1,149 +1,168 @@
-Return-Path: <linux-arm-msm+bounces-90908-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 0FL6Mm7BeWl/ywEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90908-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 08:57:34 +0100
+	id KChJDP3BeWl0zAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 08:59:57 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7345C9DE99
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 08:57:34 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 47D6D9DF1A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 08:59:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id DC3B930054CB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 07:57:31 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 20AC5300E3B3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 07:59:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A0972D5957;
-	Wed, 28 Jan 2026 07:57:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5936732C31B;
+	Wed, 28 Jan 2026 07:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UvJ0Hx6f"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="EyXUMY6b"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 565DD2C0F8C;
-	Wed, 28 Jan 2026 07:57:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D0CF32BF2E;
+	Wed, 28 Jan 2026 07:59:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769587048; cv=none; b=bnREF3ts97Bv+F8fERJBrRGReWZVrPtCYDMzi0OBwcgCsI25cNUzch3Lyo9ly2Icp9G3DUU+bfx+F86qoAnqXOIYBopQgYYbVKWZ26wAYvW5LjICQpmURsyfmoKIrhv0bRlk4UqkLT8EOpYHNjW2jJ1Q/yGzGhmzhgP2NRU39sE=
+	t=1769587161; cv=none; b=RqCujCoOXA5rKHH8yDEO1Hvf4834eJ/c2hQAW6zW6pGQG1fQmNxo7PCbiOrUv6xGl3LWAAOUaHwq/BG2x/1bE+YW9RcO39KRKrE69votogJGBItGffcBEEgkuF/Z5A1k9hcmQk8/5P+kY2qOhIB2PT+/6H6vOZhQXFdxB+8dI+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769587048; c=relaxed/simple;
-	bh=Edxazn8QS4dzQlUgaoJvS2lJwVXq0yRqauGtKDHAMGc=;
+	s=arc-20240116; t=1769587161; c=relaxed/simple;
+	bh=bLrxrtaKEb0EIqN05MhZumlDxMxzAI3JunezXZpTj3E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mLwaCCU9Fcjd1Yb9r+7+fKJwzwF8suejEJ9JdZ29LCXflbFlAqEZ/3a3CHRbcscFwong9984NGeHO9tYvr+rOwnemZFEzvvLUj42tWczhpJXX+zpSlp80p2uehyS19g1vAmXXKElbvIw80EkSfY3Y5csWU7bP9qCFBpUyQOGb/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UvJ0Hx6f; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEF4AC4CEF1;
-	Wed, 28 Jan 2026 07:57:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769587048;
-	bh=Edxazn8QS4dzQlUgaoJvS2lJwVXq0yRqauGtKDHAMGc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UvJ0Hx6fEVhv2jb1LSVkEQLToIpw9cNVss0Rnqo1n3hSjVuN5KgSN9s/95Ut7EIou
-	 bFD2BKZjRl9MmGNDLIL81X+rwLYoaTU2zOC0EJGmUNLCh/DYFlZusV0S5d4zhdx8jf
-	 rS4JVEjsHlAJ93oLeXNseazRIp0vQkzkQw0nRr32ZLGFzjjs/QJ17apYUgf0I2QY22
-	 /aTvbu7/qdiBjOepoXE+V7ndBmBNFJmlA29n7j7rZmCw1lBeN9niSuuv9LhrYPlfIY
-	 OcOALjnZuHyTnBp7SN3wWT6Zi6Vmiad/N9Ux23JF3KFsnN8iClXPFlcILqKjM8skmG
-	 ix5wDgU9Hc4CA==
-Date: Wed, 28 Jan 2026 13:27:15 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Shawn Lin <shawn.lin@rock-chips.com>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Clark <robin.clark@oss.qualcomm.com>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
-	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, 
-	Bartosz Golaszewski <brgl@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-usb@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
-	linux-pci@vger.kernel.org
-Subject: Re: [PATCH v2 2/7] pci: pwrctrl: add PCI pwrctrl driver for the
- UPD720201/UPD720202 USB 3.0 xHCI Host Controller
-Message-ID: <ppe6w2h32vx2jh73bcv7ip7ubr2wgwjsz4ooruplpx7gx5s4rv@qfasjbocku4r>
-References: <20260127-topic-sm8650-ayaneo-pocket-s2-base-v2-0-c55ec1b5d8bf@linaro.org>
- <20260127-topic-sm8650-ayaneo-pocket-s2-base-v2-2-c55ec1b5d8bf@linaro.org>
- <llbnkm72mgcsrucnp7pdkwbgyzenvhe4kudxkdixplgaoirdem@3q3me34o5drf>
- <0104896e-44d0-485a-a44e-694864c819b7@linaro.org>
- <33bbb3ec-5659-4d50-a5ff-dafa44e291dd@rock-chips.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=OT0GfvPghCbduVRxwpROHVHZ2YZ7wwbuP84hTxvFYjbjtpcCShyRxQRT00u2wNql1TiSwcwoJRgNSq9YHVjgTZd5C1TaLtHaejrhoVVKvrJUPIu1aRh3KA43lwdHPOYFl3DdLud5fOpHd1wF2hckWVWiJLlx9siSZcQWrPjQ0lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=EyXUMY6b; arc=none smtp.client-ip=198.175.65.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1769587159; x=1801123159;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=bLrxrtaKEb0EIqN05MhZumlDxMxzAI3JunezXZpTj3E=;
+  b=EyXUMY6bWQ9zgHZf9zod8yZwZlhU0YvGdVLezgYgOqcGMyqE99KCsUUP
+   m9/FNJpxoHeEqEPGaVAuKFcBv1ZXCz7Mdym9NbkGZjSjDv/k4KhZmH238
+   5YLT7473+kEJHVruRm3IUcYIAPWkPSgNur+/dpXS2DqTxCTYyriB/jIsj
+   PpWngT7TwoksSsLEf/j4R7Oim2c8ePvCNrfucu+Witgqwcu0KIDDiDaOL
+   2XoqIkbOPXDkaKZM+C0ED5R+tXma64du4b3KCzs3VetHoGAAGnMhRsKmW
+   mfE+405ZL4mSRDLKn/VXnbzoOJ/LZ6n90JBA9F0WzwPR/UGzFgxRXEWEb
+   g==;
+X-CSE-ConnectionGUID: aMk2igRwTC+JmgmMhJgXFQ==
+X-CSE-MsgGUID: PZMJOQu/R62S8qLYWkjcYQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11684"; a="88213354"
+X-IronPort-AV: E=Sophos;i="6.21,258,1763452800"; 
+   d="scan'208";a="88213354"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jan 2026 23:59:19 -0800
+X-CSE-ConnectionGUID: 5zo4JnMQTI600qsDecQFhw==
+X-CSE-MsgGUID: O2q+B3eCRc+ROdb41+pwtA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,258,1763452800"; 
+   d="scan'208";a="208439050"
+Received: from egrumbac-mobl6.ger.corp.intel.com (HELO kekkonen.fi.intel.com) ([10.245.244.229])
+  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jan 2026 23:59:15 -0800
+Received: from kekkonen.localdomain (localhost [IPv6:::1])
+	by kekkonen.fi.intel.com (Postfix) with SMTP id BF78A1207FB;
+	Wed, 28 Jan 2026 09:59:20 +0200 (EET)
+Date: Wed, 28 Jan 2026 09:59:20 +0200
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6 krs, Bertel Jungin Aukio 5, 02600 Espoo
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
+To: Richard Acayan <mailingradian@gmail.com>
+Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Tianshu Qiu <tian.shu.qiu@intel.com>, linux-media@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	Robert Mader <robert.mader@collabora.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	David Heidelberg <david@ixit.cz>, phone-devel@vger.kernel.org
+Subject: Re: [PATCH v7 2/5] media: i2c: imx355: Support devicetree and power
+ management
+Message-ID: <aXnB2FUgb5OlGjfn@kekkonen.localdomain>
+References: <20260117040657.27043-1-mailingradian@gmail.com>
+ <20260117040657.27043-3-mailingradian@gmail.com>
+ <578668b0-cba2-4550-b676-26ed0b447bf2@linaro.org>
+ <aW-V8VTcOICLWqaU@kekkonen.localdomain>
+ <aXl6MpRB9ncCeu2M@rdacayan>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <33bbb3ec-5659-4d50-a5ff-dafa44e291dd@rock-chips.com>
+In-Reply-To: <aXl6MpRB9ncCeu2M@rdacayan>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
+	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-90908-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-90909-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[28];
+	HAS_ORG_HEADER(0.00)[];
+	FREEMAIL_TO(0.00)[gmail.com];
+	RCPT_COUNT_TWELVE(0.00)[16];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[linaro.org,kernel.org,oss.qualcomm.com,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch,linuxfoundation.org,glider.be,google.com,vger.kernel.org,lists.freedesktop.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,renesas];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DKIM_TRACE(0.00)[intel.com:+];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 7345C9DE99
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[sakari.ailus@linux.intel.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	NEURAL_HAM(-0.00)[-1.000];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 47D6D9DF1A
 X-Rspamd-Action: no action
 
-On Wed, Jan 28, 2026 at 02:22:50PM +0800, Shawn Lin wrote:
-> 在 2026/01/28 星期三 5:53, Neil Armstrong 写道:
-> > On 1/27/26 16:53, Manivannan Sadhasivam wrote:
-> > > On Tue, Jan 27, 2026 at 10:57:29AM +0100, Neil Armstrong wrote:
-> > > > Add support fo the Renesas UPD720201/UPD720202 USB 3.0 xHCI Host
-> > > > Controller
-> > > > power control which connects over PCIe and requires specific
-> > > > power supplies
-> > > > to start up.
-> > > > 
-> > > 
-> > > This driver only handles the supplies. So why can't you use the existing
-> > > pwrctrl-slot driver as a fallback?
+On Tue, Jan 27, 2026 at 09:53:38PM -0500, Richard Acayan wrote:
+> On Tue, Jan 20, 2026 at 04:49:21PM +0200, Sakari Ailus wrote:
+> > Hi Bryan, others,
 > > 
-> > It would fit with no change, but the name "slot" doesn't match the goal
-> > here,
-> > it's not a slot at all, it's an actual pcie IC.
+> > On Tue, Jan 20, 2026 at 12:44:24PM +0000, Bryan O'Donoghue wrote:
+> > > I think reset should be asserted before regulators and power are switched
+> > > on. i.e. before you try to switch the chip on, you should establish that the
+> > > reset pin is in the state that the timing diagram calls for.
 > > 
+> > Indeed.
 > 
-> How about renaming slot.cto something like pci-pwrctrl-simple.c, especially
-> if most power sequences fit into this category? This would follow the naming
-> example seen in other subsystems, such as drivers/mmc/core/pwrseq_simple.c.
+> I think the discussion is more about whether there should be an assert
+> in the same function as the de-assert.
 > 
+> > The xshutdown pin, as it is typically called labelled as "reset" in this
+> > case, functions as both hardware reset and hardware standby mode control.
+> > It should be asserted (i.e. be set to low level) whenever the sensor is
+> > expected to be powered off. Typically deasserting it is the last step in
+> > the sensor's power-up sequence. This applies to nearly all CSI-2 and DVP
+> > (parallel) camera sensors. (There are some exceptions that use explicitly
+> > two GPIOs for similar functions but there are very few of them.)
+> 
+> This patch has the reset asserted by the time it gets to
+> imx355_power_on():
+> 
+> - when coming from runtime PM, the suspend callback asserted it
+> - when coming from probe, GPIOD_OUT_HIGH asserted it (considering that
+>   active-low also affects the initial output setting)
+> 
+> Should it be asserted again inside the function, or
+> should the initial `gpiod_set_value_cansleep()` be removed?
 
-Yes. There is no point in duplicating the drivers just for a different name.
-Slot driver is relatively new. So I don't think there would be issues in
-renaming the module name.
-
-I'd prefer for 'pci-pwrctrl-generic.ko' for module name and 'generic.c' for
-driver name.
-
-- Mani
+Please remove it as requested.
 
 -- 
-மணிவண்ணன் சதாசிவம்
+Sakari Ailus
 
