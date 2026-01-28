@@ -1,103 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-90948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-90949-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id WHwPIabneWkG1AEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-90948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 11:40:38 +0100
+	id MIJGL+LneWl60wEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-90949-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 11:41:38 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9BC79F9B5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 11:40:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1FCD09F9DA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 11:41:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id B8CD73008D01
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 10:40:30 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 949CC3002296
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jan 2026 10:41:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 306912FB0BA;
-	Wed, 28 Jan 2026 10:40:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B18B7274B51;
+	Wed, 28 Jan 2026 10:41:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AqIhipHO";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="a4TFVlws"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VnlHrM2J"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0F32F1FD7
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 10:40:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2730E276028
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 10:41:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769596830; cv=none; b=K7EjKl4ylX+NydxnNVkqIfY4OcEbe/f88Z0p/Zi8rrv6kkYUow8zxyTE3edTmLjFm7ejsvdH//CwaoLmWQiur253rMSpkoxX/4NSrbSGP3M8J+SaOHIaAYrboTvmvW8T6PtkqGKSZhSD+jZXHXilRwdRf/uJZ9BjeRjC5qnEO0M=
+	t=1769596882; cv=none; b=YdrkDl+CGxSQnaAvKLqZU+ffUIirM2LYsU3UPrJ4Sa2BwahRhaz9Sv8lTH+MdJcTp+I1umP9m6uCD01ofPd1WZwpqS3yy1RpFOB+Iu28Nn6wsD5tCv/57sEixGsScSLH3/HEwymJULTzAT2DUXkiDlm0iFZpn2hPX/ve7qztNqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769596830; c=relaxed/simple;
-	bh=xNCuBjdzS4goBIvwhhXFzsi0BmxhT/kaPlm/aIO1PAY=;
+	s=arc-20240116; t=1769596882; c=relaxed/simple;
+	bh=BF1Tk583OYnavcumB+Q/6k0kWYo9Y1pbJOM2dT6gFmY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OzkxXKskOxDXDeVScyX/XYqGbxES+fEnZ9mIUfKBN6heXE6gf3+btNoJUxv/zFp63mYItlwNAEStBISaxxnNDmJ8a4Vw8hvcA6nBKFIuUGnrzZEmHuLpZ4ER4tx+zzt2uMvihbkfpW98rHdsjgbep/QECwIdrOqKn2V6gI1UM1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AqIhipHO; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=a4TFVlws; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60S92TjV3907679
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 10:40:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	1RUTm2rK9W/8H1oDMERwWFJFkerUpB49X4+1zNyNLdg=; b=AqIhipHOFcS5YYms
-	Ihh397u3CjD7BEppLGJPviyIAi+6GM9de3mLm9ohtwmi9rgf0K5M2XxpZEQdO06s
-	02+Rs6dN6q5IiQdj1xnYdZao9go27AcRf2f0eWCqioJHwi/uCVRJy+1r/xRfagM9
-	5KL2sHOpLuhhbhfjl/X5Qozauf/ByloxLgSSmX/MiPSlTWxTRs9wRKCyF7XfMHlT
-	3ClKI4ld2ex0rXJLRWSf/Ks4i0YZ6igG5z/xnHlItgKkQFAZtu6rKYfKbE4Qk0iy
-	tlnC/yqAdcdKxuSLvHbUL++8ENzXhw0WwoEXO4RmaSPbHdOG3eBbv+DRUPr02IJs
-	Ar74zQ==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4by0g0be6w-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 10:40:27 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-8c709a3a56dso54837785a.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 02:40:27 -0800 (PST)
+	 In-Reply-To:Content-Type; b=XaVMV4+qHE9XvwbXWiVjE+1vI9f2Q+4QSiDcKHWPrbvZ7gu+PW9FgTGj/F5V1CjuqPxUtfRrmf0cLxPZgW48XW1P20Kkb9om2BZhhQZwDhLcNVj9LnPX75GkSVoWAYfbHG9unNVovhKwS4ehFisNdeeJJFqRcvzTgt4VtrX8+Ec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VnlHrM2J; arc=none smtp.client-ip=209.85.208.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-6581327d6baso10292914a12.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 02:41:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1769596827; x=1770201627; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
+        d=linaro.org; s=google; t=1769596879; x=1770201679; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=1RUTm2rK9W/8H1oDMERwWFJFkerUpB49X4+1zNyNLdg=;
-        b=a4TFVlws40h7o8i7rn9Ae8WmpSMM8JPGIVNfb2VKRhb6hsdb1JMgb+vrmKKLs9Q/zc
-         IBolZS2c7PDpHBfwTCgeS/uFtCb2HKGqmONlxo//2bJ1u3JzuEcvLwEfEFqtuGPufQTw
-         mbdB0HtIw6vJEoTSn15SCE4OG/4Ff3MiP2+b/+ROtu4qYstx8eHpjVp26JNdBpfhBcvQ
-         Pmz/dhHKrMZ9MLfmGTl2Ejx2wvBuvehp3uKAvJe6ZkQz3bJodXoGpbqZR2+hx76DxSu0
-         Hkm1CiQ8D23pvg/r1gdc3ZP24iBVCE8/nC1eVa/EtPovdnWY8YJ3wfOsaWT/MLm9+cR0
-         cfrg==
+        bh=64aHssFZr7VaxSK0D6/XN0631oo5malDp14UZIFT07M=;
+        b=VnlHrM2JEg6Uz+TMM5YoIigbkc6mWf+dZoQAiHHHj63jmlxqj1uedrDQId1msZFFXw
+         ZTmpDRTlqiBUHE8JMgsVdiLbmZ2WFwJOGcJNtuTt2a+3lqNt0Eja10SPtKa9qP4oEGYD
+         1t3HQBgAyV+8FMRFc085/DuQvA2VkjymVwI9LC+7tGh4DMJAzesdUAshOaMdpu+dLohQ
+         qEsw49MH3do/ftE3X2JygdXv7pOG+w+nnVg7PFIiflt6On05zD9mZoc6zUXv+/C2FvD2
+         QZlsWlpS6YhPrsL9fhduFBpesES6e7zVOBYkqm/Qx6vdv9ZuGLQxGQivJvvufcRuH9U7
+         JLgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769596827; x=1770201627;
-        h=content-transfer-encoding:in-reply-to:from:content-language
+        d=1e100.net; s=20230601; t=1769596879; x=1770201679;
+        h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=1RUTm2rK9W/8H1oDMERwWFJFkerUpB49X4+1zNyNLdg=;
-        b=u1rcwKBbdgi1ODona7Pi+t1AORnweGjI98QNkITbLf+PMxW6KbXQWmyeRX35yIXhy2
-         KD0OHrBx0VvR8k39RvXSTkF+U/5PDomfelY0PMdeG/4uYaauC0549jmYnivEQxUgUFXC
-         lJ3BQnIegBaLbAWNz0iBjlPmEUFCt5TmYb+AhRt6kr2TJ3NyRzqw1kCC+9o2fpfk/Doz
-         qeQ9ZnrUfluWSUSW9jvElHGp/S82RdzTjI9q+Cg8wNv58Ryo1YVovJEJUvHNpJzkdHvz
-         6XpXh5NLCL4aTzC9dxZBPJ9Xj9WDASYFeMImgTCaoDNOvihkNjSCf5ZSUxMRnvVcG62L
-         HQ3w==
-X-Gm-Message-State: AOJu0YymmECdzKbhZ0HNI/ay4Qr2hyl/XZhysT6r1YIaiJ+Qr5pakcWk
-	fVYPj5XLaigbUoE6ua5XJsaEdH3d6jc7k0Un3jlOy1Cgafdg3X1Ff9Ta86Ebq9R8xYvWNOsE6rV
-	ukP/v5jAh13nnR7DZ1eEdR0nEZbuwAEG65xq5tH+oWn+FzEPu98xIzD+ODikISNnk78Ru
-X-Gm-Gg: AZuq6aLsS8iEALqJMzHIqspxpAklici4OQVZvoXjckPsGdJoRX3EHGoqL/kngcsjQDh
-	czaGtAxhsLoIyfud/ks9lxrmmnKEW1d3DCWVpuQXumtXDhHBhsTCevqNcVkOlpmhdazsl7zVM5m
-	XoDLAleMLhwYXuGTDv/R51f8USIJTG89ZZ7bKh7PuN8EpSMJIHQF+C+NuObycLpx2gVQZS5AAda
-	adbseviY464eTRUbKvjnP3k4K2g1ogLYWrlyHkPu4bNLli8rRb5MNeaeIhPNmo06007EXf7Hn7X
-	EzIQ5xpxjFT/EM4nc6TqJQv+lGImzmyb7jSBqX60PSYCZ3KkNb5gdsFZIBBrHi4pNpkDYkKjdVN
-	pPEduZPUj3lzOpJFPlmC9NeB+IbBjm4mfzP8LLygaVIW+MZWvv5MQ5t3COYbaqBr09t0=
-X-Received: by 2002:a05:620a:1aa0:b0:8b2:6eba:c45d with SMTP id af79cd13be357-8c714b481bfmr123926385a.2.1769596826925;
-        Wed, 28 Jan 2026 02:40:26 -0800 (PST)
-X-Received: by 2002:a05:620a:1aa0:b0:8b2:6eba:c45d with SMTP id af79cd13be357-8c714b481bfmr123923185a.2.1769596826370;
-        Wed, 28 Jan 2026 02:40:26 -0800 (PST)
-Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8dbeffed15sm109656966b.31.2026.01.28.02.40.24
+        bh=64aHssFZr7VaxSK0D6/XN0631oo5malDp14UZIFT07M=;
+        b=uvfPgIXORrs93F3YyzDfuWndwNWfP9Xk42knyVe4/hd4blOvgfbT+4XQKJJSqDbftH
+         0va5rWQbZT8rYR70n7YvYG3UUACWHMI2JejkPyp8fsF+RKBkDlkZwJCZPNMRZyUiYhHc
+         MqMLtRGKNaHQvecP2gLolGm4qJUtRGTWyFZpc4lxGk+GYtZgIZ2eCgKV9/HAg0fSQoVI
+         5bOCM4Nig/62LuWoPNiomJlJL9Rtzmp5rHW+O8Mx6rZCuxgONGLUS0e0S5GGJunZ+RjK
+         gh9Fa6UjLNK4l30JwB7Sl16HTkw/i3Eq33QyEHPXdlJjdz6DjW7LAeQDMh9px8uUaYsa
+         dQlA==
+X-Forwarded-Encrypted: i=1; AJvYcCUkA4yIrrX5AWvXFaBfH4p0PhZ7aZE4Gp4RkqBXfzaVMN4snFBMARM4JBfrbjPCKUN7++umGugHaa4KCjev@vger.kernel.org
+X-Gm-Message-State: AOJu0YyTLeeAIOrgf1pkmhV9mC/BhXHKe4yk5/Tbhq7PL8QSq8oBJ6gk
+	vu3Bs/nnDR9uTbdKK7ES71Vc+vwpQTbqPcxQyXUXPJ99QqgdRptx2/dJcnhahBKGKdc=
+X-Gm-Gg: AZuq6aLJjmOXQp3s5FeGG50pRYcVd6EtsGHShYmkFW82zHiZsyOZydED5+QoIQ+kiUK
+	xjyVrRjZP2Ik3QW4y3HtS1DqzNaLqZaqzl6VGRiL18PEdDtQuki67PDEd+ktkTiYd7H444D/6TZ
+	ZwMqiYTAEFQY3DcyQEwF5UgcZ8TeLT/GJyrO1hoSmhmt9mbz5VjU1sdZV1+Y1ckpO8v41pp2hds
+	B+IRmsQyGSSwZnCqHjWyAHhFxuW48RajSyHBxQ6mD5cs2UxfIrRaZvG+Z+sJV8zkY2kZa7eIZ3h
+	eFV046Pf+6mC68IM2gJKdvfsNsQ0duzaXzi3TZBRLM024HEwb0bxBQEr9Z/JAmpPcFzDgCP9jgu
+	iYx7KdO9SrcZrKghicUJMpEIKNvB+mQgTp7TzZBR7vYnVQk0naQDEmt1cap5C9hwY0vqlzMhLnA
+	Wk/nHXTOKbGy6Ckb9X87q85rlTe0LlIJoCSs9r1HjO2tG4tdO1qyxt
+X-Received: by 2002:a17:907:8689:b0:b83:95ca:23e7 with SMTP id a640c23a62f3a-b8dab2c00fdmr351448566b.4.1769596879528;
+        Wed, 28 Jan 2026 02:41:19 -0800 (PST)
+Received: from [192.168.0.40] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8dbf1c0102sm108582866b.51.2026.01.28.02.41.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Jan 2026 02:40:25 -0800 (PST)
-Message-ID: <734ae332-e1c6-49d8-9f10-a68e84360ab7@oss.qualcomm.com>
-Date: Wed, 28 Jan 2026 11:40:23 +0100
+        Wed, 28 Jan 2026 02:41:19 -0800 (PST)
+Message-ID: <6692ca5f-216f-428c-96b2-511fdd769f04@linaro.org>
+Date: Wed, 28 Jan 2026 10:41:17 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -105,115 +86,137 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/6] clk: qcom: rpmh: Add support for Eliza rpmh clocks
-To: Abel Vesa <abel.vesa@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        Taniya Das <taniya.das@oss.qualcomm.com>,
-        Taniya Das <quic_tdas@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20260127-eliza-clocks-v2-0-ccee9438b5c8@oss.qualcomm.com>
- <20260127-eliza-clocks-v2-4-ccee9438b5c8@oss.qualcomm.com>
+Subject: Re: [PATCH v4 2/2] media: i2c: ov02c10: Correct power-on sequence and
+ timing
+To: Saikiran B <bjsaikiran@gmail.com>, Bryan O'Donoghue <bod@kernel.org>
+Cc: Sakari Ailus <sakari.ailus@linux.intel.com>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, rfoss@kernel.org, todor.too@gmail.com,
+ vladimir.zapolskiy@linaro.org, Hans de Goede <hansg@kernel.org>,
+ mchehab@kernel.org, stable@vger.kernel.org
+References: <20260127165024.46156-1-bjsaikiran@gmail.com>
+ <20260127165024.46156-3-bjsaikiran@gmail.com>
+ <aXjwtBey0MRP0c7f@kekkonen.localdomain>
+ <hAXW76sxpszN3JpApVO_ntI28dSyCTiDXIE-S1AJDCa7Mbp8-pHbGqhFhTh2FGPdj3TxO9AowyRRan2u8TTO6Q==@protonmail.internalid>
+ <CAAFDt1vJtJc+C_J9Gv3SYjs_2zWFXsWqwq29=ig1o2_kSkjwLg@mail.gmail.com>
+ <dbf73780-a33a-4fbf-8569-321b4f4e0a88@kernel.org>
+ <MZajBkG4hU2kIZFDZbpq0WZOF_tJmASpmGr-7IH_qheO0We0Z45KNZPrQY4UmoqsWKOX3lSx1W_hnLtfKocXPw==@protonmail.internalid>
+ <CAAFDt1vmXg9L6axsDN6kpCQKZifOCRxtQeDpmRpHyejS1ORR+Q@mail.gmail.com>
+ <92131a67-471e-41e8-83d6-4f802103db7b@kernel.org>
+ <CAAFDt1sqh=O-CpxbdcWueyqbiq4qyCrJHVH-_SS+KjEC9CyRhg@mail.gmail.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20260127-eliza-clocks-v2-4-ccee9438b5c8@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: 5XOt_l56rfbbUDxVp8EjQ2OtROLRiQ9Q
-X-Proofpoint-GUID: 5XOt_l56rfbbUDxVp8EjQ2OtROLRiQ9Q
-X-Authority-Analysis: v=2.4 cv=UPXQ3Sfy c=1 sm=1 tr=0 ts=6979e79b cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=yZxmAL73Vz1KKP0sLwcA:9
- a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI4MDA4NyBTYWx0ZWRfX8HUIKKqPh8d1
- OZCDpgyVzuJ78oA2JQGsTX16QdLnDraV+r2AEn06EZhDRhAWBmcbnPe/CxrBDGloKXpxw5S5ewW
- Z7qlhT27KF/6lV3/hStT+J6G6opGdoPy37WiF7imMtzt+P+VHF6lToXvGD5Uk4H2/DFOmm/H4En
- d77iwarTqcoj2DPVS18hsVvS/HtKvwo+rPqK2dMydRljfcs/UAKA8zlqqB2hQc4K08/GudTnx9f
- ywlkQZI5kBATnoVydPW7nIWNT6XB/3ZxVMnGC+9ENwGmsgys5sWGkyYC/ZepqTiL63nWcTcrG0K
- CNDp+ej7fxQQaR7C0qRwJ8A7f6ztmlkgoQiq54n4i7C4RJ3hwZNj13isPCe1B4CE19JAKINUPaV
- GqrqmsWtot3+IUUEB0XPZYKUw8Bk7YR6ah8A7aIhTKJyz7AJE72eyGc9wQjAow2UFMY3NoxHQAO
- geFvdMPx3AD/ME5AXFw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-01-28_02,2026-01-27_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 clxscore=1015 priorityscore=1501
- suspectscore=0 spamscore=0 adultscore=0 impostorscore=0 bulkscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2601280087
+In-Reply-To: <CAAFDt1sqh=O-CpxbdcWueyqbiq4qyCrJHVH-_SS+KjEC9CyRhg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[14];
+	FREEMAIL_CC(0.00)[linux.intel.com,vger.kernel.org,kernel.org,gmail.com,linaro.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-90948-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_TO(0.00)[gmail.com,kernel.org];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-90949-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[linaro.org:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:mid,oss.qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_SEVEN(0.00)[11];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: D9BC79F9B5
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,linaro.org:mid,linaro.org:dkim]
+X-Rspamd-Queue-Id: 1FCD09F9DA
 X-Rspamd-Action: no action
 
-On 1/27/26 4:03 PM, Abel Vesa wrote:
-> From: Taniya Das <taniya.das@oss.qualcomm.com>
+On 28/01/2026 10:19, Saikiran B wrote:
+>  > Just to be difficult - I'm specifically asking to test never switching
+>  > the regulator off - not having a long delay.
 > 
-> Add the RPMH clocks present in Eliza SoC.
+> To be absolutely clear:
 > 
-> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
-> Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-> ---
->  drivers/clk/qcom/clk-rpmh.c | 20 ++++++++++++++++++++
->  1 file changed, 20 insertions(+)
+> ***I have tested exactly this.***
 > 
-> diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-> index 547729b1a8ee..cf46a6585174 100644
-> --- a/drivers/clk/qcom/clk-rpmh.c
-> +++ b/drivers/clk/qcom/clk-rpmh.c
-> @@ -940,6 +940,25 @@ static const struct clk_rpmh_desc clk_rpmh_kaanapali = {
->  	.num_clks = ARRAY_SIZE(kaanapali_rpmh_clocks),
->  };
->  
-> +static struct clk_hw *eliza_rpmh_clocks[] = {
-> +	[RPMH_CXO_CLK]          = &clk_rpmh_bi_tcxo_div2.hw,
-> +	[RPMH_CXO_CLK_A]        = &clk_rpmh_bi_tcxo_div2_ao.hw,
-> +	[RPMH_LN_BB_CLK1]	= &clk_rpmh_clk6_a2.hw,
-> +	[RPMH_LN_BB_CLK1_A]	= &clk_rpmh_clk6_a2_ao.hw,
-> +	[RPMH_LN_BB_CLK3]	= &clk_rpmh_clk8_a2.hw,
-> +	[RPMH_LN_BB_CLK3_A]	= &clk_rpmh_clk8_a2_ao.hw,
-> +	[RPMH_RF_CLK1]		= &clk_rpmh_rf_clk1_a.hw,
-> +	[RPMH_RF_CLK1_A]	= &clk_rpmh_rf_clk1_a_ao.hw,
-> +	[RPMH_RF_CLK2]		= &clk_rpmh_rf_clk2_a.hw,
-> +	[RPMH_RF_CLK2_A]	= &clk_rpmh_rf_clk2_a_ao.hw,
-> +	[RPMH_IPA_CLK]		= &clk_rpmh_ipa.hw,
+> In my local v2 testing, I modified the driver to keep the regulators
+> permanently ENABLED and only toggled the software standby/reset lines.
+> 
+> Result: The camera was 100% stable over hundreds of cycles.
+> 
+> This isolates the issue:
+> 1. CCI Leaking? No. If CCI were leaking, the "Always On" test would 
+> eventually
+>     fail or show instability. It did not.
 
-I see that downstream also has LN_BB_CLK2 (clka7_a2) and RF_CLK3-5
+I have to say, I'm not an electrical engineer by profession but, I don't 
+believe you can make this blanket statement.
 
-Konrad
+What is the problem with testing the hypothesis ?
+
+> 2. XSHUTDOWN Floating? No. The "Always On" test relies on XSHUTDOWN working
+>     correctly to wake the sensor. It worked perfectly.
+
+Yes I agree there, if always-on shows no failure then XSHUTDOWN isnt' 
+floating.
+
+In which case this patch can be dropped, its not helping.
+
+> The instability ***only*** appears when we physically toggle the PMIC rail.
+> 
+>  > Do not believe we have root caused a regulator brown out
+>  > Believe we should interrogate the LDO settings
+> 
+> I cannot easily dump raw SPMI registers on my personal machine, but
+> we can derive the LDO state physically from the discharge curve (RC Time 
+> Constant).
+
+?
+
+I gave you code to do just that. If you can iterate sensor and DTS 
+changes - you can use that code to dump out the requested LDO states.
+
+> We know the physics of the PM8550 PMIC:
+> - Active Discharge Resistor (R_active): ~1 kΩ (Typical)
+> - Bulk Capacitance (C_bulk): ~10 µF (Estimated for this rail)
+> 
+> Scenario A: If Active Discharge IS set:
+>     Time Constant (T) = R * C = 1000 * 10e-6 = 0.01s (10ms)
+>     Complete discharge (5T) would happen in ~50ms.
+> 
+> Scenario B: If Active Discharge is NOT set (Passive Leakage):
+>     The rail discharges through the high-impedance sensor (~200kΩ+).
+>     Time Constant (T) = 200,000 * 10e-6 = 2.0s.
+> 
+> My measurements show the rail takes ~2.0s to reach the Brownout Threshold
+> (failure point) and ~2.3s to reach a clean 0V (success point).
+> 
+> This 2.3s duration is physically impossible if the Active Discharge bit 
+> was set.
+> It mathematically proves the LDO is in High-Z mode (Passive Discharge).
+> 
+> Here are the specific logs capturing the failure at exactly the 2.0s mark.
+That's great. We should be able to interrogate the PMIC regs and see the 
+state of the LDO configuration - code I've shared with you.
+
+If they show active-state isn't set on one or more of our LDOs then we 
+can write some platform quirk code to set them.
+
+A 2.3 second delay on every start/stop stream is not an acceptable 
+upstream fix.
+
+And please stop top posting !
+
+---
+bod
 
