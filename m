@@ -1,71 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-91200-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91201-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id IG5rEHWQe2nOGAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91200-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 17:53:09 +0100
+	id +AKHN9iYe2nOGAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91201-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 18:28:56 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F1F5B276B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 17:53:08 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 83934B2E4D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 18:28:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id E4ED23002B59
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 16:53:05 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id CEAE130276BF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 17:24:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6DDA33F8DA;
-	Thu, 29 Jan 2026 16:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFD1E34A795;
+	Thu, 29 Jan 2026 17:24:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i9GB03m2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rw6tQ/1j"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82A7878F2F;
-	Thu, 29 Jan 2026 16:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97F82C21F6;
+	Thu, 29 Jan 2026 17:24:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769705584; cv=none; b=t9gvF/DXFy7/+lG2ef+BI2WYo8bmEvdR6dL/Wmuz/U5r9qSfYtWZaMYtrnoyJT7ETIK6+4/6Q+w0hWKf17ppE87uXOoTejtUa66b64p/u6pnbN9ljXWqqwKrmUVVbZjUKj2oA3TECytMbIR40OpxpfQxUOF9sddCX0zPahpew54=
+	t=1769707453; cv=none; b=pI1c3+ENjpRU9krG7XmU76sURnlJGVVwg1NWhZfunlljKX9x0TjrPQWRNM42KPLKqqhpSckmjTuLOKOURaXcMEwGHlYWgSxu9MM5bA0UVM6libOwqxOyEM7QnaUk09APFkNaoOBnkrBiQgi/hrMTYbGZ+sC1VZv/Pbuk/XqRcZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769705584; c=relaxed/simple;
-	bh=4Go8r+auphjo22TcuXvyOWWNojSmrb+RGzHfXTGMbzs=;
+	s=arc-20240116; t=1769707453; c=relaxed/simple;
+	bh=GwpyZ1XhwGvTuaJx2R/noCmHcGV2NRys+b4dwGgPMRw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l1EZ81E/BVjHH+xHlxmNR/fKmc1kUAsdnCPLAXdSXOEH+6qm2/3lveMZZpy5RSWNEgvRxAm+qveEu9WFo2emFpuIRdGyeafGKj2gBtn0JI61etIpCZj619WMHfIkVTcvZZkhq0DohOIMHTTCdYKm39uQT9mfjUWodKl/r6cw070=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i9GB03m2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E040BC4CEF7;
-	Thu, 29 Jan 2026 16:53:03 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=DfNL28a5EVE16ljs54w3kPaosuGYlJA53S8Ow0jR5XPqYEqBrldhUmTecimJdhf6hXEZqLkuAMf89NIyIPqPmvPLCTuyYIJkTeiesImctUWPZS+sx1/YjVnn1l/3kWikc1BVOxN9xuxUmYFZFsSMWTvWQwfK/iPJ3QzPp5AuWhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rw6tQ/1j; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12733C4CEF7;
+	Thu, 29 Jan 2026 17:24:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769705584;
-	bh=4Go8r+auphjo22TcuXvyOWWNojSmrb+RGzHfXTGMbzs=;
+	s=k20201202; t=1769707453;
+	bh=GwpyZ1XhwGvTuaJx2R/noCmHcGV2NRys+b4dwGgPMRw=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=i9GB03m2rvW1q2q52DbPwCtjUQP5aHy6q0i/GQtvQPaBJ77SGI9HEANAdjlN+ue50
-	 cz4KCQVvudBzPtTloSt7N4Bxq+AiQLUVj8DXVEVb6Jp6PlksHW8ir0Xjg1x9AwJqw7
-	 BPg8jwfYNyiCs1SAMC5wdYwvHw4ApXjcGxAGrGoolFt8swmCiXrGX0mck+fC/4epLG
-	 AtBxiVddh00hmQJtFZhy8nvi+gRGAs3QG6/ybnz3rRwvtYa9EH6ATp1RkpXUgrQ6iU
-	 /nyBDnOmmeLghKnZ3q+SvgvkFNEw0yuvjZgXWZEaDcQ/auR7l+TTjmMXkNDl0df/L7
-	 RXZBPHnedKVaw==
-Date: Thu, 29 Jan 2026 10:53:03 -0600
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Ritesh Kumar <quic_riteshk@quicinc.com>
-Cc: quic_mahap@quicinc.com, robin.clark@oss.qualcomm.com,
-	mripard@kernel.org, krzk+dt@kernel.org,
-	dri-devel@lists.freedesktop.org, martin.petersen@oracle.com,
-	tzimmermann@suse.de, lumag@kernel.org, simona@ffwll.ch,
-	linux-kernel@vger.kernel.org, maarten.lankhorst@linux.intel.com,
-	sean@poorly.run, kishon@kernel.org,
-	James.Bottomley@hansenpartnership.com,
-	marijn.suijten@somainline.org, devicetree@vger.kernel.org,
-	andersson@kernel.org, cros-qcom-dts-watchers@chromium.org,
-	linux-scsi@vger.kernel.org, vkoul@kernel.org, mani@kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-	quic_vproddut@quicinc.com, abhinav.kumar@linux.dev,
-	conor+dt@kernel.org, konradybcio@kernel.org,
-	freedreno@lists.freedesktop.org, airlied@gmail.com
-Subject: Re: [PATCH v4 1/2] dt-bindings: phy: qcom-edp: Add reference clock
- for sa8775p eDP PHY
-Message-ID: <176970558251.1269081.4205775234649909264.robh@kernel.org>
-References: <20260128114853.2543416-1-quic_riteshk@quicinc.com>
- <20260128114853.2543416-2-quic_riteshk@quicinc.com>
+	b=Rw6tQ/1jebbzeNxeUd/uwC8v3wG9O5tVLwF2euGaO17C7SgFAnEj0LQIUhH7DjSwM
+	 7Dm2ej3g9X3WBu8/fBJkC/jCb6p1/XbKyqe5M6nMCYZff2P2o6xOLy6+z/UxW0cZ9w
+	 +WzjA8j3cjKOeAspg8ScQzaVSE7OZO/HeKgwADO8fBDm1LW6m4j7IE9azNZSNRIRtb
+	 F1xZUup+O5edsuyRuAF5V8hRA82pe4SWffHrvfCJa7jfxRyXHQRYcGQ6Sb59MP0JDk
+	 gUtjzxm4+UjaAHdZcKjgHj40Rj294kcwhOeToQDL5QIadAAfMBR6+yxE6gkjCM3HWg
+	 djTkIYBYJpZdQ==
+Date: Thu, 29 Jan 2026 11:24:12 -0600
+From: Rob Herring <robh@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+	Bryan O'Donoghue <bod@kernel.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Bjorn Andersson <andersson@kernel.org>,
+	David Heidelberg <david@ixit.cz>, linux-media@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: Re: [PATCH v3 1/7] media: dt-bindings: Document SC8280XP/SM8350 Venus
+Message-ID: <20260129172412.GA1303752-robh@kernel.org>
+References: <20260125-iris-sc8280xp-v3-0-d21861a9ea33@oss.qualcomm.com>
+ <20260125-iris-sc8280xp-v3-1-d21861a9ea33@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,25 +74,24 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260128114853.2543416-2-quic_riteshk@quicinc.com>
+In-Reply-To: <20260125-iris-sc8280xp-v3-1-d21861a9ea33@oss.qualcomm.com>
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [0.34 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_CONTAINS_FROM(1.00)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCPT_COUNT_TWELVE(0.00)[30];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[quicinc.com,oss.qualcomm.com,kernel.org,lists.freedesktop.org,oracle.com,suse.de,ffwll.ch,vger.kernel.org,linux.intel.com,poorly.run,hansenpartnership.com,somainline.org,chromium.org,lists.infradead.org,linux.dev,gmail.com];
-	TAGGED_FROM(0.00)[bounces-91200-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-91201-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[18];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
@@ -100,37 +99,107 @@ X-Spamd-Result: default: False [0.34 / 15.00];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,linaro];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[quicinc.com:email]
-X-Rspamd-Queue-Id: 5F1F5B276B
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,linaro.org:email]
+X-Rspamd-Queue-Id: 83934B2E4D
 X-Rspamd-Action: no action
 
-
-On Wed, 28 Jan 2026 17:18:49 +0530, Ritesh Kumar wrote:
-> The initial sa8775p eDP PHY binding contribution missed adding support for
-> voting on the eDP reference clock. This went unnoticed because the UFS PHY
-> driver happened to enable the same clock.
+On Sun, Jan 25, 2026 at 05:32:58PM +0200, Dmitry Baryshkov wrote:
+> From: Konrad Dybcio <konradybcio@kernel.org>
 > 
-> After commit 77d2fa54a945 ("scsi: ufs: qcom : Refactor phy_power_on/off
-> calls"), the eDP reference clock is no longer kept enabled, which results
-> in the following PHY power-on failure:
+> Both of these SoCs implement an IRIS2 block, with SC8280XP being able
+> to clock it a bit higher and  with SM8350 having 4 VPP pipes, while
+> SC8280XP having just 2.
 > 
-> phy phy-aec2a00.phy.10: phy poweron failed --> -110
+> Document Iris2 cores found on these SoCs.
 > 
-> To fix this, explicit voting for the eDP reference clock is required.
-> This patch adds the eDP reference clock for sa8775p eDP PHY and updates
-> the corresponding example node.
-> 
-> Signed-off-by: Ritesh Kumar <quic_riteshk@quicinc.com>
+> Signed-off-by: Konrad Dybcio <konradybcio@kernel.org>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> [ bod: dropped dts video-encoder/video-decoder ]
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> [db: dropped status, dropped extra LLCC interconnect]
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 > ---
->  .../devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml  | 6 ++++--
->  Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml     | 1 +
->  2 files changed, 5 insertions(+), 2 deletions(-)
+>  .../bindings/media/qcom,sm8350-venus.yaml          | 113 +++++++++++++++++++++
+>  1 file changed, 113 insertions(+)
 > 
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sm8350-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sm8350-venus.yaml
+> new file mode 100644
+> index 000000000000..d78bdc08d830
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/media/qcom,sm8350-venus.yaml
+> @@ -0,0 +1,113 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/media/qcom,sm8350-venus.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm SM8350 Venus video encode and decode accelerators
+> +
+> +maintainers:
+> +  - Konrad Dybcio <konradybcio@kernel.org>
+> +
+> +description: |
 
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Don't need '|'
 
+> +  The Venus Iris2 IP is a video encode and decode accelerator present
+> +  on Qualcomm platforms
+> +
+> +allOf:
+> +  - $ref: qcom,venus-common.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,sc8280xp-venus
+> +      - qcom,sm8350-venus
+> +
+> +  clocks:
+> +    maxItems: 3
+> +
+> +  clock-names:
+> +    items:
+> +      - const: iface
+> +      - const: core
+> +      - const: vcodec0_core
+> +
+> +  resets:
+> +    maxItems: 1
+> +
+> +  reset-names:
+> +    items:
+> +      - const: core
+> +
+> +  power-domains:
+> +    maxItems: 3
+> +
+> +  power-domain-names:
+> +    items:
+> +      - const: venus
+> +      - const: vcodec0
+> +      - const: mx
+> +
+> +  interconnects:
+> +    maxItems: 2
+> +
+> +  interconnect-names:
+> +    items:
+> +      - const: cpu-cfg
+> +      - const: video-mem
+> +
+> +  operating-points-v2: true
+
+blank line
+
+With that,
+
+Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+
+> +  opp-table:
+> +    type: object
 
