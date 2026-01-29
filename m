@@ -1,107 +1,107 @@
-Return-Path: <linux-arm-msm+bounces-91132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id IJamDHwRe2nqAwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 08:51:24 +0100
+	id QKf6GGgRe2nqAwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 08:51:04 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4EECAD020
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 08:51:23 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 83748AD003
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 08:51:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 4F4BD305E76F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 07:49:29 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 6FD2B3018D56
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 07:49:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C4F937AA92;
-	Thu, 29 Jan 2026 07:49:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61D0C37D11A;
+	Thu, 29 Jan 2026 07:49:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Wr6hkQKz";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="dFseT7dr"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="IuZSoFFW";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="LpeaBLWt"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D560037C118
-	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jan 2026 07:48:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC7537D106
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jan 2026 07:49:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769672941; cv=none; b=cC5cDlhWndqMiKmiZokZliwBJen8TW7I+0T9fVLFzz3+vJFK1SdxQVN2/VC4uFNACYQgDBIjhR3bVJBeZFxugNC/jz84j0rXYmzPhVW2fV7Mtp7bX3ro6UvK/ZRfPV4SZJDNyKE0di9Bg4FAURH3rCoNkM0yuKr+e23OUZVH8C4=
+	t=1769672942; cv=none; b=R8TujXEMCxaTT8+cZNeX1cddPvihJslrWhSKvlgiSBIi1nxIwqTwmB13aOztQzSKMkIrip3aeaZmDDxE3FvqueCRqu4H09sJ/MzuAhAT09Cjmp68kg+KLyAVMzC43BneXaKsZzFxMTdKbWRBoKCsZ8Ur1x7LsMsC4Av9SNsu0Ww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769672941; c=relaxed/simple;
-	bh=wlo89wUsTBg+cNJlTI2T+8Hua/ZnYc6pwFtWHXIfH20=;
+	s=arc-20240116; t=1769672942; c=relaxed/simple;
+	bh=vtZ8qpxO1glVKw5WkTGV/9fGQlliBjbhanGx9pnoSjM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=DN+E3pIy6h0m5FFMYkKROvrXKabpp7nuUVFR2qV2VgukNBPsOBdRYWgjBBwX9noySnVMGKjlgHynvLJI5ECo1MEkSTp4wb+0n6F9wnO1yxgBe9bRwtdj7berlSJANSUrwrDLHqHfVpG5XwHkVDO1wEfjHhxqNvWVhg13x6OxQF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Wr6hkQKz; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=dFseT7dr; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:To:Cc; b=c87h7ayzerZKxeH0LcC+5TQ01GGaq0pJbkMWr1J8p6/Ye8aj62t1Kz38/63Aj6XFVafd9H+JtwsiTpqqn/lVFbrJKo9EGfBysizUtclCtoQVe12DW1X1GKmopzJJ8dVHGqJmRxPjSpZ0k4KY5u03JG4toY0B7eXpM6Muwd7x99U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=IuZSoFFW; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=LpeaBLWt; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60T3AGA81430614
-	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jan 2026 07:48:57 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60T3A3421430065
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jan 2026 07:48:59 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	e0/I/DJJZa2vhoCFigzW3Q2dg5+iBNdSgTYhvQB+lvY=; b=Wr6hkQKzEO8NabRS
-	Y2FAGS8xPuJ6um7yaLwz2S1sEJeW03VPcB9xDDP45RkdbOLTUIcLJXp7r6XlHRfP
-	K5QI5QwiBzzz8IS5O1HjLlA8t9oP5gMsSVujCAPOp1ggYzLFHgXBQmwF+EJQg7eu
-	pijU0KO1yJdGBlLJot6thzRIp+wNQyN4tRAiIL52hy2ywGFJFSN5sl1QPydkAcGh
-	CJWGBdBkgsuifCyhZVJSbP1uJ4SxtybWFb5wOspbCYiawjeNnHT+HrgMqh6mtMYQ
-	EMnoKbjgvWz0DYEA/lkmAH4iUDFg8dhwzUyYWGesGHDdBaUWSHLJXoyH0tBKFLB8
-	NN67Wg==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4byydh0qbe-1
+	14DCHSOuOQFKW6OTpiNFZoRvwSOz4r8wKdkOgTkHAjQ=; b=IuZSoFFW780jc7Oz
+	kq8HqLhfGXqkVrK4MSG7iQ0Mv+qx2HyChJgxVcFYdKOnE5qXYrtJdJt6m/5A7HJe
+	wzCNxcCB2LhoQmtv/LKeOv2D/GQxdWtba+TqShW2oJONWDgvKiXPkn04jXbaV+MT
+	C5jkQrCuFs14ZseoCz9ATnbVE0ireRKMG4XU3pbpDhPd9ha0UggoSyqi814/PFNz
+	o6iunT8aZFOsBFkxAJMsMq4Qkntg1UXc6aWDANV/BN4CuL5sMrW59ySGgAOtUq8Q
+	dbIvEQgIV11q8TFD2p6/CImuGLgURCanMWEhrx8i4pLWMW5ut/lulWWkRc90f9nL
+	atYqgw==
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4byydh0qbj-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jan 2026 07:48:57 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2a0bae9acd4so5774615ad.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 23:48:57 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jan 2026 07:48:59 +0000 (GMT)
+Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-82357cbd272so1061840b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jan 2026 23:48:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1769672935; x=1770277735; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1769672938; x=1770277738; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=e0/I/DJJZa2vhoCFigzW3Q2dg5+iBNdSgTYhvQB+lvY=;
-        b=dFseT7drLj5hs6BqUyMUupg2XUKyhhXU/VVxtkwwHkiIUIHEXE1VstbHFvA5D3Kb7F
-         zdw3/qaFUCakKk4gdzjH3dzkp9vJ1/O3aVp41xflmAbDR5zZrVSml2J7y0fcEJxd1gyG
-         Zb6OKSkYQhW6vOeC5QWjXA0m2ZIhK6LA5afcAUKWXPtsaZzuTa6+fqxso3lwukDJSmlR
-         1iogxq3ilJov81zjwjX8F1rscFIzGKrTvqrGIT1yPzdGT7PipTUnTlANIYR9YilvTLRU
-         0rd8ieLVcxtdFP3qNWp6fQXD1FzDZzMN4GuN2f3PVtdujjwITagWU5IWLpWGPRl8wbBg
-         n1fQ==
+        bh=14DCHSOuOQFKW6OTpiNFZoRvwSOz4r8wKdkOgTkHAjQ=;
+        b=LpeaBLWtywPqgvTFSIxK4KZX+DA4a8D8y7G2D5Wq86L11SwyKpdJIuYKdhXmd4SHR7
+         0CowupcARA48eMx9XrIb6tBO9FuzJ5TP/TPiTe6TVpbQpJ9yvJhbEpzUaKKJTNPVr5Br
+         2jMMAOm+/WmAiTI477DiPmQmkpmm1MmTxgsT5iJ0ckCyHh1Pwn7jQr/amu8nem3i3rjQ
+         mrTtynntdm74hz428s1Ns0Kox2sBYu22fsUtGHPS7TQEaip7uN9evRAF4bZq7xngsf4o
+         l+5rcpaKdbNjwTAZtlSE8AYAaKX5g7JLquKpfjFOMgbQMHAmnlZo68XRTRQZSeypciKu
+         w58g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769672935; x=1770277735;
+        d=1e100.net; s=20230601; t=1769672938; x=1770277738;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=e0/I/DJJZa2vhoCFigzW3Q2dg5+iBNdSgTYhvQB+lvY=;
-        b=wmiat4Lb1buc8RLssXDX4xzxPY50c64JL0rw0mg7S6lY8RllRi9TrY9UXaWASqj1OW
-         Xew9Omn2HTYIHDX+AGUddFl6UtCYKc9md4kjdIWUtmG4b6FtWeN4+CXcy6HpOg2efGg1
-         8mLCK2jE079nv/LHmh61Krb8WvdKk7kbmrsmUGTUeqbuK1B6lFNT5vLEI9wsDANrWSZh
-         YYnlxtwUL3+T40HbLyHO19JOye0I/piEUgN6n1SA413N7rKq5f1rAUav2Swkt5Taxlb5
-         tqILmBDhHTJeAg0YW1ALgS0Bo2Jhvn8+HBP/J0K8bncXTYX3FnZI6VEb9LvPlydCOiWY
-         RKeQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXEWrMsUiIkzRJ3FY0c2RhjlbhGUpwMzJ4WbVcuWPNfKr5zOfxUXme1O4pKLOUeJx2bJp6YhFCUnhNfO0Wn@vger.kernel.org
-X-Gm-Message-State: AOJu0YxUZ0YqKkSzF4Taoa5E7vAJm1TvZQaVJvZ2EYJ4XCXAFUYD1+x/
-	rJoswsJJ9RyuxQ4pjF1iraqLFd4IFyn4A+jH675MxZQxuECUbeRwI9Ec84fGv2pB9jogg1MpaZY
-	nAbyRM287zgL9Nm+2Ye7ONptlMao8K57+9o4nsmPWhJDQiYKorr5RS8rjuYeT1K7f+kNvS2d3oY
-	flHXw=
-X-Gm-Gg: AZuq6aJ8Y8uhUIYK19HuLxvc99kKEUaO2Lb3lgrtB42F+FWHRMsKZ7GEdH4WfpQNRCo
-	cbT1AJ9aPEYt+n4B2JGxy3e4k+dPGYLAU4/qYI80Uzr3jyXLRX/IFiNYeg+/pQKS8F8dQ3KGcrF
-	WItLA6m97e2+eiP1r1XbsFIchTEq4HMOGWs9LQ/DrDmLr+58llcyOuUrxFryXA0Ki7kF2UT6/2E
-	Z5orlGfWIHGRh87/fr2Q7QUmCDa/lblXvGjsYbxOocK6oiXX+4PGQ3ztVMCGB5/U30VOlAWQwIc
-	wD9hXOiBdQKb3aq9IphUHu/rDQippZBsneAfB1+8Vgt5xjZYjHRrTaUffOyz7+mgREOBwg1Ha+9
-	cOctNqueF39WBucDwfQEvDipFazwdfk140/OpkaesXC6mOEthPkpHIKEyltWNCjpAE4oPJ7jfQa
-	/L/BZG/or8NLE=
-X-Received: by 2002:a17:903:1b08:b0:2a0:81c1:6194 with SMTP id d9443c01a7336-2a870dd80b9mr76216975ad.47.1769672935081;
-        Wed, 28 Jan 2026 23:48:55 -0800 (PST)
-X-Received: by 2002:a17:903:1b08:b0:2a0:81c1:6194 with SMTP id d9443c01a7336-2a870dd80b9mr76216585ad.47.1769672934418;
-        Wed, 28 Jan 2026 23:48:54 -0800 (PST)
+        bh=14DCHSOuOQFKW6OTpiNFZoRvwSOz4r8wKdkOgTkHAjQ=;
+        b=OFtcz9ngpPnBYd9gHbukJ8Ai6WwHvpEhwlRwfeyi1/JB5bQGVumEHg5PFvPzDeRsBf
+         iQhyRSsm4suN+Y91n74ov3dKNov3kDd6uqCqbrmiFsFseWTlZvIoTJmdnExVaspNoj7S
+         ji5OC31SBHNJWy2oI1eU0gr5vzin6TftGY2dc9e+mW3tG8lwrIjj7whbJ/eB3tK+Qc2H
+         G9S/4DbpA/pO9riIJiOm9KONi3B/+tHnocy59QLOWIH+d3ckE0CRyWaMSc+xuMhj+x7h
+         +6BwggCJDBktPGzDn9a88nbw0Z+nEHdZkjQch3L9fdJa8lHPjrXNlgfokLcRpAuAfO1R
+         M9Dw==
+X-Forwarded-Encrypted: i=1; AJvYcCVCet7qWRFFxwIXlCFz7/UJK2DRW5znqXghFLDKE97KpyUq61b2SG4P4MUOKl5e+F4Jco5kPZiAf9TjZddJ@vger.kernel.org
+X-Gm-Message-State: AOJu0YyBKctzi8gYw2UCEy7dUSjRHwYbDJsT/JhM0vf2L1niu3hHlmh6
+	n59Nu3F2nj5N/5t19mucVs0x+4hHduCRvfng8436KnKr3nuvlTiP0sxKHQzjy3O2Stg5IG9e+J6
+	chDrRTWPW9MLScoSiMziC4lZ5zmZMhgyxJlPrD5u8JswiUhIHyVb/4D0BSdZozED0kJBSt3viSy
+	T27pE=
+X-Gm-Gg: AZuq6aJRXi43WrIAQf0HLLsJ99pwjqAtU/iV4TkjGaztR3fRIabcdVEE3OFstKcVphe
+	IbMiXJU3pW1MAMmQ/3pUzqxZghlQH1GzhaJ9tbtvMT17JL043dnIysdav9xLkgk/WG3Is4UNP0m
+	MQMua3MYs4EXC0xqzI9JyRf6HRonORjH1ehemRd/Uh84/lNRMViaHux66nBi9H2ii67psuabHgR
+	G8iRwtG7kyebMepLB0hPMnmRuBOCzI72z5xg+D9JemuAiPAmEyeqCjV2Ct9D3+v8BGYMbXkuJyG
+	E0T9tCf0VTjjXKSpEOCcoN7oOjo99jArlqzQg5+x4WwB/Fo0VzOZqOfAbW+QTVHU0dyMkJuOvVk
+	jC251tSxdN1hL3VtD5q0Q9NX+rZEMya04l1j6+4g44LEBNjz03M6HHEYYVmm6S7DQBMIjLCo1HZ
+	5EoXRV4BgELkw=
+X-Received: by 2002:a05:6a00:b481:b0:823:1679:49cc with SMTP id d2e1a72fcca58-823693027c0mr7725477b3a.66.1769672938351;
+        Wed, 28 Jan 2026 23:48:58 -0800 (PST)
+X-Received: by 2002:a05:6a00:b481:b0:823:1679:49cc with SMTP id d2e1a72fcca58-823693027c0mr7725453b3a.66.1769672937863;
+        Wed, 28 Jan 2026 23:48:57 -0800 (PST)
 Received: from WANGAOW-LAB01.ap.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82379b49fecsm4534634b3a.15.2026.01.28.23.48.51
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82379b49fecsm4534634b3a.15.2026.01.28.23.48.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Jan 2026 23:48:53 -0800 (PST)
+        Wed, 28 Jan 2026 23:48:57 -0800 (PST)
 From: Wangao Wang <wangao.wang@oss.qualcomm.com>
-Date: Thu, 29 Jan 2026 15:48:25 +0800
-Subject: [PATCH v4 4/6] media: qcom: iris: Add hierarchical coding support
- for encoder
+Date: Thu, 29 Jan 2026 15:48:26 +0800
+Subject: [PATCH v4 5/6] media: qcom: iris: Optimize
+ iris_hfi_gen1_packet_session_set_property
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -110,7 +110,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260129-batch2_iris_encoder_enhancements-v4-4-efaac131a5f7@oss.qualcomm.com>
+Message-Id: <20260129-batch2_iris_encoder_enhancements-v4-5-efaac131a5f7@oss.qualcomm.com>
 References: <20260129-batch2_iris_encoder_enhancements-v4-0-efaac131a5f7@oss.qualcomm.com>
 In-Reply-To: <20260129-batch2_iris_encoder_enhancements-v4-0-efaac131a5f7@oss.qualcomm.com>
 To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
@@ -121,30 +121,32 @@ To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
 Cc: quic_qiweil@quicinc.com, Renjiang Han <renjiang.han@oss.qualcomm.com>,
         Wangao Wang <wangao.wang@oss.qualcomm.com>,
         linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+        linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1769672917; l=31480;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1769672917; l=9503;
  i=wangao.wang@oss.qualcomm.com; s=20251021; h=from:subject:message-id;
- bh=wlo89wUsTBg+cNJlTI2T+8Hua/ZnYc6pwFtWHXIfH20=;
- b=DqzblBT3ZnTlYq1aBXLc/tqu53UoSt+uBCavHWtR+dR8n5vjpbiof5h5eFFLaeAR9G9bdat+O
- 2XKw1sARxauA4Vg48d5jO8hCMTMKj7KsZ9XUsom/AuQX5XVlE5purpQ
+ bh=vtZ8qpxO1glVKw5WkTGV/9fGQlliBjbhanGx9pnoSjM=;
+ b=spXlVBTmO8xUhF/BGYet9A0KHqnQ5uqY678/roxKlyw4iNEzp5jclU2dTjVLf1dt8MS4M9aBv
+ OytHcPHRShYD8iNHNKUhxB0o7pkf4A7yT8k7We3WObirjuu8t5YANAL
 X-Developer-Key: i=wangao.wang@oss.qualcomm.com; a=ed25519;
  pk=bUPgYblBUAsoPyGfssbNR7ZXUSGF8v1VF4FJzSO6/aA=
-X-Proofpoint-GUID: 6Wke14sa8y4w9JcxSUKlDFOKN6h47WCZ
-X-Proofpoint-ORIG-GUID: 6Wke14sa8y4w9JcxSUKlDFOKN6h47WCZ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI5MDA0NiBTYWx0ZWRfXzL9abGF3dc2L
- 0V0RMAVPJ4c0OfA4HAgqnuVA1QyHKoT63HDOSfNkoG0eSNljP0BB/0c3Z3/Ijw4Xw7ina8DJfdx
- 2N/rtGynf+XFrbuL4qT3pSY+TKbecvH4zXSEBC13MEeHFyRf2fNUE4FPHwNT87yStSkDVxicrZz
- 89Az7zIF9LNWewcbCZOgjgc4rap/MeUjEvts0zYUPesuq13RtlDBZnG5XTsAS4GOquQNXOJvYxH
- j1PoURkv2M5b8V60f9Y3dUq/iw9vyN4paAa0tTwkSWM8GxGoD2DiDeRAekEdatvNL3s/4eWWPmr
- xR93M4Cc9hkH7Q+xCSswNG+iW8oDyBzz94yD2cnzGK7U+R1U5nHUf4XfJMYyhTPzmgU7puU/teG
- NoTa2PIa49edWR6wR8Se2hrgSglJZFb+MqmKL04Wb53xIygZL3n+znYNzEOnhZIRxWkTDe9Tdld
- 8IK93+RUbAgM7MeB7Yg==
-X-Authority-Analysis: v=2.4 cv=Cs6ys34D c=1 sm=1 tr=0 ts=697b10e9 cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+X-Proofpoint-GUID: LLbIGvreQy7toN-_TzE9fnfJNRmjwqgq
+X-Proofpoint-ORIG-GUID: LLbIGvreQy7toN-_TzE9fnfJNRmjwqgq
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI5MDA0NiBTYWx0ZWRfXzafT7164e8PE
+ wPL7aPow4Kc/LVeeZF9svmALS2ueahcoF36Qxjw0mcG+6aYwe/qBMcNPZG/AYhcTHLzj8q/2Y5l
+ oehp3mJVVfH/334zVYAwSi6WqEVEl84na63op+PjkaY4u1xrJ8u+KIMuALKpfajgkJDJ4j1oyut
+ dQDYo+L9TDaA5qmxPdjGEvARyWRNi0+pMA5HmcmppKmSttZIFyv0xkEEAJiL6xga2VVPvgZTlPB
+ JNYZiF60E7ML5BNzXDiJhzdVIWk42EgfHZJlH8givLH2qDBUdF2pGbv5aRLe6MaDmB/L9GhwXwY
+ EbGMNwH4HGj7H98/5ouuuuaZYEvdpWycyEacP+x5onaCZryu3aVk2i64St/D1aRopDzxLepSEVR
+ Tc2TQIYMDx4Q2YCj5DbAczk4gXcSA28iMgwjm04sb8zXoKUeB2Q//073Dp8CMv5f2g+q0dJzDfJ
+ 6IYL8cjTDNEI6eFwQHg==
+X-Authority-Analysis: v=2.4 cv=Cs6ys34D c=1 sm=1 tr=0 ts=697b10eb cx=c_pps
+ a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
  a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=pEw79mLSGxr9eRpYBYUA:9
- a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8
+ a=7zm3FxsWSslHyZ29AF8A:9 a=QEXdDO2ut3YA:10 a=IoOABgeZipijB_acs4fv:22
+ a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-01-29_01,2026-01-28_03,2025-10-01_01
@@ -157,909 +159,271 @@ X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-91132-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	FROM_NEQ_ENVFROM(0.00)[wangao.wang@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	TAGGED_FROM(0.00)[bounces-91133-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,linaro.org:email,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[wangao.wang@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[11];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: B4EECAD020
+X-Rspamd-Queue-Id: 83748AD003
 X-Rspamd-Action: no action
 
-Add hierarchical coding support for both gen1 and gen2 encoders by enabling
- the following V4L2 controls:
-H264:
-V4L2_CID_MPEG_VIDEO_H264_HIERARCHICAL_CODING,
-V4L2_CID_MPEG_VIDEO_H264_HIERARCHICAL_CODING_TYPE,
-V4L2_CID_MPEG_VIDEO_H264_HIERARCHICAL_CODING_LAYER
-HEVC(gen2 only):
-V4L2_CID_MPEG_VIDEO_HEVC_HIER_CODING_TYPE,
-V4L2_CID_MPEG_VIDEO_HEVC_HIER_CODING_LAYER
+Modify iris_hfi_gen1_packet_session_set_property to simplify size
+calculations and remove redundant code patterns.
 
+Previously, packet->shdr.hdr.size was incremented by sizeof(u32) in
+every switch case, resulting in repetitive and less maintainable
+logic.
+
+Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
 Signed-off-by: Wangao Wang <wangao.wang@oss.qualcomm.com>
 ---
- drivers/media/platform/qcom/iris/iris_ctrls.c      | 287 ++++++++++++++++++++-
- drivers/media/platform/qcom/iris/iris_ctrls.h      |   7 +-
- .../platform/qcom/iris/iris_hfi_gen1_command.c     |  21 +-
- .../platform/qcom/iris/iris_hfi_gen1_defines.h     |   2 +
- .../platform/qcom/iris/iris_hfi_gen2_defines.h     |  15 ++
- drivers/media/platform/qcom/iris/iris_instance.h   |   4 +
- .../platform/qcom/iris/iris_platform_common.h      |  23 ++
- .../media/platform/qcom/iris/iris_platform_gen1.c  |  94 ++++++-
- .../media/platform/qcom/iris/iris_platform_gen2.c  | 182 ++++++++++++-
- drivers/media/platform/qcom/iris/iris_vpu_buffer.c |  28 ++
- 10 files changed, 655 insertions(+), 8 deletions(-)
+ .../platform/qcom/iris/iris_hfi_gen1_command.c     | 50 +++++++++++-----------
+ 1 file changed, 25 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/iris/iris_ctrls.c b/drivers/media/platform/qcom/iris/iris_ctrls.c
-index e049c28db1d8395736ae6970b5efbb351ce427dd..b7f0cce8ec7da5336156d0780d84dff6d0f50535 100644
---- a/drivers/media/platform/qcom/iris/iris_ctrls.c
-+++ b/drivers/media/platform/qcom/iris/iris_ctrls.c
-@@ -120,6 +120,40 @@ static enum platform_inst_fw_cap_type iris_get_cap_id(u32 id)
- 		return MARK_LTR;
- 	case V4L2_CID_MPEG_VIDEO_B_FRAMES:
- 		return B_FRAME;
-+	case V4L2_CID_MPEG_VIDEO_H264_HIERARCHICAL_CODING:
-+		return LAYER_ENABLE;
-+	case V4L2_CID_MPEG_VIDEO_H264_HIERARCHICAL_CODING_TYPE:
-+		return LAYER_TYPE_H264;
-+	case V4L2_CID_MPEG_VIDEO_HEVC_HIER_CODING_TYPE:
-+		return LAYER_TYPE_HEVC;
-+	case V4L2_CID_MPEG_VIDEO_H264_HIERARCHICAL_CODING_LAYER:
-+		return LAYER_COUNT_H264;
-+	case V4L2_CID_MPEG_VIDEO_HEVC_HIER_CODING_LAYER:
-+		return LAYER_COUNT_HEVC;
-+	case V4L2_CID_MPEG_VIDEO_H264_HIER_CODING_L0_BR:
-+		return LAYER0_BITRATE_H264;
-+	case V4L2_CID_MPEG_VIDEO_H264_HIER_CODING_L1_BR:
-+		return LAYER1_BITRATE_H264;
-+	case V4L2_CID_MPEG_VIDEO_H264_HIER_CODING_L2_BR:
-+		return LAYER2_BITRATE_H264;
-+	case V4L2_CID_MPEG_VIDEO_H264_HIER_CODING_L3_BR:
-+		return LAYER3_BITRATE_H264;
-+	case V4L2_CID_MPEG_VIDEO_H264_HIER_CODING_L4_BR:
-+		return LAYER4_BITRATE_H264;
-+	case V4L2_CID_MPEG_VIDEO_H264_HIER_CODING_L5_BR:
-+		return LAYER5_BITRATE_H264;
-+	case V4L2_CID_MPEG_VIDEO_HEVC_HIER_CODING_L0_BR:
-+		return LAYER0_BITRATE_HEVC;
-+	case V4L2_CID_MPEG_VIDEO_HEVC_HIER_CODING_L1_BR:
-+		return LAYER1_BITRATE_HEVC;
-+	case V4L2_CID_MPEG_VIDEO_HEVC_HIER_CODING_L2_BR:
-+		return LAYER2_BITRATE_HEVC;
-+	case V4L2_CID_MPEG_VIDEO_HEVC_HIER_CODING_L3_BR:
-+		return LAYER3_BITRATE_HEVC;
-+	case V4L2_CID_MPEG_VIDEO_HEVC_HIER_CODING_L4_BR:
-+		return LAYER4_BITRATE_HEVC;
-+	case V4L2_CID_MPEG_VIDEO_HEVC_HIER_CODING_L5_BR:
-+		return LAYER5_BITRATE_HEVC;
- 	default:
- 		return INST_FW_CAP_MAX;
- 	}
-@@ -229,6 +263,40 @@ static u32 iris_get_v4l2_id(enum platform_inst_fw_cap_type cap_id)
- 		return V4L2_CID_MPEG_VIDEO_FRAME_LTR_INDEX;
- 	case B_FRAME:
- 		return V4L2_CID_MPEG_VIDEO_B_FRAMES;
-+	case LAYER_ENABLE:
-+		return V4L2_CID_MPEG_VIDEO_H264_HIERARCHICAL_CODING;
-+	case LAYER_TYPE_H264:
-+		return V4L2_CID_MPEG_VIDEO_H264_HIERARCHICAL_CODING_TYPE;
-+	case LAYER_TYPE_HEVC:
-+		return V4L2_CID_MPEG_VIDEO_HEVC_HIER_CODING_TYPE;
-+	case LAYER_COUNT_H264:
-+		return V4L2_CID_MPEG_VIDEO_H264_HIERARCHICAL_CODING_LAYER;
-+	case LAYER_COUNT_HEVC:
-+		return V4L2_CID_MPEG_VIDEO_HEVC_HIER_CODING_LAYER;
-+	case LAYER0_BITRATE_H264:
-+		return V4L2_CID_MPEG_VIDEO_H264_HIER_CODING_L0_BR;
-+	case LAYER1_BITRATE_H264:
-+		return V4L2_CID_MPEG_VIDEO_H264_HIER_CODING_L1_BR;
-+	case LAYER2_BITRATE_H264:
-+		return V4L2_CID_MPEG_VIDEO_H264_HIER_CODING_L2_BR;
-+	case LAYER3_BITRATE_H264:
-+		return V4L2_CID_MPEG_VIDEO_H264_HIER_CODING_L3_BR;
-+	case LAYER4_BITRATE_H264:
-+		return V4L2_CID_MPEG_VIDEO_H264_HIER_CODING_L4_BR;
-+	case LAYER5_BITRATE_H264:
-+		return V4L2_CID_MPEG_VIDEO_H264_HIER_CODING_L5_BR;
-+	case LAYER0_BITRATE_HEVC:
-+		return V4L2_CID_MPEG_VIDEO_HEVC_HIER_CODING_L0_BR;
-+	case LAYER1_BITRATE_HEVC:
-+		return V4L2_CID_MPEG_VIDEO_HEVC_HIER_CODING_L1_BR;
-+	case LAYER2_BITRATE_HEVC:
-+		return V4L2_CID_MPEG_VIDEO_HEVC_HIER_CODING_L2_BR;
-+	case LAYER3_BITRATE_HEVC:
-+		return V4L2_CID_MPEG_VIDEO_HEVC_HIER_CODING_L3_BR;
-+	case LAYER4_BITRATE_HEVC:
-+		return V4L2_CID_MPEG_VIDEO_HEVC_HIER_CODING_L4_BR;
-+	case LAYER5_BITRATE_HEVC:
-+		return V4L2_CID_MPEG_VIDEO_HEVC_HIER_CODING_L5_BR;
- 	default:
- 		return 0;
- 	}
-@@ -575,7 +643,63 @@ int iris_set_header_mode_gen2(struct iris_inst *inst, enum platform_inst_fw_cap_
- 				     &hfi_val, sizeof(u32));
- }
- 
--int iris_set_bitrate(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id)
-+int iris_set_bitrate_gen1(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id)
-+{
-+	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
-+	u32 entropy_mode = inst->fw_caps[ENTROPY_MODE].value;
-+	u32 bitrate = inst->fw_caps[cap_id].value;
-+	u32 hfi_id = inst->fw_caps[cap_id].hfi_id;
-+	struct hfi_bitrate hfi_val;
-+	u32 max_bitrate;
-+
-+	if (!(inst->fw_caps[cap_id].flags & CAP_FLAG_CLIENT_SET) && cap_id != BITRATE)
-+		return -EINVAL;
-+
-+	if (inst->codec == V4L2_PIX_FMT_HEVC)
-+		max_bitrate = CABAC_MAX_BITRATE;
-+
-+	if (entropy_mode == V4L2_MPEG_VIDEO_H264_ENTROPY_MODE_CABAC)
-+		max_bitrate = CABAC_MAX_BITRATE;
-+	else
-+		max_bitrate = CAVLC_MAX_BITRATE;
-+
-+	hfi_val.bitrate = min(bitrate, max_bitrate);
-+
-+	switch (cap_id) {
-+	case BITRATE:
-+	case LAYER0_BITRATE_H264:
-+		hfi_val.layer_id = 0;
-+		break;
-+	case LAYER1_BITRATE_H264:
-+		hfi_val.layer_id = 1;
-+		break;
-+	case LAYER2_BITRATE_H264:
-+		hfi_val.layer_id = 2;
-+		break;
-+	case LAYER3_BITRATE_H264:
-+		hfi_val.layer_id = 3;
-+		break;
-+	case LAYER4_BITRATE_H264:
-+		hfi_val.layer_id = 4;
-+		break;
-+	case LAYER5_BITRATE_H264:
-+		hfi_val.layer_id = 5;
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
-+
-+	if (hfi_val.layer_id > 0 && !inst->fw_caps[LAYER_ENABLE].value)
-+		return -EINVAL;
-+
-+	return hfi_ops->session_set_property(inst, hfi_id,
-+					     HFI_HOST_FLAGS_NONE,
-+					     iris_get_port_info(inst, cap_id),
-+					     HFI_PAYLOAD_STRUCTURE,
-+					     &hfi_val, sizeof(hfi_val));
-+}
-+
-+int iris_set_bitrate_gen2(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id)
- {
- 	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
- 	u32 entropy_mode = inst->fw_caps[ENTROPY_MODE].value;
-@@ -1191,6 +1315,167 @@ int iris_set_intra_period(struct iris_inst *inst, enum platform_inst_fw_cap_type
- 					     &intra_period, sizeof(intra_period));
- }
- 
-+int iris_set_layer_type(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id)
-+{
-+	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
-+	u32 layer_enable = inst->fw_caps[LAYER_ENABLE].value;
-+	u32 hfi_id = inst->fw_caps[cap_id].hfi_id;
-+	u32 layer_type;
-+
-+	if (inst->hfi_rc_type == HFI_RATE_CONTROL_CQ ||
-+	    inst->hfi_rc_type == HFI_RATE_CONTROL_OFF)
-+		return -EINVAL;
-+
-+	if (inst->codec == V4L2_PIX_FMT_H264) {
-+		if (!layer_enable || !inst->fw_caps[LAYER_COUNT_H264].value)
-+			return -EINVAL;
-+
-+		if (inst->fw_caps[LAYER_TYPE_H264].value ==
-+			V4L2_MPEG_VIDEO_H264_HIERARCHICAL_CODING_P) {
-+			if (inst->hfi_rc_type == HFI_RC_VBR_CFR)
-+				layer_type = HFI_HIER_P_HYBRID_LTR;
-+			else
-+				layer_type = HFI_HIER_P_SLIDING_WINDOW;
-+		} else if (inst->fw_caps[LAYER_TYPE_H264].value ==
-+			V4L2_MPEG_VIDEO_H264_HIERARCHICAL_CODING_B) {
-+			if (inst->hfi_rc_type == HFI_RC_VBR_CFR)
-+				layer_type = HFI_HIER_B;
-+			else
-+				return -EINVAL;
-+		} else {
-+			return -EINVAL;
-+		}
-+	} else if (inst->codec == V4L2_PIX_FMT_HEVC) {
-+		if (!inst->fw_caps[LAYER_COUNT_HEVC].value)
-+			return -EINVAL;
-+
-+		if (inst->fw_caps[LAYER_TYPE_HEVC].value ==
-+			V4L2_MPEG_VIDEO_HEVC_HIERARCHICAL_CODING_P) {
-+			layer_type = HFI_HIER_P_SLIDING_WINDOW;
-+		} else if (inst->fw_caps[LAYER_TYPE_HEVC].value ==
-+			V4L2_MPEG_VIDEO_HEVC_HIERARCHICAL_CODING_B) {
-+			if (inst->hfi_rc_type == HFI_RC_VBR_CFR)
-+				layer_type = HFI_HIER_B;
-+			else
-+				return -EINVAL;
-+		} else {
-+			return -EINVAL;
-+		}
-+	} else {
-+		return -EINVAL;
-+	}
-+
-+	inst->hfi_layer_type = layer_type;
-+
-+	return hfi_ops->session_set_property(inst, hfi_id,
-+					     HFI_HOST_FLAGS_NONE,
-+					     iris_get_port_info(inst, cap_id),
-+					     HFI_PAYLOAD_U32_ENUM,
-+					     &layer_type, sizeof(u32));
-+}
-+
-+int iris_set_layer_count_gen1(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id)
-+{
-+	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
-+	struct vb2_queue *sq = v4l2_m2m_get_src_vq(inst->m2m_ctx);
-+	struct vb2_queue *dq = v4l2_m2m_get_dst_vq(inst->m2m_ctx);
-+	u32 layer_enable = inst->fw_caps[LAYER_ENABLE].value;
-+	u32 layer_count = inst->fw_caps[cap_id].value;
-+	u32 hfi_id, ret;
-+
-+	if (!layer_enable || !layer_count)
-+		return -EINVAL;
-+
-+	inst->hfi_layer_count = layer_count;
-+
-+	if (!vb2_is_streaming(sq) && !vb2_is_streaming(dq)) {
-+		hfi_id = HFI_PROPERTY_PARAM_VENC_HIER_P_MAX_NUM_ENH_LAYER;
-+		ret = hfi_ops->session_set_property(inst, hfi_id,
-+						    HFI_HOST_FLAGS_NONE,
-+						    iris_get_port_info(inst, cap_id),
-+						    HFI_PAYLOAD_U32,
-+						    &layer_count, sizeof(u32));
-+		if (ret)
-+			return ret;
-+	}
-+
-+	hfi_id = inst->fw_caps[cap_id].hfi_id;
-+	return hfi_ops->session_set_property(inst, hfi_id,
-+					     HFI_HOST_FLAGS_NONE,
-+					     iris_get_port_info(inst, cap_id),
-+					     HFI_PAYLOAD_U32,
-+					     &layer_count, sizeof(u32));
-+}
-+
-+int iris_set_layer_count_gen2(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id)
-+{
-+	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
-+	u32 hfi_id = inst->fw_caps[cap_id].hfi_id;
-+	u32 layer_type = inst->hfi_layer_type;
-+	u32 layer_count, layer_count_max;
-+
-+	layer_count = (inst->codec == V4L2_PIX_FMT_H264) ?
-+		inst->fw_caps[LAYER_COUNT_H264].value :
-+		inst->fw_caps[LAYER_COUNT_HEVC].value;
-+
-+	if (!layer_count)
-+		return -EINVAL;
-+
-+	if (layer_type == HFI_HIER_B) {
-+		layer_count_max = MAX_LAYER_HB;
-+	} else if (layer_type == HFI_HIER_P_HYBRID_LTR) {
-+		layer_count_max = MAX_AVC_LAYER_HP_HYBRID_LTR;
-+	} else if (layer_type == HFI_HIER_P_SLIDING_WINDOW) {
-+		if (inst->codec == V4L2_PIX_FMT_H264) {
-+			layer_count_max = MAX_AVC_LAYER_HP_SLIDING_WINDOW;
-+		} else {
-+			if (inst->hfi_rc_type == HFI_RC_VBR_CFR)
-+				layer_count_max = MAX_HEVC_VBR_LAYER_HP_SLIDING_WINDOW;
-+			else
-+				layer_count_max = MAX_HEVC_LAYER_HP_SLIDING_WINDOW;
-+		}
-+	} else {
-+		return -EINVAL;
-+	}
-+
-+	if (layer_count > layer_count_max)
-+		layer_count = layer_count_max;
-+
-+	layer_count += 1; /* base layer */
-+	inst->hfi_layer_count = layer_count;
-+
-+	return hfi_ops->session_set_property(inst, hfi_id,
-+					     HFI_HOST_FLAGS_NONE,
-+					     iris_get_port_info(inst, cap_id),
-+					     HFI_PAYLOAD_U32,
-+					     &layer_count, sizeof(u32));
-+}
-+
-+int iris_set_layer_bitrate(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id)
-+{
-+	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
-+	struct vb2_queue *sq = v4l2_m2m_get_src_vq(inst->m2m_ctx);
-+	struct vb2_queue *dq = v4l2_m2m_get_dst_vq(inst->m2m_ctx);
-+	u32 hfi_id = inst->fw_caps[cap_id].hfi_id;
-+	u32 bitrate = inst->fw_caps[cap_id].value;
-+
-+	/* ignore layer bitrate when total bitrate is set */
-+	if (inst->fw_caps[BITRATE].flags & CAP_FLAG_CLIENT_SET)
-+		return 0;
-+
-+	if (!(inst->fw_caps[cap_id].flags & CAP_FLAG_CLIENT_SET))
-+		return -EINVAL;
-+
-+	if (!vb2_is_streaming(sq) && !vb2_is_streaming(dq))
-+		return -EINVAL;
-+
-+	return hfi_ops->session_set_property(inst, hfi_id,
-+					     HFI_HOST_FLAGS_NONE,
-+					     iris_get_port_info(inst, cap_id),
-+					     HFI_PAYLOAD_U32,
-+					     &bitrate, sizeof(u32));
-+}
-+
- int iris_set_properties(struct iris_inst *inst, u32 plane)
- {
- 	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
-diff --git a/drivers/media/platform/qcom/iris/iris_ctrls.h b/drivers/media/platform/qcom/iris/iris_ctrls.h
-index 609258c81517b71523b682ca994786cdd020b07f..3c462ec9190be8935176b290588f224fe4f144a4 100644
---- a/drivers/media/platform/qcom/iris/iris_ctrls.h
-+++ b/drivers/media/platform/qcom/iris/iris_ctrls.h
-@@ -22,7 +22,8 @@ int iris_set_level(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id
- int iris_set_profile_level_gen1(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id);
- int iris_set_header_mode_gen1(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id);
- int iris_set_header_mode_gen2(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id);
--int iris_set_bitrate(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id);
-+int iris_set_bitrate_gen1(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id);
-+int iris_set_bitrate_gen2(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id);
- int iris_set_peak_bitrate(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id);
- int iris_set_bitrate_mode_gen1(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id);
- int iris_set_bitrate_mode_gen2(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id);
-@@ -42,6 +43,10 @@ int iris_set_use_ltr(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_
- int iris_set_mark_ltr(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id);
- int iris_set_use_and_mark_ltr(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id);
- int iris_set_intra_period(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id);
-+int iris_set_layer_type(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id);
-+int iris_set_layer_count_gen1(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id);
-+int iris_set_layer_count_gen2(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id);
-+int iris_set_layer_bitrate(struct iris_inst *inst, enum platform_inst_fw_cap_type cap_id);
- int iris_set_properties(struct iris_inst *inst, u32 plane);
- 
- #endif
 diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
-index 87871fed09ed753760b6057ad4afa87be5f91b69..39fc728646d3808c50481ccdfa15ef0dfab05576 100644
+index 39fc728646d3808c50481ccdfa15ef0dfab05576..d19d15435424da375919e3de729e756be23c0882 100644
 --- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
 +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
-@@ -604,11 +604,10 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
+@@ -485,7 +485,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
+ {
+ 	void *prop_data = &packet->data[1];
+ 
+-	packet->shdr.hdr.size = sizeof(*packet);
++	packet->shdr.hdr.size = sizeof(*packet) + sizeof(ptype);
+ 	packet->shdr.hdr.pkt_type = HFI_CMD_SESSION_SET_PROPERTY;
+ 	packet->shdr.session_id = inst->session_id;
+ 	packet->num_properties = 1;
+@@ -498,14 +498,14 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
+ 		fsize->buffer_type = in->buffer_type;
+ 		fsize->height = in->height;
+ 		fsize->width = in->width;
+-		packet->shdr.hdr.size += sizeof(u32) + sizeof(*fsize);
++		packet->shdr.hdr.size += sizeof(*fsize);
+ 		break;
+ 	}
+ 	case HFI_PROPERTY_CONFIG_VIDEOCORES_USAGE: {
+ 		struct hfi_videocores_usage_type *in = pdata, *cu = prop_data;
+ 
+ 		cu->video_core_enable_mask = in->video_core_enable_mask;
+-		packet->shdr.hdr.size += sizeof(u32) + sizeof(*cu);
++		packet->shdr.hdr.size += sizeof(*cu);
+ 		break;
+ 	}
+ 	case HFI_PROPERTY_PARAM_UNCOMPRESSED_FORMAT_SELECT: {
+@@ -514,7 +514,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
+ 
+ 		hfi->buffer_type = in->buffer_type;
+ 		hfi->format = in->format;
+-		packet->shdr.hdr.size += sizeof(u32) + sizeof(*hfi);
++		packet->shdr.hdr.size += sizeof(*hfi);
+ 		break;
+ 	}
+ 	case HFI_PROPERTY_PARAM_UNCOMPRESSED_PLANE_ACTUAL_CONSTRAINTS_INFO: {
+@@ -533,7 +533,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
+ 			info->plane_format[1].buffer_alignment = 256;
+ 		}
+ 
+-		packet->shdr.hdr.size += sizeof(u32) + sizeof(*info);
++		packet->shdr.hdr.size += sizeof(*info);
+ 		break;
+ 	}
+ 	case HFI_PROPERTY_PARAM_BUFFER_COUNT_ACTUAL: {
+@@ -543,7 +543,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
+ 		count->type = in->type;
+ 		count->count_actual = in->count_actual;
+ 		count->count_min_host = in->count_min_host;
+-		packet->shdr.hdr.size += sizeof(u32) + sizeof(*count);
++		packet->shdr.hdr.size += sizeof(*count);
+ 		break;
+ 	}
+ 	case HFI_PROPERTY_PARAM_VDEC_MULTI_STREAM: {
+@@ -552,7 +552,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
+ 
+ 		multi->buffer_type = in->buffer_type;
+ 		multi->enable = in->enable;
+-		packet->shdr.hdr.size += sizeof(u32) + sizeof(*multi);
++		packet->shdr.hdr.size += sizeof(*multi);
+ 		break;
+ 	}
+ 	case HFI_PROPERTY_PARAM_BUFFER_SIZE_ACTUAL: {
+@@ -560,7 +560,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
+ 
+ 		sz->size = in->size;
+ 		sz->type = in->type;
+-		packet->shdr.hdr.size += sizeof(u32) + sizeof(*sz);
++		packet->shdr.hdr.size += sizeof(*sz);
+ 		break;
+ 	}
+ 	case HFI_PROPERTY_PARAM_WORK_ROUTE: {
+@@ -568,7 +568,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
+ 		u32 *in = pdata;
+ 
+ 		wr->video_work_route = *in;
+-		packet->shdr.hdr.size += sizeof(u32) + sizeof(*wr);
++		packet->shdr.hdr.size += sizeof(*wr);
+ 		break;
+ 	}
+ 	case HFI_PROPERTY_PARAM_WORK_MODE: {
+@@ -576,7 +576,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
+ 		u32 *in = pdata;
+ 
+ 		wm->video_work_mode = *in;
+-		packet->shdr.hdr.size += sizeof(u32) + sizeof(*wm);
++		packet->shdr.hdr.size += sizeof(*wm);
+ 		break;
+ 	}
+ 	case HFI_PROPERTY_PARAM_PROFILE_LEVEL_CURRENT: {
+@@ -592,7 +592,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
+ 			/* Level not supported, falling back to 1 */
+ 			pl->level = 1;
+ 
+-		packet->shdr.hdr.size += sizeof(u32) + sizeof(*pl);
++		packet->shdr.hdr.size += sizeof(*pl);
+ 		break;
+ 	}
+ 	case HFI_PROPERTY_CONFIG_VENC_SYNC_FRAME_SEQUENCE_HEADER: {
+@@ -600,7 +600,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
+ 		u32 *in = pdata;
+ 
+ 		en->enable = *in;
+-		packet->shdr.hdr.size += sizeof(u32) + sizeof(*en);
++		packet->shdr.hdr.size += sizeof(*en);
  		break;
  	}
  	case HFI_PROPERTY_CONFIG_VENC_TARGET_BITRATE: {
--		struct hfi_bitrate *brate = prop_data;
--		u32 *in = pdata;
-+		struct hfi_bitrate *in = pdata, *brate = prop_data;
+@@ -608,7 +608,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
  
--		brate->bitrate = *in;
--		brate->layer_id = 0;
-+		brate->bitrate = in->bitrate;
-+		brate->layer_id = in->layer_id;
- 		packet->shdr.hdr.size += sizeof(u32) + sizeof(*brate);
+ 		brate->bitrate = in->bitrate;
+ 		brate->layer_id = in->layer_id;
+-		packet->shdr.hdr.size += sizeof(u32) + sizeof(*brate);
++		packet->shdr.hdr.size += sizeof(*brate);
  		break;
  	}
-@@ -728,6 +727,20 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
- 		packet->shdr.hdr.size += sizeof(u32) + sizeof(*intra_period);
+ 	case HFI_PROPERTY_PARAM_VENC_RATE_CONTROL: {
+@@ -627,7 +627,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
+ 		}
+ 
+ 		packet->data[1] = *in;
+-		packet->shdr.hdr.size += sizeof(u32) * 2;
++		packet->shdr.hdr.size += sizeof(u32);
  		break;
  	}
-+	case HFI_PROPERTY_PARAM_VENC_HIER_P_MAX_NUM_ENH_LAYER: {
-+		u32 *in = pdata;
-+
-+		packet->data[1] = *in;
-+		packet->shdr.hdr.size += sizeof(u32) + sizeof(u32);
-+		break;
-+	}
-+	case HFI_PROPERTY_CONFIG_VENC_HIER_P_ENH_LAYER: {
-+		u32 *in = pdata;
-+
-+		packet->data[1] = *in;
-+		packet->shdr.hdr.size += sizeof(u32) + sizeof(u32);
-+		break;
-+	}
+ 	case HFI_PROPERTY_PARAM_VENC_H264_ENTROPY_CONTROL: {
+@@ -637,7 +637,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
+ 		entropy->entropy_mode = *in;
+ 		if (entropy->entropy_mode == HFI_H264_ENTROPY_CABAC)
+ 			entropy->cabac_model = HFI_H264_CABAC_MODEL_0;
+-		packet->shdr.hdr.size += sizeof(u32) + sizeof(*entropy);
++		packet->shdr.hdr.size += sizeof(*entropy);
+ 		break;
+ 	}
+ 	case HFI_PROPERTY_PARAM_VENC_SESSION_QP_RANGE_V2: {
+@@ -662,7 +662,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
+ 			((max_qp & 0xFF) << 16);
+ 		range->min_qp.enable = 7;
+ 		range->max_qp.enable = 7;
+-		packet->shdr.hdr.size += sizeof(u32) + sizeof(*range);
++		packet->shdr.hdr.size += sizeof(*range);
+ 		break;
+ 	}
+ 	case HFI_PROPERTY_CONFIG_FRAME_RATE: {
+@@ -671,7 +671,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
+ 
+ 		frate->buffer_type = in->buffer_type;
+ 		frate->framerate = in->framerate;
+-		packet->shdr.hdr.size += sizeof(u32) + sizeof(*frate);
++		packet->shdr.hdr.size += sizeof(*frate);
+ 		break;
+ 	}
+ 	case HFI_PROPERTY_PARAM_UNCOMPRESSED_PLANE_ACTUAL_INFO: {
+@@ -683,7 +683,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
+ 		plane_actual_info->plane_format[0] = in->plane_format[0];
+ 		if (in->num_planes > 1)
+ 			plane_actual_info->plane_format[1] = in->plane_format[1];
+-		packet->shdr.hdr.size += sizeof(u32) + sizeof(*plane_actual_info);
++		packet->shdr.hdr.size += sizeof(*plane_actual_info);
+ 		break;
+ 	}
+ 	case HFI_PROPERTY_PARAM_VENC_INTRA_REFRESH: {
+@@ -691,7 +691,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
+ 
+ 		intra_refresh->mode = in->mode;
+ 		intra_refresh->mbs = in->mbs;
+-		packet->shdr.hdr.size += sizeof(u32) + sizeof(*intra_refresh);
++		packet->shdr.hdr.size += sizeof(*intra_refresh);
+ 		break;
+ 	}
+ 	case HFI_PROPERTY_PARAM_VENC_LTRMODE: {
+@@ -700,7 +700,7 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
+ 		ltr_mode->mode = in->mode;
+ 		ltr_mode->count = in->count;
+ 		ltr_mode->trust_mode = in->trust_mode;
+-		packet->shdr.hdr.size += sizeof(u32) + sizeof(*ltr_mode);
++		packet->shdr.hdr.size += sizeof(*ltr_mode);
+ 		break;
+ 	}
+ 	case HFI_PROPERTY_CONFIG_VENC_USELTRFRAME: {
+@@ -709,14 +709,14 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
+ 		ltr_use->frames = in->frames;
+ 		ltr_use->ref_ltr = in->ref_ltr;
+ 		ltr_use->use_constrnt = in->use_constrnt;
+-		packet->shdr.hdr.size += sizeof(u32) + sizeof(*ltr_use);
++		packet->shdr.hdr.size += sizeof(*ltr_use);
+ 		break;
+ 	}
+ 	case HFI_PROPERTY_CONFIG_VENC_MARKLTRFRAME: {
+ 		struct hfi_ltr_mark *in = pdata, *ltr_mark = prop_data;
+ 
+ 		ltr_mark->mark_frame = in->mark_frame;
+-		packet->shdr.hdr.size += sizeof(u32) + sizeof(*ltr_mark);
++		packet->shdr.hdr.size += sizeof(*ltr_mark);
+ 		break;
+ 	}
+ 	case HFI_PROPERTY_CONFIG_VENC_INTRA_PERIOD: {
+@@ -724,21 +724,21 @@ iris_hfi_gen1_packet_session_set_property(struct hfi_session_set_property_pkt *p
+ 
+ 		intra_period->pframes = in->pframes;
+ 		intra_period->bframes = in->bframes;
+-		packet->shdr.hdr.size += sizeof(u32) + sizeof(*intra_period);
++		packet->shdr.hdr.size += sizeof(*intra_period);
+ 		break;
+ 	}
+ 	case HFI_PROPERTY_PARAM_VENC_HIER_P_MAX_NUM_ENH_LAYER: {
+ 		u32 *in = pdata;
+ 
+ 		packet->data[1] = *in;
+-		packet->shdr.hdr.size += sizeof(u32) + sizeof(u32);
++		packet->shdr.hdr.size += sizeof(u32);
+ 		break;
+ 	}
+ 	case HFI_PROPERTY_CONFIG_VENC_HIER_P_ENH_LAYER: {
+ 		u32 *in = pdata;
+ 
+ 		packet->data[1] = *in;
+-		packet->shdr.hdr.size += sizeof(u32) + sizeof(u32);
++		packet->shdr.hdr.size += sizeof(u32);
+ 		break;
+ 	}
  	default:
- 		return -EINVAL;
- 	}
-diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_defines.h b/drivers/media/platform/qcom/iris/iris_hfi_gen1_defines.h
-index 4343661e86065f5623b2c02c7ee808a3c47a8c41..0e4dee19238464a9671a94eaab8eeda2d7f7ca9f 100644
---- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_defines.h
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_defines.h
-@@ -154,11 +154,13 @@
- 
- #define HFI_PROPERTY_PARAM_VENC_LTRMODE				0x200501c
- #define HFI_PROPERTY_PARAM_VENC_MAX_NUM_B_FRAMES		0x2005020
-+#define HFI_PROPERTY_PARAM_VENC_HIER_P_MAX_NUM_ENH_LAYER	0x2005026
- #define HFI_PROPERTY_CONFIG_VENC_TARGET_BITRATE			0x2006001
- #define HFI_PROPERTY_CONFIG_VENC_INTRA_PERIOD			0x2006003
- #define HFI_PROPERTY_CONFIG_VENC_MARKLTRFRAME			0x2006009
- #define HFI_PROPERTY_CONFIG_VENC_USELTRFRAME			0x200600a
- #define HFI_PROPERTY_CONFIG_VENC_SYNC_FRAME_SEQUENCE_HEADER	0x2006008
-+#define HFI_PROPERTY_CONFIG_VENC_HIER_P_ENH_LAYER		0x200600b
- 
- struct hfi_pkt_hdr {
- 	u32 size;
-diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h b/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
-index aec19efc41a5ef47bbad2471d3c4575704859743..d09096a9d5f934acf072b05c2cf80f3007c3aa7e 100644
---- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
-@@ -74,7 +74,22 @@ enum hfi_rate_control {
- #define HFI_PROP_LTR_COUNT			0x03000134
- #define HFI_PROP_LTR_MARK			0x03000135
- #define HFI_PROP_LTR_USE			0x03000136
-+
-+enum hfi_layer_encoding_type {
-+	HFI_HIER_P_SLIDING_WINDOW	= 0x1,
-+	HFI_HIER_P_HYBRID_LTR		= 0x2,
-+	HFI_HIER_B			= 0x3,
-+};
-+
-+#define HFI_PROP_LAYER_ENCODING_TYPE		0x03000138
-+#define HFI_PROP_LAYER_COUNT			0x03000139
- #define HFI_PROP_TOTAL_BITRATE			0x0300013b
-+#define HFI_PROP_BITRATE_LAYER1			0x0300013c
-+#define HFI_PROP_BITRATE_LAYER2			0x0300013d
-+#define HFI_PROP_BITRATE_LAYER3			0x0300013e
-+#define HFI_PROP_BITRATE_LAYER4			0x0300013f
-+#define HFI_PROP_BITRATE_LAYER5			0x03000140
-+#define HFI_PROP_BITRATE_LAYER6			0x03000141
- #define HFI_PROP_MAX_GOP_FRAMES			0x03000146
- #define HFI_PROP_MAX_B_FRAMES			0x03000147
- #define HFI_PROP_QUALITY_MODE			0x03000148
-diff --git a/drivers/media/platform/qcom/iris/iris_instance.h b/drivers/media/platform/qcom/iris/iris_instance.h
-index 16965150f427b901778dd5decf10a1379450b2f4..84b939f390d940c01db4b1c56270a123cabca2e3 100644
---- a/drivers/media/platform/qcom/iris/iris_instance.h
-+++ b/drivers/media/platform/qcom/iris/iris_instance.h
-@@ -74,6 +74,8 @@ struct iris_fmt {
-  * @enc_raw_height: source image height for encoder instance
-  * @enc_scale_width: scale width for encoder instance
-  * @enc_scale_height: scale height for encoder instance
-+ * @hfi_layer_type: hierarchical coding layer type
-+ * @hfi_layer_count: hierarchical coding layer count
-  */
- 
- struct iris_inst {
-@@ -116,6 +118,8 @@ struct iris_inst {
- 	u32				enc_raw_height;
- 	u32				enc_scale_width;
- 	u32				enc_scale_height;
-+	u32				hfi_layer_type;
-+	u32				hfi_layer_count;
- };
- 
- #endif
-diff --git a/drivers/media/platform/qcom/iris/iris_platform_common.h b/drivers/media/platform/qcom/iris/iris_platform_common.h
-index 67acd98e467df037d49d2ea1830038c0c8fecbaf..3efe3121459c610af55ad2f930b21c376f0a085b 100644
---- a/drivers/media/platform/qcom/iris/iris_platform_common.h
-+++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
-@@ -32,6 +32,12 @@ struct iris_inst;
- #define INVALID_DEFAULT_MARK_OR_USE_LTR		-1
- #define MAX_LTR_FRAME_COUNT_GEN1		4
- #define MAX_LTR_FRAME_COUNT_GEN2		2
-+#define MAX_LAYER_HB				3
-+#define MAX_AVC_LAYER_HP_HYBRID_LTR		5
-+#define MAX_AVC_LAYER_HP_SLIDING_WINDOW		3
-+#define MAX_HEVC_LAYER_HP_SLIDING_WINDOW	3
-+#define MAX_HEVC_VBR_LAYER_HP_SLIDING_WINDOW	5
-+#define MAX_HIER_CODING_LAYER_GEN1		6
- 
- enum stage_type {
- 	STAGE_1 = 1,
-@@ -167,6 +173,23 @@ enum platform_inst_fw_cap_type {
- 	MARK_LTR,
- 	B_FRAME,
- 	INTRA_PERIOD,
-+	LAYER_ENABLE,
-+	LAYER_TYPE_H264,
-+	LAYER_TYPE_HEVC,
-+	LAYER_COUNT_H264,
-+	LAYER_COUNT_HEVC,
-+	LAYER0_BITRATE_H264,
-+	LAYER1_BITRATE_H264,
-+	LAYER2_BITRATE_H264,
-+	LAYER3_BITRATE_H264,
-+	LAYER4_BITRATE_H264,
-+	LAYER5_BITRATE_H264,
-+	LAYER0_BITRATE_HEVC,
-+	LAYER1_BITRATE_HEVC,
-+	LAYER2_BITRATE_HEVC,
-+	LAYER3_BITRATE_HEVC,
-+	LAYER4_BITRATE_HEVC,
-+	LAYER5_BITRATE_HEVC,
- 	INST_FW_CAP_MAX,
- };
- 
-diff --git a/drivers/media/platform/qcom/iris/iris_platform_gen1.c b/drivers/media/platform/qcom/iris/iris_platform_gen1.c
-index e9016609127b83b933a18e44250fd43d25f05959..65156584326a1a83588e8055f1318ba1b62e6510 100644
---- a/drivers/media/platform/qcom/iris/iris_platform_gen1.c
-+++ b/drivers/media/platform/qcom/iris/iris_platform_gen1.c
-@@ -158,7 +158,7 @@ static const struct platform_inst_fw_cap inst_fw_cap_sm8250_enc[] = {
- 		.hfi_id = HFI_PROPERTY_CONFIG_VENC_TARGET_BITRATE,
- 		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_INPUT_PORT |
- 			CAP_FLAG_DYNAMIC_ALLOWED,
--		.set = iris_set_bitrate,
-+		.set = iris_set_bitrate_gen1,
- 	},
- 	{
- 		.cap_id = BITRATE_MODE,
-@@ -313,6 +313,98 @@ static const struct platform_inst_fw_cap inst_fw_cap_sm8250_enc[] = {
- 		.flags = CAP_FLAG_OUTPUT_PORT,
- 		.set = iris_set_intra_period,
- 	},
-+	{
-+		.cap_id = LAYER_ENABLE,
-+		.min = 0,
-+		.max = 1,
-+		.step_or_mask = 1,
-+		.value = 0,
-+		.flags = CAP_FLAG_OUTPUT_PORT,
-+	},
-+	{
-+		.cap_id = LAYER_TYPE_H264,
-+		.min = V4L2_MPEG_VIDEO_H264_HIERARCHICAL_CODING_P,
-+		.max = V4L2_MPEG_VIDEO_H264_HIERARCHICAL_CODING_P,
-+		.step_or_mask = BIT(V4L2_MPEG_VIDEO_H264_HIERARCHICAL_CODING_P),
-+		.value = V4L2_MPEG_VIDEO_H264_HIERARCHICAL_CODING_P,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
-+	},
-+	{
-+		.cap_id = LAYER_COUNT_H264,
-+		.min = 0,
-+		.max = MAX_HIER_CODING_LAYER_GEN1,
-+		.step_or_mask = 1,
-+		.value = 0,
-+		.hfi_id = HFI_PROPERTY_CONFIG_VENC_HIER_P_ENH_LAYER,
-+		.flags = CAP_FLAG_OUTPUT_PORT,
-+		.set = iris_set_layer_count_gen1,
-+	},
-+	{
-+		.cap_id = LAYER0_BITRATE_H264,
-+		.min = 1,
-+		.max = BITRATE_MAX,
-+		.step_or_mask = 1,
-+		.value = BITRATE_DEFAULT,
-+		.hfi_id = HFI_PROPERTY_CONFIG_VENC_TARGET_BITRATE,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_INPUT_PORT |
-+			CAP_FLAG_DYNAMIC_ALLOWED,
-+		.set = iris_set_bitrate_gen1,
-+	},
-+	{
-+		.cap_id = LAYER1_BITRATE_H264,
-+		.min = 1,
-+		.max = BITRATE_MAX,
-+		.step_or_mask = 1,
-+		.value = BITRATE_DEFAULT,
-+		.hfi_id = HFI_PROPERTY_CONFIG_VENC_TARGET_BITRATE,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_INPUT_PORT |
-+			CAP_FLAG_DYNAMIC_ALLOWED,
-+		.set = iris_set_bitrate_gen1,
-+	},
-+	{
-+		.cap_id = LAYER2_BITRATE_H264,
-+		.min = 1,
-+		.max = BITRATE_MAX,
-+		.step_or_mask = 1,
-+		.value = BITRATE_DEFAULT,
-+		.hfi_id = HFI_PROPERTY_CONFIG_VENC_TARGET_BITRATE,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_INPUT_PORT |
-+			CAP_FLAG_DYNAMIC_ALLOWED,
-+		.set = iris_set_bitrate_gen1,
-+	},
-+	{
-+		.cap_id = LAYER3_BITRATE_H264,
-+		.min = 1,
-+		.max = BITRATE_MAX,
-+		.step_or_mask = 1,
-+		.value = BITRATE_DEFAULT,
-+		.hfi_id = HFI_PROPERTY_CONFIG_VENC_TARGET_BITRATE,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_INPUT_PORT |
-+			CAP_FLAG_DYNAMIC_ALLOWED,
-+		.set = iris_set_bitrate_gen1,
-+	},
-+	{
-+		.cap_id = LAYER4_BITRATE_H264,
-+		.min = 1,
-+		.max = BITRATE_MAX,
-+		.step_or_mask = 1,
-+		.value = BITRATE_DEFAULT,
-+		.hfi_id = HFI_PROPERTY_CONFIG_VENC_TARGET_BITRATE,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_INPUT_PORT |
-+			CAP_FLAG_DYNAMIC_ALLOWED,
-+		.set = iris_set_bitrate_gen1,
-+	},
-+	{
-+		.cap_id = LAYER5_BITRATE_H264,
-+		.min = 1,
-+		.max = BITRATE_MAX,
-+		.step_or_mask = 1,
-+		.value = BITRATE_DEFAULT,
-+		.hfi_id = HFI_PROPERTY_CONFIG_VENC_TARGET_BITRATE,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_INPUT_PORT |
-+			CAP_FLAG_DYNAMIC_ALLOWED,
-+		.set = iris_set_bitrate_gen1,
-+	},
- };
- 
- static struct platform_inst_caps platform_inst_cap_sm8250 = {
-diff --git a/drivers/media/platform/qcom/iris/iris_platform_gen2.c b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
-index a7ee63e5cbd8b476d765f29ecb3a7d5d52fae269..32e36b547343b5e4dc2bcfb2de57ee3d515cc8ff 100644
---- a/drivers/media/platform/qcom/iris/iris_platform_gen2.c
-+++ b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
-@@ -416,7 +416,7 @@ static const struct platform_inst_fw_cap inst_fw_cap_sm8550_enc[] = {
- 		.hfi_id = HFI_PROP_TOTAL_BITRATE,
- 		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_INPUT_PORT |
- 			CAP_FLAG_DYNAMIC_ALLOWED,
--		.set = iris_set_bitrate,
-+		.set = iris_set_bitrate_gen2,
- 	},
- 	{
- 		.cap_id = BITRATE_PEAK,
-@@ -780,6 +780,186 @@ static const struct platform_inst_fw_cap inst_fw_cap_sm8550_enc[] = {
- 		.flags = CAP_FLAG_OUTPUT_PORT,
- 		.set = iris_set_u32,
- 	},
-+	{
-+		.cap_id = LAYER_ENABLE,
-+		.min = 0,
-+		.max = 1,
-+		.step_or_mask = 1,
-+		.value = 0,
-+		.flags = CAP_FLAG_OUTPUT_PORT,
-+	},
-+	{
-+		.cap_id = LAYER_TYPE_H264,
-+		.min = V4L2_MPEG_VIDEO_H264_HIERARCHICAL_CODING_B,
-+		.max = V4L2_MPEG_VIDEO_H264_HIERARCHICAL_CODING_P,
-+		.step_or_mask = BIT(V4L2_MPEG_VIDEO_H264_HIERARCHICAL_CODING_B) |
-+				BIT(V4L2_MPEG_VIDEO_H264_HIERARCHICAL_CODING_P),
-+		.value = V4L2_MPEG_VIDEO_H264_HIERARCHICAL_CODING_P,
-+		.hfi_id = HFI_PROP_LAYER_ENCODING_TYPE,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
-+	},
-+	{
-+		.cap_id = LAYER_TYPE_HEVC,
-+		.min = V4L2_MPEG_VIDEO_HEVC_HIERARCHICAL_CODING_B,
-+		.max = V4L2_MPEG_VIDEO_HEVC_HIERARCHICAL_CODING_P,
-+		.step_or_mask = BIT(V4L2_MPEG_VIDEO_HEVC_HIERARCHICAL_CODING_B) |
-+				BIT(V4L2_MPEG_VIDEO_HEVC_HIERARCHICAL_CODING_P),
-+		.value = V4L2_MPEG_VIDEO_HEVC_HIERARCHICAL_CODING_P,
-+		.hfi_id = HFI_PROP_LAYER_ENCODING_TYPE,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_MENU,
-+		.set = iris_set_layer_type,
-+	},
-+	{
-+		.cap_id = LAYER_COUNT_H264,
-+		.min = 0,
-+		.max = 5,
-+		.step_or_mask = 1,
-+		.value = 0,
-+		.hfi_id = HFI_PROP_LAYER_COUNT,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_DYNAMIC_ALLOWED,
-+	},
-+	{
-+		.cap_id = LAYER_COUNT_HEVC,
-+		.min = 0,
-+		.max = 5,
-+		.step_or_mask = 1,
-+		.value = 0,
-+		.hfi_id = HFI_PROP_LAYER_COUNT,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_DYNAMIC_ALLOWED,
-+		.set = iris_set_layer_count_gen2,
-+	},
-+	{
-+		.cap_id = LAYER0_BITRATE_H264,
-+		.min = 1,
-+		.max = BITRATE_MAX,
-+		.step_or_mask = 1,
-+		.value = BITRATE_DEFAULT,
-+		.hfi_id = HFI_PROP_BITRATE_LAYER1,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_INPUT_PORT |
-+			CAP_FLAG_DYNAMIC_ALLOWED,
-+		.set = iris_set_layer_bitrate,
-+	},
-+	{
-+		.cap_id = LAYER1_BITRATE_H264,
-+		.min = 1,
-+		.max = BITRATE_MAX,
-+		.step_or_mask = 1,
-+		.value = BITRATE_DEFAULT,
-+		.hfi_id = HFI_PROP_BITRATE_LAYER2,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_INPUT_PORT |
-+			CAP_FLAG_DYNAMIC_ALLOWED,
-+		.set = iris_set_layer_bitrate,
-+	},
-+	{
-+		.cap_id = LAYER2_BITRATE_H264,
-+		.min = 1,
-+		.max = BITRATE_MAX,
-+		.step_or_mask = 1,
-+		.value = BITRATE_DEFAULT,
-+		.hfi_id = HFI_PROP_BITRATE_LAYER3,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_INPUT_PORT |
-+			CAP_FLAG_DYNAMIC_ALLOWED,
-+		.set = iris_set_layer_bitrate,
-+	},
-+	{
-+		.cap_id = LAYER3_BITRATE_H264,
-+		.min = 1,
-+		.max = BITRATE_MAX,
-+		.step_or_mask = 1,
-+		.value = BITRATE_DEFAULT,
-+		.hfi_id = HFI_PROP_BITRATE_LAYER4,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_INPUT_PORT |
-+			CAP_FLAG_DYNAMIC_ALLOWED,
-+		.set = iris_set_layer_bitrate,
-+	},
-+	{
-+		.cap_id = LAYER4_BITRATE_H264,
-+		.min = 1,
-+		.max = BITRATE_MAX,
-+		.step_or_mask = 1,
-+		.value = BITRATE_DEFAULT,
-+		.hfi_id = HFI_PROP_BITRATE_LAYER5,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_INPUT_PORT |
-+			CAP_FLAG_DYNAMIC_ALLOWED,
-+		.set = iris_set_layer_bitrate,
-+	},
-+	{
-+		.cap_id = LAYER5_BITRATE_H264,
-+		.min = 1,
-+		.max = BITRATE_MAX,
-+		.step_or_mask = 1,
-+		.value = BITRATE_DEFAULT,
-+		.hfi_id = HFI_PROP_BITRATE_LAYER6,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_INPUT_PORT |
-+			CAP_FLAG_DYNAMIC_ALLOWED,
-+		.set = iris_set_layer_bitrate,
-+	},
-+	{
-+		.cap_id = LAYER0_BITRATE_HEVC,
-+		.min = 1,
-+		.max = BITRATE_MAX,
-+		.step_or_mask = 1,
-+		.value = BITRATE_DEFAULT,
-+		.hfi_id = HFI_PROP_BITRATE_LAYER1,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_INPUT_PORT |
-+			CAP_FLAG_DYNAMIC_ALLOWED,
-+		.set = iris_set_layer_bitrate,
-+	},
-+	{
-+		.cap_id = LAYER1_BITRATE_HEVC,
-+		.min = 1,
-+		.max = BITRATE_MAX,
-+		.step_or_mask = 1,
-+		.value = BITRATE_DEFAULT,
-+		.hfi_id = HFI_PROP_BITRATE_LAYER2,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_INPUT_PORT |
-+			CAP_FLAG_DYNAMIC_ALLOWED,
-+		.set = iris_set_layer_bitrate,
-+	},
-+	{
-+		.cap_id = LAYER2_BITRATE_HEVC,
-+		.min = 1,
-+		.max = BITRATE_MAX,
-+		.step_or_mask = 1,
-+		.value = BITRATE_DEFAULT,
-+		.hfi_id = HFI_PROP_BITRATE_LAYER3,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_INPUT_PORT |
-+			CAP_FLAG_DYNAMIC_ALLOWED,
-+		.set = iris_set_layer_bitrate,
-+	},
-+	{
-+		.cap_id = LAYER3_BITRATE_HEVC,
-+		.min = 1,
-+		.max = BITRATE_MAX,
-+		.step_or_mask = 1,
-+		.value = BITRATE_DEFAULT,
-+		.hfi_id = HFI_PROP_BITRATE_LAYER4,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_INPUT_PORT |
-+			CAP_FLAG_DYNAMIC_ALLOWED,
-+		.set = iris_set_layer_bitrate,
-+	},
-+	{
-+		.cap_id = LAYER4_BITRATE_HEVC,
-+		.min = 1,
-+		.max = BITRATE_MAX,
-+		.step_or_mask = 1,
-+		.value = BITRATE_DEFAULT,
-+		.hfi_id = HFI_PROP_BITRATE_LAYER5,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_INPUT_PORT |
-+			CAP_FLAG_DYNAMIC_ALLOWED,
-+		.set = iris_set_layer_bitrate,
-+	},
-+	{
-+		.cap_id = LAYER5_BITRATE_HEVC,
-+		.min = 1,
-+		.max = BITRATE_MAX,
-+		.step_or_mask = 1,
-+		.value = BITRATE_DEFAULT,
-+		.hfi_id = HFI_PROP_BITRATE_LAYER5,
-+		.flags = CAP_FLAG_OUTPUT_PORT | CAP_FLAG_INPUT_PORT |
-+			CAP_FLAG_DYNAMIC_ALLOWED,
-+		.set = iris_set_layer_bitrate,
-+	}
- };
- 
- static struct platform_inst_caps platform_inst_cap_sm8550 = {
-diff --git a/drivers/media/platform/qcom/iris/iris_vpu_buffer.c b/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
-index 0ed82dc2b8af8c789df1b8c10c1a5afc51ef39d8..c2cd4adc082394a9ab6f32a37fe4e57678019d89 100644
---- a/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
-+++ b/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
-@@ -936,6 +936,8 @@ static u32 iris_vpu_enc_bin_size(struct iris_inst *inst)
- 
- static inline u32 hfi_buffer_get_recon_count(struct iris_inst *inst)
- {
-+	u32 layer_count = inst->hfi_layer_count;
-+	u32 layer_type = inst->hfi_layer_type;
- 	u32 bframe_count, ltr_count;
- 	u32 num_ref = 1;
- 
-@@ -945,9 +947,35 @@ static inline u32 hfi_buffer_get_recon_count(struct iris_inst *inst)
- 	if (bframe_count)
- 		num_ref = 2;
- 
-+	/* The shift operation here is rounding logic, similar to [(x+1)/2]. */
-+	if (layer_type == HFI_HIER_P_HYBRID_LTR)
-+		num_ref = (layer_count + 1) >> 1;
-+
-+	if (layer_type == HFI_HIER_P_SLIDING_WINDOW) {
-+		if (inst->codec == V4L2_PIX_FMT_HEVC)
-+			num_ref = (layer_count + 1) >> 1;
-+		else if (inst->codec == V4L2_PIX_FMT_H264 && layer_count < 4)
-+			num_ref = (layer_count - 1);
-+		else
-+			num_ref = layer_count;
-+	}
-+
- 	if (ltr_count)
- 		num_ref = num_ref + ltr_count;
- 
-+	/*
-+	 * The expression (1 << layers - 2) + 1 accounts for the number of reference
-+	 * frames in the Adaptive Hierarchical B-frame encoding case. In this scheme,
-+	 * the number of frames in a sub-GOP is related to (2^(number of layers) - 1),
-+	 * hence the use of the shift operation.
-+	 */
-+	if (layer_type == HFI_HIER_B) {
-+		if (inst->codec == V4L2_PIX_FMT_HEVC)
-+			num_ref	= layer_count;
-+		else
-+			num_ref = (1 << (layer_count - 2)) + 1;
-+	}
-+
- 	return num_ref;
- }
- 
 
 -- 
 2.43.0
