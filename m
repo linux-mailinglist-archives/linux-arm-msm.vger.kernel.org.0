@@ -1,134 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-91207-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91208-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id QL6VAv+le2lWHgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91207-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 19:25:03 +0100
+	id 4I4FO9Wpe2m8HgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91208-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 19:41:25 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 78272B38DA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 19:25:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 560FAB3A99
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 19:41:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D358E30B4504
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 18:20:14 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 2CEEC301455A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 18:38:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 672FF2EDD69;
-	Thu, 29 Jan 2026 18:20:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0D032F8BD3;
+	Thu, 29 Jan 2026 18:38:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X5EKcgKw"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="rVP9e3X6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 412412F659C;
-	Thu, 29 Jan 2026 18:20:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D6AB2D8796;
+	Thu, 29 Jan 2026 18:38:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769710813; cv=none; b=Z1kPSVMtL5g7ml1c8G68brDu4kwAeQf+Q3q6/xbmA6ELgo2i4TBtHM0GU3cuhn7CZNBeOJAOZpPoREX1s0RSVWiaGuNuyrpcKrTND0rQerJBq+qcEy3cwbg1jll71/LT6e/f7GCCCt1AU8CVUxEfDonxb6gduioVdSAjRHfi7Z4=
+	t=1769711934; cv=none; b=KQclXfjs9Skt+E5Xs/ZB9dEzo5E3lTuBrSdkiqYueLCUZpdDUwRM3r002UuxwZklVdOiZmy6GtUp08MpLqrJDZqM1ZkpmRq0x6dSLVZtQzYkaPY3DAad0ggLfU8m3GKwQDgSRkY0ow36km9AGoHTCVi94U9ydNga53TS2RDuu8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769710813; c=relaxed/simple;
-	bh=PaIH6okr8XD2p+qHmR0aplF61ZPc2yOtZkDucFHp0Bc=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=F9mrOjJd6Mxn9nkNBRGxTXk9k91uscCPZDBtb2MOq1ulUGkYEPXIPbKJp4yQ59Q3qkL2NI/+sXKmV9QkW9OaEerpfS/eBWMKUqF0Ut498o814XB3Y6vy4SOu5bcSUYuzOcJx01vmSu6dG8YKxqAqtUmyyKGV+m4DXc85E5reigc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X5EKcgKw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4CD2C4CEF7;
-	Thu, 29 Jan 2026 18:20:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769710813;
-	bh=PaIH6okr8XD2p+qHmR0aplF61ZPc2yOtZkDucFHp0Bc=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=X5EKcgKwgNi7eipiyJfN5n9B2dDtXBJHZkhUshr1MrrQV3Nc5naQMMPVmZoqfT5r7
-	 vh9mpBY47LCoz++DFzNttz4UG3PpTRxNCA1hjZN/0eHxjWsuKL9T15uXs1Cn2kDS56
-	 fhy50dEe3EELoVRhBaaDfbduI4y87nSv5WIuwCYZJ75Ps+ETOakpdKkYxKXbKqZeyF
-	 vHktFhjK1QemQxISFxLzCZlLZ47vajWd5orrQFN41Mie+3+pcEeHz6A49qg6mvK9rB
-	 /zdhMrJhquwj0Nd6wjsXjHQOoV6IGOBkXihvbKGcoXihZz4LP5QPyWWLc87h3bpjxY
-	 +J9fHECw8yRrQ==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 11AF2380CED4;
-	Thu, 29 Jan 2026 18:20:07 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1769711934; c=relaxed/simple;
+	bh=RgHO2pkUFSgU4t4TLGPUHZGx0S+toOfJKk5R7JzVOLQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=SftbRDT/HELzbGumvh5hS778r9/eQEAsNJOd76CUAZJR3yjx3BCmLSYd8SPPEdBXYYEaxCq7pvZsdSaDi3Nj4yRrk527VobVEzMk9RgUwzxcNcKsL6/o2snOe9MVr3CT9KwRjMciIQBYqdBt5VkvZut+Y29ifi5UuQXJOq6xFWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=rVP9e3X6; arc=none smtp.client-ip=185.246.84.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-02.galae.net (Postfix) with ESMTPS id 7F1A41A2B11;
+	Thu, 29 Jan 2026 18:38:50 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 3655D60746;
+	Thu, 29 Jan 2026 18:38:50 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 7C38B119A880F;
+	Thu, 29 Jan 2026 19:38:45 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1769711929; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=RgHO2pkUFSgU4t4TLGPUHZGx0S+toOfJKk5R7JzVOLQ=;
+	b=rVP9e3X6fXoClBPXCPhoP7BSYBOtTcPNHLgyBvFkcaicQTSZ0X0uowXMx/DwvhujyBREpm
+	fM5v7tqFldp6J7Cn93HyKBwUnqXk4BrKLsUg5K87idhTveUn7IRgN/EUjdO8WkmSqaEG6i
+	vex6a/y9FF6tTS7uRdHB3gOZsiYfRlRCJRK6bW9JmBnuRLtuNHhD29JcU7NZNdmnrihzEz
+	+ndD/0mw6cMsrLB3WRoRxXWJfOyKCb67+fpOoCvWfkXPrOXjezr4+bgZcou+qTXRpuRhVS
+	u4X4sGxLpGazqSh7p6CemlnAPcdR429XWDjVSOL4odcVglWaaiSeYmLT5tH59A==
+From: Miquel Raynal <miquel.raynal@bootlin.com>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,  Junhao Xie
+ <bigfoot@radxa.com>,  Konrad Dybcio <konradybcio@kernel.org>,  Richard
+ Weinberger <richard@nod.at>,  Vignesh Raghavendra <vigneshr@ti.com>,
+  linux-arm-msm@vger.kernel.org,  linux-kernel@vger.kernel.org,
+  linux-mtd@lists.infradead.org,  Xilin Wu <sophon@radxa.com>
+Subject: Re: [PATCH v2 0/2] mtd: devices: Qualcomm SCM storage support
+In-Reply-To: <njrzcyhdkohsmnlisdzu25b6obqotjjrzlrs42jhq5bhlz6qco@mdk5blghdqbc>
+	(Bjorn Andersson's message of "Wed, 28 Jan 2026 14:31:33 -0600")
+References: <20260126-scm-storage-v2-v2-0-fa045c7e7699@radxa.com>
+	<d0652707-c983-4deb-981c-b1584168e330@oss.qualcomm.com>
+	<875x8ln7tk.fsf@bootlin.com>
+	<njrzcyhdkohsmnlisdzu25b6obqotjjrzlrs42jhq5bhlz6qco@mdk5blghdqbc>
+User-Agent: mu4e 1.12.7; emacs 30.2
+Date: Thu, 29 Jan 2026 19:38:44 +0100
+Message-ID: <87fr7ol0wb.fsf@bootlin.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v3 0/2] Bluetooth: hci_qca: Refactor HFP hardware offload
- capability handling
-From: patchwork-bot+bluetooth@kernel.org
-Message-Id: 
- <176971080559.2988967.15593237248042578435.git-patchwork-notify@kernel.org>
-Date: Thu, 29 Jan 2026 18:20:05 +0000
-References: <20260127025423.1418207-1-mengshi.wu@oss.qualcomm.com>
-In-Reply-To: <20260127025423.1418207-1-mengshi.wu@oss.qualcomm.com>
-To: Mengshi Wu <mengshi.wu@oss.qualcomm.com>
-Cc: brgl@kernel.org, marcel@holtmann.org, luiz.dentz@gmail.com,
- linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
- linux-kernel@vger.kernel.org, shuai.zhang@oss.qualcomm.com,
- cheng.jiang@oss.qualcomm.com, chezhou@qti.qualcomm.com,
- wei.deng@oss.qualcomm.com, yiboz@qti.qualcomm.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Last-TLS-Session-Version: TLSv1.3
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[bootlin.com,reject];
+	R_DKIM_ALLOW(-0.20)[bootlin.com:s=dkim];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-91207-lists,linux-arm-msm=lfdr.de,bluetooth];
-	FREEMAIL_CC(0.00)[kernel.org,holtmann.org,gmail.com,vger.kernel.org,oss.qualcomm.com,qti.qualcomm.com];
-	FROM_NEQ_ENVFROM(0.00)[patchwork-bot@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[bootlin.com:+];
+	TAGGED_FROM(0.00)[bounces-91208-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	FROM_NO_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
 	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[miquel.raynal@bootlin.com,linux-arm-msm@vger.kernel.org];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,intel.com:email]
-X-Rspamd-Queue-Id: 78272B38DA
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,bootlin.com:mid,bootlin.com:dkim]
+X-Rspamd-Queue-Id: 560FAB3A99
 X-Rspamd-Action: no action
 
-Hello:
+Hello Bjorn,
 
-This series was applied to bluetooth/bluetooth-next.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+>> If I may, I even skipped the mail entirely because it was not about mtd
+>> in the end. There is a single big patch labelled "firmware: qcom:". I
+>> believe the series would better be split in smaller chunks. Typically
+>> one for the storage support and another one for the firmware part, at
+>> least.
+>>=20
+>
+> The firmware patch adds wrappers for the secure world interface, which
+> without the MTD driver will lack consumers of the API - i.e. I'd prefer
+> not to pick that part, or parts thereof, alone.
 
-On Tue, 27 Jan 2026 10:54:21 +0800 you wrote:
-> Changes from v3:
->  - Add QCA_CAP_HFP_HW_OFFLOAD capability flag to WCN7850
-> 
-> Changes from v2:
->  - Add QCA_CAP_HFP_HW_OFFLOAD capability flag at first commit to avoid
->    breaking original logic.
->  - Link to v2:
->    https://lore.kernel.org/all/20260126162444.4194293-1-mengshi.wu@oss.qualcomm.com/
-> 
-> [...]
+Yes, I understand.
 
-Here is the summary with links:
-  - [v3,1/2] Bluetooth: hci_qca: Refactor HFP hardware offload capability handling
-    https://git.kernel.org/bluetooth/bluetooth-next/c/2241cc90a694
-  - [v3,2/2] Bluetooth: hci_qca: Enable HFP hardware offload for WCN6855 and WCN7850
-    https://git.kernel.org/bluetooth/bluetooth-next/c/0393a2959963
+> So I think it does make sense to introduce the two parts together in one
+> series (if you have any requests for splitting the MTD patch up in any
+> way I have no objections).
+>
+> This leaves us with the practical problem of getting it merged, which I
+> believe would best be handled by me picking the firmware patch and
+> sharing this in an immutable branch with you, once we're happy with the
+> set (which won't be for 6.20).
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+Works for me!
 
+I'll send a minor review with a couple of comments, but we can apply
+this close after next -rc1, if you are good with the fw part.
 
+Thanks,
+Miqu=C3=A8l
 
