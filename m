@@ -1,104 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-91188-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91189-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SMqIFF13e2mMEgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91188-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 16:06:05 +0100
+	id AP62J3F4e2nWEwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91189-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 16:10:41 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0923B148E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 16:06:04 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E5EFB151A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 16:10:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D2E303014659
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 15:05:22 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id D82843004D2E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 15:10:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09CED2D5935;
-	Thu, 29 Jan 2026 15:05:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2947309EEC;
+	Thu, 29 Jan 2026 15:10:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="il6dcJyd";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="hjtp8iRB"
+	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="BBeN9Gd3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mout.web.de (mout.web.de [217.72.192.78])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5378D2737F8
-	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jan 2026 15:05:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 996521BBBFC;
+	Thu, 29 Jan 2026 15:10:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769699121; cv=none; b=ahcEgjFcwkcH3q/47o6gJafDNcmxG9zDDyW99D7g6tNtlCn7hl+jjvRJRSqesOIq0Th3wRYPvV3X3WWLpQsn1ZGSEAYn928cE4M4bo0ZEJwRfRi1zvtr6SE/qWjI26evwEbCfH6+tCDIIh2N435yf0P9LPC2XTWUVk/kZNh58RE=
+	t=1769699439; cv=none; b=lFlX6PLizhFxM+Id5ELoJFW0H6PZpvjL0CBZ6IfgjGwjbNNZjYCEs5taKekNYmQ0jo54wEUZ58267EVGRgOG+CrkKHVle/Pm9kdzF3ZpNwqGTvzmR2Nd8pNyU0sUnRgbaxlBmiLyCz36xwDJIQ1+Ai9px7mvpQ/TGsIrkYgNyI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769699121; c=relaxed/simple;
-	bh=sUdoQKuITD6AiZJ3dc9S+dNSXPTTT8L0qAJRfFVjOhc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lvloErS3o6BfBAeNuju3oZzFjkrP9GpKFWQ72SQ2FEkAllLxHUgHw4H+OKrCf5MNLD0vsLJIYsp4/zi4ifdaOKIfGMSwd4McSbpfKHvaKxxoIvVOOVNg9v0jGbnRkivt/K3tuXMRkHWUki+KxTGrYvIrmf2Jccx7U8/h2B1BBRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=il6dcJyd; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=hjtp8iRB; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60TAOxZO3900264
-	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jan 2026 15:05:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	1jujTeAzI9H5NsIDYheZqvKmgSMIu72C0nmLn2Vk+rw=; b=il6dcJydU4EmQSit
-	nzWPKj9xK9ACJKae6+1pMib8f23w8g4bZByTiQu57bH9AIOeOtjC78MPHP07U8BE
-	xLq3xOKmF3o0dRiQvteU71coIQXB9fZ0PR67vty41hyUSpQdsIZz6NR0bjotddo+
-	fIHZFXBfAmi1o53/qliHlhuVpbc7QVv9m8yS/WwENcs+sCeHs6FxYJ2YU6PfJLFy
-	6va3PZw4qmZPTnVsaZr6q794kDwnrinfso8CGeYkvaRE+Hox63nI1AGSpzfIAZjb
-	wDQAchSxZj3ZeS3il1/hjIMLga7vd34Nz/qtHDgRzVYTbxnAq8GODOE7scvWPGtM
-	QZZw2A==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c05se8td4-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jan 2026 15:05:19 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2a7701b6353so10465885ad.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jan 2026 07:05:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1769699119; x=1770303919; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1jujTeAzI9H5NsIDYheZqvKmgSMIu72C0nmLn2Vk+rw=;
-        b=hjtp8iRBPbEY5dm7RWya/D8IfaozKiNWn4D6+wXN+oOqCgOnW+7WEhSAqcoW3fbA7o
-         2TZs90kpJaFCtnURPpggzg0Ii7wr60KfRI1pqWlt6aevjweiKOBAnmzWDyREDO6OppWD
-         FUuw/4w2wnfbyE6Uar/mrgboG0xFKnlbAH1yBNzrd9CnQNm6oYeFGd8YbAuSmB0ifoh7
-         7QbLCT4Gk2Jgq2QcLD/yoTIWRu6vqX7VeHdlWZ3dtizYYr3U3tha8fDMjBYUZxPeW+cY
-         TBlLzN/F50mg/v3wqYXzAKDKKnJvGtMemgFAKr6JLw9UK3j0gU50NfgMYweFrSZ8mu1t
-         Pwqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769699119; x=1770303919;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1jujTeAzI9H5NsIDYheZqvKmgSMIu72C0nmLn2Vk+rw=;
-        b=DFSs1vv2cd1/zN8yZ40C9N3t1L2T//YGxOKG2D557w/dZRDAIBzpgnbpMiCpi8s/li
-         ZLiJlEpYphg/Ofk4IWdpLRMUU2YycWF4T9RSIUcmhoBZDJdpElQUILcSK42/OD1kLXCB
-         OIkCuRPYybbau7CA2TG+4zlnFYPPWAUEpJag85kqPb1vzvdKS3xQZUjTEcRNRv4QhSAr
-         bZeDRhTY0/UFiOOgiwt2uPSjrzxjXrXrEoH7NihoWbH3ksKAq45b1U0udvyWzSV3wUsa
-         qaZEqHTN5UgIRtEpieSrvKCQ1YE/Gah9JoMwlwGtt9gpzX3TxtbCDhPo/GZg9/o8eSOX
-         C8QA==
-X-Forwarded-Encrypted: i=1; AJvYcCVyXckNaaHYed74IiFrKgOo7MQENWMZdvcV6ZkN2wWRITvCcCNFV1hU9y8Sl7RjR1Anfz11E/H3kqepzVhp@vger.kernel.org
-X-Gm-Message-State: AOJu0YxCYz0XcqBN9wI6ii81zILi9VWMSWkJYGxhCNfzV46QxF7HgWNh
-	rVBBvR3rahygDzLkiotyGEZHGw0FIFbyHPHQOqYohTtnVcszWKlkqL2xPMA1DidRvDAPmDAqdWW
-	YRIK6G7NAF0bY/okTJyPRhCFj4z1D+qJB+eqoYVlDUNew5ekMRMnIwvhP7TnobcQViVja
-X-Gm-Gg: AZuq6aL58p8H7hJaQxqB96M5mZEph3GIsWCpI2cw0jm4NrL0J5JEvACE6KhWRNQSVFg
-	2txXwCWLDaG9/FthFP8mKEXd5gy8uZKpeQXoy1R2xaKqRHFqslMrM397ayUYInOsTKbGlAoPTxK
-	I2Xzu72ncP4InG3BYX5QnKyxRHOvMUs+R904h9ybgE2j1lbUJCyM3irdawpSt9h1MiNdb7EMHw1
-	ztl3EncWlfNlAXy2Yw/FlJLe+u3SmoU9bLBwJFNUljCQPMJW5KyxzVipXReDrRPT4mCUEYRvO7r
-	f/QUXEj/2Sa6mE0P2gnr3CdBoymyrw+4KB/TYNxpam5ZnnS7jyJWI+OAHDjApw0njfZ0k561EBh
-	lxiTL1L7nPlMX/iziMmi92ZohDPSDWAEAOrZtoVXUhQ==
-X-Received: by 2002:a17:902:f54b:b0:2a0:e223:f6e6 with SMTP id d9443c01a7336-2a870e74030mr87760395ad.46.1769699118633;
-        Thu, 29 Jan 2026 07:05:18 -0800 (PST)
-X-Received: by 2002:a17:902:f54b:b0:2a0:e223:f6e6 with SMTP id d9443c01a7336-2a870e74030mr87759815ad.46.1769699117875;
-        Thu, 29 Jan 2026 07:05:17 -0800 (PST)
-Received: from [10.204.100.98] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a8c3a23e40sm21406195ad.90.2026.01.29.07.05.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Jan 2026 07:05:17 -0800 (PST)
-Message-ID: <025b5070-676c-4284-9c30-1fd195d8a549@oss.qualcomm.com>
-Date: Thu, 29 Jan 2026 20:35:10 +0530
+	s=arc-20240116; t=1769699439; c=relaxed/simple;
+	bh=IRHR5iQWIdeZaSG8skB+OmLU3CRMfWy31KvWkdkrpmM=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
+	 In-Reply-To:Content-Type; b=t0puQ/fgMlTcGHjR5XvyHYhafDOOQbpzbouTtUG8Mw+vu5E64vvanZ6QqkAAjjenLH8jybO9twWF011rOP7bWUXU+8ZjcW0GcTDnXLp/rT3/WcJB8TSMySw0KKE3D5SLJe4jmOK6QVAyEJND6VkhY4EVYP9FpkgVlgGQEM68fpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=BBeN9Gd3; arc=none smtp.client-ip=217.72.192.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1769699430; x=1770304230; i=markus.elfring@web.de;
+	bh=IRHR5iQWIdeZaSG8skB+OmLU3CRMfWy31KvWkdkrpmM=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
+	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=BBeN9Gd3fqHO3PZKIr5aHfEFm3gfWGraXQzJJAd/uGBqi35ecXfN3wJKbbW7AIRj
+	 Olq42SSb9nC47Pa7YHzjuzrlp9nZu8+ZI4bLOnsHQH6t+b4uIQ401T0ywSSkPHD+k
+	 8HD5SWpSuWu46Fviv7qWOs++u1K378o2tff2kRQYmbtINBLM7XxypMq4tQC6lNPPp
+	 o1XXWo7l7BSj70FMk8i1mW/ZeDLzgj7TlyVcnIiG4ANk9z0aitOC7w5cee9vQG8vr
+	 uoFYKY6SibX4VrxVpCUOKNHYUaDIQdc34uzBghPrfnXMSHLmr2VJLc+Ag4pbZJ4DV
+	 t960TytNe/+g0Qvmqw==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([94.31.92.239]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MCXVZ-1vbp0n1Wi3-000aa2; Thu, 29
+ Jan 2026 16:10:30 +0100
+Message-ID: <5795f914-e01d-4b85-82da-0e4762c81cc3@web.de>
+Date: Thu, 29 Jan 2026 16:10:27 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -106,222 +60,147 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/4] media: qcom: flip the switch between Venus and
- Iris drivers
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bod@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Stephan Gerhold <stephan.gerhold@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20260127-venus-iris-flip-switch-v3-0-7f37689f4b39@oss.qualcomm.com>
- <22583dde-caaa-4d64-bcb6-ac7f09916a8d@oss.qualcomm.com>
- <xyhl36bcpmjhav73ujlvbtwqixngr5vko75t335mlcebxrs7lc@t43mxhknuqtj>
- <5df59084-d19b-414e-a43d-8c5d26cb07e9@oss.qualcomm.com>
- <i37aqxqtb4dovx3lpjm3xmkbcwlpiyfe7blzz4kirme7tegbb5@hgztyetld6lf>
-Content-Language: en-US
-From: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-In-Reply-To: <i37aqxqtb4dovx3lpjm3xmkbcwlpiyfe7blzz4kirme7tegbb5@hgztyetld6lf>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: 6NLzAuPSU11KCS0qMaFYXkd1Tnp4S_ki
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI5MDEwNCBTYWx0ZWRfXxkDV4all93vS
- WS7krxmJ/yGRZ4+uWhwEmhWfIfyJi3d6yyXBVFRXOxvfsRTN9ZrUzCtB1gTZ1/iQ9dJkvmkm70A
- Q6I81WXQA1rjNa7I1U06YP5kVhD25d/IavL1iXKTwNYrAK197BPPkDE8VH9W2UKIJurFTxlDqrO
- /DVQ6SJ8JHH9GIDrssFKgXMPcVj8JuV/2arQ0lMyFI24D6Tlu4njb3LJvsZQKrFQl/sGVj+Si/4
- S2g/elY0DP7dywO6RtFlN73z5w13kx1Fk8OoOGHbfM+33nm+gU0n6xhB7nYY7CWBoGDBknE1wxv
- PNe/0vJ+nvLhhHQZlYaXaLRaTca882NOj+GMqP0MZcreoBrIBJY7e1jMYtcjFn3qnudiR+zxY0j
- w8fC+rpsoCtI7/CLv4Wp3jyUs4LML9FTHu54Vb0qEQ7Awsl/uphlOxktyc5v6pLFf6f2IfgGZrz
- 1M1nKkBGktSvC+SylNQ==
-X-Authority-Analysis: v=2.4 cv=RIu+3oi+ c=1 sm=1 tr=0 ts=697b772f cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=P-IC7800AAAA:8 a=pM9kW0q8fP39S2ihOX0A:9
- a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22 a=d3PnA9EDa4IxuAV0gXij:22
-X-Proofpoint-GUID: 6NLzAuPSU11KCS0qMaFYXkd1Tnp4S_ki
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-01-29_02,2026-01-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0 priorityscore=1501
- impostorscore=0 malwarescore=0 clxscore=1015 adultscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601290104
+To: Praveen Talari <praveen.talari@oss.qualcomm.com>,
+ linux-spi@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Mark Brown <broonie@kernel.org>
+Cc: LKML <linux-kernel@vger.kernel.org>,
+ Aniket Randive <aniket.randive@oss.qualcomm.com>,
+ Chandana Chiluveru <chandana.chiluveru@oss.qualcomm.com>,
+ Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>,
+ Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+ Prasad Sodagudi <prasad.sodagudi@oss.qualcomm.com>,
+ Visweswara Tanuku <quic_vtanuku@quicinc.com>
+References: <20260122151008.2149252-3-praveen.talari@oss.qualcomm.com>
+Subject: Re: [PATCH 2/3] spi: geni-qcom: Fix abort sequence execution for
+ serial engine errors
+Content-Language: en-GB, de-DE
+From: Markus Elfring <Markus.Elfring@web.de>
+In-Reply-To: <20260122151008.2149252-3-praveen.talari@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:loZby3KIyGpFeJspHQFrROPYnc6jxUFh2bEXPlm5Vt4VbiFKtvm
+ hP9ZOCWqvyXmnsfyVMNoTjQ+UodgUnkQffvys5PoiwYbyAFxaOjz8PpUyoOhwKkJVVDK0Nw
+ W1qUdo4NdIWb5XSB7QyamJWKb+UNO8QKDnTlMuaeBWAsuyA0gy8LRGhqCNe82X+TCyjNvYh
+ 5LwOSL5MwQF9pgFUWt9ag==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:Q7WFC7noZ2Q=;DBy63u3ZTQP9As+fXA/J7n5g6kJ
+ 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
+ P5NSGTFw=
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[web.de,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[web.de:s=s29768273];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[19];
-	TAGGED_FROM(0.00)[bounces-91188-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[bootlin.com:url,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,qualcomm.com:dkim];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[vikash.garodia@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-91189-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_FROM(0.00)[web.de];
+	RCPT_COUNT_TWELVE(0.00)[14];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[Markus.Elfring@web.de,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[web.de:+];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: B0923B148E
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 7E5EFB151A
 X-Rspamd-Action: no action
 
+> Fix this by ensuring the abort sequence and DMA reset always execute dur=
+ing
+> error recovery, as both are required for proper serial engine error
+> handling.
 
-On 1/29/2026 8:02 PM, Dmitry Baryshkov wrote:
-> On Thu, Jan 29, 2026 at 03:32:28PM +0530, Vikash Garodia wrote:
->>
->> On 1/29/2026 5:51 AM, Dmitry Baryshkov wrote:
->>> On Wed, Jan 28, 2026 at 06:35:01PM +0530, Vikash Garodia wrote:
->>>>
->>>> On 1/27/2026 5:52 PM, Dmitry Baryshkov wrote:
->>>>> As the Venus and Iris drivers are close to the "feature parity" for the
->>>>> common platforms (SC7280, SM8250), in order to get more attention to
->>>>> squashing bugs from the Iris driver, flip the switch and default to the
->>>>> Iris driver if both are enabled. The Iris driver has several
->>>>> regressions, but hopefully they can be fixed through the development
->>>>> cycle by the respective team. Also it is better to fail the test than
->>>>> crash the device (which Venus driver does a lot).
->>>>>
->>>>> Note: then intention is to land this in 6.21, which might let us to
->>>>> drop those platforms from the Venus driver in 6.22+.
->>>>>
->>>>> Testing methodology: fluster test-suite, single-threaded mode, SM8250
->>>>> device (RB5).
->>>>
->>>> Could you run fluster on SC7280 as well ? Also please share the v4l2
->>>> compliance results.
->>>
->>> Okay, the SC7280 is a bit more interesting. For H.264 and VP9 the
->>> results are the same. For H.265 Iris errors out for all tests except for
->>> the one, WPP_E_ericsson_MAIN_2.
->>>
->>> The kernel prints the following message:
->>>
->>> [   82.573112] qcom-iris aa00000.video-codec: session error for command: d0000000, event id:1009, session id:52ef2000
->>>
->>
->> 0x1009 corresponds to HFI_ERR_SESSION_INSUFFICIENT_RESOURCES
->>
->> Below patch would enable firmware logs and make it print in kernel logs, you
->> can apply and share to know more about insufficient resource error.
-> 
-> Added it. BTW: would it make sense to land it in some way (I saw that
-> earlier you posted the same one for gen2). Would it make sense to land
-> it in some way upstram?
-
-yes, for sure. It was pending, before we enable, to check firmware do 
-not emit any default message which are type "err | warn" and those gets 
-emitted in kernel logs everytime, even in success cases.
-
-> 
-> Anyway:
-> 
-> $ gst-launch-1.0 --no-fault filesrc location=/home/debian/fluster/fluster/../resources/JCT-VC-HEVC_V1/AMP_A_Samsung_7/AMP_A_Samsung_7.bin ! parsebin ! v4l2h265dec ! video/x-raw ! videoconvert dither=none ! video/x-raw,format=I420 ! videocodectestsink -m
-> Setting pipeline to PAUSED ...
-> Pipeline is PREROLLING ...
-> Got message #19 from element "videocodectestsink0" (state-changed): GstMessageStateChanged, old-state=(GstState)null, new-state=(GstState)ready, pending-state=(GstState)void-pending;
-> Got message #20 from element "capsfilter1" (state-changed): GstMessageStateChanged, old-state=(GstState)null, new-state=(GstState)ready, pending-state=(GstState)void-pending;
-> Got message #21 from element "videoconvert0" (state-changed): GstMessageStateChanged, old-state=(GstState)null, new-state=(GstState)ready, pending-state=(GstState)void-pending;
-> Got message #22 from element "capsfilter0" (state-changed): GstMessageStateChanged, old-state=(GstState)null, new-state=(GstState)ready, pending-state=(GstState)void-pending;
-> Got message #23 from element "v4l2h265dec0" (state-changed): GstMessageStateChanged, old-state=(GstState)null, new-state=(GstState)ready, pending-state=(GstState)void-pending;
-> Got message #24 from element "typefind" (state-changed): GstMessageStateChanged, old-state=(GstState)null, new-state=(GstState)ready, pending-state=(GstState)void-pending;
-> Got message #25 from element "parsebin0" (state-changed): GstMessageStateChanged, old-state=(GstState)null, new-state=(GstState)ready, pending-state=(GstState)void-pending;
-> Got message #26 from element "filesrc0" (state-changed): GstMessageStateChanged, old-state=(GstState)null, new-state=(GstState)ready, pending-state=(GstState)void-pending;
-> Got message #27 from element "pipeline0" (state-changed): GstMessageStateChanged, old-state=(GstState)null, new-state=(GstState)ready, pending-state=(GstState)paused;
-> Got message #29 from element "capsfilter1" (state-changed): GstMessageStateChanged, old-state=(GstState)ready, new-state=(GstState)paused, pending-state=(GstState)void-pending;
-> Got message #30 from element "videoconvert0" (state-changed): GstMessageStateChanged, old-state=(GstState)ready, new-state=(GstState)paused, pending-state=(GstState)void-pending;
-> Got message #31 from element "capsfilter0" (state-changed): GstMessageStateChanged, old-state=(GstState)ready, new-state=(GstState)paused, pending-state=(GstState)void-pending;
-> Got message #32 from element "v4l2h265dec0" (state-changed): GstMessageStateChanged, old-state=(GstState)ready, new-state=(GstState)paused, pending-state=(GstState)void-pending;
-> Got message #35 from pad "typefind:sink" (stream-status): GstMessageStreamStatus, type=(GstStreamStatusType)create, owner=(GstElement)"\(GstTypeFindElement\)\ typefind", object=(GstTask)"\(GstTask\)\ typefind:sink";
-> Got message #36 from element "typefind" (state-changed): GstMessageStateChanged, old-state=(GstState)ready, new-state=(GstState)paused, pending-state=(GstState)void-pending;
-> Got message #37 from element "parsebin0" (state-changed): GstMessageStateChanged, old-state=(GstState)ready, new-state=(GstState)paused, pending-state=(GstState)void-pending;
-> Got message #38 from element "filesrc0" (state-changed): GstMessageStateChanged, old-state=(GstState)ready, new-state=(GstState)paused, pending-state=(GstState)void-pending;
-> Got message #39 from pad "typefind:sink" (stream-status): GstMessageStreamStatus, type=(GstStreamStatusType)enter, owner=(GstElement)"\(GstTypeFindElement\)\ typefind", object=(GstTask)"\(GstTask\)\ typefind:sink";
-> Got message #51 from element "h265parse0" (state-changed): GstMessageStateChanged, old-state=(GstState)null, new-state=(GstState)ready, pending-state=(GstState)void-pending;
-> Got message #67 from pad "h265parse0:sink" (stream-status): GstMessageStreamStatus, type=(GstStreamStatusType)create, owner=(GstElement)"\(GstH265Parse\)\ h265parse0", object=(GstTask)"\(GstTask\)\ task1";
-> Got message #68 from element "h265parse0" (state-changed): GstMessageStateChanged, old-state=(GstState)ready, new-state=(GstState)paused, pending-state=(GstState)void-pending;
-> Got message #69 from pad "h265parse0:sink" (stream-status): GstMessageStreamStatus, type=(GstStreamStatusType)enter, owner=(GstElement)"\(GstH265Parse\)\ h265parse0", object=(GstTask)"\(GstTask\)\ h265parse0:sink";
-> Got message #74 from element "parsebin0" (stream-collection): GstMessageStreamCollection, collection=(GstStreamCollection)"\(GstStreamCollection\)\ unparented";
-> Got message #70 from element "pipeline0" (stream-start): GstMessageStreamStart, group-id=(uint)2;
-> Got message #83 from pad "v4l2h265dec0:src" (stream-status): GstMessageStreamStatus, type=(GstStreamStatusType)create, owner=(GstElement)"\(v4l2h265dec\)\ v4l2h265dec0", object=(GstTask)"\(GstTask\)\ task2";
-> ERROR: from element /GstPipeline:pipeline0/GstParseBin:parsebin0/GstH265Parse:h265parse0: Internal data stream error.
-> Additional debug info:
-> ../libs/gst/base/gstbaseparse.c(3703): gst_base_parse_loop (): /GstPipeline:pipeline0/GstParseBin:parsebin0/GstH265Parse:h265parse0:
-> streaming stopped, reason error (-5)
-> ERROR: pipeline doesn't want to preroll.
-> Got message #85 from pad "v4l2h265dec0:src" (stream-status): GstMessageStreamStatus, type=(GstStreamStatusType)enter, owner=(GstElement)"\(v4l2h265dec\)\ v4l2h265dec0", object=(GstTask)"\(GstTask\)\ v4l2h265dec0:src";
-> Setting pipeline to NULL ...
-> ERROR: from element /GstPipeline:pipeline0/v4l2h265dec:v4l2h265dec0: Could not read from resource.
-> Additional debug info:
-> ../sys/v4l2/gstv4l2object.c(6253): gst_v4l2_object_poll (): /GstPipeline:pipeline0/v4l2h265dec:v4l2h265dec0:
-> poll error 1: Success (0)
-> ERROR: pipeline doesn't want to preroll.
-> Freeing pipeline ...
-> 
-> 
-<snip>
-
-> [   68.592482] qcom-iris aa00000.video-codec:
-> [   68.592482] <VFW_M:HostDr:265d:6eea4000:00000000> Set buffer type 0x7 addr 0xd0000000 num 1 size 135967744
-> [   68.605612] qcom-iris aa00000.video-codec:
-> [   68.605612] <VFW_H:HostDr:265d:6eea4000:00000000> HFI_BUFFER_COMMON_INTERNAL_SCRATCH_1, Driver macro size = 135967744 vs FW HFI macro size = 136623360 vs FW golden buffer size = 13640960
-> [   68.616954] qcom-iris aa00000.video-codec:
-> [   68.616954] <VFW_E:HostDr:265d:6eea4000:00000000> vDec_SetBuffers(2017): Dec_SetBuffers, Insufficient 7 buffer
-
-One of the internal buffer size (135967744 bytes) fails to meet the size 
-desired by firmware (136623360 bytes) to decode this specific test 
-vector, hence resource insufficient.
-
-We need to compare if iris is calculating any les size for scratch_1.
-
-scratch_1 venus - 
-https://elixir.bootlin.com/linux/v6.19-rc5/source/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c#L647
-
-scratch_1 iris - 
-https://elixir.bootlin.com/linux/v6.19-rc5/source/drivers/media/platform/qcom/iris/iris_vpu_buffer.c#L552
-
-> [   68.628259] qcom-iris aa00000.video-codec:
-> [   68.628259] <VFW_L:HostDr:unkn:--------:-> Host cmd: HFI_CMD_SESSION_LOAD_RESOURCES
-> [   68.640602] qcom-iris aa00000.video-codec:
-> [   68.640602] <VFW_L:HostDr:265d:6eea4000:00000000> Output2 Dimensions 1:1 : NO_SCALING
-> [   68.653195] qcom-iris aa00000.video-codec:
-> [   68.653195] <VFW_E:HostDr:265d:6eea4000:00000000> vDec_LoadResources(1392): Load Resources Command received without complete buffer set 16/14
-> [   68.665510] qcom-iris aa00000.video-codec:
-> [   68.665510] <VFW_L:HostDr:265d:6eea4000:00000000> Load Resource with core id: 0
-> [   68.678699] qcom-iris aa00000.video-codec:
-> [   68.678699] <VFW_M:HostDr:265d:6eea4000:00000000> cabac_direct_mode = 0
-> [   68.692300] qcom-iris aa00000.video-codec:
-> [   68.692300] <VFW_E:HostDr:265d:6eea4000:00000000> vDec_AttachInternalBuffers(1760): mem->vsp_buf: pty->size_vsp:461056,total_size:0
-> [   68.704271] qcom-iris aa00000.video-codec:
-> [   68.704271] <VFW_E:HostDr:265d:6eea4000:00000000> vDec_LoadResources(1486): Load Resources failed with error code: 4105 due to internal buffer attachment
-> [   68.722196] qcom-iris aa00000.video-codec:
-
-...
-> [   68.892229] qcom-iris aa00000.video-codec: session error for command: d0000000, event id:1009, session id:6eea4000
+How do you think about to add any tags (like =E2=80=9CFixes=E2=80=9D and =
+=E2=80=9CCc=E2=80=9D) accordingly?
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Do=
+cumentation/process/submitting-patches.rst?h=3Dv6.19-rc7#n145
 
 Regards,
-Vikash
-
+Markus
 
