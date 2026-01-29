@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-91180-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91181-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OEs+B0FXe2k0EAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91180-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 13:49:05 +0100
+	id aBKaO4lbe2nXEAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91181-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 14:07:22 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77250B0244
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 13:49:04 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79D77B03FF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 14:07:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 57F2E300D157
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 12:49:03 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E3B5D30107E1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 13:06:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0031387588;
-	Thu, 29 Jan 2026 12:49:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F42D385EF8;
+	Thu, 29 Jan 2026 13:06:49 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpbguseast2.qq.com (smtpbguseast2.qq.com [54.204.34.130])
+Received: from smtpbguseast3.qq.com (smtpbguseast3.qq.com [54.243.244.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C24743446D0;
-	Thu, 29 Jan 2026 12:48:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E185F3358CE;
+	Thu, 29 Jan 2026 13:06:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.243.244.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769690942; cv=none; b=CLKwYfLBWjtQenbLkbxqpUXRJxyae9JpeZVXj/7DEnCG9VWQzf5h2yZ5PFnRVmV3SWmVcwcqwpk71HtcA1gmkDnLmXywktnyEOlXRNzAGMPtaqXbAJZUkc708XJAW+HqufY6CK5xwDAgscFhR2JTpYhDQco+8i7eUDeQzkLTrO0=
+	t=1769692009; cv=none; b=UvJOModZDwKyRcTZJPw1tRk9jJ7K5DkP6eaprkTxxRUyYIKbqwNg3tKyfBq+FcyLkSVQe02Yn5kLwKO/KVmVPOAixJp8bupsUIJNALEAlxL7FDiHiJr6pP1X01nM9JNvi8h19kuXkTX2yCj/Zff1+PmgU0CjxAyZ26TIfiYLa9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769690942; c=relaxed/simple;
-	bh=+Q740mks8URXGrd2KIYxh4yLk1icory6ETiyq3SRSL8=;
+	s=arc-20240116; t=1769692009; c=relaxed/simple;
+	bh=4zvRqhRiMCup6EoT2ntBAuuubr6FQxYVeKjSdVPsOD4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OD+vE4RLZlLpOacwtiEwk+WwPqU0Q0T6nlrWxY72jvdcQQAsejtbLONbOV1xo41G5A9bh7k5lE3XwfMxRzMH14o4ggWf5W4nEUVjlansEwBy+G2S3AEw4m/uMCvFtXQZPxSOb48u7Z3NLiRKM2YTM0N04tAm1vpeMukZZNGo6dM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.204.34.130
+	 In-Reply-To:Content-Type; b=uJ7kAKHrO3yEWlfeXvFhiLno/sfNrSdsFr3oRwh1M2f0aCnAKElhN+XhUE9GmVByT7fuyrObPuWALNrPi7agjYvh2Z2IayZ/Ej6zdSiMNnyl1WLyFKF4j3isJD5mAdpIDjQxGMATIrNYL0GYc8LuEjhIt/o0dqHKT5a2awf7Jv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.243.244.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
-X-QQ-mid: zesmtpgz9t1769690855t60ab1644
-X-QQ-Originating-IP: wYyPjWPI//T2UB90xXQhGRavoGv4dQM9a2sofjs/Waw=
+X-QQ-mid: zesmtpsz4t1769691913t366438cd
+X-QQ-Originating-IP: gz+CZwWd9plegMHqHSJgsZdH2WQTASPPIlBKPKpeCCc=
 Received: from [192.168.0.109] ( [110.81.94.113])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 29 Jan 2026 20:47:33 +0800 (CST)
+	id ; Thu, 29 Jan 2026 21:05:11 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 1389357313924058083
-EX-QQ-RecipientCnt: 10
-Message-ID: <2397C90D8A633438+88e8956b-5753-4842-a1c7-b0f6a78580c1@radxa.com>
-Date: Thu, 29 Jan 2026 20:47:23 +0800
+X-BIZMAIL-ID: 9450623713281733181
+EX-QQ-RecipientCnt: 11
+Message-ID: <B4C4E86D6B3966B4+c6e5887b-f61a-4425-8608-d4dad52fed69@radxa.com>
+Date: Thu, 29 Jan 2026 21:05:01 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -51,127 +51,94 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 0/2] mtd: devices: Qualcomm SCM storage support
-To: Trilok Soni <trilokkumar.soni@oss.qualcomm.com>,
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>,
  Miquel Raynal <miquel.raynal@bootlin.com>,
  Richard Weinberger <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>
 Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-mtd@lists.infradead.org, Xilin Wu <sophon@radxa.com>
+ linux-mtd@lists.infradead.org, Xilin Wu <sophon@radxa.com>,
+ Junhao Xie <bigfoot@radxa.com>
 References: <20260126-scm-storage-v2-v2-0-fa045c7e7699@radxa.com>
- <dd89949a-11da-4c57-9b1a-2fba181988cc@oss.qualcomm.com>
+ <d0652707-c983-4deb-981c-b1584168e330@oss.qualcomm.com>
 From: Junhao Xie <bigfoot@radxa.com>
-In-Reply-To: <dd89949a-11da-4c57-9b1a-2fba181988cc@oss.qualcomm.com>
+In-Reply-To: <d0652707-c983-4deb-981c-b1584168e330@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:radxa.com:qybglogicsvrsz:qybglogicsvrsz4b-0
-X-QQ-XMAILINFO: MgDzoWPZpMu1Vduoi8VZqzB1qT3rNCGCxMjS4QKsCZieNWylTA2vYZ+3
-	Q8rwTLRvZlv1kdKoMKszowVLNOTz73m/9hzv6cGXruE6DT4RpW0Wsw8NwA2PbMYO4ndgjOV
-	Z6MCBWm1XE7iJ+fMn2HtP/4+YnanhDm/hd8b4ATUzmehhP3WsYAEiDIR0uNV06CL1O9veIF
-	v9hIqGoMfKzN2W1UJr+3tPISguM5OQl1C9ZcwgB+lDWlYz6c04I7XhrBMFlbgTm6r0Y8UAV
-	EUcbPp9srh+Kgi5LZc0r+tEZFq/P44ayPY+dg+lpODglAj88T2+lVsqRKLNX1zlRyL9pyE/
-	d2dBgHGheB57yTXVEX0vef3HdedyRU0D1fYW8Lc2HCAwUgEYjzU+wqcMCUyS+3ZTABQsPL+
-	8ozSaeoHcqbK9yIUGW+UKAOlqFNetV6NMl8+Czrokoch8LLQEml/9YDNCGeu5ht3todY8sz
-	h8r+pGr084RErVCpSPMd+OoSXJeLqbH0JSf8QUBn9tadh2avp73k4wZIzeuEipZhtR/VRMM
-	n29ptyDfAN6UanHJu26inUHe5q6zV+j2C+w2RZnm/QmrNOQnsDH68r+J6DvRnA7E5HnkXz7
-	8Z6h8i2fW+jmqBgdOK4TlavftzW+6037F2zeIlUYX3sFCe3mSay8HdLvdRyQ2SCI6JjajxI
-	+RiOZEN3fbZGf6wepkXQXxYq3BpzRZkcLSfS7rfmifAiz18nGxtNuwyRFX1sRw4sVmpjDlZ
-	r18CFiyWpFaeLO7v8lRDCw6WU2RB1U0yJFXTb+V26y2YNtefFO+7kQCS/xCfuRhx+VEwkWX
-	X/PB0lt4egYL8ZslHu/AHopxiE2o10ZMgB0YyGldfQwT12sCTFq9NNKDJv5hG2pX8eGk5rV
-	YPKj6wTjTWzzZpIECjvbSRrgrWGNKKAvQhhkKPRzLdnlyBbKzFyGPxedPnjx5pU294ZdF1O
-	U0p4ZJ1IQF6jfQedIYjCPxb+FUDTD5TMHfKu+eTCpnurtXzRf69nHM+16/1KQueaBXYAR3U
-	pqMRTopf9yhaDfUkfx
+Feedback-ID: zesmtpsz:radxa.com:qybglogicsvrsz:qybglogicsvrsz4b-0
+X-QQ-XMAILINFO: M1RocC0a9oEUB1s3OPAAUNbmd8ZddQaz/jHhsiI+tPTnRw4OoAtcHyPz
+	YkYT0Ffk/BWfrzcFyyO2swPu4xsi7Gjev2UpQpJILwzcdmfDoVNAwFe+e/SV9iNmaI05dpI
+	aurbkzNfUe7vWwX8ZJlfdvDixAQSBIl+sobi+y8vlNdQtDZHwrGEj/ohui/C7F1jiJ6ghJo
+	3VnZRcKl9t7ZjbYh8krcXFXQH0uBMiFSFBS2smTr+Uf6fe47JENasZ8IcU0qLQwE3zUMBo8
+	nPenaFlJe3VoSgCNCxFkJJCPIJfeUPphY3RvahCfF7h7CHB1TyVjliyWnbriSSSmKPgJZ5I
+	IgqwjxQHSoJud6NKVwlL8fHES08GOJur6eIZHce9egoTjk+Vj+ZK16gZGtHRRiTy9sKOmuW
+	OwLSEN+FNmMIPbN4UoMvXMu9+tG8kXQg9AXpzMGCETWQo8BYMDYgnw4Qjm4UX4xEadBqUks
+	8fcyTtbQ2tYRf4xBDVhD2rrkC9tABOMGSfPSy4TQlsuZ+6EnAL2zBncohepIFqWkfCiEPru
+	0zok1CZa/rIpppwvxuhK1z9XSQ7EUCXzLP0Op9mfjg2GQQPiYVMtvxakawUtLZP/ivQY+z4
+	1PrczJFEbs9CJw7WLMQfnd7xfQ2i3AzPoH6hoU+MuF2QwVHmUoqGezVWM9Ra/mL0ykbkji5
+	RQ40Ot5HoCtk703QW6FYtCupP5OnsG9LvYGjjuqqR8vXYtcMe0FVNcqYBZn94l5Q/4sw6G2
+	fFBEVgwWioYXRWuCegy8xTJfKFCpHTnIAfDR/d/XGz122m9Qk44FS/mcXMSBLdvpBIKKMgs
+	rkeCqFAGB4sl0bTQ8C5il/QE2Vh0oBP7qYvNhgwNrL+xqzrXiXV9fxsT4vCQxHLJXvpli7G
+	tE7GLha4HFndDHCeZ9Jk7ha2u/6N4G9cQ3U3cSXPZSx+tzoTwrQlGYGTx7JdvMMeBy9V+MM
+	JPtTaJyl0ibFgyF3UScGQ9QCPW0L6vchR2YLnSdc/beH4cYZu6LATpGV4+YwATkkWlolZ3b
+	Dy16k0mI30yMLRFs8rdhe/V32tP14sFDsmTgmSff4ENQ74hZKg
 X-QQ-XMRINFO: Nq+8W0+stu50tPAe92KXseR0ZZmBTk3gLg==
 X-QQ-RECHKSPAM: 0
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-1.36 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	DMARC_POLICY_SOFTFAIL(0.10)[radxa.com : SPF not aligned (relaxed), No valid DKIM,none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	FORGED_MUA_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-91180-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-91181-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	FROM_HAS_DN(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[bigfoot@radxa.com,linux-arm-msm@vger.kernel.org];
 	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-0.999];
-	RCPT_COUNT_SEVEN(0.00)[10];
+	RCPT_COUNT_SEVEN(0.00)[11];
 	R_DKIM_NA(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,radxa.com:mid]
-X-Rspamd-Queue-Id: 77250B0244
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,radxa.com:mid]
+X-Rspamd-Queue-Id: 79D77B03FF
 X-Rspamd-Action: no action
 
-On 2026/1/29 5:43, Trilok Soni wrote:
-
-> On 1/26/2026 3:44 AM, Junhao Xie wrote:
->> This patch series adds support for accessing storage devices managed by
->> Qualcomm TrustZone firmware via SCM (Secure Channel Manager) by
->> introducing a new MTD driver.
+On 2026/1/28 21:26, Konrad Dybcio wrote:
+> On 1/26/26 12:44 PM, Junhao Xie wrote:
+>> Junhao Xie (2):
+>>        firmware: qcom: scm: Add SCM storage interface support
+>>        mtd: devices: Add Qualcomm SCM storage driver
 >>
->> On some Qualcomm platforms, firmware or BIOS-related storage (typically
->> SPI NOR flash) is not directly accessible from the non-secure world.
->> All read, write, and erase operations must be performed through SCM
->> interfaces provided by the secure firmware. As a result, existing MTD
->> SPI NOR drivers cannot be used directly on these systems.
->>
->> This series introduces a new MTD device driver that exposes such
->> firmware-managed storage as a standard MTD device in the Linux kernel.
->> The driver is built on top of the existing Qualcomm SCM infrastructure
->> and integrates with the MTD subsystem to provide a uniform interface to
->> userspace.
->>
->> This driver has been tested on Radxa Dragon Q6A, based on the Qualcomm
->> QCS6490 SoC, with a Winbond W25Q256JWPIQ SPI NOR flash device.
->>
->> Note that this platform previously used the standard Qualcomm Linux
->> firmware, which allowed direct access to the QSPI controller without
->> needing this driver. However, we plan to migrate to a Windows-compatible
->> firmware which is more feature-complete but restricts direct access.
->> Device tree changes for this transition will be sent separately.
->>
->> If kernel boots with EL2, access to the SCM storage will be denied. This
->> needs more investigation.
-> So you plan to enable this driver only w/ the Gunyah based configuration
-> and disable for the KVM one through the devicetree overlay ? I just
-> don't want to break the KVM boot flow on other platforms supporting
-> qcs6490.
+>>   drivers/firmware/qcom/qcom_scm.c       | 161 ++++++++++++++++++++
+>>   drivers/firmware/qcom/qcom_scm.h       |   3 +
+>>   drivers/mtd/devices/Kconfig            |  17 +++
+>>   drivers/mtd/devices/Makefile           |   1 +
+>>   drivers/mtd/devices/qcom_scm_storage.c | 265 +++++++++++++++++++++++++++++++++
+>>   include/linux/firmware/qcom/qcom_scm.h |  34 +++++
+>>   6 files changed, 481 insertions(+)
+>> ---
+>> base-commit: 63804fed149a6750ffd28610c5c1c98cce6bd377
+> This is 6.19-rc7, please rebase on linux-next/master (the series
+> doesn't currently apply because this base is essentially a full release
+> behind)
 
-On systems booted with EL2/KVM, the SCM storage GET_INFO call currently
-returns -EINVAL. If a platform does not support SPI-NOR or SCM storage,
-__qcom_scm_is_call_available() will cause the initialization to bail out 
-early.
+I will rebase the series onto linux-next/master in v3.
 
-There is no DT-based enable/disable mechanism, and this should not affect
-KVM boot flow on other platforms.
+> Konrad
 
-Other QCS6490 LE platforms do not support SCM storage, as the LE firmware
-does not support SPI-NOR boot. Radxa Dragon Q6A uses WP firmware and boots
-from SPI-NOR.
-
-The root cause of SCM storage being unavailable under EL2/KVM is still under
-investigation.
-
-[    0.770124] qcom_scm: convention: smc arm 64
-[    0.775005] qcom_scm firmware:scm: qseecom: found qseecom with 
-version 0x1402000
-[    0.782990] qcom_scm firmware:scm: scm storage get info failed: -22
-[    0.999095] qcom_qseecom qcom_qseecom: setting up client for 
-qcom.tz.uefisecapp
-
-Thanks for your reply.
 Best regards,
 Junhao Xie
+
 
 
