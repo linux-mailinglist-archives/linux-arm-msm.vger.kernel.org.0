@@ -1,73 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-91208-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91209-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4I4FO9Wpe2m8HgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91208-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 19:41:25 +0100
+	id wNtyKLque2lOHwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91209-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 20:02:18 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 560FAB3A99
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 19:41:25 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08BCAB3C3D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 20:02:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 2CEEC301455A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 18:38:55 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 504A5303A915
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 19:01:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0D032F8BD3;
-	Thu, 29 Jan 2026 18:38:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF92B30B50F;
+	Thu, 29 Jan 2026 19:01:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="rVP9e3X6"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="W6sG3Nl1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D6AB2D8796;
-	Thu, 29 Jan 2026 18:38:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 976F130EF7F
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jan 2026 19:01:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769711934; cv=none; b=KQclXfjs9Skt+E5Xs/ZB9dEzo5E3lTuBrSdkiqYueLCUZpdDUwRM3r002UuxwZklVdOiZmy6GtUp08MpLqrJDZqM1ZkpmRq0x6dSLVZtQzYkaPY3DAad0ggLfU8m3GKwQDgSRkY0ow36km9AGoHTCVi94U9ydNga53TS2RDuu8k=
+	t=1769713287; cv=none; b=dz95l8BY3ZuCFHtzb9f6hySiNjyjViFlQnioj+ybbCla/yHhbd5lqaETuQtHEOEfw/Th2IQ/56Zefzn6ilLuhvaNm4ABD9K9vYuE6FmvQEyApfwRomUGTq4ugpCt/vvAe68eEasu4UcCwf7LV8i9l0cV6aoYToLD0+W+9WEu5Sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769711934; c=relaxed/simple;
-	bh=RgHO2pkUFSgU4t4TLGPUHZGx0S+toOfJKk5R7JzVOLQ=;
+	s=arc-20240116; t=1769713287; c=relaxed/simple;
+	bh=W4oiW3ZCreBFKnt1WN4t37yUfwwWI+rWsckbWFsLrZA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SftbRDT/HELzbGumvh5hS778r9/eQEAsNJOd76CUAZJR3yjx3BCmLSYd8SPPEdBXYYEaxCq7pvZsdSaDi3Nj4yRrk527VobVEzMk9RgUwzxcNcKsL6/o2snOe9MVr3CT9KwRjMciIQBYqdBt5VkvZut+Y29ifi5UuQXJOq6xFWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=rVP9e3X6; arc=none smtp.client-ip=185.246.84.56
+	 MIME-Version:Content-Type; b=aAw7P+oKY25gUYVzXBR/u4Ul+BJxjwWQvJ4f1o6xvcIN6Dr/Smcn2GC6pzsST7px8cwEgwvoJ0SqWfHfRj3gdx7XfoGn6LE4PagChnEaon5w4LgwomkrqSPXb7FQt0EpCOq37Sengail7QrMdEp8W2UR1Jj6qwW9KZ+O96aDYmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=W6sG3Nl1; arc=none smtp.client-ip=185.171.202.116
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id 7F1A41A2B11;
-	Thu, 29 Jan 2026 18:38:50 +0000 (UTC)
+	by smtpout-04.galae.net (Postfix) with ESMTPS id 645C6C22F4C;
+	Thu, 29 Jan 2026 19:01:23 +0000 (UTC)
 Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 3655D60746;
-	Thu, 29 Jan 2026 18:38:50 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 7C38B119A880F;
-	Thu, 29 Jan 2026 19:38:45 +0100 (CET)
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 4300B60746;
+	Thu, 29 Jan 2026 19:01:20 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 69B46119A880F;
+	Thu, 29 Jan 2026 20:01:14 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1769711929; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	t=1769713279; h=from:subject:date:message-id:to:cc:mime-version:content-type:
 	 content-transfer-encoding:in-reply-to:references;
-	bh=RgHO2pkUFSgU4t4TLGPUHZGx0S+toOfJKk5R7JzVOLQ=;
-	b=rVP9e3X6fXoClBPXCPhoP7BSYBOtTcPNHLgyBvFkcaicQTSZ0X0uowXMx/DwvhujyBREpm
-	fM5v7tqFldp6J7Cn93HyKBwUnqXk4BrKLsUg5K87idhTveUn7IRgN/EUjdO8WkmSqaEG6i
-	vex6a/y9FF6tTS7uRdHB3gOZsiYfRlRCJRK6bW9JmBnuRLtuNHhD29JcU7NZNdmnrihzEz
-	+ndD/0mw6cMsrLB3WRoRxXWJfOyKCb67+fpOoCvWfkXPrOXjezr4+bgZcou+qTXRpuRhVS
-	u4X4sGxLpGazqSh7p6CemlnAPcdR429XWDjVSOL4odcVglWaaiSeYmLT5tH59A==
+	bh=R3bTYiE5fmpx2hKk+ij/xNGunlQDmY23LY/sHyFCZyM=;
+	b=W6sG3Nl1IURGhJrQDPhEb6hFjjFnVg/wK5hJxzooruVb0xYppeZtsNqWhZykDVhuNC4mFK
+	772UVOkszbjzC41lJE5koR+krq3ooTxFgdxEMJm30e2qMhrrkOEZNNyX4Ni/sdlXju9BHQ
+	2Uz9tnuQ8OoGuYJMRbIQvuWruQAdg/vvxIasozv4XB2l/kEnALQw2CE231VwWZmizceTDG
+	u34EdPCIjgeb5erQg1BkBF4ePuMr4YSSx8dfxUvbbzEg2qCaS7ZAmHodMa7m/3VnH0/6BB
+	sVO5fwcZ6qczQfx1wZ753Mv7WRGVojypwDCpi7E7UGc7ZKzFsU3g0qnEm3PJmQ==
 From: Miquel Raynal <miquel.raynal@bootlin.com>
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,  Junhao Xie
- <bigfoot@radxa.com>,  Konrad Dybcio <konradybcio@kernel.org>,  Richard
- Weinberger <richard@nod.at>,  Vignesh Raghavendra <vigneshr@ti.com>,
-  linux-arm-msm@vger.kernel.org,  linux-kernel@vger.kernel.org,
-  linux-mtd@lists.infradead.org,  Xilin Wu <sophon@radxa.com>
-Subject: Re: [PATCH v2 0/2] mtd: devices: Qualcomm SCM storage support
-In-Reply-To: <njrzcyhdkohsmnlisdzu25b6obqotjjrzlrs42jhq5bhlz6qco@mdk5blghdqbc>
-	(Bjorn Andersson's message of "Wed, 28 Jan 2026 14:31:33 -0600")
+To: Junhao Xie <bigfoot@radxa.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,  Konrad Dybcio
+ <konradybcio@kernel.org>,  Richard Weinberger <richard@nod.at>,  Vignesh
+ Raghavendra <vigneshr@ti.com>,  linux-arm-msm@vger.kernel.org,
+  linux-kernel@vger.kernel.org,  linux-mtd@lists.infradead.org,  Xilin Wu
+ <sophon@radxa.com>
+Subject: Re: [PATCH v2 2/2] mtd: devices: Add Qualcomm SCM storage driver
+In-Reply-To: <20260126-scm-storage-v2-v2-2-fa045c7e7699@radxa.com> (Junhao
+	Xie's message of "Mon, 26 Jan 2026 19:44:52 +0800")
 References: <20260126-scm-storage-v2-v2-0-fa045c7e7699@radxa.com>
-	<d0652707-c983-4deb-981c-b1584168e330@oss.qualcomm.com>
-	<875x8ln7tk.fsf@bootlin.com>
-	<njrzcyhdkohsmnlisdzu25b6obqotjjrzlrs42jhq5bhlz6qco@mdk5blghdqbc>
+	<20260126-scm-storage-v2-v2-2-fa045c7e7699@radxa.com>
 User-Agent: mu4e 1.12.7; emacs 30.2
-Date: Thu, 29 Jan 2026 19:38:44 +0100
-Message-ID: <87fr7ol0wb.fsf@bootlin.com>
+Date: Thu, 29 Jan 2026 20:01:12 +0100
+Message-ID: <87a4xwkzuv.fsf@bootlin.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,12 +80,12 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[bootlin.com,reject];
 	R_DKIM_ALLOW(-0.20)[bootlin.com:s=dkim];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	DKIM_TRACE(0.00)[bootlin.com:+];
-	TAGGED_FROM(0.00)[bounces-91208-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-91209-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	RECEIVED_HELO_LOCALHOST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
@@ -99,43 +97,281 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	RCVD_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[miquel.raynal@bootlin.com,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[10];
+	RCPT_COUNT_SEVEN(0.00)[9];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,bootlin.com:mid,bootlin.com:dkim]
-X-Rspamd-Queue-Id: 560FAB3A99
+X-Rspamd-Queue-Id: 08BCAB3C3D
 X-Rspamd-Action: no action
 
-Hello Bjorn,
+Hello Junhao,
 
->> If I may, I even skipped the mail entirely because it was not about mtd
->> in the end. There is a single big patch labelled "firmware: qcom:". I
->> believe the series would better be split in smaller chunks. Typically
->> one for the storage support and another one for the firmware part, at
->> least.
->>=20
->
-> The firmware patch adds wrappers for the secure world interface, which
-> without the MTD driver will lack consumers of the API - i.e. I'd prefer
-> not to pick that part, or parts thereof, alone.
+> +static int qcom_scm_storage_erase(struct mtd_info *mtd,
+> +				  struct erase_info *instr)
+> +{
+> +	struct qcom_scm_storage *host =3D mtd->priv;
+> +	size_t block_size;
+> +
+> +	if (instr->addr % host->mtd.erasesize ||
+> +	    instr->len % host->mtd.erasesize)
+> +		return -EINVAL;
 
-Yes, I understand.
+Can theses situations realistically happen? Erases are in theory
+eraseblock aligned, so I doubt this case shall be checked in device drivers.
 
-> So I think it does make sense to introduce the two parts together in one
-> series (if you have any requests for splitting the MTD patch up in any
-> way I have no objections).
->
-> This leaves us with the practical problem of getting it merged, which I
-> believe would best be handled by me picking the firmware patch and
-> sharing this in an immutable branch with you, once we're happy with the
-> set (which won't be for 6.20).
+> +
+> +	block_size =3D le32_to_cpu(host->info.block_size);
 
-Works for me!
+You seem to store the SCM info structure as-is and always make
+conversions on the fly. May I suggest to store the fields you need
+directly in the correct format/endianness?
 
-I'll send a minor review with a couple of comments, but we can apply
-this close after next -rc1, if you are good with the fw part.
+> +
+> +	guard(mutex)(&host->lock);
+> +
+> +	return qcom_scm_storage_send_cmd(QCOM_SCM_STORAGE_SPINOR,
+> +					 QCOM_SCM_STORAGE_ERASE,
+> +					 instr->addr / block_size,
+
+Actually what you need instead of block_size is to use mtd->erasesize
+directly, no need to store "block_size" in your structure, you already
+have it.
+
+> +					 0, instr->len);
+> +}
+> +
+> +static int qcom_scm_storage_read(struct mtd_info *mtd,
+> +				 loff_t from, size_t len,
+> +				 size_t *retlen, u_char *buf)
+
+u_char? Can we use a more common type?
+
+> +{
+> +	struct qcom_scm_storage *host =3D mtd->priv;
+> +	loff_t block_start, block_off, lba;
+> +	size_t block_size, chunk, to_read;
+> +	int ret;
+> +
+> +	if (retlen)
+> +		*retlen =3D 0;
+
+Are there cases where retlen can be absent?
+
+> +
+> +	if (from + len > mtd->size)
+> +		return -EINVAL;
+
+This check should be done at the core level already.
+
+> +	if (len =3D=3D 0)
+> +		return 0;
+
+Ditto (see mtdchar_read()).
+
+> +	block_size =3D le32_to_cpu(host->info.block_size);
+> +
+> +	guard(mutex)(&host->lock);
+> +
+> +	while (len > 0) {
+> +		block_start =3D round_down(from, block_size);
+> +		block_off =3D from - block_start;
+> +		lba =3D block_start / block_size;
+> +
+> +		if (block_off || len < block_size) {
+> +			chunk =3D min_t(size_t, block_size - block_off, len);
+> +			to_read =3D block_size;
+> +		} else {
+> +			chunk =3D round_down(len, block_size);
+> +			chunk =3D min_t(size_t, chunk, host->buffer_size);
+> +			to_read =3D chunk;
+> +		}
+> +
+> +		ret =3D qcom_scm_storage_send_cmd(QCOM_SCM_STORAGE_SPINOR,
+> +						QCOM_SCM_STORAGE_READ,
+> +						lba, host->buffer,
+> +						to_read);
+> +		if (ret)
+> +			return ret;
+> +
+> +		memcpy(buf, host->buffer + block_off, chunk);
+> +
+> +		buf +=3D chunk;
+> +		from +=3D chunk;
+> +		len -=3D chunk;
+> +		if (retlen)
+> +			*retlen +=3D chunk;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int qcom_scm_storage_write(struct mtd_info *mtd,
+> +				  loff_t to, size_t len,
+> +				  size_t *retlen, const u_char *buf)
+> +{
+> +	struct qcom_scm_storage *host =3D mtd->priv;
+> +	loff_t block_start, block_off, lba;
+> +	size_t block_size, chunk, to_write;
+> +	int ret;
+> +
+> +	if (retlen)
+> +		*retlen =3D 0;
+> +
+> +	if (to + len > mtd->size)
+> +		return -EINVAL;
+> +
+> +	if (len =3D=3D 0)
+> +		return 0;
+> +
+> +	block_size =3D le32_to_cpu(host->info.block_size);
+> +
+> +	guard(mutex)(&host->lock);
+> +
+> +	while (len > 0) {
+> +		block_start =3D round_down(to, block_size);
+> +		block_off =3D to - block_start;
+> +		lba =3D block_start / block_size;
+> +
+> +		if (block_off || len < block_size) {
+> +			chunk =3D min_t(size_t, block_size - block_off, len);
+> +			to_write =3D block_size;
+> +
+> +			ret =3D qcom_scm_storage_send_cmd(QCOM_SCM_STORAGE_SPINOR,
+> +							QCOM_SCM_STORAGE_READ,
+> +							lba, host->buffer,
+> +							block_size);
+
+This is strange. Does it really work? My understanding: you're trying to
+handle a non aligned write access (I'm not even sure this is possible as
+you set writesize =3D=3D erasesize) by reading the existing data before
+writing. If that's what you intend to do, you'll forcibly get 1s instead
+of actual data because erases are mandatory before writes, which means
+your read will happen too late.
+
+I might be totally wrong, but I believe this approach is
+incorrect. Please explain what you're trying to do otherwise.
+
+> +			if (ret)
+> +				return ret;
+> +		} else {
+> +			chunk =3D round_down(len, block_size);
+> +			chunk =3D min_t(size_t, chunk, host->buffer_size);
+> +			to_write =3D chunk;
+> +		}
+> +
+> +		memcpy(host->buffer + block_off, buf, chunk);
+> +
+> +		ret =3D qcom_scm_storage_send_cmd(QCOM_SCM_STORAGE_SPINOR,
+> +						QCOM_SCM_STORAGE_WRITE,
+> +						lba, host->buffer,
+> +						to_write);
+> +		if (ret)
+> +			return ret;
+> +
+> +		buf +=3D chunk;
+> +		to +=3D chunk;
+> +		len -=3D chunk;
+> +		if (retlen)
+> +			*retlen +=3D chunk;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int qcom_scm_storage_probe(struct platform_device *pdev)
+> +{
+> +	struct device *dev =3D &pdev->dev;
+> +	struct qcom_scm_storage *host;
+> +	u64 total_blocks, serial_num;
+> +	u32 block_size;
+> +	int ret;
+> +
+> +	host =3D devm_kzalloc(dev, sizeof(*host), GFP_KERNEL);
+> +	if (!host)
+> +		return -ENOMEM;
+> +
+> +	platform_set_drvdata(pdev, host);
+> +	host->dev =3D dev;
+> +
+> +	ret =3D devm_mutex_init(dev, &host->lock);
+> +	if (ret)
+> +		return ret;
+> +
+> +	host->buffer_size =3D SZ_256K;
+> +	host->buffer =3D devm_kzalloc(dev, host->buffer_size, GFP_KERNEL);
+
+Do you really need 256K of adjacent memory? If this is a DMA-able
+buffer, then yes. Also, the check (block_size vs. buffer_size) should
+happen before this allocation, and you should not need to allocate 256k
+blindly, just use the NOR geometry knowledge.
+
+> +	if (!host->buffer)
+> +		return -ENOMEM;
+> +
+> +	ret =3D qcom_scm_storage_send_cmd(QCOM_SCM_STORAGE_SPINOR,
+> +					QCOM_SCM_STORAGE_GET_INFO,
+> +					0, &host->info,
+> +					sizeof(host->info));
+> +	if (ret < 0)
+> +		return dev_err_probe(dev, ret,
+> +				     "failed to get storage info\n");
+
+Maybe this print can be enhanced, it may also mean the firmware does not
+implement the required system call?
+
+> +
+> +	total_blocks =3D le64_to_cpu(host->info.total_blocks);
+> +	serial_num =3D le64_to_cpu(host->info.serial_num);
+> +	block_size =3D le32_to_cpu(host->info.block_size);
+> +
+> +	if (!block_size || !total_blocks)
+> +		return dev_err_probe(dev, -EINVAL,
+> +				     "invalid storage geometry\n");
+> +
+> +	if (block_size > host->buffer_size)
+> +		return dev_err_probe(dev, -EINVAL,
+> +				     "block size %u exceeds buffer size\n",
+> +				     block_size);
+
+I am now in favour of reducing logs in the kernel, maybe you can group
+these two prints into one, indicating the info you get from firmware is
+incorrect? Also, what is the point of using dev_err_probe() here, as you
+cannot have an EPROBE_DEFER?
+
+> +
+> +	host->mtd.priv =3D host;
+> +	host->mtd.name =3D dev_name(dev);
+> +	host->mtd.owner =3D THIS_MODULE;
+> +	host->mtd.dev.parent =3D dev;
+> +	host->mtd.size =3D total_blocks * block_size;
+> +	host->mtd.erasesize =3D block_size;
+> +	host->mtd.writesize =3D block_size;
+> +	host->mtd.writebufsize =3D block_size;
+> +	host->mtd.type =3D MTD_NORFLASH;
+> +	host->mtd.flags =3D MTD_WRITEABLE;
+> +	host->mtd._erase =3D qcom_scm_storage_erase;
+> +	host->mtd._read =3D qcom_scm_storage_read;
+> +	host->mtd._write =3D qcom_scm_storage_write;
+> +
+> +	dev_info(dev, "scm storage 0x%llx registered with size %llu bytes\n",
+> +		 serial_num, host->mtd.size);
+
+Please drop this message, it is not useful.
+
+...
+
+> +static struct platform_driver qcom_scm_storage_driver =3D {
+> +	.probe	=3D qcom_scm_storage_probe,
+> +	.remove	=3D qcom_scm_storage_remove,
+> +	.driver =3D {
+> +		.name	=3D "qcom_scm_storage",
+> +	},
+> +	.id_table =3D qcom_scm_storage_ids,
+
+I am surprised you have an id_table here, this is likely not for an OF
+based platform, do you confirm?
 
 Thanks,
 Miqu=C3=A8l
