@@ -1,245 +1,514 @@
-Return-Path: <linux-arm-msm+bounces-91186-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UAKHHDZse2mMEgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91186-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 15:18:30 +0100
+	id CDZKLI5ve2mMEgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 15:32:46 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id D8815B0D78
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 15:18:29 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 33855B0F9C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 15:32:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 23924300E721
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 14:17:43 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id AB05430028F3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 14:32:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65A0A24EF8C;
-	Thu, 29 Jan 2026 14:17:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5922254AF5;
+	Thu, 29 Jan 2026 14:32:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lJoRJwY/";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="aoOflR/V"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GGlwRPKr";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="igPU8t/+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E2EA3770B
-	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jan 2026 14:17:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4291925BC
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jan 2026 14:32:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769696262; cv=none; b=irNdZJvVjSJGbEathpOaDMQtX4w3hpYGu24LwtCN/Ku5lPXeLCR50y6B4aB68aMvllIJ8whEDg19DlK7MCg5Qkirzg5hV4STNqlkDfh8YCkoOhYLBCvibqn7MScC2ROePbodghDxilJAgJVY9fpmI+TFPZuPLVqR3LAYzbIKYB8=
+	t=1769697157; cv=none; b=q/vdjqcNG9BPhYMLtzqo6wONDQj9qI5U63NVVk0+/sOOz16b9tf7z5xAA5c61ntDLY2skStgEe9XFWOncAhYGeLL4bhKg7yWoi35iHhD8s1UqD76pvTzWlQttSuVv+lx78MLb358Rx1pusYpBnyZeaZWT7aj03R/T3j63pnoGzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769696262; c=relaxed/simple;
-	bh=QxW0f6pLDBRENUCo+Z37WURx1pG8/E2qFBSIDtV/2/c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=O2HnZ+WAnJV3OATVW9S8ZiP9Z36sDhU6iiVTucjJGMbQ87ZxO97m3lphS8Va4kaIePX46LwfGGpDtN/699gscaT3vDXSRstRKe+S3oTbROknCHkoF8Wz7s8z8ULx6B4ZfevN6VJAJg0MYXLHNcFu5pfnAzBZwELkMCKWdK7fdkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lJoRJwY/; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=aoOflR/V; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1769697157; c=relaxed/simple;
+	bh=QcCFpSrQxC2+hCfGGBoubJeFLr6JppgZjy63w38hP+E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=f5EUbsqwqYlILGV1h1txB//40ANiDcaa4FhxfUH1SZF7OK2DK6xIfzZhTcHYF2mril4EQQ+rSmzOuDtPJgXVGdlwLkTTe+tmizY9Zev5K/zsqCwLeWcetaszmGd3DZflLtM7I6NMQxiAYipCPf+xJ3tul2GCKIYfk4XHlyRfD24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GGlwRPKr; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=igPU8t/+; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60TAI3AK2150699
-	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jan 2026 14:17:40 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60TAP29o3900829
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jan 2026 14:32:35 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	sPxS5c0pRe16fDouaE61U8nM92dYddyMAnv3v5fItBU=; b=lJoRJwY/N5LLdmaz
-	yP8ORpj6R15zgxFrSasCs3DZqbVnj6B09H1/2FTb+qCBPO4UkeYzaIfRSrLhhA3J
-	S7FLdbv2Ow73wUSOeqd+AOYyiOD6MpNOVAVjH0JXAHuMzXBYprqkkGZtQ9FlheHe
-	jcFwq0ph8mGDaTXtOtgUYDIeTGoFP8vBhONEZRQFLcehjK1KfF/X/OBvd1CCc5Lg
-	5GMl6pcTlzuqbKBK1yCiA1tA+6n62GZvucwd/Prj4vJQAN6M9sbraLtA9frGO3YW
-	rO6HCj3LcbiFI1aeOQLcUq0HXhDB3agMITSEjDrZW8wlGM3QBo5EXPBu3yJWEV0e
-	irvtfg==
-Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com [209.85.217.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4byph3bq33-1
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=IhJHHUv/gD43tiXPoXmVcP63
+	bLvok/PXpDDKQR4l0yc=; b=GGlwRPKrnpYMl8EzNKbmVeoXKQDF8FJQRWHn9XIA
+	y2Gw3lR34b/6pXadEiar6GtaKq6UI+Oh/IdUu04GQXuF230MrldoeOE++crT4O/s
+	tU1hrCXyFt7b7iWsa2aeavJjWXYgy++y4n9EDw4V83bgBVzuZEent2wcC5txLoS/
+	pNO3ILL6eYmyvq59IFMPFVaCDwEmti9zp8IxksWoZXwPuMjOCt01XRai8bRSFuZG
+	DVJBgfcbHli9fprH/HAzROSwrK0HwoBSdI/4ALJePQXK2XTt2YD3SD+GB7/R3UIx
+	V/3TL943TvF2dy8ETaoP0/3AT0c7YzQdNl1drYDKH4Q76w==
+Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com [209.85.217.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c05se8pva-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jan 2026 14:17:39 +0000 (GMT)
-Received: by mail-vs1-f71.google.com with SMTP id ada2fe7eead31-5ee9e287d7aso20432137.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jan 2026 06:17:39 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jan 2026 14:32:34 +0000 (GMT)
+Received: by mail-vs1-f72.google.com with SMTP id ada2fe7eead31-5ed0ec20724so2908297137.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jan 2026 06:32:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1769696259; x=1770301059; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=sPxS5c0pRe16fDouaE61U8nM92dYddyMAnv3v5fItBU=;
-        b=aoOflR/VWy8eWr4jWv93mfElXeXyuYFSDpHZ4f2JfeAVzTFVA5IscBv31r8bSswVwD
-         AZ27DnnZRe8zYijlFCJ/7A5FXunZzx6B6pfMuFBdjqsVF0mKTNpdPCFXEjHfcZYHo3Xl
-         O8VmX1E6bVoYpjTRkxFD4cCYPsbE2gJQrPnr4PUmyPgQVKrKiFLgn6PgGBhi4XSfHy/W
-         brvR22eKtqWGZIPnjE38NL7MLaxE6N2a/Hc7xw/IotL/kIvEk4JM6xljaPrqJtd67KmH
-         cKeUp3K5SJIfRzV6UANdTS50Q8T5kbRbTTj3SrWnxRb/MEiy/UB3IVMFneA4x3KhiFND
-         NQMA==
+        d=oss.qualcomm.com; s=google; t=1769697154; x=1770301954; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=IhJHHUv/gD43tiXPoXmVcP63bLvok/PXpDDKQR4l0yc=;
+        b=igPU8t/+i4TNrQDob3h59ZubHt/7T3EkszLQVBOprIxOy3SV1sB0C36k2InMrxPoIX
+         c4RzQJr6BAObWDdsSt/eRv2DCOCR2Dt0oEhegbQ+hnpmfFXBqe2tQcidLhlEnacTu6FS
+         4sJVkG+vCg7oRqbDKiZAdyjBuukGvaDtEr4F9Wn4btiGkEeEx9YRwfUTsX0tpZUg1lf7
+         2NUTlwHZCEPQSExUiJrhukLg5/AQRzwnq4K4B1sQT3TsQ8Dz6ljGh0j3F2tySOJq9lbE
+         UDCLf7TguEKiSbV1IcHwurY46T/5zomjJj8quRrtMaVR3ID3LDDlwe11KBpfMqLP2qs/
+         UQwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769696259; x=1770301059;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=sPxS5c0pRe16fDouaE61U8nM92dYddyMAnv3v5fItBU=;
-        b=upVEH1tLtfVUzwGpRmxiNJ45JwEJNJipr7TTDWrNYI07Ak/ZQSbJ6cdQAkZD0Vh0JI
-         1TrjppbJhunwb3J1Ezb/NVZ1DA/XlXq9sryFqmQ642F2FMHkmotL458vsrsFMusMMchH
-         Qh9/HBUOWRzORl0LkQrlxLHTcpSA2eGTiPgIds+1/JkfSbgOrRBypC3Zw6srVhLNEFSR
-         93oJVsV9ywIIWXq+Hx993PHQ2ZLo9t7sXIkvnYTg21oOHLWzhiWA4GEQBSu0+zyFhwHt
-         eDrDTHkbWFOGA+cHFd2YXEMw71AkI+In6zXJzeVxfy0B8hZedaYV4LF8dJlOsF+WUevt
-         U2/A==
-X-Gm-Message-State: AOJu0Yw9KO8sfXcQPYO9nyzFNd0xorB8b5/RljxcQikI8yzXqTtosD+l
-	AiieQDRcmTPRSq2cSlkzg7yV5Ofhxpt26VaKeDXnkS6ugCynTFCO95zuoy2AB9hOCVy0fUn2Mxw
-	GD24GfLKkv5kn/27vydKv/Tg2txx/hQ+I0a+eH3+fFeG4KbBCm1sGLiI6hlJCtOjUG95z
-X-Gm-Gg: AZuq6aJ+Ifo7VvyXr2AoTgsTRv7/1j/Jj0URBMcFY+BWA31rvhThmFG7lrFlb13vaeB
-	vvaEKGC4mGYOAjOezD6VarJWm7j9aIM6S7Q9piM3gjj9BqNGMVl49G5xtbPnzZirxckM5AyUJtF
-	35tZySPnwrPqxs7KlzbsUz+/6jaZJ4ID+kX2Qnlzc6o6F5TWPOXSSvjL6hw6iPS/chRM7xgS5e6
-	FNYsS/rrHCzL/d3jfIBu6QH1APFcVecY9r6vT1/cB6GLfJqs2nUjCcQN294p593YA0KS7e/zRrK
-	K/v3J9r+Regx3ddHm+5oyTuIh8SgvoenzBGrfCqy9luBMNHzunWza+rSuX9uoT4MKgjeeiZ4XxY
-	5blBOtPQAfCXoK54Wtcv0nUGqW7yt99WM6YefU05f1hQ+uCD5y3Oa31zmfXIuJr0kZew=
-X-Received: by 2002:a05:6102:4186:b0:5ec:95a0:6aac with SMTP id ada2fe7eead31-5f87e834e64mr1047581137.4.1769696258908;
-        Thu, 29 Jan 2026 06:17:38 -0800 (PST)
-X-Received: by 2002:a05:6102:4186:b0:5ec:95a0:6aac with SMTP id ada2fe7eead31-5f87e834e64mr1047572137.4.1769696258373;
-        Thu, 29 Jan 2026 06:17:38 -0800 (PST)
-Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59e074b2d89sm1145142e87.49.2026.01.29.06.17.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Jan 2026 06:17:37 -0800 (PST)
-Message-ID: <42c1c820-f235-4d7b-af58-c0b9a4d331cb@oss.qualcomm.com>
-Date: Thu, 29 Jan 2026 15:17:35 +0100
+        d=1e100.net; s=20230601; t=1769697154; x=1770301954;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=IhJHHUv/gD43tiXPoXmVcP63bLvok/PXpDDKQR4l0yc=;
+        b=XjfHq/ktTy5iGmRkgoeMTH+BM40WpqC4G+Wwhl4IF6dX57Q2aNEcWHx0H/2pGdYVk4
+         k9Zm9zV387+W044LX2tUS96+w/znw+nnW0Xv27WZWm4Q4Ka7FwvVTZWERl1f4BR05485
+         AcfozCwdqjbhgn5xQ7poH0U4p5sIkF/KsftM1Su8bcxTI62sOeVvlflHst54CL7O9PDP
+         DqA9HQLUGqVwxaZaxUoXWIuDCbePcTAZvW9onQSVwstfsQ0tbXLp3xwaGD2vmGvlCbip
+         KQyudtHY/Y+1Aag4sf6hTjAtcMXakr5J+Vo0rcjB5P+5Y/iOq/B1zUsSV60s7kLVOJym
+         5KnQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXt4WEM+sbWqmg9G9Ms489z01fjuxOQ1fMI5g1/xP+2ja3OA+/jflkWyM2XoKaIk1eqf45Z9w1R6fjxzczd@vger.kernel.org
+X-Gm-Message-State: AOJu0YypEkLIFtfPfNp+2gornvx2zQG+vSYmzhOJZ+Y+Ns3jCzG9j3hA
+	hquTMoxrNByGZsf0T/57rZOf6KBV4jH/gC59UzYo3xAXFwaLegiKGTLF0iiMuEAZirD+pduveB5
+	zNdfBMagL+T01qpJhWJDqBidw+Vt5gKs3tcROaAi/Tj0siOx9auvQr1gcuEWNbqElpIQ4
+X-Gm-Gg: AZuq6aKv8gUDP0jow4fl75hJpqCbXETOQp0qGBHfC+B3hWeDAmpGQegCCPkWaCiKoQa
+	f6yCe/+WFXla1d/SDuMP4miPK/hCNCIf4NV0jdDI4NSn2kYo+qVQkx07rCU/pJKTNX5L3be5mq4
+	Nm1Cig/kGqa5xOx0orkRTO+zx0dbGnNMlcuvr+xv4iOsq59sMp8x73TkTg8p/KHmtW4vIeqVSYO
+	Cc93i7vJfi1dBHzqBzoRijtBDhqB3vClH+txnXx3hrqkpfWZpsxIX+/xep7I6cola3FSG942PZ1
+	c9uSULm4jqOVCD0NAkHldyoUxC6mS/IA3dANkUNNGX7DZHhzIkFu74V01TUQfdsWMXKi28CLQYF
+	uJqTKQwrZP4RAVa9tpvVHyuKNIs7v7Uy3T4Q3eUkE8C7jm8kDQ1I2KZPE1R9lXdjFs40NXe8l4V
+	UWuS8WkNRaFbq23mh3aaRmhDc=
+X-Received: by 2002:a05:6102:b10:b0:5ee:f115:bbb6 with SMTP id ada2fe7eead31-5f723890961mr3319310137.24.1769697153365;
+        Thu, 29 Jan 2026 06:32:33 -0800 (PST)
+X-Received: by 2002:a05:6102:b10:b0:5ee:f115:bbb6 with SMTP id ada2fe7eead31-5f723890961mr3319283137.24.1769697152711;
+        Thu, 29 Jan 2026 06:32:32 -0800 (PST)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59e0a491039sm890278e87.66.2026.01.29.06.32.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Jan 2026 06:32:30 -0800 (PST)
+Date: Thu, 29 Jan 2026 16:32:28 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+Cc: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bod@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Stephan Gerhold <stephan.gerhold@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v3 0/4] media: qcom: flip the switch between Venus and
+ Iris drivers
+Message-ID: <i37aqxqtb4dovx3lpjm3xmkbcwlpiyfe7blzz4kirme7tegbb5@hgztyetld6lf>
+References: <20260127-venus-iris-flip-switch-v3-0-7f37689f4b39@oss.qualcomm.com>
+ <22583dde-caaa-4d64-bcb6-ac7f09916a8d@oss.qualcomm.com>
+ <xyhl36bcpmjhav73ujlvbtwqixngr5vko75t335mlcebxrs7lc@t43mxhknuqtj>
+ <5df59084-d19b-414e-a43d-8c5d26cb07e9@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] mtd: devices: Qualcomm SCM storage support
-To: Junhao Xie <bigfoot@radxa.com>,
-        Trilok Soni <trilokkumar.soni@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-mtd@lists.infradead.org, Xilin Wu <sophon@radxa.com>
-References: <20260126-scm-storage-v2-v2-0-fa045c7e7699@radxa.com>
- <dd89949a-11da-4c57-9b1a-2fba181988cc@oss.qualcomm.com>
- <2397C90D8A633438+88e8956b-5753-4842-a1c7-b0f6a78580c1@radxa.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <2397C90D8A633438+88e8956b-5753-4842-a1c7-b0f6a78580c1@radxa.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=Z93h3XRA c=1 sm=1 tr=0 ts=697b6c03 cx=c_pps
- a=P2rfLEam3zuxRRdjJWA2cw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=KV2aPqcVs2_3Sbi7RCIA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=ODZdjJIeia2B_SHc_B0f:22
-X-Proofpoint-ORIG-GUID: VRTa0AK4vDU6WWMreVWyG7GyFa5fG5wN
-X-Proofpoint-GUID: VRTa0AK4vDU6WWMreVWyG7GyFa5fG5wN
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI5MDA5NyBTYWx0ZWRfX1I46uMZ53M4S
- qZeYAM4tq9jIrmAEq8wpv8p6ztRNwKsGVOhetH8xW4uizisbCvleDhp2SS6rS48OR4d9P0h4cHV
- +UDemHLMdrvVOyyalOJNUBlOpvSkJy3JowVknqMjRIVpqSDFCGu+aMeoxzL+aWH8OHKrIl9f9Ob
- 8lAxD7WjaZR31TBH8qnwffXqrjkP/UywZPz9vnHEfYXuiccav7SGZtpjL7W0/OuJyXr5Rpqti5c
- uxGSgbpfvrnm12QcXd3GvOulnWVqrZfV+2MN+mpvwSIeKuVb31YW+KRtGRWJY+G5ovBr2wBfQBd
- EfIJY+rISUolBHj8UvfJwlvVgOh02QMgBaG5VsqE4XUOltygkfbBnvUsrgDhOCLABZC5G437kOi
- osdvzIoyQxuRXa//4Yw6167eBhfbMGm2lYVsM67SpasennD51jZB+Uv4+wA3YN6GM+RUb7I6NMm
- jHyUCUS42MhjH4aw5mg==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5df59084-d19b-414e-a43d-8c5d26cb07e9@oss.qualcomm.com>
+X-Proofpoint-ORIG-GUID: jWQI6GYFq9yMzFAy2hbX4XbhNqbE0eTq
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTI5MDA5OSBTYWx0ZWRfX1KsyTdQXUzz2
+ COT+eNnwesuXR8gnJA1YKyL/Yb9/RYSJfJSPnk+OcMG0jPdJ43MmdidK4xHRrZra2a3MYu7M2FD
+ fG5H44ZZEYPEazTa8s4w0IbGZL/1kpED+cvRv9m+vZfQbHfth5abeQBmkvaO/pLm9TLNy/x7IgH
+ 43qLySKF2a9n6L/DYYvUWpoiW/6irKm9UHwqpPeIFPMQ9xw26MRv9ua6oryDsZUvH97z/C13+K4
+ W9UtADa2axHnaOFs4Y7KoMz+RD8jwcS+QVi3hr3RK+xX4NJlBjgO6NJfLf1WUgSt+mYAAUgRX5Z
+ RDFXQw8CwwF/t0Oa6dPGD6WJJI7PU7Wx/3tYg6qv7AgDZ21M2zzxd94/UiXoAhWVymiwra1dzzL
+ i29DwcPXLWVJFGGN3ho/R5hmRyuJxlAQEJ9AY9Wwomwz7lGCuHzLjIWBvTI+VU6CHUujzVxToXF
+ GWk8H7YctXvoD2PAQ6w==
+X-Authority-Analysis: v=2.4 cv=RIu+3oi+ c=1 sm=1 tr=0 ts=697b6f83 cx=c_pps
+ a=DUEm7b3gzWu7BqY5nP7+9g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=UOdPSrI3100sDzHww24A:9 a=CjuIK1q_8ugA:10 a=-aSRE8QhW-JAV6biHavz:22
+X-Proofpoint-GUID: jWQI6GYFq9yMzFAy2hbX4XbhNqbE0eTq
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-01-29_02,2026-01-28_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 impostorscore=0 adultscore=0 clxscore=1015
- phishscore=0 spamscore=0 suspectscore=0 malwarescore=0 lowpriorityscore=0
+ suspectscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0 priorityscore=1501
+ impostorscore=0 malwarescore=0 clxscore=1015 adultscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601290097
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601290099
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-91186-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-91187-lists,linux-arm-msm=lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,oss.qualcomm.com:dkim,qualcomm.com:dkim];
 	MIME_TRACE(0.00)[0:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	MISSING_XM_UA(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[11];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: D8815B0D78
+X-Rspamd-Queue-Id: 33855B0F9C
 X-Rspamd-Action: no action
 
-On 1/29/26 1:47 PM, Junhao Xie wrote:
-> On 2026/1/29 5:43, Trilok Soni wrote:
+On Thu, Jan 29, 2026 at 03:32:28PM +0530, Vikash Garodia wrote:
 > 
->> On 1/26/2026 3:44 AM, Junhao Xie wrote:
->>> This patch series adds support for accessing storage devices managed by
->>> Qualcomm TrustZone firmware via SCM (Secure Channel Manager) by
->>> introducing a new MTD driver.
->>>
->>> On some Qualcomm platforms, firmware or BIOS-related storage (typically
->>> SPI NOR flash) is not directly accessible from the non-secure world.
->>> All read, write, and erase operations must be performed through SCM
->>> interfaces provided by the secure firmware. As a result, existing MTD
->>> SPI NOR drivers cannot be used directly on these systems.
->>>
->>> This series introduces a new MTD device driver that exposes such
->>> firmware-managed storage as a standard MTD device in the Linux kernel.
->>> The driver is built on top of the existing Qualcomm SCM infrastructure
->>> and integrates with the MTD subsystem to provide a uniform interface to
->>> userspace.
->>>
->>> This driver has been tested on Radxa Dragon Q6A, based on the Qualcomm
->>> QCS6490 SoC, with a Winbond W25Q256JWPIQ SPI NOR flash device.
->>>
->>> Note that this platform previously used the standard Qualcomm Linux
->>> firmware, which allowed direct access to the QSPI controller without
->>> needing this driver. However, we plan to migrate to a Windows-compatible
->>> firmware which is more feature-complete but restricts direct access.
->>> Device tree changes for this transition will be sent separately.
->>>
->>> If kernel boots with EL2, access to the SCM storage will be denied. This
->>> needs more investigation.
->> So you plan to enable this driver only w/ the Gunyah based configuration
->> and disable for the KVM one through the devicetree overlay ? I just
->> don't want to break the KVM boot flow on other platforms supporting
->> qcs6490.
+> On 1/29/2026 5:51 AM, Dmitry Baryshkov wrote:
+> > On Wed, Jan 28, 2026 at 06:35:01PM +0530, Vikash Garodia wrote:
+> > > 
+> > > On 1/27/2026 5:52 PM, Dmitry Baryshkov wrote:
+> > > > As the Venus and Iris drivers are close to the "feature parity" for the
+> > > > common platforms (SC7280, SM8250), in order to get more attention to
+> > > > squashing bugs from the Iris driver, flip the switch and default to the
+> > > > Iris driver if both are enabled. The Iris driver has several
+> > > > regressions, but hopefully they can be fixed through the development
+> > > > cycle by the respective team. Also it is better to fail the test than
+> > > > crash the device (which Venus driver does a lot).
+> > > > 
+> > > > Note: then intention is to land this in 6.21, which might let us to
+> > > > drop those platforms from the Venus driver in 6.22+.
+> > > > 
+> > > > Testing methodology: fluster test-suite, single-threaded mode, SM8250
+> > > > device (RB5).
+> > > 
+> > > Could you run fluster on SC7280 as well ? Also please share the v4l2
+> > > compliance results.
+> > 
+> > Okay, the SC7280 is a bit more interesting. For H.264 and VP9 the
+> > results are the same. For H.265 Iris errors out for all tests except for
+> > the one, WPP_E_ericsson_MAIN_2.
+> > 
+> > The kernel prints the following message:
+> > 
+> > [   82.573112] qcom-iris aa00000.video-codec: session error for command: d0000000, event id:1009, session id:52ef2000
+> > 
 > 
-> On systems booted with EL2/KVM, the SCM storage GET_INFO call currently
-> returns -EINVAL. If a platform does not support SPI-NOR or SCM storage,
-> __qcom_scm_is_call_available() will cause the initialization to bail out early.
+> 0x1009 corresponds to HFI_ERR_SESSION_INSUFFICIENT_RESOURCES
 > 
-> There is no DT-based enable/disable mechanism, and this should not affect
-> KVM boot flow on other platforms.
-> 
-> Other QCS6490 LE platforms do not support SCM storage, as the LE firmware
-> does not support SPI-NOR boot. Radxa Dragon Q6A uses WP firmware and boots
-> from SPI-NOR.
-> 
-> The root cause of SCM storage being unavailable under EL2/KVM is still under
-> investigation.
-> 
-> [    0.770124] qcom_scm: convention: smc arm 64
-> [    0.775005] qcom_scm firmware:scm: qseecom: found qseecom with version 0x1402000
-> [    0.782990] qcom_scm firmware:scm: scm storage get info failed: -22
-> [    0.999095] qcom_qseecom qcom_qseecom: setting up client for qcom.tz.uefisecapp
+> Below patch would enable firmware logs and make it print in kernel logs, you
+> can apply and share to know more about insufficient resource error.
 
-I think you need to create a shmbridge when running without gunyah, see
-e.g.
+Added it. BTW: would it make sense to land it in some way (I saw that
+earlier you posted the same one for gen2). Would it make sense to land
+it in some way upstram?
 
-4a7d6a78fbc6 ("firmware: qcom_scm: Add a prep version of auth_and_reset function")
+Anyway:
 
-where the memory is bridged right before the call. Without knowing any
-better I would guesstimate you may need to qcom_tzalloc (which does that
-under the hood) the 'struct qcom_scm_storage_info info' which you pass
-to that func in qcom_scm_storage_init()
+$ gst-launch-1.0 --no-fault filesrc location=/home/debian/fluster/fluster/../resources/JCT-VC-HEVC_V1/AMP_A_Samsung_7/AMP_A_Samsung_7.bin ! parsebin ! v4l2h265dec ! video/x-raw ! videoconvert dither=none ! video/x-raw,format=I420 ! videocodectestsink -m
+Setting pipeline to PAUSED ...
+Pipeline is PREROLLING ...
+Got message #19 from element "videocodectestsink0" (state-changed): GstMessageStateChanged, old-state=(GstState)null, new-state=(GstState)ready, pending-state=(GstState)void-pending;
+Got message #20 from element "capsfilter1" (state-changed): GstMessageStateChanged, old-state=(GstState)null, new-state=(GstState)ready, pending-state=(GstState)void-pending;
+Got message #21 from element "videoconvert0" (state-changed): GstMessageStateChanged, old-state=(GstState)null, new-state=(GstState)ready, pending-state=(GstState)void-pending;
+Got message #22 from element "capsfilter0" (state-changed): GstMessageStateChanged, old-state=(GstState)null, new-state=(GstState)ready, pending-state=(GstState)void-pending;
+Got message #23 from element "v4l2h265dec0" (state-changed): GstMessageStateChanged, old-state=(GstState)null, new-state=(GstState)ready, pending-state=(GstState)void-pending;
+Got message #24 from element "typefind" (state-changed): GstMessageStateChanged, old-state=(GstState)null, new-state=(GstState)ready, pending-state=(GstState)void-pending;
+Got message #25 from element "parsebin0" (state-changed): GstMessageStateChanged, old-state=(GstState)null, new-state=(GstState)ready, pending-state=(GstState)void-pending;
+Got message #26 from element "filesrc0" (state-changed): GstMessageStateChanged, old-state=(GstState)null, new-state=(GstState)ready, pending-state=(GstState)void-pending;
+Got message #27 from element "pipeline0" (state-changed): GstMessageStateChanged, old-state=(GstState)null, new-state=(GstState)ready, pending-state=(GstState)paused;
+Got message #29 from element "capsfilter1" (state-changed): GstMessageStateChanged, old-state=(GstState)ready, new-state=(GstState)paused, pending-state=(GstState)void-pending;
+Got message #30 from element "videoconvert0" (state-changed): GstMessageStateChanged, old-state=(GstState)ready, new-state=(GstState)paused, pending-state=(GstState)void-pending;
+Got message #31 from element "capsfilter0" (state-changed): GstMessageStateChanged, old-state=(GstState)ready, new-state=(GstState)paused, pending-state=(GstState)void-pending;
+Got message #32 from element "v4l2h265dec0" (state-changed): GstMessageStateChanged, old-state=(GstState)ready, new-state=(GstState)paused, pending-state=(GstState)void-pending;
+Got message #35 from pad "typefind:sink" (stream-status): GstMessageStreamStatus, type=(GstStreamStatusType)create, owner=(GstElement)"\(GstTypeFindElement\)\ typefind", object=(GstTask)"\(GstTask\)\ typefind:sink";
+Got message #36 from element "typefind" (state-changed): GstMessageStateChanged, old-state=(GstState)ready, new-state=(GstState)paused, pending-state=(GstState)void-pending;
+Got message #37 from element "parsebin0" (state-changed): GstMessageStateChanged, old-state=(GstState)ready, new-state=(GstState)paused, pending-state=(GstState)void-pending;
+Got message #38 from element "filesrc0" (state-changed): GstMessageStateChanged, old-state=(GstState)ready, new-state=(GstState)paused, pending-state=(GstState)void-pending;
+Got message #39 from pad "typefind:sink" (stream-status): GstMessageStreamStatus, type=(GstStreamStatusType)enter, owner=(GstElement)"\(GstTypeFindElement\)\ typefind", object=(GstTask)"\(GstTask\)\ typefind:sink";
+Got message #51 from element "h265parse0" (state-changed): GstMessageStateChanged, old-state=(GstState)null, new-state=(GstState)ready, pending-state=(GstState)void-pending;
+Got message #67 from pad "h265parse0:sink" (stream-status): GstMessageStreamStatus, type=(GstStreamStatusType)create, owner=(GstElement)"\(GstH265Parse\)\ h265parse0", object=(GstTask)"\(GstTask\)\ task1";
+Got message #68 from element "h265parse0" (state-changed): GstMessageStateChanged, old-state=(GstState)ready, new-state=(GstState)paused, pending-state=(GstState)void-pending;
+Got message #69 from pad "h265parse0:sink" (stream-status): GstMessageStreamStatus, type=(GstStreamStatusType)enter, owner=(GstElement)"\(GstH265Parse\)\ h265parse0", object=(GstTask)"\(GstTask\)\ h265parse0:sink";
+Got message #74 from element "parsebin0" (stream-collection): GstMessageStreamCollection, collection=(GstStreamCollection)"\(GstStreamCollection\)\ unparented";
+Got message #70 from element "pipeline0" (stream-start): GstMessageStreamStart, group-id=(uint)2;
+Got message #83 from pad "v4l2h265dec0:src" (stream-status): GstMessageStreamStatus, type=(GstStreamStatusType)create, owner=(GstElement)"\(v4l2h265dec\)\ v4l2h265dec0", object=(GstTask)"\(GstTask\)\ task2";
+ERROR: from element /GstPipeline:pipeline0/GstParseBin:parsebin0/GstH265Parse:h265parse0: Internal data stream error.
+Additional debug info:
+../libs/gst/base/gstbaseparse.c(3703): gst_base_parse_loop (): /GstPipeline:pipeline0/GstParseBin:parsebin0/GstH265Parse:h265parse0:
+streaming stopped, reason error (-5)
+ERROR: pipeline doesn't want to preroll.
+Got message #85 from pad "v4l2h265dec0:src" (stream-status): GstMessageStreamStatus, type=(GstStreamStatusType)enter, owner=(GstElement)"\(v4l2h265dec\)\ v4l2h265dec0", object=(GstTask)"\(GstTask\)\ v4l2h265dec0:src";
+Setting pipeline to NULL ...
+ERROR: from element /GstPipeline:pipeline0/v4l2h265dec:v4l2h265dec0: Could not read from resource.
+Additional debug info:
+../sys/v4l2/gstv4l2object.c(6253): gst_v4l2_object_poll (): /GstPipeline:pipeline0/v4l2h265dec:v4l2h265dec0:
+poll error 1: Success (0)
+ERROR: pipeline doesn't want to preroll.
+Freeing pipeline ...
 
-Konrad
+
+
+
+[   67.435274] qcom-iris aa00000.video-codec: 
+[   67.435274] <VFW_L:HostDr:unkn:--------:-> Host cmd: HFI_CMD_SYS_PC_PREP
+[   67.446528] qcom-iris aa00000.video-codec: 
+[   67.446528] <VFW_L:HostDr:unkn:--------:-> Host cmd: HFI_CMD_SYS_SET_PROPERTY
+[   67.629798] qcom-iris aa00000.video-codec: 
+[   67.629798] <VFW_L:HostDr:unkn:--------:-> Host cmd: HFI_CMD_SYS_SESSION_INIT
+[   67.641590] qcom-iris aa00000.video-codec: 
+[   67.641590] <VFW_L:HostDr:unkn:--------:-> used byte before CreateSession 0xd77c
+[   67.653538] qcom-iris aa00000.video-codec: 
+[   67.653538] <VFW_P:HostDr:unkn:--------:-> Session 0 start 6efb871.
+[   67.664964] qcom-iris aa00000.video-codec: 
+[   67.664964] <VFW_H:HostDr:unkn:--------:-> HostDriver: HEVC Decoder Session Created
+[   67.677381] qcom-iris aa00000.video-codec: 
+[   67.677381] <VFW_L:HostDr:unkn:--------:-> Unknown Host msg 0x20006
+[   67.688191] qcom-iris aa00000.video-codec: 
+[   67.688191] <VFW_L:HostDr:unkn:--------:-> used byte after CreateSession 0x2821c
+[   67.700213] qcom-iris aa00000.video-codec: 
+[   67.700213] <VFW_L:HostDr:unkn:--------:-> Host cmd: HFI_CMD_SESSION_SET_PROPERTY
+[   67.712232] qcom-iris aa00000.video-codec: 
+[   67.712232] <VFW_M:HostDr:265d:6eea4000:00000000> Set property cmd type 0x2002 received
+[   67.724825] qcom-iris aa00000.video-codec: 
+[   67.724825] <VFW_L:HostDr:265d:6eea4000:00000000> HFI_PROPERTY_CONFIG_VIDEOCORES_USAGE: 1
+[   67.737551] qcom-iris aa00000.video-codec: 
+[   67.737551] <VFW_L:HostDr:unkn:--------:-> Host cmd: HFI_CMD_SESSION_SET_PROPERTY
+[   67.749590] qcom-iris aa00000.video-codec: 
+[   67.749590] <VFW_M:HostDr:265d:6eea4000:00000000> Set property cmd type 0x1003 received
+[   67.762131] qcom-iris aa00000.video-codec: 
+[   67.762131] <VFW_H:HostDr:265d:6eea4000:00000000> Uncompressed Format bufType:2 fmt:8002
+[   67.774789] qcom-iris aa00000.video-codec: 
+[   67.774789] <VFW_L:HostDr:unkn:--------:-> Host cmd: HFI_CMD_SESSION_SET_PROPERTY
+[   67.786831] qcom-iris aa00000.video-codec: 
+[   67.786831] <VFW_M:HostDr:265d:6eea4000:00000000> Set property cmd type 0x1003 received
+[   67.799382] qcom-iris aa00000.video-codec: 
+[   67.799382] <VFW_H:HostDr:265d:6eea4000:00000000> Uncompressed Format bufType:3 fmt:2
+[   67.811746] qcom-iris aa00000.video-codec: 
+[   67.811746] <VFW_L:HostDr:unkn:--------:-> Host cmd: HFI_CMD_SESSION_SET_PROPERTY
+[   67.823760] qcom-iris aa00000.video-codec: 
+[   67.823760] <VFW_M:HostDr:265d:6eea4000:00000000> Set property cmd type 0x201002 received
+[   67.836507] qcom-iris aa00000.video-codec: 
+[   67.836507] <VFW_L:HostDr:unkn:--------:-> Host cmd: HFI_CMD_SESSION_SET_PROPERTY
+[   67.848512] qcom-iris aa00000.video-codec: 
+[   67.848512] <VFW_M:HostDr:265d:6eea4000:00000000> Set property cmd type 0x201001 received
+[   67.861252] qcom-iris aa00000.video-codec: 
+[   67.861252] <VFW_L:HostDr:265d:6eea4000:00000000> HFI_PROPERTY_PARAM_BUFFER_COUNT_ACTUAL type:1, min:32, act:32
+[   67.875954] qcom-iris aa00000.video-codec: 
+[   67.875954] <VFW_L:HostDr:unkn:--------:-> Host cmd: HFI_CMD_SESSION_SET_PROPERTY
+[   67.887981] qcom-iris aa00000.video-codec: 
+[   67.887981] <VFW_M:HostDr:265d:6eea4000:00000000> Set property cmd type 0x201001 received
+[   67.900734] qcom-iris aa00000.video-codec: 
+[   67.900734] <VFW_L:HostDr:265d:6eea4000:00000000> HFI_PROPERTY_PARAM_BUFFER_COUNT_ACTUAL type:2, min:32, act:32
+[   67.915434] qcom-iris aa00000.video-codec: 
+[   67.915434] <VFW_L:HostDr:unkn:--------:-> Host cmd: HFI_CMD_SESSION_SET_PROPERTY
+[   67.927439] qcom-iris aa00000.video-codec: 
+[   67.927439] <VFW_M:HostDr:265d:6eea4000:00000000> Set property cmd type 0x201001 received
+[   67.940189] qcom-iris aa00000.video-codec: 
+[   67.940189] <VFW_L:HostDr:265d:6eea4000:00000000> HFI_PROPERTY_PARAM_BUFFER_COUNT_ACTUAL type:3, min:4, act:4
+[   67.954713] qcom-iris aa00000.video-codec: 
+[   67.954713] <VFW_L:HostDr:unkn:--------:-> Host cmd: HFI_CMD_SESSION_SET_PROPERTY
+[   67.966721] qcom-iris aa00000.video-codec: 
+[   67.966721] <VFW_M:HostDr:265d:6eea4000:00000000> Set property cmd type 0x1003001 received
+[   67.979579] qcom-iris aa00000.video-codec: 
+[   67.979579] <VFW_L:HostDr:unkn:--------:-> Host cmd: HFI_CMD_SESSION_SET_PROPERTY
+[   67.991582] qcom-iris aa00000.video-codec: 
+[   67.991582] <VFW_M:HostDr:265d:6eea4000:00000000> Set property cmd type 0x1003001 received
+[   68.004412] qcom-iris aa00000.video-codec: 
+[   68.004412] <VFW_H:HostDr:265d:6eea4000:00000000> HFI_PROPERTY_PARAM_VDEC_MULTI_STREAM DS Enable Width2 0 Height2 0
+[   68.019492] qcom-iris aa00000.video-codec: 
+[   68.019492] <VFW_L:HostDr:unkn:--------:-> Host cmd: HFI_CMD_SESSION_SET_PROPERTY
+[   68.031497] qcom-iris aa00000.video-codec: 
+[   68.031497] <VFW_M:HostDr:265d:6eea4000:00000000> Set property cmd type 0x1001 received
+[   68.044056] qcom-iris aa00000.video-codec: 
+[   68.044056] <VFW_L:HostDr:unkn:--------:-> Host cmd: HFI_CMD_SESSION_SET_PROPERTY
+[   68.056063] qcom-iris aa00000.video-codec: 
+[   68.056063] <VFW_M:HostDr:265d:6eea4000:00000000> Set property cmd type 0x1001 received
+[   68.068622] qcom-iris aa00000.video-codec: 
+[   68.068622] <VFW_H:HostDr:265d:6eea4000:00000000> Output2 Width 2560 Height 1600
+[   68.080570] qcom-iris aa00000.video-codec: 
+[   68.080570] <VFW_L:HostDr:unkn:--------:-> Host cmd: HFI_CMD_SESSION_SET_PROPERTY
+[   68.092596] qcom-iris aa00000.video-codec: 
+[   68.092596] <VFW_M:HostDr:265d:6eea4000:00000000> Set property cmd type 0x20100c received
+[   68.105313] qcom-iris aa00000.video-codec: 
+[   68.105313] <VFW_L:HostDr:unkn:--------:-> Host cmd: HFI_CMD_SESSION_SET_PROPERTY
+[   68.117343] qcom-iris aa00000.video-codec: 
+[   68.117343] <VFW_M:HostDr:265d:6eea4000:00000000> Set property cmd type 0x20100c received
+[   68.130072] qcom-iris aa00000.video-codec: 
+[   68.130072] <VFW_L:HostDr:unkn:--------:-> Host cmd: HFI_CMD_SESSION_SET_PROPERTY
+[   68.142083] qcom-iris aa00000.video-codec: 
+[   68.142083] <VFW_M:HostDr:265d:6eea4000:00000000> Set property cmd type 0x1015 received
+[   68.154644] qcom-iris aa00000.video-codec: 
+[   68.154644] <VFW_L:HostDr:265d:6eea4000:00000000> HFI_PROPERTY_PARAM_WORK_MODE: 2
+[   68.166650] qcom-iris aa00000.video-codec: 
+[   68.166650] <VFW_L:HostDr:unkn:--------:-> Host cmd: HFI_CMD_SESSION_SET_PROPERTY
+[   68.178676] qcom-iris aa00000.video-codec: 
+[   68.178676] <VFW_M:HostDr:265d:6eea4000:00000000> Set property cmd type 0x1017 received
+[   68.191222] qcom-iris aa00000.video-codec: 
+[   68.191222] <VFW_L:HostDr:unkn:--------:-> Host cmd: HFI_CMD_SESSION_SET_BUFFERS
+[   68.203160] qcom-iris aa00000.video-codec: 
+[   68.203160] <VFW_L:HostDr:265d:6eea4000:00000000> internal buffer size 13640960:
+[   68.215080] qcom-iris aa00000.video-codec: 
+[   68.215080] <VFW_L:HostDr:265d:6eea4000:00000000> persist buffer size 160000:
+[   68.226750] qcom-iris aa00000.video-codec: 
+[   68.226750] <VFW_L:HostDr:265d:6eea4000:00000000> bin buffer size  24576000
+[   68.238221] qcom-iris aa00000.video-codec: 
+[   68.238221] <VFW_L:HostDr:265d:6eea4000:00000000> MACRO internal buffer size 136623360:
+[   68.250788] qcom-iris aa00000.video-codec: 
+[   68.250788] <VFW_L:HostDr:265d:6eea4000:00000000> MACRO persist buffer size 160000:
+[   68.262977] qcom-iris aa00000.video-codec: 
+[   68.262977] <VFW_L:HostDr:265d:6eea4000:00000000> MACRO bin buffer size  24576000
+[   68.275041] qcom-iris aa00000.video-codec: 
+[   68.275041] <VFW_H:HostDr:265d:6eea4000:00000000> Input dimension is 2560 x 1600
+[   68.286977] qcom-iris aa00000.video-codec: 
+[   68.286977] <VFW_M:HostDr:265d:6eea4000:00000000> Set buffer type 0x5 addr 0xdd780000 num 1 size 397568
+[   68.300972] qcom-iris aa00000.video-codec: 
+[   68.300972] <VFW_L:HostDr:unkn:--------:-> Host cmd: HFI_CMD_SESSION_SET_BUFFERS
+[   68.312899] qcom-iris aa00000.video-codec: 
+[   68.312899] <VFW_L:HostDr:265d:6eea4000:00000000> internal buffer size 13640960:
+[   68.312910] qcom-iris aa00000.video-codec: 
+[   68.312910] <VFW_L:HostDr:265d:6eea4000:00000000> persist buffer size 160000:
+[   68.333411] qcom-iris aa00000.video-codec: 
+[   68.333411] <VFW_L:HostDr:265d:6eea4000:00000000> bin buffer size  24576000
+[   68.350423] qcom-iris aa00000.video-codec: 
+[   68.350423] <VFW_L:HostDr:265d:6eea4000:00000000> MACRO internal buffer size 136623360:
+[   68.368388] qcom-iris aa00000.video-codec: 
+[   68.368388] <VFW_L:HostDr:265d:6eea4000:00000000> MACRO persist buffer size 160000:
+[   68.387805] qcom-iris aa00000.video-codec: 
+[   68.387805] <VFW_L:HostDr:265d:6eea4000:00000000> MACRO bin buffer size  24576000
+[   68.407251] qcom-iris aa00000.video-codec: 
+[   68.407251] <VFW_H:HostDr:265d:6eea4000:00000000> Input dimension is 2560 x 1600
+[   68.420980] qcom-iris aa00000.video-codec: 
+[   68.420980] <VFW_M:HostDr:265d:6eea4000:00000000> Set buffer type 0x6 addr 0xdc000000 num 1 size 24576000
+[   68.437821] qcom-iris aa00000.video-codec: 
+[   68.437821] <VFW_H:HostDr:265d:6eea4000:00000000> HFI_BUFFER_COMMON_INTERNAL_SCRATCH, Driver macro size = 24576000 vs FW HFI macro size = 24576000 vs FW golden buffer size = 24576000
+[   68.458428] qcom-iris aa00000.video-codec: 
+[   68.458428] <VFW_L:HostDr:unkn:--------:-> Host cmd: HFI_CMD_SESSION_SET_BUFFERS
+[   68.480399] qcom-iris aa00000.video-codec: 
+[   68.480399] <VFW_L:HostDr:265d:6eea4000:00000000> internal buffer size 13640960:
+[   68.496893] qcom-iris aa00000.video-codec: 
+[   68.496893] <VFW_L:HostDr:265d:6eea4000:00000000> persist buffer size 160000:
+[   68.511749] qcom-iris aa00000.video-codec: 
+[   68.511749] <VFW_L:HostDr:265d:6eea4000:00000000> bin buffer size  24576000
+[   68.525563] qcom-iris aa00000.video-codec: 
+[   68.525563] <VFW_L:HostDr:265d:6eea4000:00000000> MACRO internal buffer size 136623360:
+[   68.553110] qcom-iris aa00000.video-codec: 
+[   68.553110] <VFW_L:HostDr:265d:6eea4000:00000000> MACRO persist buffer size 160000:
+[   68.566233] qcom-iris aa00000.video-codec: 
+[   68.566233] <VFW_L:HostDr:265d:6eea4000:00000000> MACRO bin buffer size  24576000
+[   68.579462] qcom-iris aa00000.video-codec: 
+[   68.579462] <VFW_H:HostDr:265d:6eea4000:00000000> Input dimension is 2560 x 1600
+[   68.592482] qcom-iris aa00000.video-codec: 
+[   68.592482] <VFW_M:HostDr:265d:6eea4000:00000000> Set buffer type 0x7 addr 0xd0000000 num 1 size 135967744
+[   68.605612] qcom-iris aa00000.video-codec: 
+[   68.605612] <VFW_H:HostDr:265d:6eea4000:00000000> HFI_BUFFER_COMMON_INTERNAL_SCRATCH_1, Driver macro size = 135967744 vs FW HFI macro size = 136623360 vs FW golden buffer size = 13640960
+[   68.616954] qcom-iris aa00000.video-codec: 
+[   68.616954] <VFW_E:HostDr:265d:6eea4000:00000000> vDec_SetBuffers(2017): Dec_SetBuffers, Insufficient 7 buffer
+[   68.628259] qcom-iris aa00000.video-codec: 
+[   68.628259] <VFW_L:HostDr:unkn:--------:-> Host cmd: HFI_CMD_SESSION_LOAD_RESOURCES
+[   68.640602] qcom-iris aa00000.video-codec: 
+[   68.640602] <VFW_L:HostDr:265d:6eea4000:00000000> Output2 Dimensions 1:1 : NO_SCALING
+[   68.653195] qcom-iris aa00000.video-codec: 
+[   68.653195] <VFW_E:HostDr:265d:6eea4000:00000000> vDec_LoadResources(1392): Load Resources Command received without complete buffer set 16/14
+[   68.665510] qcom-iris aa00000.video-codec: 
+[   68.665510] <VFW_L:HostDr:265d:6eea4000:00000000> Load Resource with core id: 0
+[   68.678699] qcom-iris aa00000.video-codec: 
+[   68.678699] <VFW_M:HostDr:265d:6eea4000:00000000> cabac_direct_mode = 0
+[   68.692300] qcom-iris aa00000.video-codec: 
+[   68.692300] <VFW_E:HostDr:265d:6eea4000:00000000> vDec_AttachInternalBuffers(1760): mem->vsp_buf: pty->size_vsp:461056,total_size:0
+[   68.704271] qcom-iris aa00000.video-codec: 
+[   68.704271] <VFW_E:HostDr:265d:6eea4000:00000000> vDec_LoadResources(1486): Load Resources failed with error code: 4105 due to internal buffer attachment
+[   68.722196] qcom-iris aa00000.video-codec: 
+[   68.722196] <VFW_M:HostDr:265d:6eea4000:00000000> Increased input queue length to 32
+[   68.723970] use of bytesused == 0 is deprecated and will be removed in the future,
+[   68.723984] use the actual size instead.
+[   68.724030] ------------[ cut here ]------------
+[   68.724032] WARNING: drivers/media/common/videobuf2/videobuf2-core.c:1821 at vb2_start_streaming+0xdc/0x178, CPU#6: h265parse0:sink/832
+[   68.724049] Modules linked in:
+[   68.724071] CPU: 6 UID: 1000 PID: 832 Comm: h265parse0:sink Not tainted 6.19.0-rc6-next-20260123-gcc2a9fa439f0-dirty #4136 PREEMPT 
+[   68.724076] Hardware name: Qualcomm Technologies, Inc. Robotics RB3gen2 (DT)
+[   68.724078] pstate: 20400005 (nzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[   68.724082] pc : vb2_start_streaming+0xdc/0x178
+[   68.724089] lr : vb2_start_streaming+0x6c/0x178
+[   68.724094] sp : ffff80008f9b3b40
+[   68.724096] x29: ffff80008f9b3b40 x28: ffff000091154020 x27: 0000000000000000
+[   68.724103] x26: 0000000040045612 x25: 0000000000000000 x24: ffffc8eab4ae0cd8
+[   68.724109] x23: ffffc8eab4ae8de0 x22: ffff00008fe51380 x21: ffff00008e15e420
+[   68.724115] x20: ffff00008e15e438 x19: 00000000fffffff0 x18: 0000000000000000
+[   68.724120] x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000002
+[   68.724126] x14: 0000000000000028 x13: 0000000000014e76 x12: ffffc8eab5f391a0
+[   68.724132] x11: ffffc8eab624b418 x10: ffffc8eab52ca4e4 x9 : 0000000000000050
+[   68.724138] x8 : ffff80008f9b39b0 x7 : ffff80008f9b3ab0 x6 : ffff80008f9b3a70
+[   68.724143] x5 : ffff80008f9b39f0 x4 : 0000000000000002 x3 : ffff80008f9b3a34
+[   68.724149] x2 : 0000000000000000 x1 : ffffc8eab62aa000 x0 : ffff00008f769a38
+[   68.724155] Call trace:
+[   68.724156]  vb2_start_streaming+0xdc/0x178 (P)
+[   68.724164]  vb2_core_streamon+0xd8/0x1bc
+[   68.724167]  vb2_streamon+0x18/0x64
+[   68.724172]  v4l2_m2m_ioctl_streamon+0x38/0xa0
+[   68.724177]  v4l_streamon+0x24/0x30
+[   68.724181]  __video_do_ioctl+0x34c/0x400
+[   68.724186]  video_usercopy+0x2ec/0x880
+[   68.724192]  video_ioctl2+0x18/0x40
+[   68.724197]  v4l2_ioctl+0x40/0x60
+[   68.724201]  __arm64_sys_ioctl+0xac/0x104
+[   68.724205]  invoke_syscall+0x48/0x104
+[   68.724212]  el0_svc_common.constprop.0+0x40/0xe0
+[   68.724218]  do_el0_svc+0x1c/0x28
+[   68.724223]  el0_svc+0x50/0x2d0
+[   68.724230]  el0t_64_sync_handler+0xa0/0xe4
+[   68.724236]  el0t_64_sync+0x198/0x19c
+[   68.724241] irq event stamp: 2164
+[   68.724243] hardirqs last  enabled at (2163): [<ffffc8eab488e4b8>] _raw_spin_unlock_irqrestore+0x6c/0x74
+[   68.724250] hardirqs last disabled at (2164): [<ffffc8eab48780ac>] el1_brk64+0x20/0x60
+[   68.724256] softirqs last  enabled at (2074): [<ffffc8eab382ff48>] fpsimd_restore_current_state+0x13c/0x334
+[   68.724261] softirqs last disabled at (2072): [<ffffc8eab382ff64>] fpsimd_restore_current_state+0x158/0x334
+[   68.724266] ---[ end trace 0000000000000000 ]---
+[   68.733181] qcom-iris aa00000.video-codec: 
+[   68.733181] <VFW_M:HostDr:265d:6eea4000:00000000> Increased length of YUV queues to 32
+[   68.744254] qcom-iris aa00000.video-codec: 
+[   68.744254] <VFW_L:HostDr:265d:6eea4000:00000000> Host msg: HFI_MSG_SESSION_LOAD_RESOURCES_DONE
+[   68.758898] qcom-iris aa00000.video-codec: 
+[   68.758898] <VFW_L:HostDr:unkn:--------:-> Host cmd: HFI_CMD_SYS_SESSION_END
+[   68.779049] qcom-iris aa00000.video-codec: 
+[   68.779049] <VFW_L:HostDr:unkn:--------:-> used byte before DestroySession 0x299d6
+[   68.795564] qcom-iris aa00000.video-codec: 
+[   68.795564] <VFW_L:WrkDec:265d:6eea4000:00000000> Start destroying ...
+[   68.795564]  
+[   68.814913] qcom-iris aa00000.video-codec: 
+[   68.814913] <VFW_L:HostDr:unkn:--------:-> Destroying Session.
+[   68.830323] qcom-iris aa00000.video-codec: 
+[   68.830323] <VFW_P:HostDr:unkn:--------:-> Session 0 end 7992d3a.
+[   68.845802] qcom-iris aa00000.video-codec: 
+[   68.845802] <VFW_P:HostDr:unkn:--------:-> Session 6eea4000 Thread Load Stats
+[   68.861250] qcom-iris aa00000.video-codec: 
+[   68.861250] <VFW_L:HostDr:unkn:--------:-> Unknown Host msg 0x20007
+[   68.876714] qcom-iris aa00000.video-codec: 
+[   68.876714] <VFW_L:HostDr:unkn:--------:-> used byte after DestroySession 0xd77c
+[   68.892229] qcom-iris aa00000.video-codec: session error for command: d0000000, event id:1009, session id:6eea4000
+
+
+-- 
+With best wishes
+Dmitry
 
