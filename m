@@ -1,160 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-91210-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91211-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id AJF+IrW1e2neHwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91210-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 20:32:05 +0100
+	id iLamBnDVe2klIwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91211-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 22:47:28 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id EDD08B401B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 20:32:04 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id DA907B50BA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 22:47:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id CE6E43004DFD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 19:32:03 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 9B5573003BDE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jan 2026 21:47:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97FBC30BF79;
-	Thu, 29 Jan 2026 19:32:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FBFE36657F;
+	Thu, 29 Jan 2026 21:47:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VWVVVJd3"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="f04/yhoa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7272D2D46B3;
-	Thu, 29 Jan 2026 19:32:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB810362134;
+	Thu, 29 Jan 2026 21:47:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769715122; cv=none; b=XI6QuXHoKAT3YY970Dz+hEXRqGtyY/0fXZ6Z90HxoMhjwF7LrHTZlUkqtLHImwGozyAPOsHNkGF5i3AtQk+TESDHjkwxyVb8TbJqgFDF1uwIxxiKoBHfQU7S7KZZIFhnTfM6RCs/zk1UldnI9H4+cHyHQ+5nJVlIQqEP8kAxuCc=
+	t=1769723243; cv=none; b=SUl4jNl7vexl9fmD3rhc0SVFp+Pew5WZE4olpO2cIKee2YmKuvd7TRExLEI7gT1JUhAX27v55qVBnoVytw18cTapst/Y/uMR5+9yjS6PjXKHAnNdLwz4GWHygniE3x91Sfq8niqyK8fMqqjlfxE+dFuOWnezMbZ2yz9Cxpanqkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769715122; c=relaxed/simple;
-	bh=+afXvXUiUrGnXFfdDqtAMfkE/vdSboOihJX6gkigv6M=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=qayAHBATQGjD/p8xdg2gM2Gf6OzDbpDj7H/ObXLp5K5FQiwkyhcqHywOFcUPuvsOMi702G4rmfjyNJDosuebw5NuXRiu7VeAG6c3GREw0J/TvU0jQeFNF+lEXrnRj9W41EGbqbB21p58uj0xhTu2qxnCWOKHma6/SFJdyPE2PMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VWVVVJd3; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37599C4CEF7;
-	Thu, 29 Jan 2026 19:32:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769715122;
-	bh=+afXvXUiUrGnXFfdDqtAMfkE/vdSboOihJX6gkigv6M=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=VWVVVJd3vy51QjUbs15jezgc+M60SoerF9LjzTPt8CR9bHtku0CAvZb4ybxDHFik2
-	 cEkKyU8wdpWO4+UqWA3G4ME4K/JGipl8s3GyfZzNe+N+xMpErhgmcprfIKSU6Fic9f
-	 dWA4nCVClDJqtnJ8gZt7sDgQBm7kx9OsXsnrUrhFbguzHXrXdUGUc8jFYqQPfFAm9G
-	 3tAh68gq6NkNWuWANyePQV+laaP+kkex48VJI7qoj2lTl+hYUzxfxraT8P08+j/2j1
-	 8JM/bOYeGTSJ/bpw5DYwC5PRzpcxS0FOuEgX/i39pe3Hzz2mU3L3Cd8KgInMNev6NM
-	 lQTFXfwv+DT6A==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 4ED25380CED5;
-	Thu, 29 Jan 2026 19:31:56 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1769723243; c=relaxed/simple;
+	bh=xuEWwxsCnKV1hgUcvG3HkKb3wtP4QNEso9PfcYG5F+c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MmGq3MrPJeWZW79gbdd4xSqBgV4ZyQITqVbNs/o6S31X401WTue+A5upF0tzjg0Yy1OcAtqzeAwGooCG48CxkRSmE9/++hblIn6jlX+mxNKKP7CItAGZEEvMVz1EOWPcxYlCt6uCq8k4Lj4eXe4tkPf7TY1Zl7PtW4NoietahzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=f04/yhoa; arc=none smtp.client-ip=198.175.65.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1769723241; x=1801259241;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=xuEWwxsCnKV1hgUcvG3HkKb3wtP4QNEso9PfcYG5F+c=;
+  b=f04/yhoamEoWJwthRP8GYQ4W6MGGdJUwNDqabNadxcYd5CelKh+/vtPr
+   9qlEDM/HkzxopTOovXNx8VeyDBGsKgiAOkYMqWG6a4AXMkNsIRlUgGYQl
+   Vwubl4uiYHUoNTQDHWtL/txbhgMDgxETR8d/DQWDCPD1p86nKtBnLymqz
+   luRHRRf8wQWwZS8jFNX9s8qtHJNdqifZxccQaX+LndEfrA/9VL4KAIbtc
+   G0ROosqFycCkorB5qMMaq/HdMO5xkAZAxifqiYKfS2gJJAnh+bz9ozCP3
+   weUswUXS9vow2DGfvZL88ghChT5BfATxVe7c5D0F5CMtgOblzBLKaaLiV
+   w==;
+X-CSE-ConnectionGUID: 33YBsUrtS7Kz4rBsMZECOg==
+X-CSE-MsgGUID: Itmmys3mRQOK3EudLR2xhg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11686"; a="74601380"
+X-IronPort-AV: E=Sophos;i="6.21,261,1763452800"; 
+   d="scan'208";a="74601380"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jan 2026 13:47:21 -0800
+X-CSE-ConnectionGUID: yLbJJGB2QGqnFxxCDbzpEg==
+X-CSE-MsgGUID: v5zuVwWmR1iHFhcpO5K4vg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,261,1763452800"; 
+   d="scan'208";a="208481382"
+Received: from lkp-server01.sh.intel.com (HELO 765f4a05e27f) ([10.239.97.150])
+  by orviesa009.jf.intel.com with ESMTP; 29 Jan 2026 13:47:17 -0800
+Received: from kbuild by 765f4a05e27f with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1vlZr8-00000000bvI-2acX;
+	Thu, 29 Jan 2026 21:47:14 +0000
+Date: Fri, 30 Jan 2026 05:46:17 +0800
+From: kernel test robot <lkp@intel.com>
+To: Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>,
+	andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+	krzk+dt@kernel.org, conor+dt@kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org
+Cc: oe-kbuild-all@lists.linux.dev, sumit.garg@oss.qualcomm.com,
+	dmitry.baryshkov@oss.qualcomm.com,
+	Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v3 2/4] arm64: dts: qcom: ipq9574-rdp433: Reorganize DTS
+ to introduce eMMC support
+Message-ID: <202601300550.OQXggWux-lkp@intel.com>
+References: <20260129062825.666457-3-varadarajan.narayanan@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH RESEND v3 00/11] Bluetooth: dt-bindings: qualcomm: Split
- binding
-From: patchwork-bot+bluetooth@kernel.org
-Message-Id: 
- <176971511510.3002804.2692229697653539128.git-patchwork-notify@kernel.org>
-Date: Thu, 29 Jan 2026 19:31:55 +0000
-References: 
- <20260111-dt-bindings-qcom-bluetooth-v3-0-95e286de1da1@oss.qualcomm.com>
-In-Reply-To: 
- <20260111-dt-bindings-qcom-bluetooth-v3-0-95e286de1da1@oss.qualcomm.com>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Cc: marcel@holtmann.org, luiz.dentz@gmail.com, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, quic_bgodavar@quicinc.com,
- quic_rjliao@quicinc.com, brgl@bgdev.pl, brgl@kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org,
- andersson@kernel.org
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260129062825.666457-3-varadarajan.narayanan@oss.qualcomm.com>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
+	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-91210-lists,linux-arm-msm=lfdr.de,bluetooth];
-	FREEMAIL_CC(0.00)[holtmann.org,gmail.com,kernel.org,quicinc.com,bgdev.pl,vger.kernel.org];
-	FROM_NEQ_ENVFROM(0.00)[patchwork-bot@kernel.org,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-91211-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[15];
+	RCPT_COUNT_TWELVE(0.00)[14];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	FROM_NO_DN(0.00)[];
+	DKIM_TRACE(0.00)[intel.com:+];
 	MISSING_XM_UA(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,msgid.link:url,intel.com:email]
-X-Rspamd-Queue-Id: EDD08B401B
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[lkp@intel.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	NEURAL_HAM(-0.00)[-1.000];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,intel.com:email,intel.com:dkim,intel.com:mid]
+X-Rspamd-Queue-Id: DA907B50BA
 X-Rspamd-Action: no action
 
-Hello:
+Hi Varadarajan,
 
-This series was applied to bluetooth/bluetooth-next.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+kernel test robot noticed the following build errors:
 
-On Sun, 11 Jan 2026 16:48:57 +0100 you wrote:
-> Changes in v3:
-> - Just rebase and add review tags.
-> - Link to v2: https://patch.msgid.link/20251029-dt-bindings-qcom-bluetooth-v2-0-dd8709501ea1@linaro.org
-> 
-> Changes in v2:
-> - Drop in few commits the properties (supplies) from
->   qualcomm-bluetooth.yaml which are not used by devices left there,
->   instead of removing them in final patch (qcom,wcn7850-bt).
-> - Fix dt_binding_check error - missing gpio.h header in the example.
-> - Drop maintainers update - split into separate patch.
-> - Add also Bartosz as maintainer of two bindings because he was working
->   with these in the past.
-> - Link to v1: https://patch.msgid.link/20251028-dt-bindings-qcom-bluetooth-v1-0-524a978e3cda@linaro.org
-> 
-> [...]
+[auto build test ERROR on fcb70a56f4d81450114034b2c61f48ce7444a0e2]
 
-Here is the summary with links:
-  - [RESEND,v3,01/11] dt-bindings: bluetooth: qcom,qca2066-bt: Split to separate schema
-    https://git.kernel.org/bluetooth/bluetooth-next/c/68f3769ce016
-  - [RESEND,v3,02/11] dt-bindings: bluetooth: qcom,qca9377-bt: Split to separate schema
-    (no matching commit)
-  - [RESEND,v3,03/11] dt-bindings: bluetooth: qcom,qca6390-bt: Split to separate schema
-    (no matching commit)
-  - [RESEND,v3,04/11] dt-bindings: bluetooth: qcom,wcn3950-bt: Split to separate schema
-    (no matching commit)
-  - [RESEND,v3,05/11] dt-bindings: bluetooth: qcom,wcn3990-bt: Split to separate schema
-    (no matching commit)
-  - [RESEND,v3,06/11] dt-bindings: bluetooth: qcom,wcn6750-bt: Split to separate schema
-    (no matching commit)
-  - [RESEND,v3,07/11] dt-bindings: bluetooth: qcom,wcn6750-bt: Deprecate old supplies
-    (no matching commit)
-  - [RESEND,v3,08/11] dt-bindings: bluetooth: qcom,wcn6855-bt: Split to separate schema
-    (no matching commit)
-  - [RESEND,v3,09/11] dt-bindings: bluetooth: qcom,wcn6855-bt: Deprecate old supplies
-    (no matching commit)
-  - [RESEND,v3,10/11] dt-bindings: bluetooth: qcom,wcn7850-bt: Split to separate schema
-    (no matching commit)
-  - [RESEND,v3,11/11] dt-bindings: bluetooth: qcom,wcn7850-bt: Deprecate old supplies
-    (no matching commit)
+url:    https://github.com/intel-lab-lkp/linux/commits/Varadarajan-Narayanan/arm64-dts-qcom-ipq9574-Add-gpio-details-for-eMMC/20260129-143219
+base:   fcb70a56f4d81450114034b2c61f48ce7444a0e2
+patch link:    https://lore.kernel.org/r/20260129062825.666457-3-varadarajan.narayanan%40oss.qualcomm.com
+patch subject: [PATCH v3 2/4] arm64: dts: qcom: ipq9574-rdp433: Reorganize DTS to introduce eMMC support
+config: arm64-randconfig-001-20260129 (https://download.01.org/0day-ci/archive/20260130/202601300550.OQXggWux-lkp@intel.com/config)
+compiler: aarch64-linux-gcc (GCC) 10.5.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260130/202601300550.OQXggWux-lkp@intel.com/reproduce)
 
-You are awesome, thank you!
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202601300550.OQXggWux-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+>> make[4]: *** No rule to make target 'arch/arm64/boot/dts/qcom/ipq9574-rdp433.dtb', needed by 'arch/arm64/boot/dts/qcom/dtbs-list'.
+   make[4]: Target 'arch/arm64/boot/dts/qcom/' not remade because of errors.
+
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
