@@ -1,283 +1,303 @@
-Return-Path: <linux-arm-msm+bounces-91290-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iNYoKL+XfGmJNwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91290-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 12:36:31 +0100
+	id oA5WCnmbfGn2NwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 12:52:25 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id ADB8BBA1EE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 12:36:30 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 78A62BA2CE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 12:52:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 1DE50300406F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 11:36:28 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 88F8A3019BB8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 11:52:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 233D936C0B5;
-	Fri, 30 Jan 2026 11:36:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 444CE36D503;
+	Fri, 30 Jan 2026 11:52:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UbyHDKe5"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="XIQZxfxT";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="AVIDUhAV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 009F0242D6C;
-	Fri, 30 Jan 2026 11:36:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91F1634F46C
+	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jan 2026 11:52:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769772987; cv=none; b=EMmde+ZxQF+FNDWa+BGvpCajyFKIW/fJXm8zxYIlb+lfJdtUf//mHXhx3e8JQZRCF/sPe6WJIm+H/6aZIcm2uR+J12NH9ATIxVN2JiWyQ7zliW2Cgow8zIANELqxNDMZv/Ux2OmP04ePeue5wkDSccE7himJnA7FlrUph8MUvPI=
+	t=1769773935; cv=none; b=XWKAZ/kJgLFvobWkqBBw+k+CNGMKl8bN5g2MQwKUSnAmQSe6rx9esdnIaNEPNrIZVVBdRixYVt27/i624dhPTHQqXDc+vaIC08ICn//cGs6EOH7dMqaCm/mfQO6giDQS9olqeLsnRjWoW1CyLQdHt42RHBNT4WaIJAPwJ22RD5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769772987; c=relaxed/simple;
-	bh=jyP8UFUCJn0UvJdr5ojW7aKqDlco0cu49Uk40l47+Go=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LM1FBKYa6JnsVVl+L8XdMdsgns4EJmdylwSnnIDfaX8DVQmt+K+PWOH+Ct/HMWdIz5B27O6S+ZJvKL2BTgb3B0pb9QBQQOypPWHyAAA4udqGUaDQllyfhPIFrgq0IkHnAw8GCTydmEYqJEDaD2qyL/ljZCvhnVjtDjSYdMXmOTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UbyHDKe5; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96206C4CEF7;
-	Fri, 30 Jan 2026 11:36:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1769772986;
-	bh=jyP8UFUCJn0UvJdr5ojW7aKqDlco0cu49Uk40l47+Go=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UbyHDKe5McLn4+4STOatu2vO8QkmdOx2VdAt/YxLiZ/WNstO9/u7k+xh7/whlZ+NG
-	 ylDxC1nfsSfs90DIQ6gxrwnM05UhO/WgBU/4zafwjvyfZiIfJ6dI7CS4u2LDb3FCFn
-	 6DiZsnQkpxY0W4WmtFZqlFyHcdbB5vqVDF/eJf7Smu1yTmRllG13u7Bxr/8bE7TQKd
-	 rPZEotZkwQoOiWNRvKCjlwwFOE9IZ1hvkldNXU/0tQUIrM21qdaj5pIu/GvbnuM9p8
-	 cEV9gHbctgnaWQZTlftzlew2RlKFypA3bAoCdE0schv4qnID8LYCiJNB9m647/WSt+
-	 IJEZ6fyUz+z6w==
-Date: Fri, 30 Jan 2026 17:06:20 +0530
-From: Sumit Garg <sumit.garg@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	andersson@kernel.org, konradybcio@kernel.org, abelvesa@kernel.org,
-	mani@kernel.org, linux-kernel@vger.kernel.org,
-	Sumit Garg <sumit.garg@oss.qualcomm.com>
-Subject: Re: [PATCH] soc: qcom: ice: Avoid probe deferring for un-supported
- ICE feature
-Message-ID: <aXyXtK10_t-OBOxn@sumit-xelite>
-References: <20260130091118.147379-1-sumit.garg@kernel.org>
- <4ad700f3-da8f-4175-9172-3fc4d87d8152@oss.qualcomm.com>
- <aXx_UDTkdYHY04FR@sumit-xelite>
- <4f629971-94cb-44aa-9502-4f5ebfd63937@oss.qualcomm.com>
+	s=arc-20240116; t=1769773935; c=relaxed/simple;
+	bh=dLKlbBdNdZT0825AM0f0kn6sHa7tW2Pakir9yuwrrvY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mW+klF10qaXh6q0OiH3vNTCpQcAPxbUOgmzBoA2iBlyd2ovnWBUUkynaXZzUF7o7/eUq6HIF0gwJ5lhYl2TGevuDrdpnq5B+JNW2VqjdtvDO7ctY2E2imGOF51By4NDNEUOO3w9E1YJ5BsooxWg1flaD4FRw8qACAFquG9Po5Ms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XIQZxfxT; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=AVIDUhAV; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60UAbJQM891567
+	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jan 2026 11:52:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	NACypJ423bQETWp3QTda+kmcF4j0ws7q8gc9h2VRpCY=; b=XIQZxfxT6C/JJcZW
+	34qNv+mGZ4x+e2AgkQamMa3zP1LAyrOVCG3S0V1pLLellukjLRdnO3ymsjfNDIxW
+	Bx2pw/xL1nJkPGNU0cbSn2uXnuy35FuuUPxfNUVVuVQ5Oi2WQXFeCzmB0GahHvey
+	pkUSzx2G8MFScesjH18Ek5QKL9SL5MFGuXJFOcq5ly+TW+0uDzJIBW7Ab0dDq4Do
+	mxyDpvrThFNHRP/8bZTmcAz1C+CQh2QKYibqEAPYATQ4DWCiODvBOMDRXR3aQxSg
+	SERUaXT/RE6au6bozzanLx/KpRjVEpBURc1pmiv0jXYWFQTfaP7RI3AxkgBT/MF8
+	Jxc0hQ==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c0gs7t14j-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jan 2026 11:52:11 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-34ac814f308so3155708a91.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jan 2026 03:52:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1769773931; x=1770378731; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=NACypJ423bQETWp3QTda+kmcF4j0ws7q8gc9h2VRpCY=;
+        b=AVIDUhAVjBwROKFjNTL1yWxEqptCVMl4psC55gDCTRjIgEByttIUSF1djpyggi2hjL
+         wjpHcN7Re4FW3eSTVvTHprUZqkrI9kPKfOfo9FbY3c1+iQgsGfAKVVuO//dBJ1E3fT6E
+         zglQZyFNhxdm65kt6pqMvlhNeEMyIvkl2uxHle/uoX3I6ekXTigKRCTNzon5KnVWlF2E
+         YkMvqXC3ASQYyyvtzEdiozOYQqXqdvJrH+r1UR00znyL0IoKJ754My2/UeLEirI26z7F
+         mW41e20JXituHSYGmHNvfmYmPcFebhyH3NNWB2Qm3qfATfpwXfRljqDoUz7PZ8stIDZe
+         3eLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1769773931; x=1770378731;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NACypJ423bQETWp3QTda+kmcF4j0ws7q8gc9h2VRpCY=;
+        b=ZjpMbnk5w0gYhbs1ZYvDm2lcT0j25Kp08EYKGtLb8b73CfSt6Vkf6/7e6IVHeBPs45
+         hXo2x4PAR6plHnzbqUlv0YbEy02CZE91MEesK796NmBxps+wvwWgmw3+v0ZW9mm6PeA5
+         NLcPGl+McsbHXTDfA8bTSzac0dG05mds3aoBGWB28fa87lGTwG9JvBhglh3OLlbeV+r6
+         5dsVleLY09RkfFrLEZSAXCYzC1oEg9ddgtEtepgdFrmV+qd/tRqU5BJgpOQjq/qs0aLR
+         k/Mg2KCg3A99jmBLubQWpnDnW31lpcazoDlm20jsXFBLQOCRRpaV7sQr6VqQIBzFWeiG
+         xwLg==
+X-Forwarded-Encrypted: i=1; AJvYcCWIXTLmTxiD1AldNoUAHqfAanXZkzDM3ncbQLmUVdcreN5PiZQ9QYVB6Kwju4ezbgKiaafGKhgXnOp9cWtJ@vger.kernel.org
+X-Gm-Message-State: AOJu0YzJn6Z7AoFGQbilh36KC3nrW6hOeU1Ux4OEQf5JqbpMdJd49m2T
+	p2KwdNUL+CQimFJEIol/Y7K0AVgLAuQCe31/JVFzSVeNgDmwyS8GxA9/VaczAQUxW35PDmG9XRF
+	+0f9IoWUobcLzhAyorju8HPdhfPu5c3OcjTDkj8C6z6S6Ek7cItzentm3tOE3s1B7GSNw
+X-Gm-Gg: AZuq6aL7wGs6/r9hedrk5WstKi8ZrGo4kyemf3qlCdgio50mTDecKLyESBO9hNjlVes
+	inBca1irhoibdxReu78fGuD++t6CZdXFh+j/Lqo8EgBAxcKzUrHFf4pijd0NGz8BYu4xJR/Zl33
+	26JyYdNwcZISQf0MCb19rrVQpj3foYdgTxiDt83ZEFNjfTaiMxvun90TvxuNdEhxq+KcZ3AX+/v
+	mXpnyL3GO4ci+yrSQLyqrSv7ZLs2zZaKMcX5FLM0pga9yDn5NhUOx1sh0bGgLYxAvIU0gnwZcg/
+	7vQ7dIx9jmNuigKIO0r5vply4A1l3QwGPqC1Hm2ZP0vy9K1NXpWATR3MFnOM40l1PFwsqh+iXu9
+	WnnsEDg1uB5TYW0zf+ypCcjV36kKH4y6l//LLww==
+X-Received: by 2002:a17:90b:6c3:b0:341:8601:d77a with SMTP id 98e67ed59e1d1-3543b3b54b3mr2883672a91.29.1769773931072;
+        Fri, 30 Jan 2026 03:52:11 -0800 (PST)
+X-Received: by 2002:a17:90b:6c3:b0:341:8601:d77a with SMTP id 98e67ed59e1d1-3543b3b54b3mr2883650a91.29.1769773930565;
+        Fri, 30 Jan 2026 03:52:10 -0800 (PST)
+Received: from [10.206.99.28] ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3540f2cb5adsm8083054a91.3.2026.01.30.03.52.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 30 Jan 2026 03:52:10 -0800 (PST)
+Message-ID: <7e52f1d4-c05c-45ea-878c-cea2e6354c3f@oss.qualcomm.com>
+Date: Fri, 30 Jan 2026 17:22:05 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4f629971-94cb-44aa-9502-4f5ebfd63937@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/3] misc: fastrpc: Support mapping userspace-allocated
+ buffers
+To: rob.clark@oss.qualcomm.com
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, srini@kernel.org,
+        linux-arm-msm@vger.kernel.org, gregkh@linuxfoundation.org,
+        quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org,
+        quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org,
+        arnd@arndb.de
+References: <20251230110225.3655707-1-ekansh.gupta@oss.qualcomm.com>
+ <20251230110225.3655707-4-ekansh.gupta@oss.qualcomm.com>
+ <z3tktit6jkxrkre4gm666aw3ql3plyhs6266cu2itrbjbj2das@yjp2pyesoszn>
+ <69cb2d42-6672-4c42-935f-e3fff9bf38f8@oss.qualcomm.com>
+ <CACSVV02ArZQYW0D66wCzcLoegAB+vUODDxfX4Vbt3xpBajRKYg@mail.gmail.com>
+Content-Language: en-US
+From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+In-Reply-To: <CACSVV02ArZQYW0D66wCzcLoegAB+vUODDxfX4Vbt3xpBajRKYg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTMwMDA5NiBTYWx0ZWRfX2blCXYnRY27h
+ mffgEqmXXlJFcF0FtH0LkMeD8HTy1pJM8nBDpnPeKePPu5uO3yxfRgzF3vMfUpRbU8R/wEmLmb3
+ l+D/+FMxstU/8Jq5yHLd00iBXtqA/o6KF6iFnJ5Sh+ogVIS0fcSpJE8TGAhNEvd8FfKx7AtyZcn
+ h5lOiji1CGPJUP9gKcPQWthZZSEkWJypVlVdkYinCFsFHG+7m1dJ2//nrBuC0NeB9CachGsqIjg
+ +Pg1ssGQKrb3MstwIHBaxf5U4FKo57NsO36Ykh8AupPQFjYSw2R2hrF3U6yTEeaZ+plWsO0jcg5
+ 77zF2kVaWqmc/XNiyqB+2Oqj5gnI4Jyyz2w3YLZfRXiu7HjA+V/vG2R5575QpqdEsZr0ewo3ugC
+ DNYyy36H5PTIKLEtwXH0sK7DpoQHEEgpP2+IXXeEk4Zsr6Vm5REsfUHQtly5KoBOAm5nGyP+yZO
+ LF1o0FlwAz9XkYHvfzw==
+X-Proofpoint-ORIG-GUID: Qhrfy5IlYJB9dfg5MnBdhtwQYR2p9zIt
+X-Proofpoint-GUID: Qhrfy5IlYJB9dfg5MnBdhtwQYR2p9zIt
+X-Authority-Analysis: v=2.4 cv=UPLQ3Sfy c=1 sm=1 tr=0 ts=697c9b6b cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=hcJ8E8GYhuT13GVzWLAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=rl5im9kqc5Lf4LNbBjHf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-01-30_01,2026-01-29_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 malwarescore=0 adultscore=0 suspectscore=0 clxscore=1015
+ priorityscore=1501 lowpriorityscore=0 spamscore=0 impostorscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2601300096
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-91290-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	MISSING_XM_UA(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[sumit.garg@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[9];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:mid,oss.qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-91291-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FROM_NEQ_ENVFROM(0.00)[ekansh.gupta@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: ADB8BBA1EE
+	PRECEDENCE_BULK(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 78A62BA2CE
 X-Rspamd-Action: no action
 
-On Fri, Jan 30, 2026 at 10:59:18AM +0100, Konrad Dybcio wrote:
-> On 1/30/26 10:52 AM, Sumit Garg wrote:
-> > On Fri, Jan 30, 2026 at 10:34:26AM +0100, Konrad Dybcio wrote:
-> >> On 1/30/26 10:11 AM, Sumit Garg wrote:
-> >>> From: Sumit Garg <sumit.garg@oss.qualcomm.com>
-> >>>
-> >>> ICE related SCM calls may not be supported in every TZ environment like
-> >>> OP-TEE or a no-TZ environment too. So let's try to avoid probe deferring
-> >>> when it's known that ICE feature isn't supported.
-> >>>
-> >>> This problem only came to notice after the inline encryption drivers were
-> >>> enabled in the arm64 defconfig by: commit 5f37788adedd ("arm64: defconfig:
-> >>> Enable SCSI UFS Crypto and Block Inline encryption drivers").
-> >>>
-> >>> Fixes: 2afbf43a4aec ("soc: qcom: Make the Qualcomm UFS/SDCC ICE a dedicated driver")
-> >>> Signed-off-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
-> >>> ---
-> >>>  drivers/soc/qcom/ice.c | 2 +-
-> >>>  1 file changed, 1 insertion(+), 1 deletion(-)
-> >>>
-> >>> diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
-> >>> index b203bc685cad..ab9586b8caf5 100644
-> >>> --- a/drivers/soc/qcom/ice.c
-> >>> +++ b/drivers/soc/qcom/ice.c
-> >>> @@ -652,7 +652,7 @@ static struct qcom_ice *of_qcom_ice_get(struct device *dev)
-> >>>  		dev_err(dev, "Cannot get ice instance from %s\n",
-> >>>  			dev_name(&pdev->dev));
-> >>>  		platform_device_put(pdev);
-> >>> -		return ERR_PTR(-EPROBE_DEFER);
-> >>> +		return NULL;
-> >>
-> >> Wouldn't this wreck the "actually need to defer" case, i.e.
-> >>
-> >>
-> >> qcom,ufs probes first
-> >>   calls devm_of_qcom_ice_get()
-> >>     "ice" reg is missing, non-legacy case
-> >>       qcom,ice is absent (not yet probed)
-> >>         return NULL
-> >>
-> >> ...
-> >>
-> >> qcom,ice probes
-> >>
-> >> ?
-> > 
-> > Since qcom,ufs depends on qcom,ice via a phandle, so isn't the probe
-> > orderering automatically taken care off? Or that isn't the case here?
-> 
-> No, that's guaranteed by devlink only with certain properties.
 
-Okay I see. The other alternate solution I can come up is following to
-keep the deferred probing intact. Let me know your thoughts on this:
 
-diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
-index ab9586b8caf5..76bf9f94fbaf 100644
---- a/drivers/soc/qcom/ice.c
-+++ b/drivers/soc/qcom/ice.c
-@@ -559,7 +559,7 @@ static struct qcom_ice *qcom_ice_create(struct device *dev,
+On 1/30/2026 3:41 AM, Rob Clark wrote:
+> On Thu, Jan 29, 2026 at 2:39 AM Ekansh Gupta
+> <ekansh.gupta@oss.qualcomm.com> wrote:
+>>
+>>
+>> On 1/6/2026 8:21 AM, Dmitry Baryshkov wrote:
+>>> On Tue, Dec 30, 2025 at 04:32:25PM +0530, Ekansh Gupta wrote:
+>>>> Currently, FastRPC only supports mapping buffers allocated by the
+>>>> kernel. This limits flexibility for applications that allocate memory
+>>>> in userspace using rpcmem or DMABUF and need to share it with the DSP.
+>>> Hmm, for DMABUF we need _import_ support rather than support for mapping
+>>> of userspace-allocated buffers.
+>>>
+>>>> Add support for mapping and unmapping userspace-allocated buffers to
+>>>> the DSP through SMMU. This includes handling map requests for rpcmem
+>>>> and DMABUF-backed memory and providing corresponding unmap
+>>>> functionality.
+>>> For me this definitely looks like a step back. For drm/accel we are
+>>> going to have GEM-managed buffers only. Why do we need to handle
+>>> userspace-allocated buffers here?
+>> That's correct, GEM-PRIME will handle it properly. Here, the reason to add this
+>> change is to enable routing of DSP logs to HLOS which is done by using a shared
+>> buffer between userspace process and DSP PD. The buffer can be allocated from
+>> both fastrpc driver's DMA-BUF or DMABUF heap(eg. system heap).
+>>
+>> So this shared buffer is getting mapped to both process's IOMMU device and DSP PD
+>> with this change.
+> So, a mmap'd dma-buf is not necessarily pinned.  Or even backed with
+> pages.  So you wouldn't want to try to map a userspace vaddr from a
+> dma-buf to the device.
+>
+> But looking at the patch, this looks more like mapping an imported
+> dmabuf?  Presumably going thru dma_buf_map_attachment() somewhere in
+> the existing fastrpc code?
+yes, when the fd is passed to this call, first fastrpc_map_create is called which is
+calling dma_buf_map_attachment[1]. After this the buffer is mapped onto DSP.
 
-        if (!qcom_scm_ice_available()) {
-                dev_warn(dev, "ICE SCM interface not found\n");
--               return NULL;
-+               return ERR_PTR(-ENODEV);
-        }
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/misc/fastrpc.c#n781
 
-        engine = devm_kzalloc(dev, sizeof(*engine), GFP_KERNEL);
-@@ -648,11 +648,14 @@ static struct qcom_ice *of_qcom_ice_get(struct device *dev)
-        }
+>
+> BR,
+> -R
+>
+>>>> Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+>>>> ---
+>>>>  drivers/misc/fastrpc.c | 97 +++++++++++++++++++++++++++++++++++++-----
+>>>>  1 file changed, 86 insertions(+), 11 deletions(-)
+>>>>
+>>>> @@ -1989,25 +2020,69 @@ static int fastrpc_req_buf_alloc(struct fastrpc_user *fl,
+>>>>      return err;
+>>>>  }
+>>>>
+>>>> -static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+>>>> +static int fastrpc_req_map_create(struct fastrpc_user *fl,
+>>>> +                              struct fastrpc_req_mmap req,
+>>>> +                              char __user *argp)
+>>>>  {
+>>>> -    struct fastrpc_req_mmap req;
+>>>> +    struct fastrpc_map *map = NULL;
+>>>> +    struct device *dev = fl->sctx->dev;
+>>>> +    u64 raddr = 0;
+>>>>      int err;
+>>>>
+>>>> -    if (copy_from_user(&req, argp, sizeof(req)))
+>>>> -            return -EFAULT;
+>>>> +    err = fastrpc_map_create(fl, req.fd, req.size, 0, &map);
+>>>> +    if (err) {
+>>>> +            dev_err(dev, "failed to map buffer, fd = %d\n", req.fd);
+>>>> +            return err;
+>>>> +    }
+>>>> +
+>>>> +    err = fastrpc_req_map_dsp(fl, map->phys, map->size, req.flags,
+>>>> +                              req.vaddrin, &raddr);
+>>>> +    if (err)
+>>>> +            goto err_invoke;
+>>>>
+>>>> -    if (req.flags != ADSP_MMAP_ADD_PAGES && req.flags != ADSP_MMAP_REMOTE_HEAP_ADDR) {
+>>>> -            dev_err(fl->sctx->dev, "flag not supported 0x%x\n", req.flags);
+>>>> +    /* update the buffer to be able to deallocate the memory on the DSP */
+>>>> +    map->raddr = (u64)raddr;
+>>> Which type are you converting? And why?
+>> I'll drop this.
+>>>> -            return -EINVAL;
+>>>> +    /* let the client know the address to use */
+>>>> +    req.vaddrout = raddr;
+>>>> +    dev_dbg(dev, "mmap OK: raddr=%p [len=0x%08llx]\n",
+>>>> +            (void *)(unsigned long)map->raddr, map->size);
+>>>> +
+>>>> +    if (copy_to_user(argp, &req, sizeof(req))) {
+>>>> +            err = -EFAULT;
+>>>> +            goto err_copy;
+>>>>      }
+>>>>
+>>>> -    err = fastrpc_req_buf_alloc(fl, req, argp);
+>>>> +    return 0;
+>>>> +err_copy:
+>>>> +    fastrpc_req_munmap_dsp(fl, map->raddr, map->size);
+>>>> +err_invoke:
+>>>> +    fastrpc_map_put(map);
+>>>>
+>>>>      return err;
+>>>>  }
+>>>>
+>>>> +static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+>>>> +{
+>>>> +    struct fastrpc_req_mmap req;
+>>>> +    int err;
+>>>> +
+>>>> +    if (copy_from_user(&req, argp, sizeof(req)))
+>>>> +            return -EFAULT;
+>>>> +
+>>>> +    if ((req.flags == ADSP_MMAP_ADD_PAGES ||
+>>>> +         req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR)) {
+>>> Side note: why are these flags not defined in the uABI header?
+>> Ack. These should be part of uABI. I'll create a separate patch for this.
+>>>> +            err = fastrpc_req_buf_alloc(fl, req, argp);
+>>>> +            if (err)
+>>>> +                    return err;
 
-        ice = platform_get_drvdata(pdev);
--       if (!ice) {
-+       if (IS_ERR_OR_NULL(ice)) {
-                dev_err(dev, "Cannot get ice instance from %s\n",
-                        dev_name(&pdev->dev));
-                platform_device_put(pdev);
--               return NULL;
-+               if (PTR_ERR(ice) == -ENODEV)
-+                       return NULL;
-+               else
-+                       return ERR_PTR(-EPROBE_DEFER);
-        }
-
-        link = device_link_add(dev, &pdev->dev, DL_FLAG_AUTOREMOVE_SUPPLIER);
-@@ -726,7 +729,7 @@ static int qcom_ice_probe(struct platform_device *pdev)
-        }
-
-        engine = qcom_ice_create(&pdev->dev, base);
--       if (IS_ERR(engine))
-+       if (IS_ERR(engine) && PTR_ERR(engine) != -ENODEV)
-                return PTR_ERR(engine);
-
-        platform_set_drvdata(pdev, engine);
-
-> In this case though, I think it could make sense to add it to the
-> "suppliers" list in drivers/of/property.c.
-> 
-> I don't know if vendors adding their custom properties there is a
-> pattern that +Rob will be happy about though..
-
-Not sure if that's a shorter path as I would like to see fix for this
-issue backported as well.
-
-Aside, not sure how much stable ICE feature itself is as I got following
-crash with QLI boot firmware on Kodiak:
-
-[    5.172970] SError Interrupt on CPU6, code 0x00000000be000000 -- SError
-[    5.172986] CPU: 6 UID: 0 PID: 241 Comm: (udev-worker) Tainted: G   M                6.19.0-rc5-next-20260115-gc1a0fee87a05 #9 PREEMPT 
-[    5.172996] Tainted: [M]=MACHINE_CHECK
-[    5.172999] Hardware name: Qualcomm Technologies, Inc. Robotics RB3gen2 (DT)
-[    5.173003] pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[    5.173010] pc : qcom_ice_create.part.0+0x6c/0x24c [qcom_ice]
-[    5.173024] lr : qcom_ice_create.part.0+0xe4/0x24c [qcom_ice]
-[    5.173035] sp : ffff8000810fb860
-[    5.173037] x29: ffff8000810fb860 x28: ffff8000810fbcc0 x27: ffffb38718304084
-[    5.173046] x26: 0000000000000000 x25: ffff8000810fbcc0 x24: ffff0000832ff068
-[    5.173052] x23: 000000000000003d x22: 0000000000000000 x21: ffff00008144fc10
-[    5.173058] x20: ffff0000832ff380 x19: ffff8000815e8000 x18: 000000000000000a
-[    5.173063] x17: 000000000404006f x16: ffffb38728601480 x15: ffffb38729fbefc8
-[    5.173068] x14: ffff8000815f1000 x13: ffffb3872a0ab208 x12: ffffb3872a0ab000
-[    5.173073] x11: 0000000000008000 x10: 0000000000159ff8 x9 : 0000000000000003
-[    5.173079] x8 : ffff00008083ccc0 x7 : 0000000000000000 x6 : 0000000000077064
-[    5.173084] x5 : ffff8000810fb744 x4 : 0000000000000000 x3 : ffff0000832ff480
-[    5.173089] x2 : ffff0000832ff540 x1 : ffff00008e0c8000 x0 : ffff00008083cc60
-[    5.173096] Kernel panic - not syncing: Asynchronous SError Interrupt
-[    5.173100] CPU: 6 UID: 0 PID: 241 Comm: (udev-worker) Tainted: G   M                6.19.0-rc5-next-20260115-gc1a0fee87a05 #9 PREEMPT 
-[    5.173107] Tainted: [M]=MACHINE_CHECK
-[    5.173109] Hardware name: Qualcomm Technologies, Inc. Robotics RB3gen2 (DT)
-[    5.173111] Call trace:
-[    5.173113]  show_stack+0x18/0x30 (C)
-[    5.173125]  dump_stack_lvl+0x60/0x80
-[    5.173132]  dump_stack+0x18/0x24
-[    5.173137]  vpanic+0xf8/0x2dc
-[    5.173143]  abort+0x0/0x4
-[    5.173149]  add_taint+0x0/0xbc
-[    5.173154]  arm64_serror_panic+0x70/0x80
-[    5.173161]  arm64_is_fatal_ras_serror+0x34/0xac
-[    5.173167]  do_serror+0x58/0x74
-[    5.173173]  el1h_64_error_handler+0x38/0x60
-[    5.173184]  el1h_64_error+0x6c/0x70
-[    5.173189]  qcom_ice_create.part.0+0x6c/0x24c [qcom_ice] (P)
-[    5.173196]  qcom_ice_probe+0x58/0xa0 [qcom_ice]
-[    5.173202]  platform_probe+0x5c/0xa4
-[    5.173208]  really_probe+0xbc/0x2ac
-[    5.173217]  __driver_probe_device+0x78/0x118
-[    5.173225]  driver_probe_device+0x3c/0x178
-[    5.173233]  __driver_attach+0x90/0x184
-[    5.173241]  bus_for_each_dev+0x7c/0xdc
-[    5.173248]  driver_attach+0x24/0x3c
-[    5.173256]  bus_add_driver+0xe4/0x20c
-[    5.173263]  driver_register+0x68/0x130
-[    5.173271]  __platform_driver_register+0x20/0x2c
-[    5.173276]  qcom_ice_driver_init+0x24/0x1000 [qcom_ice]
-[    5.173283]  do_one_initcall+0x60/0x1d4
-[    5.173289]  do_init_module+0x54/0x240
-[    5.173296]  load_module+0x16fc/0x1c60
-[    5.173302]  init_module_from_file+0xd8/0xf0
-[    5.173309]  __arm64_sys_finit_module+0x1b8/0x334
-[    5.173315]  invoke_syscall.constprop.0+0x40/0xf0
-[    5.173320]  el0_svc_common.constprop.0+0x38/0xd8
-[    5.173325]  do_el0_svc+0x1c/0x28
-[    5.173329]  el0_svc+0x34/0x104
-[    5.173337]  el0t_64_sync_handler+0xa0/0xe4
-[    5.173346]  el0t_64_sync+0x198/0x19c
-[    5.173352] SMP: stopping secondary CPUs
-[    5.174472] Kernel Offset: 0x3386a7e00000 from 0xffff800080000000
-[    5.174475] PHYS_OFFSET: 0xfff1000080000000
-[    5.174478] CPU features: 0x600000,000b8001,4008c501,0400720b
-[    5.174482] Memory Limit: none
-[    5.175510] Calling EFI runtime from NMI context
-[    5.177177] Calling EFI runtime from NMI context
-[    5.178490] Calling EFI runtime from NMI context
-[    5.179729] Calling EFI runtime from NMI context
-[    5.180928] Calling EFI runtime from NMI context
-[    5.182074] Calling EFI runtime from NMI context
-[    5.183218] Calling EFI runtime from NMI context
-[    5.184319] Calling EFI runtime from NMI context
-[    5.185387] Calling EFI runtime from NMI context
-[    5.186404] Calling EFI runtime from NMI context
-[    5.569397] ---[ end Kernel panic - not syncing: Asynchronous SError Interrupt ]---
-
--Sumit
 
