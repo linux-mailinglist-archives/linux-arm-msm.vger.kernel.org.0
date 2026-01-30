@@ -1,219 +1,193 @@
-Return-Path: <linux-arm-msm+bounces-91239-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91240-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id QK1eHWBEfGnZLgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91239-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 06:40:48 +0100
+	id 74ikIuJLfGlZLwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91240-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 07:12:50 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id D48EAB75DF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 06:40:47 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id A4073B7925
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 07:12:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4B6603016C87
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 05:40:39 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 3C13C300380D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 06:12:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6B25374169;
-	Fri, 30 Jan 2026 05:40:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 037682D948A;
+	Fri, 30 Jan 2026 06:12:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="TSn+NuRt"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="b9GBk5uR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 298AC36D4F1;
-	Fri, 30 Jan 2026 05:40:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E522BD0B;
+	Fri, 30 Jan 2026 06:12:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769751638; cv=none; b=IbHYSQxWTSaDSIOnNH98LI3nAxmmCZ1KZrcXIu6nfmHCMGUtAKed8pjcNChy4Gl/1daFs4AEvVvJZIacDuo88ggNhZ+bmPMfBwjhx6KQzI1u0uW2rpUvivoehVlUB0fgoio588psmum8I72xKkOQbax/zG+cFSkoy26QQMClFV4=
+	t=1769753562; cv=none; b=mtriUszfYHEUrnuP55M2qOGbC3GHdTJZufOxZMxqvwePpcTKK9kznnVVp7oXHKJeOkg99pepu1IAIlG5SPsX8CEQtTRFrx9q09Q6ABl/+v3QQ4DVnbsRJQHMYjBS50kOdUAakLcJ8yVr7wAh69vyaO5inW+2reNM9yjU8nKURZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769751638; c=relaxed/simple;
-	bh=O0yrTfM/db7ruCmnkUxHUcsXFLt25Gn8UsW4TJhHR4w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rSQGNFnM3ovYWYfQmQ8sknIZOq1Eda5bwYjFtnzGpaYCT96Desv0ooBxwNRMEQg8FPVEl1PYPfmGvMLkx5/C+9ol10E5+kluYt5yxmQmgGXPldo5QpSBheiJ1AhmITjACeJKNb0N6Xsdl4UzVmgHG6bCN3u1pd57sXpgGicQk5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=TSn+NuRt; arc=none smtp.client-ip=198.175.65.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1769751637; x=1801287637;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=O0yrTfM/db7ruCmnkUxHUcsXFLt25Gn8UsW4TJhHR4w=;
-  b=TSn+NuRtw7KmX1SceMaZJyVUlKhfvSv8Ji5D1L6U+oRiUcGB8k34T4Jw
-   Mljv/nQOPnsoavZ1s8l0Si9BoO7LahZGaNsQ5LlfBPMQwHxf66r1zo+7Y
-   NE/Q1BjuRbEfRLywfhQqjOLmk67lv5RJek143Fn+L0oKKL+EC5mTG4NjP
-   eMZCUAqFZWlxx+dGRrBpLjQSCf8yIEBCP/B1kB5cwWxP4qpUG+sRQ5jMr
-   oAzuqmLeO0VyyLXqpRHm6IkjO8cHv3UDS35CIVeCF26K0OwhA5HDrRrLh
-   X/0Ka0BIm5AFLUSWNiS8vboh9v9DiUgXQYE8xM/RVUaaGkVrdc8nNxN+Y
-   w==;
-X-CSE-ConnectionGUID: aX4KMcCwToa4Sk+4Pzc39Q==
-X-CSE-MsgGUID: PVJbhADMSdCDEoSQ+McgKQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11686"; a="71037445"
-X-IronPort-AV: E=Sophos;i="6.21,262,1763452800"; 
-   d="scan'208";a="71037445"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jan 2026 21:40:36 -0800
-X-CSE-ConnectionGUID: zoU1rLYHTa6f8aixvlR8nw==
-X-CSE-MsgGUID: a2vdqcYNQAOq6a4llo9v+w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,262,1763452800"; 
-   d="scan'208";a="213299494"
-Received: from lkp-server01.sh.intel.com (HELO 765f4a05e27f) ([10.239.97.150])
-  by orviesa004.jf.intel.com with ESMTP; 29 Jan 2026 21:40:31 -0800
-Received: from kbuild by 765f4a05e27f with local (Exim 4.98.2)
-	(envelope-from <lkp@intel.com>)
-	id 1vlhF7-00000000cDg-0npS;
-	Fri, 30 Jan 2026 05:40:29 +0000
-Date: Fri, 30 Jan 2026 13:39:31 +0800
-From: kernel test robot <lkp@intel.com>
-To: Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>, andersson@kernel.org,
-	mathieu.poirier@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, rui.zhang@intel.com, lukasz.luba@arm.com,
-	konradybcio@kernel.org, mani@kernel.org, casey.connolly@linaro.org,
-	amit.kucheria@oss.qualcomm.com
-Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-pm@vger.kernel.org, gaurav.kohli@oss.qualcomm.com,
-	manaf.pallikunhi@oss.qualcomm.com
-Subject: Re: [PATCH v2 1/8] thermal: Add Remote Proc cooling driver
-Message-ID: <202601301354.3ERTn2SC-lkp@intel.com>
-References: <20260127155722.2797783-2-gaurav.kohli@oss.qualcomm.com>
+	s=arc-20240116; t=1769753562; c=relaxed/simple;
+	bh=KSVzag3nVsRlO4X8MyX7NnKVQj7opoNSwXs3KXqyaQs=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=ZFmAc6xjbVw1/UFzpt24A3DlhfACTsEb+Hm/EDZwsA8v3AP/GGICotfLTMsjkiYu5L38/5Li8kquRGY8Yh5bxFTH9Is1HX7OETGTmQdA+MK0pcDNS/hh/JNQW8nkJNlsPL6QYdaJopX8RaPCI1EKH0WUfhwy1ln41JXlpsFfTCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=b9GBk5uR; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60U52aPC555321;
+	Fri, 30 Jan 2026 06:12:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=DZZrlKqSGdlJzjstjcwmjT
+	5zfu51oe24NqbZ10BuLaI=; b=b9GBk5uR4FeqccuTbKu7LYboS2ijcK0F2aSqqH
+	95hxfsChxYeOneYPHG28cTouRAYvNs4Bd06XVBORFDtXfpn17tcSqldXcmhr26b+
+	ZMyj2Y63S6Zn6sZwXysunYO55BEH1590Mn7kWxZmIco76PXYh9w6nEogvIMZ8jqX
+	kwl1WscqY8EwX0Gl9z93o/iohVI5K/3oLu4yoGUksBkzFpDMwYjy6+1Ff/wSwk8a
+	/ysd4Q2je+z99oNIi8Y3k49NWLNgNVvG/9lX3MGFqzJ0wMbX8eNOHM6pVCp0zSmO
+	ltGxk2udUXp4TVPjiQxcgmiRJMcjq5sYI97irmwJ7cFOju9w==
+Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c0p59g5vb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 30 Jan 2026 06:12:37 +0000 (GMT)
+Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
+	by APTAIPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 60U6CZZI005949;
+	Fri, 30 Jan 2026 06:12:35 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 4bvq5mv1c5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 30 Jan 2026 06:12:35 +0000
+Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 60U6CZeX005943;
+	Fri, 30 Jan 2026 06:12:35 GMT
+Received: from cse-cd01-lnx.ap.qualcomm.com (smtphost-taiwan.qualcomm.com [10.249.136.33])
+	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 60U6CYYc005940
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 30 Jan 2026 06:12:35 +0000
+Received: by cse-cd01-lnx.ap.qualcomm.com (Postfix, from userid 4531182)
+	id 35A8122740; Fri, 30 Jan 2026 14:12:33 +0800 (CST)
+From: Le Qi <le.qi@oss.qualcomm.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        kernel@oss.qualcomm.com, Le Qi <le.qi@oss.qualcomm.com>
+Subject: [PATCH v2] arm64: qcom: pd-mapper: Add QCS615 power domain mappings
+Date: Fri, 30 Jan 2026 14:12:31 +0800
+Message-Id: <20260130061231.310113-1-le.qi@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260127155722.2797783-2-gaurav.kohli@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: -7JZH5K7ytOqVlZMFAqt0RuxDxZ041Vm
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTMwMDA0NiBTYWx0ZWRfX75J4kpJhXZsM
+ Ub6Pwx8DA/148F/i2doJxTlyMmAof8FC/IXrn7YlNXlGk+F0ia20FzbU1FHZ6TulcKO/LmK6PTc
+ viHCBK0zLbYjoPXubb2MCHlQN48q6psaJX8KfCWn64VeUm/d8vWjOsQ/kn4bIjIvUjbg8o+aaDb
+ t0R9Amoev/yT23oW+JbxotFTTjd00Xrp6LLov8Zf8nwYPY2axVUmRrK8kpUhgwkN/yNz9dcsnVv
+ VtOrnkYPDRL+eM1o75WJBuXWryOvcLceHkm0drdSzODSlY1OCoaHBprGmd6KlB9yZD+sgM7YsAD
+ nzX6+qKflSPAaKBp1T6eUrSd+4o2xTmwMIH8jT6HaOd1NPPYzVN3NDW8TZpYeSa6YSondPFlmw3
+ 5f4zUNR3tQppzshN0N2Fu9V3YO4djArjiSFYifZUMh8IpQ6UyhjWJeUEjLpB+V06Q3CFMKTbOeK
+ jV0NagN3ZyxpMmSiW7g==
+X-Proofpoint-GUID: -7JZH5K7ytOqVlZMFAqt0RuxDxZ041Vm
+X-Authority-Analysis: v=2.4 cv=Re+dyltv c=1 sm=1 tr=0 ts=697c4bd6 cx=c_pps
+ a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=ugCWuRhOeS4SfFBP1JEA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-01-29_03,2026-01-29_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 malwarescore=0 suspectscore=0 clxscore=1015 bulkscore=0
+ adultscore=0 impostorscore=0 priorityscore=1501 lowpriorityscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2601300046
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.34 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.16 / 15.00];
 	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-91239-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[19];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[lkp@intel.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[intel.com:+];
-	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:email,intel.com:dkim,intel.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,01.org:url]
-X-Rspamd-Queue-Id: D48EAB75DF
+	TAGGED_FROM(0.00)[bounces-91240-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[le.qi@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+];
+	PRECEDENCE_BULK(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_FIVE(0.00)[6];
+	RCVD_COUNT_SEVEN(0.00)[10]
+X-Rspamd-Queue-Id: A4073B7925
 X-Rspamd-Action: no action
 
-Hi Gaurav,
+Add the QCS615 domain table to the in-kernel pd-mapper so that audio
+subsystems no longer rely on the userspace pd-mapper daemon.
+This enables proper initialization of ADSP and CDSP domains directly
+from the kernel.
 
-kernel test robot noticed the following build warnings:
+---
+Changelog:
 
-[auto build test WARNING on next-20260126]
-[also build test WARNING on v6.19-rc7]
-[cannot apply to robh/for-next rafael-pm/thermal remoteproc/rproc-next linus/master v6.19-rc7 v6.19-rc6 v6.19-rc5]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+v2:
+  - Added mpss_root_pd and mpss_wlan_pd for Talos/SM6150 variants, as Wi‑Fi
+    firmware is loaded via MPSS (icnss). Confirmed by modemr.jsn/root_pd and
+    modemuw.jsn/wlan_pd from Redmi Note 7 Pro firmware
+  - v1-link: https://lore.kernel.org/all/20260122111318.500262-1-le.qi@oss.qualcomm.com/
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Gaurav-Kohli/thermal-Add-Remote-Proc-cooling-driver/20260128-000753
-base:   next-20260126
-patch link:    https://lore.kernel.org/r/20260127155722.2797783-2-gaurav.kohli%40oss.qualcomm.com
-patch subject: [PATCH v2 1/8] thermal: Add Remote Proc cooling driver
-config: m68k-allyesconfig (https://download.01.org/0day-ci/archive/20260130/202601301354.3ERTn2SC-lkp@intel.com/config)
-compiler: m68k-linux-gcc (GCC) 15.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260130/202601301354.3ERTn2SC-lkp@intel.com/reproduce)
+Signed-off-by: Le Qi <le.qi@oss.qualcomm.com>
+---
+ drivers/soc/qcom/qcom_pd_mapper.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202601301354.3ERTn2SC-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
->> drivers/thermal/remoteproc_cooling.c:87:1: warning: no previous prototype for 'remoteproc_cooling_register' [-Wmissing-prototypes]
-      87 | remoteproc_cooling_register(struct device_node *np,
-         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~
->> drivers/thermal/remoteproc_cooling.c:131:6: warning: no previous prototype for 'remoteproc_cooling_unregister' [-Wmissing-prototypes]
-     131 | void remoteproc_cooling_unregister(struct remoteproc_cdev *rproc_cdev)
-         |      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-vim +/remoteproc_cooling_register +87 drivers/thermal/remoteproc_cooling.c
-
-    85	
-    86	struct remoteproc_cdev *
-  > 87	remoteproc_cooling_register(struct device_node *np,
-    88				    const char *name, const struct remoteproc_cooling_ops *ops,
-    89				     void *devdata)
-    90	{
-    91		struct remoteproc_cdev *rproc_cdev;
-    92		struct thermal_cooling_device *cdev;
-    93		int ret;
-    94	
-    95		if (!name || !ops)
-    96			return ERR_PTR(-EINVAL);
-    97	
-    98		rproc_cdev = kzalloc(sizeof(*rproc_cdev), GFP_KERNEL);
-    99		if (!rproc_cdev)
-   100			return ERR_PTR(-ENOMEM);
-   101	
-   102		rproc_cdev->ops = ops;
-   103		rproc_cdev->devdata = devdata;
-   104		mutex_init(&rproc_cdev->lock);
-   105	
-   106		char *rproc_name __free(kfree) =
-   107			kasprintf(GFP_KERNEL, REMOTEPROC_PREFIX "%s", name);
-   108		/* Register with thermal framework */
-   109		if (np)
-   110			cdev = thermal_of_cooling_device_register(np, rproc_name, rproc_cdev,
-   111								  &remoteproc_cooling_ops);
-   112		else
-   113			cdev = thermal_cooling_device_register(rproc_name, rproc_cdev,
-   114							       &remoteproc_cooling_ops);
-   115	
-   116		if (IS_ERR(cdev)) {
-   117			ret = PTR_ERR(cdev);
-   118			goto free_rproc_cdev;
-   119		}
-   120	
-   121		rproc_cdev->cdev = cdev;
-   122	
-   123		return rproc_cdev;
-   124	
-   125	free_rproc_cdev:
-   126		kfree(rproc_cdev);
-   127		return ERR_PTR(ret);
-   128	}
-   129	EXPORT_SYMBOL_GPL(remoteproc_cooling_register);
-   130	
- > 131	void remoteproc_cooling_unregister(struct remoteproc_cdev *rproc_cdev)
-   132	{
-   133		if (!rproc_cdev)
-   134			return;
-   135	
-   136		thermal_cooling_device_unregister(rproc_cdev->cdev);
-   137		mutex_destroy(&rproc_cdev->lock);
-   138		kfree(rproc_cdev);
-   139	}
-   140	EXPORT_SYMBOL_GPL(remoteproc_cooling_unregister);
-   141	
-
+diff --git a/drivers/soc/qcom/qcom_pd_mapper.c b/drivers/soc/qcom/qcom_pd_mapper.c
+index 1bcbe69688d2..b685698458e3 100644
+--- a/drivers/soc/qcom/qcom_pd_mapper.c
++++ b/drivers/soc/qcom/qcom_pd_mapper.c
+@@ -401,6 +401,16 @@ static const struct qcom_pdm_domain_data *qcs404_domains[] = {
+ 	NULL,
+ };
+ 
++static const struct qcom_pdm_domain_data *qcs615_domains[] = {
++	&adsp_audio_pd,
++	&adsp_root_pd,
++	&adsp_sensor_pd,
++	&cdsp_root_pd,
++	&mpss_root_pd,
++	&mpss_wlan_pd,
++	NULL,
++};
++
+ static const struct qcom_pdm_domain_data *sc7180_domains[] = {
+ 	&adsp_audio_pd,
+ 	&adsp_root_pd_pdr,
+@@ -572,6 +582,7 @@ static const struct of_device_id qcom_pdm_domains[] __maybe_unused = {
+ 	{ .compatible = "qcom,qcm2290", .data = qcm2290_domains, },
+ 	{ .compatible = "qcom,qcm6490", .data = sc7280_domains, },
+ 	{ .compatible = "qcom,qcs404", .data = qcs404_domains, },
++	{ .compatible = "qcom,qcs615", .data = qcs615_domains, },
+ 	{ .compatible = "qcom,sc7180", .data = sc7180_domains, },
+ 	{ .compatible = "qcom,sc7280", .data = sc7280_domains, },
+ 	{ .compatible = "qcom,sc8180x", .data = sc8180x_domains, },
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.34.1
+
 
