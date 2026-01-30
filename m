@@ -1,808 +1,266 @@
-Return-Path: <linux-arm-msm+bounces-91296-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91297-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OOcLIFWcfGn2NwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91296-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 12:56:05 +0100
+	id EPHWMZGcfGn2NwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91297-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 12:57:05 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE36FBA3AE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 12:56:04 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2595FBA3FF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 12:57:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id B2F71300F68F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 11:55:17 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A5020300A8E5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 11:56:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA15E36CDFF;
-	Fri, 30 Jan 2026 11:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B20C285073;
+	Fri, 30 Jan 2026 11:56:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Nw4CCPw4";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="SvyK6SbP"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZNJzxztk";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="KtC5OfJt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A6836EAAB
-	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jan 2026 11:55:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1BD92C0F72
+	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jan 2026 11:55:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769774116; cv=none; b=EFS2PFXNAFiR4KcihJIfQZ2jnkwS3jphLpBOhIz6O+p6RWKBgZSkjPVKSvQow+Wij53epPnLCJECGkMemfpjxYhbqH44J2Zw0k1VYZRr7gKJqCdOMAmoFvN7li4ZFIZh9TCwyjPgn7gEiujA4Vaj60ASMdApo7fRxyxdMtArVU0=
+	t=1769774161; cv=none; b=oTff2hneafpUu8WHS+R5X+mS3OR2kA4jX7ygyONP1CCsa64CoGcyXQYMaz6ECT1NggQWGyrgVbwN7m1SDHfkDL0i/5YuPi4QDWmryNaMHUFF3adW8hiuHKg2NjznA/sHgZkiSnyQvZN0ahY5RtigSi03zL9bOnWaekHzD7lCEpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769774116; c=relaxed/simple;
-	bh=paU7ee1DztoKRgyHORWjgOxfdoVagM67Kh861L1K6FA=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=n26AuLn3IGrTI/ai26h/geOUqsp4MeNJl1ppZoR6WWSyrD+7VS/ls1e8UMPmP5cl9O2KRUHbD1akcjuykTmB4JWB9C6MT/5Q/bqUWtc/n6StHpwEf5ruiSIerx9qx4R9f19830sSsZr6cAIAPoALS8BiKQPqke+tg98parvrOx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Nw4CCPw4; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=SvyK6SbP; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1769774161; c=relaxed/simple;
+	bh=OJwPTZRTEklOZhpT7S5bhlvgzfcai6Sxyl1nAIPFzMs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lDUFwel6z6Ez/0hWahham3zPKhJaVP3CTFZ3mFXmrO//Ro2/Ll/7PiYge61UnDH5TQ/OpmrK5HedDWWFrfSFBjp5KW/ZMzqs9egDGQK5g2tVAThkgVrCl2ecEZHPyRPl0uIB06Qt9o50chiP6H/BGIxfIS4iXmpvNJKUuj+DAeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZNJzxztk; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=KtC5OfJt; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60UBLQ0C2992856
-	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jan 2026 11:55:13 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60U4tObl2294948
+	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jan 2026 11:55:58 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=CrKePOeV2uU
-	tnBbmOpIfK+3XWHgrGvk5mYIvXcAB8F8=; b=Nw4CCPw4HaeStOIGB/jhuBHGE58
-	R6fkYOiiwNabjzuVTQZHEc/9vkCXiEzCToxtrLiSeZ0XgSdzJaymBPoZY5NtIAWa
-	qBKR0YhhG9mZf+SQek2Qm80fnuwlksDJIOIsqWXv0t1DoAzPUM/awvGbCD4aDey6
-	+n5liGuRI9KXDcE247e6dIIIbYSwhMNnRl7P6P4ZdVLVhrZm7GEbORvsm+Wu6mZ0
-	OnQtFtb8cLW/h1W+KSz1R3fEtKJjJLvNn3Q5HYH4bp0dysV7IiYvKKYFbU7OYtlZ
-	Ti+f0qS7DLEjGduws4nSb8KNwOmqDW8CNmt0WmLtljiq886zDHDEItf2Wag==
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c0db1jp6x-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	+WZkU1lyCaEeWQ3hXRLyOfKOv0thvYXR823k7SIXJtQ=; b=ZNJzxztkk5D/w1Cm
+	aryldQv/FAo2EFC0eh1VODa1GlDzBQdJcw5aaClXocDivbYCI50b08jRRlrRYP7k
+	Y2em1NQiWVot9qt/gGf3qjJtDtYLG8s0WAdfF9H85yLAKy5tNdaFyS0c6LAXszzx
+	ch6QcNlUAAdYxyZgOnipcIsN36ccsS1KeUDhJ/NYEYGdLoAo464N17czcmJQfW6k
+	tdaheVv4gNJuulQXw+pDdthTd7+WqUoB2BUPk3t+eEP/2gN8reGp3/612/W9vgrv
+	Tm/KPL4qhoNHfiIDU3cFwVu1VSyffmQ3KdcFnfr3T+X4L/Xui3apFwGeRkDml0hb
+	PYOh6Q==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c0p1x95hd-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jan 2026 11:55:13 +0000 (GMT)
-Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-34c704d5d15so3933295a91.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jan 2026 03:55:13 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jan 2026 11:55:58 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-894662cba4fso1553826d6.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jan 2026 03:55:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1769774113; x=1770378913; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CrKePOeV2uUtnBbmOpIfK+3XWHgrGvk5mYIvXcAB8F8=;
-        b=SvyK6SbPcAiOvlJWu4wPNzS6cMYsXPUWNG/SJR2deuuBOeLz7MZWZMXRbc/qh3BksR
-         EbPQ304ef6kYNwe1AcRvIDxm/KD+DuZJKx+osj9dZFMK2gyODd+p6u2LYlsiptft3+ba
-         l2UigjhJ8q7CnWRex3O6Kamvk7hULgDWLeT9SElbvzqgagNeml95it3tdmWYje5EIENG
-         MCQnMh/5tvVdBEP4qeOiv843im1biPcTZt4dPaV4XnKF/MBZXEHxIXZxRd2YAKh2o0tp
-         KH/UbE/W8wMaldO1DPWZhToChakgf3n1UV3aQWxysukGgfbBV3K34wWYNHbn3xk30nCL
-         hZcA==
+        d=oss.qualcomm.com; s=google; t=1769774158; x=1770378958; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+WZkU1lyCaEeWQ3hXRLyOfKOv0thvYXR823k7SIXJtQ=;
+        b=KtC5OfJt/asQZgpzm6o/ZA3UyeQbaOEmXw4o1dAbg02jljyoDsgNFdcHLLd+e4QenE
+         XmcXmCNyNurAq0X4Is57BKTXUmhv/7bRqI9y7s81Ps7yzpbzagYHiiP5/SFwvbaKLRFL
+         yIQNJ1EZXBR+rHDcBM/5Gp1ykTlqV/XGEVIGpiWi+FdCbO0SAkSdsXol4wpscnoGieMI
+         2tuW6XT0bIDduyW/ApEo6yOeBuNXlE+4Wt/8XbkfTWaiwPo9qJR9vVKVIioSuy0hKygb
+         x0157fqpGBmy5oAoXCymPgvdfM4NEBNr3GohDi8rRM+oTzahDTKhkkdO3n+99gf1+LIX
+         j2OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769774113; x=1770378913;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=CrKePOeV2uUtnBbmOpIfK+3XWHgrGvk5mYIvXcAB8F8=;
-        b=sp5sK2zooUx+Xoixu/92iCwK5fVBiwIN+A4vkUBgtAtejspvmX2Z10tZw8knlDbR3u
-         m++6E18rCad9MundcL7yr1xbKStHJNO9DoVpJGAD+IpkfvBEiRlbI9AKRgTuqqYdc86O
-         F4OgkZA28XRyONd9XGpC75D5+KSMIRy2jEh+9nmp9+69CTxMji/vFlE+sjoaGz1fdtHx
-         RSmAvEcWc3MyrjBoAjW24rp4JAdDzFbH9zDmvTaWS6AgAu/zobTSxSoATH970DuN1jOb
-         lqDx2Tlb25R9h7PvNqMIfIdpeIwweI4L8oPy/M/2VHjYyo9L6ZEG69xE+RXVik+7E9aj
-         IRYQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWVaLLt4QhhBFS8V4xx3CZ3C6kRvp8WD5gM7kPOV+PN+y2T86+ez0kIdo6tiV3xXhaIZ7GlRzTGahZnIDuH@vger.kernel.org
-X-Gm-Message-State: AOJu0YzWnQUpPe7Jj3BvGaUGNEgJxgrIOZWxGfodHL3u0IApVgDxCrG2
-	xlI+oyehbCpgbYw86PLjxL4CqHxhRK85mk/o8u7q8c7UO6q+P8V2rb7jyAo1XeS4beaGzYDU8/R
-	aMY3dnr2QhmCh5AmjHmKzC95yacY6GBIEFDxZpPpgDQPJMHEah6WH0iYweivo3iKGRRKB
-X-Gm-Gg: AZuq6aIppwcxD1ABkVE6TVGXrio9PO4kvaCmk+Y3WzUOM2+ZPd8+qqvritF8SctuIF3
-	seDyCyika7ysGB7ls8D4IZyxbS+6aFQtm2usrsbeRX/jHdMBgupxlbRqvSaY1IAli/6+AsbX4kE
-	K/vtBLjtkT/eogchu64P0tO/k45X3kAxVZHWFAVERpey+CsYixoVU+cD+6EH8JzxHisJrl7Cuca
-	1q6HoIneh1fEoa2//bLADm0JXK0eryBVAH6ma9kziZSK4jUxiFGzj6h5ZF/ZNTbT+E7FyveosWm
-	P3AYGvcndMvGI5BsNH4tDUi4eqahD5td+FPRwLbReemXi4r4q0mFMYtuS/E0HoHgbXF2EedFM0u
-	RGv4jARnui7QznRTxodPI2UB/fczHT88KzQ3UWFbKtI+u
-X-Received: by 2002:a05:6a20:6a0c:b0:390:ca32:da2c with SMTP id adf61e73a8af0-392e0054779mr2654344637.24.1769774112260;
-        Fri, 30 Jan 2026 03:55:12 -0800 (PST)
-X-Received: by 2002:a05:6a20:6a0c:b0:390:ca32:da2c with SMTP id adf61e73a8af0-392e0054779mr2654289637.24.1769774111635;
-        Fri, 30 Jan 2026 03:55:11 -0800 (PST)
-Received: from hu-jprakash-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3540f2f24ccsm10431278a91.8.2026.01.30.03.55.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Jan 2026 03:55:11 -0800 (PST)
-From: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
-To: jic23@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-        agross@kernel.org, andersson@kernel.org, lumag@kernel.org,
-        dmitry.baryshkov@oss.qualcomm.com, konradybcio@kernel.org,
-        daniel.lezcano@linaro.org, sboyd@kernel.org, amitk@kernel.org,
-        thara.gopinath@gmail.com, lee@kernel.org, rafael@kernel.org,
-        subbaraman.narayanamurthy@oss.qualcomm.com,
-        david.collins@oss.qualcomm.com, anjelique.melendez@oss.qualcomm.com,
-        kamal.wadhwa@oss.qualcomm.com
-Cc: rui.zhang@intel.com, lukasz.luba@arm.com, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        cros-qcom-dts-watchers@chromium.org, jishnu.prakash@oss.qualcomm.com,
-        quic_kotarake@quicinc.com, neil.armstrong@linaro.org,
-        stephan.gerhold@linaro.org
-Subject: [PATCH V10 4/4] thermal: qcom: add support for PMIC5 Gen3 ADC thermal monitoring
-Date: Fri, 30 Jan 2026 17:24:21 +0530
-Message-Id: <20260130115421.2197892-5-jishnu.prakash@oss.qualcomm.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20260130115421.2197892-1-jishnu.prakash@oss.qualcomm.com>
-References: <20260130115421.2197892-1-jishnu.prakash@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1769774158; x=1770378958;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+WZkU1lyCaEeWQ3hXRLyOfKOv0thvYXR823k7SIXJtQ=;
+        b=EWuLsBo8j/Ev7ZsSAXTvomSlA2XR5Auu3iES3Sx3rpuPvZICjsj0DYwthWYe5OD14x
+         C8QX2MlWEafDMOci88UKaNnmGc8xPailae7vldGMXW7HElhYdAq9r6AVszTeA6EUjnX+
+         SyFjgD/C7Wf3C+jlQYQNVHTpCUGXD+K+83V2p7SBaxTCw4rkeEORUZboxql4Ri5zph6h
+         XV52qPHt/SWaC1Tfj3GkSNIgoKaDpZUPTVGyfiN/5GWcww/huTqf3VgLYwYTLrj6S2ip
+         YUViRH6ky/Oj0EaS9Zv9nhVOw6Rwhk1DWwZjmwJh8GgUOTEBmajpWs8zgNDn2gJjMiF9
+         2BDw==
+X-Forwarded-Encrypted: i=1; AJvYcCWDTcxBauhUOwpGENI3cT2pG1oJyZeUJgI2RP1u1Ubej647u8O/y9R3b/D48oNzsm9ycg3SbQdYABs0f5TT@vger.kernel.org
+X-Gm-Message-State: AOJu0YyhHxEVe8B1U3qJTds39kZdIgX9CW3ormqqUyeQwVpdOyfClrkv
+	XkDsEnPI0iEzN6kWQnuEPyLx1FKhWcz7xZGeOmV/a6VOjQw8lviihhbKPz3YHtHJhzucRVRcoAO
+	LhrBcwDoIUuGbd55V9jZ0U5iA+Gl9I5iAecCbmVU63az43C+kb/o7YRpaN0NZNsO7xq0j
+X-Gm-Gg: AZuq6aJVt6qZSSo6gDxt7IRP6RM9JcltyBgJdwkWrF1l39sbpvGjiHY2v3omNOgoBbG
+	OumkD//JdzF0AdT/GXc56VMxWPTIZxRvxa0vHr+hUH1gvuFK3K2ksgGJ2rBFIHJvg4yr2/C47UM
+	7DXJaxSfTe6UDxh7e0BEif4+dH5p90Y2UONateWULKN3g7YkyK6IEgR+QTl6L82DvlmAoP6ygiQ
+	1a7qTyBic1vuVCNh9ugLZ7l2ScVTI85IubJk2yw2jjaQ03CrP95/V6GHMJTYDesQE7j7Lan2lUV
+	yjXHyoga9i5Qt1d/iiYEVmxB/KZOByZFQHh7Q9lVe13QliWAWocxA76zduWjAw4ARxAyvEuJklh
+	4WHsBUzkOOEWNg+BuSyEjT/IpP4DHt5FAlbxBeSUkYYgAgjTchqCjlIyshMHotc84YNs=
+X-Received: by 2002:a05:6214:4f01:b0:894:946e:3687 with SMTP id 6a1803df08f44-894ea096a36mr24616306d6.7.1769774157962;
+        Fri, 30 Jan 2026 03:55:57 -0800 (PST)
+X-Received: by 2002:a05:6214:4f01:b0:894:946e:3687 with SMTP id 6a1803df08f44-894ea096a36mr24616086d6.7.1769774157533;
+        Fri, 30 Jan 2026 03:55:57 -0800 (PST)
+Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-658b4256a4bsm4118791a12.2.2026.01.30.03.55.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 30 Jan 2026 03:55:57 -0800 (PST)
+Message-ID: <2697d1e1-8421-46aa-b58f-10608a2bea2c@oss.qualcomm.com>
+Date: Fri, 30 Jan 2026 12:55:53 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: Sb9fc-XW_NZmF2DFFiPKZXidiApxgma7
-X-Proofpoint-GUID: Sb9fc-XW_NZmF2DFFiPKZXidiApxgma7
-X-Authority-Analysis: v=2.4 cv=VMTQXtPX c=1 sm=1 tr=0 ts=697c9c21 cx=c_pps
- a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=hpoCfrBzasziBmgo1UAA:9 a=uKXjsCUrEbL0IQVhDsJ9:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTMwMDA5NyBTYWx0ZWRfX+V3ce51IQeXv
- P9Ij3Ofi8UgdbnAcUfWS/HgsNJgrcg33BUeoHfPfyi1ovFQacF8W9/MKWmCIXSxXbf0IAYFQqiZ
- nEJd+H5k84IyRvr1q1rTfULk5lHWI+7QetQymecMmPpaP9WGdNYjpTbQQXjaaGR3Nh/PySEh4Ob
- rQgTJ7ZZRVlGqF6n+w3PdRlvttcxdjf9uBBQpS3nnha/m8NWMnRv/6k2Q6pIyIHcFBfz6bSfbAp
- hcSplggrtWc9m+7Uiyho2dMERFeAeEV4j6WckZkR+4/fEf75k3iAdXHcmoIPIjdT+r3MVx7BrY/
- 2lu+yB5T2sVDWzqA88nsAm7SKM2SumFeUEHbxEr4/Q5JwUqr0xUAIXM/G6sXUp/O7O7X1kg3ATc
- umwwd64swhXCEbnW6DXme9vSaPq1HNu4lqwq4tXffRsF9hzPotYL0YYwPvTRAaUPl4y5BBy53+6
- 35X0Dp6afj7V+GFtEGw==
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] soc: qcom: ice: Avoid probe deferring for un-supported
+ ICE feature
+To: Sumit Garg <sumit.garg@kernel.org>
+Cc: Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        andersson@kernel.org, konradybcio@kernel.org, abelvesa@kernel.org,
+        mani@kernel.org, linux-kernel@vger.kernel.org,
+        Sumit Garg <sumit.garg@oss.qualcomm.com>
+References: <20260130091118.147379-1-sumit.garg@kernel.org>
+ <4ad700f3-da8f-4175-9172-3fc4d87d8152@oss.qualcomm.com>
+ <aXx_UDTkdYHY04FR@sumit-xelite>
+ <4f629971-94cb-44aa-9502-4f5ebfd63937@oss.qualcomm.com>
+ <aXyXtK10_t-OBOxn@sumit-xelite>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <aXyXtK10_t-OBOxn@sumit-xelite>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: 6G3mOpN_DY_Ig7HS_YWIN5QJ4IUx6Gv4
+X-Proofpoint-ORIG-GUID: 6G3mOpN_DY_Ig7HS_YWIN5QJ4IUx6Gv4
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTMwMDA5NyBTYWx0ZWRfX6RY62D7VcQQA
+ 8Z7CzjvzWug/IC+NONjXs8NUjXlIFdDUuup1i+y4u/3iPMfau8zYYp/N5cBQZpRZpbeTtwDVW9G
+ JoMDbm1PnAh6NybN3Zf0EfhwV+TFm9J63FNC6C37G3IRDN/mQZKRGJfKKeTSP3qTo5Vt2lb2a6r
+ qsss1rynA7+AyJjw8rgf351f0/VKzN5L/3Ugx3eXWjyOfeutUfjWhZKBb3Yhc1kdSnKkFDmnNJR
+ 5D8QuiXO6Ilf7DjIDuoRn4QrnKKt3umQTyxGs2mblzlF4hWrqdXr9Yf3AYTNrp73VAkJVJ8EsGO
+ t/jiRXD8Oc+OQ0bm5DUGQIvYQc/PLFdAy/WfjOrfc1snZPc5jD/AEuYQkgyen7WaaJOZvkbRfM4
+ 9RtoUxd+4bn3SRTGhzN1sgEHbo9l+YXQgZG30gv1+/KpVonYYhTf6YM0O6eSXaM40YYn5s/Pt/U
+ IGxzlNOLSQ2Z4RBFCaQ==
+X-Authority-Analysis: v=2.4 cv=G5cR0tk5 c=1 sm=1 tr=0 ts=697c9c4e cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=9oxdx14C3Cyt1g6qQDsA:9
+ a=QEXdDO2ut3YA:10 a=pJ04lnu7RYOZP9TFuWaZ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-01-30_01,2026-01-29_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 bulkscore=0 lowpriorityscore=0
- impostorscore=0 adultscore=0 phishscore=0 suspectscore=0 spamscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2601300097
+ impostorscore=0 malwarescore=0 clxscore=1015 lowpriorityscore=0 adultscore=0
+ priorityscore=1501 spamscore=0 phishscore=0 bulkscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601300097
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.84 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_TO(0.00)[kernel.org,oss.qualcomm.com,linaro.org,gmail.com];
-	TAGGED_FROM(0.00)[bounces-91296-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[jishnu.prakash@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	MIME_TRACE(0.00)[0:+];
-	PRECEDENCE_BULK(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
-	TO_DN_NONE(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_TWELVE(0.00)[31];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-91297-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: BE36FBA3AE
+X-Rspamd-Queue-Id: 2595FBA3FF
 X-Rspamd-Action: no action
 
-Add support for ADC_TM part of PMIC5 Gen3.
+On 1/30/26 12:36 PM, Sumit Garg wrote:
+> On Fri, Jan 30, 2026 at 10:59:18AM +0100, Konrad Dybcio wrote:
+>> On 1/30/26 10:52 AM, Sumit Garg wrote:
+>>> On Fri, Jan 30, 2026 at 10:34:26AM +0100, Konrad Dybcio wrote:
+>>>> On 1/30/26 10:11 AM, Sumit Garg wrote:
+>>>>> From: Sumit Garg <sumit.garg@oss.qualcomm.com>
 
-This is an auxiliary driver under the Gen3 ADC driver, which implements the
-threshold setting and interrupt generating functionalities of QCOM ADC_TM
-drivers, used to support thermal trip points.
+[...]
 
-Signed-off-by: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
----
-Changes since v9:
-- Replaced the break statement within scoped_guard() in tm_handler_work() with
-  return statement to fix the error reported by kernel test robot.
+>>> Since qcom,ufs depends on qcom,ice via a phandle, so isn't the probe
+>>> orderering automatically taken care off? Or that isn't the case here?
+>>
+>> No, that's guaranteed by devlink only with certain properties.
+> 
+> Okay I see. The other alternate solution I can come up is following to
+> keep the deferred probing intact. Let me know your thoughts on this:
+> 
+> diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
+> index ab9586b8caf5..76bf9f94fbaf 100644
+> --- a/drivers/soc/qcom/ice.c
+> +++ b/drivers/soc/qcom/ice.c
+> @@ -559,7 +559,7 @@ static struct qcom_ice *qcom_ice_create(struct device *dev,
+> 
+>         if (!qcom_scm_ice_available()) {
+>                 dev_warn(dev, "ICE SCM interface not found\n");
+> -               return NULL;
+> +               return ERR_PTR(-ENODEV);
+>         }
+> 
+>         engine = devm_kzalloc(dev, sizeof(*engine), GFP_KERNEL);
+> @@ -648,11 +648,14 @@ static struct qcom_ice *of_qcom_ice_get(struct device *dev)
+>         }
+> 
+>         ice = platform_get_drvdata(pdev);
+> -       if (!ice) {
+> +       if (IS_ERR_OR_NULL(ice)) {
+>                 dev_err(dev, "Cannot get ice instance from %s\n",
+>                         dev_name(&pdev->dev));
+>                 platform_device_put(pdev);
+> -               return NULL;
+> +               if (PTR_ERR(ice) == -ENODEV)
+> +                       return NULL;
+> +               else
+> +                       return ERR_PTR(-EPROBE_DEFER);
+>         }
+> 
+>         link = device_link_add(dev, &pdev->dev, DL_FLAG_AUTOREMOVE_SUPPLIER);
+> @@ -726,7 +729,7 @@ static int qcom_ice_probe(struct platform_device *pdev)
+>         }
+> 
+>         engine = qcom_ice_create(&pdev->dev, base);
+> -       if (IS_ERR(engine))
+> +       if (IS_ERR(engine) && PTR_ERR(engine) != -ENODEV)
+>                 return PTR_ERR(engine);
+> 
+>         platform_set_drvdata(pdev, engine);
 
-Changes since v8:
-- Made following changes to address Dmitry's comment to use module_auxiliary_driver():
-  - Dropped the wrapper struct containing the auxiliary driver (struct adc_tm5_auxiliary_drv)
-    which was originally meant to expose the TM interrupt callback to be called by
-    main driver and replaced it with standalone definition of the auxiliary_driver struct.
-  - Added call to adc5_gen3_register_tm_event_notifier() in probe to initialize the
-    TM callback for main driver.
-  - Replaced the module_init() and module_exit() calls with module_auxiliary_driver().
-- Made following changes to address Jonathan's comments:
-  - Updated header files included in drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c
-    to follow IWYU (include-what-you-use) principles.
-  - Added a DEFINE_GUARD() definition for mutex lock/unlock functions and replaced
-    their existing calls with guard() and scoped_guard() statements using this definition.
-  - Moved some variable declarations in tm_handler_work() to inside the for() loop.
-  - Fixed if() check condition for low_temp in adc_tm5_gen3_set_trip_temp().
-- Dropped the wrapper function adc_tm5_gen3_disable_channel() around
-  _adc_tm5_gen3_disable_channel() as it only calls the inner function with no other actions.
-- Replaced a pr_debug() call with dev_dbg() in tm_handler_work().
+This looks more robust. Although the UFS and MMC drivers today check
+for EOPNOTSUPP, so perhaps throwing that would be even better
 
-Changes since v7:
-- Addressed following comments from Jonathan:
-  - Replaced {0} with { } in tm_handler_work()
-  - Simplified logic for setting upper_set and lower_set into
-    a single line each, in tm_handler_work()
-  - Cleaned up local variable declarations and high/low threshold
-    check in adc_tm5_gen3_configure()
-  - Moved cleanup action to disable all ADC_TM channels to probe
-    end and added comment to describe it.
-  - Fixed { } formatting in adctm5_auxiliary_id_table[].
+> 
+>> In this case though, I think it could make sense to add it to the
+>> "suppliers" list in drivers/of/property.c.
+>>
+>> I don't know if vendors adding their custom properties there is a
+>> pattern that +Rob will be happy about though..
+> 
+> Not sure if that's a shorter path as I would like to see fix for this
+> issue backported as well.
+> 
+> Aside, not sure how much stable ICE feature itself is as I got following
+> crash with QLI boot firmware on Kodiak:
+> 
+> [    5.172970] SError Interrupt on CPU6, code 0x00000000be000000 -- SError
+> [    5.172986] CPU: 6 UID: 0 PID: 241 Comm: (udev-worker) Tainted: G   M                6.19.0-rc5-next-20260115-gc1a0fee87a05 #9 PREEMPT 
+> [    5.172996] Tainted: [M]=MACHINE_CHECK
+> [    5.172999] Hardware name: Qualcomm Technologies, Inc. Robotics RB3gen2 (DT)
+> [    5.173003] pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+> [    5.173010] pc : qcom_ice_create.part.0+0x6c/0x24c [qcom_ice]
+> [    5.173024] lr : qcom_ice_create.part.0+0xe4/0x24c [qcom_ice]
 
-Changes since v6:
-- Addressed following comments from Jonathan:
-  - Added error check for devm_thermal_add_hwmon_sysfs() call.
-  - Used local variable `dev` in multiple places in adc_tm5_probe().
-    in place of `&aux_dev->dev` and `adc_tm5->dev`.
-  - Added a comment to explain cleanup action calling adc5_gen3_clear_work()
-    near probe end.
-  - Fixed return statement at probe end to return last called API's
-    return value directly.
+Could you please decode the pc value with ./scripts/faddr2line?
+My compiler produces different output
 
-Changes since v5:
-- Addressed following comments from Jonathan:
-  - Corrected all files to follow kernel-doc formatting fully.
-  - Cleaned up formatting in struct definitions.
-  - Used sizeof() to specify length in register read/write calls
-    instead of using integers directly.
-  - Added comments in adc_tm5_probe() for skipping first SDAM for
-    IRQ request and for usage of auxiliary_set_drvdata().
-  - Corrected line wrap length driver file.
-  - Moved INIT_WORK() and auxiliary_set_drvdata() to earlier
-    locations to ensure they are ready when needed.
+./scripts/faddr2line vmlinux(or path to .ko) <symbol_name>
 
-Changes since v4:
-- Fixed a compilation error and updated dependencies in config as suggested
-  by Krzysztof.
-
- drivers/thermal/qcom/Kconfig                  |   9 +
- drivers/thermal/qcom/Makefile                 |   1 +
- drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c | 512 ++++++++++++++++++
- 3 files changed, 522 insertions(+)
- create mode 100644 drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c
-
-diff --git a/drivers/thermal/qcom/Kconfig b/drivers/thermal/qcom/Kconfig
-index a6bb01082ec6..1acb11e4ac80 100644
---- a/drivers/thermal/qcom/Kconfig
-+++ b/drivers/thermal/qcom/Kconfig
-@@ -21,6 +21,15 @@ config QCOM_SPMI_ADC_TM5
- 	  Thermal client sets threshold temperature for both warm and cool and
- 	  gets updated when a threshold is reached.
- 
-+config QCOM_SPMI_ADC_TM5_GEN3
-+	tristate "Qualcomm SPMI PMIC Thermal Monitor ADC5 Gen3"
-+	depends on QCOM_SPMI_ADC5_GEN3
-+	help
-+	  This enables the auxiliary thermal driver for the ADC5 Gen3 thermal
-+	  monitoring device. It shows up as a thermal zone with multiple trip points.
-+	  Thermal client sets threshold temperature for both warm and cool and
-+	  gets updated when a threshold is reached.
-+
- config QCOM_SPMI_TEMP_ALARM
- 	tristate "Qualcomm SPMI PMIC Temperature Alarm"
- 	depends on OF && SPMI && IIO
-diff --git a/drivers/thermal/qcom/Makefile b/drivers/thermal/qcom/Makefile
-index 0fa2512042e7..828d9e7bc797 100644
---- a/drivers/thermal/qcom/Makefile
-+++ b/drivers/thermal/qcom/Makefile
-@@ -4,5 +4,6 @@ obj-$(CONFIG_QCOM_TSENS)	+= qcom_tsens.o
- qcom_tsens-y			+= tsens.o tsens-v2.o tsens-v1.o tsens-v0_1.o \
- 				   tsens-8960.o
- obj-$(CONFIG_QCOM_SPMI_ADC_TM5)	+= qcom-spmi-adc-tm5.o
-+obj-$(CONFIG_QCOM_SPMI_ADC_TM5_GEN3)	+= qcom-spmi-adc-tm5-gen3.o
- obj-$(CONFIG_QCOM_SPMI_TEMP_ALARM)	+= qcom-spmi-temp-alarm.o
- obj-$(CONFIG_QCOM_LMH)		+= lmh.o
-diff --git a/drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c b/drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c
-new file mode 100644
-index 000000000000..882355d6606d
---- /dev/null
-+++ b/drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c
-@@ -0,0 +1,512 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-+ */
-+
-+#include <linux/auxiliary_bus.h>
-+#include <linux/bitfield.h>
-+#include <linux/bits.h>
-+#include <linux/cleanup.h>
-+#include <linux/container_of.h>
-+#include <linux/device.h>
-+#include <linux/device/devres.h>
-+#include <linux/dev_printk.h>
-+#include <linux/err.h>
-+#include <linux/iio/adc/qcom-adc5-gen3-common.h>
-+#include <linux/interrupt.h>
-+#include <linux/kernel.h>
-+#include <linux/module.h>
-+#include <linux/thermal.h>
-+#include <linux/types.h>
-+#include <linux/workqueue.h>
-+#include <linux/unaligned.h>
-+
-+#include "../thermal_hwmon.h"
-+
-+struct adc_tm5_gen3_chip;
-+
-+/**
-+ * struct adc_tm5_gen3_channel_props - ADC_TM channel structure
-+ * @timer: time period of recurring TM measurement.
-+ * @tm_chan_index: TM channel number used (ranging from 1-7).
-+ * @sdam_index: SDAM on which this TM channel lies.
-+ * @common_props: structure with common  ADC channel properties.
-+ * @high_thr_en: TM high threshold crossing detection enabled.
-+ * @low_thr_en: TM low threshold crossing detection enabled.
-+ * @chip: ADC TM device.
-+ * @tzd: pointer to thermal device corresponding to TM channel.
-+ * @last_temp: last temperature that caused threshold violation,
-+ *	or a thermal TM channel.
-+ * @last_temp_set: indicates if last_temp is stored.
-+ */
-+struct adc_tm5_gen3_channel_props {
-+	unsigned int timer;
-+	unsigned int tm_chan_index;
-+	unsigned int sdam_index;
-+	struct adc5_channel_common_prop common_props;
-+	bool high_thr_en;
-+	bool low_thr_en;
-+	struct adc_tm5_gen3_chip *chip;
-+	struct thermal_zone_device *tzd;
-+	int last_temp;
-+	bool last_temp_set;
-+};
-+
-+/**
-+ * struct adc_tm5_gen3_chip - ADC Thermal Monitoring device structure
-+ * @dev_data: Top-level ADC device data.
-+ * @chan_props: Array of ADC_TM channel structures.
-+ * @nchannels: number of TM channels allocated
-+ * @dev: SPMI ADC5 Gen3 device.
-+ * @tm_handler_work: handler for TM interrupt for threshold violation.
-+ */
-+struct adc_tm5_gen3_chip {
-+	struct adc5_device_data *dev_data;
-+	struct adc_tm5_gen3_channel_props *chan_props;
-+	unsigned int nchannels;
-+	struct device *dev;
-+	struct work_struct tm_handler_work;
-+};
-+
-+DEFINE_GUARD(adc5_gen3, struct adc_tm5_gen3_chip *, adc5_gen3_mutex_lock(_T->dev),
-+	     adc5_gen3_mutex_unlock(_T->dev))
-+
-+static int get_sdam_from_irq(struct adc_tm5_gen3_chip *adc_tm5, int irq)
-+{
-+	int i;
-+
-+	for (i = 0; i < adc_tm5->dev_data->num_sdams; i++) {
-+		if (adc_tm5->dev_data->base[i].irq == irq)
-+			return i;
-+	}
-+	return -ENOENT;
-+}
-+
-+static irqreturn_t adctm5_gen3_isr(int irq, void *dev_id)
-+{
-+	struct adc_tm5_gen3_chip *adc_tm5 = dev_id;
-+	int ret, sdam_num;
-+	u8 tm_status[2];
-+	u8 status, val;
-+
-+	sdam_num = get_sdam_from_irq(adc_tm5, irq);
-+	if (sdam_num < 0) {
-+		dev_err(adc_tm5->dev, "adc irq %d not associated with an sdam\n",
-+			irq);
-+		return IRQ_HANDLED;
-+	}
-+
-+	ret = adc5_gen3_read(adc_tm5->dev_data, sdam_num, ADC5_GEN3_STATUS1,
-+			     &status, sizeof(status));
-+	if (ret) {
-+		dev_err(adc_tm5->dev, "adc read status1 failed with %d\n", ret);
-+		return IRQ_HANDLED;
-+	}
-+
-+	if (status & ADC5_GEN3_STATUS1_CONV_FAULT) {
-+		dev_err_ratelimited(adc_tm5->dev,
-+				    "Unexpected conversion fault, status:%#x\n",
-+				    status);
-+		val = ADC5_GEN3_CONV_ERR_CLR_REQ;
-+		adc5_gen3_status_clear(adc_tm5->dev_data, sdam_num,
-+				       ADC5_GEN3_CONV_ERR_CLR, &val, 1);
-+		return IRQ_HANDLED;
-+	}
-+
-+	ret = adc5_gen3_read(adc_tm5->dev_data, sdam_num, ADC5_GEN3_TM_HIGH_STS,
-+			     tm_status, sizeof(tm_status));
-+	if (ret) {
-+		dev_err(adc_tm5->dev, "adc read TM status failed with %d\n", ret);
-+		return IRQ_HANDLED;
-+	}
-+
-+	if (tm_status[0] || tm_status[1])
-+		schedule_work(&adc_tm5->tm_handler_work);
-+
-+	dev_dbg(adc_tm5->dev, "Interrupt status:%#x, high:%#x, low:%#x\n",
-+		status, tm_status[0], tm_status[1]);
-+
-+	return IRQ_HANDLED;
-+}
-+
-+static int adc5_gen3_tm_status_check(struct adc_tm5_gen3_chip *adc_tm5,
-+				     int sdam_index, u8 *tm_status, u8 *buf)
-+{
-+	int ret;
-+
-+	ret = adc5_gen3_read(adc_tm5->dev_data, sdam_index, ADC5_GEN3_TM_HIGH_STS,
-+			     tm_status, 2);
-+	if (ret) {
-+		dev_err(adc_tm5->dev, "adc read TM status failed with %d\n", ret);
-+		return ret;
-+	}
-+
-+	ret = adc5_gen3_status_clear(adc_tm5->dev_data, sdam_index, ADC5_GEN3_TM_HIGH_STS_CLR,
-+				     tm_status, 2);
-+	if (ret) {
-+		dev_err(adc_tm5->dev, "adc status clear conv_req failed with %d\n",
-+			ret);
-+		return ret;
-+	}
-+
-+	ret = adc5_gen3_read(adc_tm5->dev_data, sdam_index, ADC5_GEN3_CH_DATA0(0),
-+			     buf, 16);
-+	if (ret)
-+		dev_err(adc_tm5->dev, "adc read data failed with %d\n", ret);
-+
-+	return ret;
-+}
-+
-+static void tm_handler_work(struct work_struct *work)
-+{
-+	struct adc_tm5_gen3_chip *adc_tm5 = container_of(work, struct adc_tm5_gen3_chip,
-+							 tm_handler_work);
-+	int sdam_index = -1;
-+	u8 tm_status[2] = { };
-+	u8 buf[16] = { };
-+
-+	for (int i = 0; i < adc_tm5->nchannels; i++) {
-+		struct adc_tm5_gen3_channel_props *chan_prop = &adc_tm5->chan_props[i];
-+		int offset = chan_prop->tm_chan_index;
-+		bool upper_set, lower_set;
-+		int ret, temp;
-+		u16 code;
-+
-+		scoped_guard(adc5_gen3, adc_tm5) {
-+			if (chan_prop->sdam_index != sdam_index) {
-+				sdam_index = chan_prop->sdam_index;
-+				ret = adc5_gen3_tm_status_check(adc_tm5, sdam_index,
-+								tm_status, buf);
-+				if (ret)
-+					return;
-+			}
-+
-+			upper_set = ((tm_status[0] & BIT(offset)) && chan_prop->high_thr_en);
-+			lower_set = ((tm_status[1] & BIT(offset)) && chan_prop->low_thr_en);
-+		}
-+
-+		if (!(upper_set || lower_set))
-+			continue;
-+
-+		code = get_unaligned_le16(&buf[2 * offset]);
-+		dev_dbg(adc_tm5->dev, "ADC_TM threshold code:%#x\n", code);
-+
-+		ret = adc5_gen3_therm_code_to_temp(adc_tm5->dev,
-+						   &chan_prop->common_props,
-+						   code, &temp);
-+		if (ret) {
-+			dev_err(adc_tm5->dev,
-+				"Invalid temperature reading, ret = %d, code=%#x\n",
-+				ret, code);
-+			continue;
-+		}
-+
-+		chan_prop->last_temp = temp;
-+		chan_prop->last_temp_set = true;
-+		thermal_zone_device_update(chan_prop->tzd, THERMAL_TRIP_VIOLATED);
-+	}
-+}
-+
-+static int adc_tm5_gen3_get_temp(struct thermal_zone_device *tz, int *temp)
-+{
-+	struct adc_tm5_gen3_channel_props *prop = thermal_zone_device_priv(tz);
-+	struct adc_tm5_gen3_chip *adc_tm5;
-+
-+	if (!prop || !prop->chip)
-+		return -EINVAL;
-+
-+	adc_tm5 = prop->chip;
-+
-+	if (prop->last_temp_set) {
-+		pr_debug("last_temp: %d\n", prop->last_temp);
-+		prop->last_temp_set = false;
-+		*temp = prop->last_temp;
-+		return 0;
-+	}
-+
-+	return adc5_gen3_get_scaled_reading(adc_tm5->dev, &prop->common_props,
-+					    temp);
-+}
-+
-+static int adc_tm5_gen3_disable_channel(struct adc_tm5_gen3_channel_props *prop)
-+{
-+	struct adc_tm5_gen3_chip *adc_tm5 = prop->chip;
-+	int ret;
-+	u8 val;
-+
-+	prop->high_thr_en = false;
-+	prop->low_thr_en = false;
-+
-+	ret = adc5_gen3_poll_wait_hs(adc_tm5->dev_data, prop->sdam_index);
-+	if (ret)
-+		return ret;
-+
-+	val = BIT(prop->tm_chan_index);
-+	ret = adc5_gen3_write(adc_tm5->dev_data, prop->sdam_index,
-+			      ADC5_GEN3_TM_HIGH_STS_CLR, &val, sizeof(val));
-+	if (ret)
-+		return ret;
-+
-+	val = MEAS_INT_DISABLE;
-+	ret = adc5_gen3_write(adc_tm5->dev_data, prop->sdam_index,
-+			      ADC5_GEN3_TIMER_SEL, &val, sizeof(val));
-+	if (ret)
-+		return ret;
-+
-+	/* To indicate there is an actual conversion request */
-+	val = ADC5_GEN3_CHAN_CONV_REQ | prop->tm_chan_index;
-+	ret = adc5_gen3_write(adc_tm5->dev_data, prop->sdam_index,
-+			      ADC5_GEN3_PERPH_CH, &val, sizeof(val));
-+	if (ret)
-+		return ret;
-+
-+	val = ADC5_GEN3_CONV_REQ_REQ;
-+	return adc5_gen3_write(adc_tm5->dev_data, prop->sdam_index,
-+			       ADC5_GEN3_CONV_REQ, &val, sizeof(val));
-+}
-+
-+#define ADC_TM5_GEN3_CONFIG_REGS 12
-+
-+static int adc_tm5_gen3_configure(struct adc_tm5_gen3_channel_props *prop,
-+				  int low_temp, int high_temp)
-+{
-+	struct adc_tm5_gen3_chip *adc_tm5 = prop->chip;
-+	u8 buf[ADC_TM5_GEN3_CONFIG_REGS];
-+	u8 conv_req;
-+	u16 adc_code;
-+	int ret;
-+
-+	ret = adc5_gen3_poll_wait_hs(adc_tm5->dev_data, prop->sdam_index);
-+	if (ret < 0)
-+		return ret;
-+
-+	ret = adc5_gen3_read(adc_tm5->dev_data, prop->sdam_index,
-+			     ADC5_GEN3_SID, buf, sizeof(buf));
-+	if (ret < 0)
-+		return ret;
-+
-+	/* Write SID */
-+	buf[0] = FIELD_PREP(ADC5_GEN3_SID_MASK, prop->common_props.sid);
-+
-+	/* Select TM channel and indicate there is an actual conversion request */
-+	buf[1] = ADC5_GEN3_CHAN_CONV_REQ | prop->tm_chan_index;
-+
-+	buf[2] = prop->timer;
-+
-+	/* Digital param selection */
-+	adc5_gen3_update_dig_param(&prop->common_props, &buf[3]);
-+
-+	/* Update fast average sample value */
-+	buf[4] &= ~ADC5_GEN3_FAST_AVG_CTL_SAMPLES_MASK;
-+	buf[4] |= prop->common_props.avg_samples | ADC5_GEN3_FAST_AVG_CTL_EN;
-+
-+	/* Select ADC channel */
-+	buf[5] = prop->common_props.channel;
-+
-+	/* Select HW settle delay for channel */
-+	buf[6] = FIELD_PREP(ADC5_GEN3_HW_SETTLE_DELAY_MASK,
-+			    prop->common_props.hw_settle_time_us);
-+
-+	/* High temperature corresponds to low voltage threshold */
-+	prop->low_thr_en = (high_temp != INT_MAX);
-+	if (prop->low_thr_en) {
-+		adc_code = qcom_adc_tm5_gen2_temp_res_scale(high_temp);
-+		put_unaligned_le16(adc_code, &buf[8]);
-+	}
-+
-+	/* Low temperature corresponds to high voltage threshold */
-+	prop->high_thr_en = (low_temp != -INT_MAX);
-+	if (prop->high_thr_en) {
-+		adc_code = qcom_adc_tm5_gen2_temp_res_scale(low_temp);
-+		put_unaligned_le16(adc_code, &buf[10]);
-+	}
-+
-+	buf[7] = 0;
-+	if (prop->high_thr_en)
-+		buf[7] |= ADC5_GEN3_HIGH_THR_INT_EN;
-+	if (prop->low_thr_en)
-+		buf[7] |= ADC5_GEN3_LOW_THR_INT_EN;
-+
-+	ret = adc5_gen3_write(adc_tm5->dev_data, prop->sdam_index, ADC5_GEN3_SID,
-+			      buf, sizeof(buf));
-+	if (ret < 0)
-+		return ret;
-+
-+	conv_req = ADC5_GEN3_CONV_REQ_REQ;
-+	return adc5_gen3_write(adc_tm5->dev_data, prop->sdam_index,
-+			       ADC5_GEN3_CONV_REQ, &conv_req, sizeof(conv_req));
-+}
-+
-+static int adc_tm5_gen3_set_trip_temp(struct thermal_zone_device *tz,
-+				      int low_temp, int high_temp)
-+{
-+	struct adc_tm5_gen3_channel_props *prop = thermal_zone_device_priv(tz);
-+	struct adc_tm5_gen3_chip *adc_tm5;
-+
-+	if (!prop || !prop->chip)
-+		return -EINVAL;
-+
-+	adc_tm5 = prop->chip;
-+
-+	dev_dbg(adc_tm5->dev, "channel:%s, low_temp(mdegC):%d, high_temp(mdegC):%d\n",
-+		prop->common_props.label, low_temp, high_temp);
-+
-+	guard(adc5_gen3)(adc_tm5);
-+	if (high_temp == INT_MAX && low_temp == -INT_MAX)
-+		return adc_tm5_gen3_disable_channel(prop);
-+
-+	return adc_tm5_gen3_configure(prop, low_temp, high_temp);
-+}
-+
-+static const struct thermal_zone_device_ops adc_tm_ops = {
-+	.get_temp = adc_tm5_gen3_get_temp,
-+	.set_trips = adc_tm5_gen3_set_trip_temp,
-+};
-+
-+static int adc_tm5_register_tzd(struct adc_tm5_gen3_chip *adc_tm5)
-+{
-+	unsigned int i, channel;
-+	struct thermal_zone_device *tzd;
-+	int ret;
-+
-+	for (i = 0; i < adc_tm5->nchannels; i++) {
-+		channel = ADC5_GEN3_V_CHAN(adc_tm5->chan_props[i].common_props);
-+		tzd = devm_thermal_of_zone_register(adc_tm5->dev, channel,
-+						    &adc_tm5->chan_props[i],
-+						    &adc_tm_ops);
-+
-+		if (IS_ERR(tzd)) {
-+			if (PTR_ERR(tzd) == -ENODEV) {
-+				dev_warn(adc_tm5->dev,
-+					 "thermal sensor on channel %d is not used\n",
-+					 channel);
-+				continue;
-+			}
-+			return dev_err_probe(adc_tm5->dev, PTR_ERR(tzd),
-+					     "Error registering TZ zone:%ld for channel:%d\n",
-+					     PTR_ERR(tzd), channel);
-+		}
-+		adc_tm5->chan_props[i].tzd = tzd;
-+		ret = devm_thermal_add_hwmon_sysfs(adc_tm5->dev, tzd);
-+		if (ret)
-+			return ret;
-+	}
-+	return 0;
-+}
-+
-+static void adc5_gen3_clear_work(void *data)
-+{
-+	struct adc_tm5_gen3_chip *adc_tm5 = data;
-+
-+	cancel_work_sync(&adc_tm5->tm_handler_work);
-+}
-+
-+static void adc5_gen3_disable(void *data)
-+{
-+	struct adc_tm5_gen3_chip *adc_tm5 = data;
-+	int i;
-+
-+	guard(adc5_gen3)(adc_tm5);
-+	/* Disable all available TM channels */
-+	for (i = 0; i < adc_tm5->nchannels; i++)
-+		adc_tm5_gen3_disable_channel(&adc_tm5->chan_props[i]);
-+}
-+
-+static void adctm_event_handler(struct auxiliary_device *adev)
-+{
-+	struct adc_tm5_gen3_chip *adc_tm5 = auxiliary_get_drvdata(adev);
-+
-+	schedule_work(&adc_tm5->tm_handler_work);
-+}
-+
-+static int adc_tm5_probe(struct auxiliary_device *aux_dev,
-+			 const struct auxiliary_device_id *id)
-+{
-+	struct adc_tm5_gen3_chip *adc_tm5;
-+	struct tm5_aux_dev_wrapper *aux_dev_wrapper;
-+	struct device *dev = &aux_dev->dev;
-+	int i, ret;
-+
-+	adc_tm5 = devm_kzalloc(dev, sizeof(*adc_tm5), GFP_KERNEL);
-+	if (!adc_tm5)
-+		return -ENOMEM;
-+
-+	aux_dev_wrapper = container_of(aux_dev, struct tm5_aux_dev_wrapper,
-+				       aux_dev);
-+
-+	adc_tm5->dev = dev;
-+	adc_tm5->dev_data = aux_dev_wrapper->dev_data;
-+	adc_tm5->nchannels = aux_dev_wrapper->n_tm_channels;
-+	adc_tm5->chan_props = devm_kcalloc(dev, aux_dev_wrapper->n_tm_channels,
-+					   sizeof(*adc_tm5->chan_props), GFP_KERNEL);
-+	if (!adc_tm5->chan_props)
-+		return -ENOMEM;
-+
-+	for (i = 0; i < adc_tm5->nchannels; i++) {
-+		adc_tm5->chan_props[i].common_props = aux_dev_wrapper->tm_props[i];
-+		adc_tm5->chan_props[i].timer = MEAS_INT_1S;
-+		adc_tm5->chan_props[i].sdam_index = (i + 1) / 8;
-+		adc_tm5->chan_props[i].tm_chan_index = (i + 1) % 8;
-+		adc_tm5->chan_props[i].chip = adc_tm5;
-+	}
-+
-+	INIT_WORK(&adc_tm5->tm_handler_work, tm_handler_work);
-+
-+	/*
-+	 * Skipping first SDAM IRQ as it is requested in parent driver.
-+	 * If there is a TM violation on that IRQ, the parent driver calls
-+	 * the notifier (adctm_event_handler) exposed from this driver to handle it.
-+	 */
-+	for (i = 1; i < adc_tm5->dev_data->num_sdams; i++) {
-+		ret = devm_request_threaded_irq(dev,
-+						adc_tm5->dev_data->base[i].irq,
-+						NULL, adctm5_gen3_isr, IRQF_ONESHOT,
-+						adc_tm5->dev_data->base[i].irq_name,
-+						adc_tm5);
-+		if (ret < 0)
-+			return ret;
-+	}
-+
-+	/*
-+	 * This drvdata is only used in the function (adctm_event_handler)
-+	 * called by parent ADC driver in case of TM violation on the first SDAM.
-+	 */
-+	auxiliary_set_drvdata(aux_dev, adc_tm5);
-+
-+	adc5_gen3_register_tm_event_notifier(dev, adctm_event_handler);
-+
-+	/*
-+	 * This is to cancel any instances of tm_handler_work scheduled by
-+	 * TM interrupt, at the time of module removal.
-+	 */
-+
-+	ret = devm_add_action(dev, adc5_gen3_clear_work, adc_tm5);
-+	if (ret)
-+		return ret;
-+
-+	ret = adc_tm5_register_tzd(adc_tm5);
-+	if (ret)
-+		return ret;
-+
-+	/* This is to disable all ADC_TM channels in case of probe failure. */
-+
-+	return devm_add_action(dev, adc5_gen3_disable, adc_tm5);
-+}
-+
-+static const struct auxiliary_device_id adctm5_auxiliary_id_table[] = {
-+	{ .name = "qcom_spmi_adc5_gen3.adc5_tm_gen3", },
-+	{ }
-+};
-+
-+MODULE_DEVICE_TABLE(auxiliary, adctm5_auxiliary_id_table);
-+
-+static struct auxiliary_driver adctm5gen3_auxiliary_driver = {
-+	.id_table = adctm5_auxiliary_id_table,
-+	.probe = adc_tm5_probe,
-+};
-+
-+module_auxiliary_driver(adctm5gen3_auxiliary_driver);
-+
-+MODULE_DESCRIPTION("SPMI PMIC Thermal Monitor ADC driver");
-+MODULE_LICENSE("GPL");
-+MODULE_IMPORT_NS("QCOM_SPMI_ADC5_GEN3");
--- 
-2.25.1
-
+Konrad
 
