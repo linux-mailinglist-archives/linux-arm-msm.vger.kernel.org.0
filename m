@@ -1,122 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-91247-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91248-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id eOXZCWlpfGn+MQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91247-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 09:18:49 +0100
+	id SMFiJbhqfGn+MQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91248-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 09:24:24 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74635B8404
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 09:18:48 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1237DB84EE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 09:24:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 12C45300A119
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 08:18:26 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 0D29B300D61A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 08:24:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BCCE350A29;
-	Fri, 30 Jan 2026 08:18:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 434EB352946;
+	Fri, 30 Jan 2026 08:24:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VHFDfaF8";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="SFfXZnsI"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="L2ikZ6xb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f68.google.com (mail-wr1-f68.google.com [209.85.221.68])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB81314D13
-	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jan 2026 08:18:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B79313267
+	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jan 2026 08:24:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769761105; cv=none; b=gyPv0nn+G0dIqBgFNcSV25oBy/dD3fMsnjfdU3eP4G4i/WhOwf+HQX8D4rNXSkgMPNxlElOvD7K9+1Xp8ikHVovOyNu9D/YSQsYrON/pCyLRQZFiT6pqRITjpEvrrbT9LGztaxDEyu8XsiEHRLZbMVwk6AF2NY6zySuVPK3ThY0=
+	t=1769761460; cv=none; b=RVgjJwp23CRcByPPYaLE6v4wAxvekjY3ecu8ahqlTf0ZW+KmjXQou/hhvJVVqK/Okm0lWFYqq1JesBJA5mBgHp0wKyuRUQZWop6ohlDHkNYvSAsMCz7ruF96WPxFdROUBa9TYpbCEiULQW4HKf0OT2yHlBBSiHN12fwEupnJpLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769761105; c=relaxed/simple;
-	bh=br2SMO/CqOLy01O9OblTwnj3Y8uFghxnpz7SdQ6Z3dY=;
+	s=arc-20240116; t=1769761460; c=relaxed/simple;
+	bh=yk/DQImrd6Y8tLPo5TGQWWzOQ0L6lo6eOALIFPe2x8E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hZiiTK970OcUit7rAxXOeKkshl55i8J9yIQGnFQbH4svq345kV590q6oSCNygh5QXllpXp8fwRpErAhhZPxWaAwKv9tZ8yfybKAceZKYDjTMJtKlZ2X3nnWHfApSM6/FWYUfgyhvy0pqD8Wi+USiwX6tCDgfoC/eYWlJrTP9NWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VHFDfaF8; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=SFfXZnsI; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60U3VTP8485905
-	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jan 2026 08:18:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=6SP+L5YkJ1dJdpaUxQXBP5gH
-	hMTqV+qrQzfZOzgDS6A=; b=VHFDfaF8W/2cTM+dHYtYLyqCEFSkC1PXaj+Nsw3H
-	mZcEh/B28ssTotdFCtmyd2JtJ+g3AV+RG8a9wModEPldBewrV3EFUqcQVALVPLWq
-	WhMoYVmmJ8UqGqTxXPBefgUWay0fnnJpPetQQ+iABdlZ3C3bZsHnVLs5Xk12F0S/
-	OD2t2ZUXx8LHDDOd8ooOpeYvxoTlrKo3DXe2Svj212r7LE0rFrCvmkow15lin7Uq
-	k/vcT0Qy7AMUrt6VtAVTKsAC3vUTyuetGWOJvzlu1XF4X6vxyMEiO68K0WnVvba7
-	j78lmvWQ0WeBo/+b0+Z+OkZVvuRhvREqsUEMuSzhLvACqw==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c0gtnhbth-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jan 2026 08:18:22 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8c70a08daf3so468586285a.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jan 2026 00:18:22 -0800 (PST)
+	 Content-Type:Content-Disposition:In-Reply-To; b=K1m23dt8CUsezo/2jvV0x8QYOp/RdWjZYEan8TSeZbWHDzHGr33SxGqNV+k17ZYDtHW+x9cM9JEeoTBicgoNg57HekFULntRS3gOecH9jPEhqUHWy8A2jOYmCROlGaOUmB8NcrCMbCLkudL6/j0Ez1c33kESH21CRrtMlUaSPIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=L2ikZ6xb; arc=none smtp.client-ip=209.85.221.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f68.google.com with SMTP id ffacd0b85a97d-42fbbc3df8fso1388626f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jan 2026 00:24:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1769761102; x=1770365902; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1769761457; x=1770366257; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=6SP+L5YkJ1dJdpaUxQXBP5gHhMTqV+qrQzfZOzgDS6A=;
-        b=SFfXZnsI0eOu7E+NB0fGHJEg4L3Bx/nu/q+iRjkbLixYCBq38ORVmrbWB8FkgJwaU7
-         +4peO99MIERAFyL2aiHzGNhQA0A+iJTLjpx4qY9+T6xZ2m2l7MsbFcocSiQd4qdPltoA
-         XYmDAW0JigKyIen80PpB9mUjDCqVZzL6Dk7H7BCl6BE/74YuECeAKd2vCxo7OvbnhC6t
-         tnkEAiDI3P8pS1H4a8S9B8ov65bnkskmJmfqXWe58aMydXD7cY49UnLFjVNVeLc0A/jL
-         BQBUa1AB4j0lLTiispwYNK+k4J0lrE1xwZL8cFVQvBKpKrY9eCI2PjjD9qDPd0E9L0L8
-         0f+Q==
+        bh=kSHfEKQ3xKgmT9AN7R0YJI5063g4zHXX2+tc+T6cmxk=;
+        b=L2ikZ6xbikXxcmnl0Vpc5Ekg+J/HaNEUkbgwsAvZFN8ne8Z7tjDs5e0zdshcqssld2
+         91bH63df8cYdKaDOmtha6q2EiFRBnUHTF6eFXWw5DanKNd5PZKsW1vxoduH/Vu3ukmem
+         zp8SoTMNf7UXWgD8VBeSoOVAW60leiP/VNZC6LnR+OWHtPxrLEBItYet/NNMI+Nqqzaq
+         mbur7GZa2KcSl02B4OTzMv9nub/+uSw0kGiQYRg3RI4NvjPe6Xm8cA1eJvQZ7MhmvPG3
+         mxKghk81yTgSIURWaHCIz5/9BHp/bii+NTl2e8z7pILEzMUGYcIJQ+FFcScdh1lolprj
+         b3/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769761102; x=1770365902;
+        d=1e100.net; s=20230601; t=1769761457; x=1770366257;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=6SP+L5YkJ1dJdpaUxQXBP5gHhMTqV+qrQzfZOzgDS6A=;
-        b=QOrr4mCJpUk0Y5IodxTSjpwUSSq+jMfk43YD7Uba20KLKHSNjGXahD3o9v1UE4G6Fk
-         DWO+7c7NvweRdjOw6/ZiHyIpf+TpzlGpZTTPVwEuQ1VZkBzvZManUdsIUqucgfB2FB17
-         wDs4G/sbrkfLVCgHw9tVfasnn08uMoK6Nlfm2N7S2kC115t4xubCPAFhGIp361tOervL
-         o7f2kPzuBJBm5eARU1Qio0a055coAXjU8WcXhX3Nt8jnagMGG37nNIEuKqCeGMnZZXo2
-         Revk0JpEG8FFtwTBcMG0ViDc47EWqxZO5kVZMAMK8mCpE5d6dDmEEp1L6DH00T7wLC7l
-         LeQQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXKKArzHIPCT2ZRWxqAvaRSzdhYYU/Eb+5JQyWYAkPb+igUne2ygoADW4rdRNKzr/70jR61GIoYL3d/Tjsr@vger.kernel.org
-X-Gm-Message-State: AOJu0YzbOde1hMSy8YnTr8paLZsG+BP+glSzImUs4sPyuWKQGyIduzYl
-	Wzv3yICyGpqOm4onUp7FNLEZNlpClZJeYbpP7WdC2KCCeHUtD4CwilLIxvLVQ3F8EHLy5gAUj2D
-	PMiYeHbyUjdOmoKKR+cXPsOQ+gdTKRtCkjZ1t1RT0YuZrS75kSadKHnT/LnuuFRGKbidi
-X-Gm-Gg: AZuq6aKxqfQ4UkkIw/0necQb+o0WpX/ZYZarUTSwKyArxEQplI5Kmcm8gEH1USpcTRD
-	Yjd0dzNuX2h9dL67ivXUIsUp4TgxwqAp9mGCxYhJklUrXm72zfJqsQfijrc2SDwdIXFKCkAjEhI
-	BQD8HiYzT3sQSEXirI5gQBzf1x8sQN73rcaiNagObi9q8ceNHc5NKOquvHl6H830LMU96EbTtnY
-	k0ot0PVUipb5t8Suo8JLaHeU+uGDFlFC7hbaWUsQz3Mg37kmVRUO7oRWn8nrCJFFnp9LAN3dUq0
-	mIF+Ep1wtMRgsuc2nqODqiA4vERXBSZWoAuGtn1RhxJ4SgCpjmPDp7qYf+Qwu+o4r3XjlB1k+o+
-	876EFqloMUBboWdKpD0ALhf99
-X-Received: by 2002:a05:620a:4708:b0:8c6:d398:4a76 with SMTP id af79cd13be357-8c9eb1fc068mr284444585a.2.1769761101939;
-        Fri, 30 Jan 2026 00:18:21 -0800 (PST)
-X-Received: by 2002:a05:620a:4708:b0:8c6:d398:4a76 with SMTP id af79cd13be357-8c9eb1fc068mr284441385a.2.1769761101378;
-        Fri, 30 Jan 2026 00:18:21 -0800 (PST)
-Received: from oss.qualcomm.com ([86.121.162.109])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-435e1322dc7sm20233675f8f.37.2026.01.30.00.18.19
+        bh=kSHfEKQ3xKgmT9AN7R0YJI5063g4zHXX2+tc+T6cmxk=;
+        b=tnCUaOmzjbaQ8ea/Zid2RMh7IYDtF/sY7Hc7N9VKViPYmQIuwZXycmftnMR4IMr5E8
+         R9CVT96c10a0dujf2HmUSDnptjMArvPaiuvRmhr2MDhpz4JVRsnGTMDelMph+V9LUzUy
+         D1hm9Iloi0ejOOC8947hOrH2Mvztn2+HgWx7RlXt16Jnq1m0rOZAwtNV3jegC+x3l04b
+         ya/asYeeMPLCf4ZzD2kts03PxN1COf3n3cD1BEufgz2xQJiBfrAwB5jz+vNSoUnLU4aR
+         l5ptOIv8uJ8rxA0MWwRBz8R1sfA5fyQ8GwA3YVBbWUdf9u4KPsDfojzti1H/mqLOxfd/
+         TBvg==
+X-Forwarded-Encrypted: i=1; AJvYcCUZAyvgFVR5MWtKTOZAkuXK26/L+qKuS6M1eNB2ceALn0igKaYt4/XL6/fWwqXaW4bsbua8cVUNA97GQu0l@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxvp0MrTW9czYbn02925UWBXe3fhnLamzij+iCvzz0SkWZ5sbWN
+	4Dj92WjKHkQKtB/YtWeDOCft9EZk039DSvgREQKVw9s4m4lKLdzwscoe8AYVb8FlC+0=
+X-Gm-Gg: AZuq6aIjFry/aiv/wxP8NPcRm0k5zxuJ/9aDg+ywcSeYk3HKxUimk319qHW8f/HdzKa
+	5sgcTUOzFR8DXNFSVzraed8N8Nz/4qtFCiLvUtlsAlg/KY2VjLhksTaibW0HnhGr7tNBHGcKPn8
+	nfKNrGSmKKZj1rXNCMFoNO9DwwyUvCcJC5EmpWaYEfl9t2Rown/JL9imm0cetc60lZdMl59rOgH
+	56yh/7raTxzvYUGigsbkEHwJGvquwyUuYtLNnJBkkbylCIlJZY/RVhrLnLaG/gNSnDXZ60VdN18
+	f8kQt1htwgkIop+B7xf5xULLxtwG9j29NXpY1dVyjjEFsWMYd7J7BlheaViPpF7PqmVwbaVPgTn
+	oCZcHaUZdcCSZNXTImh7R+XOdJj3O4vfPZjrSB0YaSKJK0GyJRdIR1vIid/NEtcfTnhDjZtgtgn
+	VwvMoAA1sXuUYbDgu+9vAsKFM4PFA=
+X-Received: by 2002:a05:6000:220c:b0:435:8f18:9539 with SMTP id ffacd0b85a97d-435f3a6cd84mr3201514f8f.9.1769761456834;
+        Fri, 30 Jan 2026 00:24:16 -0800 (PST)
+Received: from localhost ([196.207.164.177])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-435e1354d43sm21835959f8f.43.2026.01.30.00.24.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Jan 2026 00:18:20 -0800 (PST)
-Date: Fri, 30 Jan 2026 10:18:19 +0200
-From: Abel Vesa <abel.vesa@oss.qualcomm.com>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: document the Eliza Top
- Level Mode Multiplexer
-Message-ID: <lqzft4adz56ly5323cpcsdasr4uag6gb2wrtlabynd6mvxayhi@jdrxniqm6qek>
-References: <20260127-eliza-pinctrl-v2-1-1faf78efdc2e@oss.qualcomm.com>
- <20260128-hot-camel-of-acumen-eef9f2@quoll>
- <aizrc6xysfwzygdsfeuc2raccq7efmwg5bn6v33t2de6ugvzgi@z3ipf3i25ulf>
- <dc0b7245-de95-4db7-bf8f-815ba60d7adf@oss.qualcomm.com>
- <pdxrotmxjiebyj2gqx6buwupkydngxki6jgv4e6l6fmodzc5v2@yxky3civt3yz>
- <8360708d-5d82-4cbe-bf0c-31107ab07bac@oss.qualcomm.com>
- <p5rv7u5utnetlt2xvh6ixk2xvi74tdcurgwzrkxfuq7qa3m66u@m7u2ukr46n6j>
- <6244680d-f6c3-4aba-8e12-61093e51f76c@oss.qualcomm.com>
- <flr35di3ivjivnnkrcnwnurlzhmf43i5ymtgj3jnitexcm45sa@jli2o7qkb4tb>
- <9234e45d-4a48-4820-a42b-48e11d79c0ee@oss.qualcomm.com>
+        Fri, 30 Jan 2026 00:24:16 -0800 (PST)
+Date: Fri, 30 Jan 2026 11:24:12 +0300
+From: Dan Carpenter <dan.carpenter@linaro.org>
+To: sunliming <sunliming@linux.dev>
+Cc: robin.clark@oss.qualcomm.com, lumag@kernel.org, airlied@gmail.com,
+	simona@ffwll.ch, sean@poorly.run, marijn.suijten@somainline.org,
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+	sunliming <sunliming@kylinos.cn>, kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>
+Subject: Re: [PATCH RESEND] drm/msm/dpu: Fix smatch warnings about variable
+ dereferenced before check
+Message-ID: <aXxqrD3ZzK_dTAmb@stanley.mountain>
+References: <20260129024919.30449-1-sunliming@linux.dev>
+ <aXsHSTHHP0eyI-Pk@stanley.mountain>
+ <b62dc0de-b39c-7515-25d8-6e6817df3f17@linux.dev>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -125,174 +98,73 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <9234e45d-4a48-4820-a42b-48e11d79c0ee@oss.qualcomm.com>
-X-Proofpoint-GUID: fI8YST6exr1I1IF6ePMwBDwCbpU-6BGz
-X-Authority-Analysis: v=2.4 cv=FPcWBuos c=1 sm=1 tr=0 ts=697c694e cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=oauzzCmhM186DRC0Y2yWPg==:17
- a=kj9zAlcOel0A:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=k23fqYO9E_dANr8HoeMA:9
- a=CjuIK1q_8ugA:10 a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-ORIG-GUID: fI8YST6exr1I1IF6ePMwBDwCbpU-6BGz
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTMwMDA2NSBTYWx0ZWRfX1Rrk3VnzUI1n
- BAmwAqiZPlnhm/xXXgTpPtnav1mWjrQqaK1wEy+71+jX9CITg2ZEMg4Ny9XL9h2j/g1hDW0YKJI
- 4PrJmfl++A9yUEc85Q/SxZNuNPIZNVgoonKftk24Gvj25nI8PKynEjnEbpZZXP7fR0I4yn+LDj8
- peZUmtbXOv8oNKjmFVXjBNCF053Ap48fddvWegttpr8fkTWfA7o2UybkeoRt/c7BAg1G/epsBjA
- YXBJcYsQtqBPkD/4mqkrB66E69j+cwfnsAy1ZJKBJVZCtwHtz0n6z0DCFICOgLOlFwjT8rU19iA
- orEQQ12RCGiJ/qcnG32c18szSO1Tz/77fOGJkhKy3m7tJUXCAuUPg+rU6VqbSeDyP13gNpLV0a+
- aepkqNk1KTd8qTVXGvzGcPf7w+nh9PqV79TaC/u5jzgRotzjhHHrcWlI45NN4BHARhSXDKmuyol
- +WLPYDAF/6a2nvHCczA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-01-29_03,2026-01-29_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 spamscore=0 clxscore=1015 phishscore=0 bulkscore=0
- impostorscore=0 suspectscore=0 priorityscore=1501 adultscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601300065
+In-Reply-To: <b62dc0de-b39c-7515-25d8-6e6817df3f17@linux.dev>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-91247-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[abel.vesa@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,gmail.com,ffwll.ch,poorly.run,somainline.org,vger.kernel.org,lists.freedesktop.org,kylinos.cn,intel.com];
+	TAGGED_FROM(0.00)[bounces-91248-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	DKIM_TRACE(0.00)[linaro.org:+];
+	MISSING_XM_UA(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[dan.carpenter@linaro.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[11];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 74635B8404
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[kylinos.cn:email,linux.dev:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 1237DB84EE
 X-Rspamd-Action: no action
 
-On 26-01-29 15:11:07, Konrad Dybcio wrote:
-> On 1/29/26 1:42 PM, Abel Vesa wrote:
-> > On 26-01-29 13:04:23, Konrad Dybcio wrote:
-> >> On 1/29/26 12:12 PM, Abel Vesa wrote:
-> >>> On 26-01-29 11:45:59, Konrad Dybcio wrote:
-> >>>> On 1/29/26 11:41 AM, Abel Vesa wrote:
-> >>>>> On 26-01-29 11:34:07, Konrad Dybcio wrote:
-> >>>>>> On 1/28/26 6:22 PM, Abel Vesa wrote:
-> >>>>>>> On 26-01-28 12:38:32, Krzysztof Kozlowski wrote:
-> >>>>>>>> On Tue, Jan 27, 2026 at 05:47:36PM +0200, Abel Vesa wrote:
-> >>>>>>>>> Document the Top Level Mode Multiplexer on the Eliza Platform.
-> >>>>>>>>>
-> >>>>>>>>> Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-> >>>>>>>>> ---
-> >>>>>>
-> >>>>>> [...]
-> >>>>>>
-> >>>>>>>>> +
-> >>>>>>>>> +  gpio-line-names:
-> >>>>>>>>> +    maxItems: 185
-> >>>>>>>>
-> >>>>>>>> 186, your first GPIO is 0 and last is 185.
-> >>>>>>>
-> >>>>>>> Actually it is 0 through 184. The 185 is ufs reset.
-> >>>>>>
-> >>>>>> The UFS reset also happens to be a GPIO..
-> >>>>>
-> >>>>> So the gpio-line-names should include the ufs reset,
-> >>>>> but the pattern not.
-> >>>>
-> >>>> Why not?
-> >>>
-> >>> ufs reset cannot be configured as gpio, so why would it be part of the
-> >>> pattern?
-> >>
-> >> It's certainly registered as a GPIO, as all users of UFSHC refer to it
-> > 
-> > Well, technically yes, SW-wise. But it definitely doesn't have the same
-> > configuration fields in HW. Anyway, that is not the point here.
-> > 
-> > The point is the pattern has dedicated enum for ufs_reset and gpio185 is
-> > not even part of the gpio groups anyway. [1]
+On Fri, Jan 30, 2026 at 01:30:35PM +0800, sunliming wrote:
 > 
-> So, is the current behavior such that in case I wanted to set some
-> properties on the ufs pin, the description would be:
+> On 2026/1/29 15:07, Dan Carpenter wrote:
+> > On Thu, Jan 29, 2026 at 10:49:19AM +0800,sunliming@linux.dev  wrote:
+> > > From: sunliming<sunliming@kylinos.cn>
+> > > 
+> > > Fix below smatch warnings:
+> > > drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp_v13.c:161 dpu_hw_sspp_setup_pe_config_v13()
+> > > warn: variable dereferenced before check 'ctx' (see line 159)
+> > > 
+> > > Reported-by: kernel test robot<lkp@intel.com>
+> > > Reported-by: Dan Carpenter<error27@gmail.com>
+> > > Closes:https://lore.kernel.org/r/202601252214.oEaY3UZM-lkp@intel.com/
+> > > Signed-off-by: sunliming<sunliming@kylinos.cn>
+> > > ---
 > 
-> foo-state {
-> 	pins = "ufs_reset";
-> };
+> Previously, a maintainer suggested that the name should match the email
+> address,
 > 
-> ?
+
+Yes.  But normally people change their email address instead of their
+name.
+
+> but community patches have consistently used the name "sunliming" since
+> then.
 > 
-> TBF we don't have any such ones, possibly because whatever the
-> bootloader had configured has always seemed to work well enough..
-> 
-> In that case, I agree that this pattern should not include the pin.
-> I'm however a little surprised to see that would be the case, since
-> we end up consuming this pin as a numbered GPIO via reset-gpios.
 
-That's because the pins property uses the name (here "ufs_reset") while
-the *-gpios uses the number that goes via driver specific of_xlate.
+Consistency is less important than being correct...  It's just a weird
+thing to say.  Are there other non-community patches with a different
+name?  It's fine if that's your legal name and we have made exceptions
+for people who aren't able to share their real name because of stalking
+or whatever...
 
-> 
-> > Also, are you saying that all older platforms (sm8[3-7]50, at least) are effectively
-> > wrong since they do exactly the thing I described ? :-)
-> > 
-> >>
-> >>> For the same reason, it cannot be part of the gpio-line-names either.
-> >>
-> >> Since it's registered as a GPIO, why not?
-> > 
-> > If what I'm saying above is true, you can't configure gpio185, so AFAICT you
-> > won't be able to name it either. Or am I wrong ?
-> 
-> I think the truth is more nuanced:
-> 
-> The UFS_RESET is a GPIO in the sense of pinctrl-msm, as it has a ctl_reg
-> and an io_reg. It's not capable of receiving interrupts and it seems to
-> be output-only.
+regards,
+dan carpenter
 
-Just because we treat it as gpio in the driver, doesn't mean it is a gpio.
-HW-wise, it is not a gpio. GPIOs have electrical properties (at least) that
-this ufs_reset doesn't.
-
-> 
-> It does not have a "gpio" pinmux function (func0 is named "ufs_reset" intead),
-> but that's just human-facing naming, so whatever.
-> 
-> It can be toggled and is consumed by its number, through the gpios/xxx-pins
-> property.
-
-Being toggle capable doesn't make it a GPIO. Again, a GPIO is more than that.
-
-> 
-> Running cat /sys/kernel/debug/gpios on x1e80100, where ngpios and gpio-ranges
-> includes that pin though, I could not see it listed. I don't really know why.
-> That's where I'd expect to see the name given by gpio-line-names.
-
-Yeah. I think it should've listed it. It does on Eliza and Glymur.
-
-> 
-> Now, I would also strongly expect that this pin would be only ever used for
-> UFS reset, making the name override unnecessary but we've all seen things..
-
-Anyway, to conclude, pins property does allow you to use it by name beacuse
-of the enum entry below.
-
-But the gpio-line-names doesn't make any sense to allow you to override the name.
-This part is can be debated, for sure.
-
-I'll respin with these in mind and we can fix this later on, if needed, on all
-platforms at once.  
-
-Thanks,
-Abel
 
