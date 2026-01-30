@@ -1,144 +1,219 @@
-Return-Path: <linux-arm-msm+bounces-91238-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91239-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id KNHzJr9DfGmqLgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91238-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 06:38:07 +0100
+	id QK1eHWBEfGnZLgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91239-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 06:40:48 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 00878B7599
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 06:38:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D48EAB75DF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 06:40:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4F8C63013A6C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 05:37:38 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 4B6603016C87
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 05:40:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4153376BD2;
-	Fri, 30 Jan 2026 05:37:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6B25374169;
+	Fri, 30 Jan 2026 05:40:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="pmdHnq14"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="TSn+NuRt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-188.mta1.migadu.com (out-188.mta1.migadu.com [95.215.58.188])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF9836D4F1
-	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jan 2026 05:37:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.188
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 298AC36D4F1;
+	Fri, 30 Jan 2026 05:40:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769751457; cv=none; b=En5u56BN4YDZmtl/UXL930xE6OKGo6KHZ98ntMSvf3WT2dVXuk0Yu9Ou+OSbeziLg4yCAcFMII10i+nhPomIHepcMoa7Bxxo78lNNVOyrWTca6rpUGk8BjvIlMLZybeQKTbv/9nAUpe4twvU2dvFu1Wn+e9g11thaB1Ud/63Pis=
+	t=1769751638; cv=none; b=IbHYSQxWTSaDSIOnNH98LI3nAxmmCZ1KZrcXIu6nfmHCMGUtAKed8pjcNChy4Gl/1daFs4AEvVvJZIacDuo88ggNhZ+bmPMfBwjhx6KQzI1u0uW2rpUvivoehVlUB0fgoio588psmum8I72xKkOQbax/zG+cFSkoy26QQMClFV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769751457; c=relaxed/simple;
-	bh=VbmVlaI8njkT1Ax30GP5fPj8vmfJSHYJFX697reox+s=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=WPeIKW5jXThCvwGvF1qVB66uc0CxneRwum7t9GDNNkupQLXt67btXi1Aq0gumc5/6PT9CN7jESIeki+ln+zsut598E+O+wTSBXI/b72pW5D4HgD/kY142ZUsL+0kXm1M33sXPOrtyiGChkl5etZAnSo7717s0i1wt8C++HinGRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=pmdHnq14; arc=none smtp.client-ip=95.215.58.188
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1769751443;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=By0bg9wCFwXBYMFNVFKyoeLOvCJNOOZJJFAOdp9CCNI=;
-	b=pmdHnq14FgcAwRmQ0g6vWYI8SuTZF0xgvRMejlneygTKWXtJYdYDJsdu7ufN8nym7ZuaxJ
-	qXabQSbqF/3K/yOhlFADDLqJSeChLvg2bNc3Czlo822nmWMvtZEuRYnckIlfG13z1hVkHX
-	TESKRpTwF8BmywesYgb3Idj4Wu/BvrE=
-From: sunliming@linux.dev
-To: robin.clark@oss.qualcomm.com,
-	lumag@kernel.org,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	abhinav.kumar@linux.dev,
-	jesszhan0024@gmail.com,
-	sean@poorly.run,
-	marijn.suijten@somainline.org,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org
-Cc: sunliming <sunliming@kylinos.cn>,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>
-Subject: [PATCH v2] drm/msm/dpu: Fix smatch warnings about variable dereferenced before check
-Date: Fri, 30 Jan 2026 13:36:15 +0800
-Message-Id: <20260130053615.24886-1-sunliming@linux.dev>
+	s=arc-20240116; t=1769751638; c=relaxed/simple;
+	bh=O0yrTfM/db7ruCmnkUxHUcsXFLt25Gn8UsW4TJhHR4w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rSQGNFnM3ovYWYfQmQ8sknIZOq1Eda5bwYjFtnzGpaYCT96Desv0ooBxwNRMEQg8FPVEl1PYPfmGvMLkx5/C+9ol10E5+kluYt5yxmQmgGXPldo5QpSBheiJ1AhmITjACeJKNb0N6Xsdl4UzVmgHG6bCN3u1pd57sXpgGicQk5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=TSn+NuRt; arc=none smtp.client-ip=198.175.65.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1769751637; x=1801287637;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=O0yrTfM/db7ruCmnkUxHUcsXFLt25Gn8UsW4TJhHR4w=;
+  b=TSn+NuRtw7KmX1SceMaZJyVUlKhfvSv8Ji5D1L6U+oRiUcGB8k34T4Jw
+   Mljv/nQOPnsoavZ1s8l0Si9BoO7LahZGaNsQ5LlfBPMQwHxf66r1zo+7Y
+   NE/Q1BjuRbEfRLywfhQqjOLmk67lv5RJek143Fn+L0oKKL+EC5mTG4NjP
+   eMZCUAqFZWlxx+dGRrBpLjQSCf8yIEBCP/B1kB5cwWxP4qpUG+sRQ5jMr
+   oAzuqmLeO0VyyLXqpRHm6IkjO8cHv3UDS35CIVeCF26K0OwhA5HDrRrLh
+   X/0Ka0BIm5AFLUSWNiS8vboh9v9DiUgXQYE8xM/RVUaaGkVrdc8nNxN+Y
+   w==;
+X-CSE-ConnectionGUID: aX4KMcCwToa4Sk+4Pzc39Q==
+X-CSE-MsgGUID: PVJbhADMSdCDEoSQ+McgKQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11686"; a="71037445"
+X-IronPort-AV: E=Sophos;i="6.21,262,1763452800"; 
+   d="scan'208";a="71037445"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Jan 2026 21:40:36 -0800
+X-CSE-ConnectionGUID: zoU1rLYHTa6f8aixvlR8nw==
+X-CSE-MsgGUID: a2vdqcYNQAOq6a4llo9v+w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,262,1763452800"; 
+   d="scan'208";a="213299494"
+Received: from lkp-server01.sh.intel.com (HELO 765f4a05e27f) ([10.239.97.150])
+  by orviesa004.jf.intel.com with ESMTP; 29 Jan 2026 21:40:31 -0800
+Received: from kbuild by 765f4a05e27f with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1vlhF7-00000000cDg-0npS;
+	Fri, 30 Jan 2026 05:40:29 +0000
+Date: Fri, 30 Jan 2026 13:39:31 +0800
+From: kernel test robot <lkp@intel.com>
+To: Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>, andersson@kernel.org,
+	mathieu.poirier@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, rui.zhang@intel.com, lukasz.luba@arm.com,
+	konradybcio@kernel.org, mani@kernel.org, casey.connolly@linaro.org,
+	amit.kucheria@oss.qualcomm.com
+Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-pm@vger.kernel.org, gaurav.kohli@oss.qualcomm.com,
+	manaf.pallikunhi@oss.qualcomm.com
+Subject: Re: [PATCH v2 1/8] thermal: Add Remote Proc cooling driver
+Message-ID: <202601301354.3ERTn2SC-lkp@intel.com>
+References: <20260127155722.2797783-2-gaurav.kohli@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260127155722.2797783-2-gaurav.kohli@oss.qualcomm.com>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [0.34 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linux.dev,none];
-	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[linux.dev:s=key1];
+	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-91238-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-91239-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[19];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[kylinos.cn,intel.com,gmail.com];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,gmail.com,ffwll.ch,linux.dev,poorly.run,somainline.org,vger.kernel.org,lists.freedesktop.org];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[15];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[3];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[sunliming@linux.dev,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[linux.dev:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	FROM_NO_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FROM_HAS_DN(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[kylinos.cn:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,intel.com:email,linux.dev:mid,linux.dev:dkim]
-X-Rspamd-Queue-Id: 00878B7599
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[lkp@intel.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[intel.com:+];
+	NEURAL_HAM(-0.00)[-1.000];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:email,intel.com:dkim,intel.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,01.org:url]
+X-Rspamd-Queue-Id: D48EAB75DF
 X-Rspamd-Action: no action
 
-From: sunliming <sunliming@kylinos.cn>
+Hi Gaurav,
 
-Fix below smatch warnings:
-drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp_v13.c:161 dpu_hw_sspp_setup_pe_config_v13()
-warn: variable dereferenced before check 'ctx' (see line 159)
+kernel test robot noticed the following build warnings:
 
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Closes: https://lore.kernel.org/r/202601252214.oEaY3UZM-lkp@intel.com/
-Signed-off-by: sunliming <sunliming@kylinos.cn>
----
-v2: Fix error code
+[auto build test WARNING on next-20260126]
+[also build test WARNING on v6.19-rc7]
+[cannot apply to robh/for-next rafael-pm/thermal remoteproc/rproc-next linus/master v6.19-rc7 v6.19-rc6 v6.19-rc5]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp_v13.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+url:    https://github.com/intel-lab-lkp/linux/commits/Gaurav-Kohli/thermal-Add-Remote-Proc-cooling-driver/20260128-000753
+base:   next-20260126
+patch link:    https://lore.kernel.org/r/20260127155722.2797783-2-gaurav.kohli%40oss.qualcomm.com
+patch subject: [PATCH v2 1/8] thermal: Add Remote Proc cooling driver
+config: m68k-allyesconfig (https://download.01.org/0day-ci/archive/20260130/202601301354.3ERTn2SC-lkp@intel.com/config)
+compiler: m68k-linux-gcc (GCC) 15.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260130/202601301354.3ERTn2SC-lkp@intel.com/reproduce)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp_v13.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp_v13.c
-index e65f1fc026fd..312ee6597ab1 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp_v13.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp_v13.c
-@@ -156,11 +156,13 @@ static void dpu_hw_sspp_setup_pe_config_v13(struct dpu_hw_sspp *ctx,
- 	u8 color;
- 	u32 lr_pe[4], tb_pe[4];
- 	const u32 bytemask = 0xff;
--	u32 offset = ctx->cap->sblk->sspp_rec0_blk.base;
-+	u32 offset;
- 
- 	if (!ctx || !pe_ext)
- 		return;
- 
-+	offset = ctx->cap->sblk->sspp_rec0_blk.base;
-+
- 	c = &ctx->hw;
- 	/* program SW pixel extension override for all pipes*/
- 	for (color = 0; color < DPU_MAX_PLANES; color++) {
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202601301354.3ERTn2SC-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/thermal/remoteproc_cooling.c:87:1: warning: no previous prototype for 'remoteproc_cooling_register' [-Wmissing-prototypes]
+      87 | remoteproc_cooling_register(struct device_node *np,
+         | ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+>> drivers/thermal/remoteproc_cooling.c:131:6: warning: no previous prototype for 'remoteproc_cooling_unregister' [-Wmissing-prototypes]
+     131 | void remoteproc_cooling_unregister(struct remoteproc_cdev *rproc_cdev)
+         |      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+vim +/remoteproc_cooling_register +87 drivers/thermal/remoteproc_cooling.c
+
+    85	
+    86	struct remoteproc_cdev *
+  > 87	remoteproc_cooling_register(struct device_node *np,
+    88				    const char *name, const struct remoteproc_cooling_ops *ops,
+    89				     void *devdata)
+    90	{
+    91		struct remoteproc_cdev *rproc_cdev;
+    92		struct thermal_cooling_device *cdev;
+    93		int ret;
+    94	
+    95		if (!name || !ops)
+    96			return ERR_PTR(-EINVAL);
+    97	
+    98		rproc_cdev = kzalloc(sizeof(*rproc_cdev), GFP_KERNEL);
+    99		if (!rproc_cdev)
+   100			return ERR_PTR(-ENOMEM);
+   101	
+   102		rproc_cdev->ops = ops;
+   103		rproc_cdev->devdata = devdata;
+   104		mutex_init(&rproc_cdev->lock);
+   105	
+   106		char *rproc_name __free(kfree) =
+   107			kasprintf(GFP_KERNEL, REMOTEPROC_PREFIX "%s", name);
+   108		/* Register with thermal framework */
+   109		if (np)
+   110			cdev = thermal_of_cooling_device_register(np, rproc_name, rproc_cdev,
+   111								  &remoteproc_cooling_ops);
+   112		else
+   113			cdev = thermal_cooling_device_register(rproc_name, rproc_cdev,
+   114							       &remoteproc_cooling_ops);
+   115	
+   116		if (IS_ERR(cdev)) {
+   117			ret = PTR_ERR(cdev);
+   118			goto free_rproc_cdev;
+   119		}
+   120	
+   121		rproc_cdev->cdev = cdev;
+   122	
+   123		return rproc_cdev;
+   124	
+   125	free_rproc_cdev:
+   126		kfree(rproc_cdev);
+   127		return ERR_PTR(ret);
+   128	}
+   129	EXPORT_SYMBOL_GPL(remoteproc_cooling_register);
+   130	
+ > 131	void remoteproc_cooling_unregister(struct remoteproc_cdev *rproc_cdev)
+   132	{
+   133		if (!rproc_cdev)
+   134			return;
+   135	
+   136		thermal_cooling_device_unregister(rproc_cdev->cdev);
+   137		mutex_destroy(&rproc_cdev->lock);
+   138		kfree(rproc_cdev);
+   139	}
+   140	EXPORT_SYMBOL_GPL(remoteproc_cooling_unregister);
+   141	
+
 -- 
-2.25.1
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
