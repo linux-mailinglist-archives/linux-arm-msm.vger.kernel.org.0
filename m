@@ -1,303 +1,315 @@
-Return-Path: <linux-arm-msm+bounces-91291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91292-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id oA5WCnmbfGn2NwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 12:52:25 +0100
+	id kKAhJgacfGn2NwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91292-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 12:54:46 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 78A62BA2CE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 12:52:24 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 41D33BA30D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 12:54:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 88F8A3019BB8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 11:52:16 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 5AFEC3019F14
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jan 2026 11:54:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 444CE36D503;
-	Fri, 30 Jan 2026 11:52:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 819FB371062;
+	Fri, 30 Jan 2026 11:54:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="XIQZxfxT";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="AVIDUhAV"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="a8hjxkTy";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="hRkHk0sq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91F1634F46C
-	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jan 2026 11:52:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C0336EAAB
+	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jan 2026 11:54:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769773935; cv=none; b=XWKAZ/kJgLFvobWkqBBw+k+CNGMKl8bN5g2MQwKUSnAmQSe6rx9esdnIaNEPNrIZVVBdRixYVt27/i624dhPTHQqXDc+vaIC08ICn//cGs6EOH7dMqaCm/mfQO6giDQS9olqeLsnRjWoW1CyLQdHt42RHBNT4WaIJAPwJ22RD5U=
+	t=1769774079; cv=none; b=cYpqQ/Pf+sjB/uH6Ii4mi+uEqWvmPouc+O2vvFm1YYEsZxrOXc5l9Fw2R7e3EReNFPMQhpJZY1VyRzMNv/Q3GPYFFZoNxsRruD4WeklVSc/Yf+O8jVDpZA9WGvgO8FpQiEkW7C2EiiyQEuNdhRUfmyU6R2wV/HbhhHyXihKN7+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769773935; c=relaxed/simple;
-	bh=dLKlbBdNdZT0825AM0f0kn6sHa7tW2Pakir9yuwrrvY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mW+klF10qaXh6q0OiH3vNTCpQcAPxbUOgmzBoA2iBlyd2ovnWBUUkynaXZzUF7o7/eUq6HIF0gwJ5lhYl2TGevuDrdpnq5B+JNW2VqjdtvDO7ctY2E2imGOF51By4NDNEUOO3w9E1YJ5BsooxWg1flaD4FRw8qACAFquG9Po5Ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XIQZxfxT; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=AVIDUhAV; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1769774079; c=relaxed/simple;
+	bh=9nJeV5otfxhvyVk/o3mAdnETeHwPKzjbL0aq17GpJ1Q=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=tUblrANv5/ZgUEipybFWemAZCde2ktZoyArccGa8CI0MolvbgyiND2Om/SVv5suDMPCNlhN07gvmoNcji5mq9UdyecFUqYQFnLHAYzjp1/mYheWw/GFq4JoiszWvumzToVvuPxGwjmYcaYabQsIHoW88TkLppN93NOH3a6GoG44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=a8hjxkTy; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=hRkHk0sq; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60UAbJQM891567
-	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jan 2026 11:52:12 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60UBnTbD1485358
+	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jan 2026 11:54:36 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	NACypJ423bQETWp3QTda+kmcF4j0ws7q8gc9h2VRpCY=; b=XIQZxfxT6C/JJcZW
-	34qNv+mGZ4x+e2AgkQamMa3zP1LAyrOVCG3S0V1pLLellukjLRdnO3ymsjfNDIxW
-	Bx2pw/xL1nJkPGNU0cbSn2uXnuy35FuuUPxfNUVVuVQ5Oi2WQXFeCzmB0GahHvey
-	pkUSzx2G8MFScesjH18Ek5QKL9SL5MFGuXJFOcq5ly+TW+0uDzJIBW7Ab0dDq4Do
-	mxyDpvrThFNHRP/8bZTmcAz1C+CQh2QKYibqEAPYATQ4DWCiODvBOMDRXR3aQxSg
-	SERUaXT/RE6au6bozzanLx/KpRjVEpBURc1pmiv0jXYWFQTfaP7RI3AxkgBT/MF8
-	Jxc0hQ==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c0gs7t14j-1
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=6DxR+POmIz59mgQ++mArmaUuOtuww7k8jS+
+	8SDgDEck=; b=a8hjxkTya+8mNNpjlQ1oxD0hJ/NrAzaZrN4Fi199xmQV8UM5LiQ
+	mQv1DuH7zPTubvQLisvTwxleZJvDp2ANYvAC5ELHuM8JvimNp9wgbS1aoBdNWnAz
+	TS5THZRUOaYs4EAg9SmOYS5FPcl6pYR1HpSuJZyM0Opr0eTcIcVoxbfwHy69+Vjy
+	h6eM54Yx3fDOo6XF5aVaV5q3jxt5Z+TPHgagCXqZc7/PdF3QXI5U8GEu+hv34grS
+	bMbhrmCa3nZbuddl17Gw6DPmhbBfoH0N37+o3pzr2wigl+l9FBdl2E1vCojuTfEn
+	+zNRXPpRVvnPXltLZU5JX7sJhJUcP0EzWWA==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c0nsf97mx-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jan 2026 11:52:11 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-34ac814f308so3155708a91.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jan 2026 03:52:11 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jan 2026 11:54:36 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-352ec74a925so3603419a91.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jan 2026 03:54:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1769773931; x=1770378731; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=NACypJ423bQETWp3QTda+kmcF4j0ws7q8gc9h2VRpCY=;
-        b=AVIDUhAVjBwROKFjNTL1yWxEqptCVMl4psC55gDCTRjIgEByttIUSF1djpyggi2hjL
-         wjpHcN7Re4FW3eSTVvTHprUZqkrI9kPKfOfo9FbY3c1+iQgsGfAKVVuO//dBJ1E3fT6E
-         zglQZyFNhxdm65kt6pqMvlhNeEMyIvkl2uxHle/uoX3I6ekXTigKRCTNzon5KnVWlF2E
-         YkMvqXC3ASQYyyvtzEdiozOYQqXqdvJrH+r1UR00znyL0IoKJ754My2/UeLEirI26z7F
-         mW41e20JXituHSYGmHNvfmYmPcFebhyH3NNWB2Qm3qfATfpwXfRljqDoUz7PZ8stIDZe
-         3eLg==
+        d=oss.qualcomm.com; s=google; t=1769774075; x=1770378875; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=6DxR+POmIz59mgQ++mArmaUuOtuww7k8jS+8SDgDEck=;
+        b=hRkHk0sqsV0prqkY9qNfn2eM8BinGAaRlSmMrjTT2kj6eMZIrTPwR5sbMDChPRe29K
+         Zjr00cHEk4pw2jLTXMKOLUYY8bgI1w5Z+SFLxxQUFIgZibkMHN/239KXBVGTP0Bn82JX
+         IKTtlmLBxH+iVULKGIwjaxuEqtzqxwHV1W/d9Tks2QxACzcLGAOaVkfsg/9aW6S2Z3KZ
+         ZTjOR2WWsrvsCfzFikdUxARmwK0UfaZY14GQoc8GnIfxmn83RlxU2Z30IoVk+7ckvcBT
+         ixQMjGznt4t+78IXlM/oH0qXo3Zb3035MwHn/ikxrIb3VN2f+01Hb6HvPaI+hSk/+f/V
+         O3Fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769773931; x=1770378731;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NACypJ423bQETWp3QTda+kmcF4j0ws7q8gc9h2VRpCY=;
-        b=ZjpMbnk5w0gYhbs1ZYvDm2lcT0j25Kp08EYKGtLb8b73CfSt6Vkf6/7e6IVHeBPs45
-         hXo2x4PAR6plHnzbqUlv0YbEy02CZE91MEesK796NmBxps+wvwWgmw3+v0ZW9mm6PeA5
-         NLcPGl+McsbHXTDfA8bTSzac0dG05mds3aoBGWB28fa87lGTwG9JvBhglh3OLlbeV+r6
-         5dsVleLY09RkfFrLEZSAXCYzC1oEg9ddgtEtepgdFrmV+qd/tRqU5BJgpOQjq/qs0aLR
-         k/Mg2KCg3A99jmBLubQWpnDnW31lpcazoDlm20jsXFBLQOCRRpaV7sQr6VqQIBzFWeiG
-         xwLg==
-X-Forwarded-Encrypted: i=1; AJvYcCWIXTLmTxiD1AldNoUAHqfAanXZkzDM3ncbQLmUVdcreN5PiZQ9QYVB6Kwju4ezbgKiaafGKhgXnOp9cWtJ@vger.kernel.org
-X-Gm-Message-State: AOJu0YzJn6Z7AoFGQbilh36KC3nrW6hOeU1Ux4OEQf5JqbpMdJd49m2T
-	p2KwdNUL+CQimFJEIol/Y7K0AVgLAuQCe31/JVFzSVeNgDmwyS8GxA9/VaczAQUxW35PDmG9XRF
-	+0f9IoWUobcLzhAyorju8HPdhfPu5c3OcjTDkj8C6z6S6Ek7cItzentm3tOE3s1B7GSNw
-X-Gm-Gg: AZuq6aL7wGs6/r9hedrk5WstKi8ZrGo4kyemf3qlCdgio50mTDecKLyESBO9hNjlVes
-	inBca1irhoibdxReu78fGuD++t6CZdXFh+j/Lqo8EgBAxcKzUrHFf4pijd0NGz8BYu4xJR/Zl33
-	26JyYdNwcZISQf0MCb19rrVQpj3foYdgTxiDt83ZEFNjfTaiMxvun90TvxuNdEhxq+KcZ3AX+/v
-	mXpnyL3GO4ci+yrSQLyqrSv7ZLs2zZaKMcX5FLM0pga9yDn5NhUOx1sh0bGgLYxAvIU0gnwZcg/
-	7vQ7dIx9jmNuigKIO0r5vply4A1l3QwGPqC1Hm2ZP0vy9K1NXpWATR3MFnOM40l1PFwsqh+iXu9
-	WnnsEDg1uB5TYW0zf+ypCcjV36kKH4y6l//LLww==
-X-Received: by 2002:a17:90b:6c3:b0:341:8601:d77a with SMTP id 98e67ed59e1d1-3543b3b54b3mr2883672a91.29.1769773931072;
-        Fri, 30 Jan 2026 03:52:11 -0800 (PST)
-X-Received: by 2002:a17:90b:6c3:b0:341:8601:d77a with SMTP id 98e67ed59e1d1-3543b3b54b3mr2883650a91.29.1769773930565;
-        Fri, 30 Jan 2026 03:52:10 -0800 (PST)
-Received: from [10.206.99.28] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3540f2cb5adsm8083054a91.3.2026.01.30.03.52.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 30 Jan 2026 03:52:10 -0800 (PST)
-Message-ID: <7e52f1d4-c05c-45ea-878c-cea2e6354c3f@oss.qualcomm.com>
-Date: Fri, 30 Jan 2026 17:22:05 +0530
+        d=1e100.net; s=20230601; t=1769774075; x=1770378875;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6DxR+POmIz59mgQ++mArmaUuOtuww7k8jS+8SDgDEck=;
+        b=GZErQwOi5x4jRNeSw6EUahH6GFgBAxH6fMtVJrIKUvHwjGa2H8sd1TSIpsb03WOFrW
+         krScp/w+sC2XcJMbeBYcodRNgTjJeDniOzjWF+nI+El7kkLv2Ccw5X9nRwJMgHgIDDvD
+         NGn7695ABehggFudJGbYPUQQW4Kcjt8iPs65lz0NCPP51QK3eF/Y8DAaiW4VYXGQbLAU
+         GALMmCDI8+3lCbaOMvJSQB1IkCBUKNBoxPBQMB7o+Dh+iPN/m32JkoMXbK7kI+6zpsxI
+         y8buADM7s+NdeXxt+bllb8iHG9wDBou7AZKstvaEPTzHI5w5oL42u7Qqd97Jm4YVUJsC
+         wrlw==
+X-Forwarded-Encrypted: i=1; AJvYcCV9d3d164eu0RMzjjznAj9RfJlfSwfekWHA1S5X03gVYWEQtHQ+3/yZJO80vqhOMLJa+W702xExMQwkEcdD@vger.kernel.org
+X-Gm-Message-State: AOJu0YxdSCyOlAmpRxraAyzmVTcqC7doDdDeAZac2zgwdl6or+68XSEp
+	R/0YeyRFeAGBtq679z5iCP/JlYFsiHWrmF/enDudaX3Yi48Rr80p7rsJSeLCkU8TpbsA8QJ2nUw
+	w1vAMCRbH+GvXMcyovLHppXKuSKxhA1sbvX5Z44M30OryaX51UyjZXUp7F4HdevHSe8zc
+X-Gm-Gg: AZuq6aKGqPdexMp4EhFt3owVdfKXLI9HqrFIItocPkY8qCGGqmlzxeWExqpwTeS6RQD
+	Bzy+SjbCngbxfccdyCgmQeODoGVEQCs9onRK/kgC+n1tI6pAK6b/TzzEMickhTb4caqOfuq4W6l
+	DNS/E8B3ESFbR5QPwPXGqjIZ+6Ra6Q+CdxfGRprEHjMafeklcuzfgaq+V1Tfmb1FkyAiw6jGIAQ
+	o4VVqzX+zq//FNCqDpLqltA4PusBH+VkrLYcWWLlFzL9UihBGT/+rnJtTxWC97/j3I8mbBp0F0b
+	skliXUL5JuMmgT/4xJjuHaO+zjxfqgZWk8g6WeVwmwMrcJzXnzn1pzzUnxOZO4pKzsP3bdutrHW
+	4GbG1wEik1QkSuaA6b/97us5a+Bf0NwN1d4ZfqIR8UXPu
+X-Received: by 2002:a17:90b:2e47:b0:34a:b8fc:f1d8 with SMTP id 98e67ed59e1d1-3543b3e3a6amr2950607a91.37.1769774075375;
+        Fri, 30 Jan 2026 03:54:35 -0800 (PST)
+X-Received: by 2002:a17:90b:2e47:b0:34a:b8fc:f1d8 with SMTP id 98e67ed59e1d1-3543b3e3a6amr2950553a91.37.1769774074844;
+        Fri, 30 Jan 2026 03:54:34 -0800 (PST)
+Received: from hu-jprakash-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3540f2f24ccsm10431278a91.8.2026.01.30.03.54.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Jan 2026 03:54:34 -0800 (PST)
+From: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
+To: jic23@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+        agross@kernel.org, andersson@kernel.org, lumag@kernel.org,
+        dmitry.baryshkov@oss.qualcomm.com, konradybcio@kernel.org,
+        daniel.lezcano@linaro.org, sboyd@kernel.org, amitk@kernel.org,
+        thara.gopinath@gmail.com, lee@kernel.org, rafael@kernel.org,
+        subbaraman.narayanamurthy@oss.qualcomm.com,
+        david.collins@oss.qualcomm.com, anjelique.melendez@oss.qualcomm.com,
+        kamal.wadhwa@oss.qualcomm.com
+Cc: rui.zhang@intel.com, lukasz.luba@arm.com, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        cros-qcom-dts-watchers@chromium.org, jishnu.prakash@oss.qualcomm.com,
+        quic_kotarake@quicinc.com, neil.armstrong@linaro.org,
+        stephan.gerhold@linaro.org
+Subject: [PATCH V10 0/4] Add support for QCOM SPMI PMIC5 Gen3 ADC
+Date: Fri, 30 Jan 2026 17:24:17 +0530
+Message-Id: <20260130115421.2197892-1-jishnu.prakash@oss.qualcomm.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/3] misc: fastrpc: Support mapping userspace-allocated
- buffers
-To: rob.clark@oss.qualcomm.com
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, srini@kernel.org,
-        linux-arm-msm@vger.kernel.org, gregkh@linuxfoundation.org,
-        quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org,
-        quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org,
-        arnd@arndb.de
-References: <20251230110225.3655707-1-ekansh.gupta@oss.qualcomm.com>
- <20251230110225.3655707-4-ekansh.gupta@oss.qualcomm.com>
- <z3tktit6jkxrkre4gm666aw3ql3plyhs6266cu2itrbjbj2das@yjp2pyesoszn>
- <69cb2d42-6672-4c42-935f-e3fff9bf38f8@oss.qualcomm.com>
- <CACSVV02ArZQYW0D66wCzcLoegAB+vUODDxfX4Vbt3xpBajRKYg@mail.gmail.com>
-Content-Language: en-US
-From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-In-Reply-To: <CACSVV02ArZQYW0D66wCzcLoegAB+vUODDxfX4Vbt3xpBajRKYg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTMwMDA5NiBTYWx0ZWRfX2blCXYnRY27h
- mffgEqmXXlJFcF0FtH0LkMeD8HTy1pJM8nBDpnPeKePPu5uO3yxfRgzF3vMfUpRbU8R/wEmLmb3
- l+D/+FMxstU/8Jq5yHLd00iBXtqA/o6KF6iFnJ5Sh+ogVIS0fcSpJE8TGAhNEvd8FfKx7AtyZcn
- h5lOiji1CGPJUP9gKcPQWthZZSEkWJypVlVdkYinCFsFHG+7m1dJ2//nrBuC0NeB9CachGsqIjg
- +Pg1ssGQKrb3MstwIHBaxf5U4FKo57NsO36Ykh8AupPQFjYSw2R2hrF3U6yTEeaZ+plWsO0jcg5
- 77zF2kVaWqmc/XNiyqB+2Oqj5gnI4Jyyz2w3YLZfRXiu7HjA+V/vG2R5575QpqdEsZr0ewo3ugC
- DNYyy36H5PTIKLEtwXH0sK7DpoQHEEgpP2+IXXeEk4Zsr6Vm5REsfUHQtly5KoBOAm5nGyP+yZO
- LF1o0FlwAz9XkYHvfzw==
-X-Proofpoint-ORIG-GUID: Qhrfy5IlYJB9dfg5MnBdhtwQYR2p9zIt
-X-Proofpoint-GUID: Qhrfy5IlYJB9dfg5MnBdhtwQYR2p9zIt
-X-Authority-Analysis: v=2.4 cv=UPLQ3Sfy c=1 sm=1 tr=0 ts=697c9b6b cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=hcJ8E8GYhuT13GVzWLAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=rl5im9kqc5Lf4LNbBjHf:22
+X-Proofpoint-ORIG-GUID: O9rJVxpqoIgd3xhVYBalNCC7ZnjQ-A4f
+X-Authority-Analysis: v=2.4 cv=EvjfbCcA c=1 sm=1 tr=0 ts=697c9bfc cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8 a=XccleKrqIk_kMzO7r2MA:9
+ a=iS9zxrgQBfv6-_F4QbHw:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: O9rJVxpqoIgd3xhVYBalNCC7ZnjQ-A4f
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTMwMDA5NyBTYWx0ZWRfX5TeTEn1jw8nz
+ QAQvzuiD/4ipHw3Z6T5gJT961DxLwFyzimX11y26S1yeoWbl0RwV9vTMYDCVjGWllIboVyI0JWy
+ UO2P5WnWwBZCSxCRtmtPaGWF8VHKRsKMFxpYivQ1WMP+aSWEsclhJGl7qdnzBqPZdHsX4L1AEDi
+ +XTYIK5b7cM7lB3V6GdphChgwGvP5uadTNFiVsFqaylUaohhyfnTI8A7BLTAFLZw2kuIZ+vExhJ
+ 7ExzfwagE9OPsIo/TrW5don9zYGaGYVLsOgZjvbu9argK3uxmenLntXRpKsmzs3gMf+3i/dYyNR
+ Qgf+B+ADV0iDV2cHJjfQg5VtDzQDJuvHTb6NrTDs/v59EQ4VtCOJiT6wTYfwDjjDtyE1I7xxVfF
+ aV6Aol6C6nQvVs4ZJAnwPVZ5ldTcocY7jSBNKQtFBHOnnxZHORLhSrrzn4MA2w3mm9QZnt2FxHp
+ InjzwXdTAiotFOFJDwg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-01-30_01,2026-01-29_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 malwarescore=0 adultscore=0 suspectscore=0 clxscore=1015
- priorityscore=1501 lowpriorityscore=0 spamscore=0 impostorscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2601300096
+ clxscore=1015 spamscore=0 priorityscore=1501 bulkscore=0 suspectscore=0
+ adultscore=0 malwarescore=0 impostorscore=0 lowpriorityscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601300097
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [0.84 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:mid,oss.qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-91291-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	FROM_NEQ_ENVFROM(0.00)[ekansh.gupta@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_TO(0.00)[kernel.org,oss.qualcomm.com,linaro.org,gmail.com];
+	TAGGED_FROM(0.00)[bounces-91292-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[jishnu.prakash@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
 	PRECEDENCE_BULK(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[10];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,qualcomm.com:dkim];
+	TO_DN_NONE(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_TWELVE(0.00)[31];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 78A62BA2CE
+X-Rspamd-Queue-Id: 41D33BA30D
 X-Rspamd-Action: no action
 
+PMIC5 Gen3 has a similar ADC architecture to that on PMIC5 Gen2,
+with all SW communication to ADC going through PMK8550 which
+communicates with other PMICs through PBS. The major difference is
+that the register interface used here is that of an SDAM present on
+PMK8550, rather than a dedicated ADC peripheral. There may be more than one
+SDAM used for ADC5 Gen3. Each ADC SDAM has eight channels, each of which may
+be used for either immediate reads (same functionality as previous PMIC5 and
+PMIC5 Gen2 ADC peripherals) or recurring measurements (same as PMIC5 and PMIC5
+Gen2 ADC_TM functionality). In this case, we have VADC and ADC_TM functionality
+combined into the same module.
+
+Patch 1 splits out the common ADC channel properties used on older
+VADC devices, which would also be reused on ADC5 Gen3, into a common 
+binding file, to be referenced in Gen3 and other ADC binding files.
+
+Patch 2 adds bindings for ADC5 Gen3 peripheral.
+
+Patch 3 adds the main driver for ADC5 Gen3.
+
+Patch 4 adds the auxiliary thermal driver which supports the ADC_TM
+functionality of ADC5 Gen3.
+
+Changes since v9:
+- In patch 4, replaced the break statement within scoped_guard() in tm_handler_work()
+  with return statement to fix the error reported by kernel test robot.
+
+Changes since v8:
+- Collected Reviewed-by tag from Krzysztof on patch 2.
+- Dropped the common module (drivers/iio/adc/qcom-adc5-gen3-common.c) as suggested
+  by Dmitry.
+- Made changes in patches 3 and 4 to simplify auxiliary device structure to use
+  module_auxiliary_driver() as requested by Dmitry.
+- Updated header files included in all newly added files to follow IWYU
+  (include-what-you-use) principles as requested by Jonathan.
+- Addressed all remaining comments from Jonathan in patches 3 and 4, for
+  refactoring some code.
+- More details about all changes are present in per-patch change logs.
+- Link to v8: https://lore.kernel.org/all/20251127134036.209905-1-jishnu.prakash@oss.qualcomm.com/
+
+Changes since v7:
+- Based on a discussion with Krzysztof concluded here: 
+  https://lore.kernel.org/all/d10e2eea-4b86-4e1a-b7a0-54c55907a605@oss.qualcomm.com/,
+  patch 1 in the previous series is updated to move ADC header files from binding to
+  devicetree folders, as they contain HW constants, not exactly bindings.
+  Earlier in series v7, patches 3 (Gen3 binding) and 4 (driver) were dependent on
+  patch 1, as it updated the location of include/dt-bindings/iio/qcom,spmi-vadc.h,
+  which was used in patches 3 and 4 for Gen3 channel macros. In v8, these macros
+  will be added in other new files, so the former patch 1 will now be a standalone
+  change separate from this series, as the other patches here are no longer
+  dependent on it.
+- Patches 2/3/4/5 of v7 are now patches 1/2/3/4 in v8. Below comments refer to
+  v7 patch numbers.
+- Updated description of `reg` property in patch 2 to completely drop mentions of binding
+  file paths, to simplify it and avoid any dependencies with patch 1.
+- Dropped all ADC channel macro definitions from patch 3, updated binding example
+  correspondingly and fixed formatting inconsistancies in property names, to address
+  Krzysztof's comments.
+- Addressed all comments from Jonathan in driver patches 4 and 5, for fixing formatting
+  and refactoring some code.
+- In patch 4, added ADC5 Gen3 channel macros in qcom-adc5-gen3-common.h, for use in main
+  driver file. Also added a check to fail probe in case ADC channel value obtained
+  from devicetree is not among list of supported channels.
+- More details about all changes are present in per-patch change logs.
+- Link to v7: https://lore.kernel.org/all/20250826083657.4005727-1-jishnu.prakash@oss.qualcomm.com/
+
+Changes since v6:
+- Collected Acked-by tags from Jonathan on patches 1, 2 and 3.
+- Addressed Neil's comment in patch 3.
+- Updated copyright to yearless one in newly added files, following new internal guidelines.
+- Addressed all comments from Jonathan on patches 4 and 5 (most importantly for updating
+  auxiliary device cleanup handling to fix memory freeing issues).
+- More details about all changes are present in per-patch change logs.
+- Link to v6: https://lore.kernel.org/all/20250509110959.3384306-1-jishnu.prakash@oss.qualcomm.com/
+
+Changes since v5:
+- Collected Reviewed-by tag from Krzysztof on patch 2.
+- Addressed all comments from Krzysztof and Jonathan on patch 3.
+- Addressed all comments from Jonathan on patches 4 and 5.
+- More details about all changes are present in per-patch change logs.
+- Link to v5: https://lore.kernel.org/all/20250131183242.3653595-1-jishnu.prakash@oss.qualcomm.com/
+
+Changes since v4:
+- Split common ADC channel properties out into a separate file to use as 
+  ref for ADC5 Gen3 and moved ADC5 Gen3 documentation into a separate
+  file as suggested by reviewers.
+- Addressed few reviewer comments in driver patches.
+- Link to v4: https://lore.kernel.org/all/20241030185854.4015348-1-quic_jprakash@quicinc.com/
+
+Changes since v3:
+- Updated files affected by adc file path change in /arch/arm folder,
+  which were missed earlier.
+- Added ADC5 Gen3 documentation changes in existing qcom,spmi-vadc.yaml file
+  instead of adding separate file and addressed reviewer comments for all bindings.
+- Addressed review comments in driver patch. Split out TM functionality into
+  auxiliary driver in separate patch and added required changes in main driver, as
+  suggested by Dmitry.
+- Link to v3: https://lore.kernel.org/all/20231231171237.3322376-1-quic_jprakash@quicinc.com/
+
+Changes since v2:
+- Reordered patches to keep cleanup change for ADC files first.
+- Moved ADC5 Gen3 documentation into a separate file
+
+Changes since v1:
+- Dropped patches 1-5 for changing 'ADC7' peripheral name to 'ADC5 Gen2'.
+- Addressed reviewer comments for binding and driver patches for ADC5 Gen3.
+- Combined patches 8-11 into a single patch as requested by reviewers to make
+  the change clearer and made all fixes required in same patch.
+
+Jishnu Prakash (4):
+  dt-bindings: iio: adc: Split out QCOM VADC channel properties
+  dt-bindings: iio: adc: Add support for QCOM PMIC5 Gen3 ADC
+  iio: adc: Add support for QCOM PMIC5 Gen3 ADC
+  thermal: qcom: add support for PMIC5 Gen3 ADC thermal monitoring
+
+ .../bindings/iio/adc/qcom,spmi-adc5-gen3.yaml | 151 +++
+ .../iio/adc/qcom,spmi-vadc-common.yaml        |  84 ++
+ .../bindings/iio/adc/qcom,spmi-vadc.yaml      |  78 +-
+ .../bindings/mfd/qcom,spmi-pmic.yaml          |   1 +
+ drivers/iio/adc/Kconfig                       |  26 +
+ drivers/iio/adc/Makefile                      |   1 +
+ drivers/iio/adc/qcom-spmi-adc5-gen3.c         | 860 ++++++++++++++++++
+ drivers/thermal/qcom/Kconfig                  |   9 +
+ drivers/thermal/qcom/Makefile                 |   1 +
+ drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c | 512 +++++++++++
+ include/linux/iio/adc/qcom-adc5-gen3-common.h | 211 +++++
+ 11 files changed, 1860 insertions(+), 74 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/iio/adc/qcom,spmi-adc5-gen3.yaml
+ create mode 100644 Documentation/devicetree/bindings/iio/adc/qcom,spmi-vadc-common.yaml
+ create mode 100644 drivers/iio/adc/qcom-spmi-adc5-gen3.c
+ create mode 100644 drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c
+ create mode 100644 include/linux/iio/adc/qcom-adc5-gen3-common.h
 
 
-On 1/30/2026 3:41 AM, Rob Clark wrote:
-> On Thu, Jan 29, 2026 at 2:39 AM Ekansh Gupta
-> <ekansh.gupta@oss.qualcomm.com> wrote:
->>
->>
->> On 1/6/2026 8:21 AM, Dmitry Baryshkov wrote:
->>> On Tue, Dec 30, 2025 at 04:32:25PM +0530, Ekansh Gupta wrote:
->>>> Currently, FastRPC only supports mapping buffers allocated by the
->>>> kernel. This limits flexibility for applications that allocate memory
->>>> in userspace using rpcmem or DMABUF and need to share it with the DSP.
->>> Hmm, for DMABUF we need _import_ support rather than support for mapping
->>> of userspace-allocated buffers.
->>>
->>>> Add support for mapping and unmapping userspace-allocated buffers to
->>>> the DSP through SMMU. This includes handling map requests for rpcmem
->>>> and DMABUF-backed memory and providing corresponding unmap
->>>> functionality.
->>> For me this definitely looks like a step back. For drm/accel we are
->>> going to have GEM-managed buffers only. Why do we need to handle
->>> userspace-allocated buffers here?
->> That's correct, GEM-PRIME will handle it properly. Here, the reason to add this
->> change is to enable routing of DSP logs to HLOS which is done by using a shared
->> buffer between userspace process and DSP PD. The buffer can be allocated from
->> both fastrpc driver's DMA-BUF or DMABUF heap(eg. system heap).
->>
->> So this shared buffer is getting mapped to both process's IOMMU device and DSP PD
->> with this change.
-> So, a mmap'd dma-buf is not necessarily pinned.  Or even backed with
-> pages.  So you wouldn't want to try to map a userspace vaddr from a
-> dma-buf to the device.
->
-> But looking at the patch, this looks more like mapping an imported
-> dmabuf?  Presumably going thru dma_buf_map_attachment() somewhere in
-> the existing fastrpc code?
-yes, when the fd is passed to this call, first fastrpc_map_create is called which is
-calling dma_buf_map_attachment[1]. After this the buffer is mapped onto DSP.
-
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/misc/fastrpc.c#n781
-
->
-> BR,
-> -R
->
->>>> Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
->>>> ---
->>>>  drivers/misc/fastrpc.c | 97 +++++++++++++++++++++++++++++++++++++-----
->>>>  1 file changed, 86 insertions(+), 11 deletions(-)
->>>>
->>>> @@ -1989,25 +2020,69 @@ static int fastrpc_req_buf_alloc(struct fastrpc_user *fl,
->>>>      return err;
->>>>  }
->>>>
->>>> -static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
->>>> +static int fastrpc_req_map_create(struct fastrpc_user *fl,
->>>> +                              struct fastrpc_req_mmap req,
->>>> +                              char __user *argp)
->>>>  {
->>>> -    struct fastrpc_req_mmap req;
->>>> +    struct fastrpc_map *map = NULL;
->>>> +    struct device *dev = fl->sctx->dev;
->>>> +    u64 raddr = 0;
->>>>      int err;
->>>>
->>>> -    if (copy_from_user(&req, argp, sizeof(req)))
->>>> -            return -EFAULT;
->>>> +    err = fastrpc_map_create(fl, req.fd, req.size, 0, &map);
->>>> +    if (err) {
->>>> +            dev_err(dev, "failed to map buffer, fd = %d\n", req.fd);
->>>> +            return err;
->>>> +    }
->>>> +
->>>> +    err = fastrpc_req_map_dsp(fl, map->phys, map->size, req.flags,
->>>> +                              req.vaddrin, &raddr);
->>>> +    if (err)
->>>> +            goto err_invoke;
->>>>
->>>> -    if (req.flags != ADSP_MMAP_ADD_PAGES && req.flags != ADSP_MMAP_REMOTE_HEAP_ADDR) {
->>>> -            dev_err(fl->sctx->dev, "flag not supported 0x%x\n", req.flags);
->>>> +    /* update the buffer to be able to deallocate the memory on the DSP */
->>>> +    map->raddr = (u64)raddr;
->>> Which type are you converting? And why?
->> I'll drop this.
->>>> -            return -EINVAL;
->>>> +    /* let the client know the address to use */
->>>> +    req.vaddrout = raddr;
->>>> +    dev_dbg(dev, "mmap OK: raddr=%p [len=0x%08llx]\n",
->>>> +            (void *)(unsigned long)map->raddr, map->size);
->>>> +
->>>> +    if (copy_to_user(argp, &req, sizeof(req))) {
->>>> +            err = -EFAULT;
->>>> +            goto err_copy;
->>>>      }
->>>>
->>>> -    err = fastrpc_req_buf_alloc(fl, req, argp);
->>>> +    return 0;
->>>> +err_copy:
->>>> +    fastrpc_req_munmap_dsp(fl, map->raddr, map->size);
->>>> +err_invoke:
->>>> +    fastrpc_map_put(map);
->>>>
->>>>      return err;
->>>>  }
->>>>
->>>> +static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
->>>> +{
->>>> +    struct fastrpc_req_mmap req;
->>>> +    int err;
->>>> +
->>>> +    if (copy_from_user(&req, argp, sizeof(req)))
->>>> +            return -EFAULT;
->>>> +
->>>> +    if ((req.flags == ADSP_MMAP_ADD_PAGES ||
->>>> +         req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR)) {
->>> Side note: why are these flags not defined in the uABI header?
->> Ack. These should be part of uABI. I'll create a separate patch for this.
->>>> +            err = fastrpc_req_buf_alloc(fl, req, argp);
->>>> +            if (err)
->>>> +                    return err;
+base-commit: 63804fed149a6750ffd28610c5c1c98cce6bd377
+-- 
+2.25.1
 
 
