@@ -1,424 +1,545 @@
-Return-Path: <linux-arm-msm+bounces-91368-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91370-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aN0wDIfrfWmsUQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91368-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Jan 2026 12:46:15 +0100
+	id MN2sGKoKfmktVAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91370-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Jan 2026 14:59:06 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82112C1BB6
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Jan 2026 12:46:14 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 84EFDC21BB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Jan 2026 14:59:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 94E96300AB05
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Jan 2026 11:46:11 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 9828730028F1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Jan 2026 13:59:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0ED131AA81;
-	Sat, 31 Jan 2026 11:46:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50861354AC7;
+	Sat, 31 Jan 2026 13:58:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GIkHdyvd";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Ok0HNmP9"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Qf2iQrEd";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="I9Zq6Uso"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 039732874E9
-	for <linux-arm-msm@vger.kernel.org>; Sat, 31 Jan 2026 11:46:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2764C3542EC
+	for <linux-arm-msm@vger.kernel.org>; Sat, 31 Jan 2026 13:58:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769859970; cv=none; b=Si2tMRrhbYGUAFXu9hHut+yOOBBs4FrpoScIOucl/pmcfKavydDF07VtBPE36DcWGj/nntkUi/yuIPi3EK7YwRiN0mpWjFBq4uh44hS7aOVe7rNZ49dMjh/usNRQqn7fBKWe8ne3rgsrJux45LaijWOKPJu6N7ZBSkeTmWbrBFQ=
+	t=1769867938; cv=none; b=KLmcRPIvk5PL7utRfXfB0BzFpL3U4CDl+Rm9dGTIVs9gc5jR5L1H1Wq3Cjl3l0pZ0jqsaR7F+iXoZX5bBkdlCLl3KeKa//yMiDfvXo8dj8jD04yDB5XfJdhBOeyG5S39P1uc85oCmrKChIyC6staZ3Yoa/YxboL2bEuJVIE16UA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769859970; c=relaxed/simple;
-	bh=UaSwpXA2lLpvPzCblja7+d5HOZuOkbxAfMPi+r6Ojts=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SP3dcSFijlnQ4/HzY5xYftq4yJA4h5rkyDHfXafyHawN70DvtTZQIjyvuwPYIYccgCzX1XNRJLEyZ4R20rTQjAmidXUUmf1nf5dxQC21Oh2dPmPYIsYyQAqxdn/BYsl6Fa44pLFpaajfORTP0aJVEkQ/V8niR+rIH5aus2A6DHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GIkHdyvd; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Ok0HNmP9; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1769867938; c=relaxed/simple;
+	bh=IbBe+qPzL/JW2ROcb8V9haTlv7c+yK1yAHzmxUuMoI4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=luXWcvXsVyHqLdpGojlJXuzpUfukv49nTkX8FgXRbdcGPB7/2JTbo0Bw5+F0TwuRwcEahYQzRkKLeSgK4dxzvcXIggapi+BXTcznYMcOHw+hhMqTn9+9S7/coh55boyHBOy9EGDtqGXBz/7ezH+Femq3X9V9xJEZgree6y7o9Jg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Qf2iQrEd; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=I9Zq6Uso; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60V4U2pu447972
-	for <linux-arm-msm@vger.kernel.org>; Sat, 31 Jan 2026 11:46:08 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 60V4SiNB1510053
+	for <linux-arm-msm@vger.kernel.org>; Sat, 31 Jan 2026 13:58:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	6u0xoNNxZq/Kq4q0yf8gG51zhFYWc74v8speF7/QBe4=; b=GIkHdyvdZnAjFSfJ
-	Mft2eiwuFoiNpF/F4B70TKZQDW/IWlNpS4WIPCkQwsCh9KqV2FGuuQDfl+jTPUiL
-	bxYxM0tLCPXstaop6EM57TA/Zv4o/WLGb+CRkU/qsHnjIWUsg/Q6SHeUkhgBy0kb
-	Mx8KLajGsoOmwecpE57/jOM7JLzzqDD85LV/2W+tUiTSmbqq0HtHYWeVISbfPKtn
-	ESE8FzrEtwVokAv40naHarXw+B+9XFqWZ46QC+acQEV0k1DT+21mB3RPoy5jFaRF
-	HPjHYQ8du9vRr/ttHHwrlfYfUAnV57Cy9Q50Y1BXvov2iYy2xXcpAEnh3IgphFo+
-	6RqE6Q==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c1as0rqrc-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=gWzTVG2Er8cPlMebJz+BOz
+	AjlmkSqf6/LYTyc/ntxAU=; b=Qf2iQrEd4mrOKFos1zXVQynr7PZkoZTJWVo3U/
+	DqgGi0enc5CIHKFNyqLT9faCGx47pHnmlYaKH+RX4tKQFqE+An7Sj0eBE7aIDAbk
+	wuQBbAm/bgdl2TXt11HHA4Z2gNKPOlLcvXMr8g3MXwaCEfNh/42ywpQhfKJHLV8i
+	/+M5Z1gT+N04mi49QGA4MOWjN3DYL9uJ+r/qMGtmbe8V8Kl8KrkzoS+2KDJRepCQ
+	WNk1ZgQSj88Lod55OOK0yiUNsRELbcwUj/ptPBiKFwGQOxLsKyZD1eWl3tLxi/q6
+	nCcIUaXJRGBAzyzmnyiiJHZaT7HidVoo/LWGmr7ntGLC3dnQ==
+Received: from mail-vs1-f70.google.com (mail-vs1-f70.google.com [209.85.217.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c1ard0vcf-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 31 Jan 2026 11:46:08 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-81ea3358dd3so2599361b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 31 Jan 2026 03:46:08 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 31 Jan 2026 13:58:54 +0000 (GMT)
+Received: by mail-vs1-f70.google.com with SMTP id ada2fe7eead31-5ec9a4e6cb0so2805266137.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 31 Jan 2026 05:58:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1769859967; x=1770464767; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6u0xoNNxZq/Kq4q0yf8gG51zhFYWc74v8speF7/QBe4=;
-        b=Ok0HNmP9zfvKro2UPMpdBpJ3KW7DYQGlZE/qOKpnICx4DSptgfdS9KaMGVqPlWrUfS
-         857fAjjI/mMJqvUv4r0xW9NHNY65pD3aEZ2nP9o4A5Zs4udP+QMCqqHG3LOwkicbeRpH
-         V+abov7jiuMC+8pOWwol7bxIQdQ+sHwJGr4YZd65zMD+HorWD2MGfxafo0HH1Ie0p3MN
-         i71+5SsK9KAQWk1/O6GEcWLhpCeFH+rNdUuCFpVW9Al7Aoh9JpMRwFkjrU2r853wXJSe
-         L6RtdBPegZLsGusDXfd29vjcMwzrMrhY5c1O4s+k9KPEyJrfr2vgQf1ymvVP7x53NUAm
-         l0Lg==
+        d=oss.qualcomm.com; s=google; t=1769867934; x=1770472734; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=gWzTVG2Er8cPlMebJz+BOzAjlmkSqf6/LYTyc/ntxAU=;
+        b=I9Zq6Usog5Y7siOmM81g7fIHHlqhciNQTnvcxg02jSUxQLY507ELBRQ4dr02a/eeUg
+         MjWniIHQfVQFi/Zm3fMBnffXN+p3NCliCPnsaDixho8f7kZh0N5l+mzS7ML9HjMcnCKy
+         jAPooOkDG16O1GEuwFBvL5pXbhWsdQg3uGZYeev982BWTB6fnkECtNQTNvaFtt5SCMn+
+         VVZ0GOunot0GHN1m1TKMM2p8HZ0PYNm69L4lLYLWSQJ7WTesTbhaBqem87J73q9gJLFd
+         vLUcvuSlyqwdALUvOBPl5NE8CUTdcn+oXOmd9uIMSwZtl5s4pRbdqHNYu7olxxwfkKKE
+         LAxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769859967; x=1770464767;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6u0xoNNxZq/Kq4q0yf8gG51zhFYWc74v8speF7/QBe4=;
-        b=cZZmSmErdYGtC6YtrH1s4HnKwN8/qc1yOizg/nEq9GADD0PgCzvFPNcX01hCD8iuLV
-         RDiUN4+H/oc+lNcGzSv/KW2uRvjSWc3rNPSQENoGNYgiickTggwcRVv6uhWJYM/2Nls4
-         V0YAhvMrsiIjzdfASa4OXy4mZYPUGuqv313KTah0eXDUgR6QBviJ2yH9YeDucGLbfq5v
-         b4Sz6qrx9e2CaQ6rq0ZgzcsTfYIIrunPMTlDtJpM3fTJ+XPW+G4rLlOqVCaYi6sssd4e
-         SoiTZ4vejbxSPypdbUT7U7bU9mPkgLnHAVjH/SMJGfXlESGgKbgsVTbw6iPI1oAbQEQe
-         cWsw==
-X-Forwarded-Encrypted: i=1; AJvYcCX3y7OsxQufDXj/Erq2oOzr1pLmyhjq4nsgWIlSN29SCUNhyWjWACjd9WiXTQecr0NCvR75U32dQlVc95NO@vger.kernel.org
-X-Gm-Message-State: AOJu0YwxhGn8coBKmj0Vc9QpXBXV+Dm98s8ZH6qkgboK0GLaCQCV67+a
-	J2UaUiWOypp5hHcTa2l019VKIWW9wheb0cc7WJQ4aKj+XdEe+bb8DULr+dUUfFufRH1e8RblZON
-	K4RbKLElHa34g9SzzhnBSaZd7heoyjd1G8cM+zAljIKtZbCUvnTE5D/gVKwOej3KDzlVq
-X-Gm-Gg: AZuq6aKbLNdM6H0UBHTWyvphLxn7I4S9A0oo9rNoTVd54RorE6ysuxpD3WHKFIAkrbf
-	EhuhwFjnm/EiKVIwPVNQxhXn/wpDurQJciFr0pRAPBosLHbPdsVVpjrVIdKI+jSx/b0zCnI5FCT
-	lm6vCK8V7a8JctscjNgg6mzq1/+nflUeB7HRU/w44za18JF/H/KEkeXcZHBsvDb6slL0uIJbFeY
-	WTEaxe4i8rlJ0IwXjQSGOhkK4vzjfQ5974JDUKbYUaMsce9FD3EBcXJma2vxWCmn5i87qTm/o/6
-	kiNoUD+QdAcWijGTnFUN/rx9ISU2Ju0PWKFoSAwTs4Qj9zRupyCLchPcnRvieGTxFNkYsZFrjMa
-	85hR2Zepi/Zv84Mfsji59JMFxWpMPBFD9Y9irytM=
-X-Received: by 2002:a05:6a00:9287:b0:81d:dd3a:b8ff with SMTP id d2e1a72fcca58-823ab76e226mr5457602b3a.53.1769859967405;
-        Sat, 31 Jan 2026 03:46:07 -0800 (PST)
-X-Received: by 2002:a05:6a00:9287:b0:81d:dd3a:b8ff with SMTP id d2e1a72fcca58-823ab76e226mr5457580b3a.53.1769859966766;
-        Sat, 31 Jan 2026 03:46:06 -0800 (PST)
-Received: from [192.168.1.6] ([106.222.229.24])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82379b1efa6sm10306085b3a.6.2026.01.31.03.45.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 31 Jan 2026 03:46:06 -0800 (PST)
-Message-ID: <dfdb2f4f-9c94-4d44-8dd7-67e8f4e025a4@oss.qualcomm.com>
-Date: Sat, 31 Jan 2026 17:15:57 +0530
+        d=1e100.net; s=20230601; t=1769867934; x=1770472734;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gWzTVG2Er8cPlMebJz+BOzAjlmkSqf6/LYTyc/ntxAU=;
+        b=ZHCetxhp3UM33KVApHO53pPEb03lI9idV4A76XCsxHhIVMBJf9/C1AhfhDoUdjXscn
+         P3lfM6bg1m+SGJ8vUPyR+W1miGWK/KDPWmbwEA1OZeaLqVi2lILfT5TQR6gJk61wrxUI
+         cm2m6BqGdqCjMdd0uOp3ZgKYnvmtWuocAhFeNxqfs9BIxrjSrU9rS+qpA3M2Vqwhe9Ik
+         QwoM7Roh089VpwykpCN/+ACHKouH9QgQdhyrI3tS9WFW8+q7SlKuTUMhUtdw3xRQ+pGI
+         f4cOYB3czcX/OuNqzTzUvCy/sPs1mjXuitjXf9wjkcWztN1KAP1iK6u7CJxtth1f9FH2
+         f1jw==
+X-Forwarded-Encrypted: i=1; AJvYcCX5ADyAC/zBwfgDCuf5hOHiTskpVF6533W5O6oXqcpIhXYoUUWh8F+FCx3Mxn+xFdH87gXr1OC0uHuBhA73@vger.kernel.org
+X-Gm-Message-State: AOJu0YwVW3hMpQO/nNyK+TNIjMS6s90wzt5JY5sRVU+YBUi9Pkg+vHP8
+	opSbQ4qHxvWgtkgcQ/rw5xhMbQ0TfStMe2BpX9zRmrL1+CGjggs8W9hw2tUCXdo/xlS8CI8n+1/
+	IO6k10x8Ax0Y02n9UPdWdeHHVxiWLcMXa5pYBn5KDClFm3c5hC4OZWwcmDt/iDbqBcfJ3
+X-Gm-Gg: AZuq6aJGgMzYlvUatxLXmINO+GQQKHB9OgZKhw/uG3rBZCr70ExeZmaPXt8Qo2jva0p
+	V0vZEedFx9uI5V4QaJL+on6a0A/tEnPc5Nidik8LksH9CAxsswn3neToudHjdQMk747seip6j24
+	hw+wpR4AgG2avCuNE/Jqvv1gv413h+d1WtLXalE7+haSvwkQ3THpqu3lWfE9vd6gDFDYnrur/MH
+	Nq6Pef385oIhtcl+wk/faXQDwaF9D0mzG7w1YnC+/GfNF3+khO5R46Tbk4IT+xTuvg+03pXV9mu
+	SQ7OlzXrxsSZF1GXe0qIsPxMyrLrIhKjniDUtbcExj1FHW6XZNRfG+R6+7Uapd59jxCytxl6Od0
+	YVICBMoj80rHPZfGN+WVjNh8n7vqbqJyGOwHEfw9eHyBIPscPCZ9oaJVGXCmsojqAQ63m1zepoQ
+	ugXkGKe/EyCKDl8A/4LU6BT7A=
+X-Received: by 2002:a05:6102:2920:b0:5f5:2e63:f571 with SMTP id ada2fe7eead31-5f8e24e04f3mr1975539137.19.1769867933907;
+        Sat, 31 Jan 2026 05:58:53 -0800 (PST)
+X-Received: by 2002:a05:6102:2920:b0:5f5:2e63:f571 with SMTP id ada2fe7eead31-5f8e24e04f3mr1975524137.19.1769867933385;
+        Sat, 31 Jan 2026 05:58:53 -0800 (PST)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59e074b2dddsm2373021e87.61.2026.01.31.05.58.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 31 Jan 2026 05:58:52 -0800 (PST)
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: [PATCH v4 0/5] media: qcom: flip the switch between Venus and Iris
+ drivers
+Date: Sat, 31 Jan 2026 15:58:49 +0200
+Message-Id: <20260131-venus-iris-flip-switch-v4-0-e10b886771e1@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/8] remoteproc: qcom: probe all child devices
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>, mathieu.poirier@linaro.org,
-        robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-        rafael@kernel.org, daniel.lezcano@linaro.org, rui.zhang@intel.com,
-        lukasz.luba@arm.com, konradybcio@kernel.org, amitk@kernel.org,
-        mani@kernel.org, casey.connolly@linaro.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        manaf.pallikunhi@oss.qualcomm.com
-References: <evb5tn2cht7wk76fuc2wpsyxepknigfw37633n6ypuapstbceh@tn5glmi65bdv>
- <cb5430c8-12d6-4439-b1ae-c2f36f29a9f8@oss.qualcomm.com>
- <57493aef-fb35-4377-8cf3-1df7f53470c9@oss.qualcomm.com>
- <74h7r3vsig3csejax3eu3uk53mdiimg2hjx7ntmmfrwdai6s3j@eiztghclfcvt>
- <5db5dafd-3c1f-4844-b822-bbfe86b3eb4d@oss.qualcomm.com>
- <ctrpymbvjlchp3djnsqq4bghkq2zvqnf5bebszi74f3d36l5dv@icvnkdwgdxmi>
- <ef1911f5-2d96-428c-93f1-3d1815710894@oss.qualcomm.com>
- <98397a59-8ef2-4202-ae41-015c895d6bce@oss.qualcomm.com>
- <c5ace95c-6ba1-4ce9-b461-82225a9fc576@oss.qualcomm.com>
- <f461ca33-0892-4a58-a40b-6da2a32d1430@oss.qualcomm.com>
- <33kugspepphj3ywp642bp5ee4zd6pk6pxbooe4knv62coeofo6@5zqxy4n37k3j>
- <998079d0-1c38-4a93-a63d-6bf9c91c4a83@oss.qualcomm.com>
- <CAO9ioeVxbAJR-JSVSVOgtZaTmwqaez=2K5Rfxo=+swUJ=YmN3A@mail.gmail.com>
-Content-Language: en-US
-From: Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>
-In-Reply-To: <CAO9ioeVxbAJR-JSVSVOgtZaTmwqaez=2K5Rfxo=+swUJ=YmN3A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTMxMDA5OCBTYWx0ZWRfXytqP0y6zDtpk
- kYU/OQWmhA5WX0HbxjJ+v7nroiP8pY3RQoqtnkkKD+nbeBhCbqCVaZVn/GFJblcuyfGA7kVmj4H
- +vDDgSGBLHlaUgezqV8dTwPSJGYomQ93eagaUWLwmtMvqEZrplWsW8i+LwspN6dSQThKlul7Nus
- +Kj/Emvg273upxWFeiAyxJ4mtqsFlqHbzpvKpzmjIyumg3C3y4SEMs2x+Aa60x7PebvZOQL1oM7
- aWJ9GYTMGb8kcvCJbKDfW4wrnwEk07surYgdU+jUDZD3Fjr1Q3nrvQh8LaXyC8SRUxsv46Sxsti
- AW9pgqZAhPpxgj6faCvo+IDGVfi0LBB7s/Kuh7MH0Rc6sDKTDNaLdJGFgH/FdYtexHjgBIaE+08
- DWEOgriTRxFF5jfPU9bYeQ/fXIsWxv2UWiuhTsYKcWtdTVF84DdtB0f2R5iEY349YHOm8+EVzRi
- kdj1Pooqv2UbO7W9CeQ==
-X-Proofpoint-ORIG-GUID: 8QWQ_LSBlBO-7ETT80lLwdLre-gaUFuw
-X-Proofpoint-GUID: 8QWQ_LSBlBO-7ETT80lLwdLre-gaUFuw
-X-Authority-Analysis: v=2.4 cv=MYthep/f c=1 sm=1 tr=0 ts=697deb80 cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=EBd7WcfsMYPMwvoCMWz0vA==:17
- a=IkcTkHD0fZMA:10 a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8
- a=D6nknfrBpnRlDUAZrOIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=2VI0MkxyNR6bbpdq8BZq:22 a=cvBusfyB2V15izCimMoJ:22
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJkKfmkC/4XQwW7CMAwG4Fepcp5Zk7Qp4cR7TByS4qyWaAtx2
+ oEQ774UNGmHVbtE+iP7s/TfBWMkZLEr7iLiTEzjkEP1Voi2c8MnAh1zFqpUtZTSwozDxECRGMK
+ JzsBflNoOjrV1OvjWuMqLvHyOGOj6hD8OOXfEaYy3551ZLr//krMECdtaaWODMajNfmTeXCZ3a
+ se+3+RHLPKsfjRTSmVWNQUl+BJdWaNstHUrmv6tNauazloTdGO2NlRe2z+0x6uGiJcp15peXQj
+ vGGEZorQrBrym995xwpjnH99EsESgjgEAAA==
+X-Change-ID: 20251119-venus-iris-flip-switch-d59a3fbc6a4b
+To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bod@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        cros-qcom-dts-watchers@chromium.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Stephan Gerhold <stephan.gerhold@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=13797;
+ i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
+ bh=IbBe+qPzL/JW2ROcb8V9haTlv7c+yK1yAHzmxUuMoI4=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBpfgqbLiPmmBKGRK2U4qZWY12ph+L7MKr+uzO1t
+ tr0fXNQn6KJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaX4KmwAKCRCLPIo+Aiko
+ 1YNPCACAlK/+nkOO500FTZiunhnM+iEnzQp7JRXQ93t5FnM4ZstCZaHKIAvX0o3+oba9dhSQJo6
+ eM9tfB7eqmetWUhc1TWUu0bygcpstIDly5l43rLCq+/t4vo/4Y9vMyZnL+y7SycHDa3X9iATyez
+ waFKcj/cSqbsfOqSHYkcjN+c2O0R1/9czVlG6ui4r9xLUdJDYfmpFNxNFkNiQMK8NBOR5Y3T3FU
+ b68b7E71q4WZon4PbmNlDnyCAeV6RKNoe3K+0FnwjrnwhJfJVaLZnRmv1yhTmgbuY+s1YOFXehN
+ pcUajVAGF8VC8p99eCUhIesUbAUbD5ArTFwu3zxvjqasBOg5
+X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMTMxMDExNyBTYWx0ZWRfXzaYhEeDDsgG2
+ w7fafBPkL5/ilm27f7JVRJAefJyrs/J94yuVhUy9NtugTKV0kjEzLyWSZU5p9SBKyobE3K/d+L8
+ KBKUTNq/6krwnye4FnRRPaMgfOJat5GcX0VyHRrlEInvLqptdF6X6ouTODR9dr7wojznL1aHhPs
+ gpQqaeBY2GoqZDPQmybnEFooURzfiu3GkcXdsOna2ssKlXq2L7cMtweCAw9uZiawKOS8Q1e87EB
+ G3Ju1vfup6EZx6V8DLPSRgTgG02q/+AS7rXA/3QOIniCQimc1N2tbwwAqKpgJ+NRqLnHojMc9j2
+ 1kKRr6awaAPyhSSAEg4EDXgZh/GizAJdZweNz1nwJipyP6tgBNU6XjhjRqjHtdxjx6uy1uBhC7E
+ RhXmJKDeLZn0YTwWahl7kDPvuHUdAnqDrDOdvXgXFlUhs+Y+/H3YPZvTVEjuoE4v1+yr8GY1PJH
+ Kjmou8g2NqiBuinXEGA==
+X-Authority-Analysis: v=2.4 cv=J6anLQnS c=1 sm=1 tr=0 ts=697e0a9e cx=c_pps
+ a=N1BjEkVkxJi3uNfLdpvX3g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=vUbySO9Y5rIA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=dCW-8o_xTGPffEoVNk8A:9 a=QEXdDO2ut3YA:10
+ a=crWF4MFLhNY0qMRaF8an:22
+X-Proofpoint-ORIG-GUID: D4Gz3daiDKBe1MIUUfYRi7fRIaAHuF8R
+X-Proofpoint-GUID: D4Gz3daiDKBe1MIUUfYRi7fRIaAHuF8R
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-01-31_01,2026-01-30_04,2025-10-01_01
+ definitions=2026-01-31_02,2026-01-30_04,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 adultscore=0 impostorscore=0 suspectscore=0
- clxscore=1015 bulkscore=0 spamscore=0 priorityscore=1501 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2601310098
+ lowpriorityscore=0 priorityscore=1501 phishscore=0 suspectscore=0
+ malwarescore=0 bulkscore=0 adultscore=0 clxscore=1015 spamscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2601310117
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
 	RCPT_COUNT_TWELVE(0.00)[20];
+	TAGGED_FROM(0.00)[bounces-91370-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-91368-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,linaro.org:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,qualcomm.com:email,qualcomm.com:dkim,out-vp9.md:url,out-h265.md:url];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[gaurav.kohli@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 82112C1BB6
+X-Rspamd-Queue-Id: 84EFDC21BB
 X-Rspamd-Action: no action
 
+As the Venus and Iris drivers are close to the "feature parity" for the
+common platforms (SC7280, SM8250), in order to get more attention to
+squashing bugs from the Iris driver, flip the switch and default to the
+Iris driver if both are enabled. The Iris driver has several
+regressions, but hopefully they can be fixed through the development
+cycle by the respective team. Also it is better to fail the test than
+crash the device (which Venus driver does a lot).
 
+Note: then intention is to land this in 6.21, which might let us to
+drop those platforms from the Venus driver in 6.22+.
 
-On 1/31/2026 5:10 PM, Dmitry Baryshkov wrote:
-> On Sat, 31 Jan 2026 at 11:12, Gaurav Kohli
-> <gaurav.kohli@oss.qualcomm.com> wrote:
->>
->>
->>
->> On 1/31/2026 1:36 PM, Dmitry Baryshkov wrote:
->>> On Fri, Jan 30, 2026 at 10:13:06AM +0100, Konrad Dybcio wrote:
->>>> On 1/30/26 8:03 AM, Gaurav Kohli wrote:
->>>>>
->>>>> On 1/28/2026 3:15 PM, Konrad Dybcio wrote:
->>>>>> On 1/28/26 10:39 AM, Gaurav Kohli wrote:
->>>>>>> On 1/27/2026 10:11 PM, Dmitry Baryshkov wrote:
->>>>>>>> On Tue, Jan 27, 2026 at 09:42:10PM +0530, Gaurav Kohli wrote:
->>>>>>>>> On 1/24/2026 12:33 AM, Dmitry Baryshkov wrote:
->>>>>>>>>> On Fri, Jan 23, 2026 at 07:23:39PM +0530, Gaurav Kohli wrote:
->>>>>>>>>>> On 1/8/2026 12:37 PM, Gaurav Kohli wrote:
->>>>>>>>>>>> On 1/3/2026 8:26 PM, Bjorn Andersson wrote:
->>>>>>>>>>>>> On Tue, Dec 23, 2025 at 06:02:21PM +0530, Gaurav Kohli wrote:
->>>>>>>>>>>>>> From: Casey Connolly <casey.connolly@linaro.org>
->>>>>>>>>>>>>>
->>>>>>>>>>>>>> Generalise the qcom,bam-dmux child node support by probing all
->>>>>>>>>>>>>> remoteproc children with of_platform_populate(). This will be used to
->>>>>>>>>>>>>> enable support for devices which are best represented as
->>>>>>>>>>>>>> subnodes of the
->>>>>>>>>>>>>> remoteproc, such as those representing QMI clients.
->>>>>>>>>>>>> Please flip this around, start with the description of the problem
->>>>>>>>>>>>> you're trying to solve.
->>>>>>>>>>>>>
->>>>>>>>>>>>>> Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
->>>>>>>>>>>>> This must have your signed-off-by, where you certifies the origin of
->>>>>>>>>>>>> this patch.
->>>>>>>>>>>>>
->>>>>>>>>>>>>> ---
->>>>>>>>>>>>>>        drivers/remoteproc/qcom_q6v5.c     | 4 ++++
->>>>>>>>>>>>>>        drivers/remoteproc/qcom_q6v5_mss.c | 8 --------
->>>>>>>>>>>>>>        2 files changed, 4 insertions(+), 8 deletions(-)
->>>>>>>>>>>>>>
->>>>>>>>>>>>>> diff --git a/drivers/remoteproc/qcom_q6v5.c
->>>>>>>>>>>>>> b/drivers/remoteproc/qcom_q6v5.c
->>>>>>>>>>>>>> index 58d5b85e58cd..a02839c7ed8c 100644
->>>>>>>>>>>>>> --- a/drivers/remoteproc/qcom_q6v5.c
->>>>>>>>>>>>>> +++ b/drivers/remoteproc/qcom_q6v5.c
->>>>>>>>>>>>>> @@ -6,6 +6,7 @@
->>>>>>>>>>>>>>         * Copyright (C) 2014 Sony Mobile Communications AB
->>>>>>>>>>>>>>         * Copyright (c) 2012-2013, The Linux Foundation. All rights
->>>>>>>>>>>>>> reserved.
->>>>>>>>>>>>>>         */
->>>>>>>>>>>>>> +#include <linux/of_platform.h>
->>>>>>>>>>>>>>        #include <linux/kernel.h>
->>>>>>>>>>>>>>        #include <linux/platform_device.h>
->>>>>>>>>>>>>>        #include <linux/interconnect.h>
->>>>>>>>>>>>>> @@ -351,6 +352,8 @@ int qcom_q6v5_init(struct qcom_q6v5 *q6v5,
->>>>>>>>>>>>>> struct platform_device *pdev,
->>>>>>>>>>>>>>                return dev_err_probe(&pdev->dev, PTR_ERR(q6v5->path),
->>>>>>>>>>>>>>                             "failed to acquire interconnect path\n");
->>>>>>>>>>>>>>        +    of_platform_populate(q6v5->dev->of_node, NULL, NULL, q6v5->dev);
->>>>>>>>>>>>> There are other child nodes here, in particular the GLINK and SMD edges.
->>>>>>>>>>>>> Do we really want platform_devices registered for them?
->>>>>>>>>>>>>
->>>>>>>>>>>>> Regards,
->>>>>>>>>>>>> Bjorn
->>>>>>>>>>>> thanks for pointing this, can you please suggest the right approach.
->>>>>>>>>>>>
->>>>>>>>>>>> This should not impact glink, as that is registering as rproc sub node,
->>>>>>>>>>>> And we need rproc cooling as child node
->>>>>>>>>>>>
->>>>>>>>>>>> of remote proc subsytem to create probe dependency only.
->>>>>>>>>>>>
->>>>>>>>>>>>
->>>>>>>>>>>> Can we do platform populate for specific child, would that be right
->>>>>>>>>>>> approach. or we should create rproc cooling as independent of parent ?
->>>>>>>>>>>>
->>>>>>>>>>> HI Bjorn,
->>>>>>>>>>>
->>>>>>>>>>> I’d like to highlight the impact and details of placement of remoteproc
->>>>>>>>>>> cooling dt node:
->>>>>>>>>>>
->>>>>>>>>>>
->>>>>>>>>>> ->As a child of the remote proc subsystem node:
->>>>>>>>>>>          In this configuration, the cooling device will only be probed once the
->>>>>>>>>>> corresponding remote proc subsystem itself is probed.
->>>>>>>>>>>
->>>>>>>>>>> ->Outside the remote proc subsystem, may be part of soc node:
->>>>>>>>>>>          In this setup, the cooling device will be probed independently. It will
->>>>>>>>>>> wait until the remoteproc subsystem is brought up
->>>>>>>>>>>          before completing cooling registration.
->>>>>>>>>>>          The drawback here is that if the parent remoteproc subsystem is
->>>>>>>>>>> disabled, the cooling device will still undergo an
->>>>>>>>>>>          unnecessary probe, even though it cannot be registered.
->>>>>>>>>> Bjorns question was different. It wasn't about pushing cooling device
->>>>>>>>>> outside of the remoteproc node. It is about not registering the devices.
->>>>>>>>>>
->>>>>>>>>> Can we follow the approach outlined by qcom_add_smd_subdev() /
->>>>>>>>>> qcom_add_glink_subdev()?
->>>>>>>>> Hi Dmitry,
->>>>>>>>>
->>>>>>>>> Thanks for the review. Since the remoteproc cooling is a QMI-based driver,
->>>>>>>>> it will receive the
->>>>>>>>> subsystem up notification directly. Therefore, there’s no need to make it a
->>>>>>>>> subdev node or
->>>>>>>>> tie it into the init/reset sequence of remoteproc subsytem.
->>>>>>>> But you've added a subnode for it (and we are discussing exactly
->>>>>>>> of_platform_populate()) call. So, you are tying it to the remoteproc
->>>>>>>> device lifecycle instead of the remoteproc subsys, which seems strange
->>>>>>>> to me. There is no cooling device if the DSP is not running.
->>>>>>>
->>>>>>> For the cooling feature, we don’t need to define it as a subnode. The cooling subsystem becomes relevant only
->>>>>>> after the remote subsystem is up, at which point it will receive add/delete notifications from the QMI server.
->>>>>>>
->>>>>>>
->>>>>>> If child nodes must be modeled as subnodes for rproc, we can move the CDSP TMD out of the remoteproc and add in soc.
->>>>>>> Is there currently a way for the remoteproc core layer to call of_platform_populate() without requiring a subnode?
->>>>>> I think the question is "why can't you register the remoteproc device
->>>>>> as a cooling_device, with perhaps #cooling-cells = <1>; instead of
->>>>>> any form of children?"
->>>>>>
->>>>>> Konrad
->>>>>
->>>>>
->>>>> thanks Konrad, for the review.
->>>>>
->>>>> As each subsystem can expose multiple thermal mitigation devices via the remoteproc TMD service, so need to define child node.
->>>>
->>>> I think you're stuck in an XY problem - you keep insisting that adding
->>>> a subnode is your end goal, while you really want to achieve being able
->>>> to register multiple cooling devices. Or at least that's how I read your
->>>> messages since you happen not to give any explanation as to why it's
->>>> actually necessary.
->>>>
->>>> In my previous message, I forgot that cells for cooling devices actually
->>>> represent the minimum and maximum cooling state allowed. But since the
->>>> API is just part of the kernel, there's nothing preventing us from
->>>> evolving it.
->>>>
->>>> Currently, we have:
->>>>
->>>> Documentation/devicetree/bindings/thermal/thermal-cooling-devices.yaml
->>>>
->>>> properties:
->>>>     "#cooling-cells":
->>>>       description:
->>>>         Must be 2, in order to specify minimum and maximum cooling state used in
->>>>         the cooling-maps reference. The first cell is the minimum cooling state
->>>>         and the second cell is the maximum cooling state requested.
->>>>       const: 2
->>>>
->>>> But I think it would be perfectly fine to suggest a change such that
->>>> if cells > 2, the last two cells keep the current behavior and the former
->>>> ones let you index into a cooling device exposed through a single OF node
->>>
->>> This might be a big change, which probably needs to be coordinated with
->>> thermal and DT maintainers first.
->>>
->>>>
->>>> e.g.
->>>>
->>>> rproc_xyz: remoteproc {
->>>>       compatible = "qcom,rproc-xyz";
->>>>
->>>>       ...
->>>>
->>>>       #cooling-device-cells = <3>;
->>>> };
->>>
->>> Which brings in another topic. In DT we have labels for different DT
->>> children, which correspond to different handlers on the DSP side. For
->>> the CDSP we see a "cdsp_sw" only. I think I've asked several times, but
->>> didn't get an example of the device having more than one, just claims
->>> that there might be more thane one TMD.
->>>
->>> Do we need different cooling cells here? Or would it be enough to send
->>> the same max state to all TMDs on the DSP side?
->>>
->>
->> For newer targets, Within the CDSP we have compute core(cdsp-sw),
->> npu(hmx-sw) core and both have independent dcvs and also dedicated
->> tsens on each core.
-> 
-> Okay, inside the DT bindings please provide this system as an example
-> rather than using the simplest one.
-> 
->>
->> And For Modem also we have multiple mitigation devices based on
->> different modem tech, for e.g tech level side we have modem-lte,
->> modem-nr etc and mitigation at different power amplifier side like
->> modem-pa etc. We have not added modem node for current series target
->> as it does not support modem.
-> 
-> I wrote it several times: there is no reason to limit yourself to
-> CDSP. Please also add support for ADSP, SLPI and modem.
-> 
+Testing methodology: fluster test-suite, single-threaded mode, SM8250
+device (RB5).
 
-Sure, will add.
+$ ./fluster.py r -j 1 -d  GStreamer-H.264-V4L2-Gst1.0 -s -so out-h264.md -ts JVT-AVC_V1
+$ ./fluster.py r -j 1 -d  GStreamer-H.265-V4L2-Gst1.0 -s -so out-h265.md -ts JCT-VC-HEVC_V1
+$ ./fluster.py r -j 1 -d  GStreamer-VP9-V4L2-Gst1.0 -s -so out-vp9.md
 
->>
->>>>
->>>> ...
->>>>
->>>> thermal-zones {
->>>>       super-rproc-therm-a {
->>>>               thermal-sensors = <&rproc_xyz RPROC_XYZ_COOLING_A
->>>>                                  THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
->>>>
->>>>               trips { ... } ;
->>>>       };
->>>>
->>>>       super-rproc-therm-b {
->>>>               thermal-sensors = <&rproc_xyz RPROC_XYZ_COOLING_B
->>>>                                  THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
->>>>
->>>>               trips { ... } ;
->>>>       };
->>>> };
->>>>
->>>> This would be resolved by allowing drivers to register an .of_xlate-type
->>>> function which would take the RPROC_XYZ_COOLING_n argument and e.g. use
->>>> it as an index into struct thermal_cooling_device cdev[]; within the
->>>> driver struct.
->>>
->>>
->>>
->>>>
->>>> Konrad
->>>
->>
-> 
-> 
+For H.264:
+
+Only the main set was used on both platforms
+
+On Venus pass 126/135
+On Iris  pass 78/135
+
+- Fail on Iris, but pass on Venus:
+  cabac_mot_fld0_full, cabac_mot_mbaff0_full, cabac_mot_picaff0_full,
+  CAFI1_SVA_C, CAMA1_Sony_C, cama1_vtc_c, cama2_vtc_b, cama3_vtc_b,
+  CAMACI3_Sony_C, CAMASL3_Sony_B, CAMP_MOT_MBAFF_L30,
+  CAMP_MOT_MBAFF_L31, CANLMA2_Sony_C, CANLMA3_Sony_C,
+  cavlc_mot_fld0_full_B, cavlc_mot_mbaff0_full_B,
+  cavlc_mot_picaff0_full_B, CVCANLMA2_Sony_C, CVFI1_Sony_D, CVFI1_SVA_C,
+  CVFI2_Sony_H, CVFI2_SVA_C, CVMA1_Sony_D, CVMAPAQP3_Sony_E,
+  CVMAQP2_Sony_G, CVMAQP3_Sony_D, CVMP_MOT_FLD_L30_B,
+  CVMP_MOT_FRM_L31_B, CVNLFI1_Sony_C, CVNLFI2_Sony_H, FI1_Sony_E,
+  MR9_BT_B, Sharp_MP_Field_1_B, Sharp_MP_Field_2_B, Sharp_MP_Field_3_B,
+  Sharp_MP_PAFF_1r2, Sharp_MP_PAFF_2r
+
+- Fail on Venus, but pass on Iris:
+  BA3_SVA_C
+
+For Venus several tests crash the firmware or crash the device,
+so test-suite was executed with extra:
+
+-sv CABREF3_Sand_D CAMANL1_TOSHIBA_B CAMA1_TOSHIBA_B \
+  CAMA3_Sand_E CAMANL2_TOSHIBA_B CAMANL3_Sand_E CAPA1_TOSHIBA_B \
+  CAPAMA3_Sand_F CVMA1_TOSHIBA_B CVMANL1_TOSHIBA_B CVMANL2_TOSHIBA_B \
+  CVPA1_TOSHIBA_B
+
+For H.265:
+
+Only the main set was used on both platforms
+
+On Venus pass 135/147
+On Iris  pass 133/147
+
+- Fail on Iris, but pass on Venus:
+  INITQP_B_Main10_Sony_1, WP_A_MAIN10_Toshiba_3,
+  WPP_A_ericsson_MAIN10_2, WPP_B_ericsson_MAIN10_2,
+  WPP_C_ericsson_MAIN10_2, WPP_E_ericsson_MAIN10_2,
+  WPP_F_ericsson_MAIN10_2
+
+- Fail on Venus, but pass on Iris:
+  ipcm_A_NEC_3, ipcm_B_NEC_3, ipcm_C_NEC_3, ipcm_D_NEC_3, ipcm_E_NEC_2,
+  IPRED_B_Nokia_3, VPSSPSPPS_A_MainConcept_1
+
+For VP9 codec:
+
+On Venus pass 174/311
+On Iris  pass 232/311
+
+- Fail on Venus, but pass on Iris:
+  vp90-2-05-resize.ivf, vp90-2-14-resize-10frames-fp-tiles-1-2-4-8,
+  vp90-2-14-resize-10frames-fp-tiles-1-2,
+  vp90-2-14-resize-10frames-fp-tiles-1-4,
+  vp90-2-14-resize-10frames-fp-tiles-1-8,
+  vp90-2-14-resize-10frames-fp-tiles-2-1,
+  vp90-2-14-resize-10frames-fp-tiles-2-4,
+  vp90-2-14-resize-10frames-fp-tiles-2-8,
+  vp90-2-14-resize-10frames-fp-tiles-4-1,
+  vp90-2-14-resize-10frames-fp-tiles-4-2,
+  vp90-2-14-resize-10frames-fp-tiles-4-8,
+  vp90-2-14-resize-10frames-fp-tiles-8-1,
+  vp90-2-14-resize-10frames-fp-tiles-8-2,
+  vp90-2-14-resize-10frames-fp-tiles-8-4-2-1,
+  vp90-2-14-resize-10frames-fp-tiles-8-4, vp90-2-14-resize-fp-tiles-1-16,
+  vp90-2-14-resize-fp-tiles-1-2-4-8-16, vp90-2-14-resize-fp-tiles-1-2,
+  vp90-2-14-resize-fp-tiles-1-4, vp90-2-14-resize-fp-tiles-16-1,
+  vp90-2-14-resize-fp-tiles-16-2, vp90-2-14-resize-fp-tiles-16-4,
+  vp90-2-14-resize-fp-tiles-16-8-4-2-1, vp90-2-14-resize-fp-tiles-16-8,
+  vp90-2-14-resize-fp-tiles-1-8, vp90-2-14-resize-fp-tiles-2-16,
+  vp90-2-14-resize-fp-tiles-2-1, vp90-2-14-resize-fp-tiles-2-4,
+  vp90-2-14-resize-fp-tiles-2-8, vp90-2-14-resize-fp-tiles-4-16,
+  vp90-2-14-resize-fp-tiles-4-1, vp90-2-14-resize-fp-tiles-4-2,
+  vp90-2-14-resize-fp-tiles-4-8, vp90-2-14-resize-fp-tiles-8-16,
+  vp90-2-14-resize-fp-tiles-8-1, vp90-2-14-resize-fp-tiles-8-2,
+  vp90-2-14-resize-fp-tiles-8-4, vp90-2-15-segkey,
+  vp90-2-21-resize_inter_1280x720_5_1-2, vp90-2-21-resize_inter_1280x720_5_3-4,
+  vp90-2-21-resize_inter_1280x720_7_1-2, vp90-2-21-resize_inter_1280x720_7_3-4,
+  vp90-2-21-resize_inter_1920x1080_5_1-2,
+  vp90-2-21-resize_inter_1920x1080_5_3-4,
+  vp90-2-21-resize_inter_1920x1080_7_1-2,
+  vp90-2-21-resize_inter_1920x1080_7_3-4,
+  vp90-2-21-resize_inter_320x180_5_3-4, vp90-2-21-resize_inter_320x180_7_3-4,
+  vp90-2-21-resize_inter_320x240_5_3-4, vp90-2-21-resize_inter_320x240_7_3-4,
+  vp90-2-21-resize_inter_640x360_5_1-2, vp90-2-21-resize_inter_640x360_5_3-4,
+  vp90-2-21-resize_inter_640x360_7_1-2, vp90-2-21-resize_inter_640x360_7_3-4,
+  vp90-2-21-resize_inter_640x480_5_1-2, vp90-2-21-resize_inter_640x480_5_3-4,
+  vp90-2-21-resize_inter_640x480_7_1-2, vp90-2-21-resize_inter_640x480_7_3-4
+
+$ v4l2-compliance -d /dev/video0
+v4l2-compliance 1.30.1, 64 bits, 64-bit time_t
+
+Compliance test for iris_driver device /dev/video0:
+
+Driver Info:
+        Driver name      : iris_driver
+        Card type        : Iris Decoder
+        Bus info         : platform:aa00000.video-codec
+        Driver version   : 6.19.0
+        Capabilities     : 0x84204000
+                Video Memory-to-Memory Multiplanar
+                Streaming
+                Extended Pix Format
+                Device Capabilities
+        Device Caps      : 0x04204000
+                Video Memory-to-Memory Multiplanar
+                Streaming
+                Extended Pix Format
+        Detected Stateful Decoder
+
+Required ioctls:
+        test VIDIOC_QUERYCAP: OK
+        test invalid ioctls: OK
+
+Allow for multiple opens:
+        test second /dev/video0 open: OK
+        test VIDIOC_QUERYCAP: OK
+        test VIDIOC_G/S_PRIORITY: OK
+        test for unlimited opens: OK
+
+Debug ioctls:
+        test VIDIOC_DBG_G/S_REGISTER: OK (Not Supported)
+        test VIDIOC_LOG_STATUS: OK (Not Supported)
+
+Input ioctls:
+        test VIDIOC_G/S_TUNER/ENUM_FREQ_BANDS: OK (Not Supported)
+        test VIDIOC_G/S_FREQUENCY: OK (Not Supported)
+        test VIDIOC_S_HW_FREQ_SEEK: OK (Not Supported)
+        test VIDIOC_ENUMAUDIO: OK (Not Supported)
+        test VIDIOC_G/S/ENUMINPUT: OK (Not Supported)
+        test VIDIOC_G/S_AUDIO: OK (Not Supported)
+        Inputs: 0 Audio Inputs: 0 Tuners: 0
+
+Output ioctls:
+        test VIDIOC_G/S_MODULATOR: OK (Not Supported)
+        test VIDIOC_G/S_FREQUENCY: OK (Not Supported)
+        test VIDIOC_ENUMAUDOUT: OK (Not Supported)
+        test VIDIOC_G/S/ENUMOUTPUT: OK (Not Supported)
+        test VIDIOC_G/S_AUDOUT: OK (Not Supported)
+        Outputs: 0 Audio Outputs: 0 Modulators: 0
+
+Input/Output configuration ioctls:
+        test VIDIOC_ENUM/G/S/QUERY_STD: OK (Not Supported)
+        test VIDIOC_ENUM/G/S/QUERY_DV_TIMINGS: OK (Not Supported)
+        test VIDIOC_DV_TIMINGS_CAP: OK (Not Supported)
+        test VIDIOC_G/S_EDID: OK (Not Supported)
+
+Control ioctls:
+        test VIDIOC_QUERY_EXT_CTRL/QUERYMENU: OK
+        test VIDIOC_QUERYCTRL: OK
+        test VIDIOC_G/S_CTRL: OK
+        test VIDIOC_G/S/TRY_EXT_CTRLS: OK
+        test VIDIOC_(UN)SUBSCRIBE_EVENT/DQEVENT: OK
+        test VIDIOC_G/S_JPEGCOMP: OK (Not Supported)
+        Standard Controls: 2 Private Controls: 0
+
+Format ioctls:
+        test VIDIOC_ENUM_FMT/FRAMESIZES/FRAMEINTERVALS: OK
+        test VIDIOC_G/S_PARM: OK (Not Supported)
+        test VIDIOC_G_FBUF: OK (Not Supported)
+        test VIDIOC_G_FMT: OK
+        test VIDIOC_TRY_FMT: OK
+        test VIDIOC_S_FMT: OK
+        test VIDIOC_G_SLICED_VBI_CAP: OK (Not Supported)
+        test Cropping: OK
+        test Composing: OK
+        test Scaling: OK (Not Supported)
+
+Codec ioctls:
+        test VIDIOC_(TRY_)ENCODER_CMD: OK (Not Supported)
+        test VIDIOC_G_ENC_INDEX: OK (Not Supported)
+        test VIDIOC_(TRY_)DECODER_CMD: OK
+
+Buffer ioctls:
+        test VIDIOC_REQBUFS/CREATE_BUFS/QUERYBUF: OK
+        test CREATE_BUFS maximum buffers: OK
+        test VIDIOC_REMOVE_BUFS: OK
+        test VIDIOC_EXPBUF: OK
+        test Requests: OK (Not Supported)
+        test blocking wait: OK
+
+$ v4l2-compliance -d /dev/video1
+v4l2-compliance 1.30.1, 64 bits, 64-bit time_t
+
+Compliance test for iris_driver device /dev/video1:
+
+Driver Info:
+        Driver name      : iris_driver
+        Card type        : Iris Encoder
+        Bus info         : platform:aa00000.video-codec
+        Driver version   : 6.19.0
+        Capabilities     : 0x84204000
+                Video Memory-to-Memory Multiplanar
+                Streaming
+                Extended Pix Format
+                Device Capabilities
+        Device Caps      : 0x04204000
+                Video Memory-to-Memory Multiplanar
+                Streaming
+                Extended Pix Format
+        Detected Stateful Encoder
+
+Required ioctls:
+        test VIDIOC_QUERYCAP: OK
+        test invalid ioctls: OK
+
+Allow for multiple opens:
+        test second /dev/video1 open: OK
+        test VIDIOC_QUERYCAP: OK
+        test VIDIOC_G/S_PRIORITY: OK
+        test for unlimited opens: OK
+
+Debug ioctls:
+        test VIDIOC_DBG_G/S_REGISTER: OK (Not Supported)
+        test VIDIOC_LOG_STATUS: OK (Not Supported)
+
+Input ioctls:
+        test VIDIOC_G/S_TUNER/ENUM_FREQ_BANDS: OK (Not Supported)
+        test VIDIOC_G/S_FREQUENCY: OK (Not Supported)
+        test VIDIOC_S_HW_FREQ_SEEK: OK (Not Supported)
+        test VIDIOC_ENUMAUDIO: OK (Not Supported)
+        test VIDIOC_G/S/ENUMINPUT: OK (Not Supported)
+        test VIDIOC_G/S_AUDIO: OK (Not Supported)
+        Inputs: 0 Audio Inputs: 0 Tuners: 0
+
+Output ioctls:
+        test VIDIOC_G/S_MODULATOR: OK (Not Supported)
+        test VIDIOC_G/S_FREQUENCY: OK (Not Supported)
+        test VIDIOC_ENUMAUDOUT: OK (Not Supported)
+        test VIDIOC_G/S/ENUMOUTPUT: OK (Not Supported)
+        test VIDIOC_G/S_AUDOUT: OK (Not Supported)
+        Outputs: 0 Audio Outputs: 0 Modulators: 0
+
+Input/Output configuration ioctls:
+        test VIDIOC_ENUM/G/S/QUERY_STD: OK (Not Supported)
+        test VIDIOC_ENUM/G/S/QUERY_DV_TIMINGS: OK (Not Supported)
+        test VIDIOC_DV_TIMINGS_CAP: OK (Not Supported)
+        test VIDIOC_G/S_EDID: OK (Not Supported)
+
+Control ioctls:
+        test VIDIOC_QUERY_EXT_CTRL/QUERYMENU: OK
+        test VIDIOC_QUERYCTRL: OK
+        test VIDIOC_G/S_CTRL: OK
+        test VIDIOC_G/S/TRY_EXT_CTRLS: OK
+        test VIDIOC_(UN)SUBSCRIBE_EVENT/DQEVENT: OK
+        test VIDIOC_G/S_JPEGCOMP: OK (Not Supported)
+        Standard Controls: 18 Private Controls: 0
+
+Format ioctls:
+        test VIDIOC_ENUM_FMT/FRAMESIZES/FRAMEINTERVALS: OK
+        test VIDIOC_G/S_PARM: OK
+        test VIDIOC_G_FBUF: OK (Not Supported)
+        test VIDIOC_G_FMT: OK
+        test VIDIOC_TRY_FMT: OK
+        test VIDIOC_S_FMT: OK
+        test VIDIOC_G_SLICED_VBI_CAP: OK (Not Supported)
+        test Cropping: OK
+        test Composing: OK (Not Supported)
+        test Scaling: OK (Not Supported)
+
+Codec ioctls:
+        test VIDIOC_(TRY_)ENCODER_CMD: OK
+        test VIDIOC_G_ENC_INDEX: OK (Not Supported)
+        test VIDIOC_(TRY_)DECODER_CMD: OK (Not Supported)
+
+Buffer ioctls:
+        test VIDIOC_REQBUFS/CREATE_BUFS/QUERYBUF: OK
+        test CREATE_BUFS maximum buffers: OK
+        test VIDIOC_REMOVE_BUFS: OK
+        test VIDIOC_EXPBUF: OK
+        test Requests: OK (Not Supported)
+        test blocking wait: OK
+
+Total for iris_driver device /dev/video1: 48, Succeeded: 48, Failed: 0, Warnings: 0
+
+For SC7280, the results match the SM8250 ones.
+
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+---
+Changes in v4:
+- Fixed building (Dikshita)
+- Changed H265D_MAX_SLICE to have the same value as in Venus, fixing
+  H.265 decoding on SC7280
+- Link to v3: https://lore.kernel.org/r/20260127-venus-iris-flip-switch-v3-0-7f37689f4b39@oss.qualcomm.com
+
+Changes in v3:
+- Dropped dependency on the sc8280xp patchset, this will probably go in
+  earlier.
+- Updated commit messages for DT bindings (Konrad)
+- Link to v2: https://lore.kernel.org/r/20260126-venus-iris-flip-switch-v2-0-b0ea05e1739a@oss.qualcomm.com
+
+Changes in v2:
+- Sorted out SC7280 Chromebook bindings (Stephan)
+- Dropped most of ifdef from venus (Vikash, Konrad)
+- Added testign results to the cover letter.
+- Link to v1: https://lore.kernel.org/r/20251119-venus-iris-flip-switch-v1-1-852369f66e36@oss.qualcomm.com
+
+---
+Dmitry Baryshkov (5):
+      arm64: dts: qcom: sc7280-chrome-common: disable Venus
+      media: dt-bindings: qcom,sc7280-venus: drop non-PAS support
+      media: dt-bindings: qcom-sc7180-venus: move video-firmware here
+      media: qcom: iris: increase H265D_MAX_SLICE to fix H.265 decoding on SC7280
+      media: qcom: venus: flip the venus/iris switch
+
+ .../devicetree/bindings/media/qcom,sc7180-venus.yaml      | 15 +++++++++++++++
+ .../devicetree/bindings/media/qcom,sc7280-venus.yaml      | 10 ++--------
+ .../devicetree/bindings/media/qcom,venus-common.yaml      | 15 ---------------
+ arch/arm64/boot/dts/qcom/sc7280-chrome-common.dtsi        | 11 -----------
+ drivers/media/platform/qcom/iris/Makefile                 |  5 +----
+ drivers/media/platform/qcom/iris/iris_probe.c             |  2 --
+ drivers/media/platform/qcom/iris/iris_vpu_buffer.h        |  2 +-
+ drivers/media/platform/qcom/venus/core.c                  |  6 ++++++
+ drivers/media/platform/qcom/venus/core.h                  | 11 +++++++++++
+ 9 files changed, 36 insertions(+), 41 deletions(-)
+---
+base-commit: 4c87cdd0328495759f6e9f9f4e1e53ef8032a76f
+change-id: 20251119-venus-iris-flip-switch-d59a3fbc6a4b
+
+Best regards,
+-- 
+With best wishes
+Dmitry
 
 
