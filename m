@@ -1,167 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-91340-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91341-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id YMjaKYdifWkrRwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91340-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Jan 2026 03:01:43 +0100
+	id YOMVFWpufWmTSAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91341-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Jan 2026 03:52:26 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52369C02F9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Jan 2026 03:01:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E81AC05DE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Jan 2026 03:52:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1A06E301546E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Jan 2026 02:01:19 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 992A5301BF44
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Jan 2026 02:51:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0BA325B31D;
-	Sat, 31 Jan 2026 02:01:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42F602F60A3;
+	Sat, 31 Jan 2026 02:51:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I9d0gHCV"
+	dkim=pass (2048-bit key) header.d=gondor.apana.org.au header.i=@gondor.apana.org.au header.b="bS7F/nbd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-dl1-f67.google.com (mail-dl1-f67.google.com [74.125.82.67])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from abb.hmeau.com (abb.hmeau.com [180.181.231.80])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 624EE2DD5E2
-	for <linux-arm-msm@vger.kernel.org>; Sat, 31 Jan 2026 02:01:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0E014A60F;
+	Sat, 31 Jan 2026 02:51:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=180.181.231.80
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769824878; cv=none; b=U+MJp8vRQkRcr8nAuU0vHxv4w8lru+p/4l+Ah5oHo4l7+9kAODfluztifQk1SWlgUJduf09A+BFsL9Q1MkBrl7R3J2mRsPQd7fYpMQUl3xl//ZEiTCGcf2QVMJFWLlmkmEoC/C/Jv/ENUi8qL3851n23JU3kM2jUmXcCvof0BAQ=
+	t=1769827872; cv=none; b=PzWz7gASktKCPizKq5TcPjfl7Q4pFx6WISzp5CyHh123tNLiHuekI1uTBhEXQq2b2Muj2osmTTGIgoQKzCMNaAplgQ1pMQOu5QJN2Eb4t1gJcmvH1J3j8v7FuCsh4/CerAilq/ypoQ8jPL+OMwPHlOFAQjo/LtRwZxHWALag5eU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769824878; c=relaxed/simple;
-	bh=92T2NSenuzpQ1IeP2UgYsAzY+M+FQA1qO2qwotD+glA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Ta7uo93Jk14f+mlLE6G0gN0Ssem3I0EB24BZLYJsJ70P+H/301rjcvijOggSowv1gj2mE2qdMQEk0YUw8KvENsiJ1emRnTIuRd3KOuRpl+z0OEcJXXbLgK+7vYlLGaWwg7ehdhrc247VJFAGibkxbEcpahmMTYwo+dMF1WWVJN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I9d0gHCV; arc=none smtp.client-ip=74.125.82.67
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-dl1-f67.google.com with SMTP id a92af1059eb24-1233c155a42so4696493c88.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jan 2026 18:01:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1769824877; x=1770429677; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=uXzjo1qPCGsNjEppRvNKaCpQ8NopBy4yIETlX1eZ16g=;
-        b=I9d0gHCVSbDKxPb3iaDrzAq7DT05UKy6ZXgC28ObFI4yJ8ZkH0b27J5mwDH3AqRa7t
-         KlXdtVBYv089lx0PVhZ2IIXyQqXxJ1RV4U1xJT3SZFkHqs7k7/GJWcIARFznuz0nAbN/
-         6BD6hmjWGROcBUbZhWlJMWhAlLe3oc5GfyKfAfIqwurcbwiqIOAf9lxQLiC5b2gfWdmB
-         njCSj1slqwb7h/Cr/ub4dJxx2MqlTn5Hvpk8UHFidOJbsFEfMyNvbpBKpVRTHI5kCfT6
-         qb31mP71uRzPn6p+j6QVjYbCDYaiEmKnT4zCWbM5kguneV0Q9sjeF/CrbRmKnKkQvxDQ
-         JZuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769824877; x=1770429677;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uXzjo1qPCGsNjEppRvNKaCpQ8NopBy4yIETlX1eZ16g=;
-        b=HYzUqIgwjRuH0OmfNOodt4oV9hgrQ1VCAPAPYmYksK71LAzxLUDXGtN03eqjqNwobG
-         ZGxXlNpeRvfePq2UpiIE+bKYRvTLUoQqn3WJfV/+WfxNvi/E6SrMavlbw1M+sgGyw7md
-         bdGfubc/He8NybKc9lPF+JALy6FYrZ8jtiHQu+JD7NCStpa9+CEpy4LT+q4Vr6rVSK1r
-         DCS728jEUg92JMseahUFVoGh2dMC6bPd+kBfwmvmhapHxLYI1G6JKpbUbKaaI+OfJFAj
-         CWA/6YCtU7CcMULADgtpOw+yfXfDSb5F2iF7P8ONWPMzXM1GxwD/IfVkspgrNxIjcVEc
-         CqOw==
-X-Forwarded-Encrypted: i=1; AJvYcCXO6SkYJTH+vGrsEVCPK5wsTCBCSO4zCCtrlh/+HsvcHtULJTZ7YJYAMOHlvg7U/E+FBi+5u9nPRAQJJOZf@vger.kernel.org
-X-Gm-Message-State: AOJu0YxBmIun896OdHrxFzPZgmNx5UGEinosCiZqlgeBtb0D0mG0ML72
-	2EjXZ8ZJh0m9u60/pxKCd4QMGu6wQNBY7T3N7YeWRu8Z1uKE7XaqK6iH
-X-Gm-Gg: AZuq6aIzXXFPmpI9qBP60X2Bx4ntkrOy70q9TuRxg0to3c4E7Z1PaQZLBjduNzrBuwI
-	i654OjCZ/Eevq6qVcCXehdUTMmW8Kox3gKAmUsEErUBtTFh7NowGxCw4q3TKQM/+mZu06J2KM+t
-	/GLVbjJ7OAbIjXaX/XhBXizaAuRP8OmWlRbq6bsY9Vm04OOSKb9fqgcyi8UBzQBWi5hcokJYtQN
-	MSkOyeeRnv8FNpBBWkl//o4CM4QWbqFO8H8vCVgSFGs/l+2EbBgC5eoSeFWU5rUQb8dDp8bFeN4
-	wyiPXUo4U/zUtQou462WbgQLv75Bc8IsW6zWRmU+wFYgdNEkQiD3COMCBxCPihtmw5vJkUOqjv2
-	d97Z/8ktcF/6o8NhX+2T7na3HWFXd26CW9gyn38JCoGRHNFK55ZolZcrpWQEvAztJJpJykhhAtB
-	T1x3NOo1Q4/Sad/inrsRc6JAO7/l35IcH7KNfa7Zy7xH+TDtFuebYZgCA51k479xVHAa49TXbic
-	q+CASgy6nC2ihpSiGU7fT06lci+XSlghdZesnKYZMbAPGMTlhSjAVakicwCs9qDdpiwNvA4FFGw
-	NOfZ
-X-Received: by 2002:a05:7022:4585:b0:119:e56b:989d with SMTP id a92af1059eb24-125c0f87329mr2407082c88.4.1769824876553;
-        Fri, 30 Jan 2026 18:01:16 -0800 (PST)
-Received: from ethan-latitude5420.. (host-127-24.cafrjco.fresno.ca.us.clients.pavlovmedia.net. [68.180.127.24])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-124a9d6b663sm12290534c88.1.2026.01.30.18.01.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Jan 2026 18:01:16 -0800 (PST)
-From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
-To: linux-sound@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Cc: Ethan Nelson-Moore <enelsonmoore@gmail.com>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>
-Subject: [PATCH] sound: wcd-mbhc-v2: remove unnecessary module_init/exit functions
-Date: Fri, 30 Jan 2026 18:01:10 -0800
-Message-ID: <20260131020111.46108-1-enelsonmoore@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1769827872; c=relaxed/simple;
+	bh=z2IUnKDxCffO/oajqBFwUfRPGVi7JlF9z6BsZ+0SCVY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=d7WxjgSEnXVqQ6qDJBsIy9Fjf36vOLgVzNJJF83qvT9u/22prkJWqhUqsbr5+2L9HNJz6SWUGXLiUNFD5d9RMX2iualtYvG8KfJ9f9E78pArvmQHdMj9tilQmMp1dVdLqRFtvuL4XJA+hDfOKEg8EPvf870eYcxEsy9S5O8WHXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au; spf=pass smtp.mailfrom=gondor.apana.org.au; dkim=pass (2048-bit key) header.d=gondor.apana.org.au header.i=@gondor.apana.org.au header.b=bS7F/nbd; arc=none smtp.client-ip=180.181.231.80
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gondor.apana.org.au
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gondor.apana.org.au
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=gondor.apana.org.au; s=h01; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:cc:to:subject:message-id:date:
+	from:content-type:reply-to; bh=zHrmQwFLqA3OLiwbqOe/h4SuxVGBdkNc6DkN33Q2rhs=; 
+	b=bS7F/nbdMYLt3Bs8D0c9yg4djWYLv7cpXsdW3jahmAHVbcm9vR/EYuWY6+cjmYKKO7L7IevJO5c
+	uSwhPL7dPgEEXO3hyshrJuzl4H+RLnxZrM/nW8hNfdwlvbLHvZu6EtzBpDEcxOSn8ZfSYCzEBQ3Fc
+	IqWGqSgRkQjoj6wf3MxFIhAW2dJSrkhud0GHa4NLx0zB4+lSLaTHOXsG5MdyBnlsx9mijQomzW4d9
+	nTH9yyU0c4SzDra0tftXwTNEE8HCOs7a1yTC3vvYhyWz6k9pNu0IXyGeZJ+aY6NUbLV4z93YFcG28
+	nfoHo0XAM147lFuM6SLWYzDHEMx1/JE0sdRg==;
+Received: from loth.rohan.me.apana.org.au ([192.168.167.2])
+	by formenos.hmeau.com with smtp (Exim 4.96 #2 (Debian))
+	id 1vm14N-003Rv5-15;
+	Sat, 31 Jan 2026 10:50:44 +0800
+Received: by loth.rohan.me.apana.org.au (sSMTP sendmail emulation); Sat, 31 Jan 2026 10:50:43 +0800
+Date: Sat, 31 Jan 2026 10:50:43 +0800
+From: Herbert Xu <herbert@gondor.apana.org.au>
+To: Luca Weiss <luca.weiss@fairphone.com>
+Cc: "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	Bart Van Assche <bvanassche@acm.org>, Vinod Koul <vkoul@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-scsi@vger.kernel.org, linux-phy@lists.infradead.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Subject: Re: [PATCH v2 1/6] dt-bindings: crypto: qcom,inline-crypto-engine:
+ document the Milos ICE
+Message-ID: <aX1uAxZmO0ZR8c9e@gondor.apana.org.au>
+References: <20260112-milos-ufs-v2-0-d3ce4f61f030@fairphone.com>
+ <20260112-milos-ufs-v2-1-d3ce4f61f030@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260112-milos-ufs-v2-1-d3ce4f61f030@fairphone.com>
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_MISSING_CHARSET(0.50)[];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+	DMARC_POLICY_ALLOW(-0.50)[apana.org.au,quarantine];
+	R_DKIM_ALLOW(-0.20)[gondor.apana.org.au:s=h01];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_CC(0.00)[gmail.com,kernel.org,perex.cz,suse.com];
-	TAGGED_FROM(0.00)[bounces-91340-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_FIVE(0.00)[5];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-91341-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[enelsonmoore@gmail.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[8];
-	NEURAL_HAM(-0.00)[-1.000];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[21];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[gondor.apana.org.au:+];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 52369C02F9
+	MISSING_XM_UA(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[herbert@gondor.apana.org.au,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[gondor.apana.org.au:mid,gondor.apana.org.au:dkim,apana.org.au:url,apana.org.au:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,fairphone.com:email]
+X-Rspamd-Queue-Id: 9E81AC05DE
 X-Rspamd-Action: no action
 
-The wcd-mbhc-v2 driver has unnecessary empty module_init and
-module_exit functions. Remove them. Note that if a module_init function
-exists, a module_exit function must also exist; otherwise, the module
-cannot be unloaded.
+On Mon, Jan 12, 2026 at 02:53:14PM +0100, Luca Weiss wrote:
+> Document the Inline Crypto Engine (ICE) on the Milos SoC.
+> 
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+>  Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 
-Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
----
- sound/soc/codecs/wcd-mbhc-v2.c | 12 ------------
- 1 file changed, 12 deletions(-)
-
-diff --git a/sound/soc/codecs/wcd-mbhc-v2.c b/sound/soc/codecs/wcd-mbhc-v2.c
-index 26ebcdadeb7d..0c842aaa7eec 100644
---- a/sound/soc/codecs/wcd-mbhc-v2.c
-+++ b/sound/soc/codecs/wcd-mbhc-v2.c
-@@ -1631,17 +1631,5 @@ void wcd_mbhc_deinit(struct wcd_mbhc *mbhc)
- }
- EXPORT_SYMBOL(wcd_mbhc_deinit);
- 
--static int __init mbhc_init(void)
--{
--	return 0;
--}
--
--static void __exit mbhc_exit(void)
--{
--}
--
--module_init(mbhc_init);
--module_exit(mbhc_exit);
--
- MODULE_DESCRIPTION("wcd MBHC v2 module");
- MODULE_LICENSE("GPL");
+Patch applied.  Thanks.
 -- 
-2.43.0
-
+Email: Herbert Xu <herbert@gondor.apana.org.au>
+Home Page: http://gondor.apana.org.au/~herbert/
+PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
 
