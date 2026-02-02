@@ -1,207 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-91566-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91567-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id QNN1JlUvgWl6EgMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91566-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 00:12:21 +0100
+	id +9efFTk0gWlyEwMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91567-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 00:33:13 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id ECEF6D29C3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 00:12:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A40EFD2A8F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 00:33:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A1C13300638E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Feb 2026 23:12:19 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 303073014558
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Feb 2026 23:33:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18F2C388869;
-	Mon,  2 Feb 2026 23:12:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0E3C2D8DD4;
+	Mon,  2 Feb 2026 23:33:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eFMlGa5R"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QMtlPAz/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A6AB38E138
-	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Feb 2026 23:12:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770073939; cv=pass; b=euBvkTGfjVFKHpBqYJKDT58/5JvC819howS4pgxLG0CRYj/KM7NQNRlt6Hdi2k6JQuKQ0kIjOeYKvmQ/1n/ErMy2ZUinwiXPH5+Dgi9NaI12Dvse+XDt9ShyCi+jF1F0BIoDW1ynzu24utg3i1he9JNou0KWU0AR9SYL86nbliU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770073939; c=relaxed/simple;
-	bh=EfK6DcBE6eevbHz58EN6/+MyCdckwGHF/ICtR4f7Nak=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Slan9173n9pWXZgr3OooRKfBXMNJnYRfBf3xcHzPpvfmUU5y/jWQfV3wGrcuOBBdRrAge3p1yd/Vs6riSiKoRdPZk9bUBRxtphOt6Z08zoP1Jb4rQLBfWtF2bjlFa9u4pgQAQfYQNko1Obv47VPjCfPqe8/FlowH++oozy12sds=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eFMlGa5R; arc=pass smtp.client-ip=209.85.167.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-59dd490be5fso6510542e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Feb 2026 15:12:17 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770073936; cv=none;
-        d=google.com; s=arc-20240605;
-        b=coYCsmUj6/ixWXXLYqxYmQDxqCmAVkT7c+q8UCNN8d50DUxzpTRUbiZl+kWcpdQ8EE
-         XIhTl1Jms5zB6SEGT06jinF+EuNLtj+m8ZIkSdahLgAhbtkG2R93c7wVLFcI3rLVHYtD
-         c8cZMwcThY3iqEFjX11PN31SHYsbQP66P+z5RUIGgDw9X5jCt3NN9K0DMJdfoPgph7W8
-         0zdVfEdXh6UQVn3ejTzA86d6u38FByDGvFAAxyJvzfPBEIzVxMObGwkDfxGy5MJnyj+q
-         t1FohWvNGwKtuKcGSspJFNF0/RcIng8jsQoEZfDBfCjmHnS0FRcHmLeibT18ybHjnT2u
-         w9aw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=EfK6DcBE6eevbHz58EN6/+MyCdckwGHF/ICtR4f7Nak=;
-        fh=tQWoptCR9ukBybEjs4K/EujaVZmF1DL7tpfWgXafXlA=;
-        b=FK6RUuu/vxE/rHnBGLawV7ZaBBYCMkEked5lrNg+puddvv5NxAAVQnuMrBEYZm8MJc
-         5arAMFfMsYoGtlj+Q/q1n7Rzsp13j1TWFy+jcZeXXMt2ID2bBTeWAuAW1DIixLA9yUSP
-         z2oYzOuQnl2I8lm1SsQLdw4/h1IhPMm/2dHmyxQiLIAc+8mRcU4LxXew2gXK0EZztkRM
-         BuJBvyR2frOEMBFdQmVWCk77mlDmZphlWAUXAhtsuz38E/mFVH8TuTgUVP0SAv2jZM4W
-         5czgNLOprtWeijVwePrkZs4BSSeIU2r7N9ijQWmLHIYiFNfnNYKXus2jVnybtkHNvSgr
-         iPNA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770073936; x=1770678736; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EfK6DcBE6eevbHz58EN6/+MyCdckwGHF/ICtR4f7Nak=;
-        b=eFMlGa5RVILiNqIvlZIUzIH3N1UJ3h6nS9zqARKzpqXNxfmNxoZXjGAlOt6lVnyzdP
-         bCuiv/8NSHDQT5g75sNNs4hL3GMJIAoc4IeezWzP0bblSxtnQrU9UZo95B2b00MUgfq1
-         BIbapBtliNQPgY3bQZfWNbRj2LIVF6arwq/pKxMKhsJAevAaGfa8t4LcjTvZR5kZJz+G
-         PGdsECS4XWFZGEOjoM4Lxo85NFo4cj1JyK3BqsQ1msE9kr3JVnR+j9sFtRkiAimELYyH
-         9Wkq4g+ZdamaHk8ctuexSS7oTaC/ZK6mOt5WVLnq4NUAaaYX2/95EcUVdNneX7tKVEK4
-         o+UA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770073936; x=1770678736;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=EfK6DcBE6eevbHz58EN6/+MyCdckwGHF/ICtR4f7Nak=;
-        b=PZv4UG+yuU3/Qqz2QBRNeWjPHdt9EsE1bMtpalSnNGlLMT9p3DvfRmBiImJnIeRRl1
-         fHXfdtPF/0T9LokrrLd6QZdMErXzmSXm4ugF6WNQZuUGVg/Gb8+LKxr0vzG9B7kNzfXT
-         7tMXi7Rxck5RKyDgycAikZUaMu1uf2ZY6Cr7bkhuwsu2ZhXVkKBnaLn5rGIFiXVXCM0O
-         iTmK7GaYM3KVGbpKJcgzApID2fi2RSkHCBt7ApW6OO4ddEizKEyoRdz3Gv4ahn1RWr+x
-         jr8DoyVdQ5uv3rjAhXDOT2BO2BbcgM+ELBAsis4hyIft0y8Po1HGZFFE4p4XdXwnCaca
-         hS1A==
-X-Gm-Message-State: AOJu0YxiK0eS3EfqLNM42w3MJYGeiWpqZ20rlWZ8rNeRX7n455oira1Q
-	UNJHQwYemfJDXULtBXefD7Fu/wucy2+5hVNmcjNdyY1ADFDpqNq8OvLUI9DTbIAKygHkst/LIKC
-	TWWo5iped0uJ85+VpeR2scIKAzpRsCfs6og==
-X-Gm-Gg: AZuq6aKumLeCppBoGdKPNbBFQOTSg8UZ/kmVVVgaWjbAKyDlyq7ilSM1Qu6OPvUUdUD
-	ZkQhclpTU0R+R+g/0yC4EgQqiQXUIppF11DH4B9MR5f38NaQX1frQjtJHhQceRhPFru6/5CkR9p
-	wEz89jWVZ9UFITHODlap7tZNP03IgQLymSbjIxJ3IfQgQMtCBHctaoKy7RZ0Wj0sQQblAiiwdxl
-	t7WNXuXZ0qa7UcfNW2EMmOeGmz7l6m7Oh3N7KURlJSLsVNYdC/9L5XkjyGPQyVxKTxWZzigQ0mI
-	4/d7elhoeVlf6KzdWuEwCgyfI5nltGktzeffclbs0+bRsZNq1DxjoEEowHy1wzHMEgo=
-X-Received: by 2002:a05:6512:23a2:b0:59b:9ff8:468e with SMTP id
- 2adb3069b0e04-59e1641aba6mr4576759e87.31.1770073935428; Mon, 02 Feb 2026
- 15:12:15 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D378287276;
+	Mon,  2 Feb 2026 23:33:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770075190; cv=none; b=o343PrKBQ7Bhc4X+WtrnLNOQeOmQFBYXzAv8lnrZhdsojyxcWec2n6MvXOrF57frvyLzTxomD82ZT/3tK1/pkeK/L6sV++Ko2IBMaPufwwI8RfwIx5J9RFrMAyPnP6Ki5RoF/9w59C8VrgpQwXKtKrMAySgqLlay6rksvbBAwes=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770075190; c=relaxed/simple;
+	bh=eh5tVOlTZmiBlgQfny92fb/GJtH8eyR+7MNnbacuOBc=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=IIQZmq2JSFdvd0j5/IFOqFfQhWbeAjyOosI32vUUg0JbaLCREXLqI5jKB7ZzL1spCsn6lxPxV+76xVeWM9cf6lv/Hwqvb4ngPAZ5IIG0nTr8K6XGFra2IT9jXlw1gvTyOhZnv5Lvg1/I1Mm8r6AbiznFkVd0ySEbORa1byVXtpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QMtlPAz/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BABF2C116C6;
+	Mon,  2 Feb 2026 23:33:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1770075190;
+	bh=eh5tVOlTZmiBlgQfny92fb/GJtH8eyR+7MNnbacuOBc=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=QMtlPAz/7Yo7x2Y2pI/Bp5RawUhlHbEfRK2/gv0evW5Se4LBTrPkx8MGsREu2jC8A
+	 oK5bo7ZZh6ggEF3lIfXN/MRKpN8d1Cv5l8S1QO7OjEXlE2tijcKNwhrmkQoviSF+v7
+	 ia6Lxr/Iqt9qAYVojJGxz52goyNVcvPTgfoSvlYu4bm0N92XF+3+iF4ZnJ166/0jHA
+	 g9dRda6LXiakNwX9bVAtbN4yv4OzCcLIAqI4RDA17/Wok6J2k2Zt6lZJrWdF2uN7wv
+	 zuNik2IsmrQ+43/cOXd12/wphfD1NWERictjMtvvI58EgBCcYF4WCW2b/kVqqRqbBN
+	 gT8elTLP9ZKuA==
+From: Mark Brown <broonie@kernel.org>
+To: linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ Ethan Nelson-Moore <enelsonmoore@gmail.com>
+Cc: Srinivas Kandagatla <srini@kernel.org>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, 
+ Takashi Iwai <tiwai@suse.com>
+In-Reply-To: <20260131020111.46108-1-enelsonmoore@gmail.com>
+References: <20260131020111.46108-1-enelsonmoore@gmail.com>
+Subject: Re: [PATCH] sound: wcd-mbhc-v2: remove unnecessary
+ module_init/exit functions
+Message-Id: <177007518848.976577.14331557943658557012.b4-ty@kernel.org>
+Date: Mon, 02 Feb 2026 23:33:08 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CALHNRZ8qSOZKwmBznRqvAAjMcQ265iEdBXEA2RSkSBViKO=uEA@mail.gmail.com>
- <aa90c5ca-72d7-48fb-b3b6-4be8a51dc0cc@oss.qualcomm.com> <CALHNRZ_SjzLVoZ5qf1tzDFqRtnZWRaBWyytyrjA=dbyHWekAQA@mail.gmail.com>
- <24f770ff-e4a6-4f8c-be72-26ff5cbf8d1a@oss.qualcomm.com>
-In-Reply-To: <24f770ff-e4a6-4f8c-be72-26ff5cbf8d1a@oss.qualcomm.com>
-From: Aaron Kling <webgeek1234@gmail.com>
-Date: Mon, 2 Feb 2026 17:12:04 -0600
-X-Gm-Features: AZwV_QitExTF5ww8P-DTj9JcWiVrzMue3Fw1hdCYSO6n-pJzZi6a7oAcTz021Bc
-Message-ID: <CALHNRZ_79_SvsgeFu-n4txsRAcj5Tw+UOza12vZC0=isWA28Bw@mail.gmail.com>
-Subject: Re: Questions About SM8550 Support
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.15-dev-47773
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWO(0.00)[2];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-91566-lists,linux-arm-msm=lfdr.de];
-	TO_DN_SOME(0.00)[];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-91567-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[kernel.org,gmail.com,perex.cz,suse.com];
 	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[vger.kernel.org,gmail.com];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[webgeek1234@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: ECEF6D29C3
+	RCPT_COUNT_SEVEN(0.00)[7];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: A40EFD2A8F
 X-Rspamd-Action: no action
 
-On Mon, Feb 2, 2026 at 4:36=E2=80=AFAM Konrad Dybcio
-<konrad.dybcio@oss.qualcomm.com> wrote:
->
-> On 1/30/26 6:13 PM, Aaron Kling wrote:
-> > On Fri, Jan 30, 2026 at 5:01=E2=80=AFAM Konrad Dybcio
-> > <konrad.dybcio@oss.qualcomm.com> wrote:
-> >>
-> >> On 1/27/26 11:48 PM, Aaron Kling wrote:
-> >>> I am working on the AYN Odin 2 qcs8550 series of devices, specificall=
-y
-> >>> for Android, using mainline kernel drivers. I have come across some
-> >>> missing functionality and failures that I would like to inquire about=
-.
-> >>>
-> >>> * ABL fails to load a dtbo using a baseline dtb unmodified from
-> >>> mainline. Using changes described in the gunyah watchdog thread [0], =
-a
-> >>> dtbo loads and the devices boot as expected. If any of the changes in
-> >>> that post don't exist in the base dtb, abl will fail to load the dtbo
-> >>> and go to the bootloader menu. This appears to be an issue in the
-> >>> baseline abl code, affecting all devices of that generation. Would it
-> >>> be allowable to merge a change adding those changes to the sm8550
-> >>> dtsi, allowing an unmodified mainline dtb to work with overlays?
-> >>
-> >> ABL is.. picky.. to say the least
-> >>
-> >> Could you please try to check if what once worked for me on a
-> >> 8550-based Sony phone would happen to work for you too?
-> >>
-> >> 39c596304e44 ("arm64: dts: qcom: Add SM8550 Xperia 1 V")
-> >
-> > Is the question if the devices boots without dtbo? Yes, that works.
->
-> That's nice!
->
-> > And fastboot erase even works too, though that may be because I'm not
-> > using appended dtb, I'm using dtb in vendor_boot. The setup I'm trying
-> > to use is a base dtb that has all the common nodes for the AYN qcs8550
-> > devices, then a device specific dtbo for the diverging parts of the
-> > four devices.
->
-> I'm not sure if that's a good idea if the bootloader is (effectively)
-> broken
->
-> I'd consider building full DTBs for each device
+On Fri, 30 Jan 2026 18:01:10 -0800, Ethan Nelson-Moore wrote:
+> The wcd-mbhc-v2 driver has unnecessary empty module_init and
+> module_exit functions. Remove them. Note that if a module_init function
+> exists, a module_exit function must also exist; otherwise, the module
+> cannot be unloaded.
+> 
+> 
 
-My end goal makes that difficult. I'm working on LineageOS, an open
-source AOSP fork. I am attempting to make a single build target that
-supports all four AYN qcs8550 devices. Android puts the base dtb in
-vendor_boot. The concept supports multiple dtb's, but the ids the
-bootloader uses to fetch said dtb matches across all four devices.
-Even more unfortunately, this is true for the dtbo id as well; the
-vendor did not set unique board ids for the different devices.
-However, I can pull some tricks to use a variant dtbo image per
-device. That concept isn't feasible for the vendor_boot partition. So
-I'm taking every reasonable effort to support dtbo's.
+Applied to
 
-And to be fair, beyond these node name and label requirements, I have
-not seen any breakage. Once the bootloader is convinced to actually
-apply the dtbo, it works as expected.
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
-Aaron
+Thanks!
+
+[1/1] sound: wcd-mbhc-v2: remove unnecessary module_init/exit functions
+      commit: 090c8844e5d454a898183ec4a7be8a75681ed262
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
 
