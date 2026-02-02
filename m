@@ -1,376 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-91429-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91430-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wEPODxVPgGkF6QIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91429-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Feb 2026 08:15:33 +0100
+	id 4MzGJ79TgGkd6gIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91430-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Feb 2026 08:35:27 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6E81C91D6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Feb 2026 08:15:32 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 427A9C9314
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Feb 2026 08:35:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 778073003356
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Feb 2026 07:15:31 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id F1C9630056D8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Feb 2026 07:33:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 826B7286881;
-	Mon,  2 Feb 2026 07:15:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC3822877FE;
+	Mon,  2 Feb 2026 07:33:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="q9qUJOzN"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="NV796G2W";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="KfP5lUpS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yx1-f49.google.com (mail-yx1-f49.google.com [74.125.224.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C782F1F181F
-	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Feb 2026 07:15:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770016528; cv=pass; b=h3Nwa+fai093pOSQOeFfyuM2KHOwZLFlIFlmADhWAxRDq87D1UV1U77awq984c03reVuVjquCrwGOvKpHmCm79lcBgbOyDPJ34vDERIBKerwnKjUuo2fEdYeG3QiY0Tr0cf6AyfyNS0dmdfFPvrYLUPUOXwwJBUhVrSyTWT+AbI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770016528; c=relaxed/simple;
-	bh=ztmSMRxEEhqHKEigenhjjYGV8aFdHmjSmPiuWDxrdqo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GnEnWsqa74hUptqDgr/cGlrhrsgYUfCnu+STH2l6YBr3h3ou6wVFCLvSg3BYORNfMboQUn2jBkqcjii40ivl7JGg0GvhrFG209/qMgOLhP0xV8LFWsbBEG6aaeD0oyQRoImRLVz/hWZfMe173NlV2lDl5Veu6OacCErQEnIcNG0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=q9qUJOzN; arc=pass smtp.client-ip=74.125.224.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yx1-f49.google.com with SMTP id 956f58d0204a3-64938fce805so3495326d50.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 01 Feb 2026 23:15:26 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770016526; cv=none;
-        d=google.com; s=arc-20240605;
-        b=I+PqmZEXYIfMVbRP+8TKEs1bg3CjgSXPG2Ij+7e7FFq3EbcOa1ICO4V5h5Tbz6aGRW
-         tCA6m0Ivmq+r385+VeTJnhcjWd2l0aUVMHsXHAoCxzaF6GG6b5MocrDJzu/BlWTVDsfq
-         iIJF3+Ss/rT3JdkVrev8L9TZWfUK2xdbxGIFegYYwkkRM1rFP7Znx8PKCQ1MlhuIdaa8
-         Km9ka4BXAIfEwYxLrXaclCyyPYXk6n/+x3gneWfXct0wUgVkwq0Vltob8GRlkpWB2Y9Z
-         0d/5HdFcAfAn9XLb5eH/8YlHxCjOZ17ZeoMn5+gfJmrM8kUIU9rDZUhxrUP6hsKD0mwb
-         WXPA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=AOhIjuxpp6TSu7OUXd09SI4wwYt5TFMCJ2RUNnmG8u4=;
-        fh=y1ENJ0n2JGLsEIdjGAK+AcF6m6QpNF+Dfnxqek228ho=;
-        b=UzhzMLcROF/qyjBJCJscgdXXNmibH9O7eV52NVBGLPDexl3csUUVbV1SjYbI+Jy1Dq
-         2HwYqqTD9V37RBez+M9OyrTLR2hldAiOkd0ADI+kSROl6n/Vc1I3m9rZ2Gqmik2HtFWj
-         BBPVomhuvZLZN6CO50BZqnu8pZYcdIWnby6hcnydh2wvYymfCxtzLhHNTaPNcXI9uGpV
-         cVG+hIJ6n4RA5/yRrKGFhwc62xnk5Pbg1igrBDdJwZumVxgCCNHY9rJ1AsYlxz36/Y3o
-         JJ3QvV1j7RkK52f57E7a2SP9dxUfRreKnTkQAagGLoxN66zYQJL0PRN5Lg7IEGPmaZwU
-         DaCg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 921D0212548
+	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Feb 2026 07:33:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770017612; cv=none; b=odFJjBAe+HM9MO9YuNZe6aB9fAre7l44e9UHz1K5ECI0n6o90suhni9Bnl8UYwXZCNrCDza5gs/A6QZ0VLwPVZpXl3T9ZKLcXI6qHDxhjEKQI6PGYFtrtufDALWoWnUb+1gKvmcBJB5X6LrZeYj4PQV0TZuqqOoe27B/3D6WExk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770017612; c=relaxed/simple;
+	bh=+wneqpHrH/TNq9lRs5i9oiuTpQ4P5Xi7INyfogQXS9c=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=WVa9OjVqgDEhYE1M++7h7AVxSSIfRfgvQJku2Q/vTAGxPPheDHiLrGiWqUAfbrGr04+QiEfh/4hQqlSW2HhxyLWcBOSDHHaXWyknD7JbLfskaMjQupXamcNYwLnEYHWIwS7YuMP/mpQS8/DXFmcD7HxCtsX5ZSDRfu9ZAqU8WqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=NV796G2W; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=KfP5lUpS; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 611NuUmq733449
+	for <linux-arm-msm@vger.kernel.org>; Mon, 2 Feb 2026 07:33:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=yXdntplLKF7U4FV3mgbK5Q5DtyvnneIEhh1
+	dZ2ooHEE=; b=NV796G2WBG/xOJrwJn/XNGE/wT5P6XBWufo5yvZMhksRxNMuWQP
+	rngH1HAldJMxUtLqs9iHzI7hOwL/dHiTtyjFlI4kse+MxG1fxgy2KIoex2JT4hN0
+	B9sQcdLaIj0HPtPhBm7iVWHlWCXde0HB5HUlUFHvd/33NtnHe/vOqHlMTHpm2RS8
+	NQg5rL183qP8yu+CXe4j7DDfIlKNNzJJKorxj5UdAPyx4jL0SvcMOZ60UMvlslP6
+	E1KEaecOrMrVgQrBczBZ1S6oh/T06OhPmUEjT8ZD6rtx3M0ITOF4ysqA30PD0uUT
+	cWealD4avjJzSXDEznql03lrUKQNNMaUqIA==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c1b17vd03-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 02 Feb 2026 07:33:31 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-3545b891dd1so3532662a91.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 01 Feb 2026 23:33:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1770016526; x=1770621326; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AOhIjuxpp6TSu7OUXd09SI4wwYt5TFMCJ2RUNnmG8u4=;
-        b=q9qUJOzN9eWvvZcg5r+oJ+45qKyBpXOJSTOwZcfva1YIIpKCcCaZEu6QwQVu9SdebW
-         SpvV3wff7rR8UP+pCdZGFk3a9wD4euLLjLHTG70Bfnd5eItNWk13+o3KQkGiuL1AomTh
-         Cp0qd3wO32R74M3hZK+yVSKl88fnh1JqbnizN6sMppb99OxOHCAhhsxIFATjTHItDGd1
-         TLCKXDqEVRO2Mp3skTR0mgTg1SygJ49gQLgO+7JHr2sphBC6HV0IxXbVRypS+VhvepDo
-         2WdXPlCgB1vnLczO0QHg0n60j1AJHhuQz4QFBYgV4JHDFO9JDw2ZLDpmQnNGO2wruw+Q
-         XSuQ==
+        d=oss.qualcomm.com; s=google; t=1770017610; x=1770622410; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=yXdntplLKF7U4FV3mgbK5Q5DtyvnneIEhh1dZ2ooHEE=;
+        b=KfP5lUpSjr0Ce331G7zfK6FqAKJqMeo7K9uuMQyjOetNU3kVBaY6vYMRtMzTN+5fZG
+         N5dbiouMMlvGgnKmyRzPn7RnIA7Qjdjoj4hQv9zqs/QEa1odeqb8hN4PP78h9dbwbHjz
+         oN8Bbs0N3sFuRXeA6iztqqVKAWyFH2HmcZaa6dzN4X9T/ChXO61WvYUWLtY+b7oLWaFm
+         zKZ5YsGJrKITLXuWLB3smfICXS9pH2rzzPWtDahW/vZqdTcBo7Bl2WW8fWsKLNgcr6NB
+         lFwt5xVabbeuyc0u6AMtcSFaHhCsRyC0y9IX6Fh3iZteW0lV4foU1hG3rdn8NWm5/Xhp
+         0TIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770016526; x=1770621326;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=AOhIjuxpp6TSu7OUXd09SI4wwYt5TFMCJ2RUNnmG8u4=;
-        b=Z7fFAVElPRCn0OZrdSBWDSGS5bK063Io7VEWc1jiBT7rZLgd18p3d2hf5A7Ul3+sl2
-         PpUQRXcQhazpwhNGaAQwWlZP/L4M77B4Zpn83mOMLpYw6Ixl8rk4KAaK1WslOn0iPi3n
-         IkRus2Q4doTW148qSwUK95Ujpxco5LclvZVCSHZCu1JE4HAKh/hGdAaBGZGSPOFrgLF6
-         ZtTtjgjG8cXRw6HLlOzvov3bu2leACjL3hRlrNzbvreBCaN0NzprWXvE2pIHIYTkLLbS
-         a3ONdh9VppWh5G9hnwNH3m2z+c4TghgGJzn8//UPYll73ALfhWuzIN2zYxZGfHsA6ojj
-         uTLA==
-X-Forwarded-Encrypted: i=1; AJvYcCUT9OI8puraqRNhGa9vdiUOvjuVN7R4bueD4SZwkFs8cSn2h0+8+Og7nE8jhbrfmYm52Airn91/xuvU6tIo@vger.kernel.org
-X-Gm-Message-State: AOJu0YxSh7PyxHyK/aI4xnBCRElxKjZogLCvI38xOeg9JS9k1RsQWMeo
-	9BEraRt8BSiVOHzYSWplJeCecuM4RMc6csX6q9zI8FfN7tssr7wGPIgWJZ4LO81qhhvZANwvbwb
-	xK6eDKYaCCyAamscxYhhcLXwJawfdX+u1bN3Bfw2SFQ==
-X-Gm-Gg: AZuq6aJGcNnCMJivopApDojp6tvZaNbgOFRg2ymOiLw6k7L8247Nuf6z6xdMVP9q4Va
-	CgzxYbw0TKG3FQFhyhLoT5neMxXdN9zHfq2iWhjSyRQZPeXGQ2CQzelCRdrVYyVLZ5QsFQoCO/Z
-	c9oL8V/Gxt1dhowV5prIriuKv0ngF7B1U6ArlzHB4csTS3h3Yko4o7fISIwuReK3xSxrXpIEKII
-	kfuJDRy70+5dlxi+15gyx/iMCDfX6D1MhPDp0lwH9co6jrl70WnB2xSmiflZ/Seb06uUwwU+Mev
-	Ygo=
-X-Received: by 2002:a05:690e:1347:b0:649:b002:2553 with SMTP id
- 956f58d0204a3-649b0022aaamr6055975d50.79.1770016525726; Sun, 01 Feb 2026
- 23:15:25 -0800 (PST)
+        d=1e100.net; s=20230601; t=1770017610; x=1770622410;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yXdntplLKF7U4FV3mgbK5Q5DtyvnneIEhh1dZ2ooHEE=;
+        b=K0JRekq6KJGCdidxgylfFNa9wxGwfUwADeIrbNPpZRyoD0GKrR5GEWbSw5FKzfyPDu
+         duzaddq2SiKsyl9zZNfm40P0yga7dynxUHjiMFyCe2gRL2xzthOLtsccvN9zzfZ0mEm6
+         RkPZpi/6yE506D1md0CNQ1d2H1okBaXemXM56Kx1qE/yKM0pooXL/mMi8BwGXd2mNsct
+         KjhZ49oJNwQp00gjZ/MlHMwuCUcupPwiIskajWqT/e+DGJwIcpHGGHTt5VKhQFnE+cXL
+         iR0ulE/D8BF+HvL9M0uA4Jp5P6SZqWAp5ZI/geNnFg3y2FiX/wx2MPEP7jMK8TTcTgf5
+         jFiw==
+X-Forwarded-Encrypted: i=1; AJvYcCUrPizgoiojFysJzbj8qRd8qp8MiYg9pf2i2aiRfLq2Mbn6fhm0M8kwdCN8zY9ngp+Rskn45gWdSFYKAsd8@vger.kernel.org
+X-Gm-Message-State: AOJu0YwyJq3dNUgCBbrZXnW0AvN5CxxYMbjEyNALu4SnU8zrdMU0xZzw
+	AsN881bXxO+cQjGSHAVSH7i7DpWLpnTsj0ffRxy0IYEp5shAyi1oL6wk4JRn55qbWrTa/EEpTa5
+	56EAx+ey0yw0yhjh/T4rcY/2ehH47YKEnQthp3+xyV9MPaoShxw0RmQXp/1G7qm246lV2
+X-Gm-Gg: AZuq6aIwbVPIetdUe+Y9olnT1a+rOq94cDgX02UgSnACCywxXh0gH/tticvRMBj5fl2
+	z2nMMJ85XwgJQXqQ9QHqW+elqP4Z1/kyaBPWXwM74l56XKB478aU5XeAxdQI1upgitwkqdFT2R1
+	bAuTj7f0BRbDLf/XwGJjOt0E3PzaoIv4gzEpjHYi0gthVznS9MY2kfBTefltYjJ12UYNFOO40s7
+	b2ebAbKDHIyVgV6z/YdVV51sPY5SCKxsXKXjtHWNbAgy0PLA9TcjhpBJXWLknSLx+5pfwaDqlY6
+	WcH+FEJWaNOJXQwv+Vu2p7UV21fW2b2xxsdWqYYRgD5Czc2YB1ZZEMScxl7PFLWTw55QvSDSwr5
+	Xd3HSZPhsBmYeMFw8Bmb5vHwrikkRzCXRdCer83UjGkAbKoLyNhrSgowegM01GEmLkzpu/QFVaX
+	YGuMk4tElKGuM0lCXAkyTtNomolJKLiaG4oNonTCo=
+X-Received: by 2002:a17:90b:2fc5:b0:33b:b020:597a with SMTP id 98e67ed59e1d1-3543b185498mr9468518a91.0.1770017610350;
+        Sun, 01 Feb 2026 23:33:30 -0800 (PST)
+X-Received: by 2002:a17:90b:2fc5:b0:33b:b020:597a with SMTP id 98e67ed59e1d1-3543b185498mr9468490a91.0.1770017609732;
+        Sun, 01 Feb 2026 23:33:29 -0800 (PST)
+Received: from hu-varada-blr.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-353f6103e25sm20758332a91.1.2026.02.01.23.33.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 01 Feb 2026 23:33:29 -0800 (PST)
+From: Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>
+To: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: sumit.garg@oss.qualcomm.com, dmitry.baryshkov@oss.qualcomm.com,
+        Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>
+Subject: [PATCH v4 0/4] Enable IPQ9574 RDP433 eMMC variant
+Date: Mon,  2 Feb 2026 13:03:18 +0530
+Message-Id: <20260202073322.259534-1-varadarajan.narayanan@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <6kzd2g4hgffqz5ipaqbourgiefuxxh3njj44n35blo37z6hhhj@us7lzlgmjuld>
- <CABymUCMf8LxX6VWUuzNJP+G1y3Xi5-CVYhaqLR7F=kU6ZgdcgA@mail.gmail.com>
- <c56e4ylgwcqni23btaxegdbfg3tbkyp2vtjtboeb3kbvcfk27u@vrlh276djtfr>
- <CABymUCP6ZDGtEJeQSZ48x8TZyJ4gKVDC+JzJRz-tZ0ksCUCqsA@mail.gmail.com>
- <91d590de-fa00-4df3-923f-b49ad00cd9da@oss.qualcomm.com> <CABymUCOqxtYS7BaDMHeN2npn=4+Y-6kxLDOS6oskiiH58epR5w@mail.gmail.com>
- <bbd8e584-4398-40da-9759-0c27f34214d3@oss.qualcomm.com> <CABymUCMivNJt4fikx8XJ8KFZB-y4zc2RaqjBksxWrQFD9foEkg@mail.gmail.com>
- <7c3yxfkadtkd6xs6aiupcamykx75c2tieakc7n4a2jyymz6kzz@4gflcto2nbkj>
- <CABymUCMeS7cWgEProyWnMUJ1fF1rfba3dy4VB0mwTmPbpTvanA@mail.gmail.com> <g2kzzrfmcsmzs6wz7alzjjycytpuebxwbehkco7yimdg2jam5a@uqsrt7mov7la>
-In-Reply-To: <g2kzzrfmcsmzs6wz7alzjjycytpuebxwbehkco7yimdg2jam5a@uqsrt7mov7la>
-From: Jun Nie <jun.nie@linaro.org>
-Date: Mon, 2 Feb 2026 15:15:14 +0800
-X-Gm-Features: AZwV_QgxNMYnRxQupdZOrh2Yv4jbFQ5rsdru-fR7eVF3kXxCsbW0Ix_tK3sAtyQ
-Message-ID: <CABymUCOmq_FVOQRVQSz97wjF_gtdji4dXz0CucChvFyqmyw06w@mail.gmail.com>
-Subject: Re: [PATCH v17 2/4] drm/msm/dpu: Defer SSPP allocation until CRTC check
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Abhinav Kumar <abhinav.kumar@linux.dev>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Rob Clark <robin.clark@oss.qualcomm.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=LcAxKzfi c=1 sm=1 tr=0 ts=6980534b cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=0U-vFLkCacPubaFtw1EA:9
+ a=iS9zxrgQBfv6-_F4QbHw:22
+X-Proofpoint-ORIG-GUID: XQIJOZrMrxsPd9V7VH50kv3K3LJkFMNU
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjAyMDA2MyBTYWx0ZWRfX1YiyVpLJmcOg
+ 1UBj5FKdxAqWpgeEqiX14SfNOUwKbqEQtd/hK9148mFQDcznSfzohUuwHR+xlqUJj/STOkzbCch
+ dGHGD17iGV1+vAVZSNVmJYVxFR3Y0MVUvXYWqvN60S2TU/qsn5bztHvhL87xZxQaU4CLsJb9Im1
+ G8BzC9Lx4e1ow4eLxcIot/HP77n6Gqkhvb66e9xLol7m5dsM2fe2OTWdpbS6+vd+FQzgw3yZr47
+ SxuAVV8TUr1TKcbSdEnOR3SY1ldyl6LnxOJ8ojDIVOQOaMoFpaOgnX44A5bkAC6Cf++yvJOHNxP
+ 0zGqo4VarNFXIQaEavllcNrn36rwh0Edevt2i01YyB1/qSJE0Nr80t7zuw56bFWfqPAbidZsAmn
+ KUOUQP2wrQIwpMupxzrJUoY40X83VTPhxyn8S0EYyzaws3JtkAzuAvCn/6ME+3HYbI1kw8f4j4v
+ +gEGfPpyimlDLZzM6qA==
+X-Proofpoint-GUID: XQIJOZrMrxsPd9V7VH50kv3K3LJkFMNU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-02_02,2026-01-30_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 adultscore=0 priorityscore=1501 impostorscore=0 suspectscore=0
+ lowpriorityscore=0 malwarescore=0 phishscore=0 spamscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602020063
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-91429-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[linux.dev,kernel.org,poorly.run,somainline.org,gmail.com,ffwll.ch,oss.qualcomm.com,linaro.org,vger.kernel.org,lists.freedesktop.org];
-	RCPT_COUNT_TWELVE(0.00)[13];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-91430-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[jun.nie@linaro.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[linaro.org:+];
+	FROM_NEQ_ENVFROM(0.00)[varadarajan.narayanan@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:mid,oss.qualcomm.com:dkim,qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
+	RCPT_COUNT_SEVEN(0.00)[11];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,qualcomm.com:email]
-X-Rspamd-Queue-Id: C6E81C91D6
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 427A9C9314
 X-Rspamd-Action: no action
 
-Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> =E4=BA=8E2026=E5=B9=B4=
-1=E6=9C=8827=E6=97=A5=E5=91=A8=E4=BA=8C 03:06=E5=86=99=E9=81=93=EF=BC=9A
->
-> On Mon, Jan 26, 2026 at 09:29:44PM +0800, Jun Nie wrote:
-> > Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> =E4=BA=8E2026=E5=
-=B9=B41=E6=9C=8826=E6=97=A5=E5=91=A8=E4=B8=80 20:31=E5=86=99=E9=81=93=EF=BC=
-=9A
-> > >
-> > > On Mon, Jan 26, 2026 at 08:01:00PM +0800, Jun Nie wrote:
-> > > > Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> =E4=BA=8E2026=
-=E5=B9=B41=E6=9C=8826=E6=97=A5=E5=91=A8=E4=B8=80 18:49=E5=86=99=E9=81=93=EF=
-=BC=9A
-> > > > >
-> > > > > On 26/01/2026 12:29, Jun Nie wrote:
-> > > > > > Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> =E4=BA=8E2=
-026=E5=B9=B41=E6=9C=8826=E6=97=A5=E5=91=A8=E4=B8=80 18:13=E5=86=99=E9=81=93=
-=EF=BC=9A
-> > > > > >>
-> > > > > >> On 26/01/2026 12:06, Jun Nie wrote:
-> > > > > >>> Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> =E4=BA=
-=8E2026=E5=B9=B41=E6=9C=8822=E6=97=A5=E5=91=A8=E5=9B=9B 18:22=E5=86=99=E9=
-=81=93=EF=BC=9A
-> > > > > >>>>
-> > > > > >>>> On Thu, Jan 22, 2026 at 02:03:25PM +0800, Jun Nie wrote:
-> > > > > >>>>> Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> =E4=BA=
-=8E2026=E5=B9=B41=E6=9C=8821=E6=97=A5=E5=91=A8=E4=B8=89 17:30=E5=86=99=E9=
-=81=93=EF=BC=9A
-> > > > > >>>>>>
-> > > > > >>>>>> On Wed, Jan 21, 2026 at 04:01:51PM +0800, Jun Nie wrote:
-> > > > > >>>>>>> Currently, plane splitting and SSPP allocation occur duri=
-ng the plane
-> > > > > >>>>>>> check phase. Defer these operations until dpu_assign_plan=
-e_resources()
-> > > > > >>>>>>> is called from the CRTC side to ensure the topology infor=
-mation from
-> > > > > >>>>>>> the CRTC check is available.
-> > > > > >>>>>>
-> > > > > >>>>>> Why is it important? What is broken otherwise?
-> > > > > >>>>>
-> > > > > >>>>> I see. Thanks! Will add below lines in next version.
-> > > > > >>>>>
-> > > > > >>>>> By default, the plane check occurs before the CRTC check.
-> > > > > >>>>> Without topology information from the CRTC, plane splitting
-> > > > > >>>>> cannot be properly executed. Consequently, the SSPP
-> > > > > >>>>> engine starts without a valid memory address, which trigger=
-s
-> > > > > >>>>> an IOMMU warning.
-> > > > > >>>>
-> > > > > >>>> What is plane splitting? Write commit message for somebody w=
-ho doesn't
-> > > > > >>>> exactly know what is going on.
-> > > > > >>>
-> > > > > >>> Thanks for the suggestion! Any more revise is needed?
-> > > > > >>
-> > > > > >> Sadly enough the text below is not a significant improvement.
-> > > > > >>
-> > > > > >>>
-> > > > > >>> Currently, splitting plane into SSPP rectangles the allocatio=
-n occur
-> > > > > >>> during the plane check phase, so that a plane can be supporte=
-d by
-> > > > > >>> multiple hardware pipe.
-> > > > > >>
-> > > > > >> What does this mean? Without virtual planes in place, there ar=
-e no
-> > > > > >> multiple hardware pipes.
-> > > > > >>
-> > > > > >>> While pipe topology is decided in CRTC check.
-> > > > > >>
-> > > > > >> ?? What does it mean here?
-> > > > > >>
-> > > > > >>> By default, the plane check occurs before the CRTC check in D=
-RM
-> > > > > >>> framework. Without topology information from the CRTC, plane =
-splitting
-> > > > > >>> cannot be properly executed.
-> > > > > >>
-> > > > > >> What does 'properly' mean here? How is it executed? What happe=
-ns?
-> > > > > >>
-> > > > > >>> Consequently, the SSPP engine starts
-> > > > > >>> without a valid memory address, which triggers IOMMU warning.
-> > > > > >>
-> > > > > >> IOMMU faults. There are no "warnings".
-> > > > > >>
-> > > > > >>>
-> > > > > >>> Defer above plane operations until dpu_assign_plane_resources=
-()
-> > > > > >>> is called from the CRTC side to ensure the topology informati=
-on from
-> > > > > >>> the CRTC check is available.
-> > > > > >>
-> > > > > >>
-> > > > > > Thanks for the patience!
-> > > > > >
-> > > > > >
-> > > > > > Currently, splitting plane into SSPP rectangles and allocation =
-occur
-> > > > > > during the plane check phase. When virtual plane is enabled to =
-support
-> > > > > > quad-pipe topology later, 2 SSPPs with 4 rect will be needed, s=
-o that
-> > > > > > a plane can be supported by 4 hardware pipes. And pipe number i=
-s
-> > > > >
-> > > > > number of pipes
-> > > > >
-> > > > > > decided in CRTC check per interface number, resolution and hard=
-ware
-> > > > > > feature.
-> > > > >
-> > > > > Okay, but IOMMU errors were reported with virtual planes being di=
-sabled.
-> > > > > So how is it relevant?
-> > > >
-> > > > After revise of splitting plane into pipes, the number of pipes wil=
-l be decided
-> > > > by CRTC check for both virtual plane and non-virtual plane case to =
-unify the
-> > > > plane handling,  instead of assumption of 2 pipes at most.
-> > >
-> > > This needs to be explicitly written.
-> > >
-> > > > >
-> > > > > >
-> > > > > > By default, the plane check occurs before the CRTC check in DRM
-> > > > > > framework. Without topology information from the CRTC, plane sp=
-litting
-> > > > >
-> > > > > WHat is plane splitting?
-> > > >
-> > > > How about: s/plane splitting/splitting plane into pipes ?
-> > >
-> > > This plane is not being split into anything. It's being mapped onto h=
-w
-> > > pipes. But before that, the number of necessary hw pipes is being det=
-ermined
-> > > based on foo, bar an baz,
-> >
-> > Thanks for the correction!
-> >
-> > Currently, plane is mapped onto at most 2 hardware pipes and 1 SSPP
-> > allocation occur during the plane check phase. When virtual plane is
-> > enabled to support quad-pipe topology later, 2 SSPPs with 4 rect will
-> > be needed, so that a plane can be supported by 4 hardware pipes.
-> >
-> > After revise of quad-pipe, the number of pipes is decided in CRTC
-> > check per number of interfaces, resolution, clock rate constrain,
->
-> Where?
+RDP433 can have NAND or eMMC based on a board level rework. Since the
+same GPIOS are used for both the interfaces, only one of them can be
+used. Add a new DTS file to disable NAND and enable eMMC.
 
-The pipe is decided in dpu_crtc_get_topology(). Change to quad-pipe
- is made in later patch. So I drop this in this patch message below.
->
-> > hardware feature and virtual plane enablement. The decidsion of
->
-> decision
->
-> > number of pipes will happen in CRTC check for both virtual plane and
-> > non-virtual plane case to unify the plane handling. Before that, the
->
-> will? Do you mean, after this patch? If so, please use imperative
-> language. See Documentation/process/submitting-patches.rst
+v4: Move sdhc properties to SoC dtsi.
+    Disable nand in ipq9574-rdp433-emmc.dts
 
-Yes, it is in later patch. So drop it in this patch message.
+v3: Disable nand in ipq9574-rdp-common.dtsi and enable it where
+    required.
+    Add r-b tags
+    https://lore.kernel.org/r/20260129062825.666457-1-varadarajan.narayanan@oss.qualcomm.com
 
-It is possible to keep plane check unchanged, and rely on re-allocation
-in later stage to support quad-pipe, if quad-pipe use case is detected.
-But to unify the allocation logic for both non-virtual and virtual plane
-use cases, and to centralize resource management, we'd better defer
-the allocation.
+v2: Create two separate DTS files for the NAND and eMMC variants as
+    suggested in the review.
+    https://lore.kernel.org/linux-arm-msm/20260123120016.3671812-1-varadarajan.narayanan@oss.qualcomm.com/
+
+v1: https://lore.kernel.org/linux-arm-msm/20260102104638.3802715-1-varadarajan.narayanan@oss.qualcomm.com/
+
+Varadarajan Narayanan (4):
+  arm64: dts: qcom: ipq9574: Add gpio details for eMMC
+  arm64: dts: qcom: ipq9574-rdp433: Reorganize DTS to introduce eMMC
+    support
+  dt-bindings: arm: qcom: Add IPQ9574 AL02-c7 eMMC variant
+  arm64: dts: qcom: ipq9574: Enable eMMC variant
+
+ .../devicetree/bindings/arm/qcom.yaml         |   1 +
+ arch/arm64/boot/dts/qcom/Makefile             |   2 +-
+ .../boot/dts/qcom/ipq9574-rdp-common.dtsi     |  32 +++++
+ .../boot/dts/qcom/ipq9574-rdp433-common.dtsi  | 121 ++++++++++++++++++
+ .../boot/dts/qcom/ipq9574-rdp433-emmc.dts     |  24 ++++
+ arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts   | 116 +----------------
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi         |   9 ++
+ 7 files changed, 189 insertions(+), 116 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq9574-rdp433-common.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq9574-rdp433-emmc.dts
 
 
->
-> > the number of necessary hw pipes is being determined based on
-> > resolution and clock rate constrain.
-> >
-> > By default, the plane check occurs before the CRTC check in DRM
-> > framework. Without topology information from the CRTC, plane mapping
-> > will be skipped for the first time as number of pipe is 0.
-> > Consequently, the SSPP engine starts without a valid memory address,
-> > which triggers IOMMU fault.
-> >
-> > Defer above plane related operations until dpu_assign_plane_resources()
-> > is called from the CRTC side to ensure the topology information from
-> > the CRTC check is available.
-> >
-> > >
-> > > >
-> > > > >
-> > > > > > will be skipped for the first time as pipe number is 0. Consequ=
-ently,
-> > > > > > the SSPP engine starts without a valid memory address, which tr=
-iggers
-> > > > > > IOMMU fault.
-> > > > > >
-> > > > > > Defer above plane related operations until dpu_assign_plane_res=
-ources()
-> > > > > > is called from the CRTC side to ensure the topology information=
- from
-> > > > > > the CRTC check is available.
->
-How about this commit message? It is more coherent with the change
-in this patch.
+base-commit: fcb70a56f4d81450114034b2c61f48ce7444a0e2
+-- 
+2.34.1
 
-
-Currently, a plane maps to at most two hardware pipes, and SSPP
-allocation occurs during the plane check phase. However, when virtual
-planes are enabled, SSPP re-allocation can occur within
-dpu_assign_plane_resources() during the CRTC check.
-
-To support future quad-pipe topologies, which require allocating two
-SSPPs with four rectangles by default, it is more efficient to perform
-the primary allocation in a single pass rather than relying on later
-re-allocations. So defer the allocation to CRTC check phase by default.
-Allocation logic for both non-virtual and virtual plane use cases is
-unified in this way.
-
-> --
-> With best wishes
-> Dmitry
 
