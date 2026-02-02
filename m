@@ -1,103 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-91522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91523-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UAXcLSi+gGl3AgMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Feb 2026 16:09:28 +0100
+	id 4MyRG6K+gGl3AgMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91523-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Feb 2026 16:11:30 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B478CDED5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Feb 2026 16:09:28 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id C3E0ECDF55
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Feb 2026 16:11:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 2150A300F137
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Feb 2026 15:02:49 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 2E61830293CC
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Feb 2026 15:09:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6FCC036C596;
-	Mon,  2 Feb 2026 15:02:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87AFA377570;
+	Mon,  2 Feb 2026 15:09:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Jt+KJczA";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="iOg1g0DD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RqNvkwlY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD9C36B062
-	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Feb 2026 15:02:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627AC376BE2;
+	Mon,  2 Feb 2026 15:09:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770044567; cv=none; b=WqQoU9vObu2PlBXSX6bPr3qB412exeaGwCag4l60LlpnYu+5aueXjXhCqqEttJ6/JPceKOeN8YjN/vTPCGwynpt0zOfAX1mJ2K0aZ2m+t4GHqSQJPt9xlURuU+VFy6z4KV0f/JPgslQCGKLQvnyp1s9bH1u7O5lG8WOzgInFdMY=
+	t=1770044973; cv=none; b=BABt617b+Msb5FAAFczXipQ5yJM4TX8Sv41yD85ETE0IZLtq8FaWIv9MssYXoSN3ZgD5RKkYJKBlURhy3PLm+nK20VWruW2RaXlCNbsG+iPVCOSwcqAVfhF/g65fDWP/XrIlR5wU7wBIWQio+KOymUm7T3BFmoQNT3dzbqo1fgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770044567; c=relaxed/simple;
-	bh=itfRJHDz9lJeyAF3mgUM3enz69pJ0fTjxJlcJ6nTLZ4=;
+	s=arc-20240116; t=1770044973; c=relaxed/simple;
+	bh=9E/FR4q3vtIyA3a+HHqzla9sze5VoEKNZY/ceoasSoQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MEPCK//kdGyY55kDTklPyS9oSLtDVBESSlFQ528lnIc/f01CbehJccRZVDoW8lXKulKJxP6MQMM+24//CbcHhCazg9oZNsADQYtNwplPKnkdxFh/pz18g9WgevQw7liFV3J8sUBvPWMjoiAPDkPiztveTY+mK7rGkFBAo2DJ0m8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Jt+KJczA; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=iOg1g0DD; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 612CJYas2884449
-	for <linux-arm-msm@vger.kernel.org>; Mon, 2 Feb 2026 15:02:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	4KMMiAEvQ+clJBW6YBPI9jpod8sif0Y2dqJxSGpD68w=; b=Jt+KJczAajZAU4n1
-	xu8n9BUY7xx/RloDgMhmM7MIkMYIkXz1lQKXjFf0pKZ0BZnEK2ZewblbDCGD9Nju
-	0U2CYEdLBT/cN98E8ALqgI4eKGBKtlwJLr4tXZMCA4o/SjBQsHvEXoY2L0yTtM37
-	3prWcVbyIv42e26aZ8W+EQUaoy1+TRPkUnajqJb7f5h+arS9nOSTiSF6ymX8JKgo
-	chnyULMK/O2wZ6qLKU0/t22jV/oNm30OE8MrQncy/bJ9RVNuLSzVamLKNZSoPYWf
-	l6UhwPy7k28M4qpj25vM8YZNnHQoskcz8Her+5ZtIDSqjfoFNYvPYMB3GbmH5KRf
-	cwQACA==
-Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com [209.85.210.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c2uu3gef6-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 02 Feb 2026 15:02:44 +0000 (GMT)
-Received: by mail-ot1-f69.google.com with SMTP id 46e09a7af769-7cfc9ab2828so1625673a34.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Feb 2026 07:02:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1770044563; x=1770649363; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4KMMiAEvQ+clJBW6YBPI9jpod8sif0Y2dqJxSGpD68w=;
-        b=iOg1g0DD30f0yQGm/nz4mRtBTjivx4lYLtNd//hf7JikGpNfmxwZ+99kvOezkK4jCB
-         RadNQ/v/QbutXyBI8MRYDph3bB1BxgcJOtxLCJjTRmSjJ8HlneUwaI6Rf7qEiDizukYv
-         Wr4DR6PqES3jChKRlDMl0I0HfWc+AsyqmYcYsohqCM408Ve6UjXOez1iUXJ9GVllX+c+
-         q6swA3PhsjCRsVBegoqsA8xWJgeFh9XnLWUkW+FwiHxLL6uKXUH4AKrSmCTL8YqYpT6G
-         UGTcXJbMaQtV0h2tmRzFxH67Y6411dc7kCwtZaHiSg4l/rg+uZIPkeTozw5sIAs3Wr5d
-         bOXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770044563; x=1770649363;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4KMMiAEvQ+clJBW6YBPI9jpod8sif0Y2dqJxSGpD68w=;
-        b=uYLg4f1+Pxk7zSJmvYY5YvkVmeaIpdf4dhGgq+7xaSa54iRpyZEgAd3DrKduXxpNXf
-         FyL4BeuOCbym2RjDubO+Y5CO4WaDKSoYWFRjXIIx641IeF1HCOO3cDUa5Qcvq6LQJVN3
-         S805KO5o1hijIFKUs/ZTlKLz+f7rqR1RUXVrbIDNg9Po5bOTu69pj/9xWjZmBXwTBEwH
-         cvgQAC1KBORnnxWHBN/f4P/qP5C2IcuOxTGlNJZyt/WJOnmkqQr5A1WGcxojNQ6hl22f
-         zoO6ALqNxHQrF7Iizymd5ddw1jDchL9aJz50fIjgq4XAT943pOVfsoXs1PWjKnW5KtLt
-         XhHQ==
-X-Gm-Message-State: AOJu0YzYnvAvcXl6osO//rs+xtDRUCALAYX78qlIjciaWcN9IAjdxZr2
-	9htYfTmOYpEWUJyktBgfc8gF3bWxFEZLMyx1wbccdgKScf3Z9BTT5RVgiZ9KEyhndLId7KcL0xC
-	EtJ2zeZUr4MCZdstx/70V78x+hhD05qddo2gywK5E7kuqPnAuv/D4ab7BBCEteOUQJUrO
-X-Gm-Gg: AZuq6aI381hyCdaorsZPtDkpz13R9fUC2z2yBwcgMzXqiw3OrgC+5IkD5JxY92Tp35Z
-	kFqkC52zjQdthp00HIslEi+NB523pXF2lAk+96ZmmqXsjZOU2vLEIFOCpwd3ba4mIp0toc7j3sr
-	4A4bdJ8n4NjqtFXDwsQ5WHOwOL7Ha0iAM1tuSfJWuhMUV+H5zxNdpAvSspYNG9a3HgJWhztqZ9f
-	6yaNGlZPr0Tca3PZ6t5PVFSc0zwUlVPfXJ7s3/ATIYFws9kSdjBwGxYCNYYb3KMWE4EJyIKfA8Z
-	vBCcaLpU7s39pVU8bM0t4cylkW07z2Fqjn+bfbWJLi0z3qCVXDiPX4IE85XHdBI894NfbroJ5qp
-	9/6wQ9JyYnTj7V5KaUM/ILZHBSWRvZ8heB/VGfYmzDqF5Q7gul8s4/loW0Yo69i7cRdE=
-X-Received: by 2002:a05:6830:43a1:b0:7cf:da36:3d3d with SMTP id 46e09a7af769-7d1a536e341mr6027179a34.6.1770044563593;
-        Mon, 02 Feb 2026 07:02:43 -0800 (PST)
-X-Received: by 2002:a05:6830:43a1:b0:7cf:da36:3d3d with SMTP id 46e09a7af769-7d1a536e341mr6027147a34.6.1770044563018;
-        Mon, 02 Feb 2026 07:02:43 -0800 (PST)
-Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8dbefc655csm869765366b.19.2026.02.02.07.02.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Feb 2026 07:02:41 -0800 (PST)
-Message-ID: <9d53901a-7ad0-400b-9952-ad502ea803a8@oss.qualcomm.com>
-Date: Mon, 2 Feb 2026 16:02:39 +0100
+	 In-Reply-To:Content-Type; b=sZHfG3YRK3Hu4k0wiA/PePuXn+cvVRXToBkvhCOHGVWG8cUx11JsiSgYgWY9PHGcvH39GAwzxMtmfWS4nzHEq7MWk1gtRcnShe90gvamqqZIYbDqdStoWK1LKausVAgyqvzQUjhZA+ep+ZUXD+dkz8kSTZHDArxWy35i2kwiPpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RqNvkwlY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DC77C116C6;
+	Mon,  2 Feb 2026 15:09:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1770044972;
+	bh=9E/FR4q3vtIyA3a+HHqzla9sze5VoEKNZY/ceoasSoQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=RqNvkwlYbu8R3ZhmeIcbfdABgYW/Ixgl0H2RCG2H3VCw6+UuLpm4ft8FnJ9aX6XGS
+	 fOyC1KMy9O9ngHbdOVQwrWwoU8vqfjPNgBAnVOTsCw+NXdRfHZCvKho20yQTikW2A1
+	 Ym2mKI9k7MVvpxf7t4uMDH7DsrsnIobTqgGGRPRIjZsuOXp65xsVtHvGCSNYYcyxnl
+	 F40FDv0AHYxu1IyekVSENCaUI5w+QCClD3/4dPLNmeg/PlB54oBT/5mY1HZaZ4sNYb
+	 tUdAg7eMObt+AEi+jb3ZawLbrZQDmbMpdZCoHHvjzWY9ZZUSRQsTkWSX85eysdOLD5
+	 AoCKMqtBuRzgQ==
+Message-ID: <dd36c365-cffb-4fac-bf11-40e4896cbab5@kernel.org>
+Date: Mon, 2 Feb 2026 15:09:26 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -105,101 +53,214 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 4/4] arm64: dts: qcom: Add base PURWA-IOT-EVK board
-To: YijieYang <yijie.yang@oss.qualcomm.com>, andersson@kernel.org,
-        konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20260202-purwa-v5-0-1f5a93578802@oss.qualcomm.com>
- <20260202073555.1345260-4-yijie.yang@oss.qualcomm.com>
+Subject: Re: [PATCH 4/7] media: iris: Switch to hardware mode after firmware
+ boot
+To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+ Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Saravana Kannan <saravanak@kernel.org>,
+ Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+ Robin Murphy <robin.murphy@arm.com>,
+ Stefan Schmidt <stefan.schmidt@linaro.org>,
+ Hans Verkuil <hverkuil@kernel.org>, Krzysztof Kozlowski <krzk@kernel.org>,
+ Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
+ Hans Verkuil <hverkuil+cisco@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ iommu@lists.linux.dev, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+References: <20260126-kaanapali-iris-v1-0-e2646246bfc1@oss.qualcomm.com>
+ <fLxe2FUgx2tsLsXWrEdDq_iHxUUnVhy0BT_zzO3t3rmpLau36zhbLaZFyH5tQZJRO-uLVcHm4RsG_x1PEVOnKw==@protonmail.internalid>
+ <20260126-kaanapali-iris-v1-4-e2646246bfc1@oss.qualcomm.com>
+From: Bryan O'Donoghue <bod@kernel.org>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20260202073555.1345260-4-yijie.yang@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20260126-kaanapali-iris-v1-4-e2646246bfc1@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: 5ss7d7cQUakoEXV3XdumIhs23sjJO_GE
-X-Authority-Analysis: v=2.4 cv=OrRCCi/t c=1 sm=1 tr=0 ts=6980bc94 cx=c_pps
- a=z9lCQkyTxNhZyzAvolXo/A==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=TSu30AdjdkAtlEphcj8A:9
- a=QEXdDO2ut3YA:10 a=EyFUmsFV_t8cxB2kMr4A:22
-X-Proofpoint-GUID: 5ss7d7cQUakoEXV3XdumIhs23sjJO_GE
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjAyMDExOCBTYWx0ZWRfX9j8cu3bgjtYK
- 11c3WSGhgMHl/KAFpZJCcKqHjA3YxynAnp6lhznpT8ay9XSB0z+lIrciCi8Qfv69O7u1EFQ+Evn
- qwPbZgyB+rlLAMjp1YgDAJOTVhKoampkWf+JuZz1Ss4r1UG+gv86nDBcgOQ3Qpc8SQs4Y2fHszp
- 8k0RA8hT7OhvPDhokmvTAi6l2PGqTcjydXwrXopoxmSBnP68MX5mHZyLoAFd3NhFnz2Hu+HtAbD
- quKp39HjgxJiEGSaxHNYzF0KK8tZO4kgqYdGgwOmKFbzPt4iVA+kAtLxm/V1l37qDihc6p4y8r4
- EuE2rMotquqKm3Jl7GB8jlJsazca/haKAX36f1xltP/e/zj2JGhHtnjAT39eOeaAUEhSdtBpBkq
- 12W+sCIhYBtJtdsdmxEdwTaYGhcjahzN8vuA0Ltkf/fnhTwL0ZOzi1UM08UGaPDFebk6/nmx2Bn
- RYjjNbwCEqweyQFGl2A==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-02_04,2026-01-30_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015 adultscore=0
- malwarescore=0 phishscore=0 impostorscore=0 priorityscore=1501 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602020118
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-91522-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-91523-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[22];
 	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 5B478CDED5
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,cisco];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: C3E0ECDF55
 X-Rspamd-Action: no action
 
-On 2/2/26 8:35 AM, YijieYang wrote:
-> From: Yijie Yang <yijie.yang@oss.qualcomm.com>
+On 26/01/2026 12:25, Vikash Garodia wrote:
+> Currently the driver switches the vcodec GDSC to hardware (HW) mode
+> before firmware load and boot sequence. GDSC can be powered off,
+> keeping in hw mode, thereby the vcodec registers programmed in TrustZone
+> (TZ) carry default (reset) values.
+> Move the transition to HW mode after firmware load and boot sequence.
 > 
-> The PURWA-IOT-EVK is an evaluation platform for IoT products, composed of
-> the Purwa IoT SoM and a carrier board. Together, they form a complete
-> embedded system capable of booting to UART.
+> The bug was exposed with driver configuring different stream ids to
+> different devices via iommu-map. With registers carrying reset values,
+> VPU would not generate desired stream-id, thereby leading to SMMU fault.
 > 
-> PURWA-IOT-EVK uses the PS8833 as a retimer for USB0, unlike HAMOA-IOT-EVK.
-> Meanwhile, USB0 bypasses the SBU selector FSUSB42.
-> 
-> Make the following peripherals on the carrier board enabled:
-> - UART
-> - On-board regulators
-> - USB Type-C mux
-> - Pinctrl
-> - Embedded USB (EUSB) repeaters
-> - NVMe
-> - pmic-glink
-> - USB DisplayPorts
-> - Bluetooth
-> - WLAN
-> - Audio
-> - PCIe ports for PCIe3 through PCIe6a
-> - TPM
-> 
-> Signed-off-by: Yijie Yang <yijie.yang@oss.qualcomm.com>
+> Fixes: dde659d37036 ("media: iris: Introduce vpu ops for vpu4 with necessary hooks")
+> Co-developed-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+> Signed-off-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+> Signed-off-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
 > ---
+>   drivers/media/platform/qcom/iris/iris_core.c       |  4 ++++
+>   drivers/media/platform/qcom/iris/iris_hfi_common.c |  4 ++++
+>   drivers/media/platform/qcom/iris/iris_vpu2.c       |  1 +
+>   drivers/media/platform/qcom/iris/iris_vpu3x.c      |  9 +++-----
+>   drivers/media/platform/qcom/iris/iris_vpu4x.c      | 24 ++++++++++++----------
+>   drivers/media/platform/qcom/iris/iris_vpu_common.c | 16 +++++++++------
+>   drivers/media/platform/qcom/iris/iris_vpu_common.h |  3 +++
+>   7 files changed, 38 insertions(+), 23 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/iris/iris_core.c b/drivers/media/platform/qcom/iris/iris_core.c
+> index 8406c48d635b6eba0879396ce9f9ae2292743f09..dbaac01eb15a0e622e85635fddd29c1f7fc18662 100644
+> --- a/drivers/media/platform/qcom/iris/iris_core.c
+> +++ b/drivers/media/platform/qcom/iris/iris_core.c
+> @@ -75,6 +75,10 @@ int iris_core_init(struct iris_core *core)
+>   	if (ret)
+>   		goto error_unload_fw;
+> 
+> +	ret = iris_vpu_switch_to_hwmode(core);
+> +	if (ret)
+> +		goto error_unload_fw;
+> +
+>   	ret = iris_hfi_core_init(core);
+>   	if (ret)
+>   		goto error_unload_fw;
+> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_common.c b/drivers/media/platform/qcom/iris/iris_hfi_common.c
+> index 92112eb16c11048e28230a2926dfb46e3163aada..621c66593d88d47ef3438c98a07cb29421c4e375 100644
+> --- a/drivers/media/platform/qcom/iris/iris_hfi_common.c
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_common.c
+> @@ -159,6 +159,10 @@ int iris_hfi_pm_resume(struct iris_core *core)
+>   	if (ret)
+>   		goto err_suspend_hw;
+> 
+> +	ret = iris_vpu_switch_to_hwmode(core);
+> +	if (ret)
+> +		goto err_suspend_hw;
+> +
+>   	ret = ops->sys_interframe_powercollapse(core);
+>   	if (ret)
+>   		goto err_suspend_hw;
+> diff --git a/drivers/media/platform/qcom/iris/iris_vpu2.c b/drivers/media/platform/qcom/iris/iris_vpu2.c
+> index 9c103a2e4e4eafee101a8a9b168fdc8ca76e277d..01ef40f3895743b3784464e2d5ba2de1aeca5a4a 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vpu2.c
+> +++ b/drivers/media/platform/qcom/iris/iris_vpu2.c
+> @@ -44,4 +44,5 @@ const struct vpu_ops iris_vpu2_ops = {
+>   	.power_off_controller = iris_vpu_power_off_controller,
+>   	.power_on_controller = iris_vpu_power_on_controller,
+>   	.calc_freq = iris_vpu2_calc_freq,
+> +	.set_hwmode = iris_vpu_set_hwmode,
+>   };
+> diff --git a/drivers/media/platform/qcom/iris/iris_vpu3x.c b/drivers/media/platform/qcom/iris/iris_vpu3x.c
+> index fe4423b951b1e9e31d06dffc69d18071cc985731..3dad47be78b58f6cd5ed6f333b3376571a04dbf0 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vpu3x.c
+> +++ b/drivers/media/platform/qcom/iris/iris_vpu3x.c
+> @@ -234,14 +234,8 @@ static int iris_vpu35_power_on_hw(struct iris_core *core)
+>   	if (ret)
+>   		goto err_disable_hw_free_clk;
+> 
+> -	ret = dev_pm_genpd_set_hwmode(core->pmdomain_tbl->pd_devs[IRIS_HW_POWER_DOMAIN], true);
+> -	if (ret)
+> -		goto err_disable_hw_clk;
+> -
+>   	return 0;
+> 
+> -err_disable_hw_clk:
+> -	iris_disable_unprepare_clock(core, IRIS_HW_CLK);
+>   err_disable_hw_free_clk:
+>   	iris_disable_unprepare_clock(core, IRIS_HW_FREERUN_CLK);
+>   err_disable_axi_clk:
+> @@ -266,6 +260,7 @@ const struct vpu_ops iris_vpu3_ops = {
+>   	.power_off_controller = iris_vpu_power_off_controller,
+>   	.power_on_controller = iris_vpu_power_on_controller,
+>   	.calc_freq = iris_vpu3x_vpu4x_calculate_frequency,
+> +	.set_hwmode = iris_vpu_set_hwmode,
+>   };
+> 
+>   const struct vpu_ops iris_vpu33_ops = {
+> @@ -274,6 +269,7 @@ const struct vpu_ops iris_vpu33_ops = {
+>   	.power_off_controller = iris_vpu33_power_off_controller,
+>   	.power_on_controller = iris_vpu_power_on_controller,
+>   	.calc_freq = iris_vpu3x_vpu4x_calculate_frequency,
+> +	.set_hwmode = iris_vpu_set_hwmode,
+>   };
+> 
+>   const struct vpu_ops iris_vpu35_ops = {
+> @@ -283,4 +279,5 @@ const struct vpu_ops iris_vpu35_ops = {
+>   	.power_on_controller = iris_vpu35_vpu4x_power_on_controller,
+>   	.program_bootup_registers = iris_vpu35_vpu4x_program_bootup_registers,
+>   	.calc_freq = iris_vpu3x_vpu4x_calculate_frequency,
+> +	.set_hwmode = iris_vpu_set_hwmode,
+>   };
+> diff --git a/drivers/media/platform/qcom/iris/iris_vpu4x.c b/drivers/media/platform/qcom/iris/iris_vpu4x.c
+> index a8db02ce5c5ec583c4027166b34ce51d3d683b4e..02e100a4045fced33d7a3545b632cc5f0955233f 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vpu4x.c
+> +++ b/drivers/media/platform/qcom/iris/iris_vpu4x.c
+> @@ -252,21 +252,10 @@ static int iris_vpu4x_power_on_hardware(struct iris_core *core)
+>   		ret = iris_vpu4x_power_on_apv(core);
+>   		if (ret)
+>   			goto disable_hw_clocks;
+> -
+> -		iris_vpu4x_ahb_sync_reset_apv(core);
+>   	}
+> 
+> -	iris_vpu4x_ahb_sync_reset_hardware(core);
+> -
+> -	ret = iris_vpu4x_genpd_set_hwmode(core, true, efuse_value);
+> -	if (ret)
+> -		goto disable_apv_power_domain;
+> -
+>   	return 0;
+> 
+> -disable_apv_power_domain:
+> -	if (!(efuse_value & DISABLE_VIDEO_APV_BIT))
+> -		iris_vpu4x_power_off_apv(core);
+>   disable_hw_clocks:
+>   	iris_vpu4x_disable_hardware_clocks(core, efuse_value);
+>   disable_vpp1_power_domain:
+> @@ -359,6 +348,18 @@ static void iris_vpu4x_power_off_hardware(struct iris_core *core)
+>   	iris_disable_power_domains(core, core->pmdomain_tbl->pd_devs[IRIS_HW_POWER_DOMAIN]);
+>   }
+> 
+> +static int iris_vpu4x_set_hwmode(struct iris_core *core)
+> +{
+> +	u32 efuse_value = readl(core->reg_base + WRAPPER_EFUSE_MONITOR);
+> +
+> +	if (!(efuse_value & DISABLE_VIDEO_APV_BIT))
+> +		iris_vpu4x_ahb_sync_reset_apv(core);
+> +
+> +	iris_vpu4x_ahb_sync_reset_hardware(core);
+> +
+> +	return iris_vpu4x_genpd_set_hwmode(core, true, efuse_value);
+I'd like to see something in the commit log about the efuse value. What 
+is it, why does it appear etc.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Because just to be difficult you are not doing a 1:1 switch to hw_mode 
+here, you're also introducing contingent logic.
 
-Konrad
+---
+bod
 
