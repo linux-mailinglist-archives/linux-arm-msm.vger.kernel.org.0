@@ -1,274 +1,213 @@
-Return-Path: <linux-arm-msm+bounces-91718-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91719-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iDgCEHs5gmmVQgMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91718-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 19:07:55 +0100
+	id uCQIOWk5gmmVQgMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91719-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 19:07:37 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id D1924DD53C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 19:07:54 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CC28DD51B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 19:07:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A10BF309515A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Feb 2026 18:04:19 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 799433001A5A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Feb 2026 18:07:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9A6239C659;
-	Tue,  3 Feb 2026 18:04:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4416361642;
+	Tue,  3 Feb 2026 18:07:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="KNR5uij6"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="H4X/6foU";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="i8u0Z7D/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 171E7366579
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Feb 2026 18:04:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770141858; cv=pass; b=i+NsR1ln3sHxqZqYpwz62R7mNDOhgWQf6X8XQbB3KQbomFtflP80kasYonCecBKzrRL2Da+LzZr9E0tRKqaShCTt9o+iKh6mz70pCwhR/HZtSIqS8qDMDckRI4Wcl5/nhcBtn/hWlDTQXFZSqnHUUXtDVdDLSRiVoN0uThAEPKA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770141858; c=relaxed/simple;
-	bh=NiYmGhBDnkvI8ZJQgcCZNDyToFlarmUji712KD5FXgA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Aavt2zUaeuOSXhTNMGXE0M1KmVuikqdjYoNyeEnYxSqid831S2Tf4+ucdJUhIAl+gPmTffOWchKAS5+jNw0D00Kk0X5tE1KKf6dNh6OWt5dqLbCPfHN4GJU0Rl0DFJVa2MpGW/Px04CyLMSyxwvL4cPhMyfrTPDaxdpqEe2VHjg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=KNR5uij6; arc=pass smtp.client-ip=209.85.208.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-6581551aa88so482a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Feb 2026 10:04:16 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770141855; cv=none;
-        d=google.com; s=arc-20240605;
-        b=cX3+ZlUzvPt49+sgcmH5YfE4BmoAAHVaknTCTS/cb81Rdcdu/S42OZ3PAXrNin6y0D
-         MERc5DglY9EewyY704Rb4C/YJoYj9LISWSqxldK1L1DZVMZjGdGH2FNC0bq8jlS7TE4N
-         uyyqftkzvW5vL9zyk/5ombgrwHFM+zAglm9y3OH9Z9bOpPvaohOBiogBJjYHgKCTtZiU
-         rH0fkEwbpub6ARLm9JzyTtD26u2o18PVjPyx4mfCca6ToH8JnP0Mq1QiEk0EQabStuOA
-         4s6/sG3DCZPD4NibVFwcqNQyWTcwrZQrRNJbL2pyjw0aCC2RQHLdT327EF5zhHSvncqy
-         U6aw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=Zo5g4kjzsHVdCYVph0+zHfHpTvTrsr3e0LsvYcnTAos=;
-        fh=ELyqxrV8GvgU9r5kyMmxiaWptrgmPVDLj5azP47ZfSc=;
-        b=LlQ95soU0EHA0SKfltm8ix56D0zlp6gRkGKlxVXXlHfdSbTB/IzkuDC0ZabhZve0GP
-         Cks09qYzRwb3S7hoQe+mnRe+QFx1iu6ROla77ABAYMI+Tr/m4XY5DkxJzazE2uk3SvLm
-         xi+bDmBX08w/TGFNHHjplsbjTkRUnu/V25i1Y4/7RqPdifUx89skXxcpL/l+Kv0dTmxH
-         TrmVeG4stPx/96Ui5PdFnhEcPVh4o75b2k/xVB5RFdYhN5uMD6EvB80DzrOcxzSulGaq
-         D5d0zggTciZ/oJBQmLVejlBOyAAC7lMv4dvX6Z1A/sxJTw+mFOPaXXm8ZIN0vL+ObhMg
-         bpAg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B53A31B10F
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Feb 2026 18:07:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770142023; cv=none; b=sGtsquC4lwyhIa3WZwKlPp++ABeQtvTGrObcLrT3Jj9uJOarpkyc088ZKwW6sJoRJu69IQhHBheDkiQm5bbiqjGUp5ZEUgYZTPGyckF0Z8rYaM2aQSNrSWzK+GCTTUXjZanePb6Zl3EaGTRnfUcsYlMfY7YMYK6IWw2zk6K9aX8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770142023; c=relaxed/simple;
+	bh=Q/+saX2dF9dO51xaj0JnNN82Vqc+y84TzTdCSjhEW3U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=esWAaiPXRR8YI5OZ7y4sH+RC8QZ76pcLZ/Gs/EgxWQ8lUkvj5HD7PRm/qR1mni64UnTEiu3+fY5mj4OSMxsQ8sxDLz3g33d3yFzxrTSA7k/83dygWqW3JfbkrtZRbvykyBs6Z5RzRXJ6zP5GzQlod+aWZRg98Ku/Cw24O5/J/5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=H4X/6foU; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=i8u0Z7D/; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 613CABSu1191821
+	for <linux-arm-msm@vger.kernel.org>; Tue, 3 Feb 2026 18:07:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=mcru2SsTTBFu/p4JgHEtdY+0
+	gyS9G4cGC93a2klc6V0=; b=H4X/6foUI72OyuIGrBrp+EPm8oobd58GqamDbcCC
+	giV7WZyeuA22zo1K/FMTn9y2DiG/CabxV5GSQYC416BeP/HQHbRRvicryafqse0t
+	9ecafA3qaQ7cx1xlm6xsCmR+tm/A4q0vLBjAWtsTFV5Y5wWQTv6ap6g5oNLIoyAm
+	i3lU5A37/ww5gp2vx/OOkpUGm9zOLuWv0JKUiqJ1y9FeMHatmYBXCCYBQYSnAwXT
+	DJxCXQinvEnPOXvxhfWobPRJ8faRMs+kxbrDs55JcRShzgF1Ok83BAkR7yNdsQes
+	jF/PQqGorrh94Q7CV4PuaKbwwW5B5Z/eUamL5jzhlV+HWg==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c3gsr15k4-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 03 Feb 2026 18:07:01 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-8c70ab7f67fso2600143185a.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Feb 2026 10:07:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1770141855; x=1770746655; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Zo5g4kjzsHVdCYVph0+zHfHpTvTrsr3e0LsvYcnTAos=;
-        b=KNR5uij6C7FzK9xZwFmLsgZCkuZtZmjaWLp7PcA9CyI7xspZmm7CvlSzZMEwS3DgN9
-         Cj9xbgNF1mV97TWI3f2ZGpsIo7h09OsDhH+kDMw9hux7PANFMxIa5O+85bgAB3fi2Czu
-         Teeivr0u+gL2DWcfCVkfdT92MEfPWGnUQhPuAgAdsggDZMT7tI+OuSsL3a7/rcs7JkBX
-         jNsFiDQKefQhCEg6HZl9NbXDeG+uGtZpARYiDaV+77a+plJcX5MiOrwtZNyJzADISdJr
-         EP1XmBHgfNOQIXmZrahHQLxo3eabd3RoQECoa05lDa6iyKFyDW+USqo7lVIelyVnFj8t
-         dTCg==
+        d=oss.qualcomm.com; s=google; t=1770142020; x=1770746820; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=mcru2SsTTBFu/p4JgHEtdY+0gyS9G4cGC93a2klc6V0=;
+        b=i8u0Z7D/D3/8gf+mpHMwQG+mO/gn6v/F6XwhQZWuxeA1+82/SeVBgsXv9yUtXgUWUK
+         CN7hH/UY4MkAPicEg+yZ+KJg0nLi0m8KLfLEZQmquAj8zlLfM1+YhZRdb/KSrDR0bshR
+         P+TDQzZEIhkYatBLveRr4Z+D8Ny+n45w56sTUuuRxcOZx5GnLYSU2XYpZdNspCFUEH40
+         9eauZNvAGm5xwLlO+fyizPCy65ubucUrn7jUH+SFiaTEzuyCANcclPvsfIteP4dl/2yC
+         SDSWHZg8ZrznQhHTfaaiVhq4DOdF+1m+vhvl0cIsTMzOyZ/v8YJG0M0HON44LvUTC89T
+         YB1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770141855; x=1770746655;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=Zo5g4kjzsHVdCYVph0+zHfHpTvTrsr3e0LsvYcnTAos=;
-        b=f8GuBSGBRqoKb5A6XRVBq30H8KPJk5nWS8OzpT/tKA3CQfSienJqwMn9B7G2nPmitH
-         vzjGRCXLC5q0jou/Lh2q98Fv9vtJrj24PYoiVdnZdFTxGAo6M6vFPoNM98LZwatvKROs
-         OUXDT/H3ypEhOM+EimkqtB3q3Fy83JySi5Os6C8Fidw8xNGs/VFmm3bw0gsD0z5YLaOb
-         5uDKr8oSgOVvQR+EQ+vHZ5liq3OVd8Zrwv8hrFXk4gSt0ZpRtUHMBz7Yvq8X3q1j1Qf1
-         5s/5Xi58I+Zs+cH3/7VCiZW1s2JjSqgea6GjtKal/8fXxItwdptGdvRN7c7m2+U27fnY
-         7JdA==
-X-Forwarded-Encrypted: i=1; AJvYcCWDa1FIcVgSLYSciFyM6Hof1pp9cRkpb+B8on3vKdOQsOIgriUE9NFObCvCU3UXK0cglyp3TWrfnsyosWhe@vger.kernel.org
-X-Gm-Message-State: AOJu0YzZXJ6FZ5JYz1A9Cw0vI9KEW8dWYOtP6+kizNcpHgCbW815OvvB
-	ODeqe8yAbgPfaVkLFZBGDwg+/p4oIBQQ1WJsfEeEnlfkic2bR1fiHqrr8snZohgTMrP0j5iZvaB
-	5foRyri/xiDktDGZ/Ka9yOo38nS5bVjjZwe0mfjta
-X-Gm-Gg: AZuq6aI5Wbg07M5r3FpaMZ1meW++Ydw9/SlaRDA2XA9d11GZJSKte2dTYPC04lhBI7g
-	xW7RXMQED8kg/qzOjglUpQkLMJctvzcLcyInxbDNSdd6gexjH2cCE6jYEfTaLZ84GpHJ453/5xT
-	zQmKaG0ROO1Fn/nJ9GmLzWZ0A64DV6OiXEXvzE1UKEBlo95uEhD7s6wBzz49TA9BTE4b3baPfaK
-	W/YcfdpUorG+bTc/91nlgC0i0teSi4cvvvS0EgjtjiwIVhS9X2eGWN3QqDDePqnSutj4DPYSCFZ
-	f764gfrFgCJ0piCSAPF+tEY3mQ==
-X-Received: by 2002:a05:6402:5351:20b0:659:3fc7:e1e1 with SMTP id
- 4fb4d7f45d1cf-6594a350f8dmr6491a12.16.1770141855228; Tue, 03 Feb 2026
- 10:04:15 -0800 (PST)
+        d=1e100.net; s=20230601; t=1770142020; x=1770746820;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mcru2SsTTBFu/p4JgHEtdY+0gyS9G4cGC93a2klc6V0=;
+        b=eiXSd3oOemed4BYYF0WhmVwGwNb+JQJn4zYwNA5qbuxqrGph446aXZqgNs86YSzr8o
+         TLHtrGZ4L2ZaRVsYj5/jOH/dPq9oDh8TxobWoM41bhyCbspO/TOE98hke+2iVytg6DMn
+         driDXUBIjKFPlz2bNb04BrnssvuGIMGxwGtP2LvPMPTSxPOqQ+D0S5o1tnCKVVPBKyeu
+         bahI5GlfivP07vL9Uy2p3s2WXMwio2c2+ct2lZTMHsQtOd5+LdmduTqnJ8KyjGYdl5Rs
+         yXAXTfKSK0hg2SEdYhErqwpV//UZ7V2vqghL7XBNrJfu6ZgyZjnuX5XlO5NzTNHPaSM7
+         mfOw==
+X-Forwarded-Encrypted: i=1; AJvYcCVHi2rLLA8rRfMqqg/HZSnXJAEeujfYkBaOf/qnHbaUhNDNNF1/BFwYKZkIzJ1N48xCklzsALmfeAhyw+3X@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw6lYhIceCouRvyCfcVXT+5u5JaKXhxAifP9SJXJ07Qh5K6Ozyy
+	Su20eZ40Lus7UBlAjmKMabfWLPCdVGqta0pGO8JZc6ZuKHMcRvxZIw4H8UjMiSq6EH89ICc8FfO
+	ihhfVRLmf0XOu7wF2zdHvrNBPodYR8CLKNsYfnjslUd31iio17JpHfPttyytB0ueB5dhi
+X-Gm-Gg: AZuq6aIdCUZlz3nVuuVNhYE5oUs+C3Lu7KPMGlX3xVR8LCS/NVsncxAMkNWJLlg21+j
+	Aql78LMB1GcJfbso2mVVY0L+9Kg+96rHelCl3BLBiK7MuFgRJwR+lsdPVuvXgE2cbqILyJCDHYD
+	1ENv4wGnq49cnB8I9TB85YOCnjhBna1lsdboKcfNOZekBZ9nCMCtgsVigtB5GJ4FRfbUXqpVEbF
+	GyWrgkPUZLN7eL5bdUYTiIfXN6jg4/wPGgTbZkxdpr6OSBc+rn6y1pnj73ymB8bSUuoM0BYNJOC
+	2h6EOsIw9sEEnxtQ4TpaeEZ/4Smk4+N8cm1MLyYb+hHk39BIyYl0tGjJkAgVS/agr01PBknUGJs
+	xZ6sTWysivXwFKAVgOp0094cg1O7VWCZ2got5SASIJcerI4hBYg07BTKuAhNe2GlA9NejI1smp9
+	iLNcK6wi5MzQEL5e3ReEfTQkc=
+X-Received: by 2002:a05:620a:1902:b0:8ca:105a:f5d1 with SMTP id af79cd13be357-8ca2f83c03fmr56961285a.30.1770142020200;
+        Tue, 03 Feb 2026 10:07:00 -0800 (PST)
+X-Received: by 2002:a05:620a:1902:b0:8ca:105a:f5d1 with SMTP id af79cd13be357-8ca2f83c03fmr56955185a.30.1770142019512;
+        Tue, 03 Feb 2026 10:06:59 -0800 (PST)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38691f6e90bsm408491fa.8.2026.02.03.10.06.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Feb 2026 10:06:57 -0800 (PST)
+Date: Tue, 3 Feb 2026 20:06:54 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Sushrut Shree Trivedi <sushrut.trivedi@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 0/2] arm64: dts: qcom:
+ qcs6490-rb3gen2-industrial-mezzanine: Add TC9563 PCIe switch nodes
+Message-ID: <aciylkjxh3u5jxyklyj5tzzlidl7a7kf6nnqkmk2kg4bwi5b7d@2rrabtmfe5r6>
+References: <20260203-industrial-mezzanine-pcie-v2-0-8579ed6bf931@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260203-qcom-socinfo-v2-0-d6719db85637@google.com>
- <20260203-qcom-socinfo-v2-5-d6719db85637@google.com> <DG5HAM6F5QYE.1ZFO7GD3SL9V0@garyguo.net>
-In-Reply-To: <DG5HAM6F5QYE.1ZFO7GD3SL9V0@garyguo.net>
-From: Matthew Maurer <mmaurer@google.com>
-Date: Tue, 3 Feb 2026 10:04:03 -0800
-X-Gm-Features: AZwV_QiFdGyk29eec1MFmYhNyUzLZTIr17YBC0D3LJX2IXJzzxnb_bKNmlHpqIg
-Message-ID: <CAGSQo03g8bjRosYVPzxhK9FpSW1ZfW52unPaoxpcn=pXaDUriQ@mail.gmail.com>
-Subject: Re: [PATCH v2 5/6] rust: debugfs: Allow access to device in
- Devres-wrapped scopes
-To: Gary Guo <gary@garyguo.net>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Satya Durga Srinivasu Prabhala <satyap@quicinc.com>, Miguel Ojeda <ojeda@kernel.org>, Boqun Feng <boqun.feng@gmail.com>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
-	Danilo Krummrich <dakr@kernel.org>, Daniel Almeida <daniel.almeida@collabora.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Michal Wilczynski <m.wilczynski@samsung.com>, Dave Ertman <david.m.ertman@intel.com>, 
-	Ira Weiny <ira.weiny@intel.com>, Leon Romanovsky <leon@kernel.org>, Trilok Soni <tsoni@quicinc.com>, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	rust-for-linux@vger.kernel.org, driver-core@lists.linux.dev, 
-	dri-devel@lists.freedesktop.org, linux-pwm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260203-industrial-mezzanine-pcie-v2-0-8579ed6bf931@oss.qualcomm.com>
+X-Authority-Analysis: v=2.4 cv=A+9h/qWG c=1 sm=1 tr=0 ts=69823945 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=u-mDUw0qBS5sdDMJZvIA:9 a=CjuIK1q_8ugA:10
+ a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-ORIG-GUID: NjQxM-x9PtxNYJo4TX2Cz9yrex_6fybA
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjAzMDE0NCBTYWx0ZWRfX1cw5iC0NT3e9
+ aSYDkLjJLLXTZMTpOVP04cunq/J8yb0trV25bb1ya3RJCnJJX+ThjaHCyn2XY/lYA4vGNuBNNZw
+ WCPfc7pZpIBn2+AoA4y9fhb4TzEJx/UdpuD39r5yYGHfeWhcfijLyzmDqKwcU8SUORG7ReHQN24
+ AKFtayYK9OO89R+ssEfC9tzkDbVuCsGI5u1WKVCERrnMbkSyFHbBXSW0RfuVOI4Rs8RlZ7MLTX0
+ 9tTGcizImtrbCKCMASPVQxq7zUcATux6zNwmK4eZiV+Z1L3u0UsBmR27khBAfSskY6DaJdZTvP5
+ PBA27RueyNBSGpDqJPJWV2NMfhmvmIjk9/wIBWIOgvNKRGu5l1VCrjl77ZCAVqYlV2M4KwcUrJx
+ MGAXZKzXFWEXMX+7E9fGvnBAiQLT4fz5aYSOfJjMSBMqgAt7VpNOPcC668VLxDLecA3OMTegh4S
+ iY/aHg0NyXUf2sNmX3w==
+X-Proofpoint-GUID: NjQxM-x9PtxNYJo4TX2Cz9yrex_6fybA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-03_05,2026-02-02_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 adultscore=0 bulkscore=0 malwarescore=0 priorityscore=1501
+ clxscore=1015 impostorscore=0 suspectscore=0 lowpriorityscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602030144
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[google.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[google.com:s=20230601];
+X-Spamd-Result: default: False [-1.66 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-91718-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[28];
-	FREEMAIL_CC(0.00)[kernel.org,quicinc.com,gmail.com,protonmail.com,google.com,umich.edu,collabora.com,linuxfoundation.org,ffwll.ch,samsung.com,intel.com,vger.kernel.org,lists.linux.dev,lists.freedesktop.org];
+	TAGGED_FROM(0.00)[bounces-91719-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:dkim,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mmaurer@google.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[google.com:+];
+	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,garyguo.net:email]
-X-Rspamd-Queue-Id: D1924DD53C
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 0CC28DD51B
 X-Rspamd-Action: no action
 
-On Tue, Feb 3, 2026 at 8:48=E2=80=AFAM Gary Guo <gary@garyguo.net> wrote:
->
-> On Tue Feb 3, 2026 at 3:46 PM GMT, Matthew Maurer wrote:
-> > This adds support for creating a DebugFS directory which is aware that
-> > it is bound to a device. As a result, callbacks under that directory
-> > have access to a bound device which gives them efficient access to othe=
-r
-> > Devres, ability to use dev_err! and friends, etc.
-> >
-> > Signed-off-by: Matthew Maurer <mmaurer@google.com>
-> > ---
-> >  rust/kernel/debugfs.rs | 40 ++++++++++++++++++++++++++++++++++++++++
-> >  1 file changed, 40 insertions(+)
-> >
-> > diff --git a/rust/kernel/debugfs.rs b/rust/kernel/debugfs.rs
-> > index d7b8014a6474698235203f2b7d8fec96f2bb43f8..ac614d693fa73929d095b66=
-9e9ba61958bec609e 100644
-> > --- a/rust/kernel/debugfs.rs
-> > +++ b/rust/kernel/debugfs.rs
-> > @@ -11,6 +11,11 @@
-> >  #[cfg(CONFIG_DEBUG_FS)]
-> >  use crate::sync::Arc;
-> >  use crate::{
-> > +    device::{
-> > +        Bound,
-> > +        Device, //
-> > +    },
-> > +    devres::Devres,
-> >      fmt,
-> >      prelude::*,
-> >      str::CStr,
-> > @@ -722,3 +727,38 @@ fn new(name: &CStr) -> ScopedDir<'data, 'static> {
-> >          }
-> >      }
-> >  }
-> > +
-> > +impl<'a, T: 'a + Send> Devres<Scope<T>> {
-> > +    /// Creates a new scope, which is a directory at the root of the d=
-ebugfs filesystem,
-> > +    /// associated with some data `T`, enclosed in a [`Devres`] for th=
-e provided device.
-> > +    ///
-> > +    /// The `init` closure is called to populate the directory with fi=
-les and subdirectories. These
-> > +    /// files can reference the data stored in the scope. Because it i=
-s stored inside a `Devres`,
-> > +    /// the init method is granted access to a `&Device<Bound>`.
-> > +    ///
-> > +    /// This can be used for cheaply accessing device-protected data i=
-nside DebugFS methods or
-> > +    /// accessing device-specific methods (e.g. [`dev_err!`]).
-> > +    ///
-> > +    /// The entire directory tree created within the scope will be rem=
-oved when the returned
-> > +    /// `Scope` handle is dropped.
-> > +    pub fn dir<E: 'a, F>(
-> > +        dev: &'a Device<Bound>,
-> > +        data: impl PinInit<T, E> + 'a,
-> > +        name: &'a CStr,
-> > +        init: F,
-> > +    ) -> impl PinInit<Self, Error> + 'a
-> > +    where
-> > +        F: for<'data, 'dir> FnOnce(&'data T, &'data Device<Bound>, &'d=
-ir ScopedDir<'data, 'dir>)
-> > +            + 'a,
-> > +        Error: From<E>,
-> > +    {
-> > +        Devres::new(
-> > +            dev,
-> > +            Scope::new(data, |data| {
-> > +                let scoped =3D ScopedDir::new(name);
-> > +                init(data, dev, &scoped);
-> > +                scoped.into_entry()
-> > +            }),
-> > +        )
-> > +    }
-> > +}
->
-> I think it is a big strange to have this on `Devres` (in patch v6 it has =
-`Devres::dir` doesn't make
-> too much sense). I would suggest that we domsomething like
->
->     impl<'a, T: 'a + Send> Scope<T> {
->         pub fn devres_dir(
->             ...
->         ) -> impl PinInit<Devres<Self>, Error> + 'a;
->     }
->
-> To me `Devres` is just a generic container type, just like `Arc` and `ARe=
-f`, so
-> the assoc functions should be defined on the concrete type.
->
-> Also: is there a reason that this needs a special API, and by
->
->     Devres::new(device, Scope::dir(data, c"name", |data| {
->         // use data and device
->     });
->
-> ?
+On Tue, Feb 03, 2026 at 10:01:27AM +0530, Sushrut Shree Trivedi wrote:
+> Add nodes for the two additional TC9563 PCIe switches present on the
+> QCOM RB3Gen2 Industrial Mezzanine platform.
+> 
+> One of the TC9563 is connected directly to the PCIe0 root-port while
+> the second TC9563 switch is connected in cascade fashion to another
+> already available TC9563 switch on PCIe1 via the former's downstream
+> port (DSP). The final PCIe hierarchy on the Industrial Mezz platform
+> would look something like below:
+> 
+> ---
+> Changes in v2:
+> - EDITME: describe what is new in this series revision.
+> - EDITME: use bulletpoints and terse descriptions.
 
-Yes - that won't work, because the function being provided to
-`Scope::dir` is `for<'data, 'dir> FnOnce(&'data T, &'dir
-ScopedDir<'data, 'dir>)` - this means that *intentionally*, if you
-capture any non-static-lifetime variable from outside the closure, you
-won't be able to use it with the methods on `ScopedDir`, because the
-`'data` lifetime bound should stop you. In the general case, we
-wouldn't want a reference with the same lifetime as `device` in that
-example to be usable inside the debugfs callbacks. The device of a
-Devres wrapped scope is a special case because we know that it will
-outlive it.
+The b4 tool should have warned you about this. Why was it ignored? Where
+is the changelog?
 
->
-> Best,
-> Gary
->
->
+> - Link to v1: https://lore.kernel.org/r/20260131-industrial-mezzanine-pcie-v1-0-b3c2905dd768@oss.qualcomm.com
+> 
+> ---
+> Sushrut Shree Trivedi (2):
+>       arm64: dts: qcom: qcs6490-rb3gen2-industrial-mezzanine: Add TC9563 PCIe switch node for PCIe0
+>       arm64: dts: qcom: qcs6490-rb3gen2-industrial-mezzanine: Add second TC9563 PCIe switch node for PCIe1
+> 
+>  .../qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso | 234 +++++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts       |  12 +-
+>  2 files changed, 240 insertions(+), 6 deletions(-)
+> ---
+> base-commit: 4f938c7d3b25d87b356af4106c2682caf8c835a2
+> change-id: 20260131-industrial-mezzanine-pcie-75dd851f5b04
+> 
+> Best regards,
+> -- 
+> Sushrut Shree Trivedi <sushrut.trivedi@oss.qualcomm.com>
+> 
+
+-- 
+With best wishes
+Dmitry
 
