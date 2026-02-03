@@ -1,134 +1,279 @@
-Return-Path: <linux-arm-msm+bounces-91708-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OIPTOUwpgmnFPwMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91708-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 17:58:52 +0100
+	id cLLvAWYtgmlFQAMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 18:16:22 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF81ADC655
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 17:58:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D87DDC9D6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 18:16:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id E84F1303FB71
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Feb 2026 16:58:42 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id DDFA830010E4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Feb 2026 17:16:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B3433D34A5;
-	Tue,  3 Feb 2026 16:58:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87D802417C2;
+	Tue,  3 Feb 2026 17:16:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PatvW/Fe"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GQ3cEh1/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D433D34A0;
-	Tue,  3 Feb 2026 16:58:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64DDE1A76DE;
+	Tue,  3 Feb 2026 17:16:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770137915; cv=none; b=iZa0xhXeLjdVkDDSCtyJ/lRZsmyUJZXK7t77QgCp+cx4Xkn1uVmxawKQ25xuTVm2GzOgYIsKk0LMiCB8eZ2YSbhiOl5KYFGySwA/jQX5NsRddr+MEu2r6BJ7rcQP9/ONT2moMhtu4j01AtHGLiJ+g7Z0I/HSOBvBNJZ0ip3E51c=
+	t=1770138979; cv=none; b=KEcSmD/mZBhdVdMcR8pbpApxfIg2D4jYI2ZFNF89xl4525cpBz7o/myAmdve1XZ9eDmukvpiuNM52s8gD9hmWUzplCF4tZfF7y3G4R8ur9y41uaH59Yla3/wEcB+xXtooKbl5UCh+KPUtbS4NdQGE/bzcOWP+U3Tq/z1Gaq5Fio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770137915; c=relaxed/simple;
-	bh=WxmlTgy0bTXH+yTAEyI8pJk9rrPb8d6K81hCjqQk99E=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:Subject:Cc:To:
-	 References:In-Reply-To; b=urtw+7O6h9MMbR8MgraAirwRooCsJmXsxECn6sedlVMWG1Og5/VXvQ2TwH3/Q5RGjF+OP4nWKKe/jnw/2t65dLGE38chzZaDc5J70KiBiAzbv5YqhJ2TcHrBvWMqvTvid6or8IxaBCNCI3nKDocgJ0Qa40YKDcmaSPJkspuTFlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PatvW/Fe; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAB20C116D0;
-	Tue,  3 Feb 2026 16:58:29 +0000 (UTC)
+	s=arc-20240116; t=1770138979; c=relaxed/simple;
+	bh=V+hRYaveht9zKYaY/x1O5Uifx5AVMz4lD+Sn9iPlVes=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=nFPjcZOb0RgkHlOWz3QrDMnlDji60sTWv5Hla3NZVURrF65tfVA6Ju+G2UfQdINFiGXXiyGNhr61XEYWXsrosYq4IrTsBoyGRsRJCd64LB1smV7KlmnPQd32BhLMQbT0xX5sCLCXlBytO9QhTRX7mv9JmGiPhcZe1agdfTjAdV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GQ3cEh1/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8305AC116D0;
+	Tue,  3 Feb 2026 17:16:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770137914;
-	bh=WxmlTgy0bTXH+yTAEyI8pJk9rrPb8d6K81hCjqQk99E=;
-	h=Date:From:Subject:Cc:To:References:In-Reply-To:From;
-	b=PatvW/FeOqaD0/AGUGWfu+D/oZ5PFg0xDRNlYV+ebA78rtsQYefCAXTKRXXG5aJ4S
-	 P8Wcu4gN+/6xCdbzi0UzOduiWN5nLel1xOmS3l5XMvCDW67Z96PGTvhM6QSC4oye4B
-	 mRMU3m8cZkmfP3deqtdtcyMUp2qWPtiKpdVTWPSoDa2MOfrs6jU5OJY9lhT9h+/eCd
-	 GG2AJSiH8lKZZ0zsWGhBVATSEe3A4Z5IwpPbuRIBVN3izJqMMLl24cZZz9JdwCMapS
-	 XcibbwAB1OWctZLYRGuRBbqEYseEXQC756WNjxeokuXJpPM1j3ZtIQV/2SRZMTkgoE
-	 U9el1uBjxXRcg==
+	s=k20201202; t=1770138979;
+	bh=V+hRYaveht9zKYaY/x1O5Uifx5AVMz4lD+Sn9iPlVes=;
+	h=From:To:Cc:Subject:Date:From;
+	b=GQ3cEh1/aMEa1eRzUixJkttpRawZoqz4f7u8KkkpBmx7jTWjibs1zj/DH+ViIr621
+	 BaVOfdcElW0Jd2Hky6y/TK26NkwP2HwruSO72btzEzmMR2OzqWIYiEyuUaGcT2xTHI
+	 O1az1+38QA0ZNAwVwieSa9LZ3XnWePr0nPiaB23h1E61I/XefUWLIoZXyuegyiWjuh
+	 c9OTs3K+1dHjBcMX9AhbCmVr9haOH51n2LeczDsMO/t7BwFvwiNiqULBrMEL9XWyt9
+	 RhRsyXe8IJgkLXAIl7ATvEE1FUbvn+cbR7sbYyQjNe7HmTlLzCBL8u1YQ/5kwGSh0I
+	 FOage/04NqELg==
+From: Bjorn Andersson <andersson@kernel.org>
+To: Stephen Boyd <sboyd@kernel.org>,
+	linux-clk@vger.kernel.org
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Taniya Das <taniya.das@oss.qualcomm.com>,
+	Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
+	=?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Brian Masney <bmasney@redhat.com>,
+	Daniil Titov <daniilt971@gmail.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	David Heidelberg <david@ixit.cz>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	George Moussalem <george.moussalem@outlook.com>,
+	Petr Hodina <petr.hodina@protonmail.com>
+Subject: [GIT PULL] Qualcomm clock updates for v6.20
+Date: Tue,  3 Feb 2026 11:16:16 -0600
+Message-ID: <20260203171616.2830464-1-andersson@kernel.org>
+X-Mailer: git-send-email 2.52.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Date: Tue, 03 Feb 2026 17:58:28 +0100
-Message-Id: <DG5HIOSFBM2O.1ZKURNJFQN1KB@kernel.org>
-From: "Danilo Krummrich" <dakr@kernel.org>
-Subject: Re: [PATCH v2 5/6] rust: debugfs: Allow access to device in
- Devres-wrapped scopes
-Cc: "Matthew Maurer" <mmaurer@google.com>, "Bjorn Andersson"
- <andersson@kernel.org>, "Konrad Dybcio" <konradybcio@kernel.org>, "Satya
- Durga Srinivasu Prabhala" <satyap@quicinc.com>, "Miguel Ojeda"
- <ojeda@kernel.org>, "Boqun Feng" <boqun.feng@gmail.com>,
- =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, "Benno Lossin"
- <lossin@kernel.org>, "Andreas Hindborg" <a.hindborg@kernel.org>, "Alice
- Ryhl" <aliceryhl@google.com>, "Trevor Gross" <tmgross@umich.edu>, "Daniel
- Almeida" <daniel.almeida@collabora.com>, "Greg Kroah-Hartman"
- <gregkh@linuxfoundation.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
- "David Airlie" <airlied@gmail.com>, "Simona Vetter" <simona@ffwll.ch>,
- "Michal Wilczynski" <m.wilczynski@samsung.com>, "Dave Ertman"
- <david.m.ertman@intel.com>, "Ira Weiny" <ira.weiny@intel.com>, "Leon
- Romanovsky" <leon@kernel.org>, "Trilok Soni" <tsoni@quicinc.com>,
- <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
- <rust-for-linux@vger.kernel.org>, <driver-core@lists.linux.dev>,
- <dri-devel@lists.freedesktop.org>, <linux-pwm@vger.kernel.org>
-To: "Gary Guo" <gary@garyguo.net>
-References: <20260203-qcom-socinfo-v2-0-d6719db85637@google.com>
- <20260203-qcom-socinfo-v2-5-d6719db85637@google.com>
- <DG5HAM6F5QYE.1ZFO7GD3SL9V0@garyguo.net>
-In-Reply-To: <DG5HAM6F5QYE.1ZFO7GD3SL9V0@garyguo.net>
+Content-Transfer-Encoding: 8bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.16 / 15.00];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MV_CASE(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-91708-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[google.com,kernel.org,quicinc.com,gmail.com,protonmail.com,umich.edu,collabora.com,linuxfoundation.org,ffwll.ch,samsung.com,intel.com,vger.kernel.org,lists.linux.dev,lists.freedesktop.org];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-91709-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.infradead.org,oss.qualcomm.com,mainlining.org,redhat.com,gmail.com,linaro.org,ixit.cz,outlook.com,protonmail.com];
 	MIME_TRACE(0.00)[0:+];
+	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	MISSING_XM_UA(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dakr@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.999];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_TWELVE(0.00)[28];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: AF81ADC655
+X-Rspamd-Queue-Id: 9D87DDC9D6
 X-Rspamd-Action: no action
 
-On Tue Feb 3, 2026 at 5:47 PM CET, Gary Guo wrote:
-> I think it is a big strange to have this on `Devres` (in patch v6 it has =
-`Devres::dir` doesn't make
-> too much sense). I would suggest that we domsomething like
->
->     impl<'a, T: 'a + Send> Scope<T> {
->         pub fn devres_dir(
->             ...
->         ) -> impl PinInit<Devres<Self>, Error> + 'a;
->     }
 
-Good catch, I did not notice that this is implemented on Devres, rather tha=
-n
-debugfs. This should not be implemented on Devres.
+The following changes since commit 8f0b4cce4481fb22653697cced8d0d04027cb1e8:
 
-> To me `Devres` is just a generic container type, just like `Arc` and `ARe=
-f`, so
-> the assoc functions should be defined on the concrete type.
+  Linux 6.19-rc1 (2025-12-14 16:05:07 +1200)
 
-Indded.
+are available in the Git repository at:
+
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-clk-for-6.20
+
+for you to fetch changes up to 012e012e4917da06b512a3074980c3091949befa:
+
+  clk: qcom: sm8750: Constify 'qcom_cc_desc' in SM8750 camcc (2026-01-28 14:23:35 -0600)
+
+----------------------------------------------------------------
+Qualcomm clock updates for v6.20
+
+Convert clock dividers from round_rate() to determine_rate().
+
+Add support for global, tcsr, rpmh, display, gpu, camera, and video
+clock controllers for Kaanapali.
+
+Add support for camera clock controller for SM8750.
+
+Fix the SDCC RCGs to use shared_floor_ops across a variety of platforms.
+
+Add support for global clock controller on MSM8940 and SDM439.
+
+----------------------------------------------------------------
+Barnabás Czémán (6):
+      dt-bindings: clock: gcc-msm8917: Add missing MDSS reset
+      clk: qcom: gcc-msm8917: Add missing MDSS reset
+      dt-bindings: clock: qcom: Add MSM8940 Global Clock Controller
+      dt-bindings: clock: qcom: Add SDM439 Global Clock Controller
+      clk: qcom: gcc-msm8953: Remove ALWAYS_ON flag from cpp_gdsc
+      clk: qcom: gcc-msm8917: Remove ALWAYS_ON flag from cpp_gdsc
+
+Bjorn Andersson (4):
+      Merge branch '20251117-mdss-resets-msm8917-msm8937-v2-1-a7e9bbdaac96@mainlining.org' into clk-for-6.20
+      Merge branch '20260103-ufs_symbol_clk-v2-1-51828cc76236@oss.qualcomm.com' into clk-for-6.20
+      Merge branch '20251202-sm8750_camcc-v1-2-b3f7ef6723f1@oss.qualcomm.com' into clk-for-6.20
+      Merge branch '20260107-kaanapali-mmcc-v3-v3-0-8e10adc236a8@oss.qualcomm.com' into clk-for-6.20
+
+Brian Masney (3):
+      clk: qcom: alpha-pll: convert from divider_round_rate() to divider_determine_rate()
+      clk: qcom: regmap-divider: convert from divider_ro_round_rate() to divider_ro_determine_rate()
+      clk: qcom: regmap-divider: convert from divider_round_rate() to divider_determine_rate()
+
+Daniil Titov (2):
+      clk: qcom: gcc: Add support for Global Clock controller found on MSM8940
+      clk: qcom: gcc: Add support for Global Clock controller found on SDM439
+
+David Heidelberg (1):
+      clk: qcom: dispcc-sm7150: Fix dispcc_mdss_pclk1_clk_src
+
+Dmitry Baryshkov (1):
+      clk: qcom: gfx3d: add parent to parent request map
+
+George Moussalem (1):
+      clk: qcom: gcc-ipq5018: flag sleep clock as critical
+
+Jagadeesh Kona (8):
+      clk: qcom: gcc-sm8450: Update the SDCC RCGs to use shared_floor_ops
+      clk: qcom: gcc-sm8750: Update the SDCC RCGs to use shared_floor_ops
+      clk: qcom: gcc-sm4450: Update the SDCC RCGs to use shared_floor_ops
+      clk: qcom: gcc-sdx75: Update the SDCC RCGs to use shared_floor_ops
+      clk: qcom: gcc-milos: Update the SDCC RCGs to use shared_floor_ops
+      clk: qcom: gcc-x1e80100: Update the SDCC RCGs to use shared_floor_ops
+      clk: qcom: gcc-qdu1000: Update the SDCC RCGs to use shared_floor_ops
+      clk: qcom: gcc-glymur: Update the SDCC RCGs to use shared_floor_ops
+
+Krzysztof Kozlowski (4):
+      clk: qcom: gcc-kaanapali: Fix double array initializer
+      clk: qcom: rpmh: Fix double array initializer on Kaanapali
+      clk: qcom: videocc-sm8750: Constify qcom_cc_desc
+      clk: qcom: sm8750: Constify 'qcom_cc_desc' in SM8750 camcc
+
+Petr Hodina (1):
+      clk: qcom: dispcc-sdm845: Enable parents for pixel clocks
+
+Taniya Das (20):
+      clk: qcom: rpmh: Update the clock suffix for Glymur
+      clk: qcom: rpmh: Add support for Kaanapali rpmh clocks
+      clk: qcom: Add TCSR clock driver for Kaanapali
+      clk: qcom: Add support for Global clock controller on Kaanapali
+      dt-bindings: clock: qcom,x1e80100-gcc: Add missing UFS mux clocks
+      clk: qcom: gcc-x1e80100: Add missing UFS symbol mux clocks
+      clk: qcom: rcg2: compute 2d using duty fraction directly
+      dt-bindings: clock: qcom: Add camera clock controller for SM8750 SoC
+      dt-bindings: clock: qcom: document Kaanapali DISPCC clock controller
+      dt-bindings: clock: qcom: Add support for CAMCC for Kaanapali
+      dt-bindings: clock: qcom: Add Kaanapali video clock controller
+      dt-bindings: clock: qcom: document the Kaanapali GPU Clock Controller
+      clk: qcom: clk-alpha-pll: Add support for controlling Rivian PLL
+      clk: qcom: camcc: Add camera clock controller driver for SM8750 SoC
+      clk: qcom: clk-alpha-pll: Update the PLL support for cal_l
+      clk: qcom: clk-alpha-pll: Add support for controlling Pongo EKO_T PLL
+      clk: qcom: dispcc: Add support for display clock controller Kaanapali
+      clk: qcom: camcc: Add support for camera clock controller for Kaanapali
+      clk: qcom: Add support for VideoCC driver for Kaanapali
+      clk: qcom: Add support for GPUCC and GXCLK for Kaanapali
+
+Vladimir Zapolskiy (2):
+      clk: qcom: gcc-sm8550: Use floor ops for SDCC RCGs
+      clk: qcom: gcc-sm8650: Use floor ops for SDCC RCGs
+
+ .../bindings/clock/qcom,gcc-msm8953.yaml           |    6 +-
+ .../bindings/clock/qcom,kaanapali-gxclkctl.yaml    |   63 +
+ .../bindings/clock/qcom,sm8450-camcc.yaml          |   11 +
+ .../bindings/clock/qcom,sm8450-gpucc.yaml          |    2 +
+ .../bindings/clock/qcom,sm8450-videocc.yaml        |    3 +
+ .../bindings/clock/qcom,sm8550-dispcc.yaml         |    2 +
+ .../bindings/clock/qcom,x1e80100-gcc.yaml          |    8 +-
+ drivers/clk/qcom/Kconfig                           |   71 +-
+ drivers/clk/qcom/Makefile                          |    7 +
+ drivers/clk/qcom/cambistmclkcc-kaanapali.c         |  437 +++
+ drivers/clk/qcom/cambistmclkcc-sm8750.c            |  454 +++
+ drivers/clk/qcom/camcc-kaanapali.c                 | 2661 +++++++++++++++
+ drivers/clk/qcom/camcc-sm8750.c                    | 2710 +++++++++++++++
+ drivers/clk/qcom/clk-alpha-pll.c                   |   41 +-
+ drivers/clk/qcom/clk-alpha-pll.h                   |    7 +
+ drivers/clk/qcom/clk-rcg2.c                        |    7 +-
+ drivers/clk/qcom/clk-regmap-divider.c              |   16 +-
+ drivers/clk/qcom/clk-rpmh.c                        |   60 +-
+ drivers/clk/qcom/dispcc-kaanapali.c                | 1956 +++++++++++
+ drivers/clk/qcom/dispcc-sdm845.c                   |    4 +-
+ drivers/clk/qcom/dispcc-sm7150.c                   |    2 +-
+ drivers/clk/qcom/gcc-glymur.c                      |    4 +-
+ drivers/clk/qcom/gcc-ipq5018.c                     |    1 +
+ drivers/clk/qcom/gcc-kaanapali.c                   | 3540 ++++++++++++++++++++
+ drivers/clk/qcom/gcc-milos.c                       |    6 +-
+ drivers/clk/qcom/gcc-msm8917.c                     |  282 +-
+ drivers/clk/qcom/gcc-msm8953.c                     |    1 -
+ drivers/clk/qcom/gcc-qdu1000.c                     |    4 +-
+ drivers/clk/qcom/gcc-sdx75.c                       |    4 +-
+ drivers/clk/qcom/gcc-sm4450.c                      |    6 +-
+ drivers/clk/qcom/gcc-sm8450.c                      |    4 +-
+ drivers/clk/qcom/gcc-sm8550.c                      |    4 +-
+ drivers/clk/qcom/gcc-sm8650.c                      |    4 +-
+ drivers/clk/qcom/gcc-sm8750.c                      |    4 +-
+ drivers/clk/qcom/gcc-x1e80100.c                    |   76 +-
+ drivers/clk/qcom/gpucc-kaanapali.c                 |  482 +++
+ drivers/clk/qcom/gxclkctl-kaanapali.c              |   76 +
+ drivers/clk/qcom/tcsrcc-kaanapali.c                |  141 +
+ drivers/clk/qcom/videocc-kaanapali.c               |  821 +++++
+ drivers/clk/qcom/videocc-sm8750.c                  |    2 +-
+ include/dt-bindings/clock/qcom,gcc-msm8917.h       |    2 +
+ .../clock/qcom,kaanapali-cambistmclkcc.h           |   33 +
+ include/dt-bindings/clock/qcom,kaanapali-camcc.h   |  147 +
+ include/dt-bindings/clock/qcom,kaanapali-dispcc.h  |  109 +
+ include/dt-bindings/clock/qcom,kaanapali-gpucc.h   |   47 +
+ .../dt-bindings/clock/qcom,kaanapali-gxclkctl.h    |   13 +
+ include/dt-bindings/clock/qcom,kaanapali-videocc.h |   58 +
+ .../dt-bindings/clock/qcom,sm8750-cambistmclkcc.h  |   30 +
+ include/dt-bindings/clock/qcom,sm8750-camcc.h      |  151 +
+ include/dt-bindings/clock/qcom,x1e80100-gcc.h      |    3 +
+ 50 files changed, 14504 insertions(+), 79 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,kaanapali-gxclkctl.yaml
+ create mode 100644 drivers/clk/qcom/cambistmclkcc-kaanapali.c
+ create mode 100644 drivers/clk/qcom/cambistmclkcc-sm8750.c
+ create mode 100644 drivers/clk/qcom/camcc-kaanapali.c
+ create mode 100644 drivers/clk/qcom/camcc-sm8750.c
+ create mode 100644 drivers/clk/qcom/dispcc-kaanapali.c
+ create mode 100644 drivers/clk/qcom/gcc-kaanapali.c
+ create mode 100644 drivers/clk/qcom/gpucc-kaanapali.c
+ create mode 100644 drivers/clk/qcom/gxclkctl-kaanapali.c
+ create mode 100644 drivers/clk/qcom/tcsrcc-kaanapali.c
+ create mode 100644 drivers/clk/qcom/videocc-kaanapali.c
+ create mode 100644 include/dt-bindings/clock/qcom,kaanapali-cambistmclkcc.h
+ create mode 100644 include/dt-bindings/clock/qcom,kaanapali-camcc.h
+ create mode 100644 include/dt-bindings/clock/qcom,kaanapali-dispcc.h
+ create mode 100644 include/dt-bindings/clock/qcom,kaanapali-gpucc.h
+ create mode 100644 include/dt-bindings/clock/qcom,kaanapali-gxclkctl.h
+ create mode 100644 include/dt-bindings/clock/qcom,kaanapali-videocc.h
+ create mode 100644 include/dt-bindings/clock/qcom,sm8750-cambistmclkcc.h
+ create mode 100644 include/dt-bindings/clock/qcom,sm8750-camcc.h
 
