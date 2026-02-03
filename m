@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-91686-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91687-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UNIuLKUYgmmZPAMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91686-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 16:47:49 +0100
+	id 4Ft2NLEYgmmZPAMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91687-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 16:48:01 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6FC96DB7F3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 16:47:49 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5EBB4DB803
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 16:48:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id BABA9307C81E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Feb 2026 15:46:54 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 3929B30AB5D6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Feb 2026 15:46:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F5F63C197D;
-	Tue,  3 Feb 2026 15:46:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DA6C3C1985;
+	Tue,  3 Feb 2026 15:46:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="QWWpbDi+"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="o47zouml"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-dy1-f201.google.com (mail-dy1-f201.google.com [74.125.82.201])
+Received: from mail-dy1-f202.google.com (mail-dy1-f202.google.com [74.125.82.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E5E73BFE45
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Feb 2026 15:46:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C20A63C1966
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Feb 2026 15:46:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770133604; cv=none; b=ZQVogo//MFk0D8l4bDQO3MqTGyllBi1S+nAFPCIhj6V9g+iIk/aUmwE5OrWEcgue/n3FbmgyOpCx/WKcMzxXzjc4WopNRXGrNv++rRMWesNfenEtimV8jFOjZZp1aPE/AAXDxn4qGM6p6jnsjOA6jrswZeh5os1M0hvkMwgXwEw=
+	t=1770133605; cv=none; b=Py0InDxs/3sjhFxZft8PS21Z2Xm2TfN3psYW1Pk/q8IR4OTd/tHl9Hx8aGnXhSCXnWUjhM9LYxub7RCF1nHBgi2Xw56KwUG4uUc7Fa7iA4hVivx6HRZRQRGd5/bGfVCwIpWG8XJCDQXKQp2zYgXT6B2I54CVh7qOFJjVCedB0No=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770133604; c=relaxed/simple;
-	bh=RwCJ/xEwqbjligRdRo7donBAUlsdrVxdbuTW9DJLV3g=;
+	s=arc-20240116; t=1770133605; c=relaxed/simple;
+	bh=sLbxFTX2mTYV2vSHOwak0YCZYcQva6hVw82FQCeYKlk=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=EoxK3tnwyoIe0s5hD/87rXsYOhHy3RsRkb+Gekl5rDAp+uE2lhCHEYx1uqbN0NMtsj+LjnBQ6OFrrNoG7Hnc2NPbTfLSKI0WvgMJizbgFWLsBzqgzDM8hY6L8zWbC9Mjot6bOyhTKCV4wuA94GxeU7QRtVq0Bzchvrd9vNxAiCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--mmaurer.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=QWWpbDi+; arc=none smtp.client-ip=74.125.82.201
+	 To:Cc:Content-Type; b=oSGgwmzn+TAquK8jG100JWyF7yXXaf6+bUamVmP8NZo4BJYJtMOJF8BO+h7h0v1UAbLAnj0WezqcBsyeNOkj7jSjFXlEEYIf5VRHicaeKh4gfJxNPu5ethdNPBAaAEx8htCEE3N+pUJeYTuWi5NUY5l5HW1F2NLIf8AxG8JATJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--mmaurer.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=o47zouml; arc=none smtp.client-ip=74.125.82.202
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--mmaurer.bounces.google.com
-Received: by mail-dy1-f201.google.com with SMTP id 5a478bee46e88-2b74aff34efso10550371eec.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Feb 2026 07:46:41 -0800 (PST)
+Received: by mail-dy1-f202.google.com with SMTP id 5a478bee46e88-2b708fa4093so18384960eec.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Feb 2026 07:46:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1770133600; x=1770738400; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1770133602; x=1770738402; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=KdXVf1jtiVVdnaqb+rLnoB8/QmUjcxzniTwKjo2bXrU=;
-        b=QWWpbDi+07DEGZt/vbKJ4gHNZQvQ9xKkTh6732LHW4Pw7iLWmQPaPw40lm/jK1iXFv
-         RsaY+EyR9ugT8iRjNWYsQIz1WYyFkALVnbRps2rNI4MePXVn+R3HTfn0sd47SAYRESmm
-         VdM68Uzak3YXOm3T1MiTs9pny8iOXHAQNiiR7Bh2L17xpL4bISRbqjE8xe8bNPD/bimA
-         q/3aMkFxtIKqOqH49AuO4K/nB7Hwzc7iyMgpG40QINdvujP6h3q2gDd1SxJ0DR4OehQW
-         YlWFgqYRM8NgxMibh9YHCkNx1FQ84lHH14/keobHJFY1ilaYorqUT27KXV8kqoFJVS7N
-         W85A==
+        bh=yriD2nT/Os7MHztKIgeqU92FBaPsLQ1akZyLJCP9KTY=;
+        b=o47zoumlJdrRlPy6ZNnwUnLc/OELYrP8hjk4+NsdIelT0dGOyfVWUtWoByfnCo+ubt
+         U6Nvufmiict84IsqfV/SmComuIvgXZu/ywEpnNzbL8RyThvn3LgaK5sgfV3cVSyl/B6k
+         jbPXn/q8cMFIC+8bQMQ6AWijqDRKi6bIekaJxx1JzexituXxJ+lISMQDNKPFhwPuA9UY
+         cnwKY5ZtsQCukha4vODVvtUiYDsCSJBmK0Iz/eyPOkBjsHEec96kfOT3rLMfhUTk3+M7
+         3V0zMVa28w+kNPLgRBpS3oPHUbyUrAqKK/IUAPN6zhino3tzd6q3famHirNjIWgDKxnz
+         CIXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770133600; x=1770738400;
+        d=1e100.net; s=20230601; t=1770133602; x=1770738402;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KdXVf1jtiVVdnaqb+rLnoB8/QmUjcxzniTwKjo2bXrU=;
-        b=D4YzPRVmUrDoqi9cRUC7vsPHOSpVA1RpzUiUq938AiHDgj5GpKhSR7k4FiGYe1qmNv
-         JkCTC96f/16t8eem2vpq2+nbn49H3KsdAfPaqeWU6VGgkVsZ//Vepv6rcuhal+XZigPJ
-         XR6EoezFCkQWPxiwzbUnpAY9Ininh7oGEhKl8nbzp7TAs7I11vjE2zIP+fat6N4HrUmy
-         +VVwBKss9ooOlIG0/SUubLiid0SXDtAGEioM7SIXtcQdSpgU3M/hjFDq/vBU4nh47R1j
-         g0ZJ7Fsz+PineCMwWhkNFOntyvB1av/U8yz92yGRIHIcZUmFfn4sMSwbg7f64/S1JZhI
-         uZ8g==
-X-Forwarded-Encrypted: i=1; AJvYcCU5JyuBXrfFLxFPLyrNoWKp/2aY3oKMYYWRHndEXfjK2odIt3LdrKNjcLQ/i4HL1HBmOiNdAXloW7lS47wB@vger.kernel.org
-X-Gm-Message-State: AOJu0YwPO3nNAy2jgXf9V24YcSIMo5ng7g6OPe2sppo1XOkTDPHVkrMg
-	7sX0bNUSSJpZvz9KTRepdLASyV8wlZByXwS+XAlM9yW6ujnj/5HBvLI0ikRb0chU66/HjhAlrZJ
-	zBVhi+GistQ==
-X-Received: from dycrt20.prod.google.com ([2002:a05:693c:2d94:b0:2b6:c6a7:636a])
- (user=mmaurer job=prod-delivery.src-stubby-dispatcher) by 2002:a05:693c:3002:b0:2b6:c617:f795
- with SMTP id 5a478bee46e88-2b7c86663c1mr7418033eec.17.1770133600442; Tue, 03
- Feb 2026 07:46:40 -0800 (PST)
-Date: Tue, 03 Feb 2026 15:46:32 +0000
+        bh=yriD2nT/Os7MHztKIgeqU92FBaPsLQ1akZyLJCP9KTY=;
+        b=QIZgF3Up4QWkvf/CkYL04ZZbTZkbaXngAx7EmAHtjTuGCLo1ePG0GkocL5nHM4vAO2
+         k6w7s4TV+N261TFgvrDsYdfx/kT66dTGuTCE3KmWQhiSUAjFl1Ul5UDuNIu/F8nLpmkA
+         nWZI9o1BmzG4HbvwWnDZ6zO3TVsKgdc1gO3RX/vfK35c9+nApjKVJ5MjPnWoGZ+F+IQo
+         0lRs0YgT27mQHQIBxKbWN+FU9oLG1XQPSLUSAf04T0N3crRak4qiuduohDBC0u+BnBAd
+         dbXJPUK656ITBOVmSxMPV7FX9O0Fb/zrA+7iP7a5Dz/AWkX0xsjGae+cnu6Tq9uRDLAd
+         oujw==
+X-Forwarded-Encrypted: i=1; AJvYcCWL964IuIDh7f5Y07J4lzsbR0Kk5sGbZDK6l4cxrNqLYy36NtLaz1BJviaVhHZsCBlp3T6QbMgEL7XtAbdw@vger.kernel.org
+X-Gm-Message-State: AOJu0YyQGvqFnHJss0ujvIikX1f5jWLESgQq+fPUZdG6bB3hqrUYSXiV
+	Opxdz4cVD0djm8hpkACnNfb/HKXXXzm3PgzN6imQQK723UqsYj+aia90+hm71gpeAGbyRFD3Kc5
+	hpdhq7VFUxQ==
+X-Received: from dybhk18.prod.google.com ([2002:a05:7301:2892:b0:2b7:d91:b4a2])
+ (user=mmaurer job=prod-delivery.src-stubby-dispatcher) by 2002:a05:7300:7491:b0:2b7:f28d:c8c1
+ with SMTP id 5a478bee46e88-2b8327328c7mr4126eec.0.1770133601984; Tue, 03 Feb
+ 2026 07:46:41 -0800 (PST)
+Date: Tue, 03 Feb 2026 15:46:33 +0000
 In-Reply-To: <20260203-qcom-socinfo-v2-0-d6719db85637@google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -76,13 +76,13 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 References: <20260203-qcom-socinfo-v2-0-d6719db85637@google.com>
 X-Developer-Key: i=mmaurer@google.com; a=ed25519; pk=2Ezhl7+fEjTOMVFpplDeak2AdQ8cjJieLRVJdNzrW+E=
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1770133593; l=2963;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1770133593; l=1096;
  i=mmaurer@google.com; s=20250429; h=from:subject:message-id;
- bh=RwCJ/xEwqbjligRdRo7donBAUlsdrVxdbuTW9DJLV3g=; b=SQdCmaIOesp2nNqbcmI1qfM3G5NEMlAiTI7JoMUcwHSNW8vyq+fqK1lL17+OwnTzARN5rGU+z
- 9PyU4DL3NSyDmB3rGdnOpkIMgMGTW/9HGTk/h/gqJgPbPfyQrUyBmYk
+ bh=sLbxFTX2mTYV2vSHOwak0YCZYcQva6hVw82FQCeYKlk=; b=lrUfeO8BzxGoH2q0cLzXZitIHc5mxhrmhIP1EvIGlTolROpSubzosdu4ukDgERhXMbVdgqt6B
+ hy4MuPfZ3YMDwryq+n6Z7b1/52uJBUTXJBD7xC/OlPQKkhC26hmI+cu
 X-Mailer: b4 0.14.2
-Message-ID: <20260203-qcom-socinfo-v2-3-d6719db85637@google.com>
-Subject: [PATCH v2 3/6] rust: device: Support testing devices for equality
+Message-ID: <20260203-qcom-socinfo-v2-4-d6719db85637@google.com>
+Subject: [PATCH v2 4/6] rust: auxiliary: Support accessing raw aux pointer
 From: Matthew Maurer <mmaurer@google.com>
 To: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
 	Satya Durga Srinivasu Prabhala <satyap@quicinc.com>, Miguel Ojeda <ojeda@kernel.org>, Boqun Feng <boqun.feng@gmail.com>, 
@@ -107,12 +107,12 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	MV_CASE(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[google.com,reject];
 	R_DKIM_ALLOW(-0.20)[google.com:s=20230601];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-91686-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-91687-lists,linux-arm-msm=lfdr.de];
 	FREEMAIL_TO(0.00)[kernel.org,quicinc.com,gmail.com,garyguo.net,protonmail.com,google.com,umich.edu,collabora.com,linuxfoundation.org,ffwll.ch,samsung.com,intel.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
@@ -127,83 +127,36 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	NEURAL_HAM(-0.00)[-0.999];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 6FC96DB7F3
+X-Rspamd-Queue-Id: 5EBB4DB803
 X-Rspamd-Action: no action
 
-This allows device drivers to check if, for example, an auxiliary
-devices is one of its children by comparing the parent field, or
-checking if a device parameter is its own device.
-
-Also convert existing `.as_raw() != .as_raw()` to  use this new
-implementation.
+While it's preferable to add bindings in the kernel crate rather than
+using raw pointers where possible, access to the raw aux pointer is
+required to pass it to C interfaces provided by a driver.
 
 Signed-off-by: Matthew Maurer <mmaurer@google.com>
 ---
- rust/kernel/device.rs     | 8 ++++++++
- rust/kernel/devres.rs     | 2 +-
- rust/kernel/drm/driver.rs | 2 +-
- rust/kernel/pwm.rs        | 2 +-
- 4 files changed, 11 insertions(+), 3 deletions(-)
+ rust/kernel/auxiliary.rs | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/rust/kernel/device.rs b/rust/kernel/device.rs
-index 94e0548e76871d8b7de309c1f1c7b77bb49738ed..aa10359d3ebdd1c99cc567a35b89f52ddb2ee050 100644
---- a/rust/kernel/device.rs
-+++ b/rust/kernel/device.rs
-@@ -516,6 +516,14 @@ unsafe impl Send for Device {}
- // synchronization in `struct device`.
- unsafe impl Sync for Device {}
+diff --git a/rust/kernel/auxiliary.rs b/rust/kernel/auxiliary.rs
+index 93c0db1f66555c97ec7dc58825e97c47c0154e54..1a88277f0fd9ea5ff32cc534dfe5682009de94c2 100644
+--- a/rust/kernel/auxiliary.rs
++++ b/rust/kernel/auxiliary.rs
+@@ -237,7 +237,11 @@ pub struct Device<Ctx: device::DeviceContext = device::Normal>(
+ );
  
-+impl<Ctx: DeviceContext, Ctx2: DeviceContext> PartialEq<Device<Ctx2>> for Device<Ctx> {
-+    fn eq(&self, other: &Device<Ctx2>) -> bool {
-+        self.as_raw() == other.as_raw()
-+    }
-+}
-+
-+impl<Ctx: DeviceContext> Eq for Device<Ctx> {}
-+
- /// Marker trait for the context or scope of a bus specific device.
- ///
- /// [`DeviceContext`] is a marker trait for types representing the context of a bus specific
-diff --git a/rust/kernel/devres.rs b/rust/kernel/devres.rs
-index cdc49677022a6b466e771d9d8cf3818ab9b9112d..20126daad193370868661b9412937937eda6d3c4 100644
---- a/rust/kernel/devres.rs
-+++ b/rust/kernel/devres.rs
-@@ -281,7 +281,7 @@ pub fn device(&self) -> &Device {
-     /// }
-     /// ```
-     pub fn access<'a>(&'a self, dev: &'a Device<Bound>) -> Result<&'a T> {
--        if self.dev.as_raw() != dev.as_raw() {
-+        if self.dev.as_ref() != dev {
-             return Err(EINVAL);
-         }
- 
-diff --git a/rust/kernel/drm/driver.rs b/rust/kernel/drm/driver.rs
-index f30ee4c6245cda72ac72852bf9362736d8fe992f..497ef46028d560bc9649dbbdf69316ce4fce8199 100644
---- a/rust/kernel/drm/driver.rs
-+++ b/rust/kernel/drm/driver.rs
-@@ -139,7 +139,7 @@ pub fn new_foreign_owned(
-     where
-         T: 'static,
-     {
--        if drm.as_ref().as_raw() != dev.as_raw() {
-+        if drm.as_ref() != dev {
-             return Err(EINVAL);
-         }
- 
-diff --git a/rust/kernel/pwm.rs b/rust/kernel/pwm.rs
-index cb00f8a8765c8ec58ed78a73275b022b02bf7aa3..033f778909a2633acbc25d5a21a1c8a7b8e41a70 100644
---- a/rust/kernel/pwm.rs
-+++ b/rust/kernel/pwm.rs
-@@ -680,7 +680,7 @@ impl<T: 'static + PwmOps + Send + Sync> Registration<T> {
-     /// calling `pwmchip_remove`. This function should be called from the driver's `probe`.
-     pub fn register(dev: &device::Device<Bound>, chip: ARef<Chip<T>>) -> Result {
-         let chip_parent = chip.device().parent().ok_or(EINVAL)?;
--        if dev.as_raw() != chip_parent.as_raw() {
-+        if dev != chip_parent {
-             return Err(EINVAL);
-         }
+ impl<Ctx: device::DeviceContext> Device<Ctx> {
+-    fn as_raw(&self) -> *mut bindings::auxiliary_device {
++    /// Returns the underlying auxiliary device
++    ///
++    /// Prefer to add bindings in the kernel crate for any use other than calling driver-specific
++    /// functions.
++    pub fn as_raw(&self) -> *mut bindings::auxiliary_device {
+         self.0.get()
+     }
  
 
 -- 
