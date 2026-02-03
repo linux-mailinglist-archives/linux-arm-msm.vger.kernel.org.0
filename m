@@ -1,190 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-91572-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id kIELLqNugWkrGQMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91572-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 04:42:27 +0100
+	id 7ELHAsd4gWliGgMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 05:25:43 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 20928D431B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 04:42:27 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 935D6D4627
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 05:25:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 2BB07302BE28
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Feb 2026 03:42:25 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 065AE30574B6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Feb 2026 04:25:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B229B2C17B6;
-	Tue,  3 Feb 2026 03:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB84824E4D4;
+	Tue,  3 Feb 2026 04:25:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="B/iVhpB1"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MlHeREWt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453892AD10
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Feb 2026 03:42:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770090144; cv=none; b=Jg2IYwTF6NZw6WzrUe9hRZfe/tBuZZH+P1n1uWoUbOr2N9SZvayvZAbKhQ5BHm5M1OQTjlxBJTDq/r127SPePDS91EXEAN3ytpPHNzlVbWmVSkSCgXekeHlAnFOUq94PL9f+2Fk71R8Mx43+SA0MTu7DxP0lHTu79+FwHCKEDNU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770090144; c=relaxed/simple;
-	bh=T4cAPVKw6gvlUdTL2zRYEKv+vfVpSUYHPsEeSSPkaFI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GyDQnCuNfZ9Z2hNCSeIysb48mpREqXA3Tn4sFFNV6iDtxRgASSnOaJiiD3wwwJBu8XYpO1jpHs2FQMqSq9GHqiKSKiDkhrvfgQxStssQzwkBA8iIp/J3D95DXrxTYOyW5hI68oA0IbSQF+bQgIwbFrMbDNPtLkOFpUi2uw+KvvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=B/iVhpB1; arc=none smtp.client-ip=209.85.216.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-34ab8e0df53so4370004a91.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Feb 2026 19:42:23 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12779214A64
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Feb 2026 04:25:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.47
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770092738; cv=pass; b=Ezuz/ypXnKbyUPq+bwuhY7G35M+kCc0my0qUXvB+LZOCZQ4kKJ1JDOQi3xTA/gENtPhsJtpIKTo69giPuRLPr0Ird1gWMjBWN3i3JOTGuPlmJzLST+btcNxiw8EJdDytMrC558+i/XfWLE2r5/pKbd7oxqzzy9bgWLkIm6FbVo8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770092738; c=relaxed/simple;
+	bh=EdHU03bhYYZ7yFrfwataaL8rRDvCETz6LV0rqKOKdtY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TmSpZRjF5c4FSs7xMUdwANY0QLmWUrFCSR2vSw3e9rxRxoINKpYtN8V7B3TbMxs4nGLy4Y287yruq2UiNiq7yFSIqp6PIZz3hOavsPRCMt/kjK0RZOL+hW9SVH3ITMuqSr4z9fUTkETQfB6AAQNhYNL5Do57ubMpHn91mKxeI64=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MlHeREWt; arc=pass smtp.client-ip=209.85.167.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-59dea2f2ef2so5714332e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Feb 2026 20:25:36 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770092735; cv=none;
+        d=google.com; s=arc-20240605;
+        b=URmznNOLFslAAPUgxmt9V3PFrezr1OXwuZvCJV8c/cpLMRmNd4eKYdfJB54QR/jZFl
+         DagFwhdxf5fRdo8z0vUr515+P+X0sN+w3hrdO3xP74w3SNT2IadyeBywcaJ+gXZ5P5vu
+         VeXraD1eQDck9XuI7WtXEQY/eBSMzGUTGk9A2vu1ypnnG3ESza+lSuL5JKJQrw4+l78X
+         szkZkUBhieO1SkEh8Z2k1ta7StJYTH+/DlI8WGzsDn0eLcc9aKfWa3DiScZ+CqHw6c6Q
+         xMjl9mCRjQkFWdwyVD3xgtUMbx5ykZQZstIdhvFcvWhyiumI5R1HEfU91xnmZ5Z08WDy
+         vlaA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Jt2Dm0RbGbWNotmQ8EzW0yNDULTzCqKQ9mn6zTmoL/8=;
+        fh=J7EcKBTe82W/XC25OyOolUpzPrcPQgDqMHiT0QTE+3Y=;
+        b=E7SWO2s/ehcqiLNQ2qrE9S3LI/4XtjH62P2NArtJXjReu4XkSVVRDeLUtsCXquKuGN
+         B4IwJrGuDGceOZbkYJ4MnXn3R6+B03cngGp4KLA7G0mmOlYtgm0AuhnZZu1ISVM3FbU0
+         1kWZWDuRFXpkVsELb5wv7exOWPlpD7u3prQQAVmboM1xLiutJO3dF1Er/RTOvzh/8ENa
+         L5/7bGQfTWpl0QV1DIZGmuSM1RGtDpSsyPk+g/iWnfvBI++gwYrUqLgaGdcx5vI2jRmf
+         14n0G3QqtVJHEZfuRuEOpeWWWC8p/M38FDkge1Ssk5sfOx9946jdO1cOn/E9sxv5p+qG
+         /3Bg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1770090143; x=1770694943; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=mQQ9Yn0qN8mFWXLqjsawjzfjPTO4eluX+BjJlD5wAq0=;
-        b=B/iVhpB1ZXMB6SrD+pGiHiKDHjP3CWn9r11OW2L3hMgRXMzdOSGYDnaihTPCqyCkEs
-         Ek9MCdrSfRaN11ZOyZp/sldQhyzEuDh0iAJE38lsESzArLFFL02azHvRIxHLYfdYtuP+
-         w9DwpM4IFHtQ9aOu+3BcdBcIQPsP/3gkQCZhM=
+        d=gmail.com; s=20230601; t=1770092735; x=1770697535; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Jt2Dm0RbGbWNotmQ8EzW0yNDULTzCqKQ9mn6zTmoL/8=;
+        b=MlHeREWtz0oHlfTYkLxR8Dv2w1uGKnTRGwmBtz4vf2oT/faDERbNmIeJ0qFmnxs/KF
+         8/sgmsqLgc/1MD/bb5id2FDgYv71VILJnwS2Q5yWL/I+DbPknjSj+J2kQAWOlLkI5+vO
+         EPTThuikXSzW5g5sD9aiYn7tyaM8aiTSwDrB670czWDYviEXRyHCw9jux4VGORUdJ/d5
+         ACyMhC5E6tZRqRrYARtgjiIyFVgkxG7V8cbpGvn6D4asR29/ydlGQCbV9YmWJ9pQSNbF
+         XHwafpGrvSJBOL26/QZ+3+tnSy+T1nr3q+Y8tNaCBjzJ9PU4ZmBGti+F4ctpp3RPXlSv
+         ROXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770090143; x=1770694943;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mQQ9Yn0qN8mFWXLqjsawjzfjPTO4eluX+BjJlD5wAq0=;
-        b=AiOax84EMstqDNCqhB/6bKax2QMFGlzHpe/Q1CP+OqM4mFfjwQ0C6gGaWozMFxM4wW
-         Ie+fAzfxMcQyI/iUPt1LmZlB89aw8Txv0IT5B5w61Z0B+r05gaayVcETJJdfkdXAbaiX
-         wzaTgfSjZqWEQk0U4LgJA0/vzi8saxVNJV6nswb6fIeyYw01+Pbh1Me/zh49xNn3dYNT
-         aQk7Ti/p+h+S8saRsv5TqBU5Z/mLHMNxiHkOODwlwnKj5mW6cARQ8vbM1Uw6HdGCXyEj
-         EpdSqIiwOh//4Cot3FL9NjByjM6MOL5voHkiCks5Cvwtv/+vZHdDbzi7VV+Jy8CYmkLm
-         a2mg==
-X-Forwarded-Encrypted: i=1; AJvYcCUNTFCjItQoRwbaTRWocoCvrCwI7bijY5paA8p9ajRZNEUcPeTyzAp64SuV64PPnKCfKloMJKB3ZM3RiULK@vger.kernel.org
-X-Gm-Message-State: AOJu0YyL5YNNkFYvqh4LNhi2RkH+bnw2wLiPbbz1RZ07QzjvIgp4r7k/
-	Nu9lyjFiEZ3vLvlIQBduzBmpcvW+8qpFSxjN8w2zQFGoFNULc6qM1qJkn5Hsu2qbFw==
-X-Gm-Gg: AZuq6aLB+5hOZoRHDPUitntBNWXvXgB9PUZz8obb5vXEQT6mifLCqdzR15ESGF+Ax3L
-	hyL6dhBj9toqhaBm6TID5aJT4jJaQpk0cQigRyLv26qGik/b+GedFV3tGu6Rmql4z/iX2ZkeDbu
-	W9Ub5U/6R6I/nxv36dCvvrih6a3eziBqF+53qRDrT09gJoS6vm5HCjKIro448B7hlIkCPCRtM1o
-	DCoSmlTeaxhXYasU5SPOY3TVbGYH4c/Z9IDRGOLRoeK2/5wOew8mgCqOkb6YOUSfR4Gfv+CoPwC
-	gFsXcoeqbgLuvpsYEigjjOxJTpN7jXSOgoZPi5ipcYdoKmHrKxxwF0vNThm2xCebtI6wmk0ZnrV
-	vFAh7OBa0rYVT1HhgxDitP4icJm9jyz6mwGAC7KdLhwLhCY5ysBAA7AdxNZuvof6NRs48fcEl3O
-	6xS7bVIn/4jaFTiwwSsqhnvnt2Y+7lXu0QnqcTPDtwsp02l4mU9w==
-X-Received: by 2002:a17:90b:4a4e:b0:340:d578:f299 with SMTP id 98e67ed59e1d1-3543b2dcba2mr12892974a91.3.1770090142638;
-        Mon, 02 Feb 2026 19:42:22 -0800 (PST)
-Received: from google.com ([2a00:79e0:2031:6:ad8e:5863:2270:6d7])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3547b10364csm342726a91.10.2026.02.02.19.42.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Feb 2026 19:42:22 -0800 (PST)
-Date: Tue, 3 Feb 2026 12:42:18 +0900
-From: Sergey Senozhatsky <senozhatsky@chromium.org>
-To: Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, 
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, Tomasz Figa <tfiga@chromium.org>, 
-	Sergey Senozhatsky <senozhatsky@chromium.org>
-Subject: Re: [RFC PATCH] drm: gpu: msm: forbid mem reclaim from reset
-Message-ID: <nbk32ecg6wgdghnsr4amj5wufk4t7pavbsuqjvc6ulychjr6jh@zyyrzqbjes4i>
-References: <20260127073341.2862078-1-senozhatsky@chromium.org>
+        d=1e100.net; s=20230601; t=1770092735; x=1770697535;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Jt2Dm0RbGbWNotmQ8EzW0yNDULTzCqKQ9mn6zTmoL/8=;
+        b=IBRHKXyIfdYmacreXia21uazRrVk8zPW0AWkHCnzpaq9dx1atQEyM5C++PZEtvUR60
+         ehHh5DS8GePXAMVP0tkzAwjPA4/b7zFL+eZOVoA0Zimma5I3Dy1Tr4lgIXwDBG9tZ0sp
+         jdtxQPATFQvy3OG3531GMCQNCRZJPTOQ2DOjmqbcRpt89HWpwU8EFRhmI14584/swgdx
+         f+4TpN7zq8LN+oA31oYpmjiz15n/CmjKzeWR/FjnCcn71+f+Lr5rq45ZXUiIyJaccFPv
+         48XUaGOn7r5reggi0jPib5CudigoZ4+xell8WyOG//e5TryzizVCQ8sp+oH2n6CBhLdx
+         Jy8A==
+X-Forwarded-Encrypted: i=1; AJvYcCVywHjPAkH6C+tBjd3SD771sp/3ncxmc3YDgl0TBOVg2vsBZSult8Aoj32w9PMx439cbnE43FAihnSpVCyz@vger.kernel.org
+X-Gm-Message-State: AOJu0YyITg/xvp7IJcyJX3FwrYHBwoRw2GCw+W952LmQ4jzrJVt6fzV5
+	p+anJtOMGvIi/65t6vPasoBj7wjc1q56COxU8SsLgxwGzTxLlJmna9aEL6bV+eGNcdGwlAZmf+0
+	Falp5tVX0vDCIIHq9o8G8EEQ/DdWL0dE=
+X-Gm-Gg: AZuq6aLwFgX1KPf7e3ltfWIUMN9SBykaz1LHiN3aok5+5BzYyFzHWaUyDh21lHyUFXE
+	V0gydvaApa5UHmWRUN7lZqYFVl2LgAsd84jD/6dMVVi6ZSHepLJhyIO6S4MSKuYx1e/zoZjKvEs
+	DBdKaMvGC/NsAIBRlKVL3g2VMgIj8rTVHnx5C6QdgA+N3k/VQ/GKNar/ZXZS0PBAK1zNdlNKu47
+	RrfXgmlasFKG24pIF3EsliGDZVhNPiUbHvkQ1BDlXicxiMO/T1V3kuPHF5iYlmxXD39qa3VPd/F
+	EOMceM77NrNdFGiArxSPobs3ze0P1UINVEdAVZNxG4E9WxCiT8bvIPNf
+X-Received: by 2002:a05:651c:2128:b0:385:d78a:1f34 with SMTP id
+ 38308e7fff4ca-3864657b9d2mr40077461fa.17.1770092734914; Mon, 02 Feb 2026
+ 20:25:34 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260127073341.2862078-1-senozhatsky@chromium.org>
+References: <20260129-sm8550-abl-dtbo-v1-0-abca3be14024@gmail.com>
+ <20260129-sm8550-abl-dtbo-v1-2-abca3be14024@gmail.com> <eef70e37-3841-47f3-a436-13e18c157176@oss.qualcomm.com>
+In-Reply-To: <eef70e37-3841-47f3-a436-13e18c157176@oss.qualcomm.com>
+From: Aaron Kling <webgeek1234@gmail.com>
+Date: Mon, 2 Feb 2026 22:25:23 -0600
+X-Gm-Features: AZwV_Qhb8SSPNF0MwFMC1mpUlw4fi159-QRmg7Pfsiv0KcqLf4mSC9L9Xt3F0w0
+Message-ID: <CALHNRZ-aj+rR0qFuiU+cPNsHWQgMJ2mMjzysJudY-TPN9tY3gg@mail.gmail.com>
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sm8550: Add tz-log node
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Kumar Sharma <quic_vksharma@quicinc.com>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Lei Chen <quic_chenlei@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[chromium.org,none];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_DKIM_ALLOW(-0.20)[chromium.org:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+X-Spamd-Result: default: False [-2.16 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[chromium.org:+];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-91572-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MISSING_XM_UA(0.00)[];
 	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-91573-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[senozhatsky@chromium.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	MISSING_XM_UA(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 20928D431B
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[webgeek1234@gmail.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[146aa000:email,146aa720:email,mail.gmail.com:mid,0.0.0.0:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: 935D6D4627
 X-Rspamd-Action: no action
 
-On (26/01/27 16:33), Sergey Senozhatsky wrote:
-> We sometimes get into a situtation where GPU hangcheck fails to
-> recover GPU:
-> 
-> [..]
-> msm_dpu ae01000.display-controller: [drm:hangcheck_handler] *ERROR* (IPv4: 1): hangcheck detected gpu lockup rb 0!
-> msm_dpu ae01000.display-controller: [drm:hangcheck_handler] *ERROR* (IPv4: 1): completed fence: 7840161
-> msm_dpu ae01000.display-controller: [drm:hangcheck_handler] *ERROR* (IPv4: 1): submitted fence: 7840162
-> msm_dpu ae01000.display-controller: [drm:hangcheck_handler] *ERROR* (IPv4: 1): hangcheck detected gpu lockup rb 0!
-> msm_dpu ae01000.display-controller: [drm:hangcheck_handler] *ERROR* (IPv4: 1): completed fence: 7840162
-> msm_dpu ae01000.display-controller: [drm:hangcheck_handler] *ERROR* (IPv4: 1): submitted fence: 7840163
-> [..]
-> 
-> The problem is that msm_job worker is blocked on gpu->lock
-> 
-> INFO: task ring0:155 blocked for more than 122 seconds.
-> Not tainted 6.6.99-08727-gaac38b365d2c #1
-> task:ring0 state:D stack:0 pid:155 ppid:2 flags:0x00000008
-> Call trace:
-> __switch_to+0x108/0x208
-> schedule+0x544/0x11f0
-> schedule_preempt_disabled+0x30/0x50
-> __mutex_lock_common+0x410/0x850
-> __mutex_lock_slowpath+0x28/0x40
-> mutex_lock+0x5c/0x90
-> msm_job_run+0x9c/0x140
-> drm_sched_main+0x514/0x938
-> kthread+0x114/0x138
-> ret_from_fork+0x10/0x20
-> 
-> which is owned by recover worker, which is waiting for DMA fences
-> from a memory reclaim path, under the very same gpu->lock
-> 
-> INFO: task ring0:155 is blocked on a mutex likely owned by task gpu-worker:154.
-> task:gpu-worker state:D stack:0 pid:154 ppid:2 flags:0x00000008
-> Call trace:
-> __switch_to+0x108/0x208
-> schedule+0x544/0x11f0
-> schedule_timeout+0x1f8/0x770
-> dma_fence_default_wait+0x108/0x218
-> dma_fence_wait_timeout+0x6c/0x1c0
-> dma_resv_wait_timeout+0xe4/0x118
-> active_purge+0x34/0x98
-> drm_gem_lru_scan+0x1d0/0x388
-> msm_gem_shrinker_scan+0x1cc/0x2e8
-> shrink_slab+0x228/0x478
-> shrink_node+0x380/0x730
-> try_to_free_pages+0x204/0x510
-> __alloc_pages_direct_reclaim+0x90/0x158
-> __alloc_pages_slowpath+0x1d4/0x4a0
-> __alloc_pages+0x9f0/0xc88
-> vm_area_alloc_pages+0x17c/0x260
-> __vmalloc_node_range+0x1c0/0x420
-> kvmalloc_node+0xe8/0x108
-> msm_gpu_crashstate_capture+0x1e4/0x280
-> recover_worker+0x1c0/0x638
-> kthread_worker_fn+0x150/0x2d8
-> kthread+0x114/0x138
-> 
-> So no one can make any further progress.
-> 
-> Forbid recover/fault worker to enter memory reclaim (under
-> gpu->lock) to address this deadlock scenario.
+On Fri, Jan 30, 2026 at 4:59=E2=80=AFAM Konrad Dybcio
+<konrad.dybcio@oss.qualcomm.com> wrote:
+>
+> On 1/29/26 8:46 AM, Aaron Kling via B4 Relay wrote:
+> > From: Lei Chen <quic_chenlei@quicinc.com>
+> >
+> > Add DT node to enable tz-log driver.
+> >
+> > Signed-off-by: Lei Chen <quic_chenlei@quicinc.com>
+> > Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
+> > ---
+>
+> It's nice that you preserved the original authorship.
+>
+> Please extend the rather lackluster commit message to explain the
+> "why", which is notably different from the original downstream
+> addition, since your goal here is to mainly appease a grumpy
+> bootloader.
+>
+> >  arch/arm64/boot/dts/qcom/sm8550.dtsi | 8 ++++++++
+> >  1 file changed, 8 insertions(+)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts=
+/qcom/sm8550.dtsi
+> > index e3f93f4f412ded9583a6bc9215185a0daf5f1b57..740e3c238e8ed0f162dd168=
+291f6e307ace66e80 100644
+> > --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> > @@ -5136,6 +5136,14 @@ data-pins {
+> >                       };
+> >               };
+> >
+> > +             qcom_tzlog: tz-log@146aa720 {
+>
+> If we were to implement qcom,tz-log upstream, this would definitely
+> not be a node randomly in the middle of /soc, rather a child of
+> imem, most likely.
+>
+> Could you please check whether adding a qcom_tzlog label to *any*
+> node makes the BL happy enough? Does it need the properties that
+> this node has?
 
-Gentle ping.
+It does appear that ABL doesn't care about the path name, only the
+label. And given that the original change that worked had the label
+pointing at an empty node, it doesn't fail if all the properties are
+missing. I moved the node underneath an sram node and the bootloader
+loaded my dtbo just fine.
+
+The imem/sram node, though... The numbers don't add up. Per the
+downstream dt, qcom,msm-imem@146aa000 has size 0x1000. Then
+tz-log@146AA720 has size 0x3000. Which... starts within the imem
+range, then blasts quite far outside of it. So... what should this end
+up looking like?
+
+I should also note that an empty node at /soc@0/tz-log fails dt schema
+checks. I presume that adding any warnings would immediately get a
+patch nuked from orbit, which is why I fetched a real binding and node
+from CLO.
+
+Aaron
 
