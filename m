@@ -1,546 +1,393 @@
-Return-Path: <linux-arm-msm+bounces-91611-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91612-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id IO0EL9ScgWlwHwMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91611-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 07:59:32 +0100
+	id QIWbDUKhgWkoIAMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91612-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 08:18:26 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 62081D581C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 07:59:32 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id D093ED5A47
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 08:18:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id C747D300610F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Feb 2026 06:59:31 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id F02DD300C028
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Feb 2026 07:18:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D130938E5FA;
-	Tue,  3 Feb 2026 06:59:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B52E3803E5;
+	Tue,  3 Feb 2026 07:18:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DJV18dpX"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dBSCLEUf";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="G+24kbhV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09EA38E5E1
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Feb 2026 06:59:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.52
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770101970; cv=pass; b=gyYSB5b+ijlmDTMQn6gR/gp0Hv89IFqzwo4HETZyoqp3JB/A6+owpf9h4JUonNUwugIjDYZl4JL4Z4M5Zk15opzb3vv972rmiY81QTGBkQrmAgaS8+Q8Bkskd67AhEl5+xOg8gqbokOrJiiMGpqVob8ZShILs/aRdEUZhK7cWbU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770101970; c=relaxed/simple;
-	bh=QtstCwAqLku7wLC0KMFjTwFbCl0ZHuJsD7+5uA/6uNc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aaC9cAysPSJ9Y0wBlEvvpAspaDDMFV/zhatWZ0wdDvYO1kPJhCeQId2zj2SlctflZ5DTLkzPRBEe9MqWnqYpDbngafJ96yIJUYlnVnk/NXaFZyMeoGWFn7TaARJ1/sUAiFXLDw6LUbuJKzZ3uAJs3OkKOpT6zxxxPjyRaHPhGVU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DJV18dpX; arc=pass smtp.client-ip=209.85.161.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-662fca4503cso3022275eaf.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Feb 2026 22:59:28 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770101968; cv=none;
-        d=google.com; s=arc-20240605;
-        b=VTkfyUx1iRR6NX1oLPGJXInUvqibGnqmaI4mcfASrpufdQinhSZ5wmi5jSEMWjT18w
-         HuJW0uVeuWOK6Y80OqV6wsOvbhrCCc4kz1sOlMp+pz/WJOLHsDaDLHqpeKCULDmFYRJp
-         dMDP8SL2vydYI0Xj6y6z79uipXo68ONzIOfs1AiJpSeC75GqcJrk3H3avsMLujKNOTQO
-         x+PA3JzDbXGxigsI5eZrMfyQ+VZXU7ynnhynAKRBCSIWIxCBljazRfHkwBUFJRYUF5yA
-         Wv7gi9XJIdRVdnR/1sZPwa/BlrMoz5AGLNCoqcnHJfdrh3un/Sn4XgJwaEnHEiWYUtLb
-         FlDQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=lAyjKnU+7aaJ1xd9n4DKEiUdS8vWgH1sM330Ox4WJ00=;
-        fh=aSYyXXwpB5HclAF8ImPGfB4snO1DPRemqJMI7aWRUbo=;
-        b=f4ysvrcX2Zvfdd/MXOsyEPP6zNZKAh9b/Qw9Tv7VzxytFjSjim3gorFZ87oFfv6fRH
-         QdC0sP18gqjhkKk+EGUFu/YTPU7PD0fSJlGdTHPq+2BYUyifvC4eDjrgClPesfLkylJa
-         cj9r3dNZNzXXhIlnyxX7MyafQB8VJAlqy/FbhmdMb+7/njoN0ca+Zk6xXr1Fy3AoKyA2
-         b2zXXYC/PwDrvzfKe0EP74n0bPAtw8yFi2B8Eicx8DyMwBsat96K9V1Cgd4tYN770f6n
-         mkoMiKFMCbnEErgY/Ovqgp9CEmLZ9rXctdY7lTox7rbW76DdJ1sHAZbk5Ny3S/X478iq
-         m0lw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1765438F923
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Feb 2026 07:18:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770103101; cv=none; b=TzstF0gnrSW2Xu7vF7eAUYoeQ5PK7wd6mYaqj1rNS4kfbz1PKL+0Bk+LN6AQBXvZyj2WPCt7lIxHUiyaslH8Kc1meAYu3wPAoaG6FOjdH0KpVPEDLiRdijsQtPY1qPnm2BnWQ7cTU7lFfV+1v8L9q1aDXlBUT7BTfgI4KOwTHQQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770103101; c=relaxed/simple;
+	bh=zqgXDC27wrbH231qmnfXbqUHNTA251yMVXx7ll5Lfjc=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=TvgOnJD5AB398splEnqPfPbneGurPJvxzVYvPupeYR8FOoMlMTeOmOxjY8BBUNqCPZ6PsfBGibsJlNRwbzjN/uWHiuW4rZca4PUPZX+EStb3813jEIvOcuH9p2DDwb3wLFRw6vGey7qHTRsgOZcOqx06cDAv3sC4JH5W8f3MFso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dBSCLEUf; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=G+24kbhV; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 61362xkn3916029
+	for <linux-arm-msm@vger.kernel.org>; Tue, 3 Feb 2026 07:18:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=BI9OYiyYyM84p9UdwJQqnP8/H4HjmMVwzks
+	g/PS1Dfs=; b=dBSCLEUfzPsBXV1oqRlkrsRAMkG2Q+jWeO0Vikh70VcSlhTOpO9
+	Ype/0GTRCamBJDyFKvVEpxAZyqwLe3hDVNJ2wZonvUE/mcrYLOYlCQFM0aQ5JxNP
+	bAWKx4rEubW9YYQmyvV0xyKsp44/oJ7ffR759ou22F6IrjHfrFVjkTvFxayRrlaX
+	RPqYp/cSIZXEHkKK9/RPaW0stbFXyOI0a2IonN655+FjtlQF7EEjHDS0ytkvl1Qj
+	Hw6tG2Nrijm6djhDJ2z13lZXD8YhMfxEIgTmeEs2MVI7GIExi4EgesL0EZrGlac3
+	Ld+81PW7AtlF3niWDy0fOInosu05d35fvtg==
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c2tkmkcb0-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 03 Feb 2026 07:18:18 +0000 (GMT)
+Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-81f42368322so4628598b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Feb 2026 23:18:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1770101968; x=1770706768; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lAyjKnU+7aaJ1xd9n4DKEiUdS8vWgH1sM330Ox4WJ00=;
-        b=DJV18dpX5mtbZLHkG7LPRxTsM2xsl9BBLeeIUpYBFfLCBydWCBZTvrnv5rGChIwm9k
-         0eSWbsO6fWrfvEpHUWw/Z5XOHzWG6O5hOg8wkiNHjqbdgvHBkpKgZ7tY/vkf4uEyj65I
-         iJjYC0sAu1WlPIsZ7HklqzmztzPHXFngb99YnbTkvRUOeRC6fGcbr4lQ4TCneDJS/ZDk
-         K7VjYCrqPO30Hqv2Y1elI1OhQHc/oL81JfzNTXDd/i+1zGH1M5auFpm6NXveBF2lVyEb
-         JX40gh9bDnF+zQzs3LAx0rJoEoOgXGM0VMJJ5C7ozciIFBemr4AXXyfG+JgznRVx7Nfh
-         amMA==
+        d=oss.qualcomm.com; s=google; t=1770103098; x=1770707898; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BI9OYiyYyM84p9UdwJQqnP8/H4HjmMVwzksg/PS1Dfs=;
+        b=G+24kbhVQOJ/AA+LFUkfLxGRQc5HatHm/uaQwR4MXXz20rwhZ/KFcy9gvlmjoKBP9h
+         tNisLJJJrehjKhKZWc6VwcQ1yoao6Bfwxl44tYrEDo1vUyGqhnAitoPwgL03S65KUcpM
+         GfRDeB6icUzjiJJr3jPVMGkrTyw1lUQX+1PS7OJeGj5lWX9itBdu3uzMO9pcK71fgHPX
+         gczPxELu2O/1g2kV63eNZI4y6EeMpgE5G6H4VQMG59cZSf96Hw0IK1Qt5KqFZ/9HWYN7
+         hWDe/B9uYMD9tkSafaW8ci4BoZJawjwmDBEFCTdq8XAeWvtl7lsdScGJmWHqOS1QmRIO
+         mNmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770101968; x=1770706768;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=lAyjKnU+7aaJ1xd9n4DKEiUdS8vWgH1sM330Ox4WJ00=;
-        b=v010buu1plPRO15BXRPmP8GZW59PM3+dJpUCfDW0ILCmfl/ZPXKgDQh349jRO2dpDL
-         4uwS6J4EtJj5MvN4OKNXtv4ySVEYP8UEuv9gM3S33H4fR3bbhdxdCF8qcBLtw/n5Bp+5
-         IZsSKf7PPiIAdPA/NS19zgLDjAtrX07NsAajNrMqyMVwSYUexnlnig9FznHev9dJYG0w
-         i2zsEx/Q2Uox0qcHgpkdjXobhDgZGryV27JZ/eeRB3oOQzpALWW7nmBfBfpQS0MVkE/F
-         Kz5MFV00s6SlY924R7kZ+FhjYgBy/HQ7Vs58loz1Nh3B4BjIy8wUu4hJ3Z0vRUhzqUjY
-         DQtA==
-X-Forwarded-Encrypted: i=1; AJvYcCUIvS1XOusVMAGQqiFXSJ7F01q5u4E9YhaVKOcBLI1UQ4tbQZMYhDJcvK6B02h183oCQBa4xogcDXKC3ZBt@vger.kernel.org
-X-Gm-Message-State: AOJu0YxgRnYI4jfUDT3bTQrRubqpRPlsaiEeTvGc4hAIVzfVH0hDpjZ+
-	Rqn5uwjfcHiRnKP922M4x5sFOfnXOsmjdbx7c0lTRL49pv/G1vxjUwq9ljI0lh44WDoGkXMAsK7
-	PLOCSnVLqT8z67QX/CkLfXY3n0jXqGXEmCj7SF+6c0A==
-X-Gm-Gg: AZuq6aLp2cmTORd3g06F48L8B5zFJ07KqBYmd9D3/vtRkXaTmo7QSQYLZ5Tze8Rxxij
-	owAv0Vd/qhiaw6rJJdImp4NBDWxckJvTsOYTFTrlIzpza7Ie+WdQaXShAz5JbqnqH62PZXDX8TS
-	TPE+LfFoNohh4mB1cJs8vQnEVzYabHnckLbuB1wfV47dGddirFlEJN9YGxzAYSIpAQwOW91lKhT
-	oyet3QCnlCTDE9ztxuNucf9QPbaJpiz9+KPTNxB4as9m5jgzWC2VF1PXDC4hfMAJg8hjr7aRtYl
-	OXPLJ5r71/a1fSUIbuC9KWivYA==
-X-Received: by 2002:a4a:de08:0:b0:663:1239:9ec3 with SMTP id
- 006d021491bc7-6631239a26amr4774214eaf.18.1770101967700; Mon, 02 Feb 2026
- 22:59:27 -0800 (PST)
+        d=1e100.net; s=20230601; t=1770103098; x=1770707898;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BI9OYiyYyM84p9UdwJQqnP8/H4HjmMVwzksg/PS1Dfs=;
+        b=Mrl9B6A9ImhP8IzAGReWZIfmNncIFQnEICY/+8RxwJxR7ahdNdx6TAHUBO3ro5zMeV
+         wuA6feYK1xPDc+6wnwHFVHkLEcN1A8IiKo1UUkBeSq4CZb/mcfrp+mZV+JhWxeNs+d37
+         OWXgRFl9rb4CUSCi9RY3wWKjR86W7tBfcwFRwemoZRaYBV2wQSKxomHETeF9kYSqtLZi
+         nKOFrTJHNFyYpI8hr5XIlnjPHYk6r6xLeb7y/A6unz9f++JCRPBahxK3QQp1QfIUsDKc
+         +kCmbbmnOxomzL6yrP17hpfYJmpLwQ/ZsyYttB+DfCWdf8kVR4Q6tKq6yEJ8f1k0fRPD
+         oeFg==
+X-Forwarded-Encrypted: i=1; AJvYcCW/vKvchYcKqWX6mXi8YHZocs+vg11EjpeF11lJXRODNMjD7LWmoadUDRyOOxTxtf2p1svPXSdtxM21MwzH@vger.kernel.org
+X-Gm-Message-State: AOJu0YzzEqWWXRIDJACfgdFpe0qfWebnQGCLYD1AAEzODFSNfl796vbT
+	xqlpPbRdnloBSqpa5p6/onx07TvHk5oYwpIZxz1eIawlfIPRpogiZG9D7O65Z8bN0BEO1qf2LkQ
+	TIQmDZzs4QLgTvT5XaG9O1XqGJWY2tcbELqWNYggh/9HnFGYtnImPNhlrbCpi/1LMHalu
+X-Gm-Gg: AZuq6aKcIylGJVoRlJsUj5lpWhuIPFlW0Nn2OqBXxUQjp2gZjk08c3LS/As3DXBxph+
+	E0JJVu9VDP0PhBvUcuspuwJHGNELeHArvwHsiXVZ7IauI31/PbertMKYAsH7PknZA3huHVH9S8/
+	YSfQMKgTKgnSxsHEU6y4fGfa6Ctj244s1rnCaGcNgaQ1ADHnw8VaJFEcE3MR+dbe0CgZujiJSbP
+	JOzVRmDMdsawU4kPdWBR/AWlX7rhqXSlPCcSUb0i+7c5mwzGbmpryixG7oD8jxL7lSi2Z6K1pvl
+	srmJF2oVUQgCM7lE//ivSLckzyVm5KoCDvgnvz3IVGrrjNUIGKzeVK0SQZCU+6mVYHRmaMtPhZz
+	paOMVvNRAa/+/uUKnGN57V6NsRIzRrApNnL4PAW+6Cg==
+X-Received: by 2002:a05:6a00:ad5:b0:81f:4dc7:d44 with SMTP id d2e1a72fcca58-823aa94032fmr12627326b3a.66.1770103097807;
+        Mon, 02 Feb 2026 23:18:17 -0800 (PST)
+X-Received: by 2002:a05:6a00:ad5:b0:81f:4dc7:d44 with SMTP id d2e1a72fcca58-823aa94032fmr12627299b3a.66.1770103097258;
+        Mon, 02 Feb 2026 23:18:17 -0800 (PST)
+Received: from hu-janathot-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82379b23020sm17827578b3a.1.2026.02.02.23.18.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Feb 2026 23:18:16 -0800 (PST)
+From: Janaki Ramaiah Thota <janaki.thota@oss.qualcomm.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: quic_mohamull@quicinc.com, quic_hbandi@quicinc.com,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Janaki Ramaiah Thota <janaki.thota@oss.qualcomm.com>
+Subject: [PATCH v1] arm64: dts: qcom: qcm6490-idp: add and enable BT node
+Date: Tue,  3 Feb 2026 12:48:07 +0530
+Message-Id: <20260203071807.764036-1-janaki.thota@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260128-fix-use-after-free-v3-1-b0786670d927@oss.qualcomm.com>
- <CAHUa44E4Htg9zEMY9XtkMsPRJq+13mq6kSd8RUznHTRvXVXKVQ@mail.gmail.com> <55546b03-cbe6-40dd-b794-b2e81efde33a@oss.qualcomm.com>
-In-Reply-To: <55546b03-cbe6-40dd-b794-b2e81efde33a@oss.qualcomm.com>
-From: Jens Wiklander <jens.wiklander@linaro.org>
-Date: Tue, 3 Feb 2026 07:59:16 +0100
-X-Gm-Features: AZwV_QhvDuGw7UvZDogMCoyveNi3imEaiJA2LmSGKXYqbKXg9ynGggk_PMr_ibY
-Message-ID: <CAHUa44FfowG=GpgLcq=sp_TqRArJtf0_V-tsJY11HH+FEA6u+w@mail.gmail.com>
-Subject: Re: [PATCH v3] tee: optee: prevent use-after-free when the client
- exits before the supplicant
-To: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
-Cc: Sumit Garg <sumit.garg@kernel.org>, Arnd Bergmann <arnd@arndb.de>, 
-	Michael Wu <michael@allwinnertech.com>, linux-arm-msm@vger.kernel.org, 
-	op-tee@lists.trustedfirmware.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=TaebdBQh c=1 sm=1 tr=0 ts=6981a13a cx=c_pps
+ a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=EUspDBNiAAAA:8 a=86PJZVPQ1pRugi-lMccA:9 a=IoOABgeZipijB_acs4fv:22
+X-Proofpoint-GUID: b1E6-cNGgG4scfmB951ER9GQ9CmY9WDu
+X-Proofpoint-ORIG-GUID: b1E6-cNGgG4scfmB951ER9GQ9CmY9WDu
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjAzMDA1NyBTYWx0ZWRfXx4KIlmPkkeYJ
+ sUeLYReP07jhXLkfX/NtsetSVR6lVnZqRe1piNdWgMQiqpeijzOxLwMTbLrtYzq43hZw3LctoBk
+ IjlqvEJDjSrlLFCTWhc+9uyCbVM16oIY6zV2xOGm0/OzEfVmRdbxXy87rVxoEW5vy19yIwmO7BO
+ /kUB0DqLFNcxy2XkRaJCyt7MutiqLO6j/Im/h7uUh0Qqav2aTX6Yoh13w6TI/cqftkVRbOstHi9
+ vsFPzZv7QKGTdehIFeTA0wihDHaYnoGbClaZdzS/DE/kjx825/u53t6l0PJJf1F4QiUnpBWICHx
+ w9YTp3Pgf0Deeq1CA6OlSBJk/3CsTQWyBRsEPG6LVLoPK09Z4fPAh05GZSfwqP9fehrFery8O15
+ KEpNxZDl4pRXZ0/4XLuQgsIa5T2eAIBHW7pmdn5iJqJZxhR43+5Ls1fGrdDRSbhebtMWQrdSbLB
+ ggzoXiRjdm8vSOtwA9w==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-03_02,2026-02-02_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 impostorscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0
+ suspectscore=0 bulkscore=0 priorityscore=1501 clxscore=1011 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602030057
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-91611-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	MISSING_XM_UA(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[jens.wiklander@linaro.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-91612-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[7];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:dkim,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,qualcomm.com:email,mail.gmail.com:mid]
-X-Rspamd-Queue-Id: 62081D581C
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[janaki.thota@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: D093ED5A47
 X-Rspamd-Action: no action
 
-Hi,
+Add the PMU node for WCN6750 present on the qcm6490-idp
+board and assign its power outputs to the Bluetooth module.
 
-On Tue, Feb 3, 2026 at 3:09=E2=80=AFAM Amirreza Zarrabi
-<amirreza.zarrabi@oss.qualcomm.com> wrote:
->
-> Hi Jens,
->
-> On 2/2/2026 10:36 PM, Jens Wiklander wrote:
-> > Hi Amir,
-> >
-> > On Thu, Jan 29, 2026 at 4:22=E2=80=AFAM Amirreza Zarrabi
-> > <amirreza.zarrabi@oss.qualcomm.com> wrote:
-> >>
-> >> Commit 70b0d6b0a199 ("tee: optee: Fix supplicant wait loop") made the
-> >> client wait as killable so it can be interrupted during shutdown or
-> >> after a supplicant crash. This changes the original lifetime expectati=
-ons:
-> >> the client task can now terminate while the supplicant is still proces=
-sing
-> >> its request.
-> >>
-> >> If the client exits first it removes the request from its queue and
-> >> kfree()s it, while the request ID remains in supp->idr. A subsequent
-> >> lookup on the supplicant path then dereferences freed memory, leading =
-to
-> >> a use-after-free.
-> >>
-> >> Serialise access to the request with supp->mutex:
-> >>
-> >>   * Hold supp->mutex in optee_supp_recv() and optee_supp_send() while
-> >>     looking up and touching the request.
-> >>   * Let optee_supp_thrd_req() notice that the client has terminated an=
-d
-> >>     signal optee_supp_send() accordingly.
-> >>
-> >> With these changes the request cannot be freed while the supplicant st=
-ill
-> >> has a reference, eliminating the race.
-> >>
-> >> Fixes: 70b0d6b0a199 ("tee: optee: Fix supplicant wait loop")
-> >> Signed-off-by: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
-> >> ---
-> >> Changes in v3:
-> >> - Introduce processed flag instead of -1 for req->id.
-> >> - Update optee_supp_release() as reported by Michael Wu.
-> >> - Use mutex instead of guard.
-> >> - Link to v2: https://lore.kernel.org/r/20250617-fix-use-after-free-v2=
--1-1fbfafec5917@oss.qualcomm.com
-> >>
-> >> Changes in v2:
-> >> - Replace the static variable with a sentinel value.
-> >> - Fix the issue with returning the popped request to the supplicant.
-> >> - Link to v1: https://lore.kernel.org/r/20250605-fix-use-after-free-v1=
--1-a70d23bff248@oss.qualcomm.com
-> >> ---
-> >>  drivers/tee/optee/supp.c | 122 +++++++++++++++++++++++++++++++++-----=
----------
-> >>  1 file changed, 86 insertions(+), 36 deletions(-)
-> >
-> > I had forgotten about this. I'd like to prioritize getting this fixed
-> > soon. By the way, how did you test this?
-> >
->
-> Thanks for the update. I currently don't have access to the setup require=
-d to run
-> the tests myself. My plan is to finalize the design and implementation, t=
-hen
-> ask Michael Wu to run his use case. Based on his earlier feedback, the pa=
-tch
-> appears to be working as expected.
->
-> https://lore.kernel.org/all/292653ba-3836-00f1-acd4-a28b1c54388c@allwinne=
-rtech.com/
+In WCN6750 module sw_ctrl and wifi-enable pins are handled
+in the wifi controller firmware. Therefore, it is not required
+to have those pins' entries in the PMU node.
 
-OK
+Signed-off-by: Janaki Ramaiah Thota <janaki.thota@oss.qualcomm.com>
+---
+ arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 169 +++++++++++++++++++++++
+ 1 file changed, 169 insertions(+)
 
->
-> >>
-> >> diff --git a/drivers/tee/optee/supp.c b/drivers/tee/optee/supp.c
-> >> index d0f397c90242..0ec66008df19 100644
-> >> --- a/drivers/tee/optee/supp.c
-> >> +++ b/drivers/tee/optee/supp.c
-> >> @@ -10,7 +10,11 @@
-> >>  struct optee_supp_req {
-> >>         struct list_head link;
-> >>
-> >> +       int id;
-> >> +
-> >>         bool in_queue;
-> >> +       bool processed;
-> >> +
-> >>         u32 func;
-> >>         u32 ret;
-> >>         size_t num_params;
-> >> @@ -19,6 +23,9 @@ struct optee_supp_req {
-> >>         struct completion c;
-> >>  };
-> >>
-> >> +/* It is temporary request used for invalid pending request in supp->=
-idr. */
-> >> +#define INVALID_REQ_PTR ((struct optee_supp_req *)ERR_PTR(-ENOENT))
-> >> +
-> >>  void optee_supp_init(struct optee_supp *supp)
-> >>  {
-> >>         memset(supp, 0, sizeof(*supp));
-> >> @@ -46,6 +53,10 @@ void optee_supp_release(struct optee_supp *supp)
-> >>         /* Abort all request retrieved by supplicant */
-> >>         idr_for_each_entry(&supp->idr, req, id) {
-> >>                 idr_remove(&supp->idr, id);
-> >> +               /* Skip if request was already marked invalid */
-> >> +               if (IS_ERR(req))
-> >> +                       continue;
-> >> +
-> >>                 req->ret =3D TEEC_ERROR_COMMUNICATION;
-> >>                 complete(&req->c);
-> >>         }
-> >> @@ -102,6 +113,7 @@ u32 optee_supp_thrd_req(struct tee_context *ctx, u=
-32 func, size_t num_params,
-> >>         mutex_lock(&supp->mutex);
-> >>         list_add_tail(&req->link, &supp->reqs);
-> >>         req->in_queue =3D true;
-> >> +       req->processed =3D false;
-> >>         mutex_unlock(&supp->mutex);
-> >>
-> >>         /* Tell an eventual waiter there's a new request */
-> >> @@ -117,21 +129,40 @@ u32 optee_supp_thrd_req(struct tee_context *ctx,=
- u32 func, size_t num_params,
-> >>         if (wait_for_completion_killable(&req->c)) {
-> >>                 mutex_lock(&supp->mutex);
-> >>                 if (req->in_queue) {
-> >> +                       /* Supplicant has not seen this request yet. *=
-/
-> >>                         list_del(&req->link);
-> >>                         req->in_queue =3D false;
-> >> +
-> >> +                       ret =3D TEEC_ERROR_COMMUNICATION;
-> >> +               } else if (req->processed) {
-> >> +                       /*
-> >> +                        * Supplicant has processed this request. Igno=
-re the
-> >> +                        * kill signal for now and submit the result.
-> >> +                        */
-> >> +                       ret =3D req->ret;
-> >> +               } else {
-> >> +                       /*
-> >> +                        * Supplicant is in the middle of processing t=
-his
-> >> +                        * request. Replace req with INVALID_REQ_PTR s=
-o that
-> >> +                        * the ID remains busy, causing optee_supp_sen=
-d() to
-> >> +                        * fail on the next call to supp_pop_req() wit=
-h this ID.
-> >> +                        */
-> >> +                       idr_replace(&supp->idr, INVALID_REQ_PTR, req->=
-id);
-> >> +                       ret =3D TEEC_ERROR_COMMUNICATION;
-> >>                 }
-> >> +
-> >>                 mutex_unlock(&supp->mutex);
-> >> -               req->ret =3D TEEC_ERROR_COMMUNICATION;
-> >> +       } else {
-> >> +               ret =3D req->ret;
-> >>         }
-> >>
-> >> -       ret =3D req->ret;
-> >>         kfree(req);
-> >>
-> >>         return ret;
-> >>  }
-> >>
-> >>  static struct optee_supp_req  *supp_pop_entry(struct optee_supp *supp=
-,
-> >> -                                             int num_params, int *id)
-> >> +                                             int num_params)
-> >>  {
-> >>         struct optee_supp_req *req;
-> >>
-> >> @@ -153,8 +184,8 @@ static struct optee_supp_req  *supp_pop_entry(stru=
-ct optee_supp *supp,
-> >>                 return ERR_PTR(-EINVAL);
-> >>         }
-> >>
-> >> -       *id =3D idr_alloc(&supp->idr, req, 1, 0, GFP_KERNEL);
-> >> -       if (*id < 0)
-> >> +       req->id =3D idr_alloc(&supp->idr, req, 1, 0, GFP_KERNEL);
-> >> +       if (req->id < 0)
-> >>                 return ERR_PTR(-ENOMEM);
-> >
-> > Since we're now storing the supplicant request ID, wouldn't it make
-> > sense to pre-allocate the ID when allocating the request to avoid this
-> > error case?
-> >
->
-> True, but allocating the ID at this stage has one advantage.
-> If an ID is not available, the request can remain on the request list,
-> allowing the supplicant to retry later when resources become available.
-> If ID allocation fails during request creation, I have no choice but
-> to drop the request and report an error to optee.
+diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+index 089a027c57d5..4c9f16cc2e4d 100644
+--- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
++++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+@@ -36,6 +36,7 @@ / {
+ 
+ 	aliases {
+ 		serial0 = &uart5;
++		serial1 = &uart7;
+ 	};
+ 
+ 	pm8350c_pwm_backlight: backlight {
+@@ -194,6 +195,63 @@ wcd9370: audio-codec-0 {
+ 
+ 		#sound-dai-cells = <1>;
+ 	};
++
++	wcn6750-pmu {
++		compatible = "qcom,wcn6750-pmu";
++		pinctrl-0 = <&bt_en>;
++		pinctrl-names = "default";
++		vddaon-supply = <&vreg_s7b_0p972>;
++		vddasd-supply = <&vreg_l11c_2p8>;
++		vddpmu-supply = <&vreg_s7b_0p972>;
++		vddrfa0p8-supply = <&vreg_s7b_0p972>;
++		vddrfa1p2-supply = <&vreg_s8b_1p272>;
++		vddrfa1p7-supply = <&vreg_s1b_1p872>;
++		vddrfa2p2-supply = <&vreg_s1c_2p19>;
++
++		bt-enable-gpios = <&tlmm 85 GPIO_ACTIVE_HIGH>;
++
++		regulators {
++			vreg_pmu_rfa_cmn: ldo0 {
++				regulator-name = "vreg_pmu_rfa_cmn";
++			};
++
++			vreg_pmu_aon_0p59: ldo1 {
++				regulator-name = "vreg_pmu_aon_0p59";
++			};
++
++			vreg_pmu_wlcx_0p8: ldo2 {
++				regulator-name = "vreg_pmu_wlcx_0p8";
++			};
++
++			vreg_pmu_wlmx_0p85: ldo3 {
++				regulator-name = "vreg_pmu_wlmx_0p85";
++			};
++
++			vreg_pmu_btcmx_0p85: ldo4 {
++				regulator-name = "vreg_pmu_btcmx_0p85";
++			};
++
++			vreg_pmu_rfa_0p8: ldo5 {
++				regulator-name = "vreg_pmu_rfa_0p8";
++			};
++
++			vreg_pmu_rfa_1p2: ldo6 {
++				regulator-name = "vreg_pmu_rfa_1p2";
++			};
++
++			vreg_pmu_rfa_1p7: ldo7 {
++				regulator-name = "vreg_pmu_rfa_1p7";
++			};
++
++			vreg_pmu_pcie_0p9: ldo8 {
++				regulator-name = "vreg_pmu_pcie_0p9";
++			};
++
++			vreg_pmu_pcie_1p8: ldo9 {
++				regulator-name = "vreg_pmu_pcie_1p8";
++			};
++		};
++	};
+ };
+ 
+ &apps_rsc {
+@@ -695,6 +753,39 @@ &pon_resin {
+ 	status = "okay";
+ };
+ 
++&qup_uart7_cts {
++	/*
++	 * Configure a bias-bus-hold on CTS to lower power
++	 * usage when Bluetooth is turned off. Bus hold will
++	 * maintain a low power state regardless of whether
++	 * the Bluetooth module drives the pin in either
++	 * direction or leaves the pin fully unpowered.
++	 */
++	bias-bus-hold;
++};
++
++&qup_uart7_rts {
++	/* We'll drive RTS, so no pull */
++	drive-strength = <2>;
++	bias-disable;
++};
++
++&qup_uart7_rx {
++	/*
++	 * Configure a pull-up on RX. This is needed to avoid
++	 * garbage data when the TX pin of the Bluetooth module is
++	 * in tri-state (module powered off or not driving the
++	 * signal yet).
++	 */
++	bias-pull-up;
++};
++
++&qup_uart7_tx {
++	/* We'll drive TX, so no pull */
++	drive-strength = <2>;
++	bias-disable;
++};
++
+ &qupv3_id_0 {
+ 	status = "okay";
+ };
+@@ -920,6 +1011,59 @@ &tlmm {
+ 	gpio-reserved-ranges = <32 2>, /* ADSP */
+ 			       <48 4>; /* NFC */
+ 
++	bt_en: bt-en-state {
++		pins = "gpio85";
++		function = "gpio";
++		output-low;
++		bias-disable;
++	};
++
++	qup_uart7_sleep_cts: qup-uart7-sleep-cts-state {
++		pins = "gpio28";
++		function = "gpio";
++		/*
++		 * Configure a bias-bus-hold on CTS to lower power
++		 * usage when Bluetooth is turned off. Bus hold will
++		 * maintain a low power state regardless of whether
++		 * the Bluetooth module drives the pin in either
++		 * direction or leaves the pin fully unpowered.
++		 */
++		bias-bus-hold;
++	};
++
++	qup_uart7_sleep_rts: qup-uart7-sleep-rts-state {
++		pins = "gpio29";
++		function = "gpio";
++		/*
++		 * Configure pull-down on RTS. As RTS is active low
++		 * signal, pull it low to indicate the BT SoC that it
++		 * can wakeup the system anytime from suspend state by
++		 * pulling RX low (by sending wakeup bytes).
++		 */
++		bias-pull-down;
++	};
++
++	qup_uart7_sleep_rx: qup-uart7-sleep-rx-state {
++		pins = "gpio31";
++		function = "gpio";
++		/*
++		 * Configure a pull-up on RX. This is needed to avoid
++		 * garbage data when the TX pin of the Bluetooth module
++		 * is floating which may cause spurious wakeups.
++		 */
++		bias-pull-up;
++	};
++
++	qup_uart7_sleep_tx: qup-uart7-sleep-tx-state {
++		pins = "gpio30";
++		function = "gpio";
++		/*
++		 * Configure pull-up on TX when it isn't actively driven
++		 * to prevent BT SoC from receiving garbage during sleep.
++		 */
++		bias-pull-up;
++	};
++
+ 	sd_cd: sd-cd-state {
+ 		pins = "gpio91";
+ 		function = "gpio";
+@@ -938,6 +1082,31 @@ &uart5 {
+ 	status = "okay";
+ };
+ 
++&uart7 {
++	/delete-property/ interrupts;
++	interrupts-extended = <&intc GIC_SPI 608 IRQ_TYPE_LEVEL_HIGH>,
++			      <&tlmm 31 IRQ_TYPE_EDGE_FALLING>;
++	pinctrl-1 = <&qup_uart7_sleep_cts>,
++		    <&qup_uart7_sleep_rts>,
++		    <&qup_uart7_sleep_tx>,
++		    <&qup_uart7_sleep_rx>;
++	pinctrl-names = "default",
++			"sleep";
++
++	status = "okay";
++
++	bluetooth: bluetooth {
++		compatible = "qcom,wcn6750-bt";
++		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
++		vddaon-supply = <&vreg_pmu_aon_0p59>;
++		vddbtcmx-supply = <&vreg_pmu_btcmx_0p85>;
++		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
++		vddrfa1p7-supply = <&vreg_pmu_rfa_1p7>;
++		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
++		max-speed = <3200000>;
++	};
++};
++
+ &ufs_mem_hc {
+ 	reset-gpios = <&tlmm 175 GPIO_ACTIVE_LOW>;
+ 	vcc-supply = <&vreg_l7b_2p952>;
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-We're allocating in the range 1..INT_MAX, and not more than a handful
-are expected to be active at a time. If we run out of IDs, we have
-bigger problems.
-
->
-> >>
-> >>         list_del(&req->link);
-> >> @@ -214,7 +245,6 @@ int optee_supp_recv(struct tee_context *ctx, u32 *=
-func, u32 *num_params,
-> >>         struct optee *optee =3D tee_get_drvdata(teedev);
-> >>         struct optee_supp *supp =3D &optee->supp;
-> >>         struct optee_supp_req *req =3D NULL;
-> >> -       int id;
-> >>         size_t num_meta;
-> >>         int rc;
-> >>
-> >> @@ -224,15 +254,48 @@ int optee_supp_recv(struct tee_context *ctx, u32=
- *func, u32 *num_params,
-> >>
-> >>         while (true) {
-> >>                 mutex_lock(&supp->mutex);
-> >> -               req =3D supp_pop_entry(supp, *num_params - num_meta, &=
-id);
-> >> -               mutex_unlock(&supp->mutex);
-> >>
-> >> -               if (req) {
-> >> -                       if (IS_ERR(req))
-> >> -                               return PTR_ERR(req);
-> >> -                       break;
-> >> +               req =3D supp_pop_entry(supp, *num_params - num_meta);
-> >> +               if (!req) {
-> >> +                       mutex_unlock(&supp->mutex);
-> >> +                       goto wait_for_request;
-> >> +               }
-> >> +
-> >> +               if (IS_ERR(req)) {
-> >> +                       rc =3D PTR_ERR(req);
-> >> +                       mutex_unlock(&supp->mutex);
-> >> +
-> >> +                       return rc;
-> >>                 }
-> >>
-> >> +               /*
-> >> +                * Process the request while holding the lock, so that
-> >> +                * optee_supp_thrd_req() doesn't pull the request from=
- under us.
-> >> +                */
-> >> +
-> >> +               if (num_meta) {
-> >> +                       /*
-> >> +                        * tee-supplicant support meta parameters ->
-> >> +                        * requests can be processed asynchronously.
-> >> +                        */
-> >> +                       param->attr =3D TEE_IOCTL_PARAM_ATTR_TYPE_VALU=
-E_INOUT |
-> >> +                                     TEE_IOCTL_PARAM_ATTR_META;
-> >> +                       param->u.value.a =3D req->id;
-> >> +                       param->u.value.b =3D 0;
-> >> +                       param->u.value.c =3D 0;
-> >> +               } else {
-> >> +                       supp->req_id =3D req->id;
-> >> +               }
-> >> +
-> >> +               *func =3D req->func;
-> >> +               *num_params =3D req->num_params + num_meta;
-> >> +               memcpy(param + num_meta, req->param,
-> >> +                      sizeof(struct tee_param) * req->num_params);
-> >> +
-> >> +               mutex_unlock(&supp->mutex);
-> >> +               return 0;
-> >
-> > Do we really need to move this into the loop? The structure of the
-> > function becomes a bit unusual and harder to read.
-> >
->
-> Ack. I'll reorganize this function.
->
-> >> +
-> >> +wait_for_request:
-> >>                 /*
-> >>                  * If we didn't get a request we'll block in
-> >>                  * wait_for_completion() to avoid needless spinning.
-> >> @@ -243,29 +306,10 @@ int optee_supp_recv(struct tee_context *ctx, u32=
- *func, u32 *num_params,
-> >>                  */
-> >>                 if (wait_for_completion_interruptible(&supp->reqs_c))
-> >>                         return -ERESTARTSYS;
-> >> -       }
-> >>
-> >> -       if (num_meta) {
-> >> -               /*
-> >> -                * tee-supplicant support meta parameters -> requsts c=
-an be
-> >> -                * processed asynchronously.
-> >> -                */
-> >> -               param->attr =3D TEE_IOCTL_PARAM_ATTR_TYPE_VALUE_INOUT =
-|
-> >> -                             TEE_IOCTL_PARAM_ATTR_META;
-> >> -               param->u.value.a =3D id;
-> >> -               param->u.value.b =3D 0;
-> >> -               param->u.value.c =3D 0;
-> >> -       } else {
-> >> -               mutex_lock(&supp->mutex);
-> >> -               supp->req_id =3D id;
-> >> -               mutex_unlock(&supp->mutex);
-> >> +               /* Check for the next request in the queue. */
-> >>         }
-> >>
-> >> -       *func =3D req->func;
-> >> -       *num_params =3D req->num_params + num_meta;
-> >> -       memcpy(param + num_meta, req->param,
-> >> -              sizeof(struct tee_param) * req->num_params);
-> >> -
-> >>         return 0;
-> >>  }
-> >>
-> >> @@ -297,12 +341,18 @@ static struct optee_supp_req *supp_pop_req(struc=
-t optee_supp *supp,
-> >>         if (!req)
-> >>                 return ERR_PTR(-ENOENT);
-> >>
-> >> +       /* optee_supp_thrd_req() already returned to optee. */
-> >> +       if (IS_ERR(req))
-> >> +               goto failed_req;
-> >> +
-> >>         if ((num_params - nm) !=3D req->num_params)
-> >>                 return ERR_PTR(-EINVAL);
-> >>
-> >> +       *num_meta =3D nm;
-> >> +failed_req:
-> >>         idr_remove(&supp->idr, id);
-> >>         supp->req_id =3D -1;
-> >> -       *num_meta =3D nm;
-> >> +
-> >>
-> >>         return req;
-> >>  }
-> >> @@ -328,9 +378,8 @@ int optee_supp_send(struct tee_context *ctx, u32 r=
-et, u32 num_params,
-> >>
-> >>         mutex_lock(&supp->mutex);
-> >>         req =3D supp_pop_req(supp, num_params, param, &num_meta);
-> >> -       mutex_unlock(&supp->mutex);
-> >> -
-> >>         if (IS_ERR(req)) {
-> >> +               mutex_unlock(&supp->mutex);
-> >
-> > We need a way to tell the difference between an id not found and an id
-> > removed because of a killed requester.
-> > How about storing NULL for revoked requests instead of an err-pointer?
-> >
->
-> Not sure I'm following correctly. Are you expecting supp_pop_req()
-> to return NULL instead of an err-pointer when a request has been revoked?
-
-I was looking at it again, and storing an err-pointer as you do in
-this patch has the advantage that we can tell whether the ID has been
-revoked or was never supplied. In the latter case, it suggests that
-the supplicant is doing something wrong and might as well restart in
-an attempt to recover. So, please keep using an err-pointer as a
-placeholder, but we must be able to distinguish a revoked request from
-other errors to make sure that the supplicant doesn't restart due to a
-revoked request.
-
-Cheers,
-Jens
-
->
-> Best Rearads,
-> Amir
->
-> > Cheers,
-> > Jens
-> >
-> >>                 /* Something is wrong, let supplicant restart. */
-> >>                 return PTR_ERR(req);
-> >>         }
-> >> @@ -355,9 +404,10 @@ int optee_supp_send(struct tee_context *ctx, u32 =
-ret, u32 num_params,
-> >>                 }
-> >>         }
-> >>         req->ret =3D ret;
-> >> -
-> >> +       req->processed =3D true;
-> >>         /* Let the requesting thread continue */
-> >>         complete(&req->c);
-> >> +       mutex_unlock(&supp->mutex);
-> >>
-> >>         return 0;
-> >>  }
-> >>
-> >> ---
-> >> base-commit: 3f24e4edcd1b8981c6b448ea2680726dedd87279
-> >> change-id: 20250604-fix-use-after-free-8ff1b5d5d774
-> >>
-> >> Best regards,
-> >> --
-> >> Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
-> >>
->
 
