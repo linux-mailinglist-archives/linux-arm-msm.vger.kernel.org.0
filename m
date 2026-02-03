@@ -1,103 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-91660-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91661-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id tA5vG2jTgWmoKQMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91660-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 11:52:24 +0100
+	id CLfTHF/VgWkCKgMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91661-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 12:00:47 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id B957ED7F67
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 11:52:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C72EED805B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 12:00:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id BA1F13028353
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Feb 2026 10:52:18 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 9CE8F308A7E2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Feb 2026 11:00:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47F63327C07;
-	Tue,  3 Feb 2026 10:52:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75CDD32E733;
+	Tue,  3 Feb 2026 11:00:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="WejfX0w3";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="UfliVhyi"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ovCclxQZ";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="AcFBBmEo"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BCB326D5E
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Feb 2026 10:52:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 222AE3EBF29
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Feb 2026 11:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770115938; cv=none; b=gY/kjk45cMvOEw44P238BW2b27TJOckRhi4GVW7AhALJABi3pnNAUQU3+pA+p+PMYQ3cEV8KAgFw8YBpXqd6kb8EVab/gkf1Imt1qIzwk1AIWfBIBXpkICAh1+9ZYmu1AuwKwN5t4wk9wsccKn0tU7IBt0YSV5vKkyX69cvv66A=
+	t=1770116431; cv=none; b=lfXc61Ht/gmCJH/49ailkLT+BUE3Jcyt27sXA5PspbPdPrKqt3fjf+iEPhMwcQ+pRI7F5294XhsQZDw9PVhiZXBRg/rPF5uCCjDDVrqMPA2GFfM7+wqhZYGCSWv8EiGx3EUADX/oM7Fdpm+/GgTNrcChI5ttFqZ8PnwVxBNeMvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770115938; c=relaxed/simple;
-	bh=9EMYvPZqjZKZwYRTfzKedruF/ZAlbUnamAO8TWQfVM0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DAPpS4WFGXQtC43eqwrgcfJkjbkZQvNvE0XoaIu4U7Y2hWcGm+pfFa9Pf3akRVOUW1RCMMrBDB1q4bxb/YgEKlKj3Z89FDTsY2P502EkJgtMVgxWZG5C96eoZW8JHGDb07/zcD6rWpEeSPdhntm70gcJXzlGzMgj6fu4VFQl/Vg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=WejfX0w3; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=UfliVhyi; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1770116431; c=relaxed/simple;
+	bh=s8kd7B8nGOXVT9/T863Ij748peQ8U+2YLjiIBuPLaHk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=cZ2dFda5jv7gNTCfHTlZWLm+AFIUIXeJwnTiCM7a0Err/JNndddzqtCRTJOhsJf+KBvznrKvrEKW6tdWhglzd+z/xy0Lm7qGkNMGORinnRTF1172jt5oXnKd3Zv8X7tT8DkCjrvJBhANLguqlKMdTIuqE2cpc/EwR4qLX3leIXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ovCclxQZ; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=AcFBBmEo; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6136WH2V277353
-	for <linux-arm-msm@vger.kernel.org>; Tue, 3 Feb 2026 10:52:16 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 61382I4e255028
+	for <linux-arm-msm@vger.kernel.org>; Tue, 3 Feb 2026 11:00:29 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	K65sB3uDjDvfV29tZMSsnqctzd2/c+oSofRl8ktT8Wg=; b=WejfX0w3iULE/QDX
-	44VoFCNbdbWdpxAVcLHEt6DvgZPV5HKKlQFgJb3chngY2Gtjd4syMC3wXfhmRAl3
-	kk2zlD/QmIHwFB7dOv/VrDZiRfBOX+7bxDYZsB8kLVeil5HrRbyXRUeutRdL4k0+
-	P0G75mKkgayRcrN/6g+pw793w+vlxufAx+iFkvoqi8TFJK40hV8UgIgsH07ZjHTb
-	rQCk24yUco5SWJ+JqkY2JzAOOVEjKSXTjRM0SEFff3P3/v6CJWEK42J529fU/u5y
-	QKP+449qaI53yDbEe+I8M03zZnsI38jC1ebVWC3xKom3NHHog1JSrJaNMrKKkPEY
-	JkMhoA==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c32s3ab4v-1
+	oQkZfToFq8BT06VP1uFHEcrlVvgBQYb05e9o8S8pTFg=; b=ovCclxQZfTBJZHCj
+	kvFChiXP97GakvAnTtA0UXKk0axdw2C6A/HEH5S/6SIPfoHT7qm8+Enh3DVjS7P0
+	zVr5M24ui5l6c4TqD/NiVaBKrrhsMxZ/Qh8iinaRLc74DBlaFe5sfWpSJG9PIWq/
+	LeSfugWP2yFY24hDDfwOhznjON2sPRNzF9UQsShXTkmNdz6DtdbiIDNuSUlkdtVL
+	ZVaI+Lmmjo2W0U2lZ2La1A8DIkPCIQ7UTSHx5p/VE1QpxkwRtGGwlo2gUTxWhU/S
+	VrzPqrr9sTnvN/Nt9xevL+JpzIcMJ4ryxdJ65SOYoQSvOlbgsVjFDBVFUKj/gTk9
+	qGnYfA==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c2v0kkt04-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 03 Feb 2026 10:52:15 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2a773db3803so57736565ad.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Feb 2026 02:52:15 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 03 Feb 2026 11:00:29 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2a0f47c0e60so18130775ad.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Feb 2026 03:00:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1770115934; x=1770720734; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=K65sB3uDjDvfV29tZMSsnqctzd2/c+oSofRl8ktT8Wg=;
-        b=UfliVhyipg6+yqeh3vUyGmat8VzHTn/hwqITdd4AUs115S1FudIdKRIxgOu/N39dal
-         BwJ2uCTqDfOQebak7if302rebsZ8ChrX/QZAU8xfd+pfwKVIy1nneXhBNdBIPcq8xQuM
-         YSxhj/eVHgip6NF7eT7LrPBWq2Vyo3we3oppBSZmp+EwGs51CU3uWZ3AjW0DuxmVQipC
-         ReyAYosBZOiUXjdwjADaMrR8KXrjLv1uadu3V6k/+s/6ghm1Tl9QUtxu3Pedcf6qOnEv
-         ZrrBCLewwZsCvgRtDaBGVzswJXua27IMI65I5JbSojQ6RLsF3VB7aDTZ82m7QCA6wAoR
-         9dJA==
+        d=oss.qualcomm.com; s=google; t=1770116428; x=1770721228; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:cc:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=oQkZfToFq8BT06VP1uFHEcrlVvgBQYb05e9o8S8pTFg=;
+        b=AcFBBmEoxwa8URq/LSq3Gv3Tz3aj+W9CNvan1D24QNlZ70IerP0K51NI+UqmgcKxx9
+         jWWQDwsaCwhPozjI7/MJS4pYeJwUz5p4zkriZqZ/DKYW7dFtHmTUpJCBK4FFgsZeR1Qt
+         7A1C6k+yTyBZYvlDo4lUoGf+EYLJeCEMRrdbE2mG1ExAE2C2EAjTyXX/MHL1o4Japrby
+         JxYgATp3PhDCBBXvwjtLD619wEqilWOgTJyP+R5Ft1zyJJFOsXYKln1WazXlPFZMAWMH
+         zd4UlRJ8RsWQ5CZ2rlCRt/GBnyjVRVFWs3L91t/mj/kOwo3a4dkIYyzVRa/OsJcvExjk
+         0vfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770115934; x=1770720734;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1770116428; x=1770721228;
+        h=content-transfer-encoding:in-reply-to:cc:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=K65sB3uDjDvfV29tZMSsnqctzd2/c+oSofRl8ktT8Wg=;
-        b=LVfkVXoEMA5YA5iW91+RsIOdGPmgAuzUJZW4Es+ClINSDir/WJfJ1bqOftchiDwGf+
-         zX72mGD+ySnnWFS0bHJHON/26hRcTo4w91XSIbCLXgXr/mEo+dWAINqDI05MyKYwsHv5
-         pLF20WyQ6QFNhPgVrOCVUlpH3NAyXf4S3yPmomGC1VmZxtD3pQtH1sKOv1sV6/uBF2SC
-         fkDXBduG9dpOabX0RnJwkEGx9jp9FQWH7mScbO0tCyRmxLAqMNPzQAArdvLAy5C1ptzw
-         u8S9miBbfUOYzhSyk3etSfN34qKethU8mlxMKxtB5ZYgL9hBrt1vjVC1+uGyX5Kp3aef
-         s0Rg==
-X-Gm-Message-State: AOJu0YwdqiZz9xV45zBC5NCHV7oAC7W3GPtOO6R8aliThDWBfVAtPPvh
-	1F2f+eprK69UYVuKcPe/QuAe7d31O1j4Z+5/HFkLGNWeUOr1Rg+zLy92qasNELNCq45HQ/B/gy8
-	n2VDAZ1t50usthRU8K+hk7aeqGh6kFR1U7WyyFXnQPAC4Ew/K1QnrB/OGO775+YIiFM9n
-X-Gm-Gg: AZuq6aI9G73cXC9t/fk9IdTL5kVrNes4H/VlcStWXFgV86Z25J1oQwO3y6IRzaobKUK
-	Dc9vz5k3TpVr5tdaYx/6M7dCL/z83fXGHMjeullMg/JJvzZawIrLWtjn8pf2e8Kbc2stZebyztC
-	JSRlRntqrqxfy5pslVmXMr5RPcsJ+++9EAqcjJyh8cAm7OXEBZFrlQWO9UJs0DGeHNNTvX4MGM+
-	wcLAs1YnpdpTDBqHV+KqNa7VoJMyFh0IHAgX5qLCKjRWB2bq88FHroH3rBin++0fpF4MpFhdmr7
-	OX7zzq5TG5YD9SeuAYwJPbreE2MJXDgk89HKCIpY6zcPgYh3Kac7CwaNbqINsyYXaoHhm+VDw5Y
-	5QX0nYQXaGqI7byoCkHXpnXLixMQEavAZTsOG2zCbyIr7
-X-Received: by 2002:a17:902:f68b:b0:2a9:e8b:5326 with SMTP id d9443c01a7336-2a90e8b56e0mr69719815ad.23.1770115933942;
-        Tue, 03 Feb 2026 02:52:13 -0800 (PST)
-X-Received: by 2002:a17:902:f68b:b0:2a9:e8b:5326 with SMTP id d9443c01a7336-2a90e8b56e0mr69719495ad.23.1770115933413;
-        Tue, 03 Feb 2026 02:52:13 -0800 (PST)
-Received: from [10.219.57.109] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a88b415b01sm170144145ad.40.2026.02.03.02.52.05
+        bh=oQkZfToFq8BT06VP1uFHEcrlVvgBQYb05e9o8S8pTFg=;
+        b=t4OwSJ20bPK9CbEV7dzo8M4usTrT+RiFtaWfLeotPUU1zMzeL3/9GZhST+GNvHrrfJ
+         nt7+wBIXUtowzpEIKTjmNRAb72iFRppH5tjIIxZeuYUT00pZRzb7Ar8ZXeizjmEzRpv5
+         NOrZFAkvGpijl7LqqDQwWJywja05zRRuDn8YfVsDL3yhVcbHVLtQRAQn62Aglv8aTNH2
+         2x0mPfHAzZhrAZ4gt9qdOoi5h2tLTk9/RpgGeA9M3oBTaw8Zlrv0yvRoEuYNwWPxlfmF
+         5XdK5xtt8ep4MdP37//zBrMqOdPYqgLrFRWdxhReWLBaDm9LSfjahGa4pDff7ydo0tAX
+         Sw4w==
+X-Forwarded-Encrypted: i=1; AJvYcCUZKGpWA9cCKW4xd10RB9pigjZDameCBTZPUI6T4u4NMNYzvNAD66C/7ehMw6XsXzmldW299B5t+6YCgQz2@vger.kernel.org
+X-Gm-Message-State: AOJu0Yws6HAS6qxz3F1LoNy7UaM0ofEEl8Q2/JF/7eGPU0gorqBEDYaH
+	0eIQVE9q+pJ3RU3j4bYpdjrQG7R5UPvOnbqYQxfn5hhkzrE2d5LkrrBc9rjsPIVBVAD0hGZT4bB
+	Z1/DxYUoVIS+xWGaLg5YVcchPwYA0c4EYtLojAPpGlUzv9Dn+qhVt8F4Ug7oC9mvVSpHD
+X-Gm-Gg: AZuq6aKbDxAUZ0G5e0RveSChPxjdgqL8Fok6A8fycBpiaHpigxmDwv5OpExHX4B3tS8
+	67YbZw1q64kZ24cKSfH7W1vEVInNo4A3P8zs5kbxFpQja/8jFeEiY0FCwE/k6WJnos65dqh9sRV
+	/xV8qrdITTZhuo81KMb3aqQHDDIH0TDnHlzNg07KQZOyVwijJz0WoAhRI2FGEHylYPY19GVTKuZ
+	+antZ9+r0eExZGqrUAfQnIbR1fZ1eERh1zPG8dKHwkjSOPNeul99e5CjPt+Sqv40+IIfGPxFoFh
+	dAnYXsocvOH6vVWX6YYQWwCsJaDnHsyM6LcYeBIOeklHjNeKfhgvmK20MCY3x8YmbVq0d+RG8Ns
+	00cbX53F1YpHpYrEKNN5SoM2iTmX5W5bSEA==
+X-Received: by 2002:a17:903:2ec8:b0:2a1:388c:ca63 with SMTP id d9443c01a7336-2a8d9919665mr138993135ad.31.1770116428358;
+        Tue, 03 Feb 2026 03:00:28 -0800 (PST)
+X-Received: by 2002:a17:903:2ec8:b0:2a1:388c:ca63 with SMTP id d9443c01a7336-2a8d9919665mr138992885ad.31.1770116427866;
+        Tue, 03 Feb 2026 03:00:27 -0800 (PST)
+Received: from [10.64.69.250] ([114.94.8.21])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a88b4c3db4sm180801255ad.50.2026.02.03.03.00.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Feb 2026 02:52:13 -0800 (PST)
-Message-ID: <d67b33b1-392e-4689-9a67-48c1099bdc80@oss.qualcomm.com>
-Date: Tue, 3 Feb 2026 16:22:04 +0530
+        Tue, 03 Feb 2026 03:00:27 -0800 (PST)
+Message-ID: <a7fc9f94-4a64-4e5f-8c9d-858e7e9df7f8@oss.qualcomm.com>
+Date: Tue, 3 Feb 2026 19:00:17 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -105,63 +106,50 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/7] of/iommu: add multi-map support
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bod@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Saravana Kannan <saravanak@kernel.org>, Joerg Roedel <joro@8bytes.org>,
-        Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Stefan Schmidt <stefan.schmidt@linaro.org>,
-        Hans Verkuil <hverkuil@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
-        Hans Verkuil <hverkuil+cisco@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        iommu@lists.linux.dev,
-        Charan Teja Kalla <charan.kalla@oss.qualcomm.com>
-References: <20260126-kaanapali-iris-v1-0-e2646246bfc1@oss.qualcomm.com>
- <20260126-kaanapali-iris-v1-3-e2646246bfc1@oss.qualcomm.com>
- <c3c38745-2bc0-4573-92d3-f5035d651ca1@linaro.org>
+Subject: Re: [PATCH v2 1/4] misc: fastrpc: Add NULL check to fastrpc_buf_free
+ to prevent crash
+To: Greg KH <gregkh@linuxfoundation.org>
+References: <20260115082851.570-1-jianping.li@oss.qualcomm.com>
+ <20260115082851.570-2-jianping.li@oss.qualcomm.com>
+ <2026011621-fang-moneywise-d6b2@gregkh>
+ <2255b500-f4fd-4d7a-a5d9-5b4fb55c78b2@oss.qualcomm.com>
+ <2026020245-catalog-outburst-f805@gregkh>
 Content-Language: en-US
-From: Vijayanand Jitta <vijayanand.jitta@oss.qualcomm.com>
-In-Reply-To: <c3c38745-2bc0-4573-92d3-f5035d651ca1@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=Zc4Q98VA c=1 sm=1 tr=0 ts=6981d35f cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
+From: Jianping <jianping.li@oss.qualcomm.com>
+Cc: srini@kernel.org, amahesh@qti.qualcomm.com, arnd@arndb.de,
+        linux-arm-msm@vger.kernel.org,
+        Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
+        thierry.escande@linaro.org, abelvesa@kernel.org,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        quic_chennak@quicinc.com, stable@kernel.org
+In-Reply-To: <2026020245-catalog-outburst-f805@gregkh>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=Reqdyltv c=1 sm=1 tr=0 ts=6981d54d cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=Uz3yg00KUFJ2y2WijEJ4bw==:17
  a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
- a=bdoIAPvoR7LDK81EK4wA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=1OuFwYUASf3TG4hYMiVC:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: WwU4zLza41SL6kg6vgH-hniDJcN2z9BT
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjAzMDA4NiBTYWx0ZWRfX0fHpDoNfvaIz
- jC12eyr53/3OTgqk9V07+m3oSVHCIHpE0awHTplmhwf1svUhs3Pu6Zghul8F5pYEiSThdTUnuFV
- hMsCZFAjBX7hzKC+HvTkEV+bwmPDe6z7Q/EcC8Xm24I8eIidIVk7Vyhmnnk6y4E1IflHL337kCU
- pfbY9FJHzCMIRt8ceUzWRs8qMjXGaMGBPGQXilUIxUHQt8BFhAuOj1qFm2PKCnczX96EAPQ8ixa
- oUMPUy/YWCNaZGW8tUswWelgrxGu9WOTn3+wZvG9L9pfofJrOi2sPmlJXjw9JaR6GuE0u807Bks
- nfvogmKiYX+ue85ukj7kDluzg3e4nqlfqpkkHNDLEXu0S6WEi+D9MksjIeObMWJGNaKdbbivH+k
- kl2f9UkTCcvKPCV89Tz0vA3GLTIO4XqP0r+LKfEmKzuVQl/lY+bbLf3IwXMfOYYCTklvLxbiwWZ
- ppaA3WBagEXM6HS1Ryw==
-X-Proofpoint-GUID: WwU4zLza41SL6kg6vgH-hniDJcN2z9BT
+ a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=X5nBk1X44HCHp22wJVoA:9 a=QEXdDO2ut3YA:10 a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjAzMDA4NyBTYWx0ZWRfXz+SlGjoy9rYm
+ pBag5A3QXYZuUliRfXCIuxIMY8X6r3+BNmCXOlC3/hbfmH4GMnTwCGsun/epuPrs6Y9gQOL6n95
+ iRIdNDWsG/NPXk77N11SggMolUYDgdN3eiZmWmPgqa7Sj7iwheLXEg9S0LImaZFiMXCX0qUXZAJ
+ leoGprUa0P1yI2i6RkxaMG8l7W8AXSmf2Nv9g61pNGy2PT5M6zqbCMFPRiuq0mk41kQbklpTB8z
+ uZZGms6UAeXVGJ73pUBDikVAnCC++G73whUpqXmxoqNgP3JPBCUXiQ2nkMR/SEKYHqz0zbon5EZ
+ BXVaQaRmQ0h4SGoA3dgKtCZUFFQcHI/a/xUctYjVUQZW1DwF6pb2p8mqV3UNi2jslK7vlH00l7r
+ 3/8hLLl8Tg19TdaHn8e8H5VrpBO8Dr9gfCmIK0jSYCS33/wYvOSF1G+BzwuetTDvMwrkqTRDFtX
+ FVhZ9wO24ne4WHwFCHw==
+X-Proofpoint-GUID: kGpBL68oGX1wt2EfllqblrtexOvWxheo
+X-Proofpoint-ORIG-GUID: kGpBL68oGX1wt2EfllqblrtexOvWxheo
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-02-03_03,2026-02-02_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 suspectscore=0 impostorscore=0 adultscore=0
- phishscore=0 bulkscore=0 lowpriorityscore=0 clxscore=1015 spamscore=0
+ priorityscore=1501 spamscore=0 suspectscore=0 adultscore=0 lowpriorityscore=0
+ clxscore=1015 phishscore=0 impostorscore=0 malwarescore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602030086
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602030087
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
@@ -170,220 +158,79 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[24];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	TAGGED_FROM(0.00)[bounces-91661-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-91660-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linux.dev:email,qualcomm.com:email,qualcomm.com:dkim,arg.map_args.np:url,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[vijayanand.jitta@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[jianping.li@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,cisco];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: B957ED7F67
+X-Rspamd-Queue-Id: C72EED805B
 X-Rspamd-Action: no action
 
 
 
-On 2/2/2026 8:27 PM, Bryan O'Donoghue wrote:
-> On 26/01/2026 12:25, Vikash Garodia wrote:
->> From: Charan Teja Kalla <charan.kalla@oss.qualcomm.com>
+On 2/2/2026 4:41 PM, Greg KH wrote:
+> On Mon, Feb 02, 2026 at 03:13:10PM +0800, Jianping wrote:
 >>
->> When multiple mappings are present for an input id, linux matches just
->> the first one. There is a usecase[1] where all the mappings are to be
->> maintained in parallel for an iommu-map entry of a same input id.
 >>
->> Whether multi-map is needed is reported by the callers through the
->> callback function passed, which is called for every input id match.
+>> On 1/16/2026 10:49 PM, Greg KH wrote:
+>>> On Thu, Jan 15, 2026 at 04:28:48PM +0800, Jianping Li wrote:
+>>>> From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+>>>>
+>>>> The fastrpc_buf_free function currently does not handle the case where
+>>>> the input buffer pointer (buf) is NULL. This can lead to a null pointer
+>>>> dereference, causing a crash or undefined behavior when the function
+>>>> attempts to access members of the buf structure. Add a NULL check to
+>>>> ensure safe handling of NULL pointers and prevent potential crashes.
+>>>
+>>> What caller passes in NULL here?  I did a quick look, and see where the
+>>> callers check this properly if it could be NULL, otherwise it all looks
+>>> sane to me.  What in-kernel user is causing a crash here?  Why not fix
+>>> the caller up instead?
+>>>
+>>> thanks,
+>>>
+>>> greg k-h
 >>
->> Since the requirement in the usecase[1] is for platform devices, not
->> sure if it is really clean to maintain this decision on the bus type at
->> the of_iommu layer or further to be from the respective
->> iommu_driver->impl_ops().
->>
->> [1] https://lore.kernel.org/all/20250627-video_cb-v3-0-51e18c0ffbce@quicinc.com/
->>
->> Signed-off-by: Charan Teja Kalla <charan.kalla@oss.qualcomm.com>
->> Signed-off-by: Vijayanand Jitta <vijayanand.jitta@oss.qualcomm.com>
->> Signed-off-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
->> ---
->>   drivers/iommu/of_iommu.c | 36 ++++++++++++++++++++++++++++--------
->>   drivers/of/base.c        | 38 ++++++++++++++++++++++++++++----------
->>   include/linux/of.h       |  6 ++++++
->>   3 files changed, 62 insertions(+), 18 deletions(-)
->>
->> diff --git a/drivers/iommu/of_iommu.c b/drivers/iommu/of_iommu.c
->> index 768eaddf927b0700b2497b08ea21611b1a1b5688..067bb2298973671e1eaf01bb2ea52df3d2a52a44 100644
->> --- a/drivers/iommu/of_iommu.c
->> +++ b/drivers/iommu/of_iommu.c
->> @@ -16,6 +16,7 @@
->>   #include <linux/pci.h>
->>   #include <linux/slab.h>
->>   #include <linux/fsl/mc.h>
->> +#include <linux/platform_device.h>
->>     #include "iommu-priv.h"
->>   @@ -41,22 +42,41 @@ static int of_iommu_xlate(struct device *dev,
->>       return ret;
->>   }
->>   +/*
->> + * Callback to be called from of_map_id(), that tells if
->> + * all the mappings for an input id to be maintained in
->> + * parallel. Should this decission be from further layers,
->> + * iommu_driver->impl_ops?
->> + */
->> +static int of_iommu_configure_cb(struct of_map_id_arg *arg)
->> +{
->> +    struct of_phandle_args *iommu_spec = &arg->map_args;
->> +    struct device *dev = arg->dev;
->> +    int err;
->> +
->> +    err = of_iommu_xlate(dev, iommu_spec);
->> +    of_node_put(iommu_spec->np);
->> +
->> +    /* !iommu_spec->np may be from the bypassed translations */
->> +    if (!err)
->> +        err = (!arg->multi_map || !iommu_spec->np) ? 0 : -EAGAIN;
->> +
->> +    return err;
->> +}
->> +
->>   static int of_iommu_configure_dev_id(struct device_node *master_np,
->>                        struct device *dev,
->>                        const u32 *id)
->>   {
->>       struct of_map_id_arg arg = {
->>           .map_args = {},
->> +        .cb = of_iommu_configure_cb,
->> +        .dev = dev,
->> +        /* Should this be pushed to iommu_driver->impl_ops? */
->> +        .multi_map = dev_is_platform(dev),
->>       };
->> -    int err;
->> -
->> -    err = of_map_iommu_id(master_np, *id, &arg);
->> -    if (err)
->> -        return err;
->>   -    err = of_iommu_xlate(dev, &arg.map_args);
->> -    of_node_put(arg.map_args.np);
->> -    return err;
->> +    return of_map_iommu_id(master_np, *id, &arg);
->>   }
->>     static int of_iommu_configure_dev(struct device_node *master_np,
->> diff --git a/drivers/of/base.c b/drivers/of/base.c
->> index 606bef4f90e7d13bae4f7b0c45acd1755ad89826..a1c3c5954ec7e8eb3753c8fd782a1570f9eb9c17 100644
->> --- a/drivers/of/base.c
->> +++ b/drivers/of/base.c
->> @@ -2122,14 +2122,21 @@ static bool of_check_bad_map(const __be32 *map, int len)
->>       return true;
->>   }
->>   -static int of_map_id_fill_output(struct of_map_id_arg *arg,
->> -                 struct device_node *phandle_node, u32 id_or_offset,
->> -                 const __be32 *out_base, u32 cells,
->> -                 bool bypass)
->> +/*
->> + * Fill the id_out and target for the of_map_id() caller. Also
->> + * call the callback passed to the of_map_id() as part of the arg
->> + * that decides if to continue further search.
->> + */
->> +static int of_map_id_fill_arg(struct of_map_id_arg *arg,
->> +                  struct device_node *phandle_node, u32 id_or_offset,
->> +                  const __be32 *out_base, u32 cells,
->> +                  bool bypass, bool *multi_id_map)
->>   {
->> +    int ret;
->> +
->>       if (bypass) {
->>           arg->map_args.args[0] = id_or_offset;
->> -        return 0;
->> +        goto output;
->>       }
->>         if (arg->map_args.np)
->> @@ -2145,7 +2152,14 @@ static int of_map_id_fill_output(struct of_map_id_arg *arg,
->>         arg->map_args.args_count = cells;
->>   -    return 0;
->> +output:
->> +    /* pass the output for the callback, callers may further decide */
->> +    ret =  arg->cb ? arg->cb(arg) : 0;
->> +
->> +    if (multi_id_map && ret == -EAGAIN)
->> +        *multi_id_map = true;
->> +
->> +    return ret;
->>   }
->>     /**
->> @@ -2179,6 +2193,7 @@ int of_map_id(const struct device_node *np, u32 id, const char *map_name,
->>       int map_bytes, map_len, offset = 0;
->>       bool bad_map = false;
->>       const __be32 *map = NULL;
->> +    bool multi_id_map = false;
->>         if (!np || !map_name || !arg)
->>           return -EINVAL;
->> @@ -2264,23 +2279,26 @@ int of_map_id(const struct device_node *np, u32 id, const char *map_name,
->>           if (masked_id < id_base || id_off >= id_len)
->>               continue;
->>   -        ret = of_map_id_fill_output(arg, phandle_node, id_off, out_base, cells, false);
->> +        ret = of_map_id_fill_arg(arg, phandle_node, id_off, out_base,
->> +                     cells, false, &multi_id_map);
->>           if (ret == -EAGAIN)
->>               continue;
->>             pr_debug("%pOF: %s, using mask %08x, id-base: %08x, out-base: %08x, length: %08x, id: %08x -> %08x\n",
->>               np, map_name, map_mask, id_base, be32_to_cpup(out_base),
->>               id_len, id, id_off + be32_to_cpup(out_base));
->> -        return 0;
->> +        return ret;
->>       }
->>   +    if (multi_id_map)
->> +        return 0;
->> +
->>       pr_info("%pOF: no %s translation for id 0x%x on %pOF\n", np, map_name,
->>           id, arg->map_args.np  ? arg->map_args.np : NULL);
->>     bypass_translation:
->>       /* Bypasses translation */
->> -    return of_map_id_fill_output(arg, NULL, id, 0, 0, true);
->> -
->> +    return of_map_id_fill_arg(arg, NULL, id, 0, 0, true, NULL);
->>   err_map_len:
->>       pr_err("%pOF: Error: Bad %s length: %d\n", np, map_name, map_bytes);
->>       return -EINVAL;
->> diff --git a/include/linux/of.h b/include/linux/of.h
->> index 9efa6f93712c6024f05476f9fd39f3294f942ec1..abab73a76682351f5635c1127a6c899917525050 100644
->> --- a/include/linux/of.h
->> +++ b/include/linux/of.h
->> @@ -25,6 +25,9 @@
->>   typedef u32 phandle;
->>   typedef u32 ihandle;
->>   +struct of_map_id_arg;
->> +typedef int (*of_map_id_cb)(struct of_map_id_arg *arg);
->> +
->>   struct property {
->>       char    *name;
->>       int    length;
->> @@ -76,6 +79,9 @@ struct of_phandle_args {
->>     struct of_map_id_arg {
->>       struct of_phandle_args map_args;
->> +    of_map_id_cb cb;
->> +    struct device *dev;
->> +    bool multi_map;
->>   };
->>     struct of_phandle_iterator {
->>
+>> It's a saftety coding: to eliminate NULL checks on the caller side, as we do
+>> in a lot of other kernel API.
 > 
-> I think at a minimum this and the previous patch should be separated into its/their own series ∵ you really require this to be applied before proceeding on with the rest of the submission.
-> 
-> Get these two patches through iommu@lists.linux.dev in isolation and then submit the driver changes to consume.
-> 
-> ---
-> bod
+> But you do not do that for all functions in the kernel, otherwise the
+> kernel would be full of checks that are never hit at all.
+To clarify the intention: this change was not triggered by any real 
+crash in current callers. The motivation came from the v1 review 
+discussion [1], where it was suggested that a NULL check in 
+fastrpc_buf_free() would allow simplifying some of the caller paths.
 
-Sure, I’ll split the first two patches into a seperate series and submit them.
+[1]https://lore.kernel.org/all/c80c48a1-f1b6-4520-9d7c-3a83915c7717@oss.qualcomm.com/
+> 
+>> And it was pointed out in the v1 patch discussion that this change was
+>> needed:
+>> https://lore.kernel.org/all/c80c48a1-f1b6-4520-9d7c-3a83915c7717@oss.qualcomm.com/
+> 
+> Were the checks removed from the caller side like was asked for?
+Currently, I have placed the check inside the API and removed all the 
+checks outside the API.
+> 
+> Also, your changelog makes it sound like this is a real bugfix for
+> something, when it is not at all, which is what I object to the most.
+> Don't make scary changelogs for things that are not actually happening.
+You are correct, I will modify the commit text that caused the 
+misunderstanding.
+> 
+> thanks,
+> 
+> greg k-h
 
-Thanks,
-Vijay
 
