@@ -1,104 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-91665-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91666-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UIAgAFzegWkXLgMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91665-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 12:39:08 +0100
+	id mOcsIanegWmDLQMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91666-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 12:40:25 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id AEA55D87E5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 12:39:07 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id EEDD2D8831
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 12:40:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 4F4DB306F94E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Feb 2026 11:37:25 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id AB08B308F5D3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Feb 2026 11:39:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 179A81E5205;
-	Tue,  3 Feb 2026 11:37:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20CA11A9F88;
+	Tue,  3 Feb 2026 11:39:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PzwA2nH/";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="PG3AScJA"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="euxueVHo";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="jYXoVGWX"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 891BE2DFA32
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Feb 2026 11:37:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8659D3081DF
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Feb 2026 11:39:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770118642; cv=none; b=WP7hICzOQBHH7q97b7/kY3kQNktz+EF6UoI9W6QcHV9Nksplz/hhwyFFoWY40pmhEMxXjJtCYce7mW6jwNZRcMM5hx5Sx/Lgn2gelWQ3h5lAeirdOTY4+oaDaRLjKBOhoiOR5xa0mdMTd1cOS28bHb5euPHvghhalRxAraZgOhw=
+	t=1770118770; cv=none; b=qEJzruLQNjI9cDnt88IvwdVbNEl9uuiQ22OthtZDUm9nj2srgefUXKtrqZ583DxKhzBkzI7QZ8I6PINsFL8o6MzeIZCXHxIotujsou9qxGrAqmH4lHe1x0fBlZsmoGvlvlMc9REgL1hFYBbrr1QVuZ8QphQBQQhUZxgTt8Zk56c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770118642; c=relaxed/simple;
-	bh=VTGy+hSixzX/7eAjbyiDKj+Mxpr1yO+yiNB/A8Ec2J8=;
+	s=arc-20240116; t=1770118770; c=relaxed/simple;
+	bh=bfwKJtqNsZE3KuZCJtq7p+/eAqY/BYsUU4jyWlwrLhI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rgowGOrrkHc46Dqc4iPf+cQk8Bjwz9eVoH7nBRj3AMdFpZYmjbnHygcKLAKXemv4UjsDo7FCNLcT0dK7mSKwPbLb0Mh/Y3Pt88s0iStB4bRPaNQTy5VStqSUF4gg6U5oeKQK+g7q4Xbif2K2YuR2/n1ABK8FoL5lrDACB0RM8Ts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PzwA2nH/; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=PG3AScJA; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=S+1XZReQtI9eyP9F1PMLwNSJcZwuf+Wvm4hpgY+kWQJTMqrn6VY8U2AUgM6O2O8uuCxnaoJvhInAfLhh1Wr8AJ/2oKEf7euSm1w+VOgEtv5Ytxrc4ZOdnz+7iBwg/LiuvchMSxmT/oYcnP/dzSBUoGbZwCmMp3BJ4PvITdRU43o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=euxueVHo; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=jYXoVGWX; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6135Ug573459099
-	for <linux-arm-msm@vger.kernel.org>; Tue, 3 Feb 2026 11:37:19 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6136RgeK3459139
+	for <linux-arm-msm@vger.kernel.org>; Tue, 3 Feb 2026 11:39:27 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	/6Q5A4nPQoJIml7jHNWhTTRAmL4NDVJ4SCgRkqslwP0=; b=PzwA2nH/VQnFJdwH
-	JR5/U7lt7WwbGT4WqaY/+lWlUUYSLXRFSHudbr/lVXOva9s01ENqDhrBy4Vj5GlK
-	0MqNutlJNwLXV34J/78kMox+R9ZyqErUAHPaL7Zd8TmSL8RTlVHdx5J+EyImnCSy
-	JbyE6N+vCS+HiAsTj7fsIPvFaNs9flAKQCx4KWHX66/mSJtCF/ZbrGuzLoqBOjZM
-	YIs857WNwXtAtKVh6URHJ4bR+yPexgbSL4Nyeazi7aDXFwLqlRDso4Z5JU7dARp1
-	kpvz8laivuqvdxQvbfqlmUYYzeRl93sCto5tjFwbuKrtB2hzunl2XDwTOQGgvpLo
-	/H5a9g==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c2trbm39a-1
+	D4I8Eu3UIs4Ch8uaoG3W9J/ClKObbsqX0kUiIwkWg40=; b=euxueVHoTjqmInyB
+	L8brDOL60avqFOIl7U7pQybzTFp6hsHYv9k3fUPvuKaOTsIHvu296hZL988vMCh3
+	ogcowPjbYlwyWwoWsiRnRc8iKTx7eWJnwjG0r437nalmJvOBn6J6I/wpA5EpbxGa
+	mjWvNFvAKPEAwq+mE4p1eTHwSOCBD5wm5njRTLnudOr6lhk7lv8dUagXFbWqnisy
+	HPks16+wgTGS9yLng+FlQxsEuc3EqXsfBWL8eGMibSrMN/fA4zC0CSQG/XYSdOSW
+	9+Tpn1A7GpnZ1tN6WD6dIAdg1zOGiHoBRbDZeiXSL19M4NOo0QE4HxGPKizzrwEb
+	W0SYRQ==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c2trbm3f3-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 03 Feb 2026 11:37:19 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2a7a98ba326so9073085ad.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Feb 2026 03:37:19 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 03 Feb 2026 11:39:27 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-88a26989018so16206126d6.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Feb 2026 03:39:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1770118638; x=1770723438; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1770118767; x=1770723567; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=/6Q5A4nPQoJIml7jHNWhTTRAmL4NDVJ4SCgRkqslwP0=;
-        b=PG3AScJAFFuXOWj47FplJz5vGUtWPzD9KmM0Gad42X+gUGINN0AKEpI7+PdHZmV+eJ
-         FxP1nJovOaH6p2ZFttHTf5Uge8Q9iPWL69vQaPFmGHcUEiWq7hj3gySMwWNYPEcISLmU
-         eojGafzEUJKtqUBV8wQYSsQqV5086xZRKrnrY1uiHtLZXKSI6rPKMQLz9vHyWz3gTS5c
-         Ql8Bm401BvxhAZBXmUa+qHEs4h/Q19O+t02Laiy/j801Y66Xvnb/R1eLiexENF/cL1Ng
-         FxN5s3OjFByA8FJnl852T9FB3sBIgPY/YDv3aCpKKTHCEwZCSRc90wJcYNwEcf05ERqI
-         rGew==
+        bh=D4I8Eu3UIs4Ch8uaoG3W9J/ClKObbsqX0kUiIwkWg40=;
+        b=jYXoVGWXoDFAOsGr/gurftcXcHQGhOafbP7IJmAfHQCo2JrgPEhmUBndX2b/ObPK+B
+         MQyncAb6NPxv8F7XjD42uHyoP84DVq92wOWrFMzCT7P7pYpTrVYEO/OgZXaJ5a0jVkIb
+         jHk8qG29BG/mFmW/PHDj4S3lWieFmmAA6JEyjncOzhCzkEOwqo/ABBLcU6zeLR7LXV34
+         usy+ULfyLG/SCGIGwiOIeBj5KBhWpdoeb/gz+2y4Yur5QOArQw/cxOlxOz4JOF5gDrfb
+         QSfwWvcmZG+hcOrf81QOppypPNHxSFNmnVb70JXoxWw2DsrHz7GVxohInVGJdv9wgGyu
+         kz3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770118638; x=1770723438;
+        d=1e100.net; s=20230601; t=1770118767; x=1770723567;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=/6Q5A4nPQoJIml7jHNWhTTRAmL4NDVJ4SCgRkqslwP0=;
-        b=pCDvQHcFuH9UmHZS7UspvqWwwe6kpjKkBPGa9yutyKWIeEaLAE6RkUud3Uqv4IcqLn
-         whmlp+02MPyDKM5mLCXSQrww2s5M5R9JFopJzfgK5wd7qG2R/u8+EHtN+B1K8c1Ub/Yy
-         JnuQGxI9OCrnSG03aOb6OWx/wsXAEw3uzI6hA/oxQjpAfdLz1jG/jcAxa6cI9HwWOYVx
-         cURqtyfsiHUyIJx0wglF3qq/M/HDL7E9dZyAT3IiL2NFqsN2UgT72eaUoQDIYpoSJwkT
-         TY1fZT2UAOxH1WcJolRVOBeU26Yvbi9mxwBXqF838RjUEX7JlFPP7Kb6VPCnh1X9GxBc
-         79hQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVDlXK4fH+6b5IzBnOz4i9VNUl7n8ernnGnItp8+Up/HtTUu8hozx0J5lIvV99u8mn7b4rcPJ51NmuisaNv@vger.kernel.org
-X-Gm-Message-State: AOJu0YzHjaX3XgXJZY2fNWwKoh9n7MErm7mtjiKuBYtJQ1KOEhT1ojcH
-	rzjh2onmAD0jBajE9XMBxy3hOr0m8Kve+2D2tVcw3wQUpzzfx1n5sHBPrSt7qUKccs6uCBdcYiH
-	eOvgTFsuK0QwxrRyET/6lbObhdvu8bwVkfwXd0Jly54wxjv3TCmK09aWGwY89Lf0KKN3W
-X-Gm-Gg: AZuq6aIA5uYWVdC/86Ftl1gYpcw5f5Qm8OQQu19RfpjktuY78Yqf1MwJIJYzB5yX6eL
-	s5yoNjq3/f0r3Usv8U6iVcv5M2QlrjH/YRf/eX+jekW9+C86/C/DdIpSEdcGktyQf9P5eQfjpFH
-	0z16VLCyT+ilj6HXvEqGm1uyDrAqjFu+18jt8BTxgR/spD4h1r6tRM10P57/4lbliu3j/qXQtyw
-	yUiASrmH2fXZLHNRdjjSh84mlNgHNNOyJCeXm/RWwYhjoe2q4F/AdR9fU/1FVTyVfPEsBsTJIm2
-	12A1Tx8fmMo6DeLT9k4QSa+M9g+AvMzAUZ70p3QPpYyEk+EkXxoMAsgVRuLtydKFqFVSXneQOva
-	UafGsBd5bnZtIbqUJOCxdRu332N7krEvRot6LNVoo1AU=
-X-Received: by 2002:a17:902:c94a:b0:2a7:a87a:423 with SMTP id d9443c01a7336-2a92465cb91mr25890405ad.19.1770118638303;
-        Tue, 03 Feb 2026 03:37:18 -0800 (PST)
-X-Received: by 2002:a17:902:c94a:b0:2a7:a87a:423 with SMTP id d9443c01a7336-2a92465cb91mr25890315ad.19.1770118637839;
-        Tue, 03 Feb 2026 03:37:17 -0800 (PST)
-Received: from [192.168.1.2] ([106.222.228.35])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a88b4153c6sm175587305ad.37.2026.02.03.03.37.12
+        bh=D4I8Eu3UIs4Ch8uaoG3W9J/ClKObbsqX0kUiIwkWg40=;
+        b=A8EEN58iKIrone9ap+vYdYH7HBNFsQWYIdzcCCiQsETs7y6MZkuGu3qC1et5N535e3
+         /L351Bkla3KpjPVxDSQNHnrVhgyXTZslaz42mgwYEinJcP4oCWGW0zbfgyw92jOUMEOY
+         QvI48rSVWp9hM52ehlf7rDQGU8hvINtOMfUfnoMJzT1ejLskekHqbl8mF3bl0ms2o6Wm
+         +okVij7+qz8rnHKAp36Ua+zlyxX/d+f3kh9Hh+bM+pU0+6hMp43qidae3pYpsMzzVGEG
+         E2k9S6PwqOEXmU5s4A+Hh/upKZvp5xHAlNEebYaYtzClhjAneRF7w/arMemELSHuwN36
+         fbdA==
+X-Forwarded-Encrypted: i=1; AJvYcCW8sHFBkchxtqb7BEFQXVN0tZj3bAQmZwYvUV8O2YcDMTlq6lCa9fp+H4VAFqgRLZrX40pAzDoFdmSb1+34@vger.kernel.org
+X-Gm-Message-State: AOJu0YxuKExKjJ2ivQz87uNJAG+Sk/dRFE+ss3q+RL1hhUri8xntRKoT
+	wWNL5RX0Vx8rPyylEvs3X8lRL2UIL4GMnKV7tH+Pwu/t4pPe3TgUB9+D3+SIhdvodW4AevU+YHy
+	RqvCvur5ejYKF8Hi6sWJIbFw0JFbbUZDR1ndJlu77nQszshLS4w4Zh7zFY11h679Z8kVV
+X-Gm-Gg: AZuq6aI0SyRyBfzxqh3tasNbxkrS/Qq8on8Jniys8LlAr4FwK8SlCjwrSTtTjABbiQl
+	Va48916AH7r82YHDWikalpeDwlRGSFl4Ds3BOk6t0PzJ96IdPbzgcWJvKFTggR8nub4sDpDxKrv
+	VGpKIk7ksyvX6rqX1EOEHvD0V0DNFT+WrHATeBr7uQ3Gr2WWj/myea3Obc4M+uc1og8gl3j5Gf5
+	DD1pXoXscZ3foFVKejJbSq+HrWCe4zUtsRY9nlkp7z453ctpDoVHOrMe3WvygyzXqQPcDiUUXD5
+	m4qskOrMjo3UQhP/H5vTUh9NpX/+TIbJlVTfjUpk+lhUz0s3hDxds287Pahk5vmqwof0XdDMBeU
+	ok1BNTkMKniiwiCeVCV4Xk1PHwdZeLIINx8YDptSWtHzgyG7QoMRBdPsjUrO9DAp4yNw=
+X-Received: by 2002:a05:620a:1725:b0:8c9:eae0:d1df with SMTP id af79cd13be357-8c9eb2fa369mr1389600285a.6.1770118766812;
+        Tue, 03 Feb 2026 03:39:26 -0800 (PST)
+X-Received: by 2002:a05:620a:1725:b0:8c9:eae0:d1df with SMTP id af79cd13be357-8c9eb2fa369mr1389598585a.6.1770118766325;
+        Tue, 03 Feb 2026 03:39:26 -0800 (PST)
+Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-658b46ae22fsm9031179a12.35.2026.02.03.03.39.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Feb 2026 03:37:17 -0800 (PST)
-Message-ID: <5486697e-d02e-4b12-9a60-99d0de343515@oss.qualcomm.com>
-Date: Tue, 3 Feb 2026 17:07:11 +0530
+        Tue, 03 Feb 2026 03:39:25 -0800 (PST)
+Message-ID: <f2b11a1f-8085-45e8-a3f5-b07477b9ef91@oss.qualcomm.com>
+Date: Tue, 3 Feb 2026 12:39:23 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -106,42 +106,46 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/2] arm64: dts: qcom: qcs6490-rb3gen2: Enable CAN bus
- controller
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: mkl@pengutronix.de, mani@kernel.org, thomas.kopp@microchip.com,
-        mailhol@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
-        linux-can@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        mukesh.savaliya@oss.qualcomm.com, anup.kulkarni@oss.qualcomm.com
-References: <20260108125200.2803112-1-viken.dadhaniya@oss.qualcomm.com>
- <20260108125200.2803112-3-viken.dadhaniya@oss.qualcomm.com>
- <n6affntgff5wy4xmm255v5h2ejpepicpz2cybcuvsxmry5td6u@jucskv7zrzvv>
- <5cdfe5a5-3c78-45a2-886c-768b224ad776@oss.qualcomm.com>
- <wbx2qrkhpsntggzqkzkpi4sa6qv3buhkjbwmjoa7zgw2oc4b7u@qugyhcxb6qrh>
- <316fa702-6cd8-4842-aecf-c176a5a53e2e@oss.qualcomm.com>
- <qvuokwiqllm6zmlzj3pfvziylrr5krjya5rnf3ojeycdoutlro@fl5qukh4vorm>
+Subject: Re: [PATCH v2 2/3] Input: aw86938 - add driver for Awinic AW86938
+To: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Cc: Luca Weiss <luca.weiss@fairphone.com>,
+        Griffin Kroah-Hartman <griffin.kroah@fairphone.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, linux-input@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20260128-aw86938-driver-v2-0-b51ee086aaf5@fairphone.com>
+ <20260128-aw86938-driver-v2-2-b51ee086aaf5@fairphone.com>
+ <aX6whqw7XyaKMd9m@google.com>
+ <472d7db3-db34-4966-aa17-588e1153ba12@oss.qualcomm.com>
+ <DG4EAYDXMGQS.2MKAJKDFQCFEG@fairphone.com>
+ <34fa533c-b9ab-4025-b9ad-4041837e790c@oss.qualcomm.com>
+ <aYCCv6nI2QkvD8rb@google.com>
+ <6fa17bda-4d4a-4b31-99a2-1d2b606b663b@oss.qualcomm.com>
+ <aYHBgLyIttd4lkn6@google.com>
 Content-Language: en-US
-From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
-In-Reply-To: <qvuokwiqllm6zmlzj3pfvziylrr5krjya5rnf3ojeycdoutlro@fl5qukh4vorm>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <aYHBgLyIttd4lkn6@google.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: i2krzQWdX98NfOiDBoyS8NfL-Rrtyjaq
-X-Authority-Analysis: v=2.4 cv=dcmNHHXe c=1 sm=1 tr=0 ts=6981ddef cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=MIwPJUb4XD/Z2H5uR64eEw==:17
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: Ze4eFk1_ySrQxob5IxxXQJ64K7yiEU86
+X-Authority-Analysis: v=2.4 cv=dcmNHHXe c=1 sm=1 tr=0 ts=6981de6f cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
  a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=aEdQ800eGeG3iW2-5J8A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=GvdueXVYPmCkWapjIL-Q:22
-X-Proofpoint-GUID: i2krzQWdX98NfOiDBoyS8NfL-Rrtyjaq
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjAzMDA5MiBTYWx0ZWRfX547x849prxRJ
- w8kAxWNQlNs/G/5fz/Ea6Dwi+H9Mz3rY7b7vAWdCzmFbsxhHcT7aO7yr7WHDt8ZXPYC9heevj4p
- 44JxNb7ejLeJ5gzBKaDsg1fJp8lkp/FZDwlXrPaKFR04oUMwz7r/pT5Egl7tQbHSfX4LzbPtq7A
- yzf56Kz9Wv5UH26iMy1y2bx3n5+/q/6hPNjVzCfJIJRU15sYVLjYCO7KXLNqabN9YPLncr8IDRQ
- /mVNPbxGZF5MWi6k8MBDtRWCqsV0+wHTz47Rb4aSDH1gFI8/Id9udv83jUmsKxEhcO6FGxGi+zI
- DlG2E+5BZQwjBXr5xtC3Qmtv3Zb5A94o6uW7gibvoLY8H7jgl83RKmEkdWsHKJ4X2PaJt0ExILO
- Qq5YFFvNy2PPQnnLUVQsxfdYARfI4JlkI4/53ya5A9qBOriQcRsmmn5YJucAbt4IxB1HYAmvkoK
- l8ZE/yIfdcmDoAtEasw==
+ a=VkNPw1HP01LnGYTKEx00:22 a=xnehguOeFdtwgeas_nkA:9 a=QEXdDO2ut3YA:10
+ a=1HOtulTD9v-eNWfpl4qZ:22
+X-Proofpoint-GUID: Ze4eFk1_ySrQxob5IxxXQJ64K7yiEU86
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjAzMDA5MiBTYWx0ZWRfX/vQsLbtkGL1s
+ FQAdnf13Bvx/7VoZJ04/k3qyzZ5jt0hTCbPU9B4uROmvgz/XhAxH3YUn401UaNeLGFz23KtOa2+
+ NW4hKnlX5xhAG3ZRaUsqbFCG8akkWohygNYIoyVCY3c0r5YYup5MgVQfP4U/8pgRGeWUwOTrQVO
+ eCk5XmIdt9W3meUzKjZYJfEvvpAI7f4/K70h/Xt68AeuyGOHyZX327COLiQ/JQe1KTLFeZUC1D9
+ 1zpc7nmzwHpy/DY/MgBBU83+MaLMeWBef8YqSBLDgCBvFRKEi8vglkjobuQ/tiw6XdVtcntz/Do
+ E/Laq9J+av8CcnW0oPTSeV7XtZhd/rryAxtJcJcRRm+YqlCEfQcRCqmjgbcyQc3U3mxrZwFe3vV
+ 0JfxrIjrNali8BrTAW3p82Z0IO1vk9IlQhHvBx2SuLP9hGwO8Xpuo6zFJMKYDCWwP+mwbqxpbZg
+ zVzTjDCNd+RhxbXTYsw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-02-03_03,2026-02-02_01,2025-10-01_01
@@ -151,138 +155,181 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602030092
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[16];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-91665-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	TAGGED_FROM(0.00)[bounces-91666-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_TO(0.00)[gmail.com];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:mid,oss.qualcomm.com:dkim,qualcomm.com:dkim,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[viken.dadhaniya@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: AEA55D87E5
+X-Rspamd-Queue-Id: EEDD2D8831
 X-Rspamd-Action: no action
 
-
-
-On 1/19/2026 11:59 AM, Dmitry Baryshkov wrote:
-> On Mon, Jan 19, 2026 at 10:21:37AM +0530, Viken Dadhaniya wrote:
->>
->>
->> On 1/9/2026 7:35 PM, Dmitry Baryshkov wrote:
->>> On Fri, Jan 09, 2026 at 06:23:39PM +0530, Viken Dadhaniya wrote:
->>>>
->>>>
->>>> On 1/8/2026 7:33 PM, Dmitry Baryshkov wrote:
->>>>> On Thu, Jan 08, 2026 at 06:22:00PM +0530, Viken Dadhaniya wrote:
->>>>>> Enable the MCP2518FD CAN controller on the QCS6490 RB3 Gen2 platform.
->>>>>> The controller is connected via SPI3 and uses a 40 MHz oscillator.
->>>>>> A GPIO hog for GPIO0 is included to configure the CAN transceiver in
->>>>>> Normal mode during boot.
+On 2/3/26 10:49 AM, Dmitry Torokhov wrote:
+> On Mon, Feb 02, 2026 at 04:11:51PM +0100, Konrad Dybcio wrote:
+>> On 2/2/26 12:04 PM, Dmitry Torokhov wrote:
+>>> On Mon, Feb 02, 2026 at 11:19:36AM +0100, Konrad Dybcio wrote:
+>>>> On 2/2/26 11:14 AM, Luca Weiss wrote:
+>>>>> Hi Konrad,
 >>>>>
->>>>> The main question is: what is so different between RB3 Gen2 and previous
->>>>> RB boards which also incorporated this CAN controller? Are there any
->>>>> board differences or is it that nobody tested the CAN beforehand?
+>>>>> On Mon Feb 2, 2026 at 11:12 AM CET, Konrad Dybcio wrote:
+>>>>>> On 2/1/26 2:49 AM, Dmitry Torokhov wrote:
+>>>>>>> Hi Griffin,
+>>>>>>>
+>>>>>>> On Wed, Jan 28, 2026 at 04:51:14PM +0100, Griffin Kroah-Hartman wrote:
+>>>>>>>> @@ -717,9 +746,19 @@ static int aw86927_detect(struct aw86927_data *haptics)
+>>>>>>>>  
+>>>>>>>>  	chip_id = be16_to_cpu(read_buf);
+>>>>>>>>  
+>>>>>>>> -	if (chip_id != AW86927_CHIPID) {
+>>>>>>>> -		dev_err(haptics->dev, "Unexpected CHIPID value 0x%x\n", chip_id);
+>>>>>>>> -		return -ENODEV;
+>>>>>>>> +	switch (haptics->model) {
+>>>>>>>> +	case AW86927:
+>>>>>>>> +		if (chip_id != AW86927_CHIPID) {
+>>>>>>>> +			dev_err(haptics->dev, "Unexpected CHIPID value 0x%x\n", chip_id);
+>>>>>>>> +			return -ENODEV;
+>>>>>>>> +		}
+>>>>>>>
+>>>>>>> If we are able to query chip ID why do we need to have separate
+>>>>>>> compatibles? I would define chip data structure with differences between
+>>>>>>> variants and assign and use it instead of having separate compatible.
+>>>>>>
+>>>>>> dt-bindings guidelines explicitly call for this, a chipid comparison
+>>>>>> then works as a safety net
 >>>>>
+>>>>> Are you saying, that
+>>>>>
+>>>>> 1. we should enforce dt-bindings == CHIP_ID (what's currently done)
 >>>>
->>>> The behavior is consistent across platforms, but I do not have details on
->>>> how other platforms were tested.
+>>>> This
+>>>
+>>> No. If there is a compatible chip with different ID (for whatever reason
+>>> - maybe there is additional functionality that either board does not
+>>> need or the driver does not implement) we absolutely should not refuse
+>>> to bind the driver.
+>>>
+>>> Hint: this thing is called _compatible_ for a reason.
+>>
+>> Right, the reason you have in mind is fulfilled by fallback compatibles
+>>
+>> (i.e. "vendor,actualchipname", "vendor,similarchipname" where the driver
+>> only considers the latter becuase the software interface hasn't changed)
+> 
+> And having chip_id checks will break this...
+
+Depends on how they're implemented and how different the chips are.
+
+If the software interface is exactly 1:1, with the only difference in the
+ID register, something like
+
+if (chipid == SIMILARCHIPNAME_ID || chipid == ACTUALCHIPNAME_ID)
+	...
+
+would be fitting.
+
+However, more often than not, like in this case, there's actual differences
+that need to be taken into account, meaning we already need to act upon
+the "actual" compatible
+
+> 
+>>
+>>>
 >>>>
->>>> On the RB3Gen2 board, communication with the PCAN interface requires the
->>>> CAN transceiver to be in normal mode. Since the GPIO-controller support
->>>> was recently integrated into the driver, I configured the transceiver using a
->>>> GPIO hog property. Without this configuration, the transceiver is not set
->>>> to normal mode, and CAN communication does not work.
+>>>>>
+>>>>> or
+>>>>>
+>>>>> 2. we should have both compatibles with no handling based on compatible,
+>>>>>    but only use CHIP_ID at runtime to change behavior
+>>>>
+>>>> This is spaghetti
 >>>
->>> How do we verify the mode on a running system? I have the boards, but I
->>> don't have anything connected to them over the CAN bus.
->>>
->>> BTW: can you recommend any simple setup to actually test the CAN bus on
->>> those devices?
->>>
+>>> I really do not understand the aversion of DT maintainers to generic
+>>> compatibles. We see this in I2C HID where we keep adding compatibles
+>>> for what could be described via device properties.
 >>
->> I tested the CAN controller using the following commands:
->>
->> 1. Loopback Mode Testing (GPIO hog not required)
->>
->> ip link set can0 down
->> ip link set can0 type can bitrate 500000 loopback on
->> ip link set can0 up
->> cansend can0 12345678#1122334455667788_B
->> candump can0
->>
->> 2. Testing with External CAN FD Adapter (PCAN-USB FD)
+>> This is because it's the only way to allow for retroactive changes that
+>> do not require changing firmware. That's why ACPI carries new identifiers
+>> for even very slightly different devices too. Once the firmware containing
+>> (ACPI tables / DTB) is put on a production device, it is generally not
+>> going to ever change.
 > 
-> Thanks! It's price doesn't make it esily available, but it answers the
-> most imporant question: by the USB CAN adapter.
-> 
-> Did you add
-> 
->> A GPIO hog was required to configure the transceiver in normal mode.
-> 
-> I'd phrase it differently: to pull the transceiver out of standby mode.
-> By using the GPIO pin you make it always stay in the normal mode. It is
-> fine, but it is not optimal. Instead a proper solution would be to use
-> the MCP251XFD_REG_IOCON_XSTBYEN bit. Could you please instead implement
-> support for setting that bit, based on the DT property.
+> They are actually solving slightly different problem. In ACPI world they
+> allocate a new ID to represent a peripheral in a given design, down to
+> it's firmware behavior. It encodes much more than chip ID that DT
+> maintainers want to key off of.
 
-Thanks for the suggestion.
+DT sort of does this to. In the Qualcomm world, how you get to interact
+with the platform changes dramatically depending on the firmware flavor
+it's flashed with (which I'd hope to see go away one day..) - if you have
+a Chrome firmware, you're basically free/required to configure everything
+from Linux. With Android firmware, much of that heavy lifting must be done
+by the hypervisor or the secure world. With Windows firmware, you get the
+Android experience + UEFI services. And at the tail end of the scale,
+there's the automotive firmware where you don't even get to toggle clocks,
+but instead all peripherals' power and performance states are exposed
+through dozens of SCMI servers..
 
-I tested enabling IOCON.XSTBYEN, but on this hardware it doesn’t bring
-the transceiver out of standby by itself. With only XSTBYEN set, the bus
-remains inactive and no frames reach the CAN adapter. Clearing LAT0
-(driving GPIO0 low) is required to put the transceiver into normal mode;
-data transfer works only after LAT0 is cleared.
-
-Given this, a practical approach on this board is:
-
-drive LAT0 = 0 when the controller is started to take the transceiver
-out of standby, and
-
-restore LAT0 = 1 when the controller is stopped/suspended to return it
-to standby.
-
-If you prefer, I can make this conditional on a DT property (e.g. using
-an existing standby-gpios or a new property indicating that the
-transceiver’s standby is wired to GPIO0).
+Somehow we can try and be smart, deducing the behavior based on the
+properties present in DT, but often times, a separate compatible for
+"this SoC except with this firmware" needs to exist, as the OS-accessible
+software interface is simply different, as if this wasn't the same SoC
+anymore.
 
 > 
 >>
->> 1. Probed and verified CAN transceiver pins and connected them to the
->>    PCAN-USB FD hardware.
->> 2. Configured the CAN interface:
->> 	
->> 	ip link set can0 down
->> 	ip link set can0 type can bitrate 500000
->> 	ip link set can0 up
->>
->> 3. Configured the PCAN-USB FD software for 500 kbps arbitration bitrate.
->>
->> 4.Sent a CAN FD frame from Linux
->> 	cansend can0 12345678#1122334455667788_B
->> 	
->> 5. Verified reception in the PCAN software.
->>
->> 6. Transmitted frames from the PCAN software and validated them on Linux
->> 	candump can0
->>
+>> CHIP_ID registers are a good tool to validate that the author of the
+>> firmware table is doing the right thing, but solely relying on them
+>> encourages creating a "vendor,haptic" compatible, which I'm sure you'll
+>> agree is totally meaningless.
 > 
+> Is it? If a piece of hardware speaks i2c-hid protocol why do I need to
+> know the exact chip that is being used? Depending on the chassis and the
+> size of the sensing element and the version of the firmware that is
+> loaded into it the behavior and timings of the same chip may be very
+> different.
+
+I agree this argument gets overused at times
+
+>>
+>> That's especially if the naming scheme makes no sense and you can't
+>> even factor out a common wildcard-name (which also happens to be the case
+>> quite often)
+>>
+>> Plus a compatible is used to restrict/modify the set of allowed/required
+>> properties, so having an "actual" compatible is required for schema
+>> validation to work
+> 
+> Yes, in cases where there is not a common set of properties having
+> different compatibles makes sense. But in cases when the device is
+> supposed to have vendor-agnostic behavior insisting on myriad
+> compatibles makes little sense.
+
+Some people may be thrown off by the golden rule of implementing standards,
+which is to break or bend them immediately, claiming full compatibility.
+
+But for cases like hid-over-i2c, I symphatize with the "no one needs
+to know if it's a synaptics a00001 or a synaptics a00002" sentiment
+
+Konrad
 
