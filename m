@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-91684-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91685-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GDy3OnIYgmmZPAMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91684-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 16:46:58 +0100
+	id SIMrIs8ZgmmZPAMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91685-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 16:52:47 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E5FEDB7C8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 16:46:58 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 24A8FDB8B7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Feb 2026 16:52:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 5EEC9307C8D8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Feb 2026 15:46:41 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 8C3D4311E352
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Feb 2026 15:46:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A726C3BFE31;
-	Tue,  3 Feb 2026 15:46:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F7803BFE31;
+	Tue,  3 Feb 2026 15:46:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ZbFNFk2g"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="y2uRjLBv"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-dy1-f202.google.com (mail-dy1-f202.google.com [74.125.82.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 561B03BFE3F
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Feb 2026 15:46:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E844E3BFE4A
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Feb 2026 15:46:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770133600; cv=none; b=CHYhGjaF45eYYzSLNyT8E2QCami9ObdMbfOy3azYXkpo0NRccaTEUwM8OgOlLbBi3FBmY0Wkyr555SQpvMoZ7aljmqY6WqMr4SdAAvsLYx5JXFeE/nK/2KOEXSiqN+9Bj0z6rwO2yzv91mj1QkihFtIqR22ERBlJQ7VOmmZxa2A=
+	t=1770133601; cv=none; b=GDKYdCDpuf1I0p/BCNTn9aGiTcYWLSefYQGNAVfZeo0ogbsoDg1TNE3QugCtQN8qkoaC/kf3CwAsj8IeO3ti6OtlzC6DQKsW1YYSL2E6cQ7tXUG63Mubp6XPZ5mKIFcREj7HvarPdwIV5la3wgqcAt9t3RmAQii7w2GamtYnChA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770133600; c=relaxed/simple;
-	bh=toV72FONVd+c77Jdi9/X05RZt7qiox3e/hnCpHZii2E=;
+	s=arc-20240116; t=1770133601; c=relaxed/simple;
+	bh=B6pUx1j5pFgygp5i69R4pVf7HKotofgGAbGCOoefnlg=;
 	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=EMJhStlFeiXyu5ADzDIpzL34lWf2oCHwUwiCiqAWz20QYUAUph55aYk0n5ZFV82EQaVasOEwKxN6lZDObaG9SW5UkGo76g8qmkowHrbdicbbx3keMXZGwZQXCCAYgCKnkg8Ff0jVzpHTx69f6KHiqUxb4eveo1Ovx5k4qVU9cKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--mmaurer.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ZbFNFk2g; arc=none smtp.client-ip=74.125.82.202
+	 To:Cc:Content-Type; b=kxh8QaEtuHxqJ/OJT0vVdUL6AmTO2hhC84wpcPvtUkNmdfXfWXvn5T8DvRCsBt7PIM/LIGPSGnVs7iaN2KXNUx7mzcYD/nGlW/4Jw5m6oUH5Ip84jBTWJGmKBBj/4NwQezOnjo3GI1qigm12hM3rziEGnarNWOj5rEBB6DGGB60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--mmaurer.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=y2uRjLBv; arc=none smtp.client-ip=74.125.82.202
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--mmaurer.bounces.google.com
-Received: by mail-dy1-f202.google.com with SMTP id 5a478bee46e88-2b7ef896edcso14447391eec.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Feb 2026 07:46:38 -0800 (PST)
+Received: by mail-dy1-f202.google.com with SMTP id 5a478bee46e88-2b74aff34efso10550084eec.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Feb 2026 07:46:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1770133597; x=1770738397; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1770133599; x=1770738399; darn=vger.kernel.org;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=h/wJPUnQVMCcHAFscBghK0MQ8yiIElHndU1rZLXdeks=;
-        b=ZbFNFk2gSwMTms9IgyqABz1Tfmdd70Jk9hs6D8rXVhNnDQYCX4qhfqmhECBZTceWcR
-         4f1dESGCKHR3g2cDj9DE/x2reuG4HACMs/B0BeCtkvByHsOJzNmahqr8++Qy2/85I5rB
-         0G3MnhIW55WPfcfNhuZiTU6KhoKn64Ci3CeRNc8yVzovWg6kdb/gRgrGGp5RY+R28IPn
-         eR0wgZ+vCgRkh6+T14q1HU16VnX7C+78Wao8XP4nNS7vfCtBF3cjZ8aVPc1XW5+AEklt
-         6nr1Q2aKhTyCyDrRa6UfJJ+9wZ7qDHGHogTjMhd9K8R+6l/jJh6oDh6TqkuE7W5qQgKz
-         6IEQ==
+        bh=3QkppxUftz38QVidHBNdTmT2F8VCX5EZWUQmqLBEfqQ=;
+        b=y2uRjLBvfn8tU0Fib3HMepDwJoWScAED2Z8NPq3Gb/KgpISVXuSCYzTnz44Ub/2RsT
+         D7U6ytX5exnDF/M5d7XJTOfIWO1jSLzkHCKJ760z/84PHHyNZ/xNXj+hldbCx7CVdEf6
+         bLTsvzBrKbsN3uczsLy3EEvMn7+YhLgQ2UHG8vcPTfGZWVVHkVqe/5Be3uRQgFo/CWrW
+         2iPF4pmBY0lK62lO+0QGAOD0CRipFxc7Wfjvd7ScQlgpmL53VrRbgkwa4gbqAiKTnbYY
+         ceIbuvIvnTo/s9H4QcwXhX8bsXOzXT+mjWn1TBzC2aVWXFSNwZXizt4LLuN7ou3SJWMo
+         HNqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770133597; x=1770738397;
+        d=1e100.net; s=20230601; t=1770133599; x=1770738399;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=h/wJPUnQVMCcHAFscBghK0MQ8yiIElHndU1rZLXdeks=;
-        b=ZjpV86QKVG2TMQoTSlSCvzKKeXpzl2Z6xETaUzFdAnOgKifBKzDL0W+LcuNMqKtM25
-         JZJ6B4tZsM3ladrqUGw4jHj4bnIqPZCRxfNITPHoMUEOGc26TPl+jQwAIPD13Bppf1Vx
-         dr5OzsJEI8GaSzWFh0GCD722rC915xEhvnAL7dqP6CTvomctZk0BFxZhepqNyueiIuIc
-         Wbv9esyTsNb7bt/bqnAxIOXQ6nA72/lU2bBYKJ/XX2otCIITBnB98lGNS63KwrYvdpG2
-         LDqGyQ+kDCIcf+mU443vHC6woP4xYAb8kEaky7AxUzFezRPBELpvYJyRWpSOrPAAEI19
-         u2+Q==
-X-Forwarded-Encrypted: i=1; AJvYcCX/m24FbTJXZ9gpmJak26MHqlTVSBnboDsymAHn1L+MMPE4NcUglt3SKdKSmm7E6HwsvjzyiO1VMlUMSfKS@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz3d728zKj6K4/shWPscmKX04zx5fmQD/5JBnKi1YXh9OfSt1U1
-	KKJEB/ZD25A93DJMOOk4kEXNvjPK4Absl4d+7ENtntVw6m6RPa/E0+qubZTxIjbpOFaDN7yJy4m
-	Op71m7WGwpQ==
-X-Received: from dybny37.prod.google.com ([2002:a05:7300:e825:b0:2ae:51e3:c162])
- (user=mmaurer job=prod-delivery.src-stubby-dispatcher) by 2002:a05:7301:7bc2:b0:2b7:20c6:36dc
- with SMTP id 5a478bee46e88-2b7c8960b21mr6824371eec.42.1770133597088; Tue, 03
- Feb 2026 07:46:37 -0800 (PST)
-Date: Tue, 03 Feb 2026 15:46:30 +0000
+        bh=3QkppxUftz38QVidHBNdTmT2F8VCX5EZWUQmqLBEfqQ=;
+        b=c+EJHreDskEeTDZUaFYG+UgjWa9SbaS7e7bbXkmp0+X1kcJHRiqau5g1B3GTeMZL1r
+         YdZYCaKH7GCsXgVAxrOgA5i3thoRqLLvUZ6lNmPNHxylfyaE7RU2i/9HUYDPGOJdvpix
+         nBPxLBAxqwzqcykKvgONwgbqdB1xg68BDO28pm2sXyozHSza4ih91Fp7ezEb3+xv+RLA
+         nLDdCwjHVf0Bg72uSJfc+yJUyqty+T0jEd9GKZlDk8PIfJbdv0Wag4mqjZGAxPFFth0L
+         0rzp9HSP/1uk5c7Wz8srLcbiKChRPSRKJvN0sCjkd/S0TQfbLUb5U+3zzDB+WtHDb0kB
+         SNwg==
+X-Forwarded-Encrypted: i=1; AJvYcCVKKrR4oDNVzM+dLwCDi6a4JCs4flhQ1BLaebiVmTer+DnC1cx1hmU/43IwfyzYQcthtF12B1bSYC0UqFW2@vger.kernel.org
+X-Gm-Message-State: AOJu0YwnFx0mA8/FHbO45k846y68IqEEapICq136j88FkXq7CVK37H0J
+	1bLacOv9TfY36Botxq/6nNqxjYuNCYliZ+e0nvH3uSvOfK26JgQEd5LCi6meA3D8jTRwGKMSKcE
+	H7S/w3Nt79A==
+X-Received: from dydb13.prod.google.com ([2002:a05:7300:80cd:b0:2b6:b139:8515])
+ (user=mmaurer job=prod-delivery.src-stubby-dispatcher) by 2002:a05:7300:c8d:b0:2b7:f415:53da
+ with SMTP id 5a478bee46e88-2b7f41562demr4507487eec.39.1770133598871; Tue, 03
+ Feb 2026 07:46:38 -0800 (PST)
+Date: Tue, 03 Feb 2026 15:46:31 +0000
 In-Reply-To: <20260203-qcom-socinfo-v2-0-d6719db85637@google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -76,13 +76,13 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 References: <20260203-qcom-socinfo-v2-0-d6719db85637@google.com>
 X-Developer-Key: i=mmaurer@google.com; a=ed25519; pk=2Ezhl7+fEjTOMVFpplDeak2AdQ8cjJieLRVJdNzrW+E=
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1770133593; l=1885;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1770133593; l=4973;
  i=mmaurer@google.com; s=20250429; h=from:subject:message-id;
- bh=toV72FONVd+c77Jdi9/X05RZt7qiox3e/hnCpHZii2E=; b=HmKT9Wjpe5u2hTdJ2Tcoag2Ev49Zm6fhsS7eX/dQiAxY/wxuUniXmJdhtGMd67QiHayfpx34L
- 0bkddcnyzhZATSmzQBb6PghYphGlfrft9E9n7goPvqOGq6riqINeZyj
+ bh=B6pUx1j5pFgygp5i69R4pVf7HKotofgGAbGCOoefnlg=; b=fxAPn9jEKutvpJgCWN9uhdCYYPvpNSAPYUiC58vFHXa9srmJAEVvTYAI4ltyhlDhosBAKf3Rg
+ E9oiUBNs6ZcCvvrOXXHz6bHCDz2FOMAAS2YvT7aTHhFBqLoubFyOfDq
 X-Mailer: b4 0.14.2
-Message-ID: <20260203-qcom-socinfo-v2-1-d6719db85637@google.com>
-Subject: [PATCH v2 1/6] rust: Add sparse_array! helper macro
+Message-ID: <20260203-qcom-socinfo-v2-2-d6719db85637@google.com>
+Subject: [PATCH v2 2/6] rust: io: Support copying arrays and slices
 From: Matthew Maurer <mmaurer@google.com>
 To: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
 	Satya Durga Srinivasu Prabhala <satyap@quicinc.com>, Miguel Ojeda <ojeda@kernel.org>, Boqun Feng <boqun.feng@gmail.com>, 
@@ -107,19 +107,18 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	MV_CASE(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[google.com,reject];
 	R_DKIM_ALLOW(-0.20)[google.com:s=20230601];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_COUNT_THREE(0.00)[4];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-91685-lists,linux-arm-msm=lfdr.de];
 	FREEMAIL_TO(0.00)[kernel.org,quicinc.com,gmail.com,garyguo.net,protonmail.com,google.com,umich.edu,collabora.com,linuxfoundation.org,ffwll.ch,samsung.com,intel.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	SUBJECT_HAS_EXCLAIM(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
 	RCPT_COUNT_TWELVE(0.00)[29];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-91684-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
@@ -127,72 +126,117 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	DKIM_TRACE(0.00)[google.com:+];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[garyguo.net:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 6E5FEDB7C8
+	NEURAL_HAM(-0.00)[-0.999];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 24A8FDB8B7
 X-Rspamd-Action: no action
 
-An idiom in C code is to have an array of nullable values which is
-partially initialized via `{ [0] = x, [7] = y}`. Because Rust expects
-everything to be fully initialized, it does not have this idiom by
-default.
-
-`sparse_array!` allows declaration of `[Option<T>; _]` constants to
-allow Rust code to more easily mimic the safe version of this pattern.
+Adds support for doing array copies of data in and out of IO regions.
+Fixed size arrays allow for compile-time bound checking, while slice
+arguments allow for dynamically checked copies.
 
 Signed-off-by: Matthew Maurer <mmaurer@google.com>
-Co-developed-by: Gary Guo <gary@garyguo.net>
-Signed-off-by: Gary Guo <gary@garyguo.net>
 ---
- rust/kernel/slice.rs | 37 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ rust/kernel/io.rs | 72 ++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 71 insertions(+), 1 deletion(-)
 
-diff --git a/rust/kernel/slice.rs b/rust/kernel/slice.rs
-index ca2cde13506196d46c9169aa6e4ab2ac42af6f5b..826b6f77f0d07775bd22837cc1773b59ec96936c 100644
---- a/rust/kernel/slice.rs
-+++ b/rust/kernel/slice.rs
-@@ -47,3 +47,40 @@ fn as_flattened_mut(&mut self) -> &mut [T] {
-         self.flatten_mut()
+diff --git a/rust/kernel/io.rs b/rust/kernel/io.rs
+index 056a3ec71647b866a9a4b4c9abe9a0844f126930..6e74245eced2c267ba3b5b744eab3bc2db670e71 100644
+--- a/rust/kernel/io.rs
++++ b/rust/kernel/io.rs
+@@ -266,8 +266,9 @@ macro_rules! define_write {
+ #[inline]
+ const fn offset_valid<U>(offset: usize, size: usize) -> bool {
+     let type_size = core::mem::size_of::<U>();
++    let type_align = core::mem::align_of::<U>();
+     if let Some(end) = offset.checked_add(type_size) {
+-        end <= size && offset % type_size == 0
++        end <= size && offset % type_align == 0
+     } else {
+         false
      }
- }
-+
-+/// Create a sparse array of `[Option<T>; _]`.
-+///
-+/// This is intended for use when C code would write `{ [0] = x, [7] = y}` to perform partial
-+/// initialization of an array.
-+///
-+/// # Example
-+/// ```
-+/// use kernel::sparse_array;
-+/// const FOO: &[Option<usize>] = &sparse_array! {
-+///   0: 10,
-+///   7: 16,
-+/// };
-+/// assert_eq!(FOO[0], Some(10));
-+/// assert_eq!(FOO[1], None);
-+/// assert_eq!(FOO[7], Some(16));
-+/// ```
-+#[macro_export]
-+macro_rules! sparse_array {
-+    ($(
-+        $index:literal: $value:expr
-+    ),* $(,)?) => {{
-+        const SIZE: usize = {
-+            let mut size = 0;
-+            $(if $index >= size {
-+                size = $index + 1;
-+            })*
-+            size
-+        };
-+
-+        const {
-+            let mut arr = [None; SIZE];
-+            $(arr[$index] = Some($value);)*
-+            arr
+@@ -323,6 +324,25 @@ fn io_addr<U>(&self, offset: usize) -> Result<usize> {
+         self.addr().checked_add(offset).ok_or(EINVAL)
+     }
+ 
++    /// Returns the absolute I/O address for a given `offset`, performing runtime bounds checks
++    /// to ensure the entire range is available.
++    #[inline]
++    fn io_addr_range<U>(&self, offset: usize, count: usize) -> Result<usize> {
++        if count != 0 {
++            // These ranges are contiguous, so we can just check the first and last elements.
++            let bytes = (count - 1)
++                .checked_mul(core::mem::size_of::<U>())
++                .ok_or(EINVAL)?;
++            let end = offset.checked_add(bytes).ok_or(EINVAL)?;
++            if !offset_valid::<U>(offset, self.maxsize()) || !offset_valid::<U>(end, self.maxsize())
++            {
++                return Err(EINVAL);
++            }
 +        }
-+    }}
-+}
++
++        self.addr().checked_add(offset).ok_or(EINVAL)
++    }
++
+     /// Returns the absolute I/O address for a given `offset`,
+     /// performing compile-time bound checks.
+     // Always inline to optimize out error path of `build_assert`.
+@@ -605,4 +625,54 @@ pub unsafe fn from_raw(raw: &MmioRaw<SIZE>) -> &Self {
+         pub try_write64_relaxed,
+         call_mmio_write(writeq_relaxed) <- u64
+     );
++
++    /// Write a known size buffer to an offset known at compile time.
++    ///
++    /// Bound checks are performed at compile time, hence if the offset is not known at compile
++    /// time, the build will fail, and the buffer size must be statically known.
++    #[inline]
++    pub fn copy_from<const N: usize>(&self, src: &[u8; N], offset: usize) {
++        let addr = self.io_addr_assert::<[u8; N]>(offset);
++        // SAFETY: By the type invariant `addr` is a valid address for MMIO operations, and by the
++        // assertion it's valid for `N` bytes.
++        unsafe { bindings::memcpy_toio(addr as *mut c_void, src.as_ptr().cast(), N) }
++    }
++
++    /// Write the contents of a slice to an offset.
++    ///
++    /// Bound checks are performed at runtime and will fail if the offset (plus the slice size) is
++    /// out of bounds.
++    #[inline]
++    pub fn try_copy_from(&self, src: &[u8], offset: usize) -> Result<()> {
++        let addr = self.io_addr_range::<u8>(offset, src.len())?;
++        // SAFETY: By the type invariant `addr` is a valid address for MMIO operations, and by the
++        // range check it's valid for `src.len()` bytes.
++        unsafe { bindings::memcpy_toio(addr as *mut c_void, src.as_ptr().cast(), src.len()) };
++        Ok(())
++    }
++
++    /// Read a known size buffer from an offset known at compile time.
++    ///
++    /// Bound checks are performed at compile time, hence if the offset is not known at compile
++    /// time, the build will fail, and the buffer size must be statically known.
++    #[inline]
++    pub fn copy_to<const N: usize>(&self, dst: &mut [u8; N], offset: usize) {
++        let addr = self.io_addr_assert::<[u8; N]>(offset);
++        // SAFETY: By the type invariant `addr` is a valid address for MMIO operations, and by the
++        // assertion it's valid for `N` bytes.
++        unsafe { bindings::memcpy_fromio(dst.as_mut_ptr().cast(), addr as *mut c_void, N) }
++    }
++
++    /// Read into a slice from an offset.
++    ///
++    /// Bound checks are performed at runtime and will fail if the offset (plus the slice size) is
++    /// out of bounds.
++    #[inline]
++    pub fn try_copy_to(&self, dst: &mut [u8], offset: usize) -> Result<()> {
++        let addr = self.io_addr_range::<u8>(offset, dst.len())?;
++        // SAFETY: By the type invariant `addr` is a valid address for MMIO operations, and by the
++        // range check, it's valid for `dst.len()` bytes.
++        unsafe { bindings::memcpy_fromio(dst.as_mut_ptr().cast(), addr as *mut c_void, dst.len()) }
++        Ok(())
++    }
+ }
 
 -- 
 2.53.0.rc2.204.g2597b5adb4-goog
