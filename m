@@ -1,161 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-91792-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91794-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id KL/ZFvQsg2kwjAMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91792-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Feb 2026 12:26:44 +0100
+	id +D/ZOUU0g2kwjAMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91794-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Feb 2026 12:57:57 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D22A5E519D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Feb 2026 12:26:43 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 478B2E563A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Feb 2026 12:57:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 1BD153031F2D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Feb 2026 11:25:27 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id CDD1A302AD3B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Feb 2026 11:56:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7F4B3ED100;
-	Wed,  4 Feb 2026 11:25:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33B263ECBCC;
+	Wed,  4 Feb 2026 11:56:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eBdXYFei"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vw89mexy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 488673ECBC5;
-	Wed,  4 Feb 2026 11:25:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9BC329ACDB
+	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Feb 2026 11:56:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770204314; cv=none; b=uwndTXZwjatScjw/qfG0MiKqSIzmIqMgv7TVXWmxKetvRuaAg31sb9ZhW77UPjPX/lMOditmtVgqxnruPV2O6MZjPnZYpu9HApUfhtwTIOzw3WjizZC/AgH49PFHOWCDPWcP9WGPKoDjEz3vupzf1ki1h0rXV4pbjkJtO2Dgfg8=
+	t=1770206218; cv=none; b=oS8jD86jEV345hk9T0VEWmPmp5C16y4hsoSatnfS6+WCkgLDETHVwhRGqqzh/chQbLX/lH/P/4ggXG/uW9ghO/6xgp3lyiSk2FqBR4OZjAC06PsvGkn6HWQXtCgd/do/25Ugkq5nz7R7s6Grmv8v7wIOMmwKo8Ata3+Qv7irpLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770204314; c=relaxed/simple;
-	bh=vE8UXlKfInB73S8Crc3gaHWqLQg+oOyoCtzeWharQS0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=nr0qlzwFsS+ce2fu7iqjeCzNSpG8h2LgSxcLUcVXPjNCM2Ync4ajZxf9s+2yE/jV1FuPogUTSu/Npx6P4esNTjiZnUNQQGO/vqBBzhAUOsRZh5kDpfIZD4XNW94nSCFEnymaMZDVMojvZSF25aKaWLbrWAehNVPyQMhyGyXG2kg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eBdXYFei; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 1FBA8C16AAE;
-	Wed,  4 Feb 2026 11:25:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770204314;
-	bh=vE8UXlKfInB73S8Crc3gaHWqLQg+oOyoCtzeWharQS0=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=eBdXYFeiLIl+QGeTfz6IIUeYBuEEDl+b419qodE2EVomGdqaNo6884pycBeWBvZMh
-	 haX7oelDQSKnWGiF9sQjVUxz4Bay2BEZVQ1GmcghWtGQg7w+d4/fdfvByLW08F//at
-	 iN1OoKPRpYgIVaVKk7kEOMlXr20t38YcZLXpVfFG+fIWwnxTLMzJ8Gau5rLyluyr8P
-	 eM9GvY4qwgMgvdyujRQepS7Oi+ovHftu/43TRRxbdoIE8N8kI7jYvsCdHJ61HDu2ls
-	 NNNef1ZfWkcdGaVDLNWZmQ6VTGMTNKrX1uWcdOfsGts6/lMd7pc+dMVMn4md9rJWnb
-	 Ul0Go0aD9V1TQ==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DE25E95389;
-	Wed,  4 Feb 2026 11:25:14 +0000 (UTC)
-From: George Moussalem via B4 Relay <devnull+george.moussalem.outlook.com@kernel.org>
-Date: Wed, 04 Feb 2026 15:25:12 +0400
-Subject: [PATCH v20 6/6] arm64: dts: qcom: ipq9574: add pwm node
+	s=arc-20240116; t=1770206218; c=relaxed/simple;
+	bh=WjEXkGsQ5sr5TzqRl6oe46H9S0TisIOthFvDELfEQ7A=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XdBHD8IiJFIatHm4/p/MGc0IcCD8Am8TS2Dq6F6CFF85PIfHYKvXBRRV1XaXh7P+LcrMYmHm8L433JqZb0VQPTWodScmHI7s1kNP3nnHP8UuSt1QKeXKvShhH/F5Rf3ye8tMRW02ccaNmH2BbEs7F0gTIs5zFBxIEacZ7riFlIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vw89mexy; arc=none smtp.client-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-b8871718b00so1148207566b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Feb 2026 03:56:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770206216; x=1770811016; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FtNij9A3CnyY9eArlj5GSFWikA3b1bHvLn2mkmp9wl4=;
+        b=Vw89mexyDGlwDhc8wwEhxVPxbgvgqbzZOeaPX7G719Rs35UFFLMY+v8dhXVAGX9o+A
+         bud/Oi7RHE/CHLC8VdK7xvUXWI4ozouKzQWtufitRra24yjd7JguHFtVw3TA964oOepK
+         X5/W2gVfQipnWmKWcmBEf6RymZrIF02zbJqLBHXG99LZJ+8nRAFZcnBMecivbvAcSmWb
+         +O9UXKq6a0URTeakd/tcGzItWcnnNmsrccGRQHN8MAXdct9dnwe2fP4TSpmqBwlJCQ3u
+         tUBcpeKFi5/25He0xs9kY88eaWb/sfW2OmozRu3PAmyGMjYVhfj7nUNbkK39Ff1bFQzS
+         xY7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770206216; x=1770811016;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FtNij9A3CnyY9eArlj5GSFWikA3b1bHvLn2mkmp9wl4=;
+        b=MRnFmuRlaT+hyXoND7zG44RwBOG1YKVMsYV31WsTsiPpNrOx5QXOrvOcn+WrVa4Wc6
+         mWhR5H5g4P6MDAGaYkziMcNb49dNYCCa9f1UfMu3+vwYvuzJrD+aFUvgjN6TciRnelyP
+         hh0fMOAC/pLMCtZg2p1VqH05RPXpFkbUYtYOZdAG1TlaiM9yp13M8SZrEbNUK1qs6xe5
+         PQReGGArpng+6Jpbvz0A2hJQgYhxd8dXkT9EZaQkxdIBiWmsOCXJciepHOwIcjkQgmqx
+         Gc2d2ZSe/3xoi1j3zVZJ8wiz0AdP3Ju8MAbNrD7ZxSJYbFGtESKlBGwJiUQgzsDFWmu7
+         e9+A==
+X-Gm-Message-State: AOJu0YytYRkQ53IRvpsyzNajPn3NVsDZCx5+Dbravi04UxP5376ppsZF
+	pitZpfrDGCwwOHfKKvtC6NVGvPHlhME7F+h+iCI6n5yvgCdsNmYACltB
+X-Gm-Gg: AZuq6aJtPziMBpvJMJlCBqUakCctCScj4Vmv0N/wQ8l2ylK1A/sv/IC1LMS/YPPB3cO
+	rBZnpH3nBdqerS/0mqMjT4JoFyBYJCJ6Ua1CHi6vrPIGjC/HKOhGM29SqGYjh34fqqoWkqlWZLv
+	KyscH9dttJneacl4dXgT3ADqCzGulxwitGwnja+VjB+xMkZs8kXqxdREwmFVAvwF3S545y5SiXF
+	uHFzD2suZztyN5hEd+DiUmHn65w+qpZUDUdyfmBTb/63tZME2ym6iIYkQSmM8XbZtztzD2TEjbo
+	AXEY84pVU6Z3g3qoi7CIPwEOZtkinrBMBXZi5xn3Cp3Ke4SlmhLz8in3rC66JXtYic+RjHMoovq
+	f/dksgkJOIgJqMx23mLftjIKQ2Xx77BLHHWbyY76o0d7PlZ7o8C+uEqloEJV7ljj4mqc3iplJJC
+	VbMvdeWBUcHF/6/k8=
+X-Received: by 2002:a17:907:1c98:b0:b88:5ef6:17f9 with SMTP id a640c23a62f3a-b8e9ef23790mr183701866b.7.1770206215897;
+        Wed, 04 Feb 2026 03:56:55 -0800 (PST)
+Received: from workstation.home ([178.228.161.30])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8e9feefffbsm116457666b.37.2026.02.04.03.56.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Feb 2026 03:56:55 -0800 (PST)
+From: Stanislav Zaikin <zstaseg@gmail.com>
+To: devicetree@vger.kernel.org
+Cc: linux-arm-msm@vger.kernel.org,
+	andersson@kernel.org,
+	konradybcio@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	linux-kernel@vger.kernel.org,
+	Stanislav Zaikin <zstaseg@gmail.com>
+Subject: [PATCH 0/2] Add Xiaomi 12 Lite 5G (taoyao) device tree
+Date: Wed,  4 Feb 2026 12:56:43 +0100
+Message-ID: <20260204115645.1343750-1-zstaseg@gmail.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260204-ipq-pwm-v20-6-91733011a3d1@outlook.com>
-References: <20260204-ipq-pwm-v20-0-91733011a3d1@outlook.com>
-In-Reply-To: <20260204-ipq-pwm-v20-0-91733011a3d1@outlook.com>
-To: =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <ukleinek@kernel.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Baruch Siach <baruch@tkos.co.il>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- George Moussalem <george.moussalem@outlook.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1770204310; l=1234;
- i=george.moussalem@outlook.com; s=20250321; h=from:subject:message-id;
- bh=1ixhFwq2rEjXYJIhs5+j+ngAUcQh5KQa6+Qdzh8kp4o=;
- b=ky+nnCBbPuFce/HNZnz6s4ubdKccwoR4mGT7VVjp1Q+YR30lXS7xluR+rnmLy73TfU2J3/6kO
- 144Si65ChORDD0KZk1dvy+masC3Igfhy8O3qYSqMdoqSlttNJsS5eZR
-X-Developer-Key: i=george.moussalem@outlook.com; a=ed25519;
- pk=/PuRTSI9iYiHwcc6Nrde8qF4ZDhJBlUgpHdhsIjnqIk=
-X-Endpoint-Received: by B4 Relay for george.moussalem@outlook.com/20250321
- with auth_id=364
-X-Original-From: George Moussalem <george.moussalem@outlook.com>
-Reply-To: george.moussalem@outlook.com
+Content-Transfer-Encoding: 8bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [1.34 / 15.00];
-	FREEMAIL_REPLYTO_NEQ_FROM(2.00)[];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_MISSING_CHARSET(0.50)[];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-91792-lists,linux-arm-msm=lfdr.de,george.moussalem.outlook.com];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
+	FREEMAIL_CC(0.00)[vger.kernel.org,kernel.org,gmail.com];
+	TAGGED_FROM(0.00)[bounces-91794-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_FIVE(0.00)[5];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
-	FREEMAIL_REPLYTO(0.00)[outlook.com];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	FREEMAIL_CC(0.00)[vger.kernel.org,outlook.com,oss.qualcomm.com];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	HAS_REPLYTO(0.00)[george.moussalem@outlook.com];
-	RCVD_COUNT_FIVE(0.00)[5];
-	DBL_PROHIBIT(0.00)[0.29.158.18:email];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
-	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
-	NEURAL_HAM(-0.00)[-0.912];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[zstaseg@gmail.com,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,outlook.com:replyto,outlook.com:email,outlook.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,0.119.20.96:email,0.29.142.104:email]
-X-Rspamd-Queue-Id: D22A5E519D
+	PRECEDENCE_BULK(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	NEURAL_HAM(-0.00)[-1.000];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 478B2E563A
 X-Rspamd-Action: no action
 
-From: George Moussalem <george.moussalem@outlook.com>
+This series adds device tree support for the Xiaomi 12 Lite 5G (taoyao),
+based on the Qualcomm SM7325 SoC.
 
-Describe the PWM block on IPQ9574.
+The display panel model is unknown, so bootloader-initialized
+simple-framebuffer is therefore used to expose the display.
 
-Although PWM is in the TCSR area, make pwm its own node as simple-mfd
-has been removed from the bindings and as such hardware components
-should have its own node.
+Stanislav Zaikin (2):
+  dt-bindings: arm: qcom: Add SM7325 Xiaomi 12 Lite 5G (taoyao)
+  arm64: dts: qcom: Add Xiaomi 12 Lite 5G (taoyao) DTS
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: George Moussalem <george.moussalem@outlook.com>
----
- arch/arm64/boot/dts/qcom/ipq9574.dtsi | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-index d7278f2137ac58305cc4e82c1d6c26c08bc7a405..31f4bcc92c986e1c0b02ea56acdf707af92b7f84 100644
---- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-@@ -449,6 +449,16 @@ tcsr: syscon@1937000 {
- 			reg = <0x01937000 0x21000>;
- 		};
- 
-+		pwm: pwm@1941010 {
-+			compatible = "qcom,ipq9574-pwm", "qcom,ipq6018-pwm";
-+			reg = <0x01941010 0x20>;
-+			clocks = <&gcc GCC_ADSS_PWM_CLK>;
-+			assigned-clocks = <&gcc GCC_ADSS_PWM_CLK>;
-+			assigned-clock-rates = <100000000>;
-+			#pwm-cells = <3>;
-+			status = "disabled";
-+		};
-+
- 		sdhc_1: mmc@7804000 {
- 			compatible = "qcom,ipq9574-sdhci", "qcom,sdhci-msm-v5";
- 			reg = <0x07804000 0x1000>,
+ .../devicetree/bindings/arm/qcom.yaml         |   1 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../boot/dts/qcom/sm7325-xiaomi-taoyao.dts    | 866 ++++++++++++++++++
+ 3 files changed, 868 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sm7325-xiaomi-taoyao.dts
 
 -- 
-2.52.0
-
+2.51.0
 
 
