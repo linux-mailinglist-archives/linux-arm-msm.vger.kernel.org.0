@@ -1,151 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-91814-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cJgEG8Fqg2m3mgMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91814-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Feb 2026 16:50:25 +0100
+	id kMENHlVtg2kFmwMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Feb 2026 17:01:25 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 144D3E9727
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Feb 2026 16:50:25 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 248D7E9BDA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Feb 2026 17:01:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id B39F13043EC4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Feb 2026 15:45:40 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 4705B303E3A9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Feb 2026 15:58:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D1356423A80;
-	Wed,  4 Feb 2026 15:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A04CD421EEB;
+	Wed,  4 Feb 2026 15:58:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ChyBoGK2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kqnwv+C8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC5BF423A76;
-	Wed,  4 Feb 2026 15:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE5440FD98;
+	Wed,  4 Feb 2026 15:58:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770219872; cv=none; b=PDd8r+Cc08M11Gz0XWzJP5zBH519oMpUgWYdC+dJyaPPTp1KpvHVMn9Ighp1zfU5aYpiDhejsd6Y5zIxzWN0FOqi8JVW6u1yd4NPlUecJWOnFGRTUDb3Hr1kWer5H6NB6iSIi00T59Q20oftLQ83/zWVI5+L6JS0D/iuksVAgrQ=
+	t=1770220721; cv=none; b=YaZQWPWPbysk3LPmBvUH/jKcGrvyO2Xf+S/wcuT0jxgWeCvNlboVsb8A1DxmxmdKDk8BOuTXJupFytfxSrcVWVhQDg9zReD9t2XrNTxPVwgPDsgPf4b6yfjwoDS6fHnk4pr1YEwkgcsw3i6/fMJRiV1IBZWqJeJxJ3fdDCa1wuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770219872; c=relaxed/simple;
-	bh=+SiVY+/yNC7rLAU4MsNDlaFmt/l6M3hSIaCT9ls3sWA=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=m72uba23pl4WjvM98glI9P4rnREvAsy0VgAg9S2Kc0bfyPHOT7zG+uGX3MsKh+yq9PLwtnN4UZ6XpEjCuow0dOyn6PVZ5K5XuuGCw3fAJ84N7r7CgeY94MdZDpbkrJ00Oi18puXxHqzpDyn6UPB7+gWWz6MhOL++U3ZvwkG1saY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ChyBoGK2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86463C4AF09;
-	Wed,  4 Feb 2026 15:44:20 +0000 (UTC)
+	s=arc-20240116; t=1770220721; c=relaxed/simple;
+	bh=fXIO50BxCOvj19SX/PYIBMX1v096vG7DR657MgvfepU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lpmd6kM77PVlgZzxTkhpABbBcqUs4GJa5u9FxcFvZsWlO6uAUWVYACKz0/gMjF1HP7UosEAohxUBd+qgCWLvt5rgoiMFk+lAXVlHCuyEDPBcK3csmOOtveMokvH9PNiZekHtVlcuc3Sq1cI4YJCEM53vr2bPI+Ej9s/oP99+daU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kqnwv+C8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BC44C4CEF7;
+	Wed,  4 Feb 2026 15:58:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770219872;
-	bh=+SiVY+/yNC7rLAU4MsNDlaFmt/l6M3hSIaCT9ls3sWA=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=ChyBoGK2yE6SGuM1Drf5M172SdoJACKZFUrrNsUyxs9tGn1I7qqhqJE3n0SdMuKH8
-	 WBsiwmPVq8rOQ6GO0hIm6TfZIkR7fNFOFSnqJ6Wdc5I/3L23nQxD+pLZgfso/lsmdU
-	 N1ft/ntOh+AHs/UCG+Km7aago4ldSONLc+3r2AOXwQZfUcNSU1niG9vFP8cVLMaEBv
-	 VG4YKOSwN1dDXgyUhW0x6meOz/fA8+ehA5Aie8KkSz3fTjfCixIQW19ESOaqSx9ox7
-	 M5PMr/5rexa0xvN6NnkgCdEKKhyKZgRD5vul5MiJBcLirTLb81zxgj6ptueMw8TKGG
-	 fD9D5P7F7CkxQ==
-From: Vinod Koul <vkoul@kernel.org>
-To: Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Brian Masney <bmasney@redhat.com>
-Cc: linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
- sophgo@lists.linux.dev, Chen-Yu Tsai <wens@kernel.org>, 
- Maxime Ripard <mripard@kernel.org>, 
- Jernej Skrabec <jernej.skrabec@gmail.com>, 
- Samuel Holland <samuel@sholland.org>, linux-arm-kernel@lists.infradead.org, 
- linux-sunxi@lists.linux.dev, 
- Alexandre Belloni <alexandre.belloni@bootlin.com>, 
- linux-rtc@vger.kernel.org, 
- =?utf-8?q?Andreas_F=C3=A4rber?= <afaerber@suse.de>, 
- Manivannan Sadhasivam <mani@kernel.org>, linux-actions@lists.infradead.org, 
- Keguang Zhang <keguang.zhang@gmail.com>, linux-mips@vger.kernel.org, 
- Taichi Sugaya <sugaya.taichi@socionext.com>, 
- Takao Orito <orito.takao@socionext.com>, Jacky Huang <ychuang3@nuvoton.com>, 
- Shan-Chun Hung <schung@nuvoton.com>, Vladimir Zapolskiy <vz@mleia.com>, 
- Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>, 
- Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
- Orson Zhai <orsonzhai@gmail.com>, 
- Baolin Wang <baolin.wang@linux.alibaba.com>, 
- Chunyan Zhang <zhang.lyra@gmail.com>, 
- Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
- Alexandre Torgue <alexandre.torgue@foss.st.com>, 
- linux-stm32@st-md-mailman.stormreply.com, 
- Michal Simek <michal.simek@amd.com>, 
- Rob Clark <robin.clark@oss.qualcomm.com>, 
- Dmitry Baryshkov <lumag@kernel.org>, David Airlie <airlied@gmail.com>, 
- Simona Vetter <simona@ffwll.ch>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
- Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
- Neil Armstrong <neil.armstrong@linaro.org>, linux-phy@lists.infradead.org
-In-Reply-To: <20260108-clk-divider-round-rate-v1-0-535a3ed73bf3@redhat.com>
-References: <20260108-clk-divider-round-rate-v1-0-535a3ed73bf3@redhat.com>
-Subject: Re: (subset) [PATCH 00/27] clk: remove deprecated API
- divider_round_rate() and friends
-Message-Id: <177021986017.133434.7084660742419779164.b4-ty@kernel.org>
-Date: Wed, 04 Feb 2026 21:14:20 +0530
+	s=k20201202; t=1770220721;
+	bh=fXIO50BxCOvj19SX/PYIBMX1v096vG7DR657MgvfepU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=kqnwv+C8nMWAHhlk9ovqaF5hQpA6Io/TvuR1dwDelYJR7xE8KrwKmq0Zt7FQBrhhi
+	 Bz4zOOqg2DqMFGZ3kw2qKMhpL3RoyLNnAICEyGv9O6X1gmJ0dIjlhGsAOVj96luc+/
+	 QwsIwKxk35FnOYujaeJIStWhMwUZ+q2nzyUVBIyIVsGp05AkWVHCs1yhNFVH1VMXY8
+	 6czPwUV4KfiA189stlhbQ1bhMQfOzRyaKGeey38pjBVGg/34w31WnprdOzHeQQq9+V
+	 M+O8LP2v/0FTfHRSJRt7Y0NaR8kVPFFuBD7XBgIfQ8c2UCsd2UyaIGYuVLw2OvijbF
+	 +de6EYCBdh06A==
+Date: Wed, 4 Feb 2026 16:58:37 +0100
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
+Cc: bryan.odonoghue@linaro.org, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org, 
+	hverkuil-cisco@xs4all.nl, loic.poulain@oss.qualcomm.com, rfoss@kernel.org, 
+	linux-i2c@vger.kernel.org, cros-qcom-dts-watchers@chromium.org, quic_svankada@quicinc.com, 
+	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Subject: Re: [PATCH v9 1/5] dt-bindings: i2c: qcom-cci: Document qcs8300
+ compatible
+Message-ID: <aYNqLdPid_GeTryc@zenone.zhora.eu>
+References: <20260121183142.1867199-1-quic_nihalkum@quicinc.com>
+ <20260121183142.1867199-2-quic_nihalkum@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260121183142.1867199-2-quic_nihalkum@quicinc.com>
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-91814-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[linaro.org,kernel.org,xs4all.nl,oss.qualcomm.com,vger.kernel.org,chromium.org,quicinc.com];
+	TAGGED_FROM(0.00)[bounces-91815-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[18];
+	RSPAMD_URIBL_FAIL(0.00)[linaro.org:query timed out];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,outlook.com,gmail.com,lists.linux.dev,kernel.org,sholland.org,lists.infradead.org,bootlin.com,suse.de,socionext.com,nuvoton.com,mleia.com,timesys.com,linux.alibaba.com,foss.st.com,st-md-mailman.stormreply.com,amd.com,oss.qualcomm.com,ffwll.ch,linux.dev,poorly.run,somainline.org,lists.freedesktop.org,linaro.org];
-	RCPT_COUNT_TWELVE(0.00)[48];
 	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_THREE(0.00)[4];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[vkoul@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[andi.shyti@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 144D3E9727
+	RSPAMD_EMAILBL_FAIL(0.00)[quic_nihalkum.quicinc.com:query timed out,robh.kernel.org:query timed out,vladimir.zapolskiy.linaro.org:query timed out,quic_vikramsa.quicinc.com:query timed out,bryan.odonoghue.linaro.org:query timed out];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,quicinc.com:email,linaro.org:email,zenone.zhora.eu:mid]
+X-Rspamd-Queue-Id: 248D7E9BDA
 X-Rspamd-Action: no action
 
+Hi Nihal,
 
-On Thu, 08 Jan 2026 16:16:18 -0500, Brian Masney wrote:
-> Here's a series that gets rid of the deprecated APIs
-> divider_round_rate(), divider_round_rate_parent(), and
-> divider_ro_round_rate_parent() since these functions are just wrappers
-> for the determine_rate variant.
+On Thu, Jan 22, 2026 at 12:01:38AM +0530, Nihal Kumar Gupta wrote:
+> The three instances of CCI found on the QCS8300 are functionally the same
+> as on a number of existing Qualcomm SoCs.
 > 
-> Note that when I converted some of these drivers from round_rate to
-> determine_rate, this was mistakenly converted to the following in some
-> cases:
+> Introduce a new SoC-specific compatible string "qcom,qcs8300-cci" with a
+> common fallback.
 > 
-> [...]
+> Signed-off-by: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
+> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Acked-by: Rob Herring (Arm) <robh@kernel.org>
+> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-Applied, thanks!
+just this patch merged to i2c/i2c-host-2(*)
 
-[25/27] phy: ti: phy-j721e-wiz: convert from divider_round_rate() to divider_determine_rate()
-        commit: dbeea86fecef7cf2b93aded4525d74f6277376ef
+Thanks,
+Andi
 
-Best regards,
--- 
-~Vinod
-
-
+(*) The pull request for i2c/i2c-host-2 will be sent in the
+middle of the merge window.
 
