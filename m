@@ -1,364 +1,703 @@
-Return-Path: <linux-arm-msm+bounces-91785-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91786-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sDj3OJogg2nWhwMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91785-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Feb 2026 11:34:02 +0100
+	id mEO4Ktwjg2nWhwMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91786-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Feb 2026 11:47:56 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C350E48B7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Feb 2026 11:34:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 491E2E4BED
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Feb 2026 11:47:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7DA44300BDAB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Feb 2026 10:32:20 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 2B0FB300DF6A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Feb 2026 10:47:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 872303DA7D9;
-	Wed,  4 Feb 2026 10:32:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A62613ACEED;
+	Wed,  4 Feb 2026 10:47:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cjmhr2cO";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="JWnCHPzA"
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="SVHHNV+e"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazolkn19011057.outbound.protection.outlook.com [52.103.14.57])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F0953D7D75
-	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Feb 2026 10:32:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770201139; cv=none; b=TZLXflRU71iP+Pat4R7hxE0IyLflBA1nrxuYgGZ0qCjzCijjl4XFKoIYTH4XVtyeRSbkh8RtJ+IDUHtCnU7VDNVFu+RNO1Fe/1CEF4B2NeKYtPei1BNYeHdj9ek0UXko22fDcVQwjjWzZkISbBmY8rT/kpE3Nb9B7krKW6PBuP8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770201139; c=relaxed/simple;
-	bh=dA9HGnoYrsyw199BWM92sVwUec6CG6Nx3O2r1xdUEpw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l6pFeUB2MaheEKndBFLP0Ztmal3NEY/G05T/nKZDAbQWTLxrs2FGKndRe0pkWMQdP4t+fJ4M8wwiB0Wc0Taj8sQ8cx3iwwLwLtq0izk8INaHHE50BvckTKizLbOeDV7k0XTLKksYTv+XlC1TFWTGOy7aWou7+OoILQaFBXHL7R4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cjmhr2cO; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=JWnCHPzA; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6147EcK6060344
-	for <linux-arm-msm@vger.kernel.org>; Wed, 4 Feb 2026 10:32:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	EZVaMLvlgDWhkf7Hi1ntH/HGfqniNLCamW0vWobtXgI=; b=cjmhr2cODKqsJj0f
-	NT+1XqsAvJQNq4eTdA6pGWfYnLNhgzab0tiRsvhAhrJ+Qu6N7JGsNjS2y2dcuVwh
-	WDg4ZGGsFQMrrbQntzAndrTajg5RpO4H+VopA/dAst8O+MVfK409zAzxPHCaK07K
-	WYHlafuiRkISQS6WiiSTkt0G9ukfNDJwQHmwm0Z2rnVKfJ4Xw3STIaJcv2dXc204
-	fa4Wq75yabMB3tQodhyGGl5KGlh81tLFk4UrT2fi6FbxT7+AYss6Qi0qmClzn0Ru
-	HXbpTY2WyqP7AwIOUm9FjkFododckmnbUSXzsJPpmICO8sVG1a0bk7q6XPNqBuJv
-	NeJgoQ==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c3nf62wky-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 04 Feb 2026 10:32:18 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8c6a289856eso244008185a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Feb 2026 02:32:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1770201137; x=1770805937; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=EZVaMLvlgDWhkf7Hi1ntH/HGfqniNLCamW0vWobtXgI=;
-        b=JWnCHPzAf3EwoQYOVRe8mqPTR2XbBaKBxGqZcoIJJ19s8eohiBp6UHxWcjDFk525Nc
-         HjhF1t0ur7m9vBpuo3XX7fdvswQ1f3vYhfIbCy+zwARihI88uz6XPmK+L2C10olnwQEg
-         n7RTUE1YO1zNzWwDm6aCLJTJP4tLo59Bh9yziweo/LWrG5I+YzvyfG6Dm0D7p+0ZvrWL
-         GcY+hcA0KE1t/2WRFMx6z1rTNA4UCTcolURUoyIYKC29xNLoD2gG1IoFg5vHSlBMrJPt
-         lHwD+MqhyO7soaRSEFM1nMGUA8exHH9I+sZw8UTCK45uUJ55kEz4H3eG9OlNUxlBjvDe
-         1KdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770201137; x=1770805937;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EZVaMLvlgDWhkf7Hi1ntH/HGfqniNLCamW0vWobtXgI=;
-        b=Rnna9sHDg85zAPaBHmw8JBZKXfWN07A/pGRG4/kjLdXMiJPrEiaRdBK5LD7GnFWzNR
-         uKIQtjC0bzxJIbsUMYVAV48MjgsX41h1hjdWPvt3WakKEIOb3UtIPvxeohYt5xfaY5iW
-         Rhyqj6r/W/4wVKgoBDNdzFh4Vgp6cS38iE8+ACFe7Sd3hH5LP7lKHw2avsICJWxyCo8b
-         y2dTEkUlIwYWq8TjAOBL6n+wnOl7tKZpTa9XdKmN6riHHpDy4OURs7q1TL2Or2iv+7CP
-         aiFKhWMTQyJmWGcEFmn/NXT9xSg/6kXiejcQEfa/VlGprhhsas4oaO1V06foFxA7DLuW
-         sRjQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVt+wuAyBHMO0pbJw+ySmKPc2kehnKrltj0zzSDTTvD0QZ7owxHk0VQg2uqsIzLGfa/L7D1AMgrao8TFSeu@vger.kernel.org
-X-Gm-Message-State: AOJu0YwZGyckPRDPIECp2Fz+nZE8fn9K/6h0De6jEx7GrvTqatj6NQo/
-	1Ap4QC1vohdEync1Mq5NHqi420TBClsDWXdQgUFItz2Gnc/WMc6yGPptt3Iwpc7JQERwPKZPteO
-	UYGjvbG78+onCGF/U44x83E4Iu2O3q/xFiIxwfDqpKw+HNQvIJVlm2A66Ci/8IoHlZOPK
-X-Gm-Gg: AZuq6aKaVQp1LmZDupUW/k1vSbH+G4zSCtiM+tFTdBO7RhqoThYz4sTQWCKZh0N4w2Y
-	FkqSon0nYR30afn0imJTcqLOqWvujPRZJlH0YmYSTOgHtSWmJtBqSHxhqLC2ExEnG2VGUDW+0u/
-	WUXWBa6PnReiB2vec9R4+eozoGWaz2lLOiicYD69A3nr09kdZRkucgGeV33/Ic9eREjO1ElRJR5
-	giYAVfRfrQ1rwr2xGqvvFC3DphRcdSfngInIqhsFExSM2CphHWFezlrku2xiKdkZkSPnuCZGIqb
-	JP9geC7nxzClCga8h5w04e6hqMe7DenPNl/y6zMrbY1rV9Je8n1RYtzp4S3xosMEJroSALwdlPw
-	ug0/ADWlglnL8TfSrtt5Yemqv8fHCms28vQo7/fr9fewEbo4R5s1+Fl9oMoSpIXghf7PimNusPt
-	BNdajlkAYK84oBR3QAxHfLs8Y=
-X-Received: by 2002:a05:620a:3189:b0:8c6:aff3:5a79 with SMTP id af79cd13be357-8ca20523b8dmr626640185a.44.1770201137401;
-        Wed, 04 Feb 2026 02:32:17 -0800 (PST)
-X-Received: by 2002:a05:620a:3189:b0:8c6:aff3:5a79 with SMTP id af79cd13be357-8ca20523b8dmr626637185a.44.1770201136905;
-        Wed, 04 Feb 2026 02:32:16 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59e388308adsm562588e87.97.2026.02.04.02.32.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Feb 2026 02:32:16 -0800 (PST)
-Date: Wed, 4 Feb 2026 12:32:14 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-Cc: Swati Agarwal <swati.agarwal@oss.qualcomm.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Icenowy Zheng <uwu@icenowy.me>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Mike Looijmans <mike.looijmans@topic.nl>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
-        Chaoyi Chen <chaoyi.chen@rock-chips.com>,
-        =?utf-8?Q?J=2E_Neusch=C3=A4fer?= <j.ne@posteo.net>,
-        Pin-yen Lin <treapking@chromium.org>,
-        Catalin Popescu <catalin.popescu@leica-geosystems.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v5 4/4] arm64: dts: qcom: lemans-evk: Enable secondary
- USB controller in host mode
-Message-ID: <xfl4fir3l7ckh66zok46uot3xd63jptnyb5f3wsw7cok4rtqsh@23vlnfukpoi5>
-References: <20260122092852.887624-1-swati.agarwal@oss.qualcomm.com>
- <20260122092852.887624-5-swati.agarwal@oss.qualcomm.com>
- <63fjxtcmpbpna4cuuis332y3p52b6pvh43gyg6m7u5kiwkb2pb@znwfyet4xlpc>
- <CAHz4bYuR_LZXh=tS2FJ4VE9tVB6vN10pd-9i=uOL35sSx_BRzg@mail.gmail.com>
- <fycr33dqcosay7ake3nbbeaclhqvynwzixas4u3ocaerpqbu5e@shoibdd663vm>
- <6a982b56-2f4c-441f-acf7-a8e77ea55600@oss.qualcomm.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EAF838F255;
+	Wed,  4 Feb 2026 10:47:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.14.57
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770202066; cv=fail; b=cWGOo+Pw+GwZ7YNYjaXTJthw3Zjn5TqKQUc0qKFkNRk2PalKLH/ffAV/BDF6Efh1ntC+oXda2bQpq9U4zCjZyr41CzfTqP15SHL7d6w+3AK7lZ/YmiRpphRHZFyZXIYYXLuIA126UuRJYMuOYVXYMgnHSDqWN+xd+DP+JQmaJos=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770202066; c=relaxed/simple;
+	bh=KxWjOea6W0VHoJFx73yH3Iw08DPsMZB+A1QiGzLdTX0=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=mYp+7d8LRei5XtoPX5Gs513VesUchIUyRm/c/AoBWIAP91TLkm5v5AH7H7Xz1wJR27DoAW4VZIJGxI/1LbVL6qROGlBrx+sEkyLKq5Phl7fqiJ632zPKPb6kxVr/j0GWjnwCxP8A8+8OEWfND2S7RIU29ajNJhAaqr3tR62OdRw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=SVHHNV+e; arc=fail smtp.client-ip=52.103.14.57
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=VD345ALCm/yeD4xVzE3xgB3jO+2FKI/pg0iW3oHQu5Nx6yfp+XYlK9MLJNdNOVnLQ41l0WCL4jY1nUTd+bLJAXpuHEivHwLmy/7hD7PJ8s2yLINQ7/nNtKgZVdCRsgB7Kn0jYa+Lc0ynMWX0DuEz37BI99dE3semlTnOQz8vdh7x1M51BXr2ZcROTHRiYJArCOIwQbOqc1kB4i5g4fgQLHLxcq/oR4XWRNsNh2CYMfEbVa6LHYYZQ6oQ75hxNYB0+2QD+aHQ47IIDiDG2y1f1YFftcnUEyHeccuRERgCsXw0wtMpmDLNraQnEnO0uifEF+yvplN2FQFsSSsRCktf/A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=MNtwA4xf6B4nYLxhWvktB39cLXGcPyI4NQTAjn09oDc=;
+ b=e7akpxX1lDzNynfYJ8V+W+RWEUFigamKZHVVtJm5KHkhEqOLmuVOrw95l/qYiuNR30pM15u8N9oGqOdWUaFhc3CL3OggHGznCsU5cO4+kTgcCxybUoHaYLWS6KWm+/v6mCGqszobIjVoBykYdDJnD/B/FRXCuOW3iEYnxv0BbL4zgm0qJRdYjV7BgWGA9jqFKDm0FxVGGafW5ekBwBXTD0dag4AtNWW33MsBICUzsQ3hE67nWCwlYXNq+g4dT19BycdVWncrrto5fi+GPW2d1w2PRDX+vChdyACosZGANTLEare6EcgiWGN2JtiU+2aExxliuUVzouZQ8EzofUG7AQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=MNtwA4xf6B4nYLxhWvktB39cLXGcPyI4NQTAjn09oDc=;
+ b=SVHHNV+eTazC62krXhR6SC2Pz9X7oXqWn7QXuqdoCZ7mPB4vxxHekyX7XdQM+tpNL2xBLpPLgQBrSUN4cyuz6SM2a0dgaJIpz8gzZTBhPguwz9tPn/FWCXK8VuBvG4i2ksovUsxN1SHpLXd8dhDQpp2vzRUyfU6MjEdEYErYoPGHceWzvhDLERZhdXbJGVSabB0NSnS6MqWCt60aCAOpd/F7OTteTXAdgbVdh5xi+uON1lvqeWCKUDASpsAOlZLcy2iamdYRFl9dIEs2XU/eOxl9eAIF0KYmN2AqQ07NmrNY0SRx8mSvkgTQkBROl9uHavubO84MaPTptsfbC82ECg==
+Received: from DS7PR19MB8883.namprd19.prod.outlook.com (2603:10b6:8:253::16)
+ by DS4PR19MB9100.namprd19.prod.outlook.com (2603:10b6:8:29b::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9587.13; Wed, 4 Feb
+ 2026 10:47:44 +0000
+Received: from DS7PR19MB8883.namprd19.prod.outlook.com
+ ([fe80::5880:19f:c819:c921]) by DS7PR19MB8883.namprd19.prod.outlook.com
+ ([fe80::5880:19f:c819:c921%4]) with mapi id 15.20.9587.013; Wed, 4 Feb 2026
+ 10:47:44 +0000
+Message-ID:
+ <DS7PR19MB8883EC46B66736A0962FA3009D98A@DS7PR19MB8883.namprd19.prod.outlook.com>
+Date: Wed, 4 Feb 2026 14:47:31 +0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v19 2/6] pwm: driver for qualcomm ipq6018 pwm block
+To: =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <ukleinek@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Baruch Siach <baruch@tkos.co.il>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Devi Priya <quic_devipriy@quicinc.com>,
+ Baruch Siach <baruch.siach@siklu.com>
+References: <20251128-ipq-pwm-v19-0-13bc704cc6a5@outlook.com>
+ <20251128-ipq-pwm-v19-2-13bc704cc6a5@outlook.com>
+ <eajmwhwb2wd3ts4fpbu262uscqqddns3o5rf4b2jeswugpgmao@sdtx5hkqxz62>
+Content-Language: en-US
+From: George Moussalem <george.moussalem@outlook.com>
+In-Reply-To: <eajmwhwb2wd3ts4fpbu262uscqqddns3o5rf4b2jeswugpgmao@sdtx5hkqxz62>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: DX0P273CA0056.AREP273.PROD.OUTLOOK.COM
+ (2603:1086:300:5a::18) To DS7PR19MB8883.namprd19.prod.outlook.com
+ (2603:10b6:8:253::16)
+X-Microsoft-Original-Message-ID:
+ <e7e52bae-e5e9-4a68-b0bd-2b6a34ec12d7@outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <6a982b56-2f4c-441f-acf7-a8e77ea55600@oss.qualcomm.com>
-X-Proofpoint-GUID: pdyKLCml1uOjD38H7aP4RO67dgIRtluU
-X-Proofpoint-ORIG-GUID: pdyKLCml1uOjD38H7aP4RO67dgIRtluU
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA0MDA3OSBTYWx0ZWRfX7GUDlahBPZlz
- 84tYlUb1m+2Gns2lZffold94sDDaugJGcXbM6ESLkIOeAcsBWOUu9WyYevhiTHEtfD2fVdBbyX6
- GJv42vp+sGElHgwk7AvR2Tk2qCLF1NHHCfAr3IvcoU1FFkf62Thus80uxsuB9M29mjz3fFp+DJo
- Wu30oPacZFh//q9iFKN+AESDAX1Vqjo46N4QDPpryYo4ixiHcVJ+iyqcWHnP34CAzI/NfUxUH1j
- Faf24lsPLz7m9g8nv6kulv7ywsYs6r0w2z2c7GEx2dmOXojzPaGk4aqJpqcyPaZBVidC911bTvz
- zTrI8DSOjKyrft/3mxGcgfxkQwduPXWlpzhxntFvLPDMjRUK2EgMLB0VSIIA4iBXn7wB3T3K9WM
- eFUb45bc192fih4+m4YrN1l8Ac8MQeap0ZTHfMCCT7odH2CH/wCQ25zM3NBvX9YlAu3/rujg/tc
- q2LowKDnQjmH4xApeYw==
-X-Authority-Analysis: v=2.4 cv=doTWylg4 c=1 sm=1 tr=0 ts=69832032 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=EUspDBNiAAAA:8 a=qVSwaBYOakyh4oU-HHEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-04_02,2026-02-04_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 clxscore=1015 impostorscore=0 suspectscore=0 spamscore=0
- priorityscore=1501 bulkscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602040079
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS7PR19MB8883:EE_|DS4PR19MB9100:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3fbe3827-2495-4637-a827-08de63dad30c
+X-MS-Exchange-SLBlob-MailProps:
+	LVbdfIC7uFAyHke/CE1Ui/FW7barhRQEVpQlEYqH0vz4Z3DHM8R6tZ6YxNP/2L/X5PMn4YKbhUpOpnNPnUP9r6ojLBkczXtLyOAV49cW3Wb0bM1R7RMV/2NwZc+IB5Bl0dSBSZCJhgEgTD2xgPJntac8CXm/wKPM/rF5doDajCGBFnGXtiSMYrewGnHvWUttoDzDUTSO0QUjctG/Ntu6kH9+eLbmMODWR9EAW46B8s17SMnfiP3pTmF3MFBQY/ylbm2DF+oPvBcxsnEnuKD0wqJgsr5ENodjimaRB9n5yEpZCaXrupaS7O0E7MQtlnI5kw4EDjwekIdkYvBRQPsH1fJWIx+nkGQ6+Akdw5ONiztx0SuO53mpLVx5e/xAaByP+471X88Du+eF1dzB+2cUJ8Q9r7a0H+wVvsykMCiuApxIP8lgWigy6wjUq5OIYaq/fsbxQ6BQS6B8uZrnT9C8w8QbW6iO78RTOtWNTWPAMFji8tBWqKvsmJp2DNz6paASCkH6TPdKNHkoCzS9zC2T/MiQ3Keh2ser91YYg6fp2oko8Qgm4eVyiSftd5XBq+c4rxYtJwhkf8IywLHGhuLjPVpdULNft054g6F6TN0fqgkC9xhHJOBU7ReCCd69HLW/TtjzD0XGEvtwk/IjuiqXOQItZznjx/vr7m5fnT1IrIgZIsPekMn0k6T6nIp3kh2mrBbpVrC7hZ0Ppd1HDpiNKO6pZEfImCM2YcsOc2HVw4xkauGdt+e3xg==
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|6090799003|5072599009|461199028|19110799012|8060799015|41001999006|15080799012|23021999003|440099028|3412199025|12091999003|40105399003;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?YmZQdW0wWE9yQ2xJekowSEhYR3RocklGOWlQZEYrMXcrTHoxazduSzdGVUlK?=
+ =?utf-8?B?R3I3dURZaUY5eHo1N1h5VjdtWkd4ZEMyanQzOWtQWXB1NEJDbDNub3JuQ0FV?=
+ =?utf-8?B?QlRwUUE3T2dpM2hjb2NVZ1grWHFFVmpDY1lqamg1QWsvQUZCNzFobXczMElV?=
+ =?utf-8?B?K1pscDhSaFJkWjZvVGx0WExvZHEvakZvM3VET2xSNXh5SFgxN3Q0akJ5SWpv?=
+ =?utf-8?B?MFpvekNDUkJLSVJ1ekM5aEhYOGFocGU5dHROZFYwRzkvYXdhUUtuVTh5T3pD?=
+ =?utf-8?B?bDBvWG9KUDhoU0ExUER4N05tT2JqNUJoMk1qM1phdEtIQ3B5bFZmWElkYnJT?=
+ =?utf-8?B?NER6a0hkdHZRRWsxa3N4VTdCY0F3K0cxTTlCaXhqYjlDekgycmxPc2NrVUww?=
+ =?utf-8?B?UmZEdXpNOXdlQk9XUW9XREMyZ1BQZ1RYME05QWtRcWc4bmUrY2o1dFNvdFAy?=
+ =?utf-8?B?ZmozWWNXRVgrWkNQTFRQWFpyOGI4akdUMDZ3RlB0N1hOdXRoMy9ybWNzdERy?=
+ =?utf-8?B?MGlrMHNxbGVIMG9sci9sL2hXUGdaMTNtTmZ1dHVpZVhBNDZZRXdpdUZLb0pm?=
+ =?utf-8?B?ZTVPSW0wRzk2UlBqYU4zTTJBZytuN2lhdGQ1M1l0Tm83VlNwUjg3WmhHbnVT?=
+ =?utf-8?B?OE1oV1ZGTUF0QW5scWZwRklSRDRzSEFzMlZnMWxCeXo3VU5FOTFyL0R1K1h0?=
+ =?utf-8?B?bndzWWlXOVQxeUlnZno3WUVBUkYzZ2xhWHNhMTE4NEpNUTI1Y3U3YnEwLzBT?=
+ =?utf-8?B?c1c1aVcyTHVVOHRNR1QrL1JiOVdacTI4WHE0ZEVod284Q2tZdmpOQ3p0TGlE?=
+ =?utf-8?B?VnpqeE81VWE0TWMwb2VjMVFKT3pvQ3FYS0ErZGxISlEyMHIyMWRtSGxreEtu?=
+ =?utf-8?B?eTgweDY1aVYwYjlrKzBoOW81ZFRvSVpCUkdIUDJ6bC92V1FVWFllOWQ5RUxJ?=
+ =?utf-8?B?ZnFlK1BVd3VxeUNvcCs1djVJYzBBR2xraVVXOHV2MXBjQ2NoRXBtY05kYmVW?=
+ =?utf-8?B?dW5yb3BHbVZralB3aDFPN3BGajhqMEhvTjV0VnZGSXRhK0JTT0xTZm9oc2VY?=
+ =?utf-8?B?RzhObU1kS1VjM0EzKzcxNitVM0kyQzFQSnhQeWE1RXNtelFXT2xSOFJRdUox?=
+ =?utf-8?B?ZnhON01OdWZ2N2dOWVRSOCsxQWFTdWtGcGQwQjUzL1poUDJNUVc3Q1JuZldr?=
+ =?utf-8?B?R3Q4QUh5U2tWM1pKUlVVZEZDdGdGTk9ZWnJ5bDFhd0xjV05kcEx6enZ6eTk5?=
+ =?utf-8?B?TDRGMTI1TmNWeUVSenJZVnQxVFdGQldYRjBPUjZEa0FKUVkrTlVZN0JnMWJB?=
+ =?utf-8?B?Nk9mS3lEc1k2K2krd3FDY0hjZmlHbE9qWXljeWh4Wk15L3Bvcm9EQlY2WlAr?=
+ =?utf-8?B?NnA3YlZTaVV2cEJzV3hqdGdKNkdYWFZUR3YvSFZRQUprWTRtYUVaT2c2WFdm?=
+ =?utf-8?B?N2ErbzE5V3JYYzRNTmROdTdOU2FMdFdmam9QcGpNdURDTUtEMVZYWUMzZ2lQ?=
+ =?utf-8?B?bXYzcjlPRlpUM1crYkJHRDVObHZUYWJmdDEzZXZtZmxlaFFabHYxNDgremVV?=
+ =?utf-8?B?eWpiZnhyc25qWE01UGNDOVhUQUZUVXZEUno0VElmdnBWbTZnSlJmQXZzaHNR?=
+ =?utf-8?Q?9R7AUsGVkxbULThfWbcyhjt5J73j97Y3E3oB8R60u2AA=3D?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?QWprZHNDOGMva0ZoNU5oL2kwWE05Y0NYL0hlUTZvTEJRU1laeGZnaHZFYVVk?=
+ =?utf-8?B?ZWFRL1FKUnB3S2xFamVVV3duWklnMmV0Q2FzbEdpZzJvL24xVzdIeHl4MTcx?=
+ =?utf-8?B?aHprem8xd2E3M1VSWWRyWk8vSXBsSWNEcm0xRzdjMldyR0Y2TmJEU3N5a1JK?=
+ =?utf-8?B?dE56M2EycE83dGxrZk5IZWh4MFRJckZMM1BucExPeTdUd2M1b0pnamY2c05O?=
+ =?utf-8?B?SmpNTHBOWHUwTUhRbEoxenBRYm1vT1NST0tMU0VVY0crUTM5V0x0SkduZVFO?=
+ =?utf-8?B?YU5VMWhZSFlpZndZNmJVaGx5ei9KU25wVER6UkthbXlhQVhXQ213L1NEZUQ1?=
+ =?utf-8?B?VitqdkpwMXhRTmU4V1h3VmE3RnBLMjNyMVFHdFJpaTh0Y1VsTlk2ME13anFw?=
+ =?utf-8?B?VklibmNaSWw0M3lZVWpuZ1lSQkpGS1M0TUhDM1ZPakxDY1paS2taOFdBejNO?=
+ =?utf-8?B?Tmxab2tqZjZpUTZUbjhiZDZFeGxrUCtZeE1FdlQ4M0ZLdUFPcWx0ZkxtWFNU?=
+ =?utf-8?B?THpTZ1JSYjk3RjRpU0kyQ3c5QkxJUjVpdUpCZzg2R2Z4TjROdDBuQlNUK3Rh?=
+ =?utf-8?B?Wi9rUHQrUFAxK0VRaUlwZU9STUFFNHo5N256Nk5zeVhhYThVVjZxOThzSmJO?=
+ =?utf-8?B?QVZ3UEUzcit0eTMrUHRpbzY1K1YrSzJJRWxaSEZEczZNaVdjN3dpSERQbUVQ?=
+ =?utf-8?B?QlZhbXgyb0w3UnhjUDJzNi93Uzd1UkY2ckN5MzdxUVRKOE45NEw3M1VRNlkw?=
+ =?utf-8?B?bDBLaHMybGtaUU1qR1JzaDl4YTNpajZKdnd3TWNJbHlvdmpHMU0wN0ZiWVBB?=
+ =?utf-8?B?dXFvK21mZFRneTlpUW5QNFBBaklqZXprbWJLcmJCdEZ5REVXdno4d3M1by8w?=
+ =?utf-8?B?a1NRenNLT1JmOU4vcnlIaGRaV1BzeU1DaW0yNVJuV0trNk41RUV2T3NzMmJa?=
+ =?utf-8?B?RzAzaGVCNXlSZkpTR0h2c2pWWklac0NqSmNSSmx0S0dNMHJQdGVUb0p6RHR6?=
+ =?utf-8?B?am05cXVUc0QvREtjSlBIN1NNb3l6ZkI3S1RCYzhMM1ZoWDFUVWdydklhZFk5?=
+ =?utf-8?B?dUhhVklpYWZRYXg1d1pjMHBiaE1QdFRmbFI0aDhFT3hrS3BTTUxpekU3ZDZJ?=
+ =?utf-8?B?enplRUhTZW9jNjhKRXR2cEJtcEhLS281Y3dmR0ZieTc5UkxWc2lFYVZwQmxq?=
+ =?utf-8?B?SmRjeEhVaVFjOGpEamJLeFpRQzFEQjRMeEVkL3RpcUswUGhEdGhZOWpIV0xu?=
+ =?utf-8?B?azJzVlBYQThNdHc0QUthR1gyQjFzM1BDZWhjelJVWW1uTU5EMmZnOU0zOWpv?=
+ =?utf-8?B?WXRrRFpodjVtUjFpbzB6d2JEMkhSelV1NGNVYjVCbjIwU1BVeWxpc3o1MllL?=
+ =?utf-8?B?enh5U20xSGc4KzlwaS9uUXpxMFR1b1Y0di85aXZiMEViangyM1BET2pwUkVC?=
+ =?utf-8?B?VHFQdHV5V1lXY3loM2ZMK3pTaHZ2Vy92cXlJOUljZ1VpcTR4NHJneFZMYTBm?=
+ =?utf-8?B?d0t4ZWFudGFBT252clZ0d2VNamg2emVmNzZzMDRFNitXMUhYV1JWNmpMUGhI?=
+ =?utf-8?B?aitPcE1EeENpTGcxdmRwSmt4aDBUbFl6VndYRG9GZElPcGplWWF1Rno2TjRt?=
+ =?utf-8?B?ZytvMW9aNSt4L09kNDkyVXg1UkkxcjB6REh2M0VWdFVBUlVIY0c4cEhrZ2Fn?=
+ =?utf-8?B?c29lM0dpSWxLYW5RNFZTVzIrK3NrYUt3b2R3cUpHMlZPQXRRN1MyNjhIVVFD?=
+ =?utf-8?B?dDFPMzdvTlFzQmNneDk3QWE3akpmOEdub2tZQy9EQUlINXpBck4yN3Vub2JJ?=
+ =?utf-8?B?WjBkS2dIS2hPNTBKemRZYnk5WXlGMlUzVTlFOWxsTVdDdXduYnVuME0rNENp?=
+ =?utf-8?B?UGNndHd2NHdUd2lXaXBoKzBsUzlLSjhRTzlNeGNJZC9Fd1E9PQ==?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3fbe3827-2495-4637-a827-08de63dad30c
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR19MB8883.namprd19.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Feb 2026 10:47:43.8593
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS4PR19MB9100
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
+X-Spamd-Result: default: False [1.34 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	ARC_REJECT(1.00)[cv is fail on i=2];
+	DMARC_POLICY_ALLOW(-0.50)[outlook.com,none];
+	R_DKIM_ALLOW(-0.20)[outlook.com:s=selector1];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-91785-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.2:email,qualcomm.com:email,qualcomm.com:dkim,0.0.0.0:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:dkim,0.0.0.1:email];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[21];
+	TAGGED_FROM(0.00)[bounces-91786-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	MISSING_XM_UA(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	FORGED_MUA_MAILLIST(0.00)[];
+	FREEMAIL_FROM(0.00)[outlook.com];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_PROHIBIT(0.00)[0.0.0.47:email];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	NEURAL_HAM(-0.00)[-0.999];
 	TO_DN_SOME(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 8C350E48B7
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[george.moussalem@outlook.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	DKIM_TRACE(0.00)[outlook.com:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,quicinc.com:email,siklu.com:email,DS7PR19MB8883.namprd19.prod.outlook.com:mid,outlook.com:email,outlook.com:dkim]
+X-Rspamd-Queue-Id: 491E2E4BED
 X-Rspamd-Action: no action
 
-On Wed, Feb 04, 2026 at 11:26:37AM +0530, Krishna Kurapati wrote:
-> 
-> 
-> On 2/4/2026 7:03 AM, Dmitry Baryshkov wrote:
-> > On Tue, Jan 27, 2026 at 10:53:46AM +0530, Swati Agarwal wrote:
-> > > On Thu, Jan 22, 2026 at 4:02 PM Dmitry Baryshkov
-> > > <dmitry.baryshkov@oss.qualcomm.com> wrote:
-> > > > 
-> > > > On Thu, Jan 22, 2026 at 02:58:52PM +0530, Swati Agarwal wrote:
-> > > > > Enable secondary USB controller in host mode on lemans EVK Platform.
-> > > > > 
-> > > > > Secondary USB controller is connected to a Genesys Logic USB HUB GL3590
-> > > > > having 4 ports. The ports of hub that are present on lemans EVK standalone
-> > > > > board are used as follows:-
-> > > > > 1) port-1 is connected to HD3SS3220 Type-C port controller.
-> > > > > 2) port-4 is used for the M.2 E key on corekit. Standard core kit uses UART
-> > > > > for Bluetooth. This port is to be used only if user optionally replaces the
-> > > > > WiFi card with the NFA765 chip which uses USB for Bluetooth.
-> > > > > 
-> > > > > Remaining 2 ports will become functional when the interface plus mezzanine
-> > > > > board is stacked on top of corekit:
-> > > > > 
-> > > > > 3) port-2 is connected to another hub which is present on the mezz through
-> > > > > which 4 type-A ports are connected.
-> > > > > 4) port-3 is used for the M.2 B key for a 5G card when the mezz is
-> > > > > connected.
-> > > > > 
-> > > > > Mark the second USB controller as host only capable and add the HD3SS3220
-> > > > > Type-C port controller along with Type-c connector for controlling vbus
-> > > > > supply.
-> > > > > 
-> > > > > Signed-off-by: Swati Agarwal <swati.agarwal@oss.qualcomm.com>
-> > > > > ---
-> > > > >   arch/arm64/boot/dts/qcom/lemans-evk.dts | 208 ++++++++++++++++++++++++
-> > > > >   1 file changed, 208 insertions(+)
-> > > > > 
-> > > > > diff --git a/arch/arm64/boot/dts/qcom/lemans-evk.dts b/arch/arm64/boot/dts/qcom/lemans-evk.dts
-> > > > > index 074a1edd0334..a549f7fe53a1 100644
-> > > > > --- a/arch/arm64/boot/dts/qcom/lemans-evk.dts
-> > > > > +++ b/arch/arm64/boot/dts/qcom/lemans-evk.dts
-> > > > > @@ -68,6 +68,45 @@ usb0_con_ss_ep: endpoint {
-> > > > >                };
-> > > > >        };
-> > > > > 
-> > > > > +     connector-1 {
-> > > > > +             compatible = "usb-c-connector";
-> > > > > +             label = "USB1-Type-C";
-> > > > > +             data-role = "host";
-> > > > > +             power-role = "source";
-> > > > > +
-> > > > > +             vbus-supply = <&vbus_supply_regulator_1>;
-> > > > > +
-> > > > > +             ports {
-> > > > > +                     #address-cells = <1>;
-> > > > > +                     #size-cells = <0>;
-> > > > > +
-> > > > > +                     port@0 {
-> > > > > +                             reg = <0>;
-> > > > > +
-> > > > > +                             usb1_con_ss_ep: endpoint {
-> > > > 
-> > > > This contradicts USB-C connector bindings. Why?
-> > > > 
-> > > > > +                                     remote-endpoint = <&hd3ss3220_1_in_ep>;
-> > > > > +                             };
-> > > > > +                     };
-> > > > > +
-> > > > > +                     port@1 {
-> > > > > +                             reg = <1>;
-> > > > > +
-> > > > > +                             usb1_hs_in: endpoint {
-> > > > > +                                     remote-endpoint = <&usb_hub_2_1>;
-> > > > > +                             };
-> > > > > +
-> > > > > +                     };
-> > > > > +
-> > > > > +                     port@2 {
-> > > > > +                             reg = <2>;
-> > > > > +
-> > > > > +                             usb1_ss_in: endpoint {
-> > > > 
-> > > > port@2 is for the SBU signals. It can't be connected to the hub.
-> > > > 
-> > > > > +                                     remote-endpoint = <&usb_hub_3_1>;
-> > > > > +                             };
-> > > > > +                     };
-> > > > > +             };
-> > > > > +     };
-> > > > > +
-> > > > >        edp0-connector {
-> > > > >                compatible = "dp-connector";
-> > > > >                label = "EDP0";
-> > > > > @@ -141,6 +180,16 @@ vbus_supply_regulator_0: regulator-vbus-supply-0 {
-> > > > >                enable-active-high;
-> > > > >        };
-> > > > > 
-> > > > > +     vbus_supply_regulator_1: regulator-vbus-supply-1 {
-> > > > > +             compatible = "regulator-fixed";
-> > > > > +             regulator-name = "vbus_supply_1";
-> > > > > +             gpio = <&expander1 3 GPIO_ACTIVE_HIGH>;
-> > > > > +             regulator-min-microvolt = <5000000>;
-> > > > > +             regulator-max-microvolt = <5000000>;
-> > > > > +             regulator-boot-on;
-> > > > > +             enable-active-high;
-> > > > > +     };
-> > > > > +
-> > > > >        vmmc_sdc: regulator-vmmc-sdc {
-> > > > >                compatible = "regulator-fixed";
-> > > > > 
-> > > > > @@ -536,6 +585,39 @@ hd3ss3220_0_out_ep: endpoint {
-> > > > >                        };
-> > > > >                };
-> > > > >        };
-> > > > > +
-> > > > > +     usb-typec@47 {
-> > > > > +             compatible = "ti,hd3ss3220";
-> > > > > +             reg = <0x47>;
-> > > > > +
-> > > > > +             interrupts-extended = <&pmm8654au_2_gpios 6 IRQ_TYPE_EDGE_FALLING>;
-> > > > > +
-> > > > > +             id-gpios = <&tlmm 51 GPIO_ACTIVE_HIGH>;
-> > > > > +
-> > > > > +             pinctrl-0 = <&usb1_id>, <&usb1_intr>;
-> > > > > +             pinctrl-names = "default";
-> > > > > +
-> > > > > +             ports {
-> > > > > +                     #address-cells = <1>;
-> > > > > +                     #size-cells = <0>;
-> > > > > +
-> > > > > +                     port@0 {
-> > > > > +                             reg = <0>;
-> > > > > +
-> > > > > +                             hd3ss3220_1_in_ep: endpoint {
-> > > > > +                                     remote-endpoint = <&usb1_con_ss_ep>;
-> > > > > +                             };
-> > > > > +                     };
-> > > > > +
-> > > > > +                     port@1 {
-> > > > > +                             reg = <1>;
-> > > > > +
-> > > > > +                             hd3ss3220_1_out_ep: endpoint {
-> > > > > +                             };
-> > > > 
-> > > > Why is this port disconnected? It it really N/C?
-> > > 
-> > > Hi Dmitry,
-> > > 
-> > > Sorry for the confusion, Can we do it as follows:
-> > > 
-> > > hub:                    Hd3ss3220   typec-connector
-> > > 
-> > > usb_hub_2_1 <-> port@1       port@1 <-> empty
-> > > usb_hub_3_1 <-> port@2       port@2 <-> <empty>
-> > >                               port@0 <-> port@0
-> > > 
-> > 
-> > You still missed the _why_. Why port@1 of HD3SS3220 is not connected?
-> > 
-> 
-> There are no remote endpoints added in dwc3 node. Since we are making
-> dr_mode host. Hence keeping this remore endpoint empty.
+Hi Uwe,
 
-How is the link between HD3SS3220 and Type-C affected by the DWC3? What
-does port@1 of it represent? Do we have SS lanes between HD3SS3220 and
-the connector?
+On 1/19/26 20:30, Uwe Kleine-König wrote:
+> Hello,
+> 
+> On Fri, Nov 28, 2025 at 02:29:14PM +0400, George Moussalem via B4 Relay wrote:
+>> From: Devi Priya <quic_devipriy@quicinc.com>
+>>
+>> Driver for the PWM block in Qualcomm IPQ6018 line of SoCs. Based on
+>> driver from downstream Codeaurora kernel tree. Removed support for older
+>> (V1) variants because I have no access to that hardware.
+>>
+>> Tested on IPQ5018 and IPQ6010 based hardware.
+>>
+>> Co-developed-by: Baruch Siach <baruch.siach@siklu.com>
+>> Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
+>> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+>> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+>> Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+>> ---
+>> v18:
+>>
+>>   Added hardware notes and limitations based on own findings as
+>>   requested. NOTE: there's no publically available datasheet though.
+>>
+>>   Expanded comment on REG1_UPDATE to indicate that when this bit is set,
+>>   values for div and pre-div take effect. The hardware automatically
+>>   unsets it when the change is completed.
+>>
+>>   Added newline between MACRO definition and next comment
+>>
+>>   In config_div_and_duty, used mul_u64_u64_div_u64 to avoid overflow
+>>
+>>   Removed unncessary restriction of pwm_div to MAX_DIV - 1 after testing
+>>
+>>   Constrain pre_div to MAX_DIV is pre_div calculated is > MAX_DIV
+>>
+>>   Use of mul_u64_u64_div_u64 in .apply
+>>
+>>   Skip calculation of period and duty cycle when PWM_ENABLE REG is unset
+>>
+>>   Set duty cycle to period value when calculated duty cycle > period to
+>>   return a valid config
+>>
+>>   Removed .npwm as it's taken care of in devm_pwmchip_alloc
+>>
+>>   Added call to devm_clk_rate_exclusive_get to lock the clock rate
+>>
+>>   Start all kernel messages with a capital letter and end with \n.
+>>
+>> v17:
+>>
+>>   Removed unnecessary code comments
+>>
+>> v16:
+>>
+>>   Simplified code to calculate divs and duty cycle as per Uwe's comments
+>>
+>>   Removed unused pwm_chip struct from ipq_pwm_chip struct
+>>
+>>   Removed unnecessary cast as per Uwe's comment
+>>
+>>   Replaced devm_clk_get & clk_prepare_enable by devm_clk_get_enabled
+>>
+>>   Replaced pwmchip_add by devm_pwmchip_add and removed .remove function
+>>
+>>   Removed .owner from driver struct
+>>
+>> v15:
+>>
+>>   No change
+>>
+>> v14:
+>>
+>>   Picked up the R-b tag
+>>
+>> v13:
+>>
+>>   Updated the file name to match the compatible
+>>
+>>   Sorted the properties and updated the order in the required field
+>>
+>>   Dropped the syscon node from examples
+>>
+>> v12:
+>>
+>>   Picked up the R-b tag
+>>
+>> v11:
+>>
+>>   No change
+>>
+>> v10:
+>>
+>>   No change
+>>
+>> v9:
+>>
+>>   Add 'ranges' property to example (Rob)
+>>
+>>   Drop label in example (Rob)
+>>
+>> v8:
+>>
+>>   Add size cell to 'reg' (Rob)
+>>
+>> v7:
+>>
+>>   Use 'reg' instead of 'offset' (Rob)
+>>
+>>   Drop 'clock-names' and 'assigned-clock*' (Bjorn)
+>>
+>>   Use single cell address/size in example node (Bjorn)
+>>
+>>   Move '#pwm-cells' lower in example node (Bjorn)
+>>
+>>   List 'reg' as required
+>>
+>> v6:
+>>
+>>   Device node is child of TCSR; remove phandle (Rob Herring)
+>>
+>>   Add assigned-clocks/assigned-clock-rates (Uwe Kleine-König)
+>>
+>> v5: Use qcom,pwm-regs for phandle instead of direct regs (Bjorn
+>>     Andersson, Kathiravan T)
+>>
+>> v4: Update the binding example node as well (Rob Herring's bot)
+>>
+>> v3: s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
+>>
+>> v2: Make #pwm-cells const (Rob Herring)
+>> ---
+>>  drivers/pwm/Kconfig   |  12 +++
+>>  drivers/pwm/Makefile  |   1 +
+>>  drivers/pwm/pwm-ipq.c | 239 ++++++++++++++++++++++++++++++++++++++++++++++++++
+>>  3 files changed, 252 insertions(+)
+>>
+>> diff --git a/drivers/pwm/Kconfig b/drivers/pwm/Kconfig
+>> index bf2d101f67a1e0ae12a58b5630abd5cfd77ccc99..6393f4e91697ae471b1aba72e7ef3f94c5e18383 100644
+>> --- a/drivers/pwm/Kconfig
+>> +++ b/drivers/pwm/Kconfig
+>> @@ -347,6 +347,18 @@ config PWM_INTEL_LGM
+>>  	  To compile this driver as a module, choose M here: the module
+>>  	  will be called pwm-intel-lgm.
+>>  
+>> +config PWM_IPQ
+>> +	tristate "IPQ PWM support"
+>> +	depends on ARCH_QCOM || COMPILE_TEST
+>> +	depends on HAVE_CLK && HAS_IOMEM
+>> +	help
+>> +	  Generic PWM framework driver for IPQ PWM block which supports
+>> +	  4 pwm channels. Each of the these channels can be configured
+>> +	  independent of each other.
+>> +
+>> +	  To compile this driver as a module, choose M here: the module
+>> +	  will be called pwm-ipq.
+>> +
+>>  config PWM_IQS620A
+>>  	tristate "Azoteq IQS620A PWM support"
+>>  	depends on MFD_IQS62X || COMPILE_TEST
+>> diff --git a/drivers/pwm/Makefile b/drivers/pwm/Makefile
+>> index 0dc0d2b69025dbd27013285cd335d3cb1ca2ab3f..5630a521a7cffeb83ff8c8960e15eb23ddb1c9f8 100644
+>> --- a/drivers/pwm/Makefile
+>> +++ b/drivers/pwm/Makefile
+>> @@ -29,6 +29,7 @@ obj-$(CONFIG_PWM_IMX1)		+= pwm-imx1.o
+>>  obj-$(CONFIG_PWM_IMX27)		+= pwm-imx27.o
+>>  obj-$(CONFIG_PWM_IMX_TPM)	+= pwm-imx-tpm.o
+>>  obj-$(CONFIG_PWM_INTEL_LGM)	+= pwm-intel-lgm.o
+>> +obj-$(CONFIG_PWM_IPQ)		+= pwm-ipq.o
+>>  obj-$(CONFIG_PWM_IQS620A)	+= pwm-iqs620a.o
+>>  obj-$(CONFIG_PWM_JZ4740)	+= pwm-jz4740.o
+>>  obj-$(CONFIG_PWM_KEEMBAY)	+= pwm-keembay.o
+>> diff --git a/drivers/pwm/pwm-ipq.c b/drivers/pwm/pwm-ipq.c
+>> new file mode 100644
+>> index 0000000000000000000000000000000000000000..9955b185bc60f27d770f3833d5acd7f587595324
+>> --- /dev/null
+>> +++ b/drivers/pwm/pwm-ipq.c
+>> @@ -0,0 +1,239 @@
+>> +// SPDX-License-Identifier: BSD-3-Clause OR GPL-2.0
+>> +/*
+>> + * Copyright (c) 2016-2017, 2020 The Linux Foundation. All rights reserved.
+>> + *
+>> + * Hardware notes / Limitations:
+>> + * - The PWM controller has no publicly available datasheet.
+>> + * - Each of the four channels is programmed via two 32-bit registers
+>> + *   (REG0 and REG1 at 8-byte stride).
+>> + * - Period and duty-cycle reconfiguration is fully atomic: new divider,
+>> + *   pre-divider, and high-duration values are latched by setting the
+>> + *   UPDATE bit (bit 30 in REG1). The hardware applies the new settings
+>> + *   at the beginning of the next period without disabling the output,
+>> + *   so the currently running period is always completed.
+>> + * - On disable (clearing the ENABLE bit 31 in REG1), the hardware
+>> + *   finishes the current period before stopping the output. The pin
+>> + *   is then driven to the inactive (low) level.
+>> + * - Upon disabling, the hardware resets the pre-divider (PRE_DIV) and divider
+>> + *   fields (PWM_DIV) in REG0 and REG1 to 0x0000 and 0x0001 respectively.
+>> + * - Only normal polarity is supported.
+>> + */
+>> +
+>> +#include <linux/module.h>
+>> +#include <linux/platform_device.h>
+>> +#include <linux/pwm.h>
+>> +#include <linux/clk.h>
+>> +#include <linux/io.h>
+>> +#include <linux/of.h>
+>> +#include <linux/math64.h>
+>> +#include <linux/of_device.h>
+>> +#include <linux/bitfield.h>
+>> +#include <linux/units.h>
+>> +
+>> +/* The frequency range supported is 1 Hz to clock rate */
+>> +#define IPQ_PWM_MAX_PERIOD_NS	((u64)NSEC_PER_SEC)
+> 
+> This is used below with:
+> 	period_ns = min(state->period, IPQ_PWM_MAX_PERIOD_NS);
+> 
+> Where does this limitation come from?
 
--- 
-With best wishes
-Dmitry
+Tbh, I don't know, it was added by qcom, I took over from v16 onwards
+and I don't have the technical datasheet / specs. Perhaps Devi or Baruch
+can chime in?
+
+I've got v20 ready and will submit as is if that's okay.
+
+> 
+>> +/*
+>> + * The max value specified for each field is based on the number of bits
+>> + * in the pwm control register for that field
+>> + */
+>> +#define IPQ_PWM_MAX_DIV		0xFFFF
+> 
+> Maybe use (depending on context) FIELD_MAX(IPQ_PWM_REG0_PWM_DIV) or
+> FIELD_MAX(IPQ_PWM_REG1_PRE_DIV).
+
+Changed to FIELD_MAX in next version (16-bit)
+
+> 
+>> +
+>> +/*
+>> + * Two 32-bit registers for each PWM: REG0, and REG1.
+>> + * Base offset for PWM #i is at 8 * #i.
+>> + */
+>> +#define IPQ_PWM_REG0			0
+>> +#define IPQ_PWM_REG0_PWM_DIV		GENMASK(15, 0)
+>> +#define IPQ_PWM_REG0_HI_DURATION	GENMASK(31, 16)
+>> +
+>> +#define IPQ_PWM_REG1			4
+>> +#define IPQ_PWM_REG1_PRE_DIV		GENMASK(15, 0)
+>> +
+>> +/*
+>> + * Enable bit is set to enable output toggling in pwm device.
+>> + * Update bit is set to trigger the change and is unset automatically
+>> + * to reflect the changed divider and high duration values in register.
+>> + */
+>> +#define IPQ_PWM_REG1_UPDATE		BIT(30)
+>> +#define IPQ_PWM_REG1_ENABLE		BIT(31)
+>> +
+>> +struct ipq_pwm_chip {
+>> +	struct clk *clk;
+> 
+> you're using clk_rate_exclusive_get(), so it's enough to call
+> clk_get_rate() once. Then you can store the rate here instead of the
+> clk itself.
+
+Removed clk from ipq_pwm struct and added unsigned long rate field which
+is set during probe after enabling the clock.
+
+> 
+>> +	void __iomem *mem;
+>> +};
+>> +
+>> +static struct ipq_pwm_chip *ipq_pwm_from_chip(struct pwm_chip *chip)
+>> +{
+>> +	return pwmchip_get_drvdata(chip);
+>> +}
+>> +
+>> +static unsigned int ipq_pwm_reg_read(struct pwm_device *pwm, unsigned int reg)
+>> +{
+>> +	struct ipq_pwm_chip *ipq_chip = ipq_pwm_from_chip(pwm->chip);
+>> +	unsigned int off = 8 * pwm->hwpwm + reg;
+>> +
+>> +	return readl(ipq_chip->mem + off);
+>> +}
+>> +
+>> +static void ipq_pwm_reg_write(struct pwm_device *pwm, unsigned int reg,
+>> +			      unsigned int val)
+>> +{
+>> +	struct ipq_pwm_chip *ipq_chip = ipq_pwm_from_chip(pwm->chip);
+>> +	unsigned int off = 8 * pwm->hwpwm + reg;
+>> +
+>> +	writel(val, ipq_chip->mem + off);
+>> +}
+>> +
+>> +static void config_div_and_duty(struct pwm_device *pwm, unsigned int pre_div,
+> 
+> Missing name prefix (i.e. rename to ipq_pwm_config_div_and_duty(), or
+> maybe even better: fold into ipq_pwm_apply()).
+
+Addressed and folded into .apply in v20.
+
+> 
+>> +				unsigned int pwm_div, unsigned long rate, u64 duty_ns,
+>> +				bool enable)
+>> +{
+>> +	unsigned long hi_dur;
+>> +	unsigned long val = 0;
+>> +
+>> +	/*
+>> +	 * high duration = pwm duty * (pwm div + 1)
+>> +	 * pwm duty = duty_ns / period_ns
+>> +	 */
+>> +	hi_dur = mul_u64_u64_div_u64(duty_ns, rate, (pre_div + 1) * NSEC_PER_SEC);
+> 
+> With pre_div = 0xffff the multiplication in the 3rd parameter overflows.
+
+cast to u64 during calculation -> mul_u64_u64_div_u64(duty_ns, rate,
+(u64)(pre_div + 1) * NSEC_PER_SEC)
+
+> 
+>> +	val = FIELD_PREP(IPQ_PWM_REG0_HI_DURATION, hi_dur) |
+>> +		FIELD_PREP(IPQ_PWM_REG0_PWM_DIV, pwm_div);
+>> +	ipq_pwm_reg_write(pwm, IPQ_PWM_REG0, val);
+>> +
+>> +	val = FIELD_PREP(IPQ_PWM_REG1_PRE_DIV, pre_div);
+>> +	ipq_pwm_reg_write(pwm, IPQ_PWM_REG1, val);
+>> +
+>> +	/* PWM enable toggle needs a separate write to REG1 */
+>> +	val |= IPQ_PWM_REG1_UPDATE;
+>> +	if (enable)
+>> +		val |= IPQ_PWM_REG1_ENABLE;
+>> +	ipq_pwm_reg_write(pwm, IPQ_PWM_REG1, val);
+>> +}
+>> +
+>> +static int ipq_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+>> +			 const struct pwm_state *state)
+>> +{
+>> +	struct ipq_pwm_chip *ipq_chip = ipq_pwm_from_chip(chip);
+>> +	unsigned long rate = clk_get_rate(ipq_chip->clk);
+>> +	unsigned int pre_div, pwm_div;
+>> +	u64 period_ns, duty_ns;
+>> +
+>> +	if (state->polarity != PWM_POLARITY_NORMAL)
+>> +		return -EINVAL;
+>> +
+>> +	if (state->period < DIV64_U64_ROUND_UP(NSEC_PER_SEC, rate))
+>> +		return -ERANGE;
+>> +
+>> +	period_ns = min(state->period, IPQ_PWM_MAX_PERIOD_NS);
+>> +	duty_ns = min(state->duty_cycle, period_ns);
+>> +
+>> +	pwm_div = IPQ_PWM_MAX_DIV;
+> 
+> With pwm_div = 0xffff you cannot configure a 100% relative duty cycle,
+> right?
+
+Fixed in next version.
+
+> 
+>> +	pre_div = mul_u64_u64_div_u64(period_ns, rate, (u64)NSEC_PER_SEC * (pwm_div + 1));
+> 
+> according to the get_state() callback below we have:
+> 
+>             (PRE_DIV + 1) (PWM_DIV + 1)
+> 	P = ---------------------------
+> 	                RATE
+> 
+> The (first) +1 isn't accounted for in your formula.
+
+thanks, fixed in v20.
+> 	
+>> +
+>> +	if (pre_div > IPQ_PWM_MAX_DIV)
+>> +		pre_div = IPQ_PWM_MAX_DIV;
+>> +
+>> +	config_div_and_duty(pwm, pre_div, pwm_div, rate, duty_ns, state->enabled);
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static int ipq_pwm_get_state(struct pwm_chip *chip, struct pwm_device *pwm,
+>> +			     struct pwm_state *state)
+>> +{
+>> +	struct ipq_pwm_chip *ipq_chip = ipq_pwm_from_chip(chip);
+>> +	unsigned long rate = clk_get_rate(ipq_chip->clk);
+>> +	unsigned int pre_div, pwm_div, hi_dur;
+>> +	u64 effective_div, hi_div;
+>> +	u32 reg0, reg1;
+>> +
+>> +	reg1 = ipq_pwm_reg_read(pwm, IPQ_PWM_REG1);
+>> +	state->enabled = reg1 & IPQ_PWM_REG1_ENABLE;
+>> +
+>> +	if (!state->enabled)
+>> +		return 0;
+>> +
+>> +	reg0 = ipq_pwm_reg_read(pwm, IPQ_PWM_REG0);
+>> +
+>> +	state->polarity = PWM_POLARITY_NORMAL;
+>> +
+>> +	pwm_div = FIELD_GET(IPQ_PWM_REG0_PWM_DIV, reg0);
+>> +	hi_dur = FIELD_GET(IPQ_PWM_REG0_HI_DURATION, reg0);
+>> +	pre_div = FIELD_GET(IPQ_PWM_REG1_PRE_DIV, reg1);
+>> +
+>> +	/* No overflow here, both pre_div and pwm_div <= 0xffff */
+>> +	effective_div = (pre_div + 1) * (pwm_div + 1);
+> 
+> With pre_div = pwm_div = 0xffff this yields 0x100000000 which overflows
+> a (32 bit) unsigned int.
+> 
+
+fixed in v20.
+
+>> +	state->period = DIV64_U64_ROUND_UP(effective_div * NSEC_PER_SEC, rate);
+>> +
+>> +	hi_div = hi_dur * (pre_div + 1);
+>> +	state->duty_cycle = DIV64_U64_ROUND_UP(hi_div * NSEC_PER_SEC, rate);
+>> +
+>> +	/*
+>> +	 * ensure a valid config is passed back to PWM core in case duty_cycle
+>> +	 * is > period (>100%)
+>> +	 */
+>> +	state->duty_cycle = min(state->duty_cycle, state->period);
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static const struct pwm_ops ipq_pwm_ops = {
+>> +	.apply = ipq_pwm_apply,
+>> +	.get_state = ipq_pwm_get_state,
+>> +};
+>> +
+>> +static int ipq_pwm_probe(struct platform_device *pdev)
+>> +{
+>> +	struct device *dev = &pdev->dev;
+>> +	struct ipq_pwm_chip *pwm;
+>> +	struct pwm_chip *chip;
+>> +	int ret;
+>> +
+>> +	chip = devm_pwmchip_alloc(dev, 4, sizeof(*pwm));
+>> +	if (IS_ERR(chip))
+>> +		return PTR_ERR(chip);
+>> +	pwm = ipq_pwm_from_chip(chip);
+>> +
+>> +	pwm->mem = devm_platform_ioremap_resource(pdev, 0);
+>> +	if (IS_ERR(pwm->mem))
+>> +		return dev_err_probe(dev, PTR_ERR(pwm->mem),
+>> +				"Failed to acquire resource\n");
+> 
+> Please align continuation lines to the opening (.
+> 
+>> +
+>> +	pwm->clk = devm_clk_get_enabled(dev, NULL);
+>> +	if (IS_ERR(pwm->clk))
+>> +		return dev_err_probe(dev, PTR_ERR(pwm->clk),
+>> +				"Failed to get clock\n");
+>> +
+>> +	ret = devm_clk_rate_exclusive_get(dev, pwm->clk);
+>> +	if (ret)
+>> +		return dev_err_probe(dev, ret,
+>> +				"Failed to lock clock rate\n");
+>> +
+>> +	chip->ops = &ipq_pwm_ops;
+>> +
+>> +	ret = devm_pwmchip_add(dev, chip);
+>> +	if (ret < 0)
+>> +		return dev_err_probe(dev, ret, "Failed to add pwm chip\n");
+>> +
+>> +	return ret;
+> 
+> You could return 0 here which is a tad clearer.
+
+Done.
+
+> 
+>> +}
+>> +
+>> +static const struct of_device_id pwm_ipq_dt_match[] = {
+>> +	{ .compatible = "qcom,ipq6018-pwm", },
+>> +	{}
+>> +};
+>> +MODULE_DEVICE_TABLE(of, pwm_ipq_dt_match);
+>> +
+>> +static struct platform_driver ipq_pwm_driver = {
+>> +	.driver = {
+>> +		.name = "ipq-pwm",
+>> +		.of_match_table = pwm_ipq_dt_match,
+>> +	},
+>> +	.probe = ipq_pwm_probe,
+>> +};
+>> +
+>> +module_platform_driver(ipq_pwm_driver);
+>> +
+>> +MODULE_LICENSE("GPL");
+> 
+> Best regards
+> Uwe
+
 
