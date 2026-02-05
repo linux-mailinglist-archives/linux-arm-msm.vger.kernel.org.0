@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-91964-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91965-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id EGCaBNvyhGkF7AMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91964-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Feb 2026 20:43:23 +0100
+	id EFYdJ0v+hGl47QMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91965-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Feb 2026 21:32:11 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F03EF6EA1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Feb 2026 20:43:22 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id F31C6F72B5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Feb 2026 21:32:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 094613014C23
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Feb 2026 19:43:21 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id AACDA300AB3E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Feb 2026 20:32:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D1FC3329C5F;
-	Thu,  5 Feb 2026 19:43:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB22E3242A9;
+	Thu,  5 Feb 2026 20:32:08 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF31237180
-	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Feb 2026 19:43:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F69301708
+	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Feb 2026 20:32:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770320599; cv=none; b=YIbSBW90SpkTQT0THOChY3YIKBYFaALi1YA9K5MPFxnqb0FO7gJYDigu3P82WGJiAPFGjgGeEbSfEPHTr+DwfP+D7RBTMfXJMAHerwdrL3JK8PY/eVfZia/hIeUo8u24oMGDQN+z00a+Sddrqj5wYSz2FN3FHDzNJjASZughRfA=
+	t=1770323528; cv=none; b=CWwLqDvHZdyfGqVJ9aux1FbqGhLyViG1mqjK6eOwKwKv5FNSFkDLBiL2wQuWIR6eirCRWgCx4MRW8upXzzzK0W9u0YfoePJdP6Djpr9nvtZcTYwbZ6En/13Qla6vYfdjOx4H3Go/Dlxzn+yTGbH3TZLjZ5J9rsNvfhRVciDW4Oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770320599; c=relaxed/simple;
-	bh=NADkIUPSPYJ6eoj468PahRViRu/F/G/7pnep2BZi9j0=;
+	s=arc-20240116; t=1770323528; c=relaxed/simple;
+	bh=hHRM1hG5u64AI+78FHy2jBXvmx8Dnw4TMlLI/0c55EM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MyuYJJ749ZU8B5VfF6M9fbZfwjPURzE8HVsNgpeZ0DORtU+Awtv8gT/ALk/FhH5KVQFj3pU34xBC1xi0s7dXnZ0wAgX8iiQ8chu5YolxXzuaFH6KBj3FHXp7HQiZMgsIp74aDWphNtv1yP3IHFapMSlXWjzu8Yu0GmU1fpSog+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.175
+	 To:Cc:Content-Type; b=fOotT8cBIYd4/RgZnHwrgDDIeKs0kEeKppnhnoytT4sK/5AAb14w6/jJaX2/rTPqQlfvZ5kyT3rrBDDAVDoGFIgps6IWovw3nxNKbTyR0m07kBeybYt5llMoai8f3zUONJYzX6SwFhKUTUVcAqOWnyn3Zp594DVB8A550kERaZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.128.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-8c5386f1c9fso171170185a.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Feb 2026 11:43:19 -0800 (PST)
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-78fc4425b6bso13890427b3.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Feb 2026 12:32:08 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770320598; x=1770925398;
+        d=1e100.net; s=20230601; t=1770323527; x=1770928327;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=NADkIUPSPYJ6eoj468PahRViRu/F/G/7pnep2BZi9j0=;
-        b=mI/SIozv0RZbHGm5zHJbrUWyqAxNZgF/799oEMyqkUBR1MzdOyO9nYNPtzEVdcYfhY
-         9WHLYjwY2RBwnGs40B5+xso0RZRR3g09Od+jxLwhbvuUfucXt+rrRwYjvdrPbq5NYgmO
-         nEKuY4vuO+mBh2YXsJB0Q00rvHnjlkG0QbtcXxC6nPDhFXTt5MNisZSb4pELToOFiro8
-         yibr+dl9hY5y+GpEsG1fJxgUDA1NnltyId3dTt4MCrgolSQjt6PySI/w+w9dmawjclkA
-         UufWwQUp359vGalMxYqPKHvFQEcxakj5JXnyWc3pMJsP4Q87XB/pgdIyC8tqIT7VQILa
-         QhfA==
-X-Forwarded-Encrypted: i=1; AJvYcCXgFyZFpy8NXdLBp1jaNUjzSNqmpYYG/Z/wSN//9mOtm2gmNmFyTpB/Fjw3YTn/we8q1xdHFbdmEYT9kk6m@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw2B/NOgzEnsEa7RXmDqvY20y2Xrc22pPAmywJiaGIBjuswLojG
-	BBbyIPqnjXvY7ajC7/V0J53CRAaiZL/39bhCOsWg9XMCyKytiynE2v0AL9qPoxHx
-X-Gm-Gg: AZuq6aIw2FKV4AAjGb8lLYoVG4il4A9IpQiA7USzvY7p55TVoKFhv0orwPeXsM/EpYm
-	OiEucb/svMgiW41WSD+kQRHDxlzRaSq6dX4Q/ICqvvTpKzdE+xtzt2RUnJBdkUGSiMYcO0OVDrQ
-	K5FyVsiBf5ODP/VHnopHBwDPz0FGjxVKmPpGcbMZPFkwPUaJ/Ig7UW8iv5gUhAgtieirhcdhnIK
-	cwVfFBEkaUhUmRWglLAmJID/0Y7Tl1rjRNhdVHPtXtUzrvi/FfeAMHOLiiGljFRjr/lcCMS9kD4
-	xkpbmXsMzpXSfYPWasqRTYm14u576pxDoojYU/I10YnmjZwL4qzwYCc3V0fdfJvETTFoXBOw0rc
-	6NRcZuYmekMPyLJ9MhaUnDG4IsMFjVYryEO3O7dj+MrMcv8bVwppiFHeWZFX5y6IISifh8LOOi0
-	ZFyXMWr179ARbYMTZnhuoedmjvYm7SRRiJlYqaQQMtVQArsw==
-X-Received: by 2002:a05:620a:7010:b0:8c6:e1ff:8cfa with SMTP id af79cd13be357-8caf1307e4fmr28895685a.60.1770320598374;
-        Thu, 05 Feb 2026 11:43:18 -0800 (PST)
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com. [209.85.222.171])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cafa3bf628sm4832285a.48.2026.02.05.11.43.18
+        bh=Uw9NFSYymdF9cfh8JgFLbLxokKprMEjCgsdfjzfGOUA=;
+        b=pPLnSL0MVRwjM2/GgxErvDALfoZ6ZCGQQP8FWOE1gxOje83ePBv5Fd28pPKezdNwmb
+         Oz+s1f2LxDzIa8yE9L0Zm3d8Xp3iBPOhQfQvbTQ25kVH+pnGzzTLNDOC9dpLnPktTcu8
+         d37l4u5/zjViYMKn2B6aI34omz+7xviIviKJM41pGqIakBhxM6uZKbN1JEH5T7kTL4EW
+         j3EGfTNAGQwrobXuHI8qZg3H2trANahbio2409tGoQTdWJUOM5BusD4c5dmaE3XpNCYR
+         GFiW4PYQzavecGARcjBNIEa9yAXF14ETnr13SFCN+HwfhGIH6r8A9XdWvycrfGKUzC9N
+         tWFg==
+X-Forwarded-Encrypted: i=1; AJvYcCUQ3A14QhGVSfd/B+cTr94v4BQkAJMqBvKzMwYC5Qj1mIlV/0ykSHoF3PvxQ4pOo9gqnmhchliKhCDaYxhT@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx+OrbQ/33GojeWzxTtYqoGwjdftsoJcielheF8+DGD8mvz6tHw
+	77IrGaRSivZuaHTBuaU1nAMj4RK9nVM6kejZLlNqInY4GVVO3gaAsog6U7VS2w==
+X-Gm-Gg: AZuq6aK2zhheXaxpBBUeCm0ZErF0FAuuaEl6RwPbxeRiIiP3Qp9BREmBzFNvnTJ3TuP
+	UO/0PDuJRSk8xkoaZ+8EDCt2ZBl0hxCf1Co25wRqQ6WUMMYSUSTUaDIf9aXfbcGps2DRBzc2h2y
+	F1TUSF1vNuD4aly44UU4jGb6ycaZXtuF6uFDrQZrKZ/NOcgKg+XZuLDOXI5bhz+23ExLrAnXXxg
+	cW4Xel3HXZuNbnunHfthHA5ZkG4nlJSxkR27KGuOhovfXAfhcEOdIOW/QoG4lgd/Fqa1I9Cu5E1
+	o+7Tcw7CVbR79rr3QpcS+OUvcAAalheT9H+wcAiJ09MOWyBiRBZ+CV049HeDpWZkpCZgxwIQqGY
+	jpWrgJjbz7EJ7RR+JvXbQWppruUpSFG3O9Tp6PTMygbkANwnC1HgP1l2RbfUVkfRq+ppTLg8pyn
+	hVKMz7Afvq9UvhGI5qwH5j6CLgPG7qY6kM1/ZsUdedHg==
+X-Received: by 2002:a05:690c:39c:b0:792:7c6e:35fa with SMTP id 00721157ae682-7952ab20eedmr4570377b3.37.1770323527649;
+        Thu, 05 Feb 2026 12:32:07 -0800 (PST)
+Received: from mail-yx1-f52.google.com (mail-yx1-f52.google.com. [74.125.224.52])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-7952a234924sm4985747b3.39.2026.02.05.12.32.07
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Feb 2026 11:43:18 -0800 (PST)
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-8c7199e7f79so169292785a.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Feb 2026 11:43:18 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCWCDP66UaGTenf8vybad87XHe6I+DUagqLPSTY9wXpmBK6jGd1tW2IFaMf+wy9gP4IX0dM7gZXj3m/DdUVW@vger.kernel.org
-X-Received: by 2002:a05:690e:24c2:b0:649:40ff:2933 with SMTP id
- 956f58d0204a3-649f21b2ef0mr353888d50.97.1770320199620; Thu, 05 Feb 2026
- 11:36:39 -0800 (PST)
+        Thu, 05 Feb 2026 12:32:07 -0800 (PST)
+Received: by mail-yx1-f52.google.com with SMTP id 956f58d0204a3-64938fce805so1491345d50.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Feb 2026 12:32:07 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCWWM/xV86gnw/MHYQ16jh6nnN6naTFbYdoAYxD1TrePILzsNZ9ATAvc4wdm8G90oPA9LBJkx8Cmp2ez36tH@vger.kernel.org
+X-Received: by 2002:a05:690e:4259:b0:649:d5ca:7988 with SMTP id
+ 956f58d0204a3-649f1f53982mr512491d50.48.1770323527220; Thu, 05 Feb 2026
+ 12:32:07 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,15 +76,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20260128-rubikpi-next-20260116-v2-0-ba51ce8d2bd2@thundersoft.com>
- <20260128-rubikpi-next-20260116-v2-3-ba51ce8d2bd2@thundersoft.com> <20260205-calm-aboriginal-mastiff-b07eb3@quoll>
-In-Reply-To: <20260205-calm-aboriginal-mastiff-b07eb3@quoll>
+ <20260128-rubikpi-next-20260116-v2-1-ba51ce8d2bd2@thundersoft.com> <20260205-winged-alligator-of-sorcery-aada21@quoll>
+In-Reply-To: <20260205-winged-alligator-of-sorcery-aada21@quoll>
 From: Roger Shimizu <rosh@debian.org>
-Date: Thu, 5 Feb 2026 11:36:28 -0800
-X-Gmail-Original-Message-ID: <CAEQ9gEm-A8mDS=6V3h=2gHOhtM39q+bR79sSFhDTvbEJbDJRWA@mail.gmail.com>
-X-Gm-Features: AZwV_QjZObttSH7jw-q62i4ilWQ9P8pUKpyBFPt_sGdKcdebjL-CU0t2EfBq4Fc
-Message-ID: <CAEQ9gEm-A8mDS=6V3h=2gHOhtM39q+bR79sSFhDTvbEJbDJRWA@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: qcs6490-rubikpi3: Use lt9611 DSI
- Port B
+Date: Thu, 5 Feb 2026 12:31:56 -0800
+X-Gmail-Original-Message-ID: <CAEQ9gEkkK_qBCq__oSJb1D5J=gLyw-kVDx1OD4SMPry6z-F7nA@mail.gmail.com>
+X-Gm-Features: AZwV_QiroKm7vTG3Gj0nXKqwrJ2f1hhd_XI_tJeNywGoynyWCjVs8fpCZhr8ft8
+Message-ID: <CAEQ9gEkkK_qBCq__oSJb1D5J=gLyw-kVDx1OD4SMPry6z-F7nA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] dt-bindings: display: lt9611: Support single Port
+ B input
 To: Krzysztof Kozlowski <krzk@kernel.org>
 Cc: Hongyang Zhao <hongyang.zhao@thundersoft.com>, Andrzej Hajda <andrzej.hajda@intel.com>, 
 	Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
@@ -102,57 +102,61 @@ X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [0.04 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	MIME_TRACE(0.00)[0:+];
 	FREEMAIL_CC(0.00)[thundersoft.com,intel.com,linaro.org,kernel.org,ideasonboard.com,kwiboo.se,gmail.com,ffwll.ch,linux.intel.com,suse.de,lists.freedesktop.org,vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-91964-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[23];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-91965-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
 	DMARC_NA(0.00)[debian.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[23];
-	MIME_TRACE(0.00)[0:+];
 	MISSING_XM_UA(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[rosh@debian.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	NEURAL_HAM(-0.00)[-0.997];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_PROHIBIT(0.00)[0.0.0.1:email];
 	R_DKIM_NA(0.00)[];
+	NEURAL_HAM(-0.00)[-0.999];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.1:email,mail.gmail.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,thundersoft.com:email]
-X-Rspamd-Queue-Id: 4F03EF6EA1
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.0:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,mail.gmail.com:mid,thundersoft.com:email]
+X-Rspamd-Queue-Id: F31C6F72B5
 X-Rspamd-Action: no action
 
-On Thu, Feb 5, 2026 at 5:09=E2=80=AFAM Krzysztof Kozlowski <krzk@kernel.org=
+On Thu, Feb 5, 2026 at 5:07=E2=80=AFAM Krzysztof Kozlowski <krzk@kernel.org=
 > wrote:
 >
-> On Wed, Jan 28, 2026 at 07:15:47PM +0800, Hongyang Zhao wrote:
-> > The LT9611 HDMI bridge on RubikPi3 has DSI physically connected to
-> > Port B. Update the devicetree to use port@1 which corresponds to
-> > Port B input on the LT9611.
+> On Wed, Jan 28, 2026 at 07:15:45PM +0800, Hongyang Zhao wrote:
+> > The LT9611 has two DSI input ports (Port A and Port B). Update the
+> > binding to clearly document the port mapping and allow using Port B
+> > alone when DSI is physically connected to Port B only.
+> >
+> > Changes:
+> > - Clarify port@0 corresponds to DSI Port A input
+> > - Clarify port@1 corresponds to DSI Port B input
+> > - Change port requirement from mandatory port@0 to anyOf port@0/port@1,
+> >   allowing either port to be used independently
 > >
 > > Signed-off-by: Hongyang Zhao <hongyang.zhao@thundersoft.com>
 > > Reviewed-by: Roger Shimizu <rosh@debian.org>
 >
-> Where did this happen?
->
-> https://lore.kernel.org/all/?q=3Df%3Arosh%40debian.org
->
-> And again, v1 was completely different so how pre-v1-internal-review
-> could be applied to this v2?
->
-> Honestly, initial guidance is useful but continuous development behind
-> the closed doors is not.
+> Where did this review happen? V1 had this tag, but the patch was
+> completely different, which means you were supposed to drop the tag.
+> Please perform review in public.
 
 FYI. v2 was updated per review feedback, which is public:
 https://lore.kernel.org/all/7d9041a3-9d2b-469a-9fa7-89d53bbd2a1f@linaro.org=
 /
+
+Maybe it's better to add this info to v2 cover letter / trailer for
+easier reading.
 
 -Roger
 
