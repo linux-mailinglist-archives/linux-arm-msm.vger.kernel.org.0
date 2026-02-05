@@ -1,382 +1,244 @@
-Return-Path: <linux-arm-msm+bounces-91861-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91862-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OGABGyhPhGkE2gMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91861-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Feb 2026 09:04:56 +0100
+	id GcaHEWlQhGkh2gMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91862-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Feb 2026 09:10:17 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6753EFB5B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Feb 2026 09:04:55 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0614FEFBE3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Feb 2026 09:10:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id CE93B3011F0D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Feb 2026 08:01:15 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 1BE29300F103
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Feb 2026 08:10:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 652E128CF7C;
-	Thu,  5 Feb 2026 08:01:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B2B03612CC;
+	Thu,  5 Feb 2026 08:10:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XVm8G65I"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="iEUiPBrO";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="EMerfe3Q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16AF348445
-	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Feb 2026 08:01:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.182
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770278475; cv=pass; b=aNyIGH4KjBNGeAMvWQLatNdcYdklSqIBssOl/+LtdqQF7s9oSKRnJnon5AHS2DH1iIsF1saAEZF4vWzlCaOvhSm6Pm2wYq6kGeMAqBmA3btf/PBsqgWcftSURVi2BKIJXd7MZ+jUtt+HE1/VGybUSRZGONFlJyfQ5IRsNXtr/To=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770278475; c=relaxed/simple;
-	bh=/AJ4U6gh3MKJZdKD8w/iOndk83/SnVdMyfBVZEqz9LY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Fm8GgZ4bcbqByswx80LLt3KJRWbHUV1+jngBPRWi2pCXQHrcI/98R6l72teTg+l4Fz+ansvCdiaJD0/Q0MRQKVBema5MdKoe2rKPzhXn9EZtaEBSTEDnqXIHoG388zXXFkiaxjHDABYrSdDpJG38YDXQfjCS4BATeNjw92iTeAw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XVm8G65I; arc=pass smtp.client-ip=209.85.208.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-385d75e1a79so4821591fa.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Feb 2026 00:01:14 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770278473; cv=none;
-        d=google.com; s=arc-20240605;
-        b=CpiDB9IddCX6BlCYdpJzU6vjZPb9QpIEIoPZiGXVWfXc6YH04Aylk0RIPvcCtIHV7M
-         dcTXVta0UyRxTe7vXSpJ8+/wt74GjdDqLIpx8Ulkj0myT0gYOGMJ23pEde7oV52lYG7x
-         LsE0qUhDxzpCSCK/6KQo9Ni8EGfr4OFZvdTjOGKkhTvVkCoeDqN1FcB1nUYWS0JvLTBv
-         seAAoF7NvZpiawzaXn1Wzhuy8YqLScTa67yZW7jGr2VIQHaTa6ZrdTdAF1G906NLAfQ9
-         0T0DRDWo07JbR1LEASP36e7iNEtiaTxfwBDj/fe1uPhLpYmruM3CgaG+ruBEB2z4c6yK
-         ycQA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=/IvY3ICgjtqApqS2PRfqr2QbryjB/lNh89R/p/mLxcA=;
-        fh=0gYVoPQPNplYnfg3+IDc9fU80qwrjm3UY5XKe3eFuT0=;
-        b=jKl4XD3loL7W5Jz4uVy202IJUCWX152p47IwnFItl5lpuL+MBu9SaXtb4hpmXTI7Jk
-         Di875IC4EiimEt9RZ1nN+9zPUWOb+NWVBKcvez7eKIg8qqAvsxYxr4ydPi3r9a1SYqhY
-         bebSDVWnsndXho9NTTLd9p5cc0hF9Zw43LBba+Zv7/hN+4zeOr1AJ44n5CyGjrKWgwqL
-         rhmUU7FfXa03w3fTGuVt9EpO1GeEePVzjPLfTHvrkgCfotdRXqW22hrPDD537SUN95xN
-         Io/kFvpkT0n8VLu14p8xtkIdc1oGUAQLTwn3OGmF78ckiDigPGu1FYA0oi/0P4JjFJAf
-         VoKw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1111327BF5
+	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Feb 2026 08:10:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770279005; cv=none; b=JqPkyqaSUTc9FIBnYaSXCSYQz0f6oiCAALnrSf1yHutQKmDeVO0pNqGebSl0oI16qwsKm4dm53J0j6+EW2elfkIKmGYMyLu691W4vm9UskZE6tgleBV1AAGc4Cg8xpFjMTVuDyZZFTKR74Bqgk1y9+OWYuCLb8wr9CsYIKklwWA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770279005; c=relaxed/simple;
+	bh=31BKYP0Nlhr52tfXs2A8uGkTeifCfvGi22PcYSAYp/o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dLwrO8+Od+yCnyUDSD8Fyoo/c16Y9OCVh/3qMG2zijrOexs75STNp/FprWzIVxEfp9cGErYfsAr6Qcc2/+4rAshYtRAvkiNxqmU/au1RUvJgZehuVMfw9VCQad7UhYBD/H8nnW3EDxfiYqUhDgjgDMsNLXqdGA9BIl4XlH90yow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=iEUiPBrO; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=EMerfe3Q; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6153dj0T3237394
+	for <linux-arm-msm@vger.kernel.org>; Thu, 5 Feb 2026 08:10:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	a8rDuGUPyagZOfVWM+f/BrTixnTf4NeRHC5TK7Tyqkw=; b=iEUiPBrO91RmrhUa
+	NgQ2fl6CgspcdHcFktP7O8JSlhyMfMc11W4F/N03QNnaHvC20g3Zl2YdhuVGkPBj
+	7o0YC8drrm7VbWw9gWSeQUrK7SkC16k5FEeo34GPlpMfOcts4CSgvlbqp2tbCfRf
+	FLQCG8wnorn6YwH5CWUl6ZQGdZs98X48tAE0vqWbtsz2Jo0AT4Gv10yldJLolAUT
+	jCUNOO7Ke2AIwOCiioRA2Yaq3HAs8JEiUzp/LS3qsIro7WB9i94i7uPVtWjX8See
+	OdZiqA41kskQnR352Apb1tX6f/cBtrPiloUCJYZTd2N0QLiA84ozIY0XI0rajO5a
+	Tu+Vpg==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c4cp51s59-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 05 Feb 2026 08:10:04 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-352e6fcd72dso1226450a91.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Feb 2026 00:10:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770278473; x=1770883273; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/IvY3ICgjtqApqS2PRfqr2QbryjB/lNh89R/p/mLxcA=;
-        b=XVm8G65IV4N/h39iNUNcEHZi4eUv1vcmb+Vk7hsGjfjBpjE5J+q+uWsxUwOtJJRCqn
-         Y2YrshpiC2w5jbQdipnH00JD3LTIe4Vmwk9XWMWGqA+pYpXR7Qi/O9uS04dBLXPdCHEq
-         sF9OkEOfzBlQa2twM1ack3RaaLqjq9XD5ODdqYDlJ96er6Ur7CyboMTPRRMXsByrMlqU
-         E9Y89DY/80UD5lSx2suFOSa2ovsSGwRAPVOgL2ELH76S+SBBJiI8EMgmfDidBYpLWBq1
-         PmSadkmXZRfJO0lZm+/r8hv0mP3aYYnCyIWC18mFNORKjBegpVkk8wGOCprl5gJUQbbI
-         BL+g==
+        d=oss.qualcomm.com; s=google; t=1770279003; x=1770883803; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=a8rDuGUPyagZOfVWM+f/BrTixnTf4NeRHC5TK7Tyqkw=;
+        b=EMerfe3Q985LaIxlKWSf08iXTdAIm/7Eqh4zwQTT51Q09dTduWKgdVbnTPeENkiV8e
+         QWFrsNrkkqSYBq5SsmVdaJpwZQ9E9RNIbzBxpEToSvS5jlwTAb54OUOiMmOUGH5eMh5C
+         MoT8dVsAXVUXbfDx8Y8w+vikuJoKn+bly+xsWs31L1SEHQYemsYXpPPVdgWY1z3GmRl+
+         C9mNI2VRSWYO11Zj4Y1pKECZj6K+Lah/E4Fn5hCTi115lmbQxYsAdNzlLQPmB47au9ru
+         FJM5FEUSYWtJU7Zb0wObXUKI4CVPGgwcuK+0ocb/050R3k7U4cI/06Wyy/i+rrNCm0TF
+         iepg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770278473; x=1770883273;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=/IvY3ICgjtqApqS2PRfqr2QbryjB/lNh89R/p/mLxcA=;
-        b=Le22WI0yRSMAVORXtCKsYf1xkAX4RipNuA0WRyf5AysZlLHkDHYPbvvPqSPYsumuaC
-         uln0QhvbNEf0BSWuiJ/F6g/Mzqrl8mVhRh4OLYw5BHjlS2ioW5g5wcugP/Ncwp3wQajZ
-         teiO9MnP2BVfRJjekS+3vInvsfWcwWaHCXz6Js0lbUZRCrTseKFwYl5aNbBzDCqpheoI
-         XS+HkRkEWwSXnaazvC1WTHWN/wyFStRQ5I0hKi5s+lDse4f5VY40Q6ZGiiwgGclqleJ7
-         HW1t25+H96rd48Ynms7ygSl5Cu6XDhD2qaP++3qzCC/rx8GC+8BHiYz9zdGgMuXTchx8
-         Kh+Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVZsgWV2lOh2VHc07OJ8yx5QEhaMdXJZ63affbjVUQHfSANq3gD5OtQLq+BwKYCT3/u9LmkTH9RaBqIn0AZ@vger.kernel.org
-X-Gm-Message-State: AOJu0YzRsy3HAh3xiG7KK9XgRUuAKL/pojGZy9rcxplilAqOIFWyZiGy
-	6hXA6l38v3E8XPvMEoG0ulRkeFqHQGCNgRqTjMQcWY5Ui4OSxsPYUJ4GF/2WeqZCnUCQLe6akFa
-	1sTDiA7jsXm+YRj/mBDUmvy0PSIOyog8=
-X-Gm-Gg: AZuq6aISJ/KYYtJBM+d+KQgNHzm3c29wM6wjJEvKZJahk5Ji6yDG4U4i0kpV8G6sky1
-	wsf64FUreLLND5MYoKO/FcvrlSSoQKBMVOHekYWdIIcC3pWJ95THYOfjfBXOAwSanyQD0hPPCfE
-	DvoZ43Eg7xJOdGz0OovlRwPpyapwGyw3a8WDv3b8wg+lIt8suYUp9fyQApoEWPjw3YxPW/guLCN
-	9GZ+sV8p8y/mS5cWKQeF/8N1vrn8hKgD3mHWdj5WADxs7n1a8xS05BwZsnDgkLSZeHQ8hXSJn39
-	SwWZV9CGONq6iovHLaHsKooTVF1fP6tv1Hu5aFhqZXURpDeDNVcJHN2lDCJjDu9+10U=
-X-Received: by 2002:a05:651c:4185:b0:383:2102:981d with SMTP id
- 38308e7fff4ca-38691e32939mr19109191fa.45.1770278472698; Thu, 05 Feb 2026
- 00:01:12 -0800 (PST)
+        d=1e100.net; s=20230601; t=1770279003; x=1770883803;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=a8rDuGUPyagZOfVWM+f/BrTixnTf4NeRHC5TK7Tyqkw=;
+        b=q2z66YHUXJ+rDCexLGf8lEvlh1IXPAyjrYb8ttMrHz4tVaudnn1BuO9V2JljqGcJbK
+         gDqoTkXSsy8qosKh1gb6BrfMzEf2rv9UDOC82gMPzVCZsxeznFdX3VyKEgChdCk7E+os
+         zzdEhnMzqYM6uuk9A4sCGQneeY7Jmaqzd1Zmr73LI00vsQXRXUdO8oG921+weCm6DGdN
+         0jf60ss7f3+E3ScBSktClvifDSTzMxMqy4vwNBrVqubsskwcqKOWpVKeka2RvKtffgxs
+         7t5pSwzFRjtTh2ip95Jh+f7nTLyXdBV0EyNy2nGD+ENLWXppoe1FeZgREq03eFq1KfQ2
+         c2PQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVHWDX1VsK5H5utbic5ccGInAj0Bn8BfjlQ6xMMnzayDp9z89QP7TZxrD4okO625iv0NIzHrk+kx/H+vVHT@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy12uM6mgmRGI9vpNp9GKmJOySBy2Fb9E//Pf7GdTepA92D2gUv
+	1Nf2NnWLNtiq+JaHOpjdOecakShg/8j7a46YswTUWcLgviVyElMUh983k4ol8Zwe8DeQzdSBylj
+	DQiJRqsKT9eTBMVBLDzzZtQrkltar8QRqrNuWBOecCO70gqqM7jPJB/e3OO+Bd5XpNrr2
+X-Gm-Gg: AZuq6aK1Lbs1aQU1m5iWztG5wF+cfpJFlJJBsGtCAcVfvj7MhsPNIYIl43FJ2AaM6tQ
+	K0yFgghMCt8kLCnw7okw2vZrZcivABHBJJHqDvz3Zr+qkApinvGExhVLEa0h4YyVD4SgSvQsxSZ
+	/2t978TMI05g8e4NBRo19VW8VdOdZqb1o8FmWL9CZM2xm7KZPBuJPRJX7yI1ijeOABaIchgW2j8
+	Q88mnDKzDInDdlwRFnp88XGCNgP5MoqYcYfbC9MTuo3uh014vSQoXi3jWnxv0J71KeYg5I2wGJx
+	Qpu76LQSkX+H8wLs+k2p+OLbzKD+PU37J4n4T0O0w4hZNw1wI9PrHBdpQJNGpWTdNkzWsng8/3+
+	SBTwB5cQpntncZUUtBWFv8EEB/ghC1yL4yTHNBnT3pk7s
+X-Received: by 2002:a17:90b:1643:b0:345:badf:f1b7 with SMTP id 98e67ed59e1d1-354871db4e8mr4514473a91.28.1770279003359;
+        Thu, 05 Feb 2026 00:10:03 -0800 (PST)
+X-Received: by 2002:a17:90b:1643:b0:345:badf:f1b7 with SMTP id 98e67ed59e1d1-354871db4e8mr4514452a91.28.1770279002912;
+        Thu, 05 Feb 2026 00:10:02 -0800 (PST)
+Received: from [10.219.57.109] ([202.46.23.19])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3549c09adffsm1642267a91.4.2026.02.05.00.09.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 05 Feb 2026 00:10:02 -0800 (PST)
+Message-ID: <4835d0b0-06c2-42d1-aa33-34daa0e7a8e7@oss.qualcomm.com>
+Date: Thu, 5 Feb 2026 13:39:54 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CALHNRZ8qSOZKwmBznRqvAAjMcQ265iEdBXEA2RSkSBViKO=uEA@mail.gmail.com>
- <8c64d188-9e14-43ae-8950-b31347f8eff8@linaro.org> <CACSVV02HKpEGQ6cAhNQ8a0YiT0nXHVD8=yXOfONz=1Amac+z2A@mail.gmail.com>
- <CALHNRZ-4oM9Kpx-umvdYaMXDwBtny5HHpe1PWzFcJ9=3m0s49A@mail.gmail.com>
- <4c2faa1d-504d-4642-90d7-8db21b99d7c1@oss.qualcomm.com> <CALHNRZ-HzFfgeScszdHb3CtAsm9rc9UBrbkiz7wgo+dVUZ4wWQ@mail.gmail.com>
-In-Reply-To: <CALHNRZ-HzFfgeScszdHb3CtAsm9rc9UBrbkiz7wgo+dVUZ4wWQ@mail.gmail.com>
-From: Aaron Kling <webgeek1234@gmail.com>
-Date: Thu, 5 Feb 2026 02:01:01 -0600
-X-Gm-Features: AZwV_QibdT7V7njgieuV2DAWgjI5E5MmK9z2L7-tZqnW-TKfAav3bVq7DipLj7Y
-Message-ID: <CALHNRZ_=c0JZ4B779rCciP+_U+YMqEbby1F5RaeyUTZiNZdc2Q@mail.gmail.com>
-Subject: Re: Questions About SM8550 Support
-To: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Cc: rob.clark@oss.qualcomm.com, Neil Armstrong <neil.armstrong@linaro.org>, 
-	linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/7] of: factor out of_map_id() code
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bod@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Saravana Kannan <saravanak@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+        Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Stefan Schmidt <stefan.schmidt@linaro.org>,
+        Hans Verkuil <hverkuil@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
+        Hans Verkuil <hverkuil+cisco@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        iommu@lists.linux.dev,
+        Charan Teja Kalla <charan.kalla@oss.qualcomm.com>
+References: <20260126-kaanapali-iris-v1-0-e2646246bfc1@oss.qualcomm.com>
+ <20260126-kaanapali-iris-v1-2-e2646246bfc1@oss.qualcomm.com>
+ <47fbba15-6375-40fc-bd2c-8ebf2788837e@linaro.org>
+ <7d1b5897-8f17-4213-b893-d99d96afef94@oss.qualcomm.com>
+ <j6euiso3pcg7nvewscsfjkqyfl55ajxxybf2pib3622uontj2y@aqj4satyf7b7>
+Content-Language: en-US
+From: Vijayanand Jitta <vijayanand.jitta@oss.qualcomm.com>
+In-Reply-To: <j6euiso3pcg7nvewscsfjkqyfl55ajxxybf2pib3622uontj2y@aqj4satyf7b7>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=Oc2VzxTY c=1 sm=1 tr=0 ts=6984505c cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
+ a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=EUspDBNiAAAA:8 a=SBgkrO22ZELSIJHh4VIA:9
+ a=QEXdDO2ut3YA:10 a=uKXjsCUrEbL0IQVhDsJ9:22
+X-Proofpoint-ORIG-GUID: MGRQjp-eBDnuvmC7y1dh7PWK_nEQ5veg
+X-Proofpoint-GUID: MGRQjp-eBDnuvmC7y1dh7PWK_nEQ5veg
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA1MDA1NyBTYWx0ZWRfX8IW+padETD7x
+ BBhQKnjH7albws9aScRQSMA5G28/tCOLsxal7zNO5X5cXg3SbXsZYyHbQLEa0RnWnPoncvvM+rE
+ XYJTX9pcEKwLJh4huDWw10SrbDIynufCGZyGZ/cX3HtNviN3bH+QyYfBrYCT6ObVRRYsrn+DuzK
+ VgAgHfoXJ5QeSCWXgi0ytmpArEY5sk3AZbO9RbgIi1gAsHGb8nLtcR3upFBHQpV5rTV48u09rBe
+ dXPj5d+mJ4gN0hKl3QND5lrLzAUe7fCpKShK5//RFHqzBsMUrLjfEoZqHlMTSikFWRiW8FsbXut
+ bJpmRuTlRKC9TJIIu8Ek+p5yW2foOhhLxnPEq6lHcv5GWv2OFMRpcd0LBHxBkfXsJVprs0mVY+F
+ SUY/F3REYOFYsEGCUKkPPP8q9XvlI04NbJ7VJzdzz3EO5nCszAalSE6JeHOzrBkmEhjzs1huuJC
+ DnYj0WpKeWJ4403PDiA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-05_01,2026-02-05_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0
+ bulkscore=0 priorityscore=1501 spamscore=0 impostorscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602050057
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-91861-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-91862-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2600:3c09:e001:a7::12fc:5321:from];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	RCPT_COUNT_TWELVE(0.00)[25];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	RCPT_COUNT_THREE(0.00)[4];
-	NEURAL_HAM(-0.00)[-1.000];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[webgeek1234@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,mail.gmail.com:mid,qualcomm.com:email,linaro.org:email]
-X-Rspamd-Queue-Id: B6753EFB5B
+	FROM_NEQ_ENVFROM(0.00)[vijayanand.jitta@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[100.90.174.1:received,202.46.23.19:received,209.85.216.71:received];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,cisco];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 0614FEFBE3
 X-Rspamd-Action: no action
 
-On Thu, Jan 29, 2026 at 8:35=E2=80=AFPM Aaron Kling <webgeek1234@gmail.com>=
- wrote:
->
-> On Thu, Jan 29, 2026 at 5:11=E2=80=AFPM Akhil P Oommen <akhilpo@oss.qualc=
-omm.com> wrote:
-> >
-> > On 1/28/2026 11:24 PM, Aaron Kling wrote:
-> > > On Wed, Jan 28, 2026 at 8:46=E2=80=AFAM Rob Clark <rob.clark@oss.qual=
-comm.com> wrote:
-> > >>
-> > >> On Wed, Jan 28, 2026 at 12:54=E2=80=AFAM Neil Armstrong
-> > >> <neil.armstrong@linaro.org> wrote:
-> > >>>
-> > >>> Hi,
-> > >>>
-> > >>> On 1/27/26 23:48, Aaron Kling wrote:
-> > >>>> I am working on the AYN Odin 2 qcs8550 series of devices, specific=
-ally
-> > >>>> for Android, using mainline kernel drivers. I have come across som=
-e
-> > >>>> missing functionality and failures that I would like to inquire ab=
-out.
-> > >>>>
-> > >>>> * ABL fails to load a dtbo using a baseline dtb unmodified from
-> > >>>> mainline. Using changes described in the gunyah watchdog thread [0=
-], a
-> > >>>> dtbo loads and the devices boot as expected. If any of the changes=
- in
-> > >>>> that post don't exist in the base dtb, abl will fail to load the d=
-tbo
-> > >>>> and go to the bootloader menu. This appears to be an issue in the
-> > >>>> baseline abl code, affecting all devices of that generation. Would=
- it
-> > >>>> be allowable to merge a change adding those changes to the sm8550
-> > >>>> dtsi, allowing an unmodified mainline dtb to work with overlays?
-> > >>>
-> > >>> Any addition to the DT must be documented in dt-bindings, so if it'=
-s needed
-> > >>> for boot they should be documented and added for sure.
-> > >>>
-> > >>>>
-> > >>>> * SM8550 does not have cpu opp tables, thus cpufreq does not work.=
- I
-> > >>>> have locally copied the commits from sm8650 and adapted for sm8550=
-,
-> > >>>> and that seems to work okay. But no measuring of bandwidth was don=
-e,
-> > >>>> so the numbers are likely not entirely correct. Is there any plan =
-to
-> > >>>> generate correct tables for sm8550?
-> > >>>
-> > >>> Cpufreq works but not the interconnect scaling, so doing the same a=
-s sm8650
-> > >>> is fine but since the values were calculated from downstream DT tab=
-les,
-> > >>> the same should be done for sm8550.
-> > >>>
-> > >>>>
-> > >>>> * As part of a series to support the original Odin 2, a patch to
-> > >>>> update sm8550 EAS values was submitted [1]. But that series stalle=
-d
-> > >>>> and this was never merged. If this change is valid, which per that
-> > >>>> discussion it appears to be, can it be resubmitted by itself and
-> > >>>> merged?
-> > >>>
-> > >>> I missed this patch, please re-submit, I also need to update the on=
-es
-> > >>> for SM8650.
-> > >>>
-> > >>>>
-> > >>>> * Per the mainline kernel device trees and audio topology provide =
-by
-> > >>>> the oem, these devices use primary i2s for the speakers path. Ther=
-e
-> > >>>> was a commit adding clock support for that as part of an hdmi seri=
-es
-> > >>>> [2], but that seems to have stalled. Is this going to be picked ba=
-ck
-> > >>>> up?
-> > >>>
-> > >>> No, I do not plan to do this work, it required adding callbacks in =
-the
-> > >>> code to handle the clocks like done for the pre-audioreach firmware=
-s.
-> > >>>
-> > >>>>
-> > >>>> * Inline crypto fails to detect hwkm support. And I see other logs
-> > >>>> online, such as for the sm8550 qrd, that logs the same way my devi=
-ce
-> > >>>> does. I traced the issue to the check for wrapped key support [3].=
- On
-> > >>>> my devices, the derive call is supported, but the other three call=
-s
-> > >>>> are not. I was pointed at the downstream headers for sm8550 suppor=
-t
-> > >>>> and only derive is listed there, the other three don't appear to b=
-e
-> > >>>> used in the downstream driver. Is this expected? And if so, will t=
-his
-> > >>>> case be added to the mainline drivers?
-> > >>>
-> > >>> Does hwkm work with you remove the last 3 calls ?
-> > >>>
-> > >>>>
-> > >>>> * Some gpu related clocks complain about being stuck off during bo=
-ot,
-> > >>>> causing stack traces, but the gpu does work. I tried to do some
-> > >>>> research into this, but quickly got lost in the weeds and I have n=
-o
-> > >>>> idea where to even look.
-> > >>>> [    0.367278] gpu_cc_cxo_clk status stuck at 'off'
-> > >>>> [    0.367962] gpu_cc_hub_cx_int_clk status stuck at 'off'
-> > >>>> [    0.368595] gpu_cc_cx_gmu_clk status stuck at 'off'
-> > >>>> [    0.369245] disp_cc_mdss_ahb1_clk status stuck at 'off'
-> > >>>
-> > >>> This may be related with the display handoff from ABL, did you add =
-the
-> > >>> plat region to the reserved memories ?
-> > >>>
-> > >>>>
-> > >>>> * Sometimes when starting rendering, a bandwidth submission times =
-out,
-> > >>>> then the driver immediately complains that said id was left on the
-> > >>>> queue. I have tried increasing the timeout, but the same sequence
-> > >>>> still happens. Timeout happens, immediately followed by a matching
-> > >>>> unexpected response. Implying that this isn't actually a delay /
-> > >>>> timeout issue.
-> > >>>> [ 1848.517020] platform 3d6a000.gmu:
-> > >>>> [drm:a6xx_hfi_wait_for_msg_interrupt [msm]] *ERROR* Message
-> > >>>> HFI_H2F_MSG_GX_BW_PERF_VOTE id 1015 timed out waiting for response
-> > >>>> [ 1848.518020] platform 3d6a000.gmu: [drm:a6xx_hfi_send_msg [msm]]
-> > >>>> *ERROR* Unexpected message id 1015 on the response queue
-> > >>>
-> > >>> Weird the timeout was extended for this very purpose
-> > >>>
-> > >>>>
-> > >>>> * Some 3dmark benchmarks such as solar bay cause a gpu crash. I am
-> > >>>> unsure if this is a kernel problem or userspace, so I'm submitting
-> > >>>> here first. If the consensus is that it's a userspace issue, I'll
-> > >>>> submit it to mesa.
-> > >>>> [ 1860.112008] adreno 3d00000.gpu: [drm:a6xx_irq [msm]] *ERROR* gp=
-u
-> > >>>> fault ring 2 fence a261 status 00EF0585 rb 06df/090f ib1
-> > >>>> 00000001512E9000/003d ib2 00000001512E7000/0000
-> > >>>> [ 1860.113122] msm_dpu ae01000.display-controller: [drm:recover_wo=
-rker
-> > >>>> [msm]] *ERROR* 67.5.10.1: hangcheck recover!
-> > >>>> [ 1860.113238] msm_dpu ae01000.display-controller: [drm:recover_wo=
-rker
-> > >>>> [msm]] *ERROR* 67.5.10.1: offending task: Thread-23
-> > >>>> (com.futuremark.dmandroid.application)
-> > >>>> [ 1860.258126] revision: 0 (67.5.10.1)
-> > >>>> [ 1860.258132] rb 0: fence:    2884/2884
-> > >>>> [ 1860.258133] rptr:     36
-> > >>>> [ 1860.258134] rb wptr:  36
-> > >>>> [ 1860.258135] rb 1: fence:    -256/-256
-> > >>>> [ 1860.258138] rptr:     0
-> > >>>> [ 1860.258138] rb wptr:  0
-> > >>>> [ 1860.258139] rb 2: fence:    41563/41569
-> > >>>> [ 1860.258140] rptr:     1752
-> > >>>> [ 1860.258140] rb wptr:  2319
-> > >>>> [ 1860.258141] rb 3: fence:    -256/-256
-> > >>>> [ 1860.258141] rptr:     0
-> > >>>> [ 1860.258142] rb wptr:  0
-> > >>>> [ 1860.258146] adreno 3d00000.gpu: [drm:a6xx_recover [msm]] CP_SCR=
-ATCH_REG0: 0
-> > >>>> [ 1860.258220] adreno 3d00000.gpu: [drm:a6xx_recover [msm]] CP_SCR=
-ATCH_REG1: 0
-> > >>>> [ 1860.258266] adreno 3d00000.gpu: [drm:a6xx_recover [msm]]
-> > >>>> CP_SCRATCH_REG2: 41562
-> > >>>> [ 1860.258310] adreno 3d00000.gpu: [drm:a6xx_recover [msm]] CP_SCR=
-ATCH_REG3: 0
-> > >>>> [ 1860.258354] adreno 3d00000.gpu: [drm:a6xx_recover [msm]]
-> > >>>> CP_SCRATCH_REG4: 3736059565
-> > >>>> [ 1860.258399] adreno 3d00000.gpu: [drm:a6xx_recover [msm]]
-> > >>>> CP_SCRATCH_REG5: 3736059565
-> > >>>> [ 1860.258443] adreno 3d00000.gpu: [drm:a6xx_recover [msm]]
-> > >>>> CP_SCRATCH_REG6: 3736059565
-> > >>>> [ 1860.258487] adreno 3d00000.gpu: [drm:a6xx_recover [msm]]
-> > >>>> CP_SCRATCH_REG7: 3736059565
-> > >>>
-> > >>> @rob do you have any idea how to solve this crash on a740 ?
-> > >>
-> > >> The clk and a6xx_hfi_wait_for_msg_interrupt errors indicate that
-> > >> something is unhappy about gpu pm.  I'd focus on that first, since
-> > >> that is almost certainly the cause of the later issues.  If things
-> > >> _sorta_ work (rendering UI, etc) you could try removing all but the
-> > >> lowest gpu OPP as an experiment.  Could be that power related proble=
-ms
-> > >> surface when the GPU ramps up to higher OPPs.
-> > >
-> > > Things work amazingly well compared to what I was expecting. Using
-> > > mesa staging 26.0 as of yesterday, I'm getting roughly 80% performanc=
-e
-> > > in the benchmarks that do run, compared to the stock Android. And
-> > > rendering is correct everywhere that I've seen so far. Mesa 25.3.3
-> > > gives about 89% compared to stock, but there are graphical glitches i=
-n
-> > > some of the benchmarks.
-> > >
-> > > I set gpu max_freq via devfreq to the minimum available frequency and
-> > > ran the failing benchmark again. It completed once, but failed with a
-> > > similar stack trace on the second run. And per sysfs, the gpu did sta=
-y
-> > > at that minimum. Of note, that causes the benchmark to fail, but
-> > > rendering does recover and the unit is still usable afterwards.
-> >
-> > In sm8550.dtsi, I see that ACD values are not specified in the GPU OPP
-> > table. Can we add those (from downstream dt) and try again?
->
-> I don't know what I'm looking for in the downstream dt. But if such a
-> change gets pushed to lkml, I can grab that and verify.
 
-I took at look at the downstream dt and took a guess at importing the
-acd values. I'm not sure if the gpu here is the baseline kalama or
-kalama v2. I guessed the former. There were a couple values missing
-however, that I had to extrapolate based on other frequencies. This
-however changed nothing about my test results. Still getting crashes.
 
-From my perspective, this part does not appear to be a PM or frequency
-related issue. Some of the 3dmark benchmarks I have never seen crash.
-Like Wild Life Extreme. I can run the stress variant of that and it
-beats the unit for 20 minutes at full clocks with a screaming fan and
-that runs perfectly stable. Solar Bay Extreme also runs completely
-stable in all of its glorious 3 fps. The two problems are the standard
-non-extreme Solar Bay and Steel Nomad Light. Both of these
-intermittently crash with similar traces to what I posted before.
-There doesn't seem to be consistency in the faults, sometimes it will
-be almost immediately after starting the benchmark, other times it
-will get 90% through and then fail. But they virtually always fail to
-complete. For another point of data, I have never seen GravityMark
-cause a fault either.
+On 2/4/2026 6:41 AM, Dmitry Baryshkov wrote:
+> On Tue, Feb 03, 2026 at 03:43:58PM +0530, Vijayanand Jitta wrote:
+>>
+>>
+>> On 2/2/2026 8:22 PM, Bryan O'Donoghue wrote:
+>>> On 26/01/2026 12:25, Vikash Garodia wrote:
+>>>> From: Charan Teja Kalla <charan.kalla@oss.qualcomm.com>
+>>>
+>>> This commit message is confusing and inaccurate.
+>>>
+>>> First up, you're not factoring _out_ of_map_id() - factor out of_map_id() means to remove of_map_id() - you are refactoring of_map_id().
+>>>
+>>> Your patch title should be something like "refactor of_map_id() to prepare for mapping of multiple IDs to a single device"
+>>>
+>>
+>> Sure, will update the commit.
+>>
+>>>> Linux interprets multiple mappings for the same input ID as a set of
+>>>> equivalent choices to pick one. There exists usecases where these set
+>>>> must be maintained in parallel, ex: on ARM, a dynamically created child
+>>>> device(s) is referencing multiple input id's in parent iommu-map.
+>>>>
+>>>> Factor out the code where multiple mappings needs to be maintained in
+>>>> parallel can be achieved through callback from this factored out code.
+>>>
+>>> Which callback ? There is no ->function(pointer, here...); ?!
+>>>
+>>> Just make some plain and straightforward statements about what you are doing and why. There's no need to resort to dissertation-speak.
+>>>
+>>
+>> The callback in introduced in patch 2 of this series. will update the commit descripition as suggested.
+> 
+> I think, the callback was NAKed already.
+> 
+> 
 
-Aaron
+I'll remove the callback and update change such that all entries of iommu-map are always scanned.
+This would handle the video usecase ( i.e; same input id's mapping to different SIDs ) and in other
+cases it would result in few additional scans in iommu-map compared to existing implementation (where
+it just returns after first input id match) , does this look fine ?
+
+Thanks,
+Vijay
+
 
