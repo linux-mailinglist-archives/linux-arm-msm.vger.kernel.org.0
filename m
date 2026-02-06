@@ -1,340 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-92012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92013-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id QKWbGh2+hWmpFwQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 11:10:37 +0100
+	id UJ8WJ7PGhWnAGAQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92013-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 11:47:15 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4B7EFC859
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 11:10:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C0B1FCC6B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 11:47:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 52D3C30053FB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Feb 2026 10:10:35 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id DAC4C30398AF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Feb 2026 10:46:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD5CC35DCF7;
-	Fri,  6 Feb 2026 10:10:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2076366559;
+	Fri,  6 Feb 2026 10:46:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=forissier.org header.i=@forissier.org header.b="pNyRo1j7"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="EAKVAQgQ";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="fCTsYWmU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E0012EE5FC
-	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Feb 2026 10:10:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.181
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770372634; cv=pass; b=XZmYGhzmnWKK0N1w62ZIxr59cVr2EOtbbuNqd3DsjYuqV9G4jKaUgA+byUoW9NJ9Y8QkBsw7iXk8M3MQyxG067DrKHLFtcBPC0JspzuYUYsOCQrCQ/lZhX6HAlASB8mhRhdCH8KVjxV7RX7kOmpBaUZyDkMngXM3srWqzpjcrqE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770372634; c=relaxed/simple;
-	bh=+raMpszw+VfiU8LwlzdNKHxES59Mccz7j6Z7SxfXCao=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=D2Pni4BdF630Eax3Idz/T9CwG/qzb2Si5WyQ2rwK0uMX7kY8tuEnLVPUsM+CXsA9u9bsOjqpweyVXDA0sxR9nSwn3ltK3ob9Kz4/+5owhnYEIBME0DJ6N8LCb95mDwe7eRvSLFCyOvEXhRQJ8usO5AtNsO51LdOfRMiRjHC66SE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=forissier.org; spf=pass smtp.mailfrom=forissier.org; dkim=pass (2048-bit key) header.d=forissier.org header.i=@forissier.org header.b=pNyRo1j7; arc=pass smtp.client-ip=209.85.214.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=forissier.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=forissier.org
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2a7d98c1879so12442615ad.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Feb 2026 02:10:34 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770372634; cv=none;
-        d=google.com; s=arc-20240605;
-        b=PVuReLvRwvh57n08yarr8JZraOU6xwTgdqIFJxqC/EPs4HDV4sSZHBQLc0sJz/tihW
-         ijRAWvbWm7dhnctlSs2p9lwxgJWT2IaY8Xu2z29RcbI9oZYtdF/4qYmFxsE+x3/iN8ea
-         VIaJq0YaZfb4GgwBDR96ga1dwMOHLqA1hQZv/wLtH83dVsUrWam8WgXQ1B8A7N4ixqin
-         2O4RAz9aQPyzpzEjiGQZxKVHLoZSSKWok6mflKKZtlCk8IDCWZ+xZteh9mZvnc3RaaZC
-         XLNNZDoKchLquqzRePiIYDgfhpHV5a9JXsxhbAF208vZuUepfbw6/9pocsjrmmNjGsd3
-         ztDg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=zCPgnb7KEPXry1O1IYURNqjbLQ+f0InuIl7jk/xq6CU=;
-        fh=CMWSj4eV268rm7PQO8v/p9akvUMIg8PP0dwHBRtnhGE=;
-        b=dNf2P8r+yYwOoPZ0oi6aBnCVlNmtRpyOgkoaPIE6ngKHam1fb17KA9n7xUUhM8DDQ1
-         +1f6q1J6ZyKJ6V1pifYVGLKTotIr+bblqbFUnv/kxtUJhTxzpAcUdSViYEK9jyEfDA7s
-         aiIyMMjSMlaEYz1d1A7nFJw+FAykrk34ffOJHyXqytjz73qjRH/AFBbzIhP6P6pdKlFK
-         bvf7DAQiaYLn5F3IZAyrlizbJZyBawNftvmrcm05pGZ1QEo0olUyXk3ureU1bq6t7uyj
-         h4rsMbCorfGIT6VCCXO2s8rP2upzho0J0nf5gZRtRhEKxVEdUcjBqgpgj0t0Qy6MDBtz
-         AeBQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94E7630BF4F
+	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Feb 2026 10:46:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770374812; cv=none; b=Zj6/A0sNMYL0P/fHkPW13EbqUFgMOQfJwn1eebgEjb3va8u89hUfOu2MaDXiVeUvqP+78n5Np6DfUHEMNcBbSs+WGtZrnt52mYxbx9JdcjVcYAuV52oREycnBQuh73MieHxd5UP+oj4LmMhBcX1Qw6GwA3gXz4CWg1b4fFY23LU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770374812; c=relaxed/simple;
+	bh=Cbf64mzzPEuG0k8eQLoj1J9/kH8qdLgOuoX+21Wwx8c=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=ItkI3ao3bE8/v+9HvDn/BxGZKsObjlGwfVJV44juzoVdWJWeF7t6i7C7RGnVX4k/dj8hFTBOe9+8LiVdBi3+w2eJdE2z1IsBBC5JaDBiv5hrlwIdwQLEPZvlK2l0HgwITK4Y1RBpRn6fY+A5p8it4cEhvKjWBYV0O3L5LGDr828=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=EAKVAQgQ; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=fCTsYWmU; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6169QOfw2228023
+	for <linux-arm-msm@vger.kernel.org>; Fri, 6 Feb 2026 10:46:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=9r/eMOQK9nTT1F6zLZ106lu0lf4Wx/cgfXM
+	m44WebkI=; b=EAKVAQgQR0rK1bPs/5VNsJFJ/GN7QNF2AK/FxkqNFzUmz3I9jD/
+	QGBtMM2jm8LWtBSXEnYlxH/9b3a/IaIw6r1/6/kyHAVhq8w1TjZh4Kc+wIng1D/l
+	XgDbMyfadNSe6gz8LjrqpHso/MukxW33Mr+LUwZt9nYMj8ZnGusF6zuKL7qjMlW/
+	H5HM9xCtSbe+Ut41DNFwp44zl6APhsBjolkb4ZK49REYd8sApOFgqwrNAbQAY2HV
+	wJsyXvRNQTHVnZRS5jMo35RvRxNA0KhTG9E3I1VUYucFJCL7V58o/AwLo0zYr5LY
+	dFtu/PwVxseXLNdP7sxNKtX1vzgqrZ8xe4g==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c5dnyg87r-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 06 Feb 2026 10:46:51 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-3545cc84ab1so3998013a91.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Feb 2026 02:46:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=forissier.org; s=google; t=1770372634; x=1770977434; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zCPgnb7KEPXry1O1IYURNqjbLQ+f0InuIl7jk/xq6CU=;
-        b=pNyRo1j7y0tp/jKSocmSpghpxdbsjWPf/RPQzGm6LgGS3REvSowlN1Bkt8PVTkt8hQ
-         YTIZFeZciVeu4AijhlXeLnjCaEhDtuc9vepDq4a1PP1uhbIatv/537fiikIbSGA8CJam
-         +ae1oeRBaFK7eRAbHm6VtY2yaM12SlaBoIbtJdRu47wc+onhSBqZhCRbQ3F8ljhnbpC1
-         pdEIAJu2GlsW/zZP2p7QnviWXkybid2JMP5aywuRuvw2LSjHKUl0pabSog1FBwBFt9rY
-         uTIMudqAyCBB5ZbdRGPCucbJGeNlvElh9jybLGRE47pc+uguwbETnpVvvCIihBfYb4WH
-         tKEA==
+        d=oss.qualcomm.com; s=google; t=1770374810; x=1770979610; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9r/eMOQK9nTT1F6zLZ106lu0lf4Wx/cgfXMm44WebkI=;
+        b=fCTsYWmUbtXIYXlanmStpd6GiSW2eA+Xn1wen6hsTpn8aZwHqh0c/O2hKj7rvL/xK0
+         1v/SnGWObYD5Nih2N4iglpBBelr9v/7VuQrQjSPSCRNDUbdnRUEYEhTG4QlZmr3PZY0B
+         UD0oEeGXw7q5eDxdeQjFcUBnxyu7t/g/72kqHT6j8kXVMvPm5nwz7Sff41SdiFskLnI1
+         NF5zTWXCx65R0/DhpSJYQ+Vq0tgFU/YXVqJGAL+2k5Wsr2velL6mfY0BALdT5JCmOPpl
+         fnz4ZZlVRFPDWS3TnExvYs2sRo/sgcY5a6mTY+26cYoN+jS1FDfOyAthWrAcCDH8Vjw0
+         F7hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770372634; x=1770977434;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=zCPgnb7KEPXry1O1IYURNqjbLQ+f0InuIl7jk/xq6CU=;
-        b=opzAWLrm70crxxNW1ogkB0i2xwVhaWz/G8nMjVnTDVWMh8JnppwxX/e+0EOLNHPh5I
-         gM5Jwd6+lCh3t6lpoE6lbuCf0WKNC0ioWkZtz1udhOvWyWlNpcBRqdtefegNhTuBHLLZ
-         h4Zxk2QLIuMKUdSw9/2Ai7yJfghSFXp0OWLk7HwI6DOgPq9DwQnTRniZT28HD11onx7G
-         p+0jGYP68NHRmYqjM9YFzhRajvFvpS65qexR5eM3gKIBsglWwkBmJdz+CZsO1QD+wPV1
-         jhr8H7P5JRQnmwwjsRk8zqxPrf1hE4rQiQAxCezp1fBhWLT+8DhkHr5GNrJ7ZL57pmCA
-         pyhw==
-X-Forwarded-Encrypted: i=1; AJvYcCWB1Ui5OWdhkAucvu84bDtIHb3JAYs7QNTdxfIb3hSoSZAT6HPF4+uXp7kkUizFSLaLCLZYOqHecNlDc4Nb@vger.kernel.org
-X-Gm-Message-State: AOJu0YxywH1t1URG+M70DzroTEyC4IJWXqfL397HCHP3YHD6Um7j0RBq
-	iE74XTkp5KdKSOVa30wRBPtbXmWvy5eHoznRXBB4lqL8PUDaijB/5CNS26lGZnBLulSxOO4eJwM
-	6IIaaIEUP2SK8Ud4i1+76m2PvST7eBglXxgf3nQ814g==
-X-Gm-Gg: AZuq6aLnCBEdOT8SBdQgMzMRIujMpMASQ0EJZi0TDyf2F4jzMDHUzTyIpgUil9cPBvx
-	QYkz540ysH0l50UidWvxGkQbGDR+V2AlUDc7CiC6t9ZfAQlBxnh3a6ztOomRrUzmGokmczRw5XX
-	2WZqmIdGP7FkwuZg8oTHpARkoVZQ/B/D7amgBg2OpgqrNRTyK/J+GjpO1SV7+w3knF1svXusGnX
-	X8uON9+o9C0eBJwJL6QkpxTX2S2rxbDu9QUqgabquo8Kc7tf4BDwNinVMTxCwMUTvfXB7OQE494
-	3xUQAcQ=
-X-Received: by 2002:a17:902:e809:b0:2a0:d34f:aff3 with SMTP id
- d9443c01a7336-2a95164c0eemr25673595ad.18.1770372633718; Fri, 06 Feb 2026
- 02:10:33 -0800 (PST)
+        d=1e100.net; s=20230601; t=1770374810; x=1770979610;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9r/eMOQK9nTT1F6zLZ106lu0lf4Wx/cgfXMm44WebkI=;
+        b=AOh4N/p5n+v90Rtx9Qkd1bwt/mYls4IHKfL3gQQQ45x/ta3oYTOUPr8MsCwe7bUfLs
+         TVVHhf89OaNP+yvtgQw8gYzXJZa2lhaHRNcpeCPT2cQ72vG8u4Tj0flrB3L2fu0IU1zE
+         H1YtFTdOn2PKIIUr0mTGr0QaqzHBeh5j4ILg+gTnjwUncGkilBMQKgzYPnR5riYc2rK7
+         juwdS0GtCpOCXWPmulUe6PY0O+CZ7Qdytn5dB/JC5D8g+/Tbs7iBlxYhigwcI1RvFGcS
+         CDvVCraLs4ezpNGLXdbbKaDSDeXrow82F6Za4LQcEV6NeZWf+aNZYg1+/aCawatqlMOe
+         0p/Q==
+X-Gm-Message-State: AOJu0Yz1vGC0hrg2o2CD81zn9yfqwH96IZQbzLOf6d3ATCv2iUQ1mzCb
+	C9hyLajhtRIL9Eu2bJva2Cb39nirq6GNLAyFcTpV+5k5Ha2o0uXUBhX+8jC7R5SBAaC3h7xqBlb
+	ffZB9FOa7ikEmwHxWj5v1yowQgCmSeMl3G8m/xpz8JtNQ5C776W+MDFKIsHFjhJPtPOwI
+X-Gm-Gg: AZuq6aLrkTsGubql5b19NvQolaU3oU8MMHlB36i9XAUxb64EknIhWW6ZjvuHkQl8VrY
+	dHx1Kcug54v0K56/DzViYph42feFLTC4srDMYkrH2EYJ/cEQFSKXLvHBt4/7EvSx/qV6Bku31pR
+	QBn/cbWgSWzFgPvME81+7Yz9rTtEct2Fcn6AcQgUAF/K9bSLEQ8VVCxn1J2cfaTYBfg5uZ48Cq5
+	LdrD6cePNJchAl16Gjq72dQ7gFQpb+h4CaTveuCgI64pyp1ggAboKUctIVpo6AA6LcwzcZbr2Xq
+	viZcFO4XU+F2skt1GFaNh+b7+7/Ki0R/K/UqFSXLccjxBAek+ACGd6MdHP4evxhaTbBjeCw+FTR
+	PvkCVsQPQfl/BeNL8gynU9EPd098+k1MHARLpkX/bVIE=
+X-Received: by 2002:a17:90b:1d50:b0:353:3934:1449 with SMTP id 98e67ed59e1d1-354b3bc8501mr2172216a91.12.1770374810492;
+        Fri, 06 Feb 2026 02:46:50 -0800 (PST)
+X-Received: by 2002:a17:90b:1d50:b0:353:3934:1449 with SMTP id 98e67ed59e1d1-354b3bc8501mr2172183a91.12.1770374809920;
+        Fri, 06 Feb 2026 02:46:49 -0800 (PST)
+Received: from hu-swatagar-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-354b21fb723sm2081136a91.10.2026.02.06.02.46.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Feb 2026 02:46:49 -0800 (PST)
+From: Swati Agarwal <swati.agarwal@oss.qualcomm.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Swati Agarwal <swati.agarwal@oss.qualcomm.com>
+Subject: [PATCH 0/2] Enable tertiary USB controller in OTG mode
+Date: Fri,  6 Feb 2026 16:16:40 +0530
+Message-Id: <20260206104642.1038381-1-swati.agarwal@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260128-fix-use-after-free-v3-1-b0786670d927@oss.qualcomm.com>
- <CAHUa44E4Htg9zEMY9XtkMsPRJq+13mq6kSd8RUznHTRvXVXKVQ@mail.gmail.com>
- <55546b03-cbe6-40dd-b794-b2e81efde33a@oss.qualcomm.com> <CAHUa44FfowG=GpgLcq=sp_TqRArJtf0_V-tsJY11HH+FEA6u+w@mail.gmail.com>
- <4c9e4f5f-e0f3-42aa-852f-064f4024af26@oss.qualcomm.com> <CAHUa44EhaztJ+5piu0c-HQbqZFX47uLPJ+VDRp=Bp6BMeeARAQ@mail.gmail.com>
- <b8086bfb-f240-4115-9ab0-18509775932a@oss.qualcomm.com> <CAHUa44GhTy=TWAuG7JY_6jjWG-uCGnLyZRn1JhGWgaWt28cH7w@mail.gmail.com>
-In-Reply-To: <CAHUa44GhTy=TWAuG7JY_6jjWG-uCGnLyZRn1JhGWgaWt28cH7w@mail.gmail.com>
-From: =?UTF-8?B?SsOpcsO0bWUgRm9yaXNzaWVy?= <jerome@forissier.org>
-Date: Fri, 6 Feb 2026 11:10:22 +0100
-X-Gm-Features: AZwV_QgHFkxvM7-SfE4zulthjLCOgAI9_C7OQtk4WJKE5RyCOXruSJm_rkaAV_M
-Message-ID: <CAA-cTWYKSiWRFipi6Ka7h9c99t-RAA1kVrwbjApZseErv3gFwg@mail.gmail.com>
-Subject: Re: [PATCH v3] tee: optee: prevent use-after-free when the client
- exits before the supplicant
-To: Jens Wiklander <jens.wiklander@linaro.org>
-Cc: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>, Sumit Garg <sumit.garg@kernel.org>, 
-	Arnd Bergmann <arnd@arndb.de>, Michael Wu <michael@allwinnertech.com>, linux-arm-msm@vger.kernel.org, 
-	op-tee@lists.trustedfirmware.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: P3Fzsf_LXSnI_9edVu7JimvJ38XdTn3l
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA2MDA3NCBTYWx0ZWRfX6HzGy3UWgDYt
+ Nc24Fn55oBlIDs6nVSJRqO2uyHOX2/me096DNZ9Wq5s11dt9SGbBXVIkHhE+FN/K7Gml5eoZLKp
+ A/CRVTAk08UwX1Q45P9jARGC5gxx9fzh8FSqpZBDOXQl8ul3gHEq6MjVGpOiYm7dH8AfVz+PFs/
+ 1kTgcNN+spdVBNgkCMd8vT9M2KmauHvfC0vUgtC5kA09AzN7MH+v/ZQtfJq7C7OCbIUuV4M/HIX
+ 61Rr3zXxGQ39lqB1RKREB/EGuYXPeCULkknAaZ4e1UDWP/pURUxx+ZCn4mP2GkYWIFvDlAlUMdP
+ SkfD2OH12VHLmj6/ZWcyNkpKacxSbaTC9wVmk4PkV+Sw4ztuVEqocvaBrBUUzFDU2f8pU3BBrAy
+ sT96izQFvRRwT0NQlSGbdHvpHHWz2K/213wTGWmZ9bVE3j9OCWxdeUlNs/buw06ua/6kbAs++62
+ 1Z+lsI3wTtxG+Z6x89A==
+X-Authority-Analysis: v=2.4 cv=C73kCAP+ c=1 sm=1 tr=0 ts=6985c69b cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=qYWVFJ-tb-LjRqi9uroA:9 a=iS9zxrgQBfv6-_F4QbHw:22
+X-Proofpoint-ORIG-GUID: P3Fzsf_LXSnI_9edVu7JimvJ38XdTn3l
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-06_03,2026-02-05_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 bulkscore=0 malwarescore=0 clxscore=1015 impostorscore=0
+ phishscore=0 adultscore=0 lowpriorityscore=0 spamscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602060074
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.63 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	R_MIXED_CHARSET(0.53)[subject];
-	DMARC_POLICY_ALLOW(-0.50)[forissier.org,reject];
-	R_DKIM_ALLOW(-0.20)[forissier.org:s=google];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_MISSING_CHARSET(0.50)[];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-92012-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[forissier.org:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	MISSING_XM_UA(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[jerome@forissier.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-92013-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[8];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,mail.gmail.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: B4B7EFC859
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[swati.agarwal@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 3C0B1FCC6B
 X-Rspamd-Action: no action
 
-Hi,
+Enable tertiary USB controller in OTG mode on lemans EVK platform.
 
+This patch depends on:
+https://lore.kernel.org/all/20260122092852.887624-1-swati.agarwal@oss.qualcomm.com/
 
-On Fri, Feb 6, 2026 at 9:54=E2=80=AFAM Jens Wiklander <jens.wiklander@linar=
-o.org> wrote:
->
-> Hi Amir,
->
-> On Thu, Feb 5, 2026 at 3:13=E2=80=AFAM Amirreza Zarrabi
-> <amirreza.zarrabi@oss.qualcomm.com> wrote:
-> >
-> > Hi Jens,
-> >
-> > On 2/4/2026 6:46 PM, Jens Wiklander wrote:
-> > > Hi Amir,
-> > >
-> > > On Tue, Feb 3, 2026 at 11:56=E2=80=AFPM Amirreza Zarrabi
-> > > <amirreza.zarrabi@oss.qualcomm.com> wrote:
-> > >>
-> > >> Hi Jens,
-> > >>
-> > >> On 2/3/2026 5:59 PM, Jens Wiklander wrote:
-> > >>> Hi,
-> > >>>
-> > >>> On Tue, Feb 3, 2026 at 3:09=E2=80=AFAM Amirreza Zarrabi
-> > >>> <amirreza.zarrabi@oss.qualcomm.com> wrote:
-> > >>>>
-> > >>>> Hi Jens,
-> > >>>>
-> > >>>> On 2/2/2026 10:36 PM, Jens Wiklander wrote:
-> > >>>>> Hi Amir,
-> > >>>>>
-> > >>>>> On Thu, Jan 29, 2026 at 4:22=E2=80=AFAM Amirreza Zarrabi
-> > >>>>> <amirreza.zarrabi@oss.qualcomm.com> wrote:
-> > >>>>>>
-> > >>>>>> Commit 70b0d6b0a199 ("tee: optee: Fix supplicant wait loop") mad=
-e the
-> > >>>>>> client wait as killable so it can be interrupted during shutdown=
- or
-> > >>>>>> after a supplicant crash. This changes the original lifetime exp=
-ectations:
-> > >>>>>> the client task can now terminate while the supplicant is still =
-processing
-> > >>>>>> its request.
-> > >>>>>>
-> > >>>>>> If the client exits first it removes the request from its queue =
-and
-> > >>>>>> kfree()s it, while the request ID remains in supp->idr. A subseq=
-uent
-> > >>>>>> lookup on the supplicant path then dereferences freed memory, le=
-ading to
-> > >>>>>> a use-after-free.
-> > >>>>>>
-> > >>>>>> Serialise access to the request with supp->mutex:
-> > >>>>>>
-> > >>>>>>   * Hold supp->mutex in optee_supp_recv() and optee_supp_send() =
-while
-> > >>>>>>     looking up and touching the request.
-> > >>>>>>   * Let optee_supp_thrd_req() notice that the client has termina=
-ted and
-> > >>>>>>     signal optee_supp_send() accordingly.
-> > >>>>>>
-> > >>>>>> With these changes the request cannot be freed while the supplic=
-ant still
-> > >>>>>> has a reference, eliminating the race.
-> > >>>>>>
-> > >>>>>> Fixes: 70b0d6b0a199 ("tee: optee: Fix supplicant wait loop")
-> > >>>>>> Signed-off-by: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.c=
-om>
-> > >>>>>> ---
-> > >>>>>> Changes in v3:
-> > >>>>>> - Introduce processed flag instead of -1 for req->id.
-> > >>>>>> - Update optee_supp_release() as reported by Michael Wu.
-> > >>>>>> - Use mutex instead of guard.
-> > >>>>>> - Link to v2: https://lore.kernel.org/r/20250617-fix-use-after-f=
-ree-v2-1-1fbfafec5917@oss.qualcomm.com
-> > >>>>>>
-> > >>>>>> Changes in v2:
-> > >>>>>> - Replace the static variable with a sentinel value.
-> > >>>>>> - Fix the issue with returning the popped request to the supplic=
-ant.
-> > >>>>>> - Link to v1: https://lore.kernel.org/r/20250605-fix-use-after-f=
-ree-v1-1-a70d23bff248@oss.qualcomm.com
-> > >>>>>> ---
-> > >>>>>>  drivers/tee/optee/supp.c | 122 ++++++++++++++++++++++++++++++++=
-+--------------
-> > >>>>>>  1 file changed, 86 insertions(+), 36 deletions(-)
-> > >>>>>
-> [snip]
->
->
-> > >>>>>> @@ -328,9 +378,8 @@ int optee_supp_send(struct tee_context *ctx,=
- u32 ret, u32 num_params,
-> > >>>>>>
-> > >>>>>>         mutex_lock(&supp->mutex);
-> > >>>>>>         req =3D supp_pop_req(supp, num_params, param, &num_meta)=
-;
-> > >>>>>> -       mutex_unlock(&supp->mutex);
-> > >>>>>> -
-> > >>>>>>         if (IS_ERR(req)) {
-> > >>>>>> +               mutex_unlock(&supp->mutex);
-> > >>>>>
-> > >>>>> We need a way to tell the difference between an id not found and =
-an id
-> > >>>>> removed because of a killed requester.
-> > >>>>> How about storing NULL for revoked requests instead of an err-poi=
-nter?
-> > >>>>>
-> > >>>>
-> > >>>> Not sure I'm following correctly. Are you expecting supp_pop_req()
-> > >>>> to return NULL instead of an err-pointer when a request has been r=
-evoked?
-> > >>>
-> > >>> I was looking at it again, and storing an err-pointer as you do in
-> > >>> this patch has the advantage that we can tell whether the ID has be=
-en
-> > >>> revoked or was never supplied. In the latter case, it suggests that
-> > >>> the supplicant is doing something wrong and might as well restart i=
-n
-> > >>> an attempt to recover. So, please keep using an err-pointer as a
-> > >>> placeholder, but we must be able to distinguish a revoked request f=
-rom
-> > >>> other errors to make sure that the supplicant doesn't restart due t=
-o a
-> > >>> revoked request.
-> > >>>
-> > >>
-> > >> Understood. What if I switch the stored err-pointer to EBADF instead=
- of ENOENT
-> > >> (which seems more natural), so it doesn't overlap with other supp_po=
-p_req() error
-> > >> codes and the supplicant can reliably detect it.
-> > >
-> > > Any error returned by TEE_IOC_SUPPL_SEND (or TEE_IOC_SUPPL_RECV) will
-> > > cause the tee-supplicant to exit. Even if we update it to ignore
-> > > certain codes, we must also consider the installed base. There's not
-> > > much tee-supplicant could do with this error, except logging it. But =
-I
-> > > don't think that is very useful either. Unless the tee-supplicant doe=
-s
-> > > anything wrong or if the device isn't working any longer, we shouldn'=
-t
-> > > return an error.
-> > >
-> >
-> > The direction of data flow in optee_supp_send is from the supplicant to=
- optee,
-> > so the only way I can return meaningful information back to the supplic=
-ant is
-> > through the return value. I suppose I could simply ignore the revoked r=
-equest
-> > and return success, but it might be useful for the supplicant to know a=
-bout it
-> > in case it needs to roll back something.
-> >
-> > At this point I'm out of ideas :). Do you have any suggestions on how I=
- can
-> > inform the supplicant about a revoked request in optee_supp_send while =
-returning
-> > success return value?
->
-> This became a bit harder than I first thought. At this point, to fix
-> the possible use-after-free, we have two options:
-> 1. Returning an error code: tee-supplicant will exit
-> 2. Returning OK: worst case, tee-supplicant can leak memory
->
-> During reboot, neither case is a problem. During normal operation,
-> it's annoying if tee-supplicant exists, but you still need some
-> privileges to kill the client. If we return an error, it's enough to
-> update tee-supplicant to handle that error case, and we're done. The
-> advantage is no added code to the kernel.
->
-> I think we should do what you suggested and return an error. This will
-> not happen during normal operation. We'll fix tee-supplicant to handle
-> the return error properly. tee-supplicant doesn't care about what
-> error code it gets. If there's an error in TEE_IOC_SUPPL_SEND, it
-> knows that no one will receive whatever was sent, and cleanup is
-> needed.
->
-> Sumit and Jerome, what do you think?
+Swati Agarwal (2):
+  arm64: dts: qcom: lemans-evk: Enable GPIO expander3 interrupt for
+    Lemans EVK
+  arm64: dts: qcom: lemans-evk: Enable the tertiary USB controller
 
-Sounds good.
+ arch/arm64/boot/dts/qcom/lemans-evk.dts | 66 +++++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/lemans.dtsi    |  7 +++
+ 2 files changed, 73 insertions(+)
 
-Thanks,
---=20
-Jerome
+-- 
+2.34.1
 
->
-> Cheers,
-> Jens
 
