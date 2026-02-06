@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-92074-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92075-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id qIbBBcAahmlNJwQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92074-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 17:45:52 +0100
+	id YML4ORcghmm/JwQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92075-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 18:08:39 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB6D51007EC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 17:45:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 94C2D100BDC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 18:08:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7A4063067A21
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Feb 2026 16:39:46 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E11D5300DE2C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Feb 2026 17:08:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC6C332B9B4;
-	Fri,  6 Feb 2026 16:39:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D9DC36C0DC;
+	Fri,  6 Feb 2026 17:08:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W3D4XoT4"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r+FbUDxV"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87230314B94;
-	Fri,  6 Feb 2026 16:39:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09FE2368276;
+	Fri,  6 Feb 2026 17:08:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770395985; cv=none; b=t566xA4BAJHIBIHxBgzN2drDogrYRc11cCtjJmUE3eI3W67Uk4/LZkfC5r9iTwuV+k9lLtYOMSPiccCaNN7IeyV3va1ECa8LgilAh+5Fx21Gt8xj6CrmQ8N6In6h3MkQKvkxrLOCroIDfmiLkqJm9c4ZMuk9rUwg/ZYpzTLcW2E=
+	t=1770397717; cv=none; b=O8+TokliNic+HHrsGqhBKVsETErTp86LuJbzUIBAAqGNrMMHAJmqmTyBRI/tefQzlgYK0wBDtm/v/pGSdJdbmaJIZgDKXjmCwBmXv2Q0dR+xzO/CbR5ZYAJioIorqatM/Vdl5kGDaZU8vL5shZCc07WMDS/I8MvI51y2ABmWnrU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770395985; c=relaxed/simple;
-	bh=7syuwNXdSVR4Ve65sRTX3ZIgMyR5B8X1JRDHZX9yUMg=;
+	s=arc-20240116; t=1770397717; c=relaxed/simple;
+	bh=LpI7KpatvGJ0S8fdp0AU5DPeYXCacXy7mJsdFtd8VAI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FthCjCeMsWeDsYhV0CWwCFw8Y54JYEDmVp06OAcuM9dpyo7cYQvmjx2koRkdinLxQujIz64Mi0s2U7cgriEIrZaUuMDuW+n9rLXpXlfIn6PQbqKW7vcbu2O6cKj922w0fPlZ9li+xNn5PhKmh05acrnieaPXf+WN1i2z3lbJjaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W3D4XoT4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEF9AC116C6;
-	Fri,  6 Feb 2026 16:39:40 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=WIn5bulfarQtf+5UIWwAXbB+BhSPJR8dsN0Pyd0WukphLZqrs395KEm1z4zrPcOBEqmVq3L/5nGPCApTjm3NOahL8lIWPc1h/orvxXU+QzNK5oAkYQiY+uRd3vm2EWBhkMrdtaBMPgHIRloilNsndACvbxhkbFSN3BsM60VFGS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r+FbUDxV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83EF7C116C6;
+	Fri,  6 Feb 2026 17:08:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770395985;
-	bh=7syuwNXdSVR4Ve65sRTX3ZIgMyR5B8X1JRDHZX9yUMg=;
+	s=k20201202; t=1770397716;
+	bh=LpI7KpatvGJ0S8fdp0AU5DPeYXCacXy7mJsdFtd8VAI=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=W3D4XoT4M+nzs/FnoLQ8dPxkCDuyt8OdqSz3BWlBhGRFPlL5y/XZ02B//xXpHtyor
-	 8lm9NZHz4VO1EFvnp8AIlwO67KvxRqdh0JcMTRF4S04m2spQr+uVnLcUYBvUD7dcvS
-	 rJCpiFZKcKFh9ST5tu/31svO3x7W4Z2SUqirkACu3y2O+gKFtiLQVIgIySV9BxPvPR
-	 /G0PwCy051RKUTN+y9M7JvEdQBxebyfl6zYk9xs2BzVn+iRTgZRVotEWfvzB4dLyvY
-	 wr4INPYXJy0pd1fF7We4NyM9lrPZuTCXo3p4ah5Vedr53IS8MM1HqG8xQu1n+IRxSa
-	 uuKP6II03Zkcw==
-Message-ID: <32c4d3c3-6cbc-42cc-8c6e-7f1d0d35cc2c@kernel.org>
-Date: Fri, 6 Feb 2026 17:39:39 +0100
+	b=r+FbUDxVkjm5RSpsXQxF/mSRsC/RpUu+tVDBIpxdhIiyouk6YjxYe+PPH4dXJerl+
+	 VJToxtKgqW54CGqpgIOoZRAWbuEIvrQXt86yj1SgiErSwo+iIgpOYDwx4hqaPeZNio
+	 AiICAOR4fvtDv8qLVk2HoHuR0l1e8vtjQEQegsI0DFr33PXjDOPxYeycs96ZbrCrxm
+	 +G7c7VwHXrYaKMmB5ws1mFe1I8pcObQezK1Zy4bAgysbkWZXW5UoK8F/tM3aUUtua7
+	 Cl6LCkESUIUiJDar31eG5/j4i7rfzN80QjPDoIoYCjBEOU7Bv3qoGrq4orZ7SqWU99
+	 Khr2eehQcuEkg==
+Message-ID: <76a35ff1-5b6a-439a-9bd8-81fef945e3a5@kernel.org>
+Date: Fri, 6 Feb 2026 18:08:32 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,22 +53,14 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 5/5] arm64: dts: qcom: monaco-evk-camera: Add DT
- overlay
-To: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>,
- bryan.odonoghue@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
- hverkuil-cisco@xs4all.nl, loic.poulain@oss.qualcomm.com, rfoss@kernel.org,
- andi.shyti@kernel.org, linux-i2c@vger.kernel.org,
- cros-qcom-dts-watchers@chromium.org
-Cc: quic_svankada@quicinc.com, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Ravi Shankar <quic_rshankar@quicinc.com>,
- Vishal Verma <quic_vishverm@quicinc.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20260121183142.1867199-1-quic_nihalkum@quicinc.com>
- <20260121183142.1867199-6-quic_nihalkum@quicinc.com>
+Subject: Re: [PATCH] arm64: dts: qcom: remove msm8996-v3.0.dtsi
+To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20260206134506.72679-1-bartosz.golaszewski@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -114,81 +106,49 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260121183142.1867199-6-quic_nihalkum@quicinc.com>
+In-Reply-To: <20260206134506.72679-1-bartosz.golaszewski@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-92075-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-92074-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_TO(0.00)[quicinc.com,linaro.org,kernel.org,xs4all.nl,oss.qualcomm.com,vger.kernel.org,chromium.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[22];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.988];
+	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,quicinc.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,linaro.org:email]
-X-Rspamd-Queue-Id: AB6D51007EC
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 94C2D100BDC
 X-Rspamd-Action: no action
 
-On 21/01/2026 19:31, Nihal Kumar Gupta wrote:
-> Monaco EVK board does not include a camera sensor in its default hardware
-> configuration. Introducing a device tree overlay to support optional
-> integration of the IMX577 sensor via CSIPHY1.
+On 06/02/2026 14:45, Bartosz Golaszewski wrote:
+> This file is not used anywhere. Remove it.
 > 
-> Camera reset is handled through an I2C expander, and power is enabled
-> via TLMM GPIO74.
-> 
-> An example media-ctl pipeline for the imx577 is:
-> 
-> media-ctl --reset
-> media-ctl -V '"imx577 3-001a":0[fmt:SRGGB10/4056x3040 field:none]'
-> media-ctl -V '"msm_csiphy1":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -l '"msm_csiphy1":1->"msm_csid0":0[1]'
-> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
-> yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video1
-> 
-> Signed-off-by: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
-> Co-developed-by: Ravi Shankar <quic_rshankar@quicinc.com>
-> Signed-off-by: Ravi Shankar <quic_rshankar@quicinc.com>
-> Co-developed-by: Vishal Verma <quic_vishverm@quicinc.com>
-> Signed-off-by: Vishal Verma <quic_vishverm@quicinc.com>
-> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
-> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> ---
->  arch/arm64/boot/dts/qcom/Makefile             |  4 ++
->  .../dts/qcom/monaco-evk-camera-imx577.dtso    | 66 +++++++++++++++++++
->  2 files changed, 70 insertions(+)
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
+Rob already cleaned up all of them:
+https://lore.kernel.org/all/20251212203226.458694-3-robh@kernel.org/
 
-So many people developed it, three people reviewed it, patch is at v9 and...
-
-still was not build-tested by the author. At this point this is big
-surprise.
-
-NAK
+at least reported-by could go to him, especially that I told you about
+this removal on yesterday's meeting.
 
 Best regards,
 Krzysztof
