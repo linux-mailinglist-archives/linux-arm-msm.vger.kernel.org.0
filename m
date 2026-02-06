@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-92018-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GBCnMH3HhWnAGAQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92018-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 11:50:37 +0100
+	id 4LlzJFXIhWnAGAQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 11:54:13 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B36CFCD10
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 11:50:37 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E2761FCDC6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 11:54:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 2858C301FCA0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Feb 2026 10:50:36 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B7C0D300C03E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Feb 2026 10:51:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04BCA38F249;
-	Fri,  6 Feb 2026 10:50:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB90738B9AF;
+	Fri,  6 Feb 2026 10:51:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ugsp2+eV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PuN5+iYq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2F6736E484;
-	Fri,  6 Feb 2026 10:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7B9E36074A;
+	Fri,  6 Feb 2026 10:51:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770375034; cv=none; b=S7mlJDzy8RsCCCMrmwOCzXaA1Tg3tV0DYJsH9vir5kO7U/fmk4BDQppulTPewe8EFuSnCwcTCAVhjhwsko/sIG2KNnrLNd2E97OIDjiTQz7TQSlkb569xHsMuYBy3YpW/EHX32/2ITk8mjX1yfV3v/S2dQLgDhi1YuAkvbDSyVA=
+	t=1770375096; cv=none; b=GkPebrnL3Vy/XqI6Lh0WKtrv+DRO+HJAxHaHZ0fdfbxbcidSeP0WzwAXEKM4p09OD+P7lGt2gMg9xxe8m44+szKa1fe1J5WhPQOBKUC2SJSgfv62Ya8wCM8b9xBKRSzA7g6d06/735bnjlCOpV3WF2WJ4xpeDFiqF+mZPdkKJv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770375034; c=relaxed/simple;
-	bh=34L2SW/qxeY9BE4lfUsgbL+hNBIIFynrgo6CO+UGVf4=;
+	s=arc-20240116; t=1770375096; c=relaxed/simple;
+	bh=B03WHjFxJmx9zW/0Sbpl0SDJMABj0KjkFNwWgA7VMGQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=He8ccZAWbbZlhUGZLzJL1DgcPJg3InaGJDdTbiy2n59M6u4qgjo1FkyRjz0CrJcoQY6m86ZfAYIrEjVWUJY7cozPhihjYdWoWa/92D1SPkh5dsm/IaDg36n4a08soxIekGs5uC+MfM2m1HgSCF6DJMgzAPuYP+EmNXU+qxNzVuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ugsp2+eV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC44AC116C6;
-	Fri,  6 Feb 2026 10:50:30 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=tPiEkVaCX1xUNx2b+UrdhSAq+AplvCF+/kvCj0K3jiAIi5qHBmWFfvgOY7osKbhuXxAIID1u95nOEXbf3i2yotglXQHVt9Z2S7ub6CNvIzIHaoGEQYLomXtfxzsCHGvbSTHTvdV2fORv/PZk9pjPb0bp9Q1gF0P/zPq/I28MLJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PuN5+iYq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61F40C116C6;
+	Fri,  6 Feb 2026 10:51:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770375034;
-	bh=34L2SW/qxeY9BE4lfUsgbL+hNBIIFynrgo6CO+UGVf4=;
+	s=k20201202; t=1770375096;
+	bh=B03WHjFxJmx9zW/0Sbpl0SDJMABj0KjkFNwWgA7VMGQ=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ugsp2+eVBrc8zbeCNb0piLAaAGZoDfqoSx3ZpKUK0RrRM7y8ShIukNgtegBPB7GpV
-	 /hFD9yreKvMvB7nL4cRzRIdi3iXiUKZ167by6YX9cOqCbzxDuG1LwYuvY8oTW8VCIq
-	 wudMY1i/9sUIC7Hw9dgoEaOycX6lZ+e+F3EKGPdfvs2189/qCqnuhUgpzgfwjJTQ+a
-	 vrjwC3jFqcZmsKROGvIOn53Y3+XVBBG1L0AsrzFGOQxTv4VDZ7oMrW1yJEaEm2jA8j
-	 9NqeA308vXV1B9J+M2NbwctbSareGHRcQ5a8x35ifwJG6dPV26aUhp4x1xSfBs/SUP
-	 lrqz/W/QQpldw==
-Message-ID: <6efcdf51-bdb1-4dfc-aa5e-8b7dc8c68cd3@kernel.org>
-Date: Fri, 6 Feb 2026 11:50:29 +0100
+	b=PuN5+iYqCA7chcWW7XhEhluZWMxCAggJgKW/O4P5DTBioD4CnLAAV9ERXhsVJfliM
+	 igh94EgTn8y+qt7vqGK3OIAIVZR4sUL7GUEtmeVuaxYe1VEY3FVzIZV0G6rUoybT7d
+	 5BnjNcP0+yeAJ4kYxPkccvKsyOMD7wtrDeyf7XsQemZ6euVRiE9LNBfx6MgfCf1q/C
+	 UxrjIXBjNnlwOspS0ZXR77i9LgsmiLl4mQdiWi1ZrTG2SGgts2mMUzbG/zBqMF09Wn
+	 4YJjjH/3vGZjEjlKBtBHX5XEuJwSgjNGoUwToAcp96oCNtlHJFBt+uD7b7Dgz2i7la
+	 KznYhDliH6nSA==
+Message-ID: <e9a1ec1b-02ba-40dd-a507-46c303dddd5d@kernel.org>
+Date: Fri, 6 Feb 2026 11:51:32 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,29 +53,16 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/11] dt-bindings: crypto: qcom,ice: Require power-domain
- and iface clk
-To: Harshal Dev <harshal.dev@oss.qualcomm.com>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Herbert Xu <herbert@gondor.apana.org.au>,
- "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Abel Vesa <abel.vesa@oss.qualcomm.com>, cros-qcom-dts-watchers@chromium.org
-Cc: Brian Masney <bmasney@redhat.com>,
- Neeraj Soni <neeraj.soni@oss.qualcomm.com>,
- Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>,
- linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20260123-qcom_ice_power_and_clk_vote-v1-0-e9059776f85c@qti.qualcomm.com>
- <20260123-qcom_ice_power_and_clk_vote-v1-1-e9059776f85c@qti.qualcomm.com>
- <14a71b33-4c10-41b0-a6cb-585a38e05f56@kernel.org>
- <06160c6c-a945-467a-be82-7b33c5285d0f@oss.qualcomm.com>
- <7216c86d-2b87-496c-9548-ccdcb3c98b6b@oss.qualcomm.com>
- <1f99db18-d76c-4b87-9e30-423eee7037e1@oss.qualcomm.com>
- <dd34525c-0a25-47ae-9061-c4c7ab708306@kernel.org>
- <2830a189-a5ce-45a0-92fe-7a01c3b012a7@oss.qualcomm.com>
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: lemans-evk: Enable the tertiary USB
+ controller
+To: Swati Agarwal <swati.agarwal@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20260206104642.1038381-1-swati.agarwal@oss.qualcomm.com>
+ <20260206104642.1038381-3-swati.agarwal@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -121,166 +108,52 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <2830a189-a5ce-45a0-92fe-7a01c3b012a7@oss.qualcomm.com>
+In-Reply-To: <20260206104642.1038381-3-swati.agarwal@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-92018-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[18];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_FROM(0.00)[bounces-92019-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MIME_TRACE(0.00)[0:+];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[9];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: 3B36CFCD10
+	TO_DN_SOME(0.00)[]
+X-Rspamd-Queue-Id: E2761FCDC6
 X-Rspamd-Action: no action
 
-On 06/02/2026 11:07, Harshal Dev wrote:
-> Hi Krzysztof,
-> 
-> On 2/5/2026 4:47 PM, Krzysztof Kozlowski wrote:
->> On 03/02/2026 10:26, Harshal Dev wrote:
->>> Hi Krzysztof and Konrad,
->>>
->>> On 1/26/2026 3:59 PM, Konrad Dybcio wrote:
->>>> On 1/23/26 12:04 PM, Harshal Dev wrote:
->>>>> Hi Krzysztof,
->>>>>
->>>>> On 1/23/2026 2:27 PM, Krzysztof Kozlowski wrote:
->>>>>> On 23/01/2026 08:11, Harshal Dev wrote:
->>>>>>> Update the inline-crypto engine DT binding to reflect that power-domain and
->>>>>>> clock-names are now mandatory. Also update the maximum number of clocks
->>>>>>> that can be specified to two. These new fields are mandatory because ICE
->>>>>>> needs to vote on the power domain before it attempts to vote on the core
->>>>>>> and iface clocks to avoid clock 'stuck' issues.
->>>>>>>
->>>>>>> Signed-off-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
->>>>>>> ---
->>>>>>>  .../bindings/crypto/qcom,inline-crypto-engine.yaml         | 14 +++++++++++++-
->>>>>>>  1 file changed, 13 insertions(+), 1 deletion(-)
->>>>>>>
->>>>>>> diff --git a/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml b/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
->>>>>>> index c3408dcf5d20..1c2416117d4c 100644
->>>>>>> --- a/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
->>>>>>> +++ b/Documentation/devicetree/bindings/crypto/qcom,inline-crypto-engine.yaml
->>>>>>> @@ -28,12 +28,20 @@ properties:
->>>>>>>      maxItems: 1
->>>>>>>  
->>>>>>>    clocks:
->>>>>>> +    maxItems: 2
->>>>>>
->>>>>> This is ABI break and your commit msg suggests things were not perfect,
->>>>>> but it is not explicit - was this working or not? How is it that ICE was
->>>>>> never tested?
->>>>>>
->>>>>
->>>>> I took some time to educate myself on the point of DT bindings stability being a
->>>>> strict requirement now, so I understand how these changes are breaking ABI, I'll
->>>>> send a better version of this again.
->>>>>
->>>>> As for your question of how it was working till now, it seems that
->>>>> things were tested with the 'clk_ignore_unused' flag, or with CONFIG_SCSI_UFS_QCOM
->>>>> flag being override set to 'y'. When this is done, QCOM-ICE (on which QCOM-UFS
->>>>> depends) initiates probe _before_ the unused clocks and power-domains are
->>>>> disabled by the kernel. And so, the un-clocked register access or clock 'stuck'
->>>>> isn't observed (since the clocks and power domains are already enabled).
->>>>> Perhaps I should write this scenario explicitly in the commit message?
->>>>>
->>>>> To maintain backward compatibility, let me introduce minItems and maxItems for clocks.
->>>>> When the Linux distro uses CONFIG_SCSI_UFS_QCOM=y, we can do with just 1 clock as
->>>>> before.
->>>>
->>>> You must not assume any particular kernel configuration
->>>>
->>>> clk_ignore_unused is a hack which leads to situations like this, since
->>>> the bootloader doesn't clean up clocks it turned on, which leads to
->>>> situations like this where someone who previously wrote this binding
->>>> didn't care enough to **actually** test whether this device can operate
->>>> with only the set of clocks it requires
->>>>
->>>> I believe in this case it absolutely makes sense to break things, but
->>>> you must put the backstory in writing, in the commit message
->>>>
->>>
->>> I took some more time to think this through, and I agree with you now Konrad.
->>>
->>> These DT bindings appear to be invalid from day-1. ICE being an independent
->>> and common IP for both UFS and SDCC, it cannot operate correctly without its
->>> power-domain and clocks being enabled first. Hence, it should be mandatory for
->>> them to be specified in the DT-node and the same should be reflected in the DT
->>> binding.
->>>
->>> The only reason I can think of for omitting the 'power-domain' and 'iface' clock
->>> in the original DT-binding for ICE is because we failed to test the driver on
->>> a production kernel where the 'clk_ignore_unused' flag is not passed on the cmdline.
->>
->> That's a reason to change ABI in the bindings, but not a reason to break
->> in-kernel or out of tree DTS.
->>
->>> Or if we did test that way, we were just lucky to not run into a timing scenario
->>> where the probe for the driver is attempted _after_ the clocks are turned off by the
->>> kernel.
->>>
->>> Sending a new patch, which makes these two resources optional (to preserve the DT
->>> binding) would either imply that we are make this bug fix optional as well or
->>> asking the reporter to resort to some workaround such as overriding
->>> CONFIG_SCSI_UFS_QCOM to 'y'.
->>
->> Either I do not understand the point or you still insist on breaking a
->> working DTS on kernels with clk_ignore_unused, just because what
->> exactly? You claim it did not work, but in fact it did work. So you
->> claim it worked by luck, right? And what this patchset achieves? It
->> breaks this "work by luck" into "100% not working and broken". I do not
->> see how is this an improvement.
->>
-> 
-> My point is something more fundamental. It worked before and it will still continue
-> to work if:
-> 1. We pass the 'clk_ignore_unused' flag. or,
-> 2. If the Linux distro is overriding CONFIG_SCSI_UFS_QCOM to 'y'.
+On 06/02/2026 11:46, Swati Agarwal wrote:
+> +
+>  	edp0-connector {
+>  		compatible = "dp-connector";
+>  		label = "EDP0";
+> @@ -190,6 +209,16 @@ vbus_supply_regulator_1: regulator-vbus-supply-1 {
+>  		enable-active-high;
+>  	};
+>  
+> +	vbus_supply_regulator_2: vbus-supply-regulator_2 {
 
-I do not agree with this. I already commented about your driver. If you
-do not believe me, apply your driver patch and show the test results of
-existing working device.
+Do not introduce your own coding style. How the nodes are called? Please
+stop posting downstream code to us, but take and work on upstream.
 
-
-> 
-> But that does not change the fact that the current DT binding does not fully describe all
-> the resources required by the hardware block to function correctly.
-> 
->> My NAK for driver change stays. This is wrong approach - you cannot
->> break working DTS.
->>
-> 
-> I agree that this patch in it's current form will break both the in-kernel and
-> out of tree DTS written in accordance with the old binding. If this isn't acceptable
-
-What? You just said few lines above:
-"it will still continue to work if:"
-
-So either this will continue to work or not. I don't understand this
-thread and honestly do not have patience for it. I gave you already
-reasoning what is wrong and why it is. Now it is just wasting my time.
 
 Best regards,
 Krzysztof
