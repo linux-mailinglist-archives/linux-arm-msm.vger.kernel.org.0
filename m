@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-92076-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92077-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id WGTBBGkghmm/JwQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92076-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 18:10:01 +0100
+	id zKv+IegghmkCKAQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92077-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 18:12:08 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2C6B100C0F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 18:10:00 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C804100C37
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 18:12:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 1D58C3005A94
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Feb 2026 17:10:00 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id AB7A13010144
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Feb 2026 17:12:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 51B3E36E472;
-	Fri,  6 Feb 2026 17:09:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA12B38E5F0;
+	Fri,  6 Feb 2026 17:12:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A74DVELJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZN6Yyck2"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BEF030F7F1;
-	Fri,  6 Feb 2026 17:09:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42E7363C46;
+	Fri,  6 Feb 2026 17:12:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770397798; cv=none; b=EKvBw9FqR/bEAzfqZgs25/xie0mGxjCipRfJxfwO4xub5bwWqq6/mAx7bETCkX7KHf+4omJwdcA2POn+eX6n8+WA0qo23n2rPlRcinkUwm8hxpVw0gd4EgUz+CR//GabEKuM2ecLYrySRz4ECz88KO4G7SeVmfW+TMZnbqwVLZ0=
+	t=1770397925; cv=none; b=EwXBxoONJ1o/UkehIgZ6tECDqaDEccCEQX0Z2RjWS54Yx3NmyqOVNWyFRuMaqIaXFCvXkh12X7sWGmPxOWXOYrwKrg8nROXJywHdNcP7ufaB7r2Cs+O1HbkZxpYf8DwVG0fvXJP9KeFKXYBtM6XQzKElapjnP0ts6quwz5G24rI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770397798; c=relaxed/simple;
-	bh=BGXDgDYEup+9xmNSBbsL/lqaJnAhJidDqY2B1JrUHQE=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=YzVPjtQDcDe8QVyp8An6H+4jP85X/5pIx1xxjGq6iXkNDywmmlG5eLCD6EzupOPM+yvWWwXQxeu9zYAM9+HJpbHD4ZXJRPszxgc7vE/udD12+zLE/oOdOm39B+UOlPxequHCi/4zVxs5yYo5TAWR9uY64EfeGHOgVOnahQVpQac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A74DVELJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB017C116C6;
-	Fri,  6 Feb 2026 17:09:55 +0000 (UTC)
+	s=arc-20240116; t=1770397925; c=relaxed/simple;
+	bh=JJYA0CyMbrQfqxdD13IkQJd8o+a5hbxd+Cesee+tMYE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gWMYNAsgsKTdB1bv7pNIiM+mMpt4TgJDLBcvQFsM2YwQC2Y4upthm4/g7K+Z3n34+7hoORPHd1KYkOUnHO9bE8Ndh42u1BKHyPOr79krOg9G6hmiEssHJ4LjIJcTRg0GiNRpPCAPMFRsafB99ZT2A/QuOaiirBQcbtDzzOS/0Ts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZN6Yyck2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68F1AC116C6;
+	Fri,  6 Feb 2026 17:12:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770397797;
-	bh=BGXDgDYEup+9xmNSBbsL/lqaJnAhJidDqY2B1JrUHQE=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=A74DVELJ8tP7weKbmtJptXRU/AUxlxP9XAAq9mgrCgKsFkq3GfODcOQxWkO+6WcZh
-	 n6w0FSezkUalOpxP83Xssli+J2nvGrL33KAfcfS68IyDlGmFznAUMkR4R1knBD5x2w
-	 eoFs/NJcZ/iSPogPxtmPgbvT0zKEltIQqAAiWSo5RrY73lOgYe3FTnblxCi+g9TYdS
-	 fb+Dc9ELU9fuAHbVRLcKcWt7h8Zir7zJytn48CD9X9V7yROtACMEGux+ml5pjwe6tS
-	 SKa3W0WJ53nJPV8pt7CC/yDNqMyJIzrhLdvgHbU+t5nBpSk9TGoV4d4/RpnEydR+J3
-	 2DvQHrrAgB2Mw==
-Message-ID: <9199aac7-fb61-4ff7-89a4-0509aec5f677@kernel.org>
-Date: Fri, 6 Feb 2026 18:09:54 +0100
+	s=k20201202; t=1770397925;
+	bh=JJYA0CyMbrQfqxdD13IkQJd8o+a5hbxd+Cesee+tMYE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=ZN6Yyck2EkCRVTggdQ24qLdN9ElaHecbDivf+totIaA+xcVyTeJAxjcg106YLUOW6
+	 WhxpzZqkSpeDEcFTCrlvz/efj/JOqU1n4ht0BSn0UEB/GwouLhdk6aeEWx+nWJ1Nsa
+	 s+qBzerGkLcUplSHG1Y4f9mI6dG6CXUGBGgggL1r5GQs5dKPAr2l/FXI1xXcnglfjb
+	 o6hDczXBnO49xqHZaYOY3kUY1U636Cr5TGDtEl584ZWZzxJvYFN/EEmxJHFRFlKpfj
+	 qxl9hUjEA/Lu/8iQwU+BN+uYEe2Ecm+VwqDLcU3PVNGsgRQEA4vjoOKm5IJjn4up4q
+	 vussIcXCZx4pQ==
+Message-ID: <409c2e5f-1bf2-44ed-9c0f-df762320e068@kernel.org>
+Date: Fri, 6 Feb 2026 18:12:00 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,16 +53,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: remove msm8996-v3.0.dtsi
+Subject: Re: [PATCH v4 1/7] dma: qcom: bam_dma: Fix command element mask field
+ for BAM v1.6.0+
+To: Md Sadre Alam <quic_mdalam@quicinc.com>, andersson@kernel.org,
+ konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, vkoul@kernel.org, Frank.Li@kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org
+Cc: quic_varada@quicinc.com
+References: <20260206100202.413834-1-quic_mdalam@quicinc.com>
+ <20260206100202.413834-2-quic_mdalam@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260206134506.72679-1-bartosz.golaszewski@oss.qualcomm.com>
- <76a35ff1-5b6a-439a-9bd8-81fef945e3a5@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -107,55 +108,75 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <76a35ff1-5b6a-439a-9bd8-81fef945e3a5@kernel.org>
+In-Reply-To: <20260206100202.413834-2-quic_mdalam@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-92076-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-92077-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[13];
 	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-0.996];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: B2C6B100C0F
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,bootlin.com:url]
+X-Rspamd-Queue-Id: 0C804100C37
 X-Rspamd-Action: no action
 
-On 06/02/2026 18:08, Krzysztof Kozlowski wrote:
-> On 06/02/2026 14:45, Bartosz Golaszewski wrote:
->> This file is not used anywhere. Remove it.
->>
->> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+On 06/02/2026 11:01, Md Sadre Alam wrote:
+> BAM version 1.6.0 and later changed the behavior of the mask field in
+> command elements for read operations. In newer BAM versions, the mask
+> field for read commands contains the upper 4 bits of the destination
+> address to support 36-bit addressing, while for write commands it
+> continues to function as a traditional write mask.
 > 
-> Rob already cleaned up all of them:
-> https://lore.kernel.org/all/20251212203226.458694-3-robh@kernel.org/
+> This change causes NAND enumeration failures on platforms like IPQ5424
+
+Please do not use "This commit/patch/change", but imperative mood. See
+longer explanation here:
+https://elixir.bootlin.com/linux/v6.16/source/Documentation/process/submitting-patches.rst#L94
+
+> that use BAM v1.6.0+, because the current code sets mask=0xffffffff
+> for all commands. For read commands on newer BAM versions, this results
+> in the hardware interpreting the destination address as 0xf_xxxxxxxx
+> (invalid high memory) instead of the intended 0x0_xxxxxxxx address.
 > 
-> at least reported-by could go to him, especially that I told you about
-> this removal on yesterday's meeting.
+> Fixed this issue by:
+> 1. Updating the bam_cmd_element structure documentation to reflect the
+>    dual purpose of the mask field
+> 2. Modifying bam_prep_ce_le32() to set appropriate mask values based on
+>    command type:
+>    - For read commands: mask = 0 (32-bit addressing, upper bits = 0)
+>    - For write commands: mask = 0xffffffff (traditional write mask)
+> 3. Maintaining backward compatibility with older BAM versions
+> 
+> This fix enables proper NAND functionality on IPQ5424 and other platforms
+> using BAM v1.6.0+ while preserving compatibility with existing systems.
 
-So if Rob does not respin his patch (which seems happening) then:
+Fixes tag? CC-stable?
 
-Reported-by: Rob Herring (Arm) <robh@kernel.org>
-Closes: https://lore.kernel.org/all/20251212203226.458694-3-robh@kernel.org/
+Why is this part of DTS patchset? Do not combine independent work, you
+only make it difficult for maintainers to handle your work.
+
 
 Best regards,
 Krzysztof
