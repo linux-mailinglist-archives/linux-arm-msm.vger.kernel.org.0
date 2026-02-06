@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-91975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91976-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GOovN++ThWm3DgQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 08:10:39 +0100
+	id EKzxJMeThWm3DgQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91976-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 08:09:59 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D2EAFADAC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 08:10:39 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id C717FFAD8E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 08:09:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 542483034799
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Feb 2026 07:08:16 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 3CD4C3009820
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Feb 2026 07:08:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E6DBC302756;
-	Fri,  6 Feb 2026 07:08:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1C4430BB95;
+	Fri,  6 Feb 2026 07:08:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YrNAFJVA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SIdLnOPR"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1BE530AACF;
-	Fri,  6 Feb 2026 07:08:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE230302756;
+	Fri,  6 Feb 2026 07:08:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770361693; cv=none; b=denO01MTcdF1I3SnJki0fS9iXLQPdvflzfQZl+e3Vh22190NmDE5yRW8oRzg9wUwlBj/7Yh4CNzyC3DcICYeZv7ckOXW5pUzB/nqO182B6NqUyvNU2vjdx6tvEwz1ZeNGZjyz29zuAvBJUDq1zGAkxq0kMlDtO8mfzn+YX8j3Z4=
+	t=1770361721; cv=none; b=HlHtz4iwR24Yz8DlA1RZDkbriM4TSa2ehunDdEkVkSpK6/Q3i6Ua82n6560YySlYj+OYkNij8da4+yeMKMu0J8S1PKtJG2aCFOCHuT7piWrM/bxuu5MLkjV6t4xJ7oovohjgIEZflFBkmskOACmEP/JT8rGRwOjCdCg/o3lMD88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770361693; c=relaxed/simple;
-	bh=9TCzEfxMV7CHDiMeebC4Fkp8Q2GKzqvqiEiVuobvAZQ=;
+	s=arc-20240116; t=1770361721; c=relaxed/simple;
+	bh=1k9//wWJb62aYZ68toVkEokNHe38FeVHN4Bp4sGRr40=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=X/UAS2wnUjEilTHKXBpVW8FVNVnc4qYIRAtvN6f+EFC1F1KZa3dv5HCio116DwPUTtGhhC1+B9MTV0cabaQcLHk//uVO3E2sKvBHgpxxGMxMa28j4SEXiVaW2Oi2pasNjz3MkPWIrA7gmEQUiIDm1IF7Kfy2ucROpJqjGIuRbEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YrNAFJVA; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFB5CC116C6;
-	Fri,  6 Feb 2026 07:08:08 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Ka2mxo/zt2UsUFQwDyzHRR6xFrLEUDW3WuM05EPVef2/Vve7ctuu9Xi5Fm1Adfw7DO5oAE/BPJf/tKb73ZgSB82cLWXfrS/uUBvotDmmW45Ear9FaE4q+4VbXMVdGl8GJ5Pe5Xf57BwM1O1yXswvwHTPue5vq2iYrfCCAKGvU8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SIdLnOPR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A0A4C116C6;
+	Fri,  6 Feb 2026 07:08:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770361693;
-	bh=9TCzEfxMV7CHDiMeebC4Fkp8Q2GKzqvqiEiVuobvAZQ=;
+	s=k20201202; t=1770361721;
+	bh=1k9//wWJb62aYZ68toVkEokNHe38FeVHN4Bp4sGRr40=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=YrNAFJVA7S2/rpOPOSbwaYDarWol6MnehwhqawQcW8RWrSScUNzcKkLoDNcC0CC6l
-	 kehhFVbDkURJFGzoX1P6yspiX25/HgJ9PyBUh1bvYRzp2bn3EVQ//b5FK5qVHcLoIs
-	 wf/1nQ55+kfBuLCaw3mZ9TFvlKzDau8hLvvJREPEmk21QwYytmemWFAS4XU36AuqYZ
-	 YXwDusfZnDWkOGqtmQIUx6M4NidfnnXgQ77ugkGRzg9GhTO5uoKs+qqEGaJ66xtUW1
-	 8x9wQMlYSrIDjiSdWvYfwD/zN7/VKjMdu2Ac2NKDpKbxfu37JV4tKyX5SwYqSBx1OG
-	 Ee1OCVc1uNBxQ==
-Message-ID: <0bcd3cb0-9231-4cb0-a726-c439d01f63e5@kernel.org>
-Date: Fri, 6 Feb 2026 08:08:07 +0100
+	b=SIdLnOPRG287RZ/dv4KBdfYWDl6IXMmQovDw+Wp4EeTvRD/X2SXnPrlducdAeo/3S
+	 WTDVWhceh+gZhqL8QiFIOGz251Lk4G2NtecxwePtGKLJt9gX1KUbMamR5AzGLBLw2Y
+	 rFWY/DQHPmbv07b7EFeUEBWqsk4MJNSkKPJRA4cfanU4VUPagbFERcMRSeF+D+iYGF
+	 QISZGDLEzyQPgBcbtHJ7tY/D7VkfU8uvNcR68Bb34mL7wNo3omyOoIOnrtrdcyDW8e
+	 djjniC+pizxIPv9vu/hh6hwe2QGClKnOO407oiLeL5OfydIBsl7sTvFvByE9K5Rk/R
+	 pQZPlCdpb9/9w==
+Message-ID: <7c6ebf5f-ed13-46f3-88c8-a33205388d74@kernel.org>
+Date: Fri, 6 Feb 2026 08:08:34 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,8 +53,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] dt-bindings: display: lt9611: Support single Port
- B input
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: qcs6490-rubikpi3: Use lt9611 DSI
+ Port B
 To: Roger Shimizu <rosh@debian.org>
 Cc: Hongyang Zhao <hongyang.zhao@thundersoft.com>,
  Andrzej Hajda <andrzej.hajda@intel.com>,
@@ -71,9 +71,9 @@ Cc: Hongyang Zhao <hongyang.zhao@thundersoft.com>,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-arm-msm@vger.kernel.org
 References: <20260128-rubikpi-next-20260116-v2-0-ba51ce8d2bd2@thundersoft.com>
- <20260128-rubikpi-next-20260116-v2-1-ba51ce8d2bd2@thundersoft.com>
- <20260205-winged-alligator-of-sorcery-aada21@quoll>
- <CAEQ9gEkkK_qBCq__oSJb1D5J=gLyw-kVDx1OD4SMPry6z-F7nA@mail.gmail.com>
+ <20260128-rubikpi-next-20260116-v2-3-ba51ce8d2bd2@thundersoft.com>
+ <20260205-calm-aboriginal-mastiff-b07eb3@quoll>
+ <CAEQ9gEm-A8mDS=6V3h=2gHOhtM39q+bR79sSFhDTvbEJbDJRWA@mail.gmail.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -119,7 +119,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <CAEQ9gEkkK_qBCq__oSJb1D5J=gLyw-kVDx1OD4SMPry6z-F7nA@mail.gmail.com>
+In-Reply-To: <CAEQ9gEm-A8mDS=6V3h=2gHOhtM39q+bR79sSFhDTvbEJbDJRWA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Rspamd-Server: lfdr
@@ -128,11 +128,11 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-91975-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-91976-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
@@ -149,37 +149,37 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.1:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,thundersoft.com:email,0.0.0.0:email]
-X-Rspamd-Queue-Id: 9D2EAFADAC
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[thundersoft.com:email,0.0.0.1:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: C717FFAD8E
 X-Rspamd-Action: no action
 
-On 05/02/2026 21:31, Roger Shimizu wrote:
-> On Thu, Feb 5, 2026 at 5:07 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
+On 05/02/2026 20:36, Roger Shimizu wrote:
+> On Thu, Feb 5, 2026 at 5:09 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
 >>
->> On Wed, Jan 28, 2026 at 07:15:45PM +0800, Hongyang Zhao wrote:
->>> The LT9611 has two DSI input ports (Port A and Port B). Update the
->>> binding to clearly document the port mapping and allow using Port B
->>> alone when DSI is physically connected to Port B only.
->>>
->>> Changes:
->>> - Clarify port@0 corresponds to DSI Port A input
->>> - Clarify port@1 corresponds to DSI Port B input
->>> - Change port requirement from mandatory port@0 to anyOf port@0/port@1,
->>>   allowing either port to be used independently
+>> On Wed, Jan 28, 2026 at 07:15:47PM +0800, Hongyang Zhao wrote:
+>>> The LT9611 HDMI bridge on RubikPi3 has DSI physically connected to
+>>> Port B. Update the devicetree to use port@1 which corresponds to
+>>> Port B input on the LT9611.
 >>>
 >>> Signed-off-by: Hongyang Zhao <hongyang.zhao@thundersoft.com>
 >>> Reviewed-by: Roger Shimizu <rosh@debian.org>
 >>
->> Where did this review happen? V1 had this tag, but the patch was
->> completely different, which means you were supposed to drop the tag.
->> Please perform review in public.
+>> Where did this happen?
+>>
+>> https://lore.kernel.org/all/?q=f%3Arosh%40debian.org
+>>
+>> And again, v1 was completely different so how pre-v1-internal-review
+>> could be applied to this v2?
+>>
+>> Honestly, initial guidance is useful but continuous development behind
+>> the closed doors is not.
 > 
 > FYI. v2 was updated per review feedback, which is public:
 > https://lore.kernel.org/all/7d9041a3-9d2b-469a-9fa7-89d53bbd2a1f@linaro.org/
 
-Link above is not from Roger, so again - where did the review leading to
-above tag happen?
+What? I asked about the tag. Do you understand how kernel review process
+works?
 
 Best regards,
 Krzysztof
