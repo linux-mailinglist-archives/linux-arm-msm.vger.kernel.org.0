@@ -1,145 +1,214 @@
-Return-Path: <linux-arm-msm+bounces-92097-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92098-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 2Ft7I7hJhmkhLgQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92097-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 21:06:16 +0100
+	id 0O9yLJNPhmlpLwQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92098-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 21:31:15 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08A8C10302A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 21:06:15 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB7CF10320F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 21:31:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 8141D302A6E1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Feb 2026 20:05:33 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 4EE35300D551
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Feb 2026 20:31:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77D40267B07;
-	Fri,  6 Feb 2026 20:05:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA5E5305E01;
+	Fri,  6 Feb 2026 20:31:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=danielhodges.dev header.i=@danielhodges.dev header.b="i6iburd6";
-	dkim=permerror (0-bit key) header.d=danielhodges.dev header.i=@danielhodges.dev header.b="SdPRbV7z"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="ueVs8yE3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from devnull.danielhodges.dev (vps-2f6e086e.vps.ovh.us [135.148.138.8])
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD2A81684B0;
-	Fri,  6 Feb 2026 20:05:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=135.148.138.8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68A152DE6E6;
+	Fri,  6 Feb 2026 20:31:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770408332; cv=none; b=Rnu/A2QJzq5nKl45Z126K9Ksc12YVucQIaNQoa6uvSNmxlVQ9suLgpl6sMaK/cFC/FIuZKkhsZIRO3SvVynykzOAuMpFB/83Pgzypw2wSu8j9Fp4+JuEoVP4ziusUzRKZLLjf7ZaJAzcRuCQCMB6Ef2AO0cqxjz2FE903fMQvA0=
+	t=1770409868; cv=none; b=oJf6WxXtO6+iu/wOz7oAgQADBUxySKmXwEF3C/TLVC5+8eLbvCyvU0/erUNjh6evg9N/4H2xcykkUc5l5DKv5zLEf8Ue6WJHg/92g16NvE3uk2k3ReDTpRxRafCJwOAhtXqT8e8Qim0w/s5A3h/atu+S4LG3JzBHeQ0kLfI7rq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770408332; c=relaxed/simple;
-	bh=OW+Q3rzodi0tW38z+786M3YCC3DeD5z4t0v6YdGlt2A=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fE/nkZCR8qV3yPcsKwVMQAlqxtfQHT6fV5bcwWsBLHTyhFd949dVEXZGBHD17XJGpZYvAid8wU467UzkSPtr7k4/Zae8LdQm5nSXYZw1AHuFDvaTLtqv8aCC+bZHzV6n8tjrNn85wsYAuKbv8zZYgUAC1z3nKgoWsYvaAwcZsQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=danielhodges.dev; spf=pass smtp.mailfrom=danielhodges.dev; dkim=pass (2048-bit key) header.d=danielhodges.dev header.i=@danielhodges.dev header.b=i6iburd6; dkim=permerror (0-bit key) header.d=danielhodges.dev header.i=@danielhodges.dev header.b=SdPRbV7z; arc=none smtp.client-ip=135.148.138.8
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=danielhodges.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=danielhodges.dev
-DKIM-Signature: v=1; a=rsa-sha256; s=202510r; d=danielhodges.dev; c=relaxed/relaxed;
-	h=Message-ID:Date:Subject:To:From; t=1770408330; bh=5QQtgVbtkot2rgxT7w3IBYs
-	aUEG80YUdurHvF76mGi8=; b=i6iburd6bUi2yiOeQ92+nHXUYxNSjyhEnBRGyuSMP/HQUBnoya
-	J3fWye8Z9O6gKjy7sQ9sp6hmD7lc3iz13A8v5Ugwc5RDqa74QeE0cnIY3PndahfFkFPBJBNbQ5/
-	kpFZaHq/+s4bthT16wC0m/VM5GSQjbPYBSnzNnW66uNHI2EsPuk8c9zVw+anDNOvMi7I2CvCoLX
-	vUfmrkWhZPytkq3YVf44ZVsnjwWsQvYR6MVT31WcBSZ7156U83SfEZYLhMIWequdWM7SqNvJBQf
-	/syEfw3kcog1znFazvPcWNF5Nj40T0etTu7qlGVoxO4e+Llycb0pIf944SP+LWqdtMw==;
-DKIM-Signature: v=1; a=ed25519-sha256; s=202510e; d=danielhodges.dev; c=relaxed/relaxed;
-	h=Message-ID:Date:Subject:To:From; t=1770408330; bh=5QQtgVbtkot2rgxT7w3IBYs
-	aUEG80YUdurHvF76mGi8=; b=SdPRbV7zHGtxVuFTg8s2NS6qMmuPmN/qOmRAyiKsZlyhOGmYmP
-	roY0mMPhtXSdpKirQd88UKXNOrxH1nS0f4Bw==;
-From: Daniel Hodges <git@danielhodges.dev>
-To: mani@kernel.org,
-	kwilczynski@kernel.org
-Cc: kishon@kernel.org,
-	bhelgaas@google.com,
-	mhi@lists.linux.dev,
+	s=arc-20240116; t=1770409868; c=relaxed/simple;
+	bh=NiVSPEoZOAR35n9OsGdpe9NzkVmd4acJpqFyu/UduSA=;
+	h=From:To:Cc:Subject:MIME-Version:Content-Disposition:Content-Type:
+	 Message-Id:Date; b=EbR3UzNeo28a+f6r1F0R95mu6SKJLLYgHa+lbdRnki/KCi8qIBnN3E+vWDAzXK/v2PMeMrfc1/rHUgQe93YNu6CZ4exRZHr/oCsSnpaSGCZ/DM8oEnDirYcjUjtCFoTyD23ODvzNc/UdDDFlmP6gJmR7PQJVCT/qvINNJFLkFyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=ueVs8yE3; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Date:Sender:Message-Id:Content-Type:
+	Content-Transfer-Encoding:MIME-Version:Subject:Cc:To:From:Reply-To:Content-ID
+	:Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:
+	Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:
+	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=dWmLCHSX/zl5TXT9/CAx8lBKbFhSqb8YTbzRq8kmEq0=; b=ueVs8yE3A44c9vupcFdGhLYxOh
+	ROPCEf6Z4FYw076aNt16760QLDmoc/fa/pSwLM8l7pOXvQfsNMX4DiVon41rGE4ZHpLGt31e7fwNm
+	v3uqcrTSEJm9ycSNe5rrecAB3jO4/xgnVgT0QFQ9MQ+KFL6GsDhzY0NF36mAyEMpBRb98eRBLgAdh
+	Tpz0pD7lzWi6bUEg3RBPbSZT7DVUtj/TATmLvfOG3N7tW1ecFuSkDHUOaJsNJ5LBbFgMUmDHWyVEs
+	NMhX/3fwnQr+ZUAYLbrAVmtGOdHnF1vWGmuyP0L+QBrjqfnFDeuGlNi4B6Zotw0b6pv6rmWSYA8Ov
+	1CQdvJrA==;
+Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:44050 helo=rmk-PC.armlinux.org.uk)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <rmk@armlinux.org.uk>)
+	id 1voSTm-000000008P8-3Fkf;
+	Fri, 06 Feb 2026 20:31:03 +0000
+Received: from rmk by rmk-PC.armlinux.org.uk with local (Exim 4.98.2)
+	(envelope-from <rmk@rmk-PC.armlinux.org.uk>)
+	id 1voSTm-000000087qO-04ua;
+	Fri, 06 Feb 2026 20:31:02 +0000
+From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+To: Andrew Lunn <andrew@lunn.ch>
+Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	linux-arm-kernel@lists.infradead.org,
 	linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org,
-	Daniel Hodges <git@danielhodges.dev>
-Subject: [PATCH] PCI: epf-mhi: return 0 on success instead of positive jiffies
-Date: Fri,  6 Feb 2026 15:05:29 -0500
-Message-ID: <20260206200529.10784-1-git@danielhodges.dev>
-X-Mailer: git-send-email 2.52.0
+	linux-stm32@st-md-mailman.stormreply.com,
+	netdev@vger.kernel.org,
+	Paolo Abeni <pabeni@redhat.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH RFC net-next] net: stmmac: qcom-ethqos: convert register field
+ updates
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Message-Id: <E1voSTm-000000087qO-04ua@rmk-PC.armlinux.org.uk>
+Sender: Russell King <rmk@armlinux.org.uk>
+Date: Fri, 06 Feb 2026 20:31:02 +0000
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [1.14 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[danielhodges.dev,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[danielhodges.dev:s=202510r,danielhodges.dev:s=202510e];
+	R_DKIM_REJECT(1.00)[armlinux.org.uk:s=pandora-2019];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
+	DMARC_POLICY_SOFTFAIL(0.10)[armlinux.org.uk : SPF not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_COUNT_THREE(0.00)[3];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-92097-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[danielhodges.dev:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TO_DN_SOME(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[git@danielhodges.dev,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-92098-lists,linux-arm-msm=lfdr.de,kernel];
 	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[armlinux.org.uk:-];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	FROM_NEQ_ENVFROM(0.00)[rmk@armlinux.org.uk,linux-arm-msm@vger.kernel.org];
 	PRECEDENCE_BULK(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	NEURAL_HAM(-0.00)[-0.999];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[danielhodges.dev:email,danielhodges.dev:dkim,danielhodges.dev:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 08A8C10302A
+	MISSING_XM_UA(0.00)[];
+	NEURAL_HAM(-0.00)[-0.844];
+	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,armlinux.org.uk:email]
+X-Rspamd-Queue-Id: DB7CF10320F
 X-Rspamd-Action: no action
 
-wait_for_completion_timeout() returns the number of jiffies remaining
-on success (positive value) or 0 on timeout. The pci_epf_mhi_edma_read()
-and pci_epf_mhi_edma_write() functions use the return value directly as
-their own return value, only converting timeout (0) to -ETIMEDOUT.
+Convert the register field update values to something more recognisable
+to a human.
 
-On success, they return the positive jiffies value. The callers in
-drivers/bus/mhi/ep/ring.c check for errors with "if (ret < 0)" for
-read_sync and "if (ret)" for write_sync. This causes write_sync success
-cases to be incorrectly treated as errors since the positive jiffies
-value is non-zero.
+For example, using (BIT(29) | BIT(27)) to update a register field that
+consists of bits 29:27 is just a way of obfuscating the constant so
+the bare constant doesn't attract review comments.
 
-Fix by setting ret to 0 when wait_for_completion_timeout() succeeds.
+Worse still is BIT(12) | GENMASK(9, 8), which is used to hide the
+decimal value 19 for the bitfield 16:8.
 
-Fixes: 7b99aaaddabb ("PCI: epf-mhi: Add eDMA support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Daniel Hodges <git@danielhodges.dev>
+Fix these, and a few others by using FIELD_PREP(). Yes, it means we
+have bare numeric constants, but that's way more preferable than
+having them obfuscated away.
+
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 ---
- drivers/pci/endpoint/functions/pci-epf-mhi.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ .../stmicro/stmmac/dwmac-qcom-ethqos.c        | 23 ++++++++++++-------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-index 6643a88c7a0c..2f077d0b7957 100644
---- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-@@ -367,6 +367,8 @@ static int pci_epf_mhi_edma_read(struct mhi_ep_cntrl *mhi_cntrl,
- 		dev_err(dev, "DMA transfer timeout\n");
- 		dmaengine_terminate_sync(chan);
- 		ret = -ETIMEDOUT;
-+	} else {
-+		ret = 0;
- 	}
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+index af8204c0e188..5ee2a6ee5840 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+@@ -361,10 +361,12 @@ static int ethqos_dll_configure(struct qcom_ethqos *ethqos)
+ 			      SDCC_HC_REG_DLL_CONFIG2);
  
- err_unmap:
-@@ -438,6 +440,8 @@ static int pci_epf_mhi_edma_write(struct mhi_ep_cntrl *mhi_cntrl,
- 		dev_err(dev, "DMA transfer timeout\n");
- 		dmaengine_terminate_sync(chan);
- 		ret = -ETIMEDOUT;
-+	} else {
-+		ret = 0;
- 	}
+ 		rgmii_updatel(ethqos, SDCC_DLL_CONFIG2_MCLK_FREQ_CALC,
+-			      0x1A << 10, SDCC_HC_REG_DLL_CONFIG2);
++			      FIELD_PREP(SDCC_DLL_CONFIG2_MCLK_FREQ_CALC, 26),
++			      SDCC_HC_REG_DLL_CONFIG2);
  
- err_unmap:
+ 		rgmii_updatel(ethqos, SDCC_DLL_CONFIG2_DDR_TRAFFIC_INIT_SEL,
+-			      BIT(2), SDCC_HC_REG_DLL_CONFIG2);
++			      FIELD_PREP(SDCC_DLL_CONFIG2_DDR_TRAFFIC_INIT_SEL,
++					 1), SDCC_HC_REG_DLL_CONFIG2);
+ 
+ 		rgmii_setmask(ethqos, SDCC_DLL_CONFIG2_DDR_TRAFFIC_INIT_SW,
+ 			      SDCC_HC_REG_DLL_CONFIG2);
+@@ -425,11 +427,13 @@ static int ethqos_rgmii_macro_init(struct qcom_ethqos *ethqos, int speed)
+ 		if (ethqos->has_emac_ge_3) {
+ 			/* 0.9 ns */
+ 			rgmii_updatel(ethqos, SDCC_DDR_CONFIG_PRG_RCLK_DLY,
+-				      115, SDCC_HC_REG_DDR_CONFIG);
++				      FIELD_PREP(SDCC_DDR_CONFIG_PRG_RCLK_DLY,
++						 115), SDCC_HC_REG_DDR_CONFIG);
+ 		} else {
+ 			/* 1.8 ns */
+ 			rgmii_updatel(ethqos, SDCC_DDR_CONFIG_PRG_RCLK_DLY,
+-				      57, SDCC_HC_REG_DDR_CONFIG);
++				      FIELD_PREP(SDCC_DDR_CONFIG_PRG_RCLK_DLY,
++						 57), SDCC_HC_REG_DDR_CONFIG);
+ 		}
+ 		rgmii_setmask(ethqos, SDCC_DDR_CONFIG_PRG_DLY_EN,
+ 			      SDCC_HC_REG_DDR_CONFIG);
+@@ -451,7 +455,8 @@ static int ethqos_rgmii_macro_init(struct qcom_ethqos *ethqos, int speed)
+ 		rgmii_updatel(ethqos, RGMII_CONFIG2_TX_CLK_PHASE_SHIFT_EN,
+ 			      phase_shift, RGMII_IO_MACRO_CONFIG2);
+ 		rgmii_updatel(ethqos, RGMII_CONFIG_MAX_SPD_PRG_2,
+-			      BIT(6), RGMII_IO_MACRO_CONFIG);
++			      FIELD_PREP(RGMII_CONFIG_MAX_SPD_PRG_2, 1),
++			      RGMII_IO_MACRO_CONFIG);
+ 		rgmii_clrmask(ethqos, RGMII_CONFIG2_RSVD_CONFIG15,
+ 			      RGMII_IO_MACRO_CONFIG2);
+ 
+@@ -464,7 +469,8 @@ static int ethqos_rgmii_macro_init(struct qcom_ethqos *ethqos, int speed)
+ 
+ 		/* Write 0x5 to PRG_RCLK_DLY_CODE */
+ 		rgmii_updatel(ethqos, SDCC_DDR_CONFIG_EXT_PRG_RCLK_DLY_CODE,
+-			      (BIT(29) | BIT(27)), SDCC_HC_REG_DDR_CONFIG);
++			      FIELD_PREP(SDCC_DDR_CONFIG_EXT_PRG_RCLK_DLY_CODE,
++					 5), SDCC_HC_REG_DDR_CONFIG);
+ 		rgmii_setmask(ethqos, SDCC_DDR_CONFIG_EXT_PRG_RCLK_DLY,
+ 			      SDCC_HC_REG_DDR_CONFIG);
+ 		rgmii_setmask(ethqos, SDCC_DDR_CONFIG_EXT_PRG_RCLK_DLY_EN,
+@@ -487,7 +493,7 @@ static int ethqos_rgmii_macro_init(struct qcom_ethqos *ethqos, int speed)
+ 		rgmii_updatel(ethqos, RGMII_CONFIG2_TX_CLK_PHASE_SHIFT_EN,
+ 			      phase_shift, RGMII_IO_MACRO_CONFIG2);
+ 		rgmii_updatel(ethqos, RGMII_CONFIG_MAX_SPD_PRG_9,
+-			      BIT(12) | GENMASK(9, 8),
++			      FIELD_PREP(RGMII_CONFIG_MAX_SPD_PRG_9, 19),
+ 			      RGMII_IO_MACRO_CONFIG);
+ 		rgmii_clrmask(ethqos, RGMII_CONFIG2_RSVD_CONFIG15,
+ 			      RGMII_IO_MACRO_CONFIG2);
+@@ -499,7 +505,8 @@ static int ethqos_rgmii_macro_init(struct qcom_ethqos *ethqos, int speed)
+ 				      RGMII_IO_MACRO_CONFIG2);
+ 		/* Write 0x5 to PRG_RCLK_DLY_CODE */
+ 		rgmii_updatel(ethqos, SDCC_DDR_CONFIG_EXT_PRG_RCLK_DLY_CODE,
+-			      (BIT(29) | BIT(27)), SDCC_HC_REG_DDR_CONFIG);
++			      FIELD_PREP(SDCC_DDR_CONFIG_EXT_PRG_RCLK_DLY_CODE,
++					 5), SDCC_HC_REG_DDR_CONFIG);
+ 		rgmii_setmask(ethqos, SDCC_DDR_CONFIG_EXT_PRG_RCLK_DLY,
+ 			      SDCC_HC_REG_DDR_CONFIG);
+ 		rgmii_setmask(ethqos, SDCC_DDR_CONFIG_EXT_PRG_RCLK_DLY_EN,
 -- 
-2.52.0
+2.47.3
 
 
