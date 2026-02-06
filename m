@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-92069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4PuwGAIXhmk1JgQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 17:29:54 +0100
+	id INIBERIahmlNJwQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 17:42:58 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id BFF85100463
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 17:29:53 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id DA207100793
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 17:42:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 094D83028B30
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Feb 2026 16:26:09 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id AD621305617B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Feb 2026 16:32:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DFFF328B5D;
-	Fri,  6 Feb 2026 16:26:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B476C32939F;
+	Fri,  6 Feb 2026 16:31:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g63/9b3o"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ME5qbyDb"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7442D59E8;
-	Fri,  6 Feb 2026 16:26:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB042D59E8;
+	Fri,  6 Feb 2026 16:31:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770395167; cv=none; b=oCOCJUqFd/wunPe0PFDO1J1tgF+En/nASUGhCwy7/ro7QV2Ew66Zeuo8kEmQRZkglbYHC7qlngRYuKGM49V4EYCnk7tVC35bM415eVcDhf6Dt4XBKSc+REjbVxgt1ONfz7fB0S3n5Dt2YIBtWSb4xdS3ygsRmRd/+ZK38K9g+qs=
+	t=1770395519; cv=none; b=D27ZHm7UnnyC4re64l/4jw5P2lpoCaD2zHHrOrVKMXlT2q/i1YBukDq1YAnIr25Ham21rYjzsywGsCBdb0Qs5U4prph+VJMALMN6wE/ccOv5KuvnJPLGBsEDiEbjQ7V5NtTQzoOK0yUWyroi3n09nBkq5Uu2BwhneKG6Lyh4QOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770395167; c=relaxed/simple;
-	bh=wzEZ4gm2SvZ+OkIZHsII83TSRZGhNfNhys4PPmfQeSE=;
+	s=arc-20240116; t=1770395519; c=relaxed/simple;
+	bh=SSM0/6NMkB6hrFzK/KE9bEts4iRvYgEngqBWiP+yPns=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=m9ZDNxXylCgo55c9gfwOAST+/BKHCBprpA5N3xOhVOzutGUE8aJ6p2kHWXoJrT+B2klC1fVd5Z9Y2AStAUqPBjFlkgXoaK3Quf2IJgSN088nVd8CEMXS3mUXPf2A//dTMoS80LASkUwLsdng60vdMp8djx+h1KLocdpNJzGCY/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g63/9b3o; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0929C116C6;
-	Fri,  6 Feb 2026 16:26:04 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=YZl/2CHuIZVb6ZVvG70KMdYYHfgkArpbZWkfv1uufRG4x5T4y8uZ/X7vfCXbSzK8LRbM+Vvy0ofu1wzUGbAYGKyxzDrImVfwLZRK/3izCsLVlEj1mCacHgBZKd2JKZZbQNt0hMTxUqssAjCH7RcQ08z+6esRaoGGVToBaeAE+e8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ME5qbyDb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E524C116C6;
+	Fri,  6 Feb 2026 16:31:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770395167;
-	bh=wzEZ4gm2SvZ+OkIZHsII83TSRZGhNfNhys4PPmfQeSE=;
+	s=k20201202; t=1770395519;
+	bh=SSM0/6NMkB6hrFzK/KE9bEts4iRvYgEngqBWiP+yPns=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=g63/9b3oPlFPtPIYtllnmreAKdrZ87HFlIIQ3Os9juvebA1o8NULHh3XSjozR/2RX
-	 iBq6G4vwxyiMsPQPAiFc/4JWQvjejeWKAHE/d01U9by745ht4R7GxrCKMtEtzcB3kY
-	 45fzNoI2D2/AFmbX0GkkkneOdvYI9k9FbF6Xk/PWvJJBHrEPog0quoP2ddMPOsj9MG
-	 NARFhAn2nv3Ruyr+oGXnDbbNY4rDva6xDjLsmg04g5qxmEGw2kEKBT4zTkzAHRp5hU
-	 gnWQVk2n/u76sngMKwDiNTQ5cdT1XWj3YyV6F0ZMCKJFbPrPf0rneQehxoskeg1pBT
-	 tKnNg8GiLAp3g==
-Message-ID: <d4ad8281-c9ca-4473-b7d2-f4a0955542f7@kernel.org>
-Date: Fri, 6 Feb 2026 17:26:02 +0100
+	b=ME5qbyDbEBlw174e3d18qE+K+cq9L0oUame7HIWLYhlLw4rDVUZ2BArDdxPB5Tore
+	 vb+FFpcBdNWaoVKvolO6GUqdy6kJfDDE1MHCXDzCUUXH/Ssxm5SAi/LZ5zaItnrgYX
+	 khMq168SFONZuSegEOjZuV3Ekjc7ygD9CoNa/PlO5cazDW0xSf3s1BtgcneBnu70Mp
+	 eK9YZo08QXE52tWUox7FJoSTt7fKaYJ8Ap8BQ4qBGpnTEFs0MG/7+nVO24Es0UnZlR
+	 03t0qpQ4M7lPNPTzag1LYRR7/5FguyWozWUMrbo1A5WRoSepgp/2f3e/WvMXQYHyrj
+	 B/mQNyhxRkFEQ==
+Message-ID: <73ce4035-412a-4b62-9c19-abb26d5237f5@kernel.org>
+Date: Fri, 6 Feb 2026 17:31:51 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,17 +53,26 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 1/4] dt-bindings: arm: qcom: Document Glymur SoC and
- board
-To: Pankaj Patil <pankaj.patil@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-References: <20260205-upstream_v3_glymur_introduction-v7-0-849e7a9e6888@oss.qualcomm.com>
- <20260205-upstream_v3_glymur_introduction-v7-1-849e7a9e6888@oss.qualcomm.com>
+Subject: Re: [PATCH v5 2/5] dt-bindings: i2c: qcom-cci: Document sm6150
+ compatible
+To: Andi Shyti <andi.shyti@kernel.org>,
+ Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
+Cc: Loic Poulain <loic.poulain@oss.qualcomm.com>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Fabio Estevam <festevam@gmail.com>, linux-i2c@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+ imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org
+References: <20260122-sm6150_evk-v5-0-039b170450a3@oss.qualcomm.com>
+ <20260122-sm6150_evk-v5-2-039b170450a3@oss.qualcomm.com>
+ <aYNtLbUel_oWUHfh@zenone.zhora.eu>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,69 +118,57 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260205-upstream_v3_glymur_introduction-v7-1-849e7a9e6888@oss.qualcomm.com>
+In-Reply-To: <aYNtLbUel_oWUHfh@zenone.zhora.eu>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-92069-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-92070-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,gmail.com,linaro.org,pengutronix.de,vger.kernel.org,lists.linux.dev,lists.infradead.org];
+	RCPT_COUNT_TWELVE(0.00)[23];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-0.999];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[10];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: BFF85100463
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: DA207100793
 X-Rspamd-Action: no action
 
-On 05/02/2026 13:20, Pankaj Patil wrote:
-> Document Glymur SoC bindings and Compute Reference Device
-> (CRD) board id
+On 04/02/2026 17:01, Andi Shyti wrote:
+> Hi Wenmeng,
 > 
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-
-Drop my tag
-
-> Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
-> ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 5 +++++
->  1 file changed, 5 insertions(+)
+> On Thu, Jan 22, 2026 at 06:48:53PM +0800, Wenmeng Liu wrote:
+>> Add the sm6150 CCI device string compatible.
+>>
+>> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+>> Signed-off-by: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
 > 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> index d48c625d3fc4..5be53b50f5ad 100644
-> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> @@ -66,6 +66,11 @@ properties:
->                - fairphone,fp6
->            - const: qcom,milos
->  
-> +      - items:
-> +          - enum:
-> +              - qcom,glymur-crd
-> +          - const: qcom,glymur
+> Acked-by: Andi Shyti <andi.shyti@kernel.org>
 
-g < m.
+There is no dependency here. It should have never been placed here
+(repeated to Qualcomm many times...). It seems like contributors want to
+make their life more difficult and avoid merging their work...
 
-This is just mess that I need to keep looking for such issues and
-repeating such feedback.
+Andi, please take the patch instead.
 
 Best regards,
 Krzysztof
