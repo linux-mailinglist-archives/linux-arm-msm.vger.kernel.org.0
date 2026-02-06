@@ -1,50 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-91977-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-91978-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id KEcuIXSghWlKEAQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-91977-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 09:04:04 +0100
+	id +LZlDsughWlKEAQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-91978-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 09:05:31 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2FD2FFB3C3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 09:04:04 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 924A7FB3DA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Feb 2026 09:05:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 71314300B122
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Feb 2026 08:00:13 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id CF5193010DB5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Feb 2026 08:01:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 892E033F395;
-	Fri,  6 Feb 2026 08:00:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8578346AD6;
+	Fri,  6 Feb 2026 08:01:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YlWn99IG"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rgq6+Wfs"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6025733F37F;
-	Fri,  6 Feb 2026 08:00:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A431633F395;
+	Fri,  6 Feb 2026 08:01:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770364812; cv=none; b=l7vtVkUwO3VADSAdG7yR9EFRkaNTm4ExagMZ94Sq4uayFTKScEqcw9q0JzmDYtCcdHpf/gmuwewkJuuIEV6DJGbva6OI/yjvD6NR3GhZYoDTKiW4ZW15g3TE32cuNTv5jZx19zsqQcU7cMBPLjqUDEgbECrsWM6HcQWU/8XFXlI=
+	t=1770364906; cv=none; b=aiK6mH0IFzeCpGm0FB/m9n3Gx6OtKuPYpsUmVsFAKOMHjN5kdCfcZ8gvRfjfWXf/awx7eplKIn9/5GF5zSDSqTYEWV+eUPg9wCLPWKqelJptFUt4lo0UA5UussVRYQzSk/dkVBW6XLG8gYobdfaKZlO3jEl656fJgVZYlBJtaYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770364812; c=relaxed/simple;
-	bh=QYQxMJpseoM1Pjg/ppDkYzFEx9y2SCTxdUniu1od0g4=;
+	s=arc-20240116; t=1770364906; c=relaxed/simple;
+	bh=8xG3JPsnWZhg/I84nAFY9ErZo3wh4h7qBN5sbtVVtOY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Bjoyx5TiMkoCIIAk11oPqHPQkAIr6OCftLGwcbpCABGfyWVhMfMM0Fztbb4NRQG1RYbUaLfqocWDkeeE8TJCpJ/bl50YtE4gcYq6R5X/NwEC+usOJHi6UQ5UJoF53SKCMakzFg+ML7sjSJEyR/NX4VU8dflv1PXM7bQGLH6zkpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YlWn99IG; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39DA9C116C6;
-	Fri,  6 Feb 2026 08:00:11 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=q+5aQYGBdN7XKAEL8H+DxFUYB4bQR/1I4W5kzR35XNCB664yXW4hjITC6Pmlg90xwWqHxRwUmqja0v6GVEneYIX8t6VjLY0IHkwfEkS/vVA4iMfaGl3xaKFGOU+4myckgmYcknpgnWnIu+6qG5mCNPkEolqK5fNCf2zh7T5aTIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rgq6+Wfs; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2EA8C116C6;
+	Fri,  6 Feb 2026 08:01:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770364811;
-	bh=QYQxMJpseoM1Pjg/ppDkYzFEx9y2SCTxdUniu1od0g4=;
+	s=k20201202; t=1770364906;
+	bh=8xG3JPsnWZhg/I84nAFY9ErZo3wh4h7qBN5sbtVVtOY=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YlWn99IG2UbCJd0tPwymWE00YeNRIWyvSyDeO3n2OypA+Hd3ItfcjBvZf2lQBrDjW
-	 /RBqj8OL9nUonPbW6Ob1nsuqjxY5qYqDYvrZXYvoa04mHNoY/v7PlgHTIxwFuBViBL
-	 Wlk1Xpk3FevA5eKTZeiCG3/Ll49DQHyTWAVK5DEaqvMdfMmIg5DAr80c3efq2cNKCA
-	 kfL2DHMKTg1NtUvx/NSAX9yBXFGlqNznzroZYBLq4vuBJLWWlxvu1jA0XiazLuDEuA
-	 Y3HwsZwwg5UQiap5xgsrrTlRjhYm4LJqgEPbOOUK08PsgMhkZJwkDRQLF9B9BTuqci
-	 5BKiL47ukLnAA==
-Date: Fri, 6 Feb 2026 09:00:09 +0100
+	b=rgq6+WfsTFqxbi/vuNmyZ2oRdjtbUetWYpXA18v5oa0OH+ZfjJWY6E7DoL1SL5ZA9
+	 dpvASmEWCXeJBVBgwbc4yXXni/SKa7Ji89rrA+jWwmjlUgP+RBh+5CI4eMKDLEXEQW
+	 eUQsP4Ih9SWfVIyC44W/XfqoNmizf3k/Hdcs05rT+L6LyiE9Lsp1awwwbevUx+swcP
+	 yEzhhJIay5vh/JQUNgp8IAND2PVSlvVp2KYO8Zemrrts/Qt8yfelMK8nWRT/RatPyk
+	 hpGrRDBkA9dDVzohBRTQ9cu/aApV5Br5oSznujElX+K7klRSVJK1Xba52gFF+s8Yg1
+	 5eJECI+OQWmZg==
+Date: Fri, 6 Feb 2026 09:01:43 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 Cc: broonie@kernel.org, lgirdwood@gmail.com, robh@kernel.org, 
@@ -52,12 +52,12 @@ Cc: broonie@kernel.org, lgirdwood@gmail.com, robh@kernel.org,
 	tiwai@suse.com, alexey.klimov@linaro.org, mohammad.rafi.shaik@oss.qualcomm.com, 
 	quic_wcheng@quicinc.com, johan@kernel.org, dmitry.baryshkov@oss.qualcomm.com, 
 	konrad.dybcio@oss.qualcomm.com, linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 05/10] ASoC: qcom: q6dsp: add support for LPASS LPI MI2S
- dais
-Message-ID: <20260206-petite-tireless-iguana-addf9e@quoll>
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Stable@vger.kernel.org
+Subject: Re: [PATCH 01/10] ASoC: qcom: q6apm: fix array out of bounds on
+ lpass ports
+Message-ID: <20260206-funny-beaver-of-trust-873343@quoll>
 References: <20260205171411.34908-1-srinivas.kandagatla@oss.qualcomm.com>
- <20260205171411.34908-6-srinivas.kandagatla@oss.qualcomm.com>
+ <20260205171411.34908-2-srinivas.kandagatla@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,7 +66,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260205171411.34908-6-srinivas.kandagatla@oss.qualcomm.com>
+In-Reply-To: <20260205171411.34908-2-srinivas.kandagatla@oss.qualcomm.com>
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
@@ -74,16 +74,16 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-91977-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-91978-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[19];
+	RCPT_COUNT_TWELVE(0.00)[20];
 	MIME_TRACE(0.00)[0:+];
 	FREEMAIL_CC(0.00)[kernel.org,gmail.com,perex.cz,suse.com,linaro.org,oss.qualcomm.com,quicinc.com,vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
@@ -93,57 +93,37 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	MISSING_XM_UA(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: 2FD2FFB3C3
+X-Rspamd-Queue-Id: 924A7FB3DA
 X-Rspamd-Action: no action
 
-On Thu, Feb 05, 2026 at 12:14:06PM -0500, Srinivas Kandagatla wrote:
-> Add new dai ids and dai driver entries ior LPASS LPI MI2S lines
+On Thu, Feb 05, 2026 at 12:14:02PM -0500, Srinivas Kandagatla wrote:
+> lpass ports numbers have been added but the apm driver never got updated
+> with new max port value that it uses to store dai specific data.
 > 
+> This will result in array out of bounds and weird driver behaviour.
+> Fix this by adding a new LPASS_MAX_PORT which is can be used by driver
+> instead of using number and any new port additional can only be done in
+> one place, which should avoid these type of mistakes in future.
+> 
+> Also update the driver to use this LPASS_MAX_PORT.
+> 
+> Fixes: 55b5fb369c02 ("ASoC: dt-bindings: qcom,q6dsp-lpass-ports: Add USB_RX port")
+> Cc: Stable@vger.kernel.org
 > Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 > ---
->  .../sound/qcom,q6dsp-lpass-ports.h            | 12 ++++-
->  sound/soc/qcom/qdsp6/q6dsp-lpass-ports.c      | 47 +++++++++++++++++++
->  2 files changed, 58 insertions(+), 1 deletion(-)
-> 
+>  include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h | 1 +
 
-It's impossible to reply via korg - wrong address of Conor...
+Why do you send this patch multiple times? I already replied to it.
 
-> diff --git a/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h b/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
-> index 609bc278f726..0febc641f351 100644
-> --- a/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
-> +++ b/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
-> @@ -140,7 +140,17 @@
->  #define DISPLAY_PORT_RX_6	134
->  #define DISPLAY_PORT_RX_7	135
->  #define USB_RX			136
-> -#define LPASS_MAX_PORT		(USB_RX + 1)
-> +#define	LPI_MI2S_RX_0		137
+NAK
 
-Odd indentation appeared.
+And also impossible to reply via korg:
 
-> +#define	LPI_MI2S_TX_0		138
-> +#define	LPI_MI2S_RX_1		139
-> +#define	LPI_MI2S_TX_1		140
-> +#define	LPI_MI2S_RX_2		141
-> +#define	LPI_MI2S_TX_2		142
-> +#define	LPI_MI2S_RX_3		143
-> +#define	LPI_MI2S_TX_3		144
-> +#define	LPI_MI2S_RX_4		145
-> +#define	LPI_MI2S_TX_4		146
-> +#define	LPASS_MAX_PORT		(LPI_MI2S_TX_4 + 1)
-
-Confusing change or actual proof that my previous comments for similar
-patch are valid:
-1. not a binding
-or
-2. you cannot change this, because you break ABI.
-Choose only one from these options.
-
-Drop.
+sendmail: server message: 550 5.1.1 <cnor+dt@kernel.org>: Recipient address rejected: User unknown in local recipient table
 
 Best regards,
 Krzysztof
