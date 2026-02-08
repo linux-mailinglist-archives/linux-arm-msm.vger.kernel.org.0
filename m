@@ -1,207 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-92135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id EGu+K4rmh2leewQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 02:27:38 +0100
+	id 6NyEH7Lmh2leewQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 02:28:18 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 02B5D10784E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 02:27:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 293BE107875
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 02:28:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 67F6D3011BE0
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Feb 2026 01:27:36 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 3192830125EF
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Feb 2026 01:28:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 301363009F6;
-	Sun,  8 Feb 2026 01:27:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E4763016F5;
+	Sun,  8 Feb 2026 01:28:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dTcR+S51"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="i51G6pAK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B6DF19F40A
-	for <linux-arm-msm@vger.kernel.org>; Sun,  8 Feb 2026 01:27:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E2D2FE071;
+	Sun,  8 Feb 2026 01:28:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770514055; cv=none; b=CflekRI54gP8aaZhQ/4QTmu0myoUFsk0//YxoEnQZiFn+yhCWr77r8mB2m05aq2uBSG+9il4H5BvFoDkpnxBNmws6bRI6IhUM8RloGLRE8Cx01xfXuCwwnGDbQehZyUWvvxyNVnVfVu8SjEwRGZf1uurLEsA1SOn0YVSDvzXSs4=
+	t=1770514086; cv=none; b=gb0BNBxoII2fSHwrlGvpjM2531UdunnzYUO/84oTSk3kuwJ0WVSco+nX8yn0hxuiu0MOZEBI6tZcuLBFORTgqahbpGsWf1DvSswPFk1zS6WvG9tYwcn+xcyeAbJmzegjosOrnKy2Hfz448EmwyUFg0hiJzcOcshbW2Rf0+7mxuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770514055; c=relaxed/simple;
-	bh=E7P8zn8SkOqfK6Lhfvl3FSA/eexLP6U4z99vJKnQhTY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZFJDOKqxWPLfq+OOULc/Vy5bWxH0bAxieeKQV4yHb+tH6D93/s9WAUDBWZM4FZxLXAf1qX+Li1x3CmRn2jwwuptcVX2PBwUH67kiDIVsOT+wsM46Wp+5qXSRHSKyMl00qWC8MSZ0/t5305XeI8fgKZvM9fahCIchJXkBGD0uPBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dTcR+S51; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9F1C4AF0B
-	for <linux-arm-msm@vger.kernel.org>; Sun,  8 Feb 2026 01:27:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770514054;
-	bh=E7P8zn8SkOqfK6Lhfvl3FSA/eexLP6U4z99vJKnQhTY=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=dTcR+S51wiY5JJmW99RAi1e7TIVi0OIRLT7F0KpiT/VzzO0eqPk0Fisjn/k85MJDA
-	 D8S8jU+EvYHqw4bIF1gJNMOylp4kTS30f1mIsfCnQM7Lk3ZcV+MTvCqj/0gyYOGUZw
-	 7VrTiSADndPnpXA1+MAUzBFZM+LnLSIrg8QeJ4gXKZPha7knIYcBMRhu6J9iscwIqu
-	 6PmVppHpeYsbL8zO5htqEIePTF0CoQqBHqL8TTWyAqCOuPFfzets/z6x+JRYUL/jp/
-	 zbP4lWMshjmz4yG2xtyIGaGuqhTpuFtMwEAWLzRKOgWGrQ84mGC6RvuaXZj4s9l6A8
-	 6NIqpIt+S/+HQ==
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-658cc45847cso4909901a12.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 07 Feb 2026 17:27:34 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCVSNN4ueSk5bwN9uW/h9pba4O8MwPm/Y3SOAnsMVdwDnkV38adfFvnNSfyXb4GsF7Y7m6/Yd5IPEGWj9SSm@vger.kernel.org
-X-Gm-Message-State: AOJu0YwCLDdnuzSRqE/r2CkfQzMk2MBFIFjTIJExWWtOofbhSO5cQ7Lp
-	G9m0eLY+g9uFGLy2GAn2moDPHlGmIfslDEMc4SyIi1hDtsAZih8BjzwWEvgRsJiNJnk+nPvJOcy
-	J1AVZu+WxyIOqKgSHVjaIwH1eyWyLnV8=
-X-Received: by 2002:a05:6402:3551:b0:659:36de:6d20 with SMTP id
- 4fb4d7f45d1cf-6598413d07cmr3640827a12.14.1770514053368; Sat, 07 Feb 2026
- 17:27:33 -0800 (PST)
+	s=arc-20240116; t=1770514086; c=relaxed/simple;
+	bh=00vtT39Jvixfi9ZVfpFlajnoDWPhiFq0HqXBPIp6ZRs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eVO9c4nnDp3joFYK3MSZANlmvtqrQ3SjYhEenxMZCJDZNwelfpO9P12fHqL8yiEieoHemgO7vO9xrKxZQRBtoYelX1yd70rbC0kbZ7Eyzgb6rf6oiGa8+ZSYCaaEpsa0oR+ws8w6VHeLHMohZCC+2gsz6B5hmA/6qw4YIEF5WLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=i51G6pAK; arc=none smtp.client-ip=192.198.163.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1770514086; x=1802050086;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=00vtT39Jvixfi9ZVfpFlajnoDWPhiFq0HqXBPIp6ZRs=;
+  b=i51G6pAKyuCXaAQ5uyOLw4969y2fdpjKiWN/fUSeYENTZSHvGgh+WXwX
+   tPc0ZZtLj5NTjGo9IU6WW4LFTSSTBF4PktLi8itBq1fwd56HFCfQqB7Ay
+   imQC3eDZW8vB/NLIVAamu4i3b0BuN/a3m/MmUafUSPrK4COOOlv5sfXrT
+   npxToBe2utvpa0ei/E28Oz1+PzScaRu+F56fw5G3fF/JCMUXBqRZafbn0
+   0WQoD+Hp5CjB591NTQc9GjdIgj20cpff4VuyNqaug9n+50g0F3YmRokVD
+   /5EBKb6HfOu+WyieYGcek49dGpdc96Mi5izn0Yuc4i6v9U2gCHSBQIdiF
+   A==;
+X-CSE-ConnectionGUID: rpDwlkS8Su6VYhBVyaKt/g==
+X-CSE-MsgGUID: +j8L9GSeSRmw1u3Y15X9gQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11694"; a="82407605"
+X-IronPort-AV: E=Sophos;i="6.21,279,1763452800"; 
+   d="scan'208";a="82407605"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Feb 2026 17:28:05 -0800
+X-CSE-ConnectionGUID: Z8lL18aARnOxVCVEXE5i8w==
+X-CSE-MsgGUID: uY40Je0aRMOw+ecg6shhpA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,279,1763452800"; 
+   d="scan'208";a="211037611"
+Received: from lkp-server01.sh.intel.com (HELO 765f4a05e27f) ([10.239.97.150])
+  by fmviesa008.fm.intel.com with ESMTP; 07 Feb 2026 17:28:02 -0800
+Received: from kbuild by 765f4a05e27f with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1votai-00000000m00-0D9Z;
+	Sun, 08 Feb 2026 01:28:00 +0000
+Date: Sun, 8 Feb 2026 09:27:58 +0800
+From: kernel test robot <lkp@intel.com>
+To: Manaf Meethalavalappu Pallikunhi <manaf.pallikunhi@oss.qualcomm.com>,
+	Guenter Roeck <linux@roeck-us.net>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	amit.kucheria@oss.qualcomm.com,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>
+Cc: oe-kbuild-all@lists.linux.dev, linux-hwmon@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Manaf Meethalavalappu Pallikunhi <manaf.pallikunhi@oss.qualcomm.com>
+Subject: Re: [PATCH 2/4] hwmon: Add Qualcomm PMIC BCL hardware monitor driver
+Message-ID: <202602080939.NxUyWMbv-lkp@intel.com>
+References: <20260206-qcom-bcl-hwmon-v1-2-7b426f0b77a1@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260205070640.10653-1-manivannan.sadhasivam@oss.qualcomm.com>
- <bfba9d62-2741-47b8-8325-2d932c20c9e7@oss.qualcomm.com> <lnzmgsdjckbf6u5hxfqm4kzlmcg2cqvszcg7otmkqxaj3yzdfq@vu232xx5kts3>
-In-Reply-To: <lnzmgsdjckbf6u5hxfqm4kzlmcg2cqvszcg7otmkqxaj3yzdfq@vu232xx5kts3>
-From: Saravana Kannan <saravanak@kernel.org>
-Date: Sat, 7 Feb 2026 17:27:21 -0800
-X-Gmail-Original-Message-ID: <CACRMN=eu7n+wCD3vRY-7GSKpqf3VG=oyDoQdeauiEHGK-q9pPg@mail.gmail.com>
-X-Gm-Features: AZwV_Qj_FXfuqtNbiLuc57OTK7D3Dyw4bQfFYHBT6WOVHb87zyCIiSHuhyyXSeo
-Message-ID: <CACRMN=eu7n+wCD3vRY-7GSKpqf3VG=oyDoQdeauiEHGK-q9pPg@mail.gmail.com>
-Subject: Re: [PATCH] of: property: Create devlink between PCI Host bridge and
- Root Port suppliers
-To: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, robh@kernel.org, saravanak@kernel.org, 
-	andersson@kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	qiang.yu@oss.qualcomm.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260206-qcom-bcl-hwmon-v1-2-7b426f0b77a1@oss.qualcomm.com>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [0.34 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-92136-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[16];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-92135-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
+	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[saravanak@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[lkp@intel.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[intel.com:+];
+	NEURAL_HAM(-0.00)[-0.962];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	NEURAL_HAM(-0.00)[-0.998];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: 02B5D10784E
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,01.org:url,intel.com:email,intel.com:dkim,intel.com:mid]
+X-Rspamd-Queue-Id: 293BE107875
 X-Rspamd-Action: no action
 
-On Thu, Feb 5, 2026 at 1:01=E2=80=AFAM Manivannan Sadhasivam
-<manivannan.sadhasivam@oss.qualcomm.com> wrote:
->
-> On Thu, Feb 05, 2026 at 09:50:20AM +0100, Konrad Dybcio wrote:
-> > On 2/5/26 8:06 AM, Manivannan Sadhasivam wrote:
-> > > In the recent times, devicetree started to represent the PCI Host bri=
-dge
-> > > supplies like PHY in the Root Port nodes as seen in commit 38fcbfbd42=
-07
-> > > ("dt-bindings: PCI: qcom: Move PHY & reset GPIO to Root Port node"). =
-But
-> > > the Host bridge drivers still need to control these supplies as a par=
-t of
-> > > their controller initialization/deinitialization sequence.
-> > >
-> > > So the Host bridge drivers end up parsing the Root Port supplies in t=
-heir
-> > > probe() and controlled them. A downside to this approach is that the
-> > > devlink dependency between the suppliers and Host bridge is completel=
-y
-> > > broken. Due to this, the driver core probes the Host bridge drivers e=
-ven if
-> > > the suppliers are not ready, causing probe deferrals and setup teardo=
-wns in
-> > > probe().
-> > >
-> > > These probe deferrals sometime happen over 1000 times (as reported in=
- Qcom
-> > > Glymur platform) leading to a waste of CPU resources and increase in =
-boot
-> > > time. So to fix these unnecessary deferrals, create devlink between t=
-he
-> > > Host bridge and Root Port suppliers in of_fwnode_add_links(). This wi=
-ll
-> > > allow the driver core to probe the Host bridge drivers only when all =
-Root
-> > > Port suppliers are available.
-> > >
-> > > Reported-by: Bjorn Andersson <andersson@kernel.org>
-> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualc=
-omm.com>
-> > > ---
-> >
+Hi Manaf,
 
-100% NACK to this patch. You are touching a core part of the
-fw_devlink code to fix it for one specific case. This is not the place
-to special case for a property or a framework.
+kernel test robot noticed the following build warnings:
 
-Please fix it on the PCI framework level please. Couple of options:
-1. Revert the original patch causing the issue. The patch was from
-Qualcomm and they didn't test it on their own devices?
+[auto build test WARNING on 0f8a890c4524d6e4013ff225e70de2aed7e6d726]
 
-2. PCI does this weird thing of setting the of_node of two different
-devices to the same of_node. Now that you have this new node, I think
-fixing that behavior to use different of_nodes for the two devices
-might be a solution that might work here. I forget the technical terms
-used in the PCI framework, but I think one was a the bus device and
-the other was the root node.
+url:    https://github.com/intel-lab-lkp/linux/commits/Manaf-Meethalavalappu-Pallikunhi/dt-bindings-hwmon-Add-qcom-bcl-hwmon-yaml-bindings/20260206-051819
+base:   0f8a890c4524d6e4013ff225e70de2aed7e6d726
+patch link:    https://lore.kernel.org/r/20260206-qcom-bcl-hwmon-v1-2-7b426f0b77a1%40oss.qualcomm.com
+patch subject: [PATCH 2/4] hwmon: Add Qualcomm PMIC BCL hardware monitor driver
+config: sh-allyesconfig (https://download.01.org/0day-ci/archive/20260208/202602080939.NxUyWMbv-lkp@intel.com/config)
+compiler: sh4-linux-gcc (GCC) 15.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260208/202602080939.NxUyWMbv-lkp@intel.com/reproduce)
 
-3. Just create device links if you know you have a weird case of
-dependency that fw_devlink doesn't pick up? It's generally more
-painful to get fw_devlink to ignore what it thinks is a dependency,
-but thankfully that's not the case here.
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202602080939.NxUyWMbv-lkp@intel.com/
 
-Please continue cc'ing me in future patches trying to address this.
-I'm happy to give guidance if you get stuck.
+All warnings (new ones prefixed by >>):
 
--Saravana
+>> Warning: drivers/hwmon/qcom-bcl-hwmon.c:338 function parameter 'mval' not described in 'bcl_convert_milliunit_to_raw'
+>> Warning: drivers/hwmon/qcom-bcl-hwmon.c:338 function parameter 'mval' not described in 'bcl_convert_milliunit_to_raw'
 
-> > [...]
-> >
-> > This is not 'required' in bindings and device_type=3D"pci" doesn't uniq=
-uely
-> > identify root complexes (as can be seen below).. but I suppose this is =
-the
-> > best delimiter we've got
-> >
->
-> Yeah. There is no way to uniquely identify the Host bridges in DT. So I h=
-ad to
-> settle for this.
->
-> Maybe I can check for 'device_type', but that will create devlink between=
- switch
-> port supplies and Root Ports.
->
-> > Perhaps it could be made 'required'?
-> >
->
-> Nah. Linux will generate domain numbers on its own. Also, this is a Linux
-> specific property, so we cannot make it mandatory in dtschema.
->
-> - Mani
->
-> --
-> =E0=AE=AE=E0=AE=A3=E0=AE=BF=E0=AE=B5=E0=AE=A3=E0=AF=8D=E0=AE=A3=E0=AE=A9=
-=E0=AF=8D =E0=AE=9A=E0=AE=A4=E0=AE=BE=E0=AE=9A=E0=AE=BF=E0=AE=B5=E0=AE=AE=
-=E0=AF=8D
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
