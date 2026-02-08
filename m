@@ -1,185 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-92178-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6CXIOHAViWko2QQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92178-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Feb 2026 00:00:00 +0100
+	id WDjYMsMXiWkd2gQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Feb 2026 00:09:55 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 31C5F10A8C5
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 23:59:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 33B7710A8F5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Feb 2026 00:09:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id ACC6A3008756
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Feb 2026 22:59:58 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 6B15130086F1
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Feb 2026 23:09:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0C90381703;
-	Sun,  8 Feb 2026 22:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 622E733B6D3;
+	Sun,  8 Feb 2026 23:09:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f7kKFMII"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T353r0Tb"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A7A3342C8F;
-	Sun,  8 Feb 2026 22:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B1BF1CBEB9;
+	Sun,  8 Feb 2026 23:09:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770591597; cv=none; b=I5K1dE9868j2urR+fMq/XqjQ1FaADKOUk6rCwFXoH3LP5hQ4KBNy+1FTfL6dp7RCp0opxwCvQZRUXPLHiiSq/jSVoRQJIjL8H42okzrgyVpz4SWk9Gt8qtybJH8dIXfNmZU390R1+8dli9e7+3tQCgIkEVFRv7WAa0sk6fTOG2g=
+	t=1770592191; cv=none; b=NH5Gejd7dpLMs40rMgwyjCcpWFydqbtKjK4os5tbSngIQFZ0QyQf/WShlav9NdzGJl9YobyDWFx4B5QfAWhwrH0HORP2HBN0XHx4l3PO4LSijppnC6GILAFsS9F6DLICwIPmYoNz5j2Wl27M+tRgte5tjMJzRrX9Ms+k1gJiX3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770591597; c=relaxed/simple;
-	bh=vrozi+Ia7SoQnbXsLpZ/HefKMDz8FKkknmXv/NhTnNk=;
+	s=arc-20240116; t=1770592191; c=relaxed/simple;
+	bh=j1lymzKs6N3SZ3jLvBp91X5W04tWsUuqeM3MyN9LSw4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o23ljadQM/Eafr1V8z7H0QCLarpGHYrHl8be5d5Ab+0Q5SByTV8V+VXjBS8PUqYzPCPk1Vte9ay45eblOAlD7xi5MGJ430BiRtFCyC7RkaOc4G/8N+k+iiXVMwOysCX42VjstJDlAQbcxRKsl1mWaO4DpyhKKjMaMNpCBzzOpJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f7kKFMII; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62172C4CEF7;
-	Sun,  8 Feb 2026 22:59:56 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=SmiuV9IwOZiqInU2RecfEhowLYmxBALW6e/AaTWAUFK+bOBY3THo7+tT9qd+jeC4TX18sZ800RFWYrN/KGUuHKMyKZleV0Kj2y+/9Q8zIB+VrL2nyBLMnnkkdbjkae/kdYoGLMP49xHuY57IFOAvfvw5dri5joB3zF99nW1vb8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T353r0Tb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EF53C4CEF7;
+	Sun,  8 Feb 2026 23:09:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770591597;
-	bh=vrozi+Ia7SoQnbXsLpZ/HefKMDz8FKkknmXv/NhTnNk=;
+	s=k20201202; t=1770592190;
+	bh=j1lymzKs6N3SZ3jLvBp91X5W04tWsUuqeM3MyN9LSw4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=f7kKFMIIt+HMPV/OgdLXgcRq5x8bbzlCVhDSz54ERsK2D3byzwIJiHGSom6k8hNjl
-	 woSzGXskgodzqYXh0pUNsY+xCAE4oW9SRX/htCE6gsktOZTu+f0f2A9vNo3ILiVxql
-	 dybEM5swVwOIx3OPmIGRGNlHPmFJ7QnCaquvp04FAB8ALNjfzsAXzmhe6+L+zvqScb
-	 irqJ8qAQkTVX3TKoLPbrSqHsnEPYIHjgTMDhTFSQ8KM5nnUinU/XzpuZEOEGw64pnE
-	 L0wb++ImugmoQjojTx6htP6FkqwN2eNuzXVwr7ueNfuew7d1eAHSHtTvyXFEnUFcYG
-	 B6+0naDJeGZTw==
-Date: Sun, 8 Feb 2026 16:59:54 -0600
+	b=T353r0Tbt+H5laEunDirGDTsbhUttXAr5xFiuzAFq1lchP6YIVm/pqDxx4nLWxg0s
+	 QCFsEUqfeSUnuAUNzIom8bVxuGPTTbryOETNU0LqS+Nkq2bbmHUPKZwSa6qSxnyiEE
+	 SUgn9EgSIwIiZKgHdwY+7zDQvv/8uVrVDWfHrn8Q0t0qMRSZGJSrPi/B1Kg8L6ihAr
+	 qG2wp/dADfbbh6q9g+UaUp7gMHjJq6Ky7fqBPqvOKZXwy5ZDMcj86n9B0LY4ytASYF
+	 fuSEHQdBbYr7IOB27iB2pKcg33XhywfgooqYwAghzuvTY+mfycuBPCNG6CvYcVfbXW
+	 JKAagZexhXURA==
+Date: Sun, 8 Feb 2026 17:09:48 -0600
 From: Bjorn Andersson <andersson@kernel.org>
-To: webgeek1234@gmail.com
-Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Kumar Sharma <quic_vksharma@quicinc.com>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>
-Subject: Re: [PATCH v2] arm64: dts: qcom: sm8550: Fix DTBO boot failure
-Message-ID: <73mvlkbwem3rt7kd6udyenazfufgb4zkt2kggiihihincjc6ry@53ztcljmqxnd>
-References: <20260207-sm8550-abl-dtbo-v2-1-83afaa6f3ce9@gmail.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Cc: Saravana Kannan <saravanak@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, robh@kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, qiang.yu@oss.qualcomm.com
+Subject: Re: [PATCH] of: property: Create devlink between PCI Host bridge and
+ Root Port suppliers
+Message-ID: <re6ed3n5scouxoj66ysqitkm5zmloj5t5pwlvdkkvgcj4pshcs@d4ibi32x4qcs>
+References: <20260205070640.10653-1-manivannan.sadhasivam@oss.qualcomm.com>
+ <bfba9d62-2741-47b8-8325-2d932c20c9e7@oss.qualcomm.com>
+ <lnzmgsdjckbf6u5hxfqm4kzlmcg2cqvszcg7otmkqxaj3yzdfq@vu232xx5kts3>
+ <CACRMN=eu7n+wCD3vRY-7GSKpqf3VG=oyDoQdeauiEHGK-q9pPg@mail.gmail.com>
+ <apfr6syofeffm4ffv67viacsi4bvc5hd7ozk3ddcdcl7kisjee@qsbusru4uns2>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260207-sm8550-abl-dtbo-v2-1-83afaa6f3ce9@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <apfr6syofeffm4ffv67viacsi4bvc5hd7ozk3ddcdcl7kisjee@qsbusru4uns2>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-92178-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-92179-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.993];
+	NEURAL_HAM(-0.00)[-0.998];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	RCPT_COUNT_SEVEN(0.00)[10];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[8];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	TO_DN_SOME(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 31C5F10A8C5
+X-Rspamd-Queue-Id: 33B7710A8F5
 X-Rspamd-Action: no action
 
-On Sat, Feb 07, 2026 at 07:16:03PM -0600, Aaron Kling via B4 Relay wrote:
-> From: Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>
+On Sun, Feb 08, 2026 at 08:51:33PM +0530, Manivannan Sadhasivam wrote:
+> On Sat, Feb 07, 2026 at 05:27:21PM -0800, Saravana Kannan wrote:
+> > On Thu, Feb 5, 2026 at 1:01 AM Manivannan Sadhasivam
+> > <manivannan.sadhasivam@oss.qualcomm.com> wrote:
+> > >
+> > > On Thu, Feb 05, 2026 at 09:50:20AM +0100, Konrad Dybcio wrote:
+> > > > On 2/5/26 8:06 AM, Manivannan Sadhasivam wrote:
+[..]
+> > 3. Just create device links if you know you have a weird case of
+> > dependency that fw_devlink doesn't pick up? It's generally more
+> > painful to get fw_devlink to ignore what it thinks is a dependency,
+> > but thankfully that's not the case here.
+> > 
 > 
-> ABL requires certain things in the base dtb to apply a dtbo.
-
-What if I don't need/want a dtbo? Or are you referring to some specific
-overlay that ABL attempts to apply?
-
-> Namely:
-> 
-> * A label named qcom_tzlog must exist, but doesn't have to contain any
->   specific properties
-> * The timer node must have a label named arch_timer
-> 
-> This aligns the sm8550 soc dtsi with those requirements. Without these
-> in the base dtb, when ABL attempts to apply any dtbo, it will fail to
-> the bootloader menu.
+> I would love to solve it in the PCI layer itself if there is a way. But I don't
+> know how. The PCI framework becomes operational only when the controller driver
+> probes and registers with the framework. But we need to create devlink even
+> before the controller driver probes.
 > 
 
-I don't consider this to be a property of the SM8550 SoC, but rather
-ABL shipping on specific devices - where ABL can't be replaced/fixed.
+The devlinks are just an optimization, so worst case you should be able
+to create the link on the first probe attempt to avoid further probe
+deferrals until the dependencies are in place?
 
-It's been a while since I booted SM8550 with the unmodified ABL (as I
-always use abl2esp these days), but I don't remember having this problem
-on the MTP...
+Just like we could have done for all those other provider types that
+of_link_property() handles.
 
-Can we push this down to those specific devices that manifest this
-problem and does not allow replacing ABL?
-
-> Co-authored-by: Aaron Kling <webgeek1234@gmail.com>
-> Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
-> ---
-> With a current mainline sm8550 base dtb, ABL will fail to apply any dtbo
-> and fail back to the bootloader menu. There are two changes needed:
+> We do have the PCI class which gets registered during postcore_initcall(), FYI.
 > 
-> * Add a label named qcom_tzlog
-> * Add a label named arch_timer to the timer node
+> > Please continue cc'ing me in future patches trying to address this.
+> > I'm happy to give guidance if you get stuck.
+> > 
+> 
+> Sure, thanks for the review. Even I'm not super happy with plumbing PCI
+> specific code in the core DT layer, but I'm not sure of doing it elsewhere. Any
+> suggestions from you would be greatly appreciated!
+> 
 
-You said that in the commit message.
+I don't understand your concern, Saravana, of_link_property() is all
+about tangling subsystem-specific details into the of-core.
 
 Regards,
 Bjorn
 
-> ---
-> Changes in v2:
-> - Drop tz log changes
-> - Add tz log label to a generic node
-> - Link to v1: https://lore.kernel.org/r/20260129-sm8550-abl-dtbo-v1-0-abca3be14024@gmail.com
-> ---
->  arch/arm64/boot/dts/qcom/sm8550.dtsi | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
+> - Mani
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> index e3f93f4f412ded9583a6bc9215185a0daf5f1b57..04ea1a4a015aa5a4fd615e068b6f18b7c336607c 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> @@ -32,7 +32,8 @@ / {
->  	#address-cells = <2>;
->  	#size-cells = <2>;
->  
-> -	chosen { };
-> +	// This label is required by ABL to apply a dtbo
-> +	qcom_tzlog: chosen { };
->  
->  	clocks {
->  		xo_board: xo-board {
-> @@ -6756,7 +6757,8 @@ trip-point2 {
->  		};
->  	};
->  
-> -	timer {
-> +	// This label is required by ABL to apply a dtbo
-> +	arch_timer: timer {
->  		compatible = "arm,armv8-timer";
->  		interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW) 0>,
->  			     <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW) 0>,
-> 
-> ---
-> base-commit: 3f24e4edcd1b8981c6b448ea2680726dedd87279
-> change-id: 20260128-sm8550-abl-dtbo-96288634f00d
-> 
-> Best regards,
 > -- 
-> Aaron Kling <webgeek1234@gmail.com>
-> 
-> 
+> மணிவண்ணன் சதாசிவம்
 
