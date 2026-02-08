@@ -1,196 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-92171-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92173-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id +EnGLikFiWnD1AQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92171-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 22:50:33 +0100
+	id mHRZNXkLiWm+1gQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92173-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 23:17:29 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 571E010A460
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 22:50:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 35AF510A6B3
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 23:17:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 2BC22300A3BA
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Feb 2026 21:50:29 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id BC7B530086C1
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Feb 2026 22:17:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43A7834D4EC;
-	Sun,  8 Feb 2026 21:50:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14CCB342C8F;
+	Sun,  8 Feb 2026 22:17:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UvYhpCHF";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="I93mrpZz"
+	dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b="jYSUCZlG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE586344DAD
-	for <linux-arm-msm@vger.kernel.org>; Sun,  8 Feb 2026 21:50:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AB203019B2;
+	Sun,  8 Feb 2026 22:17:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770587428; cv=none; b=akgJoqESOUqz7n8VtfyGBfxH5HRBonIXmPsqrNvua5u9ZoRcFy+SoD3B2qocTmn1/jSCkrhidIU/vA97RnIlT95JrtDMPD8AIAllfTgvIs9yPgtctQFI11RUhk0DI0/oEmwTFla6nw6XTHeluTiuFDwZDJ+9dZAT9W9hcL473W0=
+	t=1770589047; cv=none; b=uDichIlTbEufKlpov80aHOL1E52in92RN00dhjNMrHKxdUXzFzH9p5/iYP60tIDkI+GKOOHIiGqD9Tra6EbvNNJBw+I/CqBH1hlR0UP77/7znP5RG/IONGHZp+mK+WHWHD1OIGM70nv420CPKxMnOey3cM8N7x/TIewP4Iw4Pq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770587428; c=relaxed/simple;
-	bh=3sqxfwiHpg9NGhfCvj/lwGpS6zdUgJo2L3SFNseKJBU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PjgKOKfGOIQv9kCCjI3iSb0ZK6TX/oc9En5FpbuYZy0Buxuqouk2D8TsOkhFPvB39HmG8YDgqOicKMreKLqTw6SA6O5/3wALC9dFqz6EQWna5rXvQ5J0UT06y8bOQw1TN1MtU/mS0hfITASxeRoGk9syGV1oF8hbiPcNbPLivqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UvYhpCHF; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=I93mrpZz; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 618CRRPl4193293
-	for <linux-arm-msm@vger.kernel.org>; Sun, 8 Feb 2026 21:50:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=MoJhtGGFfr966sCxFmKDNUK0
-	M+fXF8BrsqWGwL92JNk=; b=UvYhpCHFJ2sK9VuFKhYwJrXg6kJg1o+cnTL5yNTR
-	3ujQ3+bZvHN1TB+y/gLiESaGenlnOdt5uX4QQAYralREINi5stiDJOJo9JZrGU/u
-	CiAm0FuI8DfJXZULUgioZPfbqM5K1I7nlWffdCcUu3wUl+itUNVPMytLnAwV/+Ek
-	kxfCiva2Ix0mcdMpxlRthraB/ar2uS47eVJ8MiyANmB901tKP6XXRB40AyheIck8
-	8+XgUvTDnoAw8YoC+iniTzMI/fRuSbrI06OsenCcHu6WpKt2CDwhaXgdd0jEOpqs
-	XP/n7+qqYRgWvLe73kYj+8BXGQ3QiMR1ycRdKwT4ZC9XPw==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c5xb4u0qs-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sun, 08 Feb 2026 21:50:26 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-50340e2b4dfso161542211cf.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Feb 2026 13:50:26 -0800 (PST)
+	s=arc-20240116; t=1770589047; c=relaxed/simple;
+	bh=fM/kEI14kSqI7NhvfISk0A9R8MeXAynbDOi797/bEvM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DbOyTLmZgM9ViFVMC/zIaFUOvnyfqMT7JEbEb6436s0+wKoNKlvtx79EzKsEEbQzxi5vy5MA9P3laeXwADGTC1TjbxScMRo0UQtPxT19CM8ryFiPUQ6A7AK2MKQTBSRVtlOS/TL3/nKVWx/RcXoDi/UHm3/cV8Xz8/biQqVPYOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=permerror header.from=oldschoolsolutions.biz; spf=pass smtp.mailfrom=oldschoolsolutions.biz; dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b=jYSUCZlG; arc=none smtp.client-ip=212.227.126.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=permerror header.from=oldschoolsolutions.biz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldschoolsolutions.biz
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1770587426; x=1771192226; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=MoJhtGGFfr966sCxFmKDNUK0M+fXF8BrsqWGwL92JNk=;
-        b=I93mrpZz6Y7765L0Fpn2tu6mk8DqtJ1+lDThvwRhqdqLIn6YtH01NOOg5a1rOfJ7o6
-         xFbgT9CIWkkvFoztsj+TeMmeloSKo9BMKBUR2fdySeKy+ApJBiUkPTB438HJhYBQdrtZ
-         v0DstTaqlYLLQYEaDe1dXFtXpzSxdIkgYJgv7o1VyNwDDBd0K1pChy3C+qg3DQbnr+qd
-         WBjzPcLSyVsW/nhHXkFeiGhMBfHYcol8JbSxZwNgJJPfeSZ3kfUeyEQ6CM5M0wj0JBbs
-         SOH00DcrpGE2c4qi035a/8YbP6gzgqRkpbTw6RfrMi3R+vr9DGqe4X8WTCLNgbTwppTu
-         Gi/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770587426; x=1771192226;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=MoJhtGGFfr966sCxFmKDNUK0M+fXF8BrsqWGwL92JNk=;
-        b=K9TVsSAPudbVJ+O5hlTLsbu6jWQcW03rBPdfl1SGTdAwxR9ydxoA7kcoGQIxTHw7Sz
-         y86llds2NX0Okyi/lijsTrcgTMWw1SmnXnOcugsrMW9Dfhqs+CSD05LaehlTOTjRFJw9
-         mxKhTyi0DVEbxr+KESTOY+SJm+B4R7xtpIYEzYv9DX9Nscr1nuV0agiqVq7aQn7CrnRC
-         NlULKvhYHRh8mMwBxWE07OVLayRV98XT9e7lecsrZ76t/VhmHVvLHd3A+ppMcbJPSosR
-         lzePaTZmKpuY/0tIRw0sfsvGvplm5NqiTL3s/Y0D9cJuFpHNRbF/XMEYFARKpHaYkdMK
-         ua2g==
-X-Forwarded-Encrypted: i=1; AJvYcCU187OrBZ9k5qNYmoLO7NFirelowM/Ts34VDuKzQlFNgEdCN6mYeckXqTt/0aQbogQIzBhgh7spwGxfxmz2@vger.kernel.org
-X-Gm-Message-State: AOJu0YyQTJ9l8yNcKDO5KBj0+a6VI57ks3sssZcSjnGQFIzrV1eBZOos
-	bTtk9RnMmTEThvtflitoLMynDx1nau5Jc4bOeB5gsUpxO09/evZ0DD4GTmNzLTZtoATR7ZjdYyX
-	T4OJHENFZE1cC0Yk+ggUuMRraHgaSPgB4x85sSzvm3c7jrRrW39Osn4IEKWLnghac4HHu
-X-Gm-Gg: AZuq6aKmeXXrgVnLZonsb3F4ZqUuWLiK8tzcfhhWhTgaOoC5F6qG/Z2NTuVb4apo+/e
-	PcX4m1Wde+8jDcCea2ZqhTMh7yMhuzY8FSgNbZozvHVbPdKoCIIeCWUOxq5EtnkT1gyCwo+EjKx
-	9SU1/OfHCbmnshj7vxstCItPQD5FJC5DMhrO1hRfhOxwKXkmA4BACW1jvYlxOK2TL8C46sehfDG
-	ZxKfu7Tjz2dMYtGH+LNsWUxDcxQIZa0qrTOXbOEv6G8xyrYZH9CktFsJSA8Pi68lTZu58Udd9yh
-	4Pm9EflzbapZ6PnsrpILPtJpu4PriG7waeGUXX6/nb4pdT1EEeOGyYnapjZo185TM0vH51flrl6
-	Nk/b5T4GQURPHPyNUfRcb2ZAep763tQA1XzUKjRW/FNw30Ql8kmsgWMa+LiuyXQUekDYrBgSy6m
-	xVHAMwbXqKMMjnln8xsvc/9I4=
-X-Received: by 2002:ac8:7f0d:0:b0:4ee:1db1:a605 with SMTP id d75a77b69052e-506398738f1mr130855381cf.20.1770587426073;
-        Sun, 08 Feb 2026 13:50:26 -0800 (PST)
-X-Received: by 2002:ac8:7f0d:0:b0:4ee:1db1:a605 with SMTP id d75a77b69052e-506398738f1mr130855191cf.20.1770587425664;
-        Sun, 08 Feb 2026 13:50:25 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-59e44d299ffsm2180093e87.55.2026.02.08.13.50.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Feb 2026 13:50:25 -0800 (PST)
-Date: Sun, 8 Feb 2026 23:50:23 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: jens.glathe@oldschoolsolutions.biz
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Maud Spierings <maud_spierings@hotmail.com>
-Subject: Re: [PATCH 2/4] firmware: qcom: scm: allow QSEECOM on ASUS Vivobook
- X1P42100 variant
-Message-ID: <tedyxze5s5zziagmshe5p3ewnmdklkldrbsjvvkizwvxy4qeng@w46r2tg3i2bn>
-References: <20260208-b4-vivobook-v1-0-3a9b5e153909@oldschoolsolutions.biz>
- <20260208-b4-vivobook-v1-2-3a9b5e153909@oldschoolsolutions.biz>
+	d=oldschoolsolutions.biz; s=s1-ionos; t=1770589044; x=1771193844;
+	i=jens.glathe@oldschoolsolutions.biz;
+	bh=ZHJn9k/wzslPKQUUGgsoa/8pnelKL59hdVyjpcUcW1c=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=jYSUCZlG9oYr/t1QjzKtXos0tsnFNqDnsRyJrwlqs0VBN95IWQfkvReCsq6YPWIb
+	 R3wAH6SgLbKPQFIG4Eh99TpTiO9biy0ZRYIdpImPuCW14taj+Kh9H8kbP6JOSNg5m
+	 yFsluDhqUS9CArW7C+Pol17wLiRwyimoUZ5qAApxmg4vXvAvXML+lR+7+wLbUD8z1
+	 8nook14+E4Ow/epCsNiQhaMzQR3PWw/MlhPhJHQ9EJtby1mdQ9auKw6wkfK6B/clK
+	 pJ7cgB6oOm3fCGMDGADK4UIyEKdts3l2OQpkmSollwfU7wBKcdbrMaOno0qPF2JI3
+	 /ichG2L0HED1KSM5XA==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from [192.168.0.174] ([80.128.164.2]) by mrelayeu.kundenserver.de
+ (mreue011 [212.227.15.167]) with ESMTPSA (Nemesis) id
+ 1MhlbM-1vKYpE1nJw-00fDkD; Sun, 08 Feb 2026 22:51:12 +0100
+Message-ID: <dad0940a-9cca-41f3-871a-fca48c8c868a@oldschoolsolutions.biz>
+Date: Sun, 8 Feb 2026 22:51:11 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260208-b4-vivobook-v1-2-3a9b5e153909@oldschoolsolutions.biz>
-X-Proofpoint-GUID: vYpSUbptxxH1OtKSRaKCBdNL2YS0W5bK
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjA4MDE4OCBTYWx0ZWRfXxm4be4NXPFTy
- LQg7/w48WjjAe7Od+J3OJE6mGDomz+C0qQq1bR6Hbcff2hyKPHC616nKLn+faAsUalkRp7acNX2
- WfR8zNiIVvd05HpV+vefbmVA7msqIZX12unpPP5knvoUpoIdW+wv3r2c6OyEy1FISVW+lrKv2Ml
- jtbqtxpdcJ7DwqUcGLF+H9DWtcRd6+6TpzBQlMo2t2qFM49AZLy1DCR0O5c38LZbT+5kYflw5JX
- 8ZVcvQsTQxESlV3Nma8yBETTAMsxCadVZeLsNvSBmjRJHpEtr0Ku1CtQREMX7GDwjtMkNpNPw7Z
- 2YFWBoIXkaZTqpPmDyfxhXi4eX4JXw6Svz0aZXPW33J1y0EFRcUVDJu2lYEjBe+37jLCUW3iQHF
- LbA5pOuiTiXG/rpeoqyWJ6y+JbEpVAQB76UpvlZcysXag9ZO4y1Gu/dyl0k94IUkQUGExGgbGLQ
- ePT7S8v4+BNT8iHRYPw==
-X-Authority-Analysis: v=2.4 cv=PYLyRyhd c=1 sm=1 tr=0 ts=69890522 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=gxl3bz0cAAAA:8
- a=EUspDBNiAAAA:8 a=itIGahJsI5aVLUWJxsUA:9 a=CjuIK1q_8ugA:10 a=zZCYzV9kfG8A:10
- a=kacYvNCVWA4VmyqE58fU:22 a=kiRiLd-pWN9FGgpmzFdl:22
-X-Proofpoint-ORIG-GUID: vYpSUbptxxH1OtKSRaKCBdNL2YS0W5bK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-08_05,2026-02-05_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 phishscore=0 malwarescore=0 priorityscore=1501
- suspectscore=0 bulkscore=0 impostorscore=0 spamscore=0 clxscore=1015
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602080188
+User-Agent: Mozilla Thunderbird Beta
+Subject: Re: [PATCH 1/4] dt-bindings: arm: qcom: Add ASUS Vivobook X1P42100
+ variant
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Maud Spierings <maud_spierings@hotmail.com>
+References: <20260208-b4-vivobook-v1-0-3a9b5e153909@oldschoolsolutions.biz>
+ <20260208-b4-vivobook-v1-1-3a9b5e153909@oldschoolsolutions.biz>
+ <75glzfxcgnjr52mexcbas3zzm5rykgzuhv3bflui4zrmnvov7w@gmfwegaziikp>
+Content-Language: en-US
+From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+In-Reply-To: <75glzfxcgnjr52mexcbas3zzm5rykgzuhv3bflui4zrmnvov7w@gmfwegaziikp>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:WxjN1hbkToLMD5KuLMVLFRl48cS0BbGH5LaFEX4j5n+CtdfSBvk
+ SUe55zNSkzPqfIv/UcmFayUcOyDrzRtk8+f6+52c+czH2c9rV9OII3/QrXt6oR3DrWjQwGn
+ THCxbk4Ip47WFDBmT2WjK/WoIoMcjUCcE3oFexvAEoP+OKU2lj9zu0elmBJXbBeojDbCp8y
+ DxBUOz0WcWxCDEKvGKPGg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:YbxEryZNGPc=;2nZ0eJLzx5l3o2wCld1RvN/XAto
+ 3qItgxLcQJUD5XCcI+muxD4DQ9JD6QJg4QELW+jo1KDbP9FF4nGGOlTWUcHcNQuxFlcUD0KBY
+ zWNAtFCPCRXwoh7Z4bXp79S+zFO1krD7K8tjZE91aGUaWRw+V0qwWWSZic1+mCTPydTyb76T+
+ DeuGfCkRL3NnKs1GwXqJKXVgK2KeSV03O3cUdoqa0WIlVcQXzsSUSqcdsY4JFv1KLFpx7lM38
+ 52qrVdpJmxJMmkfTyAD4uHGSqoQFelVh3ETYY/O4qNWEAobUuyBLob85YORYDpwvjJkQog+W9
+ EqOtHCq1iay1F7wwyZ+8d6/BsfYefnd4F0w2uS5CDePT7FLHY86WZTjmb9VIN3FRwc5ts8M14
+ 123l5qq2NdcSXJ2h0Vs7KA6+YqQTblgsVHaGZhkekubl03InT/585wmP9M1ruhVoCRXiTGiXp
+ /ResRt3ggCd2G5Ss2JvFIi4Y+f1KGGmuqM/MpCWvIkNhQ75IrY+191Wgbj6VaoS/UksWYA+Bv
+ jDvCh9nUv/KQPibhDCnTWBr8O2mxqtQxWRspZRhD9CugA5UVTyWm4uNqGLrcy6aUVTb6sOs3Y
+ /RFpzT1WeYEKhOitYIZcL03KAIlqPzj91xcl8QJaHD88vYzNx1ajlHHzrOeWJQppqi5metOjt
+ IskXUXjH2AUiUqcF70192OUIZ9UCDxFGCCHXajOnYho1m2ly26ytX7+devr2cr9M7XXDo2nqe
+ 9eR/B8NMTFDX3jftQP8v/iu2ilGcaZ/gBXg2ajMFlas0CpZtsFhQeJ52GigXUTAtZ2zx/zzs1
+ cMeG073ofrO+FATJ3TaHs4MDV5KPW3SThWGIvNMTdZpx6hl+1kRZOdjflk3E41X9hTYsdoFPv
+ L9FyV4IW7g3IyCerZQyq2P4ow73Mk8y8eG/JToOhZyPuVhX3icIxZLU4Ca1VWp0dRVREs33Y8
+ 9GuAssE1TddVDP9aQ9OMHlB5E/x7sf+q2VABMcAFOQUwPytFWHUxS6+WUJ45UFiZYDPUY2aJW
+ bqPD3vvrDinP0IyRSO7+noTtMudM16v6VVU+Zspy93+BQn18r5Jp62GRP5o+uza5FYH6a8e2/
+ M5eutJNQcV+U+D5UZZdd5dQ05QeZ3zzFfVoIvRtzJHM0O0Gdqa0ZyaVjCuBbEHDCH14vqx272
+ CUuBcqk42bcfa1VsOcJ72eZ3xz2qReEtnV0LSh5CPypXTZmhCsLedZcNJ+8U+HQ/qnXiqAaZQ
+ w/rfTinfPcx+iBSl5D1mQ+jCyoR4GtxYWOdC+eNH8WM29e4R9rkAjKfBnaiov3YSm+sM2RSRE
+ tfYX/x+3OISvkc4h7zTKP+WQ2LKmeHUu682WZRL/RzpwB+vA20MK4Z31oPxHUPhY3mDXIj0Pl
+ GfwbWtDw5dRzUPF/R9/v1VzBxeWRuaJg1ZOnzYLKmPRj+bWJvCXH99k8jrRIIsP3yE06iS2UK
+ KQXr7AgOEJT+eoA2sE5lK2lWNwsyzMjBhU/oSQA5llaZm3KR6rGNIvscuwioXrAboYPKmAvo+
+ +yKULgFpSVmAexPmHEDdQKt7WhqCrNTz1GFawcsYvdLydUXJZQwGhzd0uco5E0+VbiCh0eowh
+ 0Vy7lyEXG8A0EU0J1I3Iq9t0/DJCq5VBjlrsVHYlOIexUbunxlq5pOC4QFg73DcbDr/RamA+b
+ FTN1AeNrYqyCtvjXlJwd2tetB4OXUGs74HzJZThMOIQtYwMBeJvsRN+QUaAbkCsgiYBzEjgFb
+ J1nqmJTeUFu5npf3b5/f85j6EUzo8zJR/0s595mlQLDpZNGx1gcfvMhs=
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	MID_RHS_NOT_FQDN(0.50)[];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_DKIM_ALLOW(-0.20)[oldschoolsolutions.biz:s=s1-ionos];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[kernel.org,vger.kernel.org,hotmail.com];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim];
+	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-92173-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-92171-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
+	DMARC_NA(0.00)[oldschoolsolutions.biz: no valid DMARC record];
+	FREEMAIL_CC(0.00)[kernel.org,vger.kernel.org,hotmail.com];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	DKIM_TRACE(0.00)[oldschoolsolutions.biz:+];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	MISSING_XM_UA(0.00)[];
+	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-0.999];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[jens.glathe@oldschoolsolutions.biz,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.998];
+	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCPT_COUNT_SEVEN(0.00)[10];
-	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 571E010A460
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 35AF510A6B3
 X-Rspamd-Action: no action
 
-On Sun, Feb 08, 2026 at 10:25:39PM +0100, Jens Glathe via B4 Relay wrote:
-> From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-> 
-> Enables access to EFI variables on this machine.
-> 
-> Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-> ---
->  drivers/firmware/qcom/qcom_scm.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
+On 08.02.26 22:47, Dmitry Baryshkov wrote:
+> On Sun, Feb 08, 2026 at 10:25:38PM +0100, Jens Glathe via B4 Relay wrote=
+:
+>> From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+>>
+>> The ASUS Vivobook S15 (S5507) [1] is available with Hamoa and Purwa SoC=
+.
+>> Add the Purwa-based variant:
+>>
+>> asus,vivobook-s15-x1p4 compatible to Purwa SoC
+>>
+>> [1]: https://www.asus.com/de/laptops/for-home/vivobook/asus-vivobook-s-=
+15-s5507/techspec/
+>>
+>> Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+>> ---
+>>   Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+>>   1 file changed, 1 insertion(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Document=
+ation/devicetree/bindings/arm/qcom.yaml
+>> index d48c625d3fc42f1a90f76a020753ae4daec8c5ea..5eaeda2c85bdc189d650bba=
+82f173810854f5d1e 100644
+>> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+>> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+>> @@ -1124,6 +1124,7 @@ properties:
+>>  =20
+>>         - items:
+>>             - enum:
+>> +              - asus,vivobook-s15-x1p4
+> Is it really compatible with the ZenBook A14?
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Ouch, thanks for the hint. Will correct this, it is not. Will be in the V2=
+.
 
+with best regards
 
--- 
-With best wishes
-Dmitry
+Jens
+
 
