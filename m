@@ -1,184 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-92157-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4gnBGlloiGn+pAQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92157-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 11:41:29 +0100
+	id WJz4HMxRiGn9nwQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 10:05:16 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id A829C108652
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 11:41:28 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A6E1108283
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 10:05:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D623E300874F
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Feb 2026 10:41:26 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id EC48C3003811
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Feb 2026 09:05:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7595F346797;
-	Sun,  8 Feb 2026 10:41:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4E5E32E697;
+	Sun,  8 Feb 2026 09:05:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZMX/O+/J"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-dy1-f169.google.com (mail-dy1-f169.google.com [74.125.82.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3535520DE3
-	for <linux-arm-msm@vger.kernel.org>; Sun,  8 Feb 2026 10:41:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4431F872D;
+	Sun,  8 Feb 2026 09:05:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770547286; cv=none; b=ALHwrGNUNBH+QkMQoGLBLeYetFqsTBzckS6ELeMHEQMyrSfp0Pe6F6o3rTu90oLhSLC0wOiTcm2LUVIGQpuVj97RiovNRsMuK3EvpRpYy67uK19ZAAR7QXjA7dn4Ca783hmWfPUc4SumYlKGrl8ACuDw3TRiRafmorsbpnCvQU8=
+	t=1770541512; cv=none; b=luLf8NIA5No6Kf/6ne1wMxJc7W7sbdHiTij7kAC/5GPiSRTpl8yHqlV1cXbHD0kwGrbNqAAC+G15MnI0VzTB14ACNAfbI3a2XsDL0HSFhUsNo6V/TMQEDDN8sYcJebqyrnBiocuq2LXMgam1+MWNlaqqP42bZUJlTkwGmI/9hOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770547286; c=relaxed/simple;
-	bh=aZZzfxoP/OAR63tqh89B9La0YY1hyXKXoHsZ/sLOQ6o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PvXyxnmI/7uy/MIptqP0QWBg/dePahQmNT+30ZrUKCGhkxvhTU/WzyQzvuyGXJZA7DTeSdfR4G3vuTtqPC5IZ+B+t0jCi/K/iWj/xfPKp87qvlw8rWLl2Hnj211L8Rh6Gbb2y8NCKfCAGFMAbMtTAofLzNhkt0skym9spQaQn7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=74.125.82.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-dy1-f169.google.com with SMTP id 5a478bee46e88-2b785801c93so5493415eec.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Feb 2026 02:41:26 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770547285; x=1771152085;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=haeg3n1GXO743Ijog6kKrEyqSkcsBt7foGPftVqFxYs=;
-        b=BX/bGjxQCqSSKpGy7plJK6LxfuL0GOwzZD3XB06ThIFQkozz4QjumzWzj3Kym6SDJR
-         XRh6Yd87ghRb34yn8JO03TvGV2rIXUw8YBK98oTAeK2s8bqi/97wwI6ljcqP9ZFBklMM
-         0IpYHl6yk9Reg7xIvfBA0q3vmBIooBgcAjmYJvTsAAgq7a58fSw866kVDvw9nD5FGVOw
-         0bt640zyXGg3Jl70Ka/09v5QRO/STccbk3gz4kvb4WS0+JxSUiccTJueAAU4o6IX8RVa
-         85vfiV7ffKO8oKwhSeJmx2VrxSTkVrlTduEOOl66klSkn6vAUWimLYuZpwcLnbofV9Wn
-         ZWhA==
-X-Forwarded-Encrypted: i=1; AJvYcCUSEtPfyw9JkVrmCOrVVtnll5FVBSuzMfw/yo1BYqyIGlOm3X/LGFoaF9rJPaTGC28rv7mAPM3JJOoTRTwZ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz3GoKf65473ujL5FMKzcKSxyKQa808I7S+PfIQ+P0kOFE88iM4
-	3BJtxsDGonGC2RCtiuaqJ3Y0S00fbUoIF839W1ArQQDcCAfE7HLu6VnBUiOrzA==
-X-Gm-Gg: AZuq6aK1YhDsWk6MOjaDmvU87baeZhX1Z9XeVktmGlSqRTo835pW5iDw+efBLDmK2It
-	qo6bn0vU4qzKtbsmbudhZA4Fcr9vuDCbFUQM6zgaiiD9glzAEC81sskMeJ2dCsrP23M+n6t41wg
-	cAAjcNs7y9GKCJ5jSoHTr0Ec8KhM7GpxBD2W9XeC+t14nGVcs0LwXiIAuOLAeW9CQJ6DFVvN+Qt
-	x7sgYFNQXzUsJM1FBip6/rSRFukyNJ7+/0e1M9NBWaeR3uYzcPVQsKqyDCPo+Faw4tnLlichg9Q
-	VWgSKW+vxfVuJQGtJjnCeHguaBbNgz9d1Sq+Y8F+22DKk7WE+FddtsrEeP+yBbrO/5DVaSShy0c
-	MNWjv9yRE60cw8Wyo77RjVvVzkpC0mLOe5tUDv/g373M7N9LXXICVY6enhWzr6EeduYqdKMWjRf
-	0P/3TANRLfXnkMFE7rQDrIaz+D3FqfbjG7l1XJWn6hgD1n1A==
-X-Received: by 2002:a05:6870:3d8c:b0:3f9:f6ca:738b with SMTP id 586e51a60fabf-40a96dc6fc3mr4184430fac.19.1770540674441;
-        Sun, 08 Feb 2026 00:51:14 -0800 (PST)
-Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com. [209.85.167.177])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-40a99355b7fsm5269406fac.8.2026.02.08.00.51.14
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 08 Feb 2026 00:51:14 -0800 (PST)
-Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-45c7c841904so1444881b6e.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Feb 2026 00:51:14 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCVn75ziAo2BeWlibqZyPkJADsDy+UdDc4zoVRRGX5xbKcLm3iA7idwss/DJ5PdkK5nuSXUX5oygDlgdV30G@vger.kernel.org
-X-Received: by 2002:a05:690e:4192:b0:64a:d1bd:8c65 with SMTP id
- 956f58d0204a3-64ad1bd9100mr3953663d50.95.1770540244041; Sun, 08 Feb 2026
- 00:44:04 -0800 (PST)
+	s=arc-20240116; t=1770541512; c=relaxed/simple;
+	bh=IjmY924MOYXvkiLpvJeWlpv0ss7WAiLTx8eQzbe2plA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nW6CfILtXPIVi2UusNJpL8BpHd3NY+FZ4iZTcTgxBN51wZ2aVJrovSCMfS77pbskX5DNVQSNbHaHIR01jums9aMZYg0Cs3m2tI3/8hN+jmKHODi0A04ZLAP0VjQ8C5MUlCDTH+xmoTI5MMBTrRWrrPwctwBCty8KoQu8rIQsusY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZMX/O+/J; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55920C4CEF7;
+	Sun,  8 Feb 2026 09:05:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1770541512;
+	bh=IjmY924MOYXvkiLpvJeWlpv0ss7WAiLTx8eQzbe2plA=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=ZMX/O+/JZLFWflZrouC0QHZQL6g9FCEY1RMUJOdg2nQEGmCsuU8YKaT2byMVyx88P
+	 8ef4kZ19ifyfzCGUqMezJJOu81y9mU7gtnoyTz4eh9PE6xVVdm3zPdkobvr9VHT5CO
+	 EQfb2vrgDCDKiEhJikflBusA7ADOdlC8noWOz4swVYcH9SbhPV+/9VxlMKoOI20dr6
+	 ax3fjANsRsM7w/RQFm9T+XmVmMneMkNT8b6pqDR0vO/Rg/ctdZBUO4vfupeDa3W3/P
+	 qQn5NOBOOY6W1UfeMpLMB34ELgGOv4kDYuajVF+Li+F9hJt3QAVtK5Pn7kpuVnRfaO
+	 0JPKZy4VF1jmA==
+Message-ID: <eb423286-c26b-4e03-9e9e-af6718e459cc@kernel.org>
+Date: Sun, 8 Feb 2026 10:05:08 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260207-rubikpi-next-20260116-v3-0-23b9aa189a3a@thundersoft.com>
-In-Reply-To: <20260207-rubikpi-next-20260116-v3-0-23b9aa189a3a@thundersoft.com>
-From: Roger Shimizu <rosh@debian.org>
-Date: Sun, 8 Feb 2026 00:43:52 -0800
-X-Gmail-Original-Message-ID: <CAEQ9gE=9xV7i3afybmWvE+W9aLgYWSo1X=gC4cWRMkTJYBLo3A@mail.gmail.com>
-X-Gm-Features: AZwV_QhVsL319mpFfmBVf16B05oxLi4h6s2zjEvcVQi8QHoXqqVnbGWDOb-EoSo
-Message-ID: <CAEQ9gE=9xV7i3afybmWvE+W9aLgYWSo1X=gC4cWRMkTJYBLo3A@mail.gmail.com>
-Subject: Re: [PATCH v3 0/3] Add DSI Port B input support for LT9611 HDMI bridge
-To: Hongyang Zhao <hongyang.zhao@thundersoft.com>
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
-	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
-	Christopher Obbard <christopher.obbard@linaro.org>, dri-devel@lists.freedesktop.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: sm8550: add cpu interconnect nodes
+To: webgeek1234@gmail.com, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20260207-sm8550-ddr-bw-scaling-v1-0-d96c3f39ac4b@gmail.com>
+ <20260207-sm8550-ddr-bw-scaling-v1-2-d96c3f39ac4b@gmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20260207-sm8550-ddr-bw-scaling-v1-2-d96c3f39ac4b@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.04 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[intel.com,linaro.org,kernel.org,ideasonboard.com,kwiboo.se,gmail.com,ffwll.ch,linux.intel.com,suse.de,oss.qualcomm.com,lists.freedesktop.org,vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-92157-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-92151-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	DMARC_NA(0.00)[debian.org];
+	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[gmail.com,kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[25];
-	MIME_TRACE(0.00)[0:+];
-	MISSING_XM_UA(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[6];
+	MIME_TRACE(0.00)[0:+];
+	NEURAL_HAM(-0.00)[-0.999];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[rosh@debian.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	NEURAL_HAM(-0.00)[-0.935];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	R_DKIM_NA(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,mail.gmail.com:mid,0.0.0.0:email,msgid.link:url,0.0.0.1:email]
-X-Rspamd-Queue-Id: A829C108652
+	TO_DN_SOME(0.00)[]
+X-Rspamd-Queue-Id: 1A6E1108283
 X-Rspamd-Action: no action
 
-On Fri, Feb 6, 2026 at 11:33=E2=80=AFPM Hongyang Zhao
-<hongyang.zhao@thundersoft.com> wrote:
->
-> The LT9611 HDMI bridge has two DSI input ports (Port A and Port B).
-> The current driver only supports Port A or dual-port (A+B) mode, but
-> some boards like RubikPi3 connect DSI to Port B only.
->
-> This series adds support for using DSI Port B as the input source by
-> utilizing the existing ports mechanism in devicetree:
->
-> - port@0 corresponds to LT9611 DSI Port A input
-> - port@1 corresponds to LT9611 DSI Port B input
->
-> The driver detects which ports are populated and configures the hardware
-> accordingly. When only port@1 is present, it configures port swap
-> (register 0x8303 bit 6) and byte_clk source (register 0x8250 bit 3:2)
-> for Port B operation.
->
-> Signed-off-by: Hongyang Zhao <hongyang.zhao@thundersoft.com>
+On 08/02/2026 02:28, Aaron Kling via B4 Relay wrote:
+> From: Aaron Kling <webgeek1234@gmail.com>
+> 
+> Add the interconnect entry for each cpu, with 3 different paths:
+> - CPU to Last Level Cache Controller (LLCC)
+> - Last Level Cache Controller (LLCC) to DDR
+> - L3 Cache from CPU to DDR interface
+> 
+> Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
 > ---
-> Changes in v3:
-> - v2 incorporates significant changes based on Neil's review of v1,
->   so remove Roger=E2=80=99s Reviewed-by tag from the v2 commit message.
-> - Link to v2: https://patch.msgid.link/20260128-rubikpi-next-20260116-v2-=
-0-ba51ce8d2bd2@thundersoft.com
->
-> Changes in v2:
-> - Use ports mechanism instead of boolean property
-> - port@0 corresponds to LT9611 Port A, port@1 to Port B
-> - Driver detects which port is populated and configures accordingly
-> - Link to v1: https://lore.kernel.org/r/20260127-rubikpi-next-20260116-v1=
--0-0286c75150c5@thundersoft.com
->
-> ---
-> Hongyang Zhao (3):
->       dt-bindings: display: lt9611: Support single Port B input
->       drm/bridge: lt9611: Add support for single Port B input
->       arm64: dts: qcom: qcs6490-rubikpi3: Use lt9611 DSI Port B
->
->  .../bindings/display/bridge/lontium,lt9611.yaml    | 15 +++++--
->  .../boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts |  8 ++--
->  drivers/gpu/drm/bridge/lontium-lt9611.c            | 46 +++++++++++++++-=
-------
->  3 files changed, 47 insertions(+), 22 deletions(-)
-> ---
-> base-commit: 46fe65a2c28ecf5df1a7475aba1f08ccf4c0ac1b
-> change-id: 20260127-rubikpi-next-20260116-99c1dbea50e4
+>  arch/arm64/boot/dts/qcom/sm8550.dtsi | 49 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 49 insertions(+)
+> 
 
-Reviewed-by: Roger Shimizu <rosh@debian.org>
-Tested-by: Roger Shimizu <rosh@debian.org>
+This patch should be squashed. You add interconnect and use it,
+otherwise it is pretty pointless or even negatively impacting (syncing
+without interconnect paths).
 
--Roger
+Best regards,
+Krzysztof
 
