@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-92154-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92155-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id gC2IEJ5fiGnUowQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92154-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 11:04:14 +0100
+	id fu71OStgiGkupAQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92155-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 11:06:35 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 968A61084AB
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 11:04:13 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C1AD1084F0
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 11:06:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 3064230056D1
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Feb 2026 10:04:12 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id CAB5F300B757
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Feb 2026 10:06:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C840E2DB7B2;
-	Sun,  8 Feb 2026 10:04:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EDB4633BBC6;
+	Sun,  8 Feb 2026 10:06:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WfMKXudH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="liWewoni"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A454A38DF9;
-	Sun,  8 Feb 2026 10:04:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C870338DF9;
+	Sun,  8 Feb 2026 10:06:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770545051; cv=none; b=sCEPLHLQSRclrxtEhu2OM3xg9ae+OkRrSv8/crtc+b63VH/0ktJghUav+qIb/+VHsBdl7A+yAiEOOZ09mdFCEo9XEmUToI522emccpyr1Zut4/QHjiR9VL2KZGnbrPxKjQen3Gzm4BACVKinFqtOApFEcnJDi3Xy4yMCyhXdTEY=
+	t=1770545192; cv=none; b=NzPDIoeOA0xJyRxjxZ6jh3Aak4pLzG2B7R0BclsI3ctlfGptYGHf+vkFr8b1ifRQEs20DGjGCKPg9uQWvObnzWZLOyjuc7DiDrs27FmP4NfWQYBFZUeavlpmxCKFlM9V+IAt+Cig/aeVFYoPGJYhUsY4z8MpwclOTAGXQazHQIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770545051; c=relaxed/simple;
-	bh=Y2GVGXqeWViOcrFDuthfB/jCtTacj2goqd9wcyLkUqc=;
+	s=arc-20240116; t=1770545192; c=relaxed/simple;
+	bh=/+sR5eQuNf6DfxGVY8NJs9rtxBg82DyCHLCcjJQKYYU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hcXbpzHhDZZMWbK3rcO521THFu1gbeliz3Im08qKZeKFSNI9J535pzb4y1HPdVeXHvS5um9Vb5F0iH554vusSJyuiwhzMCfRkoGd7F9h4jKtz/tqruWJLpKNYHJPfI6OWvwrdMltxT+sN/OxNhFdoXR8cM2vndZQ3GwHz6YP/Bo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WfMKXudH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D223BC4CEF7;
-	Sun,  8 Feb 2026 10:04:08 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=upmiMs6N9/sfJD7bbwdCl1xDx9CzEusqePYqxPCt/VWwUamPzCUn8mgqcf7FWWD5lxyxV39yMRgPrtMLjhLSV7uOYrFGwfMrtZNQblpomxHu8IA+bZTceJXhJEm9xYNjCaQcm0rO/FWRpCYIGGsbAGlsQJ9nzDsZbNrzt5mCOb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=liWewoni; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEDFBC4CEF7;
+	Sun,  8 Feb 2026 10:06:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770545051;
-	bh=Y2GVGXqeWViOcrFDuthfB/jCtTacj2goqd9wcyLkUqc=;
+	s=k20201202; t=1770545192;
+	bh=/+sR5eQuNf6DfxGVY8NJs9rtxBg82DyCHLCcjJQKYYU=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=WfMKXudHw8+Bd4D/iEDodQozXVYF7ntUKohRMtxrhAk1suzuXBLwKMWOf+OSsXmNE
-	 maW4d5+46Cnh1BL8x22FnO2MLqt7QmA1SBko4YE2r9tPF/PeSymSdGkhINqhiC+aV0
-	 UTGA7Ln5kMIiN1/rHhl9CJdrDUcMCgQ6nqBCo16U9mLfRursLPtJHMxRE3sWN+67uk
-	 sJWR1fQXUWJAqKGTvBNEkfpIkz2EEmo5kJTFie/n3oaqvb2DBc2HITDjnRip91KO2y
-	 1mn7Ksy8BmDz9b8m6x9/RfluBVyMRtkviqbuNYzd970mu50Q4RaBFLRsdCnNuaC8Bw
-	 wBzmUbCrvcE9Q==
-Message-ID: <d15efd8e-079d-44e7-bc2e-63d21f219ade@kernel.org>
-Date: Sun, 8 Feb 2026 11:04:06 +0100
+	b=liWewoniNCTe1uyynIQvxMGNX7D3JITKyThZ7D6v6y7uISyy25T+qxl7OAYTymnU7
+	 yYpQgklG1Ho9ho7KW79Sl8msGuBjJ8FDbGFTn500ohf5Y13FHYz/79rmMIAX8jBEwJ
+	 tLkUr74ZIlrhxxK5mUciXceFQ0R6Wrd3/947uOw2ijDXIvePZlqLJuDdrD4ar5ANiE
+	 KPc9dgQYJIVxNeYxiCaz7c9RehHnZYFkkDoTYU4JXhEzQNHe7T+WbOpVUz8XGbhrFm
+	 dwVaRnb6oif2Dlz6UnTLJmgQm0uiDu86CvVWMRl+1Lf4e0aMfzc5zKY62Wt2fAAt2j
+	 KkHJ3Uy8FNTeg==
+Message-ID: <546faeda-d896-403c-a449-5c9b0cd7159e@kernel.org>
+Date: Sun, 8 Feb 2026 11:06:27 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,20 +53,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl: document the Eliza Top Level
- Mode Multiplexer
-To: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Linus Walleij
- <linusw@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260127-eliza-pinctrl-v2-0-1faf78efdc2e@oss.qualcomm.com>
- <20260127-eliza-pinctrl-v2-1-1faf78efdc2e@oss.qualcomm.com>
- <20260128-hot-camel-of-acumen-eef9f2@quoll>
- <5teqin7wl2n4spyqrt2glyeaxe5tm6zgk3tmzs2nhj4xedurrp@um3y6enwt7iz>
- <yhnnlbvcqgtaseoiarii4rfsmiem56hxsiuibf3kyux5ftebgy@dhkhij3qq7sk>
+Subject: Re: [PATCH v2 2/8] dt-bindings: thermal: Add qcom,qmi-cooling yaml
+ bindings
+To: Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>
+Cc: andersson@kernel.org, mathieu.poirier@linaro.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, rui.zhang@intel.com,
+ lukasz.luba@arm.com, konradybcio@kernel.org, mani@kernel.org,
+ casey.connolly@linaro.org, amit.kucheria@oss.qualcomm.com,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+ manaf.pallikunhi@oss.qualcomm.com
+References: <20260127155722.2797783-1-gaurav.kohli@oss.qualcomm.com>
+ <20260127155722.2797783-3-gaurav.kohli@oss.qualcomm.com>
+ <20260128-whispering-caracal-of-respect-a26638@quoll>
+ <36706481-2549-4716-8e6d-0e4db42591a2@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -112,67 +112,158 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <yhnnlbvcqgtaseoiarii4rfsmiem56hxsiuibf3kyux5ftebgy@dhkhij3qq7sk>
+In-Reply-To: <36706481-2549-4716-8e6d-0e4db42591a2@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-92154-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-92155-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[17];
 	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.999];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-0.993];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[10];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 968A61084AB
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 5C1AD1084F0
 X-Rspamd-Action: no action
 
-On 29/01/2026 11:59, Abel Vesa wrote:
->>>
->>>> +
->>>> +  gpio-line-names:
->>>> +    maxItems: 185
->>>
->>> 186, your first GPIO is 0 and last is 185.
->>
->> Wait, are all of these wrong then?
->>
->> $ grep -r "gpio-line-names" Documentation/devicetree/bindings/pinctrl/qcom,sm8[3-7]50* -A 3 |grep maxItems:
->> Documentation/devicetree/bindings/pinctrl/qcom,sm8350-tlmm.yaml-    maxItems: 203
->> Documentation/devicetree/bindings/pinctrl/qcom,sm8450-tlmm.yaml-    maxItems: 210
->> Documentation/devicetree/bindings/pinctrl/qcom,sm8550-tlmm.yaml-    maxItems: 210
->> Documentation/devicetree/bindings/pinctrl/qcom,sm8650-tlmm.yaml-    maxItems: 210
->> Documentation/devicetree/bindings/pinctrl/qcom,sm8750-tlmm.yaml-    maxItems: 215
->> $ grep -r "UFS_RESET\"" drivers/pinctrl/qcom/pinctrl-sm8[3-7]50.c
->> drivers/pinctrl/qcom/pinctrl-sm8350.c:  PINCTRL_PIN(203, "UFS_RESET"),
->> drivers/pinctrl/qcom/pinctrl-sm8450.c:  PINCTRL_PIN(210, "UFS_RESET"),
->> drivers/pinctrl/qcom/pinctrl-sm8550.c:  PINCTRL_PIN(210, "UFS_RESET"),
->> drivers/pinctrl/qcom/pinctrl-sm8650.c:  PINCTRL_PIN(210, "UFS_RESET"),
->> drivers/pinctrl/qcom/pinctrl-sm8750.c:  PINCTRL_PIN(215, "UFS_RESET"),
+On 29/01/2026 13:06, Gaurav Kohli wrote:
 > 
-> 185 is actually correct, because ufs_reset doesn't count.
+> On 1/28/2026 4:57 PM, Krzysztof Kozlowski wrote:
+>> On Tue, Jan 27, 2026 at 09:27:16PM +0530, Gaurav Kohli wrote:
+>>> The cooling subnode of a remoteproc represents a client of the Thermal
+>>> Mitigation Device QMI service running on it. Each subnode of the cooling
+>>> node represents a single control exposed by the service.
+>>>
+>>> Signed-off-by: Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>
+>>> ---
+>>>   .../bindings/remoteproc/qcom,pas-common.yaml  |  6 ++
+>>>   .../bindings/thermal/qcom,qmi-cooling.yaml    | 72 +++++++++++++++++++
+>>>   2 files changed, 78 insertions(+)
+>>>   create mode 100644 Documentation/devicetree/bindings/thermal/qcom,qmi-cooling.yaml
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,pas-common.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,pas-common.yaml
+>>> index 68c17bf18987..6a736161d5ae 100644
+>>> --- a/Documentation/devicetree/bindings/remoteproc/qcom,pas-common.yaml
+>>> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,pas-common.yaml
+>>> @@ -80,6 +80,12 @@ properties:
+>>>         and devices related to the ADSP.
+>>>       unevaluatedProperties: false
+>>>   
+>>> +  cooling:
+>>> +    $ref: /schemas/thermal/qcom,qmi-cooling.yaml#
+>>> +    description:
+>>> +      Cooling subnode which represents the cooling devices exposed by the Modem.
+>> I do not see the reason why you need 3 (!!!) children here. Everything
+>> should be folded here.
+> 
+> 
+> Thanks Krzysztof for review.
+> 
+> Each subsystem may support multiple thermal mitigation devices through 
+> remote TMD service.
+> 
+> Because of this multiplicity, introduced separate binding file.
 
-But you wrote in other part you have 186 GPIOs. I don't mention here
-UFSRESET. If above is correct, then rest of your patch has some issue.
-Anyway, something needs fixing.
+This explains nothing. Subsystem does not matter for the binding. My
+comment stays.
+
+> 
+>>> +    unevaluatedProperties: false
+>>> +
+>>>   required:
+>>>     - clocks
+>>>     - clock-names
+>>> diff --git a/Documentation/devicetree/bindings/thermal/qcom,qmi-cooling.yaml b/Documentation/devicetree/bindings/thermal/qcom,qmi-cooling.yaml
+>>> new file mode 100644
+>>> index 000000000000..0dd3bd84c176
+>>> --- /dev/null
+>>> +++ b/Documentation/devicetree/bindings/thermal/qcom,qmi-cooling.yaml
+>>> @@ -0,0 +1,72 @@
+>>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>>> +
+>>> +%YAML 1.2
+>>> +---
+>>> +$id: http://devicetree.org/schemas/thermal/qcom,qmi-cooling.yaml#
+>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>> +
+>>> +title: Qualcomm QMI based thermal mitigation (TMD) cooling devices
+>>> +
+>>> +maintainers:
+>>> +  - Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>
+>>> +
+>>> +description:
+>>> +  Qualcomm QMI-based TMD cooling devices are used to mitigate thermal conditions
+>>> +  across multiple remote subsystems. These devices operate based on junction
+>>> +  temperature sensors (TSENS) associated with thermal zones for each subsystem.
+>>> +
+>>> +properties:
+>>> +  compatible:
+>>> +    enum:
+>>> +      - qcom,qmi-cooling-cdsp
+>>> +      - qcom,qmi-cooling-cdsp1
+>> What are the differences between them?
+> 
+> 
+> Some SOcs support multiple CDSP/NSP instances. Each instance requires 
+> it's own
+> 
+> compatible string to distinguish.
+
+Why? What are the differences?
+
+I will not ask third time, but just respond with NAK.
+
+> 
+> 
+>> Why these are not SoC specific?
+> 
+> 
+> They are not soc specific because the qmi thermal mitigation interface 
+> exposed by CDSP is architecturally
+> 
+> identical across multiple SOCS.
+
+I have doubts on that but anyway if you want exception from standard
+compatible rules you must come with arguments in terms of hardware and
+firmware. Above is not enough. Everyone claims that.
+
+> 
+> 
+>>> +
+>>> +patternProperties:
+>>> +  "cdsp-tmd[0-9]*$":
+>>> +    type: object
+>> No, you do not need childnode. See writing bindings (covers exactly this
+>> case).
+> 
+> 
+> Each subsystem may support multiple thermal mitigation devices through 
+> remote TMD service. So
+> 
+> need childnode to distinguish for different mitigations.
+
+NAK
+
 
 
 Best regards,
