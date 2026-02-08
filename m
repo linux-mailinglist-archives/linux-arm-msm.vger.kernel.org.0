@@ -1,54 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-92133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 1NNdJfrjh2mfegQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 02:16:42 +0100
+	id oPfHCcfkh2mCegQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 02:20:07 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 147181077EC
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 02:16:42 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7229B10782E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 02:20:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C8DB3300C918
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Feb 2026 01:16:37 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id F2152301112B
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Feb 2026 01:20:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1754F2C2363;
-	Sun,  8 Feb 2026 01:16:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36A8B2FE071;
+	Sun,  8 Feb 2026 01:20:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CRx7lg7n"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XsK8QprP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E55FD81732;
-	Sun,  8 Feb 2026 01:16:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118EF2C326B;
+	Sun,  8 Feb 2026 01:20:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770513397; cv=none; b=YEAfqL0laM0T+IbkTQeMdO/LbUwjAmf2urhG+oosNP7ErZbf0Ud7qmbkOpz/0DDYo2XrWIuKc36prJmQ/MAyiRgJTNQ0RPqm24vD/6vdoKOecCReEmI1/CXZiMIkmf9M0dNol/PdmSknX7hE4aQvRQKsz0DZCzm21z/TgzAMf1Q=
+	t=1770513604; cv=none; b=CdCzo5z2b3at4Z0cq8ARFJOFOUPL998TmyUDTvRVR5Jms9cUgDMorki/Yl2dT5nwfuRMTaJyDlDFHD/eFA587mYmSUwR/coLGU3p6EyuMaQNx/K9C+OmIwHDmXPvy+ea9N9u8cc6RcNNStNox8nS1cH/i3RK1tiVgGeiw1/Ny7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770513397; c=relaxed/simple;
-	bh=Y4kllgXVHw4Tr0oTtwYF95obod+Q02JDIkePhvAo8OU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=aX7YA+ShvzlNle+YyzApgkqPk18ZeRaosbdlNF4Nmhlli/W9AQWOl7Tj29RPH/77uuLbM7I7qZZ3Zmk44PxXUEEPSJVtJCAlbIPj8cZ9i05iFZgNpAJY1CYRlN1qLQTVUamYi+sXJv58o2ZWFTBiu2O9eKYvgkCwS+xJaOUEUyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CRx7lg7n; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 80A76C116D0;
-	Sun,  8 Feb 2026 01:16:36 +0000 (UTC)
+	s=arc-20240116; t=1770513604; c=relaxed/simple;
+	bh=l9lQwsTyFWG7ZgVHsa6Vw0Bw95LINi5Cb8WnHj2MBL4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=P/zwAC79iM50vBaEnedJvk3EJLpMN9F8euk6akEPseW1JQc0YvtGcnDrWc1Mhvx/Q29l/HuG5eiLh4QemBSgrBZbm6yulZ+qKnUVzL0TDLGiYtQdj+8lsvb3tCJU6fQ4ea4oxnpbxVb7xgjUGWYEbR8vMhxuVjIOIy8Gqb3oGUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XsK8QprP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 8ABF1C116D0;
+	Sun,  8 Feb 2026 01:20:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770513396;
-	bh=Y4kllgXVHw4Tr0oTtwYF95obod+Q02JDIkePhvAo8OU=;
+	s=k20201202; t=1770513603;
+	bh=l9lQwsTyFWG7ZgVHsa6Vw0Bw95LINi5Cb8WnHj2MBL4=;
 	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=CRx7lg7nap49AWdsgqAb2h6kzcpdt6UjiDm+f0snO4Sz4x2eDRVW0MmBkwRHUacUX
-	 pGncGyXn36OSmRORI/n+WQkXrXUSbvIZRhSF2FE9WBcKJPy9Zdanq0wc5hIVUZQFiI
-	 yoYtJzbVFXuUX31Fhy8h3p/RpVNtByNsOQg3VnkOXW2DeMLvkv8N0uARLsT5X2JFT+
-	 ySYQ/TETiBUdpalEYykeI/GcfdLt2IhQkE/qbZjSPDFnRXUicVHF3ukayWIiZO1I2R
-	 v9YZJTcKzVBHS2Q2NDnyi/L2268Xb9amN7hCuN+OVamp2dAhzsltWp1ARzP5/pQ3/E
-	 NFJFXXyzwLGMQ==
+	b=XsK8QprPZQmW3dy7rxGyUAeAS0+La39mMK0Lu8QT9/wYQ64N9sx1NJI7siw7mgMYz
+	 qNliZLVrY7FtiT7k/uA3X3+UMkmTlKq6WT6i5aaTo1rzHksyXUEuXZ4O7tsOwV+D/v
+	 IRB3PORVF01c6EZirW0zOXCflef5Bx/XzEZOrk5xgzWJpevBZkPFtgyZSYcM9Uv/XQ
+	 JdcU1DAZOFQLNHB+oxATfE12hrSTaIsSclx9W5uUVzhCtK3rgP2X+2WF/B46QH9HOT
+	 3soz2JzD26vceIROD29gIQUIKhBVz+WA5U2BvVNDv96wLM5JZY15asVhYH22Dhxeau
+	 lgdTToO+PR+gw==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B502EE0ADD;
-	Sun,  8 Feb 2026 01:16:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 723B6EE0AFC;
+	Sun,  8 Feb 2026 01:20:03 +0000 (UTC)
 From: Aaron Kling via B4 Relay <devnull+webgeek1234.gmail.com@kernel.org>
-Date: Sat, 07 Feb 2026 19:16:03 -0600
-Subject: [PATCH v2] arm64: dts: qcom: sm8550: Fix DTBO boot failure
+Date: Sat, 07 Feb 2026 19:20:00 -0600
+Subject: [PATCH] arm64: dts: qcom: sm8550: Add ACD levels for GPU
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,27 +57,23 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260207-sm8550-abl-dtbo-v2-1-83afaa6f3ce9@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/2XNQQ6DIBCF4auYWZcGEAl21Xs0LkBQJxExYEwbw
- 92LJl11+b1k/jkguYguwaM6ILodE4algN8q6Ce9jI6gLQZOuaSMK5K8ahpKtJmJ3UwgreRKyVo
- MlFooV2t0A76v4qsrnjBtIX6uBzs711+r/WvtjJzqdW0cE5SL5+g1zvc+eOhyzl/e1kFcrgAAA
- A==
-X-Change-ID: 20260128-sm8550-abl-dtbo-96288634f00d
+Message-Id: <20260207-sm8550-acd-v1-1-53d084c58c9a@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDIwNz3eJcC1NTA93E5BTd5NTkVAOjlOTkRJM0JaCGgqLUtMwKsGHRsbW
+ 1AI38bt5cAAAA
+X-Change-ID: 20260207-sm8550-acd-cece02dcca4f
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Kumar Sharma <quic_vksharma@quicinc.com>
+ Conor Dooley <conor+dt@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>, 
- Aaron Kling <webgeek1234@gmail.com>
+ linux-kernel@vger.kernel.org, Aaron Kling <webgeek1234@gmail.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1770513395; l=1988;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1770513603; l=2274;
  i=webgeek1234@gmail.com; s=20250217; h=from:subject:message-id;
- bh=MSt9cy30dkO5MvzrubSqKSonGMw3uBt52RdVxTWvKPc=;
- b=G4vENHVOwE6gA6R07OA3RFFApGCvnwOs8k3qr6VXVEl9LdUXpxPa+DGe/E/teL/EeesV1prVL
- 1RTdbO0bnoJBREC3HJW7ea+EUP5is4atVfSSAAPaRoW0JtF/JKnxmfU
+ bh=AJWp2fE4/yWQrzLUddHgO6gfebb585G1GONPy/muLhw=;
+ b=pO6qzyloSIhZrE7L7BZ09kPG4mxeTZ5xyeRrGPKeKHyyVsiObP/yrrKnbhyyKs7nj3mRqER8/
+ jlxmhd5ev69CYzQc9Csl1K8pyzBFHkL5ULH+FHkHIaieqCH4646GUb7
 X-Developer-Key: i=webgeek1234@gmail.com; a=ed25519;
  pk=TQwd6q26txw7bkK7B8qtI/kcAohZc7bHHGSD7domdrU=
 X-Endpoint-Received: by B4 Relay for webgeek1234@gmail.com/20250217 with
@@ -85,97 +81,113 @@ X-Endpoint-Received: by B4 Relay for webgeek1234@gmail.com/20250217 with
 X-Original-From: Aaron Kling <webgeek1234@gmail.com>
 Reply-To: webgeek1234@gmail.com
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [1.34 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	FREEMAIL_REPLYTO_NEQ_FROM(2.00)[];
-	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-92133-lists,linux-arm-msm=lfdr.de,webgeek1234.gmail.com];
+	TAGGED_FROM(0.00)[bounces-92134-lists,linux-arm-msm=lfdr.de,webgeek1234.gmail.com];
 	FROM_HAS_DN(0.00)[];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FREEMAIL_REPLYTO(0.00)[gmail.com];
+	FREEMAIL_CC(0.00)[vger.kernel.org,gmail.com];
 	TO_DN_SOME(0.00)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,oss.qualcomm.com,gmail.com];
+	MIME_TRACE(0.00)[0:+];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
 	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	HAS_REPLYTO(0.00)[webgeek1234@gmail.com];
 	RCVD_COUNT_FIVE(0.00)[5];
-	NEURAL_HAM(-0.00)[-0.997];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
-	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	NEURAL_HAM(-0.00)[-0.999];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	HAS_REPLYTO(0.00)[webgeek1234@gmail.com];
+	RCPT_COUNT_SEVEN(0.00)[9];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 147181077EC
+X-Rspamd-Queue-Id: 7229B10782E
 X-Rspamd-Action: no action
 
-From: Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>
+From: Aaron Kling <webgeek1234@gmail.com>
 
-ABL requires certain things in the base dtb to apply a dtbo. Namely:
+Update GPU node to include acd level values.
 
-* A label named qcom_tzlog must exist, but doesn't have to contain any
-  specific properties
-* The timer node must have a label named arch_timer
-
-This aligns the sm8550 soc dtsi with those requirements. Without these
-in the base dtb, when ABL attempts to apply any dtbo, it will fail to
-the bootloader menu.
-
-Co-authored-by: Aaron Kling <webgeek1234@gmail.com>
 Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
 ---
-With a current mainline sm8550 base dtb, ABL will fail to apply any dtbo
-and fail back to the bootloader menu. There are two changes needed:
-
-* Add a label named qcom_tzlog
-* Add a label named arch_timer to the timer node
----
-Changes in v2:
-- Drop tz log changes
-- Add tz log label to a generic node
-- Link to v1: https://lore.kernel.org/r/20260129-sm8550-abl-dtbo-v1-0-abca3be14024@gmail.com
----
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index e3f93f4f412ded9583a6bc9215185a0daf5f1b57..04ea1a4a015aa5a4fd615e068b6f18b7c336607c 100644
+index e3f93f4f412ded9583a6bc9215185a0daf5f1b57..277dd7c4ad6ed7ef1b5370f34abe350d82b14b17 100644
 --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -32,7 +32,8 @@ / {
- 	#address-cells = <2>;
- 	#size-cells = <2>;
+@@ -2503,48 +2503,56 @@ opp-680000000 {
+ 					opp-hz = /bits/ 64 <680000000>;
+ 					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
+ 					opp-peak-kBps = <16500000>;
++					qcom,opp-acd-level = <0x882e5ffd>;
+ 				};
  
--	chosen { };
-+	// This label is required by ABL to apply a dtbo
-+	qcom_tzlog: chosen { };
+ 				opp-615000000 {
+ 					opp-hz = /bits/ 64 <615000000>;
+ 					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L0>;
+ 					opp-peak-kBps = <12449218>;
++					qcom,opp-acd-level = <0xa82f5ffd>;
+ 				};
  
- 	clocks {
- 		xo_board: xo-board {
-@@ -6756,7 +6757,8 @@ trip-point2 {
+ 				opp-550000000 {
+ 					opp-hz = /bits/ 64 <550000000>;
+ 					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
+ 					opp-peak-kBps = <10687500>;
++					qcom,opp-acd-level = <0xe0285ffd>;
+ 				};
+ 
+ 				opp-475000000 {
+ 					opp-hz = /bits/ 64 <475000000>;
+ 					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_L1>;
+ 					opp-peak-kBps = <6074218>;
++					qcom,opp-acd-level = <0xe0285ffd>;
+ 				};
+ 
+ 				opp-401000000 {
+ 					opp-hz = /bits/ 64 <401000000>;
+ 					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
+ 					opp-peak-kBps = <6074218>;
++					qcom,opp-acd-level = <0xc02a5ffd>;
+ 				};
+ 
+ 				opp-348000000 {
+ 					opp-hz = /bits/ 64 <348000000>;
+ 					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D0>;
+ 					opp-peak-kBps = <6074218>;
++					qcom,opp-acd-level = <0xe02b5ffd>;
+ 				};
+ 
+ 				opp-295000000 {
+ 					opp-hz = /bits/ 64 <295000000>;
+ 					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D1>;
+ 					opp-peak-kBps = <6074218>;
++					qcom,opp-acd-level = <0xe02d5ffd>;
+ 				};
+ 
+ 				opp-220000000 {
+ 					opp-hz = /bits/ 64 <220000000>;
+ 					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D2>;
+ 					opp-peak-kBps = <2136718>;
++					qcom,opp-acd-level = <0xc02f5ffd>;
+ 				};
+ 			};
  		};
- 	};
- 
--	timer {
-+	// This label is required by ABL to apply a dtbo
-+	arch_timer: timer {
- 		compatible = "arm,armv8-timer";
- 		interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW) 0>,
- 			     <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW) 0>,
 
 ---
-base-commit: 3f24e4edcd1b8981c6b448ea2680726dedd87279
-change-id: 20260128-sm8550-abl-dtbo-96288634f00d
+base-commit: 9845cf73f7db6094c0d8419d6adb848028f4a921
+change-id: 20260207-sm8550-acd-cece02dcca4f
 
 Best regards,
 -- 
