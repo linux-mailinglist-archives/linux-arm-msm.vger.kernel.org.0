@@ -1,79 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-92146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wPEEFy8MiGmyhgQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 05:08:15 +0100
+	id uPa8KkcMiGmyhgQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 05:08:39 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB844107D4F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 05:08:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 30C47107D65
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 05:08:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 38C9B30773FA
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Feb 2026 04:04:34 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 6AD0A30125F5
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Feb 2026 04:04:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18E2529BDB1;
-	Sun,  8 Feb 2026 04:04:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F44B2BEFEB;
+	Sun,  8 Feb 2026 04:04:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="hgxq1nOq"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Cj3qW0yz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-dl1-f51.google.com (mail-dl1-f51.google.com [74.125.82.51])
+Received: from mail-dy1-f181.google.com (mail-dy1-f181.google.com [74.125.82.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D591726461F
-	for <linux-arm-msm@vger.kernel.org>; Sun,  8 Feb 2026 04:04:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4EDD26461F
+	for <linux-arm-msm@vger.kernel.org>; Sun,  8 Feb 2026 04:04:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770523474; cv=none; b=jDbsMwfDukLzZ6IiBH0ZfntMkMbAsiRM3bOomF9FmCznIfSXvXeSe8VeMiS5OG6/f3pyqWdjpgrDKJNJQfXw9TwvAWTITE3FVtGJ2YkhzDI8HVdFpsxKx9qvSUZ+/nQRf/nOsdMaVR4Yy86sOfxY4Wh717lJThlCmSqjKKbgKKc=
+	t=1770523478; cv=none; b=YmuhhXE6hPv2Ek2dnDOHIWCH8iPPG82FsBGxeuYtfr+BK9afd8TFSjbl+QUX1voX5hH+qsAdC4JjuvnB5jquuNPzrmpAaSIIIHvuQm0KHZysLV32JmSPxVrNehmfBWqenb4rBjRoY66XJRhSMnCaZ2D6vfiHNmkzrwg3v8rB5lg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770523474; c=relaxed/simple;
-	bh=XFJ6n04/sV0RGWx96Y0deEcCBY9lYJ4aO3gH79dt61A=;
+	s=arc-20240116; t=1770523478; c=relaxed/simple;
+	bh=SAIOYHmewH8+YpnZCmSgyUNdDUrB0z7/bJKOh98QEn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XRvPSm6RAIDZqQq2hEdXIqbCdB/zxqlLMx6MlwMxOS2kCOxq43LSBawvQFy5TiCPVz0Rio+bHsGkKueDeeyu4qvTV2yN5llxzIky1TRNKHeyjtiqe3I6N+DHWruquJTZ8bWT419FQ0pWCaEwsi07qFlpVE5t9LwEVOBwW2R/0AY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=hgxq1nOq; arc=none smtp.client-ip=74.125.82.51
+	 MIME-Version; b=tYsya1Nu6vG5kYlfcQSdmewm8Pn2kw5j/3VJxBADQZGIiBJIbQVUrSfibkccHkUGSRnr+fXqiMMRGScsmoFcwvw/s2RFWgn4b92HYiLcQQRg6bVag82/94Gwqt6YJ6qvf6h0Y/u23GaTwAFCTMhDgmHpvJJNUpw7SwuFFXrfeP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Cj3qW0yz; arc=none smtp.client-ip=74.125.82.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-dl1-f51.google.com with SMTP id a92af1059eb24-1270be4d125so4010303c88.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 07 Feb 2026 20:04:33 -0800 (PST)
+Received: by mail-dy1-f181.google.com with SMTP id 5a478bee46e88-2ba6aa57d5fso105738eec.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 07 Feb 2026 20:04:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1770523473; x=1771128273; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1770523477; x=1771128277; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xeTwNqi+XJ/8HLrMMWD9b0KlELdWsXmDwflMIt0OPRI=;
-        b=hgxq1nOq02T0QogV3fyJQfW79F0GIaC8H/BZ8cCtW4RhigiY0Wn1h7UyP1o9ysdari
-         Gs34ygCFmkrJsi+ZuC+a6NFi0vwuwWdV9zXOeOXtaH3IZxRF21p/jnIJFBJXWN7JdAq2
-         bAIMxaa4bzvi4Gj6UNhWWsQe8apDV4/pY4FKE=
+        bh=Rhq2fvDAB+z0+8+dqvd5EVUWoDgUFedDXtHNQ2aZ3r8=;
+        b=Cj3qW0yzM0kMFj7sHk2DuAmK/FBfwUDIrELDp3q5Pedyt6x9lC81zMsAJXBkiXTmc7
+         QmDEyVqdLqDb8yxHFi7n/3fhMMdPj7EylK3EXgySiFLOJECiTZ4qCWz6EnAXEOQ8pEwN
+         Syv5+CFuMSTJMx43yaHKCTOWJoM2X+ut8+KGs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770523473; x=1771128273;
+        d=1e100.net; s=20230601; t=1770523477; x=1771128277;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=xeTwNqi+XJ/8HLrMMWD9b0KlELdWsXmDwflMIt0OPRI=;
-        b=qfyL3EWndkeYNDbiR01YgWuSda4nxfZJxH/jUjkMhPBMmdwP2e8JH+hV21+A5ijaNy
-         UWf6i3YTYp4PJrkzoxeGwZxyQTfpMps8tFW2pukv/qj9HEflJMARxpIwrT7IKWzNzRiQ
-         klAms4fawPxIiecU1L67MTOfMnXRDbjcdtWsWOzBpW56CkJKNnfOffwtz3FfYuXlcs+h
-         BQsL+YEDPiMbE2tW7tqz/H5x2GhHSIn7IXaHfW2Ne+IaS+xefTSt0gBQwxNauclL9n0X
-         H8C2WkQyWAJnJjj4gGV1RzZw//23jwuehMn7zfHpmzpaAAIeHvv2J7G7IwCjuFt6JpeX
-         KGeA==
-X-Forwarded-Encrypted: i=1; AJvYcCV4grcFoXpv6xhDy9zeLs8geJg2jWMgUJmbwwTmuPl5XwW57oRn0KbolevyqySwKQaAUCi+CfJkgzREOYeR@vger.kernel.org
-X-Gm-Message-State: AOJu0YyCjNZCURRla/hHXAbGbK8YXHWFBTmjGjcIGKn/G4VAvp0V6W5u
-	71ZQyxVzgTNB/XwWgfH/E4/KIJSWHWcxvlrzJc2srycoZ/Sl/OOD9LtF++AqZRSnfQ==
-X-Gm-Gg: AZuq6aJZ0zs1LR1pAwvN4gxcWi8B0ZMmAZ/3/xxdagHiC2zIiRpCTKJDjJtDsg0n566
-	FaqXjqFzRzgRQzMUBqtZCg+iI61r9c1h25efIkCQSekKydRgr4CISTDIqfD5sC7SH1u4Uyrx4ht
-	Z/JaEnXWMwk4ShMKQilU69M8Xw8GCotJIT7GI4fJiOozOk10ILI9EfbESYiP3jUbmeUAxNZzvMK
-	uNizfthMsv6VcyuxjNv7tL3Earfww+roqeQEbJ60YcLRje8l7ZUlwp9ShKAHBtB77ebZNkMAwsS
-	6FghfgW8jaJWHCq+OcKOE399+TkUDXMNoJQF4y1giPp6JgzSSvlrhcoS3E+bO7bmPah+89dfa8c
-	KnaSMP7aXMOt7FwTg5N8npi+yuWKvhtzPR5dvP/ub+e9WxNufzF+JGhFk+AKmWsIzSTZfuc+9Dd
-	xMCyBH2iAzrI9s/3OKWt7rT/nWjaOTsqIyAUih6FVDaeNWlJGDgVob/vH7e8j0ofrTgMWcx4Mjf
-	ZrW/d4YYQ==
-X-Received: by 2002:a05:7022:7a6:b0:123:3bba:fc4c with SMTP id a92af1059eb24-1270407387amr3855209c88.38.1770523473030;
-        Sat, 07 Feb 2026 20:04:33 -0800 (PST)
+        bh=Rhq2fvDAB+z0+8+dqvd5EVUWoDgUFedDXtHNQ2aZ3r8=;
+        b=vk/CNlgh+Sn72CnKG5omXWXm4ojlmxw0FFKlV5p/dnSYGkukX6Frkq6oARy6HKtc4Y
+         QJDKB1Kamn1VPoEHvCBEi1iDXoJQa+V3pWibVCIrFfNivTzm9b9Enw0e1kouo4PPNL+l
+         D/soo/3RPAI9tUBxrDLzjqM3qw12lpl61PAhO81cXHOTMvW1cRD40Ki9mh8yJR0oNZnh
+         TPsCCxRT19SoGmNFjv1RCXeq905UqydRHfQOmkcBw5RZHa5Q0yzER40qjq7Uwf9RW1zd
+         EpIyUJkGiFQx7gyWiM9CLLAzUd/RQELpP8VPOBpAZxYZduhNQnY9e4s4IPF5LzqNu4fh
+         guCA==
+X-Forwarded-Encrypted: i=1; AJvYcCV3Q6Fj58yxGUClLug0JpqydhrSohxpPBD9MpbaJZTcOhkZeHcBMxNSQaweI2bfBm9RA3yVqVUMlbpEE5q7@vger.kernel.org
+X-Gm-Message-State: AOJu0YyGDfLyr2p6UiuYzQm7yJuYsHQ6erhpzPqWtiYummvttAMfLJUI
+	bwgWz8haNyaUeZlwkt2/v9mIE/JGo6+5sPVsyrfoUgItRlRcWWc9FLuXrBfBbi1igQ==
+X-Gm-Gg: AZuq6aK3vqavh25pLa1lPiNbAnWg9I0T2N/YB0VpxCEaDYk8BTKKkmjpj+M6lTbOi6d
+	EXgdyFtc6ArVW71XOX/m/3dPtJ/BSWn7zvJImrA6ubDUIxLkM7CdlCrvh0hrKOmSnFpKKNJd9+5
+	gwdXr9vUfP1Q6K43y++Fz/4BmdUYmsZPTXs8H3WQJNeLMiEVEJ+S0sXnE5T+ebyalkJIhNsp5I4
+	zLQJpY5jMKqWqa81/LMCicCujLZx0o97RrIwfVECnmmXh8hZ/Am55r0xeJrvqgPd5s++M5kqpeS
+	4LFJHLMvAv/Azx5EtB3DH51k+yQWLZTGEnMMcTm4yHzqCSIwfiPLSCRZn9AJ08Y4OZ2wqn/wu/c
+	tyHEG1OmAn6X7c70r64VMrD1XcKCOLY+NicJpfKWNj119riXqyietXC8yKh1Yd31ZMXdkPd9gdg
+	qq9kwQjbSmnBJ0BKwtkF6og1dY2pxfL8/zUOFzLik6QFB+eiOcTh90dbJACJ7/kzHG/PekH7c=
+X-Received: by 2002:a05:7301:38a6:b0:2b8:209d:5983 with SMTP id 5a478bee46e88-2b856833715mr2948032eec.29.1770523476783;
+        Sat, 07 Feb 2026 20:04:36 -0800 (PST)
 Received: from dianders.sjc.corp.google.com ([2a00:79e0:2e7c:8:6d43:22d7:40eb:81e6])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-127041e61b9sm7085064c88.8.2026.02.07.20.04.30
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-127041e61b9sm7085064c88.8.2026.02.07.20.04.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Feb 2026 20:04:31 -0800 (PST)
+        Sat, 07 Feb 2026 20:04:35 -0800 (PST)
 From: Douglas Anderson <dianders@chromium.org>
 To: jassisinghbrar@gmail.com
 Cc: Douglas Anderson <dianders@chromium.org>,
@@ -82,9 +81,9 @@ Cc: Douglas Anderson <dianders@chromium.org>,
 	linux-kernel@vger.kernel.org,
 	linux-remoteproc@vger.kernel.org,
 	mathieu.poirier@linaro.org
-Subject: [PATCH v2 09/15] rpmsg: glink: smem: Use mbox_ring_doorbell() instead of NULL message
-Date: Sat,  7 Feb 2026 20:01:31 -0800
-Message-ID: <20260207200128.v2.9.I6973a32c3fcd6d2edebdd6fd868fe0a046420ed5@changeid>
+Subject: [PATCH v2 10/15] rpmsg: qcom_smd: Use mbox_ring_doorbell() instead of NULL message
+Date: Sat,  7 Feb 2026 20:01:32 -0800
+Message-ID: <20260207200128.v2.10.Idbe327f5b4ce65a284b55033627d0819e2fed21b@changeid>
 X-Mailer: git-send-email 2.53.0.rc2.204.g2597b5adb4-goog
 In-Reply-To: <20260208040240.1971442-1-dianders@chromium.org>
 References: <20260208040240.1971442-1-dianders@chromium.org>
@@ -111,7 +110,7 @@ X-Spamd-Result: default: False [-1.16 / 15.00];
 	RCVD_COUNT_FIVE(0.00)[5];
 	FREEMAIL_TO(0.00)[gmail.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-92146-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-92147-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	FROM_NEQ_ENVFROM(0.00)[dianders@chromium.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
@@ -124,7 +123,7 @@ X-Spamd-Result: default: False [-1.16 / 15.00];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,chromium.org:email,chromium.org:dkim]
-X-Rspamd-Queue-Id: AB844107D4F
+X-Rspamd-Queue-Id: 30C47107D65
 X-Rspamd-Action: no action
 
 As per the patch ("mailbox: Deprecate NULL mbox messages; Introduce
@@ -136,28 +135,43 @@ straightforward. We can remove the call to mbox_client_txdone(). The
 call didn't do anything for NULL messages and it's now officially
 documented not to be called for doorbells.
 
+Also remove the comment about the only cause of errors for
+mbox_send_message() being if the framework's FIFO was full since we
+don't queue doorbells.
+
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 ---
 
 (no changes since v1)
 
- drivers/rpmsg/qcom_glink_smem.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/rpmsg/qcom_smd.c | 13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/rpmsg/qcom_glink_smem.c b/drivers/rpmsg/qcom_glink_smem.c
-index 7a982c60a8dd..f2a6d94e72ea 100644
---- a/drivers/rpmsg/qcom_glink_smem.c
-+++ b/drivers/rpmsg/qcom_glink_smem.c
-@@ -197,8 +197,7 @@ static void glink_smem_tx_kick(struct qcom_glink_pipe *glink_pipe)
- 	struct glink_smem_pipe *pipe = to_smem_pipe(glink_pipe);
- 	struct qcom_glink_smem *smem = pipe->smem;
+diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
+index 42594f5ee438..afe1177d092e 100644
+--- a/drivers/rpmsg/qcom_smd.c
++++ b/drivers/rpmsg/qcom_smd.c
+@@ -371,17 +371,10 @@ static void qcom_smd_signal_channel(struct qcom_smd_channel *channel)
+ {
+ 	struct qcom_smd_edge *edge = channel->edge;
  
--	mbox_send_message(smem->mbox_chan, NULL);
--	mbox_client_txdone(smem->mbox_chan, 0);
-+	mbox_ring_doorbell(smem->mbox_chan);
+-	if (edge->mbox_chan) {
+-		/*
+-		 * We can ignore a failing mbox_send_message() as the only
+-		 * possible cause is that the FIFO in the framework is full of
+-		 * other writes to the same bit.
+-		 */
+-		mbox_send_message(edge->mbox_chan, NULL);
+-		mbox_client_txdone(edge->mbox_chan, 0);
+-	} else {
++	if (edge->mbox_chan)
++		mbox_ring_doorbell(edge->mbox_chan);
++	else
+ 		regmap_write(edge->ipc_regmap, edge->ipc_offset, BIT(edge->ipc_bit));
+-	}
  }
  
- static irqreturn_t qcom_glink_smem_intr(int irq, void *data)
+ /*
 -- 
 2.53.0.rc2.204.g2597b5adb4-goog
 
