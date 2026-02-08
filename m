@@ -1,188 +1,222 @@
-Return-Path: <linux-arm-msm+bounces-92142-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92143-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wPthI2/yh2lWgAQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92142-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 03:18:23 +0100
+	id +64bBjYLiGmzhgQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92143-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 05:04:06 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4182107A1E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 03:18:22 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F114107C79
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 05:04:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 610E63012EB9
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Feb 2026 02:18:20 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 3CE263012E88
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Feb 2026 04:04:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55E143019D6;
-	Sun,  8 Feb 2026 02:18:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61DE12C11F9;
+	Sun,  8 Feb 2026 04:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OlxxVvzX"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="P7qE1WmT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f43.google.com (mail-dl1-f43.google.com [74.125.82.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D3813E02A;
-	Sun,  8 Feb 2026 02:18:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 181D6288515
+	for <linux-arm-msm@vger.kernel.org>; Sun,  8 Feb 2026 04:04:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770517099; cv=none; b=MUe3OA/fRUphrnm7qJiQ3CzYtlN1hQkMq0ANjqoDOmjaJLLCVdFgNkB+WK9DilXc85uIgDk8d5vk7LE4ZF3GgeRDYkmMEBx63AjWUSouwt5simS7Op3gBiJfmrotfIMlaGmdkyY9++EuUcycvR+cBbd6O3uJHOdikZQauGbuRCo=
+	t=1770523443; cv=none; b=TllJSygXELULTNFCGXC/uWRvxQT7uW4UzGWiG1bCo6R/PB1mRyn7nX5CerkejSvwTQ4YvLgZItGPncsdFf45QJ6VNExXq9k/AqC3jw1WoX9kT7toW4+La3lh/ufciApgZt9phs0vgb3cKKhubRwXYw2g5ZbKpsrl2PL9Ipq6zGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770517099; c=relaxed/simple;
-	bh=IobxCSyUwmCj5HVUsqw6yAml2nCsNHFhjH5gVz6dt4g=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Ouh18g4pv5isUnjrXOykR5aUAg/loEzLQbda5Bu9fYCbEQxDSweHDLTjiP+l59GNPg0txoQHOjY4THFX6MJPTbvvVsD7ucGYRYJLaeCYzMCYDek+KrU3uZUWLhRMYmcB5Spd+LM8MYRdnXwpxedqrJeBq6DyQV2+eHfk75zN0Gw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OlxxVvzX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id B042DC116D0;
-	Sun,  8 Feb 2026 02:18:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770517098;
-	bh=IobxCSyUwmCj5HVUsqw6yAml2nCsNHFhjH5gVz6dt4g=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=OlxxVvzXsp/d9KziIcEBn1O1H9AbG6or7eoGbCXmlxGRkTjtNyLsnY7d098hzMYDz
-	 2jRmzuyBlfcztgXZZrdZj8X9LmJGtTnWyvht6Gkk+EBpvktMnGuTERGNvNHfIygpwW
-	 oXZVrCl7LxBV2LUVty/ZN3wvL7B7yLtrBctqAHDQ6iA1A/qN3aD1GyxGZdUOyk3ufY
-	 OQOCM1GcbPe3rVMdg+sx7RcJlaEA10DeBuZGrnvbUzWwt31oWZcemdu3GY9SSmqw4n
-	 bu+VEzpROTf5n210WS4F3v57usDO8/+7ZlbC54NtF1lXNVfqwM1kOvcsmim/53OM83
-	 QyoK8cb1lY3+A==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97A36EF06E3;
-	Sun,  8 Feb 2026 02:18:18 +0000 (UTC)
-From: Aaron Kling via B4 Relay <devnull+webgeek1234.gmail.com@kernel.org>
-Date: Sat, 07 Feb 2026 20:18:17 -0600
-Subject: [PATCH] arm64: dts: qcom: sm8550: Add UART15
+	s=arc-20240116; t=1770523443; c=relaxed/simple;
+	bh=gVLYpM9coDM1ziPBdzZCYGdJwdE7dELsKzKbZ2xsotU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ibZKX1Eo/63syKK1FnxVjTcF5d5d+pSq8B1HnaryCjTDsdQEVmqDTWkqnOupf2VSDhGfDbKKM+/qxAmbbU1uvneEvQKLtbiU8Qd5L8qUYq6LlPht2ikODqvacqdbXSEy/U6P7RusHjz9rBRpKs90pbEcGWDURuyoAxcu6seI8sE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=P7qE1WmT; arc=none smtp.client-ip=74.125.82.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-dl1-f43.google.com with SMTP id a92af1059eb24-1233c155a42so4195557c88.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 07 Feb 2026 20:04:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1770523442; x=1771128242; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=oUKaI1Jl6BOBoZBMk5DmhJ8i+x4ONVWqzInJUK5fe+o=;
+        b=P7qE1WmTEd5I37fInOyQx1w45mjLTo3qys+INfnu8t5IC9k+n6eN+ZAZ3b87UDXN2R
+         v1vJuuW32wtajMDyRxLYu5uO5V3+NEqo2KKby93w25FfGf47VyoRpWyBNa5sxkx60LU+
+         stMtq3lODGpYytxQofsfgc5yc+ToC+xJyk3qI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770523442; x=1771128242;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oUKaI1Jl6BOBoZBMk5DmhJ8i+x4ONVWqzInJUK5fe+o=;
+        b=qGNd+mY4emXah3jpC8criiwm4OZDgtFYvx+gBL6K/xjNYY7pZ9XTPLXQeFOIsk/pui
+         V7g3jD+m5AnoNyiHti1sJHf5nb2C5gL1qpJ86oxzhnQsgUdop9/w/VLugK+1i4evqM1c
+         VAYwueyRNbMgB48sp6wWZ/5hPMwm26P7z5EZO8JpsDnE1OBRfr0MPBLZB9TAAsCwMKSf
+         COLKZ+dNedMQ65GL1nN1hRJPPFR4cr57zPic+NGZ6yVMA2kP9xoqWqW5i40Zm0bMP043
+         txTpSRPmzr2NoGd4vt2o+hfjDU+3q4v8/fsJBOWilnuT4IPt4o5G/EEECUqGVz8ZcIoB
+         LYIg==
+X-Forwarded-Encrypted: i=1; AJvYcCW2d20UGrrOnFA/gWljzgOXi0WZKj1owNjVaeXo5N0Gle8RptsN/uIp2rLWPkc9ArynQ9CQ0uME4nKd9iC8@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz3DKjbj/qGCIqb33XJWMfdRZj5pBC4Feq+I4csByjGwrOPeSxP
+	nb0EHkd7CjzBUmPBsMImdDhGZVYxQB9rX81Br5a1FsfwdmHvTk4hxkgJNMNZrSmQCw==
+X-Gm-Gg: AZuq6aJ0c596kPfsmySkIFXCXz0mUFINFxmYzg2bEgOGpI2i+94L41M6stDiUT0SMcE
+	dyqoWRidQwA06u4MgPHy3oNLxe6VUc8cALBB6DDREJmg4zDhdwpp0RrDqLm34ixjClOykfsPSpC
+	lWQDF3v5l9iGPfcA4SQ8QBUiFl4AUbf3WFKjq+38Fyslbs2qblzxIzXxub94bn805E5LTlhemHT
+	g3cJVERQHtIo2DtLYWFogXb1/5TpPMcqVQuAFyLFGJ4aOb6K423ks1OFqkpA4D6/kAU88EMzIED
+	sJ5mUgZi/pgZWyKfjiTMZhFLpgk1dl1jqqe9EVr3RKvYFIUxo6ddO4YWWZ6g1alcEKSp5/r32dU
+	GFsA5M8FX7LpqvbH/oz3WY8GFoEzBRzUFGMCcjlPRnQWOxeZTnGGiUoE+IZD8hnTi3RXFSRKnmb
+	H3NviQxhbfVx6YMzpQQ6F1dx5U4KWM/d7IrAJsAq9tVBpbnjba4Ri3jf0dyUySG3ZHbeWXzvY=
+X-Received: by 2002:a05:7022:6184:b0:123:2d38:928d with SMTP id a92af1059eb24-1270405aa72mr3860925c88.36.1770523442099;
+        Sat, 07 Feb 2026 20:04:02 -0800 (PST)
+Received: from dianders.sjc.corp.google.com ([2a00:79e0:2e7c:8:6d43:22d7:40eb:81e6])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-127041e61b9sm7085064c88.8.2026.02.07.20.03.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 07 Feb 2026 20:03:59 -0800 (PST)
+From: Douglas Anderson <dianders@chromium.org>
+To: jassisinghbrar@gmail.com
+Cc: Douglas Anderson <dianders@chromium.org>,
+	Frank.Li@nxp.com,
+	Santosh Shilimkar <ssantosh@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	andersson@kernel.org,
+	arm-scmi@vger.kernel.org,
+	cristian.marussi@arm.com,
+	festevam@gmail.com,
+	imx@lists.linux.dev,
+	jay.buddhabhatti@amd.com,
+	jonathanh@nvidia.com,
+	kernel@pengutronix.de,
+	konradybcio@kernel.org,
+	krzk@kernel.org,
+	lenb@kernel.org,
+	linux-acpi@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-remoteproc@vger.kernel.org,
+	linux-tegra@vger.kernel.org,
+	mathieu.poirier@linaro.org,
+	michal.simek@amd.com,
+	nm@ti.com,
+	rafael@kernel.org,
+	robh@kernel.org,
+	shawn.guo@linaro.org,
+	sudeep.holla@kernel.org,
+	tglx@kernel.org,
+	thierry.reding@gmail.com
+Subject: [PATCH v2 00/15] mailbox: Stop sending NULL mailbox messages
+Date: Sat,  7 Feb 2026 20:01:22 -0800
+Message-ID: <20260208040240.1971442-1-dianders@chromium.org>
+X-Mailer: git-send-email 2.53.0.rc2.204.g2597b5adb4-goog
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260207-sm8550-uart15-v1-1-d8ccf746d102@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDIwNz3eJcC1NTA93SxKISQ1NdyyTzpBQTi1RzE/MUJaCegqLUtMwKsHn
- RsbW1AIDYp4hfAAAA
-X-Change-ID: 20260207-sm8550-uart15-9b7bd48e747d
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Xilin Wu <wuxilin123@gmail.com>, 
- Molly Sophia <mollysophia379@gmail.com>, 
- Aaron Kling <webgeek1234@gmail.com>, Dmitry Baryshkov <lumag@kernel.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1770517098; l=2180;
- i=webgeek1234@gmail.com; s=20250217; h=from:subject:message-id;
- bh=+xWn2WhENfNTFixOvMZt/E1OqwTYGEWhm9jN/K555L8=;
- b=zsCsd4WBYCQ3ad1VdrolbnoKVsVFbum74EIONdI8W+uuNw2jTQRJAPTixw18xVQ+TKSvD2Lhd
- fEhjj/F48a5CvoECb62xOgC4H9MVzRkaO8R7j3swTzrk+cPP15Fppkl
-X-Developer-Key: i=webgeek1234@gmail.com; a=ed25519;
- pk=TQwd6q26txw7bkK7B8qtI/kcAohZc7bHHGSD7domdrU=
-X-Endpoint-Received: by B4 Relay for webgeek1234@gmail.com/20250217 with
- auth_id=342
-X-Original-From: Aaron Kling <webgeek1234@gmail.com>
-Reply-To: webgeek1234@gmail.com
+Content-Transfer-Encoding: 8bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	FREEMAIL_REPLYTO_NEQ_FROM(2.00)[];
+X-Spamd-Result: default: False [0.84 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[chromium.org,none];
+	R_DKIM_ALLOW(-0.20)[chromium.org:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	FREEMAIL_TO(0.00)[gmail.com];
+	FREEMAIL_CC(0.00)[chromium.org,nxp.com,kernel.org,pengutronix.de,vger.kernel.org,arm.com,gmail.com,lists.linux.dev,amd.com,nvidia.com,lists.infradead.org,linaro.org,ti.com];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-92142-lists,linux-arm-msm=lfdr.de,webgeek1234.gmail.com];
-	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[31];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	TO_DN_SOME(0.00)[];
-	FREEMAIL_REPLYTO(0.00)[gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	FREEMAIL_CC(0.00)[vger.kernel.org,gmail.com,kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	HAS_REPLYTO(0.00)[webgeek1234@gmail.com];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
-	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
+	TAGGED_FROM(0.00)[bounces-92143-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[9c0000:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,linaro.org:email]
-X-Rspamd-Queue-Id: E4182107A1E
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[dianders@chromium.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[chromium.org:+];
+	RCVD_COUNT_FIVE(0.00)[5];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	NEURAL_HAM(-0.00)[-0.999];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[chromium.org:mid,chromium.org:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 9F114107C79
 X-Rspamd-Action: no action
 
-From: Xilin Wu <wuxilin123@gmail.com>
+As talked about in the first patch in this series, passing NULL as the
+'mssg' argument to mbox_send_message() ends up causing confusion and
+quirky behavior inside the mailbox core. Despite this, there are a
+number of drivers that pass NULL.
 
-Add uart15 node for UART bus present on sm8550 SoC.
+It is plausible that some of the drivers passing NULL may have been
+taking advantage of the quirks of the mailbox core. Specifically, they
+may have been taking advantage that calling "tx_done" wasn't truly
+necessary for NULL messages (it was a noop) or that NULL messages were
+passed onto the mailbox controller right away without queuing.
 
-Signed-off-by: Molly Sophia <mollysophia379@gmail.com>
-Signed-off-by: Xilin Wu <wuxilin123@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
----
-This patch was originally submitted as part of a series to support the
-AYN Odin 2 [0]. That series stalled, so submitting separately.
+This series introduces a new API call: mbox_ring_doorbell(). The new
+API call tries to mimic the specific quirks that were helpful in the
+old behavior and it's expected to be a nearly drop-in replacement.
 
-[0] https://lore.kernel.org/all/20240424-ayn-odin2-initial-v1-0-e0aa05c991fd@gmail.com/
----
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+There are some subtle differences between the new call and the old
+behavior, but it's expected that all of these differences are only for
+cases where the old behavior made little sense. The description of the
+first patch details these differences.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index e3f93f4f412ded9583a6bc9215185a0daf5f1b57..ec172c22d928c4d73313c7b4980807760995ecaa 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -1251,6 +1251,22 @@ &config_noc SLAVE_QUP_2 QCOM_ICC_TAG_ACTIVE_ONLY>,
- 				#size-cells = <0>;
- 				status = "disabled";
- 			};
-+
-+			uart15: serial@89c000 {
-+				compatible = "qcom,geni-uart";
-+				reg = <0 0x89c000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP2_S7_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_uart15_default>;
-+				interrupts = <GIC_SPI 462 IRQ_TYPE_LEVEL_HIGH 0>;
-+				interconnects = <&clk_virt MASTER_QUP_CORE_2 0
-+						 &clk_virt SLAVE_QUP_CORE_2 0>,
-+						<&gem_noc MASTER_APPSS_PROC 0
-+						 &config_noc SLAVE_QUP_2 0>;
-+				interconnect-names = "qup-core", "qup-config";
-+				status = "disabled";
-+			};
- 		};
- 
- 		i2c_master_hub_0: geniqup@9c0000 {
-@@ -5095,6 +5111,14 @@ qup_uart14_cts_rts: qup-uart14-cts-rts-state {
- 				bias-pull-down;
- 			};
- 
-+			qup_uart15_default: qup-uart15-default-state {
-+				/* TX, RX */
-+				pins = "gpio74", "gpio75";
-+				function = "qup2_se7";
-+				drive-strength = <2>;
-+				bias-pull-up;
-+			};
-+
- 			sdc2_sleep: sdc2-sleep-state {
- 				clk-pins {
- 					pins = "sdc2_clk";
+The series attempts to convert all in-tree users to stop passing NULL
+for mssg. As per above, there are some slight differences in behavior.
+If any of the patches are causing problems, they can safely be
+reverted while debugging the problems. Eventually, all code should be
+converted over to stop passing NULL mssg.
 
----
-base-commit: 9845cf73f7db6094c0d8419d6adb848028f4a921
-change-id: 20260207-sm8550-uart15-9b7bd48e747d
+Changes in v2:
+- Instead of just documenting NULL, introduce a new function
 
-Best regards,
+Douglas Anderson (15):
+  mailbox: Deprecate NULL mbox messages; Introduce mbox_ring_doorbell()
+  ACPI: PCC: Use mbox_ring_doorbell() instead of NULL message
+  firmware: arm_scmi: Use mbox_ring_doorbell() instead of NULL message
+  firmware: imx-dsp: Use mbox_ring_doorbell() instead of NULL message
+  firmware: tegra: bpmp: Use mbox_ring_doorbell() instead of NULL
+    message
+  irqchip/qcom-mpm: Use mbox_ring_doorbell() instead of NULL message
+  remoteproc: xlnx: Use mbox_ring_doorbell() instead of NULL message
+  rpmsg: qcom_glink_rpm: Use mbox_ring_doorbell() instead of NULL
+    message
+  rpmsg: glink: smem: Use mbox_ring_doorbell() instead of NULL message
+  rpmsg: qcom_smd: Use mbox_ring_doorbell() instead of NULL message
+  soc: qcom: aoss: Use mbox_ring_doorbell() instead of NULL message
+  soc: qcom: smp2p: Use mbox_ring_doorbell() instead of NULL message
+  soc: qcom: smsm: Use mbox_ring_doorbell() instead of NULL message
+  soc: ti: wkup_m3_ipc: Use mbox_ring_doorbell() instead of NULL message
+  drivers: firmware: xilinx: Use mbox_ring_doorbell() instead of NULL
+    message
+
+ drivers/acpi/acpi_pcc.c                       |  4 +-
+ .../firmware/arm_scmi/transports/mailbox.c    |  8 +-
+ drivers/firmware/imx/imx-dsp.c                |  2 +-
+ drivers/firmware/tegra/bpmp-tegra186.c        |  4 +-
+ drivers/irqchip/irq-qcom-mpm.c                |  2 +-
+ drivers/mailbox/mailbox.c                     | 82 ++++++++++++++++++-
+ drivers/remoteproc/xlnx_r5_remoteproc.c       |  2 +-
+ drivers/rpmsg/qcom_glink_rpm.c                |  3 +-
+ drivers/rpmsg/qcom_glink_smem.c               |  3 +-
+ drivers/rpmsg/qcom_smd.c                      | 13 +--
+ drivers/soc/qcom/qcom_aoss.c                  |  3 +-
+ drivers/soc/qcom/smp2p.c                      |  8 +-
+ drivers/soc/qcom/smsm.c                       |  8 +-
+ drivers/soc/ti/wkup_m3_ipc.c                  | 10 +--
+ drivers/soc/xilinx/zynqmp_power.c             |  2 +-
+ include/linux/mailbox_client.h                |  1 +
+ include/linux/mailbox_controller.h            |  4 +-
+ 17 files changed, 108 insertions(+), 51 deletions(-)
+
 -- 
-Aaron Kling <webgeek1234@gmail.com>
-
+2.53.0.rc2.204.g2597b5adb4-goog
 
 
