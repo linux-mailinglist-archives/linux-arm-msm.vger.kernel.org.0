@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-92158-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92159-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sLu3BN5yiGlZpgQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92158-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 12:26:22 +0100
+	id AGjQEvlyiGlZpgQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92159-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 12:26:49 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 687F9108843
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 12:26:21 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id B61C610885B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 12:26:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id E6A03300FEDC
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Feb 2026 11:26:18 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 8F35B300AEEE
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Feb 2026 11:26:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08E3833C19E;
-	Sun,  8 Feb 2026 11:26:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8135E3469FE;
+	Sun,  8 Feb 2026 11:26:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WKXbfjHg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PEHDPc8I"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D348B2D8797;
-	Sun,  8 Feb 2026 11:26:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E19023D7CE;
+	Sun,  8 Feb 2026 11:26:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770549977; cv=none; b=lmwjL+fU7CzyBf2R1kH0TsqJLSHCid/WHEFEvpF/wz/V4m15Z+jaFJm9n//6Y4rfUAQJPfY4VFBr/wONVqZTxA0RCVFNQB4mtoeFCG9dJ9/q8OCipsmplgFIzbGBTih4byYtxPZNNjLCYR/x5JE4xkwe94X5sfSGm3Hzq4MRuck=
+	t=1770550006; cv=none; b=bLN77zd6/oCwbVZx45ySV6NFtoeBnO2esZHCx8k0xyVJmHgYSzGzklQmNTbJDt5F0BxRFbJI6RawfOKdSjDW3Wm0yj0XkB4kf6Hcz+fXmdIJcJkbwN6rH35Gr4+5ZzCEOxVhaWKb7dEPFH0mnuKioHuZF/WzsTwEt2Ivy2DrBd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770549977; c=relaxed/simple;
-	bh=MIQaFm+mVYPbMUThq0gQqfvnOU8g9x8m9zL9ClrzgwA=;
+	s=arc-20240116; t=1770550006; c=relaxed/simple;
+	bh=GHrfKq5xCOGP09EmpizdVPiu6ZM5KQJXJJ+zxLJYBDY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YAWeTC7ZSzD3PyAwzWGA7EnqJlsW/f0tVw6Y6OCkcv7v00bZfa48P/+RiGa92lebdd6PK1ZcTfwjKKjJXwSgtNdvadLenwgCWPVuq2Nsv65SnEzWddUYkYdMvsrTG3fwbH9NcOo3ZsvDQtTaCcOa8aIEZ8fXteJk7sKYS1B/rA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WKXbfjHg; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9D6CC4CEF7;
-	Sun,  8 Feb 2026 11:26:13 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=qTVvRlfbGHoHCQS2pIWqqNJu3C31wKWucqen9FsQT4k6/Oru0yMQyArUxB4QWI3ist6cmXLezUm11Dp1uwxZRcQ2nWN2zy5BL8Mq5meorimcGaYB/O/h7bbzyYupo0NsKhy7z/2jgEKw6PxpV/X28jVQfIqRNjIh9u3BdTnelvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PEHDPc8I; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 497E8C4CEF7;
+	Sun,  8 Feb 2026 11:26:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770549977;
-	bh=MIQaFm+mVYPbMUThq0gQqfvnOU8g9x8m9zL9ClrzgwA=;
+	s=k20201202; t=1770550006;
+	bh=GHrfKq5xCOGP09EmpizdVPiu6ZM5KQJXJJ+zxLJYBDY=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=WKXbfjHg3WAtptJ0gH0xheEvs2PPkv/gXLJlQ4gZF7kfJRzzsjDQcUTXaSaBX6/Pw
-	 mWVxIEV3Bqa5QOApaOmVKzjwRmMhHXNI0R9L9Wd+9Ybjd45+XEW0sxcTIwLB+s/o6Z
-	 94k9Q9XquJzK7G+vkMdJR7BieWhN2sGTKc1hnj7I9VaVSnHWA7odZwr4qmL5pXkMty
-	 L9hS9MtQv0Hg2LpX2A6Cv6aOGhs/4mDa+4G1EpxbDYuUwlP9aWQXv1KB4HZDVcxDpM
-	 RkNd8W38aRmC/69YRtsbTjkKN8Ly/TLfSMuszsN8HEUGbGu79xsDo9wCWdIf80COZx
-	 tA3e9WR4oHSaA==
-Message-ID: <007a761a-a419-43c3-981b-13e2cd977972@kernel.org>
-Date: Sun, 8 Feb 2026 12:26:11 +0100
+	b=PEHDPc8ICJwAFda4aOrfBqnytamjFUIhOEDm7jdk/tNYaflrk9nLqUApnL97z+3lf
+	 52sEllAg4gBPN1PKz9WTzz23H1opDmNaPpUDgCmbZmZK2qNMc+E9o9zNGwwFOFEJrT
+	 //S7v9XUmc7nk+BIo9CZRddJ/PUOkvtOnyIjGgWFsZsM3GWuB0VkrNHe/Xe7tCsZWl
+	 TdwJT4ZN+PmWYoXoHZTzjKJSRIXa0WicCSJuhGTbABjxHbf0yQWPQALBL6njiK9wlY
+	 3FEJVT6Gv+6Qs6+8EDZuZJY3KCQsj2Ch0gvsXtodRmrSOY0r+/d4dl6yiXWF2vGxeE
+	 bWbaipjjOG3MQ==
+Message-ID: <0a38766b-2244-436c-ac1b-714e51af3a28@kernel.org>
+Date: Sun, 8 Feb 2026 12:26:41 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,23 +53,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/8] arm64: defconfig: Enable VIDEOCC and CAMCC drivers on
- Qualcomm X1P42100
-To: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
+Subject: Re: [PATCH v2 2/2] arm64: configs: Update defconfig for DSI-LVDS
+ bridge support
+To: Gopi Botlagunta <venkata.botlagunta@oss.qualcomm.com>,
  Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Jagadeesh Kona <quic_jkona@quicinc.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
- Imran Shaik <imran.shaik@oss.qualcomm.com>,
- Taniya Das <taniya.das@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260128-purwa-videocc-camcc-v1-0-b23de57df5ba@oss.qualcomm.com>
- <20260128-purwa-videocc-camcc-v1-8-b23de57df5ba@oss.qualcomm.com>
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, venkata.valluru@oss.qualcomm.com,
+ jessica.zhang@oss.qualcomm.com, Yi Zhang <zhanyi@qti.qualcomm.com>
+References: <20260130-add-lt9211c-bridge-for-rb3gen2-industrial-mezzanine-v2-0-a98714fa1531@oss.qualcomm.com>
+ <20260130-add-lt9211c-bridge-for-rb3gen2-industrial-mezzanine-v2-2-a98714fa1531@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -115,50 +109,49 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260128-purwa-videocc-camcc-v1-8-b23de57df5ba@oss.qualcomm.com>
+In-Reply-To: <20260130-add-lt9211c-bridge-for-rb3gen2-industrial-mezzanine-v2-2-a98714fa1531@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-92158-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-92159-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.990];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-0.999];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: 687F9108843
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: B61C610885B
 X-Rspamd-Action: no action
 
-On 27/01/2026 20:26, Jagadeesh Kona wrote:
-> Enable video and camera clock controller drivers for their respective
-> functionalities on Qualcomm X1P42100-CRD and similar other platforms
-> with Snapdragon X1P42100 SoC.
+On 30/01/2026 11:27, Gopi Botlagunta wrote:
+> Enable the LT9211 bridge driver to support DSI-to-LVDS conversion
+> on the Qualcomm RB3GEN2 Industrial Kit.
 > 
-> Signed-off-by: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
-> ---
+> Signed-off-by: Gopi Botlagunta <venkata.botlagunta@oss.qualcomm.com>
+> Co-developed-by: Yi Zhang <zhanyi@qti.qualcomm.com>
+> Signed-off-by: Yi Zhang <zhanyi@qti.qualcomm.com>
 
+Incorrect DCO chain.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
 Best regards,
 Krzysztof
