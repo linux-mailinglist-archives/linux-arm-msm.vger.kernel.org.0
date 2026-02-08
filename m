@@ -1,170 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-92150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92157-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8DIsC3oLiGmyhgQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 05:05:14 +0100
+	id 4gnBGlloiGn+pAQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92157-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 11:41:29 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC524107CEE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 05:05:13 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id A829C108652
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Feb 2026 11:41:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 3DF26300BBB2
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Feb 2026 04:04:56 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D623E300874F
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Feb 2026 10:41:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B02B2D2381;
-	Sun,  8 Feb 2026 04:04:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="SrsrWVWE"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7595F346797;
+	Sun,  8 Feb 2026 10:41:26 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-dl1-f54.google.com (mail-dl1-f54.google.com [74.125.82.54])
+Received: from mail-dy1-f169.google.com (mail-dy1-f169.google.com [74.125.82.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 130C52C0296
-	for <linux-arm-msm@vger.kernel.org>; Sun,  8 Feb 2026 04:04:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3535520DE3
+	for <linux-arm-msm@vger.kernel.org>; Sun,  8 Feb 2026 10:41:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770523487; cv=none; b=O0cpoLBrGPFQClRkRcKqEX9zC6YNrTg9uEph85XEhPRWSvKPJyHWESGi17rBLayR+9lNdvrmaNpmLh59T5ssvJ0ZtXi8NrcrOG+NFwildbs7m7R+Gn6aqIrU+rtCTBR5bJ9NeaG14FbKu6EwB2RVn5va2/NU2Fzk4+r4OJG43N4=
+	t=1770547286; cv=none; b=ALHwrGNUNBH+QkMQoGLBLeYetFqsTBzckS6ELeMHEQMyrSfp0Pe6F6o3rTu90oLhSLC0wOiTcm2LUVIGQpuVj97RiovNRsMuK3EvpRpYy67uK19ZAAR7QXjA7dn4Ca783hmWfPUc4SumYlKGrl8ACuDw3TRiRafmorsbpnCvQU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770523487; c=relaxed/simple;
-	bh=G1nudZutYj6d9MNzox0nHfR1iYoPe3imRgM6voCKXqE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hkjZq5xJwxkbolOeLx4v3D46DRwDjVBTW96J0Xfy+ZLA4JvqlaYCDOMGHg7snLk5tJuNpnlelm21jGTRuECLdJbqVuxsvALh1AQupRjcg+jQFYe5U6RGep6GZ9F7S+x7FD0GqTYKRGowSPPwXraQPgFQFUeUyJo0kBiQut7K8cQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=SrsrWVWE; arc=none smtp.client-ip=74.125.82.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-dl1-f54.google.com with SMTP id a92af1059eb24-124a95e592fso1565745c88.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 07 Feb 2026 20:04:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1770523486; x=1771128286; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZDSoxJmUAFCsFOozdtCEnUcIaNdh6KfxLjvN8lzvaUE=;
-        b=SrsrWVWEQ4GV9FKiXWl0C6wpWS+xgTlrd77iq5c+tvlRIM9yQ/Qfd5F+wIB12vSUKC
-         hSFyrqZxuQPjb+BmU0k5rky7expVU48+o9v5Bp79TlfaTZjgR7/BvyLRWyRu2dPwNHog
-         hp3pu8HDPQhLdeOUgxkFcR4Xv8FRRkako++YE=
+	s=arc-20240116; t=1770547286; c=relaxed/simple;
+	bh=aZZzfxoP/OAR63tqh89B9La0YY1hyXKXoHsZ/sLOQ6o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PvXyxnmI/7uy/MIptqP0QWBg/dePahQmNT+30ZrUKCGhkxvhTU/WzyQzvuyGXJZA7DTeSdfR4G3vuTtqPC5IZ+B+t0jCi/K/iWj/xfPKp87qvlw8rWLl2Hnj211L8Rh6Gbb2y8NCKfCAGFMAbMtTAofLzNhkt0skym9spQaQn7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=74.125.82.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-dy1-f169.google.com with SMTP id 5a478bee46e88-2b785801c93so5493415eec.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Feb 2026 02:41:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770523486; x=1771128286;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1770547285; x=1771152085;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=ZDSoxJmUAFCsFOozdtCEnUcIaNdh6KfxLjvN8lzvaUE=;
-        b=X1A3aSIQ2OdpsetJadVCwlKf0GZ/DhoxhD3xL7jtkdmNNGONhOeMJDLc2mSbslwUdk
-         JUG52fWxVlPbnQEbNvfZGLRC+piaReEASVD+RncxYK+5YB7ryWYYQNwAHzaUuA8Pa99w
-         t4lwZO+RFEv05ESiBgqBztkvNJx3oTMhmSs9QNDYTTv4Wlp9DyyU6GoA7TKNrMQrdYXi
-         5gmCqxsuHjt1/txAtG5TBgrqrHSER0IZGEHF4mWiF3CR4wG72ELLzuT6VFnR99xnWUfz
-         7kAKyxeLW1jc2+SDXWyzlSeKf3C3O2xc6+9KwvHVM4tJoUfD8mLySJ3ULMipKmMv3vxj
-         BvKA==
-X-Forwarded-Encrypted: i=1; AJvYcCVqjRf0BRKSPDgrpyEo0+Xpst60gTsF0ckQqTcp98Z6b0dDNePQroBicngA8liyA6ZnMwzKOi3Y5ZKElGgC@vger.kernel.org
-X-Gm-Message-State: AOJu0YygK7odbZktDrxp/EhqZ1YW/Obvw9n2ROE0lykfBfeO/ad+3lKk
-	DYiOOruEvuKqzTmd9dwCk6DFn4agJpIn4g1gQeprZSvLZ2QeK9bduFjxCWRwVZWi0A==
-X-Gm-Gg: AZuq6aIZOs3yTi9zYsbPlxwH1fnWFCjoUklNvcAhsVy4acCtks+A5WGrEgCS+gXPjjC
-	YSMKr7meaOGkXUciZdkCKn+tlndfHZ4QfDwtVBP/ye6ljHJUZXJlJSdyCtL227tNs4C4kzHt9lQ
-	zWZt7OGg+Qo8d8vBzXT6ONwNiFUcHXeBfUacX019er0UiRfV1ZO9oOFgCPEMB3bT2FN9lBmcePN
-	lTNe95Rhlw7wDg4dWb75qywzSVyzPRTeNZtm/O9J+A1V20rrsgjfN6U2ZR/Oji+B+dhL7+wW2SA
-	MWqX2kgkOFzG+CGXcPNsc/1H7VnV6dYqyav0ZQw5VC1Ue7+qpZuzeleLfrDZHUYwHQ/ECObHUIi
-	t1rnnOaQTP3nohFsuW67jn0Y/te6nUp/3nBObYS1n9pRnTXB2okDs6m2TpMwAcCotQyceFs5UKO
-	UjbVOX0ZtNSr0f6fQ3DHASwkMLxTvEs8dKgy5c9ALU82sqYhMet51ALetpZuR+cQOvmzPPkkY=
-X-Received: by 2002:a05:7022:301:b0:122:345:a948 with SMTP id a92af1059eb24-1270419f523mr4166171c88.46.1770523486146;
-        Sat, 07 Feb 2026 20:04:46 -0800 (PST)
-Received: from dianders.sjc.corp.google.com ([2a00:79e0:2e7c:8:6d43:22d7:40eb:81e6])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-127041e61b9sm7085064c88.8.2026.02.07.20.04.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Feb 2026 20:04:44 -0800 (PST)
-From: Douglas Anderson <dianders@chromium.org>
-To: jassisinghbrar@gmail.com
-Cc: Douglas Anderson <dianders@chromium.org>,
-	andersson@kernel.org,
-	konradybcio@kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v2 13/15] soc: qcom: smsm: Use mbox_ring_doorbell() instead of NULL message
-Date: Sat,  7 Feb 2026 20:01:35 -0800
-Message-ID: <20260207200128.v2.13.I18ba5837ac5c89cdd3531b6b09a2ab24a95912fa@changeid>
-X-Mailer: git-send-email 2.53.0.rc2.204.g2597b5adb4-goog
-In-Reply-To: <20260208040240.1971442-1-dianders@chromium.org>
-References: <20260208040240.1971442-1-dianders@chromium.org>
+        bh=haeg3n1GXO743Ijog6kKrEyqSkcsBt7foGPftVqFxYs=;
+        b=BX/bGjxQCqSSKpGy7plJK6LxfuL0GOwzZD3XB06ThIFQkozz4QjumzWzj3Kym6SDJR
+         XRh6Yd87ghRb34yn8JO03TvGV2rIXUw8YBK98oTAeK2s8bqi/97wwI6ljcqP9ZFBklMM
+         0IpYHl6yk9Reg7xIvfBA0q3vmBIooBgcAjmYJvTsAAgq7a58fSw866kVDvw9nD5FGVOw
+         0bt640zyXGg3Jl70Ka/09v5QRO/STccbk3gz4kvb4WS0+JxSUiccTJueAAU4o6IX8RVa
+         85vfiV7ffKO8oKwhSeJmx2VrxSTkVrlTduEOOl66klSkn6vAUWimLYuZpwcLnbofV9Wn
+         ZWhA==
+X-Forwarded-Encrypted: i=1; AJvYcCUSEtPfyw9JkVrmCOrVVtnll5FVBSuzMfw/yo1BYqyIGlOm3X/LGFoaF9rJPaTGC28rv7mAPM3JJOoTRTwZ@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz3GoKf65473ujL5FMKzcKSxyKQa808I7S+PfIQ+P0kOFE88iM4
+	3BJtxsDGonGC2RCtiuaqJ3Y0S00fbUoIF839W1ArQQDcCAfE7HLu6VnBUiOrzA==
+X-Gm-Gg: AZuq6aK1YhDsWk6MOjaDmvU87baeZhX1Z9XeVktmGlSqRTo835pW5iDw+efBLDmK2It
+	qo6bn0vU4qzKtbsmbudhZA4Fcr9vuDCbFUQM6zgaiiD9glzAEC81sskMeJ2dCsrP23M+n6t41wg
+	cAAjcNs7y9GKCJ5jSoHTr0Ec8KhM7GpxBD2W9XeC+t14nGVcs0LwXiIAuOLAeW9CQJ6DFVvN+Qt
+	x7sgYFNQXzUsJM1FBip6/rSRFukyNJ7+/0e1M9NBWaeR3uYzcPVQsKqyDCPo+Faw4tnLlichg9Q
+	VWgSKW+vxfVuJQGtJjnCeHguaBbNgz9d1Sq+Y8F+22DKk7WE+FddtsrEeP+yBbrO/5DVaSShy0c
+	MNWjv9yRE60cw8Wyo77RjVvVzkpC0mLOe5tUDv/g373M7N9LXXICVY6enhWzr6EeduYqdKMWjRf
+	0P/3TANRLfXnkMFE7rQDrIaz+D3FqfbjG7l1XJWn6hgD1n1A==
+X-Received: by 2002:a05:6870:3d8c:b0:3f9:f6ca:738b with SMTP id 586e51a60fabf-40a96dc6fc3mr4184430fac.19.1770540674441;
+        Sun, 08 Feb 2026 00:51:14 -0800 (PST)
+Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com. [209.85.167.177])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-40a99355b7fsm5269406fac.8.2026.02.08.00.51.14
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 08 Feb 2026 00:51:14 -0800 (PST)
+Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-45c7c841904so1444881b6e.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Feb 2026 00:51:14 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCVn75ziAo2BeWlibqZyPkJADsDy+UdDc4zoVRRGX5xbKcLm3iA7idwss/DJ5PdkK5nuSXUX5oygDlgdV30G@vger.kernel.org
+X-Received: by 2002:a05:690e:4192:b0:64a:d1bd:8c65 with SMTP id
+ 956f58d0204a3-64ad1bd9100mr3953663d50.95.1770540244041; Sun, 08 Feb 2026
+ 00:44:04 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20260207-rubikpi-next-20260116-v3-0-23b9aa189a3a@thundersoft.com>
+In-Reply-To: <20260207-rubikpi-next-20260116-v3-0-23b9aa189a3a@thundersoft.com>
+From: Roger Shimizu <rosh@debian.org>
+Date: Sun, 8 Feb 2026 00:43:52 -0800
+X-Gmail-Original-Message-ID: <CAEQ9gE=9xV7i3afybmWvE+W9aLgYWSo1X=gC4cWRMkTJYBLo3A@mail.gmail.com>
+X-Gm-Features: AZwV_QhVsL319mpFfmBVf16B05oxLi4h6s2zjEvcVQi8QHoXqqVnbGWDOb-EoSo
+Message-ID: <CAEQ9gE=9xV7i3afybmWvE+W9aLgYWSo1X=gC4cWRMkTJYBLo3A@mail.gmail.com>
+Subject: Re: [PATCH v3 0/3] Add DSI Port B input support for LT9611 HDMI bridge
+To: Hongyang Zhao <hongyang.zhao@thundersoft.com>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
+	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+	Christopher Obbard <christopher.obbard@linaro.org>, dri-devel@lists.freedesktop.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.16 / 15.00];
+X-Spamd-Result: default: False [0.04 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_MISSING_CHARSET(0.50)[];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[chromium.org,none];
-	R_DKIM_ALLOW(-0.20)[chromium.org:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TO_DN_SOME(0.00)[];
-	TAGGED_FROM(0.00)[bounces-92150-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[intel.com,linaro.org,kernel.org,ideasonboard.com,kwiboo.se,gmail.com,ffwll.ch,linux.intel.com,suse.de,oss.qualcomm.com,lists.freedesktop.org,vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-92157-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	DMARC_NA(0.00)[debian.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_TO(0.00)[gmail.com];
-	DKIM_TRACE(0.00)[chromium.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	RCPT_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dianders@chromium.org,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	NEURAL_HAM(-0.00)[-0.998];
+	RCPT_COUNT_TWELVE(0.00)[25];
+	MIME_TRACE(0.00)[0:+];
+	MISSING_XM_UA(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[rosh@debian.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	NEURAL_HAM(-0.00)[-0.935];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	R_DKIM_NA(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[chromium.org:email,chromium.org:dkim,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: CC524107CEE
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,mail.gmail.com:mid,0.0.0.0:email,msgid.link:url,0.0.0.1:email]
+X-Rspamd-Queue-Id: A829C108652
 X-Rspamd-Action: no action
 
-As per the patch ("mailbox: Deprecate NULL mbox messages; Introduce
-mbox_ring_doorbell()"), we want to switch all users of NULL mailbox
-messages to use mbox_ring_doorbell().
+On Fri, Feb 6, 2026 at 11:33=E2=80=AFPM Hongyang Zhao
+<hongyang.zhao@thundersoft.com> wrote:
+>
+> The LT9611 HDMI bridge has two DSI input ports (Port A and Port B).
+> The current driver only supports Port A or dual-port (A+B) mode, but
+> some boards like RubikPi3 connect DSI to Port B only.
+>
+> This series adds support for using DSI Port B as the input source by
+> utilizing the existing ports mechanism in devicetree:
+>
+> - port@0 corresponds to LT9611 DSI Port A input
+> - port@1 corresponds to LT9611 DSI Port B input
+>
+> The driver detects which ports are populated and configures the hardware
+> accordingly. When only port@1 is present, it configures port swap
+> (register 0x8303 bit 6) and byte_clk source (register 0x8250 bit 3:2)
+> for Port B operation.
+>
+> Signed-off-by: Hongyang Zhao <hongyang.zhao@thundersoft.com>
+> ---
+> Changes in v3:
+> - v2 incorporates significant changes based on Neil's review of v1,
+>   so remove Roger=E2=80=99s Reviewed-by tag from the v2 commit message.
+> - Link to v2: https://patch.msgid.link/20260128-rubikpi-next-20260116-v2-=
+0-ba51ce8d2bd2@thundersoft.com
+>
+> Changes in v2:
+> - Use ports mechanism instead of boolean property
+> - port@0 corresponds to LT9611 Port A, port@1 to Port B
+> - Driver detects which port is populated and configures accordingly
+> - Link to v1: https://lore.kernel.org/r/20260127-rubikpi-next-20260116-v1=
+-0-0286c75150c5@thundersoft.com
+>
+> ---
+> Hongyang Zhao (3):
+>       dt-bindings: display: lt9611: Support single Port B input
+>       drm/bridge: lt9611: Add support for single Port B input
+>       arm64: dts: qcom: qcs6490-rubikpi3: Use lt9611 DSI Port B
+>
+>  .../bindings/display/bridge/lontium,lt9611.yaml    | 15 +++++--
+>  .../boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts |  8 ++--
+>  drivers/gpu/drm/bridge/lontium-lt9611.c            | 46 +++++++++++++++-=
+------
+>  3 files changed, 47 insertions(+), 22 deletions(-)
+> ---
+> base-commit: 46fe65a2c28ecf5df1a7475aba1f08ccf4c0ac1b
+> change-id: 20260127-rubikpi-next-20260116-99c1dbea50e4
 
-This client only ever sent NULL messages, so the transition is
-straightforward. We can remove the call to mbox_client_txdone(). The
-call didn't do anything for NULL messages and it's now officially
-documented not to be called for doorbells.
+Reviewed-by: Roger Shimizu <rosh@debian.org>
+Tested-by: Roger Shimizu <rosh@debian.org>
 
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
-
-(no changes since v1)
-
- drivers/soc/qcom/smsm.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/soc/qcom/smsm.c b/drivers/soc/qcom/smsm.c
-index 021e9d1f61dc..1e127678fd9c 100644
---- a/drivers/soc/qcom/smsm.c
-+++ b/drivers/soc/qcom/smsm.c
-@@ -182,14 +182,12 @@ static int smsm_update_bits(void *data, u32 mask, u32 value)
- 		if (!(val & changes))
- 			continue;
- 
--		if (hostp->mbox_chan) {
--			mbox_send_message(hostp->mbox_chan, NULL);
--			mbox_client_txdone(hostp->mbox_chan, 0);
--		} else if (hostp->ipc_regmap) {
-+		if (hostp->mbox_chan)
-+			mbox_ring_doorbell(hostp->mbox_chan);
-+		else if (hostp->ipc_regmap)
- 			regmap_write(hostp->ipc_regmap,
- 				     hostp->ipc_offset,
- 				     BIT(hostp->ipc_bit));
--		}
- 	}
- 
- done:
--- 
-2.53.0.rc2.204.g2597b5adb4-goog
-
+-Roger
 
