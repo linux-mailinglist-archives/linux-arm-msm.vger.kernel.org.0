@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-92216-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92217-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sLQYN1+QiWlz+wQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92216-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Feb 2026 08:44:31 +0100
+	id SFOxDRySiWlz+wQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92217-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Feb 2026 08:51:56 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4641510C921
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Feb 2026 08:44:31 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id ACA8010CA05
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Feb 2026 08:51:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 92FDE300361D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Feb 2026 07:44:28 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 42A643002A12
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Feb 2026 07:51:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D5D7330D22;
-	Mon,  9 Feb 2026 07:44:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F96B3382FC;
+	Mon,  9 Feb 2026 07:51:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oGiG67+y"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r7ESbaM3"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 792911862A;
-	Mon,  9 Feb 2026 07:44:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C661318B96;
+	Mon,  9 Feb 2026 07:51:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770623067; cv=none; b=g8l4Lj6sS8gD6TL+50aAIZPhAfXcTA9SdYPdHZBDDsajRJqjVaU9AM9qKAiQHMIpLppLsjixW4NxVAhky/hXiVJWtSxjGZHLHQvcP43I5VeDpWIsthwc0JJ+W4wuM6l0QjI0DcVa19iqw4185cOB2seUSOD0C3pCNQyz7vxvtdE=
+	t=1770623483; cv=none; b=qSMj7rNt+w7z3H045Hzw1cCoNmY1FdnrFWECvXB8/84HlKJnH9ElrES4vV5sjsf/FEHeX5JTEpYpkelHmse/C0aEFdicBgt8tWhGO9r6DGTim9KrSJd7At3fGYhA5Vx6oHPDRnf1w3DQnODRIQnsgeOfNLzTxQ76Q36zl8ALMd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770623067; c=relaxed/simple;
-	bh=Ta25kI7USSWWuSkXP9nJ+DZDxRzPLkzvq2/V5y/6bk8=;
+	s=arc-20240116; t=1770623483; c=relaxed/simple;
+	bh=tra1nGlLkCkWrSabfPDcu8ZuECM2MQK2rXwhoc1KMVA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=D4/1q0KEe1/qz8jYNnjrK4+EHh/uW2qzqy48BO7fQPMOIKtktbGKBILtV+NXfxF1T6/YrI+59ZZJJqFkVd7CQhkfjkuVhFCotRzsnckonKZn3N5lCrAXMkCOhhm+8D6GrwIA1nDtUXVWnrTVRCYWE6vxyYGrhndfOLVtfLrtqyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oGiG67+y; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40DC8C116C6;
-	Mon,  9 Feb 2026 07:44:23 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Zxfpv0UqUl2Sbi6x8OTMinTpOoHFTcJemKgsl7alOlUQ1eMnB2dTbPHGLYAZsa2UldwWHqFZQH7hnaPkvhJyfD7z4zPpVSpxcZyfVT6MgLj7pn6A7qDttrn0gAhEZjJnU6hNWwkR4v8j4yutCn1IlzZANwiH8LPT7Odbk5w7su0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r7ESbaM3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B9EC116C6;
+	Mon,  9 Feb 2026 07:51:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770623067;
-	bh=Ta25kI7USSWWuSkXP9nJ+DZDxRzPLkzvq2/V5y/6bk8=;
+	s=k20201202; t=1770623483;
+	bh=tra1nGlLkCkWrSabfPDcu8ZuECM2MQK2rXwhoc1KMVA=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=oGiG67+ykCGXB+vg87pIpANs+w13tPLZ7LvR4IZSdZ8EbKDK/Ljpc9SBQNqeeBCUM
-	 a5WQ9G926i7fllx5Gv1YJlG+0/d3ffR77AukgUV1ClA8U8TzLE9xiXlPgHH2EMPl+v
-	 FspI2ALfo5W1WJ8nJlBmjACNAKWa/24N35Aulc3oCXBdeSA8RSYRBWgZ/nJpLFxOSX
-	 JXUtBzMZLwMMPMw/2Pf4LAl0pGadfZ3QPAIZ2z0hITDs2x6wtnxquYrk2k13409ZE7
-	 FUMoGd2mvjdS2mwxCp217sz8FzlXm0jWSwX9g0kXI84SdKnBnvd1KEJMtN3K+ZeqKI
-	 M35QNVYwrz5pw==
-Message-ID: <ffafb3b7-bb9a-48e8-9810-7fd837d52001@kernel.org>
-Date: Mon, 9 Feb 2026 08:44:21 +0100
+	b=r7ESbaM3Q8pZlvmWhFVRH5o94GyXn8ZSDUmqs07VGs0dWkVx6L5eT14Nv4S6litfI
+	 y254riFFhuBYpKTg1qapgqulUQCCvaVgXCYgamqdXQxoU8AVPGGMjJ2GCtIbFgALOP
+	 pncmSmNV8QshZhVXgytbO8cv5l8FXsfGGnRvCX1eV/CEn2DU7ClMsXRuzELDEL4/Vl
+	 1j3iXt4tbT03LZgjQNFJsGvNxX7+IeIcjJP4HxxnW+prOlvpGmmYdZkl8BD8iYp33d
+	 g2WM1v/9zK2/h36PPCilBJ8Ex/fuRFZk/G5nNxL8DWpl/rj0EstyuKVH5Or0UgYwen
+	 k2r4ZbK0d4TSg==
+Message-ID: <487e4605-0a21-48d6-8b77-9ce2799ad212@kernel.org>
+Date: Mon, 9 Feb 2026 08:51:18 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,31 +53,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/11] dt-bindings: crypto: qcom,ice: Require power-domain
- and iface clk
-To: Harshal Dev <harshal.dev@oss.qualcomm.com>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Herbert Xu <herbert@gondor.apana.org.au>,
- "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH v2] arm64: dts: qcom: sm8550: Fix DTBO boot failure
+To: Aaron Kling <webgeek1234@gmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Abel Vesa <abel.vesa@oss.qualcomm.com>, cros-qcom-dts-watchers@chromium.org
-Cc: Brian Masney <bmasney@redhat.com>,
- Neeraj Soni <neeraj.soni@oss.qualcomm.com>,
- Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>,
- linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20260123-qcom_ice_power_and_clk_vote-v1-0-e9059776f85c@qti.qualcomm.com>
- <20260123-qcom_ice_power_and_clk_vote-v1-1-e9059776f85c@qti.qualcomm.com>
- <14a71b33-4c10-41b0-a6cb-585a38e05f56@kernel.org>
- <06160c6c-a945-467a-be82-7b33c5285d0f@oss.qualcomm.com>
- <7216c86d-2b87-496c-9548-ccdcb3c98b6b@oss.qualcomm.com>
- <1f99db18-d76c-4b87-9e30-423eee7037e1@oss.qualcomm.com>
- <dd34525c-0a25-47ae-9061-c4c7ab708306@kernel.org>
- <2830a189-a5ce-45a0-92fe-7a01c3b012a7@oss.qualcomm.com>
- <6efcdf51-bdb1-4dfc-aa5e-8b7dc8c68cd3@kernel.org>
- <b217a08a-2755-4ef8-bf39-af1c3e628cf8@oss.qualcomm.com>
+ <conor+dt@kernel.org>, Kumar Sharma <quic_vksharma@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>
+References: <20260207-sm8550-abl-dtbo-v2-1-83afaa6f3ce9@gmail.com>
+ <d4faaf8d-1517-4187-8801-a2dd52d8dde3@kernel.org>
+ <CALHNRZ9k3yxXb9OfYXMSfEwyYKU8Rrrrjb-hPqLgU90X9YBP8g@mail.gmail.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -123,71 +109,99 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <b217a08a-2755-4ef8-bf39-af1c3e628cf8@oss.qualcomm.com>
+In-Reply-To: <CALHNRZ9k3yxXb9OfYXMSfEwyYKU8Rrrrjb-hPqLgU90X9YBP8g@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-92216-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-92217-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[gmail.com];
+	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[18];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.989];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-0.987];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 4641510C921
+	RCPT_COUNT_SEVEN(0.00)[11];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: ACA8010CA05
 X-Rspamd-Action: no action
 
-On 09/02/2026 06:43, Harshal Dev wrote:
->>>> Either I do not understand the point or you still insist on breaking a
->>>> working DTS on kernels with clk_ignore_unused, just because what
->>>> exactly? You claim it did not work, but in fact it did work. So you
->>>> claim it worked by luck, right? And what this patchset achieves? It
->>>> breaks this "work by luck" into "100% not working and broken". I do not
->>>> see how is this an improvement.
->>>>
+On 08/02/2026 16:10, Aaron Kling wrote:
+> On Sun, Feb 8, 2026 at 3:07 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>>
+>> On 08/02/2026 02:16, Aaron Kling via B4 Relay wrote:
+>>> From: Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>
 >>>
->>> My point is something more fundamental. It worked before and it will still continue
->>> to work if:
->>> 1. We pass the 'clk_ignore_unused' flag. or,
->>> 2. If the Linux distro is overriding CONFIG_SCSI_UFS_QCOM to 'y'.
+>>> ABL requires certain things in the base dtb to apply a dtbo. Namely:
+>>>
+>>> * A label named qcom_tzlog must exist, but doesn't have to contain any
+>>>   specific properties
+>>> * The timer node must have a label named arch_timer
+>>>
+>>> This aligns the sm8550 soc dtsi with those requirements. Without these
+>>> in the base dtb, when ABL attempts to apply any dtbo, it will fail to
+>>> the bootloader menu.
+>>>
 >>
->> I do not agree with this. I already commented about your driver. If you
->> do not believe me, apply your driver patch and show the test results of
->> existing working device.
+>> Incomplete DCO chain.
 >>
+>>> Co-authored-by: Aaron Kling <webgeek1234@gmail.com>
+>>> Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
+>>> ---
+>>> With a current mainline sm8550 base dtb, ABL will fail to apply any dtbo
+>>> and fail back to the bootloader menu. There are two changes needed:
 >>
+>> Since when? We were testing SM8550 (me on QRD) all the time and there
+>> was no problem.
+>>
+>> You need to provide details which hardware needs it, if this is about to
+>> expected, but honestly, we don't add such nodes/labels for downstream
+>> bootloader. Qualcomm should fix the bootloder instead.
 > 
-> Apologies, it seems like I failed to explain correctly what I meant.
-> Here I was talking about the existing in-tree ICE driver and not about this particular DT
-> binding commit. This commit, as you rightly said and I mentioned below too, breaks backward
-> compatibility for existing in-tree and out-of-tree DTS.
+> This discussion has been ongoing in a couple places. It is needed on
+> all semi-recent recent qcom socs. See this chain [0] on my sm8550
 
-I was also talking about existing in-tree ICE driver, not about my
-commit. I do not believe anything will work fine with existing in-tree
-ICE driver.
 
-We shifted away from this binding in the discussion, imagine it does not
-matter. Just look at your driver code.
+Explanation must be in this commit, not in other places.
+
+> questions thread and the previous revision of this series [1]. This
+> has been a known issue for a while, see this comment [2] on the gunyah
+> watchdog series, which is what the series was based on.
+
+But that [2] still speaks about overlay. You are suppose to boot
+standard kernel with typical setup - concatenated DTB.
+
+If you want some other ways, like choosing overlays by ABL or whatever
+else, you need to fix ABL.
+
+You want to use some custom boot way of ABL, but it's broken... yet it
+is no reason to add these properties. What if I want to boot DTJUNK
+files via my custom ABJUNK - can I add such things to upstream? No.
+
+You cannot add properties to support custom boot of ABL if that boot is
+broken.
+> 
+> My current understanding is that the qcom_tzlog and arch_timer labels
+> are required period for abl to apply a dtbo. And this setup will only
+
 
 Best regards,
 Krzysztof
