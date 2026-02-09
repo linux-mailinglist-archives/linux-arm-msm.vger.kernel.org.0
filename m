@@ -1,163 +1,200 @@
-Return-Path: <linux-arm-msm+bounces-92262-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92261-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UJajL1DXiWlUCQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92262-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Feb 2026 13:47:12 +0100
+	id WKKfARTWiWn7CAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92261-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Feb 2026 13:41:56 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6182C10EF38
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Feb 2026 13:47:12 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 257AB10EE0B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Feb 2026 13:41:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 263FA30058C7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Feb 2026 11:27:30 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C33EA300CC27
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Feb 2026 11:25:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B607636EA98;
-	Mon,  9 Feb 2026 11:27:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B16136EA98;
+	Mon,  9 Feb 2026 11:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b="dPAd89aq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aMI75chK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.187])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4BD10F2;
-	Mon,  9 Feb 2026 11:27:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD941CEADB
+	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Feb 2026 11:25:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770636448; cv=none; b=PULv57ltK2IAPCRjs/q3w3j/r8SAkSPI2M2p2yae1R6IvD2jeBrHtB6cMRrZ3J0PID1OJN5rq6vUDlgj1pqAYyk5NZwjolUzPu1A8mqlUNhkVchSONQzmvIN+kwHradc0bakvF7DDSwu2XKM+IKWfkZ6EMc8wNE3FofHFm56iTk=
+	t=1770636357; cv=none; b=FgXU0b63hw0ZOIbGLI1czNodqYmVSS82RG8FKKQiso9tyYAj23E6gcvztv+XTX/w9xwyEXxYfHyyXH1uTeeZS8W9PbQnhpII9Xe15y/n97tgP3i9fV6wH87GU+MSaPcXv5LjieFZ9hywRNIYvEzsdwHN85sl+ysSdAdkiJxI4Vc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770636448; c=relaxed/simple;
-	bh=Ci98xsW9EY1TON/NR9jHDoabdpxktSGoJAQmZMNonos=;
+	s=arc-20240116; t=1770636357; c=relaxed/simple;
+	bh=04N/0A+BfnpRyNElBUEeVBI3HIJAHdzkZSaHOq+Qbf4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qLAYt7vwhErIoYBENL0GU1e9WAHxb9vQZwM7ZWP58cylB+gzeGNXPdDqm8wYpss1dH7UhH2YeVPSJpO92bNylOaNeGYPtQrA+C3RAT3Qw+Q+wEhtVp1Iv7bCUkEtvAEJSX0XBaJFhbcHyMnt00ls9SmMQoTZyfIF6v6KsXfWdCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=permerror header.from=oldschoolsolutions.biz; spf=pass smtp.mailfrom=oldschoolsolutions.biz; dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b=dPAd89aq; arc=none smtp.client-ip=212.227.126.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=permerror header.from=oldschoolsolutions.biz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldschoolsolutions.biz
+	 In-Reply-To:Content-Type; b=Th2Br3zlFERXg3iyD9+EJh124pCPQyW4bacxVKza/k5BuO0u4xjb0jM2Y+SzY8gM0/ArXOJmYh6DFInzOdxP+lp2RVbyjfT/R0Mw1es2UbrnTMxsingIflyQ5NNXMxZlCd2Rwo/lYInzyMO43946vVOjYp2o+mBgrh/R/wLucAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aMI75chK; arc=none smtp.client-ip=209.85.214.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2a7d98c1879so24832075ad.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Feb 2026 03:25:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=oldschoolsolutions.biz; s=s1-ionos; t=1770636441; x=1771241241;
-	i=jens.glathe@oldschoolsolutions.biz;
-	bh=Ci98xsW9EY1TON/NR9jHDoabdpxktSGoJAQmZMNonos=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=dPAd89aqTxbV6SRDCeMaYezduuoopOzYbHMebPSku95wMB/Ot3/YR+eRowU29qI4
-	 TZRpCmEZ1wU/L0APvGck/Rdz0gpDlpJX16byr+lo8QkUe/PVINIE4ljMYwxaMknWF
-	 MUy0nTJ7uKCMPbaNo0dAMoR9iT/YieplkwSR3Y990g47x3uE2rvXNpCKOnqBpep5x
-	 jBNc7PqqG4MejNMP7S0Fqct0R36BhWatnCE/NYjof/jygNWTzmZ72DXGtxevW+VlX
-	 X+gWLUypsYrH13cpgD2kQn3NsBGgR/TboezPaaf4gUdGumh6/YTKa8cl8f+SQO/74
-	 tmXjH1fN40alzwj5Bw==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from [192.168.0.109] ([91.64.235.193]) by mrelayeu.kundenserver.de
- (mreue012 [212.227.15.167]) with ESMTPSA (Nemesis) id
- 1MhWx1-1vKlHm0BxT-00pnwr; Mon, 09 Feb 2026 12:21:45 +0100
-Message-ID: <26711953-5f15-4409-85e7-f8d93c377137@oldschoolsolutions.biz>
-Date: Mon, 9 Feb 2026 12:21:43 +0100
+        d=gmail.com; s=20230601; t=1770636356; x=1771241156; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=taZpZ0oWLGP6Au0CiSuaC2iygIHIhUD2iwTBS1mdzoA=;
+        b=aMI75chK9t1F2JQLZnpErX4bWNUVpjFvGV/0mFI/ZGjgqxWSIBd/8LN+OT+m03yD13
+         xnKAd7BDDC5uF2bGMeEqYbJDn/vfw2klTEfEzHhkMQmoJQmiDlnU2wsb3VWCbicQgne4
+         Dw48VfSIcE8QdKzNd1OAYJ7eZ3p45dC9M/3qyim21uh2KZlJn4yhb0rV2dKQ5FeH+oWI
+         UprXaW9/mTv924usN/nLJNSEuO9ll16N1F47JBf+lZkXIjOFwKZ0atV2fEHDGW5wLSw7
+         OYKlUkpCxwfvgtsBD+MpsfgeXj8DpHLB3wgJVdtng5UAYMATXgnRwBBJXWvrG/VG9WuQ
+         AdNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770636356; x=1771241156;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=taZpZ0oWLGP6Au0CiSuaC2iygIHIhUD2iwTBS1mdzoA=;
+        b=Sd/yTQzaLg5oeL9kwbo817jdmdT+KckAzXr4bR+3U09gIcp/M6BYhU5K0bTyEXhaTq
+         egLWopP/XaCTG09k3slUVAkgA5ekbVj1c5Bqc7fcGcUWF0Br9ZZbjOv5zImnRBX5eIfA
+         ssPDQiPX1Ucl3KG24hWy9+CXz7P6T9U9Tcmm6osiWy16DCRypwlmBtYkZzrVY334I/fk
+         7mMpAu2ktPz6tlWrfg+qScKTYcJJj+MHyj3fnHRpS+Zzg0Bs7BLMxQPOfmFWs/WILK8j
+         2+1H1pSn+uSlhpWFSiOHCYwUOhg805N+Y7Xf03Iuj7yWpq4xIAt656eLb7V3IBgb5A8X
+         M2SA==
+X-Forwarded-Encrypted: i=1; AJvYcCXTAm5P6ep3Ki26R2GSdHIXmHnE4vDPz07W8JBGCN+VO2kpoYuWUDkBtJ4gk5kz8rJEBn8/ddZz2DH8f9vb@vger.kernel.org
+X-Gm-Message-State: AOJu0YyxHMW85lROEWIEKi/m1uRl7mbQm+4H8Bue/mKmWDtM4mx0oKaW
+	E7yjkdUsSU4Ib4CN36ouxvstd4uCZh2dvCB/4wKMyQGdkjgVDff5g6X0
+X-Gm-Gg: AZuq6aKLnahHfMru75HJuRuifmd6ZsJi8MmYU3SjigRhfTU9WKPlnUW0h2/QtaTZIIh
+	fejgshanfrFto3B+3hG3yB9CsoK7lwB1btrm54PnVjxnT6Mg2Q0YG+6gPFIKxMM8MI2vVcuIDs5
+	WRJJKuy4VcvsqB3zxNKLBYDsu1Tg9BiYdgMkIeNCfpXYR4uBuPRWEa/wrOzaBg3YqljvXUpjWbw
+	MX6CSVfJfN344tEzc5C+tOvl7onBQbUr56BdLqpLq6oTvqeTxfT6iz3CM6XbfdKU/gF7aF+zdKq
+	7S9Eu/ok13UtuTidns2v6dQVPruMvhnZpIYM3P84o+zusMutaZ25+HGft5dy8JSexeNgpwszk4v
+	JjJpUZmwZkrjglnNaj2gs1kavknb5PsmDO9oMsLhhEvx1Z6QcUaeoPZiJ2a4pJuHk6pa+r4cwuZ
+	yvv8PyCvMOrgOeub3ySwwnSYWG0V0HNUqu0A==
+X-Received: by 2002:a17:902:c945:b0:2a9:30d4:2af3 with SMTP id d9443c01a7336-2a951937e91mr93409705ad.49.1770636356365;
+        Mon, 09 Feb 2026 03:25:56 -0800 (PST)
+Received: from [172.16.20.12] ([136.226.253.21])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2aaf2f8472esm25460445ad.5.2026.02.09.03.25.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 Feb 2026 03:25:55 -0800 (PST)
+Message-ID: <317e9030-849a-4a54-a4e6-75fc93b78935@gmail.com>
+Date: Mon, 9 Feb 2026 16:56:18 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH 0/4] arm64: qcom: x1-vivobook-s15: add X1P42100 variant,
- restructure dts files
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Maud Spierings <maud_spierings@hotmail.com>
-References: <20260208-b4-vivobook-v1-0-3a9b5e153909@oldschoolsolutions.biz>
- <7e96bff7-9b9f-40c5-b21d-663115a6459b@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v12 3/3] arm64: dts: qcom: talos-evk: Add support for
+ QCS615 talos evk board
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, andersson@kernel.org,
+ konradybcio@kernel.org
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+References: <20260114100043.1310164-1-tessolveupstream@gmail.com>
+ <20260114100043.1310164-4-tessolveupstream@gmail.com>
+ <169f7c2b-51cb-468d-a492-3b880ef1bd2e@oss.qualcomm.com>
 Content-Language: en-US
-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-In-Reply-To: <7e96bff7-9b9f-40c5-b21d-663115a6459b@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:Pycj87TjOI4gtbSnw+RJ9SHrF06BeWsXwN1CB0yLtT79xEljTDW
- dMaYUt9c9GhLdihQFmFSXqi4xiXTfQBGGrGJ+HOeQUC6b2QC1rkentv20lJQHvPL129DgPt
- YJAh9ywszyhVN3juXWjmltarIqQemzYUp4DsAUygzVEndzAV8HgrVHDlm424vY4GojbcbhO
- RbgldLS8BC8l8g7KTaUSQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:071P/sDOaVU=;j4VXBIzvd0epGfIRFPSoPSz5Y1q
- gzzuv6+otzOt6h5eYIAC3H/0lkA4Q2XHflMH+Mybyueo9jEL7xczixLVNosYi2qID6fM5Ev0L
- MXdAZxi78znz9IFnVp8sWpPs8ZrSC9ud7Y1joJTPBjR1G7iljBdVFvhTHhwRYsRnN/2SQhWCv
- LkH8FHp6H9xfowrOv3MBYW4lS4jFCn35sR+Flh9ORs+UH3Bp34+0/PI6YqzSyr655ugRCSQUX
- QiduSyjCFro1YJc5rX9vci+czFamU4ACnxDDK214l2hp1a3S2I3V/3uUZMxetq83qw1GtVKlm
- ndp/UhZ2eUC6lZ3wxE9d4bMWko0LJfKPqaGBus8kc8s25QUjajMyigaGiXbKE9F3betl4Jk7k
- x/9Jdk6ZR6cAz4B6lzTu7HoTc0bpnClQQ6fQ8A9M7gPBLZ1SOT7TXw8Nhm7oa47s5fCf+BFc0
- 4CeiH8zGJXiWxDGP+AjaO/o2hCDX7iTYGc1pnnHnLIl8YYgXPZnrzgtCp/ALVlE0qbFIT5Ax2
- RiWWSmU0t6XOlLRqBZATGXcXEIDbFhGhQ4ZWITq3OZLPGpW/XRw84yrfhUwiEezXXC8/zwu1c
- iHRpIMypcNgqEUEGcZD0zTnmx7R2xDU5BtdZb/74OSt2H473WGiRJ3vsD7urW5636SJqtupAf
- UzPejNG4zJgN8ljfnyoPGhP5zr7+q2VfIlA95wO1+/vmbUlYytlmw1rUue/yVmjm10u+a65xN
- MDGlaWmsU8TwAQAaqGs2OxXB78XydJju8aEXaCGCKm4XUWvjXVkqyhHX1VgiFwyM2qwBVqut2
- lsSeRex6K2UmKPULzPgrgYLCOqKmrboqUx2iKsD2PC9PqXPeSOId7JBDxOLmysM1fQUzMJmQa
- hmfBI1glKYL3pZACZwlvQfof5DYSZ9cn33Yw5QEJQHkdmqImzWBZhyw/0hjotXrrN3r0ry2fQ
- 30knuFeR7ThSV9gVcsupWpi/lBJ3mBiPQqthd4hZg0/MU6jFMCGPuNF3sD70CE/WbanbyN2T1
- 1AFxD1vZHs9zxBo1MzBP4pNEruKJjmEXIf++JNCXPgW1yacCM1U/ieBPhKPx94K2sWBU4+Uiu
- 7yCw4nlcIJpSR/YZittXBdGsiz2l86j9gjBdn1uo8u6iM5UVVd/RR5maBWns6AirGjNFdwNTU
- Hpqin4jgo7ISkT1/AIF39ORxG8LzzhZXUFeKk2jLTa0hL9adFTMfeSPzWEnIwiMyD3wgbUWuI
- saeViJhPm41Nx7ertd9Z8IkvC1np20ft9sFigaWj6dQvNJNKD+NJLHZLuV/JJ47KZF3GFkkmp
- Q4o6eRGndUVvO3OB6ueDAoXYr8+sygdVXz9pamgKstTjoFwBQdY3cDQy/gYf2pypDEr+d2Ckc
- o2l1yi/aPy9ozmmTid1LiMJcP23eJw4oGdljiHOhXM08kaFsqxjg48YyBY/p8rxQk++TSYnEA
- 99HgGGY/2eJAOhk2amUofvVs2i5R+IiLLqoiJohSOfbvS0l44txIM+ZFL63Oz/bVBD2MKkoUx
- /9MsBQyexdr2YxIXdIm8gNJ5zmhK1F6241kgN2usIWbpd11WXz/62kggF89wvmMrQ8foen1lq
- EjQkMN0Q7S7yPaGaJRgBZtf6HvmNynQs3kIj5c9wpZabBWNmv0U+KlycKc6/u0INEWYWy5Uss
- 9P+0GSLinw3IeZHSZ74Kr3sUJCa07qzoH5O+zvKdZpIEgvCzXi+bhkryV1+GJcH/q1rU4fpMW
- xLMJOIE9fVLpNUsVpklUw8T+oQjTsZfcXWj5Fz/F8za040XK8sqQLezziLBLXMfFlCRF85hpz
- XL7v
+From: tessolveupstream@gmail.com
+In-Reply-To: <169f7c2b-51cb-468d-a492-3b880ef1bd2e@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
-	R_DKIM_ALLOW(-0.20)[oldschoolsolutions.biz:s=s1-ionos];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-92261-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-92262-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	FROM_NEQ_ENVFROM(0.00)[tessolveupstream@gmail.com,linux-arm-msm@vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DMARC_NA(0.00)[oldschoolsolutions.biz: no valid DMARC record];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	TO_DN_SOME(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[vger.kernel.org,hotmail.com];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[jens.glathe@oldschoolsolutions.biz,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[oldschoolsolutions.biz:+];
+	FROM_NO_DN(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCPT_COUNT_SEVEN(0.00)[10];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[asus.com:url,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,oldschoolsolutions.biz:mid,oldschoolsolutions.biz:dkim]
-X-Rspamd-Queue-Id: 6182C10EF38
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 257AB10EE0B
 X-Rspamd-Action: no action
 
-Hi Konrad,
-
-On 2/9/26 09:55, Konrad Dybcio wrote:
-
-> On 2/8/26 10:25 PM, Jens Glathe via B4 Relay wrote:
->> [1]: https://www.asus.chhdakhdkom/de/laptops/for-home/vivobook/asus-viv=
-obook-s-15-s5507/techspec/
-> I'm not super sure about this TLD..
-
-Thanks for spotting, the right link is=20
-https://www.asus.com/de/laptops/for-home/vivobook/asus-vivobook-s-15-s5507=
-/techspec/=20
 
 
-Will be fixed in V2.
+On 28-01-2026 17:29, Konrad Dybcio wrote:
+> On 1/14/26 11:00 AM, Sudarshan Shetty wrote:
+>> Add the device tree for the QCS615-based Talos EVK platform. The
+>> platform is composed of a System-on-Module following the SMARC
+>> standard, and a Carrier Board.
+>>
+>> The Carrier Board supports several display configurations, HDMI and
+>> LVDS. Both configurations use the same base hardware, with the display
+>> selection controlled by a DIP switch.
+>>
+>> Use a DTBO file, talos-evk-lvds-auo,g133han01.dtso, which defines an
+>> overlay that disables HDMI and adds LVDS. The DTs file talos-evk
+>> can describe the HDMI display configurations.
+>>
+>> The initial device tree includes support for:
+>> - CPU and memory
+>> - UART
+>> - GPIOs
+>> - Regulators
+>> - PMIC
+>> - Early console
+>> - AT24MAC602 EEPROM
+>> - MCP2515 SPI to CAN
+>> - ADV7535 DSI-to-HDMI bridge
+>> - DisplayPort interface
+>> - SN65DSI84ZXHR DSI-to-LVDS bridge
+>> - Wi-Fi/BT
+>>
+>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+>> Signed-off-by: Sudarshan Shetty <tessolveupstream@gmail.com>
+>> ---
+> 
+> [...]
+> 
+>> +	wifi_reg_en_pins_state: wifi-reg-en-pins-state {
+>> +		pins = "gpio91";
+>> +		function = "gpio";
+>> +		drive-strength = <8>;
+>> +		output-high;
+>> +		bias-pull-up;
+>> +	};
+>> +
+>> +	wlan_en_state: wlan-en-state {
+>> +		pins = "gpio84";
+>> +		function = "gpio";
+>> +		drive-strength = <16>;
+>> +		bias-pull-down;
+>> +		output-low;
+>> +	};
+> 
+> The output-low/high properties should be unnecessary since the
+> drivers that requests the connected GPIOs control their state
+> 
+> otherwise, I think it's time to finally close in on this..
+> 
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>
 
-with best regards
-
-Jens
+Sure, will take care in the next patch.
+Thank you.
+ 
+> Konrad
 
 
