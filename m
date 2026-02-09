@@ -1,62 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-92313-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92314-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4D8/N4npiWmdDwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92313-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Feb 2026 15:04:57 +0100
+	id ucBQNdfqiWn1EAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92314-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Feb 2026 15:10:31 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 80272110066
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Feb 2026 15:04:57 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7460211019B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Feb 2026 15:10:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 052C0301227B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Feb 2026 14:03:26 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 714143018C35
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Feb 2026 14:10:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2164237755F;
-	Mon,  9 Feb 2026 14:03:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B79037997E;
+	Mon,  9 Feb 2026 14:10:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RuTJLbZX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dObRy6nP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F291C1BC2A;
-	Mon,  9 Feb 2026 14:03:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B223446C7;
+	Mon,  9 Feb 2026 14:10:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770645805; cv=none; b=OfQH73D+ptB0JFHTKBY2aE17xl6SQEYHk6b2G9bzvXKThT1K3coirr0cfGg+5hG02ow7mFUX3Ke/43afZvfMsV5BycJ74kzYtPHaPapg+mFvtuFaVROcz5dzwvZxWMcj2dwl4JqGtabsZ1mMM83JAoMG8kneu+PU3YydNO9fd18=
+	t=1770646229; cv=none; b=DA9oUlizywee4v9qSsj2nR/yvlz16KpDQ1uf2es2ozNq1lHBUfKaGi8Ir0fXTTKKTkuTmJk8y5QjJYbWkAPD4vjIzhpl6hUY5t4K9emv9nYnnrvoIgUjrDxrKWqbQ6DHWKM7yxGIhbLRSogiZsJXyqmCdzodDsHvAPl/nS4Iu8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770645805; c=relaxed/simple;
-	bh=cRa04hZCg0b8G9i0a+uRcUNpAa7gqU7eUDpMxVYri5Q=;
+	s=arc-20240116; t=1770646229; c=relaxed/simple;
+	bh=7sbwMdBPr5gGnzsAQAIIVH8IG/ORAL8YSQ7vWl4bZiE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KF1BsKflzQebvxHB0oO+twM6R11pWQZNfriZDUc0ObuOt2xpkF2o/7SkfpYjaw+6/0vJLD1kYWuhLr8IqweHwEbFkhNcLP/UCM5hmwz7E6ZCXehKWm1YsH838pLM7FBiqF1xkUwoTt0QLfmTWQX+GiZvqF5A5AaKvXNeA58UJvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RuTJLbZX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5BF0C116C6;
-	Mon,  9 Feb 2026 14:03:23 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=dD/CImM/xZ/kf2QaC6su2mTzKo+ePcdlGtsT2P9CUSnHe91Y7BQCmtf8G5egEbY4shFTmcgzD9IugZhOQQ11o6HP9xCb1tjabc+98UgtgfIc2rlIX/JRzD1aBA86mrsCyaq3jBMvRBeq6Vdfd48pgMO6HIb210Pr9TC54cjbXjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dObRy6nP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9800C116C6;
+	Mon,  9 Feb 2026 14:10:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770645804;
-	bh=cRa04hZCg0b8G9i0a+uRcUNpAa7gqU7eUDpMxVYri5Q=;
+	s=k20201202; t=1770646228;
+	bh=7sbwMdBPr5gGnzsAQAIIVH8IG/ORAL8YSQ7vWl4bZiE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=RuTJLbZXjaTipKnJmJKWtpEOegZeAX8ziIP56Dci7ZHwmCZWKVnxH/FUgyWnxj6C5
-	 1Hv0AyXDTZSRU2/Gmg4+AnfXMCL6mqtDF2DksRz/FkgN67Wh8GllyRUFRbYylIXADA
-	 himGAWf+EvcP0aEQtSc7MEj3a3PDCnskUeVHI0DiNeplO8LJzo+vtRHHYWroE7o6vd
-	 5FJp7oioYqLLrC8HEnXNRHAh/pG6ypu5JaKbYkx6tn+ybIofWW+lcD+rAOLbsKu8Bw
-	 wy5xDysQdIsH+Woi/edKhipLRNJ3FqxNWxKgl1EFPAFsoWXv/q1ifwpEI/c4L36e6h
-	 rqEHLYneIk49A==
-Date: Mon, 9 Feb 2026 15:03:21 +0100
+	b=dObRy6nPI+CtosubXE58YN/s45lr5BorMn0sMD+bFZ4DNLMXnrKHwOyyM1OugeRz9
+	 kF4dFNRUWnNCUEHgi/IiyYjZxh7jekJI44v/JetlvZEGv0lB1d+khoBekfMwcoAwTq
+	 snGvKg4zg8hm3NKXfamLDSlWPKMxd8kRaNwFfF3LHqgO6qVVnlVUTXjNRU7sw6es1u
+	 8yb0h40+LcSJKCslHRfaS67o7Bl1eFzRePlyEeOSArCmqH6o3xd4ZOCc7sy4iQotex
+	 pjETgY+5TrTLb++gVKRRJ7xgaG2xHd8S7lSFKj4DWcQl0T6QThvphzxcLERedHonta
+	 Ze8MVntpnHGYA==
+Date: Mon, 9 Feb 2026 15:10:25 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>
-Cc: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v3 1/2] dt-bindings: interconnect: document the RPMh
- Network-On-Chip interconnect in Mahua SoC
-Message-ID: <20260209-auspicious-righteous-fossa-403cf1@quoll>
-References: <20260209-mahua_icc-v3-0-c65f3dfd72c8@oss.qualcomm.com>
- <20260209-mahua_icc-v3-1-c65f3dfd72c8@oss.qualcomm.com>
+To: Wangao Wang <wangao.wang@oss.qualcomm.com>
+Cc: Bryan O'Donoghue <bod@kernel.org>, 
+	Vikash Garodia <vikash.garodia@oss.qualcomm.com>, Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>, 
+	Abhinav Kumar <abhinav.kumar@linux.dev>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/5] dt-bindings: media: qcom,sm8550-iris: Add X1P42100
+ compatible
+Message-ID: <20260209-bulky-optimal-puffin-04c1f7@quoll>
+References: <20260209-enable_iris_on_purwa-v1-0-537c410f604f@oss.qualcomm.com>
+ <20260209-enable_iris_on_purwa-v1-1-537c410f604f@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,58 +67,95 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260209-mahua_icc-v3-1-c65f3dfd72c8@oss.qualcomm.com>
+In-Reply-To: <20260209-enable_iris_on_purwa-v1-1-537c410f604f@oss.qualcomm.com>
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-92313-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-92314-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MISSING_XM_UA(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: 80272110066
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 7460211019B
 X-Rspamd-Action: no action
 
-On Mon, Feb 09, 2026 at 09:44:28AM +0000, Raviteja Laggyshetty wrote:
-> Document the RPMh Network-on-Chip (NoC) interconnect for the Qualcomm
-> Mahua platform.
-> 
-> Mahua is a derivative of the Glymur SoC. Many interconnect nodes are
-> identical and continue to use Glymur fallback compatibles. Mahua
-> introduces SoC-specific configurations and topologies for several
-> NoC blocks, including CNOC, HSCNOC, PCIe West ANoC/Slave NoCs.
-> This updates the existing Glymur yaml schema to include Mahua-specific
-> compatible strings, using two-cell "fallback" compatibles wherever
-> the hardware is identical with Glymur.
-> 
-> Co-developed-by: Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>
-> Signed-off-by: Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>
-> Acked-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> Signed-off-by: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>
-> ---
->  .../bindings/interconnect/qcom,glymur-rpmh.yaml    | 136 +++++++++++++++++----
->  1 file changed, 111 insertions(+), 25 deletions(-)
+On Mon, Feb 09, 2026 at 03:39:03PM +0800, Wangao Wang wrote:
+> Document the new compatible "qcom,x1p42100-iris", which uses a different
+> set of clocks and OPP configuration compared to SM8550 and X1E80100.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+And the device is or is not compatible?
+
+> 
+> Signed-off-by: Wangao Wang <wangao.wang@oss.qualcomm.com>
+> ---
+>  .../bindings/media/qcom,sm8550-iris.yaml           | 23 +++++++++++++++++++++-
+>  1 file changed, 22 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
+> index 9c4b760508b50251ac467ad44a366689260bfc0d..0400ca1bff05dcef6b742c3fbf77e38adca9f280 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
+> @@ -26,6 +26,7 @@ properties:
+>            - qcom,qcs8300-iris
+>            - qcom,sm8550-iris
+>            - qcom,sm8650-iris
+> +          - qcom,x1p42100-iris
+
+And what about resets? Why do you take only one reset?
+
+So the device is not compatible? Then should not be in this binding but
+separate file.
+
+Commit msg should explain this. OPP configuration is not even relevant
+in terms of choices of DTS/bindings/drivers...
+
+>  
+>    reg:
+>      maxItems: 1
+> @@ -41,13 +42,16 @@ properties:
+>        - const: mmcx
+>  
+>    clocks:
+> -    maxItems: 3
+> +    minItems: 3
+> +    maxItems: 4
+>  
+>    clock-names:
+> +    minItems: 3
+>      items:
+>        - const: iface
+>        - const: core
+>        - const: vcodec0_core
+> +      - const: vcodec0_bse
+
+What is bse? Maybe it is bus? See SM8750.
+
+
+>  
+>    firmware-name:
+>      maxItems: 1
+> @@ -115,6 +119,23 @@ allOf:
+>            maxItems: 1
+>          reset-names:
 
 Best regards,
 Krzysztof
