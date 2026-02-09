@@ -1,134 +1,199 @@
-Return-Path: <linux-arm-msm+bounces-92275-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92276-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id oKcyKxzZiWlUCQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92275-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Feb 2026 13:54:52 +0100
+	id oDIOFe7UiWmBCAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92276-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Feb 2026 13:37:02 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F7B610F376
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Feb 2026 13:54:52 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A255310EBDB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Feb 2026 13:37:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 871C3301CFC4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Feb 2026 11:35:29 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 016A33016ED7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Feb 2026 11:36:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5BD30371072;
-	Mon,  9 Feb 2026 11:35:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3000F371049;
+	Mon,  9 Feb 2026 11:36:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Iyc4b7cj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TxtuOdAe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 382B237105B
-	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Feb 2026 11:35:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A10D736605C
+	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Feb 2026 11:36:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770636927; cv=none; b=TfsM06cbbIqP0JwhW0LgoXjw5/YFIWOzB0eO3RObDR+sQYIz4uTjXymCW1rryfywlLO3nAp9gf0DnpH5eh6AtvJNxsEw57KxlWE/N291wCWzQmWd2J4jZFzFM0nSHGEtM2oPdztmB9ghSBMb/fBdlBBjG079JmKJDrS7/uUtp9I=
+	t=1770637006; cv=none; b=IQNKhbfbz9yaBzKHnWXHXWITMZ9zOeA9J4Ky3jtaAB5payKc+qBPTq/QNuO2CxhvG6kbeKCGChGA8oofdlBoBtAq68zW+rUGZWxBwviW5i9UosM2NYEmUh+Yo8qp9ioWKHNjymS8xuzNqi/WSrqIGPpFVCiq0b7XPFabXDePqoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770636927; c=relaxed/simple;
-	bh=52ZnTTwCU6ma5VGHBGZTKykJyZwNc2akaww0BZAxEwM=;
-	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lITSMpiNOJ9NGsanugxejS6oXv0Gafq+XPPPcu+vcD3ofnFv5+m4w2XPvPtOWAT6SnO8iqJ2m+LyG8pcxqVZoUC8IwJY0LC0wYSM+aYxmCvsOttJPXD7I7iFoAWwD+S6L/P5xlUnMbh4gDwI/W/D/gsz/SGXP2edqt67OGqay+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Iyc4b7cj; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC194C4AF0B
-	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Feb 2026 11:35:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770636927;
-	bh=52ZnTTwCU6ma5VGHBGZTKykJyZwNc2akaww0BZAxEwM=;
-	h=From:In-Reply-To:References:Date:Subject:To:Cc:From;
-	b=Iyc4b7cjpQ0xc4d7KPFC1NzS/nadMYwOxPiqGwgFY5ZjEV/N7+qU4l0bx+ymaAlJ+
-	 isupo1FIVNnO9bmHKI/D+XPoWoZA4jN56DzvvfmLIhsH1ft/8/IkW1y18S3JFYKAos
-	 lcefWhjtG11Jknz3WkR+EvKsEFdmoQKfeIiRFRMAoBqW0xFzV3/xa2jh0uhRhnWGog
-	 wz5ghjTJ2ntRxraSWO0t2fVZMyfu7m9DvAicwZCax7QEuQ8I4N6DrABm8HzUB8U5hZ
-	 4VajzJ1oq44L229V34kF1dlkAVropxNynu+VUJdbwORvn8CWKw+CAJQFLJUrXakOiz
-	 YE5+9U1ddP+Zw==
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-382fd45a1feso43095161fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Feb 2026 03:35:26 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCXyxQzsFAQERsTJfCwXNAYywSq+01isJoafOhw/qHCAlS/NsT8Ya6HteSKTMPsKf/I+OrzLEHz+Qduau0Ao@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzus0kkQnFateoVEixRd6tOfOFvJSiYJ2QkC6/k7n5G49uHf3NW
-	UMAvos7p9AusK1mZKfwpRs0ru3aF0EH+2RcT/2zI9CqC5N5EadIb8IenpV2vOciCFff1L1DuGqQ
-	GRK3UsbIfljWUk2W6fDJPbyddPDUc1AAfrOEiL06RWQ==
-X-Received: by 2002:a05:651c:548:b0:385:f202:a787 with SMTP id
- 38308e7fff4ca-386b5547738mr43444311fa.9.1770636925624; Mon, 09 Feb 2026
- 03:35:25 -0800 (PST)
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 9 Feb 2026 05:35:23 -0600
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 9 Feb 2026 05:35:23 -0600
-From: Bartosz Golaszewski <brgl@kernel.org>
-In-Reply-To: <7cb9a945-651c-426d-8cc7-1ec1174ac68b@kernel.org>
+	s=arc-20240116; t=1770637006; c=relaxed/simple;
+	bh=jS7w+mNi1x5aaB/vd4zifJyI6GuShvVgleKcUeSY9pk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VvIcC5o+Oar9HaZUM4Srhxtpv65P8uwMyq/B/EDvWgwHY/1kC2HwxvtIhXF/MtczoN3dfrl2E1zrdzBEZ7eF16pGeQ3wv3rrCjcqZg6TqZtbMN/BWt3KPb/I718Jth8kG8K5kqSzIK8Gz0P+K8hi/6aud1SKKANfK01Ua7lLl7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TxtuOdAe; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-47ee76e8656so66613985e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Feb 2026 03:36:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1770637004; x=1771241804; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=NM/PrFFohoVLcHQpdOFnX+o8+tO8YjeAGLU0+RPGLOQ=;
+        b=TxtuOdAe3p4EqPQcfn+rzj5rWrSQ4ndy7HbdP7MscwsW6LhvZqOi5y/22SoGRNIjpu
+         Y/u+gbUYGd4jSwGI8vKvUylhirFYH5dHME2HkXolgs82rg18mhuFrnC2e+Iop5eMj7RW
+         zxZfqUOz+3v+n5E1kO43I2HtiGmW3TKQn0zFZytVVY8jtJurqsY+hGrQrWPySZ7QZHVM
+         Rj4/ohTuJO55z4xpI253G06W5zFgIO0TnPglNEXe3xInAKDjm9QOxp7cUF+T4ZFc3HtD
+         PVhFcEPoaNZxhkpTJU8BWIuett1g+SThfpVOWepmO7GMzGpTL2zn08IBPEQsfhfSndwO
+         payw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770637004; x=1771241804;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NM/PrFFohoVLcHQpdOFnX+o8+tO8YjeAGLU0+RPGLOQ=;
+        b=SupmytCcCxMW/7OLQwqQMoBMDo4teXcEYJe/Y5viF/4pz8ex3z14TbHyrl3WZaxMow
+         a8GZEJ21uJbpruzrXq4b/gxgSi6GM/9AMSbMKn4d2o10f/qTwa/Ryoq4NACxvod73WDn
+         WOEL6s6VcN7igs1K3C0kd7voKhjL1EnzKJD44Sm8CRI/c24MhMA0D514n5X5HrLbdMyv
+         KpTX4DoKdb7h8qJbZX/rRLhQaTfD5GQrd8rv970qgaqHOyfy6JiQ8MM6idS8k9EZcIHq
+         kpTR3GPh1jZ9Rj5sXvLy3igd59cbbMG/L0TpCfD61/Y9AcVt7prV75UMOp1Ve+mzs2TV
+         LhSg==
+X-Forwarded-Encrypted: i=1; AJvYcCUD7zbu+ke/33/dDjVoSMByryHuakc+cTkZYDQN+yoXJ/d8sjxKEdvE/VxjYpbbcRqbfaDbpeU1h4Ugaa1g@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzl4jSIMNm/DyrCTivTRJ2LYFXMwB0lfkV2Pei1Gre5tYbvTInB
+	CHkUOEIGUL2MB/RoZADD7F6rAluuGmKHGT3XPxzMHimPKq4gSEJI2FU6Z/LYk74N2/I=
+X-Gm-Gg: AZuq6aLQBovbOh4FZTcUrnRsiFS0pvgfNPKTa+zKXI5HisD/AZS+OHBz2b2mt4FV01u
+	qNyhPYm/TfSDIC3tu6MQ3fKFTI599CmkVx2mbJDqs9v4LYi614pXfp2x+/8HAgwB8T2QSEjLVsZ
+	73yBnvc9Y3PorVnk3gPLai5u1UDDHv8psQt5OduuXD/Q6d0r9s1qBibRtdlae/mBDvQeejxWkp5
+	oJ8FzIyj/oLbED1qJToAJWZQGtUw0eIv+jgz1eD8EtIGpPA6uPFb7Qg0O8iGVfbDPP+61HyTn4C
+	lNmMlGUXmpjpg62+2TK7LTwHBIHtVQiPmmDZeqaJr5xHUYQIURQT5MVQCU1PnfFhDYxL+MifGA/
+	+kAU6eNIpIjGhw1ba0+RypzrLaTyyO3PplNaiFLqS4p6aRb+4kIrrg3rpZFqtmI1jUy/2wy/eqa
+	ui2LHr482THoxSdVZWzANsi3FX1BaBvuaGe9Aip0JiOMovuQydUoNW
+X-Received: by 2002:a05:600c:5290:b0:477:6d96:b3e5 with SMTP id 5b1f17b1804b1-4832020023cmr157204555e9.7.1770637003950;
+        Mon, 09 Feb 2026 03:36:43 -0800 (PST)
+Received: from [192.168.0.40] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4362972fb16sm26165273f8f.25.2026.02.09.03.36.42
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 Feb 2026 03:36:43 -0800 (PST)
+Message-ID: <146ea20e-0779-4ec7-a8c0-09ebd06456d1@linaro.org>
+Date: Mon, 9 Feb 2026 11:36:40 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260209080613.217578-1-vivek.sahu@oss.qualcomm.com>
- <20260209080613.217578-2-vivek.sahu@oss.qualcomm.com> <7cb9a945-651c-426d-8cc7-1ec1174ac68b@kernel.org>
-Date: Mon, 9 Feb 2026 05:35:23 -0600
-X-Gmail-Original-Message-ID: <CAMRc=Md=f_fpfZ6i2PKOvhtgVs_H_XL9u_uRsjF1OfryR-0aVQ@mail.gmail.com>
-X-Gm-Features: AZwV_Qg5yf4vIpdAfGn9f7D0Ri5TRZ26eMgjRzKm34rnqwn3a6graqhIH0vI0Nk
-Message-ID: <CAMRc=Md=f_fpfZ6i2PKOvhtgVs_H_XL9u_uRsjF1OfryR-0aVQ@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] dt-bindings: net: bluetooth: qualcomm: add
- bindings for QCC2072
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: quic_mohamull@quicinc.com, quic_hbandi@quicinc.com, 
-	linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Vivek Sahu <vivek.sahu@oss.qualcomm.com>, Marcel Holtmann <marcel@holtmann.org>, 
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bartosz Golaszewski <brgl@kernel.org>, Balakrishna Godavarthi <quic_bgodavar@quicinc.com>, 
-	Rocky Liao <quic_rjliao@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] media: iris: Enable Gen2 HFI on SC7280
+To: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20260209-iris_sc7280_gen2_support-v1-0-390000a4fa39@oss.qualcomm.com>
+ <20260209-iris_sc7280_gen2_support-v1-2-390000a4fa39@oss.qualcomm.com>
+ <0da582a6-5bba-4450-99ec-cf57b67915e6@oss.qualcomm.com>
+ <b6DhOj6aTnv6v2gw9cFy_PHc3yc5J4zM6RoKnTuTlr38CpZ9KI3-knSJnQKiPVTEOb6ZM_Zlt-xMycztV591_g==@protonmail.internalid>
+ <0a324898-092b-3e44-c35c-15de20b50f40@oss.qualcomm.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Content-Language: en-US
+In-Reply-To: <0a324898-092b-3e44-c35c-15de20b50f40@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-92275-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[16];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_CC(0.00)[quicinc.com,vger.kernel.org,oss.qualcomm.com,holtmann.org,gmail.com,kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email];
-	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[linaro.org:+];
+	TAGGED_FROM(0.00)[bounces-92276-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 6F7B610F376
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCVD_COUNT_FIVE(0.00)[5];
+	RCPT_COUNT_SEVEN(0.00)[8];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,linaro.org:mid,linaro.org:dkim]
+X-Rspamd-Queue-Id: A255310EBDB
 X-Rspamd-Action: no action
 
-On Mon, 9 Feb 2026 09:07:58 +0100, Krzysztof Kozlowski <krzk@kernel.org> said:
-> On 09/02/2026 09:06, Vivek Sahu wrote:
->> QCC2072 is a WiFi/BT connectivity chip.
->> It requires different firmware, so document it as a new compat string.
+On 09/02/2026 11:34, Dikshita Agarwal wrote:
+> 
+> 
+> On 2/9/2026 3:32 PM, Konrad Dybcio wrote:
+>> On 2/9/26 10:45 AM, Dikshita Agarwal wrote:
+>>> SC7280 supports both Gen1 and Gen2 HFI firmware. The driver continues to
+>>> use Gen1 by default, but boards that intend to use Gen2 firmware can
+>>> opt‑in by specifying a Gen2 image through the Device Tree
+>>> 'firmware-name' property.
+>>>
+>>> Based on this property and the availability of the referenced
+>>> firmware binary, the driver selects the appropriate HFI generation and
+>>> updates its platform data accordingly. Boards that do not
+>>> specify a Gen2 firmware, or where the firmware is not present,
+>>> automatically fall back to Gen1.
+>>>
+>>> Signed-off-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+>>> ---
 >>
->> Correct the sorting of other chipsets for better readability.
+>> [...]
 >>
->> Signed-off-by: Vivek Sahu <vivek.sahu@oss.qualcomm.com>
->> ---
->>  .../devicetree/bindings/net/bluetooth/qualcomm-bluetooth.yaml  | 3 ++-
->
-> There is no such file.
->
+>>> +int iris_update_platform_data(struct iris_core *core)
+>>> +{
+>>> +	const char *fwname = NULL;
+>>> +	const struct firmware *fw;
+>>> +	int ret;
+>>> +
+>>> +	if (of_device_is_compatible(core->dev->of_node, "qcom,sc7280-venus")) {
+>>> +		ret = of_property_read_string_index(core->dev->of_node, "firmware-name", 0,
+>>> +					    &fwname);
+>>> +		if (ret)
+>>> +			return 0;
+>>> +
+>>> +		if (strstr(fwname, "gen2")) {
+>>> +			ret = request_firmware(&fw, fwname, core->dev);
+>>> +			if (ret) {
+>>> +				dev_err(core->dev, "Specified firmware is not present\n");
+>>> +				return ret;
+>>
+>> This is fragile - if someone names names their gen1 firmware something like
+>> "myproduct_gen2_vidfw.mbn", it's going to match..
+>>
+>> Could we instead do something like the explicit format checks in
+>> venus/hfi_msgs.c : sys_get_prop_image_version(), based on the **contents**
+>> of the binary?
+>>
+> 
+> I agree that checking for "gen2" as a substring in the firmware name is not
+> reliable. Unfortunately, we cannot
+> usevenus/hfi_msgs.c:sys_get_prop_image_version() (or any Gen1 HFI query) to
+> probe the contents of the binary here, because Gen1 vs Gen2 have
+> incompatible HFI protocols—probing a Gen2 image with Gen1 HFI (or
+> vice‑versa) isn’t viable in this path.
+> 
+> To avoid accidental matches, I can switch to an exact filename match
+> instead. That way, only the specific Gen2 image (for example
+> "qcom/vpu/vpu20_p1_gen2.mbn") will trigger the Gen2 path, and boards that
+> want to use Gen2 can opt in by naming the firmware accordingly.
 
-Ah, -ETOOFAST, I'm retracting by R-b. Thanks Krzysztof for catching it.
+Exact match would be reasonable, IMO.
 
-Bartosz
+---
+bod
 
