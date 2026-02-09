@@ -1,161 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-92361-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92362-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id QJ9yIbtTimkVJgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92361-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Feb 2026 22:38:03 +0100
+	id UO1jGHxoimkHKAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92362-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 00:06:36 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id F3D1D114D8F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Feb 2026 22:38:02 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id EBDCA11551A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 00:06:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9BF783004F77
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Feb 2026 21:38:01 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 88BA0302BE10
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Feb 2026 23:06:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7D9530ACE3;
-	Mon,  9 Feb 2026 21:38:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40076326D4A;
+	Mon,  9 Feb 2026 23:06:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R2/CxZyE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ujaqc37d"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F8526ED48;
-	Mon,  9 Feb 2026 21:38:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770673080; cv=none; b=caIojxXY2QUt5CjQOoEsp/3r9bX8fsW2IwTb6fMi7coaqUnGnU5PcJmi9ofA9M3wMtTP8coPlXhhWK5JOSu9jjxEPuhO8l3M5n04nlBO1mxohEUvfd307dTnW24IuMcbU3jKvPKjbU274ldeHErhu6sx8R6sQrI2N5T+K4Nc6NI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770673080; c=relaxed/simple;
-	bh=V5k7yronzuPg2/sQDnDLiZPJmoREh3DS6In0CZNegm4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=piIlRZXY6Mfu2eSviplCwfkkE1eyLvZlHb5WAAdiz5D8cEWL6R4c9WEq10XxKgE96lg++MZbd9bJ2PKqg/3XTGAxxu51oSsLX4DHYgBfH0wLngNYTNL1fjs4EN4VXK7e+pwYhEBMg30ozZkxS+eVUOdA4c0f86TSIaNIJCZ/cws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R2/CxZyE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A991C116C6;
-	Mon,  9 Feb 2026 21:37:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770673080;
-	bh=V5k7yronzuPg2/sQDnDLiZPJmoREh3DS6In0CZNegm4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=R2/CxZyE7D7NuC7727GzKNmG8L0gFdn827lwUEFhrk1GcDYwfKzMWilh9KCwLySN2
-	 tDMTyIgjKpNBsz+CrnFUB8QrkqCqmuexDnRgYALsArlPL7MYxDDAkqQGMRry/iQQEz
-	 tXkZ9aLz2eqJBLP0lhFLwX/6MjqEStYuaBxUaPzS36VebR2KunZkZR9O1OXhOtXp8N
-	 y7WKLM3eEtcCOQ9wRj+umXbC0jg6B9FNMdR1WBBVMG3pafl6iUuxvb1YkCeBuik/q3
-	 twvcXwcELPoyngclQnEGLBF2iDgahBFNYk+KVc3S2d7b59tHFINf47IiCuGxldwxT1
-	 EqvORhp9jn0CQ==
-Date: Mon, 9 Feb 2026 15:37:54 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Cc: Andy Shevchenko <andriy.shevchenko@intel.com>, 
-	Baolin Wang <baolin.wang@linux.alibaba.com>, linux-renesas-soc@vger.kernel.org, 
-	Alexandre Torgue <alexandre.torgue@foss.st.com>, Andy Shevchenko <andy@kernel.org>, 
-	Antonio Borneo <antonio.borneo@foss.st.com>, Arnd Bergmann <arnd@arndb.de>, Boqun Feng <boqun.feng@gmail.com>, 
-	Chen-Yu Tsai <wens@kernel.org>, Chunyan Zhang <zhang.lyra@gmail.com>, 
-	Danilo Krummrich <dakr@kernel.org>, David Lechner <dlechner@baylibre.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Ingo Molnar <mingo@redhat.com>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Jonathan Cameron <jic23@kernel.org>, 
-	Jonathan Corbet <corbet@lwn.net>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Lee Jones <lee@kernel.org>, Linus Walleij <linusw@kernel.org>, 
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, linux-iio@vger.kernel.org, linux-omap@vger.kernel.org, 
-	linux-remoteproc@vger.kernel.org, linux-spi@vger.kernel.org, 
-	linux-stm32@st-md-mailman.stormreply.com, linux-sunxi@lists.linux.dev, Mark Brown <broonie@kernel.org>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Nuno =?utf-8?B?U8Oh?= <nuno.sa@analog.com>, 
-	Orson Zhai <orsonzhai@gmail.com>, Peter Zijlstra <peterz@infradead.org>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>, Samuel Holland <samuel@sholland.org>, 
-	Shuah Khan <skhan@linuxfoundation.org>, Srinivas Kandagatla <srini@kernel.org>, 
-	Thomas Gleixner <tglx@kernel.org>, Waiman Long <longman@redhat.com>, 
-	Wilken Gottwalt <wilken.gottwalt@posteo.net>, Will Deacon <will@kernel.org>
-Subject: Re: [RFC PATCH 0/4] hwspinlock: refactor headers into public
- provider/consumer pair
-Message-ID: <epechyewxhlkp2dgw7yxmz5duak3illbmjpeux5jgt2ewskc3j@cre3vpa5wnhy>
-References: <20260125184654.17843-6-wsa+renesas@sang-engineering.com>
- <aXc7DxsqiCGdfzxi@smile.fi.intel.com>
- <aXc-Zxw05XQLb1Dy@ninjato>
- <aXdAB2bLTy6u8G8c@smile.fi.intel.com>
- <aXdCBu6kzdw1NWay@ninjato>
- <aXikZ5wc6bvgRqF6@ninjato>
- <aYnBrN0JRCf9-UjB@ninjato>
- <yl4bbbev7lgrmnqys2izkolo5egzg24faukvqar5eh26q5ra7p@42rcegfpqqt6>
- <aYo60vooftdem4Lt@ninjato>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C5493254B1
+	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Feb 2026 23:06:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770678365; cv=pass; b=ZNY+e0cb7Q20MCd3ccp4Mz9+cFy4rhm8dhMVSPwZEV97xM2IfwGw9ANCMznvJHtCjOqdqQ9BIfLq6YI/wFIApd0QlU5fpD7StkIgf4mGJu6AK/c/t6Bu2RmVRUqlQkYOPW1tOUOyaR0yhgsmd2Rl3aZ0a/I9irCOc4H+hV+BDRk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770678365; c=relaxed/simple;
+	bh=3CMr7co1DRh/RKzmgL+sf0SpJ+u3D9obkDjv8ZFp6L8=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=PGZPi5hfrWWqcrGwOsXeFLFNFUMPsYkQF3If1MpMIjvxiUGiuXGpUBIzcu/KLc+kEYWIzfnCNzDu1SQRvI0pcpucfyGzfo5sibhiAOi33MrxnKuW9T4KkxVR1sw/j7jUj43/L3rcwJux/AQng8RwOPzrzxNtfEfrheEkbbwmojc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ujaqc37d; arc=pass smtp.client-ip=209.85.161.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-662fc35291eso139994eaf.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Feb 2026 15:06:02 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770678362; cv=none;
+        d=google.com; s=arc-20240605;
+        b=fK4F4CxYl1tACjR4jj4GP5dkkI7R1mjQegfVHr4KLTdyPZWhtC8y5pecwM6aB9rt6E
+         j0iG8m1k7cQlMVb2MeE+7NXbn2XkYeGkxaggDOMHj9Cxyv95qqDd2FBZGCAdKZSU9bMH
+         02iRySXk6GYxvddPkQ6zAkjd5V+kdQYXp+mhmDcgnivIEz/sDn2aRVHDvaTF0DV//CW+
+         baUVVUmkGV6ky5otVCcQUrLqTcJk8KHnlp52RlSzz0aBuFP2ydLIvYAr2gqt5b0MqvrH
+         gMvyXJU2sWbIRxVXiQzKhpHkmNS3d/Lh/F06k9kuI3pp18h6XD9HnsjHToD5U3Sp7RDn
+         PvbQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+        bh=3CMr7co1DRh/RKzmgL+sf0SpJ+u3D9obkDjv8ZFp6L8=;
+        fh=U1megDDNLiH6PThvUZkBGWNxwMT2sPK3cP1Zk3sjKuU=;
+        b=d69V2prwP1z/NEi1GPfvRT7vPElD8MmRZwj3iWw/NOaLHlUV3mXjd+y6XD1G9kQMoe
+         tv1zwmwPxran/m6YWGjGD48CxUSZZWKbrcUO+VA/aLu9k/ed+lSXorEUBDwyqCcfcSXz
+         5w3MHGjNWValN6D/DLTsdhzeQLAfBEQ9Fx/1C+Tf4jNfBK9Uvklkr8cJDtF51EU7cqAd
+         bzI8ve4Ho5lcHfbQXREYBCcenldiJPvLBUowezouJ/CsOpDRWgDat4j6kP2zbVLv3uap
+         McNeiXBjgMLLQhLgA8LuzVX21/Sc+E4ruHsyXsjr5nMPn0Ay631KqkNopWT+Q5B1DCxm
+         y9sg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770678362; x=1771283162; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=3CMr7co1DRh/RKzmgL+sf0SpJ+u3D9obkDjv8ZFp6L8=;
+        b=Ujaqc37dnQl2R5Yqj26hFvHbjrkkVtvv3gWCjC5Ecr1+WZO3N7g4EBLvZOP54cVaY6
+         6x62DGnZb6lzyxmjWD5HXAEoTSCqmxUR5oQgQ3gSJ4wp+EF1bVoAvPyYYAx6zMwz1ixz
+         FVbDiYe4M7VG0vFRbcS2WNe3kIAit/yPe6ANQZPeoUl8kIwt4IduA+Ag+HKUk+uWMHjs
+         krKywhijR4qDlElkHf1/eTVzbJsb6wvpQ7p1T8Meb943tOCUUQYmzNd8dl6vWhvluWRH
+         tHWbMnSeQvIcZ7Bi3NUTVxF3F0tuyULOROVqr138baNClehGQeHbS1OWvu1RfityBPdu
+         LHEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770678362; x=1771283162;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3CMr7co1DRh/RKzmgL+sf0SpJ+u3D9obkDjv8ZFp6L8=;
+        b=p/wHZrDT7xj75P4HytggRepv0Rh2XAYZJ1Q57mAV14lJkBLANmTOQRQw9kYL0UkDik
+         MvBm10U2Bc7XXaI4MVwzaf0Wy+4ruVFrzqJ5Qftfrv2mFWGf327pcq7HvCfTWZldHP46
+         htzO43ugCEZ8Ejm4gKFxgTe4a//Di/N6k9OWCFNF7GsfmE6NFxGMRseFyppfrnzqhoob
+         7WRWt9D9XWhSPfxi+ORrkV30R01moGPF9BOvTRnPF5P6FdMH9voMa6yZJbSLFwPiBdgN
+         rt+SOx2QhndDqgDeRBfZf/XURYvjRaUWeHT4l7GPiHXiw7Pr6xFgeMZqeqAKwRsQvNW4
+         a7AA==
+X-Forwarded-Encrypted: i=1; AJvYcCXBfvwz8wiW0h1UKOPaZAzuhW6gX1eRX9MZGmkVt29OufuRSg5EcGSbNVGBY9M7XWAI9LaQlcWFkGjwdFxf@vger.kernel.org
+X-Gm-Message-State: AOJu0YwVrevp+x63q+urj6/WpjNYTqF5vqKVZi6Xkmo/thHN46oQTtPC
+	PpmgqAA8wvpGQnHfRWxedsy6drU/F+fEJYZaV7sXgzD8aBlFT3bN6mnU1tFKOb4ZRlAvQ+Jrkur
+	cKgQGGYY0X4DIJjkXBnCjpSHQTxd9LSE=
+X-Gm-Gg: AZuq6aISKKK8lEOgjS2/WVVCGdF9ybCQsdxd8SBwDvlQn8bwuMV73T8WYRKifqMN8bE
+	7j6IJ/LAHQHG6QqZlFKa9GdFNrzkRlQzBX9i1axP9/bZfHU6Bzs7xyTqEHbKVAIZonklbh/W4SO
+	J5CIKhvEg80ONIP3D8Yf9uWYKgGoqeFPfXBSz1JwifTg0unxjQozCNemYbr8zsG5ggsPIpwtdt/
+	5PnKHcGFqkocwMA2v5p2HZomB3LL/wBB8k0BaGLsain1nFeDjiCmwx/2JD3t3qwTDhrInRz5Otm
+	XcBLWjAKcdtqHP93rXaCdEFtO2s=
+X-Received: by 2002:a05:6820:1514:b0:65f:6994:314b with SMTP id
+ 006d021491bc7-66d0d2fa708mr4985297eaf.76.1770678361869; Mon, 09 Feb 2026
+ 15:06:01 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aYo60vooftdem4Lt@ninjato>
+From: Yoann Lecuyer <yoann.lecuyer@gmail.com>
+Date: Tue, 10 Feb 2026 00:05:49 +0100
+X-Gm-Features: AZwV_QjCJogYNxSx58S_93uDe6N0OJjkbPA74xddnic2w5pObERjuWLWGj2ZiXo
+Message-ID: <CAPZXbJmpAZfxFK9LKaS=wZXX+pez9j5k3gjF+CRPgP6Ru4DuRA@mail.gmail.com>
+Subject: Re: [PATCH v2] remoteproc: qcom_wcnss: Fix handling the lack of PD
+ regulators in v3
+To: val@packett.cool
+Cc: andersson@kernel.org, barnabas.czeman@mainlining.org, 
+	devicetree@vger.kernel.org, dmitry.baryshkov@oss.qualcomm.com, 
+	justinstitt@google.com, konrad.dybcio@oss.qualcomm.com, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-remoteproc@vger.kernel.org, linux@mainlining.org, llvm@lists.linux.dev, 
+	Luca Weiss <luca@lucaweiss.eu>, mathieu.poirier@linaro.org, matti.lehtimaki@gmail.com, 
+	morbo@google.com, Nathan Chancellor <nathan@kernel.org>, 
+	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, phone-devel@vger.kernel.org, 
+	vladimir.lypak@gmail.com, ~postmarketos/upstreaming@lists.sr.ht
+Content-Type: text/plain; charset="UTF-8"
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
+X-Spamd-Result: default: False [0.34 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	FAKE_REPLY(1.00)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-92361-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[21];
 	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[44];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-92362-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	DKIM_TRACE(0.00)[gmail.com:+];
 	TO_DN_SOME(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[intel.com,linux.alibaba.com,vger.kernel.org,foss.st.com,kernel.org,arndb.de,gmail.com,baylibre.com,linuxfoundation.org,redhat.com,lwn.net,lists.infradead.org,st-md-mailman.stormreply.com,lists.linux.dev,analog.com,infradead.org,sholland.org,posteo.net];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[yoannlecuyer@gmail.com,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[kernel.org,mainlining.org,vger.kernel.org,oss.qualcomm.com,google.com,lists.linux.dev,lucaweiss.eu,linaro.org,gmail.com,lists.sr.ht];
+	TAGGED_RCPT(0.00)[linux-arm-msm,lkml];
 	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: F3D1D114D8F
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,mail.gmail.com:mid]
+X-Rspamd-Queue-Id: EBDCA11551A
 X-Rspamd-Action: no action
 
-On Mon, Feb 09, 2026 at 08:51:46PM +0100, Wolfram Sang wrote:
-> Hi Bjorn,
-> 
-> thanks for the reply!
-> 
-> > > Moving maintainers from CC to To ;) Do you, in general, approve this
-> > > change to the headers?
-> > 
-> > Certainly, I don't think we should force unnatural slicing of drivers
-> > across the source tree.
-> 
-> Cool, glad you like it.
-> 
-> > I've always found the current model unergonomic, resolving this part
-> > might very well have the side effect that Andy is looking for (and I'd
-> > welcome that).
-> 
-> Yeah probably, but frankly the task of redesigning hwlock-allocation is
-> a bit exceeding my bandwidth for this project. Can we make this a second
-> step on top of this series?
+> The changes introduced to handle single power domain platforms have
+> swapped the info pointer increment from num_pd_vregs to num_pds, which
+> would shift the info pointer past the end of the array for pronto-v3,
+> which does not list power domain regulators in vregs.
+>
+> This showed up as a difference between GCC- and LLVM-compiled kernels
+> on SDM632 devices, where only with LLVM one would get the
+> "regulator request with no identifier" error, because the out-of-bounds
+> memory ended up being zeroed. Fix by skipping the increment when there
+> are more power domains than regulators.
+>
+> Signed-off-by: Val Packett <val@packett.cool>
 
-I'm okay with that. It's winter and the yak might need its fur.
+Tested-by: Yoann Lecuyer <yoann.lecuyer@gmail.com>
 
-> And if so, would be this series acceptable
-> as-is then (modulo the better include-sorting mentioned by Andy)?
-> 
-
-Sounds good, I'll pick up your v2 once we get out of the merge window
-and share a immutable branch for the other subsystems.
-
-> Hope you are well,
-> 
-
-Likewise,
-Bjorn
-
->    Wolfram
-> 
+Yoann
 
