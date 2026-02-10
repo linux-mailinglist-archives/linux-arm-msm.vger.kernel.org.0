@@ -1,368 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-92409-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92410-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aIVQF+vMimndNwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92409-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 07:15:07 +0100
+	id CHypNkDOimkUOAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92410-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 07:20:48 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id A2E7F11750A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 07:15:06 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 106B211754A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 07:20:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9AC5B300A765
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 06:15:04 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 6BBBD3008455
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 06:20:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 051CD32B9AE;
-	Tue, 10 Feb 2026 06:15:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AAEF2D193F;
+	Tue, 10 Feb 2026 06:20:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bA0kx4VB"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VG40HT/Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f68.google.com (mail-dl1-f68.google.com [74.125.82.68])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655EC32B983;
-	Tue, 10 Feb 2026 06:15:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7322E7164
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Feb 2026 06:20:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770704103; cv=none; b=QN/eDknWoYrrh8etWgNsDB4xjVilAZPM0PDr/9/2/0CN5uLpX8og/Gp6N3fRG69cINaXsfXqUQK9LkEH/3c/XSpEL6OW3plcbjg0MhpQGJ23/dZB7Y6Ly+YeNPcDyst1Emy2FPZ8tkaFzkk9RZeDsCPUSbBppxkAoAkEFlQOLGY=
+	t=1770704444; cv=none; b=h49lR4ADGEej6czldFYkaGac9Z796hurs9wZvuP8nmJInmErXUGpT9C5ZIgclyNtoZemUrmUbWbWJzetoPPBP9NE4I6pw2VukiN/aBHX05UL/bPOrYgTY+V7/JicwOCYR2DCNZtGsTGjBAwo/dzFFfjHYNDbS7Z8Xp0GDgi0oXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770704103; c=relaxed/simple;
-	bh=cX3G6q3zRwBTX6CaCzC0f872taJV7Egp8MXV9kgRDxw=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=NNGByQEWhLfq8KYKaS0HVVCyqJJkQLnSGkoXrBuVJXrIjna9bI0TkVIsYeyqNH1/qHs1HF4kXvRf6BYI1EYDLRp43Vp5tZJ7c1ftxzAR23AIJ12opEWpWYoeuHSy8Q9wC94+T7NB/t3mjNI23vN1L+essQtJaOlGajbFWDqBrHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bA0kx4VB; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 61A53i5Y801095;
-	Tue, 10 Feb 2026 06:14:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=01+gzjkAVfY+zxJPrcftUM
-	6fYNSdr/4DZKjfqOgyfjM=; b=bA0kx4VBV/rhvNqotAiKQu/AKgAwY74xpqqUOj
-	Vhp5lWMkQW6JliIAC4xGxQyS8POffpc96mMabSrXrFVzPhsWkuKEBvFqssCYKyuw
-	IFy2d9IHXazCvJY0RD7fZbp3ElGGjv2R+tCwp+Jah0X4Nt2viDK1RdPllblIDNym
-	y6kyY4Xf8jOOQmpBUsjo5sip0OjTb1ebQB5kw+T8gerqESe8CmleVP5zvPv/H/76
-	ncjVn9I3/VErZqo8gZIsGjYE+pJyCumZUoKo06vE0jssPrH3hSXwLqA1G1N5lmVZ
-	f4rgk+xoq82W0mQ4pEwXesqtbepKAX5Heqmagz5V9QRUiMsg==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c7x6u06d4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 10 Feb 2026 06:14:56 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 61A6EtLi007840
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 10 Feb 2026 06:14:55 GMT
-Received: from hu-utiwari-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17; Mon, 9 Feb 2026 22:14:51 -0800
-From: <quic_utiwari@quicinc.com>
-To: <konrad.dybcio@oss.qualcomm.com>, <herbert@gondor.apana.org.au>,
-        <thara.gopinath@gmail.com>, <davem@davemloft.net>
-CC: <linux-crypto@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_neersoni@quicinc.com>,
-        <quic_kuldsing@quicinc.com>
-Subject: [PATCH v6] crypto: qce - Add runtime PM and interconnect bandwidth scaling support
-Date: Tue, 10 Feb 2026 11:44:37 +0530
-Message-ID: <20260210061437.2293654-1-quic_utiwari@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1770704444; c=relaxed/simple;
+	bh=SEYG66B8ZtLuXgv2nsuhGS6fllKN1d8ENv7O1dAcJEI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EzL4qGUjqrbb+pXr5ZCG+Sx/L4NHVd7+W0nX6t3pwAlbMnOShsrad7ejs1FE/k1CUtLS86lEHBAOzq3Vm6fJawbDBMfghw853PIdizcHukMaoYGJZH72Azu0Xzi385ETh8X/QkqVJGDmxbtqno++mKDSzERh3n/ScHU/8KfL4wM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VG40HT/Y; arc=none smtp.client-ip=74.125.82.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-dl1-f68.google.com with SMTP id a92af1059eb24-1270adc5121so554182c88.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Feb 2026 22:20:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770704442; x=1771309242; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=AgWuwLpuwK0cTRarzf0Yohoxjvezc1aQian77BUVRlU=;
+        b=VG40HT/Yo1xVlgykPCpuUNQAlmLtgOtlXBKB7lm53NlxtZ5B1aHn2wkMlZeg8+j+Od
+         KcSNK+XfPXbv3wiCtz4cLFaCWstozCP9mesd413mVV5icmozgLBHbS29oFNQA5uTnkbw
+         Mlw5I8r4cKDxfqrTGAMYM4/cWMwhA7yudYNtd8y7KZm73QaJ5M/i/pEElMTAMo7Bqwwj
+         sAmJCg78yA28Y620ukaiODgphsMPaWy1bIc1VE3RT/ekw7qxjIRQ9c1igEukUZFDZm9w
+         2DDTrtH3nK4SJHUUpZpzpnpckBAR5GUq16ElEffRIB/WsSaA+TqYzy5Y5wOcNyXTKlnE
+         yDEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770704442; x=1771309242;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=AgWuwLpuwK0cTRarzf0Yohoxjvezc1aQian77BUVRlU=;
+        b=ns67rc/tHYB2ijukmF6Fajb+baduwmNspyxks92Xrn5qxQzZvysCoypBC+atQZZ6qC
+         yAr8ICVLd2tdfOVjcaWeL94vUEc7WTSN55+pPp/z/z2UijB28CXLhLWBxFvPHis9yuYR
+         Fi/n//s9wBPlEb4BubUi0BDixeSrDO+kCE+Q+n44u/+oiE6mMvurq3po39PxxH7NHdP/
+         gaRJec5aKjL0Hw0vywck6DsQpkC27qdE2A5k2jBg5LY8sk0jUQqRQxqnOl4lDc6bBYmP
+         ezRVFmFw7Q3HmUr2kT1y/cWDS4NCb+UHhcyGGzItnfMFyyR345jxcj2uitoBDw8a6uhT
+         z6gQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUq1vWxkxslopEaKJ7pkp23tGmS6FNvA/uIQQlO8LF6I5MxJ1TwlBdDuOQeVMHtJJlAQl8A1Fq2JGL4vNhK@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx8HlD1f+EkrGfIbDdTdPK5ALEZojhQqAscFMoBra8AewQS5AnV
+	RabKn0iBbPStRUf7NoPLOlEMRPQC/e7YOaGGFCLFN6XpOMOiofpHdjY/
+X-Gm-Gg: AZuq6aL5LKqjzwOUQjEMA2EYiEOrABzwfNr/I96wpP+W4OqSd3IOJHJIbYygnHAuQh2
+	bVHy/2jDiNgmx7eLVaA/sy+VY/kvKDlL5FaA85wN3ylr0UoSvHOPL2Xt69OHkd2Gv61UljBlVZY
+	6pRz4htcPPWj5KaHRgVQFEJ9pG6BdkOeYqU0g7muBC0AVUT+gNb4xw8fZsp4D39FDBQmPOCZOeP
+	PS7KGHv7ephIkA+hp/MU1wpHmjUNLUXDeacDDdCNgDvCNhfP6JLYnOYrnL+hOG/+m7sAEwSQisU
+	D/nl3Kmr9Qw49SRMpJllqqJkE8vDHtKUWkykvP0BX11axkFQXH3yMRLrFh1cvFqm+oL36Xtdv8U
+	yhHo2dxd28P+2trFW9sOAcOO7lLfEiWWhGAbVTBWvbFJYWjSfTETYhp4HcPDl7IvfO8uhD1Uats
+	uCgVvMymkHPIxySTDAM1aL+rqo23ipVYcMgKwfw4hLUoOGqVuVnWLa9HTrJKOXbmvE
+X-Received: by 2002:a05:7022:2523:b0:119:e56b:98c1 with SMTP id a92af1059eb24-1270405d980mr5709422c88.40.1770704442142;
+        Mon, 09 Feb 2026 22:20:42 -0800 (PST)
+Received: from google.com ([2a00:79e0:2ebe:8:616e:78a2:cc03:4be3])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2ba89ae14c9sm887685eec.29.2026.02.09.22.20.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Feb 2026 22:20:41 -0800 (PST)
+Date: Mon, 9 Feb 2026 22:20:37 -0800
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
+Cc: Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Vinod Koul <vkoul@kernel.org>, Courtney Cavin <courtney.cavin@sonymobile.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, linux-pm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-input@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] dt-bindings: input: qcom,pm8941-pwrkey: Document
+ PMM8654AU
+Message-ID: <aYrOMvIJdiaGHw9k@google.com>
+References: <20260209-add_pwrkey_and_resin-v2-0-f944d87b9a93@oss.qualcomm.com>
+ <20260209-add_pwrkey_and_resin-v2-2-f944d87b9a93@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: _Iq4mG6d_36xi-4UVPOjvKcaJ8Pn65Mh
-X-Proofpoint-ORIG-GUID: _Iq4mG6d_36xi-4UVPOjvKcaJ8Pn65Mh
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEwMDA1MCBTYWx0ZWRfX0Gu1xERLXh52
- ddP/EmDV2kDrkztA1dgfdzCRgQUCpYRmaNVTNFiPCNZaL6Y+YaxTYctYcT7B8PVNl37PChlkNjt
- jhL3NSp/cfyzWn2WPPDjkI5IXPpX2zz7F+GRMsZDe4SSncLZdupNB0cviGr90ILlk2FRkcHOqlN
- xHJ2MGc348RYQXbtPwnYJDLOJbhaDPbKQEFwzjnv1scKBlJn/7H71BCYgUPaOmDvaNxdYIs35dr
- u/LKIVyGC3L6tabObuVvuMvST9dMkFgYbDQlRgbDrgPRjMSmIWdRpKJGi+wdE0HDskAnzO7u2H6
- 8A2n5y/ETzPMxMADF5UCEZCwQfKr/YaFs3Uf7XgZaoPuvp99gk4lXxOqdm1V4J4/t515tVPQ3aT
- U1M4whEFKDgBm0OTj3JWzGL+dMC5GA70zUvV55/pDCheP3oc/hhG1T3l3qeFduKY+sNkwuQYN8E
- yVRR+/WotOJRNWr2e2Q==
-X-Authority-Analysis: v=2.4 cv=YfmwJgRf c=1 sm=1 tr=0 ts=698acce0 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=VwQbUJbxAAAA:8
- a=COk6AnOGAAAA:8 a=HUPvR95Ouy4MFf8pceUA:9 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-09_01,2026-02-09_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 spamscore=0 priorityscore=1501
- lowpriorityscore=0 phishscore=0 adultscore=0 bulkscore=0 clxscore=1015
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602100050
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260209-add_pwrkey_and_resin-v2-2-f944d87b9a93@oss.qualcomm.com>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.84 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[quicinc.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10];
-	R_DKIM_ALLOW(-0.20)[quicinc.com:s=qcppdkim1];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-92409-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,gondor.apana.org.au,gmail.com,davemloft.net];
 	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[quicinc.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	FROM_NO_DN(0.00)[];
-	TO_DN_NONE(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[quic_utiwari@quicinc.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[9];
+	TAGGED_FROM(0.00)[bounces-92410-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[14];
 	MIME_TRACE(0.00)[0:+];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: A2E7F11750A
+	FREEMAIL_FROM(0.00)[gmail.com];
+	FROM_HAS_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[dmitrytorokhov@gmail.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 106B211754A
 X-Rspamd-Action: no action
 
-From: Udit Tiwari <quic_utiwari@quicinc.com>
+On Mon, Feb 09, 2026 at 06:53:37PM +0530, Rakesh Kota wrote:
+> Add compatible strings for PMM8654AU power key and resin support.
+> These blocks are compatible with PMK8350, so use that as the
+> fallback.
+> 
+> Signed-off-by: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
 
-The Qualcomm Crypto Engine (QCE) driver currently lacks support for
-runtime power management (PM) and interconnect bandwidth control.
-As a result, the hardware remains fully powered and clocks stay
-enabled even when the device is idle. Additionally, static
-interconnect bandwidth votes are held indefinitely, preventing the
-system from reclaiming unused bandwidth.
+Applied, thank you.
 
-Address this by enabling runtime PM and dynamic interconnect
-bandwidth scaling to allow the system to suspend the device when idle
-and scale interconnect usage based on actual demand. Improve overall
-system efficiency by reducing power usage and optimizing interconnect
-resource allocation.
-
-Make the following changes as part of this integration:
-
-- Add support for pm_runtime APIs to manage device power state
-  transitions.
-- Implement runtime_suspend() and runtime_resume() callbacks to gate
-  clocks and vote for interconnect bandwidth only when needed.
-- Replace devm_clk_get_optional_enabled() with devm_pm_clk_create() +
-  pm_clk_add() and let the PM core manage device clocks during runtime
-  PM and system sleep.
-- Register dev_pm_ops with the platform driver to hook into the PM
-  framework.
-
-Tested:
-
-- Verify that ICC votes drop to zero after probe and upon request
-  completion.
-- Confirm that runtime PM usage count increments during active
-  requests and decrements afterward.
-- Observe that the device correctly enters the suspended state when
-  idle.
-
-Signed-off-by: Udit Tiwari <quic_utiwari@quicinc.com>
----
-Changes in v6:
-- Adopt ACQUIRE(pm_runtime_active_try, ...) for scoped runtime PM management
-  in qce_handle_queue(). This removes the need for manual put calls and
-  goto labels in the error paths, as suggested by Konrad.
-
-Changes in v5:
-- Drop Reported-by and Closes tags for kernel test robot W=1 warnings, as
-  the issue was fixed within the same patch series.
-- Fix a minor comment indentation/style issue.
-- Link to v5: https://lore.kernel.org/lkml/20251120062443.2016084-1-quic_utiwari@quicinc.com/
-
-Changes in v4:
-- Annotate runtime PM callbacks with __maybe_unused to silence W=1 warnings.
-- Add Reported-by and Closes tags for kernel test robot warning.
-- Link to v4: https://lore.kernel.org/lkml/20251117062737.3946074-1-quic_utiwari@quicinc.com/
-
-Changes in v3:
-- Switch from manual clock management to PM clock helpers
-  (devm_pm_clk_create() + pm_clk_add()); no direct clk_* enable/disable
-  in runtime callbacks.
-- Replace pm_runtime_get_sync() with pm_runtime_resume_and_get(); remove
-  pm_runtime_put_noidle() on error.
-- Define PM ops using helper macros and reuse runtime callbacks for system
-  sleep via pm_runtime_force_suspend()/pm_runtime_force_resume().
-- Link to v2: https://lore.kernel.org/lkml/20250826110917.3383061-1-quic_utiwari@quicinc.com/
-
-Changes in v2:
-- Extend suspend/resume support to include runtime PM and ICC scaling.
-- Register dev_pm_ops and implement runtime_suspend/resume callbacks.
-- Link to v1: https://lore.kernel.org/lkml/20250606105808.2119280-1-quic_utiwari@quicinc.com/
----
- drivers/crypto/qce/core.c | 98 +++++++++++++++++++++++++++++++++------
- 1 file changed, 83 insertions(+), 15 deletions(-)
-
-diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
-index b966f3365b7d..2e1e4db93682 100644
---- a/drivers/crypto/qce/core.c
-+++ b/drivers/crypto/qce/core.c
-@@ -12,6 +12,9 @@
- #include <linux/module.h>
- #include <linux/mod_devicetable.h>
- #include <linux/platform_device.h>
-+#include <linux/pm.h>
-+#include <linux/pm_runtime.h>
-+#include <linux/pm_clock.h>
- #include <linux/types.h>
- #include <crypto/algapi.h>
- #include <crypto/internal/hash.h>
-@@ -90,6 +93,11 @@ static int qce_handle_queue(struct qce_device *qce,
- 	struct crypto_async_request *async_req, *backlog;
- 	int ret = 0, err;
- 
-+	ACQUIRE(pm_runtime_active_try, pm)(qce->dev);
-+	ret = ACQUIRE_ERR(pm_runtime_active_auto_try, &pm);
-+	if (ret)
-+		return ret;
-+
- 	scoped_guard(mutex, &qce->lock) {
- 		if (req)
- 			ret = crypto_enqueue_request(&qce->queue, req);
-@@ -207,37 +215,47 @@ static int qce_crypto_probe(struct platform_device *pdev)
- 	if (ret < 0)
- 		return ret;
- 
--	qce->core = devm_clk_get_optional_enabled(qce->dev, "core");
--	if (IS_ERR(qce->core))
--		return PTR_ERR(qce->core);
-+	/* PM clock helpers: register device clocks */
-+	ret = devm_pm_clk_create(dev);
-+	if (ret)
-+		return ret;
-+
-+	ret = pm_clk_add(dev, "core");
-+	if (ret)
-+		return ret;
- 
--	qce->iface = devm_clk_get_optional_enabled(qce->dev, "iface");
--	if (IS_ERR(qce->iface))
--		return PTR_ERR(qce->iface);
-+	ret = pm_clk_add(dev, "iface");
-+	if (ret)
-+		return ret;
- 
--	qce->bus = devm_clk_get_optional_enabled(qce->dev, "bus");
--	if (IS_ERR(qce->bus))
--		return PTR_ERR(qce->bus);
-+	ret = pm_clk_add(dev, "bus");
-+	if (ret)
-+		return ret;
- 
--	qce->mem_path = devm_of_icc_get(qce->dev, "memory");
-+	qce->mem_path = devm_of_icc_get(dev, "memory");
- 	if (IS_ERR(qce->mem_path))
- 		return PTR_ERR(qce->mem_path);
- 
--	ret = icc_set_bw(qce->mem_path, QCE_DEFAULT_MEM_BANDWIDTH, QCE_DEFAULT_MEM_BANDWIDTH);
-+	/* Enable runtime PM after clocks and ICC are acquired */
-+	ret = devm_pm_runtime_enable(dev);
- 	if (ret)
- 		return ret;
- 
--	ret = devm_qce_dma_request(qce->dev, &qce->dma);
-+	ret = pm_runtime_resume_and_get(dev);
- 	if (ret)
- 		return ret;
- 
-+	ret = devm_qce_dma_request(qce->dev, &qce->dma);
-+	if (ret)
-+		goto err_pm;
-+
- 	ret = qce_check_version(qce);
- 	if (ret)
--		return ret;
-+		goto err_pm;
- 
- 	ret = devm_mutex_init(qce->dev, &qce->lock);
- 	if (ret)
--		return ret;
-+		goto err_pm;
- 
- 	INIT_WORK(&qce->done_work, qce_req_done_work);
- 	crypto_init_queue(&qce->queue, QCE_QUEUE_LENGTH);
-@@ -245,9 +263,58 @@ static int qce_crypto_probe(struct platform_device *pdev)
- 	qce->async_req_enqueue = qce_async_request_enqueue;
- 	qce->async_req_done = qce_async_request_done;
- 
--	return devm_qce_register_algs(qce);
-+	ret = devm_qce_register_algs(qce);
-+	if (ret)
-+		goto err_pm;
-+
-+	/* Configure autosuspend after successful init */
-+	pm_runtime_set_autosuspend_delay(dev, 100);
-+	pm_runtime_use_autosuspend(dev);
-+	pm_runtime_mark_last_busy(dev);
-+	pm_runtime_put_autosuspend(dev);
-+
-+	return 0;
-+
-+err_pm:
-+	pm_runtime_put(dev);
-+
-+	return ret;
-+}
-+
-+static int __maybe_unused qce_runtime_suspend(struct device *dev)
-+{
-+	struct qce_device *qce = dev_get_drvdata(dev);
-+
-+	icc_disable(qce->mem_path);
-+
-+	return 0;
- }
- 
-+static int __maybe_unused qce_runtime_resume(struct device *dev)
-+{
-+	struct qce_device *qce = dev_get_drvdata(dev);
-+	int ret = 0;
-+
-+	ret = icc_enable(qce->mem_path);
-+	if (ret)
-+		return ret;
-+
-+	ret = icc_set_bw(qce->mem_path, QCE_DEFAULT_MEM_BANDWIDTH, QCE_DEFAULT_MEM_BANDWIDTH);
-+	if (ret)
-+		goto err_icc;
-+
-+	return 0;
-+
-+err_icc:
-+	icc_disable(qce->mem_path);
-+	return ret;
-+}
-+
-+static const struct dev_pm_ops qce_crypto_pm_ops = {
-+	SET_RUNTIME_PM_OPS(qce_runtime_suspend, qce_runtime_resume, NULL)
-+	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend, pm_runtime_force_resume)
-+};
-+
- static const struct of_device_id qce_crypto_of_match[] = {
- 	{ .compatible = "qcom,crypto-v5.1", },
- 	{ .compatible = "qcom,crypto-v5.4", },
-@@ -261,6 +328,7 @@ static struct platform_driver qce_crypto_driver = {
- 	.driver = {
- 		.name = KBUILD_MODNAME,
- 		.of_match_table = qce_crypto_of_match,
-+		.pm = &qce_crypto_pm_ops,
- 	},
- };
- module_platform_driver(qce_crypto_driver);
 -- 
-2.34.1
-
+Dmitry
 
