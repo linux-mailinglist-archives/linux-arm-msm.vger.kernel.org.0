@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-92425-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92426-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id yC4WNFTdimlIOgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92425-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 08:25:08 +0100
+	id IBUeB5reimlIOgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92426-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 08:30:34 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F779117E3C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 08:25:08 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C0D5117F15
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 08:30:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id CDC21302DE06
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 07:25:06 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7B2263019529
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 07:29:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A366332EB0;
-	Tue, 10 Feb 2026 07:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83E07332EB0;
+	Tue, 10 Feb 2026 07:29:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AnmZuF8F"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YyGU1cQv"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 043FB309EFB;
-	Tue, 10 Feb 2026 07:25:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6014133066A;
+	Tue, 10 Feb 2026 07:29:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770708303; cv=none; b=lspWaR+x/eDzzviU0Py2JtJeoTz2w8o3F9+YWHUdIRkD6uIjuJ2xxvdnw0EgRTBOXbl6gpY9/QquGawGB0ra+tMvjwIU+edyehN66hFRCJIBJtWSTdUj+hoMbu7i2RTKShcaguP6FoHzMQ7wMOE3Rom/JYlCcWumh8orJC2E6FY=
+	t=1770708543; cv=none; b=F2k50+srSBfIuGld3QyiUDPwZMpuddi04QO3fPVdchUTItD4nlwO4IQMcMdgaIdptVybpqStMntzgnIqqA0o7ORgQuUYQMqxJq4zvXBp+Ym5OijVbbTRTVB+4nlBipJFVJBVRsFc1sLvSqzn4cCEWRmPKv84M9vqiCZdV+ADMbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770708303; c=relaxed/simple;
-	bh=NKabKm5bxXQzRG3wBqpraJyx74A7XUtBm0rlOFG7iag=;
+	s=arc-20240116; t=1770708543; c=relaxed/simple;
+	bh=ByPtK5KEpX2LdZX9oddoBB6sseTwgfzJrnfd0ExNZ1U=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JCl6Z0IoLv63yXDpaaV56gU5+TNrfdrZ2RhFbJ9cTkek7nMlo1lROR2mVZlNJgtyg/nLRfFXFNYEsJiiunkxeoz/6Z2VmhdYzYudTaJeyot7AqwZmg5wk1ExW4X5s/lRa+h9X3XYuaeVnnsU9N0LOy0LnftBb2UbxvvRnm/LKX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AnmZuF8F; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1485C116C6;
-	Tue, 10 Feb 2026 07:24:59 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=eGuB/k9/45JJZTSxwlG0fAo13C5y9vZyZ17YyaOFpFrgHlkjpmUIQY4uJFcKoH27VluqudBsEOG6CWZxNicMoLKgY5Z+44uGD7F4F1TMbZKj9Cl8guMsEOaFiiiH5RK59vWHXPF69Se0q+J2vyNaxoowy/NPm/gkcW8dVL0bv78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YyGU1cQv; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFD51C116C6;
+	Tue, 10 Feb 2026 07:29:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770708302;
-	bh=NKabKm5bxXQzRG3wBqpraJyx74A7XUtBm0rlOFG7iag=;
+	s=k20201202; t=1770708543;
+	bh=ByPtK5KEpX2LdZX9oddoBB6sseTwgfzJrnfd0ExNZ1U=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=AnmZuF8FPlL7U+DEcpntM54HDphYDNE41OcocmVHVcoS04EA0ntdCrL0u3NTUoeme
-	 zLUMXu3oD/kSPaYg2gb3ptBzvydHBdiicYKoyhSLOv8VteFz+5S5Hr33mW9fKTP5DE
-	 fh3buE72NGRcUgFBal6Izl1AlP7+JqkBqH6KrNlvaRAGpVSos5Kj2UQGP7knfTFaLX
-	 6TvM0s5yCPFpFLFuhL2cj97m71IR7KeNPW1+9hMkmjaaulk8S/kZe5TYnWPIwsaio7
-	 WNz8aKUT18l2g/JYoJle/RqHmNbi3Bm4gpGwvfuWeLXJVHPFNoL+L3q7gCOm22KSa7
-	 q3WOshNWN4MVg==
-Message-ID: <3bed0897-f04a-4d0d-81f5-eea34a0f833b@kernel.org>
-Date: Tue, 10 Feb 2026 08:24:57 +0100
+	b=YyGU1cQvALzFPDmnZyw5MOmEzvZCQwkvqF+FVIiC2LPpFkPbx1xqfwVCS9rnDmf41
+	 dHFk3IjcNIkf49vG76e2B5WrwCbWcwrKQPMuDJQKwkZTrHK8Y8lXUVPImvhKVgpICp
+	 pQ3lvDv0Yc3JkEmEY4kdGPyNR830sP2khMrFbWEdlYrK/2XAqtfbWK/xePApG1IcqH
+	 Yy4pk/1MmdLnjlA4RImRUU6DueMuz/qZjcJVarCPYNv7uZ7CCmNAIEbe+OoXoNi90y
+	 ApmwpvRO5Lga+1KgvqYgWhnGeANZ6p43tWuDYwlv/LGmRDNNRU5aYoTpz+FFWrvTbg
+	 z0BeU0nSeYeFA==
+Message-ID: <d159efb2-6c91-4778-8be8-838e5789fa24@kernel.org>
+Date: Tue, 10 Feb 2026 08:28:58 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,21 +53,14 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/9] dt-bindings: soc: qcom: eud: Restructure to model
- multi-path hardware
-To: Elson Serrao <elson.serrao@oss.qualcomm.com>,
- Rob Herring <robh@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20260126233830.2193816-1-elson.serrao@oss.qualcomm.com>
- <20260126233830.2193816-2-elson.serrao@oss.qualcomm.com>
- <20260206145544.GA207233-robh@kernel.org>
- <cb0693b2-b9fd-4880-86fa-26fd1259f5b1@oss.qualcomm.com>
+Subject: Re: [PATCH v2] arm64: dts: qcom: hamoa-evk: Add DP0/DP1 audio
+ playback support
+To: Le Qi <le.qi@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, kernel@oss.qualcomm.com
+References: <20260210024037.3719191-1-le.qi@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -113,218 +106,49 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <cb0693b2-b9fd-4880-86fa-26fd1259f5b1@oss.qualcomm.com>
+In-Reply-To: <20260210024037.3719191-1-le.qi@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-92425-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-92426-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_PROHIBIT(0.00)[0.0.0.2:email];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.0:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,0.0.0.3:email,0.0.0.1:email]
-X-Rspamd-Queue-Id: 6F779117E3C
+	RCPT_COUNT_SEVEN(0.00)[10];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: 8C0D5117F15
 X-Rspamd-Action: no action
 
-On 10/02/2026 05:32, Elson Serrao wrote:
+On 10/02/2026 03:40, Le Qi wrote:
+> The hamoa-evk DTS currently lacks DAI links for DP0 and DP1, preventing
+> the sound card from exposing these playback paths. Add the missing links
+> to enable audio output on both DP interfaces.
 > 
-> 
-> On 2/6/2026 6:55 AM, Rob Herring wrote:
->> On Mon, Jan 26, 2026 at 03:38:22PM -0800, Elson Serrao wrote:
->>> The Qualcomm Embedded USB Debugger (EUD) can intercept one or two
->>> independent High-Speed UTMI paths, depending on the SoC. Each path is
->>> distinct with its own HS-PHY interface, connector/controller wiring, and
-> 
-> [...]
-> 
->>> +  supported on up to two High-Speed USB ports.
->>>  
->>>  properties:
->>>    compatible:
->>> @@ -29,26 +32,62 @@ properties:
->>>      description: EUD interrupt
->>>      maxItems: 1
->>>  
->>> -  ports:
->>> -    $ref: /schemas/graph.yaml#/properties/ports
->>
->> You are breaking existing users.
->>
-> 
-> Thanks Rob for your feedback.
-> 
-> The original motivation for the structural change was to make the binding
-> encode resources/topology that were implicit before. Specifically the EUD
-> intercept of the UTMI path(s) between the HS-USB PHY and the controller, and
-> the need to represent platforms with two independent UTMI paths. That led me
-> to introduce per-path nodes and a per-path PHY reference.
-
-I do not see how this answers at all the comment, so no, it's still NAK.
-
-> I outlined the constraints and rationale in this earlier thread:
-> 
-> https://lore.kernel.org/all/5cec9127-bdc5-49d7-80e1-2ae26f81163c@oss.qualcomm.com/
-
-And you were supposed to keep things backwards compatible. Are they? Not.
-
-Anyway, the reasoning cannot be somewhere else. Must be here in the commit.
-
-> 
-> 
->>> +  '#address-cells':
->>> +    const: 1
->>> +
->>> +  '#size-cells':
->>> +    const: 0
->>> +
->>> +patternProperties:
->>> +  "^eud-path@[0-1]$":
->>> +    type: object
->>>      description:
->>> -      These ports is to be attached to the endpoint of the DWC3 controller node
->>> -      and type C connector node. The controller has the "usb-role-switch"
->>> -      property.
->>> +      Represents one High-Speed UTMI path that EUD intercepts. This node models
->>> +      the physical data path intercepted by EUD and provides graph endpoints to
->>> +      link the USB controller and the external connector associated with this path.
->>>  
->>>      properties:
->>> -      port@0:
->>> -        $ref: /schemas/graph.yaml#/properties/port
->>> -        description: This port is to be attached to the DWC3 controller.
->>> +      reg:
->>> +        maxItems: 1
->>> +        description: Path number
->>> +
->>> +      phys:
->>> +        maxItems: 1
->>> +        description: High-Speed USB PHY associated with this data path.
->>
->> Doesn't the DWC3 node have a phys property? You don't need it twice 
->> since you can walk the graph.
->>
-> 
-> Yes, the DWC3 node does have a `phys` property. I added a PHY reference under
-> EUD to make the dependency explicit, since the EUD debug module is independent
-> and relies on the HS‑USB PHY for its operation.
-> 
-> If the preferred pattern is to rely on the controller’s `phys` and discover it
-> by walking the graph, I’m happy to drop the duplicate reference. My only
-> concern was whether that makes the dependency effectively implicit—i.e., EUD’s
-> correctness would depend on a resource not directly referenced in its own
-> binding. If my understanding of how this should be expressed in the binding is
-> not correct, please let me know and I’ll adjust v3 accordingly.
-
-Binding is not for drivers, so term "implicit" used before and now is
-not correct. Does the EUD has dedicated different phy? Yes or not?
-
-> 
-> 
-> 
->>> +
->>> +      usb-role-switch:
->>> +        type: boolean
->>> +        description:
->>> +          Set this property if the USB port on this path is role switch capable.
->>> +          In device role, debug mode inserts the EUD hub into the UTMI path. In
->>> +          host role, the EUD hub is bypassed and UTMI traffic flows directly
->>> +          between the PHY and the USB controller.
->>> +
->>> +      ports:
->>> +        $ref: /schemas/graph.yaml#/properties/ports
->>> +        description:
->>> +          These ports are to be attached to the endpoint of the USB controller node
->>> +          and USB connector node.
->>> +
->>> +        properties:
->>> +          port@0:
->>> +            $ref: /schemas/graph.yaml#/properties/port
->>> +            description: This port is to be attached to the USB controller.
->>>  
->>> -      port@1:
->>> -        $ref: /schemas/graph.yaml#/properties/port
->>> -        description: This port is to be attached to the type C connector.
->>> +          port@1:
->>> +            $ref: /schemas/graph.yaml#/properties/port
->>> +            description: This port is to be attached to the USB connector.
->>
->> Both port 0 and 1 are attached to the USB controller?
->>
-> 
-> No—only port@0 is attached to the USB controller; port@1 is attached to the USB
-> connector.
-> 
->> Why can't you just add more port nodes to the existing binding?
->>
-> 
-> Do you mean extending the existing top-level ports like this?
-> 
->   - port@0: USB controller0
->   - port@1: USB connector0
->   - port@2: USB controller1
->   - port@3: USB connector1
-> 
-> My hesitation with a flat ports list is that it doesn’t encode which
-> controller/connector pair belongs to which physical path through EUD.
-
-What do you mean? The index defines exactly which path it is.
-
-> A graph walk starting at Conn0 could also reach USB Ctrl1, even though
-> these are independent paths and not interchangeable.
-> 
-> Below is the high‑level topology of EUD connections. In the disabled state,
-> EUD is transparent and UTMI traffic flows directly from USB2PHY0/1 to USB
-> Ctrl0/1. When EUD is enabled, the debug hub is inserted on the selected path
-> by the internal UTMI switch, so UTMI traffic on that path traverses the hub.
-> The non‑selected path continues as a direct PHY↔Controller link (EUD can be
-> enabled on only one path at a time).
-> 
-> 
-> 
-> 					EUD Block
-> 			   +------------------------------+  
-> 			   |                              |
-> [Conn0]-->[USB2PHY0 ]----->|  -------- Path 0 ------------|--> [ USB Ctrl0 ]
-> 			   |                              |  
-> [Conn1]-->[USB2PHY1 ]----->|  -------- Path 1 ------------|--> [ USB Ctrl1 ]
-> 			   |                              |
-> 			   |      +------------------+    |
-> 			   |      |  EUD Debug Hub   |    |
-> 			   |      +------------------+    |
-> 			   +------------------------------+
-> 
-> 
-> 
-> So to make the connector–controller relationships explicit, I kept the `ports`
-> property under the `eud-path@N` child nodes. Please let me know if there is a
-> preferable way to model this.
-> 
-> Thanks
-> Elson
-> 
+> ---
+> Changelog:
 > 
 
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
 Best regards,
 Krzysztof
