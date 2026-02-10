@@ -1,191 +1,224 @@
-Return-Path: <linux-arm-msm+bounces-92509-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92510-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OKNSHXQvi2lEQgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92509-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 14:15:32 +0100
+	id wORtM8Uvi2lVQwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92510-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 14:16:53 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C348111B260
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 14:15:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B45511B286
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 14:16:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D6491302BA6D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 13:15:29 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 284EB302B3AC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 13:16:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AEFF327798;
-	Tue, 10 Feb 2026 13:15:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AD6E328B7D;
+	Tue, 10 Feb 2026 13:16:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="qp7jvGLT"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="h/R5cJsn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476623C07A
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Feb 2026 13:15:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2F8314B977
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Feb 2026 13:16:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770729329; cv=none; b=iAYFT8LixoLoh0ceFFPjVq6hpU/lkv9nPJsiCq5ik+qs0CDAbQwn2+uacAwjjkPDHWcADyXGsZv6OOQcZTKKR23px+iJuMrISD6Zz3RVG4W1d2zS+mfmvRrlPKH0oheuFrWDUSLVBvoLa6geufCs5dNE9KB37Y3hiyjtFkvApvM=
+	t=1770729381; cv=none; b=r7M7GUk7YAqKEkgw6LR/7amnM4e+mr3EWgS4fQiG3d4f5dwyWXx/cxuG4wlcdQ/WjTbD5BUpXdngndFEj7IKojEiKrJgZ452PMR0Sj/BEtnybs2BI+fFdsf7C1NU7x1jouCbbR4morXwdG47nXCKBoA1/Z3UPivy38ZrM7/zTe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770729329; c=relaxed/simple;
-	bh=F8w4PX3YR2LBUt2iuysbbtlPZH7MbKvPtV4LF1y5x4I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DSWMeIVgdte4qkPLHUYjvUeVJFwXFpRDnaveuGLWAv0GLrDg78ctcS5YQ+u/Z2jB+a6jGAPFnCzjX/O9LNpmsTXNXr4jb5y3v4EB61WhBNzY0xAN+iIEbVyCTPdT/Nl3qsB7pD0ErQPdTDpWzYAKO6u6+ADshNBN0iVkOGplphU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=qp7jvGLT; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2a76b39587aso72495ad.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Feb 2026 05:15:28 -0800 (PST)
+	s=arc-20240116; t=1770729381; c=relaxed/simple;
+	bh=47lTU55/gykUcjRt+xxtWjYlJLvvJMCfBp+RED1uTkU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XTq5lPz/ONutbEGTeEYyDc6ArVqxM37DaKmkr5RTLC6D8cx3qF/d6CywlpTz1gmrScIA/iuUx+vEDuLhgBwYsGg5Nn6XMo4nA4iDu3vX8zhe22HOWb0PjZ1dkKLlTgxs9A91zOvEqcxcRyIfou7vjD/RuZXjdpCvf5uDCgYGmRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=h/R5cJsn; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-47f5c2283b6so7158765e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Feb 2026 05:16:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1770729327; x=1771334127; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=RX56B6Pzw6O0Q1rKBSh+0V8lVIPD4tWbCrOnzMgOsgU=;
-        b=qp7jvGLTTtjU+BZjfB6jiM+B2JRicSoSvG/0iDIDPhU7hHgQMht//23WbmB4ffumiJ
-         S238FO83bbp2hJPvg9wuSIjEvq9AoE+MbrW4RMfM2nUup4+qoGUF7gxGu8rxE48aaR9a
-         JkWy0cc9qvsGGMLGBb97bp6czzML/Nz4zhEKqGm6QQ7cdDo+DQHx4GtI3EUpFU2zak5j
-         +5KUrHdRoT0JuQIsCrEpKPBkyrMe7jM5Im35+6I+JblGUX6PTMBuNp/7e9UbXCmVM2+U
-         S4xMZ3lG7eVFVvPhe0yVtjSLIGJ9YCIek56W+8yWf1gNKiDVoP1G7C2TU+pBfC4FQ6ex
-         Pu9Q==
+        d=linaro.org; s=google; t=1770729378; x=1771334178; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OYSe1+CAiybXtDZ7qn+sljqCDCmOWnnVyECoc1AwnJs=;
+        b=h/R5cJsnrDi94NyDn/J7FIOCfsNM7gozZyxaObjI+6X6rB9sprwsX7pR9y3pGMv0YA
+         woI2CgwbvOFDzBR1swB+bHKpWYNCCNW4C1Hr16Of/A47BheUb9P3UEcd9Bl7pLYG/Trq
+         +fzdixSUZzv8T583rW3eFf4bdw1PXeDjh57Az0TS8Lu5jcVm0aZNauPwfC6C2pCvObKx
+         PBqkJJWnFfAlJ3Zt019Y/9umAIfIJTghqZGrZ/+IPlk8nxN2baChBKUCnWB6Ib0TqK4N
+         bJ90s0aQKX637GvW61zgznta3ae1S7neoNeTKWzZ1X0TlEo0icLZd3rgRazdVnWuEkPK
+         8lcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770729327; x=1771334127;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RX56B6Pzw6O0Q1rKBSh+0V8lVIPD4tWbCrOnzMgOsgU=;
-        b=TmFXcaMUO4G9Qsk3OrZSfYKrav6Y3z1ORNVo5yzMMcZ8Jy8x+jUMtLy8tyD797S93P
-         6PDFJLvxVE192Fjtc9I+Qq+aVs/6CVtZFoq8okPCKAcPV6cV5DrU+9lV+SWNPH22ef90
-         /nAeiPOQ33QuApZ3nBm1s+kcftg9FDYCsPf8Cf5+/4zX8ITgdtBXF+wJVx4QpmIlT2SA
-         rU4Haxxvux5flU/SGjehtsoQ+R8n/rMKYp/XowmZWDo8maoGi+5uSe+iLFgqYyzEJyEU
-         gspltuGY2B/NVQQLfbG5qDL2Jtg9879fs5L5abbOKL3Bw+4S/uCb2To4ZCN/u8ak+bCd
-         9dQg==
-X-Forwarded-Encrypted: i=1; AJvYcCVyqyIpSzzmHwt0ZBMCifFaZ8cRNvyxtksqdcd74Xe4n7DtWos2vbfEsSjcjQgfAbTTw/8dtZzd/aA4MhaZ@vger.kernel.org
-X-Gm-Message-State: AOJu0YxnQHf/teEH3UGUhl7dXNDn2pP6gnkAwAaRj/HGPd8SdXL0DHJ0
-	Sz15Ki9SMIBKRSB6EnkOW0HdejLDL3Rx7iP3mQBG8TrTbD1ZlvaKLZOq8XEqU/wY7A==
-X-Gm-Gg: AZuq6aKQlzWiefCuL5Y6z4hFK/SgQ0YlU/+wpyNJejEIupac5tg9rKdTx93S2rzPc6g
-	OLya4hcij9lw1Sk6SrgwoC+nScwXrlKgdedIrmQdFiI71v5zItMLbZJ8e9JKfMKgrbema5sRfNv
-	VyWPeAEu25T+e+Jq5tA0hNPu+0PV82GrKjG90weqWD5fuoCDDk+C8f79GW3OSqUPdPW4dbJzasw
-	M7KM5/8xz64WHqrLW0OrLmq440ElRhiCTx7Aiv8BQUQ9YTIJRPucdBAaEYK0CG+uSEFm22SGKdk
-	EEBFNs1t3OXOBGW71DtXKoBy/6s8bZjJyp3N7ytPzq0xfMrXobRhDWqTakmhic/KTdA/vLlWElv
-	xC5VSil/uhjDM10bNgnoHMOW/aWJTHw3qQNSOZAxd0s8uXbBe+mysRfpMg0eZyNuXJhshJvElFb
-	ydl+gBdK28KXv2eq6DFprvFQoTNtehOBBEX/UzIgFM8BWuOqhLeOoeaEiaMiAK
-X-Received: by 2002:a17:903:32cf:b0:2a7:d266:d84a with SMTP id d9443c01a7336-2ab10104509mr2092735ad.17.1770729327080;
-        Tue, 10 Feb 2026 05:15:27 -0800 (PST)
-Received: from google.com (222.245.187.35.bc.googleusercontent.com. [35.187.245.222])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-824418dd7a2sm13128886b3a.59.2026.02.10.05.15.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Feb 2026 05:15:26 -0800 (PST)
-Date: Tue, 10 Feb 2026 13:15:21 +0000
-From: Pranjal Shrivastava <praan@google.com>
-To: Prakash Gupta <prakash.gupta@oss.qualcomm.com>
-Cc: Robin Murphy <robin.murphy@arm.com>, Will Deacon <will@kernel.org>,
-	Joerg Roedel <joro@8bytes.org>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Connor Abbott <cwabbott0@gmail.com>, linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	Pratyush Brahma <pratyush.brahma@oss.qualcomm.com>
-Subject: Re: [PATCH] iommu/arm-smmu: Use pm_runtime in fault handlers
-Message-ID: <aYsvacmKoLroXlrZ@google.com>
-References: <20260127-smmu-rpm-v1-1-2ef2f4c85305@oss.qualcomm.com>
- <9fb8f661-a235-4f86-bc10-f80a21a8fa9d@arm.com>
- <00fcbcf2-3f48-410d-88a3-88dc834c1ed7@oss.qualcomm.com>
- <d6bc7f38-b41d-4e89-b484-0e699981b8b4@arm.com>
- <aYEFop8CJiLYzhLw@google.com>
- <7720d215-9f92-4f0f-83af-c992e1cbe531@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1770729378; x=1771334178;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OYSe1+CAiybXtDZ7qn+sljqCDCmOWnnVyECoc1AwnJs=;
+        b=oAVr4EKv/Bk60sbZ5qKwA4O4U88lPdcmrqkNkPFuzVKtSZVWyK+vMwba5tkkR1d/iM
+         eyEsNpvsozcmysQaeY6xrxOvuLLw7uRdmUHK4bKhqB6+TiXyZMBK/Ekxw0gmSnSVUemm
+         Nao9+WyIt+jPsmynnh6IrAHH/Nd1DsvCl1Df3CQXyh8LbfJ5Ed+u5JQ7UYnHinaGU+y9
+         r49BmUdT5bw4ag3f0own6UTvWaZQJQLR8T7SAGYpq/0PWMlfcIoMOqwSnovzahV7t3uD
+         Yme/ipThjuhORvKf45myGAF41JuHpCVnY8aiZZT7yHIY3ybtOonn2PxZuRdVQPGmxfbG
+         LGnA==
+X-Forwarded-Encrypted: i=1; AJvYcCXoG+xnqzBbQp/sovxq7Wz7Un1UMWLFJ9MmcnUnk+2tTWgB90mQxhOqD4lH54P7uiMfXJQzY2OteKwqaQsN@vger.kernel.org
+X-Gm-Message-State: AOJu0YynNf5dE1572R4kYRGuPRKxFo/+RXqNABEAdr/u9lR6L1geFgj7
+	bseVQ41N3X+Mw78oBpy4G/77pzzv2SkCtCkqbWVM+urxEMGYYApXDHmnAmAhbU4jElQ=
+X-Gm-Gg: AZuq6aLPWdjCVb32onh0yI1eTHIgSfhVplg0/5yuO6eLE8lENynMnQ5l2m8GlPbdPYD
+	12vI9AEamLnolD3fNMW9JgSIwLnq22rMZ2cMz/galIRce2ZCUb30uJ8FhZrM3Vv/dSy0A7sBH5q
+	n/XCG2lvmJn1XKpgh+bbyKbQisxv4OY2uEEcbdM3pK1KG6Tik2dj6nNuRsYJ7edXeWmLdAKbYzu
+	DQTbwI8gjrnoiMNENoU4FOqjtMozqF7+lL4e8C+H7GOLnH2uOKFpOn+26bygJMvhsODV2aZpVBh
+	igsLPUiEw2jcZy/ocqd9ymFySgDo63A5uTYx60iKEL4wopVXjoIHI8bi8DAgfyb/8mR89KxFhV5
+	48fm91jbh6u4skS1oQUL6u1QvstJnwYYgyH33CjRMVTf213fMluhEHyOfjTTPprk9UBZ8898wo0
+	MI8l4ImT3q0ZaR9ocKBuxxKuJHpJ0BpiIreHvr3zr388VsfkefuBfthV8VKYzpZvtf
+X-Received: by 2002:a05:600c:3552:b0:480:4a90:1afe with SMTP id 5b1f17b1804b1-48320339137mr232607865e9.34.1770729378123;
+        Tue, 10 Feb 2026 05:16:18 -0800 (PST)
+Received: from [192.168.0.40] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4834d7e64b0sm72637865e9.11.2026.02.10.05.16.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Feb 2026 05:16:17 -0800 (PST)
+Message-ID: <416e2f12-92c1-4e41-bf08-860443710035@linaro.org>
+Date: Tue, 10 Feb 2026 13:16:15 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <7720d215-9f92-4f0f-83af-c992e1cbe531@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 1/7] dt-bindings: media: qcom,sdm670-camss: Remove
+ clock-lanes property
+To: Richard Acayan <mailingradian@gmail.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Tianshu Qiu
+ <tian.shu.qiu@intel.com>, Sakari Ailus <sakari.ailus@linux.intel.com>,
+ linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+Cc: Robert Mader <robert.mader@collabora.com>,
+ David Heidelberg <david@ixit.cz>, phone-devel@vger.kernel.org
+References: <20260210020207.10246-1-mailingradian@gmail.com>
+ <20260210020207.10246-2-mailingradian@gmail.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260210020207.10246-2-mailingradian@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[google.com,reject];
-	R_DKIM_ALLOW(-0.20)[google.com:s=20230601];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-92509-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[arm.com,kernel.org,8bytes.org,oss.qualcomm.com,gmail.com,vger.kernel.org,lists.infradead.org,lists.linux.dev];
+	TAGGED_FROM(0.00)[bounces-92510-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
+	FREEMAIL_TO(0.00)[gmail.com,kernel.org,linaro.org,intel.com,linux.intel.com,vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[18];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[google.com:+];
+	DKIM_TRACE(0.00)[linaro.org:+];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	MISSING_XM_UA(0.00)[];
+	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[praan@google.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_PROHIBIT(0.00)[0.0.0.1:email,0.0.0.2:email];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	TO_DN_SOME(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: C348111B260
+X-Rspamd-Queue-Id: 2B45511B286
 X-Rspamd-Action: no action
 
-On Tue, Feb 10, 2026 at 04:39:56PM +0530, Prakash Gupta wrote:
+On 10/02/2026 02:02, Richard Acayan wrote:
+> The clock-lanes property has no effect on the hardware configuration, as
+> of 336136e197e2 ("media: dt-bindings: media: camss: Remove clock-lane
+> property"). Remove the clock-lanes property.
 > 
+> Suggested-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> Link: https://lore.kernel.org/r/bbf0dcd9-d0f2-49a6-a2f2-6ec9376f2f59@linaro.org
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> ---
+>   .../bindings/media/qcom,sdm670-camss.yaml           | 13 -------------
+>   1 file changed, 13 deletions(-)
 > 
-> On 2/3/2026 1:44 AM, Pranjal Shrivastava wrote:
-> > On Wed, Jan 28, 2026 at 06:44:35PM +0000, Robin Murphy wrote:
-> >> [ +Pranjal as this might matter for v3 too... ]
-> >>
-> > 
-> > Hi Robin,
-> > 
-> > To weigh in from the arm-smmu-v3 side, we’ve attempted to address the
-> > "can of worms" regarding power races by leaning on these differences:
-> > 
-> >  - Threaded IRQs for PRI/Events: In the recent series[1], the PRI and
-> >    event handlers are fully threaded. This allows us to call 
-> >    arm_smmu_rpm_get() safely, as the handler can sleep while waiting for
-> >    the hardware to resume.
-> > 
-> >  - GERROR Handling: Since GERROR remains a hard IRQ, we handle any
-> >    pending gerrors in the suspend callback before the SMMU actually
-> >    powers down. Any GERROR interrupts received while the device was
-> >    suspended are treated as spurious and ignored.
-> > 
-> > Thanks,
-> > Praan
-> 
-> [1] refer to case where SMMU state is not retained during smmu device
-> power down, this I think is equally applicable for both context and
-> global faults.
-> 
-> Since the ARM SMMU runtime resume triggers a device reset, any pending
-> faults would be cleared during resume. Here the solution can be to
-> handle both global and context faults before allowing the SMMU device to
-> suspend.
-> With this approach, any hard or threaded IRQ scheduled after the SMMU
-> device has suspended can be safely ignored.
-> One concern I see is iommu fault reporting to clients while handling
-> fault during smmu device suspend.
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
+> index 35c40fe22376..78b9e03da06b 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
+> @@ -116,15 +116,11 @@ properties:
+>               unevaluatedProperties: false
+>   
+>               properties:
+> -              clock-lanes:
+> -                maxItems: 1
+> -
+>                 data-lanes:
+>                   minItems: 1
+>                   maxItems: 4
+>   
+>               required:
+> -              - clock-lanes
+>                 - data-lanes
+>   
+>         port@1:
+> @@ -139,15 +135,11 @@ properties:
+>               unevaluatedProperties: false
+>   
+>               properties:
+> -              clock-lanes:
+> -                maxItems: 1
+> -
+>                 data-lanes:
+>                   minItems: 1
+>                   maxItems: 4
+>   
+>               required:
+> -              - clock-lanes
+>                 - data-lanes
+>   
+>         port@2:
+> @@ -162,15 +154,11 @@ properties:
+>               unevaluatedProperties: false
+>   
+>               properties:
+> -              clock-lanes:
+> -                maxItems: 1
+> -
+>                 data-lanes:
+>                   minItems: 1
+>                   maxItems: 4
+>   
+>               required:
+> -              - clock-lanes
+>                 - data-lanes
+>   
+>   required:
+> @@ -308,7 +296,6 @@ examples:
+>                       reg = <0>;
+>   
+>                       csiphy_ep0: endpoint {
+> -                        clock-lanes = <7>;
+>                           data-lanes = <0 1 2 3>;
+>                           remote-endpoint = <&front_sensor_ep>;
+>                       };
 
-I believe by the time we've reached suspend it's safe to assume that all
-clients have been suspended. Thus, we could simply not report the error
-and instead scream by having a dev_warn_ratelimited about the situation.
+I think the ask was to have clock-lanes in the board dts rather than 
+dropping the clock-lanes from the yaml.
 
-Thanks,
-Praan
+We want to keep clock-lanes in general as some SoCs support changing the 
+lane assignment.
 
-> 
-> Thanks,
-> Prakash
-> 
-> [1] https://lore.kernel.org/all/20260126151157.3418145-9-praan@google.com/
-> 
+---
+bod
 
