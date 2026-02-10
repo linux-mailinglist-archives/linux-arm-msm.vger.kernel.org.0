@@ -1,174 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-92428-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92429-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id KAX/AIzhimlyOgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92428-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 08:43:08 +0100
+	id qO7MI5LlimndOgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92429-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 09:00:18 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B79DF118034
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 08:43:07 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id F38A7118161
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 09:00:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id A82B83030751
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 07:43:06 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id E56E6302DF5B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 08:00:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E086233556E;
-	Tue, 10 Feb 2026 07:43:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07BAB33C52D;
+	Tue, 10 Feb 2026 08:00:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="roVAtPtB"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cf1vDTs7"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC3F632C926;
-	Tue, 10 Feb 2026 07:43:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D732B33BBBA;
+	Tue, 10 Feb 2026 08:00:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770709383; cv=none; b=idu37XvMF1GNY8kVvV82lwCD7/gLjk1GmWfGIPZfAS2FXaqNWfKUg2l0k/qjIrX8qzZ9pEkiMYNj26opBACNQRh1hLHG7+mDSDko3LE96022Lf00ogXSRyEeWWCXLRxKaTq5UFanYoP5rglcVHIdaOxARrJCu8FBvarkanNi9G0=
+	t=1770710415; cv=none; b=K6Oj3q9VY8LPTXiUUgfxRvvOa0NjOQz25d/Cf3GxgJL5KaeJ0pQqqqoM2RTcPC78xlguntzxxM4ZexOwdAMJjxvlFyRaPptKZ9UDhvObarNEq9CNc/dwnBRvtXBmEdET7JgfEZAZGUCtAQd5vxYPGe0Q7YC5AEpGRXyBkbjKkJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770709383; c=relaxed/simple;
-	bh=SuD40GTxhiLcBBjjT8Usds1jaokLubBZ9+YgUt6zCvQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=rc1gWLoX6zbWBYwMQWS6KjczRnGkbAZbmcteAyKLVbPBmdt/n2VS4fB93kSaFKvqOwxL+naqi6r0aZcBJgEuxroSOJCStyGAo96mBwdtONuJYx6jV8kY1YZeDQG5CXhoZ/NZhmPh9SYYQUP+e/2ZCqI5BGSizJTYBdcMi+25ulo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=roVAtPtB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 542E7C116C6;
-	Tue, 10 Feb 2026 07:43:01 +0000 (UTC)
+	s=arc-20240116; t=1770710415; c=relaxed/simple;
+	bh=vGVI1GPobS6Ck1Wc7xRE4xQgoD9fzTTbpIBQJmAWkN8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tblai39I+SWkYbY8gX88aTez2U8vZ980dwFMKkSN/RuRregPlF31ngc4tvWpmyumGGIdXHoePztXs8jLAWZkbP9TCq6MJ0VeGxOTWUDDW/es1rODQGzivXTMX0f4D8CpTTF0AGUYyYna42ppAiMKcbIn0pcpWIJOf9+5GwSfybY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cf1vDTs7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4140C116C6;
+	Tue, 10 Feb 2026 08:00:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770709383;
-	bh=SuD40GTxhiLcBBjjT8Usds1jaokLubBZ9+YgUt6zCvQ=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=roVAtPtBgy2H/3B6R035WqI9dEHYhdyp4t7CdvjFse+Q4S4gTMDQa/V5Y9kOWqSJy
-	 Drzw/qHnVIdWMVCfnyjy/PoNd/EFXfIdripeoVzAGd1s9Mgbitl0EBss0ml7gt7S25
-	 HUAqz/5jm0z9KKXxyQtLxiyPHqVaaXFLnfUjOh1fIWUCMOuunmmXwsJYb9XQbxf1Yz
-	 UP46d3vbM/gWNrHEAwJTZaVgAFskBXcQCLu6JkPsc0ZRP3spUwles4OvYQkj8tr/JU
-	 Y4DGM8vq21aqXPF7WePZQyY/jAB5SurWnu/njjdYbu4HJRD/zNk/gIidV5lrX4oKwS
-	 7GV7DnB/fJVaA==
-Message-ID: <2b3d9528-56d0-407f-bd3f-e805cfdea5e3@kernel.org>
-Date: Tue, 10 Feb 2026 08:42:59 +0100
+	s=k20201202; t=1770710415;
+	bh=vGVI1GPobS6Ck1Wc7xRE4xQgoD9fzTTbpIBQJmAWkN8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=cf1vDTs7Vt5yAzTw7XCYMmNQVRMZNfbAE5sKfuaS06LYSpGraP0BFz/2Ekl4BUaaS
+	 t8eaACG3ybXmLyuBRT7bpXM5CHChiCP72i31nLi1jIOapgVehyRlOVVIx0kgCsgmIC
+	 eJ2ct79hJYRMzNYVD/reWGeObYu0yTo/r0OyMFwcfT1S+YlJWqRc2xYPknJ3zCNksP
+	 EKXK2DqAiNp43uRvSeaY0njRhWXUiM+/SHJE+cs9m64oBT4YnYlsXOhU0JZeHd1uFf
+	 08KQ4jwCIVKknAPLZ4f97rFp9cK1zF7xZy14rCr/OxQu2W1AuYCZfPpR1SHz0cq0D4
+	 n6wzNl5xqtZDg==
+Date: Tue, 10 Feb 2026 13:30:05 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
+	Magnus Damm <magnus.damm@gmail.com>, Bartosz Golaszewski <brgl@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-usb@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org, linux-pci@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3 4/9] pci: pwrctrl: generic: support for the
+ UPD720201/UPD720202 USB 3.0 xHCI Host Controller
+Message-ID: <qd5egc42mkdofs4ey7gl664e5el2p5sxwluesjtm7gc3y66hez@l4dz3bd5xm6n>
+References: <20260206-topic-sm8650-ayaneo-pocket-s2-base-v3-0-5b79c5d61a03@linaro.org>
+ <20260206-topic-sm8650-ayaneo-pocket-s2-base-v3-4-5b79c5d61a03@linaro.org>
+ <fbxbnou5mdlhaq5dpxr3wdzmjetwdp7auaaqeunc67tgk5ej2m@cnnkr2pcwy77>
+ <a4e55e91-0e03-4e63-8542-d8ad61b38906@linaro.org>
+ <o6e5qygss55p6npjgaicxffsqdpv7kojgidr46zinsvfpxfxug@vn67nq4k6jzk>
+ <b46da4da-93aa-4213-ad75-ec7709008b95@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sdm670: add lpi pinctrl
-To: Richard Acayan <mailingradian@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>, Linus Walleij <linusw@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
- linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20260210021109.11906-1-mailingradian@gmail.com>
- <20260210021109.11906-4-mailingradian@gmail.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20260210021109.11906-4-mailingradian@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <b46da4da-93aa-4213-ad75-ec7709008b95@linaro.org>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	MID_RHS_NOT_FQDN(0.50)[];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-92428-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com,kernel.org,vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-92429-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	FROM_HAS_DN(0.00)[];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	TO_DN_SOME(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,renesas];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[10];
+	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[linuxfoundation.org,kernel.org,glider.be,gmail.com,google.com,vger.kernel.org];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,17d43000:email,62b40000:email]
-X-Rspamd-Queue-Id: B79DF118034
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: F38A7118161
 X-Rspamd-Action: no action
 
-On 10/02/2026 03:11, Richard Acayan wrote:
-> The Snapdragon 670 has a separate TLMM for audio pins. Add the device
-> node for it.
+On Mon, Feb 09, 2026 at 03:59:20PM +0100, Neil Armstrong wrote:
+> On 2/9/26 15:49, Manivannan Sadhasivam wrote:
+> > On Mon, Feb 09, 2026 at 03:00:02PM +0100, Neil Armstrong wrote:
+> > > On 2/9/26 12:30, Manivannan Sadhasivam wrote:
+> > > > On Fri, Feb 06, 2026 at 03:50:32PM +0100, Neil Armstrong wrote:
+> > > > > Enable the generic pwrctrl driver to control the power of the
+> > > > > PCIe UPD720201/UPD720202 USB 3.0 xHCI Host Controller.
+> > > > > 
+> > > > > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> > > > > ---
+> > > > >    drivers/pci/pwrctrl/generic.c | 4 ++++
+> > > > >    1 file changed, 4 insertions(+)
+> > > > > 
+> > > > > diff --git a/drivers/pci/pwrctrl/generic.c b/drivers/pci/pwrctrl/generic.c
+> > > > > index 08e53243cdbd..4a57a631362f 100644
+> > > > > --- a/drivers/pci/pwrctrl/generic.c
+> > > > > +++ b/drivers/pci/pwrctrl/generic.c
+> > > > > @@ -73,6 +73,10 @@ static const struct of_device_id pci_pwrctrl_slot_of_match[] = {
+> > > > >    	{
+> > > > >    		.compatible = "pciclass,0604",
+> > > > >    	},
+> > > > > +	/* Renesas UPD720201/UPD720202 USB 3.0 xHCI Host Controller */
+> > > > > +	{
+> > > > > +		.compatible = "pci1912,0014",
+> > > > 
+> > > > No need to add the compatible to the driver. Just use the existing compatible as
+> > > > fallback in the binding/dts.
+> > > 
+> > > ???
+> > > 
+> > > Sorry but this is insane, in no world a standalone PCIe USB controller could be qualified as
+> > > compatible as a pciclass,0604 slot.
+> > > 
+> > 
+> > AFAIU, 'compatibility' implies that the driver can safely fallback and would
+> > still work. If we add dedicated compatibles for each endpoint devices, then we
+> > will just keep adding forever. Powering up a PCIe slot and an endpoint device
+> > are conceptually same.
 > 
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> ---
->  arch/arm64/boot/dts/qcom/sdm670.dtsi | 74 ++++++++++++++++++++++++++++
->  1 file changed, 74 insertions(+)
+> We're not speaking about driver here, but about compatible string which describes
+> a device, a PCI endpoint and a PCIe slot are 2 very different devices that are
+> nowhere compatible.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-> index b8a8dcbdfbe3..0da3e22ce402 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-> @@ -2273,5 +2273,79 @@ cpufreq_hw: cpufreq@17d43000 {
->  
->  			#freq-domain-cells = <1>;
->  		};
-> +
-> +		lpi_tlmm: pinctrl@62b40000 {
-> +			compatible = "qcom,sdm670-lpass-lpi-pinctrl";
-> +			reg = <0 0x62b40000 0 0x20000>;
-> +			gpio-controller;
-> +			#gpio-cells = <2>;
-> +			gpio-ranges = <&lpi_tlmm 0 0 32>;
-> +			status = "disabled";
+> > 
+> > > Technically it would work just fine, but "compatibility" has a meaning....
+> > > 
+> > 
+> > I view compatibility interms of device operation, not device as a whole. But
+> > sure, I could be wrong. If the DT maintainers say so, I won't insist.
+> 
+> In the actual way it's defined _today_, the "slot" and "endpoint" power up schemes are
+> compatible, but I hope the slot bindings will get much more features to describe the
+> real world slots power properties. And no, endpoints will definitely not have the same
+> features as slots, using it as a fallback today is an error.
+> 
+> On the other side, adding a "simple-pci-endpoint" compatible that enables any supply
+> and clock would be a good solution, if the DT maintainers agrees of course.
+> 
 
-Why is this disabled? We disable blocks needing external resources or
-being busses/connectors. This is not the case.
+We do have a 'pci-host-cam-generic' compatible. So we can also have something
+like 'pci-pwrctrl-generic' IMO.
 
-Best regards,
-Krzysztof
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
