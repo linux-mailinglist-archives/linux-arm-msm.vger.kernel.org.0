@@ -1,388 +1,324 @@
-Return-Path: <linux-arm-msm+bounces-92404-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92405-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id yAiUJ+jBimkeNgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92404-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 06:28:08 +0100
+	id JIUJMZnDimm9NgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92405-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 06:35:21 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 18C65117193
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 06:28:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 110621171E6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 06:35:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 2C9F83002745
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 05:27:42 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 4703B300E727
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 05:35:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22CF332BF35;
-	Tue, 10 Feb 2026 05:27:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC1FF32B990;
+	Tue, 10 Feb 2026 05:35:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HxG9s3w8"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dMjA/6LL";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="GwEjjKLf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F212A26D4F9;
-	Tue, 10 Feb 2026 05:27:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92FC926A088
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Feb 2026 05:35:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770701261; cv=none; b=jcFYjoJ8EXaYgBKd/HT9NDWctAWQuKX6aC2m4Er4/Bkm3677LrdXSKs80dTJwe8e2FYTolH4zh9AMEpf5CrFuPshf4mQfdzDf9/pgZytcPWS6Kr9DMSFTVaVJfitE3z0f4cSgwh3lV2Mm7j+6mKG15vEsUN2o1Y9CwZm/LLK7mQ=
+	t=1770701718; cv=none; b=Bmiuk1TKgjwWLEk/4zWgQrZz1yb7Q3y8cWyHxG2pd7UKJAurc9yTFAWZAzvPgQWojw0svpRWGsRiO1Nd2tc4mV7tC4ZjgcvQJNJfiCNWJdftEaANZXOsTg6zZNCYnQRAkyFQptveFhSA7zS3+v/3riWgpIRbKVsC49gP9PuS7Ik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770701261; c=relaxed/simple;
-	bh=XVU3/kMoWuKGGEpT1kAP/bnKygDs5Z5lBBK9bgHkDjM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CP0hhWoiaeeZFKQyRnHm2nfvveOHtH3LNgEW0MW7HVG3ZAJGRJ1U2FzRA77pRgQ7z3IdNCQgNtQpjhrbRXmK+EYEO/zZFnQKIlaYucna8ovjui1RRQvr29qgAyntkbAl+SBD1GYGIboQAX7A92PpSbITNLJp/6moTOVIHB2d1II=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HxG9s3w8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05830C116C6;
-	Tue, 10 Feb 2026 05:27:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770701260;
-	bh=XVU3/kMoWuKGGEpT1kAP/bnKygDs5Z5lBBK9bgHkDjM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HxG9s3w8nGipibGWNdeb5svnezPm8Tk1ra3ogqzWBYZfffQlGTSXZqfesz3KkwFeO
-	 0NXnEm4W7gei2DoZ0KrEgvFDoHgz5noYDKyHLz2wz606uJR9o5hXa7yHqTED9o0eoH
-	 AmyHnADWsaHTW+5ib/cOUOw2/2He1SHhrHKxg5mk1Uc9c07D1040a7I1S4twspsLEt
-	 om20mD/833gTAqIfu0B4fPBrTBP9Ia3eqWABMvN94EX9PXqwerF85+qSnyD/6E6LKN
-	 YcPNbvC2kpv4WNQmfhTHsn+05kkLbHXEoK3gdsNV4hJxJt7uAzJvSHym19TRaTM3PR
-	 88U5pegs3geug==
-Date: Tue, 10 Feb 2026 10:57:33 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Sumit Garg <sumit.garg@oss.qualcomm.com>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
-	andersson@kernel.org, konradybcio@kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org, Abel Vesa <abel.vesa@oss.qualcomm.com>
-Subject: Re: [PATCH] soc: qcom: ice: Remove platform_driver support and
- expose as a pure library
-Message-ID: <pwnsyudcuocsrsmdualnlrtposioea7tjxbkkprowedocxwx7d@4wojlivpeglv>
-References: <20260203080712.15480-1-manivannan.sadhasivam@oss.qualcomm.com>
- <CAGptzHOfmrHeJWvMxWj_xUTt_Xn-WGX04oc5s7DvjujPUOWQZQ@mail.gmail.com>
- <bznckulswclw6zwaf4r524hxsimz3d2p4rk5lrnvlcgpyxqlru@nenunn2h7fjz>
- <CAGptzHOTi=ysnYS_nXhn-m+hC969LW2tdCnU5P-y5sKaxt6MMg@mail.gmail.com>
+	s=arc-20240116; t=1770701718; c=relaxed/simple;
+	bh=Rq1Ocek2lZZBo5E6c+kKcL2B7KgGYVFXnWgK2OPs2ZQ=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=EhyIpnEbUDB89zyZ2mr0hk3Z0lmqmjGRYD34YZw3oVAy65+YoWdHlaF5jkhOh9OluAJelJEBqpLs+ZlYApKNkqJosgxiWEX943akiKSxzGhGI243xv23jrNMuoE9H50Jv7EsXi2bDB0Vt6qkwCFAyfLoUvd2e/en/CvWqaxzw5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dMjA/6LL; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=GwEjjKLf; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 619M1otm3081419
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Feb 2026 05:35:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	u3ldEW/nEVzh5CZp/5lBKtJ/9ynaM4YNM9Rzd9I+khw=; b=dMjA/6LLvGw80rHE
+	1yCaF0O+iJ0cOGHq1l5e/OEdWhkxf5y/EgJtPXOtulZW3z+zFr89R13naLRWaWS1
+	2yTEhK/Di3EkVDcbIYxth6WLIFiFMudbC3nhoohH2tml4OSvyLG2QCelalRFSFHu
+	bD3eAxaqRQXrk2Yr/JVPNv5a77nVKhS6MHkthbL9F8YIlCvHKhPU/OWu3yzdVSNN
+	yFkSxmrfA5T1XpvZmmx+EgUGUHT4hYVTI/YraAwC945gd5bKSmJ+0s2wHeoOZd0K
+	O9aWAjl8usoLQ9UOklmst2QLg/aYucelzmJOrXYC2WQOvgXCmUc34nF5oMN2Q/E7
+	6GEVCg==
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c7gauat8q-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Feb 2026 05:35:16 +0000 (GMT)
+Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-81f2481ab87so573440b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Feb 2026 21:35:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1770701715; x=1771306515; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=u3ldEW/nEVzh5CZp/5lBKtJ/9ynaM4YNM9Rzd9I+khw=;
+        b=GwEjjKLfUdGkN7pY0AXHKALKiVa2Lhg3MRHNpaIVGleZUnorl/qJwz0rvqvmyJ9M77
+         CEipULd16ph8+NIrwgOFzfGeG4WliY7szw2rOi0q7/Ync40dWYHfFpqn8voiOcUAOivx
+         QCrlp0+RQZn8CO+2WCxKKgoapf582yDlzCtu30GivKOtpGUFJJeKrxOL14jMaADmgFr+
+         39ovfw0l1KTgI8F9RXA2EGZGcG2byVSMBaPy0mOLcAKfjYq4HyMX6prrAhHDeH18IdOo
+         ooIxeYjEt95TSBtajn+MQpzE+YRDv7QWOoYCgoaZEevuTBD/sBqX5fNxH+he0ditrQFI
+         I6Bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770701715; x=1771306515;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:from:user-agent:mime-version:date:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=u3ldEW/nEVzh5CZp/5lBKtJ/9ynaM4YNM9Rzd9I+khw=;
+        b=Krc4wpS2737IHhwqbPzihl9t6yQIN1af/TErb61/5e4Me3zKuyF6gcjTxu5j+1P+v4
+         jRec2i4le+htt8UUTorGBneDh77pQ9VgqYCWNSlfWxqG28v/xiNYp2pldhBJTvSM3Jqm
+         qOc7eEmB+8DxJ8liYX00tU936NhurMywZtOgK93mHkxNUCBoGqm62lTUMvgQEKiRjO/c
+         t7SkB271xI/gvW+y78w7HGuRDQA7VIGnkrzEQThnsK/ASBO4Qj7gM0wEOw8DxO6xIOZq
+         bbgFC2gVZjiL39LHzIMWfHFbbEh7eSd3lsR57h0kBgOukTNp7iubTSj0w/drZJ/SUSqt
+         YbQA==
+X-Forwarded-Encrypted: i=1; AJvYcCXKK0yiFdeRxAhvi6n3cCLoZ2WJRnp7TxfrsqMsFgWfY5RcTCWM6FzdTaaxqpPkkl62tUqYfHYO1cG+MeSp@vger.kernel.org
+X-Gm-Message-State: AOJu0YxJeEZbmWDceUincUHWKt2mQ5gQ6JdjRYesmFKVgqjtZZFUDSJB
+	ddm6rlOKFG4GTwq6zUoYRk23AhBvbLo7zIFWXcTyz/StrwepmusfYk2NLnNam9QWqmwQdYeMUHp
+	HgwNW1mIY4ZdphRkVNrLjfElAl1otrjNaFi24cDhN+irhMKnwFRwODgdRPUZ6fmUK9RA8
+X-Gm-Gg: AZuq6aJNDwmbmUYVzMvyndjhTQ0mFEVy+vS0dK4/zYI8fDVJVURR8JsecoHTRT2xcj6
+	riLJXONArBCOGSYSehjrhGGO+Ht9nSzOlHeSrKM6J1KpXJPSSH4rH0TsjLnggwlEKCN0PWNscY0
+	ZyvR8brfTAwXKzpVJGvfV7FmyAXBjciAMshQQ4BTX1DRaNe1QiB/Iv6ilylATo+MYESOgK+Ev/f
+	DBZLebBHglUxk2XTxFH1w4wFrRvF5QAi3IHt4ffnQMzd7q9xNytjJt2Wz7xME34xI9dldejgMxZ
+	JHBO7wpGQu9mgioLbivkXp36JyK17RtQ6FsvAfOLOzd9AQgTOft36/UFvM9JLFOjfeyqyRtmkcX
+	6TIroPkFI4WmXggkHko6FFdN0ymC0f0vpg4s38O8oMIZbhwQh8+ah2g==
+X-Received: by 2002:a05:6a00:6ca1:b0:81f:40e5:34c2 with SMTP id d2e1a72fcca58-824416f8811mr13006990b3a.32.1770701715485;
+        Mon, 09 Feb 2026 21:35:15 -0800 (PST)
+X-Received: by 2002:a05:6a00:6ca1:b0:81f:40e5:34c2 with SMTP id d2e1a72fcca58-824416f8811mr13006965b3a.32.1770701714976;
+        Mon, 09 Feb 2026 21:35:14 -0800 (PST)
+Received: from [10.0.0.3] ([106.222.232.221])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82441884b80sm12411804b3a.44.2026.02.09.21.35.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 Feb 2026 21:35:14 -0800 (PST)
+Message-ID: <a71e3bc2-23dc-fa02-0dbf-0a9d779dca76@oss.qualcomm.com>
+Date: Tue, 10 Feb 2026 11:05:08 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+From: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+Subject: Re: [PATCH v3 2/7] media: iris: introduce SM8350 and SC8280XP support
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+        Bryan O'Donoghue <bod@kernel.org>,
+        Mauro Carvalho Chehab
+ <mchehab@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bjorn Andersson <andersson@kernel.org>,
+        David Heidelberg <david@ixit.cz>, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Johan Hovold <johan+linaro@kernel.org>
+References: <20260125-iris-sc8280xp-v3-0-d21861a9ea33@oss.qualcomm.com>
+ <20260125-iris-sc8280xp-v3-2-d21861a9ea33@oss.qualcomm.com>
+ <8c5cd9ff-e549-00ab-60c6-814b52f50949@oss.qualcomm.com>
+ <rhsmmvbxjzb4ylxryo3n6j6wf52tjpxxon6fww6tsfhxttc2g7@xfsnyfkqh3ke>
+ <ec4348fc-b27c-9b56-2967-222e4e280c8a@oss.qualcomm.com>
+ <d67faniik7jrlnq2a2wsyku3agpezh5qj4g4rip3j6pbeagmkj@xax6nuginypu>
+Content-Language: en-US
+In-Reply-To: <d67faniik7jrlnq2a2wsyku3agpezh5qj4g4rip3j6pbeagmkj@xax6nuginypu>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAGptzHOTi=ysnYS_nXhn-m+hC969LW2tdCnU5P-y5sKaxt6MMg@mail.gmail.com>
+X-Proofpoint-ORIG-GUID: Xkrg-c74JhBelqZd2th74NQRe6f9Phs_
+X-Authority-Analysis: v=2.4 cv=eP4eTXp1 c=1 sm=1 tr=0 ts=698ac394 cx=c_pps
+ a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=Q1L4dSpLiPPsWIQ2aSSWHQ==:17
+ a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
+ a=EUspDBNiAAAA:8 a=eRPdXeDVQe4KOXe1A8MA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=OpyuDcXvxspvyRM73sMx:22
+X-Proofpoint-GUID: Xkrg-c74JhBelqZd2th74NQRe6f9Phs_
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEwMDA0NCBTYWx0ZWRfXx6ZW25r1NWNM
+ bn8pGb70v/ZNkMt4ZTY3WUW9rTCOS7k8VeyLfk0scHwSeVr86TEfN0LpkWDoFDXCeg6ufC6Bxlw
+ Kxv6Pfec5YLUksgLK9YXKmuyX7uR6MtyWs32UmX91a1GR06XOel0fYFojJsBn/xB1Gm0+dDdo2j
+ iZ4BRyDohhB1SO4HhU2w007/PJx4nCc71kvC/43kp8uGe8pW0XpLLu2ghNyEWDap+q0xDSwvIAH
+ KHrPGrDimThCg/4gEI0tGbSEJK+9KG0FRDnGv/Guhv0V6xAwYAV9ggy07Cd8y7353Y2SJy6qQiV
+ jGz9CCmVeA3CAnDlPRXvZ8AvTXbgjahfuyLlFhTQ7ceDu8r1cPXlbJasMG2wWYaTmP90vA3tAXh
+ dVZzNNOTzoCQRBAEvWFYZ8wn57NYS7plWcSq47e+tyX+yExZffIakIdZ8kOTfQmmoDMOqj8EtW6
+ Zh2P8eaWh5ArXP1W1Dw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-09_01,2026-02-09_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 spamscore=0 phishscore=0 bulkscore=0 malwarescore=0
+ suspectscore=0 lowpriorityscore=0 impostorscore=0 adultscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2602100044
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-92404-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-92405-lists,linux-arm-msm=lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[17];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[8];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 18C65117193
+	TO_DN_SOME(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[dikshita.agarwal@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,linaro];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 110621171E6
 X-Rspamd-Action: no action
 
-On Tue, Feb 10, 2026 at 10:27:28AM +0530, Sumit Garg wrote:
-> On Mon, Feb 9, 2026 at 6:27 PM Manivannan Sadhasivam <mani@kernel.org> wrote:
-> >
-> > On Mon, Feb 09, 2026 at 06:12:35PM +0530, Sumit Garg wrote:
-> > > Hi Mani,
-> > >
-> > > On Tue, Feb 3, 2026 at 1:37 PM Manivannan Sadhasivam
-> > > <manivannan.sadhasivam@oss.qualcomm.com> wrote:
-> > > >
-> > > > The current platform driver design causes probe ordering races with clients
-> > > > (UFS, eMMC) due to ICE's dependency on SCM firmware calls. If ICE probe
-> > > > fails (missing ICE SCM or DT registers), devm_of_qcom_ice_get() loops with
-> > > > -EPROBE_DEFER, leaving clients non-functional even when ICE should be
-> > > > gracefully disabled. devm_of_qcom_ice_get() cannot know if the ICE driver
-> > > > probe has failed due to above reasons or it is waiting for the SCM driver.
-> > > >
-> > > > Moreover, there is no devlink dependency between ICE and client drivers
-> > > > as 'qcom,ice' is not considered as a DT 'supplier'. So the client drivers
-> > > > have no idea of when the ICE driver is going to probe.
-> > > >
-> > > > To avoid all this hassle, remove the platform driver support altogether and
-> > > > just expose the ICE driver as a pure library to client drivers. With this
-> > > > design, when devm_of_qcom_ice_get() is called, it will check if the ICE
-> > > > instance is available or not. If not, it will create one based on the ICE
-> > > > DT node, increase the refcount and return the handle. When the next client
-> > > > calls the API again, the ICE instance would be available. So this function
-> > > > will just increment the refcount and return the instance.
-> > > >
-> > > > Finally, when the client devices get destroyed, refcount will be
-> > > > decremented and finally the cleanup will happen once all clients are
-> > > > destroyed.
-> > > >
-> > > > For the clients using the old DT binding of providing the separate 'ice'
-> > > > register range in their node, this change has no impact.
-> > > >
-> > > > Cc: stable@vger.kernel.org
-> > > > Cc: Abel Vesa <abel.vesa@oss.qualcomm.com>
-> > > > Reported-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
-> > > > Fixes: 2afbf43a4aec ("soc: qcom: Make the Qualcomm UFS/SDCC ICE a dedicated driver")
-> > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> > > > ---
-> > > >  drivers/soc/qcom/ice.c | 100 ++++++++++++++++-------------------------
-> > > >  1 file changed, 39 insertions(+), 61 deletions(-)
-> > > >
-> > >
-> > > Thanks for this change but we need to avoid building ICE as a module
-> > > too and return error code when ICE SCM calls aren't present.
-> > >
-> >
-> > Why built-in?
-> 
-> If the intention is to build it as a module then you don't drop following:
-> 
 
-Indeed, that's a mistake. I've added it back in v2.
 
-- Mani
-
-> diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
-> index 139891a122db..bfe23cb232fc 100644
-> --- a/drivers/soc/qcom/ice.c
-> +++ b/drivers/soc/qcom/ice.c
-> @@ -729,3 +729,6 @@ struct qcom_ice *devm_of_qcom_ice_get(struct device *dev)
->         return ice;
->  }
->  EXPORT_SYMBOL_GPL(devm_of_qcom_ice_get);
-> +
-> +MODULE_DESCRIPTION("Qualcomm Inline Crypto Engine driver");
-> +MODULE_LICENSE("GPL");
+On 2/5/2026 4:24 PM, Dmitry Baryshkov wrote:
+> On Thu, Feb 05, 2026 at 02:40:39PM +0530, Dikshita Agarwal wrote:
+>>
+>>
+>> On 1/31/2026 12:58 PM, Dmitry Baryshkov wrote:
+>>> On Fri, Jan 30, 2026 at 06:46:04PM +0530, Dikshita Agarwal wrote:
+>>>>
+>>>>
+>>>> On 1/25/2026 9:02 PM, Dmitry Baryshkov wrote:
+>>>>> SM8350 and SC8280XP have an updated version of the Iris2 core also
+>>>>> present on the SM8250 and SC7280 platforms. Add necessary platform data
+>>>>> to utilize the core on those two platforms.
+>>>>>
+>>>>> The iris_platform_gen1.c is now compiled unconditionally, even if Venus
+>>>>> driver is enabled, but SM8250 and SC7280 are still disabled in
+>>>>> iris_dt_match.
+>>>>>
+>>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+>>>>> ---
+>>>>>  drivers/media/platform/qcom/iris/Makefile          |   5 +-
+>>>>>  .../platform/qcom/iris/iris_platform_common.h      |   2 +
+>>>>>  .../media/platform/qcom/iris/iris_platform_gen1.c  | 111 +++++++++++++++++++++
+>>>>>  .../platform/qcom/iris/iris_platform_sm8350.h      |  20 ++++
+>>>>>  drivers/media/platform/qcom/iris/iris_probe.c      |  10 ++
+>>>>>  5 files changed, 144 insertions(+), 4 deletions(-)
+>>>>>
+>>>>> @@ -392,6 +393,61 @@ const struct iris_platform_data sm8250_data = {
+>>>>>  	.enc_ip_int_buf_tbl_size = ARRAY_SIZE(sm8250_enc_ip_int_buf_tbl),
+>>>>>  };
+>>>>>  
+>>>>> +const struct iris_platform_data sm8350_data = {
+>>>>> +	.get_instance = iris_hfi_gen1_get_instance,
+>>>>> +	.init_hfi_command_ops = &iris_hfi_gen1_command_ops_init,
+>>>>> +	.init_hfi_response_ops = iris_hfi_gen1_response_ops_init,
+>>>>> +	.get_vpu_buffer_size = iris_vpu_buf_size,
+>>>>> +	.vpu_ops = &iris_vpu2_ops,
+>>>>> +	.set_preset_registers = iris_set_sm8350_preset_registers,
+>>>>> +	.icc_tbl = sm8250_icc_table,
+>>>>> +	.icc_tbl_size = ARRAY_SIZE(sm8250_icc_table),
+>>>>> +	.clk_rst_tbl = sm8350_clk_reset_table,
+>>>>> +	.clk_rst_tbl_size = ARRAY_SIZE(sm8350_clk_reset_table),
+>>>>> +	.bw_tbl_dec = sm8250_bw_table_dec,
+>>>>> +	.bw_tbl_dec_size = ARRAY_SIZE(sm8250_bw_table_dec),
+>>>>> +	.pmdomain_tbl = sm8250_pmdomain_table,
+>>>>> +	.pmdomain_tbl_size = ARRAY_SIZE(sm8250_pmdomain_table),
+>>>>> +	.opp_pd_tbl = sm8250_opp_pd_table,
+>>>>> +	.opp_pd_tbl_size = ARRAY_SIZE(sm8250_opp_pd_table),
+>>>>> +	.clk_tbl = sm8250_clk_table,
+>>>>> +	.clk_tbl_size = ARRAY_SIZE(sm8250_clk_table),
+>>>>> +	.opp_clk_tbl = sm8250_opp_clk_table,
+>>>>> +	/* Upper bound of DMA address range */
+>>>>> +	.dma_mask = 0xe0000000 - 1,
+>>>>> +	.fwname = "qcom/vpu/vpu20_p4.mbn",
+>>>>
+>>>> This firmware is not compatible with SM8350.
+>>>> SM8350 firmware is not released to linux-firmware yet.
+>>>
+>>> What would be the name for the firmware? The downstream uses vpu20_4v
+>>> here, so, I guess, in upstream we should be using vpu20_p4, but a newer
+>>> version?
+>>>
+>>
+>> Using a newer version won't work as the firmware for SM8250 and SM8350 are
+>> different binaries generated from different firmware source branch.
+>> You can give it a try, but AFAIK it won't work.
 > 
-> -Sumit
+> Ugh...
 > 
-> >
-> > > So following diff on top of this patch works for me, feel free to
-> > > incorporate it in your patch:
-> > >
-> > > diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-> > > index 2caadbbcf830..db528104488b 100644
-> > > --- a/drivers/soc/qcom/Kconfig
-> > > +++ b/drivers/soc/qcom/Kconfig
-> > > @@ -283,7 +283,7 @@ config QCOM_ICC_BWMON
-> > >           memory throughput even with lower CPU frequencies.
-> > >
-> > >  config QCOM_INLINE_CRYPTO_ENGINE
-> > > -       tristate
-> > > +       bool
-> > >         select QCOM_SCM
-> > >
-> > >  config QCOM_PBS
-> > > diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
-> > > index 8640e05becd1..139891a122db 100644
-> > > --- a/drivers/soc/qcom/ice.c
-> > > +++ b/drivers/soc/qcom/ice.c
-> > > @@ -563,7 +563,7 @@ static struct qcom_ice *qcom_ice_create(struct device *dev,
-> > >
-> > >         if (!qcom_scm_ice_available()) {
-> > >                 dev_warn(dev, "ICE SCM interface not found\n");
-> > > -               return NULL;
-> > > +               return ERR_PTR(-EOPNOTSUPP);
-> >
-> > This makes sense.
-> >
-> > - Mani
-> >
-> > >         }
-> > >
-> > >         engine = devm_kzalloc(dev, sizeof(*engine), GFP_KERNEL);
-> > >
-> > > -Sumit
-> > >
-> > > > diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
-> > > > index b203bc685cad..b5a9cf8de6e4 100644
-> > > > --- a/drivers/soc/qcom/ice.c
-> > > > +++ b/drivers/soc/qcom/ice.c
-> > > > @@ -107,12 +107,16 @@ struct qcom_ice {
-> > > >         struct device *dev;
-> > > >         void __iomem *base;
-> > > >
-> > > > +       struct kref refcount;
-> > > >         struct clk *core_clk;
-> > > >         bool use_hwkm;
-> > > >         bool hwkm_init_complete;
-> > > >         u8 hwkm_version;
-> > > >  };
-> > > >
-> > > > +static DEFINE_MUTEX(ice_mutex);
-> > > > +struct qcom_ice *ice_handle;
-> > > > +
-> > > >  static bool qcom_ice_check_supported(struct qcom_ice *ice)
-> > > >  {
-> > > >         u32 regval = qcom_ice_readl(ice, QCOM_ICE_REG_VERSION);
-> > > > @@ -599,8 +603,8 @@ static struct qcom_ice *qcom_ice_create(struct device *dev,
-> > > >   * This function will provide an ICE instance either by creating one for the
-> > > >   * consumer device if its DT node provides the 'ice' reg range and the 'ice'
-> > > >   * clock (for legacy DT style). On the other hand, if consumer provides a
-> > > > - * phandle via 'qcom,ice' property to an ICE DT, the ICE instance will already
-> > > > - * be created and so this function will return that instead.
-> > > > + * phandle via 'qcom,ice' property to an ICE DT node, then the ICE instance will
-> > > > + * be created if not already done and will be returned.
-> > > >   *
-> > > >   * Return: ICE pointer on success, NULL if there is no ICE data provided by the
-> > > >   * consumer or ERR_PTR() on error.
-> > > > @@ -611,11 +615,12 @@ static struct qcom_ice *of_qcom_ice_get(struct device *dev)
-> > > >         struct qcom_ice *ice;
-> > > >         struct resource *res;
-> > > >         void __iomem *base;
-> > > > -       struct device_link *link;
-> > > >
-> > > >         if (!dev || !dev->of_node)
-> > > >                 return ERR_PTR(-ENODEV);
-> > > >
-> > > > +       guard(mutex)(&ice_mutex);
-> > > > +
-> > > >         /*
-> > > >          * In order to support legacy style devicetree bindings, we need
-> > > >          * to create the ICE instance using the consumer device and the reg
-> > > > @@ -631,6 +636,16 @@ static struct qcom_ice *of_qcom_ice_get(struct device *dev)
-> > > >                 return qcom_ice_create(&pdev->dev, base);
-> > > >         }
-> > > >
-> > > > +       /*
-> > > > +        * If the ICE node has been initialized already, just increase the
-> > > > +        * refcount and return the handle.
-> > > > +        */
-> > > > +       if (ice_handle) {
-> > > > +               kref_get(&ice_handle->refcount);
-> > > > +
-> > > > +               return ice_handle;
-> > > > +       }
-> > > > +
-> > > >         /*
-> > > >          * If the consumer node does not provider an 'ice' reg range
-> > > >          * (legacy DT binding), then it must at least provide a phandle
-> > > > @@ -643,41 +658,43 @@ static struct qcom_ice *of_qcom_ice_get(struct device *dev)
-> > > >
-> > > >         pdev = of_find_device_by_node(node);
-> > > >         if (!pdev) {
-> > > > -               dev_err(dev, "Cannot find device node %s\n", node->name);
-> > > > +               dev_err(dev, "Cannot find ICE platform device\n");
-> > > > +               platform_device_put(pdev);
-> > > >                 return ERR_PTR(-EPROBE_DEFER);
-> > > >         }
-> > > >
-> > > > -       ice = platform_get_drvdata(pdev);
-> > > > -       if (!ice) {
-> > > > -               dev_err(dev, "Cannot get ice instance from %s\n",
-> > > > -                       dev_name(&pdev->dev));
-> > > > +       base = devm_platform_ioremap_resource(pdev, 0);
-> > > > +       if (IS_ERR(base)) {
-> > > > +               dev_warn(&pdev->dev, "ICE registers not found\n");
-> > > >                 platform_device_put(pdev);
-> > > > -               return ERR_PTR(-EPROBE_DEFER);
-> > > > +               return base;
-> > > >         }
-> > > >
-> > > > -       link = device_link_add(dev, &pdev->dev, DL_FLAG_AUTOREMOVE_SUPPLIER);
-> > > > -       if (!link) {
-> > > > -               dev_err(&pdev->dev,
-> > > > -                       "Failed to create device link to consumer %s\n",
-> > > > -                       dev_name(dev));
-> > > > +       ice = qcom_ice_create(&pdev->dev, base);
-> > > > +       if (IS_ERR(ice)) {
-> > > >                 platform_device_put(pdev);
-> > > > -               ice = ERR_PTR(-EINVAL);
-> > > > +               return ice_handle;
-> > > >         }
-> > > >
-> > > > -       return ice;
-> > > > +       ice_handle = ice;
-> > > > +       kref_init(&ice_handle->refcount);
-> > > > +
-> > > > +       return ice_handle;
-> > > >  }
-> > > >
-> > > > -static void qcom_ice_put(const struct qcom_ice *ice)
-> > > > +static void qcom_ice_put(struct kref *kref)
-> > > >  {
-> > > > -       struct platform_device *pdev = to_platform_device(ice->dev);
-> > > > -
-> > > > -       if (!platform_get_resource_byname(pdev, IORESOURCE_MEM, "ice"))
-> > > > -               platform_device_put(pdev);
-> > > > +       platform_device_put(to_platform_device(ice_handle->dev));
-> > > > +       ice_handle = NULL;
-> > > >  }
-> > > >
-> > > >  static void devm_of_qcom_ice_put(struct device *dev, void *res)
-> > > >  {
-> > > > -       qcom_ice_put(*(struct qcom_ice **)res);
-> > > > +       const struct qcom_ice *ice = *(struct qcom_ice **)res;
-> > > > +       struct platform_device *pdev = to_platform_device(ice->dev);
-> > > > +
-> > > > +       if (!platform_get_resource_byname(pdev, IORESOURCE_MEM, "ice"))
-> > > > +               kref_put(&ice_handle->refcount, qcom_ice_put);
-> > > >  }
-> > > >
-> > > >  /**
-> > > > @@ -713,42 +730,3 @@ struct qcom_ice *devm_of_qcom_ice_get(struct device *dev)
-> > > >         return ice;
-> > > >  }
-> > > >  EXPORT_SYMBOL_GPL(devm_of_qcom_ice_get);
-> > > > -
-> > > > -static int qcom_ice_probe(struct platform_device *pdev)
-> > > > -{
-> > > > -       struct qcom_ice *engine;
-> > > > -       void __iomem *base;
-> > > > -
-> > > > -       base = devm_platform_ioremap_resource(pdev, 0);
-> > > > -       if (IS_ERR(base)) {
-> > > > -               dev_warn(&pdev->dev, "ICE registers not found\n");
-> > > > -               return PTR_ERR(base);
-> > > > -       }
-> > > > -
-> > > > -       engine = qcom_ice_create(&pdev->dev, base);
-> > > > -       if (IS_ERR(engine))
-> > > > -               return PTR_ERR(engine);
-> > > > -
-> > > > -       platform_set_drvdata(pdev, engine);
-> > > > -
-> > > > -       return 0;
-> > > > -}
-> > > > -
-> > > > -static const struct of_device_id qcom_ice_of_match_table[] = {
-> > > > -       { .compatible = "qcom,inline-crypto-engine" },
-> > > > -       { },
-> > > > -};
-> > > > -MODULE_DEVICE_TABLE(of, qcom_ice_of_match_table);
-> > > > -
-> > > > -static struct platform_driver qcom_ice_driver = {
-> > > > -       .probe  = qcom_ice_probe,
-> > > > -       .driver = {
-> > > > -               .name = "qcom-ice",
-> > > > -               .of_match_table = qcom_ice_of_match_table,
-> > > > -       },
-> > > > -};
-> > > > -
-> > > > -module_platform_driver(qcom_ice_driver);
-> > > > -
-> > > > -MODULE_DESCRIPTION("Qualcomm Inline Crypto Engine driver");
-> > > > -MODULE_LICENSE("GPL");
-> > > > --
-> > > > 2.51.0
-> > > >
-> >
-> > --
-> > மணிவண்ணன் சதாசிவம்
+>>>>> +	.fwname = "qcom/vpu/vpu20_p2.mbn",
+>>>>
+>>>> this firmware doesn't exist on linux-firmware.
+>>>
+>>> It was based on the assumption of having 2 pipes. If Iris here has 2
+>>> pipes, then probably we should still point to vpu20_p4.mbn?
+>>>
+>>
+>> SC8280XP also uses the Iris2 4‑pipe configuration, though its firmware
+>> comes from a different source branch compared to SM8250 and SM8350. This
+>> means we have multiple firmwares with identical VPU and pipe configurations
+>> but different origins. Could you propose a suitable naming scheme that can
+>> differentiate such firmware?
+> 
+> Can we have a single binary that works on all Iris2 4-pipe cores?
 
--- 
-மணிவண்ணன் சதாசிவம்
+That is not possible as it is older VPU.
+For newer ones, the plan is have single source branch for same VPU to avoid
+such issues in future.
+
+> Or are there any differences between Iris2 on SM8250 / SM8350 /
+> SC8280XP? Are they stil vpu20_something or should we use different VPU
+> versions in the firmware name?
+
+I think we can keep vpu20_4p_* with some way to different among SM8250,
+SM8350, SC8280XP.
+
+> 
+>>>>> diff --git a/drivers/media/platform/qcom/iris/iris_platform_sm8350.h b/drivers/media/platform/qcom/iris/iris_platform_sm8350.h
+>>>>> new file mode 100644
+>>>>> index 000000000000..74cf5ea2359a
+>>>>> --- /dev/null
+>>>>> +++ b/drivers/media/platform/qcom/iris/iris_platform_sm8350.h
+>>>>> @@ -0,0 +1,20 @@
+>>>>> +/* SPDX-License-Identifier: GPL-2.0-only */
+>>>>> +/*
+>>>>> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+>>>>> + */
+>>>>> +
+>>>>> +#ifndef __IRIS_PLATFORM_SM8350_H__
+>>>>> +#define __IRIS_PLATFORM_SM8350_H__
+>>>>> +
+>>>>> +static void iris_set_sm8350_preset_registers(struct iris_core *core)
+>>>>> +{
+>>>>> +	u32 val;
+>>>>> +
+>>>>> +	val = readl(core->reg_base + 0xb0088);
+>>>>> +	val &= ~0x11;
+>>>>> +	writel(val, core->reg_base + 0xb0088);
+>>>>> +}
+>>>>
+>>>> you can reuse this from SM8250. That would work.
+>>>
+>>> Hmm, downstream driver was explicit about clearing only these two bits.
+>>> Is it really fine to clear all the bits?
+>>>
+>>
+>> Yes it is. We are doing the same for other SOCs as well.
+> 
+> Wouldn't this also ungate / start the second core?
+> 
 
