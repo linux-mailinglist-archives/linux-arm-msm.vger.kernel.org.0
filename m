@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-92426-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92427-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id IBUeB5reimlIOgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92426-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 08:30:34 +0100
+	id 8EaMMjPhimmLOgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92427-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 08:41:39 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C0D5117F15
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 08:30:33 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 31ECB118014
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 08:41:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7B2263019529
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 07:29:04 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 244EE301C979
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 07:41:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83E07332EB0;
-	Tue, 10 Feb 2026 07:29:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AF2F335561;
+	Tue, 10 Feb 2026 07:41:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YyGU1cQv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pLOX7UcC"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6014133066A;
-	Tue, 10 Feb 2026 07:29:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6781F19EED3;
+	Tue, 10 Feb 2026 07:41:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770708543; cv=none; b=F2k50+srSBfIuGld3QyiUDPwZMpuddi04QO3fPVdchUTItD4nlwO4IQMcMdgaIdptVybpqStMntzgnIqqA0o7ORgQuUYQMqxJq4zvXBp+Ym5OijVbbTRTVB+4nlBipJFVJBVRsFc1sLvSqzn4cCEWRmPKv84M9vqiCZdV+ADMbk=
+	t=1770709296; cv=none; b=c1NAxaLDOo+SPHXR+SIri5nssyv2LCSwq60/VcE7o3OrMARRJmvcsuEfNBz4/uc+q3Dyig1iMlWY/4IfbhAlIm9lplNFWN0SkRGczIGbWXR83gCRo4C7UQNQUr/lBNFg2jzJvtpzgg/jru7pZqx4uN/IDv4Trbrk+GBkXbNs/XE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770708543; c=relaxed/simple;
-	bh=ByPtK5KEpX2LdZX9oddoBB6sseTwgfzJrnfd0ExNZ1U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eGuB/k9/45JJZTSxwlG0fAo13C5y9vZyZ17YyaOFpFrgHlkjpmUIQY4uJFcKoH27VluqudBsEOG6CWZxNicMoLKgY5Z+44uGD7F4F1TMbZKj9Cl8guMsEOaFiiiH5RK59vWHXPF69Se0q+J2vyNaxoowy/NPm/gkcW8dVL0bv78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YyGU1cQv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFD51C116C6;
-	Tue, 10 Feb 2026 07:29:00 +0000 (UTC)
+	s=arc-20240116; t=1770709296; c=relaxed/simple;
+	bh=10GKuEcAgkY0yWL5TN46kmxXr60I+AZNuhtIUxoWnSY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=hM6GlRtTFwYoyWC+ae6J6T7iJiEzV9lM9yuxXgfdUqj5k3uts6XnbKqwenKbxl/ZQrFaOxQCbqDjMxVjjFe7j5n2nPOF6yZLEDIEl4SwAwj+mXDcMcy1uGVC4k2BCaqhH7fUfzlS8jJ+PDzUzTbENSdsF9kuZ4F1JMQSxi3oNyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pLOX7UcC; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D101CC116C6;
+	Tue, 10 Feb 2026 07:41:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770708543;
-	bh=ByPtK5KEpX2LdZX9oddoBB6sseTwgfzJrnfd0ExNZ1U=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=YyGU1cQvALzFPDmnZyw5MOmEzvZCQwkvqF+FVIiC2LPpFkPbx1xqfwVCS9rnDmf41
-	 dHFk3IjcNIkf49vG76e2B5WrwCbWcwrKQPMuDJQKwkZTrHK8Y8lXUVPImvhKVgpICp
-	 pQ3lvDv0Yc3JkEmEY4kdGPyNR830sP2khMrFbWEdlYrK/2XAqtfbWK/xePApG1IcqH
-	 Yy4pk/1MmdLnjlA4RImRUU6DueMuz/qZjcJVarCPYNv7uZ7CCmNAIEbe+OoXoNi90y
-	 ApmwpvRO5Lga+1KgvqYgWhnGeANZ6p43tWuDYwlv/LGmRDNNRU5aYoTpz+FFWrvTbg
-	 z0BeU0nSeYeFA==
-Message-ID: <d159efb2-6c91-4778-8be8-838e5789fa24@kernel.org>
-Date: Tue, 10 Feb 2026 08:28:58 +0100
+	s=k20201202; t=1770709296;
+	bh=10GKuEcAgkY0yWL5TN46kmxXr60I+AZNuhtIUxoWnSY=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=pLOX7UcCDkfj4rQ0GyytWdDnReigh3gIZyB+Dzo7MKGZ64NpUKhZRNQ36yC50P8px
+	 g3WAD7UzyGY+8j0rHHB/K4LDNpM6l09o2XfcYKDiOp/cuegxNZZmDMKAZ4RAchYlDi
+	 d/ySS6yKd+XZ6W6XxO+BNOI0gyTdZZNJvuZhfP2Pwk7M8bRh+O9OQ0mZJJLo35LT2A
+	 d/bbJKVBeAXn74AqWVbMxJXR2gAJzoW99rmSDuAixI8hPrXQGm/dqA7WeW/I8BuUll
+	 HWuZcocjofK0cYeaC5gNO8T3Y1AN34/KAmIS5AEdKLwdfr/OWM1buytwE5voj/jtJK
+	 Q0mt6pLaZV9Ow==
+Message-ID: <4f89cc2a-6e30-4ee3-bb95-f2df25b5b88f@kernel.org>
+Date: Tue, 10 Feb 2026 08:41:32 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,14 +53,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] arm64: dts: qcom: hamoa-evk: Add DP0/DP1 audio
- playback support
-To: Le Qi <le.qi@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, kernel@oss.qualcomm.com
-References: <20260210024037.3719191-1-le.qi@oss.qualcomm.com>
+Subject: Re: [PATCH 1/3] dt-bindings: pinctrl: qcom: Add SDM670 LPI pinctrl
+To: Richard Acayan <mailingradian@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>, Linus Walleij <linusw@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
+ linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20260210021109.11906-1-mailingradian@gmail.com>
+ <20260210021109.11906-2-mailingradian@gmail.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,49 +107,97 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260210024037.3719191-1-le.qi@oss.qualcomm.com>
+In-Reply-To: <20260210021109.11906-2-mailingradian@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-92426-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-92427-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FREEMAIL_TO(0.00)[gmail.com,kernel.org,vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCPT_COUNT_SEVEN(0.00)[10];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: 8C0D5117F15
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 31ECB118014
 X-Rspamd-Action: no action
 
-On 10/02/2026 03:40, Le Qi wrote:
-> The hamoa-evk DTS currently lacks DAI links for DP0 and DP1, preventing
-> the sound card from exposing these playback paths. Add the missing links
-> to enable audio output on both DP interfaces.
+On 10/02/2026 03:11, Richard Acayan wrote:
+> Add the pin controller for the audio Low-Power Island (LPI) on SDM670.
+
+Subject: Missing "LPASS" before LPI. I really thought you just add TLMM...
+
 > 
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
 > ---
-> Changelog:
+>  .../qcom,sdm670-lpass-lpi-pinctrl.yaml        | 81 +++++++++++++++++++
+>  1 file changed, 81 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sdm670-lpass-lpi-pinctrl.yaml
 > 
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sdm670-lpass-lpi-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sdm670-lpass-lpi-pinctrl.yaml
+> new file mode 100644
+> index 000000000000..125f365d11fa
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sdm670-lpass-lpi-pinctrl.yaml
+> @@ -0,0 +1,81 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pinctrl/qcom,sdm670-lpass-lpi-pinctrl.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm SDM670 SoC LPASS LPI TLMM
+> +
+> +maintainers:
+> +  - Richard Acayan <mailingradian@gmail.com>
+> +
+> +description:
+> +  Top Level Mode Multiplexer pin controller in the Low Power Audio SubSystem
+> +  (LPASS) Low Power Island (LPI) of Qualcomm SDM670 SoC.
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,sdm670-lpass-lpi-pinctrl
+> +
+> +  reg:
+> +    items:
+> +      - description: LPASS LPI TLMM Control and Status registers
+> +
+
+Hm, no clocks? In most designs there has to be HW macro or HW codec
+vote. I see SDM660 does not have it either, but I think this might be
+exactly the same mistake.
 
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+> +patternProperties:
+> +  "-state$":
+> +    oneOf:
+> +      - $ref: "#/$defs/qcom-sdm670-lpass-state"
+> +      - patternProperties:
+> +          "-pins$":
+> +            $ref: "#/$defs/qcom-sdm670-lpass-state"
+> +        additionalProperties: false
+> +
+
+
 
 Best regards,
 Krzysztof
