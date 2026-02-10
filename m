@@ -1,224 +1,200 @@
-Return-Path: <linux-arm-msm+bounces-92510-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92511-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wORtM8Uvi2lVQwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92510-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 14:16:53 +0100
+	id wN90NZM2i2nyRgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92511-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 14:45:55 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B45511B286
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 14:16:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 33F7611B5ED
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 14:45:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 284EB302B3AC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 13:16:22 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 0A796302EE9E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Feb 2026 13:44:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AD6E328B7D;
-	Tue, 10 Feb 2026 13:16:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D7CE32A3CC;
+	Tue, 10 Feb 2026 13:44:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="h/R5cJsn"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Vw8WzPB0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-yx1-f51.google.com (mail-yx1-f51.google.com [74.125.224.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2F8314B977
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Feb 2026 13:16:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770729381; cv=none; b=r7M7GUk7YAqKEkgw6LR/7amnM4e+mr3EWgS4fQiG3d4f5dwyWXx/cxuG4wlcdQ/WjTbD5BUpXdngndFEj7IKojEiKrJgZ452PMR0Sj/BEtnybs2BI+fFdsf7C1NU7x1jouCbbR4morXwdG47nXCKBoA1/Z3UPivy38ZrM7/zTe4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770729381; c=relaxed/simple;
-	bh=47lTU55/gykUcjRt+xxtWjYlJLvvJMCfBp+RED1uTkU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XTq5lPz/ONutbEGTeEYyDc6ArVqxM37DaKmkr5RTLC6D8cx3qF/d6CywlpTz1gmrScIA/iuUx+vEDuLhgBwYsGg5Nn6XMo4nA4iDu3vX8zhe22HOWb0PjZ1dkKLlTgxs9A91zOvEqcxcRyIfou7vjD/RuZXjdpCvf5uDCgYGmRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=h/R5cJsn; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E6B6329E77
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Feb 2026 13:44:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.51
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770731074; cv=pass; b=fHaVz/ataRJ4BXf6qant2kt4Z9cD8HoKhqUxJa7jM7l9HNkSIrlP/+cSx3UXKK46U5W1Mm16qMtnjyhCmnsYjART0oOV8kHpLfLhFRyZApSEgeLLfUdWAtCbe84THmgdai3FrZVtz/yHOb5MBiKC1SF/3D5GmP0T+ygHuB/u1Dg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770731074; c=relaxed/simple;
+	bh=My7H0zv9om6eGFOqwrY8WEQgO1PL3LXVOyrjI3ZQRjo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=g3JASjYJm9cbQBhaL3JwFscgZ+bnZVdgBzwxscACB3buvqeQaP3TeOJB7qb864DZYquwhz6YI96mIr1Nz8eOUT6QG7Eu3eTgP59Pd7ZZkluGN3rwUVdGQ1wBbnZJP8IO9RcsVHclb90m0OF9w6QUpy/A92Vb14LrqrLTDo2OMv8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Vw8WzPB0; arc=pass smtp.client-ip=74.125.224.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-47f5c2283b6so7158765e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Feb 2026 05:16:19 -0800 (PST)
+Received: by mail-yx1-f51.google.com with SMTP id 956f58d0204a3-64ad8435f46so3372014d50.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Feb 2026 05:44:33 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770731072; cv=none;
+        d=google.com; s=arc-20240605;
+        b=GIgNNOp9Smwz2N8d5yi28SKEKtRqHgAxlockZFEoVo5FWj05pa7SHZEXl+6/1TIdZu
+         Aa7lXQ02Bqcuugj1wSHk8ylv7jRsOQGFUiEAlK4QdTOojPX1i6Vv1M5kQlWZwCAEWH5k
+         Qqo49rpbNroub1J/NUiuHBupaW2DGmEIDH0Fzpgz8VS1QdsZQknW+XyrZAeb9H+E1Muk
+         p3aokFNhnSwHkQmPtykopRkNXXsXh6/mz+wknOs3FqFXbmfQh3UNn1zrrzA7NPa05mey
+         mGamCmjnbHSKBeo64Hq81gnR/I+j2BKmJXa2K4izzaFg3M8m2s6loNKiGLIySq72nQAm
+         KPaw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:dkim-signature;
+        bh=cO0B8QPhPo0Y3GlbKCDusifXNzaiAeSd4InIZCnguwY=;
+        fh=KLoEGf5fAhWtnEk4MVCzHMRXOXh7bddlt4ZWvLwoL24=;
+        b=Zitr15k59Edq95RVgbELNSzZJ1ad7B9tLn0R5LZDR01hjsvO4O2oNDEa5OpbhtgiDB
+         zW+Nybx9UD+YA9Oo7Dh+NZGlSatnXLrq2WghqorfxpvIoNsIbHPGW6WPLhnOZgdY2DMd
+         RYqu3T6anXQLopbLMSfr0YLt2WrzZ+CNfQg9uUrXRUBEFaZqL0oTuZnTUIHNdcQ3t7BN
+         WHrzncv0bQEVCnl7ULxIaMHnMmwFaxuLyFk40bW32XCeUww+saWn/CKlvJAw4AsYzrgW
+         Kl/Nf+yybyCO2WRkIU4gJD2zyipXEkdk/mVPQDBxz+qbQkR8v6Ku/pcF80HyoGBqbNXn
+         Fc4A==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1770729378; x=1771334178; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=OYSe1+CAiybXtDZ7qn+sljqCDCmOWnnVyECoc1AwnJs=;
-        b=h/R5cJsnrDi94NyDn/J7FIOCfsNM7gozZyxaObjI+6X6rB9sprwsX7pR9y3pGMv0YA
-         woI2CgwbvOFDzBR1swB+bHKpWYNCCNW4C1Hr16Of/A47BheUb9P3UEcd9Bl7pLYG/Trq
-         +fzdixSUZzv8T583rW3eFf4bdw1PXeDjh57Az0TS8Lu5jcVm0aZNauPwfC6C2pCvObKx
-         PBqkJJWnFfAlJ3Zt019Y/9umAIfIJTghqZGrZ/+IPlk8nxN2baChBKUCnWB6Ib0TqK4N
-         bJ90s0aQKX637GvW61zgznta3ae1S7neoNeTKWzZ1X0TlEo0icLZd3rgRazdVnWuEkPK
-         8lcw==
+        d=linaro.org; s=google; t=1770731072; x=1771335872; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=cO0B8QPhPo0Y3GlbKCDusifXNzaiAeSd4InIZCnguwY=;
+        b=Vw8WzPB0oLcYWhtQSx/BjgeR0IIJffAqCy/AtF/PqSjkoeWAJ3MPMv1QGab0EKCEJp
+         hYOrRYbpzrt0KLCPL8dv2ImW+w3GICWzj0n+MLSB8F4DaPx0w3X9pqcj/75b/SrDmK+0
+         dS6JJILoKeKUQwgO44dPaUMEmOtfdsgxTXuM9w/SFYfhDEhVXbdIppsVZ474fE4EH5z8
+         W5tQMD6yyOGACdGI2sBNuBPlvNFy1h5C8ojSZJ9FMMJx7l2OTuwjy/VDX4yB7L05G2NR
+         AU1NqixA2Lis3AnkTkzixffUUqPnjIMvk9NfWEWDvDQciQRcfQzdH3t2uFPeYph0ihxZ
+         tAwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770729378; x=1771334178;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=OYSe1+CAiybXtDZ7qn+sljqCDCmOWnnVyECoc1AwnJs=;
-        b=oAVr4EKv/Bk60sbZ5qKwA4O4U88lPdcmrqkNkPFuzVKtSZVWyK+vMwba5tkkR1d/iM
-         eyEsNpvsozcmysQaeY6xrxOvuLLw7uRdmUHK4bKhqB6+TiXyZMBK/Ekxw0gmSnSVUemm
-         Nao9+WyIt+jPsmynnh6IrAHH/Nd1DsvCl1Df3CQXyh8LbfJ5Ed+u5JQ7UYnHinaGU+y9
-         r49BmUdT5bw4ag3f0own6UTvWaZQJQLR8T7SAGYpq/0PWMlfcIoMOqwSnovzahV7t3uD
-         Yme/ipThjuhORvKf45myGAF41JuHpCVnY8aiZZT7yHIY3ybtOonn2PxZuRdVQPGmxfbG
-         LGnA==
-X-Forwarded-Encrypted: i=1; AJvYcCXoG+xnqzBbQp/sovxq7Wz7Un1UMWLFJ9MmcnUnk+2tTWgB90mQxhOqD4lH54P7uiMfXJQzY2OteKwqaQsN@vger.kernel.org
-X-Gm-Message-State: AOJu0YynNf5dE1572R4kYRGuPRKxFo/+RXqNABEAdr/u9lR6L1geFgj7
-	bseVQ41N3X+Mw78oBpy4G/77pzzv2SkCtCkqbWVM+urxEMGYYApXDHmnAmAhbU4jElQ=
-X-Gm-Gg: AZuq6aLPWdjCVb32onh0yI1eTHIgSfhVplg0/5yuO6eLE8lENynMnQ5l2m8GlPbdPYD
-	12vI9AEamLnolD3fNMW9JgSIwLnq22rMZ2cMz/galIRce2ZCUb30uJ8FhZrM3Vv/dSy0A7sBH5q
-	n/XCG2lvmJn1XKpgh+bbyKbQisxv4OY2uEEcbdM3pK1KG6Tik2dj6nNuRsYJ7edXeWmLdAKbYzu
-	DQTbwI8gjrnoiMNENoU4FOqjtMozqF7+lL4e8C+H7GOLnH2uOKFpOn+26bygJMvhsODV2aZpVBh
-	igsLPUiEw2jcZy/ocqd9ymFySgDo63A5uTYx60iKEL4wopVXjoIHI8bi8DAgfyb/8mR89KxFhV5
-	48fm91jbh6u4skS1oQUL6u1QvstJnwYYgyH33CjRMVTf213fMluhEHyOfjTTPprk9UBZ8898wo0
-	MI8l4ImT3q0ZaR9ocKBuxxKuJHpJ0BpiIreHvr3zr388VsfkefuBfthV8VKYzpZvtf
-X-Received: by 2002:a05:600c:3552:b0:480:4a90:1afe with SMTP id 5b1f17b1804b1-48320339137mr232607865e9.34.1770729378123;
-        Tue, 10 Feb 2026 05:16:18 -0800 (PST)
-Received: from [192.168.0.40] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4834d7e64b0sm72637865e9.11.2026.02.10.05.16.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Feb 2026 05:16:17 -0800 (PST)
-Message-ID: <416e2f12-92c1-4e41-bf08-860443710035@linaro.org>
-Date: Tue, 10 Feb 2026 13:16:15 +0000
+        d=1e100.net; s=20230601; t=1770731072; x=1771335872;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cO0B8QPhPo0Y3GlbKCDusifXNzaiAeSd4InIZCnguwY=;
+        b=GWXbBeFHJwArENU9qlqaoLIfqr294isMjyovAcMOs68/L8a1zorJENH0UqFyKksPWU
+         xZi4+ZcBkxSd3BJt8qOdiQNn870/HlBz2Nou8Th1U5zP0Nr4t+DNihK9SrVD4ujjeC9S
+         9CkDQjglPANP1xNkHZLVYNn7+NUI9rNyrCPOwq4R3Veim4nN94MCk2BYFsY3e1YGdvBV
+         3Fks8HkRdajg7WBKq3ibLUeUHVccgYX4QJDfTpkuRHdcaffSf4XbyCuyA4O1Knh5ufG2
+         D1XjMsGH+2bnQVeTDoxlicwwjtQMxNsdJ61P2e0LEo5VS/2HqcbDbiZ2wV14h5cVNuaX
+         wO4Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXzI+9HsxExiqKvA8PV8bL4gXOjvCaqK2kWZ70WB1cXmuzhy/sjDt/Ruk0T59ATDcLwuAKSJclvIhEsVngF@vger.kernel.org
+X-Gm-Message-State: AOJu0YzlRa5b/3Dsn7OtJZKUrrv4UKHXLInhR8zECqDNMyv12n0gDyM4
+	QbYiyY4t01aKgpvAGxR2ye5T4oVW1sOy/JGEMyXSyclOqrwBdYys8O9Pu3u3wqhKjmlEtHvqF50
+	Ts1SkLR9a9RtjyIxT06mCpVyWEcAk4mMhZNn+w0+9rg==
+X-Gm-Gg: AZuq6aKtBNV6W2jdothHXEW9Wia2Z3x275kwe/9QKICKFanWRpAuJ9e+Qo+rzJC5sWm
+	aK0j98wbPdS1YYMDxVqv46GBfyxUlfs69TvBHtEb2xoQNtPyx94zTXVw9HirABdtA8nlglQKiJe
+	Vvdd8YAUWDVEiY/d5kUxyQINQotNDcUoA1k9h767qkFZ0nVq+TwcVQT4kse+fi+NWSVL4RwlTq4
+	K93vQJiXnPAnv+beAehmYN4niLHnJg12up9jcTK+3Awo7S3ZPBQhYq1HxQBTx/cXdye8WvZC760
+	L8xqPb/l
+X-Received: by 2002:a05:690e:b4e:b0:64a:f188:976f with SMTP id
+ 956f58d0204a3-64af1889b6fmr1730648d50.45.1770731072184; Tue, 10 Feb 2026
+ 05:44:32 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 1/7] dt-bindings: media: qcom,sdm670-camss: Remove
- clock-lanes property
-To: Richard Acayan <mailingradian@gmail.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Tianshu Qiu
- <tian.shu.qiu@intel.com>, Sakari Ailus <sakari.ailus@linux.intel.com>,
- linux-media@vger.kernel.org, devicetree@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-Cc: Robert Mader <robert.mader@collabora.com>,
- David Heidelberg <david@ixit.cz>, phone-devel@vger.kernel.org
-References: <20260210020207.10246-1-mailingradian@gmail.com>
- <20260210020207.10246-2-mailingradian@gmail.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260210020207.10246-2-mailingradian@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20260210-qcom-ice-fix-v2-0-9c1ab5d6502c@oss.qualcomm.com>
+In-Reply-To: <20260210-qcom-ice-fix-v2-0-9c1ab5d6502c@oss.qualcomm.com>
+From: Ulf Hansson <ulf.hansson@linaro.org>
+Date: Tue, 10 Feb 2026 14:43:53 +0100
+X-Gm-Features: AZwV_QhTZ9KRaRA5GTHx4N22K6Lp6hSICHstQ6937DBI5S-nFi13iuFlfu6mtC8
+Message-ID: <CAPDyKFocm3yRTG0TJJRxfDvJMjvvvri5fzi_HoNY4YSd-41oKA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/4] soc: qcom: ice: Remove platform_driver support and
+ expose as a pure library
+To: manivannan.sadhasivam@oss.qualcomm.com
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Abel Vesa <abel.vesa@linaro.org>, Adrian Hunter <adrian.hunter@intel.com>, 
+	Manivannan Sadhasivam <mani@kernel.org>, 
+	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>, 
+	"Martin K. Petersen" <martin.petersen@oracle.com>, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-mmc@vger.kernel.org, 
+	linux-scsi@vger.kernel.org, Sumit Garg <sumit.garg@oss.qualcomm.com>, 
+	stable@vger.kernel.org, Abel Vesa <abel.vesa@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+X-Spamd-Result: default: False [-2.16 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
 	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-92510-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com,kernel.org,linaro.org,intel.com,linux.intel.com,vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[18];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
+	MISSING_XM_UA(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	MIME_TRACE(0.00)[0:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCVD_TLS_LAST(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[ulf.hansson@linaro.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_PROHIBIT(0.00)[0.0.0.1:email,0.0.0.2:email];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 2B45511B286
+	PRECEDENCE_BULK(0.00)[];
+	TAGGED_FROM(0.00)[bounces-92511-lists,linux-arm-msm=lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,mail.gmail.com:mid];
+	DKIM_TRACE(0.00)[linaro.org:+]
+X-Rspamd-Queue-Id: 33F7611B5ED
 X-Rspamd-Action: no action
 
-On 10/02/2026 02:02, Richard Acayan wrote:
-> The clock-lanes property has no effect on the hardware configuration, as
-> of 336136e197e2 ("media: dt-bindings: media: camss: Remove clock-lane
-> property"). Remove the clock-lanes property.
-> 
-> Suggested-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> Link: https://lore.kernel.org/r/bbf0dcd9-d0f2-49a6-a2f2-6ec9376f2f59@linaro.org
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+On Tue, 10 Feb 2026 at 07:56, Manivannan Sadhasivam via B4 Relay
+<devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org> wrote:
+>
+> Hi,
+>
+> This series removes the platform_driver support from Qcom ICE driver and
+> exposes it as a pure library to the clients to avoid race conditions with ICE
+> SCM call availability.
+>
+> Merge Strategy
+> ==============
+>
+> ICE patches (1,2) through Qcom tree and MMC/UFS patches (3,4) through respective
+> subsystem trees as there is no dependency.
+
+Just wanted to double check that this is really correct....
+
+The propagated error codes (or NULL) are changed in patch1/patch2, so
+is it really okay to pick the mmc/ufs patches (patch3 and patch4)
+independently?
+
+Kind regards
+Uffe
+
+>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 > ---
->   .../bindings/media/qcom,sdm670-camss.yaml           | 13 -------------
->   1 file changed, 13 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
-> index 35c40fe22376..78b9e03da06b 100644
-> --- a/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
-> +++ b/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
-> @@ -116,15 +116,11 @@ properties:
->               unevaluatedProperties: false
->   
->               properties:
-> -              clock-lanes:
-> -                maxItems: 1
-> -
->                 data-lanes:
->                   minItems: 1
->                   maxItems: 4
->   
->               required:
-> -              - clock-lanes
->                 - data-lanes
->   
->         port@1:
-> @@ -139,15 +135,11 @@ properties:
->               unevaluatedProperties: false
->   
->               properties:
-> -              clock-lanes:
-> -                maxItems: 1
-> -
->                 data-lanes:
->                   minItems: 1
->                   maxItems: 4
->   
->               required:
-> -              - clock-lanes
->                 - data-lanes
->   
->         port@2:
-> @@ -162,15 +154,11 @@ properties:
->               unevaluatedProperties: false
->   
->               properties:
-> -              clock-lanes:
-> -                maxItems: 1
-> -
->                 data-lanes:
->                   minItems: 1
->                   maxItems: 4
->   
->               required:
-> -              - clock-lanes
->                 - data-lanes
->   
->   required:
-> @@ -308,7 +296,6 @@ examples:
->                       reg = <0>;
->   
->                       csiphy_ep0: endpoint {
-> -                        clock-lanes = <7>;
->                           data-lanes = <0 1 2 3>;
->                           remote-endpoint = <&front_sensor_ep>;
->                       };
-
-I think the ask was to have clock-lanes in the board dts rather than 
-dropping the clock-lanes from the yaml.
-
-We want to keep clock-lanes in general as some SoCs support changing the 
-lane assignment.
-
----
-bod
+> Changes in v2:
+>
+> * Added MODULE_* macros back
+> * Removed spurious platform_device_put()
+> * Added patches to remove NULL return
+>
+> ---
+> Manivannan Sadhasivam (4):
+>       soc: qcom: ice: Remove platform_driver support and expose as a pure library
+>       soc: qcom: ice: Return proper error codes from devm_of_qcom_ice_get() instead of NULL
+>       mmc: sdhci-msm: Remove NULL check from devm_of_qcom_ice_get()
+>       scsi: ufs: ufs-qcom: Remove NULL check from devm_of_qcom_ice_get()
+>
+>  drivers/mmc/host/sdhci-msm.c |  10 ++--
+>  drivers/soc/qcom/ice.c       | 127 ++++++++++++++++---------------------------
+>  drivers/ufs/host/ufs-qcom.c  |  10 ++--
+>  3 files changed, 58 insertions(+), 89 deletions(-)
+> ---
+> base-commit: 8f0b4cce4481fb22653697cced8d0d04027cb1e8
+> change-id: 20260210-qcom-ice-fix-d2a3a045b32d
+>
+> Best regards,
+> --
+> Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+>
+>
 
