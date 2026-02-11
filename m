@@ -1,191 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-92628-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92629-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cDeTMzcEjWlVxAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92628-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Feb 2026 23:35:35 +0100
+	id aFlkB7MEjWlVxAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92629-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Feb 2026 23:37:39 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6577B128244
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Feb 2026 23:35:35 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 873BE128299
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Feb 2026 23:37:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 8B8B830D98F0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Feb 2026 22:35:33 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 9ADBA303ABC3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Feb 2026 22:37:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59FB03563F1;
-	Wed, 11 Feb 2026 22:35:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01076314B9D;
+	Wed, 11 Feb 2026 22:37:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AX/JiXWO"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xk3+Web+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349BC303A30;
-	Wed, 11 Feb 2026 22:35:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770849332; cv=none; b=IORkaHXG3gIKbkvMboi+LE5tSscIKI7pyfLAORic0CgvmisFujsK0FD8V8Q2C8OrfeTAI8uPJrs8BNyQregiY7hjQvkoZwHeW04T/VBQF48bXop+Z/iZBADPSOLPchC1wNI8vOaFf3oGg/4P7+z9qLcFTgQ6uB+YFpuTnoU57wY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770849332; c=relaxed/simple;
-	bh=fRzd5C1m1KWnj9sN3omOYm7Eno2jrTo72iTwE+EhFO8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=WWe2e8CcaBEFnByP1F8xv158Os/ibStrwrENvmUjp428saRUITYIstsJrLNb8erD1pHF36tW1+zccpptIYX1Pt9lBtFl6B/jn51li+OydvuiFJWMgST76URuKmvtb48/npJaGH+eCcRODzpcdgrIQLuJX3TmmAn+k2aotw2kZNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AX/JiXWO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id BC753C4CEF7;
-	Wed, 11 Feb 2026 22:35:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770849331;
-	bh=fRzd5C1m1KWnj9sN3omOYm7Eno2jrTo72iTwE+EhFO8=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=AX/JiXWOpYqGXHWExudlFDOmtX9oXAm7pOLiOlDhydmIfVh/rTQBBMG0J9njynaZa
-	 6ig+h0BgDCGVXqZK0V0Sf75Gyh5bE5hsmVJXg7BapOOMw+ziinWuoj8HfWHhnNUJYA
-	 H7bD4DD7PjFuNG9/bMs331oEo9fdxtdpOfvbNbkUSy117MN5/ZTUfO/rN+0Ll9ClA7
-	 UeybticEes5Zv/zHC2XXBhq/QirO3+IaFQ8eaGOQAenil14ycKZPBDlwuUG92yMGNL
-	 LFZtYhQ8FPXMY5O0JtxdbUkQf45FKo0sG4QDi0HiKNNoP13YGXBJV8/1ceNNfj+26M
-	 TPpYERZpUJUEw==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ACFFFECD6D6;
-	Wed, 11 Feb 2026 22:35:31 +0000 (UTC)
-From: Aaron Kling via B4 Relay <devnull+webgeek1234.gmail.com@kernel.org>
-Date: Wed, 11 Feb 2026 16:35:30 -0600
-Subject: [PATCH v2] arm64: dts: qcom: sm8550: Add UART15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B1E3563C4
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Feb 2026 22:37:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.174
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770849432; cv=pass; b=pJ9fMrbq5wjcLhhSG21WTbl6pthkTj6IYuuENHs/GUXK4bF8CaYRt1M5sXG+I4z054agQh7AW3Ezd6YCn4ITKdDoq/HPADSlc4Hqua4/j6nyeBmWLXbGe3utvg+nUAjNSbK/rnBoP9ESFtojJcQd+Igl+diMFkkK+R0ZsW/UF/s=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770849432; c=relaxed/simple;
+	bh=6T/ikvHMlOYTLQYFaudB2xCLFqG7v7kDfO5+WLaLkts=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sS0bYttSZQk+Ym2/xmYGfKSTsn64Hev35IYg/wla7aHN6YztGkSPNXgh/GwWmMjjSX/UmYHQWb5hr3i2bvZgzzX+7GIUMW7Q0z1HlwnIVyDhKdWA+8CE35ifNX6v5s+tZbS48nYc/BokC3SmzKeeEaJo44wkxhtnhh/ichSukF8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xk3+Web+; arc=pass smtp.client-ip=209.85.208.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-385cfc572f1so21816241fa.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Feb 2026 14:37:11 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770849429; cv=none;
+        d=google.com; s=arc-20240605;
+        b=AWSwsbE54JdYHIplmGGDK5TETQalRfjtxpsbr4wtioV+0KXs3qsYqMw/1eGG1KoC8j
+         Vtmve0x/z04Z9dyZegnKJkmkOyuBesUuIwaaol2YVmUrdncqAoYskL1OVCXEWKDUYBwE
+         enTKLkRW6m0BxRtj0vVT3RrxNP6bZKC8TuYuHW2IiyDbKHiXaSAP/tKwFq7wXqOh4mth
+         JxgP6h00XOxnyIU3iEAFhCfXG+05WDd1zqzQBMw2OP3AcgMtAmmmHE3qG0BMzrNIPg10
+         YYB0JH35/nSgg6IyMgp3qhDnR8w78keV2vnva4NZ5s3bgFSMLp5UwfanQjzCqPZX0/WD
+         HXMQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=xxRS13aj1UT3Xoxhw6gPSgMuVGY8Xee+/X95ZwB2/v0=;
+        fh=WcL+22sOGqYy27OtXJLbOhc+QFwbvHG4bu5Zy3dB64g=;
+        b=hdyzKv4+cV9jheIJkB7QdyfOvLapXW7lEGb9IUAdcPjFiRyuMDeLXAjguu4x1BUZ1g
+         a50TJOgEoZlbf/qNmZGIpF7OX/Jh4rLvqXR2NE6LcbxLpI86cf/GFIM3Exiw3aUeAXRa
+         XpAUvjy2Ur6WcRGzoudJPikEPGi5i+BfaExwaMC2i9xsFt8pZJmTK55iSHuzHsoNklb3
+         xyJHjVy0YdvshDfwZJnpzVfkgIa8+4O2wI95u8/BXSTX65RD6JEerSo2YGiy4eaOLctV
+         0Awn8OLVmdy44Zm7LHtwv86xYgQ8Q1AqCxTkf0vUcmM8QPRjn4lEcT2tqWnwOS2l4/nO
+         YY0w==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770849429; x=1771454229; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xxRS13aj1UT3Xoxhw6gPSgMuVGY8Xee+/X95ZwB2/v0=;
+        b=Xk3+Web+E7O6ii9gAUZGCCbKeHns3yXmlVDn6e2f3SzG+8ENMWC9yMDjZcKlL8m1As
+         HWSJLAVD2GGqpJZ0Nyp7YhsSEvyoYO0pYxW8Be2oDxn5xotkjtRWQgXVUt+YLdhoO8Nl
+         q92QuFYCfC7PE9uivn98YV6mMfEHmK3wxGnFqvovRieJssSGAzH4Xdy09I7PpPzAdEBM
+         KMtvafe++lqRIf5dfgufo9UeaQxUsQsd2rZZ6AFZtGoyZ+osMtd3gyYh2WISUPTqPwDK
+         4eDjo3M4FSMLtoTVtpMaMvekSdSi7Eamu2RAGglbGFxDyqxA4Xi86VZtu1iLAxNvQX2+
+         DZVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770849429; x=1771454229;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=xxRS13aj1UT3Xoxhw6gPSgMuVGY8Xee+/X95ZwB2/v0=;
+        b=e3t9FYAZTdUQBphI4yVf5g519/MqpPmtuKs3sKG1e/nXiAGM8wtuWwOkSEdwk6pen/
+         966AN+FPY3Qz4DGZRSbs0ViFtJgJU0MxYQiO3V3hxuYOMjgOKSyvO+3x7vyPS5JkyTbP
+         UlZsH03PNN+ol8nhz87Gr93aqeua4LEw8IRyNngt5p0OSXEuWqvHM3NAYMGsPAHqsm3T
+         eT5n5T8iBq0pz79rwKX0CUApsyEX7PkmWc3KyMlaRyoQdAPI7fXy1A86Eb10EiUQhguR
+         DeI44szkeahY+Y2Q0ARA+Npz2qYLYKCOjttPDrxbyoOI7PhYSB+tRituhyRI5vYQ4rAi
+         pCww==
+X-Forwarded-Encrypted: i=1; AJvYcCUcSVlWvZvV2vyKrH7tfg6+icku0lMrlE5b+7wwWdJ5ESs3q7gAL7HKp7ndJ/t6CF+iXB119qb9pCZkXcHm@vger.kernel.org
+X-Gm-Message-State: AOJu0YzekcukIRBCmQPA34CdE3vw8sBRtBfMR4ArkntD3Ja9inlEQJKE
+	q0fLBCxot2FYQNGRdAgoPTSoWgFeNYUBO4Nka3qUqZgLwpGO82+DAWpKxnU/T2RbeZYMifL/CZy
+	kgb6Acksz1IoSuJcTIg62VdiDkAYJwDo=
+X-Gm-Gg: AZuq6aL72yTe89rKcFRJimZZWn42iloz34BPZgB7g9X6WNWjoJYqybOETxJNVu9jdVt
+	wOU5TUIHKZqQ2vje/WEPFwhVsilTJKjux9WUEUxEZVSZpKAUOuQTDCNuvoGuDb/VEwIj7cHvbqe
+	iUomJ+AQ4m/Ls8uIgK9TXEasH5Pu4Nd9RjlaVluZD2MWTgBLWC71Jw9Lbx074hAFWslH0vZIcHy
+	GeILTuPGUhf02up6ehRP75frAM+zLFfXUEhH43URIcBTUbnlPspalCQCgXsuSgfSirgCA6WKy9K
+	7zmiBs4XdLU8/FZSdsbr59hE9efD6aMOhpFmqY3MLVlyDu/q5lOK5PB/XUm61Jt0Uuj5
+X-Received: by 2002:a2e:bcc1:0:b0:387:384:923e with SMTP id
+ 38308e7fff4ca-38712b93f62mr623591fa.37.1770849429292; Wed, 11 Feb 2026
+ 14:37:09 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260211-sm8550-uart15-v2-1-bd23a0de18bc@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/3XMQQ7CIBRF0a00fywGCBR05D5MBxRo+xMpBirRN
- Oxd7Nzhfck7O2Sf0Ge4djskXzBjXFvwUwd2MevsCbrWwCnvKaeK5KClpORl0sYkuYxqdEJ7JZS
- D9nkmP+H78O5D6wXzFtPn4Av7rf+kwggjTls7KdE7RvltDgYfZxsDDLXWL8VlWHKqAAAA
-X-Change-ID: 20260207-sm8550-uart15-9b7bd48e747d
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Xilin Wu <wuxilin123@gmail.com>, 
- Molly Sophia <mollysophia379@gmail.com>, 
- Aaron Kling <webgeek1234@gmail.com>, Dmitry Baryshkov <lumag@kernel.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1770849331; l=2448;
- i=webgeek1234@gmail.com; s=20250217; h=from:subject:message-id;
- bh=1UeX34r1RbR0E20rmrtQKnc42GyRjfpe4HlrJ/o9flA=;
- b=5X6HlHiTEI4PYvujt7jJ7TJ+8sYjeLR0vqBFWgtbFjmxOuk7vDHkTigGtboTYYYNUzfNxdNM/
- IazaswrC8YKDQqzE2RIr4W2CgOHncIQmtgJOwSWluK7WvzCPQEFOTAp
-X-Developer-Key: i=webgeek1234@gmail.com; a=ed25519;
- pk=TQwd6q26txw7bkK7B8qtI/kcAohZc7bHHGSD7domdrU=
-X-Endpoint-Received: by B4 Relay for webgeek1234@gmail.com/20250217 with
- auth_id=342
-X-Original-From: Aaron Kling <webgeek1234@gmail.com>
-Reply-To: webgeek1234@gmail.com
+References: <20260207-sm8550-ddr-bw-scaling-v1-0-d96c3f39ac4b@gmail.com>
+ <20260207-sm8550-ddr-bw-scaling-v1-1-d96c3f39ac4b@gmail.com> <a745718d-1960-401b-b8cf-fb7b56dae933@oss.qualcomm.com>
+In-Reply-To: <a745718d-1960-401b-b8cf-fb7b56dae933@oss.qualcomm.com>
+From: Aaron Kling <webgeek1234@gmail.com>
+Date: Wed, 11 Feb 2026 16:36:58 -0600
+X-Gm-Features: AZwV_QiE8SSuF6b8a6D2WT0Vl5F8W8vkMWkANkHgxY3SvVJmLzsNQFZVTZ0Gm2k
+Message-ID: <CALHNRZ8n0sQvUuXcmiq7pc+e_hQsVgwRCMnx9FF8n6SGhCNxLA@mail.gmail.com>
+Subject: Re: [PATCH 1/3] arm64: dts: qcom: sm8550: add OSM L3 node
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	FREEMAIL_REPLYTO_NEQ_FROM(2.00)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+X-Spamd-Result: default: False [-2.16 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-92628-lists,linux-arm-msm=lfdr.de,webgeek1234.gmail.com];
-	FREEMAIL_REPLYTO(0.00)[gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[12];
+	TAGGED_FROM(0.00)[bounces-92629-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	MISSING_XM_UA(0.00)[];
+	FREEMAIL_FROM(0.00)[gmail.com];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[vger.kernel.org,gmail.com,kernel.org];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FROM_NEQ_ENVFROM(0.00)[webgeek1234@gmail.com,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	HAS_REPLYTO(0.00)[webgeek1234@gmail.com];
-	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,9c0000:email,linaro.org:email,89c000:email]
-X-Rspamd-Queue-Id: 6577B128244
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,qualcomm.com:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,17d90000:email]
+X-Rspamd-Queue-Id: 873BE128299
 X-Rspamd-Action: no action
 
-From: Xilin Wu <wuxilin123@gmail.com>
+On Mon, Feb 9, 2026 at 3:04=E2=80=AFAM Konrad Dybcio
+<konrad.dybcio@oss.qualcomm.com> wrote:
+>
+> On 2/8/26 2:28 AM, Aaron Kling via B4 Relay wrote:
+> > From: Aaron Kling <webgeek1234@gmail.com>
+> >
+> > Add the OSC L3 Cache controller node.
+> >
+> > Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sm8550.dtsi | 10 ++++++++++
+> >  1 file changed, 10 insertions(+)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts=
+/qcom/sm8550.dtsi
+> > index e3f93f4f412ded9583a6bc9215185a0daf5f1b57..80fc437c9874fd5009ff1ea=
+f4227b75bec5fe883 100644
+> > --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> > @@ -5437,6 +5437,16 @@ rpmhpd_opp_turbo_l1: opp-416 {
+> >                       };
+> >               };
+> >
+> > +             epss_l3: interconnect@17d90000 {
+> > +                     compatible =3D "qcom,sm8650-epss-l3", "qcom,epss-=
+l3";
+>                                              ^ this
+> should definitely be changed to say 8550 instead (it's going to require
+> an addition to dt-bindings too)
 
-Add uart15 node for UART bus present on sm8550 SoC.
+I missed this in my copy-pasta. Will fix for v2.
 
-Signed-off-by: Molly Sophia <mollysophia379@gmail.com>
-Signed-off-by: Xilin Wu <wuxilin123@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
----
-This patch was originally submitted as part of a series to support the
-AYN Odin 2 [0]. That series stalled, so submitting separately.
-
-[0] https://lore.kernel.org/all/20240424-ayn-odin2-initial-v1-0-e0aa05c991fd@gmail.com/
----
-Changes in v2:
-- Use QCOM_ICC_TAG_ define in interconnect paths phandle third argument
-- Link to v1: https://lore.kernel.org/r/20260207-sm8550-uart15-v1-1-d8ccf746d102@gmail.com
----
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index e3f93f4f412ded9583a6bc9215185a0daf5f1b57..a54f375f7f041a193a4396e4aa911abb42e3e6dc 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -1251,6 +1251,22 @@ &config_noc SLAVE_QUP_2 QCOM_ICC_TAG_ACTIVE_ONLY>,
- 				#size-cells = <0>;
- 				status = "disabled";
- 			};
-+
-+			uart15: serial@89c000 {
-+				compatible = "qcom,geni-uart";
-+				reg = <0 0x89c000 0 0x4000>;
-+				clock-names = "se";
-+				clocks = <&gcc GCC_QUPV3_WRAP2_S7_CLK>;
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&qup_uart15_default>;
-+				interrupts = <GIC_SPI 462 IRQ_TYPE_LEVEL_HIGH 0>;
-+				interconnects = <&clk_virt MASTER_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS
-+						 &clk_virt SLAVE_QUP_CORE_2 QCOM_ICC_TAG_ALWAYS>,
-+						<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
-+						 &config_noc SLAVE_QUP_2 QCOM_ICC_TAG_ACTIVE_ONLY>;
-+				interconnect-names = "qup-core", "qup-config";
-+				status = "disabled";
-+			};
- 		};
- 
- 		i2c_master_hub_0: geniqup@9c0000 {
-@@ -5095,6 +5111,14 @@ qup_uart14_cts_rts: qup-uart14-cts-rts-state {
- 				bias-pull-down;
- 			};
- 
-+			qup_uart15_default: qup-uart15-default-state {
-+				/* TX, RX */
-+				pins = "gpio74", "gpio75";
-+				function = "qup2_se7";
-+				drive-strength = <2>;
-+				bias-pull-up;
-+			};
-+
- 			sdc2_sleep: sdc2-sleep-state {
- 				clk-pins {
- 					pins = "sdc2_clk";
-
----
-base-commit: 9845cf73f7db6094c0d8419d6adb848028f4a921
-change-id: 20260207-sm8550-uart15-9b7bd48e747d
-
-Best regards,
--- 
-Aaron Kling <webgeek1234@gmail.com>
-
-
+Aaron
 
