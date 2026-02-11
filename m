@@ -1,194 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-92614-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92615-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id uC/4KYvMjGnJtAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92614-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Feb 2026 19:38:03 +0100
+	id WLCtIZ3WjGm+tgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92615-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Feb 2026 20:21:01 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id CAC02126E46
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Feb 2026 19:38:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C28A127215
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Feb 2026 20:21:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 552763004417
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Feb 2026 18:37:59 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id C3A4D300463F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Feb 2026 19:20:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49F6B352C4B;
-	Wed, 11 Feb 2026 18:37:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37BDC1A0B15;
+	Wed, 11 Feb 2026 19:20:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dD4Bysm8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XA4qx6kd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28736211A09
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Feb 2026 18:37:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.176
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770835077; cv=pass; b=JmRJCa0cJABX/Z2O82h4lI9rQ6JCK6AEtfpQNtttTdGHxEv+JQZS9aHtW5Zf94FKR/uZqRFhNtJ944GoHvcUJk4wNFBZ00IVy2H9QAcgo5G7Zk1oEudDe7OWBLgr7Rjc7ndTkssrIDlfNNhrryw/Zdj6AvMkLWkVifnG09hb8Wk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770835077; c=relaxed/simple;
-	bh=9ZWLjOloP1Q5uHjLNR70INYP0pXvmwZRE/FY/ppnIWc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Rwit4o9QhJQIR2uqbBOPKMCu0A/hYv7FfwtvIwEjkmrohBoltv7MxM+9VKoaUXtFb1jWHS+V97D9kDszti9BR5so9DvJDm+i57EhOlX8brsidSrhe6BTeekYJnZV/RkOwJRZWWgQf/fe/xS6Oat+SBppQ45g8HAoKEXisrQ5bkQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dD4Bysm8; arc=pass smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FB3527FB0E
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Feb 2026 19:20:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770837649; cv=none; b=SfhQJCGZqwgOUoO3sfYbouD2n9ObEETVJkPmCy5OoJNKD0mWV7ofDd3bY9A2fkzqMWyUIH2Mb+n14WWuqZ4Y4nQ3gtP3LPHAWf6s5e64NvszJgPuXWJ+jkBbBw3me9VQ2flFpKw9CM1z7k63OOWvnhTQTzRh2ZeStvH736cSKrU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770837649; c=relaxed/simple;
+	bh=N7jtro5oSJN1JKozY7l0/NLT0gx83PLmC0myZcZeqW0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NYNbfDMZCUJR7x5B/xKzubv2EM0iR0DG1jEj7F99jWNSY0heq7vPsHz2swLO2OWGKTSqHcq55qwaGXlUt1/7O6uqUB0Tmcj7IUCLMAhTVhGvxn3XKDNHieDT4E4tNAurJ/FKNLm5XdSCQZbmBIAtkCyVR6DbdTpXmlWrf0MrWkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XA4qx6kd; arc=none smtp.client-ip=209.85.222.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-8230c2d3128so1105273b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Feb 2026 10:37:56 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1770835075; cv=none;
-        d=google.com; s=arc-20240605;
-        b=kloSw2UhipUYtq0fk2dpP5TwAXfiyKnazO1GIihtxkcCBsIoEgSRy3gV1EYC89zKyJ
-         oqHwBevvvz7pJBa/zB0Z82F1rH+yUvkCXATakCdynnmzYvgdOny5BiAsaLY0AWGI+dJE
-         G8vMbpvaNFgGM0E83QpkzgBEMWdwSbNg2XmzAwkLONELilTR7hqDnX48GcDjaIOIB30G
-         SRgNBB6O0HNXQmO94ZbACOn5BbPeZRcHHQUyUuXtegz+C3JiqAT97FviVSutuHugsuQQ
-         XS8Oi5pOHfkXcdDd/EM3nMjEDDFEXrHYUXzRaQOHsnYjJFuQkj4ZbN39iTcf4ARVUeOD
-         JFcw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=NMPWpykIwqzVnKpU0MqZGbLM8pCJKBxgV4mw17dHpGg=;
-        fh=QGk2OfXFeKXWmsPCT0SUlgPb8CTrR32jzsEll11fMFc=;
-        b=bH1q+zpw0TMKbguHr+2HT93LcS0bTo5oiO4q3afPD2sr3VUqlDE9IwVnPZkv9SWg3M
-         NEzsAPoov+7kpLp5GJuFGNc1pllphKNwrtuPB84Vm+7UOX1xufwnej61SsJ4jU7JGbPX
-         CtduwVDK+NmwMaQz5xjwms2RGjqk0Bnw2c72Nm2sj+y3aDX+2h5F0MHbiaDwYoQ+M6v1
-         dnjIdvV+NLnz/zob+WlRUvctECkbgcsgjlrS4p42KKXRKKfdMplB30AFNSxkX0J/Qzmm
-         dIHMLhKxg8XXFDUDExiNg0asmsiqqO59V9doBcGf7YCyjc7dmpqtIoIE195/5azGqgrS
-         QDdA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-8c59bce68a1so167580185a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Feb 2026 11:20:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1770835075; x=1771439875; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NMPWpykIwqzVnKpU0MqZGbLM8pCJKBxgV4mw17dHpGg=;
-        b=dD4Bysm8qx2oNt/ljYK2dY+kw68Z2xBUGiI0IXibgjRxcMEVvrlAUFoHXtwbDrscd4
-         3bbAWi/WA7yXun3eogVkRIca5PJYESQuIeDF3pTW5GFXqt24PGzOq7OK+u0hiHrk9GGn
-         d/BYnuxs5gunbHQntQ5QV5y9KiWksyLfJgP3dPiDJZI5D+Uzq9fQlzV+VVgNAUL1cVT6
-         C2t26hPMMmIkLOGmPBw+Ko9eL8cvflZ/D4s5J14PGOmx9h7tZX9xLNviXi5pzhhMZkDX
-         dvsC6t4X5H2tKmh0gmhUDoRB+bpRtAiIYFrn2qNaXoTlilkJyv+rWnRChdQF/jW7I726
-         ZtGw==
+        d=gmail.com; s=20230601; t=1770837646; x=1771442446; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Hnjm98atgKsIzfRxPyb/8amThvi/ub+kK9XVY2KgknI=;
+        b=XA4qx6kdzGxpYbNm808+tcFQvxoWXgCxbzFAmbhfsLXxu4IoLCVkXR0HA3EzqeSc6Z
+         YbGV1AGtjiIB3xoJUxWhbsveNcpHRHhzQRQdjBwBEobTxueMPwujR5+F9xfOkaQ7xrcr
+         koLV5cf38Rk49Bl9VzI5xu2RJsMRqIenjVBaZyRR22WZdkh1Djrfw8tq8sqOTfpkxUgJ
+         zOUUCwxWMlDP1P8fbooRXk/4BFpEGdpo7OpNZ3yV0PvfpNJ2uHV8Oy8+X7hGBhTSYzxH
+         Shc3LBXFgkhICyoHP7afbQF6yV61g8piw1eSFgNSLMEHJBfeqIS9J8dLmNJyTCSdGPFS
+         9e/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770835075; x=1771439875;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=NMPWpykIwqzVnKpU0MqZGbLM8pCJKBxgV4mw17dHpGg=;
-        b=rc81K9GzIbOv2OONVI1Nz5IPs5QYCcceTyoXVu8cc9T1P1fMGHEFe3cwc90zsTmHyo
-         NgJoiwIVbthnbpFAyagUaCUhYEcDKk/3VWfNLg4nrwiDRqpY05zQ5OE7dRs+T7q85MR7
-         da7xF/Aqwmn/u0YkGsvikCkTgayg06NXuKIc44hPsJBKSoM/Ukn8p5PQE5X2IYnIL8b0
-         6oQ4UhsnzLjuOMF5xYvF5Htlnt3ReANCCWlQFj6e5wRbUbNQNkLPXifALymE8f4L8h1r
-         PdM/lGBd82E9OELbj+jZ1mZ6jKAf6SN5yhEep/DEk+YIC5P72z+zgkJXQgYykxM3/9s3
-         bTeQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW13wUcrXqtQMwUFE7Pp8qwaUDLu1ZPXSH7BYJSaQr/Tvob/rHhP0OeeLZ/VRxVEnQzRl362QIA8brlhHdT@vger.kernel.org
-X-Gm-Message-State: AOJu0YwtXofOykw74jwqWFk39uVvqoZQMEHn5IazhKMMiI1DJSLgM1rC
-	uI8fyWlXiNSqd67O5tS73W1TCdjLR/rOvPTplGrt23LGD7lf5raQ186C6r1saiy/TZHXeQYuaek
-	B5f+hHDzBB64DfdMk9Sw0yVWN4Mhocjg=
-X-Gm-Gg: AZuq6aIPk4y4BDcLrderUq1InBkx5jTn2t1iwUuq82COpveu8TBvAj+din5zt/xEC8Q
-	SPlZW/1tvoMWum1rw0JmS4afTPMj+kZD+GAAG6oQSmiyNXOGMVyQe2QswpseqyFIIDguuwJ+w6v
-	LmSMdRDRmxfp5Y2APaeLjU1ppUqwzyCfKXpLgdIEsJJbsR9YTUrkj1PgtOTVD41UUQ5r0+cSOm9
-	SldyaZGFLNB8HfNY/KRUTK6aql69oVS0hElCCTJnBDF0JGwUhgcVQe3A1DbEPhFtWvc4UaTsz3z
-	GsME8S4=
-X-Received: by 2002:a17:90b:5211:b0:356:282e:7eb5 with SMTP id
- 98e67ed59e1d1-3568f3f7f89mr227816a91.24.1770835075473; Wed, 11 Feb 2026
- 10:37:55 -0800 (PST)
+        d=1e100.net; s=20230601; t=1770837646; x=1771442446;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Hnjm98atgKsIzfRxPyb/8amThvi/ub+kK9XVY2KgknI=;
+        b=pdmT6Hu0kdL0DuismvEQBJxAt0AP4mto7o80he8C4xD5RQSUH6RV3LoGH6z3WMaMmD
+         HQ5hBW/Zqf+QtuDAFLPPQeFm9AjwhihFBfGgQbC7bDAwCb0CEuBDx2VXUvy5iFI16roA
+         /C38B9RYXmfWcghwilit/7HZySUv0rAEFUezfjFI6thpDZDe1I+/b/XC/mTRN2jwS55A
+         tnY1uMyFn1Yc4Dk5bBrMoqtPnucwYJLzdbAAziTNn7kxeT8yuYdfrKGcrPimt8PNSbYL
+         Am7Dh6S7p39TbZ3+RD1Oy9LEsvKBnxA6LIbYT/d3Tzzyx+l0JwZkawQj5GIa+07ljEfV
+         JjwQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXCdRUSaGXncKUyG58k3mrAmZIa/emgR1G38a3ooYJDanVN7Y3cJIr7mwjQMnX/ByHjQvSQdgUGAS0+enrq@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw7C0cfu/w0eCKH45COLQqtcFGlxiTBjoy4RF/M5PRh23mnNw4E
+	IY9oUaLuFaRoS6eN2oWzPzrKESTOpKRkGwbTefVWlUmbNzRi7aXd7yUz
+X-Gm-Gg: AZuq6aJR4uiKhtpOg4J8sDASrohk5KaQ/c7rCh8Dm1WfLMerGGOm08U5QJ+kqzdDG9R
+	GOlTXLtqj/au1HvA7dvZ3Fbr55wXvsmade/L3j0AOz5eSPf2wPSxmi/rzbjfIEJ6jLAmPoSe7rt
+	nFCEsxW40SLbhgRyTWpCIZr1TVnUjjhJVjmwrXe18FDnL3McsvJF/Ox2o8nN2Yx0YzZUenfI80S
+	Jeztq03PplPLBwU3RP5s50roBxo1ovj88He+/JlcMsSPwL4Ka34WlcLqRazJgqSCXY+BnzLNjRg
+	wyqV/mD+qS00Z1aAxmiLW4Fh3pnmN7JgxBbp2/zGtqJuRLKF10PKqHbn7wmrVHOhitRaS26WXlb
+	07Hh9rtQdilNybIsyD52a9DtTLKzqj0rZO+iTdjGknclwO/AoHHUmrNyXl9FbVQ8y3cR72kb8SM
+	AQMLJLVm9SkzQSCBdoJ//bvFukS+mR7yX5tlbY
+X-Received: by 2002:a05:620a:4892:b0:8c5:2ce6:dae with SMTP id af79cd13be357-8cb3308ed3bmr48912085a.29.1770837645889;
+        Wed, 11 Feb 2026 11:20:45 -0800 (PST)
+Received: from localhost ([184.144.58.243])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cb2b1f8185sm180521985a.36.2026.02.11.11.20.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Feb 2026 11:20:45 -0800 (PST)
+Date: Wed, 11 Feb 2026 14:21:12 -0500
+From: Richard Acayan <mailingradian@gmail.com>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Conor Dooley <conor@kernel.org>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 2/3] soc: qcom: llcc: Add configuration data for SDM670
+Message-ID: <aYzWqFybymwd17Dx@rdacayan>
+References: <20260210021957.13357-1-mailingradian@gmail.com>
+ <20260210021957.13357-3-mailingradian@gmail.com>
+ <026ce34c-c880-4832-a791-656fb245a495@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260205-qrtr-control-port-access-permission-v1-1-e900039e92d5@oss.qualcomm.com>
- <20260206183657.0477e50a@kernel.org> <5b2fm4nbceqdmeu532vsr26il7jroli2sh6azcwirzm43b32da@grqzpgmmdvyp>
-In-Reply-To: <5b2fm4nbceqdmeu532vsr26il7jroli2sh6azcwirzm43b32da@grqzpgmmdvyp>
-From: Stephen Smalley <stephen.smalley.work@gmail.com>
-Date: Wed, 11 Feb 2026 13:37:44 -0500
-X-Gm-Features: AZwV_QiEMEu8q-izEMqXgVPWSyu-zfy2ppyFTX5F5JMm-3LkhB33GLI1JN_qEvc
-Message-ID: <CAEjxPJ4VA58rtSEEZpxeUZHMjURtrUbZCvV8kAkWwJaoR1YN2A@mail.gmail.com>
-Subject: Re: [PATCH] net: qrtr: Expand control port access to root
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Jakub Kicinski <kuba@kernel.org>, Paul Moore <paul@paul-moore.com>, 
-	Ondrej Mosnacek <omosnace@redhat.com>, selinux@vger.kernel.org, 
-	Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>, "David S. Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>, Simon Horman <horms@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, bjorn.andersson@oss.qualcomm.com, 
-	chris.lew@oss.qualcomm.com, 
-	Deepak Kumar Singh <deepak.singh@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <026ce34c-c880-4832-a791-656fb245a495@oss.qualcomm.com>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	MID_RHS_NOT_FQDN(0.50)[];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_COUNT_THREE(0.00)[4];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-92615-lists,linux-arm-msm=lfdr.de];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-92614-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[16];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[stephensmalleywork@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FROM_HAS_DN(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: CAC02126E46
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mailingradian@gmail.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 8C28A127215
 X-Rspamd-Action: no action
 
-On Wed, Feb 11, 2026 at 12:20=E2=80=AFPM Manivannan Sadhasivam <mani@kernel=
-.org> wrote:
->
-> + SELinux folks
->
-> On Fri, Feb 06, 2026 at 06:36:57PM -0800, Jakub Kicinski wrote:
-> > On Thu, 05 Feb 2026 13:51:31 +0530 Vishnu Santhosh wrote:
-> > > When qrtr is loaded as module, qrtr-ns runs from SELinux kmod_t
-> > > domain. On targets using upstream SELinux policies, this domain
-> > > does not receive CAP_NET_ADMIN, which prevents it from binding
-> > > control port even though qrtr-ns is a trusted system component.
-> > >
-> > > Granting kmod_t the CAP_NET_ADMIN capability in policy is possible,
-> > > but not desirable, as kmod_t is not expected to perform networking
-> > > operations and widening its capability set is discouraged.
-> > >
-> > > To address this in a contained way within qrtr, extend the control
-> > > port permission check to allow binding when either:
-> > >
-> > >   - the process has CAP_NET_ADMIN, or
-> > >   - the process belongs to GLOBAL_ROOT_GID (root-equivalent tasks)
-> > >
-> > > This permits qrtr-ns to successfully bind its control port in
-> > > kmod_t restricted environments without broadening SELinux capability
-> > > assignments.
-> >
-> > This really feels like a one-off hack, but it's far from my area
-> > of expertise.. Could you get an ack or review tag from some kernel
-> > maintainer working on security, capabilities or permissions?
->
-> I'm also not too sure about the problem because it looks like kmod_t has =
-almost
-> near root privileges, but cannot do network administration.
->
-> Maybe there is a valid reason for that?
+On Tue, Feb 10, 2026 at 10:27:40AM +0100, Konrad Dybcio wrote:
+> On 2/10/26 3:19 AM, Richard Acayan wrote:
+> > Add system cache table and configs for the SDM670 SoC.
+> > 
+> > Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> > ---
+> 
+> I have a clone of some msm-4.9 on my ssd and it roughly matches this
+> patch
+> 
+> However
+> 
+> In docs, I see a version with only CPU_SS, MODEM and MMUHWT left
+> (your settings here seem to match), dated later than the last commit
+> to llcc-sdm670.c in that downstream kernel clone..
+> 
+> Because this SoC seems to only have 512KiB of LLC in total, it may
+> be that it was found in testing for that configuration to have a
+> better perf profile
+> 
+> Could you please give it a shot and check if you see any immediate
+> gains/losses?
 
-On Fedora, kmod_t is an unconfined domain and is allowed all capabilities.
-Upstream refpolicy likely hasn't encountered a need for net_admin
-during module initialization previously and thus doesn't allow it just
-as a matter of least privilege.
-Since you referenced kmod_t, I assume this is just for Linux, not
-Android (which has an entirely different policy).
-I would fix this in policy rather than changing the kernel module code.
+I don't notice a difference outside the margin of error. The Unixbench
+workload reported 4550.4 with all configs, and 4550.9 with only
+LLCC_CPUSS, LLCC_MDM, and LLCC_MMUHWT. My 15-second workload on
+Hexagon/CDSP was half a second faster when commenting out the cache use
+cases.
+
+I don't see better startup times either.
 
