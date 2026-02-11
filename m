@@ -1,120 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-92577-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 2KDHClwojGm8iQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92577-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Feb 2026 07:57:32 +0100
+	id gKbgOaIsjGlOiwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Feb 2026 08:15:46 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B71A121BB1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Feb 2026 07:57:31 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 94429121D07
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Feb 2026 08:15:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id C5E173004D1F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Feb 2026 06:57:28 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id D356330168B0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Feb 2026 07:15:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B001E318EDB;
-	Wed, 11 Feb 2026 06:57:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ipi9uGuF"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D11B2C11D0;
+	Wed, 11 Feb 2026 07:15:42 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ADEB258EE0;
-	Wed, 11 Feb 2026 06:57:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 699C923BD1B
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Feb 2026 07:15:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770793047; cv=none; b=DTE+f+IXSWB+iIRKZpQ0FlcZyyeT6WkZ1YW6lujbD8M45KupWSD38WkDKDLZCSBPNA2Hvc3KXVQFMXP189mV4e8U59JbbviFhbGvLd96gCOr5+F3Krh3ftlNmHP72fFIikyeppTmpXDcbVJlQfjjarIBLBXlNMPbV45M6oIeKnM=
+	t=1770794142; cv=none; b=cIf6zRGg6YO/2yhApV6PLx84Ee9DEOfK+TngCKeLbR8wdMF9CKwS6PgUyYYewQN/DArKAl/+YGYhGy+HRyqRg+Eeprb1PKfTDm4UtfJyIY3K1emyfEJ3IFX5dPE8j4XdOY1daUkMW9RpDjhQl30lKQbQLb277+fzGe3MsGIIU5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770793047; c=relaxed/simple;
-	bh=XhiK/KBLwkYOM+W68oEBw/UPC5xlX/sh5Ht9rNNP8Ik=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uOMBDjzxWLUjzZ3uFef0o9AbVvpf0j5R//Dat1Cm/sKdTqk3kkkm1LT4koAU5n/arNC2WhF/BrTOzt5pn7UMTH/QRHVocffI2U6DR2nMkZEngo5NM6FImjsGO6vLLxZ0tUU06tUMvO/2mC0ylQp8858S4AhvHY0bot+81uuYiOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ipi9uGuF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85AE9C4CEF7;
-	Wed, 11 Feb 2026 06:57:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770793047;
-	bh=XhiK/KBLwkYOM+W68oEBw/UPC5xlX/sh5Ht9rNNP8Ik=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ipi9uGuFs9DLdR2w4sw2Hy1qxGSEyzU8+jPEC4mcIiVZ6Qv92VgnJ6+2bTN6nut0k
-	 skDT4TGw3i8OGCGR2hvt5zpQ61FUfMqGrvXCKD98c24XRNJnjD4ZxwJD1cJqwCF5xA
-	 trh+Pi0fA94Y/NbgaWUlEaPyHMXr0Aindi7NLF1fESpA0gGb+KAvQ/eaPd3x4wQjPe
-	 e06PlwdeJeXNqXx4nkY+3i4TNTnxuW/mP7so7CSH7U3m40znHh31b1is7XhObnX+9a
-	 hOlZrMRmKCK4PdgO2yhUwofkk/etoC8WCjdCZUPhQMks49ORAK/YfPqtpQBKuyt/9Q
-	 EyMHyyDGyHInQ==
-Date: Wed, 11 Feb 2026 07:57:24 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Richard Acayan <mailingradian@gmail.com>
-Cc: Srinivas Kandagatla <srini@kernel.org>, 
-	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Wesley Cheng <quic_wcheng@quicinc.com>, 
-	Johan Hovold <johan@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
-	Nickolay Goppen <setotau@mainlining.org>
-Subject: Re: [PATCH 04/10] ASoC: dt-bindings: msm8916-digital-codec: Add
- SDM660 compatible
-Message-ID: <20260211-angelic-pony-of-hurricane-05bd64@quoll>
-References: <20260211020302.2674-1-mailingradian@gmail.com>
- <20260211020302.2674-5-mailingradian@gmail.com>
+	s=arc-20240116; t=1770794142; c=relaxed/simple;
+	bh=1z9QXfaNM31CLdI80Xi3sblAOGbXr02fTw9N8R8Tk3Y=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=oVvU21g4gd13WZLPVKHPDa2fkFPbpnNEa1r1dkTN7A+OUNRT3mTj90Pej5z9Fkf2W9SUVS9ViBs+Qb0V8X4Jc3ACH3kieqAepjSOpRkg96DAG1NcDTvwGsrz2EXgGD8JmNpXs9jqG347elCNmluSOEp4roApFTDw3FDEI2BJ7KY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=li-nk.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.216.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=li-nk.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-354bb7d2cb1so295650a91.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Feb 2026 23:15:41 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770794141; x=1771398941;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=1z9QXfaNM31CLdI80Xi3sblAOGbXr02fTw9N8R8Tk3Y=;
+        b=YgHgA/6FMB0ahcUAIdsRyCmhUpivYR/KUlhFkvKr73LlyNuMXfBQpT+emETq38YmoU
+         kJWQIpC649qq53Lv9AmTcAv3u0Sxm7uopSE6HIUwPH/nfbcIGXtx8abI9YHETWS03WhL
+         aUAWXlv5CaQvDeHOzXJIPu3r8X20gMMyQjopfTEJYfSUIipFKY1WLaQ5Xjs3RqWhyC+9
+         c0XcWuiMeIT+snfZ0gauxkdHLOJ7cg50pfywldIP19t1jc/1yQvMrj3+vyFyapNw6gRs
+         3VenC39SozYFvM3xco7UIvuZpm9vSPxwsNYOU3aO2je0vNuZqyDcih95iQc168137Rd8
+         H85Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUbsq4XrId0mnfBs0s1uqxNl0O8IswUwj8K/L6fKvUao6vpSGFdrpo37C4hO/r+qWlHRFrwd7S/PSg2kxX3@vger.kernel.org
+X-Gm-Message-State: AOJu0YzUVY5Ivl/72F93U+XEiVTOIvnQcmnew0EjT68AR3GACPGKUSHU
+	dndzZNB6dp55FyxibMcYEh7BWslnEZJ9WM0HKMhv3ipedIm3k/J24/XU
+X-Gm-Gg: AZuq6aIE9AtZvRzT7q/HjMnZTtpe9ZgnC1ryIBLammK2q+cAeWjRxc/T8csGje0QLVn
+	lBX0EvXWipbvxrkQEz7qfkQe+eVEh09U4P5yBJysw67Lbvh7OhlPkMyo7zdYxW+vdtU1M6EnZBi
+	N4GHjOxomeExbK7mZibz/tEOMrGHgSYadGXFePGo2yYh4TIF96EkMFWqCOpxAPWrLaUVv+Hl6TZ
+	7/IAx+Zcv3F7XEqh0isW4cUciR8U9y67vmVrh5uGjTtgcNbDSr4b2Rk1DGn6V4Eie3PGkFrGQFb
+	Z7G8eiGkWZ1OI5wSNu8Hq8QY8f35hEgA6LSizfmLyTvqf07YfzMJ83YDYAvCC+WUiIVZgEV+1Fe
+	DTM9YOXoYwn3w+5sc+zl15fwKHNBIsTiYlr0DrLRoyXX+oUDvbqXeWJ+kAh3yQT6yNbw3MeJkOM
+	VALlfR+gXaqyGmzBg0mGhcYqqcxSFOrCAPEZ9KXk68KS3eaat5eII4C1bJYF/hWsxYASNUNnOre
+	8dmQ4Uc0KW9
+X-Received: by 2002:a17:90b:5106:b0:354:57eb:c826 with SMTP id 98e67ed59e1d1-3566641e5ddmr4309870a91.2.1770794140714;
+        Tue, 10 Feb 2026 23:15:40 -0800 (PST)
+Received: from bishop.localdomain ([207.32.167.122])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35662f6b624sm5300572a91.11.2026.02.10.23.15.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Feb 2026 23:15:40 -0800 (PST)
+Received: by bishop.localdomain (Postfix, from userid 1000)
+	id 06E8D142C7E; Tue, 10 Feb 2026 23:15:40 -0800 (PST)
+From: li-nkSN <colin@li-nk.org>
+To: jens.glathe@oldschoolsolutions.biz
+Cc: andersson@kernel.org,
+	konradybcio@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	"Colin K. Williams" <colin@li-nk.org>
+Subject: Re: [PATCH 0/4] arm64: qcom: x1-vivobook-s15: add X1P42100 variant, restructure dts files
+Date: Tue, 10 Feb 2026 23:15:38 -0800
+Message-ID: <20260211071538.182318-1-colin@li-nk.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260208-b4-vivobook-v1-0-3a9b5e153909@oldschoolsolutions.biz>
+References: <20260208-b4-vivobook-v1-0-3a9b5e153909@oldschoolsolutions.biz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260211020302.2674-5-mailingradian@gmail.com>
+Content-Transfer-Encoding: 8bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
+X-Spamd-Result: default: False [1.54 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FREEMAIL_TO(0.00)[gmail.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-92577-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[17];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TO_DN_SOME(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[kernel.org,gmail.com,perex.cz,suse.com,linuxfoundation.org,quicinc.com,vger.kernel.org,mainlining.org];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: 4B71A121BB1
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-92578-lists,linux-arm-msm=lfdr.de];
+	DMARC_NA(0.00)[li-nk.org];
+	RCVD_TLS_LAST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FROM_NEQ_ENVFROM(0.00)[colin@li-nk.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	R_DKIM_NA(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 94429121D07
 X-Rspamd-Action: no action
 
-On Tue, Feb 10, 2026 at 09:02:56PM -0500, Richard Acayan wrote:
-> The MSM8916 digital codec is also found on SDM660, typically connected to
-> the SDM660 internal sound card. Provide a space
-> for specific compatibles and add the compatible for SDM660.
-> 
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> ---
->  .../bindings/sound/qcom,msm8916-wcd-digital-codec.yaml    | 8 +++++++-
->  1 file changed, 7 insertions(+), 1 deletion(-)
+I have been testing Jens's device tree for the X1P42100 ASUS Vivobook S15
+for about a year now on my hardware. The generated DTB works well and the
+device is fully operational in daily use.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-
-Best regards,
-Krzysztof
-
+tested-by: Colin K. Williams <colin@li-nk.org>
 
