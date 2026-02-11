@@ -1,61 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-92572-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id WCyIFholjGnjiAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92572-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Feb 2026 07:43:38 +0100
+	id 2I14MHgljGnjiAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Feb 2026 07:45:12 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2A46121A82
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Feb 2026 07:43:37 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 69747121ACB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Feb 2026 07:45:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 9B4F63018596
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Feb 2026 06:43:36 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 38B3F305CAA0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Feb 2026 06:44:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F300B3370E3;
-	Wed, 11 Feb 2026 06:43:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E0C3343208;
+	Wed, 11 Feb 2026 06:44:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s6UWzHDr"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ToKM3CgU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3CE3148A3;
-	Wed, 11 Feb 2026 06:43:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A40A33FE1F;
+	Wed, 11 Feb 2026 06:44:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770792212; cv=none; b=d1HMIniGswqGg2Q5tZigZcQdBGFnVsMNyFZ7WxHdHrIS9dKp6P+v0yPFutQWAG3Vh0iy/B6QADRg59/O6gZlmLpixglheA9Om8xfUdp8v1VXsMGvxYNIoBKjCmS1L+jFQ8Rm6uKjZwGwfFEfVDskkVf+6J83xp1llrEh09avWMg=
+	t=1770792285; cv=none; b=A2CFXt7PcZ2PQPZL9p4eVMaiduLZageExcPAQupuN9SY/pjI4NufG7DqkLVKTY9GXYJU1QkozEXXQ9BxTTD945muXKV6nppfIAwUgHzYWaDbX4jn3SEU0qLUeYVJ3IJycMEu4r3L8QxgYlaDIHG/Sb9Rnl5xWnmho63TtnB/duI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770792212; c=relaxed/simple;
-	bh=PvxfgnACJlWHTINBi0YLxkfqVq+/kkMQjHVm0WPXloQ=;
+	s=arc-20240116; t=1770792285; c=relaxed/simple;
+	bh=3djo9Qmfdzan0IAZWyZvmp4FhZLmI6JZf/+TmkMe4TA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EhXGYJqFPZ4TiCxDwp9I+9vj3t4TkUsNANb443g+aOTSrKCGaYKWyY6YviwBHETfee/TQtaUgHXI9wsX7Sdyc42k7FMH3V99GGKoR2aPlz3X9ZfmjwL2DvQRPkAZyVGcne0kA6y7kjx0s7JSS+0701uDZWklwAmYf9xqjBnOkd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s6UWzHDr; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D01FEC16AAE;
-	Wed, 11 Feb 2026 06:43:31 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=tLzJrwxgg+L7KpNKCrtn5U4/9iaQK157Mc+EfeKjYe3tWWKctIjr/qx+L/2SjWvbd3pTbLsaNG2n2xhDZEh7f+brCMj+cEo6RUzyGYg0zG/IlbDyn/WD9hy9/LIA7Mk++cgzxoKM+ykjZqJf6rRe4d6rnT8a4gC4X0NFLlcpibw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ToKM3CgU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4664CC4CEF7;
+	Wed, 11 Feb 2026 06:44:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770792212;
-	bh=PvxfgnACJlWHTINBi0YLxkfqVq+/kkMQjHVm0WPXloQ=;
+	s=k20201202; t=1770792284;
+	bh=3djo9Qmfdzan0IAZWyZvmp4FhZLmI6JZf/+TmkMe4TA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=s6UWzHDrMcTk/ihJ2GTvKMFaoMX+fYXydbk4/I2jmchtxHVMGyVYm0M7jilVw7Ejt
-	 AHy1Sv+cGBi2Bo3Y6g2CSFCB15+Fsm8A+xA5hqHRbQWG4EPO9SZ3emEtyurUWMA7/S
-	 /nULaQKZ7yHaxpbUrBD2Uz+9dNGzw1i7NihNRDxN2Sb2KG1HuFAvI5ZUtKOWzvN244
-	 NJYz5Un8FLy8oh5EWG1AYg0wFcGvZttv+0JBT1BNLWJ/n4UG552Fq8QTrWtIcwq3s/
-	 E4Xxw5zrZcjdQhx047Rld9GPCcwebTQcLJIPg37XtdBJFhjTuNfc2X2oI67YUiTOhQ
-	 mCLJ0dHe5h3yg==
-Date: Wed, 11 Feb 2026 07:43:29 +0100
+	b=ToKM3CgUkHshGA3xcxhM/66ew0qrGe4H3qOB9WekDJ4y7SJuvcBktw++4nP3P+aws
+	 StbeYHFcqLPQ0Pdy+KF0hD108LIOR5NQwnYu4U4hNQKA/zOieh4FoXhTTM/s/MmJao
+	 rqNf5pUjnrv3T91T374YI99hgaJQMg3lau2WwYKJp1a/4uhifpeclHJfpRlh+Cb8nf
+	 Oy4Q5oMqPMQ5GhRYo5L9XGH9JWGkSe24Ahh6kfwXA2oZ+7h8GXHW/YcpB8qeRCPn9l
+	 TN2JeMNfMR8woGb8Sf2FsrrSYMiZGiFDT8Iq0RGRz/EDa16Q+RrsKWEdRfLrinZnvr
+	 AFm+WQBjPwPbA==
+Date: Wed, 11 Feb 2026 07:44:42 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Cc: lee@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
-	conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org, sboyd@kernel.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	alexey.klimov@linaro.org, r.mereu@arduino.cc
-Subject: Re: [PATCH 1/4] dt-bindings: mfd: qcom,spmi-pmic: add compatibles
- for pm4124-codec
-Message-ID: <20260211-holistic-precise-gazelle-fea9be@quoll>
-References: <20260209142428.214428-1-srinivas.kandagatla@oss.qualcomm.com>
- <20260209142428.214428-2-srinivas.kandagatla@oss.qualcomm.com>
+To: Richard Acayan <mailingradian@gmail.com>
+Cc: Lee Jones <lee@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Amit Kucheria <amitk@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>, 
+	"Rafael J. Wysocki" <rafael@kernel.org>, Daniel Lezcano <daniel.lezcano@linaro.org>, 
+	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH 1/3] dt-bindings: mfd: qcom,spmi-pmic: Allow PMIC4
+ thermal monitor on pm660
+Message-ID: <20260211-enthusiastic-military-caracara-af0b65@quoll>
+References: <20260210021819.12673-1-mailingradian@gmail.com>
+ <20260210021819.12673-2-mailingradian@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,57 +68,51 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260209142428.214428-2-srinivas.kandagatla@oss.qualcomm.com>
+In-Reply-To: <20260210021819.12673-2-mailingradian@gmail.com>
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-92572-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
 	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[13];
+	FREEMAIL_TO(0.00)[gmail.com];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-92573-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[18];
+	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	TO_DN_SOME(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	FREEMAIL_CC(0.00)[kernel.org,gmail.com,linaro.org,intel.com,arm.com,vger.kernel.org];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: C2A46121A82
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: 69747121ACB
 X-Rspamd-Action: no action
 
-On Mon, Feb 09, 2026 at 02:24:25PM +0000, Srinivas Kandagatla wrote:
-> From: Alexey Klimov <alexey.klimov@linaro.org>
+On Mon, Feb 09, 2026 at 09:18:17PM -0500, Richard Acayan wrote:
+> While newer PMICs are compatible with PMIC5 drivers, the PM8998 and
+> PM660 are both PMIC4. The PM8998 is allowed to use the PMIC4 thermal
+> monitor. Allow it for PM660 as well.
 > 
-> Qualcomm Agatti SoC has PM4125 PMIC, which includes audio codec.
-> Audio codec has TX and RX soundwire slave devices to connect to on-chip
-> soundwire master.
-> 
-> Add missing qcom,pm4125-codec compatible to pattern of audio-codec node
-> properties in mfd qcom,spmi-pmic schema to complete the audio codec support.
-> 
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> ---
+>  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 
-That's v6, not v1.
-
-> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-> [Srini: reworked the patch]
-
-Why? The v5 version was what we wanted. Why changing it?
-
-Anyway, same feedback.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
 Best regards,
 Krzysztof
