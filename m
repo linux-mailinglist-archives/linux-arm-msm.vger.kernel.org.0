@@ -1,167 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-92728-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92729-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aaT1HyQUjmms/AAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92728-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Feb 2026 18:55:48 +0100
+	id OPuELpsbjmlK/gAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92729-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Feb 2026 19:27:39 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0472E130180
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Feb 2026 18:55:47 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D3491303F1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Feb 2026 19:27:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id B51B5308A9E7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Feb 2026 17:55:46 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 7DEFB300BB8D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Feb 2026 18:27:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C41A9224AF7;
-	Thu, 12 Feb 2026 17:55:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DF3D27BF93;
+	Thu, 12 Feb 2026 18:27:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PVsJewGH"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cZo/kQZT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DEA421C16E;
-	Thu, 12 Feb 2026 17:55:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17700274FC1
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Feb 2026 18:27:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770918945; cv=none; b=k7yQ22Z9oot7tmATE8vImCv56jqG1t11/XllEOn2omtGFV4vi+KRAiXB46ExeXI1ybKvK13sPT2WrDf23TNT+vKsrOF5LjBP7vnjvr9LQBI99CZqzwZZGAulVk/s5NAbWYZZgoI29TmkJib/GHXUJ8hIHkgv3kSfPCj6jxFjX0A=
+	t=1770920856; cv=none; b=Rb3mtQik8rE9f51YNHccYv40MPJbmp1Lfir8kkXAk6THmR+WaG/TjTbpOUvbHif4UXItrV8lOAHzTptKlxJ8auzwRsQT8YfCmB4zd7DVnI6ENk2A9IPiYb3My/qCnaQufZd/CFbNs/dTcQ8RM58siTwuf1ICFCUYPQ1Q13MYSI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770918945; c=relaxed/simple;
-	bh=tmiUxdjaAj9JS3g6BpUFQUWj1Ue0lOWa//lkSxTwLHw=;
+	s=arc-20240116; t=1770920856; c=relaxed/simple;
+	bh=ufmEDOIfuDt3CbFMJGieDgc3OFPQ2BpzxMovoK9k9II=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dZBIIQUiABIV1GgeebwPVLR+1Xjsg2z9A24d091GP1e1CE3nuhv+ESZnt/IqfybfWqUkC5YNkWXZeC1u8pnmQneO0V3peXSWL7dpevgNJATn3l4XdMT6T6fNeMAfNRcdF2qMsRoM3C+ZTP5AitG+MwVagQAv5afoXDIu2urJTzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PVsJewGH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E5E2C4CEF7;
-	Thu, 12 Feb 2026 17:55:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770918945;
-	bh=tmiUxdjaAj9JS3g6BpUFQUWj1Ue0lOWa//lkSxTwLHw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=PVsJewGH9iF7XUHoRikHfCDRKjUd/VZtZ2sZXGNwoeelcB5s9V4zFpcgTrtVTwFjA
-	 Uk0/aPQiFiyVxZhSiwABEzd5v95UWllJQewiMfk6hiogqX16lFayPhWbAqpNEa+qfI
-	 KMkxSN3yVpZai6sst04BaqNRSoVSOa6cQAYLWuk7jeGOEhk+8UknTyptwDNAGvS6wI
-	 2/hSsSGeLHiEIy4fB5PFItbPFas/BIzJDjU8zvwzFhBPEYIliTt057Gb4iBu+27+1O
-	 ClfeydGKA8q5iOnXFfDpA+CZMsB4EK3ub63lPAEknWqiwdDwBsuozYMnfgreL2xSfe
-	 25xTNUvAsLMrg==
-Date: Thu, 12 Feb 2026 17:55:39 +0000
-From: Conor Dooley <conor@kernel.org>
-To: Riccardo Mereu <r.mereu.kernel@arduino.cc>
-Cc: lee@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
-	sboyd@kernel.org, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	alexey.klimov@linaro.org, srinivas.kandagatla@oss.qualcomm.com,
-	m.facchin@arduino.cc, akucheri@qti.qualcomm.com,
-	ndechesn@quicinc.com, Riccardo Mereu <r.mereu@arduino.cc>
-Subject: Re: [PATCH V2] arm64: dts: qcom: arduino-imola: fix faulty spidev
- node
-Message-ID: <20260212-retired-eldercare-14f91dfaf995@spud>
-References: <20260212152329.134065-1-r.mereu.kernel@arduino.cc>
+	 Content-Type:Content-Disposition:In-Reply-To; b=ufs9eBZEcx45aWCVxl+LJ5ndKgaWK6GR07ohH1QM+Ymzd3u3ad/h6aH0g9nc7b4jND16LuDBArVeDCFo2Isth5krvYfuyHpTW+ynd6DvhpygqZpp85jqUJv0zoDhMLmFqMrzmOyD5S4txCz9pq7UeUZRCvhEQQJc1inBnoly+wU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cZo/kQZT; arc=none smtp.client-ip=209.85.160.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-506a1b23c05so1732391cf.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Feb 2026 10:27:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1770920854; x=1771525654; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=CRTCx5otqsXIbaqSTlPHxkL1toAAMDZa7bOrLqMbOPc=;
+        b=cZo/kQZTjS2vr5q1bFg8Vzkcsh4BkVL182YtD2u7NDBGXtyKIwaHmSJlDp90L0nIL6
+         Zn87QmHrSsapG9WjxiPa9LtqJ4dPMNVlhCwxGbGXuLC+vPtu7RFCl+yzN021OXz7dB5X
+         MMV8cITtg3Z8Vm5WVNakufIUctf75pGKbgr0kCAAitQZlk/sppz8zE/gcRfi4UYlyn1f
+         N6qDfFizVLeiKtsXlzS9DuyiOYifLxHLXwyH5O95trf19M0b2HSDdIyewu+6VESi6+Bw
+         8ktw982Z4Cw7X6GsIyYsrEofeTgiFI7XxswkQYh91xKt6N+TSiEbWrGoaEsiR8hxY0dx
+         qs9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770920854; x=1771525654;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=CRTCx5otqsXIbaqSTlPHxkL1toAAMDZa7bOrLqMbOPc=;
+        b=KTAiVacV3tZueYz+dUiiNM4cLbT8qoDzrhhxnSlZK3HT9PlKzKn0VajvhWfuam3oxX
+         T0ibtLMZW5xt+23AArDDtKfEjHvEnBUgvIuEBTuKpTrV2Vq5QvHjrVWh2QJwP3F2mXdr
+         xJEJWbwYSvYk3siGR9oJoXQZ+OYQVcPgHn/YofWyYTbDXP7uKEO1+3jzW9x5Qh+ajo5s
+         WnuZrKtVhYU3EA4kM4dsUOzXZRENxqjnp5igbdefnKebxWXUGb5Eo+EtPi2v8nmoOQ4j
+         YjoofhBIZpNJzqA9wJXW2D43QKJIFaalYAQhk0B5SNVh7CJrE9YtRKtUuvP5AJwnawGq
+         lyYw==
+X-Forwarded-Encrypted: i=1; AJvYcCW8pfYHTCoVDcgu7cEIri7lJWapEbBpdsCdfGQkG3NqE5Kkjsj3iCnN3Xo169tUjCEWGvvez4RUVfcLXU2G@vger.kernel.org
+X-Gm-Message-State: AOJu0YzDwZ+Grf7TR+/3CoAlsTRAMlWIb6g4ahmbhyyndiI6r7rczkyk
+	Umddp4KDxDiLFEbYmmpQqqMd3tkCSkvcTR0ZzWuVKrpyoeZ9Ai6xi3Xc
+X-Gm-Gg: AZuq6aIjsyjqEadFtToI0IByGI5ZeGGiKC1Zk/PdHT7mZ0tQSScuy7t9PWBLzlmItqL
+	YC7BLbqUF4+71GY1qbYGjxS9fSu62Mv50scExKj+l0EXQJ9yK/hq2nh0lLyMqKUqBlcHxOlg1Sn
+	BFQZUECXe8VyJSuyFwXSdzz4zmPcxnfKn0xN5B7vaFa1ISu11jx6rb7GY5avF4uH2CtkbwfGglK
+	FC5jx/fR7AWdT+u8TcdPwnhSBX3G0xM1L4qZzgAE1w3Z0AgId3KmAx7HPxG0nB/p+051gS8+dGf
+	vpNDmJzbkOACJUmFewQwJbmQlGgYWyexLPAeQ57vfgurqK0aXiqzekFKkH9fEOvw7y5AaUsC3EE
+	Uxi+CjmvR+tZFuUVzxR6cgZBe9zDiCPyMvRFSTNvzIBOwvcbER/cr6hq7YfF7t1QKt/SSqrLBh0
+	kIcdBO/17tWjECPf77Z8to+7cb2X+wwQ==
+X-Received: by 2002:ac8:5d44:0:b0:4ef:db28:1f3b with SMTP id d75a77b69052e-506919e9f83mr53865011cf.16.1770920853839;
+        Thu, 12 Feb 2026 10:27:33 -0800 (PST)
+Received: from localhost ([184.144.58.243])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-8971cc95acasm43835426d6.18.2026.02.12.10.27.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Feb 2026 10:27:33 -0800 (PST)
+Date: Thu, 12 Feb 2026 13:27:59 -0500
+From: Richard Acayan <mailingradian@gmail.com>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Lee Jones <lee@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Amit Kucheria <amitk@kernel.org>,
+	Thara Gopinath <thara.gopinath@gmail.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Dmitry Baryshkov <lumag@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: pm660: add thermal monitor
+Message-ID: <aY4br1BX9InqWUd6@rdacayan>
+References: <20260210021819.12673-1-mailingradian@gmail.com>
+ <20260210021819.12673-4-mailingradian@gmail.com>
+ <e72ede03-94cb-45c3-95e7-63dff0ca3888@oss.qualcomm.com>
+ <aYvNX718diaXDsBy@rdacayan>
+ <f1fc24ad-054f-4731-b982-4c579abf46c1@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="OMcjiy6yAWK0hAqa"
-Content-Disposition: inline
-In-Reply-To: <20260212152329.134065-1-r.mereu.kernel@arduino.cc>
-X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.26 / 15.00];
-	SIGNED_PGP(-2.00)[];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	MIME_GOOD(-0.20)[multipart/signed,text/plain];
-	MAILLIST(-0.15)[generic];
-	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-92728-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+,1:+,2:~];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[conor@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,arduino.cc:email,0.0.0.0:email]
-X-Rspamd-Queue-Id: 0472E130180
-X-Rspamd-Action: no action
-
-
---OMcjiy6yAWK0hAqa
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <f1fc24ad-054f-4731-b982-4c579abf46c1@oss.qualcomm.com>
+X-Rspamd-Server: lfdr
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	MAILLIST(-0.15)[generic];
+	MIME_GOOD(-0.10)[text/plain];
+	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-92729-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	RCPT_COUNT_TWELVE(0.00)[18];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mailingradian@gmail.com,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[kernel.org,gmail.com,linaro.org,intel.com,arm.com,vger.kernel.org];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.13.72:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,0.0.0.0:email]
+X-Rspamd-Queue-Id: 5D3491303F1
+X-Rspamd-Action: no action
 
-On Thu, Feb 12, 2026 at 04:23:29PM +0100, Riccardo Mereu wrote:
-> From: Riccardo Mereu <r.mereu@arduino.cc>
->=20
-> CS pin added on pinctrl0 property is causing spidev to return -ENODEV
-> since that GPIO is already part of spi5 pinmuxing.
->=20
-> Fixes: 3f745bc0f11f ("arm64: dts: qcom: qrb2210: add dts for Arduino unoq=
-")
-> Signed-off-by: Riccardo Mereu <r.mereu@arduino.cc>
-> ---
->  arch/arm64/boot/dts/qcom/qrb2210-arduino-imola.dts | 8 --------
->  1 file changed, 8 deletions(-)
->=20
-> diff --git a/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola.dts b/arch/ar=
-m64/boot/dts/qcom/qrb2210-arduino-imola.dts
-> index 197ab6eb1666..796c1f7ff17c 100644
-> --- a/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola.dts
-> +++ b/arch/arm64/boot/dts/qcom/qrb2210-arduino-imola.dts
-> @@ -328,18 +328,10 @@ &spi5 {
->  	spidev@0 {
+On Thu, Feb 12, 2026 at 01:15:04PM +0100, Konrad Dybcio wrote:
+> On 2/11/26 1:29 AM, Richard Acayan wrote:
+> > On Tue, Feb 10, 2026 at 10:59:20AM +0100, Konrad Dybcio wrote:
+> >> On 2/10/26 3:18 AM, Richard Acayan wrote:
+> > (snip)
+> >>> +		pm660_adc_tm: adc-tm@3400 {
+> >>> +			compatible = "qcom,spmi-adc-tm-hc";
+> >>> +			reg = <0x3400>;
+> >>> +			interrupts = <0x0 0x34 0x0 IRQ_TYPE_EDGE_RISING>;
+> >>> +			#thermal-sensor-cells = <1>;
+> >>> +			#address-cells = <1>;
+> >>> +			#size-cells = <0>;
+> >>> +			status = "disabled";
+> >>
+> >> Can we enable it by default?
+> > 
+> > No, the thermal monitor fails to probe if it doesn't have any channels:
+> > 
+> > 	[   17.728926] qcom-spmi-adc-tm5 c440000.spmi:pmic@0:adc-tm@3400: error -EINVAL: get dt data failed
+> > 	[   17.728945] qcom-spmi-adc-tm5 c440000.spmi:pmic@0:adc-tm@3400: probe with driver qcom-spmi-adc-tm5 failed with error -22
+> > 
+> > Triggered by https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/thermal/qcom/qcom-spmi-adc-tm5.c?h=next-20260209#n945
+> 
+> You can define the following ones in the common dt:
+> 
+> REF_GND
 
-Of you're modifying this node, you should fix the nodename too. "spidev"
-isn't a type of device. It should probably either be "mcu@" or whatever
-the mcu is used for.
+Is there any (likely passive, if any) cooling device that should be
+activated when this goes above or below a certain reading?
 
->  		reg =3D <0>;
->  		compatible =3D "arduino,unoq-mcu";
-> -		pinctrl-0 =3D <&spidev_cs>;
-> -		pinctrl-names =3D "default";
->  	};
->  };
-> =20
->  &tlmm {
-> -	spidev_cs: spidev-cs-state {
-> -		pins =3D "gpio17";
-> -		function =3D "gpio";
-> -		drive-strength =3D <16>;
-> -	};
-> -
->  	jmisc_gpio18: jmisc-gpio18-state {
->  		pins =3D "gpio18";
->  		function =3D "gpio";
-> --=20
-> 2.53.0
->=20
+> 1.25VREF
+> VREF_VADC
+> VPH_PWR
+> VCOIN
+> DIE_TEMP
 
---OMcjiy6yAWK0hAqa
-Content-Type: application/pgp-signature; name="signature.asc"
+Maybe this temperature can be included, but I don't see any other
+PMIC devicetree that has this channel ready-to-go.
 
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCaY4UGwAKCRB4tDGHoIJi
-0ut1AQC6hbCoOcl6oNOgXLXPG4oh0gSJ3cT0xrHoUtAkw6ZjyQD+O2DCXW+CZEmU
-Np7sskf0EyivJdZT41nb/E7HIhxvXA0=
-=uSw8
------END PGP SIGNATURE-----
-
---OMcjiy6yAWK0hAqa--
+> ANA_IN
 
