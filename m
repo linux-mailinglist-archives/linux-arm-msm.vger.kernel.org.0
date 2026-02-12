@@ -1,46 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-92708-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MdJ6KoTjjWmb8QAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92708-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Feb 2026 15:28:20 +0100
+	id MDUuCJ/pjWmr8gAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Feb 2026 15:54:23 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id E355B12E3E3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Feb 2026 15:28:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 767F212EA02
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Feb 2026 15:54:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 6F94D304C044
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Feb 2026 14:28:18 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id F04273051C8F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Feb 2026 14:50:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29ECA1C2324;
-	Thu, 12 Feb 2026 14:28:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACE0235502A;
+	Thu, 12 Feb 2026 14:50:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="YGE1H3k0";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="TBlh8iBs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx3.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28492F4F1;
-	Thu, 12 Feb 2026 14:28:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=141.14.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4190B35C1AB
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Feb 2026 14:50:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770906497; cv=none; b=U+xcRiimEtoKVAi2ZKo1DW5OFslH2RyyBR1KeD2n3o+y1+blnkE/ayqHfJWXORR/ibG2rda6sFKAX9BFs24hrPbDTva87Ijic01wAOGAuwIm1Hu6Oo4aommLwd6plxgjVwgIJTMYJpxDxjP/Hydxv30LUqkQfGAf7D1GE11JGuI=
+	t=1770907840; cv=none; b=TM2AZyeOXKB6HCfXnowpgKzXDo/3JnUUL5zsbkRlCW2+2afk0nyL8WixDTilbHu3V1qLIS8JR3RrPyMUJKS5gnKh+Oh15dsTZSKSFyp3sMlpsxmuSrp0N8zw5JSQmHC2kNi7sH7MhYV3tlt33+owRMtBvpAkHhozOd/o55Vy2RQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770906497; c=relaxed/simple;
-	bh=DBzb1VKpeRr7cqPOZvVVYrVads/CoOTYrQJR1icj7iA=;
+	s=arc-20240116; t=1770907840; c=relaxed/simple;
+	bh=TbqN5JLaryI0tzOo31pgU0unhHmJom7G7NSzwMOHvdg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UUfwJOTQQ426pHFgJioLb9J6cR9/eXP0IxOMl5qMOOwBZJ9msmu7KZNrIBWXfSeN2e8mTojHjZNuLBIGTcCNLIvdm99I7KgwweoFxF4YDYePGdNf8K9+VeIUkseFQPklo8SKVmVIEgjs/pqZaykot8XDHfvwBGhIHJ9aXZkfzWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de; spf=pass smtp.mailfrom=molgen.mpg.de; arc=none smtp.client-ip=141.14.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=molgen.mpg.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=molgen.mpg.de
-Received: from [141.14.220.42] (g42.guest.molgen.mpg.de [141.14.220.42])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: pmenzel)
-	by mx.molgen.mpg.de (Postfix) with ESMTPSA id B437C4C4430E00;
-	Thu, 12 Feb 2026 15:27:31 +0100 (CET)
-Message-ID: <c4a9a3ee-0fa3-449a-bb5d-ac1e3b8eba2c@molgen.mpg.de>
-Date: Thu, 12 Feb 2026 15:27:28 +0100
+	 In-Reply-To:Content-Type; b=fVXo7zNaqTJssifFhh/rQvfL6F8lwBUwfg1Se1OgG4IterjfnJnX0aCrsMKEFlelEZWFFXeRK88tUTsM9HaKuyyh6OAbrsr9P6cwBFy8jMoWoXDPwC3i5DCiw9PxNrJ6pVleXSEeIN67FX9yUrUdL+garEvG8QvcDndw8oz+x+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YGE1H3k0; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=TBlh8iBs; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 61CDRe1I421442
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Feb 2026 14:50:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	mkdIQKCORgBHmpzhYnqV+lMcVLWl9ZTC9POI19y5zYg=; b=YGE1H3k0jIt8b2Z5
+	qve/zApEkliL9nO2jVBRtekQPh9xxy+zcJ8htTv4AxHfh0f4Tw4qaqzBsbfE6ild
+	MMjACNpbT4kxfADloceWMNtHXD3Qv53FIhB46RIVgdCmAb8QayM+FrZOn2nRtznP
+	zhdRrV7hel0WlDwkM7ozc5ZdJ+ZVOwkEQ6Gdynvy0d+S9t6hrXdRgXWr120BR0iL
+	ncmuhg6MdsGtGMWbv4TQPK35EqcsOoY5Ea0GR4OX2VHawv9JmbWSJSOhSQgYICT8
+	HAFXN2iWLicopcuPrHv+ZCG/DUuPgSc77MCSASg3DvKXeA8J5hXHCrA7c9wHC/Ov
+	Wv6Qkw==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c9cy48t07-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Feb 2026 14:50:37 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-8ca3952cbb9so335549085a.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Feb 2026 06:50:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1770907837; x=1771512637; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mkdIQKCORgBHmpzhYnqV+lMcVLWl9ZTC9POI19y5zYg=;
+        b=TBlh8iBsrR0yERTWoCdf6IivWvqNhy/P22sMr++OCGTqqRtjBUxGhnSUy7oHPhzcIz
+         c/uPw0a+DUNUrNFzs7kvb/38gHTpxreHgyokD9vE8FIVMfZ5oiz3ioWxlEmsRfbmQziM
+         n+Upnbwsq3muPm17BEJ1NvgbSozcnulUa1KMWHqR2gGlO56pGHdIz+VtyoAkYaahWA5t
+         dEpyS5bvHFedXS1t3aC+ozYHzMD9ku3iILYR5gWRYcRczf/5JLkO9dumhtGybFBnPiht
+         5UvuZHaVVUhNyo9NNyXIzjwpzW1EcFUnwvK7W56QPvNA3ySy0OgA4ko0azCU2LlV06JJ
+         dn0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770907837; x=1771512637;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mkdIQKCORgBHmpzhYnqV+lMcVLWl9ZTC9POI19y5zYg=;
+        b=GruEbEiVK5ke+CTaeY+Y/ah+CDStjpe39dfjoD9zRUDRbc5BbB/LlCbmokD8rUocgK
+         ZE/FaUnnOdXTh1zR/ND7/CKSJCGpxhGApff49pRpqWeHUzfvC3PWyYmH6AhXAGUY2xx7
+         mv1y6MBPAhEVnlnUnkeuIim7E+X9orn3YU/5XWp53pQj3nTd+BuTCJAaxADP9No9mESM
+         oom/tt6UYpVhQxTaO4JB8KdlPtVz6udr1BLtRa3nB5RGkqQ7I7MQuj5SjPma4vIWxU7a
+         kOM/IiV58f/oXp9aU8SrZ+NtPV7HkiaCRKGcghS54g85iCRme2VdPzi1mbPyNuwc9Xww
+         xpLQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVVhAsqmYZ2TMzgXh15y491Xus4yL433P38O1DtRBIoi1bJAhMa1MSrlGiIXIXoHNFEkpUovzlLGEDlKJr9@vger.kernel.org
+X-Gm-Message-State: AOJu0YymKK9sgCxCTbqkJcKtu6Bka4ynBgp+fHGJeWm/9eiVOodcc0rh
+	N5YO7Gf1M7rX0S36podTckAb0p/eGSanvQ3nEpWv4xnil4udsDUeEnEMn9amaGPDNd1dRSzcBXP
+	Jg8ES54bdD2Z6vUy+0JKCe3UjR4DpKAh5BA92Pv4bHw6r1aIOMAsnFpJgRI5xEK9rxb6I
+X-Gm-Gg: AZuq6aJ3WAdMnUt3PDtN8alYqzTJEfnc5ENP9v6eMuWf7PCbE3CQzRdnVVBnKQyAnJm
+	bkkyQ2IOhh1W4nh0HwbFy9qPnOjYDxob8fWCPpajii9YjTVAOKOHOCzZLt7XvtPqqhywz27YuKr
+	JrjNMkolBzfFZieDCUKq9auueBgRmfQkqNCVGdBBmDkSJyJGMHcmTrEUFea+ElecMBc9pHnprgW
+	de0SpGyoF7C/dZaJYIHClMQcLvJhmmjKugBYdB3j6iGmuZnBNvICDnqL34OX66QSQwPLcJ/p0Ef
+	ABFezfZPc2oQcOSsSyNiDRmQC/CdpObmv1CZFqFgua0CjPecRlXl3im0UUcVnspCTgRB2gaV8A0
+	7T0iRSSVHVjgBIJw8PmX3oJRE7j1GKrFW6dBelrJDFsdA81MXLqaMZex/m6A/b2d85Ygx4QFo91
+	NUWtQ=
+X-Received: by 2002:a05:620a:198b:b0:8b2:6eba:c45d with SMTP id af79cd13be357-8cb33064bddmr293003485a.2.1770907837349;
+        Thu, 12 Feb 2026 06:50:37 -0800 (PST)
+X-Received: by 2002:a05:620a:198b:b0:8b2:6eba:c45d with SMTP id af79cd13be357-8cb33064bddmr293000385a.2.1770907836830;
+        Thu, 12 Feb 2026 06:50:36 -0800 (PST)
+Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8f6e9a6a24sm164450766b.20.2026.02.12.06.50.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Feb 2026 06:50:35 -0800 (PST)
+Message-ID: <c911c0de-a81c-4b29-a839-57867b618ec4@oss.qualcomm.com>
+Date: Thu, 12 Feb 2026 15:50:33 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -48,139 +107,173 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] Bluetooth: hci_qca: Fix confusing shutdown() and
- power_off() naming
-To: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Cc: Bartosz Golaszewski <brgl@kernel.org>,
- Marcel Holtmann <marcel@holtmann.org>,
- Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
- linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org
-References: <20260212141721.69961-1-johannes.goede@oss.qualcomm.com>
+Subject: Re: [PATCH 2/2] media: iris: Enable Gen2 HFI on SC7280
+To: Bryan O'Donoghue <bod@kernel.org>,
+        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20260209-iris_sc7280_gen2_support-v1-0-390000a4fa39@oss.qualcomm.com>
+ <20260209-iris_sc7280_gen2_support-v1-2-390000a4fa39@oss.qualcomm.com>
+ <0da582a6-5bba-4450-99ec-cf57b67915e6@oss.qualcomm.com>
+ <0a324898-092b-3e44-c35c-15de20b50f40@oss.qualcomm.com>
+ <2uih6xdzarkwnvhlhv5kznmdwo4jorqvsrb7xxrxgr6vprx3ey@4kx45k5i3c4y>
+ <6b9042c8-767e-0fdb-9012-f3790899509e@oss.qualcomm.com>
+ <f9f40ac7-e6fe-41eb-92e4-311913567ef0@oss.qualcomm.com>
+ <FaJyQ2c9oLW2a2qKHDI_zfRx4G_Ee4rzdjImb7o3bKnZAo7AzRDgokOBewYZCNdqexEEPhB6nmPEjkmS72Kalg==@protonmail.internalid>
+ <b759fb04-22b7-cd5c-9e53-f4ffe9f37dc5@oss.qualcomm.com>
+ <5ec260fd-b8ae-4c54-863f-de9e684bc543@kernel.org>
 Content-Language: en-US
-From: Paul Menzel <pmenzel@molgen.mpg.de>
-In-Reply-To: <20260212141721.69961-1-johannes.goede@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <5ec260fd-b8ae-4c54-863f-de9e684bc543@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: 99d2FvfdVDfPo11VgTX-PGtriq39UL9u
+X-Proofpoint-GUID: 99d2FvfdVDfPo11VgTX-PGtriq39UL9u
+X-Authority-Analysis: v=2.4 cv=XvX3+FF9 c=1 sm=1 tr=0 ts=698de8bd cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
+ a=EUspDBNiAAAA:8 a=_GnCpRreIiypi8OaDPIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEyMDExMyBTYWx0ZWRfXwoZm7jQI/QTu
+ 7BeUkyVtwJz3EQn84M/jkqz06WcWRDmFfM3fj64RNRYoOkZ/OXTD7gy5MiDtGXHjMbUvWUnNwdZ
+ nii4bo9kHFe2WWu8UqEoToi+xzG6Si0yN3LTdAQYqTUgRMYoHPtTJi5rNLNY0CBstlxpmVeIiSp
+ o41vQD1y4YrYkM2pFWuLybyywBpU7kqooBVFsU8FitkF1HVaMgPV8+HrliCoUMp2KnzJAcQlmZl
+ TJq56uGlycQQKwhqS3XjtJ2WDjd2ppsitHA0gkNRJpE2qegAf7Geo0o6CsbxGlx30sroDTjHq12
+ 641/z8+RtOfj667nae6Bf55nblRZqJFehzg23OIos3W3IgKUA6pf7zqIAqZsiDhFOavVPpasO2j
+ naHFtPH8OGa4qpKzocmQcLfXs24gtgqv4ik0qVNj8xtRtLVNA+s2w1cJ95xXHaMwqvKwUy9KXai
+ wh6WmTXvunYatVW/iAg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-12_04,2026-02-12_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 priorityscore=1501 malwarescore=0 adultscore=0 phishscore=0
+ bulkscore=0 lowpriorityscore=0 impostorscore=0 clxscore=1015 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602120113
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.04 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-92708-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DMARC_NA(0.00)[mpg.de];
-	TO_DN_SOME(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[kernel.org,holtmann.org,gmail.com,vger.kernel.org];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	RCPT_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[pmenzel@molgen.mpg.de,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	R_DKIM_NA(0.00)[];
+	MIME_TRACE(0.00)[0:+];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROM(0.00)[];
+	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: E355B12E3E3
+	RCVD_COUNT_SEVEN(0.00)[7];
+	MID_RHS_MATCH_FROM(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	PRECEDENCE_BULK(0.00)[];
+	TAGGED_FROM(0.00)[bounces-92709-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+]
+X-Rspamd-Queue-Id: 767F212EA02
 X-Rspamd-Action: no action
 
-Dear Hans,
-
-
-Thank you for the patch.
-
-Am 12.02.26 um 15:17 schrieb Hans de Goede:
-> The function called qca_power_off() is actually the hci_dev shutdown
-> handler, rename it to qca_hci_shutdown() to make this clear.
+On 2/12/26 2:27 PM, Bryan O'Donoghue wrote:
+> On 12/02/2026 13:05, Dikshita Agarwal wrote:
+>>
+>>
+>> On 2/12/2026 5:13 PM, Konrad Dybcio wrote:
+>>> On 2/12/26 12:16 PM, Dikshita Agarwal wrote:
+>>>>
+>>>>
+>>>> On 2/9/2026 6:05 PM, Dmitry Baryshkov wrote:
+>>>>> On Mon, Feb 09, 2026 at 05:04:48PM +0530, Dikshita Agarwal wrote:
+>>>>>>
+>>>>>>
+>>>>>> On 2/9/2026 3:32 PM, Konrad Dybcio wrote:
+>>>>>>> On 2/9/26 10:45 AM, Dikshita Agarwal wrote:
+>>>>>>>> SC7280 supports both Gen1 and Gen2 HFI firmware. The driver continues to
+>>>>>>>> use Gen1 by default, but boards that intend to use Gen2 firmware can
+>>>>>>>> opt‑in by specifying a Gen2 image through the Device Tree
+>>>>>>>> 'firmware-name' property.
+>>>>>>>>
+>>>>>>>> Based on this property and the availability of the referenced
+>>>>>>>> firmware binary, the driver selects the appropriate HFI generation and
+>>>>>>>> updates its platform data accordingly. Boards that do not
+>>>>>>>> specify a Gen2 firmware, or where the firmware is not present,
+>>>>>>>> automatically fall back to Gen1.
+>>>>>>>>
+>>>>>>>> Signed-off-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+>>>>>>>> ---
+>>>
+>>> [...]
+>>>
+>>>>>> To avoid accidental matches, I can switch to an exact filename match
+>>>>>> instead. That way, only the specific Gen2 image (for example
+>>>>>> "qcom/vpu/vpu20_p1_gen2.mbn") will trigger the Gen2 path, and boards that
+>>>>>
+>>>>> How do you detect that for the OEM-signed firmware, which can have
+>>>>> random name?
+>>>>>
+>>>>>> want to use Gen2 can opt in by naming the firmware accordingly.
+>>>>
+>>>> I Explored on suggested alternative approaches and seeing some limitation
+>>>> with the both of them:
+>>>>
+>>>> 1. Detecting Gen1/Gen2 by scanning the firmware blob (fw->data)
+>>>> It is possible to parse QC_IMAGE_VERSION_STRING from the .mbn and  extract
+>>>> the version string. The issues with this approach :
+>>>>
+>>>> - the version string has no explicit marker that identifies Gen1 vs Gen2.
+>>>>
+>>>> - This prefix is not a formal ABI, and it is not consistent across SoCs.
+>>>> Each SoC family uses different naming patterns in the version string.
+>>>>
+>>>> Example : For SC7280 Gen1 we currently see:
+>>>> QC_IMAGE_VERSION_STRING=video-firmware.1.0-<hash> while SM8250 has
+>>>> QC_IMAGE_VERSION_STRING=VIDEO.VPU.1.0-00119-<>
+>>>>
+>>>> So the driver would need SoC‑specific string‑matching rules, which is hard
+>>>> to maintain if we are looking for a design to address all available SOCs.
+>>>
+>>> The only SoC with such distinction today is kodiak. So we can simply check:
+>>>
+>>> if (kodiak && strstr(fw->data, "VIDEO.VPU.1.0.")
+>>>     hfi = gen2;
+>>
+>> Agree, this works for Kodiak. However, Dmitry was also referring to other
+>> SoCs that may support both Gen1 and Gen2, and at the moment there isn’t a
+>> generic way to handle that check.
+>>
+>> Also, please note that the Kodiak Gen1 firmware uses the string
+>> video-firmware.1.0, whereas Gen2 uses VIDEO.VPU.3.4.
+>>
+>>>
+>>>
+>>> Can we agree that VIDEO.VPU.x firmwares are hfigen2? If so, problem also
+>>> solved for <=8450
+>>>
+>>
+>> Nope. that's not true for all, SM8250 uses VIDEO.VPU.1.0 which is gen1.
+>>
+>> Thanks,
+>> Dikshita
+>>
+>>> Konrad
 > 
-> While the qca_power_shutdown() function is actually the counter-part
-> of qca_power_on() rename it to qca_power_off() to make this clear.
-> 
-> Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-> ---
->   drivers/bluetooth/hci_qca.c | 15 +++++++--------
->   1 file changed, 7 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-> index 4d562596ebf9..fa7ab4272771 100644
-> --- a/drivers/bluetooth/hci_qca.c
-> +++ b/drivers/bluetooth/hci_qca.c
-> @@ -235,8 +235,7 @@ struct qca_serdev {
->   
->   static int qca_regulator_enable(struct qca_serdev *qcadev);
->   static void qca_regulator_disable(struct qca_serdev *qcadev);
-> -static void qca_power_shutdown(struct hci_uart *hu);
-> -static int qca_power_off(struct hci_dev *hdev);
-> +static void qca_power_off(struct hci_uart *hu);
->   static void qca_controller_memdump(struct work_struct *work);
->   static void qca_dmp_hdr(struct hci_dev *hdev, struct sk_buff *skb);
->   
-> @@ -2015,7 +2014,7 @@ static int qca_setup(struct hci_uart *hu)
->   out:
->   	if (ret && retries < MAX_INIT_RETRIES) {
->   		bt_dev_warn(hdev, "Retry BT power ON:%d", retries);
-> -		qca_power_shutdown(hu);
-> +		qca_power_off(hu);
->   		if (hu->serdev) {
->   			serdev_device_close(hu->serdev);
->   			ret = serdev_device_open(hu->serdev);
-> @@ -2171,7 +2170,7 @@ static const struct qca_device_data qca_soc_data_wcn7850 __maybe_unused = {
->   	.capabilities = QCA_CAP_WIDEBAND_SPEECH | QCA_CAP_VALID_LE_STATES,
->   };
->   
-> -static void qca_power_shutdown(struct hci_uart *hu)
-> +static void qca_power_off(struct hci_uart *hu)
->   {
->   	struct qca_serdev *qcadev;
->   	struct qca_data *qca = hu->priv;
-> @@ -2232,7 +2231,7 @@ static void qca_power_shutdown(struct hci_uart *hu)
->   	set_bit(QCA_BT_OFF, &qca->flags);
->   }
->   
-> -static int qca_power_off(struct hci_dev *hdev)
-> +static int qca_hci_shutdown(struct hci_dev *hdev)
->   {
->   	struct hci_uart *hu = hci_get_drvdata(hdev);
->   	struct qca_data *qca = hu->priv;
-> @@ -2251,7 +2250,7 @@ static int qca_power_off(struct hci_dev *hdev)
->   		usleep_range(8000, 10000);
->   	}
->   
-> -	qca_power_shutdown(hu);
-> +	qca_power_off(hu);
->   	return 0;
->   }
->   
-> @@ -2498,7 +2497,7 @@ static int qca_serdev_probe(struct serdev_device *serdev)
->   
->   	if (power_ctrl_enabled) {
->   		hci_set_quirk(hdev, HCI_QUIRK_NON_PERSISTENT_SETUP);
-> -		hdev->shutdown = qca_power_off;
-> +		hdev->shutdown = qca_hci_shutdown;
->   	}
->   
->   	if (data) {
-> @@ -2530,7 +2529,7 @@ static void qca_serdev_remove(struct serdev_device *serdev)
->   	case QCA_WCN6855:
->   	case QCA_WCN7850:
->   		if (power->vregs_on)
-> -			qca_power_shutdown(&qcadev->serdev_hu);
-> +			qca_power_off(&qcadev->serdev_hu);
->   		break;
->   	default:
->   		break;
+> I really don't see what the problem with Dikshita's proposal here is after all she literally controls the firmware name that goes to linux-firmware.
 
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+A vendor could name their gen1 binary i_really_wanted_gen2_but_didnt_get_it.mbn,
+or perhaps "snapdragon_8_gen_2_venus.mbn" and we can't control it.
 
+Plus I generally see relying on file*names* as a hack (in the same way that
+Linux doesn't care about file extensions, but Windows blindly trusts them).
+And there's oddball cases like with FW_LOADER_USER_HELPER
 
-Kind regards,
-
-Paul
+Konrad
 
