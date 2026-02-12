@@ -1,148 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-92680-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92681-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id EE/HOLS2jWl96AAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92680-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Feb 2026 12:17:08 +0100
+	id QOWLDcO5jWl96AAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92681-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Feb 2026 12:30:11 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4479512CEA6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Feb 2026 12:17:08 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id BFC0112D03D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Feb 2026 12:30:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D7BC23007E07
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Feb 2026 11:16:23 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 036A0300AB19
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Feb 2026 11:30:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55E2932863A;
-	Thu, 12 Feb 2026 11:16:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35FC7311C21;
+	Thu, 12 Feb 2026 11:30:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZSZALmOz";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="E74w3dEO"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cp5oxCmm";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="cwK2gFx+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12066469D
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Feb 2026 11:16:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 008322C3256
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Feb 2026 11:30:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770894983; cv=none; b=NAfUzJ9qG19xVc7fWflwiHYxCeIXsGMzVkA3KCFO/hQK6yXIQVYph4UQrWeRc64R9JVkybqbFz3uwsUYTdsx9gr6VWkroTboeVCD5VnFwvM3QeIJYxldN5xNZW0EHQYkYXxQfknPy59W5phObOH6lgXY3EAQBo5Ri1r20+GODrY=
+	t=1770895808; cv=none; b=mkzAWHDHclDfM9kpuZHnQ9viGF9jSc6YVZrmY3WsmLCq2mI5pS0rjCzlwoC2hWHDTLkqwrFf1ryT1KEV/kCwLNEg9XLPQ2kCm2p3WKTu7/jLuya+WoZZk8usHHYErsDu73tYFkLDLcu+R6OGUpagDD+lbwTnXkmS/Y21EqDPDI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770894983; c=relaxed/simple;
-	bh=K+EcnrhdmLiQKi9r5V/gzJrnPgzyZ/cfOXg0C9WV33k=;
+	s=arc-20240116; t=1770895808; c=relaxed/simple;
+	bh=s/xg6C6WN2NIXO1VE7H68jznG8Lz8f8idcAGIpFhkXQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Rdf+p6CfNHiXPI0P/qM7c3fptsnuQI2EFpm+FLq41gnVyeUlmzZLQzRPlpsvh62XBzWjbWD12Om7nr+xb5odJ/fBORlOGAvd7YpMjCs8qPQz4PfcpkWVG65p7R/JSxRlZbL7DzQVByPvUZCjcKhMNfSm810MunOPG/Gw4zmmimk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZSZALmOz; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=E74w3dEO; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=Hqc2o4OqX91kWDqTSsXP7wiO7UGSHThDkde4tS66mWLV8TQN6j91npmImMDaOtZEkwonrRmlaLrQ9s492qQreLzrbJWvWGFKQiR6VNrB7SmLwQ3Y06LCnM2izKtzdBIhkwM/TmetUnvrbXQ0zuZRVeoOUHgSZQLiW2v+KyleyDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cp5oxCmm; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=cwK2gFx+; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 61C8Y021693654
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Feb 2026 11:16:21 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 61CAP2CM3888000
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Feb 2026 11:30:06 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	5K9YjFShuMcHa0PLjdTNzDkm6yAqgg1AgaHhLg+Xb9M=; b=ZSZALmOz2edboGZY
-	4NqMLzDJ7FFY8qR3HfbTIcSuBQtjIIUofP6ufXXxCGXyWr3ZnUA+E3/yc/CJgP+v
-	yBxeL23ag5egKWDuXS63+O0/5lxfx+dliprUdoBPTki0nukeK0DHVJ5NZkDCxpsk
-	Z/1zVICg5ro4c2lYXkZXU9Hij3/0PbJ8o14xFx3sIKw5PuqtKhTKVby62L2sUrxp
-	8Z/2WhgNosKBwoMeHm0lN86s46VyAUTsNy9LymKE2xooBl0sEDBpOCmKZRAOvOdR
-	YUwY3zCQblQDR4h4HxQlDDFi0eGBrPRQfJF7GJkBy02+CwketsQHr6qxkcD1FX26
-	mTa6hw==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c90wjabuq-1
+	CcafTaVjifqFrLoCQd4r4m/zCs1n46XiePZ4WiT65Tg=; b=cp5oxCmmi5uiP91R
+	omlhAZvPlihcPIEMr6YJPdw0iPUivmDq5wu6B57wr4cIWi4vy0l4gSNtuvYAHHqk
+	xAX5ZrV0dm2qV17PeYiVzPwmQxlWvOTueaqPJpGt4ko5Yxnvt4xYX2sdjxaASZE0
+	msurNksYX+8eOhTtVLkYUipLDwKzvbu0SQDaYfew3EqxaliXJaImO0WDKYvArodf
+	GrXQULaq+GwSqKsSjCsGfDhaYaPtK7cfvcXaCTItZlrBAr/4IovFAeOTBsXTc3ck
+	elsHEh/eElFLiZSN2r5R8xoC5BEhDls71jpW/B1tBpVFq2H93vUPMRmEENcZzU7G
+	9BlgGQ==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c90wjad1s-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Feb 2026 11:16:21 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2a9638b0422so34739335ad.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Feb 2026 03:16:21 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Feb 2026 11:30:06 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-8cb3978cdb2so7968285a.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Feb 2026 03:30:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1770894980; x=1771499780; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1770895805; x=1771500605; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=5K9YjFShuMcHa0PLjdTNzDkm6yAqgg1AgaHhLg+Xb9M=;
-        b=E74w3dEODb0hzGfqrKHwte+wVoDcMf92Ouo/8EbtBXsMAHBopT1Hf9GLpcpjWmlovE
-         crMq3oQrWRUJEvvkk88LoJOb9I5+Q4nbj9YoxjzBaq4tkrd2B5ZmMHzqYc4d6r7MGFqM
-         GuSbNpn8QsE6hBcMKR3zn1hx9Xl4nOhU50jvZ/owAmmeS/ccTTjr7DQQxlv89by4Wc3v
-         n/P1S/FV25lcWH8lLUR8o5pd3aR16gK9K8C2RHKBaNSwGc88g2XT+nCs8nmPFMt0SNt7
-         Kb8Fr4EED3RY0Vzppf4FvL7Bn94RBxKYLfP/IXh/sPEIPcRFkiqScTgcNj+1yGobNjei
-         NCNw==
+        bh=CcafTaVjifqFrLoCQd4r4m/zCs1n46XiePZ4WiT65Tg=;
+        b=cwK2gFx+005GnA2gRJEBkCg4Y+rXXGjABsdpTTufPculx5Imzsr68LztdsvDf4ozTe
+         gEOC3qeDxwSwGNmA9jDQ1MiPIlJYMq5jN+7JW379ZjNHRGvE9fA/noezMXaRDV6j3O0q
+         oLy//xmVrTtwPQv4yixpFLMHMdt65vtms8V61CEaBngL/qFWAkfmo6xj+4tGuK3g89Bf
+         v6I1DczdAtjhrBN/LEwsurTP8YfoiSlYQPExud1gKJZ/vQvR34j2PYtkdCygT+/p3/5x
+         NmktCbIUtEaas+emSCVEB3dO9qYYDBFxq7EEphCWS+Gaj1R3MXxYh4dFKqamiu6dFPBk
+         ayJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770894980; x=1771499780;
+        d=1e100.net; s=20230601; t=1770895805; x=1771500605;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=5K9YjFShuMcHa0PLjdTNzDkm6yAqgg1AgaHhLg+Xb9M=;
-        b=LtR2gyJwWMcWtr44Y/IWkRNSi2l9zyFfrnrXtPtQqv/kRgFMU0CA3EjvB9Aip1HmRj
-         sMCKQOCA3rlemmSrrxnIv/dW23QJOHq3dCe/YiMkZeOVBqTZuUIFw2+9fFxy2vXa0WHe
-         2TLkuPw253pSNHeaUaYLdSzF2qvux2W5d28QI07IfyWHwBSqwkH3k2EpumUiJpCIFm7/
-         3Zj8Yz6dai/oORStPkGptljGpVLViiFnPu5s2L6WDVXmnLVEBOpO/1ARP5D8q33Ce/vN
-         LvuBZwKjytiXVsaHPxwI5wuJ5ZOCjkTBrJPNI2wHX92gddGeD66xQ/lPIEryqXGw5i5K
-         cWMw==
-X-Forwarded-Encrypted: i=1; AJvYcCXKZqPVzFXn8rVTcXAk8kwoS7N8OuCUBC/nxPMZM+fsJhvawH0xcpJcUBk4+7NZEM8VbebomFHYRJ4beNED@vger.kernel.org
-X-Gm-Message-State: AOJu0YzJo+zFMopA7lyo1boyFD9Jy9VIrmGgYO9a2fec9bWgnGOpCn9o
-	c2afWDI0ostnwaOeMXgiJxampQIFIqLua+1R6UCjwkKTf/FlriO7GZx3FgYtgZYhZ9XwEbx3pWm
-	fMoEpLHVcS0UTRK+vzyG7+b11KGLIp/2IIAs9ZiICuvJeWzmGRSnQptfhTTojbzFf27iROSkPJF
-	6r
-X-Gm-Gg: AZuq6aKj6wKrkIV7pFUdGuoSykUO22Mka6XXyqptAwxrGdt/yECZERV1bMSLirFQya/
-	bZNS0Kfupa+lYJ6NWVeTfNWV1nsNCB46JMIKJUTsqXA+WkgRK6SSbTtf8kOL9QxpjIi3LpFIV9E
-	vjd4vvOmAQNooXAebhNLAzCbmlM08nioc1/iSi4Z+tDgv2tgBe1DptgYj48UBs9LP4honI656XB
-	L+te21gWVScdgZAlg33kWyCs0JT5YZG7QNH9LmMGlpuBstAeDp7N7a1dMehBfmVzfLM3Wk5Wi7e
-	14s8xgR21488V1yi4HYIganYcq62Mt63/SX6dCIRuSrpHmZDlLaCUh/l+mX+vHwMhv2QrM6r+bb
-	McrYyJ40JaSKA533Fu5FEi2uSTJfyYqIK/sZ0FwZnx8dFxHc/GwUyLA==
-X-Received: by 2002:a17:903:15cf:b0:2aa:df82:ed7a with SMTP id d9443c01a7336-2ab39c8cd0cmr26501055ad.58.1770894980324;
-        Thu, 12 Feb 2026 03:16:20 -0800 (PST)
-X-Received: by 2002:a17:903:15cf:b0:2aa:df82:ed7a with SMTP id d9443c01a7336-2ab39c8cd0cmr26500795ad.58.1770894979780;
-        Thu, 12 Feb 2026 03:16:19 -0800 (PST)
-Received: from [10.0.0.3] ([106.222.229.190])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ab2997a660sm52371265ad.64.2026.02.12.03.16.16
+        bh=CcafTaVjifqFrLoCQd4r4m/zCs1n46XiePZ4WiT65Tg=;
+        b=KKQa/aYUL+Sgy7tuRdtShc7bGbodrWvTnY2JNdN2zFMT3XGvFAS29Kp9PbsnJdauQr
+         fr4drDWOjFfaOQ/WL5JPjI29Tbc/vGiPf2kN/rp2dh3HPoNkC9pG6g0f6fbFwUnXL9Ts
+         QlvrWuIw8zT8RU8lvsPX24am9NIeAR0U8Nng8BJz3pIwA03fjGbswWWd8RHW2wQALEi1
+         +LkdlHfkDmHPSkuxy+u7thWz2J7/ejR3mC2K1gxK7NXdsYovG5L/GGWef1JMll1ZUEne
+         vq9BPNBOLMQWrnARn/YT+SFO8Ale8B/838fg+63c7VbgCVsCv6fZDr/UX6gQzfIcsdra
+         T52Q==
+X-Gm-Message-State: AOJu0YwPqNmmRywvZdbFH97xFTzJNVY4nOx3QVdPTUSJB5Qn6UOGJD20
+	sJX5h/CEkqc4oOuUK0+Y8SZKfxRFLasyryI/gY6PBSK9+aVUIekH3BSQdysF5MXmHcIif4TproE
+	TUaPqECRwGdlj2bjNueKmvlaBLfngHMvjMlLcU97Kfmov0XWBu3l+Wa+33/HYlZmaAVrN
+X-Gm-Gg: AZuq6aLKB3bZp3CN8RyM+q4E1m3hL8UJz/cZJ0MyPl7EBDjAqCg8AnRv+txQUlU+hPO
+	2//E9CzZELlGTUDAII74D+fZtYHbn7KaG6mnMEt35jF5XYiwcpAoqq09Ax+C2tj+wWB+W8S5aL0
+	ilWhgHXInj0xuiZwkN2GozoNlPdKzbX7vP82B6u+ti/PmdiEgNTL0zmkWeHjFhziN+UjwmHeuA7
+	biHGKMqIgcEKpSrc4/z5eFwlLQ/wmf0m5uG/AV0aZG6eGwKs/oaan6kv2dnuXfY3XociRD0H+b5
+	hdhBMWpi4miH78PlwySmJNnink9+zQ7kGN2P4kvghugT33VzkXs9AWUBTKtp+VOfa25TpskjVy0
+	xTChhAT1RggGtBtKrpmEDAK2EVtGJeY4LaZtJEadDmNMKPO/eqyExS30/JjRLvjcN/uiFHGa5oZ
+	T1G8Y=
+X-Received: by 2002:a05:620a:448b:b0:8c9:eae0:d1df with SMTP id af79cd13be357-8cb33115b5amr226371585a.6.1770895805150;
+        Thu, 12 Feb 2026 03:30:05 -0800 (PST)
+X-Received: by 2002:a05:620a:448b:b0:8c9:eae0:d1df with SMTP id af79cd13be357-8cb33115b5amr226368085a.6.1770895804702;
+        Thu, 12 Feb 2026 03:30:04 -0800 (PST)
+Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8f6ecadb27sm147972666b.63.2026.02.12.03.30.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Feb 2026 03:16:19 -0800 (PST)
-Message-ID: <6b9042c8-767e-0fdb-9012-f3790899509e@oss.qualcomm.com>
-Date: Thu, 12 Feb 2026 16:46:14 +0530
+        Thu, 12 Feb 2026 03:30:03 -0800 (PST)
+Message-ID: <bfbe04db-bf64-418b-a75a-88879bf0bf2d@oss.qualcomm.com>
+Date: Thu, 12 Feb 2026 12:30:00 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 2/2] media: iris: Enable Gen2 HFI on SC7280
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bod@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20260209-iris_sc7280_gen2_support-v1-0-390000a4fa39@oss.qualcomm.com>
- <20260209-iris_sc7280_gen2_support-v1-2-390000a4fa39@oss.qualcomm.com>
- <0da582a6-5bba-4450-99ec-cf57b67915e6@oss.qualcomm.com>
- <0a324898-092b-3e44-c35c-15de20b50f40@oss.qualcomm.com>
- <2uih6xdzarkwnvhlhv5kznmdwo4jorqvsrb7xxrxgr6vprx3ey@4kx45k5i3c4y>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 2/4] soc: qcom: ice: Add OPP-based clock scaling
+ support for ICE
+To: Abhinaba Rakshit <abhinaba.rakshit@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Neeraj Soni <neeraj.soni@oss.qualcomm.com>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-scsi@vger.kernel.org, linux-crypto@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20260211-enable-ufs-ice-clock-scaling-v5-0-221c520a1f2e@oss.qualcomm.com>
+ <20260211-enable-ufs-ice-clock-scaling-v5-2-221c520a1f2e@oss.qualcomm.com>
 Content-Language: en-US
-From: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-In-Reply-To: <2uih6xdzarkwnvhlhv5kznmdwo4jorqvsrb7xxrxgr6vprx3ey@4kx45k5i3c4y>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20260211-enable-ufs-ice-clock-scaling-v5-2-221c520a1f2e@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=DtlbOW/+ c=1 sm=1 tr=0 ts=698db685 cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=VDDfqcjMpRzOalc4LhIaOQ==:17
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=DtlbOW/+ c=1 sm=1 tr=0 ts=698db9be cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
  a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
- a=EUspDBNiAAAA:8 a=7y-AjjASQrn7PQsgydUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=GvdueXVYPmCkWapjIL-Q:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEyMDA4NCBTYWx0ZWRfXyHTVImHVYJEe
- hdteh98AsJAllN0KjgXniGM0zxAYAXLazHJmifuSae/dDlGg+ZpWB0UJBjmjh4dWZ0pYDE5jXbY
- wAb26RsJfBh3GGTl5J0QzUtYY/Ws+y4ejGXn+rgwMY5MZPnXWQseSnTry0+5Z0evqtaSfeeZuO5
- TbfVcwX8JHZbsagSBhUO32r6MsiiMqd648hmsVE+8rngsv7RV1c91pRNPhNgcBpKILOvk0olWGg
- c34q9vSAdP8fCpoGOseBboA5U44XFNMM3s0td1Dnah0QJmcH0uTmFODjH+oy+Y24rSbpbynAh93
- +JhLbnz0YZIWC+jTBoj6xdvhsgE2G15+PjirvSo6Dub3vGlpn6KKx0iSO628FMB59q530PEDmGE
- 8+mURJJkwM0dZgOjo6EDcUclsTq/fdyBA2BzKdGhi7yM9DHgnmmUlW9Vh+KQrEmVQSExxIWH8zf
- UOBcmdAWppuWHU396rw==
-X-Proofpoint-ORIG-GUID: BWa6q5EOBPT9r9W0H9XeMvD3oPqgJoil
-X-Proofpoint-GUID: BWa6q5EOBPT9r9W0H9XeMvD3oPqgJoil
+ a=EUspDBNiAAAA:8 a=cMzz2QcylWOBvAN0VsUA:9 a=QEXdDO2ut3YA:10
+ a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEyMDA4NSBTYWx0ZWRfXz8uHZls2w1PI
+ bkjUsoVDm5vgyW23yE4z/afcpTE5ULyFH92dOGA4328VtUknhEJLk+OExKV3iX3iU9y3SQZFbMM
+ j55fmOqrlREjUq56VxgXhE0XnUSLVXc21Zz8T7JqrwnaacQ8Be1GyPUXLa5ZofO9SA/KCxAlxJx
+ fSjMkLwmUvREQEJ66u1I01kP3iW7IvAgSoqpVoaXYxXr6G2in1e9RX+4ZfSIntK+JctKjYASEUk
+ YU/uR/tAYVBl3kwY6nmL4ko1NwapmhUZlCkvm/mVuLmWxO05ltLZFfteMDkB+kx3AZqaa3FwEyv
+ MaWctnGJI+cPUczF/avZQTZLoCr1hvKtOuXBrat/yMS6PuVbZKbJOj6SNHvLxc1kGG8SL8SNP+A
+ 4VRbzuK/DhZPfgilbUDue75TopLuLw1Uyub+OJgy4ZfwJO35j9QBgs1xx2w4dzKMFZn+iC6/azq
+ E/JGIjNiIWkD6i9Ah4g==
+X-Proofpoint-ORIG-GUID: PotL_6TMToWGBlHtCArSFx3Sf1qfhCLj
+X-Proofpoint-GUID: PotL_6TMToWGBlHtCArSFx3Sf1qfhCLj
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-02-12_03,2026-02-11_04,2025-10-01_01
@@ -150,150 +152,126 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  priorityscore=1501 spamscore=0 suspectscore=0 impostorscore=0 adultscore=0
  lowpriorityscore=0 clxscore=1015 bulkscore=0 malwarescore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602120084
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602120085
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	TAGGED_FROM(0.00)[bounces-92680-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
+	TAGGED_FROM(0.00)[bounces-92681-lists,linux-arm-msm=lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[17];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	TO_DN_SOME(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dikshita.agarwal@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[9];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 4479512CEA6
+X-Rspamd-Queue-Id: BFC0112D03D
 X-Rspamd-Action: no action
 
-
-
-On 2/9/2026 6:05 PM, Dmitry Baryshkov wrote:
-> On Mon, Feb 09, 2026 at 05:04:48PM +0530, Dikshita Agarwal wrote:
->>
->>
->> On 2/9/2026 3:32 PM, Konrad Dybcio wrote:
->>> On 2/9/26 10:45 AM, Dikshita Agarwal wrote:
->>>> SC7280 supports both Gen1 and Gen2 HFI firmware. The driver continues to
->>>> use Gen1 by default, but boards that intend to use Gen2 firmware can
->>>> opt‑in by specifying a Gen2 image through the Device Tree
->>>> 'firmware-name' property.
->>>>
->>>> Based on this property and the availability of the referenced
->>>> firmware binary, the driver selects the appropriate HFI generation and
->>>> updates its platform data accordingly. Boards that do not
->>>> specify a Gen2 firmware, or where the firmware is not present,
->>>> automatically fall back to Gen1.
->>>>
->>>> Signed-off-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
->>>> ---
->>>
->>> [...]
->>>
->>>> +int iris_update_platform_data(struct iris_core *core)
->>>> +{
->>>> +	const char *fwname = NULL;
->>>> +	const struct firmware *fw;
->>>> +	int ret;
->>>> +
->>>> +	if (of_device_is_compatible(core->dev->of_node, "qcom,sc7280-venus")) {
->>>> +		ret = of_property_read_string_index(core->dev->of_node, "firmware-name", 0,
->>>> +					    &fwname);
->>>> +		if (ret)
->>>> +			return 0;
->>>> +
->>>> +		if (strstr(fwname, "gen2")) {
->>>> +			ret = request_firmware(&fw, fwname, core->dev);
->>>> +			if (ret) {
->>>> +				dev_err(core->dev, "Specified firmware is not present\n");
->>>> +				return ret;
->>>
->>> This is fragile - if someone names names their gen1 firmware something like
->>> "myproduct_gen2_vidfw.mbn", it's going to match..
->>>
->>> Could we instead do something like the explicit format checks in
->>> venus/hfi_msgs.c : sys_get_prop_image_version(), based on the **contents**
->>> of the binary?
->>>
->>
->> I agree that checking for "gen2" as a substring in the firmware name is not
->> reliable. Unfortunately, we cannot
->> usevenus/hfi_msgs.c:sys_get_prop_image_version() (or any Gen1 HFI query) to
->> probe the contents of the binary here, because Gen1 vs Gen2 have
->> incompatible HFI protocols—probing a Gen2 image with Gen1 HFI (or
->> vice‑versa) isn’t viable in this path.
+On 2/11/26 10:47 AM, Abhinaba Rakshit wrote:
+> Register optional operation-points-v2 table for ICE device
+> and aquire its minimum and maximum frequency during ICE
+> device probe.
 > 
-> Can't we perform Gen2 query on Gen1 firmware, get the error and act
-> accordingly? Or, better, perform Gen1 query on Gen2 firmware, receive
-> the error from the firmware and act? In the end, your team is handling
-> the firmware. If you want to support both interfaces, it should be a
-> runtime check rather than filename matching.
+> Introduce clock scaling API qcom_ice_scale_clk which scale ICE
+> core clock based on the target frequency provided and if a valid
+> OPP-table is registered. Use flags (if provided) to decide on
+> the rounding of the clock freq against OPP-table. Incase no flags
+> are provided use default behaviour (CEIL incase of scale_up and FLOOR
+> incase of ~scale_up). Disable clock scaling if OPP-table is not
+> registered.
 > 
->>
->> To avoid accidental matches, I can switch to an exact filename match
->> instead. That way, only the specific Gen2 image (for example
->> "qcom/vpu/vpu20_p1_gen2.mbn") will trigger the Gen2 path, and boards that
+> When an ICE-device specific OPP table is available, use the PM OPP
+> framework to manage frequency scaling and maintain proper power-domain
+> constraints.
 > 
-> How do you detect that for the OEM-signed firmware, which can have
-> random name?
+> Also, ensure to drop the votes in suspend to prevent power/thermal
+> retention. Subsequently restore the frequency in resume from
+> core_clk_freq which stores the last ICE core clock operating frequency.
 > 
->> want to use Gen2 can opt in by naming the firmware accordingly.
+> Signed-off-by: Abhinaba Rakshit <abhinaba.rakshit@oss.qualcomm.com>
+> ---
 
-I Explored on suggested alternative approaches and seeing some limitation
-with the both of them:
+[...]
 
-1. Detecting Gen1/Gen2 by scanning the firmware blob (fw->data)
-It is possible to parse QC_IMAGE_VERSION_STRING from the .mbn and  extract
-the version string. The issues with this approach :
+> +/**
+> + * qcom_ice_scale_clk() - Scale ICE clock for DVFS-aware operations
+> + * @ice: ICE driver data
+> + * @target_freq: requested frequency in Hz
+> + * @scale_up: If @flags is 0, choose ceil (true) or floor (false)
+> + * @flags: Rounding policy (ICE_CLOCK_ROUND_*); overrides @scale_up
+> + *
+> + * Clamps @target_freq to the OPP range (min/max), selects an OPP per rounding
+> + * policy, then applies it via dev_pm_opp_set_rate() (including voltage/PD
+> + * changes).
+> + *
+> + * Return: 0 on success; -EOPNOTSUPP if no OPP table; or error from
+> + *         dev_pm_opp_set_rate()/OPP lookup.
+> + */
+> +int qcom_ice_scale_clk(struct qcom_ice *ice, unsigned long target_freq,
+> +		       bool scale_up, unsigned int flags)
+> +{
+> +	int ret;
+> +	unsigned long ice_freq = target_freq;
+> +	struct dev_pm_opp *opp;
 
-- the version string has no explicit marker that identifies Gen1 vs Gen2.
+Reverse-Christmas-tree ordering would be neat
 
-- This prefix is not a formal ABI, and it is not consistent across SoCs.
-Each SoC family uses different naming patterns in the version string.
+> +
+> +	if (!ice->has_opp)
+> +		return -EOPNOTSUPP;
+> +
+> +	/* Clamp the freq to max if target_freq is beyond supported frequencies */
+> +	if (ice->max_freq && target_freq >= ice->max_freq) {
+> +		ice_freq = ice->max_freq;
+> +		goto scale_clock;
+> +	}
+> +
+> +	/* Clamp the freq to min if target_freq is below supported frequencies */
+> +	if (ice->min_freq && target_freq <= ice->min_freq) {
+> +		ice_freq = ice->min_freq;
+> +		goto scale_clock;
+> +	}
 
-Example : For SC7280 Gen1 we currently see:
-QC_IMAGE_VERSION_STRING=video-firmware.1.0-<hash> while SM8250 has
-QC_IMAGE_VERSION_STRING=VIDEO.VPU.1.0-00119-<>
+The OPP framework won't let you overclock the ICE if this is what these checks
+are about. Plus the clk framework will perform rounding for you too
 
-So the driver would need SoC‑specific string‑matching rules, which is hard
-to maintain if we are looking for a design to address all available SOCs.
-	
-2. Booting the firmware and querying it via an HFI system property
-Issues with this approach :
+> +
+> +	switch (flags) {
 
-- Gen1 and Gen2 use different HFI protocol formats (different packet
-layouts, IDs, and message structures). There is no unified HFI message that
-both generations can safely accept.
+Are you going to use these flags? Currently they're dead code
 
-- The HFI protocol provides no version marker in any packet header.
-The firmware does not know whether it is being talked to with Gen1‑style
-packets or Gen2‑style packets. The driver simply typecasts the memory
-buffer into a Gen1 or Gen2 packet type — the firmware has no concept of
-“wrong HFI generation”. So it cannot return a dedicated error indicating
-“incompatible HFI interface”.
+> +	case ICE_CLOCK_ROUND_CEIL:
+> +		opp = dev_pm_opp_find_freq_ceil_indexed(ice->dev, &ice_freq, 0);
 
+You never use the index (hardcoded to 0)
 
-Thanks,
-Dikshita
+> +		break;
+> +	case ICE_CLOCK_ROUND_FLOOR:
+> +		opp = dev_pm_opp_find_freq_floor_indexed(ice->dev, &ice_freq, 0);
+> +		break;
+> +	default:
+> +		if (scale_up)
+> +			opp = dev_pm_opp_find_freq_ceil_indexed(ice->dev, &ice_freq, 0);
+> +		else
+> +			opp = dev_pm_opp_find_freq_floor_indexed(ice->dev, &ice_freq, 0);
 
->>
->> Thanks,
->> Dikshita
->>
->>> Konrad
-> 
+Is this distinction necessary?
+
+Konrad
 
