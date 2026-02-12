@@ -1,59 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-92714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cK11Eu3ujWlw8wAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Feb 2026 16:17:01 +0100
+	id +LZMJ0bvjWlw8wAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Feb 2026 16:18:30 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F47A12ECF2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Feb 2026 16:17:00 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B93A12ED42
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Feb 2026 16:18:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 2C4843002D01
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Feb 2026 15:16:57 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 128F23050221
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Feb 2026 15:18:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDCA0208D0;
-	Thu, 12 Feb 2026 15:16:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD4441E492D;
+	Thu, 12 Feb 2026 15:18:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Oex44UkU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="klC2+tU5"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA6EE2C9D;
-	Thu, 12 Feb 2026 15:16:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 856697E110;
+	Thu, 12 Feb 2026 15:18:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770909415; cv=none; b=bnmgXzBf3erhSV4F0EvpbtpiURBURBB4vLpR5jPfh9aFyjhVty51tT0ngo7gig1LMvuC+gCqzQC3WVwcwmxv3oJNHfyl3wH7+oo+XYonAvQcIMqfEtgCLgYPkO6eFrLVOwGursFI3NjPSnJxmORx9vaUk7Xun9AGj8QwEMRZD9I=
+	t=1770909480; cv=none; b=M3aj0hF63O/9l2u7TyIL4kWGPPrpURuywcCZOb8EOGA1wZF7FXUnO5pC32GAyeE6fzs2563TPbR6FLZ7TPmtsOCa2rmgSvbQhYFGgtBzFg6hBLOHAOz+zbeTi+upqOIqIN/bq/NKk8NFVlLTYBEUTFks7xt9GwGCaG7Tg+P6PHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770909415; c=relaxed/simple;
-	bh=/YxLfHepNobMPznsIT/8d/F6MCTOOI+heTvJBv7kiXE=;
+	s=arc-20240116; t=1770909480; c=relaxed/simple;
+	bh=GNWaPpbr53BU3Z840pm9s1F3R3YM8PUA8uCQhf9EXyk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ku0P8HJESw4YxQWUsp3ak14oUmmapk8999DhEs3Gswbx8xyqsfqNZ96Qh/ewOtgKpaPDyyKfOlUaMfEAKx7DL6YCQar9dAczNaTGMaaHvpfAdaRHYxcOf2SBNmLjYLb2TR523+LDIs/IVE6wAVnEJRvsUdpwLytjN/7ajQgTXmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Oex44UkU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2030C4CEF7;
-	Thu, 12 Feb 2026 15:16:54 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=glkbaMrLkSkUZEuRob784FCaL61gftwxIWkBny/uTMt9oPSSuhypYVv4TG9LX0qYa1Dxk0EbM4R5O/oHr3wl+VJJR/K4gF7RjddA/nrRGgC2A6pgnLjyzVXC4aWp8Wmv1tHG9rQ0gKRJ9/WSjRPuD6ZInCgaffAOm+tlCcOU/jw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=klC2+tU5; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C9A8C19425;
+	Thu, 12 Feb 2026 15:17:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770909415;
-	bh=/YxLfHepNobMPznsIT/8d/F6MCTOOI+heTvJBv7kiXE=;
+	s=k20201202; t=1770909480;
+	bh=GNWaPpbr53BU3Z840pm9s1F3R3YM8PUA8uCQhf9EXyk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Oex44UkU03+7lRzAzgkAdYqpU4PK8HFEyN8f+VLkQmYHRec+30S4RJYoJhxlYAQPx
-	 ABuVrxqU23MegqnHULPRoXj4VwojimjSgVqbM+MIiqOZt/ZBBExRCntvQxgGwEdyuM
-	 IPn/Pd5+t9BkmfiWmUJQKORvUuDD5cFPMEXA1nCUOj3zozq37g5UR8L3WWzQRTuC3Y
-	 tcuQwYNhqu6s06Es8of2AST5DdKTUdpbi5ysKm1kxoBA1PGesYuY9NVa+YoNb74+4E
-	 dWVUE51Yo/foyemRZVOYgInb/OpqQ6Plfgxqk7AGZPaxibIC3YRVjlvGd/UtBjqp1f
-	 Mr4Hbw/kYIkBA==
-Date: Thu, 12 Feb 2026 09:16:52 -0600
+	b=klC2+tU5ThyeaPGiln5kckSlgVK801hTcmdB64aKcQtluNwnGEb+N29aJ4mrAqWIg
+	 38Mm4pu/e7bYwLL0ujY6BYSMHD1nXV+t5CPpKSBrxFd4RX42863yQTuRcPpj6i+Nko
+	 TXHo/7Yy136kkxCE9uNU01qQSPefY8yMTu5xYVQ/hSjqqtsRhLRi8QbeVPw/VXUPqx
+	 3gpCSunUXMgOcb8B5nZDmmMWLmTOwnIlFrU6LMRu0daaCgmuTNTlO6xImpeni1QYJD
+	 DXVigqwGyL4IkzMlc4auTqqCPa04NruKsLZEpCPQ9tPHYhY4+wSL0+00bDXj3zFtoh
+	 TNjDhElNtAyEQ==
+Date: Thu, 12 Feb 2026 09:17:56 -0600
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>, 
-	Jeff Johnson <jjohnson@kernel.org>, linux-arm-msm@vger.kernel.org, linux-wireless@vger.kernel.org, 
-	ath11k@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] wifi: ath11k: Silence remoteproc probe deferral prints
-Message-ID: <zpddlyuwrxr2rwjsyzsucgm3irtxmetyhhajptveojnmo7vcni@ntyqoahm6xtq>
-References: <20260212-ath11k-silence-probe-deferr-v1-1-b8a49bb3c332@oss.qualcomm.com>
- <f028462c-ae31-4fa5-b414-e03d3a73fdf4@oss.qualcomm.com>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
+	Magnus Damm <magnus.damm@gmail.com>, Bartosz Golaszewski <brgl@kernel.org>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-usb@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org, linux-pci@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3 1/9] dt-bindings: usb: document the Renesas
+ UPD720201/UPD720202 USB 3.0 xHCI Host Controller
+Message-ID: <7kkwkjnucx3cpvegilske2qd4u24vvjkykrljosi2uyknte4bz@3xvh57q5lpcv>
+References: <20260206-topic-sm8650-ayaneo-pocket-s2-base-v3-0-5b79c5d61a03@linaro.org>
+ <20260206-topic-sm8650-ayaneo-pocket-s2-base-v3-1-5b79c5d61a03@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,96 +68,126 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f028462c-ae31-4fa5-b414-e03d3a73fdf4@oss.qualcomm.com>
+In-Reply-To: <20260206-topic-sm8650-ayaneo-pocket-s2-base-v3-1-5b79c5d61a03@linaro.org>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	MID_RHS_NOT_FQDN(0.50)[];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-92714-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-92715-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	MISSING_XM_UA(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[linuxfoundation.org,kernel.org,glider.be,gmail.com,google.com,vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[17];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[7];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,renesas];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MIME_TRACE(0.00)[0:+];
+	MISSING_XM_UA(0.00)[];
 	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: 5F47A12ECF2
+X-Rspamd-Queue-Id: 3B93A12ED42
 X-Rspamd-Action: no action
 
-On Thu, Feb 12, 2026 at 04:01:21PM +0100, Konrad Dybcio wrote:
-> On 2/12/26 3:52 PM, Bjorn Andersson wrote:
-> > Upon failing to resolve the remoteproc phandle one ath11k_dbg() and one
-> > ath11k_err() is used to tell the user about the (presumably) temporary
-> > failure.
-> > 
-> > Reduce the log spam by removing the duplicate print and switching to
-> > dev_err_probe(), in line with how ath12k handles this error.
-> > 
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-> > ---
-> >  drivers/net/wireless/ath/ath11k/ahb.c | 10 +++-------
-> >  1 file changed, 3 insertions(+), 7 deletions(-)
-> > 
-> > diff --git a/drivers/net/wireless/ath/ath11k/ahb.c b/drivers/net/wireless/ath/ath11k/ahb.c
-> > index 8dfe9b40c12626649639fc1dd9da0e5e0c2dcaf1..08d3a0c8f105b26b1548c5d6006f6ea162fe58ff 100644
-> > --- a/drivers/net/wireless/ath/ath11k/ahb.c
-> > +++ b/drivers/net/wireless/ath/ath11k/ahb.c
-> > @@ -807,10 +807,8 @@ static int ath11k_core_get_rproc(struct ath11k_base *ab)
-> >  	}
-> >  
-> >  	prproc = rproc_get_by_phandle(rproc_phandle);
-> > -	if (!prproc) {
-> > -		ath11k_dbg(ab, ATH11K_DBG_AHB, "failed to get rproc, deferring\n");
-> > -		return -EPROBE_DEFER;
-> > -	}
-> > +	if (!prproc)
-> > +		return dev_err_probe(&ab->pdev->dev, -EPROBE_DEFER, "failed to get rproc\n");
+On Fri, Feb 06, 2026 at 03:50:29PM +0100, Neil Armstrong wrote:
+> Document the Renesas UPD720201/UPD720202 USB 3.0 xHCI Host Controller,
+> which connects over PCIe and requires specific power supplies to
+> start up.
 > 
-> I'd like to think this doesn't really change the behavior, but I'd rather
-> see this that in-house print functions..
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+>  .../bindings/usb/renesas,upd720201-pci.yaml        | 61 ++++++++++++++++++++++
+>  1 file changed, 61 insertions(+)
 > 
+> diff --git a/Documentation/devicetree/bindings/usb/renesas,upd720201-pci.yaml b/Documentation/devicetree/bindings/usb/renesas,upd720201-pci.yaml
+> new file mode 100644
+> index 000000000000..34acee62cdd2
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/usb/renesas,upd720201-pci.yaml
+> @@ -0,0 +1,61 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/usb/renesas,upd720201-pci.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: UPD720201/UPD720202 USB 3.0 xHCI Host Controller (PCIe)
+> +
+> +maintainers:
+> +  - Neil Armstrong <neil.armstrong@linaro.org>
+> +
+> +description:
+> +  UPD720201 USB 3.0 xHCI Host Controller via PCIe x1 Gen2 interface.
+> +  The UPD720202 supports up to two downstream ports, while UPD720201
+> +  supports up to four downstream USB 3.0 rev1.0 ports.
+> +
+> +properties:
+> +  compatible:
+> +    const: pci1912,0014
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  avdd33-supply:
+> +    description: +3.3 V power supply for analog circuit
+> +
+> +  vdd10-supply:
+> +    description: +1.05 V power supply
+> +
+> +  vdd33-supply:
+> +    description: +3.3 V power supply
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - avdd33-supply
+> +  - vdd10-supply
+> +  - vdd33-supply
+> +
+> +allOf:
+> +  - $ref: usb-xhci.yaml
+> +
+> +additionalProperties: false
 
-I'm having problems parsing your sentence. Are you saying you rather see
-us keep using the ath11k_* functions?
+I'm trying to hang a onboard_hub off this controller and #address-cells,
+#size-cells, and hub@ comes back as invalid children. 
 
-> 
-> >  	ab_ahb->tgt_rproc = prproc;
-> >  
-> >  	return 0;
-> > @@ -1190,10 +1188,8 @@ static int ath11k_ahb_probe(struct platform_device *pdev)
-> >  	ath11k_ahb_init_qmi_ce_config(ab);
-> >  
-> >  	ret = ath11k_core_get_rproc(ab);
-> > -	if (ret) {
-> > -		ath11k_err(ab, "failed to get rproc: %d\n", ret);
-> > +	if (ret)
-> >  		goto err_ce_free;
-> > -	}
-> 
-> If the rproc handle is unavailable at this point, we undo quite a bit of work
-> in .probe.. would it make sense to move this check way above?
-> 
-
-Given that devlink doesn't covers this, but presumably cover several of
-the above resources, I think that would make sense. It would be a
-separate patch regardless...
+I think this should be unevaluatedProperties instead.
 
 Regards,
 Bjorn
 
-> Konrad
+> +
+> +examples:
+> +  - |
+> +    pcie@0 {
+> +        reg = <0x0 0x1000>;
+> +        ranges = <0x02000000 0x0 0x100000 0x10000000 0x0 0x0>;
+> +        #address-cells = <3>;
+> +        #size-cells = <2>;
+> +        device_type = "pci";
+> +
+> +        usb-controller@0 {
+> +            compatible = "pci1912,0014";
+> +            reg = <0x0 0x0 0x0 0x0 0x0>;
+> +            avdd33-supply = <&avdd33_reg>;
+> +            vdd10-supply = <&vdd10_reg>;
+> +            vdd33-supply = <&vdd33_reg>;
+> +        };
+> +    };
+> 
+> -- 
+> 2.34.1
+> 
 
