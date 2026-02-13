@@ -1,258 +1,263 @@
-Return-Path: <linux-arm-msm+bounces-92804-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92805-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id IHA0J8Y8j2mtNgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92804-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Feb 2026 16:01:26 +0100
+	id GECDC589j2mtNgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92805-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Feb 2026 16:05:03 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 06BD1137612
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Feb 2026 16:01:18 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B38D3137658
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Feb 2026 16:05:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id B4A4A300BCA8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Feb 2026 15:01:16 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 8A4D930074A8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Feb 2026 15:05:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14C1533FE05;
-	Fri, 13 Feb 2026 15:01:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 657B93451D5;
+	Fri, 13 Feb 2026 15:05:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EyMjC2n7"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="FKEMdH8l";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="WCWZ0kqa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49211B4224;
-	Fri, 13 Feb 2026 15:01:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770994876; cv=none; b=T+ozp8yjjdTaXLj88W901b+sRDPl7gc5oLnluprNfAdzHrkZavo7EXzsMGYZCHl8Zk/P1fzSh7YeJsY0F9XCJiGVta8PQ2FCERq7LreSXlspVkm7eUEfMyHwmBUFBYjhIRfYCJ6kTtPaB8bYo1CHpoHoyuKRrNo/T0o/hTPfAEg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770994876; c=relaxed/simple;
-	bh=i9Z1d9mtyD9VgpCG+vwLj2SdGmPboVbb0boZz52wsMM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pNG4SWZG7eZz2Vct2o9pzwFZfBhXUPtPGO3sQOyjmjTKf/hkIqsMYU0y27Sz7WI4H39m1DG09DD/74S9ZOHdSOrSDgyIZyOI8nYwoRRW6PMz6aqY5yUlC2nVj7FHXbuToIzOJc1cv4lwX2scTt1eMDcBsSOqGi79YY1POWnoSCM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EyMjC2n7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EDCBC116C6;
-	Fri, 13 Feb 2026 15:01:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770994875;
-	bh=i9Z1d9mtyD9VgpCG+vwLj2SdGmPboVbb0boZz52wsMM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=EyMjC2n7IMPmDbmI7DcdPyLWe1wqY9BvMpSkTXHOoTF1ZHwabuuL6fLci8xqhxr53
-	 elhU2yoIy8cC2ex9TzEgzamEsJdmJHAwGfUUQnFPBtlr79dA5jpv5oZ319+WLpEfQ/
-	 iM/6fET5gGJ3uMqKlk7pRgCbPzmIbO9onbqLzW3Al2RIh1w3KwEy0S5/TwCC6jKpbz
-	 Max5zmGg4g4vv0p67dQM4zlX2oa6r3Hy5rHvhywlqS1elCyfQH0FcDVBEwFRGrI5Xg
-	 i41Fs9selWGsN7RBTktbNywpczGPc4ANLtLRLITWXcNv9R8qdggxRBiMIIi8ulmAQz
-	 t823HwuOrrv8w==
-Message-ID: <bedf5751-8186-4197-95f7-24682f24dee3@kernel.org>
-Date: Fri, 13 Feb 2026 16:01:11 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 264B33612D2
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Feb 2026 15:04:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=205.220.168.131
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1770995100; cv=pass; b=VgClRufdeXDW9MG020ZoWa7f7sl3uTDe1BHL/4rWZSN74UX7TxWcsbXoZRxeraiaiIOsZPeoeFH6Bun2AThxtwtsZnk2C8oA8LdwLOFkJf7B7Q6D1Quf6oHve9+AKguiPUhKuHDTjulOsK+PNx1gyJGoVMTZKA2d8pLbccowtZI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1770995100; c=relaxed/simple;
+	bh=CMBS5EIesxGdG3K8fsAv7vMOUnfkY9B6WEZTZuwoxCo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WurgGj7RTw/4Oic78pf4ksLQtyled7XMtK5q/JVFKIfZ2EOsmaWJZ2Tu9i55PxfDJnxVYP1iJ5ZUWGG2dvStUTlEpwNpMstdGmkYlSgWkh1uqNHmrydKxCItWT/pi/NiU5IOf2LmAVTWZVwBPpUD1jGlfhEFOTNzyOj1IRgXbrI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FKEMdH8l; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=WCWZ0kqa; arc=pass smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 61DEcvUu3045230
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Feb 2026 15:04:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	eW2vMR1Mwf7vQ0YNRjjPpIBK9206Pf0npi9UisdFptM=; b=FKEMdH8lyudUWZ14
+	IhLvOfhMG+cz3cNHiHbcM32t6HcH0tewyy2j+HjxQOWeesrfLM/aLgFzNOaJwH5k
+	VxDOM4/xx2Yi9swG23pps0H6TnU/2osUCQLd+qVp847oFE8u6C7aS8/ETduKgHNs
+	ePP14RE4kfM9rPywYa6i1iS2DjEPYt3ILwRoTWRBzPHDpm6KVyFC3C89/Qy6qg7D
+	IspkRFZqlyTCD3pSAFw1X2UVt4diuz/7GWDPcn3qAKZFYmBocF0gyP/WR7X/bprm
+	LqGaunGDEkXaNADYyf67xASWbkQ+xW3QZvkUmtML3tPGLt29F3ceMi+jGlUMR6wk
+	332P5A==
+Received: from mail-vk1-f200.google.com (mail-vk1-f200.google.com [209.85.221.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c9ps2u8g5-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Feb 2026 15:04:58 +0000 (GMT)
+Received: by mail-vk1-f200.google.com with SMTP id 71dfb90a1353d-5675deeda04so1273822e0c.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Feb 2026 07:04:58 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1770995097; cv=none;
+        d=google.com; s=arc-20240605;
+        b=KK8cCfUsgZDR12To3nJoWNdtj7yqRtXpvlfGBAWfo4H9hNRdA++1L06kk9RvyOQSoV
+         gZKTLzVgBLXaTjdHp1mA6lPab5s8porBVnMDtO2oXBuwkEq7XWVUD+eNXLfjiTXSDe6I
+         Sm6mYmIXAsfGvUkeTqkLaQJhw5Lno1KecDaApms4dlmjTEIg3RHptQ/ux56tCrQVRuw9
+         KGTL5gm3bXN128/bHNsIzUwpU/YbmLGWSlemfkGCFjkdNffy7kS3Sbzw/b02pEG6BI2P
+         LdITCabD0Ec3dgwtO/QAL0l9RrOvXyxm5/AtgmQ5CW/jZtCEmkRmDI9DcXAr8PbBUACj
+         Porw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=eW2vMR1Mwf7vQ0YNRjjPpIBK9206Pf0npi9UisdFptM=;
+        fh=azI3TsCsuI+hm1stowyZOfKN3WiEWkGkD0lQpXbOjFQ=;
+        b=gguKYv7RybWLB8dKcauokJvkrZygpXhYQjriEUwUnTmHjOf7OGa/uDxHhxB6CxwDd0
+         UlSKAPMiNQW1vAGoiVd6JpgUN9/TVh7FC3/PXIjzzeENtW3+1+eapOTwWRpwMbFvfQ7O
+         VXTVYz8HRx3Lrg+htPxVCxB5O3jSguMNGWEhfjV6ZtD4YhJG7LBHXvugluW/u/5Tnz6K
+         hAvE5St6E9yhrgA+GRdBD34N/vCSB/8z4+wiZkBNHRVawxjOjZUfoplHBzluk3H/TdE/
+         /ruDPcM71ayU4ePS7gIFRKyJKAvtchlJs1691hPsuv+tV5xjhdY0RAuoASeQRjZKin/l
+         K7MA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1770995097; x=1771599897; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=eW2vMR1Mwf7vQ0YNRjjPpIBK9206Pf0npi9UisdFptM=;
+        b=WCWZ0kqa1BoeDLUn6g9JnN5FmGAwwWjxYLPMmXSh2BbdM41s2W5E01Va46lKj64fr8
+         wnAgBhNhnUqIBkPVexczi4XH7wHyTgysfExn/uD4Z/LThDpSlwG/BQyuJRX3e7MEzLoP
+         sdNnfDky32WhjD8XgyAXlodjhEyV33vbd6173hjppWM77Rdx7PTvJHOhg2jFm308i1mO
+         FPu+w0Ud0atYLuR+SFoede1b+Uu1+udoNh/vIKXMmqqbbnUTy35JgrUVVBMHo1OtFQzl
+         10VYl3TzgqltQCch7MI1KNozIMreBqypah2vlQiQHtatZGX0S7Pj1T4gfV8EKySRAvvW
+         39pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1770995097; x=1771599897;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=eW2vMR1Mwf7vQ0YNRjjPpIBK9206Pf0npi9UisdFptM=;
+        b=WTizJY2QPcYmkyYRSWE1ptRSQKu9+v5uS8SLpuGR0Eoc7JUZIUc2v/JgVL6D56BD5m
+         Y2+WocKvO1mUNOExmNJDelXKG9DQOf3TinzwMLl8xHHnyuqNLHJaK3BQMZ/c+wK963a7
+         nahFImfeIODLUmeW+s65HZRoi5HEYiD1wobE/IOpvlST5VS6iUy28akEyxHpga2pH2Xr
+         lq005+li1/OpuF1vfeq0E5wmf1LCIen+oGJlC0zpxfdRpIki0YlhGiiQ6u5Tpg4SWuB7
+         cFTQWH2hmm3/e/8DdtXka053yZ9glCHge/54DiOHRhjBzGrEiScI5YJ30UPnNB5sfOtX
+         fsbA==
+X-Forwarded-Encrypted: i=1; AJvYcCXlbdmKkDofwIN9JTbLVok8oxGBmjJw1VeBoNtbMen9Olrofwh4W32AbIi7Pfi5OPDLsEKEoB7eaGnJftdF@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx01oZ/SsuCdcq+8WIv1Z3wdBmSaerag9zb3OGbLSA02A5p8+YU
+	mATfxMmZkG2zuqUYh4NJESqGWSR7rk7U0bZok3cetgQT/MyJD3FVsjztW9h/GZGQxibylOC5Ves
+	dXAaKRWe2nGEIfsanXW1etOi9XcBBmac2alQzHd2FIhAzrKahQyYkTj2uJYD0fB4GME9KgzjGzk
+	9V+CD69qsZIjQzGDlRoXf/2DfCDkwqcrh8qw9c2ykHm/k=
+X-Gm-Gg: AZuq6aIoiHaq5fVflr8aRtnhD0yQd6hg9s+BFfsikAEop9qnswS6Ie0CA6K42d5GIV7
+	VX9W41f7H1rzP7L76lDihlLmQ5nI0NYmDba1nQTt04C/HBLm+PdZL/RiBdKSguFJCUQMxpGe7pL
+	8l+is9J6XM0DH5ieN1LFDli36c81BRVJXjd7uh86nKSyv3fLDU26IqSJxM/bCJvFVCZl9H3I0lj
+	z2GGQ6Y0Iw/RWo3VsnoZrGxqD3ROWbgxkkRXJ+S
+X-Received: by 2002:a05:6102:3ec4:b0:5f5:4eac:cd2e with SMTP id ada2fe7eead31-5fe16f31738mr892471137.32.1770995096696;
+        Fri, 13 Feb 2026 07:04:56 -0800 (PST)
+X-Received: by 2002:a05:6102:3ec4:b0:5f5:4eac:cd2e with SMTP id
+ ada2fe7eead31-5fe16f31738mr892250137.32.1770995094738; Fri, 13 Feb 2026
+ 07:04:54 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] arm64: dts: qcom: sm8550: Fix DTBO boot failure
-To: Aaron Kling <webgeek1234@gmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Kumar Sharma <quic_vksharma@quicinc.com>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>
-References: <20260207-sm8550-abl-dtbo-v2-1-83afaa6f3ce9@gmail.com>
- <d4faaf8d-1517-4187-8801-a2dd52d8dde3@kernel.org>
- <CALHNRZ9k3yxXb9OfYXMSfEwyYKU8Rrrrjb-hPqLgU90X9YBP8g@mail.gmail.com>
- <487e4605-0a21-48d6-8b77-9ce2799ad212@kernel.org>
- <CALHNRZ8sqCpUMyCFP99b7nHu2onojZ0EY6YGQZ9RMP0kH8jWzw@mail.gmail.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
- FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJoF1BKBQkWlnSaAAoJEBuTQ307
- QWKbHukP/3t4tRp/bvDnxJfmNdNVn0gv9ep3L39IntPalBFwRKytqeQkzAju0whYWg+R/rwp
- +r2I1Fzwt7+PTjsnMFlh1AZxGDmP5MFkzVsMnfX1lGiXhYSOMP97XL6R1QSXxaWOpGNCDaUl
- ajorB0lJDcC0q3xAdwzRConxYVhlgmTrRiD8oLlSCD5baEAt5Zw17UTNDnDGmZQKR0fqLpWy
- 786Lm5OScb7DjEgcA2PRm17st4UQ1kF0rQHokVaotxRM74PPDB8bCsunlghJl1DRK9s1aSuN
- hL1Pv9VD8b4dFNvCo7b4hfAANPU67W40AaaGZ3UAfmw+1MYyo4QuAZGKzaP2ukbdCD/DYnqi
- tJy88XqWtyb4UQWKNoQqGKzlYXdKsldYqrLHGoMvj1UN9XcRtXHST/IaLn72o7j7/h/Ac5EL
- 8lSUVIG4TYn59NyxxAXa07Wi6zjVL1U11fTnFmE29ALYQEXKBI3KUO1A3p4sQWzU7uRmbuxn
- naUmm8RbpMcOfa9JjlXCLmQ5IP7Rr5tYZUCkZz08LIfF8UMXwH7OOEX87Y++EkAB+pzKZNNd
- hwoXulTAgjSy+OiaLtuCys9VdXLZ3Zy314azaCU3BoWgaMV0eAW/+gprWMXQM1lrlzvwlD/k
- whyy9wGf0AEPpLssLVt9VVxNjo6BIkt6d1pMg6mHsUEVzsFNBFVDXDQBEADNkrQYSREUL4D3
- Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
- MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
- OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
- GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
- 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
- YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
- 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
- BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
- JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
- 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
- YpsFAmgXUF8FCRaWWyoACgkQG5NDfTtBYptO0w//dlXJs5/42hAXKsk+PDg3wyEFb4NpyA1v
- qmx7SfAzk9Hf6lWwU1O6AbqNMbh6PjEwadKUk1m04S7EjdQLsj/MBSgoQtCT3MDmWUUtHZd5
- RYIPnPq3WVB47GtuO6/u375tsxhtf7vt95QSYJwCB+ZUgo4T+FV4hquZ4AsRkbgavtIzQisg
- Dgv76tnEv3YHV8Jn9mi/Bu0FURF+5kpdMfgo1sq6RXNQ//TVf8yFgRtTUdXxW/qHjlYURrm2
- H4kutobVEIxiyu6m05q3e9eZB/TaMMNVORx+1kM3j7f0rwtEYUFzY1ygQfpcMDPl7pRYoJjB
- dSsm0ZuzDaCwaxg2t8hqQJBzJCezTOIkjHUsWAK+tEbU4Z4SnNpCyM3fBqsgYdJxjyC/tWVT
- AQ18NRLtPw7tK1rdcwCl0GFQHwSwk5pDpz1NH40e6lU+NcXSeiqkDDRkHlftKPV/dV+lQXiu
- jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
- zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
- XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <CALHNRZ8sqCpUMyCFP99b7nHu2onojZ0EY6YGQZ9RMP0kH8jWzw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20260205160240.748371-1-loic.poulain@oss.qualcomm.com>
+ <20260205160240.748371-6-loic.poulain@oss.qualcomm.com> <aY7pvakkOnaYsd5p@hovoldconsulting.com>
+ <CAFEp6-3yk3sPXj+hGuWvAFsFJAXjH4kWLV8k_5_v9Hax0XxaOg@mail.gmail.com> <aY8Asvu-1u0e02oJ@hovoldconsulting.com>
+In-Reply-To: <aY8Asvu-1u0e02oJ@hovoldconsulting.com>
+From: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Date: Fri, 13 Feb 2026 16:04:43 +0100
+X-Gm-Features: AZwV_Qi-gcKkQ_iLyM-qQ0bS7RPoFrsjQTRiFlw9B8VJFEwLZ3xDSAVLYDCdjiU
+Message-ID: <CAFEp6-0rzkqc0ajN72q=mv3U-TT0JHMSPmnJD6ohKuLmbPz2-A@mail.gmail.com>
+Subject: Re: [PATCH v3 5/5] phy: qcom: snps-femto-v2: Fix possible NULL-deref
+ on early runtime suspend
+To: Johan Hovold <johan@kernel.org>
+Cc: vkoul@kernel.org, kishon@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, dmitry.baryshkov@oss.qualcomm.com,
+        neil.armstrong@linaro.org, konrad.dybcio@oss.qualcomm.com,
+        Abel Vesa <abel.vesa@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-ORIG-GUID: 1TQxN-JRci4JSmgg57lGppylUbAnKM6L
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEzMDExNiBTYWx0ZWRfX0SnnQuiYt7nP
+ oAXn4BdReXOUbz9AzugHkfNJpc+nb03XGN0NVjBaQ2JwakP3BO7Wlsq+7cG/m9q7Ik9GtJbz8/O
+ e0X9/CsMnD1y3PV9dbXjEhxvx+HCvMQpgJprnhfk6SbMMPKK+4wjZyGc7WhMG2OmegR72uxdyBN
+ Y0NujFT6qDhEgiZdTAkwBYcZTkGtJubTFfAvOjyWFfHqxg64SkaJ5wUNLYXdf3thaT7bhyI1Tt2
+ qIewlwH+TFUjTr8W9VtZoi8n86kobKLXBjjYPeYUEMbOe8RuIwGkKErm0j1rFZ/cxHDE9+Wh0z8
+ oWNxsWyGjOLoI7A+HZcpC0KFTos127taji0GqWYy9u2e4amMsTnALrGVcl9GB4PamqOsIVQ9uGH
+ pKx3zw9+DsdqJgiO4kAdTAAcxw5sN61vLYaC0ACUY2AbesV04Ln9wQbcOsA8XTH17LCYc08lVwf
+ Y5BoiiD3HrREiUALieQ==
+X-Authority-Analysis: v=2.4 cv=LoOfC3dc c=1 sm=1 tr=0 ts=698f3d9a cx=c_pps
+ a=wuOIiItHwq1biOnFUQQHKA==:117 a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22
+ a=GgsMoib0sEa3-_RKJdDe:22 a=NEAV23lmAAAA:8 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=Q6oW8UG3RuEdIIStXg8A:9 a=QEXdDO2ut3YA:10 a=XD7yVLdPMpWraOa8Un9W:22
+X-Proofpoint-GUID: 1TQxN-JRci4JSmgg57lGppylUbAnKM6L
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-13_03,2026-02-12_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 impostorscore=0 spamscore=0 phishscore=0 bulkscore=0
+ malwarescore=0 adultscore=0 suspectscore=0 clxscore=1015 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602130116
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+X-Spamd-Result: default: False [-2.16 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_HAS_DN(0.00)[];
-	TAGGED_FROM(0.00)[bounces-92804-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	RSPAMD_EMAILBL_FAIL(0.00)[pavan.kondeti.oss.qualcomm.com:query timed out,krzk.kernel.org:query timed out];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,mail.gmail.com:mid,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,oss.qualcomm.com:dkim];
 	TO_DN_SOME(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	PRECEDENCE_BULK(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[9];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: 06BD1137612
+	FROM_NEQ_ENVFROM(0.00)[loic.poulain@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	PRECEDENCE_BULK(0.00)[];
+	TAGGED_FROM(0.00)[bounces-92805-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_FIVE(0.00)[6];
+	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+]
+X-Rspamd-Queue-Id: B38D3137658
 X-Rspamd-Action: no action
 
-On 11/02/2026 16:10, Aaron Kling wrote:
-> On Mon, Feb 9, 2026 at 1:51 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
->>
->> On 08/02/2026 16:10, Aaron Kling wrote:
->>> On Sun, Feb 8, 2026 at 3:07 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
->>>>
->>>> On 08/02/2026 02:16, Aaron Kling via B4 Relay wrote:
->>>>> From: Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>
->>>>>
->>>>> ABL requires certain things in the base dtb to apply a dtbo. Namely:
->>>>>
->>>>> * A label named qcom_tzlog must exist, but doesn't have to contain any
->>>>>   specific properties
->>>>> * The timer node must have a label named arch_timer
->>>>>
->>>>> This aligns the sm8550 soc dtsi with those requirements. Without these
->>>>> in the base dtb, when ABL attempts to apply any dtbo, it will fail to
->>>>> the bootloader menu.
->>>>>
->>>>
->>>> Incomplete DCO chain.
->>>>
->>>>> Co-authored-by: Aaron Kling <webgeek1234@gmail.com>
->>>>> Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
->>>>> ---
->>>>> With a current mainline sm8550 base dtb, ABL will fail to apply any dtbo
->>>>> and fail back to the bootloader menu. There are two changes needed:
->>>>
->>>> Since when? We were testing SM8550 (me on QRD) all the time and there
->>>> was no problem.
->>>>
->>>> You need to provide details which hardware needs it, if this is about to
->>>> expected, but honestly, we don't add such nodes/labels for downstream
->>>> bootloader. Qualcomm should fix the bootloder instead.
->>>
->>> This discussion has been ongoing in a couple places. It is needed on
->>> all semi-recent recent qcom socs. See this chain [0] on my sm8550
->>
->>
->> Explanation must be in this commit, not in other places.
->>
->>> questions thread and the previous revision of this series [1]. This
->>> has been a known issue for a while, see this comment [2] on the gunyah
->>> watchdog series, which is what the series was based on.
->>
->> But that [2] still speaks about overlay. You are suppose to boot
->> standard kernel with typical setup - concatenated DTB.
->>
->> If you want some other ways, like choosing overlays by ABL or whatever
->> else, you need to fix ABL.
->>
->> You want to use some custom boot way of ABL, but it's broken... yet it
->> is no reason to add these properties. What if I want to boot DTJUNK
->> files via my custom ABJUNK - can I add such things to upstream? No.
->>
->> You cannot add properties to support custom boot of ABL if that boot is
->> broken.
-> 
-> My use case here is an open source Android rom. I would like to think
-> that android would be a supported use case. Not necessarily a driving
+On Fri, Feb 13, 2026 at 11:45=E2=80=AFAM Johan Hovold <johan@kernel.org> wr=
+ote:
+>
+> On Fri, Feb 13, 2026 at 10:45:32AM +0100, Loic Poulain wrote:
+> > On Fri, Feb 13, 2026 at 10:07=E2=80=AFAM Johan Hovold <johan@kernel.org=
+> wrote:
+> > >
+> > > On Thu, Feb 05, 2026 at 05:02:40PM +0100, Loic Poulain wrote:
+> > > > Enabling runtime PM before attaching the hsphy instance as driver d=
+ata
+> > > > can lead to a NULL pointer dereference in runtime PM callbacks that
+> > > > expect valid driver data. There is a small window where the suspend
+> > > > callback may run after PM runtime enabling and before runtime forbi=
+d.
+> > >
+> > > So here too, the commit should reflect that this cannot really happen=
+ in
+> > > practice.
+> >
+> > This happened  in practice in the qcom=E2=80=91qusb2 PHY driver, with t=
+he same
+> > code flow.
+> > Bug: https://github.com/qualcomm-linux/qcom-deb-images/issues/208
+> > Patch: https://lore.kernel.org/linux-arm-msm/20251219085640.114473-1-lo=
+ic.poulain@oss.qualcomm.com/
+>
+> Thanks for the link.
+>
+> > I know it may sound unlikely, but this crash has been reported
+> > several times during boot=E2=80=91stress testing. I haven=E2=80=99t inv=
+estigated
+> > deeply enough to determine whether it=E2=80=99s caused by an unfortunat=
+e
+> > preemption window or a racing CPU.
+>
+> But I'm literally asking for *what* would trigger the suspend in that
+> initial window between enable() and forbid() cause I don't see it.
 
-Android required in the past a lot of out of tree code and for years did
-not care about mainlining these, so I do not care about Android really.
-It's a fork, which for years decided to be separate, so we are not bound
-by fork rules. Whatever the fork now wants to do together with upstream,
-the fork must adjust, not upstream.
+To be honest, I had not initially looked into the exact cause of the
+suspend trigger until now, but here is what is happening.
 
+The PHY is a supplier of the USB device. A USB device cannot be probed
+until all its suppliers are ready. As long as the PHY is not ready, the
+device core keeps retrying the probe, which fails with -EPROBE_DEFER.
 
-> force for decisions, but at least supported. And I'm using the
-> standard boot image v4 setup with dtb on vendor_boot and dtbo's on the
-> dedicated partition. This isn't some weird and wacko setup, it's what
-> the vast majority of devices this soc is used in are designed for.
+At some point the PHY probe finally runs, but the device core may still be
+attempting to probe the USB device concurrently.
 
-On downstream trees. With ABL designed for downstream trees. With
-engineers designing all this WITHOUT single consultation with upstream,
-so sorry, this is wacko in upstream :)
+Inside __driver_probe_device(), we have:
 
+    ret =3D really_probe(dev, drv);
+    pm_request_idle(dev);
 
-> 
-> Also, the vast majority of devices can't replace the bootloader. This
+    if (dev->parent)
+        pm_runtime_put(dev->parent);
 
-We all were running Androids as well when upstreaming all Qualcomm
-flagship models and we did not have to replace the bootloader. We did
-not need any of such changes like here. Although maybe our devices had a
-bit different bootloader - this I don't know. It was ABL for downstream
-Android, though.
+    pm_runtime_put_suppliers(dev);
+    return ret;
 
-> isn't an option, the devices are fused. The qrd and hdk are not
-> available to consumers. There are a handful of qcs8550 devices like
-> what I'm using that are unfused and thus are able to replace abl, but
-> I would prefer not not add that extra step for users to install my
-> project. Plus, I am trying to not just make changes that only affect
-> my devices, when they could be generic and benefit all devices using
-> the soc.
+This means that whenever a USB probe attempt completes, whether with an
+error or not, its suppliers are released via pm_runtime_put_suppliers().
+Releasing suppliers may in turn trigger a runtime suspend.
 
-... and why standard way, like we all were doing this, of booting
-QCS8550 does not work? You append the DTB.
+In our case, since the PHY is a supplier of the USB device, the USB core
+keeps 'looping' in __driver_probe_device() returning -EPROBE_DEFER until
+the PHY becomes ready. As a result, pm_runtime_put_suppliers() may run
+concurrently with the PHY's probe function. If this happens after
+runtime PM has been enabled for the PHY, but before the driver has
+forbidden suspend or taken a PM reference, the PHY may end up being
+runtime-suspended 'unexpectedly'.
 
-Anyway, this is not 2010 anymore, so vendors and bootloaders if they
-want to ask for something MUST:
-1. Obey DT spec and upstream recommendations for the DTS they use
-2. Follow standard industry interfaces (and "foo_bar" requirement is not
-standard industry interface)
-
-I know that you cannot change ABL so the actual complain goes to
-Qualcomm and/or Google.
-
-Best regards,
-Krzysztof
+Regards,
+Loic
 
