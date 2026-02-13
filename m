@@ -1,314 +1,247 @@
-Return-Path: <linux-arm-msm+bounces-92777-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92778-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sP8zJm8Tj2k8HwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92777-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Feb 2026 13:05:03 +0100
+	id kGw2Hewjj2lNKAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92778-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Feb 2026 14:15:24 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3970C135EE4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Feb 2026 13:05:03 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id CAF591363AB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Feb 2026 14:15:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 39D01300C0DC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Feb 2026 12:05:02 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 99722305D1EA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Feb 2026 13:15:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DAAB35CB60;
-	Fri, 13 Feb 2026 12:05:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F198360730;
+	Fri, 13 Feb 2026 13:15:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Wr5KmwU0";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Oi02igeW"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="2U+dmohB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7FE135770A
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Feb 2026 12:04:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 013CE35F8CF
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Feb 2026 13:15:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770984299; cv=none; b=lLIFAv6lJYEs3TD/nf52gheEwt6WVQU6Y2iiJEenHHhSVpFkYHHNVpoQKuoRzrWWvfbA49hZjsCLPLm0uynht/+ymQgLJWsRmom1NUihaJ1MdhqmOADUXbrYw4Jv3xnP4SFsMzLuKGH0Cgzly4If73onlRFm/X4BJ/171xgqwts=
+	t=1770988507; cv=none; b=iCJsJWGu2rwaYe1FU3WKvUaew1lvy5iyNHvdhVjGfUnwVW7eKQqpEgUUfzujy2u/Q44KlhvH15xwLNM2Ym27YUwycX+ykaRDz+W3SHgn5IqhuG1lJZmUvkfshi6FzNWRHpxgasvgLopRByFpGmZHcBRGQUpMzUGNM/xA9c+e3XE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770984299; c=relaxed/simple;
-	bh=N4hnCcBGEBNNb0q0uAlmNq0D2/SAMk1tcGCyGMC9L7w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S8cxF8hiwHXlHmPc97UwURc1NchK/OsyqTx8/tuGjaI1T0WNiVpCPS6UXTP0PzsaAIdonvoFRsFOaN7320grPdV9L/IZfRofS0x+SxYSyIapGqy2nfc4UthBB9GuyyJoCL+yXuJMToZI0TY+3cKE3EfLM6UgCkexasYwPVKoIWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Wr5KmwU0; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Oi02igeW; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 61D9ac6R3057009
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Feb 2026 12:04:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	wWQK31BCqZyp7A50GZvyP0Ap32S/BzA5MMR0p9yqlzM=; b=Wr5KmwU0Khx15Hif
-	1kY9r8iqn1zgr1R5ZY91W57S5lMl9G9QaHam6xFkReRLD2MO6QcPqihaP6xQPY2o
-	tUdKlAa9JIotWrr0JHAzYk+EzmRz4ZQfk/dy2FVBoV+Tjm2Q/G2cuj9NsyRq5P+9
-	BP+486J3AtvDcGSEBq8KOTeglBbMwJsfTjyLefunZX342AUXKba6eNjFvHRDzvD4
-	g/+EMBT9sZOsHieeqY26jR9GSDWlazxhUa++ohv1ARb4UhVgNjaFDx7CpGYHlyyZ
-	nUbhVYHchjNBNoxa7PS54YGVqx0M+4kYzwPID+Z0dTmYlFAlbMOJeFv8UKmVhU8a
-	5Mq62Q==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c9k6y3kgk-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Feb 2026 12:04:57 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8c70b6a5821so293166285a.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Feb 2026 04:04:57 -0800 (PST)
+	s=arc-20240116; t=1770988507; c=relaxed/simple;
+	bh=3CjkebGvysoDFaZ1dQV9tl68Ii9Y4ANoycW8kIDfkUk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Ig7RIEOP4Duoi4YKnTRK7d+lh5/kjU98Hry7zs7IWQtE9dU0zAFWKUOkE0kkyl22WVLkG5c8nQoQ4/eomgerJ6gXeo7ECEwc0xw+Ot2z3Xigvj9BS0XeHq/x/LTqvzn5jDBHzH0ymMBQOBavxfk/EQW4f/uxlBPGAads85up7vU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=2U+dmohB; arc=none smtp.client-ip=209.85.208.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-65a43a512b0so1026276a12.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Feb 2026 05:15:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1770984297; x=1771589097; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=wWQK31BCqZyp7A50GZvyP0Ap32S/BzA5MMR0p9yqlzM=;
-        b=Oi02igeWrKN/NQ0ijpFF1sPOWPNQ0TIP9Y/69aU/NXfGBLMVQg93SAnpAfZWy7VCJB
-         hMGYlqUteSG6ktnxFW0OpvL1xN8LkdtVBb3AvgU9YXDNeMZ2OyC3SYYUPn1o4KrP1wMB
-         h4iYZsY9O/K1OEtCErGJNRw36sm+IpNLgWMJc5Yp/kWCYNcKb/oLbEY03oNN0yzs4Swy
-         gMWdK75uzgMS+ml7r45qG5HjZhw9WMUw69kvqMD6rXF9vxSd92NupbHGKZDrpnSp0n4M
-         GG0hjsQdFOUh6kfCsYHnwfkHKHWM1H/51excuQOD6R0ZSMoLAH9oWDNCvYscj36DeY51
-         i55A==
+        d=fairphone.com; s=fair; t=1770988503; x=1771593303; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=qYFkF62INIHvz4pPjn3ekdDeu5/At4F7VTEdNw0IrTc=;
+        b=2U+dmohBeI2ES/ol5ShB6JLZ6d6MkVoD6WmYvVaV/7BR4D4LIoRMFXxQEB13rAVfDE
+         Cf0mSfFkAgsAMCnfdDxf3DWNXAFQB1jVgp8k3mu+VxuOBowZnfcP4wS8pb1+68SGzmpu
+         UaygcPvQ/FXKY5hXtyZSPHoWohNjoYsoOmGTmFCYHO/4oQLc7MhExGMPwoYxNXkjutBV
+         84sF6tbzIGqZKy45yrim0HqMqnjnyg0KatEg1eiYwVXxycQt62ctn1MBvu/Dy2vB+NPo
+         led2xSv0q3xVU7NCxWnfyRWK4DaNg8Jv4iauz84D1gW1ZdZvE3hh0ULE2uYlwCYh+/8Z
+         edkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770984297; x=1771589097;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wWQK31BCqZyp7A50GZvyP0Ap32S/BzA5MMR0p9yqlzM=;
-        b=FSt/o5UFjqZEW+066q2UYQBVIlirONBjY9nAXAKVolXMSzXvnShY5mGKxbAitGQhEi
-         jhfIJg2qgiPKzcMkeFbRlQ90S6e+5uRrZMxDhNKkjl5RcOtpZoEnEhShrFx2VC+rQR6e
-         DAyZgVLUfp/+iZiB3su+lY7r0fFUp8QxD/6Q8pSIZUnUFedcPK6j3ywkGsDUqYmQ7mV6
-         mFZxg86Xm14WOIB1wsZhbt7UUMCuN6vrRVT9V67EvLqGeh94ySAlnmqNUVvhAs38+1d7
-         dsnqIwzX/bFPXeaiO73q0G1AKFBh1D7N2SuS2eTwmGutIPMTRq7Ufk0BQSonGpZP7YRH
-         gcng==
-X-Forwarded-Encrypted: i=1; AJvYcCUqYeMSGVU9tBXnukWhlO9d7jueqkWd5krqWTu41w2rhx4AfDINlwrvDq3sstGR0PZpt0zK+CG3MIun6mZW@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy4ALv/hFnKNA4R3Veq9hReN8GcfouEXiiSWRrO68DlKiOyhah2
-	QlpVKnFzr7aOZCrK1X0mgeKK9R+LKHiK8cYwkoZtJrIG4ExAAw1iwsS15Qet6yqnoCcVfTBmtcy
-	DDFzA4UFhgs7A9XxTJR5dAlg7YVBRTJS/dn1x/lw1MnGbmoFLfVeklNPAB/me+y0dkNDQ
-X-Gm-Gg: AZuq6aIaAZ6EydRkS0S1c8+cbvKUpenSFuAk84kmAeUECcZ4sJF3qAyNbbojLRIK9f5
-	314i9NGIfRAYYfSdi/Yy34oU+V6Wgix5YC6Tips+18y9XoVZT7AyibIZUZm+Y1cwp3POHw/tBYR
-	0Jeoi5z7gPlvWxy0hY8woVWpXREKCAE27mq3Br4Pajl+fkfo4WMiZXR/imE9e64FciRRcx7x1c3
-	em0b6YP9c8MKwSyBW5QhOjKethkNwibvghJetSSFToYCIi5flp0uxGX08cAVQMt8GstjnnVIL22
-	tjZaKAJpFDKMwRSXsCrkjTOqirfTYV+d3DRgvlmFehqYcyrv9pQCJ18+hfWzVPtBgs15SjUHGPv
-	79ncKpzLScY+HTm6LHXUlBzMaSSMusEg7mPJF7YNYzp5Qq49MnDpCBo4c0QxpBuFKCG2GPissjf
-	E0grKdoPB8luBlU7INHme8B4RkcTF4sEh4Vig=
-X-Received: by 2002:a05:620a:28d3:b0:8b6:134e:22f8 with SMTP id af79cd13be357-8cb42497dddmr169574985a.60.1770984296846;
-        Fri, 13 Feb 2026 04:04:56 -0800 (PST)
-X-Received: by 2002:a05:620a:28d3:b0:8b6:134e:22f8 with SMTP id af79cd13be357-8cb42497dddmr169570085a.60.1770984296337;
-        Fri, 13 Feb 2026 04:04:56 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-387069067a1sm12251601fa.34.2026.02.13.04.04.54
+        d=1e100.net; s=20230601; t=1770988503; x=1771593303;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qYFkF62INIHvz4pPjn3ekdDeu5/At4F7VTEdNw0IrTc=;
+        b=kx4xt6PMUhhwoAAkeeT//VTj8i5dQzIVbrj2hnq2D2tKqP+wsr+XJLq7m1zUbgS6IF
+         mPTTIzBt8bHuNnugUK5U5BSQ3hjVT9S8KGImUxsdjVw/rat96ivOogGR/ZJ2YN6YWUhg
+         PKkFBpn3KYQEOVVahnoUn0AoEQibnKxqXk9Ag83LMwr3CMv5GXPMiru8tdn00EZQxZkt
+         edpvkQg02IF4NBRXkPtOqglnq6qdplhSvc9fMV9yF5zmCmAcYlQY3vHR81w5nffPhGAG
+         FvaTGAxdxotSFbJsTtJcZQj25Dz7gOo19KmPAMSGtMr1ilak0trRQjcr+7QobBuIfZAK
+         lDWg==
+X-Forwarded-Encrypted: i=1; AJvYcCUiKcKBPS4P0wsUUcbPDm0t45lwptK1f0ewFWEXNGXyhViby0yN6cuWJPj+G3eTVnw8GpraHoO0wHUH0nOJ@vger.kernel.org
+X-Gm-Message-State: AOJu0YzJhV6UKh3ROUxQPbl1c6J4+3AuVS7gU6U8KvaxpoB2uump4vMK
+	WMwljCMbekCc8ZFfnRGF2dXTkq7sZW9r+wi7AY4WSkDSyzjG9ZZjTbciAD+XX0dlbXo=
+X-Gm-Gg: AZuq6aKxJ1uEv7RKBBq+ewcA0lTgcxQZqKj8dHsTDi6CYCwbY/f1+7NdS08wGTQRiMZ
+	vqW4wUxXI9EmhPp2U9+ACyyqGkuSke23oQS5tot2CxBYDWf8eIlBZE57uk2FBTeSA1BhPr3rG59
+	z1eb1U51Js7gp9EJkMxo9kXOnWgyUDcIdsvHHyDwrh5NQE6JwvEgrtiaOetQGDOl8tW86IUmjot
+	kREVLqQa1uRExjIjAV82+XSGcLti6sHx8//VN+No5P4Vha5NjAJDurdBmGpYj2kCKNSvpo1RvOb
+	Uq1rcaC3zqRPLkv3S009tc3yj9RoY621RNvZLBa9tN3ENYnn1oUEMwB3YJy0OBFQ7x0ON+v/O9b
+	Bfe75NT1/YFAULIHEZOEhlVqzUOxnUAzf49FqzHvh84mvMYskXypYQYUEAU12dOO4A6b2vHimyf
+	jWVSmhYKceUr/vrZjFcRgWl+GQg5DT0df9EHjcWk5MG0YTETwlsGq73EaWTTbqIfgsrYKkzq+HB
+	ksSEfrrld74jlM=
+X-Received: by 2002:a17:907:9626:b0:b74:984c:a3de with SMTP id a640c23a62f3a-b8fb43a3b0emr121338866b.28.1770988503217;
+        Fri, 13 Feb 2026 05:15:03 -0800 (PST)
+Received: from [172.16.240.99] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-65bace3fc4esm674231a12.0.2026.02.13.05.15.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Feb 2026 04:04:54 -0800 (PST)
-Date: Fri, 13 Feb 2026 14:04:52 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bod@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] media: iris: Enable Gen2 HFI on SC7280
-Message-ID: <nb576n2risxl5mabotlu3idmoztedrblur4gbvdlk4cu3mtiqq@ecezsux4w7jz>
-References: <20260209-iris_sc7280_gen2_support-v1-0-390000a4fa39@oss.qualcomm.com>
- <20260209-iris_sc7280_gen2_support-v1-2-390000a4fa39@oss.qualcomm.com>
- <0da582a6-5bba-4450-99ec-cf57b67915e6@oss.qualcomm.com>
- <0a324898-092b-3e44-c35c-15de20b50f40@oss.qualcomm.com>
- <2uih6xdzarkwnvhlhv5kznmdwo4jorqvsrb7xxrxgr6vprx3ey@4kx45k5i3c4y>
- <6b9042c8-767e-0fdb-9012-f3790899509e@oss.qualcomm.com>
- <f9f40ac7-e6fe-41eb-92e4-311913567ef0@oss.qualcomm.com>
- <b759fb04-22b7-cd5c-9e53-f4ffe9f37dc5@oss.qualcomm.com>
+        Fri, 13 Feb 2026 05:15:02 -0800 (PST)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH v3 0/3] Add CAMSS support for SM6350
+Date: Fri, 13 Feb 2026 14:15:00 +0100
+Message-Id: <20260213-sm6350-camss-v3-0-30a845b0b7cc@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <b759fb04-22b7-cd5c-9e53-f4ffe9f37dc5@oss.qualcomm.com>
-X-Authority-Analysis: v=2.4 cv=NsTcssdJ c=1 sm=1 tr=0 ts=698f1369 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=EUspDBNiAAAA:8
- a=-RKkGvyx_SuP3FtDFEcA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEzMDA5MiBTYWx0ZWRfXzhDBXZLPSu2z
- eqH2qG38CBJLYntX0WL5tMhgjbChcTg2vTVY3wP1IxUUEtYhTMRNrMjaOZeXFcmxuVjitzh4Mz5
- Igo31JinBoFQkrQphys7nB2lWW1ppc+FzhwzpeGwTLCJ7P+S13XMgLT73Nm8rrEsTH0V5rt74s4
- x86qEjWJjOhogiI+29+VyzD4KYyOdyVTbghEQgMqwG75xoMwpUFi6i4EWrASiHLMWn4vnNL87ca
- iueCvpg39HqsZuQNj4EH+4KbOl52lCQky3HPZ+hTEo0BoAyH8SdBWEdrJtlu24EuHKyoArn6Vwp
- gWJMwFqXEzWoBVZuX3CG070FGc3X+j+xQwkMbYAH9a7cSls9/LRzU59K4ka13Hlfx00NinOWzF2
- 8GC/amxPR2+uesgA40hcdky6rQ1BFbqtLKzu3skC5JZKtRv3R7B66Gchqc6mwfgpYuK37l5z9yS
- j9xVbusfxmzw1eluDXg==
-X-Proofpoint-GUID: TwiRQbYlmJa5CXyVuTRO0bUNPDZKIxNV
-X-Proofpoint-ORIG-GUID: TwiRQbYlmJa5CXyVuTRO0bUNPDZKIxNV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-13_02,2026-02-12_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0 spamscore=0 suspectscore=0 priorityscore=1501
- lowpriorityscore=0 adultscore=0 phishscore=0 malwarescore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602130092
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/23OTQ7CIBAF4Ks0rMXw06J25T2MCwqDZQFUqE1N0
+ 7uLdGHSuHyTvO/NghJECwm11YIiTDbZ4HPghwqpXvoHYKtzRoywhhJW4+QEbwhW0qWEL6omdWc
+ uymiNcmWIYOxcuNt9yxGer6yO2xF1MgFWwTk7tpWHecRZFoRRhr6F3qYxxHd5Z6Kl8X95ophgw
+ bVgQvCz1PpqpI1DHzwcM1+wif0ASvcAy4CmxoiTlpx3Yg+s6/oBqxaYHx4BAAA=
+X-Change-ID: 20251024-sm6350-camss-9c404bf9cfdd
+To: Bryan O'Donoghue <bod@kernel.org>, Robert Foss <rfoss@kernel.org>, 
+ Todor Tomov <todor.too@gmail.com>, 
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1770988501; l=4673;
+ i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
+ bh=3CjkebGvysoDFaZ1dQV9tl68Ii9Y4ANoycW8kIDfkUk=;
+ b=JBmxAQSdlwIT7/lADuBiR3dtwqF6e6wSCyoyA1f3F5ZyCH+u9hjaiNl1QWnV55PaxwQ2hCuyt
+ +iHbGLdD2QaCqHuDb01eIdJxsHEftwLDkRAoALxrxtSLko2Y2J+uktB
+X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
+ pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[fairphone.com,quarantine];
+	R_DKIM_ALLOW(-0.20)[fairphone.com:s=fair];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-92777-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,oss.qualcomm.com:dkim,qualcomm.com:email,qualcomm.com:dkim];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-92778-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_TO(0.00)[kernel.org,gmail.com,linaro.org];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	TO_DN_SOME(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[18];
 	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[9];
+	FROM_NEQ_ENVFROM(0.00)[luca.weiss@fairphone.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[fairphone.com:+];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 3970C135EE4
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[fairphone.com:mid,fairphone.com:dkim,fairphone.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: CAF591363AB
 X-Rspamd-Action: no action
 
-On Thu, Feb 12, 2026 at 06:35:19PM +0530, Dikshita Agarwal wrote:
-> 
-> 
-> On 2/12/2026 5:13 PM, Konrad Dybcio wrote:
-> > On 2/12/26 12:16 PM, Dikshita Agarwal wrote:
-> >>
-> >>
-> >> On 2/9/2026 6:05 PM, Dmitry Baryshkov wrote:
-> >>> On Mon, Feb 09, 2026 at 05:04:48PM +0530, Dikshita Agarwal wrote:
-> >>>>
-> >>>>
-> >>>> On 2/9/2026 3:32 PM, Konrad Dybcio wrote:
-> >>>>> On 2/9/26 10:45 AM, Dikshita Agarwal wrote:
-> >>>>>> SC7280 supports both Gen1 and Gen2 HFI firmware. The driver continues to
-> >>>>>> use Gen1 by default, but boards that intend to use Gen2 firmware can
-> >>>>>> opt‑in by specifying a Gen2 image through the Device Tree
-> >>>>>> 'firmware-name' property.
-> >>>>>>
-> >>>>>> Based on this property and the availability of the referenced
-> >>>>>> firmware binary, the driver selects the appropriate HFI generation and
-> >>>>>> updates its platform data accordingly. Boards that do not
-> >>>>>> specify a Gen2 firmware, or where the firmware is not present,
-> >>>>>> automatically fall back to Gen1.
-> >>>>>>
-> >>>>>> Signed-off-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-> >>>>>> ---
-> > 
-> > [...]
-> > 
-> >>>> To avoid accidental matches, I can switch to an exact filename match
-> >>>> instead. That way, only the specific Gen2 image (for example
-> >>>> "qcom/vpu/vpu20_p1_gen2.mbn") will trigger the Gen2 path, and boards that
-> >>>
-> >>> How do you detect that for the OEM-signed firmware, which can have
-> >>> random name?
-> >>>
-> >>>> want to use Gen2 can opt in by naming the firmware accordingly.
-> >>
-> >> I Explored on suggested alternative approaches and seeing some limitation
-> >> with the both of them:
-> >>
-> >> 1. Detecting Gen1/Gen2 by scanning the firmware blob (fw->data)
-> >> It is possible to parse QC_IMAGE_VERSION_STRING from the .mbn and  extract
-> >> the version string. The issues with this approach :
-> >>
-> >> - the version string has no explicit marker that identifies Gen1 vs Gen2.
-> >>
-> >> - This prefix is not a formal ABI, and it is not consistent across SoCs.
-> >> Each SoC family uses different naming patterns in the version string.
-> >>
-> >> Example : For SC7280 Gen1 we currently see:
-> >> QC_IMAGE_VERSION_STRING=video-firmware.1.0-<hash> while SM8250 has
-> >> QC_IMAGE_VERSION_STRING=VIDEO.VPU.1.0-00119-<>
-> >>
-> >> So the driver would need SoC‑specific string‑matching rules, which is hard
-> >> to maintain if we are looking for a design to address all available SOCs.
-> > 
-> > The only SoC with such distinction today is kodiak. So we can simply check:
-> > 
-> > if (kodiak && strstr(fw->data, "VIDEO.VPU.1.0.")
-> > 	hfi = gen2;
-> 
-> Agree, this works for Kodiak. However, Dmitry was also referring to other
-> SoCs that may support both Gen1 and Gen2, and at the moment there isn’t a
-> generic way to handle that check.
-> 
-> Also, please note that the Kodiak Gen1 firmware uses the string
-> video-firmware.1.0, whereas Gen2 uses VIDEO.VPU.3.4.
+Add bindings, driver and dts to support the Camera Subsystem on the
+SM6350 SoC.
 
-This is not quite true. Kodiak Gen2 uses:
+These patches were tested on a Fairphone 4 smartphone with WIP sensor
+drivers (Sony IMX576 and IMX582), the camera pipeline works properly as
+far as I can tell.
 
-$ strings /lib/firmware/qcom/vpu/vpu20_p1_gen2.mbn | grep VERSION_S
-QC_IMAGE_VERSION_STRING=video-firmware.2.4.2-d7a3d5386743efb16b828e08695bea7722cafadd
+Though when stopping the camera stream, the following clock warning
+appears in dmesg. But it does not interfere with any functionality,
+starting and stopping the stream works and debugcc is showing 426.4 MHz
+while the clock is on, and 'off' while it's off.
 
-A collection of versions quickly captured from what I have here (for
-different chips, but for the overall picture):
+Any suggestion how to fix this, is appreciated.
 
-HFI Gen1:
+[ 5738.590980] ------------[ cut here ]------------
+[ 5738.591009] gcc_camera_axi_clk status stuck at 'on'
+[ 5738.591049] WARNING: CPU: 0 PID: 6918 at drivers/clk/qcom/clk-branch.c:87 clk_branch_toggle+0x170/0x190
+[ 5738.591081] Modules linked in:
+[ 5738.591099] CPU: 0 UID: 10000 PID: 6918 Comm: plasma-camera Tainted: G        W           6.17.0-00057-ge6b67db49622 #71 NONE 
+[ 5738.591118] Tainted: [W]=WARN
+[ 5738.591126] Hardware name: Fairphone 4 (DT)
+[ 5738.591136] pstate: 604000c5 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[ 5738.591150] pc : clk_branch_toggle+0x170/0x190
+[ 5738.591164] lr : clk_branch_toggle+0x170/0x190
+[ 5738.591177] sp : ffff800086ed3980
+[ 5738.591184] x29: ffff800086ed3990 x28: 0000000000000001 x27: ffff800086ed3cd8
+[ 5738.591208] x26: 0000000000000000 x25: ffffda14fcfbd250 x24: 0000000000000000
+[ 5738.591230] x23: 0000000000000000 x22: ffffda14fc38bce0 x21: 0000000000000000
+[ 5738.591252] x20: ffffda14fd33e618 x19: 0000000000000000 x18: 00000000000064c8
+[ 5738.591274] x17: 0000000000000000 x16: 00001ae003667e9e x15: ffffda14fd2a07b0
+[ 5738.591295] x14: 0000000000000000 x13: 6f27207461206b63 x12: 7574732073757461
+[ 5738.591317] x11: 0000000000000058 x10: 0000000000000018 x9 : ffffda14fd2a0838
+[ 5738.591338] x8 : 0000000000057fa8 x7 : 0000000000000a16 x6 : ffffda14fd2f8838
+[ 5738.591360] x5 : ffff0001f6f59788 x4 : 0000000000000a15 x3 : ffff25ecf9d7e000
+[ 5738.591381] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff0000baf5c100
+[ 5738.591403] Call trace:
+[ 5738.591412]  clk_branch_toggle+0x170/0x190 (P)
+[ 5738.591429]  clk_branch2_disable+0x1c/0x30
+[ 5738.591445]  clk_core_disable+0x5c/0xb4
+[ 5738.591462]  clk_disable+0x38/0x60
+[ 5738.591478]  camss_disable_clocks+0x44/0x78
+[ 5738.591496]  vfe_put+0x7c/0xc0
+[ 5738.591512]  vfe_set_power+0x40/0x50
+[ 5738.591528]  pipeline_pm_power_one+0x14c/0x150
+[ 5738.591546]  pipeline_pm_power+0x74/0xf4
+[ 5738.591561]  v4l2_pipeline_pm_use+0x54/0x9c
+[ 5738.591577]  v4l2_pipeline_pm_put+0x14/0x40
+[ 5738.591592]  video_unprepare_streaming+0x18/0x24
+[ 5738.591608]  __vb2_queue_cancel+0x4c/0x314
+[ 5738.591626]  vb2_core_streamoff+0x24/0xc8
+[ 5738.591643]  vb2_ioctl_streamoff+0x58/0x98
+[ 5738.591657]  v4l_streamoff+0x24/0x30
+[ 5738.591672]  __video_do_ioctl+0x430/0x4a8
+[ 5738.591689]  video_usercopy+0x2ac/0x680
+[ 5738.591705]  video_ioctl2+0x18/0x40
+[ 5738.591720]  v4l2_ioctl+0x40/0x60
+[ 5738.591734]  __arm64_sys_ioctl+0x90/0xf0
+[ 5738.591750]  invoke_syscall.constprop.0+0x40/0xf0
+[ 5738.591769]  el0_svc_common.constprop.0+0x38/0xd8
+[ 5738.591785]  do_el0_svc+0x1c/0x28
+[ 5738.591801]  el0_svc+0x34/0xe8
+[ 5738.591820]  el0t_64_sync_handler+0xa0/0xe4
+[ 5738.591838]  el0t_64_sync+0x198/0x19c
+[ 5738.591854] ---[ end trace 0000000000000000 ]---
 
-[skipping prehistorical / museum data]
-VIDEO.VE.5.2-00023-PROD-2
-VIDEO.VE.5.4-00059-PROD-1
-VIDEO.VE.6.0-00055-PROD-1
-VIDEO.IR.1.0-00005-PROD-4
-VIDEO.VPU.1.0-00119-PROD-2
-video-firmware.1.0-6804c210603073037fb32640a3dd6a46fe04edd6
-video-firmware.1.0-7da9db401e417a006ef915d6c4323f00cdbcf40a
-video-firmware.1.0-ed457c183307eff1737608763ca0f23656c95b53
-video-firmware.1.1-84a8080bf84fa9ab15b353bf03bea6e548d89d2f
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+Changes in v3:
+- Update dt-bindings to include everything related to camss
+- Update regulator names
+- Remove slow_ahb_src
+- Link to v2: https://lore.kernel.org/r/20251114-sm6350-camss-v2-0-d1ff67da33b6@fairphone.com
 
+Changes in v2:
+- Remove prefix from interconnect-names
+- Move 'top' power-domain to the top of list
+- Update regulator supply names
+- Link to v1: https://lore.kernel.org/r/20251024-sm6350-camss-v1-0-63d626638add@fairphone.com
 
-HFI Gen2:
-vfw-0:rel0095-d1a9e7c4a274aa13e4136500d19262f87ef2c921
-vfw-3.1:rel0085-070fa3311d9ef968015fee7fea07198d7eb208a1
-vfw-3.1:rel0093-7925621ff52ecb7b1565341042c4e5ffd4fc76ce
-vfw-3.5:rel0040-1ded01d0e6dcaef08b8155fd5a02f5b57248d5ca
-vfw-4.0:rel0045-25b39e81446baf48716df98dd37099a2103d36ee
-video-firmware.2.4-48ec04082362ef1922fec5e20e22f7954b11d736
-video-firmware.2.4.2-d7a3d5386743efb16b828e08695bea7722cafadd
-video-firmware.3.1-e5aea20c64cb6df9a1c9be99e206053b36424939
-video-firmware.3.4-e299f99ffcd086b43a2ccc7c3279ce5df404d693
+---
+Luca Weiss (3):
+      dt-bindings: media: camss: Add qcom,sm6350-camss
+      media: qcom: camss: Add SM6350 support
+      arm64: dts: qcom: sm6350: Add CAMSS node
 
-It seems we can assume that Gen2 is:
-- vfw-0
-- vfw-N.M
-- video-firmware.N.M where N >= 2
+ .../bindings/media/qcom,sm6350-camss.yaml          | 471 +++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sm6350.dtsi               | 233 ++++++++++
+ .../platform/qcom/camss/camss-csiphy-3ph-1-0.c     | 125 ++++++
+ drivers/media/platform/qcom/camss/camss-vfe.c      |   2 +
+ drivers/media/platform/qcom/camss/camss.c          | 261 ++++++++++++
+ drivers/media/platform/qcom/camss/camss.h          |   1 +
+ 6 files changed, 1093 insertions(+)
+---
+base-commit: 3daf23347bb5f4a375d0101ed29c97ce1a99721b
+change-id: 20251024-sm6350-camss-9c404bf9cfdd
 
-All other binaries are Gen1.
-
-Also, we don't even have to query the binary firmware blob.
-After the firmware is started, you can read the version string from
-smem, saving us from strstr over the firmware image.
-
-> 
-> > 
-> > 
-> > Can we agree that VIDEO.VPU.x firmwares are hfigen2? If so, problem also
-> > solved for <=8450
-> > 
-> 
-> Nope. that's not true for all, SM8250 uses VIDEO.VPU.1.0 which is gen1.
-> 
-> Thanks,
-> Dikshita
-> 
-> > Konrad
-
+Best regards,
 -- 
-With best wishes
-Dmitry
+Luca Weiss <luca.weiss@fairphone.com>
+
 
