@@ -1,278 +1,311 @@
-Return-Path: <linux-arm-msm+bounces-92735-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92736-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8IutNel8jmmJCgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92735-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Feb 2026 02:22:49 +0100
+	id aJ6RCC6CjmkLCwEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92736-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Feb 2026 02:45:18 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E216132403
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Feb 2026 02:22:49 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F445132507
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Feb 2026 02:45:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 3FC223059ACD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Feb 2026 01:22:47 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 86E653013C69
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Feb 2026 01:45:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF85222424C;
-	Fri, 13 Feb 2026 01:22:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B984723BF83;
+	Fri, 13 Feb 2026 01:45:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GiN7jc4s";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="f4GJFPZK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fmd6pj2F"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70AF913DBA0
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Feb 2026 01:22:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 945C2239E6F;
+	Fri, 13 Feb 2026 01:45:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770945763; cv=none; b=pc83CEo0AHxdauv/7nIg201qzNery79L5fh0AqyLtwjqEORpkGCZ9XwwmCfmlOvFNPOyK8lFR2xT2F3/IAMeYPA3bQimXwQh6PqiLgGgPVjxUrp6vIMvo2Uhj9qMKp7oe8y75VZRCNfX9+Hisd4EDLpz6hzqtvWSGPmbbCzdU/0=
+	t=1770947112; cv=none; b=CWukOLt5apU0lCW2glFxRd9h9wGof/C9b18pk0T7KnUwjEwmtFGn6TYBt3c/Rnib6k1yOLqcTxr5rKkPBNmSsRXs4JxxNXSoi14naE3WYyxXiCRqonj3v4rPAA6tyUnjlbwAxa7MLiA33mslaXmiUke0RoTb1/uKEXQjiN0tCZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770945763; c=relaxed/simple;
-	bh=2EeIMhJK8PFDk+lw2mlbKJHzWDiXMy1oQw7hKItHAM8=;
+	s=arc-20240116; t=1770947112; c=relaxed/simple;
+	bh=tACVwMa/u6HmA7WDdokbna5otA5XdG8Pg0XvKGcraxo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=M5btGQ6mQ1gAiQJZT/ELXetdW0htgljGRDNlaL06pubrVbkBuFamVHoExhUg7X+Vih3KC3UHbw6QfWDz01K86MZK8cpA2EWZvJxxvNTa9Dutymd2J2G/wXZFaprJyHXvNgGkIcSKvfnl9GkTabDSmlCOqS43b++SCk5SBvLLJho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GiN7jc4s; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=f4GJFPZK; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 61CHMA7R2093764
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Feb 2026 01:22:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=19MkWG0OHq3iuy1pxsE17MAI
-	lcD70cm6euhfGg/Aln0=; b=GiN7jc4sPOQ+hKBNNRyF+Y/x7ejsevvat8Gmkk6n
-	kTDgz1VXjV97lrxr2z4wXnxE4MDxGrjh+LnVflguuO4+Gg/WmnCBIA2jgOar2IuK
-	i23tnTOtQ1c+HpSPZrVf12lA93+UU0lPY7dW9LCc3FASgKyAGbP9JhdbAly6eu+O
-	5+mv68Gt7Gr2xLoko4hM/mJDKvVEvyDXlvQt3GDTzJOE92qf5iKN5ojlQDIs3lt9
-	Uud2NR3CrCwOKuJpRtE/90Wc91aV9YMyM6KELm0/ctwnKy05JaJYb14s/v5lJMrG
-	2so2l8oKeMqngADv4L5oI/cZk+aBfY2K1U36M5b8HIDjuw==
-Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com [74.125.82.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4c9k6y1kn1-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Feb 2026 01:22:41 +0000 (GMT)
-Received: by mail-dy1-f199.google.com with SMTP id 5a478bee46e88-2b7ef896edcso617421eec.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Feb 2026 17:22:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1770945760; x=1771550560; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=19MkWG0OHq3iuy1pxsE17MAIlcD70cm6euhfGg/Aln0=;
-        b=f4GJFPZKIegNX9pqbv4oBmqewMiKHlh2OLe82D5p7xQj6hkLi1RlPZPgYWNpjD8Q6s
-         2cyohCNiPIzjgnu41ZW44K7izOVDB4Yk/PxLvuQ8mFJbx3V8BMWVwrpH7hBggLZ99Ca9
-         vc95b8jO5vitVeEQAf4oRP1IWqtZhuEStpTykFxYzPIbEen0ac9cDgLyosINiGpFE/HN
-         ckVwzLcaXhGBAELeY5sFjulKu1uWP4e2cLUMXqHumPHCLqGgHtyNAto+tSdcNtCN87eS
-         LnVfBQbB9xR08k79cGpzB1COPA01wa0xvZMtSLlp2sgKNjK4qjuMj3hU22lpqL8nRvsr
-         sQGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770945760; x=1771550560;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=19MkWG0OHq3iuy1pxsE17MAIlcD70cm6euhfGg/Aln0=;
-        b=wV7maWhaVAuGPrjK2uSq4+hZdUbv4+Bn6tdi8qQ73BmoF3JuNLhr5KWhSGRo3xSFzX
-         2JXDrYM17IDh4C8LjVT1xtKseXPR6VMb5dpr84W2mrEQzjAXuDy+YWx8cpz5kZpTQIAy
-         5WFiQp2vL4uSXVqNgPls5mGVd9f+u7IvlyF0QPpRFHr+POn9bVLj1KrjT9FJiuKnGZ0+
-         vKa2pv+I+88JVynAyP0NWO+A2k3uE0XR+i5BcamG3ke1dv0yJ9NDQu7/LeII1H935bKq
-         /veU5n3/A2t9RnvfmomhXO6lE2Pq8nfzCVFHNpQXhobpKgmvonsNvfyv04q/Li0Adwsu
-         lAXg==
-X-Forwarded-Encrypted: i=1; AJvYcCUD8sKVHkeCUnYOhF2J6dOB8Sra1/1NJj3hg+VWamb7rVSHDUTJ//sGJ6rmRtnRdzYaNSdtFkT1wWYvBypv@vger.kernel.org
-X-Gm-Message-State: AOJu0YxYU0pOoT3DxpU91S5nLg9Vv2jhz3VLzhXQIgYeapIYIYD+FgLU
-	UPVMkVt49TDRtFk6gGiB93KEwchRHJph965H8BCKZkrjhXwr+1MJsS/XN/G06tn7Ril+4p9HbCw
-	E6/IXjwW24KjedG1/6yB1O1KniTZPaaEEFzr4yTc4eSsEEXU03zb3Sj2q2vhBJvX3YMFt
-X-Gm-Gg: AZuq6aIqmMggxxp6nsbClAe7WK3R/DdjtmhOaGARFKYPskgU7m+ova8mjDbgqWYY3o1
-	OKftzYTvhbm3kCVrHO8u0j698XuMbsWYMd3jMf4/b6joNN2+WXZ9H49lZWJt2Pgp1PS9e6pUXWs
-	ifbNJq/gofhTd09InvVGHdCiAcS2OnmkbEYYdQQmW845GwF8VB2oSESQTQoOBpx+iYg8zE22q0I
-	j5wJBh9B9vDLe3dkKwQAL358tsJTT7o+nhbHOlq0wpg3RHUIPh7XMpdzLOoIBYd6KmfQJNMW17P
-	aSQWhUbSvl9u0FhBTzPX6QwhBhkk2NpMRMRuolDlhzsS2sDxa4xfNzDhmPzIorrLHXPoJ+0GQHE
-	6cdMtuha7nOiembXBbl9o3sUdNhwV2eY5K7MYMwFnxwszyR4VmdwGzwopG8nK1Bvg
-X-Received: by 2002:a05:7301:168e:b0:2b8:6573:2d35 with SMTP id 5a478bee46e88-2babc42e1f4mr92356eec.2.1770945760107;
-        Thu, 12 Feb 2026 17:22:40 -0800 (PST)
-X-Received: by 2002:a05:7301:168e:b0:2b8:6573:2d35 with SMTP id 5a478bee46e88-2babc42e1f4mr92328eec.2.1770945759451;
-        Thu, 12 Feb 2026 17:22:39 -0800 (PST)
-Received: from QCOM-aGQu4IUr3Y (i-global052.qualcomm.com. [199.106.103.52])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2ba9dcead67sm4637540eec.26.2026.02.12.17.22.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Feb 2026 17:22:39 -0800 (PST)
-Date: Fri, 13 Feb 2026 09:22:32 +0800
-From: Shawn Guo <shengchao.guo@oss.qualcomm.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>, aiqun.yu@oss.qualcomm.com,
-        tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com,
-        yijie.yang@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Sibi Sankar <sibi.sankar@oss.qualcomm.com>
-Subject: Re: [PATCH v3 3/5] dt-bindings: remoteproc: qcom,pas: Document pas
- for SoCCP on Kaanapali and Glymur platforms
-Message-ID: <aY582M8dgOrKW39w@QCOM-aGQu4IUr3Y>
-References: <20251223-knp-remoteproc-v3-0-5b09885c55a5@oss.qualcomm.com>
- <20251223-knp-remoteproc-v3-3-5b09885c55a5@oss.qualcomm.com>
- <20251223-furry-mighty-agouti-a222f7@quoll>
- <ae532ff4-1a96-4dc1-9fa0-81305624c9c9@oss.qualcomm.com>
- <f4ef4a57-4192-4dbf-939c-46efa13c0391@kernel.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=UsNzajcbc46UCG+dpO25YfcXIguJr+PYgZknZ9uIy6OGJVHUNw/WAPSP/gdFTmEdHbnCLN8Rr/Y7Qm3o/tVT8YdJwKYn3wo4mkrtSG+kHmgJz8kjArROWoWOnyizL2MVRjlXz596F3s3RBgwcDZWmVM542m6XK/b4EZYatCou6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fmd6pj2F; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B176FC4CEF7;
+	Fri, 13 Feb 2026 01:45:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1770947112;
+	bh=tACVwMa/u6HmA7WDdokbna5otA5XdG8Pg0XvKGcraxo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fmd6pj2FsA1O+sJXBGUwTpxS5NM+mMk9fEFERHJ5el8zsCj8vFRzS8j5+lZrwG3AU
+	 cv7pka+FQU014bOXATviz+I5AEuP2ZiVxn5oyH5KVmZkK4qMD85qx1nw7wRdxv5nAW
+	 UoHjrvG/fSLlC8CczqGSgIrODMDAPEQUtOOjthM8LZQ0r7z/qj2c65Iqa4PZk42Zud
+	 zPciSL+QczLHhrpaVF5WCHjHhmWI7fv4ysLixKjFzeglCRHn55XClzqPO4jm/kynoB
+	 kSKIkEGTA9Lv3ecn9ds1Mquszq6M6GWcVWmTL7AQGiluKhbYy0r+bvRrGwhPQbdZOe
+	 TsQuCl+cv29rA==
+Date: Fri, 13 Feb 2026 07:15:05 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: Re: [PATCH RFC] arm64: dts: qcom: qcs6490-rb3gen2: Enable uPD720201
+ and GL3590
+Message-ID: <4qhibtfmmdidmi3rdwlr6lxan3uvlikpx75gp76fnrbh7axpp6@ya7um42raxvp>
+References: <20260212-rb3gen2-upd-gl3590-v1-1-18fb04bb32b0@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <f4ef4a57-4192-4dbf-939c-46efa13c0391@kernel.org>
-X-Authority-Analysis: v=2.4 cv=NsTcssdJ c=1 sm=1 tr=0 ts=698e7ce1 cx=c_pps
- a=cFYjgdjTJScbgFmBucgdfQ==:117 a=b9+bayejhc3NMeqCNyeLQQ==:17
- a=kj9zAlcOel0A:10 a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
- a=VwQbUJbxAAAA:8 a=SvtFGoktTUcKB-mbNKIA:9 a=CjuIK1q_8ugA:10
- a=scEy_gLbYbu1JhEsrz4S:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjEzMDAwOCBTYWx0ZWRfXxwwKGImRCapm
- k0iBTfP7zzEFVenfmEZY0zNNsb1rNnbuqZhPpSQQlL5qSAVdZQ+V56HNbz6nPbhI4R3RjSkCQ22
- uYBh8Xy3LnKVVcnj8JXDmSCY99QhzuTVqfI0CrP+B3REWHjRa15Tc07ooRseLYV3YHWXzlpaYI1
- hMHmCvJDJmyU/J2gABprnwd7kS6IxnrkfRsx9FNEAAJgrk37cfI9cSZNYOamlBMTRbqjAcd48tY
- is7fGlX8cWmM+df+p2nLPAJsg4pBUGJ3zXH+1oJ8RbegWu0nfhDSI3Z6GkDPMqdKaxRAmzhgV6Q
- tOSBnPHE1/PUd2mVWzkHjH8izFZ4ifywzARu6pVhMXwATpNKBs83m+cy1s5iN0dLcZPR6b++Der
- lfndMnG8lYUYuANGEyAKNsSwP6j3Cv6SDIL/xyYVNmN8o5Mq1AHEDPjxfGQcg/beZ1FxipGaDWw
- iObT6ilRyyFioDdQ2eA==
-X-Proofpoint-GUID: o338462YYWy9Kh6Ui4dfYEBWint6RtXv
-X-Proofpoint-ORIG-GUID: o338462YYWy9Kh6Ui4dfYEBWint6RtXv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-12_05,2026-02-12_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0 spamscore=0 suspectscore=0 priorityscore=1501
- lowpriorityscore=0 adultscore=0 phishscore=0 malwarescore=0 clxscore=1011
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602130008
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260212-rb3gen2-upd-gl3590-v1-1-18fb04bb32b0@oss.qualcomm.com>
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	MID_RHS_NOT_FQDN(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-92735-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:dkim];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-92736-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MISSING_XM_UA(0.00)[];
 	TO_DN_SOME(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[shengchao.guo@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[11];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 4E216132403
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.3:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,0.0.0.0:email,0.0.0.1:email,0.0.0.2:email]
+X-Rspamd-Queue-Id: 2F445132507
 X-Rspamd-Action: no action
 
-On Wed, Dec 24, 2025 at 09:34:30AM +0100, Krzysztof Kozlowski wrote:
-> On 24/12/2025 04:16, Jingyi Wang wrote:
-> > 
-> > 
-> > On 12/23/2025 9:29 PM, Krzysztof Kozlowski wrote:
-> >> On Tue, Dec 23, 2025 at 01:13:49AM -0800, Jingyi Wang wrote:
-> >>> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,pas-common.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,pas-common.yaml
-> >>> index 63a82e7a8bf8..149e993282bb 100644
-> >>> --- a/Documentation/devicetree/bindings/remoteproc/qcom,pas-common.yaml
-> >>> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,pas-common.yaml
-> >>> @@ -33,16 +33,22 @@ properties:
-> >>>        - description: Handover interrupt
-> >>>        - description: Stop acknowledge interrupt
-> >>>        - description: Shutdown acknowledge interrupt
-> >>> +      - description: Pong interrupt
-> >>> +      - description: Wake acknowledge interrupt
-> >>>  
-> >>>    interrupt-names:
-> >>>      minItems: 5
-> >>> +    maxItems: 7
-> >>>      items:
-> >>> -      - const: wdog
-> >>> -      - const: fatal
-> >>> -      - const: ready
-> >>> -      - const: handover
-> >>> -      - const: stop-ack
-> >>> -      - const: shutdown-ack
-> >>> +      enum:
-> >>
-> >> No, no. Stop doing random changes. NAK
-> >>
-> >> Now you remove strict order (see writing bindings) and claim every
-> >> device like SM8550 ADSP PAS has any order.
-> >>
-> >> And it is now de-synced with interrupts. Read writing bindings - this is
-> >> clearly described there at line 90!
-> >>
-> >> You can only grow existing list.
-> >>
-> >>
-> >>
-> > 
-> > the interrupt for soccp is defined as 
-> > "wdog","fatal","ready","handover","stop-ack","pong","wake-ack"
-> > while other pas could be:
-> > "wdog","fatal","ready","handover","stop-ack","shutdown-ack"
-> > 
-> > so grow existing list is not work for this,
-> > 
-> > In the v1, got your comments to adjust pas-common.yaml for the interrupt:
-> > https://lore.kernel.org/all/861b6ede-f168-44e6-85bd-10cf04dbcec7@kernel.org/
-> > 
-> > and in v2, interrupt are moved as part to the "allOf" with if-else and
-> > also got NAK:
-> > https://lore.kernel.org/all/20251030-venomous-apricot-falcon-b3fd64@kuoka/
-> > 
-> > Could you please share a example for us to understand how to maintain it in
-> > pas-common.yaml, not define if-else and has strict order at the same time?
-> > That will be very helpful.
-
-I guess something like this would work?
-
-  interrupt-names:
-    minItems: 5
-    maxItems: 7
-    oneOf:
-      - items:
-          - const: wdog
-          - const: fatal
-          - const: ready
-          - const: handover
-          - const: stop-ack
-          - const: shutdown-ack
-      - items:
-          - const: wdog
-          - const: fatal
-          - const: ready
-          - const: handover
-          - const: stop-ack
-          - const: pong
-          - const: wake-ack
-
-> > 
+On Thu, Feb 12, 2026 at 02:43:46PM -0600, Bjorn Andersson wrote:
+> The QCS6490 Rb3Gen2 has a Renesas μPD720201 XHCI controller hanging off
+> the TC9563 PCIe switch, on this a Genesys Logic GL3590 USB hub provides
+> two USB Type-A ports and an ASIX AX88179 USB 3.0 Gigabit Ethernet
+> interface.
 > 
-> Can you read the docs first? This is not a ping pong, where you keep
-> sending till it passes the review. If I provide you idea, then you will
-> send something whatever based on that because you still did not read the
-> rules governing bindings.
+> The Renesas chip is powered by two regulators controlled through PM7250B
+> GPIOs 1 and 4, and the power/reset pin is pulled down by PM8350C GPIO 4.
+> The Genesys chip power is always-on, but the reset pin is controlled
+> through TLMM GPIO 162.
+> 
+> Describe the Renesas chip on the PCIe bus, with supplies and reset, to
+> allow it to be brought out of reset and discovered. Then describe the
+> two peers of the USB hub, with its reset GPIO, to allow this to be
+> brought out of reset.
+> 
+> The USB Type-A connectors are not described, as they are in no regard
+> controlled by the operating system.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+> ---
+> Posting this as a RFC, because it doesn't work without some hacks in the
+> PCI pwrctrl code. It depends on Neil's work for μPD720201 pwrctrl [1],
+> on the GL3590 work by Swati and Krisha [2], and my regulator fix [3].
+> With these three dependencies, the hacks in drivers/pci/pwrctrl/core.c,
+> and firmware for the μPD720201, the primary ethernet lights up.
+> 
+> Then in pci_pwrctrl_create_device() we assume that anything in a PCI
+> device node, with either a -supply or port/ports property, should be a
+> platform_device. When the USB bus(es) of the μPD720201 shows up, it
+> again registers this platform_device. It seems that
+> of_platform_device_create() saves us and does an early exit, but by
+> "accident".
+> 
 
-Krzysztof,
+I agree that this is an issue, probably an overlook on my part assuming that
+every child node of the Root Port is a PCIe node. I should add a check for
+the 'device_type' property before we even check for the existence of the
+supply/graph properties.
 
-Feel free to shout at me if my suggestion is not what you have in
-your mind :)
+I was notified of an internal regression as well with graph port check. So I'll
+send both fixes in a single series.
 
-Shawn
+- Mani
+
+> __pci_pwrctrl_power_on_device() and __pci_pwrctrl_power_off_device() on
+> the other hand, they happily pick up the non-NULL drvdata, which is of
+> type struct onboard_dev, to call the power_on() and power_off() methods.
+> 
+> It's not clear to me why the whole board resets at this point, but I
+> don't think we can assume that any random platform_device we find at any
+> level below the PCIe bus has a drvdata of type struct pci_pwrctrl...
+> 
+> [1] https://lore.kernel.org/all/20260206-topic-sm8650-ayaneo-pocket-s2-base-v3-0-5b79c5d61a03@linaro.org/
+> [2] https://lore.kernel.org/all/20260122092852.887624-1-swati.agarwal@oss.qualcomm.com/
+> [3] https://lore.kernel.org/linux-arm-msm/177091226767.237262.6699917364293122804.b4-ty@kernel.org/T/#t
+> ---
+>  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 94 ++++++++++++++++++++++++++++
+>  1 file changed, 94 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> index e3d2f01881ae05f17796f9c97f10b53cea50daff..e8d3588e67d0386150258d0bc28b4c6200920067 100644
+> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> @@ -262,6 +262,28 @@ active-config0 {
+>  		};
+>  	};
+>  
+> +	vreg_pcie0_1p05: regulator-pcie0-1p05v {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "PCIE0_1.05V";
+> +		gpio = <&pm7250b_gpios 4 GPIO_ACTIVE_HIGH>;
+> +		regulator-min-microvolt = <1050000>;
+> +		regulator-max-microvolt = <1050000>;
+> +		enable-active-high;
+> +		pinctrl-0 = <&upd_pwr_en2_state>;
+> +		pinctrl-names = "default";
+> +	};
+> +
+> +	vreg_pcie0_3p3: regulator-pcie0-3p3v-dual {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "PCIE0_3.3V_Dual";
+> +		gpio = <&pm7250b_gpios 1 GPIO_ACTIVE_HIGH>;
+> +		regulator-min-microvolt = <3300000>;
+> +		regulator-max-microvolt = <3300000>;
+> +		enable-active-high;
+> +		pinctrl-0 = <&upd_pwr_en1_state>;
+> +		pinctrl-names = "default";
+> +	};
+> +
+>  	vdd_ntn_0p9: regulator-vdd-ntn-0p9 {
+>  		compatible = "regulator-fixed";
+>  		regulator-name = "VDD_NTN_0P9";
+> @@ -870,6 +892,41 @@ pcie@2,0 {
+>  			device_type = "pci";
+>  			ranges;
+>  			bus-range = <0x4 0xff>;
+> +
+> +			/* Renesas μPD720201 PCIe USB3.0 Host Controller */
+> +			usb-controller@0,0 {
+> +				compatible = "pci1912,0014";
+> +				reg = <0x40000 0x0 0x0 0x0 0x0>;
+> +
+> +				avdd33-supply = <&vreg_pcie0_3p3>;
+> +				vdd10-supply = <&vreg_pcie0_1p05>;
+> +				vdd33-supply = <&vreg_pcie0_3p3>;
+> +
+> +				pinctrl-0 = <&upd_hub_rst_state>;
+> +				pinctrl-names = "default";
+> +
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +				/* Genesys Logic GL3590 USB Hub Controller */
+> +				gl3590_2_0: hub@1 {
+> +					compatible = "usb5e3,610";
+> +					reg = <1>;
+> +					reset-gpios = <&tlmm 162 GPIO_ACTIVE_HIGH>;
+> +
+> +					pinctrl-0 = <&usb_hub_reset_state>;
+> +					pinctrl-names = "default";
+> +
+> +					peer-hub = <&gl3590_3_0>;
+> +				};
+> +
+> +				gl3590_3_0: hub@2 {
+> +					compatible = "usb5e3,625";
+> +					reg = <2>;
+> +
+> +					peer-hub = <&gl3590_2_0>;
+> +				};
+> +			};
+>  		};
+>  
+>  		pcie@3,0 {
+> @@ -1198,6 +1255,17 @@ ntn_1p8_en: ntn-1p8-en-state {
+>  		power-source = <0>;
+>  	};
+>  
+> +	upd_hub_rst_state: upd-hub-rst-state {
+> +		pins = "gpio4";
+> +		function = "normal";
+> +
+> +		bias-disable;
+> +		input-disable;
+> +		output-enable;
+> +		output-high;
+> +		power-source = <0>;
+> +	};
+> +
+>  	tc9563_resx_n: tc9563-resx-state {
+>  		pins = "gpio1";
+>  		function = "normal";
+> @@ -1378,6 +1446,15 @@ &edp_hot_plug_det {
+>  };
+>  
+>  &pm7250b_gpios {
+> +	upd_pwr_en1_state: upd-pwr-en1-state {
+> +		pins = "gpio1";
+> +		function = "normal";
+> +
+> +		output-enable;
+> +		input-disable;
+> +		power-source = <0>;
+> +	};
+> +
+>  	lt9611_rst_pin: lt9611-rst-state {
+>  		pins = "gpio2";
+>  		function = "normal";
+> @@ -1386,6 +1463,15 @@ lt9611_rst_pin: lt9611-rst-state {
+>  		input-disable;
+>  		power-source = <0>;
+>  	};
+> +
+> +	upd_pwr_en2_state: upd-pwr-en2-state {
+> +		pins = "gpio4";
+> +		function = "normal";
+> +
+> +		output-enable;
+> +		input-disable;
+> +		power-source = <0>;
+> +	};
+>  };
+>  
+>  &sdc2_clk {
+> @@ -1431,6 +1517,14 @@ sd_cd: sd-cd-state {
+>  		function = "gpio";
+>  		bias-pull-up;
+>  	};
+> +
+> +	usb_hub_reset_state: usb-hub-reset-state {
+> +		pins = "gpio162";
+> +		function = "gpio";
+> +
+> +		drive-strength = <2>;
+> +		bias-disable;
+> +	};
+>  };
+>  
+>  &lpass_audiocc {
+> 
+> ---
+> base-commit: fd9678829d6dd0c10fde080b536abf4b1121c346
+> change-id: 20260212-rb3gen2-upd-gl3590-d110dd722e1b
+> 
+> Best regards,
+> -- 
+> Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+> 
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
