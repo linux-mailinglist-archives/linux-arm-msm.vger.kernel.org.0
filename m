@@ -1,381 +1,258 @@
-Return-Path: <linux-arm-msm+bounces-92803-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92804-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id KFixI3c7j2nHNAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92803-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Feb 2026 15:55:51 +0100
+	id IHA0J8Y8j2mtNgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92804-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Feb 2026 16:01:26 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id F31CE13753D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Feb 2026 15:55:50 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 06BD1137612
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Feb 2026 16:01:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 2CDB730248D4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Feb 2026 14:55:25 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B4A4A300BCA8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Feb 2026 15:01:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88749361DB0;
-	Fri, 13 Feb 2026 14:55:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14C1533FE05;
+	Fri, 13 Feb 2026 15:01:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="o0Khi7qH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EyMjC2n7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9A83559C4
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Feb 2026 14:55:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E49211B4224;
+	Fri, 13 Feb 2026 15:01:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770994521; cv=none; b=p2iDwykepCFKx5+up7aEUD36uC56CKKXcS506ElVYix6IaeR+hSxtPVB0MbUi3u7JR3rSj9fJczt0lkdlLzWEtQz4TJQbBcurQIt2c97qYGO10bZMoqtLoWIn7WEr9qaWBV8WDxdofw645uZTSAATRRIW4xrELOe1PDN6EH6VZg=
+	t=1770994876; cv=none; b=T+ozp8yjjdTaXLj88W901b+sRDPl7gc5oLnluprNfAdzHrkZavo7EXzsMGYZCHl8Zk/P1fzSh7YeJsY0F9XCJiGVta8PQ2FCERq7LreSXlspVkm7eUEfMyHwmBUFBYjhIRfYCJ6kTtPaB8bYo1CHpoHoyuKRrNo/T0o/hTPfAEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770994521; c=relaxed/simple;
-	bh=70PbSNDu9x4Wj/tEPz62OV1hX90As7ZyNvi4Eury5NM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=nqDWAgp2VPOhPBL/n0EkrZSAep9bM+LnIXZBuWW3CWSoTmT7Fc7NIRxMfFYQiOyNKEAz7H7GsnE/StxRrmvEjf44UbEJRWPAQWJuDypsFcRl5pYkagrPSCZbCJM5l1pCdXRB0uxB0N0NEYJdHAg1hQvRsbI8JN4tIw1DXqP7zy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=o0Khi7qH; arc=none smtp.client-ip=209.85.215.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-c626bd75628so376086a12.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Feb 2026 06:55:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1770994518; x=1771599318; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hpDizy5onqELapjXINQoOaormzlF0uuJ9Y7c/63rKWs=;
-        b=o0Khi7qHxkQ7V6nTYNKJnKdZ9OPP3UDdyMOCwlAXsB/rmFdLKwdeP3U5QVC79+Vm8u
-         hYwwMkC3UgunHJSuIG5DzsL8lQXF8XFpZWCMzSLas5zd6TdOapsGEeEPVkSkhFP5QCYt
-         Hs5FbZF/awTB7H10ZXNLNUT/shCEeHi+3s9dkkaR+NgOuFcMgwVieMcZlp9GyFr4AQoJ
-         gAHaMOYngDTVUtTedvWMBWtiDPLVpICl0WTYcYQTJ41ZsJvd0zA3CYCqNdoCF7M3RCU9
-         muIPKorxj/1Kk7JwTmdKGqQ0i6JKjXghAUGlc5afmrfuF00cohr/nR6YVFiGfDyS9GFs
-         oj6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770994518; x=1771599318;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=hpDizy5onqELapjXINQoOaormzlF0uuJ9Y7c/63rKWs=;
-        b=kQhEI+KurOFcPxTKG6aq2HhbjqnO9M7gcDvZweIlfIlb6vBukDklKpMhui2Ax7+U1X
-         toqGr5+pBuQFubauXoNbxoaLOKyQwZfAIhPXwX8oFYC/9ttR7Bbn4vgNEx3QN+48+RT7
-         WA9cMyfjbVUhWyjVc+9aVe2xc3yGunhctoLXLA9mzefrYke3rMyLGZwhmvHuRsfmr024
-         vXw5qqfA/71BVsSALi59BEgicJIGxtM8LUWvP1Tl7FNHx/w/i8LVjxLuH7oUMviQET27
-         QKRvct18S3yKAyZNJ/ccNJUjJfN4MMHHM0vDSldpEAzfpA2oe4hsCnkf/R6xQo9DKofl
-         PFVg==
-X-Gm-Message-State: AOJu0YxzYeF3erSzPoCv6UzD/8KqL8js4vfmGFpXKPSmsttGbPTrumS/
-	wJXQYXJv/DHHMdTuDSb4JOJWns8MZUE1GiSszi+IfvINAvKWeKXafvTyGy/v7C3kyAs=
-X-Gm-Gg: AZuq6aJItASCIZTPnidzu0ooAFVeEeFGZV0y+KA195a2ZvYZprQTiTjecDkicmhbyZw
-	9UyfPx8z5Wp96wgAt71YExoUqKFRFk++Y8oDH4ojYpRgi1T2Z8QNpequoHlM8xFjbvLmsaTKfjf
-	xdM+sVVio7Eh4+rvgPW1XKE1Kz4DXEZLGY91D8JZPXHAewMPOvpXICMbZwANq+5/hqRA0Bc3rh3
-	+iOExdwHGFOdvOO0+TJLemb0kgS8wK/tZdF+rHvN+T3x8h9fNwe+sO0dCGPIvlcjqNBwG+0Q5K9
-	ENxq0eNEPT3Pes1TBCP1AduA+kKZcJzzwMVdG7PuK9hkpFOARJ4LHgJ2QsguhqV17L9S1d9gBAE
-	GjMYb+0W8RGlSbOCqx8XJEGMAdxtShamVjCCFZxu0TU6gWmEdBoDUO08FRknGacDSNGaQv/e9At
-	iWZABKyQ3zq028JSzdQT1Bw0Xqgam+EAwTh10/kH41pyck5lvnrh4jZDF/
-X-Received: by 2002:a17:90b:3e48:b0:354:c51e:f011 with SMTP id 98e67ed59e1d1-356aad7039bmr1988856a91.19.1770994517881;
-        Fri, 13 Feb 2026 06:55:17 -0800 (PST)
-Received: from [127.0.1.1] (210-61-187-172.hinet-ip.hinet.net. [210.61.187.172])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3567eba9b2esm8814759a91.9.2026.02.13.06.55.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Feb 2026 06:55:17 -0800 (PST)
-From: Jun Nie <jun.nie@linaro.org>
-Date: Fri, 13 Feb 2026 22:54:28 +0800
-Subject: [PATCH v18 4/4] drm/msm/dpu: Enable quad-pipe for DSC and dual-DSI
- case
+	s=arc-20240116; t=1770994876; c=relaxed/simple;
+	bh=i9Z1d9mtyD9VgpCG+vwLj2SdGmPboVbb0boZz52wsMM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pNG4SWZG7eZz2Vct2o9pzwFZfBhXUPtPGO3sQOyjmjTKf/hkIqsMYU0y27Sz7WI4H39m1DG09DD/74S9ZOHdSOrSDgyIZyOI8nYwoRRW6PMz6aqY5yUlC2nVj7FHXbuToIzOJc1cv4lwX2scTt1eMDcBsSOqGi79YY1POWnoSCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EyMjC2n7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EDCBC116C6;
+	Fri, 13 Feb 2026 15:01:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1770994875;
+	bh=i9Z1d9mtyD9VgpCG+vwLj2SdGmPboVbb0boZz52wsMM=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=EyMjC2n7IMPmDbmI7DcdPyLWe1wqY9BvMpSkTXHOoTF1ZHwabuuL6fLci8xqhxr53
+	 elhU2yoIy8cC2ex9TzEgzamEsJdmJHAwGfUUQnFPBtlr79dA5jpv5oZ319+WLpEfQ/
+	 iM/6fET5gGJ3uMqKlk7pRgCbPzmIbO9onbqLzW3Al2RIh1w3KwEy0S5/TwCC6jKpbz
+	 Max5zmGg4g4vv0p67dQM4zlX2oa6r3Hy5rHvhywlqS1elCyfQH0FcDVBEwFRGrI5Xg
+	 i41Fs9selWGsN7RBTktbNywpczGPc4ANLtLRLITWXcNv9R8qdggxRBiMIIi8ulmAQz
+	 t823HwuOrrv8w==
+Message-ID: <bedf5751-8186-4197-95f7-24682f24dee3@kernel.org>
+Date: Fri, 13 Feb 2026 16:01:11 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260213-msm-next-quad-pipe-split-v18-4-5815158d3635@linaro.org>
-References: <20260213-msm-next-quad-pipe-split-v18-0-5815158d3635@linaro.org>
-In-Reply-To: <20260213-msm-next-quad-pipe-split-v18-0-5815158d3635@linaro.org>
-To: Abhinav Kumar <abhinav.kumar@linux.dev>, 
- Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Rob Clark <robin.clark@oss.qualcomm.com>, 
- Neil Armstrong <neil.armstrong@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- Jun Nie <jun.nie@linaro.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1770994473; l=9265;
- i=jun.nie@linaro.org; s=20240403; h=from:subject:message-id;
- bh=70PbSNDu9x4Wj/tEPz62OV1hX90As7ZyNvi4Eury5NM=;
- b=4zyh7DkjPUbbGpw8FZEfqQe29yptwSjlWuLyOFUYMgTpfMz0Gu121XNASW+eRkw6Z9lfDhYep
- W0VSnJQv0Z1BoO8NrjyZ8HJWVK1MB9hGIbDf6INg5GPrG2ReI0/3MHw
-X-Developer-Key: i=jun.nie@linaro.org; a=ed25519;
- pk=MNiBt/faLPvo+iJoP1hodyY2x6ozVXL8QMptmsKg3cc=
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] arm64: dts: qcom: sm8550: Fix DTBO boot failure
+To: Aaron Kling <webgeek1234@gmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Kumar Sharma <quic_vksharma@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>
+References: <20260207-sm8550-abl-dtbo-v2-1-83afaa6f3ce9@gmail.com>
+ <d4faaf8d-1517-4187-8801-a2dd52d8dde3@kernel.org>
+ <CALHNRZ9k3yxXb9OfYXMSfEwyYKU8Rrrrjb-hPqLgU90X9YBP8g@mail.gmail.com>
+ <487e4605-0a21-48d6-8b77-9ce2799ad212@kernel.org>
+ <CALHNRZ8sqCpUMyCFP99b7nHu2onojZ0EY6YGQZ9RMP0kH8jWzw@mail.gmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <CALHNRZ8sqCpUMyCFP99b7nHu2onojZ0EY6YGQZ9RMP0kH8jWzw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-92803-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[104.64.211.4:from];
+	TAGGED_FROM(0.00)[bounces-92804-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_TO(0.00)[linux.dev,kernel.org,poorly.run,somainline.org,gmail.com,ffwll.ch,oss.qualcomm.com,linaro.org];
-	RCPT_COUNT_TWELVE(0.00)[14];
+	FREEMAIL_TO(0.00)[gmail.com];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	RSPAMD_EMAILBL_FAIL(0.00)[pavan.kondeti.oss.qualcomm.com:query timed out,krzk.kernel.org:query timed out];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[jun.nie@linaro.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[100.90.174.1:received,209.85.215.173:received,210.61.187.172:received];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	PRECEDENCE_BULK(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[11];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[patchwork.freedesktop.org:url,quicinc.com:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,linaro.org:mid,linaro.org:dkim,linaro.org:email,qualcomm.com:email]
-X-Rspamd-Queue-Id: F31CE13753D
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: 06BD1137612
 X-Rspamd-Action: no action
 
-To support high-resolution cases that exceed the width constrain
-or scenarios that surpass the maximum MDP clock rate, additional
-pipes are necessary to enable parallel data processing within
-the width constraints and MDP clock rate.
+On 11/02/2026 16:10, Aaron Kling wrote:
+> On Mon, Feb 9, 2026 at 1:51 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>>
+>> On 08/02/2026 16:10, Aaron Kling wrote:
+>>> On Sun, Feb 8, 2026 at 3:07 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>>>>
+>>>> On 08/02/2026 02:16, Aaron Kling via B4 Relay wrote:
+>>>>> From: Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>
+>>>>>
+>>>>> ABL requires certain things in the base dtb to apply a dtbo. Namely:
+>>>>>
+>>>>> * A label named qcom_tzlog must exist, but doesn't have to contain any
+>>>>>   specific properties
+>>>>> * The timer node must have a label named arch_timer
+>>>>>
+>>>>> This aligns the sm8550 soc dtsi with those requirements. Without these
+>>>>> in the base dtb, when ABL attempts to apply any dtbo, it will fail to
+>>>>> the bootloader menu.
+>>>>>
+>>>>
+>>>> Incomplete DCO chain.
+>>>>
+>>>>> Co-authored-by: Aaron Kling <webgeek1234@gmail.com>
+>>>>> Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
+>>>>> ---
+>>>>> With a current mainline sm8550 base dtb, ABL will fail to apply any dtbo
+>>>>> and fail back to the bootloader menu. There are two changes needed:
+>>>>
+>>>> Since when? We were testing SM8550 (me on QRD) all the time and there
+>>>> was no problem.
+>>>>
+>>>> You need to provide details which hardware needs it, if this is about to
+>>>> expected, but honestly, we don't add such nodes/labels for downstream
+>>>> bootloader. Qualcomm should fix the bootloder instead.
+>>>
+>>> This discussion has been ongoing in a couple places. It is needed on
+>>> all semi-recent recent qcom socs. See this chain [0] on my sm8550
+>>
+>>
+>> Explanation must be in this commit, not in other places.
+>>
+>>> questions thread and the previous revision of this series [1]. This
+>>> has been a known issue for a while, see this comment [2] on the gunyah
+>>> watchdog series, which is what the series was based on.
+>>
+>> But that [2] still speaks about overlay. You are suppose to boot
+>> standard kernel with typical setup - concatenated DTB.
+>>
+>> If you want some other ways, like choosing overlays by ABL or whatever
+>> else, you need to fix ABL.
+>>
+>> You want to use some custom boot way of ABL, but it's broken... yet it
+>> is no reason to add these properties. What if I want to boot DTJUNK
+>> files via my custom ABJUNK - can I add such things to upstream? No.
+>>
+>> You cannot add properties to support custom boot of ABL if that boot is
+>> broken.
+> 
+> My use case here is an open source Android rom. I would like to think
+> that android would be a supported use case. Not necessarily a driving
 
-Expand pipe array size to 4. Request 4 mixers and 4 DSCs for
-high-resolution cases where dual interfaces are enabled for virtual
-plane case. More use cases can be incorporated later if quad-pipe
-capabilities are required.
+Android required in the past a lot of out of tree code and for years did
+not care about mainlining these, so I do not care about Android really.
+It's a fork, which for years decided to be separate, so we are not bound
+by fork rules. Whatever the fork now wants to do together with upstream,
+the fork must adjust, not upstream.
 
-Signed-off-by: Jun Nie <jun.nie@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/675418/
-Link: https://lore.kernel.org/r/20250918-v6-16-rc2-quad-pipe-upstream-4-v16-10-ff6232e3472f@linaro.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c         | 48 ++++++++++++++++--------
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h         |  6 +--
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c      | 29 +++++---------
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h |  2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h   |  2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h      |  2 +-
- 6 files changed, 47 insertions(+), 42 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index 0bbe6c38b771a..92a182d69edd0 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -200,7 +200,7 @@ static int dpu_crtc_get_lm_crc(struct drm_crtc *crtc,
- 		struct dpu_crtc_state *crtc_state)
- {
- 	struct dpu_crtc_mixer *m;
--	u32 crcs[CRTC_DUAL_MIXERS];
-+	u32 crcs[CRTC_QUAD_MIXERS];
- 
- 	int rc = 0;
- 	int i;
-@@ -1377,6 +1377,9 @@ static struct msm_display_topology dpu_crtc_get_topology(
- 	struct drm_display_mode *mode = &crtc_state->adjusted_mode;
- 	struct msm_display_topology topology = {0};
- 	struct drm_encoder *drm_enc;
-+	struct msm_drm_private *priv = crtc->dev->dev_private;
-+	struct dpu_kms *kms = to_dpu_kms(priv->kms);
-+	u32 num_rt_intf;
- 
- 	drm_for_each_encoder_mask(drm_enc, crtc->dev, crtc_state->encoder_mask)
- 		dpu_encoder_update_topology(drm_enc, &topology, crtc_state->state,
-@@ -1389,31 +1392,44 @@ static struct msm_display_topology dpu_crtc_get_topology(
- 	 *
- 	 * Dual display
- 	 * 2 LM, 2 INTF ( Split display using 2 interfaces)
-+	 * 4 LM, 2 INTF ( Split display using 2 interfaces and stream merge
-+			  to support high resolution interfaces if virtual
-+			  plane is enabled)
-+	 * If DSC is enabled, use 2:2:2 for 2 LMs case, and 4:4:2 for 4 LMs
-+	 * case.
- 	 *
- 	 * Single display
- 	 * 1 LM, 1 INTF
- 	 * 2 LM, 1 INTF (stream merge to support high resolution interfaces)
- 	 *
--	 * If DSC is enabled, use 2 LMs for 2:2:1 topology
-+	 * If DSC is enabled, use 2 LMs for 2:2:1 topology for single display
-+	 * to support legacy devices that use this topology.
- 	 *
- 	 * Add dspps to the reservation requirements if ctm or gamma_lut are requested
--	 *
--	 * Only hardcode num_lm to 2 for cases where num_intf == 2 and CWB is not
--	 * enabled. This is because in cases where CWB is enabled, num_intf will
--	 * count both the WB and real-time phys encoders.
--	 *
--	 * For non-DSC CWB usecases, have the num_lm be decided by the
--	 * (mode->hdisplay > MAX_HDISPLAY_SPLIT) check.
- 	 */
- 
--	if (topology.num_intf == 2 && !topology.cwb_enabled)
--		topology.num_lm = 2;
--	else if (topology.num_dsc == 2)
--		topology.num_lm = 2;
--	else if (dpu_kms->catalog->caps->has_3d_merge)
--		topology.num_lm = (mode->hdisplay > MAX_HDISPLAY_SPLIT) ? 2 : 1;
-+	num_rt_intf = topology.num_intf;
-+	if (topology.cwb_enabled)
-+		num_rt_intf--;
-+
-+	if ((mode->hdisplay > (MAX_HDISPLAY_SPLIT * num_rt_intf)) ||
-+	    ((u64)mode->hdisplay * mode->vtotal * drm_mode_vrefresh(mode) >
-+	     kms->perf.max_core_clk_rate))
-+		topology.num_lm = num_rt_intf * 2;
- 	else
--		topology.num_lm = 1;
-+		topology.num_lm = num_rt_intf;
-+
-+	if (!dpu_use_virtual_planes)
-+		topology.num_lm = min(2, topology.num_lm);
-+
-+	if (!dpu_kms->catalog->caps->has_3d_merge)
-+		topology.num_lm = min(num_rt_intf, topology.num_lm);
-+
-+	if (topology.num_dsc) {
-+		if (num_rt_intf == 1)
-+			topology.num_lm = 2;
-+		topology.num_dsc = topology.num_lm;
-+	}
- 
- 	if (crtc_state->ctm || crtc_state->gamma_lut)
- 		topology.num_dspp = topology.num_lm;
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-index 6eaba5696e8e6..455073c7025b0 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-@@ -210,7 +210,7 @@ struct dpu_crtc_state {
- 
- 	bool bw_control;
- 	bool bw_split_vote;
--	struct drm_rect lm_bounds[CRTC_DUAL_MIXERS];
-+	struct drm_rect lm_bounds[CRTC_QUAD_MIXERS];
- 
- 	uint64_t input_fence_timeout_ns;
- 
-@@ -218,10 +218,10 @@ struct dpu_crtc_state {
- 
- 	/* HW Resources reserved for the crtc */
- 	u32 num_mixers;
--	struct dpu_crtc_mixer mixers[CRTC_DUAL_MIXERS];
-+	struct dpu_crtc_mixer mixers[CRTC_QUAD_MIXERS];
- 
- 	u32 num_ctls;
--	struct dpu_hw_ctl *hw_ctls[CRTC_DUAL_MIXERS];
-+	struct dpu_hw_ctl *hw_ctls[CRTC_QUAD_MIXERS];
- 
- 	enum dpu_crtc_crc_source crc_source;
- 	int crc_frame_skip_count;
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index eba1d52211f68..058a7c8727f7c 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -55,7 +55,7 @@
- #define MAX_PHYS_ENCODERS_PER_VIRTUAL \
- 	(MAX_H_TILES_PER_DISPLAY * NUM_PHYS_ENCODER_TYPES)
- 
--#define MAX_CHANNELS_PER_ENC 2
-+#define MAX_CHANNELS_PER_ENC 4
- #define MAX_CWB_PER_ENC 2
- 
- #define IDLE_SHORT_TIMEOUT	1
-@@ -661,7 +661,6 @@ void dpu_encoder_update_topology(struct drm_encoder *drm_enc,
- 	struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
- 	struct msm_drm_private *priv = dpu_enc->base.dev->dev_private;
- 	struct msm_display_info *disp_info = &dpu_enc->disp_info;
--	struct dpu_kms *dpu_kms = to_dpu_kms(priv->kms);
- 	struct drm_connector *connector;
- 	struct drm_connector_state *conn_state;
- 	struct drm_framebuffer *fb;
-@@ -675,22 +674,12 @@ void dpu_encoder_update_topology(struct drm_encoder *drm_enc,
- 
- 	dsc = dpu_encoder_get_dsc_config(drm_enc);
- 
--	/* We only support 2 DSC mode (with 2 LM and 1 INTF) */
--	if (dsc) {
--		/*
--		 * Use 2 DSC encoders, 2 layer mixers and 1 or 2 interfaces
--		 * when Display Stream Compression (DSC) is enabled,
--		 * and when enough DSC blocks are available.
--		 * This is power-optimal and can drive up to (including) 4k
--		 * screens.
--		 */
--		WARN(topology->num_intf > 2,
--		     "DSC topology cannot support more than 2 interfaces\n");
--		if (topology->num_intf >= 2 || dpu_kms->catalog->dsc_count >= 2)
--			topology->num_dsc = 2;
--		else
--			topology->num_dsc = 1;
--	}
-+	/*
-+	 * Set DSC number as 1 to mark the enabled status, will be adjusted
-+	 * in dpu_crtc_get_topology()
-+	 */
-+	if (dsc)
-+		topology->num_dsc = 1;
- 
- 	connector = drm_atomic_get_new_connector_for_encoder(state, drm_enc);
- 	if (!connector)
-@@ -2180,8 +2169,8 @@ static void dpu_encoder_helper_reset_mixers(struct dpu_encoder_phys *phys_enc)
- {
- 	int i, num_lm;
- 	struct dpu_global_state *global_state;
--	struct dpu_hw_blk *hw_lm[2];
--	struct dpu_hw_mixer *hw_mixer[2];
-+	struct dpu_hw_blk *hw_lm[MAX_CHANNELS_PER_ENC];
-+	struct dpu_hw_mixer *hw_mixer[MAX_CHANNELS_PER_ENC];
- 	struct dpu_hw_ctl *ctl = phys_enc->hw_ctl;
- 
- 	/* reset all mixers for this encoder */
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-index 61b22d9494546..09395d7910ac8 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-@@ -302,7 +302,7 @@ static inline enum dpu_3d_blend_mode dpu_encoder_helper_get_3d_blend_mode(
- 
- 	/* Use merge_3d unless DSC MERGE topology is used */
- 	if (phys_enc->split_role == ENC_ROLE_SOLO &&
--	    dpu_cstate->num_mixers == CRTC_DUAL_MIXERS &&
-+	    (dpu_cstate->num_mixers != 1) &&
- 	    !dpu_encoder_use_dsc_merge(phys_enc->parent))
- 		return BLEND_3D_H_ROW_INT;
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-index 70d5ed4732f2e..b93442f75c2eb 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-@@ -24,7 +24,7 @@
- #define DPU_MAX_IMG_WIDTH 0x3fff
- #define DPU_MAX_IMG_HEIGHT 0x3fff
- 
--#define CRTC_DUAL_MIXERS	2
-+#define CRTC_QUAD_MIXERS	4
- 
- #define MAX_XIN_COUNT 16
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-index 046b683d4c66d..31451241f0839 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-@@ -34,7 +34,7 @@
- #define DPU_MAX_PLANES			4
- #endif
- 
--#define STAGES_PER_PLANE		1
-+#define STAGES_PER_PLANE		2
- #define PIPES_PER_STAGE			2
- #define PIPES_PER_PLANE			(PIPES_PER_STAGE * STAGES_PER_PLANE)
- #ifndef DPU_MAX_DE_CURVES
+> force for decisions, but at least supported. And I'm using the
+> standard boot image v4 setup with dtb on vendor_boot and dtbo's on the
+> dedicated partition. This isn't some weird and wacko setup, it's what
+> the vast majority of devices this soc is used in are designed for.
 
--- 
-2.43.0
+On downstream trees. With ABL designed for downstream trees. With
+engineers designing all this WITHOUT single consultation with upstream,
+so sorry, this is wacko in upstream :)
 
+
+> 
+> Also, the vast majority of devices can't replace the bootloader. This
+
+We all were running Androids as well when upstreaming all Qualcomm
+flagship models and we did not have to replace the bootloader. We did
+not need any of such changes like here. Although maybe our devices had a
+bit different bootloader - this I don't know. It was ABL for downstream
+Android, though.
+
+> isn't an option, the devices are fused. The qrd and hdk are not
+> available to consumers. There are a handful of qcs8550 devices like
+> what I'm using that are unfused and thus are able to replace abl, but
+> I would prefer not not add that extra step for users to install my
+> project. Plus, I am trying to not just make changes that only affect
+> my devices, when they could be generic and benefit all devices using
+> the soc.
+
+... and why standard way, like we all were doing this, of booting
+QCS8550 does not work? You append the DTB.
+
+Anyway, this is not 2010 anymore, so vendors and bootloaders if they
+want to ask for something MUST:
+1. Obey DT spec and upstream recommendations for the DTS they use
+2. Follow standard industry interfaces (and "foo_bar" requirement is not
+standard industry interface)
+
+I know that you cannot change ABL so the actual complain goes to
+Qualcomm and/or Google.
+
+Best regards,
+Krzysztof
 
