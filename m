@@ -1,174 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-92840-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92841-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iH8pC4cxkGkYWwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92840-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Feb 2026 09:25:43 +0100
+	id GIW6NEkzkGnbWwEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92841-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Feb 2026 09:33:13 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C9E9F13B63B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Feb 2026 09:25:42 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 00E9E13B66E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Feb 2026 09:33:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 1E0373005ABB
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Feb 2026 08:25:41 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 8BB1830074C7
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Feb 2026 08:33:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45D19306D36;
-	Sat, 14 Feb 2026 08:25:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B99A02517A5;
+	Sat, 14 Feb 2026 08:33:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i3PNlu/y"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ei7t0NnP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E51D1EA84;
-	Sat, 14 Feb 2026 08:25:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 958953EBF3D;
+	Sat, 14 Feb 2026 08:33:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771057538; cv=none; b=o5F6arvF6rorV7c47lF39YvVMjfrez2x0+b48tqlGe71JlXIPta0tYmZqzMa3bIOiv0dXmLihU44UEAOdL9+p65qMPJVsd/K2PaePJR/jcB8Dcx9YEPrF+zEDi0UvTKoHhzJE7ay7DTywboXTSX2RxF3dspK8+xD4yeccnHx8EI=
+	t=1771057986; cv=none; b=fBMu+x8/PjAQATgR7ZkHhoxexa8wo7ypm3KlzYuCVUJLb23VVhgOCcgSLwXpWHoLn/qO9pbzD5H6Zx6/xgjrX0hjAkdPrtzHYSqZrf1xgw1bRXcsAA3H22DDzo1t8a8PtMWeurfGEXA3/YpY3UJRbpoFf9JYQg/fd1Q7IjPI1yA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771057538; c=relaxed/simple;
-	bh=IKqjHL4d6xRU3L75phhHFiawOQlj4uERLb3B+euoB8s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nSgcAarl5PA69qpDRlfwqJ3yRa6ovemn5FMik91glPyfOIP7hghwfp45fKRxGezrmjZZw6vAzCOQ8++99GjKYV6NPzcKQhtO6DJPIKVxXjoM/+mNbl9lGxdoP4sv2P+VyrQwvyLXwKLHNVUXX+72TeeJLHWOsFFHRE5AgeZWWlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i3PNlu/y; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A7F7C19421;
-	Sat, 14 Feb 2026 08:25:33 +0000 (UTC)
+	s=arc-20240116; t=1771057986; c=relaxed/simple;
+	bh=Ghx+NO5PD21JPthd0b2XCXAdcOQW8V5g2COXkPcaDf8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=YF2TrJiQC3DO4coj+kwgaXPj1AaHU1+T0Mxfo36Ob5tFA9OB/R51nD4qva14EAztbiHfWT7+eIgfK+fcA7ooWOqo/Ghf+Oe0JZp/Z0YPHdE1jCNgRL1h/G+NzQ8WHDyPE5E9B5q4YIjvMGIVTQh5eCpjgrK8+KvLib+R7DpBXQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ei7t0NnP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 1B884C19421;
+	Sat, 14 Feb 2026 08:33:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771057537;
-	bh=IKqjHL4d6xRU3L75phhHFiawOQlj4uERLb3B+euoB8s=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=i3PNlu/yEa52fEPWTsjxadTO69t6XtWUGsqEvp/hlyrTb71vLFjP0ikv+YpW5hIUi
-	 73Y2mRN6pn7zN4yVSiCcJxunmA4OuYk1q+Y/vIVJG1rs5p0lZutYvf5acsGbjIn7CR
-	 +FTt3EbO7UJhCuyeKnKVB2LR2Qnf1dirFi1Nc6GMAtfv/Q07haX24ui/C2Ube/qN8e
-	 33SxeJfF383iA+tlo/5nLEDRytDAHGWpvHw8DcPzgxrUC+YNwJNQzezlqtbgUj2g0h
-	 aB8CXZT8eD0k0clEUqxglPSzLmf600WqP//AUHBF1Wj4TKHJnmQk9mwR5dNHlNHGah
-	 oSM01xf8yWDFQ==
-Message-ID: <ab216e50-4441-4ced-b3da-6d3537ee3943@kernel.org>
-Date: Sat, 14 Feb 2026 09:25:31 +0100
+	s=k20201202; t=1771057986;
+	bh=Ghx+NO5PD21JPthd0b2XCXAdcOQW8V5g2COXkPcaDf8=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=ei7t0NnP/RMqh/UfL4WWUr3x3R1OLMHhV3ADo8KFpBXoc81rxTkv5vK2caTmmeOON
+	 Y2VShSgj5YA0YtSEa1OH4kIcMT5OjRoPB2kDtnJQxOCG7iLmGj9JjM/2sBiYk8+5tF
+	 dY3lwx51zQpjUUbCWNH835yMxqr5xVErTClTyrlZa1u9SLuWwzfrDpLTo2//Jfl0Kf
+	 jpmqJI/qhNCkCoFvy7H0WS/ZEl9BUIA2d4O7ahPwVkYI7jeytlLlQ0jOryI3+/dUND
+	 /lEcSCrQJjaeJT0FSp+sUtvyFXkOKiPBbw1xgcQp6+6C+oC2lf5z6TwwQdcFUBV7HK
+	 ErKNA24DxYtOg==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8CF6EF99F5;
+	Sat, 14 Feb 2026 08:33:05 +0000 (UTC)
+From: Jens Glathe via B4 Relay <devnull+jens.glathe.oldschoolsolutions.biz@kernel.org>
+Subject: [PATCH v3 0/4] arm64: qcom: x1-vivobook-s15: add X1P42100 variant,
+ restructure dts files
+Date: Sat, 14 Feb 2026 09:32:52 +0100
+Message-Id: <20260214-b4-vivobook-v3-0-3c88065bbf77@oldschoolsolutions.biz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] dt-bindings: arm: qcom: document google,
- bonito-tianma board
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Richard Acayan <mailingradian@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
- Jessica Zhang <jesszhan0024@gmail.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Thierry Reding <thierry.reding@gmail.com>, Sam Ravnborg <sam@ravnborg.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- dri-devel@lists.freedesktop.org, yifei@zhan.science
-References: <20260210023300.15785-1-mailingradian@gmail.com>
- <20260210023300.15785-2-mailingradian@gmail.com>
- <06503bb7-0d82-4407-815f-6f3851069041@kernel.org>
- <l223eppwztijuzg5plro5pfphlrsy4amouytri5vlzijwwsjio@wdkwscirvood>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <l223eppwztijuzg5plro5pfphlrsy4amouytri5vlzijwwsjio@wdkwscirvood>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADYzkGkC/3XOQQ6CMBCF4auQrq3pFErAlfcwLigdZCJxTIuNS
+ ri7BTeycPm/ZL7MJAJ6wiAO2SQ8RgrEtxT5LhNt39wuKMmlFlrpUgFU0hYyUmTLfJVOGVOU2GF
+ baZEu7h47eq7a6Zy6pzCyf614hGX9OlptnQhSybyprUEwea3qIw8utD3zEHh4jOmnsLf0Fgsa9
+ Q8EsIV0gurOKFWAcRrdX2ie5w8hVlcR/AAAAA==
+X-Change-ID: 20260118-b4-vivobook-d05546efec82
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Maud Spierings <maud_spierings@hotmail.com>, 
+ "Colin K. Williams" <colin@li-nk.org>, 
+ Jens Glathe <jens.glathe@oldschoolsolutions.biz>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1771057984; l=2082;
+ i=jens.glathe@oldschoolsolutions.biz; s=20240919;
+ h=from:subject:message-id;
+ bh=Ghx+NO5PD21JPthd0b2XCXAdcOQW8V5g2COXkPcaDf8=;
+ b=QEwgM6fwAwd7J50x07qde4b19KBiyOkcEVoA1sCPHgFkCDMC1fmcmoWlZeFrnOF3t07gTVaZz
+ GgJa4haFNDjBjiyMFo4SnutLoA91rPATfDoghZPiFgskWuQVoTipoSR
+X-Developer-Key: i=jens.glathe@oldschoolsolutions.biz; a=ed25519;
+ pk=JcRJqJc/y8LsxOlPakALD3juGfOKmFBWtO+GfELMJVg=
+X-Endpoint-Received: by B4 Relay for
+ jens.glathe@oldschoolsolutions.biz/20240919 with auth_id=216
+X-Original-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Reply-To: jens.glathe@oldschoolsolutions.biz
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-92840-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-92841-lists,linux-arm-msm=lfdr.de,jens.glathe.oldschoolsolutions.biz];
 	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[20];
-	FREEMAIL_CC(0.00)[gmail.com,kernel.org,linaro.org,linux.intel.com,suse.de,ffwll.ch,ravnborg.org,vger.kernel.org,lists.freedesktop.org,zhan.science];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	MIME_TRACE(0.00)[0:+];
 	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[vger.kernel.org,hotmail.com,li-nk.org,oldschoolsolutions.biz,oss.qualcomm.com];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	HAS_REPLYTO(0.00)[jens.glathe@oldschoolsolutions.biz];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: C9E9F13B63B
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,oldschoolsolutions.biz:mid,oldschoolsolutions.biz:email,oldschoolsolutions.biz:replyto]
+X-Rspamd-Queue-Id: 00E9E13B66E
 X-Rspamd-Action: no action
 
-On 13/02/2026 19:09, Dmitry Baryshkov wrote:
-> On Tue, Feb 10, 2026 at 10:12:05AM +0100, Krzysztof Kozlowski wrote:
->> On 10/02/2026 03:32, Richard Acayan wrote:
->>> The google,bonito-sdc board compatible represents the Google Pixel 3a XL
->>
->> I do not see sdc anywhere in the diff.
->>
->>> with a Tianma/Novatek NT37700F panel. Document it in the bindings.
->>
->> What is bonito? Why bonito is compatible with sdm670?
-> 
-> bonito is a name for the Pixel 3a XL devices (like sorgo and other
-> google names).
+This patchset adds the X1P42100 variant of the ASUS Vivobook S15 [1]. To avoid
+redundant code, it pulls the part that is identical to both variants into
+x1-asus-vivobook-s15.dtsi.
 
+I have maintained the X1P42100 variant on my tree for about a year now, it has
+been tested by quite a few users. Also added sound (not in this patchset) and
+users operate this successfully.
 
-`git grep bonito` gives me something quite different, so commit msg must
-explain the name (except correcting other mistakes).
+[1]: https://www.asus.com/de/laptops/for-home/vivobook/asus-vivobook-s-15-s5507/techspec/
+
+Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+---
+Changes in v3:
+- Fixed the \nstatus = "okay"; nit
+- Dropped the t-b on the bindings commit
+- Rebased onto next-20260213
+- Link to v2: https://lore.kernel.org/r/20260211-b4-vivobook-v2-0-9f500415d2ed@oldschoolsolutions.biz
+
+Changes in v2:
+- Fixed the bindings mixup and the redundant gpu node in the Purwa dts
+- Re-partitioned the patch set to have no new dangling file
+- Rebased onto next-20260210
+- Thanks to all that commented on the patches.
+- Link to v1: https://lore.kernel.org/r/20260208-b4-vivobook-v1-0-3a9b5e153909@oldschoolsolutions.biz
+
+---
+Jens Glathe (4):
+      dt-bindings: arm: qcom: Add ASUS Vivobook X1P42100 variant
+      firmware: qcom: scm: allow QSEECOM on ASUS Vivobook X1P42100 variant
+      arm64: dts: qcom: x1-vivobook-s15: create a common dtsi for Hamoa and Purwa variants
+      arm64: dts: qcom: x1-vivobook-s15: add Purwa-compatible device tree
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |    1 +
+ arch/arm64/boot/dts/qcom/Makefile                  |    2 +
+ arch/arm64/boot/dts/qcom/x1-asus-vivobook-s15.dtsi | 1362 ++++++++++++++++++++
+ .../boot/dts/qcom/x1e80100-asus-vivobook-s15.dts   | 1346 +------------------
+ .../boot/dts/qcom/x1p42100-asus-vivobook-s15.dts   |   44 +
+ drivers/firmware/qcom/qcom_scm.c                   |    1 +
+ 6 files changed, 1411 insertions(+), 1345 deletions(-)
+---
+base-commit: 635c467cc14ebdffab3f77610217c1dacaf88e8c
+change-id: 20260118-b4-vivobook-d05546efec82
 
 Best regards,
-Krzysztof
+-- 
+Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+
+
 
