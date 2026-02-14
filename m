@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-92835-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92836-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iGW8D+TJj2nMTgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92835-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Feb 2026 02:03:32 +0100
+	id wGvxD0bKj2ntTgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92836-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Feb 2026 02:05:10 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A783713A462
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Feb 2026 02:03:31 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A8E8E13A5F2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Feb 2026 02:05:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 9AA3230517FB
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Feb 2026 01:03:02 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id E1E93306070E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Feb 2026 01:03:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 806E122129B;
-	Sat, 14 Feb 2026 01:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C564E21576E;
+	Sat, 14 Feb 2026 01:03:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NkL5yBGW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jVr5wzIl"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D0331DE8AE;
-	Sat, 14 Feb 2026 01:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17D32147E5;
+	Sat, 14 Feb 2026 01:03:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771030977; cv=none; b=Z2RBslPnujnIc5nGps2sim/7JAEJkzCs6DMvbWub1123h3hqzMNNPyNd1M7XSkdcNpdg1svKzrz+vwNLrJKe8veuheyqLcpFnTt1yvw6CpQcqneTVhHGJ2Ke83a831be2pD2s0OO5fU1ch11jscCORxUpFo3h+w66/hRfOztmJ0=
+	t=1771031029; cv=none; b=k43wbkQPdq5bDpPF8fMAQ1k48mwBV4NrY0h2yPvzVPj13Yew3ahIannlHLso4Uk+ZNbWou7P4OBeQpNUFCZxA/4rRgf/XwHkcuxwD//t54FiGq53Cw5YaKBAwDTh0oFVmkf7tNtWd+2YXCVBnCJ4CgGLGVlMSmaKwEwkYm/FBW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771030977; c=relaxed/simple;
-	bh=J37sxq8pfLFgbWzCtYcfjLaOxT+W9jkKzT/+ehOmyy0=;
+	s=arc-20240116; t=1771031029; c=relaxed/simple;
+	bh=R6oVUFjWz+kXLS9nG8628lUUvyLt6G5fnWHB9B+hzfU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=c/TFQDV75ZzsyAj+4itMu1JCngtJ/fr+dDQmiocXidbPJohh+83psV8lTUfcHPNAo5ZrmJVDoBHK2P6Umxl3xoEPTtJdae8P9z9pTOjSANFCsq7WIUOKdC3a4yVCYRbLUbCufOEMXZaeMzBe70EmwC3Vl/OrEBQ7XavRQhVhE7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NkL5yBGW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 521C7C116C6;
-	Sat, 14 Feb 2026 01:02:56 +0000 (UTC)
+	 MIME-Version:Content-Type; b=qXza00YaB6J/bGunIGt8YdFZc17OVHfTx0Es7e6D29+OKHCWKDGeh8ELLSmrTE1Ab0Opt8QzDLpk52Ql4Vpsi1NNccngEaGW0ijuWIThXKT/t3qnxqNB3ZgEfy6HjGaKB3H8dt3hqZylBwzYSNbHp8sJTreUIqOOTxxS5EF89oA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jVr5wzIl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B58C19423;
+	Sat, 14 Feb 2026 01:03:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771030977;
-	bh=J37sxq8pfLFgbWzCtYcfjLaOxT+W9jkKzT/+ehOmyy0=;
+	s=k20201202; t=1771031029;
+	bh=R6oVUFjWz+kXLS9nG8628lUUvyLt6G5fnWHB9B+hzfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NkL5yBGWc6TK9nHx2hxtMCGxj24z7Nx2oQsm74KUE5oOhf1y7RBu4JQ7Vmylhaf+k
-	 dnOG8L4pIj8Q7WftquaBobZR/0YIlN1+vVXkNXzOa00Uq9Dw1NHF8FWISar1QaKUaE
-	 PPhYP8ngWel42iL3JY93dLL0FhxiiWlgaEp5uWZIdcav8euA2/IyTT6SYC6muemmqi
-	 Napo6EQ9SgX9nWsTYF6LgztR4JCpCXcwaiCx7gScbyyD2oQ1TBgceDWBiB2mqteN8A
-	 w1PrBmQS1YAUZDxgdqz6QRbKZQ2/IouBnlcIxxZ+hRxVHlG8Q3a7Uk6Ykq7EUu6dkt
-	 /eJr0zFNjEh8g==
+	b=jVr5wzIlMGmEZPyB8/5n+HnNwpTX28Xl1SQaaKzNl2hQlbLmWJLXKkRx3dbiW/kYb
+	 FJJRktTpNJODZRTSF9sU72J1nUrJHvsIi66sMr1nUkSH4CCepZd4Lua29dUOQgZvnd
+	 9R1dZYu8KXYI6xdhb9DrRtJPaRuO5/v3ciE948pS4Sa3fnYPoLrh8cYCHw9q6HZ3c3
+	 OIUAUJmFNK9TXz9OPAb4iLvZ+Wo+GTelry+smsbgOMNFE+6QqOrXtcasNiEBngHWwa
+	 6T8ek099xaWVW7xTZP92FhkFtSVrGRE35dCbmfSpPSVk56lywoRd6ZYjYfXEgdBCky
+	 hHeQt/yZA7zqg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
@@ -52,9 +52,9 @@ Cc: Jonathan Marek <jonathan@marek.ca>,
 	Sasha Levin <sashal@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
 	linux-spi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.1] spi-geni-qcom: initialize mode related registers to 0
-Date: Fri, 13 Feb 2026 19:58:06 -0500
-Message-ID: <20260214010245.3671907-6-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.6] spi-geni-qcom: use xfer->bits_per_word for can_dma()
+Date: Fri, 13 Feb 2026 19:58:30 -0500
+Message-ID: <20260214010245.3671907-30-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260214010245.3671907-1-sashal@kernel.org>
 References: <20260214010245.3671907-1-sashal@kernel.org>
@@ -79,7 +79,7 @@ X-Spamd-Result: default: False [-1.16 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-92835-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-92836-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
@@ -94,215 +94,212 @@ X-Spamd-Result: default: False [-1.16 / 15.00];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[marek.ca:email,msgid.link:url,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: A783713A462
+	DBL_BLOCKED_OPENRESOLVER(0.00)[marek.ca:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,msgid.link:url]
+X-Rspamd-Queue-Id: A8E8E13A5F2
 X-Rspamd-Action: no action
 
 From: Jonathan Marek <jonathan@marek.ca>
 
-[ Upstream commit 739062a9f1e9a77a9687c8fd30f8e5dd12ec70be ]
+[ Upstream commit fb2bbe3838728f572485706677590e4fc41eec5c ]
 
-setup_fifo_params assumes these will be zero, it won't write these
-registers if the initial mode is zero.
+mas->cur_bits_per_word may not reflect the value of xfer->bits_per_word
+when can_dma() is called. Use the right value instead.
 
 Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-Link: https://patch.msgid.link/20251120211204.24078-4-jonathan@marek.ca
+Link: https://patch.msgid.link/20251120211204.24078-3-jonathan@marek.ca
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a complete understanding of the bug and the fix. Let me
-compile the analysis.
+Here is my complete analysis:
 
 ---
 
-## Detailed Analysis
+## Commit Analysis: spi-geni-qcom: use xfer->bits_per_word for can_dma()
 
-### 1. COMMIT MESSAGE ANALYSIS
+### 1. Problem Description
 
-The commit subject "spi-geni-qcom: initialize mode related registers to
-0" is straightforward. The commit body explains: "`setup_fifo_params`
-assumes these will be zero, it won't write these registers if the
-initial mode is zero." This is a clear description of a latent
-initialization bug.
+The `geni_can_dma()` function and its helper `get_xfer_len_in_words()`
+use `mas->cur_bits_per_word` (a cached state variable on the driver
+struct) to compute the transfer length in SPI words and the effective
+FIFO size. However, **`mas->cur_bits_per_word` may not reflect the
+actual `bits_per_word` of the current transfer** when `can_dma()` is
+called by the SPI core.
 
-### 2. CODE CHANGE ANALYSIS - The Bug Mechanism
+### 2. Root Cause - Call Order Mismatch
 
-The bug centers on the interaction between two functions in `spi-geni-
-qcom.c`:
+The SPI core's `__spi_pump_transfer_message()` calls operations in this
+order:
 
-**`spi_geni_init()`** (called once during probe at line 1147)
-initializes the GENI SPI controller. In the `case 0:` (FIFO mode) branch
-at lines 724-728, it sets the transfer mode but does NOT initialize the
-SPI mode registers.
-
-**`setup_fifo_params()`** (called for each SPI message at line 593 via
-`spi_geni_prepare_message`) has an optimization at line 405:
-
-```397:431:drivers/spi/spi-geni-qcom.c
-static int setup_fifo_params(struct spi_device *spi_slv,
-                                        struct spi_controller *spi)
-{
-        struct spi_geni_master *mas = spi_controller_get_devdata(spi);
-        struct geni_se *se = &mas->se;
-        u32 loopback_cfg = 0, cpol = 0, cpha = 0, demux_output_inv = 0;
-        u32 demux_sel;
-
-        if (mas->last_mode != spi_slv->mode) {
-                // ... only writes registers when mode changes ...
-                writel(loopback_cfg, se->base + SE_SPI_LOOPBACK);
-                writel(demux_sel, se->base + SE_SPI_DEMUX_SEL);
-                writel(cpha, se->base + SE_SPI_CPHA);
-                writel(cpol, se->base + SE_SPI_CPOL);
-                writel(demux_output_inv, se->base +
-SE_SPI_DEMUX_OUTPUT_INV);
-
-                mas->last_mode = spi_slv->mode;
-        }
-        // ...
+```1726:1825:drivers/spi/spi.c
+// Step 1: prepare_message
+if (ctlr->prepare_message) {
+    ret = ctlr->prepare_message(ctlr, msg);
+    // ...
 }
+
+// Step 2: spi_map_msg → calls can_dma() for EACH transfer
+ret = spi_map_msg(ctlr, msg);
+
+// Step 3: transfer_one_message → calls transfer_one per-xfer
+ret = ctlr->transfer_one_message(ctlr, msg);
 ```
 
-**The critical chain of assumptions:**
+Looking at Step 1, `spi_geni_prepare_message` calls `setup_fifo_params`,
+which sets:
 
-1. `spi_geni_master` is allocated with `kzalloc` (confirmed in
-   `__spi_alloc_controller` at spi.c line 3056), so `mas->last_mode`
-   starts at **0**.
-2. `SPI_MODE_0` = `(0|0)` = **0** (from `include/uapi/linux/spi/spi.h`
-   line 10). This is the most common SPI mode.
-3. When the first SPI device uses mode 0, `spi_slv->mode` is 0, so
-   `mas->last_mode != spi_slv->mode` is **false** (0 != 0 → false).
-4. **The register writes are skipped entirely** for the first SPI
-   transaction.
-5. This assumes the hardware registers already contain 0.
-
-**When the assumption breaks:**
-
-- **Bootloader contamination**: If the bootloader used SPI (very common
-  on Qualcomm SoCs for reading from SPI flash/NOR), it may have
-  configured these registers with non-zero values (e.g., CPOL=1, CPHA=1
-  for SPI mode 3, or specific chip select muxing).
-- **Firmware loading path**: The `geni_load_se_firmware()` path (line
-  674-679) loads QUP firmware when `proto == GENI_SE_INVALID_PROTO`.
-  After firmware loading, register state may be undefined.
-
-**The consequence:**
-
-If hardware registers retain stale non-zero values from the bootloader
-and the first SPI device uses mode 0:
-- **SE_SPI_CPOL** could be set to `BIT(2)` → wrong clock polarity
-- **SE_SPI_CPHA** could be set to `BIT(0)` → wrong clock phase
-- **SE_SPI_LOOPBACK** could be enabled → data loops back instead of
-  going to device
-- **SE_SPI_DEMUX_SEL** could select wrong chip → wrong device addressed
-- **SE_SPI_DEMUX_OUTPUT_INV** could invert CS → chip select logic
-  inverted
-
-Any of these would cause **SPI communication failure or data
-corruption**.
-
-### 3. THE FIX
-
-The fix is 5 `writel(0, ...)` calls added to the FIFO mode
-initialization path in `spi_geni_init()`:
-
-```c
-writel(0, se->base + SE_SPI_LOOPBACK);
-writel(0, se->base + SE_SPI_DEMUX_SEL);
-writel(0, se->base + SE_SPI_CPHA);
-writel(0, se->base + SE_SPI_CPOL);
-writel(0, se->base + SE_SPI_DEMUX_OUTPUT_INV);
+```419:419:drivers/spi/spi-geni-qcom.c
+mas->cur_bits_per_word = spi_slv->bits_per_word;
 ```
 
-This ensures the hardware state matches the software assumption
-(`last_mode = 0`), making `setup_fifo_params()`'s optimization correct.
+But **only if mode changed** (`mas->last_mode != spi_slv->mode` at line
+405). If the mode hasn't changed between messages,
+`mas->cur_bits_per_word` retains whatever value was set during the
+**last transfer** of the **previous message**.
 
-### 4. CLASSIFICATION
+In Step 2, `spi_map_msg` → `__spi_map_msg` iterates over **all
+transfers** in the message and calls `can_dma()` for each:
 
-- **Type**: Initialization bug fix (uninitialized hardware register
-  state)
-- **NOT a feature**: No new functionality, just ensuring correct
-  initialization
-- **Category**: Data corruption / device communication failure fix
+```1246:1251:drivers/spi/spi.c
+list_for_each_entry(xfer, &msg->transfers, transfer_list) {
+    unsigned long attrs = DMA_ATTR_SKIP_CPU_SYNC;
+    if (!ctlr->can_dma(ctlr, msg->spi, xfer))
+        continue;
+```
 
-### 5. SCOPE AND RISK ASSESSMENT
+At this point, `mas->cur_bits_per_word` could be **wrong** for any
+transfer whose `bits_per_word` differs from the stale cached value.
 
-- **Lines changed**: 6 (5 writel + 1 comment)
-- **Files touched**: 1 (`drivers/spi/spi-geni-qcom.c`)
-- **Complexity**: Extremely low - simple register zeroing
-- **Risk of regression**: Near zero. In the common case where registers
-  are already 0, the writel calls are a harmless no-op. In the bug case,
-  they fix incorrect register values.
-- **Self-contained**: Yes - all register defines (`SE_SPI_LOOPBACK`,
-  etc.) and the `spi_geni_init()` function exist in all stable trees
-  that have this driver.
+Step 3 is where `setup_se_xfer()` (line 863-865) finally updates
+`mas->cur_bits_per_word = xfer->bits_per_word` — but this is **too
+late** for the `can_dma()` decision, which already happened in Step 2.
 
-### 6. USER IMPACT
+### 3. Bug Impact
 
-- **Qualcomm GENI SPI** is used on many Qualcomm SoCs (SDM845, SM8150,
-  SM8250, SC7180, SC7280, SM8350, SM8450, X1E80100, etc.)
-- These SoCs power phones, laptops (Qualcomm-based Chromebooks, Windows
-  on ARM devices), IoT, and embedded systems
-- SPI is used for touchscreen controllers, sensor hubs, TPM modules, and
-  other critical peripherals
-- If SPI communication fails, the affected device simply doesn't work
+The buggy `geni_can_dma()` function uses the wrong `bits_per_word` in
+two calculations:
 
-### 7. DEPENDENCY CHECK
+**a) Transfer length in words (`get_xfer_len_in_words`):**
 
-The patch is **entirely self-contained**. It uses:
-- `se->base` - available since the driver was created
-- `SE_SPI_LOOPBACK`, `SE_SPI_DEMUX_SEL`, `SE_SPI_CPHA`, `SE_SPI_CPOL`,
-  `SE_SPI_DEMUX_OUTPUT_INV` - all defined in the same file since
-  original driver creation
-- `writel()` - standard kernel API
+```551:554:drivers/spi/spi-geni-qcom.c
+if (!(mas->cur_bits_per_word % MIN_WORD_LEN))
+    len = xfer->len * BITS_PER_BYTE / mas->cur_bits_per_word;
+else
+    len = xfer->len / (mas->cur_bits_per_word / BITS_PER_BYTE + 1);
+```
 
-The patch was "4/N" in a series (from the Link URL), but this specific
-change is independent. It does not depend on any prior patch in the
-series - it simply adds register zeroing to an existing function.
+**b) FIFO size calculation:**
 
-### 8. STABILITY INDICATORS
+```574:574:drivers/spi/spi-geni-qcom.c
+fifo_size = mas->tx_fifo_depth * mas->fifo_width_bits /
+mas->cur_bits_per_word;
+```
 
-- Merged by Mark Brown (SPI subsystem maintainer) with `Signed-off-by`
-- The fix is logically obvious and defensive
-- The pattern (writing 0 to ensure known state during init) is standard
-  practice throughout the kernel
+If `mas->cur_bits_per_word` is wrong, both `len` and `fifo_size` are
+incorrect. This causes the wrong DMA vs FIFO mode selection:
+- If the stale value is **smaller** than actual, `fifo_size` is inflated
+  and `len` deflated → **FIFO chosen when DMA should be used** →
+  potential FIFO overflow for large transfers
+- If the stale value is **larger** than actual, the opposite happens →
+  **unnecessary DMA for small transfers**
 
-### CONCLUSION
+### 4. Fix Analysis
 
-This commit fixes a real initialization bug where SPI mode-related
-hardware registers may retain stale non-zero values from
-bootloader/firmware, causing the driver's `setup_fifo_params()`
-optimization to incorrectly skip the first register write when the SPI
-device uses mode 0 (the most common mode). The consequence is SPI
-communication failure or data corruption. The fix is a trivial 5-line
-addition of register zeroing during init, with essentially zero
-regression risk, affecting a widely-deployed Qualcomm SPI driver. It is
-self-contained with no dependencies and applies cleanly to stable trees.
+The fix is trivially correct: replace `mas->cur_bits_per_word` with
+`xfer->bits_per_word` in both `get_xfer_len_in_words()` and
+`geni_can_dma()`. The `xfer` parameter is already available, and the SPI
+core guarantees `xfer->bits_per_word` is always populated via
+`__spi_validate()`:
+
+```4079:4080:drivers/spi/spi.c
+if (!xfer->bits_per_word)
+    xfer->bits_per_word = spi->bits_per_word;
+```
+
+This validation runs in the `spi_async()` path, well before `can_dma()`
+is called.
+
+The fix is also correct for the other caller of
+`get_xfer_len_in_words()` — `setup_se_xfer()` at line 876. In that
+context, `mas->cur_bits_per_word` was already set to
+`xfer->bits_per_word` (line 865), so using `xfer->bits_per_word`
+directly is equivalent and always correct.
+
+### 5. Scope and Risk
+
+- **Size**: Only 4 lines changed across 2 functions in a single file
+- **Risk**: Very low — the change replaces a potentially-stale cached
+  value with the authoritative source of truth that was always available
+- **No behavioral change** for the common case where all transfers use
+  the same `bits_per_word`
+- **Fixes the bug** for devices using per-transfer `bits_per_word`
+  overrides
+
+### 6. Series Dependency
+
+The message-id (`24078-3-jonathan@marek.ca`) indicates this is patch 3
+of a series. However, this change is entirely **self-contained** — it
+only swaps `mas->cur_bits_per_word` for `xfer->bits_per_word` in
+functions that already receive the `xfer` parameter. No dependency on
+other patches.
+
+### 7. Affected Stable Versions
+
+- `geni_can_dma` was introduced in commit b59c122484ecb ("spi: spi-geni-
+  qcom: Add support for GPI dma") — around v5.16
+- `get_xfer_len_in_words` was introduced in commit 3a76c7ca9e772 ("spi:
+  spi-geni-qcom: Do not do DMA map/unmap inside driver, use framework
+  instead") — v6.5-rc1
+- The bug in `geni_can_dma` (using `mas->cur_bits_per_word` for
+  fifo_size) has existed since `geni_can_dma` was added, but
+  `get_xfer_len_in_words` was refactored in v6.5
+
+### 8. Conclusion
+
+This is a clear bug fix. The commit:
+- Fixes a real bug: wrong value used for DMA/FIFO mode selection,
+  potentially causing incorrect SPI transfers
+- Is small and surgical: 4 line changes, self-contained
+- Has very low regression risk: uses the correct data source that was
+  always available
+- Applies to stable trees v6.5+ (where `get_xfer_len_in_words` exists),
+  with a simpler variant applicable to v5.16+
+- Does not introduce new features or APIs
 
 **YES**
 
- drivers/spi/spi-geni-qcom.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/spi/spi-geni-qcom.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index a0d8d3425c6c6..9e9953469b3a0 100644
+index 9e9953469b3a0..5ab20d7955121 100644
 --- a/drivers/spi/spi-geni-qcom.c
 +++ b/drivers/spi/spi-geni-qcom.c
-@@ -724,6 +724,12 @@ static int spi_geni_init(struct spi_geni_master *mas)
- 	case 0:
- 		mas->cur_xfer_mode = GENI_SE_FIFO;
- 		geni_se_select_mode(se, GENI_SE_FIFO);
-+		/* setup_fifo_params assumes that these registers start with a zero value */
-+		writel(0, se->base + SE_SPI_LOOPBACK);
-+		writel(0, se->base + SE_SPI_DEMUX_SEL);
-+		writel(0, se->base + SE_SPI_CPHA);
-+		writel(0, se->base + SE_SPI_CPOL);
-+		writel(0, se->base + SE_SPI_DEMUX_OUTPUT_INV);
- 		ret = 0;
- 		break;
- 	}
+@@ -548,10 +548,10 @@ static u32 get_xfer_len_in_words(struct spi_transfer *xfer,
+ {
+ 	u32 len;
+ 
+-	if (!(mas->cur_bits_per_word % MIN_WORD_LEN))
+-		len = xfer->len * BITS_PER_BYTE / mas->cur_bits_per_word;
++	if (!(xfer->bits_per_word % MIN_WORD_LEN))
++		len = xfer->len * BITS_PER_BYTE / xfer->bits_per_word;
+ 	else
+-		len = xfer->len / (mas->cur_bits_per_word / BITS_PER_BYTE + 1);
++		len = xfer->len / (xfer->bits_per_word / BITS_PER_BYTE + 1);
+ 	len &= TRANS_LEN_MSK;
+ 
+ 	return len;
+@@ -571,7 +571,7 @@ static bool geni_can_dma(struct spi_controller *ctlr,
+ 		return true;
+ 
+ 	len = get_xfer_len_in_words(xfer, mas);
+-	fifo_size = mas->tx_fifo_depth * mas->fifo_width_bits / mas->cur_bits_per_word;
++	fifo_size = mas->tx_fifo_depth * mas->fifo_width_bits / xfer->bits_per_word;
+ 
+ 	if (len > fifo_size)
+ 		return true;
 -- 
 2.51.0
 
