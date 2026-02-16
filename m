@@ -1,72 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-93019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93020-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id eCHDIIiqk2lV7gEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Feb 2026 00:38:48 +0100
+	id qMJoJ6eqk2lV7gEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93020-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Feb 2026 00:39:19 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D1F131481CB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Feb 2026 00:38:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 49C2614820C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Feb 2026 00:39:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 490DE301455F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 23:38:43 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7CD973015884
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 23:38:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81AD82F1FEA;
-	Mon, 16 Feb 2026 23:38:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C1C92D8378;
+	Mon, 16 Feb 2026 23:38:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="IP4sEnXg"
+	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="jz+rBCHv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-177.mta1.migadu.com (out-177.mta1.migadu.com [95.215.58.177])
+Received: from out-187.mta1.migadu.com (out-187.mta1.migadu.com [95.215.58.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF2326F2B0
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Feb 2026 23:38:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AC0A1F7569
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Feb 2026 23:38:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771285122; cv=none; b=jHIdOtKQof9+x6oTYPoUZFwcuBonJMae9pQyyAeoxMkxk0pG38E8tuvqeVHyGR2/6o/p8266XN3LU4snlCCQtJoxmlT/VMJBJ7VXgdhgQKvP/C50pOMrxxJwEbZD17VDqrw4dSIKiUrD6qMk5vW+sPP/6rG3O0tda/7N+UjEbqY=
+	t=1771285138; cv=none; b=E6R4K44rMpOtbw2y3iVD2zquOdZh8KWO7Ac+p1rT0CuWWKZXFr7G7OiTgZCwXtFqmVP+IrOkagJkURbyWi2ZSY+ZNzbicKmt/gIrT0eduOu8TbgzGyDr0sx0RgjUx5xuF5KiwqaOKZv3F+1vfBGPJ/Y0zp9+b31449F1uZLCCjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771285122; c=relaxed/simple;
-	bh=OMRlCPZ0qEsHQmJTvMNnWe15UorBiHbpB3WG68YnfuE=;
+	s=arc-20240116; t=1771285138; c=relaxed/simple;
+	bh=UZYObOCo+4Uc/zazdoJD2WY1/0RSF+UuBPsgZca65/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qoqGeudPKz72mBt4GPpr6YiF3hloplsfJs4KYRjQf7Lq16tUItckzDdrIQI2l18eUNIpnxiQwxrKHHSY817wy3CnI0Ibi4ut2QvWLBl8jWUawDRCBX0ooqx8k578yJq3XInNPejDeLj4Y80QcXexNycZGO09oR7A9ag03jdOaac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=IP4sEnXg; arc=none smtp.client-ip=95.215.58.177
+	 MIME-Version; b=G6bNO7znpeTtQYobIFHmhMWx6xMzcfCc74DBGfit2xUIyNkEYPnFp0wOTgbbg+yFkqyFjDnK0f6+ZJaSZVAHZymCqv/3gbVwyuVhlp9qfuvNn9HdFEmewKsvNHlDTKQpVVQnDpQxUolkU77GMjqU84NDsd8x8xzemCYkENGWEeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=jz+rBCHv; arc=none smtp.client-ip=95.215.58.187
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
-	s=key1; t=1771285119;
+	s=key1; t=1771285135;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=eQuQSiGO+iS/wZyw+tk5yrutgULYwUrgwsAfbZSdAiQ=;
-	b=IP4sEnXgqOFc/6LA/A4W+MyzXKJTYAUjOYF6oICmlthJIabh0uKfDlAqvx3iFznDO/kHHb
-	NhwcT2QksYVC0i7JebM5fgfeS8TPUsF4WjCiS3bsipkSq7jAYsaXSpMGyaIbZbrUZM4yeo
-	WvLdlg4AGBSKv/X+hIv8KAehjZlbhW5W37kl9xhqugSS7QDajelvB8GAxJYP4sgSykXPeh
-	7+avHkYYoN4dNe2wpp0a7qM9L05SWfkMhkBnjdeGWiFnFOUl275XH5PZ63wLNCCNEQ2VAM
-	Sw1+JsFmFSYUlMMxUctnYhePFxhYXRlpqerLPfy1giIkv3G74ygNg/OFHr2thw==
+	bh=ILY7v2SmIZw9ZvvKst2oBdkcdWOxzEcSMApNN4USfk8=;
+	b=jz+rBCHvNqWCv6GTD/feeOn+hQoHdzYTTnU0S6uAVNKOj89vp+P1Lgfb8LsgCnvVPbFF6Y
+	kqcMozxcdL6o6n1dQDY6iZNfIR9FIUnHBnR78jGY87lXxky93mQazv2xeIx7Sb0uuC2CCc
+	MPBbPRiKLh7umSVaMre6w4TigoHZWX2f5ZsNHDDqpxHI5NRI9xxoySwnFyNuKC0wb8bO2V
+	AGsu7Bj2I3kzca/a8i61qa4xUy+8jlFiCEPl9UX+fH8PCn0Z+dRrrNiaYcxQkaeSHbm1iv
+	Mgk7LFGDgu4TsFdwIyH44Xgf+adrVqDQcU7WZ5hhsufQkrVKv0rbHx23h5PX3w==
 From: Val Packett <val@packett.cool>
 To: Bjorn Andersson <andersson@kernel.org>,
 	Michael Turquette <mturquette@baylibre.com>,
 	Stephen Boyd <sboyd@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Martin Botka <martin.botka@somainline.org>
+	Adam Skladowski <a39.skl@gmail.com>
 Cc: linux-arm-msm@vger.kernel.org,
 	phone-devel@vger.kernel.org,
 	~postmarketos/upstreaming@lists.sr.ht,
 	Val Packett <val@packett.cool>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
 	linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 2/6] dt-bindings: clock: qcom,dispcc-sm6125: Define MDSS resets
-Date: Mon, 16 Feb 2026 20:25:20 -0300
-Message-ID: <20260216233600.13098-4-val@packett.cool>
+Subject: [PATCH 3/6] clk: qcom: dispcc-sm6115: Add missing MDSS resets
+Date: Mon, 16 Feb 2026 20:25:21 -0300
+Message-ID: <20260216233600.13098-5-val@packett.cool>
 In-Reply-To: <20260216233600.13098-2-val@packett.cool>
 References: <20260216233600.13098-2-val@packett.cool>
 Precedence: bulk
@@ -82,65 +76,73 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[packett.cool,quarantine];
 	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[packett.cool,quarantine];
 	R_DKIM_ALLOW(-0.20)[packett.cool:s=key1];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCPT_COUNT_TWELVE(0.00)[16];
 	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-93020-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-93019-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_TO(0.00)[kernel.org,baylibre.com,gmail.com];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[3];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[val@packett.cool,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
 	DKIM_TRACE(0.00)[packett.cool:+];
-	PRECEDENCE_BULK(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[10];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MISSING_XM_UA(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: D1F131481CB
+X-Rspamd-Queue-Id: 49C2614820C
 X-Rspamd-Action: no action
 
-Add the missing defines for MDSS resets.
-While here, align comment style with other SoCs.
+The MDSS resets were left undescribed, fix that.
 
-Fixes: 8397c9c0c26b ("dt-bindings: clock: add QCOM SM6125 display clock bindings")
+Fixes: 9b518788631c ("clk: qcom: Add display clock controller driver for SM6115")
 Signed-off-by: Val Packett <val@packett.cool>
 ---
- include/dt-bindings/clock/qcom,dispcc-sm6125.h | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/clk/qcom/dispcc-sm6115.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/include/dt-bindings/clock/qcom,dispcc-sm6125.h b/include/dt-bindings/clock/qcom,dispcc-sm6125.h
-index 4ff974f4fcc3..f58b85d2c814 100644
---- a/include/dt-bindings/clock/qcom,dispcc-sm6125.h
-+++ b/include/dt-bindings/clock/qcom,dispcc-sm6125.h
-@@ -6,6 +6,7 @@
- #ifndef _DT_BINDINGS_CLK_QCOM_DISP_CC_SM6125_H
- #define _DT_BINDINGS_CLK_QCOM_DISP_CC_SM6125_H
+diff --git a/drivers/clk/qcom/dispcc-sm6115.c b/drivers/clk/qcom/dispcc-sm6115.c
+index 8ae25d51db94..75bd57213079 100644
+--- a/drivers/clk/qcom/dispcc-sm6115.c
++++ b/drivers/clk/qcom/dispcc-sm6115.c
+@@ -22,6 +22,7 @@
+ #include "clk-regmap-divider.h"
+ #include "common.h"
+ #include "gdsc.h"
++#include "reset.h"
  
-+/* Clocks */
- #define DISP_CC_PLL0			0
- #define DISP_CC_MDSS_AHB_CLK		1
- #define DISP_CC_MDSS_AHB_CLK_SRC	2
-@@ -35,7 +36,10 @@
- #define DISP_CC_MDSS_VSYNC_CLK_SRC	26
- #define DISP_CC_XO_CLK			27
+ enum {
+ 	DT_BI_TCXO,
+@@ -511,6 +512,10 @@ static struct clk_branch disp_cc_sleep_clk = {
+ 	},
+ };
  
--/* DISP_CC GDSCR */
-+/* Resets */
-+#define DISP_CC_MDSS_CORE_BCR			0
++static const struct qcom_reset_map disp_cc_sm6115_resets[] = {
++	[DISP_CC_MDSS_CORE_BCR] = { 0x2000 },
++};
 +
-+/* GDSCs */
- #define MDSS_GDSC			0
- 
- #endif
+ static struct gdsc mdss_gdsc = {
+ 	.gdscr = 0x3000,
+ 	.pd = {
+@@ -561,6 +566,8 @@ static const struct qcom_cc_desc disp_cc_sm6115_desc = {
+ 	.config = &disp_cc_sm6115_regmap_config,
+ 	.clks = disp_cc_sm6115_clocks,
+ 	.num_clks = ARRAY_SIZE(disp_cc_sm6115_clocks),
++	.resets = disp_cc_sm6115_resets,
++	.num_resets = ARRAY_SIZE(disp_cc_sm6115_resets),
+ 	.gdscs = disp_cc_sm6115_gdscs,
+ 	.num_gdscs = ARRAY_SIZE(disp_cc_sm6115_gdscs),
+ };
 -- 
 2.52.0
 
