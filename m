@@ -1,83 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-92883-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92884-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id frLzBZiDkmkEugEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92883-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 03:40:24 +0100
+	id DyyrFJWLkmnxugEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92884-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 04:14:29 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 79431140AB3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 03:40:23 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id E14CC140B64
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 04:14:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id A48043008507
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 02:40:21 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 3F9BF300460B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 03:14:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28EEB29E110;
-	Mon, 16 Feb 2026 02:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8838299AAB;
+	Mon, 16 Feb 2026 03:14:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jkmWQGUx"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="FDzNJJVp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B6C286D4B;
-	Mon, 16 Feb 2026 02:40:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB6E258EDA;
+	Mon, 16 Feb 2026 03:14:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771209621; cv=none; b=BjlGppP0q0Sp4S2Pq55Fks1dMADZflNoI5DD0hZftAHJQ0Dj8Hv7IYMVrehrH3Rt/CUPXccxj33HFah2vF5wj+D0mkWWRNMFK5ojdB4+yXQZgH7lJYomYBp58iOJAXnsmZjXIcBhukIdO5e/uNOZ48zxGtdUXUrGaFC29f8xSJo=
+	t=1771211662; cv=none; b=gX1oAy6A4YQrzLJFeSbsxOIo3ZdF5f/42z+sFW7PFWo9IMw1BXIaTAAQ0cGn6VN1SS4ULqRmIP5kr9/KGcwehF92RRYm9f6E58tSOvLiPiMo/M8fLgc+kmSkEOBM7gqmRU4GV5ZRt9UMuJp9O3OsfrU643o2H44dFyXXkwTIuQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771209621; c=relaxed/simple;
-	bh=Q+c3RfmNudyA6okLo+b6gNeR3tguUr+7BZ3rKjSmwsE=;
+	s=arc-20240116; t=1771211662; c=relaxed/simple;
+	bh=4NxdKFFSCCFyD3pan62EKU0kYRrwZk5F4+pfzhDm7pA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YDbWryiNhE3wRYoFEI7+STgu+AZmWQoXIhVrcwGXlMxKousrpT3HfT0vPL5L2zcRadzGpW0CBlJie6kzZjQytlo7D9C+amGIVbP5qhOlpxeik1acq9hQfAq0Gg7eVo0k+17S4UI5xaSWDcMckdejJY+LSLQUuvhdRhDsVIoosSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jkmWQGUx; arc=none smtp.client-ip=198.175.65.18
+	 Content-Type:Content-Disposition:In-Reply-To; b=KrvT/sw7ZUF0HOdpTpCIM81s2jHoKDG7roO9vFDAVs7qUtc1JcPBsBaqzXEvjEf6Z9m5o4c5MXmKdhciDHmD0DEmDx3XerJtk9RKEqAIB8zoumLhSikObcAEXbf7Dvc2Pd/sSghcO9LoKQKsx/wEOvT7GRLQ7ltvVFXldHEbTCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=FDzNJJVp; arc=none smtp.client-ip=198.175.65.20
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1771209619; x=1802745619;
+  t=1771211661; x=1802747661;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=Q+c3RfmNudyA6okLo+b6gNeR3tguUr+7BZ3rKjSmwsE=;
-  b=jkmWQGUxxowHOMqG3dV8MoG4FwIzgNHnEOnUMAmkZgYJk1qc3h6NF3jd
-   Uw4REMTHtX8haCDvrVsmZRQzJC0Ybp4I8DjPVzaoRjO/sNyJQMj/UDVwm
-   gud/3M22xYGxlOg+Ayx6Q79KVH2HXcdGpIYQiFktHBOFHpmPsmvce4h8N
-   9w7LUwJkBjzSd+kT/CD1uJUXXMgQU00F8XO8+xMM80TteS8OoFsXDzHoy
-   3LgRqFGTBdgjJvyg1qosOIaDAlB1W2QGzuODxeBQSOhG5rOg/WRvQf4Q7
-   bd9o6d38ZE+cF0XIChcjwS3MLZsnAcA1oZRysDN09k6lLoXBuXg2blK7n
-   g==;
-X-CSE-ConnectionGUID: u2jn6GLTR8ep0XGqjMvPew==
-X-CSE-MsgGUID: VndeE5g2RvKBr8DTH2XKSQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11702"; a="72339098"
+  bh=4NxdKFFSCCFyD3pan62EKU0kYRrwZk5F4+pfzhDm7pA=;
+  b=FDzNJJVpjJB4Ixj1IbB/Z0KpBMfV7d7b+yKZD47NiBuSZhN8wztSY1er
+   9bmWoULImWjHRjt3Mx5l1a/SMo04/UiwYNP1y9SrNhbKNzcL9m20IN4wY
+   v8k9oVA+CBdol8jr5xUVEtEQQaKQwoIDQacPqPEkW0v/wghgQHNNHZ4FE
+   EBlwuOGJK/fdggmDl3XaSCP81wpMRJ8NfzXcf3vQXnfHdoBfTEK6GBcKy
+   00fWs4Ox7uLXHHq0Lb8UWY0uAywIqBcbLVxmXxKeO1vbI+sLbiErs6j/j
+   BHvrHrn4p/MyI/ah1cnmD/g2LOsqqqIcxdbGcJX79NJvDIll2R4shy24M
+   A==;
+X-CSE-ConnectionGUID: TS95TeZoS8CZu/1/7qakXA==
+X-CSE-MsgGUID: ZxeX4HwjScWjOJGFPYtZlA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11702"; a="72006844"
 X-IronPort-AV: E=Sophos;i="6.21,293,1763452800"; 
-   d="scan'208";a="72339098"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Feb 2026 18:40:18 -0800
-X-CSE-ConnectionGUID: FNjSZKsPQKSeUnZ2ulGTAA==
-X-CSE-MsgGUID: Te9ANFRZQ9+VG5o4AwGH0w==
+   d="scan'208";a="72006844"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Feb 2026 19:14:21 -0800
+X-CSE-ConnectionGUID: 6pESEqZmSjyyzN9tP9AFVg==
+X-CSE-MsgGUID: DHC1voLmT9iBeKUaVaWxqg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.21,293,1763452800"; 
-   d="scan'208";a="244056967"
+   d="scan'208";a="213574603"
 Received: from lkp-server01.sh.intel.com (HELO 765f4a05e27f) ([10.239.97.150])
-  by orviesa002.jf.intel.com with ESMTP; 15 Feb 2026 18:40:15 -0800
+  by orviesa007.jf.intel.com with ESMTP; 15 Feb 2026 19:14:18 -0800
 Received: from kbuild by 765f4a05e27f with local (Exim 4.98.2)
 	(envelope-from <lkp@intel.com>)
-	id 1vroWz-00000000zKO-1Mvg;
-	Mon, 16 Feb 2026 02:40:13 +0000
-Date: Mon, 16 Feb 2026 10:39:54 +0800
+	id 1vrp3v-00000000zMe-45RS;
+	Mon, 16 Feb 2026 03:14:15 +0000
+Date: Mon, 16 Feb 2026 11:13:38 +0800
 From: kernel test robot <lkp@intel.com>
 To: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>, srini@kernel.org,
 	linux-arm-msm@vger.kernel.org
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
-	linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
-	dri-devel@lists.freedesktop.org, arnd@arndb.de,
-	dmitry.baryshkov@oss.qualcomm.com,
+Cc: oe-kbuild-all@lists.linux.dev, gregkh@linuxfoundation.org,
+	quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org,
+	quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org,
+	arnd@arndb.de, dmitry.baryshkov@oss.qualcomm.com,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Subject: Re: [PATCH v6 2/4] misc: fastrpc: Replace hardcoded ctxid mask with
  GENMASK
-Message-ID: <202602161009.M2K52X34-lkp@intel.com>
+Message-ID: <202602161130.5b7COBet-lkp@intel.com>
 References: <20260215182136.3995111-3-ekansh.gupta@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -94,13 +93,13 @@ X-Spamd-Result: default: False [-1.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
 	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-92883-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[13];
+	TAGGED_FROM(0.00)[bounces-92884-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[12];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
@@ -110,11 +109,11 @@ X-Spamd-Result: default: False [-1.16 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[lkp@intel.com,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[intel.com:+];
 	RCVD_COUNT_FIVE(0.00)[6];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[01.org:url,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,intel.com:mid,intel.com:dkim,intel.com:email,git-scm.com:url]
-X-Rspamd-Queue-Id: 79431140AB3
+	DBL_BLOCKED_OPENRESOLVER(0.00)[git-scm.com:url,intel.com:mid,intel.com:dkim,intel.com:email,01.org:url,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: E14CC140B64
 X-Rspamd-Action: no action
 
 Hi Ekansh,
@@ -131,27 +130,25 @@ url:    https://github.com/intel-lab-lkp/linux/commits/Ekansh-Gupta/misc-fastrpc
 base:   char-misc/char-misc-testing
 patch link:    https://lore.kernel.org/r/20260215182136.3995111-3-ekansh.gupta%40oss.qualcomm.com
 patch subject: [PATCH v6 2/4] misc: fastrpc: Replace hardcoded ctxid mask with GENMASK
-config: hexagon-randconfig-001-20260216 (https://download.01.org/0day-ci/archive/20260216/202602161009.M2K52X34-lkp@intel.com/config)
-compiler: clang version 23.0.0git (https://github.com/llvm/llvm-project e86750b29fa0ff207cd43213d66dabe565417638)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260216/202602161009.M2K52X34-lkp@intel.com/reproduce)
+config: sh-allyesconfig (https://download.01.org/0day-ci/archive/20260216/202602161130.5b7COBet-lkp@intel.com/config)
+compiler: sh4-linux-gcc (GCC) 15.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260216/202602161130.5b7COBet-lkp@intel.com/reproduce)
 
 If you fix the issue in a separate patch/commit (i.e. not just a new version of
 the same patch/commit), kindly add following tags
 | Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202602161009.M2K52X34-lkp@intel.com/
+| Closes: https://lore.kernel.org/oe-kbuild-all/202602161130.5b7COBet-lkp@intel.com/
 
 All errors (new ones prefixed by >>):
 
->> drivers/misc/fastrpc.c:518:29: error: call to undeclared function 'FIELD_GET'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   drivers/misc/fastrpc.c: In function 'fastrpc_context_free':
+>> drivers/misc/fastrpc.c:518:36: error: implicit declaration of function 'FIELD_GET' [-Wimplicit-function-declaration]
      518 |         idr_remove(&cctx->ctx_idr, FIELD_GET(FASTRPC_CTXID_MASK, ctx->ctxid));
-         |                                    ^
->> drivers/misc/fastrpc.c:654:15: error: call to undeclared function 'FIELD_PREP'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+         |                                    ^~~~~~~~~
+   drivers/misc/fastrpc.c: In function 'fastrpc_context_alloc':
+>> drivers/misc/fastrpc.c:654:22: error: implicit declaration of function 'FIELD_PREP' [-Wimplicit-function-declaration]
      654 |         ctx->ctxid = FIELD_PREP(FASTRPC_CTXID_MASK, ret);
-         |                      ^
-   drivers/misc/fastrpc.c:2509:10: error: call to undeclared function 'FIELD_GET'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-    2509 |         ctxid = FIELD_GET(FASTRPC_CTXID_MASK, rsp->ctx);
-         |                 ^
-   3 errors generated.
+         |                      ^~~~~~~~~~
 
 
 vim +/FIELD_GET +518 drivers/misc/fastrpc.c
