@@ -1,79 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-92998-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92999-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OAcgALY/k2kg2wEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92998-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 17:03:02 +0100
+	id WKO9N0NAk2kg2wEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92999-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 17:05:23 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB988145E12
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 17:03:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7DE2B145E8A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 17:05:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 93F7E30056EF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 16:02:59 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7589A3009CE2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 16:05:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C92623D7FB;
-	Mon, 16 Feb 2026 16:02:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F7A53321D4;
+	Mon, 16 Feb 2026 16:05:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lgsAn2zF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iYBW+CHp"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E953D544
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Feb 2026 16:02:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A782328B56
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Feb 2026 16:05:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771257779; cv=none; b=rihn74onghuAyKynENm8otyDLApNQ9MW4kpFnoPxSN5UTT7IcuC/nlsc0UmO8W9Z58Aroqe6aPXenxStzJ4ff6o4je0tgZ3eab7WCZIeFGSgAQvarGxAnO6KiFVttxKt3DVkuLQViNaouxq5jDxkfTrDwZXZga1Z6gxj86JqgAE=
+	t=1771257918; cv=none; b=sBnfVdl3fEiQVDlzj+FYP2LjpvwGQjdlq7xXgdTddsKondoLxUxu6DTpe+HJjWGZDLeKTHbscemBHz4qk5VeTn6ojw079IS+RQK6YWaclCLeb5Hr0Ud9yTXmw6wp/lnyIoihcGM8y8Ab8a7nU2YFv5cYvHYMBfNQNwYg5nROX0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771257779; c=relaxed/simple;
-	bh=v+Xm4hz8UQFQCCoWjiJZ1qnBQX/DEMOj+dum6T/tWPI=;
+	s=arc-20240116; t=1771257918; c=relaxed/simple;
+	bh=Ug0bv2q+MJyHMxXUhfuIzRES2n74yPYoafPq/Crx5xk=;
 	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UdI3MksbRWTmGUgPt59VhPT8zeS5Fsj3YOC+zlJts855McZNsapos04tQSIXch8vk5HIKPcGsOgw55KJ18W5I3IN3sGZodkh/AkmiWkK698e8C4NSeI7qKkbn3scr12IX8Htt006JnS8F1popKhEPIQfNIA2pqRvUnVX97NiTFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lgsAn2zF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5044C19424
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Feb 2026 16:02:58 +0000 (UTC)
+	 To:Cc:Content-Type; b=a6tdOnCD4XvPUBi/vDuRWTX+ey13lDqkpjaCKzoutir6th6gv6NqgeQf9ODA9j+w7F4k96adYkrx/YFLIPOt8BT1zx/QFZ7e4cxsJiGyWKpJR92EFApkPWXqtKyowLL3Xrz1TnyzVlV7i0HTLLKHT8TVPyP6Y0zY27/mLHbeydY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iYBW+CHp; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5875BC2BCB2
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Feb 2026 16:05:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771257778;
-	bh=v+Xm4hz8UQFQCCoWjiJZ1qnBQX/DEMOj+dum6T/tWPI=;
+	s=k20201202; t=1771257918;
+	bh=Ug0bv2q+MJyHMxXUhfuIzRES2n74yPYoafPq/Crx5xk=;
 	h=From:In-Reply-To:References:Date:Subject:To:Cc:From;
-	b=lgsAn2zFZ4+ASzlNnPXB0knrzGb0bRfMeeNzCsKV2FPaw/C6r6JRPreswSLJXvJZw
-	 SWPrykQAZiXPW6wNWcieabfYwcm6gGx1bsL2x029H+JZ3S2UCMy1QdW+7iINP7mJFA
-	 Ov6IDQ2CUOCsSY6JjxaVwRysxrfvE+IgjSEksJol/OEH9kjZvsU97LEh4IwdQLsOLt
-	 q1Hp3uAZIDN6JrTP6pnROv6eI4+sjtsKgUeVmWSVDR8HWPgVpj7Cizt5HA7SwfKnde
-	 26zZhmKQwKr2Vzk/qghwaNlCrn+kcIPYs0R6OqkQApJPp3tMAbkB4fmki0mUL4o4Rg
-	 ShRyANAX9DvsA==
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-388126f79bcso21716521fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Feb 2026 08:02:58 -0800 (PST)
-X-Gm-Message-State: AOJu0YwUlYAGD7xs+VMO2OzE2/gubH5whirs3AfeQaehepj3QAWIaFqx
-	LUJLlIjsNkuXP0danjzf54nbs+geKIqp5ooopxy1eL9MWg4kkpmvD9pLHlrg2i1hX1M9lvHxblz
-	WiqMccU63mXuThTd6UVfT7kofD6lMt9fHjbL9Fk2mPg==
-X-Received: by 2002:a2e:a913:0:b0:387:c42:f6c2 with SMTP id
- 38308e7fff4ca-3881052574fmr34595291fa.16.1771257777426; Mon, 16 Feb 2026
- 08:02:57 -0800 (PST)
+	b=iYBW+CHplOx33/O2WVqyNRi2MEOw8eDXFDQOas9ZlvDY3O5Os1XHVZBS35/telWBV
+	 NP05f4Jr5Fh0kmZjM4DZEMbO/DguaFTwIu6TamlNG2+yGAlGtR+govm8mW6Y8TYDlH
+	 1OdeM7Kbhb4VL7x+Tvctyw9z6h0q448WCSbuPs+pcEWJyEvCmfPxPJRFZTxFOlJNyv
+	 FhI1AnEBSYVkrr37Asxuzd8pP4L9GWfsMBVIHozCZoy5zp7IZBm86DMWyet5hJP5mB
+	 MDqKh31qWy4MbA14dthX6DOQ3E7S5gO7cLlerqfBI1PSkOOUN/XikEv2q2kfXTb86Z
+	 fQi1Mn/tZqGlw==
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-59e5bfa4f33so2812588e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Feb 2026 08:05:18 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCVriS4DhNxgWifi2dvb8yxXfqrORdlE3uOIo5FtSRsu22Yihu88nj0nPkGfLpxyNkOXjAuyRIMcs/wtKKi4@vger.kernel.org
+X-Gm-Message-State: AOJu0YwRD+Xm7FCY1WkAyv/ZwFPLpeauKDau0tmZHwonaA+Nak1qluqm
+	MjVpcs89MpPHPcwZEpLyKsEgM96x2gl1jlyslRknc/zWCX0aXMcHheFQG+yX3wdCXb21C4Gnl5h
+	J3yTUg18lbYwcaOwk0EZBKeAsoeVweAs9UK3GRg7NqQ==
+X-Received: by 2002:a05:6512:2351:b0:59e:2aee:7439 with SMTP id
+ 2adb3069b0e04-59f6d375968mr2731986e87.31.1771257916893; Mon, 16 Feb 2026
+ 08:05:16 -0800 (PST)
 Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 16 Feb 2026 08:02:56 -0800
+ HTTPREST; Mon, 16 Feb 2026 08:05:15 -0800
 Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 16 Feb 2026 08:02:56 -0800
+ HTTPREST; Mon, 16 Feb 2026 08:05:15 -0800
 From: Bartosz Golaszewski <brgl@kernel.org>
-In-Reply-To: <20260212141721.69961-2-johannes.goede@oss.qualcomm.com>
+In-Reply-To: <20260216-topic-sm8650-ayaneo-pocket-s2-base-v4-4-802c82795431@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260212141721.69961-1-johannes.goede@oss.qualcomm.com> <20260212141721.69961-2-johannes.goede@oss.qualcomm.com>
-Date: Mon, 16 Feb 2026 08:02:56 -0800
-X-Gmail-Original-Message-ID: <CAMRc=Md0gdOVOzwaVZNf52ZgQ9uw1Vn+e05Fvc44ZdLtrKezLg@mail.gmail.com>
-X-Gm-Features: AaiRm52OOfO2fZk9Ikgj3W8D7regZzNn9lCNsLVvm_J-4u9S2Ct1iCvGIHfI_mo
-Message-ID: <CAMRc=Md0gdOVOzwaVZNf52ZgQ9uw1Vn+e05Fvc44ZdLtrKezLg@mail.gmail.com>
-Subject: Re: [PATCH 2/2] Bluetooth: hci_qca: Fix BT not getting powered-off on rmmod
-To: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
-	Bartosz Golaszewski <brgl@kernel.org>, Marcel Holtmann <marcel@holtmann.org>, 
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+References: <20260216-topic-sm8650-ayaneo-pocket-s2-base-v4-0-802c82795431@linaro.org>
+ <20260216-topic-sm8650-ayaneo-pocket-s2-base-v4-4-802c82795431@linaro.org>
+Date: Mon, 16 Feb 2026 08:05:15 -0800
+X-Gmail-Original-Message-ID: <CAMRc=McWrc7uG=HSZEGybiG+d0DMw_U4c=A22aGV8DM1+h1ubA@mail.gmail.com>
+X-Gm-Features: AaiRm52M5Hr-VX4bzyAyiWWbvFrECG2u4oIptkEYguyjaGQVcwZSpUCmWBHLcCM
+Message-ID: <CAMRc=McWrc7uG=HSZEGybiG+d0DMw_U4c=A22aGV8DM1+h1ubA@mail.gmail.com>
+Subject: Re: [PATCH v4 4/9] pci: pwrctrl: generic: support for the
+ UPD720201/UPD720202 USB 3.0 xHCI Host Controller
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, 
+	Bartosz Golaszewski <brgl@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
@@ -85,77 +93,55 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-92998-lists,linux-arm-msm=lfdr.de];
-	TO_DN_SOME(0.00)[];
+	TAGGED_FROM(0.00)[bounces-92999-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[18];
 	MIME_TRACE(0.00)[0:+];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,kernel.org,holtmann.org,gmail.com];
+	FREEMAIL_CC(0.00)[vger.kernel.org,linuxfoundation.org,kernel.org,glider.be,gmail.com,google.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,mail.gmail.com:mid];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,mail.gmail.com:mid,qualcomm.com:email,linaro.org:email];
 	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,renesas];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCPT_COUNT_FIVE(0.00)[6];
+	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: EB988145E12
+X-Rspamd-Queue-Id: 7DE2B145E8A
 X-Rspamd-Action: no action
 
-On Thu, 12 Feb 2026 15:17:21 +0100, Hans de Goede
-<johannes.goede@oss.qualcomm.com> said:
-> The BT core skips calling the hci_dev's shutdown method when the HCI
-> is unregistered. This means that qca_power_off() was not getting called
-> leaving BT powered on.
+On Mon, 16 Feb 2026 15:21:48 +0100, Neil Armstrong
+<neil.armstrong@linaro.org> said:
+> Enable the generic pwrctrl driver to control the power of the
+> PCIe UPD720201/UPD720202 USB 3.0 xHCI Host Controller.
 >
-> This causes regulators / pwrseq providers to not get disabled which also
-> causes problem when re-loading the module because regulators and pwrseq
-> providers have an enablecount which now has never dropped to 0, causing
-> the BT to not get properly reset between rmmod and re-load which causes
-> initialization failure on the re-load.
->
-> Fix this by calling qca_power_off() from qca_close() when BT has not
-> already been powered off through a qca_hci_shutdown() call.
->
-> hci_ldisc.c will call qca_close() after freeing the hdev, so this
-> means that qca_power_off() can now no longer deref hu->hdev, change
-> the logging in qca_power_off() to no longer use hu->hdev.
->
-> Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 > ---
->  drivers/bluetooth/hci_qca.c | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
+>  drivers/pci/pwrctrl/generic.c | 4 ++++
+>  1 file changed, 4 insertions(+)
 >
-> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-> index fa7ab4272771..9993e748b56c 100644
-> --- a/drivers/bluetooth/hci_qca.c
-> +++ b/drivers/bluetooth/hci_qca.c
-> @@ -721,6 +721,10 @@ static int qca_close(struct hci_uart *hu)
->
->  	BT_DBG("hu %p qca close", hu);
->
-> +	/* BT core skips qca_hci_shutdown() which calls qca_power_off() on rmmod */
-> +	if (!test_bit(QCA_BT_OFF, &qca->flags))
-> +		qca_power_off(hu);
-> +
->  	serial_clock_vote(HCI_IBS_VOTE_STATS_UPDATE, hu);
->
->  	skb_queue_purge(&qca->tx_wait_q);
-> @@ -2220,7 +2224,7 @@ static void qca_power_off(struct hci_uart *hu)
->  		qca_regulator_disable(qcadev);
->  		if (qcadev->sw_ctrl) {
->  			sw_ctrl_state = gpiod_get_value_cansleep(qcadev->sw_ctrl);
-> -			bt_dev_dbg(hu->hdev, "SW_CTRL is %d", sw_ctrl_state);
-> +			BT_DBG("SW_CTRL is %d", sw_ctrl_state);
->  		}
->  		break;
+> diff --git a/drivers/pci/pwrctrl/generic.c b/drivers/pci/pwrctrl/generic.c
+> index a5b7b7965f46..1afda639f0c4 100644
+> --- a/drivers/pci/pwrctrl/generic.c
+> +++ b/drivers/pci/pwrctrl/generic.c
+> @@ -73,6 +73,10 @@ static const struct of_device_id pci_pwrctrl_generic_of_match[] = {
+>  	{
+>  		.compatible = "pciclass,0604",
+>  	},
+> +	/* Renesas UPD720201/UPD720202 USB 3.0 xHCI Host Controller */
+> +	{
+> +		.compatible = "pci1912,0014",
+> +	},
+>  	{ }
+>  };
+>  MODULE_DEVICE_TABLE(of, pci_pwrctrl_generic_of_match);
 >
 > --
-> 2.52.0
+> 2.34.1
 >
 >
 
