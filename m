@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-92949-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-92950-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id KIHcMzMUk2nD1QEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-92949-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 13:57:23 +0100
+	id 8H1iNFkUk2nD1QEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-92950-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 13:58:01 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4A07D1437A9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 13:57:23 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E9591437E6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 13:58:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id EB4AB3015D0F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 12:57:18 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 34B7B301ABBE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 12:57:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03A492FFDD5;
-	Mon, 16 Feb 2026 12:57:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4318E2609C5;
+	Mon, 16 Feb 2026 12:57:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sze+eV9D"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XLoUihAL"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D94242D9D;
-	Mon, 16 Feb 2026 12:57:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E0C721FF47;
+	Mon, 16 Feb 2026 12:57:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771246637; cv=none; b=utgv6E1Z1MoqP0GnRqOKQyECHDzetszgoPvSJvS4hAdl42pskruv3cgSmp4lW9fogGsLSPqgp5eVMHBDaUjXHI2ANxG0fBVzfSO6g06S5lGjVPG10BLSXnbu/mrPjBkbN8PYVulcrr42nhcuxdnA5pgDr5pLYlJ4Vw2ZZGv+H5o=
+	t=1771246672; cv=none; b=EW5ZZob9DDIUhvy5Yhv4kdmX0YsOWUo6Uwhsn6p8hYLCLSgK5bMhzpw6Z2i+N86NC7FFtJAXyASCzJ3uYzWPAo0g1vcztJKeWMZqo/ipf4Dwaolz7ejIc5UrDD0oeTDLEPtB1lM8Hur4ChqdXQpyV83CfkqzFp/fGV5v5r6an48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771246637; c=relaxed/simple;
-	bh=m5S1vtf0/L4uUFp5EPgnIoAsLUgOv2SDvcFf/fs5438=;
+	s=arc-20240116; t=1771246672; c=relaxed/simple;
+	bh=BhKpGfNMBicl/qGRtLmxxYjIPyXlfVNNQrgxckSy5mg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=u/pCZMNz8r425f2OmkYZVo2le/xpYGWPuflJ5D7NHYOSaGGz98bBJq8adwVzioskbn8waLtaqT8qMw8EYVnePhcjOAsa0nTY8d3TFyyfE+UthSqcXHT6EScKq7t7ZI15lAo3b0u7pDN+2gEy+kXQ9PkOZXo119rINhQxF0sPS50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sze+eV9D; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFF63C116C6;
-	Mon, 16 Feb 2026 12:57:14 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=vDYtb2LSxwSf37cN6V2HjjsQ/EpRLUudGoqZoJvu5Ed+UuOj2DQ6CmphHXIMBV2Rnw8bef62siWfid8mIjSWuWlp4YQlYt1KLoIfURKYL/IY6syPLvZZjMJ9RAwcKv6Llv4rV2iGaavRb+a/vOf5+fzfAoTahfC/vdp/PSP1v3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XLoUihAL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FF98C19423;
+	Mon, 16 Feb 2026 12:57:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771246637;
-	bh=m5S1vtf0/L4uUFp5EPgnIoAsLUgOv2SDvcFf/fs5438=;
+	s=k20201202; t=1771246671;
+	bh=BhKpGfNMBicl/qGRtLmxxYjIPyXlfVNNQrgxckSy5mg=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=sze+eV9DxaHDKKVVCE/Sewp7D1zAiW8t2xaBl4Lux/Zow1EaYD97GSDrF0kTMqseq
-	 CZ40qOIoPLY2+TvUSGVNvawWI0PqB3ZFKba2LkOM+sGERwd0p1DgILOQIPMFxatp5j
-	 6Ij4AcUQzhdIsUhB1UEjRIJHTUyoiAOQ1Nt+U0knxF83OgHvUFAPMfjHDyO0+FXbsz
-	 CwKEqH1FGc9O1hfDHm7EVL7v8nQD62b+ra8vancQqnymxWOGBeteoGGP90fVRY6m+a
-	 Z6QFlAYLt0Nb+gNPhv6wvNU7md5x+SdYlpUe2Ttf+WlGd0wvP0EXCgPI41qTxJgytA
-	 5YAEKQIqL6Lxw==
-Message-ID: <c64e5211-5ca6-4c8a-bf4c-41ca54853ba8@kernel.org>
-Date: Mon, 16 Feb 2026 13:57:12 +0100
+	b=XLoUihAL9nN3SgL0vG1QHlDRtZ0UGBJIGz7WH9aNG1bmrnD84k4X/DQxk8ThKN+jN
+	 THyJM+vDcnhXGCnjqHjcppIRQ7Efml65lHfy56c2ndxRvgefBMLRzV4zJuBr5mQ5Zn
+	 bU+iW/wq2ruYovjXH4tiRobVOOmJn/30/WJwYFglEEezqn437Js5zgF5+Do57sfo5/
+	 +JzgppHld8Ijw7QFzEHjZ5OwU6B1EObk/Tguo1lxm/4cOulS2TaeS78rECFHYYma89
+	 GKGcG6hivHTd4J9z3vJTyGkQwZuJ+7Tqb6MU06oz76eEYKEKkogBw7pj/eZWaYJ9PX
+	 v0lc8V8T58EZw==
+Message-ID: <9e237a2e-1859-47d7-b1ee-143e80991ac3@kernel.org>
+Date: Mon, 16 Feb 2026 13:57:47 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,8 +53,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 2/2] arm64: dts: qcom: lemans-evk: Enable wakeup for
- primary USB controller
+Subject: Re: [RFC PATCH 1/2] usb: typec: hd3ss3220: Add wakeup support from
+ system suspend
 To: Swati Agarwal <swati.agarwal@oss.qualcomm.com>,
  Heikki Krogerus <heikki.krogerus@linux.intel.com>,
  Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -64,7 +64,7 @@ To: Swati Agarwal <swati.agarwal@oss.qualcomm.com>,
 Cc: linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
 References: <20260215183325.3836178-1-swati.agarwal@oss.qualcomm.com>
- <20260215183325.3836178-3-swati.agarwal@oss.qualcomm.com>
+ <20260215183325.3836178-2-swati.agarwal@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -110,62 +110,52 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260215183325.3836178-3-swati.agarwal@oss.qualcomm.com>
+In-Reply-To: <20260215183325.3836178-2-swati.agarwal@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-92949-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-92950-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[12];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_PROHIBIT(0.00)[0.0.0.67:email];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 4A07D1437A9
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 4E9591437E6
 X-Rspamd-Action: no action
 
 On 15/02/2026 19:33, Swati Agarwal wrote:
-> Add the "wakeup-source" property to the primary port controller node so its
-> interrupt can wake the system from low‑power states on lemans EVK
-> platform.
 > 
-> Signed-off-by: Swati Agarwal <swati.agarwal@oss.qualcomm.com>
-> ---
->  arch/arm64/boot/dts/qcom/lemans-evk.dts | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/lemans-evk.dts b/arch/arm64/boot/dts/qcom/lemans-evk.dts
-> index 90fce947ca7e..50620b557404 100644
-> --- a/arch/arm64/boot/dts/qcom/lemans-evk.dts
-> +++ b/arch/arm64/boot/dts/qcom/lemans-evk.dts
-> @@ -515,6 +515,8 @@ usb-typec@67 {
->  		pinctrl-0 = <&usb_id>, <&usb0_intr_state>;
->  		pinctrl-names = "default";
+> diff --git a/drivers/usb/typec/hd3ss3220.c b/drivers/usb/typec/hd3ss3220.c
+> index 3e39b800e6b5..b56df9349f89 100644
+> --- a/drivers/usb/typec/hd3ss3220.c
+> +++ b/drivers/usb/typec/hd3ss3220.c
+> @@ -501,6 +501,11 @@ static int hd3ss3220_probe(struct i2c_client *client)
+>  	if (hd3ss3220->poll)
+>  		schedule_delayed_work(&hd3ss3220->output_poll_work, HZ);
 >  
-> +		wakeup-source;
+> +	if (client->irq && device_property_read_bool(hd3ss3220->dev, "wakeup-source")) {
 
-I don't think this was tested. Please read internal guideline which asks
-you about specific steps YOU MUST do.
+Looks like undocumented ABI.
 
 Best regards,
 Krzysztof
