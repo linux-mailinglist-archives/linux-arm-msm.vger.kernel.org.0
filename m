@@ -1,62 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-93001-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93002-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id ABX4H4xEk2kP3AEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93001-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 17:23:40 +0100
+	id BrtMN5lFk2l83AEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93002-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 17:28:09 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9B9F14614D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 17:23:39 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 781901462A0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 17:28:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 109EA307AA43
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 16:18:53 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 14310301A7F3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 16:27:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6971231A051;
-	Mon, 16 Feb 2026 16:18:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D9B633290F;
+	Mon, 16 Feb 2026 16:27:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OmiHrJNq"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DH2SgyPc"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45FE5242D76;
-	Mon, 16 Feb 2026 16:18:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A0A2C0F8C;
+	Mon, 16 Feb 2026 16:27:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771258732; cv=none; b=M9RGtWTS2FkvT9k6B/9mLq2tbvzKq7BM13/k1h/DiSeAOK7P5dR8/Xt3KDXQiim/XXIPoU/wzrB8JHIylL0hC6OErHvLywzyFjHNmLIR4EwcThnh9DCFmG7FMwOV/cbQZDMjglWJ8GTTtJ8OL6MST3WVUykaFwYqhSQoRQmATvs=
+	t=1771259257; cv=none; b=HBmZq/4p7WCIHjV6lfMv11KCoIRMkzE7ZE3UZJwPxORWT6k2heLawUxci89zJp5YrjWD4W9bsNKAtq7m04x+7gLdZgk2OoOOav7fn/tn/C2tK7E2N+ARNh9O0w+yT4oYVJBDpeM3t27RntnS+QRPLAMLEOz7Turzg39NJ3dDzyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771258732; c=relaxed/simple;
-	bh=F/7kMux7UiS30cFkbQa7Csbuon+UVNw6jKcpxOTHHLQ=;
+	s=arc-20240116; t=1771259257; c=relaxed/simple;
+	bh=+H5mKMCDJNc/qLxDERdZhixKg4LKT1aSL3hlRSk0nms=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SIAQ4GkjCc6eqeqIP24mWlshVVeuvopHn8l81uci4hF61x1ons9nbr9Q192c9IZM8XHMjJSW4eHZR+sYh/hLTnZe4OjJ3js8RLrUdqgYpXVgVbv2INVbyjmDKO7AKJs+Z8elcYt2Q/XpqFdeMRtm9POPcLBNyBJadKygeVD7gO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OmiHrJNq; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2B58C19423;
-	Mon, 16 Feb 2026 16:18:46 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=uAPR/tML3G/M8OoFnKequHKQvoUoA3T9BpYTcu3e2tTIkn7IK2RJdlwtuS8fmHOCExbb3fQXljP7Yib4ZtxBg/2kyPAjGn1sdHfasvI9pzq5i8GsX0hjgZrWVaNOBR7qaUq0SxBOzoRQRHCEC56ZiU8UH9CT6zjl4VxeY5l30ug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DH2SgyPc; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E482C19423;
+	Mon, 16 Feb 2026 16:27:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771258731;
-	bh=F/7kMux7UiS30cFkbQa7Csbuon+UVNw6jKcpxOTHHLQ=;
+	s=k20201202; t=1771259257;
+	bh=+H5mKMCDJNc/qLxDERdZhixKg4LKT1aSL3hlRSk0nms=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=OmiHrJNqtsChwmJr9CphEWVcyUxaVUVsNEDVEjtsV6ah/QJg0yltcPCUqR7uMKbv+
-	 ZbineVo0UHpfkmMdjhND02XJyolmL3yr9r488RNM+/DBrC8EHC3pN3uksRE0/0WKvH
-	 Kiqrj/yRslyWZaxgk6vsZjBe866nWwVZCe4Ub7Occq0WtOCd8Xkd1j9xqhnzEo6R0u
-	 t9Zo9G5CQx1MIOo9jd433xoqR/Zwjxbe5Exwoq9QmFPrrGXAnDTJgzbv3o+uLt7C7X
-	 6zbz763icAaAz7gJzYijAamw1F70YlkoHB1wDGysBYFWE//ykmRZZRvNPCvyP6dUQg
-	 rfB/1XqV+XCag==
-Date: Mon, 16 Feb 2026 21:48:36 +0530
+	b=DH2SgyPcTjIShNu2OspU97jjLkn10EGuspVaZEYyGfyEhbBCrpV7WtR0MAkhpxNgH
+	 +Th7sQX1+mio563yxt5C7CZM5CaYOEuzBI5HYARp3hpGGF39dRFZ+q1LlFDgIkw94W
+	 9ge/NSVWYaRn8HK8sKNrjXe/r4+CiajQU+gfZqWqM24UdVJKoE0gr9C3/ZnmDOV+EK
+	 nBoRVbYtIhGTaVrZ2+I4Xinc5zwtHOJjtuB6LWSZ4ws6lymdXiUmjKAOy9GBg7r34l
+	 00NHCfem916fuCoG1Jk1nLIMCXtjann65OA9V70afR+McV9juCINMEnaNMFWek8FnQ
+	 obBQcHnRvZ0kQ==
+Date: Mon, 16 Feb 2026 21:57:20 +0530
 From: Manivannan Sadhasivam <mani@kernel.org>
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>, 
-	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Simon Horman <horms@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	bjorn.andersson@oss.qualcomm.com, chris.lew@oss.qualcomm.com, 
-	Deepak Kumar Singh <deepak.singh@oss.qualcomm.com>, Stephen Smalley <stephen.smalley.work@gmail.com>
-Subject: Re: [PATCH v2] net: qrtr: Expand control port access to root
-Message-ID: <hxf347brl3ujlnrntfqfyc4snim43athuhx7bduyjj74mlysi7@vbtyz25shsqq>
-References: <20260216-qrtr-control-port-access-permission-v2-1-71c15f2c5c7f@oss.qualcomm.com>
- <szn3j7huoz6sayxxrmbm2undysbai2ac3xkeu4i7qadbcczd3l@ykrbiqzyyrc4>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
+	Magnus Damm <magnus.damm@gmail.com>, Bartosz Golaszewski <brgl@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-usb@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org, linux-pci@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Subject: Re: [PATCH v4 2/9] pci: pwrctrl: slot: fix dev_err_probe() usage
+Message-ID: <ly73vzmdqmk6xml2kz2u3klglmuscnttu4j6seguofdezqhjfh@vsrtpt2enetk>
+References: <20260216-topic-sm8650-ayaneo-pocket-s2-base-v4-0-802c82795431@linaro.org>
+ <20260216-topic-sm8650-ayaneo-pocket-s2-base-v4-2-802c82795431@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,7 +68,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <szn3j7huoz6sayxxrmbm2undysbai2ac3xkeu4i7qadbcczd3l@ykrbiqzyyrc4>
+In-Reply-To: <20260216-topic-sm8650-ayaneo-pocket-s2-base-v4-2-802c82795431@linaro.org>
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
@@ -74,111 +76,88 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	MID_RHS_NOT_FQDN(0.50)[];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-93001-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-93002-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[14];
+	RCPT_COUNT_TWELVE(0.00)[18];
 	FROM_HAS_DN(0.00)[];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	TO_DN_SOME(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,renesas];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,davemloft.net,google.com,kernel.org,redhat.com,vger.kernel.org,gmail.com];
+	FREEMAIL_CC(0.00)[linuxfoundation.org,kernel.org,glider.be,gmail.com,google.com,vger.kernel.org,oss.qualcomm.com];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: D9B9F14614D
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,linaro.org:email]
+X-Rspamd-Queue-Id: 781901462A0
 X-Rspamd-Action: no action
 
-On Mon, Feb 16, 2026 at 09:51:21AM -0600, Bjorn Andersson wrote:
-> On Mon, Feb 16, 2026 at 02:11:45PM +0530, Vishnu Santhosh wrote:
-> > When qrtr is loaded as module, QRTR NS runs from SELinux kmod_t
-> > domain. On targets using upstream SELinux policies, this domain
-> > does not receive CAP_NET_ADMIN, which prevents it from binding
-> > control port even though QRTR NS is a trusted system component.
-> > 
+On Mon, Feb 16, 2026 at 03:21:46PM +0100, Neil Armstrong wrote:
+> The code was not returning dev_err_probe() but dev_err_probe()
+> returns the error code, so simplify the code.
 > 
-> This part looks better now.
-> 
-> > Granting kmod_t the CAP_NET_ADMIN capability in policy is possible,
-> > but not desirable, as kmod_t is not expected to perform networking
-> > operations and widening its capability set is discouraged.
-> > 
-> 
-> Where is this discouraged? Who discouraged you do to this? Wasn't this
-> exactly what Stephen suggested you do in his feedback on v1?
-> 
+> Suggested-by: Bartosz Golaszewski <brgl@kernel.org>
+> Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 
-Yes. There is no point in respinning without addressing all the comments.
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
 
 - Mani
 
-> Regards,
-> Bjorn
+> ---
+>  drivers/pci/pwrctrl/slot.c | 12 ++++--------
+>  1 file changed, 4 insertions(+), 8 deletions(-)
 > 
-> > To address this in a contained way within qrtr, extend the control
-> > port permission check to allow binding when either:
-> > 
-> >   - the process has CAP_NET_ADMIN, or
-> >   - the process belongs to GLOBAL_ROOT_GID (root-equivalent tasks)
-> > 
-> > This permits QRTR NS to successfully bind its control port in
-> > kmod_t restricted environments without broadening SELinux capability
-> > assignments.
-> > 
-> > Co-developed-by: Deepak Kumar Singh <deepak.singh@oss.qualcomm.com>
-> > Signed-off-by: Deepak Kumar Singh <deepak.singh@oss.qualcomm.com>
-> > Signed-off-by: Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
-> > ---
-> > Changes in v2:
-> > - Replaced "qrtr-ns" with "QRTR NS" in the commit message to avoid
-> >   confusion with the deprecated userspace qrtr-ns tool and the NS
-> >   implementation inside the QRTR driver.
-> > - Link to v1: https://lore.kernel.org/r/20260205-qrtr-control-port-access-permission-v1-1-e900039e92d5@oss.qualcomm.com
-> > ---
-> >  net/qrtr/af_qrtr.c | 4 +++-
-> >  1 file changed, 3 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
-> > index dab839f61ee93b876021d904ae6b8dca8ed43745..b0e252c16f156c05973988fbdf317a149ad9840d 100644
-> > --- a/net/qrtr/af_qrtr.c
-> > +++ b/net/qrtr/af_qrtr.c
-> > @@ -8,6 +8,7 @@
-> >  #include <linux/qrtr.h>
-> >  #include <linux/termios.h>	/* For TIOCINQ/OUTQ */
-> >  #include <linux/spinlock.h>
-> > +#include <linux/uidgid.h>
-> >  #include <linux/wait.h>
-> >  
-> >  #include <net/sock.h>
-> > @@ -738,7 +739,8 @@ static int qrtr_port_assign(struct qrtr_sock *ipc, int *port)
-> >  	if (!*port) {
-> >  		rc = xa_alloc(&qrtr_ports, port, ipc, QRTR_EPH_PORT_RANGE,
-> >  				GFP_KERNEL);
-> > -	} else if (*port < QRTR_MIN_EPH_SOCKET && !capable(CAP_NET_ADMIN)) {
-> > +	} else if (*port < QRTR_MIN_EPH_SOCKET && !(capable(CAP_NET_ADMIN) ||
-> > +						   in_egroup_p(GLOBAL_ROOT_GID))) {
-> >  		rc = -EACCES;
-> >  	} else if (*port == QRTR_PORT_CTRL) {
-> >  		rc = xa_insert(&qrtr_ports, 0, ipc, GFP_KERNEL);
-> > 
-> > ---
-> > base-commit: 0f2acd3148e0ef42bdacbd477f90e8533f96b2ac
-> > change-id: 20260205-qrtr-control-port-access-permission-bfea19994a58
-> > 
-> > Best regards,
-> > -- 
-> > Vishnu Santhosh <vishnu.santhosh@oss.qualcomm.com>
-> > 
+> diff --git a/drivers/pci/pwrctrl/slot.c b/drivers/pci/pwrctrl/slot.c
+> index 3320494b62d8..08e53243cdbd 100644
+> --- a/drivers/pci/pwrctrl/slot.c
+> +++ b/drivers/pci/pwrctrl/slot.c
+> @@ -40,17 +40,14 @@ static int pci_pwrctrl_slot_probe(struct platform_device *pdev)
+>  
+>  	ret = of_regulator_bulk_get_all(dev, dev_of_node(dev),
+>  					&slot->supplies);
+> -	if (ret < 0) {
+> -		dev_err_probe(dev, ret, "Failed to get slot regulators\n");
+> -		return ret;
+> -	}
+> +	if (ret < 0)
+> +		return dev_err_probe(dev, ret, "Failed to get slot regulators\n");
+>  
+>  	slot->num_supplies = ret;
+>  	ret = regulator_bulk_enable(slot->num_supplies, slot->supplies);
+>  	if (ret < 0) {
+> -		dev_err_probe(dev, ret, "Failed to enable slot regulators\n");
+>  		regulator_bulk_free(slot->num_supplies, slot->supplies);
+> -		return ret;
+> +		return dev_err_probe(dev, ret, "Failed to enable slot regulators\n");
+>  	}
+>  
+>  	ret = devm_add_action_or_reset(dev, devm_pci_pwrctrl_slot_power_off,
+> @@ -59,10 +56,9 @@ static int pci_pwrctrl_slot_probe(struct platform_device *pdev)
+>  		return ret;
+>  
+>  	clk = devm_clk_get_optional_enabled(dev, NULL);
+> -	if (IS_ERR(clk)) {
+> +	if (IS_ERR(clk))
+>  		return dev_err_probe(dev, PTR_ERR(clk),
+>  				     "Failed to enable slot clock\n");
+> -	}
+>  
+>  	pci_pwrctrl_init(&slot->ctx, dev);
+>  
+> 
+> -- 
+> 2.34.1
+> 
 
 -- 
 மணிவண்ணன் சதாசிவம்
