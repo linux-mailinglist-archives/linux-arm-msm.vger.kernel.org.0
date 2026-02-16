@@ -1,261 +1,229 @@
-Return-Path: <linux-arm-msm+bounces-93006-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93007-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sByAHMBRk2nA3QEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93006-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 18:20:00 +0100
+	id 8OO4DtBdk2kr4AEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93007-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 19:11:28 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 00CCA146A7D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 18:19:59 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 94A99146E35
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 19:11:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 888B83018AFA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 17:19:53 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 6A0DF301F15E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Feb 2026 18:11:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D89992D73AD;
-	Mon, 16 Feb 2026 17:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DA3A2D8793;
+	Mon, 16 Feb 2026 18:11:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b="ouscKI7n"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="hb9r7TO9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f66.google.com (mail-wm1-f66.google.com [209.85.128.66])
+Received: from mail-dl1-f51.google.com (mail-dl1-f51.google.com [74.125.82.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31A6C292B2E
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Feb 2026 17:19:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC062BEC52
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Feb 2026 18:11:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771262392; cv=none; b=L5bn0SLQyQGc/OU73ER3/kzNY72l0KBsIy6CsBk7V5VJ1hYfbZ/rlPr88abtqKHF4p1EqXUzgtDhjctM3suKHnNWUPavWXSGXT9j6Q6mBJXk+E+3iCAOi1SG6EC9cIlqNl0qBMHiTrD+HttW5pV9wswO+81P6TZhIj86CfHg4Ds=
+	t=1771265483; cv=none; b=NUFeYek/yA/pp6wRdyG94OQY6LRJH0aWAhvUmHgKhPS2iqD1COBrA9PDsJESgkEWo4Ubb5aXxeqvteWMuXWHRnBPtGQWERt7PjvDYJ9+Nf44Iiy/GxYYsyzdVmC9DeyKF5G7RG4WnjXqu6Z6y8T5C3GD9BtBOjkqzOdFFGEDSJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771262392; c=relaxed/simple;
-	bh=ga8bFx44y5iHuBGB1mwGqWfMHjMxGLHos9sO3Y6x/f0=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=oZSVohtQhBe3pRitN1wewMrrGziyyfvhktp1X99VAolSEhS+Vz0xB5qNdzDZJgMU7CdyRN8cWx+qlnVttakJ7bgROXEADnNmY7bk/1EqyLNLW6zqbwVdkcqG7/T9RaISoOXjW+T1l3nDZCOlkg35ImgDK0T9uX/fldEGrTbEH+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tuxon.dev; spf=pass smtp.mailfrom=tuxon.dev; dkim=pass (2048-bit key) header.d=tuxon.dev header.i=@tuxon.dev header.b=ouscKI7n; arc=none smtp.client-ip=209.85.128.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=tuxon.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=tuxon.dev
-Received: by mail-wm1-f66.google.com with SMTP id 5b1f17b1804b1-4837f27cf2dso16932775e9.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Feb 2026 09:19:50 -0800 (PST)
+	s=arc-20240116; t=1771265483; c=relaxed/simple;
+	bh=cSCEF3PytEUhtrqx1ZL9yZAsXNXSd/VJdHuArUNHrik=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=iItUKWd8P+7wN9sCtzGXHpj6RIJ14sKcM9Rvf+pDU5xqPkjHvfUU1UC7kJkaT6187H3eQA520JGfurfCLIEysxfk7myzD+R2SzMltAq2m9yWyugPJ/dUQNPAwliKxX7YMIMWuS9h/AQo0tvu+3ACOVxvTUNwJ2+RXvjlUhfPaZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=hb9r7TO9; arc=none smtp.client-ip=74.125.82.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-dl1-f51.google.com with SMTP id a92af1059eb24-124afd03fd1so5024739c88.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Feb 2026 10:11:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tuxon.dev; s=google; t=1771262389; x=1771867189; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Ox2zOip8ex/pPOz0MZ66YdomhlQUxEYWyv12vdPkcRw=;
-        b=ouscKI7nRWgutqDs3djCZalbPdY3KKPAX3HU8E/wYE7M4Um+sF8DflDyPXUnOoTK4k
-         ZYAvn1TK82QUQRHXaS/gieKaRxsOkBUbvkfX185CWX1m8D/0/puUi3v+aWMH07H9idVG
-         +OK1sGS1zXzVxu+wrzAC0TbNwSk3deJvUNJyZAG9J8Rzfusd/siRn1Crg2fpjyIYREKX
-         phC5sx6sqEOjWOLZE9QITN37NJIqBZeBXBQEfQIHrqD81g+ibXibemNqG8xgv2iiy5Df
-         QZ+WYNmJtp4oLmZN0AZhtoNYaWVtSqIuCxpaJh7aYASfCAekdzrmOAnTNoDY1tEZr1+D
-         rkEg==
+        d=chromium.org; s=google; t=1771265481; x=1771870281; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7qPeoOZLMpDPHLvXRZ2UOWF72e8RnmNaQnfGaf4d8jU=;
+        b=hb9r7TO94koSoC4Z2JHCT70nWqtWkl9i4vVEr/uEjeyLhmmT+tNRlyKSZLmYrvZHhu
+         eDPKCqGVFhc3jrSCQkVj53fKUGEhSYivMP1qcHoBLVFhFAcxDLprPObeURgLzXlZKCNN
+         cBABQhOU9KyeBJuBjHIShwIvLUb/R3zbNlsuQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771262389; x=1771867189;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ox2zOip8ex/pPOz0MZ66YdomhlQUxEYWyv12vdPkcRw=;
-        b=wj3GjWotQkjr+Tm0htBFCyyydkzD/qeRgin0uMgctkNnp2+hzSL14XJwWZz+nBost8
-         Egq2gpxkUqBC1ok1MXp2lCXrlxVc8T1/hdHxNT/5KkIFW1KZZHHVqYo6Tj4N03Tu79Jf
-         QT+Td1iplrrqWwn3sGPwNcpjJCu0rrkhom45Cd6xViv2vrLIf0hgsJz0kAFv5s4Vhguq
-         6mRZE8xXhcXfHDKs8Nh4x+oAmsh0ppyk+TzZkR7VPi0dI4Bk5PcCNKVT7bL70vqPoc38
-         ZIMdsH4WCbvQPZJf4nlpKCzaWsTZQe8o18TgB4QnAZa+hbG6VMre7acEZ7hCf9zqF4Wt
-         UZkA==
-X-Forwarded-Encrypted: i=1; AJvYcCXvuS/TfX6mdAUqb+fyUNS5hCsTNQU2/J+vTK7iqblCgmV/yu9CtL0SPa2t+kmuY9cyckFVBL3BrCyrEHjA@vger.kernel.org
-X-Gm-Message-State: AOJu0YwuOfw9bWme0/acWt/7nSX/nHTNbX8uli+oswIukHlPoBGBF8d9
-	mJUz1kW5ZgcpDuB1xhPIq7YCId/7/oQNr1VqsF9H5hdCo5Mv32Upwl4sUCKFckOkq9Y=
-X-Gm-Gg: AZuq6aIyADzWu7W8YBWhsNHkRGL50F8ySo4BoirId2uVA2xvbH3H5F6yKwjCoGhY5fA
-	yaUN5bPi+KF+RUpxEzIZT+80ToaIv8605MCERB46qkOmgu7lh3cw2hC8l7Z+8GApKEl7Un+/OJH
-	g85wAzRzYsI4sXxJ27QfX1AAjLgaL+/xQGshd0LPJOGcKozX74AGN/Nk+SfoLf5JCB33waxv60u
-	r6yHc6go64tuEQClAenndfNAv1vn6/+ww3MKRi1Szx7xUieDVI6sBAyP2u6PaeWM4Bv53hceCX2
-	InMStzRav/SS5oR9Q6DygNHVNoGvKG5RjVLEZ9b4T5DS2LGpkh0STZZfasZOhpnpxvzQLlKSRuI
-	9u4Mm6yc9EKFV9dOaompQsgmLC57WAVnAvUDNsDeA0TyZHGpp1wsO8wB1XV1rjayJX7FubDOdxb
-	cp0aDXRETVuH5eUAevSf+C91EUjQtrFa5BKNbx7/vbVA==
-X-Received: by 2002:a05:600c:1547:b0:477:afc5:fb02 with SMTP id 5b1f17b1804b1-483710858c8mr218566385e9.21.1771262389276;
-        Mon, 16 Feb 2026 09:19:49 -0800 (PST)
-Received: from [192.168.50.4] ([82.78.167.215])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4834d5ebd34sm502143425e9.7.2026.02.16.09.19.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Feb 2026 09:19:48 -0800 (PST)
-Message-ID: <ccf3bfd6-c060-4b88-bf4d-37425aea4cfa@tuxon.dev>
-Date: Mon, 16 Feb 2026 19:19:46 +0200
+        d=1e100.net; s=20230601; t=1771265481; x=1771870281;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7qPeoOZLMpDPHLvXRZ2UOWF72e8RnmNaQnfGaf4d8jU=;
+        b=DmwFzB/xzYXJEquH+EkdAkSEUuMhgkLm48lCfRzQZoISdAQrozQC2zAq2cQbRX0l3h
+         ozrnz4Kuu3T4lAh6P2Natxgu5o2OrIIkVBd1fe79WPWWC6dxY+SICeiJE9kBzTF+T8dl
+         JI/5tsE+QK6wrnercfQL712q0SeBavNPFSaSNp2Kv1IOGXeYR8TIGMOElTmsAi2BORMY
+         +bdgQOsxpgRn3NDzA1645priGSjYs9oGOST1bnNUXenkdSeUyhGrJafzPmqbf+hix/9D
+         timXsUx4tHJbOuuxdJfbKUd9t5EZjKhP+ShKRgRjwomVEy8hBDmyo3EiXoixtJFDHgK3
+         cN2A==
+X-Forwarded-Encrypted: i=1; AJvYcCWPOUemTeujR4juu7r0hH/7gaGq5c4QOzMkdHAGcGYkr1K7mSGoASCaSRlv/RSHwHx1qQbGT33uETISZfkD@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywax6QLpcf0bxb28uFXwwJRKgOELPvB0lVgBFQbroHZXzGrJS+k
+	KplKUsgOb0jj8kxZySLBuSUod230xUWalA/4zRU061s0ol52Y+AbPYMRUB4n+fqBjg==
+X-Gm-Gg: AZuq6aIAImw0MkR5OQw/VxypVeqCgNZsaj+PylX7QBSmae5vJKz6s0r470FkzspYhUf
+	IajVm2J3g1GpHPLEGsiQyUc3/MaB5zyYyEfffj2+WG7L1gf3Uj0cCZGFpWz+ZCrFdQiHpNuLaSR
+	GOZnscIOxYPTmYO5oLlG7f3Un1W7nuSwID0Ld37+JZqOfO4XfaNlT6CRcCu2PG9rwAJpDRu2mLd
+	bU5y2N3RLMqInlTsDlEVfVKJ6D5TvlNYv4bfDyD/VyY8pzowbajZ5UwERv5RRBCCaBkFreNw/nZ
+	PbA4Gne59paqI1lNs83UaFc0aJgYTxYPFjYwCc8EAFIrH7fweYoEqG9qKjhkk1tOmFe0C++3BQS
+	OzxT2jqwHp8I1KL19WFZpaNp7qY5Es2swbp66NiGXcxUSLOcsUNG8XOrjcGTeJl4Dlx/tNNQjbJ
+	2YtlD+4L92ZgQmhY1UpumJh/dkPC4+4Ds0vPNCJs/i+Qb8GjXtXgq2EL1i9fxsHKdANlse10RVe
+	6fhmrA89gs=
+X-Received: by 2002:a05:7022:aa1:b0:119:e56b:91f6 with SMTP id a92af1059eb24-12741bd1202mr3136852c88.39.1771265481071;
+        Mon, 16 Feb 2026 10:11:21 -0800 (PST)
+Received: from dianders.sjc.corp.google.com ([2a00:79e0:2e7c:8:2953:dae1:1e39:73b3])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-12742c64282sm13724326c88.5.2026.02.16.10.11.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Feb 2026 10:11:20 -0800 (PST)
+From: Douglas Anderson <dianders@chromium.org>
+To: jassisinghbrar@gmail.com
+Cc: Douglas Anderson <dianders@chromium.org>,
+	Frank.Li@nxp.com,
+	Santosh Shilimkar <ssantosh@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	andersson@kernel.org,
+	arm-scmi@vger.kernel.org,
+	cristian.marussi@arm.com,
+	daniel.baluta@nxp.com,
+	festevam@gmail.com,
+	imx@lists.linux.dev,
+	jay.buddhabhatti@amd.com,
+	jonathanh@nvidia.com,
+	kernel@pengutronix.de,
+	konradybcio@kernel.org,
+	krzk@kernel.org,
+	lenb@kernel.org,
+	linux-acpi@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-remoteproc@vger.kernel.org,
+	linux-tegra@vger.kernel.org,
+	lucaswei@google.com,
+	marco.crivellari@suse.com,
+	mathieu.poirier@linaro.org,
+	michal.simek@amd.com,
+	nm@ti.com,
+	rafael@kernel.org,
+	robh@kernel.org,
+	shawn.guo@linaro.org,
+	sudeep.holla@kernel.org,
+	tglx@kernel.org,
+	thierry.reding@gmail.com
+Subject: [PATCH v3 00/15] mailbox: Stop sending NULL mailbox messages
+Date: Mon, 16 Feb 2026 10:09:37 -0800
+Message-ID: <20260216181002.3475421-1-dianders@chromium.org>
+X-Mailer: git-send-email 2.53.0.273.g2a3d683680-goog
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Claudiu Beznea <claudiu.beznea@tuxon.dev>
-Subject: Re: [PATCH v2 1/2] PCI/ASPM: Override the ASPM and Clock PM states
- set by BIOS for devicetree platforms
-To: Manivannan Sadhasivam <mani@kernel.org>,
- Bjorn Helgaas <helgaas@kernel.org>, Jon Hunter <jonathanh@nvidia.com>
-Cc: manivannan.sadhasivam@oss.qualcomm.com,
- Bjorn Helgaas <bhelgaas@google.com>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
- Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- "David E. Box" <david.e.box@linux.intel.com>,
- Kai-Heng Feng <kai.heng.feng@canonical.com>,
- "Rafael J. Wysocki" <rafael@kernel.org>,
- Heiner Kallweit <hkallweit1@gmail.com>,
- Chia-Lin Kao <acelan.kao@canonical.com>,
- "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>,
- Keith Busch <kbusch@kernel.org>, Jens Axboe <axboe@kernel.dk>,
- Christoph Hellwig <hch@lst.de>, Sagi Grimberg <sagi@grimberg.me>,
- linux-nvme@lists.infradead.org, John Madieu <john.madieu.xa@bp.renesas.com>
-References: <7306256a-b380-489b-8248-b774e6d3d80e@nvidia.com>
- <20260122152903.GA1247682@bhelgaas>
- <5z7c25nkb35prvax6vq6ud7eaeuhzsswbf7fqvmlgys3xftgwb@odocboejrdrv>
-Content-Language: en-US
-In-Reply-To: <5z7c25nkb35prvax6vq6ud7eaeuhzsswbf7fqvmlgys3xftgwb@odocboejrdrv>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [0.84 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[tuxon.dev:s=google];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[chromium.org,none];
+	R_MISSING_CHARSET(0.50)[];
+	R_DKIM_ALLOW(-0.20)[chromium.org:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,google.com,kernel.org,vger.kernel.org,linux.intel.com,canonical.com,gmail.com,kernel.dk,lst.de,grimberg.me,lists.infradead.org,bp.renesas.com];
-	DMARC_NA(0.00)[tuxon.dev];
-	TAGGED_FROM(0.00)[bounces-93006-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[23];
-	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	TO_DN_EQ_ADDR_SOME(0.00)[];
-	DKIM_TRACE(0.00)[tuxon.dev:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FREEMAIL_TO(0.00)[gmail.com];
+	FREEMAIL_CC(0.00)[chromium.org,nxp.com,kernel.org,pengutronix.de,vger.kernel.org,arm.com,gmail.com,lists.linux.dev,amd.com,nvidia.com,lists.infradead.org,google.com,suse.com,linaro.org,ti.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[34];
+	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-93007-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[claudiu.beznea@tuxon.dev,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[dianders@chromium.org,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DKIM_TRACE(0.00)[chromium.org:+];
 	RCVD_COUNT_FIVE(0.00)[5];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,amphenol-cs.com:url]
-X-Rspamd-Queue-Id: 00CCA146A7D
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[chromium.org:mid,chromium.org:dkim,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 94A99146E35
 X-Rspamd-Action: no action
 
-Hi,
+As talked about in the first patch in this series, passing NULL as the
+'mssg' argument to mbox_send_message() ends up causing confusion and
+quirky behavior inside the mailbox core. Despite this, there are a
+number of drivers that pass NULL.
 
-On 1/22/26 19:01, Manivannan Sadhasivam wrote:
-> On Thu, Jan 22, 2026 at 09:29:03AM -0600, Bjorn Helgaas wrote:
->> [+cc NVMe folks]
->>
->> On Thu, Jan 22, 2026 at 12:12:42PM +0000, Jon Hunter wrote:
->>> ...
->>
->>> Since this commit was added in Linux v6.18, I have been observing a suspend
->>> test failures on some of our boards. The suspend test suspends the devices
->>> for 20 secs and before this change the board would resume in about ~27 secs
->>> (including the 20 sec sleep). After this change the board would take over 80
->>> secs to resume and this triggered a failure.
->>>
->>> Looking at the logs, I can see it is the NVMe device on the board that is
->>> having an issue, and I see the reset failing ...
->>>
->>>   [  945.754939] r8169 0007:01:00.0 enP7p1s0: Link is Up - 1Gbps/Full -
->>>    flow control rx/tx
->>>   [ 1002.467432] nvme nvme0: I/O tag 12 (400c) opcode 0x9 (Admin Cmd) QID
->>>    0 timeout, reset controller
->>>   [ 1002.493713] nvme nvme0: 12/0/0 default/read/poll queues
->>>   [ 1003.050448] nvme nvme0: ctrl state 1 is not RESETTING
->>>   [ 1003.050481] OOM killer enabled.
->>>   [ 1003.054035] nvme nvme0: Disabling device after reset failure: -19
->>>
->>>  From the above timestamps the delay is coming from the NVMe. I see this
->>> issue on several boards with different NVMe devices and I can workaround
->>> this by disabling ASPM L0/L1 for these devices ...
->>>
->>>   DECLARE_PCI_FIXUP_HEADER(0x15b7, 0x5011, quirk_disable_aspm_l0s_l1);
->>>   DECLARE_PCI_FIXUP_HEADER(0x15b7, 0x5036, quirk_disable_aspm_l0s_l1);
->>>   DECLARE_PCI_FIXUP_HEADER(0x1b4b, 0x1322, quirk_disable_aspm_l0s_l1);
->>>   DECLARE_PCI_FIXUP_HEADER(0xc0a9, 0x540a, quirk_disable_aspm_l0s_l1);
->>>
->>> I am curious if you have seen any similar issues?
->>>
->>> Other PCIe devices seem to be OK (like the realtek r8169) but just
->>> the NVMe is having issues. So I am trying to figure out the best way
->>> to resolve this?
->>
->> For context, "this commit" refers to f3ac2ff14834, modified by
->> df5192d9bb0e:
->>
->>    f3ac2ff14834 ("PCI/ASPM: Enable all ClockPM and ASPM states for devicetree platforms")
->>    df5192d9bb0e ("PCI/ASPM: Enable only L0s and L1 for devicetree platforms")
->>
->> The fact that this suspend issue only affects NVMe reminds me of the
->> code in dw_pcie_suspend_noirq() [1] that bails out early if L1 is
->> enabled because of some NVMe expectation:
->>
->>    dw_pcie_suspend_noirq()
->>    {
->>      ...
->>      /*
->>       * If L1SS is supported, then do not put the link into L2 as some
->>       * devices such as NVMe expect low resume latency.
->>       */
->>      if (dw_pcie_readw_dbi(pci, offset + PCI_EXP_LNKCTL) & PCI_EXP_LNKCTL_ASPM_L1)
->>        return 0;
->>      ...
->>
->> That suggests there's some NVMe/ASPM interaction that the PCI core
->> doesn't understand yet.
->>
-> 
-> We have this check in place since NVMe driver keeps the device in D0 and expects
-> the link to be in L1ss on platforms not passing below checks:
-> 
->          if (pm_suspend_via_firmware() || !ctrl->npss ||
->              !pcie_aspm_enabled(pdev) ||
->              (ndev->ctrl.quirks & NVME_QUIRK_SIMPLE_SUSPEND))
-> 
+It is plausible that some of the drivers passing NULL may have been
+taking advantage of the quirks of the mailbox core. Specifically, they
+may have been taking advantage that calling "tx_done" wasn't truly
+necessary for NULL messages (it was a noop) or that NULL messages were
+passed onto the mailbox controller right away without queuing.
 
-We noticed a similar issue with the Renesas RZ/G3S host driver and NVMe devices. 
-We currently have 2 SoCs where we identified this problem (RZ/G3S and RZ/G3E), 
-both present on SoM modules, and the SoM modules could be connected to the same 
-carrier board where the PCIe signals are routed and connectors exists. On the 
-carrier board we have 2 connectors were we can attach NVMe devices, one M.2 Key 
-B and one PCIe x4 connector 
-(https://www.amphenol-cs.com/product/10061913111plf.html).
+This series introduces a new API call: mbox_ring_doorbell(). The new
+API call tries to mimic the specific quirks that were helpful in the
+old behavior and it's expected to be a nearly drop-in replacement.
 
-The issue described in this thread is reproducible for us only after suspend and 
-only for the NVMe device connected to the the PCIe x4 connector. The device is 
-working correctly just after boot. On suspend, power to the most SoC components 
-(including PCIe) is lost but the endpoints remains powered.
+There are some subtle differences between the new call and the old
+behavior, but it's expected that all of these differences are only for
+cases where the old behavior made little sense. The description of the
+first patch details these differences.
 
-The issue is not reproducible if the following command is executed before 
-suspend: echo performance > /sys/module/pcie_aspm/parameters/policy
+The series attempts to convert all in-tree users to stop passing NULL
+for mssg. As per above, there are some slight differences in behavior.
+If any of the patches are causing problems, they can safely be
+reverted while debugging the problems. Eventually, all code should be
+converted over to stop passing NULL mssg.
 
-The difference we identified in terms of signals connected from the SoC to the 
-on board connectors relies in the CLKREQ#. This signal is only connected to the 
-PCIe x4 slot.
+Changes in v3:
+- Suggest mbox_ring_doorbell in the warning message
+- Updated patch description based on Cristian's response.
 
-On RZ/G3E the CLKREQ# is configured as a individual GPIO pin. On RZ/G3S it is 
-muxed by the pin controller with PCIe function. We tried on RZ/G3E to not 
-configure the CLKREQ# pin at all and with this the NVMe connected on the PCIe x4 
-slot started to work even after suspend. We cannot reproduce the same behavior 
-on RZ/G3S.
+Changes in v2:
+- Instead of just documenting NULL, introduce a new function
 
-Initially, we considered we might have to update the existing code to do 
-specific configuration for the boards were CLKREQ# is not connected (through 
-supports-clkreq DT property that some controllers are using).
+Douglas Anderson (15):
+  mailbox: Deprecate NULL mbox messages; Introduce mbox_ring_doorbell()
+  ACPI: PCC: Use mbox_ring_doorbell() instead of NULL message
+  firmware: arm_scmi: Use mbox_ring_doorbell() instead of NULL message
+  firmware: imx-dsp: Use mbox_ring_doorbell() instead of NULL message
+  firmware: tegra: bpmp: Use mbox_ring_doorbell() instead of NULL
+    message
+  irqchip/qcom-mpm: Use mbox_ring_doorbell() instead of NULL message
+  remoteproc: xlnx: Use mbox_ring_doorbell() instead of NULL message
+  rpmsg: qcom_glink_rpm: Use mbox_ring_doorbell() instead of NULL
+    message
+  rpmsg: glink: smem: Use mbox_ring_doorbell() instead of NULL message
+  rpmsg: qcom_smd: Use mbox_ring_doorbell() instead of NULL message
+  soc: qcom: aoss: Use mbox_ring_doorbell() instead of NULL message
+  soc: qcom: smp2p: Use mbox_ring_doorbell() instead of NULL message
+  soc: qcom: smsm: Use mbox_ring_doorbell() instead of NULL message
+  soc: ti: wkup_m3_ipc: Use mbox_ring_doorbell() instead of NULL message
+  drivers: firmware: xilinx: Use mbox_ring_doorbell() instead of NULL
+    message
 
-Currently, the manual is unclear on how to control CLKREQ#.
+ drivers/acpi/acpi_pcc.c                       |  4 +-
+ .../firmware/arm_scmi/transports/mailbox.c    |  8 +-
+ drivers/firmware/imx/imx-dsp.c                |  2 +-
+ drivers/firmware/tegra/bpmp-tegra186.c        |  4 +-
+ drivers/irqchip/irq-qcom-mpm.c                |  2 +-
+ drivers/mailbox/mailbox.c                     | 82 ++++++++++++++++++-
+ drivers/remoteproc/xlnx_r5_remoteproc.c       |  2 +-
+ drivers/rpmsg/qcom_glink_rpm.c                |  3 +-
+ drivers/rpmsg/qcom_glink_smem.c               |  3 +-
+ drivers/rpmsg/qcom_smd.c                      | 13 +--
+ drivers/soc/qcom/qcom_aoss.c                  |  3 +-
+ drivers/soc/qcom/smp2p.c                      |  8 +-
+ drivers/soc/qcom/smsm.c                       |  8 +-
+ drivers/soc/ti/wkup_m3_ipc.c                  | 10 +--
+ drivers/soc/xilinx/zynqmp_power.c             |  2 +-
+ include/linux/mailbox_client.h                |  1 +
+ include/linux/mailbox_controller.h            |  4 +-
+ 17 files changed, 108 insertions(+), 51 deletions(-)
 
-Apart from the suggestions mentioned in [1], could you please let me know if you 
-have any others?
+-- 
+2.53.0.273.g2a3d683680-goog
 
-Thank you,
-Claudiu
-
-[1] 
-https://lore.kernel.org/all/unc5zefwndgcv7wufaezz3gkg3qtaymkjlmymhyqdqwzn3wybl@ow2rhbyt772h/
 
