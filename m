@@ -1,156 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-93223-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93224-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id yFDpAuG4lGlmHQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93223-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Feb 2026 19:52:17 +0100
+	id uHOaG/C9lGncHQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93224-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Feb 2026 20:13:52 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3270D14F5F5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Feb 2026 19:52:16 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0FC8C14F8D5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Feb 2026 20:13:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id E6F793007A61
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Feb 2026 18:51:58 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B4DA7301FFA4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Feb 2026 19:13:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA57A374160;
-	Tue, 17 Feb 2026 18:51:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3FB1376479;
+	Tue, 17 Feb 2026 19:13:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cPHBkMTS"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OT+faP5T"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-dy1-f172.google.com (mail-dy1-f172.google.com [74.125.82.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB2123EAB3
-	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Feb 2026 18:51:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.172
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771354315; cv=pass; b=aBWnqAqUd5jwam2gUvthGPugk/nchl4akVGhCPJUo9xLJZTEhsIOMvItxo7wX9YPdpqfGwSlK+f8mGyUCAcKwx6w8jpyVMYkBT6HEYgD65RQ4Ko+OUcqDmjJMj2vIAawMAqyZIXD/T+iRe22krCkL2PKnPn34jDlqW6bRmCn4Uo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771354315; c=relaxed/simple;
-	bh=mlaZHFNq5XRxueoqRH3q0IdHdk7o8tvxpfjKaHA7LPs=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=nTxscpfdJTBdy/vKXQKNOdyKGq4he0cqtPUXY7DLNPBVRyp0KwMmgIXs3hgLL4S7T1kobasc0v0WcV26fWDfv6OZXMdysifGytsy1fndIodXfTiwrHafpa0sePPxt+pUOkS44Anon3x4QvOFjHKiyirGOywB/1dndrXlCZZ4+eM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cPHBkMTS; arc=pass smtp.client-ip=74.125.82.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-dy1-f172.google.com with SMTP id 5a478bee46e88-2b86ce04c5cso233381eec.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Feb 2026 10:51:54 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771354314; cv=none;
-        d=google.com; s=arc-20240605;
-        b=ix+WuWgVx2XuztQTKnjpmhJXKCd5gIzY4BXP8eAfPIXjriLkk2RFeTocry9n69S+W4
-         Qd+wweunMcD7BmWCKt9FW7ixUwnsTFrMnMV8Lpxx1uV9JudpvfKBPZGTlFnSfwHqjchp
-         2zGhPpJx0r5Jm/AME5Chte3BSEexUiaJ74EpDurrL/ELDtG1jHV634KE3ow042Pd66gz
-         jtgMfRm8jqJhtq1YV2ATFeyFf8frIdsHiuUSkq0RBwLJJSH7EDQrug1I6rbE9k9QDce/
-         SVSuNUmO53on99hmc6IKNBUpZr+wodvwE32Vsiglniw6DjyUfSRo1IIFBDmdHIYO1WqS
-         jwlA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
-        bh=J/Dwq29TVM3lC7MbucjOF4EsI3jXCUOI1BLL/5lhNGs=;
-        fh=U5oxkFtYXYpQxrTcqoKiTgLrYN2s5EVbmVcfXD5BsbM=;
-        b=Q9lJTSMCsMa7A0A0msTkacyoy81LdM8Van2LOFI0W/CZ20PqoRrBAcTbvAYSejrc+I
-         99oTIQMuj1Lt7ErQQke7n8gl9pT59sC0aC+hHdfWgbTkFPZ/HwOQWNpz3pWivOvbZ5D2
-         zcrWpVOWwuREeWlLR+UocN9bLss8t8oR+vTJJuIXfmirVVnTqIrgQvISUyE58MBXKnnk
-         6xs4FLR38GAqBNxBfdLhLhp8oeWC6ok8QFlDc+YFJibjzkMOIP511ERXg4CSrnq5wmhO
-         hnohVoyx+gDBmaMsWaMXJ5qdZ+NbtiZ0+32PkP5RODJoVgsjgWCQGs/0a8SxX8tjQa8h
-         dn7w==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771354314; x=1771959114; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=J/Dwq29TVM3lC7MbucjOF4EsI3jXCUOI1BLL/5lhNGs=;
-        b=cPHBkMTSjsQBrLDzh0g8vj7f7bTw03oaXK9dbK4ieBzV5uV+wxGL935i4qZM2/biBM
-         QE/Bha4ZjDL/9dUWLpQuPHfI8s3B/peCXQs2sDucRTrCV7+mAgqFgNpf1mp/+CUigEgf
-         UxUmiEqc1OykzT5BvYjfQU4Lj3a2+DVZ9KNQXWVDV04oRxtY4l14BdpbfS5fGHcr1zMp
-         sDwM2/o7ZYD7ioUiuURlKrQjqR9PaE/cif45Lm8juHfROp9KH+FeCBqpp9CNcLck1BEH
-         O3ss3JLl20ZOzvb/o1E116JC8zQGr6T+nVrCn0IdtxigqnVqsLW+30+c3YsKVjTWTC6c
-         kNhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771354314; x=1771959114;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=J/Dwq29TVM3lC7MbucjOF4EsI3jXCUOI1BLL/5lhNGs=;
-        b=eqYVCz1FCyqpm0TboqMofA695qU1ahM5kOi8UYC62Mc+WgtyElTIErHoeyvAQ+xFgb
-         YD4eBrVTZcRwDeqwlc0qJ5K75urE/MG0mg9S1tKzEhBoNRBvUF3L5mnFg0SGm6lZcccV
-         eHlNLrWSpAA/r8KywR6XH3ExvsLJGxw4H7mecVLVYLAnrqFnLWukTRKLeJ+0UkZQq65B
-         I4ug/6RA4Yxk8/Cir1EzbGh8fKd/1BO+aem+m2Q3YIjtfE41AhZmZWjtRhMlrk+U0mX1
-         ElB2NXnUU5QSE7+wVSO+kJPB73DlqQw9Xo/7Aed/F036SZ5SV5sIUy2RgdzeYILC6d4n
-         wMPg==
-X-Forwarded-Encrypted: i=1; AJvYcCU9YSZZ1p/pPXlf3NMu2ThR5aT+n4nrSbtJrHduvaRsj7GPzDlaH0Z3o3UMG+zxI6/5DoZM8GBy7UEXNp3z@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy+Arxim9ZouKA9hDbW2Ulp1YR7Wp+ftigrgBGxXnYx0yub8ofJ
-	qi1Cnpfp4rXio2nM8PpVxxK+8CzhzkO6rR+cBlX7V87GDJIZLGbY6mNy0JuFiOk3AG+EyAXLENC
-	sV7r2TTDii7WPIh8/Q7OY3wUKAWrEYOM=
-X-Gm-Gg: AZuq6aL/IrDjHjEdmIQ//ZcUk0MVAr90VHK4bd+/iSkHiphPxQ9leKnYEjWpYYMB3E/
-	ougui1ZGzC5+EIZRGyJE0Cr5FQH/9wfhVtdUNjNAIXQ/yHo0q+5Xbh+UovROw9uViaWnTNvK/Gx
-	D2JIzLgiApNlcGoqrIwS5cqbw9JaDhaSzNnDtxijdDCTGtVy0M834jTPMS6zZdKeqyuoZ14FdNJ
-	mGU2cuREfP+BSZhjnCzGhWrbzAiFdZdvLSSdNLgAbapaCGhhVHc/dBhYzTA+2hnK+VLBRGNxq47
-	o33YZlVo
-X-Received: by 2002:a05:7300:b90b:b0:2b8:1d16:9736 with SMTP id
- 5a478bee46e88-2babc44ed98mr5624900eec.23.1771354313687; Tue, 17 Feb 2026
- 10:51:53 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF7EB14A62B;
+	Tue, 17 Feb 2026 19:13:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771355602; cv=none; b=OmzP0ivprqKAGgNUK0Zf4wa/tq8FyK2WXU+vMVF38cwlr1ttaIRzTOHrO+I/w3bOTH7TjsuS1FtHvTNlJ6ROy9YC+V6PjbrRBxPOUfmNnNj2ehbZIZ2uW/EVaZHXmj5GcDBjT/mon2+wcu5sMxJZDOW8Iz+IDBMPNoqfR3dERWc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771355602; c=relaxed/simple;
+	bh=d6SjbfBW35f7aFqMnMFJMaB0H1QisZxlZ96DgYW2Qxk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qOPaeyHeeFSP5cKy3zQRhIzZ3CDdbIpG1vVZkosJCDqb98n7Wws37eNzoee0Z+PZ1rShzBBP4mn3TNFRbeOPXDx/SldwCTn1zLKS+0PA17G+eJom2bTF/PHVWxDnGoRa9h1R+D5aaTcHs1xSgMeMOAzaE2Zaz+K19dKHDwTxpyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OT+faP5T; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5A35C4CEF7;
+	Tue, 17 Feb 2026 19:13:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1771355602;
+	bh=d6SjbfBW35f7aFqMnMFJMaB0H1QisZxlZ96DgYW2Qxk=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=OT+faP5TqMRPxnW27DXM51tz+L9fc/UIIB3oQGM1re/W1zii1ObIVeTGr45EdlbfS
+	 /+Q5mY7hew299blzJ/DNSkwc9u2NkW13Wrbp/OrOnSp+vuRff44XpALUUBBVupGBqh
+	 gFzdinXz69qymbGY99Wg1Gx/jMB7kVOG9wtp8CoqyBN4rUfxstSpNBRmhRr5kzVfnc
+	 5JDj0Vrs8qK/53HvxaZIWDJ43ytjO90mqUIMAZhzX7toXxvurnnt1Enn1+JL+GxLC5
+	 VJLlvqRyknBJvSqZpuH+B/xzRRF62Jbaf61VcKAAmge0IIbApcYGJJhFBeSn5IPIjC
+	 zdtoq6r/rfSdA==
+Message-ID: <975930a0-1ad6-4b3f-ba3f-13f6f79322e6@kernel.org>
+Date: Tue, 17 Feb 2026 20:13:16 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Yedaya Katsman <yedaya.ka@gmail.com>
-Date: Tue, 17 Feb 2026 20:51:42 +0200
-X-Gm-Features: AaiRm51oN_WMS2IyaAAXhBJ1VmnFKjk3HIr2OX6Yqqq7pT9MsuQDZGKYwbAC5Us
-Message-ID: <CAHuF_ZqWTb5Z7J10WQaBR2adVi1rU-ZFFTCBkHh6nNtuuCdJDQ@mail.gmail.com>
-Subject: Re: [PATCH 2/6] dt-bindings: clock: qcom,dispcc-sm6125: Define MDSS resets
-To: val@packett.cool
-Cc: andersson@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org, 
-	krzk+dt@kernel.org, Krzysztof Kozlowski <krzk@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	marijn.suijten@somainline.org, martin.botka@somainline.org, 
-	mturquette@baylibre.com, phone-devel@vger.kernel.org, robh@kernel.org, 
-	sboyd@kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/6] dt-bindings: clock: qcom,dispcc-sm6125: Define MDSS
+ resets
+To: Yedaya Katsman <yedaya.ka@gmail.com>, val@packett.cool
+Cc: andersson@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
+ krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+ marijn.suijten@somainline.org, martin.botka@somainline.org,
+ mturquette@baylibre.com, phone-devel@vger.kernel.org, robh@kernel.org,
+ sboyd@kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+References: <CAHuF_ZqWTb5Z7J10WQaBR2adVi1rU-ZFFTCBkHh6nNtuuCdJDQ@mail.gmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJoF1BKBQkWlnSaAAoJEBuTQ307
+ QWKbHukP/3t4tRp/bvDnxJfmNdNVn0gv9ep3L39IntPalBFwRKytqeQkzAju0whYWg+R/rwp
+ +r2I1Fzwt7+PTjsnMFlh1AZxGDmP5MFkzVsMnfX1lGiXhYSOMP97XL6R1QSXxaWOpGNCDaUl
+ ajorB0lJDcC0q3xAdwzRConxYVhlgmTrRiD8oLlSCD5baEAt5Zw17UTNDnDGmZQKR0fqLpWy
+ 786Lm5OScb7DjEgcA2PRm17st4UQ1kF0rQHokVaotxRM74PPDB8bCsunlghJl1DRK9s1aSuN
+ hL1Pv9VD8b4dFNvCo7b4hfAANPU67W40AaaGZ3UAfmw+1MYyo4QuAZGKzaP2ukbdCD/DYnqi
+ tJy88XqWtyb4UQWKNoQqGKzlYXdKsldYqrLHGoMvj1UN9XcRtXHST/IaLn72o7j7/h/Ac5EL
+ 8lSUVIG4TYn59NyxxAXa07Wi6zjVL1U11fTnFmE29ALYQEXKBI3KUO1A3p4sQWzU7uRmbuxn
+ naUmm8RbpMcOfa9JjlXCLmQ5IP7Rr5tYZUCkZz08LIfF8UMXwH7OOEX87Y++EkAB+pzKZNNd
+ hwoXulTAgjSy+OiaLtuCys9VdXLZ3Zy314azaCU3BoWgaMV0eAW/+gprWMXQM1lrlzvwlD/k
+ whyy9wGf0AEPpLssLVt9VVxNjo6BIkt6d1pMg6mHsUEVzsFNBFVDXDQBEADNkrQYSREUL4D3
+ Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
+ MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
+ OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
+ GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
+ 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
+ YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
+ 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
+ BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
+ JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
+ 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
+ YpsFAmgXUF8FCRaWWyoACgkQG5NDfTtBYptO0w//dlXJs5/42hAXKsk+PDg3wyEFb4NpyA1v
+ qmx7SfAzk9Hf6lWwU1O6AbqNMbh6PjEwadKUk1m04S7EjdQLsj/MBSgoQtCT3MDmWUUtHZd5
+ RYIPnPq3WVB47GtuO6/u375tsxhtf7vt95QSYJwCB+ZUgo4T+FV4hquZ4AsRkbgavtIzQisg
+ Dgv76tnEv3YHV8Jn9mi/Bu0FURF+5kpdMfgo1sq6RXNQ//TVf8yFgRtTUdXxW/qHjlYURrm2
+ H4kutobVEIxiyu6m05q3e9eZB/TaMMNVORx+1kM3j7f0rwtEYUFzY1ygQfpcMDPl7pRYoJjB
+ dSsm0ZuzDaCwaxg2t8hqQJBzJCezTOIkjHUsWAK+tEbU4Z4SnNpCyM3fBqsgYdJxjyC/tWVT
+ AQ18NRLtPw7tK1rdcwCl0GFQHwSwk5pDpz1NH40e6lU+NcXSeiqkDDRkHlftKPV/dV+lQXiu
+ jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
+ zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
+ XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
+In-Reply-To: <CAHuF_ZqWTb5Z7J10WQaBR2adVi1rU-ZFFTCBkHh6nNtuuCdJDQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.34 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	FAKE_REPLY(1.00)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-93224-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_TO(0.00)[gmail.com,packett.cool];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
+	RCVD_COUNT_THREE(0.00)[4];
 	RCPT_COUNT_TWELVE(0.00)[16];
-	TAGGED_FROM(0.00)[bounces-93223-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[gmail.com:+];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[yedayaka@gmail.com,linux-arm-msm@vger.kernel.org];
 	TO_DN_SOME(0.00)[];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,packett.cool:email,mail.gmail.com:mid]
-X-Rspamd-Queue-Id: 3270D14F5F5
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,packett.cool:email]
+X-Rspamd-Queue-Id: 0FC8C14F8D5
 X-Rspamd-Action: no action
 
-On Mon, Feb 16, 2026 at 08:25:20PM -0300, Val Packett wrote:
-> Add the missing defines for MDSS resets.
-> While here, align comment style with other SoCs.
->
-> Fixes: 8397c9c0c26b ("dt-bindings: clock: add QCOM SM6125 display clock bindings")
-> Signed-off-by: Val Packett <val@packett.cool>
-> ---
->  include/dt-bindings/clock/qcom,dispcc-sm6125.h | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
+On 17/02/2026 19:51, Yedaya Katsman wrote:
+> On Mon, Feb 16, 2026 at 08:25:20PM -0300, Val Packett wrote:
+>> Add the missing defines for MDSS resets.
+>> While here, align comment style with other SoCs.
+>>
+>> Fixes: 8397c9c0c26b ("dt-bindings: clock: add QCOM SM6125 display clock bindings")
+>> Signed-off-by: Val Packett <val@packett.cool>
+>> ---
+>>  include/dt-bindings/clock/qcom,dispcc-sm6125.h | 6 +++++-
+>>  1 file changed, 5 insertions(+), 1 deletion(-)
+> 
+> Tested-By: Yedaya Katsman <yedaya.ka@gmail.com>
 
-Tested-By: Yedaya Katsman <yedaya.ka@gmail.com>
+Thanks for the efforts, but unfortunately you cannot test a header. It
+is not possible. Testing means you try given code on a REAL device and
+you cannot do that for the header or bindings.
 
-Regards, Yedaya
+Please do not add tags which are not representing actual action.
+
+Best regards,
+Krzysztof
 
