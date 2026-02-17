@@ -1,57 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-93102-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93103-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SCzLKek7lGntAgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93102-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Feb 2026 10:59:05 +0100
+	id iItKGrA9lGk6BAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93103-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Feb 2026 11:06:40 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4997C14A9E3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Feb 2026 10:59:05 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E06C214AAF8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Feb 2026 11:06:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 5500630086E4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Feb 2026 09:58:44 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 4C7643000890
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Feb 2026 10:06:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4B8131A7EE;
-	Tue, 17 Feb 2026 09:58:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56E8D2D5C6C;
+	Tue, 17 Feb 2026 10:06:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="pSCg2jqK"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="iX+oh7dq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from ixit.cz (ixit.cz [185.100.197.86])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F47329D297;
-	Tue, 17 Feb 2026 09:58:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B442D3220;
+	Tue, 17 Feb 2026 10:06:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.100.197.86
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771322323; cv=none; b=JWoxnVtGW9WvEYZIYeLpGzYLbt/6AOLxefbnRMBpSKv8zS9Vu0wwF8nNKob7cSyxOUNoc4y2Rq/C6vlx9nzJMyDctq/DaDlZcKMSzQ1EzAXJQCv2uELajGyNBP1OLD2dJ+F8AqtGqvZDo52oEKqb0ZDPOFwo1Ndc5FR9RMB6tGQ=
+	t=1771322797; cv=none; b=uzNiDA0b8jN+T+V7N42J2pQ+rPmCLMZ5hB5vwONhXu+pYuWQ0H15UNnPFcXn0L5T+ehV1kD2j4SLv4Vf2HIZXpWuKqNF1HxN2Cg2UYb7FxNDOIjcbZsMp1HrTcROC5wlhUgoavMQk/I8sEynq/iOtY9Jsd2vQVXloLn7MxrCnrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771322323; c=relaxed/simple;
-	bh=Asd0Y2ZiZc3xmtVjPXQiEBHrT1kfD5yS8kMX88/3yPw=;
+	s=arc-20240116; t=1771322797; c=relaxed/simple;
+	bh=AdK8LnW/Bx53n/lVXk3PiLpD4HK+YjYVt1vCDPMO6jc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hkVEVLYHhT16qOxkuyAt/UvdaZyM3yYiEm24rWPnoqsOY9MB5Z+PMOpIj+QubKqzAFtTiAcebpYr7MqBy41TWKFdyXeYpe/q9FW+YmvnGWZ3EU78n2oeBJKqv9a8DQqbAu92WBoeZnX+geMfqvTKEx4pYjn0Obtm3CPVM1GkMjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=pSCg2jqK; arc=none smtp.client-ip=185.100.197.86
+	 In-Reply-To:Content-Type; b=oNBuIJgLs8h6laN9M836YDNDs3vFS6CBI0Sn6J0ZaJacsMEk4d6e0w5p2BbApErf1kUDuTIAQ5nl2j9MlCQhNPsqknZ1Ay9hQ7zz+auZj1QOLWWiDbSMjfODGFZhYLu30yweA6jgNI76reY7sUfW9+6DO+zro/dXejYFcwaskV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=iX+oh7dq; arc=none smtp.client-ip=185.100.197.86
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
 Received: from [IPV6:2a02:f000:10bd:e301::1d7] (unknown [IPv6:2a02:f000:10bd:e301::1d7])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange x25519)
 	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 551425341392;
-	Tue, 17 Feb 2026 10:58:30 +0100 (CET)
+	by ixit.cz (Postfix) with ESMTPSA id 4C4365341487;
+	Tue, 17 Feb 2026 11:06:33 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1771322310;
+	t=1771322793;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=NHQu27gvI0h4VyQfB7QfvF0P9Fz+9NCSnCUn9LKDwuc=;
-	b=pSCg2jqKzWgN/4V7i1q0TIPLVvelll0N+uUEI0/VOOzmeMBlah7kaGcjvmgWIv/n43Ictn
-	Ch/w7f0UyvF1I1DQzrZ5Qu9kNoubOGYU+wXoarOfQIWrtctAwXALaTGtfcm6vfNEUsQpCX
-	s+8Om4XsPfc6GisM/F2+zifsSghOUMc=
-Message-ID: <adaca1d5-0750-43ed-97cc-9aa0c7dcb3f2@ixit.cz>
-Date: Tue, 17 Feb 2026 10:58:29 +0100
+	bh=JdKJTF7zaACXesVjm8bcMb+9T+QLCOrHvL/F2wjpOm8=;
+	b=iX+oh7dqkfI1THhrvqKc8TNBWd2yaFsd7DhRv/Ceq2Q6KZgsqJ1OiFHm45zUlNcorfUK8A
+	hHj8J4S8mjC5WeBucKvAqKj3IsANFanZ6z7J51E+PhegaEU47haawYvQASTl/QDEur4KN9
+	BcEsCzyiclzspKwLHFPymmhM668OmnI=
+Message-ID: <e73a3b72-ad0e-4c22-82ae-13754c0d141e@ixit.cz>
+Date: Tue, 17 Feb 2026 11:06:33 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,7 +59,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/6] drm/panel: Add Novatek/Tianma NT37700F panel
+Subject: Re: [PATCH v2 6/6] arm64: dts: qcom: add support for pixel 3a xl with
+ the tianma panel
 To: Richard Acayan <mailingradian@gmail.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -74,7 +75,7 @@ To: Richard Acayan <mailingradian@gmail.com>,
  dri-devel@lists.freedesktop.org
 Cc: yifei@zhan.science
 References: <20260217000854.131242-1-mailingradian@gmail.com>
- <20260217000854.131242-4-mailingradian@gmail.com>
+ <20260217000854.131242-7-mailingradian@gmail.com>
 Content-Language: en-US
 From: David Heidelberg <david@ixit.cz>
 Autocrypt: addr=david@ixit.cz; keydata=
@@ -120,7 +121,7 @@ Autocrypt: addr=david@ixit.cz; keydata=
  zRKcgRumz2Tc1ouHj6qINlzEe3a5ldctIn/dvR1l2Ko7GBTG+VGp9U5NOAEkGpxHG9yg6eeY
  fFYnMme51H/HKiyUlFiE3yd5LSmv8Dhbf+vsI4x6BOOOq4Iyop/Exavj1owGxW0hpdUGcCl1
  ovlwVPO/6l/XLAmSGwdnGqok5eGZQzSst0tj9RC9O0dXO1TZocOsf0tJ8dR2egX4kxM=
-In-Reply-To: <20260217000854.131242-4-mailingradian@gmail.com>
+In-Reply-To: <20260217000854.131242-7-mailingradian@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
@@ -128,12 +129,12 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[ixit.cz,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	R_DKIM_ALLOW(-0.20)[ixit.cz:s=dkim];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-93102-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-93103-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FREEMAIL_TO(0.00)[gmail.com,kernel.org,linaro.org,linux.intel.com,suse.de,ffwll.ch,ravnborg.org,vger.kernel.org,lists.freedesktop.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
@@ -149,34 +150,96 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 4997C14A9E3
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,ixit.cz:mid,ixit.cz:dkim,9c000000:email]
+X-Rspamd-Queue-Id: E06C214AAF8
 X-Rspamd-Action: no action
 
 On 17/02/2026 01:08, Richard Acayan wrote:
-> Some Pixel 3a XL devices have a Tianma panel. Add support for it, with
-> the aid of linux-mdss-dsi-panel-driver-generator.
+> The Pixel 3a XL has variants with either a Samsung Display Controller (SDC)
+> panel or a Tianma panel. Add the device tree for the variant with the
+> Tianma panel.
 > 
-> Link: https://github.com/msm8916-mainline/linux-mdss-dsi-panel-driver-generator
 > Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> Tested-by: Yifei Zhan <yifei@zhan.science>
 > ---
+>   arch/arm64/boot/dts/qcom/Makefile             |  1 +
+>   .../dts/qcom/sdm670-google-bonito-tianma.dts  | 38 +++++++++++++++++++
+>   2 files changed, 39 insertions(+)
+>   create mode 100644 arch/arm64/boot/dts/qcom/sdm670-google-bonito-tianma.dts
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 6f34d5ed331c..6237aeb0e36d 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -245,6 +245,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm632-motorola-ocean.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= sdm636-sony-xperia-ganges-mermaid.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= sdm660-xiaomi-lavender.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= sdm670-google-sargo.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sdm670-google-bonito-tianma.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c.dtb
+>   
+>   sdm845-db845c-navigation-mezzanine-dtbs	:= sdm845-db845c.dtb sdm845-db845c-navigation-mezzanine.dtbo
+> diff --git a/arch/arm64/boot/dts/qcom/sdm670-google-bonito-tianma.dts b/arch/arm64/boot/dts/qcom/sdm670-google-bonito-tianma.dts
+> new file mode 100644
+> index 000000000000..da309434b511
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sdm670-google-bonito-tianma.dts
+> @@ -0,0 +1,38 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Device tree for Google Pixel 3a XL with the panel connected to the Samsung
+> + * Display Controller.
+> + *
+> + * Copyright (c) 2023-2024, Richard Acayan. All rights reserved.
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include "sdm670-google-common.dtsi"
+> +
+> +/ {
+> +	model = "Google Pixel 3a XL (with Tianma panel)";
+> +	compatible = "google,bonito-tianma", "google,bonito", "qcom,sdm670";
+> +};
+> +
+> +&battery {
+> +	charge-full-design-microamp-hours = <3700000>;
+> +};
+> +
+> +&framebuffer {
+> +	reg = <0 0x9c000000 0 (1080 * 2160 * 4)>;
 
-Thanks for pushing these upstream!
+Since you already touching the code, try to use memory-region mapped to
 
-Looking at [1] there seems to be at least one regulator using pm660l_l6, 
-which needs to be implemented.
+                 framebuffer-region@9c000000 {
+                         reg = <0 0x9c000000 0 0x2400000>;
+                         no-map;
+                 };
 
-Small nitpick would be NT37700F is most likely DDIC (Display Driver IC), 
-not the panel itself, it's just paired with some OLED panel, would be 
-great if the wording imply this.
+The size is usually common for whole qcom sub architecture, so no need 
+to worry about that in specific device-trees.
 
-David
+I assume only custom part is height, and status can be kept in common, 
+see sdm845-oneplus-enchilada.dts for and example.
 
+> +	width = <1080>;
+> +	height = <2160>;
+> +	stride = <(1080 * 4)>;
+> +	status = "okay";
+> +};
+> +
+> +&panel {
+> +	compatible = "novatek,nt37700f";
 
-[1] 
-https://github.com/senyuuri/bonito-kernel-4.9-android-10/blob/1f1543bbb2a38f6ddb2c2b4099339b5a15e7e1d0/arch/arm64/boot/dts/google/sdm670-b4s4-display.dtsi#L168
+newline before status (when it's not only property in the node).> + 
+status = "okay";
+> +};
+> +
+> +&rmi4_f12 {
+> +	touchscreen-x-mm = <69>;
+> +	touchscreen-y-mm = <137>;
+> +};
+
 -- 
 David Heidelberg
 
