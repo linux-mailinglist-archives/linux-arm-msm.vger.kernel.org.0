@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-93107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93109-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4LV6HKBDlGkgBwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Feb 2026 11:32:00 +0100
+	id KFlCMjVFlGmcBwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93109-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Feb 2026 11:38:45 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1672714ADF0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Feb 2026 11:32:00 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3174014AEDD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Feb 2026 11:38:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 75537300B19D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Feb 2026 10:31:59 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 6E96D303388E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Feb 2026 10:37:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1BA9325722;
-	Tue, 17 Feb 2026 10:31:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC26A326D57;
+	Tue, 17 Feb 2026 10:37:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c1CwJARg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YkK3qFhx"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DE561FC7C5;
-	Tue, 17 Feb 2026 10:31:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8656D32695D;
+	Tue, 17 Feb 2026 10:37:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771324316; cv=none; b=Xsa7hAeKTwT2vSMMiXaKXTK7+DndcdlRGpicnEAngkr6veTl+/u45KfDzMsRfEnqfGU7hX8zfrl3oL/AWa64/GvbrnYzux+uij8PGD9BrGSRUFQsZV+1+u2mZVX/vhGgAp2YedPtikjU39DuQeZsvFW8IBN0JGNqINFVTdDReVA=
+	t=1771324665; cv=none; b=JgeetHpW7md53MAsL6i6qjG/0rp9p4/jLcm983o9fIfQ0q+C5/Y/PWKm2frLOlwX1ehLqMtab9Ox4Uo8RjQOELfRlxy8Wrvpt3VwEfSaHWxnQ2b+8qytSI/wYuJNJzBQJ3M3EB7RfzZQp3JkeBGxasQRZvAr60i2oGAsjluCmCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771324316; c=relaxed/simple;
-	bh=IQTeV7/sixTSEh2ZhT4H8vly80oo1PlS1U8HDct5hmY=;
+	s=arc-20240116; t=1771324665; c=relaxed/simple;
+	bh=lQJA91caIzTutmlDhlay+0TovoxvUYi7SxVgx7da/pQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dyPwrJ+prS6TwF7Z4MehqKWEF2dt5yroLZYrt1pbEsZVgVBjU72VGEuqapj7oUqMBATtTlajsXRhPhD1cXRdXQ3+ijPPcmwR9Q9pCWds5Wf/j8foscYCqlSiy+v3/a2Rkba5ujB+99hyQV+6l2WuOpzEYGZp6+n4+xdatGJt+zc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c1CwJARg; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10576C19424;
-	Tue, 17 Feb 2026 10:31:52 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=VWTmE7Rw9J18P7u9Hmk2YfeaOoNaJJa5PZ3trNGjn/r7OTVeY6hkSK93fYMer31SxYfzfXExT29OSmmAMnYWnnkpPndzgcET4BI4Y6HRYwMfkzZRPqZT0nU8apRLJHKQNENzirr5G8iiSYRk2sn3xVQ//sqR4GrRDU9qhyrAw1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YkK3qFhx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CE94C4CEF7;
+	Tue, 17 Feb 2026 10:37:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771324316;
-	bh=IQTeV7/sixTSEh2ZhT4H8vly80oo1PlS1U8HDct5hmY=;
+	s=k20201202; t=1771324665;
+	bh=lQJA91caIzTutmlDhlay+0TovoxvUYi7SxVgx7da/pQ=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=c1CwJARgeeyX5JZrHysr/9eaqmcXU8WmK6+waQ/MvMIC5pJivTylQ78f/R0ZZkDlI
-	 geAYMOlqRoQbfP/Upr+eELHlyX9CWaQ8pLDuTmm6oq65B7kMilfgIJ3MTFmUfbEj3v
-	 xXkuTXYZnbQXk5ZbWbhHiipAmvmWYunIks1x6W6CDEuqvPHqswPWpgoPRtA1l7UhLs
-	 O4NtYTLW7MbLVeSSrCJCez4lBeQIUwtubG1+Baa4OiptbpL0XUnCiXaIAbW7A6b/mm
-	 kRN/k0lWIDo9w4KCNX2g2b2jkSC8NvIdNC7S+TiVAyHtBI79p0FyATqPRfF3SBYjob
-	 yJjjAMNyGrgEg==
-Message-ID: <d3dee7f6-987c-4d9e-9097-c08c800921cf@kernel.org>
-Date: Tue, 17 Feb 2026 11:31:51 +0100
+	b=YkK3qFhxiCdDHCIGOkK9J1d+35hRnDu7EUsES327QY4a5X5q4PAwtbjC+eHq/SgBv
+	 NEYyPWzyLTEQ8tG6FC+eSXxpPPfzAW3Zx3HATW0quqN4we2jQrAsP3/O4SF3FfjekF
+	 N13R4r+QOpeelDIZy4ROqIEyG+D3JYNR9ZGVtimcPnDOCYURg1nRQ0+MDGlW0uNNOs
+	 5H5uCDODMs4ir09vKY3o/RWHdWl7WGLRVHqQwF7KDU9kePUroCOqGBMqcdh/5I59F8
+	 8u8QJBlUApw1FeHTsIp2M0FEPWUToRoqXGCFV1njFTEwOI0snTuhDQVKrujxHy/+hI
+	 HL7MX3DNB1UkA==
+Message-ID: <36e636d9-befb-40fd-b63c-6ae48df61199@kernel.org>
+Date: Tue, 17 Feb 2026 10:37:38 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,115 +53,72 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/6] dt-bindings: clock: qcom: document the Eliza
- Global Clock Controller
-To: Abel Vesa <abel.vesa@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Luca Weiss <luca.weiss@fairphone.com>,
- Taniya Das <taniya.das@oss.qualcomm.com>, Taniya Das <quic_tdas@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20260216-eliza-clocks-v3-0-8afc5a7e3a98@oss.qualcomm.com>
- <20260216-eliza-clocks-v3-1-8afc5a7e3a98@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH 2/2] media: iris: Enable Gen2 HFI on SC7280
+To: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260209-iris_sc7280_gen2_support-v1-0-390000a4fa39@oss.qualcomm.com>
+ <20260209-iris_sc7280_gen2_support-v1-2-390000a4fa39@oss.qualcomm.com>
+ <0da582a6-5bba-4450-99ec-cf57b67915e6@oss.qualcomm.com>
+ <0a324898-092b-3e44-c35c-15de20b50f40@oss.qualcomm.com>
+ <2uih6xdzarkwnvhlhv5kznmdwo4jorqvsrb7xxrxgr6vprx3ey@4kx45k5i3c4y>
+ <6b9042c8-767e-0fdb-9012-f3790899509e@oss.qualcomm.com>
+ <f9f40ac7-e6fe-41eb-92e4-311913567ef0@oss.qualcomm.com>
+ <b759fb04-22b7-cd5c-9e53-f4ffe9f37dc5@oss.qualcomm.com>
+ <nb576n2risxl5mabotlu3idmoztedrblur4gbvdlk4cu3mtiqq@ecezsux4w7jz>
+ <mnqt1vydHJ7duvh6qPmtIczPjjPtvVtq45CYhLhlpdAIKfAXuZDtVvIZD2SN2d2m7oF1f75HTXuXFO7qS4ahxw==@protonmail.internalid>
+ <2f85b131-2167-838c-152a-03be689b0b29@oss.qualcomm.com>
+From: Bryan O'Donoghue <bod@kernel.org>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20260216-eliza-clocks-v3-1-8afc5a7e3a98@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <2f85b131-2167-838c-152a-03be689b0b29@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-93109-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-93107-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FROM_NEQ_ENVFROM(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 1672714ADF0
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 3174014AEDD
 X-Rspamd-Action: no action
 
-On 16/02/2026 14:43, Abel Vesa wrote:
-> From: Taniya Das <taniya.das@oss.qualcomm.com>
-> 
-> Add bindings documentation for the Global Clock Controller on Qualcomm
-> Eliza SoC. Reuse the Milos bindings schema since the controller resources
-> are exactly the same, even though the controllers are incompatible between
-> them.
-> 
-> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
-> Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-> ---
->  .../devicetree/bindings/clock/qcom,milos-gcc.yaml  |   9 +-
->  include/dt-bindings/clock/qcom,eliza-gcc.h         | 218 +++++++++++++++++++++
->  2 files changed, 225 insertions(+), 2 deletions(-)
-> 
+On 17/02/2026 07:40, Dikshita Agarwal wrote:
+> Due to these constraints, I think, the only possible way is to extract the
+> version from the firmware binary blob itself.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+According to the internet machine
 
-Best regards,
-Krzysztof
+MDT::SW_ID
+      GEN1 == 0x0b || 0x0c
+      GEN2 == 0x24 (or above one assumes)
+
+If you can verify that with the Iris firmware people we should be able 
+to parse that data out of the mdt header and reliably differentiate on it.
+
+---
+bod
 
