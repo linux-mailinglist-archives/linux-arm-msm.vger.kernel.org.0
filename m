@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-93274-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93275-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id PUgbO0qolWnXTAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93274-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Feb 2026 12:53:46 +0100
+	id KCByNtuolWlVTAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93275-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Feb 2026 12:56:11 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8BD6F1561EF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Feb 2026 12:53:46 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 11402156265
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Feb 2026 12:56:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 85E063013EF2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Feb 2026 11:53:45 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id BB9163007203
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Feb 2026 11:56:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DEC9130AD06;
-	Wed, 18 Feb 2026 11:53:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71C6630DD13;
+	Wed, 18 Feb 2026 11:56:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hGbQS84C"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EqdLIUNs"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95032367B5;
-	Wed, 18 Feb 2026 11:53:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D952303A1A;
+	Wed, 18 Feb 2026 11:56:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771415622; cv=none; b=C/cOe53KQ3+91lDkrAGPBuSSMgRxySqf8MOWZwBnGDdRHZ0cxe2Wt9bFOryr2ElFJ9ZzC5lRcjkDFQg2YX65FT2Gkwbxwt789eB9KG/tkWEFOrBjqbrWpj/Gq07KJv14hhPiMyGgR4q5Y48NQZMJdjzTsz8Ef6htR5SdDqKcx5w=
+	t=1771415767; cv=none; b=BDZLv/BwRjyzoByTk1SkjFyT6Swn8i3+Y0fh5C16kIRnZdfr129P7EJndDh4UWUMb2f1dC8feHDt7zYwobHRpZGxVYHQhC63kv2wDpI3NQRTgvnqRcAmFK9CIqZvqHMhcUOsJJaiLGgMamRfqwezsCrDMOMIy9i0LlWsrY1MoOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771415622; c=relaxed/simple;
-	bh=WBH1O1Xnj4S4FS16Nb91DtsqjWRLCvRuT7zz7Ug+Yyo=;
+	s=arc-20240116; t=1771415767; c=relaxed/simple;
+	bh=q6BVILBmo4kht/Ek3frvBWGuLP2t4zYigvK3MqljjUI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qdCDqW4SaOJ+Z2a9Cc46JxWKAzBK0qE/36LIqcbPXhnO16/KHdFDLvv+Yb78YKfkB8Ztyj1L4pOzEercXzQriZug/SeiadSpSfU6YGhBbOJXlwiASgGmHbUHV8b/pDXqU+lo3PvUWVjNAxK08GvWvdFEbfhfBjunT14xPetqWFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hGbQS84C; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3F43C19421;
-	Wed, 18 Feb 2026 11:53:38 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=nhHhOjMamq4zk2f8Y8Ie8CpPjH8v1qoQqDc34bkVC/18S43bOdufGBeSl5d0d31CGS0+aNMx19HFmGDvBmgqMv+GXlIwJsYL/uweq82nMfbUya0sarwQCH97Fc3DFIWLFcTDRDfpa9DQbx1Vayi/Iy7alIlYnoN1737S0jQQFO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EqdLIUNs; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEBD7C19421;
+	Wed, 18 Feb 2026 11:56:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771415622;
-	bh=WBH1O1Xnj4S4FS16Nb91DtsqjWRLCvRuT7zz7Ug+Yyo=;
+	s=k20201202; t=1771415767;
+	bh=q6BVILBmo4kht/Ek3frvBWGuLP2t4zYigvK3MqljjUI=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=hGbQS84CA9RB0KgN196vpMB1MZNCfieEKXCL0xl8DVn/LBmjQIt/Kvafy45sAf4+Y
-	 68SLFZProOPxGO7XfPLNwKQYdRGY0ZmT4S4z7czI3hSnNNvD4s4MAVfAF9Mi6aSLH5
-	 2YHc3Tl+uDARgVxGvKFOG2SuQvQ43K9ycAvX0bTTdAVrgWPNPkSnXmQ5mTjZqary/W
-	 cunQGWhTpnsW+sjjHUl1YrwNlWSVTgjUQZstTRqiQGI8NgLI/vM5ta7VP8L/E+yhRp
-	 nFcK5zGdy0bWnR8SQUNd1xw2KJg3MXw2S7vWJ8K4r22n0hdmYmhbKrdlb26seI/qwm
-	 ARl2xdDdwG6Sw==
-Message-ID: <af950713-4a0d-43ec-8000-3400f546acbd@kernel.org>
-Date: Wed, 18 Feb 2026 12:53:36 +0100
+	b=EqdLIUNsgaDcy+rd4zrmtMy9KdQgwQFRQb4uZ4Rhu0ROOF1PfLbroQsBqtD4Xaoi2
+	 8YFzq0+6V49rN7tfoxRSg1kaMu9cI6im15kl9NBQfUTqDYb2rDq2gkC5YVbzY7p/n+
+	 MzI9QgtoG8vMfx2OjT0tnMl5SBa4wJGSIOrL/NuJAF2GW+VuHqLDFDPtlC8YfA6849
+	 igrM9ZkmVPF9BqweIedYBGPTvIh61hOs1r/1hXbGvSQ8H5AdIQ13kbfF2Es3JJfsqo
+	 FM+j1l/MoW/i/NEVGi0gO325ECMS2HyFwDAYfK2VDDqPW2M4c8chrfLslgXXNVhOmP
+	 iv/thosUBbNrw==
+Message-ID: <0bfcb292-4e49-4047-b631-dd3029b43f1c@kernel.org>
+Date: Wed, 18 Feb 2026 12:56:02 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,21 +53,23 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/2] dt-bindings: bluetooth: qcom,qcc2072-bt: add
- bindings for QCC2072
-To: Vivek Sahu <vivek.sahu@oss.qualcomm.com>,
- Bartosz Golaszewski <brgl@kernel.org>, Marcel Holtmann
- <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
- Rocky Liao <quic_rjliao@quicinc.com>
-Cc: quic_mohamull@quicinc.com, quic_hbandi@quicinc.com,
- janaki.thota@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
- linux-bluetooth@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260218114955.3970974-1-vivek.sahu@oss.qualcomm.com>
- <20260218114955.3970974-2-vivek.sahu@oss.qualcomm.com>
+Subject: Re: [PATCH net-next v3 1/3] dt-bindings: sram: qcom,imem: Allow
+ modem-tables subnode
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller"
+ <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Alex Elder <elder@kernel.org>, Marijn Suijten
+ <marijn.suijten@somainline.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ netdev@vger.kernel.org
+References: <20260217-topic-ipa_imem-v3-0-d6d8ed1dfb67@oss.qualcomm.com>
+ <20260217-topic-ipa_imem-v3-1-d6d8ed1dfb67@oss.qualcomm.com>
+ <20260217-godlike-silent-owl-0a8487@quoll>
+ <36f0a71c-a8b7-4aaa-81c3-1945b268c57f@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -113,25 +115,25 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260218114955.3970974-2-vivek.sahu@oss.qualcomm.com>
+In-Reply-To: <36f0a71c-a8b7-4aaa-81c3-1945b268c57f@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-93275-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,holtmann.org,gmail.com,quicinc.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-93274-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[16];
 	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[17];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
@@ -140,101 +142,44 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,devicetree.org:url,bootlin.com:url,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,quicinc.com:email]
-X-Rspamd-Queue-Id: 8BD6F1561EF
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: 11402156265
 X-Rspamd-Action: no action
 
-On 18/02/2026 12:49, Vivek Sahu wrote:
-> QCC2072 is a WiFi/BT connectivity radios which exposes
-> UART as an interface for Bluetooth part.
-> It requires different configuartions and firmware, so
-
-different than what?
-
-Also typo configurations.
-
-> document it as a new compatible string.
-
-Please wrap commit message according to Linux coding style / submission
-process (neither too early nor over the limit):
-https://elixir.bootlin.com/linux/v6.4-rc1/source/Documentation/process/submitting-patches.rst#L597
-
+On 18/02/2026 12:05, Konrad Dybcio wrote:
+> On 2/17/26 9:25 PM, Krzysztof Kozlowski wrote:
+>> On Tue, Feb 17, 2026 at 02:30:31PM +0100, Konrad Dybcio wrote:
+>>> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>>>
+>>> The IP Accelerator hardware/firmware owns a sizeable region within the
+>>> IMEM, named 'modem-tables', containing various packet processing
+>>> configuration data.
+>>>
+>>> It's not actually accessed by the OS, although we have to IOMMU-map it
+>>> with the IPA device, so that presumably the firmware can act upon it.
+>>>
+>>> Allow it as a subnode of IMEM.
+>>
+>> You do not have compatible, so rely on the node name as ABI, which is
+>> fine in general but... I do not see usage of it in the driver. Why do
+>> you need to define modem-tables child then?
 > 
-> Signed-off-by: Vivek Sahu <vivek.sahu@oss.qualcomm.com>
-> ---
->  .../net/bluetooth/qcom,qcc2072-bt.yaml        | 47 +++++++++++++++++++
->  1 file changed, 47 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/net/bluetooth/qcom,qcc2072-bt.yaml
+> I don't really *need* the node name to be an ABI. However, the current
+> binding for IMEM only allows a named "pil-reloc@.." subnode (which is
+> consumed via of_find_compatible_node() in the remoteproc subsystem) so I
+> figured the intention was to keep the list of allowed subnodes strictly
+> moderated
 > 
-> diff --git a/Documentation/devicetree/bindings/net/bluetooth/qcom,qcc2072-bt.yaml b/Documentation/devicetree/bindings/net/bluetooth/qcom,qcc2072-bt.yaml
-> new file mode 100644
-> index 000000000000..7b27c2c651fa
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/net/bluetooth/qcom,qcc2072-bt.yaml
-> @@ -0,0 +1,47 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/net/bluetooth/qcom,qcc2072-bt.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm QCC2072 Bluetooth
-> +
-> +maintainers:
-> +  - Balakrishna Godavarthi <quic_bgodavar@quicinc.com>
-> +  - Rocky Liao <quic_rjliao@quicinc.com>
-> +
-> +description:
-> +  Qualcomm QCC2072 is a UART-based Bluetooth controller.
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,qcc2072-bt
-> +
+> If you'd prefer a blanket pattern declaration with say '^[a-z]@[0-9a-z]+$'
+> with just a reg requirement inside, I'm fine with that too
 
-Where are clocks?
+No, the problem is that you do not use the ABI here at all. Neither
+would you use the blanket pattern, so my question stays: why adding ABI
+which is not used?
 
-Where are supplies?
-
-> +  enable-gpios:
-> +    maxItems: 1
-> +    description: GPIO specifier for the chip interrupt.
-
-Interrupt? No, it cannot be interrupt. This can be only enable pin and
-then description is redundant. Look at other bindings.
-
-Looks like matching QCA2066, except missing clocks, or like other QCA
-devices with proper supplies.
-
-I don't believe that Bluetooth device works without power.
-
-> +
-> +required:
-> +  - compatible
-> +  - enable-gpios
-> +
-> +allOf:
-> +  - $ref: bluetooth-controller.yaml#
-> +  - $ref: qcom,bluetooth-common.yaml
-> +  - $ref: /schemas/serial/serial-peripheral-props.yaml#
-> +
-> +unevaluatedProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/gpio/gpio.h>
-> +    #include <dt-bindings/interrupt-controller/irq.h>
-> +
-> +    serial {
-> +        bluetooth {
-> +            compatible = "qcom,qcc2072-bt";
-> +            enable-gpios = <&tlmm 19 IRQ_TYPE_EDGE_FALLING>;
-> +            max-speed = <3200000>;
-
-No firmware?
+The pil-reloc is being used, as you pointed out.
 
 Best regards,
 Krzysztof
