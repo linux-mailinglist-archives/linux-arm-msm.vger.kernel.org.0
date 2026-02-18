@@ -1,173 +1,317 @@
-Return-Path: <linux-arm-msm+bounces-93257-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93258-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id uPrBMNiXlWk1SgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93257-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Feb 2026 11:43:36 +0100
+	id CK1uO4iXlWk1SgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93258-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Feb 2026 11:42:16 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1BAB155966
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Feb 2026 11:43:35 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6886015592A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Feb 2026 11:42:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 30F6E301092F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Feb 2026 10:41:35 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 04E9430156D8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Feb 2026 10:42:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFCA02FF64C;
-	Wed, 18 Feb 2026 10:41:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02CA2301486;
+	Wed, 18 Feb 2026 10:42:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jl0ssTuM"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="HOCrC2tk";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Is7JdY86"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB6E52F3C26;
-	Wed, 18 Feb 2026 10:41:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E8AF2BE7A7
+	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Feb 2026 10:42:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771411293; cv=none; b=dSbzF9SuO9Sw1HTPh7cIrKDFG2lVY2iIr6E50+XfbmtsM4cFnQkQeG5y8kUeiRZVFfdBR4FTs44SR3Xr3eCQpgi/5xgDddbc/6JbiE9dlLTUYqA+hviKX4gP6uOBxHnBBB7N9ON1M/5g+6Tg4u/G+zBv5dWopEoyxX0T7d9wZic=
+	t=1771411331; cv=none; b=rlAcLGzhzQ9tZhTUGx/ThgvX6jDk3iWisGTwRs0Vu3Fz7soL48qYDyHwm/DvDHGz/IJF6FRi3AiQ8h8JY2oVVdG4IsZxMWALzoAMth6jJXgXfMSxkvkxoilIkcFxL1L8uHFtFPbKVorbpToQgUs7JS8P7/fAUvyNDQw+CHZDYvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771411293; c=relaxed/simple;
-	bh=2IipbrnC8gRJmyofTcNtL2KhCjB5y7fHAJB00hh96q8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ed4TY1g50fDfZ4ZbK3MopdBLTfvPkhWaQhP3zurFCA/AohwJpLQk4IC3ZJ0nsB6ESMlcck3M+Dmo2wqixJB1+8SX37LUJDsZTPyuIAIzOeYPNTmp+xHS49S9VgnVzMiZSpdokiZrh7Z83Y8Ju0mOBHnVGU4YNfUJzE/Ssidk5Gg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jl0ssTuM; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71CA6C19421;
-	Wed, 18 Feb 2026 10:41:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771411293;
-	bh=2IipbrnC8gRJmyofTcNtL2KhCjB5y7fHAJB00hh96q8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jl0ssTuMc5uw/xUkfnpmzcshIOzt76e+5Mwm17ghvaE2r6jEg7Df8PV+7G4Vmfxi3
-	 VBAzHPb75uoqYBlrM+4IxhRaIrhvPCchkdqQmh3Xy9S/728JjUOlR7eQ+rlG/vd5+2
-	 5JUExHKR2LFhbYZuYOObTob91xuUbbpP1RBsWRIpzC/KjSIBdTxqwtA8n5entXjMD+
-	 2FvEo7XHaG/MVAv2rxf5N3HVy2V0VkjOLR/BIDpaKsZz77NhvFY4HWEmqtPh5dUVDO
-	 h3Q4dVHRYkHPt9Wq2M1DYZ/9jLa3nWWMsYn0CvjtgaMaUSR/ZsHQB9QCm5kNtvOla1
-	 uKbUYoPSsoGBg==
-From: Simon Horman <horms@kernel.org>
-To: konradybcio@kernel.org
-Cc: Simon Horman <horms@kernel.org>,
-	pabeni@redhat.com,
-	marijn.suijten@somainline.org,
-	edumazet@google.com,
-	elder@riscstar.com,
-	andrew+netdev@lunn.ch,
-	dmitry.baryshkov@oss.qualcomm.com,
-	konrad.dybcio@oss.qualcomm.com,
-	andersson@kernel.org,
-	elder@kernel.org,
-	devicetree@vger.kernel.org,
-	krzk@kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	davem@davemloft.net,
-	kuba@kernel.org,
-	conor+dt@kernel.org,
-	netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org
-Subject: Re: [net-next,v3,3/3] net: ipa: Grab IMEM slice base/size from DTS
-Date: Wed, 18 Feb 2026 10:39:19 +0000
-Message-ID: <20260218103917.132153-3-horms@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260217-topic-ipa_imem-v3-3-d6d8ed1dfb67@oss.qualcomm.com>
-References: <20260217-topic-ipa_imem-v3-3-d6d8ed1dfb67@oss.qualcomm.com>
+	s=arc-20240116; t=1771411331; c=relaxed/simple;
+	bh=j05/cxfltucXRwON8QSfjH8144PoGhffNAKPXlMCtjw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Kfu9TCBnuc2vzTwvSGXNYUzQZDv9jeUBIaZk7GY76WMXHc6hQOokZuNkKuLVq/6Mr/c2LAd6SCu0KkHv2JtfSrO7n7yJMEadxgWjy0wtABljuYMfr8ZPqwOR6w0EEynRDfX9o8kfmn3xqIgRoIozyCW69IdmGZ92cnUvFdN/gjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=HOCrC2tk; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Is7JdY86; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 61I8XDb53379857
+	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Feb 2026 10:42:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	50M2aZYa0M5or/awTAHouzvOMiiz02HpR0Cx2PU+naE=; b=HOCrC2tkGG1ZYOe6
+	HcTDt/NxHg+C+q40RhtuyEMR4htzanaDOvS0TmE+6C+329+7zJaLMz5Rj03kJeUt
+	gn3QiqoR+N5lzFpqWffPx7hVigKzjPhXjbqdyKWZtapUHfJhGjEBUJGOHrQCDdjx
+	Nn55OJK4ajp1uEQH8Ayg6zOqSarnTqk1iCCw694m/apy11YDdds9wO58WjOt7bQ2
+	QE0Z/sugrrfjJrdPF6wlZYNdL9/4fdWQVU3DiJU2hqn6ZsnZSW9E9JoA514DOngS
+	RpKaD+vZf34hd+z8VFFEuhSCPgvyMYIJwjxJcxkToOg5ycjWQlRM3sfdWgJYMLzF
+	USrYdA==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ccxnyj3cm-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Feb 2026 10:42:08 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-89547ddf32bso39948856d6.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Feb 2026 02:42:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1771411327; x=1772016127; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=50M2aZYa0M5or/awTAHouzvOMiiz02HpR0Cx2PU+naE=;
+        b=Is7JdY868+ymInNH88zQ8rJdWpjC/5tKZH/ca+LXNRZGHorimOCg8fa1jEjI8jd8Z6
+         3GmqN6GPOJsH0ITx75rbcWTSqe7fBEqIITMVb691g6fH6rCOdDjTm6PJN5BCgFEAHMtN
+         y2U5Osu3JRgjBjmF08KyxRB3NYFE3XFzjFq5Eoh+HnolhH0qKERTjeW9OB7C1SpxfyoT
+         Zf3YRCDj57UK8lPkf3cxuZXnHnqqsL1JAMtmZIcp5eGXK8i1/1AIjBIz9pfo98HGBKWc
+         KWu/tmhJpHJq9UNZDBGb+hB9tkbgO0F5tGL6yKmPv5IF1xmodG8gNRIWSUXkRfTvZFXV
+         osLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771411327; x=1772016127;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=50M2aZYa0M5or/awTAHouzvOMiiz02HpR0Cx2PU+naE=;
+        b=U0RRaiSrcCrsVmsrz9MSpi5XY7KCNOvItFkKLxjvpV7YsGJoay11HEnNFRuWWmwizo
+         JVIKL8WYciVglpHFt3Cq5xcUBVbtceUtEIOw9rNgSEufZvv6s0vrRkusblkDE/gzs/m7
+         jyeYz4bxeSiSdP2Vc482vYgUwsYjnZRzsSTyTwfEMCUvk3kxCNgzMWt2ptCn/FveiEW0
+         Pb4qTtRw+t7DHDBH6TRAsMTycssemDHK4j8AxPtdsPj9UDhyJte50xi+Y/+zG1S3594L
+         jbkbF1GIL9Iqk2i5gt6MSc5OTHsWhIqa/bqALXCHk314ma4uVUPySAOg0TZFHfZMZ/Jh
+         30aQ==
+X-Gm-Message-State: AOJu0YzkW2g4SP2ZOaTrEACN0Ktxom8Zi8wuF9wPmtYD+lQiF3KdNe9p
+	jWRbg5UqBQALAh5l4j8MCVPXU5u/mIFE851lj0BADhjS1N+WQFwaOdY/rUpt7sA8aB3FFR9qXhq
+	qulXoMB1XkKtlM61Vb6S73yJGviJv1o5suygWElwTXsXRyOWNyZadhaHKTLsxGdO4ZPjE
+X-Gm-Gg: AZuq6aI2SUqh3O4qDXBGok5ZuBMatpJ01aR7O/pPcJazf0yRnLryu2l/D+cURmKFxnp
+	b+hQjmYBuMNW1qiGaOH5gwWIbEE7sVg8tdgTfo71GOcSCNzIVP/0QOODpKdKlvTJSof8mBGzIJs
+	XCYR0856tpxzlWOtdWCucvs1OS5Y5rWeXv/AB4/XvDgr1leUTJncrg4EhSsm0VxDgzAVHUW/His
+	AQZh3SdkAf1hsRZ+/9SQg2hIzE+ZMH4QZZMzsScQ1/jvlnQzicvsL2qxSOeO+garfwESWrZPxdY
+	5Y0HSyF60bCOolK2dTpX3KKWZCfVxLcFP/R34QK2JFYhYwR3mBccNYDaMAqxSJGer3y+5cv1DPJ
+	OGP1hmlXkD2qpiGow/ZcpsB4PWsIteuom+UVUwaNOKKBBrvMNaQYlXxr+8cQ3fp0QMPXy0nafwx
+	mOjmc=
+X-Received: by 2002:a0c:e002:0:b0:895:3b2c:7708 with SMTP id 6a1803df08f44-897346241b8mr173741496d6.0.1771411327294;
+        Wed, 18 Feb 2026 02:42:07 -0800 (PST)
+X-Received: by 2002:a0c:e002:0:b0:895:3b2c:7708 with SMTP id 6a1803df08f44-897346241b8mr173741416d6.0.1771411326901;
+        Wed, 18 Feb 2026 02:42:06 -0800 (PST)
+Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-65bad3e390bsm2923880a12.17.2026.02.18.02.42.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 18 Feb 2026 02:42:06 -0800 (PST)
+Message-ID: <b96b9752-6432-419f-b49b-a34416e691a8@oss.qualcomm.com>
+Date: Wed, 18 Feb 2026 11:42:04 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: add device tree for SDM845-HDK
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd
+ <sboyd@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20260217-sdm845-hdk-v1-0-866f1965fef7@oss.qualcomm.com>
+ <20260217-sdm845-hdk-v1-4-866f1965fef7@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20260217-sdm845-hdk-v1-4-866f1965fef7@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: fEh-d_ZR2k7p1iweyaFuZi47i4K6Tkp6
+X-Authority-Analysis: v=2.4 cv=Do5bOW/+ c=1 sm=1 tr=0 ts=69959780 cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
+ a=EUspDBNiAAAA:8 a=-UWIQ00ppj3yYQeD8CsA:9 a=QEXdDO2ut3YA:10
+ a=1HOtulTD9v-eNWfpl4qZ:22
+X-Proofpoint-GUID: fEh-d_ZR2k7p1iweyaFuZi47i4K6Tkp6
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjE4MDA5NSBTYWx0ZWRfX+GkfsM2dvtsV
+ HjgfXIc8ctGe1qdzBsoj/hhyiaOgCsNa1yEFyrGtSxv4qe2KBzMuufwMgT6SQWoGcySkQlPC6iQ
+ 2KBGNxKniy2/TdtPoDUOzhU7ethghEDyoVuz4btoXr1NL18CamvlOrLI0Ky/608JcILRcrNRf0T
+ /EmmJmMW0Mybk0IZOfpRe9zEAZdv9A8Y6Za4vBAi7YOF+gVFmoiD7glEGt7eAZcGyo8LpR1QuO/
+ 7saSCO/atnB8g/ycTIy0crfyPPXcEsh+P2dHlRX8RSzOQKwVWtpJDgiK64oehXqvd+rgmm5N5Qo
+ h3D09RE/WsjLqpcx9fAF19G9ECHv3MXqGlcULl9YLUSDHrEBkypGqX37iqldfg9KWFTud21Cq5/
+ E+cxuL4k/fqGzHczP3Rm8bwZdKRjbn+e+NLGxb8DEPz+QmreFoFJ5ZKm8mbr+t/32Wyuiy6+W+q
+ /OZ0G3tBlg6uHfq33EA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-18_01,2026-02-16_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 impostorscore=0 phishscore=0 bulkscore=0 clxscore=1015
+ priorityscore=1501 adultscore=0 malwarescore=0 suspectscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602180095
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.84 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCPT_COUNT_TWELVE(0.00)[21];
-	TAGGED_FROM(0.00)[bounces-93257-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_TWELVE(0.00)[13];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-93258-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
 	TO_DN_SOME(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[horms@kernel.org,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
 	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	DBL_PROHIBIT(0.00)[0.0.0.4:email,0.0.0.3:email,0.0.0.5:email];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,netdev,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,linux.dev:url]
-X-Rspamd-Queue-Id: E1BAB155966
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 6886015592A
 X-Rspamd-Action: no action
 
-This is an AI-generated review of your patch. The human sending this
-email has considered the AI review valid, or at least plausible.
+On 2/17/26 10:20 PM, Dmitry Baryshkov wrote:
+> Add device tree for the Qualcomm / Lantronix SDM845 HDK. It is the
+> development platform using the modem-less (SDA845) SoC, optional onboard
+> DSI panel and a rich set of connectors.
+> 
+> Working:
+> - HDMI display
+> - uSD, UFS, USB
+> - DSPs, WiFi, BT
+> - Buttons, LEDs
+> 
+> Not working or not tested:
+> - DisplayPort - TCPM not supported for this PMIC
+> - WiGig - requires power sequencing driver, doesn't work with the
+>   current in-kernel driver
+> - Audio
+> - FingerPrint
+> - USIM
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> ---
 
-For local reproduction steps see https://netdev-ai.bots.linux.dev/ai-local.html
----
-net: ipa: Grab IMEM slice base/size from DTS
+[...]
 
-This commit reads the IMEM slice base address and size from a device
-tree "sram" phandle, falling back to the existing struct fields when
-the DT property is absent.
+> +	gpio-keys {
+> +		compatible = "gpio-keys";
+> +		autorepeat;
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&home_pin_a>, <&vol_up_pin_a>;
 
-> diff --git a/drivers/net/ipa/ipa_mem.c b/drivers/net/ipa/ipa_mem.c
-> index 835a3c9c1fd4..583aea625709 100644
-> --- a/drivers/net/ipa/ipa_mem.c
-> +++ b/drivers/net/ipa/ipa_mem.c
+property-n
+property-names
 
-[ ... ]
+in this order, file-wide, please
 
-> @@ -656,7 +659,23 @@ int ipa_mem_init(struct ipa *ipa, struct platform_device *pdev,
->  	ipa->mem_addr = res->start;
->  	ipa->mem_size = resource_size(res);
->
-> -	ret = ipa_imem_init(ipa, mem_data->imem_addr, mem_data->imem_size);
-> +	ipa_slice_np = of_parse_phandle(dev->of_node, "sram", 0);
-> +	if (ipa_slice_np) {
-> +		ret = of_address_to_resource(ipa_slice_np, 0, res);
+[...]
 
-Here, res still points into the platform device's resource array from
-the earlier platform_get_resource_byname() call.  Won't
-of_address_to_resource() overwrite the platform device's "ipa-shared"
-resource entry with the SRAM resource data?
+> +&cluster_sleep_0 {
+> +	/* default, 0x4100c244, kills the board */
+> +	arm,psci-suspend-param = <0x41008244>;
+> +};
 
-The needed values (mem_addr, mem_size) were already copied out, but
-this silently corrupts the platform device's resource table.  Would it
-be better to use a local struct resource for this call?
+Does crashdump say anything interesting?
 
-Simon says: I think this is a false positive as I don't see how reusing res
-here results in resource table corruption.
+[...]
 
-> +		of_node_put(ipa_slice_np);
-> +		if (ret)
-> +			return ret;
-                        ^^^^^^^^^^
+> +&mdss_dsi1_phy {
+> +	vdds-supply = <&vreg_s6a_0p8>;
+> +	status = "okay";
 
-At this point ipa->mem_virt holds a valid memremap() pointer.  Does
-this direct return leak the mapping?  Every other error path after the
-memremap() in this function uses goto err_unmap, which calls
-memunmap(ipa->mem_virt).  Should this be goto err_unmap instead?
+Let's uniformly keep a \n above 'status'
 
-Simon says: This seems to me to be an actual problem.
+[...]
+
+> +&pm8998_gpios {
+> +	home_pin_a: home-active-state {
+> +		pins = "gpio6";
+
+gpio5 here
+
+[...]
+
+> +&pmi8998_lpg {
+> +	status = "okay";
+> +
+> +	qcom,power-source = <1>;
+> +
+> +	led@3 {
+> +		reg = <3>;
+> +		color = <LED_COLOR_ID_BLUE>;
+> +		function = LED_FUNCTION_BLUETOOTH;
+> +		linux,default-trigger = "bluetooth-power";
+> +	};
+> +
+> +	led@4 {
+> +		reg = <4>;
+> +		color = <LED_COLOR_ID_GREEN>;
+> +		function = LED_FUNCTION_HEARTBEAT;
+> +		linux,default-trigger = "heartbeat";
+> +		function-enumerator = <2>;
+
+function-enumerators only seem necessary when the same color&func
+combo is registered multiple times
+
+> +	};
+> +
+> +	led@5 {
+> +		reg = <5>;
+> +		color = <LED_COLOR_ID_RED>;
+> +		function = LED_FUNCTION_INDICATOR;
+> +		function-enumerator = <1>;
+
+panic-indicator?
+
+> +	};
+> +};
+> +
+> +&pmi8998_wled {
+> +	status = "disabled";
+> +};
+
+It's already disabled
 
 > +
-> +		imem_base = res->start;
-> +		imem_size = resource_size(res);
+> +&qupv3_id_0 {
+> +	status = "okay";
+> +};
+> +
+> +&qupv3_id_1 {
+> +	status = "okay";
+> +};
+> +
+> +&sdhc_2 {
+> +	status = "okay";
 
-[ ... ]
+last, please (there's more occurences below)
 
-> +	ret = ipa_imem_init(ipa, imem_base, imem_size);
->  	if (ret)
->  		goto err_unmap;
+
+> +	pcie0_default_state: pcie0-default-state {
+> +		clkreq-pins {
+> +			pins = "gpio36";
+> +			function = "pci_e0";
+> +			bias-pull-up;
+> +		};
+> +
+> +		perst-n-pins {
+> +			pins = "gpio35";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-pull-down;
+
+bias-disable?
+
+Konrad
 
