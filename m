@@ -1,233 +1,345 @@
-Return-Path: <linux-arm-msm+bounces-93293-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93294-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id EPG/IPXOlWnjUwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93293-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Feb 2026 15:38:45 +0100
+	id gBGBC4XRlWllVAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93294-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Feb 2026 15:49:41 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11CE31571A6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Feb 2026 15:38:45 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 784EB15729A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Feb 2026 15:49:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 8AF2A301187D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Feb 2026 14:38:41 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 09392300CE6E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Feb 2026 14:49:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2995B334C1C;
-	Wed, 18 Feb 2026 14:38:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39E9D334C0A;
+	Wed, 18 Feb 2026 14:49:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Pgitkos0";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="d5S6jNxU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gnHWOx3K"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F3F330641
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Feb 2026 14:38:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1474C2D8762;
+	Wed, 18 Feb 2026 14:49:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771425521; cv=none; b=Zvf6ezsCZt2yiUgLNsCVbR+USvn964HTs9z2ygfMPEv8yZxkoMgjh8q3pKr0KZ5n49yBtrYdfCxLMqXktUkzAp7vhPgZ0CuauYQ2lyhcYZkhzQ7m/Ih4+z+WKmbWRZC+DMmZF/BFLVETtfGUdygXoMdCnE1iibTSawIsMu68Xgs=
+	t=1771426178; cv=none; b=cmjfpVq/AwtfREzo9TaHAW2H5gDXBUZiM33a2xpiBhTew39RvshzcthKROPhVOy6FSgKrnTH1tXWruzozUM1HOb/eaVK1kMJCGX4etZ7cuA1Tk0KiL5ehE9iMprL41B2fZmDG7byltXlnnbC1sFi2BQ9O/8xR87x5to1Cn7sDvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771425521; c=relaxed/simple;
-	bh=vUu2tw8Z85UwIH/pkoLHOTaWnUiXl4S6e78RxA96ga0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VeS7L7R1sRrm11GHlfcoPcg9+p06aV2m+2BJmGbpTiipeBzO5D2Jk5hVLyqWmprdPzKw18O7ntBuHIm5B1aJyfdx7IIL9O4e63i71le+5VNCfI5QsZqI93IcgdzYLKqV5o0vLZ43X6rNtqVtYRk1nH7SrDt20yM1DpG6kQ4f2/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Pgitkos0; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=d5S6jNxU; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 61IB4X0H1624211
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Feb 2026 14:38:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	WH1nlO52NiOo/le5purWnObw/9prSk/Tj9AQuM4+OCw=; b=Pgitkos0R+Ukh3CH
-	zon02hkMtAfJAK2tDb0BrcWHvlTd0qmrE/GbRo/oOHR7X3VKfTe8OO/6Hmnj6vnT
-	ajsm877NO6d7EdrEWU7zPMQ6i5bOxLiTgw7HD33l+zJ0DTTyae6twW+TPKCOKP/i
-	N8f60N91m2UIliHdgFmQW7D53a4T9fHXu1dlzPtahuZ3QfoIy1UVjYj8FGKx+kzp
-	eLKjJNtP5bXSGUE7BBrKecNQ9WfQlQQxV4m1rLEcUQEc8dTgFptsV008p9uEr7+8
-	K97XZAljV6W1vV2A3YeY6LOrw3gIVe3hSCfZaCxzBuRF9oIIwjxHgXarmQXG1ufK
-	V8cDRw==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cdc7u8g1p-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Feb 2026 14:38:32 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8c710279d57so403470085a.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Feb 2026 06:38:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1771425512; x=1772030312; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WH1nlO52NiOo/le5purWnObw/9prSk/Tj9AQuM4+OCw=;
-        b=d5S6jNxUMM78caq/QVVkeQ3WxJhvhleJ7o5JjjlsNpv5jeRGeJbhCyGTnfJ+aokzzq
-         MeYYqAV4sNQ8JIufjuoXmTMxH4OHzKSdr7oBFofExgke/thCSS/z8sEu935peGR2Iiox
-         4uyrZomO5shdep+dB25vVtkhAu2QQVjhP63c+LpmRFJqZItXUleA6viRy9CdAoF2iQW6
-         6S+VQNxnYNVDq1awHyFJ0Ocz3EN6y/kK9hcaVBCrAwneZgKZVDwf8QUyY+u5Dwc8zijx
-         kfzJaAOmpjodBuBqwfApAhbbz4py7XBLrdYxT5TZGxiQIh+UxGwxi8tcN3WjmO+BNPPr
-         ea6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771425512; x=1772030312;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=WH1nlO52NiOo/le5purWnObw/9prSk/Tj9AQuM4+OCw=;
-        b=GLDpaWP+AKhuvy1KghtQnMsFby1d+bc9LG9aMHet6FK+0s8hNFswQv3gilm39vD2X/
-         AvX8PBJ2psiQW9ZaN4hxJUyTBudLgVsL4yZgRfAzhp/ZIGvenSUHh/T3VabLosy4ghyb
-         m4k0eDqgiiX1iRjv56wczPWAhAJoGObEFGuSbDJMcEyLVS10xKRWRkIHF2ebyhgBhLyJ
-         7YSmlzXVzt/kayTqda00w/pUmG8DhoBjYG8fnZQ2HezW/EyiyMl4UNzdGOLU4MYXATJk
-         VKlqyI92vOTquqAF1/4Zq3/aWOTi6puBTTgJtJF02MX8DddHfoxnib0GHPDFfD89HqJv
-         P97A==
-X-Forwarded-Encrypted: i=1; AJvYcCXlLfs8lPCGIoPFbt18NzunRikbDB5JbKJMhcETw2gYX5e/h27Z+6qgorZupLuvPCJrEBfI7tC/+WBliafg@vger.kernel.org
-X-Gm-Message-State: AOJu0YztYWHpJA9sah/SR49+Fmg3A2TYqIxibcnf0904cm9zlWKEFY6V
-	tku+XhR0yKHrVwkxHIO/VbLUCHl2TZPIHkzq2q57H/zYthxAvk0aqyJNZru0hXR0idDOZ9Fj08N
-	bGVi+GxbAnh06ODdm4jIzvSeKF7hIl/nJ8Z+IRGp75fwjX4QdzvwJ/MF8SzgY+mV2BORl
-X-Gm-Gg: AZuq6aKV4GmVyaZkTA4ZqhFoTRGEI5G85QJQUX9Thg2or2ownfwWMSqLkUjIrMXywyr
-	fW18rP8LmSNudUxDr58Gg8KuyDcuYgAFdEI5YUSkGPyyKmYjDlJmjzGlYop0eDrueZhEfweYlOJ
-	sAJv0menxdmJfUUKrZIB0gxEWIetawMJI6EWGFHUiN+DYBkoVzVaQ4VFuPevid72PYCxZ0BZ6CX
-	EwypC6RCMIIhf8hUNpp6hF+IW9hWNcIwzFM8mR5Q6P21wVitG4r0U6W1ADUsS7Mn5g4LqzEUnCh
-	LMSYutvbUzQGcGkgq+UA/LqtE8JyfQfp12nZqEiYgNUvb0515qKox/M11c0IAOgF+2xTHdp/n+/
-	Ai+KJlwoqcK1gcD4Q+/xzqpo+iC9NKpfz/vwwzhvWCtlR+smF4ZoJc4xtxSl7ztHuF+pTPW0rGO
-	QdVIaHb/sxFIZWDw==
-X-Received: by 2002:a05:620a:4410:b0:8c0:cec5:148c with SMTP id af79cd13be357-8cb4090644dmr1660825085a.11.1771425511625;
-        Wed, 18 Feb 2026 06:38:31 -0800 (PST)
-X-Received: by 2002:a05:620a:4410:b0:8c0:cec5:148c with SMTP id af79cd13be357-8cb4090644dmr1660821885a.11.1771425511092;
-        Wed, 18 Feb 2026 06:38:31 -0800 (PST)
-Received: from [192.168.0.242] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8fc7665345sm459517566b.53.2026.02.18.06.38.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Feb 2026 06:38:30 -0800 (PST)
-Message-ID: <81faa130-b497-4248-a6c6-7c421646451a@oss.qualcomm.com>
-Date: Wed, 18 Feb 2026 15:38:28 +0100
+	s=arc-20240116; t=1771426178; c=relaxed/simple;
+	bh=MqCsBAeeKLYKSCL8IplZux6VI1NuB4kGl35kBbiVAl0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rTIXzTCDGIbo/67QJvX+LZ2DHNg5tOUtYbJuSyUxwCnV1jeAArgbsE9WC/n28VYj8VWSyZu3pdafU3Kcp4w4KtuCgOwxROExAPawpa20ouyF7VaOGCyqUjS+wIDvVCKLGjjWpS64K8deZr23SrIYpFSCtpgeMuJkKPcE3UwjOxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gnHWOx3K; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F198C116D0;
+	Wed, 18 Feb 2026 14:49:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1771426177;
+	bh=MqCsBAeeKLYKSCL8IplZux6VI1NuB4kGl35kBbiVAl0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=gnHWOx3K1WCN5jacfryWt6ZFrfRiSy3MK2GQ6P+xBX/TNtUkhEExGfVA+HBD1FTih
+	 TQkHj+/UuthLrMOFiXYH9AnrCOXd66UTPmeWoPPYt8wx8ZfZSqmNYz9TXkll/UxpY1
+	 qhAEoVq5RRRqx8N96k9IjVNGcFxgILXb46GJR05Qof6h26C/cWNHkPpozkmAyrQv0M
+	 Gbh4vJm3xkrJWdEr1FIsFON7zyol4N5oBymL4YNm0yevTDpGoz2CXC74St3+sBtHkx
+	 fElMd8RbZW2xqApF1I2GSs0t/Wf2kAu9RZ/U9Z53czstq7Qs8n5XmhJs+UZUsBs0ej
+	 Zt0OHvU1T2x5g==
+Date: Wed, 18 Feb 2026 08:49:34 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH 1/4] clk: qcom: dispcc-sdm845: set GENPD_FLAG_NO_STAY_ON
+ flag for MDSS domain
+Message-ID: <vbmo6qvepw5sjmtrffkdiaqulgqrhxlo3lrlzxhjz6i252efvg@uyhzdskc3jut>
+References: <20260217-sdm845-hdk-v1-0-866f1965fef7@oss.qualcomm.com>
+ <20260217-sdm845-hdk-v1-1-866f1965fef7@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 4/4] misc: fastrpc: Add polling mode support for
- fastRPC driver
-To: Bjorn Andersson <andersson@kernel.org>,
-        Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-Cc: srini@kernel.org, linux-arm-msm@vger.kernel.org,
-        gregkh@linuxfoundation.org, quic_bkumar@quicinc.com,
-        linux-kernel@vger.kernel.org, quic_chennak@quicinc.com,
-        dri-devel@lists.freedesktop.org, arnd@arndb.de,
-        dmitry.baryshkov@oss.qualcomm.com
-References: <20260215182136.3995111-1-ekansh.gupta@oss.qualcomm.com>
- <20260215182136.3995111-5-ekansh.gupta@oss.qualcomm.com>
- <wipphezpxtuuxtwhpwamsmvhwgwuesexmy5ev5pcqb65vov5kz@vuzzyyqnu7ci>
- <1707a83d-d717-43b7-b450-90f8400a65fb@oss.qualcomm.com>
- <lkwod3c3mubtcthy63aneumxq77lfik4nywi5oxjhnc3lmdk4s@eaygdb5vwlr3>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <lkwod3c3mubtcthy63aneumxq77lfik4nywi5oxjhnc3lmdk4s@eaygdb5vwlr3>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: 7-XW8u4Lnpl2rKVRQhG1hSpcQVgdzz3M
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjE4MDEyNCBTYWx0ZWRfX4Ip4MbSrq5oX
- +n+xFR/NU1V7zrf/RZWlO+eT0kS5E9J/EoPnQXD+58HCsa9rfGC3CLS42yVUrri90/t+70n+aBE
- h7MxhPEr0HPZyYrGN11bPpQBL8R/ssPsdyYaa1nl4mAJaNLuCcaNMmqrRtYoPPJmY1/O8p8KaBE
- GqRhB6a23I/3VrI5ySy3YkiZUYhHHm3EGUW439QuEHQVan2+KnE8z99IflE3oYcSdTUmpFXiZTp
- rLMrCTAOe2jsv2U4YAphUUIW3nsMNVBlXaugyqGWmyKSq9+fHK6OB9ikiq5uW/b7/5uIB2w82YI
- b4QXmMINnenl/334wXLUhI4HKhBdoo1R4Pt2aJM//E0P1yG3dOEodFN359PSRAifB3NVYFWCJNO
- hGKQ6lDVVDJz5Cll+b5qLktVohG8GG0SuCPyPd72/YA7DfMvU0+MOKcthtZu9O/eLkVdHET7R7N
- AHssT42l/jNUTYyHDjQ==
-X-Proofpoint-GUID: 7-XW8u4Lnpl2rKVRQhG1hSpcQVgdzz3M
-X-Authority-Analysis: v=2.4 cv=daCNHHXe c=1 sm=1 tr=0 ts=6995cee8 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
- a=PCWUlEzcUK1kj1-k8vkA:9 a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-18_02,2026-02-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0 adultscore=0 lowpriorityscore=0 malwarescore=0
- spamscore=0 clxscore=1015 suspectscore=0 priorityscore=1501 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602180124
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260217-sdm845-hdk-v1-1-866f1965fef7@oss.qualcomm.com>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	TAGGED_FROM(0.00)[bounces-93293-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:mid,oss.qualcomm.com:dkim,qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-93294-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[13];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 11CE31571A6
+	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: 784EB15729A
 X-Rspamd-Action: no action
 
+On Tue, Feb 17, 2026 at 11:20:42PM +0200, Dmitry Baryshkov wrote:
+> Since the commit 13a4b7fb6260 ("pmdomain: core: Leave powered-on genpds
+> on until late_initcall_sync") setting of the display clocks is partially
+> broken. For example, when on SDM845-HDK the bootloader leaves display
+> enabled, later the kernel can't set up DSI clocks, ending up with the
+> broken display, blinking blue.
 
+This describes how the problem manifest itself. Can you please document
+why clocks are partially broken and how that relate to the GDSC state,
+and why setting GENPD_FLAG_NO_STAY_ON solves this?
 
-On 18-Feb-26 15:36, Bjorn Andersson wrote:
-> On Mon, Feb 16, 2026 at 02:36:40PM +0530, Ekansh Gupta wrote:
->> On 2/16/2026 8:51 AM, Bjorn Andersson wrote:
->>> On Sun, Feb 15, 2026 at 11:51:35PM +0530, Ekansh Gupta wrote:
->>>> @@ -1812,6 +1912,30 @@ static int fastrpc_get_info_from_kernel(struct fastrpc_ioctl_capability *cap,
->>>>  	return 0;
->>>>  }
->>>>  
->>>> +static int fastrpc_set_option(struct fastrpc_user *fl, char __user *argp)
->>>> +{
->>>> +	struct fastrpc_ioctl_set_option opt = {0};
->>>> +	int i;
->>>> +
->>>> +	if (copy_from_user(&opt, argp, sizeof(opt)))
->>>> +		return -EFAULT;
->>>> +
->>>> +	for (i = 0; i < ARRAY_SIZE(opt.reserved); i++) {
->>>> +		if (opt.reserved[i] != 0)
->>>> +			return -EINVAL;
->>>> +	}
->>>> +
->>>> +	if (opt.req != FASTRPC_POLL_MODE)
->>>> +		return -EINVAL;
->>>> +
->>>> +	if (opt.value)
->>> Would it make sense to allow the caller to affect the poll timeout using
->>> the other 31 bits of this value?
->> I was planning to bring that control[1], but it's might be difficult for the caller
->>
-> 
-> Skimming through the thread, it seems you're discussing how to determine
-> if the DSP supports polling or not; that sounds like a separate problem
-> in my view. Not sure if you settled that discussion, but couldn't that
-> be handled through FASTRPC_IOCTL_GET_DSP_INFO?
-> 
-> I assume though, this would be subject to firmware changes. How do you
-> determine downstream if polling should be used or not today?
-> 
-> 
-> For my specific question here, I'm merely wondering if the timeout value
-> should be a boolean or have a unit. We could punt on that question, to
-> not block this feature from making progress upstream, by defining that
-> only 0 and 1 are valid values today (all other result in -EINVAL).
-> 
-> This would leave the door open for having 0 == off, 1 == default, > 1
+Regards,
+Bjorn
 
-Giving '1' a special non-numerical meaning sounds odd.. maybe 0:default,
--1:off (or the opposite)?
-
-Konrad
+> 
+>  ------------[ cut here ]------------
+>  disp_cc_mdss_pclk0_clk_src: rcg didn't update its configuration.
+>  WARNING: CPU: 7 PID: 81 at drivers/clk/qcom/clk-rcg2.c:136 update_config+0xd4/0xf0
+>  Modules linked in:
+>  CPU: 7 UID: 0 PID: 81 Comm: kworker/u32:3 Not tainted 6.16.0-rc2-00040-ga3f36de2f3ba #4236 PREEMPT
+>  Hardware name: Qualcomm Technologies, Inc. SDM845 HDK (DT)
+>  Workqueue: events_unbound deferred_probe_work_func
+>  pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+>  pc : update_config+0xd4/0xf0
+>  lr : update_config+0xd4/0xf0
+>  sp : ffff800080992a30
+>  x29: ffff800080992a40 x28: 0000000000000001 x27: ffff00008db49080
+>  x26: ffff00008db49220 x25: 0000000000000000 x24: 0000000008d9ee20
+>  x23: ffffd6f1bf1f6cd8 x22: 0000000008d9ee20 x21: ffffd6f1becadfa8
+>  x20: ffffd6f1bf1f6cc0 x19: 0000000000000000 x18: fffffffffffef3f0
+>  x17: 0000000000000004 x16: 0000000000000024 x15: 0000000000000005
+>  x14: fffffffffffcf3ef x13: 2e6e6f6974617275 x12: 6769666e6f632073
+>  x11: 7469206574616470 x10: 752074276e646964 x9 : 72756769666e6f63
+>  x8 : ffff800080992790 x7 : ffff8000809928c0 x6 : ffff800080992850
+>  x5 : ffff8000809927d0 x4 : ffff800080994000 x3 : 0000000000000000
+>  x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff0000808d1b00
+>  Call trace:
+>   update_config+0xd4/0xf0 (P)
+>   clk_rcg2_configure+0xb8/0xc0
+>   clk_pixel_set_rate+0x138/0x180
+>   clk_change_rate+0x124/0x620
+>   clk_change_rate+0x1b4/0x620
+>   clk_change_rate+0x1b4/0x620
+>   clk_change_rate+0x1b4/0x620
+>   clk_change_rate+0x1b4/0x620
+>   clk_change_rate+0x1b4/0x620
+>   clk_change_rate+0x1b4/0x620
+>   clk_core_set_rate_nolock+0x230/0x2b0
+>   clk_set_rate+0x38/0x90
+>   _opp_config_clk_single+0x30/0x98
+>   _set_opp+0x11c/0x530
+>   dev_pm_opp_set_rate+0x18c/0x280
+>   dsi_link_clk_set_rate_6g+0x44/0x100
+>   msm_dsi_host_power_on+0xc4/0x988
+>   dsi_mgr_bridge_pre_enable+0x194/0x3e0
+>   drm_atomic_bridge_call_pre_enable+0x40/0x58
+>   drm_atomic_bridge_chain_pre_enable+0x50/0x130
+>   drm_atomic_helper_commit_modeset_enables+0x15c/0x26c
+>   msm_atomic_commit_tail+0x214/0xb18
+>   commit_tail+0xa0/0x1a0
+>   drm_atomic_helper_commit+0x1a8/0x1d0
+>   drm_atomic_commit+0x8c/0xcc
+>   drm_client_modeset_commit_atomic+0x258/0x2d0
+>   drm_client_modeset_commit_locked+0x60/0x1b8
+>   drm_client_modeset_commit+0x2c/0x58
+>   __drm_fb_helper_restore_fbdev_mode_unlocked+0xbc/0xe8
+>   drm_fb_helper_set_par+0x30/0x58
+>   fbcon_init+0x3cc/0x530
+>   visual_init+0x8c/0xe0
+>   do_bind_con_driver.isra.0+0x18c/0x320
+>   do_take_over_console+0x13c/0x1d4
+>   do_fbcon_takeover+0x6c/0xe0
+>   fbcon_fb_registered+0x1dc/0x1e0
+>   do_register_framebuffer+0x1bc/0x278
+>   register_framebuffer+0x30/0x5c
+>   __drm_fb_helper_initial_config_and_unlock+0x2dc/0x5a8
+>   drm_fb_helper_initial_config+0x48/0x58
+>   drm_fbdev_client_hotplug+0x7c/0xe0
+>   drm_client_register+0x5c/0xa0
+>   drm_fbdev_client_setup+0xa4/0x1c0
+>   drm_client_setup+0x58/0xa0
+>   msm_drm_bind+0x3b4/0x460
+>   try_to_bring_up_aggregate_device+0x16c/0x1e0
+>   __component_add+0xa8/0x170
+>   component_add+0x14/0x20
+>   dsi_dev_attach+0x20/0x38
+>   dsi_host_attach+0x58/0x98
+>   devm_mipi_dsi_attach+0x34/0x90
+>   lt9611_attach_dsi+0x98/0x120
+>   lt9611_probe+0x3f8/0x4a0
+>   i2c_device_probe+0x154/0x340
+>   really_probe+0xbc/0x2c0
+>   __driver_probe_device+0x78/0x120
+>   driver_probe_device+0x3c/0x160
+>   __device_attach_driver+0xb8/0x140
+>   bus_for_each_drv+0x88/0xe8
+>   __device_attach+0xa0/0x198
+>   device_initial_probe+0x14/0x20
+>   bus_probe_device+0xb4/0xc0
+>   deferred_probe_work_func+0x90/0xcc
+>   process_one_work+0x214/0x64c
+>   worker_thread+0x1c0/0x364
+>   kthread+0x14c/0x220
+>   ret_from_fork+0x10/0x20
+>  irq event stamp: 110949
+>  hardirqs last  enabled at (110949): [<ffffd6f1be502d78>] _raw_spin_unlock_irqrestore+0x6c/0x74
+>  hardirqs last disabled at (110948): [<ffffd6f1be502268>] _raw_spin_lock_irqsave+0x84/0x88
+>  softirqs last  enabled at (109450): [<ffffd6f1be1b9ff0>] release_sock+0x90/0xa4
+>  softirqs last disabled at (109448): [<ffffd6f1be1b9f88>] release_sock+0x28/0xa4
+>  ---[ end trace 0000000000000000 ]---
+>  ------------[ cut here ]------------
+>  disp_cc_mdss_pclk1_clk_src: rcg didn't update its configuration.
+>  WARNING: CPU: 7 PID: 81 at drivers/clk/qcom/clk-rcg2.c:136 update_config+0xd4/0xf0
+>  Modules linked in:
+>  CPU: 7 UID: 0 PID: 81 Comm: kworker/u32:3 Tainted: G        W           6.16.0-rc2-00040-ga3f36de2f3ba #4236 PREEMPT
+>  Tainted: [W]=WARN
+>  Hardware name: Qualcomm Technologies, Inc. SDM845 HDK (DT)
+>  Workqueue: events_unbound deferred_probe_work_func
+>  pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+>  pc : update_config+0xd4/0xf0
+>  lr : update_config+0xd4/0xf0
+>  sp : ffff800080992a30
+>  x29: ffff800080992a40 x28: 0000000000000001 x27: ffff00008db49080
+>  x26: ffff00008db49220 x25: 0000000000000000 x24: 0000000008d9ee20
+>  x23: ffffd6f1bf1f6c48 x22: 0000000008d9ee20 x21: ffffd6f1becb1b50
+>  x20: ffffd6f1bf1f6c30 x19: 0000000000000000 x18: ffffffffffff0790
+>  x17: 0000000000000004 x16: 0000000000000024 x15: 0000000000000005
+>  x14: fffffffffffd078f x13: 2e6e6f6974617275 x12: 6769666e6f632073
+>  x11: 7469206574616470 x10: 752074276e646964 x9 : 72756769666e6f63
+>  x8 : ffff800080992790 x7 : ffff8000809928c0 x6 : ffff800080992850
+>  x5 : ffff8000809927d0 x4 : ffff800080994000 x3 : 0000000000000000
+>  x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff0000808d1b00
+>  Call trace:
+>   update_config+0xd4/0xf0 (P)
+>   clk_rcg2_configure+0xb8/0xc0
+>   clk_pixel_set_rate+0x138/0x180
+>   clk_change_rate+0x124/0x620
+>   clk_change_rate+0x1b4/0x620
+>   clk_change_rate+0x1b4/0x620
+>   clk_change_rate+0x1b4/0x620
+>   clk_change_rate+0x1b4/0x620
+>   clk_change_rate+0x1b4/0x620
+>   clk_change_rate+0x1b4/0x620
+>   clk_core_set_rate_nolock+0x230/0x2b0
+>   clk_set_rate+0x38/0x90
+>   _opp_config_clk_single+0x30/0x98
+>   _set_opp+0x11c/0x530
+>   dev_pm_opp_set_rate+0x18c/0x280
+>   dsi_link_clk_set_rate_6g+0x44/0x100
+>   msm_dsi_host_power_on+0xc4/0x988
+>   dsi_mgr_bridge_pre_enable+0x194/0x3e0
+>   drm_atomic_bridge_call_pre_enable+0x40/0x58
+>   drm_atomic_bridge_chain_pre_enable+0x50/0x130
+>   drm_atomic_helper_commit_modeset_enables+0x15c/0x26c
+>   msm_atomic_commit_tail+0x214/0xb18
+>   commit_tail+0xa0/0x1a0
+>   drm_atomic_helper_commit+0x1a8/0x1d0
+>   drm_atomic_commit+0x8c/0xcc
+>   drm_client_modeset_commit_atomic+0x258/0x2d0
+>   drm_client_modeset_commit_locked+0x60/0x1b8
+>   drm_client_modeset_commit+0x2c/0x58
+>   __drm_fb_helper_restore_fbdev_mode_unlocked+0xbc/0xe8
+>   drm_fb_helper_set_par+0x30/0x58
+>   fbcon_init+0x3cc/0x530
+>   visual_init+0x8c/0xe0
+>   do_bind_con_driver.isra.0+0x18c/0x320
+>   do_take_over_console+0x13c/0x1d4
+>   do_fbcon_takeover+0x6c/0xe0
+>   fbcon_fb_registered+0x1dc/0x1e0
+>   do_register_framebuffer+0x1bc/0x278
+>   register_framebuffer+0x30/0x5c
+>   __drm_fb_helper_initial_config_and_unlock+0x2dc/0x5a8
+>   drm_fb_helper_initial_config+0x48/0x58
+>   drm_fbdev_client_hotplug+0x7c/0xe0
+>   drm_client_register+0x5c/0xa0
+>   drm_fbdev_client_setup+0xa4/0x1c0
+>   drm_client_setup+0x58/0xa0
+>   msm_drm_bind+0x3b4/0x460
+>   try_to_bring_up_aggregate_device+0x16c/0x1e0
+>   __component_add+0xa8/0x170
+>   component_add+0x14/0x20
+>   dsi_dev_attach+0x20/0x38
+>   dsi_host_attach+0x58/0x98
+>   devm_mipi_dsi_attach+0x34/0x90
+>   lt9611_attach_dsi+0x98/0x120
+>   lt9611_probe+0x3f8/0x4a0
+>   i2c_device_probe+0x154/0x340
+>   really_probe+0xbc/0x2c0
+>   __driver_probe_device+0x78/0x120
+>   driver_probe_device+0x3c/0x160
+>   __device_attach_driver+0xb8/0x140
+>   bus_for_each_drv+0x88/0xe8
+>   __device_attach+0xa0/0x198
+>   device_initial_probe+0x14/0x20
+>   bus_probe_device+0xb4/0xc0
+>   deferred_probe_work_func+0x90/0xcc
+>   process_one_work+0x214/0x64c
+>   worker_thread+0x1c0/0x364
+>   kthread+0x14c/0x220
+>   ret_from_fork+0x10/0x20
+>  irq event stamp: 110949
+>  hardirqs last  enabled at (110949): [<ffffd6f1be502d78>] _raw_spin_unlock_irqrestore+0x6c/0x74
+>  hardirqs last disabled at (110948): [<ffffd6f1be502268>] _raw_spin_lock_irqsave+0x84/0x88
+>  softirqs last  enabled at (109450): [<ffffd6f1be1b9ff0>] release_sock+0x90/0xa4
+>  softirqs last disabled at (109448): [<ffffd6f1be1b9f88>] release_sock+0x28/0xa4
+>  ---[ end trace 0000000000000000 ]---
+>  lt9611 3-003b: video check: hactive_a=0, hactive_b=0, vactive=0, v_total=0, h_total_sysclk=0
+>  [drm:dpu_encoder_phys_vid_wait_for_commit_done:540] [dpu error]vblank timeout: 2
+>  [drm:dpu_kms_wait_for_commit_done:524] [dpu error]wait for commit done returned -110
+>  fb0: sys_imageblit: framebuffer is not in virtual address space.
+>  [drm:dpu_encoder_phys_vid_wait_for_commit_done:540] [dpu error]vblank timeout: 2
+>  [drm:dpu_kms_wait_for_commit_done:524] [dpu error]wait for commit done returned -110
+>  [drm:dpu_encoder_phys_vid_wait_for_commit_done:540] [dpu error]vblank timeout: 2
+>  [drm:dpu_kms_wait_for_commit_done:524] [dpu error]wait for commit done returned -110
+>  Console: switching to colour frame buffer device 480x135
+>  [drm:dpu_encoder_phys_vid_wait_for_commit_done:540] [dpu error]vblank timeout: 2
+>  [drm:dpu_kms_wait_for_commit_done:524] [dpu error]wait for commit done returned -110
+>  [drm:dpu_encoder_phys_vid_wait_for_commit_done:540] [dpu error]vblank timeout: 2
+>  [drm:dpu_kms_wait_for_commit_done:524] [dpu error]wait for commit done returned -110
+> 
+> Fixes: 13a4b7fb6260 ("pmdomain: core: Leave powered-on genpds on until late_initcall_sync")
+> Cc: stable@vger.kernel.org
+> Cc: Ulf Hansson <ulf.hansson@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> ---
+>  drivers/clk/qcom/dispcc-sdm845.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/clk/qcom/dispcc-sdm845.c b/drivers/clk/qcom/dispcc-sdm845.c
+> index 78e43f6d7502..468b30497746 100644
+> --- a/drivers/clk/qcom/dispcc-sdm845.c
+> +++ b/drivers/clk/qcom/dispcc-sdm845.c
+> @@ -763,6 +763,7 @@ static struct gdsc mdss_gdsc = {
+>  	.en_rest_wait_val = 0x5,
+>  	.pd = {
+>  		.name = "mdss_gdsc",
+> +		.flags = GENPD_FLAG_NO_STAY_ON,
+>  	},
+>  	.pwrsts = PWRSTS_OFF_ON,
+>  	.flags = HW_CTRL | POLL_CFG_GDSCR,
+> 
+> -- 
+> 2.47.3
+> 
 
