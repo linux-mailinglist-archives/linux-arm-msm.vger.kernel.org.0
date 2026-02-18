@@ -1,345 +1,238 @@
-Return-Path: <linux-arm-msm+bounces-93294-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93296-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id gBGBC4XRlWllVAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93294-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Feb 2026 15:49:41 +0100
+	id OKfnC7/hlWliVwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93296-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Feb 2026 16:58:55 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 784EB15729A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Feb 2026 15:49:40 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D212157893
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Feb 2026 16:58:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 09392300CE6E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Feb 2026 14:49:39 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 3CC43301627C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Feb 2026 15:58:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39E9D334C0A;
-	Wed, 18 Feb 2026 14:49:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8450534403D;
+	Wed, 18 Feb 2026 15:58:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gnHWOx3K"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hLKyhgsm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1474C2D8762;
-	Wed, 18 Feb 2026 14:49:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771426178; cv=none; b=cmjfpVq/AwtfREzo9TaHAW2H5gDXBUZiM33a2xpiBhTew39RvshzcthKROPhVOy6FSgKrnTH1tXWruzozUM1HOb/eaVK1kMJCGX4etZ7cuA1Tk0KiL5ehE9iMprL41B2fZmDG7byltXlnnbC1sFi2BQ9O/8xR87x5to1Cn7sDvg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771426178; c=relaxed/simple;
-	bh=MqCsBAeeKLYKSCL8IplZux6VI1NuB4kGl35kBbiVAl0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rTIXzTCDGIbo/67QJvX+LZ2DHNg5tOUtYbJuSyUxwCnV1jeAArgbsE9WC/n28VYj8VWSyZu3pdafU3Kcp4w4KtuCgOwxROExAPawpa20ouyF7VaOGCyqUjS+wIDvVCKLGjjWpS64K8deZr23SrIYpFSCtpgeMuJkKPcE3UwjOxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gnHWOx3K; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F198C116D0;
-	Wed, 18 Feb 2026 14:49:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771426177;
-	bh=MqCsBAeeKLYKSCL8IplZux6VI1NuB4kGl35kBbiVAl0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=gnHWOx3K1WCN5jacfryWt6ZFrfRiSy3MK2GQ6P+xBX/TNtUkhEExGfVA+HBD1FTih
-	 TQkHj+/UuthLrMOFiXYH9AnrCOXd66UTPmeWoPPYt8wx8ZfZSqmNYz9TXkll/UxpY1
-	 qhAEoVq5RRRqx8N96k9IjVNGcFxgILXb46GJR05Qof6h26C/cWNHkPpozkmAyrQv0M
-	 Gbh4vJm3xkrJWdEr1FIsFON7zyol4N5oBymL4YNm0yevTDpGoz2CXC74St3+sBtHkx
-	 fElMd8RbZW2xqApF1I2GSs0t/Wf2kAu9RZ/U9Z53czstq7Qs8n5XmhJs+UZUsBs0ej
-	 Zt0OHvU1T2x5g==
-Date: Wed, 18 Feb 2026 08:49:34 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	devicetree@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH 1/4] clk: qcom: dispcc-sdm845: set GENPD_FLAG_NO_STAY_ON
- flag for MDSS domain
-Message-ID: <vbmo6qvepw5sjmtrffkdiaqulgqrhxlo3lrlzxhjz6i252efvg@uyhzdskc3jut>
-References: <20260217-sdm845-hdk-v1-0-866f1965fef7@oss.qualcomm.com>
- <20260217-sdm845-hdk-v1-1-866f1965fef7@oss.qualcomm.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4AB134321B
+	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Feb 2026 15:58:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.215.174
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771430328; cv=pass; b=Q9FbRPg3wPwYfYe+TbmU0fLEDWfR1BaDAlMkVF4/Y9No2WE7KvGfXTEIkNPKy9YNqvAIjuQuFwFrvQ0gyGi7DkJa55Q5d/Ue5SGSJAac5tg7p3dSywjSc5SLnh5fCLQ4AaeJzHYfXVDk/hgZ9MR5LlrwMBmTP+dAaiQDD1Aw+ks=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771430328; c=relaxed/simple;
+	bh=VvEIHm0CVh76Y0ezSpIJTHt78UdN0D6dnlpEX+o5yqI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QYwBu1KdyfsdyKQoLEWhST1f2ths2Nkhlwl7PT4VnTj3KhsiOsplPedsdRxcrhlS27Lqka6DlNUTM42Vp+P0BstzCtk/IL/6VVu/vEaBv0SpabDZjH9zhsX6RI1ptjXx0CovfRGfUXZptADk8UtpDU4ptyB8IfErpiEhwbi9nxY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hLKyhgsm; arc=pass smtp.client-ip=209.85.215.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-c6e7e3f92adso359518a12.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Feb 2026 07:58:45 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1771430325; cv=none;
+        d=google.com; s=arc-20240605;
+        b=SqZPn2V27PMMpawiBnzyD+WP6+Jcb4NFSzRg5USRjOkcUPYH5MRwEWCeJdxZpcJVKz
+         YToms4iLIFcyY7wYs+LORVZKqT9uO636VWmy+YTy+ISSi7X3WpHSIf7pCupuUwoWl5JM
+         NFfLawecTRfj1NAf/2fhkus9AiwGvDQXyFyC3s91UXPtuOYaZsc2oivj29Pb/llVEWFn
+         m/V+fMrgBwdK4xMEMXNpj22E8mM+vD3IcvAefGUxwyPcF3PsmBC3tyC58XbA5OI89ni/
+         dDYo5hInC4JZXp6XYWBcOS74ZQi3oS8rqhxOZyCZCNI6ukE+LjzWUY4rGkVqIBrCFeWy
+         0smA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=+jEZRhKDKJOk8SBTSDYiUNsfqMbSOB+ljt4JuK9uCrE=;
+        fh=49WbULZb9EkUQFwhpvXfuq/ZarNY88oPM+NPFXdJXZg=;
+        b=jzhDJQS9oq4NYW+IeSWBLKqObI6UJ8na1tTzud27uymGuPY5wdvI5o2fHbTiv9+WdU
+         fL8AWYUS5CXiCFuzP94GFffjpoX7Pm90taTzSuSHLcwiIirsEmmAJ8zwNTA5tYBmByQ6
+         q+R77oSFCCCUHxLcKcHE18I4gCXl9HsHLPErvVbixbl03i2ex+xNC3R1pRsw4szOxVsu
+         DTALksYZ31r6+zsakcN1DsejCpVyjlOMQcKLnZp3xnXI/vb8tp4bD2/bRYTGmTHBKoz7
+         h4Z1SUhnE2S6/REXd1rZSdWPLO7X+8LtrmiD6Vph3a52LMeDqgpgAAImLAUN9naUEieX
+         NL2A==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1771430325; x=1772035125; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+jEZRhKDKJOk8SBTSDYiUNsfqMbSOB+ljt4JuK9uCrE=;
+        b=hLKyhgsmU3C00LOD59FISoEb9gpmq+xcs3mUTJWIMKiyrDupI2P5CllTFwCUebeEao
+         KvRKb0YuUvnMCwcIVyZfgb5SouImFffixR3tidO/iBRrsRPgGAjgtawoD22w/MuJnmDe
+         g6p2mjsdomLEzKaWo2Uo0QutEfVg0BVBP5LNxSuBVafgMjldf4r7L6zcmuxrYNJieh5s
+         k6Hxx4tj4L25HET5rzypilxHi7CCDdUprpY/l5QY6FucbRiATtwqc6tqglrMk79rOMtg
+         6P/LwjCvkwNKedBYv4AH5dUMR9oRhkeMxpSlMZ33OW5J93SKa7blc3gfoYbwKGOIe0Jx
+         0cwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771430325; x=1772035125;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=+jEZRhKDKJOk8SBTSDYiUNsfqMbSOB+ljt4JuK9uCrE=;
+        b=u75LaPiQD/bm6TYrLRpWcY9Aj/BRGWXRwYiJXA+mtayf7+UmyHYsPStFRQ7DkYpKPt
+         p+voC6/nNAq83vqT+len4IGEtrCaKRLy1hMcxrFy3Q9ynW9V9Xcg0H4iA2bgVTYY/jDQ
+         jtPar1dyf1OS+qBgiIh1Bs4nNtl86L6rkv2WZqgLOKokLB6ar86EQZd/WK45EaTXm7CQ
+         qKlci9YiyDr3pDCdA+Gztman4J6FoWIa82zL6L0gFro368d5yy+wSxsqbskAlJJ905K3
+         ZZJJpbdfqSWeiss9NUlHXOL0YFgHZ2PC54ZbDB5wd/QPZd84kkx/wP+ZVzPEwwakoy+X
+         x8ZQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX7suK6JqLtVdiPcg9VeEnFe/RHqMCYz+GD0j/xfCBR8CmQG38F7h6EXkmjiqWYnhVWaCtVFtOhih2w6B2A@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx+uKvCpcXpmXzDyh8JHmeTNB3vxxfnIbSgzD+t1mQFv7E/6Uyx
+	lYSv6IW8Vv2VngqGtjPPxlsINDKjaMwPJVzHMPTLrxpPoYoAW1WtDqAnQyZ/B42rZPVHNGbh+jM
+	58562lXgeCnK5xWDJI1ylOeZTA8Wl/xw=
+X-Gm-Gg: AZuq6aI3vIB6tQthsA78A86KExUvfc/C/lC2YMFIcKa9RzypVUNwNwrNSm/7S7zct6D
+	q6aNcpiYB3CrnXPriLpUlxFjNSpji0VHGS3xjZ46lsu3z7Xp7yukcNHbaPVdn6Beqc1URTV25eP
+	LjSDrL0vCeMb6M4AsIuWPHRNXfs/qo2kjdlhfx/k3FWw08GpOP5yCe1r8i6jyDEz2nP5/soihm5
+	Jp7ImwHIWVKSM30GY16PbWQUvgkwUo9S5DmNLp/KFaXb2koOS8YRJQRAJw7sxEKGd7IjBlQbc/h
+	SSzx7/M=
+X-Received: by 2002:a17:90b:28c4:b0:340:bca2:cf82 with SMTP id
+ 98e67ed59e1d1-356a7a44588mr12483278a91.4.1771430325136; Wed, 18 Feb 2026
+ 07:58:45 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260217-sdm845-hdk-v1-1-866f1965fef7@oss.qualcomm.com>
+References: <20260108-topic-smem_dramc-v3-0-6b64df58a017@oss.qualcomm.com>
+ <CACu1E7EDmLPhUFyouD=W6n+U7=oo7+6PY0Gz9=3pVpT2Qu9Z6w@mail.gmail.com>
+ <CACSVV00iiAXGOqV2HZs9KREoqatE0eNBZjFH9hSFMmNaX3_RXw@mail.gmail.com>
+ <CACu1E7Fh=GbLTiedj6OqtUxWiZbCVcKmsEzV6FYan5G6r1uyUA@mail.gmail.com> <c99beabf-9841-44cd-9450-2f339d1d5c41@oss.qualcomm.com>
+In-Reply-To: <c99beabf-9841-44cd-9450-2f339d1d5c41@oss.qualcomm.com>
+From: Connor Abbott <cwabbott0@gmail.com>
+Date: Wed, 18 Feb 2026 10:58:33 -0500
+X-Gm-Features: AaiRm51N5SpqVVJUQBLh2elCdDaV2cuIU7D7DKaGqf9-QJjihmDNYzh8f93hCZk
+Message-ID: <CACu1E7EnveTSzi2QD83xEgsqrM1H33KCqMqcaLE-VebgOMbh0g@mail.gmail.com>
+Subject: Re: [PATCH v3 0/3] Retrieve information about DDR from SMEM
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: rob.clark@oss.qualcomm.com, Konrad Dybcio <konradybcio@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Kees Cook <kees@kernel.org>, 
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>, Sean Paul <sean@poorly.run>, 
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-hardening@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+X-Spamd-Result: default: False [-2.16 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-93294-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[13];
 	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-93296-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,poorly.run,linux.dev,gmail.com,somainline.org,ffwll.ch,vger.kernel.org,lists.freedesktop.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[cwabbott0@gmail.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: 784EB15729A
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,mail.gmail.com:mid]
+X-Rspamd-Queue-Id: 8D212157893
 X-Rspamd-Action: no action
 
-On Tue, Feb 17, 2026 at 11:20:42PM +0200, Dmitry Baryshkov wrote:
-> Since the commit 13a4b7fb6260 ("pmdomain: core: Leave powered-on genpds
-> on until late_initcall_sync") setting of the display clocks is partially
-> broken. For example, when on SDM845-HDK the bootloader leaves display
-> enabled, later the kernel can't set up DSI clocks, ending up with the
-> broken display, blinking blue.
+On Tue, Feb 17, 2026 at 6:23=E2=80=AFAM Konrad Dybcio
+<konrad.dybcio@oss.qualcomm.com> wrote:
+>
+> On 1/9/26 10:03 PM, Connor Abbott wrote:
+> > On Fri, Jan 9, 2026 at 3:41=E2=80=AFPM Rob Clark <rob.clark@oss.qualcom=
+m.com> wrote:
+> >>
+> >> On Fri, Jan 9, 2026 at 11:11=E2=80=AFAM Connor Abbott <cwabbott0@gmail=
+.com> wrote:
+> >>>
+> >>> On Thu, Jan 8, 2026 at 9:22=E2=80=AFAM Konrad Dybcio <konradybcio@ker=
+nel.org> wrote:
+> >>>>
+> >>>> SMEM allows the OS to retrieve information about the DDR memory.
+> >>>> Among that information, is a semi-magic value called 'HBB', or Highe=
+st
+> >>>> Bank address Bit, which multimedia drivers (for hardware like Adreno
+> >>>> and MDSS) must retrieve in order to program the IP blocks correctly.
+> >>>>
+> >>>> This series introduces an API to retrieve that value, uses it in the
+> >>>> aforementioned programming sequences and exposes available DDR
+> >>>> frequencies in debugfs (to e.g. pass to aoss_qmp debugfs). More
+> >>>> information can be exposed in the future, as needed.
+> >>>>
+> >>>> Patch 3 should really be merged after 1&2
+> >>>
+> >>> No. The HBB value currently returned by the bootloader is *not* alway=
+s
+> >>> the same as what we use currently, because some SoCs (like SM8250)
+> >>> with the same DT ship with multiple different DRAM configurations and
+> >>> we've been using a sub-optimal value the whole time. After all, that'=
+s
+> >>> the whole point of using the bootloader value. But patches 1&2 will
+> >>> only make the DPU use the bootloader value for HBB, not the GPU. So o=
+n
+> >>> one of the affected SoCs, it will introduce a mismatch. You can't
+> >>> change anything until the GPU side uses the new ubwc config as its
+> >>> source of truth.
+> >>
+> >> Hmm, how is this even working today if DPU is using HBB from the
+> >> global table but GPU is not?  Are we just getting lucky with
+> >> compositors that don't know about modifiers and end up scanning out
+> >> linear?
+> >
+> > It works out as well as it's always worked out, i.e. we try to make
+> > GPU and DPU config match and pray that we didn't mess it up. At least
+> > now we'll get a warning when they don't match.
+> >
+> >>
+> >> We do log warnings when the global ubwc config does not match the
+> >> "fixed up" config.. google search for those msgs doesn't seem to turn
+> >> up anything other than the patch which introduced them.  Idk if that
+> >> is conclusive in any way, but I hope that means we could just delete
+> >> the fixup code on the GPU side.  I suppose we could add:
+> >>
+> >>        *cfg =3D *common_cfg;
+> >>
+> >> after the warning as a first step.  That would maybe get some bug
+> >> reports along with enough details in dmesg?
+> >
+> > Yes, the plan was always to delete the fixup code in the GPU config.
+> > And even that first step would be enough to prevent regressions when
+> > switching to the bootloader HBB value.
+> >
+> > There is a problem in that ubwc_swizzle isn't as well tested. Older
+> > parts supporting UBWC 1.0-3.0 partially or entirely ignore
+> > ubwc_swizzle, because it wasn't configurable back then, but we rely on
+> > it being set correctly in Mesa for VK_EXT_host_image_copy and sparse
+> > textures. So if ubwc_swizzle is incorrect you probably wouldn't
+> > notice, until you hit the HIC codepath in zink or some game using
+> > sparse textures. I think we fixed up all the cases where it was
+> > incorrectly set to 0x1 instead of 0x7, but it would be worth it to
+> > check again.
+>
+> Just to double-check, is your expectation to just double-check the kernel
+> settings, or would that require some intervention on the mesa side too?
+>
+> Konrad
 
-This describes how the problem manifest itself. Can you please document
-why clocks are partially broken and how that relate to the GDSC state,
-and why setting GENPD_FLAG_NO_STAY_ON solves this?
+Just to double-check the kernel, and I double-checked since then and
+everything seems to be right.
 
-Regards,
-Bjorn
-
-> 
->  ------------[ cut here ]------------
->  disp_cc_mdss_pclk0_clk_src: rcg didn't update its configuration.
->  WARNING: CPU: 7 PID: 81 at drivers/clk/qcom/clk-rcg2.c:136 update_config+0xd4/0xf0
->  Modules linked in:
->  CPU: 7 UID: 0 PID: 81 Comm: kworker/u32:3 Not tainted 6.16.0-rc2-00040-ga3f36de2f3ba #4236 PREEMPT
->  Hardware name: Qualcomm Technologies, Inc. SDM845 HDK (DT)
->  Workqueue: events_unbound deferred_probe_work_func
->  pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
->  pc : update_config+0xd4/0xf0
->  lr : update_config+0xd4/0xf0
->  sp : ffff800080992a30
->  x29: ffff800080992a40 x28: 0000000000000001 x27: ffff00008db49080
->  x26: ffff00008db49220 x25: 0000000000000000 x24: 0000000008d9ee20
->  x23: ffffd6f1bf1f6cd8 x22: 0000000008d9ee20 x21: ffffd6f1becadfa8
->  x20: ffffd6f1bf1f6cc0 x19: 0000000000000000 x18: fffffffffffef3f0
->  x17: 0000000000000004 x16: 0000000000000024 x15: 0000000000000005
->  x14: fffffffffffcf3ef x13: 2e6e6f6974617275 x12: 6769666e6f632073
->  x11: 7469206574616470 x10: 752074276e646964 x9 : 72756769666e6f63
->  x8 : ffff800080992790 x7 : ffff8000809928c0 x6 : ffff800080992850
->  x5 : ffff8000809927d0 x4 : ffff800080994000 x3 : 0000000000000000
->  x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff0000808d1b00
->  Call trace:
->   update_config+0xd4/0xf0 (P)
->   clk_rcg2_configure+0xb8/0xc0
->   clk_pixel_set_rate+0x138/0x180
->   clk_change_rate+0x124/0x620
->   clk_change_rate+0x1b4/0x620
->   clk_change_rate+0x1b4/0x620
->   clk_change_rate+0x1b4/0x620
->   clk_change_rate+0x1b4/0x620
->   clk_change_rate+0x1b4/0x620
->   clk_change_rate+0x1b4/0x620
->   clk_core_set_rate_nolock+0x230/0x2b0
->   clk_set_rate+0x38/0x90
->   _opp_config_clk_single+0x30/0x98
->   _set_opp+0x11c/0x530
->   dev_pm_opp_set_rate+0x18c/0x280
->   dsi_link_clk_set_rate_6g+0x44/0x100
->   msm_dsi_host_power_on+0xc4/0x988
->   dsi_mgr_bridge_pre_enable+0x194/0x3e0
->   drm_atomic_bridge_call_pre_enable+0x40/0x58
->   drm_atomic_bridge_chain_pre_enable+0x50/0x130
->   drm_atomic_helper_commit_modeset_enables+0x15c/0x26c
->   msm_atomic_commit_tail+0x214/0xb18
->   commit_tail+0xa0/0x1a0
->   drm_atomic_helper_commit+0x1a8/0x1d0
->   drm_atomic_commit+0x8c/0xcc
->   drm_client_modeset_commit_atomic+0x258/0x2d0
->   drm_client_modeset_commit_locked+0x60/0x1b8
->   drm_client_modeset_commit+0x2c/0x58
->   __drm_fb_helper_restore_fbdev_mode_unlocked+0xbc/0xe8
->   drm_fb_helper_set_par+0x30/0x58
->   fbcon_init+0x3cc/0x530
->   visual_init+0x8c/0xe0
->   do_bind_con_driver.isra.0+0x18c/0x320
->   do_take_over_console+0x13c/0x1d4
->   do_fbcon_takeover+0x6c/0xe0
->   fbcon_fb_registered+0x1dc/0x1e0
->   do_register_framebuffer+0x1bc/0x278
->   register_framebuffer+0x30/0x5c
->   __drm_fb_helper_initial_config_and_unlock+0x2dc/0x5a8
->   drm_fb_helper_initial_config+0x48/0x58
->   drm_fbdev_client_hotplug+0x7c/0xe0
->   drm_client_register+0x5c/0xa0
->   drm_fbdev_client_setup+0xa4/0x1c0
->   drm_client_setup+0x58/0xa0
->   msm_drm_bind+0x3b4/0x460
->   try_to_bring_up_aggregate_device+0x16c/0x1e0
->   __component_add+0xa8/0x170
->   component_add+0x14/0x20
->   dsi_dev_attach+0x20/0x38
->   dsi_host_attach+0x58/0x98
->   devm_mipi_dsi_attach+0x34/0x90
->   lt9611_attach_dsi+0x98/0x120
->   lt9611_probe+0x3f8/0x4a0
->   i2c_device_probe+0x154/0x340
->   really_probe+0xbc/0x2c0
->   __driver_probe_device+0x78/0x120
->   driver_probe_device+0x3c/0x160
->   __device_attach_driver+0xb8/0x140
->   bus_for_each_drv+0x88/0xe8
->   __device_attach+0xa0/0x198
->   device_initial_probe+0x14/0x20
->   bus_probe_device+0xb4/0xc0
->   deferred_probe_work_func+0x90/0xcc
->   process_one_work+0x214/0x64c
->   worker_thread+0x1c0/0x364
->   kthread+0x14c/0x220
->   ret_from_fork+0x10/0x20
->  irq event stamp: 110949
->  hardirqs last  enabled at (110949): [<ffffd6f1be502d78>] _raw_spin_unlock_irqrestore+0x6c/0x74
->  hardirqs last disabled at (110948): [<ffffd6f1be502268>] _raw_spin_lock_irqsave+0x84/0x88
->  softirqs last  enabled at (109450): [<ffffd6f1be1b9ff0>] release_sock+0x90/0xa4
->  softirqs last disabled at (109448): [<ffffd6f1be1b9f88>] release_sock+0x28/0xa4
->  ---[ end trace 0000000000000000 ]---
->  ------------[ cut here ]------------
->  disp_cc_mdss_pclk1_clk_src: rcg didn't update its configuration.
->  WARNING: CPU: 7 PID: 81 at drivers/clk/qcom/clk-rcg2.c:136 update_config+0xd4/0xf0
->  Modules linked in:
->  CPU: 7 UID: 0 PID: 81 Comm: kworker/u32:3 Tainted: G        W           6.16.0-rc2-00040-ga3f36de2f3ba #4236 PREEMPT
->  Tainted: [W]=WARN
->  Hardware name: Qualcomm Technologies, Inc. SDM845 HDK (DT)
->  Workqueue: events_unbound deferred_probe_work_func
->  pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
->  pc : update_config+0xd4/0xf0
->  lr : update_config+0xd4/0xf0
->  sp : ffff800080992a30
->  x29: ffff800080992a40 x28: 0000000000000001 x27: ffff00008db49080
->  x26: ffff00008db49220 x25: 0000000000000000 x24: 0000000008d9ee20
->  x23: ffffd6f1bf1f6c48 x22: 0000000008d9ee20 x21: ffffd6f1becb1b50
->  x20: ffffd6f1bf1f6c30 x19: 0000000000000000 x18: ffffffffffff0790
->  x17: 0000000000000004 x16: 0000000000000024 x15: 0000000000000005
->  x14: fffffffffffd078f x13: 2e6e6f6974617275 x12: 6769666e6f632073
->  x11: 7469206574616470 x10: 752074276e646964 x9 : 72756769666e6f63
->  x8 : ffff800080992790 x7 : ffff8000809928c0 x6 : ffff800080992850
->  x5 : ffff8000809927d0 x4 : ffff800080994000 x3 : 0000000000000000
->  x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff0000808d1b00
->  Call trace:
->   update_config+0xd4/0xf0 (P)
->   clk_rcg2_configure+0xb8/0xc0
->   clk_pixel_set_rate+0x138/0x180
->   clk_change_rate+0x124/0x620
->   clk_change_rate+0x1b4/0x620
->   clk_change_rate+0x1b4/0x620
->   clk_change_rate+0x1b4/0x620
->   clk_change_rate+0x1b4/0x620
->   clk_change_rate+0x1b4/0x620
->   clk_change_rate+0x1b4/0x620
->   clk_core_set_rate_nolock+0x230/0x2b0
->   clk_set_rate+0x38/0x90
->   _opp_config_clk_single+0x30/0x98
->   _set_opp+0x11c/0x530
->   dev_pm_opp_set_rate+0x18c/0x280
->   dsi_link_clk_set_rate_6g+0x44/0x100
->   msm_dsi_host_power_on+0xc4/0x988
->   dsi_mgr_bridge_pre_enable+0x194/0x3e0
->   drm_atomic_bridge_call_pre_enable+0x40/0x58
->   drm_atomic_bridge_chain_pre_enable+0x50/0x130
->   drm_atomic_helper_commit_modeset_enables+0x15c/0x26c
->   msm_atomic_commit_tail+0x214/0xb18
->   commit_tail+0xa0/0x1a0
->   drm_atomic_helper_commit+0x1a8/0x1d0
->   drm_atomic_commit+0x8c/0xcc
->   drm_client_modeset_commit_atomic+0x258/0x2d0
->   drm_client_modeset_commit_locked+0x60/0x1b8
->   drm_client_modeset_commit+0x2c/0x58
->   __drm_fb_helper_restore_fbdev_mode_unlocked+0xbc/0xe8
->   drm_fb_helper_set_par+0x30/0x58
->   fbcon_init+0x3cc/0x530
->   visual_init+0x8c/0xe0
->   do_bind_con_driver.isra.0+0x18c/0x320
->   do_take_over_console+0x13c/0x1d4
->   do_fbcon_takeover+0x6c/0xe0
->   fbcon_fb_registered+0x1dc/0x1e0
->   do_register_framebuffer+0x1bc/0x278
->   register_framebuffer+0x30/0x5c
->   __drm_fb_helper_initial_config_and_unlock+0x2dc/0x5a8
->   drm_fb_helper_initial_config+0x48/0x58
->   drm_fbdev_client_hotplug+0x7c/0xe0
->   drm_client_register+0x5c/0xa0
->   drm_fbdev_client_setup+0xa4/0x1c0
->   drm_client_setup+0x58/0xa0
->   msm_drm_bind+0x3b4/0x460
->   try_to_bring_up_aggregate_device+0x16c/0x1e0
->   __component_add+0xa8/0x170
->   component_add+0x14/0x20
->   dsi_dev_attach+0x20/0x38
->   dsi_host_attach+0x58/0x98
->   devm_mipi_dsi_attach+0x34/0x90
->   lt9611_attach_dsi+0x98/0x120
->   lt9611_probe+0x3f8/0x4a0
->   i2c_device_probe+0x154/0x340
->   really_probe+0xbc/0x2c0
->   __driver_probe_device+0x78/0x120
->   driver_probe_device+0x3c/0x160
->   __device_attach_driver+0xb8/0x140
->   bus_for_each_drv+0x88/0xe8
->   __device_attach+0xa0/0x198
->   device_initial_probe+0x14/0x20
->   bus_probe_device+0xb4/0xc0
->   deferred_probe_work_func+0x90/0xcc
->   process_one_work+0x214/0x64c
->   worker_thread+0x1c0/0x364
->   kthread+0x14c/0x220
->   ret_from_fork+0x10/0x20
->  irq event stamp: 110949
->  hardirqs last  enabled at (110949): [<ffffd6f1be502d78>] _raw_spin_unlock_irqrestore+0x6c/0x74
->  hardirqs last disabled at (110948): [<ffffd6f1be502268>] _raw_spin_lock_irqsave+0x84/0x88
->  softirqs last  enabled at (109450): [<ffffd6f1be1b9ff0>] release_sock+0x90/0xa4
->  softirqs last disabled at (109448): [<ffffd6f1be1b9f88>] release_sock+0x28/0xa4
->  ---[ end trace 0000000000000000 ]---
->  lt9611 3-003b: video check: hactive_a=0, hactive_b=0, vactive=0, v_total=0, h_total_sysclk=0
->  [drm:dpu_encoder_phys_vid_wait_for_commit_done:540] [dpu error]vblank timeout: 2
->  [drm:dpu_kms_wait_for_commit_done:524] [dpu error]wait for commit done returned -110
->  fb0: sys_imageblit: framebuffer is not in virtual address space.
->  [drm:dpu_encoder_phys_vid_wait_for_commit_done:540] [dpu error]vblank timeout: 2
->  [drm:dpu_kms_wait_for_commit_done:524] [dpu error]wait for commit done returned -110
->  [drm:dpu_encoder_phys_vid_wait_for_commit_done:540] [dpu error]vblank timeout: 2
->  [drm:dpu_kms_wait_for_commit_done:524] [dpu error]wait for commit done returned -110
->  Console: switching to colour frame buffer device 480x135
->  [drm:dpu_encoder_phys_vid_wait_for_commit_done:540] [dpu error]vblank timeout: 2
->  [drm:dpu_kms_wait_for_commit_done:524] [dpu error]wait for commit done returned -110
->  [drm:dpu_encoder_phys_vid_wait_for_commit_done:540] [dpu error]vblank timeout: 2
->  [drm:dpu_kms_wait_for_commit_done:524] [dpu error]wait for commit done returned -110
-> 
-> Fixes: 13a4b7fb6260 ("pmdomain: core: Leave powered-on genpds on until late_initcall_sync")
-> Cc: stable@vger.kernel.org
-> Cc: Ulf Hansson <ulf.hansson@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> ---
->  drivers/clk/qcom/dispcc-sdm845.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/clk/qcom/dispcc-sdm845.c b/drivers/clk/qcom/dispcc-sdm845.c
-> index 78e43f6d7502..468b30497746 100644
-> --- a/drivers/clk/qcom/dispcc-sdm845.c
-> +++ b/drivers/clk/qcom/dispcc-sdm845.c
-> @@ -763,6 +763,7 @@ static struct gdsc mdss_gdsc = {
->  	.en_rest_wait_val = 0x5,
->  	.pd = {
->  		.name = "mdss_gdsc",
-> +		.flags = GENPD_FLAG_NO_STAY_ON,
->  	},
->  	.pwrsts = PWRSTS_OFF_ON,
->  	.flags = HW_CTRL | POLL_CFG_GDSCR,
-> 
-> -- 
-> 2.47.3
-> 
+Connor
 
