@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-93367-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93368-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GOvDBoftlmngrAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93367-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Feb 2026 12:01:27 +0100
+	id SKJ2JvftlmngrAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93368-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Feb 2026 12:03:19 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B316F15E1A7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Feb 2026 12:01:21 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 468F315E20C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Feb 2026 12:03:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id AEC6B301C14F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Feb 2026 11:01:17 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 59C9130097E3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Feb 2026 11:01:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0317033D507;
-	Thu, 19 Feb 2026 11:01:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C27F533D514;
+	Thu, 19 Feb 2026 11:01:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y1n9cgQE"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EzI4U+0L"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18CB324B1F;
-	Thu, 19 Feb 2026 11:01:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C67A33D50A;
+	Thu, 19 Feb 2026 11:01:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771498876; cv=none; b=llsVrIMvEQB7mOp76vbKffzz8CUZyF4mtySYCLbtfA/uVt+ZL1hwvg0KOwRuUyoYyeplAI6RropNe0YmfiWIfBi8dYcZRZwDWau6DftI8G3GHADkZQRJdcSyDe74sKrwui4mgPOWyxcVF9i6io+pvhEh+yDnzHORStaXM9PUGPA=
+	t=1771498892; cv=none; b=GGTsTPjvoRdMOHNdHuIh6oDFKNeCDFw363yyH0z/oR3Sldblj9jnGLmvVN6itZ3ujuFU9Njlx+WbpuS/kx98vZXeoCNIhYMRqI81Irhw4QjiL5UCQRODRt8681Q1TuRrp5bdsaX8yo4G2DhynM5fpg3ZOQmPNzZFHez5HpZjrGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771498876; c=relaxed/simple;
-	bh=miZhDsMWmagt9nqGKuiS3OD9emZt6QV5Ry0UEmS/4po=;
+	s=arc-20240116; t=1771498892; c=relaxed/simple;
+	bh=NmrOcvMHCYeayk8JjT6h8S01R2z4UwfaPhPLFEB2bXg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kf6SrtnI785pScYgbmvlGe1orx7TZRIen2ayGTrPN8JnAziFyvBwByCOTNwU0PTbZpO/YKHforCwMP5w0WuxyUucGsXaq+N42t3KV6W3avWP01KUdCshSIIfNBYtKtLr8/jcaBss1FJX5FvYVUF4kfkeYqAAskZbabqLRRA3PAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y1n9cgQE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F29A4C4CEF7;
-	Thu, 19 Feb 2026 11:01:12 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=FMeVZtSNX92h+nOt0S0tPwRASHISlQ8xawDKSlHZWZNCEEnxxRm9AMEOMoQK4+R9BDaqV3uC9x7vBnebP7znOog0OsztBrcQzC35NPBYW11ZcgpfiC4D2INfgGczkXIoODlWccm9lZRoNGYnyanMse5cOw8udIQD5ZuaXdlq/wE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EzI4U+0L; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB945C116C6;
+	Thu, 19 Feb 2026 11:01:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771498876;
-	bh=miZhDsMWmagt9nqGKuiS3OD9emZt6QV5Ry0UEmS/4po=;
+	s=k20201202; t=1771498892;
+	bh=NmrOcvMHCYeayk8JjT6h8S01R2z4UwfaPhPLFEB2bXg=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Y1n9cgQEBqIXOQAWFUbCpZdFC3l8BjKe1y8eR9Z6TkGLC/VejI1TwVZGVyPUmZskJ
-	 OrjDrAwZDRl9AC1si/SBjVifGqOA3w3TkYqarItNpkwWLFJ2stN4L9zr6HVSBhvxFL
-	 C0/kSvW8LN0eH6o2gETAC37x5TzEhgVc+xvJQF/eRdR2ZVggOQ5veZhSNkmUuHOOL6
-	 Ahywd9m/jWGnLCR9V+8aOpaGe3Ic6snwLPyJDccqpbn11ggUa8kuDVvQbcXI5kRtz+
-	 SN5otb/DPJtu0RpTTjZwyLszvWgIgUWwAlL5i/67QpWlMYhrMkTk9wdkYpeU33nXs2
-	 xW7gujRLlQKHg==
-Message-ID: <00b3d8ad-47fd-429f-9c46-aa540d4257ae@kernel.org>
-Date: Thu, 19 Feb 2026 12:01:11 +0100
+	b=EzI4U+0LrX0L/ZbsG2302dfi4XMIWgdyNcRs/pwH9EpxdRIIIQ/A5RsTHvRsZxSIZ
+	 +8JPVoM8BsGsCO/zmvbiRcMRKa3zoei4cQHUJ/l7fDrQYlv1Vxm5xHjJsMuUhA04jy
+	 kpJKJxSRgwOYtm1pQboCEODY/okYtGVgOBQsWYHe8cMQ7RrdYgMJYv1ljmNzTGJbG3
+	 1xYIeeIxglbALCUB3ieztdn2g7H2+8YCsicO1I2GSKwBQ0HudTrsYNFEGCYmhP0Rqj
+	 2KJVxtvsYJuLkzgnEAVYMVp4KwRv+skz3+JPdBdgel0n1q7pFFGYNkqs9kufCkhI72
+	 HQz6qwhPwzK3g==
+Message-ID: <9f452e62-c1b4-4010-9153-83d822c7a8dc@kernel.org>
+Date: Thu, 19 Feb 2026 12:01:26 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,25 +55,19 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH net-next v3 1/3] dt-bindings: sram: qcom,imem: Allow
  modem-tables subnode
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+To: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
  Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller"
  <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
  Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
- Alex Elder <elder@kernel.org>, Marijn Suijten
- <marijn.suijten@somainline.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- netdev@vger.kernel.org
+ Alex Elder <elder@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 References: <20260217-topic-ipa_imem-v3-0-d6d8ed1dfb67@oss.qualcomm.com>
  <20260217-topic-ipa_imem-v3-1-d6d8ed1dfb67@oss.qualcomm.com>
- <20260217-godlike-silent-owl-0a8487@quoll>
- <36f0a71c-a8b7-4aaa-81c3-1945b268c57f@oss.qualcomm.com>
- <0bfcb292-4e49-4047-b631-dd3029b43f1c@kernel.org>
- <193d236b-864b-45bd-b0a9-6efbdccf6db9@oss.qualcomm.com>
- <9bfb4ef0-49a1-4127-aad4-2ba1b9dd8e95@kernel.org>
- <ac568d38-adae-4fb6-8f12-1d3593d9843b@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -119,7 +113,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <ac568d38-adae-4fb6-8f12-1d3593d9843b@oss.qualcomm.com>
+In-Reply-To: <20260217-topic-ipa_imem-v3-1-d6d8ed1dfb67@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
@@ -127,78 +121,51 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-93367-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-93368-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RSPAMD_URIBL_FAIL(0.00)[foobar:query timed out,foo:query timed out,0.0.4.210:query timed out];
-	RCPT_COUNT_TWELVE(0.00)[17];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	RSPAMD_EMAILBL_FAIL(0.00)[modem-tables.0.0.4.210:query timed out];
-	TO_DN_SOME(0.00)[];
-	DBL_PROHIBIT(0.00)[0.0.4.210:email];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-0.999];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,foobar:email,foo:email]
-X-Rspamd-Queue-Id: B316F15E1A7
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: 468F315E20C
 X-Rspamd-Action: no action
 
-On 18/02/2026 14:32, Konrad Dybcio wrote:
->>>>>
->>>>> If you'd prefer a blanket pattern declaration with say '^[a-z]@[0-9a-z]+$'
->>>>> with just a reg requirement inside, I'm fine with that too
->>>>
->>>> No, the problem is that you do not use the ABI here at all. Neither
->>>> would you use the blanket pattern, so my question stays: why adding ABI
->>>> which is not used?
->>>
->>> The subnode I'm trying to introduce is going to be consumed (via a
->>> phandle reference) from the IPA node, as done by the remaining 2
->>> patches in this series.
->>
->> And that's the problem - I do not see consuming child. I see
->> of_parse_phandle to sram node, not the child.
+On 17/02/2026 14:30, Konrad Dybcio wrote:
+> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > 
-> Ah, I just realized this series has no DT examples..
+> The IP Accelerator hardware/firmware owns a sizeable region within the
+> IMEM, named 'modem-tables', containing various packet processing
+> configuration data.
 > 
-> The property I proposed to add into the IPA node&code is indeed
-> named 'sram', but my intention is to pass a phandle to the *child*
-> (similarly like we pass a phandle to the child of a nvmem provider
-> rather than to the provider device itself)
+> It's not actually accessed by the OS, although we have to IOMMU-map it
+> with the IPA device, so that presumably the firmware can act upon it.
 > 
-> i.e. the design I envisioned is:
+> Allow it as a subnode of IMEM.
 > 
-> imem@foo {
-> 	...
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> ---
+>  Documentation/devicetree/bindings/sram/qcom,imem.yaml | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
 > 
-> 	ipa_modem_tables: modem-tables@1234 {
-> 		reg = <0x1234 0x1234>;
-> 	};
-> };
-> 
-> ...
-> 
-> ipa@foobar {
-> 	...
-> 
-> 	sram = <&ipa_modem_tables>;
-> }
 
-OK, this explains my questions.
-
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
 Best regards,
 Krzysztof
