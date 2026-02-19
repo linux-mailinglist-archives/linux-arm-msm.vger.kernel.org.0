@@ -1,198 +1,251 @@
-Return-Path: <linux-arm-msm+bounces-93384-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93385-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id AF4YKp8Hl2lmtwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93384-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Feb 2026 13:52:47 +0100
+	id 2GUZOksLl2lEuAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93385-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Feb 2026 14:08:27 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0F77B15EC21
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Feb 2026 13:52:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 47AFF15EE8E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Feb 2026 14:08:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C77003049166
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Feb 2026 12:51:22 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id DB2503007CA7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Feb 2026 13:04:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 341A833A6FB;
-	Thu, 19 Feb 2026 12:51:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 625FC20C463;
+	Thu, 19 Feb 2026 13:04:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="gJTuk5OC"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="g/xLzWYa";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="hb1k7hsU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2877334373;
-	Thu, 19 Feb 2026 12:51:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F71733A715
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Feb 2026 13:04:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771505482; cv=none; b=ZuCLCIoalJg0v+XssuzkjD8aY4Hika1oejMBCjNyyXRJIwZIw6bz2UQCoGu8uI1u83Kd4Z8Ee+PPbjbSmHqfehA6UmlxGYSRW1strqOna7oK/Y3aK/6T5vtEFCwP9vcSEc2ii2iAYljWrcwnZ5TKrvskrCD8NwR9GCaFsNR0KNk=
+	t=1771506267; cv=none; b=UjvaI8WQz5DBeeBdVkjDJK7er44HSxECrNiKujgToa7FkmJOiCvDBRpD8X7SP5uoEDlyT27yrL0ibMNpys15ZuZQvnWFa5fzH+vWZYztrtZcPhNYOwAaiEE7M/jhPNHLI0iSx2eRqxd4M/6hL5j3YDhQwTLLe+LZeVEGC4qYANc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771505482; c=relaxed/simple;
-	bh=dJs4LN5IDxfdlRoPDGT6USPyxzT1SgXwTDOL8f4EIBA=;
-	h=In-Reply-To:References:From:To:Cc:Subject:MIME-Version:
-	 Content-Disposition:Content-Type:Message-Id:Date; b=MvyGJWFzRp5QFWpf0g+Jv+xn68GkHTvw9vKqFjDaheyd5NSJr7v/B0O8ReWLB71NkUkWlsoWdxUAcHPVR9RVpoYf32+NZlv0bZgCidN+3gikcCSIO8q0pZ+bH80vwCLiGi3/vD9oLMR10X5iEKrD6bc4MR+sKW+iWtj7uULeUeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=gJTuk5OC; arc=none smtp.client-ip=78.32.30.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Date:Sender:Message-Id:Content-Type:
-	Content-Transfer-Encoding:MIME-Version:Subject:Cc:To:From:References:
-	In-Reply-To:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=UW9TZnyZ2Y3LKNh+2F0ZhT91QThw6bRR+2OtOzOSz7Q=; b=gJTuk5OCkGKe0b/nvgnA1+x3VO
-	V/ipmXPTKs4LAzJ1cGwncsENwC43Yui2ugL3KwPufR0ejtfx3OKgfAH9YYneUMcDA5XPvW7zgAzNk
-	v/Ue2qGugmLuJ22XLR1jyvY8tESLmAKSMUa0kJld5kvN5Ma6dSnbpbM3qGamT2pwAcLRgBkSCpKYR
-	mrsgZFt/MIBg7e0Ai01knbybfcyjAFYqlSEP9vMX4A+DAURpfUATFeqVH+kOBucEshUlbDzIwhgzs
-	GfUrbZ3ps4xnrK6TysSc0KYeCWT9IyzBazLWgLys54DIQV+tQLkt/LjAc1n/fo2SM5ZTDMVM17vjt
-	eV5fRIxA==;
-Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:58024 helo=rmk-PC.armlinux.org.uk)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <rmk@armlinux.org.uk>)
-	id 1vt3Ut-000000000tg-2pht;
-	Thu, 19 Feb 2026 12:51:12 +0000
-Received: from rmk by rmk-PC.armlinux.org.uk with local (Exim 4.98.2)
-	(envelope-from <rmk@rmk-PC.armlinux.org.uk>)
-	id 1vt3Us-0000000A5ei-04Bg;
-	Thu, 19 Feb 2026 12:51:10 +0000
-In-Reply-To: <aZcGxDBwfMXHbo_O@shell.armlinux.org.uk>
-References: <aZcGxDBwfMXHbo_O@shell.armlinux.org.uk>
-From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
-To: Andrew Lunn <andrew@lunn.ch>
-Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	netdev@vger.kernel.org,
-	Paolo Abeni <pabeni@redhat.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH RFC net-next+ 9/9] net: stmmac: qcom-ethqos: remove
- phy_set_mode_ext() after phy_power_on()
+	s=arc-20240116; t=1771506267; c=relaxed/simple;
+	bh=1NeJm8sPIVVg4lGdDswPtIieqlhK9RJ0JG6NPd8z2MI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZR2KUvlnlFbZ2oHfF9c9hF0bI+98sjYvL0b4DX3SlRyPrcXT2g/roCImI4QJ46yq31+jQR+tsjvwSvfbIY+Djm7CxijqOItIOa5wPfQrVIRZDLJyYxn7cFH0GgdCGAGHMvqGrsVYu8h+uMXg26Orl+jVoCi+Hn9aRWJRrVhyIIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=g/xLzWYa; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=hb1k7hsU; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 61JCF68e2883165
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Feb 2026 13:04:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Tta6p1UfArJB2f1ZLaS24vMXG5SGG6hI3ls4c9vUi0s=; b=g/xLzWYaZAS2bBWg
+	JWzT/LveWvegH3N7zrFO6QdRNJTcLZNISsMN/krf3tyC9PLv1D8EtakrRm/X+nUO
+	QTiwOgOcHeYp0b7TBQFkyqMuoBSt8ySJQIxK/gY2CIWczSrNWOgaN3sHXNoOVfbg
+	1PRjlp5l9CJfTUom8JpT3ILdYazTR/mhBTo5T25pPdChfjWvaahZ9XbmiLMnTVlE
+	Yrhuwspltlf7Q/5xFgiD5tqR903bwKKN38k8csF6m/+xbTKATAe4JBoPSlmLTnqt
+	CQUf1pv5UaKqCToE/zboS2IO9fJdhZKHCQQClxWTgz2l89s5oin6V5K7O0n08ivJ
+	Uq1ygA==
+Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com [209.85.217.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cdqfg9mhy-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Feb 2026 13:04:24 +0000 (GMT)
+Received: by mail-vs1-f71.google.com with SMTP id ada2fe7eead31-5fd493bc7a2so187908137.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Feb 2026 05:04:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1771506264; x=1772111064; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Tta6p1UfArJB2f1ZLaS24vMXG5SGG6hI3ls4c9vUi0s=;
+        b=hb1k7hsUmcebMIUlmFtPvkIh5d6NiF/OhfBrZCPF/7oAOFE1MhRSxshgRV8PfZyEyt
+         5e3A+Gppc8Twp6nXBXkJMawf3pxwXg4PxTw9QfMcJB69u4HdahX8AiOh2sA9M95ZGzec
+         CZdsqGAKnCnY7+7JgW9rO9XkQmYIZARsFQbSsDTkTzs4KSm4TbZVXxa3iS1erztOXWJf
+         szgSmD4VrFXzPgY0DaF2v0YPvhPymg/8b1/I4ZZP1d2bgOtrK3aln7LfHucutQRKn2ks
+         NrDJ3UYLXguUzxQPbQ6g6Kuk1IMWDjw6bbDpS2gPpgXv/s8hJEsl0v9AXGceUCrfcgnn
+         fM6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771506264; x=1772111064;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Tta6p1UfArJB2f1ZLaS24vMXG5SGG6hI3ls4c9vUi0s=;
+        b=n+oQ2w1Ucqkvol5HXp1UAAjc/rHlKa+iLzDQkDF0o5jOAy0s+tJX+PGeBdb5K0pvv0
+         h3BJLxbeSpQ4SO03po4ZWOQgr4Pfkk3sYRwngyTrdDCWChNQA6wgIIxE8MJ2I8fKTFWA
+         ep6cJsKHESedSEwUP37qL2rNWwpzBPv7H7b3LKMBFqrMuBsdelMxufuAJfvyO/al0r7q
+         /9azxr3s+bk63gYIMRf9bHvdDWzWekf4hJQ5ZkRiYKzP4zc6NK4dEgAvEbw8ZhNOWL/5
+         PIk5yoTzyzlQa64x+91x+uozXzi+4/EJEsKyfGdcbJhif8Non0pjSmxS4hfdrr9g8lTw
+         G2AQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUf4EKXyiXtF5t+JGoHBO/j0PbYqJ1fgb4ckIfg1NN0OI5Big6VwYTSn6NtU/vmmUTNacXDs71U5EX3Hy8s@vger.kernel.org
+X-Gm-Message-State: AOJu0YzY5p0n5KXkQF9n/jrN9hIOGnXywGYmVkX58GqXWF068QmG9LtV
+	+ZTxA/m6E+qjAvbpYuXftgJ5zvObfod4pRXS0f5bM3nFTAcBFMKgFjDTbzbcrlTvHzTIKI1Enq2
+	2cMTOMaclleGd+2gDMAntx3EPW1VkVAu69PCneQWY/X0k2tKUsz+3vD4af+TqnxFTA5GE
+X-Gm-Gg: AZuq6aLBMMvmzaNidX1zAbwqCfHVzYbT4Kishr1UA3uPqFrs5mZgdNfEnIjOPvjCnPD
+	moO8nj3YnUqnMxKdq8RL7A0onFg5qnaAQpWsCIxwpO4BnFpfc2F32R083FK+oA6MID2jkufQBTp
+	vp2VhdjtfZ3bJYDxZd2HS0CWWclyKCpufEOWBfvXbTe6X5A8IKHu69Aa85EYt7xvZaSP6ELoWNY
+	lmgep/Hob1bgbvOBjwrqmmIizkj3OJ2H42zntE+POhm0H2YDEzWmFhPIPgyQejuf+Y3ByDBpkyH
+	SQ3c6SHketJO47b2c4KmWjbrEsZ/jjyNKzL8aL4+rab+RbYQgBV0THoc0UbNAznfIMSoQqNVAk0
+	v1dkjp81/CTnTeEpUAzhuX/NtfuDHiu7tUK3aFV/YKgQpHOzd5faY9jMvvkHfvj4QAA5u+3AiRh
+	P2PmE=
+X-Received: by 2002:a05:6102:3f09:b0:5ec:95a0:6aac with SMTP id ada2fe7eead31-5fe16e93895mr4524650137.4.1771506264144;
+        Thu, 19 Feb 2026 05:04:24 -0800 (PST)
+X-Received: by 2002:a05:6102:3f09:b0:5ec:95a0:6aac with SMTP id ada2fe7eead31-5fe16e93895mr4524635137.4.1771506263611;
+        Thu, 19 Feb 2026 05:04:23 -0800 (PST)
+Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b8fc7627895sm583473766b.31.2026.02.19.05.04.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 Feb 2026 05:04:23 -0800 (PST)
+Message-ID: <81d31750-f301-4332-84fa-a5c1aa401507@oss.qualcomm.com>
+Date: Thu, 19 Feb 2026 14:04:20 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: pm7250b: Enable Qualcomm BCL device
+To: Manaf Meethalavalappu Pallikunhi <manaf.pallikunhi@oss.qualcomm.com>,
+        Guenter Roeck <linux@roeck-us.net>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, amit.kucheria@oss.qualcomm.com,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>
+Cc: linux-hwmon@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260206-qcom-bcl-hwmon-v1-0-7b426f0b77a1@oss.qualcomm.com>
+ <20260206-qcom-bcl-hwmon-v1-3-7b426f0b77a1@oss.qualcomm.com>
+ <98ad13d8-82d0-4def-917d-b99cf455c5f1@oss.qualcomm.com>
+ <fa6ce650-42b8-4090-9c80-7f4e4c85a96e@oss.qualcomm.com>
+ <91425550-35f6-4941-917c-f639dfadb42d@oss.qualcomm.com>
+ <f62c0595-16ce-4af3-b0e1-0ebb84dc4236@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <f62c0595-16ce-4af3-b0e1-0ebb84dc4236@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset="utf-8"
-Message-Id: <E1vt3Us-0000000A5ei-04Bg@rmk-PC.armlinux.org.uk>
-Sender: Russell King <rmk@armlinux.org.uk>
-Date: Thu, 19 Feb 2026 12:51:10 +0000
+X-Proofpoint-GUID: aDgmc3UjutoKjMR-GdUZPd-gvoKO1grl
+X-Proofpoint-ORIG-GUID: aDgmc3UjutoKjMR-GdUZPd-gvoKO1grl
+X-Authority-Analysis: v=2.4 cv=A6hh/qWG c=1 sm=1 tr=0 ts=69970a58 cx=c_pps
+ a=P2rfLEam3zuxRRdjJWA2cw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
+ a=EUspDBNiAAAA:8 a=MO18dg7sMrBkYyaxiDMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=ODZdjJIeia2B_SHc_B0f:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjE5MDExOSBTYWx0ZWRfX9/YlsMWvATti
+ XmuNOUNCSaOZp0ii7RTlb6M+G0cHrtgR/1tU50MHCnvF/c1HUg/8uAuvSJophOpTjyo0mUxQJmI
+ Wb+9KOmyKUPZ8zkHr+81LqMTCuhSDDTWqanAdSpNMMiBI3jJ42D4tCCIJB4wIh2VzEU7WmARdEP
+ gDkTqSPb6+z+fqilPqiYFylXLT+/yowUnRPA7v9Is4ifyiBb6XRHj8sM9ksyeEHEM+d2n4kw492
+ FMHQ7Kf/zwr/rsVTjExZ+EDck6ZfXi5kNcvENErXeWiAyZSC7cY/3XJUnGN98Nnuo+/kWHbIp/L
+ PjTcgLKTTSXnFv+sVKWwxGgBeEFSPRr35Ku7zZrla3N0ZQr8ZVYubVCUnr9v88gikb6A/lqE3I3
+ 9o8zrRmcXU2dr6FYG6aPQSewpyzdsv4C+hukXCzWgWsrx86vVOwz2cpKaE6mfJD89G7reqPsCJO
+ 2GJdsVLl78l0VykFskg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-19_03,2026-02-18_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 priorityscore=1501 adultscore=0 impostorscore=0 suspectscore=0
+ spamscore=0 malwarescore=0 clxscore=1015 bulkscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602190119
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [1.14 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_DKIM_REJECT(1.00)[armlinux.org.uk:s=pandora-2019];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
-	DMARC_POLICY_SOFTFAIL(0.10)[armlinux.org.uk : SPF not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-93384-lists,linux-arm-msm=lfdr.de,kernel];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[armlinux.org.uk:-];
-	RCPT_COUNT_TWELVE(0.00)[15];
-	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_TWELVE(0.00)[14];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-93385-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,1d00:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,c000:email,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	FROM_NEQ_ENVFROM(0.00)[rmk@armlinux.org.uk,linux-arm-msm@vger.kernel.org];
 	PRECEDENCE_BULK(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	NEURAL_HAM(-0.00)[-0.962];
-	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	NEURAL_HAM(-0.00)[-0.999];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,armlinux.org.uk:email,rmk-PC.armlinux.org.uk:mid]
-X-Rspamd-Queue-Id: 0F77B15EC21
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 47AFF15EE8E
 X-Rspamd-Action: no action
 
-The call to phy_set_mode_ext() after phy_power_on() was a work-around
-for the qcom-sgmii-eth SerDes driver that only re-enabled its clocks on
-phy_power_on() but did not configure the PHY. Now that the SerDes driver
-fully configures the SerDes at phy_power_on(), there is no need to call
-phy_set_mode_ext() immediately afterwards.
+On 2/19/26 12:34 PM, Manaf Meethalavalappu Pallikunhi wrote:
+> Hi Konrad,
+> 
+> On 2/16/2026 5:18 PM, Konrad Dybcio wrote:
+>> On 2/13/26 12:55 PM, Manaf Meethalavalappu Pallikunhi wrote:
+>>> Hi Konrad,
+>>>
+>>> On 2/6/2026 2:41 PM, Konrad Dybcio wrote:
+>>>> On 2/5/26 10:14 PM, Manaf Meethalavalappu Pallikunhi wrote:
+>>>>> Enable Qualcomm BCL hardware devicetree binding configuration
+>>>>> for pm7250b.
+>>>>>
+>>>>> Signed-off-by: Manaf Meethalavalappu Pallikunhi <manaf.pallikunhi@oss.qualcomm.com>
+>>>>> ---
+>>>>>    arch/arm64/boot/dts/qcom/pm7250b.dtsi | 10 ++++++++++
+>>>>>    1 file changed, 10 insertions(+)
+>>>>>
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/pm7250b.dtsi b/arch/arm64/boot/dts/qcom/pm7250b.dtsi
+>>>>> index 0761e6b5fd8d..69ad76831cde 100644
+>>>>> --- a/arch/arm64/boot/dts/qcom/pm7250b.dtsi
+>>>>> +++ b/arch/arm64/boot/dts/qcom/pm7250b.dtsi
+>>>>> @@ -202,6 +202,16 @@ pm7250b_gpios: gpio@c000 {
+>>>>>                interrupt-controller;
+>>>>>                #interrupt-cells = <2>;
+>>>>>            };
+>>>>> +
+>>>>> +        bcl@1d00 {
+>>>>> +            compatible = "qcom,pm7250b-bcl", "qcom,bcl-v1";
+>>>>> +            reg = <0x1d00>;
+>>>>> +            interrupts = <PM7250B_SID 0x1d 0x0 IRQ_TYPE_EDGE_RISING>,
+>>>>> +                     <PM7250B_SID 0x1d 0x1 IRQ_TYPE_EDGE_RISING>;
+>>>>> +            interrupt-names = "bcl-max-min",
+>>>>> +                      "bcl-critical";
+>>>> We should strip the "bcl-" prefix, since these interrupts happen
+>>>> to be under the bcl device
+>>> Ack
+>>>>
+>>>>> +            overcurrent-thresholds-milliamp = <5500 6000>;
+>>>> Is that something that we expect to change between boards, or is
+>>>> that an electrical characteristic of the PM7250B?
+>>> Yes,  It can change based on battery used for that board as these thresholds will be close below battery OCP spec.
+>>> It is not based on pmic spec. Max current threshold support for specific pmic bcl is taken care in driver pmic data.
+>>
+>> Okay, so this property must not live in the common PMIC DTSI then..
+> 
+> Ack, I will move it into board file wherever it is required in next revision
+> 
+>>
+>> I think ideally this could be communicated over battmgr, since it already
+>> has a lot of information about the battery that's currently connected to
+>> the device. Do you think that would be reasonable? Would you know who we
+>> could talk to internally?
+> 
+> We are not adding any battery information here. This configuration is specifically for the BCL peripheral to monitor current and trigger an over‑current alarm. While the BCL settings are derived from battery specifications, they are not the same as the battery’s own limits,the BCL thresholds will always be set below the battery’s OCP specification.
+> The intent of the BCL is to provide early detection of over‑current or under‑voltage conditions, notify the SoC/peripherals, and allow corrective action before the system ever reaches the battery’s actual protection limits.
 
-This also means we no longer need to record the previous operating mode
-of the driver - this is up to the SerDes driver. In any case, the only
-thing that we care about is the SerDes provides the necessary clocks to
-the stmmac core to allow it to reset at this point. The actual mode is
-irrelevant at this point as the correct mode will be configured in
-ethqos_mac_finish_serdes() just before the network device is brought
-online.
+Right, but as you say they are derived from the battery spec, I would
+guesstimate it's something like "90% max current", so swapping out different
+batteries for the same device could potentially affect this value. Since we
+already have a place where OEMs are required to add the battery specs, I
+would imagine this could be beneficial to move over to battmgr in the future
 
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
----
- .../stmicro/stmmac/dwmac-qcom-ethqos.c         | 18 ++----------------
- 1 file changed, 2 insertions(+), 16 deletions(-)
-
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-index 65316c603cae..20d0d113965d 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-@@ -105,7 +105,6 @@ struct qcom_ethqos {
- 
- 	struct clk *link_clk;
- 	struct phy *serdes_phy;
--	phy_interface_t serdes_mode;
- 	phy_interface_t phy_mode;
- 
- 	const struct ethqos_emac_por *rgmii_por;
-@@ -648,17 +647,8 @@ static int qcom_ethqos_serdes_powerup(struct net_device *ndev, void *priv)
- 		return ret;
- 
- 	ret = phy_power_on(ethqos->serdes_phy);
--	if (ret) {
--		phy_exit(ethqos->serdes_phy);
--		return ret;
--	}
--
--	ret = phy_set_mode(ethqos->serdes_phy, PHY_MODE_ETHERNET,
--			   ethqos->serdes_mode);
--	if (ret) {
--		phy_power_off(ethqos->serdes_phy);
-+	if (ret)
- 		phy_exit(ethqos->serdes_phy);
--	}
- 
- 	return ret;
- }
-@@ -681,12 +671,9 @@ static int ethqos_mac_finish_serdes(struct net_device *ndev, void *priv,
- 	qcom_ethqos_set_sgmii_loopback(ethqos, false);
- 
- 	if (interface == PHY_INTERFACE_MODE_SGMII ||
--	    interface == PHY_INTERFACE_MODE_2500BASEX) {
-+	    interface == PHY_INTERFACE_MODE_2500BASEX)
- 		ret = phy_set_mode(ethqos->serdes_phy, PHY_MODE_ETHERNET,
- 				   interface);
--		if (ret == 0)
--			ethqos->serdes_mode = interface;
--	}
- 
- 	return ret;
- }
-@@ -839,7 +826,6 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
- 		plat_dat->host_dma_width = data->dma_addr_width;
- 
- 	if (ethqos->serdes_phy) {
--		ethqos->serdes_mode = PHY_INTERFACE_MODE_SGMII;
- 		plat_dat->serdes_powerup = qcom_ethqos_serdes_powerup;
- 		plat_dat->serdes_powerdown  = qcom_ethqos_serdes_powerdown;
- 	}
--- 
-2.47.3
-
+Konrad
 
