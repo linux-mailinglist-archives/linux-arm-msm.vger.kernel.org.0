@@ -1,174 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-93439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93440-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id gGlPAz3Ol2kk8wIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 04:00:13 +0100
+	id h0C2NhfTl2lM9AIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93440-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 04:20:55 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F2DE164534
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 04:00:12 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 28AA01645B2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 04:20:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C8C143013264
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 03:00:10 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id BC76730209E6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 03:20:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD5FF2D839E;
-	Fri, 20 Feb 2026 03:00:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4349A274FE8;
+	Fri, 20 Feb 2026 03:20:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DVuzS3A/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WTJJkWdw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3087A2D838A
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Feb 2026 03:00:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.172
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771556409; cv=pass; b=V5FiFz1H10lsBKAabiouMEthylO59A0emhsqKgLjBADBTBMNen1lPlJZ7dmIA+rcV8blTbAxn8m5kqDaw7JlXE9bF8b/8cThfTej2PwqTy3MyanWdpq++gvdAMedu1XDrQ0qHxR74EeRoxE8coeUxMYv64/leD5kRVNQYXudOXk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771556409; c=relaxed/simple;
-	bh=jL5V55t1rEBj27+VWKWTlqwdAuocpvOVvYTKQbJZVCg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CaSWizQkMqKPUZCr0R0MOEc8Oobamlih5oGgOPi53eH2hSHW4EnVAxUuRRvQsWVMBxCfxfUmvA5IkgnMcpQvhPs4ZlPnBYKNoDBfQCZjmQmOoGDwmOH+9iHd4UPEZxN0PDPFRNwkpY79aoBTfCYt8XCC31/RL2wW7FJ1shQFJFQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DVuzS3A/; arc=pass smtp.client-ip=209.85.208.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-3870cbd6c40so14755291fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Feb 2026 19:00:08 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1771556406; cv=none;
-        d=google.com; s=arc-20240605;
-        b=gVLSX0/7x0aEzHunmr+6KYA68tVXHKNvGUGVGF/kYFv3rBT4Ehhpp2KV/VYLnjlj1o
-         GentPh7Lf0254bCszMYwWou1TKuvWeRe8G8FNowCrRkeCeooOsU8XiX2oWAe9cZzrNIR
-         9oWrlvZG+E9L4VYpHcIvYgWOhQueE1fhW8rTUqiMXjW6F8Odl+1PN6k6cr83Tf4rf1te
-         G0giLD+ZE7MXoVhpbRFtzQJvnzsRhVQIdAedWyNzfOMQhB4NkzKCC4lGIiCh2fQJIy0k
-         X4QfEQyhMGAld5ddyIujxSf6e0Wifybl9VRhMeBcmB122MO+s7/tGT5/T+hnNlbxjQgn
-         ewBw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=hKJq4SbZvV5Qnlwxk5U0/GVmtjJHH6p7BfIFLrvgzoY=;
-        fh=giCpI0gU39w4y6AOI/vUp65hKRQV+m5dalksSwCdP1Q=;
-        b=c69YQmEaEHcMszuQbi3RPTwEjoFuYtmPw0WE601903WWpF8g9aQQ3hIvT+iXqdU9oO
-         PeoxxNAidJbcVuGYY75Eau4BSfFv3IziXi+SrDs4HDZh2uF9g0i7PJ/fRFYGhjHwaHhC
-         ajAIMBmcfteMRB/3w2BGuO5aMBmAvO+5l1T8xQA+ePdlO9kyWhW2jGNzWtiYay5GlRIc
-         tn9CqNn959FqGnHPkYrevga3KkYwQ7dUbz4TQPJNNRw9HfcWIJu+w54KzDn4EX57NLGP
-         KVPR/isL7Q1EUv+k202ukJVHXqRKsYzlY262D2mP23gWWrIrPSKD5Z4EMli7San4vjZW
-         8/XA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771556406; x=1772161206; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hKJq4SbZvV5Qnlwxk5U0/GVmtjJHH6p7BfIFLrvgzoY=;
-        b=DVuzS3A/taTGcwIrGFQp4IvIGh54AP88eAYOeQQib5mI0EigAvW9D1roeyn0ChNFC6
-         EbCzZNwRhDhIsoeJHZh22bNg5WC9a3JDhz54Dl0ad0Ki2QPoYSarbbU/9KRSB3uiJzPF
-         ffnqWE7WdbIJvGJSud3eUga85j9fNXg0a4BJ127AuhJLM9YOK2OhuO/lwLubvufSyZI0
-         csGqfPfzTWeGpPE8JahLe7XvgvlG42qw441GE/XoTCPNVnRzvuFCgAMO5nO51aMeXKDX
-         8mXaOG2fjp3T0JVzY8oyVtkRW98EC+nFtQ/XU9/YXIzLT171POcGZOTjZf8wjQr9L2An
-         Gb9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771556406; x=1772161206;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=hKJq4SbZvV5Qnlwxk5U0/GVmtjJHH6p7BfIFLrvgzoY=;
-        b=oil17XIVAFQx1BwwMz61MMDlJ+ClQPBGzOTe3Uowl/dnwCCru2RO0guwzkwvJ5XJpw
-         O1nCOM5OZo4yBeaCsiKxto/iSpmJvBt8P/lChZEWa+7LecyqWbH5FhdxmXldWzHv22VT
-         KTF/gMMofe08ntA06ylavjzM0yFMr+OXEuj9HKwKvQvPO0hN1ITfPmhQc6xCrwKMUqwu
-         aevKJ+X0mnRmIgBfgmyCZnGx9cPMcy0DfIxRvncAXVx3Z35u3RV5ZxauA9ru5C5yrGXK
-         9X0npvZIXYHvwSKSPXBoTUc/s3scc9ZLfhRamv4JN1Q768ZGW/lhjGnzyN9Ff98IklYA
-         ZJPQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWt+pafkB90zNfVvGfg2YXvDpXYLnR/NWXook8MthEBVMjp9e/vryBt/pAQz7zO1wNUlTrkr01dKX2MQ8AX@vger.kernel.org
-X-Gm-Message-State: AOJu0YxTcq5RKVejWuEYA07RagVj3hudqpPpid5IyGwmhQgIY4u+Gws9
-	MjBvl3NY1UQuCOvTEsV7H8tksfbMcaWochv0r7bm0WxSlHGGqftcM4jB908jxRK7HN1OOtk1+Wa
-	Ytu9JdUjGH/WzNzQQUoQtQgWIXQT7oSQ=
-X-Gm-Gg: AZuq6aJc0kdbnp0ZlAYggAGEH42CCo2WfsjvKKJJh6Qh6lNtbQgF/Tk2J65s+/tcFnR
-	LcX4O0bKCWR4Z3edVUT1J97fX9dgl3S6KFGhTxxo2O3iH/pUdcoGs800OhdVeim/SMc8NhHyDL4
-	oqYVjV6RuSQLOMlBVuXxo235KiCWESWK113oyRNxqyR/eT+MZ1Km2IGL6p2dJLx9ODL/i8D9nwx
-	vOJuAnCPvrrH+/yHsebsnQ5w5oGd0bWjVUr/2P7JUYHElJpxtlWmS8m679wG0fzNhRNT+9psKea
-	Pvz6bNRPUNaLQLhxwHJgdMrxgavVIUtNE68Fgl2n0/2jgobuyM9t2STq6ZQP6E4WKIzL
-X-Received: by 2002:a2e:bc02:0:b0:387:14c6:53df with SMTP id
- 38308e7fff4ca-3881b997fc2mr53665881fa.42.1771556406012; Thu, 19 Feb 2026
- 19:00:06 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EDC11DF755;
+	Fri, 20 Feb 2026 03:20:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1771557653; cv=none; b=oG+LJGPRptPXaSnQqpMWwHGPpYJQJOMsg8szvvk3N33uy+nQ9uEQeKQnAD1fU10TuRdhVkX04OCX+z1UnIbkQWgi4ug3n1I27eEuoEPW9sHCbTLs/cQWwDtLzxvZGovOgGNaUPdDSrHv/6z/VYKHJ+4LOCgvJMzpP+KbiemVEEM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1771557653; c=relaxed/simple;
+	bh=wgWPPCRutcpO0Vhe/8Eobv+T7qlKLjGdFeswF+1azuI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HR4n1JOii8Xep99r5os6KQ0WOs6DJ4AeLMNY8WBTQBQRZb0XhMkHy19jDbrIxWuaojNMeQTXO1UuTNlcQ6UAkpj5ZGtUq47EWvyEKhypHK+84W493s5RTwPnWGE5+1B5EQkO/rixj/DS12c4JG3DkKogPFG26ksom9HMCZXI82U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WTJJkWdw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 938E0C4CEF7;
+	Fri, 20 Feb 2026 03:20:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1771557652;
+	bh=wgWPPCRutcpO0Vhe/8Eobv+T7qlKLjGdFeswF+1azuI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=WTJJkWdwSDM3vKCDuXGH7+QA7AxvOe4/p4VvANZJGC1UXLvxckICmzFt1ZsiEmlgP
+	 MqvGYf/lrB5t0UnDAUrz4B6LwFK/8DZaCy7Ci63LpyUE8ESBH70GxDhq7OZYSdHKG9
+	 fvLtjZgnUCseWLjoB+PgbE4XHIOTBOA6CjQGO5+RwZWYCuQ6LpEQVetCmzg4i7ieta
+	 VlJ3zicDCTHQJRRdW4m2wzDy7/TEbEh+Z2/6houW6nc8Ja1gYmGrwP42KkwmYJ/TrM
+	 TpdPUk7fZAiGYeHxYtTgAUEnGY+/Yj/35XpVnYmMWQgtMQaBx/guFVhJrgEZRovJXQ
+	 sgHkhwHnXdYGg==
+Date: Thu, 19 Feb 2026 21:20:49 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Cc: Alexander Wilhelm <alexander.wilhelm@westermo.com>, 
+	Chris Lew <christopher.lew@oss.qualcomm.com>, Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, David Heidelberg <david@ixit.cz>, 
+	Jeff Johnson <jjohnson@kernel.org>, ath11k@lists.infradead.org, ath12k@lists.infradead.org
+Subject: Re: [PATCH 1/2] soc: qcom: qmi: Fix "invalid data length" in encoder
+Message-ID: <jys6bzcbdl5wly255nlcyjqrq4tehxpez2ydybm4ae7dalqxmq@s3xcuzy7ckqa>
+References: <20260214-qmi-encode-invalid-length-v1-0-780cb4e98b0f@oss.qualcomm.com>
+ <20260214-qmi-encode-invalid-length-v1-1-780cb4e98b0f@oss.qualcomm.com>
+ <aZLcO4kD5fGtLcGh@FUE-ALEWI-WINX>
+ <vexuybqdbf6wx5dxlcdlcy6lwqmxmzonorjn6x5zlzdpxzi3yo@pcqbxitzed2m>
+ <608ff2a7-775e-46ae-ba8b-9d9c2f8219bc@oss.qualcomm.com>
+ <q2gogah4suu3nftewye2l3iud2nxwdi7ykzqnagnz7npmrurgm@7icn643kozp6>
+ <ke3anvhgm7popzmrh3eg272eczhtcmgtho6trkwleczim23lcd@dnaudbsrslhr>
+ <1ad37b2f-5f3c-493e-ba3c-fec1a0377767@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260218-sm8550-ddr-bw-scaling-v2-0-43a2b6d47e70@gmail.com>
- <20260218-sm8550-ddr-bw-scaling-v2-1-43a2b6d47e70@gmail.com> <20260219-cordial-robin-of-performance-5fb88c@quoll>
-In-Reply-To: <20260219-cordial-robin-of-performance-5fb88c@quoll>
-From: Aaron Kling <webgeek1234@gmail.com>
-Date: Thu, 19 Feb 2026 20:59:54 -0600
-X-Gm-Features: AaiRm50qTrqt8BSzzi0gs_vnlSMTOnmf8SWXzlWyfspsagrgKunuBjfwtusY52U
-Message-ID: <CALHNRZ8qEJc8OSsrvCQC76_LjxA7KunrOonvSfq8bsFdYnKE+Q@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] dt-bindings: interconnect: OSM L3: Document sm8550
- OSM L3 compatible
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Georgi Djakov <djakov@kernel.org>, Sibi Sankar <sibi.sankar@oss.qualcomm.com>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1ad37b2f-5f3c-493e-ba3c-fec1a0377767@oss.qualcomm.com>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+X-Spamd-Result: default: False [-1.66 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-93439-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_FROM(0.00)[gmail.com];
+	TAGGED_FROM(0.00)[bounces-93440-lists,linux-arm-msm=lfdr.de];
 	RCPT_COUNT_TWELVE(0.00)[12];
+	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
 	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	NEURAL_HAM(-0.00)[-0.999];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[webgeek1234@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,mail.gmail.com:mid,qualcomm.com:email]
-X-Rspamd-Queue-Id: 5F2DE164534
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 28AA01645B2
 X-Rspamd-Action: no action
 
-On Thu, Feb 19, 2026 at 1:52=E2=80=AFAM Krzysztof Kozlowski <krzk@kernel.or=
-g> wrote:
->
-> On Wed, Feb 18, 2026 at 12:16:18PM -0600, Aaron Kling wrote:
-> > Document the OSM L3 found in the Qualcomm SM8550 platform.
-> >
-> > Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
-> > ---
-> >  Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml | 1 +
-> >  1 file changed, 1 insertion(+)
-> >
->
-> Your changelog does not mention this patch, so I assume it is just a new
-> one?
+On Thu, Feb 19, 2026 at 01:25:36PM -0800, Jeff Johnson wrote:
+> On 2/19/2026 11:18 AM, Bjorn Andersson wrote:
+> > I reviewed the downstream code generator source and documentation.
+> > 
+> > We do generate tables matching the ath12k c-structures, i.e. variable
+> > length arrays are always prefixed with an uint32_t field - not a
+> > uint8_t or uint16_t based on elem_size.
+> > 
+> > Looking back at the original implementation of the in-kernel
+> > qmi_encode(), we only read elem_size bytes from the c-structure, but we
+> > do so into the (little-endian) uint32_t on the stack, from which we
+> > encode the message and act upon the result.
+> > 
+> > In qmi_decode() we decode elem_size bytes from the message into the
+> > (little endian) uint32_t and then write 4 bytes to the c-structure.
+> > 
+> > 
+> > The fix would as such seem to be to just update the length fields to be
+> > all uint32_t. The problem I see with this is that qmic [1] is the only
+> > publicly available code generator, and if we change it to always
+> > generate uint32_t length members, we also need to fix the
+> > encoder/decoder in libqrtr [2] - which will be an ABI breaking change.
+> 
+> And IMO that is a deal breaker since it would break the interface with all
+> existing legacy firmware.
+> 
 
-Yes, I forgot about this when making the changelog. I had used the
-wrong compatible in v1 and setting the correct one required adding
-this to bindings.
+No, the firwmare-facing encoded length in the messages are currently all
+little-endian elem_sized, and this would be unchanged. It's merely a
+question about the ABI between code generator, encoder/decoder, and the
+client code.
 
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
->
-> Best regards,
-> Krzysztof
->
+> > 
+> > If we go the other way around, the drawback is that we no longer support
+> > the c-structures generated by the proprietary code generator.
+> > 
+> > Worth pointing out is that the structure of the c-code is an ABI between
+> > the encoder/decoder, the code generator and the client - it does not
+> > affect the wire format.
+> > 
+> > [1] https://github.com/linux-msm/qmic
+> > [2] https://github.com/linux-msm/qrtr
+> 
+> Going back to the original implementation that reads and writes a u32 on the
+> stack, can we stick with that but add endian logic that correctly converts
+> between u32 host endian on the stack and either u8 or u16 little endian in the
+> messages? Is this specific to QMI_DATA_LEN TLVs?
+> 
+
+I gave it some more thought, and discussed a bit with Chris Lew.
+
+If we change qmic to produce uint32_t length entries and align the
+in-kernel interfaces to use 32-bit lengths the kernel works fine - and
+thanks to Alexander's work, should support both endianes (will double
+check).
+
+For the userspace library, the decoder already writes 32-bit fields
+(into the u8/u16...) so the situation for currently generated c-structs
+will be unchanged and it will be correct for 32-bit fields.
+
+The encoder is reading u8/u16 from the c-struct and encodes this. Just
+as with the structs in athNNk, we can change them to 32-bit without
+impacting the encoder; as long as we don't change the encoder...
+The only problem I think we have left is that we can't fix the userspace
+encoder - as this would be incompatible with current clients (u8/u16
+can't be read as u32).
+
+
+I'll take another pass tomorrow, to review this, review Alexander's work
+once more, and prepare some patches.
+
+Regards,
+Bjorn
 
