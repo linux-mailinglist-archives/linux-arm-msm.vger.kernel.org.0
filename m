@@ -1,206 +1,400 @@
-Return-Path: <linux-arm-msm+bounces-93501-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93502-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 2EKrNFxbmGkNGwMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93501-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 14:02:20 +0100
+	id gFFGGhBjmGmKHgMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93502-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 14:35:12 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 40C6B167A53
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 14:02:15 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D5B49167DA7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 14:35:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 92AC63001FB9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 13:02:12 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 41E5E3031F2E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 13:35:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9A9C330662;
-	Fri, 20 Feb 2026 13:02:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 211F9331220;
+	Fri, 20 Feb 2026 13:34:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gFrL94H4";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="O+lfRd3X"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="w09L5OCO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4DB322B83
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Feb 2026 13:02:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA82343D9E
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Feb 2026 13:34:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771592530; cv=none; b=sAwKfr6q/S6wlN8SnI2mCeqiSg5ir/ZBxdV4xQQHhDerzmFdl6odS+IQjTTI0RN/vxvhzNhl7UE2g6h7boXK54kMlniVmetzrwOlL0PkWCUSnugvGShmXpWE3+Pkr9xOdyE/Oxv8Nv+3mY1mVcEHD/pCOkYUyefR4TtVSFxwz8U=
+	t=1771594499; cv=none; b=Rr5a/S8CdAzQda29cTh+iMznrFghESbXbggoVmhCDzhuTwJrXUpdkEIyKuR1exUDH14C/P7VgyQtnJevMiSX85LEzrUdYafM2a0tDC5Mi5N0QWeTpZk3tZWazWGqMBgRHW8RodEkmNUuK2fK208v1yJP15qlA+jDc70++gSud+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771592530; c=relaxed/simple;
-	bh=jjiZekOWQAI0H2IL4fEIk9IiBZnrG/WEjlYmYNSVUXc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=misov2WH1Y8XNmNEdVHpyCMXiWelTUwU+LwMKRzxqx9/dkMGlvUGkw1eTn2ZdmcMcabA1yrrgPhu11211TaNLcUAqeaIc8QHJOc0WAtgqOTbX2vy9wMJtRFwPr0xlUZHDCDf/eivEQddK6BmaLp4nud86OUWTXvouH1GxAuNd9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gFrL94H4; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=O+lfRd3X; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 61K5Rp2T2552606
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Feb 2026 13:02:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	CzWESu2uFKsGs95jb7f+KQXQWBws/czIlkrDZWRZm8Y=; b=gFrL94H487pzY4lC
-	AmSW4F7XSq8t9OJLj+pDk9wQsT9YIuRkNskaVGM1HqZREiquWCiOIVnFs3iEw5uQ
-	nWByS9rCtA6uk3hjoqzAS9/etrHFO3V/79q40uShA3mLxkrvofCLQxQUK+oF7378
-	2RbATDBnEz5SVzswR0UC2+XO/EpQwLaCcUXx5p+L/aaHCGkF/qXyNufgnhKOCA+T
-	eOMa8OhBH35SgpnnH8s94UliJb/+IVCbhAZ01cR6/bI2RroNVdckZnIfg33xDapz
-	neKHiBaLkBnBN3YqLRJ05SVCTA4GqWXWVMzw/tWU48Bdpu8+IZPo7ixY5+DxED5V
-	dd2hSw==
-Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com [209.85.161.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ceh7t12qd-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Feb 2026 13:02:08 +0000 (GMT)
-Received: by mail-oo1-f71.google.com with SMTP id 006d021491bc7-662bf85cdc4so2097027eaf.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Feb 2026 05:02:08 -0800 (PST)
+	s=arc-20240116; t=1771594499; c=relaxed/simple;
+	bh=9v7WQdaNoQtPaDpzoCJBsmkyHzAJQ1A++FUBSLTF/P0=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=FZrzWaEAndy/IEty6aC4417SBKzuCDfGtduIlYiyuiuJRsb5JMvOf3Lhkk3Ptu/0sEX21g81ko4a/PNHrTro7UAnUSSYsBJoIgx50Jnpj+vzXTkdIfF4mZtLo9Gz5CBSenU5o2dJN94VavmnFX6fKS+SGSgIwGvnApu+T21Ks30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=w09L5OCO; arc=none smtp.client-ip=209.85.208.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-65c01595276so3067630a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Feb 2026 05:34:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1771592528; x=1772197328; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=CzWESu2uFKsGs95jb7f+KQXQWBws/czIlkrDZWRZm8Y=;
-        b=O+lfRd3XO0fYMkzv3BKkz/NGB0bbHY44H9H+FJqmxnYPQ92eeHA9cvKVg+Ph9vqqW+
-         a7cG7EtL/OBP03RjeFwCKZEpuGGQsTGCPntRoE32cO8OQ7eocAut+HAuaoIQ5X9F/TYZ
-         vUetSru3qTlhYopjs1RI6jA09OEO2LJ3kPGglr/x/PXo6Vfkz2Jt8vZi4PgTHiKCPvhs
-         fx/zdQC3U1/RP19hx9rFNGSMDNxtN1GQhoa2sqKz7Uul9P6w0unJqJzxLWj/5r4jiIe6
-         1DOL7cBkDFQ7fJE5ecY+k8k48Sfb2w5GoAx0UWOVU8NCIQIDaHBcKw1CEoL29SbytmhN
-         alHQ==
+        d=fairphone.com; s=fair; t=1771594494; x=1772199294; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZKTvIic+hzKri0132pc/UWBS21rv01sHE1M70q4jAFU=;
+        b=w09L5OCOyvO/owUYmp+plhJ417JRNWXA4Yx3NiT7pSyO5v2aWC2Apn8/XrElwVIW0b
+         qa04yPatCT3uIPpVREtqlNVlWNDqXfTt8wVlo/TQtVCjDUp29RhU9EdtOKh7u5FgudU8
+         vPEs0TObbTahxOMHbShviKteiFic+m3x5lbtt68p2ftClMkdTYpJWva0gdRDPiTnjjT3
+         vipNke6gpY00bw3CZtAQm4ngEm0iXrla0AWy0hCaYLgjlKyH70wPAcZW2DEHN8zl1d23
+         SUzZGlotsOK1btAk6Cc2hobN4Dr/Z9joVeo6+eFpJ3awTklmTdtx4V1rvEdHzFQAoO4B
+         Ssng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771592528; x=1772197328;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CzWESu2uFKsGs95jb7f+KQXQWBws/czIlkrDZWRZm8Y=;
-        b=g/4TQecvykNkZgRLYH/mA65fqwn2k5vR3/j5zkSFM9EhdAQYDD5EMwMSrothuAqHh0
-         yasPLT+jlDr/7mgr6p4bpV9ByTkXSXBMjazMzbFQzxiuECOWJl4XDSzf7Kyo+BaEehdD
-         fhJgbCdzGI2mmHIG0QEMMdYnSRqc+3kRcNeeujWeKK48dKOv7drGu1FRnYRyT9rb/XId
-         rZvEApBBckN7cEeAGcD+5O1FTg590NnyHp2deyktxp+QxFqZId/Zf+W+N097IM2qccDx
-         cS5LzZPJhAaj6xMiitOCZ02oGaEX8B81pVMsOAfE+J8v5wmDfBjPlVd26EnJx0L26VCQ
-         +/PQ==
-X-Gm-Message-State: AOJu0YzAf2lJAkEPcayRKH6XZX21L/YQUtJZi7ymWcJGGfWg87iG3aBn
-	PwLwDKQNkgyScHAMAWipP0GN2cxJhPovT/j9SofOl1aOeYY6vmSP+X1wHr7EaM31IPW1tKZb9rV
-	5wQ1wp681mN+WwJ917DSKJcbZygCqK8DHGpU78bH3GamLLvm8YdKZbL9qF5ZWGIE+tlEn
-X-Gm-Gg: AZuq6aIRnn3wGkyOikoP/M/fFztS97L/DKo6vV4mM1JG9aEcpz3Vv1JWVoGXyRskxyv
-	P78Zn1Spvb6yIuY6++TzZEDYqzd4AFTaZcH8QJnbQ1DM5ZOnF7nejn9iym/RThYoCNSsfIHs/jl
-	JQuxfBFPud/lG5vKwuwoASmJNLEv9wjOxgLeZdsqdwVYB9ejNk+01r+3y9Ct1/PyOYyNo4fxMbQ
-	rkScD6mOPTCEhXFgoXFmS0rEhaOtwLwdzl+sWVZJFVSm2+CWiQkrcTm9afV7a9x0uZUzOnj8hap
-	bjFkgSf6BEZVr9gyBpPqSUNaROta7b0JxlhkAXsowIQ6BOo1P1OB2BMFtS8pawGLBqMfGBBwYNC
-	EjLeS/KKOwzP9KeRGdmhozfksZs9NxujN1jvOzsi+bl3WdIpkM5aK7oUMqkRpvFt7QQ3VRX/9mh
-	XsBAs=
-X-Received: by 2002:a05:6820:c018:b0:663:4ae9:23aa with SMTP id 006d021491bc7-67722c5a7a4mr6830821eaf.2.1771592527869;
-        Fri, 20 Feb 2026 05:02:07 -0800 (PST)
-X-Received: by 2002:a05:6820:c018:b0:663:4ae9:23aa with SMTP id 006d021491bc7-67722c5a7a4mr6830806eaf.2.1771592527336;
-        Fri, 20 Feb 2026 05:02:07 -0800 (PST)
-Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-65bad3e38f5sm4749119a12.19.2026.02.20.05.02.04
+        d=1e100.net; s=20230601; t=1771594494; x=1772199294;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ZKTvIic+hzKri0132pc/UWBS21rv01sHE1M70q4jAFU=;
+        b=TPHBPwakxxgO+CHLsWJIt9mERitmj9OzRkymoHIwYK7qkiBNj8LPSnGn1x824HSZzz
+         htU9aCvxNrxxJg0YUbNYqcdNzkrGHqeyb05vwiLUkNxPGSU5C+QS4ucyP3aCJXk3GNzn
+         q0L4qcE3JiB8bLFMo+ARjFjI140/Cix1k3+snTPq7DTQ71iEHcPIoB9IULUQHMEDwhCF
+         FhuiJWGUjXPxONvAE77pYs38EkmoYPMbK8pbuqpCnzUbT+qFqQyWqkSFd9TzdnWAO3iU
+         FE9jFnr15yMgneXSzqo+O4aiSMjN1i3yiAl38tnJvhNkC6k8uGX6JVYymYFdrsWdHrzd
+         jlAg==
+X-Forwarded-Encrypted: i=1; AJvYcCWh6ftdeScKGnDT8LcpoULqr0Bc9I+CoMqhQ7IBhoA5DvIp8koS9scSe/pMHZmpBF5kjDarUjj+PdaFLnT9@vger.kernel.org
+X-Gm-Message-State: AOJu0YwJ3fl2BXTA2qDtSNwhjBFUWDauo2npdxMleVDWGWhS8WzkwS+R
+	PlP4KtF9ZaXju071OwHbc+VlnoV6shgN23OXUUHoRMJhfBBpQYUZ+c+B3+Z3VQzzzdI=
+X-Gm-Gg: AZuq6aIaTtLBGJism2f2cVyF/raNhoob8v3wKgM/UafSmW8ovh1h+WlueBP3GQ/NbHu
+	WE44qmrFRj4Ytj1pyVGhAfPPbWb8L+3pXlyXviNH2RhSlT1YZU+L/N8EM6fu2aY1AUsBackMFxL
+	stwhbKNBGACxha/xmUaI/pgwSL0g+PT4HhBmkdiVI/ZYh79+DpoCfed7Uj/YrbI8WGJSVzm3Y/E
+	5+zhB2LwAer398TlMBqkJyrXIWRxxOW+d3fkjDnX5r+WbIPD4DAEI7arb0fzPEdSeYa/x+bc682
+	kmJiqaDjlBzNfZc7h1l2CxHiHLg6tRHDoiFmEirXgb3g/0N3gTl/yf3UNQVemHjN3r8FPOEvoXO
+	E8dGbhqBQnrMVInL2YJXKpvd2XL7BPlhlf0ToIQMnm0cMIxp4JOKOiz+bGBbT2+bxpfN+VJSJfN
+	xiIC6FPJMwBt8DgY3owzidmB51JyZhOMGTEfl4k4OgCEtMM5YpcTh9CxABKO0CELTIu5C7
+X-Received: by 2002:a05:6402:1e8f:b0:65b:99b3:d517 with SMTP id 4fb4d7f45d1cf-65bc78655bamr11701073a12.13.1771594494260;
+        Fri, 20 Feb 2026 05:34:54 -0800 (PST)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-65bad3e3ae4sm4843041a12.21.2026.02.20.05.34.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Feb 2026 05:02:05 -0800 (PST)
-Message-ID: <7dddf37b-c8f9-4cc2-bd3f-1bff5cc398d1@oss.qualcomm.com>
-Date: Fri, 20 Feb 2026 14:02:03 +0100
+        Fri, 20 Feb 2026 05:34:53 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] arm64: dts: qcom: hamoa/x1: fix idle exit latency
-To: Daniel J Blueman <daniel@quora.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Maulik Shah <maulik.shah@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, stable@kernel.org
-References: <20260220124626.8611-1-daniel@quora.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20260220124626.8611-1-daniel@quora.org>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: CC0XNba8t8GecFtoysICdUzQnVj4bX99
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjIwMDExMyBTYWx0ZWRfX9hN3EGp+ek3x
- DmUbn85KMsSQ3Et/bJd9Ll0HzVqT4PWq7kTqq6yX55g2CQk8OnRIuR/qKCK1kGMkIXfK0HstEVO
- 6a/yEa8+i3xPowV69IulhRgn+R63Ck5tkZGzWg+3F4mRD53PymLds5HHVG4T0Q/SHJUak2NzM0U
- Vh3aOhDvmQzRibIJTVCxD7wKR4F26wrNJW5mvlGiDMCxy/DOt/PAP/XimhNWTQX3vR5xhzqm3mk
- FLymS0zXzlawdYEdOojoH41Bq47Z3b2uPwXTwSI5Tidv6hadsufySrlK6oUGmKAxt/VXoA05RbR
- XligTlTAVSYIGw5tHdv8X64qIGa1u7UPIjb85FWihLtvtF9FO7QLpXOAF1Qe42hMUBTXKTg45jk
- sbMlH9LYClMbxYeiQqHy+hEjY1puQxIbZ8w1JjZyoQOXoJBC7tpS+pzy7LizKgeH+2wZtwwNXl1
- yaUwAcm7qMCw93QmIow==
-X-Authority-Analysis: v=2.4 cv=PcTyRyhd c=1 sm=1 tr=0 ts=69985b50 cx=c_pps
- a=V4L7fE8DliODT/OoDI2WOg==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
- a=t9ty7G3lAAAA:8 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=Wy8xLuAV8_BPkXRswWEA:9
- a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10 a=WZGXeFmKUf7gPmL3hEjn:22
- a=CsAS6f0m0zARWR-uHzm3:22
-X-Proofpoint-ORIG-GUID: CC0XNba8t8GecFtoysICdUzQnVj4bX99
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-20_01,2026-02-20_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 impostorscore=0 bulkscore=0 clxscore=1015 phishscore=0
- adultscore=0 suspectscore=0 spamscore=0 priorityscore=1501 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2601150000 definitions=main-2602200113
+Date: Fri, 20 Feb 2026 14:34:53 +0100
+Message-Id: <DGJTU2TOFZR7.2MOU6I6J8GV4L@fairphone.com>
+Cc: <conor+dt@kernel.org>, <srini@kernel.org>,
+ <yung-chuan.liao@linux.intel.com>, <pierre-louis.bossart@linux.dev>,
+ <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+ <alexey.klimov@linaro.org>, <linux-sound@vger.kernel.org>
+Subject: Re: [PATCH v4 4/7] soundwire: qcom: deprecate qcom,din/out-ports
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Srinivas Kandagatla" <srinivas.kandagatla@oss.qualcomm.com>,
+ <robh@kernel.org>, <krzk+dt@kernel.org>, <vkoul@kernel.org>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20250912083225.228778-1-srinivas.kandagatla@oss.qualcomm.com>
+ <20250912083225.228778-5-srinivas.kandagatla@oss.qualcomm.com>
+In-Reply-To: <20250912083225.228778-5-srinivas.kandagatla@oss.qualcomm.com>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[fairphone.com,quarantine];
+	MV_CASE(0.50)[];
+	R_DKIM_ALLOW(-0.20)[fairphone.com:s=fair];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	RSPAMD_URIBL_FAIL(0.00)[qualcomm.com:query timed out,quora.org:query timed out];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-93502-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-93501-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RSPAMD_EMAILBL_FAIL(0.00)[stable.vger.kernel.org:query timed out];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[quora.org:email,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[fairphone.com:+];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	NEURAL_HAM(-0.00)[-0.999];
-	RCPT_COUNT_SEVEN(0.00)[11];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[luca.weiss@fairphone.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 40C6B167A53
+	NEURAL_HAM(-0.00)[-1.000];
+	TO_DN_SOME(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[fairphone.com:mid,fairphone.com:dkim,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: D5B49167DA7
 X-Rspamd-Action: no action
 
-On 2/20/26 1:44 PM, Daniel J Blueman wrote:
-> Designs based on the Qualcomm X1 Hamoa reference platform report:
-> driver: Idle state 1 target residency too low
-> 
-> This is because the declared X1 idle entry plus exit latency of 680us
-> exceeds the declared minimum 600us residency time:
->   entry-latency-us = <180>;
->   exit-latency-us = <500>;
->   min-residency-us = <600>;
-> 
-> Fix this to be 320us so the sum of the entry and exit latencies matches
-> the downstream 500us exit latency, as directed by Maulik.
-> 
-> Tested on a Lenovo Yoga Slim 7x with Qualcomm X1E-80-100.
-> 
-> Fixes: 2e65616ef07f ("arm64: dts: qcom: x1e80100: Update C4/C5 residency/exit numbers")
-> Signed-off-by: Daniel J Blueman <daniel@quora.org>
+Hi Srinivas,
+
+On Fri Sep 12, 2025 at 10:32 AM CEST, Srinivas Kandagatla wrote:
+> Number of input and output ports can be dynamically read from the
+> controller registers, getting this value from Device Tree is redundant
+> and potentially lead to bugs.
+>
+> Remove the code parsing this property along with marking this as
+> deprecated in device tree bindings.
+
+Could you help suggest how to correct kodiak.dtsi?
+
+I'm seeing these warnings on QCM6490:
+
+[   36.952517] qcom-soundwire 3210000.soundwire: din-ports (0) mismatch wit=
+h controller (1)
+[   36.952524] qcom-soundwire 3210000.soundwire: dout-ports (5) mismatch wi=
+th controller (6)
+[   36.954285] qcom-soundwire 3230000.soundwire: din-ports (3) mismatch wit=
+h controller (4)
+
+Regards
+Luca
+
+>
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 > ---
+>  drivers/soundwire/qcom.c | 141 +++++++++++++++++----------------------
+>  1 file changed, 62 insertions(+), 79 deletions(-)
+>
+> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+> index f3ad53ec6e76..9e6dc43c1112 100644
+> --- a/drivers/soundwire/qcom.c
+> +++ b/drivers/soundwire/qcom.c
+> @@ -128,7 +128,6 @@
+>  #define MAX_FREQ_NUM						1
+>  #define TIMEOUT_MS						100
+>  #define QCOM_SWRM_MAX_RD_LEN					0x1
+> -#define QCOM_SDW_MAX_PORTS					14
+>  #define DEFAULT_CLK_FREQ					9600000
+>  #define SWRM_MAX_DAIS						0xF
+>  #define SWR_INVALID_PARAM					0xFF
+> @@ -195,6 +194,7 @@ struct qcom_swrm_ctrl {
+>  	int wake_irq;
+>  	int num_din_ports;
+>  	int num_dout_ports;
+> +	int nports;
+>  	int cols_index;
+>  	int rows_index;
+>  	unsigned long port_mask;
+> @@ -202,7 +202,7 @@ struct qcom_swrm_ctrl {
+>  	u8 rcmd_id;
+>  	u8 wcmd_id;
+>  	/* Port numbers are 1 - 14 */
+> -	struct qcom_swrm_port_config pconfig[QCOM_SDW_MAX_PORTS + 1];
+> +	struct qcom_swrm_port_config *pconfig;
+>  	struct sdw_stream_runtime *sruntime[SWRM_MAX_DAIS];
+>  	enum sdw_slave_status status[SDW_MAX_DEVICES + 1];
+>  	int (*reg_read)(struct qcom_swrm_ctrl *ctrl, int reg, u32 *val);
+> @@ -1153,7 +1153,6 @@ static int qcom_swrm_stream_alloc_ports(struct qcom=
+_swrm_ctrl *ctrl,
+>  				       struct snd_pcm_hw_params *params,
+>  				       int direction)
+>  {
+> -	struct sdw_port_config pconfig[QCOM_SDW_MAX_PORTS];
+>  	struct sdw_stream_config sconfig;
+>  	struct sdw_master_runtime *m_rt;
+>  	struct sdw_slave_runtime *s_rt;
+> @@ -1162,6 +1161,10 @@ static int qcom_swrm_stream_alloc_ports(struct qco=
+m_swrm_ctrl *ctrl,
+>  	unsigned long *port_mask;
+>  	int maxport, pn, nports =3D 0, ret =3D 0;
+>  	unsigned int m_port;
+> +	struct sdw_port_config *pconfig __free(kfree) =3D kcalloc(ctrl->nports,
+> +								sizeof(*pconfig), GFP_KERNEL);
+> +	if (!pconfig)
+> +		return -ENOMEM;
+> =20
+>  	if (direction =3D=3D SNDRV_PCM_STREAM_CAPTURE)
+>  		sconfig.direction =3D SDW_DATA_DIR_TX;
+> @@ -1186,8 +1189,7 @@ static int qcom_swrm_stream_alloc_ports(struct qcom=
+_swrm_ctrl *ctrl,
+>  			continue;
+> =20
+>  		port_mask =3D &ctrl->port_mask;
+> -		maxport =3D ctrl->num_dout_ports + ctrl->num_din_ports;
+> -
+> +		maxport =3D ctrl->nports;
+> =20
+>  		list_for_each_entry(s_rt, &m_rt->slave_rt_list, m_rt_node) {
+>  			slave =3D s_rt->slave;
+> @@ -1347,17 +1349,8 @@ static int qcom_swrm_register_dais(struct qcom_swr=
+m_ctrl *ctrl)
+>  static int qcom_swrm_get_port_config(struct qcom_swrm_ctrl *ctrl)
+>  {
+>  	struct device_node *np =3D ctrl->dev->of_node;
+> -	u8 off1[QCOM_SDW_MAX_PORTS];
+> -	u8 off2[QCOM_SDW_MAX_PORTS];
+> -	u16 si[QCOM_SDW_MAX_PORTS];
+> -	u8 bp_mode[QCOM_SDW_MAX_PORTS] =3D { 0, };
+> -	u8 hstart[QCOM_SDW_MAX_PORTS];
+> -	u8 hstop[QCOM_SDW_MAX_PORTS];
+> -	u8 word_length[QCOM_SDW_MAX_PORTS];
+> -	u8 blk_group_count[QCOM_SDW_MAX_PORTS];
+> -	u8 lane_control[QCOM_SDW_MAX_PORTS];
+> -	int i, ret, nports, val;
+> -	bool si_16 =3D false;
+> +	struct qcom_swrm_port_config *pcfg;
+> +	int i, ret, val;
+> =20
+>  	ctrl->reg_read(ctrl, SWRM_COMP_PARAMS, &val);
+> =20
+> @@ -1365,88 +1358,78 @@ static int qcom_swrm_get_port_config(struct qcom_=
+swrm_ctrl *ctrl)
+>  	ctrl->num_din_ports =3D FIELD_GET(SWRM_COMP_PARAMS_DIN_PORTS_MASK, val)=
+;
+> =20
+>  	ret =3D of_property_read_u32(np, "qcom,din-ports", &val);
+> -	if (ret)
+> -		return ret;
+> -
+> -	if (val > ctrl->num_din_ports)
+> -		return -EINVAL;
+> +	if (!ret) { /* only if present */
+> +		if (val !=3D ctrl->num_din_ports) {
+> +			dev_err(ctrl->dev, "din-ports (%d) mismatch with controller (%d)",
+> +				val, ctrl->num_din_ports);
+> +		}
+> =20
+> -	ctrl->num_din_ports =3D val;
+> +		ctrl->num_din_ports =3D val;
+> +	}
+> =20
+>  	ret =3D of_property_read_u32(np, "qcom,dout-ports", &val);
+> -	if (ret)
+> -		return ret;
+> +	if (!ret) { /* only if present */
+> +		if (val !=3D ctrl->num_dout_ports) {
+> +			dev_err(ctrl->dev, "dout-ports (%d) mismatch with controller (%d)",
+> +				val, ctrl->num_dout_ports);
+> +		}
+> =20
+> -	if (val > ctrl->num_dout_ports)
+> -		return -EINVAL;
+> +		ctrl->num_dout_ports =3D val;
+> +	}
+> =20
+> -	ctrl->num_dout_ports =3D val;
+> +	ctrl->nports =3D ctrl->num_dout_ports + ctrl->num_din_ports;
+> =20
+> -	nports =3D ctrl->num_dout_ports + ctrl->num_din_ports;
+> -	if (nports > QCOM_SDW_MAX_PORTS)
+> -		return -EINVAL;
+> +	ctrl->pconfig =3D devm_kcalloc(ctrl->dev, ctrl->nports + 1,
+> +					sizeof(*ctrl->pconfig), GFP_KERNEL);
+> +	if (!ctrl->pconfig)
+> +		return -ENOMEM;
+> =20
+> -	/* Valid port numbers are from 1-14, so mask out port 0 explicitly */
+>  	set_bit(0, &ctrl->port_mask);
+> +	/* Valid port numbers are from 1, so mask out port 0 explicitly */
+> +	for (i =3D 0; i < ctrl->nports; i++) {
+> +		pcfg =3D &ctrl->pconfig[i + 1];
+> =20
+> -	ret =3D of_property_read_u8_array(np, "qcom,ports-offset1",
+> -					off1, nports);
+> -	if (ret)
+> -		return ret;
+> -
+> -	ret =3D of_property_read_u8_array(np, "qcom,ports-offset2",
+> -					off2, nports);
+> -	if (ret)
+> -		return ret;
+> -
+> -	ret =3D of_property_read_u8_array(np, "qcom,ports-sinterval-low",
+> -					(u8 *)si, nports);
+> -	if (ret) {
+> -		ret =3D of_property_read_u16_array(np, "qcom,ports-sinterval",
+> -						 si, nports);
+> +		ret =3D of_property_read_u8_index(np, "qcom,ports-offset1", i, &pcfg->=
+off1);
+>  		if (ret)
+>  			return ret;
+> -		si_16 =3D true;
+> -	}
+> =20
+> -	ret =3D of_property_read_u8_array(np, "qcom,ports-block-pack-mode",
+> -					bp_mode, nports);
+> -	if (ret) {
+> -		if (ctrl->version <=3D SWRM_VERSION_1_3_0)
+> -			memset(bp_mode, SWR_INVALID_PARAM, QCOM_SDW_MAX_PORTS);
+> -		else
+> +		ret =3D of_property_read_u8_index(np, "qcom,ports-offset2", i, &pcfg->=
+off2);
+> +		if (ret)
+>  			return ret;
+> -	}
+> =20
+> -	memset(hstart, SWR_INVALID_PARAM, QCOM_SDW_MAX_PORTS);
+> -	of_property_read_u8_array(np, "qcom,ports-hstart", hstart, nports);
+> +		ret =3D of_property_read_u8_index(np, "qcom,ports-sinterval-low", i, (=
+u8 *)&pcfg->si);
+> +		if (ret) {
+> +			ret =3D of_property_read_u16_index(np, "qcom,ports-sinterval", i, &pc=
+fg->si);
+> +			if (ret)
+> +				return ret;
+> +		}
+> +
+> +		ret =3D of_property_read_u8_index(np, "qcom,ports-block-pack-mode",
+> +						i, &pcfg->bp_mode);
+> +		if (ret) {
+> +			if (ctrl->version <=3D SWRM_VERSION_1_3_0)
+> +				pcfg->bp_mode =3D SWR_INVALID_PARAM;
+> +			else
+> +				return ret;
+> +		}
+> =20
+> -	memset(hstop, SWR_INVALID_PARAM, QCOM_SDW_MAX_PORTS);
+> -	of_property_read_u8_array(np, "qcom,ports-hstop", hstop, nports);
+> +		/* Optional properties */
+> +		pcfg->hstart =3D SWR_INVALID_PARAM;
+> +		pcfg->hstop =3D SWR_INVALID_PARAM;
+> +		pcfg->word_length =3D SWR_INVALID_PARAM;
+> +		pcfg->blk_group_count =3D SWR_INVALID_PARAM;
+> +		pcfg->lane_control =3D SWR_INVALID_PARAM;
+> =20
+> -	memset(word_length, SWR_INVALID_PARAM, QCOM_SDW_MAX_PORTS);
+> -	of_property_read_u8_array(np, "qcom,ports-word-length", word_length, np=
+orts);
+> +		of_property_read_u8_index(np, "qcom,ports-hstart", i, &pcfg->hstart);
+> =20
+> -	memset(blk_group_count, SWR_INVALID_PARAM, QCOM_SDW_MAX_PORTS);
+> -	of_property_read_u8_array(np, "qcom,ports-block-group-count", blk_group=
+_count, nports);
+> +		of_property_read_u8_index(np, "qcom,ports-hstop", i, &pcfg->hstop);
+> =20
+> -	memset(lane_control, SWR_INVALID_PARAM, QCOM_SDW_MAX_PORTS);
+> -	of_property_read_u8_array(np, "qcom,ports-lane-control", lane_control, =
+nports);
+> +		of_property_read_u8_index(np, "qcom,ports-word-length", i, &pcfg->word=
+_length);
+> =20
+> -	for (i =3D 0; i < nports; i++) {
+> -		/* Valid port number range is from 1-14 */
+> -		if (si_16)
+> -			ctrl->pconfig[i + 1].si =3D si[i];
+> -		else
+> -			ctrl->pconfig[i + 1].si =3D ((u8 *)si)[i];
+> -		ctrl->pconfig[i + 1].off1 =3D off1[i];
+> -		ctrl->pconfig[i + 1].off2 =3D off2[i];
+> -		ctrl->pconfig[i + 1].bp_mode =3D bp_mode[i];
+> -		ctrl->pconfig[i + 1].hstart =3D hstart[i];
+> -		ctrl->pconfig[i + 1].hstop =3D hstop[i];
+> -		ctrl->pconfig[i + 1].word_length =3D word_length[i];
+> -		ctrl->pconfig[i + 1].blk_group_count =3D blk_group_count[i];
+> -		ctrl->pconfig[i + 1].lane_control =3D lane_control[i];
+> +		of_property_read_u8_index(np, "qcom,ports-block-group-count",
+> +					i, &pcfg->blk_group_count);
+> +
+> +		of_property_read_u8_index(np, "qcom,ports-lane-control", i, &pcfg->lan=
+e_control);
+>  	}
+> =20
+>  	return 0;
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: stable@vger.kernel.org
-
-Konrad
 
