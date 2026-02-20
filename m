@@ -1,186 +1,191 @@
-Return-Path: <linux-arm-msm+bounces-93530-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93531-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id KGvOL3+CmGlMJQMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93530-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 16:49:19 +0100
+	id 4O9TE/qEmGnKJQMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93531-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 16:59:54 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3BA0016908E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 16:49:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B2E06169207
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 16:59:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 13D47304607F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 15:49:17 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id CCDC73084CBB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 15:59:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0C5B34DCE0;
-	Fri, 20 Feb 2026 15:49:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5432F34AAE3;
+	Fri, 20 Feb 2026 15:59:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T8/qI17p"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LUmRafCX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D6F434D90D
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Feb 2026 15:49:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 309372BF00A;
+	Fri, 20 Feb 2026 15:59:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771602555; cv=none; b=J9v8zaTzdN6QiQTzABIVXn1yKLJMNse8y8lQ0i8KjDuv72lec3xynB4bt9uHfGJGEXhr+KiROasL0lzCipQRg+224qrfOStyZe8mESr8u6ttGjPJZPaf90odfz1tLjxu/xsPukb7aeX2Ti8PhT8JcJIqLa6Oljq+J2mx/KXczG0=
+	t=1771603185; cv=none; b=OnvQGyoLmGW3uEy5nrqH0+vXS9ZDtczUSEyauh0fVC4/wYD7EzehFGgoszNxUlBqjRomKRwygPaID/0LeP4YB/EPNi132rT1cIxY7q70YAxoiK5dRkNgXc3zBFGbhK7kG9kQKzjG8q+0Soyz1pHqfLbD79A6wCnrLCJuwbulTpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771602555; c=relaxed/simple;
-	bh=DbCNPocwG0B6Nz6qRLmSK5WUNAykh43JJ00fyZd1XqM=;
+	s=arc-20240116; t=1771603185; c=relaxed/simple;
+	bh=6cuMGKybA6nMgwR4d/d5hq1DbXYI+gxftIfAvX08tOw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JRE/Xw9UhdgTx5uLr/mAZkEAVHFnHZN95x3w4qQCb8u/OVNWvNeK4l7HKg0ejj8prctfkGKNnJ3ytnM8eIIZ599/rEfDxUwGzqE9XHboAC2tgIP7kXw7gyQON8S78OCF1W2r87d802it+/akkJ/CRwlkD0MaqiCBO3m75HeglB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T8/qI17p; arc=none smtp.client-ip=209.85.160.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-5069ad750b7so18318981cf.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Feb 2026 07:49:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771602553; x=1772207353; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z6LoJ75EgE4N9tYxSOxvVmCDYlAbN9HmsVc+u6xnBeI=;
-        b=T8/qI17peIPoroe6st7InwPQhOm6akjZrlicBzAxC0MaZZD6DhR8+VP1S0Mm5tDt6u
-         XAIIZoPFjYpgg9Dd/egpT3pHQySeSETiZYb4qQZtTW/Ao+mH9bKd17BMtmIz0XDZGmMt
-         L4t8h23vx81EIAhYPHZKz5Xg89IpU1CtnKZ9dz34Cq+L+JZ326w65txOCDxqk1zkugxv
-         Nml++9cTFGxJLI0+VEiQzNfprx7jgU+ACYA8nHA31fhyamxXUJ6T4OOb8uBjK1n3w0Ab
-         wxvE3WMVFm40RX99o2Yze4+Nr1sK6wm7iujcAoXu6/Hec2FFsGhgGBPuuRNn18ptpLqi
-         vOag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771602553; x=1772207353;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Z6LoJ75EgE4N9tYxSOxvVmCDYlAbN9HmsVc+u6xnBeI=;
-        b=mePGAz/N3CujyluWfeRw9s233ryhvcMsZq4DGtTqaDk6oOqahU39GZkp9l/MZu+MTd
-         om86ILNfM6HdYYx9LtYNERCrT60H6kbZ+lDGM/YYs2F78HiQPMx+UB6okcSvozGlkXyC
-         j6nFdOL/qU+c7TniR5l+cNNlhW/bwW3ybmB1XA/xf/9mUQpFY4CHjnI/Vwan0XkwahE2
-         9wcvSwXI3rbWxyJ/eq9o4aqSs3OvHUq6oARPiQiKRh0G1GfQuy/pCCpnIRTPLcWpyCEb
-         0G5Ck771QIfK7461Kifhvh5Z3VxMLisoeEM/xOBMUSOHJm1g6xFuxyiWN9tl8R3azik/
-         uakQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXfRZvMigZ5Cu84NLygSKs6tM502Y6C2AkNDhHr7XUe9s31UTXJFNXA9XD76HscmTy0r7yAK7y2oPwXnOZX@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz7bTwqyo5pdAzgniVuc9LyWmQ/PTfNorYqhlj4auN4pxS8t10h
-	1cShHjIJBv6Qeo578jTP28i5CaA7oDdwygSqeKH5yJGnbUcytyqWTgGV
-X-Gm-Gg: AZuq6aJ76zi0FnIaKgZueEa6rnNAk6VreEn8TQFp9SAMJlI9FXk67tVIVd1lA+POwUJ
-	KHti0r127WeXRlDA7BmbYOGTEQnHnEYMJf58HnxPsbZY9edvjyuMc6cfAAuc4YrAkDSK1x7dcBe
-	A+FYsxXFAg7oNvXyJCsrbyDlSKXuovU1/Evj/IFxYm8AkPqOWV6U/BrWznsG31jw6/zfTni/bf+
-	eRCRLMvWykxSm6nztPkTPn7YmK0bcCD/NPvvmyc5O2BeSnsR34ntHp4nCI9PAsOAzRDstrEMoVt
-	AUgRgyyhgIzHSGBxZp6FxIHBvOiu8oa71lU8NktwcDABvl/NDw+gJVO4O4+xpamBLnCeu34eL0O
-	4MHWgFZjci3sB2u82qi9FGckGHTUukeLBq6Y0OrvBCCNBOWltZjUttMnYlv8hTE8keifKbg8b8b
-	k9+N1OgS7tZlpgqqDdPTd5moSYIuUKyg==
-X-Received: by 2002:ac8:5a10:0:b0:503:3838:ac1e with SMTP id d75a77b69052e-5070bba1c14mr3307421cf.2.1771602553436;
-        Fri, 20 Feb 2026 07:49:13 -0800 (PST)
-Received: from localhost ([184.144.58.243])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-89949b3d543sm112192996d6.16.2026.02.20.07.49.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Feb 2026 07:49:12 -0800 (PST)
-Date: Fri, 20 Feb 2026 10:49:39 -0500
-From: Richard Acayan <mailingradian@gmail.com>
-To: Srinivas Kandagatla <srini@kernel.org>
-Cc: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Johan Hovold <johan@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	Nickolay Goppen <setotau@mainlining.org>
-Subject: Re: [PATCH 09/10] ASoC: qcom: add sdm660 internal sound card support
-Message-ID: <aZiCkxWLHzgvHnvP@rdacayan>
-References: <20260211020302.2674-1-mailingradian@gmail.com>
- <20260211020302.2674-10-mailingradian@gmail.com>
- <05873ad7-ca35-4542-b064-5b401f7bd069@kernel.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=tDy/VQRFLgD+QEiQxB4fErtWg3M4CwM/whS82rtRePPvMVqYfqvhoYYdU7/M6dOo0uCJ7QPh11joVrjx/0WItbUgdF9j9Cnma9HQPK+OpJDg0Nth3kHs2nisDUroG1mIpVRa6CLltLQ1mhGna6glZD+OeVksH2A2F0eInI9gGUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LUmRafCX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93FF3C116D0;
+	Fri, 20 Feb 2026 15:59:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1771603184;
+	bh=6cuMGKybA6nMgwR4d/d5hq1DbXYI+gxftIfAvX08tOw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=LUmRafCXygPu5aecy5p9uW1s2CjAYMSYPbCRXdB/gzDSjKUuT7+J6+6+p52S0B52r
+	 XOCfwrLhMEvF4Vf1FVujfdmPV44adeCJ88zN3ky6781QsCKmU+T8oP3X+ZlHHIWVkB
+	 HiRkdZX9XJpHd0y8gkl0mlet2LBvEOWSpHoeI5wAS2HObmPYTnxUZ3glek7za4hT3O
+	 1lexvbpdoIV2j3s3Er9jMbRopeug3pCrCttUwPqBWHDveLFqL8AbDd1oEqOPqLk/76
+	 rcVN5DfYVnZektLc/tEPl2+Y/BNLZsiZGWZsyBGn/E/J01GH3aMjIN48kYm6X5/5yE
+	 rECbmfZNUiH7w==
+Date: Fri, 20 Feb 2026 09:59:41 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: Harshal Dev <harshal.dev@oss.qualcomm.com>, 
+	Krzysztof Kozlowski <krzk@kernel.org>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	Herbert Xu <herbert@gondor.apana.org.au>, "David S. Miller" <davem@davemloft.net>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Abel Vesa <abel.vesa@oss.qualcomm.com>, cros-qcom-dts-watchers@chromium.org, 
+	Brian Masney <bmasney@redhat.com>, Neeraj Soni <neeraj.soni@oss.qualcomm.com>, 
+	Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 01/11] dt-bindings: crypto: qcom,ice: Require
+ power-domain and iface clk
+Message-ID: <vpgeduh5fwgvbx42dujbm7x3vacbmwjgjkcmhpgcsaa2ig4cm3@kk34eaqoh6ww>
+References: <20260123-qcom_ice_power_and_clk_vote-v1-1-e9059776f85c@qti.qualcomm.com>
+ <14a71b33-4c10-41b0-a6cb-585a38e05f56@kernel.org>
+ <06160c6c-a945-467a-be82-7b33c5285d0f@oss.qualcomm.com>
+ <7216c86d-2b87-496c-9548-ccdcb3c98b6b@oss.qualcomm.com>
+ <1f99db18-d76c-4b87-9e30-423eee7037e1@oss.qualcomm.com>
+ <dd34525c-0a25-47ae-9061-c4c7ab708306@kernel.org>
+ <2830a189-a5ce-45a0-92fe-7a01c3b012a7@oss.qualcomm.com>
+ <6efcdf51-bdb1-4dfc-aa5e-8b7dc8c68cd3@kernel.org>
+ <b217a08a-2755-4ef8-bf39-af1c3e628cf8@oss.qualcomm.com>
+ <3cxejy2jplgqufj5fivi27ii3rrcrhzdyvmxd4ekp2ik3aqa6l@tiwyslt3ng5p>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <05873ad7-ca35-4542-b064-5b401f7bd069@kernel.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <3cxejy2jplgqufj5fivi27ii3rrcrhzdyvmxd4ekp2ik3aqa6l@tiwyslt3ng5p>
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-93530-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-93531-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[16];
-	FREEMAIL_CC(0.00)[gmail.com,kernel.org,perex.cz,suse.com,linuxfoundation.org,quicinc.com,vger.kernel.org,mainlining.org];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
+	NEURAL_HAM(-0.00)[-0.999];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mailingradian@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MISSING_XM_UA(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,googlesource.com:url]
-X-Rspamd-Queue-Id: 3BA0016908E
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: B2E06169207
 X-Rspamd-Action: no action
 
-On Mon, Feb 16, 2026 at 01:34:20PM +0000, Srinivas Kandagatla wrote:
-> On 2/11/26 2:03 AM, Richard Acayan wrote:
-(snip)
-> > +	case INT0_MI2S_RX:
-> > +		data->int0_mi2s_clk_count++;
-> > +		if (data->int0_mi2s_clk_count == 1)
-> > +			snd_soc_dai_set_sysclk(cpu,
-> > +				Q6AFE_LPASS_CLK_ID_INT0_MI2S_IBIT,
-> > +				MI2S_BCLK_RATE, SNDRV_PCM_STREAM_PLAYBACK);
-> > +
-> > +		/*
-> > +		 * Downstream specifies that the AFE is a clock consumer, but
-> > +		 * the sound is distorted (loud on the right channel and sped
-> > +		 * up) unless we set it as a producer.
-> This comment does not make any value, Who is driving the bit clk and
-> frame clock is totally depended on the hw setup on the platform, Driving
-> incorrect clock would lead to such issues. Does the codec drive on the
-> platform that you are testing?
+On Fri, Feb 20, 2026 at 08:01:59PM +0530, Manivannan Sadhasivam wrote:
+> On Mon, Feb 09, 2026 at 11:13:06AM +0530, Harshal Dev wrote:
+> > On 2/6/2026 4:20 PM, Krzysztof Kozlowski wrote:
+> > > On 06/02/2026 11:07, Harshal Dev wrote:
+> > >> On 2/5/2026 4:47 PM, Krzysztof Kozlowski wrote:
+> > >>> On 03/02/2026 10:26, Harshal Dev wrote:
+> > >>>> On 1/26/2026 3:59 PM, Konrad Dybcio wrote:
+> > >>>>> On 1/23/26 12:04 PM, Harshal Dev wrote:
+> > >>>>>> On 1/23/2026 2:27 PM, Krzysztof Kozlowski wrote:
+> > >>>>>>> On 23/01/2026 08:11, Harshal Dev wrote:
+[..]
+> > >>> My NAK for driver change stays. This is wrong approach - you cannot
+> > >>> break working DTS.
+> > >>>
+> > >>
+> > >> I agree that this patch in it's current form will break both the in-kernel and
+> > >> out of tree DTS written in accordance with the old binding. If this isn't acceptable
+> > > 
+> > > What? You just said few lines above:
+> > > "it will still continue to work if:"
+> > >
+> > 
+> > I hope I am clear now, 'it' referred to the in-tree ICE driver and not to this particular
+> > DT schema commit. :)
+> >  
+> > > So either this will continue to work or not. I don't understand this
+> > > thread and honestly do not have patience for it. I gave you already
+> > > reasoning what is wrong and why it is. Now it is just wasting my time.
+> > > 
+> > 
+> > Apologies again for the confusion. I totally agree, as replied previously too, that the
+> > updated DT binding breaks backward compatibility. Like I said, I will post another patch
+> > to preserve the correctness of existing in-tree and out-of-tree DTS.
+> > 
+> 
+> The ICE hardware cannot work without 'iface' clock and the power domain, which
+> are shared with the UFS PHY. One can argue that ICE is actually a part of the
+> peripherals like UFS/eMMC, but I don't have access to internal layout, so cannot
+> comment on that. I ran into this issue today when I tried to rmmod ice driver
+> together with ufs_qcom driver and got SError when reloading the module because
+> ice driver was trying to access unclocked/unpowered register.
+> 
+> But you should mark the resources as 'required' in the binding and justify the
+> ABI break. No need to preserve backwards compatibility here as the binding was
+> wrong from day one.
+> 
 
-I dug into the downstream Q6AFE driver a bit more. It actually inverts
-the logic and specifies that the codec is a clock consumer (instead of
-taking Q6AFE's perspective), so it is equivalent to setting
-SND_SOC_DAIFMT_CBP_CFP.
+Marking it "required" in the binding, implies that it's fine for the
+driver to fail in its absence. If I understand correctly that will
+prevent UFS and eMMC from probing, unless you have a DTB from "the
+future".
 
-Downstream (https://android.googlesource.com/kernel/msm-extra/+/530cffa4cc977a348753831b163eb9d3302b954a/asoc/msm-dai-q6-v2.c#4347):
+Even if I merge the dt-binding change through the qcom-tree (together
+with the driver change) I will not guarantee that torvalds/master will
+remain bisectable - because dts changes and driver changes goes in
+different branches.
 
-	case SND_SOC_DAIFMT_CBS_CFS:
-		mi2s_dai_data->rx_dai.mi2s_dai_data.port_config.i2s.ws_src = 1;
-		mi2s_dai_data->tx_dai.mi2s_dai_data.port_config.i2s.ws_src = 1;
-		break;
 
-Mainline (sound/soc/qcom/q6afe.c):
-	
-	#define AFE_PORT_CONFIG_I2S_WS_SRC_INTERNAL	0x1
-	...
-	case SND_SOC_DAIFMT_BP_FP:
-		pcfg->i2s_cfg.ws_src = AFE_PORT_CONFIG_I2S_WS_SRC_INTERNAL;
-		break;
+As such, the pragmatic approach is to introduce the clock as optional
+and then once we're "certain" that the dts changes has propagated we
+can consider breaking the backwards compatibility.
 
-I don't think the downstream code needs to be explained so I would
-simply drop these code comments.
+Regards,
+Bjorn
 
-> > +		 */
-> > +		snd_soc_dai_set_fmt(cpu, SND_SOC_DAIFMT_CBP_CFP);
+> > The only point I am trying to highlight for everyone's awareness is that as per this bug
+> > report https://lore.kernel.org/all/ZZYTYsaNUuWQg3tR@x1/ the kernel fails to boot with the
+> > existing DTS when the above two conditions aren't satisfied.
+> > 
+> 
+> And you sent the fix after almost 2 years. Atleast I'm happy that you got around
+> to fix it.
+> 
+> - Mani
+> 
+> -- 
+> மணிவண்ணன் சதாசிவம்
 
