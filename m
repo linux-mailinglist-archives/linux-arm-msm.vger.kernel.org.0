@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-93455-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93456-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GBNADfkJmGkK/gIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93455-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 08:15:05 +0100
+	id eOOcL1IKmGkK/gIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93456-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 08:16:34 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9FFDF165349
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 08:15:04 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 21F75165376
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 08:16:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 957C8300CC83
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 07:15:03 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 85267301E20A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 07:16:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B29C132ED42;
-	Fri, 20 Feb 2026 07:15:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC0D31F4CB3;
+	Fri, 20 Feb 2026 07:16:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IgRv8l5Y"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MaFZ3eQI"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0A22F546D;
-	Fri, 20 Feb 2026 07:15:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7BCD4C97;
+	Fri, 20 Feb 2026 07:16:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771571702; cv=none; b=OOCaD0SespoilDltMc22apyi7/PlitwgrVoavD7+if/YKxTaeXdPBz7J4obuVLgyXekJI7uJw+qp9ZM+oBZH46WPZ8VHpFlIVwFKNZg7Cmw7DlwCYaO/Jo/7M3VrV0gmuo9En8myPn5la6j4scUYZOgksALEmoumMTWX5iPa8r8=
+	t=1771571790; cv=none; b=CqQY+eZYUBvn+kw2rp2VLX+hsnYmZ5iloyBxnMd110YB8khibt5Sk8wGrsSfZzAZuo2vS7e2ckA6zGY8m/xdYOZGM3jmd/5AptloPFoc0QNiShEXL6+0laYbLMIampqXRBI19sXDyIKx3yklHhhlkb90K/EVGBdseezqBBCjJAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771571702; c=relaxed/simple;
-	bh=T0O5A+xUjT6vhBJGOgVXcZJpUKTH/AW+Aa/p49E4kH0=;
+	s=arc-20240116; t=1771571790; c=relaxed/simple;
+	bh=fCsDOu9MBaZOA4u5mcVYU6mFowaT4kgxrvj/7c6MZAU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=G2Oqw6VHrxs0savFLbzwGbGxRGxboHq8opZ0RHrwu3DSxLGB4XgqUkiYegUnIdqkXUq/TqY07Ql4UEz8GcrcJ18m1nVpp9pyd/CKA1LZ3dVEtnIPn9715BNUaHVlt/M5xngmQlucm9FgIwoEkewuJGiR+n64kYfgr8/LEa3m8FQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IgRv8l5Y; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AA40C116C6;
-	Fri, 20 Feb 2026 07:14:59 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=eL/fltptkTWcsQz1WISwM3O7SbYAy+GKUtLNOYYlbcvzFrjqhOMj46RxV9L7rLsYJDuMbxcaNZe6Yr0laJWGMZgL+3Do9hd53cqBV9nKHR5OylZfSQu7fguy4Dww+AIBz0jXPsO1vi+iNC7BJ0YuKIfaSObJjTW4N14+AgiopY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MaFZ3eQI; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0120FC116C6;
+	Fri, 20 Feb 2026 07:16:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771571702;
-	bh=T0O5A+xUjT6vhBJGOgVXcZJpUKTH/AW+Aa/p49E4kH0=;
+	s=k20201202; t=1771571790;
+	bh=fCsDOu9MBaZOA4u5mcVYU6mFowaT4kgxrvj/7c6MZAU=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=IgRv8l5YsHGQnMCoGXywtNR0Zwu08sYJGLPKTKDDn5CQU1CjC8/RCSsG7fL5bC01z
-	 q76+kVN/PF8jR0WiMRtasMewdqb5PbNxQ4LZhU7bnCwfGyvmc0ltc4JOXpzmKPl1XD
-	 98xa2mE8qANJbux3JmDYo8apx3NsU18f0IRm7AGcisOXvD2iS6hfvhkdqc1gyZb9x9
-	 hQmQYWBLLx6q1gowH35ivkUksZxKLHgFxI3xZDzbyQyKTItNiWgQoeVBHAZyf/JYZ2
-	 /7EPZf3Zsi0Zc0Ve1pIKbdWFg2gtFmhKA6uRA7RpGe3AJak0FmAqpZSIhIWJ7DPmi3
-	 czm8JJwmqxM5Q==
-Message-ID: <6396401b-eb62-4f91-a4e0-ad873131edb6@kernel.org>
-Date: Fri, 20 Feb 2026 08:14:57 +0100
+	b=MaFZ3eQIjClKqZreu5gxQH7DsM50VL/v2fvhzHw+eBJQs516MG9nmJP0qrCkIDI+O
+	 pRc5cjIWPMQ4u4RKIq6aoZRnBV7mRHF26/lnTbJOV2FlB2rBGqGvBp7C27LTY7eN3+
+	 0Hro9KMDdgq4WBaGvh3zNzJ+do5GDhTwtwgXx9U084jsj6wUSz4zC3vE/nHHzlpYfa
+	 KFWDZ6FqRLE+/sJKOXNV7YPZyga90yCeR2RHWr9UPLz690FDYpsHJ9Wx+YEebbaYCu
+	 p5mR5ZiHb2CAZccHdYd5Yzjf2s1UMbxamjq3cVRFaPTFdPjx5RehUqEGF/GietmO7G
+	 Hd12gH4UxSG8w==
+Message-ID: <ca2fcbfa-80a0-4685-8544-06c98a6973d2@kernel.org>
+Date: Fri, 20 Feb 2026 08:16:26 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -115,63 +115,50 @@ X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_FROM(0.00)[bounces-93455-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-93456-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
-	DBL_PROHIBIT(0.00)[0.0.0.0:email];
+	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	NEURAL_HAM(-0.00)[-0.999];
-	RCPT_COUNT_SEVEN(0.00)[11];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 9FFDF165349
+	RCPT_COUNT_SEVEN(0.00)[11];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[quicinc.com:email,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 21F75165376
 X-Rspamd-Action: no action
 
 On 20/02/2026 07:35, Gopi Botlagunta wrote:
-> LT9211c bridge and lvds panel node.
-> LT9211c is powered by default with reset gpio connected to 66.
 > 
-> Signed-off-by: Gopi Botlagunta <venkata.botlagunta@oss.qualcomm.com>
-
-Isn't this a v2?
-
-
 > ---
->  arch/arm64/boot/dts/qcom/monaco-evk-mezzanine.dtso | 117 +++++++++++++++++++++
->  1 file changed, 117 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/monaco-evk-mezzanine.dtso b/arch/arm64/boot/dts/qcom/monaco-evk-mezzanine.dtso
-> index 701494d4dd7f..2512bdfbadbf 100644
-> --- a/arch/arm64/boot/dts/qcom/monaco-evk-mezzanine.dtso
-> +++ b/arch/arm64/boot/dts/qcom/monaco-evk-mezzanine.dtso
-> @@ -11,6 +11,58 @@
->  &{/} {
->  	model = "Qualcomm Technologies, Inc. Monaco-EVK Mezzanine";
->  
-> +	panel_lvds: panel-lvds@0 {
-> +		compatible = "panel-lvds";
-> +		data-mapping = "vesa-24";
-> +		width-mm = <476>;
-> +		height-mm = <268>;
-> +
-> +		status = "okay";
+> base-commit: 1a0829927afbfe654c632eb2e779fa32df825b06
+> change-id: 20260219-enable_rb4_lvds-d7cf92b30b5a
+> prerequisite-message-id: 20260210103821.4169-2-umang.chheda@oss.qualcomm.com
+> prerequisite-patch-id: c38266562544ebe10eb4e6d771665c66fd319cab
+> prerequisite-message-id: 20260217090955.2446470-1-quic_amakhija@quicinc.com
+> prerequisite-patch-id: a50422285e837760143af6bdfcc6f64d38525752
+> prerequisite-patch-id: 7bd948199c6ff8d6feec941e2dd4f4266e5ab39b
 
-Did you just ignore entire feedback you were given?
+And this is odd.
+
+We also asked about this.
+
+Anyway, you keep ignoring our responses and sending either the same or
+actually worse code without any explanations. Please read carefully
+internal guideline which explains you all the steps you must do.
 
 Best regards,
 Krzysztof
