@@ -1,130 +1,221 @@
-Return-Path: <linux-arm-msm+bounces-93514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id mJ15MkdymGkoIgMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 15:40:07 +0100
+	id GHnoA2tzmGkoIgMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 15:44:59 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 86AB8168709
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 15:40:06 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A38751687FD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 15:44:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id C300A300692A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 14:40:03 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 454FE3049948
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 14:44:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E556F287265;
-	Fri, 20 Feb 2026 14:40:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6397B29994B;
+	Fri, 20 Feb 2026 14:44:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D824gdji"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C12rBUTn"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2B3D41754;
-	Fri, 20 Feb 2026 14:40:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB2E41754;
+	Fri, 20 Feb 2026 14:44:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771598400; cv=none; b=CDcZ/z4tunmedHDAGwdvA2tXSCIWHo+fmar5QqVX/2uPAfQnCmE6Z8QAJuBT6rBupsStnX3YohLlOyaxsZ+nEgZvmh9JGvA2lzDoaBYqGDrD7zBcEmONJEkXX2qldc/fdVWqM9JUGxaE/43gcSslA/OK1Tb0UpZuxI2Ygq33RNU=
+	t=1771598694; cv=none; b=IKrWafwXNfrtS6Ltq90VnIZDJyUko0H69QS8fW7tZ0dGZVEUrDTmzweCSdOMlhrTedNDc9YA9G2QNi0fiRSr0t7tQZwOkLxu74aB5gAoOHWB7FinhDGfow+0N/QZ5qiMK1BNVt1eYN/uNrr8SrE/U1K/JOSR+aEk9Lw+O5l70I0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771598400; c=relaxed/simple;
-	bh=LyGi7WUbWhTHoolhD36fLiBiIaIOs25Zl5kFFcKGUGg=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=ebCjeOvaulQERynvWrx3hfspVtRMRQ8AxcKgtpbRGdZgvU/HenK9+qoZ81dImyb0ORrA8TiURMiwHz6hvmTrURZxIBnCGoP9zlcBAG18ZfjAb9EwCOICtDeU+ngUqy45KizKui5VhAGylJb0OqV6OSd47lCCOjSlzYcdPMLEoEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D824gdji; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BE52C116C6;
-	Fri, 20 Feb 2026 14:40:00 +0000 (UTC)
+	s=arc-20240116; t=1771598694; c=relaxed/simple;
+	bh=RG2Hbf0o3KuqHZA5+48UswLVGJeXGifkvsztTu4/mN4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=l+rHcgC284T6Zum4BFon8Si14T6EP6uN3zA0omH6GNXmDc+J0yEE4RQKEU7xik0rFszvO+tN0cVIFgsRx0QX7XHqO8lklVWqMcOc2UjBrDFjtGzNFmfFTPLs8twTx/DPQPVAUjSdMGdLvMTB5WJbzwaNNyFulfAM86SyWaeyCjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C12rBUTn; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCB7EC116C6;
+	Fri, 20 Feb 2026 14:44:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771598400;
-	bh=LyGi7WUbWhTHoolhD36fLiBiIaIOs25Zl5kFFcKGUGg=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=D824gdji96H9YLjbFCmQ8fVAjmNLvwra3pwmKYw5uCISZY31jtd2+To6uoGcjkrDs
-	 acjMI6czymR6HxyJsuiGraTMwkIvPNo8pF1t27iPf+pmoWhuC7/iXV19IohLjtSRQK
-	 eTlraURi1ylx6nJSse+6KBZPPAo7MaSZHHb96iacJtU1zdphMbyfXmjkDR2EGM5ljv
-	 kIW9ZEdyhgvF8Q/0qaL5PIcSM0oGAdJypUPmLjgzITvYPKmdjWTAMdPDGSQDCNJzj/
-	 8Po0LGqr0Z1oM7eTWQR1haw5wzSlf2vPs4RE3LCcQRmGjEoTH4GrSIoOs4IbZImUqb
-	 mLoWmyeT2znCw==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 7D0893808200;
-	Fri, 20 Feb 2026 14:40:09 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=k20201202; t=1771598694;
+	bh=RG2Hbf0o3KuqHZA5+48UswLVGJeXGifkvsztTu4/mN4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=C12rBUTnA1iJHVlm9ABE6opSgoFtD/ToalKiOumJIOKBNooJtp5TVG/aJmvhSYzoN
+	 JdxJ7uk4iCij2Aui1zxPm8KDGulo+EhprMBZduPecMxE0eTB+C/K2rVrG6MjNvVBwA
+	 V0tAmRNwiC3Son3ZQwnVkKQgTtax/HAdgY9zjkbrgyU1c0zY1FMYUqv36qm+mLv+5w
+	 HIj9eCxwC2UJ46qn+BMXGx8FTh9f7R/YHTrpBiyacN6nH/CCzjA0TA6eRsJ76X/0Wv
+	 Lo24d5B3SiovMtgewWVYU2pfVG8IjcwsMGCjEopMcAqm6LJ/WpZUEGvEutRLP4bLW3
+	 16gH6/69vLArw==
+Date: Fri, 20 Feb 2026 20:14:44 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Harshal Dev <harshal.dev@oss.qualcomm.com>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>, 
+	"David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Abel Vesa <abel.vesa@oss.qualcomm.com>, cros-qcom-dts-watchers@chromium.org, 
+	Brian Masney <bmasney@redhat.com>, Neeraj Soni <neeraj.soni@oss.qualcomm.com>, 
+	Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 11/11] soc: qcom: ice: Add explicit power-domain and
+ clock voting calls for ICE
+Message-ID: <vimd3tbnu4mr2uqporj7d4fv23aq2cb6e5een43yz5spe4u2xx@ufyzb2lzlc6j>
+References: <20260123-qcom_ice_power_and_clk_vote-v1-0-e9059776f85c@qti.qualcomm.com>
+ <20260123-qcom_ice_power_and_clk_vote-v1-11-e9059776f85c@qti.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 1/2] Bluetooth: hci_qca: Fix confusing shutdown() and
- power_off() naming
-From: patchwork-bot+bluetooth@kernel.org
-Message-Id: 
- <177159840830.557111.11680373477755318049.git-patchwork-notify@kernel.org>
-Date: Fri, 20 Feb 2026 14:40:08 +0000
-References: <20260212141721.69961-1-johannes.goede@oss.qualcomm.com>
-In-Reply-To: <20260212141721.69961-1-johannes.goede@oss.qualcomm.com>
-To: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Cc: brgl@kernel.org, marcel@holtmann.org, luiz.dentz@gmail.com,
- linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org
+In-Reply-To: <20260123-qcom_ice_power_and_clk_vote-v1-11-e9059776f85c@qti.qualcomm.com>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-93514-lists,linux-arm-msm=lfdr.de,bluetooth];
-	FREEMAIL_CC(0.00)[kernel.org,holtmann.org,gmail.com,vger.kernel.org];
-	FROM_NEQ_ENVFROM(0.00)[patchwork-bot@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	TO_DN_SOME(0.00)[];
+	TAGGED_FROM(0.00)[bounces-93515-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	FROM_NO_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	NEURAL_HAM(-0.00)[-0.999];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-0.999];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_FIVE(0.00)[6];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,intel.com:email]
-X-Rspamd-Queue-Id: 86AB8168709
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: A38751687FD
 X-Rspamd-Action: no action
 
-Hello:
+On Fri, Jan 23, 2026 at 12:41:35PM +0530, Harshal Dev wrote:
+> Since Qualcomm inline-crypto engine (ICE) is now a dedicated driver
+> de-coupled from the QCOM UFS driver, it should explicitly vote for it's
+> needed resources during probe, specifically the UFS_PHY_GDSC power-domain
+> and the 'core' and 'iface' clocks.
 
-This series was applied to bluetooth/bluetooth-next.git (master)
-by Luiz Augusto von Dentz <luiz.von.dentz@intel.com>:
+You don't need to vote for a single power domain since genpd will do that for
+you before the driver probes.
 
-On Thu, 12 Feb 2026 15:17:20 +0100 you wrote:
-> The function called qca_power_off() is actually the hci_dev shutdown
-> handler, rename it to qca_hci_shutdown() to make this clear.
+> Also updated the suspend and resume callbacks to handle votes on these
+> resources.
 > 
-> While the qca_power_shutdown() function is actually the counter-part
-> of qca_power_on() rename it to qca_power_off() to make this clear.
-> 
-> Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-> 
-> [...]
+> Signed-off-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
 
-Here is the summary with links:
-  - [1/2] Bluetooth: hci_qca: Fix confusing shutdown() and power_off() naming
-    (no matching commit)
-  - [2/2] Bluetooth: hci_qca: Fix BT not getting powered-off on rmmod
-    https://git.kernel.org/bluetooth/bluetooth-next/c/e08fdde76adb
+Where is the Fixes tag?
 
-You are awesome, thank you!
+> ---
+>  drivers/soc/qcom/ice.c | 20 ++++++++++++++++++++
+>  1 file changed, 20 insertions(+)
+> 
+> diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
+> index b203bc685cad..4b50d05ca02a 100644
+> --- a/drivers/soc/qcom/ice.c
+> +++ b/drivers/soc/qcom/ice.c
+> @@ -16,6 +16,8 @@
+>  #include <linux/of.h>
+>  #include <linux/of_platform.h>
+>  #include <linux/platform_device.h>
+> +#include <linux/pm.h>
+> +#include <linux/pm_runtime.h>
+>  
+>  #include <linux/firmware/qcom/qcom_scm.h>
+>  
+> @@ -108,6 +110,7 @@ struct qcom_ice {
+>  	void __iomem *base;
+>  
+>  	struct clk *core_clk;
+> +	struct clk *iface_clk;
+>  	bool use_hwkm;
+>  	bool hwkm_init_complete;
+>  	u8 hwkm_version;
+> @@ -310,12 +313,20 @@ int qcom_ice_resume(struct qcom_ice *ice)
+>  	struct device *dev = ice->dev;
+>  	int err;
+>  
+> +	pm_runtime_get_sync(dev);
+
+This is not needed as the power domain would be enabled at this point.
+
+>  	err = clk_prepare_enable(ice->core_clk);
+>  	if (err) {
+>  		dev_err(dev, "failed to enable core clock (%d)\n",
+>  			err);
+>  		return err;
+>  	}
+> +
+> +	err = clk_prepare_enable(ice->iface_clk);
+> +	if (err) {
+> +		dev_err(dev, "failed to enable iface clock (%d)\n",
+> +			err);
+> +		return err;
+> +	}
+
+Use clk_bulk API to enable all clocks in one go.
+
+>  	qcom_ice_hwkm_init(ice);
+>  	return qcom_ice_wait_bist_status(ice);
+>  }
+> @@ -323,7 +334,9 @@ EXPORT_SYMBOL_GPL(qcom_ice_resume);
+>  
+>  int qcom_ice_suspend(struct qcom_ice *ice)
+>  {
+> +	clk_disable_unprepare(ice->iface_clk);
+
+Same here.
+
+>  	clk_disable_unprepare(ice->core_clk);
+> +	pm_runtime_put_sync(ice->dev);
+
+Not needed.
+
+>  	ice->hwkm_init_complete = false;
+>  
+>  	return 0;
+> @@ -584,6 +597,10 @@ static struct qcom_ice *qcom_ice_create(struct device *dev,
+>  	if (IS_ERR(engine->core_clk))
+>  		return ERR_CAST(engine->core_clk);
+>  
+> +	engine->iface_clk = devm_clk_get_enabled(dev, "iface_clk");
+> +	if (IS_ERR(engine->iface_clk))
+> +		return ERR_CAST(engine->iface_clk);
+> +
+
+Same here. Use devm_clk_bulk_get_all_enabled().
+
+>  	if (!qcom_ice_check_supported(engine))
+>  		return ERR_PTR(-EOPNOTSUPP);
+>  
+> @@ -725,6 +742,9 @@ static int qcom_ice_probe(struct platform_device *pdev)
+>  		return PTR_ERR(base);
+>  	}
+>  
+> +	devm_pm_runtime_enable(&pdev->dev);
+> +	pm_runtime_get_sync(&pdev->dev);
+
+If you want to mark & enable the runtime PM status, you should just do:
+
+	devm_pm_runtime_set_active_enabled();	
+
+But this is not really needed in this patch. You can add it in a separate patch
+for the sake of correctness.
+
+- Mani
+
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+மணிவண்ணன் சதாசிவம்
 
