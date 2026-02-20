@@ -1,242 +1,379 @@
-Return-Path: <linux-arm-msm+bounces-93536-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93537-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4FEHKyPOmGlDMwMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93536-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 22:12:03 +0100
+	id GBBDF8/wmGl1OQMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93537-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Feb 2026 00:39:59 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9078216AEDD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 22:12:03 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id B953016B6B2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Feb 2026 00:39:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 3025230090B1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 21:12:02 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id CF92D3032F75
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 23:39:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB8B630C625;
-	Fri, 20 Feb 2026 21:11:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F2DE31282A;
+	Fri, 20 Feb 2026 23:39:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DoXX3Hni";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="P5NRWW0m"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z99cy/Vg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 900872D9EE2
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Feb 2026 21:11:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4892D6407;
+	Fri, 20 Feb 2026 23:39:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771621918; cv=none; b=Y+ettqUWVfJPNj0Y96uEC8VzETdclodn83HFxyFj7RMJPrcQWEM7yzFdMTX7P0hNZl2LB86QqS4thWzM/6FGWqSoo0m4rqNBqKRy5eM8TglXA2VpoaGtOme7tS++i85EnOZqOvBc3/XPf5gtpdIYI6WXUwsLG+Vg3bOW9zt7Rp0=
+	t=1771630795; cv=none; b=SY77RMqM7IqP3GVXbdeDMa/kKVj/4pQmZ9UpRvPyLP+ESOhsHZLnBTbdVFBKl1ykbi3qYPX84sH9wrCL2S7Pj/CvlSCgsnwImucL/4gKuy7xdH9BxywB3fhhueOd8qMzjdnljNwvsMrOZLn27pwOdCFSWrUIqHdHF1vWMZyowZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771621918; c=relaxed/simple;
-	bh=DL3Sst52QBLUKYVj2tfLw4VHvR7JBJOofYsTrvCjkmk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=TKS1OkHd8IYbj6c8Zak9SzA4hbimbCr38kFtogzxXOXBUOOMe8lbcFZncOUDR34PNo4dLBNZt/EU38MGOV4q8h1rb/jEnED3EED7mVX36vVpcTj2Fx3XvRiTyK0/9Q8Xz+avwdDqpfHhYXRdaYVNnMT4byNjKzJyfpKqDYqIQwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DoXX3Hni; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=P5NRWW0m; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 61KKcILu2219101
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Feb 2026 21:11:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=lfOBufkm7Z/MEMLOsm70W5
-	SqD+HBjk/QRTlErPpYjdc=; b=DoXX3HnizvpTqr8dAqa4kd+pyvnGi9gZNfGj1W
-	A8y8oBtuplWAzh3FNaKBzmYtHuEXQeswTcWLd//93MCl4oZhf5uvp8WMa1AmX/zD
-	QF3EFeMiZhiWKSXCqU4OqD95iHLW9Cw6t4FMgBfnX/RLV8CAWLQCuaCVwLjU+T/e
-	l5Lel6tfOED25DloTH4ZCdqHBKEISaohtdhfwOxqv8Wbqvb4O6qUoXW9t/e6AfKd
-	+PpZbZUr4IwSkq0BimIpGj6rytKf3+RaRhNj5d2Rhe50mg72tf3yJsL3XoeLJzAq
-	dAKUV5LiApyN7l9dmjNYsDnMjB8sfwHfhwcSwnE70QBu/eZw==
-Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com [209.85.161.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cenhgsrwp-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Feb 2026 21:11:55 +0000 (GMT)
-Received: by mail-oo1-f71.google.com with SMTP id 006d021491bc7-66308f16ea1so28774651eaf.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Feb 2026 13:11:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1771621915; x=1772226715; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=lfOBufkm7Z/MEMLOsm70W5SqD+HBjk/QRTlErPpYjdc=;
-        b=P5NRWW0mnJZORvYIwvxdcoPpx/74TKmdiguG5Za18ZeW9fIzd8E3VfjRvWTPYQH8E3
-         i4QOvhNfH3lNNBJFlcaBxe7gxICljAQU6v+QXnIBr8BAvajdaGCliF0BnWpqRlfSGEb3
-         CT9TLtuLUxYdh7u9+OmRzJmMutOdWw83YOp2kBRJKT85y0uck9r4OdC3iHCYQbv9RPlc
-         df7yE+daenwost3UkPp0rSKccyhHxnHGzJjgaRinrfT8cvcQsmNOvgEiGrGtNN6M1rXR
-         8nNmqGYu5oxpWnLnAyB0bSqA2NaDf9kNd4jg5IK9eFgdc6TN49IIRgwRj9Oc5OXLF0xG
-         zabA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771621915; x=1772226715;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lfOBufkm7Z/MEMLOsm70W5SqD+HBjk/QRTlErPpYjdc=;
-        b=EWKf3fEDnl8o9L3ZFVArz+CTJxlAKzjP4iUcJFuCHv5kD3BEaqOns+E3C9wfyh9wK3
-         Ujr0p8Oc7NXSXnjiGQOl8Z354wIGFmO/MLhoAH3Y21FHdmmFSHNNjXopyJju7wwSRnsP
-         Kpy5sBr4vxPp9aHd25eNm2j6dGpmtu3E7L+KECrraMrIlOe4Yp0gUrQu+NJBvGsI2SPf
-         EreyqvWtQ4qhO9b8C6jUsrKnakDI0ugcKSoQ4eGRXCdxFOnKEIbdcFKAuSNMsuhlMOos
-         znHIComEJW5Q2FtxKEovofGOg7Z268JGfA3SGPHYDCj5yNyGucjGIH4yla7GWnLkw8EI
-         rCUA==
-X-Gm-Message-State: AOJu0Yxmnv2fGjfNFNoWBwd+OHOHZt0mRKWmbj8l8xX2cbTvM5pJojcO
-	OiaLdT/c6kwTCMi+ZsLhtPHjdWHBiUyYo+G0bu6C223BEicUD1wy2iocOS04iDyhpf0eLzSx5iX
-	mSr2aXVT0AzpCzHTNf9WEzAt2LGqedg8r2L/SHnWmz3HpGYoEz0VAo7Bm9JGXDE1GlL+L
-X-Gm-Gg: AZuq6aIkczU7i9/MiWECjLK0NyEZhflUdEx79TJ6khZfPrRSbX34skv/GEayIPFAiwT
-	S9VIHNAGDQ8h/MyeyA9SmzKz8y+wVeKGsIJdRr/vBrc7WTddvfXoAGGZlyFkteOwRGVZuWoOKve
-	wU89eCKVE+4He52i1K7AOgjiJj3t77LMXIF8xJ10VePAuljM9qZmrWEHXPnhwWiNeWf29uguPyN
-	iGZ1UL2Q9ooPvIDsLmKO0EP7r/iisNCPzFPgcayUzMuTV6L1gyTO5rpCqDfEE4jO7ljFrBeNbaX
-	IHIupd1SKOgMESmhphG9OvVtEKpW163/3yuwoBWDo2/ZQRRqTYObDUFNuv5XuhaE8+j8+l5VzYG
-	dxq6Dt/0gqG41LmRmkXxjNdcGSnsYL2wVfHE0CoOkrCUEQO1A/9jQKO4ZWESfO4CaujC6LG7i9p
-	PXIOreMqoL/1Hky5caLWiz
-X-Received: by 2002:a05:6820:228a:b0:66e:58f3:b4e9 with SMTP id 006d021491bc7-679c4507b4bmr742336eaf.67.1771621914696;
-        Fri, 20 Feb 2026 13:11:54 -0800 (PST)
-X-Received: by 2002:a05:6820:228a:b0:66e:58f3:b4e9 with SMTP id 006d021491bc7-679c4507b4bmr742329eaf.67.1771621914238;
-        Fri, 20 Feb 2026 13:11:54 -0800 (PST)
-Received: from [192.168.86.59] (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-679c565728esm382227eaf.8.2026.02.20.13.11.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Feb 2026 13:11:53 -0800 (PST)
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Date: Fri, 20 Feb 2026 15:11:48 -0600
-Subject: [PATCH v2] remoteproc: sysmon: Correct subsys_name_len type in QMI
- request
+	s=arc-20240116; t=1771630795; c=relaxed/simple;
+	bh=azZwRItiqBuEwOJjXEmInSNN6hMAbyaoUqAhQdkhtME=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CVmibP6khtg9Gaf0capsr7DEzPRB8uFo0EtR9jRVAUaVX5708bcwJU/pUkOaFf0OsmqHo8DhTFMzkPN0ZQ9y7x3svWnGUcIhCWglGUs91DXK4dA/pAQn/cVxVnUit/1gdb3QuKP7WbvTFHWw6lmnSwaM4fkn2+89HQ767KnujHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z99cy/Vg; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1A59C116C6;
+	Fri, 20 Feb 2026 23:39:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1771630794;
+	bh=azZwRItiqBuEwOJjXEmInSNN6hMAbyaoUqAhQdkhtME=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Z99cy/Vgl53gCB1sjIvn22NqPUXOjaKDb8AcyYiytn/X7CbsFdT847O7QxVlP/tMg
+	 d2Tckw7O8t2j5guSq5nQdoxjNsB+cZSbd01+7O73E93MWlXt++K3B7z4JVZKsCfOKx
+	 A19qXscYC2M0oqgvfqxEhbavxfllhktm0kOo2GaUmRzkxTJNEMzMdYabBSq4HhAeHc
+	 zZs61AmrATpSJTklSes5+1xmwa9gT+UmDqkOKlDD+ec3WnIbFuq4q6J8qY4MJoZouj
+	 HMyLaEN5MeZaKBp91welW6ZkUy/C70dTDE/OMby4AS/cJQGgE4CCoiROBlaEimuWcA
+	 AvQoA3Dyfsa3g==
+Date: Fri, 20 Feb 2026 17:39:52 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: quic_utiwari@quicinc.com
+Cc: konrad.dybcio@oss.qualcomm.com, herbert@gondor.apana.org.au, 
+	thara.gopinath@gmail.com, davem@davemloft.net, linux-crypto@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, quic_neersoni@quicinc.com
+Subject: Re: [PATCH v7] crypto: qce - Add runtime PM and interconnect
+ bandwidth scaling support
+Message-ID: <gtqvktl4wmtetth7qz3zl4osnd4yebhjwjxw6nroelzflk55u2@xmamdznupxfa>
+References: <20260220072818.2921517-1-quic_utiwari@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260220-qmi-encode-invalid-length-v2-1-5674be35ab29@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIABPOmGkC/42NQQ6DIBREr2L+uhigam1XvUfjAuGrP1GoYEkbw
- 91LPUE3k7yZzMwOAT1hgFuxg8dIgZzNIE8F6EnZERmZzCC5bLgUFVsXYmi1MzmxUc1k2Ix23CZ
- 2FtyYuhZKtA3k/tPjQO9j+9Flnihszn+Oqyh+7j+rUTDOLi3XfYXXtufD3YVQri81a7csZRboU
- kpfs/pIzMkAAAA=
-X-Change-ID: 20260214-qmi-encode-invalid-length-310dd551a186
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Alexander Wilhelm <alexander.wilhelm@westermo.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1763;
- i=bjorn.andersson@oss.qualcomm.com; h=from:subject:message-id;
- bh=DL3Sst52QBLUKYVj2tfLw4VHvR7JBJOofYsTrvCjkmk=;
- b=owEBgwJ8/ZANAwAKAQsfOT8Nma3FAcsmYgBpmM4ZZf8ABIIkwB4cFTp9AaWBbyKtGSgR5v+To
- ayJEPcTwLuJAkkEAAEKADMWIQQF3gPMXzXqTwlm1SULHzk/DZmtxQUCaZjOGRUcYW5kZXJzc29u
- QGtlcm5lbC5vcmcACgkQCx85Pw2ZrcWkHA//dov3lXOmwwVgqI6jmuyzz6EPzMhnfrRnXfKkWYc
- QyX2hcSj8xo6IC9QK3hJuXITXTmfkD7oE2dBYgaQGpETMcw9SaW1kHDGiXrm4Kw6Cld4qeV0l2n
- ZvzsOKq2TWUGZnEbq9XhBixCt+emUeK+3VxPl/H1DEAKwPz0IMVXIOpYUK30sKz6hc3N8+oG5Jo
- plqpFZxoTa/BykU/ALWSzTv/jfHcuRYAUqad2dK5Rxg6kS3TnFVPIhXpQlXqc312fFDDQLjjpl4
- UwZejmhbLFMQlbhJB3H+gz2YxFUy6QOD6WSTS9WIla0Wj8NnGaDCn50c2OyccspAINyePyrC38V
- Ab8LuoYY5rlDb1Ou82KKeRnY/ezGm/VNdGRyd3ftx2gUR7RTQ9zCVtZv5XbLpf4aZP0qEpxuC5j
- RIJFYHrSqhEhRKoX2qIpbgbVZQCGmhpjSIyGhFMt68AgZm6FZeLQpUd8evOWEzVeLuObigPLh1L
- ywCCEQ4y+lErs8Z0UodJJmsMNDJ0ojz/WqdLchjG8LEK3S8lUNPB0WTM+1b+9cDL+ux29Vf+SEF
- /pUsayy+2CNmF1sraRKBHB3qTLLcgMc1l7tcAXXrt/CMMPmd9EDf5Gh0czzu1M7QuQxx/ZXfcJA
- UTnMgdfwD5zAO248nUPNqsTrBAHLZDLS9+RMqaAyyUQQ=
-X-Developer-Key: i=bjorn.andersson@oss.qualcomm.com; a=openpgp;
- fpr=05DE03CC5F35EA4F0966D5250B1F393F0D99ADC5
-X-Authority-Analysis: v=2.4 cv=TJVIilla c=1 sm=1 tr=0 ts=6998ce1b cx=c_pps
- a=V4L7fE8DliODT/OoDI2WOg==:117 a=DaeiM5VmU20ml6RIjrOvYw==:17
- a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=KizKeGmJ27Xn7kP_Cx8A:9 a=QEXdDO2ut3YA:10
- a=WZGXeFmKUf7gPmL3hEjn:22
-X-Proofpoint-ORIG-GUID: 9Z_V7TjpR35BfasAcmIMUIe29Wk_0jFv
-X-Proofpoint-GUID: 9Z_V7TjpR35BfasAcmIMUIe29Wk_0jFv
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjIwMDE3NSBTYWx0ZWRfX1/NRpYlHN6yZ
- PqJIHTrzMy9mzcKfoaIaPc0C8IQqBaelV0tDnJJSNWkUjNf72SGCwkFrdIxoLmdhQA4ojXFT9+v
- zOkLBnB3CRwrrTsg+aUyJiqm8FWbDKK67VQsmrSASWY81IrK64XWV9l9lhs3LsPWOorz5oZ1HMu
- jwW8tmHq+8mLKpNpSOhwYwz6BFmb0Z0R8FMdy064JkQQ/VCJr6UJ/pQeBK0qSiDN2zpZDl11xWB
- O6oiV7lrQI8Pu1D0lP41GsNdu+pDXj52Yv4IhIzIu1DMq9S07osLOB5suggjwD+3uehuRXPYxJg
- pqbM5LMo7xlF/DyGUUqq5vb7SQg7s1IHcsMlYN3OuhlER0zUCduyQCJdXBEDFVnrLnrU9WC0REy
- Zd6576Dh5ZM/V5N7zgUTS/O0GAVr+HDOwYwyqT3jucXf06EONG3gDUaOZxBgIT+fycDIgPxWwK2
- 8f/1j7Ld2F5cMf5kFyA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-20_03,2026-02-20_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 impostorscore=0 priorityscore=1501 lowpriorityscore=0
- clxscore=1015 bulkscore=0 phishscore=0 suspectscore=0 adultscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2602200175
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260220072818.2921517-1-quic_utiwari@quicinc.com>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-93536-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	FROM_NEQ_ENVFROM(0.00)[bjorn.andersson@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,gondor.apana.org.au,gmail.com,davemloft.net,vger.kernel.org,quicinc.com];
 	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-93537-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	MISSING_XM_UA(0.00)[];
+	TO_DN_NONE(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-0.999];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	RCPT_COUNT_SEVEN(0.00)[9];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 9078216AEDD
+	MIME_TRACE(0.00)[0:+];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:url,quicinc.com:email]
+X-Rspamd-Queue-Id: B953016B6B2
 X-Rspamd-Action: no action
 
-The QMI message encoder has up until recently read a single byte (as
-elem_size == 1), but with the introduction of big endian support it's
-become apparent that this field is expected to be a full u32 -
-regardless of the size of the length in the encoded message (which is
-what elem_size specifies).
+On Fri, Feb 20, 2026 at 12:58:18PM +0530, quic_utiwari@quicinc.com wrote:
+> From: Udit Tiwari <quic_utiwari@quicinc.com>
+> 
+> The Qualcomm Crypto Engine (QCE) driver currently lacks support for
+> runtime power management (PM) and interconnect bandwidth control.
+> As a result, the hardware remains fully powered and clocks stay
+> enabled even when the device is idle. Additionally, static
+> interconnect bandwidth votes are held indefinitely, preventing the
+> system from reclaiming unused bandwidth.
+> 
+> Address this by enabling runtime PM and dynamic interconnect
+> bandwidth scaling to allow the system to suspend the device when idle
+> and scale interconnect usage based on actual demand. Improve overall
+> system efficiency by reducing power usage and optimizing interconnect
+> resource allocation.
+> 
+> Make the following changes as part of this integration:
 
-The result is that the encoder now reads past the length byte and
-rejects the unreasonably large length formed when including the
-following 3 bytes from the subsys_name array.
+"this integration" is internal lingo. In fact I think you can omit this
+whole paragraph, because the bullets here are expected.
 
-Fix this by changing to the expected type.
+> 
+> - Add support for pm_runtime APIs to manage device power state
+>   transitions.
+> - Implement runtime_suspend() and runtime_resume() callbacks to gate
+>   clocks and vote for interconnect bandwidth only when needed.
+> - Replace devm_clk_get_optional_enabled() with devm_pm_clk_create() +
+>   pm_clk_add() and let the PM core manage device clocks during runtime
+>   PM and system sleep.
+> - Register dev_pm_ops with the platform driver to hook into the PM
+>   framework.
+> 
+> Tested:
 
-Fixes: 1fb82ee806d1 ("remoteproc: qcom: Introduce sysmon")
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
----
-I believe I've checked all the other users now, and this is the only
-case I found that needs fixing.
+This isn't very useful to carry in the git history, please move this
+down below '---'.
 
-Changes in v2:
-- Fix the sysmon driver instead of the encoder/decoder
-- Link to v1: https://lore.kernel.org/r/20260214-qmi-encode-invalid-length-v1-0-780cb4e98b0f@oss.qualcomm.com
----
- drivers/remoteproc/qcom_sysmon.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> - Verify that ICC votes drop to zero after probe and upon request
+>   completion.
+> - Confirm that runtime PM usage count increments during active
+>   requests and decrements afterward.
+> - Observe that the device correctly enters the suspended state when
+>   idle.
+> 
+> Signed-off-by: Udit Tiwari <quic_utiwari@quicinc.com>
 
-diff --git a/drivers/remoteproc/qcom_sysmon.c b/drivers/remoteproc/qcom_sysmon.c
-index 660ac6fc408213073942f20a2c4e43a0c9b9b37e..c6cc6e519fe566a92505dc57c30e8b3e0a697179 100644
---- a/drivers/remoteproc/qcom_sysmon.c
-+++ b/drivers/remoteproc/qcom_sysmon.c
-@@ -203,7 +203,7 @@ static const struct qmi_elem_info ssctl_shutdown_resp_ei[] = {
- };
- 
- struct ssctl_subsys_event_req {
--	u8 subsys_name_len;
-+	u32 subsys_name_len;
- 	char subsys_name[SSCTL_SUBSYS_NAME_LENGTH];
- 	u32 event;
- 	u8 evt_driven_valid;
+Please switch to oss.qualcomm.com 
 
----
-base-commit: fd9678829d6dd0c10fde080b536abf4b1121c346
-change-id: 20260214-qmi-encode-invalid-length-310dd551a186
+> ---
+> Changes in v7:
+> - Use ACQUIRE guard in probe to simplify runtime PM management and error paths.
+> - Drop redundant icc_enable() call in runtime resume path.
+> - Explicitly call pm_clk_suspend(dev) and pm_clk_resume(dev) within the 
+>   custom runtime PM callbacks. Since custom callbacks are provided to handle 
+>   interconnect scaling, the standard PM clock helpers must be invoked manually 
+>   to ensure clocks are gated/ungated.
+> 
+> Changes in v6:
+> - Adopt ACQUIRE(pm_runtime_active_try, ...) for scoped runtime PM management
+>   in qce_handle_queue(). This removes the need for manual put calls and
+>   goto labels in the error paths, as suggested by Konrad.
+> - Link to v6: https://lore.kernel.org/lkml/20260210061437.2293654-1-quic_utiwari@quicinc.com/
+> 
+> Changes in v5:
+> - Drop Reported-by and Closes tags for kernel test robot W=1 warnings, as
+>   the issue was fixed within the same patch series.
+> - Fix a minor comment indentation/style issue.
+> - Link to v5: https://lore.kernel.org/lkml/20251120062443.2016084-1-quic_utiwari@quicinc.com/
+> 
+> Changes in v4:
+> - Annotate runtime PM callbacks with __maybe_unused to silence W=1 warnings.
+> - Add Reported-by and Closes tags for kernel test robot warning.
+> - Link to v4: https://lore.kernel.org/lkml/20251117062737.3946074-1-quic_utiwari@quicinc.com/
+> 
+> Changes in v3:
+> - Switch from manual clock management to PM clock helpers
+>   (devm_pm_clk_create() + pm_clk_add()); no direct clk_* enable/disable
+>   in runtime callbacks.
+> - Replace pm_runtime_get_sync() with pm_runtime_resume_and_get(); remove
+>   pm_runtime_put_noidle() on error.
+> - Define PM ops using helper macros and reuse runtime callbacks for system
+>   sleep via pm_runtime_force_suspend()/pm_runtime_force_resume().
+> - Link to v2: https://lore.kernel.org/lkml/20250826110917.3383061-1-quic_utiwari@quicinc.com/
+> 
+> Changes in v2:
+> - Extend suspend/resume support to include runtime PM and ICC scaling.
+> - Register dev_pm_ops and implement runtime_suspend/resume callbacks.
+> - Link to v1: https://lore.kernel.org/lkml/20250606105808.2119280-1-quic_utiwari@quicinc.com/
+> ---
+>  drivers/crypto/qce/core.c | 87 +++++++++++++++++++++++++++++++++------
+>  1 file changed, 75 insertions(+), 12 deletions(-)
+> 
+> diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
+> index b966f3365b7d..776a08340b08 100644
+> --- a/drivers/crypto/qce/core.c
+> +++ b/drivers/crypto/qce/core.c
+> @@ -12,6 +12,9 @@
+>  #include <linux/module.h>
+>  #include <linux/mod_devicetable.h>
+>  #include <linux/platform_device.h>
+> +#include <linux/pm.h>
+> +#include <linux/pm_runtime.h>
+> +#include <linux/pm_clock.h>
+>  #include <linux/types.h>
+>  #include <crypto/algapi.h>
+>  #include <crypto/internal/hash.h>
+> @@ -90,6 +93,11 @@ static int qce_handle_queue(struct qce_device *qce,
+>  	struct crypto_async_request *async_req, *backlog;
+>  	int ret = 0, err;
 
-Best regards,
--- 
-Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+First use of ret is now an assignment, so please drop the unnecessary
+zero-initialization.
 
+>  
+> +	ACQUIRE(pm_runtime_active_try, pm)(qce->dev);
+> +	ret = ACQUIRE_ERR(pm_runtime_active_auto_try, &pm);
+
+Luckily, this - to me - incomprehensible construct got some useful
+wrappers in ef8057b07c72 ("PM: runtime: Wrapper macros for
+ACQUIRE()/ACQUIRE_ERR()"), merged back in November. So, you should
+instead use the form:
+
+	PM_RUNTIME_ACQUIRE(qce->dev, pm);
+	if ((ret = PM_RUNTIME_ACQUIRE_ERR(&pm)))
+		return ret;
+	
+or (I don't think we really care about the specific error returned):
+
+	PM_RUNTIME_ACQUIRE(qce->dev, pm);
+	if (PM_RUNTIME_ACQUIRE_ERR(&pm))
+		return -Esome_specific_error;
+
+
+Although I presume that's PM_RUNTIME_ACQUIRE_AUTOSUSPEND() in your case.
+
+> +	if (ret)
+> +		return ret;
+> +
+>  	scoped_guard(mutex, &qce->lock) {
+>  		if (req)
+>  			ret = crypto_enqueue_request(&qce->queue, req);
+> @@ -207,23 +215,34 @@ static int qce_crypto_probe(struct platform_device *pdev)
+>  	if (ret < 0)
+>  		return ret;
+>  
+> -	qce->core = devm_clk_get_optional_enabled(qce->dev, "core");
+> -	if (IS_ERR(qce->core))
+> -		return PTR_ERR(qce->core);
+> +	/* PM clock helpers: register device clocks */
+> +	ret = devm_pm_clk_create(dev);
+> +	if (ret)
+> +		return ret;
+>  
+> -	qce->iface = devm_clk_get_optional_enabled(qce->dev, "iface");
+> -	if (IS_ERR(qce->iface))
+> -		return PTR_ERR(qce->iface);
+> +	ret = pm_clk_add(dev, "core");
+> +	if (ret)
+> +		return ret;
+>  
+> -	qce->bus = devm_clk_get_optional_enabled(qce->dev, "bus");
+> -	if (IS_ERR(qce->bus))
+> -		return PTR_ERR(qce->bus);
+> +	ret = pm_clk_add(dev, "iface");
+> +	if (ret)
+> +		return ret;
+>  
+> -	qce->mem_path = devm_of_icc_get(qce->dev, "memory");
+> +	ret = pm_clk_add(dev, "bus");
+> +	if (ret)
+> +		return ret;
+> +
+> +	qce->mem_path = devm_of_icc_get(dev, "memory");
+>  	if (IS_ERR(qce->mem_path))
+>  		return PTR_ERR(qce->mem_path);
+>  
+> -	ret = icc_set_bw(qce->mem_path, QCE_DEFAULT_MEM_BANDWIDTH, QCE_DEFAULT_MEM_BANDWIDTH);
+> +	/* Enable runtime PM after clocks and ICC are acquired */
+
+It wouldn't hurt to continue this sentence to include that you're doing
+it like that so that clocks and interconnect votes are applied by the
+resume callback (I assume that's your reason for the ordering at least).
+
+> +	ret = devm_pm_runtime_enable(dev);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ACQUIRE(pm_runtime_active_try, pm)(dev);
+> +	ret = ACQUIRE_ERR(pm_runtime_active_auto_try, &pm);
+
+As above.
+
+>  	if (ret)
+>  		return ret;
+>  
+> @@ -245,9 +264,52 @@ static int qce_crypto_probe(struct platform_device *pdev)
+>  	qce->async_req_enqueue = qce_async_request_enqueue;
+>  	qce->async_req_done = qce_async_request_done;
+>  
+> -	return devm_qce_register_algs(qce);
+> +	ret = devm_qce_register_algs(qce);
+> +	if (ret)
+> +		return ret;
+> +
+> +	/* Configure autosuspend after successful init */
+> +	pm_runtime_set_autosuspend_delay(dev, 100);
+> +	pm_runtime_use_autosuspend(dev);
+> +	pm_runtime_mark_last_busy(dev);
+> +
+> +	return 0;
+>  }
+>  
+> +static int __maybe_unused qce_runtime_suspend(struct device *dev)
+> +{
+> +	struct qce_device *qce = dev_get_drvdata(dev);
+> +
+> +	icc_disable(qce->mem_path);
+> +
+> +	return pm_clk_suspend(dev);
+> +}
+> +
+> +static int __maybe_unused qce_runtime_resume(struct device *dev)
+> +{
+> +	struct qce_device *qce = dev_get_drvdata(dev);
+> +	int ret = 0;
+> +
+> +	ret = pm_clk_resume(dev);
+
+What is the reason to use pm_clk_add() if you need to manually
+enable/disable them anyways?
+
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = icc_set_bw(qce->mem_path, QCE_DEFAULT_MEM_BANDWIDTH, QCE_DEFAULT_MEM_BANDWIDTH);
+
+icc_disable() will set the "enabled" flag on the internal interconnect
+data structures, which causes the vote to be skipped in aggregation.
+
+So, not only does it look unbalanced with icc_disable() vs icc_set_bw()
+in suspend/resume, I don't think you have a bandwidth vote after the
+first suspend, unless you call icc_enable() here.
+
+> +	if (ret)
+
+Just put pm_clk_suspend(dev) here and return ret; below. Skip the goto.
+
+Regards,
+Bjorn
+
+> +		goto err_icc;
+> +
+> +	return 0;
+> +
+> +err_icc:
+> +	pm_clk_suspend(dev);
+> +	return ret;
+> +}
+> +
+> +static const struct dev_pm_ops qce_crypto_pm_ops = {
+> +	SET_RUNTIME_PM_OPS(qce_runtime_suspend, qce_runtime_resume, NULL)
+> +	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend, pm_runtime_force_resume)
+> +};
+> +
+>  static const struct of_device_id qce_crypto_of_match[] = {
+>  	{ .compatible = "qcom,crypto-v5.1", },
+>  	{ .compatible = "qcom,crypto-v5.4", },
+> @@ -261,6 +323,7 @@ static struct platform_driver qce_crypto_driver = {
+>  	.driver = {
+>  		.name = KBUILD_MODNAME,
+>  		.of_match_table = qce_crypto_of_match,
+> +		.pm = &qce_crypto_pm_ops,
+>  	},
+>  };
+>  module_platform_driver(qce_crypto_driver);
+> -- 
+> 2.34.1
+> 
+> 
 
