@@ -1,356 +1,370 @@
-Return-Path: <linux-arm-msm+bounces-93458-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93459-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6OyBJjwNmGlF/gIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93458-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 08:29:00 +0100
+	id KG5IJmUNmGlF/gIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93459-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 08:29:41 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF8B416544C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 08:28:59 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32E1C16546C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 08:29:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 3F2B6300443F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 07:28:57 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id EE174302BEA4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 07:29:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79C96331A4B;
-	Fri, 20 Feb 2026 07:28:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C3FA331A66;
+	Fri, 20 Feb 2026 07:29:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BqaysPY9"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="WMr6nv7b";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="AkNvneXG"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2621315793;
-	Fri, 20 Feb 2026 07:28:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 358D9331A4B
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Feb 2026 07:29:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771572535; cv=none; b=I+hPKajv+5TnKZWjxYF081Vlarf+2bVPrRLpjNin7Lna9dAC2/zJP2IIdtpmg/ZXsDTUdUFCQxlqPJziS7Ri0PF6zi6sAY0wGvnmeXrHltYJ/8XRNGg4f2OeMiNyeDda4G9eR56nVLPx+x0iRfuFu6keA0oSEvC5GAgchVeoZe4=
+	t=1771572554; cv=none; b=rLeVNLI0bhiXrvO0waMwcu60fGmgaIsAoG4YOlgo023RknK42J90UAxzZxzQFBvIk+9q0UP1QGajXOtVVKYrEg/OUJeMEDDCm6grAyRqNZX24y3Cqybes1gK5IEOKgdH1VCiVQsELjqWRwNzuOvRjjpfpj/+NmmrMie4khktb1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771572535; c=relaxed/simple;
-	bh=1+5uWV0n9MfffP4DHGOhg63kVFPBHl2PY9yZvMx7vqY=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=e4FG8QEcIsNTSSP+ceYHAfnS20ntSSYWAh09kgWi8lFaDqIUIGGW3U1q6SRfSy0PN5cEyPr4Jt3LRa+CvbzRsqI+UVa/ECI5+ZOVVxAnBZNsyjeODr/7eXEHVrvz40STTsSHGYSS/rWWLOKJ7ECTv3ejLSN7nsy+4bDOrbnwDvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BqaysPY9; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 61K5SJGk2380873;
-	Fri, 20 Feb 2026 07:28:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=9aCQNjqRlo1QXlDE4Kpjsw
-	45ZhfYEFhie75EX5cRAV8=; b=BqaysPY9qu5iVO7wWEWqL064lz04wgJ3lzDN2d
-	twwULGzeOpGWTYcWodWOIkDyXdn0BEVdMytnnpBZyIqNSACH7N1rnSIgCt1Lhtsj
-	tvIpXAR8tgP1g8APKY0AiAfqR4Irqx+TLE5TB8y89A99MmsPQLAx85aw7QizN2KF
-	JGfKpnW/2lBtPu8mDEf4PaEFX/+i0GQ30CnnmsAZUDK3X3RTd8U1pmboorWycvVt
-	K3E1IQ4DE6C43XGWaTlBRe3QNU7MUHEOztNeypu3uOhrVWr41221Bt3sfftthDCw
-	K3EwkrTJmHjATbaYLnsHfB9UVUtfj6bOC6y04FWuqkoWUkVg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cechh8ycr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 20 Feb 2026 07:28:47 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 61K7Skj0019673
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 20 Feb 2026 07:28:46 GMT
-Received: from hu-utiwari-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.17; Thu, 19 Feb 2026 23:28:43 -0800
-From: <quic_utiwari@quicinc.com>
-To: <konrad.dybcio@oss.qualcomm.com>, <herbert@gondor.apana.org.au>,
-        <thara.gopinath@gmail.com>, <davem@davemloft.net>
-CC: <linux-crypto@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_neersoni@quicinc.com>,
-        <quic_utiwari@quicinc.com>
-Subject: [PATCH v7] crypto: qce - Add runtime PM and interconnect bandwidth scaling support
-Date: Fri, 20 Feb 2026 12:58:18 +0530
-Message-ID: <20260220072818.2921517-1-quic_utiwari@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1771572554; c=relaxed/simple;
+	bh=pPjKdwM9pmwO4ao95fJig6405dk2rzL3k/DXFhE4Olg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Cij2b8N+ugCHNbnnPLBIejkYzPHQroFYn9KLP3VhfWZHuDxMVG5+/w2fNGnhoPHXWvZjL+rtf1JsmfxPhaD82XY8sOxHRf4Imu3prR1vIpFNdLmeA8geEj31hXLJRJ10f7hrssNsqTwGOccz0PcX++RLfLTZPLoCCuLAg9TNkVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=WMr6nv7b; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=AkNvneXG; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 61K5RtA11645830
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Feb 2026 07:29:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	nmdzgEkoO24WLtSkwTLlj9tbQJ0T6NhXURDMGInhV6w=; b=WMr6nv7be7sSjsGo
+	T9gpWrneL0U2f4F8/jIZ2/V3GK4SamK+KYpwciacuBWJ1jDrE9Qdt3a+scb+bQVq
+	3W7hj9xRFDLFlZWu5pMGCEXtq0gszJNXO3w/2VCzxmTaHhdR7/XlL7xOCzkeIvHP
+	r5gmLPqdnDMfr29LlgZsmeDroWHTpCmeo0/vw1anFOf+szsYlsjlDQTYVl6vD/xB
+	LTHkujNDjCxso9DCzl5ftSlKp96OlL2kTJJo4r7gS7x3Ck1MEZc45JjhS/cedR7i
+	Wdq2cfuflccKJgm9T85E+vDVPQMu3+T1h5cAJOCXRE8t9ye6zlVN6XRFbeMk12PY
+	2LKTCg==
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ce1k83416-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Feb 2026 07:29:11 +0000 (GMT)
+Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-c5269fcecdeso1131124a12.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Feb 2026 23:29:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1771572550; x=1772177350; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=nmdzgEkoO24WLtSkwTLlj9tbQJ0T6NhXURDMGInhV6w=;
+        b=AkNvneXGbI8HU8/nR47M0qTlZhnwUmh4uZiGSjBsVA5Ug5NX1cBuHpWqOXaP+LLrIj
+         hfSFXpn/OFazFlGQbVmRElryXmnLjUWiZ5nbpTynO0ZVf7bmobM1ILYZMYqdcMLFQTt9
+         PmlF8aYrsqdBMIqm8jvry/Zx6IKaaZepIrT5HPOQEPODRaTuKKPYNSCd9VbvVcPH1eja
+         /9ssNwiJz6jwNQS2VcC/hjUcxnI7W2jpUsmr5sU4JAQG7kYoMAiM8wKxT8W7brBXX8bg
+         ne3kHxwHa64c0Bi2bWm+Bw/V3NTDp5HqjouSl1BJyHuXmzlEXkXyk6TUm9eQnHFwuTYT
+         TWGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771572550; x=1772177350;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nmdzgEkoO24WLtSkwTLlj9tbQJ0T6NhXURDMGInhV6w=;
+        b=p8HaYm3GsP3O0dF3bUOA4JDHr7dRFjDoj5bXqsX1n+MnGAapOJHEHKA+kMVQthao39
+         3axPJ+tfUXrogTsezXO5qVuptK/rSYpcO6eB7m/lp2K4VI+jVAoLN/OjbSMgTCc4sK7p
+         0Yq+5AMn3SVheZh1lvQOxypv5A8rp5cU0zB4JguNLO/hcQEId1haaZpsk0EP6ZWBarl5
+         WIuZCImxQ8TyNRuLA9KCXgzUCyIojc+oGQPr5zQ8DxNeLMBF9ndWj4XBFQHhapLyX4rh
+         O6HBmwbZbpLCCz9DmfT2pdcU/JjcYsqS8BD9ukOj6jOE5ot+vgEOYPxFsSK/AlNfqwbo
+         S3Ow==
+X-Forwarded-Encrypted: i=1; AJvYcCWb8GF7bdNq4AvMSECUT9e5X7SvwscKvBgLCD0QcsJoAwf7tpZSolkM7IOPim6p/hDSRZxm+WCHsjL69oIT@vger.kernel.org
+X-Gm-Message-State: AOJu0YxIGnxFs1qNI+CIcaHx+HT7QrEc4P8fnXKeXsJNwQCdjeZ+JuVd
+	D4rlw3bMCmmi2NZrHA9pnBsb+u/ok73rWdDS8Kvmc5zGMMraxsZ23JYYMZ5x0HjEC+EQfjREcBy
+	HU8obuWfvjREIu6o11AsTIWmPrR1ulIMYy64Opg4M2WWLyDELFLRLsETZBuLsH3/PDln+
+X-Gm-Gg: AZuq6aKHDZjVvs6dMRaDVgVSH7NI/XiQfd/RO3WWxPXwPONrA8HexAcHyPO5x2xbx5d
+	EvLrzTRy/SwMUCCHBb9iTedMxcKeWXFcgWT+93N5JRPN+x4FJSEt7g1dWP9B2S13A7XL4OIqU0i
+	oELgaxSe/wmfh7quI16Td9HdLyyFThcjC7DRU+AGjaTqFLt4yJFlbrRaWGplkwlyocu0zf+wk9G
+	pXL27hWx9T33v8q0PFORVzWp6xKLQPPE9D2lefWHtB0nhm4bD1JVDUKXeOFw+4WF1utNo06Ufbp
+	9ye1cqPaFEPN7SX6gWQz2OHTX0xnmIdcvEQrLQxzWm8F3bZjRn9b5jFu7Ca8iWjKayb/2X2kyEL
+	pzMSaHnZcrMpkyecsi9yjsEJBJjHElE6kSMvTtXS40QvI47C8nco=
+X-Received: by 2002:a05:6a00:3d0c:b0:81c:c98c:aeb7 with SMTP id d2e1a72fcca58-824d94d00abmr19343470b3a.7.1771572549746;
+        Thu, 19 Feb 2026 23:29:09 -0800 (PST)
+X-Received: by 2002:a05:6a00:3d0c:b0:81c:c98c:aeb7 with SMTP id d2e1a72fcca58-824d94d00abmr19343453b3a.7.1771572549211;
+        Thu, 19 Feb 2026 23:29:09 -0800 (PST)
+Received: from [10.218.12.237] ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-824c6b69b13sm20291596b3a.30.2026.02.19.23.29.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 Feb 2026 23:29:08 -0800 (PST)
+Message-ID: <c6136314-5bdf-466b-b19e-43062fb11150@oss.qualcomm.com>
+Date: Fri, 20 Feb 2026 12:59:02 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/8] dt-bindings: thermal: Add qcom,qmi-cooling yaml
+ bindings
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: andersson@kernel.org, mathieu.poirier@linaro.org, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, rui.zhang@intel.com,
+        lukasz.luba@arm.com, konradybcio@kernel.org, mani@kernel.org,
+        casey.connolly@linaro.org, amit.kucheria@oss.qualcomm.com,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        manaf.pallikunhi@oss.qualcomm.com
+References: <20260127155722.2797783-1-gaurav.kohli@oss.qualcomm.com>
+ <20260127155722.2797783-3-gaurav.kohli@oss.qualcomm.com>
+ <20260128-whispering-caracal-of-respect-a26638@quoll>
+ <36706481-2549-4716-8e6d-0e4db42591a2@oss.qualcomm.com>
+ <546faeda-d896-403c-a449-5c9b0cd7159e@kernel.org>
+ <17474333-bb82-49d7-bc04-45ab21095c38@oss.qualcomm.com>
+ <ae4c1f7e-8f4c-4ce0-a6b8-bab29984e693@kernel.org>
+Content-Language: en-US
+From: Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>
+In-Reply-To: <ae4c1f7e-8f4c-4ce0-a6b8-bab29984e693@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: QQ1hI3qG8i579mXomr2Pm_O3zTiqWmx2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjIwMDA2NCBTYWx0ZWRfX1bCdc1t8yE2c
- FY2JLzvy8UV1Ih4J5Bj7+XK1IxfVgWe4fkWtspdaOFjqNNgzIwb/8U3I9+rB2TO5PYW7X0F4ono
- QCQ4ULhoEts5BpIgXruWbmey2ZXVU42L2h4vaLQyq+NfzNNnkzcYv49Qm0zK7qWyvhLCM6RYDe1
- kAT9p5lPImo0B0n4B9DkKU4lhyoz+kXyTQ/DANGOIwRJw/t8nFvyklmmYPt/wwTgqwUXXqWFTlP
- NATCl08+Ja3p3zZxJW4dsIWed4fghyBtrP+7/Xp0fb0djFESAwBPt37xZEM41K/CaDINXjzbJa2
- Rh5Yzu7KiHhiNcXPe5raiWkkGi9NJY1m5vSwCs/Rd3qUR5BKc5REku/rQ50i89Skz3aP0xIJZrC
- rMG9UwS3GgNSGHtqpCGsp/teHhPGB+DgU70ota5Rkk7GBU2E3lqSai/2ja/1Fi68U6RAylno5/8
- va6jhv6p45VdehJZJvA==
-X-Proofpoint-ORIG-GUID: QQ1hI3qG8i579mXomr2Pm_O3zTiqWmx2
-X-Authority-Analysis: v=2.4 cv=KYzfcAYD c=1 sm=1 tr=0 ts=69980d2f cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=HzLeVaNsDn8A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22 a=VwQbUJbxAAAA:8
- a=COk6AnOGAAAA:8 a=HUPvR95Ouy4MFf8pceUA:9 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: CdphvBuffKYBnY0w4szx6s3fp5utw215
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjIwMDA2NCBTYWx0ZWRfX8hijPDYoK5GA
+ hqd4MdxbOvQECC7DD9WB9SqiJmVzVGp5aFbgot8mwdnGQl/7kIzm20wXVs0RO5EQ7J/yT5o80yF
+ EsU3SZ936LEcvdrEw68DrhO0cazvQGLQW7WIUEsg3ai5tA/sqnPiQL2sKDswHewPUBP7Vk6R3+M
+ PueoKtIjVF+8wsehkFC2snX28Zk2SLaEE828otv8XvOiP5n/EEHBqUASg6yTiSfAzWWbrvUFS+u
+ JQvDehOgd4fFHK5G3Zx7/G3c/aiJyRfJLcQpQx0qV9hypV+bC7l5Ts859oLGUlqkG5s0VCpfw5G
+ HNtchGv7BK118MrxRfmBjB6Mpjz9v0rOHiY7WYMS/YlvmhYOv06HeMLIHOVHDExa+0dy2rtS6FP
+ eMKQtYlRGx8xxoqGdPy5jlTpcP4RCibI8N7l69UdtK7zEXLxrMHPPlph1xvzLeE8/FTSlRAckIc
+ oObV3kkVQEBfp4VxqMg==
+X-Authority-Analysis: v=2.4 cv=cdrfb3DM c=1 sm=1 tr=0 ts=69980d47 cx=c_pps
+ a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
+ a=gEfo2CItAAAA:8 a=EUspDBNiAAAA:8 a=Y8yh3MHrz31bv1ga194A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=x9snwWr2DeNwDh03kgHS:22 a=sptkURWiP4Gy88Gu7hUp:22
+X-Proofpoint-ORIG-GUID: CdphvBuffKYBnY0w4szx6s3fp5utw215
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-02-19_06,2026-02-20_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 impostorscore=0 bulkscore=0 clxscore=1015
- lowpriorityscore=0 suspectscore=0 malwarescore=0 priorityscore=1501
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ spamscore=0 bulkscore=0 adultscore=0 priorityscore=1501 phishscore=0
+ impostorscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0
+ clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
  definitions=main-2602200064
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.84 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[quicinc.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
-	R_DKIM_ALLOW(-0.20)[quicinc.com:s=qcppdkim1];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,gondor.apana.org.au,gmail.com,davemloft.net];
-	TAGGED_FROM(0.00)[bounces-93458-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[quicinc.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	MIME_TRACE(0.00)[0:+];
-	TO_DN_NONE(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-93459-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[2a300000:email,qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[quic_utiwari@quicinc.com,linux-arm-msm@vger.kernel.org];
-	FROM_NO_DN(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	NEURAL_HAM(-0.00)[-0.998];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[quicinc.com:mid,quicinc.com:dkim,quicinc.com:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: BF8B416544C
+	FROM_NEQ_ENVFROM(0.00)[gaurav.kohli@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_PROHIBIT(0.00)[1.145.78.96:email];
+	MID_RHS_MATCH_FROM(0.00)[];
+	NEURAL_HAM(-0.00)[-0.999];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 32E1C16546C
 X-Rspamd-Action: no action
 
-From: Udit Tiwari <quic_utiwari@quicinc.com>
 
-The Qualcomm Crypto Engine (QCE) driver currently lacks support for
-runtime power management (PM) and interconnect bandwidth control.
-As a result, the hardware remains fully powered and clocks stay
-enabled even when the device is idle. Additionally, static
-interconnect bandwidth votes are held indefinitely, preventing the
-system from reclaiming unused bandwidth.
 
-Address this by enabling runtime PM and dynamic interconnect
-bandwidth scaling to allow the system to suspend the device when idle
-and scale interconnect usage based on actual demand. Improve overall
-system efficiency by reducing power usage and optimizing interconnect
-resource allocation.
+On 2/11/2026 1:43 PM, Krzysztof Kozlowski wrote:
+> On 11/02/2026 08:37, Gaurav Kohli wrote:
+>>
+>>
+>> On 2/8/2026 3:36 PM, Krzysztof Kozlowski wrote:
+>>> On 29/01/2026 13:06, Gaurav Kohli wrote:
+>>>>
+>>>> On 1/28/2026 4:57 PM, Krzysztof Kozlowski wrote:
+>>>>> On Tue, Jan 27, 2026 at 09:27:16PM +0530, Gaurav Kohli wrote:
+>>>>>> The cooling subnode of a remoteproc represents a client of the Thermal
+>>>>>> Mitigation Device QMI service running on it. Each subnode of the cooling
+>>>>>> node represents a single control exposed by the service.
+>>>>>>
+>>>>>> Signed-off-by: Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>
+>>>>>> ---
+>>>>>>     .../bindings/remoteproc/qcom,pas-common.yaml  |  6 ++
+>>>>>>     .../bindings/thermal/qcom,qmi-cooling.yaml    | 72 +++++++++++++++++++
+>>>>>>     2 files changed, 78 insertions(+)
+>>>>>>     create mode 100644 Documentation/devicetree/bindings/thermal/qcom,qmi-cooling.yaml
+>>>>>>
+>>>>>> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,pas-common.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,pas-common.yaml
+>>>>>> index 68c17bf18987..6a736161d5ae 100644
+>>>>>> --- a/Documentation/devicetree/bindings/remoteproc/qcom,pas-common.yaml
+>>>>>> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,pas-common.yaml
+>>>>>> @@ -80,6 +80,12 @@ properties:
+>>>>>>           and devices related to the ADSP.
+>>>>>>         unevaluatedProperties: false
+>>>>>>     
+>>>>>> +  cooling:
+>>>>>> +    $ref: /schemas/thermal/qcom,qmi-cooling.yaml#
+>>>>>> +    description:
+>>>>>> +      Cooling subnode which represents the cooling devices exposed by the Modem.
+>>>>> I do not see the reason why you need 3 (!!!) children here. Everything
+>>>>> should be folded here.
+>>>>
+>>>>
+>>>> Thanks Krzysztof for review.
+>>>>
+>>>> Each subsystem may support multiple thermal mitigation devices through
+>>>> remote TMD service.
+>>>>
+>>>> Because of this multiplicity, introduced separate binding file.
+>>>
+>>> This explains nothing. Subsystem does not matter for the binding. My
+>>> comment stays.
+>>>
+>>
+>> thanks for this suggestion, we will use qcom,pas-common.yaml to define
+>> bindings and avoid creating new file.
+> 
+> I asked not to create any children nodes.
+> 
 
-Make the following changes as part of this integration:
+We have multiple cores within a subsystem(cdsp) and each core has its 
+own independent DCVS. And also we have dedicated TSENS sensor placed on 
+each core within the subsystem.
+As a result, each core requires its own cooling device, which must be 
+linked to its TSENS thermal zone. Because of this, we introduced 
+multiple child nodes—one for each cooling device.
 
-- Add support for pm_runtime APIs to manage device power state
-  transitions.
-- Implement runtime_suspend() and runtime_resume() callbacks to gate
-  clocks and vote for interconnect bandwidth only when needed.
-- Replace devm_clk_get_optional_enabled() with devm_pm_clk_create() +
-  pm_clk_add() and let the PM core manage device clocks during runtime
-  PM and system sleep.
-- Register dev_pm_ops with the platform driver to hook into the PM
-  framework.
+  ------            ----------------------------------------
+|      | -------> |  cdsp                                  |
+|      |          |                                        |
+|      |          | HVX compute(tsens1)    HMX NPU(tsens2) |          |
+|      |           ----------------------------------------
+| SOC  |
+|      |
+|      |
+|      |           -----------------------------------------
+|      | -------> |  Modem                                  |
+|      |          |                                         |
+  ------           |  (modem Lte)    (modem nr)   (modem pa) | 
+  
 
-Tested:
+                    -----------------------------------------
 
-- Verify that ICC votes drop to zero after probe and upon request
-  completion.
-- Confirm that runtime PM usage count increments during active
-  requests and decrements afterward.
-- Observe that the device correctly enters the suspended state when
-  idle.
+Unfortunately, we don't have target in this series which supports 
+multiple cores within the subsystem, but there are targets which 
+supports multiple cores. We will post patches for those once upstream 
+dependency aligns. If it make sense, we will add superset node examples 
+in dt bindings for future targets also.
 
-Signed-off-by: Udit Tiwari <quic_utiwari@quicinc.com>
----
-Changes in v7:
-- Use ACQUIRE guard in probe to simplify runtime PM management and error paths.
-- Drop redundant icc_enable() call in runtime resume path.
-- Explicitly call pm_clk_suspend(dev) and pm_clk_resume(dev) within the 
-  custom runtime PM callbacks. Since custom callbacks are provided to handle 
-  interconnect scaling, the standard PM clock helpers must be invoked manually 
-  to ensure clocks are gated/ungated.
+We can use another approach, we can take this cooling node out of 
+remoteproc node and use soc node to define child node. This has it's own 
+drawback, here qmi-tmd will probe and wait for remoteproc subsystem to 
+be up. For cases where remoteproc won't be up, qmi-tmd will still do
+probe and sits indefinitely.
 
-Changes in v6:
-- Adopt ACQUIRE(pm_runtime_active_try, ...) for scoped runtime PM management
-  in qce_handle_queue(). This removes the need for manual put calls and
-  goto labels in the error paths, as suggested by Konrad.
-- Link to v6: https://lore.kernel.org/lkml/20260210061437.2293654-1-quic_utiwari@quicinc.com/
+So we need your guidance here.
 
-Changes in v5:
-- Drop Reported-by and Closes tags for kernel test robot W=1 warnings, as
-  the issue was fixed within the same patch series.
-- Fix a minor comment indentation/style issue.
-- Link to v5: https://lore.kernel.org/lkml/20251120062443.2016084-1-quic_utiwari@quicinc.com/
+>>
+>>>>
+>>>>>> +    unevaluatedProperties: false
+>>>>>> +
+>>>>>>     required:
+>>>>>>       - clocks
+>>>>>>       - clock-names
+>>>>>> diff --git a/Documentation/devicetree/bindings/thermal/qcom,qmi-cooling.yaml b/Documentation/devicetree/bindings/thermal/qcom,qmi-cooling.yaml
+>>>>>> new file mode 100644
+>>>>>> index 000000000000..0dd3bd84c176
+>>>>>> --- /dev/null
+>>>>>> +++ b/Documentation/devicetree/bindings/thermal/qcom,qmi-cooling.yaml
+>>>>>> @@ -0,0 +1,72 @@
+>>>>>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>>>>>> +
+>>>>>> +%YAML 1.2
+>>>>>> +---
+>>>>>> +$id: http://devicetree.org/schemas/thermal/qcom,qmi-cooling.yaml#
+>>>>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>>>>> +
+>>>>>> +title: Qualcomm QMI based thermal mitigation (TMD) cooling devices
+>>>>>> +
+>>>>>> +maintainers:
+>>>>>> +  - Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>
+>>>>>> +
+>>>>>> +description:
+>>>>>> +  Qualcomm QMI-based TMD cooling devices are used to mitigate thermal conditions
+>>>>>> +  across multiple remote subsystems. These devices operate based on junction
+>>>>>> +  temperature sensors (TSENS) associated with thermal zones for each subsystem.
+>>>>>> +
+>>>>>> +properties:
+>>>>>> +  compatible:
+>>>>>> +    enum:
+>>>>>> +      - qcom,qmi-cooling-cdsp
+>>>>>> +      - qcom,qmi-cooling-cdsp1
+>>>>> What are the differences between them?
+>>>>
+>>>>
+>>>> Some SOcs support multiple CDSP/NSP instances. Each instance requires
+>>>> it's own
+>>>>
+>>>> compatible string to distinguish.
+>>>
+>>> Why? What are the differences?
+>>>
+>>> I will not ask third time, but just respond with NAK.
+>>>
+>>
+>> For Leman's, we have multiple NSP subsystem to support compute and each
+>> instance has it's own firmware and separate hardware like below for cdsp
+>>
+>> Below data is from lemans.dtsi for cdsp subsystem:
+>> -> remoteproc@26300000 {
+>> ->  remoteproc@2a300000 {
+>>
+>> That's why, we have introduced different compatible to distinguish
+>> multiple instance, but we can also solve this with single compatible
+> 
+> You did not answer the question what are the differences, so I am not
+> going to ask third time. NAK.
 
-Changes in v4:
-- Annotate runtime PM callbacks with __maybe_unused to silence W=1 warnings.
-- Add Reported-by and Closes tags for kernel test robot warning.
-- Link to v4: https://lore.kernel.org/lkml/20251117062737.3946074-1-quic_utiwari@quicinc.com/
+For exact hw diff, we are checking internally and will update for this. 
+Right now we only know that we have two cdsp subsystem in Leman's and 
+each has it's own firmware/cores.
 
-Changes in v3:
-- Switch from manual clock management to PM clock helpers
-  (devm_pm_clk_create() + pm_clk_add()); no direct clk_* enable/disable
-  in runtime callbacks.
-- Replace pm_runtime_get_sync() with pm_runtime_resume_and_get(); remove
-  pm_runtime_put_noidle() on error.
-- Define PM ops using helper macros and reuse runtime callbacks for system
-  sleep via pm_runtime_force_suspend()/pm_runtime_force_resume().
-- Link to v2: https://lore.kernel.org/lkml/20250826110917.3383061-1-quic_utiwari@quicinc.com/
+  ------            ----------------------------------------
+|      | -------> |  cdsp0                                 |
+|      |          |                                        |
+|      |          | HVX compute(tsens1)    HMX NPU(tsens2) |
+|      |           ----------------------------------------
+| SOC  |
+|      |
+|      |
+|      |           -----------------------------------------
+|      | -------> |  cdsp1                                  |
+|      |          |                                         |
+  ------           |  tsesn3               tsens4            | 
+  
 
-Changes in v2:
-- Extend suspend/resume support to include runtime PM and ICC scaling.
-- Register dev_pm_ops and implement runtime_suspend/resume callbacks.
-- Link to v1: https://lore.kernel.org/lkml/20250606105808.2119280-1-quic_utiwari@quicinc.com/
----
- drivers/crypto/qce/core.c | 87 +++++++++++++++++++++++++++++++++------
- 1 file changed, 75 insertions(+), 12 deletions(-)
+                    -----------------------------------------
 
-diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
-index b966f3365b7d..776a08340b08 100644
---- a/drivers/crypto/qce/core.c
-+++ b/drivers/crypto/qce/core.c
-@@ -12,6 +12,9 @@
- #include <linux/module.h>
- #include <linux/mod_devicetable.h>
- #include <linux/platform_device.h>
-+#include <linux/pm.h>
-+#include <linux/pm_runtime.h>
-+#include <linux/pm_clock.h>
- #include <linux/types.h>
- #include <crypto/algapi.h>
- #include <crypto/internal/hash.h>
-@@ -90,6 +93,11 @@ static int qce_handle_queue(struct qce_device *qce,
- 	struct crypto_async_request *async_req, *backlog;
- 	int ret = 0, err;
- 
-+	ACQUIRE(pm_runtime_active_try, pm)(qce->dev);
-+	ret = ACQUIRE_ERR(pm_runtime_active_auto_try, &pm);
-+	if (ret)
-+		return ret;
-+
- 	scoped_guard(mutex, &qce->lock) {
- 		if (req)
- 			ret = crypto_enqueue_request(&qce->queue, req);
-@@ -207,23 +215,34 @@ static int qce_crypto_probe(struct platform_device *pdev)
- 	if (ret < 0)
- 		return ret;
- 
--	qce->core = devm_clk_get_optional_enabled(qce->dev, "core");
--	if (IS_ERR(qce->core))
--		return PTR_ERR(qce->core);
-+	/* PM clock helpers: register device clocks */
-+	ret = devm_pm_clk_create(dev);
-+	if (ret)
-+		return ret;
- 
--	qce->iface = devm_clk_get_optional_enabled(qce->dev, "iface");
--	if (IS_ERR(qce->iface))
--		return PTR_ERR(qce->iface);
-+	ret = pm_clk_add(dev, "core");
-+	if (ret)
-+		return ret;
- 
--	qce->bus = devm_clk_get_optional_enabled(qce->dev, "bus");
--	if (IS_ERR(qce->bus))
--		return PTR_ERR(qce->bus);
-+	ret = pm_clk_add(dev, "iface");
-+	if (ret)
-+		return ret;
- 
--	qce->mem_path = devm_of_icc_get(qce->dev, "memory");
-+	ret = pm_clk_add(dev, "bus");
-+	if (ret)
-+		return ret;
-+
-+	qce->mem_path = devm_of_icc_get(dev, "memory");
- 	if (IS_ERR(qce->mem_path))
- 		return PTR_ERR(qce->mem_path);
- 
--	ret = icc_set_bw(qce->mem_path, QCE_DEFAULT_MEM_BANDWIDTH, QCE_DEFAULT_MEM_BANDWIDTH);
-+	/* Enable runtime PM after clocks and ICC are acquired */
-+	ret = devm_pm_runtime_enable(dev);
-+	if (ret)
-+		return ret;
-+
-+	ACQUIRE(pm_runtime_active_try, pm)(dev);
-+	ret = ACQUIRE_ERR(pm_runtime_active_auto_try, &pm);
- 	if (ret)
- 		return ret;
- 
-@@ -245,9 +264,52 @@ static int qce_crypto_probe(struct platform_device *pdev)
- 	qce->async_req_enqueue = qce_async_request_enqueue;
- 	qce->async_req_done = qce_async_request_done;
- 
--	return devm_qce_register_algs(qce);
-+	ret = devm_qce_register_algs(qce);
-+	if (ret)
-+		return ret;
-+
-+	/* Configure autosuspend after successful init */
-+	pm_runtime_set_autosuspend_delay(dev, 100);
-+	pm_runtime_use_autosuspend(dev);
-+	pm_runtime_mark_last_busy(dev);
-+
-+	return 0;
- }
- 
-+static int __maybe_unused qce_runtime_suspend(struct device *dev)
-+{
-+	struct qce_device *qce = dev_get_drvdata(dev);
-+
-+	icc_disable(qce->mem_path);
-+
-+	return pm_clk_suspend(dev);
-+}
-+
-+static int __maybe_unused qce_runtime_resume(struct device *dev)
-+{
-+	struct qce_device *qce = dev_get_drvdata(dev);
-+	int ret = 0;
-+
-+	ret = pm_clk_resume(dev);
-+	if (ret)
-+		return ret;
-+
-+	ret = icc_set_bw(qce->mem_path, QCE_DEFAULT_MEM_BANDWIDTH, QCE_DEFAULT_MEM_BANDWIDTH);
-+	if (ret)
-+		goto err_icc;
-+
-+	return 0;
-+
-+err_icc:
-+	pm_clk_suspend(dev);
-+	return ret;
-+}
-+
-+static const struct dev_pm_ops qce_crypto_pm_ops = {
-+	SET_RUNTIME_PM_OPS(qce_runtime_suspend, qce_runtime_resume, NULL)
-+	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend, pm_runtime_force_resume)
-+};
-+
- static const struct of_device_id qce_crypto_of_match[] = {
- 	{ .compatible = "qcom,crypto-v5.1", },
- 	{ .compatible = "qcom,crypto-v5.4", },
-@@ -261,6 +323,7 @@ static struct platform_driver qce_crypto_driver = {
- 	.driver = {
- 		.name = KBUILD_MODNAME,
- 		.of_match_table = qce_crypto_of_match,
-+		.pm = &qce_crypto_pm_ops,
- 	},
- };
- module_platform_driver(qce_crypto_driver);
--- 
-2.34.1
+> 
+>> with new dt property for each subsystem instance id. Please let us know
+> 
+> Instance IDs are not allowed, either. Please read writing bindings doc
+> or slides from talks.
+> 
+> Best regards,
+> Krzysztof
 
 
