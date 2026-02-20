@@ -1,232 +1,242 @@
-Return-Path: <linux-arm-msm+bounces-93535-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93536-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UL+rMP/HmGngMAMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93535-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 21:45:51 +0100
+	id 4FEHKyPOmGlDMwMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93536-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 22:12:03 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 26E4A16ABA6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 21:45:51 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9078216AEDD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 22:12:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 79E263037431
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 20:45:36 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 3025230090B1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Feb 2026 21:12:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC8D22FF154;
-	Fri, 20 Feb 2026 20:45:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB8B630C625;
+	Fri, 20 Feb 2026 21:11:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="mN6i4ZVs"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DoXX3Hni";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="P5NRWW0m"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3F82D7DEF;
-	Fri, 20 Feb 2026 20:45:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 900872D9EE2
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Feb 2026 21:11:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771620334; cv=none; b=qWmcDqK+7DfrGUC+BDcpUJySUi1ECPQBwqnVt83t0ga2LX18UxwCE1QBDwU8iyaeDz51gaYlXjFfW2T41Xjvu8G9bOt4kme74Yvquz8R6aky7bJQY0GJDRLmpyLjQn6HMQIkF0JL2MhPKUmU8MpQx6gili6BRKwxhIEkCGVPH74=
+	t=1771621918; cv=none; b=Y+ettqUWVfJPNj0Y96uEC8VzETdclodn83HFxyFj7RMJPrcQWEM7yzFdMTX7P0hNZl2LB86QqS4thWzM/6FGWqSoo0m4rqNBqKRy5eM8TglXA2VpoaGtOme7tS++i85EnOZqOvBc3/XPf5gtpdIYI6WXUwsLG+Vg3bOW9zt7Rp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771620334; c=relaxed/simple;
-	bh=hfYEovSptZFg5jSs3vZA6H/NzLnh/a2Mu/MOyrony4A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oouxpZkFa7g6IzCYAwgOHyNZZL7eUJibTjlxl4KtpLdFduZOnFdE/IetFqW7jHDj4gFF19Fm2btyIl5USSH6bNXxCoroG5Gn4xb/bjHrRRjBAwRw87NwXdOpzpYVb8QSkEs7hWzj7mq7XtMjoGQoVIhkI3ZjaqbpVbmQ6bq9O58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=mN6i4ZVs; arc=none smtp.client-ip=192.198.163.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1771620332; x=1803156332;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=hfYEovSptZFg5jSs3vZA6H/NzLnh/a2Mu/MOyrony4A=;
-  b=mN6i4ZVs2vS4SltVE9rb1xBbxWa32F+DbjFSU4OdJ3srylG/SZTzVd9z
-   +v7a4e2SpgOA0GCTPj1GbcnIAJgVcYhe4YTMoJcRdsf7MrnCRqxsDF/e+
-   hEWE3KhC3d9CRD2d2bpklfZEd4p0Br1SRjc6ws+8j3c6da/ygfLBEJZHY
-   O2E5xIgFpMvfgvCxGXUUXVZo9rCfshugrko63wPV24pUQ3vhIN5fM4xyM
-   MoZDSuQhWBzCdnUiv+CJTWFDtTZtmLYAfI1gJs8HmF5Fbhh9DDFR2mVwC
-   OUVI7+MpoACqhGqQ+vfWiHKH0csuLE+KIqXgkq/Fpxl120KfqWA8WSu+a
-   A==;
-X-CSE-ConnectionGUID: neeO9JAzTSiaQv6x5pJbIw==
-X-CSE-MsgGUID: 93PB6O24RQqVHMhC4qVq6g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11707"; a="83434420"
-X-IronPort-AV: E=Sophos;i="6.21,302,1763452800"; 
-   d="scan'208";a="83434420"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Feb 2026 12:45:31 -0800
-X-CSE-ConnectionGUID: jpMjX0KqSTifzBgpQjwRbw==
-X-CSE-MsgGUID: oqN9twAHQ9+nO0UT0QyPFA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,302,1763452800"; 
-   d="scan'208";a="213476982"
-Received: from lkp-server01.sh.intel.com (HELO 765f4a05e27f) ([10.239.97.150])
-  by fmviesa007.fm.intel.com with ESMTP; 20 Feb 2026 12:45:29 -0800
-Received: from kbuild by 765f4a05e27f with local (Exim 4.98.2)
-	(envelope-from <lkp@intel.com>)
-	id 1vtXNP-000000014Sq-1zkA;
-	Fri, 20 Feb 2026 20:45:27 +0000
-Date: Sat, 21 Feb 2026 04:44:52 +0800
-From: kernel test robot <lkp@intel.com>
-To: quic_utiwari@quicinc.com, konrad.dybcio@oss.qualcomm.com,
-	herbert@gondor.apana.org.au, thara.gopinath@gmail.com,
-	davem@davemloft.net
-Cc: oe-kbuild-all@lists.linux.dev, linux-crypto@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	quic_neersoni@quicinc.com, quic_utiwari@quicinc.com
-Subject: Re: [PATCH v7] crypto: qce - Add runtime PM and interconnect
- bandwidth scaling support
-Message-ID: <202602210452.d7at3UQJ-lkp@intel.com>
-References: <20260220072818.2921517-1-quic_utiwari@quicinc.com>
+	s=arc-20240116; t=1771621918; c=relaxed/simple;
+	bh=DL3Sst52QBLUKYVj2tfLw4VHvR7JBJOofYsTrvCjkmk=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=TKS1OkHd8IYbj6c8Zak9SzA4hbimbCr38kFtogzxXOXBUOOMe8lbcFZncOUDR34PNo4dLBNZt/EU38MGOV4q8h1rb/jEnED3EED7mVX36vVpcTj2Fx3XvRiTyK0/9Q8Xz+avwdDqpfHhYXRdaYVNnMT4byNjKzJyfpKqDYqIQwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DoXX3Hni; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=P5NRWW0m; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 61KKcILu2219101
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Feb 2026 21:11:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=lfOBufkm7Z/MEMLOsm70W5
+	SqD+HBjk/QRTlErPpYjdc=; b=DoXX3HnizvpTqr8dAqa4kd+pyvnGi9gZNfGj1W
+	A8y8oBtuplWAzh3FNaKBzmYtHuEXQeswTcWLd//93MCl4oZhf5uvp8WMa1AmX/zD
+	QF3EFeMiZhiWKSXCqU4OqD95iHLW9Cw6t4FMgBfnX/RLV8CAWLQCuaCVwLjU+T/e
+	l5Lel6tfOED25DloTH4ZCdqHBKEISaohtdhfwOxqv8Wbqvb4O6qUoXW9t/e6AfKd
+	+PpZbZUr4IwSkq0BimIpGj6rytKf3+RaRhNj5d2Rhe50mg72tf3yJsL3XoeLJzAq
+	dAKUV5LiApyN7l9dmjNYsDnMjB8sfwHfhwcSwnE70QBu/eZw==
+Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com [209.85.161.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cenhgsrwp-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Feb 2026 21:11:55 +0000 (GMT)
+Received: by mail-oo1-f71.google.com with SMTP id 006d021491bc7-66308f16ea1so28774651eaf.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Feb 2026 13:11:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1771621915; x=1772226715; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=lfOBufkm7Z/MEMLOsm70W5SqD+HBjk/QRTlErPpYjdc=;
+        b=P5NRWW0mnJZORvYIwvxdcoPpx/74TKmdiguG5Za18ZeW9fIzd8E3VfjRvWTPYQH8E3
+         i4QOvhNfH3lNNBJFlcaBxe7gxICljAQU6v+QXnIBr8BAvajdaGCliF0BnWpqRlfSGEb3
+         CT9TLtuLUxYdh7u9+OmRzJmMutOdWw83YOp2kBRJKT85y0uck9r4OdC3iHCYQbv9RPlc
+         df7yE+daenwost3UkPp0rSKccyhHxnHGzJjgaRinrfT8cvcQsmNOvgEiGrGtNN6M1rXR
+         8nNmqGYu5oxpWnLnAyB0bSqA2NaDf9kNd4jg5IK9eFgdc6TN49IIRgwRj9Oc5OXLF0xG
+         zabA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771621915; x=1772226715;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lfOBufkm7Z/MEMLOsm70W5SqD+HBjk/QRTlErPpYjdc=;
+        b=EWKf3fEDnl8o9L3ZFVArz+CTJxlAKzjP4iUcJFuCHv5kD3BEaqOns+E3C9wfyh9wK3
+         Ujr0p8Oc7NXSXnjiGQOl8Z354wIGFmO/MLhoAH3Y21FHdmmFSHNNjXopyJju7wwSRnsP
+         Kpy5sBr4vxPp9aHd25eNm2j6dGpmtu3E7L+KECrraMrIlOe4Yp0gUrQu+NJBvGsI2SPf
+         EreyqvWtQ4qhO9b8C6jUsrKnakDI0ugcKSoQ4eGRXCdxFOnKEIbdcFKAuSNMsuhlMOos
+         znHIComEJW5Q2FtxKEovofGOg7Z268JGfA3SGPHYDCj5yNyGucjGIH4yla7GWnLkw8EI
+         rCUA==
+X-Gm-Message-State: AOJu0Yxmnv2fGjfNFNoWBwd+OHOHZt0mRKWmbj8l8xX2cbTvM5pJojcO
+	OiaLdT/c6kwTCMi+ZsLhtPHjdWHBiUyYo+G0bu6C223BEicUD1wy2iocOS04iDyhpf0eLzSx5iX
+	mSr2aXVT0AzpCzHTNf9WEzAt2LGqedg8r2L/SHnWmz3HpGYoEz0VAo7Bm9JGXDE1GlL+L
+X-Gm-Gg: AZuq6aIkczU7i9/MiWECjLK0NyEZhflUdEx79TJ6khZfPrRSbX34skv/GEayIPFAiwT
+	S9VIHNAGDQ8h/MyeyA9SmzKz8y+wVeKGsIJdRr/vBrc7WTddvfXoAGGZlyFkteOwRGVZuWoOKve
+	wU89eCKVE+4He52i1K7AOgjiJj3t77LMXIF8xJ10VePAuljM9qZmrWEHXPnhwWiNeWf29uguPyN
+	iGZ1UL2Q9ooPvIDsLmKO0EP7r/iisNCPzFPgcayUzMuTV6L1gyTO5rpCqDfEE4jO7ljFrBeNbaX
+	IHIupd1SKOgMESmhphG9OvVtEKpW163/3yuwoBWDo2/ZQRRqTYObDUFNuv5XuhaE8+j8+l5VzYG
+	dxq6Dt/0gqG41LmRmkXxjNdcGSnsYL2wVfHE0CoOkrCUEQO1A/9jQKO4ZWESfO4CaujC6LG7i9p
+	PXIOreMqoL/1Hky5caLWiz
+X-Received: by 2002:a05:6820:228a:b0:66e:58f3:b4e9 with SMTP id 006d021491bc7-679c4507b4bmr742336eaf.67.1771621914696;
+        Fri, 20 Feb 2026 13:11:54 -0800 (PST)
+X-Received: by 2002:a05:6820:228a:b0:66e:58f3:b4e9 with SMTP id 006d021491bc7-679c4507b4bmr742329eaf.67.1771621914238;
+        Fri, 20 Feb 2026 13:11:54 -0800 (PST)
+Received: from [192.168.86.59] (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-679c565728esm382227eaf.8.2026.02.20.13.11.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Feb 2026 13:11:53 -0800 (PST)
+From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Date: Fri, 20 Feb 2026 15:11:48 -0600
+Subject: [PATCH v2] remoteproc: sysmon: Correct subsys_name_len type in QMI
+ request
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260220072818.2921517-1-quic_utiwari@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260220-qmi-encode-invalid-length-v2-1-5674be35ab29@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIABPOmGkC/42NQQ6DIBREr2L+uhigam1XvUfjAuGrP1GoYEkbw
+ 91LPUE3k7yZzMwOAT1hgFuxg8dIgZzNIE8F6EnZERmZzCC5bLgUFVsXYmi1MzmxUc1k2Ix23CZ
+ 2FtyYuhZKtA3k/tPjQO9j+9Flnihszn+Oqyh+7j+rUTDOLi3XfYXXtufD3YVQri81a7csZRboU
+ kpfs/pIzMkAAAA=
+X-Change-ID: 20260214-qmi-encode-invalid-length-310dd551a186
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Alexander Wilhelm <alexander.wilhelm@westermo.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1763;
+ i=bjorn.andersson@oss.qualcomm.com; h=from:subject:message-id;
+ bh=DL3Sst52QBLUKYVj2tfLw4VHvR7JBJOofYsTrvCjkmk=;
+ b=owEBgwJ8/ZANAwAKAQsfOT8Nma3FAcsmYgBpmM4ZZf8ABIIkwB4cFTp9AaWBbyKtGSgR5v+To
+ ayJEPcTwLuJAkkEAAEKADMWIQQF3gPMXzXqTwlm1SULHzk/DZmtxQUCaZjOGRUcYW5kZXJzc29u
+ QGtlcm5lbC5vcmcACgkQCx85Pw2ZrcWkHA//dov3lXOmwwVgqI6jmuyzz6EPzMhnfrRnXfKkWYc
+ QyX2hcSj8xo6IC9QK3hJuXITXTmfkD7oE2dBYgaQGpETMcw9SaW1kHDGiXrm4Kw6Cld4qeV0l2n
+ ZvzsOKq2TWUGZnEbq9XhBixCt+emUeK+3VxPl/H1DEAKwPz0IMVXIOpYUK30sKz6hc3N8+oG5Jo
+ plqpFZxoTa/BykU/ALWSzTv/jfHcuRYAUqad2dK5Rxg6kS3TnFVPIhXpQlXqc312fFDDQLjjpl4
+ UwZejmhbLFMQlbhJB3H+gz2YxFUy6QOD6WSTS9WIla0Wj8NnGaDCn50c2OyccspAINyePyrC38V
+ Ab8LuoYY5rlDb1Ou82KKeRnY/ezGm/VNdGRyd3ftx2gUR7RTQ9zCVtZv5XbLpf4aZP0qEpxuC5j
+ RIJFYHrSqhEhRKoX2qIpbgbVZQCGmhpjSIyGhFMt68AgZm6FZeLQpUd8evOWEzVeLuObigPLh1L
+ ywCCEQ4y+lErs8Z0UodJJmsMNDJ0ojz/WqdLchjG8LEK3S8lUNPB0WTM+1b+9cDL+ux29Vf+SEF
+ /pUsayy+2CNmF1sraRKBHB3qTLLcgMc1l7tcAXXrt/CMMPmd9EDf5Gh0czzu1M7QuQxx/ZXfcJA
+ UTnMgdfwD5zAO248nUPNqsTrBAHLZDLS9+RMqaAyyUQQ=
+X-Developer-Key: i=bjorn.andersson@oss.qualcomm.com; a=openpgp;
+ fpr=05DE03CC5F35EA4F0966D5250B1F393F0D99ADC5
+X-Authority-Analysis: v=2.4 cv=TJVIilla c=1 sm=1 tr=0 ts=6998ce1b cx=c_pps
+ a=V4L7fE8DliODT/OoDI2WOg==:117 a=DaeiM5VmU20ml6RIjrOvYw==:17
+ a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=Mpw57Om8IfrbqaoTuvik:22 a=GgsMoib0sEa3-_RKJdDe:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=KizKeGmJ27Xn7kP_Cx8A:9 a=QEXdDO2ut3YA:10
+ a=WZGXeFmKUf7gPmL3hEjn:22
+X-Proofpoint-ORIG-GUID: 9Z_V7TjpR35BfasAcmIMUIe29Wk_0jFv
+X-Proofpoint-GUID: 9Z_V7TjpR35BfasAcmIMUIe29Wk_0jFv
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjIwMDE3NSBTYWx0ZWRfX1/NRpYlHN6yZ
+ PqJIHTrzMy9mzcKfoaIaPc0C8IQqBaelV0tDnJJSNWkUjNf72SGCwkFrdIxoLmdhQA4ojXFT9+v
+ zOkLBnB3CRwrrTsg+aUyJiqm8FWbDKK67VQsmrSASWY81IrK64XWV9l9lhs3LsPWOorz5oZ1HMu
+ jwW8tmHq+8mLKpNpSOhwYwz6BFmb0Z0R8FMdy064JkQQ/VCJr6UJ/pQeBK0qSiDN2zpZDl11xWB
+ O6oiV7lrQI8Pu1D0lP41GsNdu+pDXj52Yv4IhIzIu1DMq9S07osLOB5suggjwD+3uehuRXPYxJg
+ pqbM5LMo7xlF/DyGUUqq5vb7SQg7s1IHcsMlYN3OuhlER0zUCduyQCJdXBEDFVnrLnrU9WC0REy
+ Zd6576Dh5ZM/V5N7zgUTS/O0GAVr+HDOwYwyqT3jucXf06EONG3gDUaOZxBgIT+fycDIgPxWwK2
+ 8f/1j7Ld2F5cMf5kFyA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-20_03,2026-02-20_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 impostorscore=0 priorityscore=1501 lowpriorityscore=0
+ clxscore=1015 bulkscore=0 phishscore=0 suspectscore=0 adultscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2602200175
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.34 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[intel.com:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-93535-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_TO(0.00)[quicinc.com,oss.qualcomm.com,gondor.apana.org.au,gmail.com,davemloft.net];
-	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-93536-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	RCVD_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[lkp@intel.com,linux-arm-msm@vger.kernel.org];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_NONE(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	NEURAL_HAM(-0.00)[-0.997];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:mid,intel.com:dkim,intel.com:email,01.org:url,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 26E4A16ABA6
+	FROM_NEQ_ENVFROM(0.00)[bjorn.andersson@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	NEURAL_HAM(-0.00)[-0.999];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 9078216AEDD
 X-Rspamd-Action: no action
 
-Hi,
+The QMI message encoder has up until recently read a single byte (as
+elem_size == 1), but with the introduction of big endian support it's
+become apparent that this field is expected to be a full u32 -
+regardless of the size of the length in the encoded message (which is
+what elem_size specifies).
 
-kernel test robot noticed the following build warnings:
+The result is that the encoder now reads past the length byte and
+rejects the unreasonably large length formed when including the
+following 3 bytes from the subsys_name array.
 
-[auto build test WARNING on herbert-cryptodev-2.6/master]
-[also build test WARNING on herbert-crypto-2.6/master linus/master v6.19 next-20260220]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Fix this by changing to the expected type.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/quic_utiwari-quicinc-com/crypto-qce-Add-runtime-PM-and-interconnect-bandwidth-scaling-support/20260220-153052
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/herbert/cryptodev-2.6.git master
-patch link:    https://lore.kernel.org/r/20260220072818.2921517-1-quic_utiwari%40quicinc.com
-patch subject: [PATCH v7] crypto: qce - Add runtime PM and interconnect bandwidth scaling support
-config: x86_64-buildonly-randconfig-004-20260221 (https://download.01.org/0day-ci/archive/20260221/202602210452.d7at3UQJ-lkp@intel.com/config)
-compiler: gcc-14 (Debian 14.2.0-19) 14.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260221/202602210452.d7at3UQJ-lkp@intel.com/reproduce)
+Fixes: 1fb82ee806d1 ("remoteproc: qcom: Introduce sysmon")
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+---
+I believe I've checked all the other users now, and this is the only
+case I found that needs fixing.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202602210452.d7at3UQJ-lkp@intel.com/
+Changes in v2:
+- Fix the sysmon driver instead of the encoder/decoder
+- Link to v1: https://lore.kernel.org/r/20260214-qmi-encode-invalid-length-v1-0-780cb4e98b0f@oss.qualcomm.com
+---
+ drivers/remoteproc/qcom_sysmon.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-All warnings (new ones prefixed by >>):
+diff --git a/drivers/remoteproc/qcom_sysmon.c b/drivers/remoteproc/qcom_sysmon.c
+index 660ac6fc408213073942f20a2c4e43a0c9b9b37e..c6cc6e519fe566a92505dc57c30e8b3e0a697179 100644
+--- a/drivers/remoteproc/qcom_sysmon.c
++++ b/drivers/remoteproc/qcom_sysmon.c
+@@ -203,7 +203,7 @@ static const struct qmi_elem_info ssctl_shutdown_resp_ei[] = {
+ };
+ 
+ struct ssctl_subsys_event_req {
+-	u8 subsys_name_len;
++	u32 subsys_name_len;
+ 	char subsys_name[SSCTL_SUBSYS_NAME_LENGTH];
+ 	u32 event;
+ 	u8 evt_driven_valid;
 
-   In file included from include/uapi/linux/posix_types.h:5,
-                    from include/uapi/linux/types.h:14,
-                    from include/linux/types.h:6,
-                    from include/linux/kasan-checks.h:5,
-                    from include/asm-generic/rwonce.h:26,
-                    from ./arch/x86/include/generated/asm/rwonce.h:1,
-                    from include/linux/compiler.h:380,
-                    from include/linux/cleanup.h:5,
-                    from drivers/crypto/qce/core.c:6:
-   drivers/crypto/qce/core.c: In function 'qce_runtime_suspend':
-   include/linux/stddef.h:8:14: error: called object is not a function or function pointer
-       8 | #define NULL ((void *)0)
-         |              ^
-   include/linux/pm_clock.h:77:25: note: in expansion of macro 'NULL'
-      77 | #define pm_clk_suspend  NULL
-         |                         ^~~~
-   drivers/crypto/qce/core.c:285:16: note: in expansion of macro 'pm_clk_suspend'
-     285 |         return pm_clk_suspend(dev);
-         |                ^~~~~~~~~~~~~~
-   drivers/crypto/qce/core.c: In function 'qce_runtime_resume':
-   include/linux/stddef.h:8:14: error: called object is not a function or function pointer
-       8 | #define NULL ((void *)0)
-         |              ^
-   include/linux/pm_clock.h:78:25: note: in expansion of macro 'NULL'
-      78 | #define pm_clk_resume   NULL
-         |                         ^~~~
-   drivers/crypto/qce/core.c:293:15: note: in expansion of macro 'pm_clk_resume'
-     293 |         ret = pm_clk_resume(dev);
-         |               ^~~~~~~~~~~~~
-   include/linux/stddef.h:8:14: error: called object is not a function or function pointer
-       8 | #define NULL ((void *)0)
-         |              ^
-   include/linux/pm_clock.h:77:25: note: in expansion of macro 'NULL'
-      77 | #define pm_clk_suspend  NULL
-         |                         ^~~~
-   drivers/crypto/qce/core.c:304:9: note: in expansion of macro 'pm_clk_suspend'
-     304 |         pm_clk_suspend(dev);
-         |         ^~~~~~~~~~~~~~
-   drivers/crypto/qce/core.c: In function 'qce_runtime_suspend':
->> drivers/crypto/qce/core.c:286:1: warning: control reaches end of non-void function [-Wreturn-type]
-     286 | }
-         | ^
+---
+base-commit: fd9678829d6dd0c10fde080b536abf4b1121c346
+change-id: 20260214-qmi-encode-invalid-length-310dd551a186
 
-Kconfig warnings: (for reference only)
-   WARNING: unmet direct dependencies detected for CAN_DEV
-   Depends on [n]: NETDEVICES [=n] && CAN [=m]
-   Selected by [m]:
-   - CAN [=m] && NET [=y]
-
-
-vim +286 drivers/crypto/qce/core.c
-
-   278	
-   279	static int __maybe_unused qce_runtime_suspend(struct device *dev)
-   280	{
-   281		struct qce_device *qce = dev_get_drvdata(dev);
-   282	
-   283		icc_disable(qce->mem_path);
-   284	
-   285		return pm_clk_suspend(dev);
- > 286	}
-   287	
-   288	static int __maybe_unused qce_runtime_resume(struct device *dev)
-   289	{
-   290		struct qce_device *qce = dev_get_drvdata(dev);
-   291		int ret = 0;
-   292	
-   293		ret = pm_clk_resume(dev);
-   294		if (ret)
-   295			return ret;
-   296	
-   297		ret = icc_set_bw(qce->mem_path, QCE_DEFAULT_MEM_BANDWIDTH, QCE_DEFAULT_MEM_BANDWIDTH);
-   298		if (ret)
-   299			goto err_icc;
-   300	
-   301		return 0;
-   302	
-   303	err_icc:
- > 304		pm_clk_suspend(dev);
-   305		return ret;
-   306	}
-   307	
-
+Best regards,
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+
 
