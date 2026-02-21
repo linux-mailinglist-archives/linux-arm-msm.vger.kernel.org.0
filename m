@@ -1,60 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-93541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cqTCG+ktmWmfRQMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Feb 2026 05:00:41 +0100
+	id aGcZISJxmWkfUAMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Feb 2026 09:47:30 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0940916C14D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Feb 2026 05:00:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 235CB16C6CD
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Feb 2026 09:47:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 4D1DF30078AD
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Feb 2026 04:00:40 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 585243004D12
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Feb 2026 08:47:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1463626B2AD;
-	Sat, 21 Feb 2026 04:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 821422DC334;
+	Sat, 21 Feb 2026 08:47:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KeBjgInW"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="CuA5cpqR";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="c11BnIqW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35078F4A;
-	Sat, 21 Feb 2026 04:00:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9341DF742
+	for <linux-arm-msm@vger.kernel.org>; Sat, 21 Feb 2026 08:47:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771646438; cv=none; b=MbclKbL4u7eIn1PW1KOqiqN0jAcd/gHSOUNRGqzdOk0kRNVWQL/HxhvamDP/XBwNGV0eiLWvAv+N5kg3rSwq+6EM39xnn4vh9GayY9xY7GHVlSMHT6XhWfMxQpFzMmzcc6qC/qDThoJJkZDQZNWbNr+Ln7TNNWE4W0xOOMIkvu4=
+	t=1771663648; cv=none; b=jIC8L8KfOlWr9J0Wn4lMRL25QcdChDrNyaSEDsM2cEzIw0jsOS1v9tcjSLoPo4Wppkko7yBpeImpjkFeB2aKhnaNGM692i01i81ptlQj2zun+eK04peqPYpDMDRfQZrLx8SnnHqQKPzN+m18F33l2OtR2dCi/gdabCyXwYsf3Yw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771646438; c=relaxed/simple;
-	bh=+WNMkY5JJm1kzCFBm/Q4pq2jKDqzBRCLdPN1FXaIK14=;
+	s=arc-20240116; t=1771663648; c=relaxed/simple;
+	bh=tRn0DThSLflcJMZTji8S2/jDXpqEAqTNUUFl+3gSkNw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YjszMocGWnbUEb1BkZiFGhpiD343rUtRDI7UgFSi3F2gZOvQCyP6Sz/vpkuQPNTWhQi63MyGNF/NHXcNVGyJucXudzcwiuehwpwX/w+aEO3bMcrnGzCCC4Fk51/OlQ0VW2bR6lW/Z1PZqbfk5wpjeyIWgshD8E+AunkFDOMLBoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KeBjgInW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB901C4CEF7;
-	Sat, 21 Feb 2026 04:00:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771646437;
-	bh=+WNMkY5JJm1kzCFBm/Q4pq2jKDqzBRCLdPN1FXaIK14=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=KeBjgInW/dRSJYmCWVJLxuue7TvblcOd2M79c1eBSJDzZ2XspdgasZZpV27SvVtY+
-	 qJk7EAgbhL+FiS8G1mnktE5zhHdmjbcj/tEVsShWhTKiuQGEVEezUOu0RfuhjMV5pQ
-	 n6vbQpIY7Tc9+oDCDybx4cLyEYpNv3W8GhK4KRq/dCPHj8qXyQCT2d//ul81JuyvNx
-	 203Cy+7IH9VGH4t7zFzCmfrjOWWuSoIXTDqua9RhguqGsDKL9ON1puoOK7RGgM/r6K
-	 SvKCx3mhhos+gjRQlIuzdLO0mewErm4spl9BHypj02KeGp23AGrQdHggrb2RMVRD0J
-	 gVqIxyQ+rlvJw==
-Date: Fri, 20 Feb 2026 22:00:34 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: quic_utiwari@quicinc.com, herbert@gondor.apana.org.au, 
-	thara.gopinath@gmail.com, davem@davemloft.net, linux-crypto@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, quic_neersoni@quicinc.com
-Subject: Re: [PATCH v7] crypto: qce - Add runtime PM and interconnect
- bandwidth scaling support
-Message-ID: <fnsagbqvriuxdz4xrvs76kwovu3oir3662tu4niii56tgz2cag@zrxyd36qmujb>
-References: <20260220072818.2921517-1-quic_utiwari@quicinc.com>
- <ab5725df-8454-4e3d-8806-a711ef0e6a42@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=E8p8WmyrCfPJ514M0wC++9/Fm2nnemUtg/JfuLNphs5CZ0NXYrx9hauFn2soPEVxxF/PNzifqfSwITB+JSVwkJznLEWRV10jkcQaEa0+Ek5r0Tadqx5rW0QTObcDTP51mT4hU2HoV4DXzMIcF1ncVzjrGWiWx0PS9zxSnYCzOvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=CuA5cpqR; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=c11BnIqW; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 61L5Fg2p2589294
+	for <linux-arm-msm@vger.kernel.org>; Sat, 21 Feb 2026 08:47:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=fhS9S5/58016Vf/YXfH8VAqj
+	s0j11zRsRAHbqbywpcw=; b=CuA5cpqRYIvCvzHrmidfdX8YflKf/kvNmstqXYCm
+	45M42bEFBl7uYEm56U0uQomI6qFVAwEMb230dXu/nxr4rhAso2RcK7L2srAgfypW
+	98lMG21aphALCPSO5Cp2miTkW2j2/1kPNuDIq6rYl2cK0jxCDXUBE4ptN55fJAwc
+	gIL+eOcIBDRzN1RS258FNXy11KduyuY3z/EXsQOO8mJq5vCycSX/QX2lv63NzBzv
+	0gIqD48A1wQzvb4r8+s0woXo9xdE9TIrWKgm+8n20Dqx6UZIymnuoXrN3d+WX/Yh
+	X9pSN8DXoUkUKpsandO58AfKMEKtn51+0n8ZfVjE1k48ag==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cf5wk093k-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 21 Feb 2026 08:47:26 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-8cb4d191ef1so434104485a.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Feb 2026 00:47:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1771663645; x=1772268445; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=fhS9S5/58016Vf/YXfH8VAqjs0j11zRsRAHbqbywpcw=;
+        b=c11BnIqWmEsAJrwkzW/0O9Qz+D+Rh2LK1YtAKfVVzm4eJXJbRBY8IAM+JJdoXTpSFn
+         ByiWxmDNfH+H2nK2J34g/OQ4ZZGQtdABRNvST4h/Y7KaedYDcD0jJe7ETK4VEEONf05X
+         iP1yqrE7zRLFOrmVbg3dBSKc6EtO6w98+2sN+ucYVl4oUgdUaBtV4l+9fu9BD/PhTxTt
+         ln4k0MmwMXztMqsXM3kjPO9SqjTOoa2ZW/VC2DFXr5XXKFLNcNrp1uWNHJtRr9hsTlCs
+         1AFZtCfIo14lwnW6pQEwMsMVZFRVtOdsjNvnmVqdTOKFAqoGvfAkYAbzm2J0QoFZUhyG
+         ZyQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771663645; x=1772268445;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=fhS9S5/58016Vf/YXfH8VAqjs0j11zRsRAHbqbywpcw=;
+        b=chjaZHVSfHdLOQd08b5LMzUuxO4y6nKV1cJqa8GgaxaF6Fy4F41SkdPE2idTq0QWdk
+         /Mw63aS9pF9gFOw/0uq1pfx5G5SZaUSpTs/WI2mMhqhIvBKmBZnBLMgR7GL0BDihc2K0
+         KQD7qZSih/M2hBS1EobkQAVFf9vE+Nqk7GEkcut4/rIamZIfq1V7l547ttMGgtp+QQX8
+         iBQk1/DkPC7Li+QwMI59ReLFUa6WCRumEvsbR3oSLXPf/5jrcnR588mfoOg9YR4Y5v5M
+         ZkBbgho+QJvoxDVOdKsOabiVXvfSfnQnO7DEuZthQEBsDg39QEODs0K/oTvHcOS29BI+
+         ub/A==
+X-Forwarded-Encrypted: i=1; AJvYcCV5dwK4JWdpQdRfy7Ou2W3CTCxSB5qQzg9mQV0exqFuD14PoG5yru7b/ReAPtNE7tnB5+mW8lHrJvMIbyX2@vger.kernel.org
+X-Gm-Message-State: AOJu0YzYHNKGLVcRM0fgjqCoRzsRX94uh65U+J08KacqZ1MXu0kCBbuT
+	2QD+yzd57jDzbEMb4+7S5oYHldjbp5bPGDQJ/4b4RGWKTAQdA6pa1VdoVyohJKcuvjEdYst23yr
+	cs/4jBY2JTXmwaWgsd6WQeBMsW61npy+vsZMOs3knIFBpayYdLKxvnrxzBZ14Mp4qk/Px
+X-Gm-Gg: AZuq6aKQuRQySOa/Lto4jUlHyaC2l3+hIU2+CmiEGeF0nVfky1rj9PvMNdMyRsmrzSC
+	wllQRnvXvmUf7hGOhHZ/6rcldJ66w47qx3ugso8YFlZrX2AkLnC91JIuIk4yM7LveNPeuh27Mdl
+	ryMK+JM1M10xeHRP5CLM4cBnCch8owBU8/UhqCRQ8KcrHJz/f8wST9iwgvhGVILSpG8WRDhdIbi
+	wGXM2rY5EUTU8YVmvYKpJTBkZIFhsyBFxZ7xIXaKOtfT1Krkb3lN/5Z/8GpiujedOQNJP3nFWVJ
+	K3XS403/mcvXLG0sF9hc3G28f4s8RKjWAfQdDLcW/NKk6ERemKpovTXl8sFcNKwhQjvgtElXWB2
+	KJn8PgRnwAh/MCgOr0Y+6Jg6uN7XrYNjvzGUdtuZ0YJixCtj/WTSOMhEyUBwTZLvqs0akM/YhH6
+	fyUkHUK2hGLiOiboA+ZkEZeR2zZagfFKZJ6ow=
+X-Received: by 2002:a05:620a:25ca:b0:8c6:b315:1452 with SMTP id af79cd13be357-8cb8c9d042emr264772985a.7.1771663645468;
+        Sat, 21 Feb 2026 00:47:25 -0800 (PST)
+X-Received: by 2002:a05:620a:25ca:b0:8c6:b315:1452 with SMTP id af79cd13be357-8cb8c9d042emr264770785a.7.1771663644978;
+        Sat, 21 Feb 2026 00:47:24 -0800 (PST)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-389a78cd8d1sm3096311fa.14.2026.02.21.00.47.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 21 Feb 2026 00:47:23 -0800 (PST)
+Date: Sat, 21 Feb 2026 10:47:21 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Cc: bryan.odonoghue@linaro.org, rfoss@kernel.org, todor.too@gmail.com,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        mchehab@kernel.org, vladimir.zapolskiy@linaro.org,
+        johannes.goede@oss.qualcomm.com
+Subject: Re: [PATCH 3/3] media: qcom: camss: vfe-340: Support for PIX client
+Message-ID: <s4xcnk6zef7nzmozptjj24ngvpa5ntllykvt6ypn6sv4xem6bm@dpbhlqdgnkqx>
+References: <20260219152737.728106-1-loic.poulain@oss.qualcomm.com>
+ <20260219152737.728106-4-loic.poulain@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,168 +114,90 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ab5725df-8454-4e3d-8806-a711ef0e6a42@oss.qualcomm.com>
+In-Reply-To: <20260219152737.728106-4-loic.poulain@oss.qualcomm.com>
+X-Authority-Analysis: v=2.4 cv=a6k9NESF c=1 sm=1 tr=0 ts=6999711e cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=EUspDBNiAAAA:8
+ a=8cErUUNgtVhzW7ovVb4A:9 a=CjuIK1q_8ugA:10 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjIxMDA4NCBTYWx0ZWRfX0bt00D6P0RFS
+ xxiaujzn4netTjXQ4FcYUkzESMLifjQA8E860uY422FobwvC8exPcad7NHtT0MiSqYlAEc3OHhu
+ N/29cPY5F1tyqmBfUjqmnQotaHDi9obki973E4QjsTHxfp436JG8hJOFz7OUmegIUfuvWL1nSKt
+ pi4DR/qYJ9YT/bPS8vACGJTRRCYegC60jFq8+xG5Jb/yOZ2IHSYe7JB4ckBtE1bCTkcjYv+aZhJ
+ NP3rxcrCD/gMPti+G3CZdaJ7RdWATB6EGJyEhzxKVgf1odDv81A9KRLoSEgYD3Pesd5snSeaG69
+ lFK/RcEpHUe4lhUyAFUWnN7+SlVnqNT4Sb+Fdbfs3KHaB/8mCwK4fh2BPj3AReRbYymyQVkyDxj
+ je6w9MC8cSFL0+Gh7SPTUuOz8sUTD+CCkrpF7/LRWO5g8XUOG6T6HOz7nH0GqgqnDTW/y/UeDPE
+ gKwO5M+weXINwkt6oAw==
+X-Proofpoint-ORIG-GUID: DAydvzfr22AlVwJAW5JXyWrcjlba-8Dk
+X-Proofpoint-GUID: DAydvzfr22AlVwJAW5JXyWrcjlba-8Dk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-21_02,2026-02-20_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 suspectscore=0 phishscore=0 impostorscore=0 priorityscore=1501
+ bulkscore=0 lowpriorityscore=0 adultscore=0 spamscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2602210084
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	MID_RHS_NOT_FQDN(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-93541-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[linaro.org,kernel.org,gmail.com,vger.kernel.org,oss.qualcomm.com];
+	TAGGED_FROM(0.00)[bounces-93542-lists,linux-arm-msm=lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_CC(0.00)[quicinc.com,gondor.apana.org.au,gmail.com,davemloft.net,vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.999];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	TO_DN_SOME(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 0940916C14D
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 235CB16C6CD
 X-Rspamd-Action: no action
 
-On Fri, Feb 20, 2026 at 10:52:04AM +0100, Konrad Dybcio wrote:
-> On 2/20/26 8:28 AM, quic_utiwari@quicinc.com wrote:
-> > From: Udit Tiwari <quic_utiwari@quicinc.com>
-> > 
-> > The Qualcomm Crypto Engine (QCE) driver currently lacks support for
-> > runtime power management (PM) and interconnect bandwidth control.
-> > As a result, the hardware remains fully powered and clocks stay
-> > enabled even when the device is idle. Additionally, static
-> > interconnect bandwidth votes are held indefinitely, preventing the
-> > system from reclaiming unused bandwidth.
-> > 
-> > Address this by enabling runtime PM and dynamic interconnect
-> > bandwidth scaling to allow the system to suspend the device when idle
-> > and scale interconnect usage based on actual demand. Improve overall
-> > system efficiency by reducing power usage and optimizing interconnect
-> > resource allocation.
-> 
-> [...]
-> 
-> 
-> > +static int __maybe_unused qce_runtime_suspend(struct device *dev)
-> 
-> I think you should be able to drop __maybe_unused if you drop the
-> SET_ prefix in pm_ops
+On Thu, Feb 19, 2026 at 04:27:37PM +0100, Loic Poulain wrote:
+> Add support for VFE PIX write engine, allowing to capture frames
+> via the PIX video device (e.g. msm_vfe0_pix).
 
-I believe that's correct.
+And nothing specifies, what is PIX.
 
-> and add a pm_ptr() around &qce_crypto_pm_ops in
-> the assignment at the end
+> 
+> Tested on Agatti/Arduino-Uno-Q with:
+> media-ctl -d /dev/media0 -l '"msm_csiphy0":1->"msm_csid0":0[1],"msm_csid0":4->"msm_vfe0_pix":0[1]'
+> media-ctl -d /dev/media0 -V '"imx219 2-0010":0[fmt:SRGGB10_1X10/640x480 field:none]'
+> media-ctl -d /dev/media0 -V '"msm_csiphy0":0[fmt:SRGGB10_1X10/640x480 field:none]'
+> media-ctl -d /dev/media0 -V '"msm_csid0":0[fmt:SRGGB10_1X10/640x480 field:none]'
+> media-ctl -d /dev/media0 -V '"msm_csid0":4[fmt:SRGGB10_1X10/640x480 field:none]'
+> media-ctl -d /dev/media0 -V '"msm_vfe0_rdi0":0[fmt:SRGGB10_1X10/640x480 field:none]'
+
+If we are using PIX, why do we need to setup RDI0 too? I thought that
+they are two alternatives.
+
+> media-ctl -d /dev/media0 -V '"msm_vfe0_pix":0[fmt:SRGGB10_1X10/640x480 field:none]'
+> yavta -B capture-mplane --capture=30 -n 3 -f SRGGB10P -s 640x480 /dev/video3
+> 
+> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+> ---
+>  .../media/platform/qcom/camss/camss-vfe-340.c | 64 +++++++++++++++----
+>  1 file changed, 53 insertions(+), 11 deletions(-)
 > 
 
-Doesn't that turn into NULL if CONFIG_PM=n and then you get a warning
-about unused struct?
-
-> > +{
-> > +	struct qce_device *qce = dev_get_drvdata(dev);
-> > +
-> > +	icc_disable(qce->mem_path);
-> 
-> icc_disable() can also fail, since under the hood it's an icc_set(path, 0, 0),
-> please check its retval
-> 
-
-Given that the outcome of returning an error from the runtime_suspend
-callback is to leave the domain in ACTIVE state I presume that also
-means we need to turn icc_enable() again if pm_clk_suspend() where to
-fail?
-
-
-Two things I noted while looking at icc_disable():
-
-1) icc_bulk_disable() return type is void. Which perhaps relates to the
-fact that qcom_icc_set() can't fail?
-
-
-2) Error handling in icc_disable() is broken.
-
-icc_disable() sets enabled = false on the path, then calls icc_set_bw()
-with the current bandwith again. This stores the old votes, then calls
-aggregate_requests() (which ignored enabled == false votes) and then
-attempts to apply_contraints().
-
-If the apply_contraints() fails, it reinstate the old vote (which in
-this case is the same as the new vote) and then does the
-aggregate_requests() and apply_contraints() dance again.
-
-I'm assuming the idea here is to give the provider->set() method a
-chance to reject the new votes.
-
-
-But during the re-application of the old votes (which are same as the
-new ones) enabled is still false across the path, so we're not
-reinstating anything and while we're exiting icc_disabled() with an
-error, the path is now disabled - in software, because we have no idea
-what the hardware state is.
-
-Regards,
-Bjorn
-
-> > +
-> > +	return pm_clk_suspend(dev);
-> > +}
-> > +
-> > +static int __maybe_unused qce_runtime_resume(struct device *dev)
-> > +{
-> > +	struct qce_device *qce = dev_get_drvdata(dev);
-> > +	int ret = 0;
-> 
-> No need to initialize it here, as you overwrite this zero immediately
-> a line below anyway
-> 
-> > +
-> > +	ret = pm_clk_resume(dev);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	ret = icc_set_bw(qce->mem_path, QCE_DEFAULT_MEM_BANDWIDTH, QCE_DEFAULT_MEM_BANDWIDTH);
-> > +	if (ret)
-> > +		goto err_icc;
-> 
-> Normally I think bus votes are cast before clock re-enables to make sure
-> the hw doesn't try to access a disabled bus path
-> 
-> Konrad
-> 
-> > +
-> > +	return 0;
-> > +
-> > +err_icc:
-> > +	pm_clk_suspend(dev);
-> > +	return ret;
-> > +}
-> > +
-> > +static const struct dev_pm_ops qce_crypto_pm_ops = {
-> > +	SET_RUNTIME_PM_OPS(qce_runtime_suspend, qce_runtime_resume, NULL)
-> > +	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend, pm_runtime_force_resume)
-> > +};
-> > +
-> >  static const struct of_device_id qce_crypto_of_match[] = {
-> >  	{ .compatible = "qcom,crypto-v5.1", },
-> >  	{ .compatible = "qcom,crypto-v5.4", },
-> > @@ -261,6 +323,7 @@ static struct platform_driver qce_crypto_driver = {
-> >  	.driver = {
-> >  		.name = KBUILD_MODNAME,
-> >  		.of_match_table = qce_crypto_of_match,
-> > +		.pm = &qce_crypto_pm_ops,
-> >  	},
-> >  };
-> >  module_platform_driver(qce_crypto_driver);
-> 
+-- 
+With best wishes
+Dmitry
 
