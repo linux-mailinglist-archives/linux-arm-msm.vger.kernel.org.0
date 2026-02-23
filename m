@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-93682-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93683-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UDs5HV5SnGktDwQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93682-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 14:13:02 +0100
+	id gLdrEcxSnGktDwQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93683-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 14:14:52 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB13E17694F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 14:13:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B16C21769A3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 14:14:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id E0C1E301494B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 13:12:11 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 583F130297A6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 13:13:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 76669365A05;
-	Mon, 23 Feb 2026 13:12:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EB25365A1E;
+	Mon, 23 Feb 2026 13:13:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UCVGf8dm"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="axa38Lpm"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 513913659EE;
-	Mon, 23 Feb 2026 13:12:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A1E4364EB1;
+	Mon, 23 Feb 2026 13:13:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771852331; cv=none; b=MERq4vhGpuHchw9BkGnmsGlDfwc+SJHATEIlGPenf6e1Dk1AOohlj7HSathbtiZv+POoVSFG9gGE3tl5ftXrnogML9TVa9E3VxrMRpx9Vse56qobKt0jL02nGg/LfAmGHijz0N7fNyPOOCIedb3YCg1S6O5KVUjz4y3xHJ7/APw=
+	t=1771852395; cv=none; b=m+SvKeG2ZKlV+OVLOo0vTz+X1FD8ELfoazkIGdv5QvTVluPHWZBNAs10p4zmHYV9iKHFT2Ne0VQmXyB6M6gM2ceLtc2VCem+exMKzoy7BNlJkR595ndsYpvhdCeTglluNkmZEG2ZqkvomfylR6gZeU6MdPtToNsQ8tzJrWfOUgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771852331; c=relaxed/simple;
-	bh=HLWJW2yxTt3ZRITLfiRWQgY+zh0ufY9QJ7vU9yfnJno=;
+	s=arc-20240116; t=1771852395; c=relaxed/simple;
+	bh=PGx5m7LGTIbwi3eyqU63kJxfwvIULqIepFQQ5bn0Hr8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=E+616XJiaKfE2X4uW5yhDk4Xtgys2k5pzfJBhm3YXJ26ZNRDySU4PI5T24YUKnbeswuvc2FpEpUY6e1GLNyvo5sqwH2LPpnruD5Esuk/WHOntcp3m8azijWnDtj3OOqyt07a0WgbhXGCp7RAI07ex6kOS394811FEl7F2tKaYOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UCVGf8dm; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 043D3C116C6;
-	Mon, 23 Feb 2026 13:12:07 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=RTqFfY4xM0Yx+4oHl22QriXMIgaWQZM3Yb1KnOjbN8hzjzj3AgvT3Q7ASdrSpwc9ghwEZ+WEznpntYj0Pzous4/LCVy9xwrsz7hHcPUgA4+lhhjojFv5qdpsNskqfvwdupevEyBgQK/eSJJHm7TP9noyZLzBmpG5DavSvUCC+rk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=axa38Lpm; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F54CC116C6;
+	Mon, 23 Feb 2026 13:13:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771852330;
-	bh=HLWJW2yxTt3ZRITLfiRWQgY+zh0ufY9QJ7vU9yfnJno=;
+	s=k20201202; t=1771852395;
+	bh=PGx5m7LGTIbwi3eyqU63kJxfwvIULqIepFQQ5bn0Hr8=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=UCVGf8dm5Nq8mZh45ctw9P5cSmdiBYG3rcuuPwwk7RQJb1wViKvL2Uv1FpX9BS0Dn
-	 ZKhaZ9C4D0oGrv9ONUDfZK0SUWmmVr2quRCY5MSzChcU3hALUKW5mSodVd+m61g97A
-	 uUCpH/17zAR9sCuFZ93l8Q0MXBaJ8BnjAv41Pk1hzlHqCfqE8lkRsm9uTUgSrJ/8xr
-	 Rgx1f30wX5pecJte+s+qDOQ8PcJnzPZ4nVTQEH98FModIUWpHvZ+RrgyVN421LlNXu
-	 oiJ4QkIiuSZoVOfGX6csjv5Yt53ybxAP7YHAhGQZaDZU2Uw1wpitD9iT8D9A5CSlBG
-	 /99Ir3hj4YcHg==
-Message-ID: <a7777e5d-f9be-43c5-9f3f-4d84e16f6e89@kernel.org>
-Date: Mon, 23 Feb 2026 14:12:05 +0100
+	b=axa38Lpmp0N271LOvYZiPQHwKOl0ubgEzuS6Spx7c0wJ+rKbDkIxQBRBrAVVI3aTu
+	 wO6kOtdTn9QqHUWXaVr1hfQ9pvOb1vek3DxjnPkeWTIx7fWqw0gwLOCS9oYCk2wliV
+	 ZRgPzV9bj949V+n2vQMMBBpD5X0Xj7ly9Uy+Aw12zlB2M1rEjUhkpoGSXff0ZbFxZp
+	 lNRaxyj5tY/ck/lolMVaGGiWC7o58CP5Rb1XjbGaHDUfrYhViTPwy7n4PdkL0g9+4Y
+	 b12e3HSkq2ZAmgwZNTXFCmsm/ba4g8NU0JKjVpDMLQK+4cnHGO/eEiseDQTBpIPpHs
+	 PqDQmLpqsLuPw==
+Message-ID: <628df86f-e866-4986-a1a6-8c1b38f3c85f@kernel.org>
+Date: Mon, 23 Feb 2026 14:13:10 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,17 +53,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/1] arm64: dts: qcom: monaco-evk: Add Interface Plus
- Mezzanine
+Subject: Re: [PATCH v3 1/1] arm64: dts: qcom: lemans-evk: Add Mezzanine
 To: Umang Chheda <umang.chheda@oss.qualcomm.com>, andersson@kernel.org,
  konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
  conor+dt@kernel.org, richardcochran@gmail.com
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, mohd.anwar@oss.qualcomm.com,
- krishna.chundru@oss.qualcomm.com, monish.chunara@oss.qualcomm.com,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-References: <20260222173545.3627478-1-umang.chheda@oss.qualcomm.com>
- <20260222173545.3627478-2-umang.chheda@oss.qualcomm.com>
+ krishna.chundru@oss.qualcomm.com, monish.chunara@oss.qualcomm.com
+References: <20260203193848.123307-1-umang.chheda@oss.qualcomm.com>
+ <20260203193848.123307-2-umang.chheda@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,7 +107,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260222173545.3627478-2-umang.chheda@oss.qualcomm.com>
+In-Reply-To: <20260203193848.123307-2-umang.chheda@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
@@ -125,8 +123,8 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	RCVD_COUNT_THREE(0.00)[4];
 	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,gmail.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-93682-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[14];
+	TAGGED_FROM(0.00)[bounces-93683-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[13];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
@@ -139,63 +137,66 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: CB13E17694F
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: B16C21769A3
 X-Rspamd-Action: no action
 
-On 22/02/2026 18:35, Umang Chheda wrote:
-> The Interface Plus [IFP] Mezzanine is an hardware expansion add-on
-> board designed to be stacked on top of Monaco EVK.
+On 03/02/2026 20:38, Umang Chheda wrote:
+> The Mezzanine is an hardware expansion add-on board designed
+> to be stacked on top of Lemans EVK.
 > 
 > It has following peripherals :
 > 
 > - 4x Type A USB ports in host mode.
 > - TC9563 PCIe switch, which has following three downstream ports (DSP) :
 >    - 1st DSP connects M.2 E-key connector for connecting WLAN endpoints.
->    - 2nd DSP connects M.2 B-key connector for connecting cellular
->      modems.
+>    - 2nd DSP connects M.2 B-key connector for connecting cellular modems.
 >    - 3rd DSP with support for Dual Ethernet ports.
+> - eMMC.
+> - Additional 2.5GbE Ethernet PHY connected to native EMAC with support for
+>   MAC Address configuration via NVMEM.
 > - EEPROM.
 > - LVDS Display.
 > - 2*mini DP.
 > 
 > Add support for following peripherals :
 > - TC9563 PCIe Switch.
+> - Additional 2.5GbE Ethernet Port.
 > - EEPROM.
 > 
 > Written with inputs from :
+>     Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com> - Ethernet.
 >     Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com> - PCIe
 >     Monish Chunara <monish.chunara@oss.qualcomm.com> - EEPROM.
 > 
 > Signed-off-by: Umang Chheda <umang.chheda@oss.qualcomm.com>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 > ---
 >  arch/arm64/boot/dts/qcom/Makefile             |   4 +
->  .../dts/qcom/monaco-evk-ifp-mezzanine.dtso    | 184 ++++++++++++++++++
->  2 files changed, 188 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/monaco-evk-ifp-mezzanine.dtso
+>  .../boot/dts/qcom/lemans-evk-mezzanine.dtso   | 301 ++++++++++++++++++
+>  2 files changed, 305 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/lemans-evk-mezzanine.dtso
 > 
 > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index f80b5d9cf1e8..9d298e7e8a90 100644
+> index f80b5d9cf1e8..79449004adfd 100644
 > --- a/arch/arm64/boot/dts/qcom/Makefile
 > +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -45,6 +45,10 @@ lemans-evk-el2-dtbs := lemans-evk.dtb lemans-el2.dtbo
+> @@ -43,6 +43,10 @@ dtb-$(CONFIG_ARCH_QCOM)	+= lemans-evk-camera.dtb
+>  lemans-evk-el2-dtbs := lemans-evk.dtb lemans-el2.dtbo
+> 
 >  dtb-$(CONFIG_ARCH_QCOM)	+= lemans-evk-el2.dtb
+> +
+> +lemans-evk-mezzanine-dtbs	:= lemans-evk.dtb lemans-evk-mezzanine.dtbo
+> +
+> +dtb-$(CONFIG_ARCH_QCOM)	+= lemans-evk-mezzanine.dtb
 >  dtb-$(CONFIG_ARCH_QCOM)	+= milos-fairphone-fp6.dtb
 >  dtb-$(CONFIG_ARCH_QCOM)	+= monaco-evk.dtb
-> +
-> +monaco-evk-ifp-mezzanine-dtbs	:= monaco-evk.dtb monaco-evk-ifp-mezzanine.dtbo
-> +
-> +dtb-$(CONFIG_ARCH_QCOM)	+= monaco-evk-ifp-mezzanine.dtb
 >  dtb-$(CONFIG_ARCH_QCOM)	+= msm8216-samsung-fortuna3g.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-acer-a1-724.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-alcatel-idol347.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/monaco-evk-ifp-mezzanine.dtso b/arch/arm64/boot/dts/qcom/monaco-evk-ifp-mezzanine.dtso
+> diff --git a/arch/arm64/boot/dts/qcom/lemans-evk-mezzanine.dtso b/arch/arm64/boot/dts/qcom/lemans-evk-mezzanine.dtso
 > new file mode 100644
-> index 000000000000..f0572647200c
+> index 000000000000..4fab96ba873c
 > --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/monaco-evk-ifp-mezzanine.dtso
-> @@ -0,0 +1,184 @@
+> +++ b/arch/arm64/boot/dts/qcom/lemans-evk-mezzanine.dtso
+> @@ -0,0 +1,301 @@
 > +// SPDX-License-Identifier: BSD-3-Clause
 > +/*
 > + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
@@ -207,17 +208,9 @@ On 22/02/2026 18:35, Umang Chheda wrote:
 > +#include <dt-bindings/gpio/gpio.h>
 > +
 > +&{/} {
-> +	model = "Qualcomm Technologies, Inc. Monaco-EVK IFP Mezzanine";
+> +	model = "Qualcomm Technologies, Inc. Lemans-evk Mezzanine";
 > +
 > +	vreg_0p9: regulator-vreg-0p9 {
-
-Please use name for all fixed regulators which matches current format
-recommendation: 'regulator-[0-9]v[0-9]'
-
-https://web.git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/regulator/fixed-regulator.yaml
-
-Duplicating regulator name (regulator-reg(ulator)) is pointless.
-
 > +		compatible = "regulator-fixed";
 > +		regulator-name = "VREG_0P9";
 > +
@@ -254,9 +247,6 @@ Duplicating regulator name (regulator-reg(ulator)) is pointless.
 > +	};
 > +
 > +	vreg_4p2: regulator-vreg-4p2 {
-
-Unused node (other dummies don't really count).
-
 > +		compatible = "regulator-fixed";
 > +		regulator-name = "VREG_4P2";
 > +
@@ -270,19 +260,8 @@ Unused node (other dummies don't really count).
 > +
 > +	vreg_sys_pwr: regulator-vreg-sys-pwr {
 
-What is the point of this regulator? It is not used by anything (another
-dummy is not considered an user).
-
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "VREG_SYS_PWR";
-> +
-> +		regulator-min-microvolt = <24000000>;
-> +		regulator-max-microvolt = <24000000>;
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +	};
-> +};
-> +
+And here the same pattern as in Monaco EVK. This is pointless, you just
+inflate the kernel and DTS with dummies.
 
 
 Best regards,
