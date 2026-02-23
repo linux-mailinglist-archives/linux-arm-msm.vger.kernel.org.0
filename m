@@ -1,141 +1,203 @@
-Return-Path: <linux-arm-msm+bounces-93733-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93734-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GHjGISB7nGmmIQQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93733-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 17:06:56 +0100
+	id UI6gDTB8nGm6IQQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93734-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 17:11:28 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B7251795BA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 17:06:56 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 902BC179703
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 17:11:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 910F7307E8FE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 16:02:41 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B2DC73067752
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 16:07:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A82BD30AAA6;
-	Mon, 23 Feb 2026 16:02:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE7662EC09B;
+	Mon, 23 Feb 2026 16:07:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KQn5cUD8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hL029yla"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 842EC303A26;
-	Mon, 23 Feb 2026 16:02:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE8D262808;
+	Mon, 23 Feb 2026 16:07:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771862525; cv=none; b=i6FpqJ9/vEDk1bHAmBZcJBjR9HPv21KTLqGlcGWe6Hit5Xutnq8sZ8tfWdVb8V8le/Eutt2jVPCpRgbBzsuTceZlcT613e1Nq+PmUm7aAhf2kNbSB30PVxe5gnzT5bDDx1ZzKHBKPnON2uoG59BEug+twd110DtmsyHfmRuriCU=
+	t=1771862842; cv=none; b=bw/YLnjNrNPDBvIffSMEMC7sODfkWe5pUCZW0I4qLRz06Jo/IuJfaHQRH1dczR2Klt0+F3yjdHxC6sYNqXn8/IkpOZE+JP8NWNF7tPjn9YF4pJDEFDcnty1kMZDpWejymjkB/rZirrZlGrnLD7F7XRzk9Ymm0X3DVNew/NSsCVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771862525; c=relaxed/simple;
-	bh=+Pr0GifpXOYCuWRHnzUO3l8XX5QxVwywd1ltopvWPlQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bXJDUntoEVEeSOKMuHeFfO9B34NM96Q1sGHV4/hVxeCEaGyZaH+Yg6EEeXwCgVVUzdOVS0RQZwCOJ8KU4X7NDj8D9CIhW5dPsQXe/J+r6WW0/QS+fP1MopysTXIr9zufLRJo2+5WrHn1+qJgC2j+RoIk4/g9ue8oqvNfiVJGdm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KQn5cUD8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 318DAC116C6;
-	Mon, 23 Feb 2026 16:02:04 +0000 (UTC)
+	s=arc-20240116; t=1771862842; c=relaxed/simple;
+	bh=GhLl9ZdRY3Y1jLozygGmR/YnOTlmDerWjkfwo8L9yVU=;
+	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
+	 Mime-Version:Content-Type; b=ZjBxCzF2rjgnb0qWUc+e+soo6wg4JN18YnaTQCQNXzDHpsQXK5hQHC2ITRG8rRXJvELwbRnhDch5wy64Az9uqIML2pbYT2Yip+hEW2smAfI8yn5OgUZhgqwqj2NYPK4Kqbr8x0U179e67koj6tl8yFuaPvrNxKiwILuyQAck2Pw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hL029yla; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A2B8C116C6;
+	Mon, 23 Feb 2026 16:07:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771862525;
-	bh=+Pr0GifpXOYCuWRHnzUO3l8XX5QxVwywd1ltopvWPlQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=KQn5cUD8HnDOBis6LCd+D9OfOuHR3pO71XU1DfV1IG3UxccfGu8BvEi8vuLlBKUnF
-	 doU9EN3Bumw7R8zCF8yHXw09wSvZNkIhwxj4A9NMu6OBCbJQK7biFw5JV6gkoDTNCa
-	 UiUxmclcvpW45lgvj4fxtAsOx3cgeLKWDX0v9cQUx9ZcEuEWz009B4pFs+GmfQL4mJ
-	 wOwu2mYr+rZ5c2BWdtzHgXXw8NBn4mQF8CP6UtyEIX08YI2XOnTsMppfj/3DoD6TXG
-	 xwltV1eoaIvopi2RYpUYp3AhHQhz1//loT+IW862G90VZd37lVWQLN2ozDG2VAKfok
-	 hmwAu2CDt1lJA==
-Date: Mon, 23 Feb 2026 10:02:02 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Val Packett <val@packett.cool>
-Cc: "Maulik Shah (mkshah)" <maulik.shah@oss.qualcomm.com>, 
-	Daniel J Blueman <daniel@quora.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, stable@kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: hamoa/x1: Fix TODO in system power
- domain node
-Message-ID: <xvftv3tcvm5osajvtvwlqqipyap4n2zlupra3xlcfuvjpzgs7b@ugg5sw3bnb2u>
-References: <20260221105245.19328-1-daniel@quora.org>
- <9defac59-ae8a-4658-ab38-dcb0559d9708@oss.qualcomm.com>
- <0397c453-e1ec-44a2-bf8f-a64347882226@packett.cool>
+	s=k20201202; t=1771862842;
+	bh=GhLl9ZdRY3Y1jLozygGmR/YnOTlmDerWjkfwo8L9yVU=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=hL029ylaeQv8chZx1V/BoKCDPp1HXx7Xxaj6d561OVl3S+DlFYtq0/s7xJQdbNRU1
+	 7I7d8lAUvVoQYBA1drMukTn5efiEF6LwPqKiFxIXQxJbDOBjFGvM5bGUjTCIoJni3B
+	 DgV6+8Tvv1z1ESDgKHQJKZhKEfJBpSzYsf7srHUI/IrmexUu8QdnDmjwTB1HQhl2Vp
+	 M8Ovk2xSmnhPaAOAOpdmxg/zJCIa1hJ1WV5hXV7WS6aB1CwPzTFV5/vKoOG6dunZzs
+	 fLDrZ+55CDZSb7vTmfL3/kP0RxBKx1cMB25zzrgoNmpH1AvFR+E74rbtIVRda4eMHG
+	 XPXLFwujTibTA==
+Date: Tue, 24 Feb 2026 01:07:16 +0900
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+To: Mark Rutland <mark.rutland@arm.com>
+Cc: Khaja Hussain Shaik Khaji <khaja.khaji@oss.qualcomm.com>,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ catalin.marinas@arm.com, will@kernel.org, mhiramat@kernel.org,
+ yang@os.amperecomputing.com, dev.jain@arm.com, ada.coupriediaz@arm.com,
+ linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] arm64: kprobes: disable preemption across XOL
+ single-step
+Message-Id: <20260224010716.91b1f54b446acab84bc6031c@kernel.org>
+In-Reply-To: <aZSdkGjy2BXUL0bT@J2N7QTR9R3.cambridge.arm.com>
+References: <20251106104955.2089268-1-khaja.khaji@oss.qualcomm.com>
+	<20260217133855.3142192-1-khaja.khaji@oss.qualcomm.com>
+	<20260217133855.3142192-2-khaja.khaji@oss.qualcomm.com>
+	<aZSdkGjy2BXUL0bT@J2N7QTR9R3.cambridge.arm.com>
+X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0397c453-e1ec-44a2-bf8f-a64347882226@packett.cool>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	MID_RHS_NOT_FQDN(0.50)[];
+	MV_CASE(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-93733-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	MISSING_XM_UA(0.00)[];
-	NEURAL_HAM(-0.00)[-0.999];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-93734-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	FROM_HAS_DN(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mhiramat@kernel.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	RCPT_COUNT_SEVEN(0.00)[11];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MIME_TRACE(0.00)[0:+];
 	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: 2B7251795BA
+X-Rspamd-Queue-Id: 902BC179703
 X-Rspamd-Action: no action
 
-On Mon, Feb 23, 2026 at 02:51:44AM -0300, Val Packett wrote:
-> On 2/23/26 1:11 AM, Maulik Shah (mkshah) wrote:
-> > On 2/21/2026 4:21 PM, Daniel J Blueman wrote:
-[..]
-> That issue with runtime-suspending all four USB controllers shutting the
-> system down, does that mean there's some rail where USB ends up being the
-> last load-bearing thing holding it up and we'd like to let it go down
-> properly?
+On Tue, 17 Feb 2026 16:55:44 +0000
+Mark Rutland <mark.rutland@arm.com> wrote:
+
+> On Tue, Feb 17, 2026 at 07:08:54PM +0530, Khaja Hussain Shaik Khaji wrote:
+> > On arm64, non-emulatable kprobes instructions execute out-of-line (XOL)
+> > after returning from the initial debug exception. The XOL instruction
+> > runs in normal kernel context, while kprobe state is maintained per-CPU.
+> 
+> The XOL instruction runs in a context with all DAIF bits set (see
+> kprobes_save_local_irqflag() and kprobes_restore_local_irqflag()), so
+> not quite a regular kernel context.
+> 
+> > If the task is preempted or migrates during the XOL window, the subsequent
+> > SS-BRK exception may be handled on a different CPU, corrupting per-CPU
+> > kprobe state and preventing correct recovery.
+> 
+> I think we need a better explanation of this.
+> 
+> Since DAIF is masked, we won't take an IRQ to preempt during the actual
+> XOL execution.
+> 
+> AFAICT we *could* explicitly preempt/schedule in C code around the XOL
+> execution. However, AFAICT that'd equally apply to other architectures,
+> and on x86 they *removed* the preempt count manipulation in commit:
+> 
+>   2bbda764d720aaca ("kprobes/x86: Do not disable preempt on int3 path")
+> 
+> ... so it looks like there's a wider potential problem here.
+> 
+> Can you please share an example failure that you have seen? .. and how
+> you triggered it (e.g. is this a plain kprobe, something with bpf, etc).
+
+Yeah, this is important to know. Did it really happen on the single
+stepping? or in user's handler function?
+
+> 
+> I reckon you could hack a warning something into schedule() (or
+> cond_resched(), etc) that detects when there's an active XOL slot, so
+> that we can get the full backtrace.
+
+Sounds good way to show it.
+
+Thank you,
+
+> 
+> > Disable preemption across the XOL instruction and re-enable it in the
+> > SS-BRK handler to prevent migration until control returns to the kprobe
+> > handler.
+> 
+> This might work, but without some more detail I'm not certain this is
+> sufficient, and I believe other architectures are likely affected by the
+> same problem.
+> 
+> Thanks,
+> Mark.
+> 
+> > 
+> > Signed-off-by: Khaja Hussain Shaik Khaji <khaja.khaji@oss.qualcomm.com>
+> > ---
+> >  arch/arm64/kernel/probes/kprobes.c | 13 +++++++++++++
+> >  1 file changed, 13 insertions(+)
+> > 
+> > diff --git a/arch/arm64/kernel/probes/kprobes.c b/arch/arm64/kernel/probes/kprobes.c
+> > index 43a0361a8bf0..d8a70c456543 100644
+> > --- a/arch/arm64/kernel/probes/kprobes.c
+> > +++ b/arch/arm64/kernel/probes/kprobes.c
+> > @@ -227,6 +227,14 @@ static void __kprobes setup_singlestep(struct kprobe *p,
+> >  
+> >  		kprobes_save_local_irqflag(kcb, regs);
+> >  		instruction_pointer_set(regs, slot);
+> > +
+> > +		/*
+> > +		 * Disable preemption across the out-of-line (XOL) instruction.
+> > +		 * The XOL instruction executes in normal kernel context and
+> > +		 * kprobe state is per-CPU.
+> > +		 */
+> > +		preempt_disable();
+> > +
+> >  	} else {
+> >  		/* insn simulation */
+> >  		arch_simulate_insn(p, regs);
+> > @@ -363,6 +371,11 @@ kprobe_ss_brk_handler(struct pt_regs *regs, unsigned long esr)
+> >  		kprobes_restore_local_irqflag(kcb, regs);
+> >  		post_kprobe_handler(cur, kcb, regs);
+> >  
+> > +		/*
+> > +		 * Re-enable preemption after completing the XOL instruction.
+> > +		 */
+> > +		preempt_enable_no_resched();
+> > +
+> >  		return DBG_HOOK_HANDLED;
+> >  	}
+> >  
+> > -- 
+> > 2.34.1
+> > 
 > 
 
-The three USB nodes have power-domains = <&gcc GCC_USB30_*_GDSC> and
-required-opps = <&opp_nom>. &gcc has power-domains = < &rpmhpd CX>.
-This means that as long as the USB controllers are active, CX is kept at
-at least nominal corner.
 
-The reason why the USB node has &opp_nom is because it's required by the
-200MHz MASTER_CLK, which iirc relates to the possibility that you might
-have something SuperSpeed connected. (But as we flatten dwc3, we should
-be able to scale this based on what is actually connected)
-
-I don't know why there's multiple pm_runtime_forbid() in the USB stack,
-this needs to be revisited.
-
-
-Then to your actual question, yes, if you suspend the USB controllers
-and the result is that the system dies, then we have other resources
-piggybacking on the USB controllers' votes for CX.
-
-I did some experiments on SC8280XP earlier and was able to drop the
-pm_runtime_forbid() - and see CX drop below NOM. Iirc more work was
-needed to get reasonable behavior in terms of plug-detect, so the
-patches got stuck in their topic branch...
-
-Regards,
-Bjorn
-
-> 
-> Thanks
-> ~val
-> 
+-- 
+Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
