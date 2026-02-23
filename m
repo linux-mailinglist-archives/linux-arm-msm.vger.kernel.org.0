@@ -1,185 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-93723-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93724-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id eEVeG4J0nGmcGAQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93723-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 16:38:42 +0100
+	id SIF5HE51nGmyHwQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93724-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 16:42:06 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 102F2178D80
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 16:38:42 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id CBC86178E8C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 16:42:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 401983025E09
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 15:38:41 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 0D96D305542D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 15:38:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1E642EDD62;
-	Mon, 23 Feb 2026 15:38:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 071E52ECE91;
+	Mon, 23 Feb 2026 15:38:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c5YdjTLc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="svfrjplP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA09285C88;
-	Mon, 23 Feb 2026 15:38:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D88B0285C88;
+	Mon, 23 Feb 2026 15:38:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771861119; cv=none; b=uSMSB87Zk17UMJ0qFRKR7Tdmhu6ORxTRG4plcRD1eM1G61Kwn/nJRNZPMdsTxFQQytNKAVmcLZtvupl5NGYIsWOb+2SQ6wiY488Uzr2RC/ghywyQn2/XpPlpx2Cx2afME02oXw+iwP5D5c+bQZU79Vc3Z5eDirS6smqaaCbhNXg=
+	t=1771861137; cv=none; b=GirTKBuqUGtziPmDGvxclEuyLy7b9kGD95ur23KB0yLmw2Iyud4akACOjrADTDbHFLjisR6fGpik7PPNjXIqjX01lknPDqUqa8KLS2RJYUvLbMVYgwGw/AhOQivlQMqBRyn4oqtLfYUHtKofZOjsPjPH7Oqs2qXGs6kMxnsulcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771861119; c=relaxed/simple;
-	bh=SR5N+s5trZNvGm9faWX/wk0yJdYXSU3FOeiGfQGRrxw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=C8/yWQvHY0g88fC3j2x50hPmnd8MianAZk38kELI9qCJti7Tlx3UrHuAeed9xPPg8hy9kN5t1/Jr/uypYaH+0X5cqh5uelc9UM+woe8KXvnHa9fCCO//zCJzv7g8ae4M9ErRefja8lPGAAU/bUVfQk7kp/vxiFciVoocRXmEuHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c5YdjTLc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E685C116C6;
-	Mon, 23 Feb 2026 15:38:38 +0000 (UTC)
+	s=arc-20240116; t=1771861137; c=relaxed/simple;
+	bh=a91x6ZjyFVgYhiuh7Il+46iAHGDPqn7LDIlyqFnTu5k=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=BmQ7bJ/JuxMcL+OAsl0D25sV3eHHDhKe1vAgvjavYez8OEfGuwI6Rm+aJxg5p3U115lqCo6LUhkbvHsTrB7zU0JwZ/3+BHnYWWW3FDeR6hT1SMaNJwvRpcFwwkQksNuSObQbxZVgxSjpHkreMHbYFa39ZFy0+WOvqMlHUleS/MU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=svfrjplP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5716FC116D0;
+	Mon, 23 Feb 2026 15:38:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771861119;
-	bh=SR5N+s5trZNvGm9faWX/wk0yJdYXSU3FOeiGfQGRrxw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=c5YdjTLcgT0m66EkJdWp7rZfvS5BmL4+6K2i8etW+yf1fq9VKgoq7erR35AgfL8v9
-	 r/DEDADDho4HIwYv0QUqirOI9kpNEr8v1ZNsce4lst/jsenHARHpu+I4NxSSN9+AV0
-	 cEFu/i3ZtitZIyIcxkvV3e6HmO7lv78/z6FuvGHT5ZM3QwRgr2Ma2pJ0472w2UMH0e
-	 rXlABK07Ill9VW0rYg8D/h4QyNU+VuoTnNgcPidMf1JanfBq4f1qLnnXuYWZq6GHcI
-	 RAX0OHNRP2O8WLsxqqCrdI72WnRHyYvm1Xnl5nf8TI5xAUesjCo1+NUcxNxegRlH+l
-	 LF9w5/Ji0xvGg==
-Date: Mon, 23 Feb 2026 09:38:36 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: "Maulik Shah (mkshah)" <maulik.shah@oss.qualcomm.com>
-Cc: Daniel J Blueman <daniel@quora.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	stable@kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: hamoa/x1: Fix TODO in system power
- domain node
-Message-ID: <emh66tl7id5psuqkriswjizsz3gee54qj2id6dymildncrx66s@qzelmfgog35v>
-References: <20260221105245.19328-1-daniel@quora.org>
- <9defac59-ae8a-4658-ab38-dcb0559d9708@oss.qualcomm.com>
+	s=k20201202; t=1771861137;
+	bh=a91x6ZjyFVgYhiuh7Il+46iAHGDPqn7LDIlyqFnTu5k=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=svfrjplPzw4A3l5INpYv4WC3llJq3EA60Vw5jgFk5X3FlJ0MpNOm2yUTf1jhe3xqH
+	 ZZ27tio3TdQS80zkmxsvMFTiN2UC6yawBWdYrXvfM9rHPZQV1Sqac+gwlb8fQzs3J7
+	 uh/ldIyq760LZH/kC+7nv8OdaXB8MNSiC/BWObgasnDMfRwdFQ3S86MjPWRcaqgnlu
+	 gQZI6JChPhhkRhkW6Y/x7DZnZGmklsIAfXfqevVrw+vd/MwuYHRjwXDauaz/MXG3h2
+	 kzO0EKp57slNQlwM3qXctibSJbP8Q5JK4nphZ2dcM+NJPWd4SIiBJTFdh3Jmp+1XZ7
+	 rr/RmiA7kqoYQ==
+Date: Mon, 23 Feb 2026 09:38:56 -0600
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Manivannan Sadhasivam <mani@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Jingoo Han <jingoohan1@gmail.com>, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	mayank.rana@oss.qualcomm.com, quic_vbadigan@quicinc.com
+Subject: Re: [PATCH v2 2/3] PCI: dwc: Add helper to Program T_POWER_ON
+Message-ID: <20260223153856.GA3695024@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <9defac59-ae8a-4658-ab38-dcb0559d9708@oss.qualcomm.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260223-t_power_on_fux-v2-2-20c921262709@oss.qualcomm.com>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-93723-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	MISSING_XM_UA(0.00)[];
-	NEURAL_HAM(-0.00)[-0.999];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TAGGED_FROM(0.00)[bounces-93724-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_CC(0.00)[kernel.org,google.com,gmail.com,vger.kernel.org,oss.qualcomm.com,quicinc.com];
+	FROM_HAS_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[helgaas@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[12];
 	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: 102F2178D80
+X-Rspamd-Queue-Id: CBC86178E8C
 X-Rspamd-Action: no action
 
-On Mon, Feb 23, 2026 at 09:41:04AM +0530, Maulik Shah (mkshah) wrote:
-> 
-> On 2/21/2026 4:21 PM, Daniel J Blueman wrote:
-> > At present, designs based on the Qualcomm X1 Hamoa reference platform have an always-on system power domain since the OF node values aren't implement.
-> 
-> Implemented.
-> 
-> > 
-> > Fix this by using the CPU C4, cluster CL5 and system DRIPS parameters from the ACPI DSDT Windows uses, together with the Low Power Idle _LPI minimum residency of 9000us and wake latency of 5000us as exit latency. Finally, assume the entry latency is the difference of these two values.
-> 
-> ACPI used 5000usec as total exit latency, with this change total exit latency will be 9000usec (sum of entry + exit).
-> 
-> > 
-> > Tested on a Lenovo Yoga Slim 7x with Qualcomm X1E-80-100.
-> > 
-> > Fixes: f33767e3cfa5 ("arm64: dts: qcom: x1e80100: Add missing system-wide PSCI power domain")
-> 
-> Using this fixes tag, can make the change back ported to stable kernels without dependencies and may break the GPIO IRQs.
-> 
-> Background:
-> 
-> PDC monitors the wakeup capable IRQs during system wide low power state, hitting the system low power mode can break to wake via GPIO IRQs. 
-> The system-wide idle state was not added since the wakeup capable GPIO IRQs were not configured at PDC with 602cb14e310a
-> ("pinctrl: qcom: x1e80100: Bypass PDC wakeup parent for now").
-> 
-> So IMO this fixes tag should be used instead of above with the changes to configure PDC to monitor GPIO wake ups.
-> I have these changes to configure GPIO IRQs at PDC and enable back domain_ss3 idle state in my local tree, which i plan to
-> post this week or next.
-> 
 
-No, this patch does not fix 602cb14e310a ("pinctrl: qcom: x1e80100:
-Bypass PDC wakeup parent for now"), please see
-Documentation/process/stable-kernel-rules.rst on how to document
-dependencies for fixes.
+  PCI: dwc: Add dw_pcie_program_t_power_on() helper for L1SS T_POWER_ON
 
-It could however be argued that this doesn't fix a bug with f33767e3cfa5
-("arm64: dts: qcom: x1e80100: Add missing system-wide PSCI power
-domain"), but instead just implements the missing domain-idle-state
-(i.e. drop the Fixes).
-
-
-PS. What I do expect is that 602cb14e310a ("pinctrl: qcom: x1e80100:
-Bypass PDC wakeup parent for now") should have been reverted once the
-PDC driver gained the necessary workarounds!
-
-Regards,
-Bjorn
-
-> Thanks,
-> Maulik
+On Mon, Feb 23, 2026 at 04:43:31PM +0530, Krishna Chaitanya Chundru wrote:
+> The T_POWER_ON indicates the time (in μs) that a Port requires the port
+> on the opposite side of Link to wait in L1.2.Exit after sampling CLKREQ#
+> asserted before actively driving the interface. This value is used by
+> the ASPM driver to compute the LTR_L1.2_THRESHOLD.
 > 
-> > Signed-off-by: Daniel J Blueman <daniel@quora.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/hamoa.dtsi | 10 +++++++++-
-> >  1 file changed, 9 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/hamoa.dtsi b/arch/arm64/boot/dts/qcom/hamoa.dtsi
-> > index a17900eacb20..64338769bc85 100644
-> > --- a/arch/arm64/boot/dts/qcom/hamoa.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/hamoa.dtsi
-> > @@ -290,6 +290,14 @@ cluster_cl5: cluster-sleep-1 {
-> >  				exit-latency-us = <4000>;
-> >  				min-residency-us = <7000>;
-> >  			};
-> > +
-> > +			domain_ss3: domain-sleep-0 {
-> > +				compatible = "domain-idle-state";
-> > +				arm,psci-suspend-param = <0x0200c354>;
-> > +				entry-latency-us = <4000>;
-> > +				exit-latency-us = <5000>;
-> > +				min-residency-us = <9000>;
-> > +			};
-> >  		};
-> >  	};
-> >  
-> > @@ -448,7 +456,7 @@ cluster_pd2: power-domain-cpu-cluster2 {
-> >  
-> >  		system_pd: power-domain-system {
-> >  			#power-domain-cells = <0>;
-> > -			/* TODO: system-wide idle states */
-> > +			domain-idle-states = <&domain_ss3>;
-> >  		};
-> >  	};
-> >  
+> Currently, some controllers exposes T_POWER_ON value of zero in the L1SS
+> capability registers, leading to incorrect LTR_L1.2_THRESHOLD calculations,
+> which  can result in improper L1.2 exit behavior and can trigger AER's.
+
+s/some controllers exposes/some controllers expose/
+
+> Add a helper to override T_POWER_ON value by the DWC controller drivers.
+
+s/a helper/dw_pcie_program_t_power_on()/
+
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-designware.c | 27 +++++++++++++++++++++++++++
+>  drivers/pci/controller/dwc/pcie-designware.h |  1 +
+>  2 files changed, 28 insertions(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
+> index 5741c09dde7f40487c6da6dfd66f7c8d96a74259..f56e2c07ddc57bd84882c14bebc7d4b4961f601a 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware.c
+> +++ b/drivers/pci/controller/dwc/pcie-designware.c
+> @@ -1249,6 +1249,33 @@ void dw_pcie_hide_unsupported_l1ss(struct dw_pcie *pci)
+>  	dw_pcie_writel_dbi(pci, l1ss + PCI_L1SS_CAP, l1ss_cap);
+>  }
+>  
+> +/* TODO: Need to handle multi root ports */
+> +void dw_pcie_program_t_power_on(struct dw_pcie *pci, u16 t_power_on)
+> +{
+> +	u8 scale, value;
+> +	u16 offset;
+> +	u32 val;
+> +
+> +	if (!t_power_on)
+> +		return;
+> +
+> +	offset = dw_pcie_find_ext_capability(pci, PCI_EXT_CAP_ID_L1SS);
+> +	if (offset) {
+
+  if (!offset)
+    return;
+
+> +		pcie_encode_t_power_on(t_power_on, &scale, &value);
+> +
+> +		dw_pcie_dbi_ro_wr_en(pci);
+> +
+> +		val = readl(pci->dbi_base + offset + PCI_L1SS_CAP);
+> +		val &= ~(PCI_L1SS_CAP_P_PWR_ON_SCALE | PCI_L1SS_CAP_P_PWR_ON_VALUE);
+> +		val |= FIELD_PREP(PCI_L1SS_CAP_P_PWR_ON_SCALE, scale);
+> +		val |= FIELD_PREP(PCI_L1SS_CAP_P_PWR_ON_VALUE, value);
+
+  FIELD_MODIFY(PCI_L1SS_CAP_P_PWR_ON_SCALE, &reg, scale);
+  FIELD_MODIFY(PCI_L1SS_CAP_P_PWR_ON_VALUE, &reg, value);
+
+> +		writel(val, pci->dbi_base + offset + PCI_L1SS_CAP);
+> +
+> +		dw_pcie_dbi_ro_wr_dis(pci);
+> +	}
+> +}
+> +
+>  void dw_pcie_setup(struct dw_pcie *pci)
+>  {
+>  	u32 val;
+> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+> index ae6389dd9caa5c27690f998d58729130ea863984..da67beece3f11e33d9a1937fa23d443feea3bbc7 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware.h
+> +++ b/drivers/pci/controller/dwc/pcie-designware.h
+> @@ -602,6 +602,7 @@ int dw_pcie_prog_ep_inbound_atu(struct dw_pcie *pci, u8 func_no, int index,
+>  				u8 bar, size_t size);
+>  void dw_pcie_disable_atu(struct dw_pcie *pci, u32 dir, int index);
+>  void dw_pcie_hide_unsupported_l1ss(struct dw_pcie *pci);
+> +void dw_pcie_program_t_power_on(struct dw_pcie *pci, u16 t_power_on);
+>  void dw_pcie_setup(struct dw_pcie *pci);
+>  void dw_pcie_iatu_detect(struct dw_pcie *pci);
+>  int dw_pcie_edma_detect(struct dw_pcie *pci);
+> 
+> -- 
+> 2.34.1
 > 
 
