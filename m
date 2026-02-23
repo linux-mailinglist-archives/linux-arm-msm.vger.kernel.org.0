@@ -1,63 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-93716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iKKiI5BunGmcGAQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 16:13:20 +0100
+	id AH6FEGBynGmcGAQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 16:29:36 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D6AF178934
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 16:13:19 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6CCD2178BD1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 16:29:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 0A938304D1CA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 15:12:49 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id DE53E301AAA5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 15:29:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BC43364EBC;
-	Mon, 23 Feb 2026 15:12:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB3C829B799;
+	Mon, 23 Feb 2026 15:29:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bz9cun3+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t+6MAdil"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269CA35CB9B;
-	Mon, 23 Feb 2026 15:12:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A67392C027C;
+	Mon, 23 Feb 2026 15:29:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771859568; cv=none; b=PSC3hamqI2mRBdm8B15kbRQ2CJNoJPBkXyJoBSC6r1f/9yVBX5iqhdNhuG1SNHfApppNLEKrVqY7Vxsoj8rR/si4cQbcb43AkX9rEvkDuGgiqaPSNpnpBoCxHHz2vwznB3xLLiVZ2E8v/6amhoXj/aicsznYQkUfB3OrJLn8i1I=
+	t=1771860543; cv=none; b=gni7aHpxH5fogr4QFkMwELXBd18/RLyy1b2LnnA1akbTPT9fCUDu7wO5AEdCP5R0g0Q0HBsBC4EJ489ZScdSp+YY+AKp+az0nQDAoCwguX58FUN4I6Eke/420cnZeR6xcmI3VjCRA9HvkM554O/rN9O+eesT0azPOGx5l9eAhyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771859568; c=relaxed/simple;
-	bh=j4BEkBbEinmh14zJz8TAvVlb07thNijCZtGD0pVrp9U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=r+Vm2JX6y8B5+tzs67pyyDP6ur0rnA5XieNiMXGQrabdx0m4kLfSrqzcTCebEAoiF17ddbafeVP14bM1r7PJABZCUPgmj+hS7KcOmAwIkFZU4iygC+QVZ7BR8/d42GcMDXHP3t2konYiuSSkfvLoekFSQlp6vXISCQdl01YJAPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bz9cun3+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DA3EC116C6;
-	Mon, 23 Feb 2026 15:12:46 +0000 (UTC)
+	s=arc-20240116; t=1771860543; c=relaxed/simple;
+	bh=I3iet3x99uxDCI36yFxWvwNJLu73fsxRnYcMhsEpYJM=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=s82lE2HfGUc0VnYauI9dXTFzpMw6jvxqrLi1OcGPjq0Y/0WCroV1H2aajvpJp9KXP+wgw1+o0WpqG5Lu3WzGErzJqUnTkKLnGzo89icHkHiiiiwWQsj2z2URoiJDevkbBz10hvsVp6DIaymOqjskHf9X5NUrrHVZhiEzdTik8+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t+6MAdil; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D907C19424;
+	Mon, 23 Feb 2026 15:29:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771859567;
-	bh=j4BEkBbEinmh14zJz8TAvVlb07thNijCZtGD0pVrp9U=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bz9cun3+cUw54Ol1Dz7caq+ZlF37jAVxKT9Kvevz/vpjSWX3L+cMd1hLBHG4izKlP
-	 18GrgZNIucHHKURQlplOgBID7SPhPJxvDXUrlnbLQnOUDFtoAe+Sbqk1+RRDYJWVFj
-	 lmipEHq87VGFbO6KP0mZtIvFdTU8fRt2IJH3qDSGI+YVd6nzMjMYhK3nhz5CprOzSq
-	 5bafVvCHW0C1Zqmv4hlCmbUAyrT5U2LsquVsls0W7mGVU5pIQRuiOzcHs2DxqjO6ko
-	 HKuevoK6uLBuGaJK5ATPhecOUrXUf4Vi/u1Km61wsXkcFn63QVfYzKYFlU2deyEf8w
-	 Estsy0loDLA0g==
-Date: Mon, 23 Feb 2026 09:12:44 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Umang Chheda <umang.chheda@oss.qualcomm.com>, konradybcio@kernel.org, 
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	richardcochran@gmail.com, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, mohd.anwar@oss.qualcomm.com, krishna.chundru@oss.qualcomm.com, 
-	monish.chunara@oss.qualcomm.com, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: [PATCH v2 1/1] arm64: dts: qcom: monaco-evk: Add Interface Plus
- Mezzanine
-Message-ID: <jncbztn4xohzns734i4o2hsherdshjgxqtiglh7zf2oz7nkujs@an24wf3txymy>
-References: <20260222173545.3627478-1-umang.chheda@oss.qualcomm.com>
- <20260222173545.3627478-2-umang.chheda@oss.qualcomm.com>
- <a7777e5d-f9be-43c5-9f3f-4d84e16f6e89@kernel.org>
+	s=k20201202; t=1771860543;
+	bh=I3iet3x99uxDCI36yFxWvwNJLu73fsxRnYcMhsEpYJM=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=t+6MAdilOqzVrZjqbFVM86h+VPcrYbuB9lU3ebrEoYlYZxVwHiCkffCX6P4SMOYx1
+	 DbDdiYkN2jYygHIvqg1updb9MZtG31bmJMmpv58iniLpBQx6kbC6qkQFqw6Rs3E8nO
+	 vnH+BwC3SrXKdqTKGQL8JNPfFE3J5C780pbWOvwAdt44RlXl6M0c16dy9WHb6btKiy
+	 M1Jfj3TaDIBYw4QnfuxRvBvY359Op7vmPH5WzuJ3Pj6F8bLeZylZRz2QI4v9HbhEAn
+	 a0Sxn3ek/l6sc+WotOo8nZ007mfXVrTZT5ou7LrlVbDmsabgllfs2LJZLDuwY/ma+5
+	 FPnktH01oyczQ==
+Date: Mon, 23 Feb 2026 09:29:01 -0600
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Manivannan Sadhasivam <mani@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Jingoo Han <jingoohan1@gmail.com>, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	mayank.rana@oss.qualcomm.com, quic_vbadigan@quicinc.com
+Subject: Re: [PATCH v2 1/3] PCI/ASPM: Add helper to encode L1SS T_POWER_ON
+ fields
+Message-ID: <20260223152901.GA3694918@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,209 +65,138 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <a7777e5d-f9be-43c5-9f3f-4d84e16f6e89@kernel.org>
+In-Reply-To: <20260223-t_power_on_fux-v2-1-20c921262709@oss.qualcomm.com>
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-93716-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-93717-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,gmail.com,vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[14];
+	FREEMAIL_CC(0.00)[kernel.org,google.com,gmail.com,vger.kernel.org,oss.qualcomm.com,quicinc.com];
+	RCPT_COUNT_TWELVE(0.00)[12];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[helgaas@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 0D6AF178934
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: 6CCD2178BD1
 X-Rspamd-Action: no action
 
-On Mon, Feb 23, 2026 at 02:12:05PM +0100, Krzysztof Kozlowski wrote:
-> On 22/02/2026 18:35, Umang Chheda wrote:
-> > The Interface Plus [IFP] Mezzanine is an hardware expansion add-on
-> > board designed to be stacked on top of Monaco EVK.
-> > 
-> > It has following peripherals :
-> > 
-> > - 4x Type A USB ports in host mode.
-> > - TC9563 PCIe switch, which has following three downstream ports (DSP) :
-> >    - 1st DSP connects M.2 E-key connector for connecting WLAN endpoints.
-> >    - 2nd DSP connects M.2 B-key connector for connecting cellular
-> >      modems.
-> >    - 3rd DSP with support for Dual Ethernet ports.
-> > - EEPROM.
-> > - LVDS Display.
-> > - 2*mini DP.
-> > 
-> > Add support for following peripherals :
-> > - TC9563 PCIe Switch.
-> > - EEPROM.
-> > 
-> > Written with inputs from :
-> >     Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com> - PCIe
-> >     Monish Chunara <monish.chunara@oss.qualcomm.com> - EEPROM.
-> > 
-> > Signed-off-by: Umang Chheda <umang.chheda@oss.qualcomm.com>
-> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/Makefile             |   4 +
-> >  .../dts/qcom/monaco-evk-ifp-mezzanine.dtso    | 184 ++++++++++++++++++
-> >  2 files changed, 188 insertions(+)
-> >  create mode 100644 arch/arm64/boot/dts/qcom/monaco-evk-ifp-mezzanine.dtso
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> > index f80b5d9cf1e8..9d298e7e8a90 100644
-> > --- a/arch/arm64/boot/dts/qcom/Makefile
-> > +++ b/arch/arm64/boot/dts/qcom/Makefile
-> > @@ -45,6 +45,10 @@ lemans-evk-el2-dtbs := lemans-evk.dtb lemans-el2.dtbo
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= lemans-evk-el2.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= milos-fairphone-fp6.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= monaco-evk.dtb
-> > +
-> > +monaco-evk-ifp-mezzanine-dtbs	:= monaco-evk.dtb monaco-evk-ifp-mezzanine.dtbo
-> > +
-> > +dtb-$(CONFIG_ARCH_QCOM)	+= monaco-evk-ifp-mezzanine.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= msm8216-samsung-fortuna3g.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-acer-a1-724.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-alcatel-idol347.dtb
-> > diff --git a/arch/arm64/boot/dts/qcom/monaco-evk-ifp-mezzanine.dtso b/arch/arm64/boot/dts/qcom/monaco-evk-ifp-mezzanine.dtso
-> > new file mode 100644
-> > index 000000000000..f0572647200c
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/qcom/monaco-evk-ifp-mezzanine.dtso
-> > @@ -0,0 +1,184 @@
-> > +// SPDX-License-Identifier: BSD-3-Clause
-> > +/*
-> > + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> > + */
-> > +
-> > +/dts-v1/;
-> > +/plugin/;
-> > +
-> > +#include <dt-bindings/gpio/gpio.h>
-> > +
-> > +&{/} {
-> > +	model = "Qualcomm Technologies, Inc. Monaco-EVK IFP Mezzanine";
-> > +
-> > +	vreg_0p9: regulator-vreg-0p9 {
+On Mon, Feb 23, 2026 at 04:43:30PM +0530, Krishna Chaitanya Chundru wrote:
+> Add a shared helper to encode the PCIe L1 PM Substates T_POWER_ON
+> parameter into the T_POWER_ON_Scale and T_POWER_ON_Value fields.
 > 
-> Please use name for all fixed regulators which matches current format
-> recommendation: 'regulator-[0-9]v[0-9]'
+> This helper can be used by the controller drivers to change the
+> default/wrong value of T_POWER_ON in L1ss capability register to
+> avoid incorrect calculation of LTR_L1.2_THRESHOLD value.
 > 
-> https://web.git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/regulator/fixed-regulator.yaml
+> The helper converts a T_POWER_ON time specified in microseconds into
+> the appropriate scale/value encoding defined by the PCIe spec r7.0,
+> sec 7.8.3.2. Values that exceed the maximum encodable range are clamped
+> to the largest representable encoding.
 > 
-> Duplicating regulator name (regulator-reg(ulator)) is pointless.
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> ---
+>  drivers/pci/pcie/aspm.c | 43 +++++++++++++++++++++++++++++++++++++++++++
+>  include/linux/pci.h     |  2 ++
+>  2 files changed, 45 insertions(+)
 > 
+> diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+> index 21f5d23e0b61bd7e1163cc869fe9356d1ab87b34..d7f9ae9e48c25dbc2d9b4887e2f74623688098e0 100644
+> --- a/drivers/pci/pcie/aspm.c
+> +++ b/drivers/pci/pcie/aspm.c
+> @@ -525,6 +525,49 @@ static u32 calc_l12_pwron(struct pci_dev *pdev, u32 scale, u32 val)
+>  	return 0;
+>  }
+>  
+> +/**
+> + * pcie_encode_t_power_on - Encode T_POWER_ON into scale and value fields
+> + * @t_power_on_us: T_POWER_ON time in microseconds
+> + * @scale: Encoded T_POWER_ON_Scale (0..2)
+> + * @value: Encoded T_POWER_ON_Value
+> + *
+> + * T_POWER_ON is encoded as:
+> + *   T_POWER_ON(us) = scale_unit(us) * value
+> + *
+> + * where scale_unit is selected by @scale:
+> + *   0: 2us
+> + *   1: 10us
+> + *   2: 100us
+> + *
+> + * If @t_power_on_us exceeds the maximum representable value, the result
+> + * is clamped to the largest encodable T_POWER_ON.
+> + *
+> + * See PCIe r7.0, sec 7.8.3.2.
+> + */
+> +void pcie_encode_t_power_on(u16 t_power_on_us, u8 *scale, u8 *value)
+> +{
+> +	u8 maxv = FIELD_MAX(PCI_L1SS_CTL2_T_PWR_ON_VALUE);
+> +
+> +	/*
+> +	 * T_POWER_ON_Value ("value") is a 5-bit field with max
+> +	 * value of 31.
+> +	 */
+> +	if (t_power_on_us <= 2 * maxv) {
+> +		*scale = 0; /* Value times 2us */
+> +		*value = DIV_ROUND_UP(t_power_on_us, 2);
+> +	} else if (t_power_on_us <= 10 * maxv) {
+> +		*scale = 1; /* Value times 10us */
+> +		*value = DIV_ROUND_UP(t_power_on_us, 10);
+> +	} else if (t_power_on_us <= 100 * maxv) {
+> +		*scale = 2; /* value times 100us */
+> +		*value = DIV_ROUND_UP(t_power_on_us, 100);
+> +	} else {
+> +		*scale = 2;
+> +		*value = maxv;
+> +	}
+> +}
+> +EXPORT_SYMBOL(pcie_encode_t_power_on);
+> +
+>  /*
+>   * Encode an LTR_L1.2_THRESHOLD value for the L1 PM Substates Control 1
+>   * register.  Ports enter L1.2 when the most recent LTR value is greater
+> diff --git a/include/linux/pci.h b/include/linux/pci.h
+> index 1c270f1d512301de4d462fe7e5097c32af5c6f8d..eec16fdcb9996ab0f663f4587a2367a676a49ce6 100644
+> --- a/include/linux/pci.h
+> +++ b/include/linux/pci.h
+> @@ -1911,6 +1911,7 @@ int pci_enable_link_state_locked(struct pci_dev *pdev, int state);
+>  void pcie_no_aspm(void);
+>  bool pcie_aspm_support_enabled(void);
+>  bool pcie_aspm_enabled(struct pci_dev *pdev);
+> +void pcie_encode_t_power_on(u16 t_power_on_us, u8 *scale, u8 *value);
 
-"pointless" is a strong word IMO.
+This looks like it should go in drivers/pci/pci.h.  I don't think it's
+needed outside drivers/pci/.
 
-The recommendation that has been communicated is to based label, name
-and regulator-name of the schematics, but prefix the node name with
-regulator- to achieve sensible sort order.
-
-
-In fact naming these regulator-0v9, regulator-1v8, and regulator-3v3
-make the name useless. We further have plenty of designs where there are
-multiple regulator-1v8 and regulator-3v3.
-
-I guess the preferred name, per the binding, is to not have multiple
-3.3V regulators in your design?
-
-> > +		compatible = "regulator-fixed";
-> > +		regulator-name = "VREG_0P9";
-> > +
-> > +		regulator-min-microvolt = <900000>;
-> > +		regulator-max-microvolt = <900000>;
-> > +		regulator-always-on;
-> > +		regulator-boot-on;
-> > +
-> > +		vin-supply = <&vreg_3p3>;
-> > +	};
-> > +
-> > +	vreg_1p8: regulator-vreg-1p8 {
-> > +		compatible = "regulator-fixed";
-> > +		regulator-name = "VREG_1P8";
-> > +
-> > +		regulator-min-microvolt = <1800000>;
-> > +		regulator-max-microvolt = <1800000>;
-> > +		regulator-always-on;
-> > +		regulator-boot-on;
-> > +
-> > +		vin-supply = <&vreg_4p2>;
-> > +	};
-> > +
-> > +	vreg_3p3: regulator-vreg-3p3 {
-> > +		compatible = "regulator-fixed";
-> > +		regulator-name = "VREG_3P3";
-> > +
-> > +		regulator-min-microvolt = <3300000>;
-> > +		regulator-max-microvolt = <3300000>;
-> > +		regulator-always-on;
-> > +		regulator-boot-on;
-> > +
-> > +		vin-supply = <&vreg_4p2>;
-> > +	};
-> > +
-> > +	vreg_4p2: regulator-vreg-4p2 {
+>  #else
+>  static inline int pci_disable_link_state(struct pci_dev *pdev, int state)
+>  { return 0; }
+> @@ -1923,6 +1924,7 @@ static inline int pci_enable_link_state_locked(struct pci_dev *pdev, int state)
+>  static inline void pcie_no_aspm(void) { }
+>  static inline bool pcie_aspm_support_enabled(void) { return false; }
+>  static inline bool pcie_aspm_enabled(struct pci_dev *pdev) { return false; }
+> +static inline void pcie_encode_t_power_on(u16 t_power_on_us, u8 *scale, u8 *value) { }
+>  #endif
+>  
+>  #ifdef CONFIG_HOTPLUG_PCI
 > 
-> Unused node (other dummies don't really count).
+> -- 
+> 2.34.1
 > 
-
-I'm pretty sure this is a direct result of previous review feedback
-requiring these to be added. I do agree that they don't add any value
-in a system were we don't control the entire power grid anyways.
-
-
-So I presume what you're saying is that we should at most declare one
-level of non-controlled fixed regulators?
-
-Regards,
-Bjorn
-
-> > +		compatible = "regulator-fixed";
-> > +		regulator-name = "VREG_4P2";
-> > +
-> > +		regulator-min-microvolt = <4200000>;
-> > +		regulator-max-microvolt = <4200000>;
-> > +		regulator-always-on;
-> > +		regulator-boot-on;
-> > +
-> > +		vin-supply = <&vreg_sys_pwr>;
-> > +	};
-> > +
-> > +	vreg_sys_pwr: regulator-vreg-sys-pwr {
-> 
-> What is the point of this regulator? It is not used by anything (another
-> dummy is not considered an user).
-> 
-> > +		compatible = "regulator-fixed";
-> > +		regulator-name = "VREG_SYS_PWR";
-> > +
-> > +		regulator-min-microvolt = <24000000>;
-> > +		regulator-max-microvolt = <24000000>;
-> > +		regulator-always-on;
-> > +		regulator-boot-on;
-> > +	};
-> > +};
-> > +
-> 
-> 
-> Best regards,
-> Krzysztof
 
