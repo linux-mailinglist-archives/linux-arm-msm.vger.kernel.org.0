@@ -1,203 +1,226 @@
-Return-Path: <linux-arm-msm+bounces-93734-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93735-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UI6gDTB8nGm6IQQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93734-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 17:11:28 +0100
+	id cEHgGNt8nGm6IQQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93735-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 17:14:19 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 902BC179703
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 17:11:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C420E1797E7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 17:14:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id B2DC73067752
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 16:07:23 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 940CA3104E55
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 16:09:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE7662EC09B;
-	Mon, 23 Feb 2026 16:07:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7744730AAA6;
+	Mon, 23 Feb 2026 16:09:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hL029yla"
+	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="QIa8w6+m"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-m3274.qiye.163.com (mail-m3274.qiye.163.com [220.197.32.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE8D262808;
-	Mon, 23 Feb 2026 16:07:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4044C3090C1;
+	Mon, 23 Feb 2026 16:09:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.32.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771862842; cv=none; b=bw/YLnjNrNPDBvIffSMEMC7sODfkWe5pUCZW0I4qLRz06Jo/IuJfaHQRH1dczR2Klt0+F3yjdHxC6sYNqXn8/IkpOZE+JP8NWNF7tPjn9YF4pJDEFDcnty1kMZDpWejymjkB/rZirrZlGrnLD7F7XRzk9Ymm0X3DVNew/NSsCVs=
+	t=1771862993; cv=none; b=NZWiBPIlGdmnFAg3C+bwqlesBjeaxNCoVhpHyuSf2OVtmR+7ETv2ehkBtOlM8nm9C/Y0z/FIqBhUNWU03Ftq+uIpEXP9vlMzI4Yxp/TBXr2H5/pFrUN0p7ijiRuQEM/RE4i+RGp0g22jfwirHwZn+Yht4hon1Pm+npx1SmvTnno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771862842; c=relaxed/simple;
-	bh=GhLl9ZdRY3Y1jLozygGmR/YnOTlmDerWjkfwo8L9yVU=;
-	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
-	 Mime-Version:Content-Type; b=ZjBxCzF2rjgnb0qWUc+e+soo6wg4JN18YnaTQCQNXzDHpsQXK5hQHC2ITRG8rRXJvELwbRnhDch5wy64Az9uqIML2pbYT2Yip+hEW2smAfI8yn5OgUZhgqwqj2NYPK4Kqbr8x0U179e67koj6tl8yFuaPvrNxKiwILuyQAck2Pw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hL029yla; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A2B8C116C6;
-	Mon, 23 Feb 2026 16:07:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771862842;
-	bh=GhLl9ZdRY3Y1jLozygGmR/YnOTlmDerWjkfwo8L9yVU=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=hL029ylaeQv8chZx1V/BoKCDPp1HXx7Xxaj6d561OVl3S+DlFYtq0/s7xJQdbNRU1
-	 7I7d8lAUvVoQYBA1drMukTn5efiEF6LwPqKiFxIXQxJbDOBjFGvM5bGUjTCIoJni3B
-	 DgV6+8Tvv1z1ESDgKHQJKZhKEfJBpSzYsf7srHUI/IrmexUu8QdnDmjwTB1HQhl2Vp
-	 M8Ovk2xSmnhPaAOAOpdmxg/zJCIa1hJ1WV5hXV7WS6aB1CwPzTFV5/vKoOG6dunZzs
-	 fLDrZ+55CDZSb7vTmfL3/kP0RxBKx1cMB25zzrgoNmpH1AvFR+E74rbtIVRda4eMHG
-	 XPXLFwujTibTA==
-Date: Tue, 24 Feb 2026 01:07:16 +0900
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-To: Mark Rutland <mark.rutland@arm.com>
-Cc: Khaja Hussain Shaik Khaji <khaja.khaji@oss.qualcomm.com>,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- catalin.marinas@arm.com, will@kernel.org, mhiramat@kernel.org,
- yang@os.amperecomputing.com, dev.jain@arm.com, ada.coupriediaz@arm.com,
- linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] arm64: kprobes: disable preemption across XOL
- single-step
-Message-Id: <20260224010716.91b1f54b446acab84bc6031c@kernel.org>
-In-Reply-To: <aZSdkGjy2BXUL0bT@J2N7QTR9R3.cambridge.arm.com>
-References: <20251106104955.2089268-1-khaja.khaji@oss.qualcomm.com>
-	<20260217133855.3142192-1-khaja.khaji@oss.qualcomm.com>
-	<20260217133855.3142192-2-khaja.khaji@oss.qualcomm.com>
-	<aZSdkGjy2BXUL0bT@J2N7QTR9R3.cambridge.arm.com>
-X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	s=arc-20240116; t=1771862993; c=relaxed/simple;
+	bh=AHx0h1hO5knesFXxZVApDK1swS5oE7zMU5mMkaIob88=;
+	h=Cc:Subject:To:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=gZPtP7sBDWcXNLShBalb+Y2iEoEZxwfbJ8Bi48jQEm+hWXxoddw8cWJT49xKfIkcajFyx/rzcHN/UE6ytJau09R6W7AqO9sb80tUHdNfe/a63OdFKgXbYdgPlGGd0dReAEhrN+ZZI6Lo3e3PyFRdJsUmd0dL00girDGCcY3r/2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=QIa8w6+m; arc=none smtp.client-ip=220.197.32.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
+Received: from [172.16.12.14] (unknown [58.22.7.114])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 34b44f421;
+	Tue, 24 Feb 2026 00:09:40 +0800 (GMT+08:00)
+Cc: shawn.lin@rock-chips.com, Bjorn Helgaas <bhelgaas@google.com>,
+ "Vaibhaav Ram T . L" <vaibhaavram.tl@microchip.com>,
+ Kumaravel Thiagarajan <kumaravel.thiagarajan@microchip.com>,
+ Even Xu <even.xu@intel.com>, Xinpeng Sun <xinpeng.sun@intel.com>,
+ Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+ Jiri Kosina <jikos@kernel.org>,
+ Alexandre Belloni <alexandre.belloni@bootlin.com>,
+ Zhou Wang <wangzhou1@hisilicon.com>, Longfang Liu <liulongfang@huawei.com>,
+ Vinod Koul <vkoul@kernel.org>, Lee Jones <lee@kernel.org>,
+ Jijie Shao <shaojijie@huawei.com>, Jian Shen <shenjian15@huawei.com>,
+ Sunil Goutham <sgoutham@marvell.com>, Andrew Lunn <andrew+netdev@lunn.ch>,
+ Heiner Kallweit <hkallweit1@gmail.com>,
+ "David S . Miller" <davem@davemloft.net>,
+ Jeff Hugo <jeff.hugo@oss.qualcomm.com>, Oded Gabbay <ogabbay@kernel.org>,
+ Maciej Falkowski <maciej.falkowski@linux.intel.com>,
+ Karol Wachowski <karol.wachowski@linux.intel.com>,
+ Min Ma <mamin506@gmail.com>, Lizhi Hou <lizhi.hou@amd.com>,
+ Andreas Noever <andreas.noever@gmail.com>,
+ Mika Westerberg <westeri@kernel.org>, Tomasz Jeznach
+ <tjeznach@rivosinc.com>, Will Deacon <will@kernel.org>,
+ Xinliang Liu <xinliang.liu@linaro.org>, Tian Tao <tiantao6@hisilicon.com>,
+ Davidlohr Bueso <dave@stgolabs.net>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Srujana Challa <schalla@marvell.com>, Bharat Bhushan
+ <bbhushan2@marvell.com>, Antoine Tenart <atenart@kernel.org>,
+ Herbert Xu <herbert@gondor.apana.org.au>, Raag Jadav <raag.jadav@intel.com>,
+ Hans de Goede <hansg@kernel.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Jiri Slaby <jirislaby@kernel.org>, Andy Shevchenko <andy@kernel.org>,
+ Manivannan Sadhasivam <mani@kernel.org>,
+ Mika Westerberg <mika.westerberg@linux.intel.com>,
+ Andi Shyti <andi.shyti@kernel.org>, Robert Richter <rric@kernel.org>,
+ Mark Brown <broonie@kernel.org>, Nirmal Patel
+ <nirmal.patel@linux.intel.com>, Kurt Schwemmer
+ <kurt.schwemmer@microsemi.com>, Logan Gunthorpe <logang@deltatee.com>,
+ Linus Walleij <linusw@kernel.org>, Bartosz Golaszewski <brgl@kernel.org>,
+ Sakari Ailus <sakari.ailus@linux.intel.com>,
+ Bingbu Cao <bingbu.cao@intel.com>, Ulf Hansson <ulf.hansson@linaro.org>,
+ Arnd Bergmann <arnd@arndb.de>, Benjamin Tissoires <bentiss@kernel.org>,
+ linux-input@vger.kernel.org, linux-i3c@lists.infradead.org,
+ dmaengine@vger.kernel.org, Philipp Stanner <phasta@kernel.org>,
+ netdev@vger.kernel.org, nic_swsd@realtek.com, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, linux-usb@vger.kernel.org,
+ iommu@lists.linux.dev, linux-riscv@lists.infradead.org,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ linux-cxl@vger.kernel.org, linux-crypto@vger.kernel.org,
+ platform-driver-x86@vger.kernel.org, linux-serial@vger.kernel.org,
+ mhi@lists.linux.dev, Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ Jan Dabros <jsd@semihalf.com>, linux-i2c@vger.kernel.org,
+ Daniel Mack <daniel@zonque.org>, Haojian Zhuang <haojian.zhuang@gmail.com>,
+ linux-spi@vger.kernel.org, Jonathan Derrick <jonathan.derrick@linux.dev>,
+ linux-pci@vger.kernel.org, linux-gpio@vger.kernel.org,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, linux-media@vger.kernel.org,
+ linux-mmc@vger.kernel.org
+Subject: Re: [PATCH 0/37] PCI/MSI: Enforce explicit IRQ vector management by
+ removing devres auto-free
+To: Andy Shevchenko <andy.shevchenko@gmail.com>
+References: <1771860581-82092-1-git-send-email-shawn.lin@rock-chips.com>
+ <CAHp75VeWD5A0r7-Uayyte1ZXXxdhLixd+z_y0xNeki0N+Ro=jQ@mail.gmail.com>
+From: Shawn Lin <shawn.lin@rock-chips.com>
+Message-ID: <cb878741-7b61-b72c-5a72-6ed6d5091b1f@rock-chips.com>
+Date: Tue, 24 Feb 2026 00:09:37 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+In-Reply-To: <CAHp75VeWD5A0r7-Uayyte1ZXXxdhLixd+z_y0xNeki0N+Ro=jQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0a9c8b4376c609cckunm3fddd3f4988fc3
+X-HM-MType: 1
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFDSUNOT01LS0k3V1ktWUFJV1kPCRoVCBIfWUFZQh9CQlYeGUkeS01CTB5IS0tWFRQJFh
+	oXVRMBExYaEhckFA4PWVdZGBILWUFZTkNVSUlVTFVKSk9ZV1kWGg8SFR0UWUFZT0tIVUpLSUJNS0
+	pVSktLVUtZBg++
+DKIM-Signature: a=rsa-sha256;
+	b=QIa8w6+mvkPs5yiMg8fVRt+gi3F6m/qkhqhjD+6XgiSvEJjtpIRJHvdkclp/pXy7G5fSEbf/NetLr/rXCYIFm/CQEBB6zjl+aiz8R4JS9N+fvFShWzFTgOlhNPDfffXHGWPxdi8/iAaZQWZ16BNVBWgFXcFRVBUKCW34Wu0UCFI=; s=default; c=relaxed/relaxed; d=rock-chips.com; v=1;
+	bh=scr8hCA+aPfGKwMjupeE8viSs7WuDndPG1pZF3mByMQ=;
+	h=date:mime-version:subject:message-id:from;
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	MV_CASE(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[rock-chips.com,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[rock-chips.com:s=default];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	RCVD_COUNT_THREE(0.00)[4];
-	TAGGED_FROM(0.00)[bounces-93734-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-93735-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[gmail.com];
+	FREEMAIL_CC(0.00)[rock-chips.com,google.com,microchip.com,intel.com,linux.intel.com,kernel.org,bootlin.com,hisilicon.com,huawei.com,marvell.com,lunn.ch,gmail.com,davemloft.net,oss.qualcomm.com,amd.com,rivosinc.com,linaro.org,stgolabs.net,gondor.apana.org.au,linuxfoundation.org,microsemi.com,deltatee.com,arndb.de,vger.kernel.org,lists.infradead.org,realtek.com,lists.freedesktop.org,lists.linux.dev,ffwll.ch,semihalf.com,zonque.org,linux.dev];
 	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[88];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mhiramat@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[shawn.lin@rock-chips.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[rock-chips.com:+];
+	NEURAL_HAM(-0.00)[-0.999];
+	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: 902BC179703
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: C420E1797E7
 X-Rspamd-Action: no action
 
-On Tue, 17 Feb 2026 16:55:44 +0000
-Mark Rutland <mark.rutland@arm.com> wrote:
+Hi Andy
 
-> On Tue, Feb 17, 2026 at 07:08:54PM +0530, Khaja Hussain Shaik Khaji wrote:
-> > On arm64, non-emulatable kprobes instructions execute out-of-line (XOL)
-> > after returning from the initial debug exception. The XOL instruction
-> > runs in normal kernel context, while kprobe state is maintained per-CPU.
+在 2026/02/23 星期一 23:50, Andy Shevchenko 写道:
+> On Mon, Feb 23, 2026 at 5:32 PM Shawn Lin <shawn.lin@rock-chips.com> wrote:
+>>
+>> This patch series addresses a long-standing design issue in the PCI/MSI
+>> subsystem where the implicit, automatic management of IRQ vectors by
+>> the devres framework conflicts with explicit driver cleanup, creating
+>> ambiguity and potential resource management bugs.
+>>
+>> ==== The Problem: Implicit vs. Explicit Management ====
+>> Historically, `pcim_enable_device()` not only manages standard PCI resources
+>> (BARs) via devres but also implicitly triggers automatic IRQ vector management
+>> by setting a flag that registers `pcim_msi_release()` as a cleanup action.
+>>
+>> This creates an ambiguous ownership model. Many drivers follow a pattern of:
+>> 1. Calling `pci_alloc_irq_vectors()` to allocate interrupts.
+>> 2. Also calling `pci_free_irq_vectors()` in their error paths or remove routines.
+>>
+>> When such a driver also uses `pcim_enable_device()`, the devres framework may
+>> attempt to free the IRQ vectors a second time upon device release, leading to
+>> a double-free. Analysis of the tree shows this hazardous pattern exists widely,
+>> while 35 other drivers correctly rely solely on the implicit cleanup.
 > 
-> The XOL instruction runs in a context with all DAIF bits set (see
-> kprobes_save_local_irqflag() and kprobes_restore_local_irqflag()), so
-> not quite a regular kernel context.
-> 
-> > If the task is preempted or migrates during the XOL window, the subsequent
-> > SS-BRK exception may be handled on a different CPU, corrupting per-CPU
-> > kprobe state and preventing correct recovery.
-> 
-> I think we need a better explanation of this.
-> 
-> Since DAIF is masked, we won't take an IRQ to preempt during the actual
-> XOL execution.
-> 
-> AFAICT we *could* explicitly preempt/schedule in C code around the XOL
-> execution. However, AFAICT that'd equally apply to other architectures,
-> and on x86 they *removed* the preempt count manipulation in commit:
-> 
->   2bbda764d720aaca ("kprobes/x86: Do not disable preempt on int3 path")
-> 
-> ... so it looks like there's a wider potential problem here.
-> 
-> Can you please share an example failure that you have seen? .. and how
-> you triggered it (e.g. is this a plain kprobe, something with bpf, etc).
+> Is this confirmed? What I read from the cover letter, this series was
+> only compile-tested, so how can you prove the problem exists in the
+> first place?
 
-Yeah, this is important to know. Did it really happen on the single
-stepping? or in user's handler function?
+Yes, it's confirmed. My debug of a double free issue of a out-of-tree
+PCIe wifi driver which uses
+pcim_enable_device + pci_alloc_irq_vectors + pci_free_irq_vectors expose
+it. And we did have a TODO to cleanup this hybrid usage, targeted in
+this cycle[1] suggested by Philipp:
 
-> 
-> I reckon you could hack a warning something into schedule() (or
-> cond_resched(), etc) that detects when there's an active XOL slot, so
-> that we can get the full backtrace.
-
-Sounds good way to show it.
-
-Thank you,
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git/log/?h=msi
 
 > 
-> > Disable preemption across the XOL instruction and re-enable it in the
-> > SS-BRK handler to prevent migration until control returns to the kprobe
-> > handler.
+>> ==== The Solution: Making Management Explicit ====
+>> This series enforces a clear, predictable model:
+>> 1.  New Managed API (Patch 1/37): Introduces pcim_alloc_irq_vectors() and
+>>      pcim_alloc_irq_vectors_affinity(). Drivers that desire devres-managed IRQ
+>>      vectors should use these functions, which set the is_msi_managed flag and
+>>      ensure automatic cleanup.
+>> 2.  Patches 2 through 36 convert each driver that uses pcim_enable_device() alongside
+>>      pci_alloc_irq_vectors() and relies on devres for IRQ vector cleanup to instead
+>>      make an explicit call to pcim_alloc_irq_vectors().
+>> 3.  Core Change (Patch 37/37): With the former cleanup, now modifies pcim_setup_msi_release()
+>>      to check only the is_msi_managed flag. This decouples automatic IRQ cleanup from
+>>      pcim_enable_device(). IRQ vectors allocated via pci_alloc_irq_vectors*()
+>>      are now solely the driver's responsibility to free with pci_free_irq_vectors().
+>>
+>> With these changes, we clear ownership model: Explicit resource management eliminates
+>> ambiguity and follows the "principle of least surprise." New drivers choose one model and
+>> be consistent.
+>> - Use `pci_alloc_irq_vectors()` + `pci_free_irq_vectors()` for explicit control.
+>> - Use `pcim_alloc_irq_vectors()` for devres-managed, automatic cleanup.
 > 
-> This might work, but without some more detail I'm not certain this is
-> sufficient, and I believe other architectures are likely affected by the
-> same problem.
-> 
-> Thanks,
-> Mark.
-> 
-> > 
-> > Signed-off-by: Khaja Hussain Shaik Khaji <khaja.khaji@oss.qualcomm.com>
-> > ---
-> >  arch/arm64/kernel/probes/kprobes.c | 13 +++++++++++++
-> >  1 file changed, 13 insertions(+)
-> > 
-> > diff --git a/arch/arm64/kernel/probes/kprobes.c b/arch/arm64/kernel/probes/kprobes.c
-> > index 43a0361a8bf0..d8a70c456543 100644
-> > --- a/arch/arm64/kernel/probes/kprobes.c
-> > +++ b/arch/arm64/kernel/probes/kprobes.c
-> > @@ -227,6 +227,14 @@ static void __kprobes setup_singlestep(struct kprobe *p,
-> >  
-> >  		kprobes_save_local_irqflag(kcb, regs);
-> >  		instruction_pointer_set(regs, slot);
-> > +
-> > +		/*
-> > +		 * Disable preemption across the out-of-line (XOL) instruction.
-> > +		 * The XOL instruction executes in normal kernel context and
-> > +		 * kprobe state is per-CPU.
-> > +		 */
-> > +		preempt_disable();
-> > +
-> >  	} else {
-> >  		/* insn simulation */
-> >  		arch_simulate_insn(p, regs);
-> > @@ -363,6 +371,11 @@ kprobe_ss_brk_handler(struct pt_regs *regs, unsigned long esr)
-> >  		kprobes_restore_local_irqflag(kcb, regs);
-> >  		post_kprobe_handler(cur, kcb, regs);
-> >  
-> > +		/*
-> > +		 * Re-enable preemption after completing the XOL instruction.
-> > +		 */
-> > +		preempt_enable_no_resched();
-> > +
-> >  		return DBG_HOOK_HANDLED;
-> >  	}
-> >  
-> > -- 
-> > 2.34.1
-> > 
-> 
+> Have you checked previous attempts? Why is your series better than those?
 
+There seems not previous attempts.
 
--- 
-Masami Hiramatsu (Google) <mhiramat@kernel.org>
+> 
+>> ==== Testing And Review ====
+>> 1. This series is only compiled test with allmodconfig.
+>> 2. Given the substantial size of this patch series, I have structured the mailing
+>>     to facilitate efficient review. The cover letter, the first patch and the last one will be sent
+>>     to all relevant mailing lists and key maintainers to ensure broad visibility and
+>>     initial feedback on the overall approach. The remaining subsystem-specific patches
+>>     will be sent only to the respective subsystem maintainers and their associated
+>>     mailing lists, reducing noise.
+> 
 
