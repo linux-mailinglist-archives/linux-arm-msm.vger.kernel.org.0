@@ -1,205 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-93814-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MEsoOUK5nGkqKAQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93814-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 21:32:02 +0100
+	id SLphFGC6nGlHKAQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 21:36:48 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 537E117CEF5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 21:32:02 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id E684A17CFDD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 21:36:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 48A323032DEE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 20:32:01 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 36990306BC2E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Feb 2026 20:34:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 439A837755A;
-	Mon, 23 Feb 2026 20:31:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A056037754D;
+	Mon, 23 Feb 2026 20:34:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nOe5FCym"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WDmF2Zv/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1A41BC46;
-	Mon, 23 Feb 2026 20:31:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A62D1BC46;
+	Mon, 23 Feb 2026 20:34:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771878719; cv=none; b=ZnMZWCLNvDLte8idJJ1ogC3d12sSjZI16Mc1exxUhqRFvMswoY6PpYOV+wJ6AFnjrk/mdTLfU2Q4lXOt6zMhhdeX/t4AvxbGgtHnTPwkshrsbB4yU0YjOzc/tYAnqFQp8izftjyXZNHlpMEC8nh0LDGNBNNJXaaW01X+gxnATeM=
+	t=1771878877; cv=none; b=EsYXKJ6AqtaoepG4RFQcLOZEj1CS7+Eaq3g7WDZKF2kjin9QZZQk1BYV53Lyz8VeBO9sRhs8FI0nxf9YQ/21ymlKkRf3JXPwYGIE2d9AE+2lAs9heWNKN4SzwIsYNSCEWSHgnz/QQkdH8jhcwkd/sC4gHWLbzX1sdzrfI3kRyd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771878719; c=relaxed/simple;
-	bh=JVFoYP6O1GtQxzGkQymbRgfqEOvg8wZWDd9t5Qjwppk=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BS0irhC/+pDY5rF4RloMJd/g332ba2tKoJDr14Ljkvw2za3BAVbYGj5qcEHBSqal+h7Ni56G+kRe+tazLWEXVO9piC8M+nzSIeRtTfPmCOv89vINFxAejz67MmT/ojZIB4VP7NqUyzt1lMDNr4do6xFcAXy841nZCQtOnh579dU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nOe5FCym; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6254AC116C6;
-	Mon, 23 Feb 2026 20:31:49 +0000 (UTC)
+	s=arc-20240116; t=1771878877; c=relaxed/simple;
+	bh=agwFHK677eRcmoaMBCgPnV8LmYwoYhIaK5ArgeRinfU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=sL2cyllg35cOkjJHlMQk+7AGoU+ek1LPWETbOWu5SAZ0LWVZDG2N8/oq90zwlooF69Rp9pTBE8qUHhoyjLIRMft2nveC79CSHbPY/W5Xp+We+e4BkW5TdPIV6GogzoDPowMNV/+N2zK3HOUmwbC6QWoPlUvej+jnbnFz+XfzXdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WDmF2Zv/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23881C116C6;
+	Mon, 23 Feb 2026 20:34:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771878718;
-	bh=JVFoYP6O1GtQxzGkQymbRgfqEOvg8wZWDd9t5Qjwppk=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=nOe5FCymJvzvQhrorcqcuC9zWVQ+MxE5R4ZC88A57t9/fGFGDxeFznV2QmIIkEH0K
-	 Yb4FPzgc1AyBsVZs2rm3J0yAREi7wPCleMjttHhZsvgpBkuWi95EOBYpxaRLnvVk10
-	 sDFG4uiZXnDgQPyZKIUvUV/hUzjNY1lnSlnvh5CkmP0SrwfsHYAHwmbc38Ix5y2Op5
-	 09TpgNmdJy9dvRinFE7HGyTg2g34pLSNvr+5p4pPzKitt2gkvrYR2xaInKKh4hQVxz
-	 73FY04gRJsziFxShzjFUbycBWvRlifyJD1nhFSR+Qt6Yee+CQWHrojMGMORsWzlbiG
-	 PDtVvM6N9MSSg==
-Date: Mon, 23 Feb 2026 20:31:45 +0000
-From: Jonathan Cameron <jic23@kernel.org>
-To: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- agross@kernel.org, andersson@kernel.org, lumag@kernel.org,
- dmitry.baryshkov@oss.qualcomm.com, konradybcio@kernel.org,
- daniel.lezcano@linaro.org, sboyd@kernel.org, amitk@kernel.org,
- thara.gopinath@gmail.com, lee@kernel.org, rafael@kernel.org,
- subbaraman.narayanamurthy@oss.qualcomm.com, david.collins@oss.qualcomm.com,
- anjelique.melendez@oss.qualcomm.com, kamal.wadhwa@oss.qualcomm.com,
- rui.zhang@intel.com, lukasz.luba@arm.com, devicetree@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
- cros-qcom-dts-watchers@chromium.org, quic_kotarake@quicinc.com,
- neil.armstrong@linaro.org, stephan.gerhold@linaro.org
-Subject: Re: [PATCH V10 3/4] iio: adc: Add support for QCOM PMIC5 Gen3 ADC
-Message-ID: <20260223203145.4a4493a7@jic23-huawei>
-In-Reply-To: <70b77d54-a6ab-426e-a7e1-3e011adad6d4@oss.qualcomm.com>
-References: <20260130115421.2197892-1-jishnu.prakash@oss.qualcomm.com>
-	<20260130115421.2197892-4-jishnu.prakash@oss.qualcomm.com>
-	<20260131173941.68b8116d@jic23-huawei>
-	<6012ad64-3a10-4f05-9f37-f2d0c36df582@oss.qualcomm.com>
-	<20260207165638.0ed27302@jic23-huawei>
-	<70b77d54-a6ab-426e-a7e1-3e011adad6d4@oss.qualcomm.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-pc-linux-gnu)
+	s=k20201202; t=1771878877;
+	bh=agwFHK677eRcmoaMBCgPnV8LmYwoYhIaK5ArgeRinfU=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=WDmF2Zv/GO1dsSpisw+y5UoS08rTUwIxbVUVBkoG/G5mJ1I2l8plwQmw2DZZUUw2q
+	 v8yJ1M5VNlT+NpO5BNWVk+SCNbatrd6U3vqVpRCzCazQLb0XOzwJ061qf0dBPq7t4S
+	 jliigBsuEQ0LvM0IM72hq4KkiHmWtusLah3u+hlm0HCoHBYrHHl4qlA4m0lfsaYZKl
+	 qoH0ohA+p8vdl0bsKXQabEq+htXhAKBfBNFn2rScCodn2GTpjBy0ompzpyYy+w9X6z
+	 vNkz/0DmteXgV6rRETvU2KtCwnF1qXAIN1S0q+7X7jiMs9KpiLCc5X375ZTAUF5mSA
+	 5oAcDEpGhc98A==
+Message-ID: <9009be77-8708-4403-b254-ebbd5aec103a@kernel.org>
+Date: Mon, 23 Feb 2026 21:34:31 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: (subset) [PATCH v3 0/4] arm64: dts: qcom: Introduce Glymur SoC
+ dtsi and Glymur CRD dts
+To: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Pankaj Patil <pankaj.patil@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, rajendra.nayak@oss.qualcomm.com,
+ sibi.sankar@oss.qualcomm.com,
+ Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>,
+ Maulik Shah <maulik.shah@oss.qualcomm.com>,
+ Taniya Das <taniya.das@oss.qualcomm.com>,
+ Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
+ Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>,
+ Qiang Yu <qiang.yu@oss.qualcomm.com>,
+ Manaf Meethalavalappu Pallikunhi <manaf.pallikunhi@oss.qualcomm.com>,
+ Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>,
+ Abel Vesa <abelvesa@kernel.org>
+References: <20251219-upstream_v3_glymur_introduction-v3-0-32271f1f685d@oss.qualcomm.com>
+ <177187657304.166046.16689907944315673624.b4-ty@kernel.org>
+ <eijiiyxjtj6cw25gb3xaaeqitemtmrxeemcb52csoy34vw2wme@y22ajzhyfikm>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <eijiiyxjtj6cw25gb3xaaeqitemtmrxeemcb52csoy34vw2wme@y22ajzhyfikm>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-93814-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-93815-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[30];
-	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[20];
 	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[jic23@kernel.org,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[kernel.org,oss.qualcomm.com,linaro.org,gmail.com,intel.com,arm.com,vger.kernel.org,chromium.org,quicinc.com];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: 537E117CEF5
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:url]
+X-Rspamd-Queue-Id: E684A17CFDD
 X-Rspamd-Action: no action
 
-On Mon, 23 Feb 2026 17:49:18 +0530
-Jishnu Prakash <jishnu.prakash@oss.qualcomm.com> wrote:
+On 23/02/2026 21:31, Bjorn Andersson wrote:
+> On Mon, Feb 23, 2026 at 01:56:10PM -0600, Bjorn Andersson wrote:
+>>
+>> On Fri, 19 Dec 2025 20:16:53 +0530, Pankaj Patil wrote:
+>>> Introduce dt-bindings and initial device tree support for Glymur,
+>>> Qualcomm's next-generation compute SoC and it's associated
+>>> Compute Reference Device (CRD) platform.
+>>>
+>>> https://www.qualcomm.com/products/mobile/snapdragon/laptops-and-tablets/snapdragon-x2-elite
+>>> https://www.qualcomm.com/news/releases/2025/09/new-snapdragon-x2-elite-extreme-and-snapdragon-x2-elite-are-the-
+>>>
+>>> [...]
+>>
+>> Applied, thanks!
+>>
+>> [1/4] dt-bindings: arm: qcom: Document Glymur SoC and board
+>>       commit: 4ed5f35359db5fac587d4fb9f7f61c1c6f0729d7
+>> [3/4] arm64: dts: qcom: Introduce Glymur base dtsi
+>>       commit: 41b6e8db400ccba9fc373ac3f0c9ebfd3a22c810
+>> [4/4] arm64: dts: qcom: glymur: Enable Glymur CRD board support
+>>       commit: 9314c6ecace1a49aa40f75f72278e14d2feb2cd2
+>>
+> 
+> I don't know why b4 generated a ty message for this version, v8 has been
+> merged.
 
-> Hi Jonathan,
-> 
-> On 2/7/2026 10:26 PM, Jonathan Cameron wrote:
-> > On Fri, 6 Feb 2026 18:45:02 +0530
-> > Jishnu Prakash <jishnu.prakash@oss.qualcomm.com> wrote:
-> >   
-> >> Hi Jonathan,
-> >>
-> >> On 1/31/2026 11:09 PM, Jonathan Cameron wrote:  
-> >>> On Fri, 30 Jan 2026 17:24:20 +0530
-> >>> Jishnu Prakash <jishnu.prakash@oss.qualcomm.com> wrote:
-> >>>     
-> >>>> The ADC architecture on PMIC5 Gen3 is similar to that on PMIC5 Gen2,
-> >>>> with all SW communication to ADC going through PMK8550 which
-> >>>> communicates with other PMICs through PBS.
-> >>>>
-> >>>> One major difference is that the register interface used here is that
-> >>>> of an SDAM (Shared Direct Access Memory) peripheral present on PMK8550.
-> >>>> There may be more than one SDAM used for ADC5 Gen3 and each has eight
-> >>>> channels, which may be used for either immediate reads (same functionality
-> >>>> as previous PMIC5 and PMIC5 Gen2 ADC peripherals) or recurring measurements
-> >>>> (same as ADC_TM functionality).
-> >>>>
-> >>>> By convention, we reserve the first channel of the first SDAM for all
-> >>>> immediate reads and use the remaining channels across all SDAMs for
-> >>>> ADC_TM monitoring functionality.
-> >>>>
-> >>>> Add support for PMIC5 Gen3 ADC driver for immediate read functionality.
-> >>>> ADC_TM is implemented as an auxiliary thermal driver under this ADC
-> >>>> driver.
-> >>>>
-> >>>> Signed-off-by: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>    
-> >>> Hi Jishnu
-> >>>
-> >>> Whilst there are a couple of comments below, I think this is ready to go.
-> >>> Unfortunately this is just a few days too late to merge for this coming
-> >>> cycle as I need to send the IIO pull request today or tomorrow (due to going
-> >>> through char-misc) so this would get no soak time in next.
-> >>>
-> >>> Also, I'm not sure how we actually want to merge this given close coupling with
-> >>> the thermal driver.  Perhaps best bet is I do an immutable branch of next rc1
-> >>> once available that we pull into both trees. That would have the first 3 patches
-> >>> on it. 
-> >>>
-> >>> Jonathan
-> >>>     
-> >>>> diff --git a/drivers/iio/adc/qcom-spmi-adc5-gen3.c b/drivers/iio/adc/qcom-spmi-adc5-gen3.c
-> >>>> new file mode 100644
-> >>>> index 000000000000..f8168a14b907
-> >>>> --- /dev/null
-> >>>> +++ b/drivers/iio/adc/qcom-spmi-adc5-gen3.c  
-> 
-> ....
-> 
-> >>
-> >> Also, is it alright if I push the next series to address
-> >> your comments immediately? Would you be able to include patches 1-3
-> >> in the immutable branch you mentioned, once it's available?  
-> > It's fine to post a v11.  I'll only be building that immutable tree
-> > after 7.0-rc1 is out (or 6.20-rc1 depending on Linus' decision on naming
-> > for the cycle that is about to start)
-> >   
-> 
-> It looks like kernel 7.0-rc1 is out now and I had posted v11 here earlier:
-> https://lore.kernel.org/all/20260209105438.596339-1-jishnu.prakash@oss.qualcomm.com/,
-> 
-> so can you please check this latest series and pick patches 1-3 if there
-> are no issues?
+I objected to the DTS patch.
 
-Sure.  Immutable branch created. However, I'd suggest the thermal folk don't
-pick this up until it's had a little soak time. Today I've pushed it out for
-0-day to have a look (as part of the testing branch of iio.git). Once those
-results come in I'll push it out as togreg and linux-next will pick it up.
-
-https://web.git.kernel.org/pub/scm/linux/kernel/git/jic23/iio.git/log/?h=ib-iio-thermal-qcom-pmic5
-https://git.kernel.org/pub/scm/linux/kernel/git/jic23/iio.git  ib-iio-thermal-qcom-pmic5
-
-Thanks,
-
-Jonathan
-
-> 
-> Thanks,
-> Jishnu
-> 
-> > Thanks,
-> > 
-> > Jonathan  
-> 
-
+Best regards,
+Krzysztof
 
