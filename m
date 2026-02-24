@@ -1,135 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-94001-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94002-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aPghLVe2nWnURAQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94001-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 15:31:51 +0100
+	id SI9aBd+3nWmQRQQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94002-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 15:38:23 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 23D63188619
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 15:31:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 656C9188762
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 15:38:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 8895D3125D60
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 14:26:07 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 2A6C431EF433
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 14:30:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C00339E6DC;
-	Tue, 24 Feb 2026 14:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E55C639E6E8;
+	Tue, 24 Feb 2026 14:30:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b="PLL2Q8o9"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b4WBReiV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout01.posteo.de (mout01.posteo.de [185.67.36.65])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E82239C62B
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Feb 2026 14:26:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE54D38E5C4;
+	Tue, 24 Feb 2026 14:30:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771943165; cv=none; b=tzQGPklF+wAMbvHgX9nf6Yxha96Mch5QDQDblifSvY8uGQ0bFfkk4npWEVnQQyX7xCYOz09INzBCgbLiW79WuGdm6AKiKv37Hjge5tKmRYvDJEmLhG1QwL+AgiAsoiT/u/pJwBQgdA+BjTdm3fnL9AcF1lzgKlbF0O616RP6Is0=
+	t=1771943434; cv=none; b=ojEkjw9+x04mtXM2068McgVHfB9LLdWoYH5f3ez7Ho0KydLH74CcR/1sg7RYZJYRjpp4FgPXaARLq3ugBuNQmlMjMdy9p4cB/7Nv/BqPKP03SYQZW00yzow2Df+ePa1UhSWBz9UHRWsWJaNswfsB6gt1PoofVK/lwvWRpl8u0oM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771943165; c=relaxed/simple;
-	bh=yGF1SihMby5FoTVbeRkf4o0DTwBjNrt7ncyLUn6qLKw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EHtXdn13GQAsex/aN16TLueqXvFmuCYlzFCMAddGZ51thn9NNEosJ+kFhauwLbyYGnLCGBstSxsv9cVHr7pYVK3vTKq5R+C/x7/n7lt5p6JhIJ7XyeexsrtBh9cuABoLKisvC1kzmVnegQg8g7cjOQIvrPNPBQ++kSW/GVtr7j0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de; spf=pass smtp.mailfrom=posteo.de; dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b=PLL2Q8o9; arc=none smtp.client-ip=185.67.36.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.de
-Received: from submission (posteo.de [185.67.36.169]) 
-	by mout01.posteo.de (Postfix) with ESMTPS id 132E7240027
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Feb 2026 15:26:03 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.de; s=2017;
-	t=1771943163; bh=OqJgJP9gwGvLNHBkbuH7ShAGV/HSthFLMVtrCu4MZp4=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:Content-Transfer-Encoding:From;
-	b=PLL2Q8o9jYExfZ/eXVvBNEchQmAXE5clcUb9reZCPEc1JNXbXs1vV5v1m6W2x8eiw
-	 KdEKnAnKmItyiJErydZ3k01nlO7TWwlKWmSlFUt3+bNgO8lQXskdUh8f0YbrucTfCJ
-	 wNQnwwDW/wWad1CdlkGQYXw9Ietc5zzZ/CxBqE11TQTVsa4jj+y/LBKwI9kc23wGs6
-	 ysbDNKQWA0mvcGx5d5g9r5g43nZtDwEBFWX2v0i+NsYMPjNMAjIIO4q+BO6vfBXKRz
-	 X/GaZbSPPfwRibO4npyMvxKboABj0ppZFw1nyuAIwB9s1G9cIg6WdVRRtD65V1rTnn
-	 IbJ9J4jRx63VQ==
-Received: from customer (localhost [127.0.0.1])
-	by submission (posteo.de) with ESMTPSA id 4fL0Q16jsfz6tvs;
-	Tue, 24 Feb 2026 15:26:01 +0100 (CET)
-Date: Tue, 24 Feb 2026 14:26:02 +0000
-From: Paul Adam <adamp@posteo.de>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-Subject: Re: [PATCH v2 1/3] dt-bindings: vendor-prefixes: add WIKO SAS
-Message-ID: <aZ2040a0qgj28JCf@MyryksLaptop>
-References: <20260221-wiko-chuppito-v2-0-6336b1b12389@posteo.de>
- <20260221-wiko-chuppito-v2-1-6336b1b12389@posteo.de>
- <20260223-literate-flamingo-of-reading-4deaa5@quoll>
+	s=arc-20240116; t=1771943434; c=relaxed/simple;
+	bh=6MnCgrZgi9hxcGd/9mSh+s2YoyRRPk0j2EFgEAogS7g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=qrD7ocu1QULm9qIEwbQleUcS6Q4awaLXjjHL7X7A5lK41nscu35V3U/wcXhhgQpha158WEsZpBa3dww6bfpjV9Ux3f1H7MshBjSNMFN8p4Gzxx/1lB327VZt+Qo/nahnYXo7yci172NX91cmrdUinYPYHlVEGjK7fa/U1nG78MA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b4WBReiV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D20FC2BC86;
+	Tue, 24 Feb 2026 14:30:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1771943434;
+	bh=6MnCgrZgi9hxcGd/9mSh+s2YoyRRPk0j2EFgEAogS7g=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=b4WBReiVOreiCHdkeuXHGUy68TNXter60eocG2n3IBhHkfOnDCGqD4L07Hs580cwe
+	 TmBXb72tkDiIXbxYDsGPhtmdXYS0Pzt4dSCHd85zxZcPKzk0xyy9EzwTZOkmo+Km53
+	 6T7ZkfTQIzLzRZavhnL4eHu+v7dEB5qy2COW54r51iaUHi7prhcQ078k/BYH6X1XtZ
+	 +TWkiQymNojK+nYJPbKB+TW9eXxSAuz/kUMQoSlTyeTd7p8112uGPeisxHLaXaoDpB
+	 BJDJXA433Xz9vTPh2co0IjNkJuj73svfihCH3d0AfMFfisKo08sk9i9mG2lwqpO+rl
+	 VraVyQr10V5iQ==
+Message-ID: <bcb838c9-9e29-4191-8b89-53ee319309f9@kernel.org>
+Date: Tue, 24 Feb 2026 15:30:29 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/3] dt-bindings: vendor-prefixes: add WIKO SAS
+To: Paul Adam <adamp@posteo.de>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+References: <20260221-wiko-chuppito-v2-0-6336b1b12389@posteo.de>
+ <20260221-wiko-chuppito-v2-1-6336b1b12389@posteo.de>
+ <20260223-literate-flamingo-of-reading-4deaa5@quoll>
+ <aZ2040a0qgj28JCf@MyryksLaptop>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <aZ2040a0qgj28JCf@MyryksLaptop>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260223-literate-flamingo-of-reading-4deaa5@quoll>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[posteo.de,none];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_DKIM_ALLOW(-0.20)[posteo.de:s=2017];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[posteo.de:+];
-	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94001-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-94002-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MISSING_XM_UA(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
+	NEURAL_HAM(-0.00)[-0.998];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[adamp@posteo.de,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	NEURAL_HAM(-0.00)[-1.000];
+	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCPT_COUNT_SEVEN(0.00)[11];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[posteo.de:dkim,wiko.com:url,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 23D63188619
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,wiko.com:url,wikomobile.com:url,wiko.cn:url]
+X-Rspamd-Queue-Id: 656C9188762
 X-Rspamd-Action: no action
 
-On 26/02/23 11:25, Krzysztof Kozlowski wrote:
-> On Sat, Feb 21, 2026 at 09:55:39PM +0100, Paul Adam wrote:
-> > Wiko is a french smartphone company: https://wiko.com
+On 24/02/2026 15:26, Paul Adam wrote:
+> On 26/02/23 11:25, Krzysztof Kozlowski wrote:
+>> On Sat, Feb 21, 2026 at 09:55:39PM +0100, Paul Adam wrote:
+>>> Wiko is a french smartphone company: https://wiko.com
+>>
+>> Everything in Chinese, so not that much French company. Also footer says
+>> after translation:
+>>
+>> Copyright Â© Wuke Terminal Technology (Dongguan) Co., Ltd.
+>> The main body number of the record: Guangdong ICP No. 2022057930
+>>
+>> so for sure not French.
+>>
+>> Best regards,
+>> Krzysztof
+>>
 > 
-> Everything in Chinese, so not that much French company. Also footer says
-> after translation:
-> 
-> Copyright © Wuke Terminal Technology (Dongguan) Co., Ltd.
-> The main body number of the record: Guangdong ICP No. 2022057930
-> 
-> so for sure not French.
-> 
-> Best regards,
-> Krzysztof
-> 
+> Whats quite confusing to me is that both "wikomobile" and "wiko" use the brand
+> name "Wiko" and sell the same phones. 
 
-Whats quite confusing to me is that both "wikomobile" and "wiko" use the brand
-name "Wiko" and sell the same phones. 
+It's just different branches. wiko.cn redirects to wiko.com
 
-But since my phone is from the french company, I can change it back to
-"wikomobile" and adjust the binding accordingly.
+> 
+> But since my phone is from the french company, I can change it back to
+> "wikomobile" and adjust the binding accordingly.
+> 
+> I just want to mention that the offical/legal company name is
+> "Wiko, sociÃ©tÃ© par actions simplifiÃ©e" (Wiko, french type of business entity)
 
-I just want to mention that the offical/legal company name is
-"Wiko, société par actions simplifiée" (Wiko, french type of business entity)
+I assumed that the Chinese part is rather the mother company, but page:
+https://world.wikomobile.com/w-introduction-wiko
+claims rather that French one, so it is actually fine.
 
 Best regards,
-Paul
+Krzysztof
 
