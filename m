@@ -1,198 +1,198 @@
-Return-Path: <linux-arm-msm+bounces-93933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93934-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id AO4GKeFenWmxOgQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 09:18:41 +0100
+	id YOdnI49fnWmxOgQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93934-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 09:21:35 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C56F18383E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 09:18:41 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 93EE31838D5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 09:21:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 23F34313977B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 08:15:03 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 7CC43301A53E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 08:21:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9536636657D;
-	Tue, 24 Feb 2026 08:15:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CF46364EB6;
+	Tue, 24 Feb 2026 08:21:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="e/PLKYYK"
+	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="OtokF0pM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f65.google.com (mail-ed1-f65.google.com [209.85.208.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-m21471.qiye.163.com (mail-m21471.qiye.163.com [117.135.214.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F004366556
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Feb 2026 08:15:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF21366806;
+	Tue, 24 Feb 2026 08:21:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.214.71
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771920902; cv=none; b=nAbIW+nKKQXmi/NYWRYZ9ljtl4/s2DP+iw5rzxk9Ln41H+o80oEQaJJwVmvew5wktuYEkRRi4zhbbhfLnEmxciE+DnFZMOl2weq0GrPjLTSsvdjCs5Qv4zAGh9pCEyEoVgsBntAs/B139oU+CQ6ZPASfEUG/EeBFmxT0zsZMDgw=
+	t=1771921292; cv=none; b=c7wSE4hYou+7htxkKBpX3x3ocowippH+kD0AHV630QVegc3x/ERtAn8OA3Oel0DJtvfMIC0vYCKEJEMDvzzd9AKvH2xPCpXeFUhSCQlCD6CgXjPeyqlEYsHFpG9Z1r+MtvZBmXzHdQWfvm8J416A8wJavRiTV4od5pcnmpD4CIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771920902; c=relaxed/simple;
-	bh=9BNqf2MxT2KB9V3RmWVoDEyDdtAfYIbH0M7+sdJqyF8=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=QDAUNQr0+aoeIw0zI9olsrAq2TOz9VLHNNm0KjX7wRwHuBqLfmSx/BbwMVtZku9aBndMsPUMYROM0Onp00wzM/9kYp5MaiTduP8335UsdQBuQXc8Cv84U5a878wLh+0sgNayV2FqlR+HWW/pk+0A21z+Vte/dInf3lX39iW9HMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=e/PLKYYK; arc=none smtp.client-ip=209.85.208.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f65.google.com with SMTP id 4fb4d7f45d1cf-65be78011c8so7151221a12.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Feb 2026 00:15:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1771920899; x=1772525699; darn=vger.kernel.org;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xKXXJGWnu9K3xWMW9HyaDVo1/D1y/DKuzi9/eiBk4qI=;
-        b=e/PLKYYKTVwvOJC59T6f+2vp9KK35XkixfJUCi8jTKZP0yiHMyS6pfcomFjzHxfpbQ
-         knxi8XFrWlEjfuXlgFAvgTkKZBq4gWLEfJMZD4+jfhKoN2q4G/bj9slSFvButfSgrN9Y
-         YsNAVtK/Dq7GCFsgV7LuF1IlOrVmsv97R4MrP6FPstwdbxKns0TovrENx8qlxgrGl0fu
-         UzJdPC0FT9ESwfqQ4Cog01EcdUEfyXd7qaWKbRYmgvymrA3s1U1XmEO6/OGrzUZxdfBo
-         W3pqi3H33scQHyOm6TBC0uE/8w1ehNpixQ5vjnb4NXm8cRabSWM7CaxS+RUe3/3aVBCx
-         xUyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771920899; x=1772525699;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xKXXJGWnu9K3xWMW9HyaDVo1/D1y/DKuzi9/eiBk4qI=;
-        b=nKs2qoDOqpoRs9b/djZpHkGX4jHEN28pG8T/QDiqJGqOcX7ZWzDC1AhBWoKuw5qOGZ
-         c4TyckaXJAI1/mkVXseBdMUOErHCr2KXgv12JxvTCSFUQP9MWpRE4AIIIH9VOsJ9P+a5
-         lDyqwmTw87C89cIz0YfAkRG8lMDTRqhnPOyMS2xz136RrFkdYySDvjyHdsIH/rY3wB/s
-         cHC33/8ko0Y2GpNALpEZS0eKvgofN88Sj9m6zgs1+h1s54TG81Jai9o1imD90og9f9KJ
-         GmzE7vCAbHvIQgJzllF8oIQXCekolO1Aea973V4gs7XgcCIPPauM6KgKW8tkubcxptnJ
-         yW8g==
-X-Forwarded-Encrypted: i=1; AJvYcCX5Z6jk4uBOJdHnycwBDikGo7Ap6SnXRC9UK8I/Vrooh1BxFGCsThUOO8aJjP1V9pxvBqXA2Shc7SbrQrhT@vger.kernel.org
-X-Gm-Message-State: AOJu0YybgUjErzM3nVOfqSgyQI9/GojNGgkCPeEe4E7EPAZU42xPtI3x
-	IjBT0iioDNdvPn4V+TnkK3hdKMeQwILfWU7zwhisPqMQ9weD/SWwTcpGDPKTxdwW7mg=
-X-Gm-Gg: AZuq6aJljLIafogn2dXaIWfx0R1mTQeV3596GriHjQq/YGbxnwkdEmIO4QQX0NWRthn
-	jYd4w/ol9K0mnOfVOblLXmc0T9jpCfigcHsRhwXkh+JSqilN4Jvh7U+QowMsXDsW74LYzbwUHOp
-	JRZT3DDbV0t3uCbS9KeRd+TBqdmFJS1LvnOMuxbJLBTP/Xduwmf4CkEAewhEOdC9Soymd8lHtoY
-	rWDuYvXe975ERCOkFdeaaWqAmDIBr4BIuL2CtvI2LfSq9pQq/xyp1gGAvAbgAlB2QcT0i+UXj7j
-	JUVjwTP5JC6UGwpjiIEUay3JlHn3fFHEEOliTR4gerfn4GepC8dT9oWoekH183C07x/6Dc18VHP
-	IWe7bjZiDTAf4E2NZFtSyqIpDYZbYyriHFZTZQNreFUxTdLk/N4EH1590R4magSLJ6/w8Avd6xd
-	aLBXI4pipHJtWgrlgUDai+PQlWjR6IFWlKryrZYO5Ep+NKs5Bx8q2nfoUjVHJS7B11+YN+CBb2S
-	dTqdgo=
-X-Received: by 2002:a17:907:e0d8:b0:b88:5957:2d65 with SMTP id a640c23a62f3a-b9081b40c12mr380726366b.37.1771920899412;
-        Tue, 24 Feb 2026 00:14:59 -0800 (PST)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b9084e4bfe6sm399567166b.44.2026.02.24.00.14.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Feb 2026 00:14:59 -0800 (PST)
+	s=arc-20240116; t=1771921292; c=relaxed/simple;
+	bh=jGNKoKMtgp1RUDE0JUj9nl9DZtqZbHM10+ockHI/Lug=;
+	h=Cc:Subject:To:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=P/KLlkIQh9Dl90OQ+njg4dzOQ/zbf6CwFmP9It6h0RhyWjK/3EXYe9AekiMM0lxaRmdjynzjbFU5jYbWCcidYa2PE4pu52hu0aHvhB6SjVYfsmaV+Xr6aKQ54mGMD/gmQNFz+kHJf6eoRokSfL5o6sVlnBBq/TV3sXJUrkplKUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=OtokF0pM; arc=none smtp.client-ip=117.135.214.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
+Received: from [172.16.12.14] (unknown [58.22.7.114])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 34c7e7f42;
+	Tue, 24 Feb 2026 16:21:13 +0800 (GMT+08:00)
+Cc: shawn.lin@rock-chips.com, Bjorn Helgaas <bhelgaas@google.com>,
+ "Vaibhaav Ram T . L" <vaibhaavram.tl@microchip.com>,
+ Kumaravel Thiagarajan <kumaravel.thiagarajan@microchip.com>,
+ Even Xu <even.xu@intel.com>, Xinpeng Sun <xinpeng.sun@intel.com>,
+ Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+ Jiri Kosina <jikos@kernel.org>,
+ Alexandre Belloni <alexandre.belloni@bootlin.com>,
+ Zhou Wang <wangzhou1@hisilicon.com>, Longfang Liu <liulongfang@huawei.com>,
+ Vinod Koul <vkoul@kernel.org>, Lee Jones <lee@kernel.org>,
+ Jijie Shao <shaojijie@huawei.com>, Jian Shen <shenjian15@huawei.com>,
+ Sunil Goutham <sgoutham@marvell.com>, Andrew Lunn <andrew+netdev@lunn.ch>,
+ Heiner Kallweit <hkallweit1@gmail.com>,
+ "David S . Miller" <davem@davemloft.net>,
+ Jeff Hugo <jeff.hugo@oss.qualcomm.com>, Oded Gabbay <ogabbay@kernel.org>,
+ Maciej Falkowski <maciej.falkowski@linux.intel.com>,
+ Karol Wachowski <karol.wachowski@linux.intel.com>,
+ Min Ma <mamin506@gmail.com>, Lizhi Hou <lizhi.hou@amd.com>,
+ Andreas Noever <andreas.noever@gmail.com>,
+ Mika Westerberg <westeri@kernel.org>, Tomasz Jeznach
+ <tjeznach@rivosinc.com>, Will Deacon <will@kernel.org>,
+ Xinliang Liu <xinliang.liu@linaro.org>, Tian Tao <tiantao6@hisilicon.com>,
+ Davidlohr Bueso <dave@stgolabs.net>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Srujana Challa <schalla@marvell.com>, Bharat Bhushan
+ <bbhushan2@marvell.com>, Antoine Tenart <atenart@kernel.org>,
+ Herbert Xu <herbert@gondor.apana.org.au>, Raag Jadav <raag.jadav@intel.com>,
+ Hans de Goede <hansg@kernel.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Jiri Slaby <jirislaby@kernel.org>, Andy Shevchenko <andy@kernel.org>,
+ Manivannan Sadhasivam <mani@kernel.org>,
+ Mika Westerberg <mika.westerberg@linux.intel.com>,
+ Andi Shyti <andi.shyti@kernel.org>, Robert Richter <rric@kernel.org>,
+ Mark Brown <broonie@kernel.org>, Nirmal Patel
+ <nirmal.patel@linux.intel.com>, Kurt Schwemmer
+ <kurt.schwemmer@microsemi.com>, Logan Gunthorpe <logang@deltatee.com>,
+ Linus Walleij <linusw@kernel.org>, Bartosz Golaszewski <brgl@kernel.org>,
+ Sakari Ailus <sakari.ailus@linux.intel.com>,
+ Bingbu Cao <bingbu.cao@intel.com>, Ulf Hansson <ulf.hansson@linaro.org>,
+ Arnd Bergmann <arnd@arndb.de>, Benjamin Tissoires <bentiss@kernel.org>,
+ linux-input@vger.kernel.org, linux-i3c@lists.infradead.org,
+ dmaengine@vger.kernel.org, netdev@vger.kernel.org, nic_swsd@realtek.com,
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ linux-usb@vger.kernel.org, iommu@lists.linux.dev,
+ linux-riscv@lists.infradead.org, David Airlie <airlied@gmail.com>,
+ Simona Vetter <simona@ffwll.ch>, linux-cxl@vger.kernel.org,
+ linux-crypto@vger.kernel.org, platform-driver-x86@vger.kernel.org,
+ linux-serial@vger.kernel.org, mhi@lists.linux.dev,
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ Jan Dabros <jsd@semihalf.com>, linux-i2c@vger.kernel.org,
+ Daniel Mack <daniel@zonque.org>, Haojian Zhuang <haojian.zhuang@gmail.com>,
+ linux-spi@vger.kernel.org, Jonathan Derrick <jonathan.derrick@linux.dev>,
+ linux-pci@vger.kernel.org, linux-gpio@vger.kernel.org,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, linux-media@vger.kernel.org,
+ linux-mmc@vger.kernel.org, Jakub Kicinski <kuba@kernel.org>
+Subject: Re: [PATCH 01/37] PCI/MSI: Add Devres managed IRQ vectors allocation
+To: phasta@kernel.org
+References: <1771860581-82092-1-git-send-email-shawn.lin@rock-chips.com>
+ <1771860581-82092-2-git-send-email-shawn.lin@rock-chips.com>
+ <20260223160402.3ad8f079@kernel.org>
+ <ec226aa1-5cc8-855f-8f90-1d7f89efe766@rock-chips.com>
+ <07fc896007d86b731cbfb3cf6bbdf4e5315d7a77.camel@mailbox.org>
+From: Shawn Lin <shawn.lin@rock-chips.com>
+Message-ID: <d601ec05-ef38-5e8e-c643-c05010717ebe@rock-chips.com>
+Date: Tue, 24 Feb 2026 16:21:11 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 24 Feb 2026 09:14:58 +0100
-Message-Id: <DGN1JB8J9YG5.JZDBJ9WBLDXC@fairphone.com>
-Subject: Re: [PATCH v2 2/5] dt-bindings: thermal: generic-adc: Document
- #io-channel-cells
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Rob Herring" <robh@kernel.org>, "Luca Weiss" <luca.weiss@fairphone.com>
-Cc: "Jonathan Cameron" <jic23@kernel.org>, "David Lechner"
- <dlechner@baylibre.com>, =?utf-8?q?Nuno_S=C3=A1?= <nuno.sa@analog.com>,
- "Andy Shevchenko" <andy@kernel.org>, "Rafael J. Wysocki"
- <rafael@kernel.org>, "Daniel Lezcano" <daniel.lezcano@linaro.org>, "Zhang
- Rui" <rui.zhang@intel.com>, "Lukasz Luba" <lukasz.luba@arm.com>, "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
- "Laxman Dewangan" <ldewangan@nvidia.com>, "Bjorn Andersson"
- <andersson@kernel.org>, "Konrad Dybcio" <konradybcio@kernel.org>, "Hans de
- Goede" <hansg@kernel.org>, "Jens Reidel" <adrian@mainlining.org>, "Casey
- Connolly" <casey.connolly@linaro.org>,
- <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
- <linux-arm-msm@vger.kernel.org>, <linux-iio@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
- <devicetree@vger.kernel.org>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260220-bat-temp-adc-v2-0-fe34ed4ea851@fairphone.com>
- <20260220-bat-temp-adc-v2-2-fe34ed4ea851@fairphone.com>
- <20260223184815.GA144001-robh@kernel.org>
-In-Reply-To: <20260223184815.GA144001-robh@kernel.org>
+MIME-Version: 1.0
+In-Reply-To: <07fc896007d86b731cbfb3cf6bbdf4e5315d7a77.camel@mailbox.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0a9c8ebcf01809cckunma66e3c5da3898b
+X-HM-MType: 1
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFDSUNOT01LS0k3V1ktWUFJV1kPCRoVCBIfWUFZGkwYT1ZIQ05NT00aQhpOTEpWFRQJFh
+	oXVRMBExYaEhckFA4PWVdZGBILWUFZTkNVSUlVTFVKSk9ZV1kWGg8SFR0UWUFZT0tIVUpLSEtKTE
+	tVSktLVUtZBg++
+DKIM-Signature: a=rsa-sha256;
+	b=OtokF0pM0Rdmb7CoOmlCq/zfLcm40+tPTFk2ZLwxQS10TLzJue4pNlrDVsSPzZGK7GjnZ03zAIHAn5VDRN2uAWAEjdInG9Pdls9n5NtKIAxCt/aoY8MRgy7icqkMUtp0jEjJ+naa5XLLsJTKYxzikINqVGIROqqbjer5tDm2ofg=; s=default; c=relaxed/relaxed; d=rock-chips.com; v=1;
+	bh=NX1TqWCCjq6xu1hXTAQXpYiiKKus6llHeXoiHdmvBy4=;
+	h=date:mime-version:subject:message-id:from;
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[fairphone.com,quarantine];
-	MV_CASE(0.50)[];
-	R_DKIM_ALLOW(-0.20)[fairphone.com:s=fair];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[rock-chips.com,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[rock-chips.com:s=default];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[25];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-93933-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[fairphone.com:+];
+	TAGGED_FROM(0.00)[bounces-93934-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_CC(0.00)[rock-chips.com,google.com,microchip.com,intel.com,linux.intel.com,kernel.org,bootlin.com,hisilicon.com,huawei.com,marvell.com,lunn.ch,gmail.com,davemloft.net,oss.qualcomm.com,amd.com,rivosinc.com,linaro.org,stgolabs.net,gondor.apana.org.au,linuxfoundation.org,microsemi.com,deltatee.com,arndb.de,vger.kernel.org,lists.infradead.org,realtek.com,lists.freedesktop.org,lists.linux.dev,ffwll.ch,semihalf.com,zonque.org,linux.dev];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[luca.weiss@fairphone.com,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[88];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[shawn.lin@rock-chips.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[rock-chips.com:+];
+	NEURAL_HAM(-0.00)[-0.999];
+	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	NEURAL_HAM(-0.00)[-1.000];
 	TO_DN_SOME(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[fairphone.com:mid,fairphone.com:dkim,fairphone.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 4C56F18383E
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,rock-chips.com:mid,rock-chips.com:dkim]
+X-Rspamd-Queue-Id: 93EE31838D5
 X-Rspamd-Action: no action
 
-On Mon Feb 23, 2026 at 7:48 PM CET, Rob Herring wrote:
-> On Fri, Feb 20, 2026 at 10:19:06AM +0100, Luca Weiss wrote:
->> Document the property to allow using this sensor with io-channels.
->
-> Why? On the surface, it looks like you are adding a provider property to=
-=20
-> a consumer. Maybe that's right?=20
+在 2026/02/24 星期二 15:47, Philipp Stanner 写道:
+> On Tue, 2026-02-24 at 10:08 +0800, Shawn Lin wrote:
+>> 在 2026/02/24 星期二 8:04, Jakub Kicinski 写道:
+>>> On Mon, 23 Feb 2026 23:29:40 +0800 Shawn Lin wrote:
+>>>> pcim_alloc_irq_vectors() and pcim_alloc_irq_vectors_affinity() are created for
+>>>> pci device drivers which rely on the devres machinery to help cleanup the IRQ
+>>>> vectors.
+>>>
+>>> If you can please add this API with just a few users, and then convert
+>>> remaining users via the subsystem trees in the next cycle.
+>>> There's no need to risk wasting maintainer time on conflicts with
+>>> conversions like this.
+>>
+>> Thanks for the suggestion, Jakub. I have little experience with
+>> cross-subsystem cleanups like this, so your suggestion is very helpful.
+> 
+> 
+> When I removed the hybrid nature of pci_request_region() et al., I
+> concluded that there were so few users that doing them all in one run
+> was sufficient.
+> 
+> For larger reworks, like removing pcim_iomap_table(), a slower step-by-
+> step strategy is necessary for the reasons that Jakub details.
+> 
+> It is then smart to omit an easy to port subsystem / driver for the
+> ultimate patch series where one then removes the hybrid behavior from
+> PCI itself, after porting the last driver.
+> 
+> In general,  as Jakub details, those step-by-step cleanups are a bit
+> safer, since you can proof valid behavior early on and in case of an
+> explosion they are very easy to revert.
+> 
 
-Correct, commit 3762f5851ac5a65dcccadf73dbe853b1b346f561
-("thermal/drivers/thermal-generic-adc: Add temperature sensor channel")
-added support for this in the driver, this documents the dt parts of it.
+Thank you, Philipp. I wish I had attended your talk at FOSDEM 2025 on
+removing pcim_iomap_table earlier. This first version was perhaps a bit 
+too aggressive. For v2, I think the plan should start with addressing 
+the switchtec and vmd drivers, since both of those, along with the new 
+API additions, can be handled entirely within the PCI subsystem scope.
 
-Regards
-Luca
-
->
->>=20
->> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->> ---
->>  Documentation/devicetree/bindings/thermal/generic-adc-thermal.yaml | 4 =
-++++
->>  1 file changed, 4 insertions(+)
->>=20
->> diff --git a/Documentation/devicetree/bindings/thermal/generic-adc-therm=
-al.yaml b/Documentation/devicetree/bindings/thermal/generic-adc-thermal.yam=
-l
->> index 12e6418dc24d..317fc39ed46a 100644
->> --- a/Documentation/devicetree/bindings/thermal/generic-adc-thermal.yaml
->> +++ b/Documentation/devicetree/bindings/thermal/generic-adc-thermal.yaml
->> @@ -24,6 +24,9 @@ properties:
->>    '#thermal-sensor-cells':
->>      const: 0
->> =20
->> +  "#io-channel-cells":
->> +    const: 0
->> +
->>    io-channels:
->>      maxItems: 1
->> =20
->> @@ -58,6 +61,7 @@ examples:
->>      thermal-sensor {
->>          compatible =3D "generic-adc-thermal";
->>          #thermal-sensor-cells =3D <0>;
->> +        #io-channel-cells =3D <0>;
->>          io-channels =3D <&ads1015 1>;
->>          io-channel-names =3D "sensor-channel";
->>          temperature-lookup-table =3D <
->>=20
->> --=20
->> 2.53.0
->>=20
-
+> 
+> P.
+> 
 
