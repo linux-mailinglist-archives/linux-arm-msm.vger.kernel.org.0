@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-94002-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94003-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SI9aBd+3nWmQRQQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94002-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 15:38:23 +0100
+	id QHToErK3nWmQRQQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94003-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 15:37:38 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 656C9188762
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 15:38:22 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B4D4D18873C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 15:37:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 2A6C431EF433
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 14:30:44 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 40F313049968
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 14:31:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E55C639E6E8;
-	Tue, 24 Feb 2026 14:30:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3716A23FC5A;
+	Tue, 24 Feb 2026 14:31:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b4WBReiV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VBKOb24q"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE54D38E5C4;
-	Tue, 24 Feb 2026 14:30:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1239586337;
+	Tue, 24 Feb 2026 14:31:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771943434; cv=none; b=ojEkjw9+x04mtXM2068McgVHfB9LLdWoYH5f3ez7Ho0KydLH74CcR/1sg7RYZJYRjpp4FgPXaARLq3ugBuNQmlMjMdy9p4cB/7Nv/BqPKP03SYQZW00yzow2Df+ePa1UhSWBz9UHRWsWJaNswfsB6gt1PoofVK/lwvWRpl8u0oM=
+	t=1771943463; cv=none; b=i0zyrM/WnI7V6x3xI8gJTIbEKJGRS9+F7LQPJKBsD5xQXq9cDNz2GiUdejofKNTb+tlKuj7R5KR8zUeKLp8JAWDQ1K0PsSZs1dbOFcjM5cIew1P3Mo2jEMCSDh3R0WTMDW3D3nxYrqIXDybtELndLPrzZ69yMAesqxfwQg2+EoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771943434; c=relaxed/simple;
-	bh=6MnCgrZgi9hxcGd/9mSh+s2YoyRRPk0j2EFgEAogS7g=;
+	s=arc-20240116; t=1771943463; c=relaxed/simple;
+	bh=s8u6XzlkXQzVyqyVcS4xszJKB+ptJwu47KifAgxDtqY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qrD7ocu1QULm9qIEwbQleUcS6Q4awaLXjjHL7X7A5lK41nscu35V3U/wcXhhgQpha158WEsZpBa3dww6bfpjV9Ux3f1H7MshBjSNMFN8p4Gzxx/1lB327VZt+Qo/nahnYXo7yci172NX91cmrdUinYPYHlVEGjK7fa/U1nG78MA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b4WBReiV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D20FC2BC86;
-	Tue, 24 Feb 2026 14:30:30 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=fsoCKGihDGnZsz4MNqk2HCQUh33tSTABJ9bMyfgPzp6fhZiv8iJC+gitSuJiv1ySCsbeYOldaONP4sdGWEoYj2zq1Z3Sm3ye0ox45hTcba63kSGEpG0OmISy97/Hj7yBMGSYMvIWTHk9y2Jn4+lmcSFbMNBa+6fr/kxyqaSGQBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VBKOb24q; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AB33C116D0;
+	Tue, 24 Feb 2026 14:31:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771943434;
-	bh=6MnCgrZgi9hxcGd/9mSh+s2YoyRRPk0j2EFgEAogS7g=;
+	s=k20201202; t=1771943462;
+	bh=s8u6XzlkXQzVyqyVcS4xszJKB+ptJwu47KifAgxDtqY=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=b4WBReiVOreiCHdkeuXHGUy68TNXter60eocG2n3IBhHkfOnDCGqD4L07Hs580cwe
-	 TmBXb72tkDiIXbxYDsGPhtmdXYS0Pzt4dSCHd85zxZcPKzk0xyy9EzwTZOkmo+Km53
-	 6T7ZkfTQIzLzRZavhnL4eHu+v7dEB5qy2COW54r51iaUHi7prhcQ078k/BYH6X1XtZ
-	 +TWkiQymNojK+nYJPbKB+TW9eXxSAuz/kUMQoSlTyeTd7p8112uGPeisxHLaXaoDpB
-	 BJDJXA433Xz9vTPh2co0IjNkJuj73svfihCH3d0AfMFfisKo08sk9i9mG2lwqpO+rl
-	 VraVyQr10V5iQ==
-Message-ID: <bcb838c9-9e29-4191-8b89-53ee319309f9@kernel.org>
-Date: Tue, 24 Feb 2026 15:30:29 +0100
+	b=VBKOb24qFMbrwXYLg1PyndBrMbPYNKWv0i18NjU0hQ+y96bv5ohHezj4WfMVbqvT1
+	 wM/uP20m6HNgQZsK7gJclsT1DsRowfMilSl/lbXwFFe5HW4IS1zgjR08riTcUeLyg4
+	 uzJ5xKdir6DFxSygGVuqa/aihNcXdpqsp4Ugyl/f7+QhTyw3Kot5TqntTATQJ2u1LD
+	 iwYIzB5i6B9sgQxTT05mkoeG6g1+9AXG0we1Am4nHQQCWFhB8p9XIR1+fFkduTTfZJ
+	 2zGl2KLe8a16eiuHfaFBXDwaPFjZWlWEXZKtn6eBE+HDTsvg4HQ6X8O1yH99xStHAP
+	 nMpR9Zp++UpFQ==
+Message-ID: <acfc7bb8-41a3-42b7-95e7-bd30aa8f7bcd@kernel.org>
+Date: Tue, 24 Feb 2026 15:30:58 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -54,16 +54,15 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 1/3] dt-bindings: vendor-prefixes: add WIKO SAS
-To: Paul Adam <adamp@posteo.de>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+To: adamp@posteo.de, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+ phone-devel@vger.kernel.org
 References: <20260221-wiko-chuppito-v2-0-6336b1b12389@posteo.de>
  <20260221-wiko-chuppito-v2-1-6336b1b12389@posteo.de>
- <20260223-literate-flamingo-of-reading-4deaa5@quoll>
- <aZ2040a0qgj28JCf@MyryksLaptop>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,72 +108,48 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <aZ2040a0qgj28JCf@MyryksLaptop>
+In-Reply-To: <20260221-wiko-chuppito-v2-1-6336b1b12389@posteo.de>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94002-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-94003-lists,linux-arm-msm=lfdr.de];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.998];
+	NEURAL_HAM(-0.00)[-0.997];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCPT_COUNT_SEVEN(0.00)[11];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,wiko.com:url,wikomobile.com:url,wiko.cn:url]
-X-Rspamd-Queue-Id: 656C9188762
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,posteo.de:email,wiko.com:url]
+X-Rspamd-Queue-Id: B4D4D18873C
 X-Rspamd-Action: no action
 
-On 24/02/2026 15:26, Paul Adam wrote:
-> On 26/02/23 11:25, Krzysztof Kozlowski wrote:
->> On Sat, Feb 21, 2026 at 09:55:39PM +0100, Paul Adam wrote:
->>> Wiko is a french smartphone company: https://wiko.com
->>
->> Everything in Chinese, so not that much French company. Also footer says
->> after translation:
->>
->> Copyright © Wuke Terminal Technology (Dongguan) Co., Ltd.
->> The main body number of the record: Guangdong ICP No. 2022057930
->>
->> so for sure not French.
->>
->> Best regards,
->> Krzysztof
->>
+On 21/02/2026 21:55, Paul Adam via B4 Relay wrote:
+> From: Paul Adam <adamp@posteo.de>
 > 
-> Whats quite confusing to me is that both "wikomobile" and "wiko" use the brand
-> name "Wiko" and sell the same phones. 
-
-It's just different branches. wiko.cn redirects to wiko.com
-
+> Wiko is a french smartphone company: https://wiko.com
 > 
-> But since my phone is from the french company, I can change it back to
-> "wikomobile" and adjust the binding accordingly.
-> 
-> I just want to mention that the offical/legal company name is
-> "Wiko, société par actions simplifiée" (Wiko, french type of business entity)
 
-I assumed that the Chinese part is rather the mother company, but page:
-https://world.wikomobile.com/w-introduction-wiko
-claims rather that French one, so it is actually fine.
+
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
 Best regards,
 Krzysztof
