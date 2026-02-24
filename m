@@ -1,168 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-93960-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93961-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id CJBwOKODnWlsQQQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93960-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 11:55:31 +0100
+	id YCg8LHqGnWnCQQQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93961-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 12:07:38 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A276B185B48
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 11:55:31 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1ED90185E3D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 12:07:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id E577730DFD41
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 10:54:39 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id CFF7A302DB43
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 11:02:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 733AB3793B6;
-	Tue, 24 Feb 2026 10:54:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B6DDE555;
+	Tue, 24 Feb 2026 11:02:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M6pgoeDG"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zglZ478f"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7AA37475A
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Feb 2026 10:54:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7EE77F39
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Feb 2026 11:02:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771930477; cv=none; b=Jgc+PJrU4XXnvunoURznwozn7XFWymzqyXwqFF5waKNkYeyd1LvsO9Zt5ZO2S5rRujMziSgOwMYDMi6et4CEWLObNlX7Zogx2s6ZhQOos6bSMWUSQJ0fIoqanlh2n72pXSu9VqTMC6EXY3PcfSJ8kRfNMSA+BAAscslWZCNo+5s=
+	t=1771930943; cv=none; b=K0YrE7X/x8W8CxxBcMnSEKs9YRC/tHo/HGtKDQsVoix7xvCGBaurk0cDUPOW/xZUXFTpzWiD1vUbYaqAz/Dq4EsskJfhdvbrAM2racgLnPkwrsT8WA4JK/XtPYRYuadosAvP1EVSGZiP7M4kLtlHnvM6Ua6qPz5158wAlf3SYxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771930477; c=relaxed/simple;
-	bh=Ar8h4pwA1NDtg967Id6YIJ0hbFJ+kyEH685q68t02QU=;
-	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Hje48D6xkvNCiaVmSmOrMg/mBvLD/0SJCVHfXKFefscADm7HAcmRB1H2F3AqN+pS15RczMfHrDmdJ8N7ppOtZNpfUbO8q+C/C/MIyCyqQm4c7zobM9QtfUdNtpFPCuTR02RYlxlRGAaSrYVupIAJr7xrke1caMI8Ut2J9fjt2pc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M6pgoeDG; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28A7AC2BC87
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Feb 2026 10:54:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771930477;
-	bh=Ar8h4pwA1NDtg967Id6YIJ0hbFJ+kyEH685q68t02QU=;
-	h=From:In-Reply-To:References:Date:Subject:To:Cc:From;
-	b=M6pgoeDGL67rxGCyufC4jL6jDjmdisqXHbWqNCPcw6GOAHDURfGTlBlbEMGfJPoiT
-	 VybiFBRSJIoDHfXqPhzQ/0+quhEKQ9qk58BiOCZ8L/4dHMv8XjxpQNOyT6sp+KwcMg
-	 QJBbn2plHMVRDm7Pbiu4U7Y5NblmauZOc6xZnKZmlcp/lKkDCNOQOqSGG4NaoGrIoJ
-	 iahNexx6alWPwSLgdrsL0m/jVM3hbim8HvEnKVAE2pWTYJAOCzzInR545iXunE5ofm
-	 OmtWVGhSeIzxg2vyv+VqQoZCeYhs1meV02dKq8b4pja1URbLNhaMBGxWGpinv1/ei/
-	 JOQlA32OyuS8w==
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-385d9fb297dso57621321fa.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Feb 2026 02:54:37 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCULqxCB0LeVb0Iyz1ZyLMIuTPNxaaYs3XaqScVMz2FWn0Ev7yzkwN3JHg7y8WgQSrXIQubXuqwc6hCQwlto@vger.kernel.org
-X-Gm-Message-State: AOJu0YxkAKXB+aTLfO2kABB6M4tU5oshfje0MtttO9YayHINZUfPLmY+
-	mR3OWV2Qg+3zv1x4ZQNobIPc7RrU4yGWmiyvCPYDPrZ4tGI2nwN6b2CG9xuogKBArtIJxv9tj6i
-	aH28uS7OsTB6Fj2LZ3QWoLlIJKB/G4GFWmQA4eWfzKw==
-X-Received: by 2002:a05:651c:1602:b0:385:beca:f6d2 with SMTP id
- 38308e7fff4ca-389a5c92b9bmr38250061fa.1.1771930475771; Tue, 24 Feb 2026
- 02:54:35 -0800 (PST)
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 24 Feb 2026 04:54:34 -0600
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 24 Feb 2026 04:54:34 -0600
-From: Bartosz Golaszewski <brgl@kernel.org>
-In-Reply-To: <aZ19kFCv_3QUkvPL@smile.fi.intel.com>
+	s=arc-20240116; t=1771930943; c=relaxed/simple;
+	bh=5J6iaC7/QP0y+DGKdkyTxTIHUxBA4h55M+mc4qRVvNw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=tWyCWCJCxRv1zLVszRnfhvO6hyXa8p5HjOHtpARm2nutNDFIPly01S6+bMz3XQvfHdiBBKh/dRNM66n4FFinFkhhy2vO/+Zjpm/27B6kw/aJX1kBkkzq1JWcEw/tpc38kJE7XHbbkB679AnGDBZio2uaRBNa+NcX67codLEZs6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zglZ478f; arc=none smtp.client-ip=209.85.208.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-3870d35c89bso4805561fa.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Feb 2026 03:02:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1771930940; x=1772535740; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/K0d0r9ZG4mPQL7eWE9IREvrR7/jaMHMpGlBofp7zVE=;
+        b=zglZ478fXho0bsUZIVXn9XdfU34QzhV3XIHnJ9NLoSiEEct+CX663m4x2dlTbI+SZh
+         LXTbtSSB92Y3FMmi4OUEHvUvnyAzU83IQaFU5pWVFnTQ+kifDD3Aqf11jaIiB7G2QNin
+         ZJ1/gmG09de+6ZWLrHOKQBlLEZdbExa7X6WCITNMATPrQE8ind7hHuoy5J3Gbmd4YHyM
+         9XWNRZYRiSstjBCQLohsmzwfj7Svz3NaRFfHg7NaWPT4WjgnfAkpH8L13qyCcbttfbWE
+         DvVvCRYNU9f2DDBRbMVRt1sJTUdHZu84O6TYk+OR5VwEd/yD7IkrlAMZuo0V0oVO2a72
+         VBgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771930940; x=1772535740;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/K0d0r9ZG4mPQL7eWE9IREvrR7/jaMHMpGlBofp7zVE=;
+        b=stYkjJ8oiVx7kjnYHlMrsYZBVPMHI+POQfEJ2x0hYjgziJWNwgnF59HgiOtW+2f5wL
+         MtKbTIwI9OxO9pNAwQX5zXin2L9ibAX5bI+veGKU9IeM+gHAhPVIdteK4b6g7kdazfLn
+         qOJY4j+5zyTX3UOfbCyTu33iBFAvvfyKmK5fM4PSxnncZ6EomqeBGs8NXxK26Y+3TYLv
+         F4uLPP1FZud6ewxNT/5/7IjKbL7TFEXKa3IRcC7U1Irve+JHcwTL3ixFv03ffALAnNYo
+         nQEJUOi1nyfYjAcc1hR9bHwRlamn+DfuYiqYzu0s+N1uQRwK4WsgMuGvHcvH9TjYII4l
+         Hp9Q==
+X-Gm-Message-State: AOJu0YwVg2IrVn3qJehrhGFFyuXylNltKRkgiJPVIKEy9LVYCuQ0dAqD
+	nWedEJ86v8jfOaaCLj2RnbP0JFfpIyY8zrQXwd1jpVLMuQV3k1KlQrw8JD0svLcVu6c=
+X-Gm-Gg: ATEYQzyezz0uOSgU+Hbjvybrv/cutoVrudGx9eTkNwNiLnlrZbFuI9bU2S1MiImV6hZ
+	zWQkOew84ZknBHNsaYyvRGnmSf7Omxc42nA/tdaDIOA9nQ0yWl0rnguJ+2S/JrC8th+w01+fcPs
+	xmtQzLR66Y6QpSxipcfdHHHkDMyaHI0VeAadPozIJYD5N89Hatt0r0SYhsyiMwrDrG4Am8X3HYx
+	anrNGtngKDoDCfvuYoDJwjwIArrQjvKcDBuHOnbyMZdY7nmDYV0uDWpEeYqQT35e0HX8D3/lIN1
+	1KvtcIWUPYNesQNtUcqB/Hxy/Isjy2zRmMjdt6qM101uERKTLGghm+ntcd2dWjDAzhq8uhVXhIw
+	1XF9FUJv5HuunqNLlqqjqO7IXy3aefUzCmaaWhHzBcf0OSkknEq886sx8UtoLa55xt9i8+6kDgR
+	Qe1H7+pY3EKHhOBPsfmYGdme+pizmENbEBuZaGO6NOXviQlFYjII+XRXejdhR6j0G84A==
+X-Received: by 2002:a2e:9a13:0:b0:387:170:73fa with SMTP id 38308e7fff4ca-389a5d66672mr19816321fa.6.1771930939813;
+        Tue, 24 Feb 2026 03:02:19 -0800 (PST)
+Received: from thyme.. (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-389a7878b37sm21095791fa.9.2026.02.24.03.02.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Feb 2026 03:02:19 -0800 (PST)
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org
+Subject: [PATCH] soc: qcom: pd-mapper: Simplify code using of_root to get root device tree node
+Date: Tue, 24 Feb 2026 13:02:13 +0200
+Message-ID: <20260224110213.3929063-1-vladimir.zapolskiy@linaro.org>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260224-pci-m2-e-v5-0-dd9b9501d33c@oss.qualcomm.com>
- <20260224-pci-m2-e-v5-2-dd9b9501d33c@oss.qualcomm.com> <CAMRc=MethnZu_GrujadpBZwj4SpgdNXEnTfEikSvPkO2f9MJjg@mail.gmail.com>
- <aZ19kFCv_3QUkvPL@smile.fi.intel.com>
-Date: Tue, 24 Feb 2026 04:54:34 -0600
-X-Gmail-Original-Message-ID: <CAMRc=Md5K=qPbbjSX6eX7EUwgPHpPkUhOPF7RsqD5gejXK2rnQ@mail.gmail.com>
-X-Gm-Features: AaiRm50PZNtQU10kvSbt1uPfme98Sm6BHfpF2pr5K4ZzyNi38Xb-W4BKtnbBLf4
-Message-ID: <CAMRc=Md5K=qPbbjSX6eX7EUwgPHpPkUhOPF7RsqD5gejXK2rnQ@mail.gmail.com>
-Subject: Re: [PATCH v5 2/9] serdev: Add an API to find the serdev controller
- associated with the devicetree node
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: manivannan.sadhasivam@oss.qualcomm.com, 
-	Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>, 
-	linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-kbuild@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
-	linux-pm@vger.kernel.org, Stephan Gerhold <stephan.gerhold@linaro.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, linux-acpi@vger.kernel.org, 
-	Hans de Goede <johannes.goede@oss.qualcomm.com>, Rob Herring <robh@kernel.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
-	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas.schier@linux.dev>, 
-	Hans de Goede <hansg@kernel.org>, =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
-	Mark Pearson <mpearson-lenovo@squebb.ca>, "Derek J. Clark" <derekjohn.clark@gmail.com>, 
-	Manivannan Sadhasivam <mani@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
-	Bartosz Golaszewski <brgl@bgdev.pl>, Bartosz Golaszewski <brgl@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-93960-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,vger.kernel.org,linaro.org,linuxfoundation.org,linux.dev,linux.intel.com,squebb.ca,gmail.com,holtmann.org,bgdev.pl];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:email,qualcomm.com:email,mail.gmail.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[32];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-93961-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.997];
+	RCVD_COUNT_FIVE(0.00)[5];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FROM_NEQ_ENVFROM(0.00)[vladimir.zapolskiy@linaro.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_THREE(0.00)[3];
+	PRECEDENCE_BULK(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	NEURAL_HAM(-0.00)[-1.000];
+	DKIM_TRACE(0.00)[linaro.org:+];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,manivannan.sadhasivam.oss.qualcomm.com,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: A276B185B48
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 1ED90185E3D
 X-Rspamd-Action: no action
 
-On Tue, 24 Feb 2026 11:29:36 +0100, Andy Shevchenko
-<andriy.shevchenko@linux.intel.com> said:
-> On Tue, Feb 24, 2026 at 02:16:17AM -0800, Bartosz Golaszewski wrote:
->> On Tue, 24 Feb 2026 06:30:48 +0100, Manivannan Sadhasivam via B4 Relay
->> <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org> said:
->> >
->> > Add of_find_serdev_controller_by_node() API to find the serdev controller
->> > device associated with the devicetree node.
->
-> ...
->
->> > +struct serdev_controller *of_find_serdev_controller_by_node(struct device_node *node)
->> > +{
->> > +	struct device *dev = bus_find_device_by_of_node(&serdev_bus_type, node);
->> > +
->> > +	return (dev && dev->type == &serdev_ctrl_type) ? to_serdev_controller(dev) : NULL;
->> > +}
->> > +EXPORT_SYMBOL_GPL(of_find_serdev_controller_by_node);
->>
->> I'm not sure if I commented on it before but there's no reason for this to be
->> OF-centric. It would work equally well as (I think the same should keep the
->> "serdev" prefix too for correct namespacing):
->>
->> struct serdev_controller *serdev_find_controller_by_fwnode(struct
->> fwnode_handle *fwnode)
->> {
->> 	struct device *dev = bus_find_device_by_fwnode();
->>
->> 	...
->> }
->>
->> It would be more flexible and users can always use to_of_node().
->
-> IIRC it was discussed already and the fact of use only in DT overlays and
-> absence of the user for all this time makes it feel like solving non-existing
-> problem. So OF-centric in this case seems to be fine.
->
+A few lines of code are removed by using the global non-NULL of_root
+pointer to access the root device tree node instead of its recalculation.
 
-Ok then.
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+---
+ drivers/soc/qcom/qcom_pd_mapper.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+diff --git a/drivers/soc/qcom/qcom_pd_mapper.c b/drivers/soc/qcom/qcom_pd_mapper.c
+index 1bcbe69688d2..64d2ff0dddf9 100644
+--- a/drivers/soc/qcom/qcom_pd_mapper.c
++++ b/drivers/soc/qcom/qcom_pd_mapper.c
+@@ -615,15 +615,9 @@ static struct qcom_pdm_data *qcom_pdm_start(void)
+ 	const struct qcom_pdm_domain_data * const *domains;
+ 	const struct of_device_id *match;
+ 	struct qcom_pdm_data *data;
+-	struct device_node *root;
+ 	int ret, i;
+ 
+-	root = of_find_node_by_path("/");
+-	if (!root)
+-		return ERR_PTR(-ENODEV);
+-
+-	match = of_match_node(qcom_pdm_domains, root);
+-	of_node_put(root);
++	match = of_match_node(qcom_pdm_domains, of_root);
+ 	if (!match) {
+ 		pr_notice("PDM: no support for the platform, userspace daemon might be required.\n");
+ 		return ERR_PTR(-ENODEV);
+-- 
+2.49.0
+
 
