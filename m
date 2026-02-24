@@ -1,188 +1,198 @@
-Return-Path: <linux-arm-msm+bounces-93932-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id INS6AJ5enWmxOgQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93932-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 09:17:34 +0100
+	id AO4GKeFenWmxOgQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 09:18:41 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F3B71837F1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 09:17:33 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C56F18383E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 09:18:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 11BFC3075F8F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 08:14:07 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 23F34313977B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 08:15:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17989366552;
-	Tue, 24 Feb 2026 08:14:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9536636657D;
+	Tue, 24 Feb 2026 08:15:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UUhKuhDT"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="e/PLKYYK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f65.google.com (mail-ed1-f65.google.com [209.85.208.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E79D636607A;
-	Tue, 24 Feb 2026 08:14:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F004366556
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Feb 2026 08:15:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771920846; cv=none; b=Ldev+b3iJdDpgLv/KPdaITT+CRTYLgLFCUkvoFd3U5TsJipB3bhO+EbfNaS1yjOYINzaCtvQN0sYUo15Q6XKiJ0M36K3Atd9ZcT3dQcfWJRp8dt4LYgZIAlvosbQHLqRrOn5fw3RZCoAve9raAJbc1jZ8h9QbEf9JSEXBGqyYKs=
+	t=1771920902; cv=none; b=nAbIW+nKKQXmi/NYWRYZ9ljtl4/s2DP+iw5rzxk9Ln41H+o80oEQaJJwVmvew5wktuYEkRRi4zhbbhfLnEmxciE+DnFZMOl2weq0GrPjLTSsvdjCs5Qv4zAGh9pCEyEoVgsBntAs/B139oU+CQ6ZPASfEUG/EeBFmxT0zsZMDgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771920846; c=relaxed/simple;
-	bh=ZSdlrKqbVCuZmxUrfPuTkw9piWsYGBn+6/etAxA62SM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YHwJIKazbJ4EU203TOJmk6FgrK0TXfVA0M6/RNLHoo4bzZaxlkqsUlTgTpBZ3zdbUoFlsA0gonLsIssvda6HpEiaonUIXXk1Fni24jiUinXezbn5DQsOxtVByW2YufHj5rxXNdlQWrfgb1ELaW55KzaCbM88fW4OAjCT8l/I/eA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UUhKuhDT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34640C116D0;
-	Tue, 24 Feb 2026 08:14:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771920845;
-	bh=ZSdlrKqbVCuZmxUrfPuTkw9piWsYGBn+6/etAxA62SM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=UUhKuhDTLHJbkT+SPXbSb5eVXV+2oMYtI0h0iYJX8Il0bC10OxvL4dtlVZYIhbB/m
-	 rwEWmkarN9Bd9fW+Lwg4arPtZZ6+FlWRMCubQYUaEs52ruB+ELQuAPXTKIMtfVz0a9
-	 XLVnbtS5Ix+dVfAlXCmHKsq7ddNkwnFvgbEI96X2rI1bWzyB7W+kTS4DjAMTmGFcj3
-	 Hxatmil5KA6us/tkoDEjE7iSLAtalknngZVAf9MJHcQJn5R18BwsPXYy5DuDGr2KXr
-	 L+8IIQ6ldVRZwstDO89dEM5g9bcU9isRT/0eNf+FNZPXvdZgUnAqB1AxhbkfEKooEW
-	 7Q3KypWA9ZNzw==
-Message-ID: <08471da2-8577-4114-ab26-bcbc81536999@kernel.org>
-Date: Tue, 24 Feb 2026 09:14:01 +0100
+	s=arc-20240116; t=1771920902; c=relaxed/simple;
+	bh=9BNqf2MxT2KB9V3RmWVoDEyDdtAfYIbH0M7+sdJqyF8=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
+	 References:In-Reply-To; b=QDAUNQr0+aoeIw0zI9olsrAq2TOz9VLHNNm0KjX7wRwHuBqLfmSx/BbwMVtZku9aBndMsPUMYROM0Onp00wzM/9kYp5MaiTduP8335UsdQBuQXc8Cv84U5a878wLh+0sgNayV2FqlR+HWW/pk+0A21z+Vte/dInf3lX39iW9HMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=e/PLKYYK; arc=none smtp.client-ip=209.85.208.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f65.google.com with SMTP id 4fb4d7f45d1cf-65be78011c8so7151221a12.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Feb 2026 00:15:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1771920899; x=1772525699; darn=vger.kernel.org;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xKXXJGWnu9K3xWMW9HyaDVo1/D1y/DKuzi9/eiBk4qI=;
+        b=e/PLKYYKTVwvOJC59T6f+2vp9KK35XkixfJUCi8jTKZP0yiHMyS6pfcomFjzHxfpbQ
+         knxi8XFrWlEjfuXlgFAvgTkKZBq4gWLEfJMZD4+jfhKoN2q4G/bj9slSFvButfSgrN9Y
+         YsNAVtK/Dq7GCFsgV7LuF1IlOrVmsv97R4MrP6FPstwdbxKns0TovrENx8qlxgrGl0fu
+         UzJdPC0FT9ESwfqQ4Cog01EcdUEfyXd7qaWKbRYmgvymrA3s1U1XmEO6/OGrzUZxdfBo
+         W3pqi3H33scQHyOm6TBC0uE/8w1ehNpixQ5vjnb4NXm8cRabSWM7CaxS+RUe3/3aVBCx
+         xUyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771920899; x=1772525699;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xKXXJGWnu9K3xWMW9HyaDVo1/D1y/DKuzi9/eiBk4qI=;
+        b=nKs2qoDOqpoRs9b/djZpHkGX4jHEN28pG8T/QDiqJGqOcX7ZWzDC1AhBWoKuw5qOGZ
+         c4TyckaXJAI1/mkVXseBdMUOErHCr2KXgv12JxvTCSFUQP9MWpRE4AIIIH9VOsJ9P+a5
+         lDyqwmTw87C89cIz0YfAkRG8lMDTRqhnPOyMS2xz136RrFkdYySDvjyHdsIH/rY3wB/s
+         cHC33/8ko0Y2GpNALpEZS0eKvgofN88Sj9m6zgs1+h1s54TG81Jai9o1imD90og9f9KJ
+         GmzE7vCAbHvIQgJzllF8oIQXCekolO1Aea973V4gs7XgcCIPPauM6KgKW8tkubcxptnJ
+         yW8g==
+X-Forwarded-Encrypted: i=1; AJvYcCX5Z6jk4uBOJdHnycwBDikGo7Ap6SnXRC9UK8I/Vrooh1BxFGCsThUOO8aJjP1V9pxvBqXA2Shc7SbrQrhT@vger.kernel.org
+X-Gm-Message-State: AOJu0YybgUjErzM3nVOfqSgyQI9/GojNGgkCPeEe4E7EPAZU42xPtI3x
+	IjBT0iioDNdvPn4V+TnkK3hdKMeQwILfWU7zwhisPqMQ9weD/SWwTcpGDPKTxdwW7mg=
+X-Gm-Gg: AZuq6aJljLIafogn2dXaIWfx0R1mTQeV3596GriHjQq/YGbxnwkdEmIO4QQX0NWRthn
+	jYd4w/ol9K0mnOfVOblLXmc0T9jpCfigcHsRhwXkh+JSqilN4Jvh7U+QowMsXDsW74LYzbwUHOp
+	JRZT3DDbV0t3uCbS9KeRd+TBqdmFJS1LvnOMuxbJLBTP/Xduwmf4CkEAewhEOdC9Soymd8lHtoY
+	rWDuYvXe975ERCOkFdeaaWqAmDIBr4BIuL2CtvI2LfSq9pQq/xyp1gGAvAbgAlB2QcT0i+UXj7j
+	JUVjwTP5JC6UGwpjiIEUay3JlHn3fFHEEOliTR4gerfn4GepC8dT9oWoekH183C07x/6Dc18VHP
+	IWe7bjZiDTAf4E2NZFtSyqIpDYZbYyriHFZTZQNreFUxTdLk/N4EH1590R4magSLJ6/w8Avd6xd
+	aLBXI4pipHJtWgrlgUDai+PQlWjR6IFWlKryrZYO5Ep+NKs5Bx8q2nfoUjVHJS7B11+YN+CBb2S
+	dTqdgo=
+X-Received: by 2002:a17:907:e0d8:b0:b88:5957:2d65 with SMTP id a640c23a62f3a-b9081b40c12mr380726366b.37.1771920899412;
+        Tue, 24 Feb 2026 00:14:59 -0800 (PST)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b9084e4bfe6sm399567166b.44.2026.02.24.00.14.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Feb 2026 00:14:59 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: interconnect: OSM L3: Add Eliza OSM L3
- compatible
-To: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Cc: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
- linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20260223-eliza-bindings-interconnect-epss-l3-v1-1-fa83970d60ae@oss.qualcomm.com>
- <20260224-hilarious-tasteful-narwhal-c492a5@quoll>
- <2dnws4hpakt4oxhbfpcnu5ga45mmx4fjxexou2gaueiqaveeyn@itiyzldq5cxr>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <2dnws4hpakt4oxhbfpcnu5ga45mmx4fjxexou2gaueiqaveeyn@itiyzldq5cxr>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Date: Tue, 24 Feb 2026 09:14:58 +0100
+Message-Id: <DGN1JB8J9YG5.JZDBJ9WBLDXC@fairphone.com>
+Subject: Re: [PATCH v2 2/5] dt-bindings: thermal: generic-adc: Document
+ #io-channel-cells
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Rob Herring" <robh@kernel.org>, "Luca Weiss" <luca.weiss@fairphone.com>
+Cc: "Jonathan Cameron" <jic23@kernel.org>, "David Lechner"
+ <dlechner@baylibre.com>, =?utf-8?q?Nuno_S=C3=A1?= <nuno.sa@analog.com>,
+ "Andy Shevchenko" <andy@kernel.org>, "Rafael J. Wysocki"
+ <rafael@kernel.org>, "Daniel Lezcano" <daniel.lezcano@linaro.org>, "Zhang
+ Rui" <rui.zhang@intel.com>, "Lukasz Luba" <lukasz.luba@arm.com>, "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
+ "Laxman Dewangan" <ldewangan@nvidia.com>, "Bjorn Andersson"
+ <andersson@kernel.org>, "Konrad Dybcio" <konradybcio@kernel.org>, "Hans de
+ Goede" <hansg@kernel.org>, "Jens Reidel" <adrian@mainlining.org>, "Casey
+ Connolly" <casey.connolly@linaro.org>,
+ <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ <linux-arm-msm@vger.kernel.org>, <linux-iio@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+ <devicetree@vger.kernel.org>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260220-bat-temp-adc-v2-0-fe34ed4ea851@fairphone.com>
+ <20260220-bat-temp-adc-v2-2-fe34ed4ea851@fairphone.com>
+ <20260223184815.GA144001-robh@kernel.org>
+In-Reply-To: <20260223184815.GA144001-robh@kernel.org>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[fairphone.com,quarantine];
+	MV_CASE(0.50)[];
+	R_DKIM_ALLOW(-0.20)[fairphone.com:s=fair];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-93932-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	RCPT_COUNT_TWELVE(0.00)[25];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-93933-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[fairphone.com:+];
 	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[luca.weiss@fairphone.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[10];
+	NEURAL_HAM(-0.00)[-1.000];
+	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 9F3B71837F1
+	DBL_BLOCKED_OPENRESOLVER(0.00)[fairphone.com:mid,fairphone.com:dkim,fairphone.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 4C56F18383E
 X-Rspamd-Action: no action
 
-On 24/02/2026 09:10, Abel Vesa wrote:
-> On 26-02-24 08:29:09, Krzysztof Kozlowski wrote:
->> On Mon, Feb 23, 2026 at 10:49:04AM +0200, Abel Vesa wrote:
->>> Eliza, similarly to SDM845, uses OSM hardware for L3 scaling.
->>> Document it.
->>>
->>> Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
->>> ---
->>>  Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml | 1 +
->>>  1 file changed, 1 insertion(+)
->>>
->>> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml b/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
->>> index 4b9b98fbe8f2..6182599eb3c1 100644
->>> --- a/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
->>> +++ b/Documentation/devicetree/bindings/interconnect/qcom,osm-l3.yaml
->>> @@ -28,6 +28,7 @@ properties:
->>>            - const: qcom,osm-l3
->>>        - items:
->>>            - enum:
->>> +              - qcom,eliza-epss-l3
->>
->> I see EPSS, not OSM here. This is also list without SDM845, so I don't
->> understand explanation in commit msg at all.
-> 
-> So there are two issues here:
-> 
-> 1. EPSS bindings are handled by the OSM schema. I believe this is by
-> design as they basically do the same thing. Interconnect providers for
-> L3 scaling. So the compatible is in the right schema.
+On Mon Feb 23, 2026 at 7:48 PM CET, Rob Herring wrote:
+> On Fri, Feb 20, 2026 at 10:19:06AM +0100, Luca Weiss wrote:
+>> Document the property to allow using this sensor with io-channels.
+>
+> Why? On the surface, it looks like you are adding a provider property to=
+=20
+> a consumer. Maybe that's right?=20
 
-We do not talk here about schema or bindings at all. Look at your commit
-msg:
-"uses OSM hardware"
-so again: EPSS or OSM.
+Correct, commit 3762f5851ac5a65dcccadf73dbe853b1b346f561
+("thermal/drivers/thermal-generic-adc: Add temperature sensor channel")
+added support for this in the driver, this documents the dt parts of it.
 
-> 
-> 2. The commit message should've said SM8650 instead. Will fix and
-> respin.
-> 
+Regards
+Luca
 
+>
+>>=20
+>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>> ---
+>>  Documentation/devicetree/bindings/thermal/generic-adc-thermal.yaml | 4 =
+++++
+>>  1 file changed, 4 insertions(+)
+>>=20
+>> diff --git a/Documentation/devicetree/bindings/thermal/generic-adc-therm=
+al.yaml b/Documentation/devicetree/bindings/thermal/generic-adc-thermal.yam=
+l
+>> index 12e6418dc24d..317fc39ed46a 100644
+>> --- a/Documentation/devicetree/bindings/thermal/generic-adc-thermal.yaml
+>> +++ b/Documentation/devicetree/bindings/thermal/generic-adc-thermal.yaml
+>> @@ -24,6 +24,9 @@ properties:
+>>    '#thermal-sensor-cells':
+>>      const: 0
+>> =20
+>> +  "#io-channel-cells":
+>> +    const: 0
+>> +
+>>    io-channels:
+>>      maxItems: 1
+>> =20
+>> @@ -58,6 +61,7 @@ examples:
+>>      thermal-sensor {
+>>          compatible =3D "generic-adc-thermal";
+>>          #thermal-sensor-cells =3D <0>;
+>> +        #io-channel-cells =3D <0>;
+>>          io-channels =3D <&ads1015 1>;
+>>          io-channel-names =3D "sensor-channel";
+>>          temperature-lookup-table =3D <
+>>=20
+>> --=20
+>> 2.53.0
+>>=20
 
-Best regards,
-Krzysztof
 
