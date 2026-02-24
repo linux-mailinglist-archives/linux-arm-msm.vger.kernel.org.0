@@ -1,434 +1,220 @@
-Return-Path: <linux-arm-msm+bounces-93869-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93870-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id EDm/M9gXnWlTMwQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93869-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 04:15:36 +0100
+	id IBU1GAAcnWmPMwQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93870-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 04:33:20 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37EC0181549
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 04:15:36 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 062DE181663
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 04:33:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id E0E9A304FFA1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 03:15:34 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 6BB023013967
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 03:33:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB13528504D;
-	Tue, 24 Feb 2026 03:15:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CE8D28DB54;
+	Tue, 24 Feb 2026 03:33:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bwWM/pPZ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MpsmBFFf";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="kNduJN2p"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C55AE42A82;
-	Tue, 24 Feb 2026 03:15:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E4E01E47CC
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Feb 2026 03:33:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771902933; cv=none; b=cbq5hqpS6XokAZNpr0Bs0ibIMdiiWURroR7U/7ik35eEU2GvDm4hzXwkZn8i+ntTCqc1lYt3V8RHjljQP76KV528zDBVo6O95fX6KHJ9YwX7JFya7Wwf0w6/TqL56ozlYGQqA41j2mdig6PzImzoxCFGGIAN5vWqo0xI0e7coAQ=
+	t=1771903997; cv=none; b=qX2PpIfj/O4R89uE3GIJc3QSRhuH6AlFcoIOwTUmm+pJPUs5RjPiu4wzOAqdLuZTvSvwKr3QCga/G4NRAX+6dWuRYe/0N+scjbsnLqymN6n6IVfJYZcpjP//c2cwRKr1RBYBh0pumExLn6ZzQNXHaEp+DU76WrINHGaLDSfWs3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771902933; c=relaxed/simple;
-	bh=ujg8PJxPHLTWrLp47StB6vTynQiaJsIrpk/gBeqRkoo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S6iq31WMT8dPy//GvLE5kiSf8vhORCrOBaKYXkFtp+NAxVtRSQ8GkYhPLV3X1avRRHmRWDdFOmoGDBB1l+FCmQi+SPsuWgodQsjbrJgRQSRaABjg94+EiecAwvZWnurK9G8nW965cSWHVy42uPsrgS3EVWD9PkCSyM7JPGUuUGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bwWM/pPZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C008DC116C6;
-	Tue, 24 Feb 2026 03:15:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771902933;
-	bh=ujg8PJxPHLTWrLp47StB6vTynQiaJsIrpk/gBeqRkoo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bwWM/pPZZdWfyewwlIooloNxe/Q3n+RkjLxQW8QfBou5KNSgsaMVK8jD1s25+bTdh
-	 IzYmQi6QKf30Il4As+jamj/bsTj5blxqH3syaSGSvqBypMBnvJQUavMIJw2pkDNvLw
-	 82jsPjLzgQUxRgkkKq0ei6QwK3ubgppF9/WNgbpcLHBuU1t8H6NsAIAPCDLJGKCzDi
-	 7CLTz/xrBPXRjd56uB1VYyhTokMBluBxSWQYVh6AtSwyjfaDnOkA2zbxEfBZSM+88x
-	 r2BWH+g+e8tx52If6j5ziHiEKaPpjJS4uOp3zRvud6noTBebN8McLQzjHBIbEuJD2V
-	 xiMkffiEYpqyw==
-Date: Mon, 23 Feb 2026 21:15:30 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Cc: Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2] dt-bindings: arm: cpus: Deprecate Qualcomm generic
- compatibles
-Message-ID: <decphyalrsuaw3c65qsbzlqlrbvjzj2laaxeyl3qmeodj7aj57@jun6og2wqv4b>
-References: <20260223074422.18468-2-krzysztof.kozlowski@oss.qualcomm.com>
+	s=arc-20240116; t=1771903997; c=relaxed/simple;
+	bh=alwlXydTZQTHU+SrbhxPkAVBaJ0ViLt6EMzcXAEspXg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HMNcVDkJYxMezwccaHDiuHK/qEwZMDD4E/g1qa3iR2dHiIseyLypNYNJ8vkpEg+m7ToA/CK6Aw8TQOkAnKsJIJm2SYBEuJ20qJmwFNBtgkCUl2HbmdQ/ee8guLQWzWvh5f5bHB5Y5xT8C10CP7kEKkc1tL7Y3+v+CmbuSgtM9Qs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MpsmBFFf; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=kNduJN2p; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 61O3V7Sc1143729
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Feb 2026 03:33:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	cw5oOYysEVaaTcVwIagtgtb1acPAUP70RqJhekAP7Zs=; b=MpsmBFFfOVHfn/pk
+	Gg4QcxaaZhK4U4eeUQBi7urMNKOvTDwSza1oS2UzSLIHLFy6kA7W7NleuM4sn6pl
+	M4x4z6TjyHPZgg4ou/d8h8DibM3bcqEdiwQu0FeW7LgGxLih+lLSrErJxFh5rbzX
+	joWxCc85TVP2OaJiKwZxzYkKcrm6kl8YijJF6ZMr0v7LH8HP2qqM6Z0p5yvz6YbR
+	XjQe9GyKv84EeXPKNaDjKC9RSLpcMfINW3laTZ+VfF97K/O+0n8fHtp5xtJi4egN
+	BJECOTqR8p85DNs0EfpaZlyZzaGKFuO8gdAkbKig/BVcURryr6jTJC7DzqVx83T0
+	W1ob0w==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com [74.125.82.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ch456805a-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Feb 2026 03:33:15 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id 5a478bee46e88-2ba9a744f7dso6168313eec.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Feb 2026 19:33:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1771903994; x=1772508794; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cw5oOYysEVaaTcVwIagtgtb1acPAUP70RqJhekAP7Zs=;
+        b=kNduJN2piySqJTsIrsTMpdTiJaI6B/J7hYurgu9hLrqYQF0OoTJTnsUWe15cFyFWhl
+         gFEViEMqiNyJ4LpPTgUavfwUJbBj3HRKEzfxWvw1XNgdUaLw0kKeKf1yMK4AgjMUpsK8
+         egIa8T9fWOz6a8Jf3raNro4JLZWeykiCgMUyjFTTNQRmvH2NjrbN2ka6VW2kC/2lqhBb
+         Gqe7StgDHok/1VBNns4+GpNi05KyUSj8JBFwciPznYc5guB+ztF4T6n7+VwEHpPsiqRq
+         ++VO8rcvQMdLWqwyUKjOkFPUGrmIfK3iQq8OQMeVG7zU0sWzr1zb4gcXRxW4DcKaoPeh
+         C89Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1771903994; x=1772508794;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cw5oOYysEVaaTcVwIagtgtb1acPAUP70RqJhekAP7Zs=;
+        b=uNQL17kkEyq1gaWFEeFny09E3PBH347e0x/9U6j5WH9pm6ytQw84nj6oOgHvJSinPn
+         e0hRJXIBBdV+3tXEq8AoXzMtya6CXsEvw965ceQD4wzRxEKLKZ80EEZhjR+PaIng+omx
+         yGtSDCpu7qEx8laBXlNwAYpncBEU0C1fxN5M4pfENjBguV64eV4P2jYClzZORBrwvEc0
+         FnLlXDKXJ5UmuC/wvCtRPDWcqcPlBZ+pCkeUvGxx9kOFGoUwnnWExaxxkvJVKo+DwZUS
+         GVSirQZMn1e1gcjP7ZNOjoaxLKdr3hYBQSkatwCzmDGOOvMSLqfkL6U/1yCeqnvtnRu2
+         +JLw==
+X-Forwarded-Encrypted: i=1; AJvYcCVqKd+iLFpaKUhOmIPNjcsmB5E6+6afv8vdutHGIatBd09gvI63QaVP/YsFLPnt7sk6tA3f/Jftl3sq580w@vger.kernel.org
+X-Gm-Message-State: AOJu0YyvkTozOpo4HTH0oRQuKmTaZPm1yWCMiXf5eDroerTe0PjNXG7S
+	NcvYAQib3lLjw3w0e53spY91e03Rq5D3j9V7sJT0xBfRwXoXlGyaiYmtipI4u04PRSJoSYS/9gm
+	HGG06UyDzzc6awOtRriMcDERq7iEAm+R7Z3cp6T8mBO200MNVRprXSLRKP/gkF+DZRHfV
+X-Gm-Gg: AZuq6aJ7gMAkJJ3Y5jdfdUa7xabC9TQdYGfXqD1yl3Lo8cQVm+bzpGSBeJXsvibZo9j
+	NxItI4uoMuuxu6RtPFTSQWGkrr3j14/9iKv8pRwoRhT1IXgbOfC7sgI1eTweuuoOoEgx+KQgryq
+	+TlW/jBKdxMm9ShNCSnJ0evPzkW0fxREgz5arHpa7qID/vwYvMS7xc1GqpG1bhUOGGwov01VZdu
+	5y0uZbnA9VJbNA3kbZg/mZIQHgm562TnEdtr9UX5U/gxcXM5Rw/DM0MhZ61z9Ho5bJzVXXFMaVT
+	CCz4jzPJGow5dVSdmecmYswtOpeEN4LVFTXq680pacqRohc13JvOE2/fCl3oa6tBGVYXKoF7+m6
+	uGVsCLRp2WM2lSOk0JmkqrwqhoVKc7tWtw6TlG1MSSp85+U3WCiJGAEM=
+X-Received: by 2002:a05:7022:4387:b0:121:9f05:c4c2 with SMTP id a92af1059eb24-1276ad18ec5mr3365891c88.23.1771903994053;
+        Mon, 23 Feb 2026 19:33:14 -0800 (PST)
+X-Received: by 2002:a05:7022:4387:b0:121:9f05:c4c2 with SMTP id a92af1059eb24-1276ad18ec5mr3365882c88.23.1771903993530;
+        Mon, 23 Feb 2026 19:33:13 -0800 (PST)
+Received: from [192.168.86.165] ([76.176.48.107])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1276af20fc8sm10325680c88.6.2026.02.23.19.33.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Feb 2026 19:33:12 -0800 (PST)
+Message-ID: <e94ce683-d47c-4c8e-8b26-cd327c891cc8@oss.qualcomm.com>
+Date: Mon, 23 Feb 2026 19:33:10 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260223074422.18468-2-krzysztof.kozlowski@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 01/18] accel/qda: Add Qualcomm QDA DSP accelerator
+ driver docs
+To: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
+        Oded Gabbay <ogabbay@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+        Shuah Khan <skhan@linuxfoundation.org>, Joerg Roedel <joro@8bytes.org>,
+        Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
+Cc: dri-devel@lists.freedesktop.org, linux-doc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        iommu@lists.linux.dev, linux-media@vger.kernel.org,
+        linaro-mm-sig@lists.linaro.org,
+        Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Bharath Kumar <quic_bkumar@quicinc.com>,
+        Chenna Kesava Raju <quic_chennak@quicinc.com>
+References: <20260224-qda-firstpost-v1-0-fe46a9c1a046@oss.qualcomm.com>
+ <20260224-qda-firstpost-v1-1-fe46a9c1a046@oss.qualcomm.com>
+Content-Language: en-US
+From: Trilok Soni <trilokkumar.soni@oss.qualcomm.com>
+In-Reply-To: <20260224-qda-firstpost-v1-1-fe46a9c1a046@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: kavgZmmrk0IQwEPUK4urFC65fLhOZReL
+X-Proofpoint-ORIG-GUID: kavgZmmrk0IQwEPUK4urFC65fLhOZReL
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI0MDAyOCBTYWx0ZWRfXzrRT2/xFRl3M
+ UVzUjNZMLI4iRR5ZVbca/uwgsVpqPKSAamBc1kjpTk/n3MxytlNQ1LyBrFB+UOshQY7uuNfs8n3
+ tcpgwou++EmLeVGNO28iiVRxzcsMi6lu2JzYivbiBW8wmyp31HqyTivhPR48TVpP5VUotI/J9yU
+ hvYwnz1eWqBQItA0r8sgi5mY/4XHz59gh5m4yaQNh2gDx8KK/V0Jor9N/L+0NL14OAdV8zhDHdc
+ Le1vHyfiXcuV2Y93DAJ2q9Okarxj+FknqPQd1yU13kc1CjPykWhbJmov7oycPr4XYQsIc74p/W9
+ 8YAZBdocQevbSZBe1yaNhRAl6dOCmJAaWZOaQlHeyCbYUITTg7KnmIMP6e6xMXl8KrwsdthfTGj
+ q8v7lYGPBq3hOtVMZruffvoBZW/uT+Di1yRhR21fEBChnxVZi7uyq+H9ER7TNnbu816Wz68+Ugo
+ C23XRIzpafFEUFbeaVA==
+X-Authority-Analysis: v=2.4 cv=J8enLQnS c=1 sm=1 tr=0 ts=699d1bfb cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=lsoD3MMNObdLvy1227ExmA==:17
+ a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=88Pab4rnIKjo3RbOS5oA:9 a=QEXdDO2ut3YA:10 a=scEy_gLbYbu1JhEsrz4S:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-23_06,2026-02-23_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 suspectscore=0 phishscore=0 spamscore=0
+ adultscore=0 malwarescore=0 impostorscore=0 bulkscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2602240028
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-93870-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-93869-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,lwn.net,linuxfoundation.org,8bytes.org,arm.com,linux.intel.com,suse.de,gmail.com,ffwll.ch,linaro.org,amd.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	RCPT_COUNT_TWELVE(0.00)[25];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	MISSING_XM_UA(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 37EC0181549
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[trilokkumar.soni@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	NEURAL_HAM(-0.00)[-0.999];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 062DE181663
 X-Rspamd-Action: no action
 
-On Mon, Feb 23, 2026 at 08:44:23AM +0100, Krzysztof Kozlowski wrote:
-> Move compatibles for Qualcomm Kryo and Oryon custom CPU cores out of the
-> enum into separate one with deprecated: true annotation, because these
-> are too generic names.
+On 2/23/2026 11:08 AM, Ekansh Gupta wrote:
+> Add initial documentation for the Qualcomm DSP Accelerator (QDA) driver
+> integrated in the DRM accel subsystem.
 > 
-> These are names of the families and there are significant differences
-> within individual processors, e.g. Kryo6xx can based on architectures
-> from Cortex-X2, A710, A510 to A78 and probably more.
+> The new docs introduce QDA as a DRM/accel-based implementation of
+> Hexagon DSP offload that is intended as a modern alternative to the
+> legacy FastRPC driver in drivers/misc. The text describes the driver
+> motivation, high-level architecture and interaction with IOMMU context
+> banks, GEM-based buffer management and the RPMsg transport.
 > 
-> Just like other vendor processors are differentiated, also Qualcomm CPUs
-> should come with specific compatibles.
+> The user-space facing section documents the main QDA IOCTLs used to
+> establish DSP sessions, manage GEM buffer objects and invoke remote
+> procedures using the FastRPC protocol, along with a typical lifecycle
+> example for applications.
 > 
-> Cc: Bjorn Andersson <andersson@kernel.org>
-> Cc: Konrad Dybcio <konradybcio@kernel.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+> Finally, the driver is wired into the Compute Accelerators
+> documentation index under Documentation/accel, and a brief debugging
+> section shows how to enable dynamic debug for the QDA implementation.
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+So existing applications written over character device UAPI needs to be
+rewritten over new UAPI and it will be broken once this driver gets
+merged? Are we going to keep both the drivers in the Linux kernel
+and not deprecate the /char device one? 
 
-Regards,
-Bjorn
+Is Qualcomm going to provide the wrapper library in the userspace
+so that existing applications by our customers and developers
+keep working w/ the newer kernel if the char interface based
+driver gets deprecated? It is not clear from your text above. 
 
-> 
-> ---
-> 
-> Changes in v2:
-> 1. Do not touch Krait and Scorpion because no consensus was reached
->    about whether there is a final model-specific name for them.
-> ---
->  .../devicetree/bindings/arm/cpus.yaml         | 290 +++++++++---------
->  1 file changed, 147 insertions(+), 143 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/cpus.yaml b/Documentation/devicetree/bindings/arm/cpus.yaml
-> index 736b7ab1bd0a..700255e9a002 100644
-> --- a/Documentation/devicetree/bindings/arm/cpus.yaml
-> +++ b/Documentation/devicetree/bindings/arm/cpus.yaml
-> @@ -79,149 +79,153 @@ properties:
->        All other bits in the reg cells must be set to 0.
->  
->    compatible:
-> -    enum:
-> -      - apm,potenza
-> -      - apm,strega
-> -      - apple,avalanche
-> -      - apple,blizzard
-> -      - apple,cyclone
-> -      - apple,firestorm
-> -      - apple,hurricane-zephyr
-> -      - apple,icestorm
-> -      - apple,mistral
-> -      - apple,monsoon
-> -      - apple,twister
-> -      - apple,typhoon
-> -      - arm,arm710t
-> -      - arm,arm720t
-> -      - arm,arm740t
-> -      - arm,arm7ej-s
-> -      - arm,arm7tdmi
-> -      - arm,arm7tdmi-s
-> -      - arm,arm9es
-> -      - arm,arm9ej-s
-> -      - arm,arm920t
-> -      - arm,arm922t
-> -      - arm,arm925
-> -      - arm,arm926e-s
-> -      - arm,arm926ej-s
-> -      - arm,arm940t
-> -      - arm,arm946e-s
-> -      - arm,arm966e-s
-> -      - arm,arm968e-s
-> -      - arm,arm9tdmi
-> -      - arm,arm1020e
-> -      - arm,arm1020t
-> -      - arm,arm1022e
-> -      - arm,arm1026ej-s
-> -      - arm,arm1136j-s
-> -      - arm,arm1136jf-s
-> -      - arm,arm1156t2-s
-> -      - arm,arm1156t2f-s
-> -      - arm,arm1176jzf
-> -      - arm,arm1176jz-s
-> -      - arm,arm1176jzf-s
-> -      - arm,arm11mpcore
-> -      - arm,armv8 # Only for s/w models
-> -      - arm,c1-nano
-> -      - arm,c1-premium
-> -      - arm,c1-pro
-> -      - arm,c1-ultra
-> -      - arm,cortex-a5
-> -      - arm,cortex-a7
-> -      - arm,cortex-a8
-> -      - arm,cortex-a9
-> -      - arm,cortex-a12
-> -      - arm,cortex-a15
-> -      - arm,cortex-a17
-> -      - arm,cortex-a32
-> -      - arm,cortex-a34
-> -      - arm,cortex-a35
-> -      - arm,cortex-a53
-> -      - arm,cortex-a55
-> -      - arm,cortex-a57
-> -      - arm,cortex-a65
-> -      - arm,cortex-a72
-> -      - arm,cortex-a73
-> -      - arm,cortex-a75
-> -      - arm,cortex-a76
-> -      - arm,cortex-a77
-> -      - arm,cortex-a78
-> -      - arm,cortex-a78ae
-> -      - arm,cortex-a78c
-> -      - arm,cortex-a320
-> -      - arm,cortex-a510
-> -      - arm,cortex-a520
-> -      - arm,cortex-a520ae
-> -      - arm,cortex-a710
-> -      - arm,cortex-a715
-> -      - arm,cortex-a720
-> -      - arm,cortex-a720ae
-> -      - arm,cortex-a725
-> -      - arm,cortex-m0
-> -      - arm,cortex-m0+
-> -      - arm,cortex-m1
-> -      - arm,cortex-m3
-> -      - arm,cortex-m4
-> -      - arm,cortex-r4
-> -      - arm,cortex-r5
-> -      - arm,cortex-r7
-> -      - arm,cortex-r52
-> -      - arm,cortex-x1
-> -      - arm,cortex-x1c
-> -      - arm,cortex-x2
-> -      - arm,cortex-x3
-> -      - arm,cortex-x4
-> -      - arm,cortex-x925
-> -      - arm,neoverse-e1
-> -      - arm,neoverse-n1
-> -      - arm,neoverse-n2
-> -      - arm,neoverse-n3
-> -      - arm,neoverse-v1
-> -      - arm,neoverse-v2
-> -      - arm,neoverse-v3
-> -      - arm,neoverse-v3ae
-> -      - arm,rainier
-> -      - brcm,brahma-b15
-> -      - brcm,brahma-b53
-> -      - brcm,vulcan
-> -      - cavium,thunder
-> -      - cavium,thunder2
-> -      - faraday,fa526
-> -      - intel,sa110
-> -      - intel,sa1100
-> -      - marvell,feroceon
-> -      - marvell,mohawk
-> -      - marvell,pj4a
-> -      - marvell,pj4b
-> -      - marvell,sheeva-v5
-> -      - marvell,sheeva-v7
-> -      - nvidia,tegra132-denver
-> -      - nvidia,tegra186-denver
-> -      - nvidia,tegra194-carmel
-> -      - qcom,krait
-> -      - qcom,kryo
-> -      - qcom,kryo240
-> -      - qcom,kryo250
-> -      - qcom,kryo260
-> -      - qcom,kryo280
-> -      - qcom,kryo360
-> -      - qcom,kryo385
-> -      - qcom,kryo465
-> -      - qcom,kryo468
-> -      - qcom,kryo470
-> -      - qcom,kryo485
-> -      - qcom,kryo560
-> -      - qcom,kryo570
-> -      - qcom,kryo660
-> -      - qcom,kryo670
-> -      - qcom,kryo685
-> -      - qcom,kryo780
-> -      - qcom,oryon
-> -      - qcom,scorpion
-> -      - samsung,mongoose-m2
-> -      - samsung,mongoose-m3
-> -      - samsung,mongoose-m5
-> +    oneOf:
-> +      - enum:
-> +          - apm,potenza
-> +          - apm,strega
-> +          - apple,avalanche
-> +          - apple,blizzard
-> +          - apple,cyclone
-> +          - apple,firestorm
-> +          - apple,hurricane-zephyr
-> +          - apple,icestorm
-> +          - apple,mistral
-> +          - apple,monsoon
-> +          - apple,twister
-> +          - apple,typhoon
-> +          - arm,arm710t
-> +          - arm,arm720t
-> +          - arm,arm740t
-> +          - arm,arm7ej-s
-> +          - arm,arm7tdmi
-> +          - arm,arm7tdmi-s
-> +          - arm,arm9es
-> +          - arm,arm9ej-s
-> +          - arm,arm920t
-> +          - arm,arm922t
-> +          - arm,arm925
-> +          - arm,arm926e-s
-> +          - arm,arm926ej-s
-> +          - arm,arm940t
-> +          - arm,arm946e-s
-> +          - arm,arm966e-s
-> +          - arm,arm968e-s
-> +          - arm,arm9tdmi
-> +          - arm,arm1020e
-> +          - arm,arm1020t
-> +          - arm,arm1022e
-> +          - arm,arm1026ej-s
-> +          - arm,arm1136j-s
-> +          - arm,arm1136jf-s
-> +          - arm,arm1156t2-s
-> +          - arm,arm1156t2f-s
-> +          - arm,arm1176jzf
-> +          - arm,arm1176jz-s
-> +          - arm,arm1176jzf-s
-> +          - arm,arm11mpcore
-> +          - arm,armv8 # Only for s/w models
-> +          - arm,c1-nano
-> +          - arm,c1-premium
-> +          - arm,c1-pro
-> +          - arm,c1-ultra
-> +          - arm,cortex-a5
-> +          - arm,cortex-a7
-> +          - arm,cortex-a8
-> +          - arm,cortex-a9
-> +          - arm,cortex-a12
-> +          - arm,cortex-a15
-> +          - arm,cortex-a17
-> +          - arm,cortex-a32
-> +          - arm,cortex-a34
-> +          - arm,cortex-a35
-> +          - arm,cortex-a53
-> +          - arm,cortex-a55
-> +          - arm,cortex-a57
-> +          - arm,cortex-a65
-> +          - arm,cortex-a72
-> +          - arm,cortex-a73
-> +          - arm,cortex-a75
-> +          - arm,cortex-a76
-> +          - arm,cortex-a77
-> +          - arm,cortex-a78
-> +          - arm,cortex-a78ae
-> +          - arm,cortex-a78c
-> +          - arm,cortex-a320
-> +          - arm,cortex-a510
-> +          - arm,cortex-a520
-> +          - arm,cortex-a520ae
-> +          - arm,cortex-a710
-> +          - arm,cortex-a715
-> +          - arm,cortex-a720
-> +          - arm,cortex-a720ae
-> +          - arm,cortex-a725
-> +          - arm,cortex-m0
-> +          - arm,cortex-m0+
-> +          - arm,cortex-m1
-> +          - arm,cortex-m3
-> +          - arm,cortex-m4
-> +          - arm,cortex-r4
-> +          - arm,cortex-r5
-> +          - arm,cortex-r7
-> +          - arm,cortex-r52
-> +          - arm,cortex-x1
-> +          - arm,cortex-x1c
-> +          - arm,cortex-x2
-> +          - arm,cortex-x3
-> +          - arm,cortex-x4
-> +          - arm,cortex-x925
-> +          - arm,neoverse-e1
-> +          - arm,neoverse-n1
-> +          - arm,neoverse-n2
-> +          - arm,neoverse-n3
-> +          - arm,neoverse-v1
-> +          - arm,neoverse-v2
-> +          - arm,neoverse-v3
-> +          - arm,neoverse-v3ae
-> +          - arm,rainier
-> +          - brcm,brahma-b15
-> +          - brcm,brahma-b53
-> +          - brcm,vulcan
-> +          - cavium,thunder
-> +          - cavium,thunder2
-> +          - faraday,fa526
-> +          - intel,sa110
-> +          - intel,sa1100
-> +          - marvell,feroceon
-> +          - marvell,mohawk
-> +          - marvell,pj4a
-> +          - marvell,pj4b
-> +          - marvell,sheeva-v5
-> +          - marvell,sheeva-v7
-> +          - nvidia,tegra132-denver
-> +          - nvidia,tegra186-denver
-> +          - nvidia,tegra194-carmel
-> +          - qcom,krait
-> +          - qcom,kryo240
-> +          - qcom,kryo250
-> +          - qcom,kryo260
-> +          - qcom,kryo280
-> +          - qcom,kryo360
-> +          - qcom,kryo385
-> +          - qcom,kryo465
-> +          - qcom,kryo468
-> +          - qcom,kryo470
-> +          - qcom,kryo485
-> +          - qcom,kryo560
-> +          - qcom,kryo570
-> +          - qcom,kryo660
-> +          - qcom,kryo670
-> +          - qcom,kryo685
-> +          - qcom,kryo780
-> +          - qcom,scorpion
-> +          - samsung,mongoose-m2
-> +          - samsung,mongoose-m3
-> +          - samsung,mongoose-m5
-> +      - enum:
-> +          - qcom,kryo
-> +          - qcom,oryon
-> +        # Too generic, do not use in new code
-> +        deprecated: true
->  
->    enable-method:
->      $ref: /schemas/types.yaml#/definitions/string
-> -- 
-> 2.51.0
-> 
+---Trilok Soni
 
