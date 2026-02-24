@@ -1,188 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-93855-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-93856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id yONON3AHnWk7MgQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-93855-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 03:05:36 +0100
+	id 0ENrK/YLnWnLMgQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-93856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 03:24:54 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 50FF8180D13
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 03:05:36 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F2BD180FC8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 03:24:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 0C4123096A5B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 02:04:49 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id BA59330465C8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Feb 2026 02:24:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D21121EB9F2;
-	Tue, 24 Feb 2026 02:04:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40A322566F7;
+	Tue, 24 Feb 2026 02:24:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UGPFJ+nU"
+	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="I2JxoTtV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-m1973185.qiye.163.com (mail-m1973185.qiye.163.com [220.197.31.85])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98CF11E8836
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Feb 2026 02:04:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B491A9FBC;
+	Tue, 24 Feb 2026 02:24:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.85
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771898687; cv=none; b=t576Ies9vY0t7AsZjr73OdgnEJSlOJz5B6WB5UFHk0fWslEK5t4J8Mm2vfPtKx+lwaCzitwvbY/JvHG8yWQO+MqOuqR+RLElvSlPOGFOn1ZbvpwhNmXJKDGqYX2nTXgwqvGJGVZMMoTTRJ4SYtI2OX8ldmU7P5xgCed4EbAyZ6w=
+	t=1771899876; cv=none; b=i0G+WlUN05LrDEyhg86ed61NX2390HjVK1Nw168H8D9oYAqWqCJ8Kc1DhlksYxQ40vDIaBXAby4GqiieOEoMPo4ZjEMvTqAV0bJMspa2LWsQTnSVY9u2GaNzxABoT6jr2fJa6JcaJDZyv80frqEgimnv6IvHjPibpobnLvDRijA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771898687; c=relaxed/simple;
-	bh=uLgluuDCj92jXodSMJnL+H8miLgLtj6VzV3cb/Nfglc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fCd5a0DExx0YxiRF0UOQGsawFA1ue/pEU/bathY7ZXh9zSHYkKv7L7WTxHgJVa/RYwzJGYh6/AjcUztbeovwQMpEFk/Sk16Akd90dLInMaHlqX1thPmAvyttfcvRDsGwzy4D3E3WmFygygpxPWgrB78Dxhwj0cAjImAL3xfwg4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UGPFJ+nU; arc=none smtp.client-ip=209.85.222.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-8cb5c9ba82bso812429385a.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Feb 2026 18:04:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1771898685; x=1772503485; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=bhavNWQtfwjo29hZM2bT15wiOFGQrdKpiRqxwXs1Kpc=;
-        b=UGPFJ+nUlPm/JdkvdY+IqYtE22zztDmdufDVVxaXh7h6iz/FWDHDZruyA2ahlUsGTY
-         Vk7SMVFmG1QsTKyTqM5/1tH1Lg10QBVgiNdonB1p9lzPfb6OhSd91cyQDaRLcdOC6dlJ
-         zRO+Ou+Ueln8s612D0i+iIlCbpS2yzLP1ZWm454Kqa6WrRXncH1L+jKPgxJHqVxfWzBW
-         puw3q2CVcPl87aB2E7pMwcalUp8jxdFx2GR/8m85zBF8mxj8Gbet7Ac5dllofDbWmJsv
-         93aGJo2UZ8yzh8MmHfxEge440j80qd7Jrd2Ud2SfV19n0u9u3rPsEyDUhhayQmbRXNx1
-         BIhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1771898685; x=1772503485;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bhavNWQtfwjo29hZM2bT15wiOFGQrdKpiRqxwXs1Kpc=;
-        b=CQCvFAotXQCR0oFrjJpF0A+BVuK3UY6Z+Rs2vj0TD0XmYI2OPm/lm5EDs+Rt6Xmuzs
-         dwMV55V55n3PzREePfwHxIHAeCe7ROrVrsyDlHrdFVFGrr49y4R98sVCFevsdUrMywi9
-         TLWfqqFgbUiN0iLawvtIOXgEfKMKHbgzvKEJ18M+kqSIRQ1rSK6MsvMIu2W4czZALVxp
-         TUTylL1oFTIZ+q1YyJt1Tg3z/6MgTvA5U17Qt3MI81GU59AQ5lp1eBbwCuG11fdAlpS7
-         h3la1KaMXogJcUd4fPTMrmUn9+/wtBI4Hia1SIcDS6wtWUR5xpRhmjzrbMc7B8UhzryS
-         e2+g==
-X-Forwarded-Encrypted: i=1; AJvYcCWkmEIS0IwQkyLjSIGpchXCh3a0Vrm/3a8dsVYcsN0THj1TnMDzLcn1gUebOPmOerctJ+N3eTGKVySAsRyd@vger.kernel.org
-X-Gm-Message-State: AOJu0YwNjSn+qHIY3v65mRuOEtd3UZGQGKTbRRrgkM9RgTvDUSx6u9Ji
-	EGctSDcKvrG46JCzNNG4sLOUezCkT7rXEp/Td3yo2tmzyma4XjKIDG+E
-X-Gm-Gg: AZuq6aJjneLXb1jzE2SLCmpeZzRdNFlTwZUIF4af7p7caPbIsjwLjPLwGGXUmplw+yz
-	ZpowyXtNJomo9LdD458owcBbnl95qn0hdDyUYI4ARo4Gihn5YelqczrQQTk9zUwXW2itqUNUHsD
-	TOFK0jgXTWr5/8Wxr9XGzu5aR9IzFAYsbUnYeiVYS/PtVux8MiI7AKRUt2USA2FJJRdGa8bLsta
-	1TrE8eElN46caPwJ4sn/16HzbDk0NGU//091qu9YxJyzqcD5If8MwTxPxqAbJp13mlHjhl+URpe
-	7/tZEmVf2rHom20vieAYKRmC/O6V7Tu3qBVxiSlFe6Z6uSR7K9TAvs6nxfc1VfSpVnh6SLzBFVA
-	yUzhNVoKBXN0mgG59QpB3hmTipJURXEouhXYIAxHlrD2UsYmpgsaKlhSOqEP2AjTOWgWAxulwlF
-	+KvPMfj3GBaBYD/srkwWKshFgjv7zkxO3DxxJmibg7MInfXI3qqyvl2SxPNxx49KNrVaSC56LXL
-	buoCPixdZ4pOVtN5ZA=
-X-Received: by 2002:a05:620a:8412:b0:8ca:105a:f5d1 with SMTP id af79cd13be357-8cb8ca0a6ddmr1082391485a.30.1771898685553;
-        Mon, 23 Feb 2026 18:04:45 -0800 (PST)
-Received: from localhost (bras-base-toroon21-grc-75-184-144-58-243.dsl.bell.ca. [184.144.58.243])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cb8d122906sm843410885a.51.2026.02.23.18.04.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Feb 2026 18:04:44 -0800 (PST)
-Date: Mon, 23 Feb 2026 21:05:23 -0500
-From: Richard Acayan <mailingradian@gmail.com>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Nickolay Goppen <setotau@mainlining.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Johan Hovold <johan@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH 01/10] ASoC: dt-bindings: qcom,sm8250: add compatible for
- sdm660-internal
-Message-ID: <aZ0HY_fMGAWt8nuh@rdacayan>
-References: <20260211020302.2674-1-mailingradian@gmail.com>
- <20260211020302.2674-2-mailingradian@gmail.com>
- <yxrhmblavwkuhfrfgskujs7tz7cykojnqnl2mfrf365lhdem35@bgqwiaft67b3>
- <20260211-skilled-transparent-moth-fac10f@quoll>
- <f1b67c1e-cfc1-4d23-a24e-4dd342edd2e9@mainlining.org>
- <f27ec5bb-1562-4bcc-9178-4ff4d4fe00d8@oss.qualcomm.com>
- <aY_uQZxuwt8rDf6n@rdacayan>
- <ddb41df1-2d60-481b-999e-cc480a6900f3@oss.qualcomm.com>
+	s=arc-20240116; t=1771899876; c=relaxed/simple;
+	bh=VFI84jsJoxKxbbl2Av3iihOwmdaUZt/3qxvYrHVfk1A=;
+	h=Cc:Subject:To:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=VBPYwiL4yLQsyXsqVnEg6E1nWzE0tL7EPnj76s3zTnS0GpxARrzBahESAw79vNYluJ3W/EIcPb2Vq5xCiGAYTj/MTxF0UvZ24dC0kpmcS9PiFPhx0V/AuLtxcCh3Qr9XopNzLG+wuDoLJW1449mAJVoqgpN0+f5Y4/ljj9srBeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=I2JxoTtV; arc=none smtp.client-ip=220.197.31.85
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
+Received: from [172.16.12.14] (unknown [58.22.7.114])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 34bd86f1b;
+	Tue, 24 Feb 2026 10:08:59 +0800 (GMT+08:00)
+Cc: shawn.lin@rock-chips.com, Bjorn Helgaas <bhelgaas@google.com>,
+ "Vaibhaav Ram T . L" <vaibhaavram.tl@microchip.com>,
+ Kumaravel Thiagarajan <kumaravel.thiagarajan@microchip.com>,
+ Even Xu <even.xu@intel.com>, Xinpeng Sun <xinpeng.sun@intel.com>,
+ Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+ Jiri Kosina <jikos@kernel.org>,
+ Alexandre Belloni <alexandre.belloni@bootlin.com>,
+ Zhou Wang <wangzhou1@hisilicon.com>, Longfang Liu <liulongfang@huawei.com>,
+ Vinod Koul <vkoul@kernel.org>, Lee Jones <lee@kernel.org>,
+ Jijie Shao <shaojijie@huawei.com>, Jian Shen <shenjian15@huawei.com>,
+ Sunil Goutham <sgoutham@marvell.com>, Andrew Lunn <andrew+netdev@lunn.ch>,
+ Heiner Kallweit <hkallweit1@gmail.com>,
+ "David S . Miller" <davem@davemloft.net>,
+ Jeff Hugo <jeff.hugo@oss.qualcomm.com>, Oded Gabbay <ogabbay@kernel.org>,
+ Maciej Falkowski <maciej.falkowski@linux.intel.com>,
+ Karol Wachowski <karol.wachowski@linux.intel.com>,
+ Min Ma <mamin506@gmail.com>, Lizhi Hou <lizhi.hou@amd.com>,
+ Andreas Noever <andreas.noever@gmail.com>,
+ Mika Westerberg <westeri@kernel.org>, Tomasz Jeznach
+ <tjeznach@rivosinc.com>, Will Deacon <will@kernel.org>,
+ Xinliang Liu <xinliang.liu@linaro.org>, Tian Tao <tiantao6@hisilicon.com>,
+ Davidlohr Bueso <dave@stgolabs.net>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Srujana Challa <schalla@marvell.com>, Bharat Bhushan
+ <bbhushan2@marvell.com>, Antoine Tenart <atenart@kernel.org>,
+ Herbert Xu <herbert@gondor.apana.org.au>, Raag Jadav <raag.jadav@intel.com>,
+ Hans de Goede <hansg@kernel.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Jiri Slaby <jirislaby@kernel.org>, Andy Shevchenko <andy@kernel.org>,
+ Manivannan Sadhasivam <mani@kernel.org>,
+ Mika Westerberg <mika.westerberg@linux.intel.com>,
+ Andi Shyti <andi.shyti@kernel.org>, Robert Richter <rric@kernel.org>,
+ Mark Brown <broonie@kernel.org>, Nirmal Patel
+ <nirmal.patel@linux.intel.com>, Kurt Schwemmer
+ <kurt.schwemmer@microsemi.com>, Logan Gunthorpe <logang@deltatee.com>,
+ Linus Walleij <linusw@kernel.org>, Bartosz Golaszewski <brgl@kernel.org>,
+ Sakari Ailus <sakari.ailus@linux.intel.com>,
+ Bingbu Cao <bingbu.cao@intel.com>, Ulf Hansson <ulf.hansson@linaro.org>,
+ Arnd Bergmann <arnd@arndb.de>, Benjamin Tissoires <bentiss@kernel.org>,
+ linux-input@vger.kernel.org, linux-i3c@lists.infradead.org,
+ dmaengine@vger.kernel.org, Philipp Stanner <phasta@kernel.org>,
+ netdev@vger.kernel.org, nic_swsd@realtek.com, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, linux-usb@vger.kernel.org,
+ iommu@lists.linux.dev, linux-riscv@lists.infradead.org,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ linux-cxl@vger.kernel.org, linux-crypto@vger.kernel.org,
+ platform-driver-x86@vger.kernel.org, linux-serial@vger.kernel.org,
+ mhi@lists.linux.dev, Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ Jan Dabros <jsd@semihalf.com>, linux-i2c@vger.kernel.org,
+ Daniel Mack <daniel@zonque.org>, Haojian Zhuang <haojian.zhuang@gmail.com>,
+ linux-spi@vger.kernel.org, Jonathan Derrick <jonathan.derrick@linux.dev>,
+ linux-pci@vger.kernel.org, linux-gpio@vger.kernel.org,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, linux-media@vger.kernel.org,
+ linux-mmc@vger.kernel.org
+Subject: Re: [PATCH 01/37] PCI/MSI: Add Devres managed IRQ vectors allocation
+To: Jakub Kicinski <kuba@kernel.org>
+References: <1771860581-82092-1-git-send-email-shawn.lin@rock-chips.com>
+ <1771860581-82092-2-git-send-email-shawn.lin@rock-chips.com>
+ <20260223160402.3ad8f079@kernel.org>
+From: Shawn Lin <shawn.lin@rock-chips.com>
+Message-ID: <ec226aa1-5cc8-855f-8f90-1d7f89efe766@rock-chips.com>
+Date: Tue, 24 Feb 2026 10:08:58 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ddb41df1-2d60-481b-999e-cc480a6900f3@oss.qualcomm.com>
+In-Reply-To: <20260223160402.3ad8f079@kernel.org>
+Content-Type: text/plain; charset=gbk; format=flowed
+Content-Transfer-Encoding: 8bit
+X-HM-Tid: 0a9c8d68279109cckunm6766673b9bec2a
+X-HM-MType: 1
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFDSUNOT01LS0k3V1ktWUFJV1kPCRoVCBIfWUFZQ09CQ1YYTU4fGk8fHk9CSE1WFRQJFh
+	oXVRMBExYaEhckFA4PWVdZGBILWUFZTkNVSUlVTFVKSk9ZV1kWGg8SFR0UWUFZT0tIVUpLSEtKTE
+	tVSktLVUtZBg++
+DKIM-Signature: a=rsa-sha256;
+	b=I2JxoTtVS0Yy5g50bgv4Wil//q2f9q9dCHuXovK/5LdNvBScPX9QRZNqNln/2pGvmbHOVQSNiAizH26Ay9wuN1CW4yf959RsxwxZnY1zkzGm1f2heNBE5Aht1ygGExZDhYnxUaCH2lYQFIRzQh1Ji7cYGdQWjF/HKhpMW2zjyIY=; s=default; c=relaxed/relaxed; d=rock-chips.com; v=1;
+	bh=VXxBr7dg17LQLBnY9v36F+7EuLqaMgXXNtGWjPOgYcA=;
+	h=date:mime-version:subject:message-id:from;
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+	DMARC_POLICY_ALLOW(-0.50)[rock-chips.com,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[rock-chips.com:s=default];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-93855-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[19];
-	FREEMAIL_CC(0.00)[mainlining.org,kernel.org,oss.qualcomm.com,gmail.com,perex.cz,suse.com,linuxfoundation.org,quicinc.com,vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-93856-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_CC(0.00)[rock-chips.com,google.com,microchip.com,intel.com,linux.intel.com,kernel.org,bootlin.com,hisilicon.com,huawei.com,marvell.com,lunn.ch,gmail.com,davemloft.net,oss.qualcomm.com,amd.com,rivosinc.com,linaro.org,stgolabs.net,gondor.apana.org.au,linuxfoundation.org,microsemi.com,deltatee.com,arndb.de,vger.kernel.org,lists.infradead.org,realtek.com,lists.freedesktop.org,lists.linux.dev,ffwll.ch,semihalf.com,zonque.org,linux.dev];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
+	RCPT_COUNT_GT_50(0.00)[88];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mailingradian@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 50FF8180D13
+	FROM_NEQ_ENVFROM(0.00)[shawn.lin@rock-chips.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[rock-chips.com:+];
+	NEURAL_HAM(-0.00)[-0.999];
+	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,rock-chips.com:mid,rock-chips.com:dkim]
+X-Rspamd-Queue-Id: 0F2BD180FC8
 X-Rspamd-Action: no action
 
-On Mon, Feb 16, 2026 at 11:53:49AM +0100, Konrad Dybcio wrote:
-> On 2/14/26 4:38 AM, Richard Acayan wrote:
-> > On Thu, Feb 12, 2026 at 10:34:27AM +0100, Konrad Dybcio wrote:
-> >> On 2/11/26 10:55 PM, Nickolay Goppen wrote:
-> >>>
-> >>> 11.02.2026 09:51, Krzysztof Kozlowski wrote:
-> >>>> On Wed, Feb 11, 2026 at 04:11:24AM +0200, Dmitry Baryshkov wrote:
-> >>>>> On Tue, Feb 10, 2026 at 09:02:53PM -0500, Richard Acayan wrote:
-> >>>>>> From: Nickolay Goppen <setotau@mainlining.org>
-> >>>>>>
-> >>>>>> Add compatibles for sdm660-internal based soundcards.
-> >>>>> Why is it called "internal"?
-> >>>> Yeah... I am pretty sure there is no such sound card. You cannot have
-> >>>> sound card internal to the soc, because you need the external components
-> >>>> like codecs.
-> >>>
-> >>> It comes mainly from downstream driver name [1].
-> >>>
-> >>> Downstream also mentions it as int_codec [2].
-> >>>
-> >>> There's also an sdm660-external sndcard [3].
-> >>
-> >> It seems like "external" means "coupled with WCD934x+WSA881x" and "internal"
-> >> means "coupled with (digital cdc on SoC and analog on PMIC)-over-intI2S plus
-> >> optionally WSA881x".
-> > 
-> > Interesting you left out WCD9335 (codename tasha), is it never used in
-> > production on SDM660?
+在 2026/02/24 星期二 8:04, Jakub Kicinski 写道:
+> On Mon, 23 Feb 2026 23:29:40 +0800 Shawn Lin wrote:
+>> pcim_alloc_irq_vectors() and pcim_alloc_irq_vectors_affinity() are created for
+>> pci device drivers which rely on the devres machinery to help cleanup the IRQ
+>> vectors.
 > 
-> I don't know.
-> 
-> I think both were used with MSM8998, so I wouldn't rule that out being the
-> case for 660 too
+> If you can please add this API with just a few users, and then convert
+> remaining users via the subsystem trees in the next cycle.
+> There's no need to risk wasting maintainer time on conflicts with
+> conversions like this.
 
-Okay. If the codec needs separate configuration, the sound card driver
-can just compare the codec name like in SC7180.
+Thanks for the suggestion, Jakub. I have little experience with 
+cross-subsystem cleanups like this, so your suggestion is very helpful.
+
+> 
 
