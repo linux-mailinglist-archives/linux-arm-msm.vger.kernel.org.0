@@ -1,188 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-94191-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94192-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id IM6QHLpon2mFbAQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94191-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 22:25:14 +0100
+	id N6IpKZl8n2mrcQQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94192-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 23:50:01 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C934819DCE8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 22:25:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EEFCD19E736
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 23:50:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1FB35304F208
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 21:24:34 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 821DF303CE84
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 22:49:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA1E8311596;
-	Wed, 25 Feb 2026 21:24:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D354366060;
+	Wed, 25 Feb 2026 22:49:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="mi4Kff6v"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bLQgSWqw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ixit.cz [185.100.197.86])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B722830FC12;
-	Wed, 25 Feb 2026 21:24:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.100.197.86
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0542A2FB0A3;
+	Wed, 25 Feb 2026 22:49:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772054673; cv=none; b=XTsCej09AysDvdkaJp5h0defvo5syl9j4oW67ZQaKBG+T/gFAbKmjNKrLM/LI+xs+sb2udexje7betboNyyBn6llahPN6ti+Lm1OhmQql8YRK+aFmsfwlxWnIej8jpnqfeX3/vvpeYVZ3cLllLaOaUnX88f/kakxzgey4iS2Zfg=
+	t=1772059797; cv=none; b=inQ2vR2s9wFsAc2NbU8MEgq7R+gXRA7FqoIavpKyeb51pSHN1vEvPgffMmShEwhq/tPNcqOqOHeUX0vfZ1w8ABMknFIuhTGUaDykq/DezCAsHGofMHt4Uue3tyVCLbc2TExHWDFuMMvkjxpOtUtNDYwoVQ31YHNooDncYvqPkpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772054673; c=relaxed/simple;
-	bh=XtT+VNJxt/Et7Pi4d760zJXLKSmPTUh238UKLHzRh4Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=e1BrScZC1H5Xzqrv8K8C73EexD5JHFtpmQeqIi6qZ1/hgiWEdJA8nnI/RaHNXS8OEc/vABnYgqGPrZC5GE6H2iACownDdgQ87mvNde60fbMF7dQvBsGkHD2MAWefeEbClVjLnCTP783r46KWdExFHId16TZFaoOYNIshBY/2iwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=mi4Kff6v; arc=none smtp.client-ip=185.100.197.86
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [IPV6:2a02:f000:10bd:e301::1d7] (unknown [IPv6:2a02:f000:10bd:e301::1d7])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 67D415340E26;
-	Wed, 25 Feb 2026 22:24:22 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1772054662;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=T6s2uIiAhUVipze4PZGEeYXhC0Ng5fUHFn+usY+ef+c=;
-	b=mi4Kff6vSzXGfMS0gbXZHhoPTbpRJtJ0p0vcCkWI8Si+dspj4xzpL1yJTqGZstiafLQiaA
-	09OQSrjy+sCq+Ys0s0Yb16Qyqa8xkRBXjfmXBuhNwLEJow0Z/8bDGyp9HtaqNJpfLcTFLp
-	nsNxf0a3cvIflFKhFUybRDcDDKXu5Qo=
-Message-ID: <c80683ec-9c34-430e-8007-7d5f9677263c@ixit.cz>
-Date: Wed, 25 Feb 2026 22:24:22 +0100
+	s=arc-20240116; t=1772059797; c=relaxed/simple;
+	bh=mgxqDo5rlL2fSjIeQ+XKlvcKVTdg4JhBlzt9laj0qHg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=q8Z0l65NT8KEPzD4yiuYtvF2DHwjx9lgMxiVpDwKxQqelkCejjwOSiQPAOgKVQLRIt8XbajxF9W0OEMtYPTxoUZQe5XBSkrp6OBftkeWvSVrDIQo0u3gHkFNphm/x5KX43DMi/zChOiMiTQf1cvSlVT58FawgdXNrx2Xs1fhk5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bLQgSWqw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3F67C116D0;
+	Wed, 25 Feb 2026 22:49:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772059796;
+	bh=mgxqDo5rlL2fSjIeQ+XKlvcKVTdg4JhBlzt9laj0qHg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=bLQgSWqwB5/tv0+42PqFvJIC6uAPHKjAVuUraKTMifpKvdyvIvgx2av6xiXb+jH5w
+	 vfxvNUjNhJQFj7zDnuSMySWY8oxqftC2658+awD+Z+ssthXdxbiRx2An5UKGIFeWSW
+	 m+38CS/WIcesBthKltLTgLd6s6YyLAEHVGDq4KfM7hukPxRtfCPnQNWC84zww7ujzV
+	 GkMRN2aBhoBsLVtQ+AL+0EQxWMyo9+QZJEmm9A++JG1qYr+RfGPm9tKIQRmFWkajWl
+	 82fndr47I2wtRIv+6rSlpJIR0iMlE8DmQUIsXlOHENAShAHcrP2x+JZZmYK471ujpS
+	 y9e3wzlMle7Ig==
+Date: Wed, 25 Feb 2026 23:49:49 +0100
+From: Niklas Cassel <cassel@kernel.org>
+To: Frank Li <Frank.li@nxp.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>, Christoph Hellwig <hch@lst.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"David S. Miller" <davem@davemloft.net>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Koichiro Den <den@valinux.co.jp>, dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-nvme@lists.infradead.org, mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: Re: [PATCH v3 0/9] dmaengine: Add new API to combine configuration
+ and descriptor preparation
+Message-ID: <aZ98jbxb2Wh-yRe1@ryzen>
+References: <20260105-dma_prep_config-v3-0-a8480362fd42@nxp.com>
+ <aXD/EYqhhRJEN8oy@lizhi-Precision-Tower-5810>
+ <aX0EXjM4LlO3Hygd@lizhi-Precision-Tower-5810>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] drm: panel: Add Samsung S6E8FCO
-To: Yedaya Katsman <yedaya.ka@gmail.com>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>,
- Jessica Zhang <jesszhan0024@gmail.com>, David Airlie <airlied@gmail.com>,
- Simona Vetter <simona@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, =?UTF-8?Q?Kamil_Go=C5=82da?=
- <kamil.golda@protonmail.com>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, dri-devel@lists.freedesktop.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-References: <20260223-panel-patches-v2-0-1b6ad471d540@gmail.com>
- <20260223-panel-patches-v2-2-1b6ad471d540@gmail.com>
- <44283903-f11d-4b13-a6c7-6f0d40a3d00b@ixit.cz>
- <CAHuF_ZoZDJ9bGKv9FqAoJsBMjVeyHAJWqoc5NA3sshep3cdDwQ@mail.gmail.com>
-Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <CAHuF_ZoZDJ9bGKv9FqAoJsBMjVeyHAJWqoc5NA3sshep3cdDwQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aX0EXjM4LlO3Hygd@lizhi-Precision-Tower-5810>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[ixit.cz,quarantine];
-	R_DKIM_ALLOW(-0.20)[ixit.cz:s=dkim];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94191-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[19];
+	TAGGED_FROM(0.00)[bounces-94192-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[25];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[linaro.org,gmail.com,ffwll.ch,linux.intel.com,kernel.org,suse.de,protonmail.com,lists.freedesktop.org,vger.kernel.org,oss.qualcomm.com];
+	FROM_HAS_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.998];
+	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[david@ixit.cz,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[ixit.cz:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FROM_NEQ_ENVFROM(0.00)[cassel@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,ixit.cz:mid,ixit.cz:dkim]
-X-Rspamd-Queue-Id: C934819DCE8
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: EEFCD19E736
 X-Rspamd-Action: no action
 
-On 25/02/2026 22:13, Yedaya Katsman wrote:
+On Fri, Jan 30, 2026 at 02:19:58PM -0500, Frank Li wrote:
+> 
+> Vinod Koul:
+> 
+> 	Do you have chance to pick up (at least first 2 patches) for 6.20?
+> So I can start do more cleanup work.
+
+Why only the first two patches?
+
+Mani has already given his ack and said that he thinks it should go via
+the dmaengine tree:
+https://lore.kernel.org/dmaengine/6f4elcu5iql65jeqfeqhmllquv253xh4gb37ivef2kyvsj5lps@w35ciehuwxym/
+
+The series still applies to dmaengine/next btw :)
 
 
-[...]
->>> +static struct backlight_device *
->>> +s6e8fco_samsungp_create_backlight(struct mipi_dsi_device *dsi)
->>> +{
->>> +     struct device *dev = &dsi->dev;
->>> +     const struct backlight_properties props = {
->>> +             .type = BACKLIGHT_RAW,
->>> +             .brightness = 268,
->>
->> ~ 10% of brightness at boot? What is the scale? Shouldn't make sense to
->> set it around 50%? (just asking)
-> This is just what was configured downstream, it looks bright enough for me
-> fwiw, I can change it if you want.
-
-No need to change it if it’s bright enough. If it’s usable when you 
-power on the device outdoors with some daylight exposure, then it’s fine.
-
-Also, since the user can adjust the brightness later, it won’t matter 
-much either way.
-
-Thanks,
-David
-
-[...]
+Kind regards,
+Niklas
 
