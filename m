@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-94050-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94051-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id WKVmAE61nmnwWwQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94050-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 09:39:42 +0100
+	id mMNvAve5nmmfXAQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94051-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 09:59:35 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 93F0E194525
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 09:39:41 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B1AD194839
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 09:59:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id A7C083019C90
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 08:39:40 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 57A423014109
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 08:56:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 580D731D390;
-	Wed, 25 Feb 2026 08:39:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD6F03101B0;
+	Wed, 25 Feb 2026 08:56:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MSSl2XTg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uIMLHQvT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 310682F691D;
-	Wed, 25 Feb 2026 08:39:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988252E719B;
+	Wed, 25 Feb 2026 08:56:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772008777; cv=none; b=Q0jDldKUAPXKlh9wZIlQb+sM7uq+zvSjmwJmtR9af5H6sAPcE4WFpqIeVdIKb0LwQu318NkkoFde8Pionm6baHx5/eUMOH62o3y7EejCB/C8H3m4rA+pUl9mJO+HnKIQO5Vin5gVBcndNltMJ6l5bXM2nfoxicJ9ufP3Y9j4Zgs=
+	t=1772009782; cv=none; b=fOID0N9h0sPK2aK/MXOZjaEcermU80T5dNh6Z1sEnFodaeS1C0LTh204jQjfwthhaOqbSE4SXYKJT6uukhO1iil69/OILEI583wab1V8X3RxC/mMBlv5CuvGGNv63lEVA5xRh2cVFTlvYYmnGOzI/qYrcRBO+jiyPL9JtlDMzfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772008777; c=relaxed/simple;
-	bh=1OCPxXntM+s7o5PBlMuNbV/cDG5o/3yTIzhrli3dG8Y=;
+	s=arc-20240116; t=1772009782; c=relaxed/simple;
+	bh=vh9IydZEdS5fYANIDUkw7RmerX2CejVPgOG68RaRZso=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Mxdwq3EKz99UsdgObydbcgj1qQh+u1qt4XvDubk7Pe0abtbPNK4BjNnSQo6fxpQ+gPGpz5NQuJ2aTDHxQiEiYzR9omS1b9lOkFHmTJoaOCCJeRVHbuby7K+WgMJV2dWNKiTXxxNzZ5u7RXrdryQOi4i/Xms6Ya9Y6e0yimZtliM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MSSl2XTg; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E05C116D0;
-	Wed, 25 Feb 2026 08:39:32 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=KLif5k0SyGlTVYFyTPTmOLiSg1Wz+NkxIxBTYlki1u2LiZg/qAgo9ucPcvGkj+PzWKjUbMkurYVqzdx4cuC52zwe8cClV1d7IFqIsKJDuy5tkgpx/zKlEUyXAW3JRcUlXP1hySjn+74T38I8v0LLl9rUuXs3nwjBF4lKT5UofYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uIMLHQvT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FC21C116D0;
+	Wed, 25 Feb 2026 08:56:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772008776;
-	bh=1OCPxXntM+s7o5PBlMuNbV/cDG5o/3yTIzhrli3dG8Y=;
+	s=k20201202; t=1772009782;
+	bh=vh9IydZEdS5fYANIDUkw7RmerX2CejVPgOG68RaRZso=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=MSSl2XTgEWR03qgz9kE0MAQkk6LLIOSabSJrrBAHX1/2OXar3ZUBFKegvn4Bi1huI
-	 jG5FQF9+VMmkW3zolT9IkoWE2Cc4+Sf+FKkQmHgVj3eswe1GK/KAvWXovETDe5/HPG
-	 HbmLKXD222dYwl+PhY/8r5oxLMjRlVB336p2byRAhbpjJYLnldLPWckWA+Eu6BUs2v
-	 620VHwkWrzey57XFfPleHkHEQbC5Q+dWsHVmEwvCi/ODyn0bkVENz12opZ8lc6bVwQ
-	 Zg438WzlHpS+cmUZP0KZyLBEWGuwsdxOxC9r5c2a9gPcdjnLOSzbHKHgR2/gIme6Iw
-	 KlxPR0bXZcf2g==
-Message-ID: <100347ef-ab5e-45d4-a3b8-5d900110e0c8@kernel.org>
-Date: Wed, 25 Feb 2026 09:39:30 +0100
+	b=uIMLHQvTC9Q07NEJemsBK1R/SOqDVQH2/uXRtkjqXvRlQR55tgtpLWx6uExuV3oOW
+	 A7Ba8WTK6e3KkXA16PPBhtfRYiCXUWg01BL4ML50+vruxFx1PmqhjizcZE2VHwLSLY
+	 ozhi0+w9YtcJd+9xNUjyJ5EJei04Z4wQ9RVHy1FGGY6+PxNk76x4uRSfwvBwYqaUkI
+	 wQSYrIBmhbA0R0dv1gZ8WNqmhJLLI++MxGPuOdIUOKo559YCUEsjBXuG4/a2Q7fL2S
+	 vA1v5I3UDK3T2cODwiunibzV2KCNnQ9avpJl9C2msbOnXhG84XBnnCZvKCA21hliLL
+	 eESzLi/+XCN9Q==
+Message-ID: <bab87b07-42a8-4712-ba14-3489b7424ac3@kernel.org>
+Date: Wed, 25 Feb 2026 09:56:17 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,28 +53,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/6] scsi: ufs: qcom,sc7180-ufshc: dt-bindings:
- Document the Milos UFS Controller
-To: Luca Weiss <luca.weiss@fairphone.com>,
- "Martin K. Petersen" <martin.petersen@oracle.com>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>,
- "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
- Bart Van Assche <bvanassche@acm.org>, Vinod Koul <vkoul@kernel.org>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-scsi@vger.kernel.org, linux-phy@lists.infradead.org,
- Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Subject: Re: [PATCH v2 0/6] Enable UFS support on Milos
+To: Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>,
+ "Martin K . Petersen" <martin.petersen@oracle.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-scsi@vger.kernel.org, Konrad Dybcio <konradybcio@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+ Luca Weiss <luca.weiss@fairphone.com>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Rob Herring
+ <robh@kernel.org>, Bjorn Andersson <andersson@kernel.org>
 References: <20260112-milos-ufs-v2-0-d3ce4f61f030@fairphone.com>
- <20260112-milos-ufs-v2-2-d3ce4f61f030@fairphone.com>
- <DGDW69W84LJ1.2GHM2WU31VANR@fairphone.com>
- <yq14in67xwd.fsf@ca-mkp.ca.oracle.com>
- <DGNVDXQTH812.3MCVKWNCKR8B6@fairphone.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -120,7 +110,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <DGNVDXQTH812.3MCVKWNCKR8B6@fairphone.com>
+In-Reply-To: <20260112-milos-ufs-v2-0-d3ce4f61f030@fairphone.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
@@ -129,64 +119,66 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94050-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-94051-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
+	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[23];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.998];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCPT_COUNT_TWELVE(0.00)[14];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-0.999];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 93F0E194525
+	TO_DN_SOME(0.00)[]
+X-Rspamd-Queue-Id: 9B1AD194839
 X-Rspamd-Action: no action
 
-On 25/02/2026 08:38, Luca Weiss wrote:
-> On Tue Feb 24, 2026 at 8:19 PM CET, Martin K. Petersen wrote:
->>
->> Luca,
->>
->>> I've added you to this email now since you seem to pick up most patches
->>> for these files. Could you take this one please to unblock Milos UFS
->>> dts?
->>
->> Applied #2, #5, and #6 to 7.1/scsi-staging, thanks!
+On 12/01/2026 14:53, Luca Weiss wrote:
+> Add inline-crypto-engine and UFS bindings & driver parts, then add them
+> to milos dtsi and enable the UFS storage on Fairphone (Gen. 6).
 > 
-> Hi Martin,
-> 
-> Thanks for picking up the bindings!
-> 
-> I'm surprised you picked up the dts as well (and modified the subject
-> line), these patches should go via Bjorn's qcom tree.
-> 
-> * scsi: qcom: milos: arm64: dts: Add UFS nodes
-> * scsi: qcom: milos-fairphone-fp6: arm64: dts: Enable UFS
-> 
-> I also see these in your staging branch as well:
-> 
-> * scsi: qcom: hamoa: arm64: dts: Add UFS nodes for x1e80100 SoC
-> * scsi: qcom: hamoa-iot-evk: arm64: dts: Enable UFS
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+> Changes in v2:
+> - Add missing dma-coherent in milos.dtsi (Neil)
+> - Pick up tags
+> - Link to v1: https://lore.kernel.org/r/20260107-milos-ufs-v1-0-6982ab20d0ac@fairphone.com
+Trimming some Cc entries
 
+@Martin,
 
-Uh, what? First, renaming prefix is not correct for arm64 DTS patches,
-but nevertheless these MUST NOT be merged into SCSI/UFS.
+It seems you picked at least four patches clearly marked not for
+SCSI/UFS. These had CLEAR marking "arm64" subsystem.
 
-Never.
+Driver subsystems CANNOT take DTS patches because DTS is independent
+hardware description, thus combining them implies dependency and usually
+means users can be silently affected. We expressed it many times and
+documented it in point 7 of [1] (although it does not need any
+documenting because it is different subsystem - why would you ever take
+arm64 stuff without acks/permission from its maintainers?)
 
-I will mark SCSI/UFS subsystem as one needing explicit patchset split.
+Please drop all DTS patches like:
+
+https://web.git.kernel.org/pub/scm/linux/kernel/git/mkp/scsi.git/commit/?h=for-next&id=38fe636f266bc340e91ac2618c7e5aa473ea54df
+
+https://web.git.kernel.org/pub/scm/linux/kernel/git/mkp/scsi.git/commit/?h=for-next&id=7a941f1f631933972393a735e372fd9b5294f7f0
+
+https://web.git.kernel.org/pub/scm/linux/kernel/git/mkp/scsi.git/commit/?h=for-next&id=3c4c2ea631adce8d71075339431c5064c12c4ec4
+
+https://web.git.kernel.org/pub/scm/linux/kernel/git/mkp/scsi.git/commit/?h=for-next&id=a76d404af148fb7b70c1db436912dfe031d995ef
+
+[1]
+https://www.kernel.org/doc/html/latest/devicetree/bindings/submitting-patches.html
 
 Best regards,
 Krzysztof
