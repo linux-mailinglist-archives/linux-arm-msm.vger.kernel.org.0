@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-94051-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94052-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id mMNvAve5nmmfXAQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94051-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 09:59:35 +0100
+	id OL8LL1G7nmm4XAQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94052-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 10:05:21 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B1AD194839
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 09:59:34 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 157B41949B7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 10:05:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 57A423014109
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 08:56:23 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 2810C316AE31
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 08:58:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD6F03101B0;
-	Wed, 25 Feb 2026 08:56:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B50DE328251;
+	Wed, 25 Feb 2026 08:58:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uIMLHQvT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NS8v0XUa"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988252E719B;
-	Wed, 25 Feb 2026 08:56:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908CA242D76;
+	Wed, 25 Feb 2026 08:58:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772009782; cv=none; b=fOID0N9h0sPK2aK/MXOZjaEcermU80T5dNh6Z1sEnFodaeS1C0LTh204jQjfwthhaOqbSE4SXYKJT6uukhO1iil69/OILEI583wab1V8X3RxC/mMBlv5CuvGGNv63lEVA5xRh2cVFTlvYYmnGOzI/qYrcRBO+jiyPL9JtlDMzfo=
+	t=1772009913; cv=none; b=U7+wAUvsZ9JddPObvWQZjbnJb4KoCWegyYFJea7RQY3hWKuNyUd15MFqXBnHNTv0daqLCXi1efsqBi+D8VJCwaPpFwO0xS5Mz+THvroiCHsdwosZTEoj7InLFliiG0/rBeUOrYHcjJCy+n03SFZQu3xR0lVYxt+iIRWAUYeATaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772009782; c=relaxed/simple;
-	bh=vh9IydZEdS5fYANIDUkw7RmerX2CejVPgOG68RaRZso=;
+	s=arc-20240116; t=1772009913; c=relaxed/simple;
+	bh=2zl2uSzIEXK/8F7KQDQvH7x0yfHfGtEwIj5MhCIkPz4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KLif5k0SyGlTVYFyTPTmOLiSg1Wz+NkxIxBTYlki1u2LiZg/qAgo9ucPcvGkj+PzWKjUbMkurYVqzdx4cuC52zwe8cClV1d7IFqIsKJDuy5tkgpx/zKlEUyXAW3JRcUlXP1hySjn+74T38I8v0LLl9rUuXs3nwjBF4lKT5UofYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uIMLHQvT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FC21C116D0;
-	Wed, 25 Feb 2026 08:56:19 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=iTwZ94LxHVSGuYgKmt/VVXbkhWqXpa3VZ9KQO9DxKaptVOkiI2nnNoDja51xowIWbs5MIIlkvk6S0C8dty1p/JSSMcEloxuQNHP5zsWqHC/OeSFvKG1kdml6aalU/c2zsYjHVNy4FponG0SOUqWDsDmAD82SEu6L8SvKMIGmozE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NS8v0XUa; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EF07C116D0;
+	Wed, 25 Feb 2026 08:58:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772009782;
-	bh=vh9IydZEdS5fYANIDUkw7RmerX2CejVPgOG68RaRZso=;
+	s=k20201202; t=1772009913;
+	bh=2zl2uSzIEXK/8F7KQDQvH7x0yfHfGtEwIj5MhCIkPz4=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=uIMLHQvTC9Q07NEJemsBK1R/SOqDVQH2/uXRtkjqXvRlQR55tgtpLWx6uExuV3oOW
-	 A7Ba8WTK6e3KkXA16PPBhtfRYiCXUWg01BL4ML50+vruxFx1PmqhjizcZE2VHwLSLY
-	 ozhi0+w9YtcJd+9xNUjyJ5EJei04Z4wQ9RVHy1FGGY6+PxNk76x4uRSfwvBwYqaUkI
-	 wQSYrIBmhbA0R0dv1gZ8WNqmhJLLI++MxGPuOdIUOKo559YCUEsjBXuG4/a2Q7fL2S
-	 vA1v5I3UDK3T2cODwiunibzV2KCNnQ9avpJl9C2msbOnXhG84XBnnCZvKCA21hliLL
-	 eESzLi/+XCN9Q==
-Message-ID: <bab87b07-42a8-4712-ba14-3489b7424ac3@kernel.org>
-Date: Wed, 25 Feb 2026 09:56:17 +0100
+	b=NS8v0XUabZallNyWXkQXA+nTkM2O6Ujit3ag3gFjGrpKPqdcV6GRPFEayci0dMu1h
+	 Aicy/J4QQUxNerYJZKUnfu2qvIECF+QwogAO/sLqawgljkAzkSF4Lzp9BkbEARUaar
+	 3SQWfZrQH8QW/H21LGb1ZXFGGi2IElxDa56MFgIfSjcMkgx47KN1OTyR5sG0X3jb2x
+	 hJ2RAzVDSACzS5AV/vnnfL8pDJUsbsFL7UasgN4MIfQWD7KLrL7ptzTfaoCuoK8i6S
+	 BivmbJHilQl4prHb5lVgKUXg8wHRvsqSii3qTIYeio/ouHNxGEy8pCdWaVVUE8oseH
+	 8RW1Tp59jvs5A==
+Message-ID: <7d664825-48dd-4123-9112-42eba4170818@kernel.org>
+Date: Wed, 25 Feb 2026 09:58:27 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,18 +53,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/6] Enable UFS support on Milos
-To: Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>,
- "Martin K . Petersen" <martin.petersen@oracle.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-scsi@vger.kernel.org, Konrad Dybcio <konradybcio@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
- Luca Weiss <luca.weiss@fairphone.com>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Rob Herring
- <robh@kernel.org>, Bjorn Andersson <andersson@kernel.org>
-References: <20260112-milos-ufs-v2-0-d3ce4f61f030@fairphone.com>
+Subject: Re: [PATCH V5 0/3] Add UFS support for x1e80100 SoC
+To: "Martin K. Petersen" <martin.petersen@oracle.com>,
+ Pradeep P V K <pradeep.pragallapati@oss.qualcomm.com>
+Cc: vkoul@kernel.org, neil.armstrong@linaro.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, andersson@kernel.org,
+ konradybcio@kernel.org, taniya.das@oss.qualcomm.com,
+ dmitry.baryshkov@oss.qualcomm.com, manivannan.sadhasivam@oss.qualcomm.com,
+ linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-scsi@vger.kernel.org, nitin.rawat@oss.qualcomm.com
+References: <20260211132926.3716716-1-pradeep.pragallapati@oss.qualcomm.com>
+ <yq1seaq6ifd.fsf@ca-mkp.ca.oracle.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -110,7 +110,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260112-milos-ufs-v2-0-d3ce4f61f030@fairphone.com>
+In-Reply-To: <yq1seaq6ifd.fsf@ca-mkp.ca.oracle.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
@@ -119,66 +119,46 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-94051-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-94052-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[18];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-0.999];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: 9B1AD194839
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 157B41949B7
 X-Rspamd-Action: no action
 
-On 12/01/2026 14:53, Luca Weiss wrote:
-> Add inline-crypto-engine and UFS bindings & driver parts, then add them
-> to milos dtsi and enable the UFS storage on Fairphone (Gen. 6).
+On 24/02/2026 20:40, Martin K. Petersen wrote:
 > 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
-> Changes in v2:
-> - Add missing dma-coherent in milos.dtsi (Neil)
-> - Pick up tags
-> - Link to v1: https://lore.kernel.org/r/20260107-milos-ufs-v1-0-6982ab20d0ac@fairphone.com
-Trimming some Cc entries
+> Pradeep,
+> 
+>> Add UFSPHY, UFSHC compatible binding names and UFS devicetree
+>> enablement changes for Qualcomm x1e80100 SoC.
+> 
+> Applied to 7.1/scsi-staging. Please validate conflict resolution in
+> qcom,sc7180-ufshc.yaml, thanks!
 
-@Martin,
+NAK
 
-It seems you picked at least four patches clearly marked not for
-SCSI/UFS. These had CLEAR marking "arm64" subsystem.
+You CANNOT take DTS patches. This is different subsysytem - look at the
+subject prefix.
 
-Driver subsystems CANNOT take DTS patches because DTS is independent
-hardware description, thus combining them implies dependency and usually
-means users can be silently affected. We expressed it many times and
-documented it in point 7 of [1] (although it does not need any
-documenting because it is different subsystem - why would you ever take
-arm64 stuff without acks/permission from its maintainers?)
-
-Please drop all DTS patches like:
-
-https://web.git.kernel.org/pub/scm/linux/kernel/git/mkp/scsi.git/commit/?h=for-next&id=38fe636f266bc340e91ac2618c7e5aa473ea54df
-
-https://web.git.kernel.org/pub/scm/linux/kernel/git/mkp/scsi.git/commit/?h=for-next&id=7a941f1f631933972393a735e372fd9b5294f7f0
-
-https://web.git.kernel.org/pub/scm/linux/kernel/git/mkp/scsi.git/commit/?h=for-next&id=3c4c2ea631adce8d71075339431c5064c12c4ec4
-
-https://web.git.kernel.org/pub/scm/linux/kernel/git/mkp/scsi.git/commit/?h=for-next&id=a76d404af148fb7b70c1db436912dfe031d995ef
-
-[1]
-https://www.kernel.org/doc/html/latest/devicetree/bindings/submitting-patches.html
 
 Best regards,
 Krzysztof
