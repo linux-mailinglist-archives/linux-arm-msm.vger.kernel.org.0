@@ -1,149 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-94018-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wA/LChtbnmlSUwQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94018-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 03:14:51 +0100
+	id cDiKMT1vnmkvVQQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 04:40:45 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A42EC190C33
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 03:14:50 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C6C21913EB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 04:40:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 95DB03025726
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 01:50:56 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id CAD913029774
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 03:40:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBD0B2765ED;
-	Wed, 25 Feb 2026 01:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B04CB29AAFA;
+	Wed, 25 Feb 2026 03:40:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gbsBe58x"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lch/AR3T"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5E38275864;
-	Wed, 25 Feb 2026 01:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C0E817A2EA;
+	Wed, 25 Feb 2026 03:40:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771984226; cv=none; b=Nr/VAxSkhn+pmVvZalqNO8Ur41HkJT6EkXLhTsPEKdUE1SsO6IUipSWI768kB366QHPl2u/j0JehfGtlg8QGVE8e6TelmUaKNhOmlWOpA/8qbv2rYFD7rR4puOnMv0qnXN+5d6yPpQLeyDBfZXdwEzw3Q/uLm1AYTAdewnHtaSI=
+	t=1771990843; cv=none; b=Hoaj1y2P3Fw+RihaaeHd+ioxvhaWw29kbuovK0MvzwXU+JhQSIVlHPnDePGyDf2nJpwyqv3nx8InT9RiPAq3D5XEYnVk3AwBr3GFI68cHceFER0s9ROogmoSmK/djkGzWACdYEQVy5lpVjbbOUfUNRcWZVTq0uDKcYz9nN8rQew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771984226; c=relaxed/simple;
-	bh=hqHD9RFlh+gmpegg8cL1nP31Ba7mVMoIC+E34e8sKf0=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=fZ5F4hqqOwC0v8RvNCsupxEeqCXdoAoldpk/oB35N0iNpaPdJjttIIFkKM6C35wARLCxglAvUr+VjzBD4fx0/NsQAwUtlQsL0GMgIjDra2ujvLQrDzhmpy2rzzfkyatR8PpFd+mO4UbLiiApZf2KCDpTDcRcc5LFJw2Y4d2b+6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gbsBe58x; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 697D1C2BC87;
-	Wed, 25 Feb 2026 01:50:26 +0000 (UTC)
+	s=arc-20240116; t=1771990843; c=relaxed/simple;
+	bh=SH1l2VHXFd2mlhizLCM7eVb2wpOXLRKRe8YOIkeJkv0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dC7YIAkTKF1SkCO9CLyb+AST7CtvP2qRIkBVPFv7Hh423OiZUXiufGXeXz6aw4MbdwRnpqj3bpzvWG/LaXPKjMXyIyg8gQHSLAUyBj6PFIdL4g5Vc2ZLFVIt4RCSLhNzP55Hdo0ypoijWQ+53Av8jTGI+CuLNkOlHMIGh1ctw14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lch/AR3T; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 578DBC116D0;
+	Wed, 25 Feb 2026 03:40:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1771984226;
-	bh=hqHD9RFlh+gmpegg8cL1nP31Ba7mVMoIC+E34e8sKf0=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=gbsBe58xM8CPUL4NRKk/zy0iv7QuA1oH0MYcKYyoq8dcNj6DZ7ckecjm8AXhi0KjI
-	 DOyD8Hrzissdqy71F50GykotYh8GgeYmZruknBLJXVvD2WGL4eApqDPJXCvn/lzeWl
-	 zhDXV0FkCdus+JAGYSKvddZxsyvXoKOyIBUWxiRu9i/2XgPwVQocPueik48gQbJ81r
-	 xeXfzP7jIcTs+/jM447N51dKgVgO9VF68eaZjloZzqZp1X3QFfBbZVJMOxA0vccWZN
-	 ECmLaOkZ+tgfwlwX1zBgfFrNHI8GB6IIBSKQnJ0fCFjaoyZG4k8YUywLJorp527BAy
-	 GH1G8qlv65iPA==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 02D8C3808203;
-	Wed, 25 Feb 2026 01:50:33 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=k20201202; t=1771990843;
+	bh=SH1l2VHXFd2mlhizLCM7eVb2wpOXLRKRe8YOIkeJkv0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=lch/AR3TzcXQhwRHw3JK9Thp6XVQwEdVIwXe2N+gXNT5PVSoZJ3EUFNKw69Yi+t6X
+	 CLdhqC0hSjET5kyeYeiSNK1H7PAY5EtFKQhNUR2cimetDL3jDLSEFthVqN5YE7p5XC
+	 VdRXBexpOa2JxttwyzZojCm8b9wN5eIH4h95P1TwGJOsU4O6XMJDJZ1PG/hPA0EyPh
+	 fawG5xT1/TvLVqVRc6fP1ZyBZwO6hyJEwga1EY555ZbATU76r4I3wUOjR9H5jHAPxF
+	 r9fu7aWlWVw0Hz7LFv08uq5pr62y2asjhxc63sc7D6wotRC8Ku9cuwAYFTuPO6FqWB
+	 siO8nsatFCx+w==
+Date: Tue, 24 Feb 2026 21:40:40 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Manivannan Sadhasivam <mani@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH RFC] arm64: dts: qcom: qcs6490-rb3gen2: Enable uPD720201
+ and GL3590
+Message-ID: <5slnnbku4wap4bpyg5iyme3zmzst3frggdukg4elli3e3pmsow@7oueerydfiq2>
+References: <20260212-rb3gen2-upd-gl3590-v1-1-18fb04bb32b0@oss.qualcomm.com>
+ <iy3yypj2gcl6znygsyoxja3lh7irrl25snqnbxfmyhyhqgays2@57lyx33bthh6>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net-next 00/10] net: stmmac: qcom-ethqos: cleanups and
- re-organise SerDes handling
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: 
- <177198423153.31093.1747668496554974371.git-patchwork-notify@kernel.org>
-Date: Wed, 25 Feb 2026 01:50:31 +0000
-References: <aZwfAFJQcp9f0niI@shell.armlinux.org.uk>
-In-Reply-To: <aZwfAFJQcp9f0niI@shell.armlinux.org.uk>
-To: Russell King (Oracle) <linux@armlinux.org.uk>
-Cc: andrew@lunn.ch, alexandre.torgue@foss.st.com, andrew+netdev@lunn.ch,
- davem@davemloft.net, edumazet@google.com, Frank.Li@nxp.com,
- imx@lists.linux.dev, kuba@kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
- maxime.chevallier@bootlin.com, mohd.anwar@oss.qualcomm.com,
- netdev@vger.kernel.org, pabeni@redhat.com, kernel@pengutronix.de,
- s.hauer@pengutronix.de, vkoul@kernel.org
+In-Reply-To: <iy3yypj2gcl6znygsyoxja3lh7irrl25snqnbxfmyhyhqgays2@57lyx33bthh6>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_NEQ_ENVFROM(0.00)[patchwork-bot@kernel.org,linux-arm-msm@vger.kernel.org];
 	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_FROM(0.00)[bounces-94018-lists,linux-arm-msm=lfdr.de,netdevbpf];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-94019-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	FROM_NO_DN(0.00)[];
-	NEURAL_HAM(-0.00)[-0.999];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	MISSING_XM_UA(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[11];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
-	RCPT_COUNT_TWELVE(0.00)[19];
-	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: A42EC190C33
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 6C6C21913EB
 X-Rspamd-Action: no action
 
-Hello:
-
-This series was applied to netdev/net-next.git (main)
-by Jakub Kicinski <kuba@kernel.org>:
-
-On Mon, 23 Feb 2026 09:33:52 +0000 you wrote:
-> Hi,
+On Tue, Feb 24, 2026 at 09:52:45AM +0200, Dmitry Baryshkov wrote:
+> On Thu, Feb 12, 2026 at 02:43:46PM -0600, Bjorn Andersson wrote:
+> > The QCS6490 Rb3Gen2 has a Renesas μPD720201 XHCI controller hanging off
+> > the TC9563 PCIe switch, on this a Genesys Logic GL3590 USB hub provides
+> > two USB Type-A ports and an ASIX AX88179 USB 3.0 Gigabit Ethernet
+> > interface.
+> > 
+> > The Renesas chip is powered by two regulators controlled through PM7250B
+> > GPIOs 1 and 4, and the power/reset pin is pulled down by PM8350C GPIO 4.
+> > The Genesys chip power is always-on, but the reset pin is controlled
+> > through TLMM GPIO 162.
+> > 
+> > Describe the Renesas chip on the PCIe bus, with supplies and reset, to
+> > allow it to be brought out of reset and discovered. Then describe the
+> > two peers of the USB hub, with its reset GPIO, to allow this to be
+> > brought out of reset.
+> > 
+> > The USB Type-A connectors are not described, as they are in no regard
+> > controlled by the operating system.
 > 
-> As the last series had issues with stability, I've changed the approach
-> in this series to concentrate on keeping much of the SerDes related
-> code within the qcom-ethqos driver rather than trying to move it out at
-> this stage. This means it should be possible to bisect these patches and
-> pinpoint exactly the code movement that causes any instability.
+> Nevertheless, their presense in DT controls port's connect_type as can
+> be seen in sysfs.
 > 
-> [...]
 
-Here is the summary with links:
-  - [net-next,01/10] net: stmmac: qcom-ethqos: rename "por" members to "rgmii_por"
-    https://git.kernel.org/netdev/net-next/c/ebfc2be12ec5
-  - [net-next,02/10] net: stmmac: qcom-ethqos: remove register field value obfuscations
-    https://git.kernel.org/netdev/net-next/c/e6f43a41ba62
-  - [net-next,03/10] net: stmmac: qcom-ethqos: change ethqos_configure*() to return void
-    https://git.kernel.org/netdev/net-next/c/649a00c3926f
-  - [net-next,04/10] net: stmmac: qcom-ethqos: move qcom_ethqos_set_sgmii_loopback() up
-    https://git.kernel.org/netdev/net-next/c/3baa791f19be
-  - [net-next,05/10] net: stmmac: qcom-ethqos: move loopback disable to .mac_finish()
-    https://git.kernel.org/netdev/net-next/c/834c72ca306c
-  - [net-next,06/10] net: stmmac: pass interface mode into fix_mac_speed() method
-    https://git.kernel.org/netdev/net-next/c/cd0aa6515350
-  - [net-next,07/10] net: stmmac: qcom-ethqos: pass phy interface mode to configs
-    https://git.kernel.org/netdev/net-next/c/b560938163db
-  - [net-next,08/10] net: stmmac: qcom-ethqos: use phy interface mode for inband
-    https://git.kernel.org/netdev/net-next/c/b8ab32315e22
-  - [net-next,09/10] net: stmmac: qcom-ethqos: move SerDes speed configuration
-    https://git.kernel.org/netdev/net-next/c/fb42f19e671f
-  - [net-next,10/10] net: stmmac: qcom-ethqos: convert to set_clk_tx_rate() method
-    https://git.kernel.org/netdev/net-next/c/9192320a65b7
+Is that information useful enough to be worth describing the connectors
+and wire them up, despite being completely passive?
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+What consumes connect_type?
 
+Regards,
+Bjorn
 
+> > 
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+> > ---
+> -- 
+> With best wishes
+> Dmitry
 
