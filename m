@@ -1,318 +1,210 @@
-Return-Path: <linux-arm-msm+bounces-94171-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cJy3BEUmn2mPZAQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94171-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 17:41:41 +0100
+	id IHfqBaUon2nmZAQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 17:51:49 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A782119AD0B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 17:41:40 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1490019AFCC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 17:51:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 4BA43309B1AF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 16:38:18 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 0047B30847D8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 16:44:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3CFC3E9582;
-	Wed, 25 Feb 2026 16:35:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8BD881386DA;
+	Wed, 25 Feb 2026 16:44:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mv1NfCF0"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="SjIVYZoO";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Hlky7G3V"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-dy1-f182.google.com (mail-dy1-f182.google.com [74.125.82.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CB833A1D1C
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Feb 2026 16:35:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.182
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772037328; cv=pass; b=fYc7ZHA3jh6Iw2UtELUwgM2I+Cy5iaQ/C/arjZDlwfBTUuigRHxfrPgIlnni0g4jfPqXwgkdIGzARC/VtIwq/BghtcVTf8szEDM3xX6dVBSglJh8abfAukrRuwTdkpP099Hz7LePaHdtZQEEE1u1WQ0TIEr69V+amkCqzc6S14s=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772037328; c=relaxed/simple;
-	bh=5mn5Tfn04nZioLhmX5FA6JQCdLtNk5ymRmu4Pl6FZFQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BWwh5jJIVAKKa09sfwFkmm6wkCsKh2Quf1ItldR6mUN/9F8gFEJ4NlzpOEvF9DBHyjwiSO/OyKT7noFExgdM1SWuaZUdKOKVI8o9+WsCF77uYH6w/mEkoPRC48SZZcKioBv33y3m0oFlWUj2MWfw3L99Voq9CvEKFnxzNxkWvGQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mv1NfCF0; arc=pass smtp.client-ip=74.125.82.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-dy1-f182.google.com with SMTP id 5a478bee46e88-2bdbd13ca01so2568969eec.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Feb 2026 08:35:26 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772037325; cv=none;
-        d=google.com; s=arc-20240605;
-        b=XfLHz+tO5l4bthikz/fPdEF2ll+5BwikhaZbbtVz3ch+ycOhZsdh0tqXAhsC7U9lud
-         B9nAKfj2zZQRKRou8f5tYbXtepU0j65KOFR8CjNq6M0HgE4b4yjjgSq5XnEx8bAS1AyR
-         DxJhjwANCvLak8BxlnI2uW55Z/6NetZPJ9iBJOvgazlOUiiYnDjqvVaWL1iXoHnKdoo3
-         ninYmzl1k5AajIM2dmr/OdiEg1efKfOSHTMrzPIt1dzzWXsBexKDgLuDz3y6cK9SsjFQ
-         PqO1j4uIuDghiqzdhBCLzdWb5zHO/+qQoMcPPz/WC2NRjnp28b8CUsFh1ad2C2w9w8N2
-         5L7A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=RuMyK8k/Iub+seZtBM6TPXaM4YVrVm+PvcW0VWb+Be8=;
-        fh=mtlyPZZLb26mn0duZxJjnpD+/mc14Okmr9V2DGAqsBU=;
-        b=Bridu3Cn3s1ahYs8cxEZ/s2no5JfQbYdLFDTL43JnH1lrhxC3MGqc7BJoQZgrWFxxy
-         19+kaBs4YQpjDJ6S1OWL+B72tc3Yg9TwFI/hHLoHKhgv/ctzrFFse6ptmNYIoETJNxgS
-         l4WaFn83ixEjXUoOPNQRQauycl7zcw2ptE99021v/nwJ73F+IDZV+Rz022d8F3Hg/kXw
-         7/zwMHvI+2reLBbvRQgvPEBTIp5ae7SQE4gSYn+WVXDBafTZfLO9Z7Zx3DcexJx6k1bZ
-         EkNcq+LkI4OB/wOFGmr6h3fipcaV1/Ika90+5A7Or9RdC61YGyIDPeInmOjuzILBiTAJ
-         M4TQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A202727FA
+	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Feb 2026 16:44:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772037883; cv=none; b=SOy3Y4HVuhxxLMKON+QB8uFTxECxPCduHEl11FdadXNyX7uT6TkDwuspa+lkSdX4wpOClaZ+mAC28BtUhttnIp+tGvhHdfhJZnIr+iHDotsnz1cijrad5NzrbGFjtAA6kb+ftDS45BIYNrS58nyg62gqyzxSt5E4HhR3yg2iljw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772037883; c=relaxed/simple;
+	bh=4+WhaYZVbC044qiWc0R3aALccnyRgLYAnX8GPvMvM1I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Z0pCnJpfQpNLiD1+RI2mlmlJmwV7zOw51MvE9HQC5UaUgJhD6BQZc5KsO+WclUdiAthaMYENDC3Tm2t+2spg1TurWdLgqUZ4C8fAQfOAOl1L70COR/Z/S0U3dW/j308rkLZK3as3chSz14Ls0s7x2rBrjQ89eJ+QlyL9T9WISfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=SjIVYZoO; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Hlky7G3V; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 61P9SKZ31025033
+	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Feb 2026 16:44:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=FPLVcfKw5IWz8lzxbKMBoAuR
+	iK8OHzaS6FYc9SRfd50=; b=SjIVYZoOxmm/St7Mv6HP3BSHibIqWVgEbi/UG6/b
+	LyMKWL58HMmN8zqL7ATacHlwho7iXVyGpfN/z5V6rr3gJ8LGJT+M8IzrxQlFBInc
+	i/4db5tRnqLDKXXjFnNM2fIY1iNgQeRBnJdntPs7PbPjvmz+nzFc1JDPcE0TxliQ
+	i+/H5VJ39sHFdKhbCWrl9IYKA2wpnsMGZ3txmC+QURSKkqrTH/25wmpnJSDolEU4
+	/B6pmXx4UFYpvRAlAsOpEl5B6dnoX4fsEwkVkGvnc3TG72kArIkLWi2Oik3Fotq+
+	9xcQmm0NFkzZeoCEdqS8avoiDo9zsehxaUHS5qE/7IT1pQ==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4chq57tjrd-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Feb 2026 16:44:41 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8cb4e37a796so4511002385a.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Feb 2026 08:44:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772037325; x=1772642125; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RuMyK8k/Iub+seZtBM6TPXaM4YVrVm+PvcW0VWb+Be8=;
-        b=mv1NfCF0Oszuw2rgMNTU6F2h/wsO5cT0xhXLkX3WaHHjMc0DL7Jv9teLYd3TEBelGN
-         aBeZL3ySUxktv3cRSNnOrrpsyU9HvlKzJk+pQD5ih02PNCuiH2AuV4fC73aTGDSjb+P1
-         e5nUrq0casCgvKWyEe0gxvYK3fYV4oR17zIfBgMVmt7P9Evr0RsAbE1fSqOZuODK5b7k
-         feC4mZEmTdcR4U227r7Pl38z1EUMhtRjg9frJEZxe3uWKwQRV4pmOUOflxCsVwIT13HU
-         F5Yu+8pInffnaP9GmFP5d17wTP0T9IdCQYroh162xbV33HcaAwJrH2OgSwhn5sqdUAgI
-         531A==
+        d=oss.qualcomm.com; s=google; t=1772037880; x=1772642680; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=FPLVcfKw5IWz8lzxbKMBoAuRiK8OHzaS6FYc9SRfd50=;
+        b=Hlky7G3VcFVYCwx0YhgsxhCiMxk+yzsZwcydGiQQU/tgr52AJKF/P4KaOVU03c6TFr
+         TZSjJ/qSKNmlc04BtyBsNs1O9JTytmjlWiKM9SOaVIy8OuE0s341QDCX4DWT55FJUxsA
+         VU8VCkdO/M8/pnLJJZSl84w3zjrrxT0PH+bagebXKxb5NMBborHrhYijyVA6CrbL7Nuz
+         ofc2/bJriollMzeq5CVrHxesWVnZlkbOcjGr0YPDDvKjdC2z73xwmZNA7CFIRxzCh+px
+         BTyEbSqPGPHr76HC6p4DLXEI7Im4YaaulrMcJJGMNZsbWKSwpLLTXV8R6siloUxJXlui
+         DTzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772037325; x=1772642125;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=RuMyK8k/Iub+seZtBM6TPXaM4YVrVm+PvcW0VWb+Be8=;
-        b=wm8OvERPJNEtqLdwDT1NytumNkTFcOu18xvtvC3FKRNcW1xENyOQ6wC/QVvtN5Bb4C
-         wKVMYDEJ5srAc0pDtWhYYpx7CzPvDIhFBEsEkjLT5wCglpvLgEtRqXRZIO+lCg4bEx6Y
-         365TXb2SZAQpHXHnUipmOF0LYG2L+346zUQRpnKyCkFLbHue2EBz+9EQPkP7Nv4ySypF
-         fn6g5Mm3yqd8Tq/Ut0tV+eYwAXC5gTpUOLyqtsNHcARvl7Jrn6dp2BUAM/MJ6Vou+Bso
-         1t/rKOSgojpd+4wz1wlSzDQe0fED0kpZ5CbhTUzmc5nI24tJ5ZxAVkV074iD2pXHF4rf
-         Twow==
-X-Forwarded-Encrypted: i=1; AJvYcCXJ7KOO4eDxAEYWHxUfWzmwl7Pm/qHsQNYcP6YGjx/2ctNVnvqgEU2e2TmuRnA8z6O8XNO06wG1cXJquJmA@vger.kernel.org
-X-Gm-Message-State: AOJu0YzIlKJkdhNwId4N6NID4Gu3c4du0IMYKleYg1Q3dE/mPDDAwvxG
-	ExqaUh+MZTRZLjQWZWGb4v/X2j3AH2c9kedNRl97PX05ubm8jZ3KbT5Ys53OJ0UZcuQdC9GyVYR
-	JJF9b08oIKSDh+Q0xGUG6ut+gcWLhfFg=
-X-Gm-Gg: ATEYQzxs2R4HsT9pcMTPdUcSqyMOjtxZeeF9SMXYvGCBqnuQa3noMO8PQBsx2TPWfOM
-	T+QXpSuDnL+rw5hw2L63fv13nYc1BE776JbwED/PYxOVkrpDDAl+V4bPQi23OVneTEgSWJahlg8
-	bWo2HoAg5lRCbWuZxc5JdNf0Uh2DzVjtbRB49e6A1t6sT5bj+zjzp8u8rz/wrQEg0jPtqxfnhp/
-	TmROFsRTzDNADOs4z/wzJiyzs9DAhwMzoFSIvg1n2viQdIPXIlEMgnljGaQ5zlo9ocvh/q4tgLK
-	hygpA6AIDMk5ai3qxA==
-X-Received: by 2002:a05:7300:730c:b0:2ba:8018:cc53 with SMTP id
- 5a478bee46e88-2bdcc09cdcfmr451942eec.35.1772037325339; Wed, 25 Feb 2026
- 08:35:25 -0800 (PST)
+        d=1e100.net; s=20230601; t=1772037880; x=1772642680;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=FPLVcfKw5IWz8lzxbKMBoAuRiK8OHzaS6FYc9SRfd50=;
+        b=NOeD97UGZhk5ZeqW+7+ApwJX7exysNizG9/gwVLQl8q3dLEk/ZXhx1h735O0PahBLl
+         5kIpHYCE3rQoiG5Q881LuhCVrZ8zNAfXdBvs+k8dVH7jKrgON8ii5SnYRbmDvYxJcIf7
+         ZauMEzXxQxqI6684ukijAAxeS5aO9B5UDYR4NcINBMP8aP/GUJy2wavgLCTayDpwLHNV
+         8AlmDBnPcRnoyZ4Goy+xLyuJZaPTggtahQYzoSKGqg+e7MkeZt4ju9AOhZNlDdcVk3+W
+         0oBUfvP9XDRhmxNZVmXUkqMdfENNNpnLj+3ZbsbFh6RSggcjW+Oz7wzsZ3BPpKI8p2oS
+         5eKA==
+X-Forwarded-Encrypted: i=1; AJvYcCX76N6koI60/5jFjnjjghRAohF/R+MY39d1VcGDF/Uib53ivnYyuKEe8mXmhNPLDGd1+zP9Rlhq8L3EuHXK@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz/lUDM2PeA+U5sMDGPwQ0xD4Yhou2ab3fwCGTIMoyZkWpsr2X4
+	Ch7jguYi2eqk26rU8FDfTEZ5pqv3LIuf98HnlRe87g+kaQEDf2Fe0sFGaG0uuQLC5k0cWfn1AD0
+	n8OTuKM6LUHkTpKDiigUZVwxKP1VEN6t7inszubCLW98uyK/NnTwjIU3wTMDA5/c50U2K
+X-Gm-Gg: ATEYQzxB7k5EB93DEjHPgHaybukDEKUtEC+aXGEb1aC+J477pe7C5OGQTDic2rEM+Yu
+	HPHtg1Z6AwFNMvF8HIUOnRFkyJYWNMQ0RPdH4r4/lcnlHtuq30iZt0uCjrezUp37hnSqQOQRe6C
+	/km76qBN3gMXEOOlyPG7yDdXbw6BLDh8rdGxUIC+di3xni4dyRe3+YN7YQ7DOJmms2Dha86ppvi
+	18RmxrOysNK9oQG6FHS2ERDq9G+NaIyCByS7GlScQZ6kdf8rAKJfIO1CKxMUX7aLY2f2Ft59hs8
+	B2oSZG/xqpSOigEFDidh+3Ztmg/w8bRxmAlCV12PzrxeYYpwncDuUNKIutO7HYDFQCrKwCIUn0u
+	PjUrqan8alru+0oeQXrYZkdD2Zh6xFxFYZI0O4+RNnhA5jbzk5RdRaF37tWbrGTbquzF07yt9V0
+	VBY1xVqFndW1Z0ZunyXCDmf3pPuhurArOSvxg=
+X-Received: by 2002:a05:620a:294d:b0:8c6:ec8f:c8a1 with SMTP id af79cd13be357-8cb8ca71fc7mr2235413785a.44.1772037880537;
+        Wed, 25 Feb 2026 08:44:40 -0800 (PST)
+X-Received: by 2002:a05:620a:294d:b0:8c6:ec8f:c8a1 with SMTP id af79cd13be357-8cb8ca71fc7mr2235407985a.44.1772037879897;
+        Wed, 25 Feb 2026 08:44:39 -0800 (PST)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-389a7b0d500sm27629641fa.46.2026.02.25.08.44.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Feb 2026 08:44:39 -0800 (PST)
+Date: Wed, 25 Feb 2026 18:44:37 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Cc: bryan.odonoghue@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-media@vger.kernel.org, mchehab@kernel.org,
+        vladimir.zapolskiy@linaro.org
+Subject: Re: [PATCH] media: qcom: camss: Add debug message to camss-video
+ format check
+Message-ID: <32hsnxlqg6dzu3zjszuarn5tu73vpvwhf3u22wvrucznz6h4ub@xzuqhcayo2jv>
+References: <20260225152211.766792-1-loic.poulain@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260223-panel-patches-v1-0-7756209477f9@gmail.com>
- <20260223-panel-patches-v1-3-7756209477f9@gmail.com> <dko7l6iage7blup4zbpsm32d2elvxpengqwbzcsv4v4zedjmpb@rsdrb77acgme>
-In-Reply-To: <dko7l6iage7blup4zbpsm32d2elvxpengqwbzcsv4v4zedjmpb@rsdrb77acgme>
-From: Yedaya Katsman <yedaya.ka@gmail.com>
-Date: Wed, 25 Feb 2026 18:35:13 +0200
-X-Gm-Features: AaiRm500k62S5PT-UtPwx_C8A375gU6HJuFS3MnM7OdDg835C8WPOS3XQzbLxvI
-Message-ID: <CAHuF_ZrQPZSv=AhK5Cq8aNq1NVcdZhHC3v0ju4sW4whYYP+d+A@mail.gmail.com>
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sm6125-xiaomi-laurel-sprout: Enable
- MDSS and add panel
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>, Jessica Zhang <jesszhan0024@gmail.com>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	=?UTF-8?B?S2FtaWwgR2/FgmRh?= <kamil.golda@protonmail.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	~postmarketos/upstreaming@lists.sr.ht, dri-devel@lists.freedesktop.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260225152211.766792-1-loic.poulain@oss.qualcomm.com>
+X-Authority-Analysis: v=2.4 cv=faOgCkQF c=1 sm=1 tr=0 ts=699f26f9 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=EUspDBNiAAAA:8
+ a=MSYuwrY0xV-Ka2yJnwAA:9 a=CjuIK1q_8ugA:10 a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-ORIG-GUID: gVRQsJbSRNhLaAZObQpVQgBmfV0zbTLL
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI1MDE2MSBTYWx0ZWRfX0IMgWoxVAyBS
+ iQquojuN0vUAdT9dalt0ZeGYm4haX+mBBvuiDra7Dk8VUsXqDXEs95dxLLrgixWk5s+fb76unyE
+ VP6NAFc98IDT01QAuDfNJiIVc7txGc/kiRxUwDv9xiiT9dznZA82nW12BLgxChvFgkj96d5BWLL
+ qhpt7WhLFsdxIedHOZ9xkUrEh2zATriycb5LBrC2pmlzAnTCDUyKX7o7NgK85LGw9DXETIeJzCk
+ uQ7mJds08YTX+Kfv5NrqcxsIdcq+cWG11llCdJPDv1HUMwNBMDYkY4CSs2VZimhVn9vKgYwoGzL
+ cAPxBZzg3AryAJGA/hwIFdvSIWdf/fvrL6L0jf4gMfhqgNtrYn+E/54CjX5CYA6aqwS39gCTpG+
+ kY39VCu7uLtbArun7e77xUYyc85BByLY67JeW+D1C6N4DNWuQ8HfClkELoRzg8ti1RAJXSiOe76
+ N9un3xa5pP6fSx5VkTg==
+X-Proofpoint-GUID: gVRQsJbSRNhLaAZObQpVQgBmfV0zbTLL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-25_02,2026-02-25_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 clxscore=1015 impostorscore=0 suspectscore=0 phishscore=0
+ lowpriorityscore=0 malwarescore=0 spamscore=0 bulkscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2602250161
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+X-Spamd-Result: default: False [-1.66 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94171-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-94172-lists,linux-arm-msm=lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:dkim];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[19];
-	FREEMAIL_CC(0.00)[linaro.org,gmail.com,ffwll.ch,linux.intel.com,kernel.org,suse.de,protonmail.com,lists.sr.ht,lists.freedesktop.org,vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.996];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[yedayaka@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,qualcomm.com:email,mail.gmail.com:mid,0.0.0.0:email,protonmail.com:email]
-X-Rspamd-Queue-Id: A782119AD0B
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCPT_COUNT_FIVE(0.00)[6];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 1490019AFCC
 X-Rspamd-Action: no action
 
-On Tue, 24 Feb 2026 at 04:46, Dmitry Baryshkov
-<dmitry.baryshkov@oss.qualcomm.com> wrote:
->
-> On Mon, Feb 23, 2026 at 04:24:04PM +0200, Yedaya Katsman wrote:
-> > Enable the MDSS nodes and add supplies and bindings for the Samsung
-> > S6E8FCO panel.
-> >
-> > The ldo and iovcc pins boot up with a current of 16 mA, but they work
-> > fine with 2mA, so I used that.
-> >
-> > Co-developed-by: Kamil Go=C5=82da <kamil.golda@protonmail.com>
-> > Signed-off-by: Kamil Go=C5=82da <kamil.golda@protonmail.com>
-> > Signed-off-by: Yedaya Katsman <yedaya.ka@gmail.com>
-> > ---
-> >  .../boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts  | 94 ++++++++++++++=
-++++++++
-> >  1 file changed, 94 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts b=
-/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts
-> > index 994fb0412fcbdf5466f87a325c48b697a37b514b..10fd01143a644004b807fc4=
-55d2235f8e6a9737a 100644
-> > --- a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-laurel-sprout.dts
-> > @@ -82,6 +82,32 @@ key-volume-up {
-> >               };
-> >       };
-> >
-> > +     panel_ldo_supply: panel-ldo-supply {
->
-> regulator-foo-bar-baz
-Will change
->
-> > +             compatible =3D "regulator-fixed";
-> > +             regulator-name =3D "panel_ldo_supply";
->
-> Is it an actual name (e.g. from schematics)?
-In the downstream dts it's called "panel_ldo-gpio-supply". [0]
+On Wed, Feb 25, 2026 at 04:22:11PM +0100, Loic Poulain wrote:
+> Add a debug trace to video_check_format() to log both the subdev-reported
+> format and the format requested by the video node. This makes it easier
+> to diagnose mismatches between subdev output and the negotiated V4L2
+> pixel format, as well as issues related to plane count, resolution, or
+> field settings.
+> 
+> A small helper, print_fourcc(), is introduced to render fourcc codes in
+> a readable way.
+> 
+> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+> ---
+>  .../media/platform/qcom/camss/camss-video.c   | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
+> 
+> diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
+> index 0c76bc2cc574..601d5a43306f 100644
+> --- a/drivers/media/platform/qcom/camss/camss-video.c
+> +++ b/drivers/media/platform/qcom/camss/camss-video.c
+> @@ -114,6 +114,19 @@ static int video_get_subdev_format(struct camss_video *video,
+>  				    &video->formats[ret], video->bpl_alignment);
+>  }
+>  
+> +static char *print_fourcc(u32 fmt)
+> +{
+> +	static char code[5];
+> +
+> +	code[0] = (unsigned char)(fmt & 0xff);
+> +	code[1] = (unsigned char)((fmt >> 8) & 0xff);
+> +	code[2] = (unsigned char)((fmt >> 16) & 0xff);
+> +	code[3] = (unsigned char)((fmt >> 24) & 0xff);
+> +	code[4] = '\0';
 
-[0] https://github.com/MiCode/Xiaomi_Kernel_OpenSource/blob/d3766fc8cda2d96=
-de2850faa9ce58e5a37ea9f9c/arch/arm64/boot/dts/qcom/trinket-sde-display.dtsi=
-#L28
-> > +             regulator-min-microvolt =3D <1800000>;
-> > +             regulator-max-microvolt =3D <1800000>;
-> > +             regulator-boot-on;
-> > +
-> > +             enable-active-high;
-> > +             gpio =3D <&tlmm 26 GPIO_ACTIVE_HIGH>;
-> > +             pinctrl-0 =3D <&panel_ldo_en>;
-> > +             pinctrl-names =3D "default";
-> > +     };
-> > +
-> > +     panel_iovcc_supply: panel-iovcc-supply {
-> > +             compatible =3D "regulator-fixed";
-> > +             regulator-name =3D "panel_iovcc_supply";
-> > +             regulator-min-microvolt =3D <1800000>;
-> > +             regulator-max-microvolt =3D <1800000>;
-> > +             regulator-boot-on;
-> > +
-> > +             enable-active-high;
-> > +             gpio =3D <&tlmm 124 GPIO_ACTIVE_HIGH>;
-> > +             pinctrl-0 =3D <&panel_iovcc_en>;
-> > +             pinctrl-names =3D "default";
-> > +     };
-> > +
-> >       thermal-zones {
-> >               rf-pa0-thermal {
-> >                       thermal-sensors =3D <&pm6125_adc_tm 0>;
-> > @@ -128,6 +154,46 @@ &hsusb_phy1 {
-> >       status =3D "okay";
-> >  };
-> >
-> > +&mdss {
-> > +     status =3D "okay";
-> > +};
-> > +
-> > +&mdss_dsi0 {
-> > +     vdda-supply =3D <&vreg_l18a>;
-> > +
-> > +     pinctrl-0 =3D <&mdss_default>;
-> > +     pinctrl-1 =3D <&mdss_sleep>;
-> > +     pinctrl-names =3D "default", "sleep";
-> > +
-> > +     status =3D "okay";
-> > +
-> > +     panel@0 {
-> > +             compatible =3D "samsung,s6e8fco";
-> > +             reg =3D <0>;
-> > +
-> > +             vddio-supply =3D <&vreg_l9a>;
-> > +             ldo-supply =3D <&panel_ldo_supply>;
-> > +             iovcc-supply =3D <&panel_iovcc_supply>;
-> > +             reset-gpios =3D <&tlmm 90 GPIO_ACTIVE_LOW>;
-> > +
-> > +             port {
-> > +                     panel_in: endpoint {
-> > +                             remote-endpoint =3D <&mdss_dsi0_out>;
-> > +                     };
-> > +             };
-> > +     };
-> > +};
-> > +
-> > +&mdss_dsi0_out {
-> > +     data-lanes =3D <0 1 2 3>;
-> > +     remote-endpoint =3D <&panel_in>;
-> > +};
-> > +
-> > +
-> > +&mdss_dsi0_phy {
-> > +     status =3D "okay";
->
-> Missing vdds-supply.
-Will add
-> > +};
-> > +
-> >  &pm6125_adc {
-> >       pinctrl-names =3D "default";
-> >       pinctrl-0 =3D <&camera_flash_therm &emmc_ufs_therm>;
-> > @@ -387,6 +453,34 @@ &sdhc_2 {
-> >
-> >  &tlmm {
-> >       gpio-reserved-ranges =3D <22 2>, <28 6>;
-> > +
-> > +     panel_ldo_en: panel-ldo-default-state {
-> > +             pins =3D "gpio26";
-> > +             function =3D "gpio";
-> > +             drive-strength =3D <2>;
-> > +             bias-pull-up;
-> > +     };
-> > +
-> > +     mdss_default: mdss-default-state {
-> > +             pins =3D "gpio90";
-> > +             function =3D "gpio";
-> > +             drive-strength =3D <8>;
-> > +             bias-disable;
-> > +     };
-> > +
-> > +     mdss_sleep: mdss-sleep-state {
-> > +             pins =3D "gpio90";
-> > +             function =3D "gpio";
-> > +             drive-strength =3D <2>;
-> > +             bias-pull-down;
-> > +     };
-> > +
-> > +     panel_iovcc_en: panel-iovcc-default-state {
-> > +             pins =3D "gpio124";
-> > +             function =3D "gpio";
-> > +             drive-strength =3D <2>;
-> > +             bias-pull-up;
-> > +     };
-> >  };
-> >
-> >  &ufs_mem_hc {
-> >
-> > --
-> > 2.53.0
-> >
->
-> --
-> With best wishes
-> Dmitry
+Any reason for not using %p4cc ?
+
+
+-- 
+With best wishes
+Dmitry
 
