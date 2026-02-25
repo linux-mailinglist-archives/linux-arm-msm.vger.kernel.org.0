@@ -1,52 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-94106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SMvkFkfqnmk/XwQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 13:25:43 +0100
+	id eNwlCC7qnmk/XwQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 13:25:18 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id EBCFD19743C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 13:25:42 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4493F19742C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 13:25:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 64D303053CD1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 12:24:08 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id A1DB7303E319
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Feb 2026 12:24:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40DC03AEF24;
-	Wed, 25 Feb 2026 12:23:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 913A43AE717;
+	Wed, 25 Feb 2026 12:24:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rYKlKKzT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eOIdrVJf"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CC811F17E8;
-	Wed, 25 Feb 2026 12:23:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D50F1F17E8;
+	Wed, 25 Feb 2026 12:24:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772022238; cv=none; b=YAy1cQSe7vMXY+9I+CRyPvhr0X88EDyD0q4abjDJ1pCHHv/VokAvxi4t5tG/0gc5LOEf0jAyj6oKhqjHlWexaZ+aKx0fy2QTr+UzgA7BI8hpyuKIL/FtmytM1wQwRqBydZqEiMyfTGVotX/wV0jphRQ5YpKikMY4z2Owq+nMbo8=
+	t=1772022244; cv=none; b=slEYGJnMC/c1/E5sSASde7UQ0ByDRVaXFTTBfN08sCM5q0vZwtNeVSXv9iLRg7VnXXu4yx0xquDZjof9uQLLCxp60Y46L9l1NzpF3kiNlHI1Z8ptB9oJjoKJw76eWaHQaY2dX+FjQZow8nC/u7R0N7NWeqSA0Sr2UbMqIIRf8iU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772022238; c=relaxed/simple;
-	bh=mfa3cNdFQhIGZa8zO/Gx2FpgAUpvC+jvOnc1rbE4nA4=;
+	s=arc-20240116; t=1772022244; c=relaxed/simple;
+	bh=5S8s9wBsu0POu0fhrPSWuEa4tcoSLqgVNor9jPqxTZw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=pENLoScRyB9QNuE1eVSJofDA0jPHzeVXOkOy7n3/dXrbgsiQMtsF/L+oR56fXKzN7tYILeiEszy7YKG3+UHMF5cyrjmV5jHODgEJeUpwhT7I5s0mUriK1Husg9CRg1seCZRaD6c8fjAARKTKu22Y2h/7MK/O6pEGTEIsdirOp3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rYKlKKzT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1B78C4AF0B;
-	Wed, 25 Feb 2026 12:23:52 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=Bea44Nxk90Vzn5DzGNw2Rdv+2Kn02YwSgeBGzZ1ne86x5G9GwBP9HYbl1Z8a61JJs/HLTedwMIHXJYp/EMAKMLH/KYF6hyd0z6saSb4LxU7SQ/qnDnuc3gMrDpFYTTGn+WiZyPzp/Fqm643iNEfZRb9C76SvuuJLW5Xbzp43OW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eOIdrVJf; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67684C19423;
+	Wed, 25 Feb 2026 12:23:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772022237;
-	bh=mfa3cNdFQhIGZa8zO/Gx2FpgAUpvC+jvOnc1rbE4nA4=;
+	s=k20201202; t=1772022244;
+	bh=5S8s9wBsu0POu0fhrPSWuEa4tcoSLqgVNor9jPqxTZw=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=rYKlKKzT3oBBK/jI6EUMMQgXOof1VdRxIcEcNfiSXfrp6EAmqPW+MAu4BvJYvAV/0
-	 v/ZshccKJP+M5nvr9VCRl+gWhvdmsJaZTBDfldxKldLEWL3Qn15NIEshEq8mGgd6dR
-	 Dw2q5UsFJMJVZlcNupT5ZYYtR+Zkntb1DzCc1aFQg0uvohWoPXoaduPkN8zL3zMnOT
-	 2W7B63noz/Lqp5V65qINoBTRRIaocFGMygHs+kECA6ftTnytf4gCPli3Qo7OfMK4gD
-	 rxBme5nrRUJABkReAt2wcF0t5vn03QWz08wQ2dE7dXjvkoKlXnlwEA8lkv8SGxJ2L5
-	 OwYE0GIM3OPwA==
+	b=eOIdrVJfgOBPhcPw4wi9eV9a/MZi0LPHZuuJriATh8RRF9kkpobQmxEMFhs+x5+Bs
+	 Z0IPd8ymr1AM4DP5xSkzJCSKrG/o4IiRR2GG/BcR/XLxqlajJa0BN4Cc6yFSw1JP9w
+	 tNh9vw3TJu7gI26JVUZcktC4kN9v1wBG6XHgPNoKlSKSDvRU6UsS96FRRSaBypGNe/
+	 wyE7rM948Kpclm0Duf6JpeaoVy1Jz2rUSiT71SaV9jLyypv0a5nQwDJKyKwjuV3Z+M
+	 Fp+dqU9Gutp5CjLn/h4RxNl1wxjFC0rtLZjs4WGIy2mAqyHB98jugF7t2m/w58327F
+	 +NWc7oSRKIxig==
 From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Wed, 25 Feb 2026 13:23:24 +0100
-Subject: [PATCH v3 04/10] arm64: dts: qcom: sc8280xp-gaokun3: Fix BT RFA
+Date: Wed, 25 Feb 2026 13:23:25 +0100
+Subject: [PATCH v3 05/10] arm64: dts: qcom: sc8280xp-x13s: Fix BT RFA
  supply name
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -56,7 +56,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260225-topic-wcn6855_pmu_dtbdings-v3-4-576ec5c4e631@oss.qualcomm.com>
+Message-Id: <20260225-topic-wcn6855_pmu_dtbdings-v3-5-576ec5c4e631@oss.qualcomm.com>
 References: <20260225-topic-wcn6855_pmu_dtbdings-v3-0-576ec5c4e631@oss.qualcomm.com>
 In-Reply-To: <20260225-topic-wcn6855_pmu_dtbdings-v3-0-576ec5c4e631@oss.qualcomm.com>
 To: Jeff Johnson <jeff.johnson@oss.qualcomm.com>, 
@@ -76,11 +76,11 @@ Cc: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
  Abel Vesa <abel.vesa@oss.qualcomm.com>, 
  Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1772022207; l=946;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1772022207; l=976;
  i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=wb1DLlNmMtnNV1TwecWCQnAQ7r5lQej7pxeDKEV5oa4=;
- b=tstWvoNSZ98ltK+Vd+kYOkiQA0QoGlCKLMAJ5sqS3aFyk0r1x63SKYVoqvBabNg8srQBtOOqg
- v7pO6rV61BHCzuKekVXFfNUB0D2qQAlQMgOXTU9fdien8BumquHMtjn
+ bh=5/4XzDPzB+/SfDFy+8ruZ9GavHTyq5ADjjYuopEUns8=;
+ b=no6OcnFzGON0TFAyh6wOlW3bjlvNuTNMrvz7YYxYH1ylxiVv8PO6z0qq4Oi0u1HDNHVQPrc01
+ Z7FiOe3aqlAB9NKLXQGvHfvnRm4kwhdd1FnqHp9EEtGyUqHlejeJqLX
 X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Rspamd-Server: lfdr
@@ -90,11 +90,11 @@ X-Spamd-Result: default: False [0.34 / 15.00];
 	MID_RHS_MATCH_TO(1.00)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-94106-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-94107-lists,linux-arm-msm=lfdr.de];
 	FREEMAIL_TO(0.00)[oss.qualcomm.com,bgdev.pl,holtmann.org,gmail.com,kernel.org,quicinc.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
@@ -107,11 +107,11 @@ X-Spamd-Result: default: False [0.34 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[konradybcio@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[20];
 	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: EBCFD19743C
+X-Rspamd-Queue-Id: 4493F19742C
 X-Rspamd-Action: no action
 
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
@@ -122,14 +122,14 @@ Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
 Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts | 2 +-
+ arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts b/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
-index 9819454abe13..f3c00be67081 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
-@@ -1122,7 +1122,7 @@ bluetooth {
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+index d84ca010ab9d..abd9c5a67b9f 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+@@ -1331,7 +1331,7 @@ bluetooth {
  		vddbtcmx-supply = <&vreg_pmu_btcmx_0p8>;
  		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
  		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
