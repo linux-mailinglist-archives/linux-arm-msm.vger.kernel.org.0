@@ -1,37 +1,37 @@
-Return-Path: <linux-arm-msm+bounces-94350-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94351-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MB6lG9HSoGmrnAQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94350-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 00:10:09 +0100
+	id mD73MeDSoGmrnAQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94351-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 00:10:24 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1D1D81B0C5E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 00:10:09 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F2311B0C83
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 00:10:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 844063016B98
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Feb 2026 23:10:08 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id B8D41304AA2F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Feb 2026 23:10:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 12DA2438FF3;
-	Thu, 26 Feb 2026 23:10:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D649314D1D;
+	Thu, 26 Feb 2026 23:10:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="xIZsT4l2"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="wESK0CpD"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A41C3A4F23;
-	Thu, 26 Feb 2026 23:10:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1128542B724;
+	Thu, 26 Feb 2026 23:10:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772147405; cv=none; b=ahI2M42YnCkBBVz2xRT7zdtIEAVLjJh3u4oixBf3bjVreW/X6ZPHIZcZiS0Tgs/98HrrLxcoFiRYfl+nIdfI3V5bqJMf5YfBEi6GcNkF8OM0IqSPrIDsfCAAjat9IU5ecYiI6Y66QwmeYUuJp7ieHmNZDZgGiIhpoVda8pL7sZ0=
+	t=1772147411; cv=none; b=ULq0VjAyWU966YnLInrPPUSa09UH0m59Z64GgJu+wGL+XLdwSP3aesx91wMyMEMPccz1ApL400OqN68OZoLIpPHzgphqEUTsn0AUHRGJjg9Y2dqHqzXfkwKW3C8E7aCnuLCNW4ffaS7KXC9+mApr59swk7oGT3W9QQNWQZZBlDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772147405; c=relaxed/simple;
-	bh=0LSYd2UoXVX4DLNkFVhpzekJQuGSo5nxMn5DlTUIlU8=;
+	s=arc-20240116; t=1772147411; c=relaxed/simple;
+	bh=NMrML7XWpFxonb99SXNOJH6rQio3XyQFef3xUJwrD30=;
 	h=In-Reply-To:References:From:To:Cc:Subject:MIME-Version:
-	 Content-Disposition:Content-Type:Message-Id:Date; b=rtHS/W5g8ZH8+EIeCC9zMlozBLFmxAKzCEfsxmQZ7Ur/y7Sm/xtuV/xcgOroheVSSZSSkiNxxG/ISejBu/ReGbyjyiGN9B7GhRufnpuu09MhHGqE1rZYC9O7STWeBgVvhhPiVMXNE+6xNen3nZZmaltInGTbS1xCDGBL1Tjp2Jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=xIZsT4l2; arc=none smtp.client-ip=78.32.30.218
+	 Content-Disposition:Content-Type:Message-Id:Date; b=UVBDn+eP3XNkav04p8yb3UKrbTJcuX216jqyvRGicI0sH4smek11IVXFE++YfRgZ2lxxqtbsVRZ3gaGlBrXN6IaIZSNz0/vB20EnUesdk+zce5fJodCP3igNR6ehsH98wSEq0L6PVp5L0950/VIWu6/yfrjDwrnNEvpSHT3M3bg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=wESK0CpD; arc=none smtp.client-ip=78.32.30.218
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
@@ -40,22 +40,22 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	In-Reply-To:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
 	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
 	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=GxfcZEUseWSWgXEfUJ/x192G0PkidFc23RUS1GJAT+I=; b=xIZsT4l2M3uLxTAnNhbl9gu9fY
-	RCxVEkpKHCP8dXz1yHjHc6mD0l3vsCRoLozVGfBSN8xaIOHanO9JBnCGOxgqlALdLN0iYCyf+BoM/
-	nLPB21b8m7EU/r1Kjt/ayifXWjEpsJ77hzy6UPumZgthrD5dcU+QE0Vdb56h8bHqcReVBHpnHMLqE
-	UqQbGa8GqrDfwXspnYTeqWOuLGIewbnciSVPpDqcuWRvUUmkBECzyY33NBHv98ejtKFOOP68bPi2j
-	4UQUTi4b9dkVBFpJZTEcLhlMY7vO/9WklCk7CNJh2DE77abizztAF+Rkt53ajWIrsaiOgrLQsRPSp
-	+YNL3pDA==;
-Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:44606 helo=rmk-PC.armlinux.org.uk)
+	bh=PkRfojPSv3CP3LZanTyC5uu1PLQ8pOplU1rIVTgxy/U=; b=wESK0CpDUNq8UiEZ7oh1WCl0bY
+	o69axdMyXf87MeMvhJXBXTDZV5j7Rzx6/2uuezIRoNPL3nMk7nNhdkSTSkvVxdcFX/RwdWwX/dVC0
+	YPSAxT+3Ri0ywW/juB8zZ67g4hvSpbFVCTjeTKw16ZQmu9dbcRPz/K7FG3/4gWHrlB5M486A/LdzO
+	4zc6ULVrVin8DKHijumKHR9BXRiVSdXhWW8TRNOFcNU0l9FacDbxXyzbkA0KQ5YijCct0QpwIJvDK
+	DP+278tRDlmGCCcUZPWZPyOskRdy9B5QOrD1tijdAWnCvC245ZAmz1GxgUikTBhrd+4J4B1x93kn3
+	/wi2pteA==;
+Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:40152 helo=rmk-PC.armlinux.org.uk)
 	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
 	(envelope-from <rmk@armlinux.org.uk>)
-	id 1vvkUU-0000000005I-0GEE;
-	Thu, 26 Feb 2026 23:09:54 +0000
+	id 1vvkUa-0000000005l-2ZN5;
+	Thu, 26 Feb 2026 23:10:00 +0000
 Received: from rmk by rmk-PC.armlinux.org.uk with local (Exim 4.98.2)
 	(envelope-from <rmk@rmk-PC.armlinux.org.uk>)
-	id 1vvkUS-0000000AuPh-3Il7;
-	Thu, 26 Feb 2026 23:09:52 +0000
+	id 1vvkUX-0000000AuPo-3mEw;
+	Thu, 26 Feb 2026 23:09:58 +0000
 In-Reply-To: <aaDSJAc-x2-klvHJ@shell.armlinux.org.uk>
 References: <aaDSJAc-x2-klvHJ@shell.armlinux.org.uk>
 From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
@@ -74,8 +74,8 @@ Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	netdev@vger.kernel.org,
 	Paolo Abeni <pabeni@redhat.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH RESEND2 net-next 7/8] phy: qcom-sgmii-eth: relax order of
- .power_on() vs .set_mode*()
+Subject: [PATCH RESEND2 net-next 8/8] net: stmmac: qcom-ethqos: remove
+ phy_set_mode_ext() after phy_power_on()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,20 +85,20 @@ MIME-Version: 1.0
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset="utf-8"
-Message-Id: <E1vvkUS-0000000AuPh-3Il7@rmk-PC.armlinux.org.uk>
+Message-Id: <E1vvkUX-0000000AuPo-3mEw@rmk-PC.armlinux.org.uk>
 Sender: Russell King <rmk@armlinux.org.uk>
-Date: Thu, 26 Feb 2026 23:09:52 +0000
+Date: Thu, 26 Feb 2026 23:09:57 +0000
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [1.14 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	R_DKIM_REJECT(1.00)[armlinux.org.uk:s=pandora-2019];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	DMARC_POLICY_SOFTFAIL(0.10)[armlinux.org.uk : SPF not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-94350-lists,linux-arm-msm=lfdr.de,kernel];
+	TAGGED_FROM(0.00)[bounces-94351-lists,linux-arm-msm=lfdr.de,kernel];
 	FROM_HAS_DN(0.00)[];
 	DKIM_TRACE(0.00)[armlinux.org.uk:-];
 	RCPT_COUNT_TWELVE(0.00)[15];
@@ -106,64 +106,94 @@ X-Spamd-Result: default: False [1.14 / 15.00];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	FROM_NEQ_ENVFROM(0.00)[rmk@armlinux.org.uk,linux-arm-msm@vger.kernel.org];
 	PRECEDENCE_BULK(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	NEURAL_HAM(-0.00)[-0.978];
+	NEURAL_HAM(-0.00)[-0.979];
 	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
 	MID_RHS_MATCH_FROMTLD(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[armlinux.org.uk:email,rmk-PC.armlinux.org.uk:mid,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: 1D1D81B0C5E
+	DBL_BLOCKED_OPENRESOLVER(0.00)[armlinux.org.uk:email,rmk-PC.armlinux.org.uk:mid,qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 2F2311B0C83
 X-Rspamd-Action: no action
 
-Allow any order of the .power_on() and .set_mode*() methods as per the
-recent discussion. This means phy_power_on() with this SerDes will now
-restore the previous setup without requiring a subsequent
-phy_set_mode*() call.
+The call to phy_set_mode_ext() after phy_power_on() was a work-around
+for the qcom-sgmii-eth SerDes driver that only re-enabled its clocks on
+phy_power_on() but did not configure the PHY. Now that the SerDes driver
+fully configures the SerDes at phy_power_on(), there is no need to call
+phy_set_mode_ext() immediately afterwards.
 
+This also means we no longer need to record the previous operating mode
+of the driver - this is up to the SerDes driver. In any case, the only
+thing that we care about is the SerDes provides the necessary clocks to
+the stmmac core to allow it to reset at this point. The actual mode is
+irrelevant at this point as the correct mode will be configured in
+ethqos_mac_finish_serdes() just before the network device is brought
+online.
+
+Reviewed-by: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
 Tested-by: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
 Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 ---
- drivers/phy/qualcomm/phy-qcom-sgmii-eth.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ .../stmicro/stmmac/dwmac-qcom-ethqos.c         | 18 ++----------------
+ 1 file changed, 2 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-sgmii-eth.c b/drivers/phy/qualcomm/phy-qcom-sgmii-eth.c
-index 6332ff291fdf..f48faa2929a6 100644
---- a/drivers/phy/qualcomm/phy-qcom-sgmii-eth.c
-+++ b/drivers/phy/qualcomm/phy-qcom-sgmii-eth.c
-@@ -271,8 +271,17 @@ static int qcom_dwmac_sgmii_phy_calibrate(struct phy *phy)
- static int qcom_dwmac_sgmii_phy_power_on(struct phy *phy)
- {
- 	struct qcom_dwmac_sgmii_phy_data *data = phy_get_drvdata(phy);
-+	int ret;
-+
-+	ret = clk_prepare_enable(data->refclk);
-+	if (ret < 0)
-+		return ret;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+index 8913f6f02b9e..cb1c074c2053 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+@@ -105,7 +105,6 @@ struct qcom_ethqos {
  
--	return clk_prepare_enable(data->refclk);
-+	ret = qcom_dwmac_sgmii_phy_calibrate(phy);
-+	if (ret < 0)
-+		clk_disable_unprepare(data->refclk);
-+
-+	return ret;
+ 	struct clk *link_clk;
+ 	struct phy *serdes_phy;
+-	phy_interface_t serdes_mode;
+ 	phy_interface_t phy_mode;
+ 
+ 	const struct ethqos_emac_por *rgmii_por;
+@@ -648,17 +647,8 @@ static int qcom_ethqos_serdes_powerup(struct net_device *ndev, void *priv)
+ 		return ret;
+ 
+ 	ret = phy_power_on(ethqos->serdes_phy);
+-	if (ret) {
+-		phy_exit(ethqos->serdes_phy);
+-		return ret;
+-	}
+-
+-	ret = phy_set_mode_ext(ethqos->serdes_phy, PHY_MODE_ETHERNET,
+-			       ethqos->serdes_mode);
+-	if (ret) {
+-		phy_power_off(ethqos->serdes_phy);
++	if (ret)
+ 		phy_exit(ethqos->serdes_phy);
+-	}
+ 
+ 	return ret;
  }
+@@ -681,12 +671,9 @@ static int ethqos_mac_finish_serdes(struct net_device *ndev, void *priv,
+ 	qcom_ethqos_set_sgmii_loopback(ethqos, false);
  
- static int qcom_dwmac_sgmii_phy_power_off(struct phy *phy)
-@@ -318,6 +327,9 @@ static int qcom_dwmac_sgmii_phy_set_mode(struct phy *phy, enum phy_mode mode,
- 	if (submode != data->interface)
- 		data->interface = submode;
+ 	if (interface == PHY_INTERFACE_MODE_SGMII ||
+-	    interface == PHY_INTERFACE_MODE_2500BASEX) {
++	    interface == PHY_INTERFACE_MODE_2500BASEX)
+ 		ret = phy_set_mode_ext(ethqos->serdes_phy, PHY_MODE_ETHERNET,
+ 				       interface);
+-		if (ret == 0)
+-			ethqos->serdes_mode = interface;
+-	}
  
-+	if (phy->power_count == 0)
-+		return 0;
-+
- 	return qcom_dwmac_sgmii_phy_calibrate(phy);
+ 	return ret;
  }
+@@ -839,7 +826,6 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+ 		plat_dat->host_dma_width = data->dma_addr_width;
  
+ 	if (ethqos->serdes_phy) {
+-		ethqos->serdes_mode = PHY_INTERFACE_MODE_SGMII;
+ 		plat_dat->serdes_powerup = qcom_ethqos_serdes_powerup;
+ 		plat_dat->serdes_powerdown  = qcom_ethqos_serdes_powerdown;
+ 	}
 -- 
 2.47.3
 
