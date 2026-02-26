@@ -1,84 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-94342-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94343-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 2EjULWesoGlulgQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94342-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Feb 2026 21:26:15 +0100
+	id sNbBDDfSoGmPnAQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94343-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 00:07:35 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F94D1AF16C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Feb 2026 21:26:15 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B9F61B0BEF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 00:07:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 85BDC3038723
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Feb 2026 20:24:36 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 8BB1730276A7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Feb 2026 23:07:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3171246AECB;
-	Thu, 26 Feb 2026 20:24:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E20A835A380;
+	Thu, 26 Feb 2026 23:07:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="ArwLD00N"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="MNboOHRE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67BE446AF1F
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Feb 2026 20:24:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B429314D1D;
+	Thu, 26 Feb 2026 23:07:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772137446; cv=none; b=VWT0eYoUGa4Ib+w+qEeEdtHqpEGtZp0rSn4BiXbd4kmE6Kac6MdC/ir2KZ8O0F8zZQhBccAQ4twIk2Y+1k2wA0qWEHtQIVwv2+LZV/zFLOVVDJfWB0IeDdSaZZdiDAPano4wt+nbDX6vpn176u/mnMCH4jaO80S6H/5qCJkQ15A=
+	t=1772147250; cv=none; b=a5+5gIj6C2H3OIhTQo3ecuuF7xRbCdKd8h1u9fTq1qLBxn7DlZ7PP0PL40eKFWJUblTa+Ka7Sk7E8k7Ycp/J/qzvxmrNtURjx2DM8gAt0wlo5dipm8ZrFRUaPFpTA5+ptH+mODiIltnRLqrQhhTqDcTMTYZhJwyG+ql28ajfPAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772137446; c=relaxed/simple;
-	bh=7cIptIAtCy+YKmfm48wrDxQzATrxEhpTKqY9xKxhVPw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UhhzofSPAsFhfQjJb+pV1pcm2KLGjiXP+LRri2FSELCvsYsAphhntY3OQ51HibJ9iHzoIblEzesN8+846rBDjcuFMM02lu9uzSMEhEkeVZzSPWiCpAKTSVBGBQU2SPKTURP+PhcEEyOayVCSg/f6UJpjPMtIIn2U2DwFr5VVyU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=ArwLD00N; arc=none smtp.client-ip=194.117.254.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	sang-engineering.com; h=date:from:to:cc:subject:message-id
-	:references:mime-version:content-type:in-reply-to; s=k1; bh=P103
-	FCGrnxs/xWkEVMA9wfCrrwGUD1RHdk9OgkWjkw4=; b=ArwLD00NgpD8GB6F3smK
-	N81VP79SFKd4S2KXc7kXA8DG2HqiKcVJFAE84wiZkLVbYc0dcDn7xVrrqOstsWmm
-	7Soa2GzK0V7rlrV345mLTHVvK9YqnQjwG8WTaHRhEhp5Lj26sWW7ILiQSNNSg0Lk
-	6xVBe+6iePHwSS6IMD4VazRh8aWVu/Jlk7ukQYVSFWIflH3BUhp3GEp+Sxk2fnii
-	ObczMWhgDQeaLFMLAlD8cApZLoPT+tppLZb/0yLahD4PGixDzB3JaKRupzLSPzpI
-	dzo/jA0JGrDU8Ch20uk3ospXBOmwShwf7nY7+Zwqqvg+YlA/gOPAl+aqZgJfkyfm
-	pw==
-Received: (qmail 1210022 invoked from network); 26 Feb 2026 21:24:01 +0100
-Received: by mail.zeus03.de with UTF8SMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 26 Feb 2026 21:24:01 +0100
-X-UD-Smtp-Session: l3s3148p1@u1Kn5r9L+OUujnuU
-Date: Thu, 26 Feb 2026 21:24:00 +0100
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
-To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Cc: Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
-	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Vignesh R <vigneshr@ti.com>, Aaro Koskinen <aaro.koskinen@iki.fi>,
-	Janusz Krzysztofik <jmkrzyszt@gmail.com>,
-	Tony Lindgren <tony@atomide.com>,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Roger Quadros <rogerq@kernel.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Linus Walleij <linusw@kernel.org>, Frank Li <Frank.Li@nxp.com>,
-	Bartosz Golaszewski <brgl@kernel.org>, linux-i2c@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev,
-	linux-rpi-kernel@lists.infradead.org
-Subject: Re: [PATCH v2 00/12] i2c: configure parent device and OF node
- through the adapter struct
-Message-ID: <aaCr4CeJFGaRMWRU@ninjato>
-References: <20260223-i2c-adap-dev-config-v2-0-d78db0a6fcf7@oss.qualcomm.com>
+	s=arc-20240116; t=1772147250; c=relaxed/simple;
+	bh=perFwprZ19NFmkt6yJXHy5SD7ngPmDBmfDTrqL+DsoE=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=RMbEwyIcggHeOEzewh+Y4Igs5JH/yZxl0DgsMeVzxXjyxiYhBTmmkMCi630RfDz4RlOZbOyYOIN0Yex45vQZyTok33eOKaP9yBxImFHNgj6xMaqz8CRF5OlsFHCfZzmbZKSdezcBtZfeFiNO8ThcyTwEjHhxEim0pLcbKeSQfOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=MNboOHRE; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:Content-Type:MIME-Version:
+	Message-ID:Subject:Cc:To:From:Date:Reply-To:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=D0UK8pO0Y/9nQsoDE0tyGVTLdOq02b88CjLRoni4BOQ=; b=MNboOHREJJVAwQGuNTlghY1201
+	FHF0dvFD7a4Al7EYtSTPQiyxAl2nLEaRy3S81mT/Nu6eai2n/B86Jl+r6zvHVefKm29AtOcJrOv8o
+	I7GjG6YvM5G9h+LyfdYN7UzpO9iVGhpMsN5sgpbCcoZIS3kuSPKgocR0gZCDor/wpZequcky0E2Fm
+	IDP2phoCoVFvz5g+jvFV/euVHrIPiP2KF4X2NERWsyReTHvIUB7ipZaGBAZQ5ebZ29IjrgugjCfC8
+	PgaIAkbSB/emei8UyqGsH3ja/fIEPniU9n+5PFZGgLxR5+KitxEwavrZTe6Izz1ugwb+4BhINXhli
+	tvECZaOA==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:38136)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1vvkS1-000000008Uq-0gwu;
+	Thu, 26 Feb 2026 23:07:21 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1vvkRx-000000002RJ-0MlJ;
+	Thu, 26 Feb 2026 23:07:17 +0000
+Date: Thu, 26 Feb 2026 23:07:16 +0000
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Andrew Lunn <andrew@lunn.ch>
+Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>, netdev@vger.kernel.org,
+	Paolo Abeni <pabeni@redhat.com>, Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH RESEND2 net-next 0/8] net: stmmac: qcom-ethqos: further
+ serdes reorganisation
+Message-ID: <aaDSJAc-x2-klvHJ@shell.armlinux.org.uk>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -87,67 +81,62 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260223-i2c-adap-dev-config-v2-0-d78db0a6fcf7@oss.qualcomm.com>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.34 / 15.00];
+X-Spamd-Result: default: False [1.14 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_DKIM_ALLOW(-0.20)[sang-engineering.com:s=k1];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_REJECT(1.00)[armlinux.org.uk:s=pandora-2019];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
+	DMARC_POLICY_SOFTFAIL(0.10)[armlinux.org.uk : SPF not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	DMARC_NA(0.00)[sang-engineering.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94342-lists,linux-arm-msm=lfdr.de,renesas];
-	RCPT_COUNT_TWELVE(0.00)[33];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-94343-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[sang-engineering.com:+];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.985];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[wsa@sang-engineering.com,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,broadcom.com,ti.com,iki.fi,gmail.com,atomide.com,kemnade.info,baylibre.com,glider.be,foss.st.com,pengutronix.de,nxp.com,vger.kernel.org,lists.infradead.org,lists.linux.dev];
-	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
-	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	DKIM_TRACE(0.00)[armlinux.org.uk:-];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sang-engineering.com:dkim,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: 5F94D1AF16C
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	FROM_NEQ_ENVFROM(0.00)[linux@armlinux.org.uk,linux-arm-msm@vger.kernel.org];
+	PRECEDENCE_BULK(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	NEURAL_HAM(-0.00)[-0.928];
+	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,armlinux.org.uk:url]
+X-Rspamd-Queue-Id: 8B9F61B0BEF
 X-Rspamd-Action: no action
 
-On Mon, Feb 23, 2026 at 10:05:46AM +0100, Bartosz Golaszewski wrote:
-> It's been another year of discussing the object life-time problems at
-> conferences. I2C is one of the offenders and its problems are more
-> complex than those of some other subsystems. It seems the revocable[1]
-> API may make its way into the kernel this year but even with it in
-> place, I2C won't be able to use it as there's currently nothing to
-> *revoke*. The struct device is embedded within the i2c_adapter struct
-> whose lifetime is tied to the provider device being bound to its driver.
-> 
-> Fixing this won't be fast and easy but nothing's going to happen if we
-> don't start chipping away at it. The ultimate goal in order to be able
-> to use an SRCU-based solution (revocable or otherwise) is to convert the
-> embedded struct device in struct i2c_adapter into an __rcu pointer that
-> can be *revoked*. To that end we need to hide all dereferences of
-> adap->dev in drivers.
-> 
-> This series addresses the usage of adap->dev in probe() callbacks where
-> drivers assign the parent device address and the associated OF-node
-> directly to the struct device embedded in i2c_adapter. We extend the
-> latter struct to accept the parent struct device and of_node directly
-> and make it assign it to its internal struct device inside
-> i2c_register_adapter(). For now just 12 patches but I'll keep on doing it
-> if these get accepted. Once these get upstream for v6.20/7.0, we'll be
-> able to also start converting i2c drivers outside of drivers/i2c/.
-> 
-> Link: https://lore.kernel.org/all/20251106152330.11733-1-tzungbi@kernel.org/
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+This is part 2 of the qcom-ethqos series, part 1 has now been merged.
 
-Also applied (and squashed) to for-current. Tags are retained BTW.
+This part of the series focuses on the generic PHY driver, but these
+changes have dependencies on the ethernet driver, hence why
+it will need to go via net-next. Furthermore, subsequent changes
+depend on these patches.
 
+The underlying ideas here are:
+
+- get rid of the driver using phy_set_speed() with SPEED_1000 and
+  SPEED_2500 which makes no sense for an ethernet SerDes due to the
+  PCS 8B10B data encoding, which inflates the data rate at the SerDes
+  compared to the MAC. This is replaced with phy_set_mode_ext().
+- allow phy_power_on() / phy_set_mode*() to be called in any order.
+
+Mohd has tested this series, but it would be great to get acks/reviews
+from the generic PHY maintainers.
+
+ .../ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c    | 31 +++--------
+ drivers/phy/qualcomm/phy-qcom-sgmii-eth.c          | 62 +++++++++++++++++-----
+ 2 files changed, 57 insertions(+), 36 deletions(-)
+
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
