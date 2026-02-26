@@ -1,50 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-94233-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94234-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id qMP0IYXxn2kyfAQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94233-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Feb 2026 08:08:53 +0100
+	id KGncCl7yn2kyfAQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94234-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Feb 2026 08:12:30 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E0B41A1A5F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Feb 2026 08:08:53 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B57841A1B04
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Feb 2026 08:12:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 83A633024EFF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Feb 2026 07:08:52 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id DA7703063094
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Feb 2026 07:11:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AF4338E113;
-	Thu, 26 Feb 2026 07:08:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9019038E12F;
+	Thu, 26 Feb 2026 07:11:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="snk+3bDd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aX6zX1EW"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2665537418C;
-	Thu, 26 Feb 2026 07:08:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1D42DEA74;
+	Thu, 26 Feb 2026 07:11:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772089731; cv=none; b=qrakWkU0C9KTocRPGG5jI7dq5RDxWYoMAfhvhTuaZSgTb/XfL+Hd2EpUs9H9UU0fJSc/9Esdl+ClwoXfXGGpw1c6PrTEz0o0ckewzR8MO1Wd3ghv9YOWslW7cGXt0PPxcKFIdyZF/ardoSh5WDJaUTS+WvkUFp6TTAK0Mj8LocM=
+	t=1772089873; cv=none; b=e+157d/woCZ3vTP4dVQwX7HiC0IjkNv2JG/Uq7myx7y8fMWFDDRbHnWat436Endje+UPdGQ6EkKYSeihg4YKks0XUAkflCMEJNsMd2i4nfBJO16SQkRuhWNTji5W4mzBgPy+scD8teksLFozGwT54bEvV/k6wZV1/JATuoM4RtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772089731; c=relaxed/simple;
-	bh=/nOXJwtWBRqjHtF18qw9d+YwsOuhUDgleHpYP8DpyP8=;
+	s=arc-20240116; t=1772089873; c=relaxed/simple;
+	bh=FhMuzNTXd3+fSk0m2N05mC2Lm9WqQtqXLRWD0nIiYBA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ICvNyoLn6ZmiVJ31iIYJx3sUs35NGFZ5uxd7ZbIfEj1iETJ9nQTftUDMOMVBzocoBU7fwW6MUCkXdGbIG6ktOB6lBoaPM8fH+8sNs6Ed/EvFWRXguv2iX8AZ2RPFtjqMVNU9KBUQrwIJHuQwTa7GjxUOoUcPIStx06QHYg7NNwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=snk+3bDd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E04C19422;
-	Thu, 26 Feb 2026 07:08:50 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=qkqgqeskvyhFXt0SBz2Ps5ymMP+KtUEjCxuAynesYmLFy7GbLS63ifTPaZmr5k7ab+mucj0TotUEc2RnrCtA38B5OoijAUpf+1CWQujrCz7ijWahx5t6ET4EbgDUXCUrcHAvYNqp5PnKHR1BSMrSZY0rTd10kTh4UCvq/ZFrS94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aX6zX1EW; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87990C19422;
+	Thu, 26 Feb 2026 07:11:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772089730;
-	bh=/nOXJwtWBRqjHtF18qw9d+YwsOuhUDgleHpYP8DpyP8=;
+	s=k20201202; t=1772089873;
+	bh=FhMuzNTXd3+fSk0m2N05mC2Lm9WqQtqXLRWD0nIiYBA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=snk+3bDdO+iB2/f6ppPep06p88NcbIg2BBYSO7yUoZ1EZ/YVMLmgWoWA4OCb36jPl
-	 3BtaQw6aS4VIZnMcJMWUeMTvSeh2Q4DTsuSBzk4r3QIgGZXUXrfiUgt5VfO56SnUsw
-	 EMgxjB+Wb2iaOegyOhOxODlhjdoQ/kEII5HgppPjZ/HFrQSYVHLUsPiMQ7J8bmtbp/
-	 AyYXcF1LuzLMQBlSHYMOnm4Sbe8x90XrhUg0WQMrMhKEMX+EmJu1CJ1uxT+iNRdE00
-	 UYwSNGzvX/3YM6BHt82mvwc6Cv1NUOKOOATL+ei1rThXzpyeouJto/8fkPracuhz8L
-	 NOz/CqjNxa68w==
-Date: Thu, 26 Feb 2026 08:08:48 +0100
+	b=aX6zX1EWgnGl4txRINGhcCu8dZLEtHnvYgvON9vezRqQStu4JweO2QR5cjf9GeArI
+	 ZiQ6KyNUcaSCrWtVRpMjdEoRWEx44NM813jQMk5rz5HBr4AIaPEiaNDNCU6Xyh3vu5
+	 lqU5EwqE/RkVRaANosYu9kPpwtAnKPVO6X9GBpWq3mPhNRadULjtIMmOuq56RKNKtK
+	 QmXsgCRx7NyZV/HhF1Ciixl6hffW2IHQR7Zq+ztwj0PNa+oOx7vg28M/yQq9EeDXyG
+	 LjPefQXHH6AVyEGejEa0zXeJ5dIysrhbZcOgcf0X4v3wnPHjaso2VEvd3qt3UUTi8d
+	 gymdb5W8Pjzdw==
+Date: Thu, 26 Feb 2026 08:11:10 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Cc: Bjorn Andersson <andersson@kernel.org>, 
@@ -55,11 +55,11 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, Bryan O'Donoghue <bod@kernel.org>, linux-arm-msm@vger.kernel.org, 
 	linux-clk@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
 	linux-media@vger.kernel.org
-Subject: Re: [PATCH v8 04/18] dt-bindings: media: qcom,x1e80100-camss: Reduce
- iommus to five
-Message-ID: <20260226-magnetic-honored-taipan-355eb8@quoll>
+Subject: Re: [PATCH v8 10/18] arm64: dts: qcom: x1e80100: Add MIPI CSI PHY
+ nodes
+Message-ID: <20260226-shaggy-nyala-from-jupiter-7abe18@quoll>
 References: <20260225-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v8-0-95517393bcb2@linaro.org>
- <20260225-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v8-4-95517393bcb2@linaro.org>
+ <20260225-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v8-10-95517393bcb2@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,19 +68,19 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260225-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v8-4-95517393bcb2@linaro.org>
+In-Reply-To: <20260225-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v8-10-95517393bcb2@linaro.org>
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94233-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-94234-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FREEMAIL_CC(0.00)[kernel.org,baylibre.com,gmail.com,linaro.org,vger.kernel.org];
@@ -94,21 +94,30 @@ X-Spamd-Result: default: False [-1.66 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 1E0B41A1A5F
+	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.1:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: B57841A1B04
 X-Rspamd-Action: no action
 
-On Wed, Feb 25, 2026 at 03:11:21PM +0000, Bryan O'Donoghue wrote:
-> Rather than bury the BPS and IPE inside of the CAMSS block we can define
-> them like the CCI/I2C and CSIPHY as their own individual devices.
-> 
-> Remove the IPE and BPS iommu entries from the main CAMSS yaml. There is no
-> upstream user of these iommu entries right now so this is safe to do.
+On Wed, Feb 25, 2026 at 03:11:27PM +0000, Bryan O'Donoghue wrote:
+> +
+>  	qup_opp_table_100mhz: opp-table-qup100mhz {
+>  		compatible = "operating-points-v2";
+>  
+> @@ -5543,6 +5562,102 @@ cci1_i2c1: i2c-bus@1 {
+>  			};
+>  		};
+>  
+> +		csiphy0: csiphy@ace4000 {
+> +			compatible = "qcom,x1e80100-csi2-phy";
 
-Of course there is - v6.16.
+There is no such compatible documented in the kernel, nor in this
+patchset. Either you combine DTS into driver patchset to solve this, or
+don't combine DTS at all. DTS cannot go via driver tree.
+
+This does not make easier deciphering dependencies for soc tree...
 
 Best regards,
 Krzysztof
