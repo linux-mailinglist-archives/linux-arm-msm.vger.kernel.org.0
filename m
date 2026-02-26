@@ -1,51 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-94264-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94265-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id YJmvLnMXoGmzfgQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94264-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Feb 2026 10:50:43 +0100
+	id 2HT3H0kXoGlifgQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94265-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Feb 2026 10:50:01 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15EE01A3C04
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Feb 2026 10:50:43 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 12FA81A3BD7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Feb 2026 10:50:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 389BD300F535
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Feb 2026 09:44:53 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 529FB300CA2A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Feb 2026 09:50:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 568A6395253;
-	Thu, 26 Feb 2026 09:44:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 978EA314D0E;
+	Thu, 26 Feb 2026 09:49:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RlER1XBN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BEJsCcJp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f68.google.com (mail-wr1-f68.google.com [209.85.221.68])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3183C314D15;
-	Thu, 26 Feb 2026 09:44:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 420CF314B61
+	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Feb 2026 09:49:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772099092; cv=none; b=LNvjlCbaBn9rUaUGADLjh9QDJrFg162+p+nCEHJfScSLl0SX/iCkEhc2eg04iD7Ir7Lg/zUhWe/lkKrQMcEJhtZlKozozctCftqseXkRjlUEwfMtr8KSuJtqkh5zw/esC0QNkbkXwcY6oFqg4Env1SKuxy5pRfkobDFmvo0hTvQ=
+	t=1772099397; cv=none; b=KdapsgURTkgIyqrYkujIeOAaBCltN5zfq7jKqRg1kveviWoH1TMS/PP4cBkm+2Mly0zrrRt8jWxufLzL4e40FHApr3a3iSuQsaCDLnQ5ifVJMKQSOrpdjJtmO0MDNi0F9MdPRvFjZgCW5JifuYF36zr3KKl6DoB0du6262A9DJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772099092; c=relaxed/simple;
-	bh=4lIQj+VvqKNaQMANS9iMHQMwjGFcpQa9Jac1FstFcqI=;
+	s=arc-20240116; t=1772099397; c=relaxed/simple;
+	bh=0VLKb0yi2wmg8HmVprc6SZDCPaIePTHOT5RF/nosdlQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DpG6LXkg0Ax7bKs9diMV11drx8OhYScWduyzjyC+BpmaxubAHPHghAYhcVIIognldp0eiEC0FYOnTPqCBBIONnVJSfGwRNfP8Ky35bqehFaEOlO+HCn2fsqmgMgauLY+DCbnT6QTFHd1oUhpowyfDiE3S0wfTHVaubliGTbdE4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RlER1XBN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F516C19422;
-	Thu, 26 Feb 2026 09:44:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772099091;
-	bh=4lIQj+VvqKNaQMANS9iMHQMwjGFcpQa9Jac1FstFcqI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=RlER1XBNLk8gDURJLPbEpzvVkup8+b+PyQ7fX6kX+kZfw2E+lhL8OAWYejxRf2PJh
-	 G088jnMqan1rhv0r42adl8dNC8ikt2gL0CvThow7yD9jB5y5ljQRQuzM4ekh/L8K5T
-	 vhctTpw3k1GnjkjYmJwPGFIiLTPqrAo+RqyczjF0pLce1H/Xf0DapM9Ko3/AkrbPwv
-	 CrErVw+7Q3AyStseDTQskpAwYf1i/Yr7J7ep7hA5k0Jm99x0SSri+r1m0nrczURaV6
-	 wqi/58HZknAgr95+kchdZhDFpJOXTJxb2RDlVSMTqyx35beuTYAvxjvVnALdA5uA+T
-	 bEcY0raxGO5xg==
-Message-ID: <7927bdab-9c3b-460d-a2ba-2e5b06ee8804@kernel.org>
-Date: Thu, 26 Feb 2026 10:44:46 +0100
+	 In-Reply-To:Content-Type; b=rVsPApajnRVfg9n1yRpXIwbNHctvy91smIbqRqug6Xjd7vCVvSfo1zQsYTXfDLIxKfIpsUhPVzeitwLzwFws+AYUVxqlGeeVe/UOkv1LuFYo7cXFJ/Fv4RqLXtrJRiOWA7aI6aFxCFDXbbJsKA2da2ZQCJRxsMioOQi0DChrQxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BEJsCcJp; arc=none smtp.client-ip=209.85.221.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f68.google.com with SMTP id ffacd0b85a97d-4398d9a12c6so473982f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Feb 2026 01:49:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1772099395; x=1772704195; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7ACrGoewzoYGRbbsm9o100sXJ5ajI581hmZz0uIYUic=;
+        b=BEJsCcJpbn0rZefI+x0qXtlzFynEIuTfR5bpCRgJCN+JigKjtCM9Os5wi02gKWQtWC
+         L3gebfx8rZssFS1V/IqZ7oKW5/d9VtwWfQIBQqWtCZdtmoWsGrqgJOYnw/wSl4nvKu9f
+         PxN6pCtC6gZSI55fl+jEgX29RlzKbTl2p/KhXVM/yBJm8AaFxQ9G2r6mbz++sac2zLIU
+         azsWJuAyyivWszqkek45/YHndN8plNEEwc9+XBY+5OGsDNNF/Ovs1PCVntMpNzO8RdHj
+         ve8O5yVlV/oViio9Ml06FdsvCOxncmeNdEMFessAWSDQvdWjLCgrHH/CKTC5xRP+B40c
+         Zv+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772099395; x=1772704195;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7ACrGoewzoYGRbbsm9o100sXJ5ajI581hmZz0uIYUic=;
+        b=BI/9lYcubt6HNvqPbkjiic3+Mte6l4RLNAY3fy7mX2wyD8q/to+uVF2AW7Ilyx0HIt
+         7ob6FDcdcXAabNm/pvzV/sMv00Qjz6c25NnHmqj8MP41wrkFAKfWECQgVGlmFOCmc/Nk
+         zxqkN+kmElvG7B/VzJE50VeUSrKNFfFTW0iY3VheG6Ar653CGM2pNcj9tkiUOVFz4m8J
+         AQaUcW/D+B0LllxvkqiwSBdCPPfo6j/4PByYfgIcYt0a43gUQp+FZAE+xS/1tLHEz3LZ
+         IqPeld61wiW4NvAsvqAywsuSgMIZ8auzp6goBhL/ODhFs0U38N81oQcTMnQuae7It8u8
+         kMcg==
+X-Forwarded-Encrypted: i=1; AJvYcCVZZHLE74X50R/NIFPQ1qIGiogtO1xFpVTHC7/Q+fz5AjKsQra1dtdmpWWDghcJ2ricJMCg+xDjyGHxw5YK@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz156crRKS69DFFEgQr7i/+R2zTYg91X3SVOtkApPS3FjZe9QKm
+	8QkMqZTs51dbXNsEWYWrpU+Qdrhs5XaMoK6lA9YsAB2qU4lxBl5i10aCGU32CzDY0sM=
+X-Gm-Gg: ATEYQzwg5Nf2aPTpxAByfK5+WEvfm6pmmZCgi7FSY0de0ZIfWorDtXkZTL+iPpy83SX
+	nVsXo8kwOj5kERRW3zOCsqrRP6ntSKOWUb53MStKkUyZ92g0MFjEm5GG9eMCFbFjI4tWfTJidcS
+	N+IWPBkx5bJYmdtmp+jfJxSK8JrNWUmKM8D/ZrtVfxgf94e/qwi4NPGqjisH95FyUb3CkeRkt5S
+	6PMbYQVRfV8ffTTVzGa2pCZDeC8PVL9WoOO0C826vLjrD03BllZn0E0XSdNQTfLiUqr4rwBzNcC
+	5LGsEFIS4Z1NlS8ch5XNNdCTGlvQFy+PK6RSqJFrJAPs026Nqb0coPeKUWxG6Sj/rySlxh/FlS3
+	AT/sFUk4IlGTtBDznhp/NqWJs9OMA3V1af26EDspGjvklQTrLoMbZtxchRiYk4VCgUwp1HXUg7V
+	1c8cdqJm1e6xVACNxz67mZjychcCtRk6Y8Z9oDCfKbqxmADSZD029d+smTjNxcX9p2
+X-Received: by 2002:a05:6000:24c1:b0:439:5bfe:18ce with SMTP id ffacd0b85a97d-4396f15ccdemr36782242f8f.8.1772099394691;
+        Thu, 26 Feb 2026 01:49:54 -0800 (PST)
+Received: from [192.168.0.40] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-439927c3e01sm8948031f8f.11.2026.02.26.01.49.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 26 Feb 2026 01:49:54 -0800 (PST)
+Message-ID: <5e595b6f-ec3b-43d9-9963-f4b594f93b86@linaro.org>
+Date: Thu, 26 Feb 2026 09:49:49 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,132 +86,76 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/3] dt-bindings: media: camss: Add qcom,sm6350-camss
-To: Luca Weiss <luca.weiss@fairphone.com>, Bryan O'Donoghue <bod@kernel.org>,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH v8 01/18] dt-bindings: media: qcom,x1e80100-camss: Assign
+ correct main register bank to first address
+To: Krzysztof Kozlowski <krzk@kernel.org>, Bryan O'Donoghue <bod@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20260213-sm6350-camss-v3-0-30a845b0b7cc@fairphone.com>
- <20260213-sm6350-camss-v3-1-30a845b0b7cc@fairphone.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
+ <mchehab@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-media@vger.kernel.org
+References: <20260225-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v8-0-95517393bcb2@linaro.org>
+ <20260225-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v8-1-95517393bcb2@linaro.org>
+ <6JLP5a_yJmhmmwSmtFoMmzlT3Gh5yhHVpVSRTqDb93I2_KFB6-p_6mKmGKaqtStt2bbVPqQ16j0Sfp2Z-LvhlQ==@protonmail.internalid>
+ <20260226-resourceful-pelican-of-defense-437c7e@quoll>
+ <13853dc8-1a54-4cfd-b801-f23d88be4a88@kernel.org>
+ <5QUAno5rJaSIXrCTC1Y9QJOrrx2Pt1GGVJspvhutMHgSh6mcu5S6gsZHu3lOEVXjG7pqSyJjH6RB1wXRszZ-Mg==@protonmail.internalid>
+ <860cb545-8283-4f2b-9f21-19d207ed7da3@kernel.org>
+ <f9242e8f-95bc-4b2b-9b7d-2ad80bea1e46@kernel.org>
+ <df38ac48-a472-4f0d-84c0-1f108aa13229@kernel.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20260213-sm6350-camss-v3-1-30a845b0b7cc@fairphone.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <df38ac48-a472-4f0d-84c0-1f108aa13229@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94264-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_TO(0.00)[fairphone.com,kernel.org,gmail.com,linaro.org];
+	FREEMAIL_CC(0.00)[kernel.org,baylibre.com,gmail.com,linaro.org,vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-94265-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	RCVD_TLS_LAST(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[18];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[linaro.org:+];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.999];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-0.994];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[fairphone.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 15EE01A3C04
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,linaro.org:mid,linaro.org:dkim]
+X-Rspamd-Queue-Id: 12FA81A3BD7
 X-Rspamd-Action: no action
 
-On 13/02/2026 14:15, Luca Weiss wrote:
-> Add bindings for the Camera Subsystem on the SM6350 SoC.
-> 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
->  .../bindings/media/qcom,sm6350-camss.yaml          | 471 +++++++++++++++++++++
->  1 file changed, 471 insertions(+)
+On 26/02/2026 09:38, Krzysztof Kozlowski wrote:
+> I just told you - there is actual mainline user in v6.16 - so whatever
+> you claim here is incorrect in first assumption.
 
-Just to be clear, because Bryan posted now x1e80100 camss patches
-changing ABI. I was holding this patchset for camss/media maintainers to
-come up with driver and any other necessary pieces (like guidance for
-bindings) support for split CSI PHY. Finally after long time I gave up
-and gave these bindings green light.
+I thought we had discussed @ Amsterdam or perhaps Tokyo that if you 
+could show there was no external user - i.e. prove no dependency then 
+you could change the YAML ?
 
-Additionally there is some claim that there is policy allowing to change
-bindings. No. There is no change of bindings with few exceptions. Decide
-now what bindings you want to have. One single node or split CSI PHY,
-because you cannot take the first option but then six months later send
-complete revamp of the ABI.
+Specifically check u-boot, FreeBSD etc.
 
-So please decide and answer, e.g. by taking this patch, that you
-understand above and THIS will be your fixed ABI.
-
-P.S. It is second time I am battling with fake policies invented around
-camss. Previous was that supposedly we ask to order the
-reg/interrupts/clocks by value. That was completely fake rule debunked
-later when DT maintainers found out that you created such. Now another
-rule that you can change a released ABI with users just calling them "no
-upstream DTS users". I think this drivers/subsystem is somehow the most
-fake-rule inventing and I never had to correct other folks so many
-times. I don't know why.
-
-Best regards,
-Krzysztof
+---
+bod
 
