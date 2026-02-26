@@ -1,163 +1,232 @@
-Return-Path: <linux-arm-msm+bounces-94280-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94281-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8PLEFq4ooGlIfwQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94280-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Feb 2026 12:04:14 +0100
+	id YKRkFKIqoGlrfwQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94281-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Feb 2026 12:12:34 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A8C81A4C5F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Feb 2026 12:04:13 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 998A91A4E2C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Feb 2026 12:12:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 669253013696
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Feb 2026 11:02:36 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 33B9E300C935
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Feb 2026 11:08:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F2E2332914;
-	Thu, 26 Feb 2026 11:02:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB2FA337699;
+	Thu, 26 Feb 2026 11:08:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YYDXHf0C"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MmDaF1SB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f66.google.com (mail-wm1-f66.google.com [209.85.128.66])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EAE3334C03
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Feb 2026 11:02:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D1A330667;
+	Thu, 26 Feb 2026 11:08:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772103756; cv=none; b=ppro98wmE6ve+pUSa4rj64HCuBnZghEgz002do+J9mwComNHWUuoWi69WcE8UwsSMwC5R7kwin8EDFPQ+5T2PpjaAZJn41A/O49OIEau+vsCkK+N8IJaGRT8MFbmmxCKA5nue37PruuOIxsKU63L4Ibt0YBbw303P+eV39LCjPg=
+	t=1772104100; cv=none; b=XOmtckBnY4XWaaEMWFrdN1J3dRsnxngaTI/4+Ay5Yuux9w7DK2ji7lC/w5Q6SzJwHmWHkrNBDiJkEjc4ULTJ+UhGbixQt5tfmDtwvfpG28773Uv/cFs/wdxeI7pkEf6zmUUCmk1BFpEDS2gfDdkt5rh0P+C1h90JCY6Se2G8DAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772103756; c=relaxed/simple;
-	bh=H2+dfOzhoOTIvvxccl70tuUfbzSsTD6qNGOvprkS77k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HLyDxOlKuQn0rtTVUp8HZGFuUR+DW4vs2g+gJnNX4Sxyqmdcu/MRIF8lhsjg902mzrfGHHQe9fVv6cISmUW+CKwhA4YbfkRJF9HQUnuvYVHLz2e7CAS+x4ECjXvAAaOrdUgWe7b0br0aOL3qf+NPAG/94SAUM/k6JxR0R2mBkPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YYDXHf0C; arc=none smtp.client-ip=209.85.128.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f66.google.com with SMTP id 5b1f17b1804b1-4836e3288cdso4583935e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Feb 2026 03:02:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1772103753; x=1772708553; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RRrLhQ0K1Tca3BJr7de/DoI63SU9uCMuh6bjyopMpZ0=;
-        b=YYDXHf0CvBnw1WGPJESN6kEJYohokUTnMakryNd4SLA5N22S/TxfzkoAGrOej2bmRx
-         483bvuNMKAw/Dnjz50DpbpO3ZrNYOdlECI9+z6cncoE0B88kKMrTcZMJy4wqVpIQkXpt
-         vpvbxfNWFb74mTlIO7H1NJXBcyzBhiVgJlgOglmzRmZ3MVeGkOaK86W4LeEr7K2ddDDM
-         UDUJdZznOsnvlXKHM1k91nF488Qt+bKTWVi34i+Puz6BaNkFVHiPRPfUjOiMou2f9IoM
-         AzcwfjQcXS5BxPo1mMdzjH322fIzHGclunSJn+qFXVgTpZqgzFfrOwpzZnWUhSBVJxLU
-         NiOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772103753; x=1772708553;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RRrLhQ0K1Tca3BJr7de/DoI63SU9uCMuh6bjyopMpZ0=;
-        b=ihfBAhAKGELbEbdLF/sSwL4/42PWzFqrJKPjVSgibWY81z+11cjH9vKPmXVbjwElQV
-         vuz2o/wwy0rftN50K4S/Lzrbu1qs9Xu2Y5xDHyLedCO/AJZ4wkduQHiGYSkzaY1dYt6r
-         eub8npdP9DzNd9YV23SO18TygZoSSSviqBwQQpekjkAgMYY1jG+mWaaE/xnG7jRASTIS
-         tAzeCcAJ34Xtp3ZqPEm50kN9LQGao9aJUVCzg0sR2rYQ4YLsoNvAJ5BAGoxKzRm9ldyp
-         5bL0UyrE4xb3PFJl2SJwJr44QW6m453C+BF514FqBKAtHB1eVDCFjCzt13ywFTgAwXNi
-         vVNA==
-X-Gm-Message-State: AOJu0Yw01jwE/6ROTLnL2ee2TRDkzmN2stNkABGEYCZETMr0TGxOv0wF
-	5qjCCn+8dNiJrf0l5aYvCvpH84kOLIugxshDEbExageCIXJQAGkW1UsxDob1gvCv5ZzhPaN+NG2
-	szkBa18o=
-X-Gm-Gg: ATEYQzwvsOWmdPPEPGqGoXKdO3OSUcTXIGRocCjewawuyGJ3klZfcG2Gs9zRBYOkZZC
-	Y+f4US1RydMrsNzgZXNKh1fuFuJx47bdmRm1+mRZ1p3jOjVNyS0YJY17OMsZ2+SsGcdoXSLXg/G
-	KaR+SqXrKji9Us3CWsHPASpp2phPLtxIwwspAZ+F41whhv+G1uwItKJz1eFf/V8qrNEnDdTOa8j
-	TTqqjJI6gdlHT5EiCEsIcfGEN9T4XyLAhjUSVsrMhurJTAnfU6SIw0XD2ZY4XK5NFHoevkQtcWZ
-	bNMgYwu6B0Eg2GaF8w4fb9pDj6XadTCkypXwVR1dP0DVGxH71u8XzbNVD2YRfjS/Or8fiqHe+md
-	Z+QYKsNjTtHkWz+4msFMC7V8RfkWxSdr6pBTfcIcyr+b0P/K2G2hsN9BoqHRQ1kU+VF2FerRau7
-	uv69GgqXlGt2t6lsQlO1/L69GuICCdL7dIeKKm16eX0opbuRgFs50Jz/US0/iWEtMRiRn2P2ok7
-	ec=
-X-Received: by 2002:a7b:ca50:0:b0:483:78e7:ce15 with SMTP id 5b1f17b1804b1-483c33e9899mr27951855e9.13.1772103752860;
-        Thu, 26 Feb 2026 03:02:32 -0800 (PST)
-Received: from [192.168.0.40] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-483bd7031f3sm123221655e9.6.2026.02.26.03.02.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Feb 2026 03:02:31 -0800 (PST)
-Message-ID: <72e46620-f3bd-4c19-b6ab-113707715112@linaro.org>
-Date: Thu, 26 Feb 2026 11:02:28 +0000
+	s=arc-20240116; t=1772104100; c=relaxed/simple;
+	bh=ZqDP46s+6rmPQNKnbTHue5NpRIIQUVz+qdDzaCWyLos=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=V7Nn2hXIcnLJ+AKkDZFHUs8jbXQ3TnQigTtLg+AIlt3RQgoWT4rpvxo6stmWCIw0Q7emdQh6z0GIY6tfMM/RIXxCWS11a+0SJb67mWRJeS5/ktMFX/tIcTAFDpMXTCadrX3jy0ON1oJ+2dFwpzD8ZZ0OUViD9OcPXD3en60mm8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MmDaF1SB; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 558DFC116C6;
+	Thu, 26 Feb 2026 11:08:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772104100;
+	bh=ZqDP46s+6rmPQNKnbTHue5NpRIIQUVz+qdDzaCWyLos=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=MmDaF1SBq/2+8xAErIRzxqfb3pdbZKsesu1po+yRhZJCCyu0qL49fg4f8TdnzDFQO
+	 BybPJkTRDnX/eWmdoOKBse+FAyeSrW4EAnw71bps/I1pb+rtQfKq7Ls8IlTt1wnknp
+	 QTD9BCD2gkdIb07QQUtWi1A+lgQ3yaH1JbxE1vr07NoGvNkpNMcgCm3FSMFVxkJqRQ
+	 GVxiDyTLJ4p9FXo6YdgkT6iOYTI/m82iRa7il58q24/q51h9eIGMymriPp57t37gcm
+	 Lgv0alYggKsysn39KjjpOAejwI7mkgi2tDF513hUZnP4enM9ilTwoFg/EJBHpL+Jpl
+	 MRG6ZlsM/kjRg==
+Date: Thu, 26 Feb 2026 16:38:08 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Jon Hunter <jonathanh@nvidia.com>
+Cc: Manikanta Maddireddy <mmaddireddy@nvidia.com>, 
+	Bjorn Helgaas <helgaas@kernel.org>, krishna.chundru@oss.qualcomm.com, 
+	manivannan.sadhasivam@oss.qualcomm.com, Bjorn Helgaas <bhelgaas@google.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, "David E. Box" <david.e.box@linux.intel.com>, 
+	Kai-Heng Feng <kai.heng.feng@canonical.com>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Heiner Kallweit <hkallweit1@gmail.com>, Chia-Lin Kao <acelan.kao@canonical.com>, 
+	"linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>, Keith Busch <kbusch@kernel.org>, Jens Axboe <axboe@kernel.dk>, 
+	Christoph Hellwig <hch@lst.de>, Sagi Grimberg <sagi@grimberg.me>, linux-nvme@lists.infradead.org
+Subject: Re: [PATCH v2 1/2] PCI/ASPM: Override the ASPM and Clock PM states
+ set by BIOS for devicetree platforms
+Message-ID: <vpwe273ehsbsyjpysyky4ypgnawosjehen34rr2n5bpoaqjsyg@3uylwh3oyyqc>
+References: <20260122152903.GA1247682@bhelgaas>
+ <5z7c25nkb35prvax6vq6ud7eaeuhzsswbf7fqvmlgys3xftgwb@odocboejrdrv>
+ <e44c330b-778b-4fa1-b678-fa909cc05b03@nvidia.com>
+ <bf37b6a5-268d-4c07-a536-a826b3d5953b@nvidia.com>
+ <unc5zefwndgcv7wufaezz3gkg3qtaymkjlmymhyqdqwzn3wybl@ow2rhbyt772h>
+ <f9ac8c8f-8959-416b-ba90-14f0886c5bc0@nvidia.com>
+ <a5m4pqtiaxsq5lmq64roro633ganbeq7mypa5ojuuqy4npkvok@wcogdbzaq6xe>
+ <7157c68e-97f3-43b0-bfb5-e271a8f2a4b8@nvidia.com>
+ <cf1e685a-a1cb-45ec-bdc3-1ef1a3d1044e@nvidia.com>
+ <e0a0dc6d-fff0-41ec-92eb-7f2dbefa967b@nvidia.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] media: qcom: camss: Add debug message to camss-video
- format check
-To: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- mchehab@kernel.org, vladimir.zapolskiy@linaro.org,
- dmitry.baryshkov@oss.qualcomm.com
-References: <20260226090850.828694-1-loic.poulain@oss.qualcomm.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260226090850.828694-1-loic.poulain@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <e0a0dc6d-fff0-41ec-92eb-7f2dbefa967b@nvidia.com>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	TO_DN_SOME(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94280-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[linaro.org:+];
+	TAGGED_FROM(0.00)[bounces-94281-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
+	TO_DN_EQ_ADDR_SOME(0.00)[];
+	FREEMAIL_CC(0.00)[nvidia.com,kernel.org,oss.qualcomm.com,google.com,vger.kernel.org,linux.intel.com,canonical.com,gmail.com,kernel.dk,lst.de,grimberg.me,lists.infradead.org];
+	RCPT_COUNT_TWELVE(0.00)[23];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RCPT_COUNT_FIVE(0.00)[6];
-	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:mid,linaro.org:dkim,linaro.org:email,qualcomm.com:email]
-X-Rspamd-Queue-Id: 9A8C81A4C5F
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TO_DN_SOME(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[nvidia.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 998A91A4E2C
 X-Rspamd-Action: no action
 
-On 26/02/2026 09:08, Loic Poulain wrote:
-> Add a debug trace to video_check_format() to log both the subdev-reported
-> format and the format requested by the video node. This makes it easier
-> to diagnose mismatches between subdev output and the negotiated V4L2
-> pixel format, as well as issues related to plane count, resolution, or
-> field settings.
+On Thu, Feb 26, 2026 at 10:34:18AM +0000, Jon Hunter wrote:
+> Hi Mani, Bjorn,
 > 
-> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-> ---
->   drivers/media/platform/qcom/camss/camss-video.c | 6 ++++++
->   1 file changed, 6 insertions(+)
+> On 19/02/2026 17:42, Jon Hunter wrote:
+> > Hi Mani,
+> > 
+> > On 16/02/2026 14:35, Jon Hunter wrote:
+> > 
+> > ...
+> > 
+> > > > Krishna posted the series a couple of weeks before but forgot to CC you:
+> > > > https://lore.kernel.org/linux-pci/20260128-d3cold-v1-0-
+> > > > dd8f3f0ce824@oss.qualcomm.com/
+> > > > 
+> > > > You are expected to use the helper
+> > > > pci_host_common_can_enter_d3cold() in the
+> > > > suspend path.
+> > 
+> > 
+> > I have been playing around with this, but so far I have not got anything
+> > to work. Right now I have just made the following change (note that this
+> > is based upon Manikanta's fixes series [0]) ...
+> > 
+> > diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/
+> > controller/dwc/pcie-tegra194.c
+> > index 9883d14f7f97..9f88e4c1db08 100644
+> > --- a/drivers/pci/controller/dwc/pcie-tegra194.c
+> > +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
+> > @@ -2311,6 +2311,7 @@ static int tegra_pcie_dw_suspend_late(struct
+> > device *dev)
+> >   static int tegra_pcie_dw_suspend_noirq(struct device *dev)
+> >   {
+> >          struct tegra_pcie_dw *pcie = dev_get_drvdata(dev);
+> > +       struct dw_pcie *pci = &pcie->pci;
+> > 
+> >          if (pcie->of_data->mode == DW_PCIE_EP_TYPE)
+> >                  return 0;
+> > @@ -2318,6 +2319,9 @@ static int tegra_pcie_dw_suspend_noirq(struct
+> > device *dev)
+> >          if (!pcie->link_state)
+> >                  return 0;
+> > 
+> > +       if (!pci_host_common_can_enter_d3cold(pci->pp.bridge))
+> > +               return 0;
+> > +
+> >          tegra_pcie_dw_pme_turnoff(pcie);
+> >          tegra_pcie_unconfig_controller(pcie);
+> > 
+> > 
+> > At first I was thinking that is we are not actually suspending the
+> > controller we can skip the configuration of the controller in the
+> > resume. However, if we skip configuring the controller in the resume
+> > then the device does not resume at all. So right now I have the
+> > above, but clearly this is not sufficient. The device resumes but
+> > the NVMe is not working ...
+> > 
+> >   nvme nvme0: ctrl state 1 is not RESETTING
+> >   nvme nvme0: Disabling device after reset failure: -19
+> >   nvme nvme0: Ignoring bogus Namespace Identifiers
+> >   Aborting journal on device nvme0n1p1-8.
+> >   nvme0n1: detected capacity change from 0 to 976773168
+> >   EXT4-fs error (device nvme0n1p1): __ext4_find_entry:1613: inode
+> > #18622533: comm (t-helper): reading directory lblock 0
+> >   Buffer I/O error on dev nvme0n1p1, logical block 60850176, lost sync
+> > page write
+> >   Buffer I/O error on dev nvme0n1p1, logical block 0, lost sync page write
+> >   JBD2: I/O error when updating journal superblock for nvme0n1p1-8.
+> >   EXT4-fs (nvme0n1p1): I/O error while writing superblock
+> >   EXT4-fs error (device nvme0n1p1): ext4_journal_check_start:86: comm
+> > rs:main Q:Reg: Detected aborted journal
+> >   Buffer I/O error on dev nvme0n1p1, logical block 0, lost sync page write
+> >   EXT4-fs (nvme0n1p1): I/O error while writing superblock
+> >   EXT4-fs (nvme0n1p1): Remounting filesystem read-only
+> >   EXT4-fs (nvme0n1p1): shut down requested (2)
+> > 
+> > Is the above what you were thinking? Anything else I am missing?
 > 
-> diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
-> index 0c76bc2cc574..0852eb6f1315 100644
-> --- a/drivers/media/platform/qcom/camss/camss-video.c
-> +++ b/drivers/media/platform/qcom/camss/camss-video.c
-> @@ -218,6 +218,12 @@ static int video_check_format(struct camss_video *video)
->   	if (ret < 0)
->   		return ret;
->   
-> +	dev_dbg(video->camss->dev,
-> +		"%s: format is (%ux%u %p4cc/%up field:%u), trying (%ux%u %p4cc/%up field:%u)",
-> +		 video->vdev.name, sd_pix->width, sd_pix->height, &sd_pix->pixelformat,
-> +		 sd_pix->num_planes, sd_pix->field, pix->width, pix->height, &pix->pixelformat,
-> +		 pix->num_planes, pix->field);
-> +
->   	if (pix->pixelformat != sd_pix->pixelformat ||
->   	    pix->height != sd_pix->height ||
->   	    pix->width != sd_pix->width ||
+> So NVMe is still broken for us and I admit, I don't fully understand the
+> issue. However, it seems to me that this change is not working for all
+> device-tree platforms as intended. So for now, would it be acceptable to add
+> a callback function for drivers such as the Tegra194 PCIe driver to opt out
+> of this? This would at least allow NVMe to work as it was before.
+> 
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Since we know that ASPM is the issue on your platform and the failure also
+confirms that ASPM was never enabled before, I'd suggest disabling ASPM for the
+Root Port as a workaround:
+
+```
+diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
+index 06571d806ab3..f504b4ffbcb6 100644
+--- a/drivers/pci/controller/dwc/pcie-tegra194.c
++++ b/drivers/pci/controller/dwc/pcie-tegra194.c
+@@ -2499,6 +2499,13 @@ module_platform_driver(tegra_pcie_dw_driver);
+ 
+ MODULE_DEVICE_TABLE(of, tegra_pcie_dw_of_match);
+ 
++static void tegra_pcie_quirk_disable_aspm(struct pci_dev *dev)
++{
++       pcie_aspm_remove_cap(dev, PCI_EXP_LNKCAP_ASPM_L1 |
++                                 PCI_EXP_LNKCAP_ASPM_L0S);
++}
++DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_NVIDIA, PCI_ANY_ID, tegra_pcie_quirk_disable_aspm);
++
+ MODULE_AUTHOR("Vidya Sagar <vidyas@nvidia.com>");
+ MODULE_DESCRIPTION("NVIDIA PCIe host controller driver");
+ MODULE_LICENSE("GPL v2");
+```
+
+You can use specific Root Port IDs or PCI_ANY_ID depending on the impact. We can
+also work on fixing the actual issue parallelly.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
