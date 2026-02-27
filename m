@@ -1,222 +1,241 @@
-Return-Path: <linux-arm-msm+bounces-94534-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94535-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GFZPGoQNoml9ygQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94534-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 22:32:52 +0100
+	id SFY3AnYQomleywQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94535-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 22:45:26 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C21A41BE318
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 22:32:51 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9CE721BE406
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 22:45:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 8AE2A3091343
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 21:32:46 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id C75B83068A5A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 21:45:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B7523A1E64;
-	Fri, 27 Feb 2026 21:32:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E057736B069;
+	Fri, 27 Feb 2026 21:45:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hLFhazWs"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ae6wBDMA"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 759FB3815E9
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Feb 2026 21:32:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8712882D6;
+	Fri, 27 Feb 2026 21:45:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772227965; cv=none; b=Cr9aktneJuaDXJC/wXWh777c92ZDAsaxJZ3VSWaYKxftcLsl65F+6RfwINae07omKmzsmAl21bq5uWzFJGW2mvqFeHvUprsXg5kN7QWBHk86dExCbZUVJ42g0de9kFoI5WdcIpgVbkzjZfOoyj7iMut/VdOAQohWdJbdQeIv5oQ=
+	t=1772228720; cv=none; b=Xh/E/f2Iwr7sFOvr8y5DTsODrYgcxkfEEyPEcnRrXkIV954aXysj4eiG8nhAbUpA557DPve95pchUFwC1biX4stVPWdmuXuUi1NP9opREnnTZNTjwlNXhVmE0jlchZ92BnBkiP5cpDk0jYjda03nIFLDjRcFHRjXX/1E+XSOzNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772227965; c=relaxed/simple;
-	bh=nUceLnwnFGOsiCx6d1TbU2VXshva5vgl3jAvcmBpNIg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YvTJ0lrrajyEBcPecJp+rA8OZwYDou58rh5Ck18o4CHGGNVsdm6Cx+SHF8xcYFxXSp5koKk0BrVyftxHjfw8hAhFe2Wx7mXAar/SODPpeQRdlD27LJVa1kpPu53DQUW9DLyJhZtUUNuzc3qFiQqSJ1yueXAXJKxuuZ+R+4Q7NAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hLFhazWs; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56CEEC2BCB7
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Feb 2026 21:32:45 +0000 (UTC)
+	s=arc-20240116; t=1772228720; c=relaxed/simple;
+	bh=OGvWo+AIv+lwDE8J/A7kKn4UpSB/6vw45Dl1C6mmnGc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ce98HDWLTkVeQIYce2FQKNkiY0pe1bc9/CjJpfIuighem5Y/Yc6bo6dq7ndkA2KxuX3xpBdnA1CtfNzBMz3tQhmKXBiKx7zKLtxmS89pMdkFzM2oeA/2PUHfyaA4ON8ESUjiFNKR83yf0cvKD5QckZCwgYqnCpIswyWSfeKqXsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ae6wBDMA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC864C116C6;
+	Fri, 27 Feb 2026 21:45:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772227965;
-	bh=nUceLnwnFGOsiCx6d1TbU2VXshva5vgl3jAvcmBpNIg=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=hLFhazWswPxRoY1uNYl+xF4riy8lYbk4qBIUfzMROq+UlcfqZcSnzMZfzfTctqa1d
-	 iF4+3ANW/DJC5aVyvbvWLURQH6/K7Ri75vgUtWOmA2IyMvuIgF+sFSEijR/omqTtkP
-	 dPn6xUC/5KEx6kgp6LQbIbtewqgjLmkrkh72OoBVlKHcyuAkT/3ZhwZ/wI9xERPAoi
-	 60cUEbvVMBXMN8fBK/lb4BwIYKEAF1453JSTJfjO+Xl9i32VFsmmi+8I2gLeF0y213
-	 qq9maYtdeJZB2IxQTBdU7gnYjjb4jpyQdKbDLaQnI4ZtjzqBFGQad65bc96E1/t0aY
-	 ZbfGBErPmEEKQ==
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-3870902760cso33377351fa.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Feb 2026 13:32:45 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCXRRiSiGlHNNTRzFKoMVREvsB3el1B6BDKK8abf3ZrDl8QKLghdOqznci/Uc07qKxBz/cU0DuHpEor9mlt1@vger.kernel.org
-X-Gm-Message-State: AOJu0YxDQx3KqziFd33Y0bb4yUsClwA7EMUq6lyPvoU0i5KF7ykoxCWX
-	bgvvvRWHdQAclsHb1pvoAibhxXVDp3gZb9aABD93mgBGLBcQ2h141jCQ/IeD6oQu5H1p8/QMhIL
-	wnTAd9pNl+Iy/onARJYtOyCjqjudyGa3GWbuHO25zpA==
-X-Received: by 2002:a2e:b8d3:0:b0:389:fae2:10c1 with SMTP id
- 38308e7fff4ca-389ff109ba2mr23520851fa.7.1772227963739; Fri, 27 Feb 2026
- 13:32:43 -0800 (PST)
+	s=k20201202; t=1772228720;
+	bh=OGvWo+AIv+lwDE8J/A7kKn4UpSB/6vw45Dl1C6mmnGc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Ae6wBDMAm9RtIAfif2cOEJJHm7puxf2oUEeEEX9IL7XQFQro05j/O9KUza9ZV+Zmm
+	 khNg4X8MJBDabzdd1/AMgbAOJJE0pwvt7e28bGqbjv+40eyv2s8tRSAkWUProfSfhm
+	 eqjO9yC49229xOCJ57jb0WBhlTPEaiZ0eYk6fuymBxqxR2CwI0Gy5MZbc27HkG3DjS
+	 ngVKmq2tAXNN+C2ehWyFzkcvJdHNl0i8z9Z8mB/l1XlCxCcbvi8Huxjc5gInLeLxxI
+	 jmbKSknAOIZvMtSoZV4tlZP2RdPJCYGrbaSO2zs0lLi8ZNPJiAVjwgGKBH6KQ31ORs
+	 HVFnByexfTWiw==
+Message-ID: <75a8b887-cbdd-4780-8262-1cc24a55bc90@kernel.org>
+Date: Fri, 27 Feb 2026 21:45:09 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAMRc=Md6ucK-TAmtvWMmUGX1KuVE9Wj_z4i7_-Gc7YXP=Omtcw@mail.gmail.com>
- <aVZh3hb32r1oVcwG@vaman> <CAMRc=MePAVMZPju6rZsyQMir4CkQi+FEqbC++omQtVQC1rHBVg@mail.gmail.com>
- <aVf5WUe9cAXZHxPJ@vaman> <CAMRc=Mdaucen4=QACDAGMuwTR1L5224S0erfC0fA7yzVzMha_Q@mail.gmail.com>
- <aWBndOfbtweRr0uS@vaman> <CAMRc=McPz+W4GOCbNMx-tpSav3+wuUrLT2CF5FhoV5U29oiK6A@mail.gmail.com>
- <ana2ugshqjicqscwpdgo6knv53n4zzuwqp376qil27spco5vwh@ck7wmplz52qs>
- <CAMRc=MevcsQ+sWsERQzod-a9A+F8feoLnbBXSkZrUk4zBPYCSQ@mail.gmail.com>
- <xuiiqsrj63rtg4onuu2vmohwu2b2sd3so5uzakdzuucmwqaufn@7xwecs4apayt> <aZ7GS5W1VNNB2fLi@vaman>
-In-Reply-To: <aZ7GS5W1VNNB2fLi@vaman>
-From: Bartosz Golaszewski <brgl@kernel.org>
-Date: Fri, 27 Feb 2026 22:32:31 +0100
-X-Gmail-Original-Message-ID: <CAMRc=McD3k87-UpZ3q2eqEpVSCRgEVWc0XB+oRUZKM5rxMG=qA@mail.gmail.com>
-X-Gm-Features: AaiRm50yWEXHhLWXdj2Xm8-0PdwLOxwgr2acGIXsoFD28WkZgbQ2Gyt_0YXUMAc
-Message-ID: <CAMRc=McD3k87-UpZ3q2eqEpVSCRgEVWc0XB+oRUZKM5rxMG=qA@mail.gmail.com>
-Subject: Re: [PATCH v9 03/11] dmaengine: qcom: bam_dma: implement support for
- BAM locking
-To: Vinod Koul <vkoul@kernel.org>, Bjorn Andersson <andersson@kernel.org>
-Cc: Manivannan Sadhasivam <mani@kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
-	Thara Gopinath <thara.gopinath@gmail.com>, Herbert Xu <herbert@gondor.apana.org.au>, 
-	"David S. Miller" <davem@davemloft.net>, Udit Tiwari <quic_utiwari@quicinc.com>, 
-	Daniel Perez-Zoghbi <dperezzo@quicinc.com>, Md Sadre Alam <mdalam@qti.qualcomm.com>, 
-	Dmitry Baryshkov <lumag@kernel.org>, dmaengine@vger.kernel.org, linux-doc@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-crypto@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] media: iris: fix use-after-free of fmt_src during MBPF
+ check
+To: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
+ Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+ Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <rUXTfoyGnkGklkQTcUpGww1LY3k1mQifzKFqJaChQkC1jTWg-_3dxJVTkYOp45jUmL45pc7DKHXZvEHaEm-Evw==@protonmail.internalid>
+ <20260227-fix-use-after-free-of-fmt_src-during-mbpf-v1-1-307cdafffa2a@oss.qualcomm.com>
+From: Bryan O'Donoghue <bod@kernel.org>
+Content-Language: en-US
+In-Reply-To: <20260227-fix-use-after-free-of-fmt_src-during-mbpf-v1-1-307cdafffa2a@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-94534-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[kernel.org,lwn.net,gmail.com,gondor.apana.org.au,davemloft.net,quicinc.com,qti.qualcomm.com,vger.kernel.org,linaro.org];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-94535-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,mail.gmail.com:mid]
-X-Rspamd-Queue-Id: C21A41BE318
+	RCPT_COUNT_SEVEN(0.00)[8];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: 9CE721BE406
 X-Rspamd-Action: no action
 
-On Wed, Feb 25, 2026 at 10:52=E2=80=AFAM Vinod Koul <vkoul@kernel.org> wrot=
-e:
->
-> > > >
-> > > > Sorry for jumping late. But I disagree with the argument that the c=
-lient drivers
-> > > > have to set the LOCK/UNLOCK bit. These bits are specific to BAM DMA=
- IP for
-> > > > serializing the command descriptors from multiple entities. So DMA =
-clients like
-> > > > Crypto/NAND have no business in setting this flag. It is the job of=
- the BAM
-> > > > dmaengine driver to set/unset it at the start and end of the descri=
-ptor chain.
-> > > >
-> > >
-> > > But what if a given client does not need locking? We don't want to en=
-able it
-> > > for everyone - as I explained before.
-> > >
-> >
-> > That's not going to hurt. AFAIK, enabling locking wouldn't cause any no=
-table
-> > performance overhead.
->
-> I was always skeptical on this one. I had never seen why locking should
-> be pushed to clients. As Bjorn said it leads to more mess than worth it.
-> Thanks Mnai
->
+On 27/02/2026 17:33, Vishnu Reddy wrote:
+> A race condition was observed during concurrency testing. the core MBPF
+> check walks the list of active instances and reads fields such as fmt_src
+> height and width. 
 
-[snip]
+Where does that happen - you highlight iris_close() below - that's good, 
+what's the method or methods that can run concurrently with iris_close() 
+- you should state those in the commit log so that reviewers like myself 
+and people reading the commit in the future know where to look.
 
-> >
-> > > >> > Reg Dmitry question above, this is dma hw capability, how will c=
-lient
-> > > >> > know if it has to lock on older rev of hardware or not...?
-> > > >> >
-> > > >> > > Also: only the crypto engine needs it for now, not all the oth=
-er users
-> > > >> > > of the BAM engine.
-> > > >> >
-> > > >>
-> > > >> Trying to set the lock/unlock bits will make
-> > > >> dmaengine_desc_attach_metadata() fail if HW does not support it.
-> > > >>
-> > > >
-> > > > The BAM dmaengine driver *must* know based on the IP version whethe=
-r it supports
-> > > > the LOCK/UNLOCK bits or not, not the client drivers. How can the cl=
-ient drivers
-> > > > know about the BAM DMA IP capability?
->
-> Lock bits are on the BAM DMA IP or client? Can we not add this
-> capability to BAM driver and lock for IPs that support
->
+At the same time, iris_close() could free these format
+> structures before the instance was removed from core list. this creates a
+> use-after-free window where the MBPF checker access the freed memory and
+> read invalid values.
 
-Lock bits are in the BAM command descriptors. We do in fact already
-expose the layout of BAM command elements to consumers.
+Without looking at the code this description seems suspect.
 
-> >
-> > > How do
-> > > you handle the case where we need to lock the BAM, send an arbitrary =
-number
-> > > of descriptors from the client and then unlock it? How can the BAM kn=
-ow *when*
-> > > to lock/unlock?
-> > >
-> >
-> > BAM driver has to perform lock during issue_pending() and unlock while =
-reporting
-> > the completion using vchan_cookie_complete().
->
-> Sounds good to me, thanks Mani
->
+&inst->lock ought to protect inst && inst->thing if it doesn't, then the 
+lock isn't being used correctly.
 
-This sounds great in theory but submitting new descriptors while
-you're starting the engines proves to be quite tricky. :(
+> 
+> To fix this, the freeing of fmt_src and fmt_dst is moved to the end
+> of iris_close(), after the instance has been removed from the core
+> list and teardown is complete. This avoids accessing dangling pointers
+> during the MBPF check.
+> 
+> Signed-off-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
 
-Over the course of this week, I tried really hard to make this happen.
-The fact that we have two descriptor chains - one with data and one
-with command descriptors - prepared with two separate calls to
-dmaengine_prep_slave_sg(), but which we want to wrap with a
-lock/unlock means we'll most likely really need to find a way to
-insert the dummy command descriptors the moment we want to flush the
-queue. Though that also means that the consumers need to adjust - for
-instance: they need to submit both the data and command descriptors
-*before* calling dmaengine_issue_pending(). So there goes not
-involving the clients in the locking logic.
+Needs
 
-I will give it another try on Monday, but there's also another
-problem. The lock/unlock bits need to be attached to *real* command
-descriptors. So we need an actual "dummy" register write. The HPG
-evens says this is the way to do it and I verified that passing 0 in
-addr and size fields of a command descriptor will result in an smmu
-fault. In the current approach, we do a harmles write into the VERSION
-register of the QCE. But the address of that register is not known to
-the BAM driver. How do I tell the BAM driver which address to write
-to? There's struct dma_slave_config that has dst_addr and src_addr
-fields that could be reused but that's probably not really their
-function.
+- Fixes:
+- Cc: stable
 
-Bart
+> ---
+>   drivers/media/platform/qcom/iris/iris_vdec.c | 6 ------
+>   drivers/media/platform/qcom/iris/iris_vdec.h | 1 -
+>   drivers/media/platform/qcom/iris/iris_venc.c | 6 ------
+>   drivers/media/platform/qcom/iris/iris_venc.h | 1 -
+>   drivers/media/platform/qcom/iris/iris_vidc.c | 6 ++----
+>   5 files changed, 2 insertions(+), 18 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/iris/iris_vdec.c b/drivers/media/platform/qcom/iris/iris_vdec.c
+> index 719217399a30..99d544e2af4f 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vdec.c
+> +++ b/drivers/media/platform/qcom/iris/iris_vdec.c
+> @@ -61,12 +61,6 @@ int iris_vdec_inst_init(struct iris_inst *inst)
+>   	return iris_ctrls_init(inst);
+>   }
+> 
+> -void iris_vdec_inst_deinit(struct iris_inst *inst)
+> -{
+> -	kfree(inst->fmt_dst);
+> -	kfree(inst->fmt_src);
+> -}
+> -
+>   static const struct iris_fmt iris_vdec_formats_cap[] = {
+>   	[IRIS_FMT_NV12] = {
+>   		.pixfmt = V4L2_PIX_FMT_NV12,
+> diff --git a/drivers/media/platform/qcom/iris/iris_vdec.h b/drivers/media/platform/qcom/iris/iris_vdec.h
+> index ec1ce55d1375..5123d2a340e1 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vdec.h
+> +++ b/drivers/media/platform/qcom/iris/iris_vdec.h
+> @@ -9,7 +9,6 @@
+>   struct iris_inst;
+> 
+>   int iris_vdec_inst_init(struct iris_inst *inst);
+> -void iris_vdec_inst_deinit(struct iris_inst *inst);
+>   int iris_vdec_enum_fmt(struct iris_inst *inst, struct v4l2_fmtdesc *f);
+>   int iris_vdec_try_fmt(struct iris_inst *inst, struct v4l2_format *f);
+>   int iris_vdec_s_fmt(struct iris_inst *inst, struct v4l2_format *f);
+> diff --git a/drivers/media/platform/qcom/iris/iris_venc.c b/drivers/media/platform/qcom/iris/iris_venc.c
+> index aa27b22704eb..4d886769d958 100644
+> --- a/drivers/media/platform/qcom/iris/iris_venc.c
+> +++ b/drivers/media/platform/qcom/iris/iris_venc.c
+> @@ -79,12 +79,6 @@ int iris_venc_inst_init(struct iris_inst *inst)
+>   	return iris_ctrls_init(inst);
+>   }
+> 
+> -void iris_venc_inst_deinit(struct iris_inst *inst)
+> -{
+> -	kfree(inst->fmt_dst);
+> -	kfree(inst->fmt_src);
+> -}
+> -
+>   static const struct iris_fmt iris_venc_formats_cap[] = {
+>   	[IRIS_FMT_H264] = {
+>   		.pixfmt = V4L2_PIX_FMT_H264,
+> diff --git a/drivers/media/platform/qcom/iris/iris_venc.h b/drivers/media/platform/qcom/iris/iris_venc.h
+> index c4db7433da53..00c1716b2747 100644
+> --- a/drivers/media/platform/qcom/iris/iris_venc.h
+> +++ b/drivers/media/platform/qcom/iris/iris_venc.h
+> @@ -9,7 +9,6 @@
+>   struct iris_inst;
+> 
+>   int iris_venc_inst_init(struct iris_inst *inst);
+> -void iris_venc_inst_deinit(struct iris_inst *inst);
+>   int iris_venc_enum_fmt(struct iris_inst *inst, struct v4l2_fmtdesc *f);
+>   int iris_venc_try_fmt(struct iris_inst *inst, struct v4l2_format *f);
+>   int iris_venc_s_fmt(struct iris_inst *inst, struct v4l2_format *f);
+> diff --git a/drivers/media/platform/qcom/iris/iris_vidc.c b/drivers/media/platform/qcom/iris/iris_vidc.c
+> index bd38d84c9cc7..5eb1786b0737 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vidc.c
+> +++ b/drivers/media/platform/qcom/iris/iris_vidc.c
+> @@ -289,10 +289,6 @@ int iris_close(struct file *filp)
+>   	v4l2_m2m_ctx_release(inst->m2m_ctx);
+>   	v4l2_m2m_release(inst->m2m_dev);
+>   	mutex_lock(&inst->lock);
+> -	if (inst->domain == DECODER)
+> -		iris_vdec_inst_deinit(inst);
+> -	else if (inst->domain == ENCODER)
+> -		iris_venc_inst_deinit(inst);
+>   	iris_session_close(inst);
+>   	iris_inst_change_state(inst, IRIS_INST_DEINIT);
+>   	iris_v4l2_fh_deinit(inst, filp);
+> @@ -304,6 +300,8 @@ int iris_close(struct file *filp)
+>   	mutex_unlock(&inst->lock);
+>   	mutex_destroy(&inst->ctx_q_lock);
+>   	mutex_destroy(&inst->lock);
+> +	kfree(inst->fmt_src);
+> +	kfree(inst->fmt_dst);
+>   	kfree(inst);
+
+On the face of it I like the logic of moving the kfree() after 
+destruction of the various other bits - however the description in the 
+log makes me question of the two locks we have are being used correctly ..
+
+Please provide more detail.
+> 
+>   	return 0;
+> 
+> ---
+> base-commit: 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f
+> change-id: 20260226-fix-use-after-free-of-fmt_src-during-mbpf-abc27f573400
+> 
+> Best regards,
+> --
+> Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+> 
+
 
