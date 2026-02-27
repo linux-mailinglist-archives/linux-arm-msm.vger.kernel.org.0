@@ -1,173 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-94451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94452-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wI8CIcmZoWl8ugQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 14:19:05 +0100
+	id CBBwBGifoWl8ugQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94452-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 14:43:04 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D3301B789B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 14:19:05 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A2351B7CEF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 14:43:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9CC82308F81A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 13:17:19 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 038E930313BA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 13:43:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F8AC1F30A9;
-	Fri, 27 Feb 2026 13:17:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20556330334;
+	Fri, 27 Feb 2026 13:43:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PqrDTLp5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZRWRg1pU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8161D5CD1;
-	Fri, 27 Feb 2026 13:17:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1EE524A06B;
+	Fri, 27 Feb 2026 13:43:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772198238; cv=none; b=bTd4IxqO5kz3R8aKElWo1d8SauZmObUdOhEI9LqpXesIqIy/aEprIayqgi1d3rDrpXtfkdfzKYedh/PJjbOsQ8R4zYSAUNIRmXJo/UYNCQWq6uVysO2CDRBitwIk8JLq4IeU2MwogwWFLFmc/pBO+JgqxiSp796q7BQNlXzQVxc=
+	t=1772199782; cv=none; b=UJXmbLB460cb0Fs7mMtEHVzQ65LFxNui3xLOHF1JptPTQauyugFjWVJPP9BfmfKpPGIQ8ThH/Th5sQ2p72s+8EAEmnU3dGwvH6NZk+wU9JT1CAqrFtxXcv/dHmlXRgNjput1mWsKNVZg3YFL/LDm4E7iD7YneFWbKnd2FVbDblk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772198238; c=relaxed/simple;
-	bh=oB71LjVfkYOpcf4QOL8NCshfC3gI3O7vOzZLbyM+U3s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NWqy7nx2a/CKx6Zgs9dsYbUKbasHGhTeQQza8tzXyKgZwIvRxpY5hvWz+SLn+L3sf48Ic5l+IkotQ6fQ5nDnsL3eMMbZ0Kz10Sge9sN7byVJRrAQyCzakigzLd8opFqEn43Av8oOKYOHCFFxAjMzSSqRWFty8tNQNR284FLrQOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PqrDTLp5; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA0C5C116C6;
-	Fri, 27 Feb 2026 13:17:15 +0000 (UTC)
+	s=arc-20240116; t=1772199782; c=relaxed/simple;
+	bh=Vsxx0tf/aez0eT/Zy9uhaG0dHCfN3A4iBIahMreaC/c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VmYd6SJ2X0PmHpkCAy1bJW3WXfg0ySn8EDlbuIpheXZwPMfzMPbRiD6or0YtR12neBc1d0blszvA97mDTKZp3N10vQ7HWmgp7oMhcwfBQSlKHZWLfV5xiWnsjn25fFTmFabCCF/+3rd+4VCMgE1/GXWoLvqxRQEbLJu33BW0bVg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZRWRg1pU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D95B7C19423;
+	Fri, 27 Feb 2026 13:43:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772198237;
-	bh=oB71LjVfkYOpcf4QOL8NCshfC3gI3O7vOzZLbyM+U3s=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=PqrDTLp52oWgicEwooMb0EUQ8x97mRXlKQcGEESR6FNmKO6qEDafIZ+jtVTDPHCu7
-	 YqUnTkEzUx1KDuMoyKa/JjToZHkj3abr0t8K+gMCpePWaqAdSwvzrQUw5cj4U5cdCP
-	 dVbkq/RQksGelYJP2xHebzaA2PvCQbc9zicHvUH8NWMgE3k8zqTTgKIE+yU34KCq8j
-	 FKDMbZf/FymkzQ+yfv36QrMd5kZDQGqwlGfHa50NBCfxLJ/m7K9NGBdGOI8jC3MxwP
-	 SXArg8/L+r9zJwpKY5YWe6A0UbdHqr3ifDHL7b3DYd7Q9ybwTCuNTB+5E2Dts8LzDO
-	 a//kvyv3OYfkg==
-Message-ID: <66dd6354-2752-4b8f-8631-cbbfd36e4de1@kernel.org>
-Date: Fri, 27 Feb 2026 14:17:13 +0100
+	s=k20201202; t=1772199781;
+	bh=Vsxx0tf/aez0eT/Zy9uhaG0dHCfN3A4iBIahMreaC/c=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ZRWRg1pU523wK9B4qH/oqfxalX1dWT1tRMgvmqEhkAiQCC6+aZk47rC2NcYr6UhO7
+	 GSaSHNrYzBOKKhEh7mMElKMbIDwYIVryRv2a2FKCzh/P1lwmx+3yg7CYFUgUSSH3nm
+	 CS9LpGw+mDUvIYt+G4TAFRUiF8RMm6xHL2yo1kipylcbA2Y1kDSNeJetaEvXB8TCct
+	 q//5qO9lU20DNXf1PWD6Wus6q11rsXwDCKxYDHhlxzJD5gag8NF1z+LfJQ4HBDiIYD
+	 kXX/RBc8sB2pEWWe6mDQ76zpgQoYJL1j4f+8GDWw60K/7018hfFa9IdueKYAESm5AS
+	 554gGzUr67QjA==
+Date: Fri, 27 Feb 2026 19:12:57 +0530
+From: Vinod Koul <vkoul@kernel.org>
+To: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+Cc: Andrew Lunn <andrew@lunn.ch>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>, netdev@vger.kernel.org,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: Re: [PATCH net-next 4/8] phy: qcom-sgmii-eth: remove .set_speed()
+ implementation
+Message-ID: <aaGfYSTaBEQpLG54@vaman>
+References: <aZ66OT9scKipRRu2@shell.armlinux.org.uk>
+ <E1vvCby-0000000ArL4-3x4U@rmk-PC.armlinux.org.uk>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: glymur-crd: Enable bluetooth
-To: Zijun Hu <zijun.hu@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: Zijun Hu <zijun_hu@icloud.com>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20260226-bt_glymur-v1-1-838fcbfaa767@oss.qualcomm.com>
- <65d15750-64f4-4abf-a62c-519510ab3968@kernel.org>
- <a2b64ff0-38d6-4153-899a-b1e5a620eac2@oss.qualcomm.com>
- <a72b1f27-1bea-4930-a8f5-b0ae22675920@kernel.org>
- <8c18682d-18f4-4fc8-a3bb-5abb6303ff66@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <8c18682d-18f4-4fc8-a3bb-5abb6303ff66@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <E1vvCby-0000000ArL4-3x4U@rmk-PC.armlinux.org.uk>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[icloud.com,vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-94451-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-94452-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.981];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[10];
+	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-0.999];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[vkoul@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,kernel,netdev];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 2D3301B789B
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[armlinux.org.uk:email]
+X-Rspamd-Queue-Id: 9A2351B7CEF
 X-Rspamd-Action: no action
 
-On 27/02/2026 12:58, Zijun Hu wrote:
-> On 2/27/2026 7:43 PM, Krzysztof Kozlowski wrote:
->>> yes.
->>> the git repo is a private one, so nobody will notice and code review it if this change is not posted to https://lore.kernel.org.
->> No, it is not true. The repo is public.
->>
+On 25-02-26, 10:59, Russell King (Oracle) wrote:
+> Now that the qcom-ethqos driver has migrated to use phy_set_mode_ext()
+> rather than phy_set_speed() to configure the SerDes, the support for
+> phy_set_speed() is now obsolete. Remove support for this method.
 > 
-> The 'private' i mean is that the repo is not mentioned in kernel tree.
-> so it is not known by public.
-
-Entire Qualcomm Glymur work was coordinated through that repo, so what
-do you mean "it is not known"?
-
->> I am asking why are you duplicating the work, why you are asked even to
->> work on something which was already finished/prepared?
+> Using the MAC speed for the SerDes is never correct due to the PCS
+> encoding. For SGMII and 2500BASE-X, the PCS uses 8B10B encoding, and
+> so:
 > 
-> actually, both i and many colleagues does not notice the change obviously.
-> so cause duplicated effort.
+>   MAC rate * PCS output bits / PCS input bits = SerDes rate
+>    1000M   *       10        /       8        = 1250M
+>    2500M   *       10        /       8        = 3125M
+> 
+> Tested-by: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
+> Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
-Then I think your team or colleagues or managers should look there first
-or ask points of contact for Glymur upstreaming, so you will not be
-doing same work again.
+Acked-by: Vinod Koul <vkoul@kernel.org>
 
-Best regards,
-Krzysztof
+-- 
+~Vinod
 
