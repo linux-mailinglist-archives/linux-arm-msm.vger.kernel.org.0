@@ -1,72 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-94516-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94517-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id uHDyAnftoWmJxQQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94516-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 20:16:07 +0100
+	id KMhuMpftoWlDxQQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94517-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 20:16:39 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8DA211BC8FF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 20:16:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 32B781BC90D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 20:16:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 2509F304CA57
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 19:14:37 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 3220130A0528
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 19:15:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1B643A1A30;
-	Fri, 27 Feb 2026 19:14:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0557E36493C;
+	Fri, 27 Feb 2026 19:15:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jmIjWIO2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WYoZWYeQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F77A3859FE;
-	Fri, 27 Feb 2026 19:14:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5CE02EBB99;
+	Fri, 27 Feb 2026 19:15:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772219676; cv=none; b=XI31p1G53j/2gIUaiY0p+F8ZXIAMUX1VAta98052ktBoZCtw9q8TvN0WTWiIfPxLLM9MuY10syTAaJLMYI4Vw83mIzAgkQq8K2TP00yhGEeKsvmUrzG99GoR95+toyvEI0HZfiNuxhjB/lcXYE/O9dQmWYBM8Zn5ZTzeooUqBzc=
+	t=1772219712; cv=none; b=msh6YWBqS0V3YaAfHXiKTDm0ttXODHJVkaNvFqApfXxY5UXpDTrSjvzWm99oEtGjLExEwnfSkEbWaoA4jUgJMEjrt3P1o1G207N33J+Ikva7+cWkyh6C2jyZuJtxoRPXisHRVnm1X4f0AQB5vVkyP69DYb5eUOGJ2trkzVtiJNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772219676; c=relaxed/simple;
-	bh=yCcv7q2kK1JFxQC/UoEe5O2F1n8FApkUcBadl1XBu48=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bNCp4fs2E0oDPt3qJzyDZMfMWHthG2vWKlxL9gNNKs8EaJcLzQ+hjMZsvZZbxA9e+qZAAM9oNTkH1b3mbbg1XZg485VoFwBF3ifyinczzEPteZhbxD3zkL2G1XIhImPiWa3AwHxVWb4ekfs8Z9CnumYTToSfE9Yua9HlKjh+cOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jmIjWIO2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E282C116C6;
-	Fri, 27 Feb 2026 19:14:35 +0000 (UTC)
+	s=arc-20240116; t=1772219712; c=relaxed/simple;
+	bh=rPcMB8N3meQIpUAJxcq5/mAzs6p1uYlm85uvFKjuyQg=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=Rosa7ZOPi58Qn+7AG8Pd+qZMUDpPdVK8WCrdrbiZVqOrQcWHO3MjML11RjTCFLVYZSh9nvcFh6baVlOgqSAtiNVvZStCtT/gZ9PWxApXs3uYVT4Wd89MUOWTMX4lM1ZllAz5VSs+d4l99YTWGEOR+kUtuftaHd+2ClGUih/oAUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WYoZWYeQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00ABAC116C6;
+	Fri, 27 Feb 2026 19:15:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772219676;
-	bh=yCcv7q2kK1JFxQC/UoEe5O2F1n8FApkUcBadl1XBu48=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jmIjWIO2zglTwenOHs2LlHMgpyCUoct1j5Kzv6T3/cMxOVc2pEhVuzKLllxi3bh63
-	 G0GlUQx8lfKA3ExBy8Pj9VbVeSVd4gzqgjiuBrx0RNVo5LaMxpk57w7uRhZlmvP6Zp
-	 P3XXBZxd3BoxR8LDp9Rg0asySiItvksrB7O3KKHhYE2JtP9SWqoYN+6rzw+5s4WEXi
-	 Zq9drH7V5cMWZR+KdEzRh0o1cCVGu5gnV8Sfka7tJMQJoNZkzz4rFP7k+2FGZL0J5F
-	 VQNmQ93W3BFxdQ5z4+3vy7HAs3tOS0IAXRBUIc8cWev14b8hQkB7rpnsc/qOZCYniS
-	 l/qs3EDRnlaJg==
-Date: Fri, 27 Feb 2026 13:14:32 -0600
-From: Bjorn Andersson <andersson@kernel.org>
-To: Anandu Krishnan E <anandu.e@oss.qualcomm.com>
-Cc: srini@kernel.org, linux-arm-msm@vger.kernel.org, 
-	gregkh@linuxfoundation.org, quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org, 
-	quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org, arnd@arndb.de, 
-	ekansh.gupta@oss.qualcomm.com, stable@kernel.org
-Subject: Re: [PATCH v1] misc: fastrpc: Add reference counting for
- fastrpc_user structure
-Message-ID: <qoknqyxewirettcqlymmvnrrn5mft4ugf6zthvgmpeoapotct6@dundgjyvtjj2>
-References: <20260226151121.818852-1-anandu.e@oss.qualcomm.com>
- <r4b67y3zbhclkdskbyobtypkrz5pszykvt2hitntvdimanuwe5@34uqxkc34ub7>
- <07d585fe-dfd1-41c9-9c58-b2f9893e572e@oss.qualcomm.com>
+	s=k20201202; t=1772219712;
+	bh=rPcMB8N3meQIpUAJxcq5/mAzs6p1uYlm85uvFKjuyQg=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=WYoZWYeQc8SHFquwHj5JDCAqA5VCZQY/L7XgtqSF0P3vv/E+Lhs7AXVo+BpiQ6igQ
+	 KcEKYWVbNmbe+hesMxLGVRSFumCz9vR0+T/HPzj1F+IX6KmaWG/hE2/fa0zpHQvAaD
+	 zu0eZVdCiofcGj9PGoJ+U9pEtgV25A6SO0y0QSd58EA+NAwJoJphtINmP5Xz7WDdc4
+	 tD921c7xl05zzAc32zmp6Q4D7vyDTwamWpyhTXXK69db533afsc6A7UvQr2BAZxXMI
+	 Ib9rDMgP5XK7vfK9/BVnXj4DOMuZIVwIEi1JsfMntMzjpG7FLTtb0xhddeRjQLJWAp
+	 9n/qV8B86cAyg==
+Date: Fri, 27 Feb 2026 13:15:10 -0600
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Daniel Hodges <git@danielhodges.dev>
+Cc: mani@kernel.org, kwilczynski@kernel.org, kishon@kernel.org,
+	bhelgaas@google.com, mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH] PCI: epf-mhi: return 0 on success instead of positive
+ jiffies
+Message-ID: <20260227191510.GA3904799@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <07d585fe-dfd1-41c9-9c58-b2f9893e572e@oss.qualcomm.com>
+In-Reply-To: <20260206200529.10784-1-git@danielhodges.dev>
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
@@ -78,7 +74,7 @@ X-Spamd-Result: default: False [-1.66 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94516-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-94517-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
@@ -88,194 +84,87 @@ X-Spamd-Result: default: False [-1.66 / 15.00];
 	MISSING_XM_UA(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[helgaas@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
+	RCPT_COUNT_SEVEN(0.00)[10];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 8DA211BC8FF
+	DBL_BLOCKED_OPENRESOLVER(0.00)[danielhodges.dev:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 32B781BC90D
 X-Rspamd-Action: no action
 
-On Fri, Feb 27, 2026 at 07:52:00PM +0530, Anandu Krishnan E wrote:
+On Fri, Feb 06, 2026 at 03:05:29PM -0500, Daniel Hodges wrote:
+> wait_for_completion_timeout() returns the number of jiffies remaining
+> on success (positive value) or 0 on timeout. The pci_epf_mhi_edma_read()
+> and pci_epf_mhi_edma_write() functions use the return value directly as
+> their own return value, only converting timeout (0) to -ETIMEDOUT.
 > 
+> On success, they return the positive jiffies value. The callers in
+> drivers/bus/mhi/ep/ring.c check for errors with "if (ret < 0)" for
+> read_sync and "if (ret)" for write_sync. This causes write_sync success
+> cases to be incorrectly treated as errors since the positive jiffies
+> value is non-zero.
 > 
-> On 2/26/2026 11:20 PM, Bjorn Andersson wrote:
-> > On Thu, Feb 26, 2026 at 08:41:21PM +0530, Anandu Krishnan E wrote:
-> > > Add reference counting using kref to the fastrpc_user structure to
-> > > prevent use-after-free issues when contexts are freed from workqueue
-> > > after device release.
-> > Please follow
-> > https://docs.kernel.org/process/submitting-patches.html#describe-your-changes
-> > and start your commit message by clearly establishing the problem, once
-> > that's done you can describe the technical solution.
-> sure,  will update the commit message and send as patch v2.
-> > 
-> > > The issue occurs when fastrpc_device_release() frees the user structure
-> > > while invoke contexts are still pending in the workqueue. When the
-> > > workqueue later calls fastrpc_context_free(), it attempts to access
-> > > buf->fl->cctx in fastrpc_buf_free(), leading to a use-after-free:
-> > But why does it do that?
-> > 
-> > The reason why we need buf->fl->cctx in this context is because we need
-> > to mask out the DMA address from the buf->dma_addr (remove the SID bits).
-> > 
-> > If we instead split "dma_addr" into two separate members of struct
-> > fastrpc_buf, one dma_addr_t dma_addr and one u64 iova_with_sid (?), then
-> > it would be clear throughout the driver which address space we're
-> > talking about (is it the SID-adjusted iova space or the dma_addr_t in
-> > the particular DMA context).
-> > 
-> > In addition to making this aspect of the driver easier to follow, you no
-> > longer need to call fastrpc_ipa_to_dma_addr() in fastrpc_buf_free() (or
-> > anywhere else for that matter).
-> > 
-> > You can just pass buf->dma_addr directly to dma_free_coherent().
-> > 
-> > You're isolating the fact that the firmware needs to see "SID |
-> > dma_addr" to just two places in the driver.
-> I agree with the refactoring direction you’re suggesting, and
-> separating the address spaces does make the driver easier
-> to reason about.
+> Fix by setting ret to 0 when wait_for_completion_timeout() succeeds.
 > 
-> That said, the UAF isn’t limited to the buffer
-> free path. fastrpc_context_free() also calls fastrpc_map_put(),
-> which reaches fastrpc_free_map() and still dereferences fl, so
-> addressing only the buffer side doesn’t fully resolve the lifetime issue.
-> So the reference counting is still needed. I will update the scenario in
-> commit message as well.
+> Fixes: 7b99aaaddabb ("PCI: epf-mhi: Add eDMA support")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Daniel Hodges <git@danielhodges.dev>
+
+Thanks for the patch!
+
+Two questions: first, is there any reason why __mhi_ep_cache_ring()
+tests for "ret < 0" but mhi_ep_ring_add_element() tests for "ret"
+(non-zero)?  Could/should they both test just for non-zero, which I
+think is the typical style?
+
+Second, the subject and commit log are perfectly correct but basically
+at the level of describing the C code.  I propose something along
+these lines:
+
+  PCI: epf-mhi: Return 0, not remaining timeout, when eDMA ops complete
+
+  pci_epf_mhi_edma_read() and pci_epf_mhi_edma_write() start DMA
+  operations and wait for completion with a timeout.
+
+  On successful completion, they previously returned the remaining
+  timeout, which callers may treat as an error.  In particular,
+  mhi_ep_ring_add_element(), which calls pci_epf_mhi_edma_write() via
+  mhi_cntrl->write_sync(), interprets any non-zero return value as
+  failure.
+
+  Return 0 on success instead of the remaining timeout to prevent
+  mhi_ep_ring_add_element() from treating successful completion as an
+  error.
+
+> ---
+>  drivers/pci/endpoint/functions/pci-epf-mhi.c | 4 ++++
+>  1 file changed, 4 insertions(+)
 > 
-
-I presume you're referring to the "vmid" we need to rebuild the
-src_perms for use in fastrpc_free_map()?
-
-I think the relevant question to ask there is if it's really a property
-of the "fastrpc file context". It seems to me that we could solve that
-by storing the src_perms in the fastrpc_map once we've done the
-qcom_scm_assign_mem() call in fastrpc_map_attach() - so that we can free
-that object without having to reach out to objects of other lifetimes.
-
-> If you think it makes sense, I can take the address‑space refactoring
-> as a separate follow‑up patch and keep this change focused on fixing
-> the lifetime issue.
-
-The chance of you fixing one lifetime issue by introducing one or more
-worries me, I'm only familiar with the driver, so I wouldn't be able to
-say with confidence without investing more time fully understand the
-various lifetimes. So if we're going that path, I'd like someone else to
-step up and tell me that it's good.
-
-On the other hand, the two changes I presented above are logically
-simple to make, follow, and review - and they don't complicate the
-driver further. So that would still be _my_ preferred choice.
-
-[..]
-> > > diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> > > index 47356a5d5804..3ababcf327d7 100644
-> > > --- a/drivers/misc/fastrpc.c
-> > > +++ b/drivers/misc/fastrpc.c
-> > > @@ -310,6 +310,8 @@ struct fastrpc_user {
-> > >   	spinlock_t lock;
-> > >   	/* lock for allocations */
-> > >   	struct mutex mutex;
-> > > +	/* Reference count */
-> > > +	struct kref refcount;
-> > >   };
-> > >   /* Extract SMMU PA from consolidated IOVA */
-> > > @@ -497,15 +499,36 @@ static void fastrpc_channel_ctx_put(struct fastrpc_channel_ctx *cctx)
-> > >   	kref_put(&cctx->refcount, fastrpc_channel_ctx_free);
-> > >   }
-> > > +static void fastrpc_user_free(struct kref *ref)
-> > > +{
-> > > +	struct fastrpc_user *fl = container_of(ref, struct fastrpc_user, refcount);
-> > Unrelated question, what does the "fl" abbreviation actually mean? I
-> > presume 'f' is for "fastrpc", but what is 'l'?
-> fl is short for fastrpc file.
-> 
-
-Hmm, okay. Thank you for clarifying.
-
-Regards,
-Bjorn
-
-> Regards,
-> Anandu
-> > 
-> > Regards,
-> > Bjorn
-> > > +
-> > > +	fastrpc_channel_ctx_put(fl->cctx);
-> > > +	mutex_destroy(&fl->mutex);
-> > > +	kfree(fl);
-> > > +}
-> > > +
-> > > +static void fastrpc_user_get(struct fastrpc_user *fl)
-> > > +{
-> > > +	kref_get(&fl->refcount);
-> > > +}
-> > > +
-> > > +static void fastrpc_user_put(struct fastrpc_user *fl)
-> > > +{
-> > > +	kref_put(&fl->refcount, fastrpc_user_free);
-> > > +}
-> > > +
-> > >   static void fastrpc_context_free(struct kref *ref)
-> > >   {
-> > >   	struct fastrpc_invoke_ctx *ctx;
-> > >   	struct fastrpc_channel_ctx *cctx;
-> > > +	struct fastrpc_user *fl;
-> > >   	unsigned long flags;
-> > >   	int i;
-> > >   	ctx = container_of(ref, struct fastrpc_invoke_ctx, refcount);
-> > >   	cctx = ctx->cctx;
-> > > +	fl = ctx->fl;
-> > >   	for (i = 0; i < ctx->nbufs; i++)
-> > >   		fastrpc_map_put(ctx->maps[i]);
-> > > @@ -521,6 +544,8 @@ static void fastrpc_context_free(struct kref *ref)
-> > >   	kfree(ctx->olaps);
-> > >   	kfree(ctx);
-> > > +	/* Release the reference taken in fastrpc_context_alloc() */
-> > > +	fastrpc_user_put(fl);
-> > >   	fastrpc_channel_ctx_put(cctx);
-> > >   }
-> > > @@ -628,6 +653,8 @@ static struct fastrpc_invoke_ctx *fastrpc_context_alloc(
-> > >   	/* Released in fastrpc_context_put() */
-> > >   	fastrpc_channel_ctx_get(cctx);
-> > > +	/* Take a reference to user, released in fastrpc_context_free() */
-> > > +	fastrpc_user_get(user);
-> > >   	ctx->sc = sc;
-> > >   	ctx->retval = -1;
-> > > @@ -658,6 +685,7 @@ static struct fastrpc_invoke_ctx *fastrpc_context_alloc(
-> > >   	spin_lock(&user->lock);
-> > >   	list_del(&ctx->node);
-> > >   	spin_unlock(&user->lock);
-> > > +	fastrpc_user_put(user);
-> > >   	fastrpc_channel_ctx_put(cctx);
-> > >   	kfree(ctx->maps);
-> > >   	kfree(ctx->olaps);
-> > > @@ -1606,11 +1634,9 @@ static int fastrpc_device_release(struct inode *inode, struct file *file)
-> > >   	}
-> > >   	fastrpc_session_free(cctx, fl->sctx);
-> > > -	fastrpc_channel_ctx_put(cctx);
-> > > -
-> > > -	mutex_destroy(&fl->mutex);
-> > > -	kfree(fl);
-> > >   	file->private_data = NULL;
-> > > +	/* Release the reference taken in fastrpc_device_open */
-> > > +	fastrpc_user_put(fl);
-> > >   	return 0;
-> > >   }
-> > > @@ -1654,6 +1680,7 @@ static int fastrpc_device_open(struct inode *inode, struct file *filp)
-> > >   	spin_lock_irqsave(&cctx->lock, flags);
-> > >   	list_add_tail(&fl->user, &cctx->users);
-> > >   	spin_unlock_irqrestore(&cctx->lock, flags);
-> > > +	kref_init(&fl->refcount);
-> > >   	return 0;
-> > >   }
-> > > -- 
-> > > 2.34.1
-> > > 
-> > > 
+> diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
+> index 6643a88c7a0c..2f077d0b7957 100644
+> --- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
+> +++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
+> @@ -367,6 +367,8 @@ static int pci_epf_mhi_edma_read(struct mhi_ep_cntrl *mhi_cntrl,
+>  		dev_err(dev, "DMA transfer timeout\n");
+>  		dmaengine_terminate_sync(chan);
+>  		ret = -ETIMEDOUT;
+> +	} else {
+> +		ret = 0;
+>  	}
+>  
+>  err_unmap:
+> @@ -438,6 +440,8 @@ static int pci_epf_mhi_edma_write(struct mhi_ep_cntrl *mhi_cntrl,
+>  		dev_err(dev, "DMA transfer timeout\n");
+>  		dmaengine_terminate_sync(chan);
+>  		ret = -ETIMEDOUT;
+> +	} else {
+> +		ret = 0;
+>  	}
+>  
+>  err_unmap:
+> -- 
+> 2.52.0
 > 
 
