@@ -1,285 +1,222 @@
-Return-Path: <linux-arm-msm+bounces-94533-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94534-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id gN8EKHH+oWl4yAQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94533-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 21:28:33 +0100
+	id GFZPGoQNoml9ygQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94534-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 22:32:52 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0CB6C1BDA05
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 21:28:33 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id C21A41BE318
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 22:32:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 025AA30304AE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 20:28:32 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 8AE2A3091343
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 21:32:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE205472779;
-	Fri, 27 Feb 2026 20:28:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B7523A1E64;
+	Fri, 27 Feb 2026 21:32:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="nK2X3KtX";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="X0KKTDsE"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hLFhazWs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B243376A3
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Feb 2026 20:28:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 759FB3815E9
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Feb 2026 21:32:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772224110; cv=none; b=S0SXoItVOJbUF4feMH7K+pCq1hZaSeBz3YMeI2Qm6YrGF497hcaqH9/3U7+FlCCjoYwTqoLGpK0AZpT6VlpngMWv/pMqG4LESzavgfNGFurEbCXNBqVqr/m3MjLy5llOLQmijCSa/pIGcf0kHYr08CkFLf/E/AIWOK+R2dLoZ3o=
+	t=1772227965; cv=none; b=Cr9aktneJuaDXJC/wXWh777c92ZDAsaxJZ3VSWaYKxftcLsl65F+6RfwINae07omKmzsmAl21bq5uWzFJGW2mvqFeHvUprsXg5kN7QWBHk86dExCbZUVJ42g0de9kFoI5WdcIpgVbkzjZfOoyj7iMut/VdOAQohWdJbdQeIv5oQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772224110; c=relaxed/simple;
-	bh=ubRpnnZCa3BtxGeTQH8/24NroyvQw+/jfEMurUW7GwQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bgxqdm+1WRnTLp66P90Dbag4aUHyR9LRo8r1ekUyps0vqAhjnbfAgCfMRAie6oPSbQfDG+lXm6gNGWcJoMn1QlTpfNsKd5m1howiv0dWSfm25LfN8FZsVN+497BqyyZtxxKHvSRxEHdyrqj1V9n5ER4SU1PTKpqxuis58XGs/FM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=nK2X3KtX; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=X0KKTDsE; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 61RH0GZp527257
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Feb 2026 20:28:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=lXz8uYqb+tpPwbAm+qmdqDbm
-	VqPyxZKSrLTUZphOd/U=; b=nK2X3KtXtku82Y76wPMRZmUpj+8CT6L0uOmOgU3E
-	L2BNQubsByoq8ptEwCyi5yH/pBdKpE3uCef79vOGcWJUbE0pDE0Q8/KxclSTQOgE
-	vGm3V3CtiS3FodsjQ99+0YzzLBA2jZxABdWsJzIEAhOIGbfw7njRxnKhSY1W0Ib3
-	AgNdgQApkYjlETglgOr2ZF9PBCRm3zKPPw4VO7V4EXffwXJdoZZ6XkKRVzIDnwep
-	pglHMArpoTuAHbxb5x4uKbNlOBK9jR9kiIiM64RY1VoQI2TalU3hZ7EbRDW8yD1h
-	ur0ZFOjaN1pimiJUixUXyJv5DYfLuJUN9PiXYsj9RV7tXQ==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cjw23c8h1-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Feb 2026 20:28:28 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-8cb706313beso306752085a.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Feb 2026 12:28:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1772224107; x=1772828907; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lXz8uYqb+tpPwbAm+qmdqDbmVqPyxZKSrLTUZphOd/U=;
-        b=X0KKTDsETwXcZz7m4SyAsDyWFpbP1s+MYiBYwo0SxEIjIdLEZTq2HMUxY51WOIqqjH
-         iqP81Hzcjl56zgWlhk6zV+6zDBqmK3l/07HisSphcc0uFsWn/9MOVBJ3kJ4ArFztqM+M
-         DrOebXNxmH97mrRQGlDoWppN53kzRn3uk1gTEKsJUzUZUleuICDsUk5Y78blXerFHbPM
-         jYvcKuf2R7J3bsl4dq7HnkYlric5q4QTwr8jPtuW2U/5U+42DIwoSgir0ubSzQqPt2hy
-         xC7JIHvEx6Hz4faTuwTnqmMlNfU788EKhlOwCLeAfyVl5qlXiFy8o4yqGEGCWEFGjEeu
-         MPgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772224107; x=1772828907;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lXz8uYqb+tpPwbAm+qmdqDbmVqPyxZKSrLTUZphOd/U=;
-        b=o5n0YWj/7aNu/0gEKH2emF3yyJTL8KrbIGy5vKnN80/DL7HMRybJYF825dlQMJc6DR
-         YvwqHBTkHzjLMxMwhy8t0PNTiL4IQg64Y+xxNQ9U6gLFW4jDuaP9V403eDNxLkG+yWgz
-         VnIDJnMJrDPV9JAGPrjK7stKgLCr4R99ubDGN56ap2CI5oUTqXO6pCYe0i31p1zwTROa
-         /46SM8jNWxwXulQ83d32zf863l3RkUrAq+rGC77Yxp06o8ds3cxHNwb+SO2rbIl7xyfd
-         hGl+yqS+txGO2/vbGXurAGmt9w9PXWJ6BlVpxJwiroua7h+bA3RGVlys7aFi6ZOn0ppC
-         aJAA==
-X-Forwarded-Encrypted: i=1; AJvYcCVG5ObmRRB8i5Wepeitydt7gY9/C3b8rL3B84kUadd7DmMPnmo76pmfuaR2QvqGs5rvCt8RLsvWILy7Qrtl@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxu8sPVUPttZvZnhWpL3Wsty/7WMs5/U09ArCTq3x8vNike3rdq
-	OwQzkyvxBlk1soGSa2FB25+15yxUrLqebksq+hyq1ryYwEa3cYZFk7ojQNVSjGkahvUoI0kc02u
-	Oal521i8Ct2evmXrOThoQr2aMX/694onMck+pSiPoJZsxIF3qqmmxtIpm9umpBaEuIqDX
-X-Gm-Gg: ATEYQzzBVUka6kIjEAfClbt7r0iGzINyL+1VatpMOyCbrJrjYD3Bp8gIT7JDBUOPUwS
-	ewEjVBM3wXKda+BnKW76Md7RJTg8szlpXl0Fb75qiZX8e63qe2tvPlF1mG9rnM9FHZ+V6GBA8HQ
-	uZ88482wtjX5wvjFXF7vRS88pcmZkGSFSiZ0Jcyf2uCBtswq0b+bCeBh0mAXGAs54+d68yQRyRu
-	z153JcFePeji8pxM+rr/SwC1+OffEjPNRmyxXR0XmS6PJILgqomsPCTuOvdHw67CWyPD5tZfj5C
-	B1dwlwKwQcd2T+Dmj5kmHStO/cILyc7+S7Ba7BHyYGAg2rsLY3S2OGcs91/Kc4sYgw7m5afia0S
-	J14td5zqcrAmMu+veiX+wW1GdXJYaD2P3TkgqAAf07RjybdnD7pjDqC3PvwDs20WIywMtGVGvCQ
-	ICXsKQJ1DYMuqvgR7jHe86sGVhi0HPgndTfpg=
-X-Received: by 2002:a05:620a:4891:b0:8c7:a53:4d17 with SMTP id af79cd13be357-8cbc8e863f5mr527246085a.21.1772224107544;
-        Fri, 27 Feb 2026 12:28:27 -0800 (PST)
-X-Received: by 2002:a05:620a:4891:b0:8c7:a53:4d17 with SMTP id af79cd13be357-8cbc8e863f5mr527242385a.21.1772224107036;
-        Fri, 27 Feb 2026 12:28:27 -0800 (PST)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-389f30179e9sm15051161fa.33.2026.02.27.12.28.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Feb 2026 12:28:26 -0800 (PST)
-Date: Fri, 27 Feb 2026 22:28:24 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-Cc: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bod@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Saravana Kannan <saravanak@kernel.org>, Joerg Roedel <joro@8bytes.org>,
-        Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Stefan Schmidt <stefan.schmidt@linaro.org>,
-        Hans Verkuil <hverkuil@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
-        Hans Verkuil <hverkuil+cisco@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        iommu@lists.linux.dev, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Subject: Re: [PATCH v2 6/7] media: iris: add iris4 specific H265 line buffer
- calculation
-Message-ID: <cbwz5wtd55enswdi2zvvy3d66nsxlemyzdypheibvljnewmkax@kybx63aveepn>
-References: <20260227-kaanapali-iris-v2-0-850043ac3933@oss.qualcomm.com>
- <20260227-kaanapali-iris-v2-6-850043ac3933@oss.qualcomm.com>
+	s=arc-20240116; t=1772227965; c=relaxed/simple;
+	bh=nUceLnwnFGOsiCx6d1TbU2VXshva5vgl3jAvcmBpNIg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YvTJ0lrrajyEBcPecJp+rA8OZwYDou58rh5Ck18o4CHGGNVsdm6Cx+SHF8xcYFxXSp5koKk0BrVyftxHjfw8hAhFe2Wx7mXAar/SODPpeQRdlD27LJVa1kpPu53DQUW9DLyJhZtUUNuzc3qFiQqSJ1yueXAXJKxuuZ+R+4Q7NAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hLFhazWs; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56CEEC2BCB7
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Feb 2026 21:32:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772227965;
+	bh=nUceLnwnFGOsiCx6d1TbU2VXshva5vgl3jAvcmBpNIg=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=hLFhazWswPxRoY1uNYl+xF4riy8lYbk4qBIUfzMROq+UlcfqZcSnzMZfzfTctqa1d
+	 iF4+3ANW/DJC5aVyvbvWLURQH6/K7Ri75vgUtWOmA2IyMvuIgF+sFSEijR/omqTtkP
+	 dPn6xUC/5KEx6kgp6LQbIbtewqgjLmkrkh72OoBVlKHcyuAkT/3ZhwZ/wI9xERPAoi
+	 60cUEbvVMBXMN8fBK/lb4BwIYKEAF1453JSTJfjO+Xl9i32VFsmmi+8I2gLeF0y213
+	 qq9maYtdeJZB2IxQTBdU7gnYjjb4jpyQdKbDLaQnI4ZtjzqBFGQad65bc96E1/t0aY
+	 ZbfGBErPmEEKQ==
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-3870902760cso33377351fa.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Feb 2026 13:32:45 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCXRRiSiGlHNNTRzFKoMVREvsB3el1B6BDKK8abf3ZrDl8QKLghdOqznci/Uc07qKxBz/cU0DuHpEor9mlt1@vger.kernel.org
+X-Gm-Message-State: AOJu0YxDQx3KqziFd33Y0bb4yUsClwA7EMUq6lyPvoU0i5KF7ykoxCWX
+	bgvvvRWHdQAclsHb1pvoAibhxXVDp3gZb9aABD93mgBGLBcQ2h141jCQ/IeD6oQu5H1p8/QMhIL
+	wnTAd9pNl+Iy/onARJYtOyCjqjudyGa3GWbuHO25zpA==
+X-Received: by 2002:a2e:b8d3:0:b0:389:fae2:10c1 with SMTP id
+ 38308e7fff4ca-389ff109ba2mr23520851fa.7.1772227963739; Fri, 27 Feb 2026
+ 13:32:43 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260227-kaanapali-iris-v2-6-850043ac3933@oss.qualcomm.com>
-X-Proofpoint-GUID: G2bk3XRDwlMPvOwbgUzV9zN_Nly_yN1T
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI3MDE3OSBTYWx0ZWRfX7qrPTjH1FJ6j
- wv8iFsqVfngD3LxfspUHqBSPaFsxySyPOR71k51/7dDNVd7woac6EqSCw9Uj1AY4vyGNf3MN7eK
- r5gLhc+kMVCAIhv7ij/ip31mNtGqJFxWjc6dnjw7Lp0KzbuF56zmYP01INCTqDV2pseZPxfwhZk
- 4tkLrhvNJfHE7alE4ReRD3lI/0OM6L5gOFzUQFuSB+8ccESmcrq1s8j8aq7YyrTnG8qJlfK2jP4
- 1HVNeIekm+yjxI6XgabXhYLsGN/gPjD95lwwb8tkIne+HZVsJzEYSrcyiuqwFJZZMsdsBldjQme
- PJifLMuoOjh0pT77UPUso1tFWy9MdJ8TzhgOnNFJVcmAamiTC1q3emXSKkdlUfh0QizMInvIPqP
- uE5z865bmIW6nRFe7LbaGWZNsMQqGxSnq9Huin/X3Ofx09UPt6nNwHd7KcVpv82eWSvC41MY+l4
- 9pYRwJ4VVv0ELhOrWOg==
-X-Authority-Analysis: v=2.4 cv=cJHtc1eN c=1 sm=1 tr=0 ts=69a1fe6c cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22 a=EUspDBNiAAAA:8
- a=BuJnJetHAO0UpRBxyx0A:9 a=CjuIK1q_8ugA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-ORIG-GUID: G2bk3XRDwlMPvOwbgUzV9zN_Nly_yN1T
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-27_04,2026-02-27_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0 lowpriorityscore=0 phishscore=0 adultscore=0
- spamscore=0 clxscore=1015 priorityscore=1501 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2602270179
+References: <CAMRc=Md6ucK-TAmtvWMmUGX1KuVE9Wj_z4i7_-Gc7YXP=Omtcw@mail.gmail.com>
+ <aVZh3hb32r1oVcwG@vaman> <CAMRc=MePAVMZPju6rZsyQMir4CkQi+FEqbC++omQtVQC1rHBVg@mail.gmail.com>
+ <aVf5WUe9cAXZHxPJ@vaman> <CAMRc=Mdaucen4=QACDAGMuwTR1L5224S0erfC0fA7yzVzMha_Q@mail.gmail.com>
+ <aWBndOfbtweRr0uS@vaman> <CAMRc=McPz+W4GOCbNMx-tpSav3+wuUrLT2CF5FhoV5U29oiK6A@mail.gmail.com>
+ <ana2ugshqjicqscwpdgo6knv53n4zzuwqp376qil27spco5vwh@ck7wmplz52qs>
+ <CAMRc=MevcsQ+sWsERQzod-a9A+F8feoLnbBXSkZrUk4zBPYCSQ@mail.gmail.com>
+ <xuiiqsrj63rtg4onuu2vmohwu2b2sd3so5uzakdzuucmwqaufn@7xwecs4apayt> <aZ7GS5W1VNNB2fLi@vaman>
+In-Reply-To: <aZ7GS5W1VNNB2fLi@vaman>
+From: Bartosz Golaszewski <brgl@kernel.org>
+Date: Fri, 27 Feb 2026 22:32:31 +0100
+X-Gmail-Original-Message-ID: <CAMRc=McD3k87-UpZ3q2eqEpVSCRgEVWc0XB+oRUZKM5rxMG=qA@mail.gmail.com>
+X-Gm-Features: AaiRm50yWEXHhLWXdj2Xm8-0PdwLOxwgr2acGIXsoFD28WkZgbQ2Gyt_0YXUMAc
+Message-ID: <CAMRc=McD3k87-UpZ3q2eqEpVSCRgEVWc0XB+oRUZKM5rxMG=qA@mail.gmail.com>
+Subject: Re: [PATCH v9 03/11] dmaengine: qcom: bam_dma: implement support for
+ BAM locking
+To: Vinod Koul <vkoul@kernel.org>, Bjorn Andersson <andersson@kernel.org>
+Cc: Manivannan Sadhasivam <mani@kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
+	Thara Gopinath <thara.gopinath@gmail.com>, Herbert Xu <herbert@gondor.apana.org.au>, 
+	"David S. Miller" <davem@davemloft.net>, Udit Tiwari <quic_utiwari@quicinc.com>, 
+	Daniel Perez-Zoghbi <dperezzo@quicinc.com>, Md Sadre Alam <mdalam@qti.qualcomm.com>, 
+	Dmitry Baryshkov <lumag@kernel.org>, dmaengine@vger.kernel.org, linux-doc@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-crypto@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-94533-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:dkim];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-94534-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[kernel.org,lwn.net,gmail.com,gondor.apana.org.au,davemloft.net,quicinc.com,qti.qualcomm.com,vger.kernel.org,linaro.org];
+	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[23];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MISSING_XM_UA(0.00)[];
 	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,cisco];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 0CB6C1BDA05
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,mail.gmail.com:mid]
+X-Rspamd-Queue-Id: C21A41BE318
 X-Rspamd-Action: no action
 
-On Fri, Feb 27, 2026 at 07:41:22PM +0530, Vikash Garodia wrote:
-> The H265 decoder line buffer size calculation for iris4 (VPU4) was
-> previously reusing the iris3 formula. While this works for most
-> resolutions, certain configurations require a larger buffer size on
-> iris4, causing firmware errors during decode. This resolves firmware
-> failures seen with specific test vectors on kaanapali (iris4), and fixes
-> the following failing fluster tests
-> - PICSIZE_C_Bossen_1
-> - WPP_E_ericsson_MAIN_2
+On Wed, Feb 25, 2026 at 10:52=E2=80=AFAM Vinod Koul <vkoul@kernel.org> wrot=
+e:
+>
+> > > >
+> > > > Sorry for jumping late. But I disagree with the argument that the c=
+lient drivers
+> > > > have to set the LOCK/UNLOCK bit. These bits are specific to BAM DMA=
+ IP for
+> > > > serializing the command descriptors from multiple entities. So DMA =
+clients like
+> > > > Crypto/NAND have no business in setting this flag. It is the job of=
+ the BAM
+> > > > dmaengine driver to set/unset it at the start and end of the descri=
+ptor chain.
+> > > >
+> > >
+> > > But what if a given client does not need locking? We don't want to en=
+able it
+> > > for everyone - as I explained before.
+> > >
+> >
+> > That's not going to hurt. AFAIK, enabling locking wouldn't cause any no=
+table
+> > performance overhead.
+>
+> I was always skeptical on this one. I had never seen why locking should
+> be pushed to clients. As Bjorn said it leads to more mess than worth it.
+> Thanks Mnai
+>
 
-This reminds me of the commit fixing SC7280 support. Should SC7280 or
-all VPU2.0 platforms also use separate formula?
+[snip]
 
-> 
-> Co-developed-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
-> Signed-off-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
-> Signed-off-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-> ---
->  drivers/media/platform/qcom/iris/iris_vpu_buffer.c | 51 +++++++++++++++++++++-
->  1 file changed, 50 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/media/platform/qcom/iris/iris_vpu_buffer.c b/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
-> index 9270422c16019ba658ee8813940cb9110ad030a1..a4d599c49ce9052b609b9cedf65f669ba78b5407 100644
-> --- a/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
-> +++ b/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
-> @@ -1755,6 +1755,55 @@ static u32 hfi_vpu4x_buffer_line_vp9d(u32 frame_width, u32 frame_height, u32 _yu
->  	return lb_size + dpb_obp_size;
->  }
->  
-> +static u32 hfi_vpu4x_buffer_line_h265d(u32 frame_width, u32 frame_height, bool is_opb,
-> +				       u32 num_vpp_pipes)
-> +{
-> +	u32 num_lcu_per_pipe, fe_left_lb, se_left_lb, vsp_left_lb, top_lb, qp_size,
-> +	    dpb_obp = 0, lcu_size = 16;
-> +
-> +	num_lcu_per_pipe = (DIV_ROUND_UP(frame_height, lcu_size) / num_vpp_pipes) +
-> +			   (DIV_ROUND_UP(frame_height, lcu_size) % num_vpp_pipes);
-> +
-> +	fe_left_lb = ALIGN((DMA_ALIGNMENT * num_lcu_per_pipe), DMA_ALIGNMENT) *
-> +				FE_LFT_CTRL_LINE_NUMBERS;
-> +	fe_left_lb += ALIGN((DMA_ALIGNMENT * 2 * num_lcu_per_pipe), DMA_ALIGNMENT) *
-> +				FE_LFT_DB_DATA_LINE_NUMBERS;
-> +	fe_left_lb += ALIGN((DMA_ALIGNMENT * num_lcu_per_pipe), DMA_ALIGNMENT);
-> +	fe_left_lb += ALIGN((DMA_ALIGNMENT * 2 * num_lcu_per_pipe), DMA_ALIGNMENT);
-> +	fe_left_lb += ALIGN((DMA_ALIGNMENT * 8 * num_lcu_per_pipe), DMA_ALIGNMENT) *
-> +				FE_LFT_LR_DATA_LINE_NUMBERS;
-> +
-> +	if (is_opb)
-> +		dpb_obp = size_dpb_opb(frame_height, lcu_size) * num_vpp_pipes;
-> +
-> +	se_left_lb = max_t(u32, (ALIGN(frame_height, BUFFER_ALIGNMENT_16_BYTES) >> 3) *
-> +				MAX_SE_NBR_CTRL_LCU16_LINE_BUFFER_SIZE,
-> +				max_t(u32, (ALIGN(frame_height, BUFFER_ALIGNMENT_32_BYTES) >> 3) *
-> +				MAX_SE_NBR_CTRL_LCU32_LINE_BUFFER_SIZE,
-> +				(ALIGN(frame_height, BUFFER_ALIGNMENT_64_BYTES) >> 3) *
-> +				MAX_SE_NBR_CTRL_LCU64_LINE_BUFFER_SIZE));
-> +
-> +	vsp_left_lb = ALIGN(DIV_ROUND_UP(frame_height, BUFFER_ALIGNMENT_64_BYTES) *
-> +				H265_NUM_TILE_ROW, DMA_ALIGNMENT);
-> +
-> +	top_lb = ALIGN((DMA_ALIGNMENT * DIV_ROUND_UP(frame_width, lcu_size)), DMA_ALIGNMENT) *
-> +				FE_TOP_CTRL_LINE_NUMBERS;
-> +	top_lb += ALIGN(DMA_ALIGNMENT * 2 * DIV_ROUND_UP(frame_width, lcu_size), DMA_ALIGNMENT) *
-> +				FE_TOP_DATA_LUMA_LINE_NUMBERS;
-> +	top_lb += ALIGN(DMA_ALIGNMENT * 2 * (DIV_ROUND_UP(frame_width, lcu_size) + 1),
-> +			DMA_ALIGNMENT) * FE_TOP_DATA_CHROMA_LINE_NUMBERS;
-> +	top_lb += ALIGN(ALIGN(frame_width, BUFFER_ALIGNMENT_64_BYTES) * 2, DMA_ALIGNMENT);
-> +	top_lb += ALIGN(ALIGN(frame_width, BUFFER_ALIGNMENT_64_BYTES) * 6, DMA_ALIGNMENT);
-> +	top_lb += size_h265d_lb_vsp_top(frame_width, frame_height);
-> +
-> +	qp_size = size_h265d_qp(frame_width, frame_height);
-> +
-> +	return ((ALIGN(dpb_obp, DMA_ALIGNMENT) + ALIGN(se_left_lb, DMA_ALIGNMENT) +
-> +		ALIGN(vsp_left_lb, DMA_ALIGNMENT)) * num_vpp_pipes) +
-> +		ALIGN(fe_left_lb, DMA_ALIGNMENT) + ALIGN(top_lb, DMA_ALIGNMENT) +
-> +		ALIGN(qp_size, DMA_ALIGNMENT);
-> +}
-> +
->  static u32 iris_vpu4x_dec_line_size(struct iris_inst *inst)
->  {
->  	u32 num_vpp_pipes = inst->core->iris_platform_data->num_vpp_pipe;
-> @@ -1770,7 +1819,7 @@ static u32 iris_vpu4x_dec_line_size(struct iris_inst *inst)
->  	if (inst->codec == V4L2_PIX_FMT_H264)
->  		return hfi_buffer_line_h264d(width, height, is_opb, num_vpp_pipes);
->  	else if (inst->codec == V4L2_PIX_FMT_HEVC)
-> -		return hfi_buffer_line_h265d(width, height, is_opb, num_vpp_pipes);
-> +		return hfi_vpu4x_buffer_line_h265d(width, height, is_opb, num_vpp_pipes);
->  	else if (inst->codec == V4L2_PIX_FMT_VP9)
->  		return hfi_vpu4x_buffer_line_vp9d(width, height, out_min_count, is_opb,
->  						  num_vpp_pipes);
-> 
-> -- 
-> 2.34.1
-> 
+> >
+> > > >> > Reg Dmitry question above, this is dma hw capability, how will c=
+lient
+> > > >> > know if it has to lock on older rev of hardware or not...?
+> > > >> >
+> > > >> > > Also: only the crypto engine needs it for now, not all the oth=
+er users
+> > > >> > > of the BAM engine.
+> > > >> >
+> > > >>
+> > > >> Trying to set the lock/unlock bits will make
+> > > >> dmaengine_desc_attach_metadata() fail if HW does not support it.
+> > > >>
+> > > >
+> > > > The BAM dmaengine driver *must* know based on the IP version whethe=
+r it supports
+> > > > the LOCK/UNLOCK bits or not, not the client drivers. How can the cl=
+ient drivers
+> > > > know about the BAM DMA IP capability?
+>
+> Lock bits are on the BAM DMA IP or client? Can we not add this
+> capability to BAM driver and lock for IPs that support
+>
 
--- 
-With best wishes
-Dmitry
+Lock bits are in the BAM command descriptors. We do in fact already
+expose the layout of BAM command elements to consumers.
+
+> >
+> > > How do
+> > > you handle the case where we need to lock the BAM, send an arbitrary =
+number
+> > > of descriptors from the client and then unlock it? How can the BAM kn=
+ow *when*
+> > > to lock/unlock?
+> > >
+> >
+> > BAM driver has to perform lock during issue_pending() and unlock while =
+reporting
+> > the completion using vchan_cookie_complete().
+>
+> Sounds good to me, thanks Mani
+>
+
+This sounds great in theory but submitting new descriptors while
+you're starting the engines proves to be quite tricky. :(
+
+Over the course of this week, I tried really hard to make this happen.
+The fact that we have two descriptor chains - one with data and one
+with command descriptors - prepared with two separate calls to
+dmaengine_prep_slave_sg(), but which we want to wrap with a
+lock/unlock means we'll most likely really need to find a way to
+insert the dummy command descriptors the moment we want to flush the
+queue. Though that also means that the consumers need to adjust - for
+instance: they need to submit both the data and command descriptors
+*before* calling dmaengine_issue_pending(). So there goes not
+involving the clients in the locking logic.
+
+I will give it another try on Monday, but there's also another
+problem. The lock/unlock bits need to be attached to *real* command
+descriptors. So we need an actual "dummy" register write. The HPG
+evens says this is the way to do it and I verified that passing 0 in
+addr and size fields of a command descriptor will result in an smmu
+fault. In the current approach, we do a harmles write into the VERSION
+register of the QCE. But the address of that register is not known to
+the BAM driver. How do I tell the BAM driver which address to write
+to? There's struct dma_slave_config that has dst_addr and src_addr
+fields that could be reused but that's probably not really their
+function.
+
+Bart
 
