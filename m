@@ -1,215 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-94479-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94480-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6BspN+u8oWmswAQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94479-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 16:48:59 +0100
+	id 4LlWFA68oWlhwAQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94480-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 16:45:18 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 64A191BA41A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 16:48:59 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id C0FE71BA2A8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 16:45:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id CEF4830A0DAB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 15:42:11 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 87949314EFCC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 15:42:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3AA043D508;
-	Fri, 27 Feb 2026 15:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 126F343DA5C;
+	Fri, 27 Feb 2026 15:42:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BLlDRao4"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="o4zSXWb5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A99438FF3;
-	Fri, 27 Feb 2026 15:42:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8B8322B6F
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Feb 2026 15:42:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772206929; cv=none; b=LEFUM9rLIq9gzt+HY2KT0dP9LNCgpSsXdNQBX/tXjBu8OJSDlW5bLgTT5KQ0GFMDOftpEa8t/3GLL20CEZDqDp5xtKQ2+wkZ3kCGltXhkaUm4cGAgKXpvpAWzJ2wbGazRiXbeNcIucgcxruG+MtvrFlMvhZrjhVRO4dwuZuyhqo=
+	t=1772206943; cv=none; b=dnRfHz9iw0Z8BayMubJ+7CmnLF5kWcIn8vRvw5xe0P2pK/PjlwQEEA382nf1PWG1FI982+acSZegX3PjmGXZU4TlLkO0TQLWUNErdW6Uv8P3nNOKpLCqmbn60Qcp2CAX+Q0QW1GB9dDDNlsaAjEwLBiITApxMqNuvTKxlMcN0JE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772206929; c=relaxed/simple;
-	bh=H4F4fXW8IVEP1W4RpRlj8AR+PZsegR6Ym1A0cP7rrSU=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=ajjNFjOFq0X43KJhMDtuLwLWwRpn2z93gMZtsz/Bm0xq4epxsUD7J+WHo3PmYzxxm19t+vXO9zPndyIexfMG/4PGKm5Mvtms9GLTPFmwBITJFPIKO+MiiseUvlW8cD5f65a3whtnAUBY/0Ioq8HU6Q4YNyRGk/CySnJRtRC6844=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BLlDRao4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CE78C116C6;
-	Fri, 27 Feb 2026 15:42:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772206929;
-	bh=H4F4fXW8IVEP1W4RpRlj8AR+PZsegR6Ym1A0cP7rrSU=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=BLlDRao44Ywr3A4nFRYO7rd7oo2MtJb9RXIjuWtGBWq4TaghxWJHvvufLzFdpkV7b
-	 V0AvDcyGbm7BpUOY1wo8kR4ZYql6dgNOez4mj+ODfJuLCSnXnYQsJvxTBgg0a8sr0m
-	 A8YFryBSAGl8jyVAA3RD1GBzbcFYyN3hSAUyp5rYGMgeqYEyHQBTwBlOsnoFezCymw
-	 sL6f7oKz4tlCjDIAXS1Opc6tb/dSLy9v0uczAf+gvgRdXtvx1keOfImKNDhb9V+eH5
-	 LtJogS/GP7mCRGEJJ2l4m/+aCbNRfq2uaf0kwn02o27ZiBLdkDY+sOliPqQt+/G2ie
-	 gtKqn11bvSNUw==
-Date: Fri, 27 Feb 2026 09:42:08 -0600
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1772206943; c=relaxed/simple;
+	bh=xHYW3p+5GVfDn8x6oFMyWCK6CrLKRkNsDbg87Yl2z8k=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=aIKrzu2CgJW4MIzvkum40b2LXRRk8l5Y4La3daSh5NerDRdAOyO2ylpxKhOvEflEhKFbGikRcGBdIpYAL0sQUcpimXRIuzUpaHlVHv48ncrPQMHblkkh11KOqGcsdA2sw4SfZtaoLOLkMmgWlDILFrZX9lNWdtvqaV0O5Y5IlVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=o4zSXWb5; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-48374014a77so25282115e9.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Feb 2026 07:42:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1772206941; x=1772811741; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9wzqme1k+Wy+/3yspGSINYIH3f7UH5wA3CsIMcq2UIg=;
+        b=o4zSXWb5oeEIvPb4mrMDF6IKH/xoKT74sKzJM0PTHy2wGFz3fFja40UDgCZtZf+ZTP
+         lRSI79c0+6QQcEquu8o+F05cYoM/tAVGEQhAvvTMWHKos/fAjoxX7E+c7NQRKiapMS2/
+         dc0X1cNUof8Voy9tbrrarcEKxx3+icaDKouZi8INrbOs3Oo6GqXmBq5DbSAqgFiNv8UB
+         hMxQdi2aF93KtCfssdyfLyyIcE3O2XoyXrBEyJZAVH1xOOfr5lKb4RGo/xQzR+zLZYz9
+         NU2j7rvyqRL3GJAiyBWfisiCZI9EyxHVTCtiTkMy2VaZ67sVC7ASHuT5ct5Ci39GaJ+v
+         088Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772206941; x=1772811741;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9wzqme1k+Wy+/3yspGSINYIH3f7UH5wA3CsIMcq2UIg=;
+        b=Uud+NTiDjwcY5b4Di7gZOpn66JvZyvNfxow+ROVoDW4jAcSCxa2xvGIvn2KHE+w2C/
+         rSJPfPNohDRNtQHoXSCVaRl4/n2bhKGEP+7eHlzwCmqmcEXQy+eUaEBf7z8n7kT7Pddz
+         IYxI3JvTZC/TF/iYMdQhivyKebzzYZbsAyDxE/e8A+a77Tp4uHwKEezL8YEy8sfJhY+9
+         sVQR+9kQcUAa+tKjvdwz+7uzjHsVRxg3BU9WTlc9On1VHIm8Wu8AGwG2MveE+qtiZSdC
+         MY11ZbylJC9hkrnxfG4ML0un19IHysD1ZrntABfCIuDERWigLsTdNPFHNXDAc6VpVvQd
+         3xQQ==
+X-Gm-Message-State: AOJu0YydIXs9vlve+SQOJU4rA9skUsqyGU/Mq3aYCia4nUhrPK/4qmOi
+	yi2xKHNrmfvDCU49j4HixKiFwj9T4CLQRREOOOsK+tEXItnsjvvqenSWTFxPrwxpJQc=
+X-Gm-Gg: ATEYQzyy38dMuJkvSTqgyXn2HRm474KQ4gl5vNK/Nw/80PxnlAZSvptZf1ytWufvWob
+	a3T0Kva7SIQue0zpnAVJnbO6QFbUBskYtoW4x5i+UHGmzUc1lgcZMJTwMpgI4pdj5VOGteSyof2
+	9E9RFO4RykGM1kr2/MZsJyuF6ZifC/KH+rV8vKcasGDqpMcCA6m2GY7avFYGHfRN+ZP99LZNqj3
+	NBVpjQPLu0ASDhrGlct5sWLZekm//fyQqapj2iXzgZGYlX/X+aK6y4aGuOvxXtQdoSF/4sI6ZFv
+	I0NxUpFDhcH6dVAFJ+0eTz7//zuDK4dQeioOXcTAM9HbXs3fRSbRr+L79hTvw1Lo5rBeJ4qNHzr
+	jImC1UKdw+E6t56BqS7jFRbQgVIxC5UXi0IXTllSvuPcn9AyCobFCvtAhdmm1EdpulKDGW/gPph
+	9DkY1gGUTdrra/h02F+DhtLDyjZ2M09Cu7oqdOYh/GTmfhOr2sOeB5HOfHBCPmmof0
+X-Received: by 2002:a05:600c:c4a6:b0:480:1d0b:2d32 with SMTP id 5b1f17b1804b1-483c9bc0344mr52202975e9.12.1772206940611;
+        Fri, 27 Feb 2026 07:42:20 -0800 (PST)
+Received: from [192.168.0.40] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-483bfb77466sm83821705e9.5.2026.02.27.07.42.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 27 Feb 2026 07:42:20 -0800 (PST)
+Message-ID: <c84f0e40-50d9-4c99-92dd-00bcfc554d83@linaro.org>
+Date: Fri, 27 Feb 2026 15:42:17 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: iommu@lists.linux.dev, Robin Murphy <robin.murphy@arm.com>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>, 
- Bryan O'Donoghue <bod@kernel.org>, 
- Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>, 
- Will Deacon <will@kernel.org>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Joerg Roedel <joro@8bytes.org>, Saravana Kannan <saravanak@kernel.org>, 
- Stefan Schmidt <stefan.schmidt@linaro.org>, 
- Vishnu Reddy <busanna.reddy@oss.qualcomm.com>, linux-media@vger.kernel.org, 
- Conor Dooley <conor+dt@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Hans Verkuil <hverkuil+cisco@kernel.org>, 
- Abhinav Kumar <abhinav.kumar@linux.dev>, linux-arm-msm@vger.kernel.org, 
- Hans Verkuil <hverkuil@kernel.org>, linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzk@kernel.org>, devicetree@vger.kernel.org
-To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-In-Reply-To: <20260227-kaanapali-iris-v2-1-850043ac3933@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/7] media: iris: add support for kaanapali platform
+To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+ Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>, Bryan O'Donoghue <bod@kernel.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Saravana Kannan <saravanak@kernel.org>,
+ Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+ Robin Murphy <robin.murphy@arm.com>,
+ Stefan Schmidt <stefan.schmidt@linaro.org>,
+ Hans Verkuil <hverkuil@kernel.org>, Krzysztof Kozlowski <krzk@kernel.org>,
+ Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
+ Hans Verkuil <hverkuil+cisco@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ iommu@lists.linux.dev
 References: <20260227-kaanapali-iris-v2-0-850043ac3933@oss.qualcomm.com>
- <20260227-kaanapali-iris-v2-1-850043ac3933@oss.qualcomm.com>
-Message-Id: <177220692821.4084988.9709880172251199727.robh@kernel.org>
-Subject: Re: [PATCH v2 1/7] media: dt-bindings: qcom-kaanapali-iris: Add
- kaanapali video codec binding
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260227-kaanapali-iris-v2-0-850043ac3933@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.34 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94479-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[22];
-	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-94480-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[linaro.org:+];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt,cisco];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.0:email,qualcomm.com:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,1c00000:email,0.30.132.128:email,devicetree.org:url]
-X-Rspamd-Queue-Id: 64A191BA41A
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:mid,linaro.org:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: C0FE71BA2A8
 X-Rspamd-Action: no action
 
-
-On Fri, 27 Feb 2026 19:41:17 +0530, Vikash Garodia wrote:
-> Kaanapali SOC brings in the new generation of video IP i.e iris4. When
-> compared to previous generation, iris3x, it has,
-> - separate power domains for stream and pixel processing hardware blocks
->   (bse and vpp).
-> - additional power domain for apv codec.
-> - power domains for individual pipes (VPPx).
-> - different clocks and reset lines.
+On 27/02/2026 14:11, Vikash Garodia wrote:
+> Qualcomm kaanapali platform have a newer generation of video IP iris4.
+> The hardware have evolved mostly with respect to higher number of power
+> domains as well as multiple clock sources.
 > 
-> iommu-map include all the different stream-ids which can be possibly
-> generated by vpu4 hardware as below,
-> bitstream stream from vcodec
-> non-pixel stream from vcodec
-> non-pixel stream from tensilica
-> pixel stream from vcodec
-> secure bitstream stream from vcodec
-> secure non-pixel stream from vcodec
-> secure non-pixel stream from tensilica
-> secure pixel stream from vcodec
-> firmware stream from tensilica (might be handled by the TZ / hyp)
+> Considering iris as a client driver, it adds the handling for multiple
+> stream ids from VPU via iommu-map.
 > 
-> This patch is depend on the below dt-schema patch.
-> Link: https://github.com/devicetree-org/dt-schema/pull/184/changes/d341298d62805bc972dfba691da6b3b62aa3ff15
-> Signed-off-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-> ---
->  .../bindings/media/qcom,kaanapali-iris.yaml        | 261 +++++++++++++++++++++
->  include/dt-bindings/media/qcom,iris.h              |  18 ++
->  2 files changed, 279 insertions(+)
+> This series is depend on the below series:
+> https://lore.kernel.org/all/20260226074245.3098486-1-vijayanand.jitta@oss.qualcomm.com/
 > 
+> Following patches were dropped in v2, as per the comments, and would
+> be posted separately. This series depends on these patches for
+> functionality.
+> - https://lore.kernel.org/all/20260126-kaanapali-iris-v1-2-e2646246bfc1@oss.qualcomm.com/
+> - https://lore.kernel.org/all/20260126-kaanapali-iris-v1-3-e2646246bfc1@oss.qualcomm.com/
+> 
+> Patch #4 is also posted alongwith below series. If the other series is
+> picked earlier, then this patch can be dropped from this series.
+> https://lore.kernel.org/all/20260227-iris_sc7280_gen2_support-v2-1-7e5b13d26542@oss.qualcomm.com/
 
-My bot found errors running 'make dt_binding_check' on your patch:
+For the record this series is blocked on this:
 
-yamllint warnings/errors:
+https://lore.kernel.org/all/20260226074245.3098486-1-vijayanand.jitta@oss.qualcomm.com/ 
 
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pci/qcom,pcie-sdm845.example.dtb: pcie@1c00000 (qcom,pcie-sdm845): iommu-map:0: [0, 4294967295, 7184, 1, 256, 4294967295, 7185, 1, 512, 4294967295, 7186, 1, 768, 4294967295, 7187, 1, 1024, 4294967295, 7188, 1, 1280, 4294967295, 7189, 1, 1536, 4294967295, 7190, 1, 1792, 4294967295, 7191, 1, 2048, 4294967295, 7192, 1, 2304, 4294967295, 7193, 1, 2560, 4294967295, 7194, 1, 2816, 4294967295, 7195, 1, 3072, 4294967295, 7196, 1, 3328, 4294967295, 7197, 1, 3584, 4294967295, 7198, 1, 3840, 4294967295, 7199, 1] is too long
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sdm845.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pci/qcom,pcie-sdm845.example.dtb: pcie@1c00000 (qcom,pcie-sdm845): Unevaluated properties are not allowed ('#address-cells', '#interrupt-cells', '#size-cells', 'bus-range', 'device_type', 'interrupt-map', 'interrupt-map-mask', 'iommu-map', 'linux,pci-domain', 'num-lanes', 'pcie@0', 'perst-gpios', 'phy-names', 'phys', 'power-domains', 'ranges', 'vddpe-3v3-supply', 'wake-gpios' were unexpected)
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sdm845.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pci/qcom,pcie-sdm845.example.dtb: pcie@1c00000 (qcom,pcie-sdm845): iommu-map:0: [0, 4294967295, 7184, 1, 256, 4294967295, 7185, 1, 512, 4294967295, 7186, 1, 768, 4294967295, 7187, 1, 1024, 4294967295, 7188, 1, 1280, 4294967295, 7189, 1, 1536, 4294967295, 7190, 1, 1792, 4294967295, 7191, 1, 2048, 4294967295, 7192, 1, 2304, 4294967295, 7193, 1, 2560, 4294967295, 7194, 1, 2816, 4294967295, 7195, 1, 3072, 4294967295, 7196, 1, 3328, 4294967295, 7197, 1, 3584, 4294967295, 7198, 1, 3840, 4294967295, 7199, 1] is too long
-	from schema $id: http://devicetree.org/schemas/pci/pci-iommu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pci/qcom,pcie-sdx55.example.dtb: pcie@1c00000 (qcom,pcie-sdx55): iommu-map:0: [0, 4294967295, 512, 1, 256] is too long
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sdx55.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pci/qcom,pcie-sdx55.example.dtb: pcie@1c00000 (qcom,pcie-sdx55): iommu-map:1:0: 4294967295 is greater than the maximum of 65535
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sdx55.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pci/qcom,pcie-sdx55.example.dtb: pcie@1c00000 (qcom,pcie-sdx55): iommu-map:1: [4294967295, 513, 1, 512, 4294967295] is too long
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sdx55.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pci/qcom,pcie-sdx55.example.dtb: pcie@1c00000 (qcom,pcie-sdx55): iommu-map:2:3: 4294967295 is greater than the maximum of 65536
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sdx55.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pci/qcom,pcie-sdx55.example.dtb: pcie@1c00000 (qcom,pcie-sdx55): iommu-map:2: [514, 1, 768, 4294967295, 515] is too long
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sdx55.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pci/qcom,pcie-sdx55.example.dtb: pcie@1c00000 (qcom,pcie-sdx55): iommu-map:3: [1, 1024, 4294967295, 516, 1] is too long
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sdx55.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pci/qcom,pcie-sdx55.example.dtb: pcie@1c00000 (qcom,pcie-sdx55): Unevaluated properties are not allowed ('#address-cells', '#interrupt-cells', '#size-cells', 'bus-range', 'device_type', 'interrupt-map', 'interrupt-map-mask', 'iommu-map', 'linux,pci-domain', 'num-lanes', 'pcie@0', 'perst-gpios', 'phy-names', 'phys', 'power-domains', 'ranges', 'wake-gpios' were unexpected)
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sdx55.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pci/qcom,pcie-sdx55.example.dtb: pcie@1c00000 (qcom,pcie-sdx55): iommu-map:0: [0, 4294967295, 512, 1, 256] is too long
-	from schema $id: http://devicetree.org/schemas/pci/pci-iommu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pci/qcom,pcie-sdx55.example.dtb: pcie@1c00000 (qcom,pcie-sdx55): iommu-map:1:0: 4294967295 is greater than the maximum of 65535
-	from schema $id: http://devicetree.org/schemas/pci/pci-iommu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pci/qcom,pcie-sdx55.example.dtb: pcie@1c00000 (qcom,pcie-sdx55): iommu-map:1: [4294967295, 513, 1, 512, 4294967295] is too long
-	from schema $id: http://devicetree.org/schemas/pci/pci-iommu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pci/qcom,pcie-sdx55.example.dtb: pcie@1c00000 (qcom,pcie-sdx55): iommu-map:2:3: 4294967295 is greater than the maximum of 65536
-	from schema $id: http://devicetree.org/schemas/pci/pci-iommu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pci/qcom,pcie-sdx55.example.dtb: pcie@1c00000 (qcom,pcie-sdx55): iommu-map:2: [514, 1, 768, 4294967295, 515] is too long
-	from schema $id: http://devicetree.org/schemas/pci/pci-iommu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pci/qcom,pcie-sdx55.example.dtb: pcie@1c00000 (qcom,pcie-sdx55): iommu-map:3: [1, 1024, 4294967295, 516, 1] is too long
-	from schema $id: http://devicetree.org/schemas/pci/pci-iommu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/qcom,kaanapali-iris.example.dtb: video-codec@2000000 (qcom,kaanapali-iris): iommu-map:0: [256, 4294967295, 6468, 0, 1] is too long
-	from schema $id: http://devicetree.org/schemas/pci/pci-iommu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/qcom,kaanapali-iris.example.dtb: video-codec@2000000 (qcom,kaanapali-iris): iommu-map:1: [257, 4294967295, 6464, 0, 1] is too long
-	from schema $id: http://devicetree.org/schemas/pci/pci-iommu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/qcom,kaanapali-iris.example.dtb: video-codec@2000000 (qcom,kaanapali-iris): iommu-map:2: [257, 4294967295, 6688, 0, 1] is too long
-	from schema $id: http://devicetree.org/schemas/pci/pci-iommu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/qcom,kaanapali-iris.example.dtb: video-codec@2000000 (qcom,kaanapali-iris): iommu-map:3: [258, 4294967295, 6467, 0, 1] is too long
-	from schema $id: http://devicetree.org/schemas/pci/pci-iommu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/qcom,kaanapali-iris.example.dtb: video-codec@2000000 (qcom,kaanapali-iris): iommu-map:4: [512, 4294967295, 6470, 0, 1] is too long
-	from schema $id: http://devicetree.org/schemas/pci/pci-iommu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/qcom,kaanapali-iris.example.dtb: video-codec@2000000 (qcom,kaanapali-iris): iommu-map:5: [513, 4294967295, 6465, 0, 1] is too long
-	from schema $id: http://devicetree.org/schemas/pci/pci-iommu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/qcom,kaanapali-iris.example.dtb: video-codec@2000000 (qcom,kaanapali-iris): iommu-map:6: [513, 4294967295, 6689, 0, 1] is too long
-	from schema $id: http://devicetree.org/schemas/pci/pci-iommu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/qcom,kaanapali-iris.example.dtb: video-codec@2000000 (qcom,kaanapali-iris): iommu-map:7: [514, 4294967295, 6469, 0, 1] is too long
-	from schema $id: http://devicetree.org/schemas/pci/pci-iommu.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/qcom,kaanapali-iris.example.dtb: video-codec@2000000 (qcom,kaanapali-iris): iommu-map:8: [768, 4294967295, 6690, 0, 1] is too long
-	from schema $id: http://devicetree.org/schemas/pci/pci-iommu.yaml
 
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.kernel.org/project/devicetree/patch/20260227-kaanapali-iris-v2-1-850043ac3933@oss.qualcomm.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+---
+bod
 
