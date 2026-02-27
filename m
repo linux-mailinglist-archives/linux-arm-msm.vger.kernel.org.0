@@ -1,84 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-94540-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 0KsBHpsUomk0zAQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94540-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 23:03:07 +0100
+	id +MfhJpUUomk0zAQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 23:03:01 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 315BA1BE630
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 23:03:07 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id C28121BE61B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 23:03:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 8B5E030AF874
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 22:02:08 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 15CEA30055C4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 22:02:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AECE34779B5;
-	Fri, 27 Feb 2026 22:02:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D6E624779B6;
+	Fri, 27 Feb 2026 22:02:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zb6xL1p9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vsAWn+Wi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2F0362128
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Feb 2026 22:02:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48180361DAC
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Feb 2026 22:02:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772229724; cv=none; b=A9azoZIplXMmrhFK/+ihnag+HEGRB258svQKZ6lv6aOEFY1zRucIVPpuLJN9FxrMjQNK+PvSzAUTWJaRtgXSWlqww9yUW9f545Cyzb1YSfK+VwGUj9bFMu+vM3RY7E5UWzf6SHENZuB8pB/MKgXKu4BNbYUPl+VkZGFmKRKRv1E=
+	t=1772229760; cv=none; b=tJGo9pn5HP7hXlO9khWc/3JNFcYEbHXBq3mGc1KOSGA5vZhEn1mcnI6gkuUfVsU1fgJk0YoCfrEkGyaoctp2VlBsms3c4kW7z0ofBTp4Xqo+jYRaCjy5AS7UV0rPF8PJNS23hejFh5KTSgWrhuufpbEdvK10hAcbujfk0q5eLK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772229724; c=relaxed/simple;
-	bh=0XfJAAwPpqZPTa0S4qXdpqC5AbA+tYTKPN+ODpQiwPw=;
+	s=arc-20240116; t=1772229760; c=relaxed/simple;
+	bh=4Fb26j5vTfieYch+seVLLPeFSYE4hBxYLaTjZ68Ieuc=;
 	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=E/i/ofn3F13tGIEwtwV1MkMjQgBbkRLMUqEBlM1Hf7hbr/+O4DBy3tSwqsDjOrGFdtAHhBahxj1N9qrb4H9XfC1gLDUPWnRrApJq8EXWCkdVDMZkJ6PIQTxSrWF0mKAdKWo/Rw5Ot93dh699qaZpqVdKuJutQjNboWhZ1t125as=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zb6xL1p9; arc=none smtp.client-ip=209.85.128.48
+	 Content-Type:MIME-Version; b=QgzKrTA0J3EX/koW+a2FUMw+OZEOa2HasreMRn5WWJjR7ROHuMbO9idwbPm2ahqNaOPKKH7H4QRjjj+wM8MjEtOLMGniPM3DEw4stB1DLq16CSFTLUnS2qUxNPtuqfYaqQVzNpdfXU6VF2aT2dUxlRLGBKe5fFEtndpX59Y13Ok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vsAWn+Wi; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4807068eacbso20701315e9.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Feb 2026 14:02:03 -0800 (PST)
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-48371119eacso29137525e9.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Feb 2026 14:02:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1772229722; x=1772834522; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1772229758; x=1772834558; darn=vger.kernel.org;
         h=mime-version:user-agent:content-transfer-encoding:references
          :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=tBsw+oV5b4W+q0aJyjGVPBNMIWpF08k90ryvmytPfX4=;
-        b=zb6xL1p9x/bHkcL2dvE0RE2kZQVvdWVq5/8k0525HWTE9GdQ2gqRbOYqhyU+CbUVAw
-         UExSA5PXugxtuOEXJJF9VZe6qT7L2MivWLvU9OtuWan8lWAVsOM0Utg6Rvv2IeYPF96D
-         AyJ9G70FhrbTBud4F36hvrfDweCrrLnK4hxyFgVsR0MppdzWbjcKPKLhPRusaDQ1G7mk
-         nCGHZAgErcRLEVi7dT3hNM9KiRh7YGF/HoI3ljGJwmUwW77rTyoyznLCDSul/4WSl4TA
-         XjCANZkwbJZhRDUViZG//MNE/KNiw7OEnzPlGCV191uFQTWoh1KbOYdszu45e2Uc+ngb
-         nAmQ==
+        bh=qbVQyBBqf3r/Whw+7lnX7iODWdqwkPoqOOSohK0cUc4=;
+        b=vsAWn+WiosGwdOxk3EyBLoFb0Zh5GAvwNj569vZjoM5Be/dDtYBGpLX+sttEt1atNu
+         JGxctc0luFxQtxXHGqcMoBsAyH1FJ8DxQURWrNiJcbspAdLW2XLzDw5EZ8avv8IWxJ2M
+         hcUqD5UpUjB2u4bn1u1d++5YZ80S0Jf+4BpmS1wSgTlcZ+lpckcGqm0q7j9h16rS1X7w
+         FHy7UePlh2xiO5UkAA3QppvfaSGWKc22HrkFPFlzflr9V63QrWJMoSsC6ZJQ46WC2tNk
+         Pie1tyJlehw8BfGFoDUa7L8+mNq57SXnrF+c9wlMukTFC6TO7Yfg09qy079mEUDIyGPc
+         piIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772229722; x=1772834522;
+        d=1e100.net; s=20230601; t=1772229758; x=1772834558;
         h=mime-version:user-agent:content-transfer-encoding:references
          :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tBsw+oV5b4W+q0aJyjGVPBNMIWpF08k90ryvmytPfX4=;
-        b=PYlICUWHI/MLsm5HIQ58WALR/BZHnd+xkF4dPX94qiT6KMHAlIqoXaBzcKzOxZ+a+R
-         MSUSO7fJCuxpK35An6600vO+a4cZ/NZ69kO3876tdc85w2VqkvDE0J61hhudbpTWs7mh
-         yk5Oh6zDnXAwWz8iWrh64K8kG7T1sFuSkWpF9nYgUpCkW2m246NEDTuY5FM/iDtF3rdY
-         w/ayD4asWSidhm5xa98YTixwqLvXcjfNT82XAeS9cKquIgjR4Vg+/557ZNCvyTomdPbv
-         7/qmcBwBZl3X97RWLyfOuHrdwz5y9eWSmobFNeo5RoBZh0j5NulLebsrMfiwfje2EPny
-         iwaw==
-X-Gm-Message-State: AOJu0YyuMVuGrA7XZecWxHdInxq21Dll39FWjldSVi9geRuswq7Mj2QB
-	9TEprBWychAHNMg54pbDIc8LiQb/DdQqEBhu7mfKHpn5aDpsICdRX9GTQgfC+rrXXjM=
-X-Gm-Gg: ATEYQzzKpyKmaX1rEyH+QMf767GxLKQJ51y9YPpllfVIx4HM3CZZBgopGix4hFiQUzN
-	SZ05/qED204EhcbMZySwBeUjnyLOpTPE+0j/SVtDYoa3ezB/4a2H5C52SKNt+Sc0bIqRF1/iH10
-	gY5NWhquds7OJZY0jlzaaZG2/RWXQtaGVg8uM4B6A5EhwIMaHi9YUJ89prd0XVP9sf3QNrzl50M
-	hApJXkrlJZ8H2ladoLwn32tuwsy2nf+RAzpzRdCDxJlg66RJLroIz5gKg7z9tzt9m0JZtkPlaVR
-	jymFFsWzuGPOivS6Fqvd0EDKKGHKZ0qaeYJifUnZNqphCZVY1LUtH8qW9Cs/OwNhCWMTKnj2vNv
-	/g1l+ncWKr4R7pb82Rm3ioufC1ZaFSU4fEyuVZWH1917KFJVONVo6ACLzCrLYS0zTZ//g2FutgE
-	LFHSfZaD8YnxAN7vbwfYTAOmrrKdu17ZjcFUMPItUcS0610EquxAsBTTNRnv54c5Z4r/+PHsJZq
-	PJIcSJ60VFrptMWbt+xG+wP
-X-Received: by 2002:a05:600c:c8f:b0:483:bf23:1915 with SMTP id 5b1f17b1804b1-483c9ba68fdmr70282765e9.2.1772229721570;
-        Fri, 27 Feb 2026 14:02:01 -0800 (PST)
+        bh=qbVQyBBqf3r/Whw+7lnX7iODWdqwkPoqOOSohK0cUc4=;
+        b=mOvNZS9xF+M/p+KWTBnAx9WcbOgCorYA6cOBaZ0PFcw3VWfeBOJ1e6MtcdfRR21XvQ
+         3wtnTg0AFnep8ptyB4OLSO66zMWvgfSKwL3yKHGvD33hw1G38F6ORKsHsCMdT3OXSFcW
+         lc9uiZ8HDxmNftbT8Z8VIOTdgD+58QWvTBjJ6tAslf8a8yE0N96Y6JznTVK4ixwL0wjC
+         pdIapZirnRg3An9GRDJCDubcGRQTQeeZ2YC1XVrMUuBfl8TMgrLqVWXbuZ6hEvxdtllB
+         nA+YdGLKUoEbvMfUnQ6WfhnjqEA/r86ZvoXB2AntZV4xXoaXLHo9yqJ9qx12UD2y8zBL
+         +fKg==
+X-Gm-Message-State: AOJu0YxgCiIbVlji68+QdoZB7hPu97/+RHhyJ+VpxNX9dHNyZzYD0qnG
+	Vusb+SQmmrzW3AsRV6neE0j1BjbidbWPf0BYiqoi+PP0gSwMNtZndycr3Mwo8F3UAJ8=
+X-Gm-Gg: ATEYQzzAVgP8alLxMxawutW3jZQaVg5AJpJrHOvT3AQoYBDw3LFGvOtdUsUxkKKDCqB
+	Rwly/lSxTc3JzHWV6b0FA/bVyKpXCGv2Njw0tCZFQZ5TVoNUSmBYqYvHMetKcvHPS3dheLvvShV
+	NjxRSnhGNUFSoBXjZxTdUTX3s3UwoOk79tpgfovPKF9UgV9inKiUXiUWmii43S+r88FwDxWcrB7
+	ZNDh3LBOXzkjafau6jxiGOAyrYrXOpIwOXlKQUyjRdyqMiVuceM1lBpWggOvVg1Rsacx51YWQks
+	opLOYQONzL202839wviDbokIOX6sl9eYl4nNZddVVl+Us8kP56GxeKWAARGDyln8VGg8eKD2NrN
+	+39IuDWlxiveP3wFqc9skC78XV+LjJUO9haLGbInGM4QPHMUO6J3PF7w51HvYSHXQKoYS2/guBx
+	VwSawe1EcFJoDfgz853j3/SWUXnfAioX0FEIJGShjlPX1FZ7Tg4QiomSu3kxNi+6sTWiYOud097
+	sA0qSeD2MIzid/Etyg6bkSxxrtqKqFTlfI=
+X-Received: by 2002:a05:600c:4e08:b0:477:fcb:2256 with SMTP id 5b1f17b1804b1-483c9c0bb0amr67180355e9.17.1772229757631;
+        Fri, 27 Feb 2026 14:02:37 -0800 (PST)
 Received: from [192.168.16.154] (host86-188-11-239.range86-188.btcentralplus.com. [86.188.11.239])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4399c765b6esm10086901f8f.33.2026.02.27.14.02.00
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-483bd765604sm209952065e9.15.2026.02.27.14.02.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Feb 2026 14:02:01 -0800 (PST)
-Message-ID: <e00a03a6728a92f34f7fbb431254f908d0ea49f9.camel@linaro.org>
-Subject: Re: [PATCH v8 04/18] dt-bindings: media: qcom,x1e80100-camss:
- Reduce iommus to five
+        Fri, 27 Feb 2026 14:02:37 -0800 (PST)
+Message-ID: <22126bec3375b76f197cf7e70baa5e33a21bf0d6.camel@linaro.org>
+Subject: Re: [PATCH v8 05/18] media: qcom: camss: Add legacy_phy flag to SoC
+ definition structures
 From: Christopher Obbard <christopher.obbard@linaro.org>
 To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Bjorn Andersson	
  <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
@@ -91,11 +91,11 @@ To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Bjorn Andersson
 Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
 	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
 	linux-media@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>
-Date: Fri, 27 Feb 2026 22:02:00 +0000
-In-Reply-To: <20260225-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v8-4-95517393bcb2@linaro.org>
+Date: Fri, 27 Feb 2026 22:02:36 +0000
+In-Reply-To: <20260225-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v8-5-95517393bcb2@linaro.org>
 References: 
 	<20260225-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v8-0-95517393bcb2@linaro.org>
-	 <20260225-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v8-4-95517393bcb2@linaro.org>
+	 <20260225-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v8-5-95517393bcb2@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.56.2-8 
@@ -109,12 +109,12 @@ X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-94540-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-94541-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FREEMAIL_TO(0.00)[linaro.org,kernel.org,baylibre.com,gmail.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
@@ -127,61 +127,201 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[christopher.obbard@linaro.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,linaro.org:mid,linaro.org:dkim,linaro.org:email]
-X-Rspamd-Queue-Id: 315BA1BE630
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:mid,linaro.org:dkim,linaro.org:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: C28121BE61B
 X-Rspamd-Action: no action
 
 Hi Bryan,
 
 On Wed, 2026-02-25 at 15:11 +0000, Bryan O'Donoghue wrote:
-> Rather than bury the BPS and IPE inside of the CAMSS block we can define
-> them like the CCI/I2C and CSIPHY as their own individual devices.
->=20
-> Remove the IPE and BPS iommu entries from the main CAMSS yaml. There is n=
-o
-> upstream user of these iommu entries right now so this is safe to do.
->=20
-> We will instead include these iommus in the BPS and IPE device nodes
-> instead of jamming them into the existing CAMSS binding.
+> Flag which SoCs have legacy - builtin PHY code. This will be useful in
+> subsequent patches to inform PHY bringup logic if legacy bindings are
+> available.
 >=20
 > Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
 Reviewed-by: Christopher Obbard <christopher.obbard@linaro.org>
+Tested-by: Christopher Obbard <christopher.obbard@linaro.org>
 
 > ---
->  Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml | 5 +--=
---
->  1 file changed, 1 insertion(+), 4 deletions(-)
+>  drivers/media/platform/qcom/camss/camss.c | 17 +++++++++++++++++
+>  drivers/media/platform/qcom/camss/camss.h |  1 +
+>  2 files changed, 18 insertions(+)
 >=20
-> diff --git a/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.=
-yaml b/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml
-> index 462b1355c9fb7..d39013d4a83e1 100644
-> --- a/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml
-> +++ b/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml
-> @@ -98,7 +98,7 @@ properties:
->        - const: sf_icp_mnoc
+> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/pl=
+atform/qcom/camss/camss.c
+> index 00b87fd9afbd8..5fb5ad87e1671 100644
+> --- a/drivers/media/platform/qcom/camss/camss.c
+> +++ b/drivers/media/platform/qcom/camss/camss.c
+> @@ -5104,6 +5104,7 @@ static void camss_remove(struct platform_device *pd=
+ev)
 > =20
->    iommus:
-> -    maxItems: 8
-> +    maxItems: 5
+>  static const struct camss_resources msm8916_resources =3D {
+>  	.version =3D CAMSS_8x16,
+> +	.legacy_phy =3D true,
+>  	.csiphy_res =3D csiphy_res_8x16,
+>  	.csid_res =3D csid_res_8x16,
+>  	.ispif_res =3D &ispif_res_8x16,
+> @@ -5115,6 +5116,7 @@ static const struct camss_resources msm8916_resourc=
+es =3D {
 > =20
->    power-domains:
->      items:
-> @@ -353,11 +353,8 @@ examples:
+>  static const struct camss_resources msm8939_resources =3D {
+>  	.version =3D CAMSS_8x39,
+> +	.legacy_phy =3D true,
+>  	.csiphy_res =3D csiphy_res_8x39,
+>  	.csid_res =3D csid_res_8x39,
+>  	.ispif_res =3D &ispif_res_8x39,
+> @@ -5126,6 +5128,7 @@ static const struct camss_resources msm8939_resourc=
+es =3D {
 > =20
->              iommus =3D <&apps_smmu 0x800 0x60>,
->                       <&apps_smmu 0x860 0x60>,
-> -                     <&apps_smmu 0x1800 0x60>,
->                       <&apps_smmu 0x1860 0x60>,
->                       <&apps_smmu 0x18e0 0x00>,
-> -                     <&apps_smmu 0x1980 0x20>,
-> -                     <&apps_smmu 0x1900 0x00>,
->                       <&apps_smmu 0x19a0 0x20>;
+>  static const struct camss_resources msm8953_resources =3D {
+>  	.version =3D CAMSS_8x53,
+> +	.legacy_phy =3D true,
+>  	.icc_res =3D icc_res_8x53,
+>  	.icc_path_num =3D ARRAY_SIZE(icc_res_8x53),
+>  	.csiphy_res =3D csiphy_res_8x96,
+> @@ -5139,6 +5142,7 @@ static const struct camss_resources msm8953_resourc=
+es =3D {
 > =20
->              power-domains =3D <&camcc CAM_CC_IFE_0_GDSC>,
+>  static const struct camss_resources msm8996_resources =3D {
+>  	.version =3D CAMSS_8x96,
+> +	.legacy_phy =3D true,
+>  	.csiphy_res =3D csiphy_res_8x96,
+>  	.csid_res =3D csid_res_8x96,
+>  	.ispif_res =3D &ispif_res_8x96,
+> @@ -5150,6 +5154,7 @@ static const struct camss_resources msm8996_resourc=
+es =3D {
+> =20
+>  static const struct camss_resources qcm2290_resources =3D {
+>  	.version =3D CAMSS_2290,
+> +	.legacy_phy =3D true,
+>  	.csiphy_res =3D csiphy_res_2290,
+>  	.csid_res =3D csid_res_2290,
+>  	.vfe_res =3D vfe_res_2290,
+> @@ -5163,6 +5168,7 @@ static const struct camss_resources qcm2290_resourc=
+es =3D {
+>  static const struct camss_resources qcs8300_resources =3D {
+>  	.version =3D CAMSS_8300,
+>  	.pd_name =3D "top",
+> +	.legacy_phy =3D true,
+>  	.csiphy_res =3D csiphy_res_8300,
+>  	.csid_res =3D csid_res_8775p,
+>  	.csid_wrapper_res =3D &csid_wrapper_res_sm8550,
+> @@ -5177,6 +5183,7 @@ static const struct camss_resources qcs8300_resourc=
+es =3D {
+>  static const struct camss_resources sa8775p_resources =3D {
+>  	.version =3D CAMSS_8775P,
+>  	.pd_name =3D "top",
+> +	.legacy_phy =3D true,
+>  	.csiphy_res =3D csiphy_res_8775p,
+>  	.csid_res =3D csid_res_8775p,
+>  	.csid_wrapper_res =3D &csid_wrapper_res_sm8550,
+> @@ -5190,6 +5197,7 @@ static const struct camss_resources sa8775p_resourc=
+es =3D {
+> =20
+>  static const struct camss_resources sdm660_resources =3D {
+>  	.version =3D CAMSS_660,
+> +	.legacy_phy =3D true,
+>  	.csiphy_res =3D csiphy_res_660,
+>  	.csid_res =3D csid_res_660,
+>  	.ispif_res =3D &ispif_res_660,
+> @@ -5201,6 +5209,7 @@ static const struct camss_resources sdm660_resource=
+s =3D {
+> =20
+>  static const struct camss_resources sdm670_resources =3D {
+>  	.version =3D CAMSS_845,
+> +	.legacy_phy =3D true,
+>  	.csiphy_res =3D csiphy_res_670,
+>  	.csid_res =3D csid_res_670,
+>  	.vfe_res =3D vfe_res_670,
+> @@ -5212,6 +5221,7 @@ static const struct camss_resources sdm670_resource=
+s =3D {
+>  static const struct camss_resources sdm845_resources =3D {
+>  	.version =3D CAMSS_845,
+>  	.pd_name =3D "top",
+> +	.legacy_phy =3D true,
+>  	.csiphy_res =3D csiphy_res_845,
+>  	.csid_res =3D csid_res_845,
+>  	.vfe_res =3D vfe_res_845,
+> @@ -5223,6 +5233,7 @@ static const struct camss_resources sdm845_resource=
+s =3D {
+>  static const struct camss_resources sm6150_resources =3D {
+>  	.version =3D CAMSS_6150,
+>  	.pd_name =3D "top",
+> +	.legacy_phy =3D true,
+>  	.csiphy_res =3D csiphy_res_sm6150,
+>  	.csid_res =3D csid_res_sm6150,
+>  	.vfe_res =3D vfe_res_sm6150,
+> @@ -5236,6 +5247,7 @@ static const struct camss_resources sm6150_resource=
+s =3D {
+>  static const struct camss_resources sm8250_resources =3D {
+>  	.version =3D CAMSS_8250,
+>  	.pd_name =3D "top",
+> +	.legacy_phy =3D true,
+>  	.csiphy_res =3D csiphy_res_8250,
+>  	.csid_res =3D csid_res_8250,
+>  	.vfe_res =3D vfe_res_8250,
+> @@ -5249,6 +5261,7 @@ static const struct camss_resources sm8250_resource=
+s =3D {
+>  static const struct camss_resources sc8280xp_resources =3D {
+>  	.version =3D CAMSS_8280XP,
+>  	.pd_name =3D "top",
+> +	.legacy_phy =3D true,
+>  	.csiphy_res =3D csiphy_res_sc8280xp,
+>  	.csid_res =3D csid_res_sc8280xp,
+>  	.ispif_res =3D NULL,
+> @@ -5263,6 +5276,7 @@ static const struct camss_resources sc8280xp_resour=
+ces =3D {
+>  static const struct camss_resources sc7280_resources =3D {
+>  	.version =3D CAMSS_7280,
+>  	.pd_name =3D "top",
+> +	.legacy_phy =3D true,
+>  	.csiphy_res =3D csiphy_res_7280,
+>  	.csid_res =3D csid_res_7280,
+>  	.vfe_res =3D vfe_res_7280,
+> @@ -5276,6 +5290,7 @@ static const struct camss_resources sc7280_resource=
+s =3D {
+>  static const struct camss_resources sm8550_resources =3D {
+>  	.version =3D CAMSS_8550,
+>  	.pd_name =3D "top",
+> +	.legacy_phy =3D true,
+>  	.csiphy_res =3D csiphy_res_8550,
+>  	.csid_res =3D csid_res_8550,
+>  	.vfe_res =3D vfe_res_8550,
+> @@ -5290,6 +5305,7 @@ static const struct camss_resources sm8550_resource=
+s =3D {
+>  static const struct camss_resources sm8650_resources =3D {
+>  	.version =3D CAMSS_8650,
+>  	.pd_name =3D "top",
+> +	.legacy_phy =3D true,
+>  	.csiphy_res =3D csiphy_res_sm8650,
+>  	.csid_res =3D csid_res_sm8650,
+>  	.csid_wrapper_res =3D &csid_wrapper_res_sm8550,
+> @@ -5304,6 +5320,7 @@ static const struct camss_resources sm8650_resource=
+s =3D {
+>  static const struct camss_resources x1e80100_resources =3D {
+>  	.version =3D CAMSS_X1E80100,
+>  	.pd_name =3D "top",
+> +	.legacy_phy =3D true,
+>  	.csiphy_res =3D csiphy_res_x1e80100,
+>  	.csid_res =3D csid_res_x1e80100,
+>  	.vfe_res =3D vfe_res_x1e80100,
+> diff --git a/drivers/media/platform/qcom/camss/camss.h b/drivers/media/pl=
+atform/qcom/camss/camss.h
+> index 6d048414c919e..24ec3ad7990e7 100644
+> --- a/drivers/media/platform/qcom/camss/camss.h
+> +++ b/drivers/media/platform/qcom/camss/camss.h
+> @@ -104,6 +104,7 @@ enum icc_count {
+>  struct camss_resources {
+>  	enum camss_version version;
+>  	const char *pd_name;
+> +	const bool legacy_phy;
+>  	const struct camss_subdev_resources *csiphy_res;
+>  	const struct camss_subdev_resources *csid_res;
+>  	const struct camss_subdev_resources *ispif_res;
 
