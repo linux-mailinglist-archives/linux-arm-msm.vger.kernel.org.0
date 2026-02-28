@@ -1,114 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-94556-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94557-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id oGnXLaEsomk/0gQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94556-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 00:45:37 +0100
+	id eECYDugyommU0wQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94557-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 01:12:24 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03E211BF251
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 00:45:36 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id D6F651BF5B5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 01:12:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 0B7C03025E31
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Feb 2026 23:41:36 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 082813045029
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 00:11:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BE573E9F8C;
-	Fri, 27 Feb 2026 23:41:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B02BA6A33B;
+	Sat, 28 Feb 2026 00:11:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="k2MAv5XU";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="AsUpYmtx"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="XlYnerF5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76C337BE75
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Feb 2026 23:41:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E00DD3BB44;
+	Sat, 28 Feb 2026 00:11:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772235693; cv=none; b=t1BIB0RE5F1a34KBjd/pyIXhshZfscTxPQ9jDcDrUWcOf9HxhWDeq0q1vDjV9xzITb4EBm2zF3m1m1ft1QpivGK0gTka8JiZgpqz3aLipCv+4olempiXq197oOjK/M7Wl7IK9e4ufO6muf8aIc868SLSBfvSliwc3wwstv2QXfo=
+	t=1772237507; cv=none; b=p/ct6diHmAdjDAa4AjtEYXtobepUGCS9DIQ6EbZDQMGypvbsrtjgMT2+n8NJuCLivhn4b2wRdlD2c2QT/ShABDOD3l8Fd+egOUksiU3Ko4ziTUWDqaZpfiibmfRkMTakpRQTgikxqjadIr9ikpHLl/81JH5cO4CaCR9uiL9i0go=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772235693; c=relaxed/simple;
-	bh=6QvB7huYMux0VK3w60OaJPQ7kp21zCIfWmT+zsHmKVI=;
+	s=arc-20240116; t=1772237507; c=relaxed/simple;
+	bh=VUKGXTJ10ovocXd1o+uaQ8y3MY6Z5p2+y8a1Ilec9fY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=akR1ZrwFvr8nrNsi5FBbW2p+2+1PIYfAUmfqNn1w3sGwPkxuORNSJBLfPeotinWMRFK3yeyJaC8pHGAHQ6Kk3+Fm5Xo5l4H849CiToz/771At8WMAwvvLwrKhN7xwCAdJR00bw5O62X3PlglTB1Kx4r9M0vZLwXnkdMmQ2jlZg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=k2MAv5XU; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=AsUpYmtx; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 61RM68oV2560949
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Feb 2026 23:41:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=b4RPVfEauVulPNQw2T/2xBrD
-	ug+mzawESETX0L19vj0=; b=k2MAv5XU9/IyucUK2fIrUwROIS0Q0U70c4PayRyx
-	d4TK+qUjx3MxyNNleQrDQ7ZsTcQ3dxiuy5J8SLoHFRz/gcGRhbquLpW8P3wZisbW
-	s4DHz/5VJvXmcId00Vea4I1hoQJ1x57YP7pCCoilGuG4yOLKyAGnYJ+VGcI2+FQV
-	IHmBjWq7RyvspaO7PcV80saLhBs2O6xYczPO2b+sM0XoOCXeurdt+73COjdmEgiV
-	kfnRLYtMy51QBgX+kM20S7qWkj89SXVfBdxWE1cxpDRCkUIHpNPqtLkqDaLsUjuN
-	KgH971N0TFi8ylHLofX82qPepJFvnfgbOjQZvaUP7MyN8w==
-Received: from mail-ot1-f71.google.com (mail-ot1-f71.google.com [209.85.210.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ckks1r698-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Feb 2026 23:41:26 +0000 (GMT)
-Received: by mail-ot1-f71.google.com with SMTP id 46e09a7af769-7d4d668425dso38065692a34.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Feb 2026 15:41:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1772235686; x=1772840486; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=b4RPVfEauVulPNQw2T/2xBrDug+mzawESETX0L19vj0=;
-        b=AsUpYmtxvRWuJV/crLvY3fPnZ+1aY68fgXTWqdhcWh9lkGtof6po71QIP1a10ciVGN
-         cUtOHFE0dDtY/5x9/crdFR1Ja7RzPyastYU9vLLB9M8WT5H7m9PbCibyd4n9osRiltlN
-         YQtMBDN9MaQ7/WO13sGLgz0YnwrDtOchw+RHLPzsMX3Z5kgUMPjFn0El4TTguaSvLIkV
-         4X7oBuWAcIcIZjTKTppFzGP/KAZ51MhVxAySvnU5SxAwCoUM/mCe4LK3Px0FCD5dIyoT
-         vk2NI2KdFv07YyQRAaoALnm1Xh49aclIpUwAbQGYAbwUgcipH/wg966EyY/p6MZl8qQD
-         IRLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772235686; x=1772840486;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=b4RPVfEauVulPNQw2T/2xBrDug+mzawESETX0L19vj0=;
-        b=vrwaZF8g3L7cNdjH1QzXfzov53PC0uIOXBdZDo0n/+ypipin4/2n+V4ny3A5bEHgih
-         zkQkEXf0VLm2DMfTUIWmdt/d17R3DaOM/Dp1tmlH0gY+Kz4doMDTuxAkk4EntrDzhvCs
-         jnod1OszSdEiUr/hw7hPFhn/clo6Sk6jA5qdsvJeCBOXlUGjHdYPRN2iQolEhmz56DXb
-         LqRjVYMJ1BPu2jh1rhLRiIA8MTpSPUzI9YTulz6OmToh471B0FuLVRyX+uIk9Tls1gq7
-         tcE4CzVlCcpiMf3YzQyR2v+FwCTXSzWfxfc7b+0bJjBsArIPpz0z5BQBWaJ4jhdvx8ZI
-         /OwQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWBIZqRcunX111JLwL3I/11Ljq/tD8eF718Uw5S9i64RY1Ah2EAxSxw+aP5dOSt59sZFvI6ytaCXqC2S1eg@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywsv38FK0roBzmq+RcSZNWLfRmt3XCTgmtIswRl1Urm2gmoKWXu
-	eVkE0OsdvMzLbpsmDo/7tAJFlrtc6/pXbZqh8QfLB0SoQ9i1xnsW/dLQGgXqp5revyJx31sFdMf
-	BWMotebUF9ZNsbkP14S513RGr/pG20fnQn4YkczpfY9rbje+jZ1mlQyQaAKvryWz6QeZS
-X-Gm-Gg: ATEYQzwZ6J7YyYe+UV5FHJPlr8ykNaAsOaf26Q/hxT2CcB3q1gkMPPhHiGIxBnoWPzC
-	WvYz2ywih7aJye8Qrbk7GXxfUf6FOb765px2U91zklpN/4QR9u/jrvuZw1odn4JAmIpBGdVbBn6
-	uIjc3u9ke0i2+gOY2c6oFIfuz5YCTvVBOQYpUindIJtngZYRqLiXYYRi10492hUzWj+p8/t8Y4F
-	G2NTjsI/1dH1te2dSgqIsuJqyAdDO7rcKucDp+H3fNnNvZ4JTfNhAzJLHfJfuu+FSTsMIrLDPCF
-	3aJkfnf13nUElf0C+4vOwqch8IMeiN3Ika1cTp20RXkZ5Wx59sTWsDcGyJmPdd2E4w5a5YmrzSJ
-	9Y9psLJEll75HWjOl4eBh+gjI15zAw4R3aNRic3mIxtgneIfIDp74J6c7Q1itCtJSPRhRQqQLfL
-	M=
-X-Received: by 2002:a05:6808:1391:b0:462:aa0f:4375 with SMTP id 5614622812f47-464beb40bfamr2716105b6e.39.1772235685779;
-        Fri, 27 Feb 2026 15:41:25 -0800 (PST)
-X-Received: by 2002:a05:6808:1391:b0:462:aa0f:4375 with SMTP id 5614622812f47-464beb40bfamr2716093b6e.39.1772235685424;
-        Fri, 27 Feb 2026 15:41:25 -0800 (PST)
-Received: from hu-clew-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-464bb4028cdsm3001607b6e.9.2026.02.27.15.41.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Feb 2026 15:41:25 -0800 (PST)
-Date: Fri, 27 Feb 2026 15:41:22 -0800
-From: Chris Lew <christopher.lew@oss.qualcomm.com>
-To: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Alexander Wilhelm <alexander.wilhelm@westermo.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org
-Subject: Re: [PATCH v2] remoteproc: sysmon: Correct subsys_name_len type in
- QMI request
-Message-ID: <aaIrokT+Ovglo/Tj@hu-clew-lv.qualcomm.com>
-References: <20260220-qmi-encode-invalid-length-v2-1-5674be35ab29@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=V3juFjARl8Dj2YE866iCBZI1AM4N7X3l5z6Eq3ZSIrTxm+X8y91bKiMpz4RLYalsX9KAq+E9tvPYmZ0QLMymyBA6+GNYij9+0PQWcbWLrc8kNvzOz0Jbtryj8qG4paJ9yvj17NuPPc/yLjbtWnhC2Z8hbFsfiUGarCXOAYyrdb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=XlYnerF5; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=GZdE3v1uM6dshlMijAz4RF1iw09aYz2wg0tBwp/dyGA=; b=XlYnerF5xK1Ql3eFDyGif3TCY2
+	lfIAnzkBeHR3C7xAuoMd0iZlod2dCvxiH0kDHYgoxRbb2hPiQ3d8W5ER859VOyBAYAdOKf8cs7NTJ
+	Me1GZrqatduWjJVAio3hJRolyvfJkQ1VfGuyFKnzC+O8Oc6LT/vjJKxMaB4RRiqSvur17Yb4LN0zC
+	cHIzkBRkf5Qx+kZfdWnscVzDOZ0bu03U2P11u82Yp8thQpexjjSWxx5Z9xzRop9apWv+tyit5ihu3
+	/xNEh60H0vH8sU1tfSghfrBv+Ucx5M9JQu8IYeO30o5BJ+YGyycDBvbLTvApaoifmtps/5GKE8BKb
+	dQDPhLoQ==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:46012)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1vw7vj-000000001Rv-3OlC;
+	Sat, 28 Feb 2026 00:11:35 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1vw7ve-000000003WJ-2CMn;
+	Sat, 28 Feb 2026 00:11:30 +0000
+Date: Sat, 28 Feb 2026 00:11:29 +0000
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Andrew Lunn <andrew@lunn.ch>, Jakub Kicinski <kuba@kernel.org>
+Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>, netdev@vger.kernel.org,
+	Paolo Abeni <pabeni@redhat.com>, Vinod Koul <vkoul@kernel.org>
+Subject: Re: [PATCH RESEND2 net-next 0/8] net: stmmac: qcom-ethqos: further
+ serdes reorganisation
+Message-ID: <aaIysVxy-WxbiJz9@shell.armlinux.org.uk>
+References: <aaDSJAc-x2-klvHJ@shell.armlinux.org.uk>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -117,114 +81,85 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260220-qmi-encode-invalid-length-v2-1-5674be35ab29@oss.qualcomm.com>
-X-Proofpoint-ORIG-GUID: zg0FhKTjiWDzdTVxira4IV8Vd5AcEQ3E
-X-Proofpoint-GUID: zg0FhKTjiWDzdTVxira4IV8Vd5AcEQ3E
-X-Authority-Analysis: v=2.4 cv=eNUeTXp1 c=1 sm=1 tr=0 ts=69a22ba6 cx=c_pps
- a=OI0sxtj7PyCX9F1bxD/puw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=kj9zAlcOel0A:10 a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=UyUhSrBohwOpVuKZ7twA:9 a=CjuIK1q_8ugA:10
- a=Z1Yy7GAxqfX1iEi80vsk:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI3MDIxMiBTYWx0ZWRfXwnR7exGI66cn
- NrH37ENT1RuQOivE3TaoIhO/aMgwaijYRu2gQpJ9tnpaCex0y/wjBDIigBS7I/A5Q5Uvg2262K3
- keHJr5u68M/9rA50vWYpYFKKcVby5guTnS3E/mXRJOvBC/UtYoM0pmdP//Sr8v9t132BsiYvEbc
- lU9H0UeGa9qDY2FnGZlSZTnf9t3GVXMoufy7WF+Nn9X2d2OseR/rOmj8zN2oAq03fjd+gKvbXUC
- un25iWnroDKrdBL0N3ekF1+aCAewEXEBPOpHX/svGeYWRqy8h4JzAHAE3OhbMbqfwZCI5UYshmc
- MDF9eIK87dmBOfPLRjgpCexe/NrhNXfMg2zZHvloMPcPmRQUmM98mzPZQuFe/zPq5MM38TOvjA2
- 7xu/eRF+hDKfIFZbSeBmrmEIndPR9FX53tqwI4wPb9glzj+t9PJTQMIREYjt5tAY1EvHEZJuyWl
- y+ejzjZY/3GIzC+6VeA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-02-27_04,2026-02-27_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0 priorityscore=1501 impostorscore=0 phishscore=0
- malwarescore=0 bulkscore=0 spamscore=0 adultscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2602270212
+In-Reply-To: <aaDSJAc-x2-klvHJ@shell.armlinux.org.uk>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [1.14 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_DKIM_REJECT(1.00)[armlinux.org.uk:s=pandora-2019];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
+	DMARC_POLICY_SOFTFAIL(0.10)[armlinux.org.uk : SPF not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,hu-clew-lv.qualcomm.com:mid,qualcomm.com:email,qualcomm.com:dkim,oss.qualcomm.com:dkim];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94556-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	MISSING_XM_UA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[christopher.lew@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-94557-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[9];
+	DKIM_TRACE(0.00)[armlinux.org.uk:-];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	FROM_NEQ_ENVFROM(0.00)[linux@armlinux.org.uk,linux-arm-msm@vger.kernel.org];
+	PRECEDENCE_BULK(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	NEURAL_HAM(-0.00)[-0.758];
+	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
 	MID_RHS_MATCH_FROMTLD(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 03E211BF251
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,shell.armlinux.org.uk:mid,armlinux.org.uk:url]
+X-Rspamd-Queue-Id: D6F651BF5B5
 X-Rspamd-Action: no action
 
-On Fri, Feb 20, 2026 at 03:11:48PM -0600, Bjorn Andersson wrote:
-> The QMI message encoder has up until recently read a single byte (as
-> elem_size == 1), but with the introduction of big endian support it's
-> become apparent that this field is expected to be a full u32 -
-> regardless of the size of the length in the encoded message (which is
-> what elem_size specifies).
+On Thu, Feb 26, 2026 at 11:07:16PM +0000, Russell King (Oracle) wrote:
+> This is part 2 of the qcom-ethqos series, part 1 has now been merged.
 > 
-> The result is that the encoder now reads past the length byte and
-> rejects the unreasonably large length formed when including the
-> following 3 bytes from the subsys_name array.
+> This part of the series focuses on the generic PHY driver, but these
+> changes have dependencies on the ethernet driver, hence why
+> it will need to go via net-next. Furthermore, subsequent changes
+> depend on these patches.
 > 
-> Fix this by changing to the expected type.
+> The underlying ideas here are:
 > 
-> Fixes: 1fb82ee806d1 ("remoteproc: qcom: Introduce sysmon")
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-> ---
-> I believe I've checked all the other users now, and this is the only
-> case I found that needs fixing.
+> - get rid of the driver using phy_set_speed() with SPEED_1000 and
+>   SPEED_2500 which makes no sense for an ethernet SerDes due to the
+>   PCS 8B10B data encoding, which inflates the data rate at the SerDes
+>   compared to the MAC. This is replaced with phy_set_mode_ext().
+> - allow phy_power_on() / phy_set_mode*() to be called in any order.
 > 
+> Mohd has tested this series, but it would be great to get acks/reviews
+> from the generic PHY maintainers.
 
-Did a quick double check on ipa, ath10k, sysmon, pdr, slimbus and usb.
+So, PW says "changes requested" - please let me know what changes have
+been requested.
 
-Reviewed-by: Chris Lew <christopher.lew@oss.qualcomm.com>
+The AI review for patch 7 says:
 
+  This commit fixes a bug but lacks a Fixes: tag. The commit modifies
+  behavior introduced in 360000820ae2 ("phy: qcom-sgmii-eth: add
+  .set_mode() and .validate() methods") by making phy_power_on() call
+  qcom_dwmac_sgmii_phy_calibrate() to restore the previous setup, and by
+  making qcom_dwmac_sgmii_phy_set_mode() check if the PHY is powered on
+  before attempting calibration.
 
-> Changes in v2:
-> - Fix the sysmon driver instead of the encoder/decoder
-> - Link to v1: https://lore.kernel.org/r/20260214-qmi-encode-invalid-length-v1-0-780cb4e98b0f@oss.qualcomm.com
-> ---
->  drivers/remoteproc/qcom_sysmon.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/remoteproc/qcom_sysmon.c b/drivers/remoteproc/qcom_sysmon.c
-> index 660ac6fc408213073942f20a2c4e43a0c9b9b37e..c6cc6e519fe566a92505dc57c30e8b3e0a697179 100644
-> --- a/drivers/remoteproc/qcom_sysmon.c
-> +++ b/drivers/remoteproc/qcom_sysmon.c
-> @@ -203,7 +203,7 @@ static const struct qmi_elem_info ssctl_shutdown_resp_ei[] = {
->  };
->  
->  struct ssctl_subsys_event_req {
-> -	u8 subsys_name_len;
-> +	u32 subsys_name_len;
->  	char subsys_name[SSCTL_SUBSYS_NAME_LENGTH];
->  	u32 event;
->  	u8 evt_driven_valid;
-> 
-> ---
-> base-commit: fd9678829d6dd0c10fde080b536abf4b1121c346
-> change-id: 20260214-qmi-encode-invalid-length-310dd551a186
-> 
-> Best regards,
-> -- 
-> Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-> 
+  Should this commit include:
+
+  Fixes: 360000820ae2 ("phy: qcom-sgmii-eth: add .set_mode() and .validate() methods")
+
+which is _wrong_, this isn't a bug fix.
+
+So, in light of AI review being incorrect, my comment about re-sending
+due to the AI review is no longer relevant, and no changes are required.
+The only thing that's necessary is to have Vinod's ack added to patches
+4, 5, 6 and 7, as he gave them against the very first posting of these
+on Wednesday. This is despite waiting the required 24h before sending
+the first resend.
+
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
