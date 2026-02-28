@@ -1,175 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-94644-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94645-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id eEQNLAteo2myBQUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94644-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 22:28:43 +0100
+	id MOHhLDpno2kkCgUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94645-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 23:07:54 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 56A6C1C91AC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 22:28:42 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 916D91C95F4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 23:07:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 5CDA9301916B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 21:28:40 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 16D5D3002766
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 22:07:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA02931715F;
-	Sat, 28 Feb 2026 21:28:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19D6038D000;
+	Sat, 28 Feb 2026 22:07:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="inrtWo1o"
+	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="YjkFqDs0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-171.mta0.migadu.com (out-171.mta0.migadu.com [91.218.175.171])
+Received: from out-188.mta0.migadu.com (out-188.mta0.migadu.com [91.218.175.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B45317150
-	for <linux-arm-msm@vger.kernel.org>; Sat, 28 Feb 2026 21:28:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 022762D837E;
+	Sat, 28 Feb 2026 22:07:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772314119; cv=none; b=ra/kyn7k5rHJG1dAQQy2NQCCrn+SZyER7c3f3s2v0D5BYar0eC+AHv03el3C9eTtJvRASPCueRhV0blw58TN6pkz1K1Dfo6DxGUWGuV6Dg+q4zhJHjCLeBK1+u3w+iq6KO5xGaqT55pH+3jgq9aS9oyVrPFEGHfQwHEmZcViybs=
+	t=1772316469; cv=none; b=f7PWKaFlvx4H6BZPLEFCrrdeGk0vhMW726eRcwsBLxFcCWG85NKa1cy9CkeMI5ZMmI68+j9AB+D35T5f1Yn3hK+NtXKrCNl6RMIVBro2WsV/VU1nQFCkQQuc46GwYdIP0KFVNIV2j119GcJTjfkWIlTqNsWVLpfUJKaEeiK88EY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772314119; c=relaxed/simple;
-	bh=JHfkwcQgJSlz2GM0sgnpNaNxj1ZXE/S9TRi/hKsJgrI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=A1heyNxxmNDOFq3x7Ai19BNOUbNjKUTzvGyWSSfkLDa4ML7amRhGyWGKlGISBYImAzf6oOYfYJSCaZudFYtusXVt3pyaGuVnpFg0fWc4MYAOLZkG2VzbLZnA9lRh2RFcceZ9AO2bU1WmB3b6ye5D5V70aj+lTSjCAICgZStAzjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=inrtWo1o; arc=none smtp.client-ip=91.218.175.171
+	s=arc-20240116; t=1772316469; c=relaxed/simple;
+	bh=PS+i3OemeO6V+jJnDzdsDVy8uM7Ef4F73B2Hv8KC6qc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=r7jOdmYX+Cazw/ZZXjbq8AfGppCOcUuMEB8rnP5xgT/PUH7W8lNPi3Pl4qT1jhICKYQCCXdab7VSSC1iv3J0asp71/bgDYXSaZsQkpJtvS4yUXpQj5dEfG9sbXh1jdIc01+opaBKDs8m5Dt8wNeg0nMlxKlThvQHp2zSTNOA+/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=YjkFqDs0; arc=none smtp.client-ip=91.218.175.188
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
-Message-ID: <ad2c1f24-d205-4fb8-a79c-b955c0d08d40@packett.cool>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
-	s=key1; t=1772314102;
+	s=key1; t=1772316463;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=2drmw23LMhAgqnFvPZArzH0QWWWznsj4GGf5ZiSEOsg=;
-	b=inrtWo1ogxteJXPqsWDrYMM3i44qox2INfkGkt0RqUdMGn9W2FQe87It27cRrU/p2IspfU
-	uj3iT56Bouh/7gJ9tCykH1XFiVZEHHtZvXN/JA9xgGLwK1moFpPItdNZmCFapakhmOgPYU
-	ufUHMOe2EtsNlHQcwfNYXW/KXastyHjbK44eVlXrqPGX4kfQHJxyEe/wvBKZj/lDbk+mA0
-	KMffRQKyV+6ozSeDIRTFFGEkhWVM98Ej9uiFh6M0zaMvenmmLEFkOLkgZm+G63QSIyVcXh
-	P8snT4+pm0uVcQXB6iNWEmDqzm0pX6FCdGPOFdoiwUt8WCHLnmmL6l6DZ4vcMg==
-Date: Sat, 28 Feb 2026 18:28:13 -0300
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=V5AVxV03NAnElMqKItv7U4khI5BMEJHhDRtUcMyS+eo=;
+	b=YjkFqDs0Pxqc6Amt9jN4cWcFSP9VFUm6lk1ITcE6ViWCH0FuiwyK304YH4BNvDZSx/LQmn
+	vgAbnG7qp50XXKbxySTAEHWdQVq4L0p7bl2+NaMr5bFcwLk7ZmtGe8On7nz75K1PRphGlI
+	o7eBfrzHkgkkf337+73WPGL18U6y4SgQpiwxzFMGmXs3Cfufc0zjvitVdE+sFwOmYTjGe7
+	/f1nndsJNs9sisqlYghSgdfq+/IdXUMT42svEJPQ5jSgQdJv7HtHNrleQI2VX3MXlRRBpZ
+	yraEcRL6l6V/b7/915pvJHKVAv6v2IOSYHkLtIJL1TrpvieLSi2mmfEuowWPjg==
+From: Val Packett <val@packett.cool>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Wesley Cheng <wesley.cheng@oss.qualcomm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Val Packett <val@packett.cool>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v2] phy: qcom: qmp-combo: Move pipe_clk on/off to common
+Date: Sat, 28 Feb 2026 19:05:38 -0300
+Message-ID: <20260228220634.22778-2-val@packett.cool>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH v2] arm64: dts: qcom: sm8550: Fix DTBO boot failure
-To: Aaron Kling <webgeek1234@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Kumar Sharma <quic_vksharma@quicinc.com>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>
-References: <20260207-sm8550-abl-dtbo-v2-1-83afaa6f3ce9@gmail.com>
- <d4faaf8d-1517-4187-8801-a2dd52d8dde3@kernel.org>
- <CALHNRZ9k3yxXb9OfYXMSfEwyYKU8Rrrrjb-hPqLgU90X9YBP8g@mail.gmail.com>
- <487e4605-0a21-48d6-8b77-9ce2799ad212@kernel.org>
- <CALHNRZ8sqCpUMyCFP99b7nHu2onojZ0EY6YGQZ9RMP0kH8jWzw@mail.gmail.com>
- <gd7puun6xy5bh4q73mqc5ooza2kzla3rtov6d2723zc6tw7qwi@gxbsnloi2qcw>
- <CALHNRZ87j=j5LEMA=P=D73vOz1C-p+BDKcXV2bH7rcPDtAx9JQ@mail.gmail.com>
- <dczz4uvcq4hc6p3zb6xnrsgmfeomwliagwhf36tewdz4z6mndp@afbxzhjziiwv>
- <CALHNRZ9eT+mEqaAbj0-My4DriKWP+WPy4M21caXhOJPQuuVNhA@mail.gmail.com>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Val Packett <val@packett.cool>
-In-Reply-To: <CALHNRZ9eT+mEqaAbj0-My4DriKWP+WPy4M21caXhOJPQuuVNhA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[packett.cool,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
 	R_DKIM_ALLOW(-0.20)[packett.cool:s=key1];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94644-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_TO(0.00)[gmail.com,kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[3];
-	RCPT_COUNT_TWELVE(0.00)[12];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.992];
+	RCVD_COUNT_THREE(0.00)[3];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-94645-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[packett.cool:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	MISSING_XM_UA(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[val@packett.cool,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[packett.cool:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,packett.cool:mid,packett.cool:dkim]
-X-Rspamd-Queue-Id: 56A6C1C91AC
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[packett.cool:mid,packett.cool:dkim,packett.cool:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 916D91C95F4
 X-Rspamd-Action: no action
 
+Keep the USB pipe clock working when the phy is in DP-only mode, because
+the dwc controller still needs it for USB 2.0 over the same Type-C port.
 
-On 2/16/26 11:27 PM, Aaron Kling wrote:
-> On Fri, Feb 13, 2026 at 10:02 PM Bjorn Andersson <andersson@kernel.org> wrote:
->> On Fri, Feb 13, 2026 at 04:50:25PM -0600, Aaron Kling wrote:
->>> On Fri, Feb 13, 2026 at 2:34 PM Bjorn Andersson <andersson@kernel.org> wrote:
->>>> On Wed, Feb 11, 2026 at 09:10:39AM -0600, Aaron Kling wrote:
->>>>> On Mon, Feb 9, 2026 at 1:51 AM Krzysztof Kozlowski <krzk@kernel.org> wrote:
-[…]
->>>>> My use case here is an open source Android rom. I would like to think
->>>>> that android would be a supported use case. Not necessarily a driving
->>>>> force for decisions, but at least supported. And I'm using the
->>>>> standard boot image v4 setup with dtb on vendor_boot and dtbo's on the
->>>>> dedicated partition. This isn't some weird and wacko setup, it's what
->>>>> the vast majority of devices this soc is used in are designed for.
->>>> Android isn't a weird and wacko setup; but I'm guessing that the
->>>> proposed changes aren't related to running Android, nor are they related
->>>> to dependencies of the overlays, but it rather relate to some
->>>> runtime-generated overlay that ABL wants to apply?
->>> I honestly can't say what the underlying cause is. A couple of us have
->>> looked at the public abl source and weren't able to find what causes
->>> this issue. We just know that this issue happens when abl tries to
->>> apply a dtbo off the dtbo partition. So yes, in technicality this is
->>> not an android specific issue. I mention android because having a dtbo
->>> is generally expected in the aosp setup. In my specific use case, I
->>> have four devices from the same odm, where it's simple to split the
->>> common part into a dts, then the device specific parts into dtso's,
->>> allowing for a single software build to support all four devices.
->>> Requiring everything to be baked into a dts would require separate
->>> vendor_boot images per device, and thus completely separate build
->>> targets.
-[…]
->> Sounds like it, but I don't know what it is that ABL is expecting to be
->> able to insert. [0] seems to mostly say "I added this and then it works"
->> :(
+Tested with the BenQ RD280UA monitor which has a downstream-facing port
+for data passthrough that's manually switchable between USB 2 and 3,
+corresponding to 4-lane and 2-lane DP respectively.
 
-What everyone (well, postmarketOS community at least) has been doing 
-when running mainline kernels on ABL devices is `fastboot erase 
-dtbo`(*). Which is why we don't have any DTBO target nodes anywhere 
-upstream.
+Note: the suspend/resume callbacks were already gating the enable/disable
+of this clock only on init_count and not usb_init_count!
 
-If you want to intentionally use ABL DTBO, and you're absolutely sure 
-you **don't** reference these nodes in the DTBOs you're making, then 
-indeed it might be some "runtime overlay" coming from ABL code.. but 
-have you tried adding these nodes in the DTBOs themselves?
+Signed-off-by: Val Packett <val@packett.cool>
+---
+See https://lore.kernel.org/all/389ca5d3-a698-4dac-911c-39ba057e3d17@oss.qualcomm.com/ for more info.
+BTW https://lore.kernel.org/all/20260205160240.748371-2-loic.poulain@oss.qualcomm.com/ helped with coldplug.
 
-Wait, also, what is the build process for your DTBOs? Could there be 
-some weird Android build thing that inserts references to these nodes? 
-Have you tried decompiling them with dtc and looking at the resulting dts?
+v2: Reorder disables as suggested
+v1: https://lore.kernel.org/all/20250927093915.45124-2-val@packett.cool/
+---
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-Also have you looked into intermediate bootloaders as an alternative? 
-postmarketOS uses lk2nd on ancient devices and U-Boot on modern ones; 
-these bootloaders can dynamically choose (or even modify) a DTB based on 
-runtime detection (like ABL cmdline). Might be hard/strange to fit that 
-into the Android world but well, that's Android's fault :)
-
-
-(*) except on some old SoCs where we need a "blank" dtbo that just has 
-qcom,board-id! https://github.com/barni2000/dtbo-lk2nd (cursed)
-
-~val
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+index 93f1aa10d400..28428a8d1192 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+@@ -3691,6 +3691,13 @@ static int qmp_combo_com_init(struct qmp_combo *qmp, bool force)
+ 	if (ret)
+ 		goto err_assert_reset;
+ 
++	/* In DP-only mode, the pipe clk is still required for USB2 */
++	ret = clk_prepare_enable(qmp->pipe_clk);
++	if (ret) {
++		dev_err(qmp->dev, "pipe_clk enable failed err=%d\n", ret);
++		return ret;
++	}
++
+ 	qphy_setbits(com, QPHY_V3_DP_COM_POWER_DOWN_CTRL, SW_PWRDN);
+ 
+ 	/* override hardware control for reset of qmp phy */
+@@ -3768,6 +3775,7 @@ static int qmp_combo_com_exit(struct qmp_combo *qmp, bool force)
+ 
+ 	reset_control_bulk_assert(cfg->num_resets, qmp->resets);
+ 
++	clk_disable_unprepare(qmp->pipe_clk);
+ 	clk_bulk_disable_unprepare(qmp->num_clks, qmp->clks);
+ 
+ 	regulator_bulk_disable(cfg->num_vregs, qmp->vregs);
+@@ -3871,12 +3879,6 @@ static int qmp_combo_usb_power_on(struct phy *phy)
+ 
+ 	qmp_configure(qmp->dev, serdes, cfg->serdes_tbl, cfg->serdes_tbl_num);
+ 
+-	ret = clk_prepare_enable(qmp->pipe_clk);
+-	if (ret) {
+-		dev_err(qmp->dev, "pipe_clk enable failed err=%d\n", ret);
+-		return ret;
+-	}
+-
+ 	/* Tx, Rx, and PCS configurations */
+ 	qmp_configure_lane(qmp->dev, tx, cfg->tx_tbl, cfg->tx_tbl_num, 1);
+ 	qmp_configure_lane(qmp->dev, tx2, cfg->tx_tbl, cfg->tx_tbl_num, 2);
+@@ -3922,8 +3924,6 @@ static int qmp_combo_usb_power_off(struct phy *phy)
+ 	struct qmp_combo *qmp = phy_get_drvdata(phy);
+ 	const struct qmp_phy_cfg *cfg = qmp->cfg;
+ 
+-	clk_disable_unprepare(qmp->pipe_clk);
+-
+ 	/* PHY reset */
+ 	qphy_setbits(qmp->pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
+ 
+-- 
+2.52.0
 
 
