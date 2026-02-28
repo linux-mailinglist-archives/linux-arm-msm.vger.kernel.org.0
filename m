@@ -1,185 +1,252 @@
-Return-Path: <linux-arm-msm+bounces-94592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94593-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sNCRKa7lomkB8AQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 13:55:10 +0100
+	id uB6HJFXoomlG8AQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94593-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 14:06:29 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 537F61C3129
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 13:55:10 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D87B31C31A2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 14:06:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 855A33050203
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 12:55:06 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7E20130C52D3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 13:06:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 705F442B75E;
-	Sat, 28 Feb 2026 12:55:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A896843D519;
+	Sat, 28 Feb 2026 13:05:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KL3Rwh3c"
+	dkim=pass (2048-bit key) header.d=vinarskis.com header.i=@vinarskis.com header.b="I/H8GKCI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-244118.protonmail.ch (mail-244118.protonmail.ch [109.224.244.118])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEAD82E228D
-	for <linux-arm-msm@vger.kernel.org>; Sat, 28 Feb 2026 12:55:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B258543D4FC
+	for <linux-arm-msm@vger.kernel.org>; Sat, 28 Feb 2026 13:05:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.118
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772283305; cv=none; b=sN7df2gxHbjWPT7NqUteRtlYDtxdJ1qVmzvnIFzWBcoyTU82tDZJRt2Cullv6A7jXDlU38wNpRzFWgNGRPyrLW1R18DknF6oFFZ/psHkwz0INv2E1b8+yi3qgCFSFvgZHgqLSVcWaQxWwdJAXPdpUxHmS8jMsMLnxvp7SJVwzzo=
+	t=1772283958; cv=none; b=Ufi69zVmj2+q9fQvj9PKFpIcOZncWP58osZ2qSqbz8hb3FnEjTnpg2KtWUnojdkbtoBbWA59qCuyehnNW8vhAPIYlkWuKZKea3//HDJk1DvfaiLVpzpWTqVkx6oAAQKywZ3IETjLokTXyZhjU16NeiPTCZZN3dAyZGUyw6SjSVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772283305; c=relaxed/simple;
-	bh=FYxTbUS8wvQIr8o/w4A1iqxKt/ip7PD5E6jkILL4MIo=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Bh3iQv0C/ONiy3JuBbMyKMXqqycpowwqeQ5vNJWO28XFDRB3VL8VP/YhMZEBWBhjK4YosDw1NCdF952YuDv2mH/7zHgyGImSWmfEW/E16ZRaeCjjeGSKIGQroEpuW4oWTU3Y9VlvhXahfKqRMoUbPGUrJvrIYTOWSM0nFM77mSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KL3Rwh3c; arc=none smtp.client-ip=209.85.215.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-c70f191313cso1164556a12.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Feb 2026 04:55:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772283303; x=1772888103; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=I0TjNGD04YyVddq1HrmWd/i6gkJbEakr8TUWq/SQPr8=;
-        b=KL3Rwh3cGqOc2vgbRk2BYBNPoRoSsdulxJ6HOQS3yGEUwzfHRk3Hy/20MfNhNINcKf
-         G9Ce9Hy70ZS15R9Wh1ffJV2YINlRhmO30sm2Cn70tnhUNNEuNDBWX+zZKU6QBHcShGrL
-         roFGvyAjoUDWgPcrdZKDnhOM8hFXraei6bdWBDRg0gA9zJyiggRUBRr4aUmeUNxq/mZD
-         Mup25xBN4WNwfLxwEs/kSyNWR2g5doufKzAhIN02CHdtQyub09od+buiZ5vkXJ8d5xZ3
-         48KWOvuFrwgVf8gP/sHd0TUgzGt7TYFMV7/BjAwgDNoiuwTTXifj2g76Psc4hOAhpkEz
-         f0yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772283303; x=1772888103;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=I0TjNGD04YyVddq1HrmWd/i6gkJbEakr8TUWq/SQPr8=;
-        b=PeINz3YwLy2FiOQHA2sbW1DEsZTbrTJc3zPCwCtrauATC535Lzo58yJVzarowzEDUw
-         LpMNu2GbUHx4ZlwcKdBScmH1az7r8j8ojogo8hMAePXCaFXh+Po6SEK7v4LTLdLvcd6n
-         sUfPvO0TwCisEgdjVclocufosq1lPFYU1NCAn4X3t6bnaWokqWRShH2VuRW0/a8uREIF
-         vTE5spcoi3lrczjGpUdT1BfH96eWYWTKq6xD2L3oAqwzCb9Ll/Zh79Bihtyl/mxpkt1Z
-         g2xD9f+h/80V7jHU2YzPrwujLuyYlN2qNNwl9J6tUcm4+u4pe9qRtF/Qvd5OQ6FiTqUz
-         54vQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXUNRpzh+KQcaiLX1bOGMSbirs4JSLvIbkJelYmHx2Gsa4Drg76ztfWy/QXL26WH7k0PAPqrlCyU2jr3/3d@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx82oVhZN+fg8udGozuZzkxMTlHkysKieufSWboBG4VKoFEa96H
-	MSSkhUZAPpUiIAZzS+d7aCVA3Hpv4t87sll2jf6KSbd2VO6sPQtYb5jb
-X-Gm-Gg: ATEYQzw5Gr8bdgyZkSkIcCgL9f587omqi8q0QYGrZf1TqAadkvE8ojOm3aq0yg6rWRX
-	2UBvbiFib05rVmhlkbMmGQ9rk/rFDaNjrpd9bIUBUzuQwLiY7dNWHHKnJIkTTpa38NEQKgZw9uI
-	DNkqlxZpsp5P23qbr2FGh94oAZp8lYuIpZHduXukKZVuRAYIfJapcTE3vmsgffv9N70ROuzLZwX
-	gtaTTYghtZJJUktoxA5p01DkvYaFyYqnY+ehlGtTOV0ttooTt5JhMfny7uXy/CB37TbLN+xLkI8
-	PhOOkqBRLkf0FRVKJw5GgaBAzzeJsh/8+fU91S7Wg2QjZ04RMKgATvGRTG2cDAEqv5h3kgdMcsH
-	2tyAiff46f9lWACgyQgOcEiSAPuO2HfUdfkNUxfYIw7khmGUGtLnNCRH8nEZHgS+pyLd66r228J
-	JTiopYnXbov3QiRwasr8tg
-X-Received: by 2002:a17:90b:1d82:b0:356:2db3:1206 with SMTP id 98e67ed59e1d1-35965c34e95mr5018398a91.13.1772283303037;
-        Sat, 28 Feb 2026 04:55:03 -0800 (PST)
-Received: from nuvole ([2408:844d:b08:3702:16a4:72fd:8170:4ed3])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-359131d8a79sm6721338a91.3.2026.02.28.04.54.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Feb 2026 04:55:02 -0800 (PST)
-From: Pengyu Luo <mitltlatltl@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Cc: Pengyu Luo <mitltlatltl@gmail.com>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: sc8280xp: use refgen regulator for DSI
-Date: Sat, 28 Feb 2026 20:54:30 +0800
-Message-ID: <20260228125431.23098-1-mitltlatltl@gmail.com>
-X-Mailer: git-send-email 2.53.0
+	s=arc-20240116; t=1772283958; c=relaxed/simple;
+	bh=WdHypN4wfT3NsSm0whBTavvlM81jhBrtzWRkailWbhI=;
+	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=GeELek/fIVeyrc4Ecrv1A8SqzQGUi2zNJEJTaEcpK60v2SS1apdskd7WmhPH8l+p1ZF5BZG62N0PNCDmkpmMQnCp7RBuDHX1fqs6jtoEC39Upz4adBxV0NaLm3kFS6wXx+a81wygOuCWryYAltFO/Yhl9J+XwaGi96Xt6l5gH6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vinarskis.com; spf=pass smtp.mailfrom=vinarskis.com; dkim=pass (2048-bit key) header.d=vinarskis.com header.i=@vinarskis.com header.b=I/H8GKCI; arc=none smtp.client-ip=109.224.244.118
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vinarskis.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vinarskis.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vinarskis.com;
+	s=protonmail; t=1772283946; x=1772543146;
+	bh=kNz7IuwtOBaqLn55GG5myrKDag5tFvNdn5VrQaGUXBc=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=I/H8GKCIVre7XHfw1HxZAAMnDdv/JaaJ+ZDSegZDgYTlC3NqxwGHnizJYI2LXiPMx
+	 0e+IvBywE20H2A51pwh6bJR+6H7m44I6FxU4YstmvCvpZynD2fpeyol63Hmipt/8TT
+	 iYoBJJqWCo0v6VW3K4RCH0NLmSO1qCcFqJu6LD1r/90o7Y/BF57Oz6iK/ABPPdsxaf
+	 +U3LkD7h5jS6pWYpDL0vYqBco0K67pmw2HAnqB+IE0/fi42Psphb5TeBfREWgYM+eR
+	 E7gDZfJMYQyTYOXPDkyMij9EmV+eAg/VM14FNU0jpcylfOWmNTTBOgaX5He9MJ5Yv6
+	 wIilHxbdvWg5Q==
+Date: Sat, 28 Feb 2026 13:05:41 +0000
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+From: Aleksandrs Vinarskis <alex@vinarskis.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 10/11] arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x: Add ov02c10 RGB sensor on CSIPHY4
+Message-ID: <7177764d-fff7-465d-9ee4-f8e6f6455787@vinarskis.com>
+Feedback-ID: 158356072:user:proton
+X-Pm-Message-ID: 54b720a5066cd0f57cd2fc3306d793ce226eae9f
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-1.16 / 15.00];
+	FAKE_REPLY(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+	DMARC_POLICY_ALLOW(-0.50)[vinarskis.com,quarantine];
+	R_DKIM_ALLOW(-0.20)[vinarskis.com:s=protonmail];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94592-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[gmail.com,vger.kernel.org];
-	RCVD_COUNT_FIVE(0.00)[5];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mitltlatltl@gmail.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-94593-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[3];
+	DKIM_TRACE(0.00)[vinarskis.com:+];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	TO_DN_SOME(0.00)[];
+	DBL_PROHIBIT(0.00)[0.0.0.3:email,0.0.0.36:email];
 	PRECEDENCE_BULK(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[9];
+	FROM_NEQ_ENVFROM(0.00)[alex@vinarskis.com,linux-arm-msm@vger.kernel.org];
+	MISSING_XM_UA(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	DBL_PROHIBIT(0.00)[1.81.40.128:email];
-	DKIM_TRACE(0.00)[gmail.com:+];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[ae94000:email,1.81.32.176:email]
-X-Rspamd-Queue-Id: 537F61C3129
+	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.0:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vinarskis.com:mid,vinarskis.com:dkim]
+X-Rspamd-Queue-Id: D87B31C31A2
 X-Rspamd-Action: no action
 
-Use it for the DSI controllers, since DSI nodes have been added.
 
-Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
----
-This patch depends on the below series:
-https://lore.kernel.org/linux-arm-msm/20260228101907.18043-1-mitltlatltl@gmail.com/
----
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 8 ++++++++
- 1 file changed, 8 insertions(+)
+On 2/26/26 15:51, Bryan O'Donoghue wrote:
+> Add in the RGB sensor on CSIPHY4.
+>
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index 79021267d..1599d698b 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -4843,6 +4843,8 @@ mdss0_dsi0: dsi@ae94000 {
- 				operating-points-v2 = <&dsi_opp_table>;
- 				power-domains = <&rpmhpd SC8280XP_MMCX>;
- 
-+				refgen-supply = <&refgen>;
-+
- 				phys = <&mdss0_dsi0_phy>;
- 				phy-names = "dsi";
- 
-@@ -4942,6 +4944,8 @@ mdss0_dsi1: dsi@ae96000 {
- 				operating-points-v2 = <&dsi_opp_table>;
- 				power-domains = <&rpmhpd SC8280XP_MMCX>;
- 
-+				refgen-supply = <&refgen>;
-+
- 				phys = <&mdss0_dsi1_phy>;
- 				phy-names = "dsi";
- 
-@@ -6398,6 +6402,8 @@ mdss1_dsi0: dsi@22094000 {
- 				operating-points-v2 = <&dsi_opp_table>;
- 				power-domains = <&rpmhpd SC8280XP_MMCX>;
- 
-+				refgen-supply = <&refgen>;
-+
- 				phys = <&mdss1_dsi0_phy>;
- 				phy-names = "dsi";
- 
-@@ -6478,6 +6484,8 @@ mdss1_dsi1: dsi@22096000 {
- 				operating-points-v2 = <&dsi_opp_table>;
- 				power-domains = <&rpmhpd SC8280XP_MMCX>;
- 
-+				refgen-supply = <&refgen>;
-+
- 				phys = <&mdss1_dsi1_phy>;
- 				phy-names = "dsi";
- 
--- 
-2.53.0
+Hi Bryan,
+
+Thanks for re-spin of this series,
+
+> ---
+>   .../boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts  | 77 +++++++++++++++=
++++++++
+>   1 file changed, 77 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts b/a=
+rch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
+> index f10dff1da7f8e..f3f4841ad2c83 100644
+> --- a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
+> +++ b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
+> @@ -7,6 +7,7 @@
+>  =20
+>   #include <dt-bindings/gpio/gpio.h>
+>   #include <dt-bindings/input/gpio-keys.h>
+> +#include <dt-bindings/phy/phy.h>
+>   #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>  =20
+>   #include "hamoa.dtsi"
+> @@ -856,6 +857,66 @@ &gpu_zap_shader {
+>   =09firmware-name =3D "qcom/x1e80100/LENOVO/83ED/qcdxkmsuc8380.mbn";
+>   };
+>  =20
+> +&camss {
+> +=09status =3D "okay";
+> +
+> +=09ports {
+> +=09=09/*
+> +=09=09 * port0 =3D> csiphy0
+> +=09=09 * port1 =3D> csiphy1
+> +=09=09 * port2 =3D> csiphy2
+> +=09=09 * port3 =3D> csiphy4
+> +=09=09 */
+> +=09=09port@3 {
+> +=09=09=09camss_csiphy4_inep0: endpoint@0 {
+> +=09=09=09=09clock-lanes =3D <7>;
+> +=09=09=09=09data-lanes =3D <0 1>;
+> +=09=09=09=09remote-endpoint =3D <&ov02c10_ep>;
+> +=09=09=09};
+> +=09=09};
+> +=09};
+> +};
+> +
+> +&cci1 {
+> +=09status =3D "okay";
+> +};
+> +
+> +&cci1_i2c1 {
+> +=09camera@36 {
+> +=09=09compatible =3D "ovti,ov02c10";
+> +=09=09reg =3D <0x36>;
+> +
+> +=09=09reset-gpios =3D <&tlmm 237 GPIO_ACTIVE_LOW>;
+> +=09=09pinctrl-names =3D "default";
+> +=09=09pinctrl-0 =3D <&cam_rgb_default>;
+> +
+> +=09=09clocks =3D <&camcc CAM_CC_MCLK4_CLK>;
+> +=09=09assigned-clocks =3D <&camcc CAM_CC_MCLK4_CLK>;
+> +=09=09assigned-clock-rates =3D <19200000>;
+> +
+> +=09=09orientation =3D <0>; /* front facing */
+> +
+> +=09=09avdd-supply =3D <&vreg_l7m_2p8>;
+> +=09=09dvdd-supply =3D <&vreg_l2m_1p2>;
+> +=09=09dovdd-supply =3D <&vreg_l4m_1p8>;
+
+It probably got lost around as its been a while since last re-spin: as
+discussed in private and reported to 'issue' in Linaro's tree on gitlab,
+these are wrong. l7m/l2m/l4m are regulators used by Lenovo t14s, confirmed
+by device working and via AeoB dumps [1]. As per respective AeoB dump for
+Slim7x [2], these should be l7b/l1m/l3m instead. This arrangement was also
+confirmed working by community members (see discussion in gitlab issue [3])=
+.
+
+I have previously submitted a patch to Linaro tree to have this fixed [4],
+feel free to squash it with your changes.
+
+[1]=20
+https://github.com/alexVinarskis/qcom-aeob-dumps/blob/master/lenovo-thinkpa=
+d-t14s-g6/CAMF_RES_QRD.json#L117-L155
+[2]=20
+https://github.com/alexVinarskis/qcom-aeob-dumps/blob/master/lenovo-yoga-sl=
+im7x/CAMF_RES_QRD.json#L116-L154
+[3] https://gitlab.com/Linaro/arm64-laptops/linux/-/issues/9
+[4] https://gitlab.com/Linaro/arm64-laptops/linux/-/work_items/26
+
+> +
+> +=09=09port {
+> +=09=09=09ov02c10_ep: endpoint {
+> +=09=09=09=09data-lanes =3D <1 2>;
+> +=09=09=09=09link-frequencies =3D /bits/ 64 <400000000>;
+> +=09=09=09=09remote-endpoint =3D <&camss_csiphy4_inep0>;
+> +=09=09=09};
+> +=09=09};
+> +=09};
+> +};
+> +
+> +&csiphy4 {
+> +=09vdda-0p8-supply =3D <&vreg_l2c_0p8>;
+> +=09vdda-1p2-supply =3D <&vreg_l1c_1p2>;
+> +
+> +=09status =3D "okay";
+> +};
+> +
+>   &i2c0 {
+>   =09clock-frequency =3D <400000>;
+>  =20
+> @@ -1403,6 +1464,22 @@ &tlmm {
+>   =09=09=09       <44 4>, /* SPI (TPM) */
+>   =09=09=09       <238 1>; /* UFS Reset */
+>  =20
+> +=09cam_rgb_default: cam-rgb-default-state {
+> +=09=09mclk-pins {
+> +=09=09=09pins =3D "gpio100";
+> +=09=09=09function =3D "cam_aon";
+> +=09=09=09drive-strength =3D <16>;
+> +=09=09=09bias-disable;
+> +=09=09};
+> +
+> +=09=09reset-n-pins {
+> +=09=09=09pins =3D "gpio237";
+> +=09=09=09function =3D "gpio";
+> +=09=09=09drive-strength =3D <2>;
+> +=09=09=09bias-disable;
+> +=09=09};
+> +=09};
+> +
+
+While at it, could you please add privacy LEDs gpios for the camera? In
+the same Linaro gitlab issue [4] I have added fixup patches to enable LED
+on t14s/slim7x/thena and confirmed them working. Feel free to add those
+changes directly to your patch.
+
+I could of course send them separately once this series lands, but given
+that its a rather small change, and this initial camera support will be
+used as ground-truth example by community to enable cameras on their
+platforms, it would be nice to have privacy indicator included from the
+very beginning. v4l side that would use this LED was merged a while ago.
+
+
+Thanks,
+Alex
+
+>   =09edp_reg_en: edp-reg-en-state {
+>   =09=09pins =3D "gpio70";
+>   =09=09function =3D "gpio";
+>
 
 
