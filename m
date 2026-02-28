@@ -1,54 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-94629-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94630-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id AKKdC0tHo2lM/AQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94629-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 20:51:39 +0100
+	id 2AKBIQFKo2kF/QQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94630-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 21:03:13 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 688601C76EB
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 20:51:38 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 17D081C7D4E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 21:03:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 6CA3733102C9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 19:43:09 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 25E8334E1D25
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 19:54:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32CAC430B89;
-	Sat, 28 Feb 2026 17:47:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 856322475D0;
+	Sat, 28 Feb 2026 18:33:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=vinarskis.com header.i=@vinarskis.com header.b="fYu/WtkI"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="h3fsStD8";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="W1WY804M"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-43171.protonmail.ch (mail-43171.protonmail.ch [185.70.43.171])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 031284301CB
-	for <linux-arm-msm@vger.kernel.org>; Sat, 28 Feb 2026 17:46:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 340012D94A7
+	for <linux-arm-msm@vger.kernel.org>; Sat, 28 Feb 2026 18:33:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772300822; cv=none; b=QLHCwUGnSHBxqnlebpo8aaOhMIKc7hj1PcHNeucVakJ5XB4gHjf+6jtMD8mX6k6ccHTI3tt0l/2/suOwpqLGF4MU+S29Psqh1CDVTdzlWckZiBVr/ta2RdmsqzfuGbAUWPXNloNfnHj/p0hFAnkpW+U3NHosTy6iDu9PnLOSIco=
+	t=1772303592; cv=none; b=VbEGj2+q2JJAEAJ6VKnfeGYxnMKlIfYPKzvCef/gG2iW8qwvDtpolfNq3fAiIqyXtvA2MJVzO1IIEydn/UPv8fvnb4AmdcXei3Nr2VoOsLmHVkHLdhQ2555+JGD2D1qgmirJJWdWUtMc2kYurSebq282D7P8K05JPiHZknOEUXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772300822; c=relaxed/simple;
-	bh=upM5bB7sMn/Bn9Wg0AfAFftRp/cOqqhtEvvqO8KjEw0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=VRmU8OTeLQD3U8UGcTx5psQxu0ZD6aqoYjYAcEKUXKpMZslLpNb1GFjNNO1Kfw09MuHjp9fmGDg54kxoclcCBcwhOy+hjExY4SaAZFynUowxsFSm/ypMkx+ERsgnRHAdMb8Q5sQtKZdvKcbnhOYScHdugtbffmmdJ32rCkHY+So=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vinarskis.com; spf=pass smtp.mailfrom=vinarskis.com; dkim=pass (2048-bit key) header.d=vinarskis.com header.i=@vinarskis.com header.b=fYu/WtkI; arc=none smtp.client-ip=185.70.43.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vinarskis.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vinarskis.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vinarskis.com;
-	s=protonmail; t=1772300816; x=1772560016;
-	bh=282rh6NXOUty00jSQAeI5nGW6jMmS6pNYooX9wfpBww=;
-	h=From:Date:Subject:Message-Id:To:Cc:From:To:Cc:Date:Subject:
-	 Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=fYu/WtkIaslzC74V/VYUBbZnCXrd5q4MHe9EYE+F3Z9r90ug449Ly1bgeCZp1m2rV
-	 RM51lVuCZJ/7489MiZ5HGX4v1H2SezFxJBENR/4MYac2cErFCzX2QVBnA2ak87ROz3
-	 82hUFQpr3tkpGBVZJoMQsS18LsCumRyz1rkawscoRuraTr7gM8cIKIazY5s5OfmgFU
-	 cKNoMNc4ARUeB5Pe4sjdB2ZVf51x+zgO6IIDJ0sjyeilIBF6PHTloW31zaCSwaLl4o
-	 co9XOVuSkLXdYydxQD9Ne5bBif1CvHOGRnIbgrAp9dVUIiaifZ+jZqaJHT6keJ0Dgp
-	 0RGokMokLdeYA==
-X-Pm-Submission-Id: 4fNXgy2jkvz2SdyT
-From: Aleksandrs Vinarskis <alex@vinarskis.com>
-Date: Sat, 28 Feb 2026 18:46:23 +0100
-Subject: [PATCH] arm64: dts: qcom: x1e80100-dell-xps13-9345: enable onboard
- accelerometers
+	s=arc-20240116; t=1772303592; c=relaxed/simple;
+	bh=jgWAYu5C0b5zfBKcXg2KN4N2eUwxMytJHuZdP2ki3P8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=emE9NdNFjFOERijppQIXsJhVdTAcHHH30O6ZW3naN3teewQ3rxvk5hlwBaQ19UMI8RLfjzCqFogqYmwbt60NUmEBWMSocT1nbppIKf88LdJw7EWOmFRl7k0+n+H6eCvlFO+nWhIwCQ9e4jpB0SppsUGC1aCk7iz28Ueul5lIXq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=h3fsStD8; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=W1WY804M; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 61SH02LV909488
+	for <linux-arm-msm@vger.kernel.org>; Sat, 28 Feb 2026 18:33:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=z1QjBGy249SZqPONoffSc/
+	XfeclujHgZ7LS344mvAe0=; b=h3fsStD8k/A2FR3CZvI2m/ImbxEnvZ9P0n1c4V
+	0xUAaaWt9Ixv8bUntpU2jHdHHA2kdifLC00N8D71YIkWJRPG7T9mZ6BIzp35EUv/
+	iD7IYzTq5aoo6idvyoXYP9gotQKfj5grVYdSHg+PpObaHYvfWN4Lam68C6ZZnZ1V
+	we98zvvEoqdnBe9mD9lN5/098XBTOyocCwu8CvDOgoGtDfVDPGvV3CfAcaNld3+I
+	AFqia8+vDytwNGu2WWT6p95S4n26ZAjlBZARS6BWTdanNdlhpBj/wIhxmgZjp0YO
+	pxiiNsuCSLU6AxcV3VfDMR+ptjzD3dBKbAjkAnvBPkqeWM9A==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cksf8hfsp-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 28 Feb 2026 18:33:10 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-8cb3a129cd2so3232611585a.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Feb 2026 10:33:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1772303589; x=1772908389; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=z1QjBGy249SZqPONoffSc/XfeclujHgZ7LS344mvAe0=;
+        b=W1WY804M0vXc5sbssI8bEOxCtNoSIC34E0QuLnIL0hMfrdfEeV6iY50C7aRo2L4P3N
+         EO7691sZhvsUaVRGYuI5vMqApLuxEBMYT6sxm18dTHMUFfUzBqRM6k5WntyYXuJ8Su5j
+         Qz89vkJ3aNLTas8TFA59FaGLPTG1VMfHOhkh9Ar1ZK9+NUxkoCEKlQ4wy+e0PzwoDPvt
+         VrsGwAPJ0hasffw88JLtGCgvzSJc8cpJorByBu61yQhTXY6VmkZXwdNpO5KuMplu2cQe
+         rbLzOeMpmE5vL8vBmc9FIBA6UsRrY0+7axgrL5G64RJdlWABd9WmvbLIGkHkKl3x/KWv
+         FYPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772303589; x=1772908389;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=z1QjBGy249SZqPONoffSc/XfeclujHgZ7LS344mvAe0=;
+        b=VEyBzz5SYEKMZX5fOSBWyEdzkXh0/01adPJYUkMIu9jEm3Oz7zQYzyVKd1V+gy0XLq
+         78g0MmZcPeaI87oWrrssoyTq4nNPG/NUwIG0p0SMdkmMPtOhdXC0lSr8NK6PgQTCvjUn
+         xJ3VTe7cQIdFLacROaPmlhfGEn8VvfBBKBEbIu/GedM1PKl+NMT7xyaSzazPA8rRihab
+         xnhlmQjUY3/MvSwF8RGgrAtgoa7JTCK51bBTogVwX580JZVGF3IzYNdzEeaQmpDPasAy
+         Nn5f0fUoa6hmag8OJu1xUqK4oVzC3HDPfDlhQ6wHF4vI90Lq9iz+KVjpraUOc4ykLZz+
+         UA6g==
+X-Gm-Message-State: AOJu0YxyvOwl2mmh7heBEDRlIOUUFcyGEAk+JBxjFBt4HOA5HFHrSaXQ
+	fLdylubm3/0Yjva25VJhvkE0JYrFa4CACS96jFZ9F3vKSzRQRiuwMvoiTd1d28k0X2MWlHyl4ip
+	srxRQ1zu7tPnTrHxz6pAtXeJbbjJwDqI3JsmenuiWGZQTNBe/w+WsPNGZ/i4bu9LjfYgi
+X-Gm-Gg: ATEYQzziwCOxFPa5EY3+TZwfBI2BieQAOYjMm0T5WVhIcEkujfW+hVNyB+PwisS4bn2
+	UIb5AjL++dI3ygwrkp4N8YdJhVijPKflQeeWfxwHPB87PQk7upnMZjF0cbHs8wQsS+b1BP8xRoy
+	mZNhbYfC1U4epirKGM+lRufoClO3w0Nzo2GkXE7npG1bGOy48svveCwy+UVeKy921wkkxyah2Qj
+	4/SRhpwJv0l/kQB4RDqawANzCCqZF0wUKX7Z+caLdhGe8nJM49CfDkRr9xCA+Zm3jhl/VCfHqqP
+	0Zcetlo8bT7HYN8UtjENsR6GROQNyQNAN8U+IX0yY66lMwcMW/0MeshJLka65+RUcJa4Vb//z/p
+	K5uHE9VlV4aKcnKqx0yR8jxBduxgmKYiF+ZfeMe1ABWRWv7/JySPwCVS/Rqjt9SzrPOjp6oeKEf
+	t8sDZRBT1a6Zu3UsBTS/irdA7FKc+tBMplpQw=
+X-Received: by 2002:a05:620a:489b:b0:8c8:82cd:1a85 with SMTP id af79cd13be357-8cbbf3cf0c4mr1253995485a.21.1772303589347;
+        Sat, 28 Feb 2026 10:33:09 -0800 (PST)
+X-Received: by 2002:a05:620a:489b:b0:8c8:82cd:1a85 with SMTP id af79cd13be357-8cbbf3cf0c4mr1253992685a.21.1772303588863;
+        Sat, 28 Feb 2026 10:33:08 -0800 (PST)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a115bd238fsm660806e87.11.2026.02.28.10.33.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 28 Feb 2026 10:33:08 -0800 (PST)
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Date: Sat, 28 Feb 2026 20:33:06 +0200
+Subject: [PATCH] soc: qcom: ubwc: disable bank swizzling for Glymur
+ platform
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,224 +105,115 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260228-dell-xps-9345-accel-v1-1-daf9e3b3b5ee@vinarskis.com>
-X-B4-Tracking: v=1; b=H4sIAO4po2kC/x3MTQqAIBBA4avErBuwyX6vEi1MpxqQCoUQorsnL
- b/Few9EDsIRxuKBwLdEOY+MqizA7ubYGMVlAylqFVGPjr3HdEUcat2gsZY9arNoxW6wPXWQyyv
- wKum/TvP7fgrb2eVlAAAA
-X-Change-ID: 20260228-dell-xps-9345-accel-4ab40ed9c827
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: laurentiu.tudor1@dell.com, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5116; i=alex@vinarskis.com;
- h=from:subject:message-id; bh=upM5bB7sMn/Bn9Wg0AfAFftRp/cOqqhtEvvqO8KjEw0=;
- b=owGbwMvMwCX2dl3hIv4AZgHG02pJDJmLtfhmyTwrZI/+uch8vul8iaC1VZwxobGHtbcHvLiqf
- 3jfkv07O0pZGMS4GGTFFFm6/3xN61o0dy3DdY1vMHNYmUCGMHBxCsBEvi5mZFh0qzi/2/CV2ow7
- pSu/vcuZ3tj0IeF1z8T+f89Ca9K2T0tjZHgx37ws0nmN1bb1B6S4bhxltS5//u5xWZdzaY9PV0t
- nJB8A
-X-Developer-Key: i=alex@vinarskis.com; a=openpgp;
- fpr=8E21FAE2D2967BB123303E8C684FD4BA28133815
+Message-Id: <20260228-fix-glymur-ubwc-v1-1-d80e3fe0dcc7@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIAOE0o2kC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDIyML3bTMCt30nMrc0iLd0qTyZN00M3PjFNPkRANTC0MloK6ColSgErC
+ J0bG1tQDBXw3jYQAAAA==
+X-Change-ID: 20260228-fix-glymur-ubwc-f673d5ca0581
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+        Abel Vesa <abelvesa@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1174;
+ i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
+ bh=jgWAYu5C0b5zfBKcXg2KN4N2eUwxMytJHuZdP2ki3P8=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBpozTjd5fFOWJ1NW1LYP8p1EeGL4ebFVDVYHx6L
+ SYsBxBUQVeJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaaM04wAKCRCLPIo+Aiko
+ 1V6nB/9h5oPzh9Jp+t5jCANJtHeFJJBpsiYIExIyzRpR0Wjyhp92yj0l19q1BjivNneZCixgUl6
+ ximXS0+Pe7v8MJDPFB6yPn5TdLCrNo2suQihKuIHCWOovczFZXJCjr1s7blwdiQlVXmRr7xaz9Q
+ zDQjKWrXR90sjlrdmXTwsknSG2wEwK0ZchvNJ7coGdkbrpkEiyW5p8pfqIzyL8SReMFS05CtfzF
+ 40ThI0293iCbt++l8F37L7m2TwKi+QstGHaO5NEQqd62nz/ymr59/vJ0+yCr/o6sn0z06XLyjxw
+ F9fQ+v838qUVczrpVUkqFsbGQIoCmRzbrJsR05HdJ8E8o5K3
+X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI4MDE3MiBTYWx0ZWRfX3ZWyg6V1hYwo
+ 2n5b5TxbcTBUnbOVmITpDGhi/PBOUlXGgwsEzHuZ20eaytTxv9A0KjnglUm5TbDwO2te9im1d0h
+ 3gP0msw1aDZSotMLwshJy4hWzcPMk9ZBUpgx0h9gvx9iMsEB/fsZbB3nRLnhTynj0hcIVQwuqKs
+ AjitHGiaHKGGLpUKxygeoZkodTlD46luEjoBZ5EYN1bHxq4pe5sh0qvE+fozoxFrLXpLIq56zOt
+ BJrDWrYA6fYWZhKYa/BmVsVmfPtci9pWgumb0Ntx1MKRAGTqFEtPUMJWK1vftFzRM0Hd+Z+ED9+
+ uZFAgqh2LcJnFen0E2ulvLhgrcwCzrBVr3cLfnPYFQTdP+im9phtFcKo06Irdy3c9Xerbxio7u7
+ C22BAZ1WDc6pVQy1IlgA7SVhHQbCOYUf2XrkhTHpQxOguKsOf2FfY/0IDY9Cnvp5i9rvWUMvZJ7
+ 5/72jWV47PPgNs242xw==
+X-Proofpoint-ORIG-GUID: 9Ak5rjZPSbP2cKPq_13rNDE4h_gz5Y3P
+X-Proofpoint-GUID: 9Ak5rjZPSbP2cKPq_13rNDE4h_gz5Y3P
+X-Authority-Analysis: v=2.4 cv=I5dohdgg c=1 sm=1 tr=0 ts=69a334e6 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=EUspDBNiAAAA:8
+ a=_smvvQv66ppQ9i0oH1EA:9 a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-28_06,2026-02-27_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 impostorscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
+ adultscore=0 clxscore=1015 phishscore=0 malwarescore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2602280172
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[vinarskis.com,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[vinarskis.com:s=protonmail];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_COUNT_THREE(0.00)[3];
-	TAGGED_FROM(0.00)[bounces-94629-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[vinarskis.com:+];
-	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-94630-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
-	DBL_PROHIBIT(0.00)[0.0.0.18:email];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[alex@vinarskis.com,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[9];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,gnome.org:url,vinarskis.com:mid,vinarskis.com:dkim,vinarskis.com:email]
-X-Rspamd-Queue-Id: 688601C76EB
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[7];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 17D081C7D4E
 X-Rspamd-Action: no action
 
-Particular laptop comes with two sets of sensors:
-1. Motherboard: accelerometer
-2. Display/Camera module: accelerometer, ambient ligth (and more)
-   sensor
+Due to the way the DDR controller is organized on Glymur, hardware
+engineers strongly recommended disabling UBWC bank swizzling on Glymur.
+Follow that recommendation.
 
-Define both i2c busses (bitbanged), sensors and respective rotation
-matrices.
-
-Both accelerometers were tested individually via `monitor-sensor`.
-Display accelerometer is defined first, as it appears automatic
-screen rotation tools simply pick the 1st iio device.
-
-Signed-off-by: Aleksandrs Vinarskis <alex@vinarskis.com>
+Fixes: 9b21c3bd2480 ("soc: qcom: ubwc: Add configuration Glymur platform")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 ---
-Enable two accelerometers, one on the motherboard, one in display.
-In combination with userland screen rotation tools such as Gnome's
-'screen rotate' [1] this allows for automatic screen rotation depending
-on device orientation.
+ drivers/soc/qcom/ubwc_config.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-There appears to be an ALS, a "True Color Sensor with Flicker Detection"
-AMS TCS3530 at 0x39. Out-of-tree driver from OSRAM is available [2].
-Document bus, address, IRQ such that it could be added in the future.
-
-There is an issue with st_sensors which prevents initializing two
-sensors at the time, fix submitted [3]. It is not blocking this series,
-as without it, 2nd currently unused accelerometer on the motherboard
-will simply fail to probe.
-
-[1] https://extensions.gnome.org/extension/5389/screen-rotate
-[2] https://ams-osram.com/support/download-center?search=TCS3530&type=software&subtype=driver
-[3] https://lore.kernel.org/all/20260228-st-iio-trigger-v1-1-abf5909e547f@vinarskis.com/
----
- .../boot/dts/qcom/x1e80100-dell-xps13-9345.dts     | 94 ++++++++++++++++++++++
- 1 file changed, 94 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts b/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
-index 4c95b1af2c64432967dc1e8b1d1c8bfe5a59cc34..42829a7e7c407add12560c75ede9bf02bcc0d9f8 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
-@@ -40,6 +40,67 @@ switch-lid {
- 		};
- 	};
- 
-+	/* Display-mounted sensors */
-+	i2c-sensors-display {
-+		compatible = "i2c-gpio";
-+		i2c-gpio,delay-us = <2>;
-+
-+		scl-gpios = <&tlmm 232 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-+		sda-gpios = <&tlmm 231 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-+
-+		pinctrl-0 = <&sensors_i2c_display_default>;
-+		pinctrl-names = "default";
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		accelerometer@18 {
-+			compatible = "st,lis2dw12";
-+			reg = <0x18>;
-+
-+			interrupts-extended = <&tlmm 29 IRQ_TYPE_LEVEL_LOW>;
-+			pinctrl-0 = <&acc_display_int_n_default>;
-+			pinctrl-names = "default";
-+
-+			mount-matrix = "-1", "0", "0",
-+				       "0", "1", "0",
-+				       "0", "0", "-1";
-+		};
-+
-+		/* AMS TCS3530 @ 0x39, IRQ 93 */
-+	};
-+
-+	/* Motherboard-mounted sensors */
-+	i2c-sensors-mobo {
-+		compatible = "i2c-gpio";
-+		i2c-gpio,delay-us = <2>;
-+
-+		scl-gpios = <&tlmm 216 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-+		sda-gpios = <&tlmm 215 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-+
-+		pinctrl-0 = <&sensors_i2c_mobo_default>;
-+		pinctrl-names = "default";
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		accelerometer@18 {
-+			compatible = "st,lis2dw12";
-+			reg = <0x18>;
-+
-+			interrupts-extended = <&tlmm 28 IRQ_TYPE_LEVEL_LOW>;
-+			pinctrl-0 = <&acc_mobo_int_n_default>;
-+			pinctrl-names = "default";
-+
-+			vdd-supply = <&vreg_l10b_1p8>;
-+			vddio-supply = <&vreg_l10b_1p8>;
-+
-+			mount-matrix = "0", "1", "0",
-+				       "0", "0", "1",
-+				       "1", "0", "0";
-+		};
-+	};
-+
- 	leds {
- 		compatible = "gpio-leds";
- 
-@@ -450,6 +511,13 @@ vreg_l9b_2p9: ldo9 {
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
-+		vreg_l10b_1p8: ldo10 {
-+			regulator-name = "vreg_l10b_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
- 		vreg_l12b_1p2: ldo12 {
- 			regulator-name = "vreg_l12b_1p2";
- 			regulator-min-microvolt = <1200000>;
-@@ -1074,6 +1142,18 @@ &tlmm {
- 			       <76 4>,  /* SPI19 (TZ Protected) */
- 			       <238 1>; /* UFS Reset */
- 
-+	acc_display_int_n_default: acc-display-int-n-state {
-+		pins = "gpio29";
-+		function = "gpio";
-+		bias-pull-up;
-+	};
-+
-+	acc_mobo_int_n_default: acc-mobo-int-n-state {
-+		pins = "gpio28";
-+		function = "gpio";
-+		bias-pull-up;
-+	};
-+
- 	cam_indicator_en: cam-indicator-en-state {
- 		pins = "gpio110";
- 		function = "gpio";
-@@ -1197,6 +1277,20 @@ rtmr1_default: rtmr1-reset-n-active-state {
- 		bias-disable;
- 	};
- 
-+	sensors_i2c_display_default: sensors-i2c-display-state {
-+		pins = "gpio231", "gpio232";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	sensors_i2c_mobo_default: sensors-i2c-mobo-state {
-+		pins = "gpio215", "gpio216";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
- 	tpad_default: tpad-default-state {
- 		disable-pins {
- 			pins = "gpio38";
+diff --git a/drivers/soc/qcom/ubwc_config.c b/drivers/soc/qcom/ubwc_config.c
+index 1c25aaf55e52..31e0d55c6d9e 100644
+--- a/drivers/soc/qcom/ubwc_config.c
++++ b/drivers/soc/qcom/ubwc_config.c
+@@ -231,8 +231,7 @@ static const struct qcom_ubwc_cfg_data x1e80100_data = {
+ static const struct qcom_ubwc_cfg_data glymur_data = {
+ 	.ubwc_enc_version = UBWC_5_0,
+ 	.ubwc_dec_version = UBWC_5_0,
+-	.ubwc_swizzle = UBWC_SWIZZLE_ENABLE_LVL2 |
+-			UBWC_SWIZZLE_ENABLE_LVL3,
++	.ubwc_swizzle = 0;
+ 	.ubwc_bank_spread = true,
+ 	/* TODO: highest_bank_bit = 15 for LP_DDR4 */
+ 	.highest_bank_bit = 16,
 
 ---
-base-commit: 3fa5e5702a82d259897bd7e209469bc06368bf31
-change-id: 20260228-dell-xps-9345-accel-4ab40ed9c827
+base-commit: 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f
+change-id: 20260228-fix-glymur-ubwc-f673d5ca0581
 
 Best regards,
 -- 
-Aleksandrs Vinarskis <alex@vinarskis.com>
+With best wishes
+Dmitry
 
 
