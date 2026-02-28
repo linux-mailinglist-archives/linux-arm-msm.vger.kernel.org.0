@@ -1,80 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-94611-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94612-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 2T85Kk/5omkZ8gQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94611-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 15:18:55 +0100
+	id MGM2Npv5omn18QQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94612-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 15:20:11 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3937D1C3801
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 15:18:55 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4CA4E1C385E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 15:20:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 9CD6A302633D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 14:18:54 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 3D18030DF866
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 14:19:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 734EF371048;
-	Sat, 28 Feb 2026 14:18:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 962BC3033F4;
+	Sat, 28 Feb 2026 14:19:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O53O3dgX"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mSdT91KR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 568622EA754
-	for <linux-arm-msm@vger.kernel.org>; Sat, 28 Feb 2026 14:18:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0771D32E6BB
+	for <linux-arm-msm@vger.kernel.org>; Sat, 28 Feb 2026 14:19:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772288333; cv=none; b=fRYXWAGGik7aopOWRetaPvFjMUqL2bSRzu622Pk/Z0aoz/CNRyTQbK68AY+qJQc7ryC2TSchd0Pbxk33Xz1oGvJSDYW+imzxrrS75hiU8MOCm4Gqlfq7CryP6LZQqofk+yIUwQ5Qx/dVUZz307NnDgcUIpCfnsA/WljKs8zSQYw=
+	t=1772288346; cv=none; b=VPd2dJhZCwO34Jz2zNBZGfner8FtampOGa08Glc9kyIEw4J661RoUHQpBQAOO6uaRnipy/8kD0WYN0cIZD07p9dvUFvvjnZVnPBp256A9fEeWybpef9n9+KOahCeft9cZmO33Aq6vvNBKPppeuRSn69bbHdr5VrBzy7gBEdDx3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772288333; c=relaxed/simple;
-	bh=Oph1MiVl0LZG797TrmI5vXhHO5UUltZ+0w5/M+ZLDwo=;
+	s=arc-20240116; t=1772288346; c=relaxed/simple;
+	bh=2Q+93zcYs07cAM5ogkes+mi0L0Q3+o2uuGePjmWgSD0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HMh157uzVN1pmMma4LowYrtU9tIxwd1Hy57AZweBtDPLAbvXZWpbEu+ZmYkUo3P5EOVcsbjB22DN3AO+MsFZdahGNjlVnE0eV2LTEnQ2uoVZ19JVaNTi4eYKVmEYexR8dTsSBGz/cxd9BqyhiH/k6iIkOKQhdTOMtRTk7lIazNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O53O3dgX; arc=none smtp.client-ip=209.85.214.171
+	 MIME-Version; b=dX5PCz4z1hf10PbkKriqV4WXK3633+XS3UYw/e3kxO1Z5AjlmA71a3IKZTNbKpxB3CRjefbdVmdZC4i1kNgztReP6GGwP6nncHRd7Qai7O86su5U57HnSuwU5mv0o3vQLEqpl409y3Vt7eDIx3xTa4kE/uvLA0EjcDGorcEn+ZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mSdT91KR; arc=none smtp.client-ip=209.85.214.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2ab232cc803so15429465ad.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Feb 2026 06:18:52 -0800 (PST)
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2aae4816912so20392845ad.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Feb 2026 06:19:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772288332; x=1772893132; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772288344; x=1772893144; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9ctCiaK7OMF92qM4nTlZLKq6zwDFa78jAQVMaISXu7Q=;
-        b=O53O3dgXpJ8T2iGl7doAHdFJ2y8RXyv9U38fxfzQRX/0hifoS3nug7KbRugyreFmKc
-         uRWIBL1iilngk+cVjYpVGEOQrR0Z6sFHWRwFu1JOhcuJSw9A1LCoLBeYdZB4AJ4kW0Du
-         QQ9o7UinmZRFqIcwDeoWHYWuJ3R9BHlYFIhRyK/VAmL9jBx2pF85HWdyhPmUX6gd6wml
-         QMcLI6V+9UA2l2IQ/cGnv4CcVojnKbqfcHGFE8xWQoBc6UQcAun1b8VsC1WpZkF1qqas
-         cdHdOh6nnOLFQUQcyNZZxWPcdEpDIpAj/ECF0ROfwgr2y1BkgBTrAHjY7PtQPCoAkqeh
-         MEww==
+        bh=80XRk/bwjPPdNiwFQbXl7n9xoB7/2Y8y5DKEs5r1FxA=;
+        b=mSdT91KRzG3uT5Rk7tcndvibxIDUrY7C3VvZei+4jNco/J9uVQRVcm8aj0rszG27GW
+         /AWSC4HQEkglI7GlXS0G1TlcKdyMAGT8vLaVvsL00d+S4tI0+vxgpSxYhgPoU4g2c229
+         2u+BTPj8TChuSvTGiAqYoZWcuHMbgxpd2EecmWVS/Bo3J098WZWRh1HwMglSo1VIJwfF
+         TuIZuus/SKtGWcMIx37f8T+W2HydUGFcsmrB8Tpn/FuYlHR1wWmmuLNcDwN0pXLM6BWK
+         FN1l4Sp0D5UeHToYel9Dxt08CL4bZn+aEBBCNs5VwTz4oZiLWcFEhKPppnh1ELHspH3m
+         p2cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772288332; x=1772893132;
+        d=1e100.net; s=20230601; t=1772288344; x=1772893144;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=9ctCiaK7OMF92qM4nTlZLKq6zwDFa78jAQVMaISXu7Q=;
-        b=EZFlTHKLfiqRDk9dofGUuj/1B77di++OIT773vGArZE3vF0milhoNI0NcYPfn+J12o
-         8stcfKI0SIZD6i/SLGj+KLzPg/jclOqLcqTFapboNL/Aac3r3Ydqzb1x7kceRUXGeO6S
-         zKhYtWiP3n2/a56UDPwbhyQgpsnp47uXQ9IOdmgmv94Dbqr8JqlcWTgGpgKPF/6z4W2z
-         qExNS1GR4AHOug0hFMEJ9Wer9pcYzF8ut1cihA+sJekoWFcaEGc+IwWX7R0aSRiqryNz
-         ODEUOkxwQQR1tiL564SOZgf9ovy9PVzUmYPmgNeXAezesgQfEz00ffwZ0Nh8Uo59VcvG
-         8ZIg==
-X-Gm-Message-State: AOJu0YyoVfv221oQzhT/hkAw6zyHT1mNkgPio0ap351VIQJcT1enEYtp
-	2T8UWf0WfOAGNn1M2wK4PPsvcQ/wCxnBG/AL3ptHUHZbmrY6815Fz6hg
-X-Gm-Gg: ATEYQzwv35qBKWXMgrwBdsIin+sIXgtvj4Xv2EduHlr7aHevfzJcmzF5+xliDx8VMkS
-	kIJIKW57Bo9Mg4zn57vUzg7bt2J8hivJXuGqqjkEDw0DOcjbnRznVSf2kH4eE/jHmcObGKx8JTA
-	myN43BeJBVnsaeHvlPRiQYT0LHaIkPbnyrMYHk8i2vuzCavfRHEezVPQNfjjE1MpEYHocy+YFto
-	7ghe0iVJpCUGQ7SKm/Kzl6fShLGL3Qp/+Xw5wJe/PyiHkBhw822HHPlZKa+z541FHqdQQ8NrPAQ
-	vU5RDJA3EkPPtcy9IuQJAagV/xX8EVbDn8rGnsbGvHlNmTapjwwI5EqCsaAecptK09PquBSNRjH
-	IftA6+ylONlDtK/DacZoeroZrOHI0tJqQJ8E5F5FnZZbcqB7ASag22bdwAyfFeo4v4o39OYbUvJ
-	jJndHHlauQwhgHQDpkzufDisBpy4jID/s=
-X-Received: by 2002:a17:903:2f8c:b0:2aa:e570:6e6d with SMTP id d9443c01a7336-2ae2e4bcceemr62639155ad.40.1772288331616;
-        Sat, 28 Feb 2026 06:18:51 -0800 (PST)
+        bh=80XRk/bwjPPdNiwFQbXl7n9xoB7/2Y8y5DKEs5r1FxA=;
+        b=IPrUoc27Kx7pQ4QjYeI6LtUy2if3ajBLfI2tphvE51hcSxqmi4Tz4SAFJTBnIeSmBP
+         sSE6uqCwY3pQGjcqGqGxWgoRAmezYfiJEQGF/vhiVh6B6hn/3DoclTKGPlxz6o79A1kH
+         9dmCv8BMXldy+/34BWrTDNYX7qrT/5QmR4ZbFHvIzLTrVEn5uFbrtntECka/4qnQnkLl
+         mwVgXf2D/+xgg2PXuPKpzlxTmNR7j515mDb71ZaI8xmyeoW7oC54RGn8IlbGfMWvDtv4
+         rNbAhDzbCVtTvHK1b+ZZGWMNpk/umeN3q9yyngDRmwBrIBfeQvEFll4iFG2su+LA/O+8
+         vr5Q==
+X-Gm-Message-State: AOJu0Yw34BvwCi5IufimBQj+ElChqwLnBZiw3+VSgQzyLF+yqx09F3X7
+	jTT5HfFW43kmYLN1jNS/VJX1z9Poxn0mCdFoeuwpCW0v4v46XU7M6J20snHF/8mq3Xs=
+X-Gm-Gg: ATEYQzwyCoBjAZpabZ59whjA99QulBJPlj4y2CZihg+MpiQtDfxscvZ8QdhvR910yDR
+	ksLI7EPBagBDTlVBjMr8bALr1q1niCEhVjxAaqdxeE1IYs4nXGinqphdLuTmR71lvJc/UBUr8w3
+	xITa4g0IkR76ARyfVZwg8TiaQxqUzpCzi0qy5NJ/nj+pj+t9LFV179DFStjq4tmma2IKZZyFUXj
+	z+e6GNtJl5HevQzX70rfiB/BGPoqNqOOjblaYFmjoicIkhW1+PrHPmidrHsNpinWt2QKhSv3jUS
+	dr9niNsMLIj8cpJ3UAb9tEBzPlI+lrECTudNj125haGxqEp0KHYZoTT4qH1+MipH7NPMwtvDblC
+	3ZtfPn53c0EX8YCbJqlgd5FFJmkKfKT9qieNNJW3hlreeKUTnsWcsUAhZYi4tjz/NdScg4WxlHy
+	HDapvIF5tTm6nBk5R6jICD
+X-Received: by 2002:a17:902:f64c:b0:2aa:d6a1:e18b with SMTP id d9443c01a7336-2ae2e3f14e1mr76946475ad.18.1772288344231;
+        Sat, 28 Feb 2026 06:19:04 -0800 (PST)
 Received: from nuvole ([2408:844d:b08:3702:16a4:72fd:8170:4ed3])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae3d1b2c5esm18697235ad.6.2026.02.28.06.18.40
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae3d1b2c5esm18697235ad.6.2026.02.28.06.18.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Feb 2026 06:18:51 -0800 (PST)
+        Sat, 28 Feb 2026 06:19:03 -0800 (PST)
 From: Pengyu Luo <mitltlatltl@gmail.com>
 To: Rob Clark <robin.clark@oss.qualcomm.com>,
 	Dmitry Baryshkov <lumag@kernel.org>,
@@ -102,9 +102,9 @@ Cc: linux-arm-msm@vger.kernel.org,
 	Tianyu Gao <gty0622@gmail.com>,
 	White Lewis <liu224806@gmail.com>,
 	Pengyu Luo <mitltlatltl@gmail.com>
-Subject: [PATCH v3 3/4] dt-bindings: display: msm: Document DSI controller and DSI PHY on SC8280XP
-Date: Sat, 28 Feb 2026 22:17:14 +0800
-Message-ID: <20260228141715.35307-4-mitltlatltl@gmail.com>
+Subject: [PATCH v3 4/4] arm64: dts: qcom: sc8280xp: Add dsi nodes on SC8280XP
+Date: Sat, 28 Feb 2026 22:17:15 +0800
+Message-ID: <20260228141715.35307-5-mitltlatltl@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260228141715.35307-1-mitltlatltl@gmail.com>
 References: <20260228141715.35307-1-mitltlatltl@gmail.com>
@@ -120,92 +120,550 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_MISSING_CHARSET(0.50)[];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCPT_COUNT_TWELVE(0.00)[26];
 	FREEMAIL_CC(0.00)[vger.kernel.org,lists.freedesktop.org,gmail.com];
 	FREEMAIL_FROM(0.00)[gmail.com];
-	TAGGED_FROM(0.00)[bounces-94611-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-94612-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,linux.intel.com,suse.de,ffwll.ch,quicinc.com,marek.ca];
+	RCPT_COUNT_TWELVE(0.00)[26];
 	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,linux.intel.com,suse.de,ffwll.ch,quicinc.com,marek.ca];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
 	FROM_NEQ_ENVFROM(0.00)[mitltlatltl@gmail.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
 	DKIM_TRACE(0.00)[gmail.com:+];
-	DBL_PROHIBIT(0.00)[0.0.0.2:email,0.0.0.1:email];
+	RCVD_COUNT_FIVE(0.00)[5];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,0.0.0.4:email]
-X-Rspamd-Queue-Id: 3937D1C3801
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 4CA4E1C385E
 X-Rspamd-Action: no action
 
-Document DSI controller and DSI phy on SC8280XP platform.
+The DT configuration follows other Samsung 5nm-based Qualcomm SOCs,
+utilizing the same register layouts and clock structures.
 
+However, DSI won't work properly for now until we submit dispcc fixes.
+And some DSC enabled panels require DPU timing calculation fixes too.
+(hdisplay / width timing round errors cause the fifo error)
+
+Co-developed-by: Tianyu Gao <gty0622@gmail.com>
+Signed-off-by: Tianyu Gao <gty0622@gmail.com>
 Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
+Tested-by: White Lewis <liu224806@gmail.com> # HUAWEI Gaokun3
 ---
- .../display/msm/qcom,sc8280xp-mdss.yaml       | 30 +++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 404 ++++++++++++++++++++++++-
+ 1 file changed, 396 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sc8280xp-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sc8280xp-mdss.yaml
-index af79406e1..a710cc84e 100644
---- a/Documentation/devicetree/bindings/display/msm/qcom,sc8280xp-mdss.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/qcom,sc8280xp-mdss.yaml
-@@ -50,6 +50,22 @@ patternProperties:
-           - qcom,sc8280xp-dp
-           - qcom,sc8280xp-edp
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+index 706eb1309..1599d698b 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+@@ -5,6 +5,7 @@
+  */
  
-+  "^dsi@[0-9a-f]+$":
-+    type: object
-+    additionalProperties: true
-+    properties:
-+      compatible:
-+        contains:
-+          const: qcom,sc8280xp-dsi-ctrl
-+
-+  "^phy@[0-9a-f]+$":
-+    type: object
-+    additionalProperties: true
-+    properties:
-+      compatible:
-+        contains:
-+          const: qcom,sc8280xp-dsi-phy-5nm
-+
- unevaluatedProperties: false
+ #include <dt-bindings/clock/qcom,dispcc-sc8280xp.h>
++#include <dt-bindings/clock/qcom,dsi-phy-28nm.h>
+ #include <dt-bindings/clock/qcom,gcc-sc8280xp.h>
+ #include <dt-bindings/clock/qcom,gpucc-sc8280xp.h>
+ #include <dt-bindings/clock/qcom,rpmh.h>
+@@ -4652,13 +4653,31 @@ ports {
  
- examples:
-@@ -129,6 +145,20 @@ examples:
-                     };
-                 };
+ 					port@0 {
+ 						reg = <0>;
++
+ 						mdss0_intf0_out: endpoint {
+ 							remote-endpoint = <&mdss0_dp0_in>;
+ 						};
+ 					};
  
-+                port@1 {
-+                    reg = <1>;
-+                    dpu_intf1_out: endpoint {
-+                        remote-endpoint = <&mdss0_dsi0_in>;
-+                    };
-+                };
++					port@1 {
++						reg = <1>;
 +
-+                port@2 {
-+                    reg = <2>;
-+                    dpu_intf2_out: endpoint {
-+                        remote-endpoint = <&mdss0_dsi1_in>;
-+                    };
-+                };
++						mdss0_intf1_out: endpoint {
++							remote-endpoint = <&mdss0_dsi0_in>;
++						};
++					};
 +
-                 port@4 {
-                     reg = <4>;
-                     endpoint {
++					port@2 {
++						reg = <2>;
++
++						mdss0_intf2_out: endpoint {
++							remote-endpoint = <&mdss0_dsi1_in>;
++						};
++					};
++
+ 					port@4 {
+ 						reg = <4>;
++
+ 						mdss0_intf4_out: endpoint {
+ 							remote-endpoint = <&mdss0_dp1_in>;
+ 						};
+@@ -4666,6 +4685,7 @@ mdss0_intf4_out: endpoint {
+ 
+ 					port@5 {
+ 						reg = <5>;
++
+ 						mdss0_intf5_out: endpoint {
+ 							remote-endpoint = <&mdss0_dp3_in>;
+ 						};
+@@ -4673,6 +4693,7 @@ mdss0_intf5_out: endpoint {
+ 
+ 					port@6 {
+ 						reg = <6>;
++
+ 						mdss0_intf6_out: endpoint {
+ 							remote-endpoint = <&mdss0_dp2_in>;
+ 						};
+@@ -4791,6 +4812,189 @@ opp-810000000 {
+ 				};
+ 			};
+ 
++			mdss0_dsi0: dsi@ae94000 {
++				compatible = "qcom,sc8280xp-dsi-ctrl",
++					     "qcom,sa8775p-dsi-ctrl",
++					     "qcom,mdss-dsi-ctrl";
++				reg = <0 0x0ae94000 0 0x400>;
++				reg-names = "dsi_ctrl";
++
++				interrupt-parent = <&mdss0>;
++				interrupts = <4>;
++
++				clocks = <&dispcc0 DISP_CC_MDSS_BYTE0_CLK>,
++					 <&dispcc0 DISP_CC_MDSS_BYTE0_INTF_CLK>,
++					 <&dispcc0 DISP_CC_MDSS_PCLK0_CLK>,
++					 <&dispcc0 DISP_CC_MDSS_ESC0_CLK>,
++					 <&dispcc0 DISP_CC_MDSS_AHB_CLK>,
++					 <&gcc GCC_DISP_HF_AXI_CLK>;
++				clock-names = "byte",
++					      "byte_intf",
++					      "pixel",
++					      "core",
++					      "iface",
++					      "bus";
++
++				assigned-clocks = <&dispcc0 DISP_CC_MDSS_BYTE0_CLK_SRC>,
++						  <&dispcc0 DISP_CC_MDSS_PCLK0_CLK_SRC>;
++				assigned-clock-parents = <&mdss0_dsi0_phy DSI_BYTE_PLL_CLK>,
++							 <&mdss0_dsi0_phy DSI_PIXEL_PLL_CLK>;
++
++				operating-points-v2 = <&dsi_opp_table>;
++				power-domains = <&rpmhpd SC8280XP_MMCX>;
++
++				refgen-supply = <&refgen>;
++
++				phys = <&mdss0_dsi0_phy>;
++				phy-names = "dsi";
++
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				status = "disabled";
++
++				ports {
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					port@0 {
++						reg = <0>;
++
++						mdss0_dsi0_in: endpoint {
++							remote-endpoint = <&mdss0_intf1_out>;
++						};
++					};
++
++					port@1 {
++						reg = <1>;
++
++						mdss0_dsi0_out: endpoint {
++						};
++					};
++				};
++
++				dsi_opp_table: opp-table {
++					compatible = "operating-points-v2";
++
++					opp-187500000 {
++						opp-hz = /bits/ 64 <187500000>;
++						required-opps = <&rpmhpd_opp_low_svs>;
++					};
++
++					opp-300000000 {
++						opp-hz = /bits/ 64 <300000000>;
++						required-opps = <&rpmhpd_opp_svs>;
++					};
++
++					opp-358000000 {
++						opp-hz = /bits/ 64 <358000000>;
++						required-opps = <&rpmhpd_opp_svs_l1>;
++					};
++				};
++			};
++
++			mdss0_dsi0_phy: phy@ae94400 {
++				compatible = "qcom,sc8280xp-dsi-phy-5nm"
++					     "qcom,sa8775p-dsi-phy-5nm";
++				reg = <0 0x0ae94400 0 0x200>,
++				      <0 0x0ae94600 0 0x280>,
++				      <0 0x0ae94900 0 0x280>;
++				reg-names = "dsi_phy",
++					    "dsi_phy_lane",
++					    "dsi_pll";
++
++				#clock-cells = <1>;
++				#phy-cells = <0>;
++
++				clocks = <&dispcc0 DISP_CC_MDSS_AHB_CLK>,
++					 <&rpmhcc RPMH_CXO_CLK>;
++				clock-names = "iface", "ref";
++
++				status = "disabled";
++			};
++
++			mdss0_dsi1: dsi@ae96000 {
++				compatible = "qcom,sc8280xp-dsi-ctrl",
++					     "qcom,sa8775p-dsi-ctrl",
++					     "qcom,mdss-dsi-ctrl";
++				reg = <0 0x0ae96000 0 0x400>;
++				reg-names = "dsi_ctrl";
++
++				interrupt-parent = <&mdss0>;
++				interrupts = <5>;
++
++				clocks = <&dispcc0 DISP_CC_MDSS_BYTE1_CLK>,
++					 <&dispcc0 DISP_CC_MDSS_BYTE1_INTF_CLK>,
++					 <&dispcc0 DISP_CC_MDSS_PCLK1_CLK>,
++					 <&dispcc0 DISP_CC_MDSS_ESC1_CLK>,
++					 <&dispcc0 DISP_CC_MDSS_AHB_CLK>,
++					 <&gcc GCC_DISP_HF_AXI_CLK>;
++				clock-names = "byte",
++					      "byte_intf",
++					      "pixel",
++					      "core",
++					      "iface",
++					      "bus";
++
++				assigned-clocks = <&dispcc0 DISP_CC_MDSS_BYTE1_CLK_SRC>,
++						  <&dispcc0 DISP_CC_MDSS_PCLK1_CLK_SRC>;
++				assigned-clock-parents = <&mdss0_dsi1_phy DSI_BYTE_PLL_CLK>,
++							 <&mdss0_dsi1_phy DSI_PIXEL_PLL_CLK>;
++
++				operating-points-v2 = <&dsi_opp_table>;
++				power-domains = <&rpmhpd SC8280XP_MMCX>;
++
++				refgen-supply = <&refgen>;
++
++				phys = <&mdss0_dsi1_phy>;
++				phy-names = "dsi";
++
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				status = "disabled";
++
++				ports {
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					port@0 {
++						reg = <0>;
++
++						mdss0_dsi1_in: endpoint {
++							remote-endpoint = <&mdss0_intf2_out>;
++						};
++					};
++
++					port@1 {
++						reg = <1>;
++
++						mdss0_dsi1_out: endpoint {
++						};
++					};
++				};
++			};
++
++			mdss0_dsi1_phy: phy@ae96400 {
++				compatible = "qcom,sc8280xp-dsi-phy-5nm"
++					     "qcom,sa8775p-dsi-phy-5nm";
++				reg = <0 0x0ae96400 0 0x200>,
++				      <0 0x0ae96600 0 0x280>,
++				      <0 0x0ae96900 0 0x280>;
++				reg-names = "dsi_phy",
++					    "dsi_phy_lane",
++					    "dsi_pll";
++
++				#clock-cells = <1>;
++				#phy-cells = <0>;
++
++				clocks = <&dispcc0 DISP_CC_MDSS_AHB_CLK>,
++					 <&rpmhcc RPMH_CXO_CLK>;
++				clock-names = "iface", "ref";
++
++				status = "disabled";
++			};
++
+ 			mdss0_dp1: displayport-controller@ae98000 {
+ 				compatible = "qcom,sc8280xp-dp";
+ 				reg = <0 0xae98000 0 0x200>,
+@@ -5080,10 +5284,10 @@ dispcc0: clock-controller@af00000 {
+ 				 <&mdss0_dp2_phy 1>,
+ 				 <&mdss0_dp3_phy 0>,
+ 				 <&mdss0_dp3_phy 1>,
+-				 <0>,
+-				 <0>,
+-				 <0>,
+-				 <0>;
++				 <&mdss0_dsi0_phy DSI_BYTE_PLL_CLK>,
++				 <&mdss0_dsi0_phy DSI_PIXEL_PLL_CLK>,
++				 <&mdss0_dsi1_phy DSI_BYTE_PLL_CLK>,
++				 <&mdss0_dsi1_phy DSI_PIXEL_PLL_CLK>;
+ 			power-domains = <&rpmhpd SC8280XP_MMCX>;
+ 
+ 			#clock-cells = <1>;
+@@ -6011,13 +6215,31 @@ ports {
+ 
+ 					port@0 {
+ 						reg = <0>;
++
+ 						mdss1_intf0_out: endpoint {
+ 							remote-endpoint = <&mdss1_dp0_in>;
+ 						};
+ 					};
+ 
++					port@1 {
++						reg = <1>;
++
++						mdss1_intf1_out: endpoint {
++							remote-endpoint = <&mdss1_dsi0_in>;
++						};
++					};
++
++					port@2 {
++						reg = <2>;
++
++						mdss1_intf2_out: endpoint {
++							remote-endpoint = <&mdss1_dsi1_in>;
++						};
++					};
++
+ 					port@4 {
+ 						reg = <4>;
++
+ 						mdss1_intf4_out: endpoint {
+ 							remote-endpoint = <&mdss1_dp1_in>;
+ 						};
+@@ -6025,6 +6247,7 @@ mdss1_intf4_out: endpoint {
+ 
+ 					port@5 {
+ 						reg = <5>;
++
+ 						mdss1_intf5_out: endpoint {
+ 							remote-endpoint = <&mdss1_dp3_in>;
+ 						};
+@@ -6032,6 +6255,7 @@ mdss1_intf5_out: endpoint {
+ 
+ 					port@6 {
+ 						reg = <6>;
++
+ 						mdss1_intf6_out: endpoint {
+ 							remote-endpoint = <&mdss1_dp2_in>;
+ 						};
+@@ -6147,6 +6371,170 @@ opp-810000000 {
+ 				};
+ 			};
+ 
++			mdss1_dsi0: dsi@22094000 {
++				compatible = "qcom,sc8280xp-dsi-ctrl",
++					     "qcom,sa8775p-dsi-ctrl",
++					     "qcom,mdss-dsi-ctrl";
++				reg = <0 0x22094000 0 0x400>;
++				reg-names = "dsi_ctrl";
++
++				interrupt-parent = <&mdss1>;
++				interrupts = <4>;
++
++				clocks = <&dispcc1 DISP_CC_MDSS_BYTE0_CLK>,
++					 <&dispcc1 DISP_CC_MDSS_BYTE0_INTF_CLK>,
++					 <&dispcc1 DISP_CC_MDSS_PCLK0_CLK>,
++					 <&dispcc1 DISP_CC_MDSS_ESC0_CLK>,
++					 <&dispcc1 DISP_CC_MDSS_AHB_CLK>,
++					 <&gcc GCC_DISP_HF_AXI_CLK>;
++				clock-names = "byte",
++					      "byte_intf",
++					      "pixel",
++					      "core",
++					      "iface",
++					      "bus";
++
++				assigned-clocks = <&dispcc1 DISP_CC_MDSS_BYTE0_CLK_SRC>,
++						  <&dispcc1 DISP_CC_MDSS_PCLK0_CLK_SRC>;
++				assigned-clock-parents = <&mdss1_dsi1_phy DSI_BYTE_PLL_CLK>,
++							 <&mdss1_dsi0_phy DSI_PIXEL_PLL_CLK>;
++
++				operating-points-v2 = <&dsi_opp_table>;
++				power-domains = <&rpmhpd SC8280XP_MMCX>;
++
++				refgen-supply = <&refgen>;
++
++				phys = <&mdss1_dsi0_phy>;
++				phy-names = "dsi";
++
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				status = "disabled";
++
++				ports {
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					port@0 {
++						reg = <0>;
++
++						mdss1_dsi0_in: endpoint {
++							remote-endpoint = <&mdss1_intf1_out>;
++						};
++					};
++
++					port@1 {
++						reg = <1>;
++
++						mdss1_dsi0_out: endpoint {
++						};
++					};
++				};
++			};
++
++			mdss1_dsi0_phy: phy@22094400 {
++				compatible = "qcom,sc8280xp-dsi-phy-5nm"
++					     "qcom,sa8775p-dsi-phy-5nm";
++				reg = <0 0x22094400 0 0x200>,
++				      <0 0x22094600 0 0x280>,
++				      <0 0x22094900 0 0x280>;
++				reg-names = "dsi_phy",
++					    "dsi_phy_lane",
++					    "dsi_pll";
++
++				#clock-cells = <1>;
++				#phy-cells = <0>;
++
++				clocks = <&dispcc1 DISP_CC_MDSS_AHB_CLK>,
++					 <&rpmhcc RPMH_CXO_CLK>;
++				clock-names = "iface", "ref";
++
++				status = "disabled";
++			};
++
++			mdss1_dsi1: dsi@22096000 {
++				compatible = "qcom,sc8280xp-dsi-ctrl",
++					     "qcom,sa8775p-dsi-ctrl",
++					     "qcom,mdss-dsi-ctrl";
++				reg = <0 0x22096000 0 0x400>;
++				reg-names = "dsi_ctrl";
++
++				interrupt-parent = <&mdss1>;
++				interrupts = <5>;
++
++				clocks = <&dispcc1 DISP_CC_MDSS_BYTE1_CLK>,
++					 <&dispcc1 DISP_CC_MDSS_BYTE1_INTF_CLK>,
++					 <&dispcc1 DISP_CC_MDSS_PCLK1_CLK>,
++					 <&dispcc1 DISP_CC_MDSS_ESC1_CLK>,
++					 <&dispcc1 DISP_CC_MDSS_AHB_CLK>,
++					 <&gcc GCC_DISP_HF_AXI_CLK>;
++				clock-names = "byte",
++					      "byte_intf",
++					      "pixel",
++					      "core",
++					      "iface",
++					      "bus";
++
++				assigned-clocks = <&dispcc1 DISP_CC_MDSS_BYTE1_CLK_SRC>,
++						  <&dispcc1 DISP_CC_MDSS_PCLK1_CLK_SRC>;
++				assigned-clock-parents = <&mdss1_dsi1_phy DSI_BYTE_PLL_CLK>,
++							 <&mdss1_dsi1_phy DSI_PIXEL_PLL_CLK>;
++
++				operating-points-v2 = <&dsi_opp_table>;
++				power-domains = <&rpmhpd SC8280XP_MMCX>;
++
++				refgen-supply = <&refgen>;
++
++				phys = <&mdss1_dsi1_phy>;
++				phy-names = "dsi";
++
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				status = "disabled";
++
++				ports {
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					port@0 {
++						reg = <0>;
++
++						mdss1_dsi1_in: endpoint {
++							remote-endpoint = <&mdss1_intf2_out>;
++						};
++					};
++
++					port@1 {
++						reg = <1>;
++
++						mdss1_dsi1_out: endpoint {
++						};
++					};
++				};
++			};
++
++			mdss1_dsi1_phy: phy@22096400 {
++				compatible = "qcom,sc8280xp-dsi-phy-5nm"
++					     "qcom,sa8775p-dsi-phy-5nm";
++				reg = <0 0x22096400 0 0x200>,
++				      <0 0x22096600 0 0x280>,
++				      <0 0x22096900 0 0x280>;
++				reg-names = "dsi_phy",
++					    "dsi_phy_lane",
++					    "dsi_pll";
++
++				#clock-cells = <1>;
++				#phy-cells = <0>;
++
++				clocks = <&dispcc1 DISP_CC_MDSS_AHB_CLK>,
++					 <&rpmhcc RPMH_CXO_CLK>;
++				clock-names = "iface", "ref";
++
++				status = "disabled";
++			};
++
+ 			mdss1_dp1: displayport-controller@22098000 {
+ 				compatible = "qcom,sc8280xp-dp";
+ 				reg = <0 0x22098000 0 0x200>,
+@@ -6434,10 +6822,10 @@ dispcc1: clock-controller@22100000 {
+ 				 <&mdss1_dp2_phy 1>,
+ 				 <&mdss1_dp3_phy 0>,
+ 				 <&mdss1_dp3_phy 1>,
+-				 <0>,
+-				 <0>,
+-				 <0>,
+-				 <0>;
++				 <&mdss1_dsi0_phy DSI_BYTE_PLL_CLK>,
++				 <&mdss1_dsi0_phy DSI_PIXEL_PLL_CLK>,
++				 <&mdss1_dsi1_phy DSI_BYTE_PLL_CLK>,
++				 <&mdss1_dsi1_phy DSI_PIXEL_PLL_CLK>;
+ 			power-domains = <&rpmhpd SC8280XP_MMCX>;
+ 
+ 			#clock-cells = <1>;
 -- 
 2.53.0
 
