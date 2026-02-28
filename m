@@ -1,174 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-94645-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94646-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MOHhLDpno2kkCgUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94645-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 23:07:54 +0100
+	id iCWQJnlpo2mACgUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94646-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 23:17:29 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 916D91C95F4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 23:07:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id F2E441C96EC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 23:17:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 16D5D3002766
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 22:07:52 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B3B613014945
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 22:16:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19D6038D000;
-	Sat, 28 Feb 2026 22:07:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F056A3D3CFD;
+	Sat, 28 Feb 2026 22:16:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="YjkFqDs0"
+	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="VrQEcZTl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-188.mta0.migadu.com (out-188.mta0.migadu.com [91.218.175.188])
+Received: from out-189.mta0.migadu.com (out-189.mta0.migadu.com [91.218.175.189])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 022762D837E;
-	Sat, 28 Feb 2026 22:07:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.188
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B96A394460;
+	Sat, 28 Feb 2026 22:16:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.189
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772316469; cv=none; b=f7PWKaFlvx4H6BZPLEFCrrdeGk0vhMW726eRcwsBLxFcCWG85NKa1cy9CkeMI5ZMmI68+j9AB+D35T5f1Yn3hK+NtXKrCNl6RMIVBro2WsV/VU1nQFCkQQuc46GwYdIP0KFVNIV2j119GcJTjfkWIlTqNsWVLpfUJKaEeiK88EY=
+	t=1772317016; cv=none; b=f+gDsgyliObwGGTZe//3OTJMcB5cisXGI0LY3nYH9lM2p9Y1XLD3ZzG8J5fBCRmPFbJPkSEHPKzUUEnx7+FEHyz9LTbdzr/aXVqp41d8BbOlOOQitVOlKda/GUf3WG8/Hf1gLusUkFaujfL373B2EBJh7dr+KGtLAeZ2QbsQqvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772316469; c=relaxed/simple;
-	bh=PS+i3OemeO6V+jJnDzdsDVy8uM7Ef4F73B2Hv8KC6qc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=r7jOdmYX+Cazw/ZZXjbq8AfGppCOcUuMEB8rnP5xgT/PUH7W8lNPi3Pl4qT1jhICKYQCCXdab7VSSC1iv3J0asp71/bgDYXSaZsQkpJtvS4yUXpQj5dEfG9sbXh1jdIc01+opaBKDs8m5Dt8wNeg0nMlxKlThvQHp2zSTNOA+/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=YjkFqDs0; arc=none smtp.client-ip=91.218.175.188
+	s=arc-20240116; t=1772317016; c=relaxed/simple;
+	bh=po1GJ5OL+l37vGYwOeXHbTRrLbPHVWf6bedwzCyotzw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PqTdCNlBc/H6ylqVM1n0ob2AQ2LnSt2CAu8QGfy2/2S9iqVp2iDFPWcf/CtEBaWU+nWmu7A2Z5Ghr+rqkhYQHfAARzw0sNtz2Ygr4bqhY1hX3LUmoWFZQLPwLEkSsxB9S+crn9jwbN6Xw18VNfp0XHDlsPBfciUa2XnMhPJOCAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=VrQEcZTl; arc=none smtp.client-ip=91.218.175.189
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+Message-ID: <c4e93e78-427a-45a6-9560-399b578e9260@packett.cool>
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
-	s=key1; t=1772316463;
+	s=key1; t=1772317013;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=V5AVxV03NAnElMqKItv7U4khI5BMEJHhDRtUcMyS+eo=;
-	b=YjkFqDs0Pxqc6Amt9jN4cWcFSP9VFUm6lk1ITcE6ViWCH0FuiwyK304YH4BNvDZSx/LQmn
-	vgAbnG7qp50XXKbxySTAEHWdQVq4L0p7bl2+NaMr5bFcwLk7ZmtGe8On7nz75K1PRphGlI
-	o7eBfrzHkgkkf337+73WPGL18U6y4SgQpiwxzFMGmXs3Cfufc0zjvitVdE+sFwOmYTjGe7
-	/f1nndsJNs9sisqlYghSgdfq+/IdXUMT42svEJPQ5jSgQdJv7HtHNrleQI2VX3MXlRRBpZ
-	yraEcRL6l6V/b7/915pvJHKVAv6v2IOSYHkLtIJL1TrpvieLSi2mmfEuowWPjg==
-From: Val Packett <val@packett.cool>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Wesley Cheng <wesley.cheng@oss.qualcomm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Val Packett <val@packett.cool>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v2] phy: qcom: qmp-combo: Move pipe_clk on/off to common
-Date: Sat, 28 Feb 2026 19:05:38 -0300
-Message-ID: <20260228220634.22778-2-val@packett.cool>
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=mo8hhAD0T4w5u4cZDhtfyEdn8aaXHkZHMK1H62Gbpmw=;
+	b=VrQEcZTlYvv3IkuNXllFn7cX8Ffj/S6Whqymcl4G5uECvZvknPoJnTjyWRxRoANd5EMbTG
+	NfNaaASUoO2EhE5q9lq5zh9Uui+6r0H1IswxdEFvJWolIbxjk23zZUQVxvN37XsvRaECfh
+	BcMfr39l9XpcXZll4VNUYcZGAURwkcSOyAgEckX9s3ImA+WDgV1miMo/kyvqAiM7SIMU6X
+	BogSeBCDPcrGTpeiuU2jPr8omPStiFtiCTtZ11nNWCCgQwJr5Ltfklm3wrTQHQCW9FWdJy
+	mjAgwaU8n/qoaMIGIlSxL7mqo74jwsE3R2o0gqwymjTunXurXtCzK0irezHRHg==
+Date: Sat, 28 Feb 2026 19:16:44 -0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Subject: Re: [PATCH v3 3/3] drm/msm/adreno: Trust the SSoT UBWC config
+To: Konrad Dybcio <konradybcio@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, Kees Cook <kees@kernel.org>,
+ "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
+ Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+ Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar
+ <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-hardening@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+References: <20260108-topic-smem_dramc-v3-0-6b64df58a017@oss.qualcomm.com>
+ <20260108-topic-smem_dramc-v3-3-6b64df58a017@oss.qualcomm.com>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Val Packett <val@packett.cool>
+In-Reply-To: <20260108-topic-smem_dramc-v3-3-6b64df58a017@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[packett.cool,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
 	R_DKIM_ALLOW(-0.20)[packett.cool:s=key1];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_COUNT_THREE(0.00)[3];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94645-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[packett.cool:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	MISSING_XM_UA(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[val@packett.cool,linux-arm-msm@vger.kernel.org];
+	RCVD_COUNT_THREE(0.00)[3];
+	FREEMAIL_TO(0.00)[kernel.org,oss.qualcomm.com,poorly.run,linux.dev,gmail.com,somainline.org,ffwll.ch];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-94646-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[val@packett.cool,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[packett.cool:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[11];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[packett.cool:mid,packett.cool:dkim,packett.cool:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 916D91C95F4
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,packett.cool:mid,packett.cool:dkim,qualcomm.com:email,treehouse.systems:url]
+X-Rspamd-Queue-Id: F2E441C96EC
 X-Rspamd-Action: no action
 
-Keep the USB pipe clock working when the phy is in DP-only mode, because
-the dwc controller still needs it for USB 2.0 over the same Type-C port.
+On 1/8/26 11:21 AM, Konrad Dybcio wrote:
 
-Tested with the BenQ RD280UA monitor which has a downstream-facing port
-for data passthrough that's manually switchable between USB 2 and 3,
-corresponding to 4-lane and 2-lane DP respectively.
+> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>
+> Now that the highest_bank_bit value is retrieved from the running
+> system and the global config has been part of the tree for a couple
+> of releases, there is no reason to keep any hardcoded values inside
+> the GPU driver.
+[…]
+> -	if (adreno_is_a610(gpu)) {
+> -		cfg->highest_bank_bit = 13;
+> -		cfg->ubwc_swizzle = 0x7;
+> -	}
 
-Note: the suspend/resume callbacks were already gating the enable/disable
-of this clock only on init_count and not usb_init_count!
 
-Signed-off-by: Val Packett <val@packett.cool>
----
-See https://lore.kernel.org/all/389ca5d3-a698-4dac-911c-39ba057e3d17@oss.qualcomm.com/ for more info.
-BTW https://lore.kernel.org/all/20260205160240.748371-2-loic.poulain@oss.qualcomm.com/ helped with coldplug.
+Just noticed that the SoCs with A610 (SM6115/SM6125) have 
+.highest_bank_bit = 14 in drivers/soc/qcom/ubwc_config.c unlike this 13 
+value here.
 
-v2: Reorder disables as suggested
-v1: https://lore.kernel.org/all/20250927093915.45124-2-val@packett.cool/
----
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+Could this have been the cause of the corruption I saw on SM6115 
+initially? [1]
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-index 93f1aa10d400..28428a8d1192 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-@@ -3691,6 +3691,13 @@ static int qmp_combo_com_init(struct qmp_combo *qmp, bool force)
- 	if (ret)
- 		goto err_assert_reset;
- 
-+	/* In DP-only mode, the pipe clk is still required for USB2 */
-+	ret = clk_prepare_enable(qmp->pipe_clk);
-+	if (ret) {
-+		dev_err(qmp->dev, "pipe_clk enable failed err=%d\n", ret);
-+		return ret;
-+	}
-+
- 	qphy_setbits(com, QPHY_V3_DP_COM_POWER_DOWN_CTRL, SW_PWRDN);
- 
- 	/* override hardware control for reset of qmp phy */
-@@ -3768,6 +3775,7 @@ static int qmp_combo_com_exit(struct qmp_combo *qmp, bool force)
- 
- 	reset_control_bulk_assert(cfg->num_resets, qmp->resets);
- 
-+	clk_disable_unprepare(qmp->pipe_clk);
- 	clk_bulk_disable_unprepare(qmp->num_clks, qmp->clks);
- 
- 	regulator_bulk_disable(cfg->num_vregs, qmp->vregs);
-@@ -3871,12 +3879,6 @@ static int qmp_combo_usb_power_on(struct phy *phy)
- 
- 	qmp_configure(qmp->dev, serdes, cfg->serdes_tbl, cfg->serdes_tbl_num);
- 
--	ret = clk_prepare_enable(qmp->pipe_clk);
--	if (ret) {
--		dev_err(qmp->dev, "pipe_clk enable failed err=%d\n", ret);
--		return ret;
--	}
--
- 	/* Tx, Rx, and PCS configurations */
- 	qmp_configure_lane(qmp->dev, tx, cfg->tx_tbl, cfg->tx_tbl_num, 1);
- 	qmp_configure_lane(qmp->dev, tx2, cfg->tx_tbl, cfg->tx_tbl_num, 2);
-@@ -3922,8 +3924,6 @@ static int qmp_combo_usb_power_off(struct phy *phy)
- 	struct qmp_combo *qmp = phy_get_drvdata(phy);
- 	const struct qmp_phy_cfg *cfg = qmp->cfg;
- 
--	clk_disable_unprepare(qmp->pipe_clk);
--
- 	/* PHY reset */
- 	qphy_setbits(qmp->pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
- 
--- 
-2.52.0
+What's really strange though is that I wanted to test this now, but I 
+removed the FD_MESA_DEBUG=noubwc workaround that solved it initially…
+
+and the corruption *did not* come back so I can't even repro it to 
+confirm that this would fix it o.0
+
+
+[1]: 
+https://cache.treehouse.systems/media_attachments/files/116/083/578/070/293/038/original/9b8e73e15bed644f.jpg 
+
 
 
