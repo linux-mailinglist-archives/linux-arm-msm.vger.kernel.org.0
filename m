@@ -1,252 +1,231 @@
-Return-Path: <linux-arm-msm+bounces-94593-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94594-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id uB6HJFXoomlG8AQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94593-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 14:06:29 +0100
+	id +LU5BL3oomlG8AQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94594-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 14:08:13 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D87B31C31A2
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 14:06:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 66FF11C31CE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 14:08:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7E20130C52D3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 13:06:00 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E2C9D303B4D6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Feb 2026 13:08:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A896843D519;
-	Sat, 28 Feb 2026 13:05:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 785DD43DA50;
+	Sat, 28 Feb 2026 13:08:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=vinarskis.com header.i=@vinarskis.com header.b="I/H8GKCI"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="HUzRA9aA";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="CMsixIw7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-244118.protonmail.ch (mail-244118.protonmail.ch [109.224.244.118])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B258543D4FC
-	for <linux-arm-msm@vger.kernel.org>; Sat, 28 Feb 2026 13:05:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.118
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 358DB43C05D
+	for <linux-arm-msm@vger.kernel.org>; Sat, 28 Feb 2026 13:08:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772283958; cv=none; b=Ufi69zVmj2+q9fQvj9PKFpIcOZncWP58osZ2qSqbz8hb3FnEjTnpg2KtWUnojdkbtoBbWA59qCuyehnNW8vhAPIYlkWuKZKea3//HDJk1DvfaiLVpzpWTqVkx6oAAQKywZ3IETjLokTXyZhjU16NeiPTCZZN3dAyZGUyw6SjSVM=
+	t=1772284090; cv=none; b=RTIZUuued+yDuARFoDF1VXbgJnVBpKWHPXubvCb2FjgFENby9TYE2M5b8lYqOjnj9dlQK3h9MiC1HjENoGLe8mcchAk8AfUAdWTlYTN74gO9y+GkjD4u0UwMKImJ1giF/qJvLVv49U+x8ni51TtO8LrqLTdqSrW47yX72Uc+eUw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772283958; c=relaxed/simple;
-	bh=WdHypN4wfT3NsSm0whBTavvlM81jhBrtzWRkailWbhI=;
-	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=GeELek/fIVeyrc4Ecrv1A8SqzQGUi2zNJEJTaEcpK60v2SS1apdskd7WmhPH8l+p1ZF5BZG62N0PNCDmkpmMQnCp7RBuDHX1fqs6jtoEC39Upz4adBxV0NaLm3kFS6wXx+a81wygOuCWryYAltFO/Yhl9J+XwaGi96Xt6l5gH6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vinarskis.com; spf=pass smtp.mailfrom=vinarskis.com; dkim=pass (2048-bit key) header.d=vinarskis.com header.i=@vinarskis.com header.b=I/H8GKCI; arc=none smtp.client-ip=109.224.244.118
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vinarskis.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vinarskis.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vinarskis.com;
-	s=protonmail; t=1772283946; x=1772543146;
-	bh=kNz7IuwtOBaqLn55GG5myrKDag5tFvNdn5VrQaGUXBc=;
-	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=I/H8GKCIVre7XHfw1HxZAAMnDdv/JaaJ+ZDSegZDgYTlC3NqxwGHnizJYI2LXiPMx
-	 0e+IvBywE20H2A51pwh6bJR+6H7m44I6FxU4YstmvCvpZynD2fpeyol63Hmipt/8TT
-	 iYoBJJqWCo0v6VW3K4RCH0NLmSO1qCcFqJu6LD1r/90o7Y/BF57Oz6iK/ABPPdsxaf
-	 +U3LkD7h5jS6pWYpDL0vYqBco0K67pmw2HAnqB+IE0/fi42Psphb5TeBfREWgYM+eR
-	 E7gDZfJMYQyTYOXPDkyMij9EmV+eAg/VM14FNU0jpcylfOWmNTTBOgaX5He9MJ5Yv6
-	 wIilHxbdvWg5Q==
-Date: Sat, 28 Feb 2026 13:05:41 +0000
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-From: Aleksandrs Vinarskis <alex@vinarskis.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 10/11] arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x: Add ov02c10 RGB sensor on CSIPHY4
-Message-ID: <7177764d-fff7-465d-9ee4-f8e6f6455787@vinarskis.com>
-Feedback-ID: 158356072:user:proton
-X-Pm-Message-ID: 54b720a5066cd0f57cd2fc3306d793ce226eae9f
+	s=arc-20240116; t=1772284090; c=relaxed/simple;
+	bh=NJY0pV1M2wbLb1nUCS7E2d5p5eFL3304bkjkgwf1c38=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=cDu3krIWcFSf2w7YMzCL1MjJ+nG6tD9bGJDKhlt7CcPI3xfegM8PjsRyVR00wvAywNfJJrOGBvi6k67sPcQsaKHG9Ppr+ZlF3JFTCzW78u3Ozo+4rFVXcFnnYtNKAO5kTE7rFFLIjNCRJaohK+lgQu53QddVraYvUQLNVQnISUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=HUzRA9aA; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=CMsixIw7; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 61S90NIr3435764
+	for <linux-arm-msm@vger.kernel.org>; Sat, 28 Feb 2026 13:08:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=cDVs32k9ynqEJxcjg53Eng
+	DrY+pNd17ly0JDQCXesfE=; b=HUzRA9aAKDcXxMsSuMTZS010F0jfwmw54gSHtF
+	oapIN5fxAwyjykGlRgO+edSABIWGUmN4k0zrNRpJPxZij1NliHL++OpK1fZjaBs8
+	O4C7I6tqqIbXqL49y6ccirEViTA9e0Nsy0JjQA3NXRa/q5SP4GGs4vKMI/YNnWFt
+	diMG6P8OtNgL4EiUUHGZXM7txhXxzb3fDhyVBCWwHHYCo9KQ6lsHr+7tuRlun2W4
+	dl88WVsdC9mZU/2UKSpI/IqCunJzSerK1v/porgW6VLtsoOyZbE0NE6YwjJVG63X
+	hpdPqjHLU/hJTMYk0DiVZrER6EHLdr+oQsf9ru6SQn/U+u6w==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ckshch01m-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 28 Feb 2026 13:08:08 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2add182f21eso29937415ad.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Feb 2026 05:08:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1772284088; x=1772888888; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=cDVs32k9ynqEJxcjg53EngDrY+pNd17ly0JDQCXesfE=;
+        b=CMsixIw7RRExHKYwpKvRF5sjS2+7ZUTYIbNmovTVBCSibCr+5+Mhd3Y5vZSLYQCUl4
+         4rqZB4sd1ybbLSb2VN6LJn2bC8lj6ISN/4gFjpcjAaNyZBKzueWZ8Axt+EYFSB1ZHXPy
+         xdsKppCHkBSSxubdLZlyjd5YC+YUFuSZvmdZLCFoRty2z0DoXkL6FSN+Jkc5PyzbWIIf
+         CQzB5xwyBKIRxwt3bGeBCUMCJgsDK0T3p68/+ZfEFt/PB93G//qbSnm6Ff5PYQrtVkKa
+         vgVNY1XMtiU3y1MBDefnkMKhIJoHgvDK5EBVq4qcRJmtKjOaFE22goG+pRczXo81M58V
+         BgQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772284088; x=1772888888;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cDVs32k9ynqEJxcjg53EngDrY+pNd17ly0JDQCXesfE=;
+        b=IRySunS27bMEmTVYZTvQojKWLbEXJeBv/DJ/j4cq/7/G9Ga0RRNhgXnAFjkPEh2BD1
+         oK+YWhMJtwXL8joOX8G3ns85jhQ9x5oQLa4LYITP2m7DRHeOHAHjYS1Q2dXustC2koh5
+         mAc5NMheX5P9ZGYwWh3w8L/cWJMX5nhD/ciwRYsZ/q+AcyQkUh2zouvJukjVaeV1s+tf
+         GVFJ2EZzXPEtRAexQr9SZe8py8OYmEZOqICRnVWhl0ssGg8ciWsxylXeHPp9pWi33SFR
+         YR2VWxPAJAKRZNyP6/106h/8ETYF3DWC8h8cOXoaHYauWnNilMW3ssHsQzUX8QdLdVRU
+         hrRw==
+X-Forwarded-Encrypted: i=1; AJvYcCVcCsB88ZcmiE9/lljrIJoV7Ybczl4+ttFJwj1IzqE74NXoxcmsiu5RL2ZJrZmzWEz3Nj9E2gcFW2w56IMn@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx2bnu9M4jGVojd3Sl1Ik544VRjcsXjRak9ja5ir2b3Gs74jdAc
+	14DBvBGMNPaZDnwtvsbpwD0WAorFNyULKL+LsEGpBv7Bdl3imeKweTgLeWvpv+I4WMJGwHHMiz4
+	LhQHMEHerc6R7vDOrGJ2GNCPBj6Pzm5mcPVQbXa0LAqr6nAUsGi0LViF21ntOtAIQHAKz
+X-Gm-Gg: ATEYQzyE2o095b4RepU9HT9omkeFvTXfM2YugD7xT+Fe5wym1zfHbJnjLddhMXnWamf
+	chNwxQbxhNVU/NdEpD4plPi57QEHZrcPtFW7HVQ35ajfiC2dgyARFCYpjQQafK6t9EOyDcRVHrc
+	bt0PXG6ZUrFoSDEPb9ltiTd7gcRNd2IlfmmYbUBdkBGnkGiEhDn+Z8plMSWK2trGVqsQdiPGNpL
+	ytoUQT+3oFB/vGUedbi7xNn5Wg7mSo8Cg5Jb3gAqvVWWZoH8TxugyscNDvy2mWUpIkYrlJ/0YaA
+	tumquW8JBHpLO6tN2qCQXJYoYDEMlH0dLFuZJtRxQwOwr8fNIfSpNjy2xV0Oj+kSdCc9E5Br18k
+	bG762hqq5eL4+C3M8OPpQPWDmts21RurpfxhzV3hn3SOxg03ZGJ+BdcYINd2Owi5OVbqmufi6oo
+	4OC9UOgH741sU6NJOA6eLfmAohimRgPcxXB1mswFOBzt3ebMd7mdLw0wvX
+X-Received: by 2002:a17:902:d48d:b0:2ae:3e43:4673 with SMTP id d9443c01a7336-2ae3e434cc0mr15564885ad.1.1772284087658;
+        Sat, 28 Feb 2026 05:08:07 -0800 (PST)
+X-Received: by 2002:a17:902:d48d:b0:2ae:3e43:4673 with SMTP id d9443c01a7336-2ae3e434cc0mr15564535ad.1.1772284087124;
+        Sat, 28 Feb 2026 05:08:07 -0800 (PST)
+Received: from hu-kathirav-blr.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2adfb69f996sm83947035ad.50.2026.02.28.05.08.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 28 Feb 2026 05:08:06 -0800 (PST)
+From: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+Subject: [PATCH v3 0/6] Describe the IMEM present in Qualcomm IPQ SoC's
+Date: Sat, 28 Feb 2026 18:37:59 +0530
+Message-Id: <20260228-imem-v3-0-20fbcc1a9404@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALDoomkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyjHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDcwMj3czc1FxdS3NLy8RUcwszQ3MDJaDSgqLUtMwKsDHRsbW1AAvai6J
+ WAAAA
+X-Change-ID: 20250702-imem-9799ae786170
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1772284083; l=1941;
+ i=kathiravan.thirumoorthy@oss.qualcomm.com; s=20230906;
+ h=from:subject:message-id; bh=NJY0pV1M2wbLb1nUCS7E2d5p5eFL3304bkjkgwf1c38=;
+ b=OtIYOnOqtwtJsDUdSolaiZeTazCKsv7IQ7+/N7hkglpc/YYUZ/1OzH/fMqnE3+FblNgpYyKuJ
+ kTA3k8GUZZvA1IyjNu78FMQff3icxphT+7Z5cNQ3h0XOreLPej4oZ1G
+X-Developer-Key: i=kathiravan.thirumoorthy@oss.qualcomm.com; a=ed25519;
+ pk=xWsR7pL6ch+vdZ9MoFGEaP61JUaRf0XaZYWztbQsIiM=
+X-Proofpoint-ORIG-GUID: seSoq-Om83e42qGLFq7-cNY7vjEuxY7O
+X-Proofpoint-GUID: seSoq-Om83e42qGLFq7-cNY7vjEuxY7O
+X-Authority-Analysis: v=2.4 cv=SO9PlevH c=1 sm=1 tr=0 ts=69a2e8b8 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=IkcTkHD0fZMA:10 a=HzLeVaNsDn8A:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=Yu0Y65rDbttY8LA09AQA:9 a=QEXdDO2ut3YA:10
+ a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMjI4MDEyMSBTYWx0ZWRfX56MepTWRLq3x
+ mE//9H/ManuUlj1L2LfsGqTFOFk/bmH46gFcE0frcJS3Jly2a6uvRUWJk9Wb2U4KTkVWp9uujdY
+ r3zZIkccpN0UhMbruoPHaWT3NpB/LzPWP3mcH/sPllXBS3idJ8NJkappuJ5ZwmI+HuNgXaaScy9
+ MnIG9/HJCXn1VAHH54HrUB8UAjX8b2SPhNmIsUfv/Lfu1Jvw0BsohxY6iWF1/jxqYfkP0Y4N5X1
+ V/RsepFJOW03hprITdLmq58B37zm9xa42MQc8TKcJj0yNDl3raRC0uNgKClpJl5Ht2/TBeHOCa0
+ NEmOiQ4Nz3csyxNqF5CgmBvfE+r22CznbF4jYCMdWvr4U8+QwFCnMvsQvRWw7VrXcWbo3E7xB8G
+ 6pnABw0WFls4ubwjKoT1TBG+jlhnKW+mc75wIm2ZlXo6Pq+lDUwuB2qrJDpy5shdoZXP5j3nq/E
+ 1G08Ts69kocnqiCye9Q==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-02-28_04,2026-02-27_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 phishscore=0 impostorscore=0 spamscore=0 bulkscore=0
+ suspectscore=0 priorityscore=1501 adultscore=0 lowpriorityscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2602130000
+ definitions=main-2602280121
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.16 / 15.00];
-	FAKE_REPLY(1.00)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[vinarskis.com,quarantine];
-	R_DKIM_ALLOW(-0.20)[vinarskis.com:s=protonmail];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_HAS_DN(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94593-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[3];
-	DKIM_TRACE(0.00)[vinarskis.com:+];
-	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-94594-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FROM_NEQ_ENVFROM(0.00)[kathiravan.thirumoorthy@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
-	DBL_PROHIBIT(0.00)[0.0.0.3:email,0.0.0.36:email];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[alex@vinarskis.com,linux-arm-msm@vger.kernel.org];
-	MISSING_XM_UA(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	RCPT_COUNT_SEVEN(0.00)[9];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.0:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vinarskis.com:mid,vinarskis.com:dkim]
-X-Rspamd-Queue-Id: D87B31C31A2
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 66FF11C31CE
 X-Rspamd-Action: no action
 
+Qualcomm IPQ SoCs also have the IMEM region and used for the various
+debugging purposes like storing system restart reason and so on. As a
+preparatory work, first describe the IMEM region and susbsequently add
+the required features.
 
-On 2/26/26 15:51, Bryan O'Donoghue wrote:
-> Add in the RGB sensor on CSIPHY4.
->
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Across all SoCs, only initial 4KB can be accessed by all the masters in the
+SoC, remaining regions are access protected.
 
-Hi Bryan,
+Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+---
+Changes in v3:
+- Describe the IMEM as 'mmio-sram' instead of syscon and MFD
+- Dropped all the R-b tags
+- Link to v2:
+  https://lore.kernel.org/linux-arm-msm/20250708-imem-v2-0-692eb92b228e@oss.qualcomm.com/
 
-Thanks for re-spin of this series,
+Changes in v2:
+- Dropped the IPQ5424 support
+- Sorted the compatibles list
+- Rounded off the size for IPQ8074 and IPQ6018
+- In IPQ6018, use 0x0 for reg instead of 0
+- Link to v1:
+  https://lore.kernel.org/linux-arm-msm/20250702-imem-v1-0-12d49b1ceff0@oss.qualcomm.com/
 
-> ---
->   .../boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts  | 77 +++++++++++++++=
-+++++++
->   1 file changed, 77 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts b/a=
-rch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-> index f10dff1da7f8e..f3f4841ad2c83 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-> @@ -7,6 +7,7 @@
->  =20
->   #include <dt-bindings/gpio/gpio.h>
->   #include <dt-bindings/input/gpio-keys.h>
-> +#include <dt-bindings/phy/phy.h>
->   #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
->  =20
->   #include "hamoa.dtsi"
-> @@ -856,6 +857,66 @@ &gpu_zap_shader {
->   =09firmware-name =3D "qcom/x1e80100/LENOVO/83ED/qcdxkmsuc8380.mbn";
->   };
->  =20
-> +&camss {
-> +=09status =3D "okay";
-> +
-> +=09ports {
-> +=09=09/*
-> +=09=09 * port0 =3D> csiphy0
-> +=09=09 * port1 =3D> csiphy1
-> +=09=09 * port2 =3D> csiphy2
-> +=09=09 * port3 =3D> csiphy4
-> +=09=09 */
-> +=09=09port@3 {
-> +=09=09=09camss_csiphy4_inep0: endpoint@0 {
-> +=09=09=09=09clock-lanes =3D <7>;
-> +=09=09=09=09data-lanes =3D <0 1>;
-> +=09=09=09=09remote-endpoint =3D <&ov02c10_ep>;
-> +=09=09=09};
-> +=09=09};
-> +=09};
-> +};
-> +
-> +&cci1 {
-> +=09status =3D "okay";
-> +};
-> +
-> +&cci1_i2c1 {
-> +=09camera@36 {
-> +=09=09compatible =3D "ovti,ov02c10";
-> +=09=09reg =3D <0x36>;
-> +
-> +=09=09reset-gpios =3D <&tlmm 237 GPIO_ACTIVE_LOW>;
-> +=09=09pinctrl-names =3D "default";
-> +=09=09pinctrl-0 =3D <&cam_rgb_default>;
-> +
-> +=09=09clocks =3D <&camcc CAM_CC_MCLK4_CLK>;
-> +=09=09assigned-clocks =3D <&camcc CAM_CC_MCLK4_CLK>;
-> +=09=09assigned-clock-rates =3D <19200000>;
-> +
-> +=09=09orientation =3D <0>; /* front facing */
-> +
-> +=09=09avdd-supply =3D <&vreg_l7m_2p8>;
-> +=09=09dvdd-supply =3D <&vreg_l2m_1p2>;
-> +=09=09dovdd-supply =3D <&vreg_l4m_1p8>;
+---
+Kathiravan Thirumoorthy (6):
+      dt-bindings: sram: Describe the IMEM present in Qualcomm IPQ SoCs
+      arm64: dts: qcom: ipq8074: Add the IMEM node
+      arm64: dts: qcom: ipq6018: Add the IMEM node
+      arm64: dts: qcom: ipq5018: Add the IMEM node
+      arm64: dts: qcom: ipq9574: Add the IMEM node
+      arm64: dts: qcom: ipq5332: Add the IMEM node
 
-It probably got lost around as its been a while since last re-spin: as
-discussed in private and reported to 'issue' in Linaro's tree on gitlab,
-these are wrong. l7m/l2m/l4m are regulators used by Lenovo t14s, confirmed
-by device working and via AeoB dumps [1]. As per respective AeoB dump for
-Slim7x [2], these should be l7b/l1m/l3m instead. This arrangement was also
-confirmed working by community members (see discussion in gitlab issue [3])=
-.
+ Documentation/devicetree/bindings/sram/sram.yaml |  5 +++++
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi            | 11 +++++++++++
+ arch/arm64/boot/dts/qcom/ipq5332.dtsi            | 11 +++++++++++
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi            | 11 +++++++++++
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi            | 11 +++++++++++
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi            | 11 +++++++++++
+ 6 files changed, 60 insertions(+)
+---
+base-commit: 3fa5e5702a82d259897bd7e209469bc06368bf31
+change-id: 20250702-imem-9799ae786170
 
-I have previously submitted a patch to Linaro tree to have this fixed [4],
-feel free to squash it with your changes.
-
-[1]=20
-https://github.com/alexVinarskis/qcom-aeob-dumps/blob/master/lenovo-thinkpa=
-d-t14s-g6/CAMF_RES_QRD.json#L117-L155
-[2]=20
-https://github.com/alexVinarskis/qcom-aeob-dumps/blob/master/lenovo-yoga-sl=
-im7x/CAMF_RES_QRD.json#L116-L154
-[3] https://gitlab.com/Linaro/arm64-laptops/linux/-/issues/9
-[4] https://gitlab.com/Linaro/arm64-laptops/linux/-/work_items/26
-
-> +
-> +=09=09port {
-> +=09=09=09ov02c10_ep: endpoint {
-> +=09=09=09=09data-lanes =3D <1 2>;
-> +=09=09=09=09link-frequencies =3D /bits/ 64 <400000000>;
-> +=09=09=09=09remote-endpoint =3D <&camss_csiphy4_inep0>;
-> +=09=09=09};
-> +=09=09};
-> +=09};
-> +};
-> +
-> +&csiphy4 {
-> +=09vdda-0p8-supply =3D <&vreg_l2c_0p8>;
-> +=09vdda-1p2-supply =3D <&vreg_l1c_1p2>;
-> +
-> +=09status =3D "okay";
-> +};
-> +
->   &i2c0 {
->   =09clock-frequency =3D <400000>;
->  =20
-> @@ -1403,6 +1464,22 @@ &tlmm {
->   =09=09=09       <44 4>, /* SPI (TPM) */
->   =09=09=09       <238 1>; /* UFS Reset */
->  =20
-> +=09cam_rgb_default: cam-rgb-default-state {
-> +=09=09mclk-pins {
-> +=09=09=09pins =3D "gpio100";
-> +=09=09=09function =3D "cam_aon";
-> +=09=09=09drive-strength =3D <16>;
-> +=09=09=09bias-disable;
-> +=09=09};
-> +
-> +=09=09reset-n-pins {
-> +=09=09=09pins =3D "gpio237";
-> +=09=09=09function =3D "gpio";
-> +=09=09=09drive-strength =3D <2>;
-> +=09=09=09bias-disable;
-> +=09=09};
-> +=09};
-> +
-
-While at it, could you please add privacy LEDs gpios for the camera? In
-the same Linaro gitlab issue [4] I have added fixup patches to enable LED
-on t14s/slim7x/thena and confirmed them working. Feel free to add those
-changes directly to your patch.
-
-I could of course send them separately once this series lands, but given
-that its a rather small change, and this initial camera support will be
-used as ground-truth example by community to enable cameras on their
-platforms, it would be nice to have privacy indicator included from the
-very beginning. v4l side that would use this LED was merged a while ago.
-
-
-Thanks,
-Alex
-
->   =09edp_reg_en: edp-reg-en-state {
->   =09=09pins =3D "gpio70";
->   =09=09function =3D "gpio";
->
+Best regards,
+-- 
+Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
 
 
