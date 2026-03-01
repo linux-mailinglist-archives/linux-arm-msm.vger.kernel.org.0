@@ -1,175 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-94749-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94751-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id gFaoDR9tpGmmgQUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94749-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 17:45:19 +0100
+	id RtZPIpt8pGl5iQUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94751-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 18:51:23 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A53F71D0B1C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 17:45:18 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id E26F61D0E2C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 18:51:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 1257D3014127
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Mar 2026 16:45:10 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 6AE5D300D6B7
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Mar 2026 17:51:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF7553376A9;
-	Sun,  1 Mar 2026 16:45:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A25F7337BAA;
+	Sun,  1 Mar 2026 17:51:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LoWf0/AA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WiU6GOj9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB024336EC9;
-	Sun,  1 Mar 2026 16:45:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78351846F;
+	Sun,  1 Mar 2026 17:51:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772383505; cv=none; b=LrYExQHnPUc4960jPeMNCVr8MibEacAFni41PngIKmD84tqkIWYd9Fc06pxeK7xG33gURuCwm1eeBpNXnf4Eb6ZrMB4892WzLPTPm9v0ZZnyorq39bX9jtERKa4bOw9hGUNU1bE3vpSG4jV1zVS1ynj/1uJwBEgR4kNdjjCGWio=
+	t=1772387479; cv=none; b=k2/EaYVaDq8XgFsfdtFb1iCeQQ2e5yh4eu1DKDvZOj27xcoREMBqcVrSQfMSHZ5xNHkaHJ+nuhNRj+MEqmFyk/fi8o1x1vtJdOmaJw+bbBbHydd1RUuk0wiQ3hNW7Rnq9dtDiVbF28CEvlAOKP2nSr5DzTLEZQukz9Sa96ssZ8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772383505; c=relaxed/simple;
-	bh=ObyGEKWKsqYn0bM1IdlemshurNAb8v/KhxU989lhCfA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=I5fojPl4H6V0EZ+ltesV2k7lzWCH27Zj5Y+6sGNVh0HPHEVf9+khSopuqSE/LI9snbbqwQso7ZLg6UGUClJ0o0/wwQmEyX20VuXuPE16XxyD3Kf6yF53OMkpmV4RAS8JQODI7qD/4UT3JX3oqGYVmu+g0GU+AgdxTlNjvaJJBOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LoWf0/AA; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEF12C116C6;
-	Sun,  1 Mar 2026 16:45:02 +0000 (UTC)
+	s=arc-20240116; t=1772387479; c=relaxed/simple;
+	bh=MjnsDPgFAH43KtWaVxLKPW5yKsdDxokV0+MlP67ycVI=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=CK0FmK4no+AGirUmUJVfELonWd30zhEk1Wa+RfuGV4z4sMAimgC0jqYWCIUVBxZvphDwRi4ZRMw5eZlK5KCAnPPiyARweEjBOBa4xyoSaICf5Wdk7OTNA1QgJEKE9A8QN6xOi7QlMD31x6Jq+OUZZw92wQJKKoMJ61ns6WRHHgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WiU6GOj9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 250CEC116C6;
+	Sun,  1 Mar 2026 17:51:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772383505;
-	bh=ObyGEKWKsqYn0bM1IdlemshurNAb8v/KhxU989lhCfA=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=LoWf0/AADjAKTww6uR64HGbBWOcL+zKHKpib+4V8K8FX9z27jL84sj/DFo7QgT7pR
-	 445UMptR7GE7w3BZiapQDAG6j2rUu5XfVuX9b/AYZzP3K3v5k9OZXWUni0iMF5q2oX
-	 qR5w52ef8Ij09+TXM30prp1PuT3DeY8k+xBi0QtvxPsr2cvaCLnkAeRXc4UJU7OiBU
-	 yPcUE3RA49AIkLC/6IDkR+RH57M4iopKXyy63FPdWpcahfHSE/ojUzTX/TwzL6FQ/t
-	 +oGwli55F6EOOPqgf9LPeKIOzGio9QauYt9OJ4ymLnSIHrs46R2MRIU8+RroCZXCvn
-	 rBjTfqvHFOl9Q==
-Message-ID: <f18afe8a-58e3-41ab-bdb1-5e9676a10103@kernel.org>
-Date: Sun, 1 Mar 2026 17:45:00 +0100
+	s=k20201202; t=1772387479;
+	bh=MjnsDPgFAH43KtWaVxLKPW5yKsdDxokV0+MlP67ycVI=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=WiU6GOj9rgexHKcbUHxhE8vGSGcuc3LMoT+0qfWE3k1XeDPfoe2yNosTKzUIWE8qS
+	 OJVMhlkkcYzGpu4fFUI912wLylzP9x9bO/453Mkf6FqpjcvU0Qjim7Q0DiJ1476viN
+	 n3tK/DGQO2Ju0bcnDQd8eTZsmaofde4gro7FE4AccOHlwhURPe2tFKt1AbA+Cq6EZs
+	 Q6FNqY7ecD/r3I4CUOtkZvI/ki0zVqyEtjcVcmFU5/XY9JDTUxusILlxt89uzUHea+
+	 1apFeptc+0dB8kVxVq+GflLJHHh3EbcdieDsLFMstRmT5E/sXRMDpi29Ec44RSPqDJ
+	 1UCNBSrLHOg7A==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18B00FD0070;
+	Sun,  1 Mar 2026 17:51:19 +0000 (UTC)
+From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
+Subject: [PATCH 00/10] Input: support for STM FTS5
+Date: Sun, 01 Mar 2026 18:51:14 +0100
+Message-Id: <20260301-stmfts5-v1-0-22c458b9ac68@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] soc: qcom: socinfo: Add SoC IDs for SM7450 and
- SM7450P
-To: Aelin Reidel <aelin@mainlining.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux@mainlining.org,
- phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-References: <20260301-fillmore-socids-v1-0-5a033cd8d0e3@mainlining.org>
- <20260301-fillmore-socids-v1-2-5a033cd8d0e3@mainlining.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20260301-fillmore-socids-v1-2-5a033cd8d0e3@mainlining.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJJ8pGkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDI0MT3eKS3LSSYlPdJBNzY0PDtKQUc2MjJaDqgqLUtMwKsEnRsbW1ACF
+ 15gRZAAAA
+X-Change-ID: 20260214-stmfts5-b47311fbd732
+To: Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+ Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Henrik Rydberg <rydberg@bitmath.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Petr Hodina <petr.hodina@protonmail.com>, linux-input@vger.kernel.org, 
+ linux-stm32@st-md-mailman.stormreply.com, 
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzk@kernel.org>, devicetree@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org, 
+ David Heidelberg <david@ixit.cz>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1463; i=david@ixit.cz;
+ h=from:subject:message-id;
+ bh=MjnsDPgFAH43KtWaVxLKPW5yKsdDxokV0+MlP67ycVI=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBppHyU634xeBikriSOlFJINC2u0T7+JKAJtJW5f
+ ar1XfFgWcuJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaaR8lAAKCRBgAj/E00kg
+ cpAUEACYalYL4mkkSfpqeXUaJbkCmdmssv5VfFW+rERyHBJSp7TnWVxDS1+NVPPKuVWQ3V5jWO1
+ 95Fpt0i3orAUfQE0HYiJX5IzIKmBACWJKjT79FbHYLhjmNlHj83/xsBU9cWa5ecO15Nq9Xh3PY1
+ Tu1TP0ifOnNRy+h7dKppCOvi/1Zun++l/zBq1AaFk1I0R/N6z5Ufhn/trmg0pUuOapn7uEPsmoB
+ iJl3d7Rf3ONswHNMKPyGqaUH9liS8+roURXtSpkK5pj+Gtu2L2yfkcw0AZPOeubBwIiFJ/zPCX3
+ K8Btrp7+3HVRe7T3lVlj6FvOPEUJzIWpjfJaE+K3WGH9H+/qUTunlhO+a/XtDgSsWmqGP5tgmst
+ SfHqdqZPWROchdZzrp6oypxOPnet1oTi6i658H71ftRIgI37D+xR26G1M/hFH7/JMFHLlvEi+31
+ 7XOCtZTpy0351ebfBvJw+PvjhqmjUszGD7XXyRFKGt2yD2CSZi1om9gkB1AKfcha0lHeTtRiYHP
+ 44L3zPrYBAuHPFYbtyRSbmGSyZPANqp40p7h4Ndmk3dPrzYO3N41K22EGB95t5R4Lszq7AvhB0w
+ 2ZeGvRrvkF57XAInWTw2YPRp5yQUqBfhbB9gmdWIBOOBIRvlGuuEwqqPu+t2wkJC+0Uw4otw9+A
+ T27k3Kd3cB6D90A==
+X-Developer-Key: i=david@ixit.cz; a=openpgp;
+ fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
+X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
+X-Original-From: David Heidelberg <david@ixit.cz>
+Reply-To: david@ixit.cz
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94749-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-94751-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
 	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[gmail.com,foss.st.com,kernel.org,bitmath.org];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	TO_DN_SOME(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	FREEMAIL_CC(0.00)[protonmail.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org,kernel.org,ixit.cz];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	HAS_REPLYTO(0.00)[david@ixit.cz];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,mainlining.org:email]
-X-Rspamd-Queue-Id: A53F71D0B1C
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: E26F61D0E2C
 X-Rspamd-Action: no action
 
-On 01/03/2026 16:55, Aelin Reidel wrote:
-> SM7450 and SM7450P are two SoCs in the 'fillmore' family.
-> 
-> Signed-off-by: Aelin Reidel <aelin@mainlining.org>
-> ---
->  drivers/soc/qcom/socinfo.c | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-> index 003a2304d535c2655db566c644342dbc387e24a9..cde2151251f31fe26adbb1ed462c62c75a99f536 100644
-> --- a/drivers/soc/qcom/socinfo.c
-> +++ b/drivers/soc/qcom/socinfo.c
-> @@ -492,6 +492,7 @@ static const struct soc_id soc_id[] = {
->  	{ qcom_board_id(QRU1000) },
->  	{ qcom_board_id(SM8475_2) },
->  	{ qcom_board_id(QDU1000) },
-> +	{ qcom_board_id(SM7450P) },
->  	{ qcom_board_id(X1E80100) },
->  	{ qcom_board_id(SM8650) },
->  	{ qcom_board_id(SM4450) },
-> @@ -508,6 +509,7 @@ static const struct soc_id soc_id[] = {
->  	{ qcom_board_id(QCM8550) },
->  	{ qcom_board_id(SM8750)  },
->  	{ qcom_board_id(IPQ5300) },
-> +	{ qcom_board_id(SM7450) },
+Used on various phones. Minimal basic support.
 
-Wrongly placed, look how these are ordered.
+Includes device-tree with possibility to enable touchscreen on Pixel 3.
+
+Sending as RFC, as this is first, seemingly clean version which works.
+
+What is missing:
+ - firmware loading
+ - switching between AP and SLPI mode (to wake up phone by touch)
+ - anything above basic touch
+
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+David Heidelberg (6):
+      Input: stmfts - Use dev struct directly
+      Input: stmfts - Switch to devm_regulator_bulk_get_const
+      Input: stmfts - abstract reading information from the firmware
+      Input: stmfts - disable regulators when power on fails
+      dt-bindings: input: touchscreen: st,stmfts: Introduce reset GPIO
+      dt-bindings: input: touchscreen: st,stmfts: Introduce STM FTS5
+
+Petr Hodina (4):
+      Input: stmfts - use client to make future code cleaner
+      Input: stmfts - add optional reset GPIO support
+      Input: stmfts - support FTS5
+      arm64: dts: qcom: sdm845-google: Add STM FTS touchscreen support
+
+ .../bindings/input/touchscreen/st,stmfts.yaml      |  21 +-
+ .../arm64/boot/dts/qcom/sdm845-google-blueline.dts |  21 +-
+ drivers/input/touchscreen/stmfts.c                 | 595 +++++++++++++++++++--
+ 3 files changed, 577 insertions(+), 60 deletions(-)
+---
+base-commit: c6870e543e8d55d725cccfe972fbfb5798daa1af
+change-id: 20260214-stmfts5-b47311fbd732
 
 Best regards,
-Krzysztof
+-- 
+David Heidelberg <david@ixit.cz>
+
+
 
