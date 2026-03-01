@@ -1,161 +1,297 @@
-Return-Path: <linux-arm-msm+bounces-94708-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id IO+CExEDpGnAUwUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94708-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 10:12:49 +0100
+	id mC0PKwULpGnuVgUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 10:46:45 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97B0C1CEF42
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 10:12:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 04EED1CEFBF
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 10:46:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1CB9730136B9
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Mar 2026 09:12:30 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C47EC301A3A6
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Mar 2026 09:46:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA917261B71;
-	Sun,  1 Mar 2026 09:12:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F0AD26ED59;
+	Sun,  1 Mar 2026 09:46:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="XYEaWKUQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z0KHJpNu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D89E1F872D
-	for <linux-arm-msm@vger.kernel.org>; Sun,  1 Mar 2026 09:12:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.177.32
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7249A430B9C;
+	Sun,  1 Mar 2026 09:46:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772356348; cv=none; b=U0gvZt3J8hRj2CyVAhNojI5gUKK0qiK84JWBarxYwZ4BMzvatX3Uh1m80iu1SknUJFPYYpy1iAxoOktkw8peT8ABEs2nfCtbNO4m7SywS3UvmBxVIn7k0zesD7DWhiG6L/UPc1autugxf8E8uMmsovquRgAathrrl/ZJIyeRWGs=
+	t=1772358398; cv=none; b=QiOSCwt5dobso5bqQf8LsuFaRIgD1zmuKoF2M75bnpzgvCm/nTlr5RvBUjYW38VuH0H0wQBl44+JDN36ICRXaawTgoL9UPmVx4YxWXDZOH0kxkjNoOjjFkUGs9+t7kilB1f2oIuuXQeqXES/mA5si9rkG1o7AcugX9U5JLZ0BJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772356348; c=relaxed/simple;
-	bh=PnUpFEfZWcoKNNpvFP7RIhDS0we71jfuG4sYUWaamqQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=DVMv637iDmIgfvaEhMnbGeQwT4p5E9vWd08fGl3PGDM5lzVb+FO0mjQlGbEXJyzWIrKI6ryNXcAegm/Y0V0WPzRWeTv+S3BdKl3a/sl767x1yFJFchRKxOO1vD7Yobi07iydJzkVX3NarcmAv5yUwbS7hWq71P1mo4G28PQWH4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=XYEaWKUQ; arc=none smtp.client-ip=205.220.177.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
-Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6215aH5L3307158;
-	Sun, 1 Mar 2026 09:12:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
-	:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=corp-2025-04-25; bh=w2TMubsK5Uv5omFc/zf8YZlltsRBW
-	fHnFcyubL2bOTY=; b=XYEaWKUQzOLHm0zlXTZivDiIXzjOCrtA/LoNKQBSPuyfG
-	NBSeNTt7Ni12TDVIRj1QLxrPRV/dRdmqwwuf1JbZ+vDrtCYveRomhlUrhS9N5ySK
-	C342WrJWGMOLD1uU6kqdDBMc/2cpblqSA7aFCr7vE99krJ8uceldSY06Z1ZG08of
-	48kgoIuax172xCiYUXVinNZAXrxDkE/gJjC+T9+fqcrXCsTeuzKabN7l/aBiag35
-	XRDG6HKoMB00yyjPDydHyqIuiCN4qmlJ7XqgleeLM6ZEZ+o8mjwH0jH2Q7t1t+Bw
-	a7xPNa8RE0HbwCZcIlwUg4WbkFzxyhy6ZDbUwXixw==
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4cksh8rwdw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Sun, 01 Mar 2026 09:12:18 +0000 (GMT)
-Received: from pps.filterd (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2) with ESMTP id 6216gGh6026760;
-	Sun, 1 Mar 2026 09:12:18 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 4ckpt7my81-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Sun, 01 Mar 2026 09:12:17 +0000
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 6219CHnx030447;
-	Sun, 1 Mar 2026 09:12:17 GMT
-Received: from ca-dev112.us.oracle.com (ca-dev112.us.oracle.com [10.129.136.47])
-	by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id 4ckpt7my7k-1;
-	Sun, 01 Mar 2026 09:12:17 +0000
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
-To: jacek.lawrynowicz@linux.intel.com, andersson@kernel.org,
-        quic_pkanojiy@quicinc.com, ogabbay@kernel.org,
-        jeff.hugo@oss.qualcomm.com, carl.vanderlip@oss.qualcomm.com,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
-Cc: alok.a.tiwarilinux@gmail.com, alok.a.tiwari@oracle.com
-Subject: [PATCH] accel/qaic Fix HELLO_RESP mode sourced from wrong rx field
-Date: Sun,  1 Mar 2026 01:12:11 -0800
-Message-ID: <20260301091214.171263-1-alok.a.tiwari@oracle.com>
-X-Mailer: git-send-email 2.50.1
+	s=arc-20240116; t=1772358398; c=relaxed/simple;
+	bh=ah8m82Urr9ZVdbuAaL7dhveEEkY6qwHNCon+PPeoyBY=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=rdnuIqAxqMCdwg22ul1toSpiA2rg57NyCI8NcO5YREqkM8oqAUamRqjiFkbhr0ej+0HBTBO8lCf+NuOMcd6bmQe4pspIPDVR+U+hRG0eK3QZNcaOrp0R/KRwO3MGtrbDGt7ivhcsZrnNOIu0cH23UV500hAGmkl6jAxvn8NPbMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z0KHJpNu; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC8E1C116C6;
+	Sun,  1 Mar 2026 09:46:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772358398;
+	bh=ah8m82Urr9ZVdbuAaL7dhveEEkY6qwHNCon+PPeoyBY=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=Z0KHJpNunNcjXEqJWgt/2aE9/sPgUgk19iKbhLZyj5sIoyncIPiC5DtoCtdNTI5rN
+	 ae0CchWvin1ZNSonWM/xcQgjOh45AZVjjLAorbihnBcMIFCKtMS24eSaPw8HZnnVNh
+	 5m4IkmnaB7evNsc6rbzVP0cRVentf+1TS247vJ3/0N8jlZzcWLmBhtl2BAJGolpc3K
+	 SnBcnBqiqxfnfBMAkYqzWAVYsHCE+jWgxpQKRt5AkvNqeOi+fCiSa9vUa65yy7weLX
+	 yKjk6CJMJJlg4upoVm/xuuaj7cVFmtysK8UpS29DujEG5BWbnmwsyrINgwPMuAJ4Ye
+	 0ngrTpp3uzY1g==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <maz@kernel.org>)
+	id 1vwdNi-0000000Eusy-3vXA;
+	Sun, 01 Mar 2026 09:46:35 +0000
+Date: Sun, 01 Mar 2026 09:46:34 +0000
+Message-ID: <86342janlx.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Vijayanand Jitta <vijayanand.jitta@oss.qualcomm.com>
+Cc: Nipun Gupta <nipun.gupta@amd.com>,	Nikhil Agarwal
+ <nikhil.agarwal@amd.com>,	Joerg Roedel <joro@8bytes.org>,	Will Deacon
+ <will@kernel.org>,	Robin Murphy <robin.murphy@arm.com>,	Lorenzo Pieralisi
+ <lpieralisi@kernel.org>,	Thomas Gleixner <tglx@kernel.org>,	Rob Herring
+ <robh@kernel.org>,	Saravana Kannan <saravanak@kernel.org>,	Richard Zhu
+ <hongxing.zhu@nxp.com>,	Lucas Stach <l.stach@pengutronix.de>,	Krzysztof
+ =?UTF-8?B?V2lsY3p5xYRza2k=?= <kwilczynski@kernel.org>,	Manivannan
+ Sadhasivam <mani@kernel.org>,	Bjorn Helgaas <bhelgaas@google.com>,	Frank Li
+ <Frank.Li@nxp.com>,	Sascha Hauer <s.hauer@pengutronix.de>,	Pengutronix
+ Kernel Team <kernel@pengutronix.de>,	Fabio Estevam <festevam@gmail.com>,
+	Juergen Gross <jgross@suse.com>,	Stefano Stabellini
+ <sstabellini@kernel.org>,	Oleksandr Tyshchenko
+ <oleksandr_tyshchenko@epam.com>,	Dmitry Baryshkov
+ <dmitry.baryshkov@oss.qualcomm.com>,	Konrad Dybcio
+ <konrad.dybcio@oss.qualcomm.com>,	Bjorn Andersson
+ <bjorn.andersson@oss.qualcomm.com>,	Conor Dooley <conor+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,	Prakash Gupta
+ <prakash.gupta@oss.qualcomm.com>,	Vikash Garodia
+ <vikash.garodia@oss.qualcomm.com>,	linux-kernel@vger.kernel.org,
+	iommu@lists.linux.dev,	linux-arm-kernel@lists.infradead.org,
+	devicetree@vger.kernel.org,	linux-pci@vger.kernel.org,	imx@lists.linux.dev,
+	xen-devel@lists.xenproject.org,	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v9 1/3] of: Add convenience wrappers for of_map_id()
+In-Reply-To: <20260301-parse_iommu_cells-v9-1-4d1bceecc5e1@oss.qualcomm.com>
+References: <20260301-parse_iommu_cells-v9-0-4d1bceecc5e1@oss.qualcomm.com>
+	<20260301-parse_iommu_cells-v9-1-4d1bceecc5e1@oss.qualcomm.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-01_01,2026-02-27_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999 bulkscore=0 mlxscore=0
- malwarescore=0 spamscore=0 suspectscore=0 adultscore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2602130000
- definitions=main-2603010081
-X-Proofpoint-ORIG-GUID: 57I6IiXNfMvD60XlgQ_PqftijMm_OM_1
-X-Authority-Analysis: v=2.4 cv=D8VK6/Rj c=1 sm=1 tr=0 ts=69a402f2 cx=c_pps
- a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
- a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
- a=x4eqshVgHu-cdnggieHk:22 a=yPCof4ZbAAAA:8 a=hrsLsOafKCSbcmJkmpsA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAxMDA4MSBTYWx0ZWRfX6Ua2ds3IVs6r
- GZYuJ+Hf5UdTIhf5rhO4dCjU7+YS91xCrGZYiuTVTdETZoZwkMNmvb+P+kde4vQKZhcau1Cl6Mq
- +0DTn6y0S2WrYd13nChkpV2JinZHeQC3E5HJuGUHT941AC0h0ewrqvp0oFXGI2nJ7yrexIJVQ+w
- pS9NJyNVMXE96/9wYQJMCbuS81rItBd9vFwj6/SqzANQkUSPqR8fdYXwvuYij1aPexp2FdCi1cv
- aR2GM6W/hng1RZLHgFosuCYReoSsbgpAy5Q1xmezvxn/urPQzdE6CU749XiwANesJ4hjBkPI0Dy
- 0iTkL43zQbR33HC5oy6t5XbLj/+nzo+4IWUaGzN2sAPLcv5iZAbWnuMj22x0A71DWEjr5iU6MMo
- GnMMVqwP5XDqcSStl6p+sul1AxsTfNU75IK022BSFwVGI/QqZ6XgGP/dyoafdK8DMl33sNWuMZY
- XJv0KyO63fhjVFjB7wQ==
-X-Proofpoint-GUID: 57I6IiXNfMvD60XlgQ_PqftijMm_OM_1
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: vijayanand.jitta@oss.qualcomm.com, nipun.gupta@amd.com, nikhil.agarwal@amd.com, joro@8bytes.org, will@kernel.org, robin.murphy@arm.com, lpieralisi@kernel.org, tglx@kernel.org, robh@kernel.org, saravanak@kernel.org, hongxing.zhu@nxp.com, l.stach@pengutronix.de, kwilczynski@kernel.org, mani@kernel.org, bhelgaas@google.com, Frank.Li@nxp.com, s.hauer@pengutronix.de, kernel@pengutronix.de, festevam@gmail.com, jgross@suse.com, sstabellini@kernel.org, oleksandr_tyshchenko@epam.com, dmitry.baryshkov@oss.qualcomm.com, konrad.dybcio@oss.qualcomm.com, bjorn.andersson@oss.qualcomm.com, conor+dt@kernel.org, krzk+dt@kernel.org, prakash.gupta@oss.qualcomm.com, vikash.garodia@oss.qualcomm.com, linux-kernel@vger.kernel.org, iommu@lists.linux.dev, linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org, linux-pci@vger.kernel.org, imx@lists.linux.dev, xen-devel@lists.xenproject.org, linux-arm-msm@vger.kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.84 / 15.00];
+X-Spamd-Result: default: False [0.34 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[oracle.com,reject];
-	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[oracle.com:s=corp-2025-04-25];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[gmail.com,oracle.com];
-	FROM_HAS_DN(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[alok.a.tiwari@oracle.com,linux-arm-msm@vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-94708-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_NONE(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oracle.com:mid,oracle.com:dkim,oracle.com:email];
-	DKIM_TRACE(0.00)[oracle.com:+];
-	RCPT_COUNT_SEVEN(0.00)[10];
+	RCPT_COUNT_TWELVE(0.00)[37];
+	FREEMAIL_CC(0.00)[amd.com,8bytes.org,kernel.org,arm.com,nxp.com,pengutronix.de,google.com,gmail.com,suse.com,epam.com,oss.qualcomm.com,vger.kernel.org,lists.linux.dev,lists.infradead.org,lists.xenproject.org];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TAGGED_FROM(0.00)[bounces-94709-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[maz@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	RCVD_COUNT_SEVEN(0.00)[9]
-X-Rspamd-Queue-Id: 97B0C1CEF42
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 04EED1CEFBF
 X-Rspamd-Action: no action
 
-sahara_hello() handles SAHARA_HELLO_CMD and validates fields from
-context->rx->hello. When building the HELLO_RESP, copy the mode from the
-received HELLO request (rx->hello.mode) rather than rx->hello_resp.mode.
+On Sun, 01 Mar 2026 08:34:19 +0000,
+Vijayanand Jitta <vijayanand.jitta@oss.qualcomm.com> wrote:
+> 
+> From: Robin Murphy <robin.murphy@arm.com>
+> 
+> Since we now have quite a few users parsing "iommu-map" and "msi-map"
+> properties, give them some wrappers to conveniently encapsulate the
+> appropriate sets of property names. This will also make it easier to
+> then change of_map_id() to correctly account for specifier cells.
+> 
+> Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+> Reviewed-by: Frank Li <Frank.Li@nxp.com>
+> Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+> Signed-off-by: Vijayanand Jitta <vijayanand.jitta@oss.qualcomm.com>
+> ---
+>  drivers/cdx/cdx_msi.c                    |  3 +--
+>  drivers/iommu/of_iommu.c                 |  4 +---
+>  drivers/irqchip/irq-gic-its-msi-parent.c |  2 +-
+>  drivers/of/irq.c                         |  3 +--
+>  drivers/pci/controller/dwc/pci-imx6.c    |  6 ++----
+>  drivers/pci/controller/pcie-apple.c      |  3 +--
+>  drivers/xen/grant-dma-ops.c              |  3 +--
+>  include/linux/of.h                       | 14 ++++++++++++++
+>  8 files changed, 22 insertions(+), 16 deletions(-)
+> 
+> diff --git a/drivers/cdx/cdx_msi.c b/drivers/cdx/cdx_msi.c
+> index 91b95422b263..63b3544ec997 100644
+> --- a/drivers/cdx/cdx_msi.c
+> +++ b/drivers/cdx/cdx_msi.c
+> @@ -128,8 +128,7 @@ static int cdx_msi_prepare(struct irq_domain *msi_domain,
+>  	int ret;
+>  
+>  	/* Retrieve device ID from requestor ID using parent device */
+> -	ret = of_map_id(parent->of_node, cdx_dev->msi_dev_id, "msi-map", "msi-map-mask",
+> -			NULL, &dev_id);
+> +	ret = of_map_msi_id(parent->of_node, cdx_dev->msi_dev_id, NULL, &dev_id);
+>  	if (ret) {
+>  		dev_err(dev, "of_map_id failed for MSI: %d\n", ret);
+>  		return ret;
+> diff --git a/drivers/iommu/of_iommu.c b/drivers/iommu/of_iommu.c
+> index 6b989a62def2..a511ecf21fcd 100644
+> --- a/drivers/iommu/of_iommu.c
+> +++ b/drivers/iommu/of_iommu.c
+> @@ -48,9 +48,7 @@ static int of_iommu_configure_dev_id(struct device_node *master_np,
+>  	struct of_phandle_args iommu_spec = { .args_count = 1 };
+>  	int err;
+>  
+> -	err = of_map_id(master_np, *id, "iommu-map",
+> -			 "iommu-map-mask", &iommu_spec.np,
+> -			 iommu_spec.args);
+> +	err = of_map_iommu_id(master_np, *id, &iommu_spec.np, iommu_spec.args);
+>  	if (err)
+>  		return err;
+>  
+> diff --git a/drivers/irqchip/irq-gic-its-msi-parent.c b/drivers/irqchip/irq-gic-its-msi-parent.c
+> index d36b278ae66c..b63343a227a9 100644
+> --- a/drivers/irqchip/irq-gic-its-msi-parent.c
+> +++ b/drivers/irqchip/irq-gic-its-msi-parent.c
+> @@ -180,7 +180,7 @@ static int of_pmsi_get_msi_info(struct irq_domain *domain, struct device *dev, u
+>  
+>  	struct device_node *msi_ctrl __free(device_node) = NULL;
+>  
+> -	return of_map_id(dev->of_node, dev->id, "msi-map", "msi-map-mask", &msi_ctrl, dev_id);
+> +	return of_map_msi_id(dev->of_node, dev->id, &msi_ctrl, dev_id);
+>  }
+>  
+>  static int its_pmsi_prepare(struct irq_domain *domain, struct device *dev,
+> diff --git a/drivers/of/irq.c b/drivers/of/irq.c
+> index 6367c67732d2..e37c1b3f8736 100644
+> --- a/drivers/of/irq.c
+> +++ b/drivers/of/irq.c
+> @@ -817,8 +817,7 @@ u32 of_msi_xlate(struct device *dev, struct device_node **msi_np, u32 id_in)
+>  	 * "msi-map" or an "msi-parent" property.
+>  	 */
+>  	for (parent_dev = dev; parent_dev; parent_dev = parent_dev->parent) {
+> -		if (!of_map_id(parent_dev->of_node, id_in, "msi-map",
+> -				"msi-map-mask", msi_np, &id_out))
+> +		if (!of_map_msi_id(parent_dev->of_node, id_in, msi_np, &id_out))
+>  			break;
+>  		if (!of_check_msi_parent(parent_dev->of_node, msi_np))
+>  			break;
+> diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/controller/dwc/pci-imx6.c
+> index a5b8d0b71677..bff8289f804a 100644
+> --- a/drivers/pci/controller/dwc/pci-imx6.c
+> +++ b/drivers/pci/controller/dwc/pci-imx6.c
+> @@ -1144,8 +1144,7 @@ static int imx_pcie_add_lut_by_rid(struct imx_pcie *imx_pcie, u32 rid)
+>  	u32 sid = 0;
+>  
+>  	target = NULL;
+> -	err_i = of_map_id(dev->of_node, rid, "iommu-map", "iommu-map-mask",
+> -			  &target, &sid_i);
+> +	err_i = of_map_iommu_id(dev->of_node, rid, &target, &sid_i);
+>  	if (target) {
+>  		of_node_put(target);
+>  	} else {
+> @@ -1158,8 +1157,7 @@ static int imx_pcie_add_lut_by_rid(struct imx_pcie *imx_pcie, u32 rid)
+>  	}
+>  
+>  	target = NULL;
+> -	err_m = of_map_id(dev->of_node, rid, "msi-map", "msi-map-mask",
+> -			  &target, &sid_m);
+> +	err_m = of_map_msi_id(dev->of_node, rid, &target, &sid_m);
+>  
+>  	/*
+>  	 *   err_m      target
+> diff --git a/drivers/pci/controller/pcie-apple.c b/drivers/pci/controller/pcie-apple.c
+> index 2d92fc79f6dd..a0937b7b3c4d 100644
+> --- a/drivers/pci/controller/pcie-apple.c
+> +++ b/drivers/pci/controller/pcie-apple.c
+> @@ -764,8 +764,7 @@ static int apple_pcie_enable_device(struct pci_host_bridge *bridge, struct pci_d
+>  	dev_dbg(&pdev->dev, "added to bus %s, index %d\n",
+>  		pci_name(pdev->bus->self), port->idx);
+>  
+> -	err = of_map_id(port->pcie->dev->of_node, rid, "iommu-map",
+> -			"iommu-map-mask", NULL, &sid);
+> +	err = of_map_iommu_id(port->pcie->dev->of_node, rid, NULL, &sid);
+>  	if (err)
+>  		return err;
+>  
+> diff --git a/drivers/xen/grant-dma-ops.c b/drivers/xen/grant-dma-ops.c
+> index c2603e700178..1b7696b2d762 100644
+> --- a/drivers/xen/grant-dma-ops.c
+> +++ b/drivers/xen/grant-dma-ops.c
+> @@ -325,8 +325,7 @@ static int xen_dt_grant_init_backend_domid(struct device *dev,
+>  		struct pci_dev *pdev = to_pci_dev(dev);
+>  		u32 rid = PCI_DEVID(pdev->bus->number, pdev->devfn);
+>  
+> -		if (of_map_id(np, rid, "iommu-map", "iommu-map-mask", &iommu_spec.np,
+> -				iommu_spec.args)) {
+> +		if (of_map_iommu_id(np, rid, &iommu_spec.np, iommu_spec.args)) {
+>  			dev_dbg(dev, "Cannot translate ID\n");
+>  			return -ESRCH;
+>  		}
+> diff --git a/include/linux/of.h b/include/linux/of.h
+> index be6ec4916adf..824649867810 100644
+> --- a/include/linux/of.h
+> +++ b/include/linux/of.h
+> @@ -1457,6 +1457,20 @@ static inline int of_property_read_s32(const struct device_node *np,
+>  	return of_property_read_u32(np, propname, (u32*) out_value);
+>  }
+>  
+> +static inline int of_map_iommu_id(const struct device_node *np, u32 id,
+> +				  struct device_node **target, u32 *id_out)
+> +{
+> +	return of_map_id(np, id, "iommu-map", "iommu-map-mask",
+> +			 target, id_out);
+> +}
+> +
+> +static inline int of_map_msi_id(const struct device_node *np, u32 id,
+> +				struct device_node **target, u32 *id_out)
+> +{
+> +	return of_map_id(np, id, "msi-map", "msi-map-mask",
+> +			 target, id_out);
+> +}
+> +
 
-Fixes: 76b801aa2198 ("accel/qaic: Add Sahara implementation for firmware loading")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
----
- drivers/accel/qaic/sahara.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Any particular reason why this is made inline instead of out of line
+in of/base.c? Also, some documentation would be helpful for the
+aspiring hackers dipping into this.
 
-diff --git a/drivers/accel/qaic/sahara.c b/drivers/accel/qaic/sahara.c
-index fd3c3b2d1fd3..99bf832e2825 100644
---- a/drivers/accel/qaic/sahara.c
-+++ b/drivers/accel/qaic/sahara.c
-@@ -325,7 +325,7 @@ static void sahara_hello(struct sahara_context *context)
- 	context->tx[0]->hello_resp.version = cpu_to_le32(SAHARA_VERSION);
- 	context->tx[0]->hello_resp.version_compat = cpu_to_le32(SAHARA_VERSION);
- 	context->tx[0]->hello_resp.status = cpu_to_le32(SAHARA_SUCCESS);
--	context->tx[0]->hello_resp.mode = context->rx->hello_resp.mode;
-+	context->tx[0]->hello_resp.mode = context->rx->hello.mode;
- 
- 	ret = mhi_queue_buf(context->mhi_dev, DMA_TO_DEVICE, context->tx[0],
- 			    SAHARA_HELLO_LENGTH, MHI_EOT);
+Other than that,
+
+Acked-by: Marc Zyngier <maz@kernel.org>
+
+	M.
+
 -- 
-2.50.1
-
+Without deviation from the norm, progress is not possible.
 
