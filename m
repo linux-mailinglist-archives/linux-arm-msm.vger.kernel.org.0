@@ -1,55 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-94751-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94750-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id RtZPIpt8pGl5iQUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94751-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 18:51:23 +0100
+	id oPffBZ58pGl5iQUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94750-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 18:51:26 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id E26F61D0E2C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 18:51:22 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id DDFBE1D0E88
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 18:51:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 6AE5D300D6B7
+	by sea.lore.kernel.org (Postfix) with ESMTP id 2357E301412F
 	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Mar 2026 17:51:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A25F7337BAA;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CDB833507A;
 	Sun,  1 Mar 2026 17:51:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WiU6GOj9"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TDu5s9GZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78351846F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78314A59;
 	Sun,  1 Mar 2026 17:51:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772387479; cv=none; b=k2/EaYVaDq8XgFsfdtFb1iCeQQ2e5yh4eu1DKDvZOj27xcoREMBqcVrSQfMSHZ5xNHkaHJ+nuhNRj+MEqmFyk/fi8o1x1vtJdOmaJw+bbBbHydd1RUuk0wiQ3hNW7Rnq9dtDiVbF28CEvlAOKP2nSr5DzTLEZQukz9Sa96ssZ8s=
+	t=1772387479; cv=none; b=ZyOYAhLocQ3WISXqOcLajGUP2viwY5jyBgpACH9Z5Noz/Pglze+EFlGvmjE/Ouz/7AfYKRUnK4SLmoY9waTMKHIFMUyb+sNtjFZE1uNynuRWD5bxvSQABFTx1T2lhhduFW3/WwChprcaiTkbbnvby39C/9Pdbacl1zNmf0b3Xt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772387479; c=relaxed/simple;
-	bh=MjnsDPgFAH43KtWaVxLKPW5yKsdDxokV0+MlP67ycVI=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=CK0FmK4no+AGirUmUJVfELonWd30zhEk1Wa+RfuGV4z4sMAimgC0jqYWCIUVBxZvphDwRi4ZRMw5eZlK5KCAnPPiyARweEjBOBa4xyoSaICf5Wdk7OTNA1QgJEKE9A8QN6xOi7QlMD31x6Jq+OUZZw92wQJKKoMJ61ns6WRHHgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WiU6GOj9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 250CEC116C6;
+	bh=mc55QfSw9Ry9mLwkhN9n5gi0ZpQTsuXJJMLqwg3DcLs=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=eoPV/nBjtOd8FAhiWQErqdiAu7UGI5Csnq6Jjp5EGQka1cD0uVtlhyb8tVkbD2qjyBOkB43xzHk+wEeYPUJvEdRsgv6tYbgRnvvq2DvKDF0aapxpl+pL9ruYwpDvBdgzZE/eXH7QI15Ot2wo4HlnjQjSkVKAZpnC5qpRZ0MjeDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TDu5s9GZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 48F55C2BCB0;
 	Sun,  1 Mar 2026 17:51:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1772387479;
-	bh=MjnsDPgFAH43KtWaVxLKPW5yKsdDxokV0+MlP67ycVI=;
-	h=From:Subject:Date:To:Cc:Reply-To:From;
-	b=WiU6GOj9rgexHKcbUHxhE8vGSGcuc3LMoT+0qfWE3k1XeDPfoe2yNosTKzUIWE8qS
-	 OJVMhlkkcYzGpu4fFUI912wLylzP9x9bO/453Mkf6FqpjcvU0Qjim7Q0DiJ1476viN
-	 n3tK/DGQO2Ju0bcnDQd8eTZsmaofde4gro7FE4AccOHlwhURPe2tFKt1AbA+Cq6EZs
-	 Q6FNqY7ecD/r3I4CUOtkZvI/ki0zVqyEtjcVcmFU5/XY9JDTUxusILlxt89uzUHea+
-	 1apFeptc+0dB8kVxVq+GflLJHHh3EbcdieDsLFMstRmT5E/sXRMDpi29Ec44RSPqDJ
-	 1UCNBSrLHOg7A==
+	bh=mc55QfSw9Ry9mLwkhN9n5gi0ZpQTsuXJJMLqwg3DcLs=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=TDu5s9GZfGaxhyNdejKKZx0l8mZ3i4RtQHx5CokNdgUPMpX1KxZoFKkL0J4mtHxrY
+	 fwcxE3kXhRCbvb/8xbSfrSjr/Mfy1OocEHfGmN2jJja3EcrKHDAUxk811ndsuFhFwa
+	 bafrvUL+6w4yKnAZKwMIwEPgucPfgY0n+PS75KychtScKm9jUzuEIJ2fiZ9mefZROM
+	 0YvSNzLfftxdAdgBDlWDiXUh6KJkKxpzO8rFXkcixc0WT1J2ZPG25gtw2g7+sAA/6O
+	 As5LQeUAsbcQrBSqNeGX6qv909WdggPvedK4vYpYURxrU1MMTlsR11y5kAlw4pufmi
+	 r472tId6NSchg==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18B00FD0070;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3EDCAFD006E;
 	Sun,  1 Mar 2026 17:51:19 +0000 (UTC)
 From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Subject: [PATCH 00/10] Input: support for STM FTS5
-Date: Sun, 01 Mar 2026 18:51:14 +0100
-Message-Id: <20260301-stmfts5-v1-0-22c458b9ac68@ixit.cz>
+Date: Sun, 01 Mar 2026 18:51:15 +0100
+Subject: [PATCH 01/10] Input: stmfts - Use dev struct directly
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,10 +58,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAJJ8pGkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDI0MT3eKS3LSSYlPdJBNzY0PDtKQUc2MjJaDqgqLUtMwKsEnRsbW1ACF
- 15gRZAAAA
-X-Change-ID: 20260214-stmfts5-b47311fbd732
+Message-Id: <20260301-stmfts5-v1-1-22c458b9ac68@ixit.cz>
+References: <20260301-stmfts5-v1-0-22c458b9ac68@ixit.cz>
+In-Reply-To: <20260301-stmfts5-v1-0-22c458b9ac68@ixit.cz>
 To: Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
  Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
  Alexandre Torgue <alexandre.torgue@foss.st.com>, 
@@ -76,21 +75,21 @@ Cc: Petr Hodina <petr.hodina@protonmail.com>, linux-input@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org, 
  David Heidelberg <david@ixit.cz>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1463; i=david@ixit.cz;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3250; i=david@ixit.cz;
  h=from:subject:message-id;
- bh=MjnsDPgFAH43KtWaVxLKPW5yKsdDxokV0+MlP67ycVI=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBppHyU634xeBikriSOlFJINC2u0T7+JKAJtJW5f
- ar1XfFgWcuJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaaR8lAAKCRBgAj/E00kg
- cpAUEACYalYL4mkkSfpqeXUaJbkCmdmssv5VfFW+rERyHBJSp7TnWVxDS1+NVPPKuVWQ3V5jWO1
- 95Fpt0i3orAUfQE0HYiJX5IzIKmBACWJKjT79FbHYLhjmNlHj83/xsBU9cWa5ecO15Nq9Xh3PY1
- Tu1TP0ifOnNRy+h7dKppCOvi/1Zun++l/zBq1AaFk1I0R/N6z5Ufhn/trmg0pUuOapn7uEPsmoB
- iJl3d7Rf3ONswHNMKPyGqaUH9liS8+roURXtSpkK5pj+Gtu2L2yfkcw0AZPOeubBwIiFJ/zPCX3
- K8Btrp7+3HVRe7T3lVlj6FvOPEUJzIWpjfJaE+K3WGH9H+/qUTunlhO+a/XtDgSsWmqGP5tgmst
- SfHqdqZPWROchdZzrp6oypxOPnet1oTi6i658H71ftRIgI37D+xR26G1M/hFH7/JMFHLlvEi+31
- 7XOCtZTpy0351ebfBvJw+PvjhqmjUszGD7XXyRFKGt2yD2CSZi1om9gkB1AKfcha0lHeTtRiYHP
- 44L3zPrYBAuHPFYbtyRSbmGSyZPANqp40p7h4Ndmk3dPrzYO3N41K22EGB95t5R4Lszq7AvhB0w
- 2ZeGvRrvkF57XAInWTw2YPRp5yQUqBfhbB9gmdWIBOOBIRvlGuuEwqqPu+t2wkJC+0Uw4otw9+A
- T27k3Kd3cB6D90A==
+ bh=rLvXwYr8pRgjc4tXLmz60BmHo2WrnBAMJ136Em/i4E4=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBppHyUJhChuWhA7f0ZMnBICB62mYuFxWMpN6WEt
+ yQcwnmupwyJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaaR8lAAKCRBgAj/E00kg
+ cr38D/4sZ8a33ur+ea+HzTQrrZBNLoWzQNadsTB8b7dDzsr33qGisK7QYEM4SfIZYqd7iuwilzp
+ qF1wQvaaHDUkO8m/JRIVMc65fNXg0RYYpdM1m8F1o2wsswVmIfVn9nuq3aTf/M3y4RfxeuZTil1
+ UjXMrmeN47VLuL+S9vEh9dxi7dPfBWRFu9XM7lrYLPphnrcQzegHiYhMfZia+WaQbXz3xU5Z1vr
+ Of07bWLTYnj8paN8Ol4aIXQ1I/Kj4GT+XLbV3JZr+TMYzVgZwrDTCyfI/AMVsgnojmHG8GZkaUl
+ jDLdieILWVF+fDuWuolw6umCQRwKIT93gzPgIuCSwsxdoTo2Rcz7/8L8DAzKv6TvSl/zqz6DeXQ
+ gFLgJiMBpaQKd0dm4gXRyw/0LGsD7NCm67yld0Gx+4IQJ9c+0xAEzLTQLkw/stZq+zekQ8SfrdJ
+ Z69ICjrtDGUdUUMvrCNhgz9qEmtaHlqL24B/72+JCJOKWLEisoxT7uFZNhIZLylSE8Vo9Xh/8gn
+ 7n6Y6Whfvx5HT9O75TDOjMgqMxxfsqWuTMXkpLdZBEoCV5Ao9lH3q9EY46oOP2BviS+YORXrKih
+ o29qKxxckWBgcRmGr/ESt2mLG3dNIcF121uLCCqRg6MtDCWQw5koZkWt4KM9baVobsjEtZ7bRRX
+ ibvsWlvPnmTqRdA==
 X-Developer-Key: i=david@ixit.cz; a=openpgp;
  fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
 X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
@@ -102,12 +101,12 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94751-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
+	TAGGED_FROM(0.00)[bounces-94750-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
 	FROM_HAS_DN(0.00)[];
 	FREEMAIL_TO(0.00)[gmail.com,foss.st.com,kernel.org,bitmath.org];
 	MIME_TRACE(0.00)[0:+];
@@ -122,52 +121,113 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
 	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: E26F61D0E2C
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: DDFBE1D0E88
 X-Rspamd-Action: no action
 
-Used on various phones. Minimal basic support.
+From: David Heidelberg <david@ixit.cz>
 
-Includes device-tree with possibility to enable touchscreen on Pixel 3.
-
-Sending as RFC, as this is first, seemingly clean version which works.
-
-What is missing:
- - firmware loading
- - switching between AP and SLPI mode (to wake up phone by touch)
- - anything above basic touch
+Makes the code better readable and noticably shorter.
 
 Signed-off-by: David Heidelberg <david@ixit.cz>
 ---
-David Heidelberg (6):
-      Input: stmfts - Use dev struct directly
-      Input: stmfts - Switch to devm_regulator_bulk_get_const
-      Input: stmfts - abstract reading information from the firmware
-      Input: stmfts - disable regulators when power on fails
-      dt-bindings: input: touchscreen: st,stmfts: Introduce reset GPIO
-      dt-bindings: input: touchscreen: st,stmfts: Introduce STM FTS5
+ drivers/input/touchscreen/stmfts.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-Petr Hodina (4):
-      Input: stmfts - use client to make future code cleaner
-      Input: stmfts - add optional reset GPIO support
-      Input: stmfts - support FTS5
-      arm64: dts: qcom: sdm845-google: Add STM FTS touchscreen support
+diff --git a/drivers/input/touchscreen/stmfts.c b/drivers/input/touchscreen/stmfts.c
+index 4b166b0a9a5a6..27adb139fa0ce 100644
+--- a/drivers/input/touchscreen/stmfts.c
++++ b/drivers/input/touchscreen/stmfts.c
+@@ -620,6 +620,7 @@ static int stmfts_enable_led(struct stmfts_data *sdata)
+ 
+ static int stmfts_probe(struct i2c_client *client)
+ {
++	struct device *dev = &client->dev;
+ 	int err;
+ 	struct stmfts_data *sdata;
+ 
+@@ -628,7 +629,7 @@ static int stmfts_probe(struct i2c_client *client)
+ 						I2C_FUNC_SMBUS_I2C_BLOCK))
+ 		return -ENODEV;
+ 
+-	sdata = devm_kzalloc(&client->dev, sizeof(*sdata), GFP_KERNEL);
++	sdata = devm_kzalloc(dev, sizeof(*sdata), GFP_KERNEL);
+ 	if (!sdata)
+ 		return -ENOMEM;
+ 
+@@ -640,13 +641,13 @@ static int stmfts_probe(struct i2c_client *client)
+ 
+ 	sdata->regulators[STMFTS_REGULATOR_VDD].supply = "vdd";
+ 	sdata->regulators[STMFTS_REGULATOR_AVDD].supply = "avdd";
+-	err = devm_regulator_bulk_get(&client->dev,
++	err = devm_regulator_bulk_get(dev,
+ 				      ARRAY_SIZE(sdata->regulators),
+ 				      sdata->regulators);
+ 	if (err)
+ 		return err;
+ 
+-	sdata->input = devm_input_allocate_device(&client->dev);
++	sdata->input = devm_input_allocate_device(dev);
+ 	if (!sdata->input)
+ 		return -ENOMEM;
+ 
+@@ -665,7 +666,7 @@ static int stmfts_probe(struct i2c_client *client)
+ 	input_set_abs_params(sdata->input, ABS_MT_PRESSURE, 0, 255, 0, 0);
+ 	input_set_abs_params(sdata->input, ABS_DISTANCE, 0, 255, 0, 0);
+ 
+-	sdata->use_key = device_property_read_bool(&client->dev,
++	sdata->use_key = device_property_read_bool(dev,
+ 						   "touch-key-connected");
+ 	if (sdata->use_key) {
+ 		input_set_capability(sdata->input, EV_KEY, KEY_MENU);
+@@ -686,20 +687,20 @@ static int stmfts_probe(struct i2c_client *client)
+ 	 * interrupts. To be on the safe side it's better to not enable
+ 	 * the interrupts during their request.
+ 	 */
+-	err = devm_request_threaded_irq(&client->dev, client->irq,
++	err = devm_request_threaded_irq(dev, client->irq,
+ 					NULL, stmfts_irq_handler,
+ 					IRQF_ONESHOT | IRQF_NO_AUTOEN,
+ 					"stmfts_irq", sdata);
+ 	if (err)
+ 		return err;
+ 
+-	dev_dbg(&client->dev, "initializing ST-Microelectronics FTS...\n");
++	dev_dbg(dev, "initializing ST-Microelectronics FTS...\n");
+ 
+ 	err = stmfts_power_on(sdata);
+ 	if (err)
+ 		return err;
+ 
+-	err = devm_add_action_or_reset(&client->dev, stmfts_power_off, sdata);
++	err = devm_add_action_or_reset(dev, stmfts_power_off, sdata);
+ 	if (err)
+ 		return err;
+ 
+@@ -716,13 +717,13 @@ static int stmfts_probe(struct i2c_client *client)
+ 			 * without LEDs. The ledvdd regulator pointer will be
+ 			 * used as a flag.
+ 			 */
+-			dev_warn(&client->dev, "unable to use touchkey leds\n");
++			dev_warn(dev, "unable to use touchkey leds\n");
+ 			sdata->ledvdd = NULL;
+ 		}
+ 	}
+ 
+-	pm_runtime_enable(&client->dev);
+-	device_enable_async_suspend(&client->dev);
++	pm_runtime_enable(dev);
++	device_enable_async_suspend(dev);
+ 
+ 	return 0;
+ }
 
- .../bindings/input/touchscreen/st,stmfts.yaml      |  21 +-
- .../arm64/boot/dts/qcom/sdm845-google-blueline.dts |  21 +-
- drivers/input/touchscreen/stmfts.c                 | 595 +++++++++++++++++++--
- 3 files changed, 577 insertions(+), 60 deletions(-)
----
-base-commit: c6870e543e8d55d725cccfe972fbfb5798daa1af
-change-id: 20260214-stmfts5-b47311fbd732
-
-Best regards,
 -- 
-David Heidelberg <david@ixit.cz>
+2.51.0
 
 
 
