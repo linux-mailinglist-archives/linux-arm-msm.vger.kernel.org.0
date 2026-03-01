@@ -1,58 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-94673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94674-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cKr2B0mVo2l7HQUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 02:24:25 +0100
+	id +F/UMgmVo2n3HQUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94674-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 02:23:21 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF8D71CA703
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 02:24:24 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id B9D2C1CA613
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 02:23:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A3971306F399
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Mar 2026 01:19:03 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 90ED83025137
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Mar 2026 01:20:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39877257ACF;
-	Sun,  1 Mar 2026 01:19:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 830BE26E710;
+	Sun,  1 Mar 2026 01:20:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RZ6qolNz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pgmM0EMT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1696B24A076;
-	Sun,  1 Mar 2026 01:19:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FCDE13B7AE;
+	Sun,  1 Mar 2026 01:20:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772327942; cv=none; b=XIdzUP4NLfBm3M0UwL6N8HKlbC/IgOTXkYmkssoshkfoecAl5V2UVukhjCcF1Z2g02n26bYy6Ak/K6nPvOXHB7pKIr+vU7fM5PR0gTA7fkPVSS6dpUZSIdAQ/3eSmS8m7oX5NUIud/p/3CPnSiNRmTVVjiW2pEHWBC4qRDh8mE0=
+	t=1772328026; cv=none; b=YdTo0EVhfhKlfIHiZK+bEFb7SddO7rp47t8XaMsmH8GTzsm34DNmO2fQIGaWqB4xNzQp1mFgsm+Y6a2E3HEaXcBoJrvdAA5Yc/oPvbh/tBJ50nci4nTj+PdD/QGmg4GwjHqp0spg9fcZLt5d9Kj72SZ699MNP/FAwML4uj64A/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772327942; c=relaxed/simple;
-	bh=UjAzZ2KRBnSlhhiqG1iN7IwjVD1fMhKONsQjSkYLGBI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=g0G+AszrEaxlgJbsnmmW1/cBPPiT70WLx+QB+FUVgfiYzZwIiXqA/KrQoL4fQaQXixl+aXlpEwghMS3H7JUjjkKvYWJlxMP5QP3a8k3TeN6dvf+6ZsoJ78bUAE5Te8PXfzjILUGC4TCvm8dx7AOu177DtnZFelPO49CMsOpDiFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RZ6qolNz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C78BC19421;
-	Sun,  1 Mar 2026 01:19:01 +0000 (UTC)
+	s=arc-20240116; t=1772328026; c=relaxed/simple;
+	bh=yKeu7jjKreibOu2e/GYMYT8WtLaNhKAhPL1K/ng8tQw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=PiwTF3+dT+yLKdc0DTA7Zpwvk8WstdbeYyebz5e0k2WzhDIroVyF6wFt379le/OCLqAO66Qdml+EeJ/KTe0AL2l20AIfVkxcrQNfMt/I/7Auq0SmiH4m/dd5LCrZvhXkICVveGHM2wJ92YYJR7La6NC7U6THXev/+nQAtwEh9oo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pgmM0EMT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D4B1C19421;
+	Sun,  1 Mar 2026 01:20:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772327942;
-	bh=UjAzZ2KRBnSlhhiqG1iN7IwjVD1fMhKONsQjSkYLGBI=;
+	s=k20201202; t=1772328026;
+	bh=yKeu7jjKreibOu2e/GYMYT8WtLaNhKAhPL1K/ng8tQw=;
 	h=From:To:Cc:Subject:Date:From;
-	b=RZ6qolNzZbPjhABC5WSRoDpH0VFZ+LQeqFhxv05ALclLUXTATtLLEDFs8JF8duQl8
-	 1N36bga6jZdKYYzbrFJ/uyxJmksE4JLekaVoTO7M+17AOqfquP3sxjpzz8qunlUM88
-	 C03bUbOBAbzbfLMaAciVvEalSVD1A4MU3QRifVEPbiwIu585t+guXBNqDFy+jcAdfX
-	 Yn8MtdDemdQSARCX6PNXApdzpeuoti9sX7EPcMYGxGzVW0WphfL8+bXh4hdZTNbLLM
-	 1+GzU+JFhGk12WQaUG4Funhk5uPujIjKpbn6p8FxfX+pJ6rwVu3Cyhtsz4bCGpyhmT
-	 2UQft4D7TmzxQ==
+	b=pgmM0EMTEq+RAC5ROpGrS26R1tNyPQGrQXvSUgyU5rftR/BDjfyEkKm9EiAIiOd/y
+	 XHsmfprRqsHS1pYJo0G+9rtKx3uwiIbwIwXU218gp4WAfNOg0YhdMCfBQpc/BdzGtW
+	 scz9O0TLzA5zheWFWQoQsnwQmS1xuzr7HntarUNjpubiy2+lYlfH3wku3YJiMIBaHg
+	 FIulxEegS6zx32pLmv4FYdhKpMJEj/QPeHrStxAqZ0+eS3uJxk4jRcAhVlIzqoVNWU
+	 j2SnWeia8Rcp8cHvoCIpQZ/DUT/wDHYFfb1nvSDFDHOUO/K0M8YnJPHLc66u2+cNYw
+	 wIDz3fEE2F0hw==
 From: Sasha Levin <sashal@kernel.org>
 To: stable@vger.kernel.org,
-	abelvesa@kernel.org
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: FAILED: Patch "arm64: dts: qcom: x1e80100: Add missing TCSR ref clock to the DP PHYs" failed to apply to 6.12-stable tree
-Date: Sat, 28 Feb 2026 20:18:59 -0500
-Message-ID: <20260301011900.1673538-1-sashal@kernel.org>
+	alperyasinak1@gmail.com
+Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Bryan O'Donoghue <bod@kernel.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	linux-media@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: FAILED: Patch "media: qcom: camss: vfe: Fix out-of-bounds access in vfe_isr_reg_update()" failed to apply to 6.12-stable tree
+Date: Sat, 28 Feb 2026 20:20:24 -0500
+Message-ID: <20260301012024.1675946-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -64,34 +65,36 @@ X-Patchwork-Hint: ignore
 X-stable: review
 Content-Transfer-Encoding: 8bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [0.84 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_CONTAINS_FROM(1.00)[];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94673-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	TO_DN_SOME(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_TO(0.00)[vger.kernel.org,gmail.com];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-94674-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[sashal@kernel.org,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	NEURAL_HAM(-0.00)[-1.000];
+	NEURAL_HAM(-0.00)[-0.983];
+	TAGGED_RCPT(0.00)[linux-arm-msm,cisco];
+	RCPT_COUNT_SEVEN(0.00)[7];
+	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_FIVE(0.00)[6];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[aec2a00:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: BF8D71CA703
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: B9D2C1CA613
 X-Rspamd-Action: no action
 
 The patch below does not apply to the 6.12-stable tree.
@@ -104,65 +107,53 @@ Sasha
 
 ------------------ original commit in Linus's tree ------------------
 
-From 0907cab01ff9746ecf08592edd9bd85d2636be58 Mon Sep 17 00:00:00 2001
-From: Abel Vesa <abel.vesa@linaro.org>
-Date: Wed, 24 Dec 2025 12:53:29 +0200
-Subject: [PATCH] arm64: dts: qcom: x1e80100: Add missing TCSR ref clock to the
- DP PHYs
+From d965919af524e68cb2ab1a685872050ad2ee933d Mon Sep 17 00:00:00 2001
+From: Alper Ak <alperyasinak1@gmail.com>
+Date: Mon, 29 Dec 2025 10:52:17 +0300
+Subject: [PATCH] media: qcom: camss: vfe: Fix out-of-bounds access in
+ vfe_isr_reg_update()
 
-The DP PHYs on X1E80100 need the ref clock which is provided by the
-TCSR CC.
+vfe_isr() iterates using MSM_VFE_IMAGE_MASTERS_NUM(7) as the loop
+bound and passes the index to vfe_isr_reg_update(). However,
+vfe->line[] array is defined with VFE_LINE_NUM_MAX(4):
 
-The current X Elite devices supported upstream work fine without this
-clock, because the boot firmware leaves this clock enabled. But we should
-not rely on that. Also, even though this change breaks the ABI, it is
-needed in order to make the driver disables this clock along with the
-other ones, for a proper bring-down of the entire PHY.
+    struct vfe_line line[VFE_LINE_NUM_MAX];
 
-So lets attach it to each of the DP PHYs in order to do that.
+When index is 4, 5, 6, the access to vfe->line[line_id] exceeds
+the array bounds and resulting in out-of-bounds memory access.
 
-Cc: stable@vger.kernel.org # v6.9
-Fixes: 1940c25eaa63 ("arm64: dts: qcom: x1e80100: Add display nodes")
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20251224-phy-qcom-edp-add-missing-refclk-v5-3-3f45d349b5ac@oss.qualcomm.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fix this by using separate loops for output lines and write masters.
+
+Fixes: 4edc8eae715c ("media: camss: Add initial support for VFE hardware version Titan 480")
+Signed-off-by: Alper Ak <alperyasinak1@gmail.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/hamoa.dtsi | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/media/platform/qcom/camss/camss-vfe-480.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/hamoa.dtsi b/arch/arm64/boot/dts/qcom/hamoa.dtsi
-index 51ad2b2e6375f..03629639dcfb6 100644
---- a/arch/arm64/boot/dts/qcom/hamoa.dtsi
-+++ b/arch/arm64/boot/dts/qcom/hamoa.dtsi
-@@ -5929,9 +5929,11 @@ mdss_dp2_phy: phy@aec2a00 {
- 			      <0 0x0aec2000 0 0x1c8>;
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-480.c b/drivers/media/platform/qcom/camss/camss-vfe-480.c
+index 4feea590a47bc..d73f733fde045 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-480.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-480.c
+@@ -202,11 +202,13 @@ static irqreturn_t vfe_isr(int irq, void *dev)
+ 		writel_relaxed(status, vfe->base + VFE_BUS_IRQ_CLEAR(0));
+ 		writel_relaxed(1, vfe->base + VFE_BUS_IRQ_CLEAR_GLOBAL);
  
- 			clocks = <&dispcc DISP_CC_MDSS_DPTX2_AUX_CLK>,
--				 <&dispcc DISP_CC_MDSS_AHB_CLK>;
-+				 <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+				 <&tcsr TCSR_EDP_CLKREF_EN>;
- 			clock-names = "aux",
--				      "cfg_ahb";
-+				      "cfg_ahb",
-+				      "ref";
+-		/* Loop through all WMs IRQs */
+-		for (i = 0; i < MSM_VFE_IMAGE_MASTERS_NUM; i++) {
++		for (i = 0; i < MAX_VFE_OUTPUT_LINES; i++) {
+ 			if (status & BUS_IRQ_MASK_0_RDI_RUP(vfe, i))
+ 				vfe_isr_reg_update(vfe, i);
++		}
  
- 			power-domains = <&rpmhpd RPMHPD_MX>;
- 
-@@ -5949,9 +5951,11 @@ mdss_dp3_phy: phy@aec5a00 {
- 			      <0 0x0aec5000 0 0x1c8>;
- 
- 			clocks = <&dispcc DISP_CC_MDSS_DPTX3_AUX_CLK>,
--				 <&dispcc DISP_CC_MDSS_AHB_CLK>;
-+				 <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+				 <&tcsr TCSR_EDP_CLKREF_EN>;
- 			clock-names = "aux",
--				      "cfg_ahb";
-+				      "cfg_ahb",
-+				      "ref";
- 
- 			power-domains = <&rpmhpd RPMHPD_MX>;
- 
++		/* Loop through all WMs IRQs */
++		for (i = 0; i < MSM_VFE_IMAGE_MASTERS_NUM; i++) {
+ 			if (status & BUS_IRQ_MASK_0_COMP_DONE(vfe, RDI_COMP_GROUP(i)))
+ 				vfe_buf_done(vfe, i);
+ 		}
 -- 
 2.51.0
 
