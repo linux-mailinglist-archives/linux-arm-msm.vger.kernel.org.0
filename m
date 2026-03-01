@@ -1,59 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-94691-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94692-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4HR8Gs2ao2kwIAUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94691-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 02:47:57 +0100
+	id cNl0CrKpo2nfJQUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94692-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 03:51:30 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id E48661CBC6B
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 02:47:56 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A6091CDFA6
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 03:51:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 385A3302445D
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Mar 2026 01:42:45 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 9CC0F31035F8
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Mar 2026 01:43:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 006F029D270;
-	Sun,  1 Mar 2026 01:42:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1AEE26FA6F;
+	Sun,  1 Mar 2026 01:43:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gSM9FuXa"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="toNDlqBc"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2A81A3165;
-	Sun,  1 Mar 2026 01:42:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F884145A1F;
+	Sun,  1 Mar 2026 01:43:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772329364; cv=none; b=IK/IYVnXcD9gcdENCw8tGY/QtfSLAw7TqNMHnEPBEq0iDltDETQgeJF47VfPLqbny94Tmzz4A9LXEQte29f7WMlh9l7Ja9LHmOYQlYRaL4OUCQJbiKn9dCjmzJbSU2dLBRETwvB+bZ7vKtnGGaJ7v2CV64pV6/eaVfQkSHq+SlY=
+	t=1772329396; cv=none; b=eJGMmAcgkFSYc3W83mRe4J6FLAaYDWCuYecgMv1tVdREzRBY8tR7phte9FqI+A/125QnKNGzdC+AzaW4gNcGVmh7UjzttgkDEyaL9LRQk/GmVTeR13ifQDL0ZTm0dn8qWYIM1MI0qmzxsSOKxLRT2mOElP04auaEF/Y/5FDenZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772329364; c=relaxed/simple;
-	bh=AWeITYXqDp7opqHtWU2Zdvjkm1c6YHRb8mlaS7wsQYI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ihz42Vyk+m0BifFqSfT4z8MhHd6AvCFmfa46Y+ve4jWFmxaHmzugtysmcb1hNLvt1v04/0+1XDJyynzGumXJUSi1Eym2JdEk2XHOAhaE2x3V3s9MrV4V+tYaLIUaWxx5AixeLJ8qIBKuIQvr+CtA19cAuS2IaZDmH5pc5Q9sqHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gSM9FuXa; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F28C2C19421;
-	Sun,  1 Mar 2026 01:42:43 +0000 (UTC)
+	s=arc-20240116; t=1772329396; c=relaxed/simple;
+	bh=p35CT646UNG2/YBjz9HWSulWxIpVOpW3F1abFFnUdJ0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Xg8Q2U8GQr/MISu0oRgUfPjBGWr1fr28PtaozBAp2bUqKJjFjlyT0CK1LOGNrdUdvMGvS/6JQeHF5aH3q0gy6QbXJnSwdRh/VeTppiLx6B78ZospUyvjVI+/rZnYTy84IYfhxclvdrZT1kw7NJgQIl8mbFVB/G2qiXSlpoGBPmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=toNDlqBc; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92499C19421;
+	Sun,  1 Mar 2026 01:43:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772329364;
-	bh=AWeITYXqDp7opqHtWU2Zdvjkm1c6YHRb8mlaS7wsQYI=;
+	s=k20201202; t=1772329396;
+	bh=p35CT646UNG2/YBjz9HWSulWxIpVOpW3F1abFFnUdJ0=;
 	h=From:To:Cc:Subject:Date:From;
-	b=gSM9FuXa0HgTJ1/XEzne2TebJmEZ1i3xscXWe/n59QRGU4+GxqC4LadBg/0okTc/W
-	 KVyCH2V2nOyZ9GYFeigIu8LV2xLo0OuKNRrILnuZ5ZxGJdKiacHWaCSYYahROu6ky/
-	 eVRLOtns+aOrgWSBJZJQYtqDJ+iwjBL5NuJzuidGO275Ojrv3SdM5Qd+bXkD6kIkMA
-	 UAw3KP3rRNz/z9ZkcosD879X5YmY+Hdlc/8VeFDZIoozqcwoLgS0WOShm+LRnQ1vvX
-	 aZQDhpalsHrexIR9jWZuha/G20bQuuH5sJZsGx6j687O9M+XSRAMnjzK4wkjzlaYDa
-	 ZUpatfsnogL1g==
+	b=toNDlqBc5A8oTJRiAC7BHlObKaZ5/iEEA0BoyLawFJUaE5Vq1VV8b0SVhS0AXFzrf
+	 Peeh15hdmfy708O2mxCFIu66VqToZ0ncNXXlWt0M8Yws2y1eMYeDoEiI7AXpeOcMWj
+	 0lSLJe/sC3rjLoW4B9v3ReY2rkd5m1GS/qDwpWAebz61pHK+YXTfTtfWRvI7Dbsvnn
+	 9NUAT1ne92lktnFPLu6EgLMvRnddC1oh2WZqbfeseQc7LNvfy2+WYVHCLAtYfM3gXV
+	 lUn8g1/bkJXlnSvq3WxAPfCVo+EXMK98gnet0OKF5N6UbL0FW5an0U5guje/kqHrfz
+	 zZr+EhzHoZlrA==
 From: Sasha Levin <sashal@kernel.org>
 To: stable@vger.kernel.org,
-	renjiang.han@oss.qualcomm.com
-Cc: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-	Bryan O'Donoghue <bod@kernel.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
-	linux-media@vger.kernel.org,
+	johan@kernel.org
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Lee Jones <lee@kernel.org>,
 	linux-arm-msm@vger.kernel.org
-Subject: FAILED: Patch "media: venus: vdec: fix error state assignment for zero bytesused" failed to apply to 6.1-stable tree
-Date: Sat, 28 Feb 2026 20:42:42 -0500
-Message-ID: <20260301014242.1704630-1-sashal@kernel.org>
+Subject: FAILED: Patch "mfd: qcom-pm8xxx: Fix OF populate on driver rebind" failed to apply to 6.1-stable tree
+Date: Sat, 28 Feb 2026 20:43:14 -0500
+Message-ID: <20260301014314.1705291-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -66,33 +65,32 @@ X-stable: review
 Content-Transfer-Encoding: 8bit
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94691-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-94692-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	FROM_NEQ_ENVFROM(0.00)[sashal@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[7];
-	NEURAL_HAM(-0.00)[-1.000];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,cisco];
+	RCVD_TLS_LAST(0.00)[];
 	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_FIVE(0.00)[6];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[sashal@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: E48661CBC6B
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FROM_HAS_DN(0.00)[]
+X-Rspamd-Queue-Id: 8A6091CDFA6
 X-Rspamd-Action: no action
 
 The patch below does not apply to the 6.1-stable tree.
@@ -105,49 +103,53 @@ Sasha
 
 ------------------ original commit in Linus's tree ------------------
 
-From 93ecd6ee95c38cb533fa25f48d3c1c8cb69f410f Mon Sep 17 00:00:00 2001
-From: Renjiang Han <renjiang.han@oss.qualcomm.com>
-Date: Thu, 11 Dec 2025 15:20:39 +0530
-Subject: [PATCH] media: venus: vdec: fix error state assignment for zero
- bytesused
+From 27a8acea47a93fea6ad0e2df4c20a9b51490e4d9 Mon Sep 17 00:00:00 2001
+From: Johan Hovold <johan@kernel.org>
+Date: Fri, 19 Dec 2025 12:09:47 +0100
+Subject: [PATCH] mfd: qcom-pm8xxx: Fix OF populate on driver rebind
 
-When hfi_session_flush is issued, all queued buffers are returned to
-the V4L2 driver. Some of these buffers are not processed and have
-bytesused = 0. Currently, the driver marks such buffers as error even
-during drain operations, which can incorrectly flag EOS buffers.
+Since commit c6e126de43e7 ("of: Keep track of populated platform
+devices") child devices will not be created by of_platform_populate()
+if the devices had previously been deregistered individually so that the
+OF_POPULATED flag is still set in the corresponding OF nodes.
 
-Only capture buffers with zero payload (and not EOS) should be marked
-with VB2_BUF_STATE_ERROR. The check is performed inside the non-EOS
-branch to ensure correct handling.
+Switch to using of_platform_depopulate() instead of open coding so that
+the child devices are created if the driver is rebound.
 
-Fixes: 51df3c81ba10b ("media: venus: vdec: Mark flushed buffers with error state")
-Signed-off-by: Renjiang Han <renjiang.han@oss.qualcomm.com>
-Reviewed-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: c6e126de43e7 ("of: Keep track of populated platform devices")
+Cc: stable@vger.kernel.org	# 3.16
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251219110947.24101-1-johan@kernel.org
+Signed-off-by: Lee Jones <lee@kernel.org>
 ---
- drivers/media/platform/qcom/venus/vdec.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/mfd/qcom-pm8xxx.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index 4a6641fdffcf7..d0bd2d86a31f9 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -1440,10 +1440,10 @@ static void vdec_buf_done(struct venus_inst *inst, unsigned int buf_type,
- 				inst->drain_active = false;
- 				inst->codec_state = VENUS_DEC_STATE_STOPPED;
- 			}
-+		} else {
-+			if (!bytesused)
-+				state = VB2_BUF_STATE_ERROR;
- 		}
+diff --git a/drivers/mfd/qcom-pm8xxx.c b/drivers/mfd/qcom-pm8xxx.c
+index 1149f7102a365..0cf374c015ce7 100644
+--- a/drivers/mfd/qcom-pm8xxx.c
++++ b/drivers/mfd/qcom-pm8xxx.c
+@@ -577,17 +577,11 @@ static int pm8xxx_probe(struct platform_device *pdev)
+ 	return rc;
+ }
+ 
+-static int pm8xxx_remove_child(struct device *dev, void *unused)
+-{
+-	platform_device_unregister(to_platform_device(dev));
+-	return 0;
+-}
 -
--		if (!bytesused)
--			state = VB2_BUF_STATE_ERROR;
- 	} else {
- 		vbuf->sequence = inst->sequence_out++;
- 	}
+ static void pm8xxx_remove(struct platform_device *pdev)
+ {
+ 	struct pm_irq_chip *chip = platform_get_drvdata(pdev);
+ 
+-	device_for_each_child(&pdev->dev, NULL, pm8xxx_remove_child);
++	of_platform_depopulate(&pdev->dev);
+ 	irq_domain_remove(chip->irqdomain);
+ }
+ 
 -- 
 2.51.0
 
