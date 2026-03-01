@@ -1,524 +1,245 @@
-Return-Path: <linux-arm-msm+bounces-94766-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94769-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id CC31LwG+pGkAqgUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94766-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 23:30:25 +0100
+	id oHrBCl3ApGm2qgUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94769-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 23:40:29 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3CF271D1DDA
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 23:30:25 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id BE3CA1D1E3D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 23:40:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id A8F53300F140
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Mar 2026 22:30:15 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 170D3300A32E
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Mar 2026 22:40:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F2C4375ADC;
-	Sun,  1 Mar 2026 22:30:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AADB375ABA;
+	Sun,  1 Mar 2026 22:40:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZSJjPhwr"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="FmVl9CSH";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="CcfRFH21"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ADE5375AD4;
-	Sun,  1 Mar 2026 22:30:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF38731B10B
+	for <linux-arm-msm@vger.kernel.org>; Sun,  1 Mar 2026 22:40:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772404211; cv=none; b=p9+jGdsaBln+lnWypenEttSMjM3Wk8WgzQclqjhkxSs0QyBcVNam1JpV3sO+AZp7J7NPGgX1xJVb8Lla/Ls71Fw1l+sUStBxaa8mQNgGepgoQohnCbN2qGN3mzXPMtm6SmNT2ommlWDralywKeo02ugCF3FuZs3P5cyq8JU6Hg0=
+	t=1772404826; cv=none; b=DXZXNgPb+xG8ij65wvhq5Yc0lO4s6szoarFUjWTB5qdE6hsmS+0jtS2w3Ozrzne92PtKfowQXAPRm/SSYUQUcdwhHK6o2Ce4lzu+KEN3xxBu4c4MudrRi6E2TwK9v/+VpFW+ajU4WjLKN3vXnARDTlLDePbBAECalSUhwwT/V5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772404211; c=relaxed/simple;
-	bh=J5aCXb4NEpdqQhIhazfnVjdiOLwnVxPAxuTOnDhYYVo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Wa7J77FtpHZ0n7Pcfupn3zH8CzaUHMFoz+Q/daTW3+TA1duz7R83MB3ZqzqYhjHWJM/rvrttHG7w/UnLhyGxlN+cRnVwyIlx3oammlkKssROzosI1Jz51cTIkqPDSSVtsXKlfHQyH/evTUXH1tKLBmJjy8LiYsNOeGr0XvPY3WY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZSJjPhwr; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 0E588C4AF0B;
-	Sun,  1 Mar 2026 22:30:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772404211;
-	bh=J5aCXb4NEpdqQhIhazfnVjdiOLwnVxPAxuTOnDhYYVo=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=ZSJjPhwrrQyOdZ0L28F4/R0ugj1uN8UAhD8gGqZ65mA5R3PEK3Y6PRJ6HqrTadx3R
-	 Tfgd5jnwBgPkYV1oaNH8bTJGCdbCR+Do1o6u0ApD/Q2d4Ur/YIUzY2oBXzODv0lf9x
-	 RVBnXWZLQzBowtccFNKgFS+J+/eBV9hbnDieTMucz0L1OvDFyABYpW8yNLTjfuWdaV
-	 Uj1XkIkoG3KkB/XTv266n70I66TokjyJrqNZX2fOoAoin0AbtHywggwywZAuJDg9gf
-	 qLUNEDp3SA1Ivki7oAllMaXTshEmHhYSQo+JZlEZNszkW7maMPMakzvvpamqO+xBN8
-	 mIF3pnmaF+gpA==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3C10FD007D;
-	Sun,  1 Mar 2026 22:30:10 +0000 (UTC)
-From: Paul Adam via B4 Relay <devnull+adamp.posteo.de@kernel.org>
-Date: Sun, 01 Mar 2026 23:29:19 +0100
-Subject: [PATCH v3 3/3] arm64: dts: qcom: msm8916-wiko-chuppito: add
- initial devicetree
+	s=arc-20240116; t=1772404826; c=relaxed/simple;
+	bh=RoF4CYBqOCcTIp8+OeNsYC8UEsKn2n9wht7SnNtDGfk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=esPDQlUXtOgD+t3V4cBQbiKfOge2fmyGPED9HXyoolpGEQ9S4W7KFBwhgX1t2xRx0i79FynDhsg6xi6fcoKs6VRr9zfAcLojwOyrIQCydt+DEHyLewAiCCLopTZEryBxhhlF2XT1sDC/+2ie1lOHeBDhwlmGOKPd8OzJuwyTyEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FmVl9CSH; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=CcfRFH21; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 621KXuDa2028772
+	for <linux-arm-msm@vger.kernel.org>; Sun, 1 Mar 2026 22:40:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=liHMhkUZwLObZQKcaR0dCOsp
+	FbGoGsXIqL6LcZpPJfA=; b=FmVl9CSH3WuzakbWRWrtDYLnsJ1shhPHQUPlDcIe
+	+9lv7bblF8fP0J2Pw0MmfcBT7vGoLQmrPCXiIyWaJu0Jpx38Gh8RfROnel/TuF4+
+	FK8jVR4/TdHq9zqhye2kFv4nJoZqwxlJcfl5J8qRo40FtvI5l9KnemiwpioGxqWy
+	2BKC+M5JSMqOQ8tsfh8ybY2Ho+JnCHu63zxiQh4uw/2OG1SYzfPgHMYDB2q3qeWx
+	gGAk5611x3LjEVhtnZ1p8DG90CP30UrenFVjdemKCH2eU1rbTYOYVyRxM42JCdM5
+	pOKXaUr+dFIY4po0vGSiOZXqlE3IeQ0GEjUxAoNgI3xOhw==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cksg739q1-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sun, 01 Mar 2026 22:40:23 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-8c70cff1da5so2962773285a.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 01 Mar 2026 14:40:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1772404823; x=1773009623; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=liHMhkUZwLObZQKcaR0dCOspFbGoGsXIqL6LcZpPJfA=;
+        b=CcfRFH21mWxzdpaRfR3TO++Ob/4XgvqrAImJXhAnH3OLnF+QsearLgsFj0fN8kNXie
+         YHyZa4s726kRibxG/C0XPG+K3h1NmegA5pXO/03G6iigQB2dDGVRk6qJn5gdElYmnByH
+         7ALcm8YlQ66vF7P0tzCJLLngGfCnNhQstvCFsBzuoisUK6IUfSWSpp0iY8Xrw1avInOF
+         RIUAOwibinClXgJdIrlc+aHGNk7J6yYq/o0uHdNfOK4cQjwES/sihif9bYnD+bbspAHu
+         OINq3TmDqpJDXZYkA1hjEdxt3HfmZt9xhQx8wDMCHTLMdOjLCqf9RfkYbuYo7LoqH1SE
+         B87Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772404823; x=1773009623;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=liHMhkUZwLObZQKcaR0dCOspFbGoGsXIqL6LcZpPJfA=;
+        b=lp0jb/ypOxtDg77Pm9PQFq9F4jxuea1vQ4gV4jXxoze8Ax+hsrZRhsEm3H07VNtORa
+         5XaJUIcKlclNgK799oY4H3WE4wnN/N3XwE8gxYyfSDNjVqpEwJ4pWmdgvuS1LjcI5RS/
+         FLORbm65y+ta8U5mS1GO/ZHUXdZHA8imariJIgltTprqFK05NPGjKyAMxes/o0iqWNs0
+         x/LG+myEdJo1J4SxVdMjVgratjhdT/HzzVXE/pOtmojP4j4P/6UWTD5jYzlWVzF+5ZXF
+         jBKWbXdk3aHYMs9rnFL3obQLKQERZve+uW2cq2hi/7ekVaHi33o18GYMMe0lsKMfQnjx
+         083Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWKsy8Waru6GIHxSiWdwKe+F1jqlm7EPEWs5fS1ammq37lNZ3TklJkhshm2RnlEDEMUngeXmIXav6B7HNAx@vger.kernel.org
+X-Gm-Message-State: AOJu0YysMxL2O0BtfG54r7L75feqcA5jlACJ5DdHHyRmJsNEwGlD39E2
+	1YzQg8Wl/N/HQvwU3IQq7PGttEY1l8mpoZwR7zgYlf253V3GHLKtUSFGoVQAe6j2JJXcR3bp0PN
+	FmHt+iup+A4zNV2Hn1R4/LpBD77QAEVN2q2P2HyD0oSc+K8d8GGH/GBoPDeiySSf8NQXa
+X-Gm-Gg: ATEYQzx05gOl0mL1V+FvgSPyS0WGrs+pLd0JuiDdE+c37DsLsEO4U67IWLdmxFsHqs+
+	Ya9OYkiFxbpVvgj1mipyzgHHF3vR4BQsZ2X2MaUrf9lvQh2fTyR3pSDqYGbi41iv68BtdwVmSdh
+	dkmoAaOipQXzgjw06NfcxE3tm5elWuzKVFj849r3oPnua/T6M0JRSLb8NdKFf8zNifi6XW/m6QN
+	lHVMEUjR4wJJel6Rf87aExtoHnREFdINvKzVSSivFY1j9+MXO1Ib1d/cvIA2RorFLngyp0j+I0n
+	WbEzz3vxc6L6+c2iXBtwKFK7HpffkWxP4138XAX+32r7VKlhEavzj733wcEzpAyci5jJ9SE6OiP
+	26By2ndD/atDyXwR/LB+h7gWRtZpabwlpLHXgfL3GNnZ0jU3drlh6x9XzDgEUUOb+HTvoBLxwQ9
+	Zfy6NHNjYVFwg557MyRONRWvbEoimDFnk+PPg=
+X-Received: by 2002:a05:620a:4413:b0:8cb:4a64:f482 with SMTP id af79cd13be357-8cbc8d83cc4mr1468464285a.18.1772404823132;
+        Sun, 01 Mar 2026 14:40:23 -0800 (PST)
+X-Received: by 2002:a05:620a:4413:b0:8cb:4a64:f482 with SMTP id af79cd13be357-8cbc8d83cc4mr1468460285a.18.1772404822548;
+        Sun, 01 Mar 2026 14:40:22 -0800 (PST)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-389f3016bf6sm24553701fa.32.2026.03.01.14.40.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 01 Mar 2026 14:40:21 -0800 (PST)
+Date: Mon, 2 Mar 2026 00:40:18 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: david@ixit.cz
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Henrik Rydberg <rydberg@bitmath.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Petr Hodina <petr.hodina@protonmail.com>, linux-input@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzk@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org
+Subject: Re: [PATCH 08/10] dt-bindings: input: touchscreen: st,stmfts:
+ Introduce STM FTS5
+Message-ID: <qibmsgfttxo6kiaqyjljj6otamqp7okfr4abwpmuo7daanl6qu@ka33zvoz7lte>
+References: <20260301-stmfts5-v1-0-22c458b9ac68@ixit.cz>
+ <20260301-stmfts5-v1-8-22c458b9ac68@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260301-wiko-chuppito-v3-3-9b36a2a7aed5@posteo.de>
-References: <20260301-wiko-chuppito-v3-0-9b36a2a7aed5@posteo.de>
-In-Reply-To: <20260301-wiko-chuppito-v3-0-9b36a2a7aed5@posteo.de>
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
- phone-devel@vger.kernel.org, Paul Adam <adamp@posteo.de>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1772404208; l=8860;
- i=adamp@posteo.de; s=20260215; h=from:subject:message-id;
- bh=MgE5NLXqI2cJWDmTleXIv4skNnJUubtBBECh7G4sx44=;
- b=PQfHf7fgISE5+ThmLeiY0sKNNumoJNNVuME8s/yFdhJEw+y6ibFGAKH/rAh+hP1FRMw7OgyDz
- SNR4QCrK9v0BZ2zX4WySBPz1wx0qqFzJf0aApVxoDWuRvj39OPEYPxb
-X-Developer-Key: i=adamp@posteo.de; a=ed25519;
- pk=mtrPhSn7htywc4S5zrKNrWM6laAdfnaJzIs0BDiCyAs=
-X-Endpoint-Received: by B4 Relay for adamp@posteo.de/20260215 with
- auth_id=640
-X-Original-From: Paul Adam <adamp@posteo.de>
-Reply-To: adamp@posteo.de
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260301-stmfts5-v1-8-22c458b9ac68@ixit.cz>
+X-Proofpoint-ORIG-GUID: 4TfAJ2Acj1agEz-i_S60Z88h8ewhSQFL
+X-Proofpoint-GUID: 4TfAJ2Acj1agEz-i_S60Z88h8ewhSQFL
+X-Authority-Analysis: v=2.4 cv=FaA6BZ+6 c=1 sm=1 tr=0 ts=69a4c057 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22 a=tZRLSl_A3aL-_mRAmj8A:9
+ a=CjuIK1q_8ugA:10 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAxMDIwOCBTYWx0ZWRfX7GnkdNuxDbsg
+ pL8etOhxg4AS74J8rARB2NA3ZFZ1iF63/b/0ug4PcS86mzaJBzWhLxc01eN0m/T4gKKIFd1DIZK
+ LXCyLV5Qtngjq8G3gCzKmv5oRQGc3PAVjAu0wMGYzgq9gxCTSHdnDDhi6VMwWaYi3h6CmB9CZyt
+ IlJhY5NvkTLaDiXORE3ITWyZ8QsiYq2Gi51J4WEo7G2iyaistRqo6S2EDPCk4Mjza+ao3Vofm9q
+ AVOz5SoE0JsPa70mO3WsqoJypRo1LcfDEBGmLCOmiNm5fAuacgUSpOb7gAs76uXy6LYjcpUQzhf
+ 7mApNfkboEss3b9L5VD4kN6vsfH9nCkRpamjoM9pkFXaaB26QqE/rMo/rdg8Vk+38EtE4nUoBQ/
+ I7z4Czq7IQD+odvottdb1hZftdt5A4ORbRwRqhFkS7Z+o/qmmirNAlexS2vUgUN6xspywvqxkAj
+ Rz4dwRg46O3LwJ+cmcg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-01_05,2026-02-27_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 clxscore=1015 phishscore=0 lowpriorityscore=0
+ priorityscore=1501 spamscore=0 bulkscore=0 adultscore=0 malwarescore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2602130000
+ definitions=main-2603010208
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-94766-lists,linux-arm-msm=lfdr.de,adamp.posteo.de];
-	FROM_HAS_DN(0.00)[];
-	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-94769-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[19];
 	MIME_TRACE(0.00)[0:+];
+	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_CC(0.00)[gmail.com,foss.st.com,kernel.org,bitmath.org,protonmail.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,ixit.cz:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
-	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
-	DBL_PROHIBIT(0.00)[0.0.0.39:email,0.0.0.11:email];
-	RCPT_COUNT_SEVEN(0.00)[11];
+	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	HAS_REPLYTO(0.00)[adamp@posteo.de];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,c:email,0.0.0.68:email,0.0.0.1:email,0.0.0.48:email]
-X-Rspamd-Queue-Id: 3CF271D1DDA
+	TO_DN_SOME(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: BE3CA1D1E3D
 X-Rspamd-Action: no action
 
-From: Paul Adam <adamp@posteo.de>
+On Sun, Mar 01, 2026 at 06:51:22PM +0100, David Heidelberg via B4 Relay wrote:
+> From: David Heidelberg <david@ixit.cz>
+> 
+> Introduce more recent STM FTS5 touchscreen support.
+> 
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
+>  .../bindings/input/touchscreen/st,stmfts.yaml           | 17 ++++++++++++++++-
+>  1 file changed, 16 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/input/touchscreen/st,stmfts.yaml b/Documentation/devicetree/bindings/input/touchscreen/st,stmfts.yaml
+> index 64c4f24ea3dd0..329d89977bdbc 100644
+> --- a/Documentation/devicetree/bindings/input/touchscreen/st,stmfts.yaml
+> +++ b/Documentation/devicetree/bindings/input/touchscreen/st,stmfts.yaml
+> @@ -19,7 +19,9 @@ allOf:
+>  
+>  properties:
+>    compatible:
+> -    const: st,stmfts
+> +    enum:
+> +      - st,stmfts
+> +      - st,stmfts5
+>  
+>    reg:
+>      maxItems: 1
+> @@ -53,6 +55,19 @@ required:
+>  
+>  unevaluatedProperties: false
+>  
+> +allOf:
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          const: st,stmfts5
+> +    then:
+> +      properties:
+> +        switch-gpio:
+> +          description: Switch between SLPI and AP mode.
 
-Add an initial device tree for Wiko PULP 4G.
-Includes support for:
-- UART
-- USB (no OTG)
-- Internal storage
-- MicroSD
-- Volume keys + Power button
-- Touchscreen
-- Backlight
-- Accelerometer: Invensense MPU6880
-- Magnetometer: Asahi Kasei AK09911
-- Hall sensor: Rohm BU52021HFV
-- Proximity sensor
-- Vibrator
-- Earpiece
-- Microphone 1
-- Headphones
-- Wifi
-- Bluetooth
-- GPU
+This doesn't sounds like the GPIO on the touchscreen, more like the
+external schematic component. If it need sto be turned to one position,
+it might be better to use GPIO hog for that.
 
-Signed-off-by: Paul Adam <adamp@posteo.de>
----
- arch/arm64/boot/dts/qcom/Makefile                  |   1 +
- arch/arm64/boot/dts/qcom/msm8916-wiko-chuppito.dts | 356 +++++++++++++++++++++
- 2 files changed, 357 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index f80b5d9cf1e8..5a3a9a823503 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -75,6 +75,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-rossa.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-serranove.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-thwc-uf896.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-thwc-ufi001c.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wiko-chuppito.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt86518.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt86528.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt88047.dtb
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-wiko-chuppito.dts b/arch/arm64/boot/dts/qcom/msm8916-wiko-chuppito.dts
-new file mode 100644
-index 000000000000..dd56e1baeb4b
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8916-wiko-chuppito.dts
-@@ -0,0 +1,356 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+
-+/dts-v1/;
-+
-+#include "msm8916-pm8916.dtsi"
-+#include "msm8916-modem-qdsp6.dtsi"
-+
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/input/input.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-mpp.h>
-+
-+/ {
-+	model = "Wiko Pulp 4G";
-+	compatible = "wiko,chuppito", "qcom,msm8916";
-+	chassis-type = "handset";
-+
-+	aliases {
-+		mmc0 = &sdhc_1; /* eMMC */
-+		mmc1 = &sdhc_2; /* SD card */
-+		serial0 = &blsp_uart2;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0";
-+	};
-+
-+	backlight: backlight {
-+		compatible = "pwm-backlight";
-+		pwms = <&pm8916_pwm 0 100000>;
-+		brightness-levels = <0 255>;
-+		num-interpolated-steps = <255>;
-+		default-brightness-level = <255>;
-+		enable-gpios = <&tlmm 119 GPIO_ACTIVE_HIGH>;
-+		pinctrl-0 = <&button_backlight_default>;
-+		pinctrl-names = "default";
-+	};
-+
-+	gpio-hall-sensor {
-+		compatible = "gpio-keys";
-+		pinctrl-0 = <&gpio_hall_sensor_default>;
-+		pinctrl-names = "default";
-+		label = "Hall Effect Sensor";
-+
-+		event-hall-sensor {
-+			label = "Hall Effect Sensor";
-+			gpios = <&tlmm 117 GPIO_ACTIVE_LOW>;
-+			linux,input-type = <EV_SW>;
-+			linux,code = <SW_LID>;
-+			linux,can-disable;
-+		};
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+		pinctrl-0 = <&gpio_keys_default>;
-+		pinctrl-names = "default";
-+		label = "Buttons";
-+
-+		button-volume-up {
-+			label = "Volume up";
-+			gpios = <&tlmm 107 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEUP>;
-+		};
-+	};
-+
-+	usb_id: usb-id {
-+		compatible = "linux,extcon-usb-gpio";
-+		id-gpios = <&tlmm 110 GPIO_ACTIVE_HIGH>;
-+		pinctrl-0 = <&usb_id_default>;
-+		pinctrl-names = "default";
-+	};
-+};
-+
-+&blsp_i2c2 {
-+	status = "okay";
-+
-+	magnetometer@c {
-+		compatible = "asahi-kasei,ak09911";
-+		reg = <0x0c>;
-+		vdd-supply = <&pm8916_l17>;
-+		vid-supply = <&pm8916_l6>;
-+		reset-gpios = <&tlmm 120 GPIO_ACTIVE_LOW>;
-+		pinctrl-0 = <&mag_reset_default>;
-+		pinctrl-1 = <&mag_reset_suspend>;
-+		pinctrl-names = "default", "suspend";
-+		mount-matrix = "1",  "0", "0",
-+			       "0", "1", "0",
-+			       "0",  "0", "1";
-+	};
-+
-+	proximity@48 {
-+		compatible = "sensortek,stk3310";
-+		reg = <0x48>;
-+		interrupts-extended = <&tlmm 113 IRQ_TYPE_EDGE_FALLING>;
-+		pinctrl-0 = <&proximity_int_default>;
-+		pinctrl-1 = <&proximity_int_suspend>;
-+		pinctrl-names = "default", "suspend";
-+	};
-+
-+	imu@68 {
-+		compatible = "invensense,mpu6880";
-+		reg = <0x68>;
-+		interrupts-extended = <&tlmm 115 IRQ_TYPE_EDGE_FALLING>;
-+		vdd-supply = <&pm8916_l17>;
-+		vddio-supply = <&pm8916_l6>;
-+		pinctrl-0 = <&imu_int_default>;
-+		pinctrl-1 = <&imu_int_suspend>;
-+		pinctrl-names = "default", "suspend";
-+		mount-matrix = "0",  "-1", "0",
-+			       "-1", "0", "0",
-+			       "0",  "0", "-1";
-+	};
-+};
-+
-+&blsp_i2c5 {
-+	status = "okay";
-+
-+	touchscreen@39 {
-+		compatible = "syna,rmi4-i2c";
-+		reg = <0x39>;
-+		interrupts-extended = <&tlmm 13 IRQ_TYPE_EDGE_FALLING>;
-+		vdd-supply = <&pm8916_l17>;
-+		vio-supply = <&pm8916_l6>;
-+		pinctrl-0 = <&touchscreen_default>;
-+		pinctrl-1 = <&touchscreen_suspend>;
-+		pinctrl-names = "default", "suspend";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		syna,startup-delay-ms = <100>;
-+		syna,reset-delay-ms = <160>;
-+
-+		rmi4-f01@1 {
-+			reg = <0x1>;
-+			syna,nosleep-mode = <1>;
-+		};
-+
-+		rmi4-f11@11 {
-+			reg = <0x11>;
-+			syna,sensor-type = <1>;
-+		};
-+	};
-+};
-+
-+&blsp_uart2 {
-+	status = "okay";
-+};
-+
-+&gpu {
-+	status = "okay";
-+};
-+
-+&mdss {
-+	status = "okay";
-+};
-+
-+&mpss_mem {
-+	reg = <0x0 0x86800000 0x0 0x5600000>;
-+};
-+
-+&pm8916_codec {
-+	qcom,hphl-jack-type-normally-open;
-+};
-+
-+&pm8916_mpps {
-+	pwm_out: mpp4-state {
-+		pins = "mpp4";
-+		function = "digital";
-+		power-source = <PM8916_MPP_VPH>;
-+		output-low;
-+		qcom,dtest = <1>;
-+	};
-+};
-+
-+&pm8916_pwm {
-+	pinctrl-0 = <&pwm_out>;
-+	pinctrl-names = "default";
-+
-+	status = "okay";
-+};
-+
-+&pm8916_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
-+
-+	status = "okay";
-+};
-+
-+&pm8916_rpm_regulators {
-+	pm8916_l17: l17 {
-+		regulator-min-microvolt = <2850000>;
-+		regulator-max-microvolt = <2850000>;
-+		regulator-always-on;
-+	};
-+};
-+
-+&pm8916_vib {
-+	status = "okay";
-+};
-+
-+&sdhc_1 {
-+	status = "okay";
-+};
-+
-+&sdhc_2 {
-+	pinctrl-0 = <&sdc2_default>, <&sdc2_cd_default>;
-+	pinctrl-1 = <&sdc2_sleep>, <&sdc2_cd_default>;
-+	pinctrl-names = "default", "sleep";
-+	cd-gpios = <&tlmm 38 GPIO_ACTIVE_HIGH>;
-+
-+	status = "okay";
-+};
-+
-+&sound {
-+	audio-routing = "AMIC1", "MIC BIAS Internal1",
-+		"AMIC2", "MIC BIAS Internal2",
-+		"AMIC3", "MIC BIAS Internal1";
-+};
-+
-+&tlmm {
-+	button_backlight_default: button-backlight-default-state {
-+		pins = "gpio119";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	gpio_hall_sensor_default: gpio-hall-sensor-default-state {
-+		pins = "gpio117";
-+		function = "gpio";
-+		drive-strength = <6>;
-+		bias-pull-up;
-+	};
-+
-+	gpio_keys_default: gpio-keys-default-state {
-+		pins = "gpio107";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+
-+	imu_int_default: imu-int-default-state {
-+		pins = "gpio115";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	imu_int_suspend: imu-int-suspend-state {
-+		pins = "gpio115";
-+		function = "gpio";
-+		drive-strength = <2>;
-+	};
-+
-+	mag_reset_default: mag-reset-default-state {
-+		pins = "gpio120";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	mag_reset_suspend: mag-reset-suspend-state {
-+		pins = "gpio120";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
-+	proximity_int_default: proximity-int-default-state {
-+		pins = "gpio113";
-+		function = "gpio";
-+		drive-strength = <6>;
-+		bias-pull-up;
-+	};
-+
-+	proximity_int_suspend: proximity-int-suspend-state {
-+		pins = "gpio113";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
-+	sdc2_cd_default: sdc2-cd-default-state {
-+		pins = "gpio38";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	touchscreen_default: touchscreen-default-state {
-+		touchscreen-pins {
-+			pins = "gpio13";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+
-+		reset-pins {
-+			pins = "gpio12";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+	};
-+
-+	touchscreen_suspend: touchscreen-suspend-state {
-+		touchscreen-pins {
-+			pins = "gpio13";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-down;
-+		};
-+
-+		reset-pins {
-+			pins = "gpio12";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-down;
-+		};
-+	};
-+
-+	usb_id_default: usb-id-default-state {
-+		pins = "gpio110";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-pull-up;
-+	};
-+};
-+
-+&usb {
-+	extcon = <&usb_id>, <&usb_id>;
-+
-+	status = "okay";
-+};
-+
-+&usb_hs_phy {
-+	extcon = <&usb_id>;
-+};
-+
-+&venus {
-+	status = "okay";
-+};
-+
-+&venus_mem {
-+	status = "okay";
-+};
-+
-+&wcnss {
-+	status = "okay";
-+};
-+
-+&wcnss_iris {
-+	compatible = "qcom,wcn3620";
-+};
-+
-+&wcnss_mem {
-+	status = "okay";
-+};
+> +
+> +      required:
+> +        - switch-gpio
+> +
+>  examples:
+>    - |
+>      #include <dt-bindings/interrupt-controller/irq.h>
+> 
+> -- 
+> 2.51.0
+> 
+> 
 
 -- 
-2.53.0
-
-
+With best wishes
+Dmitry
 
