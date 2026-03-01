@@ -1,58 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-94692-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94693-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cNl0CrKpo2nfJQUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94692-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 03:51:30 +0100
+	id AEOvHKSco2k3IQUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94693-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 02:55:48 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A6091CDFA6
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 03:51:29 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 13C311CC47E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 02:55:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9CC0F31035F8
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Mar 2026 01:43:17 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 57FFE305617B
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Mar 2026 01:49:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1AEE26FA6F;
-	Sun,  1 Mar 2026 01:43:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 766642FFFA5;
+	Sun,  1 Mar 2026 01:48:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="toNDlqBc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G5aHlLRy"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F884145A1F;
-	Sun,  1 Mar 2026 01:43:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C3A76026;
+	Sun,  1 Mar 2026 01:48:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772329396; cv=none; b=eJGMmAcgkFSYc3W83mRe4J6FLAaYDWCuYecgMv1tVdREzRBY8tR7phte9FqI+A/125QnKNGzdC+AzaW4gNcGVmh7UjzttgkDEyaL9LRQk/GmVTeR13ifQDL0ZTm0dn8qWYIM1MI0qmzxsSOKxLRT2mOElP04auaEF/Y/5FDenZs=
+	t=1772329719; cv=none; b=rLVyHp4smCOH3+Pjp4rcttzOnrKyp7LGTmIjxlKQGpzVQfftZHIldrT8ohKd2CUWn8aqaCi1Wt7+dfV4LSV7GkdhJ13t/eOCCIi3Gvq3okW7e9e6zutwPZkymTJ2Hrz2u+Ifjb1JRvoQ1+TgUzOiB67F9Bb0cxV9VUFKQNsiB4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772329396; c=relaxed/simple;
-	bh=p35CT646UNG2/YBjz9HWSulWxIpVOpW3F1abFFnUdJ0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Xg8Q2U8GQr/MISu0oRgUfPjBGWr1fr28PtaozBAp2bUqKJjFjlyT0CK1LOGNrdUdvMGvS/6JQeHF5aH3q0gy6QbXJnSwdRh/VeTppiLx6B78ZospUyvjVI+/rZnYTy84IYfhxclvdrZT1kw7NJgQIl8mbFVB/G2qiXSlpoGBPmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=toNDlqBc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92499C19421;
-	Sun,  1 Mar 2026 01:43:15 +0000 (UTC)
+	s=arc-20240116; t=1772329719; c=relaxed/simple;
+	bh=7kiiLApgJY2J3rdXHoK2H5MRLLOUtuqEDK3yvedvHLA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=GENy5k0O33MeJpgaggz2ORU3+xlY1cHRyBAt2p6cf9+fX8/gtxhI9WDXtZuypVM3595T8TZCekZwq+uRvgsnSVYOz3SScZJ7kikvNDd3jeWjZ4/3aBNg1ZWgQrVZAYdzmUhLWvdJvr7z9exZAY7hS1Pe0Qxlh6IooQQXLIsrAwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G5aHlLRy; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86E9DC19424;
+	Sun,  1 Mar 2026 01:48:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772329396;
-	bh=p35CT646UNG2/YBjz9HWSulWxIpVOpW3F1abFFnUdJ0=;
+	s=k20201202; t=1772329719;
+	bh=7kiiLApgJY2J3rdXHoK2H5MRLLOUtuqEDK3yvedvHLA=;
 	h=From:To:Cc:Subject:Date:From;
-	b=toNDlqBc5A8oTJRiAC7BHlObKaZ5/iEEA0BoyLawFJUaE5Vq1VV8b0SVhS0AXFzrf
-	 Peeh15hdmfy708O2mxCFIu66VqToZ0ncNXXlWt0M8Yws2y1eMYeDoEiI7AXpeOcMWj
-	 0lSLJe/sC3rjLoW4B9v3ReY2rkd5m1GS/qDwpWAebz61pHK+YXTfTtfWRvI7Dbsvnn
-	 9NUAT1ne92lktnFPLu6EgLMvRnddC1oh2WZqbfeseQc7LNvfy2+WYVHCLAtYfM3gXV
-	 lUn8g1/bkJXlnSvq3WxAPfCVo+EXMK98gnet0OKF5N6UbL0FW5an0U5guje/kqHrfz
-	 zZr+EhzHoZlrA==
+	b=G5aHlLRyPhNhdFUVhBgNkpGrfWhNJ+m2Rmn1bJ1VB4ffp+kF5YPmwoTxYNfPxk1D6
+	 YvuDMVsu7ngJc0KtAqUTOBhZMwuj88C7h+mJ4NOeazmqWV+gYirDwu0/s3mj2SxwGE
+	 QrQ2/9+EqNqRchsRuiMIisrIalZT0Hk3G2cE1WvFlaN8IOp2uzngzIYjV81Rdjmfm0
+	 TPY/k4qZeW3vaD55jyvk1oSqtd88Yr9qtwdb6MBE/lhvzTl4YyICNdkf7UMQP0iVlm
+	 nRoSumBMTODaSINCAbHihscuoFlVCBuQkKV2qwxHcvpZLqUUGpSoyBCoO/Lxvzt1BY
+	 HiyjDaTTRGCDg==
 From: Sasha Levin <sashal@kernel.org>
 To: stable@vger.kernel.org,
-	johan@kernel.org
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Lee Jones <lee@kernel.org>,
-	linux-arm-msm@vger.kernel.org
-Subject: FAILED: Patch "mfd: qcom-pm8xxx: Fix OF populate on driver rebind" failed to apply to 6.1-stable tree
-Date: Sat, 28 Feb 2026 20:43:14 -0500
-Message-ID: <20260301014314.1705291-1-sashal@kernel.org>
+	cassel@kernel.org
+Cc: Manivannan Sadhasivam <mani@kernel.org>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org
+Subject: FAILED: Patch "Revert "PCI: qcom: Don't wait for link if we can detect Link Up"" failed to apply to 5.15-stable tree
+Date: Sat, 28 Feb 2026 20:48:37 -0500
+Message-ID: <20260301014837.1712860-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -69,31 +69,32 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-94692-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-94693-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	RCVD_TLS_LAST(0.00)[];
 	TO_DN_SOME(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[sashal@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	FROM_HAS_DN(0.00)[]
-X-Rspamd-Queue-Id: 8A6091CDFA6
+	RCPT_COUNT_FIVE(0.00)[6];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[rock-chips.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,msgid.link:url]
+X-Rspamd-Queue-Id: 13C311CC47E
 X-Rspamd-Action: no action
 
-The patch below does not apply to the 6.1-stable tree.
+The patch below does not apply to the 5.15-stable tree.
 If someone wants it applied there, or to any other stable or longterm
 tree, then please email the backport, including the original git commit
 id to <stable@vger.kernel.org>.
@@ -103,53 +104,86 @@ Sasha
 
 ------------------ original commit in Linus's tree ------------------
 
-From 27a8acea47a93fea6ad0e2df4c20a9b51490e4d9 Mon Sep 17 00:00:00 2001
-From: Johan Hovold <johan@kernel.org>
-Date: Fri, 19 Dec 2025 12:09:47 +0100
-Subject: [PATCH] mfd: qcom-pm8xxx: Fix OF populate on driver rebind
+From e9ce5b3804436301ab343bc14203a4c14b336d1b Mon Sep 17 00:00:00 2001
+From: Niklas Cassel <cassel@kernel.org>
+Date: Mon, 22 Dec 2025 07:42:10 +0100
+Subject: [PATCH] Revert "PCI: qcom: Don't wait for link if we can detect Link
+ Up"
 
-Since commit c6e126de43e7 ("of: Keep track of populated platform
-devices") child devices will not be created by of_platform_populate()
-if the devices had previously been deregistered individually so that the
-OF_POPULATED flag is still set in the corresponding OF nodes.
+This reverts commit 36971d6c5a9a134c15760ae9fd13c6d5f9a36abb.
 
-Switch to using of_platform_depopulate() instead of open coding so that
-the child devices are created if the driver is rebound.
+While this fake hotplugging was a nice idea, it has shown that this feature
+does not handle PCIe switches correctly:
+pci_bus 0004:43: busn_res: can not insert [bus 43-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
+pci_bus 0004:43: busn_res: [bus 43-41] end is updated to 43
+pci_bus 0004:43: busn_res: can not insert [bus 43] under [bus 42-41] (conflicts with (null) [bus 42-41])
+pci 0004:42:00.0: devices behind bridge are unusable because [bus 43] cannot be assigned for them
+pci_bus 0004:44: busn_res: can not insert [bus 44-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
+pci_bus 0004:44: busn_res: [bus 44-41] end is updated to 44
+pci_bus 0004:44: busn_res: can not insert [bus 44] under [bus 42-41] (conflicts with (null) [bus 42-41])
+pci 0004:42:02.0: devices behind bridge are unusable because [bus 44] cannot be assigned for them
+pci_bus 0004:45: busn_res: can not insert [bus 45-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
+pci_bus 0004:45: busn_res: [bus 45-41] end is updated to 45
+pci_bus 0004:45: busn_res: can not insert [bus 45] under [bus 42-41] (conflicts with (null) [bus 42-41])
+pci 0004:42:06.0: devices behind bridge are unusable because [bus 45] cannot be assigned for them
+pci_bus 0004:46: busn_res: can not insert [bus 46-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
+pci_bus 0004:46: busn_res: [bus 46-41] end is updated to 46
+pci_bus 0004:46: busn_res: can not insert [bus 46] under [bus 42-41] (conflicts with (null) [bus 42-41])
+pci 0004:42:0e.0: devices behind bridge are unusable because [bus 46] cannot be assigned for them
+pci_bus 0004:42: busn_res: [bus 42-41] end is updated to 46
+pci_bus 0004:42: busn_res: can not insert [bus 42-46] under [bus 41] (conflicts with (null) [bus 41])
+pci 0004:41:00.0: devices behind bridge are unusable because [bus 42-46] cannot be assigned for them
+pcieport 0004:40:00.0: bridge has subordinate 41 but max busn 46
 
-Fixes: c6e126de43e7 ("of: Keep track of populated platform devices")
-Cc: stable@vger.kernel.org	# 3.16
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251219110947.24101-1-johan@kernel.org
-Signed-off-by: Lee Jones <lee@kernel.org>
+During the initial scan, PCI core doesn't see the switch and since the Root
+Port is not hot plug capable, the secondary bus number gets assigned as the
+subordinate bus number. This means, the PCI core assumes that only one bus
+will appear behind the Root Port since the Root Port is not hot plug
+capable.
+
+This works perfectly fine for PCIe endpoints connected to the Root Port,
+since they don't extend the bus. However, if a PCIe switch is connected,
+then there is a problem when the downstream busses starts showing up and
+the PCI core doesn't extend the subordinate bus number and bridge resources
+after initial scan during boot.
+
+The long term plan is to migrate this driver to the upcoming pwrctrl APIs
+that are supposed to handle this problem elegantly.
+
+Suggested-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Tested-by: Shawn Lin <shawn.lin@rock-chips.com>
+Acked-by: Shawn Lin <shawn.lin@rock-chips.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20251222064207.3246632-11-cassel@kernel.org
 ---
- drivers/mfd/qcom-pm8xxx.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/pci/controller/dwc/pcie-qcom.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/mfd/qcom-pm8xxx.c b/drivers/mfd/qcom-pm8xxx.c
-index 1149f7102a365..0cf374c015ce7 100644
---- a/drivers/mfd/qcom-pm8xxx.c
-+++ b/drivers/mfd/qcom-pm8xxx.c
-@@ -577,17 +577,11 @@ static int pm8xxx_probe(struct platform_device *pdev)
- 	return rc;
- }
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index 60373fe1362f8..e87ec6779d44f 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -1958,10 +1958,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
  
--static int pm8xxx_remove_child(struct device *dev, void *unused)
--{
--	platform_device_unregister(to_platform_device(dev));
--	return 0;
--}
+ 	platform_set_drvdata(pdev, pcie);
+ 
+-	irq = platform_get_irq_byname_optional(pdev, "global");
+-	if (irq > 0)
+-		pp->use_linkup_irq = true;
 -
- static void pm8xxx_remove(struct platform_device *pdev)
- {
- 	struct pm_irq_chip *chip = platform_get_drvdata(pdev);
+ 	ret = dw_pcie_host_init(pp);
+ 	if (ret) {
+ 		dev_err(dev, "cannot initialize host\n");
+@@ -1975,6 +1971,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+ 		goto err_host_deinit;
+ 	}
  
--	device_for_each_child(&pdev->dev, NULL, pm8xxx_remove_child);
-+	of_platform_depopulate(&pdev->dev);
- 	irq_domain_remove(chip->irqdomain);
- }
- 
++	irq = platform_get_irq_byname_optional(pdev, "global");
+ 	if (irq > 0) {
+ 		ret = devm_request_threaded_irq(&pdev->dev, irq, NULL,
+ 						qcom_pcie_global_irq_thread,
 -- 
 2.51.0
 
