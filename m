@@ -1,58 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-94669-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94670-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cJ68EfOUo2n3HQUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94669-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 02:22:59 +0100
+	id kL0ZKv2Uo2l7HQUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94670-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 02:23:09 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE46E1CA57C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 02:22:58 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id BFFEC1CA5DB
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 02:23:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D00DC307D613
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Mar 2026 01:18:41 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 524F33083DC0
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Mar 2026 01:18:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AFDE244665;
-	Sun,  1 Mar 2026 01:18:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1894324679F;
+	Sun,  1 Mar 2026 01:18:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XVT91QZT"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b3P79KI0"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C9E1E4AF;
-	Sun,  1 Mar 2026 01:18:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9755430BA3;
+	Sun,  1 Mar 2026 01:18:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772327921; cv=none; b=IEE1H80ptY/ggDRS6zHUbNBukmfEu1U7a1eDGDgvvpzV1gpGyIoXyqyFixE5mgkOwxat2HMCt/ophjShH1INRj0Sr/FEAE1YfmA6g8uT0FidhiJLanf49sqY4fh49iDoUA4Z6CIG5VjfEXSrZ5MEo/hmQjBvOL6mdq+IMAfYtkE=
+	t=1772327924; cv=none; b=WjMFWWbIivbOx52z9hjT44CqWq6qepOgbwBnfYt/ePrpbku/kk8rP5B4fcllbolnbyi78nGEs45jHN+yfuSBLLpcIMOH+8hX11WpHid2GxrBrIUDkPjNrlzQC+/nsxusCQLRGt0BXuBRKgh4Pg3zuQT8QgD10eIG/5DEy7lWPHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772327921; c=relaxed/simple;
-	bh=Azvw4qdyjkxFA7XLpZS+79i/nX3i1SUO+MF/PkhXQs0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=kykmz6rVnxbutWadAQZgzFwRnxWaQWCcCLY7H6XKRu4Go2lnHVUC+NsZm0YTz09GMTro6JT7psK28L75IboYXdpYoji6zUJuUFe4+YDCNWzCh/o7e7BJ/e2psQvqDAmlXYlbUFUADTcVwdDf3ESa4nAurMANwqttYP2bwaPAprY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XVT91QZT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CF84C19421;
-	Sun,  1 Mar 2026 01:18:40 +0000 (UTC)
+	s=arc-20240116; t=1772327924; c=relaxed/simple;
+	bh=J7nL2l1pFFeFXMVeZ1FKffbj2Mtyo0xsjmncKkXHccA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=s714EgEomyKj5HR+x9zhBRRi3fRsAdgAC2p9f1OCymQM0F5+wFev1rZRdNxCddj9hMvXBXyOnMtYY8MBxdF4nHrPFRCghthW9LX4Gz5Pj68YA97zJzQ7ij1UnPsIB+l1U9AlUXEgr8+fZ0jpAa0tMv6XDQOWPlyeIm9g/um9U44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b3P79KI0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD7FEC19424;
+	Sun,  1 Mar 2026 01:18:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772327921;
-	bh=Azvw4qdyjkxFA7XLpZS+79i/nX3i1SUO+MF/PkhXQs0=;
+	s=k20201202; t=1772327923;
+	bh=J7nL2l1pFFeFXMVeZ1FKffbj2Mtyo0xsjmncKkXHccA=;
 	h=From:To:Cc:Subject:Date:From;
-	b=XVT91QZTVAaCL5SOMNA6Bi0aKpl+e70z12kX5+xu0yzVXk4XRBebnIJ/PjlmRGojN
-	 0H8izsQJaW+o1lu3gXunW7f1fnkIUZRBIHLvwBhNmJhNEF0EJ8zoQcg9UKnKCFxD/s
-	 SFVJ4iMZjpoZgqM3LZQjtjlVHvKsXCmEpKDl6ke+n6/8TFYrtt/gj240LgfdMxYFPZ
-	 Tatj7Ca/DTerbvX6jq9T71P2hyo1JxhQ1tG/gH5nByzHf2RZXiZVxnmM1DXsth2mqL
-	 jGOpExXVujZDL3A1pd07QyuwurTRCQP0oTFfTVeFc/2rOdBdHGC6S5jpfEqAI4Dq0d
-	 QbQg22jI9KGQA==
+	b=b3P79KI0lS47lqgKFK/IXN2IKS7WbHanFfwoYmnvpAPn0qKboJQltp+in2t1tzVV7
+	 SS/PCsq4w7o/ug66blwQFyINpp5tnaigvn18FFi2fCpmhDOkODzfzArrMd+DgwJegw
+	 zOsAdEeImEQSqJPjWmHIXG/KvLP+3azn0FaTNbIlZffnaIIMnyKiv/JqGwimxC4J7t
+	 YoL0dq7IqyNdq9ERBsXxZ8lNUpZ0iZ/UQb9cTdTP/qwtOljAlcid4a1RXCJMyUhBXc
+	 DEphpf3QAbAhBpOP+C8Kl4KHUfmn3pcv6uUjBk1AjX8hPRw7qbuWBKK+S/E2XY+FwL
+	 wXpKn3sTeHf0Q==
 From: Sasha Levin <sashal@kernel.org>
 To: stable@vger.kernel.org,
-	cassel@kernel.org
-Cc: Manivannan Sadhasivam <mani@kernel.org>,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org
-Subject: FAILED: Patch "Revert "PCI: qcom: Enable MSI interrupts together with Link up if 'Global IRQ' is supported"" failed to apply to 6.12-stable tree
-Date: Sat, 28 Feb 2026 20:18:39 -0500
-Message-ID: <20260301011839.1673093-1-sashal@kernel.org>
+	abelvesa@kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Abel Vesa <abel.vesa@linaro.org>, Vinod Koul <vkoul@kernel.org>,
+	Bjorn@web.codeaurora.org, linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org, devicetree@vger.kernel.org
+Subject: FAILED: Patch "dt-bindings: phy: qcom-edp: Add missing clock for X Elite" failed to apply to 6.12-stable tree
+Date: Sat, 28 Feb 2026 20:18:41 -0500
+Message-ID: <20260301011841.1673141-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -64,34 +65,35 @@ X-Patchwork-Hint: ignore
 X-stable: review
 Content-Transfer-Encoding: 8bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [1.54 / 15.00];
+	ARC_REJECT(1.00)[signature check failed: fail, {[1] = sig:subspace.kernel.org:reject}];
 	MID_CONTAINS_FROM(1.00)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW_WITH_FAILURES(-0.50)[];
 	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94669-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	TO_DN_SOME(0.00)[];
+	NEURAL_SPAM(0.00)[0.995];
+	R_DKIM_REJECT(0.00)[kernel.org:s=k20201202];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TAGGED_FROM(0.00)[bounces-94670-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DMARC_POLICY_ALLOW(0.00)[kernel.org,quarantine];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
+	TO_DN_SOME(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[sashal@kernel.org,linux-arm-msm@vger.kernel.org];
+	PRECEDENCE_BULK(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	NEURAL_HAM(-0.00)[-1.000];
+	DKIM_TRACE(0.00)[kernel.org:-];
+	RCPT_COUNT_SEVEN(0.00)[10];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_FIVE(0.00)[6];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,msgid.link:url,rock-chips.com:email]
-X-Rspamd-Queue-Id: AE46E1CA57C
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,linaro.org:email,msgid.link:url]
+X-Rspamd-Queue-Id: BFFEC1CA5DB
 X-Rspamd-Action: no action
 
 The patch below does not apply to the 6.12-stable tree.
@@ -104,51 +106,83 @@ Sasha
 
 ------------------ original commit in Linus's tree ------------------
 
-From 7ebdefb87942073679e56cfbc5a72e8fc5441bfc Mon Sep 17 00:00:00 2001
-From: Niklas Cassel <cassel@kernel.org>
-Date: Mon, 22 Dec 2025 07:42:11 +0100
-Subject: [PATCH] Revert "PCI: qcom: Enable MSI interrupts together with Link
- up if 'Global IRQ' is supported"
+From 6b99eeacf6abb1ff2d6463c84e490343f39cf11a Mon Sep 17 00:00:00 2001
+From: Abel Vesa <abel.vesa@linaro.org>
+Date: Wed, 24 Dec 2025 12:53:27 +0200
+Subject: [PATCH] dt-bindings: phy: qcom-edp: Add missing clock for X Elite
 
-This reverts commit ba4a2e2317b9faeca9193ed6d3193ddc3cf2aba3.
+On X Elite platform, the eDP PHY uses one more clock called ref.
 
-Since the Link up IRQ support is going away, revert the MSI logic that got
-added for it too.
+The current X Elite devices supported upstream work fine without this
+clock, because the boot firmware leaves this clock enabled. But we should
+not rely on that. Also, even though this change breaks the ABI, it is
+needed in order to make the driver disables this clock along with the
+other ones, for a proper bring-down of the entire PHY.
 
-Suggested-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-[mani: reworded the description]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Tested-by: Shawn Lin <shawn.lin@rock-chips.com>
-Acked-by: Shawn Lin <shawn.lin@rock-chips.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251222064207.3246632-12-cassel@kernel.org
+So attach the this ref clock to the PHY.
+
+Cc: stable@vger.kernel.org # v6.10
+Fixes: 5d5607861350 ("dt-bindings: phy: qcom-edp: Add X1E80100 PHY compatibles")
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://patch.msgid.link/20251224-phy-qcom-edp-add-missing-refclk-v5-1-3f45d349b5ac@oss.qualcomm.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-qcom.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ .../devicetree/bindings/phy/qcom,edp-phy.yaml | 28 ++++++++++++++++++-
+ 1 file changed, 27 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index e87ec6779d44f..c5fcb87972e91 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -136,7 +136,6 @@
+diff --git a/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml
+index eb97181cbb957..bfc4d75f50ff9 100644
+--- a/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml
+@@ -37,12 +37,15 @@ properties:
+       - description: PLL register block
  
- /* PARF_INT_ALL_{STATUS/CLEAR/MASK} register fields */
- #define PARF_INT_ALL_LINK_UP			BIT(13)
--#define PARF_INT_MSI_DEV_0_7			GENMASK(30, 23)
+   clocks:
+-    maxItems: 2
++    minItems: 2
++    maxItems: 3
  
- /* PARF_NO_SNOOP_OVERRIDE register fields */
- #define WR_NO_SNOOP_OVERRIDE_EN			BIT(1)
-@@ -1982,8 +1981,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 			goto err_host_deinit;
- 		}
+   clock-names:
++    minItems: 2
+     items:
+       - const: aux
+       - const: cfg_ahb
++      - const: ref
  
--		writel_relaxed(PARF_INT_ALL_LINK_UP | PARF_INT_MSI_DEV_0_7,
--			       pcie->parf + PARF_INT_ALL_MASK);
-+		writel_relaxed(PARF_INT_ALL_LINK_UP, pcie->parf + PARF_INT_ALL_MASK);
- 	}
+   "#clock-cells":
+     const: 1
+@@ -64,6 +67,29 @@ required:
+   - "#clock-cells"
+   - "#phy-cells"
  
- 	qcom_pcie_icc_opp_update(pcie);
++allOf:
++  - if:
++      properties:
++        compatible:
++          enum:
++            - qcom,x1e80100-dp-phy
++    then:
++      properties:
++        clocks:
++          minItems: 3
++          maxItems: 3
++        clock-names:
++          minItems: 3
++          maxItems: 3
++    else:
++      properties:
++        clocks:
++          minItems: 2
++          maxItems: 2
++        clock-names:
++          minItems: 2
++          maxItems: 2
++
+ additionalProperties: false
+ 
+ examples:
 -- 
 2.51.0
 
