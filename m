@@ -1,59 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-94674-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94675-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id +F/UMgmVo2n3HQUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94674-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 02:23:21 +0100
+	id aKLdFzuXo2neHgUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94675-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 02:32:43 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id B9D2C1CA613
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 02:23:20 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D53831CAEA3
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 02:32:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 90ED83025137
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Mar 2026 01:20:38 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 835BE3070DF0
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Mar 2026 01:22:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 830BE26E710;
-	Sun,  1 Mar 2026 01:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A54EA13B7AE;
+	Sun,  1 Mar 2026 01:22:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pgmM0EMT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tmjbl5PW"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FCDE13B7AE;
-	Sun,  1 Mar 2026 01:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 820182BD0B;
+	Sun,  1 Mar 2026 01:22:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772328026; cv=none; b=YdTo0EVhfhKlfIHiZK+bEFb7SddO7rp47t8XaMsmH8GTzsm34DNmO2fQIGaWqB4xNzQp1mFgsm+Y6a2E3HEaXcBoJrvdAA5Yc/oPvbh/tBJ50nci4nTj+PdD/QGmg4GwjHqp0spg9fcZLt5d9Kj72SZ699MNP/FAwML4uj64A/M=
+	t=1772328138; cv=none; b=kVBOvibkZUcRIW16DBJ/W70QCBRPgfVAPXepCUjPn7IOQPCvnKC/8Zh0FWzdE35tffC6tIvYvT/DgAkerDZoa8qsYrAzL7eFLTu6ZjkLa7YHyXUhkJPK7x7Bj1s5g3FphXV+r4HaWcoEiP6xNDCkDgqbTl1qPDW0U62YFQOdhoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772328026; c=relaxed/simple;
-	bh=yKeu7jjKreibOu2e/GYMYT8WtLaNhKAhPL1K/ng8tQw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=PiwTF3+dT+yLKdc0DTA7Zpwvk8WstdbeYyebz5e0k2WzhDIroVyF6wFt379le/OCLqAO66Qdml+EeJ/KTe0AL2l20AIfVkxcrQNfMt/I/7Auq0SmiH4m/dd5LCrZvhXkICVveGHM2wJ92YYJR7La6NC7U6THXev/+nQAtwEh9oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pgmM0EMT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D4B1C19421;
-	Sun,  1 Mar 2026 01:20:25 +0000 (UTC)
+	s=arc-20240116; t=1772328138; c=relaxed/simple;
+	bh=YXhn7mB2zxwROTnTS2LjnMmTHIEFY8/g9noU56p/vec=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=N5CL0Jn7PkXBoVIGsODHinPG0K1fTffX44FK/mf5UgksvogtNKt595PAoH8Cpz34mFKUe2I6e/QJciOEVS6Q0Sl2ebkuDA57Ml5LZ3bWoYXid+H92TLjtJ4b0Xd8OFRhyadvo0KZm9o/vUO8cPZrLG1IlKxEGBfN0t/4TNredGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tmjbl5PW; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F60EC19421;
+	Sun,  1 Mar 2026 01:22:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772328026;
-	bh=yKeu7jjKreibOu2e/GYMYT8WtLaNhKAhPL1K/ng8tQw=;
+	s=k20201202; t=1772328138;
+	bh=YXhn7mB2zxwROTnTS2LjnMmTHIEFY8/g9noU56p/vec=;
 	h=From:To:Cc:Subject:Date:From;
-	b=pgmM0EMTEq+RAC5ROpGrS26R1tNyPQGrQXvSUgyU5rftR/BDjfyEkKm9EiAIiOd/y
-	 XHsmfprRqsHS1pYJo0G+9rtKx3uwiIbwIwXU218gp4WAfNOg0YhdMCfBQpc/BdzGtW
-	 scz9O0TLzA5zheWFWQoQsnwQmS1xuzr7HntarUNjpubiy2+lYlfH3wku3YJiMIBaHg
-	 FIulxEegS6zx32pLmv4FYdhKpMJEj/QPeHrStxAqZ0+eS3uJxk4jRcAhVlIzqoVNWU
-	 j2SnWeia8Rcp8cHvoCIpQZ/DUT/wDHYFfb1nvSDFDHOUO/K0M8YnJPHLc66u2+cNYw
-	 wIDz3fEE2F0hw==
+	b=Tmjbl5PWssUKRG5vHHxidOo3C8O5U1jTC2DOB513kMm4s2GL42IYqCEG2RSRSJ29A
+	 0lTN1aDOuJ4Cqb3yP4hAMxUYVxFA89eTTXWex7EJ6oMhnLNZPDOEd0BXnwFbM4eLHq
+	 qRKGuBgefEy1rJ2tBgfBJOGushkFoVbiZFQUkeZbHGJ2+XVqI+E8WzyTNja+BYRXUh
+	 0/ZfOR2QLq0YhDMeZaRmCXto5SsZ+GZiV6CrHssxtZDcQO7fSBhprXyzgrhE0VjKMS
+	 x45qOq8rH3vxN46TmuZ/ZQzaqOsYBPRPgu/864O6QpMrdJmwoPpPLBHW/qS5tIQE46
+	 P/v4znpHeMCvw==
 From: Sasha Levin <sashal@kernel.org>
 To: stable@vger.kernel.org,
-	alperyasinak1@gmail.com
-Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	dikshita.agarwal@oss.qualcomm.com
+Cc: Mecid <mecid@mecomediagroup.de>,
+	Renjiang Han <renjiang.han@oss.qualcomm.com>,
 	Bryan O'Donoghue <bod@kernel.org>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	linux-media@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org
-Subject: FAILED: Patch "media: qcom: camss: vfe: Fix out-of-bounds access in vfe_isr_reg_update()" failed to apply to 6.12-stable tree
-Date: Sat, 28 Feb 2026 20:20:24 -0500
-Message-ID: <20260301012024.1675946-1-sashal@kernel.org>
+Subject: FAILED: Patch "media: venus: vdec: restrict EOS addr quirk to IRIS2 only" failed to apply to 6.12-stable tree
+Date: Sat, 28 Feb 2026 20:22:16 -0500
+Message-ID: <20260301012216.1678454-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -65,36 +66,33 @@ X-Patchwork-Hint: ignore
 X-stable: review
 Content-Transfer-Encoding: 8bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.84 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_CONTAINS_FROM(1.00)[];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[vger.kernel.org,gmail.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94674-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-94675-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[sashal@kernel.org,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	NEURAL_HAM(-0.00)[-0.983];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,cisco];
-	RCPT_COUNT_SEVEN(0.00)[7];
-	TO_DN_SOME(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[8];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: B9D2C1CA613
+	FROM_HAS_DN(0.00)[]
+X-Rspamd-Queue-Id: D53831CAEA3
 X-Rspamd-Action: no action
 
 The patch below does not apply to the 6.12-stable tree.
@@ -107,53 +105,64 @@ Sasha
 
 ------------------ original commit in Linus's tree ------------------
 
-From d965919af524e68cb2ab1a685872050ad2ee933d Mon Sep 17 00:00:00 2001
-From: Alper Ak <alperyasinak1@gmail.com>
-Date: Mon, 29 Dec 2025 10:52:17 +0300
-Subject: [PATCH] media: qcom: camss: vfe: Fix out-of-bounds access in
- vfe_isr_reg_update()
+From 63c072e2937e6c9995df1b6a28523ed2ae68d364 Mon Sep 17 00:00:00 2001
+From: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+Date: Tue, 25 Nov 2025 11:04:19 +0530
+Subject: [PATCH] media: venus: vdec: restrict EOS addr quirk to IRIS2 only
 
-vfe_isr() iterates using MSM_VFE_IMAGE_MASTERS_NUM(7) as the loop
-bound and passes the index to vfe_isr_reg_update(). However,
-vfe->line[] array is defined with VFE_LINE_NUM_MAX(4):
+On SM8250 (IRIS2) with firmware older than 1.0.087, the firmware could
+not handle a dummy device address for EOS buffers, so a NULL device
+address is sent instead. The existing check used IS_V6() alongside a
+firmware version gate:
 
-    struct vfe_line line[VFE_LINE_NUM_MAX];
+    if (IS_V6(core) && is_fw_rev_or_older(core, 1, 0, 87))
+        fdata.device_addr = 0;
+    else
+	fdata.device_addr = 0xdeadb000;
 
-When index is 4, 5, 6, the access to vfe->line[line_id] exceeds
-the array bounds and resulting in out-of-bounds memory access.
+However, SC7280 which is also V6, uses a firmware string of the form
+"1.0.<commit-hash>", which the version parser translates to 1.0.0. This
+unintentionally satisfies the `is_fw_rev_or_older(..., 1, 0, 87)`
+condition on SC7280. Combined with IS_V6() matching there as well, the
+quirk is incorrectly applied to SC7280, causing VP9 decode failures.
 
-Fix this by using separate loops for output lines and write masters.
+Constrain the check to IRIS2 (SM8250) only, which is the only platform
+that needed this quirk, by replacing IS_V6() with IS_IRIS2(). This
+restores correct behavior on SC7280 (no forced NULL EOS buffer address).
 
-Fixes: 4edc8eae715c ("media: camss: Add initial support for VFE hardware version Titan 480")
-Signed-off-by: Alper Ak <alperyasinak1@gmail.com>
+Fixes: 47f867cb1b63 ("media: venus: fix EOS handling in decoder stop command")
 Cc: stable@vger.kernel.org
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Reported-by: Mecid <mecid@mecomediagroup.de>
+Closes: https://github.com/qualcomm-linux/kernel-topics/issues/222
+Co-developed-by: Renjiang Han <renjiang.han@oss.qualcomm.com>
+Signed-off-by: Renjiang Han <renjiang.han@oss.qualcomm.com>
+Signed-off-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+Tested-by: Renjiang Han <renjiang.han@oss.qualcomm.com>
 Signed-off-by: Bryan O'Donoghue <bod@kernel.org>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 ---
- drivers/media/platform/qcom/camss/camss-vfe-480.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/media/platform/qcom/venus/vdec.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe-480.c b/drivers/media/platform/qcom/camss/camss-vfe-480.c
-index 4feea590a47bc..d73f733fde045 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe-480.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe-480.c
-@@ -202,11 +202,13 @@ static irqreturn_t vfe_isr(int irq, void *dev)
- 		writel_relaxed(status, vfe->base + VFE_BUS_IRQ_CLEAR(0));
- 		writel_relaxed(1, vfe->base + VFE_BUS_IRQ_CLEAR_GLOBAL);
+diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+index d0bd2d86a31f9..4cd69440e8753 100644
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -565,7 +565,13 @@ vdec_decoder_cmd(struct file *file, void *fh, struct v4l2_decoder_cmd *cmd)
  
--		/* Loop through all WMs IRQs */
--		for (i = 0; i < MSM_VFE_IMAGE_MASTERS_NUM; i++) {
-+		for (i = 0; i < MAX_VFE_OUTPUT_LINES; i++) {
- 			if (status & BUS_IRQ_MASK_0_RDI_RUP(vfe, i))
- 				vfe_isr_reg_update(vfe, i);
-+		}
- 
-+		/* Loop through all WMs IRQs */
-+		for (i = 0; i < MSM_VFE_IMAGE_MASTERS_NUM; i++) {
- 			if (status & BUS_IRQ_MASK_0_COMP_DONE(vfe, RDI_COMP_GROUP(i)))
- 				vfe_buf_done(vfe, i);
- 		}
+ 		fdata.buffer_type = HFI_BUFFER_INPUT;
+ 		fdata.flags |= HFI_BUFFERFLAG_EOS;
+-		if (IS_V6(inst->core) && is_fw_rev_or_older(inst->core, 1, 0, 87))
++
++		/* Send NULL EOS addr for only IRIS2 (SM8250),for firmware <= 1.0.87.
++		 * SC7280 also reports "1.0.<hash>" parsed as 1.0.0; restricting to IRIS2
++		 * avoids misapplying this quirk and breaking VP9 decode on SC7280.
++		 */
++
++		if (IS_IRIS2(inst->core) && is_fw_rev_or_older(inst->core, 1, 0, 87))
+ 			fdata.device_addr = 0;
+ 		else
+ 			fdata.device_addr = 0xdeadb000;
 -- 
 2.51.0
 
