@@ -1,58 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-94693-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94694-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id AEOvHKSco2k3IQUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94693-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 02:55:48 +0100
+	id mEwsDZuro2myJgUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94694-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 03:59:39 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 13C311CC47E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 02:55:48 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A1B11CE1E9
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 01 Mar 2026 03:59:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 57FFE305617B
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Mar 2026 01:49:51 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id CB1F833D1ECB
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Mar 2026 01:50:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 766642FFFA5;
-	Sun,  1 Mar 2026 01:48:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BBE32FD1B3;
+	Sun,  1 Mar 2026 01:48:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G5aHlLRy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sSElrp2k"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C3A76026;
-	Sun,  1 Mar 2026 01:48:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA62931280C;
+	Sun,  1 Mar 2026 01:48:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772329719; cv=none; b=rLVyHp4smCOH3+Pjp4rcttzOnrKyp7LGTmIjxlKQGpzVQfftZHIldrT8ohKd2CUWn8aqaCi1Wt7+dfV4LSV7GkdhJ13t/eOCCIi3Gvq3okW7e9e6zutwPZkymTJ2Hrz2u+Ifjb1JRvoQ1+TgUzOiB67F9Bb0cxV9VUFKQNsiB4s=
+	t=1772329727; cv=none; b=cb9pg8dy3yJb2bHMScIsZDCq4f5wXsHPjrv+n/fuwORCz+5FMrrXpJHhsIkRBxn+9hq1qRunifFn37ycVoN8lSPXWIyw4G4UK+FQc00IgjYuXGYIbpJzwkYVEr3NAJI60DzyZTR3UYfbMJp1GQ7CIVLwmNN7l/RQorbPiAf1m+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772329719; c=relaxed/simple;
-	bh=7kiiLApgJY2J3rdXHoK2H5MRLLOUtuqEDK3yvedvHLA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=GENy5k0O33MeJpgaggz2ORU3+xlY1cHRyBAt2p6cf9+fX8/gtxhI9WDXtZuypVM3595T8TZCekZwq+uRvgsnSVYOz3SScZJ7kikvNDd3jeWjZ4/3aBNg1ZWgQrVZAYdzmUhLWvdJvr7z9exZAY7hS1Pe0Qxlh6IooQQXLIsrAwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G5aHlLRy; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86E9DC19424;
-	Sun,  1 Mar 2026 01:48:38 +0000 (UTC)
+	s=arc-20240116; t=1772329727; c=relaxed/simple;
+	bh=vNd7LkGmxNT8mbGU/xBnuKNqTaBNjyglI+abRLE1Ay8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Q/vfSLrBsC6OFoA6QRoed0D4fvqNIaLxhPoCxnDzOROekhi53Fy4CotJhRy+FvkIizqIDdaauqXsV07s9g//8GJcz7uKeVzw6trXzbdpWKU6VWxDzk/oOUE0hCRZfcBhbiFDGSwj0HyfqKlJekeU3VIPXmvmFe/qZgLtkkhpt6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sSElrp2k; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1B50C19421;
+	Sun,  1 Mar 2026 01:48:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772329719;
-	bh=7kiiLApgJY2J3rdXHoK2H5MRLLOUtuqEDK3yvedvHLA=;
+	s=k20201202; t=1772329726;
+	bh=vNd7LkGmxNT8mbGU/xBnuKNqTaBNjyglI+abRLE1Ay8=;
 	h=From:To:Cc:Subject:Date:From;
-	b=G5aHlLRyPhNhdFUVhBgNkpGrfWhNJ+m2Rmn1bJ1VB4ffp+kF5YPmwoTxYNfPxk1D6
-	 YvuDMVsu7ngJc0KtAqUTOBhZMwuj88C7h+mJ4NOeazmqWV+gYirDwu0/s3mj2SxwGE
-	 QrQ2/9+EqNqRchsRuiMIisrIalZT0Hk3G2cE1WvFlaN8IOp2uzngzIYjV81Rdjmfm0
-	 TPY/k4qZeW3vaD55jyvk1oSqtd88Yr9qtwdb6MBE/lhvzTl4YyICNdkf7UMQP0iVlm
-	 nRoSumBMTODaSINCAbHihscuoFlVCBuQkKV2qwxHcvpZLqUUGpSoyBCoO/Lxvzt1BY
-	 HiyjDaTTRGCDg==
+	b=sSElrp2krajqgI99HYdry8wlm9b3Mv2U5ByjpNa4G0pTz3f4aYXWDlCFMOa3NZ1hL
+	 ZkbwNWsuKtFVj+sF/xIqtbfMQpOm2ySMK2MUoCXOGpWn0d+k4/JUzamV+Tbn5uonWh
+	 pyO5Bautamlu1Q/W7873HA8qDogE4x8RtJeXuCvAH7yQDCqRseWw1mhkvpoyFvRDBs
+	 gdj9GnUs2vSXmYxrebBbND2IJoOBijqyRSzUe4NJt4CjWM07GfpbtTuWFqs+lw+sDX
+	 9dw+Iq9kf4ySEqahiLSV+0FEwvin2pg+vP0Lbo6KIZI0b3nxb0Yk7i/eGOF5V9zEfK
+	 WekcWMnNxNHAQ==
 From: Sasha Levin <sashal@kernel.org>
 To: stable@vger.kernel.org,
 	cassel@kernel.org
 Cc: Manivannan Sadhasivam <mani@kernel.org>,
 	Shawn Lin <shawn.lin@rock-chips.com>,
-	linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org
-Subject: FAILED: Patch "Revert "PCI: qcom: Don't wait for link if we can detect Link Up"" failed to apply to 5.15-stable tree
-Date: Sat, 28 Feb 2026 20:48:37 -0500
-Message-ID: <20260301014837.1712860-1-sashal@kernel.org>
+	linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: FAILED: Patch "Revert "PCI: qcom: Enable MSI interrupts together with Link up if 'Global IRQ' is supported"" failed to apply to 5.15-stable tree
+Date: Sat, 28 Feb 2026 20:48:44 -0500
+Message-ID: <20260301014844.1713000-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -69,29 +69,28 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-94694-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94693-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	TO_DN_SOME(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[sashal@kernel.org,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_FIVE(0.00)[6];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[rock-chips.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,msgid.link:url]
-X-Rspamd-Queue-Id: 13C311CC47E
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FROM_HAS_DN(0.00)[]
+X-Rspamd-Queue-Id: 9A1B11CE1E9
 X-Rspamd-Action: no action
 
 The patch below does not apply to the 5.15-stable tree.
@@ -104,86 +103,51 @@ Sasha
 
 ------------------ original commit in Linus's tree ------------------
 
-From e9ce5b3804436301ab343bc14203a4c14b336d1b Mon Sep 17 00:00:00 2001
+From 7ebdefb87942073679e56cfbc5a72e8fc5441bfc Mon Sep 17 00:00:00 2001
 From: Niklas Cassel <cassel@kernel.org>
-Date: Mon, 22 Dec 2025 07:42:10 +0100
-Subject: [PATCH] Revert "PCI: qcom: Don't wait for link if we can detect Link
- Up"
+Date: Mon, 22 Dec 2025 07:42:11 +0100
+Subject: [PATCH] Revert "PCI: qcom: Enable MSI interrupts together with Link
+ up if 'Global IRQ' is supported"
 
-This reverts commit 36971d6c5a9a134c15760ae9fd13c6d5f9a36abb.
+This reverts commit ba4a2e2317b9faeca9193ed6d3193ddc3cf2aba3.
 
-While this fake hotplugging was a nice idea, it has shown that this feature
-does not handle PCIe switches correctly:
-pci_bus 0004:43: busn_res: can not insert [bus 43-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
-pci_bus 0004:43: busn_res: [bus 43-41] end is updated to 43
-pci_bus 0004:43: busn_res: can not insert [bus 43] under [bus 42-41] (conflicts with (null) [bus 42-41])
-pci 0004:42:00.0: devices behind bridge are unusable because [bus 43] cannot be assigned for them
-pci_bus 0004:44: busn_res: can not insert [bus 44-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
-pci_bus 0004:44: busn_res: [bus 44-41] end is updated to 44
-pci_bus 0004:44: busn_res: can not insert [bus 44] under [bus 42-41] (conflicts with (null) [bus 42-41])
-pci 0004:42:02.0: devices behind bridge are unusable because [bus 44] cannot be assigned for them
-pci_bus 0004:45: busn_res: can not insert [bus 45-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
-pci_bus 0004:45: busn_res: [bus 45-41] end is updated to 45
-pci_bus 0004:45: busn_res: can not insert [bus 45] under [bus 42-41] (conflicts with (null) [bus 42-41])
-pci 0004:42:06.0: devices behind bridge are unusable because [bus 45] cannot be assigned for them
-pci_bus 0004:46: busn_res: can not insert [bus 46-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
-pci_bus 0004:46: busn_res: [bus 46-41] end is updated to 46
-pci_bus 0004:46: busn_res: can not insert [bus 46] under [bus 42-41] (conflicts with (null) [bus 42-41])
-pci 0004:42:0e.0: devices behind bridge are unusable because [bus 46] cannot be assigned for them
-pci_bus 0004:42: busn_res: [bus 42-41] end is updated to 46
-pci_bus 0004:42: busn_res: can not insert [bus 42-46] under [bus 41] (conflicts with (null) [bus 41])
-pci 0004:41:00.0: devices behind bridge are unusable because [bus 42-46] cannot be assigned for them
-pcieport 0004:40:00.0: bridge has subordinate 41 but max busn 46
-
-During the initial scan, PCI core doesn't see the switch and since the Root
-Port is not hot plug capable, the secondary bus number gets assigned as the
-subordinate bus number. This means, the PCI core assumes that only one bus
-will appear behind the Root Port since the Root Port is not hot plug
-capable.
-
-This works perfectly fine for PCIe endpoints connected to the Root Port,
-since they don't extend the bus. However, if a PCIe switch is connected,
-then there is a problem when the downstream busses starts showing up and
-the PCI core doesn't extend the subordinate bus number and bridge resources
-after initial scan during boot.
-
-The long term plan is to migrate this driver to the upcoming pwrctrl APIs
-that are supposed to handle this problem elegantly.
+Since the Link up IRQ support is going away, revert the MSI logic that got
+added for it too.
 
 Suggested-by: Manivannan Sadhasivam <mani@kernel.org>
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
+[mani: reworded the description]
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
 Tested-by: Shawn Lin <shawn.lin@rock-chips.com>
 Acked-by: Shawn Lin <shawn.lin@rock-chips.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251222064207.3246632-11-cassel@kernel.org
+Link: https://patch.msgid.link/20251222064207.3246632-12-cassel@kernel.org
 ---
- drivers/pci/controller/dwc/pcie-qcom.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/pci/controller/dwc/pcie-qcom.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 60373fe1362f8..e87ec6779d44f 100644
+index e87ec6779d44f..c5fcb87972e91 100644
 --- a/drivers/pci/controller/dwc/pcie-qcom.c
 +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1958,10 +1958,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+@@ -136,7 +136,6 @@
  
- 	platform_set_drvdata(pdev, pcie);
+ /* PARF_INT_ALL_{STATUS/CLEAR/MASK} register fields */
+ #define PARF_INT_ALL_LINK_UP			BIT(13)
+-#define PARF_INT_MSI_DEV_0_7			GENMASK(30, 23)
  
--	irq = platform_get_irq_byname_optional(pdev, "global");
--	if (irq > 0)
--		pp->use_linkup_irq = true;
--
- 	ret = dw_pcie_host_init(pp);
- 	if (ret) {
- 		dev_err(dev, "cannot initialize host\n");
-@@ -1975,6 +1971,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 		goto err_host_deinit;
+ /* PARF_NO_SNOOP_OVERRIDE register fields */
+ #define WR_NO_SNOOP_OVERRIDE_EN			BIT(1)
+@@ -1982,8 +1981,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+ 			goto err_host_deinit;
+ 		}
+ 
+-		writel_relaxed(PARF_INT_ALL_LINK_UP | PARF_INT_MSI_DEV_0_7,
+-			       pcie->parf + PARF_INT_ALL_MASK);
++		writel_relaxed(PARF_INT_ALL_LINK_UP, pcie->parf + PARF_INT_ALL_MASK);
  	}
  
-+	irq = platform_get_irq_byname_optional(pdev, "global");
- 	if (irq > 0) {
- 		ret = devm_request_threaded_irq(&pdev->dev, irq, NULL,
- 						qcom_pcie_global_irq_thread,
+ 	qcom_pcie_icc_opp_update(pcie);
 -- 
 2.51.0
 
