@@ -1,204 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-94849-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94850-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id qJU9JYFnpWmx+wUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94849-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 11:33:37 +0100
+	id qAAdK4lmpWmx+wUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94850-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 11:29:29 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2BB8E1D6949
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 11:33:37 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A1681D681D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 11:29:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 9BF9930D6899
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 10:26:28 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 5AB57302140C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 10:28:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B69353A1A26;
-	Mon,  2 Mar 2026 10:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF0EE3AEF37;
+	Mon,  2 Mar 2026 10:28:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WDDfP1Os"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pjubp+XO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B217080E;
-	Mon,  2 Mar 2026 10:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 999C23A63E4;
+	Mon,  2 Mar 2026 10:28:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772447166; cv=none; b=mLVdiOVanS6c0EAPmtCnrP4+iRP/CFrF8ViObeGZa04a0BVGeqIoCGECgIMIuAUSyiEDO+eNPfnFZtz1leBtpWxpC78irkis8sR/erMicD+eQ3t2ZHGZSDNWEi7YNToSL2bou8F8e7osQABYrHOfto5zf7CPLY3PV3c6vs0S8a0=
+	t=1772447295; cv=none; b=WmiloHoNEP0FOyz1ANvkcE0yy36JV7KjNlK/CmoKt0uLstMTDGzgLyWQFfxnlJjJ+AseAFJuCeBlHZml0P8TFGFV7MdS66YD5qsTAjKDr2KP9xB5B8ZxXtYfXxwF9HxreWPuKMmb6+aWFy0jI2bkWVmX1x7HAxhncmN+D4zLk8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772447166; c=relaxed/simple;
-	bh=BV6a99X28x34kTu9fysdlsKntyYEL/oGxGvWite1jvc=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:To:From:
-	 References:In-Reply-To; b=jDxDTQb43L6Hi1wRDtLjPakwctMs+o8Jni27HnYwBmYMjYUPag7vQsiGpEbZSFiykAOt3HqKRkUDP1DNntnJcHcz5zUv0iYZ8TVOd4Xm9LFUNHWvDrbjyHToevvDmtwC1lK4qzUjY9C+3uf5xQKJgWtwGukmiJgrYaAasgWNDLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WDDfP1Os; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C46B1C19423;
-	Mon,  2 Mar 2026 10:26:02 +0000 (UTC)
+	s=arc-20240116; t=1772447295; c=relaxed/simple;
+	bh=257SCy83SSs8tH16mHCHWnE2T8a6EIOZvt0lmK3Ntqc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bKD2Q5vYBImqrv9na+7OGLcVK9ejDpis6O2cKkaDc+yzc/UvWozHlyB/UBaWG8/krpJ+zrYP6GbYmrwJh275Zp1c/jmgxjNA114+mNT9Bn8yDV/H/rvffMqo/3BD8Knjrqwuc+ZHjzmevRy/kIWx7KpxLNKDZ1pUXvWXdUOZe78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pjubp+XO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C5DBC2BC87;
+	Mon,  2 Mar 2026 10:28:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772447166;
-	bh=BV6a99X28x34kTu9fysdlsKntyYEL/oGxGvWite1jvc=;
-	h=Date:Subject:Cc:To:From:References:In-Reply-To:From;
-	b=WDDfP1Os+Q2p2z+RS7kZDGEKhwFriK49KhDmRtg3zaU9IpOTzmHFJktc6s2TTgXh9
-	 rCMG087zrTfSKPyR6ZxxJV8Dtq723CqOnPxMljezlPxkaLvUfiuA6QGzyJsW2MDC5a
-	 xjkBjuX9tRC8g+xC9U2kLkqq3SdO7DWlRjt0z6g05gWMrl5uX0hgkve3WSoDgpzUZy
-	 G8j6E6gmL2YDCrdms/GPfoYoXmlIzeLz8zlm9cwPMC799SSKoobzW6GUyuo+KIvQIk
-	 WzoSQ2cpO0n7gVa7i2jPPNzUWRjrI4YMEShOprcDrQNdY5lqVic90fUKr58PI3UzwE
-	 GSyU7LbaOYDOw==
+	s=k20201202; t=1772447295;
+	bh=257SCy83SSs8tH16mHCHWnE2T8a6EIOZvt0lmK3Ntqc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Pjubp+XOKVQdTkkQOs3TEw9oybdJmeTbiW7i7eFyKbWv4jIvInCm9HuWyyWdQZm9r
+	 4YHdOm4e9W1mt/PClR7orHkziV1aGjO2LEwRiHh9ojQBeAVmiGNyoGLBR+IJmfwaVF
+	 5/lisEWRQSY+uDb0k58pLza2CtycH1QxfHZXSUpwrFsRmGUMaPHitVEn9pLvl0Zj+i
+	 Sce7PcAG59zxSnmgH57JXMgLpuBefIcwWRvo9DJGsaQjybviDpxheZp5Qid+TYfAkO
+	 kY7u9p1B7t/hDvagMRBg815/ChICopKeXsg9dOkd972f7GbjV55hGe2NFAWhN6FAhV
+	 v/g76cWTWZ4OA==
+Message-ID: <7118ad44-5a56-4523-baff-9afa8030aff0@kernel.org>
+Date: Mon, 2 Mar 2026 11:28:10 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/2] dt-bindings: power: reset: qcom-pon: Add new
+ compatible PMM8654AU
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Rakesh Kota <rakesh.kota@oss.qualcomm.com>
+Cc: Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, linux-pm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+References: <20260227-b4-add_pwrkey_and_resin-v3-0-61c5bb2cdda9@oss.qualcomm.com>
+ <20260227-b4-add_pwrkey_and_resin-v3-1-61c5bb2cdda9@oss.qualcomm.com>
+ <20260228-polite-swine-of-potency-56e61a@quoll>
+ <6a304d0d-61b1-422f-bb65-8f8055095c39@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <6a304d0d-61b1-422f-bb65-8f8055095c39@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Date: Mon, 02 Mar 2026 11:26:01 +0100
-Message-Id: <DGS82WWLXPJ0.2EH4VJSF30UR5@kernel.org>
-Subject: Re: [PATCH 1/3] driver core: generalize driver_override in struct
- device
-Cc: <gregkh@linuxfoundation.org>, <rafael@kernel.org>,
- <hanguidong02@gmail.com>, <ysato@users.sourceforge.jp>, <dalias@libc.org>,
- <glaubitz@physik.fu-berlin.de>, <abelvesa@kernel.org>, <srini@kernel.org>,
- <s.nawrocki@samsung.com>, <nuno.sa@analog.com>,
- <driver-core@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
- <imx@lists.linux.dev>, <linux-hwmon@vger.kernel.org>,
- <linux-arm-msm@vger.kernel.org>, <linux-sound@vger.kernel.org>,
- <linux-sh@vger.kernel.org>
-To: "Geert Uytterhoeven" <geert@linux-m68k.org>
-From: "Danilo Krummrich" <dakr@kernel.org>
-References: <20260302002729.19438-1-dakr@kernel.org>
- <20260302002729.19438-2-dakr@kernel.org>
- <CAMuHMdUi3uNoDJ67WkNSKn=BD1F7D1Ot=gz4TwFPvaaYmKaNcg@mail.gmail.com>
-In-Reply-To: <CAMuHMdUi3uNoDJ67WkNSKn=BD1F7D1Ot=gz4TwFPvaaYmKaNcg@mail.gmail.com>
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MV_CASE(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_CC(0.00)[linuxfoundation.org,kernel.org,gmail.com,users.sourceforge.jp,libc.org,physik.fu-berlin.de,samsung.com,analog.com,lists.linux.dev,vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-94849-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-94850-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[18];
+	RCPT_COUNT_TWELVE(0.00)[14];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	MISSING_XM_UA(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dakr@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.998];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 2BB8E1D6949
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 9A1681D681D
 X-Rspamd-Action: no action
 
-On Mon Mar 2, 2026 at 11:00 AM CET, Geert Uytterhoeven wrote:
->> --- a/drivers/base/dd.c
->> +++ b/drivers/base/dd.c
->> @@ -381,6 +381,66 @@ static void __exit deferred_probe_exit(void)
->>  }
->>  __exitcall(deferred_probe_exit);
+On 02/03/2026 11:20, Konrad Dybcio wrote:
+> On 2/28/26 11:17 AM, Krzysztof Kozlowski wrote:
+>> On Fri, Feb 27, 2026 at 06:02:28PM +0530, Rakesh Kota wrote:
+>>> PMM8654AU is a different PMIC from PMM8650AU, even though both share
+>>> the same PMIC subtype. Add PON compatible string for PMM8654AU PMIC
+>>> variant.
+>>>
+>>> The PMM8654AU PON block is compatible with the PMK8350 PON
+>>> implementation, but PMM8654AU also implements additional PON registers
 >>
->> +int __device_set_driver_override(struct device *dev, const char *s, siz=
-e_t len)
->> +{
->> +       const char *new, *old;
->> +       char *cp;
->> +
->> +       if (!s)
->> +               return -EINVAL;
->> +
->> +       /*
->> +        * The stored value will be used in sysfs show callback (sysfs_e=
-mit()),
->> +        * which has a length limit of PAGE_SIZE and adds a trailing new=
-line.
->> +        * Thus we can store one character less to avoid truncation duri=
-ng sysfs
->> +        * show.
->> +        */
->> +       if (len >=3D (PAGE_SIZE - 1))
->> +               return -EINVAL;
->> +
->> +       /*
->> +        * Compute the real length of the string in case userspace sends=
- us a
->> +        * bunch of \0 characters like python likes to do.
->> +        */
->> +       len =3D strlen(s);
->> +
->
-> The newline case below is is basically the same case as the empty
-> string.  Hence if you would move the newline check here:
->
->     if (len) {
->             cp =3D strnchr(s, len, '\n');
->             if (cp)
->                     len =3D cp - s;
->     }
->
-> then the "cp !=3D s" check below is no longer needed.
->
->> +       if (!len) {
->> +               /* Empty string passed - clear override */
->> +               spin_lock(&dev->driver_override.lock);
->> +               old =3D dev->driver_override.name;
->> +               dev->driver_override.name =3D NULL;
->> +               spin_unlock(&dev->driver_override.lock);
->> +               kfree(old);
->> +
->> +               return 0;
->> +       }
->
-> Also, this block can be eliminated completely...
->
->> +
->> +       cp =3D strnchr(s, len, '\n');
->> +       if (cp)
->> +               len =3D cp - s;
->> +
->> +       new =3D kstrndup(s, len, GFP_KERNEL);
->> +       if (!new)
->> +               return -ENOMEM;
->
-> ... by pre-initializing new to NULL, and making the allocation of new
-> conditional on len being non-zero.
->
->> +
->> +       spin_lock(&dev->driver_override.lock);
->> +       old =3D dev->driver_override.name;
->> +       if (cp !=3D s) {
->> +               dev->driver_override.name =3D new;
->> +               spin_unlock(&dev->driver_override.lock);
->> +       } else {
->> +               /* "\n" passed - clear override */
->> +               dev->driver_override.name =3D NULL;
->> +               spin_unlock(&dev->driver_override.lock);
->> +
->> +               kfree(new);
->> +       }
->> +       kfree(old);
->> +
->> +       return 0;
->> +}
->> +EXPORT_SYMBOL_GPL(__device_set_driver_override);
+>> So does that mean that PMM8654AU has 2 address spaces and PMK8350 has
+>> only one? At least it looks, so I expect fixing the last if:then: - you
+>> need to drop contains from PMK8350 if clause and add new if:then: for
+>> PMM8654AU.
+> 
+> The delta between them is such that within the already-described reg
+> ranges, there is some additional bits and/or registers (can't remember
+> but it doesn't matter for this point)
+> 
+> This doesn't impact the described size, as all QC PMIC peripherals are
+> by design allocated 0x100-wide windows
 
-This is essentially a copy of driver_set_override(). Except for the require=
-d
-minor changes I intentionally kept it "as is" as it will go through -fixes =
-and
-we know it works properly.
+I still expect that fixed.
 
-Do you mind sending a follow-up patch with your suggested improvements?
+Best regards,
+Krzysztof
 
