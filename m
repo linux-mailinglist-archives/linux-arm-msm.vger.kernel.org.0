@@ -1,37 +1,37 @@
-Return-Path: <linux-arm-msm+bounces-95009-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95010-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id qErtKT+7pWnNFQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95009-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 17:30:55 +0100
+	id cCxiONK+pWn8FQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95010-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 17:46:10 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9BD3D1DCD60
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 17:30:55 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 313D11DD28D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 17:46:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id B3046303719D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 16:29:58 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id B9E9530A2963
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 16:30:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBB364218BC;
-	Mon,  2 Mar 2026 16:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D4CA421A0E;
+	Mon,  2 Mar 2026 16:29:29 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13B9407566;
-	Mon,  2 Mar 2026 16:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4983E0C71;
+	Mon,  2 Mar 2026 16:29:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772468965; cv=none; b=IYAHytHhosdhTDHvRjyfMwbeBLtgF7wPRlZfieBn5QwmtKnvqyDHPhUkFRLwSu7pdnMjAMrMD7Xp5nlnJRnejS5WTuBE9ISK4Pkec85d3Mdbs1ddAx6C1NOMZoD3hCKUCaOyEVKoJNokGnTQdeGHFlGNt9gAilhJ4+U3pB3aFn0=
+	t=1772468969; cv=none; b=ClKA7Bg95dyee/0QH9bd1WWFZ+DNBSbC9X1TxBIX7E+fqnIqAmwwkB8TIzWiDN0zIDuwVa/rb3BquioJqUUZH0ECmYKHpTdvLlssLMVhOHleqym9boTJriUzHG1hUcDuB49bB/Lo1JW1QJfJ8q+9cdD1MlzSKoaeRALGv35AjUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772468965; c=relaxed/simple;
-	bh=j0nghKavfgGKqIjOQAxB28jB0MbHHOyVxmtOg9K4sAE=;
+	s=arc-20240116; t=1772468969; c=relaxed/simple;
+	bh=NnNVhciZ+OeoyJYyEx22r9S20DC6u7nMNN6WCTZJ8xk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j3t9bSMFZru99eSFIhrYIIwYqf+giUp912t8CcvdmKADQKlvCfmOFDRJibmpr4PDbxEwhPTIlEB5lBwTYN+xmdExnGDDSL0gLLsL4DvhmmQ5tGGxs54pIyTWJJCLEEU8iqOB10XCfPxH6Ubd/U3eXTMxNrtq7sIbfK5A0oemKis=
+	 MIME-Version; b=fsSxnBOmdCN0KLRwkC1hF/ixpPlIvRDRgpBm8vMrVj2nMs/yG6oGalb0zGDD599dH3Y++9/k9YN1mfumH5j2Fc5z3IohK1md0XoeasXWNYN43nBj5gccbuD5Gn6y50n0DCnB22WOyrX8IZtwqK/jl2HcFQMStvPz+cUAGBv9m6Y=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59D96C19423;
-	Mon,  2 Mar 2026 16:29:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4BF7C2BC86;
+	Mon,  2 Mar 2026 16:29:25 +0000 (UTC)
 From: Geert Uytterhoeven <geert+renesas@glider.be>
 To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Rob Herring <robh@kernel.org>,
@@ -48,9 +48,9 @@ Cc: "Rafael J . Wysocki" <rafael@kernel.org>,
 	linux-renesas-soc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH 2/7] of: Convert to of_machine_get_match()
-Date: Mon,  2 Mar 2026 17:29:06 +0100
-Message-ID: <83ed49314b94dab7781e1d74236af72dd5c349c6.1772468323.git.geert+renesas@glider.be>
+Subject: [PATCH 3/7] cpufreq: airoha: Convert to of_machine_get_match()
+Date: Mon,  2 Mar 2026 17:29:07 +0100
+Message-ID: <cc76137755d93af982bf255095adafc7d523692c.1772468323.git.geert+renesas@glider.be>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1772468323.git.geert+renesas@glider.be>
 References: <cover.1772468323.git.geert+renesas@glider.be>
@@ -61,36 +61,35 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 9BD3D1DCD60
+X-Rspamd-Queue-Id: 313D11DD28D
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [0.54 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95009-lists,linux-arm-msm=lfdr.de,renesas];
 	DMARC_NA(0.00)[glider.be];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-95010-lists,linux-arm-msm=lfdr.de,renesas];
 	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[geert@glider.be,linux-arm-msm@vger.kernel.org];
 	RCPT_COUNT_TWELVE(0.00)[15];
 	MIME_TRACE(0.00)[0:+];
 	FREEMAIL_CC(0.00)[kernel.org,linaro.org,gmail.com,vger.kernel.org,glider.be];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	FROM_NEQ_ENVFROM(0.00)[geert@glider.be,linux-arm-msm@vger.kernel.org];
-	R_DKIM_NA(0.00)[];
-	NEURAL_HAM(-0.00)[-0.874];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	R_DKIM_NA(0.00)[];
+	NEURAL_HAM(-0.00)[-0.875];
+	PRECEDENCE_BULK(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[glider.be:mid,glider.be:email,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
+	FROM_HAS_DN(0.00)[]
 X-Rspamd-Action: no action
 
 Use the of_machine_get_match() helper instead of open-coding the same
@@ -98,29 +97,31 @@ operation.
 
 Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 ---
- drivers/of/base.c | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+Compile-tested only.
+---
+ drivers/cpufreq/airoha-cpufreq.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/drivers/of/base.c b/drivers/of/base.c
-index 3f061f10aff8fca9..39e751df9daf689f 100644
---- a/drivers/of/base.c
-+++ b/drivers/of/base.c
-@@ -504,15 +504,8 @@ EXPORT_SYMBOL(of_machine_get_match);
- const void *of_machine_get_match_data(const struct of_device_id *matches)
- {
- 	const struct of_device_id *match;
--	struct device_node *root;
--
--	root = of_find_node_by_path("/");
--	if (!root)
--		return NULL;
--
--	match = of_match_node(matches, root);
--	of_node_put(root);
+diff --git a/drivers/cpufreq/airoha-cpufreq.c b/drivers/cpufreq/airoha-cpufreq.c
+index b6b1cdc4d11d6962..3e7770860d13c8f4 100644
+--- a/drivers/cpufreq/airoha-cpufreq.c
++++ b/drivers/cpufreq/airoha-cpufreq.c
+@@ -115,15 +115,10 @@ MODULE_DEVICE_TABLE(of, airoha_cpufreq_match_list);
  
-+	match = of_machine_get_match(matches);
+ static int __init airoha_cpufreq_init(void)
+ {
+-	struct device_node *np = of_find_node_by_path("/");
+ 	const struct of_device_id *match;
+ 	int ret;
+ 
+-	if (!np)
+-		return -ENODEV;
+-
+-	match = of_match_node(airoha_cpufreq_match_list, np);
+-	of_node_put(np);
++	match = of_machine_get_match(airoha_cpufreq_match_list);
  	if (!match)
- 		return NULL;
+ 		return -ENODEV;
  
 -- 
 2.43.0
