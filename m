@@ -1,260 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-94946-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94947-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id EC77EfCUpWmPEQYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94946-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 14:47:28 +0100
+	id WCYNARSVpWnXEAYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94947-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 14:48:04 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A0C8E1DA0E3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 14:47:27 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5FE0B1DA100
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 14:48:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id BF1EA30683BA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 13:41:39 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 2FC183070DE8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 13:43:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A87A3D9024;
-	Mon,  2 Mar 2026 13:41:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BhfgjWMM"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A46D53451A6;
+	Mon,  2 Mar 2026 13:43:25 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F22430B96;
-	Mon,  2 Mar 2026 13:41:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B8F7332EC1;
+	Mon,  2 Mar 2026 13:43:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772458897; cv=none; b=f8KVioXV6DnC/wF3AV9bB/X1Rv36k+TV5QC1xiG7dUmSYMEdO83QC2dL1t58yIUKYq9WZWk0wGHqJj5+GPzS5rLY4KtyhiFRs+XCa0vURqYShMoiqGTs2S7kmb5ZyXOaIuzgyeApygd2j8I92uiVe6mSC3wUHQg43Runne37gc4=
+	t=1772459005; cv=none; b=imfmrYLKAf5yBcdn9yycSWQQNew3jhkQ/O0oMS6idXZ0gK69ibeATaxuH10A7eG8lhZLBP1JwBD1SCNzQkMretv03EG9r0saD6VVUPiHX8f25FutjT7jd5XGKA3PUMuAwyq3590OGn1xYxGsf3sgOTj/HzB4/uE4pUQMx1+JyeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772458897; c=relaxed/simple;
-	bh=h/wublz1Ca35s5noMWyzECiy7g/MJAJFvBvHdqHan1E=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=O3Rs4xCO3h6uyRbvivpqAYf2HsWi2xuUcogS0iHNyD1URh/jkzSfzZUb88/m8S6T0AizdzSpSD/lOo2IbQ12u3uHHyBPlHLvPROoRpdQVD45UsAwfg4Ern48kBBHSkKgh3goTdkmzLX6ZkKpKasu7I8K5mgygETVCgEag9t4td8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BhfgjWMM; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98F6AC19423;
-	Mon,  2 Mar 2026 13:41:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772458896;
-	bh=h/wublz1Ca35s5noMWyzECiy7g/MJAJFvBvHdqHan1E=;
-	h=From:Date:Subject:To:Cc:From;
-	b=BhfgjWMM9s4b80bx3wrn0q52RMki3+tLUYG8DkqEFgMkqaLgEJ6qOKZBuEgKsZ0T5
-	 iTDWDdDuUojIh5mo4YvOsBAKzWcU/aP/dLXbuG/t2e2l/YLd5GsdB0un/gVdjjDk1V
-	 r6i+RngIgvknn9RIur3R1D427fLIzzgELdCzny1xI/mODMih5/eDvbLjr71rf6ompU
-	 0isLZlh7QFZHBYDAbeJ6TqzATAKkbt7E/nW59IehyddnER+9iZZdcRRn14HcW4DmbT
-	 clg0PVCnXx9afLSpuV3XmB6RD/ELcwqLt2Bm/B61BfvHDwqFntHuSIwPe4ClYNQC96
-	 EXlVGuWuiFZSg==
-From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Mon, 02 Mar 2026 14:41:26 +0100
-Subject: [PATCH] drm/msm/mdp5: Remove MSM8974v1
+	s=arc-20240116; t=1772459005; c=relaxed/simple;
+	bh=zsWgoV8Guqv96aPi9dvfyPDucsCQRWi/m1EPAQvx7o0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OXSwAZgCfteMocVINNfTtIiK+ncX0uexnsj5VOfVXSyjnoG1vo9khA4F4fbmvBo5cnhGECMcYzaiXsqDuNfBQ49JFd//q2FIhmcPwTx5Cf6AGMsIk5QxbF3QSaRGCZF6fMGl0F5QcwY+kTsSzrjxbjLrUGQ3yyk0sXTcPkPmnXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1759714BF;
+	Mon,  2 Mar 2026 05:43:17 -0800 (PST)
+Received: from J2N7QTR9R3 (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 9BE4B3F73B;
+	Mon,  2 Mar 2026 05:43:21 -0800 (PST)
+Date: Mon, 2 Mar 2026 13:43:18 +0000
+From: Mark Rutland <mark.rutland@arm.com>
+To: Khaja Hussain Shaik Khaji <khaja.khaji@oss.qualcomm.com>
+Cc: catalin.marinas@arm.com, dev.jain@arm.com,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, mhiramat@kernel.org, will@kernel.org,
+	yang@os.amperecomputing.com
+Subject: Re: [PATCH v3 0/1] kernel: kprobes: fix cur_kprobe corruption during
+ re-entrant kprobe_busy_begin() calls
+Message-ID: <aaWT9hneQSRgpIuj@J2N7QTR9R3>
+References: <aaVzOfAKhQ-uLG06@J2N7QTR9R3>
+ <20260302122338.3618334-1-khaja.khaji@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260302-topic-goodnight_8974v1-v1-1-e0006f7a0526@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x3MTQqAIBBA4avErBPUor+rRMSkk85GQyOC6O5Jy
- 2/x3gOZElOGqXog0cWZYyhQdQXGY3Ak2BaDlrqTjdTijAcb4WK0gZ0/12Hs20sJowhxaxHlYKD
- ER6Kd7388L+/7AUMv13loAAAA
-X-Change-ID: 20260302-topic-goodnight_8974v1-c1eaab4aa08c
-To: Rob Clark <robin.clark@oss.qualcomm.com>, 
- Dmitry Baryshkov <lumag@kernel.org>, 
- Abhinav Kumar <abhinav.kumar@linux.dev>, 
- Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1772458893; l=4425;
- i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=Q5ct592WfC/mLHBqsbQfOSQ51VNEbV7VADXUolMFCCM=;
- b=nxGq84eBHCzYGUqYSVAsZxn4SWSgjtN7qeoQVyyuOiSkYuMmiQZF6QGFkLJH4hz0DPgcXMcnf
- bEFhGo3Aq8PDdGKRf16WS5GrJrHZOsLQqFwE2+/b80L8ynYpsmaKlf7
-X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260302122338.3618334-1-khaja.khaji@oss.qualcomm.com>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.16 / 15.00];
-	MID_RHS_MATCH_TO(1.00)[];
+X-Spamd-Result: default: False [-0.86 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
+	DMARC_POLICY_SOFTFAIL(0.10)[arm.com : SPF not aligned (relaxed), No valid DKIM,none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94946-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch];
-	FROM_HAS_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.998];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konradybcio@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	TAGGED_FROM(0.00)[bounces-94947-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mark.rutland@arm.com,linux-arm-msm@vger.kernel.org];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,oss.qualcomm.com:mid,qualcomm.com:email]
-X-Rspamd-Queue-Id: A0C8E1DA0E3
+	RCVD_COUNT_FIVE(0.00)[5];
+	R_DKIM_NA(0.00)[];
+	NEURAL_HAM(-0.00)[-0.765];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 5FE0B1DA100
 X-Rspamd-Action: no action
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+On Mon, Mar 02, 2026 at 05:53:38PM +0530, Khaja Hussain Shaik Khaji wrote:
+> On Mon, Mar 02, 2026 at 04:23:46PM +0530, Mark Rutland wrote:
+> > The el1_dbg() function was removed in commit:
+> >
+> >   31575e11ecf7 ("arm64: debug: split brk64 exception entry")
+> >
+> > ... which was merged in v6.17.
+> >
+> > Are you able to reproduce the issue with v6.17 or later?
+> >
+> > Which specific kernel version did you see this with?
+> 
+> The call trace was captured on v6.9-rc1.
 
-To the best of my knowledge, the v1 version of this SoC had been
-superseded before any device was released on the market. Everywhere
-else in the kernel, there are assumptions about the SoC being revision
-2 or the later MSM8974PRO.
+Why are you using an -rc1 release from almost two years ago?
 
-Remove the config for that flavor of MDP. To bring the naming in line
-with the rest of the kernel, remove the v2 suffix from the remaining
-config.
+> I have not yet tested on v6.17 or later. I will test and report back.
+> 
+> That said, the fix is in kernel/kprobes.c and addresses a generic
+> re-entrancy issue in kprobe_busy_begin/end that is not specific to the
+> arm64 entry path. The race -- where kprobe_busy_begin() is called
+> re-entrantly from within an active kprobe context (e.g. via softirq
+> during kretprobe entry_handler) -- can occur on any architecture where
+> IRQs are re-enabled before invoking kprobe handlers.
 
-Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
----
-related: https://lore.kernel.org/linux-arm-msm/20260109083808.1047-1-yuanjie.yang@oss.qualcomm.com/T/#m579aac6cddd5bd5b0adfa778061e6397082014fe
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
----
- drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c | 94 +-------------------------------
- 1 file changed, 2 insertions(+), 92 deletions(-)
+AFAICT, re-enabling IRQs in that path would be a bug, and re-entrancy is
+simply not expected. Please see my other reply on that front.
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-index 69fef034d0df..7c91fc1915f3 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-@@ -14,95 +14,6 @@ struct mdp5_cfg_handler {
- /* mdp5_cfg must be exposed (used in mdp5.xml.h) */
- const struct mdp5_cfg_hw *mdp5_cfg = NULL;
- 
--static const struct mdp5_cfg_hw msm8x74v1_config = {
--	.name = "msm8x74v1",
--	.mdp = {
--		.count = 1,
--		.caps = MDP_CAP_SMP |
--			0,
--	},
--	.smp = {
--		.mmb_count = 22,
--		.mmb_size = 4096,
--		.clients = {
--			[SSPP_VIG0] =  1, [SSPP_VIG1] =  4, [SSPP_VIG2] =  7,
--			[SSPP_DMA0] = 10, [SSPP_DMA1] = 13,
--			[SSPP_RGB0] = 16, [SSPP_RGB1] = 17, [SSPP_RGB2] = 18,
--		},
--	},
--	.ctl = {
--		.count = 5,
--		.base = { 0x00500, 0x00600, 0x00700, 0x00800, 0x00900 },
--		.flush_hw_mask = 0x0003ffff,
--	},
--	.pipe_vig = {
--		.count = 3,
--		.base = { 0x01100, 0x01500, 0x01900 },
--		.caps = MDP_PIPE_CAP_HFLIP |
--			MDP_PIPE_CAP_VFLIP |
--			MDP_PIPE_CAP_SCALE |
--			MDP_PIPE_CAP_CSC   |
--			0,
--	},
--	.pipe_rgb = {
--		.count = 3,
--		.base = { 0x01d00, 0x02100, 0x02500 },
--		.caps = MDP_PIPE_CAP_HFLIP |
--			MDP_PIPE_CAP_VFLIP |
--			MDP_PIPE_CAP_SCALE |
--			0,
--	},
--	.pipe_dma = {
--		.count = 2,
--		.base = { 0x02900, 0x02d00 },
--		.caps = MDP_PIPE_CAP_HFLIP |
--			MDP_PIPE_CAP_VFLIP |
--			0,
--	},
--	.lm = {
--		.count = 5,
--		.base = { 0x03100, 0x03500, 0x03900, 0x03d00, 0x04100 },
--		.instances = {
--				{ .id = 0, .pp = 0, .dspp = 0,
--				  .caps = MDP_LM_CAP_DISPLAY, },
--				{ .id = 1, .pp = 1, .dspp = 1,
--				  .caps = MDP_LM_CAP_DISPLAY, },
--				{ .id = 2, .pp = 2, .dspp = 2,
--				  .caps = MDP_LM_CAP_DISPLAY, },
--				{ .id = 3, .pp = -1, .dspp = -1,
--				  .caps = MDP_LM_CAP_WB },
--				{ .id = 4, .pp = -1, .dspp = -1,
--				  .caps = MDP_LM_CAP_WB },
--			     },
--		.nb_stages = 5,
--		.max_width = 2048,
--		.max_height = 0xFFFF,
--	},
--	.dspp = {
--		.count = 3,
--		.base = { 0x04500, 0x04900, 0x04d00 },
--	},
--	.pp = {
--		.count = 3,
--		.base = { 0x21a00, 0x21b00, 0x21c00 },
--	},
--	.intf = {
--		.base = { 0x21000, 0x21200, 0x21400, 0x21600 },
--		.connect = {
--			[0] = INTF_eDP,
--			[1] = INTF_DSI,
--			[2] = INTF_DSI,
--			[3] = INTF_HDMI,
--		},
--	},
--	.perf = {
--		.ab_inefficiency = 200,
--		.ib_inefficiency = 120,
--		.clk_inefficiency = 125
--	},
--	.max_clk = 200000000,
--};
--
- static const struct mdp5_cfg_hw msm8x26_config = {
- 	.name = "msm8x26",
- 	.mdp = {
-@@ -184,7 +95,7 @@ static const struct mdp5_cfg_hw msm8x26_config = {
- 	.max_clk = 200000000,
- };
- 
--static const struct mdp5_cfg_hw msm8x74v2_config = {
-+static const struct mdp5_cfg_hw msm8x74_config = {
- 	.name = "msm8x74",
- 	.mdp = {
- 		.count = 1,
-@@ -1098,9 +1009,8 @@ static const struct mdp5_cfg_hw msm8937_config = {
- };
- 
- static const struct mdp5_cfg_handler cfg_handlers_v1[] = {
--	{ .revision = 0, .config = { .hw = &msm8x74v1_config } },
- 	{ .revision = 1, .config = { .hw = &msm8x26_config } },
--	{ .revision = 2, .config = { .hw = &msm8x74v2_config } },
-+	{ .revision = 2, .config = { .hw = &msm8x74_config } },
- 	{ .revision = 3, .config = { .hw = &apq8084_config } },
- 	{ .revision = 6, .config = { .hw = &msm8x16_config } },
- 	{ .revision = 8, .config = { .hw = &msm8x36_config } },
+> I will verify whether the issue is still reproducible on v6.17+ and
+> report back.
 
----
-base-commit: 3fa5e5702a82d259897bd7e209469bc06368bf31
-change-id: 20260302-topic-goodnight_8974v1-c1eaab4aa08c
+Thanks, that would be much appreciated. As would anything you can share
+on the specifics of your kretprobe entry_handler
 
-Best regards,
--- 
-Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-
+Mark.
 
