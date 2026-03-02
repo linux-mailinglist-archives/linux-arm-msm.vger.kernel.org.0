@@ -1,125 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-95006-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95007-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id mIZeCk68pWnNFQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95006-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 17:35:26 +0100
+	id wLiODGK8pWnNFQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95007-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 17:35:46 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 89DD91DCF5E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 17:35:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A67041DCF7D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 17:35:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id D1430303EFF3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 16:29:06 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 2C683305CD0E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 16:29:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 591DD3E5592;
-	Mon,  2 Mar 2026 16:29:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Lxn3G3Qg"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE8B641C0B9;
+	Mon,  2 Mar 2026 16:29:18 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 341CE32AAA0;
-	Mon,  2 Mar 2026 16:29:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A53263E9F7B;
+	Mon,  2 Mar 2026 16:29:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772468944; cv=none; b=H7QfsaOIZBSPPzGt8uhCrwG2MzJT2qnvJspNtecAUNVRHY9avCD4PPV5oDfoxRStAIuCJXYAiu3c9tdhrgB5XsFyy3BpxyTuEb3wWNQwqY/iaLmZ0F/XTTraBjoLJ1Zy4pWbW/KyZRHcLswK3BvD3YV8GOrqrOlt5nJjZYzyBPc=
+	t=1772468958; cv=none; b=BbCc5VQTG2Te5yMilrmNVqvfCHz5KXtDCjr85DK39J5ifcnKr2idxmqYVQ7mdjAfBRl1KVHIKtx1I/MIjpzUkee/MbrDrINM4Z6aAHj+OgJQB9E5AxQ/yskdb/NCTADakksGS/Dx3RwbbD377ZzUvirfkfGyNzfusw9A6ojk/Bw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772468944; c=relaxed/simple;
-	bh=Q5EJz0ks9pfcEKpulvqPiKiB3QcWP4MPjhaSyuLWtKA=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:To:From:
-	 References:In-Reply-To; b=oYjpaLHj7p56aK7O2Ptf4kvKNKsIq+wjGXSGKzWpRN7MFvRoF3uALoW1POfw8vB5gcCH9mlEq6CTWF8MAaVBMO6RLB5ETMOIrtdJznRRO3kmTR+IwSxR+j8iyZINsJk0XOg+47RpUzCK7Rr//ku3BQ1nVNwKHcZFKWHR7xqSeww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Lxn3G3Qg; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 551A2C19423;
-	Mon,  2 Mar 2026 16:29:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772468943;
-	bh=Q5EJz0ks9pfcEKpulvqPiKiB3QcWP4MPjhaSyuLWtKA=;
-	h=Date:Subject:Cc:To:From:References:In-Reply-To:From;
-	b=Lxn3G3QgbEq3Mw2dsJKkaDqk5SKvaOp5Gs4pFlnODhb9INkygZgiGZdaRoF6Nuv0P
-	 BR5iV8/i60Q1y6PJKV4iGJjZnWcac/kTJlLw83K/8Ffwb5VyMP5SqyfxAIUCptdFsL
-	 rhofpvbYeC6LMiGyD8zKmrP5KlGcbLEB1f/lpHB2r+Sa6zKXHSgU5GQHec+qJe4oav
-	 ehMfC5OXRAer9/XETfOexepaoaQhDQ+4BXSp0PDwcxVfKbDAqIw2/NYv69viXzd0Yh
-	 93ws0C0XQw6/8aCxDkUW6RJ8V1Rr165zj6wx/1abbm6pySatXQLzfBn2dEnQZ20QIg
-	 x5E0dXBq/qbGg==
+	s=arc-20240116; t=1772468958; c=relaxed/simple;
+	bh=pjSZJqnhsp/YZkKPS1oMF68Uu/54f4eKu2/Po/9s8JQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=W4NvQvD95ZR9pKrVr9rlJMwuzAPVoHBxcQRHP5CH7Oi8sGed8mHV8LDJix1KGNlvjxAK6e8CpxkSiNBSfqgVbCleYGzTkd1wVAFivrGUZfcMvGmWV135tFG/+6SaLkmxkZDof+R2fqJPyUqPXANpNLEyLpfUvbfWeMIX/aWLCoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C723C2BC86;
+	Mon,  2 Mar 2026 16:29:14 +0000 (UTC)
+From: Geert Uytterhoeven <geert+renesas@glider.be>
+To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Rob Herring <robh@kernel.org>,
+	Saravana Kannan <saravanak@kernel.org>
+Cc: "Rafael J . Wysocki" <rafael@kernel.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Ilia Lin <ilia.lin@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Magnus Damm <magnus.damm@gmail.com>,
+	devicetree@vger.kernel.org,
+	linux-pm@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Geert Uytterhoeven <geert+renesas@glider.be>
+Subject: [PATCH 0/7] of: Add and use of_machine_get_match() helper
+Date: Mon,  2 Mar 2026 17:29:04 +0100
+Message-ID: <cover.1772468323.git.geert+renesas@glider.be>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 02 Mar 2026 17:28:58 +0100
-Message-Id: <DGSFSTFQ4Z1K.31HQCRTB3ZHF7@kernel.org>
-Subject: Re: [PATCH 1/3] driver core: generalize driver_override in struct
- device
-Cc: <gregkh@linuxfoundation.org>, <rafael@kernel.org>,
- <hanguidong02@gmail.com>, <ysato@users.sourceforge.jp>, <dalias@libc.org>,
- <glaubitz@physik.fu-berlin.de>, <abelvesa@kernel.org>, <srini@kernel.org>,
- <s.nawrocki@samsung.com>, <nuno.sa@analog.com>,
- <driver-core@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
- <imx@lists.linux.dev>, <linux-hwmon@vger.kernel.org>,
- <linux-arm-msm@vger.kernel.org>, <linux-sound@vger.kernel.org>,
- <linux-sh@vger.kernel.org>
-To: "Armin Wolf" <W_Armin@gmx.de>
-From: "Danilo Krummrich" <dakr@kernel.org>
-References: <20260302002729.19438-1-dakr@kernel.org>
- <20260302002729.19438-2-dakr@kernel.org>
- <bc06539d-84b3-4500-86e7-3f01f1ea3183@gmx.de>
-In-Reply-To: <bc06539d-84b3-4500-86e7-3f01f1ea3183@gmx.de>
-X-Rspamd-Queue-Id: 89DD91DCF5E
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: A67041DCF7D
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [0.54 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MV_CASE(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_MISSING_CHARSET(0.50)[];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_CC(0.00)[linuxfoundation.org,kernel.org,gmail.com,users.sourceforge.jp,libc.org,physik.fu-berlin.de,samsung.com,analog.com,lists.linux.dev,vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-95006-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	DMARC_NA(0.00)[glider.be];
+	TAGGED_FROM(0.00)[bounces-95007-lists,linux-arm-msm=lfdr.de,renesas];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_TO(0.00)[gmx.de];
+	FROM_NEQ_ENVFROM(0.00)[geert@glider.be,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[15];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	MISSING_XM_UA(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dakr@kernel.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[kernel.org,linaro.org,gmail.com,vger.kernel.org,glider.be];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.992];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	R_DKIM_NA(0.00)[];
+	NEURAL_HAM(-0.00)[-0.777];
+	PRECEDENCE_BULK(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_TWELVE(0.00)[18];
-	TO_DN_SOME(0.00)[]
+	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
+	TO_DN_SOME(0.00)[];
+	FROM_HAS_DN(0.00)[]
 X-Rspamd-Action: no action
 
-On Mon Mar 2, 2026 at 11:23 AM CET, Armin Wolf wrote:
-> Nice patch series, centralizing the handling of driver_override in the
-> device core removes a lot of duplicated code.
->
-> I wonder if we can also move DEVICE_ATTR_DRIVER_OVERRIDE() into the devic=
-e
-> core by registering the associated sysfs attribute inside bus_add_device(=
-).
->
-> Bus types that honor driver_override could for example set a boolean flag
-> inside struct bus_type to tell the device core that driver_override is
-> supported.
->
-> However this is just a suggestion, the current patch series seems fine to=
- me.
+	Hi all,
 
-That's a very good suggestion, thanks for pointing it out. In fact, I alrea=
-dy
-thought of this at some point, but then forgot to implement it. :)
+Currently, there are two helpers to match the root compatible value
+against an of_device_id array:
+  - of_machine_device_match() returns true if a match is found,
+  - of_machine_get_match_data() returns the match data if a match is
+    found.
+However, there is no helper that returns the actual of_device_id
+structure corresponding to the match, leading to code duplication in
+various drivers.  Worse, with the plan to make of_root private[1], more
+open-coded users may appear.
+
+Hence this series adds a new helper of_machine_get_match(), which
+returns the match entry, and converts several drivers to make use of it.
+Note that the new wrapper comes at no cost (binary size-wise),
+as the variant returning bool can be a trivial inline wrapper.
+
+One could argue we don't even need the variant that returns bool,
+as
+    "if (of_machine_device_match(...))" and
+    "if (of_machine_get_match(...))",
+and
+    "if (!of_machine_device_match(...))" and
+    "if (!of_machine_get_match(...))"
+are equivalent.
+
+The return type only matters when assigning to or returning an explicit
+type, like in drivers/soc/tegra/common.c:
+
+    bool soc_is_tegra(void)
+    {
+	    return of_machine_device_match(tegra_machine_match);
+    }
+
+Only the Renesas driver patch was tested on actual hardware.
+
+Thanks for your comments!
+
+[1] "[PATCH v2 0/9] soc: remove direct accesses to of_root from
+     drivers/soc/"
+    https://lore.kernel.org/20260223-soc-of-root-v2-0-b45da45903c8@oss.qualcomm.com/
+
+Geert Uytterhoeven (7):
+  of: Add of_machine_get_match() helper
+  of: Convert to of_machine_get_match()
+  cpufreq: airoha: Convert to of_machine_get_match()
+  cpufreq: qcom-nvmem: Convert to of_machine_get_match()
+  cpufreq: ti-cpufreq: Convert to of_machine_get_match()
+  soc: qcom: pd-mapper: Convert to of_machine_get_match()
+  soc: renesas: Convert to of_machine_get_match()
+
+ drivers/cpufreq/airoha-cpufreq.c     |  7 +------
+ drivers/cpufreq/qcom-cpufreq-nvmem.c | 16 ++--------------
+ drivers/cpufreq/ti-cpufreq.c         | 12 +-----------
+ drivers/of/base.c                    | 20 ++++++--------------
+ drivers/soc/qcom/qcom_pd_mapper.c    |  8 +-------
+ drivers/soc/renesas/renesas-soc.c    |  2 +-
+ include/linux/of.h                   | 11 ++++++++---
+ 7 files changed, 20 insertions(+), 56 deletions(-)
+
+-- 
+2.43.0
+
+Gr{oetje,eeting}s,
+
+						Geert
+
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+							    -- Linus Torvalds
 
