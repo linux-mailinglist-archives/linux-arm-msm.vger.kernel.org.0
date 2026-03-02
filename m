@@ -1,152 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-94896-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94897-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id IH9aATd3pWkNBgYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94896-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 12:40:39 +0100
+	id 8F6JHUJ3pWkNBgYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94897-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 12:40:50 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 642041D7A0F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 12:40:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0E1F21D7A3F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 12:40:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 6EBCF30523F8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 11:35:30 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1FCEF305A6F7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 11:36:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 102F3344D80;
-	Mon,  2 Mar 2026 11:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48CD735DA4E;
+	Mon,  2 Mar 2026 11:36:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="n98X3Sgk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RIvAurmb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-172.mta0.migadu.com (out-172.mta0.migadu.com [91.218.175.172])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9989E3451A6
-	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Mar 2026 11:35:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D6515539A;
+	Mon,  2 Mar 2026 11:36:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772451330; cv=none; b=f0fD16doyzhdurmkiOf1FwyZk+dHvzUOOvpff8IsGKtPJqjwovIxRT0f2uwolnyYuq9j9hoYnSPiFZFEas/gmSIKDg8kWXjRZcHH6gc5njhzpRqJp9uVreBrnuk52ZOQd+uw4hCrBy7bssuLjrlF2Nm9nUX2b0ldj/2JR1NLazU=
+	t=1772451382; cv=none; b=lL+otZQc/fi6TyTnu1Qhla60P6dLRNfGd8UyQBEHNgpdnBHe2bZwa3v5N9xvXZck2fj2xvh5hxMX5JjEBr82sy8mCltM79gojBg4LQcTh92Q3q6VU1euCYsD5UAQCP1+ZPlzX7Dp5muhSfWbqcRZe6MkPbgbZY637S9SC4ZrYGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772451330; c=relaxed/simple;
-	bh=uZGhgmgY/szr/GX6ytm1P8SBL355y+ixAQH0XTZooKY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=QWnwKea7p77cQJHYEJl61b0ZeEC3nhhppLC8LR26beUlSsZDgt44PVq6AqVB32pJ2jB8IbSZuvBpPSvP76+GiZSjY76FT++IQp2LEZr2GupEg2JS3QQPZxwiJjAy9SpujZci/2zvc5WvdvrWcoCjPrd1rBB0+11ZHIW5eYhEuFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=n98X3Sgk; arc=none smtp.client-ip=91.218.175.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
-	t=1772451316;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=x8ZpHLE2DRQLPnRzyw4GcR84TR9av1pRIf3eL+I1eqE=;
-	b=n98X3SgkBiMc3l6BBSzaTwypSynKYS+uy42RXkskKRtfS9ifkfKCKqMWFWzeNL0CiRNBAz
-	Rdm1L9/1yV0Y3MnobMwN0p/bYt9eGNrdGWTPnloHmJJwC62Hm62IeZhBBSaA82zmIzRc6Z
-	ucz7pOPu9hVUVIY89Q+RXprMlp/SXy8=
-From: Thorsten Blum <thorsten.blum@linux.dev>
-To: Thara Gopinath <thara.gopinath@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>
-Cc: Thorsten Blum <thorsten.blum@linux.dev>,
-	linux-crypto@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] crypto: qce - Remove return variable and unused assignments
-Date: Mon,  2 Mar 2026 12:34:53 +0100
-Message-ID: <20260302113453.938998-2-thorsten.blum@linux.dev>
+	s=arc-20240116; t=1772451382; c=relaxed/simple;
+	bh=je7AHfZfavvqP+W/PwJsmQocTkj+MwgzQ6Kl9KEtShk=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=XCJFQ5IqUi61PUVoHJOt4wju6BV9R6HjJebgf+qeG9bJ01k0MExKlyIs9fh48LENyj8kOKp3Lg4hhBbSErKDWop41mr3l3BOoeFdDzX7oYP9PKX6W2yqCD4AYZlW9xwxAxp1A3vGZvkeQBZWia8Meouh6VkepkTZcd2BGKSoTbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RIvAurmb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BECAC19423;
+	Mon,  2 Mar 2026 11:36:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772451381;
+	bh=je7AHfZfavvqP+W/PwJsmQocTkj+MwgzQ6Kl9KEtShk=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=RIvAurmbUy0ZBUYQHZgFZBjnoByxYWjxWDxCsu+qxCUvZIgX7sqVM7aJ9HL7KNoM0
+	 WnHBDYluamSmRgAPs2oCAZFbYeq+z/tugyvsCu061dUJg7pmqtLopkJQQWhUZJ5/2L
+	 L2EqAXkqd5JSJem2M/+b4hJe8EoM3WfS6DyWbeXg5yLbTJtrYxTK83M2SfUTULw0np
+	 Y8j4Vm0QgTsVCoG93DZAoYNn12Rs+Y2liDhyWSgGemDy251XKPJNwYLtjb5p0nPheF
+	 rXcqhCwCTisGBz20Z15YzV+DcszlUXCv8HZ9lKsWrCOPYUrjz8WaDxmXWcwl49m+CP
+	 3OjcVK7K0/3rw==
+Date: Mon, 02 Mar 2026 05:36:20 -0600
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ Conor Dooley <conor+dt@kernel.org>, stable@vger.kernel.org, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ Kuogee Hsieh <quic_khsieh@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+ Simona Vetter <simona@ffwll.ch>, Dmitry Baryshkov <lumag@kernel.org>, 
+ Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
+ Abel Vesa <abelvesa@kernel.org>, David Airlie <airlied@gmail.com>, 
+ freedreno@lists.freedesktop.org, Maxime Ripard <mripard@kernel.org>, 
+ Rob Clark <robin.clark@oss.qualcomm.com>, 
+ Thomas Zimmermann <tzimmermann@suse.de>, 
+ Abhinav Kumar <abhinav.kumar@linux.dev>, dri-devel@lists.freedesktop.org, 
+ linux-kernel@vger.kernel.org, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzk@kernel.org>
+To: Abel Vesa <abel.vesa@oss.qualcomm.com>
+In-Reply-To: <20260302-glymur-fix-dp-bindings-reg-clocks-v3-1-8fe49ac1f556@oss.qualcomm.com>
+References: <20260302-glymur-fix-dp-bindings-reg-clocks-v3-0-8fe49ac1f556@oss.qualcomm.com>
+ <20260302-glymur-fix-dp-bindings-reg-clocks-v3-1-8fe49ac1f556@oss.qualcomm.com>
+Message-Id: <177245138068.2323365.8449103832927911049.robh@kernel.org>
+Subject: Re: [PATCH v3 1/2] dt-bindings: display: msm: Fix reg ranges and
+ clocks on Glymur
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.84 / 15.00];
+X-Spamd-Result: default: False [0.34 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[linux.dev,none];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[linux.dev:s=key1];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com,gondor.apana.org.au,davemloft.net];
-	TAGGED_FROM(0.00)[bounces-94896-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[24];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[3];
-	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[thorsten.blum@linux.dev,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[vger.kernel.org,kernel.org,somainline.org,quicinc.com,oss.qualcomm.com,ffwll.ch,gmail.com,poorly.run,lists.freedesktop.org,suse.de,linux.dev,linux.intel.com];
+	TAGGED_FROM(0.00)[bounces-94897-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[linux.dev:+];
-	NEURAL_HAM(-0.00)[-0.998];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[7];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-0.997];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,linux.dev:mid,linux.dev:dkim,linux.dev:email]
-X-Rspamd-Queue-Id: 642041D7A0F
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,ae90000:email,devicetree.org:url,qualcomm.com:email]
+X-Rspamd-Queue-Id: 0E1F21D7A3F
 X-Rspamd-Action: no action
 
-In qce_aead_done(), the return variable 'ret' is no longer used - remove
-it. And qce_aead_prepare_dst_buf() jumps directly to 'dst_tbl_free:' on
-error and returns 'sg' - drop the useless 'ret' assignments.
 
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
----
- drivers/crypto/qce/aead.c | 12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+On Mon, 02 Mar 2026 11:58:35 +0200, Abel Vesa wrote:
+> The Glymur platform has four DisplayPort controllers. All the
+> controllers support four streams (MST). However, the first three only
+> have two streams wired up physically to the display subsystem, while the
+> fourth controller has only one stream (SST).
+> 
+> So add a dedicated clause for Glymur compatible to enforce reg ranges to
+> describing all four streams while allowing either one pixel clock, for the
+> third DP controller, or two pixel clocks, for the rest of them.
+> 
+> Cc: <stable@vger.kernel.org> # v6.19
+> Fixes: 8f63bf908213 ("dt-bindings: display: msm: Document the Glymur DiplayPort controller")
+> Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+> ---
+>  .../bindings/display/msm/dp-controller.yaml         | 21 ++++++++++++++++++++-
+>  1 file changed, 20 insertions(+), 1 deletion(-)
+> 
 
-diff --git a/drivers/crypto/qce/aead.c b/drivers/crypto/qce/aead.c
-index 97b56e92ea33..67a87a7d6abd 100644
---- a/drivers/crypto/qce/aead.c
-+++ b/drivers/crypto/qce/aead.c
-@@ -35,7 +35,6 @@ static void qce_aead_done(void *data)
- 	u32 status;
- 	unsigned int totallen;
- 	unsigned char tag[SHA256_DIGEST_SIZE] = {0};
--	int ret = 0;
- 
- 	diff_dst = (req->src != req->dst) ? true : false;
- 	dir_src = diff_dst ? DMA_TO_DEVICE : DMA_BIDIRECTIONAL;
-@@ -79,8 +78,7 @@ static void qce_aead_done(void *data)
- 	} else if (!IS_CCM(rctx->flags)) {
- 		totallen = req->cryptlen + req->assoclen - ctx->authsize;
- 		scatterwalk_map_and_copy(tag, req->src, totallen, ctx->authsize, 0);
--		ret = memcmp(result_buf->auth_iv, tag, ctx->authsize);
--		if (ret) {
-+		if (memcmp(result_buf->auth_iv, tag, ctx->authsize)) {
- 			pr_err("Bad message error\n");
- 			error = -EBADMSG;
- 		}
-@@ -144,16 +142,12 @@ qce_aead_prepare_dst_buf(struct aead_request *req)
- 
- 		sg = qce_sgtable_add(&rctx->dst_tbl, &rctx->adata_sg,
- 				     rctx->assoclen);
--		if (IS_ERR(sg)) {
--			ret = PTR_ERR(sg);
-+		if (IS_ERR(sg))
- 			goto dst_tbl_free;
--		}
- 		/* dst buffer */
- 		sg = qce_sgtable_add(&rctx->dst_tbl, msg_sg, rctx->cryptlen);
--		if (IS_ERR(sg)) {
--			ret = PTR_ERR(sg);
-+		if (IS_ERR(sg))
- 			goto dst_tbl_free;
--		}
- 		totallen = rctx->cryptlen + rctx->assoclen;
- 	} else {
- 		if (totallen) {
--- 
-Thorsten Blum <thorsten.blum@linux.dev>
-GPG: 1D60 735E 8AEF 3BE4 73B6  9D84 7336 78FD 8DFE EAD4
+My bot found errors running 'make dt_binding_check' on your patch:
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,glymur-mdss.example.dtb: displayport-controller@ae90000 (qcom,glymur-dp): reg: [[183042048, 512], [183042560, 512], [183043072, 1536], [183046144, 1024], [183047168, 1024]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.kernel.org/project/devicetree/patch/20260302-glymur-fix-dp-bindings-reg-clocks-v3-1-8fe49ac1f556@oss.qualcomm.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
 
 
