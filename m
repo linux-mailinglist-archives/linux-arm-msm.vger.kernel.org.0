@@ -1,176 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-94850-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94851-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id qAAdK4lmpWmx+wUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94850-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 11:29:29 +0100
+	id uIJUB15ppWkaAQYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94851-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 11:41:34 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A1681D681D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 11:29:29 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id D19701D6B62
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 11:41:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 5AB57302140C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 10:28:47 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 284EB3036EA9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 10:38:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF0EE3AEF37;
-	Mon,  2 Mar 2026 10:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C8A63328F7;
+	Mon,  2 Mar 2026 10:38:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pjubp+XO"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N4naTIpw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 999C23A63E4;
-	Mon,  2 Mar 2026 10:28:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9FA13314D0
+	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Mar 2026 10:38:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772447295; cv=none; b=WmiloHoNEP0FOyz1ANvkcE0yy36JV7KjNlK/CmoKt0uLstMTDGzgLyWQFfxnlJjJ+AseAFJuCeBlHZml0P8TFGFV7MdS66YD5qsTAjKDr2KP9xB5B8ZxXtYfXxwF9HxreWPuKMmb6+aWFy0jI2bkWVmX1x7HAxhncmN+D4zLk8w=
+	t=1772447922; cv=none; b=DlAFyT1wjkTko8qzzu/dLnpYE1BJWqhBe+BukApTOiNH6vN2wdYi5ah9u+bTDsaSm3CgJM8jeSTjttn/0I9K2af/8KzCqr6QaabcePkMqULWqdmJfZBT0tWCKOI6jZfTCHbJuiQkdPB1SgKSdChe6s/QH6Wvou0RTZjj+a5Wylg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772447295; c=relaxed/simple;
-	bh=257SCy83SSs8tH16mHCHWnE2T8a6EIOZvt0lmK3Ntqc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bKD2Q5vYBImqrv9na+7OGLcVK9ejDpis6O2cKkaDc+yzc/UvWozHlyB/UBaWG8/krpJ+zrYP6GbYmrwJh275Zp1c/jmgxjNA114+mNT9Bn8yDV/H/rvffMqo/3BD8Knjrqwuc+ZHjzmevRy/kIWx7KpxLNKDZ1pUXvWXdUOZe78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pjubp+XO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C5DBC2BC87;
-	Mon,  2 Mar 2026 10:28:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772447295;
-	bh=257SCy83SSs8tH16mHCHWnE2T8a6EIOZvt0lmK3Ntqc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Pjubp+XOKVQdTkkQOs3TEw9oybdJmeTbiW7i7eFyKbWv4jIvInCm9HuWyyWdQZm9r
-	 4YHdOm4e9W1mt/PClR7orHkziV1aGjO2LEwRiHh9ojQBeAVmiGNyoGLBR+IJmfwaVF
-	 5/lisEWRQSY+uDb0k58pLza2CtycH1QxfHZXSUpwrFsRmGUMaPHitVEn9pLvl0Zj+i
-	 Sce7PcAG59zxSnmgH57JXMgLpuBefIcwWRvo9DJGsaQjybviDpxheZp5Qid+TYfAkO
-	 kY7u9p1B7t/hDvagMRBg815/ChICopKeXsg9dOkd972f7GbjV55hGe2NFAWhN6FAhV
-	 v/g76cWTWZ4OA==
-Message-ID: <7118ad44-5a56-4523-baff-9afa8030aff0@kernel.org>
-Date: Mon, 2 Mar 2026 11:28:10 +0100
+	s=arc-20240116; t=1772447922; c=relaxed/simple;
+	bh=+dPP0pKLmuyRQWGO2igjZ68hfj2TtOyctwG0bH8SJm4=;
+	h=Content-Type:From:Mime-Version:Subject:Message-Id:Date:Cc:To; b=MkWDX5jmUn59BmShLppHjGeC8rq43ZdIj+tx0wIdZ10+777ETSmRbdCbTYH6hW+QY+8o8mJORFhhmQNrfuua/JI/NtkCGggNSjZlaqJqekXxp/a6YHCgkGmnLV5X/7CWXcwFDM+rYhiJZZMPsjH7u/iODFfj+sikEuYIuKCQ/DQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N4naTIpw; arc=none smtp.client-ip=209.85.208.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-3870dec27f4so4979391fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Mar 2026 02:38:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772447919; x=1773052719; darn=vger.kernel.org;
+        h=to:cc:date:message-id:subject:mime-version:from
+         :content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+dPP0pKLmuyRQWGO2igjZ68hfj2TtOyctwG0bH8SJm4=;
+        b=N4naTIpwcuC/qx5sfNFTxitY68Caq14zq82+r0fa4bspB+RVdfAkTmN1qL/74nlshO
+         mPnbQK9OXtyqewDgg0ffLhxkkLEOvtM6TyHdesDRA2nceA6I43RCI7SDQRIxIEso2+qi
+         Q4rlDkYmAsvIhjc4YMpAbU84RSQt/ZofK0kiEef++PK4VkNbkU+stXzKWCSihkdDDSfb
+         UjQ2izI7vQbm14WiqniUM5cBLxgl51H2wM0VXtVn5EW4nsPtPqTF5y169vDimbIYbs6x
+         sf0n6+NQCmYA6xXxxLcsnmY21g7rzxKAgrsHXNqrqxVwnSjMFuvJ7eYdvutr0UKxT/C+
+         3TgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772447919; x=1773052719;
+        h=to:cc:date:message-id:subject:mime-version:from
+         :content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+dPP0pKLmuyRQWGO2igjZ68hfj2TtOyctwG0bH8SJm4=;
+        b=qTQq9l6gf5Q6z617xjYYky/pqSI32iN5k/SRx5rSYU8lXVSueUFNxEvdNlxPW0xKQg
+         novW/ioM6yXFL0gm8AKkXE5gWY7sxIk/umqwCX24n+m7i+Xk2B8DB5375dePtc3V87+x
+         WZaM+wxEQUwg436mc0it3qiyI+lroSUyCmcb1jUmFYlC59CdIu0S0FJU3rpbM447xRO5
+         oeAxzxWqazF1NBXwdV7kfKevzOu/ONn6op2jCUb7ARPMKhpwKHd14i0CRmiR/4/KkPF6
+         +GYWk6+9pLGSchAppgKDNny7rErmo2gCr5mTt5cIF3SnxF43bOQikX3yKjXoduQeDZAv
+         Eqkg==
+X-Forwarded-Encrypted: i=1; AJvYcCVdYFDiIUDgulnZxryGHNGETj+MlKdqoeGb40xxxgnFpiOxtCzDBgckQdXjK8FbMNgoUuBoz9wEJb56KCnd@vger.kernel.org
+X-Gm-Message-State: AOJu0YwuOBDbIidLFmzEwTZhb1YcQK7D0w6bg/H2CDifGni5HILWucms
+	ItdnhBgHvbOA+P66Z94P8dRtgcVHnvj6yHiHFcMqA/w56V2c5feVztwj
+X-Gm-Gg: ATEYQzxP/t7gNm2EgLPuImWX95IuDTLpVBu+vrKgRTMPEhOXSuBK8EH5+peSh/HogVo
+	wkDqfn8SWbZR2zWRsQCYON4FpRCYrExHJdXTZta/JAZJZaE/Gm+AiGvaMOhYPB1NHsI9HYjiHa2
+	5nCIcVlO+cnIr4VrHlm6XuupBdjxqTQcPICD7rkb3Nv4XmLKIfYiW5cAxernBZIR1qpuCeVQSjk
+	3eozp9bsuhTBDIYifvIkua0NxpRwuOhCe82uZZY/zscZiLh5HwdqVX9JNBXpCS9ZWxM4j/6TTwn
+	zUlhpnqRfP1lUKoBpCdqV4SyjNa6gVLm2aYxvGqfzTHnEGjUC+elsuTXpsOq3tjW12kQJ+2lR+X
+	TdGYOJ9TqYD+o2dYIXVcQSWtpj7q2gPRM+A0LspTHhV7Nom87L1DA7+CjrQDDZkolzPeh1+oTJp
+	JHnlQ1jj9Kml25Rz9UcVK2sDXNhlaX63ph9yFnO3GDEL4p/MVeRJ33oDkIVVdXa1fCbKdHKqNRI
+	g0lR2JP1hzB
+X-Received: by 2002:a2e:b018:0:b0:37f:d9ba:747 with SMTP id 38308e7fff4ca-389f1d73cecmr67253571fa.5.1772447918848;
+        Mon, 02 Mar 2026 02:38:38 -0800 (PST)
+Received: from smtpclient.apple (mobile-access-2e8433-189.dhcp.inet.fi. [46.132.51.189])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a116de019esm1424664e87.3.2026.03.02.02.38.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Mar 2026 02:38:38 -0800 (PST)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Kalle Niemi <kaleposti@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] dt-bindings: power: reset: qcom-pon: Add new
- compatible PMM8654AU
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Rakesh Kota <rakesh.kota@oss.qualcomm.com>
-Cc: Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, linux-pm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-References: <20260227-b4-add_pwrkey_and_resin-v3-0-61c5bb2cdda9@oss.qualcomm.com>
- <20260227-b4-add_pwrkey_and_resin-v3-1-61c5bb2cdda9@oss.qualcomm.com>
- <20260228-polite-swine-of-potency-56e61a@quoll>
- <6a304d0d-61b1-422f-bb65-8f8055095c39@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <6a304d0d-61b1-422f-bb65-8f8055095c39@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH v2 01/12] i2c: allow setting the parent device and OF node through the adapter struct
+Message-Id: <EDF3FB58-4747-442E-8463-6F1C6E568962@gmail.com>
+Date: Mon, 2 Mar 2026 12:38:27 +0200
+Cc: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+ Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
+ Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
+ Andi Shyti <andi.shyti@kernel.org>,
+ Florian Fainelli <florian.fainelli@broadcom.com>,
+ Ray Jui <rjui@broadcom.com>, Branden Scott <sbranden@broadcom.com>,
+ bcm-kernel-feedback-list@broadcom.com, Vignesh R <vigneshr@ti.com>,
+ Aaro Koskinen <aaro.koskinen@iki.fi>,
+ Janusz Krzysztofik <jmkrzyszt@gmail.com>, Tony Lindgren <tony@atomide.com>,
+ Andreas Kemnade <andreas@kemnade.info>,
+ Kevin Hilman <khilman@baylibre.com>, Roger Quadros <rogerq@kernel.org>,
+ Geert Uytterhoeven <geert+renesas@glider.be>,
+ Magnus Damm <magnus.damm@gmail.com>,
+ Patrice Chotard <patrice.chotard@foss.st.com>,
+ Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Fabio Estevam <festevam@gmail.com>, Linus Walleij <linusw@kernel.org>,
+ Frank Li <Frank.Li@nxp.com>, linux-i2c@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev,
+ linux-rpi-kernel@lists.infradead.org,
+ Matti Vaittinen <mazziesaccount@gmail.com>
+To: Bartosz Golaszewski <brgl@kernel.org>,
+ Wolfram Sang <wsa+renesas@sang-engineering.com>
+X-Mailer: iPhone Mail (23D127)
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [0.34 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	FAKE_REPLY(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94850-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-94851-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,broadcom.com,ti.com,iki.fi,gmail.com,atomide.com,kemnade.info,baylibre.com,glider.be,foss.st.com,pengutronix.de,nxp.com,vger.kernel.org,lists.infradead.org,lists.linux.dev];
+	RCPT_COUNT_TWELVE(0.00)[35];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_TLS_LAST(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	APPLE_IOS_MAILER_COMMON(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_FIVE(0.00)[5];
 	MID_RHS_MATCH_FROM(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[kaleposti@gmail.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 9A1681D681D
+	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
+	TO_DN_SOME(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: D19701D6B62
 X-Rspamd-Action: no action
 
-On 02/03/2026 11:20, Konrad Dybcio wrote:
-> On 2/28/26 11:17 AM, Krzysztof Kozlowski wrote:
->> On Fri, Feb 27, 2026 at 06:02:28PM +0530, Rakesh Kota wrote:
->>> PMM8654AU is a different PMIC from PMM8650AU, even though both share
->>> the same PMIC subtype. Add PON compatible string for PMM8654AU PMIC
->>> variant.
->>>
->>> The PMM8654AU PON block is compatible with the PMK8350 PON
->>> implementation, but PMM8654AU also implements additional PON registers
->>
->> So does that mean that PMM8654AU has 2 address spaces and PMK8350 has
->> only one? At least it looks, so I expect fixing the last if:then: - you
->> need to drop contains from PMK8350 if clause and add new if:then: for
->> PMM8654AU.
-> 
-> The delta between them is such that within the already-described reg
-> ranges, there is some additional bits and/or registers (can't remember
-> but it doesn't matter for this point)
-> 
-> This doesn't impact the described size, as all QC PMIC peripherals are
-> by design allocated 0x100-wide windows
+=EF=BB=BFOn 3/2/26 10:55, Bartosz Golaszewski wrote:
+> On Mon, Mar 2, 2026 at 8:47=E2=80=AFAM Kalle Niemi <kaleposti@gmail.com> w=
+rote:
+>> On 2/23/26 11:05, Bartosz Golaszewski wrote:
+>>> In order to stop i2c bus drivers from dereferencing the struct device
+>>> embedded in struct i2c_adapter, let's allow configuring the parent
+>>> device and OF-node of the adapter directly through dedicated fields.
+>>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com=
+>
+>>> ---
+>> Hello,
+>> Automated driver test system bisected this commit to be the first bad
+>> commit, linux-next next-20260227 was tested. Failed tests include driver
+>> tests for ROHM PMIC and accelerometers, which are connected to
+>> BeagleBone Black.
+>> The failed driver tests all fail to first i2cget and the tests stop
+>> there: "Could not open file '/dev/i2c-2' or 'dev/i2c/2': No such file or
+>> directory".
+> Wolfram: well, now it would actually be useful to know which commit
+> exactly is the culprit so maybe splitting the changes is not a bad
+> idea after all.
+> Kalle: which i2c bus driver fails here? Any errors in kernel log?
+> Bart
 
-I still expect that fixed.
+Hello Bart,
 
-Best regards,
-Krzysztof
+i2c-1 and i2c-2 are failing. I am not seeing any i2c errors in kernel log. I=
+ got two failures without the dmesg available (this is bugged test sequence,=
+ and not a kernel crash), but those got the same stdout message "Could not o=
+pen file ...." as all others.
+
+-Kalle
 
