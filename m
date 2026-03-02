@@ -1,212 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-94891-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94892-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id ODfQC3pypWlsBQYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94891-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 12:20:26 +0100
+	id 4DqjI0J0pWkNBgYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94892-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 12:28:02 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 95C671D75B4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 12:20:25 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id F27411D77AC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 12:28:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 36F0B3011A50
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 11:20:23 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id BA9EF3035A94
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 11:23:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9393936165B;
-	Mon,  2 Mar 2026 11:20:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="CUIuDoxJ";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="V7AKa54E"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7482361DBE;
+	Mon,  2 Mar 2026 11:23:46 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2C4345731
-	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Mar 2026 11:20:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29393331A41;
+	Mon,  2 Mar 2026 11:23:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772450422; cv=none; b=jLFWBx0fIKUzBD6z/hcm1YfKaQ5jZsDI9O6XB2wBKOuU9InoWeaQCIEy4PANc+SAjQPZ6rWF2/ZDprIW5ToTpZsAtnHr9cG8CLuw5C4hFTkqNIo7BcNoervgjPG2vih6J9bsBZB4HKMUIUSnDeTeQeEPXwJXR/ry0LuLpli0mqk=
+	t=1772450626; cv=none; b=SeILxGkeFTS0XNpQMRwGtAnRiL8Om2TPxl52saHB4Vf/2b+Oswikz0Hy1iQd9+mGExIbty38esnE6hALNmvHR6x9niCNFoyd5yUc3eeQfyi9dW+Lgsee+/yUJg5YHVvZOf9JJDg5hMvy+UKH17h34vldI6nta7hPlfC7zwUOOVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772450422; c=relaxed/simple;
-	bh=sQig8sH4E6BScJY+xOzj6lYCScaNQLVNeofLc7c6QnU=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=g+KcTL5RrVrlPkV3WofreR6NC0MVSdA9x+pzPV28huKUdnQ5gG8GAvx36b8XK4R2t6c05jUqMQRapFHLVAcZXHaya9MqKGwyOB8Y4UQVDYqfB996rZ1bFIT5eDt7xAqqjsGhpXaNBPa218CCY/yYaqJFFRfN5bFvW1Ps/XwpLd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=CUIuDoxJ; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=V7AKa54E; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6227qhQn083705
-	for <linux-arm-msm@vger.kernel.org>; Mon, 2 Mar 2026 11:20:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	VtWv5X/swnOarr0QHEdJJKrMDmkoZEjG1RFAlj66QzY=; b=CUIuDoxJgTKFN28l
-	as+0772ZLXjFDIViMYasli4sLWH/UiZ3/rFnVj0NLqodk51k1y0iWN58BsdcBgiJ
-	M+A3yXhOmZyFx5m1Bdpi+7100AY/TXwAuv7up9jAXrc0asPzVK0Yvaixt1qnm35O
-	kOfEAA0bLk3ihM68HPS1EmQZHhiqEGziCiH27aFDiv2M+MNlH/Xj97LH53EMgDAw
-	h+BJ+m8ne3N/pPk7lOYZ7atJWp8JL3GOEFo5X8aIjEOZEwvqxTpPm3mmQ1fy4RUR
-	8IgivJ24tqKXFgcrsXrT7YEAWxD/sna0ySghZaD5ZUdaZJdyZNl6CPXjxA5U+RLM
-	ojZbyg==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cmw64a4mb-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 02 Mar 2026 11:20:20 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-89a01982dc5so2080246d6.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Mar 2026 03:20:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1772450420; x=1773055220; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=VtWv5X/swnOarr0QHEdJJKrMDmkoZEjG1RFAlj66QzY=;
-        b=V7AKa54EKUKCvfFXf3/lF9p8BDPPLgf/2Q9j6eFfkC50CtSJSVRTzi/CHuhmFqDgJZ
-         Ahk0lSTEM7N/00Fs4QbOi5cOAT116wmYZLdPexQTE2kWcr0Dm2urDbxihBW0uv/R2JQv
-         JAzbroOEbYmId+jeY4yWdpUIrrTdiLCLTyF2RDVM5mFyoXfkXK3I/8TRwSKubCClnb5R
-         DCQWLIMI8OkmjR3xcRsKEpFhLHBQ5c/njpoAsAVxgKagOm4iLY3MqipZUc84K0b4O8du
-         o0GilsfVUJrr8Bx4Hk2AB6oKeYqPqWrd0MpJpbMD816DozPqHQuRybYWgRxJp8wE58m7
-         P8bw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772450420; x=1773055220;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VtWv5X/swnOarr0QHEdJJKrMDmkoZEjG1RFAlj66QzY=;
-        b=Jw7QVO19sOUWaNqB5/T77RTaYeM/5f1m3z528P8tAez/11h9uB4cwQUUQpZofEUV7u
-         9RSsyKdIAy3nEMa/rsL3ntO0wUSS/na8mr9DPa+45C0czrzbI7+eZZG8VaXDEgfbMeIy
-         nYcoCp28OJ3OX0aIU6pd7mnEzls4fgOW38i5oUuQR0wIIwwL71YdUcWJOOghM3RxaRb7
-         TjOk7hoylMSCQ/gICnlmVibcaYEe2KjwncOIrJPauFzy9r7umkEUCws6bsaByfCjQqyz
-         SogW6ivQFOXcZtoJugvEhxpWs4GTC0Fs38HS94pQLSBb1cc1u1CxS5iIRKebPe4LgNTk
-         QtlQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXjOaJsgKM+dF+KGOEaMNTkUodxtduFAPXkbCWuLSEy4iUNanTuL6M3qwgStwqL+x6sG1ZNERJE5zVcYz4h@vger.kernel.org
-X-Gm-Message-State: AOJu0YwF7NzAET/zAi/7nbYRPWdTbH30cBB9KvGBJOv436RapPzYdpx5
-	5L3amkLSwwu1r9y/B2NWgKZpl5Qs0IqoxtdwcvGj2ZY3fvZZ/ee/Rxeardc7H066jt3mXhbH6Lp
-	ew1CmN19rXQWEDTUsrZQG9sDhPoQBWll+dgi+tar6+I68lhyRaIPdVCCYT4mjHl7B22ZF
-X-Gm-Gg: ATEYQzxjwIxSQiRPwfByQhxdgUmUAgdmovFOiYgcwBw4Wr/u4cMRBVO6akGK3hjYINE
-	OpW11WUA5fnngPQphz2Ehbgw1UdliMUTa5XOe/S3BBztMczwfKPY4PbYsgPrTd2HuEA11ej4FMh
-	y1guUl7pZ7WhAdZXbNOj1GWcjf9aQZraDg/b7GZfL+x+J4ayrHYFvUEf15V3FUUxKBInQC6kuKI
-	X4IV9RmiAj68t/kwYKpfrqaOP8ecMAq9sfNWbnu/s8ZpjXg8GP7iC7LLqc/szL2QyI+GSO1jFKx
-	5NTKJqGgghiTUVoXa4tC0wmYGSUjyaBrHqbehYIBKBHcdnIoE8EMJkn83fGTmSMSkzqRWcRlLkQ
-	ETyEA1cR8geTW5YKizeDI9kD2ooxtubMjDi4z/SDmLkaGwHFGnzMR+2h3cKezdqUglLD9NYSmoV
-	VFMHA=
-X-Received: by 2002:a05:6214:5c82:b0:899:bbd1:da65 with SMTP id 6a1803df08f44-899d1e5b4c6mr116037736d6.4.1772450420041;
-        Mon, 02 Mar 2026 03:20:20 -0800 (PST)
-X-Received: by 2002:a05:6214:5c82:b0:899:bbd1:da65 with SMTP id 6a1803df08f44-899d1e5b4c6mr116037436d6.4.1772450419559;
-        Mon, 02 Mar 2026 03:20:19 -0800 (PST)
-Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b935aead96bsm463768466b.51.2026.03.02.03.20.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Mar 2026 03:20:19 -0800 (PST)
-Message-ID: <d71ef31a-d7dd-4350-a784-a77e63be96ec@oss.qualcomm.com>
-Date: Mon, 2 Mar 2026 12:20:17 +0100
+	s=arc-20240116; t=1772450626; c=relaxed/simple;
+	bh=n8GhNqh9Z5M15liUm+3khHHLKWTvm8qSjLa2AKBaq88=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OrQqKYQ9XzZzx7dr1oB9uXTinsOu8P0viV3zPVbMqluuxZbAeKij1gIpvkukYkTRxqlsTuM9nbB6lhWI2p0X9GS/qBAOUV2aG6SiqQBsOsO68KKibDjJuEDeoZOj2gyrtNjOoT6xmuMcyAfqWtJNk8+aT3Cw6fZwDo999lXjsGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 515CF14BF;
+	Mon,  2 Mar 2026 03:23:38 -0800 (PST)
+Received: from J2N7QTR9R3 (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id DDD853F73B;
+	Mon,  2 Mar 2026 03:23:42 -0800 (PST)
+Date: Mon, 2 Mar 2026 11:23:37 +0000
+From: Mark Rutland <mark.rutland@arm.com>
+To: Khaja Hussain Shaik Khaji <khaja.khaji@oss.qualcomm.com>
+Cc: ada.coupriediaz@arm.com, catalin.marinas@arm.com, dev.jain@arm.com,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, mhiramat@kernel.org, will@kernel.org,
+	yang@os.amperecomputing.com
+Subject: Re: [PATCH v3 0/1] kernel: kprobes: fix cur_kprobe corruption during
+Message-ID: <aaVzOfAKhQ-uLG06@J2N7QTR9R3>
+References: <aZSdkGjy2BXUL0bT@J2N7QTR9R3.cambridge.arm.com>
+ <20260302105347.3602192-1-khaja.khaji@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: CMA allocation fails with default 128M on X1E80100 (Lenovo
- 21N1CT01WW) for ath12k
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-To: =?UTF-8?B?UmVuw6kgTcOpcm91?= <eldeinformatica@pm.me>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
-Cc: "linux-wireless@vger.kernel.org" <linux-wireless@vger.kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>
-References: <7pJkV7xouk-7S77gIvCwPj5EAAVe0JWdkD5Dc4Q7Y77_gPr5m7jMA2om7AyEN6RKBmEyFbIDJceHFstXFuzPJWPNhqafLXOu2O0uCDZEFcY=@pm.me>
- <05ff4122-1a8b-4728-81ac-33a7ca542461@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <05ff4122-1a8b-4728-81ac-33a7ca542461@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: smabYyFglYbJfRurpkV42kQNdWoQJYPj
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAyMDA5NCBTYWx0ZWRfX5M740ciUUSAH
- zACa96mBZpAuGHec/NgP22bw0IiWKITfNZTsUgMAG6A3yq23JgrmL0G9O0eDBoLJoZON9tdY09t
- PHVieTvDBo6MweLRnV9AebCvC5bXUtvVEmBrYpo3wM6utZ5gQRJ7KsD8+6mrTpuzYnNiO87PnkN
- MmseySD54JgontaJr4rHcX5Te/1qLMZmUJo0nNn4bo/ZcAFN0UygHcdMSdrm/sAOAqgfKDP/VB5
- rZ246So8TiK8o6E/VkeFRYhG332sbQ3vdBWG2RhA4by4MHkHT+HaOaiFgAkVleg6p5YZwk5ajMQ
- xKlVh5XAF8u/F7jE0rLjJdEBhbbKPSBBb1w+TByplYqu82UyBr4oNq6L9AjZoV+TCy3wZXjdhKm
- rleMF73bYtN6kiaBeV9jxi2s+CQwPOMuSe4HnA51dpjUvEjyd1BHyvhOi7VFbbSlf+W1UWB3SZP
- x9mBZTTKEv/qBPF6AEg==
-X-Proofpoint-ORIG-GUID: smabYyFglYbJfRurpkV42kQNdWoQJYPj
-X-Authority-Analysis: v=2.4 cv=I5Vohdgg c=1 sm=1 tr=0 ts=69a57274 cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=O8M4a_fLt_X7kILUOtkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=1HOtulTD9v-eNWfpl4qZ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-02_03,2026-02-27_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 priorityscore=1501 lowpriorityscore=0
- clxscore=1015 phishscore=0 impostorscore=0 bulkscore=0 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2602130000
- definitions=main-2603020094
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260302105347.3602192-1-khaja.khaji@oss.qualcomm.com>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.86 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
+	DMARC_POLICY_SOFTFAIL(0.10)[arm.com : SPF not aligned (relaxed), No valid DKIM,none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-94891-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	TO_DN_EQ_ADDR_SOME(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,qualcomm.com:dkim];
-	RCPT_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-94892-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 95C671D75B4
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mark.rutland@arm.com,linux-arm-msm@vger.kernel.org];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	R_DKIM_NA(0.00)[];
+	NEURAL_HAM(-0.00)[-0.831];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: F27411D77AC
 X-Rspamd-Action: no action
 
-On 3/2/26 12:19 PM, Konrad Dybcio wrote:
-> On 2/28/26 10:29 AM, René Mérou wrote:
->> Hi,
->> I'm experiencing CMA allocation failures with the ath12k WiFi driver on my new Lenovo 21N1CT01WW (Snapdragon X1E80100).
->>
->> Error in dmesg
->>   cma: __cma_alloc: reserved: alloc failed, req-size: 257 pages, ret: -16
->>   cma: => 1042 free of 32768 total pages
->>
->> System details
->>     Kernel: 6.17.0-8-qcom-x1e (Ubuntu)
->>     Default CMA size: 128M (set by the distribution for this hardware)
->>     WiFi chip: ath12k_pci (Qualcomm WCN685x)
->>
->> What I found
->>     With the default 128M CMA, the allocation of 257 pages (~1MB) fails
->>     After increasing CMA to 256M (by adding cma=256M to the kernel command line), the error disappears and WiFi works correctly
->>
->> My questions
->>     Is 128M expected to be sufficient for ath12k on this platform?
->>     Could the driver be optimized to need less contiguous memory?
->>     Should the default CMA size be increased to 256M for X1E80100 devices?
+On Mon, Mar 02, 2026 at 04:23:46PM +0530, Khaja Hussain Shaik Khaji wrote:
+> This patch fixes a kprobes failure observed due to lost current_kprobe
+> on arm64 during kretprobe entry handling under interrupt load.
 > 
-> The default value in the arm64 defconfig is CONFIG_CMA_SIZE_MBYTES=32,
-> although most laptop DTs individually add a 128M zone under /reserved-memory
+> v1 attempted to address this by simulating BTI instructions as NOPs and 
+> v2 attempted to address this by disabling preemption across the
+> out-of-line (XOL) execution window. Further analysis showed that this
+> hypothesis was incorrect: the failure is not caused by scheduling or
+> preemption during XOL.
 > 
-> We should probably enlarge this value in either of those places, although I
-> don't know whether changing the defconfig is going to be welcomed..
+> The actual root cause is re-entrant invocation of kprobe_busy_begin()
+> from an active kprobe context. On arm64, IRQs are re-enabled before
+> invoking kprobe handlers, allowing an interrupt during kretprobe
+> entry_handler to trigger kprobe_flush_task(), which calls
+> kprobe_busy_begin/end and corrupts current_kprobe and kprobe_status.
+> 
+> [ 2280.630526] Call trace:
+> [ 2280.633044]  dump_backtrace+0x104/0x14c
+> [ 2280.636985]  show_stack+0x20/0x30
+> [ 2280.640390]  dump_stack_lvl+0x58/0x74
+> [ 2280.644154]  dump_stack+0x20/0x30
+> [ 2280.647562]  kprobe_busy_begin+0xec/0xf0
+> [ 2280.651593]  kprobe_flush_task+0x2c/0x60
+> [ 2280.655624]  delayed_put_task_struct+0x2c/0x124
+> [ 2280.660282]  rcu_core+0x56c/0x984
+> [ 2280.663695]  rcu_core_si+0x18/0x28
+> [ 2280.667189]  handle_softirqs+0x160/0x30c
+> [ 2280.671220]  __do_softirq+0x1c/0x2c
+> [ 2280.674807]  ____do_softirq+0x18/0x28
+> [ 2280.678569]  call_on_irq_stack+0x48/0x88
+> [ 2280.682599]  do_softirq_own_stack+0x24/0x34
+> [ 2280.686900]  irq_exit_rcu+0x5c/0xbc
+> [ 2280.690489]  el1_interrupt+0x40/0x60
+> [ 2280.694167]  el1h_64_irq_handler+0x20/0x30
+> [ 2280.698372]  el1h_64_irq+0x64/0x68
+> [ 2280.701872]  _raw_spin_unlock_irq+0x14/0x54
+> [ 2280.706173]  dwc3_msm_notify_event+0x6e8/0xbe8
+> [ 2280.710743]  entry_dwc3_gadget_pullup+0x3c/0x6c
+> [ 2280.715393]  pre_handler_kretprobe+0x1cc/0x304
+> [ 2280.719956]  kprobe_breakpoint_handler+0x1b0/0x388
+> [ 2280.724878]  brk_handler+0x8c/0x128
+> [ 2280.728464]  do_debug_exception+0x94/0x120
+> [ 2280.732670]  el1_dbg+0x60/0x7c
 
-+CC FYI
+The el1_dbg() function was removed in commit:
 
-Konrad
+  31575e11ecf7 ("arm64: debug: split brk64 exception entry")
+
+... which was merged in v6.17.
+
+Are you able to reproduce the issue with v6.17 or later?
+
+Which specific kernel version did you see this with?
+
+The arm64 entry code has changed substantially in recent months (fixing
+a bunch of latent issues), and we need to know which specific version
+you're looking at. It's possible that your issue has already been fixed.
+
+Mark.
+
+> [ 2280.735815]  el1h_64_sync_handler+0x48/0xb8
+> [ 2280.740114]  el1h_64_sync+0x64/0x68
+> [ 2280.743701]  dwc3_gadget_pullup+0x0/0x124
+> [ 2280.747827]  soft_connect_store+0xb4/0x15c
+> [ 2280.752031]  dev_attr_store+0x20/0x38
+> [ 2280.755798]  sysfs_kf_write+0x44/0x5c
+> [ 2280.759564]  kernfs_fop_write_iter+0xf4/0x198
+> [ 2280.764033]  vfs_write+0x1d0/0x2b0
+> [ 2280.767529]  ksys_write+0x80/0xf0
+> [ 2280.770940]  __arm64_sys_write+0x24/0x34
+> [ 2280.774974]  invoke_syscall+0x54/0x118
+> [ 2280.778822]  el0_svc_common+0xb4/0xe8
+> [ 2280.782587]  do_el0_svc+0x24/0x34
+> [ 2280.785999]  el0_svc+0x40/0xa4
+> [ 2280.789140]  el0t_64_sync_handler+0x8c/0x108
+> [ 2280.793526]  el0t_64_sync+0x198/0x19c
+
 
