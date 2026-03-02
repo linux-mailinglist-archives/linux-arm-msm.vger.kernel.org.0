@@ -1,159 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-94973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id oOP5HUKnpWngCwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 16:05:38 +0100
+	id +B3zBUCopWmpDgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 16:09:52 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 857D71DB6C0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 16:05:37 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F2971DB7DB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 16:09:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 7E3E830197C9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 15:00:04 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id C325C3067085
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 15:01:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C758B4014A0;
-	Mon,  2 Mar 2026 15:00:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78065430B97;
+	Mon,  2 Mar 2026 15:01:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=danielhodges.dev header.i=@danielhodges.dev header.b="BxDIgoO2";
-	dkim=permerror (0-bit key) header.d=danielhodges.dev header.i=@danielhodges.dev header.b="fSolzkRG"
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="M5tdeETq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from devnull.danielhodges.dev (vps-2f6e086e.vps.ovh.us [135.148.138.8])
+Received: from mail-24416.protonmail.ch (mail-24416.protonmail.ch [109.224.244.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C67199FBA;
-	Mon,  2 Mar 2026 14:59:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=135.148.138.8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 612E4218AD4
+	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Mar 2026 15:01:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772463600; cv=none; b=blVm8RuBTPM/Xb+T88AfodF2SUSJdj3wejTEgpjAtlFMD6wy3SvKKUWbV0lf3Mg38Ly4dMRkYQ72rjlosZKY7PEi5fEJ3nuaS8hV8rt0XooTe2iOmr1SUSBs+L5Bt4Vrv1XUQdsF6zRiSiUuJ6vrKvneo/Q8Y66tF4siKhYnN/M=
+	t=1772463676; cv=none; b=rAxDUavEoIRyTDZ7qsr9vYrwD/kwZH5Y6NLgyPhxs1JcneJBiM5XwJVB99MS1cnjDk+nm9598FkF+/Y0LAYRcRV+roVpfufjgH8Jece7QZTWBEmgmfpoEh1eg+rZ4CVOBpl8toCjpAlGNi3Damoh0OWI8/7F3mMXdA8Z+fs51/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772463600; c=relaxed/simple;
-	bh=DxGkIkDdEwOD3ij4b6DLXS5/weC/z7I8vQkG0UlUNoI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mYb9Sx1s/m5Svjki4CuA6H4GGZLsUUKiwS32HC4K5FbVdpSA+QdNB9A9y1e2MnOimVDgJtVpUcwv83aEmybdYBwilN4vw6ZWvEy8hCIef7QgywuoZkdbiM8PUahxi8scFNUo0s1cLhOM/8RkGt597Re9caq8GBDCHzO2DmcKmi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=danielhodges.dev; spf=pass smtp.mailfrom=danielhodges.dev; dkim=pass (2048-bit key) header.d=danielhodges.dev header.i=@danielhodges.dev header.b=BxDIgoO2; dkim=permerror (0-bit key) header.d=danielhodges.dev header.i=@danielhodges.dev header.b=fSolzkRG; arc=none smtp.client-ip=135.148.138.8
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=danielhodges.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=danielhodges.dev
-DKIM-Signature: v=1; a=rsa-sha256; s=202510r; d=danielhodges.dev; c=relaxed/relaxed;
-	h=Message-ID:Subject:To:From:Date; t=1772463586; bh=ogl6TU85WTxGAdTtdjcpJC8
-	6XT6gSVzMS3pwvCYPadI=; b=BxDIgoO2UcmsQCz/yrwpPsHDvA4HsNrjLM5/l02bT9R7LaGyNj
-	y3rZm58smFX7kdg2GOkRAds4HgF6OaHfVLwF5Dw64NaloxmcINS5cBravS0/aNjHbyQWxHufcNB
-	YC6FUf2Cmjb+nTAcxIy1PaYomYqD2kt8dExD6dQA2zgS7i3CNkqqU+HbYFofN8S3v+4Ea7AZtoX
-	SOcXKJ2dej8lAGMvMszmlmAI5dh5UXKdgvxuLLztmH49jjqV2nw6FkX7dnAAbjxccNvJabrMFvb
-	o3dA7PAmv38Obj+7fNYNj/+ezqnpsCzDTsyqp5s12zi5oISThGNgA4hg/+EDHG+qoGw==;
-DKIM-Signature: v=1; a=ed25519-sha256; s=202510e; d=danielhodges.dev; c=relaxed/relaxed;
-	h=Message-ID:Subject:To:From:Date; t=1772463586; bh=ogl6TU85WTxGAdTtdjcpJC8
-	6XT6gSVzMS3pwvCYPadI=; b=fSolzkRGWj67YSeNdvUvZMfxe+aNi0ZoGLsTgv2ja1INmLdHKF
-	eAw/6uMMLLo76jD8ES47/vmGmh5OMqcJW3Ag==;
-Date: Mon, 2 Mar 2026 09:59:46 -0500
-From: Daniel Hodges <daniel@danielhodges.dev>
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Bjorn Helgaas <helgaas@kernel.org>, 
-	Daniel Hodges <git@danielhodges.dev>, kwilczynski@kernel.org, kishon@kernel.org, bhelgaas@google.com, 
-	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH] PCI: epf-mhi: return 0 on success instead of positive
- jiffies
-Message-ID: <nedv4u2zt6logpxggnpyuuj6ad23w5kbkfmke6cvh3gfz4zetx@u2z2ivn6xwve>
-References: <20260206200529.10784-1-git@danielhodges.dev>
- <20260227191510.GA3904799@bhelgaas>
- <xfodklav2bbej7v3ldg6equxkkkzwyadxnvuakuhrixfuc2ueo@sektmxhns7c4>
+	s=arc-20240116; t=1772463676; c=relaxed/simple;
+	bh=pisXnXXBPQdwapUXns7sN5uIBljzosgJQwotMERG0q0=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ck5nfbBV1Ar6h9rLRfsJ4l9XATn3sm9sIML8BrPyWi6J1gm0wV55W20ndLn3aKm5Zc5Xh82cVZ2KrglP39zoUuwHVVZPGWPkPdCihDfL35Fa+W0QhEoOfhXK0j0Akq0WRyD9f/HLbeHbzMHEsjI7QP/ye6c44AJO23z5AUlcqjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=M5tdeETq; arc=none smtp.client-ip=109.224.244.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1772463663; x=1772722863;
+	bh=pisXnXXBPQdwapUXns7sN5uIBljzosgJQwotMERG0q0=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=M5tdeETq4o71gby/8DPVOrc9Uctf7ZypUFiqj9uYtKrSBFbdHQRuqr65CNPNrOaFF
+	 tuLpnnDxe/Jl8EVGkLZ9yHSDuWwIdNkIVl6aUZ9iJ7Ln5kZXh26hpZM1OvX8l7UPa1
+	 jvwCY4uq9sUuyqrgNCgiaBxfSTJOGPDogUKzA8jvP9MpCvPw+ld3rTUrZHPpoh8C88
+	 18IjF3A4m3Mt3YGQ4dilkH7QwjpRn9C2eeuTH/OHGwWEiMWs2CpEI2DUnRWdtaUXSr
+	 b/QIN98a3GweaheFm6XO28+ElcE5TkXMbVI7aZsP1Q0qiJX+TSekmCBsZCYjRWzvCG
+	 u7zn7icfeGhiQ==
+Date: Mon, 02 Mar 2026 15:00:57 +0000
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, konradybcio@kernel.org
+From: Tj <tj.iam.tj@proton.me>
+Cc: linux-arm-msm@vger.kernel.org, Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: Re: qcom_scm: page dumped because: nonzero _refcount
+Message-ID: <3e67a37a-3a51-40e6-9608-2641101b6ee5@proton.me>
+In-Reply-To: <06ddefe3-2048-4e79-80a2-8d998b2c6a51@oss.qualcomm.com>
+References: <cb59c06a-b0bb-4061-9db6-30b0b350661d@proton.me> <25c4608b-c447-42eb-a5b3-8d58bd93ebc7@oss.qualcomm.com> <94629352-595b-46bb-9c11-505aa9db0a1a@proton.me> <cc10cef2-f032-460c-bbc3-2ec9b5c922c0@oss.qualcomm.com> <8cf12905-8221-4f4c-9158-42984d26b0df@proton.me> <06ddefe3-2048-4e79-80a2-8d998b2c6a51@oss.qualcomm.com>
+Feedback-ID: 113488376:user:proton
+X-Pm-Message-ID: 759111b89cf4470064ef2cbb06215b89444ce387
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xfodklav2bbej7v3ldg6equxkkkzwyadxnvuakuhrixfuc2ueo@sektmxhns7c4>
-X-Rspamd-Queue-Id: 857D71DB6C0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: 6F2971DB7DB
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[danielhodges.dev,reject];
-	R_DKIM_ALLOW(-0.20)[danielhodges.dev:s=202510r,danielhodges.dev:s=202510e];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[proton.me,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[proton.me:s=protonmail];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94973-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-94974-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[3];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[danielhodges.dev:+];
-	MISSING_XM_UA(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
+	DKIM_TRACE(0.00)[proton.me:+];
+	MISSING_XM_UA(0.00)[];
+	RCPT_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[daniel@danielhodges.dev,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[tj.iam.tj@proton.me,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-0.999];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,danielhodges.dev:dkim,danielhodges.dev:email]
+	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-On Mon, Mar 02, 2026 at 11:24:23AM +0530, Manivannan Sadhasivam wrote:
-> On Fri, Feb 27, 2026 at 01:15:10PM -0600, Bjorn Helgaas wrote:
-> > On Fri, Feb 06, 2026 at 03:05:29PM -0500, Daniel Hodges wrote:
-> > > wait_for_completion_timeout() returns the number of jiffies remaining
-> > > on success (positive value) or 0 on timeout. The pci_epf_mhi_edma_read()
-> > > and pci_epf_mhi_edma_write() functions use the return value directly as
-> > > their own return value, only converting timeout (0) to -ETIMEDOUT.
-> > > 
-> > > On success, they return the positive jiffies value. The callers in
-> > > drivers/bus/mhi/ep/ring.c check for errors with "if (ret < 0)" for
-> > > read_sync and "if (ret)" for write_sync. This causes write_sync success
-> > > cases to be incorrectly treated as errors since the positive jiffies
-> > > value is non-zero.
-> > > 
-> > > Fix by setting ret to 0 when wait_for_completion_timeout() succeeds.
-> > > 
-> > > Fixes: 7b99aaaddabb ("PCI: epf-mhi: Add eDMA support")
-> > > Cc: stable@vger.kernel.org
-> > > Signed-off-by: Daniel Hodges <git@danielhodges.dev>
-> > 
-> > Thanks for the patch!
-> > 
-> > Two questions: first, is there any reason why __mhi_ep_cache_ring()
-> > tests for "ret < 0" but mhi_ep_ring_add_element() tests for "ret"
-> > (non-zero)?  Could/should they both test just for non-zero, which I
-> > think is the typical style?
-> > 
-> 
-> Yes, agree. I've sent a patch to fix this. Thanks for spotting!
-> 
-> > Second, the subject and commit log are perfectly correct but basically
-> > at the level of describing the C code.  I propose something along
-> > these lines:
-> > 
-> >   PCI: epf-mhi: Return 0, not remaining timeout, when eDMA ops complete
-> > 
-> >   pci_epf_mhi_edma_read() and pci_epf_mhi_edma_write() start DMA
-> >   operations and wait for completion with a timeout.
-> > 
-> >   On successful completion, they previously returned the remaining
-> >   timeout, which callers may treat as an error.  In particular,
-> >   mhi_ep_ring_add_element(), which calls pci_epf_mhi_edma_write() via
-> >   mhi_cntrl->write_sync(), interprets any non-zero return value as
-> >   failure.
-> > 
-> >   Return 0 on success instead of the remaining timeout to prevent
-> >   mhi_ep_ring_add_element() from treating successful completion as an
-> >   error.
-> > 
-> 
-> Ammended the commit with the above, thanks!
-> 
-> - Mani
+On 02/03/2026 14:47, Konrad Dybcio wrote:
+> We have this line:
+>
+> 0x8BF00000, 0x0D600000, "PIL_REGION",
+>
+> which is a big region for all the remote processor firmwares. This
+> unfortunately doesn't tell us where (and whether) the IPA FW specifically
+> must reside, but we can take the conclusion that it's at least not fatall=
+y
+> wrong.
+>
+> Please try just disabling IPA (change status =3D "okay" to status =3D "fa=
+il"
+> in the DT file) for the time being.
 
-Thanks for cleaning up! I meant to get around to this, but got a little
-distracted with some other things.
+Disabled. Leads to a couple of different traces I was able to capture in=20
+photos. The images are 3.2MB each so not going to attach them, but if=20
+you have IPv6 you can directly fetch them from my workstation. I shall=20
+send you (and anyone else that requests it) the link privately.
 
--Daniel
+The first is timed 145229.
+
+
 
