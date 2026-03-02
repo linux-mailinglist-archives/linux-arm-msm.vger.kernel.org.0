@@ -1,184 +1,235 @@
-Return-Path: <linux-arm-msm+bounces-94851-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94854-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id uIJUB15ppWkaAQYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94851-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 11:41:34 +0100
+	id EK7MOLlqpWkaAQYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94854-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 11:47:21 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id D19701D6B62
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 11:41:33 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id A90E91D6C95
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 11:47:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 284EB3036EA9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 10:38:44 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id AAA903004F1D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 10:47:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C8A63328F7;
-	Mon,  2 Mar 2026 10:38:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N4naTIpw"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DD3A35504D;
+	Mon,  2 Mar 2026 10:47:05 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
+Received: from mail-ua1-f49.google.com (mail-ua1-f49.google.com [209.85.222.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9FA13314D0
-	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Mar 2026 10:38:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC3135294F
+	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Mar 2026 10:47:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772447922; cv=none; b=DlAFyT1wjkTko8qzzu/dLnpYE1BJWqhBe+BukApTOiNH6vN2wdYi5ah9u+bTDsaSm3CgJM8jeSTjttn/0I9K2af/8KzCqr6QaabcePkMqULWqdmJfZBT0tWCKOI6jZfTCHbJuiQkdPB1SgKSdChe6s/QH6Wvou0RTZjj+a5Wylg=
+	t=1772448425; cv=none; b=NZ4n9Q3jcaOC26nIUZZDE58QphJ4JCQedFJGitOBG7hoyQVv3SJn3VgxcdIISYCnVhJACHir4F4pbYf7e5yJONCsB87qacRYUUCo7AFrMrhxMSYjyXaHComZbyFrgyFB4MvLqy72maDKxVxQiuWAJgNnEzAfhG4LSDBWVOGwjCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772447922; c=relaxed/simple;
-	bh=+dPP0pKLmuyRQWGO2igjZ68hfj2TtOyctwG0bH8SJm4=;
-	h=Content-Type:From:Mime-Version:Subject:Message-Id:Date:Cc:To; b=MkWDX5jmUn59BmShLppHjGeC8rq43ZdIj+tx0wIdZ10+777ETSmRbdCbTYH6hW+QY+8o8mJORFhhmQNrfuua/JI/NtkCGggNSjZlaqJqekXxp/a6YHCgkGmnLV5X/7CWXcwFDM+rYhiJZZMPsjH7u/iODFfj+sikEuYIuKCQ/DQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N4naTIpw; arc=none smtp.client-ip=209.85.208.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1772448425; c=relaxed/simple;
+	bh=PO0TbLRbiVrKvdhPwH7RKWikT/wKrrUI+0ibUOovsCk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RWEmgxPlXulRaLuAOT/ocq5Y0DB0hPWuudtpS31rbR11O7mwpbe8NAEo3EU1M+V4s62iVKxPtqmyHCJ/mQbf+GA8pybtJR1xzLSYFRGIr/NUDhiutAFTCDZbLVO/OiyXPY19j3IPOYtd2CHtuSDH7lPjU8SzJOo5/UWn9Dr3jgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-3870dec27f4so4979391fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Mar 2026 02:38:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772447919; x=1773052719; darn=vger.kernel.org;
-        h=to:cc:date:message-id:subject:mime-version:from
-         :content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+dPP0pKLmuyRQWGO2igjZ68hfj2TtOyctwG0bH8SJm4=;
-        b=N4naTIpwcuC/qx5sfNFTxitY68Caq14zq82+r0fa4bspB+RVdfAkTmN1qL/74nlshO
-         mPnbQK9OXtyqewDgg0ffLhxkkLEOvtM6TyHdesDRA2nceA6I43RCI7SDQRIxIEso2+qi
-         Q4rlDkYmAsvIhjc4YMpAbU84RSQt/ZofK0kiEef++PK4VkNbkU+stXzKWCSihkdDDSfb
-         UjQ2izI7vQbm14WiqniUM5cBLxgl51H2wM0VXtVn5EW4nsPtPqTF5y169vDimbIYbs6x
-         sf0n6+NQCmYA6xXxxLcsnmY21g7rzxKAgrsHXNqrqxVwnSjMFuvJ7eYdvutr0UKxT/C+
-         3TgA==
+Received: by mail-ua1-f49.google.com with SMTP id a1e0cc1a2514c-94ddffda372so3711384241.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Mar 2026 02:47:03 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772447919; x=1773052719;
-        h=to:cc:date:message-id:subject:mime-version:from
-         :content-transfer-encoding:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+dPP0pKLmuyRQWGO2igjZ68hfj2TtOyctwG0bH8SJm4=;
-        b=qTQq9l6gf5Q6z617xjYYky/pqSI32iN5k/SRx5rSYU8lXVSueUFNxEvdNlxPW0xKQg
-         novW/ioM6yXFL0gm8AKkXE5gWY7sxIk/umqwCX24n+m7i+Xk2B8DB5375dePtc3V87+x
-         WZaM+wxEQUwg436mc0it3qiyI+lroSUyCmcb1jUmFYlC59CdIu0S0FJU3rpbM447xRO5
-         oeAxzxWqazF1NBXwdV7kfKevzOu/ONn6op2jCUb7ARPMKhpwKHd14i0CRmiR/4/KkPF6
-         +GYWk6+9pLGSchAppgKDNny7rErmo2gCr5mTt5cIF3SnxF43bOQikX3yKjXoduQeDZAv
-         Eqkg==
-X-Forwarded-Encrypted: i=1; AJvYcCVdYFDiIUDgulnZxryGHNGETj+MlKdqoeGb40xxxgnFpiOxtCzDBgckQdXjK8FbMNgoUuBoz9wEJb56KCnd@vger.kernel.org
-X-Gm-Message-State: AOJu0YwuOBDbIidLFmzEwTZhb1YcQK7D0w6bg/H2CDifGni5HILWucms
-	ItdnhBgHvbOA+P66Z94P8dRtgcVHnvj6yHiHFcMqA/w56V2c5feVztwj
-X-Gm-Gg: ATEYQzxP/t7gNm2EgLPuImWX95IuDTLpVBu+vrKgRTMPEhOXSuBK8EH5+peSh/HogVo
-	wkDqfn8SWbZR2zWRsQCYON4FpRCYrExHJdXTZta/JAZJZaE/Gm+AiGvaMOhYPB1NHsI9HYjiHa2
-	5nCIcVlO+cnIr4VrHlm6XuupBdjxqTQcPICD7rkb3Nv4XmLKIfYiW5cAxernBZIR1qpuCeVQSjk
-	3eozp9bsuhTBDIYifvIkua0NxpRwuOhCe82uZZY/zscZiLh5HwdqVX9JNBXpCS9ZWxM4j/6TTwn
-	zUlhpnqRfP1lUKoBpCdqV4SyjNa6gVLm2aYxvGqfzTHnEGjUC+elsuTXpsOq3tjW12kQJ+2lR+X
-	TdGYOJ9TqYD+o2dYIXVcQSWtpj7q2gPRM+A0LspTHhV7Nom87L1DA7+CjrQDDZkolzPeh1+oTJp
-	JHnlQ1jj9Kml25Rz9UcVK2sDXNhlaX63ph9yFnO3GDEL4p/MVeRJ33oDkIVVdXa1fCbKdHKqNRI
-	g0lR2JP1hzB
-X-Received: by 2002:a2e:b018:0:b0:37f:d9ba:747 with SMTP id 38308e7fff4ca-389f1d73cecmr67253571fa.5.1772447918848;
-        Mon, 02 Mar 2026 02:38:38 -0800 (PST)
-Received: from smtpclient.apple (mobile-access-2e8433-189.dhcp.inet.fi. [46.132.51.189])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a116de019esm1424664e87.3.2026.03.02.02.38.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Mar 2026 02:38:38 -0800 (PST)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Kalle Niemi <kaleposti@gmail.com>
+        d=1e100.net; s=20230601; t=1772448423; x=1773053223;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bl7RAWu6mKzowPFnldQghONe5pbsD04RWaX4BUYhOlo=;
+        b=UjrwiO8a6qUOKpcPQnX3i76tY+FU+NWH8iGFxuelgqMrN/aHSGUZmRKw0sTx9eBZF3
+         Ldadd4gDq6ZUevfTxKRJKtYo4bbbSGbnPdWMRwwLYNqf1ihNfoZAZNkio+jLp45IN/3h
+         XK7jZnuEiFHdYk7QVv1E1pAezi71y0Gk56x+V6nEjQDuMq1TUZXYTqAWBKAJhtsdqDGl
+         E0F01J4IWX+wfG28+EO53c75MFqUL5WZtkUx+Shq3wUGVzcPypF5Q09JXhd2+itm9hxl
+         /TEfFSg4vDNduImegkk1SRBh+zvG2Abi96Db1YieK7ZXNoYu3Y7YdSZOXeeWbw9VwV2p
+         bjoQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWSoya7mMAI56hQnb274mdlB82Uz8qP4CO792gAkPyffo/nnSRGAgN2UuYWrJ19Can4D8rW6N5DSlmpAZDX@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywwz2/zRCCR43UKkaqEbjaAN8ojhrxVGiYfwbAsHNWXzafecTOF
+	m5BIyhrfGdc62brMmrrhuWFnuNUrEJKdck/k46ln0OzAjTWKE+Cbpz5wuUHR1qqv
+X-Gm-Gg: ATEYQzytWB6Rhc7hp+iiP3hEziQAYbIw7PfLOT0bDwMXtwGaWZ42fGYvkHteMd6l4hy
+	6CeboAdDWcykLBw41mgye5Mh2f65JLp+OGYNn+ITQZFQuz86AJNQz8GynlkzlttXHOs0BokhnPx
+	Ov5ByLHetdqf/6t227+EfWPF6PnOYGra0vRBBd3ZTNlBJqPEatSg0Uwn7mbeWT44K/MY3J9H+CB
+	gNtautwg0PBtj3n9D6IgvY/kUTStqW9Yd3oDwL0FJFNGvBA7frXhoQZebtaSm4/YZGOZUrNoeM9
+	B6G+Ys3xx/6hecKH336xIOX4OQNr1nOFlep/H41GL1OTf2vEjYDNDG7rUiaL0Z8BZSGES6qwJfM
+	woz9D68sO6I7wSKfm6RcwRQR7bV6dVk4LwBNAbyoAIk3ClfitGJD7wOxab/cMtAXPWUGECP2KBi
+	VzrUcSOmtH9s5Eqj7U8twPOxnKEuJ7W6oFvHndsGab/jYSRMrH+e6cGSrpPIvq
+X-Received: by 2002:a05:6102:160c:b0:5ff:6f3:3e35 with SMTP id ada2fe7eead31-5ff33153390mr5175634137.0.1772448422743;
+        Mon, 02 Mar 2026 02:47:02 -0800 (PST)
+Received: from mail-ua1-f43.google.com (mail-ua1-f43.google.com. [209.85.222.43])
+        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-5ff1ea1596asm12814244137.9.2026.03.02.02.47.02
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 02 Mar 2026 02:47:02 -0800 (PST)
+Received: by mail-ua1-f43.google.com with SMTP id a1e0cc1a2514c-94dd05a4b44so2640044241.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Mar 2026 02:47:02 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCUibmNBYG+FOTspZKYMU/nwPQQzDFovj8rfJXT49gmzqmtQRyX0AcdGRRT+CB0yy/GE8wHWsFUFU2eqwvKd@vger.kernel.org
+X-Received: by 2002:a05:6102:440e:b0:5ef:b32c:dff8 with SMTP id
+ ada2fe7eead31-5ff1cda8e40mr7754538137.5.1772447927548; Mon, 02 Mar 2026
+ 02:38:47 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH v2 01/12] i2c: allow setting the parent device and OF node through the adapter struct
-Message-Id: <EDF3FB58-4747-442E-8463-6F1C6E568962@gmail.com>
-Date: Mon, 2 Mar 2026 12:38:27 +0200
-Cc: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
- Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
- Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
- Andi Shyti <andi.shyti@kernel.org>,
- Florian Fainelli <florian.fainelli@broadcom.com>,
- Ray Jui <rjui@broadcom.com>, Branden Scott <sbranden@broadcom.com>,
- bcm-kernel-feedback-list@broadcom.com, Vignesh R <vigneshr@ti.com>,
- Aaro Koskinen <aaro.koskinen@iki.fi>,
- Janusz Krzysztofik <jmkrzyszt@gmail.com>, Tony Lindgren <tony@atomide.com>,
- Andreas Kemnade <andreas@kemnade.info>,
- Kevin Hilman <khilman@baylibre.com>, Roger Quadros <rogerq@kernel.org>,
- Geert Uytterhoeven <geert+renesas@glider.be>,
- Magnus Damm <magnus.damm@gmail.com>,
- Patrice Chotard <patrice.chotard@foss.st.com>,
- Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>, Linus Walleij <linusw@kernel.org>,
- Frank Li <Frank.Li@nxp.com>, linux-i2c@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev,
- linux-rpi-kernel@lists.infradead.org,
- Matti Vaittinen <mazziesaccount@gmail.com>
-To: Bartosz Golaszewski <brgl@kernel.org>,
- Wolfram Sang <wsa+renesas@sang-engineering.com>
-X-Mailer: iPhone Mail (23D127)
+MIME-Version: 1.0
+References: <20260302002729.19438-1-dakr@kernel.org> <20260302002729.19438-2-dakr@kernel.org>
+ <CAMuHMdUi3uNoDJ67WkNSKn=BD1F7D1Ot=gz4TwFPvaaYmKaNcg@mail.gmail.com> <DGS82WWLXPJ0.2EH4VJSF30UR5@kernel.org>
+In-Reply-To: <DGS82WWLXPJ0.2EH4VJSF30UR5@kernel.org>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Mon, 2 Mar 2026 11:38:36 +0100
+X-Gmail-Original-Message-ID: <CAMuHMdVe7Z3k1sz2dEYqfpp7uqdYjrqL-gRbUE7CPBpOA+-RfA@mail.gmail.com>
+X-Gm-Features: AaiRm52rSumTG3nFZ9P6FzWdxvQ0hMzWVlbis5lyqzx4MgKVwMUrLmFH3gE-zLg
+Message-ID: <CAMuHMdVe7Z3k1sz2dEYqfpp7uqdYjrqL-gRbUE7CPBpOA+-RfA@mail.gmail.com>
+Subject: Re: [PATCH 1/3] driver core: generalize driver_override in struct device
+To: Danilo Krummrich <dakr@kernel.org>
+Cc: gregkh@linuxfoundation.org, rafael@kernel.org, hanguidong02@gmail.com, 
+	ysato@users.sourceforge.jp, dalias@libc.org, glaubitz@physik.fu-berlin.de, 
+	abelvesa@kernel.org, srini@kernel.org, s.nawrocki@samsung.com, 
+	nuno.sa@analog.com, driver-core@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	imx@lists.linux.dev, linux-hwmon@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org, 
+	linux-sh@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.34 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	FAKE_REPLY(1.00)[];
+X-Spamd-Result: default: False [-1.46 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	FREEMAIL_CC(0.00)[linuxfoundation.org,kernel.org,gmail.com,users.sourceforge.jp,libc.org,physik.fu-berlin.de,samsung.com,analog.com,lists.linux.dev,vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94851-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,broadcom.com,ti.com,iki.fi,gmail.com,atomide.com,kemnade.info,baylibre.com,glider.be,foss.st.com,pengutronix.de,nxp.com,vger.kernel.org,lists.infradead.org,lists.linux.dev];
-	RCPT_COUNT_TWELVE(0.00)[35];
-	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_TWELVE(0.00)[18];
+	TAGGED_FROM(0.00)[bounces-94854-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	APPLE_IOS_MAILER_COMMON(0.00)[];
+	DMARC_NA(0.00)[linux-m68k.org];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	MID_RHS_MATCH_FROM(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[kaleposti@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
+	MISSING_XM_UA(0.00)[];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: D19701D6B62
+	RCVD_COUNT_FIVE(0.00)[6];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[geert@linux-m68k.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	NEURAL_HAM(-0.00)[-0.147];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	R_DKIM_NA(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linux-m68k.org:email,mail.gmail.com:mid,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: A90E91D6C95
 X-Rspamd-Action: no action
 
-=EF=BB=BFOn 3/2/26 10:55, Bartosz Golaszewski wrote:
-> On Mon, Mar 2, 2026 at 8:47=E2=80=AFAM Kalle Niemi <kaleposti@gmail.com> w=
-rote:
->> On 2/23/26 11:05, Bartosz Golaszewski wrote:
->>> In order to stop i2c bus drivers from dereferencing the struct device
->>> embedded in struct i2c_adapter, let's allow configuring the parent
->>> device and OF-node of the adapter directly through dedicated fields.
->>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com=
+Hi Danilo,
+
+On Mon, 2 Mar 2026 at 11:26, Danilo Krummrich <dakr@kernel.org> wrote:
+> On Mon Mar 2, 2026 at 11:00 AM CET, Geert Uytterhoeven wrote:
+> >> --- a/drivers/base/dd.c
+> >> +++ b/drivers/base/dd.c
+> >> @@ -381,6 +381,66 @@ static void __exit deferred_probe_exit(void)
+> >>  }
+> >>  __exitcall(deferred_probe_exit);
+> >>
+> >> +int __device_set_driver_override(struct device *dev, const char *s, size_t len)
+> >> +{
+> >> +       const char *new, *old;
+> >> +       char *cp;
+> >> +
+> >> +       if (!s)
+> >> +               return -EINVAL;
+> >> +
+> >> +       /*
+> >> +        * The stored value will be used in sysfs show callback (sysfs_emit()),
+> >> +        * which has a length limit of PAGE_SIZE and adds a trailing newline.
+> >> +        * Thus we can store one character less to avoid truncation during sysfs
+> >> +        * show.
+> >> +        */
+> >> +       if (len >= (PAGE_SIZE - 1))
+> >> +               return -EINVAL;
+> >> +
+> >> +       /*
+> >> +        * Compute the real length of the string in case userspace sends us a
+> >> +        * bunch of \0 characters like python likes to do.
+> >> +        */
+> >> +       len = strlen(s);
+> >> +
+> >
+> > The newline case below is is basically the same case as the empty
+> > string.  Hence if you would move the newline check here:
+> >
+> >     if (len) {
+> >             cp = strnchr(s, len, '\n');
+> >             if (cp)
+> >                     len = cp - s;
+> >     }
+> >
+> > then the "cp != s" check below is no longer needed.
+> >
+> >> +       if (!len) {
+> >> +               /* Empty string passed - clear override */
+> >> +               spin_lock(&dev->driver_override.lock);
+> >> +               old = dev->driver_override.name;
+> >> +               dev->driver_override.name = NULL;
+> >> +               spin_unlock(&dev->driver_override.lock);
+> >> +               kfree(old);
+> >> +
+> >> +               return 0;
+> >> +       }
+> >
+> > Also, this block can be eliminated completely...
+> >
+> >> +
+> >> +       cp = strnchr(s, len, '\n');
+> >> +       if (cp)
+> >> +               len = cp - s;
+> >> +
+> >> +       new = kstrndup(s, len, GFP_KERNEL);
+> >> +       if (!new)
+> >> +               return -ENOMEM;
+> >
+> > ... by pre-initializing new to NULL, and making the allocation of new
+> > conditional on len being non-zero.
+> >
+> >> +
+> >> +       spin_lock(&dev->driver_override.lock);
+> >> +       old = dev->driver_override.name;
+> >> +       if (cp != s) {
+> >> +               dev->driver_override.name = new;
+> >> +               spin_unlock(&dev->driver_override.lock);
+> >> +       } else {
+> >> +               /* "\n" passed - clear override */
+> >> +               dev->driver_override.name = NULL;
+> >> +               spin_unlock(&dev->driver_override.lock);
+> >> +
+> >> +               kfree(new);
+> >> +       }
+> >> +       kfree(old);
+> >> +
+> >> +       return 0;
+> >> +}
+> >> +EXPORT_SYMBOL_GPL(__device_set_driver_override);
 >
->>> ---
->> Hello,
->> Automated driver test system bisected this commit to be the first bad
->> commit, linux-next next-20260227 was tested. Failed tests include driver
->> tests for ROHM PMIC and accelerometers, which are connected to
->> BeagleBone Black.
->> The failed driver tests all fail to first i2cget and the tests stop
->> there: "Could not open file '/dev/i2c-2' or 'dev/i2c/2': No such file or
->> directory".
-> Wolfram: well, now it would actually be useful to know which commit
-> exactly is the culprit so maybe splitting the changes is not a bad
-> idea after all.
-> Kalle: which i2c bus driver fails here? Any errors in kernel log?
-> Bart
+> This is essentially a copy of driver_set_override(). Except for the required
+> minor changes I intentionally kept it "as is" as it will go through -fixes and
+> we know it works properly.
 
-Hello Bart,
+So I will have two to fix? ;-)
 
-i2c-1 and i2c-2 are failing. I am not seeing any i2c errors in kernel log. I=
- got two failures without the dmesg available (this is bugged test sequence,=
- and not a kernel crash), but those got the same stdout message "Could not o=
-pen file ...." as all others.
+> Do you mind sending a follow-up patch with your suggested improvements?
 
--Kalle
+Adding it to my TODO list, if this patch makes it as-is.
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
 
