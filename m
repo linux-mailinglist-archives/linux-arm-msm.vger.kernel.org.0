@@ -1,170 +1,269 @@
-Return-Path: <linux-arm-msm+bounces-94788-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94789-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SLsKH15FpWkg7AUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94788-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 09:07:58 +0100
+	id wP+jCk5GpWkg7AUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94789-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 09:11:58 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD9371D4695
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 09:07:57 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 73E861D4760
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 09:11:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id B4922301227A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 08:07:53 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 963C63028360
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 08:11:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 526213093D3;
-	Mon,  2 Mar 2026 08:07:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1B84375ADD;
+	Mon,  2 Mar 2026 08:11:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f265tYXK"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dLrAYbxi";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="YUzdmVDc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A5C25CC74;
-	Mon,  2 Mar 2026 08:07:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56FC67FBAC
+	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Mar 2026 08:11:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772438872; cv=none; b=ZbqApqCzv6PpdMSI+5hVdg7ZpTFdJ0KcrWNNCkFpd9APrbbVn21ohsPj3PTm4Pbo6pqwY6Td5mqIvOUaCKF69hK8g+JBBMcR0fN4bM4QpwZ8yeFF2IWezPAsOWicfH/l0ButSDEPa08h/Smtb0VDINJWXWy4DG25QmR0xfBRqbQ=
+	t=1772439068; cv=none; b=b8YNzSEqRx4Ml8y+3UdGHIktHWg44yDsBFsiiCVuih/S+i33rN/2lMxmV1GAJP7s2PychtI41H/gTlnL8hrSUdhmbbBZErpg2DPsS9qqncUv6gg68qPECqcxCLpORMKJis0EkM5/fiMidfwSToTjnBdc+aX8zhEktgNuvms4gDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772438872; c=relaxed/simple;
-	bh=65OL+UbZCPewWQrLAd9t4ijSWo7rOXix30szLQxZzoE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S1Wzklv5qj0ErF+jsY5bys3l+AMopVmfBsg/w4rMFqQYsMMoF/YxUXjkOtGFPuftuYF0bpxZh9zeHZk68J3bE1Vz9LdpwmUVRaeoVliHZXaV7q5qQiCRnVEhE9rMwtMMBUJ+Yo/UIc5WuuBWd0E27qlahBqODut3Ckgpp/uG/w4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f265tYXK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1661C19423;
-	Mon,  2 Mar 2026 08:07:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772438871;
-	bh=65OL+UbZCPewWQrLAd9t4ijSWo7rOXix30szLQxZzoE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=f265tYXK2uhqW1tsBNJANRpZgw7EjVRFcLF84b1UZDYM2Dt2xvA5xS4JSCgz4o+xb
-	 GeYS5tpjNI0845wu+qbpo9KU4dHkiRuUE6aYbPN+whhx5a9aRmr5vySqSDvl7G1k7P
-	 dHPgLMn8m2N4c3eeR6MqrhBYpBsDIXkJjlooH3+ZzxM1Hv7YZGaHopj9TPAOc3COya
-	 +5cKaD3OSGSIydmR+qqP47BGJeJ+FoGf1o6PFPScG9r8FlGv57Gez0VeFr4oVsQESl
-	 w1lxxIpbAN1cHGUM2I0iS+mfD9WoTE/CG1SYCOEd4IICbLk/Q/Ws1XF3Y6lOik2CH9
-	 jmszF3PeFUa8A==
-Date: Mon, 2 Mar 2026 13:37:38 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Qiang Yu <qiang.yu@oss.qualcomm.com>
-Cc: Qiang Yu <quic_qianyu@quicinc.com>, mhi@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH] bus: mhi: host: pci_generic: Switch to async power up to
- avoid boot delays
-Message-ID: <vnqrsrglpmzizk2vtee3aohuwop5wynd463bkq6kknq4ploiox@frv5z5yk3kha>
-References: <20260122-mhi_async_probe-v1-1-b5cb2a3629d0@oss.qualcomm.com>
+	s=arc-20240116; t=1772439068; c=relaxed/simple;
+	bh=rv4MpTWLbVDrRZnGJ1y2PRJZKISGnzYKDx8X9nLiGok=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=g9N71FUVruT8jdvqIc7W/X1HzgzyutEPmt1SHezABp8NI19hfbCV0wk5l8o6PbAiadXE6pf7qEQks2MUIHaFqslXD6Wjyp5Tx4xqiIUIz5t1z//UzeDet1u8Keqh2e8skYrQOO/Z3TemZrrw+VIeaXy77n9JTxl+LPAjd3tqJ0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dLrAYbxi; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=YUzdmVDc; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6220mQuq3223818
+	for <linux-arm-msm@vger.kernel.org>; Mon, 2 Mar 2026 08:11:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	bKT2lOHVdbNkn4L+PlCSmA7nngbFfRJNo82IaP0zHDw=; b=dLrAYbxiNF7vvyK6
+	SfLrKjq/5QhEdzKtiOGJpMAlUBmgBnsdvHRVnNL6SarLJwCyNmn2PP2Dw6paW7zr
+	nYo8fH0aEF0W53Am0NrRUBvhOqD8oho/YUpKHCEjib21BnW14LFX8FbQNhx+SLtQ
+	53xSK6zvSZ7Q0xXzdi+75hhBBSjUD983ojc0cMzriV2YOs3fN20pqBvGMZnf58nL
+	tXNEmLWU1FUMJZSSKbat+DF+Kzh8ZnPDXzhiW+BeJTPhi4KgX5SjXoyd012GKB0q
+	S8h5N4QoyNJfPq+WrGMcR+Ut7+9zhun+dskiYvyshBjzsTjpwGzwNjJiWbJ8A7En
+	vOa7zg==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cn0b1h70v-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 02 Mar 2026 08:11:02 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2ae5031c6b1so7467665ad.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Mar 2026 00:11:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1772439061; x=1773043861; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=bKT2lOHVdbNkn4L+PlCSmA7nngbFfRJNo82IaP0zHDw=;
+        b=YUzdmVDcHDaTdRsugPWe6U4XegZJNXjdtHHkZDnOmIZxUlk4ekXzy7x3sD9pakWdvK
+         Dvh8ka434zJxpIsgkyB86B66xQfa/u5aSDgVnVWm/Ery0NXcoQOcGrvA2mvKPAiDvcKG
+         MfzVJLl1DA0z8/cnqYwBgoJu9s2fiXbInP3MKidhllF8cSpttUIhjLzjXyR6+g883/Hp
+         rhZGw5pI5ffKEopkiZDgbGzFR6q9XeFKRptYI6gepj7S6ToY39NySSv5SnidTbfpE0OE
+         015OHO0lOsMkFgNLnR0ndCvmGNpZB3wga3JauWEgdlyRuRZkMDaqe8SIN042U2YaOwe/
+         l4ng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772439061; x=1773043861;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bKT2lOHVdbNkn4L+PlCSmA7nngbFfRJNo82IaP0zHDw=;
+        b=cCQHDxUBQynHlb6qN46JtI3V6t6IQWMeiCBuh2CIzeoPJRFnOIvv1m68VhrJXmFtTG
+         lu/ywMk+I3+KOHW/4PfzmWtT/xXsjv0ffGySBU3Cqp9GDqO2H8xtvEmuwFQudvYvf5gv
+         ssR5AjJZE/hsjRoTOSGub6PWeVWIqTNAh/eCsAiw6LBY42E3jvY8dhdpPwOjziCRQhmY
+         Qfao+rHP3IN/sCuy27sqgzSgSxKQflc3vznLQ3iU8luLHognhrwoUXbiG/2Tt12ZcJNs
+         PmEaawE11bhcL6pByxo54sQ+q1BTZvSGJA3HRIwbcmGVMNlE632/V8oH4iWbqSVaolno
+         nW2A==
+X-Forwarded-Encrypted: i=1; AJvYcCU6PCYZzfFeUlNgRMIk9qP4QXFt1SXLkXUs/40x0L6ubi+4LFhFPKkxag/yVUEZ0Fq/jErtt0XjgM8gnoGd@vger.kernel.org
+X-Gm-Message-State: AOJu0YzF65y0ZLa2gSEBdfPTj95Q2chjgVIcP7ajsWE0FPRj3ze3cezq
+	TVITRrizRvYA2r7dCX/TjGLuC1zf8ND0Hif3iBChB1WHzMDKdS9YSE+UOdJEWYsnmkJdALXcDgG
+	u6nVA4ggQ+ffgN/VPAwl6uyTPh4j3etcSGeDM9qDxYig7QYxoxbx4wlh2/KvJJk0hXJcx
+X-Gm-Gg: ATEYQzydtV1MpyqSg0ViMOjbBh03HSXKzfSvMfOEL1lWFfdUkUjgUx7zC+EhThGbg3K
+	rTdoC/Le8GVtIuXPwfq1Juc+n8eDaEN/8hVhBgyWrExPWHzJKr+iB1ePKhaLozGccwVbM4+ujrf
+	+3hsIossn5PjViatGg17yGh581c19G1A0K8qKIrK4pbMyv8Ah5rQq9KTI+WF4aCA8dkZPMVNIlF
+	XXsD0xk63rEZW70tu1OM9PqfbzbtEyj09LDea5AWXzC7kA3f5UXqNqdNGhQaMDWz3zT3dUMUYnS
+	x9itV/WjrwqWmDhpdUHq8/cJUfw8nZvvIZo+Xsd2aGENNvggkDXrO3zgtUf70LU3s4aZBOuX1oK
+	fSaoN7nB4iumNHRvbd3UtbpS+G/BmRk4mvdLEsg0BWDX/c0+t7g==
+X-Received: by 2002:a17:902:ea02:b0:2ad:c527:e9fd with SMTP id d9443c01a7336-2ae2e4b5a34mr128338685ad.41.1772439061412;
+        Mon, 02 Mar 2026 00:11:01 -0800 (PST)
+X-Received: by 2002:a17:902:ea02:b0:2ad:c527:e9fd with SMTP id d9443c01a7336-2ae2e4b5a34mr128338135ad.41.1772439060858;
+        Mon, 02 Mar 2026 00:11:00 -0800 (PST)
+Received: from [10.206.99.28] ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae45e07626sm51334055ad.39.2026.03.02.00.10.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 02 Mar 2026 00:11:00 -0800 (PST)
+Message-ID: <0e38e009-8097-4a66-b04f-95468b731b6d@oss.qualcomm.com>
+Date: Mon, 2 Mar 2026 13:40:52 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260122-mhi_async_probe-v1-1-b5cb2a3629d0@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 05/18] accel/qda: Create compute CB devices on QDA
+ compute bus
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Oded Gabbay <ogabbay@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+        Shuah Khan <skhan@linuxfoundation.org>, Joerg Roedel <joro@8bytes.org>,
+        Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+        dri-devel@lists.freedesktop.org, linux-doc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        iommu@lists.linux.dev, linux-media@vger.kernel.org,
+        linaro-mm-sig@lists.linaro.org,
+        Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+        Bharath Kumar <quic_bkumar@quicinc.com>,
+        Chenna Kesava Raju <quic_chennak@quicinc.com>
+References: <20260224-qda-firstpost-v1-0-fe46a9c1a046@oss.qualcomm.com>
+ <20260224-qda-firstpost-v1-5-fe46a9c1a046@oss.qualcomm.com>
+ <x3s26yr7oy2dokp4plsp67yndr7o4ps6nuj7i4zjze77ifljux@ap537se6npfg>
+ <57937a68-7f22-4ca1-8980-0be12cf06c66@oss.qualcomm.com>
+ <3y6rn5ujkdbc6cd2ooq7gobjvokwwrey2xoj4d3h2pavi7r5k6@rrc6bbmutz73>
+Content-Language: en-US
+From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+In-Reply-To: <3y6rn5ujkdbc6cd2ooq7gobjvokwwrey2xoj4d3h2pavi7r5k6@rrc6bbmutz73>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: OKe03Dh8OaI1u0sNs00MxZiemVi-Ewgg
+X-Authority-Analysis: v=2.4 cv=Hol72kTS c=1 sm=1 tr=0 ts=69a54616 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=EUspDBNiAAAA:8 a=ze67pjzAHjlU0Io9_bMA:9 a=QEXdDO2ut3YA:10
+ a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-ORIG-GUID: OKe03Dh8OaI1u0sNs00MxZiemVi-Ewgg
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAyMDA3MSBTYWx0ZWRfX5K39n7Kr9bA4
+ y3CcVNIaoLkkznUb50oQODyBL4zMR8/x3lI7lCGrdypN0kX3W3CYYjh43dV4l6nVr8ZxD47sD3n
+ 8ePIFFr0jWDUf1RL4AUmS7qd9UNSa9I4r9Xk1BSGZfSaFsBW+2X9KQrNm6GT/DWW1WsCFPUXGDR
+ w9K3hNyWwak7LYtjl/GjIMpDfBR9h0ZO/i5pq92slFN33ofJYtbaR6A6ZABYmq+iapx1mLkBSdb
+ 6uwNdkyXDuC8kxxzT46SWRtJLQjV2cFprn30RhDQp83tvpE3XU4LiGbvP8/QecnIpsU79YBKT3p
+ BSK/Es9KHwK8MQDEYfzdJDYZI1nKLTyrrCANO1oFlzuzjzOIWdx1cbkE6uz0RM4b7pbSkgpmo2n
+ 8OooEhb5zMLJzR3xjdIZy7Pz5/zBSHXYhB0XqzqtEdDSpZAgrh0KYkbaL704cpQpZ9sD1qHcSdj
+ GYgp7PP7ziwVKHXhBjg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-02_02,2026-02-27_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0 malwarescore=0 adultscore=0 suspectscore=0
+ lowpriorityscore=0 phishscore=0 priorityscore=1501 bulkscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603020071
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94788-lists,linux-arm-msm=lfdr.de];
-	TO_DN_SOME(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[24];
+	FREEMAIL_CC(0.00)[kernel.org,lwn.net,linuxfoundation.org,8bytes.org,arm.com,linux.intel.com,suse.de,gmail.com,ffwll.ch,linaro.org,amd.com,lists.freedesktop.org,vger.kernel.org,lists.linux.dev,lists.linaro.org,oss.qualcomm.com,quicinc.com];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	TAGGED_FROM(0.00)[bounces-94789-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.999];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FROM_NEQ_ENVFROM(0.00)[ekansh.gupta@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	NEURAL_HAM(-0.00)[-0.998];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCPT_COUNT_FIVE(0.00)[6];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: DD9371D4695
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 73E861D4760
 X-Rspamd-Action: no action
 
-On Thu, Jan 22, 2026 at 12:53:48AM -0800, Qiang Yu wrote:
-> Some modem devices can take significant time (up to 20 secs for sdx75) to
-> enter mission mode during initialization. Currently, mhi_sync_power_up()
-> waits for this entire process to complete, blocking other driver probes
-> and delaying system boot.
-> 
-> Switch to mhi_async_power_up() so probe can return immediately while MHI
-> initialization continues in the background. This eliminates lengthy boot
-> delays and allows other drivers to probe in parallel, improving overall
-> system boot performance.
-> 
 
-This part is fine.
 
-> Add pm_runtime_forbid() in remove path to prevent device suspend during
-> driver reinstallation. This issue is specific to async power up: with
-> sync power up, pm_runtime_put_noidle() is called after mission mode is
-> reached because mhi_sync_power_up() waits for mission mode event. With
-> async power up, pm_runtime_put_noidle() is called immediately while power
-> up process continues in background, which can cause the device to
-> suspend and mhi init fail if pm_runtime_allow() from a previous probe
-> is still active.
-> 
+On 2/26/2026 4:16 PM, Dmitry Baryshkov wrote:
+> On Thu, Feb 26, 2026 at 02:08:57PM +0530, Ekansh Gupta wrote:
+>>
+>> On 2/24/2026 4:19 AM, Dmitry Baryshkov wrote:
+>>> On Tue, Feb 24, 2026 at 12:38:59AM +0530, Ekansh Gupta wrote:
+>>>> Add support for creating compute context-bank (CB) devices under
+>>>> the QDA compute bus based on child nodes of the FastRPC RPMsg
+>>>> device tree node. Each DT child with compatible
+>>>> "qcom,fastrpc-compute-cb" is turned into a QDA-owned struct
+>>>> device on qda_cb_bus_type.
+>>>>
+>>>> A new qda_cb_dev structure and cb_devs list in qda_dev track these
+>>>> CB devices. qda_populate_child_devices() walks the DT children
+>>>> during QDA RPMsg probe, creates CB devices, configures their DMA
+>>>> and IOMMU settings using of_dma_configure(), and associates a SID
+>>>> from the "reg" property when present.
+>>>>
+>>>> On RPMsg remove, qda_unpopulate_child_devices() tears down all CB
+>>>> devices, removing them from their IOMMU groups if present and
+>>>> unregistering the devices. This prepares the ground for using CB
+>>>> devices as IOMMU endpoints for DSP compute workloads in later
+>>>> patches.
+>>> Are we loosing the nsessions support?
+>> Yes, it's not part of this series. I'll try bringing that as well.
+>>>> Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+>>>> ---
+>>>>  drivers/accel/qda/Makefile    |   1 +
+>>>>  drivers/accel/qda/qda_cb.c    | 150 ++++++++++++++++++++++++++++++++++++++++++
+>>>>  drivers/accel/qda/qda_cb.h    |  26 ++++++++
+>>>>  drivers/accel/qda/qda_drv.h   |   3 +
+>>>>  drivers/accel/qda/qda_rpmsg.c |  40 +++++++++++
+>>>>  5 files changed, 220 insertions(+)
+>>>>
+>>>> diff --git a/drivers/accel/qda/Makefile b/drivers/accel/qda/Makefile
+>>>> index 242684ef1af7..4aded20b6bc2 100644
+>>>> --- a/drivers/accel/qda/Makefile
+>>>> +++ b/drivers/accel/qda/Makefile
+>>>> @@ -8,5 +8,6 @@ obj-$(CONFIG_DRM_ACCEL_QDA)	:= qda.o
+>>>>  qda-y := \
+>>>>  	qda_drv.o \
+>>>>  	qda_rpmsg.o \
+>>>> +	qda_cb.o \
+>>>>  
+>>>>  obj-$(CONFIG_DRM_ACCEL_QDA_COMPUTE_BUS) += qda_compute_bus.o
+>>>> diff --git a/drivers/accel/qda/qda_cb.c b/drivers/accel/qda/qda_cb.c
+>>>> new file mode 100644
+>>>> index 000000000000..77a2d8cae076
+>>>> --- /dev/null
+>>>> +++ b/drivers/accel/qda/qda_cb.c
+>>>> @@ -0,0 +1,150 @@
+>>>> +// SPDX-License-Identifier: GPL-2.0-only
+>>>> +// Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+>>>> +#include <linux/dma-mapping.h>
+>>>> +#include <linux/device.h>
+>>>> +#include <linux/of.h>
+>>>> +#include <linux/of_device.h>
+>>>> +#include <linux/iommu.h>
+>>>> +#include <linux/slab.h>
+>>>> +#include "qda_drv.h"
+>>>> +#include "qda_cb.h"
+>>>> +
+>>>> +static void qda_cb_dev_release(struct device *dev)
+>>>> +{
+>>>> +	kfree(dev);
+>>> Do you need to put the reference on the OF node?
+>> Reference put is happening as part of qda_destroy_cb_device.
+> This way: you have a (small) window where of_node is already put (and
+> might be gone), but the pointer is not NULL. The of_node should be put
+> only when device is no longer accessible from the rest of the system, in
+> release function.
+I'll move put to release function to avoid suggested scenario. Thanks.
+>
+>
 
-pm_runtime_forbid() should be called at the start of the remove() callback to
-prevent the device from auto suspending during cleanup and to fix the issue you
-described above.
-
-So do in a separate patch and add a Fixes tag pointing to the commit that added
-the Runtime PM support.
-
-- Mani
-
-> Fixes: 5571519009d0 ("bus: mhi: host: pci_generic: Add SDX75 based modem support")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
-> ---
->  drivers/bus/mhi/host/pci_generic.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index 0884a384b77fc3f56fa62a12351933132ffc9293..fc0952e46ae5e4854c7165ed60b850729843d458 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -1393,7 +1393,7 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
->  		goto err_unregister;
->  	}
->  
-> -	err = mhi_sync_power_up(mhi_cntrl);
-> +	err = mhi_async_power_up(mhi_cntrl);
->  	if (err) {
->  		dev_err(&pdev->dev, "failed to power up MHI controller\n");
->  		goto err_unprepare;
-> @@ -1447,6 +1447,7 @@ static void mhi_pci_remove(struct pci_dev *pdev)
->  		mhi_soc_reset(mhi_cntrl);
->  
->  	mhi_unregister_controller(mhi_cntrl);
-> +	pm_runtime_forbid(&pdev->dev);
->  }
->  
->  static void mhi_pci_shutdown(struct pci_dev *pdev)
-> 
-> ---
-> base-commit: 91a0b0dce350766675961892ba4431363c4e29f7
-> change-id: 20260113-mhi_async_probe-a7b0867b6e2e
-> 
-> Best regards,
-> -- 
-> Qiang Yu <qiang.yu@oss.qualcomm.com>
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
 
