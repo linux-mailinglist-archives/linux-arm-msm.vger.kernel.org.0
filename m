@@ -1,216 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-94787-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94788-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id +xJkNIdApWkg7AUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94787-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 08:47:19 +0100
+	id SLsKH15FpWkg7AUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94788-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 09:07:58 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7AB681D41EE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 08:47:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DD9371D4695
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 09:07:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id E05903019531
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 07:47:13 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B4922301227A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 08:07:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2B2238734A;
-	Mon,  2 Mar 2026 07:47:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 526213093D3;
+	Mon,  2 Mar 2026 08:07:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EFjC6SVc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f265tYXK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 287FE3859FD
-	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Mar 2026 07:47:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A5C25CC74;
+	Mon,  2 Mar 2026 08:07:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772437632; cv=none; b=U+X8iapjNkQWVSxCoSBsJDN0TEwY9yllBQKhIsGRlkZf/MxCtMglfUX5aihy3Y2jfKRyM89A01Hqj8bFTOM0Y7Nzq0UE6aHGRxNfFv/PHTJruvcFB/SmViiqgn5ZG6/bo8zfBVV5WPCUJ3QaY08r6B9rB45DFpzCA8fgn0hbUOU=
+	t=1772438872; cv=none; b=ZbqApqCzv6PpdMSI+5hVdg7ZpTFdJ0KcrWNNCkFpd9APrbbVn21ohsPj3PTm4Pbo6pqwY6Td5mqIvOUaCKF69hK8g+JBBMcR0fN4bM4QpwZ8yeFF2IWezPAsOWicfH/l0ButSDEPa08h/Smtb0VDINJWXWy4DG25QmR0xfBRqbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772437632; c=relaxed/simple;
-	bh=xSIZpSl0bzT5ncKHIOJrQHcDCKTg9OSZ3st72BWj5dQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=six0DyQaneuQHOQVwW7GqzDTRob8yIKc2jtxcrgSh2gc5sEBhs87RuThxiCtrzzfNZx0mhyA8iZ3g57C96edzuyxhvZN5BNmsWenzh6XDIkUrg7cIE1zH+TGG8ueb5oGHyxFNvLy0ol9F2lBsnsZWrhkDVT6k3rql++Gye35ofw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EFjC6SVc; arc=none smtp.client-ip=209.85.208.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-386b553c70eso62404431fa.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 01 Mar 2026 23:47:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772437629; x=1773042429; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=e68qiM5Z/tLR2me+b5hOCaInO/EcJkXq3qS1H6cb7Bs=;
-        b=EFjC6SVc9p/eFXdAZNIgST336R2XCOSFernJ/n2gRKzFc1U2hrJxIruAKk4yhUIS+q
-         H2nMCLm7FRMSFxb1533zLePDJ0iEUu/BpOfAdJs47hQQyhMrW8ONnrhEM9TGZqUST6HG
-         ZKGJTe+3WIfVLmhjjd2AeCQb70W/CO7IONLAhiQTo/9XJd/s5N4u2Dz/6QTxBUvXfjH8
-         bM7ZejXHZMcGJ483hrWMsLalhV7cPIvSvyyINI8x8SCgJDI0K68Fy8uRAucfqeSYQeEe
-         vZcqcWj1aAZCf2B1hCLw/UieKQ5Y3GWj5E7rZoOYKTaSCwOizhXxV29SEWvKJaWqyKIp
-         ho1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772437629; x=1773042429;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=e68qiM5Z/tLR2me+b5hOCaInO/EcJkXq3qS1H6cb7Bs=;
-        b=ihDrlU+3fdP65QPPnHVwQCx8Aqvc9yJlqRb52uGmFqCvvoUnNed6hRIEhpk4yfd+dG
-         J/IcBEI5ZPgIlawWOnrYnNft0EkExOKqmZaMMTN7NoaibFh815sZ+7iVB9G1atJnAZuN
-         SChO2zvp5Jb/FnOCr1fvLfCGZ2d14UyiFAkOJ/7dmhcJBvy+uhxd9mXyJXLk9u7IPELH
-         jKx2FgJgfndQZcsr+A+KwBm1D6vRwNm7yv6fE5f4unlq6Gv2Ayrh4uFqWVJCQdk+TWhh
-         s1e7rkpIGpdCr7x886FgcsB6UoBqSMkWqjKs0ww2RSDSDpKHO8geAqaVltfuMDYFad1m
-         cweg==
-X-Forwarded-Encrypted: i=1; AJvYcCWcO9esTdP/99hWnP2ZkTh91Qs00bE48D1hFw+zMBkPGRQ5WK0S5XILcGNrkFZk5UFfC78OG8KhkcXPW5wz@vger.kernel.org
-X-Gm-Message-State: AOJu0YzGyp0qT/9Xikouu7suDSoSNexV2dEbC5SB/ICVcJE++hKwgO8P
-	ycTkSo4iTsmt54Y5LPvJ3AaJXUsOBJjcT6JvuOwkRGqExyWkG+R2QECe
-X-Gm-Gg: ATEYQzx/gDub0znTJik+Do+QsV/2cZxitfyIGEdbN1rpHiJapjewyWu4BwIGJKR1MIJ
-	hG3I5XeKPu+tKEsuOIOHtukEMTzrbnwjE/xyRcCdnCbdecCgDZWJKBHEEElewebVWICh8NVejHg
-	MykWdJbhs3wVqfuvkvzPTJ9kEUdeEMr26LqQJ2an2piWSr+3fCB3936m7OlyjFo5/Bi//XCAIhm
-	Hiaj+U3JC3zwM7akCdpEcIteJRzFiENePBh7ctv0NgbEeJunArdhrJM1KMxkHyiNT0LZ22Co8xT
-	PyZ0HPBUU7wOYhUQf7F18UVHr3XbO4CTjinLNYuKmq4ETsCZwyojftufEZkxS721rju1R1OV5AB
-	oqkKG93McW/4KsXO2naYf9OmegVO4iDn56vg2axUhEVM8BNnOzmjWBMN1bGIiXbzzpusZ7uANfo
-	Hs+Zngg4AX4Szoc+QaOMTmwfvUUg==
-X-Received: by 2002:a05:651c:1c7:b0:383:1c5f:84c7 with SMTP id 38308e7fff4ca-389ff130e18mr78428611fa.12.1772437628986;
-        Sun, 01 Mar 2026 23:47:08 -0800 (PST)
-Received: from [10.38.18.76] ([213.255.186.37])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a10a319f05sm3299418e87.50.2026.03.01.23.47.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 01 Mar 2026 23:47:08 -0800 (PST)
-Message-ID: <ac23aec1-6dce-4dd5-8990-9fad40998478@gmail.com>
-Date: Mon, 2 Mar 2026 09:47:05 +0200
+	s=arc-20240116; t=1772438872; c=relaxed/simple;
+	bh=65OL+UbZCPewWQrLAd9t4ijSWo7rOXix30szLQxZzoE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=S1Wzklv5qj0ErF+jsY5bys3l+AMopVmfBsg/w4rMFqQYsMMoF/YxUXjkOtGFPuftuYF0bpxZh9zeHZk68J3bE1Vz9LdpwmUVRaeoVliHZXaV7q5qQiCRnVEhE9rMwtMMBUJ+Yo/UIc5WuuBWd0E27qlahBqODut3Ckgpp/uG/w4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f265tYXK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1661C19423;
+	Mon,  2 Mar 2026 08:07:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772438871;
+	bh=65OL+UbZCPewWQrLAd9t4ijSWo7rOXix30szLQxZzoE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=f265tYXK2uhqW1tsBNJANRpZgw7EjVRFcLF84b1UZDYM2Dt2xvA5xS4JSCgz4o+xb
+	 GeYS5tpjNI0845wu+qbpo9KU4dHkiRuUE6aYbPN+whhx5a9aRmr5vySqSDvl7G1k7P
+	 dHPgLMn8m2N4c3eeR6MqrhBYpBsDIXkJjlooH3+ZzxM1Hv7YZGaHopj9TPAOc3COya
+	 +5cKaD3OSGSIydmR+qqP47BGJeJ+FoGf1o6PFPScG9r8FlGv57Gez0VeFr4oVsQESl
+	 w1lxxIpbAN1cHGUM2I0iS+mfD9WoTE/CG1SYCOEd4IICbLk/Q/Ws1XF3Y6lOik2CH9
+	 jmszF3PeFUa8A==
+Date: Mon, 2 Mar 2026 13:37:38 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Qiang Yu <qiang.yu@oss.qualcomm.com>
+Cc: Qiang Yu <quic_qianyu@quicinc.com>, mhi@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH] bus: mhi: host: pci_generic: Switch to async power up to
+ avoid boot delays
+Message-ID: <vnqrsrglpmzizk2vtee3aohuwop5wynd463bkq6kknq4ploiox@frv5z5yk3kha>
+References: <20260122-mhi_async_probe-v1-1-b5cb2a3629d0@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/12] i2c: allow setting the parent device and OF node
- through the adapter struct
-To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
- Wolfram Sang <wsa+renesas@sang-engineering.com>,
- Mukesh Kumar Savaliya <mukesh.savaliya@oss.qualcomm.com>,
- Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
- Andi Shyti <andi.shyti@kernel.org>,
- Florian Fainelli <florian.fainelli@broadcom.com>, Ray Jui
- <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
- Broadcom internal kernel review list
- <bcm-kernel-feedback-list@broadcom.com>, Vignesh R <vigneshr@ti.com>,
- Aaro Koskinen <aaro.koskinen@iki.fi>,
- Janusz Krzysztofik <jmkrzyszt@gmail.com>, Tony Lindgren <tony@atomide.com>,
- Andreas Kemnade <andreas@kemnade.info>, Kevin Hilman <khilman@baylibre.com>,
- Roger Quadros <rogerq@kernel.org>,
- Geert Uytterhoeven <geert+renesas@glider.be>,
- Magnus Damm <magnus.damm@gmail.com>,
- Patrice Chotard <patrice.chotard@foss.st.com>,
- Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>, Linus Walleij <linusw@kernel.org>,
- Frank Li <Frank.Li@nxp.com>
-Cc: Bartosz Golaszewski <brgl@kernel.org>, linux-i2c@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev,
- linux-rpi-kernel@lists.infradead.org,
- Matti Vaittinen <mazziesaccount@gmail.com>
-References: <20260223-i2c-adap-dev-config-v2-0-d78db0a6fcf7@oss.qualcomm.com>
- <20260223-i2c-adap-dev-config-v2-1-d78db0a6fcf7@oss.qualcomm.com>
-Content-Language: en-US
-From: Kalle Niemi <kaleposti@gmail.com>
-In-Reply-To: <20260223-i2c-adap-dev-config-v2-1-d78db0a6fcf7@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260122-mhi_async_probe-v1-1-b5cb2a3629d0@oss.qualcomm.com>
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-94787-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,sang-engineering.com,kernel.org,broadcom.com,ti.com,iki.fi,gmail.com,atomide.com,kemnade.info,baylibre.com,glider.be,foss.st.com,pengutronix.de,nxp.com];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	FREEMAIL_CC(0.00)[kernel.org,vger.kernel.org,lists.infradead.org,lists.linux.dev,gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[35];
+	TAGGED_FROM(0.00)[bounces-94788-lists,linux-arm-msm=lfdr.de];
+	TO_DN_SOME(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[kaleposti@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
 	NEURAL_HAM(-0.00)[-0.999];
-	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
-	MID_RHS_MATCH_FROM(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCPT_COUNT_FIVE(0.00)[6];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 7AB681D41EE
+X-Rspamd-Queue-Id: DD9371D4695
 X-Rspamd-Action: no action
 
-On 2/23/26 11:05, Bartosz Golaszewski wrote:
-> In order to stop i2c bus drivers from dereferencing the struct device
-> embedded in struct i2c_adapter, let's allow configuring the parent
-> device and OF-node of the adapter directly through dedicated fields.
+On Thu, Jan 22, 2026 at 12:53:48AM -0800, Qiang Yu wrote:
+> Some modem devices can take significant time (up to 20 secs for sdx75) to
+> enter mission mode during initialization. Currently, mhi_sync_power_up()
+> waits for this entire process to complete, blocking other driver probes
+> and delaying system boot.
 > 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+> Switch to mhi_async_power_up() so probe can return immediately while MHI
+> initialization continues in the background. This eliminates lengthy boot
+> delays and allows other drivers to probe in parallel, improving overall
+> system boot performance.
+> 
+
+This part is fine.
+
+> Add pm_runtime_forbid() in remove path to prevent device suspend during
+> driver reinstallation. This issue is specific to async power up: with
+> sync power up, pm_runtime_put_noidle() is called after mission mode is
+> reached because mhi_sync_power_up() waits for mission mode event. With
+> async power up, pm_runtime_put_noidle() is called immediately while power
+> up process continues in background, which can cause the device to
+> suspend and mhi init fail if pm_runtime_allow() from a previous probe
+> is still active.
+> 
+
+pm_runtime_forbid() should be called at the start of the remove() callback to
+prevent the device from auto suspending during cleanup and to fix the issue you
+described above.
+
+So do in a separate patch and add a Fixes tag pointing to the commit that added
+the Runtime PM support.
+
+- Mani
+
+> Fixes: 5571519009d0 ("bus: mhi: host: pci_generic: Add SDX75 based modem support")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
 > ---
->   drivers/i2c/i2c-core-base.c | 5 +++++
->   include/linux/i2c.h         | 4 ++++
->   2 files changed, 9 insertions(+)
+>  drivers/bus/mhi/host/pci_generic.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/i2c/i2c-core-base.c b/drivers/i2c/i2c-core-base.c
-> index 9c46147e3506d15d53b9b7d6b592709de56e41b9..dd8cec9b04c64b8340d20e018ab5ba28f1f7f5c9 100644
-> --- a/drivers/i2c/i2c-core-base.c
-> +++ b/drivers/i2c/i2c-core-base.c
-> @@ -1561,6 +1561,11 @@ static int i2c_register_adapter(struct i2c_adapter *adap)
->   	adap->dev.type = &i2c_adapter_type;
->   	device_initialize(&adap->dev);
->   
-> +	if (!adap->dev.parent)
-> +		adap->dev.parent = adap->parent;
-> +	if (!adap->dev.of_node)
-> +		adap->dev.of_node = adap->of_node;
-> +
->   	/*
->   	 * This adapter can be used as a parent immediately after device_add(),
->   	 * setup runtime-pm (especially ignore-children) before hand.
-> diff --git a/include/linux/i2c.h b/include/linux/i2c.h
-> index 20fd41b51d5c85ee1665395c07345faafd8e2fca..72677f29aff161530bc3c497d1e07144a44eb9e4 100644
-> --- a/include/linux/i2c.h
-> +++ b/include/linux/i2c.h
-> @@ -761,6 +761,10 @@ struct i2c_adapter {
->   	struct irq_domain *host_notify_domain;
->   	struct regulator *bus_regulator;
->   
-> +	/* Device configuration. */
-> +	struct device *parent;
-> +	struct device_node *of_node;
-> +
->   	struct dentry *debugfs;
->   
->   	/* 7bit address space */
+> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> index 0884a384b77fc3f56fa62a12351933132ffc9293..fc0952e46ae5e4854c7165ed60b850729843d458 100644
+> --- a/drivers/bus/mhi/host/pci_generic.c
+> +++ b/drivers/bus/mhi/host/pci_generic.c
+> @@ -1393,7 +1393,7 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+>  		goto err_unregister;
+>  	}
+>  
+> -	err = mhi_sync_power_up(mhi_cntrl);
+> +	err = mhi_async_power_up(mhi_cntrl);
+>  	if (err) {
+>  		dev_err(&pdev->dev, "failed to power up MHI controller\n");
+>  		goto err_unprepare;
+> @@ -1447,6 +1447,7 @@ static void mhi_pci_remove(struct pci_dev *pdev)
+>  		mhi_soc_reset(mhi_cntrl);
+>  
+>  	mhi_unregister_controller(mhi_cntrl);
+> +	pm_runtime_forbid(&pdev->dev);
+>  }
+>  
+>  static void mhi_pci_shutdown(struct pci_dev *pdev)
+> 
+> ---
+> base-commit: 91a0b0dce350766675961892ba4431363c4e29f7
+> change-id: 20260113-mhi_async_probe-a7b0867b6e2e
+> 
+> Best regards,
+> -- 
+> Qiang Yu <qiang.yu@oss.qualcomm.com>
 > 
 
-Hello,
-
-Automated driver test system bisected this commit to be the first bad 
-commit, linux-next next-20260227 was tested. Failed tests include driver 
-tests for ROHM PMIC and accelerometers, which are connected to 
-BeagleBone Black.
-
-The failed driver tests all fail to first i2cget and the tests stop 
-there: "Could not open file '/dev/i2c-2' or 'dev/i2c/2': No such file or 
-directory".
-
-BR
-Kalle Niemi
-
+-- 
+மணிவண்ணன் சதாசிவம்
 
