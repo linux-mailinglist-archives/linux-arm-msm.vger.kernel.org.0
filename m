@@ -1,243 +1,218 @@
-Return-Path: <linux-arm-msm+bounces-94822-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94823-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8JZPM2VbpWlc+QUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94822-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 10:41:57 +0100
+	id qGMPNZVbpWlc+QUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94823-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 10:42:45 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77A581D5B00
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 10:41:57 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B3621D5B24
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 10:42:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 5876B3038AD2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 09:41:17 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id DFEBE3007B80
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 09:42:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FE652D248D;
-	Mon,  2 Mar 2026 09:41:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 24F0D38E106;
+	Mon,  2 Mar 2026 09:42:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KTw8UYEC"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lhcWPqFf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4DF42DB787
-	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Mar 2026 09:41:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.44
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772444477; cv=pass; b=FECgdl9/FQphSae57nWtPNQF6HtPjAZXaK8zkposLzdhetmPof+xJ7j1DAbcZTz1EXUtZWj407Oy22PpUqwF3S+X6L1+JG4HmKcTl2Zgn9uOmi5BiCNgeSt6sQQw2l73CpjvnAVagu0zz72XMI+TUXbliCJxKcvfQBksKEnzROU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772444477; c=relaxed/simple;
-	bh=TBJ1yrzYQ1NnCqjl7xWYSvAiw/tj2uso2ls5/23iYEQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WoxCdZYrmiVPtj6Q1G3nrAzVMorXhWPZKfVjOiTiRgz8sMzWzUSuFN/vmHf+VUEdsd+W7nTJGEp56zfbKI9xNB6+oGRn/HY7KMvQKZzbf9K3AKzIDpqJejWIYkHWw1HZ9VSJaVC53hWvJYAR0X0l2IO/yTnCgVoXhkIcRWX1qQI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KTw8UYEC; arc=pass smtp.client-ip=209.85.210.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-7d598f4b6fdso967325a34.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Mar 2026 01:41:14 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772444473; cv=none;
-        d=google.com; s=arc-20240605;
-        b=hicBBaw/BnfG8eDzWf799g5uYf7piDTDlUVhdexIasbRAj+2bgJLmujKNSSzqjRzUt
-         k0EqjaFM04spGoAcL5IDNTRsb4zVAcE3IpkoSTe+AxB7URiqK/piRrS7h6WWbJy33X3t
-         sy8uc0VUTOXOe7QnAaXIT0jmoU02twv2VPS3UaZOKcYrTfK0cbFIiGTo13GwUufvLrSY
-         YdV1YrCvHmDa2TGvuDWRzLtGLrh3Th1PBqRzDXnGejQk7+FczxuyC2+Jx53vQxEi82kc
-         eV225kK50OVBe4QxI1pc0ui2tJ0XIKzKaHVrw5YkP4UmynxWzTuG/h2CBqYP1OByqyuD
-         GUXw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=WMS7e/VtXgxxHiT5+aAGAuDmBujfavKZuiOoKfzvjp4=;
-        fh=+OmxxGFO5vdCy2R4g+H4VuAAk/b7lXIjYeV9ulx57B8=;
-        b=Uv96IBjUILqfO6MTR1xMZ60S1izKd0HUUMnuae/DJXN+lHXCkkNNf1TzxD93Gv1tmm
-         KX6IiwqngGB8hW5YuesOvygem+Ir2Ltxw+6m+THJJ26ZBJ0O/KXp6DmpnSVHs+Ik6pY1
-         0NS/q6O6qXf6JukvPzpX5sL4Q8/u/RaWYVy8ecwZlUaGOzEq8S18qYfHJGm2cEW/LgYU
-         Qoc2NKSqIV05rmno6Z+EeZsb2RV2f3pE0ACJcueAoLtwJSa+gQZm+GGCIHV8gvOCv0g9
-         hDPGayAus89yuFIZN39R98mitYiTAL/zeyz6J+iT/4XjfCAFIB7Dxs6y+mpgbLBLvr6T
-         8IdQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910A92DB787
+	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Mar 2026 09:42:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772444563; cv=none; b=iipQizkFs5SjJKE9+gz09UVcZxAbj+xZTMXtPNtWnKAw7GrmdKFaJV7Q4aoPN4KqLECAU2uE6xkAdGB1E5XfF/GVu+HSxsvfRbQNVMLqzwKo4PiwZepQ+UzVUWTGZ2eUVJ9iL2m4D4kny26WWKjvspFMu8pLncJi5AvopAYrVFw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772444563; c=relaxed/simple;
+	bh=bPzVi9N69hOaQrGvx6uQEKHmFC+D+3tMRoAwvPYQQ38=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=DKqsi4kWF5sBPulZGldroXJSPUJ8mX/jT/WgNDm8NBnFUCzYESrN2vWvQVYJ2W72+LrkwPIwKPM/iZbjl6wx7uan8O1kjXH505gtGemWNSV4ILDtyb4ZZFPKJbzHYdKsXSfhk3b6UOD/M8Q3+RHy7AU1TcWnrZ8Gop+sc+IrTNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lhcWPqFf; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4837584120eso29728935e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Mar 2026 01:42:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772444473; x=1773049273; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WMS7e/VtXgxxHiT5+aAGAuDmBujfavKZuiOoKfzvjp4=;
-        b=KTw8UYECl8rTlbQ/egk9PMarg7ENZ5K7KbRpMAy3WgiMlkYYc9nAU4b6k+ireh7Mue
-         SxU6TJaYsZcbzBdG1QayZIGULW5fcX2IA5N7OJ6vhgkC+BAQtULkuKh7w9Svy8sKv6Nz
-         HHD1f9oNAj2HkdYFiUrrfdQFIQt3dGvvcBloBUuzEKQfmKj+s0W7SH/JmbhPTc1aK9rP
-         OLOK961XHVbPj6kfBMHI45XN4fCdJOAxBZb3/yhzjd9h0miRaiXIl9wRUUHTSS/91SXC
-         deO0ClCYeVWWMT8/8BgBENdGPmD1nhtrktVrGql6RItE9Bqj3qURXyV0VVKRM8Ft2XOI
-         qffQ==
+        d=linaro.org; s=google; t=1772444560; x=1773049360; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FUMi2IrbtLUuCYJGmkwxz9kL36i5bFYXjmXqzSFVtBU=;
+        b=lhcWPqFfe3G9b3UVTesB4YnQU/UIrvD1kpngG5SkMG6bgwnnNYe728EFFROaWS2L3r
+         PHfyy6avOrFgsEWTzXhrSgFe7phUI93gRPlzER1ufMKA7wyre/nXg30cvKE94wMO0S+7
+         ZP3JN+GhMC2KJHNx9E2uchwWLvKmTht2AVkiyVaXTEG/11iNDiI+hh/thpvcEv2Lyso4
+         GavmAl89LF35PCQ4SBOAknQkphSig19u5O8mCOTo++/aquuItkSBOamqSZK6l62AQaRq
+         CTQU+nHSCjblsi71gx3jCTHsGkD4DvkarxJoV6FrcumedoA5NgVmVSzkv8op0eDMghBR
+         ms5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772444473; x=1773049273;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=WMS7e/VtXgxxHiT5+aAGAuDmBujfavKZuiOoKfzvjp4=;
-        b=eu3aNptz4HWNl9yJI7nmN4Oly7g7xN3UvqtQrS3Ux+wdVPg9iLErm9aUZnkp/6wFJm
-         Ppw5LekNsxaXfvReFDPwYf5Ak8zcWhqZR+k3MgsQPaZ8fx/x5XmiOOB3hM6Bjr9rwmSg
-         LPbTAqFtBeM75Zf/zEnDiZkdNHhKltmh0SdjKourRvO3SPrZvhpzuDtHrEQ35S3j71+c
-         X8Qut3jE51FX2wBA/Yb2Db2AgTEWf5xs084RGg9Xz05loQ4BWjYWI13wf8ToA2RJc4md
-         3HfrtIXUlSE8drhsBWS4LCTc6aN4ndiJPs+0ueePbW7YnqAq+xd4DxWqkSDEbqsrAkDN
-         feNw==
-X-Forwarded-Encrypted: i=1; AJvYcCXN0JBgbrea3pkNdKGhf7XeEaFDePLyZHpN0rG7WoCmDW8nWEWyrSjEnHLd80OdIf9Uj4nhIp8iuzI1l6Qr@vger.kernel.org
-X-Gm-Message-State: AOJu0YzerGOi7Y6szm+GUzwuksWSJSlnR1EzBUcqnZE0M8qOGibz7yJQ
-	PzXfrANjAdRDhzz05NwnRj8yN3Yb/gSduBIZuBCqALUozR97hoWpf9Aa5bj5KoFVzAQ46IUwG05
-	OwR4sTbnV9qvbCe3iNTia3KCdLCaf+Ow=
-X-Gm-Gg: ATEYQzxtOlpq6CUrU8hIyVxEX8oTlc0nBZb62lv2+asSI+2uoS7UvbXmqBlYB3Cz2Ja
-	RfWL1wTUxFaVA3drsMj+nzKIP8LrptX6uOLD6ANxnJAUlRCJUAijVIZgRw8qkBROyDGIhusn95r
-	vzuBT7sQjrFyN1Gmo502zfKCiz5qM2dUbyYljXzUKBs/OxuTLly2NLPemv2hyQNE1u036d0Vfc9
-	gCvq9MsKiT/t48sC23n0bkwI8R1bUXCciO6LAcunYmIfkwXFajtSAQZ8j1XPU45v4h7TjNHtT0v
-	75FHtGAVSCNmBHBPT2xQuG9loT9gL9+/ocDWMvMifQLNbBnWW4hNACxaICAFhagETPzyz3Z5xE0
-	=
-X-Received: by 2002:a05:6870:5ba3:b0:40e:e5c4:a4b2 with SMTP id
- 586e51a60fabf-41626e7efd7mr6527665fac.14.1772444473484; Mon, 02 Mar 2026
- 01:41:13 -0800 (PST)
+        d=1e100.net; s=20230601; t=1772444560; x=1773049360;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=FUMi2IrbtLUuCYJGmkwxz9kL36i5bFYXjmXqzSFVtBU=;
+        b=jBmGSHJtpiejD53eMyfxobdlU6S+11Fb6Qtn/eWggMQjwf+aeMtsEoif+SwBkwxeus
+         qRSvMMiY5ITCdXytV1tTuCTvIjWWM/ZLDSAu0gLNqmZqP4I0FQ2RaXmuiZX4r36sZ7nA
+         p/ZjNbs/wPoULJGUCBG9+pfWO+yqcklUt4+01Yn9bEa2GUYbWAADXDpjpm+wyh2ClDZ2
+         MF3oBQ3ffs9f71V7K/ZgOFD/A/DNG8XN3ioanx2n395DvCfYdU0crHOo2R2VZeLvsHNk
+         5gi95L8RJdTsUcCb9ZsgRW+g+kByeDVAJJuodRvK5wETqMgEha4EU5UMp1SFdr20SEdI
+         7ucg==
+X-Gm-Message-State: AOJu0YyyjTqHJLLCHO32P4yo8RqXeozKvKZqstbRKdlIyVUXEyqnLJX0
+	zP9u55Jd4bskJDXZR6ki3LhdZLu0gQE/RIZQXoqgQrL7k8zCYNIgOPMjL69oNVm4koc=
+X-Gm-Gg: ATEYQzx3+HFyYDS+k01NcZeOwdIRZ+pmz/E4Dsbp04dlfsbVTK8N7wnMhT5p3gOWnzv
+	wWUDkBUYv/Gtfg+AFTPStSY4zlhii5bLG6wRceoab9IrYSXPQFiBff91wHWCs8rJP36Un1YiEcW
+	9iWYccwl5NDbKu9eDtwpdTr1tVaor0TA/i8MfHQlLIM9o7rClXlRc/mXt54nSYo+DzLjHdv+QyY
+	E5oNADlIgZ3XDpxSxDMNCIKFkFE3zi2+PpItmLzJxW6n4kwk5r0bfRi+cOWKaS1HidPwT3NNCWd
+	mXNpwElvpmVEC4e9Ywf/H5L+qyg5llVcmWxCzZ6V307osWkJQ/80pj9AviBqNtXXr8a3ZDqfCny
+	VI4NV/cGEtz88z+weZlrL9p/UGPyuLs++2s6Bde8ry7ePMuYdawKvw5HX8NEPBxN7c6gIyNEXnM
+	asHjgRsZ0a1W+IWIeRWbfWk5EpAG7E2AponMgZElay7vylqBKhuMPawcoiRrcin0ROLW80zhLK3
+	Njy
+X-Received: by 2002:a05:600c:458b:b0:483:6d4a:7e6d with SMTP id 5b1f17b1804b1-483c9bdb6a8mr181505995e9.30.1772444559823;
+        Mon, 02 Mar 2026 01:42:39 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:106d:1080:c342:61e:309c:3478? ([2a01:e0a:106d:1080:c342:61e:309c:3478])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-483bd70e692sm417033065e9.7.2026.03.02.01.42.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 02 Mar 2026 01:42:39 -0800 (PST)
+Message-ID: <17f652e8-1c7a-4578-bd81-5305234cbe52@linaro.org>
+Date: Mon, 2 Mar 2026 10:42:38 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260302002729.19438-1-dakr@kernel.org>
-In-Reply-To: <20260302002729.19438-1-dakr@kernel.org>
-From: Gui-Dong Han <hanguidong02@gmail.com>
-Date: Mon, 2 Mar 2026 17:41:03 +0800
-X-Gm-Features: AaiRm52ksdTFNUhtDCiLRoaU2IvMaCTzMMj20OxNJCH2RxR4-dFP_MGc6WdRh8I
-Message-ID: <CALbr=LYYUH_yQL1PO7mXzK6Oubt0LvKb0714iZCx_eEXScVdyQ@mail.gmail.com>
-Subject: Re: [PATCH 0/3] driver core: generalize driver_override infrastructure
-To: Danilo Krummrich <dakr@kernel.org>
-Cc: gregkh@linuxfoundation.org, rafael@kernel.org, ysato@users.sourceforge.jp, 
-	dalias@libc.org, glaubitz@physik.fu-berlin.de, abelvesa@kernel.org, 
-	srini@kernel.org, s.nawrocki@samsung.com, nuno.sa@analog.com, 
-	driver-core@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	imx@lists.linux.dev, linux-hwmon@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org, 
-	linux-sh@vger.kernel.org, Wang Jiayue <akaieurus@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v2] phy: qcom: m31-eusb2: Make USB repeater optional
+To: Abel Vesa <abel.vesa@oss.qualcomm.com>, Vinod Koul <vkoul@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-kernel@vger.kernel.org, Wesley Cheng <wesley.cheng@oss.qualcomm.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>
+References: <20260302-phy-qcom-m31-eusb2-make-repeater-optional-v2-1-dbf714c72056@oss.qualcomm.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20260302-phy-qcom-m31-eusb2-make-repeater-optional-v2-1-dbf714c72056@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-94822-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-94823-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[linaro.org:+];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[linuxfoundation.org,kernel.org,users.sourceforge.jp,libc.org,physik.fu-berlin.de,samsung.com,analog.com,lists.linux.dev,vger.kernel.org,gmail.com];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[18];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,msgid.link:url,qualcomm.com:email,linaro.org:mid,linaro.org:replyto,linaro.org:dkim,linaro.org:email];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	HAS_ORG_HEADER(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.999];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	HAS_REPLYTO(0.00)[neil.armstrong@linaro.org];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[hanguidong02@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	RCVD_COUNT_FIVE(0.00)[5];
+	MID_RHS_MATCH_FROM(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,mail.gmail.com:mid]
-X-Rspamd-Queue-Id: 77A581D5B00
+	RCPT_COUNT_SEVEN(0.00)[8];
+	REPLYTO_EQ_FROM(0.00)[]
+X-Rspamd-Queue-Id: 7B3621D5B24
 X-Rspamd-Action: no action
 
-On Mon, Mar 2, 2026 at 8:27=E2=80=AFAM Danilo Krummrich <dakr@kernel.org> w=
-rote:
->
-> Currently, there are 12 busses (including platform and PCI) that duplicat=
-e the
-> driver_override logic for their individual devices.
->
-> All of them seem to be prone to the bug described in [1].
->
-> While this could be solved for every bus individually using a separate lo=
-ck,
-> solving this in the driver-core generically results in less (and cleaner)
-> changes overall.
->
-> Thus, move driver_override to struct device, provide corresponding access=
-ors for
-> busses and handle locking with a separate lock internally.
->
-> In particular, add device_set_driver_override(), device_has_driver_overri=
-de(),
-> device_match_driver_override() and a helper, DEVICE_ATTR_DRIVER_OVERRIDE(=
-), to
-> declare the corresponding sysfs store() and show() callbacks.
->
-> Until all busses have migrated, keep driver_set_override() in place.
->
-> Note that we can't use the device lock for the reasons described in [2].
->
-> This patch series includes the migration of the platform bus; patches for=
- all
-> other affected busses still need to be extracted as a follow-up of the WI=
-P
-> treewide patch in [3].
->
-> [1] https://bugzilla.kernel.org/show_bug.cgi?id=3D220789
-> [2] https://lore.kernel.org/driver-core/DGRGTIRHA62X.3RY09D9SOK77P@kernel=
-.org/
-> [3] https://git.kernel.org/pub/scm/linux/kernel/git/dakr/linux.git/log/?h=
-=3Ddriver_override
->
-> Danilo Krummrich (3):
->   driver core: generalize driver_override in struct device
->   hwmon: axi-fan: don't use driver_override as IRQ name
->   driver core: platform: use generic driver_override infrastructure
-
-Hi Danilo,
-
-It looks like some usages of platform_device->driver_override were
-missed. I found them here:
-- drivers/bus/simple-pm-bus.c
-- drivers/clk/imx/clk-scu.c
-- drivers/slimbus/qcom-ngd-ctrl.c
-- sound/soc/samsung/i2s.c
-
-The good news is these can be easily updated to use the new APIs. This
-is required to avoid breaking the build, since the field is removed
-from struct platform_device. The previous build likely passed because
-these weren't enabled. I will use allyesconfig for testing going
-forward.
-
-I scanned for similar cases and most fit the new APIs perfectly. One
-exception is drivers/xen/xen-pciback/pci_stub.c. It does
-strcmp(dev->driver_override, PCISTUB_DRIVER_NAME) instead of using
-drv->name. We might want to change device_match_driver_override() to
-take a const char * instead to handle this.
-
-Besides axi-fan, I didn't find any other drivers that need to read
-driver_override. This is great, as it means we hopefully won't need to
-expose a read API at all.
-
-Thanks.
-
->
->  arch/sh/drivers/platform_early.c |  6 ++-
->  drivers/base/core.c              |  2 +
->  drivers/base/dd.c                | 60 +++++++++++++++++++++++
->  drivers/base/platform.c          | 35 ++------------
->  drivers/bus/simple-pm-bus.c      |  4 +-
->  drivers/clk/imx/clk-scu.c        |  3 +-
->  drivers/hwmon/axi-fan-control.c  |  2 +-
->  drivers/slimbus/qcom-ngd-ctrl.c  |  6 +--
->  include/linux/device.h           | 81 ++++++++++++++++++++++++++++++++
->  include/linux/platform_device.h  |  5 --
->  sound/soc/samsung/i2s.c          |  6 +--
->  11 files changed, 161 insertions(+), 49 deletions(-)
->
->
-> base-commit: 78437ab3b769f80526416570f60173c89858dd84
+On 3/2/26 09:34, Abel Vesa wrote:
+> From: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
+> 
+> A repeater is not required for the PHY to function. On systems with
+> multiple PHY instances connected to a multi-port controller, some PHYs
+> may be unconnected. All PHYs must still probe successfully even without
+> attached repeaters, otherwise the controller probe fails.
+> 
+> So make it optional.
+> 
+> Signed-off-by: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
+> [abel.vesa@oss.qualcomm.com: commit re-worded to reflect actual reason]
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+> Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+> ---
+> This has been sent initially by Wesley here:
+> https://lore.kernel.org/all/20250920032108.242643-10-wesley.cheng@oss.qualcomm.com/
+> 
+> This is still needed, but for a different reason, so re-worded the
+> commit message to reflect why.
+> ---
+> Changes in v2:
+> - Picked up Bjorn's and Dmitry's R-b tags.
+> - Fixed the subject line, as Bjorn suggested.
+> - Link to v1: https://patch.msgid.link/20260227-phy-qcom-m31-eusb2-make-repeater-optional-v1-1-07a086bbaba4@oss.qualcomm.com
+> ---
+>   drivers/phy/qualcomm/phy-qcom-m31-eusb2.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c b/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c
+> index 95cd3175926d..70a81ab2482f 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c
+> @@ -285,7 +285,7 @@ static int m31eusb2_phy_probe(struct platform_device *pdev)
+>   
+>   	phy_set_drvdata(phy->phy, phy);
+>   
+> -	phy->repeater = devm_of_phy_get_by_index(dev, dev->of_node, 0);
+> +	phy->repeater = devm_phy_optional_get(dev, NULL);
+>   	if (IS_ERR(phy->repeater))
+>   		return dev_err_probe(dev, PTR_ERR(phy->repeater),
+>   				     "failed to get repeater\n");
+> 
+> ---
+> base-commit: 3fa5e5702a82d259897bd7e209469bc06368bf31
+> change-id: 20260227-phy-qcom-m31-eusb2-make-repeater-optional-621c8c1c0354
+> 
+> Best regards,
 > --
-> 2.53.0
->
+> Abel Vesa <abel.vesa@oss.qualcomm.com>
+> 
+
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+
+Thanks,
+Neil
 
