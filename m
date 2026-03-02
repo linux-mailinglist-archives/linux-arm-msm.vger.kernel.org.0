@@ -1,266 +1,223 @@
-Return-Path: <linux-arm-msm+bounces-94875-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94876-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id WF19E3xtpWlXAgYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94875-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 11:59:08 +0100
+	id WHfLKBdupWlXAgYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94876-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 12:01:43 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id AAC881D711C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 11:59:07 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1EB051D717D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 12:01:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id AB33B30936EC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 10:54:12 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 729F13020FCD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 10:59:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A88E344DA0;
-	Mon,  2 Mar 2026 10:54:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8A9A2E2663;
+	Mon,  2 Mar 2026 10:59:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="YfIASNqY";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="foQueRih"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zxtoyy6J"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5EB535AC0C
-	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Mar 2026 10:53:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772448842; cv=none; b=VMylw4JLDz1rKBsiOIhcROYLy4xvyt5leZlTS8bwxew1Kirxg9UXh3adGV86UQ1zOEX7VGsPXcthV/O/C8NrOFrLS57hL+hTyXmvG8LXnzU0oRvZLsiF4EEhdUGZwHY81VMr1vpPiR9RzxXA9q32XLmU3vTev48pqIiLZIEpsfw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772448842; c=relaxed/simple;
-	bh=G9K/hfUGPDsJKP/JccAN6u7KTjQnqlE1JHq0qDmAoF8=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=In4qvFYOD5yN8hlLTAywCl0XUiCOvzURUdi/OO50z4BFAU7heVPyfAQlVkigorWM1YeXRWeHSWiN50NzT4o9x9HL5p/NWuW6mb+wcEBcIc4upFcAxNoyqri5BQd8+vuXIZ+VFq9zg0IcLPlcr5SsouGAgpHKq8wWq70H5aVgtVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YfIASNqY; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=foQueRih; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 622A91hw860810
-	for <linux-arm-msm@vger.kernel.org>; Mon, 2 Mar 2026 10:53:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=p/JhN9/z48d
-	DFlvHp8xGdUBIxR1Gv80fZSaR5kiHJV0=; b=YfIASNqYoGkQomrtKy/8g3fHjez
-	ZaAj2H97xT6UjfB9cD3Fnp0GzMXuJ5Iv80IkNwePX+xWYaMUSQVhP/BLSxNVY1AR
-	gtUVxS78x6jYsF8GLaa05Nkv6ED/9nVME8qA1C8lSICmfDKRaii8dQ6ObXd0JN6y
-	gn9/hq+bd6Hbs1YUKhXHB7k137xtlfNmppim4u7wS4Inw8RcjQ+hrqx9N4fWE//G
-	XScS2rVnBaiKWDHhDMhsM8uDUqezutrID84NUnJQvtXbN6TMhlcEAPq9j71m02Fz
-	XU4Qjj8GhrCsepVPNdXC/J8aUmZiswYN8cDcSj9OUtEpDXaIpC/wWebedtA==
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cmgbau209-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 02 Mar 2026 10:53:58 +0000 (GMT)
-Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-3598c05c806so889928a91.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Mar 2026 02:53:58 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 235F535DA5C
+	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Mar 2026 10:59:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.210.49
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772449179; cv=pass; b=hMopxyGpV44j4ZyrxfnxnpmhbPaBJM+pARswKPlqP1qqy/yyCPXrnze/jaoil/gvTkxplo/QV8EUDUnogApuuHqBlii/0j4dyAXUX9QInhuyz8ncUCO/Z/BZn8IhY0/YOTCZa2V2KUICXoj+ruRH6nen3TN2fP3Xnq7KUKUR7uU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772449179; c=relaxed/simple;
+	bh=DOlMsHbMVLndF4FYMYvBm7QWT7c+r+O4d0gh3fB6Nu4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=SigQ5Ew+w4jxbZHcZdb2sMyFRfEit9RvMHik7rDxXuB8Jd+e8m8jECV33t/jA5FjWFkLA2J4BkBmLAbq0vTkhHKhfSYpJZ4YlscIglm4GTO5F15P3GM4KRBxgwfx2SvOU4vDzXYm4UUwsZm3GKLnr0PjJfMlya7MAn1hDJN7jhI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Zxtoyy6J; arc=pass smtp.client-ip=209.85.210.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-7d513bc15c7so5921298a34.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Mar 2026 02:59:37 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1772449177; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Aj7DgM+JP8ofLPijaU8HgePct25qmCCa93089InKGTTYwUYOtMk9K5lmL9eqh9UBQr
+         zYi3roVVUS4WvPzDuK46TnwD1/YEDr6xJp+y7GV1TPWeB+uFQWTXIlbU+6z/+KRjarXc
+         Y9iWY8WEd38lULGqYazJmavQhEyfkrcj6Rb+SXMwwhYRvEVOF4KOIk0d7CReabZrxfn/
+         eRWvmYeECbmJh0+uk3px2EIT6iEVISSnloQ1TI58NBUfYDBC9kCrK4Nf6IbKpxMlqH8Y
+         L0ji/Q2ldgq3hF+BKyp1OAugLMAFyGsCulxxvB729CUDYbGNM69tC0YZSX9tg9Q0rnBU
+         00rg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Epvo5wYm+zeVxTVz8aEQhOjvw8UhIQfhH+DB/G3qjuc=;
+        fh=v83tYZ7M7ZEqx5W9j137KS0WW0MdHAxZZ6p1KV9/KwA=;
+        b=f7meyXqY3/zw4ce4zINtWn2t5W/L4Jgs8uUyuZYrEZvYBmiICUg7RtcL6wI9K3pt6k
+         p3+lHlv3CIQh1MNFzhk9JZ0jD4rUzJN4Rzq1tglpDGGNXSFrQhZbH620/TY+jaLOY5ii
+         CFyREjoCRjLd3o8+ArOrtLT03+jVvvSGveByY43OOSCA/pbYCn5k9vAA9Kcv4oKhrO3t
+         EHgpLcjuM/04T9E7eiEOAta7war+rwxLtyS3GKAm7PHPW58u8kY11I9A1oNhbC32YOPP
+         G/8bOjl86YxhelRBTH5Sqwex1zuySNn3O6P+bC9zTkvAF1hbdBTNbux0BOebZkz9v2Wm
+         nLJw==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1772448838; x=1773053638; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1772449177; x=1773053977; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=p/JhN9/z48dDFlvHp8xGdUBIxR1Gv80fZSaR5kiHJV0=;
-        b=foQueRihCGEhf7/fB946YQAk8DbyUWKLY0xy6gupbfxzL7MmUDTOSgC6ItNi5ypagI
-         Sw74JFWVChvQxvY87VR7Y1lazAABtL7l/4G4rvtgXRq2DXKKpr/nLFrtAamH07hCY0xO
-         VnbFz8BRb+16a1w9l2JfdtlbRpO28FARvvT+ISWtlp++Gw5WhZjHOq3QH8mTEG0CycUo
-         VPnarE6R6QofLo0/donno274oAcvZtGH6kRzUmsb++i3Dymnn1NB/WFdNSEOP1QVu1G/
-         2SV2dPJMagJ7c+PsPNV0ElUbsEIHa8uyDBRvN1aZ8TSZgMxsppAhEHWbX4nmqXQn/T2e
-         h7dg==
+        bh=Epvo5wYm+zeVxTVz8aEQhOjvw8UhIQfhH+DB/G3qjuc=;
+        b=Zxtoyy6JwMN5kYDszE+N6pvLZvnY25i0Ly46fy/Hap5GsNmsIVLeSz8VjmrfLDPaLX
+         QzeOzFZhrjGenyvgpbeXv8F2eyiilQBtdWIY7DRG0c7BI0D0b+Z57gh7tbGZC8hRAhu8
+         H3PALdg37i4yUpjRh1OtE+kPNtFBXCYEuCWlFRqflIje2iVlGlvfBYomu6yGJlvzs3/N
+         2jwPrhmRkQrdfnTtTVzBARR4Vx/F6ZQVuwFEYHYMlQ4bV0LVCL0/zNtjQ7RAji5EuX66
+         ecqA24GWTUnzCOAQzLV3xVZJdg3MeATec5Y4b1XoXjQuKCOr13rYbAcQtADrCHj2Bb0Y
+         ugTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772448838; x=1773053638;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1772449177; x=1773053977;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=p/JhN9/z48dDFlvHp8xGdUBIxR1Gv80fZSaR5kiHJV0=;
-        b=f3jqWpvmXWc1iS4+SEJwOTCRxmr2EO/sOwgT3X7AN9NOu2jZR4mv/WUyc/v/m5Aj+H
-         SUyUaycVB+WkOTemVazQx9ZQeEpHnf+4VC92I3wCw1pNhERbmqg6fzFR+kyNsQwFQi1B
-         vmYkO0745y7RPsp87zvqHjtYT79T0Z/kOGnuErEorygdj2tvkY1xIdTedbAFNFiOdSl8
-         yalB6+uWrQhd0TReoTpo+HqAH0ayHofnPkwuxlef3A9PotC3mY0B9nNp5Y6dAqcrqy5K
-         Bf0cPNdXefdGf814L70qHazpgC9dSuWg+4yGOZBbcRgBqly8RK5aSPVRU/0P07BulgPi
-         VBRA==
-X-Forwarded-Encrypted: i=1; AJvYcCXMs889NRG5co91RXa3AREko/lFNPBZIx3l7ruuzpldcqSHe4aVvx1TgK1eQMZrin8kEb38muPt79NuM1on@vger.kernel.org
-X-Gm-Message-State: AOJu0YxuhV2BCvmRxQh9h10OA5JMZhFgQr8JRm4Fx/STJC8m5C+fy+RC
-	WGAd6x2DHSTLbDBjJ3MuRo6XYVkfJOkVVTxcR6AbfOCu0DzSaTgdcVj5NhzHYiOrwb7o7YAADbD
-	ZstJ2MVbYxjIfaOmldXhj1o5OFfBUfonmMytva8RgKUFKnhwu/B2vhYveOvaq6ZfIXXJb
-X-Gm-Gg: ATEYQzzVdh1A3MqMmrimwX3D7664GkQOq0BNeFpCDMwzWx0n6Qn+i3cMixiMbMplBQ+
-	RInNz8kbY8OM9kaGkZWSGTNPonKgNYqq9Ty+O/GRF9SuTiCesP5RHcbeQ4AMjdppiosCjcjgdec
-	9fNmAlH9AbPc5DudGLehF7pZ61uw2NjVA9fE0/1bZfRz5qL2lEdv2O1hdGhqUKuZYTp/t1KQ9V6
-	yfaskV+ZM+dTRjV3ApafWUVCX//yTHZES+g8A4uJtgnpOoJ9q+EpgTozxPJavAG1KLikAQkHFTC
-	APIaPpHNNL67LT/dhF2voOcjRhi6MP0tEa2MpcUDcCMZb1Agk1J4xc6faHX/bmt4JnAcXrZcILC
-	5NWh7SJFrwcjyabfs3fttIF2od13iOL1eP/w0/4qqEfNq3GlLqD2X
-X-Received: by 2002:a05:6a20:3ca8:b0:364:33f7:7338 with SMTP id adf61e73a8af0-395c39de575mr9990027637.8.1772448837815;
-        Mon, 02 Mar 2026 02:53:57 -0800 (PST)
-X-Received: by 2002:a05:6a20:3ca8:b0:364:33f7:7338 with SMTP id adf61e73a8af0-395c39de575mr9990008637.8.1772448837260;
-        Mon, 02 Mar 2026 02:53:57 -0800 (PST)
-Received: from hu-kshaikkh-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c70fa632ddesm11847479a12.13.2026.03.02.02.53.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Mar 2026 02:53:56 -0800 (PST)
-From: Khaja Hussain Shaik Khaji <khaja.khaji@oss.qualcomm.com>
-To: mark.rutland@arm.com
-Cc: ada.coupriediaz@arm.com, catalin.marinas@arm.com, dev.jain@arm.com,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, mhiramat@kernel.org, will@kernel.org,
-        yang@os.amperecomputing.com
-Subject: [PATCH v3 1/1] kernel: kprobes: fix cur_kprobe corruption during re-entrant kprobe_busy_begin() calls
-Date: Mon,  2 Mar 2026 16:23:47 +0530
-Message-Id: <20260302105347.3602192-2-khaja.khaji@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260302105347.3602192-1-khaja.khaji@oss.qualcomm.com>
-References: <aZSdkGjy2BXUL0bT@J2N7QTR9R3.cambridge.arm.com>
- <20260302105347.3602192-1-khaja.khaji@oss.qualcomm.com>
+        bh=Epvo5wYm+zeVxTVz8aEQhOjvw8UhIQfhH+DB/G3qjuc=;
+        b=n1Ry8mGltq8GzO5VznBgBnI+oGjgehVqnKSSmtnQZtJoQjbTDr8i86V1UHAoLennu0
+         pUTqVjCZSZsHH+pLTQFBsNyOjDzj+cRjbKEs4EZL1zBeBjVxX1Z4lSpLCuY0sszE9cCg
+         Bl50w7Be5GlnwUk01chQwFBhdJIMJCVe6zVTi8+Z+qsS3Ej/hSRytg/KCYkQxMx8EThz
+         /Zoo75QuGvyXeObhVZaSMaQ0nYi0ij96895KDBJ4Y1hkOFaeQ+IrUoDglV1D4Ff3ECyQ
+         fQnexrzxq8sBtJjPSNr8nzYKOtyXLfUJhD2vyHIpSLinjMfD/c/ihPU9UC1zdTbxODQQ
+         BHxA==
+X-Forwarded-Encrypted: i=1; AJvYcCXTkZOar/BfOT7MWKy9WfLJbTOL/YLDqgB5+hySIbO7KAsN4+XEME8NIShGy3mwZM0zD/yULD55OX0pTsCV@vger.kernel.org
+X-Gm-Message-State: AOJu0YzlCn1OtKm5qsuFh5oDoTm57Ubed2ZDf756sPhpY78Jt2ZH2RpC
+	8kLGQpeYKaJrR0Zt58NgJlHWnZAtY1Ue989NXq8CSYi4lN7DauvAfLMlc6KjuFakqj613NVS7DL
+	qnNrxtyG+Yo+Ltc302IHEjo9qoM/zHJw=
+X-Gm-Gg: ATEYQzwUOi5OUPhaTDhM117lE75eaSARsNHvKX+84Udn/HjXFHUBfLdI3VveBrDp8vZ
+	8Zq2Tii1VoPPo9Xc1LY2V9J7cJ9micSRt1hs+GWMJPE86OSVG+g+tpocGXpsUQED90LM42GyXJV
+	B70CTPp7c2eRlr+Xdy2C2+EUJA47u63GMOvNxYc+edfezJT7lWkjL8YTIo9xoYmMO04CxaeRuMA
+	9rFMWKg5FA46ObZ9tdsVMfmldtKqrwuM48u/7QNk/JGjeiioQidxT/QgNB2qp/w+avLo8oNlca2
+	hr54FX0sG0iTmaoYqYLOln96egtZgG+lbAMOGvh40uxDKZQr43kO1WBL+cAJ3Ec76k6Mom4XZuA
+	=
+X-Received: by 2002:a05:6870:3234:b0:36e:8381:db00 with SMTP id
+ 586e51a60fabf-41626d6496dmr5836181fac.9.1772449176906; Mon, 02 Mar 2026
+ 02:59:36 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAyMDA4OCBTYWx0ZWRfX6R6s41P05yY1
- iNhg/YNkxLKecPGMCo0XJHE3aEPmZNsj/UQeLUU0DqWdzQHym4BZSUm4utKh2ICVHOZP+BArxhl
- VzrBwyOD487uKx5ke04tJNQu3rGxuDaKDMfdgf7z3R4QJjN9XcEie/hm9DSU/WwSvFtvjQscZnd
- 8D4w46P3Yf8KC9oILpM1fElW7KNyVnVq4Y3GPEn56bNnyA53IKLuZmeyEUc+Uw06kAv9HRd9Kh4
- Umfq0bKeFzEeqqU5EWbeT3O601YtjFceNphm4wG4+6Pm0K3BEnAR/WifOPkudVBGnkb8wwJr/vX
- 4Q8A50uEErU9ZYfUGUz6D5GwxNE+NHcW4BPL16tZGQxQ1Xad+BiqYoJLVWTrN3S7Uk/UydSAGvy
- mKlXNBayUoc9IWXJeJkCT9hzY9wQ6c95JSI9OpHyz7i6PpI5IMVVYXqbtLjRa0h+W4yGk8sUfL3
- Ybt4vRd61OShl5SpsQg==
-X-Authority-Analysis: v=2.4 cv=QfVrf8bv c=1 sm=1 tr=0 ts=69a56c46 cx=c_pps
- a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22 a=EUspDBNiAAAA:8
- a=7l7XfnHKCA38VmfCrlUA:9 a=uKXjsCUrEbL0IQVhDsJ9:22
-X-Proofpoint-ORIG-GUID: nomPV4HQEK2psXrixF5Yl8579rx3isz2
-X-Proofpoint-GUID: nomPV4HQEK2psXrixF5Yl8579rx3isz2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-02_03,2026-02-27_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 priorityscore=1501 spamscore=0 bulkscore=0 clxscore=1015
- adultscore=0 lowpriorityscore=0 phishscore=0 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603020088
+References: <20260302002729.19438-1-dakr@kernel.org> <CALbr=LYYUH_yQL1PO7mXzK6Oubt0LvKb0714iZCx_eEXScVdyQ@mail.gmail.com>
+ <DGS7SQHM3V5U.2DNQV68AMSITF@kernel.org>
+In-Reply-To: <DGS7SQHM3V5U.2DNQV68AMSITF@kernel.org>
+From: Gui-Dong Han <hanguidong02@gmail.com>
+Date: Mon, 2 Mar 2026 18:59:26 +0800
+X-Gm-Features: AaiRm50vW8aIhDL5VGmJOu5lxfmc5lcpsegRPt5hsmjpSbqi9ltnncK92dntUuc
+Message-ID: <CALbr=LYMgWXcj0QkQYv-68gX2mkzyKrE2BJFeXbnoVXKW=F85g@mail.gmail.com>
+Subject: Re: [PATCH 0/3] driver core: generalize driver_override infrastructure
+To: Danilo Krummrich <dakr@kernel.org>
+Cc: gregkh@linuxfoundation.org, rafael@kernel.org, ysato@users.sourceforge.jp, 
+	dalias@libc.org, glaubitz@physik.fu-berlin.de, abelvesa@kernel.org, 
+	srini@kernel.org, s.nawrocki@samsung.com, nuno.sa@analog.com, 
+	driver-core@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	imx@lists.linux.dev, linux-hwmon@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org, 
+	linux-sh@vger.kernel.org, Wang Jiayue <akaieurus@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+X-Spamd-Result: default: False [-2.16 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	TAGGED_FROM(0.00)[bounces-94875-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-94876-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:mid,oss.qualcomm.com:dkim];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[linuxfoundation.org,kernel.org,users.sourceforge.jp,libc.org,physik.fu-berlin.de,samsung.com,analog.com,lists.linux.dev,vger.kernel.org,gmail.com];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[18];
 	MIME_TRACE(0.00)[0:+];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[khaja.khaji@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TO_DN_NONE(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	NEURAL_HAM(-0.00)[-1.000];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-0.999];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[hanguidong02@gmail.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: AAC881D711C
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 1EB051D717D
 X-Rspamd-Action: no action
 
-Fix cur_kprobe corruption that occurs when kprobe_busy_begin() is called
-re-entrantly during an active kprobe handler.
+On Mon, Mar 2, 2026 at 6:12=E2=80=AFPM Danilo Krummrich <dakr@kernel.org> w=
+rote:
+>
+> On Mon Mar 2, 2026 at 10:41 AM CET, Gui-Dong Han wrote:
+> >> Danilo Krummrich (3):
+> >>   driver core: generalize driver_override in struct device
+> >>   hwmon: axi-fan: don't use driver_override as IRQ name
+> >>   driver core: platform: use generic driver_override infrastructure
+> >
+> > Hi Danilo,
+> >
+> > It looks like some usages of platform_device->driver_override were
+> > missed. I found them here:
+> > - drivers/bus/simple-pm-bus.c
+> > - drivers/clk/imx/clk-scu.c
+> > - drivers/slimbus/qcom-ngd-ctrl.c
+> > - sound/soc/samsung/i2s.c
+>
+> They should all be covered by patch 3, no?
 
-Previously, kprobe_busy_begin() unconditionally overwrites current_kprobe
-with &kprobe_busy, and kprobe_busy_end() writes NULL. This approach works
-correctly when no kprobe is active but fails during re-entrant calls.
+My apologies, I got a bit confused here.
 
-On arm64, arm64_enter_el1_dbg() re-enables IRQs before invoking kprobe
-handlers. This allows an IRQ during kretprobe entry_handler to trigger
-kprobe_flush_task() via softirq, which calls kprobe_busy_begin/end and
-corrupts cur_kprobe.
+>
+> > The good news is these can be easily updated to use the new APIs. This
+> > is required to avoid breaking the build, since the field is removed
+> > from struct platform_device. The previous build likely passed because
+> > these weren't enabled. I will use allyesconfig for testing going
+> > forward.
+> >
+> > I scanned for similar cases and most fit the new APIs perfectly. One
+> > exception is drivers/xen/xen-pciback/pci_stub.c. It does
+> > strcmp(dev->driver_override, PCISTUB_DRIVER_NAME) instead of using
+> > drv->name. We might want to change device_match_driver_override() to
+> > take a const char * instead to handle this.
+>
+> xen_pcibk_pci_driver should use the exact same define, so we can just con=
+vert
+> this to:
+>
+> diff --git a/drivers/xen/xen-pciback/pci_stub.c b/drivers/xen/xen-pciback=
+/pci_stub.c
+> index e4b27aecbf0591..301207b4a30dac 100644
+> --- a/drivers/xen/xen-pciback/pci_stub.c
+> +++ b/drivers/xen/xen-pciback/pci_stub.c
+> @@ -609,9 +609,9 @@ static int pcistub_probe(struct pci_dev *dev, const s=
+truct pci_device_id *id)
+>
+>         match =3D pcistub_match(dev);
+>
+> -       if ((dev->driver_override &&
+> -            !strcmp(dev->driver_override, PCISTUB_DRIVER_NAME)) ||
+> -           match) {
+> +       if (device_match_driver_override(&dev->dev,
+> +                                        &xen_pcibk_pci_driver.driver) > =
+0 ||
+> +                                        match) {
+>
+>                 if (dev->hdr_type !=3D PCI_HEADER_TYPE_NORMAL
+>                     && dev->hdr_type !=3D PCI_HEADER_TYPE_BRIDGE) {
+>
+> I.e. no separate API needed.
 
-Problem flow: kretprobe entry_handler -> IRQ -> softirq ->
-kprobe_flush_task -> kprobe_busy_begin/end -> cur_kprobe corruption.
+Thanks for the explanation, you are absolutely right.
 
-This corruption causes two issues:
-1. NULL cur_kprobe in setup_singlestep leading to panic in single-step
-handler
-2. kprobe_status overwritten with HIT_ACTIVE during execute-out-of-line
-window
-
-Implement a per-CPU re-entrancy tracking mechanism with:
-- A depth counter to track nested calls
-- Saved state for current_kprobe and kprobe_status
-- Save state on first entry, restore on final exit
-- Increment depth counter for nested calls only
-
-This approach maintains compatibility with existing callers as
-save/restore of NULL is a no-op.
-
-Signed-off-by: Khaja Hussain Shaik Khaji <khaja.khaji@oss.qualcomm.com>
----
- kernel/kprobes.c | 34 ++++++++++++++++++++++++++++++----
- 1 file changed, 30 insertions(+), 4 deletions(-)
-
-diff --git a/kernel/kprobes.c b/kernel/kprobes.c
-index e2cd01cf5968..47a4ae50ee6c 100644
---- a/kernel/kprobes.c
-+++ b/kernel/kprobes.c
-@@ -70,6 +70,15 @@ static bool kprobes_all_disarmed;
- static DEFINE_MUTEX(kprobe_mutex);
- static DEFINE_PER_CPU(struct kprobe *, kprobe_instance);
- 
-+/* Per-CPU re-entrancy state for kprobe_busy_begin/end.
-+ * kprobe_busy_begin() may be called while a kprobe handler
-+ * is active - e.g. kprobe_flush_task() via softirq during
-+ * kretprobe entry_handler on arm64 where IRQs are re-enabled.
-+ */
-+static DEFINE_PER_CPU(int, kprobe_busy_depth);
-+static DEFINE_PER_CPU(struct kprobe *, kprobe_busy_saved_current);
-+static DEFINE_PER_CPU(unsigned long, kprobe_busy_saved_status);
-+
- kprobe_opcode_t * __weak kprobe_lookup_name(const char *name,
- 					unsigned int __unused)
- {
-@@ -1307,14 +1316,31 @@ void kprobe_busy_begin(void)
- 	struct kprobe_ctlblk *kcb;
- 
- 	preempt_disable();
--	__this_cpu_write(current_kprobe, &kprobe_busy);
--	kcb = get_kprobe_ctlblk();
--	kcb->kprobe_status = KPROBE_HIT_ACTIVE;
-+	if (__this_cpu_read(kprobe_busy_depth) == 0) {
-+		kcb = get_kprobe_ctlblk();
-+		__this_cpu_write(kprobe_busy_saved_current,
-+				 __this_cpu_read(current_kprobe));
-+		__this_cpu_write(kprobe_busy_saved_status,
-+				 kcb->kprobe_status);
-+		__this_cpu_write(current_kprobe, &kprobe_busy);
-+		kcb->kprobe_status = KPROBE_HIT_ACTIVE;
-+	}
-+	__this_cpu_inc(kprobe_busy_depth);
- }
- 
- void kprobe_busy_end(void)
- {
--	__this_cpu_write(current_kprobe, NULL);
-+	struct kprobe_ctlblk *kcb;
-+
-+	__this_cpu_dec(kprobe_busy_depth);
-+
-+	if (__this_cpu_read(kprobe_busy_depth) == 0) {
-+		kcb = get_kprobe_ctlblk();
-+		__this_cpu_write(current_kprobe,
-+				 __this_cpu_read(kprobe_busy_saved_current));
-+		kcb->kprobe_status =
-+				__this_cpu_read(kprobe_busy_saved_status);
-+	}
- 	preempt_enable();
- }
- 
--- 
-2.34.1
-
+>
+> > Besides axi-fan, I didn't find any other drivers that need to read
+> > driver_override. This is great, as it means we hopefully won't need to
+> > expose a read API at all.
+>
+> Great, thanks for checking.
 
