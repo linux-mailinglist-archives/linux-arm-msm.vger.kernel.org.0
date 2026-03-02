@@ -1,105 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-94797-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94798-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id YM8vLcBKpWk28AUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94797-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 09:30:56 +0100
+	id 0OFAEn5LpWmt8AUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94798-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 09:34:06 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 624831D4AA0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 09:30:56 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id DAE161D4AC0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 09:34:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 70D09302BB93
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 08:30:28 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 40A0530054CE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 08:34:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D284B36F419;
-	Mon,  2 Mar 2026 08:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58DB138552C;
+	Mon,  2 Mar 2026 08:34:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="F397xZlX";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="S4K/6uHd"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KHTvc93G";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="FnzeUEqT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 990017080E
-	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Mar 2026 08:30:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50A963314AE
+	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Mar 2026 08:34:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772440227; cv=none; b=HMgoAxzH6rnVkhVF+PL0ABengyIFxGbCjV9NjK076GAtY+6zZUvZvmc/p0PqiX3Itf2oVTJJEaSFQ2wyp6C1tsC2o1iwWvzD26yCO6fUkCKogOJ6tNwg9FGNv1YEjI04WG2fpVX2OJSLwadH7Bk8mt03Zm609n51kLSf0upEpQA=
+	t=1772440442; cv=none; b=cojXzJX58EJj91NFLWqKXtFpl9nVfGkQEIDPUgQQYZSeTQV0rZ3aHvKMRxRtvI/mL+dxP6ItB0Su88wjPAV0dfvhmpzYBvc3PrNQ2N2XZFf5rtMdLrTUoLCdoeHfE3Wc6qNrR9Jwu/hnNf7J9o2mBeoPn0jt0J2kzqO7wD1TWKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772440227; c=relaxed/simple;
-	bh=PdVF4m/Vo8WwHxWVtyMWjZ6gfXH79CYdbE1OAJSIHQQ=;
+	s=arc-20240116; t=1772440442; c=relaxed/simple;
+	bh=txxu2DG9xzQwMmDjiRwRkA+iOAbbQRJVs+CU5TpGi6M=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dYzfCCN23qmtBmSnF4ZSE6t2MstzWyF74dZUpzOnMSqlweodoKgYl48mfswS313MwsVF6MVActjEP6cteWwUgjMcLsT0zFY/VwSJb0RmW4QRs8s9yiF6ayvhxfpX0TWURL+rgBbTUcZQJcE3HOIyxtU7T+rf9NFqmV1eRKGaLjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=F397xZlX; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=S4K/6uHd; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=EVc36y2CUFnCWk6ilv45cacKhQCdZzSyRt6W0m1kmWuPoh9OE5kUA9F1XpE0pF7W+75Kwp2uJpSyp970qB0QEI5u0HQcETo/hwy53J1iWQY3QjbwW9rPpPcwnREo24aMMrXmUm3yhW3JMhe8Y4rffiZOnRbAKxzxGgUh9x0230Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KHTvc93G; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=FnzeUEqT; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6226vP7m2649150
-	for <linux-arm-msm@vger.kernel.org>; Mon, 2 Mar 2026 08:30:25 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6228Hjcj2636015
+	for <linux-arm-msm@vger.kernel.org>; Mon, 2 Mar 2026 08:33:59 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	w5DyDPWzjeqxKw1lBuIpfRL2Rkz+BBRZDEujzzmhu+U=; b=F397xZlXt+3Y0PbW
-	4GvCqNLRVlqR1r5302V/ejr4ymSCMbxsnFMmGet8gtg0+T7cuiw9zFDLYfVWqXtx
-	NHlwNTObZFpQT/F303E5cQcgZk8NfJr0aI1KnaApBRNfvsJZlCUaQEbxBW/yROr8
-	MGrgB/9Xs6gNGuk3AS4y8/ElenZQo6FbkYv1Y4btzHMmxOhiZitsAP9rrbPD0e67
-	W/13xJJiNcD4XeiSLenJUotZhxpSbPSchyspuYCGRlsWKUdTIXe6Z/nCTaw2Mztn
-	9GSMeYACtWDb0ctj4xcnLZSkc7zywEaRk6xIIIN+QNJGWS6wEqmFI4FhOQ8wc4Ue
-	kYPSBQ==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ckshkvppe-1
+	kiGzfhiYB9wtCN3D88VauW9OjmRKCIKm/2P5tjv1u1w=; b=KHTvc93GiHjJt2D4
+	0m6pEeLM/1N0U/B3a242ftDXzyMebgu6s2qhbJiaacWOxnY7Dyep6gZMMgNZTOjv
+	inVNFD5ZTP5oMDZw48i+qeuXlFGdxLDot1h1pO/oNKID6Tof+7JFV2RqsraAZ7VV
+	R7G9ty+hum83Vtc3n1OvYw/6ICoDe7yxESCE6LR0KWOjhGg13msz2KQZc0NgDDdo
+	ulZD8iFY1XZhkxOozsZapkwLXvqtIP1LK2syRk5hTIDsTDgWCebiDzvUM5f+xBZ1
+	U1GH0eve0w+z3+Up+XAUcTpm7ewWi51k80dEcz1MR5JWaRl9hnIaNivUjlObRrDC
+	TWrFaA==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cksgq4t8e-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 02 Mar 2026 08:30:25 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-506bfff75edso527524191cf.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Mar 2026 00:30:25 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 02 Mar 2026 08:33:59 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2ae4e20a414so40283825ad.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Mar 2026 00:33:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1772440225; x=1773045025; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1772440439; x=1773045239; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=w5DyDPWzjeqxKw1lBuIpfRL2Rkz+BBRZDEujzzmhu+U=;
-        b=S4K/6uHdaB1mfRUzRnC2ndAO5wZv7QUhcsEIsxcbmbTueCFxnI9nDs+VJVbr9wjb5A
-         pnqRAUSqp6FAqyMHHANPLhq4NB9/B1SXpumFRFxczZAjxnQKdoVLm8u+HRdgY7zJEMsg
-         GJi39bOZpfXGQdHT6czirbQ6rJC4bsouFYiXuOLPSruFvTeFMF/IwlILlB93RDNFFE/c
-         QRbNSrJzEB39n0tGOsJoeY135Lo3rG51JoiaBH+iFVYZXpTxnH89VPj9fPnRpioEz6qD
-         S7EEE6Kus9JvGsWFgadeKV28c3HHSpllrwbedBDaYPDGRFDbjlPXcPpgCi/N/LKjfJbG
-         LfAQ==
+        bh=kiGzfhiYB9wtCN3D88VauW9OjmRKCIKm/2P5tjv1u1w=;
+        b=FnzeUEqTCp7CJeavIiLCm5GroIzv/Q01ZTg23pDxWxKKCT1iSsUgp4/YLteEIeIbAp
+         mVKxmelK+G8i9i7fN8tjxzeESX/aTe3lHH60uxmLyk2sXEenOs797H72/niuWh7hHmYB
+         9cpu+yEwXHd+FAjQU4iHgDrhT41birOwYyhMYxCCxbk5P1pKE7bLBA1fcrkkfNpGmpYU
+         oZPNAjFqzLfXgyeWkCNs2KuaKIXSoFxKKVEYGY/y3NawMUJRjN2igBvYBH945EFhXGu6
+         L3hQpiAm68hJrgYhiywcgzgmRNN24KZUcQ4SEIvmuulOJokmImTB3qT1m3skMOhyEoM2
+         jDVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772440225; x=1773045025;
+        d=1e100.net; s=20230601; t=1772440439; x=1773045239;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=w5DyDPWzjeqxKw1lBuIpfRL2Rkz+BBRZDEujzzmhu+U=;
-        b=oqU2zd+aRGgcqmeYutEBuILa0CXbNBaq/L72Wc1tcZ80hLi+rUucOWTKhDmKBHQe8Q
-         /RyRIyNsPd5H4CTr8HzVe+MaM4idgrGbQz1D4MC0M9JBmsYTZpbHU9lZIz7EPIM9SzQD
-         S6+TRjmBG1vAOCr4Mm6CfV6TLwTgN5kw19E1UyiRhoBEeZp5nBrLMUJk+beBIxmPvS6A
-         RN3Qj5hWNMPlks85sC98t763HSghmY9Cwgj21KxWcOqKuyovM+2pBUqWD5T2d5B8h37h
-         fS2YWNcsIdNxFPfVehNTcrp8+JFAuxrl5qacANcHAs1wHYWOvr87wHQcf/aOzdsjdTtG
-         h4XA==
-X-Forwarded-Encrypted: i=1; AJvYcCWgmy0lLC/3DfZkjHAVIYCdO7skryK586hIYvw1HhMEBAZZsWMJz7nhL4Hno+t7pVVJgSCoiezXRaw7oTeB@vger.kernel.org
-X-Gm-Message-State: AOJu0YydTbeGhoxfSN3WoVW6dQYgRd7dq1iOh29i6uZzccKlMPfhbsTg
-	WPvhLTvwufGhGPfPB75YZCerWmttbXrkgW5SJO1prBdz+if9oPHpBL5R9Y3TSjzFvcaewi1kGNn
-	O0OC+Jwr5oTFL1rAx8Wn4SEoGgO/7vt7tAd95JPe6SPhkWV+yj26Dqw3NLXUOmUXRpsXL
-X-Gm-Gg: ATEYQzzogkDWWdnw7N4H2dAm7RR7Zejt4y7qjCft3k2nK4G+dkMGiQu3UL3izAlui8/
-	J9wTphD5xf2J8rzMFtuBlEF93JtD/D+wgKlzNdJj+diV9UlXHHzGVzcEqa37nWAAu4ZUgAwOVq2
-	oq9Ho/A+R31cRYVnhiXF8X/GZdbt+LSGsUgh3diiMqAQSY6pKDRG1l2tscDUbS4ve2r7cIxFuuO
-	D4fvcjYMrBM9WggerDbArQhpJz1w+TYyHJYwUs84y5HDcAK/MO+7Qp+Z0rOGtv9frgHtUVldA86
-	+ghxlbbLgC7gvk2KeEJXiZBwU/EUkK9VQnO+Sso2O4j1Lqq7SsevqHokh5AQoxOuofO62JJ9jVc
-	cE5qj9AqfhMZqUVOr13EmqvM9Q5RljaLGMKkaAlYfq8lqu/2x7ulx/pWX1Aq6ntZaQNAU2g+kA1
-	UFIZiaNcitfA==
-X-Received: by 2002:a05:622a:1448:b0:506:1e15:d757 with SMTP id d75a77b69052e-5075295824amr163872041cf.56.1772440224759;
-        Mon, 02 Mar 2026 00:30:24 -0800 (PST)
-X-Received: by 2002:a05:622a:1448:b0:506:1e15:d757 with SMTP id d75a77b69052e-5075295824amr163871761cf.56.1772440224350;
-        Mon, 02 Mar 2026 00:30:24 -0800 (PST)
-Received: from [10.38.245.172] (Global_NAT1_IAD_FW.qualcomm.com. [129.46.232.65])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5074496300fsm105508681cf.2.2026.03.02.00.30.21
+        bh=kiGzfhiYB9wtCN3D88VauW9OjmRKCIKm/2P5tjv1u1w=;
+        b=kJbCOtbrJGsCQxjLZ2KPWzMdCB6pBfvLMCk2IopCOhu0DJ22GcguAnYyIQFkE2Blm/
+         xr1JXs7mRE2RNtZJMyDGTDPH/POtfbpDkkcYPM4vIYBjFEO06W3Dd8BEo4TNZp/uTKmr
+         Js6dYF8UaiCvyZvje+FErLn/3O+8zeI1ozthPLoODKbUY4pMFCW9YxiVCyV6A/Fqnnva
+         +u38xHj+FU0Or1bTsBqa4S059dEVqoGUAf0QOLd5xRio+jhRfusAoFZY0c1T/N3E2AM1
+         /le+WsPsToPXs9s7GZn1GyU5Yit6AUnIK9MhkbjgVGJt4dzW0gLNjYVcqFrz55dBpXQO
+         Z/Fw==
+X-Forwarded-Encrypted: i=1; AJvYcCWKMzN4j6KOL5dEp7AL38JWBUlnf3G1hhfIiUCNHnFfx5jIBMdXoOKRVhqSiEaXZ6/O0ZY9qhr8m60D9oRJ@vger.kernel.org
+X-Gm-Message-State: AOJu0YxIN/LmGoRnCk6nPlqDpLwCzZDWkNy4V/jog9sDXlbMNE9LmlXg
+	/4uZdwOe3l7YnNoJ40gMEVI5KV0hLWumX7jtS1I9Twgbjk9t5F4hFDE9J//71YrE95WKDKKir1B
+	Vr1SN22ExLSOIhLP5a/d+gynaMQfcQBc5Ery+vGEleuk/EGwK+5X2LJVCqmldXXA+oSIR
+X-Gm-Gg: ATEYQzy1RMBvk5Rgwab13l1Ch9XPqrRhtvaY90S9T1VpQM1vn6R8Mo4+Y5jbtmqN8Sr
+	Ycy1b4tR9uYPto8PXR4u+4nkFDfnaoXRo/8H6KEgk8eItmGzBAguVf1IpygArilY86v6PUn8TOi
+	cXwJtKqWaE2pPORTv7K0/9y+wPGo5j2ZFeIJK22a683RGpxKQDvNDayZQU8SddJb6c7gdwu++aV
+	PzC+8MOTZ4A7W/r9Jkp6REjK6b/Yu38pXofYMdWV+WnyPUF1zSDbkcUnjCtjynoaxgtZuDXHTJc
+	t3qZaay3M/QPsY/dV3B7ODK9AZJEHmDg/xcQobad1vllyBVJj6mx94V/NZTH6mFuRhCYs60zdZ4
+	wSPfecKgFnkeoYeQDIyg2WNcE0qwdwCdGfy0b422Crjab2sE5cQ==
+X-Received: by 2002:a17:902:eb8b:b0:2ae:593c:48fc with SMTP id d9443c01a7336-2ae593c50a1mr6195975ad.53.1772440438899;
+        Mon, 02 Mar 2026 00:33:58 -0800 (PST)
+X-Received: by 2002:a17:902:eb8b:b0:2ae:593c:48fc with SMTP id d9443c01a7336-2ae593c50a1mr6195665ad.53.1772440438404;
+        Mon, 02 Mar 2026 00:33:58 -0800 (PST)
+Received: from [10.206.99.28] ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2adfb6a041asm136014925ad.57.2026.03.02.00.33.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Mar 2026 00:30:24 -0800 (PST)
-Message-ID: <a835930a-8f53-4117-9f08-8a50ade3d0cf@oss.qualcomm.com>
-Date: Mon, 2 Mar 2026 16:30:18 +0800
+        Mon, 02 Mar 2026 00:33:57 -0800 (PST)
+Message-ID: <f5a1d71a-0a32-4e18-aaa0-bd6dcc9c133b@oss.qualcomm.com>
+Date: Mon, 2 Mar 2026 14:03:50 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -107,120 +106,385 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] phy: qcom: edp: Add DP/eDP switch for phys
+Subject: Re: [PATCH RFC 07/18] accel/qda: Add DRM accel device registration
+ for QDA driver
 To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Neil Armstrong
- <neil.armstrong@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org
-References: <20260213-edp_phy-v2-0-43c40976435e@oss.qualcomm.com>
- <lvau2mmymqiczih5dkhgd4vrx6x5tn4tdp5wfaddkkrakdjajq@soihplbnfgzy>
+Cc: Oded Gabbay <ogabbay@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+        Shuah Khan <skhan@linuxfoundation.org>, Joerg Roedel <joro@8bytes.org>,
+        Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+        dri-devel@lists.freedesktop.org, linux-doc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        iommu@lists.linux.dev, linux-media@vger.kernel.org,
+        linaro-mm-sig@lists.linaro.org,
+        Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+        Bharath Kumar <quic_bkumar@quicinc.com>,
+        Chenna Kesava Raju <quic_chennak@quicinc.com>
+References: <20260224-qda-firstpost-v1-0-fe46a9c1a046@oss.qualcomm.com>
+ <20260224-qda-firstpost-v1-7-fe46a9c1a046@oss.qualcomm.com>
+ <jjj5b2says6y2sk4lokcxslzcwlsg3gj7rme34lqmhufqc7eam@x256mqlsuvet>
 Content-Language: en-US
-From: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-In-Reply-To: <lvau2mmymqiczih5dkhgd4vrx6x5tn4tdp5wfaddkkrakdjajq@soihplbnfgzy>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+In-Reply-To: <jjj5b2says6y2sk4lokcxslzcwlsg3gj7rme34lqmhufqc7eam@x256mqlsuvet>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAyMDA3NCBTYWx0ZWRfX5SjLwA8eL47w
- lK7Uinsne0w2OApWJmFgbm0jsgyrX//XIuUIGv7LKQtfgSFmU1O9+Jv3f8+0U3fO4j6lawmZ12e
- dC51lV5/1mVTiUoL6JkTrK8lDSMnqM93+4dwmDSFea4ivTKl8OT1qOLr5yeQZB3pJUHVcdvkO3+
- z4BxUwUbdORV8LHYIhAv1DimIHERQzCzsKFZmNQzve+WCJIfUAzhy6Lh9RP7t+KXa9gfsvw2+aj
- Hr3PImOm/z+BD317SG7v1uf0IBmWS+NgWUI2r1K/cS6TJVD4jCIeHyIHBguISZWh3q7vG1D9fP3
- 5rix1o/y3gB2nwN+MMqXv7dCV1/wM03AVX5YwQE3bRhtXqSc7ciNq3M2CiXUn3XPI3S7D2jPy6W
- 0RpBHfSXZzd9yMd+JU1CrAdRLgHVluDWwdqJ2TYwHkXRYKSHTyWU8ex3BwyosNLsdJaELN94Dk4
- FK8+AhrYN/wxr47GE+A==
-X-Proofpoint-ORIG-GUID: bt68yT4JnH0J42_kM9rsTl5ihVyYekKe
-X-Authority-Analysis: v=2.4 cv=EvbfbCcA c=1 sm=1 tr=0 ts=69a54aa1 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
+X-Proofpoint-GUID: Oyf5eyJUomcH61xERduy5XwdiUNI7DZn
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAyMDA3NCBTYWx0ZWRfX3pR2D9bmQTGa
+ oVjnaT1j57DEAfI8OzUR1ehfGVfOmYDiA4w7hr+cararjGgRK7VBboUHHEChzECBFYjxTEqhO61
+ bLclqMvcVVH0nN13MAJ8SLTIROD1XjcHtnNBNny0T9rbCWFXzqMu8yVHOdX8jIZgJFHDgI5Npk+
+ bntQFvIqg3IwRART80qkTJydaUtEjYtpKRrKj73MUvZkElP6xZjbFtxbZuTt7j1vUCVfIBTFQxK
+ Uh/htMk0q1EMK+L6kGMrjxpgdzWUyHpLA6Wqo1VNgDTibML5zNkBVt0of3MCesxYJOZHrrYK7oj
+ 1hZit1fjFx6avK5FHKn7ypo3OmNGGQ5gETxCs+eVvru/Q4r+H/nyoLQrR9F6wPR6ovEyQG2f01d
+ dM+e3CvEBTcBmCfe9o8Ef85PzST1lFDKvzK+KMYGZbadiCW5PbETAl4chXucvfeIv0SVXE7vdP/
+ PR1Bat1aoKVm3GOGG1w==
+X-Authority-Analysis: v=2.4 cv=bdRmkePB c=1 sm=1 tr=0 ts=69a54b77 cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
  a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=gP65O5kftThAzFAvIssA:9 a=QEXdDO2ut3YA:10
- a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-GUID: bt68yT4JnH0J42_kM9rsTl5ihVyYekKe
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=EUspDBNiAAAA:8 a=TmiqH_r-WPNNxDXjmLoA:9 a=QEXdDO2ut3YA:10
+ a=uG9DUKGECoFWVXl0Dc02:22
+X-Proofpoint-ORIG-GUID: Oyf5eyJUomcH61xERduy5XwdiUNI7DZn
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-02_02,2026-02-27_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0 spamscore=0 lowpriorityscore=0 priorityscore=1501
- malwarescore=0 adultscore=0 impostorscore=0 clxscore=1015 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603020074
+ lowpriorityscore=0 bulkscore=0 priorityscore=1501 clxscore=1015
+ malwarescore=0 impostorscore=0 suspectscore=0 adultscore=0 spamscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2602130000
+ definitions=main-2603020074
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,qualcomm.com:email,qualcomm.com:dkim];
+	RCPT_COUNT_TWELVE(0.00)[24];
+	FREEMAIL_CC(0.00)[kernel.org,lwn.net,linuxfoundation.org,8bytes.org,arm.com,linux.intel.com,suse.de,gmail.com,ffwll.ch,linaro.org,amd.com,lists.freedesktop.org,vger.kernel.org,lists.linux.dev,lists.linaro.org,oss.qualcomm.com,quicinc.com];
+	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-94798-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94797-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	FROM_NEQ_ENVFROM(0.00)[yongxing.mou@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:mid,oss.qualcomm.com:dkim,qualcomm.com:email,qualcomm.com:dkim,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[ekansh.gupta@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	NEURAL_HAM(-0.00)[-0.998];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MID_RHS_MATCH_FROM(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[7];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 624831D4AA0
+X-Rspamd-Queue-Id: DAE161D4AC0
 X-Rspamd-Action: no action
 
 
 
-On 2/14/2026 12:12 AM, Dmitry Baryshkov wrote:
-> On Fri, Feb 13, 2026 at 03:31:41PM +0800, Yongxing Mou wrote:
->> Currently the PHY selects the DP/eDP configuration tables in a fixed way,
->> choosing the table when enable. This driver has known issues:
->> 1. The selected table does not match the actual platform mode.
->> 2. It cannot support both modes at the same time.
+On 2/24/2026 3:46 AM, Dmitry Baryshkov wrote:
+> On Tue, Feb 24, 2026 at 12:39:01AM +0530, Ekansh Gupta wrote:
+>> Add DRM accel integration for the QDA DSP accelerator driver. A new
+>> qda_drm_priv structure is introduced to hold per-device DRM state,
+>> including a pointer to the memory manager and the parent qda_dev
+>> instance. The driver now allocates a drm_device, initializes
+>> driver-private state, and registers the device via the DRM accel
+>> infrastructure.
 >>
->> As discussed here[1], this series:
->> 1. Cleans up duplicated and incorrect tables based on the HPG.
->> 2. Fixes the LDO programming error in eDP mode.
->> 3. Adds DP/eDP mode switching support.
+>> qda_register_device() performs allocation and registration of the DRM
+>> device, while qda_unregister_device() handles device teardown and
+>> releases references using drm_dev_unregister() and drm_dev_put().
+>> Initialization and teardown paths are updated so DRM resources are
+>> allocated after IOMMU/memory-manager setup and cleaned during RPMsg
+>> remove.
 >>
->> Note: x1e80100/sa8775p/sc7280 have been tested, while glymur/sc8280xp
->> have not been tested.
+>> This patch lays the foundation for adding GEM buffer support and IOCTL
+>> handling in later patches as part of the compute accelerator interface.
 >>
->> [1] https://lore.kernel.org/all/20260119-klm_dpphy-v2-1-52252190940b@oss.qualcomm.com/
->>
->> Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+>> Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
 >> ---
->> Changes in v2:
->> - Combine the third patch with the first one.[Dmitry]
->> - Fix code formatting issues.[Konrad][Dmitry]
->> - Update the commit message description.[Dmitry][Konrad]
->> - Fix kodiak swing/pre_emp table values.[Konrad]
->> - Link to v1: https://lore.kernel.org/r/20260205-edp_phy-v1-0-231882bbf3f1@oss.qualcomm.com
+>>  drivers/accel/qda/qda_drv.c   | 103 ++++++++++++++++++++++++++++++++++++++++++
+>>  drivers/accel/qda/qda_drv.h   |  33 +++++++++++++-
+>>  drivers/accel/qda/qda_rpmsg.c |   8 ++++
+>>  3 files changed, 142 insertions(+), 2 deletions(-)
 >>
->> ---
->> Yongxing Mou (2):
->>        phy: qcom: edp: Add eDP/DP mode switch support
->>        phy: qcom: edp: Add per-version LDO configuration callback
+>> diff --git a/drivers/accel/qda/qda_drv.c b/drivers/accel/qda/qda_drv.c
+>> index 69132737f964..a9113ec78fa2 100644
+>> --- a/drivers/accel/qda/qda_drv.c
+>> +++ b/drivers/accel/qda/qda_drv.c
+>> @@ -4,9 +4,31 @@
+>>  #include <linux/kernel.h>
+>>  #include <linux/atomic.h>
+>>  #include <linux/slab.h>
+>> +#include <drm/drm_accel.h>
+>> +#include <drm/drm_drv.h>
+>> +#include <drm/drm_file.h>
+>> +#include <drm/drm_gem.h>
+>> +#include <drm/drm_ioctl.h>
+>>  #include "qda_drv.h"
+>>  #include "qda_rpmsg.h"
+>>  
+>> +DEFINE_DRM_ACCEL_FOPS(qda_accel_fops);
+>> +
+>> +static struct drm_driver qda_drm_driver = {
+>> +	.driver_features = DRIVER_COMPUTE_ACCEL,
+>> +	.fops			= &qda_accel_fops,
+> Strange indentation in the middle. Please drop it.
+ack.
+>
+>> +	.name = DRIVER_NAME,
+>> +	.desc = "Qualcomm DSP Accelerator Driver",
+>> +};
+>> +
+>> +static void cleanup_drm_private(struct qda_dev *qdev)
+>> +{
+>> +	if (qdev->drm_priv) {
+>> +		qda_dbg(qdev, "Cleaning up DRM private data\n");
+>> +		kfree(qdev->drm_priv);
+>> +	}
+>> +}
+>> +
+>>  static void cleanup_iommu_manager(struct qda_dev *qdev)
+>>  {
+>>  	if (qdev->iommu_mgr) {
+>> @@ -24,6 +46,7 @@ static void cleanup_device_resources(struct qda_dev *qdev)
+>>  
+>>  void qda_deinit_device(struct qda_dev *qdev)
+>>  {
+>> +	cleanup_drm_private(qdev);
+>>  	cleanup_iommu_manager(qdev);
+>>  	cleanup_device_resources(qdev);
+>>  }
+>> @@ -59,6 +82,18 @@ static int init_memory_manager(struct qda_dev *qdev)
+>>  	return 0;
+>>  }
+>>  
+>> +static int init_drm_private(struct qda_dev *qdev)
+>> +{
+>> +	qda_dbg(qdev, "Initializing DRM private data\n");
+>> +
+>> +	qdev->drm_priv = kzalloc_obj(*qdev->drm_priv, GFP_KERNEL);
+>> +	if (!qdev->drm_priv)
+>> +		return -ENOMEM;
+>> +
+>> +	qda_dbg(qdev, "DRM private data initialized successfully\n");
+>> +	return 0;
+>> +}
+>> +
+>>  int qda_init_device(struct qda_dev *qdev)
+>>  {
+>>  	int ret;
+>> @@ -71,14 +106,82 @@ int qda_init_device(struct qda_dev *qdev)
+>>  		goto err_cleanup_resources;
+>>  	}
+>>  
+>> +	ret = init_drm_private(qdev);
+>> +	if (ret) {
+>> +		qda_err(qdev, "DRM private data initialization failed: %d\n", ret);
+>> +		goto err_cleanup_iommu;
+>> +	}
+>> +
+>>  	qda_dbg(qdev, "QDA device initialized successfully\n");
+>>  	return 0;
+>>  
+>> +err_cleanup_iommu:
+>> +	cleanup_iommu_manager(qdev);
+>>  err_cleanup_resources:
+>>  	cleanup_device_resources(qdev);
+>>  	return ret;
+>>  }
+>>  
+>> +static int setup_and_register_drm_device(struct qda_dev *qdev)
+>> +{
+>> +	struct drm_device *ddev;
+>> +	int ret;
+>> +
+>> +	qda_dbg(qdev, "Setting up and registering DRM device\n");
+>> +
+>> +	ddev = drm_dev_alloc(&qda_drm_driver, qdev->dev);
+> devm_drm_dev_alloc() please. Move this patch to the front of the series,
+> making everything else depend on the allocated data structure.
+ack.
+>
+>> +	if (IS_ERR(ddev)) {
+>> +		ret = PTR_ERR(ddev);
+>> +		qda_err(qdev, "Failed to allocate DRM device: %d\n", ret);
+>> +		return ret;
+>> +	}
+>> +
+>> +	qdev->drm_priv->drm_dev = ddev;
+>> +	qdev->drm_priv->iommu_mgr = qdev->iommu_mgr;
+>> +	qdev->drm_priv->qdev = qdev;
+>> +
+>> +	ddev->dev_private = qdev->drm_priv;
+>> +	qdev->drm_dev = ddev;
+>> +
+>> +	ret = drm_dev_register(ddev, 0);
+>> +	if (ret) {
+>> +		qda_err(qdev, "Failed to register DRM device: %d\n", ret);
+>> +		drm_dev_put(ddev);
+>> +		return ret;
+>> +	}
+>> +
+>> +	qda_dbg(qdev, "DRM device registered successfully\n");
+>> +	return 0;
+>> +}
+>> +
+>> +int qda_register_device(struct qda_dev *qdev)
+>> +{
+>> +	int ret;
+>> +
+>> +	ret = setup_and_register_drm_device(qdev);
+>> +	if (ret) {
+>> +		qda_err(qdev, "DRM device setup failed: %d\n", ret);
+>> +		return ret;
+>> +	}
+>> +
+>> +	qda_dbg(qdev, "QDA device registered successfully\n");
+>> +	return 0;
+>> +}
+>> +
+>> +void qda_unregister_device(struct qda_dev *qdev)
+>> +{
+>> +	qda_info(qdev, "Unregistering QDA device\n");
+>> +
+>> +	if (qdev->drm_dev) {
+>> +		qda_dbg(qdev, "Unregistering DRM device\n");
+>> +		drm_dev_unregister(qdev->drm_dev);
+>> +		drm_dev_put(qdev->drm_dev);
+>> +		qdev->drm_dev = NULL;
+>> +	}
+>> +
+>> +	qda_dbg(qdev, "QDA device unregistered successfully\n");
+>> +}
+>> +
+>>  static int __init qda_core_init(void)
+>>  {
+>>  	int ret;
+>> diff --git a/drivers/accel/qda/qda_drv.h b/drivers/accel/qda/qda_drv.h
+>> index 2cb97e4eafbf..2b80401a3741 100644
+>> --- a/drivers/accel/qda/qda_drv.h
+>> +++ b/drivers/accel/qda/qda_drv.h
+>> @@ -11,13 +11,35 @@
+>>  #include <linux/mutex.h>
+>>  #include <linux/rpmsg.h>
+>>  #include <linux/xarray.h>
+>> +#include <drm/drm_drv.h>
+>> +#include <drm/drm_file.h>
+>> +#include <drm/drm_device.h>
+>> +#include <drm/drm_accel.h>
+>>  #include "qda_memory_manager.h"
+>>  
+>>  /* Driver identification */
+>>  #define DRIVER_NAME "qda"
+>>  
+>> +/**
+>> + * struct qda_drm_priv - DRM device private data for QDA device
+>> + *
+>> + * This structure serves as the DRM device private data (stored in dev_private),
+>> + * bridging the DRM device context with the QDA device and providing access to
+>> + * shared resources like the memory manager during buffer operations.
+>> + */
+>> +struct qda_drm_priv {
+> Shared between what and what? Why do you need a separate structure
+> instead of using qda_dev?
+This is for channel specific resources which will be used by all processes using the channel. It
+should be possible to use qda_dev, I'll try it out and fix this in next version.
+>
+>> +	/* DRM device structure */
+>> +	struct drm_device *drm_dev;
+>> +	/* Global memory/IOMMU manager */
+>> +	struct qda_memory_manager *iommu_mgr;
+>> +	/* Back-pointer to qda_dev */
+>> +	struct qda_dev *qdev;
+>> +};
+>> +
+>>  /* struct qda_dev - Main device structure for QDA driver */
+>>  struct qda_dev {
+>> +	/* DRM device for accelerator interface */
+>> +	struct drm_device *drm_dev;
+> Drop the pointer here.
+I'll modify this based on qda_drm_priv replacement.
+>
+>>  	/* RPMsg device for communication with remote processor */
+>>  	struct rpmsg_device *rpdev;
+>>  	/* Underlying device structure */
+>> @@ -26,6 +48,8 @@ struct qda_dev {
+>>  	struct mutex lock;
+>>  	/* IOMMU/memory manager */
+>>  	struct qda_memory_manager *iommu_mgr;
+>> +	/* DRM device private data */
+>> +	struct qda_drm_priv *drm_priv;
+>>  	/* Flag indicating device removal in progress */
+>>  	atomic_t removing;
+>>  	/* Name of the DSP (e.g., "cdsp", "adsp") */
+>> @@ -39,8 +63,8 @@ struct qda_dev {
+>>   * @qdev: QDA device structure
+>>   *
+>>   * Returns the most appropriate device structure for logging messages.
+>> - * Prefers qdev->dev, or returns NULL if the device is being removed
+>> - * or invalid.
+>> + * Prefers qdev->dev, falls back to qdev->drm_dev->dev, or returns NULL
+>> + * if the device is being removed or invalid.
+>>   */
+>>  static inline struct device *qda_get_log_device(struct qda_dev *qdev)
+>>  {
+>> @@ -50,6 +74,9 @@ static inline struct device *qda_get_log_device(struct qda_dev *qdev)
+>>  	if (qdev->dev)
+>>  		return qdev->dev;
+>>  
+>> +	if (qdev->drm_dev)
+>> +		return qdev->drm_dev->dev;
+>> +
+>>  	return NULL;
+>>  }
+>>  
+>> @@ -93,5 +120,7 @@ static inline struct device *qda_get_log_device(struct qda_dev *qdev)
+>>   */
+>>  int qda_init_device(struct qda_dev *qdev);
+>>  void qda_deinit_device(struct qda_dev *qdev);
+>> +int qda_register_device(struct qda_dev *qdev);
+>> +void qda_unregister_device(struct qda_dev *qdev);
+>>  
+>>  #endif /* __QDA_DRV_H__ */
+>> diff --git a/drivers/accel/qda/qda_rpmsg.c b/drivers/accel/qda/qda_rpmsg.c
+>> index 5a57384de6a2..b2b44b4d3ca8 100644
+>> --- a/drivers/accel/qda/qda_rpmsg.c
+>> +++ b/drivers/accel/qda/qda_rpmsg.c
+>> @@ -80,6 +80,7 @@ static void qda_rpmsg_remove(struct rpmsg_device *rpdev)
+>>  	qdev->rpdev = NULL;
+>>  	mutex_unlock(&qdev->lock);
+>>  
+>> +	qda_unregister_device(qdev);
+>>  	qda_unpopulate_child_devices(qdev);
+>>  	qda_deinit_device(qdev);
+>>  
+>> @@ -123,6 +124,13 @@ static int qda_rpmsg_probe(struct rpmsg_device *rpdev)
+>>  		return ret;
+>>  	}
+>>  
+>> +	ret = qda_register_device(qdev);
+>> +	if (ret) {
+>> +		qda_deinit_device(qdev);
+>> +		qda_unpopulate_child_devices(qdev);
+>> +		return ret;
+>> +	}
+>> +
+>>  	qda_info(qdev, "QDA RPMsg probe completed successfully for %s\n", qdev->dsp_name);
+>>  	return 0;
+>>  }
 >>
->>   drivers/phy/qualcomm/phy-qcom-edp.c | 176 ++++++++++++++++++++++++++----------
->>   1 file changed, 129 insertions(+), 47 deletions(-)
->> ---
->> base-commit: fc4e91c639c0af93d63c3d5bc0ee45515dd7504a
-> 
-> 20260108 is very old. Your second patch doesn't apply anymore.
-> 
-Thanks. Got it, will update to latest tag in next patch.
->> change-id: 20260205-edp_phy-1eca3ed074c0
->>
->> Best regards,
 >> -- 
->> Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+>> 2.34.1
 >>
-> 
 
 
