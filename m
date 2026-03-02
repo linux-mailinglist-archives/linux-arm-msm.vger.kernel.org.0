@@ -1,372 +1,490 @@
-Return-Path: <linux-arm-msm+bounces-94795-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94796-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id IPnYNWdKpWn17wUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94795-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 09:29:27 +0100
+	id +DxtF59KpWk28AUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94796-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 09:30:23 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id D7D5C1D4A3F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 09:29:26 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 62DF71D4A73
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 09:30:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 26DE9300C7C4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 08:28:55 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 68D1F3005329
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 08:30:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29ED7385500;
-	Mon,  2 Mar 2026 08:28:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B74DB379EFB;
+	Mon,  2 Mar 2026 08:30:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="nY8xVwok";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Bk+Gf4f2"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PfQOMN0q";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="SxU4N+Et"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1DE4387365
-	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Mar 2026 08:28:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00AD136F419
+	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Mar 2026 08:30:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772440129; cv=none; b=ONlOMTdMLN/3f5Fqum9qBmuFfj81qHW+3pon+yzHKeDSKnpx5tpCfDhxQmaU/guxlsdIWTaJLy4Pvnt3EEpmgbzMSy8rDeC035k8N8zLCZEgMdngesBdwE6NNgDzO9GuNcGf+758f8LyXZOmsyTzIyvJfGxdHVpCH9492u6bBHA=
+	t=1772440218; cv=none; b=RQVGJPgNnMKdO/sN/wVFuul3XcpIHH9tHBxT9D0bGIGYrAWZad2ej3JOknfFfSfh6MF4+RhFlzjjQHAMW0avwwHvrbIbWtBes2ry62hAKnLZwoEQrMRABtghq5i4B7q0Mn0udX8hUFZneRtGraIJDHaQDQD1/2jcP8el3D7A170=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772440129; c=relaxed/simple;
-	bh=YJCpyIz4TCdjOpjGbf6o1zRPWSQ0oQEylCxPU7OtSbI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=MeXNEc+3BVFyyfddeaQppZbeA2luaBjphql/EujHlGb+7oKP9vOSAyGJUUL8RNdc2/OjMfzK0yhg5bpUBBBZoVKHDcS1VxNEy1uilJBrsQvjc4bhQApoATMkKi/mREIPiSZK4gyW4nsM6bTLLVIkSZigwfrGacbdp42lEG7QTbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=nY8xVwok; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Bk+Gf4f2; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1772440218; c=relaxed/simple;
+	bh=R+5/p9dJ/jKDGDpnQU7oTUWbZauWLr+KQwPNWpQtn4I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Ml4JQM2cQHE8l4h8bu45L7zBxGVpW7B7fIMc8ZfLA0FT/RFxr7udqJnVBSY/OWkbkDlS5P7ebKSqEzyCO7UIQO2CNMqRrG/U15LOCfwq2GiOl754agULI5x58beq+AckBHJGrH7j9hZOfDgQ0mf3RG6U6K9DHtpFBU8LXnPUstw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PfQOMN0q; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=SxU4N+Et; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6226h9cx2504593
-	for <linux-arm-msm@vger.kernel.org>; Mon, 2 Mar 2026 08:28:47 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62285QEq1953683
+	for <linux-arm-msm@vger.kernel.org>; Mon, 2 Mar 2026 08:30:16 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	SVcr8YN9sDAsKPDI36WQuczMepAZxihuQgrHo3tNpeY=; b=nY8xVwokoWVWVJBY
-	ACEWjydMpBrOmilVLIcK9myydbvPa4kGduP59v5OmerxTcKCEDeRam1y0QsDw2tS
-	yymirrB6ow+X1jmewOt5n9pNkfidd3EWm2LsLf1C1tIzVsUx8orL+6AfCc/edHdy
-	ABmwL+y0Cj+YjpvPK1/NONrOj03sRVi1FUNa/puMMcw1sC7SjD1Y5Jtu527DydQc
-	Ciqy9KOl8ibt9X8V2PrDT8Awv7cGgEY0M7hD3GpUZnFA/DAy+eWms2AYsrpQPe0P
-	GU4NabBMJmPsItkym5m20vd//WKLS03rRjQlKewmJp8kaieaSb9At/fzI/Ma2rpk
-	dbVh3w==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cn5herb4g-1
+	71RzyWdtt/jelNOKAvhWdj2tQ76mqCEosuyjd3bbpTQ=; b=PfQOMN0qGwtPnLCu
+	Ko8FZIg0jPFnRTEmHFsFlHJe1NQzldDEbz3hQ+P+aaEqD6QmxBW35+ppM3DMk2aV
+	v6CfOljFLknIggmQl6xVwQxgRIgYcumBhigeovnMHWjbXntnzdJEVp+6MBGLFuHa
+	GuCc0xvHH56IwLkrX5+iULTG/+a2wApBd/qnkA08kpWcqtcL3zXHGhZzymaZjPRG
+	smV0oIAL+Jr8CijaAA2gF48vbRf3QgFw3/75S8tJ4RzdzVpXcLDusl4Q+BvcV5ia
+	SzWS5tlJuICPSI9d+f01t/MEsn2ltUUwmZdl+buxdyaZRpJ/vmghAH91R2o9sjXA
+	IMTSqw==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cksg74nbg-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 02 Mar 2026 08:28:46 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-899afef8eebso634328116d6.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Mar 2026 00:28:46 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 02 Mar 2026 08:30:15 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2ae47b3adacso10598015ad.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Mar 2026 00:30:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1772440126; x=1773044926; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=SVcr8YN9sDAsKPDI36WQuczMepAZxihuQgrHo3tNpeY=;
-        b=Bk+Gf4f2+A8AGwUnQ2tihfoFIRPMHD18WmuZO9/jVigsEadT+9ovF1Ih3Z9jA4+CcM
-         /4wJ093RNd2wVexGyGikWPyWh52y5tqS9VGLR2KuNZzwjJZtfr1VRs7PoDfJSrhOEVOo
-         nxjAYfACKt3hnhA2DYggyDWzPc99+oK3kn1ezKYoLVa2KuoQ//yh/ZgznWZ5RjrlO+j1
-         8zPDWeZOduxZtu66wVU9Y3bbQAcRbwniVndyyYoWFNDKi8jiRMPZ6wtHX7MitFSU/aD0
-         IljEeNjUXTVzR0UzBf9OMEBl6LP3PmIgqFdy1LAYP+d61S7hlUZHwSULPZOC+IfU729i
-         xDGA==
+        d=oss.qualcomm.com; s=google; t=1772440215; x=1773045015; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=71RzyWdtt/jelNOKAvhWdj2tQ76mqCEosuyjd3bbpTQ=;
+        b=SxU4N+EtFWNk7mcCFQO+/pUorrjihLssuKW94/nkrPV6WZhPYy/PgePdLM+Tc1pHN4
+         niqO7hfBnQlCWolZIgo9TZTdFHZ7xPXZ2u5eutFrtdir6p+5/Rv/s1r1+vcPtRVf85m8
+         2kjVBFZleS//WqzLFrGzprF94azviMJFQfZ1YgzhgZz/lPqZxqs2FiMRokxp3kzOu/L0
+         DXDcPmdOHXQpKgEE7DRPmwXrCdLQIO4jmPAd7ZiQ2HQlqYV5AcUnIPXiILTz1SNV6v4H
+         +tPOfcP6cL5H3rzsfI1htKLEP4WdzQ/uWWWf2OpdJ+gZeVrahKjbi9bSy3eFdqqbTy9Y
+         OF9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772440126; x=1773044926;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=SVcr8YN9sDAsKPDI36WQuczMepAZxihuQgrHo3tNpeY=;
-        b=sOItR88md/OjAuqdIZrKBcgUD3VVVWxMFdldVTFfswQUmiAnbWYGAOsjP7JropfazE
-         nLMYr/qG8AY2pgS4faRSWAmfO118vIZd3NrsZ0315gXmIBNwdpjJm7v5Aod41E+/9f3U
-         HvqI7W1IQLISmbvh6PmdQTSGnWGgfvF6usXLGsPCCaoKkdC0hMs8rGkK2o46vrigSvR/
-         jgvt5/IzO4hL+qzzlH9kcvFsLCOh1JS86jjLCo3IGRqCO15vZBeLF0kXpAkptGcR3phR
-         DuQ0X1MNZ1i6FFEn/tQT36gojBS3rS5JhE1ZJN3wq95eI29d5RmY8cSJAGxP8xVICPfS
-         GBVw==
-X-Gm-Message-State: AOJu0YwFllqB6KCDJ8i4EEQSKMEWTnhQ8wmN/38v8fBkxH0R4Rijizuj
-	4fKePJ59iNqGaa2n8bzyLN8ZCKFATrg5rlsKY7VNunuqcxkTqDUi1uneuzD6NSm0pPi/ILID9TI
-	xc8160X7qfUZmFr0BasEns/hMI0kRAi1WKUVe6XO5GnAA8iued2fI5FlQNxlcAvOqdPyh
-X-Gm-Gg: ATEYQzy2V1v3Qmi1mDXNjehhSHOVqny/5JEu6TymEfd+l7ru8lEn/3+czT0PiqmR+ls
-	BegcR4P9rJZre8wzt3WB638nbKyxN+Emv+kYfoSNX8UeH1LjuiNnfYCxO8WdG/LZSMTrxo3l4F3
-	muQAk0CGWQTl/L81XKrMTcZBfU8K5/IO0Y4Ah5CCbjxBMTi9T/exnyTth+rXR3y4CF9/t+Js+dj
-	+X81Td7Py+CpEjw7PgQ2T2i/Oif4hzG/Pvjb9BWna81rUtq/Ij7cgGFe8dwhuxCi7EHk2h5ux7Q
-	vuvZq55aVg1CkPyPxY3aubheXADExbzlbi/7YUppxd1xFmZ0064JJzA5BTqWQGLmmQYEu34pLOO
-	/BXUvGSKKICtikLsxfkzu0DIZ99aMPxuUDVY4yECFk/Qj6eh6ZoLA3lHwKV77//PacwTEcCe3hg
-	rIjU37/yU=
-X-Received: by 2002:a05:6214:21c6:b0:895:1cbb:5d5b with SMTP id 6a1803df08f44-899d1e2b9a7mr180329556d6.32.1772440125900;
-        Mon, 02 Mar 2026 00:28:45 -0800 (PST)
-X-Received: by 2002:a05:6214:21c6:b0:895:1cbb:5d5b with SMTP id 6a1803df08f44-899d1e2b9a7mr180329206d6.32.1772440125393;
-        Mon, 02 Mar 2026 00:28:45 -0800 (PST)
-Received: from yongmou2.ap.qualcomm.com (Global_NAT1_IAD_FW.qualcomm.com. [129.46.232.65])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-899c7193227sm101354696d6.21.2026.03.02.00.28.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Mar 2026 00:28:45 -0800 (PST)
-From: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-Date: Mon, 02 Mar 2026 16:28:30 +0800
-Subject: [PATCH v3 2/2] phy: qcom: edp: Add per-version LDO configuration
- callback
+        d=1e100.net; s=20230601; t=1772440215; x=1773045015;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=71RzyWdtt/jelNOKAvhWdj2tQ76mqCEosuyjd3bbpTQ=;
+        b=CtOI7DMpVZtNk7KkUUR+GG6bKezGEEe5CsnhFP/jSAq6/0WnmSZKc0eKbbfN3GM0kD
+         rROw7de4VgvUJzm+84XMH4XdSOtUp/octhXFGItudrFagHbGZZXjcDF5OaeCFSBnAd9i
+         PYNNGqK+znOMEpaxC+xHxVN8/gq9G4FnGcjAB1BICEDIebe5hKvrlRGpgoAhUaut6Eya
+         3+HZA8xD69VWug2EMUfGGYBeo+GkEwmfx9yNnCb2x5PVfP8v2Jypqvl0EEALnBmOvidy
+         Loyt3yzlUHJ+vWuAcsQIpXPBktox3njz4J23olS6TbW6mqFiVKY3S0jXH6/CmlxKFZIJ
+         0FSQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV1It8Xa0lff5x1f9dJYuysQHjo+sFcY+5KtJVvR3jJWMZCmZiLdCgK3aruM68Gju0erpfgctJ5HzsWC7Qi@vger.kernel.org
+X-Gm-Message-State: AOJu0YwMwucpgeaf0ePO1E8snO20LtZvRS7LMq8jmK4NuBBv0P3W7wj6
+	Wq49M0rvShxHR/GqTFeaPD+im4LF0oOPjg+9FN2f3sPH57eeiF6U6r8aSj2lRuaNADzqB1/LKY8
+	ReYjyQrQ4io7VY1OhEebxMI3s2iVlOAvIXh/Re0S47gRL8J0tw0JXb3QICQNAfgnNsfTU
+X-Gm-Gg: ATEYQzwr986vraPKPb1AgZFqgLJUpks1yDg4304Z6k026nP1A/ag7xYtYyYtBU7ykCs
+	+eOy4984WEqk3cqySdZVpDQ5tiQUCH/6FX4bnO1JFgCs8VfjZx6eAK0r9AfDU6OrME4fShYked1
+	vpYFnYauSgGjparFSQ77cuJ+NfFQpGpo6xl7cu9Ld/K6b8jSFWeOj92Yd06tBJjSAlKxvOr3rJ3
+	Iz6HO32tL17v2FYiMw7mxBylKmq4J5x/SKEWDXah1de98ln4nq55aaXGxUorMDIQQxtTJxpYlKc
+	1U+RB3DkOjWU5WJndnWIlfBGxIKIEeXeC4ZUn11ptBSYLUbLq8dNLf2t6mn5DAo8tbMvKZBOBBE
+	fGGDj7Vt5O36Yp5GjMTayqtXVCBVT4mbgj0OltrKjNFlRcL+trA==
+X-Received: by 2002:a17:903:1b03:b0:2aa:d60c:d48a with SMTP id d9443c01a7336-2ae2e251b3dmr111197115ad.7.1772440214792;
+        Mon, 02 Mar 2026 00:30:14 -0800 (PST)
+X-Received: by 2002:a17:903:1b03:b0:2aa:d60c:d48a with SMTP id d9443c01a7336-2ae2e251b3dmr111195675ad.7.1772440213484;
+        Mon, 02 Mar 2026 00:30:13 -0800 (PST)
+Received: from [10.206.99.28] ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae4cd40e4dsm33020545ad.92.2026.03.02.00.30.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 02 Mar 2026 00:30:12 -0800 (PST)
+Message-ID: <22d81284-ff95-401d-b9ae-05f3b776036f@oss.qualcomm.com>
+Date: Mon, 2 Mar 2026 14:00:04 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 06/18] accel/qda: Add memory manager for CB devices
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Oded Gabbay <ogabbay@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+        Shuah Khan <skhan@linuxfoundation.org>, Joerg Roedel <joro@8bytes.org>,
+        Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+        dri-devel@lists.freedesktop.org, linux-doc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        iommu@lists.linux.dev, linux-media@vger.kernel.org,
+        linaro-mm-sig@lists.linaro.org,
+        Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Bharath Kumar <quic_bkumar@quicinc.com>,
+        Chenna Kesava Raju <quic_chennak@quicinc.com>
+References: <20260224-qda-firstpost-v1-0-fe46a9c1a046@oss.qualcomm.com>
+ <20260224-qda-firstpost-v1-6-fe46a9c1a046@oss.qualcomm.com>
+ <rvi6cqi343yoc3qyabtb72zsedtruktfba6dxstvgw4k7bzyt5@4ofj5pdmkhw6>
+Content-Language: en-US
+From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+In-Reply-To: <rvi6cqi343yoc3qyabtb72zsedtruktfba6dxstvgw4k7bzyt5@4ofj5pdmkhw6>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260302-edp_phy-v3-2-ca8888d793b0@oss.qualcomm.com>
-References: <20260302-edp_phy-v3-0-ca8888d793b0@oss.qualcomm.com>
-In-Reply-To: <20260302-edp_phy-v3-0-ca8888d793b0@oss.qualcomm.com>
-To: Vinod Koul <vkoul@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org,
-        Yongxing Mou <yongxing.mou@oss.qualcomm.com>, stable@vger.kernel.org
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1772440115; l=6465;
- i=yongxing.mou@oss.qualcomm.com; s=20250910; h=from:subject:message-id;
- bh=YJCpyIz4TCdjOpjGbf6o1zRPWSQ0oQEylCxPU7OtSbI=;
- b=pYYdYfq9k3t8lnU9A0S1GsHhUarTFiInP9vUOaGsDymYlwJ7FwIzBHThhSN3+DncRIhbY68hM
- u/5VUPpRNq6C5aET+ZGZYefJReEGZwaJa5sJ694Sq61HZ4sylB3aINv
-X-Developer-Key: i=yongxing.mou@oss.qualcomm.com; a=ed25519;
- pk=rAy5J1eP+V7OXqH5FJ7ngMCtUrnHhut30ZTldOj52UM=
-X-Authority-Analysis: v=2.4 cv=BI++bVQG c=1 sm=1 tr=0 ts=69a54a3e cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
+X-Proofpoint-ORIG-GUID: WagxtmhyCIypobsIBaC6SOOnf9JiViWy
+X-Proofpoint-GUID: WagxtmhyCIypobsIBaC6SOOnf9JiViWy
+X-Authority-Analysis: v=2.4 cv=FaA6BZ+6 c=1 sm=1 tr=0 ts=69a54a97 cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
  a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=Wstf64DO4dhji1mrokQA:9 a=QEXdDO2ut3YA:10
- a=1HOtulTD9v-eNWfpl4qZ:22
-X-Proofpoint-GUID: Vu7hrHIQ3uCjN4toV_Uh0mzUMAzUb3Gw
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAyMDA3MyBTYWx0ZWRfX6iPb0L+BOFPg
- vYZdAsFkbAMp+FImIiWVaamcTtwCJVoC2LLiGs69zOJSfCP9+vRdA9mWcdwVobcc5pYgeMhMJ7F
- hyhOmoLJRZdzZK2g6GbkJLWDgfaDFJCQimcrI6iSoKZE6ItudxerNxQKtCOHOqYkA9IoJjDhKbl
- o8pM19IXeZyoOgSEj4bt69Yu+WevsSxIiZnyMs1HQRlo3RofXDoqksfQX5rY4eDID6BfJAC8Klm
- 8YpZFHST4DMGTphsvXuDbjBd3ofZxYvtTR9eB7h3ZJXf35USVZO0gGClENDNJrzCqWhcPm2bQ+u
- 2KkEh1eNpMoJ6416gEi25cbSm6tW1yiWVmCvi9/g+MGAQ5/VTIfL6y11P8GGTpSWRhNJEUowSY3
- MKSHKTtIo2g50cK+OZmc9+g/FXV+P3G7s+J8+EuA+zwKbUEmuNAHVUA0G0IDSF6IbHjkh3OKQyn
- RMElIWg2eHV/hyb8uvQ==
-X-Proofpoint-ORIG-GUID: Vu7hrHIQ3uCjN4toV_Uh0mzUMAzUb3Gw
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=EUspDBNiAAAA:8 a=57SDT3_LIDrlxEhfML8A:9 a=QEXdDO2ut3YA:10
+ a=324X-CrmTo6CU4MGRt3R:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAyMDA3NCBTYWx0ZWRfX9Cxe8rEIGeUk
+ mzNtAbppo7xr6MgYLGb4/v6NlqxPlCBC0e4JtF9XhjV8OuAZYQotGxVPnRPwBeiE/Xv6g0U4zPw
+ FF4VCM0rmc2KjJBC/bsLkyTKAlioz9hMOH0RQoq45aFjBPI1UJ+smAGA1vhkNBeGVec431IOWcF
+ noYDKGm/RZ37h8rSRjBsWGbMh3LBmdIuDgHTGhkwFVmm4Yczzn86QOoCQZrvxjKivEUEZvBwhKA
+ IWkBKPgStH5bnrvl8YKwv9YktSavQoQNLvqZsBizX4TDU7/UmSs/3zh3xnnmUnibqfunlZouyDv
+ 3rVAtP5c6v8Kf9HrFPgXzfDF/dHlvS+QSjxlD2DXeRJIpgl+M3n0s1BrKwvkgn2iN0EwEtsDFaG
+ +UPEY3uGGhwFje1pPQxGCgvykUW8coJ/7bivpDTyyyLjVyoxtnB70CNvV9TcK56ry4on1zSXtyZ
+ CQo/WPVLqNJEPCEwDYw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-02_02,2026-02-27_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1015 lowpriorityscore=0 bulkscore=0 phishscore=0
- spamscore=0 adultscore=0 impostorscore=0 priorityscore=1501 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603020073
+ impostorscore=0 clxscore=1015 phishscore=0 lowpriorityscore=0
+ priorityscore=1501 spamscore=0 bulkscore=0 adultscore=0 malwarescore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2602130000
+ definitions=main-2603020074
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,oss.qualcomm.com:mid,oss.qualcomm.com:dkim,qualcomm.com:email,qualcomm.com:dkim];
+	RCPT_COUNT_TWELVE(0.00)[25];
+	FREEMAIL_CC(0.00)[kernel.org,lwn.net,linuxfoundation.org,8bytes.org,arm.com,linux.intel.com,suse.de,gmail.com,ffwll.ch,linaro.org,amd.com,lists.freedesktop.org,vger.kernel.org,lists.linux.dev,lists.linaro.org,oss.qualcomm.com,quicinc.com];
+	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-94796-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94795-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	FROM_NEQ_ENVFROM(0.00)[yongxing.mou@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:mid,oss.qualcomm.com:dkim,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,qualcomm.com:email,qualcomm.com:dkim];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[ekansh.gupta@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	NEURAL_HAM(-0.00)[-0.998];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MID_RHS_MATCH_FROM(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[9];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: D7D5C1D4A3F
+X-Rspamd-Queue-Id: 62DF71D4A73
 X-Rspamd-Action: no action
 
-For eDP low Vdiff, the LDO setting depends on the PHY version, instead of
-being a simple 0x0 or 0x01. Introduce the com_ldo_config callback to
-correct LDO setting accroding to the HPG.
 
-Since SC7280 uses different LDO settings than SA8775P/SC8280XP, introduce
-qcom_edp_phy_ops_v3 to keep the LDO setting correct.
 
-Cc: stable@vger.kernel.org
-Fixes: f199223cb490 ("phy: qcom: Introduce new eDP PHY driver")
-Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
----
- drivers/phy/qualcomm/phy-qcom-edp.c | 86 ++++++++++++++++++++++++++++++++-----
- 1 file changed, 76 insertions(+), 10 deletions(-)
-
-diff --git a/drivers/phy/qualcomm/phy-qcom-edp.c b/drivers/phy/qualcomm/phy-qcom-edp.c
-index 36998326bae6..d29e548fce9d 100644
---- a/drivers/phy/qualcomm/phy-qcom-edp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-edp.c
-@@ -81,6 +81,7 @@ struct phy_ver_ops {
- 	int (*com_clk_fwd_cfg)(const struct qcom_edp *edp);
- 	int (*com_configure_pll)(const struct qcom_edp *edp);
- 	int (*com_configure_ssc)(const struct qcom_edp *edp);
-+	int (*com_ldo_config)(const struct qcom_edp *edp);
- };
- 
- struct qcom_edp_phy_cfg {
-@@ -304,7 +305,7 @@ static int qcom_edp_set_voltages(struct qcom_edp *edp, const struct phy_configur
- 	const struct qcom_edp_swing_pre_emph_cfg *cfg;
- 	unsigned int v_level = 0;
- 	unsigned int p_level = 0;
--	u8 ldo_config;
-+	int ret;
- 	u8 swing;
- 	u8 emph;
- 	int i;
-@@ -330,13 +331,13 @@ static int qcom_edp_set_voltages(struct qcom_edp *edp, const struct phy_configur
- 	if (swing == 0xff || emph == 0xff)
- 		return -EINVAL;
- 
--	ldo_config = edp->is_edp ? 0x0 : 0x1;
-+	ret = edp->cfg->ver_ops->com_ldo_config(edp);
-+	if (ret)
-+		return ret;
- 
--	writel(ldo_config, edp->tx0 + TXn_LDO_CONFIG);
- 	writel(swing, edp->tx0 + TXn_TX_DRV_LVL);
- 	writel(emph, edp->tx0 + TXn_TX_EMP_POST1_LVL);
- 
--	writel(ldo_config, edp->tx1 + TXn_LDO_CONFIG);
- 	writel(swing, edp->tx1 + TXn_TX_DRV_LVL);
- 	writel(emph, edp->tx1 + TXn_TX_EMP_POST1_LVL);
- 
-@@ -560,6 +561,52 @@ static int qcom_edp_com_configure_pll_v4(const struct qcom_edp *edp)
- 	return 0;
- }
- 
-+static int qcom_edp_ldo_config_v3(const struct qcom_edp *edp)
-+{
-+	const struct phy_configure_opts_dp *dp_opts = &edp->dp_opts;
-+	u32 ldo_config;
-+
-+	if (!edp->is_edp)
-+		ldo_config = 0x0;
-+	else if (dp_opts->link_rate <= 2700)
-+		ldo_config = 0x81;
-+	else
-+		ldo_config = 0x41;
-+
-+	writel(ldo_config, edp->tx0 + TXn_LDO_CONFIG);
-+	writel(dp_opts->lanes > 2 ? ldo_config : 0x00, edp->tx1 + TXn_LDO_CONFIG);
-+
-+	return 0;
-+}
-+
-+static int qcom_edp_ldo_config_v4(const struct qcom_edp *edp)
-+{
-+	const struct phy_configure_opts_dp *dp_opts = &edp->dp_opts;
-+	u32 ldo_config;
-+
-+	if (!edp->is_edp)
-+		ldo_config = 0x0;
-+	else if (dp_opts->link_rate <= 2700)
-+		ldo_config = 0xc1;
-+	else
-+		ldo_config = 0x81;
-+
-+	writel(ldo_config, edp->tx0 + TXn_LDO_CONFIG);
-+	writel(dp_opts->lanes > 2 ? ldo_config : 0x00, edp->tx1 + TXn_LDO_CONFIG);
-+
-+	return 0;
-+}
-+
-+static const struct phy_ver_ops qcom_edp_phy_ops_v3 = {
-+	.com_power_on		= qcom_edp_phy_power_on_v4,
-+	.com_resetsm_cntrl	= qcom_edp_phy_com_resetsm_cntrl_v4,
-+	.com_bias_en_clkbuflr	= qcom_edp_com_bias_en_clkbuflr_v4,
-+	.com_clk_fwd_cfg	= qcom_edp_com_clk_fwd_cfg_v4,
-+	.com_configure_pll	= qcom_edp_com_configure_pll_v4,
-+	.com_configure_ssc	= qcom_edp_com_configure_ssc_v4,
-+	.com_ldo_config		= qcom_edp_ldo_config_v3,
-+};
-+
- static const struct phy_ver_ops qcom_edp_phy_ops_v4 = {
- 	.com_power_on		= qcom_edp_phy_power_on_v4,
- 	.com_resetsm_cntrl	= qcom_edp_phy_com_resetsm_cntrl_v4,
-@@ -567,6 +614,7 @@ static const struct phy_ver_ops qcom_edp_phy_ops_v4 = {
- 	.com_clk_fwd_cfg	= qcom_edp_com_clk_fwd_cfg_v4,
- 	.com_configure_pll	= qcom_edp_com_configure_pll_v4,
- 	.com_configure_ssc	= qcom_edp_com_configure_ssc_v4,
-+	.com_ldo_config		= qcom_edp_ldo_config_v4,
- };
- 
- static const struct qcom_edp_phy_cfg sa8775p_dp_phy_cfg = {
-@@ -583,7 +631,7 @@ static const struct qcom_edp_phy_cfg sc7280_dp_phy_cfg = {
- 	.vco_div_cfg = edp_phy_vco_div_cfg_v4,
- 	.dp_swing_pre_emph_cfg = &dp_phy_swing_pre_emph_cfg,
- 	.edp_swing_pre_emph_cfg = &edp_phy_swing_pre_emph_cfg_v3,
--	.ver_ops = &qcom_edp_phy_ops_v4,
-+	.ver_ops = &qcom_edp_phy_ops_v3,
- };
- 
- static const struct qcom_edp_phy_cfg sc8280xp_dp_phy_cfg = {
-@@ -768,6 +816,24 @@ static int qcom_edp_com_configure_pll_v6(const struct qcom_edp *edp)
- 	return 0;
- }
- 
-+static int qcom_edp_ldo_config_v6(const struct qcom_edp *edp)
-+{
-+	const struct phy_configure_opts_dp *dp_opts = &edp->dp_opts;
-+	u32 ldo_config;
-+
-+	if (!edp->is_edp)
-+		ldo_config = 0x0;
-+	else if (dp_opts->link_rate <= 2700)
-+		ldo_config = 0x51;
-+	else
-+		ldo_config = 0x91;
-+
-+	writel(ldo_config, edp->tx0 + TXn_LDO_CONFIG);
-+	writel(dp_opts->lanes > 2 ? ldo_config : 0x00, edp->tx1 + TXn_LDO_CONFIG);
-+
-+	return 0;
-+}
-+
- static const struct phy_ver_ops qcom_edp_phy_ops_v6 = {
- 	.com_power_on		= qcom_edp_phy_power_on_v6,
- 	.com_resetsm_cntrl	= qcom_edp_phy_com_resetsm_cntrl_v6,
-@@ -775,6 +841,7 @@ static const struct phy_ver_ops qcom_edp_phy_ops_v6 = {
- 	.com_clk_fwd_cfg	= qcom_edp_com_clk_fwd_cfg_v4,
- 	.com_configure_pll	= qcom_edp_com_configure_pll_v6,
- 	.com_configure_ssc	= qcom_edp_com_configure_ssc_v6,
-+	.com_ldo_config		= qcom_edp_ldo_config_v6,
- };
- 
- static struct qcom_edp_phy_cfg x1e80100_phy_cfg = {
-@@ -955,6 +1022,7 @@ static const struct phy_ver_ops qcom_edp_phy_ops_v8 = {
- 	.com_clk_fwd_cfg	= qcom_edp_com_clk_fwd_cfg_v8,
- 	.com_configure_pll	= qcom_edp_com_configure_pll_v8,
- 	.com_configure_ssc	= qcom_edp_com_configure_ssc_v8,
-+	.com_ldo_config		= qcom_edp_ldo_config_v6,
- };
- 
- static struct qcom_edp_phy_cfg glymur_phy_cfg = {
-@@ -970,7 +1038,6 @@ static int qcom_edp_phy_power_on(struct phy *phy)
- 	const struct qcom_edp *edp = phy_get_drvdata(phy);
- 	u32 bias0_en, drvr0_en, bias1_en, drvr1_en;
- 	unsigned long pixel_freq;
--	u8 ldo_config = 0x0;
- 	int ret;
- 	u32 val;
- 	u8 cfg1;
-@@ -979,11 +1046,10 @@ static int qcom_edp_phy_power_on(struct phy *phy)
- 	if (ret)
- 		return ret;
- 
--	if (edp->cfg->swing_pre_emph_cfg && !edp->is_edp)
--		ldo_config = 0x1;
-+	ret = edp->cfg->ver_ops->com_ldo_config(edp);
-+	if (ret)
-+		return ret;
- 
--	writel(ldo_config, edp->tx0 + TXn_LDO_CONFIG);
--	writel(ldo_config, edp->tx1 + TXn_LDO_CONFIG);
- 	writel(0x00, edp->tx0 + TXn_LANE_MODE_1);
- 	writel(0x00, edp->tx1 + TXn_LANE_MODE_1);
- 
-
--- 
-2.43.0
+On 2/24/2026 4:41 AM, Bjorn Andersson wrote:
+> On Tue, Feb 24, 2026 at 12:39:00AM +0530, Ekansh Gupta wrote:
+>> Introduce a per-device memory manager for the QDA driver that tracks
+>> IOMMU-capable compute context-bank (CB) devices. Each CB device is
+>> represented by a qda_iommu_device and registered with a central
+>> qda_memory_manager instance owned by qda_dev.
+>>
+> The name makes me expect that this manages memory, but it seems to
+> manage devices and context banks...
+>
+>> The memory manager maintains an xarray of devices and assigns a
+>> unique ID to each CB. It also provides basic lifetime management
+>> and a workqueue for deferred device removal. qda_cb_setup_device()
+>> now allocates a qda_iommu_device for each CB and registers it with
+>> the memory manager after DMA configuration succeeds.
+>>
+>> qda_init_device() is extended to allocate and initialize the memory
+>> manager, while qda_deinit_device() will tear it down in later
+>> patches.
+> "in later patches" makes this extremely hard to review. I had to apply
+> the series to try to navigate the code...
+Thanks for highlighting. I'll update this.
+>
+>> This prepares the QDA driver for fine-grained memory and
+>> IOMMU domain management tied to individual CB devices.
+>>
+>> Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
+> [..]
+>>  obj-$(CONFIG_DRM_ACCEL_QDA_COMPUTE_BUS) += qda_compute_bus.o
+>> diff --git a/drivers/accel/qda/qda_cb.c b/drivers/accel/qda/qda_cb.c
+> [..]
+>> @@ -46,6 +52,18 @@ static int qda_cb_setup_device(struct qda_dev *qdev, struct device *cb_dev)
+>>  	rc = dma_set_mask(cb_dev, DMA_BIT_MASK(pa_bits));
+>>  	if (rc) {
+>>  		qda_err(qdev, "%d bit DMA enable failed: %d\n", pa_bits, rc);
+>> +		kfree(iommu_dev);
+>> +		return rc;
+>> +	}
+>> +
+>> +	iommu_dev->dev = cb_dev;
+>> +	iommu_dev->sid = sid;
+>> +	snprintf(iommu_dev->name, sizeof(iommu_dev->name), "qda_iommu_dev_%u", sid);
+> It's not easy to follow, when you have scattered the code across so many
+> patches and so many files. But I don't think iommu_dev->name is ever
+> used.
+I'll remove this.
+>
+>> +
+>> +	rc = qda_memory_manager_register_device(qdev->iommu_mgr, iommu_dev);
+>> +	if (rc) {
+>> +		qda_err(qdev, "Failed to register IOMMU device: %d\n", rc);
+>> +		kfree(iommu_dev);
+>>  		return rc;
+>>  	}
+>>  
+>> @@ -127,6 +145,8 @@ int qda_create_cb_device(struct qda_dev *qdev, struct device_node *cb_node)
+>>  void qda_destroy_cb_device(struct device *cb_dev)
+>>  {
+>>  	struct iommu_group *group;
+>> +	struct qda_iommu_device *iommu_dev;
+>> +	struct qda_dev *qdev;
+>>  
+>>  	if (!cb_dev) {
+>>  		qda_dbg(NULL, "NULL CB device passed to destroy\n");
+>> @@ -135,6 +155,18 @@ void qda_destroy_cb_device(struct device *cb_dev)
+>>  
+>>  	qda_dbg(NULL, "Destroying CB device %s\n", dev_name(cb_dev));
+>>  
+>> +	iommu_dev = dev_get_drvdata(cb_dev);
+> I'm not sure, but I think cb_dev is the struct device allocated in
+> qda_create_cb_device(), but I can not find a place where you set drvdata
+> for this device.
+It should be updated with iommu_dev in qda_cb_setup_device. I believe I missed
+adding this and it didn't give me any functional failure. Thanks for highlighting this,
+I'll fix this in the next spin.
+>
+>> +	if (iommu_dev) {
+>> +		if (cb_dev->parent) {
+>> +			qdev = dev_get_drvdata(cb_dev->parent);
+>> +			if (qdev && qdev->iommu_mgr) {
+>> +				qda_dbg(NULL, "Unregistering IOMMU device for %s\n",
+>> +					dev_name(cb_dev));
+>> +				qda_memory_manager_unregister_device(qdev->iommu_mgr, iommu_dev);
+>> +			}
+>> +		}
+>> +	}
+>> +
+>>  	group = iommu_group_get(cb_dev);
+>>  	if (group) {
+>>  		qda_dbg(NULL, "Removing %s from IOMMU group\n", dev_name(cb_dev));
+>> diff --git a/drivers/accel/qda/qda_drv.c b/drivers/accel/qda/qda_drv.c
+> [..]
+>> @@ -25,12 +37,46 @@ static void init_device_resources(struct qda_dev *qdev)
+>>  	atomic_set(&qdev->removing, 0);
+>>  }
+>>  
+>> +static int init_memory_manager(struct qda_dev *qdev)
+>> +{
+>> +	int ret;
+>> +
+>> +	qda_dbg(qdev, "Initializing IOMMU manager\n");
+>> +
+>> +	qdev->iommu_mgr = kzalloc_obj(*qdev->iommu_mgr, GFP_KERNEL);
+>> +	if (!qdev->iommu_mgr)
+>> +		return -ENOMEM;
+>> +
+>> +	ret = qda_memory_manager_init(qdev->iommu_mgr);
+>> +	if (ret) {
+>> +		qda_err(qdev, "Failed to initialize memory manager: %d\n", ret);
+> qda_memory_manager_init() already logged 1 error and 1 debug prints if
+> you get here.
+ack.
+>
+>> +		kfree(qdev->iommu_mgr);
+>> +		qdev->iommu_mgr = NULL;
+> We're going to fail probe, you shouldn't have to clear this.
+>
+>> +		return ret;
+>> +	}
+>> +
+>> +	qda_dbg(qdev, "IOMMU manager initialized successfully\n");
+>> +	return 0;
+>> +}
+>> +
+>>  int qda_init_device(struct qda_dev *qdev)
+>>  {
+>> +	int ret;
+>> +
+>>  	init_device_resources(qdev);
+>>  
+>> +	ret = init_memory_manager(qdev);
+>> +	if (ret) {
+>> +		qda_err(qdev, "IOMMU manager initialization failed: %d\n", ret);
+> And now we have 2 debug prints and two error prints in the log.
+I'll clean the duplicate/unnecessary logs at at places
+>
+>> +		goto err_cleanup_resources;
+>> +	}
+>> +
+>>  	qda_dbg(qdev, "QDA device initialized successfully\n");
+> Or, if we get here, you have 8 debug prints.
+>
+> Please learn how to use kprobe/kretprobe instead of reimplementing it
+> using printk().
+ack.
+>
+>>  	return 0;
+>> +
+>> +err_cleanup_resources:
+>> +	cleanup_device_resources(qdev);
+>> +	return ret;
+>>  }
+>>  
+>>  static int __init qda_core_init(void)
+>> diff --git a/drivers/accel/qda/qda_drv.h b/drivers/accel/qda/qda_drv.h
+>> index eb732b7d8091..2cb97e4eafbf 100644
+>> --- a/drivers/accel/qda/qda_drv.h
+>> +++ b/drivers/accel/qda/qda_drv.h
+>> @@ -11,6 +11,7 @@
+>>  #include <linux/mutex.h>
+>>  #include <linux/rpmsg.h>
+>>  #include <linux/xarray.h>
+>> +#include "qda_memory_manager.h"
+>>  
+>>  /* Driver identification */
+>>  #define DRIVER_NAME "qda"
+>> @@ -23,6 +24,8 @@ struct qda_dev {
+>>  	struct device *dev;
+>>  	/* Mutex protecting device state */
+>>  	struct mutex lock;
+>> +	/* IOMMU/memory manager */
+>> +	struct qda_memory_manager *iommu_mgr;
+>>  	/* Flag indicating device removal in progress */
+>>  	atomic_t removing;
+>>  	/* Name of the DSP (e.g., "cdsp", "adsp") */
+>> diff --git a/drivers/accel/qda/qda_memory_manager.c b/drivers/accel/qda/qda_memory_manager.c
+> [..]
+>> +int qda_memory_manager_register_device(struct qda_memory_manager *mem_mgr,
+>> +				       struct qda_iommu_device *iommu_dev)
+>> +{
+>> +	int ret;
+>> +	u32 id;
+>> +
+>> +	if (!mem_mgr || !iommu_dev || !iommu_dev->dev) {
+> How could this happen? You call this function from one place, that looks
+> like this:
+>
+> iommu_dev->dev = cb_dev;
+> iommu_dev->sid = sid;
+> rc = qda_memory_manager_register_device(qdev->iommu_mgr, iommu_dev);
+>
+> You just allocated in filled out iommu_dev.
+>
+> Looking up the callstack, we're coming from qda_rpmsg_probe() which just
+> did qda_init_device() which created the qsdev->iommu_mgr.
+>
+> In other words, these can't possibly be NULL.
+I'll recheck this and remove redundant checks.
+>
+>> +		qda_err(NULL, "Invalid parameters for device registration\n");
+>> +		return -EINVAL;
+>> +	}
+>> +
+>> +	init_iommu_device_fields(iommu_dev, mem_mgr);
+>> +
+>> +	ret = allocate_device_id(mem_mgr, iommu_dev, &id);
+>> +	if (ret) {
+>> +		qda_err(NULL, "Failed to allocate device ID: %d (sid=%u)\n", ret, iommu_dev->sid);
+>> +		return ret;
+>> +	}
+>> +
+>> +	iommu_dev->id = id;
+>> +
+>> +	qda_dbg(NULL, "Registered device id=%u (sid=%u)\n", id, iommu_dev->sid);
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +void qda_memory_manager_unregister_device(struct qda_memory_manager *mem_mgr,
+>> +					  struct qda_iommu_device *iommu_dev)
+>> +{
+>> +	if (!mem_mgr || !iommu_dev) {
+> The one call to this function is wrapped in:
+>
+> if (iommu_dev) {
+> 	if (qdev->iommu_mgr) {
+> 		qda_dbg(NULL, ...);
+> 		qda_memory_manager_unregister_device(qdev->iommu_mgr, iommu_dev);
+> 	}
+> }
+>
+>> +		qda_err(NULL, "Attempted to unregister invalid device/manager\n");
+>> +		return;
+>> +	}
+>> +
+>> +	qda_dbg(NULL, "Unregistering device id=%u (refcount=%u)\n", iommu_dev->id,
+>> +		refcount_read(&iommu_dev->refcount));
+> And just before the call to qda_memory_manager_unregister_device() you
+> print a debug log, saying you will call this function.
+>
+>> +
+>> +	if (refcount_read(&iommu_dev->refcount) == 0) {
+>> +		xa_erase(&mem_mgr->device_xa, iommu_dev->id);
+>> +		kfree(iommu_dev);
+>> +		return;
+>> +	}
+>> +
+>> +	if (refcount_dec_and_test(&iommu_dev->refcount)) {
+>> +		qda_info(NULL, "Device id=%u refcount reached zero, queuing removal\n",
+>> +			 iommu_dev->id);
+>> +		queue_work(mem_mgr->wq, &iommu_dev->remove_work);
+>> +	}
+>> +}
+>> +
+> [..]
+>> diff --git a/drivers/accel/qda/qda_memory_manager.h b/drivers/accel/qda/qda_memory_manager.h
+> [..]
+>> +
+>> +/**
+> This says "kernel-doc"
+>
+>> + * struct qda_iommu_device - IOMMU device instance for memory management
+>> + *
+>> + * This structure represents a single IOMMU-enabled device managed by the
+>> + * memory manager. Each device can be assigned to a specific process.
+>> + */
+>> +struct qda_iommu_device {
+>> +	/* Unique identifier for this IOMMU device */
+> But this doesn't follow kernel-doc style.
+>
+> At the end of the series, 
+>
+> ./scripts/kernel-doc -none -vv -Wall drivers/accel/qda/
+>
+> reports 270 warnings.
+I'll resolve the warnings in next version.
+>
+>> +	u32 id;
+>> +	/* Pointer to the underlying device */
+>> +	struct device *dev;
+>> +	/* Name for the device */
+>> +	char name[32];
+>> +	/* Spinlock protecting concurrent access to device */
+>> +	spinlock_t lock;
+>> +	/* Reference counter for device */
+>> +	refcount_t refcount;
+>> +	/* Work structure for deferred device removal */
+>> +	struct work_struct remove_work;
+>> +	/* Stream ID for IOMMU transactions */
+>> +	u32 sid;
+>> +	/* Pointer to parent memory manager */
+>> +	struct qda_memory_manager *manager;
+>> +};
+> Regards,
+> Bjorn
 
 
