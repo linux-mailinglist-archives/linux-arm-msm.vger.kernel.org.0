@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-94888-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-94889-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4JeAB75xpWlXAgYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-94888-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 12:17:18 +0100
+	id 2Ad8OudxpWlsBQYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-94889-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 12:17:59 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 69EB01D7500
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 12:17:17 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 992671D7546
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 02 Mar 2026 12:17:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 432CC300D695
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 11:17:16 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 0B37C3025D1C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Mar 2026 11:17:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DB8035DA61;
-	Mon,  2 Mar 2026 11:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 586F236166B;
+	Mon,  2 Mar 2026 11:17:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MrjmMX4R"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jyz8Qf3M"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47ADF31280C;
-	Mon,  2 Mar 2026 11:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33559360751;
+	Mon,  2 Mar 2026 11:17:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772450234; cv=none; b=Z2D7mf2+2WkcpJcghTVsHxKAX2KGwshY97bw4raQ9zpnJz1AtQBMsypYvaWCOm1NPZNVXZq//rHm409AdcwlSukrcracYkwno8WPD8A9d+bdOW16CwVDOuZSMqy6tyVqB+t5z7I9P1gqtQOiqJZsz2/vzor0gm4q/UjlHNw0v78=
+	t=1772450273; cv=none; b=rOBxOaPn7QzjEmhFJ3UAPFGzVx96q8Kma2Z/X53mXYKkGlP+yyLpTfHsDy6MOXG1VfsRddQJdS2bE0KRdQGfggjPA77ujI3X2po7rRkzG5xMMv+E6O+KxTR03pljcbrX0OZZiS/y5xN21pfIrx/vTzZxSjWP6J5LAn1BlzlzNu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772450234; c=relaxed/simple;
-	bh=3zUWRi5LRLXrd2uW3EmL+wjUmucogvXjF1d5em9rPvI=;
+	s=arc-20240116; t=1772450273; c=relaxed/simple;
+	bh=fkhbUiAjTibzqicxDZV2RxtMcG0ieysx+D2Y41RqP0Q=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dc1Xms3MrQH28coRApd2c34eoT4Vjg3i8jxSjE4MfTHKtIN+g2rzsuHJt9Hc6rnCwNDM4iMGXmagBMwGW77V+PLXah9Zsl6vVxxVs1PaYzgz3GERvbDEKO/5hWRlJjNSc1Sg3hAHmA6NBEVbEvh7qqIXVVXgFSI3UmcDEcGYtgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MrjmMX4R; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED5F0C19423;
-	Mon,  2 Mar 2026 11:17:09 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=RKSeR9x4n7b0srpToPgeFLCUZPiguttw/HC86qnl75y88dWuA3aplbRKQEB5WzeZbtay1Nn/hPTXirW+TlIrsPLBd/GGQMcfRTByjFMs/lohqyLCMZAUzK6GLNJQLr1KMYFsG1FirHjAYLqpKpfwcyfMvopTd3ph5DxR06a4M0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jyz8Qf3M; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 774DBC19423;
+	Mon,  2 Mar 2026 11:17:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772450233;
-	bh=3zUWRi5LRLXrd2uW3EmL+wjUmucogvXjF1d5em9rPvI=;
+	s=k20201202; t=1772450272;
+	bh=fkhbUiAjTibzqicxDZV2RxtMcG0ieysx+D2Y41RqP0Q=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=MrjmMX4Rh5HzqZymwbUd0tbsPihMgH1Ud7c9+q1NeHEourf0jE0MP5fZSi8j0ivAz
-	 pVUhBhLyMvBjOYVYmm/2SV+1TXtlYr18rdOs1hlIEtgG9MT/BqKSnT1+QbGmFJJp+V
-	 ErepmUdS51sGXt/y1pA6sNlgyS/DqJ8P+RN6OQL9yhg1jWiXsyCyxTrRMXHPM3gC2O
-	 1pGG0ofALzdq2zEHR3n9Tdg5WP4EWtyHSd5n0b7NEPrM0xxM2VRUQf7Ulfg9kebCOK
-	 riponpAmlqgaTMVMe+u+QwaHUkjvsIULDEWvWyVvyLWENzICxH89RfXCdQfMcSQc08
-	 3dvPto66nBWcw==
-Message-ID: <037db488-104c-45c3-8bc4-0e64358be3d1@kernel.org>
-Date: Mon, 2 Mar 2026 12:17:07 +0100
+	b=Jyz8Qf3MSFpgdQCOOIm+4LjzNSqZ/3daldzFf3WZUBAjZpjeOI/+RG2ZETnpiAZ/F
+	 F30x3ImgiSvT8d9fQl8TaO7QSB2SjfJlknOkaUYbltTmHBHvYzsffTXRy7cxEapfQn
+	 0yqNJCkNSLZxbmrSLGtFt1iaP1HKuXaNTJVEHl8egIfnzrClPhNl2PTITs4jFhqEeE
+	 GizYVfJV66OyLv6qZrFk45jPiFoWG74yvQNjj08s+pligV4UG89sX/PIp1M+rTCLCr
+	 +rqZD7Ld5/ajZ9ccDVMuX7uM+iMYmUV+HN31iywd/+ePD/nMm621DZBUgkJxLjG6Uc
+	 P5udp0+1mXOHQ==
+Message-ID: <1b076971-5259-4f19-a550-81bf8f18f390@kernel.org>
+Date: Mon, 2 Mar 2026 12:17:48 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,23 +53,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/10] Input: stmfts - add optional reset GPIO support
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, david@ixit.cz,
- Dmitry Torokhov <dmitry.torokhov@gmail.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Henrik Rydberg <rydberg@bitmath.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Petr Hodina <petr.hodina@protonmail.com>, linux-input@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- phone-devel@vger.kernel.org
-References: <20260301-stmfts5-v1-0-22c458b9ac68@ixit.cz>
- <20260301-stmfts5-v1-7-22c458b9ac68@ixit.cz>
- <5d3694c6-57e7-4943-8dbb-41334086e8ec@oss.qualcomm.com>
+Subject: Re: [PATCH v2] dt-bindings: interconnect: OSM L3: Add Eliza EPSS L3
+ compatible
+To: Abel Vesa <abel.vesa@oss.qualcomm.com>, Georgi Djakov
+ <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Sibi Sankar <sibi.sankar@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260302-eliza-bindings-interconnect-epss-l3-v2-1-05b1848b98cc@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -115,64 +107,50 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <5d3694c6-57e7-4943-8dbb-41334086e8ec@oss.qualcomm.com>
+In-Reply-To: <20260302-eliza-bindings-interconnect-epss-l3-v2-1-05b1848b98cc@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-94889-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-94888-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,ixit.cz,gmail.com,foss.st.com,kernel.org,bitmath.org];
-	RCPT_COUNT_TWELVE(0.00)[19];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[protonmail.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.996];
+	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,ixit.cz:email,protonmail.com:email]
-X-Rspamd-Queue-Id: 69EB01D7500
+	RCPT_COUNT_SEVEN(0.00)[10];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 992671D7546
 X-Rspamd-Action: no action
 
-On 02/03/2026 12:04, Konrad Dybcio wrote:
-> On 3/1/26 6:51 PM, David Heidelberg via B4 Relay wrote:
->> From: Petr Hodina <petr.hodina@protonmail.com>
->>
->> Add support for an optional "reset-gpios" property. If present, the
->> driver drives the reset line high at probe time and releases it during
->> power-on, after the regulators have been enabled.
->>
->> Signed-off-by: Petr Hodina <petr.hodina@protonmail.com>
->> Co-developed-by: David Heidelberg <david@ixit.cz>
->> Signed-off-by: David Heidelberg <david@ixit.cz>
->> ---
+On 02/03/2026 12:14, Abel Vesa wrote:
+> Eliza, similarly to SM8650, uses EPSS hardware for L3 scaling.
+> Document it.
 > 
-> [...]
-> 
->> +	sdata->reset_gpio = devm_gpiod_get_optional(dev, "reset",
->> +						    GPIOD_OUT_HIGH);
-> 
-> Are you really sure the reset is active-high?
+> Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+> ---
+> Changes in v2:
+> - Re-worded commit message to reflect compatibility with SM8650
+>   and replaced the OSM with EPSS, as Krzysztof suggested.
 
-This is not choice of ACTIVE HIGH here. It's initialization to logical
-level to keep device in reset state.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
 Best regards,
 Krzysztof
