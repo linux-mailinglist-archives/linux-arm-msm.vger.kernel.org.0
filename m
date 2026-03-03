@@ -1,331 +1,205 @@
-Return-Path: <linux-arm-msm+bounces-95181-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95182-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id yOcmBrgVp2ncdQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95181-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 18:09:12 +0100
+	id qAsHHUogp2mYeQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95182-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 18:54:18 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A9B291F46AE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 18:09:11 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id C13AB1F4D25
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 18:54:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 408B03029A88
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Mar 2026 17:08:59 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E88D130BFA9C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Mar 2026 17:53:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AAE2F370D7F;
-	Tue,  3 Mar 2026 17:08:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4F07370D4C;
+	Tue,  3 Mar 2026 17:53:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J8mjnHgd"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ReRkO/0j";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="BEeoKPct"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87505370D55;
-	Tue,  3 Mar 2026 17:08:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8D32DF6F4
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Mar 2026 17:53:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772557732; cv=none; b=im/T8txCO77gal3dG3e3PSgP12atP5Ova1izx2vFQz/Ck/t8hgO68+f2VHHgd2wx6pYjU53XpvA+I2kz5zpXyDy8GZJ9W+k0seimS35Ocy6nyCh/9RY4VLjVQhDsWmYaE+CcD0xsULrcMIBltYXdMaaougqpB952dGcFGNMVtnQ=
+	t=1772560385; cv=none; b=J02AwGp2if4IEGI5f3m3Y+CXUtuZtawFFGnlkvhF1ksMa9/GOvTqmMSBJpaFycfHPiIs9g1CZUOU6xsf9HQe61iwWrWt/6QanylzWVvSzGwHJB/LS0mmXtZnFrDRocIAcfgii+bGiC6r1i+OOUper3wGpUXTUBnfsD9TyY0L6dY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772557732; c=relaxed/simple;
-	bh=0899M90yE/0vfANLYTT04NKHa3DPkxuOqYvMDDceb8M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jqKHf5HJMYTpdmhxUwHkQ9XKTuz0dHzfvxoY4jLrX1do5pbqr1CtItlAAJfIQbfLlXf5dojJoetYW/acsCC3euMT/uJI4UI90BLHJJk/huUXAsMWQeB0P9N648RggsMNZ2bsz/Vun0spnSbfLKHyw0beRgu8pMcL7yJypxZNb8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J8mjnHgd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F439C116C6;
-	Tue,  3 Mar 2026 17:08:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772557732;
-	bh=0899M90yE/0vfANLYTT04NKHa3DPkxuOqYvMDDceb8M=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=J8mjnHgdiWS4kMcax+ziRaVDeeSCgxeiSb9TJmljKvMagNWMQbJWh7HIhnoPMez3i
-	 pWkrLrRu69ZaD32Pt2BAqDoElnIjgNVihGK/XxqJagSUf/TKn8stl/luFbMI30/QkL
-	 j7lzx/cM59q1c6XQLcCX5tgY4Ec0QZOJqJ4T3oyTAoKqXqxBLLmQBhC451rolwG3Pg
-	 ZuaCVD018omKxsdz1PnKKWodPvFzhwG+JNazI82kNatuN707f9blL1Ki/DhIfD5uVS
-	 NMhMK8ZkOJByX9C3wMnepLJDYI4V1dGbiiEpsq0+qg1XWgHcM+FurX5uy0SsXyVA2z
-	 Pa6/HgTKoVcKA==
-Date: Tue, 3 Mar 2026 22:38:38 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Harshal Dev <harshal.dev@oss.qualcomm.com>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>, 
-	"David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Abel Vesa <abel.vesa@oss.qualcomm.com>, cros-qcom-dts-watchers@chromium.org, 
-	Brian Masney <bmasney@redhat.com>, Neeraj Soni <neeraj.soni@oss.qualcomm.com>, 
-	Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 11/11] soc: qcom: ice: Add explicit power-domain and
- clock voting calls for ICE
-Message-ID: <4a76fuanyf45d56p64qmc7c3qcovbzt7jc27uern4lr4bchl6n@l6buzvakrrcg>
-References: <20260123-qcom_ice_power_and_clk_vote-v1-0-e9059776f85c@qti.qualcomm.com>
- <20260123-qcom_ice_power_and_clk_vote-v1-11-e9059776f85c@qti.qualcomm.com>
- <vimd3tbnu4mr2uqporj7d4fv23aq2cb6e5een43yz5spe4u2xx@ufyzb2lzlc6j>
- <b32c7091-b2c4-443d-b58e-759b471f67db@oss.qualcomm.com>
+	s=arc-20240116; t=1772560385; c=relaxed/simple;
+	bh=IVO8tYleod48wc5zjfL1DtUkiG2Vk5ZhZmQ4jXhWDr8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=itJdUZXuUKqfrrc76JFema2D29v4oFv4HqDGw55HLs5kihK2dg1HWdThZcAre4P5fyoe8Szn/54s17n4mxFw2cerSl9NWplEFxD6YvcpLQBFn3N8RZHb4By3q0upCUO7mhjlVI37HnV8mQO8cwKyOPFY6e9M76KUp9mPYb2ujlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ReRkO/0j; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=BEeoKPct; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 623H0VOn3548595
+	for <linux-arm-msm@vger.kernel.org>; Tue, 3 Mar 2026 17:53:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=gbdJ08Yf80xNNKdC19Lu6C
+	u7GesD7VmFhI+UYHuIDc8=; b=ReRkO/0jlqdyjQVrYaHK7W2qHTPSzCqdSViSit
+	i1/JgmyCvm90ZgzqTr3rYkdXvGXgbZM54kL3wCsUrHf0iHxH+f2ZOI7JjMM6tYeK
+	XPisTUFWhaSJFC39wXskpVwF04fw1JojJtIZTjmDkUIVKDCXWprWSK1o5y7MYHIF
+	mogiBCFHKV11+o4UeGDm4HjZM3yyHzsYyM8TPMKP7uLbWTBn+XAZQEpfwT5mKIe8
+	ikSc9JGaJKbdLAU2L+h9iAHoyDRhfTmekeyD5GRv7L+Pbh7fdKnu60WBkll4ZGDU
+	72WGGtidAEjX2cinoZCUi1Vf7QohveAkyVUtFG1Pf/gYoKyQ==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cnvxf9mf9-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 03 Mar 2026 17:53:03 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2adc527eaf5so29424835ad.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Mar 2026 09:53:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1772560382; x=1773165182; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=gbdJ08Yf80xNNKdC19Lu6Cu7GesD7VmFhI+UYHuIDc8=;
+        b=BEeoKPctHZvnDKjPs4kapVCPJ7BDZgxeOcmB79GorITvBHaVd8EWRTwciVtghiI1+3
+         VZD8PW88cS6m8kICFDVteF93lXekXhKw+sQLKpL+LdQOVXbUB+FYYdbr8/CKxEUj2EXV
+         FZYR5Uv9vaNgLH3hooiP5m7aMbs3qdjcNyj3UBVKFfls/YE+svySZw9P2LUw8HXb9loN
+         6xDcPp30gG17xd/c9swW9fo6+xsVjrliPLx3Ie3mNYLU0CeIC+btKue5V/fJjIUqoYuV
+         5qlaNNGwvEZ7MYM8R2b1paV3f4kH+66g80FAcw/tiRxVhX412BK+BeDsQv+XVJoE/IL0
+         tv9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772560382; x=1773165182;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gbdJ08Yf80xNNKdC19Lu6Cu7GesD7VmFhI+UYHuIDc8=;
+        b=jQ22UVNoyvPAA4aO2r1F5FYTbREjgkcaTl/kZxMYbThRHpZ/y5XRg/4Ac4mJfHlC+K
+         bBYuJD0E1B6dFhLDYQA38kg2ztjtyroiHGI5n4G+AWgX91+/gTL31qEYki/qnJn69kLF
+         A2qUBznrK4q+CMa1oU65mntsD6wE4B12Jg6ES7rb3YEiINcBOLE0zafeSQBUPT6Go0hs
+         CfZYdWTZw634JEg4VxUJFLdV9Oy2rBd+Xv0P0Z930F0nsO4DKql4yzLOTwOmzj6lxYZ1
+         5OHv4UtiP/9+i/5xTgur5UY6xj42Ny9G/H7xWvmJGXYVJe/3y/9+iYoMNa0lYt4dBvEB
+         HaWA==
+X-Forwarded-Encrypted: i=1; AJvYcCUM8KoYlsGqop+pM2dBh79T4yRsCQO+X5lUD1qmWBt4oGlVpprkY2JRM4MNJP23gNVe3i8wi+9VLyvqdhEw@vger.kernel.org
+X-Gm-Message-State: AOJu0YzIW9mTitmL6uFDJFwokgrwzy0a+mBgb5ElJA/NuFPt6ni5COhi
+	FIvYVX9Jzp69BmjKW9meiJyIGbRJWNEQliOyS1MJL8oObXyvOd1uOa/6eoDv3yeJBMOkf1aO5z+
+	5SAxJPUWIezWk0exzK2k/t4VBZxDZPQJfPFf4wV5sl7TedRqLqC/ZP470Drv3izo5Uud/
+X-Gm-Gg: ATEYQzwMwmCA9QFuDty5Nu5YYj2BHGB/pn7IiI0rl8tLchZZbqbXqdss7f8HrMiSRn2
+	PTBCUXeeNcV+b7zPA0j3ziqVyoLZ1sHF8gWjn8G7fXkh3MgYqG1gSA7gFTgTx/57OOyajJXuoNl
+	F2RBuMcuZoQ5XkaLsVhw9a4w5YKXotSTJQ22SzJ8pi1gBbkdqDCC3gv3lwnmVJldkoZmgPHt4Ef
+	I0XS4b6uw9ai5ucPoUnhge/C9D9GlZA23oZv8PCMqtCi+vW9wARel1SD5WIxvGFlycRjfTICFQs
+	FRDuaakD9M0jjVuQCoUgLKRVG5GcKHSDPH6wKDzTxU4rEp1ErzNm08NmYcB0x2InSLCq0wLnFX5
+	LOBfe1cfKz5B5JxTp7tpZ9+B5Yrv3GxzRYHubKslgJaUYyA==
+X-Received: by 2002:a17:902:f745:b0:2ae:6779:c8c6 with SMTP id d9443c01a7336-2ae6779cb6emr6261025ad.33.1772560382392;
+        Tue, 03 Mar 2026 09:53:02 -0800 (PST)
+X-Received: by 2002:a17:902:f745:b0:2ae:6779:c8c6 with SMTP id d9443c01a7336-2ae6779cb6emr6260735ad.33.1772560381883;
+        Tue, 03 Mar 2026 09:53:01 -0800 (PST)
+Received: from hu-tdas-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae3e4e34e6sm107140625ad.30.2026.03.03.09.52.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Mar 2026 09:53:01 -0800 (PST)
+From: Taniya Das <taniya.das@oss.qualcomm.com>
+Subject: [PATCH v2 0/2] clk: qcom: Add clock controller device nodes and
+ enable clocks for Glymur
+Date: Tue, 03 Mar 2026 23:22:50 +0530
+Message-Id: <20260303-glymur_mmcc_dt_config_v2-v2-0-da9ded08c26f@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <b32c7091-b2c4-443d-b58e-759b471f67db@oss.qualcomm.com>
-X-Rspamd-Queue-Id: A9B291F46AE
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAPIfp2kC/x3MQQqDMBBA0avIrBtIJ7RiryIlhMkYB0yUREUR7
+ 97Q5Vv8f0HhLFzg01yQeZcic6rARwM0uhRYia8G1PjWRhsVpjNu2cZIZP1qaU6DBLujcvTqEDW
+ 1xj+h5kvmQY7/uv/e9w81aYVCagAAAA==
+X-Change-ID: 20260303-glymur_mmcc_dt_config_v2-ac59220c73d1
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
+        Imran Shaik <imran.shaik@oss.qualcomm.com>,
+        Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Taniya Das <taniya.das@oss.qualcomm.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.15-dev-aa3f6
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAzMDE0MyBTYWx0ZWRfX/FTEuJ8Sy6Ow
+ +4fegS+Qvvlvs1NisxtT5W8qG5wVz/ciG595f0oFQzMvOxjmMzPkzc2zxnLCB+txkV7USwZTQhC
+ ypeeOgwp5fi3t4TD5KmSPtAsTWDZd4DwkVzdJrz4LCzv5bBvgk+r28jz/IDT/Vyj862e3WmzHBP
+ HKdq/mBdReLwHaVQtjcW2Ui1hfdWLIJ6fxN2WNnQy4fNFZDYopGWf8aTedrl40vCFnE2p01ND4L
+ o1IuMits7W6WGE/dRMUmODEOnDD6mzjykkA254LtGkuQzZ7OqBpYFtVKMcN950nHcRkttjhcmbb
+ I2H0BAJfkYQ+WYKy5Ge35QmbMe6qHIuJEtL6gwYrll8+b1jcwCJgSsYbv3OL+jwVRactE2igD82
+ SBu7zvnt9NnTFQcQ1iVvfwnKTqvLInuamGoRV0uaLcSh4KNFad4jtcmmY6hyZJjP5Ax6lbUZoMR
+ mj0WKCfkcUzTc8PWZCg==
+X-Proofpoint-ORIG-GUID: H0k2G4Yu2IItJ81bqLwDfWNdNy06JSuu
+X-Authority-Analysis: v=2.4 cv=S+HUAYsP c=1 sm=1 tr=0 ts=69a71fff cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=ObGMq8OY7gf8BbfD65QA:9 a=QEXdDO2ut3YA:10
+ a=1OuFwYUASf3TG4hYMiVC:22
+X-Proofpoint-GUID: H0k2G4Yu2IItJ81bqLwDfWNdNy06JSuu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-03_02,2026-03-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 malwarescore=0 lowpriorityscore=0 bulkscore=0 suspectscore=0
+ clxscore=1015 spamscore=0 priorityscore=1501 adultscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603030143
+X-Rspamd-Queue-Id: C13AB1F4D25
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95181-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	TAGGED_FROM(0.00)[bounces-95182-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	FROM_HAS_DN(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FROM_NEQ_ENVFROM(0.00)[taniya.das@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,qualcomm.com:email]
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Action: no action
 
-On Tue, Mar 03, 2026 at 02:11:06PM +0530, Harshal Dev wrote:
-> Hi Manivannan,
-> 
-> On 2/20/2026 8:14 PM, Manivannan Sadhasivam wrote:
-> > On Fri, Jan 23, 2026 at 12:41:35PM +0530, Harshal Dev wrote:
-> >> Since Qualcomm inline-crypto engine (ICE) is now a dedicated driver
-> >> de-coupled from the QCOM UFS driver, it should explicitly vote for it's
-> >> needed resources during probe, specifically the UFS_PHY_GDSC power-domain
-> >> and the 'core' and 'iface' clocks.
-> > 
-> > You don't need to vote for a single power domain since genpd will do that for
-> > you before the driver probes.
-> >
-> 
-> Unfortunately, without enabling the power domain during probe, I am seeing occasional
-> clock stuck messages on LeMans RB8. Am I missing something? Could you point me to any
-> docs with more information on the the genpd framework?
-> 
+Add the Video clock controller and GPU/GX clock controllers for Glymur.
+Enable the clock controllers for Glymur CRD boards.
 
-genpd_dev_pm_attach() called before a platform driver probe(), powers ON the
-domain.
+Changes in v2:
+- Add RB-by [Konrad].
+- Cleaning up stray 0, and add 0x0 for regs.
+- Add "Qualcomm" for defconfig commit subject.
+- Update the subject for the Cover Letter [Dmitry]
+- Link to v1: https://lore.kernel.org/r/20260220-glymur_mmcc_dt_config-v1-0-e0e2f43a32af@oss.qualcomm.com
 
-> Logs for reference:
-> 
-> [    6.195019] gcc_ufs_phy_ice_core_clk status stuck at 'off'
-> [    6.195031] WARNING: CPU: 5 PID: 208 at drivers/clk/qcom/clk-branch.c:87 clk_branch_toggle+0x174/0x18c
-> 
-> [...]
-> 
-> [    6.248412] pstate: 604000c5 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> [    6.248415] pc : clk_branch_toggle+0x174/0x18c
-> [    6.248417] lr : clk_branch_toggle+0x174/0x18c
-> [    6.248418] sp : ffff80008217b770
-> [    6.248419] x29: ffff80008217b780 x28: ffff80008217bbb0 x27: ffffadf880a5f07c
-> [    6.248422] x26: ffffadf880a5c1d8 x25: 0000000000000001 x24: 0000000000000001
-> [    6.248424] x23: ffffadf8a0d1e740 x22: 0000000000000001 x21: ffffadf8a1d06160
-> [    6.248426] x20: ffffadf89f86e5a8 x19: 0000000000000000 x18: fffffffffffe9050
-> [    6.248429] x17: 000000000404006d x16: ffffadf89f8166c4 x15: ffffadf8a1ab6c70
-> [    6.347820] x14: 0000000000000000 x13: ffffadf8a1ab6cf8 x12: 000000000000060f
-> [    6.355145] x11: 0000000000000205 x10: ffffadf8a1b11d70 x9 : ffffadf8a1ab6cf8
-> [    6.362470] x8 : 00000000ffffefff x7 : ffffadf8a1b0ecf8 x6 : 0000000000000205
-> [    6.369795] x5 : ffff000ef1ceb408 x4 : 40000000fffff205 x3 : ffff521650ba3000
-> [    6.377120] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff0000928dd780
-> [    6.384444] Call trace:
-> [    6.386962]  clk_branch_toggle+0x174/0x18c (P)
-> [    6.391530]  clk_branch2_enable+0x1c/0x28
-> [    6.395644]  clk_core_enable+0x6c/0xac
-> [    6.399502]  clk_enable+0x2c/0x4c
-> [    6.402913]  devm_clk_get_optional_enabled+0xac/0x108
-> [    6.408096]  qcom_ice_create.part.0+0x50/0x2fc [qcom_ice]
-> [    6.413646]  qcom_ice_probe+0x58/0xa8 [qcom_ice]
-> [    6.418384]  platform_probe+0x5c/0x98
-> [    6.422153]  really_probe+0xbc/0x29c
-> [    6.425826]  __driver_probe_device+0x78/0x12c
-> [    6.430307]  driver_probe_device+0x3c/0x15c
-> [    6.434605]  __driver_attach+0x90/0x19c
-> [    6.438547]  bus_for_each_dev+0x7c/0xe0
-> [    6.442486]  driver_attach+0x24/0x30
-> [    6.446158]  bus_add_driver+0xe4/0x208
-> [    6.450013]  driver_register+0x5c/0x124
-> [    6.453954]  __platform_driver_register+0x24/0x30
-> [    6.458780]  qcom_ice_driver_init+0x24/0x1000 [qcom_ice]
-> [    6.464229]  do_one_initcall+0x80/0x1c8
-> [    6.468173]  do_init_module+0x58/0x234
-> [    6.472028]  load_module+0x1a84/0x1c84
-> [    6.475881]  init_module_from_file+0x88/0xcc
-> [    6.480262]  __arm64_sys_finit_module+0x144/0x330
-> [    6.485097]  invoke_syscall+0x48/0x10c
-> [    6.488954]  el0_svc_common.constprop.0+0xc0/0xe0
-> [    6.493790]  do_el0_svc+0x1c/0x28
-> [    6.497203]  el0_svc+0x34/0xec
-> [    6.500348]  el0t_64_sync_handler+0xa0/0xe4
-> [    6.504645]  el0t_64_sync+0x198/0x19c
-> [    6.508414] ---[ end trace 0000000000000000 ]---
-> [    6.514544] qcom-ice 1d88000.crypto: probe with driver qcom-ice failed
->  
-> >> Also updated the suspend and resume callbacks to handle votes on these
-> >> resources.
-> >>
-> >> Signed-off-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
-> > 
-> > Where is the Fixes tag?
-> 
-> Ack, I will add it in v2 of this patch.
-> 
-> > 
-> >> ---
-> >>  drivers/soc/qcom/ice.c | 20 ++++++++++++++++++++
-> >>  1 file changed, 20 insertions(+)
-> >>
-> >> diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
-> >> index b203bc685cad..4b50d05ca02a 100644
-> >> --- a/drivers/soc/qcom/ice.c
-> >> +++ b/drivers/soc/qcom/ice.c
-> >> @@ -16,6 +16,8 @@
-> >>  #include <linux/of.h>
-> >>  #include <linux/of_platform.h>
-> >>  #include <linux/platform_device.h>
-> >> +#include <linux/pm.h>
-> >> +#include <linux/pm_runtime.h>
-> >>  
-> >>  #include <linux/firmware/qcom/qcom_scm.h>
-> >>  
-> >> @@ -108,6 +110,7 @@ struct qcom_ice {
-> >>  	void __iomem *base;
-> >>  
-> >>  	struct clk *core_clk;
-> >> +	struct clk *iface_clk;
-> >>  	bool use_hwkm;
-> >>  	bool hwkm_init_complete;
-> >>  	u8 hwkm_version;
-> >> @@ -310,12 +313,20 @@ int qcom_ice_resume(struct qcom_ice *ice)
-> >>  	struct device *dev = ice->dev;
-> >>  	int err;
-> >>  
-> >> +	pm_runtime_get_sync(dev);
-> > 
-> > This is not needed as the power domain would be enabled at this point.
-> 
-> Would this be enabled due to the genpd framework? I am not observing that
-> during probe. Because this call is made by the UFS/EMMC driver, perhaps you
-> mean the situation at this point is different?
-> 
+Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+---
+Taniya Das (2):
+      arm64: dts: qcom: Add support for MM clock controllers for Glymur
+      arm64: defconfig: Enable Qualcomm Glymur clock controllers
 
-If you pass 'power-domains' property in DT, genpd will power it ON at this
-point.
+ arch/arm64/boot/dts/qcom/glymur.dtsi | 42 ++++++++++++++++++++++++++++++++++++
+ arch/arm64/configs/defconfig         |  2 ++
+ 2 files changed, 44 insertions(+)
+---
+base-commit: d517cb8cea012f43b069617fc8179b45404f8018
+change-id: 20260303-glymur_mmcc_dt_config_v2-ac59220c73d1
 
-> > 
-> >>  	err = clk_prepare_enable(ice->core_clk);
-> >>  	if (err) {
-> >>  		dev_err(dev, "failed to enable core clock (%d)\n",
-> >>  			err);
-> >>  		return err;
-> >>  	}
-> >> +
-> >> +	err = clk_prepare_enable(ice->iface_clk);
-> >> +	if (err) {
-> >> +		dev_err(dev, "failed to enable iface clock (%d)\n",
-> >> +			err);
-> >> +		return err;
-> >> +	}
-> > 
-> > Use clk_bulk API to enable all clocks in one go.
-> 
-> Ack, I'll use clk_bulk_prepare_enable().
-> 
-> > 
-> >>  	qcom_ice_hwkm_init(ice);
-> >>  	return qcom_ice_wait_bist_status(ice);
-> >>  }
-> >> @@ -323,7 +334,9 @@ EXPORT_SYMBOL_GPL(qcom_ice_resume);
-> >>  
-> >>  int qcom_ice_suspend(struct qcom_ice *ice)
-> >>  {
-> >> +	clk_disable_unprepare(ice->iface_clk);
-> > 
-> > Same here.
-> 
-> Ack, clk_bulk_disable_unprepare() would look good.
-> As Konrad pointed out, if iface clock is not present in DT, thse APIs are
-> fine with NULL pointers here.
-> 
-> > 
-> >>  	clk_disable_unprepare(ice->core_clk);
-> >> +	pm_runtime_put_sync(ice->dev);
-> > 
-> > Not needed.
-> > 
-> >>  	ice->hwkm_init_complete = false;
-> >>  
-> >>  	return 0;
-> >> @@ -584,6 +597,10 @@ static struct qcom_ice *qcom_ice_create(struct device *dev,
-> >>  	if (IS_ERR(engine->core_clk))
-> >>  		return ERR_CAST(engine->core_clk);
-> >>  
-> >> +	engine->iface_clk = devm_clk_get_enabled(dev, "iface_clk");
-> >> +	if (IS_ERR(engine->iface_clk))
-> >> +		return ERR_CAST(engine->iface_clk);
-> >> +
-> > 
-> > Same here. Use devm_clk_bulk_get_all_enabled().
-> 
-> As per discussion on the DT binding patch, I can do this once we decide to break the
-> DT backward compatibility with a subsequent patch which makes both clocks mandatory.
-> For v2, I am planning to continue to treat the 'iface' clock as optional via
-> devm_clk_get_optional() API.
-> 
-
-Even if you do not mark 'iface' as 'required', this API will work just fine. It
-will get and enable whatever clocks defined in the DT node. It is upto the
-binding to define, what all should be present.
-
-> > 
-> >>  	if (!qcom_ice_check_supported(engine))
-> >>  		return ERR_PTR(-EOPNOTSUPP);
-> >>  
-> >> @@ -725,6 +742,9 @@ static int qcom_ice_probe(struct platform_device *pdev)
-> >>  		return PTR_ERR(base);
-> >>  	}
-> >>  
-> >> +	devm_pm_runtime_enable(&pdev->dev);
-> >> +	pm_runtime_get_sync(&pdev->dev);
-> > 
-> > If you want to mark & enable the runtime PM status, you should just do:
-> > 
-> > 	devm_pm_runtime_set_active_enabled();	
-> > 
-> > But this is not really needed in this patch. You can add it in a separate patch
-> > for the sake of correctness.
-> 
-> If my understanding is correct, I need to call pm_runtime_get_sync() to enable
-> the power domain after enabling the PM runtime to ensure further calls to enable
-> the iface clock do not encounter failure. Just calling devm_pm_runtime_set_active_enabled()
-> will only enable the PM runtime and set it's status to 'active'. It will not enable
-> the power domain.
-> 
-
-Again, you DO NOT need to handle a single power domain in the driver, genpd will
-do it for you. If that is not helping, then something else is going wrong.
-
-- Mani
-
+Best regards,
 -- 
-மணிவண்ணன் சதாசிவம்
+Taniya Das <taniya.das@oss.qualcomm.com>
+
 
