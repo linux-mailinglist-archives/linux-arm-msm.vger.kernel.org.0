@@ -1,177 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-95176-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95177-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id AJHRKcsMp2kDcgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95176-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 17:31:07 +0100
+	id IJmJMAIRp2k0cwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95177-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 17:49:06 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52CBB1F3D32
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 17:31:07 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B2921F41B0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 17:49:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 6E95D30637DE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Mar 2026 16:27:43 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 473FB30848DC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Mar 2026 16:43:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 138BB42983C;
-	Tue,  3 Mar 2026 16:27:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9B173264CB;
+	Tue,  3 Mar 2026 16:43:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IGwJT3cc"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="X8uDMbjc";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Mf2scaBF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18E836D9ED;
-	Tue,  3 Mar 2026 16:27:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 139753264C0
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Mar 2026 16:43:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772555263; cv=none; b=ZvHGKAmkpZW6m69T/OZEeP/deZ1XmtkBPQ2SIi+O/Io6gbCqN+eW6ngU7p3JQmcSHzwqDfygtblH7JM1o1Co2dI4XY19UNIvQlzpH7I5KdbHj0zQJk8ayEezj+2gef9EAFnOc5hu+5RcYbXIaz+U+J3yagC13/AT6Ch8z+LEuzo=
+	t=1772556204; cv=none; b=QcjxG3rfpSw4XgCpsebf/d5tsWLRQ6E8lBpBcgN4iZsxbNmSoxZMzcA0YdNUnGeeHRXgcLB008uhPjt/Pr9+1OcBsT7/pRdjpjmaqJIpriMH3CBKMgbmdjIKEGgm+rlWgRn1yEvlSdNASfG7um/tiVVOlwSNnsbFxGtTw+WF/i4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772555263; c=relaxed/simple;
-	bh=02WuwVzfcqREGKNcO4A+gehHauWokgchNs/BbMoEVRw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Frfx0a3q97oS0gIEQh8VEH9Q8RtRiDGW3msbGcbW++meCfEF5866QpIA6P60InD9CFnI6e0ma9QUyo9MTuNRUc4TF3O9T5J29WX3jFsb2EaluVAeb2NVxASgaJNWParMhJDZmJ2HsEMlEphKfrTYmgDWRNubPN8iIT15uhntoy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IGwJT3cc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 464ACC19422;
-	Tue,  3 Mar 2026 16:27:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772555262;
-	bh=02WuwVzfcqREGKNcO4A+gehHauWokgchNs/BbMoEVRw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=IGwJT3ccRPvCctpnE4DzTVD9FcqQmUNlycHUD0v6oE4FbMMKWy2q5rt9sKy0wKWn5
-	 XWyuo0Xe6aDRAWyTuIbehuzELvMVCVofjpVhED//48OHcWjhILi9DMBEPdLcSDWDCb
-	 d6+pNTKHz74ebyHUBnyikOrKlOvq9eJMLEd2RoXhwffxanj1dl2oO3XrEEp8Rb1vtM
-	 RKec0J64+9GRrl2bq6SfYqks3UlK1VN+5ZOBcRiq8EY9e1sIuv/vYBSCpXXDm7s652
-	 zmoURwTNwBIhEAEjysccLZK+I/09A5pk+DOppSF/yM+gXjuPFM62kyd9DKC/NLqvSw
-	 jwVKBkkp/E0PQ==
-Date: Tue, 3 Mar 2026 21:57:25 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Jon Hunter <jonathanh@nvidia.com>
-Cc: Manikanta Maddireddy <mmaddireddy@nvidia.com>, 
-	Bjorn Helgaas <helgaas@kernel.org>, krishna.chundru@oss.qualcomm.com, 
-	manivannan.sadhasivam@oss.qualcomm.com, Bjorn Helgaas <bhelgaas@google.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
-	Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, "David E. Box" <david.e.box@linux.intel.com>, 
-	Kai-Heng Feng <kai.heng.feng@canonical.com>, "Rafael J. Wysocki" <rafael@kernel.org>, 
-	Heiner Kallweit <hkallweit1@gmail.com>, Chia-Lin Kao <acelan.kao@canonical.com>, 
-	"linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>, Keith Busch <kbusch@kernel.org>, Jens Axboe <axboe@kernel.dk>, 
-	Christoph Hellwig <hch@lst.de>, Sagi Grimberg <sagi@grimberg.me>, linux-nvme@lists.infradead.org
-Subject: Re: [PATCH v2 1/2] PCI/ASPM: Override the ASPM and Clock PM states
- set by BIOS for devicetree platforms
-Message-ID: <km5stwtgzyshi5ogd2ke7qjj35nakwo6ztho5ju6y4ds32epln@fqqebty3v6me>
-References: <e44c330b-778b-4fa1-b678-fa909cc05b03@nvidia.com>
- <bf37b6a5-268d-4c07-a536-a826b3d5953b@nvidia.com>
- <unc5zefwndgcv7wufaezz3gkg3qtaymkjlmymhyqdqwzn3wybl@ow2rhbyt772h>
- <f9ac8c8f-8959-416b-ba90-14f0886c5bc0@nvidia.com>
- <a5m4pqtiaxsq5lmq64roro633ganbeq7mypa5ojuuqy4npkvok@wcogdbzaq6xe>
- <7157c68e-97f3-43b0-bfb5-e271a8f2a4b8@nvidia.com>
- <cf1e685a-a1cb-45ec-bdc3-1ef1a3d1044e@nvidia.com>
- <e0a0dc6d-fff0-41ec-92eb-7f2dbefa967b@nvidia.com>
- <vpwe273ehsbsyjpysyky4ypgnawosjehen34rr2n5bpoaqjsyg@3uylwh3oyyqc>
- <cfbbe3f0-f958-4cf2-aaa0-afca52cc5d5e@nvidia.com>
+	s=arc-20240116; t=1772556204; c=relaxed/simple;
+	bh=nB4EeXHFFUYnBjUlly9M7et4YOc5Tz7Rn1gcNBR5gvk=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=a38m5+JwsY9OBo5fLoCvkw2fC9Xx6sMY+Aoc1Tt7rqFjdux6erGQe8X7ZB5V4P13ka0vfzxn+6j7oEWQFcqx4jP0Yu/kn7GItehn/8jV8u+oW9l7wBdu+96GFKqABI+65bVPIeAxIhTiRBlRBY9hFCj/LxGkgUqAM+zUws70f/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=X8uDMbjc; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Mf2scaBF; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6239mrBh3951969
+	for <linux-arm-msm@vger.kernel.org>; Tue, 3 Mar 2026 16:43:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=sTqT1VkZxaPh+/SI7/WDGbxw5o5hnThVAUb
+	ciJW99Ts=; b=X8uDMbjcBJV3WK180OZshT+aHGhuVAbSwpKSpkuIIQ9ed3MQQij
+	tb7Yfom12OCWNyNhyjbWe8IuFiQ7BjfEvqinbefhkvqA90/Vus3FAqMv71gGrs0p
+	bB64szAiI22qV9vTdY9+lRZ7I5dm/mmoMZ1qyY/hK6Gajnl8M7Au2En+hORzs/Op
+	jE3jF4mqS+q5k9+JXGy9lEU2LansgMgguH067fUqfeATfqQHIG5uzRF9MZAukT9X
+	ZSJBOL9JpUJQxxluQZfpIGfw35/u2gNcBZRBSw+B+P5mZgLyQT3bhm4zdHe4DIDd
+	4pipGcGDSwB/dxl25yFWUPLNaqQVTrW2bMw==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cnu3n9s37-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 03 Mar 2026 16:43:21 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-359827e4acfso1400934a91.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Mar 2026 08:43:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1772556201; x=1773161001; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=sTqT1VkZxaPh+/SI7/WDGbxw5o5hnThVAUbciJW99Ts=;
+        b=Mf2scaBFZfPtidLLlz10pHadVY2HzkiQ3VhHBSt1Fm9c7JsVpAHdmh4DQyVu/3jhV8
+         37OarJPpCy1jcEqLz+9eRQVxq19TEbJJaVpUbZpKHSIGIDwL0Fjc4b9iV7mewrI+/bDx
+         nHDSearYl7wJBscDWtkhkCxrIX8DcSpQYg7frYC30VsJyhAQ6IwK3NsF6w1bLTL2gdYv
+         giEOo6Fv4KmL8+FBOir4A4MqgosAUWFPZBT27dxDSifduhuPOKQ9kw61sdR2SRXgqZ8v
+         236j6XK4/zNSQudp12a3s/scHWcTlepPfBOFI7oXslbVstyR/UWbbsA2v82IQxVz9Gsf
+         emQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772556201; x=1773161001;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sTqT1VkZxaPh+/SI7/WDGbxw5o5hnThVAUbciJW99Ts=;
+        b=VQr4JWVkN4ZLpofNl+NMOfZddapI9vce6S6/bEO2bOQs0j6AYQvq4cTVymNFDc5+II
+         0daHfvSlmky/ukeH9fPi7HHAuseDsfqgBY4Ppj8ft9b3dj0O0B1b6cod30NV9quMvXhL
+         LASbh7CUCssvujvFXhdE98iVkLG7+uRIBaBqfrcHbJUgAIAoPsL1rn79v8/HX3OUs19p
+         FP1PX6zeQNLk1dfSF0CBYCV/5tga3oskHn0UdW/Q9cihyhkUOYpPa4QE0ic5kJiBVcjS
+         jFxZrmV1s2X97ONosxPiAZoJLDE8fS+7pV+BXlGcAAY8Pl6VVlb9yoBKLZSGAMGQY/Zo
+         6iYQ==
+X-Gm-Message-State: AOJu0YzPK9RT7k4urFufkuHhhf8yaHmkiJwk5mg13UpsihkAk0EOuDlr
+	ryu5hT5lUSdb5mG3E8zveUOWPZcZfD3Oi7IW/fDpwjqKqCLKLGCQuWJV96GfoXfkS3EL1dMYbFC
+	fTZ+nLKJUapnFw01fsyzencJ4Dj9Gxi/BPS6ABtCUKjSwE1Lq8PPO92YdbCLfBdtfclwX
+X-Gm-Gg: ATEYQzy0ZbxFOui8Vo2pR5kikQjaHxS0KivlcDUKiKy0aH8ec1pd6dX29C1q6lLCuqC
+	KclGP3Zvzlt/8S1GBSEFNK3T0aEWMJQC777+/v0mJfPihmkvFC3vE0nAyn7G+ovHEBWt06VipT4
+	kge/tftSwPD1q2ra5YfDTOcf1/NTqPnamxSRlp/kMwJpm088NgaVkPJDdzD9ZwKlSvdkrTKlpVh
+	VX/sAsnjJgCFG4KagiWxUCAflydOzYjTX8JCGGSzCgRAXbhnmCyXaHPSSpcMb9ymwqVKaQcr83v
+	GHXopGNxXAtuFcQjP5ycpBPUXinhTGErCtsVZ3qZKHYVXJSwE4ugjj6K0FbObH5QLRLKRKp2xzX
+	EMlBfLkzQgO25gyjHVYeUE8grMJsgx0Cscze1499905ilyBl2lqb/
+X-Received: by 2002:a05:6a20:3d87:b0:334:8d22:f95d with SMTP id adf61e73a8af0-395c39f6db2mr11124999637.2.1772556200760;
+        Tue, 03 Mar 2026 08:43:20 -0800 (PST)
+X-Received: by 2002:a05:6a20:3d87:b0:334:8d22:f95d with SMTP id adf61e73a8af0-395c39f6db2mr11124983637.2.1772556200327;
+        Tue, 03 Mar 2026 08:43:20 -0800 (PST)
+Received: from hu-uchheda-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-8273a048615sm16153508b3a.52.2026.03.03.08.43.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Mar 2026 08:43:19 -0800 (PST)
+From: Umang Chheda <umang.chheda@oss.qualcomm.com>
+To: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, richardcochran@gmail.com
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, umang.chheda@oss.qualcomm.com,
+        mohd.anwar@oss.qualcomm.com, krishna.chundru@oss.qualcomm.com,
+        monish.chunara@oss.qualcomm.com
+Subject: [PATCH v3 0/1] Introduce Monaco EVK Interface Plus Mezzanine
+Date: Tue,  3 Mar 2026 22:13:13 +0530
+Message-Id: <20260303164314.886733-1-umang.chheda@oss.qualcomm.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <cfbbe3f0-f958-4cf2-aaa0-afca52cc5d5e@nvidia.com>
-X-Rspamd-Queue-Id: 52CBB1F3D32
+X-Authority-Analysis: v=2.4 cv=JaexbEKV c=1 sm=1 tr=0 ts=69a70fa9 cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=cOZz2FG-nCae4-kFyaMA:9 a=uKXjsCUrEbL0IQVhDsJ9:22
+X-Proofpoint-ORIG-GUID: bg_rUACxr2ECMYuYk7qCwRfp1W5O9aY_
+X-Proofpoint-GUID: bg_rUACxr2ECMYuYk7qCwRfp1W5O9aY_
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAzMDEzMyBTYWx0ZWRfXx7aFKhW3dYgw
+ QKg/DEMobBnRS8nzJIo7ULKpD1PsZrDVBsZkx7cfmyuXBlth+HFLIeYRQgfleAwkGL2df92jLs/
+ eCPoWKpsjm5w6eTCNqBq50iV/uUOuGpYNTg3LybgUCMAU8iTt+bvXqb4bwA2YkHXZK3avgLHbhq
+ GmoaCfv6Fcfueu4ooAl/jkZ0JRjQnYDoFACu8D/ViFJcOwvGb0BzTlUGMfJ6VjDiQkI2COohUnV
+ Gug9lxnpgXNR+VXiqNtlzYc5bhz6rfpKkmHp/lZVqGOIR8Nf+7j8TLlgt7iLm1Wsu9pMIIRGlTP
+ Ug/MnlHT5G2tnEYnwSacN6yaDP1Y764C1wk5hma54YZcfer9uA4YpGhiRCmKZwkemF+godckLP2
+ xEd5/AKAfjfZpVBAIwBeK7ogjGPv4eK8zajCuAlC3wIcsQHNH9G43M8Cqf90RUzV75hPPlVR22T
+ KaJPR0bc8d/eo8dfKdg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-03_02,2026-03-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0 impostorscore=0 malwarescore=0
+ lowpriorityscore=0 adultscore=0 bulkscore=0 priorityscore=1501 phishscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2602130000
+ definitions=main-2603030133
+X-Rspamd-Queue-Id: 3B2921F41B0
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-95177-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95176-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	TO_DN_EQ_ADDR_SOME(0.00)[];
-	FREEMAIL_CC(0.00)[nvidia.com,kernel.org,oss.qualcomm.com,google.com,vger.kernel.org,linux.intel.com,canonical.com,gmail.com,kernel.dk,lst.de,grimberg.me,lists.infradead.org];
-	RCPT_COUNT_TWELVE(0.00)[23];
-	MIME_TRACE(0.00)[0:+];
+	TO_DN_NONE(0.00)[];
+	FREEMAIL_TO(0.00)[kernel.org,gmail.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FROM_NEQ_ENVFROM(0.00)[umang.chheda@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
 	NEURAL_HAM(-0.00)[-1.000];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,qualcomm.com:dkim];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_TWELVE(0.00)[13];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	TO_DN_SOME(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,nvidia.com:email]
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Action: no action
 
-On Thu, Feb 26, 2026 at 04:55:34PM +0000, Jon Hunter wrote:
-> 
-> On 26/02/2026 11:08, Manivannan Sadhasivam wrote:
-> 
-> ...
-> 
-> > Since we know that ASPM is the issue on your platform and the failure also
-> > confirms that ASPM was never enabled before, I'd suggest disabling ASPM for the
-> > Root Port as a workaround:
-> > 
-> > ```
-> > diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-> > index 06571d806ab3..f504b4ffbcb6 100644
-> > --- a/drivers/pci/controller/dwc/pcie-tegra194.c
-> > +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
-> > @@ -2499,6 +2499,13 @@ module_platform_driver(tegra_pcie_dw_driver);
-> >   MODULE_DEVICE_TABLE(of, tegra_pcie_dw_of_match);
-> > +static void tegra_pcie_quirk_disable_aspm(struct pci_dev *dev)
-> > +{
-> > +       pcie_aspm_remove_cap(dev, PCI_EXP_LNKCAP_ASPM_L1 |
-> > +                                 PCI_EXP_LNKCAP_ASPM_L0S);
-> > +}
-> > +DECLARE_PCI_FIXUP_EARLY(PCI_VENDOR_ID_NVIDIA, PCI_ANY_ID, tegra_pcie_quirk_disable_aspm);
-> > +
-> >   MODULE_AUTHOR("Vidya Sagar <vidyas@nvidia.com>");
-> >   MODULE_DESCRIPTION("NVIDIA PCIe host controller driver");
-> >   MODULE_LICENSE("GPL v2");
-> > ```
-> > 
-> > You can use specific Root Port IDs or PCI_ANY_ID depending on the impact. We can
-> > also work on fixing the actual issue parallelly.
-> 
-> Thanks. By default we are building the PCIe driver for Tegra as a module and
-> so I am not sure we can use DECLARE_PCI_FIXUP_EARLY() right?
-> 
+Introduce device tree support for the Interface Plus [IFP] Mezzanine
+expansion card used with the Qualcomm Monaco Evaluation Kit (EVK).
 
-Ah, yes. We cannot use any of these DECLARE_PCI_FIXUP*() in a module anyway :/
+The Monaco IFP Mezzanine is an additional add-on card which can be
+stacked on top of monaco-evk board to extend peripheral capabilities of
+monaco-evk used for industrial applications.
 
-> I was just thinking that in pcie_aspm_override_default_link_state() we just
-> need a callback to specify the default ASPM override state?
-> 
+It connects via expansion headers on the monaco-evk and provides
+following peripherals :
+- 4x Type A USB ports in host mode.
+- TC9563 PCIe switch, which has following three downstream ports (DSP) :
+   - 1st DSP is routed to M.2 E-key connector, intended for WLAN endpoints.
+   - 2nd DSP is routed to M.2 B-key connector, intended for cellular modems.
+   - 3rd DSP with support for Dual Ethernet ports.
+- EEPROM.
+- LVDS Display.
+- 2*mini DP.
 
-That looks like a dirty hack. Moreover, your platform works perfectly fine with
-ASPM. So you should not be turning it off due to one driver behaving
-erratically.
+---
+Changelog
 
-As I mentioned in [1], you should try to advertise the
-PM_SUSPEND_FLAG_FW_SUSPEND flag for the platform as per [2].
+v3:
+- Add fixed-regulators to satisfy what is required by the bindings
+  instead of representing the complete tree which is present on the
+  board - Krzysztof.
+- Rename fixed-regulator node names as per current format
+  recommendation: 'regulator-[0-9]v[0-9]' - Krzysztof.
+- Add comment on why output-high property is required for tc9573 pinctrl
+  node - Dmitry.
+- Update commit text to communicate USB-Hub, LVDS display and mini DP
+  support will be added later once the dependent changes are
+  available - Dmitry.
+- v3-link: [2]
 
-FYI, this is a known issue that is plauging us for so long.
-PM_SUSPEND_FLAG_FW_SUSPEND is the cleanest solution we came up with. But
-unfortunately, we cannot use it across all of our Qcom SoCs due to firmware not
-advertising S2RAM in some of them.
+v2:
+- Change the DT filename to "monaco-evk-ifp-mezzanine.dtso", also
+  update commit text and cover letter text to reflect this change -
+Konrad.
+- Remove "status=okay" property from i2c15 node - Bjorn.
+- Remove "power-source", "input-disable" and "output-enable" properties
+  from tc9563_resx_n node and add "output-high" property instead to
+  align with TLMM supported bindings - Bjorn.
+- Remove extra '\n' from tc9563_resx_n node - Konrad.
+- v1-link: [1]
 
-- Mani
+[1] https://lore.kernel.org/lkml/20260210103821.4169-1-umang.chheda@oss.qualcomm.com/
+[2] https://lore.kernel.org/lkml/20260222173545.3627478-1-umang.chheda@oss.qualcomm.com/
 
-[1] https://lore.kernel.org/linux-pci/kkly3z4durpagtenadvmzdpojlctachgfgi2fdapt6zthdl2gx@n2qhmlud2zb7/
-[2] https://lore.kernel.org/all/20251231162126.7728-1-manivannan.sadhasivam@oss.qualcomm.com/
+Umang Chheda (1):
+  arm64: dts: qcom: monaco-evk: Add IFP Mezzanine
 
--- 
-மணிவண்ணன் சதாசிவம்
+ arch/arm64/boot/dts/qcom/Makefile             |   4 +
+ .../dts/qcom/monaco-evk-ifp-mezzanine.dtso    | 149 ++++++++++++++++++
+ 2 files changed, 153 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/monaco-evk-ifp-mezzanine.dtso
+
+--
+2.34.1
+
 
