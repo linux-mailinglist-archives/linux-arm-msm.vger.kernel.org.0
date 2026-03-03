@@ -1,105 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-95069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8CQLA9OepmlqRwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 09:41:55 +0100
+	id sKgUOIafpmlqRwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 09:44:54 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F2311EAE94
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 09:41:54 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5495E1EAFF1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 09:44:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9EAF63062F86
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Mar 2026 08:41:19 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id AE65A303E1F1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Mar 2026 08:43:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D7D6388363;
-	Tue,  3 Mar 2026 08:41:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60129388E7E;
+	Tue,  3 Mar 2026 08:43:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lPu0IvLO";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="fE7/QIUH"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="B7fd91F6";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="BhREGYjC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D195338839D
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Mar 2026 08:41:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08767388E79
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Mar 2026 08:43:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772527279; cv=none; b=e3I2W85KIl7tnhkCslGOsuHE35iopyNUmD03WkrwpIryDW5hhSeuRBlUGaIcgdFB6tuaL5esFvFqw/JTRdWHDqnCXoKsw9CL+gVL2qgwqu/2Sqbm24ZMJIkDj07d/wyfbSQcsOSJA6r/IWIOvbIfzVXBqC/eWovlmFocIcv+AYQ=
+	t=1772527400; cv=none; b=DI1ssrVe7BlTScPGyB2cvGvPvV0o+do+Hef7xkYxzO6GM14WypHBx1gt0fZKQ62ngRwNVb+F9SJcjFd0pWV9Uh8GOP41GWFbpgRaBp6VkVsJ1lsxH5WAGwaBdbdJwz9RaNBk0u1F/z+h2Bwy/n1YMF0vtWCzpcCxe+WiipUNvcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772527279; c=relaxed/simple;
-	bh=SdU36b6TYV79uk+gjgvtozaaDb08vZT9Ub4z3hYO0VA=;
+	s=arc-20240116; t=1772527400; c=relaxed/simple;
+	bh=LUyjae1bbgjcpMOUQTr72UtX+V2mU+WTtJZVdL+t7Zc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AfgmoCH6jW2MazuHHU59W7kqVP1DDj/ZuotRugetYpLvO7fjQqsAmfzIQAijswXIxoFafV4LZBmnvyjkci/0/k0KO43bC7PyjhMG69D/UtsdtqtxhvvD7oxfVTaraO1jfSihcUhavzl52DCOJ4yzcBNNEtJTFy0UH5ma/e5ut3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lPu0IvLO; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=fE7/QIUH; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=ZtCsU30D7KICMqKvwj8GogavMgsohgQAtgCFzbdooqJiujBAnDPkaQxMz6lT9loUMj1G16E39BHSLmYfjHxhlTBcPefv8vONCEcgdizxTyfg32Ak2D0srvQMsXG5KDiq9Lqqi6+xHhp4asEoEm/nsU4XsfNYg8S6cObX9rMKvrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=B7fd91F6; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=BhREGYjC; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6236P4UI959358
-	for <linux-arm-msm@vger.kernel.org>; Tue, 3 Mar 2026 08:41:17 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6235xwvC2996163
+	for <linux-arm-msm@vger.kernel.org>; Tue, 3 Mar 2026 08:43:17 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	n3P/v9Y/3o9NF1GSXcnB18lWN7UL+yS3drdaJoZ7Zyg=; b=lPu0IvLOPOGEumFw
-	NtZX6jW8VhXAyjfau3IS3LNUEW7d7EWpEsdWvSM3il4/BOPUe3Im5W7DwNeweikt
-	oLmkaboeM0PZu1PZZl2uH7vn262sJSDP02HGy+g3mAE+kN0H6qwBTIsUiBTGIcjt
-	XlDYimgHcj9zT+lmR0gxwwX+cF5ENjStbMmsdcLKcRew8mWTqriIOtyLUdDeeLtF
-	nb6qCOHWMMeHBvrP3QsxpktB/b+lAKS13XYsb6XMDPI4l/ZlUHQ5pYWJ3D8rcEOi
-	XK2Lp6Avs+V+X9v1PgNIYqVv7fQsdFiHTp5YLNeRYVXz5DixjMWKTNEi8e3r6Grk
-	ZxfxbQ==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cnhx5a27x-1
+	Xf4TKQNDzqWuHUGlzr5uhZtiBKuM3uW4fL3mWneyDJQ=; b=B7fd91F6V74VdsCz
+	sRLq1lAOWRQjwnXsInvIxYgfjUctdiRXFbjO4H4DF//KiFWtq+UyOx9y88C/h+MF
+	ZQwxTOiykIFk1PT9B1OZIJ0oquTZ0nSfTNqnHjhQID0Cf0AWnh6xSwfsd1Fg7Kve
+	oAZB1oC/de6dJzp2+eWGBHT3pu0fliUsBRM1pZzosMg7+mxNKjzEvYNaGM0+UDFK
+	L3jlntNL23ZqP3zpI4DB2wn8hgn3DFIUyXoIz9NfyYuCEMu7TSzGY5uuErPm5j//
+	qcbpCn76i59kjeDRJgK0qZQ0VHydj+04Bchi1T2RkpivQ58NUVWFJUTwuaHFwEiy
+	dDo2hw==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cnh6ua6na-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 03 Mar 2026 08:41:16 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-b6097ca315bso26131135a12.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Mar 2026 00:41:16 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 03 Mar 2026 08:43:16 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-359887aece0so2378287a91.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Mar 2026 00:43:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1772527276; x=1773132076; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1772527396; x=1773132196; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=n3P/v9Y/3o9NF1GSXcnB18lWN7UL+yS3drdaJoZ7Zyg=;
-        b=fE7/QIUHs7edvxvjpqFT74zHbajbsJE/HGWi3TDwY1nTAfIM/AFONu8AWEd2nkJNKA
-         uTcgcjYgzaDr+jiLMuJWfw3EuxUudO3oCueyumYsEFSMNwueHUSDkTd1y3JvMS65BAuC
-         TiUhanU6lIMXYWeEE0ocyhm/zaEt7FTY4tWPAhr4v/+UwH4HrjKeowPanydlN0rbrHX2
-         21+EK7GUVeBrIkh1XW1hQqnJ2N39oQQ2xMVCnX+kbegG5mAPW6CgyhwT5AO2gXxkCK32
-         zBGYCcVXa/Nwa7c6EEUSxMX7akAfRy4CuyN/XdS+cG9KDkYckzyqLYhE1jCvASDF8pP3
-         h2fQ==
+        bh=Xf4TKQNDzqWuHUGlzr5uhZtiBKuM3uW4fL3mWneyDJQ=;
+        b=BhREGYjCKp6M8atweH2pKAFQ37dOSR1SX+L94FTQsLXTyKEJ4Ifr1UxIrPSTo7iPvc
+         JNvxTQSCuHl6U8po4xK7SeQ5XPeJAEQ4YdG+m5oCdTss2LR7M4QpYyD8+9FCXk1u9G9f
+         Sr3yg166EQ6H9mbNzwfaHJ/9+FBoowsRs2bfKOebky2gINAk4l1Dk/rSfbYz3YMGJL0P
+         NhRKrbCp3BRpH5CPd/IlUbKfxuFXTDwbnleFPoc1IfYSRTfpwQ9jZcpVySu5u3LnKjNj
+         tyOyvSuIZy3TepQJG6uRxDQ7JppATkLUJIh8U8QeUrzL0MtLVCGNHpXalXGmXU5GIm/i
+         vmMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772527276; x=1773132076;
+        d=1e100.net; s=20230601; t=1772527396; x=1773132196;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=n3P/v9Y/3o9NF1GSXcnB18lWN7UL+yS3drdaJoZ7Zyg=;
-        b=wIzDYXSYKvr9UAkMODGh1P53SpglNju6zG/5WNZT63zp39/6VqiK0/UIEvRix+ujEF
-         ucklb109taHZcykvDtbP90li+gyRVyi6+DhCiQI3YrNm/eHOYPnhM9sAm/8fl0f1F0t+
-         bTr6B0tM2lOZJMbNOpTGej3p/w9yOwe/yz9FWhdTKTUUXElvqbR91KzzzuvEuTf8Hro5
-         PBIDH648arQO/26GMCqZ+K1Pct2H8GkZKr06NnoThbS37BxhBg9ZfnUb3UFg2NN3TuP+
-         C7Jdy5OxOrUBF0fhOG0kcBbuzZKQlev+/s62/L1rVpAHyj0AHrTchWOoJlY4nTkgk/t/
-         8ieQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU+NWTZRP8mTHiXmx04OhydnkrjPq6mINudd0fnXOhq6DsqTdmMylsrBXvNbZI0zQ2+Ytt45zV/I0kxuqG8@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzb0Cxyre104sUb/PJTZlZ1sEIH0RuCaEaURkjD5sK1TBEmjw/X
-	VA5O/AvbEA62LAfKj+hIp5c/mmgbJ6GbmvGD6nn+SwaA6ryKBfBmkoPGIjF6KpVJ11WTTR18Gir
-	+KeO9G4IwGVHLobhJfHv4eecb29OtuxF99LcVc2c1HoH/3Zt5NZi0LvtvhvjqYsTvHo+j
-X-Gm-Gg: ATEYQzy2y12+hMcdJKpVIAVQru3z8Ihxt3HdHk+7F9VFB+XxSp8ZAQhJry7zQaRsmGw
-	WZY6q1t/CPxObUbwYxQ4YzKgJ32BtOiLa8Bp/CXnEVLVq9u02OLsrcKURPs7tFOcasqD7JGvUSa
-	Y9HQg82HBjY5NY8cmFTUbl/4zQal7v/eTodZaRGjyD8V/axbAasIzkoALtZ236UZIgKudB37gO8
-	GM718HYpPO1SGU1aPbsdeiXVjevjfb97pMTUcZkAc30IZqXe3Bx6k928FD7B52gtiYf8S9hHWWx
-	+VZOnadcwQ/8XUFbGdvrfbkvygo5EibtZfZV3PYkuH6WcEwIixn+YidABxt3xSN3QmX9SGLhRKV
-	cXsnf3mV1WRJ53DMyINU+7KpIzbntczVx4BJ0nwaORanLnH6eOcbHvbkBm5ludkI9Yr+kwrRTst
-	boCaZEzZwsBQIM
-X-Received: by 2002:a05:6a21:b82:b0:35f:5fc4:d885 with SMTP id adf61e73a8af0-395c3a1d040mr12820062637.9.1772527275737;
-        Tue, 03 Mar 2026 00:41:15 -0800 (PST)
-X-Received: by 2002:a05:6a21:b82:b0:35f:5fc4:d885 with SMTP id adf61e73a8af0-395c3a1d040mr12820039637.9.1772527275070;
-        Tue, 03 Mar 2026 00:41:15 -0800 (PST)
-Received: from ?IPV6:2401:4900:1c66:bc62:9072:7b6b:889e:887d? ([2401:4900:1c66:bc62:9072:7b6b:889e:887d])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c70fa620faesm13260917a12.10.2026.03.03.00.41.09
+        bh=Xf4TKQNDzqWuHUGlzr5uhZtiBKuM3uW4fL3mWneyDJQ=;
+        b=lN+zqPwuaWRF0qgzYWc88RsbhsFXrASCRJsv+DCyTKpWw7GNNoOaHao8DpBu6+mH8u
+         /tFB+qBpp7qe4FPBE0CELfgU/q87X7BEuNSG3t2DpiHO0sClY/m4CGnPP1GZJ50Z8BrD
+         gxXiMFBpt2Pto/c51mfGekwy2YZhD3EM8vakHx2SzQMvWWxzigR7Yg26VEzSctPdPi0y
+         SUY1BWV6c0JDlEdEw3iaeu2wHwagRgt3mDnll/GXvfkmKhbXcvIxLLqp9qDNC+/LUIZW
+         N4dA2S2KgGe0nvT0aNFqE4BXvUuem1ORAktQ3EMX6mvnoMkEC9VTYe4CO76wPSW59lVS
+         No5g==
+X-Forwarded-Encrypted: i=1; AJvYcCXzdNs+OfXVOTAfxtNCddJ5xFnoSwmp1buWrkPxqy/ZBgZ17OYa3Mp8dWQt3tqkjh8bvBJgQaRLqHFX0lXd@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx6deI0j8+hekT4JCwksuZDqCZhdrRfxI6hfiSQOvKN850YOLZD
+	izwshAOntLL3rMmX38NZS3Spor8Gj5lB3dWMgfw1klSByF72XhpClHyakn+kmSorT5Co80OKVmS
+	1Dx7IdTaiKCmQWuLOX7pHzYyBb2nMYzUKHucrXtJCY1VTedkMrcxFC3cSypRuspUkOg87
+X-Gm-Gg: ATEYQzyIlkuwtAhvjeAW5WngUKJOGqvJFxjHkEBxZZgpGirHTQDtWTNkxx9nm31fAxD
+	wvvP9PnqrESplD5HzHlhij7TZyJNx/3zxyafVOmPLJp4+lm1xZsLs7ex/dbyFUJMyncIjQ07OMz
+	xQ5GgD3pFj8Ri9Mp+A0SpsGYicaGQLZkF822I+yaSpVW0ywL32jL7qXA8XMCUGryUAsmz1pPui6
+	VLEvXOHyfJCXAY/ubivtqWjyISzFoGPr57llPcre44GQlljP/6Yt0U2bnZEq6dGja/QGrifEapR
+	QjmMl6M1mLqRe200iE0uxzS/yptgiFaZZyfJ7I8I1ZLjQoTCzDU7YQB4CWZ43zYEkO0CVGNxvUc
+	LuL0Faefwj8NPlwVNQEIitbLeucMPP7zhOP1IJ1LZ94XkfHgfeKFEvZdxY/pOrQ7qVFqfJdjje3
+	pxnks7DGv/z6o=
+X-Received: by 2002:a17:902:f689:b0:2ad:ba80:df62 with SMTP id d9443c01a7336-2ae2e480d5cmr170332115ad.37.1772527396031;
+        Tue, 03 Mar 2026 00:43:16 -0800 (PST)
+X-Received: by 2002:a17:902:f689:b0:2ad:ba80:df62 with SMTP id d9443c01a7336-2ae2e480d5cmr170331605ad.37.1772527395036;
+        Tue, 03 Mar 2026 00:43:15 -0800 (PST)
+Received: from [10.133.33.114] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2adfb6d24b3sm155532085ad.78.2026.03.03.00.43.09
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Mar 2026 00:41:14 -0800 (PST)
-Message-ID: <b32c7091-b2c4-443d-b58e-759b471f67db@oss.qualcomm.com>
-Date: Tue, 3 Mar 2026 14:11:06 +0530
+        Tue, 03 Mar 2026 00:43:14 -0800 (PST)
+Message-ID: <bbf51880-7c69-423e-8f35-84f51e4db667@oss.qualcomm.com>
+Date: Tue, 3 Mar 2026 16:43:07 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -107,79 +107,77 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/11] soc: qcom: ice: Add explicit power-domain and clock
- voting calls for ICE
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH v13 6/8] coresight: ctcu: enable byte-cntr for TMC ETR
+ devices
+To: Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach
+ <Mike.Leach@arm.com>, James Clark <james.clark@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
+        Mao Jinlong <jinlong.mao@oss.qualcomm.com>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Abel Vesa <abel.vesa@oss.qualcomm.com>,
-        cros-qcom-dts-watchers@chromium.org, Brian Masney <bmasney@redhat.com>,
-        Neeraj Soni
- <neeraj.soni@oss.qualcomm.com>,
-        Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>,
-        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20260123-qcom_ice_power_and_clk_vote-v1-0-e9059776f85c@qti.qualcomm.com>
- <20260123-qcom_ice_power_and_clk_vote-v1-11-e9059776f85c@qti.qualcomm.com>
- <vimd3tbnu4mr2uqporj7d4fv23aq2cb6e5een43yz5spe4u2xx@ufyzb2lzlc6j>
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20260223-enable-byte-cntr-for-ctcu-v13-0-9cb44178b250@oss.qualcomm.com>
+ <20260223-enable-byte-cntr-for-ctcu-v13-6-9cb44178b250@oss.qualcomm.com>
 Content-Language: en-US
-From: Harshal Dev <harshal.dev@oss.qualcomm.com>
-In-Reply-To: <vimd3tbnu4mr2uqporj7d4fv23aq2cb6e5een43yz5spe4u2xx@ufyzb2lzlc6j>
-Content-Type: text/plain; charset=UTF-8
+From: Jie Gan <jie.gan@oss.qualcomm.com>
+In-Reply-To: <20260223-enable-byte-cntr-for-ctcu-v13-6-9cb44178b250@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAzMDA2MyBTYWx0ZWRfX5/cgDIAi8y8w
- cKrnuIkj3weKNUGO6w1qamF835FMQhNVdwzryKChLXTeQG6ulhaCeFAf0Ul4j329J8YXF6GYChF
- Qz2PZN5dBbNwH1ZQhiB6feXC8KDbKyzYOHVH+yD7nCDQOPkfOOpnNTrqTHuzxq5aVAGrVOXqe0s
- PDMP3jXsnMEW5npxFOSQoXpde+7l9PNZZ2tLA+IpkunPWnFt0t7jYAgtDTXcmC/4JkYJ+YO568n
- fnpTy+OkFo8iLHXnFzZPit029STp71iNkFP1m7O9qbqYUuRgD/u1yXTp6HFl29uGQl2k0lQqVYA
- 1N+Ghcgqs/LgaHFNTiWWaCXdUuwBfPAOtLjfT1LOZQ6/yH93Z0crA5k8n5ei1VGYxmOz7hgHeMs
- leV6Yuzc0uZ56ICSyg7qIxyUup3gjMsRUrnTsHQll2TQ2XyPx9lZB52dvGhhU9sYg20WrT78o1u
- ZK2YF1AuMUDV72Z1GJg==
-X-Authority-Analysis: v=2.4 cv=T9CBjvKQ c=1 sm=1 tr=0 ts=69a69eac cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22 a=EUspDBNiAAAA:8
- a=dxsIoiN5mY1GeC2t4AAA:9 a=QEXdDO2ut3YA:10 a=_Vgx9l1VpLgwpw_dHYaR:22
-X-Proofpoint-GUID: ZLkmdKWj5pd7NmM5BANBZvfyQ8lvCNvC
-X-Proofpoint-ORIG-GUID: ZLkmdKWj5pd7NmM5BANBZvfyQ8lvCNvC
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAzMDA2MyBTYWx0ZWRfX05nexgSPtDfh
+ b4X6zs2NVvvMg2g4zqET+BNDnF51PZMlfwa3kzIlpPUH+i6M5IPeeETsClupd75kA3JhVCKwu5l
+ qm0rccO4y1XLO2nM1SkuB57zFSM4xaxZus2nmjmWHlFGSd8WKaAoT1aotNDSwxs1LdFoQpgwBiz
+ Uhf0faqdjWhzSenYTRMTor5PM1rG3qBD1Z3vUC7dtLd+Ww+yoCwFuXgQXJZu6jfagjI7nPWUGEL
+ 1lmu7VHfxsO6akXdTlaXbGcDoT4zjJVwmLoHMdi5C+vCPPndAcAyF9EQ97I2O+6D95liPmdNPwr
+ ruPz6Kjgv9ao8IfVjv6UNtkHtJo7RC4YiZws1NJkGD1zYTMUyx8FT16nXXEecooBI1aq2VpEDVt
+ 7HdjMjUAI0pSWWUNKicV83kC6YJ0d0oe1+0ExdsPR3E80w2MlSS5Ws351ZmCrgtAbTrf3QFvgQj
+ hQRmlZJnTvuTIRd3c4g==
+X-Authority-Analysis: v=2.4 cv=MuhfKmae c=1 sm=1 tr=0 ts=69a69f24 cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=EUspDBNiAAAA:8 a=_NS0HjBKCYVzgDJdXkEA:9 a=QEXdDO2ut3YA:10
+ a=rl5im9kqc5Lf4LNbBjHf:22
+X-Proofpoint-ORIG-GUID: Jf8R0hVA73_zGunuGZTV4-ym500oedMO
+X-Proofpoint-GUID: Jf8R0hVA73_zGunuGZTV4-ym500oedMO
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-02_05,2026-03-03_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 adultscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0
- priorityscore=1501 clxscore=1015 suspectscore=0 malwarescore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2602130000
- definitions=main-2603030063
-X-Rspamd-Queue-Id: 9F2311EAE94
+ priorityscore=1501 phishscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0
+ impostorscore=0 suspectscore=0 malwarescore=0 clxscore=1015 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603030063
+X-Rspamd-Queue-Id: 5495E1EAFF1
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[17];
+	RCPT_COUNT_TWELVE(0.00)[16];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95069-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-95070-lists,linux-arm-msm=lfdr.de];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,qualcomm.com:dkim,qualcomm.com:email];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,desc.dev:url];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[harshal.dev@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[jie.gan@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
@@ -187,215 +185,755 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Action: no action
 
-Hi Manivannan,
 
-On 2/20/2026 8:14 PM, Manivannan Sadhasivam wrote:
-> On Fri, Jan 23, 2026 at 12:41:35PM +0530, Harshal Dev wrote:
->> Since Qualcomm inline-crypto engine (ICE) is now a dedicated driver
->> de-coupled from the QCOM UFS driver, it should explicitly vote for it's
->> needed resources during probe, specifically the UFS_PHY_GDSC power-domain
->> and the 'core' and 'iface' clocks.
+
+On 2/23/2026 2:55 PM, Jie Gan wrote:
+> The byte-cntr function provided by the CTCU device is used to transfer data
+> from the ETR buffer to the userspace. An interrupt is triggered if the data
+> size exceeds the threshold set in the BYTECNTRVAL register. The interrupt
+> handler counts the number of triggered interruptions and the read function
+> will read the data from the synced ETR buffer.
 > 
-> You don't need to vote for a single power domain since genpd will do that for
-> you before the driver probes.
->
-
-Unfortunately, without enabling the power domain during probe, I am seeing occasional
-clock stuck messages on LeMans RB8. Am I missing something? Could you point me to any
-docs with more information on the the genpd framework?
-
-Logs for reference:
-
-[    6.195019] gcc_ufs_phy_ice_core_clk status stuck at 'off'
-[    6.195031] WARNING: CPU: 5 PID: 208 at drivers/clk/qcom/clk-branch.c:87 clk_branch_toggle+0x174/0x18c
-
-[...]
-
-[    6.248412] pstate: 604000c5 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[    6.248415] pc : clk_branch_toggle+0x174/0x18c
-[    6.248417] lr : clk_branch_toggle+0x174/0x18c
-[    6.248418] sp : ffff80008217b770
-[    6.248419] x29: ffff80008217b780 x28: ffff80008217bbb0 x27: ffffadf880a5f07c
-[    6.248422] x26: ffffadf880a5c1d8 x25: 0000000000000001 x24: 0000000000000001
-[    6.248424] x23: ffffadf8a0d1e740 x22: 0000000000000001 x21: ffffadf8a1d06160
-[    6.248426] x20: ffffadf89f86e5a8 x19: 0000000000000000 x18: fffffffffffe9050
-[    6.248429] x17: 000000000404006d x16: ffffadf89f8166c4 x15: ffffadf8a1ab6c70
-[    6.347820] x14: 0000000000000000 x13: ffffadf8a1ab6cf8 x12: 000000000000060f
-[    6.355145] x11: 0000000000000205 x10: ffffadf8a1b11d70 x9 : ffffadf8a1ab6cf8
-[    6.362470] x8 : 00000000ffffefff x7 : ffffadf8a1b0ecf8 x6 : 0000000000000205
-[    6.369795] x5 : ffff000ef1ceb408 x4 : 40000000fffff205 x3 : ffff521650ba3000
-[    6.377120] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff0000928dd780
-[    6.384444] Call trace:
-[    6.386962]  clk_branch_toggle+0x174/0x18c (P)
-[    6.391530]  clk_branch2_enable+0x1c/0x28
-[    6.395644]  clk_core_enable+0x6c/0xac
-[    6.399502]  clk_enable+0x2c/0x4c
-[    6.402913]  devm_clk_get_optional_enabled+0xac/0x108
-[    6.408096]  qcom_ice_create.part.0+0x50/0x2fc [qcom_ice]
-[    6.413646]  qcom_ice_probe+0x58/0xa8 [qcom_ice]
-[    6.418384]  platform_probe+0x5c/0x98
-[    6.422153]  really_probe+0xbc/0x29c
-[    6.425826]  __driver_probe_device+0x78/0x12c
-[    6.430307]  driver_probe_device+0x3c/0x15c
-[    6.434605]  __driver_attach+0x90/0x19c
-[    6.438547]  bus_for_each_dev+0x7c/0xe0
-[    6.442486]  driver_attach+0x24/0x30
-[    6.446158]  bus_add_driver+0xe4/0x208
-[    6.450013]  driver_register+0x5c/0x124
-[    6.453954]  __platform_driver_register+0x24/0x30
-[    6.458780]  qcom_ice_driver_init+0x24/0x1000 [qcom_ice]
-[    6.464229]  do_one_initcall+0x80/0x1c8
-[    6.468173]  do_init_module+0x58/0x234
-[    6.472028]  load_module+0x1a84/0x1c84
-[    6.475881]  init_module_from_file+0x88/0xcc
-[    6.480262]  __arm64_sys_finit_module+0x144/0x330
-[    6.485097]  invoke_syscall+0x48/0x10c
-[    6.488954]  el0_svc_common.constprop.0+0xc0/0xe0
-[    6.493790]  do_el0_svc+0x1c/0x28
-[    6.497203]  el0_svc+0x34/0xec
-[    6.500348]  el0t_64_sync_handler+0xa0/0xe4
-[    6.504645]  el0t_64_sync+0x198/0x19c
-[    6.508414] ---[ end trace 0000000000000000 ]---
-[    6.514544] qcom-ice 1d88000.crypto: probe with driver qcom-ice failed
- 
->> Also updated the suspend and resume callbacks to handle votes on these
->> resources.
->>
->> Signed-off-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
+> Switching the sysfs_buf when current buffer is full or the timeout is
+> triggered and resets rrp and rwp registers after switched the buffer.
+> The synced buffer will become available for reading after the switch.
 > 
-> Where is the Fixes tag?
+> Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
+> ---
+>   .../ABI/testing/sysfs-bus-coresight-devices-ctcu   |   8 +
+>   drivers/hwtracing/coresight/Makefile               |   2 +-
+>   .../hwtracing/coresight/coresight-ctcu-byte-cntr.c | 367 +++++++++++++++++++++
+>   drivers/hwtracing/coresight/coresight-ctcu-core.c  | 103 +++++-
+>   drivers/hwtracing/coresight/coresight-ctcu.h       |  77 ++++-
+>   drivers/hwtracing/coresight/coresight-tmc-etr.c    |  18 +
+>   drivers/hwtracing/coresight/coresight-tmc.h        |   1 +
+>   7 files changed, 563 insertions(+), 13 deletions(-)
+> 
+> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-ctcu b/Documentation/ABI/testing/sysfs-bus-coresight-devices-ctcu
+> new file mode 100644
+> index 000000000000..a58a05491f7a
+> --- /dev/null
+> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-ctcu
+> @@ -0,0 +1,8 @@
+> +What:           /sys/bus/coresight/devices/<ctcu-name>/irq_threshold[0:1]
+> +Date:           February 2026
+> +KernelVersion:  7.1
+> +Contact:        Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>; Jinlong Mao <jinlong.mao@oss.qualcomm.com>; Jie Gan <jie.gan@oss.qualcomm.com>
+> +Description:
+> +		(RW) Configure the byte-cntr IRQ register for the specified ETR device
+> +		based on its port number. An interrupt is generated when the data size
+> +		exceeds the value set in the IRQ register.
+> diff --git a/drivers/hwtracing/coresight/Makefile b/drivers/hwtracing/coresight/Makefile
+> index ab16d06783a5..821a1b06b20c 100644
+> --- a/drivers/hwtracing/coresight/Makefile
+> +++ b/drivers/hwtracing/coresight/Makefile
+> @@ -55,5 +55,5 @@ coresight-cti-y := coresight-cti-core.o	coresight-cti-platform.o \
+>   obj-$(CONFIG_ULTRASOC_SMB) += ultrasoc-smb.o
+>   obj-$(CONFIG_CORESIGHT_DUMMY) += coresight-dummy.o
+>   obj-$(CONFIG_CORESIGHT_CTCU) += coresight-ctcu.o
+> -coresight-ctcu-y := coresight-ctcu-core.o
+> +coresight-ctcu-y := coresight-ctcu-core.o coresight-ctcu-byte-cntr.o
+>   obj-$(CONFIG_CORESIGHT_KUNIT_TESTS) += coresight-kunit-tests.o
+> diff --git a/drivers/hwtracing/coresight/coresight-ctcu-byte-cntr.c b/drivers/hwtracing/coresight/coresight-ctcu-byte-cntr.c
+> new file mode 100644
+> index 000000000000..bf59e654465b
+> --- /dev/null
+> +++ b/drivers/hwtracing/coresight/coresight-ctcu-byte-cntr.c
+> @@ -0,0 +1,367 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> + */
+> +
+> +#include <linux/coresight.h>
+> +#include <linux/device.h>
+> +#include <linux/fs.h>
+> +#include <linux/interrupt.h>
+> +#include <linux/of_irq.h>
+> +#include <linux/uaccess.h>
+> +
+> +#include "coresight-ctcu.h"
+> +#include "coresight-priv.h"
+> +#include "coresight-tmc.h"
+> +
+> +static irqreturn_t byte_cntr_handler(int irq, void *data)
+> +{
+> +	struct ctcu_byte_cntr *byte_cntr_data = (struct ctcu_byte_cntr *)data;
+> +
+> +	atomic_inc(&byte_cntr_data->irq_cnt);
+> +	wake_up(&byte_cntr_data->wq);
+> +
+> +	return IRQ_HANDLED;
+> +}
+> +
+> +static void ctcu_reset_sysfs_buf(struct tmc_drvdata *drvdata)
+> +{
+> +	u32 sts;
+> +
+> +	CS_UNLOCK(drvdata->base);
+> +	tmc_write_rrp(drvdata, drvdata->sysfs_buf->hwaddr);
+> +	tmc_write_rwp(drvdata, drvdata->sysfs_buf->hwaddr);
+> +	sts = readl_relaxed(drvdata->base + TMC_STS) & ~TMC_STS_FULL;
+> +	writel_relaxed(sts, drvdata->base + TMC_STS);
+> +	CS_LOCK(drvdata->base);
+> +}
+> +
+> +static void ctcu_cfg_byte_cntr_reg(struct tmc_drvdata *drvdata, u32 val, u32 offset)
+> +{
+> +	struct ctcu_drvdata *ctcu_drvdata;
+> +	struct coresight_device *helper;
+> +
+> +	helper = tmc_etr_get_ctcu_device(drvdata);
+> +	if (!helper)
+> +		return;
+> +
+> +	ctcu_drvdata = dev_get_drvdata(helper->dev.parent);
+> +	/* A one value for IRQCTRL register represents 8 bytes */
+> +	ctcu_program_register(ctcu_drvdata, val / 8, offset);
+> +}
+> +
+> +static struct ctcu_byte_cntr *ctcu_get_byte_cntr_data(struct tmc_drvdata *drvdata)
+> +{
+> +	struct ctcu_byte_cntr *byte_cntr_data;
+> +	struct ctcu_drvdata *ctcu_drvdata;
+> +	struct coresight_device *helper;
+> +	int port;
+> +
+> +	helper = tmc_etr_get_ctcu_device(drvdata);
+> +	if (!helper)
+> +		return NULL;
+> +
+> +	port = coresight_get_in_port(drvdata->csdev, helper);
+> +	if (port < 0)
+> +		return NULL;
+> +
+> +	ctcu_drvdata = dev_get_drvdata(helper->dev.parent);
+> +	byte_cntr_data = &ctcu_drvdata->byte_cntr_data[port];
+> +	return byte_cntr_data;
+> +}
+> +
+> +static bool ctcu_byte_cntr_switch_buffer(struct tmc_drvdata *drvdata,
+> +					 struct ctcu_byte_cntr *byte_cntr_data)
+> +{
+> +	struct etr_buf_node *nd, *next, *curr_node, *picked_node;
+> +	struct etr_buf *curr_buf = drvdata->sysfs_buf;
+> +	bool found_free_buf = false;
+> +
+> +	if (WARN_ON(!drvdata || !byte_cntr_data))
+> +		return found_free_buf;
+> +
+> +	/* Stop the ETR before we start the switch */
+> +	if (coresight_get_mode(drvdata->csdev) != CS_MODE_DISABLED)
+> +		tmc_etr_enable_disable_hw(drvdata, false);
+> +
+> +	list_for_each_entry_safe(nd, next, &drvdata->etr_buf_list, node) {
+> +		/* curr_buf is free for next round */
+> +		if (nd->sysfs_buf == curr_buf) {
+> +			nd->is_free = true;
+> +			curr_node = nd;
+> +		}
+> +
+> +		if (!found_free_buf && nd->is_free && nd->sysfs_buf != curr_buf) {
+> +			picked_node = nd;
+> +			found_free_buf = true;
+> +		}
+> +	}
+> +
+> +	if (found_free_buf) {
+> +		curr_node->pos = 0;
+> +		drvdata->reading_node = curr_node;
+> +		drvdata->sysfs_buf = picked_node->sysfs_buf;
+> +		drvdata->etr_buf = picked_node->sysfs_buf;
+> +		picked_node->is_free = false;
+> +		/* Reset irq_cnt for next etr_buf */
+> +		atomic_set(&byte_cntr_data->irq_cnt, 0);
+> +		/* Reset rrp and rwp when the system has switched the buffer*/
+> +		ctcu_reset_sysfs_buf(drvdata);
+> +		/* Restart the ETR when we find a free buffer */
+> +		if (coresight_get_mode(drvdata->csdev) != CS_MODE_DISABLED)
+> +			tmc_etr_enable_disable_hw(drvdata, true);
+> +	}
+> +
+> +	return found_free_buf;
+> +}
+> +
+> +/*
+> + * ctcu_byte_cntr_get_data() - reads data from the deactivated and filled buffer.
+> + * The byte-cntr reading work reads data from the deactivated and filled buffer.
+> + * The read operation waits for a buffer to become available, either filled or
+> + * upon timeout, and then reads trace data from the synced buffer.
+> + */
+> +static ssize_t ctcu_byte_cntr_get_data(struct tmc_drvdata *drvdata, loff_t pos,
+> +				       size_t len, char **bufpp)
+> +{
+> +	struct etr_buf *sysfs_buf = drvdata->sysfs_buf;
+> +	struct device *dev = &drvdata->csdev->dev;
+> +	ssize_t actual, size = sysfs_buf->size;
+> +	struct ctcu_byte_cntr *byte_cntr_data;
+> +	size_t thresh_val;
+> +	atomic_t *irq_cnt;
+> +	int ret;
+> +
+> +	byte_cntr_data = ctcu_get_byte_cntr_data(drvdata);
+> +	if (!byte_cntr_data)
+> +		return -EINVAL;
+> +
+> +	thresh_val = byte_cntr_data->thresh_val;
+> +	irq_cnt = &byte_cntr_data->irq_cnt;
+> +
+> +wait_buffer:
+> +	if (!byte_cntr_data->reading_buf) {
+> +		ret = wait_event_interruptible_timeout(byte_cntr_data->wq,
+> +				((atomic_read(irq_cnt) + 1) * thresh_val >= size) ||
+> +				!byte_cntr_data->enable,
+> +				BYTE_CNTR_TIMEOUT);
+> +		if (ret < 0)
+> +			return ret;
+> +		/*
+> +		 * The current etr_buf is almost full or timeout is triggered,
+> +		 * so switch the buffer and mark the switched buffer as reading.
+> +		 */
+> +		if (byte_cntr_data->enable) {
+> +			if (!ctcu_byte_cntr_switch_buffer(drvdata, byte_cntr_data)) {
+> +				dev_err(dev, "Switch buffer failed for byte-cntr\n");
+> +				return -EINVAL;
+> +			}
+> +
+> +			byte_cntr_data->reading_buf = true;
+> +		} else {
+> +			/*
+> +			 * TMC-ETR has been disabled, so directly reads data from
+> +			 * the drvdata->sysfs_buf.
+> +			 */
+> +			actual = drvdata->sysfs_ops->get_trace_data(drvdata, pos, len, bufpp);
+> +			if (actual > 0) {
+> +				byte_cntr_data->total_size += actual;
+> +				return actual;
+> +			}
+> +
+> +			/* Exit byte-cntr reading */
+> +			return 0;
+> +		}
+> +	}
+> +
+> +	/* Check the status of current etr_buf*/
+> +	if ((atomic_read(irq_cnt) + 1) * thresh_val >= size)
+> +		/*
+> +		 * Unlikely to find a free buffer to switch, so just disable
+> +		 * the ETR for a while.
+> +		 */
+> +		if (!ctcu_byte_cntr_switch_buffer(drvdata, byte_cntr_data))
+> +			dev_warn(dev, "No available buffer to store data, disable ETR\n");
+> +
+> +	pos = drvdata->reading_node->pos;
+> +	actual = drvdata->sysfs_ops->get_trace_data(drvdata, pos, len, bufpp);
+> +	if (actual <= 0) {
+> +		/* Reset flags upon reading is finished or failed */
+> +		byte_cntr_data->reading_buf = false;
+> +		drvdata->reading_node = NULL;
+> +
+> +		/*
+> +		 * Nothing in the buffer, waiting for the next buffer
+> +		 * to be filled.
+> +		 */
+> +		if (actual == 0)
+> +			goto wait_buffer;
+> +	} else
+> +		byte_cntr_data->total_size += actual;
+> +
+> +	return actual;
+> +}
+> +
+> +static int ctcu_read_prepare_byte_cntr(struct tmc_drvdata *drvdata)
+> +{
+> +	struct ctcu_byte_cntr *byte_cntr_data;
+> +	unsigned long flags;
+> +	int ret = 0;
+> +
+> +	/* config types are set a boot time and never change */
+> +	if (WARN_ON_ONCE(drvdata->config_type != TMC_CONFIG_TYPE_ETR))
+> +		return -EINVAL;
+> +
+> +	/*
+> +	 * Byte counter reading should start only after the TMC-ETR has been
+> +	 * enabled, which implies that the sysfs_buf has already been setup
+> +	 * in drvdata.
+> +	 */
+> +	if (!drvdata->sysfs_buf)
+> +		return -EINVAL;
+> +
+> +	byte_cntr_data = ctcu_get_byte_cntr_data(drvdata);
+> +	if (!byte_cntr_data)
+> +		return -EINVAL;
+> +
+> +	/*
+> +	 * The threshold value must not exceed the buffer size.
+> +	 * A margin should be maintained between the two values to account
+> +	 * for the time gap between the interrupt and buffer switching.
+> +	 */
+> +	if (byte_cntr_data->thresh_val + SZ_16K >= drvdata->size) {
+> +		dev_err(&drvdata->csdev->dev, "The threshold value is too large\n");
+> +		return -EINVAL;
+> +	}
+> +
+> +	raw_spin_lock_irqsave(&drvdata->spinlock, flags);
+> +	if (byte_cntr_data->reading) {
+> +		ret = -EBUSY;
+> +		goto out_unlock;
+> +	}
+> +
+> +	byte_cntr_data->reading = true;
+> +	raw_spin_unlock_irqrestore(&drvdata->spinlock, flags);
+> +	/* Setup an available etr_buf_list for byte-cntr */
+> +	ret = tmc_create_etr_buf_list(drvdata, 2);
+> +	if (ret)
+> +		goto out;
+> +
+> +	raw_spin_lock_irqsave(&drvdata->spinlock, flags);
+> +	atomic_set(&byte_cntr_data->irq_cnt, 0);
+> +	/* Configure the byte-cntr register to enable IRQ */
+> +	ctcu_cfg_byte_cntr_reg(drvdata, byte_cntr_data->thresh_val,
+> +			       byte_cntr_data->irq_ctrl_offset);
+> +	enable_irq_wake(byte_cntr_data->irq);
+> +	byte_cntr_data->total_size = 0;
+> +
+> +out_unlock:
+> +	raw_spin_unlock_irqrestore(&drvdata->spinlock, flags);
+> +
+> +out:
+> +	return ret;
+> +}
+> +
+> +static int ctcu_read_unprepare_byte_cntr(struct tmc_drvdata *drvdata)
+> +{
+> +	struct device *dev = &drvdata->csdev->dev;
+> +	struct ctcu_byte_cntr *byte_cntr_data;
+> +	unsigned long flags;
+> +
+> +	byte_cntr_data = ctcu_get_byte_cntr_data(drvdata);
+> +	if (!byte_cntr_data)
+> +		return -EINVAL;
+> +
+> +	raw_spin_lock_irqsave(&drvdata->spinlock, flags);
+> +	/* Configure the byte-cntr register to disable IRQ */
+> +	ctcu_cfg_byte_cntr_reg(drvdata, 0, byte_cntr_data->irq_ctrl_offset);
+> +	disable_irq_wake(byte_cntr_data->irq);
+> +	byte_cntr_data->reading = false;
+> +	byte_cntr_data->reading_buf = false;
+> +	drvdata->reading_node = NULL;
+> +	raw_spin_unlock_irqrestore(&drvdata->spinlock, flags);
+> +	dev_dbg(dev, "send data total size:%llu bytes\n", byte_cntr_data->total_size);
+> +	tmc_clean_etr_buf_list(drvdata);
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct tmc_sysfs_ops byte_cntr_sysfs_ops = {
+> +	.read_prepare	= ctcu_read_prepare_byte_cntr,
+> +	.read_unprepare	= ctcu_read_unprepare_byte_cntr,
+> +	.get_trace_data	= ctcu_byte_cntr_get_data,
+> +};
+> +
+> +/* Start the byte-cntr function when the path is enabled. */
+> +void ctcu_byte_cntr_start(struct coresight_device *csdev, struct coresight_path *path)
+> +{
+> +	struct ctcu_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
+> +	struct coresight_device *sink = coresight_get_sink(path);
+> +	struct ctcu_byte_cntr *byte_cntr_data;
+> +	int port_num;
+> +
+> +	if (!sink)
+> +		return;
+> +
+> +	port_num = coresight_get_in_port(sink, csdev);
+> +	if (port_num < 0)
+> +		return;
+> +
+> +	byte_cntr_data = &drvdata->byte_cntr_data[port_num];
+> +	/* Don't start byte-cntr function when threshold is not set. */
+> +	if (!byte_cntr_data->thresh_val || byte_cntr_data->enable)
+> +		return;
+> +
+> +	guard(raw_spinlock_irqsave)(&byte_cntr_data->spin_lock);
+> +	byte_cntr_data->enable = true;
+> +	byte_cntr_data->reading_buf = false;
+> +}
+> +
+> +/* Stop the byte-cntr function when the path is disabled. */
+> +void ctcu_byte_cntr_stop(struct coresight_device *csdev, struct coresight_path *path)
+> +{
+> +	struct ctcu_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
+> +	struct coresight_device *sink = coresight_get_sink(path);
+> +	struct ctcu_byte_cntr *byte_cntr_data;
+> +	int port_num;
+> +
+> +	if (!sink || coresight_get_mode(sink) == CS_MODE_SYSFS)
+> +		return;
+> +
+> +	port_num = coresight_get_in_port(sink, csdev);
+> +	if (port_num < 0)
+> +		return;
+> +
+> +	byte_cntr_data = &drvdata->byte_cntr_data[port_num];
+> +	guard(raw_spinlock_irqsave)(&byte_cntr_data->spin_lock);
+> +	byte_cntr_data->enable = false;
+> +}
+> +
+> +void ctcu_byte_cntr_init(struct device *dev, struct ctcu_drvdata *drvdata, int etr_num)
+> +{
+> +	struct ctcu_byte_cntr *byte_cntr_data;
+> +	struct device_node *nd = dev->of_node;
+> +	int irq_num, ret, i;
+> +
+> +	drvdata->byte_cntr_sysfs_ops = &byte_cntr_sysfs_ops;
+> +	for (i = 0; i < etr_num; i++) {
+> +		byte_cntr_data = &drvdata->byte_cntr_data[i];
+> +		irq_num = of_irq_get(nd, i);
+> +		if (irq_num < 0) {
+> +			dev_err(dev, "Failed to get IRQ from DT for port%d\n", i);
+> +			continue;
+> +		}
+> +
+> +		ret = devm_request_irq(dev, irq_num, byte_cntr_handler,
+> +				       IRQF_TRIGGER_RISING | IRQF_SHARED,
+> +				       dev_name(dev), byte_cntr_data);
+> +		if (ret) {
+> +			dev_err(dev, "Failed to register IRQ for port%d\n", i);
+> +			continue;
+> +		}
+> +
+> +		byte_cntr_data->irq = irq_num;
+> +		init_waitqueue_head(&byte_cntr_data->wq);
+> +		raw_spin_lock_init(&drvdata->spin_lock);
 
-Ack, I will add it in v2 of this patch.
+This is wrong here, correct:
+raw_spin_lock_init(&byte_cntr_data->spin_lock);
 
-> 
->> ---
->>  drivers/soc/qcom/ice.c | 20 ++++++++++++++++++++
->>  1 file changed, 20 insertions(+)
->>
->> diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
->> index b203bc685cad..4b50d05ca02a 100644
->> --- a/drivers/soc/qcom/ice.c
->> +++ b/drivers/soc/qcom/ice.c
->> @@ -16,6 +16,8 @@
->>  #include <linux/of.h>
->>  #include <linux/of_platform.h>
->>  #include <linux/platform_device.h>
->> +#include <linux/pm.h>
->> +#include <linux/pm_runtime.h>
->>  
->>  #include <linux/firmware/qcom/qcom_scm.h>
->>  
->> @@ -108,6 +110,7 @@ struct qcom_ice {
->>  	void __iomem *base;
->>  
->>  	struct clk *core_clk;
->> +	struct clk *iface_clk;
->>  	bool use_hwkm;
->>  	bool hwkm_init_complete;
->>  	u8 hwkm_version;
->> @@ -310,12 +313,20 @@ int qcom_ice_resume(struct qcom_ice *ice)
->>  	struct device *dev = ice->dev;
->>  	int err;
->>  
->> +	pm_runtime_get_sync(dev);
-> 
-> This is not needed as the power domain would be enabled at this point.
+Sorry for the error, will fix it in next version.
 
-Would this be enabled due to the genpd framework? I am not observing that
-during probe. Because this call is made by the UFS/EMMC driver, perhaps you
-mean the situation at this point is different?
+Thanks,
+Jie
 
-> 
->>  	err = clk_prepare_enable(ice->core_clk);
->>  	if (err) {
->>  		dev_err(dev, "failed to enable core clock (%d)\n",
->>  			err);
->>  		return err;
->>  	}
->> +
->> +	err = clk_prepare_enable(ice->iface_clk);
->> +	if (err) {
->> +		dev_err(dev, "failed to enable iface clock (%d)\n",
->> +			err);
->> +		return err;
->> +	}
-> 
-> Use clk_bulk API to enable all clocks in one go.
-
-Ack, I'll use clk_bulk_prepare_enable().
-
-> 
->>  	qcom_ice_hwkm_init(ice);
->>  	return qcom_ice_wait_bist_status(ice);
->>  }
->> @@ -323,7 +334,9 @@ EXPORT_SYMBOL_GPL(qcom_ice_resume);
->>  
->>  int qcom_ice_suspend(struct qcom_ice *ice)
->>  {
->> +	clk_disable_unprepare(ice->iface_clk);
-> 
-> Same here.
-
-Ack, clk_bulk_disable_unprepare() would look good.
-As Konrad pointed out, if iface clock is not present in DT, thse APIs are
-fine with NULL pointers here.
-
-> 
->>  	clk_disable_unprepare(ice->core_clk);
->> +	pm_runtime_put_sync(ice->dev);
-> 
-> Not needed.
-> 
->>  	ice->hwkm_init_complete = false;
->>  
->>  	return 0;
->> @@ -584,6 +597,10 @@ static struct qcom_ice *qcom_ice_create(struct device *dev,
->>  	if (IS_ERR(engine->core_clk))
->>  		return ERR_CAST(engine->core_clk);
->>  
->> +	engine->iface_clk = devm_clk_get_enabled(dev, "iface_clk");
->> +	if (IS_ERR(engine->iface_clk))
->> +		return ERR_CAST(engine->iface_clk);
->> +
-> 
-> Same here. Use devm_clk_bulk_get_all_enabled().
-
-As per discussion on the DT binding patch, I can do this once we decide to break the
-DT backward compatibility with a subsequent patch which makes both clocks mandatory.
-For v2, I am planning to continue to treat the 'iface' clock as optional via
-devm_clk_get_optional() API.
-
-> 
->>  	if (!qcom_ice_check_supported(engine))
->>  		return ERR_PTR(-EOPNOTSUPP);
->>  
->> @@ -725,6 +742,9 @@ static int qcom_ice_probe(struct platform_device *pdev)
->>  		return PTR_ERR(base);
->>  	}
->>  
->> +	devm_pm_runtime_enable(&pdev->dev);
->> +	pm_runtime_get_sync(&pdev->dev);
-> 
-> If you want to mark & enable the runtime PM status, you should just do:
-> 
-> 	devm_pm_runtime_set_active_enabled();	
-> 
-> But this is not really needed in this patch. You can add it in a separate patch
-> for the sake of correctness.
-
-If my understanding is correct, I need to call pm_runtime_get_sync() to enable
-the power domain after enabling the PM runtime to ensure further calls to enable
-the iface clock do not encounter failure. Just calling devm_pm_runtime_set_active_enabled()
-will only enable the PM runtime and set it's status to 'active'. It will not enable
-the power domain.
-
-Please do let me know if there is something more to this that I am missing.
-
-Regards,
-Harshal
-
-> 
-> - Mani
+> +	}
+> +}
+> diff --git a/drivers/hwtracing/coresight/coresight-ctcu-core.c b/drivers/hwtracing/coresight/coresight-ctcu-core.c
+> index 78be783b3cb2..0e5cadaac350 100644
+> --- a/drivers/hwtracing/coresight/coresight-ctcu-core.c
+> +++ b/drivers/hwtracing/coresight/coresight-ctcu-core.c
+> @@ -15,6 +15,7 @@
+>   #include <linux/platform_device.h>
+>   #include <linux/pm_runtime.h>
+>   #include <linux/slab.h>
+> +#include <linux/sizes.h>
+>   
+>   #include "coresight-ctcu.h"
+>   #include "coresight-priv.h"
+> @@ -45,17 +46,21 @@ DEFINE_CORESIGHT_DEVLIST(ctcu_devs, "ctcu");
+>   
+>   #define CTCU_ATID_REG_BIT(traceid)	(traceid % 32)
+>   #define CTCU_ATID_REG_SIZE		0x10
+> +#define CTCU_ETR0_IRQCTRL               0x6c
+> +#define CTCU_ETR1_IRQCTRL               0x70
+>   #define CTCU_ETR0_ATID0			0xf8
+>   #define CTCU_ETR1_ATID0			0x108
+>   
+>   static const struct ctcu_etr_config sa8775p_etr_cfgs[] = {
+>   	{
+> -		.atid_offset	= CTCU_ETR0_ATID0,
+> -		.port_num	= 0,
+> +		.atid_offset		= CTCU_ETR0_ATID0,
+> +		.irq_ctrl_offset	= CTCU_ETR0_IRQCTRL,
+> +		.port_num		= 0,
+>   	},
+>   	{
+> -		.atid_offset	= CTCU_ETR1_ATID0,
+> -		.port_num	= 1,
+> +		.atid_offset		= CTCU_ETR1_ATID0,
+> +		.irq_ctrl_offset	= CTCU_ETR1_IRQCTRL,
+> +		.port_num		= 1,
+>   	},
+>   };
+>   
+> @@ -64,6 +69,88 @@ static const struct ctcu_config sa8775p_cfgs = {
+>   	.num_etr_config	= ARRAY_SIZE(sa8775p_etr_cfgs),
+>   };
+>   
+> +void ctcu_program_register(struct ctcu_drvdata *drvdata, u32 val, u32 offset)
+> +{
+> +	CS_UNLOCK(drvdata->base);
+> +	ctcu_writel(drvdata, val, offset);
+> +	CS_LOCK(drvdata->base);
+> +}
+> +
+> +static ssize_t irq_threshold_show(struct device *dev,
+> +				  struct device_attribute *attr,
+> +				  char *buf)
+> +{
+> +	struct ctcu_byte_cntr_irq_attribute *irq_attr =
+> +		container_of(attr, struct ctcu_byte_cntr_irq_attribute, attr);
+> +	struct ctcu_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +	u8 port = irq_attr->port;
+> +
+> +	if (!drvdata->byte_cntr_data[port].irq_ctrl_offset)
+> +		return -EINVAL;
+> +
+> +	return sysfs_emit(buf, "%u\n",
+> +			(unsigned int)drvdata->byte_cntr_data[port].thresh_val);
+> +}
+> +
+> +static ssize_t irq_threshold_store(struct device *dev,
+> +				   struct device_attribute *attr,
+> +				   const char *buf,
+> +				   size_t size)
+> +{
+> +	struct ctcu_byte_cntr_irq_attribute *irq_attr =
+> +		container_of(attr, struct ctcu_byte_cntr_irq_attribute, attr);
+> +	struct ctcu_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +	u8 port = irq_attr->port;
+> +	unsigned long val;
+> +
+> +	if (kstrtoul(buf, 0, &val))
+> +		return -EINVAL;
+> +
+> +	/* Threshold 0 disables the interruption. */
+> +	guard(raw_spinlock_irqsave)(&drvdata->spin_lock);
+> +	/* A small threshold will result in a large number of interruptions */
+> +	if (val && val < SZ_4K)
+> +		return -EINVAL;
+> +
+> +	if (drvdata->byte_cntr_data[port].irq_ctrl_offset)
+> +		drvdata->byte_cntr_data[port].thresh_val = val;
+> +
+> +	return size;
+> +}
+> +
+> +static umode_t irq_threshold_is_visible(struct kobject *kobj,
+> +					struct attribute *attr, int n)
+> +{
+> +	struct device_attribute *dev_attr =
+> +		container_of(attr, struct device_attribute, attr);
+> +	struct ctcu_byte_cntr_irq_attribute *irq_attr =
+> +		container_of(dev_attr, struct ctcu_byte_cntr_irq_attribute, attr);
+> +	struct device *dev = kobj_to_dev(kobj);
+> +	struct ctcu_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +	u8 port = irq_attr->port;
+> +
+> +	if (drvdata && drvdata->byte_cntr_data[port].irq_ctrl_offset)
+> +		return attr->mode;
+> +
+> +	return 0;
+> +}
+> +
+> +static struct attribute *ctcu_attrs[] = {
+> +	ctcu_byte_cntr_irq_rw(0),
+> +	ctcu_byte_cntr_irq_rw(1),
+> +	NULL,
+> +};
+> +
+> +static struct attribute_group ctcu_attr_grp = {
+> +	.attrs = ctcu_attrs,
+> +	.is_visible = irq_threshold_is_visible,
+> +};
+> +
+> +static const struct attribute_group *ctcu_attr_grps[] = {
+> +	&ctcu_attr_grp,
+> +	NULL,
+> +};
+> +
+>   static void ctcu_program_atid_register(struct ctcu_drvdata *drvdata, u32 reg_offset,
+>   				       u8 bit, bool enable)
+>   {
+> @@ -142,11 +229,15 @@ static int ctcu_set_etr_traceid(struct coresight_device *csdev, struct coresight
+>   static int ctcu_enable(struct coresight_device *csdev, enum cs_mode mode,
+>   		       struct coresight_path *path)
+>   {
+> +	ctcu_byte_cntr_start(csdev, path);
+> +
+>   	return ctcu_set_etr_traceid(csdev, path, true);
+>   }
+>   
+>   static int ctcu_disable(struct coresight_device *csdev, struct coresight_path *path)
+>   {
+> +	ctcu_byte_cntr_stop(csdev, path);
+> +
+>   	return ctcu_set_etr_traceid(csdev, path, false);
+>   }
+>   
+> @@ -197,7 +288,10 @@ static int ctcu_probe(struct platform_device *pdev)
+>   			for (i = 0; i < cfgs->num_etr_config; i++) {
+>   				etr_cfg = &cfgs->etr_cfgs[i];
+>   				drvdata->atid_offset[i] = etr_cfg->atid_offset;
+> +				drvdata->byte_cntr_data[i].irq_ctrl_offset =
+> +					etr_cfg->irq_ctrl_offset;
+>   			}
+> +			ctcu_byte_cntr_init(dev, drvdata, cfgs->num_etr_config);
+>   		}
+>   	}
+>   
+> @@ -209,6 +303,7 @@ static int ctcu_probe(struct platform_device *pdev)
+>   	desc.subtype.helper_subtype = CORESIGHT_DEV_SUBTYPE_HELPER_CTCU;
+>   	desc.pdata = pdata;
+>   	desc.dev = dev;
+> +	desc.groups = ctcu_attr_grps;
+>   	desc.ops = &ctcu_ops;
+>   	desc.access = CSDEV_ACCESS_IOMEM(base);
+>   
+> diff --git a/drivers/hwtracing/coresight/coresight-ctcu.h b/drivers/hwtracing/coresight/coresight-ctcu.h
+> index e9594c38dd91..bc833482c8bc 100644
+> --- a/drivers/hwtracing/coresight/coresight-ctcu.h
+> +++ b/drivers/hwtracing/coresight/coresight-ctcu.h
+> @@ -5,19 +5,26 @@
+>   
+>   #ifndef _CORESIGHT_CTCU_H
+>   #define _CORESIGHT_CTCU_H
+> +
+> +#include <linux/time.h>
+>   #include "coresight-trace-id.h"
+>   
+>   /* Maximum number of supported ETR devices for a single CTCU. */
+>   #define ETR_MAX_NUM	2
+>   
+> +#define BYTE_CNTR_TIMEOUT	(5 * HZ)
+> +
+>   /**
+>    * struct ctcu_etr_config
+>    * @atid_offset:	offset to the ATID0 Register.
+> - * @port_num:		in-port number of CTCU device that connected to ETR.
+> + * @port_num:		in-port number of the CTCU device that connected to ETR.
+> + * @irq_ctrl_offset:    offset to the BYTECNTRVAL register.
+> + * @irq_name:           IRQ name in dt node.
+>    */
+>   struct ctcu_etr_config {
+>   	const u32 atid_offset;
+>   	const u32 port_num;
+> +	const u32 irq_ctrl_offset;
+>   };
+>   
+>   struct ctcu_config {
+> @@ -25,15 +32,69 @@ struct ctcu_config {
+>   	int num_etr_config;
+>   };
+>   
+> -struct ctcu_drvdata {
+> -	void __iomem		*base;
+> -	struct clk		*apb_clk;
+> -	struct device		*dev;
+> -	struct coresight_device	*csdev;
+> +/**
+> + * struct ctcu_byte_cntr
+> + * @enable:		indicates that byte_cntr function is enabled or not.
+> + * @reading:		indicates that byte-cntr reading is started.
+> + * @reading_buf:	indicates that byte-cntr is reading data from the buffer.
+> + * @thresh_val:		threshold to trigger a interruption.
+> + * @total_size:		total size of transferred data.
+> + * @irq:		allocated number of the IRQ.
+> + * @irq_cnt:		IRQ count number for triggered interruptions.
+> + * @wq:			waitqueue for reading data from ETR buffer.
+> + * @spin_lock:		spinlock of byte_cntr_data.
+> + * @irq_ctrl_offset:	offset to the BYTECNTVAL Register.
+> + */
+> +struct ctcu_byte_cntr {
+> +	bool			enable;
+> +	bool                    reading;
+> +	bool			reading_buf;
+> +	u32			thresh_val;
+> +	u64			total_size;
+> +	int			irq;
+> +	atomic_t		irq_cnt;
+> +	wait_queue_head_t	wq;
+>   	raw_spinlock_t		spin_lock;
+> -	u32			atid_offset[ETR_MAX_NUM];
+> +	u32			irq_ctrl_offset;
+> +};
+> +
+> +struct ctcu_drvdata {
+> +	void __iomem			*base;
+> +	struct clk			*apb_clk;
+> +	struct device			*dev;
+> +	struct coresight_device		*csdev;
+> +	struct ctcu_byte_cntr		byte_cntr_data[ETR_MAX_NUM];
+> +	raw_spinlock_t			spin_lock;
+> +	u32				atid_offset[ETR_MAX_NUM];
+>   	/* refcnt for each traceid of each sink */
+> -	u8			traceid_refcnt[ETR_MAX_NUM][CORESIGHT_TRACE_ID_RES_TOP];
+> +	u8				traceid_refcnt[ETR_MAX_NUM][CORESIGHT_TRACE_ID_RES_TOP];
+> +	const struct tmc_sysfs_ops	*byte_cntr_sysfs_ops;
+>   };
+>   
+> +/**
+> + * struct ctcu_irq_thresh_attribute
+> + * @attr:	The device attribute.
+> + * @idx:	port number.
+> + */
+> +struct ctcu_byte_cntr_irq_attribute {
+> +	struct device_attribute	attr;
+> +	u8			port;
+> +};
+> +
+> +#define ctcu_byte_cntr_irq_rw(port)					\
+> +	(&((struct ctcu_byte_cntr_irq_attribute[]) {			\
+> +	   {								\
+> +		__ATTR(irq_threshold##port, 0644, irq_threshold_show,	\
+> +		irq_threshold_store),					\
+> +		port,							\
+> +	   }								\
+> +	})[0].attr.attr)
+> +
+> +void ctcu_program_register(struct ctcu_drvdata *drvdata, u32 val, u32 offset);
+> +
+> +/* Byte-cntr functions */
+> +void ctcu_byte_cntr_start(struct coresight_device *csdev, struct coresight_path *path);
+> +void ctcu_byte_cntr_stop(struct coresight_device *csdev, struct coresight_path *path);
+> +void ctcu_byte_cntr_init(struct device *dev, struct ctcu_drvdata *drvdata, int port_num);
+> +
+>   #endif
+> diff --git a/drivers/hwtracing/coresight/coresight-tmc-etr.c b/drivers/hwtracing/coresight/coresight-tmc-etr.c
+> index 32353980964a..83514966df5a 100644
+> --- a/drivers/hwtracing/coresight/coresight-tmc-etr.c
+> +++ b/drivers/hwtracing/coresight/coresight-tmc-etr.c
+> @@ -1187,6 +1187,10 @@ ssize_t tmc_etr_get_sysfs_trace(struct tmc_drvdata *drvdata,
+>   	ssize_t actual = len;
+>   	struct etr_buf *etr_buf = drvdata->sysfs_buf;
+>   
+> +	/* Reading the buffer from the buf_node if it exists*/
+> +	if (drvdata->reading_node)
+> +		etr_buf = drvdata->reading_node->sysfs_buf;
+> +
+>   	if (pos + actual > etr_buf->len)
+>   		actual = etr_buf->len - pos;
+>   	if (actual <= 0)
+> @@ -1250,6 +1254,20 @@ static void __tmc_etr_disable_hw(struct tmc_drvdata *drvdata)
+>   
+>   }
+>   
+> +/**
+> + * tmc_etr_enable_disable_hw - enable/disable the ETR hw.
+> + * @drvdata:	drvdata of the TMC device.
+> + * @enable:	indicates enable/disable.
+> + */
+> +void tmc_etr_enable_disable_hw(struct tmc_drvdata *drvdata, bool enable)
+> +{
+> +	if (enable)
+> +		__tmc_etr_enable_hw(drvdata);
+> +	else
+> +		__tmc_etr_disable_hw(drvdata);
+> +}
+> +EXPORT_SYMBOL_GPL(tmc_etr_enable_disable_hw);
+> +
+>   void tmc_etr_disable_hw(struct tmc_drvdata *drvdata)
+>   {
+>   	__tmc_etr_disable_hw(drvdata);
+> diff --git a/drivers/hwtracing/coresight/coresight-tmc.h b/drivers/hwtracing/coresight/coresight-tmc.h
+> index 27dd72065c60..d60c70530c8a 100644
+> --- a/drivers/hwtracing/coresight/coresight-tmc.h
+> +++ b/drivers/hwtracing/coresight/coresight-tmc.h
+> @@ -482,5 +482,6 @@ struct etr_buf *tmc_etr_get_buffer(struct coresight_device *csdev,
+>   extern const struct attribute_group coresight_etr_group;
+>   void tmc_clean_etr_buf_list(struct tmc_drvdata *drvdata);
+>   int tmc_create_etr_buf_list(struct tmc_drvdata *drvdata, int num_nodes);
+> +void tmc_etr_enable_disable_hw(struct tmc_drvdata *drvdata, bool enable);
+>   
+>   #endif
 > 
 
 
