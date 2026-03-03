@@ -1,159 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-95170-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95171-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id gBRZHD4Fp2k7bgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95170-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 16:58:54 +0100
+	id MDcKB5AJp2k7bgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95171-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 17:17:20 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0A601F318E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 16:58:53 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 88C101F37C1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 17:17:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id ACB5E308541E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Mar 2026 15:56:22 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1B4C2319BEF9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Mar 2026 16:10:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 05A1C492501;
-	Tue,  3 Mar 2026 15:56:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 581B24A33F7;
+	Tue,  3 Mar 2026 16:10:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZzdtIyth"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AxNVCcOi"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54503B4E8F;
-	Tue,  3 Mar 2026 15:56:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D4F4968FA;
+	Tue,  3 Mar 2026 16:10:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772553380; cv=none; b=iF4IKfS/tgUoKL6j0Wrgor3EHxDedSHpQiUwSbgr7UWxIbB/QnJK6HC12F9ZcuHp+aK6Tfo63bdFwjQ/mbc+gwxgdFSW/MIbfVlN0NT5lZkkX+u4mbOWo0JwumpZRlb+G5Rt/RwKKkeX+uFYL5zEWwB97K4+pN9C6Ca5htGk2ys=
+	t=1772554202; cv=none; b=Yp8eCHMjJQbgjKAcUSlTxgVn8vv6a0uXmdVOf2m12ooy3y9wG+L0L2kRmNOPDCck5LEIb6ErlKIMMJ523qdxa5fa7TjjkAoXfDnf7RREvUofKPkL3u1fhbi6deP1Rxb1uojx13Lah510ZDkX71p9OXwjhLGg4kCa/KU5FoRodWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772553380; c=relaxed/simple;
-	bh=docXN/j7MOnJzfbztgBR+4k4s7H02SISB2RKfeW0qo0=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=fYSSoKlLKrZfEU396AOQ1S+OM4iUp4MxsBQQmDHEGwfs64fp5Y5N3ocp6rNR5n2uO6zjbUQrj5ZmwDIjQBmWAU8Qvxg1y8HcVd1JcZOYqMmaPBlGl+jMPDgHRNpTU0s+Z0aA8cWUvgBsTcONESPfzdJ3hRSvpzF+mKaZKpKViQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZzdtIyth; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49097C116C6;
-	Tue,  3 Mar 2026 15:56:20 +0000 (UTC)
+	s=arc-20240116; t=1772554202; c=relaxed/simple;
+	bh=/Oki8YLUgptwDqEZ3/IL+keBgnynyQdoJNYct1jNqBM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=IbqYmMJGV8CINVREVdo+m1F4jblHe3s+4y0P6zYY/BsxvLeyITdRZHJanqxqDctsH/o64nHe6A7GjVpyBNrrCjSA2A1lDaLAssEGGOYE0MVSGT0M6ngn4/Sbcp9zGJipZF4fHEuAXlDA9puMygcKI8YVgeV0nVPbrzxEGK+0jQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AxNVCcOi; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D447FC116C6;
+	Tue,  3 Mar 2026 16:09:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772553380;
-	bh=docXN/j7MOnJzfbztgBR+4k4s7H02SISB2RKfeW0qo0=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=ZzdtIyth46gErNXR0r6WhugMyRnjR7EEDJuMNo9h7G9w+7AchH7hWiJnVWefCzQdz
-	 5s2+sEECu4jHA+OlZbWLFjC0wdfWl6KbINixJjxirQpfzraKjmrgafAQ6DIUhYgcI3
-	 WBhfJOgNHSGoJ09+qA7SV55zofbwcauceVwEPyYqovYNoB0E9/BWu9vZWtGAOuqEZH
-	 lS17j3XPfsJlcwRHaTt4cYwFa5+ALpTsPcIvb6v9Lc3BrH/t6Sdj3mqDMvepRPUaDi
-	 pZqRXL4toSYN8jUmMxa7WZYMBsm9jhWxkMS/q09O4Ov1f89MhtH1eAexJVMjx8FX/B
-	 GElQVoakP4Vjg==
-Date: Tue, 03 Mar 2026 09:56:19 -0600
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=k20201202; t=1772554202;
+	bh=/Oki8YLUgptwDqEZ3/IL+keBgnynyQdoJNYct1jNqBM=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=AxNVCcOi17SZBQ3JHnslC193OZYGZAwSo0J3eBTKUokc1TRw1jXBypG1WBd2N2KuR
+	 0AU3BXGx4EOS6T/VumPpnykLM7r27aDjVTBPZHrb7HhXB0voIWo0NGrrrB1THhmVUg
+	 ircmZRCItalsRPlVxeTdWBR/KUhQ1f1xqXKvlFNhEv4Y2ihTfdYvUW3RlX0mXoEaik
+	 UTudNoc1Nf3YLa8Wtmfy4XUIZueFSYfbiEZRebF+YBym61VChxCMjijF0jM2fw2ZA8
+	 w+NKevjQhhn2vONQfUdwvFveunc6bgviqTaqJMAkw2WLqo3JquTpIKkf8K2I0z3S5W
+	 FVQIH1F/B4GvA==
+Message-ID: <3e288b83-8a99-4ec2-8b2b-efdd9d7463f2@kernel.org>
+Date: Tue, 3 Mar 2026 17:09:54 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Sean Paul <sean@poorly.run>, Krzysztof Kozlowski <krzk@kernel.org>, 
- Thomas Zimmermann <tzimmermann@suse.de>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Jessica Zhang <jesszhan0024@gmail.com>, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Krishna Manikandan <quic_mkrishn@quicinc.com>, 
- Simona Vetter <simona@ffwll.ch>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Abhinav Kumar <abhinav.kumar@linux.dev>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, dri-devel@lists.freedesktop.org, 
- Bjorn Andersson <andersson@kernel.org>, freedreno@lists.freedesktop.org, 
- Kuogee Hsieh <quic_khsieh@quicinc.com>, Maxime Ripard <mripard@kernel.org>, 
- linux-arm-msm@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, 
- Jonathan Marek <jonathan@marek.ca>, 
- Rob Clark <robin.clark@oss.qualcomm.com>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/8] dt-bindings: display/msm: qcom,eliza-mdss: Add Eliza
+ SoC
+To: "Rob Herring (Arm)" <robh@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Cc: Sean Paul <sean@poorly.run>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Jessica Zhang <jesszhan0024@gmail.com>, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Krishna Manikandan <quic_mkrishn@quicinc.com>,
+ Simona Vetter <simona@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, dri-devel@lists.freedesktop.org,
+ Bjorn Andersson <andersson@kernel.org>, freedreno@lists.freedesktop.org,
+ Kuogee Hsieh <quic_khsieh@quicinc.com>, Maxime Ripard <mripard@kernel.org>,
+ linux-arm-msm@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>,
+ Jonathan Marek <jonathan@marek.ca>, Rob Clark
+ <robin.clark@oss.qualcomm.com>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
  David Airlie <airlied@gmail.com>, Dmitry Baryshkov <lumag@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-In-Reply-To: <20260303-drm-display-eliza-v1-5-814121dbb2bf@oss.qualcomm.com>
 References: <20260303-drm-display-eliza-v1-0-814121dbb2bf@oss.qualcomm.com>
  <20260303-drm-display-eliza-v1-5-814121dbb2bf@oss.qualcomm.com>
-Message-Id: <177255337948.3355290.6523186852223801021.robh@kernel.org>
-Subject: Re: [PATCH 5/8] dt-bindings: display/msm: qcom,eliza-mdss: Add
- Eliza SoC
-X-Rspamd-Queue-Id: E0A601F318E
+ <177255337948.3355290.6523186852223801021.robh@kernel.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <177255337948.3355290.6523186852223801021.robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Queue-Id: 88C101F37C1
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.34 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCPT_COUNT_TWELVE(0.00)[26];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[poorly.run,kernel.org,suse.de,gmail.com,vger.kernel.org,quicinc.com,ffwll.ch,linux.intel.com,linux.dev,linaro.org,lists.freedesktop.org,marek.ca,oss.qualcomm.com,somainline.org];
-	TAGGED_FROM(0.00)[bounces-95170-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[poorly.run,suse.de,kernel.org,gmail.com,vger.kernel.org,quicinc.com,ffwll.ch,linux.intel.com,linux.dev,linaro.org,lists.freedesktop.org,marek.ca,oss.qualcomm.com,somainline.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-95171-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:email]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_TWELVE(0.00)[26];
+	TO_DN_SOME(0.00)[]
 X-Rspamd-Action: no action
 
-
-On Tue, 03 Mar 2026 14:07:55 +0100, Krzysztof Kozlowski wrote:
-> Add MDSS/MDP display subsystem for Qualcomm Eliza SoC, being overall a
-> minor revision change against SM8750, but coming with few different
-> components, like different DSI PHY and added HDMI.
+On 03/03/2026 16:56, Rob Herring (Arm) wrote:
 > 
-> The binding does not include HDMI description yet.
+> On Tue, 03 Mar 2026 14:07:55 +0100, Krzysztof Kozlowski wrote:
+>> Add MDSS/MDP display subsystem for Qualcomm Eliza SoC, being overall a
+>> minor revision change against SM8750, but coming with few different
+>> components, like different DSI PHY and added HDMI.
+>>
+>> The binding does not include HDMI description yet.
+>>
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+>> ---
+>>  .../bindings/display/msm/qcom,eliza-mdss.yaml      | 496 +++++++++++++++++++++
+>>  1 file changed, 496 insertions(+)
+>>
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-> ---
->  .../bindings/display/msm/qcom,eliza-mdss.yaml      | 496 +++++++++++++++++++++
->  1 file changed, 496 insertions(+)
+> My bot found errors running 'make dt_binding_check' on your patch:
 > 
+> yamllint warnings/errors:
+> 
+> dtschema/dtc warnings/errors:
+> Documentation/devicetree/bindings/display/msm/qcom,eliza-mdss.example.dts:25:18: fatal error: dt-bindings/clock/qcom,eliza-gcc.h: No such file or directory
+>    25 |         #include <dt-bindings/clock/qcom,eliza-gcc.h>
 
-My bot found errors running 'make dt_binding_check' on your patch:
+Mea culpa, I was testing on branch with the dependency, so obviously I
+need to decouple these.
 
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/display/msm/qcom,eliza-mdss.example.dts:25:18: fatal error: dt-bindings/clock/qcom,eliza-gcc.h: No such file or directory
-   25 |         #include <dt-bindings/clock/qcom,eliza-gcc.h>
-      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-compilation terminated.
-make[2]: *** [scripts/Makefile.dtbs:140: Documentation/devicetree/bindings/display/msm/qcom,eliza-mdss.example.dtb] Error 1
-make[2]: *** Waiting for unfinished jobs....
-make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1597: dt_binding_check] Error 2
-make: *** [Makefile:248: __sub-make] Error 2
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.kernel.org/project/devicetree/patch/20260303-drm-display-eliza-v1-5-814121dbb2bf@oss.qualcomm.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+Best regards,
+Krzysztof
 
