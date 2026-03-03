@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-95054-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GBK5JvSApmmIQgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95054-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 07:34:28 +0100
+	id 6GXLExqBpmmIQgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 07:35:06 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F4D91E9A75
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 07:34:27 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id DBAEF1E9A95
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 07:35:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id B4151302795D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Mar 2026 06:34:26 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1AA0F3096B3F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Mar 2026 06:34:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2433E374E5E;
-	Tue,  3 Mar 2026 06:34:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FF0B3845CC;
+	Tue,  3 Mar 2026 06:34:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tegRSjB6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rzK/Wf78"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3EE21E230E;
-	Tue,  3 Mar 2026 06:34:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AED5374E57;
+	Tue,  3 Mar 2026 06:34:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772519666; cv=none; b=QyoP+isZnNuI3P+ySCpjmzmkqPl0YtXkbBRzANQK6wf+w201zzwbv03zhp+n1RhPUhA/cYpu6t9uGmaX3VGbCWPdbkX/Ihjti9XQ9aKaaf4CJbK77sGRKoJQqhPIRdBIZAQl7vKFQjsmrzGdD7N4d2nswv7EWFvT9lhMU/Rd/qA=
+	t=1772519669; cv=none; b=uT2C++zdj87aosYvLrEX6BE0+2LM0F9Yv60KgTv61Z/8vSyBNxIyue5MJlDWDtI4A5C+Y/kfZOFoeXcol64beCg/8zclOv+DpRhDDZoq4iqiBagtx8ltiREMXO7HXchPgZokrxieHttbxIPMjksx4yfPoNHtU41AF2Y6/CwsFIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772519666; c=relaxed/simple;
-	bh=REOtFCrp9D4aAmjKtPIuqLJAuUqDZjfUBSCL8TCNuS4=;
+	s=arc-20240116; t=1772519669; c=relaxed/simple;
+	bh=BReETrl3zzBY3Zv4RFg9UwyPaJx47J2Ky9T7u6cVEDc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Sdw0AVIVQppH2SuMYmvslLb3DHHZ2H4TdxUaOkIuIfSZKMoC7KGU4NqCq/ewHao0GPb3suFmJDPcCHRxzn3csTGO6ApuTfZacNTJMHKACCLpiMIxC4e57Q8BTFgDukUe37fwI9HtPWEUxopFlsnufdOvmzVeW2mFN1MgAHeJH/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tegRSjB6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45944C116C6;
-	Tue,  3 Mar 2026 06:34:21 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=go+zMIbw6ny3/Vifvh8R3E6445gTpSXm9BDLq4e5CY6H0wGr7OBRREcQP9AkeZ1lSYM2OF5O9xvaUNpkJqh8Kcjjq1k1UcUqX6rnSF8CeUFpsuUNN2ux3ljH9vsPr3gZAJdp9yUmNnYZmm32S8s0ddVmVKSl32zxQIjzxa+4BuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rzK/Wf78; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2AC6C19425;
+	Tue,  3 Mar 2026 06:34:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772519665;
-	bh=REOtFCrp9D4aAmjKtPIuqLJAuUqDZjfUBSCL8TCNuS4=;
+	s=k20201202; t=1772519668;
+	bh=BReETrl3zzBY3Zv4RFg9UwyPaJx47J2Ky9T7u6cVEDc=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=tegRSjB68vrCbk7JZkrxJh8rDw2obQelSAC+QlsRTYEJcge8U0rzBFtk/ggir5D0I
-	 gjGN9FGeFWQYtsugo6qZ0o66fBekcT/UfmGH5hz3KLhattpqfBKyPpVDs4aXtPZMxc
-	 nr69aaE34+QdLausWp1l6R01qhEaMcDcMfJWmnPFLOb+XxW437vnkF2djin79mSvgM
-	 4GSZwfF5uH+IOVKLNYgO4+IMmCAXQOUaQ2B7Sy4r6qXSWmo3AqOeiYQ0aI5YtySr+q
-	 vV1vUxxa+6E0Qb7wbMu7aJzqXstNxG/j49IyfmHWMddd/t57aAQsdvnb6HJyTaG2O5
-	 8RsZY2VbOXJHw==
-Message-ID: <45e1b15c-9289-4a55-9436-5cc70e85e4b7@kernel.org>
-Date: Tue, 3 Mar 2026 07:34:19 +0100
+	b=rzK/Wf78KD4bMA4jm6PAvIWoUyNiAZYhUf3UOGR6gh2NJJdqhFpN9cWX0sqAIJdth
+	 3QWOsNtmblbfvpEP7bOqFX02ZwHmBpZl0qnQyc0gaY3YsKkEPzTDRMACPxlD4pNc4t
+	 FXvFaUCCbMk9c2e286Q86+BIddy5odjk0CYRZs4MLkLGgpwoXSaJV4Ye3ARYzirGVV
+	 SChtaIW4zSXCAygfrDiQQnR4JZqQ5VGs5/b52GFPKgaw8pRyugh2b60rqa1mzGiY2Z
+	 esQkTixN7XbOdm1TfRhP24EPppcZ5D9Ud/Ulrzt0zxrtHNZMgsCskKGBd6exSyToio
+	 Y8am2xlE2fRDQ==
+Message-ID: <41162704-32ff-48dc-a6c1-a9ea1c7db291@kernel.org>
+Date: Tue, 3 Mar 2026 07:34:24 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,19 +53,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/6] arm64: dts: qcom: sm6115: Add missing MDSS core
- reset
+Subject: Re: [PATCH v3 4/6] clk: qcom: dispcc-sm6125: Add missing MDSS resets
 To: Val Packett <val@packett.cool>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Adam Skladowski <a39.skl@gmail.com>
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Adam Skladowski <a39.skl@gmail.com>
 Cc: linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
- ~postmarketos/upstreaming@lists.sr.ht, devicetree@vger.kernel.org,
+ ~postmarketos/upstreaming@lists.sr.ht, linux-clk@vger.kernel.org,
  linux-kernel@vger.kernel.org,
  Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 References: <20260303034847.13870-1-val@packett.cool>
- <20260303034847.13870-6-val@packett.cool>
+ <20260303034847.13870-5-val@packett.cool>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -111,23 +111,23 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260303034847.13870-6-val@packett.cool>
+In-Reply-To: <20260303034847.13870-5-val@packett.cool>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 1F4D91E9A75
+X-Rspamd-Queue-Id: DBAEF1E9A95
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95054-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_TO(0.00)[packett.cool,kernel.org,gmail.com];
+	TAGGED_FROM(0.00)[bounces-95055-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_TO(0.00)[packett.cool,kernel.org,baylibre.com,gmail.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	RCPT_COUNT_TWELVE(0.00)[14];
@@ -142,22 +142,22 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:email]
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:email,packett.cool:email]
 X-Rspamd-Action: no action
 
 On 03/03/2026 04:41, Val Packett wrote:
-> To make sure the display subsystem starts in a predictable state, we
-> need to reset it. Otherwise, unpredictable issues can happen, e.g.
-> on the motorola-guamp smartphone DSI would not transmit anything.
+> The MDSS resets were left undescribed. Add them to allow resetting the
+> display subsystem, which is necessary to avoid issues caused by state
+> left over from the bootloader on various platforms.
 > 
-> Wire up the reset to fix.
-> 
-> Fixes: 705e50427d81 ("arm64: dts: qcom: sm6115: Add mdss/dpu node")
 > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 > Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > Signed-off-by: Val Packett <val@packett.cool>
 > ---
+>  drivers/clk/qcom/dispcc-sm6125.c | 7 +++++++
+>  1 file changed, 7 insertions(+)
+
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
