@@ -1,68 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-95051-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95052-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sGTGOF2ApmmIQgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95051-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 07:31:57 +0100
+	id 0D0MO3eApmmIQgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95052-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 07:32:23 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 409021E9A15
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 07:31:57 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 634F61E9A36
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 07:32:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 44B2730379BB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Mar 2026 06:31:54 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id EF39B302E7D9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Mar 2026 06:32:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 777D133E367;
-	Tue,  3 Mar 2026 06:31:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B45C31D367;
+	Tue,  3 Mar 2026 06:32:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Hxev20dF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QjHvkaYf"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5160B2FBDE0;
-	Tue,  3 Mar 2026 06:31:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075E31E230E;
+	Tue,  3 Mar 2026 06:32:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772519513; cv=none; b=gfI6EZZ8s8Wt4cUpaXKGVEufw8/Hu5vRuUAWjaM4M6qmOWw3PoBvs4QnN+lvfpM2pLST4bugA1PnQ7P7N6lQgIpFV+H6PLBJ9g9ImUbRvifsX075oX2EmemH/AKokoKSjUBcds2VhiRpBTk2LoNUYW3yTvFMfxqwQFnuVbEVsyw=
+	t=1772519539; cv=none; b=QuSEySb5Bn/wXibIVhra023HUrd3sgC7w02vZWwJ16RgFa4StJDRrtyIRROYB36VOuhWr5b1Y5xyaRQp8mDLXkgR6n87w4BxeDy198CmFEQKXGfRoSw+/vPL6Rrmpxui4ZovWLg7oB2/46r60uwKzygaHyCsmg7q82TjJGj/E1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772519513; c=relaxed/simple;
-	bh=etIR7Pe56EdJQFM6d1qXtDhGMMHWIdR7Aif3D35ehjk=;
+	s=arc-20240116; t=1772519539; c=relaxed/simple;
+	bh=qNRc9hbmwHNq3XXQICITZDpHOIS5X7xjtvMnD8iNwGE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oRHCi62EH8dnrn4BOvqYsXRU2OWQLwLYAKn0SwkQfol4MjBIM1mYAZ4hBjKrgKZJnMvIVwfsluvLCSRQvUnkN6aYZvZHpOIHvY0gbOgctS5FtIM1F0zV2CdGvIxpFeGrt9Rvw13rFblKiAtw9wavU+VCkVaNWRYU4LB4ErHARPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Hxev20dF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65DF8C116C6;
-	Tue,  3 Mar 2026 06:31:52 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=uyoyPaL0afoN33kq+q5DqO88y4h3A65COFRs8wjG3WPNmvJQ7OPCsqjvwLOpM9VXtSzr++K+dF86BMbCCl8wVh93iQCD0zJllISQ26rwZFOx7huDl3Jb3G/9CzLhiyuziUHC/CC75Q9cc0lBFzY8J/7knZ+LHGfS/pDyx3/wqq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QjHvkaYf; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 511E7C116C6;
+	Tue,  3 Mar 2026 06:32:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772519512;
-	bh=etIR7Pe56EdJQFM6d1qXtDhGMMHWIdR7Aif3D35ehjk=;
+	s=k20201202; t=1772519538;
+	bh=qNRc9hbmwHNq3XXQICITZDpHOIS5X7xjtvMnD8iNwGE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Hxev20dFa+dxxwB5bP7ivl+Y1AczyuBBSYjv3OaLW8gvm5Ntid6NW2+EIESuixvhL
-	 953KNgVlOyKO7TnKtiVYZkTSgTBWbHDR+gAJDqTReljaT3DidnyXPYpkmP0a/7MNiZ
-	 Yf6705jGZZjSsANI7pppbBjL60NwbCyf+Phk5+gj9JMgJPTsWW3B1ZHTl3qc1WTaiI
-	 US9O3xk2ZFVQDR4TjAv6HmZw+S7Mwu4N0rOKUEuzlkbVLNoR43qALwDeblDTGeXWix
-	 AtVU7GR9t5aqKD2c+KhVCeffJBfrcBTIvubMCf68lanjTJ81pbAq3S3J3tAgPECwu0
-	 Ppe3qphaARC2A==
-Date: Tue, 3 Mar 2026 07:31:50 +0100
+	b=QjHvkaYfCzoPHxUyy1MBdQ2r3dYPXpCeCtWYDcIG4p2VYYJjTNAAOCV8N0lGeIBTK
+	 PFDSMzhkXrjZQmxYxUYI/e1ne+zGikWSyY8fn/kBr/PbyYmy+wjyz/O01Fw3q2FhNG
+	 9OTRaSOcIol7BFLMLVWlR0CTe0RvrWpv4vHDsGSgVZcVs+rVopceMkDccbAVziJHRx
+	 GAFMmtMV4CiiKfuT2RdJJhkHg9lfgcP93njx5vUQWDoSskHGNRC/clwrh4PhKxCOJM
+	 peOvLe8UNTGVYpB6Oixc66seES0w2voKsjloXhO8HoEDrKCvfTbeNUEOHFR51/UxWA
+	 Olj+ke088gwlw==
+Date: Tue, 3 Mar 2026 07:32:16 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
-	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Kuogee Hsieh <quic_khsieh@quicinc.com>, Abel Vesa <abelvesa@kernel.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	stable@vger.kernel.org
-Subject: Re: [PATCH v3 2/2] dt-bindings: display: msm: Fix reg ranges for DP
- example node
-Message-ID: <20260303-resilient-bouncy-anteater-b4cf0f@quoll>
-References: <20260302-glymur-fix-dp-bindings-reg-clocks-v3-0-8fe49ac1f556@oss.qualcomm.com>
- <20260302-glymur-fix-dp-bindings-reg-clocks-v3-2-8fe49ac1f556@oss.qualcomm.com>
+To: Val Packett <val@packett.cool>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	Adam Skladowski <a39.skl@gmail.com>, linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org, 
+	~postmarketos/upstreaming@lists.sr.ht, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v3 3/6] clk: qcom: dispcc-sm6115: Add missing MDSS resets
+Message-ID: <20260303-peridot-beaver-of-camouflage-f5ba7f@quoll>
+References: <20260303034847.13870-1-val@packett.cool>
+ <20260303034847.13870-4-val@packett.cool>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,8 +65,8 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260302-glymur-fix-dp-bindings-reg-clocks-v3-2-8fe49ac1f556@oss.qualcomm.com>
-X-Rspamd-Queue-Id: 409021E9A15
+In-Reply-To: <20260303034847.13870-4-val@packett.cool>
+X-Rspamd-Queue-Id: 634F61E9A36
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
@@ -80,18 +74,18 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-95051-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-95052-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[24];
+	RCPT_COUNT_TWELVE(0.00)[14];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,linux.intel.com,suse.de,ffwll.ch,quicinc.com,vger.kernel.org,lists.freedesktop.org];
+	FREEMAIL_CC(0.00)[kernel.org,baylibre.com,gmail.com,vger.kernel.org,lists.sr.ht,oss.qualcomm.com];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-0.998];
@@ -99,20 +93,25 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-On Mon, Mar 02, 2026 at 11:58:36AM +0200, Abel Vesa wrote:
-> Add the missing p2, p3, mst2link and mst3link register blocks to the DP
-> example node. This is now necessary since the DP schema has been fixed.
+On Tue, Mar 03, 2026 at 12:41:22AM -0300, Val Packett wrote:
+> The MDSS resets were left undescribed. Add them to allow resetting the
+> display subsystem, which is necessary to avoid issues caused by state
+> left over from the bootloader on various platforms.
 > 
-> While at it, use actual addresses from the first controller instead of
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Signed-off-by: Val Packett <val@packett.cool>
+> ---
+>  drivers/clk/qcom/dispcc-sm6115.c | 7 +++++++
+>  1 file changed, 7 insertions(+)
 
-As pointed out by bot, this must stay bisectable, thus should be
-squashed. You can keep two Fixes tags, if both are applicable.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
 Best regards,
 Krzysztof
