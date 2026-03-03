@@ -1,213 +1,331 @@
-Return-Path: <linux-arm-msm+bounces-95180-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95181-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id eKEyBGEUp2ncdQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95180-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 18:03:29 +0100
+	id yOcmBrgVp2ncdQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95181-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 18:09:12 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A1031F45D7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 18:03:28 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A9B291F46AE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 18:09:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7844F3028EF5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Mar 2026 16:57:52 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 408B03029A88
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Mar 2026 17:08:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B962E3DBD66;
-	Tue,  3 Mar 2026 16:57:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AAE2F370D7F;
+	Tue,  3 Mar 2026 17:08:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HvwwAKDA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J8mjnHgd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 960813AE194
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Mar 2026 16:57:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87505370D55;
+	Tue,  3 Mar 2026 17:08:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772557071; cv=none; b=oT5EyZ6kFY2y/Vq+OdlV2xp4voRCFZ9TlwspsNbPMVeKGHbQcTAmTxFUqrjGGzkpDwHi13Ng0xt4O0Hk2CUeb7EqZXzppreVuf3pl6UU8aCAQq8jmxAlLYoO9hJpa4gd37O7iohgci+ACFpSBnLl3wAWVtQB1PkIASrUXMpEz8w=
+	t=1772557732; cv=none; b=im/T8txCO77gal3dG3e3PSgP12atP5Ova1izx2vFQz/Ck/t8hgO68+f2VHHgd2wx6pYjU53XpvA+I2kz5zpXyDy8GZJ9W+k0seimS35Ocy6nyCh/9RY4VLjVQhDsWmYaE+CcD0xsULrcMIBltYXdMaaougqpB952dGcFGNMVtnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772557071; c=relaxed/simple;
-	bh=3/GzSmoRFQsgGZDBWOEZf5WA45dc4iHal7c2SQqyU/M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dhaj0d20F4Xy+bXbphrj0WhgdKGhOP8dJR6SRf99RS7YB9lR9envDLvubEArkoZRzA3byoaeXkEnkDOp3/Vi1wkltiSatVoIKRENLUOAMrGyJRfa2ZmkEWl0ciZNpWXAaY/ADmF0x+RO6wc6EIHvms5CkMYHy5VUQxL3/S7dieE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HvwwAKDA; arc=none smtp.client-ip=209.85.215.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-c736261ee8dso771338a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Mar 2026 08:57:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772557070; x=1773161870; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=DV/HSQAamVa6HSuuaGYt1Sx9aCryyCjzy9hIsHP5+oE=;
-        b=HvwwAKDARrPFqD3SS5xzq/r5mXo7NoKE7T6BD9dD8EDEFQAuJqiXbPvOGTZ7zuexG+
-         p4++vojTrsNVrp7npf+SU6Nw78R1rhpXT8fcWBzC+YBecRbmnYKdZXDoE12WbFRid0zG
-         eoeRH77r9zOan6tV+X89Ph36kU6ygpjYsrWzcc1zfYScYeiAnDtXXMGoHrh9+03Twx/k
-         nKTXQQYYfBdhyQgvm5xhqY/1Vq+jz1jHoqNOkXXD/udJGDS4sxQ2keR2sNcF07T+ogoa
-         YkzxBu72PM8Eyjh6GQnOjQQtRaHDztyY5J2WrUXUEXm+3CAPvv0Tuz3Wvcx/T5USEVAu
-         6aQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772557070; x=1773161870;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DV/HSQAamVa6HSuuaGYt1Sx9aCryyCjzy9hIsHP5+oE=;
-        b=mPvkuj/7ZNN6bkRoLA7/aC0Uzfx8MNtka22DNXsN96Y4Vo+R3N2qxmVEK6dZBAJQvU
-         6gQvmvefPfgpbKKzhYDVEYr4R1eSEv9akoRB01cAjbqjiaMwih6OYcZB/bnuqCYlHUiS
-         aUOhvZmQraLG0iIpbvo0wfmMOmXA/bqICj/aoxxioyLeRy4HgUoXO7PPC0ZTiH+3tAuQ
-         odhXg1ix6rRclCwtpEJ1QBNtv/T6wg2zUX8kj5qqQ8ohJlaK0e4RsCRd7n0PVvpyUUYP
-         cWmRr99npMCjMYE02wyS/S9fDL12GnXZR6IwgIvMhRFdA8REGWJCJmIhacW/t9Lx5awn
-         uwig==
-X-Forwarded-Encrypted: i=1; AJvYcCUwA8+RO4sjZicO4OodoQ+razvt12BY0KbuVKwYBj+AbjUbZD9DkRhzmk97QpaoV42WOnOWQB+hXnGV1AZm@vger.kernel.org
-X-Gm-Message-State: AOJu0YybPAvVG/Ks85+lFf20OHOAvEABXyjcUd5gH2qpe8bBWe+oPJZM
-	iqFEJjD/OK8tesK/IvGT9rg3OAaIYe5d/4wBFgp6OYsNLJY8gvXWRbEb
-X-Gm-Gg: ATEYQzxsKrFBrETiZGKRE4RjYLblQi3aS9gDwlZJ5u1BhdmpVdtQpwTgpJZBb0iJU1y
-	ixvtyeNAY6fI+VL1Wo19m4Xhj2z9kpKXIHLrk0dM9yfTbQBFi+IHVxRYPAsNV5MDMX6nVcb+c8p
-	krLhwU6bNANsjeXkM7D0ENESZrzJTb7XcJjSXX1YbNdt0KLpnILHPMzu8hP6MYRSo1MM8Nu0QIT
-	jNaCKbySm3nfJVMe4rmzFCg+898VfEtRnLZzZtKsGRUH4nsHbtI37VMUDsYo05FhPJsO3+eC+6b
-	C4EWFjmMXuliN3fs/CQQiJ0QtlYYNdJ0Qo6+1nGCiVwEOS9R/H/fP0xztvsG36bI73URTIS0fu8
-	6vYHUQLhy44cojJA9kmPPHaNsDmQYUozIY2gwNhVla9+BtDa84zZRHvhu7yba+xlrHUYBtWn0Vm
-	dXPgljf4NCp3dZy7dOxrJl6AhHw1IfqR3eyIoHbM/LtWksQ5dyQyojX19Mt9XwyOYcfu0DasxLu
-	ilrvQSRrEw=
-X-Received: by 2002:a17:903:2f89:b0:2ae:6317:56e3 with SMTP id d9443c01a7336-2ae63175cb8mr20707785ad.28.1772557069742;
-        Tue, 03 Mar 2026 08:57:49 -0800 (PST)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae4802645bsm83989515ad.12.2026.03.03.08.57.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Mar 2026 08:57:49 -0800 (PST)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <4a7ac923-0f1a-431f-a029-8843a8eddca3@roeck-us.net>
-Date: Tue, 3 Mar 2026 08:57:47 -0800
+	s=arc-20240116; t=1772557732; c=relaxed/simple;
+	bh=0899M90yE/0vfANLYTT04NKHa3DPkxuOqYvMDDceb8M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jqKHf5HJMYTpdmhxUwHkQ9XKTuz0dHzfvxoY4jLrX1do5pbqr1CtItlAAJfIQbfLlXf5dojJoetYW/acsCC3euMT/uJI4UI90BLHJJk/huUXAsMWQeB0P9N648RggsMNZ2bsz/Vun0spnSbfLKHyw0beRgu8pMcL7yJypxZNb8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J8mjnHgd; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F439C116C6;
+	Tue,  3 Mar 2026 17:08:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772557732;
+	bh=0899M90yE/0vfANLYTT04NKHa3DPkxuOqYvMDDceb8M=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=J8mjnHgdiWS4kMcax+ziRaVDeeSCgxeiSb9TJmljKvMagNWMQbJWh7HIhnoPMez3i
+	 pWkrLrRu69ZaD32Pt2BAqDoElnIjgNVihGK/XxqJagSUf/TKn8stl/luFbMI30/QkL
+	 j7lzx/cM59q1c6XQLcCX5tgY4Ec0QZOJqJ4T3oyTAoKqXqxBLLmQBhC451rolwG3Pg
+	 ZuaCVD018omKxsdz1PnKKWodPvFzhwG+JNazI82kNatuN707f9blL1Ki/DhIfD5uVS
+	 NMhMK8ZkOJByX9C3wMnepLJDYI4V1dGbiiEpsq0+qg1XWgHcM+FurX5uy0SsXyVA2z
+	 Pa6/HgTKoVcKA==
+Date: Tue, 3 Mar 2026 22:38:38 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Harshal Dev <harshal.dev@oss.qualcomm.com>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>, 
+	"David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Abel Vesa <abel.vesa@oss.qualcomm.com>, cros-qcom-dts-watchers@chromium.org, 
+	Brian Masney <bmasney@redhat.com>, Neeraj Soni <neeraj.soni@oss.qualcomm.com>, 
+	Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 11/11] soc: qcom: ice: Add explicit power-domain and
+ clock voting calls for ICE
+Message-ID: <4a76fuanyf45d56p64qmc7c3qcovbzt7jc27uern4lr4bchl6n@l6buzvakrrcg>
+References: <20260123-qcom_ice_power_and_clk_vote-v1-0-e9059776f85c@qti.qualcomm.com>
+ <20260123-qcom_ice_power_and_clk_vote-v1-11-e9059776f85c@qti.qualcomm.com>
+ <vimd3tbnu4mr2uqporj7d4fv23aq2cb6e5een43yz5spe4u2xx@ufyzb2lzlc6j>
+ <b32c7091-b2c4-443d-b58e-759b471f67db@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] hwmon: axi-fan: don't use driver_override as IRQ
- name
-To: Danilo Krummrich <dakr@kernel.org>
-Cc: gregkh@linuxfoundation.org, rafael@kernel.org, hanguidong02@gmail.com,
- ysato@users.sourceforge.jp, dalias@libc.org, glaubitz@physik.fu-berlin.de,
- abelvesa@kernel.org, srini@kernel.org, s.nawrocki@samsung.com,
- nuno.sa@analog.com, driver-core@lists.linux.dev,
- linux-kernel@vger.kernel.org, imx@lists.linux.dev,
- linux-hwmon@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-sound@vger.kernel.org, linux-sh@vger.kernel.org,
- Guenter Roeck <groeck7@gmail.com>
-References: <20260303115720.48783-1-dakr@kernel.org>
- <20260303115720.48783-4-dakr@kernel.org>
- <b46c5757-b67d-4949-b8d8-54b799464b5d@roeck-us.net>
- <DGTACERFTTCV.29XON9ZLYAEQL@kernel.org>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- xsFNBE6H1WcBEACu6jIcw5kZ5dGeJ7E7B2uweQR/4FGxH10/H1O1+ApmcQ9i87XdZQiB9cpN
- RYHA7RCEK2dh6dDccykQk3bC90xXMPg+O3R+C/SkwcnUak1UZaeK/SwQbq/t0tkMzYDRxfJ7
- nyFiKxUehbNF3r9qlJgPqONwX5vJy4/GvDHdddSCxV41P/ejsZ8PykxyJs98UWhF54tGRWFl
- 7i1xvaDB9lN5WTLRKSO7wICuLiSz5WZHXMkyF4d+/O5ll7yz/o/JxK5vO/sduYDIlFTvBZDh
- gzaEtNf5tQjsjG4io8E0Yq0ViobLkS2RTNZT8ICq/Jmvl0SpbHRvYwa2DhNsK0YjHFQBB0FX
- IdhdUEzNefcNcYvqigJpdICoP2e4yJSyflHFO4dr0OrdnGLe1Zi/8Xo/2+M1dSSEt196rXaC
- kwu2KgIgmkRBb3cp2vIBBIIowU8W3qC1+w+RdMUrZxKGWJ3juwcgveJlzMpMZNyM1jobSXZ0
- VHGMNJ3MwXlrEFPXaYJgibcg6brM6wGfX/LBvc/haWw4yO24lT5eitm4UBdIy9pKkKmHHh7s
- jfZJkB5fWKVdoCv/omy6UyH6ykLOPFugl+hVL2Prf8xrXuZe1CMS7ID9Lc8FaL1ROIN/W8Vk
- BIsJMaWOhks//7d92Uf3EArDlDShwR2+D+AMon8NULuLBHiEUQARAQABzTJHdWVudGVyIFJv
- ZWNrIChMaW51eCBhY2NvdW50KSA8bGludXhAcm9lY2stdXMubmV0PsLBgQQTAQIAKwIbAwYL
- CQgHAwIGFQgCCQoLBBYCAwECHgECF4ACGQEFAmgrMyQFCSbODQkACgkQyx8mb86fmYGcWRAA
- oRwrk7V8fULqnGGpBIjp7pvR187Yzx+lhMGUHuM5H56TFEqeVwCMLWB2x1YRolYbY4MEFlQg
- VUFcfeW0OknSr1s6wtrtQm0gdkolM8OcCL9ptTHOg1mmXa4YpW8QJiL0AVtbpE9BroeWGl9v
- 2TGILPm9mVp+GmMQgkNeCS7Jonq5f5pDUGumAMguWzMFEg+Imt9wr2YA7aGen7KPSqJeQPpj
- onPKhu7O/KJKkuC50ylxizHzmGx+IUSmOZxN950pZUFvVZH9CwhAAl+NYUtcF5ry/uSYG2U7
- DCvpzqOryJRemKN63qt1bjF6cltsXwxjKOw6CvdjJYA3n6xCWLuJ6yk6CAy1Ukh545NhgBAs
- rGGVkl6TUBi0ixL3EF3RWLa9IMDcHN32r7OBhw6vbul8HqyTFZWY2ksTvlTl+qG3zV6AJuzT
- WdXmbcKN+TdhO5XlxVlbZoCm7ViBj1+PvIFQZCnLAhqSd/DJlhaq8fFXx1dCUPgQDcD+wo65
- qulV/NijfU8bzFfEPgYP/3LP+BSAyFs33y/mdP8kbMxSCjnLEhimQMrSSo/To1Gxp5C97fw5
- 3m1CaMILGKCmfI1B8iA8zd8ib7t1Rg0qCwcAnvsM36SkrID32GfFbv873bNskJCHAISK3Xkz
- qo7IYZmjk/IJGbsiGzxUhvicwkgKE9r7a1rOwU0ETofVZwEQALlLbQeBDTDbwQYrj0gbx3bq
- 7kpKABxN2MqeuqGr02DpS9883d/t7ontxasXoEz2GTioevvRmllJlPQERVxM8gQoNg22twF7
- pB/zsrIjxkE9heE4wYfN1AyzT+AxgYN6f8hVQ7Nrc9XgZZe+8IkuW/Nf64KzNJXnSH4u6nJM
- J2+Dt274YoFcXR1nG76Q259mKwzbCukKbd6piL+VsT/qBrLhZe9Ivbjq5WMdkQKnP7gYKCAi
- pNVJC4enWfivZsYupMd9qn7Uv/oCZDYoBTdMSBUblaLMwlcjnPpOYK5rfHvC4opxl+P/Vzyz
- 6WC2TLkPtKvYvXmdsI6rnEI4Uucg0Au/Ulg7aqqKhzGPIbVaL+U0Wk82nz6hz+WP2ggTrY1w
- ZlPlRt8WM9w6WfLf2j+PuGklj37m+KvaOEfLsF1v464dSpy1tQVHhhp8LFTxh/6RWkRIR2uF
- I4v3Xu/k5D0LhaZHpQ4C+xKsQxpTGuYh2tnRaRL14YMW1dlI3HfeB2gj7Yc8XdHh9vkpPyuT
- nY/ZsFbnvBtiw7GchKKri2gDhRb2QNNDyBnQn5mRFw7CyuFclAksOdV/sdpQnYlYcRQWOUGY
- HhQ5eqTRZjm9z+qQe/T0HQpmiPTqQcIaG/edgKVTUjITfA7AJMKLQHgp04Vylb+G6jocnQQX
- JqvvP09whbqrABEBAAHCwWUEGAECAA8CGwwFAmgrMyQFCSbODQkACgkQyx8mb86fmYHlgg/9
- H5JeDmB4jsreE9Bn621wZk7NMzxy9STxiVKSh8Mq4pb+IDu1RU2iLyetCY1TiJlcxnE362kj
- njrfAdqyPteHM+LU59NtEbGwrfcXdQoh4XdMuPA5ADetPLma3YiRa3VsVkLwpnR7ilgwQw6u
- dycEaOxQ7LUXCs0JaGVVP25Z2hMkHBwx6BlW6EZLNgzGI2rswSZ7SKcsBd1IRHVf0miwIFYy
- j/UEfAFNW+tbtKPNn3xZTLs3quQN7GdYLh+J0XxITpBZaFOpwEKV+VS36pSLnNl0T5wm0E/y
- scPJ0OVY7ly5Vm1nnoH4licaU5Y1nSkFR/j2douI5P7Cj687WuNMC6CcFd6j72kRfxklOqXw
- zvy+2NEcXyziiLXp84130yxAKXfluax9sZhhrhKT6VrD45S6N3HxJpXQ/RY/EX35neH2/F7B
- RgSloce2+zWfpELyS1qRkCUTt1tlGV2p+y2BPfXzrHn2vxvbhEn1QpQ6t+85FKN8YEhJEygJ
- F0WaMvQMNrk9UAUziVcUkLU52NS9SXqpVg8vgrO0JKx97IXFPcNh0DWsSj/0Y8HO/RDkGXYn
- FDMj7fZSPKyPQPmEHg+W/KzxSSfdgWIHF2QaQ0b2q1wOSec4Rti52ohmNSY+KNIW/zODhugJ
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <DGTACERFTTCV.29XON9ZLYAEQL@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 5A1031F45D7
+In-Reply-To: <b32c7091-b2c4-443d-b58e-759b471f67db@oss.qualcomm.com>
+X-Rspamd-Queue-Id: A9B291F46AE
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95180-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[linuxfoundation.org,kernel.org,gmail.com,users.sourceforge.jp,libc.org,physik.fu-berlin.de,samsung.com,analog.com,lists.linux.dev,vger.kernel.org];
-	DMARC_NA(0.00)[roeck-us.net];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	RCPT_COUNT_TWELVE(0.00)[19];
+	TAGGED_FROM(0.00)[bounces-95181-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[17];
 	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[linux@roeck-us.net,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROM(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[analog.com:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,qualcomm.com:email]
 X-Rspamd-Action: no action
 
-On 3/3/26 08:25, Danilo Krummrich wrote:
-> On Tue Mar 3, 2026 at 5:23 PM CET, Guenter Roeck wrote:
->> On Tue, Mar 03, 2026 at 12:53:20PM +0100, Danilo Krummrich wrote:
->>> Do not use driver_override as IRQ name, as it is not guaranteed to point
->>> to a valid string; use NULL instead (which makes the devm IRQ helpers
->>> use dev_name()).
->>>
->>> Fixes: 8412b410fa5e ("hwmon: Support ADI Fan Control IP")
->>> Signed-off-by: Danilo Krummrich <dakr@kernel.org>
->>> Reviewed-by: Nuno Sá <nuno.sa@analog.com>
->>
->> Applied.
+On Tue, Mar 03, 2026 at 02:11:06PM +0530, Harshal Dev wrote:
+> Hi Manivannan,
 > 
-> I need this patch in the driver-core tree, otherwise I can't land patch 4 of
-> this series [1]. :(
+> On 2/20/2026 8:14 PM, Manivannan Sadhasivam wrote:
+> > On Fri, Jan 23, 2026 at 12:41:35PM +0530, Harshal Dev wrote:
+> >> Since Qualcomm inline-crypto engine (ICE) is now a dedicated driver
+> >> de-coupled from the QCOM UFS driver, it should explicitly vote for it's
+> >> needed resources during probe, specifically the UFS_PHY_GDSC power-domain
+> >> and the 'core' and 'iface' clocks.
+> > 
+> > You don't need to vote for a single power domain since genpd will do that for
+> > you before the driver probes.
+> >
 > 
-> Any chance you can drop it from your tree?
-> 
-> [1] https://lore.kernel.org/driver-core/20260303115720.48783-5-dakr@kernel.org/
+> Unfortunately, without enabling the power domain during probe, I am seeing occasional
+> clock stuck messages on LeMans RB8. Am I missing something? Could you point me to any
+> docs with more information on the the genpd framework?
 > 
 
-Sure, I'll drop it. Please add
+genpd_dev_pm_attach() called before a platform driver probe(), powers ON the
+domain.
 
-Acked-by: Guenter Roeck <linux@roeck-us.net>
+> Logs for reference:
+> 
+> [    6.195019] gcc_ufs_phy_ice_core_clk status stuck at 'off'
+> [    6.195031] WARNING: CPU: 5 PID: 208 at drivers/clk/qcom/clk-branch.c:87 clk_branch_toggle+0x174/0x18c
+> 
+> [...]
+> 
+> [    6.248412] pstate: 604000c5 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+> [    6.248415] pc : clk_branch_toggle+0x174/0x18c
+> [    6.248417] lr : clk_branch_toggle+0x174/0x18c
+> [    6.248418] sp : ffff80008217b770
+> [    6.248419] x29: ffff80008217b780 x28: ffff80008217bbb0 x27: ffffadf880a5f07c
+> [    6.248422] x26: ffffadf880a5c1d8 x25: 0000000000000001 x24: 0000000000000001
+> [    6.248424] x23: ffffadf8a0d1e740 x22: 0000000000000001 x21: ffffadf8a1d06160
+> [    6.248426] x20: ffffadf89f86e5a8 x19: 0000000000000000 x18: fffffffffffe9050
+> [    6.248429] x17: 000000000404006d x16: ffffadf89f8166c4 x15: ffffadf8a1ab6c70
+> [    6.347820] x14: 0000000000000000 x13: ffffadf8a1ab6cf8 x12: 000000000000060f
+> [    6.355145] x11: 0000000000000205 x10: ffffadf8a1b11d70 x9 : ffffadf8a1ab6cf8
+> [    6.362470] x8 : 00000000ffffefff x7 : ffffadf8a1b0ecf8 x6 : 0000000000000205
+> [    6.369795] x5 : ffff000ef1ceb408 x4 : 40000000fffff205 x3 : ffff521650ba3000
+> [    6.377120] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff0000928dd780
+> [    6.384444] Call trace:
+> [    6.386962]  clk_branch_toggle+0x174/0x18c (P)
+> [    6.391530]  clk_branch2_enable+0x1c/0x28
+> [    6.395644]  clk_core_enable+0x6c/0xac
+> [    6.399502]  clk_enable+0x2c/0x4c
+> [    6.402913]  devm_clk_get_optional_enabled+0xac/0x108
+> [    6.408096]  qcom_ice_create.part.0+0x50/0x2fc [qcom_ice]
+> [    6.413646]  qcom_ice_probe+0x58/0xa8 [qcom_ice]
+> [    6.418384]  platform_probe+0x5c/0x98
+> [    6.422153]  really_probe+0xbc/0x29c
+> [    6.425826]  __driver_probe_device+0x78/0x12c
+> [    6.430307]  driver_probe_device+0x3c/0x15c
+> [    6.434605]  __driver_attach+0x90/0x19c
+> [    6.438547]  bus_for_each_dev+0x7c/0xe0
+> [    6.442486]  driver_attach+0x24/0x30
+> [    6.446158]  bus_add_driver+0xe4/0x208
+> [    6.450013]  driver_register+0x5c/0x124
+> [    6.453954]  __platform_driver_register+0x24/0x30
+> [    6.458780]  qcom_ice_driver_init+0x24/0x1000 [qcom_ice]
+> [    6.464229]  do_one_initcall+0x80/0x1c8
+> [    6.468173]  do_init_module+0x58/0x234
+> [    6.472028]  load_module+0x1a84/0x1c84
+> [    6.475881]  init_module_from_file+0x88/0xcc
+> [    6.480262]  __arm64_sys_finit_module+0x144/0x330
+> [    6.485097]  invoke_syscall+0x48/0x10c
+> [    6.488954]  el0_svc_common.constprop.0+0xc0/0xe0
+> [    6.493790]  do_el0_svc+0x1c/0x28
+> [    6.497203]  el0_svc+0x34/0xec
+> [    6.500348]  el0t_64_sync_handler+0xa0/0xe4
+> [    6.504645]  el0t_64_sync+0x198/0x19c
+> [    6.508414] ---[ end trace 0000000000000000 ]---
+> [    6.514544] qcom-ice 1d88000.crypto: probe with driver qcom-ice failed
+>  
+> >> Also updated the suspend and resume callbacks to handle votes on these
+> >> resources.
+> >>
+> >> Signed-off-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
+> > 
+> > Where is the Fixes tag?
+> 
+> Ack, I will add it in v2 of this patch.
+> 
+> > 
+> >> ---
+> >>  drivers/soc/qcom/ice.c | 20 ++++++++++++++++++++
+> >>  1 file changed, 20 insertions(+)
+> >>
+> >> diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
+> >> index b203bc685cad..4b50d05ca02a 100644
+> >> --- a/drivers/soc/qcom/ice.c
+> >> +++ b/drivers/soc/qcom/ice.c
+> >> @@ -16,6 +16,8 @@
+> >>  #include <linux/of.h>
+> >>  #include <linux/of_platform.h>
+> >>  #include <linux/platform_device.h>
+> >> +#include <linux/pm.h>
+> >> +#include <linux/pm_runtime.h>
+> >>  
+> >>  #include <linux/firmware/qcom/qcom_scm.h>
+> >>  
+> >> @@ -108,6 +110,7 @@ struct qcom_ice {
+> >>  	void __iomem *base;
+> >>  
+> >>  	struct clk *core_clk;
+> >> +	struct clk *iface_clk;
+> >>  	bool use_hwkm;
+> >>  	bool hwkm_init_complete;
+> >>  	u8 hwkm_version;
+> >> @@ -310,12 +313,20 @@ int qcom_ice_resume(struct qcom_ice *ice)
+> >>  	struct device *dev = ice->dev;
+> >>  	int err;
+> >>  
+> >> +	pm_runtime_get_sync(dev);
+> > 
+> > This is not needed as the power domain would be enabled at this point.
+> 
+> Would this be enabled due to the genpd framework? I am not observing that
+> during probe. Because this call is made by the UFS/EMMC driver, perhaps you
+> mean the situation at this point is different?
+> 
 
-Thanks,
-Guenter
+If you pass 'power-domains' property in DT, genpd will power it ON at this
+point.
 
+> > 
+> >>  	err = clk_prepare_enable(ice->core_clk);
+> >>  	if (err) {
+> >>  		dev_err(dev, "failed to enable core clock (%d)\n",
+> >>  			err);
+> >>  		return err;
+> >>  	}
+> >> +
+> >> +	err = clk_prepare_enable(ice->iface_clk);
+> >> +	if (err) {
+> >> +		dev_err(dev, "failed to enable iface clock (%d)\n",
+> >> +			err);
+> >> +		return err;
+> >> +	}
+> > 
+> > Use clk_bulk API to enable all clocks in one go.
+> 
+> Ack, I'll use clk_bulk_prepare_enable().
+> 
+> > 
+> >>  	qcom_ice_hwkm_init(ice);
+> >>  	return qcom_ice_wait_bist_status(ice);
+> >>  }
+> >> @@ -323,7 +334,9 @@ EXPORT_SYMBOL_GPL(qcom_ice_resume);
+> >>  
+> >>  int qcom_ice_suspend(struct qcom_ice *ice)
+> >>  {
+> >> +	clk_disable_unprepare(ice->iface_clk);
+> > 
+> > Same here.
+> 
+> Ack, clk_bulk_disable_unprepare() would look good.
+> As Konrad pointed out, if iface clock is not present in DT, thse APIs are
+> fine with NULL pointers here.
+> 
+> > 
+> >>  	clk_disable_unprepare(ice->core_clk);
+> >> +	pm_runtime_put_sync(ice->dev);
+> > 
+> > Not needed.
+> > 
+> >>  	ice->hwkm_init_complete = false;
+> >>  
+> >>  	return 0;
+> >> @@ -584,6 +597,10 @@ static struct qcom_ice *qcom_ice_create(struct device *dev,
+> >>  	if (IS_ERR(engine->core_clk))
+> >>  		return ERR_CAST(engine->core_clk);
+> >>  
+> >> +	engine->iface_clk = devm_clk_get_enabled(dev, "iface_clk");
+> >> +	if (IS_ERR(engine->iface_clk))
+> >> +		return ERR_CAST(engine->iface_clk);
+> >> +
+> > 
+> > Same here. Use devm_clk_bulk_get_all_enabled().
+> 
+> As per discussion on the DT binding patch, I can do this once we decide to break the
+> DT backward compatibility with a subsequent patch which makes both clocks mandatory.
+> For v2, I am planning to continue to treat the 'iface' clock as optional via
+> devm_clk_get_optional() API.
+> 
+
+Even if you do not mark 'iface' as 'required', this API will work just fine. It
+will get and enable whatever clocks defined in the DT node. It is upto the
+binding to define, what all should be present.
+
+> > 
+> >>  	if (!qcom_ice_check_supported(engine))
+> >>  		return ERR_PTR(-EOPNOTSUPP);
+> >>  
+> >> @@ -725,6 +742,9 @@ static int qcom_ice_probe(struct platform_device *pdev)
+> >>  		return PTR_ERR(base);
+> >>  	}
+> >>  
+> >> +	devm_pm_runtime_enable(&pdev->dev);
+> >> +	pm_runtime_get_sync(&pdev->dev);
+> > 
+> > If you want to mark & enable the runtime PM status, you should just do:
+> > 
+> > 	devm_pm_runtime_set_active_enabled();	
+> > 
+> > But this is not really needed in this patch. You can add it in a separate patch
+> > for the sake of correctness.
+> 
+> If my understanding is correct, I need to call pm_runtime_get_sync() to enable
+> the power domain after enabling the PM runtime to ensure further calls to enable
+> the iface clock do not encounter failure. Just calling devm_pm_runtime_set_active_enabled()
+> will only enable the PM runtime and set it's status to 'active'. It will not enable
+> the power domain.
+> 
+
+Again, you DO NOT need to handle a single power domain in the driver, genpd will
+do it for you. If that is not helping, then something else is going wrong.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
