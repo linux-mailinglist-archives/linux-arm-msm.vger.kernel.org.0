@@ -1,178 +1,389 @@
-Return-Path: <linux-arm-msm+bounces-95035-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95036-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id miyUGZJGpmkGNgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95035-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 03:25:22 +0100
+	id eLKzMCVRpmmxNwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95036-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 04:10:29 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB7B71E7FA2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 03:25:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 661C91E857C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 04:10:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 717F53072669
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Mar 2026 02:25:20 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 0CC253071A65
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Mar 2026 03:09:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACC613750D1;
-	Tue,  3 Mar 2026 02:25:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01DC637CD41;
+	Tue,  3 Mar 2026 03:09:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HhrFmahQ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="hr3f4Xub";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="LSO/K8vf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713243750BC
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Mar 2026 02:25:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76FB837CD2E
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Mar 2026 03:09:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772504719; cv=none; b=iA/yFRBXbcku1B26etZP6ebSeMH4tOkSrI0W2EeftBm4IVSfF5/e56b/kd3O2KQawXVvXcqBcN1LgN/0p/T1qFdilfXlsHeoVAqWbeT19wnXO/ag7v/+HQkFj6qgbqPFUmECCkOIt/WJpM/4jr5x56pd133B3pbkCywzxGjMagQ=
+	t=1772507368; cv=none; b=EmAxgDMeSy2nTwBl04kZ6puaCN7gzvVsgeAY+1i4U1xFqBy8HQb6jNdrHcyAQ3u9HqS95s7b7jnPuMoBYG67oqRk3FCkuExC2m7rELmUSAtg5jA1bSK7otUwqrlaaGgG4dxkplZiPOl2XgtYLp5HA43bQKRRi5i8RWmabysfwAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772504719; c=relaxed/simple;
-	bh=ifvNLhNdiL6AWdShIgX/PWLQhJhpX31rZnlJXn+DfJs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Z8D/uR4aFhmYtia8hveE7lLTjs+5cKN+RrfqjV9MA8vmEn0bqBOEff52PKETgvmQ7kWiZeTXw19sYDqZ35bBSRe7A780Wzz8lFtQ1eq6MjtjAzGKiF7hv/3+4ky0QtXIB3Hjm0tUu0acphxwSiiSMl30iJSYaxd5DoqjWqP8fZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HhrFmahQ; arc=none smtp.client-ip=209.85.160.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-505a1789a27so31030331cf.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Mar 2026 18:25:18 -0800 (PST)
+	s=arc-20240116; t=1772507368; c=relaxed/simple;
+	bh=EydzVDobXWmEGamdHTF2WsUIVHA9GmJZh+MAehCXYYY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=casaejUsKwqjN4ZlhlyvHyeNYzWEElRCSD5moiw21yCZ2E9gYBiTJZVSWQXcApU0YLJwp6nAviCbsF2ycp07qjAvYxx/tC+saVG8aIQFhC8dntq9AMMuQDV0GOUtGtt4kRA7FPzp7dhbtUUzDW+Yhygo2+AxT7GZlzaxINLahv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hr3f4Xub; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=LSO/K8vf; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 622IuTTa1186655
+	for <linux-arm-msm@vger.kernel.org>; Tue, 3 Mar 2026 03:09:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	tbGmto2NuUfl5MvNcF4vDgxXI1X+eEBNwwTZ4Sd7E0g=; b=hr3f4Xub0aaGz0Ae
+	Q4+626t/htmu+VvjZ8gCguw1cwFCS6MhTNuB1bavbgBm7RCCTtkGgIoYaeVjPn4D
+	MELSih5Ch7Qm8xNdQTiu6yY6eChGTzpfGED5Q4L5Qi8buJuKB9KNkzzYYYfJbSfV
+	ujFtld6QN9DuL43ctPIA1QBhB/DY7LWzYkbx1qkLhsMl2jC0BEeInFXY1jpe4o/Z
+	d1o4v9Jg3V78qk6WGUz+uJabhxbF4ciUb5Fi4ElNs08XNPugaj8xu5I7kF3xktkx
+	Jzd213JVM/AH04wJdSk0F/jQDh0l7/btKxiHGpRT7dIiHe+icdpIx3fykKqefx6y
+	WIxZIw==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cng96hckr-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 03 Mar 2026 03:09:26 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2aaf2f3bef6so49588875ad.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Mar 2026 19:09:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772504717; x=1773109517; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=17vhc0Hs2JiBGh2C/Kc5owCSl8j4M6mqkAnMUAkK1nM=;
-        b=HhrFmahQa772OYkgAUf5Re+bF1UNgnpryrs6sWqDM+VLX/LVTjarY3wGXoHhzXWAVb
-         gufkibXJPdVSx/9LTI7O0rL88lx8m6mM/1vKwpR4Zgb5CwKbRHTRUQOMtRStSLHRcjC2
-         I93pLyX0byzAJOiVJg+BH8TIs3fGeSNMaEGfXN+nP3O/9Ww4j5ykPSNtYpyc998lxc5u
-         gcouU2LIKtbBV59smYtTFV7iE92jy8k1AJgCsNBC9ApeNLIuIswVGUiV1Yb6F5dD3r85
-         +NynFBJz6JOpsdUlPt093AfSVeh1qO/9NEVnrGGPbrMJC97nTDQPia41fxf12klPz6sz
-         vM7w==
+        d=oss.qualcomm.com; s=google; t=1772507365; x=1773112165; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=tbGmto2NuUfl5MvNcF4vDgxXI1X+eEBNwwTZ4Sd7E0g=;
+        b=LSO/K8vfOLwkffkqhAxgOOkKk9MNhMJMvdFgnKtqb+RfolhqAK/LS2SV4yYoFKGwar
+         MhGqkVpdhYioK6Xye68lXNy98SXwKRn5/U7ySSoPnXl3pG8PsxhsBmTBJqd+fE+Cg0PO
+         gdCW4W4rVGngxd34UpOlrZ1m1x+URiMe8QaGA7ng8/RGVqPpPtnShsrYDFXvLX6HYdI2
+         +FrV7YZseCC+ffuM6Jeh2nJqDltgl3jnxTZ3gZ9GdIx8/Ras20lubHnCuQa6P0g/6J/6
+         +vTY3JJdO4uAj/thacMN3RG14BZAPC59D3qjzwuo6zjeKlY+vOlr70unw8IasDm5GSbm
+         HeLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772504717; x=1773109517;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=17vhc0Hs2JiBGh2C/Kc5owCSl8j4M6mqkAnMUAkK1nM=;
-        b=XAGmuyAzQTf6IXoYdconmsLDeuPIc8pcE7IfRnCEB9TrOE4dfx8W93DKWlroVIwFrx
-         Q3c/3HpI7/GXH4U2+Rmid+yu2plUf7MrPFK9zERKDOELHClQ7ppGuZegb7puh7yeEl4E
-         S8EIWBXSWS9a1z+2VhyGdku74umJxswxHq0KwWM48H3cYZi9nZh9jb7qkRYdym3MvB79
-         ybAHvc/1Do8ZofYp68GK5nJPvgcB/ybAAcBdG+PRHck7+OEXQJgLCf+mryiACz7oVD89
-         eTYPpfMQDg7PQulmEHTYCSErggW17McF9aiVt9JfSJFOqNjfYfSvk5d2o7Iao9j6Ijtr
-         7M+Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXWxOJ3zVnpsVVm6Fmrw7CM7Yx6nq3r29WPW87QdFooxNHcYYf83ukROUXbrMr4X64nTIE1+lC6Z3hrjL/2@vger.kernel.org
-X-Gm-Message-State: AOJu0YzulYRSd8Q3T0EJ6lh3OAuR4bjxOGqyuhiXmecgflBNgjdqMi0N
-	XaRHXBSVVpAbCEQUzflPgLsYKG2dJ4rnV0gycYTk+zAGFEdqWobnbSz7
-X-Gm-Gg: ATEYQzyIzWXQo3u2jF4DvtQEGTYUGNSY8q4Tq391rNQ03ZvRYR6Dj8URlDeaeYwbmFu
-	SP0eGOkq7okqPO1MqcaEUwP6qtOFmawLFHegwW+kF5ZpjZ6sSqmFKu/gR0UUdwEIcFMo+rfmLT0
-	dBf/6tAockx7lhVEpOm1bkm6EXuy1bgUj3DtCJ7HlvIlOB7jL7DULHHBQ9gU9c0cs415AVRIorq
-	/8JeN8h4eVwvhwo/Tco/Yu9CRBiOC53QJMQ9Y66Ec8aTHfMdgP8OOttq+y7/eOAJsJeLablG4Ov
-	WmtDHFK5EFsZSIwBW0BpB42cvUgIUy3/0jhTQQzwnfSueCW4Y2UAjKA6sSLWy4oZmk4ZOym2Z/h
-	uLO5VGDbaWI1X8uoENmDUAuP4snPkX048VYvKoAI3nfRsW/VPzRQKLxuB8XpZyBKXb5ZYEv5VeN
-	NUAhmawzhCT7CFtGMTWg61PPCudw==
-X-Received: by 2002:a05:622a:190f:b0:4f1:e9f7:4dee with SMTP id d75a77b69052e-5075296e804mr188944351cf.35.1772504717149;
-        Mon, 02 Mar 2026 18:25:17 -0800 (PST)
-Received: from localhost ([184.144.58.243])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-899ff659b75sm29430186d6.34.2026.03.02.18.25.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Mar 2026 18:25:16 -0800 (PST)
-Date: Mon, 2 Mar 2026 21:25:46 -0500
-From: Richard Acayan <mailingradian@gmail.com>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Lee Jones <lee@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Amit Kucheria <amitk@kernel.org>,
-	Thara Gopinath <thara.gopinath@gmail.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Dmitry Baryshkov <lumag@kernel.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: pm660: add thermal monitor
-Message-ID: <aaXKyIJQA9SFqt41@rdacayan>
-References: <20260210021819.12673-1-mailingradian@gmail.com>
- <20260210021819.12673-4-mailingradian@gmail.com>
- <e72ede03-94cb-45c3-95e7-63dff0ca3888@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1772507365; x=1773112165;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tbGmto2NuUfl5MvNcF4vDgxXI1X+eEBNwwTZ4Sd7E0g=;
+        b=EiomUmpPmMbC7cgqp7MFAGwaDSOgIWb5asrWEx14YXOdUB4Rh6tWyE1ZQDjx4j32Au
+         fUuKBiQPZdToQUifpdzhB+uoXA0GxoJBtRto2UHQH2U2U7K3Lt3oAdi/cYniEe4dXQKS
+         riPc+NQy2qBmh11ZP5Zu3xE0fyl9C+okbGJDm8B3rdSA8iWZ/Z0YHRrVd3MZM62pDncy
+         HO0I5qdoByRPVUoTe/BM22aNCOcCR/G3SWym3XRDk4a6OyBnP0GdPoxkxj20P30cXSQo
+         +gAK7GkA7gaiFvA5jGWcBKMTawsW8MezhgP4hfenlNXeYEMfV9LAxcd1YB6PhohAhkf1
+         51mg==
+X-Forwarded-Encrypted: i=1; AJvYcCUO+MM81741CkIOJFg5z23YzYcl7XfqDWynWGq2Wftkw5I+T9d0aMqN50uhky0wT7gfp4CBuk5Spn08oylW@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxn90BVClBvKdmr0tSFYR3TQrdN0r/k9akP3jkdSnlnJSFsU+Dh
+	ZDutFUe4qn4UwJ8EQ1ZPEm/k3IndhRj6U+l4zESKSHg1+KNQTguMwxGQn5xKXHfQ2AltYyc4KQ6
+	oOaSvCZQW7DxHdl+RfJd8Q1rZmuahVfyqpR3FvmK5DuH0sEIklf5Wj0HENx1dObFD2FfAD+NrKD
+	xv
+X-Gm-Gg: ATEYQzysZgm7afjY1Obhvb37d5Pf231ZsCXfWhWKGQDQCbF14mE++rfvmZ/rqaKuOjS
+	GdCsBnyvi1pMFEBIxEEnimfob5b7kMOsoL9jk+7j/tdsSx+7wNdtfznE3/IvNoROPdOWy1qwX7O
+	OG347SFmtBTQneo5LPdkmThBX9wxnIHFS/mkUZosBI+7tS+rOv5XaPNIClLGy7q/BLKrPL4s5gv
+	cj5F2azBw76IOVMe+NvMOipZr8UlZE27CvGaSejHKKaQJAFlgsjcvpEslzSQYJS8XL/Mux4sFXh
+	Hgs8fE75NfnzhaGQv51C+ZYK0NMRBBvzmGlMKVWXOUjIm7FgweGy2z4Lyg/y5L/jSOfM4WI9xHl
+	t2bJKo6ed02OAnFza8gcBpKo3NMNYZBVA1hq0Jmmq5xhnn2KGQCpPgnui2jJTR/fzYAIpAVlZcj
+	mIP722WeVM1+g=
+X-Received: by 2002:a17:903:3c6d:b0:2aa:ea8e:f118 with SMTP id d9443c01a7336-2ae2e3e6adamr143697265ad.3.1772507365153;
+        Mon, 02 Mar 2026 19:09:25 -0800 (PST)
+X-Received: by 2002:a17:903:3c6d:b0:2aa:ea8e:f118 with SMTP id d9443c01a7336-2ae2e3e6adamr143696925ad.3.1772507364486;
+        Mon, 02 Mar 2026 19:09:24 -0800 (PST)
+Received: from [10.133.33.114] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae4e571b90sm50356815ad.62.2026.03.02.19.09.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 02 Mar 2026 19:09:23 -0800 (PST)
+Message-ID: <9e933431-44da-40b6-85eb-9fa667a7c1fa@oss.qualcomm.com>
+Date: Tue, 3 Mar 2026 11:09:17 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e72ede03-94cb-45c3-95e7-63dff0ca3888@oss.qualcomm.com>
-X-Rspamd-Queue-Id: CB7B71E7FA2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 0/4] Initial patch set for PURWA-IOT-EVK
+To: Yijie Yang <yijie.yang@oss.qualcomm.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+        andersson@kernel.org, krzk+dt@kernel.org, konradybcio@kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, conor+dt@kernel.org,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+References: <20260202-purwa-v5-0-1f5a93578802@oss.qualcomm.com>
+ <177014002716.3173249.7908353000261603377.robh@kernel.org>
+ <e577c093-0851-48b8-abdb-0aee0479c1e3@oss.qualcomm.com>
+ <d3mvqtyd6dsphkojenpalduty7x2n3yxf6rjazwndisxnktez7@iwb2nnxwvg4d>
+ <1035ed36-8659-4fc9-9a4b-aa6bd2c3a286@oss.qualcomm.com>
+Content-Language: en-US
+From: Jie Gan <jie.gan@oss.qualcomm.com>
+In-Reply-To: <1035ed36-8659-4fc9-9a4b-aa6bd2c3a286@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=Co6ys34D c=1 sm=1 tr=0 ts=69a650e6 cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=gEfo2CItAAAA:8 a=-5c19URaVyYhH7L9fpMA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
+ a=sptkURWiP4Gy88Gu7hUp:22
+X-Proofpoint-GUID: MDVL8Ng2pHX9i1lgyLfJLYbLeU7aiVnk
+X-Proofpoint-ORIG-GUID: MDVL8Ng2pHX9i1lgyLfJLYbLeU7aiVnk
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzAzMDAxNyBTYWx0ZWRfX+zxk55v+txRn
+ BUl5YUeoivWlhkMCQYus8674pEJWDmRuLcB8CyDbmw3o3qrxZHWcIfmTvHG/eU7yp3QGiSh6v4I
+ 2w13nEtng9sP0S8Li/U1qoOMkbnZuapF77dy9TFOWLA+Z5DcDi2ahCYJ1VNxfmIAK4v+/jMn7+r
+ 17Va2bjVcsLiFeffY5CJCDS+2jbvi0Y1Rl/0b1wdtjCvPtEMYtGt/vHZHmSpsXMnCDDjbguMMda
+ xrrZYDVJDwLRlr4zdgp4x9HU7Oql5kn2NDr1hTI6pUEZ1y9nWP0lmWpn0K6i+QtKpDNs8gRIzUS
+ bj6IiKgO1nkufebWbOxDHLy0XDdRIZTSIjLYZORz7hjmMeK2p1TGWLXpILnz8pxu362WbjuT4ba
+ awH1F0V54gsyd8Ouc3KqCCTk/yh5N0Giziwnxy2Qv+zrEfz2Uw+57a/KePTvdIeu0Y+XBmyf76p
+ RRB87yEjkXFuFQ+qPJw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1121,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-02_05,2026-03-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 suspectscore=0 clxscore=1015 priorityscore=1501
+ lowpriorityscore=0 phishscore=0 adultscore=0 spamscore=0 bulkscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2602130000
+ definitions=main-2603030017
+X-Rspamd-Queue-Id: 661C91E857C
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-95035-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	FREEMAIL_CC(0.00)[kernel.org,gmail.com,linaro.org,intel.com,arm.com,vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[18];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	TAGGED_FROM(0.00)[bounces-95036-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,qualcomm.com:dkim,qualcomm.com:email,qualcomm.com:url,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,1bd4000:email,devicetree.org:url];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	DBL_PROHIBIT(0.00)[0.0.13.72:email,0.0.0.85:email];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mailingradian@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MISSING_XM_UA(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[jie.gan@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Action: no action
 
-On Tue, Feb 10, 2026 at 10:59:20AM +0100, Konrad Dybcio wrote:
-> On 2/10/26 3:18 AM, Richard Acayan wrote:
-> > The thermal monitor is used to monitor arbitrary ADC-based thermal
-> > sensors. It is suitable for use in thermal zones. Add support for it in
-> > PM660.
-> > 
-> > Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/pm660.dtsi | 10 ++++++++++
-> >  1 file changed, 10 insertions(+)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/pm660.dtsi b/arch/arm64/boot/dts/qcom/pm660.dtsi
-> > index 156b2ddff0dc..7cedf6980b34 100644
-> > --- a/arch/arm64/boot/dts/qcom/pm660.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/pm660.dtsi
-> > @@ -197,6 +197,16 @@ channel@85 {
-> >  			};
-> >  		};
-> >  
-> > +		pm660_adc_tm: adc-tm@3400 {
-> > +			compatible = "qcom,spmi-adc-tm-hc";
-> > +			reg = <0x3400>;
-> > +			interrupts = <0x0 0x34 0x0 IRQ_TYPE_EDGE_RISING>;
-> > +			#thermal-sensor-cells = <1>;
-> > +			#address-cells = <1>;
-> > +			#size-cells = <0>;
-> > +			status = "disabled";
-> 
-> Can we enable it by default?
 
-This is for the ADC thermal monitor, and not the ADC itself. I don't see
-the need to allocate channels just so this can be enabled by default,
-since the thermal monitor's purpose is mostly to send interrupts when
-the ADC values go above or below a certain threshold.
+
+On 2/4/2026 10:52 AM, Yijie Yang wrote:
+> 
+> 
+> On 2/4/2026 10:38 AM, Dmitry Baryshkov wrote:
+>> On Wed, Feb 04, 2026 at 09:42:04AM +0800, Yijie Yang wrote:
+>>>
+>>>
+>>> On 2/4/2026 1:37 AM, Rob Herring wrote:
+>>>>
+>>>> On Mon, 02 Feb 2026 15:35:44 +0800, YijieYang wrote:
+>>>>> From: Yijie Yang <yijie.yang@oss.qualcomm.com>
+>>>>>
+>>>>> Introduce the device tree, DT bindings, and driver updates required 
+>>>>> to enable
+>>>>> the bring-up of the PURWA-IOT-EVK evaluation board. Focus is on two 
+>>>>> key
+>>>>> hardware components:
+>>>>>
+>>>>> PURWA-IOT-SOM — A compact System-on-Module integrating the SoC, 
+>>>>> GPIOs, and
+>>>>> PMICs. Designed for modularity, it can pair with various carrier 
+>>>>> boards to
+>>>>> support diverse use cases.
+>>>>>
+>>>>> PURWA-IOT-EVK — A carrier board tailored for IoT scenarios, providing
+>>>>> essential peripherals such as UART, on-board PMICs, and USB 
+>>>>> components.
+>>>>>
+>>>>> Together, these components form a flexible and scalable platform. 
+>>>>> Initial
+>>>>> functionality is achieved through proper device tree configuration 
+>>>>> and driver
+>>>>> support.
+>>>>>
+>>>>> The PURWA-IOT-EVK/SOM shares most of its hardware design with
+>>>>> HAMOA-IOT-EVK/SOM, differing primarily in the BOM. Consequently, 
+>>>>> the DTS files
+>>>>> are largely similar. Both platforms belong to Qualcomm’s IQ-X 
+>>>>> family. For more
+>>>>> details on the IQ-X series, see:
+>>>>> https://www.qualcomm.com/internet-of-things/products/iq-x-series
+>>>>>
+>>>>> Hardware differences between HAMOA-IOT and PURWA-IOT:
+>>>>> - Display — PURWA uses a different number of clocks and frequency 
+>>>>> compared to
+>>>>>     HAMOA.
+>>>>> - GPU — PURWA integrates a different GPU.
+>>>>> - USB0 — PURWA uses a PS8833 retimer, while HAMOA employs an 
+>>>>> FSUSB42 as the
+>>>>>     SBU switch.
+>>>>>
+>>>>> Features added and enabled:
+>>>>> - UART
+>>>>> - On-board regulators
+>>>>> - Regulators on the SOM
+>>>>> - PMIC GLINK
+>>>>> - USB0 through USB6 and their PHYs
+>>>>> - Embedded USB (eUSB) repeaters
+>>>>> - USB Type-C mux
+>>>>> - PCIe3, PCIe4, PCIe5, PCIe6a
+>>>>> - Reserved memory regions
+>>>>> - Pinctrl
+>>>>> - NVMe
+>>>>> - ADSP, CDSP
+>>>>> - WLAN, Bluetooth (M.2 interface)
+>>>>> - USB DisplayPort and eDP
+>>>>> - Graphics
+>>>>> - Audio
+>>>>> - TPM
+>>>>>
+>>>>> Signed-off-by: Yijie Yang <yijie.yang@oss.qualcomm.com>
+>>>>> ---
+>>>>> Changes in v2:
+>>>>> - Update the GPU firmware path.
+>>>>> - Update the description in the cover letter.
+>>>>> - Reorder the patches.
+>>>>> - Use separate DTS files for Purwa and Hamoa.
+>>>>> - Update base commit.
+>>>>> - Link to v1: https://lore.kernel.org/all/20251222-purwa- 
+>>>>> v1-0-14ab9316e5ff@oss.qualcomm.com/
+>>>>>
+>>>>> Changes in v3:
+>>>>> - Delete unused PMIC and thermal nodes.
+>>>>> - Add WiFi node.
+>>>>> - Add display backlight node.
+>>>>> - Add connectors and VBUS regulators for USB3 and USB6.
+>>>>> - Enable PCIe3 and PCIe5; add PCIe ports along with reset and wake- 
+>>>>> up GPIOs.
+>>>>> - Link to v2: https://lore.kernel.org/r/20260109-purwa-v2-0- 
+>>>>> f39ee10684cb@oss.qualcomm.com
+>>>>>
+>>>>> Changes in v4:
+>>>>> - Enable TPM.
+>>>>> - Update the descriptions for video and the USB OF graph.
+>>>>> - Link to v3: https://lore.kernel.org/all/20260113-purwa- 
+>>>>> v3-0-16eefacbdce9@oss.qualcomm.com/
+>>>>>
+>>>>> Changes in v5:
+>>>>> - Reorder nodes in purwa-iot-evk.dts.
+>>>>> - Update base commit.
+>>>>> - The DT binding change that fixes the DT warning for pcie3_phy is 
+>>>>> located at: https://lore.kernel.org/linux-arm-msm/20260119-topic- 
+>>>>> purwa_phy_shutup_warning-v1-1-997a692b31c6@oss.qualcomm.com/T/#u
+>>>>> - Link to v4: https://lore.kernel.org/r/20260116-purwa- 
+>>>>> v4-0-89b2adae9f09@oss.qualcomm.com
+>>>>>
+>>>>> ---
+>>>>> Yijie Yang (4):
+>>>>>         dt-bindings: arm: qcom: Document PURWA-IOT-EVK board
+>>>>>         firmware: qcom: scm: Allow QSEECOM on PURWA-IOT-EVK
+>>>>>         arm64: dts: qcom: Add PURWA-IOT-SOM platform
+>>>>>         arm64: dts: qcom: Add base PURWA-IOT-EVK board
+>>>>>
+>>>>>    Documentation/devicetree/bindings/arm/qcom.yaml |    6 +
+>>>>>    arch/arm64/boot/dts/qcom/Makefile               |    1 +
+>>>>>    arch/arm64/boot/dts/qcom/purwa-iot-evk.dts      | 1549 +++++++++ 
+>>>>> ++++++++++++++
+>>>>>    arch/arm64/boot/dts/qcom/purwa-iot-som.dtsi     |  685 ++++++++++
+>>>>>    drivers/firmware/qcom/qcom_scm.c                |    1 +
+>>>>>    5 files changed, 2242 insertions(+)
+>>>>> ---
+>>>>> base-commit: 6267b2da1b2d04847a1a8f441e138bc4a89435ee
+>>>>> change-id: 20251113-purwa-907ec75b4959
+>>>>>
+>>>>> Best regards,
+>>>>> -- 
+>>>>> Yijie Yang <yijie.yang@oss.qualcomm.com>
+>>>>>
+>>>>>
+>>>>>
+>>>>
+>>>>
+>>>> My bot found DTB warnings on the .dts/.dtsi files added or changed in
+>>>> this series.
+>>>>
+>>>> Some warnings may be existing warnings. Consider fixing existing
+>>>> warnings before adding new features.
+>>>>
+>>>> Perhaps the warnings are fixed by another series. If that is the case,
+>>>> please set the base commit and any dependencies for the series using
+>>>> "b4".
+>>>>
+>>>> Ultimately, it is up to the platform maintainer whether these warnings
+>>>> are acceptable or not.
+>>>>
+>>>> If you already ran DT checks and didn't see these error(s), then
+>>>> make sure dt-schema is up to date:
+>>>>
+>>>>     pip3 install dtschema --upgrade
+>>>>
+>>>>
+>>>> This patch series was applied (using b4) to base:
+>>>>    Base: 6267b2da1b2d04847a1a8f441e138bc4a89435ee (use --merge-base 
+>>>> to override)
+>>>>
+>>>> If this is not the correct base, please add 'base-commit' tag
+>>>> (or use b4 which does this automatically)
+>>>>
+>>>>
+>>>> New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/ 
+>>>> qcom/' for 20260202-purwa-v5-0-1f5a93578802@oss.qualcomm.com:
+>>>>
+>>>> arch/arm64/boot/dts/qcom/purwa-iot-evk.dtb: phy@1bd4000 
+>>>> (qcom,x1p42100-qmp-gen4x4-pcie-phy): 'qcom,4ln-config-sel' is a 
+>>>> required property
+>>>>     from schema $id: http://devicetree.org/schemas/phy/ 
+>>>> qcom,sc8280xp-qmp-pcie-phy.yaml
+>>>>
+>>>
+>>> I have already listed the fix in the cover letter:
+>>> https://lore.kernel.org/linux-arm-msm/20260119-topic- 
+>>> purwa_phy_shutup_warning-v1-1-997a692b31c6@oss.qualcomm.com/T/#u
+>>> It is not recommended to list it as a dependency in the latest version.
+>>
+>> You can use `b4 prep --edit-deps` to mark it as a dependency to be
+>> picked up by the bot.
+> 
+> Krzysztof mentioned in v4 that this is not a dependency and only needs 
+> to be mentioned in the changelog.
+> 
+
+Gentle reminder. Do we need another version to address the dependency issue?
+
+Thanks,
+Jie
+
+> 
+>>
+>>>
+>>>
+>>>>
+>>>>
+>>>>
+>>>
+>>> -- 
+>>> Best Regards,
+>>> Yijie
+>>>
+>>
+> 
+
 
