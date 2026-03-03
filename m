@@ -1,187 +1,213 @@
-Return-Path: <linux-arm-msm+bounces-95179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95180-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6L0/GmgTp2mfdQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 17:59:20 +0100
+	id eKEyBGEUp2ncdQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95180-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 18:03:29 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D49B1F43D8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 17:59:19 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A1031F45D7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 03 Mar 2026 18:03:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 96F7B30B3D6A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Mar 2026 16:56:08 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7844F3028EF5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Mar 2026 16:57:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9756C494A1D;
-	Tue,  3 Mar 2026 16:56:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B962E3DBD66;
+	Tue,  3 Mar 2026 16:57:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sSjKUJrP"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HvwwAKDA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 224EE3DBD66;
-	Tue,  3 Mar 2026 16:56:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 960813AE194
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Mar 2026 16:57:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772556966; cv=none; b=MeMO5TgO92veiHFQQPBbE0siIC6AlwtwIpsN4mFrelzNkN4tWnV8J8flomAjKbLOLKfOexoWLfGt2eWb1Vmu/AE/Vm6oEahTytuuSS6qtAx3o7iUF290XsJpRtZRkj1CifYdNiZfm3r+1vRhgzWPYV9mLm24H5An9Pl78wVQEHc=
+	t=1772557071; cv=none; b=oT5EyZ6kFY2y/Vq+OdlV2xp4voRCFZ9TlwspsNbPMVeKGHbQcTAmTxFUqrjGGzkpDwHi13Ng0xt4O0Hk2CUeb7EqZXzppreVuf3pl6UU8aCAQq8jmxAlLYoO9hJpa4gd37O7iohgci+ACFpSBnLl3wAWVtQB1PkIASrUXMpEz8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772556966; c=relaxed/simple;
-	bh=PspKwEQyJf0sGxt3Osb+chOp3772zSkyGfm6ysAwHYc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=U77YvgTF5vAoH13v0a3r80o29od89Xt25roGGJxBWunrNCSI/C9iAQ6BqeVwh6DJkvhheJUYzUE+vkomHviePUMG1TQX4Ex850xuufIwlzmo84LFfqIwG5PcmjsxT+Bovqw8GC7Ecew5jTLFfiHUVXTuTnHlg6ZZmYG+h2TR77k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sSjKUJrP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F9AC116C6;
-	Tue,  3 Mar 2026 16:55:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772556965;
-	bh=PspKwEQyJf0sGxt3Osb+chOp3772zSkyGfm6ysAwHYc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=sSjKUJrPBzRIJEib0UnUSBOhNY3IHP4dSv/oX2tq5IwYDRUdUJUKncey/ietImsoe
-	 FYHNuueNEdsT41MevNnsmdEtTQChUYPyopSDBTZ6uaSQatRVQqxdtGErlaMgp0Etyx
-	 2s8IZ622CpgP7f/3c4DU7B/zSWsc2F6E5WhvgJXUBiKlBpOvO+1O85JeA9nMYUV+X2
-	 hYGJvaLL0dkxueTcYBKgqkvEfU+2nARYiFHpEOLempOhFzyqPlXtknH9Em5ONfVTxw
-	 EWvvs5ZUUwvdZxFY9GJND/0DkHes+QguDxpnXsG2X7gQCi+Tg6xTe5BewuERRaCC94
-	 IW816OBtPZwBg==
-Date: Tue, 3 Mar 2026 22:25:50 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Harshal Dev <harshal.dev@oss.qualcomm.com>, 
-	Krzysztof Kozlowski <krzk@kernel.org>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	Herbert Xu <herbert@gondor.apana.org.au>, "David S. Miller" <davem@davemloft.net>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Abel Vesa <abel.vesa@oss.qualcomm.com>, cros-qcom-dts-watchers@chromium.org, 
-	Brian Masney <bmasney@redhat.com>, Neeraj Soni <neeraj.soni@oss.qualcomm.com>, 
-	Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 01/11] dt-bindings: crypto: qcom,ice: Require
- power-domain and iface clk
-Message-ID: <mns7565jbkjtmqioe5y3la4kpco43umbzpnxvfc73cnpxw7khy@7xcmoflqakuv>
-References: <14a71b33-4c10-41b0-a6cb-585a38e05f56@kernel.org>
- <06160c6c-a945-467a-be82-7b33c5285d0f@oss.qualcomm.com>
- <7216c86d-2b87-496c-9548-ccdcb3c98b6b@oss.qualcomm.com>
- <1f99db18-d76c-4b87-9e30-423eee7037e1@oss.qualcomm.com>
- <dd34525c-0a25-47ae-9061-c4c7ab708306@kernel.org>
- <2830a189-a5ce-45a0-92fe-7a01c3b012a7@oss.qualcomm.com>
- <6efcdf51-bdb1-4dfc-aa5e-8b7dc8c68cd3@kernel.org>
- <b217a08a-2755-4ef8-bf39-af1c3e628cf8@oss.qualcomm.com>
- <3cxejy2jplgqufj5fivi27ii3rrcrhzdyvmxd4ekp2ik3aqa6l@tiwyslt3ng5p>
- <vpgeduh5fwgvbx42dujbm7x3vacbmwjgjkcmhpgcsaa2ig4cm3@kk34eaqoh6ww>
+	s=arc-20240116; t=1772557071; c=relaxed/simple;
+	bh=3/GzSmoRFQsgGZDBWOEZf5WA45dc4iHal7c2SQqyU/M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dhaj0d20F4Xy+bXbphrj0WhgdKGhOP8dJR6SRf99RS7YB9lR9envDLvubEArkoZRzA3byoaeXkEnkDOp3/Vi1wkltiSatVoIKRENLUOAMrGyJRfa2ZmkEWl0ciZNpWXAaY/ADmF0x+RO6wc6EIHvms5CkMYHy5VUQxL3/S7dieE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HvwwAKDA; arc=none smtp.client-ip=209.85.215.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-c736261ee8dso771338a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Mar 2026 08:57:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772557070; x=1773161870; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=DV/HSQAamVa6HSuuaGYt1Sx9aCryyCjzy9hIsHP5+oE=;
+        b=HvwwAKDARrPFqD3SS5xzq/r5mXo7NoKE7T6BD9dD8EDEFQAuJqiXbPvOGTZ7zuexG+
+         p4++vojTrsNVrp7npf+SU6Nw78R1rhpXT8fcWBzC+YBecRbmnYKdZXDoE12WbFRid0zG
+         eoeRH77r9zOan6tV+X89Ph36kU6ygpjYsrWzcc1zfYScYeiAnDtXXMGoHrh9+03Twx/k
+         nKTXQQYYfBdhyQgvm5xhqY/1Vq+jz1jHoqNOkXXD/udJGDS4sxQ2keR2sNcF07T+ogoa
+         YkzxBu72PM8Eyjh6GQnOjQQtRaHDztyY5J2WrUXUEXm+3CAPvv0Tuz3Wvcx/T5USEVAu
+         6aQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772557070; x=1773161870;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DV/HSQAamVa6HSuuaGYt1Sx9aCryyCjzy9hIsHP5+oE=;
+        b=mPvkuj/7ZNN6bkRoLA7/aC0Uzfx8MNtka22DNXsN96Y4Vo+R3N2qxmVEK6dZBAJQvU
+         6gQvmvefPfgpbKKzhYDVEYr4R1eSEv9akoRB01cAjbqjiaMwih6OYcZB/bnuqCYlHUiS
+         aUOhvZmQraLG0iIpbvo0wfmMOmXA/bqICj/aoxxioyLeRy4HgUoXO7PPC0ZTiH+3tAuQ
+         odhXg1ix6rRclCwtpEJ1QBNtv/T6wg2zUX8kj5qqQ8ohJlaK0e4RsCRd7n0PVvpyUUYP
+         cWmRr99npMCjMYE02wyS/S9fDL12GnXZR6IwgIvMhRFdA8REGWJCJmIhacW/t9Lx5awn
+         uwig==
+X-Forwarded-Encrypted: i=1; AJvYcCUwA8+RO4sjZicO4OodoQ+razvt12BY0KbuVKwYBj+AbjUbZD9DkRhzmk97QpaoV42WOnOWQB+hXnGV1AZm@vger.kernel.org
+X-Gm-Message-State: AOJu0YybPAvVG/Ks85+lFf20OHOAvEABXyjcUd5gH2qpe8bBWe+oPJZM
+	iqFEJjD/OK8tesK/IvGT9rg3OAaIYe5d/4wBFgp6OYsNLJY8gvXWRbEb
+X-Gm-Gg: ATEYQzxsKrFBrETiZGKRE4RjYLblQi3aS9gDwlZJ5u1BhdmpVdtQpwTgpJZBb0iJU1y
+	ixvtyeNAY6fI+VL1Wo19m4Xhj2z9kpKXIHLrk0dM9yfTbQBFi+IHVxRYPAsNV5MDMX6nVcb+c8p
+	krLhwU6bNANsjeXkM7D0ENESZrzJTb7XcJjSXX1YbNdt0KLpnILHPMzu8hP6MYRSo1MM8Nu0QIT
+	jNaCKbySm3nfJVMe4rmzFCg+898VfEtRnLZzZtKsGRUH4nsHbtI37VMUDsYo05FhPJsO3+eC+6b
+	C4EWFjmMXuliN3fs/CQQiJ0QtlYYNdJ0Qo6+1nGCiVwEOS9R/H/fP0xztvsG36bI73URTIS0fu8
+	6vYHUQLhy44cojJA9kmPPHaNsDmQYUozIY2gwNhVla9+BtDa84zZRHvhu7yba+xlrHUYBtWn0Vm
+	dXPgljf4NCp3dZy7dOxrJl6AhHw1IfqR3eyIoHbM/LtWksQ5dyQyojX19Mt9XwyOYcfu0DasxLu
+	ilrvQSRrEw=
+X-Received: by 2002:a17:903:2f89:b0:2ae:6317:56e3 with SMTP id d9443c01a7336-2ae63175cb8mr20707785ad.28.1772557069742;
+        Tue, 03 Mar 2026 08:57:49 -0800 (PST)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae4802645bsm83989515ad.12.2026.03.03.08.57.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Mar 2026 08:57:49 -0800 (PST)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <4a7ac923-0f1a-431f-a029-8843a8eddca3@roeck-us.net>
+Date: Tue, 3 Mar 2026 08:57:47 -0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/4] hwmon: axi-fan: don't use driver_override as IRQ
+ name
+To: Danilo Krummrich <dakr@kernel.org>
+Cc: gregkh@linuxfoundation.org, rafael@kernel.org, hanguidong02@gmail.com,
+ ysato@users.sourceforge.jp, dalias@libc.org, glaubitz@physik.fu-berlin.de,
+ abelvesa@kernel.org, srini@kernel.org, s.nawrocki@samsung.com,
+ nuno.sa@analog.com, driver-core@lists.linux.dev,
+ linux-kernel@vger.kernel.org, imx@lists.linux.dev,
+ linux-hwmon@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-sound@vger.kernel.org, linux-sh@vger.kernel.org,
+ Guenter Roeck <groeck7@gmail.com>
+References: <20260303115720.48783-1-dakr@kernel.org>
+ <20260303115720.48783-4-dakr@kernel.org>
+ <b46c5757-b67d-4949-b8d8-54b799464b5d@roeck-us.net>
+ <DGTACERFTTCV.29XON9ZLYAEQL@kernel.org>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <DGTACERFTTCV.29XON9ZLYAEQL@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <vpgeduh5fwgvbx42dujbm7x3vacbmwjgjkcmhpgcsaa2ig4cm3@kk34eaqoh6ww>
-X-Rspamd-Queue-Id: 0D49B1F43D8
+X-Rspamd-Queue-Id: 5A1031F45D7
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95179-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-95180-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[linuxfoundation.org,kernel.org,gmail.com,users.sourceforge.jp,libc.org,physik.fu-berlin.de,samsung.com,analog.com,lists.linux.dev,vger.kernel.org];
+	DMARC_NA(0.00)[roeck-us.net];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
 	RCPT_COUNT_TWELVE(0.00)[19];
-	FROM_HAS_DN(0.00)[];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[linux@roeck-us.net,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[analog.com:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-On Fri, Feb 20, 2026 at 09:59:41AM -0600, Bjorn Andersson wrote:
-> On Fri, Feb 20, 2026 at 08:01:59PM +0530, Manivannan Sadhasivam wrote:
-> > On Mon, Feb 09, 2026 at 11:13:06AM +0530, Harshal Dev wrote:
-> > > On 2/6/2026 4:20 PM, Krzysztof Kozlowski wrote:
-> > > > On 06/02/2026 11:07, Harshal Dev wrote:
-> > > >> On 2/5/2026 4:47 PM, Krzysztof Kozlowski wrote:
-> > > >>> On 03/02/2026 10:26, Harshal Dev wrote:
-> > > >>>> On 1/26/2026 3:59 PM, Konrad Dybcio wrote:
-> > > >>>>> On 1/23/26 12:04 PM, Harshal Dev wrote:
-> > > >>>>>> On 1/23/2026 2:27 PM, Krzysztof Kozlowski wrote:
-> > > >>>>>>> On 23/01/2026 08:11, Harshal Dev wrote:
-> [..]
-> > > >>> My NAK for driver change stays. This is wrong approach - you cannot
-> > > >>> break working DTS.
-> > > >>>
-> > > >>
-> > > >> I agree that this patch in it's current form will break both the in-kernel and
-> > > >> out of tree DTS written in accordance with the old binding. If this isn't acceptable
-> > > > 
-> > > > What? You just said few lines above:
-> > > > "it will still continue to work if:"
-> > > >
-> > > 
-> > > I hope I am clear now, 'it' referred to the in-tree ICE driver and not to this particular
-> > > DT schema commit. :)
-> > >  
-> > > > So either this will continue to work or not. I don't understand this
-> > > > thread and honestly do not have patience for it. I gave you already
-> > > > reasoning what is wrong and why it is. Now it is just wasting my time.
-> > > > 
-> > > 
-> > > Apologies again for the confusion. I totally agree, as replied previously too, that the
-> > > updated DT binding breaks backward compatibility. Like I said, I will post another patch
-> > > to preserve the correctness of existing in-tree and out-of-tree DTS.
-> > > 
-> > 
-> > The ICE hardware cannot work without 'iface' clock and the power domain, which
-> > are shared with the UFS PHY. One can argue that ICE is actually a part of the
-> > peripherals like UFS/eMMC, but I don't have access to internal layout, so cannot
-> > comment on that. I ran into this issue today when I tried to rmmod ice driver
-> > together with ufs_qcom driver and got SError when reloading the module because
-> > ice driver was trying to access unclocked/unpowered register.
-> > 
-> > But you should mark the resources as 'required' in the binding and justify the
-> > ABI break. No need to preserve backwards compatibility here as the binding was
-> > wrong from day one.
-> > 
+On 3/3/26 08:25, Danilo Krummrich wrote:
+> On Tue Mar 3, 2026 at 5:23 PM CET, Guenter Roeck wrote:
+>> On Tue, Mar 03, 2026 at 12:53:20PM +0100, Danilo Krummrich wrote:
+>>> Do not use driver_override as IRQ name, as it is not guaranteed to point
+>>> to a valid string; use NULL instead (which makes the devm IRQ helpers
+>>> use dev_name()).
+>>>
+>>> Fixes: 8412b410fa5e ("hwmon: Support ADI Fan Control IP")
+>>> Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+>>> Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+>>
+>> Applied.
 > 
-> Marking it "required" in the binding, implies that it's fine for the
-> driver to fail in its absence. If I understand correctly that will
-> prevent UFS and eMMC from probing, unless you have a DTB from "the
-> future".
+> I need this patch in the driver-core tree, otherwise I can't land patch 4 of
+> this series [1]. :(
 > 
-> Even if I merge the dt-binding change through the qcom-tree (together
-> with the driver change) I will not guarantee that torvalds/master will
-> remain bisectable - because dts changes and driver changes goes in
-> different branches.
+> Any chance you can drop it from your tree?
+> 
+> [1] https://lore.kernel.org/driver-core/20260303115720.48783-5-dakr@kernel.org/
 > 
 
-Yeah, that's true.
+Sure, I'll drop it. Please add
 
-> 
-> As such, the pragmatic approach is to introduce the clock as optional
-> and then once we're "certain" that the dts changes has propagated we
-> can consider breaking the backwards compatibility.
-> 
+Acked-by: Guenter Roeck <linux@roeck-us.net>
 
-Only if we remember to mark it required some point, fine with me!
+Thanks,
+Guenter
 
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
 
