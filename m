@@ -1,72 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-95352-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95353-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iPt/FehEqGlOrwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95352-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 15:42:48 +0100
+	id sDKBN9NIqGlOrwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95353-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 15:59:31 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1C75201CDA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 15:42:47 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 39FBD2021B2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 15:59:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 3C982304B5CA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2026 14:39:51 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id BC6953173729
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2026 14:50:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 683673ACA77;
-	Wed,  4 Mar 2026 14:39:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78F5C39FCCB;
+	Wed,  4 Mar 2026 14:50:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SZKU8NqA"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="RUfIXzkt";
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b="QjVVg1zU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43435310779;
-	Wed,  4 Mar 2026 14:39:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC3129ACDB
+	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Mar 2026 14:50:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772635190; cv=none; b=UCkSQye1H4iVQRQeKjRymxgS7C9lkHH6p51gmYK4qXs1yB6wwc1DjQcwhZv3iMGYitQ+EH52rwuBj8RUrJ6eNrFwc2Cz46aqWc3pHTzNwLPq5h94Pcq15FStglV8+vchqa3QJ33TFsXODn7VUOMfUff0IOe5Ac1u5ouc44Na6mY=
+	t=1772635835; cv=none; b=kayCOdf8hx8h/yhxiJlZfJUzWTl/pnUTUMd584VuJUzIta42WkqTOduIZwqqZa0WPKXFz2k/feLP03vTMyvRfSe3LT6gNisQACe4WYaJ6EcCuXipNXgx4Hg1jUJFgVcjxASRYu/03mim05rjJgjdUNghfT5DRgVrAZcm3/t5nhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772635190; c=relaxed/simple;
-	bh=c9P1MJrJ5iSgDeKJm2NK7T0A2RucQmD2Vtmr+HlkX3Q=;
+	s=arc-20240116; t=1772635835; c=relaxed/simple;
+	bh=YLChEK5cpivtab2HRVIHw//j9o0ApVnaqOCsVAAfv4E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=s/2rQraPlSf3o64aVONeAP1xuN+9kR9XokXI8xbyeKO4+qf0xw2TnV++w1TY6EaaK6gpTbECCBqMEaoI7FvCRSsPT56Dg2CxZobB1mB2dYNvXbyISu3peD/9qjG0pjGGHRl3YL2dbUdFww4VEMg8CaVh8Bz13KF1l76PwCXD1fQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SZKU8NqA; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F371C2BC9E;
-	Wed,  4 Mar 2026 14:39:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772635189;
-	bh=c9P1MJrJ5iSgDeKJm2NK7T0A2RucQmD2Vtmr+HlkX3Q=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=SZKU8NqA2W9FxhntXn0JhnExzE2aPOPFnhX203q5ThWEX3Jvx4XduNtRzD/QksrPa
-	 oMZ+/mMEeXN6hqUmheqwvSrgdEdh3PzriZ68n353S4FvbSMqzipYmBlnVPRBhI6pNE
-	 kdxLjT3tLl1SfLcsJ1jh+46HLzdU66Ey4yP6I1i+brkPoar3PWRX0V0sJ7oWim0F/8
-	 JAk8HbtQ1mXHUTRZQgBrCEAsi08vAgbdqHzlnKhDXpC75w+/rsEsGvNWYKlCmZ/Xt9
-	 1mCD1AjNcjak/1lTyXyJt5KjtzPezIyuihcVM89GKR4sZGSXmTJ0S7rVbWMP3mB+nm
-	 lmm+UaOtjWHmw==
-Date: Wed, 4 Mar 2026 20:09:46 +0530
-From: Vinod Koul <vkoul@kernel.org>
-To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Cc: Jonathan Corbet <corbet@lwn.net>,
-	Thara Gopinath <thara.gopinath@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>,
-	Udit Tiwari <quic_utiwari@quicinc.com>,
-	Daniel Perez-Zoghbi <dperezzo@quicinc.com>,
-	Md Sadre Alam <mdalam@qti.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Michal Simek <michal.simek@amd.com>, Frank Li <Frank.Li@kernel.org>,
-	dmaengine@vger.kernel.org, linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-crypto@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	brgl@kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH RFC v11 07/12] crypto: qce - Communicate the base
- physical address to the dmaengine
-Message-ID: <aahEMjjBRINXL5zC@vaman>
-References: <20260302-qcom-qce-cmd-descr-v11-0-4bf1f5db4802@oss.qualcomm.com>
- <20260302-qcom-qce-cmd-descr-v11-7-4bf1f5db4802@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=qtOwVzO4Z+wi93xLWVIUR/4AoJWrjmq50XsmM9UfSqANPmiB6IXD8CX9fnwGHQLVJFnjNnH3HEH3poM2X16ySxGVEDpY9xhoAmWsdno/SRBvQTIMBLU6LlIfNhfI5rX+h5tUHbgmLVRHlzG1Gzo3DffcEYLP+pFWSlOcv5VFeZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=RUfIXzkt; dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b=QjVVg1zU; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1772635832;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=kjfja2BGLHgTQbzQaDUH8CPxR/uuEmvrQqAUKSSf8JU=;
+	b=RUfIXzkttlfd5r54VvDiS1edofEIJk7KRRgOAC2bqMJx+yrC1NdjKHkzzhJ5ITwjqdNPiN
+	ZRulQtMUyTR3k0l6pvEU5eqCmyqvPa2rsumUCygKQO3btaSQEPcT+wsCbDCdKvMk7500cS
+	xkNPjMJYmwmeQ9bwRz4V9n6aPWLnJdM=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-31-JfIlyrZNN8uQaZcpx_31eA-1; Wed, 04 Mar 2026 09:50:31 -0500
+X-MC-Unique: JfIlyrZNN8uQaZcpx_31eA-1
+X-Mimecast-MFC-AGG-ID: JfIlyrZNN8uQaZcpx_31eA_1772635830
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-506b4bdde91so505529891cf.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2026 06:50:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=redhat.com; s=google; t=1772635830; x=1773240630; darn=vger.kernel.org;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kjfja2BGLHgTQbzQaDUH8CPxR/uuEmvrQqAUKSSf8JU=;
+        b=QjVVg1zUiOjc8PQxQnPlXa5Zrn9uLMgtWUioku9SoLnrUAsgQI3weAKgYy9wGHHQ9Q
+         FTFBNty5f2HfrNoiIXzsNVXE3eRnlo/Xv6GAjguWafeQwOks0RZXaLDpNrWvT3ilbUax
+         nliqZOgzmXZ34wgZdayUYzZvZuqojZVB1YM2RZYHYD2R+nKOhxRHJA1F+BdV4yzQcxTB
+         OTsY4q9CADoBR/phG4YW1Mu8RGjeIEbh14Brn1UAzySpIfhu/M+53rH/mdNJhBKCt/a1
+         mQ0AaHodNACQZdwEhBISJ6mAPkce6t06hGvM+lo7tNYGhf61shNlmyPp1cTjSHY5Z2P4
+         fZvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772635830; x=1773240630;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=kjfja2BGLHgTQbzQaDUH8CPxR/uuEmvrQqAUKSSf8JU=;
+        b=mLpCwK1h0zblDywFRYtaypCBDrtWuz3qI22A6B2IT0uqGFuZ9lxS/zkwNlq30BL8TV
+         wip3lPgVl0sgWgFC1+VvsajnUgiezw8Cu2c0s5gPGnhOW/V1MV8UJyG5DmyjB9DmPTFK
+         p+6lBFkSqz0hfRm3woPCKR44VhKInzstnCWueRkgM6sUhpY9J0v5SHBpq/+vKXc2yaXT
+         qSOeOCXDsWrxJXI04d3wPUVxaEcflnN1bYaH6IIiAGuCwct9Cju0W/h/CQk/of5kWyy/
+         8kBMaqp/KdDIsrkAAwKBdrOhbxcvza2CwlXrT61rrj6ji/oFhJQjQ5Z8h2AJ3nE5jg3A
+         wGvQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWZwHYXVbu3QeuzcD772nj21tnLfmNHo4fo0iSMpqsr+qWqrleV1WCGLFneWq8xZ3JGMCYvOlsxPtJhO8tc@vger.kernel.org
+X-Gm-Message-State: AOJu0YxVas7I/9D4fyJBMTIY1/c039FvpEw07dZ7rLMapPUGFQTBOh83
+	deIy0KHEyxgfuqVgaHJpsnXA+Gneo3Ed8fp9WAwBm8n+TcjO0hOabdFQmnsQHTv9tOAIZ4LI5ov
+	ojfdsTvc8TIlYK6CsgQZr7M8wJDvlsy2sdZWhX6OOiPkaQTIHlP1PqH14XZKFpbAWJqY=
+X-Gm-Gg: ATEYQzxR5Umj73erOUX5MaDcS7oTHCerHclLiHgy77ByzHHegvcCtXEaoo6QjY3IPUQ
+	71IwDFWtjL2nRfVUcvUEV8g8AexwJ1qQh+jTkO+NfnofdoEFEdnqJhCvsHx2RVxrkYCzozdxbod
+	+/9Pg2y71f5YU+7p4UB3Nhbc+9g43fIE0a48cPQlLD6Pjmmzn8g6aQGZAMYQsvIewzZ2BoV0TG1
+	0g+ToPSHr9A+C4ocAr/v2ErnK4EX20SWUpeu7urpx0WYRpgT6f0Wbv6d6FFGsrieRAsHhiNf94l
+	W0I6Lf/4kPBjYI0yTp+AUUG1atNl6A3UINeRvwd9zRRX0owJvFEJEq14twcp3X2Rp2vyr8ewxsp
+	BQ95lmA8xXghg1pVO70etN327ikA9D7Jz+A8xAbDmcsYodKxPTVmc8xkW
+X-Received: by 2002:a05:622a:180d:b0:4ee:4a8b:d9f6 with SMTP id d75a77b69052e-508db3a7539mr28470661cf.59.1772635830348;
+        Wed, 04 Mar 2026 06:50:30 -0800 (PST)
+X-Received: by 2002:a05:622a:180d:b0:4ee:4a8b:d9f6 with SMTP id d75a77b69052e-508db3a7539mr28470381cf.59.1772635829849;
+        Wed, 04 Mar 2026 06:50:29 -0800 (PST)
+Received: from redhat.com (c-73-183-52-120.hsd1.pa.comcast.net. [73.183.52.120])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-507449b4dc0sm149392321cf.14.2026.03.04.06.50.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Mar 2026 06:50:29 -0800 (PST)
+Date: Wed, 4 Mar 2026 09:50:28 -0500
+From: Brian Masney <bmasney@redhat.com>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Pengyu Luo <mitltlatltl@gmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Dmitry Baryshkov <lumag@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+	White Lewis <liu224806@gmail.com>
+Subject: Re: [PATCH] clk: qcom: dispcc-sc8280xp: remove CLK_SET_RATE_PARENT
+ from byte_div_clk_src dividers
+Message-ID: <aahGtIkxtNPeeWKc@redhat.com>
+References: <20260303115550.9279-1-mitltlatltl@gmail.com>
+ <d2cdaa7e-1a17-4e6b-879d-266844958410@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,99 +118,82 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260302-qcom-qce-cmd-descr-v11-7-4bf1f5db4802@oss.qualcomm.com>
-X-Rspamd-Queue-Id: E1C75201CDA
+In-Reply-To: <d2cdaa7e-1a17-4e6b-879d-266844958410@oss.qualcomm.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Rspamd-Queue-Id: 39FBD2021B2
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	DMARC_POLICY_ALLOW(-0.50)[redhat.com,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[redhat.com:s=mimecast20190719,redhat.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-95352-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[20];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[lwn.net,gmail.com,gondor.apana.org.au,davemloft.net,quicinc.com,qti.qualcomm.com,kernel.org,amd.com,vger.kernel.org,lists.infradead.org,linaro.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[kernel.org,baylibre.com,vger.kernel.org,gmail.com];
+	TAGGED_FROM(0.00)[bounces-95353-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,gmail.com];
+	DKIM_TRACE(0.00)[redhat.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[vkoul@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[bmasney@redhat.com,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:email]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-On 02-03-26, 16:57, Bartosz Golaszewski wrote:
-> In order to let the BAM DMA engine know which address is used for
-> register I/O, call dmaengine_slave_config() after requesting the RX
-> channel and use the config structure to pass that information to the
-> dmaengine core. This is done ahead of extending the BAM driver with
-> support for pipe locking, which requires performing dummy writes when
-> passing the lock/unlock flags alongside the command descriptors.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-> ---
->  drivers/crypto/qce/core.c | 3 ++-
->  drivers/crypto/qce/dma.c  | 8 ++++++++
->  2 files changed, 10 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
-> index 2667fcd67fee826a44080da8f88a3e2abbb9b2cf..f6363d2a1231dcee0176824135389c42bec02153 100644
-> --- a/drivers/crypto/qce/core.c
-> +++ b/drivers/crypto/qce/core.c
-> @@ -211,6 +211,8 @@ static int qce_crypto_probe(struct platform_device *pdev)
->  	if (IS_ERR(qce->base))
->  		return PTR_ERR(qce->base);
->  
-> +	qce->base_phys = res->start;
-> +
->  	ret = dma_set_mask_and_coherent(dev, DMA_BIT_MASK(32));
->  	if (ret < 0)
->  		return ret;
-> @@ -260,7 +262,6 @@ static int qce_crypto_probe(struct platform_device *pdev)
->  	qce->dma_size = resource_size(res);
->  	qce->base_dma = dma_map_resource(dev, res->start, qce->dma_size,
->  					 DMA_BIDIRECTIONAL, 0);
-> -	qce->base_phys = res->start;
->  	ret = dma_mapping_error(dev, qce->base_dma);
->  	if (ret)
->  		return ret;
-> diff --git a/drivers/crypto/qce/dma.c b/drivers/crypto/qce/dma.c
-> index ba7a52fd4c6349d59c075c346f75741defeb6034..86f22c9a11f8a9e055c243dd8beaf1ded6f88bb9 100644
-> --- a/drivers/crypto/qce/dma.c
-> +++ b/drivers/crypto/qce/dma.c
-> @@ -109,7 +109,9 @@ void qce_write_dma(struct qce_device *qce, unsigned int offset, u32 val)
->  int devm_qce_dma_request(struct qce_device *qce)
->  {
->  	struct qce_dma_data *dma = &qce->dma;
-> +	struct dma_slave_config cfg = { };
->  	struct device *dev = qce->dev;
-> +	int ret;
->  
->  	dma->txchan = devm_dma_request_chan(dev, "tx");
->  	if (IS_ERR(dma->txchan))
-> @@ -121,6 +123,12 @@ int devm_qce_dma_request(struct qce_device *qce)
->  		return dev_err_probe(dev, PTR_ERR(dma->rxchan),
->  				     "Failed to get RX DMA channel\n");
->  
-> +	cfg.dst_addr = qce->base_phys;
-> +	cfg.direction = DMA_MEM_TO_DEV;
+Hi Pengyu and Konrad,
 
-So is this the address of crypto engine address where dma data is
-supposed to be pushed to..?
+On Tue, Mar 03, 2026 at 01:10:43PM +0100, Konrad Dybcio wrote:
+> On 3/3/26 12:55 PM, Pengyu Luo wrote:
+> > From: White Lewis <liu224806@gmail.com>
+> > 
+> > The four byte_div_clk_src dividers (disp{0,1}_cc_mdss_byte{0,1}_div_clk_src)
+> > had CLK_SET_RATE_PARENT set. When the DSI driver calls clk_set_rate() on
+> > byte_intf_clk, the rate-change propagates through the divider up to the
+> > parent PLL (byte_clk_src), halving the byte clock rate.
+> > 
+> > A simiar issue had been also encountered on SM8750.
+> > b8501febdc51 ("clk: qcom: dispcc-sm8750: Drop incorrect CLK_SET_RATE_PARENT on byte intf parent").
+> > 
+> > Likewise, remove CLK_SET_RATE_PARENT from all four byte divider clocks
+> > so that clk_set_rate() on the divider adjusts only the divider ratio,
+> > leaving the parent PLL untouched.
+> > 
+> > Fixes: 4a66e76fdb6d ("clk: qcom: Add SC8280XP display clock controller")
+> > Signed-off-by: White Lewis <liu224806@gmail.com>
+> > [pengyu: reword]
+> > Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
+> > ---
+> 
+> Looks like more platforms have this issue.. thanks for fixing this
 
--- 
-~Vinod
+I hope within the next week to post a new draft of my patch series to
+keep certain clk rates intact when sibling and parent rate changes occur
+[1]. This will be for certain critical clks, such as the ones used for
+DRM and sound. I have it working with kunit, and just need to clean up
+some of my new clk helpers and commit messages before I post a v5.
+
+I'd like to test this on some real hardware and I have the Thinkpad x13s
+with the sc8280xp SoC. Can this issue be reproduced on this hardware? If
+so, can you provide me detailed instructions about how to trigger this
+scenario?
+
+[1] Latest public posting v4 from September
+    https://lore.kernel.org/linux-clk/20250923-clk-tests-docs-v4-0-9205cb3d3cba@redhat.com/
+
+Thanks,
+
+Brian
+
 
