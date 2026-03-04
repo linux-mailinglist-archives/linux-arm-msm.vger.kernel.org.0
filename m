@@ -1,212 +1,342 @@
-Return-Path: <linux-arm-msm+bounces-95360-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95361-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id mOcyIDVNqGmvsgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95360-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 16:18:13 +0100
+	id oL4sGkBRqGnUtAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95361-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 16:35:28 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D0CE202745
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 16:18:13 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 11DA9202DAF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 16:35:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id E450F3274123
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2026 15:10:28 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id E09FB30DF393
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2026 15:11:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCA2E329C74;
-	Wed,  4 Mar 2026 15:08:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 407D8322B83;
+	Wed,  4 Mar 2026 15:10:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K3ffOugd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GZoo4wFM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com [209.85.217.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8679D32720D
-	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Mar 2026 15:08:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.47
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772636935; cv=pass; b=bZAt99CSqElFpQ34oNSJ28i1A1J+j93s8lpXiIE/IapuWmByaGB2E9/86uHrpXz9YqLGoGPJEApKZ5m7u6jQT1fOqQ9M/pBK2gnJWoAs9zUGK4O3N8fX3UFp8Zu8fQ/3DzvjeYpKmIKdTpAFrA0ezFwW4439gPs6PValzeUynGw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772636935; c=relaxed/simple;
-	bh=YhlXiU0XKCWPaqDUqf4rhyXjvfvZOfuj3Ya2JfRbtgA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Y6WSGNQ0SHib+NiL7nYFfvUQPouAO2GLsOzAODpAaJYuBaJNYf2frRiDC5w0BHC1m0HJoM1jlhVHn2UvPl7+d6HiNI/dGrSHtD2qWqkdzwqnQtu91oUqXrF4Yi6A1TuI0Hib3voHv7iOrNKBMlmCmDvf7X21r5sxBFBXjga2uuc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K3ffOugd; arc=pass smtp.client-ip=209.85.217.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vs1-f47.google.com with SMTP id ada2fe7eead31-5ff9d047981so1019022137.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2026 07:08:52 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772636931; cv=none;
-        d=google.com; s=arc-20240605;
-        b=f0HQESNCb2BrNpJe3EQ2pKD8aRsEu2dPHaz9jApC5Rfu8JnoSObCl36K0AjJ9BiNYH
-         6VzcDpwwM1fwZVcVbJEVKjQOFJLZUWmV6MX9Q19Ma63KsCbNvtQ+iM89z9zuAsE4JanX
-         mXdiiMJ0onANMmi6AfABfoCKGYIcTEsHMmDD2ulqNi8PPB+CkCd0vRuiB7Vsg3GSAk8K
-         cM0TCHCbmnsUFbknq8Qrh0Id2/kIBx2/66ylSNr0L4AZnJtjEQJMRg6uHKaictBMfsfL
-         8vUX8LXiffNfvOnjoGn69JdCD049G6JMQRQfy3vqxmSZXmCmbQwNVcmk7xT7g9ft5pzN
-         ZkFg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=Zt95rYDrbJQ7v21KKoOXmX6dHYnzklnNjTFqH4raDgw=;
-        fh=F+VpWEceZRTuBU5JdavpgA+PvqOwneuo+aJefo/92dA=;
-        b=XGTeMkxnO+OEBFgyfFXndj0YHyfPIcuDrpN13ceDt7iIp/uRKvNSHxMC27tkk2oqZV
-         tZjmtE1XVhzj3dOEkhXPyRCKuK0/M+AXNmHErk6hOR+L9pAJyVxwgU2U4G7L78/mAgAz
-         P12lE3Pwt06HCwzGdAabN8KXKOGFOUlqSuLhKHiFEovDWd8fiZDFrlB3eYgEYWQ1Nijk
-         /rm2M1k0N3TurrSqM9CwbFV6Y/RLpyvW2l+ik/5uZI5v0xyx6SoTgdyZcgAXssg6PCLZ
-         wRzjJRChzQ7kIUgFvyHryDFgmfVEa2M/UULpMoCYEo8cefwPKrwqjR8yj60JhDZkW+dl
-         CKsA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772636931; x=1773241731; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Zt95rYDrbJQ7v21KKoOXmX6dHYnzklnNjTFqH4raDgw=;
-        b=K3ffOugdaLQFkS1vn+ekot/3RyzoeBOXHBSNNKzQ+DLP3A7Gk+2gByxVMkTBGGgbdU
-         jSMvWlZr8rVQI0nsie9QXkovuJ+Tj08whQp4nXoiUiC37dGNFwIuCG3LbfUIZHgw3LaP
-         df6kfbDFeRPeC8HwPVEjNE6YCRhBPVDkaKQljea4u3WUY0EHUvNT1gW2Gse4XSb+FC6g
-         W7zAi1tuIoz2rQFxlzfSEzShi8q/06/ZhkoDTIaW+6V4/nYvExX8XXlpUDbsqQGcbqzx
-         SHJ68mE4wu4ZcQsDRdpZiLMusGpbQ6K8XrU46wRMPHRBiKqe+NSE1+gxybeKqlwpeCrn
-         51KA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772636931; x=1773241731;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=Zt95rYDrbJQ7v21KKoOXmX6dHYnzklnNjTFqH4raDgw=;
-        b=dngwayGIC4TmY2CIp+0+tbO57g8vUukp39mDSa2Cxt4/lVW5ZOmSP2A9oLJJROj8ae
-         SoxucSPWpPRShCBhJqJaUO3dDSP8d4V7OQLSPSbsRyqSNFMJUvI3ZbK3n4Egl3Vzylb8
-         WspJkRngBVy48+Vf7aWKljyjFZ5sl5oxRf7DV48nvBI3UEcz3i76Lix5Q0OSxyQW1v2z
-         8bBxaQ9iPFdsXwLMesYR+wAkjimeuFAKDE1dT/HnbI6dFUoS7T+dcZZjIu3CK8najoMa
-         8AnBJiMdhA0XAsAOl/a65CYNaiT15oRw1i58bo2q6E8Sc1iVG27h/+JqHGWGEV1cce6Y
-         q03g==
-X-Forwarded-Encrypted: i=1; AJvYcCXfxHEJ97AboUVtkRfntrAq75Z5Y8h5TQcbIB4zztiEMSomZ0DtdFGJvNtKowWsK8HmaiyWvvEbn91SpV3l@vger.kernel.org
-X-Gm-Message-State: AOJu0YxLQDnfOk9liFJp8Og4q4Y8lR9P/1QThSzY/gGukNVp1I9c55tQ
-	IgZ6bS0GqlgNskI2jiDwynNcZ1vlWD68S7rKL4WdvNj0HUEe4PDbZxe/j/6sJ07RpEaPolTG2or
-	sD97vi+k+48xenART426lGg9uRXyJ5GA=
-X-Gm-Gg: ATEYQzwfz7ikxUc4xYuh2lXg5UDi/++wpca/FHc5TZeW1ZPxGW0I8drjcda5cwZvdAn
-	G+CzZ35NCx9NjHAAhz+hgw0nZmvJKe+L4/22F0ZnFLpWML/mmLTRNicCIyGWY/PNqUqavO3Md0W
-	4URNsi85OYMv/aY3UruKrwTk1uBb17zdWIQ3pmBauXmHsMxeyfS36nSiXE33ABoqfoZcx/IZ0KI
-	bFoP70kYpO977txGm6E6oczSFsrLvpUun3Bx8gcFwcnM4dqH8WDYpK+ywRIGvhlYqptlNpv1s72
-	wWJdY20=
-X-Received: by 2002:a05:6102:3ed5:b0:5ef:a416:be63 with SMTP id
- ada2fe7eead31-5ff8fc64c78mr3126757137.22.1772636931320; Wed, 04 Mar 2026
- 07:08:51 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CACA286A4;
+	Wed,  4 Mar 2026 15:10:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772637049; cv=none; b=qv+AdFd50S970f4VuznJofO/tjs98Jp12vNcu4M3Aa682w8ofa5lOiSaApfCJYSGzMjSbzUq/t0Bgl03VjK6Vlp4QxiQoQ8ENBcjUDDLO9OIueEBTHebNcxJ4M4N53emPMW1lYi5YhIwV4e6RVEhR+SpDKZzLZ7PAxYR/yQL4f8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772637049; c=relaxed/simple;
+	bh=CG9KzzVM26ZNq02wY4JVHL0QJ6N+XoeJH8G9nUEKn9g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LU/2JcPxkaW/WqMce2sfff1KyQCyXXx741qwauQLuUTOiMgPuBzFcEEk5U2GDtHelyGmyzF0g1Izvrx8+C2EorND7PbxFt3HA6DIg0rg2qSGpnaCzjO5eFKmdgvM4QD7usXWJKytMtR5VHrJ+yC/0JUvdZbsZthx36xz7Am5zzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GZoo4wFM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18F17C19423;
+	Wed,  4 Mar 2026 15:10:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772637049;
+	bh=CG9KzzVM26ZNq02wY4JVHL0QJ6N+XoeJH8G9nUEKn9g=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=GZoo4wFMIhNMBzWmq01DZ50Sf+gHWv5lk4GK5MBA2Y5PbXRT2me2OKrRv/81mOuFs
+	 NjGx6GOmCGjPmBKn0btird4EchdI4sGtGz4d02+ImTOB58PKzSJWJIKyGczGRpgHx+
+	 NVanVHvvz4oXiz1sPI68Rz4B3wAv+JE/jUT5G0UU2ik3SJOYP8T/zqOA/NUwxUzLO6
+	 UMInZ/JpXKnSD7wOx+1eYKm5eyaA4GN0/YKPhEMb3xSY93czvbq0WyUH7Va+8igX/B
+	 cXW7fI6PVqoq4AZvp5hNAL7VrI0gyNzQWjcs5NiSD1RIdbkB6gR5jrkHDO6nywS8qx
+	 7wojiH8lmzjaQ==
+Date: Wed, 4 Mar 2026 20:40:37 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Can Guo <can.guo@oss.qualcomm.com>
+Cc: avri.altman@wdc.com, bvanassche@acm.org, beanhuo@micron.com, 
+	martin.petersen@oracle.com, linux-scsi@vger.kernel.org, 
+	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>, 
+	"open list:ARM/QUALCOMM MAILING LIST" <linux-arm-msm@vger.kernel.org>, open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 07/11] scsi: ufs: ufs-qcom: Fixup PAM-4 TX L0_L1_L2_L3
+ adaptation pattern length
+Message-ID: <5jri65eq7jc4p3bd2tcgvlgctqf4c2v4sthotkqvavp4rjyzha@hkhw7maeftq3>
+References: <20260304135313.413688-1-can.guo@oss.qualcomm.com>
+ <20260304135313.413688-8-can.guo@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260303115550.9279-1-mitltlatltl@gmail.com> <d2cdaa7e-1a17-4e6b-879d-266844958410@oss.qualcomm.com>
- <aahGtIkxtNPeeWKc@redhat.com>
-In-Reply-To: <aahGtIkxtNPeeWKc@redhat.com>
-From: Pengyu Luo <mitltlatltl@gmail.com>
-Date: Wed, 4 Mar 2026 23:08:30 +0800
-X-Gm-Features: AaiRm53efplzSDOab61tQud_P7APn9ZaH_aClYCYiHE6tyUSiXw8N58pgNHrRTk
-Message-ID: <CAH2e8h5oHvaADPgE_GdPQsWrU00XUT1d0ktbE25ztMeBEE51Yw@mail.gmail.com>
-Subject: Re: [PATCH] clk: qcom: dispcc-sc8280xp: remove CLK_SET_RATE_PARENT
- from byte_div_clk_src dividers
-To: Brian Masney <bmasney@redhat.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	White Lewis <liu224806@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: 2D0CE202745
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260304135313.413688-8-can.guo@oss.qualcomm.com>
+X-Rspamd-Queue-Id: 11DA9202DAF
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+X-Spamd-Result: default: False [-1.66 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-95360-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,baylibre.com,vger.kernel.org,gmail.com];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	TO_DN_SOME(0.00)[];
+	TAGGED_FROM(0.00)[bounces-95361-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[gmail.com:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	MISSING_XM_UA(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mitltlatltl@gmail.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:email]
 X-Rspamd-Action: no action
 
-On Wed, Mar 4, 2026 at 10:50=E2=80=AFPM Brian Masney <bmasney@redhat.com> w=
-rote:
->
-> Hi Pengyu and Konrad,
->
-> On Tue, Mar 03, 2026 at 01:10:43PM +0100, Konrad Dybcio wrote:
-> > On 3/3/26 12:55 PM, Pengyu Luo wrote:
-> > > From: White Lewis <liu224806@gmail.com>
-> > >
-> > > The four byte_div_clk_src dividers (disp{0,1}_cc_mdss_byte{0,1}_div_c=
-lk_src)
-> > > had CLK_SET_RATE_PARENT set. When the DSI driver calls clk_set_rate()=
- on
-> > > byte_intf_clk, the rate-change propagates through the divider up to t=
-he
-> > > parent PLL (byte_clk_src), halving the byte clock rate.
-> > >
-> > > A simiar issue had been also encountered on SM8750.
-> > > b8501febdc51 ("clk: qcom: dispcc-sm8750: Drop incorrect CLK_SET_RATE_=
-PARENT on byte intf parent").
-> > >
-> > > Likewise, remove CLK_SET_RATE_PARENT from all four byte divider clock=
-s
-> > > so that clk_set_rate() on the divider adjusts only the divider ratio,
-> > > leaving the parent PLL untouched.
-> > >
-> > > Fixes: 4a66e76fdb6d ("clk: qcom: Add SC8280XP display clock controlle=
-r")
-> > > Signed-off-by: White Lewis <liu224806@gmail.com>
-> > > [pengyu: reword]
-> > > Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
-> > > ---
-> >
-> > Looks like more platforms have this issue.. thanks for fixing this
->
-> I hope within the next week to post a new draft of my patch series to
-> keep certain clk rates intact when sibling and parent rate changes occur
-> [1]. This will be for certain critical clks, such as the ones used for
-> DRM and sound. I have it working with kunit, and just need to clean up
-> some of my new clk helpers and commit messages before I post a v5.
->
-> I'd like to test this on some real hardware and I have the Thinkpad x13s
-> with the sc8280xp SoC. Can this issue be reproduced on this hardware? If
-> so, can you provide me detailed instructions about how to trigger this
-> scenario?
->
+On Wed, Mar 04, 2026 at 05:53:09AM -0800, Can Guo wrote:
+> If HS-G6 Power Mode change handshake is successful and outbound data Lanes
+> are expected to transmit ADAPT, M-TX Lanes shall be configured as
+> 
+> if (Adapt Type == REFRESH)
+>   TX_HS_ADAPT_LENGTH_L0_L1_L2_L3 = PA_PeerRxHsG6AdaptRefreshL0L1L2L3.
+> else if (Adapt Type == INITIAL)
+>   TX_HS_ADAPT_LENGTH_L0_L1_L2_L3 = PA_PeerRxHsG6AdaptInitialL0L1L2L3.
+> 
+> On some platforms, the ADAPT_L0_L1_L2_L3 duration on Host TX Lanes is only
+> a half of theoretical ADAPT_L0_L1_L2_L3 duration TADAPT_L0_L1_L2_L3 (in
+> PAM-4 UI) calculated from TX_HS_ADAPT_LENGTH_L0_L1_L2_L3.
+> 
+> For such platforms, the workaround is to double the ADAPT_L0_L1_L2_L3
+> duration by uplifting TX_HS_ADAPT_LENGTH_L0_L1_L2_L3. UniPro initializes
+> TX_HS_ADAPT_LENGTH_L0_L1_L2_L3 during HS-G6 Power Mode change handshake,
+> it would be too late for SW to update TX_HS_ADAPT_LENGTH_L0_L1_L2_L3 post
+> HS-G6 Power Mode change. Update PA_PeerRxHsG6AdaptRefreshL0L1L2L3 and
+> PA_PeerRxHsG6AdaptInitialL0L1L2L3 post Link Startup and before HS-G6
+> Power Mode change, so that the UniPro would use the updated value during
+> HS-G6 Power Mode change handshake.
+> 
+> Signed-off-by: Can Guo <can.guo@oss.qualcomm.com>
+> ---
+>  drivers/ufs/host/ufs-qcom.c | 175 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 175 insertions(+)
+> 
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index 5eb12a999eb1..3a9279066192 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -1079,10 +1079,185 @@ static void ufs_qcom_override_pa_tx_hsg1_sync_len(struct ufs_hba *hba)
+>  		dev_err(hba->dev, "Failed (%d) set PA_TX_HSG1_SYNC_LENGTH\n", err);
+>  }
+>  
+> +/**
+> + * ufs_qcom_double_t_adapt_l0l1l2l3 - Create a new adapt that doubles the
+> + * adaptation duration TADAPT_L0_L1_L2_L3 derived from the old adapt.
+> + *
+> + * @old_adapt: Original ADAPT_L0_L1_L2_L3 capability
+> + *
+> + * ADAPT_length_L0_L1_L2_L3 formula from M-PHY spec:
+> + * if (ADAPT_range_L0_L1_L2_L3 == COARSE) {
+> + *   ADAPT_length_L0_L1_L2_L3 = [0, 12]
+> + *   ADAPT_L0_L1_L2_L3 = 215 x 2^ADAPT_length_L0_L1_L2_L3
+> + * } else if (ADAPT_range_L0_L1_L2_L3 == FINE) {
+> + *   ADAPT_length_L0_L1_L2_L3 = [0, 127]
+> + *   TADAPT_L0_L1_L2_L3 = 215 x (ADAPT_length_L0_L1_L2_L3 + 1)
+> + * }
+> + *
+> + * To double the adaptation duration TADAPT_L0_L1_L2_L3:
+> + * 1. If adapt range is COARSE (1'b1), new adapt = old adapt + 1.
+> + * 2. If adapt range is FINE (1'b0):
+> + *   a) If old adapt length is < 64, (new adapt + 1) = 2 * (old adapt + 1).
+> + *   b) If old adapt length is >= 64, set new adapt to 0x88 using COARSE
+> + *      range, because new adapt get from equation in a) shall exceed 127.
+> + *
+> + * Examples:
+> + * ADAPT_range_L0_L1_L2_L3 | ADAPT_length_L0_L1_L2_L3 | TADAPT_L0_L1_L2_L3 (PAM-4 UI)
+> + *		0			3			131072
+> + *		0			7			262144
+> + *		0			63			2097152
+> + *		0			64			2129920
+> + *		0			127			4194304
+> + *		1			8			8388608
+> + *		1			9			16777216
+> + *		1			10			33554432
+> + *		1			11			67108864
+> + *		1			12			134217728
+> + *
+> + * Return: new adapt.
+> + */
+> +static inline u32 ufs_qcom_double_t_adapt_l0l1l2l3(u32 old_adapt)
 
-Quick answer, no, x13s uses a edp panel, not dsi. This issue is
-related to dsi clks.
+No need of 'inline' keyword in a .c file. Same comment to other helpers.
 
-Best wishes,
-Pengyu
+Also, can you change the '_l0l1l2l3' suffix to something like '_level' or
+'_length'?
 
-> [1] Latest public posting v4 from September
->     https://lore.kernel.org/linux-clk/20250923-clk-tests-docs-v4-0-9205cb=
-3d3cba@redhat.com/
->
-> Thanks,
->
-> Brian
->
+> +{
+> +	u32 adapt_length = old_adapt & 0x7F;
+
+Please add a define for 0x75
+
+> +	u32 new_adapt;
+> +
+> +	/* Adapt range == COARSE */
+> +	if (old_adapt & 0x80) {
+
+This one also.
+
+> +		new_adapt = (adapt_length + 1) | 0x80;
+> +	} else {
+> +		if (adapt_length < 64)
+
+And this one.
+
+> +			new_adapt = (adapt_length << 1) + 1;
+> +		else
+> +			new_adapt = 0x88;
+> +	}
+> +
+> +	return new_adapt;
+> +}
+> +
+> +static inline void ufs_qcom_limit_max_gear(struct ufs_hba *hba,
+> +					   enum ufs_hs_gear_tag gear)
+> +{
+> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> +	struct ufs_pa_layer_attr *pwr_info = &hba->max_pwr_info.info;
+> +	struct ufs_host_params *host_params = &host->host_params;
+> +
+> +	host_params->hs_tx_gear = gear;
+> +	host_params->hs_rx_gear = gear;
+> +	pwr_info->gear_tx = gear;
+> +	pwr_info->gear_rx = gear;
+> +
+> +	dev_warn(hba->dev, "Limited max gear of both sides to HS-G%d\n", gear);
+
+s/both sides/host and device
+
+> +}
+> +
+> +static void ufs_qcom_fixup_tx_adapt_l0l1l2l3(struct ufs_hba *hba)
+> +{
+> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> +	struct ufs_pa_layer_attr *pwr_info = &hba->max_pwr_info.info;
+> +	struct ufs_host_params *host_params = &host->host_params;
+> +	u32 adapt_l0l1l2l3, new_adapt, actual_adapt;
+
+Can you shorten adapt_l0l1l2l3?
+
+> +	bool limit_speed = false;
+> +	int err;
+> +
+> +	if (host->hw_ver.major != 0x7 || host->hw_ver.minor > 0x1 ||
+> +	    host_params->hs_tx_gear <= UFS_HS_G5 ||
+> +	    pwr_info->gear_tx <= UFS_HS_G5)
+> +		return;
+> +
+> +	err = ufshcd_dme_get(hba, UIC_ARG_MIB(PA_PEERRXHSG6ADAPTINITIALL0L1L2L3), &adapt_l0l1l2l3);
+> +	if (err)
+> +		goto out;
+> +
+> +	if (adapt_l0l1l2l3 > ADAPT_L0L1L2L3_LENGTH_MAX) {
+> +		dev_err(hba->dev, "PA_PeerRxHsG6AdaptInitialL0L1L2L3 value (0x%x) exceeds MAX.\n",
+
+Nit: remove full stop at the end
+
+> +			adapt_l0l1l2l3);
+> +		err = -EINVAL;
+
+-ERANGE
+
+> +		goto out;
+> +	}
+> +
+> +	new_adapt = ufs_qcom_double_t_adapt_l0l1l2l3(adapt_l0l1l2l3);
+> +	dev_dbg(hba->dev, "Original PA_PeerRxHsG6AdaptInitialL0L1L2L3 value = 0x%x, new value = 0x%x\n",
+> +		adapt_l0l1l2l3, new_adapt);
+> +
+> +	/*
+> +	 * 0x8C is the max possible value allowed by UniPro v3.0 spec, some HWs
+> +	 * can accept 0x8D but some cannot.
+> +	 */
+> +	if (new_adapt <= ADAPT_L0L1L2L3_LENGTH_MAX ||
+> +	    (new_adapt == ADAPT_L0L1L2L3_LENGTH_MAX + 1 && host->hw_ver.minor == 0x1)) {
+> +		err = ufshcd_dme_set(hba, UIC_ARG_MIB(PA_PEERRXHSG6ADAPTINITIALL0L1L2L3),
+> +				     new_adapt);
+> +		if (err)
+> +			goto out;
+> +
+> +		err = ufshcd_dme_get(hba, UIC_ARG_MIB(PA_PEERRXHSG6ADAPTINITIALL0L1L2L3),
+> +				     &actual_adapt);
+> +		if (err)
+> +			goto out;
+> +
+> +		if (actual_adapt != new_adapt) {
+> +			limit_speed = true;
+> +			dev_warn(hba->dev, "Failed to update host PA_PeerRxHsG6AdaptInitialL0L1L2L3 to new value 0x%x, actual value = 0x%x\n",
+
+This goes beyond 100 column width. Please consider shortening up. Applies to
+other prints as well.
+
+> +				 new_adapt, actual_adapt);
+> +		}
+> +	} else {
+> +		limit_speed = true;
+> +		dev_warn(hba->dev, "New PA_PeerRxHsG6AdaptInitialL0L1L2L3 value (0x%x) is too large!\n",
+> +			 new_adapt);
+> +	}
+> +
+> +	err = ufshcd_dme_get(hba, UIC_ARG_MIB(PA_PEERRXHSG6ADAPTREFRESHL0L1L2L3), &adapt_l0l1l2l3);
+> +	if (err)
+> +		goto out;
+> +
+> +	if (adapt_l0l1l2l3 > ADAPT_L0L1L2L3_LENGTH_MAX) {
+> +		dev_err(hba->dev, "PA_PeerRxHsG6AdaptRefreshL0L1L2L3 value (0x%x) exceeds MAX.\n",
+> +			adapt_l0l1l2l3);
+> +		err = -EINVAL;
+
+-ERANGE
+
+> +		goto out;
+> +	}
+> +
+> +	new_adapt = ufs_qcom_double_t_adapt_l0l1l2l3(adapt_l0l1l2l3);
+> +	dev_dbg(hba->dev, "Original PA_PeerRxHsG6AdaptRefreshL0L1L2L3 value = 0x%x, new value = 0x%x\n",
+> +		adapt_l0l1l2l3, new_adapt);
+> +
+> +	/*
+> +	 * 0x8C is the max possible value allowed by UniPro v3.0 spec, some HWs
+> +	 * can accept 0x8D but some cannot.
+> +	 */
+> +	if (new_adapt <= ADAPT_L0L1L2L3_LENGTH_MAX ||
+> +	    (new_adapt == ADAPT_L0L1L2L3_LENGTH_MAX + 1 && host->hw_ver.minor == 0x1)) {
+> +		err = ufshcd_dme_set(hba, UIC_ARG_MIB(PA_PEERRXHSG6ADAPTREFRESHL0L1L2L3),
+> +				     new_adapt);
+> +		if (err)
+> +			goto out;
+> +
+> +		err = ufshcd_dme_get(hba, UIC_ARG_MIB(PA_PEERRXHSG6ADAPTREFRESHL0L1L2L3),
+> +				     &actual_adapt);
+> +		if (err)
+> +			goto out;
+> +
+> +		if (actual_adapt != new_adapt) {
+> +			limit_speed = true;
+> +			dev_warn(hba->dev, "Failed to update host PA_PeerRxHsG6AdaptRefreshL0L1L2L3 to new value 0x%x, actual value = 0x%x\n",
+> +				 new_adapt, actual_adapt);
+> +		}
+> +	} else {
+> +		limit_speed = true;
+> +		dev_warn(hba->dev, "New PA_PeerRxHsG6AdaptRefreshL0L1L2L3 value (0x%x) is too large!\n",
+> +			 new_adapt);
+
+I'm assuming it is safe to continue despite the warnings.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
