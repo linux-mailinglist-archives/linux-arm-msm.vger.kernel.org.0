@@ -1,212 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-95457-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95458-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sB1rHCWkqGnywAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95457-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 22:29:09 +0100
+	id yD66NOCuqGmfwQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95458-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 23:14:56 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7491207FD6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 22:29:08 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5953320861F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 23:14:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D90C230097FA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2026 21:26:55 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 7BC293025A5A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2026 22:14:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BC23386C2F;
-	Wed,  4 Mar 2026 21:26:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90F38388E7C;
+	Wed,  4 Mar 2026 22:14:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="RXhkKbCV";
-	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="5A25tT79"
+	dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b="lQhArVQa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
+Received: from mout02.posteo.de (mout02.posteo.de [185.67.36.66])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08B2F386432;
-	Wed,  4 Mar 2026 21:26:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 558FA37B02B
+	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Mar 2026 22:14:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.67.36.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772659614; cv=none; b=rZ2s9QgO/ge1wM0qRtCDGBU+BlMyDTg8UExIorZPKrZKfI11HitpM3Jnk0z9n3X1mfoGn48uaM3YEoyvvMKyxGKpdUuof6bxJBSsADYx+Q8EL4Qk571dTd3lKGqWcAeKri8jOXG5iFB2wOiMBCnI7XifQTJvKYPvV8iBij95RNg=
+	t=1772662489; cv=none; b=G/XIR5UWCVhCGeHnrdEahPWDQv6GQbFAXEMZLQekYVrrYeek5dA104+qOM/NdtlaN1Q2DNULAWbdIGt8qDBdRKLNgX9qvOCNRhPBDyPnuCqsWgJttMlgs/ttIKKJnt3V/wdFDPTmnHIcv7C2xf0Ww8XDty1NhZpMhY31kW5ueGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772659614; c=relaxed/simple;
-	bh=MVhmd4cWE0Kx3+BczUBvTeGMoG4y8lKZBKmcPBNai8Q=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=Gfe/XMsySc/inxPfauKSYAE7DWc9bfi1IqTwyVDNJ78veUYXOwoSSBlGxvxQ/yLmi9i88b1xZ3mv0gCCrtmkMZWwlILJskDOTjbwp/zZOqj+5BeAPyUrzhHnx/UmWZYeefDfK1y1ELgJPiUbGsNPJKuZQSjSdK4Oo6SkA8wbMH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=RXhkKbCV; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=5A25tT79; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
-DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
-	h=Message-ID:Subject:To:From:Date; t=1772659603; bh=ph8FSrXPg2/n2Ad6/2vbcmV
-	Qb668+5s77efPfp1VCHA=; b=RXhkKbCVAcPaz1mI5rRjFzXC7h2MjdCW6IahRHDaBTZ+tjHK1x
-	RTT/M/c5Law8eJDHHNzFpjjAJeQZgJ2qZDQcx/8Lf8pBOCXYQF6pwjfgLdRLM1nsfs/2fN4Yz9d
-	M2IehnG3rue2wkgHxDfZxcI+pEpn2m4MRi9rCjwS2S4vwjoHHYxsU7bb4ue0dgym9+tEk9fAbvl
-	Dd+vjSNMauLHbK03xU1F0OGeurPYtMUes8Dj9hhi+c8qmCr3j6ROf4pW8Bg0/+/9dNMgrDel2eI
-	5a6cVJFvrD6Ec7fFjGFqgRklFL+agMXkNSXJlrCMTvhIrV8kAb8CKT07iqSSfeR9JHA==;
-DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
-	h=Message-ID:Subject:To:From:Date; t=1772659603; bh=ph8FSrXPg2/n2Ad6/2vbcmV
-	Qb668+5s77efPfp1VCHA=; b=5A25tT79Aq2CJfrW6ibkNOhBuEcu5Z+zHyKHR5TouGxL8S1LnF
-	GdgmMJp2WuIpZlaNxy8r6DoX8/2BojAevyCw==;
+	s=arc-20240116; t=1772662489; c=relaxed/simple;
+	bh=JmMXkK+pLB2Bo1YGTHUwtHtIJTZMiA8prpH5Y/2aOjY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=L65t+xrRqdhee3HSaXTSXA4HrdDgjW1nrXw1k5N7OQMvG7omVuRbNI5VQ4aviVAdpsa28HYTIac7niuFIdzN13JEEVqVH03HL5e6b9M3+WFQlF30hrMThAUsdeTptj9Mx4iz6aOEjQb5SgdZV03xZDe3M5i+WqT7fIcc+1k81vQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de; spf=pass smtp.mailfrom=posteo.de; dkim=pass (2048-bit key) header.d=posteo.de header.i=@posteo.de header.b=lQhArVQa; arc=none smtp.client-ip=185.67.36.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=posteo.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=posteo.de
+Received: from submission (posteo.de [185.67.36.169]) 
+	by mout02.posteo.de (Postfix) with ESMTPS id 76FD7240101
+	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Mar 2026 23:14:41 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=posteo.de; s=2017;
+	t=1772662481; bh=AygycHmKMmUEErxEv++3db/RN2PgXbdgG0QAnKwV848=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:From;
+	b=lQhArVQaT2AiSmCNtPaomel7gxESCcjL6XkZ8Cqa81dzQDRhl8+9/6iS/fxPtlYrB
+	 e4DJkxUAZVD/PziEESlHwFPHRlxo+9RooLJUB/a/2xupxjbN3aL32T/WWs5scCRuVL
+	 MEk7sC2LlUghXNywPANYWpT3y0S1Mj5uIJLN7ibn9pOa5zwhD/insimOtFoqfO77g3
+	 Zfp14J7mn0/vLBOu0laOFSK+n1QdvP1nL2Xcvxz5JQwN+rU1XDm0TCJWkIEUUrgaKD
+	 /jIOLmv/aovFXUW/+ME+MCO7e/hHwbjFPOpXGU9Z2eGovbDLS64KKfHGAjMLpC1x4s
+	 N0TIGe35iamYg==
+Received: from customer (localhost [127.0.0.1])
+	by submission (posteo.de) with ESMTPSA id 4fR6R34wK6z6tsb;
+	Wed,  4 Mar 2026 23:14:39 +0100 (CET)
+Date: Wed, 04 Mar 2026 22:14:40 +0000
+From: Paul Adam <adamp@posteo.de>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: msm8916-wiko-chuppito: add
+ initial devicetree
+Message-ID: <aaiuzCWHegpJMCVj@MyryksLaptop>
+References: <20260301-wiko-chuppito-v3-0-9b36a2a7aed5@posteo.de>
+ <20260301-wiko-chuppito-v3-3-9b36a2a7aed5@posteo.de>
+ <9ffc0460-e394-4f18-aed2-ad8a0b3d1b8f@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 04 Mar 2026 22:26:43 +0100
-From: barnabas.czeman@mainlining.org
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Gabriel Gonzales <semfault@disroot.org>, Kees Cook
- <kees@kernel.org>, Tony Luck <tony.luck@intel.com>, "Guilherme G. Piccoli"
- <gpiccoli@igalia.com>, Biswapriyo Nath <nathbappai@gmail.com>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
- phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
- linux@mainlining.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v3 2/7] arm64: dts: qcom: sm6125-xiaomi-ginkgo: Correct
- reserved memory ranges
-In-Reply-To: <xgcv6gcaw6xxelkafo23waz4sbw2cycas45qhzxkfhbeuukzbe@wwssuc44mp7y>
-References: <20260126-xiaomi-willow-v3-0-aad7b106c311@mainlining.org>
- <20260126-xiaomi-willow-v3-2-aad7b106c311@mainlining.org>
- <xgcv6gcaw6xxelkafo23waz4sbw2cycas45qhzxkfhbeuukzbe@wwssuc44mp7y>
-Message-ID: <f1028a5b2eefbb0672f0a5e55d0691d1@mainlining.org>
-X-Sender: barnabas.czeman@mainlining.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: C7491207FD6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9ffc0460-e394-4f18-aed2-ad8a0b3d1b8f@oss.qualcomm.com>
+X-Rspamd-Queue-Id: 5953320861F
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[mainlining.org,reject];
-	R_DKIM_ALLOW(-0.20)[mainlining.org:s=202507r,mainlining.org:s=202507e];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[posteo.de,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[posteo.de:s=2017];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-95457-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-95458-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[posteo.de:+];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[3];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[kernel.org,disroot.org,intel.com,igalia.com,gmail.com,vger.kernel.org,lists.sr.ht,mainlining.org,oss.qualcomm.com];
-	RCPT_COUNT_TWELVE(0.00)[18];
 	MIME_TRACE(0.00)[0:+];
-	FROM_NEQ_ENVFROM(0.00)[barnabas.czeman@mainlining.org,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	TO_DN_SOME(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	DKIM_TRACE(0.00)[mainlining.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	FROM_NO_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[adamp@posteo.de,linux-arm-msm@vger.kernel.org];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[posteo.de:dkim,posteo.de:email,qualcomm.com:email,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-On 2026-03-04 19:51, Bjorn Andersson wrote:
-> On Mon, Jan 26, 2026 at 05:34:52PM +0100, Barnabás Czémán wrote:
->> The device was crashing on high memory load because the reserved 
->> memory
->> ranges was wrongly defined. Correct the ranges for avoid the crashes.
->> Change the ramoops memory range to match with the values from the 
->> recovery
->> to be able to get the results from the device.
->> 
+On 26/03/02 12:08, Konrad Dybcio wrote:
+> On 3/1/26 11:29 PM, Paul Adam via B4 Relay wrote:
+> > From: Paul Adam <adamp@posteo.de>
+> > 
+> > Add an initial device tree for Wiko PULP 4G.
+> > Includes support for:
+> > - UART
+> > - USB (no OTG)
+> > - Internal storage
+> > - MicroSD
+> > - Volume keys + Power button
+> > - Touchscreen
+> > - Backlight
+> > - Accelerometer: Invensense MPU6880
+> > - Magnetometer: Asahi Kasei AK09911
+> > - Hall sensor: Rohm BU52021HFV
+> > - Proximity sensor
+> > - Vibrator
+> > - Earpiece
+> > - Microphone 1
+> > - Headphones
+> > - Wifi
+> > - Bluetooth
+> > - GPU
+> > 
+> > Signed-off-by: Paul Adam <adamp@posteo.de>
+> > ---
 > 
-> FYI. If you add "memtest=1" to your kernel command line the kernel will
-I have tested with memtest=1 also, it is working fine.
-> sweep all memory at boot, which tends to flush out most such issues.
-> Then you don't need to rely on "high memory load" for testing for such
-> issues.
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > 
-> Regards,
-> Bjorn
-> 
->> Fixes: 9b1a6c925c88 ("arm64: dts: qcom: sm6125: Initial support for 
->> xiaomi-ginkgo")
->> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
->> ---
->>  arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts | 41 
->> ++++++++++++++++-------
->>  1 file changed, 29 insertions(+), 12 deletions(-)
->> 
->> diff --git a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts 
->> b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
->> index bf03226a6f85..d5e5abdb3b2f 100644
->> --- a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
->> +++ b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
->> @@ -13,6 +13,12 @@
->>  #include "sm6125.dtsi"
->>  #include "pm6125.dtsi"
->> 
->> +/delete-node/ &adsp_pil_mem;
->> +/delete-node/ &cont_splash_mem;
->> +/delete-node/ &gpu_mem;
->> +/delete-node/ &ipa_fw_mem;
->> +/delete-node/ &ipa_gsi_mem;
->> +
->>  / {
->>  	model = "Xiaomi Redmi Note 8";
->>  	compatible = "xiaomi,ginkgo", "qcom,sm6125";
->> @@ -36,28 +42,39 @@ framebuffer0: framebuffer@5c000000 {
->>  	};
->> 
->>  	reserved-memory {
->> -		debug_mem: debug@ffb00000 {
->> -			reg = <0x0 0xffb00000 0x0 0xc0000>;
->> +		adsp_pil_mem: adsp_pil_mem@55300000 {
->> +			reg = <0x0 0x55300000 0x0 0x2200000>;
->>  			no-map;
->>  		};
->> 
->> -		last_log_mem: lastlog@ffbc0000 {
->> -			reg = <0x0 0xffbc0000 0x0 0x80000>;
->> +		ipa_fw_mem: ipa_fw_mem@57500000 {
->> +			reg = <0x0 0x57500000 0x0 0x10000>;
->>  			no-map;
->>  		};
->> 
->> -		pstore_mem: ramoops@ffc00000 {
->> -			compatible = "ramoops";
->> -			reg = <0x0 0xffc40000 0x0 0xc0000>;
->> -			record-size = <0x1000>;
->> -			console-size = <0x40000>;
->> -			pmsg-size = <0x20000>;
->> +		ipa_gsi_mem: ipa_gsi_mem@57510000 {
->> +			reg = <0x0 0x57510000 0x0 0x5000>;
->> +			no-map;
->>  		};
->> 
->> -		cmdline_mem: memory@ffd00000 {
->> -			reg = <0x0 0xffd40000 0x0 0x1000>;
->> +		gpu_mem: gpu_mem@57515000 {
->> +			reg = <0x0 0x57515000 0x0 0x2000>;
->>  			no-map;
->>  		};
->> +
->> +		framebuffer@5c000000 {
->> +			reg = <0x0 0x5c000000 0x0 (2340 * 1080 * 4)>;
->> +			no-map;
->> +		};
->> +
->> +		/* Matching with recovery values to be able to get the results. */
->> +		ramoops@61600000 {
->> +			compatible = "ramoops";
->> +			reg = <0x0 0x61600000 0x0 0x400000>;
->> +			record-size = <0x80000>;
->> +			pmsg-size = <0x200000>;
->> +			console-size = <0x100000>;
->> +		};
->>  	};
->> 
->>  	extcon_usb: extcon-usb {
->> 
->> --
->> 2.52.0
->> 
+> Konrad
+
+Thanks for reviewing!
+
+I assume I resend this once more with your tag added?
+Also is there anything else I need to do, if I don't receive further
+suggestions?
+
+Paul
 
