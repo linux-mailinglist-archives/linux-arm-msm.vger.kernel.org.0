@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-95236-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MHE6Ln+Pp2lKiQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95236-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 02:48:47 +0100
+	id IFu/BoGPp2lKiQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 02:48:49 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5DA8C1F9AAA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 02:48:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 72A7C1F9AB1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 02:48:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 2C3D630FE8C3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2026 01:45:28 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C12A931055BF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2026 01:45:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7FC781CFBA;
-	Wed,  4 Mar 2026 01:45:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C9B731987D;
+	Wed,  4 Mar 2026 01:45:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HdFFDf+z"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mWX4seru"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A454D3195FC
-	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Mar 2026 01:45:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B859B1CFBA
+	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Mar 2026 01:45:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772588727; cv=none; b=Ueb4xWsuz74xJ9XKC0A+TOxtNa/sidiFNz5zm96OLi7d2c1DbSv+rrR89TgYHrcDf4aotTdQzubcaupZN+ImqmsECNm/tX+XXZwaRl3oC1ehP037FfmHcQ2pUaqteol+2tCfDsJEcf7zrH7vtWWsP07B10V7A2Loeb7yGUvUN7s=
+	t=1772588739; cv=none; b=Q46FCYEAbM+FdWZCd/qnACPGqOGkXxJn7BuURbOQa92r6y0Q61pKytY8+9l0TPs1nX+6tJShzI3lxn0LcpEPhI1f4Fe6IG+AqqTt/yy07+BkeJ+pYkff+TWSuaTt4jB5QrZKBqJRSSPh3atGc67AREosYz+QKf5OA6vEdvQJX54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772588727; c=relaxed/simple;
-	bh=YKU/DnmNIxKk/G4FaBPJrYaaIFx5k+4NkZwdBNpIKdU=;
+	s=arc-20240116; t=1772588739; c=relaxed/simple;
+	bh=k7nm+jwNnoR6r6i5PeDmHb7mZmFUijftbGPMiXndIsQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t6JtTUsMHOQdOaEScUXKnEyan9k0ZLY0AQPnsRvws22fwjT4V/BVyU7K1kIuZe3kTPg96LTiAaY/LFzXVx9sW8mbaaGzi96ny7OzSd1rcKekhexv+Wp0DDT4NezkJzxUO2VN/CqfUaKjJ9U1kANsCqc9OBzxIMN7kIJR6VCnXfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HdFFDf+z; arc=none smtp.client-ip=209.85.160.170
+	 MIME-Version; b=JFKq6Dc8s6U05srdwAR4B6nWMZ6wuIVfa1mv+gnMIk8+vwWgj1tBcR6yy4A8rmdIT3pscpmTGqCvwALmYf17WRf1rCXXlE/LAsga8HDz4jgpbaxvNL8b2nTzyu22ccomKotKJ1MiZxVU5c8EeqWCwXHbFJchJVTRp2ZWRIOjpB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mWX4seru; arc=none smtp.client-ip=209.85.222.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-506c00df428so57983331cf.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Mar 2026 17:45:25 -0800 (PST)
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-8cb40277a8bso661834285a.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Mar 2026 17:45:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772588724; x=1773193524; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1772588737; x=1773193537; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fMK0diFp+y5MtkQk4eP+T+xRtrAK1MN5VxTGJH3Ujrk=;
-        b=HdFFDf+zw3ZhK1HxZLzNEmQoO1FWmJZjY8CtCkviGNF5PyEIPQYhmElmeVfU+uKbNO
-         RK0L8u/T1TauB3SnP+yfAKQmFqG/SKRtg1ZPwyLE1JSqbRUnbk8eFHwMmD14qjhUQSCN
-         ocSCI1DbTeKrwiHFPKSe14FIbjZ/eqOqp/EpGhkgsuYSv2+eQApWbS6DzKA01miJ5BJt
-         48atPiU/fhivNhRRafxjXNHbAqfQHRowTiAyuDXcQknrHy2f89Vn1bH/fWkm94xD5R1L
-         ydFuiLO9F1T90Xcs52xAM7d5DVluO4qOAvgJLSVNxTGKxLX+abYLOJuTC36INC0JXpnM
-         1+og==
+        bh=9DWeZB8W9zANl0YuQ93YsT6OLla60nv7vNnJMueIOrk=;
+        b=mWX4seruMW22FlpDBTQ/qpol72+uc+E3XRbYuALFyxiuiiVpqanavxZzbj32klChGd
+         LaA+L+A9fo+4mwCQCCaaZrmP9FDpCqsxdhVSR56uC9/JkXHd6Z1Zbfxm/CpTc7Pv9dm5
+         nH3uItgUltbTfQ2ZZcXClh/u210KWstqoCzBbNqQ6OdHtoM9XPXkICKVrCIQDfN5BKuU
+         N5uXVcuDgwVZwPhzQAqGtljoHu2LnFtSqCtRxACx4p/cXA4idxT9udmO0RKhBnD39B6u
+         ZLDFqoliidfNd/ChkudpseOWAu9lHCUbfkWY/W8X3d4g9yDCkJgtj6fyEaMEZjkbt4Fa
+         iCMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772588724; x=1773193524;
+        d=1e100.net; s=20230601; t=1772588737; x=1773193537;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=fMK0diFp+y5MtkQk4eP+T+xRtrAK1MN5VxTGJH3Ujrk=;
-        b=KApJeSsU3JHpjmfog5RvZdO6Fr5XUEPcolXvQbZkK0TYnmNoTbRDJlhc4uljP64kLw
-         pxAPAnJyW3d84rARvroh0tHvXlUywaoY5VXWYhx1byAL4/DHExBXksLyhMO6MsOr1ilK
-         47HIJGtKBe/t7dpfZR19t4sasGu/Gv1w8I4MTkOsXLD8A+Rn+ZyZruoiMwX7jE6JUyIP
-         KPfg1hkHP0ZaFb8y+ctbZ12q2h0tCJ2rS5Qp71gRZSMkKOS7pv85mguO3x1is4IYH4pA
-         TjNJaUwvRSmdw/NDG3nd431WlVjHK5ljQpa6DVHtF/4OxdKg7986DSLgLkZPMFCqdRXI
-         sIHw==
-X-Forwarded-Encrypted: i=1; AJvYcCWLgDNNSPS4pSy6fPUSKO/l4prDKOkuvPYf5g4R3XORl/Ma6dvFJlu6wWS+3XKZj+iZfG3LyPZm3bK/G83z@vger.kernel.org
-X-Gm-Message-State: AOJu0YzOCoaMpyI4sFbAzejgp1MQclsXh0WUn2NM59FrPL/koPSHuiw/
-	GV+f+gxvPqJqMvxBTOY/CK4VDUOH3FflPXddvONky9BQSs469q37BtQm
-X-Gm-Gg: ATEYQzzqIdQ2vF0wcwU6BTHmuyxROfq5/GJLPGZ0ZghaW1vbX/NXqEZ47rn87qxXiyb
-	H/823x9v1kD9wX/sE2xsOmXUTWBBHH6FTkw7Ry9XKaqzTx+vn5q6UttJFcfrjhsci4N0bT8VpTm
-	lAL5Q/op8Ajq979eoXZInr9YMS6rBCgOKth9XEt2+KZ5+XmWC7NerwpDiQP7cFlutrG1KNnaQqd
-	ck2uwL0CUwHB+tmUVsUbVagzbhCee2Wk/qELP5ifPX4SKFewvwb7wTwSu524dL0TflZFQn//BE3
-	1JgwZqsloqloQzNBHgn4r8enEdIHnUR3WsSRyBSZgwysOlZVFgRZ5WNuCvsmXSJLRflQPHDyb3o
-	VQTRiJV+zAgC6RmyONr4A6HMvcL/BKn/OFYKyjCQLElqipUXr3OpSdQhKxT5yG0sq60qlKUScGa
-	mZO1WI3RhnPXr5y+zSJayu66jrMNha+1qTg4Hy
-X-Received: by 2002:a05:622a:14cf:b0:502:9e4c:2670 with SMTP id d75a77b69052e-508db2ed117mr5799891cf.27.1772588724614;
-        Tue, 03 Mar 2026 17:45:24 -0800 (PST)
+        bh=9DWeZB8W9zANl0YuQ93YsT6OLla60nv7vNnJMueIOrk=;
+        b=N/+D4ARc06rDcuR+gx5k7nIM68om7A5iELgfD5sOOZj1UOe0i07jPznLtoAoUY38Uw
+         Mv083CMMmFbw0gIZy8TNEvBhMnUYVZSXfvT7pOsPRcwRu/56ibUDQ19BEB+aqH7CEbFz
+         9yoAwRz/tAr0vHsZzBMqmCY3p65yYymkZDiQFYFLHnjBvDoP9cBBYA7Nr5z0+aCTNp20
+         hC3POplhFr7zHud100XL1n/NYkX/x0/ASArUNTrgYtaFiMSEuXsH0N0lUChaQYWROME/
+         g4MY+1xW6MdENnqtoLccHDkK/lT+CqYQHKalgQmtGCENOQIL09sB1D4TMhL3MBiwlQpt
+         NpLQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVMa88aw1Y3VDG54cVz/mw0QrCf/MgY7JV7KS7kSROB8HhtEvw7oWAT54NOKdj8qkEd38Ta9gAR9+6T58cI@vger.kernel.org
+X-Gm-Message-State: AOJu0YzyOnuMVYfa49sv5ELQOVXjE2mFaCWXR21+CtJP5rWkBlXzV+E/
+	eex+LW9VWyJQAtZvVipov9BlPj1ijv8uU3NkRj5hcYmAmiy15rvXREqd
+X-Gm-Gg: ATEYQzwwEtC4VkuJlSrFOklw6uMok2at+Hm+U8OS2ApOCPkgmi9haH0GRXLK1CGL/kd
+	JidBZht6mqYkR26vM5607pciytrltMkiVI7mKooZqEbStZfktQjt5LXeDqppqtVk4f4DFUGOulK
+	G/+ycgoAHpX3k9btHGz15swiNkmTjzSh91rqM2ViUwDqCTPeK+Qcfyiy0dif5Ym7FMwYjKz4kFU
+	7KMnvc/pYKkRVf3ki4pBmsp85RxpQlz2FaELEZbA6VhwCqIVOZw4DoktY3OuxvaieL5d7WvUoCl
+	9m14pSazT0VzuUu8F11WBkNlhQRyQwhu675tLjP+Izfnu1Cm5O3LEkEP1UKBoUTFC3yNl2gTCnc
+	fv7adLZ9IXFW6E5vgGaL0+gKF7TsEgMJ3MewSba4KDS+fTfEzL2hCqAfGb06AkWbRFsxwu6q7tf
+	nnHMeCajqaxxZsoYND3/lCZcQFhA==
+X-Received: by 2002:a05:620a:170f:b0:8cb:b062:c2e5 with SMTP id af79cd13be357-8cd5af19e93mr57527185a.27.1772588736696;
+        Tue, 03 Mar 2026 17:45:36 -0800 (PST)
 Received: from localhost ([184.144.58.243])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-899c7374e07sm145443306d6.33.2026.03.03.17.45.23
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cbbf7161fcsm1501862885a.33.2026.03.03.17.45.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Mar 2026 17:45:24 -0800 (PST)
+        Tue, 03 Mar 2026 17:45:36 -0800 (PST)
 From: Richard Acayan <mailingradian@gmail.com>
 To: "Rafael J. Wysocki" <rafael@kernel.org>,
 	Daniel Lezcano <daniel.lezcano@kernel.org>,
@@ -92,9 +92,9 @@ To: "Rafael J. Wysocki" <rafael@kernel.org>,
 	linux-pm@vger.kernel.org,
 	devicetree@vger.kernel.org
 Cc: Richard Acayan <mailingradian@gmail.com>
-Subject: [PATCH v2 2/3] dt-bindings: thermal: lmh: Add SDM670 compatible
-Date: Tue,  3 Mar 2026 20:45:29 -0500
-Message-ID: <20260304014530.27775-3-mailingradian@gmail.com>
+Subject: [PATCH v2 3/3] arm64: dts: qcom: sdm670: add thermal zones and thermal devices
+Date: Tue,  3 Mar 2026 20:45:30 -0500
+Message-ID: <20260304014530.27775-4-mailingradian@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260304014530.27775-1-mailingradian@gmail.com>
 References: <20260304014530.27775-1-mailingradian@gmail.com>
@@ -105,7 +105,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 5DA8C1F9AAA
+X-Rspamd-Queue-Id: 72A7C1F9AB1
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [0.84 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
@@ -120,7 +120,7 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	HAS_LIST_UNSUB(-0.01)[];
 	FREEMAIL_FROM(0.00)[gmail.com];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95236-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-95237-lists,linux-arm-msm=lfdr.de];
 	RCPT_COUNT_TWELVE(0.00)[15];
 	MIME_TRACE(0.00)[0:+];
 	RECEIVED_HELO_LOCALHOST(0.00)[];
@@ -140,27 +140,577 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	FROM_HAS_DN(0.00)[]
 X-Rspamd-Action: no action
 
-Document the SDM670 LMh.
+Add thermal zones to safeguard from overheating to high temperatures,
+along with the thermal sensors (TSENS) and CPU frequency limits (LMh).
+The temperatures are very high, but should still be safeguard for
+devices that do not specify their own thermal zones.
 
 Signed-off-by: Richard Acayan <mailingradian@gmail.com>
 ---
- Documentation/devicetree/bindings/thermal/qcom-lmh.yaml | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm670.dtsi | 474 +++++++++++++++++++++++++++
+ 1 file changed, 474 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/thermal/qcom-lmh.yaml b/Documentation/devicetree/bindings/thermal/qcom-lmh.yaml
-index 1175bb358382..ce72347e29d1 100644
---- a/Documentation/devicetree/bindings/thermal/qcom-lmh.yaml
-+++ b/Documentation/devicetree/bindings/thermal/qcom-lmh.yaml
-@@ -22,6 +22,9 @@ properties:
-           - qcom,sc8180x-lmh
-           - qcom,sdm845-lmh
-           - qcom,sm8150-lmh
-+      - items:
-+          - const: qcom,sdm670-lmh
-+          - const: qcom,sdm845-lmh
-       - items:
-           - const: qcom,qcm2290-lmh
-           - const: qcom,sm8150-lmh
+diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
+index f115bc6e64f3..3a55b24ff93b 100644
+--- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
+@@ -20,6 +20,7 @@
+ #include <dt-bindings/phy/phy-qcom-qusb2.h>
+ #include <dt-bindings/power/qcom-rpmpd.h>
+ #include <dt-bindings/soc/qcom,rpmh-rsc.h>
++#include <dt-bindings/thermal/thermal.h>
+ 
+ / {
+ 	interrupt-parent = <&intc>;
+@@ -62,6 +63,7 @@ cpu0: cpu@0 {
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+ 			power-domains = <&cpu_pd0>;
+ 			power-domain-names = "psci";
++			#cooling-cells = <2>;
+ 			next-level-cache = <&l2_0>;
+ 			l2_0: l2-cache {
+ 				compatible = "cache";
+@@ -89,6 +91,7 @@ cpu1: cpu@100 {
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+ 			power-domains = <&cpu_pd1>;
+ 			power-domain-names = "psci";
++			#cooling-cells = <2>;
+ 			next-level-cache = <&l2_100>;
+ 			l2_100: l2-cache {
+ 				compatible = "cache";
+@@ -111,6 +114,7 @@ cpu2: cpu@200 {
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+ 			power-domains = <&cpu_pd2>;
+ 			power-domain-names = "psci";
++			#cooling-cells = <2>;
+ 			next-level-cache = <&l2_200>;
+ 			l2_200: l2-cache {
+ 				compatible = "cache";
+@@ -133,6 +137,7 @@ cpu3: cpu@300 {
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+ 			power-domains = <&cpu_pd3>;
+ 			power-domain-names = "psci";
++			#cooling-cells = <2>;
+ 			next-level-cache = <&l2_300>;
+ 			l2_300: l2-cache {
+ 				compatible = "cache";
+@@ -155,6 +160,7 @@ cpu4: cpu@400 {
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+ 			power-domains = <&cpu_pd4>;
+ 			power-domain-names = "psci";
++			#cooling-cells = <2>;
+ 			next-level-cache = <&l2_400>;
+ 			l2_400: l2-cache {
+ 				compatible = "cache";
+@@ -177,6 +183,7 @@ cpu5: cpu@500 {
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+ 			power-domains = <&cpu_pd5>;
+ 			power-domain-names = "psci";
++			#cooling-cells = <2>;
+ 			next-level-cache = <&l2_500>;
+ 			l2_500: l2-cache {
+ 				compatible = "cache";
+@@ -199,6 +206,7 @@ cpu6: cpu@600 {
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+ 			power-domains = <&cpu_pd6>;
+ 			power-domain-names = "psci";
++			#cooling-cells = <2>;
+ 			next-level-cache = <&l2_600>;
+ 			l2_600: l2-cache {
+ 				compatible = "cache";
+@@ -221,6 +229,7 @@ cpu7: cpu@700 {
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+ 			power-domains = <&cpu_pd7>;
+ 			power-domain-names = "psci";
++			#cooling-cells = <2>;
+ 			next-level-cache = <&l2_700>;
+ 			l2_700: l2-cache {
+ 				compatible = "cache";
+@@ -1408,6 +1417,8 @@ gpu: gpu@5000000 {
+ 			nvmem-cells = <&gpu_speed_bin>;
+ 			nvmem-cell-names = "speed_bin";
+ 
++			#cooling-cells = <2>;
++
+ 			status = "disabled";
+ 
+ 			gpu_zap_shader: zap-shader {
+@@ -2100,6 +2111,28 @@ dispcc: clock-controller@af00000 {
+ 			#power-domain-cells = <1>;
+ 		};
+ 
++		tsens0: thermal-sensor@c263000 {
++			compatible = "qcom,sdm670-tsens", "qcom,tsens-v2";
++			reg = <0 0x0c263000 0 0x1ff>,
++			      <0 0x0c222000 0 0x4>;
++			interrupts-extended = <&pdc 26 IRQ_TYPE_EDGE_RISING>,
++					      <&pdc 28 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "uplow", "critical";
++			#thermal-sensor-cells = <1>;
++			#qcom,sensors = <13>;
++		};
++
++		tsens1: thermal-sensor@c265000 {
++			compatible = "qcom,sdm670-tsens", "qcom,tsens-v2";
++			reg = <0 0x0c265000 0 0x1ff>,
++			      <0 0x0c223000 0 0x4>;
++			interrupts-extended = <&pdc 27 IRQ_TYPE_EDGE_RISING>,
++					      <&pdc 29 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "uplow", "critical";
++			#thermal-sensor-cells = <1>;
++			#qcom,sensors = <8>;
++		};
++
+ 		apps_smmu: iommu@15000000 {
+ 			compatible = "qcom,sdm670-smmu-500", "qcom,smmu-500", "arm,mmu-500";
+ 			reg = <0 0x15000000 0 0x80000>;
+@@ -2289,5 +2322,446 @@ cpufreq_hw: cpufreq@17d43000 {
+ 
+ 			#freq-domain-cells = <1>;
+ 		};
++
++		lmh_cluster1: lmh@17d70800 {
++			compatible = "qcom,sdm670-lmh", "qcom,sdm845-lmh";
++			reg = <0 0x17d70800 0 0x400>;
++			interrupts = <GIC_SPI 32 IRQ_TYPE_LEVEL_HIGH>;
++			cpus = <&cpu6>;
++			qcom,lmh-temp-arm-millicelsius = <65000>;
++			qcom,lmh-temp-low-millicelsius = <94500>;
++			qcom,lmh-temp-high-millicelsius = <95000>;
++			interrupt-controller;
++			#interrupt-cells = <1>;
++		};
++
++		lmh_cluster0: lmh@17d78800 {
++			compatible = "qcom,sdm670-lmh", "qcom,sdm845-lmh";
++			reg = <0 0x17d78800 0 0x400>;
++			interrupts = <GIC_SPI 33 IRQ_TYPE_LEVEL_HIGH>;
++			cpus = <&cpu0>;
++			qcom,lmh-temp-arm-millicelsius = <65000>;
++			qcom,lmh-temp-low-millicelsius = <94500>;
++			qcom,lmh-temp-high-millicelsius = <95000>;
++			interrupt-controller;
++			#interrupt-cells = <1>;
++		};
++	};
++
++	thermal-zones {
++		aoss0-thermal {
++			polling-delay-passive = <250>;
++			polling-delay = <1000>;
++
++			thermal-sensors = <&tsens0 0>;
++
++			trips {
++				aoss0_crit: trip-point0 {
++					temperature = <125000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu0-thermal {
++			polling-delay-passive = <250>;
++			polling-delay = <1000>;
++
++			thermal-sensors = <&tsens0 1>;
++
++			trips {
++				cpu0_alert0: trip-point0 {
++					temperature = <95000>;
++					hysteresis = <1000>;
++					type = "passive";
++				};
++
++				cpu0_crit: trip-point1 {
++					temperature = <125000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu1-thermal {
++			polling-delay-passive = <250>;
++			polling-delay = <1000>;
++
++			thermal-sensors = <&tsens0 2>;
++
++			trips {
++				cpu1_alert0: trip-point0 {
++					temperature = <95000>;
++					hysteresis = <1000>;
++					type = "passive";
++				};
++
++				cpu1_crit: trip-point1 {
++					temperature = <125000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu2-thermal {
++			polling-delay-passive = <250>;
++			polling-delay = <1000>;
++
++			thermal-sensors = <&tsens0 3>;
++
++			trips {
++				cpu2_alert0: trip-point0 {
++					temperature = <95000>;
++					hysteresis = <1000>;
++					type = "passive";
++				};
++
++				cpu2_crit: trip-point1 {
++					temperature = <125000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu3-thermal {
++			polling-delay-passive = <250>;
++			polling-delay = <1000>;
++
++			thermal-sensors = <&tsens0 4>;
++
++			trips {
++				cpu3_alert0: trip-point0 {
++					temperature = <95000>;
++					hysteresis = <1000>;
++					type = "passive";
++				};
++
++				cpu3_crit: trip-point1 {
++					temperature = <125000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cluster0-thermal {
++			polling-delay-passive = <250>;
++			polling-delay = <1000>;
++
++			thermal-sensors = <&tsens0 5>;
++
++			trips {
++				cluster0_alert0: trip-point0 {
++					temperature = <95000>;
++					hysteresis = <1000>;
++					type = "passive";
++				};
++
++				cluster0_crit: trip-point1 {
++					temperature = <125000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cluster1-thermal {
++			polling-delay-passive = <250>;
++			polling-delay = <1000>;
++
++			thermal-sensors = <&tsens0 6>;
++
++			trips {
++				cluster1_alert0: trip-point0 {
++					temperature = <95000>;
++					hysteresis = <1000>;
++					type = "passive";
++				};
++
++				cluster1_crit: trip-point1 {
++					temperature = <125000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu4-thermal {
++			polling-delay-passive = <250>;
++			polling-delay = <1000>;
++
++			thermal-sensors = <&tsens0 7>;
++
++			trips {
++				cpu4_alert0: trip-point0 {
++					temperature = <95000>;
++					hysteresis = <1000>;
++					type = "passive";
++				};
++
++				cpu4_crit: trip-point1 {
++					temperature = <125000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu5-thermal {
++			polling-delay-passive = <250>;
++			polling-delay = <1000>;
++
++			thermal-sensors = <&tsens0 8>;
++
++			trips {
++				cpu5_alert0: trip-point0 {
++					temperature = <95000>;
++					hysteresis = <1000>;
++					type = "passive";
++				};
++
++				cpu5_crit: trip-point1 {
++					temperature = <125000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu6-thermal {
++			polling-delay-passive = <250>;
++			polling-delay = <1000>;
++
++			thermal-sensors = <&tsens0 9>;
++
++			trips {
++				cpu6_alert0: trip-point0 {
++					temperature = <95000>;
++					hysteresis = <1000>;
++					type = "passive";
++				};
++
++				cpu6_crit: trip-point1 {
++					temperature = <125000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		cpu7-thermal {
++			polling-delay-passive = <250>;
++			polling-delay = <1000>;
++
++			thermal-sensors = <&tsens0 10>;
++
++			trips {
++				cpu7_alert0: trip-point0 {
++					temperature = <95000>;
++					hysteresis = <1000>;
++					type = "passive";
++				};
++
++				cpu7_crit: trip-point1 {
++					temperature = <125000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		gpu0-thermal {
++			polling-delay-passive = <250>;
++			polling-delay = <1000>;
++
++			thermal-sensors = <&tsens0 11>;
++
++			cooling-maps {
++				map0 {
++					trip = <&gpu0_alert0>;
++					cooling-device = <&gpu THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
++				};
++			};
++
++			trips {
++				gpu0_alert0: trip-point0 {
++					temperature = <95000>;
++					hysteresis = <1000>;
++					type = "passive";
++				};
++
++				gpu0_crit: trip-point1 {
++					temperature = <125000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		gpu1-thermal {
++			polling-delay-passive = <250>;
++			polling-delay = <1000>;
++
++			thermal-sensors = <&tsens0 12>;
++
++			cooling-maps {
++				map0 {
++					trip = <&gpu1_alert0>;
++					cooling-device = <&gpu THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
++				};
++			};
++
++			trips {
++				gpu1_alert0: trip-point0 {
++					temperature = <95000>;
++					hysteresis = <1000>;
++					type = "passive";
++				};
++
++				gpu1_crit: trip-point1 {
++					temperature = <125000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		aoss1-thermal {
++			polling-delay-passive = <250>;
++			polling-delay = <1000>;
++
++			thermal-sensors = <&tsens1 0>;
++
++			trips {
++				aoss1_crit: trip-point0 {
++					temperature = <125000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		q6-modem-thermal {
++			polling-delay-passive = <250>;
++			polling-delay = <1000>;
++
++			thermal-sensors = <&tsens1 1>;
++
++			trips {
++				q6_modem_crit: trip-point0 {
++					temperature = <125000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		mem-thermal {
++			polling-delay-passive = <250>;
++			polling-delay = <1000>;
++
++			thermal-sensors = <&tsens1 2>;
++
++			cooling-maps {
++				map0 {
++					trip = <&mem_alert0>;
++					cooling-device = <&cpu6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
++							 <&cpu7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
++				};
++			};
++
++			trips {
++				mem_alert0: trip-point0 {
++					temperature = <95000>;
++					hysteresis = <1000>;
++					type = "passive";
++				};
++
++				mem_crit: trip-point1 {
++					temperature = <125000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		wlan-thermal {
++			polling-delay-passive = <250>;
++			polling-delay = <1000>;
++
++			thermal-sensors = <&tsens1 3>;
++
++			trips {
++				wlan_crit: trip-point0 {
++					temperature = <125000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		q6-hvx-thermal {
++			polling-delay-passive = <250>;
++			polling-delay = <1000>;
++
++			thermal-sensors = <&tsens1 4>;
++
++			trips {
++				q6_hvx_crit: trip-point0 {
++					temperature = <125000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		camera-thermal {
++			polling-delay-passive = <250>;
++			polling-delay = <1000>;
++
++			thermal-sensors = <&tsens1 5>;
++
++			trips {
++				camera_crit: trip-point0 {
++					temperature = <125000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		video-thermal {
++			polling-delay-passive = <250>;
++			polling-delay = <1000>;
++
++			thermal-sensors = <&tsens1 6>;
++
++			trips {
++				video_crit: trip-point0 {
++					temperature = <125000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
++
++		modem-thermal {
++			polling-delay-passive = <250>;
++			polling-delay = <1000>;
++
++			thermal-sensors = <&tsens1 7>;
++
++			trips {
++				modem_crit: trip-point0 {
++					temperature = <125000>;
++					hysteresis = <1000>;
++					type = "critical";
++				};
++			};
++		};
+ 	};
+ };
 -- 
 2.53.0
 
