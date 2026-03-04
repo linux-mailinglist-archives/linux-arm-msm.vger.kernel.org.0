@@ -1,122 +1,200 @@
-Return-Path: <linux-arm-msm+bounces-95438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iNghN9iHqGn2vQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 20:28:24 +0100
+	id WGyEB8GOqGmzvgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 20:57:53 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4706020711B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 20:28:24 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B59962074C9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 20:57:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 795E13024155
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2026 19:27:23 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 1A40930217FC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2026 19:57:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D09B13DBD46;
-	Wed,  4 Mar 2026 19:27:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9BCF43D3CEA;
+	Wed,  4 Mar 2026 19:57:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RcmEx/Aq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OF4V1Ie2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB83A3D6CCA;
-	Wed,  4 Mar 2026 19:27:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2869B3D6CCB
+	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Mar 2026 19:57:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772652442; cv=none; b=nR8p1uZeIrBeu3dhAWngBOPUWhzr/nKp8rsY5n1IdAjTq9jZxc5rBMDe14/lgWcL4B8X+ocbML5WRab5u62ANR7O2UiuPpaq+ejNb9lJd8mwi6Op+kqzULlcDniewGa526BesT1hPY4QWYLsFyUbGd0n3resVEvhbESgiCjVOxQ=
+	t=1772654268; cv=none; b=u6jiMUBhdi+KlZudY+OkdcI/cXSHANIhlG6Xu/Seq7eJkOlwpTIAzVZkY1B+xp8tVmBoYuVrMYx6iGVsZkP2kUzdOvf2Cpp4N7m13PjIAJiK5KIXlOu8mJb0vkz8G8L8T5hCkXi0Rakg9+9DNWVcd+ChP/vPd6pHiDl1L+3n3Cs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772652442; c=relaxed/simple;
-	bh=ucmwUtQTpikcb1mLNt7L+nzR/8KKJlj+msH+B16mj9U=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=l0l2s2FipTbvCF6HCdNPuEuLvPEAfwERgQRV/ROucqyCUiAPGOVOHxatLk/fOlniK1/rky11hKTP6CZ2Ruy5d4jWe7AmKlMeR0kn6khZ1r131c4cJuPGo+bui/B3eY0/dj6cRZhpnBmJux8Lbhle81rfMw2xS19mNSDDJnIEhJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RcmEx/Aq; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1720AC2BC86;
-	Wed,  4 Mar 2026 19:27:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772652442;
-	bh=ucmwUtQTpikcb1mLNt7L+nzR/8KKJlj+msH+B16mj9U=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RcmEx/AqyLBL63emDAQt3vUGckEnd0GZ2lXq238tiNsOg4jWDmlaz31plbhXmV+Dx
-	 4VUVv8nWl+yUD+F80krjtfqdlGvoSwQtGKPEXOw6LGnm6bEnjE8pFtOqwAYrmarB6i
-	 +TeSM+iyI15IlLzNv7FjTSlfKw4X/TfXTNcuqBbkSLUW2Dg/7CzEBXAy/3UqkYK1k0
-	 9O57EtILp/Q43I90Rj0rQxI3PBsoaSi8KYTPSrDtOFii56XMx45cLsXPbOCPyfZXSn
-	 5M8VP+hPJe66abZBdGkOvk1obrUwp67t+voqovUlCqMImLfA/yn73JAiNd3duz3FXW
-	 hB422HFsqTjIg==
-From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Alexander Wilhelm <alexander.wilhelm@westermo.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-remoteproc@vger.kernel.org
-Subject: Re: [PATCH v2] remoteproc: sysmon: Correct subsys_name_len type in QMI request
-Date: Wed,  4 Mar 2026 13:27:05 -0600
-Message-ID: <177265242140.5575.13390917589462432936.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260220-qmi-encode-invalid-length-v2-1-5674be35ab29@oss.qualcomm.com>
-References: <20260220-qmi-encode-invalid-length-v2-1-5674be35ab29@oss.qualcomm.com>
+	s=arc-20240116; t=1772654268; c=relaxed/simple;
+	bh=BgdtRCrG+UT4Wjl3MNPFweAAAvfm5+xVSgZzPOCJs5M=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=mS0yRE3THUzkQXOTrXE58sWQf3mMSdWeaT0bY7tEPEYwenufLcjgD8PCTW2ul/eBM6/9ASvUO6CxGr5sWhF/HnAtyn+JwAyLUh80Mzmb4I1EK77xpnCq05iVsC3AivL7ijU9uDdC4Ie7MpMrp/uBpgsef/Nb9o+r++RxtURadhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OF4V1Ie2; arc=none smtp.client-ip=209.85.219.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-89a15b9a556so19835706d6.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2026 11:57:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772654265; x=1773259065; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=kZuBqMqdE2cR1Kb9L+99KXcjTlaXgNSs2txRlLKnKaA=;
+        b=OF4V1Ie2vaqPUvtWXOIagQfe3oQZchFCCIEXpik9fK0YwPOeg3Ao1cmYKy29tUZyXY
+         J3gOR4oHo0KJkWOkgRZ/Fl30twFijBZL8d4cVAPKZGZYkVY5dc+/S1VMoKaQqhS0rMPA
+         s/kR/Y9kAaYLSs5+S4rMJwZrwSzvjdSfZNUUQy5ml9HIkiCL84mGr7sMUlHjtu+1jUwJ
+         llxZzfAKu5wn+M2pFdyYz2qGYWPrPZ0usOpbVGk6p290G3sefmms858+0SSRIQ+3O4hg
+         WlQSEaB1GL/0uSX2gCVVvYyJFvnxIwuF1vNvMlmMTGqta6ZjN19kCe22YxAphT3uHTG6
+         lH0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772654265; x=1773259065;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kZuBqMqdE2cR1Kb9L+99KXcjTlaXgNSs2txRlLKnKaA=;
+        b=IAusPfp41Y6x4FASME4rIAaz+5VSwjcjAvZfTSzMlmkhmN+Zn7lvgB2KX/X6ECfGo+
+         oaDD/KthTRlhYpQFM4DLfemDnozHbHCrkUb44T/ysJEqpGltLLlvD58a57S/YiW0S/B9
+         HhxlvZUocyXEbs+dzsM7IMONvufuPklSVceVaucEiKLZSlnsGLuCuW2ovHgr4BAmFQ4y
+         0Qh6ND0fBWqc39I9dG3LE/87p/DqLWZ1wHQp1AGOq1rekPTtG1QvV9VirM2hsCDhBkd4
+         VlkEhj+7Ba0ulDi2AE3KLG7TdDzKY7tc4LW+ZTVLJjbsAlFnbf3vEeEF2EmjPhuBSy2K
+         RQTQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWQyDR3t198/wsH4czVJisVTaUF4jgy4vp26ccSbzvM5hR87fu74WVTAgUsUIzcnvwu+F1k437TQNRj75an@vger.kernel.org
+X-Gm-Message-State: AOJu0YyoFsQMBZB91k1Udcgac6xKHzIsQy6I0dd4gadD5F3VSFxW6kCN
+	2a1g2pB0EvSI8sm6EcDJ5/mqJfJ5WkSTvZozvd/ohvGNcLM3W6h5SVXE
+X-Gm-Gg: ATEYQzzi4KhcMzBLrnger6diQKQzb/0RwfG5iFLeD3NhWFkVISe+2BHvN8dTIstms+V
+	ngRldDCdP5CSJYPzZly1JQHP8UwgX86nwiwozS/B6PMxuyhAKP6rT+RcwnuO84ohqXEQfeRjKQJ
+	wP8B7vj5xEtWFG5CAl7MgeIyHXQAaM9sLS9WJtwREm3/fCsgFCWb+tXMjL03zm5wtBurfTl9pn3
+	eT7CCLb0vIfYVp6JvxPzn8AhW+2b9tWKc4WR3TrnAj0JarV1TrFnDnbRvmDiKZT6yiaSmcryUIE
+	bLGjKECJjuDXJF2Pz6gAwqCUu+yGl7zwItCSNr9mzXpMe19FqvnZOJvhZ/OM9egvbgsFt6xDqLU
+	WMOlo3AClFMII/VBq10fFYPtn+DSqprV3lTfSf7Ik3ZDw3urAOcwVFWFhqwX/d80iPQEur8ErGO
+	dzSwE8+AAHRfPuBKC5JSOb6OS1mESrjk5SShXa
+X-Received: by 2002:a05:6214:21c2:b0:899:f8c4:5c with SMTP id 6a1803df08f44-89a199acacfmr47559586d6.22.1772654265116;
+        Wed, 04 Mar 2026 11:57:45 -0800 (PST)
+Received: from localhost ([184.144.58.243])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-899fc21676fsm76028846d6.22.2026.03.04.11.57.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Mar 2026 11:57:44 -0800 (PST)
+From: Richard Acayan <mailingradian@gmail.com>
+To: Srinivas Kandagatla <srini@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-sound@vger.kernel.org,
+	devicetree@vger.kernel.org
+Cc: Nickolay Goppen <setotau@mainlining.org>,
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Johan Hovold <johan@kernel.org>,
+	Kees Cook <kees@kernel.org>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Richard Acayan <mailingradian@gmail.com>
+Subject: [PATCH v2 00/11] SDM660 sound card and internal MI2S support
+Date: Wed,  4 Mar 2026 14:58:04 -0500
+Message-ID: <20260304195815.52347-1-mailingradian@gmail.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 4706020711B
+X-Rspamd-Queue-Id: B59962074C9
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [0.84 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-95438-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-95439-lists,linux-arm-msm=lfdr.de];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	FREEMAIL_TO(0.00)[kernel.org,gmail.com,perex.cz,suse.com,vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[20];
 	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[mainlining.org,quicinc.com,linuxfoundation.org,kernel.org,opensource.cirrus.com,renesas.com,gmail.com];
+	DKIM_TRACE(0.00)[gmail.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mailingradian@gmail.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[8];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
+This adds support for the SDM660 (formerly "SDM660 internal") sound
+card and support for WCD codecs over internal MI2S.
 
-On Fri, 20 Feb 2026 15:11:48 -0600, Bjorn Andersson wrote:
-> The QMI message encoder has up until recently read a single byte (as
-> elem_size == 1), but with the introduction of big endian support it's
-> become apparent that this field is expected to be a full u32 -
-> regardless of the size of the length in the encoded message (which is
-> what elem_size specifies).
-> 
-> The result is that the encoder now reads past the length byte and
-> rejects the unreasonably large length formed when including the
-> following 3 bytes from the subsys_name array.
-> 
-> [...]
+Like on MSM8916 and MSM8953, some SDM660 and SDM670 devices connect to a
+digital and analog codec. The connection to the digital codec is through
+special "internal" MI2S ports. The digital and analog codecs are used on
+the Xiaomi Redmi Note 7 for headset (playback + capture) and earpiece,
+and also on the Google Pixel 3a for the headset.
 
-Applied, thanks!
+This series does not include devicetree patches.
 
-[1/1] remoteproc: sysmon: Correct subsys_name_len type in QMI request
-      commit: da994db94e60f9a9411108ddf4d1836147ad4c9c
+Changes since v1 (https://lore.kernel.org/r/20260211020302.2674-1-mailingradian@gmail.com):
+- rename sound card to drop "internal" (1/11, 10/11)
+- use common headphone jack code (9/11, 10/11)
+- remove no-op code in sound card driver (10/11)
+- remove inaccurate comment about clock consumer/producer (10/11)
+- add review tags (3/11, 4/11)
 
-Best regards,
+Nickolay Goppen (1):
+  ASoC: dt-bindings: qcom,sm8250: add compatible for sdm660
+
+Richard Acayan (10):
+  ASoC: dt-bindings: qcom: q6dsp: add internal mi2s support
+  ASoC: dt-bindings: pm8916-analog-codec: Add PM660L compatible
+  ASoC: dt-bindings: msm8916-digital-codec: Add SDM660 compatible
+  ASoC: qdsp6: q6dsp-lpass-ports: add internal mi2s support
+  ASoC: qdsp6: q6afe: add internal mi2s support
+  ASoC: qdsp6: q6afe-dai: add internal mi2s support
+  ASoC: qdsp6: q6routing: add internal mi2s support
+  ASoC: qdsp6: common: support headphone jacks connected to internal
+    mi2s
+  ASoC: qcom: add sdm660 sound card support
+  ASoC: msm8916-wcd-analog: add quirk for cajon 2.0
+
+ .../sound/qcom,msm8916-wcd-digital-codec.yaml |   8 +-
+ .../sound/qcom,pm8916-wcd-analog-codec.yaml   |   8 +-
+ .../sound/qcom,q6dsp-lpass-ports.yaml         |   5 +-
+ .../bindings/sound/qcom,sm8250.yaml           |   1 +
+ .../sound/qcom,q6dsp-lpass-ports.h            |  14 ++
+ sound/soc/codecs/msm8916-wcd-analog.c         |  63 +++++-
+ sound/soc/qcom/Kconfig                        |  12 ++
+ sound/soc/qcom/Makefile                       |   2 +
+ sound/soc/qcom/common.c                       |   1 +
+ sound/soc/qcom/qdsp6/q6afe-dai.c              |  46 ++++
+ sound/soc/qcom/qdsp6/q6afe.c                  |  56 +++++
+ sound/soc/qcom/qdsp6/q6afe.h                  |   2 +-
+ sound/soc/qcom/qdsp6/q6dsp-lpass-ports.c      | 200 ++++++++++++++++++
+ sound/soc/qcom/qdsp6/q6routing.c              |  78 ++++++-
+ sound/soc/qcom/sdm660.c                       | 192 +++++++++++++++++
+ 15 files changed, 681 insertions(+), 7 deletions(-)
+ create mode 100644 sound/soc/qcom/sdm660.c
+
 -- 
-Bjorn Andersson <andersson@kernel.org>
+2.53.0
+
 
