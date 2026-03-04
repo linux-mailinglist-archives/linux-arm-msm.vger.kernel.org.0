@@ -1,371 +1,400 @@
-Return-Path: <linux-arm-msm+bounces-95467-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95468-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cHwzDRvFqGlaxAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95467-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 00:49:47 +0100
+	id sM9SN8DEqGlaxAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95468-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 00:48:16 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 896BE209230
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 00:49:46 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 728512091E2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 00:48:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 5D591300B9E3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2026 23:47:23 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 9FA373047DE7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2026 23:48:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C034836D9FB;
-	Wed,  4 Mar 2026 23:47:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF88C383C8F;
+	Wed,  4 Mar 2026 23:48:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="NmZ5wYzw";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="DJBCMKNf"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="aVdHPngs";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="OYXXn9NQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6410E264A65
-	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Mar 2026 23:47:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1136221D89
+	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Mar 2026 23:48:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772668042; cv=none; b=jxVfIGnVqxrX2Iox6HUEQiN5d663TjIaRDmu3dAhHAXMtt4yVSniixCtmEk0UFJHoJB1CRuSrgf2JDq+84kmmTK4VkVUbxOvxZqHgu5LzTUjCBI/COBaOn2fkKwT/ovMEQUZbcV7gebhNd4AWIUFhNYVnaoOINVXuBzU10GjdQ4=
+	t=1772668092; cv=none; b=JYLiGQ9wQsQ+zTth9MRaZtDiGwbJc/KBVdLf/JZ/m2iSem52ZZHqsQ1Ta1zR9Z6RCYjxaNSy9mIeBIR+hwqKRRa+zqdLwRhRBJjstzBkAxfeOkhzTQ8YS5ePtNWBWVHoalPzaXABRyGglcbK4LkJI+7KUQ+1FTHcEVOVexRIyzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772668042; c=relaxed/simple;
-	bh=EddD0jK9xDGmaxIRtN9XorQUDW4OMYW5Z1114ll89LM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=ck/YlbLNNcqAb3rNvC7qsmkhzY3vg56RyEMUURs3WsNNc0eChdDy282F3Dcawal6ocY2h/8RDkooEAc9Ltxa6LKxrbuSS0C4l6i5p+odQjf51dDOqKRjPACRxG5gbuWT+MFE+w7KOkMy8jlqDyk8cLfdO9PpCFHKnyYftFi8Oz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=NmZ5wYzw; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=DJBCMKNf; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1772668092; c=relaxed/simple;
+	bh=iDgzPdTfY/YmV2gOcRHkK0iaClE0CXMdo2FdxhnA42g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HbibfVNSajVzmrWhrLo2RrTinDRhDLQQB9FGNNQs8gzZMAh2ZXlyog0ASw42m+VKJdurnxKhU8efl9XM/14I7TxpqSNEMskDyhkzmkOYVO9flpN7nWWIo4f/an4aEOytSRoPscseEs9b/7QwwZyJfO/Hl4G+/sWrPWP08aOdvz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=aVdHPngs; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=OYXXn9NQ; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 624ILafr1213714
-	for <linux-arm-msm@vger.kernel.org>; Wed, 4 Mar 2026 23:47:19 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 624HHnTX2612150
+	for <linux-arm-msm@vger.kernel.org>; Wed, 4 Mar 2026 23:48:10 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=dRQ8uRt4/P5Xnnec5FFe6n
-	/FfmAB6R9vICbGidBFlm4=; b=NmZ5wYzwIxyOrtsZ8up/X6ZzXE6q0Brt136GTa
-	1y0Fqr2l+ua/4vUaey6GoRyQrEq07cAO6SaHFVorUs4rRIEHU4UtvOEbRNzzht1c
-	WjgOZNNArEDS3Ye9CB3EWTYnF3ocgwyn1HebqJ+zYvYgrClaLbYzX3r1NB40/aN6
-	9mJjBs+69oII0uiB5NZ9q55vKj2TLwXBHuXJmQQ4j10o8q0V3fBnjFtYbayf+EEf
-	TQ7rf2KE3gI+OHi6ToOXtaPVF8LKjJv+IxI/7P4HriyjsbbK7/3uq2vqrNo94Ytj
-	6YC047SoyUMkPv1+krLW4n4R6dTdd3O5aWjcWLbIpGLrkMJw==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cpjh5td66-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	UJZs6BbEFPW8OUhQ3kN9LgfRkepS1RZtU3P9VDciA7k=; b=aVdHPngsjbyqgrIW
+	m0MJv9aGvPSOv7JHKGUvwROWy47iUsBdiQmtf8e0Vc2Bz3qNf7NAxjbYrjpXQhaX
+	EKCyjBQQVy3MK7f/jU4u0nknS/GaC6/sGyDa+XlKtdvBgiyRJ0lbzrrfNrkVMuBh
+	f3euURbkqHuLnHx12azkHWv8cwQiOUvW0nubrOJYqPhT8oL5TQ+VQUCQ34e+5xE5
+	9M3r3YAGA6/v6aUxLAxzIZ37vMVDkG7+r5SY5xMSNg+q9Wppsol1jYxs64OOMeaL
+	dhQKmoQFsQ/I5gNQKL8MQ2Os574Lbh57rptn8P8Aj4ezUttSie6dKLNuheXOOduW
+	hmaQuQ==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cps0w91em-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2026 23:47:19 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8cbb8040f48so5041133285a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2026 15:47:19 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2026 23:48:10 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-8cb37db8b79so5399756985a.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2026 15:48:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1772668038; x=1773272838; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=dRQ8uRt4/P5Xnnec5FFe6n/FfmAB6R9vICbGidBFlm4=;
-        b=DJBCMKNfMPySMGnqZZg/6+sEjUCpimyQoeaxoGaTHoMpzjYxmKUdpXYPVW47gOaJqD
-         7ltejH6un6JlYQPceHDS0k2Uujyhvob98xWJIr4ROsQI53OSxARbrGyT5uZFxDWoiX1M
-         HOhnKSggQUyYeXAT+7VYzNKZ/uNs+tgU4ykYTKw236TDxvle8pa7SeO13d0E/ETvC5eT
-         hUv5pGezp7IjL8YtFlUQJEmiI89FfyPdnmJg27i3wxVpxGuD8Z6tkHc0n99lmMtSaHcF
-         zpAu3byC9q0t7fZr0NxwADX0BWGlENwCPA6iOvoOxmXEz8yb9r5ROe2ZDrDWPFvejIzQ
-         Il4w==
+        d=oss.qualcomm.com; s=google; t=1772668089; x=1773272889; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=UJZs6BbEFPW8OUhQ3kN9LgfRkepS1RZtU3P9VDciA7k=;
+        b=OYXXn9NQfPbFs9LCIRigC7kTS2I17H90sUu63cZCYTj36gi2b1JuyDgQsIc6bLIVRx
+         WrQewGlTlkA14HfsCiBPXZjufZWdwgbpMoE19cJfJ3M2cO6+JbpeionWlstuuq4YzBLt
+         ThQ7iUjbAUVNJ+1rREcgb5Lc6r3CMim794QSXaqONEyAjijqYoUDT6tWdGxjg38cRCM5
+         Jkd4pKHQ1YL3O3GjtsubC6jgf02Fo2Um86lcrO2KK5e6nJHFw4N7VqBLWllkbHUY5GPY
+         3o1ZWluBuivpzjPNfxtVrokLGLtzrT1lgl6JJOBfQZ5yJOB97minWnARbpAT/f2T/NJv
+         6bBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772668038; x=1773272838;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dRQ8uRt4/P5Xnnec5FFe6n/FfmAB6R9vICbGidBFlm4=;
-        b=OChnMSnNG0kdq9Ao+gerZUl2+RzwL3dzSDnn2wuqXotDqAUGQVMRagnLSKIBD8w5Gl
-         KX3uXBN+rzMdSAEZI4WXwSVA+E4QuFn19sBohY/tc2XgvUyYDnBCGJqtKHTb07A8u3AG
-         gImOkCfiI5WNEFVCArNSg/t+uCMLX/yyUqSiCjLnrBgVheiHEpQi6JYv9HMetpj9pD0y
-         83EoTlByJOjs5CWCNE9jcYMItUqUioAEYDAa5QO73HiKHsbX/rebCMVuOVXOFQ2ptGW6
-         VV9wj4lpUODI6VWPyJwgbYIaAL9pP8vqRTBO/DlS/STIFElcXHLhcO1O0Xwg3XesFG9T
-         r3FA==
-X-Gm-Message-State: AOJu0YwXQ4u4SwfvQSJTxXjce0SpX1dhXy73ehPi0xVd5VRTzKxPPqw9
-	7stYiIctFSD4wZKV63xeyj8w3J4bKkZo4/pUTcOH9OF0Fy5yWSb1dpnVrNvktzDgR0LMvBzTFsr
-	4BP7F6xWBZd0wjAwyLIgLFPR5zZOVyjx5XJsYVHkIIqCDbjUEfWNllId681jMZG5fOft0
-X-Gm-Gg: ATEYQzzzX3jjKDMbaV2BJXSxMJC6HtI2yXYG9h7ZQj4aR9aEz2FGLcqeVEUWVgMHP0r
-	ILGuA6NzuzOTKrmgdtauEuqtxhgSu47Fmvm96XCPoy87t/k8zmqDh1YqdZiO1THsEPrcMSqcbGC
-	Z3R/g8u6fGA2FG1gRn7g0GwEBcasXReMN11EI67oc09RhJ5uHFO3OlCumpBmVEnrlAuzZ3XjBaR
-	x/YwxjLUS2QqEQdIRHMhxw9HhoqC73amYUOfxuzJtj5OoEgNsfhTjXk4qYij5cZNC2Z/7W2z967
-	bADM4u2X5qr4FFhSN6Jxh6SdJWpTCaHGroPMzoKw1PojRXz6ziwzK9MTIJ3H6iRLLXE00TZaTAo
-	5RN/DXeFx5wBrYAcJFTGBV39gpKTzs+fpg38g3TzJNm6KQUe955Nio/tCOPwJTmmvAzBO3pxIHq
-	plRS138w5EpSIDPGt9P3IegGAtj0RBVhzkehw=
-X-Received: by 2002:a05:620a:470c:b0:8c9:f9c2:118e with SMTP id af79cd13be357-8cd5af1bd5fmr444192585a.32.1772668038450;
-        Wed, 04 Mar 2026 15:47:18 -0800 (PST)
-X-Received: by 2002:a05:620a:470c:b0:8c9:f9c2:118e with SMTP id af79cd13be357-8cd5af1bd5fmr444189185a.32.1772668037874;
-        Wed, 04 Mar 2026 15:47:17 -0800 (PST)
+        d=1e100.net; s=20230601; t=1772668089; x=1773272889;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UJZs6BbEFPW8OUhQ3kN9LgfRkepS1RZtU3P9VDciA7k=;
+        b=I6M6K8K7G4Nvvm5oqwbXNKamwZiuYUVpe6EJnwNZ7N4zPXgo/i2+2AzK67hQ4YaHCp
+         g8/FDI4kZxfd743WrYb5yAJlZ4QIA1XefoofW/h1B1cNgx5+sM+lDo/fTsc+H8TnmFIP
+         wISe/zuNfxqBOg8n2Ge28jHZF4SVo9qIQp6Xj5HzqMG7pbUE81WPfmFnbF58KBfm2J3b
+         ypxeluz9um3UFxe3wl3K7U5oppk6g6FSQVv40L43okYggYcvX9X8RNltzoo7NCclW0TX
+         xfPRgqF7atm8o1Kya1yfyZXmQ4OkRh3gA3zd+i82MoK+6k8nFZsjlsPWYUdeQL6TnLPj
+         KXDw==
+X-Forwarded-Encrypted: i=1; AJvYcCVuqRBzX8l6Vj9UCB10r0bt8j90hQ5HjOIaKqHzmRwXHk6U1wTOFmLfj4jbCJhUlSlNvL725ScOhppc3gRB@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz2Xk4R4fg3qtHNtu8QNvFB1K+sNzL0OCoRwJ6Y9+6yFo4371Ai
+	/Bm6X+DxUegXE52sYkc/DYo4NhqZjHEL3azaqqFQMMc2QnM8+guRNQ8qIKvqET51aLxOgccaunG
+	9Ry3/2Q2RP8dJAbK2T1eMQpf0AlOQFWUW7yqKQtf7lRSsRpfySURdTnhRsOE6fBL08Sfo
+X-Gm-Gg: ATEYQzzA9HbQm3fYD3bh9E0jzw+hGBtpkzlQhUKSgTksDQfYXzomFfzNZe2ZTABBS50
+	0UCqcjD0Z9nRycEEhml91SAXL9dIsVe/XGeh+GgCIWhL8IqDvmnJKe9MXkH7D4EsaYztJFGXZqw
+	BlJhf/cTUWxl72/5u3M7S3eJfKLoxyH5n5YKFop5f5yQFCWw0v+SGAz8kyTFXg3JbGoFivI8H63
+	Sk+9SCyI6XitqIOa6Lb+hIqAd1BPYrAiIsLfyF3r6f63l7ywrvh/T835LtJert6JaaMMQENd7q3
+	vdx7QES4jslWToydnO1pOO6T8km3Xkm8CgPToUj1z/ICph2Cy6om4AxlTFJ7jlMPzUtOZany7n6
+	Qr8vwy+BV02+ZLXfBbGhnzGOgGeuSubdablIuS8Qxnz7gCIkXrI8scidocJnpVqYE0Yt7ZOC12e
+	bw0jhpKtEB78Us7N3YCjXte/YpeFqwk1v3sV0=
+X-Received: by 2002:a05:620a:460b:b0:8cb:7b27:9336 with SMTP id af79cd13be357-8cd5aedbea3mr527939885a.5.1772668088894;
+        Wed, 04 Mar 2026 15:48:08 -0800 (PST)
+X-Received: by 2002:a05:620a:460b:b0:8cb:7b27:9336 with SMTP id af79cd13be357-8cd5aedbea3mr527933085a.5.1772668088325;
+        Wed, 04 Mar 2026 15:48:08 -0800 (PST)
 Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a12d8162ccsm574403e87.77.2026.03.04.15.47.13
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a12357fa9dsm1597108e87.33.2026.03.04.15.48.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Mar 2026 15:47:15 -0800 (PST)
+        Wed, 04 Mar 2026 15:48:07 -0800 (PST)
+Date: Thu, 5 Mar 2026 01:48:04 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Thu, 05 Mar 2026 01:47:12 +0200
-Subject: [PATCH] dt-bindings: display/msm: move DSI PHY bindings to phy/
- subdir
+To: Vijayanand Jitta <vijayanand.jitta@oss.qualcomm.com>
+Cc: Marc Zyngier <maz@kernel.org>, Nipun Gupta <nipun.gupta@amd.com>,
+        Nikhil Agarwal <nikhil.agarwal@amd.com>,
+        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Thomas Gleixner <tglx@kernel.org>, Rob Herring <robh@kernel.org>,
+        Saravana Kannan <saravanak@kernel.org>,
+        Richard Zhu <hongxing.zhu@nxp.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>, Frank Li <Frank.Li@nxp.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>, Juergen Gross <jgross@suse.com>,
+        Stefano Stabellini <sstabellini@kernel.org>,
+        Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Prakash Gupta <prakash.gupta@oss.qualcomm.com>,
+        Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+        linux-kernel@vger.kernel.org, iommu@lists.linux.dev,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-pci@vger.kernel.org, imx@lists.linux.dev,
+        xen-devel@lists.xenproject.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v9 1/3] of: Add convenience wrappers for of_map_id()
+Message-ID: <iuy4mdv4hr7qdem2zm3yg5eostdhlcta6tifqasyov3ag26yje@huragoeossqf>
+References: <20260301-parse_iommu_cells-v9-0-4d1bceecc5e1@oss.qualcomm.com>
+ <20260301-parse_iommu_cells-v9-1-4d1bceecc5e1@oss.qualcomm.com>
+ <86342janlx.wl-maz@kernel.org>
+ <d3687764-024d-4dbc-9342-8edc9b4f1fdd@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260305-msm-dsi-phy-v1-1-0a99ac665995@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAH/EqGkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDYwNT3dziXN2U4kzdgoxKXUuzJAMz4+TkVPMkUyWgjoKi1LTMCrBp0bG
- 1tQCPGzCUXQAAAA==
-X-Change-ID: 20260305-msm-dsi-phy-96b063cce7b5
-To: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Jonathan Marek <jonathan@marek.ca>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7200;
- i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
- bh=EddD0jK9xDGmaxIRtN9XorQUDW4OMYW5Z1114ll89LM=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBpqMSBChCi8G8GUO04pbQErRlAh/8sb6jvD6jiI
- LEO6ahwb12JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaajEgQAKCRCLPIo+Aiko
- 1fUAB/9ffjvy59SgM3ObKkc1S99icLVUP31lNo757yTgpK6Z0w4BfohkBt1Dht0nWd6M2pr3a6a
- k34ZnoYhn9o+nKDORGFM4IqhzBn7yw6kGXbKTnj/ook+/69HT8QIqaTqku72NC/8kHR7p2bHsDp
- gqL4GH+230D7nh4bqjhKd2u1lN/9p8qFmi40jTMjj+JDFvIv4TMkqfW6XfJWRSz5c/qhmDC8BK/
- NxBYdCFp7QkP0Nd4wnHw/Nz5UhrnUMApGAOV6gaM3cXH6RWIARkWZ/epmRmVqbBMX+vS/TyiVRe
- AfSAYvZBXNcilPlHJzzSTEawqTFPMBDqVQf/h7Uo9M0s/csq
-X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
-X-Proofpoint-GUID: SxTkl1EoSeJqIEbH78z7JUX_0yRx_r1Y
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA0MDE5NSBTYWx0ZWRfX2Q3GwyUvEtqV
- ZiWTER8erfUIZnlP++w5kO2jgyvSzoWIIiowL8Gct2Eub0kSfhaDO2pyQNWHIQPgswg4gNdXB37
- 4HMiV7jn2/qCQtgCEl5hxuU9izhi6SmacsazaHknnKH89lvuABJJiP1tkk/O8n+Ko5NagtbiQtO
- ClnaL13OAtSKqVKOdc8eaBPgKyKg6Q7WMw/NDlcMpNJmEZy+kj3b09jp3iayqEkSAdYOPC6JU4z
- TYEB06aeH5UEOi6LnY/qfzoFSfoZRqfHD4LaQQZ9wWrTAAbVv74a6oIta80iqEThKwaKrGvzRTJ
- LEE+j1vaBoS0Ep1RZX/sOrQL5jwyjs1h2F5n3pk2RDiF6HNU2yy7EMjgzd5uxCTtyZPzn2MPahW
- +lYziZcid1z78rtIxzy5Q8x5Hfja/egjmXdDiC2Bx3h/FeVVn+s/v3I9sO67QGyYNWmrWfI8ZDN
- iIx4zTHDD+CQZKhXrfA==
-X-Authority-Analysis: v=2.4 cv=JK82csKb c=1 sm=1 tr=0 ts=69a8c487 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <d3687764-024d-4dbc-9342-8edc9b4f1fdd@oss.qualcomm.com>
+X-Proofpoint-GUID: _hzdhSG00pzJ26hZQ94r2Si7seg6RFLN
+X-Authority-Analysis: v=2.4 cv=BNK+bVQG c=1 sm=1 tr=0 ts=69a8c4ba cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
  a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=gEfo2CItAAAA:8
- a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8 a=RAbU-raeAAAA:8 a=wepcCMuCHaKBKvurWtMA:9
- a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22 a=sptkURWiP4Gy88Gu7hUp:22
- a=TjNXssC_j7lpFel5tvFf:22 a=JiizpSU_mAIq9zsZDqn2:22
-X-Proofpoint-ORIG-GUID: SxTkl1EoSeJqIEbH78z7JUX_0yRx_r1Y
+ a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=EUspDBNiAAAA:8
+ a=7CQSdrXTAAAA:8 a=VwQbUJbxAAAA:8 a=8AirrxEcAAAA:8 a=srtYxZOELw0pIWJIyL0A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
+ a=a-qgeE7W1pNrGK8U0ZQC:22 a=ST-jHhOKWsTCqRlWije3:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA0MDE5NiBTYWx0ZWRfX+0a/L9o5qFMI
+ llUnzvLmTUeM5u3z0Bs9XlI2NY1wSB2I3/Ts+laNlrCMC+4Vafb5Us7caCA75lrCTcz2GIBUbBX
+ BfpYJsAYY3OWjP6pd7ncLp1T7lwkNlaeClt1NYqnGWREGkV0Pcg8YzBSJGaWnF8HQC4GvoZEVuI
+ ggpN1EbCPsY0lBnkxmBs7LgBuK2xT8fd6OH8aEXjk/4A3xQvLLDKd1lbCAK8HLb/v3WsBslH0I0
+ gomYNTNOh1xXvQ3k/FdsBNeoV1tsC7b7D3YE4YFRq5s/9BzfZPOtBDP/VxoGLUxO0V/bkbqtWTh
+ +LGDCnCwLgJQLvvquIwSxeX41aXyzGMUkNnvDa9O22l4AVzCz2xAB0hhRlTZWHPo8TMQMb6pEWq
+ 4lgBROpB3/RFP/xoihS4hXKSvVZ3BVv0PUuMpNRJi9Jx/X92wsy+cbHX0PPuoeJ/8NFnkyC11+i
+ +9qXDJHt6Ehj7T8W1GQ==
+X-Proofpoint-ORIG-GUID: _hzdhSG00pzJ26hZQ94r2Si7seg6RFLN
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-04_08,2026-03-04_01,2025-10-01_01
+ definitions=2026-03-04_09,2026-03-04_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 impostorscore=0 priorityscore=1501 malwarescore=0
- clxscore=1015 bulkscore=0 suspectscore=0 lowpriorityscore=0 adultscore=0
+ phishscore=0 malwarescore=0 spamscore=0 clxscore=1015 impostorscore=0
+ adultscore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603040195
-X-Rspamd-Queue-Id: 896BE209230
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603040196
+X-Rspamd-Queue-Id: 728512091E2
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-95467-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[devicetree.org:url,quicinc.com:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:dkim,qualcomm.com:email,marek.ca:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch,linux.intel.com,suse.de,linaro.org,quicinc.com,marek.ca];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[24];
+	TAGGED_FROM(0.00)[bounces-95468-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[37];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TO_DN_SOME(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_CC(0.00)[kernel.org,amd.com,8bytes.org,arm.com,nxp.com,pengutronix.de,google.com,gmail.com,suse.com,epam.com,oss.qualcomm.com,vger.kernel.org,lists.linux.dev,lists.infradead.org,lists.xenproject.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim];
+	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Action: no action
 
-Historically DSI PHY bindings landed to the display/msm subdir, however
-they describe PHYs and as such they should be in the phy/ subdir.
-Follow the example of other Qualcomm display-related PHYs (HDMI, eDP)
-and move bindings for the Qualcomm DSI PHYs to the correct subdir.
+On Wed, Mar 04, 2026 at 03:02:14PM +0530, Vijayanand Jitta wrote:
+> 
+> 
+> On 3/1/2026 3:16 PM, Marc Zyngier wrote:
+> > On Sun, 01 Mar 2026 08:34:19 +0000,
+> > Vijayanand Jitta <vijayanand.jitta@oss.qualcomm.com> wrote:
+> >>
+> >> From: Robin Murphy <robin.murphy@arm.com>
+> >>
+> >> Since we now have quite a few users parsing "iommu-map" and "msi-map"
+> >> properties, give them some wrappers to conveniently encapsulate the
+> >> appropriate sets of property names. This will also make it easier to
+> >> then change of_map_id() to correctly account for specifier cells.
+> >>
+> >> Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+> >> Reviewed-by: Frank Li <Frank.Li@nxp.com>
+> >> Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+> >> Signed-off-by: Vijayanand Jitta <vijayanand.jitta@oss.qualcomm.com>
+> >> ---
+> >>  drivers/cdx/cdx_msi.c                    |  3 +--
+> >>  drivers/iommu/of_iommu.c                 |  4 +---
+> >>  drivers/irqchip/irq-gic-its-msi-parent.c |  2 +-
+> >>  drivers/of/irq.c                         |  3 +--
+> >>  drivers/pci/controller/dwc/pci-imx6.c    |  6 ++----
+> >>  drivers/pci/controller/pcie-apple.c      |  3 +--
+> >>  drivers/xen/grant-dma-ops.c              |  3 +--
+> >>  include/linux/of.h                       | 14 ++++++++++++++
+> >>  8 files changed, 22 insertions(+), 16 deletions(-)
+> >>
+> >> diff --git a/drivers/cdx/cdx_msi.c b/drivers/cdx/cdx_msi.c
+> >> index 91b95422b263..63b3544ec997 100644
+> >> --- a/drivers/cdx/cdx_msi.c
+> >> +++ b/drivers/cdx/cdx_msi.c
+> >> @@ -128,8 +128,7 @@ static int cdx_msi_prepare(struct irq_domain *msi_domain,
+> >>  	int ret;
+> >>  
+> >>  	/* Retrieve device ID from requestor ID using parent device */
+> >> -	ret = of_map_id(parent->of_node, cdx_dev->msi_dev_id, "msi-map", "msi-map-mask",
+> >> -			NULL, &dev_id);
+> >> +	ret = of_map_msi_id(parent->of_node, cdx_dev->msi_dev_id, NULL, &dev_id);
+> >>  	if (ret) {
+> >>  		dev_err(dev, "of_map_id failed for MSI: %d\n", ret);
+> >>  		return ret;
+> >> diff --git a/drivers/iommu/of_iommu.c b/drivers/iommu/of_iommu.c
+> >> index 6b989a62def2..a511ecf21fcd 100644
+> >> --- a/drivers/iommu/of_iommu.c
+> >> +++ b/drivers/iommu/of_iommu.c
+> >> @@ -48,9 +48,7 @@ static int of_iommu_configure_dev_id(struct device_node *master_np,
+> >>  	struct of_phandle_args iommu_spec = { .args_count = 1 };
+> >>  	int err;
+> >>  
+> >> -	err = of_map_id(master_np, *id, "iommu-map",
+> >> -			 "iommu-map-mask", &iommu_spec.np,
+> >> -			 iommu_spec.args);
+> >> +	err = of_map_iommu_id(master_np, *id, &iommu_spec.np, iommu_spec.args);
+> >>  	if (err)
+> >>  		return err;
+> >>  
+> >> diff --git a/drivers/irqchip/irq-gic-its-msi-parent.c b/drivers/irqchip/irq-gic-its-msi-parent.c
+> >> index d36b278ae66c..b63343a227a9 100644
+> >> --- a/drivers/irqchip/irq-gic-its-msi-parent.c
+> >> +++ b/drivers/irqchip/irq-gic-its-msi-parent.c
+> >> @@ -180,7 +180,7 @@ static int of_pmsi_get_msi_info(struct irq_domain *domain, struct device *dev, u
+> >>  
+> >>  	struct device_node *msi_ctrl __free(device_node) = NULL;
+> >>  
+> >> -	return of_map_id(dev->of_node, dev->id, "msi-map", "msi-map-mask", &msi_ctrl, dev_id);
+> >> +	return of_map_msi_id(dev->of_node, dev->id, &msi_ctrl, dev_id);
+> >>  }
+> >>  
+> >>  static int its_pmsi_prepare(struct irq_domain *domain, struct device *dev,
+> >> diff --git a/drivers/of/irq.c b/drivers/of/irq.c
+> >> index 6367c67732d2..e37c1b3f8736 100644
+> >> --- a/drivers/of/irq.c
+> >> +++ b/drivers/of/irq.c
+> >> @@ -817,8 +817,7 @@ u32 of_msi_xlate(struct device *dev, struct device_node **msi_np, u32 id_in)
+> >>  	 * "msi-map" or an "msi-parent" property.
+> >>  	 */
+> >>  	for (parent_dev = dev; parent_dev; parent_dev = parent_dev->parent) {
+> >> -		if (!of_map_id(parent_dev->of_node, id_in, "msi-map",
+> >> -				"msi-map-mask", msi_np, &id_out))
+> >> +		if (!of_map_msi_id(parent_dev->of_node, id_in, msi_np, &id_out))
+> >>  			break;
+> >>  		if (!of_check_msi_parent(parent_dev->of_node, msi_np))
+> >>  			break;
+> >> diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/controller/dwc/pci-imx6.c
+> >> index a5b8d0b71677..bff8289f804a 100644
+> >> --- a/drivers/pci/controller/dwc/pci-imx6.c
+> >> +++ b/drivers/pci/controller/dwc/pci-imx6.c
+> >> @@ -1144,8 +1144,7 @@ static int imx_pcie_add_lut_by_rid(struct imx_pcie *imx_pcie, u32 rid)
+> >>  	u32 sid = 0;
+> >>  
+> >>  	target = NULL;
+> >> -	err_i = of_map_id(dev->of_node, rid, "iommu-map", "iommu-map-mask",
+> >> -			  &target, &sid_i);
+> >> +	err_i = of_map_iommu_id(dev->of_node, rid, &target, &sid_i);
+> >>  	if (target) {
+> >>  		of_node_put(target);
+> >>  	} else {
+> >> @@ -1158,8 +1157,7 @@ static int imx_pcie_add_lut_by_rid(struct imx_pcie *imx_pcie, u32 rid)
+> >>  	}
+> >>  
+> >>  	target = NULL;
+> >> -	err_m = of_map_id(dev->of_node, rid, "msi-map", "msi-map-mask",
+> >> -			  &target, &sid_m);
+> >> +	err_m = of_map_msi_id(dev->of_node, rid, &target, &sid_m);
+> >>  
+> >>  	/*
+> >>  	 *   err_m      target
+> >> diff --git a/drivers/pci/controller/pcie-apple.c b/drivers/pci/controller/pcie-apple.c
+> >> index 2d92fc79f6dd..a0937b7b3c4d 100644
+> >> --- a/drivers/pci/controller/pcie-apple.c
+> >> +++ b/drivers/pci/controller/pcie-apple.c
+> >> @@ -764,8 +764,7 @@ static int apple_pcie_enable_device(struct pci_host_bridge *bridge, struct pci_d
+> >>  	dev_dbg(&pdev->dev, "added to bus %s, index %d\n",
+> >>  		pci_name(pdev->bus->self), port->idx);
+> >>  
+> >> -	err = of_map_id(port->pcie->dev->of_node, rid, "iommu-map",
+> >> -			"iommu-map-mask", NULL, &sid);
+> >> +	err = of_map_iommu_id(port->pcie->dev->of_node, rid, NULL, &sid);
+> >>  	if (err)
+> >>  		return err;
+> >>  
+> >> diff --git a/drivers/xen/grant-dma-ops.c b/drivers/xen/grant-dma-ops.c
+> >> index c2603e700178..1b7696b2d762 100644
+> >> --- a/drivers/xen/grant-dma-ops.c
+> >> +++ b/drivers/xen/grant-dma-ops.c
+> >> @@ -325,8 +325,7 @@ static int xen_dt_grant_init_backend_domid(struct device *dev,
+> >>  		struct pci_dev *pdev = to_pci_dev(dev);
+> >>  		u32 rid = PCI_DEVID(pdev->bus->number, pdev->devfn);
+> >>  
+> >> -		if (of_map_id(np, rid, "iommu-map", "iommu-map-mask", &iommu_spec.np,
+> >> -				iommu_spec.args)) {
+> >> +		if (of_map_iommu_id(np, rid, &iommu_spec.np, iommu_spec.args)) {
+> >>  			dev_dbg(dev, "Cannot translate ID\n");
+> >>  			return -ESRCH;
+> >>  		}
+> >> diff --git a/include/linux/of.h b/include/linux/of.h
+> >> index be6ec4916adf..824649867810 100644
+> >> --- a/include/linux/of.h
+> >> +++ b/include/linux/of.h
+> >> @@ -1457,6 +1457,20 @@ static inline int of_property_read_s32(const struct device_node *np,
+> >>  	return of_property_read_u32(np, propname, (u32*) out_value);
+> >>  }
+> >>  
+> >> +static inline int of_map_iommu_id(const struct device_node *np, u32 id,
+> >> +				  struct device_node **target, u32 *id_out)
+> >> +{
+> >> +	return of_map_id(np, id, "iommu-map", "iommu-map-mask",
+> >> +			 target, id_out);
+> >> +}
+> >> +
+> >> +static inline int of_map_msi_id(const struct device_node *np, u32 id,
+> >> +				struct device_node **target, u32 *id_out)
+> >> +{
+> >> +	return of_map_id(np, id, "msi-map", "msi-map-mask",
+> >> +			 target, id_out);
+> >> +}
+> >> +
+> > 
+> > Any particular reason why this is made inline instead of out of line
+> > in of/base.c? Also, some documentation would be helpful for the
+> > aspiring hackers dipping into this.
+> > 
+> > Other than that,
+> > 
+> > Acked-by: Marc Zyngier <maz@kernel.org>
+> > 
+> > 	M.
+> > 
+> 
+> Thanks Marc.
+> 
+> I made them static inline mainly because they’re just trivial wrappers
+> around of_map_id(), so keeping them in include/linux/of.h avoids adding
+> new global symbols/exports and keeps the callsites simple (similar to
+> the existing of_property_read_*() inline wrappers).
+> 
+> That said, I don’t have a strong preference—if you’d rather have
+> out-of-line helpers in drivers/of/base.c, I’m happy to respin accordingly.
+> 
+> Re Documentation, Sure I'll add comments for of_map_iommu_id() and
+> of_map_msi_id() in follow up patch.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
----
-Merge strategy: I'd ask to merge bindings through the msm tree, reducing
-the conflicts for the current kernel development cycle. Starting from
-the cycle after this patch is merged, DSI PHY bindings should go through
-the PHY tree.
----
- .../{display/msm/dsi-phy-10nm.yaml => phy/qcom,dsi-phy-10nm.yaml}     | 4 ++--
- .../{display/msm/dsi-phy-14nm.yaml => phy/qcom,dsi-phy-14nm.yaml}     | 4 ++--
- .../{display/msm/dsi-phy-20nm.yaml => phy/qcom,dsi-phy-20nm.yaml}     | 4 ++--
- .../{display/msm/dsi-phy-28nm.yaml => phy/qcom,dsi-phy-28nm.yaml}     | 4 ++--
- .../{display/msm/dsi-phy-7nm.yaml => phy/qcom,dsi-phy-7nm.yaml}       | 4 ++--
- .../{display/msm/dsi-phy-common.yaml => phy/qcom,dsi-phy-common.yaml} | 2 +-
- 6 files changed, 11 insertions(+), 11 deletions(-)
+... in the next iteration, please.
 
-diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml b/Documentation/devicetree/bindings/phy/qcom,dsi-phy-10nm.yaml
-similarity index 96%
-rename from Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
-rename to Documentation/devicetree/bindings/phy/qcom,dsi-phy-10nm.yaml
-index fc9abf090f0d..d98217747ad1 100644
---- a/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,dsi-phy-10nm.yaml
-@@ -1,7 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
- %YAML 1.2
- ---
--$id: http://devicetree.org/schemas/display/msm/dsi-phy-10nm.yaml#
-+$id: http://devicetree.org/schemas/phy/qcom,dsi-phy-10nm.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
- title: Qualcomm Display DSI 10nm PHY
-@@ -10,7 +10,7 @@ maintainers:
-   - Krishna Manikandan <quic_mkrishn@quicinc.com>
- 
- allOf:
--  - $ref: dsi-phy-common.yaml#
-+  - $ref: qcom,dsi-phy-common.yaml#
- 
- properties:
-   compatible:
-diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml b/Documentation/devicetree/bindings/phy/qcom,dsi-phy-14nm.yaml
-similarity index 94%
-rename from Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
-rename to Documentation/devicetree/bindings/phy/qcom,dsi-phy-14nm.yaml
-index 206a9a4b3845..be31b9bac9d5 100644
---- a/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,dsi-phy-14nm.yaml
-@@ -1,7 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
- %YAML 1.2
- ---
--$id: http://devicetree.org/schemas/display/msm/dsi-phy-14nm.yaml#
-+$id: http://devicetree.org/schemas/phy/qcom,dsi-phy-14nm.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
- title: Qualcomm Display DSI 14nm PHY
-@@ -10,7 +10,7 @@ maintainers:
-   - Krishna Manikandan <quic_mkrishn@quicinc.com>
- 
- allOf:
--  - $ref: dsi-phy-common.yaml#
-+  - $ref: qcom,dsi-phy-common.yaml#
- 
- properties:
-   compatible:
-diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-20nm.yaml b/Documentation/devicetree/bindings/phy/qcom,dsi-phy-20nm.yaml
-similarity index 93%
-rename from Documentation/devicetree/bindings/display/msm/dsi-phy-20nm.yaml
-rename to Documentation/devicetree/bindings/phy/qcom,dsi-phy-20nm.yaml
-index 93570052992a..1d135419d015 100644
---- a/Documentation/devicetree/bindings/display/msm/dsi-phy-20nm.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,dsi-phy-20nm.yaml
-@@ -1,7 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
- %YAML 1.2
- ---
--$id: http://devicetree.org/schemas/display/msm/dsi-phy-20nm.yaml#
-+$id: http://devicetree.org/schemas/phy/qcom,dsi-phy-20nm.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
- title: Qualcomm Display DSI 20nm PHY
-@@ -10,7 +10,7 @@ maintainers:
-   - Krishna Manikandan <quic_mkrishn@quicinc.com>
- 
- allOf:
--  - $ref: dsi-phy-common.yaml#
-+  - $ref: qcom,dsi-phy-common.yaml#
- 
- properties:
-   compatible:
-diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml b/Documentation/devicetree/bindings/phy/qcom,dsi-phy-28nm.yaml
-similarity index 94%
-rename from Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml
-rename to Documentation/devicetree/bindings/phy/qcom,dsi-phy-28nm.yaml
-index 371befa9f9d2..f8fe75fa29d7 100644
---- a/Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,dsi-phy-28nm.yaml
-@@ -1,7 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
- %YAML 1.2
- ---
--$id: http://devicetree.org/schemas/display/msm/dsi-phy-28nm.yaml#
-+$id: http://devicetree.org/schemas/phy/qcom,dsi-phy-28nm.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
- title: Qualcomm Display DSI 28nm PHY
-@@ -10,7 +10,7 @@ maintainers:
-   - Krishna Manikandan <quic_mkrishn@quicinc.com>
- 
- allOf:
--  - $ref: dsi-phy-common.yaml#
-+  - $ref: qcom,dsi-phy-common.yaml#
- 
- properties:
-   compatible:
-diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml b/Documentation/devicetree/bindings/phy/qcom,dsi-phy-7nm.yaml
-similarity index 95%
-rename from Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml
-rename to Documentation/devicetree/bindings/phy/qcom,dsi-phy-7nm.yaml
-index 9a9a6c4abf43..d45015e24639 100644
---- a/Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,dsi-phy-7nm.yaml
-@@ -1,7 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
- %YAML 1.2
- ---
--$id: http://devicetree.org/schemas/display/msm/dsi-phy-7nm.yaml#
-+$id: http://devicetree.org/schemas/phy/qcom,dsi-phy-7nm.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
- title: Qualcomm Display DSI 7nm PHY
-@@ -10,7 +10,7 @@ maintainers:
-   - Jonathan Marek <jonathan@marek.ca>
- 
- allOf:
--  - $ref: dsi-phy-common.yaml#
-+  - $ref: qcom,dsi-phy-common.yaml#
- 
- properties:
-   compatible:
-diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-common.yaml b/Documentation/devicetree/bindings/phy/qcom,dsi-phy-common.yaml
-similarity index 91%
-rename from Documentation/devicetree/bindings/display/msm/dsi-phy-common.yaml
-rename to Documentation/devicetree/bindings/phy/qcom,dsi-phy-common.yaml
-index d0ce85a08b6d..849321e56b2f 100644
---- a/Documentation/devicetree/bindings/display/msm/dsi-phy-common.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,dsi-phy-common.yaml
-@@ -1,7 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
- %YAML 1.2
- ---
--$id: http://devicetree.org/schemas/display/msm/dsi-phy-common.yaml#
-+$id: http://devicetree.org/schemas/phy/qcom,dsi-phy-common.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
- title: Qualcomm Display DSI PHY Common Properties
+> 
+> Thanks,
+> Vijay
+> 
+> 
+> 
 
----
-base-commit: ac47870fd795549f03d57e0879fc730c79119f4b
-change-id: 20260305-msm-dsi-phy-96b063cce7b5
-
-Best regards,
 -- 
 With best wishes
 Dmitry
-
 
