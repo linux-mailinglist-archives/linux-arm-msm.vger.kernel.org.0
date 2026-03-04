@@ -1,52 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-95329-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95330-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UBUnKMA4qGkTqgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95329-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 14:50:56 +0100
+	id 0LX0EdA5qGkTqgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95330-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 14:55:28 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25B37200B8A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 14:50:56 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F812200CA5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 14:55:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id C554E309839E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2026 13:49:25 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A4F1E312A13A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2026 13:49:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5EFC37419B;
-	Wed,  4 Mar 2026 13:49:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C41C73A2548;
+	Wed,  4 Mar 2026 13:49:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FP9xCYbS"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YL1NFCVf"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1C203537FE;
-	Wed,  4 Mar 2026 13:49:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0E742848A0;
+	Wed,  4 Mar 2026 13:49:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772632150; cv=none; b=L4efrATiWP13saJSDi39BUCU21lOv+DJ5dLKGvZBkr+ACZBFYFQOQfor0eAM7K1+uucI25FR0b5f/HAPbTEWk/q5pBfTOL0znl63/2M/bPb0G4ZAMszE8hOsqqGNz3QJ8VPYAKrpEeDorQakD75sd6I1by2hFC+x661UnSUI1y8=
+	t=1772632155; cv=none; b=qd/x4j7PL7gV5h2Ux80xXWK2N/faLcd2k5a+NI6asmBMW4NU8yf6Mp9G2dbnytIqMxjEWKHe0WThwE0WIdvfm+HHddgqpUKq0RBQZD+aEHug6Mcym7RLj6fj2W5GS5ii+fybmA+0ItuR2kpu18VcHLTzQNC44dBAhr6oLox72co=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772632150; c=relaxed/simple;
-	bh=JWDc2j0hV+E3FHXcOmEoLa067HRHjeDXFW7Z13ie7vM=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=LvWuHz0ejY7XrVIEIHQOqahcRbmNqRNQXDDpspXomzKCUf3gzC5aaxaAdFKV6e/JHAme9bBBEVK50IGqnPvyNTtYimYinscNxKPIQIGYhblpFqsf4Jw9BjI1mxVVlVRCCrIoQldMbDbza0izBp10LWahTV0uIXCBtmjPVrjcm1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FP9xCYbS; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C28ADC19423;
-	Wed,  4 Mar 2026 13:49:05 +0000 (UTC)
+	s=arc-20240116; t=1772632155; c=relaxed/simple;
+	bh=MxzsAapppLE+8dV2RbQr3gOSjRpPALVoD/deaZcnxTE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=O1/2s2+kJfS0BaQ76tHSQ3d4QtXkEHkcZsLpPkJJQirm6DjUweiI4qOrd0WklJp8+gdK/F1yCEdpqhIAlzU0Wa/LNTELb+2kCPEV8kIM+orcDso6SW6/savwsY2ORQTqNjQj4AijXPYwih48NvMDR1N2Y5ri16U6d8DlOmSvfwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YL1NFCVf; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D2F2C2BCAF;
+	Wed,  4 Mar 2026 13:49:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772632150;
-	bh=JWDc2j0hV+E3FHXcOmEoLa067HRHjeDXFW7Z13ie7vM=;
-	h=From:Subject:Date:To:Cc:From;
-	b=FP9xCYbSUDg9BoqnpZ4jQf/uUSFBARng5biSelO0DXKghx+PBH21j0xgoIMtF4SBh
-	 iTCueIH1XcrbYOznBdaNbAWjWfGEaVTPrN+kPJVqiO10m+8nbtLsEDdCiOiHeT6nQL
-	 9eBhq0YbazTL1P/69ktdcv68AygufNnPMu9TPBIbFdBSSQ9bJCtwpzhMuSjNARun+v
-	 lzPDZnL0e+hYgQyEztRCXi9oq5pNSeC9INzPp0mEHzfTPaHQVRGqBzhFPDR62y9vAA
-	 zNjamHatwn4ondNY+nMDmSpZVWXOgpk0zyUQHUOwJPZIz9mzQTeg+3u4V9KPgnLH+9
-	 cBqUBBbk4l34Q==
+	s=k20201202; t=1772632155;
+	bh=MxzsAapppLE+8dV2RbQr3gOSjRpPALVoD/deaZcnxTE=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+	b=YL1NFCVf3XXvWn/HrD9/Kwb7G5EcH5zbSVoFZoLx09V2O4Prk3kxTz5kR174PKEPb
+	 qZoyBMyXBRNBxLSMF4ngl8+VhJ8Z6ztw0QqFdu+venZ06tzEAcyZghkUrEAlB3EpWB
+	 /SGA8jbvM86Vh7TkYa5nQjb5a/izZzLVRc9KfGYJ2lIAp7um7Xh/STxn/cZd8aJVNZ
+	 kL1ovk5rix08ok0Mq9C6UGRT8FzrqA1xJx/5DJc18FlDNJDNNQCiN0BrEnzJM2Lfe4
+	 IU+PrZlZT0n5TTxt2QDwODFFPcSm/tH+k+DKeF2NsICRgXmlb6W989ccc2mdNY3lML
+	 qZBewG3iaK3xw==
 From: Konrad Dybcio <konradybcio@kernel.org>
-Subject: [PATCH 0/5] DSI byte clock setting fixup
-Date: Wed, 04 Mar 2026 14:48:26 +0100
-Message-Id: <20260304-topic-dsi_byte_fixup-v1-0-b79b29f83176@oss.qualcomm.com>
+Date: Wed, 04 Mar 2026 14:48:27 +0100
+Subject: [PATCH 1/5] clk: qcom: dispcc-glymur: Fix DSI byte clock rate
+ setting
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -54,11 +55,10 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x2MQQqAIBAAvxJ7TjAti74SEZVb7cVELQrx70nHY
- ZiJ4NEReuiLCA5v8nSaDFVZwHrMZkdGOjMILhSXXLJwWlqZ9jQtb8Bpo+eybFZL3coGO60Qcmo
- dZvFvhzGlD5zQkI5mAAAA
-X-Change-ID: 20260303-topic-dsi_byte_fixup-a6b4735e8d6e
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260304-topic-dsi_byte_fixup-v1-1-b79b29f83176@oss.qualcomm.com>
+References: <20260304-topic-dsi_byte_fixup-v1-0-b79b29f83176@oss.qualcomm.com>
+In-Reply-To: <20260304-topic-dsi_byte_fixup-v1-0-b79b29f83176@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Michael Turquette <mturquette@baylibre.com>, 
  Stephen Boyd <sboyd@kernel.org>, Taniya Das <taniya.das@oss.qualcomm.com>, 
@@ -70,31 +70,31 @@ Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  linux-kernel@vger.kernel.org, 
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1772632145; l=1206;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1772632145; l=1502;
  i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=JWDc2j0hV+E3FHXcOmEoLa067HRHjeDXFW7Z13ie7vM=;
- b=gH0/LWZ3K3Fg0/L/EblKz7UVnPB5Zh6EyJs4dqVZX9aNJYBaVY1hHm3WyRSZVy8xehkP3CW5b
- 1VrGy1NcK6fDeDsHGuFLX2EHWvG/CEJDDJ8wf8drP1xfWrF5AUj9ZuX
+ bh=Ts2BJkKZit7+6I3gWjETShyTjCfuuBSpIfDPQ8kJcTE=;
+ b=Oh0bbCKVfqcCa6PbzquX5UrHTrJm0RcibjGEGKn+eUkSO+5eYJRBsJ8WnCvult2dg+f3Otmsr
+ VEGts4q1OM/C+w1D5v61aMde9Rft52eCuPk5fb2S1vfPb9yl8gaoARB
 X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Rspamd-Queue-Id: 25B37200B8A
+X-Rspamd-Queue-Id: 9F812200CA5
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95329-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-95330-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	RCPT_COUNT_TWELVE(0.00)[14];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[konradybcio@kernel.org,linux-arm-msm@vger.kernel.org];
@@ -103,38 +103,54 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:email,oss.qualcomm.com:mid]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,oss.qualcomm.com:mid,qualcomm.com:email]
 X-Rspamd-Action: no action
 
-There's a conflict between the byte and byte_intf_div2 clocks trying to
-set_rate on their common parent. The latter should follow the rate of
-the former in one way or another anyway, so the fix here is to prevent
-the latter from ratesetting the upstream PLL.
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-This series does just that.
+The clock tree for byte_clk_src is as follows:
 
+   ┌──────byte0_clk_src─────┐
+   │                        │
+byte0_clk            byte0_div_clk_src
+                            │
+                     byte0_intf_clk
+
+If both of its direct children have CLK_SET_RATE_PARENT with different
+requests, byte0_clk_src (and its parent) will be reconfigured. In this
+case, byte0_intf should strictly follow the rate of byte0_clk (with
+some adjustments based on PHY mode).
+
+Remove CLK_SET_RATE_PARENT from byte0_div_clk_src to avoid this issue.
+
+Fixes: b4d15211c408 ("clk: qcom: dispcc-glymur: Add support for Display Clock Controller")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
-Konrad Dybcio (5):
-      clk: qcom: dispcc-glymur: Fix DSI byte clock rate setting
-      clk: qcom: dispcc-kaanapali: Fix DSI byte clock rate setting
-      clk: qcom: dispcc-milos: Fix DSI byte clock rate setting
-      clk: qcom: dispcc-sm4450: Fix DSI byte clock rate setting
-      clk: qcom: dispcc[01]-sa8775p: Fix DSI byte clock rate setting
+ drivers/clk/qcom/dispcc-glymur.c | 2 --
+ 1 file changed, 2 deletions(-)
 
- drivers/clk/qcom/dispcc-glymur.c    | 2 --
- drivers/clk/qcom/dispcc-kaanapali.c | 2 --
- drivers/clk/qcom/dispcc-milos.c     | 1 -
- drivers/clk/qcom/dispcc-sm4450.c    | 1 -
- drivers/clk/qcom/dispcc0-sa8775p.c  | 2 --
- drivers/clk/qcom/dispcc1-sa8775p.c  | 2 --
- 6 files changed, 10 deletions(-)
----
-base-commit: 3fa5e5702a82d259897bd7e209469bc06368bf31
-change-id: 20260303-topic-dsi_byte_fixup-a6b4735e8d6e
+diff --git a/drivers/clk/qcom/dispcc-glymur.c b/drivers/clk/qcom/dispcc-glymur.c
+index 94053452e871..a8c3cbf591d1 100644
+--- a/drivers/clk/qcom/dispcc-glymur.c
++++ b/drivers/clk/qcom/dispcc-glymur.c
+@@ -747,7 +747,6 @@ static struct clk_regmap_div disp_cc_mdss_byte0_div_clk_src = {
+ 			&disp_cc_mdss_byte0_clk_src.clkr.hw,
+ 		},
+ 		.num_parents = 1,
+-		.flags = CLK_SET_RATE_PARENT,
+ 		.ops = &clk_regmap_div_ops,
+ 	},
+ };
+@@ -762,7 +761,6 @@ static struct clk_regmap_div disp_cc_mdss_byte1_div_clk_src = {
+ 			&disp_cc_mdss_byte1_clk_src.clkr.hw,
+ 		},
+ 		.num_parents = 1,
+-		.flags = CLK_SET_RATE_PARENT,
+ 		.ops = &clk_regmap_div_ops,
+ 	},
+ };
 
-Best regards,
 -- 
-Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+2.53.0
 
 
