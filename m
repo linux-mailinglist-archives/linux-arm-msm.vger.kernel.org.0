@@ -1,199 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-95342-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95343-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id YJ6rMq87qGl6rQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95342-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 15:03:27 +0100
+	id cBjAG6VBqGn8rgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95343-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 15:28:53 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8D0F200E8C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 15:03:27 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 100B920175E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 15:28:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id C5AD63022066
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2026 14:03:23 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id B954F30C81E3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2026 14:20:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4DE13A257F;
-	Wed,  4 Mar 2026 14:03:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D44283A6EF1;
+	Wed,  4 Mar 2026 14:18:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kQDrejRG"
+	dkim=pass (2048-bit key) header.d=adishatz.org header.i=@adishatz.org header.b="alkNn+ag"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from adishatz.org (ns314768.ip-37-187-26.eu [37.187.26.192])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910A2238C1B;
-	Wed,  4 Mar 2026 14:03:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB033A6EF9;
+	Wed,  4 Mar 2026 14:18:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=37.187.26.192
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772632997; cv=none; b=dL3qmrjWZvddE1oF+KhGHe5gTN2WuRFXQhQSSoQdOkepL6rnsGGjijqZdojeNGfxWh4PuXyeh1Yx/k3nCuykROqTgmjzqDIpu480g2Any3ubfubm4bJaV9gVVzCyONPX5a3saIeBuF71btbsNa1/8+HyW+1E22ZdstbDO+pDWVY=
+	t=1772633891; cv=none; b=p353vECnwTBdjUSRMvfQNHDsHfpSrlPHPikIWh9J2XnrD0Mu6AmdzmDsmoM/Z675inBVIRp7ZUz24I6j48ZUtYLvF1CLnU/bO/x/shtR2xZg4mrK+5qJ2kqEelKdEehH7RrgV6+Ng7AX/8vca8tWAKrBKddjMIWFyIwsQF2UHGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772632997; c=relaxed/simple;
-	bh=BGV80tUD11eyPnfJKUYoZf/Qjy2LIJDrmkSepkpUtc8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Q/yts0XSRr7sNRzl4JphcX8gc7W2TZSvKtMptfpAbgYIBWgEdfcoYCFSvk7eaSd10CsoA3UopOf9KRT4k9F/NTTEo+4NznHjh6M0wTLXfri7rw+0dAWmG6jChBJoEOqUNGQgPnAXR2paXoeIthEt8hzjDWINwtQ18+O/39W+Q54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kQDrejRG; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA3FEC19423;
-	Wed,  4 Mar 2026 14:03:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772632997;
-	bh=BGV80tUD11eyPnfJKUYoZf/Qjy2LIJDrmkSepkpUtc8=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=kQDrejRGPxlLhiedSrqlS6fiaSBQSj1QXCt6/rGISRdpGrzdiOmNACqegOg+4tEbo
-	 d+yqvpdkUpkBwvc+jFMUmvgk4bBs8auudvlNeeDeXgtvd/nFimiQdVXmijjKeyBBda
-	 bg0Jh94fsaKthKJJcRWTG7xEh8OxvbJY38XRcWVLBZ3zkjNBckd8kxqMQeQSeTNoc2
-	 szNJDzU1ZjkZbU+nlLuf23OxMvs6eJdmhVQqmH9QDqF1fs+2MdZrA0Du3PLk+yyJU4
-	 faxHvPjkqlBiljsoMGE7o73N7bEaoW/L7CpylQInWcu8tXJf8SYdW2lE7awt6RuRK0
-	 mME4mC4FTt5UA==
-Message-ID: <377f0895-0340-423f-a95b-246cf79233dc@kernel.org>
-Date: Wed, 4 Mar 2026 15:03:09 +0100
+	s=arc-20240116; t=1772633891; c=relaxed/simple;
+	bh=6HBXokyc+vCWKhHp41UQSagjE6RZ5+wreWuFWTYT2Q4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=XslswK2DfAiZLTy5o5PZs2dAjfAlcuLWJqJx/pMIuEsv2A1HvPWVQ6pAydjJgug3IqSU9XeULYWL3ySuFaM119lhVvosbd0guXHJT8NNBede+Qtwm1UlcEfom8Qle3sgZS0C31qArWhcN3GBK/9nE0johK5HMzujOri/m149ejQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=adishatz.org; spf=pass smtp.mailfrom=adishatz.org; dkim=pass (2048-bit key) header.d=adishatz.org header.i=@adishatz.org header.b=alkNn+ag; arc=none smtp.client-ip=37.187.26.192
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=adishatz.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=adishatz.org
+Received: from p-si-bellegarde.univ-nantes.prive (unknown [193.52.84.14])
+	by adishatz.org (Postfix) with ESMTPSA id 38EE14C02DC;
+	Wed, 04 Mar 2026 15:10:15 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=adishatz.org;
+	s=mail; t=1772633415;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=ICg5aJiATtX7CngsxObvwgFdqjF1bhqFv/Y2pXy8BNY=;
+	b=alkNn+ag/VIyYv99YoJP1U7xluX9io/ZR5Pr2gidJZe9G3W1VMmqrXXStaQVWYq/7YzqqB
+	6D7hO73W/njOuDq96FMS8Pu0u4kHxzLedwEE8blTE+tycXKMK/Ny6ALa0XimxiZlO+x4GC
+	HCmXWM0ZVSGoX/9oCyooaqq/K23ceAusiY0+639BMcAh50rZCzYwhv/LpQOVz1J5aGL0av
+	CkWk7E4Jpx/BjH+l6cpP9+Z1MsFJ9BOekbSc2ktZBt3xaXP3ttMK0hsCruzyLS8IKpEgDF
+	J+Z7v/ALjq0ReCTJtePE76gifcGr6QAbVcMAVOdNz+FPaBtw/5olTpBB7FxpiA==
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=cedric.bellegarde smtp.mailfrom=cedric.bellegarde@adishatz.org
+From: =?UTF-8?q?C=C3=A9dric=20Bellegarde?= <cedric.bellegarde@adishatz.org>
+To: srini@kernel.org
+Cc: lgirdwood@gmail.com,
+	broonie@kernel.org,
+	linux-sound@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	cedric.bellegarde@adishatz.org
+Subject: [PATCH] ASoC: codecs: wcd-clsh: Always update buck/flyback on transitions on transitions
+Date: Wed,  4 Mar 2026 15:10:06 +0100
+Message-ID: <20260304141006.280894-1-cedric.bellegarde@adishatz.org>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/8] soc: qcom: ubwc: Add configuration Eliza SoC
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
- Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
- <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
- Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Kuogee Hsieh <quic_khsieh@quicinc.com>,
- Jonathan Marek <jonathan@marek.ca>,
- Krishna Manikandan <quic_mkrishn@quicinc.com>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260304-drm-display-eliza-v2-0-ea0579f62358@oss.qualcomm.com>
- <20260304-drm-display-eliza-v2-6-ea0579f62358@oss.qualcomm.com>
- <7e092c9d-ccc9-4084-91a8-7ddb063a904d@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <7e092c9d-ccc9-4084-91a8-7ddb063a904d@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: B8D0F200E8C
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 100B920175E
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[adishatz.org,reject];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_DKIM_ALLOW(-0.20)[adishatz.org:s=mail];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	FREEMAIL_CC(0.00)[gmail.com,kernel.org,vger.kernel.org,adishatz.org];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95342-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch,linux.intel.com,suse.de,quicinc.com,marek.ca,linaro.org];
+	DKIM_TRACE(0.00)[adishatz.org:+];
+	TAGGED_FROM(0.00)[bounces-95343-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[27];
-	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.999];
+	FROM_HAS_DN(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	TO_DN_NONE(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[cedric.bellegarde@adishatz.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCPT_COUNT_SEVEN(0.00)[7];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,qualcomm.com:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-On 04/03/2026 14:35, Konrad Dybcio wrote:
-> On 3/4/26 1:58 PM, Krzysztof Kozlowski wrote:
->> Add configuration data and an entry to OF table for matching the Eliza
->> SoC.
->>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
->>
->> ---
->>
->> Changes in v2:
->> 1. Use data from manual (UBWC v5 as pointed out by Dmitry, but different
->>    highest bank bits).
->> ---
->>  drivers/soc/qcom/ubwc_config.c | 11 +++++++++++
->>  1 file changed, 11 insertions(+)
->>
->> diff --git a/drivers/soc/qcom/ubwc_config.c b/drivers/soc/qcom/ubwc_config.c
->> index 1c25aaf55e52..633d1efa0883 100644
->> --- a/drivers/soc/qcom/ubwc_config.c
->> +++ b/drivers/soc/qcom/ubwc_config.c
->> @@ -16,6 +16,16 @@ static const struct qcom_ubwc_cfg_data no_ubwc_data = {
->>  	/* no UBWC, no HBB */
->>  };
->>  
->> +static const struct qcom_ubwc_cfg_data eliza_data = {
->> +	.ubwc_enc_version = UBWC_5_0,
->> +	.ubwc_dec_version = UBWC_5_0,
->> +	.ubwc_swizzle = 6,
-> 
->  = UBWC_SWIZZLE_ENABLE_LVL2 | UBWC_SWIZZLE_ENABLE_LVL3
-> 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+The WCD934x audio outputs (earpiece, headphone, speaker) share two power
+supply converters, a buck and a flyback, managed by reference counters
+(buck_users, flyback_users) in the Class-H controller.
 
-oh, crap, I rebased without my earlier patches fixing this and just
-copied existing.
+The early return in wcd_clsh_ctrl_set_state() when nstate == ctrl->state
+prevented _wcd_clsh_ctrl_set_state() from being called when switching
+between outputs sharing the same state value. As a result, the buck and
+flyback reference counters were never decremented on disable, leaving the
+converters active and their counters out of sync with the actual hardware
+state.
 
-Although would be nice if my UBWC patch got merged...
+This caused audible distortion on the earpiece output and spurious MBHC
+over-current protection interrupts on HPHL/HPHR during output switching.
 
-Best regards,
-Krzysztof
+Remove the early return so that CLSH_REQ_ENABLE and CLSH_REQ_DISABLE are
+always dispatched, keeping the buck and flyback reference counters
+consistent on every state transition.
+
+Signed-off-by: Cédric Bellegarde <cedric.bellegarde@adishatz.org>
+---
+ sound/soc/codecs/wcd-clsh-v2.c | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/sound/soc/codecs/wcd-clsh-v2.c b/sound/soc/codecs/wcd-clsh-v2.c
+index df3512ed167f..31fc91d79a8b 100644
+--- a/sound/soc/codecs/wcd-clsh-v2.c
++++ b/sound/soc/codecs/wcd-clsh-v2.c
+@@ -849,9 +849,6 @@ int wcd_clsh_ctrl_set_state(struct wcd_clsh_ctrl *ctrl,
+ {
+ 	struct snd_soc_component *comp = ctrl->comp;
+ 
+-	if (nstate == ctrl->state)
+-		return 0;
+-
+ 	if (!wcd_clsh_is_state_valid(nstate)) {
+ 		dev_err(comp->dev, "Class-H not a valid new state:\n");
+ 		return -EINVAL;
+-- 
+2.53.0
+
 
