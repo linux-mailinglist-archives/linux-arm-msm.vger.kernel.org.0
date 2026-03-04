@@ -1,177 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-95430-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95431-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aKsNL1h9qGmHuwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95430-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 19:43:36 +0100
+	id sFjoCRqAqGmYvAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95431-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 19:55:22 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 56EB72068B4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 19:43:36 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A017206AF4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 19:55:21 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id C2E563028E89
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2026 18:38:30 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id CB52D303D2C8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2026 18:52:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7E3A3D6CC3;
-	Wed,  4 Mar 2026 18:38:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 518303D6CC6;
+	Wed,  4 Mar 2026 18:52:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BcqUdW6T"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QJWkbwba"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94C053D5647
-	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Mar 2026 18:38:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 291853D34AA;
+	Wed,  4 Mar 2026 18:52:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772649505; cv=none; b=OOJVb2HeahbmSJtdKftetFEy/olxiyAERE/1UYUiEFvI/HoqMYUYpH7mXQD9G4T87zRVtJtERHMtbcTth9dFiNw6R+liYl8M7P5Dei3Ias9YPZ1Xx5adeN16S5QxPBNZyx4basiHn/CA/BZLxUpJ1lKWRUrcf3wiXCRQVi4PhxI=
+	t=1772650339; cv=none; b=O+isid8uTPdYtvO/fqSkQNOEQD2jo9J6GBepMZM2dXfu8QxmxUMiOrJBg+Vkc5zMQ8Gp5Yjk/nOE24ZKWBtY5UdPYUI5kCi1L0ITJOmZuae6AWl1A3VYVtRf5PuCuuulxgqruTX/gS4PqlvgMEhxk6Rzy5w31CJN/Ci2WB5Rg20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772649505; c=relaxed/simple;
-	bh=EtZU6Qy29bKoCG8coxW5GQ+9safZ+sfraENkCgYN+9Y=;
+	s=arc-20240116; t=1772650339; c=relaxed/simple;
+	bh=DDFFy501pyxspfWhkdcUxEKpUA/8TVxM3OGvXEIiwRo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Wu93UgG8d0SKfs0tFc7EhLS0U57bSCeQeEJLkn7m4r1mnfkNjoclTgCntWVJ2DiVlHFCn49hXciebsgCq5v7kmNsZ2sNNEcATWq//4CvlIpS+JVw/c8ShSHAqcpxE/Hd5IBi6yL9Ia7MKCjDM1kyvICPO+3RHgWDxeEYtKEpLv0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BcqUdW6T; arc=none smtp.client-ip=209.85.219.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-899efe93d4eso49173796d6.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2026 10:38:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772649503; x=1773254303; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=OXSAV6rZIrZFPwARMtOXxpUTW7bMyjqUTP3cXtGDhxc=;
-        b=BcqUdW6TSPJcRzs0oxdS58Xud8yd405V7vMOVNcq4sv3fkO94OEDR0rsromy8Bi2oU
-         nEXLKkK2ugxcrHX/3i2F+UfijpMNuvBQAkZPK8PmjhTv7p83axyGDwNsj8/pEHYyGrHZ
-         hyFX6dCTf2OGSZojldEJcMTppNWBuTyj7Djhya7N5wo7qh5CJduH+81awQaiNmJCE7T4
-         UcdS74HLFASTV6oGJuaTuuUkHZgWb1zX5a4L21iWmr0HwInvLdTv7P07ZvUcFnBQzdIr
-         /66jeVzZLc+ZJnhyd4q3Qm4fINIdHdRvw0qz34QuNHkFZ8OlfTSAkEj6Y7Dc5elitYso
-         Iigw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772649503; x=1773254303;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OXSAV6rZIrZFPwARMtOXxpUTW7bMyjqUTP3cXtGDhxc=;
-        b=OaVKdXaVUnoSYvplzTexpvlviuG/McfaGWO9fUd47gI3R08oHvLouT1vR6XHoIEosQ
-         4DUMzlJ93iqMjZ6EI4XdntCakSVBienOLJ5NmOa2UI1vK5mhpUR6MO4HbpzWNGx6dic1
-         S4bpiEALsKuMMYvvmGUzThIhAT2XB+nGd2/lnXyS1BDHMXyseynVzs6vFTjqy1AXnZoU
-         orTBBE1qXbsH5vbPItmNFHE9pAg1sP1fgZvXW/cRad+vwxC9vKXg5h5MQtbrgG8m25nH
-         rngrqA75T1lfqRhN1LAnsJU+18G+9A8+ioOLbAnlPWRiaEwKu9Y286mxEdZcWHLNuWkk
-         mxzg==
-X-Forwarded-Encrypted: i=1; AJvYcCWAgNubWZ6LuWaYy1848NJSyrf8bDyvO270xSYwWYFhjf+7LLNDdx/AV9kx7KHsaXVA9reAgu7s1wqzgrpJ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz6+f0IczXVGAf6ZcE0J0j9m/XmwVXmOw0toVKVayE2EKtRmjpW
-	3ZdLw3l/fpoIRTdcs9h71dQnUD21EFvMhGf6b76+yHTsduvXSg2zwhVkPOaS1Q==
-X-Gm-Gg: ATEYQzwd2UVoyeK6zY/VQwK65mmYn/nvVgEib+/8N0+zl8ww7NfBFJnQ6ENwgpzcmQk
-	H0+xRFjgBH16CldxZS4rHkeAnOBr3yLDxA2mRAKIZsn54euxtCnlclD7X63j4shlyniadZ0zAcc
-	8x2XBum7+78Wm5p9Gh0Nhsmpq+nf6ldgqcYbMWg1DAWk/0jcG0xhN/PX+yQvy5pbtKANBhVKu5M
-	xdKikE61wXGLi6cd4JQvfRjsZnPrMGLHLmUM70FluzBuAKGNK9dxPL1ZfphjankdHqYv1psCUJy
-	ZsZGFXANzrLbqw5fVruxcI7/cOGAAgfdDnQ3wpp28SoM+sfOI7R+xP+Xl5HMtJB5M9dsF57P/Ag
-	2IKCp5kK9VVODU33E/iev7wphd99MYggeo1eBXCcrBcvaDaeGkGqR5UdcMLbKf4wiLJTcuZE8zR
-	UesAOLfke62dsaJv2msH8agAOUpw==
-X-Received: by 2002:a05:6214:2423:b0:89a:18bc:2b27 with SMTP id 6a1803df08f44-89a19d39d01mr37465426d6.65.1772649503522;
-        Wed, 04 Mar 2026 10:38:23 -0800 (PST)
-Received: from localhost ([184.144.58.243])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-89a07f690c1sm50672736d6.44.2026.03.04.10.38.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Mar 2026 10:38:22 -0800 (PST)
-Date: Wed, 4 Mar 2026 13:38:54 -0500
-From: Richard Acayan <mailingradian@gmail.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
-	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Amit Kucheria <amitk@kernel.org>,
-	Thara Gopinath <thara.gopinath@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sdm670: add thermal zones and
- thermal devices
-Message-ID: <aah8PmAXnnGraBWt@rdacayan>
-References: <20260304014530.27775-1-mailingradian@gmail.com>
- <20260304014530.27775-4-mailingradian@gmail.com>
- <55s2gczljwgtk5rihaq6iu6a2osotruyostrhjawwz7xywlumy@7vjt6vb2kkwt>
+	 Content-Type:Content-Disposition:In-Reply-To; b=o7pqeNBggfHX/Z0589+a+8XymWSc+6/QcPrGNIeZSwsrthNCxMZKIg6J5imGUhUS/NnXxZmgv7/Sed/WbG84BsSg0wcHTkDgBJH1TM5muaOYJD98WPK7mpF1WYDuhgHWu53YeJNH5sVtMU/nf6pXLg9SmwLYLy+Cc8J25Ggwl48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QJWkbwba; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A829BC4CEF7;
+	Wed,  4 Mar 2026 18:52:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772650338;
+	bh=DDFFy501pyxspfWhkdcUxEKpUA/8TVxM3OGvXEIiwRo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=QJWkbwbacfYJo+IuwGLW6H5IhxxBfJC1lZTnSzdl1LXiWUZLlRdB4RIK47OyWVY3C
+	 UZ9YjjTC7VZgSNQejFfJzVjhqqOl5KpYM0hSTGCaZ7MZ0VdLgZba3dhh/eX4wT4zLC
+	 epTOMbEQOKHwcWKhbP01s9o1O2kJpEq6ja0aGC3rrUaYzILV2eGTgucK8vR4PFyGFJ
+	 +ZlVGry/WP8a2dTlk+PiB2AbhWPczTyqyrdvT6FGxXuMZHW/o3uDsGCc8+jsd4P42W
+	 NoPWys8q72nbXXNcaeE7aq+uy5wQ5l2nHpSZR6YRTJpPHgRPnJmZljA9G1RIEJUTDk
+	 VyiUoWcDgdwIA==
+Date: Wed, 4 Mar 2026 12:51:54 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: =?utf-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Gabriel Gonzales <semfault@disroot.org>, Kees Cook <kees@kernel.org>, Tony Luck <tony.luck@intel.com>, 
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>, Biswapriyo Nath <nathbappai@gmail.com>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-hardening@vger.kernel.org, phone-devel@vger.kernel.org, 
+	~postmarketos/upstreaming@lists.sr.ht, linux@mainlining.org, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v3 2/7] arm64: dts: qcom: sm6125-xiaomi-ginkgo: Correct
+ reserved memory ranges
+Message-ID: <xgcv6gcaw6xxelkafo23waz4sbw2cycas45qhzxkfhbeuukzbe@wwssuc44mp7y>
+References: <20260126-xiaomi-willow-v3-0-aad7b106c311@mainlining.org>
+ <20260126-xiaomi-willow-v3-2-aad7b106c311@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <55s2gczljwgtk5rihaq6iu6a2osotruyostrhjawwz7xywlumy@7vjt6vb2kkwt>
-X-Rspamd-Queue-Id: 56EB72068B4
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260126-xiaomi-willow-v3-2-aad7b106c311@mainlining.org>
+X-Rspamd-Queue-Id: 7A017206AF4
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-95431-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95430-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[15];
-	FREEMAIL_CC(0.00)[kernel.org,intel.com,arm.com,gmail.com,vger.kernel.org];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[18];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[kernel.org,disroot.org,intel.com,igalia.com,gmail.com,vger.kernel.org,lists.sr.ht,mainlining.org,oss.qualcomm.com];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mailingradian@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-On Wed, Mar 04, 2026 at 03:55:21AM +0200, Dmitry Baryshkov wrote:
-> On Tue, Mar 03, 2026 at 08:45:30PM -0500, Richard Acayan wrote:
-> > Add thermal zones to safeguard from overheating to high temperatures,
-> > along with the thermal sensors (TSENS) and CPU frequency limits (LMh).
-> > The temperatures are very high, but should still be safeguard for
-> > devices that do not specify their own thermal zones.
-> > 
-> > Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sdm670.dtsi | 474 +++++++++++++++++++++++++++
-> >  1 file changed, 474 insertions(+)
-> > 
-> > +
-> > +		mem-thermal {
-> > +			polling-delay-passive = <250>;
-> > +			polling-delay = <1000>;
-> > +
-> > +			thermal-sensors = <&tsens1 2>;
-> > +
-> > +			cooling-maps {
-> > +				map0 {
-> > +					trip = <&mem_alert0>;
-> > +					cooling-device = <&cpu6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-> > +							 <&cpu7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+On Mon, Jan 26, 2026 at 05:34:52PM +0100, Barnabás Czémán wrote:
+> The device was crashing on high memory load because the reserved memory
+> ranges was wrongly defined. Correct the ranges for avoid the crashes.
+> Change the ramoops memory range to match with the values from the recovery
+> to be able to get the results from the device.
 > 
-> Why is it only cpu6 & 7?
 
-They are supposed to have the highest available power consumption
-(implying highest TDP).
+FYI. If you add "memtest=1" to your kernel command line the kernel will
+sweep all memory at boot, which tends to flush out most such issues.
+Then you don't need to rely on "high memory load" for testing for such
+issues.
 
-> Note, SDM845 doesn't have any cooling maps for
-> mem-thermal.
+Regards,
+Bjorn
 
-Makes sense, the cooling can be removed.
+> Fixes: 9b1a6c925c88 ("arm64: dts: qcom: sm6125: Initial support for xiaomi-ginkgo")
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts | 41 ++++++++++++++++-------
+>  1 file changed, 29 insertions(+), 12 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
+> index bf03226a6f85..d5e5abdb3b2f 100644
+> --- a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo.dts
+> @@ -13,6 +13,12 @@
+>  #include "sm6125.dtsi"
+>  #include "pm6125.dtsi"
+>  
+> +/delete-node/ &adsp_pil_mem;
+> +/delete-node/ &cont_splash_mem;
+> +/delete-node/ &gpu_mem;
+> +/delete-node/ &ipa_fw_mem;
+> +/delete-node/ &ipa_gsi_mem;
+> +
+>  / {
+>  	model = "Xiaomi Redmi Note 8";
+>  	compatible = "xiaomi,ginkgo", "qcom,sm6125";
+> @@ -36,28 +42,39 @@ framebuffer0: framebuffer@5c000000 {
+>  	};
+>  
+>  	reserved-memory {
+> -		debug_mem: debug@ffb00000 {
+> -			reg = <0x0 0xffb00000 0x0 0xc0000>;
+> +		adsp_pil_mem: adsp_pil_mem@55300000 {
+> +			reg = <0x0 0x55300000 0x0 0x2200000>;
+>  			no-map;
+>  		};
+>  
+> -		last_log_mem: lastlog@ffbc0000 {
+> -			reg = <0x0 0xffbc0000 0x0 0x80000>;
+> +		ipa_fw_mem: ipa_fw_mem@57500000 {
+> +			reg = <0x0 0x57500000 0x0 0x10000>;
+>  			no-map;
+>  		};
+>  
+> -		pstore_mem: ramoops@ffc00000 {
+> -			compatible = "ramoops";
+> -			reg = <0x0 0xffc40000 0x0 0xc0000>;
+> -			record-size = <0x1000>;
+> -			console-size = <0x40000>;
+> -			pmsg-size = <0x20000>;
+> +		ipa_gsi_mem: ipa_gsi_mem@57510000 {
+> +			reg = <0x0 0x57510000 0x0 0x5000>;
+> +			no-map;
+>  		};
+>  
+> -		cmdline_mem: memory@ffd00000 {
+> -			reg = <0x0 0xffd40000 0x0 0x1000>;
+> +		gpu_mem: gpu_mem@57515000 {
+> +			reg = <0x0 0x57515000 0x0 0x2000>;
+>  			no-map;
+>  		};
+> +
+> +		framebuffer@5c000000 {
+> +			reg = <0x0 0x5c000000 0x0 (2340 * 1080 * 4)>;
+> +			no-map;
+> +		};
+> +
+> +		/* Matching with recovery values to be able to get the results. */
+> +		ramoops@61600000 {
+> +			compatible = "ramoops";
+> +			reg = <0x0 0x61600000 0x0 0x400000>;
+> +			record-size = <0x80000>;
+> +			pmsg-size = <0x200000>;
+> +			console-size = <0x100000>;
+> +		};
+>  	};
+>  
+>  	extcon_usb: extcon-usb {
+> 
+> -- 
+> 2.52.0
+> 
 
