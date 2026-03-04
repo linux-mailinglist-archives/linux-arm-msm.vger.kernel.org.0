@@ -1,530 +1,250 @@
-Return-Path: <linux-arm-msm+bounces-95385-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95386-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id IMTOC99qqGnouQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95385-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 18:24:47 +0100
+	id IGIfHeJuqGkkugAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95386-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 18:41:54 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46A832051EC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 18:24:46 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 123BB2054D9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 18:41:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id F2E203035179
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2026 17:23:15 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D84C6303DD36
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2026 17:41:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32D6D3A1E6D;
-	Wed,  4 Mar 2026 17:22:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 743BF3CA48D;
+	Wed,  4 Mar 2026 17:41:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="eiCERews";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Wh9TfSpX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D6533A5E62;
-	Wed,  4 Mar 2026 17:22:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3B89374E5C
+	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Mar 2026 17:41:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772644958; cv=none; b=sN5IPo9Z1WiXxL1JxDAQPq9xJGr6R2XD023hrvMSglU1sECF7H89CKM4ZPMBk5Mi3EDc9XXDz3keIXmHDO3Rhu/s5xQzxOL3O593gKrIZVSwKa3AzS2nCjz6R0avSc6wIRA5k4LFGqrctYWmun7KPr6aTPWtfR9Wgpb1PNIe82w=
+	t=1772646068; cv=none; b=Xd1+YyqYd5xGqWyt1utPdkO7KoXssFAIk7E/EKgDmjPqdQF9oi+49fIsJJzLh8/k7V+ZFw4pbWYy4k0jwu/AWluKzIgFvDV3lnJMVw7L00YN4OaZ5rCKznQab0wErgQiarW2f4Z+j3hAv/A67D4d/GT/lEmSRmE/7HyYtBKwvnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772644958; c=relaxed/simple;
-	bh=jEWxDQr6S1Zs3tl6hWjnIS+nMXm8FLgWHmyk0MSVFpA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Maf0sa5uyA4h+61bMmheCsSksA3Fj/3HW4qTcBozD8rK8q3s6ztGyBtfwQw2fI39QAakzh0gBReXpEzoh+XnO9zZfq9w15CyLxWIYkhmQLd6//vzyR3lpK6aUMsPG4Pgd7y2Q3ZOVDB7kC1tfal7YqfW4FPPvm2EljcPdHxaynQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A1C4C2BC9E;
-	Wed,  4 Mar 2026 17:22:31 +0000 (UTC)
-From: Geert Uytterhoeven <geert+renesas@glider.be>
-To: Marc Zyngier <maz@kernel.org>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Antoine Tenart <atenart@kernel.org>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Mark-PK Tsai <mark-pk.tsai@mediatek.com>,
-	Daniel Palmer <daniel@thingy.jp>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Nishanth Menon <nm@ti.com>,
-	Tero Kristo <kristo@kernel.org>,
-	Santosh Shilimkar <ssantosh@kernel.org>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>
-Cc: linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-rpi-kernel@lists.infradead.org,
-	imx@lists.linux.dev,
-	linux-amlogic@lists.infradead.org,
-	linux-mediatek@lists.infradead.org,
-	linux-tegra@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH 4/4] iirqchip/gic children: Use GIC_* DT binding definitions
-Date: Wed,  4 Mar 2026 18:21:59 +0100
-Message-ID: <42b68ef7417c42bd7df4de7853e774aee5b73b5f.1772644406.git.geert+renesas@glider.be>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1772644406.git.geert+renesas@glider.be>
-References: <cover.1772644406.git.geert+renesas@glider.be>
+	s=arc-20240116; t=1772646068; c=relaxed/simple;
+	bh=fmMpSxSANH/XxWlmwdgOpxQtopGuJqUbV8vxTEABn8s=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=sG1oaJ07WMMxQf2N1xTEEFPLC2DtkSOSAoqvQi6biT/lhMnAO7YaDr4wfFROF6O801KYG5LPAXco2GWH2FiYAnNus+7XiJeMJCN5XFhbx8OAXSdGGUKXYbO0ZbIZa0J6sxKLkiyo4nGXnzMXgFimSPE7tveEbvepw8K3H/ghS6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=eiCERews; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Wh9TfSpX; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 624HH7ET3837884
+	for <linux-arm-msm@vger.kernel.org>; Wed, 4 Mar 2026 17:41:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=PcvxfbbczHcX6WWI4xy9kW
+	Z0bQCBbDw9HmDzvdNQ1eg=; b=eiCERews2sRLaTr2oNYh/AufwNJHJJFyn4tCbC
+	DxTUNQK44ef/rB6fuYcb8BXI7vTgLvuYA6mkEVgqLIDfD7sZ7T/l9VlVUB7bkTUx
+	fZIiXztWtA1g8FUMD9v8f3GguukttCBms02RwP3MmX/0HQu7UxP1kr+7ZGENOJSW
+	zW8POaJ8r1IuDM+jktYRXsdcpFmtSUjfi33L7Emu8BuQQw9OYM6I9/ash6hZv8ox
+	cBI/ndx4IgpJWjaXtzR1WPnxAQJ8kGq+4E4AGhx6nwNZLiUf9WXIc/TDr1+Gb41E
+	bPI4d+pP6zUrOK9JBe9uceoACYFP0k9SM/qBGvA5Ob+lNJXw==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cps0m0264-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2026 17:41:05 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-35979a03106so4339259a91.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2026 09:41:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1772646064; x=1773250864; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=PcvxfbbczHcX6WWI4xy9kWZ0bQCBbDw9HmDzvdNQ1eg=;
+        b=Wh9TfSpXmRXUXYZ/S1XTVfsnlGySbkBuHAPwmlgVNNjAxdzT7tVZoSr1vzxNynapHQ
+         huZRO9Ksk3ZHbnnFCcVUwlrTHBO90Hzu7hJwa8UBOiMjj4odZkny6z05qGXenNulOABU
+         ASUtcNwsKNpjTSlhoYbzq5jodLNSpp+xwh8wBPPsDDvTIaPB+NfaiwJxFflFWKEYA3mK
+         eN/h2QtJF1zyWOs7LiGEz5N7aEMjtINLiJ2OTXuUOEjomlg2Y2r9/8+Vw5+k0Tx4GNzq
+         bCAfGSaWt+apigmQ+mW/BDAXUSOb8dv5UpIl4Nkl/+dbD6yGQBBlB/YhaRJ4VcAWg17v
+         XuqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772646064; x=1773250864;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PcvxfbbczHcX6WWI4xy9kWZ0bQCBbDw9HmDzvdNQ1eg=;
+        b=Nd3u6xM3rAiLaDAI2ijtoufFNUiE80ftI+pxyGu40SGts7rKQPQFbSgK7qqFGAQC5p
+         TbJdTATnxsfjp9RJMTS9cnmQCIJzyrSbY3f9y36yVGMYoS/UkCASbLRvXFNQS8Wp5srs
+         N29wtHLJ/Sdyd4p5/axk5nGMn990MatjnUBV8/w1Wsvon7SGw+CTjm7UYoOQVOWF884b
+         q0NYRzmnonkUrTwcgcsuINDojUZbSx0pnaLDeiJOaEhz3xhg6DBLgL0d/DTAu2sizm28
+         SmW/VKGrmcPtLCgJycFxfF0Slid+2vg7Y3BIcrDTVyzv+yb30G+WtWTMN2ZH01glVFec
+         QWXA==
+X-Forwarded-Encrypted: i=1; AJvYcCX9TjJ1RLCYzX6BNxVDkPWHz3LMJidmxrsVZNdZ8mviGwIygY9D4WBUjJZ/fgB1Gao2xwIhArChC7mzj5TW@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz3raXuvUbZDIfRZBJrTIXLAVy316YYdUxy+WbiqQUier/SJ8mr
+	yTsPZIoLqsHvzFfdgmgfh8S9gLWxgQNS0600HHevYI4pKYG64Q8tgse8zaJHse9rqwBb6EidaGu
+	JT7wUte5gu9S5CdW48Ua7/gybOBlg0dvNZPHkK2uNBit+74s46X7CccVD9+0y7QWKYW3j
+X-Gm-Gg: ATEYQzyRh51T8pFl2TlE9Xk7hyPaK4WsQyj9UENsk3ilDcK//oA9k5xBlEvA/+XQt/2
+	/SVPV/edLs1bvcfO8FPfIYhgR95lTZyQgfwihVDf2/+0eOxZ80CdWs0jO7TvMLCgkr2sXmldvud
+	RJQ+DQ2bbDbvP2b0CRwtdKteHYPK9uVoCE/SLgfhc+X2sJpbaY5QgjEGoRcazWEiL5+OZgENfmm
+	4QObk754nDOeE5GH1gsRniH4xcv9MyfQKMACkAT2SCCPy16g+bNW3KI6sXz7INEA6FjaRU3Jfwa
+	/R5NoflBIpZhV0GkT+iwdafXN97miF1ssXtODq/kU95oOR/QCsUE67mIGhVqj8kyS79h9Ngy1je
+	kHw9/QYARyq7m9Hv3gaHMD6Mnjev6VMhLbeHVDHJXcph3tAGLZseA
+X-Received: by 2002:a05:6a21:b8c:b0:394:6159:175b with SMTP id adf61e73a8af0-3982e28bdf2mr2644843637.71.1772646064459;
+        Wed, 04 Mar 2026 09:41:04 -0800 (PST)
+X-Received: by 2002:a05:6a21:b8c:b0:394:6159:175b with SMTP id adf61e73a8af0-3982e28bdf2mr2644808637.71.1772646064001;
+        Wed, 04 Mar 2026 09:41:04 -0800 (PST)
+Received: from hu-jkona-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c70fa5ea0dcsm16608794a12.3.2026.03.04.09.40.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Mar 2026 09:41:03 -0800 (PST)
+From: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
+Subject: [PATCH v2 0/7] Add support for videocc and camcc on X1P42100
+ platform
+Date: Wed, 04 Mar 2026 23:10:50 +0530
+Message-Id: <20260304-purwa-videocc-camcc-v2-0-dbbd2d258bd6@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 46A832051EC
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAKJuqGkC/22Nyw7CIBREf6W5a2ko9qGu/A/TBYWLvYmUChY1D
+ f8uNnHnZpIzyZxZIaAnDHAqVvAYKZCbMohdAWqU0xUZ6cwguGh5JVo2L/4pWSSNTimmpM3JOXb
+ 8WHf1gAbycvZo6LVZL33mkcLD+fd2Eqtv+/Md/vpixTgbxF5j02nTDPLsQijvi7wpZ22ZA/qU0
+ gcrIKKHvQAAAA==
+X-Change-ID: 20260126-purwa-videocc-camcc-00e709474bef
+To: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Abel Vesa <abelvesa@kernel.org>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
+        Imran Shaik <imran.shaik@oss.qualcomm.com>,
+        Taniya Das <taniya.das@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Abel Vesa <abel.vesa@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Authority-Analysis: v=2.4 cv=e6wLiKp/ c=1 sm=1 tr=0 ts=69a86eb1 cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=bl4M-8LdCsxBmHb54JgA:9
+ a=QEXdDO2ut3YA:10 a=rl5im9kqc5Lf4LNbBjHf:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: FT4pBRoKQjZfhBrXSOdZF1EwDPFdJSLY
+X-Proofpoint-GUID: FT4pBRoKQjZfhBrXSOdZF1EwDPFdJSLY
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA0MDE0NCBTYWx0ZWRfX23tMCxlKTRem
+ omF5U36zuhttw7sUQTGumMPd+joceXJoZO3YrxndHFHZRNoHDpnrZAMxETw0O9gVnjgFIlpEpuk
+ 1XpGiI4p6pqR2Gz2FeE0qOARp1BrwP2+HguxVngOJaoVaE8Dv2t5GuAKVc0eWS4/Bm8ZViGt+lz
+ 1MaYdvQfur+qRq8qlwARZRtvoRpASeu6pSAqijScQr7bokaO6BJD5seWz4s+WJZH1Y9Rv0WHhCz
+ JkAx1ZrCT773HMBJA51E2kRIFMxdmz5h90dQM0z/reOmZclPq1SVhQFFK9ds5cYYSzCC3RFSsoi
+ Y2kMEMZ7SdDAfUPz3qxjAVpC8YNiZfYJnbYnOmryleDLYqCETCxglNkPkc61WdHWY/b2c6SHqhZ
+ mKnJRF8Az7Q/IE/cW8pCa1J9kYCALBzCQQvMcmmJrzRPdAo/+TZIDmFnXUIewAw3KrNlfHQjY1w
+ QLk+JmVjO3Bphbt/5qw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-04_07,2026-03-04_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 bulkscore=0 phishscore=0 lowpriorityscore=0 clxscore=1015
+ spamscore=0 adultscore=0 impostorscore=0 suspectscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603040144
+X-Rspamd-Queue-Id: 123BB2054D9
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.54 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DMARC_NA(0.00)[glider.be];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	PRECEDENCE_BULK(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95385-lists,linux-arm-msm=lfdr.de,renesas];
-	FREEMAIL_TO(0.00)[kernel.org,broadcom.com,nxp.com,pengutronix.de,gmail.com,linaro.org,baylibre.com,googlemail.com,mediatek.com,thingy.jp,collabora.com,nvidia.com,ti.com,socionext.com];
-	RCPT_COUNT_TWELVE(0.00)[38];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	FROM_NEQ_ENVFROM(0.00)[geert@glider.be,linux-arm-msm@vger.kernel.org];
-	R_DKIM_NA(0.00)[];
-	NEURAL_HAM(-0.00)[-0.867];
+	RCPT_COUNT_TWELVE(0.00)[24];
+	TAGGED_FROM(0.00)[bounces-95386-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[jagadeesh.kona@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,renesas];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,glider.be:mid,glider.be:email]
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Action: no action
 
-Several interrupt controllers have GICs as their interrupt parents, to
-forward SPI interrupts to.  Improve readability by replacing explicit
-and implicit magic zeroes by the GIC_SPI constant from the DT binding
-definitions.
+Add support for video and camera clock controllers on
+X1P42100 platform.
 
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+The purwa(X1P42100) platform includes the hamoa dtsi file
+and camcc node is already posted upstream on hamoa(X1E80100)
+platform in Bryan's series[1]. Hence included the camcc node
+patch[PATCH 06/15] from Bryan's series[1] and extended it for
+purwa(X1P42100).
+
+[1]: https://lore.kernel.org/all/20250711-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v7-6-0bc5da82f526@linaro.org/
+
+The camcc node was added in x1e80100.dtsi in above Bryan's series
+but moved it to hamoa.dtsi in this series to align as per the latest
+changes.
+
+Signed-off-by: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
 ---
- drivers/irqchip/irq-alpine-msi.c     | 4 +++-
- drivers/irqchip/irq-bcm2712-mip.c    | 4 +++-
- drivers/irqchip/irq-crossbar.c       | 8 +++++---
- drivers/irqchip/irq-gic-v2m.c        | 4 +++-
- drivers/irqchip/irq-gic-v3-mbi.c     | 6 ++++--
- drivers/irqchip/irq-imx-gpcv2.c      | 4 +++-
- drivers/irqchip/irq-meson-gpio.c     | 4 +++-
- drivers/irqchip/irq-mst-intc.c       | 6 ++++--
- drivers/irqchip/irq-mtk-cirq.c       | 4 +++-
- drivers/irqchip/irq-mtk-sysirq.c     | 6 ++++--
- drivers/irqchip/irq-qcom-mpm.c       | 4 +++-
- drivers/irqchip/irq-tegra.c          | 2 +-
- drivers/irqchip/irq-ti-sci-inta.c    | 4 +++-
- drivers/irqchip/irq-ti-sci-intr.c    | 4 +++-
- drivers/irqchip/irq-uniphier-aidet.c | 4 +++-
- drivers/irqchip/qcom-pdc.c           | 4 +++-
- 16 files changed, 51 insertions(+), 21 deletions(-)
+Changes in v2:
+- Dropped new header file for X1P42100 videocc and included
+  additional clocks and resets in SM8650 videocc header file
+- Updated commit text for videocc and camcc driver patches
+- Squashed Purwa videocc & camcc DT compatible update into previous
+  camcc node patch based on review comments
+- Added R-By tags received on v1
+- Added Fixes tags based on review comments
+- Link to v1: https://lore.kernel.org/r/20260128-purwa-videocc-camcc-v1-0-b23de57df5ba@oss.qualcomm.com
 
-diff --git a/drivers/irqchip/irq-alpine-msi.c b/drivers/irqchip/irq-alpine-msi.c
-index 6764d64e79500dcb..309b9578ed6de381 100644
---- a/drivers/irqchip/irq-alpine-msi.c
-+++ b/drivers/irqchip/irq-alpine-msi.c
-@@ -26,6 +26,8 @@
- #include <asm/irq.h>
- #include <asm/msi.h>
- 
-+#include <dt-bindings/interrupt-controller/arm-gic.h>
-+
- /* MSIX message address format: local GIC target */
- #define ALPINE_MSIX_SPI_TARGET_CLUSTER0		BIT(16)
- 
-@@ -89,7 +91,7 @@ static int alpine_msix_gic_domain_alloc(struct irq_domain *domain, unsigned int
- 
- 	fwspec.fwnode = domain->parent->fwnode;
- 	fwspec.param_count = 3;
--	fwspec.param[0] = 0;
-+	fwspec.param[0] = GIC_SPI;
- 	fwspec.param[1] = sgi;
- 	fwspec.param[2] = IRQ_TYPE_EDGE_RISING;
- 
-diff --git a/drivers/irqchip/irq-bcm2712-mip.c b/drivers/irqchip/irq-bcm2712-mip.c
-index 06a6ab6270ad36bc..816836f6437c1b26 100644
---- a/drivers/irqchip/irq-bcm2712-mip.c
-+++ b/drivers/irqchip/irq-bcm2712-mip.c
-@@ -13,6 +13,8 @@
- 
- #include <linux/irqchip/irq-msi-lib.h>
- 
-+#include <dt-bindings/interrupt-controller/arm-gic.h>
-+
- #define MIP_INT_RAISE		0x00
- #define MIP_INT_CLEAR		0x10
- #define MIP_INT_CFGL_HOST	0x20
-@@ -99,7 +101,7 @@ static int mip_middle_domain_alloc(struct irq_domain *domain, unsigned int virq,
- 
- 	fwspec.fwnode = domain->parent->fwnode;
- 	fwspec.param_count = 3;
--	fwspec.param[0] = 0;
-+	fwspec.param[0] = GIC_SPI;
- 	fwspec.param[1] = hwirq + mip->msi_base;
- 	fwspec.param[2] = IRQ_TYPE_EDGE_RISING;
- 
-diff --git a/drivers/irqchip/irq-crossbar.c b/drivers/irqchip/irq-crossbar.c
-index cd1134101ace03e3..dc38eed366bf85ea 100644
---- a/drivers/irqchip/irq-crossbar.c
-+++ b/drivers/irqchip/irq-crossbar.c
-@@ -13,6 +13,8 @@
- #include <linux/of_irq.h>
- #include <linux/slab.h>
- 
-+#include <dt-bindings/interrupt-controller/arm-gic.h>
-+
- #define IRQ_FREE	-1
- #define IRQ_RESERVED	-2
- #define IRQ_SKIP	-3
-@@ -95,7 +97,7 @@ static int allocate_gic_irq(struct irq_domain *domain, unsigned virq,
- 
- 	fwspec.fwnode = domain->parent->fwnode;
- 	fwspec.param_count = 3;
--	fwspec.param[0] = 0;	/* SPI */
-+	fwspec.param[0] = GIC_SPI;
- 	fwspec.param[1] = i;
- 	fwspec.param[2] = IRQ_TYPE_LEVEL_HIGH;
- 
-@@ -117,7 +119,7 @@ static int crossbar_domain_alloc(struct irq_domain *d, unsigned int virq,
- 
- 	if (fwspec->param_count != 3)
- 		return -EINVAL;	/* Not GIC compliant */
--	if (fwspec->param[0] != 0)
-+	if (fwspec->param[0] != GIC_SPI)
- 		return -EINVAL;	/* No PPI should point to this domain */
- 
- 	hwirq = fwspec->param[1];
-@@ -175,7 +177,7 @@ static int crossbar_domain_translate(struct irq_domain *d,
- 			return -EINVAL;
- 
- 		/* No PPI should point to this domain */
--		if (fwspec->param[0] != 0)
-+		if (fwspec->param[0] != GIC_SPI)
- 			return -EINVAL;
- 
- 		*hwirq = fwspec->param[1];
-diff --git a/drivers/irqchip/irq-gic-v2m.c b/drivers/irqchip/irq-gic-v2m.c
-index bd85bd344f259e19..17311ad7a494016b 100644
---- a/drivers/irqchip/irq-gic-v2m.c
-+++ b/drivers/irqchip/irq-gic-v2m.c
-@@ -28,6 +28,8 @@
- 
- #include <linux/irqchip/irq-msi-lib.h>
- 
-+#include <dt-bindings/interrupt-controller/arm-gic.h>
-+
- /*
- * MSI_TYPER:
- *     [31:26] Reserved
-@@ -117,7 +119,7 @@ static int gicv2m_irq_gic_domain_alloc(struct irq_domain *domain,
- 	if (is_of_node(domain->parent->fwnode)) {
- 		fwspec.fwnode = domain->parent->fwnode;
- 		fwspec.param_count = 3;
--		fwspec.param[0] = 0;
-+		fwspec.param[0] = GIC_SPI;
- 		fwspec.param[1] = hwirq - 32;
- 		fwspec.param[2] = IRQ_TYPE_EDGE_RISING;
- 	} else if (is_fwnode_irqchip(domain->parent->fwnode)) {
-diff --git a/drivers/irqchip/irq-gic-v3-mbi.c b/drivers/irqchip/irq-gic-v3-mbi.c
-index 62504deb6cd376a4..5a046a92bc52a063 100644
---- a/drivers/irqchip/irq-gic-v3-mbi.c
-+++ b/drivers/irqchip/irq-gic-v3-mbi.c
-@@ -17,9 +17,11 @@
- #include <linux/spinlock.h>
- 
- #include <linux/irqchip/arm-gic-v3.h>
--
- #include <linux/irqchip/irq-msi-lib.h>
- 
-+#include <dt-bindings/interrupt-controller/arm-gic.h>
-+
-+
- struct mbi_range {
- 	u32			spi_start;
- 	u32			nr_spis;
-@@ -62,7 +64,7 @@ static int mbi_irq_gic_domain_alloc(struct irq_domain *domain,
- 	 */
- 	fwspec.fwnode = domain->parent->fwnode;
- 	fwspec.param_count = 3;
--	fwspec.param[0] = 0;
-+	fwspec.param[0] = GIC_SPI;
- 	fwspec.param[1] = hwirq - 32;
- 	fwspec.param[2] = IRQ_TYPE_EDGE_RISING;
- 
-diff --git a/drivers/irqchip/irq-imx-gpcv2.c b/drivers/irqchip/irq-imx-gpcv2.c
-index 6ea10d3356a7ff86..e269ad794c50af96 100644
---- a/drivers/irqchip/irq-imx-gpcv2.c
-+++ b/drivers/irqchip/irq-imx-gpcv2.c
-@@ -9,6 +9,8 @@
- #include <linux/irqchip.h>
- #include <linux/syscore_ops.h>
- 
-+#include <dt-bindings/interrupt-controller/arm-gic.h>
-+
- #define IMR_NUM			4
- #define GPC_MAX_IRQS            (IMR_NUM * 32)
- 
-@@ -151,7 +153,7 @@ static int imx_gpcv2_domain_translate(struct irq_domain *d,
- 			return -EINVAL;
- 
- 		/* No PPI should point to this domain */
--		if (fwspec->param[0] != 0)
-+		if (fwspec->param[0] != GIC_SPI)
- 			return -EINVAL;
- 
- 		*hwirq = fwspec->param[1];
-diff --git a/drivers/irqchip/irq-meson-gpio.c b/drivers/irqchip/irq-meson-gpio.c
-index f722e9c57e2e40a5..9f5849ef5cbf6c44 100644
---- a/drivers/irqchip/irq-meson-gpio.c
-+++ b/drivers/irqchip/irq-meson-gpio.c
-@@ -16,6 +16,8 @@
- #include <linux/of.h>
- #include <linux/of_address.h>
- 
-+#include <dt-bindings/interrupt-controller/arm-gic.h>
-+
- #define MAX_NUM_CHANNEL 64
- #define MAX_INPUT_MUX 256
- 
-@@ -488,7 +490,7 @@ static int meson_gpio_irq_allocate_gic_irq(struct irq_domain *domain,
- 
- 	fwspec.fwnode = domain->parent->fwnode;
- 	fwspec.param_count = 3;
--	fwspec.param[0] = 0;	/* SPI */
-+	fwspec.param[0] = GIC_SPI;
- 	fwspec.param[1] = hwirq;
- 	fwspec.param[2] = meson_gpio_irq_type_output(type);
- 
-diff --git a/drivers/irqchip/irq-mst-intc.c b/drivers/irqchip/irq-mst-intc.c
-index b5335f6fd6d6e3f6..ca254b2d8cf0a0b5 100644
---- a/drivers/irqchip/irq-mst-intc.c
-+++ b/drivers/irqchip/irq-mst-intc.c
-@@ -15,6 +15,8 @@
- #include <linux/spinlock.h>
- #include <linux/syscore_ops.h>
- 
-+#include <dt-bindings/interrupt-controller/arm-gic.h>
-+
- #define MST_INTC_MAX_IRQS	64
- 
- #define INTC_MASK		0x0
-@@ -189,7 +191,7 @@ static int mst_intc_domain_translate(struct irq_domain *d,
- 			return -EINVAL;
- 
- 		/* No PPI should point to this domain */
--		if (fwspec->param[0] != 0)
-+		if (fwspec->param[0] != GIC_SPI)
- 			return -EINVAL;
- 
- 		if (fwspec->param[1] >= cd->nr_irqs)
-@@ -216,7 +218,7 @@ static int mst_intc_domain_alloc(struct irq_domain *domain, unsigned int virq,
- 		return -EINVAL;
- 
- 	/* No PPI should point to this domain */
--	if (fwspec->param[0])
-+	if (fwspec->param[0] != GIC_SPI)
- 		return -EINVAL;
- 
- 	hwirq = fwspec->param[1];
-diff --git a/drivers/irqchip/irq-mtk-cirq.c b/drivers/irqchip/irq-mtk-cirq.c
-index 914d1d639fe303b7..00fb50e8ff40fc1f 100644
---- a/drivers/irqchip/irq-mtk-cirq.c
-+++ b/drivers/irqchip/irq-mtk-cirq.c
-@@ -15,6 +15,8 @@
- #include <linux/slab.h>
- #include <linux/syscore_ops.h>
- 
-+#include <dt-bindings/interrupt-controller/arm-gic.h>
-+
- enum mtk_cirq_regoffs_index {
- 	CIRQ_STA,
- 	CIRQ_ACK,
-@@ -151,7 +153,7 @@ static int mtk_cirq_domain_translate(struct irq_domain *d,
- 			return -EINVAL;
- 
- 		/* No PPI should point to this domain */
--		if (fwspec->param[0] != 0)
-+		if (fwspec->param[0] != GIC_SPI)
- 			return -EINVAL;
- 
- 		/* cirq support irq number check */
-diff --git a/drivers/irqchip/irq-mtk-sysirq.c b/drivers/irqchip/irq-mtk-sysirq.c
-index 50f88293b4ccf3fe..8259c37710137297 100644
---- a/drivers/irqchip/irq-mtk-sysirq.c
-+++ b/drivers/irqchip/irq-mtk-sysirq.c
-@@ -14,6 +14,8 @@
- #include <linux/slab.h>
- #include <linux/spinlock.h>
- 
-+#include <dt-bindings/interrupt-controller/arm-gic.h>
-+
- struct mtk_sysirq_chip_data {
- 	raw_spinlock_t lock;
- 	u32 nr_intpol_bases;
-@@ -78,7 +80,7 @@ static int mtk_sysirq_domain_translate(struct irq_domain *d,
- 			return -EINVAL;
- 
- 		/* No PPI should point to this domain */
--		if (fwspec->param[0] != 0)
-+		if (fwspec->param[0] != GIC_SPI)
- 			return -EINVAL;
- 
- 		*hwirq = fwspec->param[1];
-@@ -101,7 +103,7 @@ static int mtk_sysirq_domain_alloc(struct irq_domain *domain, unsigned int virq,
- 		return -EINVAL;
- 
- 	/* sysirq doesn't support PPI */
--	if (fwspec->param[0])
-+	if (fwspec->param[0] != GIC_SPI)
- 		return -EINVAL;
- 
- 	hwirq = fwspec->param[1];
-diff --git a/drivers/irqchip/irq-qcom-mpm.c b/drivers/irqchip/irq-qcom-mpm.c
-index 83f31ea657b74a77..425f7a8914452d12 100644
---- a/drivers/irqchip/irq-qcom-mpm.c
-+++ b/drivers/irqchip/irq-qcom-mpm.c
-@@ -22,6 +22,8 @@
- #include <linux/soc/qcom/irq.h>
- #include <linux/spinlock.h>
- 
-+#include <dt-bindings/interrupt-controller/arm-gic.h>
-+
- /*
-  * This is the driver for Qualcomm MPM (MSM Power Manager) interrupt controller,
-  * which is commonly found on Qualcomm SoCs built on the RPM architecture.
-@@ -247,7 +249,7 @@ static int qcom_mpm_alloc(struct irq_domain *domain, unsigned int virq,
- 
- 	parent_fwspec.fwnode = domain->parent->fwnode;
- 	parent_fwspec.param_count = 3;
--	parent_fwspec.param[0] = 0;
-+	parent_fwspec.param[0] = GIC_SPI;
- 	parent_fwspec.param[1] = map->hwirq;
- 	parent_fwspec.param[2] = type;
- 
-diff --git a/drivers/irqchip/irq-tegra.c b/drivers/irqchip/irq-tegra.c
-index b449e9cc4034a372..f141f52862796635 100644
---- a/drivers/irqchip/irq-tegra.c
-+++ b/drivers/irqchip/irq-tegra.c
-@@ -226,7 +226,7 @@ static int tegra_ictlr_domain_translate(struct irq_domain *d,
- 			return -EINVAL;
- 
- 		/* No PPI should point to this domain */
--		if (fwspec->param[0] != 0)
-+		if (fwspec->param[0] != GIC_SPI)
- 			return -EINVAL;
- 
- 		*hwirq = fwspec->param[1];
-diff --git a/drivers/irqchip/irq-ti-sci-inta.c b/drivers/irqchip/irq-ti-sci-inta.c
-index f1eb2f92f0ca10fd..d2135b304c87adf6 100644
---- a/drivers/irqchip/irq-ti-sci-inta.c
-+++ b/drivers/irqchip/irq-ti-sci-inta.c
-@@ -23,6 +23,8 @@
- #include <linux/soc/ti/ti_sci_protocol.h>
- #include <asm-generic/msi.h>
- 
-+#include <dt-bindings/interrupt-controller/arm-gic.h>
-+
- #define TI_SCI_DEV_ID_MASK	0xffff
- #define TI_SCI_DEV_ID_SHIFT	16
- #define TI_SCI_IRQ_ID_MASK	0xffff
-@@ -238,7 +240,7 @@ static struct ti_sci_inta_vint_desc *ti_sci_inta_alloc_parent_irq(struct irq_dom
- 	if (of_device_is_compatible(parent_node, "arm,gic-v3")) {
- 		/* Parent is GIC */
- 		parent_fwspec.param_count = 3;
--		parent_fwspec.param[0] = 0;
-+		parent_fwspec.param[0] = GIC_SPI;
- 		parent_fwspec.param[1] = p_hwirq - 32;
- 		parent_fwspec.param[2] = IRQ_TYPE_LEVEL_HIGH;
- 	} else {
-diff --git a/drivers/irqchip/irq-ti-sci-intr.c b/drivers/irqchip/irq-ti-sci-intr.c
-index 0ea17040e934fd0d..8bcc410c3f5aa3ac 100644
---- a/drivers/irqchip/irq-ti-sci-intr.c
-+++ b/drivers/irqchip/irq-ti-sci-intr.c
-@@ -17,6 +17,8 @@
- #include <linux/platform_device.h>
- #include <linux/soc/ti/ti_sci_protocol.h>
- 
-+#include <dt-bindings/interrupt-controller/arm-gic.h>
-+
- /**
-  * struct ti_sci_intr_irq_domain - Structure representing a TISCI based
-  *				   Interrupt Router IRQ domain.
-@@ -164,7 +166,7 @@ static int ti_sci_intr_alloc_parent_irq(struct irq_domain *domain, unsigned int
- 	if (of_device_is_compatible(parent_node, "arm,gic-v3")) {
- 		/* Parent is GIC */
- 		fwspec.param_count = 3;
--		fwspec.param[0] = 0;	/* SPI */
-+		fwspec.param[0] = GIC_SPI;
- 		fwspec.param[1] = p_hwirq - 32; /* SPI offset */
- 		fwspec.param[2] = hwirq_type;
- 	} else {
-diff --git a/drivers/irqchip/irq-uniphier-aidet.c b/drivers/irqchip/irq-uniphier-aidet.c
-index 6005c2d28dd9389a..bef7978c3d7cd76e 100644
---- a/drivers/irqchip/irq-uniphier-aidet.c
-+++ b/drivers/irqchip/irq-uniphier-aidet.c
-@@ -16,6 +16,8 @@
- #include <linux/platform_device.h>
- #include <linux/spinlock.h>
- 
-+#include <dt-bindings/interrupt-controller/arm-gic.h>
-+
- #define UNIPHIER_AIDET_NR_IRQS		256
- 
- #define UNIPHIER_AIDET_DETCONF		0x04	/* inverter register base */
-@@ -146,7 +148,7 @@ static int uniphier_aidet_domain_alloc(struct irq_domain *domain,
- 	/* parent is GIC */
- 	parent_fwspec.fwnode = domain->parent->fwnode;
- 	parent_fwspec.param_count = 3;
--	parent_fwspec.param[0] = 0;		/* SPI */
-+	parent_fwspec.param[0] = GIC_SPI;
- 	parent_fwspec.param[1] = hwirq;
- 	parent_fwspec.param[2] = type;
- 
-diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
-index 32b77fa93f730416..5340fc9abaec1622 100644
---- a/drivers/irqchip/qcom-pdc.c
-+++ b/drivers/irqchip/qcom-pdc.c
-@@ -20,6 +20,8 @@
- #include <linux/slab.h>
- #include <linux/types.h>
- 
-+#include <dt-bindings/interrupt-controller/arm-gic.h>
-+
- #define PDC_MAX_GPIO_IRQS	256
- #define PDC_DRV_OFFSET		0x10000
- 
-@@ -295,7 +297,7 @@ static int qcom_pdc_alloc(struct irq_domain *domain, unsigned int virq,
- 
- 	parent_fwspec.fwnode      = domain->parent->fwnode;
- 	parent_fwspec.param_count = 3;
--	parent_fwspec.param[0]    = 0;
-+	parent_fwspec.param[0]    = GIC_SPI;
- 	parent_fwspec.param[1]    = pin_to_hwirq(region, hwirq);
- 	parent_fwspec.param[2]    = type;
- 
+---
+Bryan O'Donoghue (1):
+      arm64: dts: qcom: x1e80100: Add CAMCC block definition
+
+Jagadeesh Kona (6):
+      dt-bindings: clock: qcom: Add X1P42100 video clock controller
+      dt-bindings: clock: qcom: Add X1P42100 camera clock controller
+      clk: qcom: videocc-x1p42100: Add support for video clock controller
+      clk: qcom: camcc-x1e80100: Add support for camera QDSS debug clocks
+      clk: qcom: camcc-x1p42100: Add support for camera clock controller
+      arm64: defconfig: Enable VIDEOCC and CAMCC drivers on Qualcomm X1P42100
+
+ .../bindings/clock/qcom,sm8450-videocc.yaml        |    2 +
+ .../bindings/clock/qcom,x1e80100-camcc.yaml        |    1 +
+ arch/arm64/boot/dts/qcom/hamoa.dtsi                |   17 +
+ arch/arm64/boot/dts/qcom/purwa.dtsi                |   10 +
+ arch/arm64/configs/defconfig                       |    2 +
+ drivers/clk/qcom/Kconfig                           |   20 +
+ drivers/clk/qcom/Makefile                          |    2 +
+ drivers/clk/qcom/camcc-x1e80100.c                  |   64 +
+ drivers/clk/qcom/camcc-x1p42100.c                  | 2223 ++++++++++++++++++++
+ drivers/clk/qcom/videocc-x1p42100.c                |  585 ++++++
+ include/dt-bindings/clock/qcom,sm8650-videocc.h    |    6 +
+ include/dt-bindings/clock/qcom,x1e80100-camcc.h    |    3 +
+ 12 files changed, 2935 insertions(+)
+---
+base-commit: ca3a02fda4da8e2c1cb6baee5d72352e9e2cfaea
+change-id: 20260126-purwa-videocc-camcc-00e709474bef
+
+Best regards,
 -- 
-2.43.0
+Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
 
 
