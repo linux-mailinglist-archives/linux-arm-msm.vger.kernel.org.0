@@ -1,255 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-95450-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6DA3AL6PqGmzvgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95450-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 21:02:06 +0100
+	id wAMBLEqQqGnZvgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 21:04:26 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6ED0B2075F9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 21:02:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C3F420761A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 21:04:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9464F305DB8A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2026 19:59:59 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C99853053B01
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2026 20:04:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BB7C3DFC89;
-	Wed,  4 Mar 2026 19:59:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD63D371869;
+	Wed,  4 Mar 2026 20:04:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d4OKRsw1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JnV8zCCH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA6973DFC85
-	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Mar 2026 19:59:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA3EC3016E9;
+	Wed,  4 Mar 2026 20:04:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772654398; cv=none; b=cvJXNxNKpsqBvYdUzdaSkLUgrQXu7RrnfiYpAtMe5qXASlk8ScD89k/vIZh5RrRSoD4QHlvD4CAvsIPXBMWWblHnQ5dg7LIQSLJwlYkX6O4Es4ffAF7fKKV9IKR8lrOID2oz3Peso6Lk5JXYe4+6A3+IXJSqBodOAm2r2heO8Vg=
+	t=1772654663; cv=none; b=cHu4FkHPfGmZkxwhJLZeU7No799+ldWZpBAC/CT549wGCeATkjdutuzwf/m9DHGRfyiTEnVTZJ9e8iTyovjfB2grsQbiLTmquXYO/2CRCdnp3VdUqnkQNEnEaItAjZFr07yi3QGZlzJ+J/njMoyG8W4t1H8TX2mj+pzJh+VfF9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772654398; c=relaxed/simple;
-	bh=8/f4hdOSdwYHmvZUxaFmVQurWRhk7GDQgpmiggd0Y9M=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=irEtVIQR7Y2/WSja8BK3TmXuZ82xOtIPdlkIUIrJrhhIAiBVHFE4GkeDtv0XpJAD4SjgVB5X087R4mAW0nm7RY6AWTeiKTU//DMTuNcq+IAKaw0TWbBikgLBO2JuQwKZUykLTWENjHeHRAtr9UfVlrNbLr6G3vHHBFgfz4WBU0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d4OKRsw1; arc=none smtp.client-ip=209.85.219.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-89a1d7cc7f0so6631586d6.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2026 11:59:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772654397; x=1773259197; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8TOsv1PGUXfFuGxG5SQQqgTLrZyW8alSpUKXMJIOho4=;
-        b=d4OKRsw1GObVqE4eFja2CZKSLEsEq3xKWH1c9o4VK3lFnpve6Xq85cG1JGVFgeoNAL
-         4wWfM8xu/ho/Sse+YpskUkK4nKsuaAzteY/B5v7tQuzk6YdF07mrRtQtNlE3jASRkki1
-         k0B59ArPjcp0n+dR4S7MUjOcMNmQXYaCLf882Frg6A4FMoOlfcwzhsH3mw7vSzJqmgOt
-         8qRKbzuIrljC7ZQJIWLvhrvwvGt8+RsZfW01DhklZq1ee8htaDocMBcDfK045p3qDMT6
-         pU4QJp/H2Z90IG/ReOYd5pFicIK5/ccAcnksBdi7W+zYTgxOy2hlXkHCM2l/4qcXo20R
-         ir9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772654397; x=1773259197;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=8TOsv1PGUXfFuGxG5SQQqgTLrZyW8alSpUKXMJIOho4=;
-        b=n6mYUlQuFl3y+3modDGCxiRXykZwg7fh26zqSn3hRPESRlrIgvYjomtGZrU8nPcfQ9
-         0AZU/wgIbkpUTgM4CtDP2HTPkCjAov4mZivg2y8l2G6ymRGcZ+r4NgJ9MTQl23uhwcOX
-         yrgE4/xdJcEJaDMN3VUOGwFSWiErHq+mbQd6YsXHo8Npna2J2jPH+pF3mzpbgg1tULLo
-         2BWSQD7BMjZaBYVdxC0Eo9oKBq8u4NqFDQTIuOwDkReMkjXUb8no22b9ceFGOyLmMRyI
-         GkOte+h7i8SzxH2YT3LL0iBjH5HcqJnnV5UJQ0lBZsUlY63e8jgu5yAUNc0mRXIAqvqg
-         HFdQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWDveK8CVXBpogypOgKApyRmMRpD41kjvbu1fV60e59b4HnxiuDWd/ZuyJ/Ct1k3YPilRRBfvXSFnGhJLLA@vger.kernel.org
-X-Gm-Message-State: AOJu0YzOvRFrVg6wlvzXB1rcoBSrSxuqMC+DRWmuArR7ec1TJbOvKZ/u
-	gc0jVMz8XqxSza+4J7EHFnCvj1mgVv7RWuTT8xYNYu6qHBeE4tqP4P0y
-X-Gm-Gg: ATEYQzyzhUHDeQu2CGYat3MeKPZyESn1wAzfpkb76glqsu/+R3C2EGpr+M36932oUst
-	kd9YJTtnwu/letZvGfd+4U2nB+k8fqroQT08W+V1ogibN1PkOTAfOhffQLiOrOKj67VUFh+lsjC
-	F0cQkyN2DEShNoBZrChfC6xHS73fGy8TZmDXljavFZbZxwtD9g2VjBgWspk37Zb+pWFhI9109fh
-	iTitb/sDrBbIMONb+bJYzuSPPrDRINOGaIAvxdrT4wFb/N+fVvneVCIbvuvSY5ZCIxjAioSdSnV
-	ZzYjiwl7Wouzp7X9FOKgBjnxab+ECTIErHmyt0nuCoc3qWrJvZt8UxzZJmAiw7qcYBHfGnLi27u
-	lU97iKg48dyy0qfXHjFY6nvZaPzpYixyg6UW44DJa2lnsgr9LQcgFNSn5iKmeYy2W+q6ZFWvMzg
-	AimN15jXTpNcT8YvN09WAut12P31nBGdxXdqle
-X-Received: by 2002:a05:6214:21ce:b0:89a:b94:3cb6 with SMTP id 6a1803df08f44-89a199967b1mr43265516d6.1.1772654396693;
-        Wed, 04 Mar 2026 11:59:56 -0800 (PST)
-Received: from localhost ([184.144.58.243])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-899eab5cf2asm100369486d6.13.2026.03.04.11.59.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Mar 2026 11:59:56 -0800 (PST)
-From: Richard Acayan <mailingradian@gmail.com>
-To: Srinivas Kandagatla <srini@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-sound@vger.kernel.org,
-	devicetree@vger.kernel.org
-Cc: Nickolay Goppen <setotau@mainlining.org>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Johan Hovold <johan@kernel.org>,
-	Kees Cook <kees@kernel.org>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Richard Acayan <mailingradian@gmail.com>
-Subject: [PATCH v2 11/11] ASoC: msm8916-wcd-analog: add quirk for cajon 2.0
-Date: Wed,  4 Mar 2026 14:58:15 -0500
-Message-ID: <20260304195815.52347-12-mailingradian@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260304195815.52347-1-mailingradian@gmail.com>
-References: <20260304195815.52347-1-mailingradian@gmail.com>
+	s=arc-20240116; t=1772654663; c=relaxed/simple;
+	bh=k9nyZkvWLcBmAO5OFoY+hnYWXM4uBUZ1HO/IjJvDH4A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=e38NUSDO7zq5AyBrEfPA2rZr2cZGkoR5q3KtDmO/CXYjBc03B46pn2oGdxdn3ZlXDkqpyoi/D+rFP7STNITDPZV+7INiy3zLtjm7Pb6vaFUHq7G5yYb5+WnLNN58dZCnzUOuu7VeT8/SOIOKVM9vB5S5ORNAlO4J6XqCw9YbSmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JnV8zCCH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6004CC4CEF7;
+	Wed,  4 Mar 2026 20:04:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772654663;
+	bh=k9nyZkvWLcBmAO5OFoY+hnYWXM4uBUZ1HO/IjJvDH4A=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=JnV8zCCHJTx00iRdYWtOUzU/VD7LlBVtZyB1ZPRG8jPfeq3fGEVmeTBkC6Ou4bsWr
+	 ALo1ZA8b/lAGNpd3nCDeNheROxT2wn8v8lpOb4XlEJ7rxkw+W7zNkvnXDrUdjBdWDT
+	 ENQhZhCJkL4MOuTka06D9t0dlQLzeQ/S6HJXQj9YgShGGqmkLc/cWRsEUPc0vHCwG/
+	 AD5XIt6vRE4/XMy5I721rBNhXmXXRX+I6EC2UkCqWVpD8uEanzScI0on+DFEFI6OkT
+	 3V6Lh+rE59vC2C09QZ30Fo5Bq+LZplnG2GqJkBBLLwPSQEJ+U8vHBfdRjsiN+PbiOD
+	 r7Otri2jwzNrg==
+Date: Wed, 4 Mar 2026 14:04:11 -0600
+From: Bjorn Andersson <andersson@kernel.org>
+To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, 
+	Chris Lew <quic_clew@quicinc.com>, Dmitry Baryshkov <lumag@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] soc: qcom: qmi: Print error codes in failure paths
+Message-ID: <vrvbq6wih4jrq3rorshqpwzxkrwtknwh7pbub4xvunmnvf5fyu@45b7g4zrpdcu>
+References: <20260129152320.3658053-1-mukesh.ojha@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 6ED0B2075F9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260129152320.3658053-1-mukesh.ojha@oss.qualcomm.com>
+X-Rspamd-Queue-Id: 1C3F420761A
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.84 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95450-lists,linux-arm-msm=lfdr.de];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	FREEMAIL_TO(0.00)[kernel.org,gmail.com,perex.cz,suse.com,vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[20];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[mainlining.org,quicinc.com,linuxfoundation.org,kernel.org,opensource.cirrus.com,renesas.com,gmail.com];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mailingradian@gmail.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-95451-lists,linux-arm-msm=lfdr.de];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+	RCPT_COUNT_FIVE(0.00)[6];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-The codec version CAJON_2_0 on the Snapdragon 670 requires touching the
-HPH test registers. Add the quirk so this driver can also support
-SDM670.
+On Thu, Jan 29, 2026 at 08:53:19PM +0530, Mukesh Ojha wrote:
+> Few error paths in the qmi_interface module log a failure message but
+> do not include the actual error code. Include the error value in the log
+> so debugging failures becomes easier.
+> 
 
-Signed-off-by: Richard Acayan <mailingradian@gmail.com>
----
- sound/soc/codecs/msm8916-wcd-analog.c | 63 ++++++++++++++++++++++++++-
- 1 file changed, 61 insertions(+), 2 deletions(-)
+I'm definitely in favor of such improvements! But I would like to make
+sure we get most signal-to-noise ratio out of it.
 
-diff --git a/sound/soc/codecs/msm8916-wcd-analog.c b/sound/soc/codecs/msm8916-wcd-analog.c
-index 9ca381812975..6fe111e6d686 100644
---- a/sound/soc/codecs/msm8916-wcd-analog.c
-+++ b/sound/soc/codecs/msm8916-wcd-analog.c
-@@ -217,9 +217,11 @@
- #define CDC_A_RX_HPH_BIAS_LDO_OCP	(0xf195)
- #define CDC_A_RX_HPH_BIAS_CNP		(0xf196)
- #define CDC_A_RX_HPH_CNP_EN		(0xf197)
-+#define CDC_A_RX_HPH_L_TEST		(0xf19A)
- #define CDC_A_RX_HPH_L_PA_DAC_CTL	(0xf19B)
- #define RX_HPA_L_PA_DAC_CTL_DATA_RESET_MASK	BIT(1)
- #define RX_HPA_L_PA_DAC_CTL_DATA_RESET_RESET	BIT(1)
-+#define CDC_A_RX_HPH_R_TEST		(0xf19C)
- #define CDC_A_RX_HPH_R_PA_DAC_CTL	(0xf19D)
- #define RX_HPH_R_PA_DAC_CTL_DATA_RESET	BIT(1)
- #define RX_HPH_R_PA_DAC_CTL_DATA_RESET_MASK BIT(1)
-@@ -696,6 +698,59 @@ static int pm8916_wcd_analog_enable_ear_pa(struct snd_soc_dapm_widget *w,
- 	return 0;
- }
- 
-+static int pm8916_wcd_analog_enable_hphl_pa(struct snd_soc_dapm_widget *w,
-+					    struct snd_kcontrol *kcontrol,
-+					    int event)
-+{
-+	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
-+	struct pm8916_wcd_analog_priv *priv = dev_get_drvdata(component->dev);
-+
-+	/* This quirk is not required for revisions prior to CAJON_2_0 */
-+	if (priv->codec_version < 4)
-+		return 0;
-+
-+	switch (event) {
-+	case SND_SOC_DAPM_POST_PMU:
-+		usleep_range(7000, 7100);
-+		snd_soc_component_update_bits(component, CDC_A_RX_HPH_L_TEST,
-+				0x04, 0x04);
-+		break;
-+	case SND_SOC_DAPM_POST_PMD:
-+		/* wait 20 ms after the digital codec has powered down */
-+		msleep(20);
-+		snd_soc_component_update_bits(component, CDC_A_RX_HPH_L_TEST,
-+				0x04, 0x00);
-+		break;
-+	}
-+	return 0;
-+}
-+
-+static int pm8916_wcd_analog_enable_hphr_pa(struct snd_soc_dapm_widget *w,
-+					    struct snd_kcontrol *kcontrol,
-+					    int event)
-+{
-+	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
-+	struct pm8916_wcd_analog_priv *priv = dev_get_drvdata(component->dev);
-+
-+	/* This quirk is not required for revisions prior to CAJON_2_0 */
-+	if (priv->codec_version < 4)
-+		return 0;
-+
-+	switch (event) {
-+	case SND_SOC_DAPM_POST_PMU:
-+		usleep_range(7000, 7100);
-+		snd_soc_component_update_bits(component, CDC_A_RX_HPH_R_TEST,
-+				0x04, 0x04);
-+		break;
-+	case SND_SOC_DAPM_POST_PMD:
-+		msleep(20);
-+		snd_soc_component_update_bits(component, CDC_A_RX_HPH_R_TEST,
-+				0x04, 0x00);
-+		break;
-+	}
-+	return 0;
-+}
-+
- static const struct reg_default wcd_reg_defaults_2_0[] = {
- 	{CDC_A_RX_COM_OCP_CTL, 0xD1},
- 	{CDC_A_RX_COM_OCP_COUNT, 0xFF},
-@@ -883,11 +938,15 @@ static const struct snd_soc_dapm_widget pm8916_wcd_analog_dapm_widgets[] = {
- 	SND_SOC_DAPM_MUX("EAR_S", SND_SOC_NOPM, 0, 0, &ear_mux),
- 	SND_SOC_DAPM_SUPPLY("EAR CP", CDC_A_NCP_EN, 4, 0, NULL, 0),
- 
--	SND_SOC_DAPM_PGA("HPHL PA", CDC_A_RX_HPH_CNP_EN, 5, 0, NULL, 0),
-+	SND_SOC_DAPM_PGA_E("HPHL PA", CDC_A_RX_HPH_CNP_EN, 5, 0, NULL, 0,
-+			   pm8916_wcd_analog_enable_hphl_pa,
-+			   SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_POST_PMD),
- 	SND_SOC_DAPM_MUX("HPHL", SND_SOC_NOPM, 0, 0, &hphl_mux),
- 	SND_SOC_DAPM_MIXER("HPHL DAC", CDC_A_RX_HPH_L_PA_DAC_CTL, 3, 0, NULL,
- 			   0),
--	SND_SOC_DAPM_PGA("HPHR PA", CDC_A_RX_HPH_CNP_EN, 4, 0, NULL, 0),
-+	SND_SOC_DAPM_PGA_E("HPHR PA", CDC_A_RX_HPH_CNP_EN, 4, 0, NULL, 0,
-+			   pm8916_wcd_analog_enable_hphr_pa,
-+			   SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_POST_PMD),
- 	SND_SOC_DAPM_MUX("HPHR", SND_SOC_NOPM, 0, 0, &hphr_mux),
- 	SND_SOC_DAPM_MIXER("HPHR DAC", CDC_A_RX_HPH_R_PA_DAC_CTL, 3, 0, NULL,
- 			   0),
--- 
-2.53.0
+> Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+> ---
+>  drivers/soc/qcom/qmi_interface.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/soc/qcom/qmi_interface.c b/drivers/soc/qcom/qmi_interface.c
+> index 6500f863aae5..941612b1bd2e 100644
+> --- a/drivers/soc/qcom/qmi_interface.c
+> +++ b/drivers/soc/qcom/qmi_interface.c
+> @@ -321,7 +321,7 @@ int qmi_txn_init(struct qmi_handle *qmi, struct qmi_txn *txn,
+>  	mutex_lock(&qmi->txn_lock);
+>  	ret = idr_alloc_cyclic(&qmi->txns, txn, 0, U16_MAX, GFP_KERNEL);
+>  	if (ret < 0)
+> -		pr_err("failed to allocate transaction id\n");
+> +		pr_err("failed to allocate transaction id: %d\n", ret);
 
+Seems this can be either -ENOMEM or -ENOSPC. In the prior case don't we
+already have an error message. For the latter, is it realistic that
+someone has created 16384 QMI transactions?
+
+>  
+>  	txn->id = ret;
+>  	mutex_unlock(&qmi->txn_lock);
+> @@ -413,7 +413,7 @@ static void qmi_invoke_handler(struct qmi_handle *qmi, struct sockaddr_qrtr *sq,
+>  
+>  	ret = qmi_decode_message(buf, len, handler->ei, dest);
+>  	if (ret < 0)
+> -		pr_err("failed to decode incoming message\n");
+> +		pr_err("failed to decode incoming message: %d\n", ret);
+
+As far as I can see, most of the qmi_decode_message() error paths has a
+more useful error print already. Which errors have you seen? Can we
+provide an even more useful print in those cases?
+
+>  	else
+>  		handler->fn(qmi, sq, txn, dest);
+>  
+> @@ -502,7 +502,7 @@ static void qmi_handle_message(struct qmi_handle *qmi,
+>  		if (txn->dest && txn->ei) {
+>  			ret = qmi_decode_message(buf, len, txn->ei, txn->dest);
+>  			if (ret < 0)
+> -				pr_err("failed to decode incoming message\n");
+> +				pr_err("failed to decode incoming message: %d\n", ret);
+
+Ditto
+
+>  
+>  			txn->result = ret;
+>  			complete(&txn->completion);
+> @@ -661,8 +661,8 @@ int qmi_handle_init(struct qmi_handle *qmi, size_t recv_buf_size,
+>  		if (PTR_ERR(qmi->sock) == -EAFNOSUPPORT) {
+>  			ret = -EPROBE_DEFER;
+>  		} else {
+> -			pr_err("failed to create QMI socket\n");
+>  			ret = PTR_ERR(qmi->sock);
+> +			pr_err("failed to create QMI socket: %d\n", ret);
+
+pr_err("failed to create QMI socket: %pe\n", qmi->soc) seems like it
+would be more helpful.
+
+>  		}
+>  		goto err_destroy_wq;
+>  	}
+> @@ -766,7 +766,7 @@ static ssize_t qmi_send_message(struct qmi_handle *qmi,
+>  	if (qmi->sock) {
+>  		ret = kernel_sendmsg(qmi->sock, &msghdr, &iv, 1, len);
+>  		if (ret < 0)
+> -			pr_err("failed to send QMI message\n");
+> +			pr_err("failed to send QMI message: %d\n", ret);
+
+Ditto.
+
+Regards,
+Bjorn
+
+>  	} else {
+>  		ret = -EPIPE;
+>  	}
+> -- 
+> 2.50.1
+> 
 
