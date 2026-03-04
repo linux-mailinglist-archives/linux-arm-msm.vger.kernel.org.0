@@ -1,345 +1,491 @@
-Return-Path: <linux-arm-msm+bounces-95364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95365-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id KKZcL7BRqGnUtAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 16:37:20 +0100
+	id aB0IGPJbqGmZtgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95365-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 17:21:06 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14D45202E85
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 16:37:20 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id C4ABF2041D4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 17:21:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 496F130935F6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2026 15:29:38 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 45137337C2A7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2026 15:43:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8F2133CEB5;
-	Wed,  4 Mar 2026 15:29:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A3093563FB;
+	Wed,  4 Mar 2026 15:40:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Q1inYt1P";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="amwtKKpc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yn0IldHN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E5A330D34
-	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Mar 2026 15:29:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5754C3563EA;
+	Wed,  4 Mar 2026 15:40:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772638176; cv=none; b=Fi/r/q5EIzdcQ3syjpPwuxDs9ocPwoSq/KG5GMj4BKfnsk3PtwDVHgsVRmhG/DAbejbSLad4ISkBos2Z05OlLJaJpMWjADo2zSq2a61BdjAGIRAJHNz5ucuTeoueQfTsOydA0W2X7gtvKo4a6AShX42mUeSRk70bXNWQkNY3nFk=
+	t=1772638809; cv=none; b=L3jwzjcIXWLPpC8u7Fa8ntMEaIgQJlYvhnhyXLyu41jfskGlb9q2RalG6ZEmavo3AdsyhiMSy5+jgRfyB6LsvSS6zmI5ebRTPZPmkzrC5BrNYSZ4M35rDoBET1yFpgrkfJyrRGFPMavbfe2GuWuzgpWo9zql6MsZJKyRplGBLbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772638176; c=relaxed/simple;
-	bh=J2pHDqkcI5jgiqu24QsunAV3h4H2fOr3FdQWGJTAODc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AHl2LWTLX0j74asDbDlTxLTZGRO3430QlmFL+cPTurbfDxEZI0m2y3zgukYXE+S0mo4LyaiOOWTlmj7j8P9TnaiyulJ+tVVWhT21rTpxcLXTpJahVwBe5ehnBz+SwYXDo1x9Lz6B+6EwVlWvb8teDxpRX2IcNvJ5yIP6m6fnuAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Q1inYt1P; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=amwtKKpc; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 624CbIH51072686
-	for <linux-arm-msm@vger.kernel.org>; Wed, 4 Mar 2026 15:29:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	S7C3ZGxT6MAy3b00eY/LGUqY8Jlj5bg+7oTeA1mEoGE=; b=Q1inYt1P8vbSvquh
-	RbvN1tXFxrQ7WBO3jZeuKtTjeAdNz4ed30cG+G58sHStPLRsDwStQPGQs1dKktMm
-	oJLDvRMSjLmHEww6yy+apcHIz4RMoGWyCBlp5LE+GYdW6c3jGs6VkyZPZyypEeSw
-	WngbUHpGtG1e2KHcRMRUs18ACkBa+1iML/MCIgto3Bgoa9RSbmmaDGcQst1S+ZFB
-	45FSzvD9ZpzFF6UskSy+MK3gXph4vfIwm/md0q+Vz/2kO7KSp3NJ5AMGDsn/Jj0W
-	1UKHCydobH6Js0BBYNHw5s10R0Zo6ro7QjZYup1+K2sB6cNbJUxZBK9qhpjPdBv2
-	4ThEWQ==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cpcxfj5wu-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2026 15:29:34 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-c738662b963so221473a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2026 07:29:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1772638173; x=1773242973; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=S7C3ZGxT6MAy3b00eY/LGUqY8Jlj5bg+7oTeA1mEoGE=;
-        b=amwtKKpcg5Am7DUBKeR4t3fJGJ6o0F0l0XLfTB3gHCI+3qMMBlWOfajgTO8eVo2H9k
-         ZwvZDZRfytrDvNajiyiQj7627LNMSEpcUAAxUYRuXFWej87vD+j/ZnETw4/Yqj1d8xq2
-         27eLK7tACgduTaZhBQtqvJlPfPNGVG27Pmcvt9Tp3ypqk0bmXwbjqcy41ruKF1KqsuQU
-         61k7ZXFkHiPkc9lmj7DmieVCfyORtykzUAha5OvnFOeDN/NAcwRtz12d8TEVhRcCAm0Q
-         9Z1XZHkvcGQhNK4VXLacQigtMiS1jYJf8KfOzE5MdBrwyClmiCyFAwFjMTNscDSjcbIG
-         896w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772638173; x=1773242973;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=S7C3ZGxT6MAy3b00eY/LGUqY8Jlj5bg+7oTeA1mEoGE=;
-        b=Q4q9WzWttq6thd9+Rj9B2kWEDgQKET24PZ07yU472uIGlr++qIxZHABxmPwG3O388V
-         ZzVxnW2FWuDgeBZkfMa364SRJEkjubGKo8tajl4YExKnVSDl9eC8Y7CsIQdgklMN8mAW
-         x87S1J8Utk/Jwu/LAfC/rEZKr1ILzzR5CqeB5+wr1nUvrtnp9r5XHtVQma4uvbANCbL8
-         jPCbQ585U5WkVdpyh/hWDNfH5hwgWXxQyMneME5QH5AhWfPqJGJ7/+VLWYGKuDLJV4/E
-         RRYJfxBdgoenapnSX/8cGpxqJ0vhnXGPtTENsqI8dAOvl68vjlVDQO8G9dI89kYq2vfy
-         U7Bw==
-X-Forwarded-Encrypted: i=1; AJvYcCX6VBZpczlQR77hyW6OKWxEICkHgqgemIt3vBYHy8E4M5EQ/8AfbRBFmYMiD4Gdw1povBR8dLubiE9RibHi@vger.kernel.org
-X-Gm-Message-State: AOJu0YwvC/zm7Ay9o3g+J+Ddw6Slz3K+/1GGoMmyrkQS0WmhguO5bQMi
-	j34bKEGWraqv8sDKPTVZSJX3Ei4EWLX88gKczu6gEgCvT8tGui+1tJhiWCpxErBPUDn6vzN3855
-	w+fV21OSSF1C4N6qmPpXOafj9HnA1UOdJIVVyQ3L16MXgthwN5Qf1ncqUoY32oBQ9iXuk
-X-Gm-Gg: ATEYQzwZ0UJuENqPh/8pCPdqJZ0asKLazSfrXZp1rkjnqMAJNkODngqSLaPblCyL4RR
-	f7jky9SY6sTtEqX/dqGH58+QwZXs5ISLHm+BkGg7Tduv/Zh/A9xG4HMBKh/dWRqj/miBF87nwe8
-	MWyDgX3ORQekjJ810TTccuFsz5nU0+nZLcVaGBxlbEdrkBXTeffzZf+ZMPk1TdXNlcZPRC00tjv
-	eeHZY2oyomjjtnDhe/lzwf/bbN4+V22QGLofkZV+Lzi5cqXH2Jho/nCeFw8PMcddvwCvhDH+/Pm
-	uFURlqkc2JCsQPFGbe+sxV+Z/+MNWbV26NEnne0ZKO8I8kWORibLF6+JRsj6/2Qze3hn8fKdyKK
-	spKNTUFwE9EkLtHCt4YTl2pIBzUnH6qKtqMoNP1tD364vr0VG8eikWw==
-X-Received: by 2002:a05:6a21:1f89:b0:38b:d9b0:e943 with SMTP id adf61e73a8af0-3982e1fe150mr2227275637.38.1772638173491;
-        Wed, 04 Mar 2026 07:29:33 -0800 (PST)
-X-Received: by 2002:a05:6a21:1f89:b0:38b:d9b0:e943 with SMTP id adf61e73a8af0-3982e1fe150mr2227236637.38.1772638172953;
-        Wed, 04 Mar 2026 07:29:32 -0800 (PST)
-Received: from [10.204.101.56] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c70fa61a19bsm17288234a12.9.2026.03.04.07.29.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Mar 2026 07:29:32 -0800 (PST)
-Message-ID: <22b3e2e9-b855-487e-868f-e72fcbbb22cd@oss.qualcomm.com>
-Date: Wed, 4 Mar 2026 20:59:24 +0530
+	s=arc-20240116; t=1772638809; c=relaxed/simple;
+	bh=x2GFsWUAXVV+143T8OkPA+H5dyk+qg28t8r9xm3JhX8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JREOicHsjpFdr1rF+Qz0WqHwsUJPz4iZRwQ665/R4tPoxGMaQOMFzHy++yA9XIRM+iHe2CW/nXUT8cC6soxVQ5oHsFqcrdKEqiwuKwvp4+iUGtmXmjCCF+twJ5RylA50zohz/hn/GZ7XbVDGVA62tiuAft9Fq+LlzXHaP++jztQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yn0IldHN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF9EFC19423;
+	Wed,  4 Mar 2026 15:40:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772638809;
+	bh=x2GFsWUAXVV+143T8OkPA+H5dyk+qg28t8r9xm3JhX8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Yn0IldHNgZINLiTnuH0mbEp72zbKpNo6Cw3EcrWyAb8zivGrF+mxaqrCZsfxTfw6q
+	 R+CGEoCUHEPHYfEqiWRqY9vCZqXUvkEYAFhcUMvgKvTZw3dd2ckOE0P8kxTyfKYKGG
+	 aIw4jZg7KMi6qulIKrGJjofI/vR0ZTE+jGkmQN7lpcu+t7ZRECFopm4eAWi+H6UDDT
+	 gvjsU/SqfNkZFnM/9W6TsAM0V/c0XKKaRqm+aQp+fi8KXz3gLEdLzmBQTN9yy97iUs
+	 +QcU1cKLaiE97QVnPA8de7r0Kz5bNJ1L0uEpUdXqZ6rZBJbs2jgPf9uqXzRtV87hWo
+	 IzVyVrIiztGoQ==
+Date: Wed, 4 Mar 2026 21:09:55 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Can Guo <can.guo@oss.qualcomm.com>
+Cc: avri.altman@wdc.com, bvanassche@acm.org, beanhuo@micron.com, 
+	martin.petersen@oracle.com, linux-scsi@vger.kernel.org, 
+	Alim Akhtar <alim.akhtar@samsung.com>, "James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>, 
+	open list <linux-kernel@vger.kernel.org>, 
+	"open list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH v2 09/11] scsi: ufs: ufs-qcom: Implement vops get_rx_fom()
+Message-ID: <ffijub727efmyhatukpqlridfdknwzbsc2dedeohx3snosxqzs@os7ddqrmziqd>
+References: <20260304135313.413688-1-can.guo@oss.qualcomm.com>
+ <20260304135313.413688-10-can.guo@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/7] media: iris: add helper to select context bank
- device
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bod@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Saravana Kannan <saravanak@kernel.org>, Joerg Roedel <joro@8bytes.org>,
-        Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Stefan Schmidt <stefan.schmidt@linaro.org>,
-        Hans Verkuil <hverkuil@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
-        Hans Verkuil <hverkuil+cisco@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        iommu@lists.linux.dev, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-References: <20260227-kaanapali-iris-v2-0-850043ac3933@oss.qualcomm.com>
- <20260227-kaanapali-iris-v2-5-850043ac3933@oss.qualcomm.com>
- <bi3i37ho3ppzlgdx264ohxpcem3nwumjelzckf4x5uzdj5rt7a@2y2jrilmfimj>
- <1dc86b00-9a18-482c-94b1-96692c1dd530@oss.qualcomm.com>
- <jgygscmwovezkytizhh54cmmu5etgv23bgopfqrql3qj7zlhxh@adxo2b7izlrc>
-Content-Language: en-US
-From: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-In-Reply-To: <jgygscmwovezkytizhh54cmmu5etgv23bgopfqrql3qj7zlhxh@adxo2b7izlrc>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: hv_v0i9U58QIJQkRsCcfQpvuWIqU1rW3
-X-Authority-Analysis: v=2.4 cv=R4gO2NRX c=1 sm=1 tr=0 ts=69a84fde cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=EUspDBNiAAAA:8 a=aBrO_zpjTiySyTrMC9oA:9 a=QEXdDO2ut3YA:10
- a=_Vgx9l1VpLgwpw_dHYaR:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA0MDEyNiBTYWx0ZWRfX5mqYJH9we0Ak
- 1OSGAS7ei7EkiD3ae5BHl/Xu7kFV5vhrprOBDhYpzyJzKG845K9fJK0+gR2THXhMCn3+4mtSRWl
- XwdBxkKACLE745bPegKZP/Ai0LYTISemtG7BcGcw/2VSAoXV6Hdl7O8WE7SAwNyVqxLdqY7P+7m
- NtdsofR0KZ83XkVEmNXomWP37HnlQw23xIBu85leRru+j0z3wKNPrR6MCqAcyPpvR3lPczjNhuV
- kOSED32xsaW8NKUrGyhGvrXXGZWh1xKOjhI1pt7YAoWWFbFqyOPYq0jdxexF6e/kVZUI0UEPYoL
- 5sQq8zgfqOfYsK0vzzW32Xlg5fG0heuuBtjLR2LbFjE0W3jqF9cax0ekl/iN2+k9oDNKxaRjMcY
- Wk3yYqYDKyNdHlhwMA6q28vH970UCfIvgI3JKWnxq3JDCvOFZJG3CbOFqp+kynXIaro3X6IKvHZ
- 5E1ARRiLpRtjldKkVqg==
-X-Proofpoint-GUID: hv_v0i9U58QIJQkRsCcfQpvuWIqU1rW3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-04_06,2026-03-03_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 priorityscore=1501 clxscore=1015 phishscore=0 bulkscore=0
- lowpriorityscore=0 impostorscore=0 spamscore=0 suspectscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603040126
-X-Rspamd-Queue-Id: 14D45202E85
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260304135313.413688-10-can.guo@oss.qualcomm.com>
+X-Rspamd-Queue-Id: C4ABF2041D4
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[23];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95364-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,qualcomm.com:dkim,qualcomm.com:email];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[vikash.garodia@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-95365-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	MISSING_XM_UA(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,cisco];
-	MID_RHS_MATCH_FROM(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[10];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-
-On 3/4/2026 3:57 AM, Dmitry Baryshkov wrote:
-> On Wed, Mar 04, 2026 at 12:46:27AM +0530, Vikash Garodia wrote:
->>
->>
->> On 2/28/2026 1:57 AM, Dmitry Baryshkov wrote:
->>> On Fri, Feb 27, 2026 at 07:41:21PM +0530, Vikash Garodia wrote:
->>>> Depending on the buffer type (input, output, internal and interface
->>>> queues), associated context bank is selected, if available. Fallback to
->>>> parent device for backward compatibility.
->>>>
->>>> Co-developed-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
->>>> Signed-off-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
->>>> Signed-off-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
->>>> ---
->>>>    drivers/media/platform/qcom/iris/iris_buffer.c    |  7 +--
->>>>    drivers/media/platform/qcom/iris/iris_buffer.h    |  2 +
->>>>    drivers/media/platform/qcom/iris/iris_hfi_queue.c | 16 +++---
->>>>    drivers/media/platform/qcom/iris/iris_resources.c | 60 +++++++++++++++++++++++
->>>>    drivers/media/platform/qcom/iris/iris_resources.h |  2 +
->>>>    drivers/media/platform/qcom/iris/iris_vidc.c      |  4 +-
->>>>    6 files changed, 79 insertions(+), 12 deletions(-)
->>>>
->>>> @@ -177,3 +178,62 @@ int iris_create_child_device_and_map(struct iris_core *core, struct iris_context
->>>>    	return 0;
->>>>    }
->>>> +
->>>> +static enum iris_buffer_region iris_get_region(struct iris_inst *inst,
->>>> +					       enum iris_buffer_type buffer_type)
->>>> +{
->>>> +	switch (buffer_type) {
->>>> +	case BUF_INPUT:
->>>> +		if (inst && inst->domain == ENCODER)
->>>
->>> Can inst be NULL here?
->>
->> during queues init/deinit, instances are not created.
+On Wed, Mar 04, 2026 at 05:53:11AM -0800, Can Guo wrote:
+> On some platforms, host's M-PHY RX_FOM Attribute always reads 0, meaning
+> SW cannot rely on Figure of Merit (FOM) to identify the optimal TX
+> Equalization settings for device's TX Lanes. Implement the vops
+> ufs_qcom_get_rx_fom() such that SW can utilize the UFS Eye Opening Monitor
+> (EOM) to evaluate the TX Equalization settings for device's TX Lanes.
 > 
-> Is this function being called during queues init?
-
-yes, via iris_get_cb_dev()
-
+> Signed-off-by: Can Guo <can.guo@oss.qualcomm.com>
+> ---
+>  drivers/ufs/core/ufs-txeq.c |   6 +-
+>  drivers/ufs/host/ufs-qcom.c | 315 ++++++++++++++++++++++++++++++++++++
+>  drivers/ufs/host/ufs-qcom.h |  42 +++++
+>  include/ufs/ufshcd.h        |   3 +
+>  include/ufs/unipro.h        |  16 ++
+>  5 files changed, 379 insertions(+), 3 deletions(-)
 > 
->>
->>>
->>>> +			return IRIS_PIXEL_REGION;
->>>> +		else if (inst && inst->domain == DECODER)
->>>> +			return IRIS_BITSTREAM_REGION;
->>>
->>> Are there any other possibilities than encoder and decoder?
->>
->> will simplify it as
->>
->> if (inst) {
->>      if (inst->domain == ENCODER)
->>          return IRIS_PIXEL_REGION;
->>      else
->>          return IRIS_BITSTREAM_REGION;
->> }
->>>
->>>> +		break;
->>>> +	case BUF_OUTPUT:
->>>> +		if (inst && inst->domain == ENCODER)
->>>> +			return IRIS_BITSTREAM_REGION;
->>>> +		else if (inst && inst->domain == DECODER)
->>>> +			return IRIS_PIXEL_REGION;
->>>> +		break;
->>>> +	case BUF_BIN:
->>>> +		return IRIS_BITSTREAM_REGION;
->>>> +	case BUF_DPB:
->>>> +	case BUF_PARTIAL:
->>>> +	case BUF_SCRATCH_2:
->>>> +	case BUF_VPSS:
->>>> +		return IRIS_PIXEL_REGION;
->>>> +	case BUF_ARP:
->>>> +	case BUF_COMV:
->>>> +	case BUF_HFI_QUEUE:
->>>> +	case BUF_LINE:
->>>> +	case BUF_NON_COMV:
->>>> +	case BUF_PERSIST:
->>>> +		return IRIS_NON_PIXEL_REGION;
->>>> +	default:
->>>> +		return 0;
->>>
->>> dev_err(dev, "unsupported buffer type %x\n", buffer_type)
->>> return -EINVAL;
->>
->> these are bit fields, returning -EINVAL would still match some bits and can
->> make the logic as true. 0 can be defined as IRIS_UNKNOWN_REGION
-> 
-> Yes, sounds good.
-> 
->>
->>>
->>>> +	}
->>>> +
->>>> +	return 0;
->>>
->>> Drop
->>>
->>
->> Ack
->>
->>>> +}
->>>> +
->>>> +struct device *iris_get_cb_dev(struct iris_core *core, struct iris_inst *inst,
->>>> +			       enum iris_buffer_type buffer_type)
->>>> +{
->>>> +	enum iris_buffer_region region;
->>>> +	struct device *dev = NULL;
->>>> +	int i;
->>>> +
->>>> +	region = iris_get_region(inst, buffer_type);
->>>> +
->>>> +	for (i = 0; i < core->iris_platform_data->cb_data_size; i++) {
->>>> +		if (core->iris_platform_data->cb_data[i].region & region) {
->>>> +			dev = core->iris_platform_data->cb_data[i].dev;
->>>> +			break;
->>>> +		}
->>>
->>> You really seem to overcomplicate things. Replace array search with the
->>> indexed array access. Much easier and much better.
->>>
->>> enum iris_buffer_region {
->>> 	IRIS_PIXEL_REGION,
->>> 	IRIS_BITSTREAM_REGION,
->>> 	IRIS_NON_PIXEL_REGION,
->>> 	// add more when necessary
->>> 	IRIS_NUM_REGIONS,
->>> };
->>>
->>> struct iris_core {
->>> 	struct iris_cb_device cb_devices[IRIS_NUM_REGIONS];
->>> };
->>>
->>> region = iris_get_region(inst, buffer_type);
->>> dev = core->cb_devices[region];
->>
->> all the regions may/may not be present in all SOC
-> 
-> You can check for dev != NULL afterwards.
+> diff --git a/drivers/ufs/core/ufs-txeq.c b/drivers/ufs/core/ufs-txeq.c
+> index 2cd2d5156607..02c1a8479910 100644
+> --- a/drivers/ufs/core/ufs-txeq.c
+> +++ b/drivers/ufs/core/ufs-txeq.c
+> @@ -227,9 +227,8 @@ ufshcd_compose_tx_eq_setting(struct ufshcd_tx_eq_settings *settings,
+>   *
+>   * Returns 0 on success, negative error code otherwise
+>   */
+> -static int ufshcd_apply_tx_eq_settings(struct ufs_hba *hba,
+> -				       struct ufshcd_tx_eq_params *params,
+> -				       u32 gear)
+> +int ufshcd_apply_tx_eq_settings(struct ufs_hba *hba,
+> +				struct ufshcd_tx_eq_params *params, u32 gear)
+>  {
+>  	u32 setting;
+>  	int ret;
+> @@ -259,6 +258,7 @@ static int ufshcd_apply_tx_eq_settings(struct ufs_hba *hba,
+>  
+>  	return ret;
+>  }
+> +EXPORT_SYMBOL_GPL(ufshcd_apply_tx_eq_settings);
+>  
+>  /**
+>   * ufshcd_evaluate_fom - Update TX EQ params based on FOM results
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index 1e074058f23d..b8fa4670ddd6 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -2534,6 +2534,320 @@ static int ufs_qcom_change_power_mode(struct ufs_hba *hba,
+>  	return ret;
+>  }
+>  
+> +static int ufs_qcom_host_eom_config(struct ufs_hba *hba, int lane, int v_step,
+> +				    int t_step, enum ufs_eom_eye_pos eye_pos,
+> +				    u32 target_test_count)
+> +{
+> +	u32 volt_step, timing_step;
+> +	int ret;
+> +
+> +	if (v_step > 127 || v_step < -127) {
+> +		dev_err(hba->dev, "Invalid EOM Voltage Step: %d\n", v_step);
+> +		return -EINVAL;
 
-with one CB to multiple region mapping, this logic would not work.
+-ERANGE
 
-Regards,
-Vikash
+> +	}
+> +
+> +	if (t_step > 63 || t_step < -63) {
+> +		dev_err(hba->dev, "Invalid EOM Timing Step: %d\n", t_step);
+> +		return -EINVAL;
 
-> 
-> 
+-ERANGE
 
+> +	}
+> +
+> +	if (v_step < 0)
+> +		volt_step = BIT(6) | (u32)(-v_step);
+
+What does BIT(6) correspond to? Create a define maybe?
+
+> +	else
+> +		volt_step = (u32)v_step;
+> +
+> +	if (t_step < 0)
+> +		timing_step = BIT(6) | (u32)(-t_step);
+> +	else
+> +		timing_step = (u32)t_step;
+> +
+> +	ret = ufshcd_dme_set(hba, UIC_ARG_MIB_SEL(RX_EYEMON_ENABLE,
+> +				UIC_ARG_MPHY_RX_GEN_SEL_INDEX(lane)),
+> +			     BIT(eye_pos) | BIT(6));
+> +	if (ret) {
+> +		dev_err(hba->dev, "Failed to enable Host EOM on Lane %d: %d\n",
+> +			lane, ret);
+> +		return ret;
+> +	}
+> +
+> +	ret = ufshcd_dme_set(hba, UIC_ARG_MIB_SEL(RX_EYEMON_TIMING_STEPS,
+> +				UIC_ARG_MPHY_RX_GEN_SEL_INDEX(lane)),
+> +			     timing_step);
+> +	if (ret) {
+> +		dev_err(hba->dev, "Failed to set Host EOM timing step on Lane %d: %d\n",
+> +			lane, ret);
+> +		return ret;
+> +	}
+> +
+> +	ret = ufshcd_dme_set(hba, UIC_ARG_MIB_SEL(RX_EYEMON_VOLTAGE_STEPS,
+> +				UIC_ARG_MPHY_RX_GEN_SEL_INDEX(lane)),
+> +			     volt_step);
+> +	if (ret) {
+> +		dev_err(hba->dev, "Failed to set Host EOM voltage step on Lane %d: %d\n",
+> +			lane, ret);
+> +		return ret;
+> +	}
+> +
+> +	ret = ufshcd_dme_set(hba, UIC_ARG_MIB_SEL(RX_EYEMON_TARGET_TEST_COUNT,
+> +				UIC_ARG_MPHY_RX_GEN_SEL_INDEX(lane)),
+> +			     target_test_count);
+> +	if (ret)
+> +		dev_err(hba->dev, "Failed to set Host EOM target test count on Lane %d: %d\n",
+> +			lane, ret);
+> +
+> +	return ret;
+> +}
+> +
+> +static int ufs_qcom_host_eom_may_stop(struct ufs_hba *hba, int lane,
+> +				      u32 target_test_count, u32 *err_count)
+> +{
+> +	u32 start, tested_count, error_count;
+> +	int ret;
+> +
+> +	ret = ufshcd_dme_get(hba, UIC_ARG_MIB_SEL(RX_EYEMON_START,
+> +				UIC_ARG_MPHY_RX_GEN_SEL_INDEX(lane)),
+> +			     &start);
+> +	if (ret) {
+> +		dev_err(hba->dev, "Failed to get Host EOM start status on Lane %d: %d\n",
+> +			lane, ret);
+> +		return ret;
+> +	}
+> +
+> +	if (start & 0x1)
+> +		return -EAGAIN;
+> +
+> +	ret = ufshcd_dme_get(hba, UIC_ARG_MIB_SEL(RX_EYEMON_TESTED_COUNT,
+> +				UIC_ARG_MPHY_RX_GEN_SEL_INDEX(lane)),
+> +			     &tested_count);
+> +	if (ret) {
+> +		dev_err(hba->dev, "Failed to get Host EOM tested count on Lane %d: %d\n",
+> +			lane, ret);
+> +		return ret;
+> +	}
+> +
+> +	ret = ufshcd_dme_get(hba, UIC_ARG_MIB_SEL(RX_EYEMON_ERROR_COUNT,
+> +				UIC_ARG_MPHY_RX_GEN_SEL_INDEX(lane)),
+> +			     &error_count);
+> +	if (ret) {
+> +		dev_err(hba->dev, "Failed to get Host EOM error count on Lane %d: %d\n",
+> +			lane, ret);
+> +		return ret;
+> +	}
+> +
+> +	/* EOM can stop */
+> +	if ((tested_count >= target_test_count - 3) || error_count > 0) {
+> +		*err_count = error_count;
+> +
+> +		/* Disable EOM */
+> +		ret = ufshcd_dme_set(hba, UIC_ARG_MIB_SEL(RX_EYEMON_ENABLE,
+> +					UIC_ARG_MPHY_RX_GEN_SEL_INDEX(lane)),
+> +				     0x0);
+> +		if (ret) {
+> +			dev_err(hba->dev, "Failed to disable Host EOM on Lane %d: %d\n",
+> +				lane, ret);
+> +			return ret;
+> +		}
+> +	} else {
+> +		return -EAGAIN;
+> +	}
+> +
+> +	return ret;
+
+return 0;
+
+> +}
+> +
+> +static int ufs_qcom_host_eom_scan(struct ufs_hba *hba, int num_lanes,
+> +				  const struct ufs_eom_coord *eom_coord,
+> +				  u32 target_test_count, u32 *err_count)
+> +{
+> +	bool eom_stopped[PA_MAXDATALANES] = { 0 };
+> +	enum ufs_eom_eye_pos eye_pos;
+> +	int lane, v_step, t_step, ret;
+> +	u32 setting;
+> +
+> +	if (!err_count || !eom_coord)
+> +		return -EINVAL;
+> +
+> +	if (target_test_count < 8) {
+> +		dev_err(hba->dev, "%s: Target test count (%u) too small for Host EOM\n",
+> +			__func__, target_test_count);
+
+No __func__ please.
+
+> +		return -EINVAL;
+
+-ERANGE
+
+> +	}
+> +
+> +	v_step = eom_coord->v_step;
+> +	t_step = eom_coord->t_step;
+> +	eye_pos = eom_coord->eye_pos;
+> +
+> +	for (lane = 0; lane < num_lanes; lane++) {
+> +		ret = ufs_qcom_host_eom_config(hba, lane, v_step, t_step,
+> +					       eye_pos, target_test_count);
+> +		if (ret) {
+> +			dev_err(hba->dev, "Failed to config Host EOM: %d\n",
+> +				ret);
+> +			return ret;
+> +		}
+> +	}
+> +
+> +	/*
+> +	 * Trigger a PACP_PWR_req to kick start EOM, but not to really change
+> +	 * the Power Mode.
+> +	 */
+> +	ret = ufshcd_uic_change_pwr_mode(hba, FAST_MODE << 4 | FAST_MODE);
+> +	if (ret) {
+> +		dev_err(hba->dev, "Failed to change power mode to kick start Host EOM: %d\n",
+> +			ret);
+> +		return ret;
+> +	}
+> +
+> +more_burst:
+> +	/* Create burst on Host RX Lane. */
+> +	ufshcd_dme_peer_get(hba, UIC_ARG_MIB(PA_LOCALVERINFO), &setting);
+> +
+> +	for (lane = 0; lane < num_lanes; lane++) {
+> +		if (eom_stopped[lane])
+> +			continue;
+> +
+> +		ret = ufs_qcom_host_eom_may_stop(hba, lane, target_test_count,
+> +						 &err_count[lane]);
+> +		if (!ret) {
+> +			eom_stopped[lane] = true;
+> +		} else if (ret == -EAGAIN) {
+> +			/* Need more burst to excercise EOM */
+> +			goto more_burst;
+> +		} else {
+> +			dev_err(hba->dev, "Failed to stop Host EOM: %d\n", ret);
+> +			return ret;
+> +		}
+> +
+> +		dev_dbg(hba->dev, "%s: Host RX Lane %d EOM, v_step %d, t_step %d, error count %u\n",
+> +			__func__, lane, v_step, t_step, err_count[lane]);
+> +	}
+> +
+> +	return ret;
+
+return 0;
+
+> +}
+> +
+> +static int ufs_qcom_host_sw_rx_fom(struct ufs_hba *hba, int num_lanes, u32 *fom)
+> +{
+> +	const struct ufs_eom_coord *eom_coord = sw_rx_fom_eom_coords_g6;
+> +	u32 eom_err_count[PA_MAXDATALANES] = { 0 };
+> +	u32 curr_ahit;
+> +	int lane, i, ret;
+> +
+> +	if (!fom)
+> +		return -EINVAL;
+> +
+> +	/* Stop the auto hibernate idle timer */
+> +	curr_ahit = ufshcd_readl(hba, REG_AUTO_HIBERNATE_IDLE_TIMER);
+> +	if (curr_ahit)
+> +		ufshcd_writel(hba, 0, REG_AUTO_HIBERNATE_IDLE_TIMER);
+> +
+> +	ret = ufshcd_dme_set(hba, UIC_ARG_MIB(PA_TXHSADAPTTYPE), PA_NO_ADAPT);
+> +	if (ret) {
+> +		dev_err(hba->dev, "%s: Failed to select NO_ADAPT before starting Host EOM: %d\n",
+> +			__func__, ret);
+> +		goto out;
+> +	}
+> +
+> +	for (i = 0; i < SW_RX_FOM_EOM_COORDS; i++, eom_coord++) {
+> +		ret = ufs_qcom_host_eom_scan(hba, num_lanes, eom_coord, 0x3F,
+> +					     eom_err_count);
+> +		if (ret) {
+> +			dev_err(hba->dev, "%s: Failed to run Host EOM scan: %d\n",
+> +				__func__, ret);
+> +			break;
+> +		}
+> +
+> +		for (lane = 0; lane < num_lanes; lane++) {
+> +			/* Bad coordinates have no weights */
+> +			if (eom_err_count[lane])
+> +				continue;
+> +			fom[lane] += SW_RX_FOM_EOM_COORDS_WEIGHT;
+> +		}
+> +	}
+> +
+> +out:
+> +	/* Restore the auto hibernate idle timer */
+> +	if (curr_ahit)
+> +		ufshcd_writel(hba, curr_ahit, REG_AUTO_HIBERNATE_IDLE_TIMER);
+> +
+> +	return ret;
+> +}
+> +
+> +static int ufs_qcom_get_rx_fom(struct ufs_hba *hba,
+> +			       struct ufs_pa_layer_attr *pwr_mode,
+> +			       struct tx_eqtr_iter *h_iter,
+> +			       struct tx_eqtr_iter *d_iter)
+> +{
+> +	struct ufshcd_tx_eq_params *params __free(kfree) =
+> +		kzalloc(sizeof(*params), GFP_KERNEL);
+> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+> +	struct ufs_pa_layer_attr old_pwr_info;
+> +	u32 fom[PA_MAXDATALANES] = { 0 };
+> +	u32 gear = pwr_mode->gear_tx;
+> +	u32 rate = pwr_mode->hs_rate;
+> +	int lane, ret;
+> +
+> +	if (host->hw_ver.major != 0x7 || host->hw_ver.minor > 0x1 ||
+> +	    gear <= UFS_HS_G5 || !d_iter || !d_iter->is_new)
+> +		return 0;
+> +
+> +	if (gear < UFS_HS_G1 || gear >= UFS_HS_GEAR_MAX)
+> +		return -EINVAL;
+
+-ERANGE
+
+> +
+> +	if (!params)
+> +		return -ENOMEM;
+> +
+> +	memcpy(&old_pwr_info, &hba->pwr_info, sizeof(struct ufs_pa_layer_attr));
+> +
+> +	memcpy(params, &hba->tx_eq_params[gear - 1], sizeof(struct ufshcd_tx_eq_params));
+> +	for (lane = 0; lane < d_iter->num_lanes; lane++) {
+> +		params->device[lane].preshoot = d_iter->preshoot;
+> +		params->device[lane].deemphasis = d_iter->deemphasis;
+> +	}
+> +
+> +	/* Use TX EQTR settings as Device's TX Equalization settings. */
+> +	ret = ufshcd_apply_tx_eq_settings(hba, params, gear);
+> +	if (ret) {
+> +		dev_err(hba->dev, "%s: Failed to apply TX EQ settings for HS-G%u: %d\n",
+> +			__func__, gear, ret);
+> +		return ret;
+> +	}
+> +
+> +	/* Force PMC to target HS Gear to use new TX Equalization settings. */
+> +	ret = ufs_qcom_change_power_mode(hba, pwr_mode, UFSHCD_PMC_POLICY_FORCE);
+> +	if (ret) {
+> +		dev_err(hba->dev, "%s: Failed to change power mode to HS-G%u, Rate-%s: %d\n",
+> +			__func__, gear, UFS_HS_RATE_STRING(rate), ret);
+> +		return ret;
+> +	}
+> +
+> +	ret = ufs_qcom_host_sw_rx_fom(hba, d_iter->num_lanes, fom);
+> +	if (ret) {
+> +		dev_err(hba->dev, "Failed to get Host SW FOM for Device TX Lane (PreShoot: %u, DeEmphasis: %u): %d\n",
+> +			d_iter->preshoot, d_iter->deemphasis, ret);
+> +		return ret;
+> +	}
+> +
+> +	/* Restore Device's TX Equalization settings. */
+> +	ret = ufshcd_apply_tx_eq_settings(hba, &hba->tx_eq_params[gear - 1], gear);
+> +	if (ret) {
+> +		dev_err(hba->dev, "%s: Failed to apply TX EQ settings for HS-G%u: %d\n",
+> +			__func__, gear, ret);
+> +		return ret;
+> +	}
+> +
+> +	/* Restore Power Mode. */
+> +	ret = ufs_qcom_change_power_mode(hba, &old_pwr_info, UFSHCD_PMC_POLICY_FORCE);
+> +	if (ret) {
+> +		dev_err(hba->dev, "%s: Failed to retore power mode to HS-G%u: %d\n",
+> +			__func__, old_pwr_info.gear_tx, ret);
+> +		return ret;
+> +	}
+> +
+> +	for (lane = 0; lane < d_iter->num_lanes; lane++)
+> +		d_iter->fom[lane] = fom[lane];
+> +
+> +	return ret;
+
+return 0;
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
