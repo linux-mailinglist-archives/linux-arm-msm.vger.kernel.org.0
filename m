@@ -1,206 +1,345 @@
-Return-Path: <linux-arm-msm+bounces-95363-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cJAFIhtRqGnUtAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95363-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 16:34:51 +0100
+	id KKZcL7BRqGnUtAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 16:37:20 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E5513202D4D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 16:34:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 14D45202E85
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 04 Mar 2026 16:37:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D54E131C2ED8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2026 15:28:09 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 496F130935F6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Mar 2026 15:29:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10D10340281;
-	Wed,  4 Mar 2026 15:28:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8F2133CEB5;
+	Wed,  4 Mar 2026 15:29:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YLh3PbYg"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Q1inYt1P";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="amwtKKpc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18BA33FE0D
-	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Mar 2026 15:28:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E5A330D34
+	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Mar 2026 15:29:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772638085; cv=none; b=JvsgXs0GE5Lrmd9ZcIVFSyUBm5FG1pZH5Xa9VoHyjIjhGmiOSPu1H7B8EY1BumLarc5swEeIUorBQqPF1HuB+fvj8DrCofR4mfE4ZquDmN59AKMXG3+o8RnUOIGFqfFyy/Llho/sQc85WCycYgPW1wf/m2NgRNST4AS1ndPMFLo=
+	t=1772638176; cv=none; b=Fi/r/q5EIzdcQ3syjpPwuxDs9ocPwoSq/KG5GMj4BKfnsk3PtwDVHgsVRmhG/DAbejbSLad4ISkBos2Z05OlLJaJpMWjADo2zSq2a61BdjAGIRAJHNz5ucuTeoueQfTsOydA0W2X7gtvKo4a6AShX42mUeSRk70bXNWQkNY3nFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772638085; c=relaxed/simple;
-	bh=4Uhi0QlTwzgQc5rwFHf8CwgRiHlRT+OzQOSYUnatPQ8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qOnD5r8q9Uyc2GTeOg92n+c6BuTcTYD0wMJqZhurTnhio2xA4NcCY22S3TxdBXGUI5SShz4uqikUOqle4F0Chw5Ae1DATgEMoGEpzKgbdtOCuJH7dUQh+KD45KN53NvlV2xNRBICE2OYNTd2IEuYi5BjaJkDv9DkqxdvISJOrus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YLh3PbYg; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1C8AC2BC87
-	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Mar 2026 15:28:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772638084;
-	bh=4Uhi0QlTwzgQc5rwFHf8CwgRiHlRT+OzQOSYUnatPQ8=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=YLh3PbYgXGp2v3C6KnPZu44bNeXrA+51KuQHTzYyw27y6BqAZ0LJyuMZgR/nRtBT7
-	 Y4D+tHIysm63trLL2LxN2D8GYwx1NiAhpsRoz+gI0a7Ely3TJReyJxJVrCgxUtIKg+
-	 avgF2+mbM2lcegc8OIj1cIQVKArFB0cF7ba5n6wMnPFc8PFVrR3xkzPaN6zrMZ3s4P
-	 ZsHxBOBni1s84woCGzvDqENShD61CQci6rWXSpjk2BhlxvkE+4R0up21FWZeUs5Ivp
-	 f6WkWpxC33pZjxBDoHYhxTcDHo+Ir+YZvqF3QNOVCw9rB3HJRvr6ZU02UWVK1GF1xN
-	 Aj15557fVZdtA==
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-38a23cf08e0so29500231fa.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2026 07:28:04 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCUKpZusBdWFfXnFq1Y0RZS2QHUzfByZdIKK0UjtzzoU6RQq+RfQEMLi5p2Qxv/mFmxkYKGsObosUoSw3T2s@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywke49DdM07EH/IzZMMJ6WW6qSCCGMK97TLFrc1HpsWC8y8eRsB
-	/Me3cieFYi1Tffrp/cRmnH6di3mazB4FsVgh80w/xp2AQQjdCtK92KbbAor2l3qdPLJw+6TUBzz
-	yKi6uNY/8iXjye4kRr3enYwobgF2kCIS6m7NTdvzUdA==
-X-Received: by 2002:a2e:be8b:0:b0:38a:314f:b80e with SMTP id
- 38308e7fff4ca-38a314fb8e2mr8868381fa.37.1772638083128; Wed, 04 Mar 2026
- 07:28:03 -0800 (PST)
+	s=arc-20240116; t=1772638176; c=relaxed/simple;
+	bh=J2pHDqkcI5jgiqu24QsunAV3h4H2fOr3FdQWGJTAODc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AHl2LWTLX0j74asDbDlTxLTZGRO3430QlmFL+cPTurbfDxEZI0m2y3zgukYXE+S0mo4LyaiOOWTlmj7j8P9TnaiyulJ+tVVWhT21rTpxcLXTpJahVwBe5ehnBz+SwYXDo1x9Lz6B+6EwVlWvb8teDxpRX2IcNvJ5yIP6m6fnuAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Q1inYt1P; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=amwtKKpc; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 624CbIH51072686
+	for <linux-arm-msm@vger.kernel.org>; Wed, 4 Mar 2026 15:29:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	S7C3ZGxT6MAy3b00eY/LGUqY8Jlj5bg+7oTeA1mEoGE=; b=Q1inYt1P8vbSvquh
+	RbvN1tXFxrQ7WBO3jZeuKtTjeAdNz4ed30cG+G58sHStPLRsDwStQPGQs1dKktMm
+	oJLDvRMSjLmHEww6yy+apcHIz4RMoGWyCBlp5LE+GYdW6c3jGs6VkyZPZyypEeSw
+	WngbUHpGtG1e2KHcRMRUs18ACkBa+1iML/MCIgto3Bgoa9RSbmmaDGcQst1S+ZFB
+	45FSzvD9ZpzFF6UskSy+MK3gXph4vfIwm/md0q+Vz/2kO7KSp3NJ5AMGDsn/Jj0W
+	1UKHCydobH6Js0BBYNHw5s10R0Zo6ro7QjZYup1+K2sB6cNbJUxZBK9qhpjPdBv2
+	4ThEWQ==
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cpcxfj5wu-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2026 15:29:34 +0000 (GMT)
+Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-c738662b963so221473a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2026 07:29:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1772638173; x=1773242973; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=S7C3ZGxT6MAy3b00eY/LGUqY8Jlj5bg+7oTeA1mEoGE=;
+        b=amwtKKpcg5Am7DUBKeR4t3fJGJ6o0F0l0XLfTB3gHCI+3qMMBlWOfajgTO8eVo2H9k
+         ZwvZDZRfytrDvNajiyiQj7627LNMSEpcUAAxUYRuXFWej87vD+j/ZnETw4/Yqj1d8xq2
+         27eLK7tACgduTaZhBQtqvJlPfPNGVG27Pmcvt9Tp3ypqk0bmXwbjqcy41ruKF1KqsuQU
+         61k7ZXFkHiPkc9lmj7DmieVCfyORtykzUAha5OvnFOeDN/NAcwRtz12d8TEVhRcCAm0Q
+         9Z1XZHkvcGQhNK4VXLacQigtMiS1jYJf8KfOzE5MdBrwyClmiCyFAwFjMTNscDSjcbIG
+         896w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772638173; x=1773242973;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=S7C3ZGxT6MAy3b00eY/LGUqY8Jlj5bg+7oTeA1mEoGE=;
+        b=Q4q9WzWttq6thd9+Rj9B2kWEDgQKET24PZ07yU472uIGlr++qIxZHABxmPwG3O388V
+         ZzVxnW2FWuDgeBZkfMa364SRJEkjubGKo8tajl4YExKnVSDl9eC8Y7CsIQdgklMN8mAW
+         x87S1J8Utk/Jwu/LAfC/rEZKr1ILzzR5CqeB5+wr1nUvrtnp9r5XHtVQma4uvbANCbL8
+         jPCbQ585U5WkVdpyh/hWDNfH5hwgWXxQyMneME5QH5AhWfPqJGJ7/+VLWYGKuDLJV4/E
+         RRYJfxBdgoenapnSX/8cGpxqJ0vhnXGPtTENsqI8dAOvl68vjlVDQO8G9dI89kYq2vfy
+         U7Bw==
+X-Forwarded-Encrypted: i=1; AJvYcCX6VBZpczlQR77hyW6OKWxEICkHgqgemIt3vBYHy8E4M5EQ/8AfbRBFmYMiD4Gdw1povBR8dLubiE9RibHi@vger.kernel.org
+X-Gm-Message-State: AOJu0YwvC/zm7Ay9o3g+J+Ddw6Slz3K+/1GGoMmyrkQS0WmhguO5bQMi
+	j34bKEGWraqv8sDKPTVZSJX3Ei4EWLX88gKczu6gEgCvT8tGui+1tJhiWCpxErBPUDn6vzN3855
+	w+fV21OSSF1C4N6qmPpXOafj9HnA1UOdJIVVyQ3L16MXgthwN5Qf1ncqUoY32oBQ9iXuk
+X-Gm-Gg: ATEYQzwZ0UJuENqPh/8pCPdqJZ0asKLazSfrXZp1rkjnqMAJNkODngqSLaPblCyL4RR
+	f7jky9SY6sTtEqX/dqGH58+QwZXs5ISLHm+BkGg7Tduv/Zh/A9xG4HMBKh/dWRqj/miBF87nwe8
+	MWyDgX3ORQekjJ810TTccuFsz5nU0+nZLcVaGBxlbEdrkBXTeffzZf+ZMPk1TdXNlcZPRC00tjv
+	eeHZY2oyomjjtnDhe/lzwf/bbN4+V22QGLofkZV+Lzi5cqXH2Jho/nCeFw8PMcddvwCvhDH+/Pm
+	uFURlqkc2JCsQPFGbe+sxV+Z/+MNWbV26NEnne0ZKO8I8kWORibLF6+JRsj6/2Qze3hn8fKdyKK
+	spKNTUFwE9EkLtHCt4YTl2pIBzUnH6qKtqMoNP1tD364vr0VG8eikWw==
+X-Received: by 2002:a05:6a21:1f89:b0:38b:d9b0:e943 with SMTP id adf61e73a8af0-3982e1fe150mr2227275637.38.1772638173491;
+        Wed, 04 Mar 2026 07:29:33 -0800 (PST)
+X-Received: by 2002:a05:6a21:1f89:b0:38b:d9b0:e943 with SMTP id adf61e73a8af0-3982e1fe150mr2227236637.38.1772638172953;
+        Wed, 04 Mar 2026 07:29:32 -0800 (PST)
+Received: from [10.204.101.56] ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c70fa61a19bsm17288234a12.9.2026.03.04.07.29.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 Mar 2026 07:29:32 -0800 (PST)
+Message-ID: <22b3e2e9-b855-487e-868f-e72fcbbb22cd@oss.qualcomm.com>
+Date: Wed, 4 Mar 2026 20:59:24 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260302-qcom-qce-cmd-descr-v11-0-4bf1f5db4802@oss.qualcomm.com>
- <20260302-qcom-qce-cmd-descr-v11-12-4bf1f5db4802@oss.qualcomm.com> <aahHeR9j7q4_ynYK@vaman>
-In-Reply-To: <aahHeR9j7q4_ynYK@vaman>
-From: Bartosz Golaszewski <brgl@kernel.org>
-Date: Wed, 4 Mar 2026 16:27:50 +0100
-X-Gmail-Original-Message-ID: <CAMRc=Mc48+NyMPkFRa8GPv-odCe=r9WXJWUZYkTsaY53Ev_stQ@mail.gmail.com>
-X-Gm-Features: AaiRm53PjeLrZbaX46W-h8Hoc8doSIzcwlm0W7I8e3WNmtZGuh6x2grvktVUNBA
-Message-ID: <CAMRc=Mc48+NyMPkFRa8GPv-odCe=r9WXJWUZYkTsaY53Ev_stQ@mail.gmail.com>
-Subject: Re: [PATCH RFC v11 12/12] dmaengine: qcom: bam_dma: add support for
- BAM locking
-To: Vinod Koul <vkoul@kernel.org>
-Cc: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, Jonathan Corbet <corbet@lwn.net>, 
-	Thara Gopinath <thara.gopinath@gmail.com>, Herbert Xu <herbert@gondor.apana.org.au>, 
-	"David S. Miller" <davem@davemloft.net>, Udit Tiwari <quic_utiwari@quicinc.com>, 
-	Daniel Perez-Zoghbi <dperezzo@quicinc.com>, Md Sadre Alam <mdalam@qti.qualcomm.com>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Peter Ujfalusi <peter.ujfalusi@gmail.com>, 
-	Michal Simek <michal.simek@amd.com>, Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org, 
-	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: E5513202D4D
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 5/7] media: iris: add helper to select context bank
+ device
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bod@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Saravana Kannan <saravanak@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+        Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Stefan Schmidt <stefan.schmidt@linaro.org>,
+        Hans Verkuil <hverkuil@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Vishnu Reddy <busanna.reddy@oss.qualcomm.com>,
+        Hans Verkuil <hverkuil+cisco@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        iommu@lists.linux.dev, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+References: <20260227-kaanapali-iris-v2-0-850043ac3933@oss.qualcomm.com>
+ <20260227-kaanapali-iris-v2-5-850043ac3933@oss.qualcomm.com>
+ <bi3i37ho3ppzlgdx264ohxpcem3nwumjelzckf4x5uzdj5rt7a@2y2jrilmfimj>
+ <1dc86b00-9a18-482c-94b1-96692c1dd530@oss.qualcomm.com>
+ <jgygscmwovezkytizhh54cmmu5etgv23bgopfqrql3qj7zlhxh@adxo2b7izlrc>
+Content-Language: en-US
+From: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+In-Reply-To: <jgygscmwovezkytizhh54cmmu5etgv23bgopfqrql3qj7zlhxh@adxo2b7izlrc>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: hv_v0i9U58QIJQkRsCcfQpvuWIqU1rW3
+X-Authority-Analysis: v=2.4 cv=R4gO2NRX c=1 sm=1 tr=0 ts=69a84fde cx=c_pps
+ a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=EUspDBNiAAAA:8 a=aBrO_zpjTiySyTrMC9oA:9 a=QEXdDO2ut3YA:10
+ a=_Vgx9l1VpLgwpw_dHYaR:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA0MDEyNiBTYWx0ZWRfX5mqYJH9we0Ak
+ 1OSGAS7ei7EkiD3ae5BHl/Xu7kFV5vhrprOBDhYpzyJzKG845K9fJK0+gR2THXhMCn3+4mtSRWl
+ XwdBxkKACLE745bPegKZP/Ai0LYTISemtG7BcGcw/2VSAoXV6Hdl7O8WE7SAwNyVqxLdqY7P+7m
+ NtdsofR0KZ83XkVEmNXomWP37HnlQw23xIBu85leRru+j0z3wKNPrR6MCqAcyPpvR3lPczjNhuV
+ kOSED32xsaW8NKUrGyhGvrXXGZWh1xKOjhI1pt7YAoWWFbFqyOPYq0jdxexF6e/kVZUI0UEPYoL
+ 5sQq8zgfqOfYsK0vzzW32Xlg5fG0heuuBtjLR2LbFjE0W3jqF9cax0ekl/iN2+k9oDNKxaRjMcY
+ Wk3yYqYDKyNdHlhwMA6q28vH970UCfIvgI3JKWnxq3JDCvOFZJG3CbOFqp+kynXIaro3X6IKvHZ
+ 5E1ARRiLpRtjldKkVqg==
+X-Proofpoint-GUID: hv_v0i9U58QIJQkRsCcfQpvuWIqU1rW3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-04_06,2026-03-03_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 priorityscore=1501 clxscore=1015 phishscore=0 bulkscore=0
+ lowpriorityscore=0 impostorscore=0 spamscore=0 suspectscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603040126
+X-Rspamd-Queue-Id: 14D45202E85
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-95363-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,lwn.net,gmail.com,gondor.apana.org.au,davemloft.net,quicinc.com,qti.qualcomm.com,kernel.org,amd.com,vger.kernel.org,lists.infradead.org,linaro.org];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[20];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[23];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-95364-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,qualcomm.com:dkim,qualcomm.com:email];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[vikash.garodia@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,mail.gmail.com:mid]
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,cisco];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Action: no action
 
-On Wed, Mar 4, 2026 at 3:53=E2=80=AFPM Vinod Koul <vkoul@kernel.org> wrote:
->
-> On 02-03-26, 16:57, Bartosz Golaszewski wrote:
-> > Add support for BAM pipe locking. To that end: when starting the DMA on
-> > an RX channel - wrap the already issued descriptors with additional
-> > command descriptors performing dummy writes to the base register
-> > supplied by the client via dmaengine_slave_config() (if any) alongside
-> > the lock/unlock HW flags.
-> >
-> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.co=
-m>
 
-[snip]
+On 3/4/2026 3:57 AM, Dmitry Baryshkov wrote:
+> On Wed, Mar 04, 2026 at 12:46:27AM +0530, Vikash Garodia wrote:
+>>
+>>
+>> On 2/28/2026 1:57 AM, Dmitry Baryshkov wrote:
+>>> On Fri, Feb 27, 2026 at 07:41:21PM +0530, Vikash Garodia wrote:
+>>>> Depending on the buffer type (input, output, internal and interface
+>>>> queues), associated context bank is selected, if available. Fallback to
+>>>> parent device for backward compatibility.
+>>>>
+>>>> Co-developed-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+>>>> Signed-off-by: Vishnu Reddy <busanna.reddy@oss.qualcomm.com>
+>>>> Signed-off-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+>>>> ---
+>>>>    drivers/media/platform/qcom/iris/iris_buffer.c    |  7 +--
+>>>>    drivers/media/platform/qcom/iris/iris_buffer.h    |  2 +
+>>>>    drivers/media/platform/qcom/iris/iris_hfi_queue.c | 16 +++---
+>>>>    drivers/media/platform/qcom/iris/iris_resources.c | 60 +++++++++++++++++++++++
+>>>>    drivers/media/platform/qcom/iris/iris_resources.h |  2 +
+>>>>    drivers/media/platform/qcom/iris/iris_vidc.c      |  4 +-
+>>>>    6 files changed, 79 insertions(+), 12 deletions(-)
+>>>>
+>>>> @@ -177,3 +178,62 @@ int iris_create_child_device_and_map(struct iris_core *core, struct iris_context
+>>>>    	return 0;
+>>>>    }
+>>>> +
+>>>> +static enum iris_buffer_region iris_get_region(struct iris_inst *inst,
+>>>> +					       enum iris_buffer_type buffer_type)
+>>>> +{
+>>>> +	switch (buffer_type) {
+>>>> +	case BUF_INPUT:
+>>>> +		if (inst && inst->domain == ENCODER)
+>>>
+>>> Can inst be NULL here?
+>>
+>> during queues init/deinit, instances are not created.
+> 
+> Is this function being called during queues init?
 
-> > +static struct bam_async_desc *
-> > +bam_make_lock_desc(struct bam_chan *bchan, struct scatterlist *sg,
-> > +                struct bam_cmd_element *ce, unsigned int flag)
-> > +{
-> > +     struct dma_chan *chan =3D &bchan->vc.chan;
-> > +     struct bam_async_desc *async_desc;
-> > +     struct bam_desc_hw *desc;
-> > +     struct virt_dma_desc *vd;
-> > +     struct virt_dma_chan *vc;
-> > +     unsigned int mapped;
-> > +     dma_cookie_t cookie;
-> > +     int ret;
-> > +
-> > +     async_desc =3D kzalloc_flex(*async_desc, desc, 1, GFP_NOWAIT);
-> > +     if (!async_desc) {
-> > +             dev_err(bchan->bdev->dev, "failed to allocate the BAM loc=
-k descriptor\n");
-> > +             return NULL;
-> > +     }
-> > +
-> > +     async_desc->num_desc =3D 1;
-> > +     async_desc->curr_desc =3D async_desc->desc;
-> > +     async_desc->dir =3D DMA_MEM_TO_DEV;
-> > +
-> > +     desc =3D async_desc->desc;
-> > +
-> > +     bam_prep_ce_le32(ce, bchan->slave.dst_addr, BAM_WRITE_COMMAND, 0)=
-;
-> > +     sg_set_buf(sg, ce, sizeof(*ce));
-> > +
-> > +     mapped =3D dma_map_sg_attrs(chan->slave, sg, 1, DMA_TO_DEVICE, DM=
-A_PREP_CMD);
-> > +     if (!mapped) {
-> > +             kfree(async_desc);
-> > +             return NULL;
-> > +     }
-> > +
-> > +     desc->flags |=3D cpu_to_le16(DESC_FLAG_CMD | flag);
-> > +     desc->addr =3D sg_dma_address(sg);
-> > +     desc->size =3D sizeof(struct bam_cmd_element);
-> > +
-> > +     vc =3D &bchan->vc;
-> > +     vd =3D &async_desc->vd;
-> > +
-> > +     dma_async_tx_descriptor_init(&vd->tx, &vc->chan);
-> > +     vd->tx.flags =3D DMA_PREP_CMD;
-> > +     vd->tx.desc_free =3D vchan_tx_desc_free;
-> > +     vd->tx_result.result =3D DMA_TRANS_NOERROR;
-> > +     vd->tx_result.residue =3D 0;
-> > +
-> > +     cookie =3D dma_cookie_assign(&vd->tx);
-> > +     ret =3D dma_submit_error(cookie);
->
-> I am not sure I understand this.
->
-> At start you add a descriptor in the queue, ideally which should be
-> queued after the existing descriptors are completed!
->
-> Also I thought you want to append Pipe cmd to descriptors, why not do
-> this while preparing the descriptors and add the pipe cmd and start and
-> end of the sequence when you prepare... This was you dont need to create
-> a cookie like this
->
+yes, via iris_get_cb_dev()
 
-Client (in this case - crypto engine) can call
-dmaengine_prep_slave_sg() multiple times adding several logical
-descriptors which themselves can have several hardware descriptors. We
-want to lock the channel before issuing the first queued descriptor
-(for crypto: typically data descriptor) and unlock it once the final
-descriptor is processed (typically command descriptor). To that end:
-we insert the dummy command descriptor with the lock flag at the head
-of the queue and the one with the unlock flag at the tail - "wrapping"
-the existing queue with lock/unlock operations.
+> 
+>>
+>>>
+>>>> +			return IRIS_PIXEL_REGION;
+>>>> +		else if (inst && inst->domain == DECODER)
+>>>> +			return IRIS_BITSTREAM_REGION;
+>>>
+>>> Are there any other possibilities than encoder and decoder?
+>>
+>> will simplify it as
+>>
+>> if (inst) {
+>>      if (inst->domain == ENCODER)
+>>          return IRIS_PIXEL_REGION;
+>>      else
+>>          return IRIS_BITSTREAM_REGION;
+>> }
+>>>
+>>>> +		break;
+>>>> +	case BUF_OUTPUT:
+>>>> +		if (inst && inst->domain == ENCODER)
+>>>> +			return IRIS_BITSTREAM_REGION;
+>>>> +		else if (inst && inst->domain == DECODER)
+>>>> +			return IRIS_PIXEL_REGION;
+>>>> +		break;
+>>>> +	case BUF_BIN:
+>>>> +		return IRIS_BITSTREAM_REGION;
+>>>> +	case BUF_DPB:
+>>>> +	case BUF_PARTIAL:
+>>>> +	case BUF_SCRATCH_2:
+>>>> +	case BUF_VPSS:
+>>>> +		return IRIS_PIXEL_REGION;
+>>>> +	case BUF_ARP:
+>>>> +	case BUF_COMV:
+>>>> +	case BUF_HFI_QUEUE:
+>>>> +	case BUF_LINE:
+>>>> +	case BUF_NON_COMV:
+>>>> +	case BUF_PERSIST:
+>>>> +		return IRIS_NON_PIXEL_REGION;
+>>>> +	default:
+>>>> +		return 0;
+>>>
+>>> dev_err(dev, "unsupported buffer type %x\n", buffer_type)
+>>> return -EINVAL;
+>>
+>> these are bit fields, returning -EINVAL would still match some bits and can
+>> make the logic as true. 0 can be defined as IRIS_UNKNOWN_REGION
+> 
+> Yes, sounds good.
+> 
+>>
+>>>
+>>>> +	}
+>>>> +
+>>>> +	return 0;
+>>>
+>>> Drop
+>>>
+>>
+>> Ack
+>>
+>>>> +}
+>>>> +
+>>>> +struct device *iris_get_cb_dev(struct iris_core *core, struct iris_inst *inst,
+>>>> +			       enum iris_buffer_type buffer_type)
+>>>> +{
+>>>> +	enum iris_buffer_region region;
+>>>> +	struct device *dev = NULL;
+>>>> +	int i;
+>>>> +
+>>>> +	region = iris_get_region(inst, buffer_type);
+>>>> +
+>>>> +	for (i = 0; i < core->iris_platform_data->cb_data_size; i++) {
+>>>> +		if (core->iris_platform_data->cb_data[i].region & region) {
+>>>> +			dev = core->iris_platform_data->cb_data[i].dev;
+>>>> +			break;
+>>>> +		}
+>>>
+>>> You really seem to overcomplicate things. Replace array search with the
+>>> indexed array access. Much easier and much better.
+>>>
+>>> enum iris_buffer_region {
+>>> 	IRIS_PIXEL_REGION,
+>>> 	IRIS_BITSTREAM_REGION,
+>>> 	IRIS_NON_PIXEL_REGION,
+>>> 	// add more when necessary
+>>> 	IRIS_NUM_REGIONS,
+>>> };
+>>>
+>>> struct iris_core {
+>>> 	struct iris_cb_device cb_devices[IRIS_NUM_REGIONS];
+>>> };
+>>>
+>>> region = iris_get_region(inst, buffer_type);
+>>> dev = core->cb_devices[region];
+>>
+>> all the regions may/may not be present in all SOC
+> 
+> You can check for dev != NULL afterwards.
 
-Bart
+with one CB to multiple region mapping, this logic would not work.
+
+Regards,
+Vikash
+
+> 
+> 
+
 
