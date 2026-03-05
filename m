@@ -1,187 +1,275 @@
-Return-Path: <linux-arm-msm+bounces-95646-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95647-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SGBYGNeKqWl3/AAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95646-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 14:53:27 +0100
+	id yBvpAA2LqWl3/AAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95647-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 14:54:21 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B7A20212CFC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 14:53:26 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 77562212D38
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 14:54:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id B0E5A303AF03
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 13:50:52 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 7103F3033E66
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 13:54:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68C663A453E;
-	Thu,  5 Mar 2026 13:50:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C7A63A5E89;
+	Thu,  5 Mar 2026 13:54:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VVvrLvja"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uGFpjcPg"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44C0237F725;
-	Thu,  5 Mar 2026 13:50:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78DFF3A5E7D
+	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Mar 2026 13:54:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772718651; cv=none; b=acLh08gP4QDwrZjetsFurB6KE06h0KSU2MZiCuy7T4gGXOR5C+KxyBq9LeAqplaCF/gNFx/V0NH3gnPBbsgd4HgItGRxkZQ1VF4AeThTqHm//5M79ZhP/dMMiYTLprcZIlUSLUM75rcM7Qp8YovnTZ+hnJibPH7h+FNJ7rkcCMk=
+	t=1772718856; cv=none; b=kICCkjNOAw2rnum3Jvt2eOz/j60Ey51VZ2MtYOM2p51dfEtNuuRG6OaCME8p9I9upb7RTZm0UoWd8DFL9ileULQHi8pLQWK/0nVqI1pd3/JFIYCJQh4LdcuHKwtwghkLr2OgkeXcFdKvVPIZKUzwd2aGNyGKYdds6JZOZZG7YcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772718651; c=relaxed/simple;
-	bh=MRnhDM/nvYdG4p30PJohAW2wuLKCIiSzbKBttMzOJ+4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LiyeRjbXSf7ISkrmnc1rpmN/i3DF7M7lga58yORVo/5M/7LA4DLBfwhGmI/EPe+3CeEYv9lGbP96Z3UC/uh7WxC3CntUbCJlriYX25jVzqbPRZU90qcysrv5jC5AR3NTzX6F6+a3Dkum2k10RVO4GCMOQiOeknyFOul+WigC4uo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VVvrLvja; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 674E4C116C6;
-	Thu,  5 Mar 2026 13:50:48 +0000 (UTC)
+	s=arc-20240116; t=1772718856; c=relaxed/simple;
+	bh=XNEc9+ahz7dlU1ZGYsJX4Kf6Gy+aD7tZ2f4Pr2djs3Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=n+DyZqZUFqBDxqG0wuYGokGLwc4YQ61jlnOfc7hxabHteKT896h3BIutyNGU7cRpX33pQFY7J1btKzAgwFt6DiqRh2/TZTr4p9KvDHcE71mvzpHe2oJsTLH8zJ0QzHdUMm/OSmzWM3tG2fiHjob85q77oGnPI1JhcUFb48xWC7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uGFpjcPg; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4526BC2BC9E
+	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Mar 2026 13:54:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772718650;
-	bh=MRnhDM/nvYdG4p30PJohAW2wuLKCIiSzbKBttMzOJ+4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=VVvrLvjawxqwOmFUkab3JDvVpIE4SEgNU13yoHo3oYksyG05q64XctNefeA1A9cVx
-	 GyJUKRS5JR7TuoKUjbAIxlZpthP++M/dnhJzwqbDtM1W+mZC8NOOIHmBoM+Gn6LOus
-	 TXg9VOb1LNf9udQJ6dU2JKdGJdPst6PLuQriH+EKa5Whxz3EO7PcQM6fsmF7e234WK
-	 /HC29XKDKdhGR33ZDas8i6XEr+88xOFJiyTodDwEROWGAYruc9D4k3zntWbGoa7fbA
-	 LgjaMjfC9IAgipN+seM3/rFgJlSCIarpXNfOBDjxVxCIIdGiSA9QpHrNbilMq8j3lC
-	 Vjta+b2imp5eA==
-Message-ID: <d86e5b24-f497-473e-a7dd-a7d3c9199239@kernel.org>
-Date: Thu, 5 Mar 2026 14:50:46 +0100
+	s=k20201202; t=1772718856;
+	bh=XNEc9+ahz7dlU1ZGYsJX4Kf6Gy+aD7tZ2f4Pr2djs3Y=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=uGFpjcPgCjDb6i1AShmMLpPt6HWe3ALg4vViqxTDZZrjsDTq3YJu1tDQvfBiryHIy
+	 p4lhfNuqgQtHzlNpsbtP/azRtkOhBLCkYsUMT5e55sWpNanAXlk3uS3HO2KzQIX7xh
+	 qE5wrxCRmJHRdYGFcvv21409rcvpizvUKIXibqikLMOUEqQ5BRAmZHD5SSt+vz2Ooa
+	 OyIY2Cn0MIz0XQuVWJMNXUIWFu7038q5WnHIXnrgFNfT5oalP8lBGTJ11fRjl+ak3D
+	 iIPieV2sGQIhOfrYpC9Afm/0QO3zSRWCeyLIAUeGUVB8IsNgahy2ztjHExRmCvdoKs
+	 n95fmtmS2i6OQ==
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-38a3225d59fso16699791fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2026 05:54:16 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCXf72T46/dowcX9zPILx+R4AwXMtlvOkDVGCvmHtl5AsUaqf/EuHQe/ih6IkERAkf9huYi4FX6vb05ZYjqj@vger.kernel.org
+X-Gm-Message-State: AOJu0YxIlqGUk0FDZQThOJbAbWO8njthbB9m2y98NNhNl49c/4jTNp70
+	IfR5xCansVUJzyqMbIPzvLNcKZFsBCObMXGckQ9ZXTal6wlCAMTiQcWPwL5kmduQAArzBM9d0Gi
+	3RXgOYw9XKUEwkBprinVlD+3pEu1EnDSx/L9UQ/RnPA==
+X-Received: by 2002:a05:651c:3244:b0:38a:23cf:873 with SMTP id
+ 38308e7fff4ca-38a2c7a62c1mr39072801fa.29.1772718854668; Thu, 05 Mar 2026
+ 05:54:14 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/2] arm64: dts: qcom:
- qcs6490-rb3gen2-industrial-mezzanine: Add TC9563 PCIe switch node for PCIe0
-To: Sushrut Shree Trivedi <sushrut.trivedi@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20260305-industrial-mezzanine-pcie-v4-0-1f2c9d1344d7@oss.qualcomm.com>
- <20260305-industrial-mezzanine-pcie-v4-1-1f2c9d1344d7@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20260305-industrial-mezzanine-pcie-v4-1-1f2c9d1344d7@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: B7A20212CFC
+References: <20260302-qcom-qce-cmd-descr-v11-0-4bf1f5db4802@oss.qualcomm.com>
+ <scr5qvxa7f7k22pms4c6k5gwiky7lhssrw6qryfngexlek44g2@rayinnnwqgbt>
+ <aalwMwN3qMlzrql5@linaro.org> <CAMRc=MfjknN1AYF_NPLzR0YbdWuoET25D9o0zsvx56VN+u59HQ@mail.gmail.com>
+ <aamIf8JethKzLW93@linaro.org>
+In-Reply-To: <aamIf8JethKzLW93@linaro.org>
+From: Bartosz Golaszewski <brgl@kernel.org>
+Date: Thu, 5 Mar 2026 14:54:02 +0100
+X-Gmail-Original-Message-ID: <CAMRc=Mf=NjCqf0eqmM800Q3MEUC48V_DZ3ts6+4=qMCtrbvzzQ@mail.gmail.com>
+X-Gm-Features: AaiRm51IYcUCfeLohT9D6zKyfOjMI-00Tvkk-qYeZ800US0I_YGYl-ZxLXXpeCw
+Message-ID: <CAMRc=Mf=NjCqf0eqmM800Q3MEUC48V_DZ3ts6+4=qMCtrbvzzQ@mail.gmail.com>
+Subject: Re: [PATCH RFC v11 00/12] crypto/dmaengine: qce: introduce BAM
+ locking and use DMA for register I/O
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
+	Thara Gopinath <thara.gopinath@gmail.com>, Herbert Xu <herbert@gondor.apana.org.au>, 
+	"David S. Miller" <davem@davemloft.net>, Udit Tiwari <quic_utiwari@quicinc.com>, 
+	Daniel Perez-Zoghbi <dperezzo@quicinc.com>, Md Sadre Alam <mdalam@qti.qualcomm.com>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Peter Ujfalusi <peter.ujfalusi@gmail.com>, 
+	Michal Simek <michal.simek@amd.com>, Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org, 
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: 77562212D38
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-95646-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-95647-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,lwn.net,gmail.com,gondor.apana.org.au,davemloft.net,quicinc.com,qti.qualcomm.com,amd.com,vger.kernel.org,lists.infradead.org];
 	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[24];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MISSING_XM_UA(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[11];
+	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:email]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-On 05/03/2026 14:39, Sushrut Shree Trivedi wrote:
-> Add a node for the TC9563 PCIe switch connected to PCIe0. The switch
-> has three downstream ports.Two embedded Ethernet devices are present
-> on one of the downstream ports. All the ports present in the
-> node represent the downstream ports and embedded endpoints.
-> 
-> Power to the TC9563 is supplied through two LDO regulators, which
-> are on by default and are added as fixed regulators. TC9563 can be
-> configured through I2C.
-> 
-> Signed-off-by: Sushrut Shree Trivedi <sushrut.trivedi@oss.qualcomm.com>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> ---
->  .../qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso | 159 +++++++++++++++++++++
->  1 file changed, 159 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso
-> index 619a42b5ef48..c58a9ad5c331 100644
-> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso
-> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso
-> @@ -5,9 +5,33 @@
->  
->  /dts-v1/;
->  /plugin/;
-> +#include <dt-bindings/gpio/gpio.h>
->  #include <dt-bindings/clock/qcom,gcc-sc7280.h>
->  #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
->  
-> +&{/} {
-> +
-> +	vreg_0p9: regulator-vreg-0p9 {
+On Thu, Mar 5, 2026 at 2:43=E2=80=AFPM Stephan Gerhold
+<stephan.gerhold@linaro.org> wrote:
+>
+> On Thu, Mar 05, 2026 at 02:10:55PM +0100, Bartosz Golaszewski wrote:
+> > On Thu, Mar 5, 2026 at 1:00=E2=80=AFPM Stephan Gerhold
+> > <stephan.gerhold@linaro.org> wrote:
+> > >
+> > > On Tue, Mar 03, 2026 at 06:13:56PM +0530, Manivannan Sadhasivam wrote=
+:
+> > > > On Mon, Mar 02, 2026 at 04:57:13PM +0100, Bartosz Golaszewski wrote=
+:
+> > > > > NOTE: Please note that even though this is version 11, I changed =
+the
+> > > > > prefix to RFC as this is an entirely new approach resulting from
+> > > > > discussions under v9. I AM AWARE of the existing memory leaks in =
+the
+> > > > > last patch of this series - I'm sending it because I want to firs=
+t
+> > > > > discuss the approach and get a green light from Vinod as well as =
+Mani
+> > > > > and Bjorn. Especially when it comes to communicating the address =
+for the
+> > > > > dummy rights from the client to the BAM driver.
+> > > > > /NOTE
+> > > > >
+> > > > > Currently the QCE crypto driver accesses the crypto engine regist=
+ers
+> > > > > directly via CPU. Trust Zone may perform crypto operations simult=
+aneously
+> > > > > resulting in a race condition. To remedy that, let's introduce su=
+pport
+> > > > > for BAM locking/unlocking to the driver. The BAM driver will now =
+wrap
+> > > > > any existing issued descriptor chains with additional descriptors
+> > > > > performing the locking when the client starts the transaction
+> > > > > (dmaengine_issue_pending()). The client wanting to profit from lo=
+cking
+> > > > > needs to switch to performing register I/O over DMA and communica=
+te the
+> > > > > address to which to perform the dummy writes via a call to
+> > > > > dmaengine_slave_config().
+> > > > >
+> > > >
+> > > > Thanks for moving the LOCK/UNLOCK bits out of client to the BAM dri=
+ver. It looks
+> > > > neat now. I understand the limitation that for LOCK/UNLOCK, BAM nee=
+ds to perform
+> > > > a dummy write to an address in the client register space. So in thi=
+s case, you
+> > > > can also use the previous metadata approach to pass the scratchpad =
+register to
+> > > > the BAM driver from clients. The BAM driver can use this register t=
+o perform
+> > > > LOCK/UNLOCK.
+> > > >
+> > > > It may sound like I'm suggesting a part of your previous design, bu=
+t it fits the
+> > > > design more cleanly IMO. The BAM performs LOCK/UNLOCK on its own, b=
+ut it gets
+> > > > the scratchpad register address from the clients through the metada=
+ta once.
+> > > >
+> > > > It is very unfortunate that the IP doesn't accept '0' address for L=
+OCK/UNLOCK or
+> > > > some of them cannot append LOCK/UNLOCK to the actual CMD descriptor=
+s passed from
+> > > > the clients. These would've made the code/design even more cleaner.
+> > > >
+> > >
+> > > I was staring at the downstream drivers for QCE (qce50.c?) [1] for a =
+bit
+> > > and my impression is that they manage to get along without dummy writ=
+es.
+> > > It's a big mess, but it looks like they always have some commands
+> > > (depending on the crypto operation) that they are sending anyway and
+> > > they just assign the LOCK/UNLOCK flag to the command descriptor of th=
+at.
+> > >
+> > > It is similar for the second relevant user of the LOCK/UNLOCK flags, =
+the
+> > > QPIC NAND driver (msm_qpic_nand.c in downstream [2], qcom_nandc.c in
+> > > mainline), it is assigned as part of the register programming sequenc=
+e
+> > > instead of using a dummy write. In addition, the UNLOCK flag is
+> > > sometimes assigned to a READ command descriptor rather than a WRITE.
+> > >
+> > > @Bartosz: Can we get by without doing any dummy writes?
+> > > If not, would a dummy read perhaps be less intrusive than a dummy wri=
+te?
+> > >
+> >
+> > The HPG says that the LOCK/UNLOCK flag *must* be set on a command
+> > descriptor, not a data descriptor. For a simple encryption we will
+> > typically have a data descriptor and a command descriptor with
+> > register writes. So we need a command descriptor in front of the data
+> > and - while we could technically set the UNLOCK bit on the subsequent
+> > command descriptor - it's unclear from the HPG whether it will unlock
+> > before or after processing the command descriptor with the UNLOCK bit
+> > set. Hence the additional command descriptor at the end.
+> >
+>
+> I won't pretend that I actually understand what the downstream QCE
+> driver is doing, but e.g. qce_ablk_cipher_req() in the qce50.c I linked
+> looks like they just put the command descriptor with all the register
+> writes first and then the data second (followed by another command
+> descriptor for cleanup/unlocking). Is it actually required to put the
+> data first?
+>
 
-Same comment as for other patches recently - drop "vreg". The remaining
-part should follow existing coding style, not your own, so this is 0v9.
+Well, now you're getting into the philosophical issue of imposing
+requirements on the client which seemed to be the main point of
+contention in earlier versions. If you start requiring the client to
+put the DMA operations in a certain order (and it's not based on any
+HW requirement but rather on how the DMA driver is implemented) then
+how is it better than having the client just drive the locking
+altogether like pre v11? We won't get away without at least some
+requirements - like the client doing register I/O over DMA or
+providing the scratchpad address - but I think just wrapping the
+existing queue with additional descriptors in a way transparent to
+consumers is better in this case. And as I said: the HPG doesn't
+explicitly say that it unlocks the pipe *after* the descriptor with
+the unlock bit is processed. Doesn't even hint at what real the
+ordering is.
 
-https://web.git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/regulator/fixed-regulator.yaml
+> > The HPG also only mentions a write command and says nothing about a
+> > read. In any case: that's the least of the problems as switching to
+> > read doesn't solve the issue of passing the address of the scratchpad
+> > register.
+>
+> True.
+>
+> >
+> > So while some of this *may* just work, I would prefer to stick to what
+> > documentation says *will* work. :)
+> >
+>
+> Well, the question is if there is always a dummy register that can be
+> safely written (without causing any side effects). This will be always
+> just based on experiments, since the concept of a dummy write doesn't
+> seem to exist downstream (and I assume the documentation doesn't suggest
+> a specific register to use either).
+>
 
+You'd think so but the HPG actually does use the word "dummy" to
+describe the write operation with lock/unlock bits set. Though it does
+not recommend any particular register to do it.
 
-Best regards,
-Krzysztof
+> NAND_VERSION (0xf08) might work for qcom_nandc.c (which might be the
+> only other relevant user of the BAM locking functionality...).
+>
+
+Yeah, I do the same for QCE, write to the version register.
+
+Bart
 
