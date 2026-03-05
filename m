@@ -1,381 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-95562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95563-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id mEBSB1xQqWkj4wAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 10:43:56 +0100
+	id wEBPBQ5RqWmd4gAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95563-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 10:46:54 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B5CC220EC60
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 10:43:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C3AC20EDC7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 10:46:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 3B14030CD00A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 09:36:59 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7BFAD311E255
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 09:39:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E422437B039;
-	Thu,  5 Mar 2026 09:36:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A88E6379999;
+	Thu,  5 Mar 2026 09:39:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="r8n3aZlu"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nRTNlTwF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55DE6378D9E
-	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Mar 2026 09:36:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51AF4377EC5
+	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Mar 2026 09:39:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772703398; cv=none; b=W2JliYhBQtUpSuZzsqByvDlnruYohPNOkG6Tzx6fxBi/FvI4uOvIe4xFj3TJyzCvItmrmDsBKFjCo1D0/sgKM9MI7RI4w+nBQZqElOS5LxFwufeF1Nemmj2EFTRrzeprv2pWZ6yRCYDL4tJCgT0m+56uWEf6xxYn/MSyQaL0R0Y=
+	t=1772703589; cv=none; b=disMmOGVspwqNQ6Ngj8rQsn68A8gn1N99isf5DAYwYHeMWGY3bO5VQB+zCUnnSYGpl54o9oy7wrX9xAcHuIjucfK8lQgl5J1qjimqYfFneq6uaGg76rg/kitmT1Pnka9kTO3MJDnkshAxizAm2YdHMhxltMp0Wa7g0uzsrUplno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772703398; c=relaxed/simple;
-	bh=CMgXM6u7309Wn3e+oqvoc7hX9vYREWTZOtF5JH1MCY8=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
-	 References:In-Reply-To; b=oqrtm6gVG3lhk1NZD1Zw1PA6jMAjx0WrOkt61edSoYuEaZ157opkLNNb/X9F8lEcuxXjvqcESAbhuWKNN6sMYoQtaYSmzfW37DkVnmcSwYgBjye67W2fVvZmNig4T1PNsNheLnKy8s2CPQpY3F/GkrKAhZPgAq9EL4S/KuG2RvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=r8n3aZlu; arc=none smtp.client-ip=209.85.221.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-439c92a193bso1573188f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2026 01:36:26 -0800 (PST)
+	s=arc-20240116; t=1772703589; c=relaxed/simple;
+	bh=uwfVUq/wdApvUK0zOWHTomco6NhetV2l36Os5KZSpQw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=VSHcxCnUTFcD1RcoEY1z7ZQarligXx20PfBrSilPQqb1WGQJjJlgG/RzevkkaYGGIkTuwNX4N0oj26DfPF5PPqwUrc5s8ueqmYJ9aD1Nxw7WjFzkdTIypZOwhi7plrFaUNhWFrKsBmolN3t0rt6Wg0r9zTpuoFQKYAZY2WX9DX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nRTNlTwF; arc=none smtp.client-ip=209.85.208.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-65f92a597a1so11172878a12.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2026 01:39:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1772703385; x=1773308185; darn=vger.kernel.org;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Mbidr/A9XxccdAFsJsVKLL2bBtmGRz8XUrt7LUMLgOs=;
-        b=r8n3aZluVhBTCfb7BQuBR7rtMDtwMt/hhUveTeZDZQAO4wJxkqYdVnWInamwTvoasd
-         njRsc4y1mlFqY6e8h+MrxsQmTwUtFPEr4bGcC2jwn78y+TT5X2hBUAy+EkXK3GfkPnMc
-         efI7YRWZmXX4iWMH3mdtVwJdLQgh9b+NgkxQAUiokU1kYqlHFgrFqn8X6Kh54oqNRJvL
-         W9KF9PgfXi06d+0sZ2isvDvqnFTaI47uFjf39desDXwhsR9fNqaB6S1RhpTym+6cBpi7
-         37SVpkS6dpjv/ggxoqRfyQPvFp9lVwc3QY78bUWB4dZgVEV/oWO3UY/ChIwfz5zMSHTu
-         wMIg==
+        d=gmail.com; s=20230601; t=1772703587; x=1773308387; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=EOKLLyFS1m1449/2Qx3gad9xJn5duh5McKfguDMZF5g=;
+        b=nRTNlTwFOTdSsMis7A9sb3cCUj24hqOMl5QttvEpXplca/djHa6f5q4bkMLgjKu5Lb
+         xaIEJ+ZMtdAVi0+YNHkOCy2NJvsIPwv0+YKI7IXAjwe6ndXfdxzoyO8gNDSHtRR0HQKK
+         fU6EmubF5gwXJAbzN7bwwZow116Znk/IMQOaWwrK8XlKkiOlqioWEhEoRtNdmHTINSiB
+         PfB8u6WDjMaeHMc64z64JtR46PsTgXHV2Vl1cp3qJ5jBJ77RdN4RYRIbxXhgDrkQYtFu
+         VcWeJJpqG0JyOnyOH1acYhXaBflFyKXuFFp3s0PgKpZzfOnF6YbSuzA+o3qJZC3OzMTQ
+         JDRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772703385; x=1773308185;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20230601; t=1772703587; x=1773308387;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Mbidr/A9XxccdAFsJsVKLL2bBtmGRz8XUrt7LUMLgOs=;
-        b=hkHOvHGTEVlwjknCS8ffIcm+6u92JQzppG2CQgjFoOk2Q9QaEtlZkx4aui3figqkF9
-         JgfkhOmXiVVkgwC9JAscJcBN4MNEYNgCGVNEsz1ImR5rArhCaWYTIwpnu2hPNSOpMKED
-         uuL1dj563jgeGFhRhVr4EmMJp3AGHB8HrPQC3HKwUOardwRdn8h7Q3KYB+qAFCGvqiZU
-         h6xGKLyOICmJnu8SOtsf3aM74pnXozAE5PeOMHRgKT7C/eGh0cLpZr3vkktk60F7q0xk
-         Go0iPdZGsxwgRPe5rmLfRp3OXJ/ItfHrO/3RwuKMTt32Jo231wPYCvUl5LPCxFqqwZ9W
-         0Gdw==
-X-Forwarded-Encrypted: i=1; AJvYcCUSIP9hVYvFQTllONoNAmZ7OWLUz6Q7yLPcAT1HyTKgn7kQxRTcBsGUv1HH6wOGw806XNZh5WuCwvqzF3HV@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywm3v1lvjiOeLgo9fBZhTFShNNRjhv0LDA3XwgfEA/fUJoseA+a
-	Z+K3nyOKRNu4piamBZT2CB+mIoSOkonUNjLI00O2gfGrbmgzDI6Bsp4fCni+ti7RZIw=
-X-Gm-Gg: ATEYQzyeKzE7DmKR9YeReETqeoHBxASFcznWAH7hH2rsSzfsD+CBmAP1Xg5IlfOg8J+
-	nomn3nY7D76CSvP3wNzyN2jWChGJZ1eVwOImaIUOAi0LwaFYP5M89TdIZsMtNoytO8bz90wilJT
-	gUTr6DX2rnT0I5uAceuZHLDtonQSlKlzIKEZoMdkoCYVcKFkAQrYo4ho3zbZ00GMDKmxhfkBjgi
-	UO5jpRVMEXrtx6deUockZsN3uAWNQj2ZMr63lhki0QfN5dP/4lfnqx50j2Nh7OzEM8SSyCxiDKy
-	AFr/umc588ypXY5UniluxjV9PPd1jTWHeQDordeQM+FncZwgHWRE3/CLIGvyMpUWQYsddhjJXBb
-	71ePpN4/lUQOcSSgERyuX5gG2WcT+sGZDPZ9BxYlPXjxzc+03ENVk/thdBjsvv8/qy3Vhc298/I
-	2BSgCN44s6G71szsQ=
-X-Received: by 2002:a05:6000:144f:b0:439:b564:7a6c with SMTP id ffacd0b85a97d-439c7f6a2c9mr9158913f8f.4.1772703384539;
-        Thu, 05 Mar 2026 01:36:24 -0800 (PST)
-Received: from localhost ([195.52.25.213])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-439c2f7eca1sm14966458f8f.11.2026.03.05.01.36.22
+        bh=EOKLLyFS1m1449/2Qx3gad9xJn5duh5McKfguDMZF5g=;
+        b=MvH1IdLIK4rAGEx3kYwedNHk2FFzQQqBizgN+UVCxfAl2oviY5TeAeubHMCunQoHxk
+         16ubPGjEeGpwDdGHW5SyOhLIi2O2EC/AOvRhbFipvhk/rJOlAN+pAOqCfo3jupt5yJ/R
+         qaOw4zhRc6+lZX9MMV5bDnWWssdjo+WVtCc7TPPNztQHN0qEZlI1e334QIlwVWwaYfGv
+         bhIAa/SCHMsvqyXzsrRLsues8v68TUsgJEBqkyUWjrl6GriaPNGBGAy9dXHNIULCjaNL
+         BS48NeK2smqrIE2hcIN+eNpxZmPtW4hj3Jh7O98kLvJrKWYQroavyHIrWkl3/obsr0nQ
+         9EPA==
+X-Gm-Message-State: AOJu0YyjTwUVFH49xbLKqvoPV8it+X4bxDwzEgLbK9B2e29moZXBbUky
+	PqgHn+PA7aPBRBL9o6j5td1NQnKljun5p29sOlpKulEkGc3PB6QlGPMR/d0SlQIq
+X-Gm-Gg: ATEYQzwvrr/+jnsdL0dwrBiX3DTL6nDIWA/Ew18tg/9MGde+1JInYL6vomDKm9T8xar
+	lbBFd/DFunFTD4eIBM5KF3xuO6DNohQrZRRVYAenBKFcjis3+6WLnrVTXWZyhR46ObPB6DOyM0y
+	6obbyl8c8m85YWEgyDl3SCrFapFblsRY3j3K11LItYyVlMkeUC/Sq1jLPvskOXz4ga4p4l58wGi
+	GchnnGlBUsrRQL7GWKub+yMDTQ8r87oIeIpUMI/+5awz1xT0o7ifZthYAit0WqjytB+h1Cuy6WH
+	V1YanXmFYXNt3NbqVnJVMk+PK+HN19dxb5Oy+W3eVspgp7GehzVIXUtRsGXopiHXAGPzxcjgSk8
+	HP9DcVuoH04lOxDnuiCJh84U3ifK3CUcIzXM0f+4kwJcYa8PuTxdBAFuzZV8Bc9WzWDufkMmRhA
+	m/tkUpc3ScbeBfqFXqDugLDPfWe/U=
+X-Received: by 2002:a05:6402:5045:b0:661:6ca5:aba2 with SMTP id 4fb4d7f45d1cf-6616ca5af17mr405615a12.28.1772703586230;
+        Thu, 05 Mar 2026 01:39:46 -0800 (PST)
+Received: from workstation.home ([178.227.95.150])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-660bf4d8249sm2616634a12.17.2026.03.05.01.39.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Mar 2026 01:36:22 -0800 (PST)
+        Thu, 05 Mar 2026 01:39:44 -0800 (PST)
+From: Stanislav Zaikin <zstaseg@gmail.com>
+To: devicetree@vger.kernel.org
+Cc: linux-arm-msm@vger.kernel.org,
+	andersson@kernel.org,
+	konradybcio@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	linux-kernel@vger.kernel.org,
+	Stanislav Zaikin <zstaseg@gmail.com>
+Subject: [PATCH v4 0/2] Add Xiaomi 12 Lite 5G (taoyao) device tree
+Date: Thu,  5 Mar 2026 10:39:39 +0100
+Message-ID: <20260305093941.305122-1-zstaseg@gmail.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=b895f1e89350da7f8491f35b99d431866030fe6df54b62358155e9918430;
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Thu, 05 Mar 2026 10:36:14 +0100
-Message-Id: <DGUQWFYCPRQZ.17SO07GXW2DYA@baylibre.com>
-From: "Markus Schneider-Pargmann" <msp@baylibre.com>
-To: "Vladimir Oltean" <vladimir.oltean@nxp.com>,
- <linux-phy@lists.infradead.org>
-Cc: "Vinod Koul" <vkoul@kernel.org>, "Neil Armstrong"
- <neil.armstrong@linaro.org>, <dri-devel@lists.freedesktop.org>,
- <freedreno@lists.freedesktop.org>, <linux-arm-kernel@lists.infradead.org>,
- <linux-arm-msm@vger.kernel.org>, <linux-can@vger.kernel.org>,
- <linux-gpio@vger.kernel.org>, <linux-ide@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <linux-media@vger.kernel.org>,
- <linux-pci@vger.kernel.org>, <linux-renesas-soc@vger.kernel.org>,
- <linux-riscv@lists.infradead.org>, <linux-rockchip@lists.infradead.org>,
- <linux-samsung-soc@vger.kernel.org>, <linux-sunxi@lists.linux.dev>,
- <linux-tegra@vger.kernel.org>, <linux-usb@vger.kernel.org>,
- <netdev@vger.kernel.org>, <spacemit@lists.linux.dev>,
- <UNGLinuxDriver@microchip.com>, "Andrzej Hajda" <andrzej.hajda@intel.com>,
- "Robert Foss" <rfoss@kernel.org>, "Laurent Pinchart"
- <Laurent.pinchart@ideasonboard.com>, "Jonas Karlman" <jonas@kwiboo.se>,
- "Jernej Skrabec" <jernej.skrabec@gmail.com>, "Maarten Lankhorst"
- <maarten.lankhorst@linux.intel.com>, "Maxime Ripard" <mripard@kernel.org>,
- "Thomas Zimmermann" <tzimmermann@suse.de>, "David Airlie"
- <airlied@gmail.com>, "Simona Vetter" <simona@ffwll.ch>, "Andy Yan"
- <andy.yan@rock-chips.com>, "Marc Kleine-Budde" <mkl@pengutronix.de>,
- "Vincent Mailhol" <mailhol@kernel.org>, "Nicolas Ferre"
- <nicolas.ferre@microchip.com>, "Alexandre Belloni"
- <alexandre.belloni@bootlin.com>, "Claudiu Beznea"
- <claudiu.beznea@tuxon.dev>, "Markus Schneider-Pargmann" <msp@baylibre.com>,
- "Geert Uytterhoeven" <geert+renesas@glider.be>, "Magnus Damm"
- <magnus.damm@gmail.com>
-Subject: Re: [PATCH phy-next 13/22] phy: introduce phy_get_max_link_rate()
- helper for consumers
-X-Mailer: aerc 0.21.0
-References: <20260304175735.2660419-1-vladimir.oltean@nxp.com>
- <20260304175735.2660419-14-vladimir.oltean@nxp.com>
-In-Reply-To: <20260304175735.2660419-14-vladimir.oltean@nxp.com>
-X-Rspamd-Queue-Id: B5CC220EC60
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 8C3AC20EDC7
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.76 / 15.00];
-	SIGNED_PGP(-2.00)[];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MV_CASE(0.50)[];
-	R_DKIM_ALLOW(-0.20)[baylibre-com.20230601.gappssmtp.com:s=20230601];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_MISSING_CHARSET(0.50)[];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	MIME_GOOD(-0.20)[multipart/signed,text/plain];
 	MAILLIST(-0.15)[generic];
+	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCPT_COUNT_TWELVE(0.00)[43];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95562-lists,linux-arm-msm=lfdr.de];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	DMARC_NA(0.00)[baylibre.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+,1:+,2:~];
-	FREEMAIL_CC(0.00)[kernel.org,linaro.org,lists.freedesktop.org,lists.infradead.org,vger.kernel.org,lists.linux.dev,microchip.com,intel.com,ideasonboard.com,kwiboo.se,gmail.com,linux.intel.com,suse.de,ffwll.ch,rock-chips.com,pengutronix.de,bootlin.com,tuxon.dev,baylibre.com,glider.be];
-	DKIM_TRACE(0.00)[baylibre-com.20230601.gappssmtp.com:+];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FREEMAIL_CC(0.00)[vger.kernel.org,kernel.org,gmail.com];
+	TAGGED_FROM(0.00)[bounces-95563-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[msp@baylibre.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
-	NEURAL_HAM(-0.00)[-1.000];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[zstaseg@gmail.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	NEURAL_HAM(-0.00)[-1.000];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FREEMAIL_FROM(0.00)[gmail.com];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
---b895f1e89350da7f8491f35b99d431866030fe6df54b62358155e9918430
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
+This series adds device tree support for the Xiaomi 12 Lite 5G (taoyao),
+based on the Qualcomm SM7325 SoC.
 
-Hi,
+The display panel model is unknown, so bootloader-initialized
+simple-framebuffer is therefore used to expose the display.
 
-On Wed Mar 4, 2026 at 6:57 PM CET, Vladimir Oltean wrote:
-> Consumer drivers shouldn't dereference struct phy, not even to get to
-> its attributes.
->
-> We have phy_get_bus_width() as a precedent for getting the bus_width
-> attribute, so let's add phy_get_max_link_rate() and use it in DRM and
-> CAN drivers.
->
-> Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-> ---
-> Cc: Andrzej Hajda <andrzej.hajda@intel.com>
-> Cc: Neil Armstrong <neil.armstrong@linaro.org>
-> Cc: Robert Foss <rfoss@kernel.org>
-> Cc: Laurent Pinchart <Laurent.pinchart@ideasonboard.com>
-> Cc: Jonas Karlman <jonas@kwiboo.se>
-> Cc: Jernej Skrabec <jernej.skrabec@gmail.com>
-> Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-> Cc: Maxime Ripard <mripard@kernel.org>
-> Cc: Thomas Zimmermann <tzimmermann@suse.de>
-> Cc: David Airlie <airlied@gmail.com>
-> Cc: Simona Vetter <simona@ffwll.ch>
-> Cc: Andy Yan <andy.yan@rock-chips.com>
-> Cc: Marc Kleine-Budde <mkl@pengutronix.de>
-> Cc: Vincent Mailhol <mailhol@kernel.org>
-> Cc: Nicolas Ferre <nicolas.ferre@microchip.com>
-> Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
-> Cc: Claudiu Beznea <claudiu.beznea@tuxon.dev>
-> Cc: Markus Schneider-Pargmann <msp@baylibre.com>
-> Cc: Geert Uytterhoeven <geert+renesas@glider.be>
-> Cc: Magnus Damm <magnus.damm@gmail.com>
-> ---
->  drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c | 4 ++--
->  drivers/gpu/drm/bridge/synopsys/dw-dp.c             | 2 +-
->  drivers/net/can/at91_can.c                          | 2 +-
->  drivers/net/can/flexcan/flexcan-core.c              | 2 +-
->  drivers/net/can/m_can/m_can_platform.c              | 2 +-
->  drivers/net/can/rcar/rcar_canfd.c                   | 2 +-
->  drivers/phy/phy-core.c                              | 6 ++++++
->  include/linux/phy/phy.h                             | 6 ++++++
->  8 files changed, 19 insertions(+), 7 deletions(-)
->
-> diff --git a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c b/driver=
-s/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
-> index a8b6ae58cb0a..ed7ed82ddb64 100644
-> --- a/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
-> +++ b/drivers/gpu/drm/bridge/cadence/cdns-mhdp8546-core.c
-> @@ -1300,7 +1300,7 @@ static u32 cdns_mhdp_get_training_interval_us(struc=
-t cdns_mhdp_device *mhdp,
-> =20
->  static void cdns_mhdp_fill_host_caps(struct cdns_mhdp_device *mhdp)
->  {
-> -	unsigned int link_rate;
-> +	u32 link_rate;
-> =20
->  	/* Get source capabilities based on PHY attributes */
-> =20
-> @@ -1308,7 +1308,7 @@ static void cdns_mhdp_fill_host_caps(struct cdns_mh=
-dp_device *mhdp)
->  	if (!mhdp->host.lanes_cnt)
->  		mhdp->host.lanes_cnt =3D 4;
-> =20
-> -	link_rate =3D mhdp->phy->attrs.max_link_rate;
-> +	link_rate =3D phy_get_max_link_rate(mhdp->phy);
->  	if (!link_rate)
->  		link_rate =3D drm_dp_bw_code_to_link_rate(DP_LINK_BW_8_1);
->  	else
-> diff --git a/drivers/gpu/drm/bridge/synopsys/dw-dp.c b/drivers/gpu/drm/br=
-idge/synopsys/dw-dp.c
-> index 4ab6922dd79c..79c72ee8e263 100644
-> --- a/drivers/gpu/drm/bridge/synopsys/dw-dp.c
-> +++ b/drivers/gpu/drm/bridge/synopsys/dw-dp.c
-> @@ -536,7 +536,7 @@ static int dw_dp_link_parse(struct dw_dp *dp, struct =
-drm_connector *connector)
-> =20
->  	link->revision =3D link->dpcd[DP_DPCD_REV];
->  	link->rate =3D min_t(u32, min(dp->plat_data.max_link_rate,
-> -				    dp->phy->attrs.max_link_rate * 100),
-> +				    phy_get_max_link_rate(dp->phy) * 100),
->  			   drm_dp_max_link_rate(link->dpcd));
->  	link->lanes =3D min_t(u8, phy_get_bus_width(dp->phy),
->  			    drm_dp_max_lane_count(link->dpcd));
-> diff --git a/drivers/net/can/at91_can.c b/drivers/net/can/at91_can.c
-> index 58da323f14d7..b56db253f02d 100644
-> --- a/drivers/net/can/at91_can.c
-> +++ b/drivers/net/can/at91_can.c
-> @@ -1126,7 +1126,7 @@ static int at91_can_probe(struct platform_device *p=
-dev)
->  	can_rx_offload_add_timestamp(dev, &priv->offload);
-> =20
->  	if (transceiver)
-> -		priv->can.bitrate_max =3D transceiver->attrs.max_link_rate;
-> +		priv->can.bitrate_max =3D phy_get_max_link_rate(transceiver);
-> =20
->  	if (at91_is_sam9263(priv))
->  		dev->sysfs_groups[0] =3D &at91_sysfs_attr_group;
-> diff --git a/drivers/net/can/flexcan/flexcan-core.c b/drivers/net/can/fle=
-xcan/flexcan-core.c
-> index f5d22c61503f..3a4307bc1d61 100644
-> --- a/drivers/net/can/flexcan/flexcan-core.c
-> +++ b/drivers/net/can/flexcan/flexcan-core.c
-> @@ -2211,7 +2211,7 @@ static int flexcan_probe(struct platform_device *pd=
-ev)
->  	priv->transceiver =3D transceiver;
-> =20
->  	if (transceiver)
-> -		priv->can.bitrate_max =3D transceiver->attrs.max_link_rate;
-> +		priv->can.bitrate_max =3D phy_get_max_link_rate(transceiver);
-> =20
->  	if (priv->devtype_data.quirks & FLEXCAN_QUIRK_NR_IRQ_3) {
->  		priv->irq_boff =3D platform_get_irq(pdev, 1);
-> diff --git a/drivers/net/can/m_can/m_can_platform.c b/drivers/net/can/m_c=
-an/m_can_platform.c
-> index 56da411878af..73525be6566b 100644
-> --- a/drivers/net/can/m_can/m_can_platform.c
-> +++ b/drivers/net/can/m_can/m_can_platform.c
-> @@ -132,7 +132,7 @@ static int m_can_plat_probe(struct platform_device *p=
-dev)
->  	}
-> =20
->  	if (transceiver)
-> -		mcan_class->can.bitrate_max =3D transceiver->attrs.max_link_rate;
-> +		mcan_class->can.bitrate_max =3D phy_get_max_link_rate(transceiver);
-> =20
->  	priv->base =3D addr;
->  	priv->mram_base =3D mram_addr;
-> diff --git a/drivers/net/can/rcar/rcar_canfd.c b/drivers/net/can/rcar/rca=
-r_canfd.c
-> index eaf8cac78038..645d5671705d 100644
-> --- a/drivers/net/can/rcar/rcar_canfd.c
-> +++ b/drivers/net/can/rcar/rcar_canfd.c
-> @@ -1885,7 +1885,7 @@ static int rcar_canfd_channel_probe(struct rcar_can=
-fd_global *gpriv, u32 ch,
->  	priv->channel =3D ch;
->  	priv->gpriv =3D gpriv;
->  	if (transceiver)
-> -		priv->can.bitrate_max =3D transceiver->attrs.max_link_rate;
-> +		priv->can.bitrate_max =3D phy_get_max_link_rate(transceiver);
->  	priv->can.clock.freq =3D fcan_freq;
->  	dev_info(dev, "can_clk rate is %u\n", priv->can.clock.freq);
-> =20
-> diff --git a/drivers/phy/phy-core.c b/drivers/phy/phy-core.c
-> index a1aff00fba7c..89f7410241aa 100644
-> --- a/drivers/phy/phy-core.c
-> +++ b/drivers/phy/phy-core.c
-> @@ -640,6 +640,12 @@ void phy_set_bus_width(struct phy *phy, int bus_widt=
-h)
->  }
->  EXPORT_SYMBOL_GPL(phy_set_bus_width);
-> =20
-> +u32 phy_get_max_link_rate(struct phy *phy)
-> +{
+Changes in v4:
+- Patch no. 1 - no changes
+- Removed Konrad's R-b tag, please take a look again (patch no. 2)
+- Fixed vreg_s2b_0p7 regulator name to spmb2 (patch no. 2)
+- Switched bluetooth to wcn6750-pmu (patch no. 2)
+- Dropped qcom,local-bd-address-broken as it has no effect (patch no. 2)
+- Added wifi calibration variant "Xiaomi_taoyao" (also sent board-2.bin
+  files to ath11k) (patch no. 2)
+- Link to v3:
+  https://lore.kernel.org/all/20260224114424.1966947-1-zstaseg@gmail.com/
 
-All of the can drivers that would use this function are checking phy
-before assigning the max_link_rate:
+Changes in v3:
+- Patch no. 1 - no changes
+- Drop unit address for framebuffer node (patch no. 2)
+- Add Konrad's R-b tag (patch no. 2)
+- Link to v2:
+  https://lore.kernel.org/all/20260216120715.3432191-1-zstaseg@gmail.com/
 
-  if (transceiver)
-          priv->can.bitrate_max =3D transceiver->attrs.max_link_rate;
+Changes in v2:
+- Add Rob's A-b tag (patch no. 1)
+- Add explicit framebuffer_reserved label (patch no. 2)
+- Use memory-region for simple-framebuffer (patch no. 2)
+- Fix reserved-memory naming: make node names consistent with labels
+  and intended subsystem (CVP/camera/video) (patch no. 2)
+- Convert mem-type value from <0x02> to <2> (patch no. 2)
+- Fix s2b regulator comment style (patch no. 2)
+- Remove unused gpio-reserved-ranges entry (<32 2>) (patch no. 2)
+- Link to v1:
+  https://lore.kernel.org/all/20260204115645.1343750-1-zstaseg@gmail.com/
 
-Would it be reasonable to have
+Stanislav Zaikin (2):
+  dt-bindings: arm: qcom: Add SM7325 Xiaomi 12 Lite 5G (taoyao)
+  arm64: dts: qcom: Add Xiaomi 12 Lite 5G (taoyao) DTS
 
-  if (!phy)
-          return 0;
+ .../devicetree/bindings/arm/qcom.yaml         |   1 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../boot/dts/qcom/sm7325-xiaomi-taoyao.dts    | 907 ++++++++++++++++++
+ 3 files changed, 909 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sm7325-xiaomi-taoyao.dts
 
-in this function to be able to drop these individual checks of the
-drivers? This would be similar to clk_get_rate() which does the same
-check and return 0 for convenience.
+-- 
+2.51.0
 
-Best
-Markus
-
-> +	return phy->attrs.max_link_rate;
-> +}
-> +EXPORT_SYMBOL_GPL(phy_get_max_link_rate);
-> +
->  /**
->   * _of_phy_get() - lookup and obtain a reference to a phy by phandle
->   * @np: device_node for which to get the phy
-> diff --git a/include/linux/phy/phy.h b/include/linux/phy/phy.h
-> index 36307e47760d..af9c3e795786 100644
-> --- a/include/linux/phy/phy.h
-> +++ b/include/linux/phy/phy.h
-> @@ -57,6 +57,7 @@ int phy_notify_disconnect(struct phy *phy, int port);
->  int phy_notify_state(struct phy *phy, union phy_notify state);
->  int phy_get_bus_width(struct phy *phy);
->  void phy_set_bus_width(struct phy *phy, int bus_width);
-> +u32 phy_get_max_link_rate(struct phy *phy);
->  #else
->  static inline struct phy *phy_get(struct device *dev, const char *string=
-)
->  {
-> @@ -256,6 +257,11 @@ static inline int phy_get_bus_width(struct phy *phy)
->  static inline void phy_set_bus_width(struct phy *phy, int bus_width)
->  {
->  }
-> +
-> +static inline u32 phy_get_max_link_rate(struct phy *phy)
-> +{
-> +	return 0;
-> +}
->  #endif /* IS_ENABLED(CONFIG_GENERIC_PHY) */
-> =20
->  #endif /* __PHY_CONSUMER_H */
-
-
---b895f1e89350da7f8491f35b99d431866030fe6df54b62358155e9918430
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iKMEABYKAEsWIQSJYVVm/x+5xmOiprOFwVZpkBVKUwUCaalOjxsUgAAAAAAEAA5t
-YW51MiwyLjUrMS4xMSwyLDIRHG1zcEBiYXlsaWJyZS5jb20ACgkQhcFWaZAVSlPc
-SwEAt3Fg0ly9qnS+HJQv96JGhcc9ssPHPspnN0LcoiUH76oBAJJ1UWuuXcnIsBb3
-namewJQN1U0nDnFUFRtJbSq49LcK
-=6g8b
------END PGP SIGNATURE-----
-
---b895f1e89350da7f8491f35b99d431866030fe6df54b62358155e9918430--
 
