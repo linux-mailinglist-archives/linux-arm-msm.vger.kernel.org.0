@@ -1,190 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-95526-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MAXQGPE2qWlk3AAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95526-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 08:55:29 +0100
+	id mEAhJIo1qWlk3AAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 08:49:30 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C006120D007
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 08:55:28 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08CD620CEA3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 08:49:29 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C99C7302F731
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 07:54:23 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 69F24302F687
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 07:49:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 734D32472AA;
-	Thu,  5 Mar 2026 07:54:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07170328B7B;
+	Thu,  5 Mar 2026 07:49:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o+9h5rox"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271C13358B9
-	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Mar 2026 07:54:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D81EB27E05E;
+	Thu,  5 Mar 2026 07:49:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772697263; cv=none; b=H3svznk5npMlOe3gZJBs2qvyXsnEvk0tDeNJrcJtzw9Uo8+OCL1s46y25ZaBArxeHEFYPFBorqZ5AR/zhMFHn23msA7TDNnIBrJIZkBPbfeFyfB3bUvDLWS01h5lZ+zOcYnvaPxk5as8qm1vWIsyziJB1/pwEZcd8/lKmzgAIXY=
+	t=1772696950; cv=none; b=C5BDhZKoMbSe7/i76u5UC+74bqj8Fwdj7t3hRFm1RZKmL00+RuceuvqxsanKb/T2OhIRa5R9s/XwlOA31d0SYpsWaJw/mUnuoo6KPA53tbxkKutletiSunsGcTPjAiPlBd8JsvX2qwI/O9xpXmjnt4Lo6eqtiMyWJ4kI9tlMR6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772697263; c=relaxed/simple;
-	bh=urVD1xPdaF3hV5GqXqVqTidMinFWi7P2lc2J0G3o7gY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eF1CjnfdCNGEeRY42MBfTTt6AUmZHBHe8JBjLAbYRSLMnIJa2mhoHCX1X7VZDIGV5V9KiLcsIsZvDwCC9Gy7OXw7YlLQVeBB2x/SgWk3+7JCoaRM6fu9k2cX3e4xsOelKjhUHb2OMgmDO3Yu+SkGjUUsEwf3/uOMCfHX7nkQe44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.210.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-7d4c9537f90so5498614a34.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2026 23:54:22 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772697261; x=1773302061;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7xyHjzGnphi32H4Bte19x6wQV76UaiJqzbc3zMkJKs8=;
-        b=ugDbClm1YHMFXO9MaS2pGivaCXZzcNJjnXCbm+/IqbL2MjTHJMt8btaKzOaL74VBtx
-         Lw8uLMCf4B/3/wdySzrxAtEU6f26D8zjvS+8UBzg8ZKW5R5DUeLcjj/cp0jCv4bOa2oa
-         MRznukCW4UGSuJTf3vmIfmNTgs9ggpCWoHPDOulmtcLg2g+/soQvBz4q/WZlfUCi38JY
-         Ipn4BUMUZvsNMNmGhB1i+e33BjYsg3vuGodzTwv7NIH3K00I0z/u18BuR/HgFhyrjyep
-         vRD8QQAwaaAqpIaE1has20dHZIWWfiSERhOCaC/SnSCaeYsaqg8QrXE3nFArIFl5UGtj
-         bddA==
-X-Forwarded-Encrypted: i=1; AJvYcCX13jKLTLaVidxkteeFweOySZYU1LBAkLTwbry0YqEGRrVTvjCOZ3vTdnBObHNh9V/W/qu8D3CXSeh43QT2@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy5IJMenRkffHENaMnWvKLO6hKnOUldPcu70tVEJbjFaQNDyV91
-	zT/h9KGRRSzNpQWWzNvPcbiJUmF3q16bWca7ikWoNYSWuQgSyaRnFyv8UYUPshAF
-X-Gm-Gg: ATEYQzznKwBITHTlwym7hcRN9GxAfXD2qSMaXnkp8DWVXV4PbR9aIvCF4XOGMUeRyqq
-	YyqihCxarRV1JG5QgD4EL9mX8mdEc2w0XKr20S7ZT+7kNjBu3HPdBiO5NiTZC6CPw0eiEinKLaD
-	yye062Oiy7Q7/ioZ1lc2NGzOLeyRqnI08seSZw3Droam+vWDR/5ckrM0P87D8jKw9DP/txcpkxw
-	i9Nw3z7Y42CObWITc+p0+5XBHV/EchGsJKQ4m6Cn1oPtsu+zasV+zmPO6dEw3ZTZkTWauB5QATR
-	wS3djEOvTGz1Fa7fNfCJvTVAXF3chwSvRS9ELz2trXJReoaXMfOkx34RdtxLauUQSH4QJpp0NWn
-	HUE88NEMskAt2azjuQt9rEb1VKkbKaihxSuJgUNE3VKJD/zuaJMPZ98lIXkwGDo4luitETcRm6Q
-	EJ+DuwArDMmDi2wiAkAVgC/d69CaEnP14s/UPW9qbdQZSiIz5yH2++sn99WLtYKTYFSMV4Xpx5f
-	Q8=
-X-Received: by 2002:a05:6830:4984:b0:7d4:96c3:3f6d with SMTP id 46e09a7af769-7d6c7f541fbmr3202368a34.7.1772697261198;
-        Wed, 04 Mar 2026 23:54:21 -0800 (PST)
-Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com. [209.85.167.181])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7d586626895sm19688308a34.18.2026.03.04.23.54.20
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Mar 2026 23:54:20 -0800 (PST)
-Received: by mail-oi1-f181.google.com with SMTP id 5614622812f47-4648447c899so4862222b6e.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2026 23:54:20 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCXsmqO+WyejFYIFMpvaH0xXi2vlctsvoHfw8oy0OwdHp8FYu2/rkjQ3Qmpu4kUe5p7NJJbEdaBE7AalrmVM@vger.kernel.org
-X-Received: by 2002:a05:6102:32c1:b0:5ff:a16b:93f9 with SMTP id
- ada2fe7eead31-5ffaae2d5b0mr1883200137.21.1772696877960; Wed, 04 Mar 2026
- 23:47:57 -0800 (PST)
+	s=arc-20240116; t=1772696950; c=relaxed/simple;
+	bh=TFdAbilw8W8sjWd9J8Wt7r39BydUSFkn/rQZC9TwBRU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lLl7s/5YLjSs0CAmGTD0b8EY+WPVa78qsA/bpBgjvHAnOJ9FR35qc1I382IWCAqQOL6z9j6VPKVbZnZgZeXEiPc2uAU+8XTKaZ5ekxO7udLgr3XrgMzqHQ02eVEUOwFxc2y+b+SDI2LwDy+4zov47fa97Gf49eWCg+bjyO7XEqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o+9h5rox; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9459C116C6;
+	Thu,  5 Mar 2026 07:49:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772696950;
+	bh=TFdAbilw8W8sjWd9J8Wt7r39BydUSFkn/rQZC9TwBRU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=o+9h5roxVzDXrGaHll77MdtFkZUAg5e5fK5yEz/y4+SA1cUuQLGpBcKfP26Wg6pBc
+	 WvUVljrgQuUiFmna5ubk44KFLeoILql1244YJ3PJly0OVWqC4SDZWxPm+UsFtmxZaN
+	 4wuNbg1FBNBrc5TyExBGaUu7Wq8VECIu6fQ+69H+tjluloT29LwOMaeB9UCuZeTUf4
+	 eKRNWoOZgE8AspGYggfzZrfsfCJ66LySxj5c/5FkUWTXTZNXdyh333LZh6yh6O731u
+	 PwiizzG7gwmKjolGBOfufl/HNfDjbWSVXFrUWUioCu0vlURzcaMaA9VzVw9aWoE2ar
+	 sGN+Pjf5jKcqg==
+Date: Thu, 5 Mar 2026 08:49:07 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Jagadeesh Kona <quic_jkona@quicinc.com>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Abel Vesa <abelvesa@kernel.org>, 
+	Rajendra Nayak <quic_rjendra@quicinc.com>, Stephan Gerhold <stephan.gerhold@linaro.org>, 
+	Ajit Pandey <ajit.pandey@oss.qualcomm.com>, Imran Shaik <imran.shaik@oss.qualcomm.com>, 
+	Taniya Das <taniya.das@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Subject: Re: [PATCH v2 2/7] dt-bindings: clock: qcom: Add X1P42100 camera
+ clock controller
+Message-ID: <20260305-rugged-agama-of-merriment-6cadf1@quoll>
+References: <20260304-purwa-videocc-camcc-v2-0-dbbd2d258bd6@oss.qualcomm.com>
+ <20260304-purwa-videocc-camcc-v2-2-dbbd2d258bd6@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260304175735.2660419-1-vladimir.oltean@nxp.com> <20260304175735.2660419-14-vladimir.oltean@nxp.com>
-In-Reply-To: <20260304175735.2660419-14-vladimir.oltean@nxp.com>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Thu, 5 Mar 2026 08:47:47 +0100
-X-Gmail-Original-Message-ID: <CAMuHMdUNtqsui3ek1RYCTyiuDLRajpSBMnrdzED6wu6i7-QcuA@mail.gmail.com>
-X-Gm-Features: AaiRm514iMGAdfTBAVsgfVfK-GGHy9jHY4ezK-Lp3w09-JWpnENLQ0I4lkIFgvE
-Message-ID: <CAMuHMdUNtqsui3ek1RYCTyiuDLRajpSBMnrdzED6wu6i7-QcuA@mail.gmail.com>
-Subject: Re: [PATCH phy-next 13/22] phy: introduce phy_get_max_link_rate()
- helper for consumers
-To: Vladimir Oltean <vladimir.oltean@nxp.com>
-Cc: linux-phy@lists.infradead.org, Vinod Koul <vkoul@kernel.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-can@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, linux-ide@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
-	linux-pci@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, linux-rockchip@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev, 
-	linux-tegra@vger.kernel.org, linux-usb@vger.kernel.org, 
-	netdev@vger.kernel.org, spacemit@lists.linux.dev, 
-	UNGLinuxDriver@microchip.com, Andrzej Hajda <andrzej.hajda@intel.com>, 
-	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
-	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Andy Yan <andy.yan@rock-chips.com>, Marc Kleine-Budde <mkl@pengutronix.de>, 
-	Vincent Mailhol <mailhol@kernel.org>, Nicolas Ferre <nicolas.ferre@microchip.com>, 
-	Alexandre Belloni <alexandre.belloni@bootlin.com>, Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
-	Markus Schneider-Pargmann <msp@baylibre.com>, Magnus Damm <magnus.damm@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Rspamd-Queue-Id: C006120D007
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260304-purwa-videocc-camcc-v2-2-dbbd2d258bd6@oss.qualcomm.com>
+X-Rspamd-Queue-Id: 08CD620CEA3
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.04 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[lists.infradead.org,kernel.org,linaro.org,lists.freedesktop.org,vger.kernel.org,lists.linux.dev,microchip.com,intel.com,ideasonboard.com,kwiboo.se,gmail.com,linux.intel.com,suse.de,ffwll.ch,rock-chips.com,pengutronix.de,bootlin.com,tuxon.dev,baylibre.com];
-	TAGGED_FROM(0.00)[bounces-95526-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	DMARC_NA(0.00)[linux-m68k.org];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[42];
+	TAGGED_FROM(0.00)[bounces-95520-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[22];
 	MIME_TRACE(0.00)[0:+];
-	MISSING_XM_UA(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[6];
+	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[geert@linux-m68k.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	NEURAL_HAM(-0.00)[-0.976];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	R_DKIM_NA(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,nxp.com:email,glider.be:email,linux-m68k.org:email]
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:email]
 X-Rspamd-Action: no action
 
-Hi Vladimir,
+On Wed, Mar 04, 2026 at 11:10:52PM +0530, Jagadeesh Kona wrote:
+> Add X1P42100 camera clock controller support and clock bindings
+> for camera QDSS debug clocks which are applicable for both
+> X1E80100 and X1P42100 platforms.
+> 
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+> Signed-off-by: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
+> ---
+>  Documentation/devicetree/bindings/clock/qcom,x1e80100-camcc.yaml | 1 +
+>  include/dt-bindings/clock/qcom,x1e80100-camcc.h                  | 3 +++
+>  2 files changed, 4 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,x1e80100-camcc.yaml b/Documentation/devicetree/bindings/clock/qcom,x1e80100-camcc.yaml
+> index 938a2f1ff3fca899b5708101df7f8aa07e943336..b28614186cc098268ab0d8c32b21d9dd9508c9f9 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,x1e80100-camcc.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,x1e80100-camcc.yaml
+> @@ -23,6 +23,7 @@ properties:
+>    compatible:
+>      enum:
+>        - qcom,x1e80100-camcc
+> +      - qcom,x1p42100-camcc
+>  
+>    reg:
+>      maxItems: 1
+> diff --git a/include/dt-bindings/clock/qcom,x1e80100-camcc.h b/include/dt-bindings/clock/qcom,x1e80100-camcc.h
+> index d72fdfb06a7c716ed2ec376e061e4f0ca35f42c5..06c316022fb0d26ec6243b28477564d97f228c8e 100644
+> --- a/include/dt-bindings/clock/qcom,x1e80100-camcc.h
+> +++ b/include/dt-bindings/clock/qcom,x1e80100-camcc.h
+> @@ -115,6 +115,9 @@
+>  #define CAM_CC_SLEEP_CLK_SRC					105
+>  #define CAM_CC_SLOW_AHB_CLK_SRC					106
+>  #define CAM_CC_XO_CLK_SRC					107
+> +#define CAM_CC_QDSS_DEBUG_CLK					108
+> +#define CAM_CC_QDSS_DEBUG_CLK_SRC				109
+> +#define CAM_CC_QDSS_DEBUG_XO_CLK				110
 
-On Wed, 4 Mar 2026 at 19:00, Vladimir Oltean <vladimir.oltean@nxp.com> wrote:
-> Consumer drivers shouldn't dereference struct phy, not even to get to
-> its attributes.
->
-> We have phy_get_bus_width() as a precedent for getting the bus_width
-> attribute, so let's add phy_get_max_link_rate() and use it in DRM and
-> CAN drivers.
->
-> Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Why X1E now gets all these clocks? I don't understand why you are having
+separate drivers and decided to change the ABI used in the first driver?
 
-Thanks for your patch!
+Best regards,
+Krzysztof
 
->  drivers/net/can/rcar/rcar_canfd.c                   | 2 +-
-
-For the Renesas part:
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-
-> --- a/drivers/phy/phy-core.c
-> +++ b/drivers/phy/phy-core.c
-> @@ -640,6 +640,12 @@ void phy_set_bus_width(struct phy *phy, int bus_width)
->  }
->  EXPORT_SYMBOL_GPL(phy_set_bus_width);
->
-> +u32 phy_get_max_link_rate(struct phy *phy)
-> +{
-> +       return phy->attrs.max_link_rate;
-> +}
-> +EXPORT_SYMBOL_GPL(phy_get_max_link_rate);
-
-Any specific reason you are not making this a simple static inline
-function, like phy_get_bus_width()?
-
-> +
->  /**
->   * _of_phy_get() - lookup and obtain a reference to a phy by phandle
->   * @np: device_node for which to get the phy
-
-Gr{oetje,eeting}s,
-
-                        Geert
-
--- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
 
