@@ -1,164 +1,205 @@
-Return-Path: <linux-arm-msm+bounces-95617-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95618-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 0O/YGxdyqWnH7AAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95617-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 13:07:51 +0100
+	id wGl7AAhzqWnH7AAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95618-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 13:11:52 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 75C702114C7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 13:07:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 146892115D5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 13:11:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 6D67F3084494
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 11:59:54 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id B29FB309D1B8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 12:01:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9943A39B49E;
-	Thu,  5 Mar 2026 11:58:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FF2839EF32;
+	Thu,  5 Mar 2026 12:00:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N26NfsLZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YAq1R3xx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A5F39A818;
-	Thu,  5 Mar 2026 11:58:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F77D3845A4
+	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Mar 2026 11:59:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772711924; cv=none; b=ul/8xIsa2jgmb4/Jh4/TJheUurjGHJnLTTPFisytHvwidYZaOtJiZnAsbA0N1cpPFyEnNKkFittEJl7qzV1mWnyXN0C2x51CTD3Ea0AZNhtNe8TXI1D3z7JgDyOn7xpsuIuGpy5UgqhXmJep1mIr5nox7dW9MhtFCn2xQ2Hl4l4=
+	t=1772712001; cv=none; b=uQCxNRE3dAIQQUwK/ptudjPj10n4PwSIlt8jp/9F8y0LHpdAOStFq7cEH7hlV0F7XezPUWrckC8dtEm00UWNIxquooGMdDk/KNE/a/wWKqfs0NXaHMpSdYchXKBrm9iXogsgEPhsX1Y85DEyLO3EyKR0qr7BPnkO6wbcma5Js9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772711924; c=relaxed/simple;
-	bh=jjwCOVMzYb5lm+oBtSJFL2iGiGfKjZLIlu8EQ1xCUVs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WbdAdAkUbUeLVSakLjo+RWySRHFAbRlvbjy+fmvtRRxaZIyMF3BZXcwXCiUbQebKCJXhFY5JfNvYqhLMeV5AyS+11vUx7Cs1mI9CWBvvMs8nDEXXtEJlpLB2MR/tXxHLNVkx4DInT8pHWnumZD3it3CgDfUagdZsxFBN1zKRosM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N26NfsLZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8312C2BCAF;
-	Thu,  5 Mar 2026 11:58:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772711924;
-	bh=jjwCOVMzYb5lm+oBtSJFL2iGiGfKjZLIlu8EQ1xCUVs=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=N26NfsLZEorxafpMajzp1jh7UuGTEtAvYlP8lh8PhsrBHwDRzBQ1Ae2ioooTXXq57
-	 VKJ3dUeTFgYHZ4Ew0JwDIWBijGx+dgKRMkoMKAZaIbDLzxEDH8NP9eWV5+edubSHEa
-	 FlgTwcO20ObIZXodx7AzKI+v2OKHUZPuGlLQkT3VSssASkdnPPSyJdirNIg/5Khd/F
-	 jLTRcY2EujYsGyQHKj0d3+TMxlAf2lCn/Rdm6bXCeTeWH8fXECkQra/i4OysZr8QpV
-	 uijpWq+4kvt46xAG17sJ5nYv9G4VaU3sCNHBQCmwAYQVTqqlW6CxBIn7nwtJdgH/5u
-	 MPtMh7HrhIeIw==
-Message-ID: <47049136-db4a-4ffd-8cbe-9d1362b783ad@kernel.org>
-Date: Thu, 5 Mar 2026 12:58:35 +0100
+	s=arc-20240116; t=1772712001; c=relaxed/simple;
+	bh=JjDjRMzh2S/8YB/HCuTF4SumXBtbSBGAlMdISgp8C0U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=c40ayo2QfiO+TO0rtxBKtKTcoyQNLwzBMZ9DL4oru31M8PBffHDuf0dpvwA9huSvnG3k4JJ5mr6VMSg/5H2xvWAWufMUNQkWZlkxrh7Lojo52LcdC5zMtuGkj75LwcjycR3BnG1rXuAIYr2Q2WMh8qRMn6m+IQLrrzNk9zaCgmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YAq1R3xx; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4833115090dso81190265e9.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2026 03:59:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1772711998; x=1773316798; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=gCREg50bz8e+v9Ahd+19Jw+eYOKRxSn1rxNuRLV4cFo=;
+        b=YAq1R3xxVSTOHOmBAwtBH6/y61jQ0vDIyps5+UMuERYYQHuwJUWle7przFQT5vVrFv
+         3xoFtPx0YchAjcnpIKXsEhZyhdNJnJynfwRAuaXoV9Q20fYdsrTXVHAiR8XUDRBQonTY
+         gJYtXbytwHhySW4i3gizDvN4E2kAUYYzLy4MvNGAUYLKytPbV9/LRXS/c5V6Xspdx0pn
+         Y/RaDkXhCHvhjgtBqzV7uve5ZPj22y3uhpe9XEZIkWue8rFqOlvOE7BigeOh/CICYIBk
+         +w7JVk0aHFoA1l1uu/62xalO8JgwvCtqHpcjkF0/8c1lv4QjEma1tSlvcn9q/QqYZXMl
+         Ppxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772711998; x=1773316798;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=gCREg50bz8e+v9Ahd+19Jw+eYOKRxSn1rxNuRLV4cFo=;
+        b=XCSUfuJWaKLaUOjM4U8WmVcMygQIxoxw/KqX44Hp6Y8BIrVImd5kBfies5pilk/FbJ
+         9cIGHv3oNmJ7svSGusBg8OQtBu1VXIdK1tiup4FQI/+iJKY4Z/C6Po+q1Gn4clqnACT1
+         unZnr0k0EQ2gWQfPQEjqrx7YckEP9p4eNYFXe7HwqYsHnC1IKPFmaeatTEt7HZaqNYYw
+         oNLjhDjFjcUX4SMTTvpax1GxGPTZBb6s+1MiGbtr/M0C9kWFzUXskVyz7yF1OIUZmUi+
+         eq45jANZbYvK5z7tW+poZ1DD7z6hUIYnRzrJtuvrhZ3plAjV6yzMBJqQDsSYItbiUQks
+         BeBA==
+X-Forwarded-Encrypted: i=1; AJvYcCUH2NXneksDd6Smw0jOQCAcZpFnUI/wl80xR0GlE/6bEtHrUd+7W8FjFCjJVqiv6zehOUHjjdU050BomUV3@vger.kernel.org
+X-Gm-Message-State: AOJu0YwcNgQhKs6t4css8R6AIozUxIiDkaW0YBV/MkwJA1/Ne21Qqu3V
+	Ee31wYbrZSkZgc5fXG5Osv8QJkvHgn1MgN51QeEkTaizj2hfsSdVhTxtPShtdWpGbh4=
+X-Gm-Gg: ATEYQzzQZ71ex60Ybxm6CTHPgbNCR0sDTedKncNBhXOlkOgCgUh8FLae1COr9bjWSSI
+	PqwLtATquzBe7rbt87knf4gVXzKC+dj7WngPzLlIVkQlEVRB1NeKaqWX+LCBWs7vpsuLXTYz5V3
+	PALMtHlbMfHr8x/IngwgEbSnz93EVtg+cTd1d5amwwlla/dzWZAN3eC3M7BSYmTOnt/C/+JP+d5
+	54C486pbGiKSIKk3dw6arrPphRuoHvt3bklPtma+07ojZlZd+SyOq8l313n5z9vQ6LBJvyb+yTc
+	L42sBw/jjp5wIUXQ85Qik3gaC2RO40wvKlEn9XGHyx+nrgNXfDrrL5faQwoU2MtHIfEQb4ONpUd
+	yz/M0uMZhsdCw4SYF0Pyk5Z7NjN1WbyO1i1dOkTGfsUQBafrhYwcBQJ74oOurJrKKadE0Qlfa8D
+	qgj/i0aKawrE0DbttgaQRHHniqpX6n
+X-Received: by 2002:a05:600c:1d05:b0:485:17a7:b9cc with SMTP id 5b1f17b1804b1-48519888633mr100850055e9.18.1772711997970;
+        Thu, 05 Mar 2026 03:59:57 -0800 (PST)
+Received: from linaro.org ([77.64.146.193])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-439b8807a4esm29845684f8f.4.2026.03.05.03.59.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Mar 2026 03:59:57 -0800 (PST)
+Date: Thu, 5 Mar 2026 12:59:47 +0100
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Bartosz Golaszewski <brgl@kernel.org>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+	Thara Gopinath <thara.gopinath@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"David S. Miller" <davem@davemloft.net>,
+	Udit Tiwari <quic_utiwari@quicinc.com>,
+	Daniel Perez-Zoghbi <dperezzo@quicinc.com>,
+	Md Sadre Alam <mdalam@qti.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+	Michal Simek <michal.simek@amd.com>, Frank Li <Frank.Li@kernel.org>,
+	dmaengine@vger.kernel.org, linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-crypto@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: Re: [PATCH RFC v11 00/12] crypto/dmaengine: qce: introduce BAM
+ locking and use DMA for register I/O
+Message-ID: <aalwMwN3qMlzrql5@linaro.org>
+References: <20260302-qcom-qce-cmd-descr-v11-0-4bf1f5db4802@oss.qualcomm.com>
+ <scr5qvxa7f7k22pms4c6k5gwiky7lhssrw6qryfngexlek44g2@rayinnnwqgbt>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/7] clk: qcom: camcc-x1e80100: Add support for camera
- QDSS debug clocks
-To: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Jagadeesh Kona <quic_jkona@quicinc.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Abel Vesa <abelvesa@kernel.org>,
- Rajendra Nayak <quic_rjendra@quicinc.com>,
- Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
- Imran Shaik <imran.shaik@oss.qualcomm.com>,
- Taniya Das <taniya.das@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20260304-purwa-videocc-camcc-v2-0-dbbd2d258bd6@oss.qualcomm.com>
- <20260304-purwa-videocc-camcc-v2-4-dbbd2d258bd6@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20260304-purwa-videocc-camcc-v2-4-dbbd2d258bd6@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 75C702114C7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <scr5qvxa7f7k22pms4c6k5gwiky7lhssrw6qryfngexlek44g2@rayinnnwqgbt>
+X-Rspamd-Queue-Id: 146892115D5
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
 	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95617-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,lwn.net,gmail.com,gondor.apana.org.au,davemloft.net,quicinc.com,qti.qualcomm.com,amd.com,vger.kernel.org,lists.infradead.org];
+	TAGGED_FROM(0.00)[bounces-95618-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[21];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[24];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[linaro.org:+];
 	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	TO_DN_SOME(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[stephan.gerhold@linaro.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MID_RHS_MATCH_FROM(0.00)[];
+	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,codelinaro.org:url,linaro.org:dkim,linaro.org:mid]
 X-Rspamd-Action: no action
 
-On 04/03/2026 18:40, Jagadeesh Kona wrote:
-> Add support for camera QDSS debug clocks on X1E80100 platform which
-> are required to be voted for camera icp and cpas usecases.
+On Tue, Mar 03, 2026 at 06:13:56PM +0530, Manivannan Sadhasivam wrote:
+> On Mon, Mar 02, 2026 at 04:57:13PM +0100, Bartosz Golaszewski wrote:
+> > NOTE: Please note that even though this is version 11, I changed the
+> > prefix to RFC as this is an entirely new approach resulting from
+> > discussions under v9. I AM AWARE of the existing memory leaks in the
+> > last patch of this series - I'm sending it because I want to first
+> > discuss the approach and get a green light from Vinod as well as Mani
+> > and Bjorn. Especially when it comes to communicating the address for the
+> > dummy rights from the client to the BAM driver.
+> > /NOTE
+> > 
+> > Currently the QCE crypto driver accesses the crypto engine registers
+> > directly via CPU. Trust Zone may perform crypto operations simultaneously
+> > resulting in a race condition. To remedy that, let's introduce support
+> > for BAM locking/unlocking to the driver. The BAM driver will now wrap
+> > any existing issued descriptor chains with additional descriptors
+> > performing the locking when the client starts the transaction
+> > (dmaengine_issue_pending()). The client wanting to profit from locking
+> > needs to switch to performing register I/O over DMA and communicate the
+> > address to which to perform the dummy writes via a call to
+> > dmaengine_slave_config().
+> > 
 > 
-> Fixes: 76126a5129b5 ("clk: qcom: Add camcc clock driver for x1e80100")
+> Thanks for moving the LOCK/UNLOCK bits out of client to the BAM driver. It looks
+> neat now. I understand the limitation that for LOCK/UNLOCK, BAM needs to perform
+> a dummy write to an address in the client register space. So in this case, you
+> can also use the previous metadata approach to pass the scratchpad register to
+> the BAM driver from clients. The BAM driver can use this register to perform
+> LOCK/UNLOCK.
+> 
+> It may sound like I'm suggesting a part of your previous design, but it fits the
+> design more cleanly IMO. The BAM performs LOCK/UNLOCK on its own, but it gets
+> the scratchpad register address from the clients through the metadata once.
+> 
+> It is very unfortunate that the IP doesn't accept '0' address for LOCK/UNLOCK or
+> some of them cannot append LOCK/UNLOCK to the actual CMD descriptors passed from
+> the clients. These would've made the code/design even more cleaner.
+> 
 
-NAK, not a fix or describe user-observable bug.
+I was staring at the downstream drivers for QCE (qce50.c?) [1] for a bit
+and my impression is that they manage to get along without dummy writes.
+It's a big mess, but it looks like they always have some commands
+(depending on the crypto operation) that they are sending anyway and
+they just assign the LOCK/UNLOCK flag to the command descriptor of that.
 
+It is similar for the second relevant user of the LOCK/UNLOCK flags, the
+QPIC NAND driver (msm_qpic_nand.c in downstream [2], qcom_nandc.c in
+mainline), it is assigned as part of the register programming sequence
+instead of using a dummy write. In addition, the UNLOCK flag is
+sometimes assigned to a READ command descriptor rather than a WRITE.
 
-Best regards,
-Krzysztof
+@Bartosz: Can we get by without doing any dummy writes?
+If not, would a dummy read perhaps be less intrusive than a dummy write?
+
+Thanks,
+Stephan
+
+[1]: https://git.codelinaro.org/clo/la/platform/vendor/qcom/opensource/securemsm-kernel/-/blob/sec-kernel.lnx.14.16.r4-rel/crypto-qti/qce50.c
+[2]: https://git.codelinaro.org/clo/la/kernel/msm-5.15/-/blob/kernel.lnx.5.15.r46-rel/drivers/mtd/devices/msm_qpic_nand.c#L542-562
 
