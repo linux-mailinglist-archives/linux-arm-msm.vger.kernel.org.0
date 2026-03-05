@@ -1,306 +1,257 @@
-Return-Path: <linux-arm-msm+bounces-95547-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95548-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id yMHdLtxFqWl53gAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95547-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 09:59:08 +0100
+	id 0EWyLV9GqWl53gAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95548-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 10:01:19 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C16220DD65
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 09:59:07 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB73520DDCC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 10:01:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 200B13008A5B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 08:56:34 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 3804330AF66F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 08:57:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BC87372EC5;
-	Thu,  5 Mar 2026 08:56:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D766376477;
+	Thu,  5 Mar 2026 08:57:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jLlZPU/X";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="V7tSsJ+c"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PTNTgkux";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="jmyuLhb0"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E469A2609EE
-	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Mar 2026 08:56:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7422F375F96
+	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Mar 2026 08:57:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772700993; cv=none; b=QR/wN+HOceyV/4npR4uhcnLKv+8HWFLlpx+fdGPW8uL5WcRdMj2LTRLLn4/yEDjdwv1GSdK2za6qeRyNL/9irnXJLeMvT7U6j7L/v+lqQ/T7LZQXFA3K23OsHAXr9H4hZ+A4nydO1E9h9LoAK2blGpAT8OijiDUBWFdr7kkRg7A=
+	t=1772701049; cv=none; b=X+lg4EvP9+wGx8u3ILYZ6zwLDBCmAunrTM4P1/X8lBAUza10TOyjoDJMPx6b7OUhJYGhKj3pAFjw84jAwHfN6OMTpOvMFipmX0QQv1EPCTf2I63vgxV4WD51r+Q42n2QMJioy1HrcGRK32jqQ8BgDu8FBSvz4GEboCrHkffRrSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772700993; c=relaxed/simple;
-	bh=XOUtMxJmY/xukrKRhAKSN7CNtGlaNNQUyMKgIxDbAXA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HxTUQUSNY4vquxzKcuYFPu3zS08o1168iU8WKekqzRcL1wceHhEQ4dPjPbKdewuKj0Z5IoMA7/yU7iNiYHT2WIyoYpPeMNPQuvWJ1aN2zyWSZwWOjjCRAmkf5ITBqi3HSCGG7R8/cn3qkhPD9utbNJQZjXYPmvJM2NOqa2DgCps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jLlZPU/X; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=V7tSsJ+c; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1772701049; c=relaxed/simple;
+	bh=YJWdEIMf8ASCj1P+EAkD1llJK235Xw3pyDEe191uiys=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gG52BvMP2L6XH5o1VSSp7ZmwY8AFolvuUU3D/EQxbgQvPq0o37qMMz3AzL7sFuOpDT+wxF2mH/qiiVQoNopFb9PtpnsFyfkX6Q6Y4bY9/vS0uwijMBXnV+E2FbkE1op9HV5nZApKiWWoVS7BmOWyLsLOhfJqiQH93BxhLNKtusQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PTNTgkux; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=jmyuLhb0; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6254K22Y1852690
-	for <linux-arm-msm@vger.kernel.org>; Thu, 5 Mar 2026 08:56:31 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6258qp3C628712
+	for <linux-arm-msm@vger.kernel.org>; Thu, 5 Mar 2026 08:57:26 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	V3eDqJ6jpq/KisFt7ksH/4aFqk3PdilfLAwISDAZsjU=; b=jLlZPU/X1OCwF0wF
-	1UcdeX6avnQUDkUN05L8dAbQAN9kQJSjq1JuhbrHdM+l0bcNeZdPLU8AeldOtikO
-	ZVO/yTrlt5W9h0Rhr0Ny8zDx8jqgypT4tpQcyCWAGhLTewI+FGp36qDakLgCIFNU
-	crO9KULtNdiuY7AZUmPC2gP4iHSR3OMBCC3I8ZFsrcccbimQiZOOAdq0czBVP85e
-	0OIkIVYunJZcU3D2vRJ3hh/P6IiYn++rOdPecUFwau2+hGYGmKNgti0f1qqf1uiJ
-	Ub14ovt9Eag1EA9ugWUu2vNHof1rl9P147S+TtZn9m0rEiYP6MlRne/HpCcAWgpJ
-	9gQimg==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cq2q80ur6-1
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=g2QX49Vqh00Z07fTh/aNaujc
+	J84T6LYPP7usUAtLV70=; b=PTNTgkuxe4kDhyEN14MR94TGk1n8uX5dsmw8l3cD
+	R+V2ZHdkmEqqmzQnGnsEs/R6F/QQsq8/C4eF15o7HYol/DxmhCJi0gK2EeMOog2n
+	e710eqoLrx4Z0XzeEXGmitYubB6UjyPWyzanCWBt/j8qpBktsu/stcGFA4UVSgM4
+	6yKEPG332QAZ89fQMnTZxMicvtNbTsxXKODT0HoFtwItchPm6P8EIyfcb5PX8YA3
+	lDiG3kVq9+B2BTH2rs7sMQ2UH+2bjnu5rhoJghvihxxWcEXXOcOY94XbEb7cWaGy
+	6DIBYGIg19GrmhrI+hmrQPiv1OigAVfRMp+hGUvHFZfpGA==
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com [74.125.82.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cps0m2kb6-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2026 08:56:31 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2ae44db60c2so45614485ad.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2026 00:56:30 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2026 08:57:26 +0000 (GMT)
+Received: by mail-dy1-f198.google.com with SMTP id 5a478bee46e88-2be27d4e3e5so2980142eec.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2026 00:57:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1772700990; x=1773305790; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=V3eDqJ6jpq/KisFt7ksH/4aFqk3PdilfLAwISDAZsjU=;
-        b=V7tSsJ+ci4kYkR6nDVOlrXbnjPtSqw8fW+DItokiuZ9O3T0GPFk3VC5rhWiEvmWmPq
-         qDZv1HWomA4c9vHLX/LAZE0fUDzyCQ53H3nMpjmNeEXpYOpSpUQxjaDSN5W6gk8eXLNO
-         EgqhNV3hZ0RGQ++82arUJkfIib0Wa8LZtPTMXi8bRzMya+ePGOvOSIcR7U4V45JloFu4
-         Ippca9lXXaCMp3fnfsL0GrLEvg8H7BOIdbmIL/KuLjvjo5Wu7ftwI4KHrjZxJgSxrszj
-         4lHC1WebHMaDGCTr1MW4z/vD2TJJ+4kAswzpl+a8+qbSSdx2jIhdFjzcVyamPUa9oBEW
-         QZaQ==
+        d=oss.qualcomm.com; s=google; t=1772701046; x=1773305846; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=g2QX49Vqh00Z07fTh/aNaujcJ84T6LYPP7usUAtLV70=;
+        b=jmyuLhb0Aqtkcc4sydRN9JkdTYsuE211/bGllJykTtyB2df6ezHQm8Vb7Jd7Qrep6t
+         o7Um906IZ1MyLLTkHYwu6mxT8FB66uYD3d/DhspgZ5KeHILR9hBH39hGTqX1KHcj41rc
+         XCPmdwvgs2+56Pp0El5QRGFOGJgJn6NGdZuxqieG3qxQS0OHrbgcZDCYDCAvS1uAi7hP
+         4SRXXg0iybhoA/JlciU2EIfW0KE3lSWvSV0g4SrtHzDsgDd3LqH7kRfsAOnviAfonTz1
+         +V/g74+WKQ4NYB8zeQs2PBjuIWCuAkgbvzoBbzlIYMPOeIqvDwVuTAVSpdidbiHUsXwG
+         7ZXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772700990; x=1773305790;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=V3eDqJ6jpq/KisFt7ksH/4aFqk3PdilfLAwISDAZsjU=;
-        b=Gk2kfCdfOLPorQQHLbsya0ZUd71WsLW+IOo0V1hlRQuvpjoz1rB/DczNDtnA5WO6GG
-         miETdO3QJwqVa62hfJXFWrzu1TxKVs0+0pfHnHnCov7TakfCFFNyBH0EDmd6hN/YY6Nu
-         P028qmGfsIfIG9skA30TKRRYCdgYEf6YroXPKEXbqRA+FGqE+xaTbjQRweLBMQ6tqUYv
-         CKWJ8YagyOar81QiNth5Mj7r+TM5dInUeV9AFIV/JBwQPhDlM7bWnJ0WUok1xalVhiKt
-         579pbfXFVJVciAPN0zIh1ycSul6rXRTvkXbRz83IT9dDub7qEEe7gPyvuKoPonT3F0da
-         MgIw==
-X-Forwarded-Encrypted: i=1; AJvYcCU0ZyfGuR+Czo5lwZ1EsBEN6/ca1McrpmoJNbY6WxUayrQTnVVlHgsaDglG6y6homPYsNraT9B8rEmdx/pK@vger.kernel.org
-X-Gm-Message-State: AOJu0YwzNZuDNG/aLn9ZAk8KIKdnVlW+5a22JiGWkED2pTlgQbmvML5O
-	saJMjsXiLkGDZ+AQ8Bz+nanT+1yj07V5C5IaPoVpSgBVVqXuqEH0spu4sD5ug2UyXZnvD/dCsdx
-	hXTjCQ+HPAyiLlZLjxlgoGirr6f0Qz1I6RklrV89mqnKqsxBBMLZz+L87u9oYvSdxxsPd
-X-Gm-Gg: ATEYQzyOlEMKE3wAlSf9qJ1PyqN0qhOGZ9jwuSqJODG8riZW4h/2dktD1oTtzpe+re9
-	wLe2/wa3INIqOi0y+wakPmvzT+rv2UcijLkjODoEg1Of5M2dMC9v/0RrrNTpLPMbwG4hHaAY5RS
-	fKvc1RI49DiFxVYUL5olecuYRwem1Z0JJ9TiCXDFBQrcD2o+b/EWURDQVNiCXnQFb2RAEgyj2k9
-	niFTuDTSbDrdkKs/oIORnGeC8/c1AktSMJ6Z9Ei9Pp6+Qqc4zjgjcnDCuZWmnIfOTR1TlynwqRB
-	wbHSzi93Xg3JseQsubmR8x9xY3MeF10MCwVgskzbW8dEuMIACfm3PkdS6rbsabw3PrUMCpJJg53
-	V6sdovqU5PXtmgn/06vo6SfprGFkEr5z1cZU2Pi2acPnBidj1LIL2SA==
-X-Received: by 2002:a17:903:388e:b0:2ad:ba80:df62 with SMTP id d9443c01a7336-2ae6aae8d8amr47956905ad.37.1772700990110;
-        Thu, 05 Mar 2026 00:56:30 -0800 (PST)
-X-Received: by 2002:a17:903:388e:b0:2ad:ba80:df62 with SMTP id d9443c01a7336-2ae6aae8d8amr47956585ad.37.1772700989632;
-        Thu, 05 Mar 2026 00:56:29 -0800 (PST)
-Received: from [10.218.35.45] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2adfb6bb5b2sm224434525ad.69.2026.03.05.00.56.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Mar 2026 00:56:29 -0800 (PST)
-Message-ID: <313d2262-56e4-49b0-8455-2b46d0966976@oss.qualcomm.com>
-Date: Thu, 5 Mar 2026 14:26:22 +0530
+        d=1e100.net; s=20230601; t=1772701046; x=1773305846;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=g2QX49Vqh00Z07fTh/aNaujcJ84T6LYPP7usUAtLV70=;
+        b=Xgon3Uygm80P0TYZi6Lj/aiV6lFkL88mcE3Y9I33foxyjyqh1iHk0VhFEk2kPLy1B4
+         WSoGI9LuyTtN6r1K+YGQqWP+a2/qQERtFdue/QfZzG2ZB+qiOel+mEveusdcE12yMU/e
+         EAMVD2vLIpi/iXmhEEDuKrFnSwNm+GZuzFbT8NTik7Viq+/AqMAphc7wuVQEQKj47Zec
+         hEtYNPpK4IQxk+BfmbDf1pQg6rusWqI3nf4MDj1gcVL5s2lTNJtYavx0eIykoprZeSMY
+         gaq1trUPYhzl9JS6rdzpTZgVYo1EHtUTBTfZVaQk/6U5DzB4HfPlpL/eHFY5NNzYeRZG
+         lb4g==
+X-Forwarded-Encrypted: i=1; AJvYcCXU3HT4NscUc5gHcf5UnwbMHw6pUZabhH4UwDCexVfLxtmyb+LgVYFZFq/xRs1ik10vF4kNzIs3o2zlGABW@vger.kernel.org
+X-Gm-Message-State: AOJu0YzbKtAaKHl/4QXNtskUkuycF8j79Tzxpuz5VmU3DUEFxBWJrUdV
+	8ALXKNZVxy/ZJPONwdUx1YvxWihQZTLh2XcvcZhdtejZ37x8skMb4mpg+3+yeba9LaIxLvBwPEu
+	cKGoNzgy6+AU315/n5fafkKvGruMaGCflV1770yMRoViri52yJzrs9ksnrSuDXPDbxoFMBjDhrP
+	Tp
+X-Gm-Gg: ATEYQzxtgqVFIAPQxyDJOM2tvRqaTKNidb5oR2GpqvtkW4+jQQ5oirKFlrfzDxD/s4+
+	3pYOZ5pW2zG9o3ixSUH4VkxK5sy3MLSVMRQde1l+4BBet3DBI/rBCYo57Dzu5hCkD/8GpJ7I2jn
+	VbEOFBGpRODbVsy/CyDgz67agBPlkNoKHLa9nz0Z5fgC+sFrCJJOAFabR6LPGWfAfB3YgCvfuNG
+	x+VODVAyu7d9ufo1yktcCXTycS9Xef+AgjWlafqv09EDmCE+CjyG7JnaHpBJDxrcOWkl/KMg0sm
+	OYbP6YmbygQWNPCS37ZL5zhFC/VLDPurEIrj8PG0F8sQ4klCjILBxo++9e5x0rS64JMvLMu4UYX
+	NoW10IqZyPT6Qv+oB1RHtoIwgTgea9Ql8apaCHlUSlGdzZl9daFcoFO+ZjX/igqZoBF59
+X-Received: by 2002:a05:7300:fd04:b0:2ba:8018:cc53 with SMTP id 5a478bee46e88-2be311d1920mr1882889eec.35.1772701045714;
+        Thu, 05 Mar 2026 00:57:25 -0800 (PST)
+X-Received: by 2002:a05:7300:fd04:b0:2ba:8018:cc53 with SMTP id 5a478bee46e88-2be311d1920mr1882872eec.35.1772701045085;
+        Thu, 05 Mar 2026 00:57:25 -0800 (PST)
+Received: from hu-qianyu-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2be2056acd1sm5583020eec.22.2026.03.05.00.57.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Mar 2026 00:57:24 -0800 (PST)
+Date: Thu, 5 Mar 2026 00:57:22 -0800
+From: Qiang Yu <qiang.yu@oss.qualcomm.com>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Add
+ vdda-refgen supply for Glymur
+Message-ID: <aalFcobmkaTTjQlE@hu-qianyu-lv.qualcomm.com>
+References: <20260208-refgen-v1-0-87ca84fd78b3@oss.qualcomm.com>
+ <20260208-refgen-v1-1-87ca84fd78b3@oss.qualcomm.com>
+ <20260209-magic-conscious-seahorse-b81c8b@quoll>
+ <aY1Jx5J8x/OALk5M@hu-qianyu-lv.qualcomm.com>
+ <hcslao22elcihjw56ltu4yo54lotheqpikzsrq6tia33di4fs4@2ygrbwhcfx2a>
+ <aaVkpKZcrNM7k4Xm@hu-qianyu-lv.qualcomm.com>
+ <578c485e-b7d3-4468-bece-efeb6db2b1e1@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/5] PCI: qcom: Power down PHY via PARF_PHY_CTRL before
- disabling rails/clocks
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Jingoo Han <jingoohan1@gmail.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-        Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-        Will Deacon <will@kernel.org>, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, jonathanh@nvidia.com,
-        bjorn.andersson@oss.qualcomm.com
-References: <20260217-d3cold-v2-0-89b322864043@oss.qualcomm.com>
- <20260217-d3cold-v2-4-89b322864043@oss.qualcomm.com>
- <to6p7yf2oo5qh37hsye4zpputrc7p4bwgqvjc2plieuyapjdhp@7xshxghi4tzd>
-Content-Language: en-US
-From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-In-Reply-To: <to6p7yf2oo5qh37hsye4zpputrc7p4bwgqvjc2plieuyapjdhp@7xshxghi4tzd>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: OjXI9X4vbu_DL3FnB3mKx1kU1QALqiHu
-X-Proofpoint-ORIG-GUID: OjXI9X4vbu_DL3FnB3mKx1kU1QALqiHu
-X-Authority-Analysis: v=2.4 cv=GecaXAXL c=1 sm=1 tr=0 ts=69a9453f cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=EUspDBNiAAAA:8 a=kJBpcOZ6olZWUerAqwAA:9 a=QEXdDO2ut3YA:10
- a=324X-CrmTo6CU4MGRt3R:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA1MDA3MSBTYWx0ZWRfX+GiEpFcRP8eG
- PA+HddJ/2+fYDjsXshFQ0rBSSPbBe2YsIKqMPtU4sDxypA6BhsgnM+BX0IvhBan2osC+tW9o+2L
- NkHKyN0sFJQtYuWwM3g8bB/c6pi9doejeVAssc23u0YIc8UmNE1jfCGnImPnn+WVt3TqT08HPRh
- MgUfDEv2M5fsgD9zZpakQTntlLjWCZS7/UZECoWQ/H8CCdsYeNidbvJTFz5MhHkzTE1HPPYo6HC
- 7DOAd+72g17rzqktPNXS7Cn4P3MtlWiNHIH68xf5o/h0FARFxU1iyqZc12vLFoEVi9lHz5df2G4
- RFlCGjUPEg8zT2cff8J1feYOW6Xn8FDto+BdrwVRIx22znfwNRlcppqW3tvJbcxcGsVxlMQDuGU
- 3st+y23jChXNNVlZki+bhWStBuA0nq/Gq6vHG0f6lP/rlDKbT3hvysevv4W8tRnRwLDzlgSHtTS
- DJv9dStoBMH9SrG0AKg==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <578c485e-b7d3-4468-bece-efeb6db2b1e1@oss.qualcomm.com>
+X-Authority-Analysis: v=2.4 cv=e6wLiKp/ c=1 sm=1 tr=0 ts=69a94576 cx=c_pps
+ a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=kj9zAlcOel0A:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=o9cD3-WFi3VABs8zBZsA:9 a=CjuIK1q_8ugA:10 a=bBxd6f-gb0O0v-kibOvt:22
+X-Proofpoint-ORIG-GUID: gbwZ8yyif2mng52zXP4ULbWaV6JmT-If
+X-Proofpoint-GUID: gbwZ8yyif2mng52zXP4ULbWaV6JmT-If
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA1MDA3MSBTYWx0ZWRfX41qmhrBkUBWf
+ mNO+nVCAHrhWg3auU5c+y/MmBYYBOqaVg+0gMnv5Efr3BB1OjhjwR8flgiaseXLg5Sv5R6hEf6U
+ ooFPcp1vev+heVk9l7eEQDLeZSKATYvDQjkbxq8RZLtHdmEpIjiU44iWOzonKFY0tft1UmPOWnH
+ x1G3j9eqEjlMCcB8nU3gTj66Z56xc6Ds4cqH46SQqoK5qykuz72PWrHreyFpLWZmFxiy13Qi/cT
+ 5ygSwjyxEU26YLDqS1u3GGAnd4DV27dwAWXDBo25f83EIFEHGtN1UL/hl3A+q0nfLFTfuIeSVkK
+ quVckidgEl1AioGh8n41+U35BNp4mvdl9fbdgYO2ctj4KcrMXpei0LpZg1qzcodUf7F5WS/8v86
+ NxgiD0kKC+6Rj7pDPmpYAhsfBVSVJzuIVj7EJzcEb+8qZmkIQr3cvbe9Qm+CwyhHkdL1Wf9QfXk
+ sstPRjqnRGa9DAhHZqg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-05_02,2026-03-04_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 impostorscore=0 spamscore=0 suspectscore=0
- clxscore=1015 lowpriorityscore=0 adultscore=0 malwarescore=0 phishscore=0
+ malwarescore=0 bulkscore=0 phishscore=0 lowpriorityscore=0 clxscore=1015
+ spamscore=0 adultscore=0 impostorscore=0 suspectscore=0 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603050071
-X-Rspamd-Queue-Id: 1C16220DD65
+X-Rspamd-Queue-Id: DB73520DDCC
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	FREEMAIL_CC(0.00)[gmail.com,kernel.org,google.com,vger.kernel.org,lists.infradead.org,nvidia.com,oss.qualcomm.com];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-95547-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-95548-lists,linux-arm-msm=lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,oss.qualcomm.com:dkim,qualcomm.com:dkim,hu-qianyu-lv.qualcomm.com:mid];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,qualcomm.com:dkim,qualcomm.com:email];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krishna.chundru@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[qiang.yu@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	MISSING_XM_UA(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Action: no action
 
+On Tue, Mar 03, 2026 at 12:14:29PM +0100, Konrad Dybcio wrote:
+> On 3/2/26 11:21 AM, Qiang Yu wrote:
+> > On Fri, Feb 13, 2026 at 07:47:36PM +0200, Dmitry Baryshkov wrote:
+> >> On Wed, Feb 11, 2026 at 07:32:23PM -0800, Qiang Yu wrote:
+> >>> On Mon, Feb 09, 2026 at 09:06:23AM +0100, Krzysztof Kozlowski wrote:
+> >>>> On Sun, Feb 08, 2026 at 08:49:39PM -0800, Qiang Yu wrote:
+> >>>>> The PCIe QMP PHYs on Glymur require stable reference voltage provided by
+> >>>>> refgen. The refgen itself requires two separate power supplies:
+> >>>>> vdda-refgen0p9 and vdda-refgen1p2.
+> >>>>>
+> >>>>> Since there is no dedicated driver for REFGEN, add vdda-refgen0p9-supply
+> >>>>
+> >>>> How does the driver matter for the bindings? If I add dedicated driver
+> >>>> for refgen, then I change the bindings?
+> >>>
+> >>> Yeah, I know that dt-bindings should describe hardware, not software. But
+> >>> what I meant to say is that the refgen is different from qref which is
+> >>> controlled via TCSR registers and its LDOs are requested to vote in
+> >>> tcsrcc driver. The refgen doesn't required register setting and it doesn't
+> >>> have dedicated driver, so we vote its LDOs in phy driver. I will avoid
+> >>> this statement in next version.
+> >>
+> >> I must admit, I could not find references to the refgen in any of Glymur
+> >> PCIe-related HPGs.
+> >>
+> >>>
+> >>>>
+> >>>> There is qcom,sc8280xp-refgen-regulator so why there cannot be
+> >>>> qcom,x1e-refgen-regulator?
+> >>>
+> >>> I think we can and it seems better because the refgen for pcie phy also
+> >>> supplies reference voltage to other modules like usb. But I checked the
+> >>> qcom-refgen-regulator.c, it contains some register settings and there is
+> >>> no LDOs voting. I'm not sure what does those register do, maybe Konrad
+> >>> can provide some backgroud.
+> >>
+> >> Those regs provide voting for refgen, because on those platforms DSI
+> >> block doesn't have a hardware vote for refgen.
+> > 
+> > Hi Konrad, Dmitry
+> > 
+> > I tried to model the reference voltage as a fixed regulator but the fixed
+> > regulator driver only supports a single vin-supply. However, the refgen
+> > block requires two separate power supplies (1.2V and 0.9V LDOs).
+> > 
+> > Would it be appropriate to modify the qcom-refgen-regulator.c driver to
+> > handle LDO voting for both the 1.2V and 0.9V supplies? In the regulator's
+> > enable/disable callbacks, we could vote for and unvote these two LDOs
+> > instead of performing register operations.
+> 
+> Wait, so you want to associate the MMIO-controlled refgen's driver with
+> a dummy regulator that takes 2 supplies? I didn't catch that part earlier,
+> that's not great..
+> 
+> Or do we actually have access to the MMIO of *this* refgen and can control
 
+I can't find related info in any documentation.
 
-On 3/5/2026 1:19 PM, Manivannan Sadhasivam wrote:
-> On Tue, Feb 17, 2026 at 04:49:09PM +0530, Krishna Chaitanya Chundru wrote:
->> Some Qcom PCIe controller variants bring the PHY out of test power-down
->> (PHY_TEST_PWR_DOWN) during init. When the link is later transitioned
->> towards D3cold and the driver disables PCIe clocks and/or regulators
->> without explicitly re-asserting PHY_TEST_PWR_DOWN, the PHY can remain
->> partially powered, leading to avoidable power leakage.
->>
->> Update the init-path comments to reflect that PARF_PHY_CTRL is used to
->> power the PHY on. Also, for controller revisions that enable PHY power
->> in init (2.3.2, 2.3.3, 2.7.0 and 2.9.0), explicitly power the PHY down
->> via PARF_PHY_CTRL in the deinit path before disabling clocks/regulators.
->>
->> This ensures the PHY is put into a defined low-power state prior to
->> removing its supplies, preventing leakage when entering D3cold.
->>
->> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
->> ---
->>   drivers/pci/controller/dwc/pcie-qcom.c | 30 +++++++++++++++++++++++++++---
->>   1 file changed, 27 insertions(+), 3 deletions(-)
->>
->> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
->> index 2c4dc7134e006d3530a809f1bcc1a6488d4632ad..b02c19bbdf2ea5db252c2a0281a569bb3a0cc497 100644
->> --- a/drivers/pci/controller/dwc/pcie-qcom.c
->> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
->> @@ -513,7 +513,7 @@ static int qcom_pcie_post_init_2_1_0(struct qcom_pcie *pcie)
->>   	u32 val;
->>   	int ret;
->>   
->> -	/* enable PCIe clocks and resets */
->> +	/* PHY power ON */
-> This comment is confusing since we already have phy_power_on() API. What does
-> really happen in the 'test power down' case?
-QCOM PCIe controller wrapper has way to force the entire PHY into lowest 
-power
-state by turning everything off, without this bit being cleared the phy 
-will not be
-powered on even after phy_power_on(), we can think this as a kind of switch
-from the controller side to power on phy.
-
-- Krishna Chaitanya.
-> - Mani
+> it (except we don't do that today because X Y Z)?
 >
->>   	val = readl(pcie->parf + PARF_PHY_CTRL);
->>   	val &= ~PHY_TEST_PWR_DOWN;
->>   	writel(val, pcie->parf + PARF_PHY_CTRL);
->> @@ -680,6 +680,12 @@ static int qcom_pcie_get_resources_2_3_2(struct qcom_pcie *pcie)
->>   static void qcom_pcie_deinit_2_3_2(struct qcom_pcie *pcie)
->>   {
->>   	struct qcom_pcie_resources_2_3_2 *res = &pcie->res.v2_3_2;
->> +	u32 val;
->> +
->> +	/* PHY Power down */
->> +	val = readl(pcie->parf + PARF_PHY_CTRL);
->> +	val |= PHY_TEST_PWR_DOWN;
->> +	writel(val, pcie->parf + PARF_PHY_CTRL);
->>   
->>   	clk_bulk_disable_unprepare(res->num_clks, res->clks);
->>   	regulator_bulk_disable(ARRAY_SIZE(res->supplies), res->supplies);
->> @@ -712,7 +718,7 @@ static int qcom_pcie_post_init_2_3_2(struct qcom_pcie *pcie)
->>   {
->>   	u32 val;
->>   
->> -	/* enable PCIe clocks and resets */
->> +	/* PHY Power ON */
->>   	val = readl(pcie->parf + PARF_PHY_CTRL);
->>   	val &= ~PHY_TEST_PWR_DOWN;
->>   	writel(val, pcie->parf + PARF_PHY_CTRL);
->> @@ -844,6 +850,12 @@ static int qcom_pcie_get_resources_2_3_3(struct qcom_pcie *pcie)
->>   static void qcom_pcie_deinit_2_3_3(struct qcom_pcie *pcie)
->>   {
->>   	struct qcom_pcie_resources_2_3_3 *res = &pcie->res.v2_3_3;
->> +	u32 val;
->> +
->> +	/* PHY Power down */
->> +	val = readl(pcie->parf + PARF_PHY_CTRL);
->> +	val |= PHY_TEST_PWR_DOWN;
->> +	writel(val, pcie->parf + PARF_PHY_CTRL);
->>   
->>   	clk_bulk_disable_unprepare(res->num_clks, res->clks);
->>   }
->> @@ -994,7 +1006,7 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
->>   	/* configure PCIe to RC mode */
->>   	writel(DEVICE_TYPE_RC, pcie->parf + PARF_DEVICE_TYPE);
->>   
->> -	/* enable PCIe clocks and resets */
->> +	/* PHY power ON */
->>   	val = readl(pcie->parf + PARF_PHY_CTRL);
->>   	val &= ~PHY_TEST_PWR_DOWN;
->>   	writel(val, pcie->parf + PARF_PHY_CTRL);
->> @@ -1065,6 +1077,12 @@ static void qcom_pcie_host_post_init_2_7_0(struct qcom_pcie *pcie)
->>   static void qcom_pcie_deinit_2_7_0(struct qcom_pcie *pcie)
->>   {
->>   	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
->> +	u32 val;
->> +
->> +	/* PHY Power down */
->> +	val = readl(pcie->parf + PARF_PHY_CTRL);
->> +	val |= PHY_TEST_PWR_DOWN;
->> +	writel(val, pcie->parf + PARF_PHY_CTRL);
->>   
->>   	clk_bulk_disable_unprepare(res->num_clks, res->clks);
->>   
->> @@ -1169,6 +1187,12 @@ static int qcom_pcie_get_resources_2_9_0(struct qcom_pcie *pcie)
->>   static void qcom_pcie_deinit_2_9_0(struct qcom_pcie *pcie)
->>   {
->>   	struct qcom_pcie_resources_2_9_0 *res = &pcie->res.v2_9_0;
->> +	u32 val;
->> +
->> +	/* PHY Power down */
->> +	val = readl(pcie->parf + PARF_PHY_CTRL);
->> +	val |= PHY_TEST_PWR_DOWN;
->> +	writel(val, pcie->parf + PARF_PHY_CTRL);
->>   
->>   	clk_bulk_disable_unprepare(res->num_clks, res->clks);
->>   }
->>
->> -- 
->> 2.34.1
->>
 
+But even if we could find registers to enable/disable the refgen block,
+the two LDOs (1.2V and 0.9V) would still need to be voted/unvoted manually
+since they're separate power rails that feed the refgen.
+
+I searched through the drivers/regulator/ directory and couldn't find any
+existing examples where a regulator driver enables/disables other
+regulators in its own enable/disable callbacks. This pattern doesn't seem
+to be commonly used in the kernel.
+
+So seems like we have to vote this two LDOs in phy driver.
+
+- Qiang Yu
+> Konrad
 
