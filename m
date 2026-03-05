@@ -1,104 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-95492-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95494-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sNqDMokGqWlW0QAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95492-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 05:28:57 +0100
+	id cICWLbEGqWlW0QAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95494-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 05:29:37 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2EA0520AC7E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 05:28:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C9B0420ACBD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 05:29:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id DE72B3036047
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 04:28:55 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A6EC63068274
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 04:29:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92FD6248861;
-	Thu,  5 Mar 2026 04:28:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 730811A6824;
+	Thu,  5 Mar 2026 04:29:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jYl8ffL7";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="HTKEEBza"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PWvSa8xG";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="NpYFd8HI"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D601288AD
-	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Mar 2026 04:28:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A48FB26F46E
+	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Mar 2026 04:28:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772684935; cv=none; b=NN5+HS4WuSNigsp00GfV4PBJFiwhQ4SkTdh6jrO4PBkLlKABqO8cz8b+C7QvnFgcTe/bY/FHV76Xtro8Ehhag/P/tLp7+118KpYfQVglOjc/4Gk0eHWtXNYdvpxK+2ff5lw9U/UnF4HuJzarwV94fi2sI1uzLydf0LkXG486jQs=
+	t=1772684943; cv=none; b=tGN2kYUNMQy5QjiJbiTGrij0WaiV4aZFW3sNh8JQItbF/4kxo+qVwq8YqxB9kBdzOIS98bNfJgm4eSxMH3kk0XBLhcCKhkU3A+5Kp614PiGIaAAa7+6Edbq7zT6aT9vhF5CoPe3U1eNJRQQvHgI4HoMuDUbj6NekBDTQeY3Nu1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772684935; c=relaxed/simple;
-	bh=vLdj3B1jQPRgWbscBTiqCTeFKntrD1geF72D+7wghxQ=;
+	s=arc-20240116; t=1772684943; c=relaxed/simple;
+	bh=9VMbwrdhl/DIw8mVUWyaF7fsS+khNtrS1qh36V/3La8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=qvx67LUFetULvZ9FCbbUw+BbaeLp7ch+C6uTCSz1AzhJavAoCRKC9po6Ki7ixMIr03j8Y/XRBj9c0mrmmWUzoHCE9J8mmVEvGgxNm6/ndrBUpOaJvtD5qDlMhmo7H7mmkOKgYeo0eIgkezKAAOfCLxpa+9U3+UZmyRuaEDdMAow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jYl8ffL7; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=HTKEEBza; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:To:Cc; b=EMegpHyrGM1blf91MFKemPh5o189L7goub9uL+gsPACiATbkjhDGGvq4G0HwRqRrl9Uo1rVuhJX5ErJgHe/qsAOlJIhC6gJeH1/EeRdtrJa4XWvVBqdnBlrrnT1QaPZMCMPdhj7TyjUq4MCVAi9QjXO+zebVsNpWCMwgWUEA7aI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PWvSa8xG; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=NpYFd8HI; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6251BkoZ3604128
-	for <linux-arm-msm@vger.kernel.org>; Thu, 5 Mar 2026 04:28:53 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6254KT1o1853173
+	for <linux-arm-msm@vger.kernel.org>; Thu, 5 Mar 2026 04:28:57 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	KWV4k21xN90qYzLHH1hU2Cz+AC1ZwZNUglGaqJt87Cc=; b=jYl8ffL7M/Rf/wRt
-	eSJxq196IvSJocHYmexVJDQS0Ynlm6oKeUOE3oa2gDYyRvyjAAfh3kLNGY6G0VQu
-	VqUpF/fgMoAaCpjHj4ZMMlP13DATnH15O47LkyKMwabATYDUQeTCPJgj9PYeNyAt
-	lPOW87yiPVf/UcFzRYEjdyykwwoPoLolwzp2h4QGwzl+IsdvKBgnTWKhzKVWjjAz
-	J5XBUvAiSZLA9x8EJgcEiGEQMWjuu6fMiqr3zGBt8QNhDCxUkdF1VAHXNB78fBO8
-	PFH7RgzwEKEnLtN3Frb2nSMVgTSIj1sx6WBmgGJYzCEIejkAiNxRTA2I3ghuMp7v
-	YoQtDw==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cps0w9put-1
+	cpFWs74RkyB3e3YCse41Bkd6QuBxpPMJuFkmsXYkZWQ=; b=PWvSa8xGhILLWiTj
+	zZ5r/R29EQB/vBhWGVu8iCBFHgROmRbKWwl8C2Yyf0swE2tz1mhRVNe3Ah21ZYIb
+	Sym+MW5VB7RrDe0lIqsLcwlPxNsQg6cdTkFBMAzi8aIN/4fixKJ4IHMgVMiiXXDQ
+	kapXZfWJUEGEMP1CrE3W1Dn84IUmo5M+qSw1RPj1A3lPny89HoSXAgzEVQ2vNPTw
+	U+Xspus6hizkCtzqCGyqfsOeuoP2WQOH7jW0Ad7Hr05LXLjSq+3dnkLJAnsZ+Zyh
+	0ENdZpAdRnFt+8D8NCv+bH0oCipCnSr7A1hvIQ4o4fgatpadKu6HFMD1jwc+1Xpn
+	oo5NeQ==
+Received: from mail-dl1-f70.google.com (mail-dl1-f70.google.com [74.125.82.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cq2q800nd-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2026 04:28:53 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2ae4af66f40so49394015ad.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2026 20:28:53 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2026 04:28:56 +0000 (GMT)
+Received: by mail-dl1-f70.google.com with SMTP id a92af1059eb24-127337c8e52so36161196c88.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Mar 2026 20:28:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1772684933; x=1773289733; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1772684936; x=1773289736; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=KWV4k21xN90qYzLHH1hU2Cz+AC1ZwZNUglGaqJt87Cc=;
-        b=HTKEEBzaPI4zXf1vjJuaRUOy9FSuPep0+hRv6frHuhnpHFGKg8xlJ2FEYQTt5rLToF
-         Ub8VH/H2r6sQnZgtUdemRu66NipdbrBy5TDgt0wFXkI0xBiqMa/0pq6No1XOv0Qty3Ej
-         uQD82m5oa6vaZN2UBXsPJ7NNgfA8nlJXA0Unub0NX41miK/NztGdWw0H+6aqKW6BtJVM
-         3hcPaP3WzY5lmxp8oKveVGKbnBl6iHEbM9ESHFXyma6Ehb4poM+NWiPtKYQXDjuQ43ZN
-         VqoB5KR+HB4PHvQcnaky3Op8NNRa2viR8OM8GugWGGmroyqkWsHuLCbPmedHuuDQ6TYM
-         qe/A==
+        bh=cpFWs74RkyB3e3YCse41Bkd6QuBxpPMJuFkmsXYkZWQ=;
+        b=NpYFd8HIbH8eyqS32r7FSBVjLlZaGk7IKTA962emBxFgrqblUukU4XeQhpUx8sdlet
+         m+TddFNG5JMIydUBXc6QsQBq+EAbQWNIIIlwcpOhbD2h0vtUuQUx5Ls3FY8/hrr5mDqh
+         lxWBQnij2dF2BbReSl1w+Z8BYFtPXK0MpjbYvABaNfOr1L3VdV/w5xX/ftoUEofp2uDD
+         0JRUtWZy6LpAhAqWhRYLmPfX3YX1zcy4sXxnT6reibwNTjfkHberQz8zchuqjScUokd5
+         iOUXs+CJrifiRVaZCdeK4selWy/O2LCr7Mg/2fSBhubuhwKQ4GJA79DXu3/t0LrWtLWr
+         dhuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772684933; x=1773289733;
+        d=1e100.net; s=20230601; t=1772684936; x=1773289736;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=KWV4k21xN90qYzLHH1hU2Cz+AC1ZwZNUglGaqJt87Cc=;
-        b=JGFFjE6sJCbRH7rfLcdFV5oSV7HSDgZ17Gh7Zxr6NTmnzYN9onQeU24Y7HpzsczMG9
-         cjtYgt88L13TBUOvUvZDkEfSP83R0DI5UN3s+MCsMBLz48nbObW0ik6dSF/1c1UPdhAb
-         +5P9DD4wSkHPlJnF317rAbbWm2+dzWhKQ10Pefwe76LxcO/2Gcu96s35OSusdYy3M6oF
-         HYg92R2iRptA+wbcNWISPqjNxsiZD4YRjSQPXAR2jnV/FJzYjVGYVIkHg/IA5YDaAZAQ
-         kXfSlfqTNIut2X61FKxfmgsIdWnfpyq3VRx6U1Y0MfcnsEUvf9OQLf/TIOEfC1szQC/j
-         1WkQ==
-X-Gm-Message-State: AOJu0YzqsWQvqtXGTWu7FPbAVZCpcJMs9332fwbhSrNv6Zuob3YJe+3q
-	2+mXb3a9HDw51wOaLrM6dF1hJ9TDb26UUjdnhR0xj1NIN7Fuc66iv3LX61G4e8meTgJDDA8O0X/
-	zYWHJmAH63F7MURpP6DueoMYCF4Q8FsF1Iug9C/xHwFmawjC98bekhvwpkSHtRLrzv01a
-X-Gm-Gg: ATEYQzyCk3Ai7eP3ueRgNovNyEc0rcPlI4ZDKpe/SmEwWgFhpbcAdSc6zRw7xeAiwsL
-	1QDr7g8UzDCn0108qINL2OG7scCk5SXWWK9Ds5bY7O8hLcVU8WbWI6DyLdA/C87+s9OHpM2BIqi
-	K/W/fndge2N+Slg2YWT0XqyBPzERQMaa3VlO7GJsyMc4cKUdiGts6SApPp/Q8uUk/TzUd/p+S5s
-	Ke9ka8TL6GSGfZTlr0jDQLPJQU5JjciUpFY0K/EGzL67S2qwfvwNrGemEobuKcu//0PuWV3SdOe
-	Zr/z5BaD3GHwjZxkvusX1OVoYHkNYuaIcgrR1mCSgcOL9QI2DaUUirGJdyvIuBXbXb7aaDbnWn8
-	OlldRi6lCzBUKOAFx8hFBOf75lATSVpkBM0kaRhp/i9IDcSAqW44TLMCoMXuSqshyjlMugi+DrQ
+        bh=cpFWs74RkyB3e3YCse41Bkd6QuBxpPMJuFkmsXYkZWQ=;
+        b=hPigRfWhK5zWR2bnnRNTXIZTvAka2xhMlFgfyPz5j7nBfjpORqT0FuCdsSS0mMIfzp
+         hbASFKsR5tBkAMRo85jjSFa6YCyi1yvDiWYFducvAKEX82QC9EUN5kLsGrgIuEb3txuT
+         GaZwLm2CHKnK2ehktO+0E9qEDmHgZ7dHupuPc7YZ9hmrVFKvkuz2lqmOVE+It5bbNPtI
+         K7OoIh6Afac3LzM3nSLuFMoCaklsDAuCbNUbEqNOwdIG8MtWXE4B1Fr7XgkEziWPOfRx
+         sklpgG2BByE3jUc5RSGxlBjqXSsAVdLuJCeUrTfiP0s6l/KPpH5w+YOH6QRKPrN9cbte
+         0n3w==
+X-Gm-Message-State: AOJu0YxM8slZ1oJOiLE/KL5J7MKOLx6pVun/Ej6sr0WgIZOHw/MfktMt
+	wsF6NTijigCH2hq0vLmUlccad/NLGDGTyv8+7nNV0XmWaZ+uUvBoArfgSmpMRO115Ve7wye15zy
+	M6umVNCxFrHrZG09egYpepdVoYwRZ/IzRGJdVmWyUa5Y/P3dRvDPfwN5YDgQHyggcqygf
+X-Gm-Gg: ATEYQzytTO595oi+wKL2FfwsOUAiDxwUurvHPOW6Vq7EzjTORtfetWOkOfnaM77Vw8N
+	lwVYR5J/3zgxS707P1fmBydL3vuoVTB7M+c1swyzUN8H6HjkqbquYUnMF++8tstfxhs02YF9Bdh
+	PO/OqL5s8f2WB1a0o18RzOJauCbELb7uLIdQOPXUAY7ed/AJa++sr9O5wapR/Qa/rseHlcgfa5g
+	8qRN4WBZTx7Mh3POFpKJJG+8BU5MfoaO1IuZXuvz5va8tgRx6CdLTHaMhHQDekbs75lQsSxAyAm
+	INTfcJTkh2xmtFi/X9RmqEwQujjN5N0eSFTBUFJb9HFgfTPNvEe3P1nzB7tPJ9Gw0BYCaQx9tde
+	7wnejq0qXD4GDrdhseJ7JkpnK1zxZzVIXPO1BfyI2Pi6FQt4CztK8S3ItQ6mH2LLC6xIb+mV6Qw
 	==
-X-Received: by 2002:a05:7022:458d:b0:11d:c91e:3b58 with SMTP id a92af1059eb24-128b70e8da0mr1972605c88.39.1772684933036;
+X-Received: by 2002:a05:7022:250f:b0:11a:3483:4a87 with SMTP id a92af1059eb24-128b70884bbmr1731875c88.13.1772684934818;
+        Wed, 04 Mar 2026 20:28:54 -0800 (PST)
+X-Received: by 2002:a05:7022:250f:b0:11a:3483:4a87 with SMTP id a92af1059eb24-128b70884bbmr1731855c88.13.1772684933579;
         Wed, 04 Mar 2026 20:28:53 -0800 (PST)
-X-Received: by 2002:a05:7022:458d:b0:11d:c91e:3b58 with SMTP id a92af1059eb24-128b70e8da0mr1972588c88.39.1772684932496;
-        Wed, 04 Mar 2026 20:28:52 -0800 (PST)
 Received: from hu-djaggi-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1279cbd1993sm11164942c88.2.2026.03.04.20.28.51
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1279cbd1993sm11164942c88.2.2026.03.04.20.28.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Mar 2026 20:28:52 -0800 (PST)
+        Wed, 04 Mar 2026 20:28:53 -0800 (PST)
 From: Deepti Jaggi <deepti.jaggi@oss.qualcomm.com>
-Date: Wed, 04 Mar 2026 20:28:28 -0800
-Subject: [PATCH v5 1/3] dt-bindings: arm: qcom: add SA8255p Ride board
+Date: Wed, 04 Mar 2026 20:28:29 -0800
+Subject: [PATCH v5 2/3] arm64: dts: qcom: Introduce sa8255p SoC
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -107,7 +107,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260304-b4-scmi-upstream-v5-1-f8fc763d8da0@oss.qualcomm.com>
+Message-Id: <20260304-b4-scmi-upstream-v5-2-f8fc763d8da0@oss.qualcomm.com>
 References: <20260304-b4-scmi-upstream-v5-0-f8fc763d8da0@oss.qualcomm.com>
 In-Reply-To: <20260304-b4-scmi-upstream-v5-0-f8fc763d8da0@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>,
@@ -119,42 +119,42 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
         Prasad Sodagudi <prasad.sodagudi@oss.qualcomm.com>,
         Nikunj Kela <quic_nkela@quicinc.com>,
-        Deepti Jaggi <deepti.jaggi@oss.qualcomm.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>
+        Shazad Hussain <shazad.hussain@oss.qualcomm.com>,
+        Deepti Jaggi <deepti.jaggi@oss.qualcomm.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1772684930; l=915;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1772684930; l=111287;
  i=deepti.jaggi@oss.qualcomm.com; s=20250501; h=from:subject:message-id;
- bh=QnmqT25GQywckMFAOnXMqflitvwpMCh13NozaygAWDg=;
- b=0MhrqyySyIfhWud/TzANKUFu12zMDYNKYrEwwMQmSZw34wm8hJyp3YChQyZ5E2+bBncgipKuE
- AZi3jLUUgi2CD01Kj0EXulaITNk6UXt85NHaNpF3HpswauppasTC4eG
+ bh=Bu0OvzjBya/KjcQ4x+W9dIYk8kL9s+fow3YJ5i/usQI=;
+ b=RrbDWAF0YXj9Chxi5GYI+tmlsnaBIkDmKBfmZswGD8fQ7iCkRo0L9qQK+KTk3nNlCfVk7Byj5
+ 1fJkRFdL2ZvAYtaKXb6H1U1qEf4YZMTqvWMzUOUJ+FpwNVaan96/iiD
 X-Developer-Key: i=deepti.jaggi@oss.qualcomm.com; a=ed25519;
  pk=+b3H5UC/u0pUK5+btJ+35nW+6vKwJV1CfjJ1CJWuOZw=
-X-Proofpoint-GUID: QVClOEWhk17mjI4Efk_92TT4hskgfCjh
-X-Authority-Analysis: v=2.4 cv=BNK+bVQG c=1 sm=1 tr=0 ts=69a90685 cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Proofpoint-GUID: Q-UZoinS1oJ5eyDsMyoJg6Ckl8ufMj9T
+X-Proofpoint-ORIG-GUID: Q-UZoinS1oJ5eyDsMyoJg6Ckl8ufMj9T
+X-Authority-Analysis: v=2.4 cv=GecaXAXL c=1 sm=1 tr=0 ts=69a90689 cx=c_pps
+ a=SvEPeNj+VMjHSW//kvnxuw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=COk6AnOGAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=wDsz3shVdOXW4ZV74lIA:9
- a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22 a=TjNXssC_j7lpFel5tvFf:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA1MDAzMSBTYWx0ZWRfX+jnl+K/g6sMr
- pK46yiePw/4A5eYIeze2zidEDIJa1xYz5ZXbRj1IFTSQNo2NQr7Ly94y56jWKGWHfI4TJ9VVbEP
- RQJ0xZmfkvTo1V+Pahuivi6NUfsaBfREkD6Y03MI5+yPvSG1xtxSpFI0Tx2Yfd3jQvxzCk68Sjo
- 35fpuuSs4a89N8xSVm0/19ifjOZV2phQ3vK8+S4ZpsfVYaMmxFc+Et/cqZFX+oSmXG3ynKVVfuD
- Ay1igU7C7bNY3suNXV3zSoJ4S1A1TEoZXO8UoPueiWycl1XS95YlqxjAB93KriA8fXAqP/5J2Ez
- JR8ok/sLhhWx+WZinIXtVnRTemOXIVsxcpwCmKkS817KCosI2Kf0LaYDZVedeVRXe6A+bJqg6Sm
- s7hnUK5V9ons1rgsMD8i070mmS6Fl0OqXdagWC+Z3p7MdVfU5j2RCZmTBWrbCpipQwh1Hcb4LI2
- zmSITmjgcXoZCwNrysg==
-X-Proofpoint-ORIG-GUID: QVClOEWhk17mjI4Efk_92TT4hskgfCjh
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=KKAkSRfTAAAA:8 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=TEjjMiGAkk3_VdAh1egA:9
+ a=QEXdDO2ut3YA:10 a=Kq8ClHjjuc5pcCNDwlU0:22 a=cvBusfyB2V15izCimMoJ:22
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA1MDAzMSBTYWx0ZWRfXztVqWgDYLdnN
+ SZXuzPbdrwfch+stqsTDM4RXnePIzaMXA7FBQnUYBJGYllPHp6LaiBLhDq7ElsrP0tu5K3fDBtx
+ YHpSwcjymMPj/JgBHK8e4pLKSt97IQpHfdTicL3y9e32E2VZ1ZdN5Q4d04ZUDi6RLSkvhS4gUO/
+ wtzt/5RUbAPxqaDFzbsAWvqJf1wxn7cTXPclO+BEGM4lsOhvIiH7CzrKfPO9uyPwRCcYHLdQuIa
+ 4ex2+/WDscmExiZ4aXEhz+B2eRN5Mw4TIlFi3Ga1c01miIkCjpY9NpRnujDL0JAvnBTh++OvQRH
+ XhqGtMKihtF9YEGVN8Eue1E0PskwVFH5NVXozVR6IVIZDqL1W6mqoy4FSkdHhgjcncMPI5HxfAs
+ cdpZBklY4NbBuWeqFAFUq4xrBgpeYDqCAKoXyTuD4kKOO3rqEE8y2mm/ggDY3r/fmwYvVfGYGSb
+ FMeaIdOUceMb8VMCxaQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-04_09,2026-03-04_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 malwarescore=0 spamscore=0 clxscore=1015 impostorscore=0
- adultscore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0 priorityscore=1501
+ priorityscore=1501 bulkscore=0 impostorscore=0 spamscore=0 suspectscore=0
+ clxscore=1015 lowpriorityscore=0 adultscore=0 malwarescore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603050031
-X-Rspamd-Queue-Id: 2EA0520AC7E
+X-Rspamd-Queue-Id: C9B0420ACBD
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
@@ -166,12 +166,12 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
 	RCPT_COUNT_TWELVE(0.00)[13];
-	TAGGED_FROM(0.00)[bounces-95492-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-95494-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,linaro.org:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[deepti.jaggi@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
@@ -186,31 +186,4905 @@ X-Rspamd-Action: no action
 
 From: Nikunj Kela <quic_nkela@quicinc.com>
 
-Document the SA8255p SoC and its reference board: sa8255p-ride.
+Introduce base device tree support for sa8255p Qualcomm's automotive
+infotainment SoC. The base dt file describes core SoC components- CPUs,
+CPU map, ipcc, QUP,  geni UART, interrupt controller, TLMM, reserved
+memory, SMMU, firmware scm, scmi, watchdog, SRAM, PSCI, ufs, pcie, pmu
+nodes and enable booting to shell with ramdisk.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+The Qualcomm automotive sa8255p SoC utilizes firmware to configure
+platform resources such as clocks, interconnects, and TLMM. Device drivers
+request these resources through the SCMI power,reset and performance
+protocols. Assign each device driver a dedicated SCMI channel and Tx/Rx
+doorbells to support parallel resource requests and aggregation in the
+SCMI platform server. Operate the SCMI server stack in an SMP-enabled VM,
+using the Qualcomm SMC/HVC transport driver for communication.
+
+Group resource operations to improve abstraction and reduce the number of
+SCMI requests. Follow the SCMI-based resource management approach
+demonstrated by Qualcomm at LinaroConnect 2024.[1]
+
+Limit initial support to basic platform resources, serial console, ufs
+and pcie.Defer enabling USB, and Ethernet to subsequent updates.
+
+[1]: https://resources.linaro.org/en/resource/wfnfEwBhRjLV1PEAJoDDte
+
+Co-developed-by: Shazad Hussain <shazad.hussain@oss.qualcomm.com>
+Signed-off-by: Shazad Hussain <shazad.hussain@oss.qualcomm.com>
 Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
+Co-developed-by: Deepti Jaggi <deepti.jaggi@oss.qualcomm.com>
 Signed-off-by: Deepti Jaggi <deepti.jaggi@oss.qualcomm.com>
 ---
- Documentation/devicetree/bindings/arm/qcom.yaml | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm64/boot/dts/qcom/sa8255p.dtsi | 4861 +++++++++++++++++++++++++++++++++
+ 1 file changed, 4861 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index d48c625d3fc4..f9a04769e20b 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -891,6 +891,11 @@ properties:
-               - qcom,sa8155p-adp
-           - const: qcom,sa8155p
- 
-+      - items:
-+          - enum:
-+              - qcom,sa8255p-ride
-+          - const: qcom,sa8255p
+diff --git a/arch/arm64/boot/dts/qcom/sa8255p.dtsi b/arch/arm64/boot/dts/qcom/sa8255p.dtsi
+new file mode 100644
+index 000000000000..4f8529db70f6
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/sa8255p.dtsi
+@@ -0,0 +1,4861 @@
++// SPDX-License-Identifier: BSD-3-Clause
++/*
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
++ */
 +
-       - items:
-           - enum:
-               - qcom,sa8295p-adp
++#include <dt-bindings/interrupt-controller/arm-gic.h>
++#include <dt-bindings/mailbox/qcom-ipcc.h>
++
++/ {
++	interrupt-parent = <&intc>;
++
++	#address-cells = <2>;
++	#size-cells = <2>;
++
++	clocks {
++
++		bi_tcxo_div2: bi-tcxo-div2-clk {
++			compatible = "fixed-factor-clock";
++			clocks = <&xo_board_clk>;
++			clock-mult = <1>;
++			clock-div = <2>;
++			#clock-cells = <0>;
++		};
++
++		gpll0_board_clk: gpll0-board-clk {
++			compatible = "fixed-clock";
++			#clock-cells = <0>;
++		};
++
++		sleep_clk: sleep-clk {
++			compatible = "fixed-clock";
++			#clock-cells = <0>;
++		};
++
++		xo_board_clk: xo-board-clk {
++			compatible = "fixed-clock";
++			#clock-cells = <0>;
++		};
++	};
++
++	cpus {
++		#address-cells = <2>;
++		#size-cells = <0>;
++
++		cpu0: cpu@0 {
++			device_type = "cpu";
++			compatible = "qcom,kryo";
++			reg = <0x0 0x0>;
++			enable-method = "psci";
++			qcom,freq-domain = <&cpufreq_hw 0>;
++			next-level-cache = <&l2_0>;
++			l2_0: l2-cache {
++				compatible = "cache";
++				cache-level = <2>;
++				cache-unified;
++				next-level-cache = <&l3_0>;
++				l3_0: l3-cache {
++					compatible = "cache";
++					cache-level = <3>;
++					cache-unified;
++				};
++			};
++		};
++
++		cpu1: cpu@100 {
++			device_type = "cpu";
++			compatible = "qcom,kryo";
++			reg = <0x0 0x100>;
++			enable-method = "psci";
++			qcom,freq-domain = <&cpufreq_hw 0>;
++			next-level-cache = <&l2_1>;
++			l2_1: l2-cache {
++				compatible = "cache";
++				cache-level = <2>;
++				cache-unified;
++				next-level-cache = <&l3_0>;
++			};
++		};
++
++		cpu2: cpu@200 {
++			device_type = "cpu";
++			compatible = "qcom,kryo";
++			reg = <0x0 0x200>;
++			enable-method = "psci";
++			qcom,freq-domain = <&cpufreq_hw 0>;
++			next-level-cache = <&l2_2>;
++			l2_2: l2-cache {
++				compatible = "cache";
++				cache-level = <2>;
++				cache-unified;
++				next-level-cache = <&l3_0>;
++			};
++		};
++
++		cpu3: cpu@300 {
++			device_type = "cpu";
++			compatible = "qcom,kryo";
++			reg = <0x0 0x300>;
++			enable-method = "psci";
++			qcom,freq-domain = <&cpufreq_hw 0>;
++			next-level-cache = <&l2_3>;
++			l2_3: l2-cache {
++				compatible = "cache";
++				cache-level = <2>;
++				cache-unified;
++				next-level-cache = <&l3_0>;
++			};
++		};
++
++		cpu4: cpu@10000 {
++			device_type = "cpu";
++			compatible = "qcom,kryo";
++			reg = <0x0 0x10000>;
++			enable-method = "psci";
++			qcom,freq-domain = <&cpufreq_hw 1>;
++			next-level-cache = <&l2_4>;
++			l2_4: l2-cache {
++				compatible = "cache";
++				cache-level = <2>;
++				cache-unified;
++				next-level-cache = <&l3_1>;
++				l3_1: l3-cache {
++					compatible = "cache";
++					cache-level = <3>;
++					cache-unified;
++				};
++
++			};
++		};
++
++		cpu5: cpu@10100 {
++			device_type = "cpu";
++			compatible = "qcom,kryo";
++			reg = <0x0 0x10100>;
++			enable-method = "psci";
++			qcom,freq-domain = <&cpufreq_hw 1>;
++			next-level-cache = <&l2_5>;
++			l2_5: l2-cache {
++				compatible = "cache";
++				cache-level = <2>;
++				cache-unified;
++				next-level-cache = <&l3_1>;
++			};
++		};
++
++		cpu6: cpu@10200 {
++			device_type = "cpu";
++			compatible = "qcom,kryo";
++			reg = <0x0 0x10200>;
++			enable-method = "psci";
++			qcom,freq-domain = <&cpufreq_hw 1>;
++			next-level-cache = <&l2_6>;
++			l2_6: l2-cache {
++				compatible = "cache";
++				cache-level = <2>;
++				cache-unified;
++				next-level-cache = <&l3_1>;
++			};
++		};
++
++		cpu7: cpu@10300 {
++			device_type = "cpu";
++			compatible = "qcom,kryo";
++			reg = <0x0 0x10300>;
++			enable-method = "psci";
++			qcom,freq-domain = <&cpufreq_hw 1>;
++			next-level-cache = <&l2_7>;
++			l2_7: l2-cache {
++				compatible = "cache";
++				cache-level = <2>;
++				cache-unified;
++				next-level-cache = <&l3_1>;
++			};
++		};
++
++		cpu-map {
++			cluster0 {
++				core0 {
++					cpu = <&cpu0>;
++				};
++
++				core1 {
++					cpu = <&cpu1>;
++				};
++
++				core2 {
++					cpu = <&cpu2>;
++				};
++
++				core3 {
++					cpu = <&cpu3>;
++				};
++			};
++
++			cluster1 {
++				core0 {
++					cpu = <&cpu4>;
++				};
++
++				core1 {
++					cpu = <&cpu5>;
++				};
++
++				core2 {
++					cpu = <&cpu6>;
++				};
++
++				core3 {
++					cpu = <&cpu7>;
++				};
++			};
++		};
++	};
++
++	firmware: firmware {
++		scm {
++			compatible = "qcom,scm-sa8255p", "qcom,scm";
++			memory-region = <&tz_ffi_mem>;
++			qcom,dload-mode = <&tcsr 0x13000>;
++		};
++
++		scmi0: scmi-0 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem0>;
++
++			interrupts = <GIC_SPI 963 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi0_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi0_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi0_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi1: scmi-1 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem1>;
++
++			interrupts = <GIC_SPI 964 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi1_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi1_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi1_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi2: scmi-2 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem2>;
++
++			interrupts = <GIC_SPI 965 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi2_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi2_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi2_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi3: scmi-3 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem3>;
++
++			interrupts = <GIC_SPI 966 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi3_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi3_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi3_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi4: scmi-4 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem4>;
++
++			interrupts = <GIC_SPI 967 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi4_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi4_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi4_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi5: scmi-5 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem5>;
++
++			interrupts = <GIC_SPI 968 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi5_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi5_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi5_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi6: scmi-6 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem6>;
++
++			interrupts = <GIC_SPI 969 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi6_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi6_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi6_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi7: scmi-7 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem7>;
++
++			interrupts = <GIC_SPI 970 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi7_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi7_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi7_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi8: scmi-8 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem8>;
++
++			interrupts = <GIC_SPI 971 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi8_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi8_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi8_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi9: scmi-9 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem9>;
++
++			interrupts = <GIC_SPI 972 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi9_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi9_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi9_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi10: scmi-10 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem10>;
++
++			interrupts = <GIC_SPI 973 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi10_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi10_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi10_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi11: scmi-11 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem11>;
++
++			interrupts = <GIC_SPI 974 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi11_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi11_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi11_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi12: scmi-12 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem12>;
++
++			interrupts = <GIC_SPI 975 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi12_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi12_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi12_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi13: scmi-13 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem13>;
++
++			interrupts = <GIC_SPI 976 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi13_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi13_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi13_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi14: scmi-14 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem14>;
++
++			interrupts = <GIC_SPI 977 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi14_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi14_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi14_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi15: scmi-15 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem15>;
++
++			interrupts = <GIC_SPI 978 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi15_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi15_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi15_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi16: scmi-16 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem16>;
++
++			interrupts = <GIC_SPI 979 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi16_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi16_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi16_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi17: scmi-17 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem17>;
++
++			interrupts = <GIC_SPI 980 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi17_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi17_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi17_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi18: scmi-18 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem18>;
++
++			interrupts = <GIC_SPI 981 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi18_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi18_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi18_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi19: scmi-19 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem19>;
++
++			interrupts = <GIC_SPI 982 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi19_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi19_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi19_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi20: scmi-20 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem20>;
++
++			interrupts = <GIC_SPI 983 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi20_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi20_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi20_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi21: scmi-21 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem21>;
++
++			interrupts = <GIC_SPI 984 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi21_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi21_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi21_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi22: scmi-22 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem22>;
++
++			interrupts = <GIC_SPI 985 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi22_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi22_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi22_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi23: scmi-23 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem23>;
++
++			interrupts = <GIC_SPI 986 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi23_sensor: protocol@15 {
++				reg = <0x15>;
++				#thermal-sensor-cells = <1>;
++			};
++		};
++
++		scmi24: scmi-24 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem24>;
++
++			interrupts = <GIC_SPI 987 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi24_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi24_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi24_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi25: scmi-25 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem25>;
++
++			interrupts = <GIC_ESPI 0 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi25_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi25_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi25_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi26: scmi-26 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem26>;
++
++			interrupts = <GIC_ESPI 1 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi26_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi26_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi26_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi27: scmi-27 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem27>;
++
++			interrupts = <GIC_ESPI 2 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi27_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi27_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi27_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi28: scmi-28 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem28>;
++
++			interrupts = <GIC_ESPI 3 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi28_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi28_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi28_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi29: scmi-29 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem29>;
++
++			interrupts = <GIC_ESPI 4 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi29_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi29_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi29_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi30: scmi-30 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem30>;
++
++			interrupts = <GIC_ESPI 5 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi30_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi30_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi30_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi31: scmi-31 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem31>;
++
++			interrupts = <GIC_ESPI 6 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi31_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi31_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi31_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi32: scmi-32 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem32>;
++
++			interrupts = <GIC_ESPI 7 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi32_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi32_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi32_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi33: scmi-33 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem33>;
++
++			interrupts = <GIC_ESPI 8 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi33_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi33_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi33_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi34: scmi-34 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem34>;
++
++			interrupts = <GIC_ESPI 9 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi34_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi34_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi34_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi35: scmi-35 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem35>;
++
++			interrupts = <GIC_ESPI 10 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi35_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi35_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi35_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi36: scmi-36 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem36>;
++
++			interrupts = <GIC_ESPI 11 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi36_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi36_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi36_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi37: scmi-37 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem37>;
++
++			interrupts = <GIC_ESPI 12 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi37_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi37_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi37_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi38: scmi-38 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem38>;
++
++			interrupts = <GIC_ESPI 13 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi38_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi38_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi38_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi39: scmi-39 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem39>;
++
++			interrupts = <GIC_ESPI 14 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi39_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi39_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi39_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi40: scmi-40 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem40>;
++
++			interrupts = <GIC_ESPI 15 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi40_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi40_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi40_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi41: scmi-41 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem41>;
++
++			interrupts = <GIC_ESPI 16 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi41_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi41_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi41_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi42: scmi-42 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem42>;
++
++			interrupts = <GIC_ESPI 17 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi42_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi42_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi42_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi43: scmi-43 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem43>;
++
++			interrupts = <GIC_ESPI 18 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi43_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi43_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi43_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi44: scmi-44 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem44>;
++
++			interrupts = <GIC_ESPI 19 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi44_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi44_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi44_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi45: scmi-45 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem45>;
++
++			interrupts = <GIC_ESPI 20 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi45_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi45_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi45_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi46: scmi-46 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem46>;
++
++			interrupts = <GIC_ESPI 21 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi46_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi46_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi46_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi47: scmi-47 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem47>;
++
++			interrupts = <GIC_ESPI 22 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi47_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi47_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi47_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi48: scmi-48 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem48>;
++
++			interrupts = <GIC_ESPI 23 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi48_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi48_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi48_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi49: scmi-49 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem49>;
++
++			interrupts = <GIC_ESPI 24 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi49_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi49_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi49_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi50: scmi-50 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem50>;
++
++			interrupts = <GIC_ESPI 25 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi50_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi50_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi50_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi51: scmi-51 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem51>;
++
++			interrupts = <GIC_ESPI 26 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi51_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi51_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi51_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi52: scmi-52 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem52>;
++
++			interrupts = <GIC_ESPI 27 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi52_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi52_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi52_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi53: scmi-53 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem53>;
++
++			interrupts = <GIC_ESPI 28 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi53_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi53_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi53_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi54: scmi-54 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem54>;
++
++			interrupts = <GIC_ESPI 29 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi54_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi54_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi54_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi55: scmi-55 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem55>;
++
++			interrupts = <GIC_ESPI 30 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi55_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi55_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi55_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi56: scmi-56 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem56>;
++
++			interrupts = <GIC_ESPI 31 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi56_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi56_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi56_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi57: scmi-57 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem57>;
++
++			interrupts = <GIC_ESPI 32 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi57_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi57_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi57_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi58: scmi-58 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem58>;
++
++			interrupts = <GIC_ESPI 33 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi58_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi58_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi58_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi59: scmi-59 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem59>;
++
++			interrupts = <GIC_ESPI 34 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi59_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi59_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi59_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi60: scmi-60 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem60>;
++
++			interrupts = <GIC_ESPI 35 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi60_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi60_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi60_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi61: scmi-61 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem61>;
++
++			interrupts = <GIC_ESPI 36 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi61_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi61_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi61_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi62: scmi-62 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem62>;
++
++			interrupts = <GIC_ESPI 37 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi62_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi62_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi62_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++
++		scmi63: scmi-63 {
++			compatible = "qcom,scmi-smc";
++			arm,smc-id = <0xc6008012>;
++			shmem = <&shmem63>;
++
++			interrupts = <GIC_ESPI 38 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "a2p";
++
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			arm,max-msg = <10>;
++			arm,max-msg-size = <256>;
++			arm,max-rx-timeout-ms = <3000>;
++
++			status = "disabled";
++
++			scmi63_pd: protocol@11 {
++				reg = <0x11>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi63_dvfs: protocol@13 {
++				reg = <0x13>;
++				#power-domain-cells = <1>;
++			};
++
++			scmi63_rst: protocol@16 {
++				reg = <0x16>;
++				#reset-cells = <1>;
++			};
++		};
++	};
++
++	memory@80000000 {
++		device_type = "memory";
++		reg = <0x0 0x80000000 0x0 0x0>;
++	};
++
++	pmu {
++		compatible = "arm,armv8-pmuv3";
++		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_HIGH>;
++	};
++
++	psci {
++		compatible = "arm,psci-1.0";
++		method = "smc";
++	};
++
++	reserved-memory {
++		#address-cells = <2>;
++		#size-cells = <2>;
++		ranges;
++
++		sail_ss_mem: sail-ss@80000000 {
++			reg = <0x0 0x80000000 0x0 0x10000000>;
++			no-map;
++		};
++
++		hyp_mem: hyp@90000000 {
++			reg = <0x0 0x90000000 0x0 0x600000>;
++			no-map;
++		};
++
++		xbl_boot_mem: xbl-boot@90700000 {
++			reg = <0x0 0x90700000 0x0 0x100000>;
++			no-map;
++		};
++
++		aop_image_mem: aop-image@90800000 {
++			reg = <0x0 0x90800000 0x0 0x60000>;
++			no-map;
++		};
++
++		aop_cmd_db_mem: aop-cmd-db@90860000 {
++			compatible = "qcom,cmd-db";
++			reg = <0x0 0x90860000 0x0 0x20000>;
++			no-map;
++		};
++
++		uefi_log: uefi-log@908b0000 {
++			reg = <0x0 0x908b0000 0x0 0x10000>;
++			no-map;
++		};
++
++		ddr_training_checksum: ddr-training-checksum@908c0000 {
++			reg = <0x0 0x908c0000 0x0 0x1000>;
++			no-map;
++		};
++
++		reserved_mem: reserved@908f0000 {
++			reg = <0x0 0x908f0000 0x0 0xe000>;
++			no-map;
++		};
++
++		secdata_apss_mem: secdata-apss@908fe000 {
++			reg = <0x0 0x908fe000 0x0 0x2000>;
++			no-map;
++		};
++
++		smem_mem: smem@90900000 {
++			compatible = "qcom,smem";
++			reg = <0x0 0x90900000 0x0 0x200000>;
++			no-map;
++			hwlocks = <&tcsr_mutex 3>;
++		};
++
++		tz_sail_mailbox_mem: tz-sail-mailbox@90c00000 {
++			reg = <0x0 0x90c00000 0x0 0x100000>;
++			no-map;
++		};
++
++		sail_mailbox_mem: sail-ss@90d00000 {
++			reg = <0x0 0x90d00000 0x0 0x100000>;
++			no-map;
++		};
++
++		sail_ota_mem: sail-ss@90e00000 {
++			reg = <0x0 0x90e00000 0x0 0x300000>;
++			no-map;
++		};
++
++		hyp_md_mem: hyp-md@91a80000 {
++			no-map;
++			reg = <0x0 0x91a80000 0x0 0x80000>;
++		};
++
++		aoss_backup_mem: aoss-backup@91b00000 {
++			reg = <0x0 0x91b00000 0x0 0x40000>;
++			no-map;
++		};
++
++		cpucp_backup_mem: cpucp-backup@91b40000 {
++			reg = <0x0 0x91b40000 0x0 0x40000>;
++			no-map;
++		};
++
++		tz_config_backup_mem: tz-config-backup@91b80000 {
++			reg = <0x0 0x91b80000 0x0 0x10000>;
++			no-map;
++		};
++
++		ddr_training_data_mem: ddr-training-data@91b90000 {
++			reg = <0x0 0x91b90000 0x0 0x10000>;
++			no-map;
++		};
++
++		cdt_data_backup_mem: cdt-data-backup@91ba0000 {
++			reg = <0x0 0x91ba0000 0x0 0x1000>;
++			no-map;
++		};
++
++		tz_ffi_mem: tz-ffi@91c00000 {
++			compatible = "shared-dma-pool";
++			reg = <0x0 0x91c00000 0x0 0x1400000>;
++			no-map;
++		};
++
++		lpass_machine_learning_mem: lpass-machine-learning@93b00000 {
++			reg = <0x0 0x93b00000 0x0 0xf00000>;
++			no-map;
++		};
++
++		adsp_rpc_remote_heap_mem: adsp-rpc-remote-heap@94a00000 {
++			reg = <0x0 0x94a00000 0x0 0x800000>;
++			no-map;
++		};
++
++		pil_camera_mem: pil-camera@95200000 {
++			reg = <0x0 0x95200000 0x0 0x500000>;
++			no-map;
++		};
++
++		pil_adsp_mem: pil-adsp@95c00000 {
++			reg = <0x0 0x95c00000 0x0 0x1e00000>;
++			no-map;
++		};
++
++		pil_adsp_dtb_mem: q6-adsp-dtb@97a00000 {
++			no-map;
++			reg = <0x0 0x97a00000 0x0 0x80000>;
++		};
++
++		pil_gdsp0_dtb_mem: pil-gdsp0-dtb@97a80000 {
++			no-map;
++			reg = <0x0 0x97a80000 0x0 0x80000>;
++		};
++
++		pil_gdsp0_mem: pil-gdsp0@97b00000 {
++			reg = <0x0 0x97b00000 0x0 0x1e00000>;
++			no-map;
++		};
++
++		pil_gdsp1_mem: pil-gdsp1@99900000 {
++			reg = <0x0 0x99900000 0x0 0x1e00000>;
++			no-map;
++		};
++
++		pil_gdsp1_dtb_mem: pil-gdsp1-dtb@9b700000 {
++			no-map;
++			reg = <0x0 0x9b700000 0x0 0x80000>;
++		};
++
++		pil_cdsp0_dtb_mem: pil-cdsp0-dtb@9b780000 {
++			no-map;
++			reg = <0x0 0x9b780000 0x0 0x80000>;
++		};
++
++		pil_cdsp0_mem: pil-cdsp0@9b800000 {
++			reg = <0x0 0x9b800000 0x0 0x1e00000>;
++			no-map;
++		};
++
++		pil_gpu_mem: pil-gpu@9d600000 {
++			reg = <0x0 0x9d600000 0x0 0x2000>;
++			no-map;
++		};
++
++		pil_cdsp1_dtb_mem: pil-cdsp1-dtb@9d680000 {
++			no-map;
++			reg = <0x0 0x9d680000 0x0 0x80000>;
++		};
++
++		pil_cdsp1_mem: pil-cdsp1@9d700000 {
++			reg = <0x0 0x9d700000 0x0 0x1e00000>;
++			no-map;
++		};
++
++		pil_cvp_mem: pil-cvp@9f500000 {
++			reg = <0x0 0x9f500000 0x0 0x700000>;
++			no-map;
++		};
++
++		pil_video_mem: pil-video@9fc00000 {
++			reg = <0x0 0x9fc00000 0x0 0x700000>;
++			no-map;
++		};
++
++		audio_config_mem: audio-config-region@ac600000 {
++			no-map;
++			reg = <0x0 0xac600000 0x0 0xa00000>;
++		};
++
++		audio_mdf_mem: audio-mdf-region@ad000000 {
++			reg = <0x0 0xad000000 0x0 0x2000000>;
++			no-map;
++		};
++
++		firmware_mem: firmware-region@b0000000 {
++			reg = <0x0 0xb0000000 0x0 0x800000>;
++			no-map;
++		};
++
++		hyptz_reserved_mem: hyptz-reserved@beb00000 {
++			reg = <0x0 0xbeb00000 0x0 0x11500000>;
++			no-map;
++		};
++
++		shmem0: scmi-mem@d0000000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0000000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem1: scmi-mem@d0001000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0001000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem2: scmi-mem@d0002000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0002000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem3: scmi-mem@d0003000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0003000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem4: scmi-mem@d0004000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0004000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem5: scmi-mem@d0005000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0005000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem6: scmi-mem@d0006000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0006000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem7: scmi-mem@d0007000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0007000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem8: scmi-mem@d0008000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0008000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem9: scmi-mem@d0009000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0009000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem10: scmi-mem@d000a000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd000a000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem11: scmi-mem@d000b000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd000b000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem12: scmi-mem@d000c000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd000c000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem13: scmi-mem@d000d000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd000d000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem14: scmi-mem@d000e000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd000e000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem15: scmi-mem@d000f000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd000f000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem16: scmi-mem@d0010000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0010000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem17: scmi-mem@d0011000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0011000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem18: scmi-mem@d0012000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0012000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem19: scmi-mem@d0013000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0013000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem20: scmi-mem@d0014000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0014000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem21: scmi-mem@d0015000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0015000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem22: scmi-mem@d0016000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0016000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem23: scmi-mem@d0017000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0017000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem24: scmi-mem@d0018000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0018000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem25: scmi-mem@d0019000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0019000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem26: scmi-mem@d001a000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd001a000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem27: scmi-mem@d001b000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd001b000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem28: scmi-mem@d001c000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd001c000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem29: scmi-mem@d001d000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd001d000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem30: scmi-mem@d001e000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd001e000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem31: scmi-mem@d001f000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd001f000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem32: scmi-mem@d0020000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0020000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem33: scmi-mem@d0021000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0021000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem34: scmi-mem@d0022000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0022000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem35: scmi-mem@d0023000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0023000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem36: scmi-mem@d0024000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0024000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem37: scmi-mem@d0025000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0025000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem38: scmi-mem@d0026000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0026000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem39: scmi-mem@d0027000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0027000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem40: scmi-mem@d0028000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0028000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem41: scmi-mem@d0029000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0029000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem42: scmi-mem@d002a000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd002a000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem43: scmi-mem@d002b000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd002b000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem44: scmi-mem@d002c000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd002c000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem45: scmi-mem@d002d000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd002d000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem46: scmi-mem@d002e000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd002e000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem47: scmi-mem@d002f000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd002f000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem48: scmi-mem@d0030000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0030000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem49: scmi-mem@d0031000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0031000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem50: scmi-mem@d0032000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0032000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem51: scmi-mem@d0033000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0033000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem52: scmi-mem@d0034000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0034000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem53: scmi-mem@d0035000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0035000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem54: scmi-mem@d0036000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0036000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem55: scmi-mem@d0037000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0037000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem56: scmi-mem@d0038000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0038000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem57: scmi-mem@d0039000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd0039000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem58: scmi-mem@d003a000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd003a000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem59: scmi-mem@d003b000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd003b000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem60: scmi-mem@d003c000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd003c000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem61: scmi-mem@d003d000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd003d000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem62: scmi-mem@d003e000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd003e000 0x0 0x1000>;
++			no-map;
++		};
++
++		shmem63: scmi-mem@d003f000 {
++			compatible = "arm,scmi-shmem";
++			reg = <0x0 0xd003f000 0x0 0x1000>;
++			no-map;
++		};
++
++		firmware_logs_mem: firmware-logs@d0040000 {
++			reg = <0x0 0xd0040000 0x0 0x10000>;
++			no-map;
++		};
++
++		firmware_audio_mem: firmware-audio@d0050000 {
++			reg = <0x0 0xd0050000 0x0 0x4000>;
++			no-map;
++		};
++
++		firmware_camera_mem: firmware-camera@d0054000 {
++			no-map;
++			reg = <0x0 0xd0054000 0x0 0x2000>;
++		};
++
++		firmware_reserved_mem: firmware-reserved@d0056000 {
++			reg = <0x0 0xd0056000 0x0 0x9a000>;
++			no-map;
++		};
++
++		firmware_quantum_test_mem: firmware-quantum-test@d00f0000 {
++			reg = <0x0 0xd00f0000 0x0 0x10000>;
++			no-map;
++		};
++
++		tags_mem: tags@d0100000 {
++			reg = <0x0 0xd0100000 0x0 0x1200000>;
++			no-map;
++		};
++
++		qtee_mem: qtee@d1300000 {
++			reg = <0x0 0xd1300000 0x0 0x500000>;
++			no-map;
++		};
++
++		deepsleep_backup_mem: deepsleep-backup@d1800000 {
++			reg = <0x0 0xd1800000 0x0 0x100000>;
++			no-map;
++		};
++
++		trusted_apps_mem: trusted-apps@d1900000 {
++			reg = <0x0 0xd1900000 0x0 0x3800000>;
++			no-map;
++		};
++
++		tz_stat_mem: tz-stat@db100000 {
++			reg = <0x0 0xdb100000 0x0 0x100000>;
++			no-map;
++		};
++
++		cpucp_fw_mem: cpucp-fw@db200000 {
++			reg = <0x0 0xdb200000 0x0 0x100000>;
++			no-map;
++		};
++
++		cma: linux,cma {
++			compatible = "shared-dma-pool";
++			alloc-ranges = <0x0 0x00000000 0x0 0xdfffffff>;
++			reusable;
++			alignment = <0x0 0x400000>;
++			size = <0x0 0x2000000>;
++			linux,cma-default;
++		};
++	};
++
++	soc: soc@0 {
++		compatible = "simple-bus";
++		#address-cells = <2>;
++		#size-cells = <2>;
++		ranges = <0 0 0 0 0x10 0>;
++
++		ipcc0: mailbox@408000 {
++			compatible = "qcom,sa8255p-ipcc", "qcom,ipcc";
++			reg = <0x0 0x00408000 0x0 0x1000>;
++			interrupts = <GIC_SPI 229 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-controller;
++			#interrupt-cells = <3>;
++			#mbox-cells = <2>;
++		};
++
++		ipcc1: mailbox@488000 {
++			compatible = "qcom,sa8255p-ipcc", "qcom,ipcc";
++			reg = <0x0 0x00488000 0x0 0x1000>;
++			interrupts = <GIC_SPI 231 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-controller;
++			#interrupt-cells = <3>;
++			#mbox-cells = <2>;
++			status = "disabled";
++		};
++
++		qupv3_id_2: geniqup@8c0000 {
++			compatible = "qcom,sa8255p-geni-se-qup";
++			reg = <0x0 0x008c0000 0x0 0x6000>;
++			ranges;
++			iommus = <&apps_smmu 0x5a3 0x0>;
++			#address-cells = <2>;
++			#size-cells = <2>;
++			status = "disabled";
++
++			uart14: serial@880000 {
++				compatible = "qcom,sa8255p-geni-uart";
++				reg = <0x0 0x00880000 0x0 0x4000>;
++				interrupts = <GIC_SPI 373 IRQ_TYPE_LEVEL_HIGH>;
++				status = "disabled";
++			};
++
++			uart15: serial@884000 {
++				compatible = "qcom,sa8255p-geni-uart";
++				reg = <0x0 0x00884000 0x0 0x4000>;
++				interrupts = <GIC_SPI 583 IRQ_TYPE_LEVEL_HIGH>;
++				status = "disabled";
++			};
++
++			uart16: serial@888000 {
++				compatible = "qcom,sa8255p-geni-uart";
++				reg = <0x0 0x00888000 0x0 0x4000>;
++				interrupts = <GIC_SPI 584 IRQ_TYPE_LEVEL_HIGH>;
++				status = "disabled";
++			};
++
++			uart17: serial@88c000 {
++				compatible = "qcom,sa8255p-geni-uart";
++				reg = <0x0 0x0088c000 0x0 0x4000>;
++				interrupts = <GIC_SPI 585 IRQ_TYPE_LEVEL_HIGH>;
++				status = "disabled";
++			};
++
++			uart18: serial@890000 {
++				compatible = "qcom,sa8255p-geni-uart";
++				reg = <0x0 0x00890000 0x0 0x4000>;
++				interrupts = <GIC_SPI 586 IRQ_TYPE_LEVEL_HIGH>;
++				status = "disabled";
++			};
++
++			uart19: serial@894000 {
++				compatible = "qcom,sa8255p-geni-uart";
++				reg = <0x0 0x00894000 0x0 0x4000>;
++				interrupts = <GIC_SPI 587 IRQ_TYPE_LEVEL_HIGH>;
++				status = "disabled";
++			};
++
++			uart20: serial@898000 {
++				compatible = "qcom,sa8255p-geni-uart";
++				reg = <0x0 0x00898000 0x0 0x4000>;
++				interrupts = <GIC_SPI 834 IRQ_TYPE_LEVEL_HIGH>;
++				status = "disabled";
++			};
++		};
++
++		qupv3_id_0: geniqup@9c0000 {
++			compatible = "qcom,sa8255p-geni-se-qup";
++			reg = <0x0 0x9c0000 0x0 0x6000>;
++			ranges;
++			#address-cells = <2>;
++			#size-cells = <2>;
++			iommus = <&apps_smmu 0x403 0x0>;
++			status = "disabled";
++
++			uart0: serial@980000 {
++				compatible = "qcom,sa8255p-geni-uart";
++				reg = <0x0 0x980000 0x0 0x4000>;
++				interrupts = <GIC_SPI 550 IRQ_TYPE_LEVEL_HIGH>;
++				power-domains = <&scmi11_pd 0>, <&scmi11_dvfs 0>;
++				power-domain-names = "power", "perf";
++				status = "disabled";
++			};
++
++			uart1: serial@984000 {
++				compatible = "qcom,sa8255p-geni-uart";
++				reg = <0x0 0x984000 0x0 0x4000>;
++				interrupts = <GIC_SPI 551 IRQ_TYPE_LEVEL_HIGH>;
++				power-domains = <&scmi11_pd 1>, <&scmi11_dvfs 1>;
++				power-domain-names = "power", "perf";
++				status = "disabled";
++			};
++
++			uart2: serial@988000 {
++				compatible = "qcom,sa8255p-geni-uart";
++				reg = <0x0 0x988000 0x0 0x4000>;
++				interrupts = <GIC_SPI 529 IRQ_TYPE_LEVEL_HIGH>;
++				power-domains = <&scmi11_pd 2>, <&scmi11_dvfs 2>;
++				power-domain-names = "power", "perf";
++				status = "disabled";
++			};
++
++			uart3: serial@98c000 {
++				compatible = "qcom,sa8255p-geni-uart";
++				reg = <0x0 0x98c000 0x0 0x4000>;
++				interrupts = <GIC_SPI 530 IRQ_TYPE_LEVEL_HIGH>;
++				power-domains = <&scmi11_pd 3>, <&scmi11_dvfs 3>;
++				power-domain-names = "power", "perf";
++				status = "disabled";
++			};
++
++			uart4: serial@990000 {
++				compatible = "qcom,sa8255p-geni-uart";
++				reg = <0x0 0x990000 0x0 0x4000>;
++				interrupts = <GIC_SPI 531 IRQ_TYPE_LEVEL_HIGH>;
++				power-domains = <&scmi11_pd 4>, <&scmi11_dvfs 4>;
++				power-domain-names = "power", "perf";
++				status = "disabled";
++			};
++
++			uart5: serial@994000 {
++				compatible = "qcom,sa8255p-geni-uart";
++				reg = <0x0 0x994000 0x0 0x4000>;
++				interrupts = <GIC_SPI 535 IRQ_TYPE_LEVEL_HIGH>;
++				power-domains = <&scmi11_pd 5>, <&scmi11_dvfs 5>;
++				power-domain-names = "power", "perf";
++				status = "disabled";
++			};
++		};
++
++		qupv3_id_1: geniqup@ac0000 {
++			compatible = "qcom,sa8255p-geni-se-qup";
++			reg = <0x0 0x00ac0000 0x0 0x6000>;
++			ranges;
++			#address-cells = <2>;
++			#size-cells = <2>;
++			iommus = <&apps_smmu 0x443 0x0>;
++			status = "disabled";
++
++			uart7: serial@a80000 {
++				compatible = "qcom,sa8255p-geni-uart";
++				reg = <0x0 0x00a80000 0x0 0x4000>;
++				interrupts = <GIC_SPI 353 IRQ_TYPE_LEVEL_HIGH>;
++				power-domains = <&scmi11_pd 7>, <&scmi11_dvfs 7>;
++				power-domain-names = "power", "perf";
++				status = "disabled";
++			};
++
++			uart8: serial@a84000 {
++				compatible = "qcom,sa8255p-geni-uart";
++				reg = <0x0 0x00a84000 0x0 0x4000>;
++				interrupts = <GIC_SPI 354 IRQ_TYPE_LEVEL_HIGH>;
++				power-domains = <&scmi11_pd 8>, <&scmi11_dvfs 8>;
++				power-domain-names = "power", "perf";
++				status = "disabled";
++			};
++
++			uart9: serial@a88000 {
++				compatible = "qcom,sa8255p-geni-uart";
++				reg = <0x0 0xa88000 0x0 0x4000>;
++				interrupts = <GIC_SPI 355 IRQ_TYPE_LEVEL_HIGH>;
++				power-domains = <&scmi11_pd 9>, <&scmi11_dvfs 9>;
++				power-domain-names = "power", "perf";
++				status = "disabled";
++			};
++
++			uart10: serial@a8c000 {
++				compatible = "qcom,sa8255p-geni-debug-uart";
++				reg = <0x0 0x00a8c000 0x0 0x4000>;
++				interrupts = <GIC_SPI 356 IRQ_TYPE_LEVEL_HIGH>;
++				power-domains = <&scmi11_pd 10>, <&scmi11_dvfs 10>;
++				power-domain-names = "power", "perf";
++				status = "disabled";
++			};
++
++			uart11: serial@a90000 {
++				compatible = "qcom,sa8255p-geni-uart";
++				reg = <0x0 0x00a90000 0x0 0x4000>;
++				interrupts = <GIC_SPI 357 IRQ_TYPE_LEVEL_HIGH>;
++				power-domains = <&scmi11_pd 11>, <&scmi11_dvfs 11>;
++				power-domain-names = "power", "perf";
++				status = "disabled";
++			};
++
++			uart12: serial@a94000 {
++				compatible = "qcom,sa8255p-geni-uart";
++				reg = <0x0 0x00a94000 0x0 0x4000>;
++				interrupts = <GIC_SPI 358 IRQ_TYPE_LEVEL_HIGH>;
++				power-domains = <&scmi11_pd 12>, <&scmi11_dvfs 12>;
++				power-domain-names = "power", "perf";
++				status = "disabled";
++			};
++
++		};
++
++		qupv3_id_3: geniqup@bc0000 {
++			compatible = "qcom,sa8255p-geni-se-qup";
++			reg = <0x0 0xbc0000 0x0 0x6000>;
++			ranges;
++			#address-cells = <2>;
++			#size-cells = <2>;
++			iommus = <&apps_smmu 0x43 0x0>;
++			status = "disabled";
++
++			uart21: serial@b80000 {
++				compatible = "qcom,sa8255p-geni-uart";
++				reg = <0x0 0x00b80000 0x0 0x4000>;
++				interrupts = <GIC_SPI 831 IRQ_TYPE_LEVEL_HIGH>;
++				power-domains = <&scmi11_pd 21>, <&scmi11_dvfs 21>;
++				power-domain-names = "power", "perf";
++				status = "disabled";
++			};
++		};
++
++		rng: rng@10d2000 {
++			compatible = "qcom,sa8255p-trng", "qcom,trng";
++			reg = <0x0 0x010d2000 0x0 0x1000>;
++		};
++
++		pcie0_ep: pcie-ep@1c00000 {
++			compatible = "qcom,sa8255p-pcie-ep";
++			reg = <0x0 0x01c00000 0x0 0x3000>,
++			      <0x0 0x40000000 0x0 0xf20>,
++			      <0x0 0x40000f20 0x0 0xa8>,
++			      <0x0 0x40001000 0x0 0x4000>,
++			      <0x0 0x40200000 0x0 0x100000>,
++			      <0x0 0x01c03000 0x0 0x1000>,
++			      <0x0 0x40005000 0x0 0x2000>;
++			reg-names = "parf", "dbi", "elbi", "atu", "addr_space",
++				    "mmio", "dma";
++
++			interrupts = <GIC_SPI 306 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 147 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 630 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "global", "doorbell", "dma";
++
++			dma-coherent;
++			iommus = <&pcie_smmu 0x0000 0x7f>;
++
++			num-lanes = <2>;
++			power-domains = <&scmi5_pd 1>;
++
++			status = "disabled";
++		};
++
++		pcie1_ep: pcie-ep@1c10000 {
++			compatible = "qcom,sa8255p-pcie-ep";
++			reg = <0x0 0x01c10000 0x0 0x3000>,
++			      <0x0 0x60000000 0x0 0xf20>,
++			      <0x0 0x60000f20 0x0 0xa8>,
++			      <0x0 0x60001000 0x0 0x4000>,
++			      <0x0 0x60200000 0x0 0x100000>,
++			      <0x0 0x01c13000 0x0 0x1000>,
++			      <0x0 0x60005000 0x0 0x2000>;
++			reg-names = "parf", "dbi", "elbi", "atu", "addr_space",
++				    "mmio", "dma";
++
++			interrupts = <GIC_SPI 518 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 152 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 474 IRQ_TYPE_LEVEL_HIGH>;
++
++			interrupt-names = "global", "doorbell", "dma";
++
++			dma-coherent;
++			iommus = <&pcie_smmu 0x80 0x7f>;
++			num-lanes = <4>;
++			power-domains = <&scmi6_pd 1>;
++
++			status = "disabled";
++		};
++
++		ufs_mem_hc: ufs@1d84000 {
++			compatible = "qcom,sa8255p-ufshc";
++			reg = <0x0 0x01d84000 0x0 0x3000>;
++
++			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
++
++			iommus = <&apps_smmu 0x100 0x0>;
++			dma-coherent;
++
++			lanes-per-direction = <2>;
++			power-domains = <&scmi3_pd 0>;
++
++			status = "disabled";
++		};
++
++		ufs_mem_hc2: ufs2@1da4000 {
++			compatible = "qcom,sa8255p-ufshc";
++			reg = <0x0 0x1da4000 0x0 0x3000>;
++
++			interrupts = <GIC_SPI 125 IRQ_TYPE_LEVEL_HIGH>;
++
++			iommus = <&apps_smmu 0x420 0x0>;
++			dma-coherent;
++
++			lanes-per-direction = <2>;
++			power-domains = <&scmi4_pd 0>;
++
++			status = "disabled";
++		};
++
++		tcsr_mutex: hwlock@1f40000 {
++			compatible = "qcom,tcsr-mutex";
++			reg = <0x0 0x01f40000 0x0 0x20000>;
++			#hwlock-cells = <1>;
++		};
++
++		tcsr: syscon@1fc0000 {
++			compatible = "qcom,sa8255p-tcsr", "syscon";
++			reg = <0x0 0x1fc0000 0x0 0x30000>;
++		};
++
++		adreno_smmu: iommu@3da0000 {
++			compatible = "qcom,sa8255p-smmu-500", "qcom,adreno-smmu",
++				     "qcom,smmu-500", "arm,mmu-500";
++			reg = <0x0 0x03da0000 0x0 0x20000>;
++			#iommu-cells = <2>;
++			#global-interrupts = <2>;
++			dma-coherent;
++			interrupts = <GIC_SPI 673 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 674 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 678 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 679 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 680 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 681 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 682 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 683 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 684 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 685 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 686 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 687 IRQ_TYPE_LEVEL_HIGH>;
++			power-domains = <&scmi15_pd 0>;
++		};
++
++		pdc: interrupt-controller@b220000 {
++			compatible = "qcom,sa8255p-pdc", "qcom,pdc";
++			reg = <0x0 0x0b220000 0x0 0x30000>,
++			      <0x0 0x17c000f0 0x0 0x64>;
++			qcom,pdc-ranges = <0 480 40>,
++					  <40 140 14>,
++					  <54 263 1>,
++					  <55 306 4>,
++					  <59 312 3>,
++					  <62 374 2>,
++					  <64 434 2>,
++					  <66 438 2>,
++					  <70 520 1>,
++					  <73 523 1>,
++					  <118 568 6>,
++					  <124 609 3>,
++					  <159 638 1>,
++					  <160 720 3>,
++					  <169 728 30>,
++					  <199 416 2>,
++					  <201 449 1>,
++					  <202 89 1>,
++					  <203 451 1>,
++					  <204 462 1>,
++					  <205 264 1>,
++					  <206 579 1>,
++					  <207 653 1>,
++					  <208 656 1>,
++					  <209 659 1>,
++					  <210 122 1>,
++					  <211 699 1>,
++					  <212 705 1>,
++					  <213 450 1>,
++					  <214 643 2>,
++					  <216 646 5>,
++					  <221 390 5>,
++					  <226 700 2>,
++					  <228 440 1>,
++					  <229 663 1>,
++					  <230 524 2>,
++					  <232 612 3>,
++					  <235 723 5>;
++			#interrupt-cells = <2>;
++			interrupt-parent = <&intc>;
++			interrupt-controller;
++		};
++
++		tsens2: thermal-sensor@c251000 {
++			compatible = "qcom,sa8255p-tsens", "qcom,tsens-v2";
++			reg = <0x0 0x0c251000 0x0 0x1ff>,
++			      <0x0 0x0c224000 0x0 0x8>;
++			interrupts = <GIC_SPI 572 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 609 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "uplow", "critical";
++			#thermal-sensor-cells = <1>;
++			#qcom,sensors = <13>;
++		};
++
++		tsens3: thermal-sensor@c252000 {
++			compatible = "qcom,sa8255p-tsens", "qcom,tsens-v2";
++			reg = <0x0 0x0c252000 0x0 0x1ff>,
++			      <0x0 0x0c225000 0x0 0x8>;
++			interrupts = <GIC_SPI 573 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 610 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "uplow", "critical";
++			#thermal-sensor-cells = <1>;
++			#qcom,sensors = <13>;
++		};
++
++		tsens0: thermal-sensor@c263000 {
++			compatible = "qcom,sa8255p-tsens", "qcom,tsens-v2";
++			reg = <0x0 0x0c263000 0x0 0x1ff>,
++			      <0x0 0x0c222000 0x0 0x8>;
++			interrupts = <GIC_SPI 506 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 508 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "uplow", "critical";
++			#thermal-sensor-cells = <1>;
++			#qcom,sensors = <12>;
++		};
++
++		tsens1: thermal-sensor@c265000 {
++			compatible = "qcom,sa8255p-tsens", "qcom,tsens-v2";
++			reg = <0x0 0x0c265000 0x0 0x1ff>,
++			      <0x0 0x0c223000 0x0 0x8>;
++			interrupts = <GIC_SPI 507 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 509 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "uplow", "critical";
++			#thermal-sensor-cells = <1>;
++			#qcom,sensors = <12>;
++		};
++
++		aoss_qmp: power-management@c300000 {
++			compatible = "qcom,sa8255p-aoss-qmp", "qcom,aoss-qmp";
++			reg = <0x0 0x0c300000 0x0 0x400>;
++			interrupts-extended = <&ipcc0 IPCC_CLIENT_AOP
++					       IPCC_MPROC_SIGNAL_GLINK_QMP
++					       IRQ_TYPE_EDGE_RISING>;
++			mboxes = <&ipcc0 IPCC_CLIENT_AOP IPCC_MPROC_SIGNAL_GLINK_QMP>;
++			#clock-cells = <0>;
++		};
++
++		tlmm: pinctrl@f000000 {
++			compatible = "qcom,sa8255p-tlmm", "qcom,sa8775p-tlmm";
++			reg = <0x0 0x0f000000 0x0 0x1000000>;
++			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
++			gpio-controller;
++			#gpio-cells = <2>;
++			interrupt-controller;
++			#interrupt-cells = <2>;
++			gpio-ranges = <&tlmm 0 0 149>;
++			wakeup-parent = <&pdc>;
++		};
++
++		apps_smmu: iommu@15000000 {
++			compatible = "qcom,sa8255p-smmu-500", "qcom,smmu-500", "arm,mmu-500";
++			reg = <0x0 0x15000000 0x0 0x100000>;
++			#iommu-cells = <2>;
++			#global-interrupts = <2>;
++			dma-coherent;
++
++			interrupts = <GIC_SPI 119 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 102 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 103 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 104 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 105 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 106 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 107 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 108 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 109 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 110 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 111 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 112 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 113 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 114 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 115 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 116 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 117 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 118 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 181 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 182 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 183 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 185 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 186 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 187 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 188 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 189 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 190 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 191 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 192 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 315 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 316 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 317 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 318 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 319 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 320 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 321 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 322 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 323 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 324 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 325 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 326 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 327 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 328 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 329 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 330 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 331 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 332 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 333 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 334 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 335 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 336 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 337 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 338 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 339 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 340 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 341 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 342 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 343 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 344 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 345 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 395 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 396 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 397 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 398 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 399 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 400 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 401 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 402 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 403 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 404 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 405 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 406 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 407 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 408 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 409 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 418 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 419 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 412 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 421 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 706 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 423 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 424 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 425 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 689 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 690 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 691 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 692 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 693 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 694 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 695 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 696 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 410 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 411 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 420 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 413 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 422 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 707 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 708 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 709 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 710 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 711 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 414 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 712 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 713 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 714 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 715 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 912 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 911 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 910 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 909 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 908 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 907 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 906 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 905 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 904 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 903 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 902 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 901 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 900 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 899 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 898 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 897 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 896 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 895 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 894 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 893 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 892 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 891 IRQ_TYPE_LEVEL_HIGH>;
++		};
++
++		pcie_smmu: iommu@15200000 {
++			compatible = "qcom,sa8255p-smmu-500", "qcom,smmu-500", "arm,mmu-500";
++			reg = <0x0 0x15200000 0x0 0x80000>;
++			#iommu-cells = <2>;
++			#global-interrupts = <2>;
++			dma-coherent;
++
++			interrupts = <GIC_SPI 920 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 921 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 925 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 926 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 927 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 928 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 950 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 951 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 952 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 953 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 954 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 955 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 956 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 957 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 958 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 885 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 886 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 887 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 888 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 820 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 822 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 823 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 310 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 446 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 447 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 452 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 840 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 841 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 842 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 843 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 844 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 845 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 846 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 847 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 848 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 849 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 802 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 803 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 804 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 805 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 806 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 807 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 808 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 809 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 810 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 811 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 812 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 813 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 814 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 836 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 837 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 838 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 839 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 854 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 855 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 856 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 790 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 791 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 792 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 793 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 794 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 795 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 796 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 639 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 79 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 640 IRQ_TYPE_LEVEL_HIGH>;
++		};
++
++		intc: interrupt-controller@17a00000 {
++			compatible = "arm,gic-v3";
++			reg = <0x0 0x17a00000 0x0 0x10000>,	/* GICD */
++			      <0x0 0x17a60000 0x0 0x100000>;	/* GICR * 8 */
++			interrupt-controller;
++			#address-cells = <2>;
++			#size-cells = <2>;
++			#interrupt-cells = <3>;
++			interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
++			#redistributor-regions = <1>;
++			redistributor-stride = <0x0 0x20000>;
++		};
++
++		watchdog@17c10000 {
++			compatible = "qcom,apss-wdt-sa8255p", "qcom,kpss-wdt";
++			reg = <0x0 0x17c10000 0x0 0x1000>;
++			clocks = <&sleep_clk>;
++			interrupts = <GIC_SPI 0 IRQ_TYPE_EDGE_RISING>;
++		};
++
++		memtimer: timer@17c20000 {
++			compatible = "arm,armv7-timer-mem";
++			reg = <0x0 0x17c20000 0x0 0x1000>;
++			ranges = <0x0 0x0 0x0 0x20000000>;
++			#address-cells = <1>;
++			#size-cells = <1>;
++
++			frame@17c21000 {
++				reg = <0x17c21000 0x1000>,
++				      <0x17c22000 0x1000>;
++				interrupts = <GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>,
++					     <GIC_SPI 6 IRQ_TYPE_LEVEL_HIGH>;
++				frame-number = <0>;
++			};
++
++			frame@17c23000 {
++				reg = <0x17c23000 0x1000>;
++				interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>;
++				frame-number = <1>;
++				status = "disabled";
++			};
++
++			frame@17c25000 {
++				reg = <0x17c25000 0x1000>;
++				interrupts = <GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
++				frame-number = <2>;
++				status = "disabled";
++			};
++
++			frame@17c27000 {
++				reg = <0x17c27000 0x1000>;
++				interrupts = <GIC_SPI 11 IRQ_TYPE_LEVEL_HIGH>;
++				frame-number = <3>;
++				status = "disabled";
++			};
++
++			frame@17c29000 {
++				reg = <0x17c29000 0x1000>;
++				interrupts = <GIC_SPI 12 IRQ_TYPE_LEVEL_HIGH>;
++				frame-number = <4>;
++				status = "disabled";
++			};
++
++			frame@17c2b000 {
++				reg = <0x17c2b000 0x1000>;
++				interrupts = <GIC_SPI 13 IRQ_TYPE_LEVEL_HIGH>;
++				frame-number = <5>;
++				status = "disabled";
++			};
++
++			frame@17c2d000 {
++				reg = <0x17c2d000 0x1000>;
++				interrupts = <GIC_SPI 14 IRQ_TYPE_LEVEL_HIGH>;
++				frame-number = <6>;
++				status = "disabled";
++			};
++		};
++
++		cpufreq_hw: cpufreq@18591000 {
++			compatible = "qcom,sa8255p-cpufreq-epss",
++				     "qcom,cpufreq-epss";
++			reg = <0x0 0x18591000 0x0 0x1000>,
++			      <0x0 0x18593000 0x0 0x1000>;
++			reg-names = "freq-domain0", "freq-domain1";
++			clocks = <&bi_tcxo_div2>, <&gpll0_board_clk>;
++			clock-names = "xo", "alternate";
++			interrupts = <GIC_SPI 31 IRQ_TYPE_LEVEL_HIGH>,
++					<GIC_SPI 32 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "dcvsh-irq-0", "dcvsh-irq-1";
++			#freq-domain-cells = <1>;
++		};
++
++		 pcie0: pcie@400000000 {
++			compatible = "qcom,pcie-sa8255p";
++			reg = <0x4 0x00000000 0x0 0x10000000>;
++			device_type = "pci";
++
++			#address-cells = <3>;
++			#size-cells = <2>;
++
++			ranges = <0x02000000 0x0 0x40100000 0x0 0x40100000 0x0 0x1ff00000>,
++				 <0x43000000 0x4 0x10100000 0x4 0x10100000 0x0 0x100000>;
++			bus-range = <0x00 0xff>;
++
++			dma-coherent;
++
++			linux,pci-domain = <0>;
++
++			interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 308 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 309 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 312 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 313 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 314 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 374 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 375 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "msi0", "msi1", "msi2", "msi3",
++					  "msi4", "msi5", "msi6", "msi7";
++			interrupt-parent = <&intc>;
++
++			#interrupt-cells = <1>;
++			interrupt-map-mask = <0 0 0 0x7>;
++			interrupt-map = <0 0 0 1 &intc 0 0 GIC_SPI 434 IRQ_TYPE_LEVEL_HIGH>,
++					<0 0 0 2 &intc 0 0 GIC_SPI 435 IRQ_TYPE_LEVEL_HIGH>,
++					<0 0 0 3 &intc 0 0 GIC_SPI 438 IRQ_TYPE_LEVEL_HIGH>,
++					<0 0 0 4 &intc 0 0 GIC_SPI 439 IRQ_TYPE_LEVEL_HIGH>;
++
++			iommu-map = <0x0 &pcie_smmu 0x0000 0x1>,
++				    <0x100 &pcie_smmu 0x0001 0x1>,
++				    <0x200 &pcie_smmu 0x0002 0x1>,
++				    <0x300 &pcie_smmu 0x0003 0x1>;
++
++			power-domains = <&scmi5_pd 0>;
++			status = "disabled";
++
++			pcieport0: pcie@0 {
++				device_type = "pci";
++				reg = <0x0 0x0 0x0 0x0 0x0>;
++				bus-range = <0x01 0xff>;
++
++				#address-cells = <3>;
++				#size-cells = <2>;
++				ranges;
++			};
++		};
++
++		pcie1: pcie@600000000 {
++			compatible = "qcom,pcie-sa8255p";
++			reg = <0x6 0x00000000 0x0 0x10000000>;
++
++			device_type = "pci";
++
++			#address-cells = <3>;
++			#size-cells = <2>;
++
++			ranges = <0x02000000 0x0 0x60100000 0x0 0x60100000 0x0 0x1ff00000>,
++				 <0x43000000 0x6 0x10100000 0x6 0x10100000 0x0 0x100000>;
++			bus-range = <0x00 0xff>;
++
++			dma-coherent;
++
++			linux,pci-domain = <1>;
++
++			interrupts = <GIC_SPI 519 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 144 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 145 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "msi0", "msi1", "msi2", "msi3",
++					  "msi4", "msi5", "msi6", "msi7";
++
++			interrupt-parent = <&intc>;
++
++			#interrupt-cells = <1>;
++			interrupt-map-mask = <0 0 0 0x7>;
++			interrupt-map = <0 0 0 1 &intc 0 0 GIC_SPI 148 IRQ_TYPE_LEVEL_HIGH>,
++					<0 0 0 2 &intc 0 0 GIC_SPI 149 IRQ_TYPE_LEVEL_HIGH>,
++					<0 0 0 3 &intc 0 0 GIC_SPI 150 IRQ_TYPE_LEVEL_HIGH>,
++					<0 0 0 4 &intc 0 0 GIC_SPI 151 IRQ_TYPE_LEVEL_HIGH>;
++
++			iommu-map = <0x0 &pcie_smmu 0x0080 0x1>,
++				    <0x100 &pcie_smmu 0x0081 0x1>,
++				    <0x200 &pcie_smmu 0x0082 0x1>,
++				    <0x208 &pcie_smmu 0x0083 0x1>,
++				    <0x210 &pcie_smmu 0x0084 0x1>,
++				    <0x300 &pcie_smmu 0x0085 0x1>,
++				    <0xab00 &pcie_smmu 0x0086 0x1>;
++
++			power-domains = <&scmi6_pd 0>;
++			status = "disabled";
++
++			pcie@0 {
++				device_type = "pci";
++				reg = <0x0 0x0 0x0 0x0 0x0>;
++				bus-range = <0x01 0xff>;
++
++				#address-cells = <3>;
++				#size-cells = <2>;
++				ranges;
++			};
++		};
++
++	};
++
++	thermal-zones {
++		aoss-0-thermal {
++			thermal-sensors = <&tsens0 0>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		cpu-0-0-0-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens0 1>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		cpu-0-1-0-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens0 2>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		cpu-0-2-0-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens0 3>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		cpu-0-3-0-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens0 4>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		gpuss-0-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens0 5>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		gpuss-1-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens0 6>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		gpuss-2-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens0 7>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		audio-thermal {
++			thermal-sensors = <&tsens0 8>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		camss-0-thermal {
++			thermal-sensors = <&tsens0 9>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		pcie-0-thermal {
++			thermal-sensors = <&tsens0 10>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		cpuss-0-0-thermal {
++			thermal-sensors = <&tsens0 11>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		aoss-1-thermal {
++			thermal-sensors = <&tsens1 0>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		cpu-0-0-1-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens1 1>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		cpu-0-1-1-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens1 2>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		cpu-0-2-1-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens1 3>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		cpu-0-3-1-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens1 4>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		gpuss-3-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens1 5>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		gpuss-4-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens1 6>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		gpuss-5-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens1 7>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		video-thermal {
++			thermal-sensors = <&tsens1 8>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		camss-1-thermal {
++			thermal-sensors = <&tsens1 9>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		pcie-1-thermal {
++			thermal-sensors = <&tsens1 10>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		cpuss-0-1-thermal {
++			thermal-sensors = <&tsens1 11>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		aoss-2-thermal {
++			thermal-sensors = <&tsens2 0>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		cpu-1-0-0-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens2 1>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		cpu-1-1-0-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens2 2>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		cpu-1-2-0-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens2 3>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		cpu-1-3-0-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens2 4>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		nsp-0-0-0-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens2 5>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		nsp-0-1-0-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens2 6>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		nsp-0-2-0-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens2 7>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		nsp-1-0-0-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens2 8>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		nsp-1-1-0-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens2 9>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		nsp-1-2-0-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens2 10>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		ddrss-0-thermal {
++			thermal-sensors = <&tsens2 11>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		cpuss-1-0-thermal {
++			thermal-sensors = <&tsens2 12>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		aoss-3-thermal {
++			thermal-sensors = <&tsens3 0>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		cpu-1-0-1-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens3 1>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		cpu-1-1-1-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens3 2>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		cpu-1-2-1-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens3 3>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		cpu-1-3-1-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens3 4>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		nsp-0-0-1-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens3 5>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		nsp-0-1-1-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens3 6>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		nsp-0-2-1-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens3 7>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		nsp-1-0-1-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens3 8>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		nsp-1-1-1-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens3 9>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		nsp-1-2-1-thermal {
++			polling-delay-passive = <10>;
++
++			thermal-sensors = <&tsens3 10>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		ddrss-1-thermal {
++			thermal-sensors = <&tsens3 11>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++
++		cpuss-1-1-thermal {
++			thermal-sensors = <&tsens3 12>;
++
++			trips {
++				trip-point0 {
++					temperature = <105000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++
++				trip-point1 {
++					temperature = <115000>;
++					hysteresis = <10000>;
++					type = "passive";
++				};
++			};
++		};
++	};
++
++	timer {
++		compatible = "arm,armv8-timer";
++		interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
++			     <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
++			     <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
++			     <GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;
++	};
++};
 
 -- 
 2.43.0
