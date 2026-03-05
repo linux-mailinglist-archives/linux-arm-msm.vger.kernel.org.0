@@ -1,179 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-95527-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95528-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iMuIACQ3qWlk3AAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95527-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 08:56:20 +0100
+	id uNPAEnc3qWlk3AAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95528-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 08:57:43 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 56BA220D016
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 08:56:19 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B530420D082
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 08:57:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 47A173088301
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 07:54:48 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id AB8293033266
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 07:57:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C90673358B0;
-	Thu,  5 Mar 2026 07:54:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A05833B961;
+	Thu,  5 Mar 2026 07:57:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bse7udeU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Eq93sB3x"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A47A530E82E;
-	Thu,  5 Mar 2026 07:54:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D6D33B949;
+	Thu,  5 Mar 2026 07:57:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772697287; cv=none; b=t+4YmfkhQSNlKCNIxN/TObNx+GEbMNrl6E7MWMIMBHUIaoeBxemfUzyMR6jBOh2PuHXsZ2ujS1uGXKjKud4pzGLfYHyLMoMloPoN5CWNiFp4AhVyyhi9WoYGnL7q5OeXxjOxSx2IUP7jo0iSvVl01zRs+PNmuYfQdG26Jktnep0=
+	t=1772697460; cv=none; b=WsK8lVbmef0vwyFeoUX3fbysR4lEF/vWQpG+ThIgsWkworMFQ+1VP8CrDfpxoPnD+axn0pfwaHuKPhj1YyNM27ZTvQXGHN8J/k683S9DPi16q7lbNf3aXSA4urNBSZqU/TPVJB0Q3t7XGOjhhhhV6zXh43ttSZI+4Xt26v7RI6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772697287; c=relaxed/simple;
-	bh=qrD1JfbHhV9Kk//SLC8znhTO0QO90fvu8ZQqzNeLSf4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aFYwZ6Ge80b01UQLWksXzvkZ1C8Y5Xq5l9llZIZ3D0cJrh284TpdR99vtwCUUv8fOVpv8B3yfe0KBkN73wy1WwW/9A/ApYpQo+b4xIy5NPq1j3aIJthbwspeQBXDlfJ1mvRTmvaBpKq29fbqHmsPcPFIHn9YU34TFomVzP9Vm30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bse7udeU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0062C116C6;
-	Thu,  5 Mar 2026 07:54:43 +0000 (UTC)
+	s=arc-20240116; t=1772697460; c=relaxed/simple;
+	bh=LTFCOG5QXLiQSKnu7SNj+IKfRYZTwEVJn8wWTsU0rXk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ehYUZ7oshWn+dWNnfpYgAWd9wXuCLeCV/3ugfHAgOP/UQwCXG3pr2MBGRJYMXM9TxEWNNQtgW54cNu1iMQTDJvDGX3hkts5VX8h9Ky0NBu556gDNTK4CirhBzGk1AO6aFiD1sLPb4B6WHZdNA5wVyG/1kIvdc4kdDOfxVpsdL6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Eq93sB3x; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 955BAC116C6;
+	Thu,  5 Mar 2026 07:57:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772697287;
-	bh=qrD1JfbHhV9Kk//SLC8znhTO0QO90fvu8ZQqzNeLSf4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=bse7udeUHikiUFC4fb5fsUyicbCJKoMR97I2a86HxvGCa0oxUhUIsDuodlI9LbtWB
-	 tPz2841kBzMSz0eqKu41Mr1cicVjuoEvPV1y4biFKQY4K+2Re9RQwGMbAsloWLaVfs
-	 Hx02taeiOGX2M85jm8ZhlcSqhIyNJVwKGyTeKeBw3/YBR7RGnoxNnN/2b2WYotZuyK
-	 P4vXkrnFyp3lkAiUIHeFxpRURormkHTAjWtaoC7C1UiqqeMA1CkBH9R47xc2bKPxhp
-	 /ZCxUNjpt9bbqysPcjgHbwS5EhcRM2Fq6qFZoHLlq0vcJcfLh/NHm/nAmDWxn8UxzU
-	 lQKrLqvCw+B5g==
-Message-ID: <e1a5bd6b-6399-4bd7-a0b2-3df7035fac86@kernel.org>
-Date: Thu, 5 Mar 2026 08:54:42 +0100
+	s=k20201202; t=1772697460;
+	bh=LTFCOG5QXLiQSKnu7SNj+IKfRYZTwEVJn8wWTsU0rXk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Eq93sB3xaArZGPVhM1mPmY8W4sl3biK2h5i5jDNlSguadqXTPx9IgZ5tWipSAJmB9
+	 N/zDvFpjmoBGM8P5a7r2tb6vOLWvdFu4YNEDxWL4TPwac6HgXAZTD2yJ2y20bJ2Rfr
+	 K+QHBlHUHNw/JHAOGMZyyxAub/6P4GIOxWFMUCR68z26IDQHpYoKUBJgsBS5EPTV6u
+	 O8BbRQx92ZWsTi34C0gsf0RC/VKaf6/3b21asXEI3uMreRXctXAEiE1fHZ846dWtkp
+	 MOaIL/6GL2LmATWc4kgBmxgQQmwwBOtOffy411lETfZA2/MIqF5NYjq9y+upo8PPIm
+	 Gu26d5F8fZYZg==
+Date: Thu, 5 Mar 2026 08:57:37 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Richard Acayan <mailingradian@gmail.com>
+Cc: Srinivas Kandagatla <srini@kernel.org>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org, 
+	devicetree@vger.kernel.org, Nickolay Goppen <setotau@mainlining.org>, 
+	Wesley Cheng <quic_wcheng@quicinc.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Johan Hovold <johan@kernel.org>, Kees Cook <kees@kernel.org>, 
+	Charles Keepax <ckeepax@opensource.cirrus.com>, Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Subject: Re: [PATCH v2 02/11] ASoC: dt-bindings: qcom: q6dsp: add internal
+ mi2s support
+Message-ID: <20260305-fluorescent-gainful-unicorn-4f8d7e@quoll>
+References: <20260304195815.52347-1-mailingradian@gmail.com>
+ <20260304195815.52347-3-mailingradian@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 06/14] ASoC: dt-bindings: qcom: add LPASS LPI MI2S dai
- ids
-To: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
- broonie@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org
-Cc: mohammad.rafi.shaik@oss.qualcomm.com, linux-sound@vger.kernel.org,
- lgirdwood@gmail.com, perex@perex.cz, tiwai@suse.com, johan@kernel.org,
- dmitry.baryshkov@oss.qualcomm.com, konrad.dybcio@oss.qualcomm.com,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, srini@kernel.org
-References: <20260304130712.222246-1-srinivas.kandagatla@oss.qualcomm.com>
- <20260304130712.222246-7-srinivas.kandagatla@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20260304130712.222246-7-srinivas.kandagatla@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 56BA220D016
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260304195815.52347-3-mailingradian@gmail.com>
+X-Rspamd-Queue-Id: B530420D082
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	MID_RHS_NOT_FQDN(0.50)[];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-95527-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,vger.kernel.org,gmail.com,perex.cz,suse.com,kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[17];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-95528-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[20];
 	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_TO(0.00)[gmail.com];
+	RCVD_COUNT_THREE(0.00)[4];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	NEURAL_HAM(-0.00)[-0.999];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FREEMAIL_CC(0.00)[kernel.org,gmail.com,perex.cz,suse.com,vger.kernel.org,mainlining.org,quicinc.com,linuxfoundation.org,opensource.cirrus.com,renesas.com];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-On 04/03/2026 14:07, Srinivas Kandagatla wrote:
-> Add new dai ids entries for LPASS LPI MI2S lines.
-> 
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-> ---
->  include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h | 10 ++++++++++
->  1 file changed, 10 insertions(+)
-> 
+On Wed, Mar 04, 2026 at 02:58:06PM -0500, Richard Acayan wrote:
+>          then:
+>            required:
+>              - qcom,sd-lines
 > diff --git a/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h b/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
-> index 6d1ce7f5da51..e27a31ece1f2 100644
+> index 6d1ce7f5da51..6753f7bf004b 100644
 > --- a/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
 > +++ b/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
-> @@ -140,6 +140,16 @@
+> @@ -140,6 +140,20 @@
 >  #define DISPLAY_PORT_RX_6	134
 >  #define DISPLAY_PORT_RX_7	135
 >  #define USB_RX			136
-> +#define LPI_MI2S_RX_0		137
-> +#define LPI_MI2S_TX_0		138
-> +#define LPI_MI2S_RX_1		139
-> +#define LPI_MI2S_TX_1		140
-> +#define LPI_MI2S_RX_2		141
-> +#define LPI_MI2S_TX_2		142
-> +#define LPI_MI2S_RX_3		143
-> +#define LPI_MI2S_TX_3		144
-> +#define LPI_MI2S_RX_4		145
-> +#define LPI_MI2S_TX_4		146
+> +#define INT0_MI2S_RX		137
+> +#define INT0_MI2S_TX		138
+> +#define INT1_MI2S_RX		139
+> +#define INT1_MI2S_TX		140
+> +#define INT2_MI2S_RX		141
+> +#define INT2_MI2S_TX		142
+> +#define INT3_MI2S_RX		143
+> +#define INT3_MI2S_TX		144
+> +#define INT4_MI2S_RX		145
+> +#define INT4_MI2S_TX		146
+> +#define INT5_MI2S_RX		147
+> +#define INT5_MI2S_TX		148
+> +#define INT6_MI2S_RX		149
+> +#define INT6_MI2S_TX		150
+
+This conflicts with Srini's patches and looks pretty the same. Please
+look at his patches and avoid re-doing them.
 
 
-And no need to update the bindings? See Richard's patches.
-
-Best regards,
-Krzysztof
+>  
+>  #define LPASS_CLK_ID_PRI_MI2S_IBIT	1
+>  #define LPASS_CLK_ID_PRI_MI2S_EBIT	2
+> -- 
+> 2.53.0
+> 
 
