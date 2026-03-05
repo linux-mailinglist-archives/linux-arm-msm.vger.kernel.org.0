@@ -1,111 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-95626-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95627-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id gD37LZp6qWkg8gAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95626-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 13:44:10 +0100
+	id ENccLhV7qWkg8gAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95627-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 13:46:13 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A403211ECD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 13:44:10 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1843211FCF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 13:46:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 448DE303CE8E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 12:43:03 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id AC8CB301318D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 12:43:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA2BB39B4A9;
-	Thu,  5 Mar 2026 12:43:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D308239E187;
+	Thu,  5 Mar 2026 12:43:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GgFzGNx1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qb0jG97e"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A50F4366DAE;
-	Thu,  5 Mar 2026 12:43:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF57D39B4A9
+	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Mar 2026 12:43:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772714582; cv=none; b=OKepzO2UQhdY12SzxgoEVWGhZ7n9gvQFs9oRGKf86EWuSWg2M88OcDqd3LZl/NByCm0DfRmphtAEFjGlyHzxvON9N+NJ7VPHfidrrpTJEawiyEcYZY6jqT9rsrGzsr3x9kRYlAM2BffLS+o9VK+n/ijgf27zY515ICMLoeL5q1s=
+	t=1772714631; cv=none; b=J1hLRIUlrlMW9NMcoeSNX2TCB6BR8Qm1yAW0LZ44IX7DhSqBfBMSm2wERR6zP4nHhktHp9eqPOxYu2JLYcCEo9lW1fdg+5c5EbDPhZmixkNeDHp6v2107P7HcZGC+FPSG/uy+IdjShmwvc18uAS9R9NuM3wqAqCjMSiAON0Bavo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772714582; c=relaxed/simple;
-	bh=3GlZ8dbSH/9p2g0p8El8ep4WXI+MyDdKLj11spmChUk=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:From:Subject:Cc:
-	 References:In-Reply-To; b=fY7iXFiJRv/mRD1x10s83PYU1G6F22YANaVfODSYZLmLFiOSfCcYM8QO1Gmmga6itSTXS4bN6OCFGbK+qAXUU92OFvvmH8uJTaAvbezl4DF454emLugTM2HD46yVrpuawfOCTPssvrND+UeIKe9vtGGQd/p4xxI2sWVrA+t43pU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GgFzGNx1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61DC4C116C6;
-	Thu,  5 Mar 2026 12:42:59 +0000 (UTC)
+	s=arc-20240116; t=1772714631; c=relaxed/simple;
+	bh=+1Soi4u0zOToM+4cvb9M54dFFqUFlTLNETgvWAKHxCU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=M3O8uSQX5eJoiv1FUVN+HQim92YsKeKNvqRyF1pxMm0UaX8J7ynsuhNAUj6J0LZufu4xhi2VwlYzyOi7tdSXd6nN+nFGgSBS7XOmtfN4YqvhpqCG7rQcK5wki4QjT0nCvxH+yTRS5kju3eYA1oentnBXMfY9betzLaJpVXmfgNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qb0jG97e; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 603EBC2BC9E
+	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Mar 2026 12:43:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772714582;
-	bh=3GlZ8dbSH/9p2g0p8El8ep4WXI+MyDdKLj11spmChUk=;
-	h=Date:To:From:Subject:Cc:References:In-Reply-To:From;
-	b=GgFzGNx12a4sekSUlult5vhaiCEQPa/aodzXN8+UHcXB3h8noGgqo4GbdB34J33Bh
-	 k0vB3oEX+wHYIMvcx8tVEPu3MyqbFT6qW757DZY8vcFyfVz/noQd5yqrt4neD9+rfs
-	 t8vSpAssKPubdnCiqh8XKnSsuO8PffrFbbM1UftRybtTvJAhq+QNNDt9TqI+y270BQ
-	 Y1v0vI/P0ullu4h1G5odV1MexgfXfvq8nNVqWq0Z04Q+Ojbx9KJtpwy82SzX4XoAWT
-	 jxfHiANb/IJiVmSEOqOPlvSOZZ7IUyw1qnrYoMLDAxgLJPzKcwWrAK3K6kSUFekuYC
-	 qEpw/odNELIwg==
+	s=k20201202; t=1772714631;
+	bh=+1Soi4u0zOToM+4cvb9M54dFFqUFlTLNETgvWAKHxCU=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=Qb0jG97edmb3U2qfJOZ8W4namHJQLjHdyLa/yO8Shzxok1cow1oGiOPDZPwW1C2aX
+	 qfpAXVF5aCFXZLxPSzvgKeKSxO9o5XsLWHV8Z2J8C79wGhUQOpuNdTpOU9Dzdkkz3p
+	 TWGjcAKnefLsljHAnEj5fjLLXkP0UfERnPvGWuc0ZQekEOQjNXH5K1HWRbh9ma16qv
+	 6TkLXMUEkXlMirlttkcaQYFOEfMZ+oBljrNq1F3YIMePzlnhhwMurIVZGke7gCj1z9
+	 cdj00Q5OZUBdizfbKPYLlLKP8RyJI5QMF03gjMx1z3TalYyUwSwiQn9mCL6ZfAo7SC
+	 0i9QiFLq3vXMw==
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-79860421382so77340067b3.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2026 04:43:51 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCUIoKFHmo19qrUSs0ieA2LeQzT1+2BSL6zWv+G3oboa3aaeo33gAXaDtX0IbD4qkrZgonJphsXtpjE+CRHC@vger.kernel.org
+X-Gm-Message-State: AOJu0YzbiotSz3KDoOvGGv8gfRsyoyzTGoqV16sEAfO9rKhCy4mOZoCr
+	mXH92eVBbLp0mEAUQvYMmnI3Gwg6LjGppAdunzFA/fqC33gFMd0FARzwzXgIvvotzEobEFpT+wK
+	KTH1axfPTMskXU0VgENfdxJwiBLvFEWc=
+X-Received: by 2002:a05:690e:448d:b0:64c:ac70:9420 with SMTP id
+ 956f58d0204a3-64cf9bdb391mr3524893d50.76.1772714630723; Thu, 05 Mar 2026
+ 04:43:50 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
+MIME-Version: 1.0
+References: <20260304175735.2660419-1-vladimir.oltean@nxp.com> <20260304175735.2660419-19-vladimir.oltean@nxp.com>
+In-Reply-To: <20260304175735.2660419-19-vladimir.oltean@nxp.com>
+From: Linus Walleij <linusw@kernel.org>
+Date: Thu, 5 Mar 2026 13:43:38 +0100
+X-Gmail-Original-Message-ID: <CAD++jLnCtu20rXcg7sMVLBi24EohscJoz0kN46XJaKPJt00O2w@mail.gmail.com>
+X-Gm-Features: AaiRm53Fhg5bHrVPoZ7KkxLKre-rHWPjFXtzmvz74i7G3hPs_-fZQdYeAKMF5Bw
+Message-ID: <CAD++jLnCtu20rXcg7sMVLBi24EohscJoz0kN46XJaKPJt00O2w@mail.gmail.com>
+Subject: Re: [PATCH phy-next 18/22] pinctrl: tegra-xusb: include PHY provider header
+To: Vladimir Oltean <vladimir.oltean@nxp.com>
+Cc: linux-phy@lists.infradead.org, Vinod Koul <vkoul@kernel.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-can@vger.kernel.org, 
+	linux-gpio@vger.kernel.org, linux-ide@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
+	linux-pci@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, linux-rockchip@lists.infradead.org, 
+	linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev, 
+	linux-tegra@vger.kernel.org, linux-usb@vger.kernel.org, 
+	netdev@vger.kernel.org, spacemit@lists.linux.dev, 
+	UNGLinuxDriver@microchip.com, Thierry Reding <thierry.reding@gmail.com>, 
+	Jonathan Hunter <jonathanh@nvidia.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 05 Mar 2026 13:42:57 +0100
-Message-Id: <DGUUVEFWIFCF.RX8CSJ96ZHMC@kernel.org>
-To: <gregkh@linuxfoundation.org>, <rafael@kernel.org>,
- <hanguidong02@gmail.com>, <ysato@users.sourceforge.jp>, <dalias@libc.org>,
- <glaubitz@physik.fu-berlin.de>, <abelvesa@kernel.org>, <srini@kernel.org>,
- <s.nawrocki@samsung.com>, <nuno.sa@analog.com>
-From: "Danilo Krummrich" <dakr@kernel.org>
-Subject: Re: [PATCH v2 4/4] driver core: platform: use generic
- driver_override infrastructure
-Cc: <driver-core@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
- <imx@lists.linux.dev>, <linux-hwmon@vger.kernel.org>,
- <linux-arm-msm@vger.kernel.org>, <linux-sound@vger.kernel.org>,
- <linux-sh@vger.kernel.org>
-References: <20260303115720.48783-1-dakr@kernel.org>
- <20260303115720.48783-5-dakr@kernel.org>
-In-Reply-To: <20260303115720.48783-5-dakr@kernel.org>
-X-Rspamd-Queue-Id: 8A403211ECD
+X-Rspamd-Queue-Id: A1843211FCF
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-1.66 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	MV_CASE(0.50)[];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-95626-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[linuxfoundation.org,kernel.org,gmail.com,users.sourceforge.jp,libc.org,physik.fu-berlin.de,samsung.com,analog.com];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-95627-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[lists.infradead.org,kernel.org,linaro.org,lists.freedesktop.org,vger.kernel.org,lists.linux.dev,microchip.com,gmail.com,nvidia.com,oss.qualcomm.com];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TO_DN_NONE(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dakr@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[27];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MISSING_XM_UA(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[linusw@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_TWELVE(0.00)[17];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,nxp.com:email]
 X-Rspamd-Action: no action
 
-On Tue Mar 3, 2026 at 12:53 PM CET, Danilo Krummrich wrote:
->  arch/sh/drivers/platform_early.c |  6 ++++--
->  drivers/clk/imx/clk-scu.c        |  3 +--
->  drivers/slimbus/qcom-ngd-ctrl.c  |  6 ++----
->  sound/soc/samsung/i2s.c          |  6 +++---
+On Wed, Mar 4, 2026 at 7:00=E2=80=AFPM Vladimir Oltean <vladimir.oltean@nxp=
+.com> wrote:
 
-Some ACKs would be appreciated. :)
+> The tegra-xusb pinctrl driver is also a PHY provider (calls
+> devm_phy_create() for PCIe and SATA). However, according to Vinod Koul,
+> having PHY provider drivers outside of drivers/phy/ is discouraged,
+> although it would be difficult for me to address a proper movement here.
+>
+> Include the private provider API header from drivers/phy/, but leave a
+> FIXME in place. It will have to be moved, eventually.
+>
+> Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+
+Fair enough, is this a regression so I should merge it for fixes
+or just a nonurgent fix that I can apply for next?
+
+Long term a custom device can be created from the pin
+control driver so that the Linux device model can be
+used to move the driver over to phy.
+
+Yours,
+Linus Walleij
 
