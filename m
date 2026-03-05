@@ -1,63 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-95515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95516-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id mIZLIl0vqWmO2wAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 08:23:09 +0100
+	id EODqAbwvqWmO2wAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95516-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 08:24:44 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2775E20C91D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 08:23:09 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4504F20C9C3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 08:24:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 89EDC3014FD5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 07:23:08 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id ACC4B30125E8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 07:24:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F45C26E706;
-	Thu,  5 Mar 2026 07:23:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3E1D30FF27;
+	Thu,  5 Mar 2026 07:24:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S01QHd21"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lnfaComR"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B6561BF33;
-	Thu,  5 Mar 2026 07:23:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEFAF191F91;
+	Thu,  5 Mar 2026 07:24:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772695385; cv=none; b=tiHtk2OhlvvYTuCQtkl+MjsPBYQg+WxmHu9Mg3iWFgMuuVAh2F7ZvPmDOVzQxBlM6s4XQ7//LAP9ikEbjN1WKpor5i75MJNML60sHLJGKjgRjr9NmfyNtHUfY7GEJFxRO7AbN0JzGNJUWdxlXel2pDaTF+35K2ZH6HbONPNPoqQ=
+	t=1772695480; cv=none; b=qj2FtqYCZT04UzEHqbAXZnwKajDQK90eijJsOdCael5oI/5+YGhrERdkp0GuP9gMrqZsQfwxgkLdYDXEuELxGXuob72giSJFm/A/WussW4mo8+xHOC46a+Tjbw6kBOk4trxauPIBJnx5Fi+zSlxADbetRomzmKDrzZXVAwHBcaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772695385; c=relaxed/simple;
-	bh=1ZZCSsE6odyfb2JuW9pbHt08dU+Ste48wn4Sc5jnvck=;
+	s=arc-20240116; t=1772695480; c=relaxed/simple;
+	bh=SqAxJif48hn5wMCG4M87dJcdnDhhNcOcYRdFJfc8YDA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=myJFiHyLjvXFZRI0TFkkoo5ZV8aVKQEQ0Ir86D5QfLwWLzSSMgHO1D8VguoXOlWo9eK9Mr60pTlCUfNfghm/pUfJ89yHFq6s/qO8yQp3/u+jXaIG8D7kl9HEoWdixPLVx6M+vKAF7wAou9AhtM7EwUTPcq/ZhxnBQzQ0oJGvWh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S01QHd21; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF57C116C6;
-	Thu,  5 Mar 2026 07:23:03 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=cm5K3fIH8SJYnQCs31l59uFD8KUdwMcGCL6KW8f2ABiyyg0AVBXr2pta42Y4N1XsVtCyQjnFx4ImZdLTViafYK1WbQR8P2eQYmKxMWZLyqMYkWhefjtvdJaiSabbRxrWR+zclSCUMkEVQF/E0SyCrOnIPsrysEaB8OUruER32W4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lnfaComR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A51ABC116C6;
+	Thu,  5 Mar 2026 07:24:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772695384;
-	bh=1ZZCSsE6odyfb2JuW9pbHt08dU+Ste48wn4Sc5jnvck=;
+	s=k20201202; t=1772695480;
+	bh=SqAxJif48hn5wMCG4M87dJcdnDhhNcOcYRdFJfc8YDA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=S01QHd21WQcvPVbPR9gc4fVyNDHlj0tsdxHEyXMpad8qKf79J7DZx7oijGa7Rl4zS
-	 +N6X0OQ+/dindGi0tyIzMrpLrDOyjogbGzTUFN8xX/G8WgFbSsKyBA4amaB0Xla9TS
-	 8aSPMBtsXD2djAGKxoYn05OzO2uYlsqyeml9uhzzQuUcrCRDwywQZUG7Qlv8AeHpUa
-	 ZGw5i0JAYyG3nr/LSgQd3d33DJfjyxRcY59PQu3JYEuBuPhtcWrQMj16wlmdrBM1dC
-	 BSJeGOWYDFYgEzvoU8FnSNtFSyNs5W9B596l8yIxy+zlMhcnbVoHtOk4zH8NJFG0R+
-	 Sqg4i9M5LFBGA==
-Date: Thu, 5 Mar 2026 08:23:02 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Cc: broonie@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
-	conor+dt@kernel.org, mohammad.rafi.shaik@oss.qualcomm.com, 
-	linux-sound@vger.kernel.org, lgirdwood@gmail.com, perex@perex.cz, tiwai@suse.com, 
-	johan@kernel.org, dmitry.baryshkov@oss.qualcomm.com, 
-	konrad.dybcio@oss.qualcomm.com, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, srini@kernel.org
-Subject: Re: [PATCH v3 08/14] ASoC: dt-bindings: qcom,q6dsp-lpass-ports: Add
- Senary MI2S port
-Message-ID: <20260305-glittering-devout-llama-fcfe75@quoll>
-References: <20260304130712.222246-1-srinivas.kandagatla@oss.qualcomm.com>
- <20260304130712.222246-9-srinivas.kandagatla@oss.qualcomm.com>
+	b=lnfaComR5UCb151SD6jDFra15uT8o/zUc66FlKXSyBKpa/mkNwVTpOZ9sfomEKYIq
+	 ObYqO+wc2ML3Oi8OH6JiD2+i8hoVNL60NioUMu57HLF5ObCNlgdtnJq37VIAjD6T3A
+	 dUe2JWDLHhx9AftYUqOPbxCCCa18TigUYefJEPEA8wF8x/QR8hwWoCux8Prqm9mVy1
+	 xee0D8ycpoXFebufVAS8ATObgmSY4sAh4qRvAE0ReW+aX43s9ex8rF3eOIMnRwhqFa
+	 yyqGjSgTyZQNGllxhd+Yo7xFJ8pzu3AXnUiY7TbZ1WBvrEHVA6SLLv5fBK0s3Szl+B
+	 TFq3RRwJxUX3A==
+Date: Thu, 5 Mar 2026 12:54:24 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
+	Magnus Damm <magnus.damm@gmail.com>, Bartosz Golaszewski <brgl@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, linux-usb@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org, linux-pci@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v5 3/9] pci: pwrctrl: rename pci-pwrctrl-slot as generic
+Message-ID: <twcdswrgibd3ydrb7ebmxdmyfi32c7yamii6pmrthiecryiyyt@3o6nexlweyzv>
+References: <20260220-topic-sm8650-ayaneo-pocket-s2-base-v5-0-1ad79caa1efa@linaro.org>
+ <20260220-topic-sm8650-ayaneo-pocket-s2-base-v5-3-1ad79caa1efa@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,8 +68,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260304130712.222246-9-srinivas.kandagatla@oss.qualcomm.com>
-X-Rspamd-Queue-Id: 2775E20C91D
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260220-topic-sm8650-ayaneo-pocket-s2-base-v5-3-1ad79caa1efa@linaro.org>
+X-Rspamd-Queue-Id: 4504F20C9C3
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
@@ -75,45 +78,104 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-95515-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-95516-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[17];
+	RCPT_COUNT_TWELVE(0.00)[19];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[kernel.org,oss.qualcomm.com,vger.kernel.org,gmail.com,perex.cz,suse.com];
+	FREEMAIL_CC(0.00)[linuxfoundation.org,kernel.org,glider.be,gmail.com,google.com,vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,renesas];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email]
 X-Rspamd-Action: no action
 
-On Wed, Mar 04, 2026 at 01:07:06PM +0000, Srinivas Kandagatla wrote:
-> From: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
+On Fri, Feb 20, 2026 at 04:04:42PM +0100, Neil Armstrong wrote:
+> The driver is pretty generic and would fit for either
+> PCI Slots or endpoints connected to PCI ports, so rename
+> the driver and module as pci-pwrctrl-generic.
 > 
-> Qualcomm platforms support the Senary MI2S interface for audio playback
-> and capture. Add a new definitions for the Senary MI2S RX and TX ports,
-> which are required for boards that utilize the Senary MI2S interface
-> for audio routing.
+> Suggested-by: Manivannan Sadhasivam <mani@kernel.org>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+
+One comment below, but that can be fixed while applying. So,
+
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+
+> ---
+>  drivers/pci/controller/dwc/Kconfig |   4 +-
+>  drivers/pci/pwrctrl/Kconfig        |  13 ++--
+>  drivers/pci/pwrctrl/Makefile       |   4 +-
+>  drivers/pci/pwrctrl/generic.c      | 139 +++++++++++++++++++++++++++++++++++++
+>  drivers/pci/pwrctrl/slot.c         | 137 ------------------------------------
+>  5 files changed, 150 insertions(+), 147 deletions(-)
 > 
+> diff --git a/drivers/pci/controller/dwc/Kconfig b/drivers/pci/controller/dwc/Kconfig
+> index d0aa031397fa..4bd36e133ca6 100644
+> --- a/drivers/pci/controller/dwc/Kconfig
+> +++ b/drivers/pci/controller/dwc/Kconfig
+> @@ -309,7 +309,7 @@ config PCIE_QCOM
+>  	select CRC8
+>  	select PCIE_QCOM_COMMON
+>  	select PCI_HOST_COMMON
+> -	select PCI_PWRCTRL_SLOT
+> +	select PCI_PWRCTRL_GENERIC
+>  	help
+>  	  Say Y here to enable PCIe controller support on Qualcomm SoCs. The
+>  	  PCIe controller uses the DesignWare core plus Qualcomm-specific
+> @@ -431,7 +431,7 @@ config PCIE_SPACEMIT_K1
+>  	depends on ARCH_SPACEMIT || COMPILE_TEST
+>  	depends on HAS_IOMEM
+>  	select PCIE_DW_HOST
+> -	select PCI_PWRCTRL_SLOT
+> +	select PCI_PWRCTRL_GENERIC
+>  	default ARCH_SPACEMIT
+>  	help
+>  	  Enables support for the DesignWare based PCIe controller in
+> diff --git a/drivers/pci/pwrctrl/Kconfig b/drivers/pci/pwrctrl/Kconfig
+> index cd3aa15bad00..ff67bec5b500 100644
+> --- a/drivers/pci/pwrctrl/Kconfig
+> +++ b/drivers/pci/pwrctrl/Kconfig
+> @@ -11,17 +11,18 @@ config PCI_PWRCTRL_PWRSEQ
+>  	select POWER_SEQUENCING
+>  	select PCI_PWRCTRL
+>  
+> -config PCI_PWRCTRL_SLOT
+> -	tristate "PCI Power Control driver for PCI slots"
+> +config PCI_PWRCTRL_GENERIC
+> +	tristate "Generic PCI Power Control driver for PCI slots and endpoints"
+>  	select POWER_SEQUENCING
+>  	select PCI_PWRCTRL
+>  	help
+> -	  Say Y here to enable the PCI Power Control driver to control the power
+> -	  state of PCI slots.
+> +	  Say Y here to enable the generic PCI Power Control driver to control
+> +	  the power state of PCI slots and endpoints.
+>  
+>  	  This is a generic driver that controls the power state of different
+> -	  PCI slots. The voltage regulators powering the rails of the PCI slots
+> -	  are expected to be defined in the devicetree node of the PCI bridge.
+> +	  PCI slots and endpoints. The voltage regulators powering the rails
+> +	  of the PCI slots or endpoints are expected to be defined in the
+> +	  devicetree node of the PCI bridge.
 
-This should be squashed. Adding IDs in multiple patches is pointless -
-it's one logical change. Plus patch is so trivial and obvious that even
-preserving authorship cannot be used as an argument.
+'PCI bridge or endpoint'
 
-Best regards,
-Krzysztof
+- Mani
 
+-- 
+மணிவண்ணன் சதாசிவம்
 
