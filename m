@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-95525-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95527-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wJ51A342qWlk3AAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95525-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 08:53:34 +0100
+	id iMuIACQ3qWlk3AAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95527-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 08:56:20 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B85820CF78
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 08:53:33 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 56BA220D016
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 08:56:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 8C22A302F99F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 07:53:31 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 47A173088301
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 07:54:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C89233557B;
-	Thu,  5 Mar 2026 07:53:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C90673358B0;
+	Thu,  5 Mar 2026 07:54:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Az9/1Ttu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bse7udeU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78BD533372A;
-	Thu,  5 Mar 2026 07:53:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A47A530E82E;
+	Thu,  5 Mar 2026 07:54:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772697210; cv=none; b=PZtdJ2zX2xcZe6KbfKNJnQY/ZP5EZTAK450no/WtN6gi1ooyrMWPaV6exEu+Io3wuL0R+heNMUcwHT2hy924f+zQAydoOUfRrC7nA6wousKI4SLlGb/hj1K4UY7HaECFpF0NQK7R+rvzoKQMxRNW9YUZVJqIYF+oGQ/ZxytdsvE=
+	t=1772697287; cv=none; b=t+4YmfkhQSNlKCNIxN/TObNx+GEbMNrl6E7MWMIMBHUIaoeBxemfUzyMR6jBOh2PuHXsZ2ujS1uGXKjKud4pzGLfYHyLMoMloPoN5CWNiFp4AhVyyhi9WoYGnL7q5OeXxjOxSx2IUP7jo0iSvVl01zRs+PNmuYfQdG26Jktnep0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772697210; c=relaxed/simple;
-	bh=peJRV8N+l9ST7Vc7pt3ykWuncWt9bovqpPOBP1Fr1hw=;
+	s=arc-20240116; t=1772697287; c=relaxed/simple;
+	bh=qrD1JfbHhV9Kk//SLC8znhTO0QO90fvu8ZQqzNeLSf4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=b3olhC/yd4ou+UL2gO/WC/N3mc93bL5ud0KVdtEDjqjm8anCC+ml8WoOiOYzmIKIyv3yhMl5wpisbKS4s4BpOvv+H8JqfmKevGiaGSlOk9v1EZOwQVoUmhg95nJOJProhzPwfKbNg+I+TDnV7q+sIq2HYcT+u14CMboXWSNBvBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Az9/1Ttu; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED619C116C6;
-	Thu,  5 Mar 2026 07:53:25 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=aFYwZ6Ge80b01UQLWksXzvkZ1C8Y5Xq5l9llZIZ3D0cJrh284TpdR99vtwCUUv8fOVpv8B3yfe0KBkN73wy1WwW/9A/ApYpQo+b4xIy5NPq1j3aIJthbwspeQBXDlfJ1mvRTmvaBpKq29fbqHmsPcPFIHn9YU34TFomVzP9Vm30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bse7udeU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0062C116C6;
+	Thu,  5 Mar 2026 07:54:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772697210;
-	bh=peJRV8N+l9ST7Vc7pt3ykWuncWt9bovqpPOBP1Fr1hw=;
+	s=k20201202; t=1772697287;
+	bh=qrD1JfbHhV9Kk//SLC8znhTO0QO90fvu8ZQqzNeLSf4=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Az9/1TtuVvttE5ZTQ1zst1nGZSeCh2brx+BJwDdsdxIpB0FILrQByqmLV/iBqGljS
-	 ZDwzieHvUb/dGZrwpiB0eRuyAEPaeDrr8Vmz1jaPG47VOgSjDqeO3Uem+LTNjNd9la
-	 pltZMBHbO3MwHQSPCJv67+EZcZyEOSXShN5S04mAITGt8FwchSHLrfKbVyjWBZFiMd
-	 YGhFSwDX2S+nQXXYUMKu284gHzrrA6NkjRoCCnfmuAwpsNwM+ZtNXmpYEKysCZrPog
-	 KG7jrnNKkwyMJ6BcbKQsHT/Prhuv2fkHnmYicnsxyjd/Qb8/racAMc1nmYI9lgqsXZ
-	 q5u9pnhJ7BBGg==
-Message-ID: <1d92329d-139d-49aa-8fc4-515e7c574774@kernel.org>
-Date: Thu, 5 Mar 2026 08:53:24 +0100
+	b=bse7udeUHikiUFC4fb5fsUyicbCJKoMR97I2a86HxvGCa0oxUhUIsDuodlI9LbtWB
+	 tPz2841kBzMSz0eqKu41Mr1cicVjuoEvPV1y4biFKQY4K+2Re9RQwGMbAsloWLaVfs
+	 Hx02taeiOGX2M85jm8ZhlcSqhIyNJVwKGyTeKeBw3/YBR7RGnoxNnN/2b2WYotZuyK
+	 P4vXkrnFyp3lkAiUIHeFxpRURormkHTAjWtaoC7C1UiqqeMA1CkBH9R47xc2bKPxhp
+	 /ZCxUNjpt9bbqysPcjgHbwS5EhcRM2Fq6qFZoHLlq0vcJcfLh/NHm/nAmDWxn8UxzU
+	 lQKrLqvCw+B5g==
+Message-ID: <e1a5bd6b-6399-4bd7-a0b2-3df7035fac86@kernel.org>
+Date: Thu, 5 Mar 2026 08:54:42 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,25 +53,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/7] clk: qcom: camcc-x1e80100: Add support for camera
- QDSS debug clocks
-To: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Jagadeesh Kona <quic_jkona@quicinc.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Abel Vesa <abelvesa@kernel.org>,
- Rajendra Nayak <quic_rjendra@quicinc.com>,
- Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
- Imran Shaik <imran.shaik@oss.qualcomm.com>,
- Taniya Das <taniya.das@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20260304-purwa-videocc-camcc-v2-0-dbbd2d258bd6@oss.qualcomm.com>
- <20260304-purwa-videocc-camcc-v2-4-dbbd2d258bd6@oss.qualcomm.com>
+Subject: Re: [PATCH v3 06/14] ASoC: dt-bindings: qcom: add LPASS LPI MI2S dai
+ ids
+To: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+ broonie@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org
+Cc: mohammad.rafi.shaik@oss.qualcomm.com, linux-sound@vger.kernel.org,
+ lgirdwood@gmail.com, perex@perex.cz, tiwai@suse.com, johan@kernel.org,
+ dmitry.baryshkov@oss.qualcomm.com, konrad.dybcio@oss.qualcomm.com,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, srini@kernel.org
+References: <20260304130712.222246-1-srinivas.kandagatla@oss.qualcomm.com>
+ <20260304130712.222246-7-srinivas.kandagatla@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -117,55 +109,70 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260304-purwa-videocc-camcc-v2-4-dbbd2d258bd6@oss.qualcomm.com>
+In-Reply-To: <20260304130712.222246-7-srinivas.kandagatla@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 5B85820CF78
+X-Rspamd-Queue-Id: 56BA220D016
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-95527-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95525-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[21];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,vger.kernel.org,gmail.com,perex.cz,suse.com,kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-On 04/03/2026 18:40, Jagadeesh Kona wrote:
->  static struct clk_branch cam_cc_sfe_0_clk = {
->  	.halt_reg = 0x133c0,
->  	.halt_check = BRANCH_HALT,
-> @@ -2398,6 +2459,9 @@ static struct clk_regmap *cam_cc_x1e80100_clocks[] = {
->  	[CAM_CC_PLL6_OUT_EVEN] = &cam_cc_pll6_out_even.clkr,
->  	[CAM_CC_PLL8] = &cam_cc_pll8.clkr,
->  	[CAM_CC_PLL8_OUT_EVEN] = &cam_cc_pll8_out_even.clkr,
-> +	[CAM_CC_QDSS_DEBUG_CLK] = &cam_cc_qdss_debug_clk.clkr,
-> +	[CAM_CC_QDSS_DEBUG_CLK_SRC] = &cam_cc_qdss_debug_clk_src.clkr,
-> +	[CAM_CC_QDSS_DEBUG_XO_CLK] = &cam_cc_qdss_debug_xo_clk.clkr,
->  	[CAM_CC_SFE_0_CLK] = &cam_cc_sfe_0_clk.clkr,
+On 04/03/2026 14:07, Srinivas Kandagatla wrote:
+> Add new dai ids entries for LPASS LPI MI2S lines.
+> 
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+> ---
+>  include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+> 
+> diff --git a/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h b/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
+> index 6d1ce7f5da51..e27a31ece1f2 100644
+> --- a/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
+> +++ b/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
+> @@ -140,6 +140,16 @@
+>  #define DISPLAY_PORT_RX_6	134
+>  #define DISPLAY_PORT_RX_7	135
+>  #define USB_RX			136
+> +#define LPI_MI2S_RX_0		137
+> +#define LPI_MI2S_TX_0		138
+> +#define LPI_MI2S_RX_1		139
+> +#define LPI_MI2S_TX_1		140
+> +#define LPI_MI2S_RX_2		141
+> +#define LPI_MI2S_TX_2		142
+> +#define LPI_MI2S_RX_3		143
+> +#define LPI_MI2S_TX_3		144
+> +#define LPI_MI2S_RX_4		145
+> +#define LPI_MI2S_TX_4		146
 
-Continuing review form bindings:
-So indeed the this ABI is used by X1E, but commit msg completely missed
-that - just said you are adding X1P clocks.
+
+And no need to update the bindings? See Richard's patches.
 
 Best regards,
 Krzysztof
