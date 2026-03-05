@@ -1,73 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-95634-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95635-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id qGyUKel/qWlB9QAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95634-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 14:06:49 +0100
+	id gKLVNMyAqWkd9gAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95635-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 14:10:36 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5325F212624
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 14:06:49 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 658F52126C5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 14:10:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id EC781309AA6A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 13:01:54 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 70A9330649FE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 13:06:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD7D22D8DA8;
-	Thu,  5 Mar 2026 13:01:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFA713A1D12;
+	Thu,  5 Mar 2026 13:06:16 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B33039659F
-	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Mar 2026 13:01:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA5D3A0EAA
+	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Mar 2026 13:06:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772715713; cv=none; b=DxHAxFIFM78Moutiuv8iQQg92OAIpnhLYPCP3MXw4U4IrUsu/QQHzWG9FEGKKmMBAMh31WdUkVHeXIFMOtd3lIc/0/ApRefij730DIMxutzM7q1aMJlEqj6iRlBlVILK4UdnTIsNyooKEUWo0ifIMJcCMt20pH5+LkFw0Z3IK40=
+	t=1772715976; cv=none; b=oxZAWiVCQhV2TPGeTiOi7MRSmHOvyQJT+8fHobFxb/ny9jvHkskBMk+S2jVH5UVAv954rx5dZU3F28QCen0Jr3WVTEOtzAWbxar/rRv/iPwguRGHSttwvIfG9QbqX9HVj0TRmD8grfXHvBr4tB9CP1k/gKE5H4tP7oo1dxfbzuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772715713; c=relaxed/simple;
-	bh=mzxuHFEBJ8rIbeR5gmZexUBLMULkEpRVqRmwwCFyU/8=;
+	s=arc-20240116; t=1772715976; c=relaxed/simple;
+	bh=An6z6pGF00+43VUaOecTwb49LKqdBH2wGqINr17mp5U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SdXfxmNg5b3UesVlPAvwn18zFUYQ5l1HPFeEbB/eCEkZYWA92Hu7BemczR8n1KQ/AUGevbJuVRyeqLHoPG/Pxa8VPEy9J3JqIgNj7SI41QpXWn4eWryIGhp7MBxsdycUQv5jwI8gFBJv5yQahqShyxs1WCoyUC/+D3VENxCV8ic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.214.179
+	 Content-Type:Content-Disposition:In-Reply-To; b=uyvwrTHj2NyMnhu4zelE5Rw3QrdKSo3D0KxHnbmwyyupEXRx9oagO2m4graLX1qV5jKRM1QnxMnOLnWCtrdKd4N5k3ZQP/eTZOtG4/O72UjR9K9urlgfHtnlNvEzw1Mv9i4S6o/5ldu/dfIKQWB+AGCY66VGlXBLUxtd3sCu4oI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.215.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2aaf43014d0so59794045ad.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2026 05:01:52 -0800 (PST)
+Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-c737d3a51bdso674656a12.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2026 05:06:12 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772715712; x=1773320512;
+        d=1e100.net; s=20230601; t=1772715972; x=1773320772;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7IxpxVkGnClS/pzWnTPcTEx+bl+pPZR21vGpLksfVXc=;
-        b=eeD39UCr65+eQYGYFqNL4JjalLV8EIN06qCPG3S5zfm0DyHWK8OFr304umzQI4FIti
-         w+UosqFd4FbMoUswdzA8r/Pss1d3waPng8ptuveskgjDqv4q6sEMJRlB7IltKoxMyroP
-         LonHKYZ3j0EuiXXDvupXgKISCkg1Jq0QFoWytOkCzTfkAG+fhXcvqh9duZNkc0qb0DUa
-         PwANbfsTHWrxJXMPF2KAtBBGOY888jxHq+IXlZ5sVrjFgybjHkdBs1Y0ZwOmMJELPsbR
-         6YTekeChl50zCfS9SUUP8N629UXAo/nOaVkwUXDyvN224d/IdpMD46aZzGyT8EYjR8gj
-         WRBw==
-X-Forwarded-Encrypted: i=1; AJvYcCVcgGyhhhRAkqz4XdUlrjsDHzOgrtwmmodZPEuBVB1ACEYuu4hAgkFIZ2icLNYTDcJofNEzplssecNPs/9/@vger.kernel.org
-X-Gm-Message-State: AOJu0YyXq2iK0oBMtgsRjrI+Sh3YpTc1h9EnZAcbN5vG+Sxjg4hfs8nd
-	cZwDEt3q+kMTDScEIq/lyhBGsIPfkJTYP7WKzoky3orwE9m/R4NmUVyv
-X-Gm-Gg: ATEYQzw6AMXVkMq1lAk9JfYBuphMkfCI4fOEJ2Pvm7tHHkkvXspwsPwQlS6Cbe+3itA
-	0LapZZBViu+NG90OB/mLrlUc4GM4IAQM1Y6Lvhlj7MPpCIHBdUfKLTQTZEoNwFVl7uck0nDbUmq
-	fUsDRnFAfH3EadomSwPsgkb1hMhxY+qrXhB9Qc2GjXMcnBQ5w8INhfGaan8RTBvdbAqvSxOw7tg
-	rpDfKQyKw8eQE7BRBtKAx7W5sqLYbjt6iMJi+TteDrsgG2CQ9EibSuk/AH1uQATnZhW357Tqr87
-	m1WPj+3AS8b7lRTpZ0thqYBgkQa3BmZFWYlgPpKkFENd6fw8h4XbYWj+nA1UR+HOzaj55vpKEp2
-	wae9HDwGKD/tM6pPxtCgW4R5pxUbLjGqaWAc21gAIPKQsvh4wFcgRp7BKdwU4/k2nbWJ3/LAHRw
-	u1rx4URmjcdIvEsyraQu/HzPmB0qIy596KRpNKmhEf71na+5KO7/8mWaWotPVt3nJ/i9FK/wk4m
-	5rprnfn9MtlhdQRv1rKfTsrtPsMyO6tD0y6y/e8S+/lLLf3V/t3Cjifhq2heQ==
-X-Received: by 2002:a17:902:ce03:b0:2ae:5b52:3818 with SMTP id d9443c01a7336-2ae6a9deb2amr60551085ad.8.1772715711782;
-        Thu, 05 Mar 2026 05:01:51 -0800 (PST)
+        bh=z/3ao61LTSp6jCCF+e+2SF+gp23jwVu9a+x2K0Dcxpg=;
+        b=Gz11c9pxWoH7qVvwWLAtE/3CNtX0UBzN5UQ/2gI3hnnkGY8AG55pmPBgoLbzpQkqCq
+         93WXLhSr0euiyYWeqtVUulqPPfO1uNaOP6SUnlYgjsi7/SIOucqkkHIsGdMpNXDOW/7P
+         sFTCLbX3ezSnL9/G/i+ChvPY2jkWVagjDS4b8uSeIDu9V8Yc2dMqgYEhI5N4XW40RJmd
+         EfS82lwdn5cwEXClQxrEuhZns0Nh8IwLtKQp9QSGyOiFyK2X3KHpYkjt/nciBEFi1LdN
+         l2k5yn9zMJZ+hUmCVSBdFsdK8ZttnhXKyBxIJu6sSXkk0RuTH2iRpH0Pasq7JH+TXf/v
+         Ad2w==
+X-Forwarded-Encrypted: i=1; AJvYcCX9yXskmHaedRcxCjZXzcXdqOuO/n2zERyTfv2CeSelJ6dAzptsryP7pojDhKGhAOioItx/6cDpQzWo5H1d@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx5EsJIqcDZe/T4Fh98jxPAk4J7l8O1PgSGQh9TJUFJVi8d2s9v
+	ZtPJSABiGQk0iw8VbW8HkfeYxLTO5CFx6BeNYJH9W6qElHizZ664lixx
+X-Gm-Gg: ATEYQzzlA4TW1X035CUnhtwqPeWMC1coiYh2r9Kq8RMS+icPB6OmcaIMl/U1ZEpDd0p
+	f+eahiPZdiYezU7vHDNRfQmqdQaFgfYmhpokkxZMDMtcBCD6Fy8p5+AJn4veGRw1VFe1tnwGmrC
+	9JgPXIEve8bRipv4okbRcK+D8uTqh2BeNQjT9Mq1PBE9nZCu7c02S5OsnAufDH2MFsY1pY6+/DN
+	vVdC/Nk8ZdhLH7aW90km3ZUHGpuj1aSz8+7hYTDfqV20sMtCwJXhCOjUtvcrmBhu/EKYykfx1sy
+	BYG/OX3okXZv+2v01NH6lyCYIOmfX65ZsuOdqHGXE5f403uiaP2VZMS9CNnY/w1+kAifPEo+nds
+	mQde8yROmqn8qD21mFT8vBZboP3AoL+07OyA8sBVvgtVLH37fkF6mdk8k6MmvNm40AGU0m0ZsE/
+	Kv4enfFCzNNlCskgIws4eVsOIOYDdmg7vvhmn7YvH8YAdxDKiVXdBFTc0r4Qo+CUpU5EfDT3fqq
+	PHRkXMjynQgX12Zy4kRMSuQSEnkzoTGI5dwp/lUXieJgBDRxqw=
+X-Received: by 2002:a17:902:f68a:b0:295:560a:e499 with SMTP id d9443c01a7336-2ae6a9cd41cmr53596975ad.5.1772715971749;
+        Thu, 05 Mar 2026 05:06:11 -0800 (PST)
 Received: from localhost (fpd11144dd.ap.nuro.jp. [209.17.68.221])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae54136b28sm115696425ad.73.2026.03.05.05.01.50
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae3d19559csm154128355ad.5.2026.03.05.05.06.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Mar 2026 05:01:50 -0800 (PST)
-Date: Thu, 5 Mar 2026 22:01:49 +0900
+        Thu, 05 Mar 2026 05:06:10 -0800 (PST)
+Date: Thu, 5 Mar 2026 22:06:09 +0900
 From: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
-To: "Russell King (Oracle)" <linux@armlinux.org.uk>
-Cc: Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Joe Perches <joe@perches.com>,
+To: Vladimir Oltean <vladimir.oltean@nxp.com>
+Cc: Joe Perches <joe@perches.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	linux-phy@lists.infradead.org, Vinod Koul <vkoul@kernel.org>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
@@ -83,7 +82,7 @@ Cc: Vladimir Oltean <vladimir.oltean@nxp.com>,
 	netdev@vger.kernel.org, spacemit@lists.linux.dev,
 	UNGLinuxDriver@microchip.com
 Subject: Re: [PATCH phy-next 22/22] MAINTAINERS: add regex for linux-phy
-Message-ID: <20260305130149.GA1659133@rocinante>
+Message-ID: <20260305130609.GB1659133@rocinante>
 References: <20260304175735.2660419-1-vladimir.oltean@nxp.com>
  <20260304175735.2660419-23-vladimir.oltean@nxp.com>
  <a8fee1cd-1e69-4a9e-8533-c0988c480fb9@oss.qualcomm.com>
@@ -91,9 +90,7 @@ References: <20260304175735.2660419-1-vladimir.oltean@nxp.com>
  <f3a5aa3df78553ffc0fd0024f5fd36a4e2158c88.camel@perches.com>
  <20260305114352.2f7btqixg4tu5bzl@skbuf>
  <20260305121532.GA1649635@rocinante>
- <20260305122957.GA1652563@rocinante>
- <20260305123956.ojkt4k3ly64xz7fu@skbuf>
- <aal6kWDx_3XRGB4K@shell.armlinux.org.uk>
+ <20260305123843.i47asdrjychwlgdt@skbuf>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -102,21 +99,21 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aal6kWDx_3XRGB4K@shell.armlinux.org.uk>
-X-Rspamd-Queue-Id: 5325F212624
+In-Reply-To: <20260305123843.i47asdrjychwlgdt@skbuf>
+X-Rspamd-Queue-Id: 658F52126C5
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.86 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	DMARC_POLICY_SOFTFAIL(0.10)[linux.com : SPF not aligned (relaxed), No valid DKIM,none];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95634-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-95635-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[27];
+	RCPT_COUNT_TWELVE(0.00)[26];
 	RECEIVED_HELO_LOCALHOST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
@@ -126,8 +123,8 @@ X-Spamd-Result: default: False [-0.86 / 15.00];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[kw@linux.com,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	NEURAL_HAM(-0.00)[-0.998];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	NEURAL_HAM(-0.00)[-0.997];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	R_DKIM_NA(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
@@ -136,19 +133,37 @@ X-Rspamd-Action: no action
 
 Hello,
 
-> > > For content match, it could also be:
-> > > 
-> > >   K:    phy
-> > > 
-> > > I believe this would match everything of interest?
+> > > K:    \b(?:__)?(?:devm_)?(?:of_)?phy_(?:create|destroy|provider_(?:un)?register)\b
+> > > K:    \bphy_(?:create|remove)_lookup\b
+> > > K:    \bphy_(?:get|set)?_drvdata\b
+> > > K:    \b(?:devm_)?(?:of_)?phy_(?:optional_)?(?:get|put)(?:_by_index)?\b
+> > > K:    \bphy_pm_runtime_(?:get|put)(?:_sync)?\b
+> > > K:    \bphy_(?:init|exit|power_(?:on|off))\b
+> > > K:    \bphy_|(?:get|set)_(?:mode(?:_ext)?|media|speed|bus_width|max_link_rate)\b
+> > > K:    \bphy_(?:reset|configure|validate|calibrate)\b
+> > > K:    \bphy_notify_(?:connect|disconnect|state)\b
+> > > K:    (?:struct\s+)?phy(?:_ops|_attrs|_lookup|_provider)?\b
+> > > K:    (?:linux/phy/phy\.h|phy-props\.h|phy-provider\.h)
 > > 
-> > Yeah, and way more. Think USB PHY, network PHY, etc. Don't want to drown
-> > the linux-phy mailing list in unrelated patches, either.
+> > What about
+> > 
+> >   F:    drivers/*/*phy*
+> > 
+> > or something along these lines.
+> > 
+> >         Krzysztof
 > 
-> Also phylink, any memory management / DMA stuff that happens to mention
-> "physical", and probably numerous other examples.
+> I don't understand your suggestion. Is it meant as a replacement for the
+> keyword regexes? Your file pattern matches on:
 
-Makes sense!  Sorry for the commotion here, then. :)
+I was thinking more along the lines of using wildcards, the F: was just an
+example.
+
+[...]
+
+> There are a lot of false positives, and a lot of false negatives.
+
+Yeah, the "catch-all", for lack of better word, will not work here.
 
 	Krzysztof
 
