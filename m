@@ -1,66 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-95528-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95529-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id uNPAEnc3qWlk3AAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95528-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 08:57:43 +0100
+	id 2B1XCBA4qWnN3AAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95529-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 09:00:16 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B530420D082
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 08:57:42 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7981B20D11C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 09:00:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id AB8293033266
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 07:57:41 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 295DE3071430
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 07:59:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A05833B961;
-	Thu,  5 Mar 2026 07:57:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9BEE33FE1F;
+	Thu,  5 Mar 2026 07:59:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Eq93sB3x"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AjssJ6aL"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D6D33B949;
-	Thu,  5 Mar 2026 07:57:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B510933F8C2;
+	Thu,  5 Mar 2026 07:59:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772697460; cv=none; b=WsK8lVbmef0vwyFeoUX3fbysR4lEF/vWQpG+ThIgsWkworMFQ+1VP8CrDfpxoPnD+axn0pfwaHuKPhj1YyNM27ZTvQXGHN8J/k683S9DPi16q7lbNf3aXSA4urNBSZqU/TPVJB0Q3t7XGOjhhhhV6zXh43ttSZI+4Xt26v7RI6s=
+	t=1772697552; cv=none; b=FcpqxMjZXg2kJwcyZ/Nz+qGFKnBuDDKUlq4oI8dLnvpks2BJHUGJsZmz7+cdt6dW6jOMeJ+KyhN0lKCK+gRNDzgngjI3GWPX9neB/QbNoQxGjVxaSdGiu80UQ3MSjkmJSSmoFhBqgHyoWarzoxhuPm4GxqTYQjeipacIzu7Wk50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772697460; c=relaxed/simple;
-	bh=LTFCOG5QXLiQSKnu7SNj+IKfRYZTwEVJn8wWTsU0rXk=;
+	s=arc-20240116; t=1772697552; c=relaxed/simple;
+	bh=mM3OjQ33S9TQppKsWWyKBLl8eCLt4XCfC08emeBfuqU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ehYUZ7oshWn+dWNnfpYgAWd9wXuCLeCV/3ugfHAgOP/UQwCXG3pr2MBGRJYMXM9TxEWNNQtgW54cNu1iMQTDJvDGX3hkts5VX8h9Ky0NBu556gDNTK4CirhBzGk1AO6aFiD1sLPb4B6WHZdNA5wVyG/1kIvdc4kdDOfxVpsdL6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Eq93sB3x; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 955BAC116C6;
-	Thu,  5 Mar 2026 07:57:39 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=qabSnnLOcHRLpSZPdXcB09kpF1AV5/1OfbplphTkVmcjKuZt86Y+ORPBz5hRSStaZQ5ts07scBvJYcRgBOfTX8WEJPHOV2R0cBsdp3Sszs4UAFBizCoCTLhQT96mHlIK9yo275sBlpBX+1E8YdudtiIubrxzVUl+etipIYZxXw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AjssJ6aL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6616C116C6;
+	Thu,  5 Mar 2026 07:59:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772697460;
-	bh=LTFCOG5QXLiQSKnu7SNj+IKfRYZTwEVJn8wWTsU0rXk=;
+	s=k20201202; t=1772697552;
+	bh=mM3OjQ33S9TQppKsWWyKBLl8eCLt4XCfC08emeBfuqU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Eq93sB3xaArZGPVhM1mPmY8W4sl3biK2h5i5jDNlSguadqXTPx9IgZ5tWipSAJmB9
-	 N/zDvFpjmoBGM8P5a7r2tb6vOLWvdFu4YNEDxWL4TPwac6HgXAZTD2yJ2y20bJ2Rfr
-	 K+QHBlHUHNw/JHAOGMZyyxAub/6P4GIOxWFMUCR68z26IDQHpYoKUBJgsBS5EPTV6u
-	 O8BbRQx92ZWsTi34C0gsf0RC/VKaf6/3b21asXEI3uMreRXctXAEiE1fHZ846dWtkp
-	 MOaIL/6GL2LmATWc4kgBmxgQQmwwBOtOffy411lETfZA2/MIqF5NYjq9y+upo8PPIm
-	 Gu26d5F8fZYZg==
-Date: Thu, 5 Mar 2026 08:57:37 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Richard Acayan <mailingradian@gmail.com>
-Cc: Srinivas Kandagatla <srini@kernel.org>, 
-	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
-	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org, 
-	devicetree@vger.kernel.org, Nickolay Goppen <setotau@mainlining.org>, 
-	Wesley Cheng <quic_wcheng@quicinc.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Johan Hovold <johan@kernel.org>, Kees Cook <kees@kernel.org>, 
-	Charles Keepax <ckeepax@opensource.cirrus.com>, Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Subject: Re: [PATCH v2 02/11] ASoC: dt-bindings: qcom: q6dsp: add internal
- mi2s support
-Message-ID: <20260305-fluorescent-gainful-unicorn-4f8d7e@quoll>
-References: <20260304195815.52347-1-mailingradian@gmail.com>
- <20260304195815.52347-3-mailingradian@gmail.com>
+	b=AjssJ6aLg8dT7xUstr9c/ZnzaYyKi7sI/j7A0qr8qZHrKwFfrZvtf2Xfb+6UN3nhU
+	 q1m+lNAt/BUmY4C+UV9GIOylGVrXbgQLWZf395SV7xk1xW8vi/Hho1sB+McNeSwAFb
+	 F8OkJfROXIq/Z+liGDyZK07vsG+NQ2CWGY1w8rKnWAVUS1SrxpVKTj3XOEW7grgCyP
+	 CisCZDfUEwBQuvs89Ol1dgUR3Mil53vH7zUH919FFdDVxOCWVUAE7JZqJB1InlXdol
+	 jGrhlwu6VPUZkoTvspMPKLfixAX0Agkth+auQxoKcNIO0Sx/HWb74C8aQRYBC2qePe
+	 81BZ0DzM8CWTA==
+Date: Thu, 5 Mar 2026 13:28:57 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Jingoo Han <jingoohan1@gmail.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Will Deacon <will@kernel.org>, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, jonathanh@nvidia.com, 
+	bjorn.andersson@oss.qualcomm.com
+Subject: Re: [PATCH v2 5/5] PCI: qcom: Add D3cold support
+Message-ID: <om6t5hlnxadpmet5i2gochjmfjw6mdfllrdbgewiz4u6vj3zot@nse5rbl3je64>
+References: <20260217-d3cold-v2-0-89b322864043@oss.qualcomm.com>
+ <20260217-d3cold-v2-5-89b322864043@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,76 +65,100 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260304195815.52347-3-mailingradian@gmail.com>
-X-Rspamd-Queue-Id: B530420D082
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260217-d3cold-v2-5-89b322864043@oss.qualcomm.com>
+X-Rspamd-Queue-Id: 7981B20D11C
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95528-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[20];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_TO(0.00)[gmail.com];
+	TAGGED_FROM(0.00)[bounces-95529-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[gmail.com,kernel.org,google.com,vger.kernel.org,lists.infradead.org,nvidia.com,oss.qualcomm.com];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.999];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[kernel.org,gmail.com,perex.cz,suse.com,vger.kernel.org,mainlining.org,quicinc.com,linuxfoundation.org,opensource.cirrus.com,renesas.com];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email]
 X-Rspamd-Action: no action
 
-On Wed, Mar 04, 2026 at 02:58:06PM -0500, Richard Acayan wrote:
->          then:
->            required:
->              - qcom,sd-lines
-> diff --git a/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h b/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
-> index 6d1ce7f5da51..6753f7bf004b 100644
-> --- a/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
-> +++ b/include/dt-bindings/sound/qcom,q6dsp-lpass-ports.h
-> @@ -140,6 +140,20 @@
->  #define DISPLAY_PORT_RX_6	134
->  #define DISPLAY_PORT_RX_7	135
->  #define USB_RX			136
-> +#define INT0_MI2S_RX		137
-> +#define INT0_MI2S_TX		138
-> +#define INT1_MI2S_RX		139
-> +#define INT1_MI2S_TX		140
-> +#define INT2_MI2S_RX		141
-> +#define INT2_MI2S_TX		142
-> +#define INT3_MI2S_RX		143
-> +#define INT3_MI2S_TX		144
-> +#define INT4_MI2S_RX		145
-> +#define INT4_MI2S_TX		146
-> +#define INT5_MI2S_RX		147
-> +#define INT5_MI2S_TX		148
-> +#define INT6_MI2S_RX		149
-> +#define INT6_MI2S_TX		150
+On Tue, Feb 17, 2026 at 04:49:10PM +0530, Krishna Chaitanya Chundru wrote:
+> Add support for transitioning Qcom PCIe controllers into D3cold by
 
-This conflicts with Srini's patches and looks pretty the same. Please
-look at his patches and avoid re-doing them.
+You cannot transition a 'PCIe controller' to D3Cold state, but only the
+endpoints and bridges.
 
-
->  
->  #define LPASS_CLK_ID_PRI_MI2S_IBIT	1
->  #define LPASS_CLK_ID_PRI_MI2S_EBIT	2
-> -- 
-> 2.53.0
+> integrating with the DWC core suspend/resume helpers.
 > 
+> Implement PME_TurnOff message generation via ELBI_SYS_CTRL and hook it
+> into the DWC host operations so the controller follows the standard
+> PME_TurnOff-based power-down sequence before entering D3cold.
+> 
+> When the link is suspended into D3cold, fully tear down interconnect
+
+You cannot suspend a link into D3Cold. Link and D-State are different.
+
+> bandwidth, OPP votes. If D3cold is not entered, retain existing behavior
+> by keeping the required interconnect and OPP votes.
+> 
+> Drop the qcom_pcie::suspended flag and rely on the existing
+> dw_pcie::suspended state, which now drives both the power-management
+> flow and the interconnect/OPP handling.
+> 
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 121 ++++++++++++++++++++-------------
+>  1 file changed, 74 insertions(+), 47 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index b02c19bbdf2ea5db252c2a0281a569bb3a0cc497..37442bbe588c36b0b0414cc4d0016da2d8424a87 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -145,6 +145,7 @@
+
+[...]
+
+> -	if (pcie->suspended) {
+> -		ret = qcom_pcie_host_init(&pcie->pci->pp);
+> -		if (ret)
+> -			return ret;
+> +		ret = icc_enable(pcie->icc_mem);
+> +		if (ret) {
+> +			dev_err(dev, "Failed to enable PCIe-MEM interconnect path: %d\n", ret);
+> +			goto disable_icc_cpu;
+> +		}
+>  
+> -		pcie->suspended = false;
+> +		/*
+> +		 * Ignore -ETIMEDOUT here since it is expected when no endpoint is
+> +		 * connected to the PCIe link.
+> +		 */
+> +		ret = dw_pcie_resume_noirq(pcie->pci);
+> +		if (ret && (ret != -ETIMEDOUT))
+
+No, dw_pcie_resume_noirq() was reworked to return -ETIMEDOUT to indicate a hard
+failure. If the device is not found, it will return -ENODEV. So you should
+fail the resume if -ETIMEDOUT is returned.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
