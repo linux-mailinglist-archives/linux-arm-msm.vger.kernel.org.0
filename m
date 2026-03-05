@@ -1,130 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-95485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id +DPQJpzaqGnGxwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 02:21:32 +0100
+	id 4CBhDMfiqGnzyAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 02:56:23 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 136AF209C4D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 02:21:31 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id C90E220A0CE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 02:56:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 43B38302C308
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 01:21:30 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 5BDDB300D341
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 01:56:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 543B921767D;
-	Thu,  5 Mar 2026 01:21:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C086B244667;
+	Thu,  5 Mar 2026 01:56:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="Dhtb/eof"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AD88mOdV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-10628.protonmail.ch (mail-10628.protonmail.ch [79.135.106.28])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 991651684B0
-	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Mar 2026 01:21:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.28
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE2F221FD4;
+	Thu,  5 Mar 2026 01:56:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772673687; cv=none; b=qc4dvbdSdzudx6qFlLPzWXHLs/VVr+8NhTttl2obWtekPcsjRINZSwsHldfX3Swgqx9K1ZK4+kZ2qxu35FJmtM9gN/tKLph0JTznk0gMlt6Hb7vTVM4eXkDAPjvRa0NtAvVwIsDAW6FQab6WLPhId+ucJDqPqlM1zT6B8+cJEro=
+	t=1772675779; cv=none; b=aiqd6MXhjn5McMj+2+TugY3KbJqbcOSNA8ScVIYNV5d/TSDZyToHA4+deCTl9e0VsoTOXAC7bAlwSw43jvE3HLmR5mm1OnGGeFzjuHCziVkkO8P6OlstO31JrpPsvIx9yYIYGFL0+Vf6iGBWKH/FUA8moCvoWIuELviN98d+PCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772673687; c=relaxed/simple;
-	bh=mBLbd9uo5NWnxjU4LeK9/wHBemppxn7CSuA0d2uXBYk=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mu6XHbWsPAIKpNpMX2xevsM4o6vI5TCXvE446CCdEl98Lq2w98D+U7yYu88UQzSMU7l4W8G/V9TjAbwhwyVe+AJPW1pxqoZmXKTNTvzcz7aKpUtcxwDee6POkhjnnoc7GJejazD4bGr0QkG19dYhWXw1n8H8f4rc3GKAoHnW3zs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=Dhtb/eof; arc=none smtp.client-ip=79.135.106.28
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=7nxb56qssralvbv73nzmtqrf4u.protonmail; t=1772673673; x=1772932873;
-	bh=mBLbd9uo5NWnxjU4LeK9/wHBemppxn7CSuA0d2uXBYk=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=Dhtb/eofli8ZSu0xsdZs4EDHEBt7I17JxsuP32dCjviasOwycVxSv+DS1sHMJBmTi
-	 0P1kZS1pBoWKPpq2Bc8uPoMmD4ByQr0cHX9/+uQQ2lLt/WGJ3dFWGZW1zLVwg2Ykoj
-	 Rk87V6Onh9fibRKfiVtcYd5uyDQ1yzATiFD2av7E/904E8AixRGPNZ8P+cU867TFbi
-	 vNekZE0X9MFXyQIuHwe3a/CVpaboy94mBRTdnTcY4zz0NKgPG1FaPeDnyu78s3m4oH
-	 8UTpbyYAYKKiIPGKhw2VeLQsuxisoeYrUotK4QSHpDhfsahsTn9S7+g2nHTGketNgK
-	 H064ZbBVoTQ1A==
-Date: Thu, 05 Mar 2026 01:21:10 +0000
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, konradybcio@kernel.org
-From: Tj <tj.iam.tj@proton.me>
-Cc: linux-arm-msm@vger.kernel.org, Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: qcom_scm: page dumped because: nonzero _refcount
-Message-ID: <43c4dfad-be25-42e5-a04d-060ab6be7f5f@proton.me>
-In-Reply-To: <a74affaa-5cad-46dd-be46-82c3b71dc512@oss.qualcomm.com>
-References: <cb59c06a-b0bb-4061-9db6-30b0b350661d@proton.me> <25c4608b-c447-42eb-a5b3-8d58bd93ebc7@oss.qualcomm.com> <94629352-595b-46bb-9c11-505aa9db0a1a@proton.me> <cc10cef2-f032-460c-bbc3-2ec9b5c922c0@oss.qualcomm.com> <8cf12905-8221-4f4c-9158-42984d26b0df@proton.me> <06ddefe3-2048-4e79-80a2-8d998b2c6a51@oss.qualcomm.com> <3e67a37a-3a51-40e6-9608-2641101b6ee5@proton.me> <cdb322ed-cb1b-4c7a-900e-31bf5b13cfa9@oss.qualcomm.com> <11bdc3aa-fd9a-44fc-b416-b3d6157aae37@proton.me> <a74affaa-5cad-46dd-be46-82c3b71dc512@oss.qualcomm.com>
-Feedback-ID: 113488376:user:proton
-X-Pm-Message-ID: fc6d09017c9864c89395c93e6ab5951dd1f9888b
+	s=arc-20240116; t=1772675779; c=relaxed/simple;
+	bh=7f9FrJn1QE1Ys6n+lCWljrWlaMQba/yHYK2P2Vp47yo=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=XmfUlJanHmmHChJxz7ors24hCoZ3vM/N/Hl2DkdsuwxfuPGfcEku7qRz+1lK2AS0nH9JsivzQZVaIHI+a+B1OzIthaMw3yEZbeEhGg45aERTscpj8hFvoOff8enX+V+3CNQN0jBtTeeoYRyUvrylIe+hXNCpLX8aHFUcnXPWmzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AD88mOdV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7454C4CEF7;
+	Thu,  5 Mar 2026 01:56:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772675779;
+	bh=7f9FrJn1QE1Ys6n+lCWljrWlaMQba/yHYK2P2Vp47yo=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=AD88mOdVAEzXpXhiJiSgq7SVc/mtFICynd6q/ArWcmpp6lYu5I9Qq/yo+45DrgBI9
+	 6IACN8SqaZcht2gCmkz0858h03LSFSRHkjJCR2OTMOBy8vf65edEwDHamH0VJHiRsO
+	 DtQxFTQXx3ya8il/2YSY/x/vFTsewZsqGVJf6huhe4m/pWJAjoMgGydLxc/FhUA9rl
+	 GUA/5TSiJYxc9uo+ZKM5NAryp2NusjQQRdYWlrCZl5IpKM71HbUtAoW0ZZRzBwPF2z
+	 ytbQ4N80Vu5+kj+fkQlk7svM5XfaduqHZ1yELL+22Grfcc6PBvDXbeX1YRl/GM1Emu
+	 M79q3lJivjyww==
+Date: Wed, 4 Mar 2026 17:56:17 -0800
+From: Jakub Kicinski <kuba@kernel.org>
+To: Vinod Koul <vkoul@kernel.org>
+Cc: "Russell King (Oracle)" <linux@armlinux.org.uk>, Andrew Lunn
+ <andrew@lunn.ch>, Alexandre Torgue <alexandre.torgue@foss.st.com>, Andrew
+ Lunn <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>, Eric
+ Dumazet <edumazet@google.com>, linux-arm-kernel@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-stm32@st-md-mailman.stormreply.com, Mohd Ayaan Anwar
+ <mohd.anwar@oss.qualcomm.com>, Neil Armstrong <neil.armstrong@linaro.org>,
+ netdev@vger.kernel.org, Paolo Abeni <pabeni@redhat.com>
+Subject: Re: [PATCH net-next v2 0/7] net: stmmac: qcom-ethqos: further
+ serdes reorganisation
+Message-ID: <20260304175617.3974d064@kernel.org>
+In-Reply-To: <aacD3osfaZkLsGxm@shell.armlinux.org.uk>
+References: <aacD3osfaZkLsGxm@shell.armlinux.org.uk>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: 136AF209C4D
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Queue-Id: C90E220A0CE
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[proton.me,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[proton.me:s=7nxb56qssralvbv73nzmtqrf4u.protonmail];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95485-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[3];
+	TAGGED_FROM(0.00)[bounces-95486-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	DKIM_TRACE(0.00)[proton.me:+];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MISSING_XM_UA(0.00)[];
-	RCPT_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[tj.iam.tj@proton.me,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[kuba@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,proton.me:dkim,proton.me:mid]
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-On 03/03/2026 11:04, Konrad Dybcio wrote:
-> On 3/2/26 6:52 PM, Tj wrote:
->> I've shared all my results, configs, logs, screenshots/photos - and will
->> add further research notes - on Debian Salsa at:
->>
->> https://salsa.debian.org/Iam_Tj/galaxybook2w737
-> Aaaah it's the slimbus driver crashing..
->
-> I believe someone is working on a fix for that
->
-> I see that the node isn't enabled in upstream, so perhaps you had
-> some additional delta
->
-> Please try to disable it for now
+On Tue, 3 Mar 2026 15:53:02 +0000 Russell King (Oracle) wrote:
+> This part of the series focuses on the generic PHY driver, but these
+> changes have dependencies on the ethernet driver, hence why
+> it will need to go via net-next. Furthermore, subsequent changes
+> depend on these patches.
 
-I've been doing some intensive test and debugging:
-
-I've moved over from mainline to the sdm845/sdm845-linus tree yesterday=20
-and although it still doesn't fully boot there are no kernel panics.=20
-However, there are a lot of deferred probe timeouts and sync_state()=20
-pending that I seem to have, tonight, tracked down to the DTS having=20
-those devices set to status =3D "disabled". I've worked through each=20
-setting to "okay" and am about to try a boot with that.
-
-What has been frustrating is it now reaches the initramfs shell but due=20
-to no devices there's no input, no USB, no network - so cannot even=20
-script writing the kernel log to storage or network !
-
-I enabled EFIVARS PSTORE and kernel log but for some reason that doesn't=20
-seem to be creating the PSTORE VAR - at least cannot find it via UEFI=20
-Shell's "dmpstore -all".
-
-
+Hi Vinod, given the dependency on the existing stuff in net-next
+are you okay with patches 3-6 going to net-next without at tag
+you can pull?
 
