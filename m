@@ -1,67 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-95520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id mEAhJIo1qWlk3AAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 08:49:30 +0100
+	id 4HF/JJ81qWlH3AAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 08:49:51 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08CD620CEA3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 08:49:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CF3E20CEBB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 08:49:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 69F24302F687
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 07:49:14 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id BBF2030387E1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 07:49:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07170328B7B;
-	Thu,  5 Mar 2026 07:49:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D43F9328608;
+	Thu,  5 Mar 2026 07:49:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o+9h5rox"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OX5meTB9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D81EB27E05E;
-	Thu,  5 Mar 2026 07:49:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13C927E05E;
+	Thu,  5 Mar 2026 07:49:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772696950; cv=none; b=C5BDhZKoMbSe7/i76u5UC+74bqj8Fwdj7t3hRFm1RZKmL00+RuceuvqxsanKb/T2OhIRa5R9s/XwlOA31d0SYpsWaJw/mUnuoo6KPA53tbxkKutletiSunsGcTPjAiPlBd8JsvX2qwI/O9xpXmjnt4Lo6eqtiMyWJ4kI9tlMR6c=
+	t=1772696964; cv=none; b=foCXLIBixod16+Aq05ZDsX51ocdR9hOdyKxQt5KdtOi+Ezk9j42JkeaqWjnpCIkBug2ZiCjGkLcckoou5CLEEoohqU+CH/E6nPNl7/0H2nxml82djH997h+2pZ1/J5dX9iaw/yOerhW0shIkDTtpQXHrZ86PJz5wQx/o/UB8uXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772696950; c=relaxed/simple;
-	bh=TFdAbilw8W8sjWd9J8Wt7r39BydUSFkn/rQZC9TwBRU=;
+	s=arc-20240116; t=1772696964; c=relaxed/simple;
+	bh=6AqLYlPW/gs3vlo4az2RBnc0fhk6dglm/YJG1KWJfp4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lLl7s/5YLjSs0CAmGTD0b8EY+WPVa78qsA/bpBgjvHAnOJ9FR35qc1I382IWCAqQOL6z9j6VPKVbZnZgZeXEiPc2uAU+8XTKaZ5ekxO7udLgr3XrgMzqHQ02eVEUOwFxc2y+b+SDI2LwDy+4zov47fa97Gf49eWCg+bjyO7XEqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o+9h5rox; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9459C116C6;
-	Thu,  5 Mar 2026 07:49:09 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=t7L9ofGlAH6OP4AN5x8BwCrrWQBvnZ7GCTba1zq3NHCQbIG2B7sq+lnyKUeriv7ALUDFiLTisZNs2pQS0H1ribkEEoSPT5iicToNaXr/GRo0MkW9h1a9vl0vq1k85VoyoD1RzRq0M+5Ibvrh6CtyNWy9tlUwxGpDw7y3UmMKHTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OX5meTB9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95538C116C6;
+	Thu,  5 Mar 2026 07:49:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772696950;
-	bh=TFdAbilw8W8sjWd9J8Wt7r39BydUSFkn/rQZC9TwBRU=;
+	s=k20201202; t=1772696964;
+	bh=6AqLYlPW/gs3vlo4az2RBnc0fhk6dglm/YJG1KWJfp4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=o+9h5roxVzDXrGaHll77MdtFkZUAg5e5fK5yEz/y4+SA1cUuQLGpBcKfP26Wg6pBc
-	 WvUVljrgQuUiFmna5ubk44KFLeoILql1244YJ3PJly0OVWqC4SDZWxPm+UsFtmxZaN
-	 4wuNbg1FBNBrc5TyExBGaUu7Wq8VECIu6fQ+69H+tjluloT29LwOMaeB9UCuZeTUf4
-	 eKRNWoOZgE8AspGYggfzZrfsfCJ66LySxj5c/5FkUWTXTZNXdyh333LZh6yh6O731u
-	 PwiizzG7gwmKjolGBOfufl/HNfDjbWSVXFrUWUioCu0vlURzcaMaA9VzVw9aWoE2ar
-	 sGN+Pjf5jKcqg==
-Date: Thu, 5 Mar 2026 08:49:07 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Jagadeesh Kona <quic_jkona@quicinc.com>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Abel Vesa <abelvesa@kernel.org>, 
-	Rajendra Nayak <quic_rjendra@quicinc.com>, Stephan Gerhold <stephan.gerhold@linaro.org>, 
-	Ajit Pandey <ajit.pandey@oss.qualcomm.com>, Imran Shaik <imran.shaik@oss.qualcomm.com>, 
-	Taniya Das <taniya.das@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Subject: Re: [PATCH v2 2/7] dt-bindings: clock: qcom: Add X1P42100 camera
- clock controller
-Message-ID: <20260305-rugged-agama-of-merriment-6cadf1@quoll>
-References: <20260304-purwa-videocc-camcc-v2-0-dbbd2d258bd6@oss.qualcomm.com>
- <20260304-purwa-videocc-camcc-v2-2-dbbd2d258bd6@oss.qualcomm.com>
+	b=OX5meTB9KrGVnyHJiKDDlXTURvrR3RfZb5Q477AWojqGpqFAT91ujTK66gHgJOq+a
+	 DTt/sOga39neE+CW7s4xLXJK5c52xpOnqv8aGaV9fcShBhmTWA5/pMXnVuSuGKyojQ
+	 AVEGfbMqf2VhL8o3uQIBOJcmNQaPcFURPHmM9J4caAigy7Xx4M2DEtIdPaEZYi5bDB
+	 OnK92yMjCFkw9/sXmWeopiF4lwHRMY6B6A9PKengoQ1A50XgU0Ja1cg8F4K5VTnGKV
+	 067wdC2+hhAvMJbPyPiQdtrkU8q1SU3eRLC+n/mqmxt6K38kkNQVCwPAMyVPV9jlxF
+	 uPXZZBbc3XChQ==
+Date: Thu, 5 Mar 2026 13:19:10 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Jingoo Han <jingoohan1@gmail.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Will Deacon <will@kernel.org>, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, jonathanh@nvidia.com, 
+	bjorn.andersson@oss.qualcomm.com
+Subject: Re: [PATCH v2 4/5] PCI: qcom: Power down PHY via PARF_PHY_CTRL
+ before disabling rails/clocks
+Message-ID: <to6p7yf2oo5qh37hsye4zpputrc7p4bwgqvjc2plieuyapjdhp@7xshxghi4tzd>
+References: <20260217-d3cold-v2-0-89b322864043@oss.qualcomm.com>
+ <20260217-d3cold-v2-4-89b322864043@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,78 +66,154 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260304-purwa-videocc-camcc-v2-2-dbbd2d258bd6@oss.qualcomm.com>
-X-Rspamd-Queue-Id: 08CD620CEA3
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260217-d3cold-v2-4-89b322864043@oss.qualcomm.com>
+X-Rspamd-Queue-Id: 0CF3E20CEBB
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-95521-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95520-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[22];
+	FREEMAIL_CC(0.00)[gmail.com,kernel.org,google.com,vger.kernel.org,lists.infradead.org,nvidia.com,oss.qualcomm.com];
+	RCPT_COUNT_TWELVE(0.00)[13];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TO_DN_SOME(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:email]
 X-Rspamd-Action: no action
 
-On Wed, Mar 04, 2026 at 11:10:52PM +0530, Jagadeesh Kona wrote:
-> Add X1P42100 camera clock controller support and clock bindings
-> for camera QDSS debug clocks which are applicable for both
-> X1E80100 and X1P42100 platforms.
+On Tue, Feb 17, 2026 at 04:49:09PM +0530, Krishna Chaitanya Chundru wrote:
+> Some Qcom PCIe controller variants bring the PHY out of test power-down
+> (PHY_TEST_PWR_DOWN) during init. When the link is later transitioned
+> towards D3cold and the driver disables PCIe clocks and/or regulators
+> without explicitly re-asserting PHY_TEST_PWR_DOWN, the PHY can remain
+> partially powered, leading to avoidable power leakage.
 > 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-> Signed-off-by: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
+> Update the init-path comments to reflect that PARF_PHY_CTRL is used to
+> power the PHY on. Also, for controller revisions that enable PHY power
+> in init (2.3.2, 2.3.3, 2.7.0 and 2.9.0), explicitly power the PHY down
+> via PARF_PHY_CTRL in the deinit path before disabling clocks/regulators.
+> 
+> This ensures the PHY is put into a defined low-power state prior to
+> removing its supplies, preventing leakage when entering D3cold.
+> 
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 > ---
->  Documentation/devicetree/bindings/clock/qcom,x1e80100-camcc.yaml | 1 +
->  include/dt-bindings/clock/qcom,x1e80100-camcc.h                  | 3 +++
->  2 files changed, 4 insertions(+)
+>  drivers/pci/controller/dwc/pcie-qcom.c | 30 +++++++++++++++++++++++++++---
+>  1 file changed, 27 insertions(+), 3 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,x1e80100-camcc.yaml b/Documentation/devicetree/bindings/clock/qcom,x1e80100-camcc.yaml
-> index 938a2f1ff3fca899b5708101df7f8aa07e943336..b28614186cc098268ab0d8c32b21d9dd9508c9f9 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,x1e80100-camcc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,x1e80100-camcc.yaml
-> @@ -23,6 +23,7 @@ properties:
->    compatible:
->      enum:
->        - qcom,x1e80100-camcc
-> +      - qcom,x1p42100-camcc
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 2c4dc7134e006d3530a809f1bcc1a6488d4632ad..b02c19bbdf2ea5db252c2a0281a569bb3a0cc497 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -513,7 +513,7 @@ static int qcom_pcie_post_init_2_1_0(struct qcom_pcie *pcie)
+>  	u32 val;
+>  	int ret;
 >  
->    reg:
->      maxItems: 1
-> diff --git a/include/dt-bindings/clock/qcom,x1e80100-camcc.h b/include/dt-bindings/clock/qcom,x1e80100-camcc.h
-> index d72fdfb06a7c716ed2ec376e061e4f0ca35f42c5..06c316022fb0d26ec6243b28477564d97f228c8e 100644
-> --- a/include/dt-bindings/clock/qcom,x1e80100-camcc.h
-> +++ b/include/dt-bindings/clock/qcom,x1e80100-camcc.h
-> @@ -115,6 +115,9 @@
->  #define CAM_CC_SLEEP_CLK_SRC					105
->  #define CAM_CC_SLOW_AHB_CLK_SRC					106
->  #define CAM_CC_XO_CLK_SRC					107
-> +#define CAM_CC_QDSS_DEBUG_CLK					108
-> +#define CAM_CC_QDSS_DEBUG_CLK_SRC				109
-> +#define CAM_CC_QDSS_DEBUG_XO_CLK				110
+> -	/* enable PCIe clocks and resets */
+> +	/* PHY power ON */
 
-Why X1E now gets all these clocks? I don't understand why you are having
-separate drivers and decided to change the ABI used in the first driver?
+This comment is confusing since we already have phy_power_on() API. What does
+really happen in the 'test power down' case?
 
-Best regards,
-Krzysztof
+- Mani
 
+>  	val = readl(pcie->parf + PARF_PHY_CTRL);
+>  	val &= ~PHY_TEST_PWR_DOWN;
+>  	writel(val, pcie->parf + PARF_PHY_CTRL);
+> @@ -680,6 +680,12 @@ static int qcom_pcie_get_resources_2_3_2(struct qcom_pcie *pcie)
+>  static void qcom_pcie_deinit_2_3_2(struct qcom_pcie *pcie)
+>  {
+>  	struct qcom_pcie_resources_2_3_2 *res = &pcie->res.v2_3_2;
+> +	u32 val;
+> +
+> +	/* PHY Power down */
+> +	val = readl(pcie->parf + PARF_PHY_CTRL);
+> +	val |= PHY_TEST_PWR_DOWN;
+> +	writel(val, pcie->parf + PARF_PHY_CTRL);
+>  
+>  	clk_bulk_disable_unprepare(res->num_clks, res->clks);
+>  	regulator_bulk_disable(ARRAY_SIZE(res->supplies), res->supplies);
+> @@ -712,7 +718,7 @@ static int qcom_pcie_post_init_2_3_2(struct qcom_pcie *pcie)
+>  {
+>  	u32 val;
+>  
+> -	/* enable PCIe clocks and resets */
+> +	/* PHY Power ON */
+>  	val = readl(pcie->parf + PARF_PHY_CTRL);
+>  	val &= ~PHY_TEST_PWR_DOWN;
+>  	writel(val, pcie->parf + PARF_PHY_CTRL);
+> @@ -844,6 +850,12 @@ static int qcom_pcie_get_resources_2_3_3(struct qcom_pcie *pcie)
+>  static void qcom_pcie_deinit_2_3_3(struct qcom_pcie *pcie)
+>  {
+>  	struct qcom_pcie_resources_2_3_3 *res = &pcie->res.v2_3_3;
+> +	u32 val;
+> +
+> +	/* PHY Power down */
+> +	val = readl(pcie->parf + PARF_PHY_CTRL);
+> +	val |= PHY_TEST_PWR_DOWN;
+> +	writel(val, pcie->parf + PARF_PHY_CTRL);
+>  
+>  	clk_bulk_disable_unprepare(res->num_clks, res->clks);
+>  }
+> @@ -994,7 +1006,7 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
+>  	/* configure PCIe to RC mode */
+>  	writel(DEVICE_TYPE_RC, pcie->parf + PARF_DEVICE_TYPE);
+>  
+> -	/* enable PCIe clocks and resets */
+> +	/* PHY power ON */
+>  	val = readl(pcie->parf + PARF_PHY_CTRL);
+>  	val &= ~PHY_TEST_PWR_DOWN;
+>  	writel(val, pcie->parf + PARF_PHY_CTRL);
+> @@ -1065,6 +1077,12 @@ static void qcom_pcie_host_post_init_2_7_0(struct qcom_pcie *pcie)
+>  static void qcom_pcie_deinit_2_7_0(struct qcom_pcie *pcie)
+>  {
+>  	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
+> +	u32 val;
+> +
+> +	/* PHY Power down */
+> +	val = readl(pcie->parf + PARF_PHY_CTRL);
+> +	val |= PHY_TEST_PWR_DOWN;
+> +	writel(val, pcie->parf + PARF_PHY_CTRL);
+>  
+>  	clk_bulk_disable_unprepare(res->num_clks, res->clks);
+>  
+> @@ -1169,6 +1187,12 @@ static int qcom_pcie_get_resources_2_9_0(struct qcom_pcie *pcie)
+>  static void qcom_pcie_deinit_2_9_0(struct qcom_pcie *pcie)
+>  {
+>  	struct qcom_pcie_resources_2_9_0 *res = &pcie->res.v2_9_0;
+> +	u32 val;
+> +
+> +	/* PHY Power down */
+> +	val = readl(pcie->parf + PARF_PHY_CTRL);
+> +	val |= PHY_TEST_PWR_DOWN;
+> +	writel(val, pcie->parf + PARF_PHY_CTRL);
+>  
+>  	clk_bulk_disable_unprepare(res->num_clks, res->clks);
+>  }
+> 
+> -- 
+> 2.34.1
+> 
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
