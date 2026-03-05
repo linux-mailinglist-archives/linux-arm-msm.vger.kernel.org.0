@@ -1,339 +1,249 @@
-Return-Path: <linux-arm-msm+bounces-95643-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95644-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id KKm+KcCHqWki+gAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95643-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 14:40:16 +0100
+	id cKJmO5WIqWki+gAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95644-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 14:43:49 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id AFD87212AC3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 14:40:15 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 28272212B4D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 14:43:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 0B55030177B4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 13:39:52 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B9D0930879C7
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 13:43:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58AB639B4A9;
-	Thu,  5 Mar 2026 13:39:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4D333A1CEB;
+	Thu,  5 Mar 2026 13:43:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="NplH6MbA";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="hU12wpoc"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="k6NTIPzP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1270B39A7F9
-	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Mar 2026 13:39:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AE111A704B
+	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Mar 2026 13:43:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772717991; cv=none; b=iUDzPYIdGizMugAhGH+FUGFOamXVfQa/f8nbOTHv0mklBAckiPIoQD8lI1cMS8fpGn1NgZaGdyYCqH7RbtzAq0DuqeMp2k2ONibvCT3syH/JnftHy79XKwyFig66PyEx7GVX9RlQ3/Qyw74VMrPEJYxSWQFbBdHEgXX9ORINdFc=
+	t=1772718222; cv=none; b=cLj/qX6jPC1eg7gczWcXYtHjNhl+FbCYXlZCEZJ9RKVMvs+rhkju38o9h/oL8oIlvcDuQlI90qrts88gFYCw69NgTvpAhkoL8Fm3jr1ObO41nhC2kOJZUE6E7jqk6wMPBDxRPcNb3riJQJaioy3KuynzEMmX5uYTi7o5//WOQMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772717991; c=relaxed/simple;
-	bh=EKv8wOSJGRlhpeUGi+dyApwOnzSEKJGSXglpAxxJlcQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=tyukoJpigRRi4h+xXzRyKD07y7/aBts7YhtBpj57mQ583u8MhzMnXEvTXBzHzlfe9xdCTG1ca6VONiHpn4jOknIY8TzDPH8VmCsM+ANYJMTvc7Vie83OicIu7MWre4M38SITKXQFRVluA8kFE6yGUcji4PjqEl8sfdNan0u2SzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=NplH6MbA; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=hU12wpoc; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 625AFp7U1517944
-	for <linux-arm-msm@vger.kernel.org>; Thu, 5 Mar 2026 13:39:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	xcpYEMXP4Nu8WtXRYSEcQ0DhOhHdqMNhLIC2zKaCrR4=; b=NplH6MbAbRtklWuA
-	9mGLvkyzqj7w0e80dmakLOFcrW4wQxiH+BNX6TiCBmnnwQyylj/6rFvZ2s9ZofNx
-	expHyBvIPF287lqiBLknS0q0EHX8LewJsZBo04u8Nu41Uk2RHYUA/EMr/Qk6iWZo
-	mIjrgJUHXQZx9J09rlzQ8VEG9bz3DzyPSbpBrXePiCTMTQhs2dfSYVEngTEkv6vu
-	//3mRm+d6Oxahacf5dOY6//kJbLQXWXSFXKHWyFwwggcFHAP8LtCQVczewSsDZL0
-	biPx2rIC8IKAVlCVQUeBS/eVxNC3PDSJnM+7I1sOK3aF57l6DfFW73OU+KZEL0pE
-	u9MXDg==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cpuptjwp0-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2026 13:39:49 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-354c0234c1fso6776191a91.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2026 05:39:49 -0800 (PST)
+	s=arc-20240116; t=1772718222; c=relaxed/simple;
+	bh=HM8oIQ4Gc+cpXMqGxUXGIs6+1o5nvkNDglwNlY3B8KY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YXIwsIeUDfIoCIovOQ08cvmSHbdbU1m9ic7xO91dJpuTTOjguPFmuamtoQSr8dZiWCiPG2whMoElL30LohaAZOv+icpTXSG0eX67JIFrKcR5gHb0cAxq5dJ01hH31krdKg5BTfNlCv6H+7RB61uru+fFYTNJEbc4EdLGlORpJhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=k6NTIPzP; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-48370174e18so48283245e9.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2026 05:43:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1772717989; x=1773322789; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xcpYEMXP4Nu8WtXRYSEcQ0DhOhHdqMNhLIC2zKaCrR4=;
-        b=hU12wpocAT/43bTLXNMqrGyGBzcZqdqGdiZsC+WELnIwooOWrtMWXNAN9gA4XKaRqt
-         X0FjFUV98pmCGKcLr6zgNlZs8zfxEwnvdIOdVQRltI3QFs7aep7TioCbhea37DjyBHSv
-         2TkLbr0CcNYjoR9JlruQoLmMO8K+1xxqFoQ5Gu25RrDwTXbNLo9hCS+IWHcDbepEWmV0
-         c/DmMc5Oy7JXiAMC0L67qOYEVZd4MaX7nF+eOFB9sVa736pSl/GmYZxXvS/jiqOR5wFi
-         oGHZom4GxQxGDHEitX9kCdqUNU3DiaFTd9R2ER3dfhevJfbEPD2Ec3qZCKkGEuQ44y7d
-         pqAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772717989; x=1773322789;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+        d=linaro.org; s=google; t=1772718219; x=1773323019; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=xcpYEMXP4Nu8WtXRYSEcQ0DhOhHdqMNhLIC2zKaCrR4=;
-        b=rDQP0bFBWFuPrIH0hFEM754YqTZnfBdgBZm0JMevLKUJB6hJbckF0I9Ym2TLa4kV57
-         DKWDhN5fX8LlxzGGCFfbB6q+WND3DHSA7EUURO05+6jvwY1UxwUEAy1P8KcXT5z/m822
-         vBQ5oFJXaMm9lgiEwTI3eb308Uf1qWWgdaIDpn25EnpGuyeMAnPWGMWlNc2K2/vj4kdZ
-         dmQEGD5Kl8dtTWYg9Puaz6fJQRo9i4DGQgpez9vmWnsyDH+cLJhyoKww01IPYqms9bXH
-         qiWPsxXSO6YYmxv11l0iemXrh3MibShzvhHI5NSh59TjD7kt/dZqihX2gMVSGf/WgUe7
-         er+w==
-X-Gm-Message-State: AOJu0YzPmZdIYN20O3O3RsPvaD153Zwkf3YEivDDOQ/9nkN9QomJsPUa
-	ixx0js4adzIUsE9eOeQt9SKW9uKktTaAjSdLGFsGs5Uu9+VjI1xWpybrom6WjImgCxvScAtiNRp
-	ToB2y5qWREj911/e5Jpy83eAzGmOlqYGMNQd8684AU2bUTkXnzeIOUh9JkTqF8iLbUcWX
-X-Gm-Gg: ATEYQzwn5Jw5/fbUu5EdOOtLcQ2PgLvSFRSdSc1fkkyX/x3XQOL1g2UYruTs+sJUzKS
-	jWxvAHEvw59iQWpdOBd8BeFPw7Qgud4yUgNE1f/6rlixxNvw0C0TOSQdJJXPG7ulcBPbXMsjttB
-	3HxyolmbqqQQQD8aZsRXTEVV2ZkLmWsLX/vLJAAGZr96Ta0oyw6WdXN9IwKsZ+CMccMrwBz/9OE
-	cO8RLUmCnf85K7fS1qPH0VR1bOIK4599BD6usMbeZ1uUtc/6NTD39qz5frQei3tCXebfjFp7FzV
-	uAbnpLey9vcOP5OiNy0htQWMcIrEQ1i9oQxNVwYi15PxmdgnZarcIyQGi9Pehr+EZky+Vaks56Y
-	QV0WbnLd2+NMh7o2TkCVx8HoF0X7nfYvgZnazCi0KSlmeFOTQhV2bvxjgeg==
-X-Received: by 2002:a17:90b:2c90:b0:359:8d70:c4ed with SMTP id 98e67ed59e1d1-359a69a26c1mr5088419a91.7.1772717988592;
-        Thu, 05 Mar 2026 05:39:48 -0800 (PST)
-X-Received: by 2002:a17:90b:2c90:b0:359:8d70:c4ed with SMTP id 98e67ed59e1d1-359a69a26c1mr5088397a91.7.1772717988039;
-        Thu, 05 Mar 2026 05:39:48 -0800 (PST)
-Received: from hu-sushruts-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-359b2d5fe2dsm2195236a91.7.2026.03.05.05.39.44
+        bh=grtuVtzx4dqYeuDSNsG3zL/G5fmjx189tw7ngaV+0gc=;
+        b=k6NTIPzPPFB853DPJHeDxAyYaI5x8GIXeCATLTryh9iJGnH30nXYvcx3z6Z6TLGaAU
+         pZPtBBHH0PDjc4JBAIkikFV2y5yDIB6m/+08Z5zYXJ4dM2fI+ksgDEw/ZvzNCREV/txX
+         RPt5LmJaP1bzy3lZ3HgfNNt3qnuQxOgz7kkBSXDQEHPrR2gCukDLWUQ+WWT+E2OH+gqT
+         hW2nFmQIVk87wWDyK5O+ZhxygyTuKcqvvPdXVaCJq7z9pWGDgklUNyoVRn+IUsQpjBZ4
+         IgV3gF5wBTc4F/EYaDmzNfaCN9F/csr8F4vwR/upP+yZKNcIjQXxvktst8UoE2sdmgEf
+         ID4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772718219; x=1773323019;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=grtuVtzx4dqYeuDSNsG3zL/G5fmjx189tw7ngaV+0gc=;
+        b=o++pNcLD4EU0MZphYUlsvpgUXRDotc8TaDDD1Jz2b1VMt0hVd4gp2+qhhCLbEviKch
+         jrTsSZpUOa7+L9UaAolMjrCHI+xIKwzl5gCaLOn2mgAoO1pOmjADwok5bz0AZs4je/E7
+         xbKT+upfiAPdSIfMpgWO0cvBPwYhBms2bb4baYq5rRpBuZxJDU5nGlY8AL9DydWr/lg3
+         O5hV2FWxezB8IpLv7jBXItvbRl3n1nCmSZtWUNRKVGhZOF9tutpTr5PgMxpIUMzidIAV
+         d6T5PJLw61d1gJ/kiBTigHzos1XZW2eYboVSuf6udUT1drRWY1r7ZIDIe9WwR/tvGnnj
+         ga5Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUXjXAvKHVTVpcP0I0tZAbMeignI7I0GfvbWTuKGXs4sVy0ScTqXGxCMx5jhnC5XZDyS199thLW/EyPEC1W@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzko0DYllbIk4oDV/H/o6FFTOnspHzfWMPmBdcIe3bb/v8LiJ6V
+	vpfXFGgue1k3lcSkireln5iKsmbMdDHgKmNQvYFUH8UidDbGLImOlHMwXl0ekmW37JQ=
+X-Gm-Gg: ATEYQzx+zQJRB06T3N/+fRIV05ipsL2V3UkK22zr7D2Q7DU/NwwfWf2HYqV0KE5IW2K
+	jS4KuEPqal+4bTeFBnKvtuMPh+qQDgHvdwr5LuFPugBS/ZNElL0N0jKHodkpBQhcLJGsLlUf6Mr
+	TQIig+/qFOuXwwLFNb41HI9QcUcM+wNW9LtdF8xYt0MvSg7BUomYBYT312g2AR3fxjvuDQQFSDA
+	XwBCFRZEVN+wD8AJpIig2IxN7gkO75PBO14b5gldHvl6VjHV7HhtHo0dRzyV2p858EGtXbfsFtg
+	/y6sW5Lzh9hm/cEAK/lQujzInR2t4AGSswZVRXo8EulM6N3CFjg0+qja41IWQMIzwLLA7W0MUTK
+	E6EonN18yxmUSoWYOTMmQWQH9NUgHjdbmfmuTMvifDhm0Js7kgci0m/iq8p5Fc+LMj1uj41UuM9
+	jFo6TNldbP60hJ9CEGJko58Zy8XEm+Pew7vyw=
+X-Received: by 2002:a05:600c:8b5c:b0:480:1c69:9d36 with SMTP id 5b1f17b1804b1-48519871622mr110409665e9.17.1772718219395;
+        Thu, 05 Mar 2026 05:43:39 -0800 (PST)
+Received: from linaro.org ([2a02:2454:ff23:4441:1c2c:7aff:fe45:362e])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4851faeaea1sm35241535e9.10.2026.03.05.05.43.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Mar 2026 05:39:47 -0800 (PST)
-From: Sushrut Shree Trivedi <sushrut.trivedi@oss.qualcomm.com>
-Date: Thu, 05 Mar 2026 19:09:32 +0530
-Subject: [PATCH v4 2/2] arm64: dts: qcom:
- qcs6490-rb3gen2-industrial-mezzanine: Add second TC9563 PCIe switch node
- for PCIe1
+        Thu, 05 Mar 2026 05:43:38 -0800 (PST)
+Date: Thu, 5 Mar 2026 14:43:27 +0100
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Bartosz Golaszewski <brgl@kernel.org>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
+	Thara Gopinath <thara.gopinath@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"David S. Miller" <davem@davemloft.net>,
+	Udit Tiwari <quic_utiwari@quicinc.com>,
+	Daniel Perez-Zoghbi <dperezzo@quicinc.com>,
+	Md Sadre Alam <mdalam@qti.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+	Michal Simek <michal.simek@amd.com>, Frank Li <Frank.Li@kernel.org>,
+	dmaengine@vger.kernel.org, linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-crypto@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: Re: [PATCH RFC v11 00/12] crypto/dmaengine: qce: introduce BAM
+ locking and use DMA for register I/O
+Message-ID: <aamIf8JethKzLW93@linaro.org>
+References: <20260302-qcom-qce-cmd-descr-v11-0-4bf1f5db4802@oss.qualcomm.com>
+ <scr5qvxa7f7k22pms4c6k5gwiky7lhssrw6qryfngexlek44g2@rayinnnwqgbt>
+ <aalwMwN3qMlzrql5@linaro.org>
+ <CAMRc=MfjknN1AYF_NPLzR0YbdWuoET25D9o0zsvx56VN+u59HQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260305-industrial-mezzanine-pcie-v4-2-1f2c9d1344d7@oss.qualcomm.com>
-References: <20260305-industrial-mezzanine-pcie-v4-0-1f2c9d1344d7@oss.qualcomm.com>
-In-Reply-To: <20260305-industrial-mezzanine-pcie-v4-0-1f2c9d1344d7@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Sushrut Shree Trivedi <sushrut.trivedi@oss.qualcomm.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1772717976; l=4306;
- i=sushrut.trivedi@oss.qualcomm.com; s=20251127; h=from:subject:message-id;
- bh=EKv8wOSJGRlhpeUGi+dyApwOnzSEKJGSXglpAxxJlcQ=;
- b=57Rdh+0nw//YsAa0uXxLianwueKyTEtSnAGRJzh93o6DwK2vIc/0PL+lkjF63P0W0jwq83uEL
- 0Q02AUNUkIWCaDFacs4D1YkmkfrnbRCEfiGogvRlWhv0lDAC4YyFl6F
-X-Developer-Key: i=sushrut.trivedi@oss.qualcomm.com; a=ed25519;
- pk=OrUHTxBaSg1oY3CtCictJ5A4bDMNLRZS1S+QfD9pdjw=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA1MDEwOSBTYWx0ZWRfX5WKErs8EthlB
- pxIlNIcSYqkKJ1C5GQi/lrxHw6fxBVIHwE4S8BIp5osCi8g8wDoRhmmKqXWrI5mDjZ/u2CJg1+T
- vtY3GMJCpQtkQ2PGTHHB92OpO6ia1XZGdhwqDhIsnP+tWbvW40Aw5rGWX4+9B7+iOcgTHyid0mK
- L4ojoDAfZwQKCb0rbNjHKoxNRZvO9blxfRb/j7kvbzUhgRA+FyCB0dgEDPQbtKo8hsCHu7/0Im0
- BIEZ0h/jRR8j+gN6juBVpBkcDwUMFfbFlX/M9fu8ZwJlRZofnEqRxUd1aOyhnJ63VlGPkVkYlti
- EEAE6F/RkHDwQJHAIfkOdiVQzccFQh0Er3kzjzLTpkI5z8ZsRrD3QWejcb4EskHRwQuWtIH00E4
- dkml68BP5igKv4vS/gNZog5c1dMK7OMbswb59ZnLOGKho25AWWuQpDAm4OLox+QWgkrptOnxUrh
- 0aibp94yE4q7K4TNOPg==
-X-Proofpoint-ORIG-GUID: 234XI5nKWs0uNOjFVDr-OKd6sa7IvbBn
-X-Authority-Analysis: v=2.4 cv=Ddsaa/tW c=1 sm=1 tr=0 ts=69a987a5 cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=EUspDBNiAAAA:8 a=bvgCVipTNhjOeuzF1ioA:9 a=QEXdDO2ut3YA:10
- a=rl5im9kqc5Lf4LNbBjHf:22
-X-Proofpoint-GUID: 234XI5nKWs0uNOjFVDr-OKd6sa7IvbBn
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-05_04,2026-03-04_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 suspectscore=0 bulkscore=0 impostorscore=0
- malwarescore=0 spamscore=0 adultscore=0 phishscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603050109
-X-Rspamd-Queue-Id: AFD87212AC3
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMRc=MfjknN1AYF_NPLzR0YbdWuoET25D9o0zsvx56VN+u59HQ@mail.gmail.com>
+X-Rspamd-Queue-Id: 28272212B4D
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-95643-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.0:email,0.0.0.3:email,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,qualcomm.com:dkim,qualcomm.com:email,0.0.0.2:email];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[sushrut.trivedi@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,lwn.net,gmail.com,gondor.apana.org.au,davemloft.net,quicinc.com,qti.qualcomm.com,amd.com,vger.kernel.org,lists.infradead.org];
+	TAGGED_FROM(0.00)[bounces-95644-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_PROHIBIT(0.00)[0.0.0.1:email];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[24];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[linaro.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	MISSING_XM_UA(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[stephan.gerhold@linaro.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,linaro.org:dkim,linaro.org:email,linaro.org:mid]
 X-Rspamd-Action: no action
 
-Add a node for the second TC9563 PCIe switch on PCIe1, which is connected
-in cascade to the first TC9563 switch via the former's downstream port.
+On Thu, Mar 05, 2026 at 02:10:55PM +0100, Bartosz Golaszewski wrote:
+> On Thu, Mar 5, 2026 at 1:00 PM Stephan Gerhold
+> <stephan.gerhold@linaro.org> wrote:
+> >
+> > On Tue, Mar 03, 2026 at 06:13:56PM +0530, Manivannan Sadhasivam wrote:
+> > > On Mon, Mar 02, 2026 at 04:57:13PM +0100, Bartosz Golaszewski wrote:
+> > > > NOTE: Please note that even though this is version 11, I changed the
+> > > > prefix to RFC as this is an entirely new approach resulting from
+> > > > discussions under v9. I AM AWARE of the existing memory leaks in the
+> > > > last patch of this series - I'm sending it because I want to first
+> > > > discuss the approach and get a green light from Vinod as well as Mani
+> > > > and Bjorn. Especially when it comes to communicating the address for the
+> > > > dummy rights from the client to the BAM driver.
+> > > > /NOTE
+> > > >
+> > > > Currently the QCE crypto driver accesses the crypto engine registers
+> > > > directly via CPU. Trust Zone may perform crypto operations simultaneously
+> > > > resulting in a race condition. To remedy that, let's introduce support
+> > > > for BAM locking/unlocking to the driver. The BAM driver will now wrap
+> > > > any existing issued descriptor chains with additional descriptors
+> > > > performing the locking when the client starts the transaction
+> > > > (dmaengine_issue_pending()). The client wanting to profit from locking
+> > > > needs to switch to performing register I/O over DMA and communicate the
+> > > > address to which to perform the dummy writes via a call to
+> > > > dmaengine_slave_config().
+> > > >
+> > >
+> > > Thanks for moving the LOCK/UNLOCK bits out of client to the BAM driver. It looks
+> > > neat now. I understand the limitation that for LOCK/UNLOCK, BAM needs to perform
+> > > a dummy write to an address in the client register space. So in this case, you
+> > > can also use the previous metadata approach to pass the scratchpad register to
+> > > the BAM driver from clients. The BAM driver can use this register to perform
+> > > LOCK/UNLOCK.
+> > >
+> > > It may sound like I'm suggesting a part of your previous design, but it fits the
+> > > design more cleanly IMO. The BAM performs LOCK/UNLOCK on its own, but it gets
+> > > the scratchpad register address from the clients through the metadata once.
+> > >
+> > > It is very unfortunate that the IP doesn't accept '0' address for LOCK/UNLOCK or
+> > > some of them cannot append LOCK/UNLOCK to the actual CMD descriptors passed from
+> > > the clients. These would've made the code/design even more cleaner.
+> > >
+> >
+> > I was staring at the downstream drivers for QCE (qce50.c?) [1] for a bit
+> > and my impression is that they manage to get along without dummy writes.
+> > It's a big mess, but it looks like they always have some commands
+> > (depending on the crypto operation) that they are sending anyway and
+> > they just assign the LOCK/UNLOCK flag to the command descriptor of that.
+> >
+> > It is similar for the second relevant user of the LOCK/UNLOCK flags, the
+> > QPIC NAND driver (msm_qpic_nand.c in downstream [2], qcom_nandc.c in
+> > mainline), it is assigned as part of the register programming sequence
+> > instead of using a dummy write. In addition, the UNLOCK flag is
+> > sometimes assigned to a READ command descriptor rather than a WRITE.
+> >
+> > @Bartosz: Can we get by without doing any dummy writes?
+> > If not, would a dummy read perhaps be less intrusive than a dummy write?
+> >
+> 
+> The HPG says that the LOCK/UNLOCK flag *must* be set on a command
+> descriptor, not a data descriptor. For a simple encryption we will
+> typically have a data descriptor and a command descriptor with
+> register writes. So we need a command descriptor in front of the data
+> and - while we could technically set the UNLOCK bit on the subsequent
+> command descriptor - it's unclear from the HPG whether it will unlock
+> before or after processing the command descriptor with the UNLOCK bit
+> set. Hence the additional command descriptor at the end.
+>
 
-Two embedded Ethernet devices are present on one of the downstream
-ports of this second switch as well. All the ports present in the
-node represent the downstream ports and embedded endpoints.
+I won't pretend that I actually understand what the downstream QCE
+driver is doing, but e.g. qce_ablk_cipher_req() in the qce50.c I linked
+looks like they just put the command descriptor with all the register
+writes first and then the data second (followed by another command
+descriptor for cleanup/unlocking). Is it actually required to put the
+data first?
 
-The second TC9563 is powered up via the same LDO regulators as the first
-one, and these can be controlled via two GPIOs, which are already present
-as fixed regulators. This TC9563 can also be configured through I2C.
+> The HPG also only mentions a write command and says nothing about a
+> read. In any case: that's the least of the problems as switching to
+> read doesn't solve the issue of passing the address of the scratchpad
+> register.
 
-Signed-off-by: Sushrut Shree Trivedi <sushrut.trivedi@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
----
- .../qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso | 102 +++++++++++++++++++++
- arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts       |   2 +-
- 2 files changed, 103 insertions(+), 1 deletion(-)
+True.
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso
-index c58a9ad5c331..2a2b7c2f9210 100644
---- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso
-+++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-industrial-mezzanine.dtso
-@@ -146,6 +146,100 @@ pci@0,1 {
- 	};
- };
- 
-+&pcie1 {
-+	iommu-map = <0x0 &apps_smmu 0x1c80 0x1>,
-+		    <0x100 &apps_smmu 0x1c81 0x1>,
-+		    <0x208 &apps_smmu 0x1c84 0x1>,
-+		    <0x210 &apps_smmu 0x1c85 0x1>,
-+		    <0x218 &apps_smmu 0x1c86 0x1>,
-+		    <0x300 &apps_smmu 0x1c87 0x1>,
-+		    <0x408 &apps_smmu 0x1c90 0x1>,
-+		    <0x410 &apps_smmu 0x1c91 0x1>,
-+		    <0x418 &apps_smmu 0x1c92 0x1>,
-+		    <0x500 &apps_smmu 0x1c93 0x1>,
-+		    <0x600 &apps_smmu 0x1c94 0x1>,
-+		    <0x700 &apps_smmu 0x1c95 0x1>,
-+		    <0x701 &apps_smmu 0x1c96 0x1>,
-+		    <0x800 &apps_smmu 0x1c97 0x1>,
-+		    <0x900 &apps_smmu 0x1c98 0x1>,
-+		    <0x901 &apps_smmu 0x1c99 0x1>;
-+};
-+
-+&pcie1_switch0_dsp1 {
-+	#address-cells = <3>;
-+	#size-cells = <2>;
-+
-+	pcie@0,0 {
-+		compatible = "pci1179,0623";
-+		reg = <0x30000 0x0 0x0 0x0 0x0>;
-+		#address-cells = <3>;
-+		#size-cells = <2>;
-+
-+		device_type = "pci";
-+		ranges;
-+		bus-range = <0x2 0xff>;
-+
-+		vddc-supply = <&vdd_ntn_0p9>;
-+		vdd18-supply = <&vdd_ntn_1p8>;
-+		vdd09-supply = <&vdd_ntn_0p9>;
-+		vddio1-supply = <&vdd_ntn_1p8>;
-+		vddio2-supply = <&vdd_ntn_1p8>;
-+		vddio18-supply = <&vdd_ntn_1p8>;
-+
-+		i2c-parent = <&i2c1 0x77>;
-+
-+		resx-gpios = <&tlmm 124 GPIO_ACTIVE_LOW>;
-+
-+		pinctrl-0 = <&pcie1_tc9563_resx_n>;
-+		pinctrl-names = "default";
-+
-+		pcie@1,0 {
-+			reg = <0x40800 0x0 0x0 0x0 0x0>;
-+			#address-cells = <3>;
-+			#size-cells = <2>;
-+
-+			device_type = "pci";
-+			ranges;
-+			bus-range = <0x3 0xff>;
-+		};
-+
-+		pcie@2,0 {
-+			reg = <0x41000 0x0 0x0 0x0 0x0>;
-+			#address-cells = <3>;
-+			#size-cells = <2>;
-+
-+			device_type = "pci";
-+			ranges;
-+			bus-range = <0x4 0xff>;
-+		};
-+
-+		pcie@3,0 {
-+			reg = <0x41800 0x0 0x0 0x0 0x0>;
-+			#address-cells = <3>;
-+			#size-cells = <2>;
-+			device_type = "pci";
-+			ranges;
-+			bus-range = <0x5 0xff>;
-+
-+			pci@0,0 {
-+				reg = <0x50000 0x0 0x0 0x0 0x0>;
-+				#address-cells = <3>;
-+				#size-cells = <2>;
-+				device_type = "pci";
-+				ranges;
-+			};
-+
-+			pci@0,1 {
-+				reg = <0x50100 0x0 0x0 0x0 0x0>;
-+				#address-cells = <3>;
-+				#size-cells = <2>;
-+				device_type = "pci";
-+				ranges;
-+			};
-+		};
-+	};
-+};
-+
- &tlmm {
- 	pcie0_tc9563_resx_n: pcie0-tc9563-resx-state {
- 		pins = "gpio78";
-@@ -177,4 +271,12 @@ pcie0_wake_n: pcie0-wake-n-state {
- 		bias-pull-up;
- 	};
- 
-+	pcie1_tc9563_resx_n: pcie1-tc9563-resx-state {
-+		pins = "gpio124";
-+		function = "gpio";
-+		bias-disable;
-+		input-disable;
-+		output-enable;
-+	};
-+
- };
-diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-index e3d2f01881ae..cd54525e45e0 100644
---- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-@@ -852,7 +852,7 @@ pcie@0,0 {
- 		pinctrl-0 = <&tc9563_resx_n>;
- 		pinctrl-names = "default";
- 
--		pcie@1,0 {
-+		pcie1_switch0_dsp1: pcie@1,0 {
- 			reg = <0x20800 0x0 0x0 0x0 0x0>;
- 			#address-cells = <3>;
- 			#size-cells = <2>;
+> 
+> So while some of this *may* just work, I would prefer to stick to what
+> documentation says *will* work. :)
+> 
 
--- 
-2.25.1
+Well, the question is if there is always a dummy register that can be
+safely written (without causing any side effects). This will be always
+just based on experiments, since the concept of a dummy write doesn't
+seem to exist downstream (and I assume the documentation doesn't suggest
+a specific register to use either).
 
+NAND_VERSION (0xf08) might work for qcom_nandc.c (which might be the
+only other relevant user of the BAM locking functionality...).
+
+Thanks,
+Stephan
 
