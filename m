@@ -1,291 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-95661-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95662-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6PDzBaqVqWnYAQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95661-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 15:39:38 +0100
+	id OEWAEcWYqWm7AgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95662-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 15:52:53 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2C952139E7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 15:39:37 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9903F213E17
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 15:52:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 2260E30B95EC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 14:32:47 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 3483530F6CEA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 14:36:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90C003A1A59;
-	Thu,  5 Mar 2026 14:32:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96B30246782;
+	Thu,  5 Mar 2026 14:36:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="ZyGgj6EQ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PRAe/0Eq";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="bFR/H0x8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5823384259;
-	Thu,  5 Mar 2026 14:32:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707FF223702
+	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Mar 2026 14:36:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772721148; cv=none; b=uqjQRYcx5N6NdA/UVdIxjLXI9qP7XCzfg9Eztv1n2Ga1uko5Ugl1omHsLPacp63w2VmuFLyFv/DaatSA2RYwnwjzj5Efx0a59tVVsFhDL1SuB6naMZvPHd4BMhs+fBHj/UbsJgXK+HO5f7d97NITaCQhXd47Y3NyrSyIxYnWemQ=
+	t=1772721407; cv=none; b=VF3Hk9sCZTxM5bRuEVcEiAH+Hpl6HShWrstdZ4JlP0aoceTw7dyc+tobSLGC3ei97l6tageYNYVziWa8s1P0KsQUyCG3Ad0+zVbnOk6hvASihr78kiHFgGmFCnpjoRylrafKe7jsyjvK9k7R6WEVmqEC53sZmkaxdai+5CjqA8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772721148; c=relaxed/simple;
-	bh=GOkCPLpVVlS1LIu4nYwSGh5zDqJWuR8CA1qOlQo2W78=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=JGNrCCWgKcIOT9K4+BG/emlZcA2epzaMcTSkk+BPOtbUJZM9d0W9CHNoGxOlA0IRkDAqx0hSerkCEN34J0La08818uBxCdiL/c6ZK2wxfx2C/ohEH7KraDjwmaN+pwLmvJw5oHEZksL6ivNkEJVkGnDWHJBSFxj/LeNuo6Z+zYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=ZyGgj6EQ; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1772721144;
-	bh=GOkCPLpVVlS1LIu4nYwSGh5zDqJWuR8CA1qOlQo2W78=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=ZyGgj6EQyiWwG1t0qOHEMf6znSO0zcW7xeU6U4Tu2ZnqDmY4QE7c2k7sNbAR0IvBf
-	 nQ39XtJXcn+ofrzRC+eTnXyLld1bbE2yQZ/ErHqQtAWp1eQzlywS0RlUt9+CuABh/7
-	 +nnMuRWwqX/Kb7CJlYFL4yqm0whxpruI1cTnr2C+WH8dy9lw601WgoRwRBxEoIrDhf
-	 hA3bO9TZWsgmboIu/k92r3jXrCySt7X2zqYX9Gy2V1EmMfW0yl818O4eaRJMsU6FCv
-	 5QaMIG0g4HgKIh4K/8iyjmtfuRzgfQN+uOw1CZsjajlHMP+qQi/v30ktVRpsL08mTM
-	 Msj2sWa4NxtUg==
-Received: from [192.168.1.100] (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits))
-	(No client certificate requested)
-	(Authenticated sender: kholk11)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id E9CB917E027A;
-	Thu,  5 Mar 2026 15:32:23 +0100 (CET)
-Message-ID: <4ed453d6-1299-4a4a-ad69-24589c513f8c@collabora.com>
-Date: Thu, 5 Mar 2026 15:32:23 +0100
+	s=arc-20240116; t=1772721407; c=relaxed/simple;
+	bh=W7LcSJDO+SmcI9iBgRwPWOz/I3O0rsjVjXKttw3Rl4w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jat+b1Jcy4+NV6Mrr3+AyLUA+NE41qvimP8nuIwk0aJO5R0z6YH8/tajwL5EzNSxMAcrOLVGUmpAJJXeqVlx8Qn2PJnw4jHJXJE1jRhBYizD+XRmqtdaescErGqdO4e6hQv3WtfA5jl2uNWW5eOfFvFmeDFgJ6+DwY+GYzT5fUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PRAe/0Eq; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=bFR/H0x8; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 625AFfIE2922564
+	for <linux-arm-msm@vger.kernel.org>; Thu, 5 Mar 2026 14:36:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=M9kOZ2oA46DkDMvPSWIl1WyV
+	VW6X0vR4sjQ/X/1ot3U=; b=PRAe/0EqEiMjUGnh75oi1rvpcTT0bLSMo3s9Mvxc
+	zmQo3yUTTpMYkV+Qnv3XTcQsEV3nq/TqKC2oJCwnbWvi996MpDVwUpc2p+VGUX8d
+	bPZikNWVwBCyiT6dpp9QvGWuKlBTRq36joBp/7+CAlOZ7xU6y+n3ERgQ7S/zrHkJ
+	574GukIy8tl90hWjHr47GEEw4USQGd4A3Trh9LIbmvgXWQc5hPK+fsZDo+hrqy27
+	fOv+tmtvWyYT+qT5BC24UpTdG9vJXz2YqEMWvex2MVwkRPN2OEcr1vKnUDioRQdp
+	cGnmlVXHFBmw6zL7YTTNr5cCx1sUb+fUgoju7D9Hb7MVHQ==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cq2q81xn5-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2026 14:36:45 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-8c71655aa11so6832794885a.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2026 06:36:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1772721405; x=1773326205; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=M9kOZ2oA46DkDMvPSWIl1WyVVW6X0vR4sjQ/X/1ot3U=;
+        b=bFR/H0x8hoMoJ5A2WqrfD/3OrdIP8ZOGC1U5BPnysmfmpj9mnpHLyrvihi8qvvJFy5
+         eXUUGAQM71WWSSoFpqoY0KW/fMhveL1dj9I3NTBAo+/WYIyA17lf55BUZ+CouR7Jq1jE
+         JMABFM6H/zvdWBZaxdVcRT93VC4h2GzafqxrXuHsXblI42OUB43RmMaXf8mNjIorLr10
+         U1RQhpV+hzhaOiwJMh0bXdISDSoQVcJu2zuXd+b3kzOvpfutvuf5MV0sKsLraRYcbH9E
+         7aBaNr1OqCJc+VNRdVqbpcOt+Zy7ZC161fa1X+Hl4KRCgwaG/4hEunYz6GHGaRauRTZ0
+         XdkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772721405; x=1773326205;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=M9kOZ2oA46DkDMvPSWIl1WyVVW6X0vR4sjQ/X/1ot3U=;
+        b=NewJpTSPfLXpspmMhNTKPQnRUKmMHBOcHzTbQwtHBJz3kBKHaW9Xwsd8Ygy9QNh7Ke
+         PyPIxmLgNjbtLEdMLZPg6hyWaL4AXoUHVJ2CgoJizcJL6vTG+ZdwQsIAE25uJND2R+Ps
+         h5IkjIBvpbtbD2xJBFx1E2KU4pcgOhXZFopY+Ptr+BkLUBxCGms1vqACqvBsAGIm2l6r
+         FfYVkBTLdpKiQ9jxNZJBsf9P9H8bP8uXWYo/Z1o0GiM6P2evv3aE5ttbXXLgeimPRD8b
+         LcDpYSnuF2ofMv13VwAfPft1bYMyAVBMsCj22KQ3JwFF0qTd357H736VhEPmvOspv1Ll
+         U8Wg==
+X-Forwarded-Encrypted: i=1; AJvYcCUingC8FDqqnGKcXGuZ9fMopH7+BHn3b2WAYHemMD4j+04F3BCQw4dQ/ZVmlP/ZvVc0lUxIzHuMB7LNkGaq@vger.kernel.org
+X-Gm-Message-State: AOJu0YyBaGl4r+3HjkGavTTIgZevPH86+wE44tDCDHxFukNRWO+t9fq+
+	bLPE2Q9NHbaTCtwPSUU/ptkqgBSGrI6uNEJyrgBk/y1o6OCE/UCrfIRbIDeqlaaM7cRMFsyVnft
+	MTo7YgX1/4KyhoWezeF2ljDBrGkQrEDi3dMJ7NmtgbOgZNheBz2honiaxJAbbydea93Wj
+X-Gm-Gg: ATEYQzxLQa//FgHwE2sbgzZdvGwiHrsCGcfXweOlkLPtZ2pb1LCDoIB83XIQde1OjqF
+	sxkHHDbIv+7MT9LRcoTyrZiZVrqTrbTY4JLtKn89Ne8wju72q0sewyuOCGrKR3TT8kymC3DwXUB
+	dnX+yK/QtbAlglxZjjcAP94a8cAY0jQvhmCsDL9lAJtlIjai+Pc2J+ZiMSLxAOlkxjMXitlBuB+
+	1dqzNXT3phDeHpTgKpN9KLnQOcyYQPaJTmbB4/xQmwSsm/cXIVQ8gpVZwbMSRIR3FOAeFiHGfbs
+	uSYs7XRcVO+AcTtm6kk05QDKyghDjZ5IGcC/M+ALnp5JVTN581ZseQq7p8ue4O6R7DCM81JF+GN
+	3GZuSxQ7OqDfuzQ4jwQrvG+XXKLY78SBZ3zbZ2sK9Q3MqGNIlspVhhinbC9tzmIAtALtJ6dLk5y
+	jcri7WKZBP+ya2mbSrXutAyutjWQ7WI0JGSGI=
+X-Received: by 2002:a05:620a:3949:b0:8cb:678b:4877 with SMTP id af79cd13be357-8cd5afb739dmr742169985a.57.1772721404780;
+        Thu, 05 Mar 2026 06:36:44 -0800 (PST)
+X-Received: by 2002:a05:620a:3949:b0:8cb:678b:4877 with SMTP id af79cd13be357-8cd5afb739dmr742163685a.57.1772721404214;
+        Thu, 05 Mar 2026 06:36:44 -0800 (PST)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-389f2ffe02bsm41758591fa.27.2026.03.05.06.36.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Mar 2026 06:36:43 -0800 (PST)
+Date: Thu, 5 Mar 2026 16:36:41 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Mahadevan <quic_mahap@quicinc.com>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>, stable@vger.kernel.org
+Subject: Re: [PATCH v5 2/2] drm/msm/dpu: Correct the SA8775P
+ intr_underrun/intr_underrun index
+Message-ID: <ulrmxcsncz5j7hbi446q33ngk63pfuja4pjvbg6zcg7c6kmn5c@ltguvvq6nsda>
+References: <20260305-mdss_catalog-v5-0-06678ac39ac7@oss.qualcomm.com>
+ <20260305-mdss_catalog-v5-2-06678ac39ac7@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 00/10] SPMI: Implement sub-devices and migrate drivers
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-To: jic23@kernel.org, sboyd@kernel.org
-Cc: dlechner@baylibre.com, nuno.sa@analog.com, andy@kernel.org,
- arnd@arndb.de, gregkh@linuxfoundation.org, srini@kernel.org,
- vkoul@kernel.org, neil.armstrong@linaro.org, sre@kernel.org,
- krzk@kernel.org, dmitry.baryshkov@oss.qualcomm.com, quic_wcheng@quicinc.com,
- melody.olvera@oss.qualcomm.com, quic_nsekar@quicinc.com,
- ivo.ivanov.ivanov1@gmail.com, abelvesa@kernel.org, luca.weiss@fairphone.com,
- konrad.dybcio@oss.qualcomm.com, mitltlatltl@gmail.com,
- krishna.kurapati@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
- linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-phy@lists.infradead.org, linux-pm@vger.kernel.org, kernel@collabora.com
-References: <20260114092742.13231-1-angelogioacchino.delregno@collabora.com>
- <de08d697-4202-499c-9784-2bb8d3d614b6@collabora.com>
-Content-Language: en-US
-In-Reply-To: <de08d697-4202-499c-9784-2bb8d3d614b6@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: B2C952139E7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260305-mdss_catalog-v5-2-06678ac39ac7@oss.qualcomm.com>
+X-Proofpoint-GUID: _LDJJaIYIi8gyL2D0toSSlo2mz3hICM_
+X-Proofpoint-ORIG-GUID: _LDJJaIYIi8gyL2D0toSSlo2mz3hICM_
+X-Authority-Analysis: v=2.4 cv=GecaXAXL c=1 sm=1 tr=0 ts=69a994fd cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=COk6AnOGAAAA:8
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=s80QRqCtEMuw_QvzVh8A:9 a=CjuIK1q_8ugA:10
+ a=bTQJ7kPSJx9SKPbeHEYW:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA1MDExNiBTYWx0ZWRfX1XJHb0RJfQoc
+ 9LrQXY4KNScc8O9IWGeAFf60tQqS9QwaE2dWwb9rAyCeVpsAsB4b1iS9oUrCrFy5m8uFGrSbKOt
+ 3W3Sss/QBxZUw87cZm8uUv98UHeli0u6D61Z4EO1LuEdgKbVTQoAFajBaHzul9SPa2jvKpQM8Ea
+ Ajx3JfaQmCFzFSNq7b8FNQrENTrWIVSil9r3eX7QbRIwBs6uFJu8q8tg5f/tcRj2OFG1GnKDEIa
+ wilGt839OqtmBJkrs5wV6FZWri/n0sH2bJZo9p1Np4HBYEedTnwe6tGAp0eX4i76JEYgM5i4r4z
+ hRj4qLUx1hbYhus+aap2xN3xxnYouyq0ybdvFaQC1+FnzCB9ikjWBJPtTWJ4+MBf7kYN3ohci07
+ DM3yT7IbyyBi9jxF2otdLGO8NG4rUoB6rOB4KUsVEI4CT7GNwDuYyi2zvdTG6St2WcuabvKb1s6
+ OsoY7kebSRq0KKErh2w==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-05_04,2026-03-04_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 bulkscore=0 impostorscore=0 spamscore=0 suspectscore=0
+ clxscore=1015 lowpriorityscore=0 adultscore=0 malwarescore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603050116
+X-Rspamd-Queue-Id: 9903F213E17
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[collabora.com,none];
-	R_DKIM_ALLOW(-0.20)[collabora.com:s=mail];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[baylibre.com,analog.com,kernel.org,arndb.de,linuxfoundation.org,linaro.org,oss.qualcomm.com,quicinc.com,gmail.com,fairphone.com,vger.kernel.org,lists.infradead.org,collabora.com];
+	TAGGED_FROM(0.00)[bounces-95662-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch,quicinc.com,vger.kernel.org,lists.freedesktop.org];
 	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[collabora.com:+];
-	TAGGED_FROM(0.00)[bounces-95661-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,qualcomm.com:dkim,qualcomm.com:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,quicinc.com:email];
 	MIME_TRACE(0.00)[0:+];
-	TO_DN_NONE(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	MISSING_XM_UA(0.00)[];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[angelogioacchino.delregno@collabora.com,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[28]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Action: no action
 
-Il 21/01/26 12:00, AngeloGioacchino Del Regno ha scritto:
-> Il 14/01/26 10:27, AngeloGioacchino Del Regno ha scritto:
->> Changes in v8:
+On Thu, Mar 05, 2026 at 06:17:07PM +0800, Yongxing Mou wrote:
+> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > 
-> With this series being finally fully reviewed and having lots of acks, and
-> since I think that the main part of this is in SPMI subsystem rather than
-> others....
+> The intr_underrun and intr_vsync indices have been swapped, just simply
+> corrects them.
 > 
-> ....Stephen or Jonathan, can you please pick at least the SPMI code so that
-> it goes in for this merge window and doesn't get forgotten again?
-> 
-> That also makes it easier for the other maintainers who didn't give an ack (and
-> that don't want their subsystem patches to go through SPMI) to apply the patches
-> in the next merge window, IMO.
-> 
-
-This series was ready and fully reviewed since the last merge window.
-
-This is a gentle ping to remind you to *please* finally pick it.
-
-Cheers,
-Angelo
-
-> Thanks,
-> Angelo
-> 
-> 
->>   - Renamed *res to *sub_sdev in devm_spmi_subdevice_remove() (Andy)
->>   - Changed kerneldoc wording to "error pointer" for function
->>     spmi_subdevice_alloc_and_add() (Andy)
->>   - Shuffled around some assignments in spmi_subdevice_alloc_and_add() (Andy)
->>   - Used device_property_read_u32() instead of of_property_read_u32()
->>     in all of the migrated drivers (Andy)
->>   - Changed .max_register field in all of the migrated drivers from
->>     0x100 to 0xff (Andy)
->>   - Kept `sta1` declaration in reversed xmas tree order in function
->>     iadc_poll_wait_eoc() of qcom-spmi-iadc.c (Andy)
->>
->> Changes in v7:
->>   - Added commit to cleanup redundant dev_name() in the pre-existing
->>     spmi_device_add() function
->>   - Added commit removing unneeded goto and improving spmi_device_add()
->>     readability by returning error in error path, and explicitly zero
->>     for success at the end.
->>
->> Changes in v6:
->>   - Added commit to convert spmi.c to %pe error format and used
->>     %pe error format in spmi_subdevice code as wanted by Uwe Kleine-Konig
->>
->> Changes in v5:
->>   - Changed dev_err to dev_err_probe in qcom-spmi-sdam (and done
->>     that even though I disagree - because I wanted this series to
->>     *exclusively* introduce the minimum required changes to
->>     migrate to the new API, but okay, whatever....!);
->>   - Added missing REGMAP dependency in Kconfig for qcom-spmi-sdam,
->>     phy-qcom-eusb2-repeater and qcom-coincell to resolve build
->>     issues when the already allowed COMPILE_TEST is enabled
->>     as pointed out by the test robot's randconfig builds.
->>
->> Changes in v4:
->>   - Added selection of REGMAP_SPMI in Kconfig for qcom-coincell and
->>     for phy-qcom-eusb2-repeater to resolve undefined references when
->>     compiled with some randconfig
->>
->> Changes in v3:
->>   - Fixed importing "SPMI" namespace in spmi-devres.c
->>   - Removed all instances of defensive programming, as pointed out by
->>     jic23 and Sebastian
->>   - Removed explicit casting as pointed out by jic23
->>   - Moved ida_free call to spmi_subdev_release() and simplified error
->>     handling in spmi_subdevice_alloc_and_add() as pointed out by jic23
->>
->> Changes in v2:
->>   - Fixed missing `sparent` initialization in phy-qcom-eusb2-repeater
->>   - Changed val_bits to 8 in all Qualcomm drivers to ensure
->>     compatibility as suggested by Casey
->>   - Added struct device pointer in all conversion commits as suggested
->>     by Andy
->>   - Exported newly introduced functions with a new "SPMI" namespace
->>     and imported the same in all converted drivers as suggested by Andy
->>   - Added missing error checking for dev_set_name() call in spmi.c
->>     as suggested by Andy
->>   - Added comma to last entry of regmap_config as suggested by Andy
->>
->> While adding support for newer MediaTek platforms, featuring complex
->> SPMI PMICs, I've seen that those SPMI-connected chips are internally
->> divided in various IP blocks, reachable in specific contiguous address
->> ranges... more or less like a MMIO, but over a slow SPMI bus instead.
->>
->> I recalled that Qualcomm had something similar... and upon checking a
->> couple of devicetrees, yeah - indeed it's the same over there.
->>
->> What I've seen then is a common pattern of reading the "reg" property
->> from devicetree in a struct member and then either
->>   A. Wrapping regmap_{read/write/etc}() calls in a function that adds
->>      the register base with "base + ..register", like it's done with
->>      writel()/readl() calls; or
->>   B. Doing the same as A. but without wrapper functions.
->>
->> Even though that works just fine, in my opinion it's wrong.
->>
->> The regmap API is way more complex than MMIO-only readl()/writel()
->> functions for multiple reasons (including supporting multiple busses
->> like SPMI, of course) - but everyone seemed to forget that regmap
->> can manage register base offsets transparently and automatically in
->> its API functions by simply adding a `reg_base` to the regmap_config
->> structure, which is used for initializing a `struct regmap`.
->>
->> So, here we go: this series implements the software concept of an SPMI
->> Sub-Device (which, well, also reflects how Qualcomm and MediaTek's
->> actual hardware is laid out anyway).
->>
->>                 SPMI Controller
->>                       |                ______
->>                       |               /       Sub-Device 1
->>                       V              /
->>                SPMI Device (PMIC) ----------- Sub-Device 2
->>                                      \
->>                                       \______ Sub-Device 3
->>
->> As per this implementation, an SPMI Sub-Device can be allocated/created
->> and added in any driver that implements a... well.. subdevice (!) with
->> an SPMI "main" device as its parent: this allows to create and finally
->> to correctly configure a regmap that is specific to the sub-device,
->> operating on its specific address range and reading, and writing, to
->> its registers with the regmap API taking care of adding the base address
->> of a sub-device's registers as per regmap API design.
->>
->> All of the SPMI Sub-Devices are therefore added as children of the SPMI
->> Device (usually a PMIC), as communication depends on the PMIC's SPMI bus
->> to be available (and the PMIC to be up and running, of course).
->>
->> Summarizing the dependency chain (which is obvious to whoever knows what
->> is going on with Qualcomm and/or MediaTek SPMI PMICs):
->>      "SPMI Sub-Device x...N" are children "SPMI Device"
->>      "SPMI Device" is a child of "SPMI Controller"
->>
->> (that was just another way to say the same thing as the graph above anyway).
->>
->> Along with the new SPMI Sub-Device registration functions, I have also
->> performed a conversion of some Qualcomm SPMI drivers and only where the
->> actual conversion was trivial.
->>
->> I haven't included any conversion of more complex Qualcomm SPMI drivers
->> because I don't have the required bandwidth to do so (and besides, I think,
->> but haven't exactly verified, that some of those require SoCs that I don't
->> have for testing anyway).
->>
->> AngeloGioacchino Del Regno (10):
->>    spmi: Remove redundant dev_name() print in spmi_device_add()
->>    spmi: Print error status with %pe format
->>    spmi: Remove unneeded goto in spmi_device_add() error path
->>    spmi: Implement spmi_subdevice_alloc_and_add() and devm variant
->>    nvmem: qcom-spmi-sdam: Migrate to devm_spmi_subdevice_alloc_and_add()
->>    power: reset: qcom-pon: Migrate to devm_spmi_subdevice_alloc_and_add()
->>    phy: qualcomm: eusb2-repeater: Migrate to
->>      devm_spmi_subdevice_alloc_and_add()
->>    misc: qcom-coincell: Migrate to devm_spmi_subdevice_alloc_and_add()
->>    iio: adc: qcom-spmi-iadc: Migrate to
->>      devm_spmi_subdevice_alloc_and_add()
->>    iio: adc: qcom-spmi-iadc: Remove regmap R/W wrapper functions
->>
->>   drivers/iio/adc/qcom-spmi-iadc.c              | 109 ++++++++----------
->>   drivers/misc/Kconfig                          |   2 +
->>   drivers/misc/qcom-coincell.c                  |  38 ++++--
->>   drivers/nvmem/Kconfig                         |   1 +
->>   drivers/nvmem/qcom-spmi-sdam.c                |  38 ++++--
->>   drivers/phy/qualcomm/Kconfig                  |   2 +
->>   .../phy/qualcomm/phy-qcom-eusb2-repeater.c    |  55 +++++----
->>   drivers/power/reset/qcom-pon.c                |  33 ++++--
->>   drivers/spmi/spmi-devres.c                    |  24 ++++
->>   drivers/spmi/spmi.c                           |  95 +++++++++++++--
->>   include/linux/spmi.h                          |  16 +++
->>   11 files changed, 290 insertions(+), 123 deletions(-)
->>
+> Cc: stable@vger.kernel.org
+> Fixes: b139c80d181c ("drm/msm/dpu: Add SA8775P support")
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
 
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
+
+-- 
+With best wishes
+Dmitry
 
