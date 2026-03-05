@@ -1,169 +1,210 @@
-Return-Path: <linux-arm-msm+bounces-95635-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95636-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id gKLVNMyAqWkd9gAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95635-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 14:10:36 +0100
+	id sE5tAs+BqWkd9gAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95636-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 14:14:55 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 658F52126C5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 14:10:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 62890212800
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 05 Mar 2026 14:14:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 70A9330649FE
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 13:06:19 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 354D7302AC26
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Mar 2026 13:11:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFA713A1D12;
-	Thu,  5 Mar 2026 13:06:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D0883A0B15;
+	Thu,  5 Mar 2026 13:11:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G9tX/hM7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA5D3A0EAA
-	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Mar 2026 13:06:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7766739FCCF
+	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Mar 2026 13:11:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772715976; cv=none; b=oxZAWiVCQhV2TPGeTiOi7MRSmHOvyQJT+8fHobFxb/ny9jvHkskBMk+S2jVH5UVAv954rx5dZU3F28QCen0Jr3WVTEOtzAWbxar/rRv/iPwguRGHSttwvIfG9QbqX9HVj0TRmD8grfXHvBr4tB9CP1k/gKE5H4tP7oo1dxfbzuI=
+	t=1772716268; cv=none; b=czfiKSTi4tpdVrvFfeQIrF4zGIkkZSVSuQi910d+vZr9a+2wX8ptk8zYbQblikXRiUAgnr1+M5GC1ziryyvvmvIg17FlxaR3uKUg09uQavU/67MtacUbRoFQjaK7/49CKvcJhAJY0g5AbVUGVS4dVwwvQwd+AcA7ke6x655hNPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772715976; c=relaxed/simple;
-	bh=An6z6pGF00+43VUaOecTwb49LKqdBH2wGqINr17mp5U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uyvwrTHj2NyMnhu4zelE5Rw3QrdKSo3D0KxHnbmwyyupEXRx9oagO2m4graLX1qV5jKRM1QnxMnOLnWCtrdKd4N5k3ZQP/eTZOtG4/O72UjR9K9urlgfHtnlNvEzw1Mv9i4S6o/5ldu/dfIKQWB+AGCY66VGlXBLUxtd3sCu4oI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.215.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-c737d3a51bdso674656a12.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2026 05:06:12 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772715972; x=1773320772;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=z/3ao61LTSp6jCCF+e+2SF+gp23jwVu9a+x2K0Dcxpg=;
-        b=Gz11c9pxWoH7qVvwWLAtE/3CNtX0UBzN5UQ/2gI3hnnkGY8AG55pmPBgoLbzpQkqCq
-         93WXLhSr0euiyYWeqtVUulqPPfO1uNaOP6SUnlYgjsi7/SIOucqkkHIsGdMpNXDOW/7P
-         sFTCLbX3ezSnL9/G/i+ChvPY2jkWVagjDS4b8uSeIDu9V8Yc2dMqgYEhI5N4XW40RJmd
-         EfS82lwdn5cwEXClQxrEuhZns0Nh8IwLtKQp9QSGyOiFyK2X3KHpYkjt/nciBEFi1LdN
-         l2k5yn9zMJZ+hUmCVSBdFsdK8ZttnhXKyBxIJu6sSXkk0RuTH2iRpH0Pasq7JH+TXf/v
-         Ad2w==
-X-Forwarded-Encrypted: i=1; AJvYcCX9yXskmHaedRcxCjZXzcXdqOuO/n2zERyTfv2CeSelJ6dAzptsryP7pojDhKGhAOioItx/6cDpQzWo5H1d@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx5EsJIqcDZe/T4Fh98jxPAk4J7l8O1PgSGQh9TJUFJVi8d2s9v
-	ZtPJSABiGQk0iw8VbW8HkfeYxLTO5CFx6BeNYJH9W6qElHizZ664lixx
-X-Gm-Gg: ATEYQzzlA4TW1X035CUnhtwqPeWMC1coiYh2r9Kq8RMS+icPB6OmcaIMl/U1ZEpDd0p
-	f+eahiPZdiYezU7vHDNRfQmqdQaFgfYmhpokkxZMDMtcBCD6Fy8p5+AJn4veGRw1VFe1tnwGmrC
-	9JgPXIEve8bRipv4okbRcK+D8uTqh2BeNQjT9Mq1PBE9nZCu7c02S5OsnAufDH2MFsY1pY6+/DN
-	vVdC/Nk8ZdhLH7aW90km3ZUHGpuj1aSz8+7hYTDfqV20sMtCwJXhCOjUtvcrmBhu/EKYykfx1sy
-	BYG/OX3okXZv+2v01NH6lyCYIOmfX65ZsuOdqHGXE5f403uiaP2VZMS9CNnY/w1+kAifPEo+nds
-	mQde8yROmqn8qD21mFT8vBZboP3AoL+07OyA8sBVvgtVLH37fkF6mdk8k6MmvNm40AGU0m0ZsE/
-	Kv4enfFCzNNlCskgIws4eVsOIOYDdmg7vvhmn7YvH8YAdxDKiVXdBFTc0r4Qo+CUpU5EfDT3fqq
-	PHRkXMjynQgX12Zy4kRMSuQSEnkzoTGI5dwp/lUXieJgBDRxqw=
-X-Received: by 2002:a17:902:f68a:b0:295:560a:e499 with SMTP id d9443c01a7336-2ae6a9cd41cmr53596975ad.5.1772715971749;
-        Thu, 05 Mar 2026 05:06:11 -0800 (PST)
-Received: from localhost (fpd11144dd.ap.nuro.jp. [209.17.68.221])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae3d19559csm154128355ad.5.2026.03.05.05.06.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Mar 2026 05:06:10 -0800 (PST)
-Date: Thu, 5 Mar 2026 22:06:09 +0900
-From: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
-To: Vladimir Oltean <vladimir.oltean@nxp.com>
-Cc: Joe Perches <joe@perches.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	linux-phy@lists.infradead.org, Vinod Koul <vkoul@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-can@vger.kernel.org, linux-gpio@vger.kernel.org,
-	linux-ide@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-media@vger.kernel.org, linux-pci@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org, linux-riscv@lists.infradead.org,
-	linux-rockchip@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
-	linux-tegra@vger.kernel.org, linux-usb@vger.kernel.org,
-	netdev@vger.kernel.org, spacemit@lists.linux.dev,
-	UNGLinuxDriver@microchip.com
-Subject: Re: [PATCH phy-next 22/22] MAINTAINERS: add regex for linux-phy
-Message-ID: <20260305130609.GB1659133@rocinante>
-References: <20260304175735.2660419-1-vladimir.oltean@nxp.com>
- <20260304175735.2660419-23-vladimir.oltean@nxp.com>
- <a8fee1cd-1e69-4a9e-8533-c0988c480fb9@oss.qualcomm.com>
- <20260305085148.7cwo3yflp7vcfldf@skbuf>
- <f3a5aa3df78553ffc0fd0024f5fd36a4e2158c88.camel@perches.com>
- <20260305114352.2f7btqixg4tu5bzl@skbuf>
- <20260305121532.GA1649635@rocinante>
- <20260305123843.i47asdrjychwlgdt@skbuf>
+	s=arc-20240116; t=1772716268; c=relaxed/simple;
+	bh=ISJ9IeJb4bdYq8e9zGFzYpxXmxiQlQWQQQm3BHAO9ac=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=r2q1HTncHpbCg21HCg4c8Wit/6wzLSC1eRAjIuozEYON9kkxySQyw/IZL2RwOT4pysvuR22UvaVRoG6Nj9TnD+4JVaVwsUWTYfldRWY2pkhvd5R1N5+GW85rjR8kKC6oKW/U2nav4CnrmhTWWj6ba18cU0eWO/3+j3j+rFPZq18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G9tX/hM7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 483ABC2BCB9
+	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Mar 2026 13:11:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772716268;
+	bh=ISJ9IeJb4bdYq8e9zGFzYpxXmxiQlQWQQQm3BHAO9ac=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=G9tX/hM7Mw5zGuhmFHkyyRDc++MrZfNxmP/ZNpmTsla4iANpe9h6kxmyvipqjVzAz
+	 Je4rF+N2HacpqEUtA56nQtcW1Htkr75+BA+vYEBrXZ0N0EhwNnymUo/bk0Yb2nmnJI
+	 6At5t1N+ZbugQP602yqM+0ekCuw5r/LjlLyjizp7gjfUKgG9DbIFhqJ5snjfsbc7qL
+	 tRdXzb1bCUDZ+74i3CHKIzvC2Qvcl0Pbqfwm7DRHg9NWxMR797L8CIY5ZgcM1SXhW3
+	 gdQRt7gvL13nfQWGsJz8VdZ6LjcxwV1aDfNTS9fN+gdaJEhCSsx11FW798ngQVwGtG
+	 1h6WZhARdxABQ==
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-38a3990e87fso1533171fa.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2026 05:11:08 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCUz/Y49USkkWK0N1NqnOmzzscsF12T5ej9rskqOcr1A8HF0kr743GtRtWTYOV2y7Ptmw5kfxAiLClOICijn@vger.kernel.org
+X-Gm-Message-State: AOJu0YxGaEzlPltrdZDrKmRXXQ+YXEgsmzAnY417l4bFe4zMVYKxop+I
+	H7YRdu71u661HgEuY6Orv3+6eDmruGRhBOly057vgFvisFwq3hMGI6b+0rJb0PDPSGX3Dz9pMIn
+	vEWcPl3VvroOGL0NWihFXv3Fws1/PBzqaF5nlWHnXPg==
+X-Received: by 2002:a2e:22c4:0:b0:383:7f85:8eef with SMTP id
+ 38308e7fff4ca-38a2c7c74e6mr37197791fa.29.1772716266754; Thu, 05 Mar 2026
+ 05:11:06 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260305123843.i47asdrjychwlgdt@skbuf>
-X-Rspamd-Queue-Id: 658F52126C5
+References: <20260302-qcom-qce-cmd-descr-v11-0-4bf1f5db4802@oss.qualcomm.com>
+ <scr5qvxa7f7k22pms4c6k5gwiky7lhssrw6qryfngexlek44g2@rayinnnwqgbt> <aalwMwN3qMlzrql5@linaro.org>
+In-Reply-To: <aalwMwN3qMlzrql5@linaro.org>
+From: Bartosz Golaszewski <brgl@kernel.org>
+Date: Thu, 5 Mar 2026 14:10:55 +0100
+X-Gmail-Original-Message-ID: <CAMRc=MfjknN1AYF_NPLzR0YbdWuoET25D9o0zsvx56VN+u59HQ@mail.gmail.com>
+X-Gm-Features: AaiRm53riIL1Ev5aiOi4LeHVM1opButAi-QDELWr9rH7US3VnOIMoqa9uDUU7UY
+Message-ID: <CAMRc=MfjknN1AYF_NPLzR0YbdWuoET25D9o0zsvx56VN+u59HQ@mail.gmail.com>
+Subject: Re: [PATCH RFC v11 00/12] crypto/dmaengine: qce: introduce BAM
+ locking and use DMA for register I/O
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
+	Thara Gopinath <thara.gopinath@gmail.com>, Herbert Xu <herbert@gondor.apana.org.au>, 
+	"David S. Miller" <davem@davemloft.net>, Udit Tiwari <quic_utiwari@quicinc.com>, 
+	Daniel Perez-Zoghbi <dperezzo@quicinc.com>, Md Sadre Alam <mdalam@qti.qualcomm.com>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Peter Ujfalusi <peter.ujfalusi@gmail.com>, 
+	Michal Simek <michal.simek@amd.com>, Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org, 
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: 62890212800
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.86 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
-	DMARC_POLICY_SOFTFAIL(0.10)[linux.com : SPF not aligned (relaxed), No valid DKIM,none];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95635-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[26];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	TAGGED_FROM(0.00)[bounces-95636-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,lwn.net,gmail.com,gondor.apana.org.au,davemloft.net,quicinc.com,qti.qualcomm.com,amd.com,vger.kernel.org,lists.infradead.org];
 	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[24];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MISSING_XM_UA(0.00)[];
 	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[kw@linux.com,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	NEURAL_HAM(-0.00)[-0.997];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	R_DKIM_NA(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,mail.gmail.com:mid]
 X-Rspamd-Action: no action
 
-Hello,
+On Thu, Mar 5, 2026 at 1:00=E2=80=AFPM Stephan Gerhold
+<stephan.gerhold@linaro.org> wrote:
+>
+> On Tue, Mar 03, 2026 at 06:13:56PM +0530, Manivannan Sadhasivam wrote:
+> > On Mon, Mar 02, 2026 at 04:57:13PM +0100, Bartosz Golaszewski wrote:
+> > > NOTE: Please note that even though this is version 11, I changed the
+> > > prefix to RFC as this is an entirely new approach resulting from
+> > > discussions under v9. I AM AWARE of the existing memory leaks in the
+> > > last patch of this series - I'm sending it because I want to first
+> > > discuss the approach and get a green light from Vinod as well as Mani
+> > > and Bjorn. Especially when it comes to communicating the address for =
+the
+> > > dummy rights from the client to the BAM driver.
+> > > /NOTE
+> > >
+> > > Currently the QCE crypto driver accesses the crypto engine registers
+> > > directly via CPU. Trust Zone may perform crypto operations simultaneo=
+usly
+> > > resulting in a race condition. To remedy that, let's introduce suppor=
+t
+> > > for BAM locking/unlocking to the driver. The BAM driver will now wrap
+> > > any existing issued descriptor chains with additional descriptors
+> > > performing the locking when the client starts the transaction
+> > > (dmaengine_issue_pending()). The client wanting to profit from lockin=
+g
+> > > needs to switch to performing register I/O over DMA and communicate t=
+he
+> > > address to which to perform the dummy writes via a call to
+> > > dmaengine_slave_config().
+> > >
+> >
+> > Thanks for moving the LOCK/UNLOCK bits out of client to the BAM driver.=
+ It looks
+> > neat now. I understand the limitation that for LOCK/UNLOCK, BAM needs t=
+o perform
+> > a dummy write to an address in the client register space. So in this ca=
+se, you
+> > can also use the previous metadata approach to pass the scratchpad regi=
+ster to
+> > the BAM driver from clients. The BAM driver can use this register to pe=
+rform
+> > LOCK/UNLOCK.
+> >
+> > It may sound like I'm suggesting a part of your previous design, but it=
+ fits the
+> > design more cleanly IMO. The BAM performs LOCK/UNLOCK on its own, but i=
+t gets
+> > the scratchpad register address from the clients through the metadata o=
+nce.
+> >
+> > It is very unfortunate that the IP doesn't accept '0' address for LOCK/=
+UNLOCK or
+> > some of them cannot append LOCK/UNLOCK to the actual CMD descriptors pa=
+ssed from
+> > the clients. These would've made the code/design even more cleaner.
+> >
+>
+> I was staring at the downstream drivers for QCE (qce50.c?) [1] for a bit
+> and my impression is that they manage to get along without dummy writes.
+> It's a big mess, but it looks like they always have some commands
+> (depending on the crypto operation) that they are sending anyway and
+> they just assign the LOCK/UNLOCK flag to the command descriptor of that.
+>
+> It is similar for the second relevant user of the LOCK/UNLOCK flags, the
+> QPIC NAND driver (msm_qpic_nand.c in downstream [2], qcom_nandc.c in
+> mainline), it is assigned as part of the register programming sequence
+> instead of using a dummy write. In addition, the UNLOCK flag is
+> sometimes assigned to a READ command descriptor rather than a WRITE.
+>
+> @Bartosz: Can we get by without doing any dummy writes?
+> If not, would a dummy read perhaps be less intrusive than a dummy write?
+>
 
-> > > K:    \b(?:__)?(?:devm_)?(?:of_)?phy_(?:create|destroy|provider_(?:un)?register)\b
-> > > K:    \bphy_(?:create|remove)_lookup\b
-> > > K:    \bphy_(?:get|set)?_drvdata\b
-> > > K:    \b(?:devm_)?(?:of_)?phy_(?:optional_)?(?:get|put)(?:_by_index)?\b
-> > > K:    \bphy_pm_runtime_(?:get|put)(?:_sync)?\b
-> > > K:    \bphy_(?:init|exit|power_(?:on|off))\b
-> > > K:    \bphy_|(?:get|set)_(?:mode(?:_ext)?|media|speed|bus_width|max_link_rate)\b
-> > > K:    \bphy_(?:reset|configure|validate|calibrate)\b
-> > > K:    \bphy_notify_(?:connect|disconnect|state)\b
-> > > K:    (?:struct\s+)?phy(?:_ops|_attrs|_lookup|_provider)?\b
-> > > K:    (?:linux/phy/phy\.h|phy-props\.h|phy-provider\.h)
-> > 
-> > What about
-> > 
-> >   F:    drivers/*/*phy*
-> > 
-> > or something along these lines.
-> > 
-> >         Krzysztof
-> 
-> I don't understand your suggestion. Is it meant as a replacement for the
-> keyword regexes? Your file pattern matches on:
+The HPG says that the LOCK/UNLOCK flag *must* be set on a command
+descriptor, not a data descriptor. For a simple encryption we will
+typically have a data descriptor and a command descriptor with
+register writes. So we need a command descriptor in front of the data
+and - while we could technically set the UNLOCK bit on the subsequent
+command descriptor - it's unclear from the HPG whether it will unlock
+before or after processing the command descriptor with the UNLOCK bit
+set. Hence the additional command descriptor at the end.
 
-I was thinking more along the lines of using wildcards, the F: was just an
-example.
+The HPG also only mentions a write command and says nothing about a
+read. In any case: that's the least of the problems as switching to
+read doesn't solve the issue of passing the address of the scratchpad
+register.
 
-[...]
+So while some of this *may* just work, I would prefer to stick to what
+documentation says *will* work. :)
 
-> There are a lot of false positives, and a lot of false negatives.
-
-Yeah, the "catch-all", for lack of better word, will not work here.
-
-	Krzysztof
+Bartosz
 
