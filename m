@@ -1,97 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-95874-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95875-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id IJx6KNYBq2msZQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95874-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 17:33:26 +0100
+	id QMklA1UCq2nPZQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95875-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 17:35:33 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5721B224F3F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 17:33:26 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id A065E225265
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 17:35:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id BD8CC300B9F3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2026 16:33:25 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 0BE61302CEA6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2026 16:35:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F278C304BDF;
-	Fri,  6 Mar 2026 16:33:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E17BA3EB7EA;
+	Fri,  6 Mar 2026 16:35:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jZMlZTBr"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="ra75eS1/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA4536BCF1
-	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Mar 2026 16:33:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0382136CDFE
+	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Mar 2026 16:35:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772814804; cv=none; b=D63E5U0qNaWaKCTPda35+WSUQ85kP1saWD9gCunuVTH/vzA8y8E34sn/NFpVBKoTVYnkcMV8bo7/pNSLul7SKK95OwINW1CYyfYbgDOZqnaWTiFe+9LbGEeXYGjaNfoCSLqcocvLmZTI21uwHco2V7N7KIM6dS62zZf7AyHsIRA=
+	t=1772814923; cv=none; b=cMtwv56TFhg8HHpitRkMHNjA8jMDQa3EQsfqbuwY+4SpQkDEiSgrj8HGPk6y+U8ZnUzP28LHmngZXz2eTGJPI+At7nXE7wG9Pj+HNZlpiT+aLezztWPnGgy49w+benAd6YexKED3nFsbTojcBKPg8SSEx4dBIoNzukbskAEuI0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772814804; c=relaxed/simple;
-	bh=t1t4YoDlUzSJoUjo8KmiYuwsghR6uCHf26BrU8o4d9E=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=bYeH9h8+ldDpL8ebG9rEKS63AIokTBc6J5Bn9cItnlamAxj7yzxUnN4StKuCMPJWK7tf6cPAHlIs69MOsesiSH+1WxOaGN1M1nKtEA3CKj3xNfWXXl5WjOi2ZgTDpMT0rCPHAgl2X8DN6WTit9JoViqWuq+lgYXdLYPx1EzlJkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jZMlZTBr; arc=none smtp.client-ip=209.85.210.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-829756f3ee9so2903798b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Mar 2026 08:33:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772814803; x=1773419603; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=fniX8oUV8n9EE4oHisFRFMjU1mIvUBscUL0mED7CFfk=;
-        b=jZMlZTBrJjifjPoCwLqEgbU9eIGNSrAlkHu3PB+9+4XkB3qQQAnuY0CX3onzORv3EV
-         7mDybG1r6xq7PDONBCvLYtuKr090F3P8+07vHv5p290TQtJ5h3yWSRqkVe5Eg1JFo0/C
-         OAHTyMVUyjhiv5ZhQKmAc073hYFR1QIQZo9E2jrTYCSBw5K/wKeS6vcEZ9LtYOSnL6M0
-         pj9njcoowtPL28GUYBI7le7sJgFFEfEnPTY1tHmq7yn9GwKP6R/xMDi8BYNidrIjHxMC
-         B91GQIQrYf/biXQUZ262j84TCfTdKreg03LvdgOhXLwR5FYolilzdaivgxzlSZDucB8V
-         lRjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772814803; x=1773419603;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fniX8oUV8n9EE4oHisFRFMjU1mIvUBscUL0mED7CFfk=;
-        b=Xq7ZRAZNx9ChZTclo3TmHmoi/WwcViE7vE26xdzvTFIXAFUrTBvt+6VFvCiiIgwYPy
-         hh7qMBrFQMxdcXIXdcZLQlRXmRCuKJMg9xA08hh+v/c18a3lv/yJjQj14DvJuICUD2W3
-         TYmZBdopkoPM/ngYp5rDPvm+0NKaofdNd/CwwSbNj93zMr+6mmeuvVIqWGG3tHY2KUWK
-         ncSXyhG2wEC+34T3oadzeWgnYJs4Bp4CdSJe+msLZ1wySgLxGrc/GSHOyTiDGrbfF/Ea
-         xmlzL7Vw11uGCOJ53mjNfrgCHdXGe3BJjGNRs5Vv9e+0Ulb3MwN7/dQBO8sdZX9luQF9
-         nSgg==
-X-Forwarded-Encrypted: i=1; AJvYcCWKETKAMq8DbE5mviO0vKW0rv6L7AcNDr4CJmNLTpL8k8ax9zEl/cHoI1QANO2s0rFVFpmWDez6iDLGz6Gk@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz2gjhmOSyyuHaXdudyuwPVb5a82mI3y9XpoiSjNBFC5Hn9hMpH
-	JMxfcULbZ6E+yAF45VBlmdPfpOFkGG/oND3mPzcTWbW9iLDd8WaMsFoW
-X-Gm-Gg: ATEYQzxHtmAXG5MsgZFs9zxkd4IAqWsS7ain+g2HZGHDZRCmoTWKVtZzmZla1Nx2iS3
-	xAE5d7opJQESxO5vRqBz/+bk53CSC+OShFOcWeFXuOc5gxEsDI/ZNqKuVeXbgJn+r+4uDu92oL3
-	4Hw6aQdqn2L9J94tBeZSOnQZaS3O7sOAeIJpr+OQOXCXKDr9k4HeJuaRfITcB9FYzL39llIx8zW
-	5lDQERMRlyfNVHDGhnmsY8DovFaWt6E1sD3L/dz9PAnnNZsB4wVAjjKi0HomQKV3/atEZFcVBzA
-	RLEzmpfhI3Ug+WborTegwZ8yWRJ8IcF/bCQIIV3fztaok94Q2tlypJMTzrCDDqezhibpe8+N3IH
-	7hhBL3tsPP6oau1JZVyyF1OlYS8kbX8nkGp/Y/YJjAt2Cp1C2FzVIeq8oml9k1SyiUEbQR3rVxH
-	5sTWTbL6SD8RvVm23zeQ==
-X-Received: by 2002:a05:6a00:1408:b0:824:93e4:2de1 with SMTP id d2e1a72fcca58-829a2eaed31mr2478705b3a.30.1772814802771;
-        Fri, 06 Mar 2026 08:33:22 -0800 (PST)
-Received: from nuvole ([109.166.36.159])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-829a4676187sm2786788b3a.27.2026.03.06.08.33.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Mar 2026 08:33:22 -0800 (PST)
-From: Pengyu Luo <mitltlatltl@gmail.com>
-To: Rob Clark <robin.clark@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jesszhan0024@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>
-Cc: Pengyu Luo <mitltlatltl@gmail.com>,
+	s=arc-20240116; t=1772814923; c=relaxed/simple;
+	bh=FFBkV/0ejK/pb/RHWbG6tAUbMX+4iNMDNwghvW8GkcI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Wd+WKHVlFOKq5S2yAQScVFb/zrJ55zrQgUSGJdYBaGwsXehlldt2s84cMk25AsnST++IfCQlz1YHazlPJw1EitANX451tQHpDRjFKPV5L6v7tA2M88MOmHMHIjzwYbepCFzOCl+Zxho3G3fUpVX/U45Jc5EMN0JnKKO0mZlycN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=ra75eS1/; arc=none smtp.client-ip=213.97.179.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
+	Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=2vcB2VKvrq1jKr6Ie6dkyIA+POf0Er+XnCCIlLmJQWs=; b=ra75eS1/pQ+kqx/IuS5FSbAdBq
+	PpTtytMD9cUZbMuaWMgCCN0M5p8BIIkstFYnAFXtPYcr8KJhGCPuOFwfLk2FnuGXz5Y7omqyBFH0S
+	5n69AA0O/omYR4NIXoKm6kmv1DG3AJzU1vnz66bSfVkx/kpQZZJEzQlVlyQ09hRnqlv3hClvnoMNV
+	wPIU3v8JN0kiRhrJX39T1lMCYUjqc2bGRkDq5kgFbybHD74wn90F9xJgnWeFG9h1JllJqkfy304Kl
+	majfJBNI43v2AysaZ8bBLJIXci5AaY7GV92CH+mxT+XKIMgaHlw39RrJeW9zzKXCHftSyjVdGvC1u
+	o6oSkj8g==;
+Received: from [90.240.106.137] (helo=localhost)
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
+	id 1vyY8p-00APWG-Ct; Fri, 06 Mar 2026 17:35:07 +0100
+From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+To: amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org
+Cc: kernel-dev@igalia.com,
+	intel-xe@lists.freedesktop.org,
+	Danilo Krummrich <dakr@kernel.org>,
+	Philipp Stanner <phasta@kernel.org>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] drm/msm/dsi: fix pclk rate calculation for bonded dsi
-Date: Sat,  7 Mar 2026 00:32:38 +0800
-Message-ID: <20260306163255.215456-1-mitltlatltl@gmail.com>
-X-Mailer: git-send-email 2.53.0
+	freedreno@lists.freedesktop.org
+Subject: [PATCH v7 22/29] drm/msm: Remove drm_sched_init_args->num_rqs usage
+Date: Fri,  6 Mar 2026 16:34:38 +0000
+Message-ID: <20260306163445.97243-23-tvrtko.ursulin@igalia.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260306163445.97243-1-tvrtko.ursulin@igalia.com>
+References: <20260306163445.97243-1-tvrtko.ursulin@igalia.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -99,109 +74,73 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 5721B224F3F
+X-Rspamd-Queue-Id: A065E225265
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [1.14 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	R_DKIM_REJECT(1.00)[igalia.com:s=20170329];
+	MID_CONTAINS_FROM(1.00)[];
 	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
+	DMARC_POLICY_SOFTFAIL(0.10)[igalia.com : SPF not aligned (relaxed),none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-95874-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[gmail.com,vger.kernel.org,lists.freedesktop.org];
-	FREEMAIL_FROM(0.00)[gmail.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-95875-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	DKIM_TRACE(0.00)[igalia.com:-];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	NEURAL_SPAM(0.00)[0.097];
+	FROM_NEQ_ENVFROM(0.00)[tvrtko.ursulin@igalia.com,linux-arm-msm@vger.kernel.org];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mitltlatltl@gmail.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	RCVD_COUNT_FIVE(0.00)[5];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	NEURAL_HAM(-0.00)[-0.981];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[10];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[lists.freedesktop.org:email,qualcomm.com:email,igalia.com:mid,igalia.com:email,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-Recently, we round up new_hdisplay once at most, for bonded dsi, we
-may need twice, since they are independent links, we should round up
-each half separately. This also aligns with the hdisplay we program
-later in dsi_timing_setup()
+Remove member no longer used by the scheduler core.
 
-Example:
-	full_hdisplay = 1904, dsc_bpp = 8, bpc = 8
-	new_full_hdisplay = DIV_ROUND_UP(1904 * 8, 8 * 3) = 635
-
-if we use half display
-	new_half_hdisplay = DIV_ROUND_UP(952 * 8, 8 * 3) = 318
-	new_full_display = 636
-
-Fixes: 7c9e4a554d4a ("drm/msm/dsi: Reduce pclk rate for compression")
-Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: freedreno@lists.freedesktop.org
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 29 +++++++++++++++++++++++------
- 1 file changed, 23 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/msm/msm_gem_vma.c    | 1 -
+ drivers/gpu/drm/msm/msm_ringbuffer.c | 1 -
+ 2 files changed, 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index e8e83ee61..db6da9937 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -584,13 +584,30 @@ void dsi_link_clk_disable_v2(struct msm_dsi_host *msm_host)
-  *  FIXME: Reconsider this if/when CMD mode handling is rewritten to use
-  *  transfer time and data overhead as a starting point of the calculations.
-  */
--static unsigned long dsi_adjust_pclk_for_compression(const struct drm_display_mode *mode,
--		const struct drm_dsc_config *dsc)
-+static unsigned long
-+dsi_adjust_pclk_for_compression(const struct drm_display_mode *mode,
-+				const struct drm_dsc_config *dsc,
-+				bool is_bonded_dsi)
+diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_gem_vma.c
+index adf88cf8f41a..086f72744312 100644
+--- a/drivers/gpu/drm/msm/msm_gem_vma.c
++++ b/drivers/gpu/drm/msm/msm_gem_vma.c
+@@ -832,7 +832,6 @@ msm_gem_vm_create(struct drm_device *drm, struct msm_mmu *mmu, const char *name,
+ 	if (!managed) {
+ 		struct drm_sched_init_args args = {
+ 			.ops = &msm_vm_bind_ops,
+-			.num_rqs = 1,
+ 			.credit_limit = 1,
+ 			.timeout = MAX_SCHEDULE_TIMEOUT,
+ 			.name = "msm-vm-bind",
+diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.c b/drivers/gpu/drm/msm/msm_ringbuffer.c
+index 30ddb5351e98..a7dafa7ab4b1 100644
+--- a/drivers/gpu/drm/msm/msm_ringbuffer.c
++++ b/drivers/gpu/drm/msm/msm_ringbuffer.c
+@@ -67,7 +67,6 @@ struct msm_ringbuffer *msm_ringbuffer_new(struct msm_gpu *gpu, int id,
  {
--	int new_hdisplay = DIV_ROUND_UP(mode->hdisplay * drm_dsc_get_bpp_int(dsc),
--			dsc->bits_per_component * 3);
-+	int hdisplay, new_hdisplay, new_htotal;
- 
--	int new_htotal = mode->htotal - mode->hdisplay + new_hdisplay;
-+	/*
-+	 * For bonded DSI, split hdisplay across two links and round up each
-+	 * half separately, passing the full hdisplay would only round up once.
-+	 * This also aligns with the hdisplay we program later in
-+	 * dsi_timing_setup()
-+	 */
-+	hdisplay = mode->hdisplay;
-+	if (is_bonded_dsi)
-+		hdisplay /= 2;
-+
-+	new_hdisplay = DIV_ROUND_UP(hdisplay * drm_dsc_get_bpp_int(dsc),
-+				    dsc->bits_per_component * 3);
-+
-+	if (is_bonded_dsi)
-+		new_hdisplay *= 2;
-+
-+	new_htotal = mode->htotal - mode->hdisplay + new_hdisplay;
- 
- 	return mult_frac(mode->clock * 1000u, new_htotal, mode->htotal);
- }
-@@ -603,7 +620,7 @@ static unsigned long dsi_get_pclk_rate(const struct drm_display_mode *mode,
- 	pclk_rate = mode->clock * 1000u;
- 
- 	if (dsc)
--		pclk_rate = dsi_adjust_pclk_for_compression(mode, dsc);
-+		pclk_rate = dsi_adjust_pclk_for_compression(mode, dsc, is_bonded_dsi);
- 
- 	/*
- 	 * For bonded DSI mode, the current DRM mode has the complete width of the
+ 	struct drm_sched_init_args args = {
+ 		.ops = &msm_sched_ops,
+-		.num_rqs = DRM_SCHED_PRIORITY_COUNT,
+ 		.credit_limit = num_hw_submissions,
+ 		.timeout = MAX_SCHEDULE_TIMEOUT,
+ 		.dev = gpu->dev->dev,
 -- 
-2.53.0
+2.52.0
 
 
