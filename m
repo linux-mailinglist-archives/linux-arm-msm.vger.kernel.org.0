@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-95717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95718-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cLM/Bp2BqmkHSwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 08:26:21 +0100
+	id wDN9FoeBqmkMSwEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95718-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 08:25:59 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC27921C6F2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 08:26:20 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0284221C6CC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 08:25:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 4D7E8304DC89
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2026 07:24:07 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A2E5430413AD
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2026 07:25:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3A92374195;
-	Fri,  6 Mar 2026 07:24:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8CBF372EE6;
+	Fri,  6 Mar 2026 07:25:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jnn1/jAH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h4ICmiWC"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CBEC30F7EA;
-	Fri,  6 Mar 2026 07:24:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3C7333689D;
+	Fri,  6 Mar 2026 07:25:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772781845; cv=none; b=B0HN6o1EOQJXEM4u9K43Q/gcz1nCnGn9uHWSWQPSiYVWmxRP78h/X+2pUuVrd3OFYt6tvSmLIHQ1vyqtPaHRdqQusonxj8KBvizwuip94HecCywHokW1Hda15YRliNcGZ3QtQWXuVB5+pzRBkPDA3EWI58+HSQIjHX9rrZvMjsc=
+	t=1772781955; cv=none; b=urv+nhm3VCwa9aW4ZMErMVn4s+t4cNbHThth3wuvN5YK8IbsrDHJqUaByKlM7s2n4BqwJUsY4TbhjmPwYR2CZhzKfIZkihbjccy+VI8i0018ymBP6ar8kaXcUqdEXnIuF+Oci49ipo50rX+X0p4YAfjdvsnjCrTK7HGCPi/0bbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772781845; c=relaxed/simple;
-	bh=Lj5SCGuo+7sbAhd95GFWDmURIHYhOxe3wX7NmPQPLoI=;
+	s=arc-20240116; t=1772781955; c=relaxed/simple;
+	bh=j9YONRo/sWUOCDk/7Xp4UEVvoJfedxAb+55rCW1hApE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ixp97Lkj8nwyvjpvDj73tHOkFkAwHy5uwHjCEXjM3cKf7TbA32sUEFSXSGroCb6oj03joMCaUUCv1gcnr98XcsW661U4+txp8JQDNZJXk/aZGLTbPUoyP651o/RgLysDjOn/APN0YCo3icMubBha8PhbO7eerecb1tphjE8nV/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jnn1/jAH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CD64C4AF09;
-	Fri,  6 Mar 2026 07:24:02 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Fd+GqnTdyOHpZ1R4Zz+FxbOQpP99eNUB2p7Jop1MS2Z3WNkQHk7L5neywWm2ShYNWYFQeqgdTokGGILk90FyagTJTalxhBdQYKQJDlqMxlUhnBJ1sMSM2DJTGzThot+vzeGim949GbIHnzzfAgNu6+/NfCoPRtENHfqsSkJ8kjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h4ICmiWC; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F74AC4CEF7;
+	Fri,  6 Mar 2026 07:25:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772781845;
-	bh=Lj5SCGuo+7sbAhd95GFWDmURIHYhOxe3wX7NmPQPLoI=;
+	s=k20201202; t=1772781955;
+	bh=j9YONRo/sWUOCDk/7Xp4UEVvoJfedxAb+55rCW1hApE=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Jnn1/jAH4recGbYIFZ4sSiKeOTVMLsDaW21tYhQzYkwJC861EtI+ZjsiRwO31FEBe
-	 GZq3+HMradhEqgFbRT+PFXDWen9F08316Qr9lWCSiN8ufZnUTz7kuA7HhCStzdT5iO
-	 CMNjLv+v2LQpwSmM3MNxo0fihfniXwTxTblVLp2gfBgZHkV7tT2Y9/LmrCXMMnspeo
-	 7rsuIpe5j81tAPQF+fYcwaY4YsBzyVXbU3rQfWWDI+8gkz3boGzHInoVw+Us6P3+fy
-	 dzq+ktVWK5ssMK5uIq8cez10XBg7ru36Liayu2uU0Vjmdvv16X3cBMIjWdjdwKG9N8
-	 i34N7IH+Qtktw==
-Message-ID: <900f7a40-70f1-42dc-b98f-845c53169127@kernel.org>
-Date: Fri, 6 Mar 2026 08:24:00 +0100
+	b=h4ICmiWC6kixVcCKFKUuxul0DzKR+jlXxTyMcwCkQc6dYTpzGiA5Z3YePn5KhLoun
+	 nPLBNUGJmHXHcY6WV+ENsPK2PoANUoH7HoduS4KTYgyVl3L8an3R0JmNpe9QQYox1o
+	 rWo89mvBque9IDvrMt6q+0Er3qgEaWYktuTIw94fbY41WVI1IKQr+hNnvfqLY7IX5F
+	 wLoeixmrxGQlVqp97nnbA5Fouq5VkNg+f5/esIsyUMbZiH/w24KGyuiGT4NvDXSh0N
+	 0izlb+i/0tAnofWD42RdvzoBqH1gWwVQWBU1QtWYduJyA2MAkah15p6XAgZEojjXUq
+	 nxqx1rDvf8nQw==
+Message-ID: <4f94c20c-d06f-48e5-95fb-5380c84a1b99@kernel.org>
+Date: Fri, 6 Mar 2026 08:25:50 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,15 +53,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: nvmem: qfprom: Add Kaanapali compatible
-To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
- Srinivas Kandagatla <srini@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
- trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260305-knp-qfprom-binding-v1-1-1b3effb09cad@oss.qualcomm.com>
+Subject: Re: [PATCH v3 2/3] remoteproc: qcom_wcnss_iris: Add support for
+ WCN3610
+To: Kerigan Creighton <kerigancreighton@gmail.com>,
+ linux-wireless@vger.kernel.org
+Cc: loic.poulain@oss.qualcomm.com, wcn36xx@lists.infradead.org,
+ andersson@kernel.org, mathieu.poirier@linaro.org,
+ linux-remoteproc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+References: <20260306004344.10968-1-kerigancreighton@gmail.com>
+ <20260306004344.10968-3-kerigancreighton@gmail.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,48 +110,59 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260305-knp-qfprom-binding-v1-1-1b3effb09cad@oss.qualcomm.com>
+In-Reply-To: <20260306004344.10968-3-kerigancreighton@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: CC27921C6F2
+X-Rspamd-Queue-Id: 0284221C6CC
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95717-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-95718-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_TO(0.00)[gmail.com,vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-0.999];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,bootlin.com:url]
 X-Rspamd-Action: no action
 
-On 06/03/2026 07:40, Jingyi Wang wrote:
-> Document compatible string for the QFPROM on Kaanapali platform.
+On 06/03/2026 01:43, Kerigan Creighton wrote:
+> WCN3610 has the same regulator requirements as
+> WCN3620, so in qcom_wcnss_iris, we can use wcn3620_data.
 > 
-> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-> ---
->  Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml | 1 +
->  1 file changed, 1 insertion(+)
+> A separate compatible is needed for WCN3610 because the
+> wcn36xx driver uses it for chip-specific configuration.
+> Specifically, it sets BTC (Bluetooth Coexistence) CFGs,
+> disables ENABLE_DYNAMIC_RA_START_RATE, and disables
+> STA_POWERSAVE for this specific chip for stable
+> functionality.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+This goes to the binding description where you describe the hardware,
+how I asked.
+
+Please wrap commit message according to Linux coding style / submission
+process (neither too early nor over the limit):
+https://elixir.bootlin.com/linux/v6.4-rc1/source/Documentation/process/submitting-patches.rst#L597
+
 
 Best regards,
 Krzysztof
