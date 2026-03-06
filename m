@@ -1,299 +1,231 @@
-Return-Path: <linux-arm-msm+bounces-95702-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95704-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cDCAJVsjqmkPMAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95702-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 01:44:11 +0100
+	id iEkwNY9HqmlkOgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95704-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 04:18:39 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3DD83219EA8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 01:44:11 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B2D421AFCA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 04:18:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 9885A301DD4B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2026 00:44:06 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 99901302F728
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2026 03:15:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6CC562E719C;
-	Fri,  6 Mar 2026 00:44:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70609248873;
+	Fri,  6 Mar 2026 03:15:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KPAgmMwV"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="TC9qfCtL";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Ko5a8CTr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10AC2E7185
-	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Mar 2026 00:44:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335DA1C84A6
+	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Mar 2026 03:15:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772757843; cv=none; b=eqUIHLJavt83ubVF0QR8t/DQerXTLbYjKg2WZc3A+j0PsQM6kQRDD8d8JkZ2ENtSGxfp+qAl1LWrKgoISkaicqg/sCm87ENCjatATnI21NitgekM3HyjLjExA/c+juGIVNcHH93pwsGS9JeXlLMg8/HaJO2J1RuYuO7tocaph2M=
+	t=1772766942; cv=none; b=FcQ4l9g/1U3YCf/gi9sIF6z/Qsgs/bM22lUURb11+oXAXiCsqazXJDKvlNTyjXGe4X4XvI2ms4MIJK95zA98LcDFwyuz4xlfm4EpFJAz0a9tuHac18OKLcKCXq/7UtZsW4o6xaFcJBabYHbPWOS7yVINyfE+y3E3yD8VvpXIC/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772757843; c=relaxed/simple;
-	bh=Pbo6Ncs2XH45+RiMK+FfG7zzkVbxY7P2JwHYAbhBwq4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hys+J4qE4NhB3LKoHUwAEsoJdFekKIFjr3pbV36I10A6JG3D8WDOzXdtGMkH4chwZdrv47TfXgeoLL2YD79C36oE95cSSBfUPJEOlgaKCHAraGNfaWZpPqBDYNlDRoUyyMvcptwj9DHMTwh9G/uZ/9gYitpASef97RAbpQuQgG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KPAgmMwV; arc=none smtp.client-ip=209.85.160.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-40f1ffba6a0so2053151fac.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2026 16:44:01 -0800 (PST)
+	s=arc-20240116; t=1772766942; c=relaxed/simple;
+	bh=5yyPCjXeALENnru/vLLkjQAw8XJRXA6irB3WZpFENk8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=NHAeOHJGdZWYyCfV+uQiDYGEM8n/oeFpFFTLDWbRnXAwEgRmjC5mcYO4sEKcMkerCYGX1LbcNgmXu2uKuWcDyhGWVcUS83B2xSEI3eFVGAB9od6eCJj8BpZrCAvdtaMj4mTQUxqXfEnrDOs/407GzWC+t1d+QLvjrGVL2hNEHZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=TC9qfCtL; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Ko5a8CTr; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 625Kmto02267457
+	for <linux-arm-msm@vger.kernel.org>; Fri, 6 Mar 2026 03:15:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=EpiNNTXiiGQjKHvs+KNiTW
+	jaystmsHApMEyELwmAA1Y=; b=TC9qfCtLGI5lv4FIwJR4jGXs7PSmgcQYVL+Ytu
+	cMuIIdot338/cP7w5LyAatmDLS3dP3HUCaLi/nYCNGovB6MPGNDkbqaNYQ/MYED0
+	LGA19n9xEAkgK//26IVk9LXMPDqnmhm3Oj2JTaZI7VyY61sl2ONUIZxfn+qT7Lfb
+	2Ih7A/htvVJPfRACmSiKjFYSqFWcBfZVHPBZeBqX+ysax/9P1KQOpBUQWQ0xfrO6
+	jhlZbf+H4HrugrQ+mwEvOzUhO0yLGL2KaX3GVvHY4lVtBz0/+SOLx6FL+oGPN9PJ
+	njQUqpIxTd1NNOb93cW+KieZwT/z7+honJv3MNrbOsfdJQag==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com [74.125.82.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cq380v20e-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 06 Mar 2026 03:15:38 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id 5a478bee46e88-2be191ce356so5100703eec.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Mar 2026 19:15:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772757841; x=1773362641; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XaIluGXx/Vhq+ZEeriR1MIRiJ/bHLPjLpQYgZ6GDJVY=;
-        b=KPAgmMwVvUVDI/orvIxpyx3FSLFlwLlv2Dkv4DHb0wPviju2X4qAWandEZL25ag1+W
-         1nsvlfNoEUt24V98kHPZdde1x/kFn5uAbZKtfl6UQjWkzJN30YZf8Itg2kV/nsSJkV94
-         nKXz9vWoUDlcOGLeVzJvAhfbEJ4G/I+evGinSTVGingNamLag4uQ2iypRP2XzdRmAQEY
-         eyGFlDAZSJo4Kl2ozs53tBj8PVELNegdIybO8ipddXk2Oxeup8fK2u7RxM+IT1y5De7m
-         zOtrnZQ12mTK2hMzkJCEURVk/8U8XkL2UxXt9F1+ujUKB9XHIwLzqnmMf9yA+RwhRGY+
-         aAxA==
+        d=oss.qualcomm.com; s=google; t=1772766855; x=1773371655; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=EpiNNTXiiGQjKHvs+KNiTWjaystmsHApMEyELwmAA1Y=;
+        b=Ko5a8CTr9b0z9bufmgy8fIaurYyfTqQIgb47SO4toiO9trWHdiikj6nyX4dLl3vnSK
+         GUhbdl7IpVzkJqWq/KKy/CfKiYddQeuEPmyza8XIEG/ShDvgWIF03mNyoXmxPwjOZ0G/
+         B3OxxryY2sLLmzbpTvHvk+fnhntiwzjkUx7TJQPWFMpXYIHhtWk3jt8DyLePItsSkeJY
+         VohafdmlVl3KX2yG61S7XFLzQZbflJo3xZ4UFGF31u7BfSQFA78fxjorLvyK+2Ut/4iI
+         2enAv/ZpaHsODiDlS1N3Hy1daElrQkrJcR30TpNADbSJFdbMo7tZKD5VIDSs12igmL00
+         4cvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772757841; x=1773362641;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=XaIluGXx/Vhq+ZEeriR1MIRiJ/bHLPjLpQYgZ6GDJVY=;
-        b=g3010lDvcKOpzGIiMdykI0t6PzgcvkbT/ODEpwB4j2VxI3dRLg09PoJ68KMgsQrvn/
-         dQKlHCe2LlBpELu79RjyhgI18baUeavRKDZvCQwqXLe9DsK0MmSNM1oLGrYxYc+4nVYe
-         HFBGYnXMVzu3CoaRKl9cgB76llKl75KH9AmdVWx1Jr5bxwlQj0XnRLV6oJYQvurn1upB
-         HVljRP4XlVIfqYSzTl4L/QZlZju5KwVzfz1BfnDE8m5x7VmIoB7icQ7w5jBl2j4Rke1c
-         pFkZVh3uwzXLTwHn1m1+kWTTpFB5fGDc4KaXOxuaV/RfIPn50vgUHe67CnO59mvAUMoL
-         bmgw==
-X-Forwarded-Encrypted: i=1; AJvYcCU/sEI/QfjW31s3eZDA1ivJF6hDZFWjl49QL6ib79LH0xe2/cQ3Nc6nAix4fT22t9tluFqOFT+jJGTnXm/G@vger.kernel.org
-X-Gm-Message-State: AOJu0YzfSCLowUtzw5eu+w3UX4vKrq60KKTWaJl4M9AnUa4tV25XU9B5
-	j6jF/yJ6QP2lAe5SmNHShrgKwOlsWJkLVGYRy6qn6EZ5OPXUXBlSMBPk
-X-Gm-Gg: ATEYQzxN6tcUmFI0K9zDj+wYw6LjHXUjhVueplnRb6O+wEG2Dq2Iag8uTPTPMLvfZV4
-	KXcWbnrlDbb/0CguopOHusXhjXlJO+7APlJQc9a7Ww+LI2N1/cEWLDyn7ULuENo7ICbGf3lzNV7
-	e5+KoI+/rhqVdAEu6+JSg4+UK1naNQ6Px+ovu3EP9MvT4zTswM5pePtNUICw87xkg87wMV37Fi8
-	JsicxdWudGo6VJEtKkxkF1b3QnsadT/IzuXokBo2KlfPVzSzBp5s7Ux9unU/p7gbAiYKJZWPleV
-	41gDep8GidDeVn8I4FEnXFVrYtg2J2SHJO0M/TSfmmwGnVMO+dFbnLGiQEmrLErVhzBsIDsvyv5
-	v17bJD3JmLYTWgusIZia05o2X1XJBkaDdjx7Hs7XCjgl59n3Lt4/YD7Snn3lYwAYFPpWPDJaS8b
-	ACy+Waoycu+XgqhOt1uIvuL+8PUbw09W5u9WCVU7QhIYSqMSNeHO2Q5koU1UsN0rG1cAG8HNG7d
-	91n+dRXqmZ24CN8/zqXvi/F4N6kgU9NhQHnV6Yhjg==
-X-Received: by 2002:a05:6870:34a:b0:409:5ad9:67d5 with SMTP id 586e51a60fabf-416e452461emr222992fac.40.1772757840712;
-        Thu, 05 Mar 2026 16:44:00 -0800 (PST)
-Received: from framework.misc.iastate.edu ([2610:130:110:25d:2aa4:4aff:fed7:9b19])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-416e65b1c82sm69335fac.5.2026.03.05.16.43.58
+        d=1e100.net; s=20230601; t=1772766855; x=1773371655;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EpiNNTXiiGQjKHvs+KNiTWjaystmsHApMEyELwmAA1Y=;
+        b=tdtWMi4/vw6KTZ+kIWgZ42wr81q2Q05xdcqQSk9MArUVtNcMEfTrVCItK2bd+btWkg
+         EpdwxbP75pcir6PRF37/XIVR8eMPeaB8nJH9nSCbqGbH6D/B59geyHu1XfLoUVZPpQwL
+         b8mDNXjQ6wdHRkPfnUBv6Fx61tB4AUPRfiEr21dlyHFlOPpspecjDHdNV+F24CGEXuO5
+         UnyvUoJyWEtQbA2QV+YCiipz5LK8yejRPsVhGl5DV/MKBpt/Qfylg5RQ4ajzZTmzFK0L
+         2HtafaKVosbRrMR5DrFqrc6/+DZQuzlfOOFNo4hDN8VXQ/TZtt+neg02aMyqNh5N33hE
+         pFOA==
+X-Gm-Message-State: AOJu0Yz9bP4JLB3QXKOIXg+FKQTakhmFtkkprBag78rvDkraBtDCqVag
+	WeRqpnZlv8GJpGwa/Rcn9rStNVqxYx704txJyy7vXMcmqUTUkdO5LX6Y1Xo1vLgzciCe/guCDNF
+	kiqxclk61hNQa5iwBBCqjX5idVw8RmYQrdmLQ/+ISF6BD+vjKWo8qlOYxhmuGD9x8/gs=
+X-Gm-Gg: ATEYQzy8u/eqnr+aANO66zAhzIiSH+yoyS9qBQr3QHENm9tBx++4W3cJ1IOcG0QZ0YW
+	JLbVq0AzTn9DGt/SdSfywNhvpsEMdc/vymxFhqk/5Ue3OxW9HdqCkVzzYAFqi3HjW8kG1RKHla3
+	sD0jKLW9C81K0IKQA8u2oCPRZXVSF7QesW3Jj9wTLT3ycoGjPDKPgwWeTgMBlxQnrLOPX1xRvzj
+	JJjJ4vplvNJflStDyrP0DwLylirGRYsllfzEVacqHhf1N8CXzIYmoWpLUD3A+uoPyHLFfbzsZHN
+	1+igDJk9e+oT6u32GmpE0mJAyXBlZqa9osDE2s9k4ru5izDNkhKx1ukoPZrGWkJN3qSmB312+0J
+	PyUi2OeH9o7FPTfFH8JwInj49v39CavgwbKdOQDnP3TCAem4j7ky6ib//KZxTogLRzV183DCLsw
+	==
+X-Received: by 2002:a05:7300:80cb:b0:2bd:cbc7:16e2 with SMTP id 5a478bee46e88-2be4deaee17mr328258eec.13.1772766854875;
+        Thu, 05 Mar 2026 19:14:14 -0800 (PST)
+X-Received: by 2002:a05:7300:80cb:b0:2bd:cbc7:16e2 with SMTP id 5a478bee46e88-2be4deaee17mr328243eec.13.1772766854082;
+        Thu, 05 Mar 2026 19:14:14 -0800 (PST)
+Received: from hu-fruiz-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2be4f82b1d3sm197839eec.11.2026.03.05.19.14.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Mar 2026 16:43:59 -0800 (PST)
-From: Kerigan Creighton <kerigancreighton@gmail.com>
-To: linux-wireless@vger.kernel.org
-Cc: loic.poulain@oss.qualcomm.com,
-	wcn36xx@lists.infradead.org,
-	andersson@kernel.org,
-	mathieu.poirier@linaro.org,
-	linux-remoteproc@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Kerigan Creighton <kerigancreighton@gmail.com>
-Subject: [PATCH v3 3/3] wifi: wcn36xx: Add support for WCN3610
-Date: Thu,  5 Mar 2026 18:43:44 -0600
-Message-ID: <20260306004344.10968-4-kerigancreighton@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260306004344.10968-1-kerigancreighton@gmail.com>
-References: <20260306004344.10968-1-kerigancreighton@gmail.com>
+        Thu, 05 Mar 2026 19:14:13 -0800 (PST)
+From: Francisco Munoz Ruiz <francisco.ruiz@oss.qualcomm.com>
+Subject: [PATCH 0/2] Fix slice accounting and simplify descriptor and
+ locking logic
+Date: Thu, 05 Mar 2026 19:12:04 -0800
+Message-Id: <20260305-external_llcc_changes1set-v1-0-6347e52e648e@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 3DD83219EA8
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAARGqmkC/yWM0QoCIRQFf0Xuc4K6VLS/ssRieqoL4i5eCWHx3
+ 5N6HJiZgwSFITSrgwo+LLzlAfakKLx9fkFzHEzOuIuZzFmjVZTs05pSCOvfESuo+uFhcLUh3ux
+ Eo98Lntx+7+Xe+xfILtxWawAAAA==
+X-Change-ID: 20260305-external_llcc_changes1set-bae0e71cd913
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Francisco Munoz Ruiz <francisco.ruiz@oss.qualcomm.com>,
+        Unnathi Chalicheemala <unnathi.chalicheemala@oss.qualcomm.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1772766853; l=1936;
+ i=francisco.ruiz@oss.qualcomm.com; s=20260305; h=from:subject:message-id;
+ bh=5yyPCjXeALENnru/vLLkjQAw8XJRXA6irB3WZpFENk8=;
+ b=gCZId9Xaon7Rlsem7cGihiGL4kMdmTcKSdOUClpm2CXSIvYXOj8eIWTKdVi653uxKTJ/cJf2Q
+ LJLH3Opz8UeAuAArWTlC7pssd5W6jqc+tRkSIiAAQI7D7KJr5MppGn8
+X-Developer-Key: i=francisco.ruiz@oss.qualcomm.com; a=ed25519;
+ pk=Gcv2CX7iHozjnQ4oK+9fINmBiQTmVC4SpaZzoM63CHE=
+X-Authority-Analysis: v=2.4 cv=I5Johdgg c=1 sm=1 tr=0 ts=69aa46db cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=EUspDBNiAAAA:8 a=A5hwTvu5O6tIpGgoCuUA:9 a=QEXdDO2ut3YA:10
+ a=scEy_gLbYbu1JhEsrz4S:22
+X-Proofpoint-ORIG-GUID: Id-ry6ffroRQ9i1R6sIj-JP1-zS9CVCG
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA2MDAyOSBTYWx0ZWRfX7MmEtBZbB8c1
+ 8SMW564Djk19DEV1KK8WHa7HrXJZNK9w//Ne9Q6NAtUmZQs2j4kltN4XtA/sMYHGcj2EUTAryGM
+ 2QBmBm7/PZBjHvBlzxc4+9TOXcyIWDbowBjU8YbcpMGW4gCPLxZPgRMEPHJwyHhlq+XpISM3YB2
+ /5Xg5gQXwXVb+SmvCJC+IzxNz4wFIFRQcS22ARUt+vTcI4E/m9Vh2DH0E9FXSoNUbV8rmz4JtZi
+ NyVj+Yape5m2Wd4Ejbj9F61RVsljOFsa3Afy+TPEYTC6fDPIqEnuxjPQ+EJLxXtrrgywakQLn9D
+ yOweXiAqLICkn+OwVi+UlkwiyxxkYxvMmoeOSbwZjNy+hpyINXLKrdmAK0sWFas+5ckdk4EtmBl
+ 4tHZW4L50C1AojG0iK8Bdc/hQHCZ8pceF9KKsXpXOjVqr/IM1bLofy/p/1VQIQ7o0ej+NaYTVeo
+ QQOYEPSCRRYt65inMfQ==
+X-Proofpoint-GUID: Id-ry6ffroRQ9i1R6sIj-JP1-zS9CVCG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-06_01,2026-03-04_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 priorityscore=1501 bulkscore=0 malwarescore=0 suspectscore=0
+ adultscore=0 clxscore=1011 impostorscore=0 spamscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603060029
+X-Rspamd-Queue-Id: 3B2D421AFCA
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.84 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,lists.infradead.org,kernel.org,linaro.org,vger.kernel.org,gmail.com];
-	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	TAGGED_FROM(0.00)[bounces-95702-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:dkim,qualcomm.com:email];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-95704-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FROM_NEQ_ENVFROM(0.00)[francisco.ruiz@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[kerigancreighton@gmail.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	RCVD_COUNT_FIVE(0.00)[5];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
+	RCPT_COUNT_SEVEN(0.00)[7];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Action: no action
 
-The WCN3610 has a lot in common with the other wcn36xx
-chips, so much of that code was reused.
+Hi all,
 
-The WCN3610 requires specific configuration values for
-stable Wi-Fi. Without these values, there's packet loss.
-An extra CFG table was made so other chips are not affected.
+This series addresses correctness issues in the LLCC slice
+activation logic and simplifies both descriptor management and
+locking within the driver.
 
-ENABLE_DYNAMIC_RA_START_RATE=0 was discovered from the
-downstream prima driver. That brought it from 95% to 5%
-packet loss. The rest of the CFG values came from my own
-observations and experimentation. The current settings
-allow for 0% packet loss.
+Patch 1 fixes incorrect slice activation and deactivation
+accounting. The current bitmap-based scheme fails when multiple
+client drivers vote for the same slice or when
+llcc_slice_getd() is called multiple times. This can lead to
+mismatched activation and deactivation pairs and incorrect slice
+state.
 
-STA_POWERSAVE resulted in BMPS errors and unstable
-functionality, thus it has been disabled for just this
-chip.
+To address this, the patch replaces the bitmap with per-slice
+atomic reference counters. This ensures that activation and
+deactivation always match, regardless of how many users share a
+slice or how often a client requests it. The patch also removes
+dynamic allocation from the slice descriptor path. Instead,
+llcc_slice_getd() now returns a pointer to a preallocated
+descriptor, ensuring consistent lifetime and eliminating repeated
+allocation and free cycles.
 
-Tested on an Anki Vector 1.0 and 2.0 robot with 3
-different APs. Support for other WCN36xx chips has not
-been affected.
+Patch 2 replaces manual lock and unlock pairs with the guard()
+pattern. This removes the need for explicit unlock handling and
+ensures the lock is always released, even on early returns. The
+control flow becomes simpler and less error-prone.
 
-Signed-off-by: Kerigan Creighton <kerigancreighton@gmail.com>
+Together, these changes make LLCC slice management more robust,
+simpler, and easier to maintain.
+
+Thanks,
+Francisco
+
+Signed-off-by: Francisco Munoz Ruiz <francisco.ruiz@oss.qualcomm.com>
 ---
-Changes in v2:
- - Move wcn36xx driver changes to the end of the patch set.
+Unnathi Chalicheemala (2):
+      soc: qcom: llcc: Add per-slice counter and common llcc slice descriptor
+      soc: qcom: llcc: Use guards for mutex handling
 
-Changes in v3:
- - Describe where the CFG values came from in the wcn36xx
-   driver patch [Konrad].
+ drivers/soc/qcom/llcc-qcom.c       | 81 ++++++++++++++++----------------------
+ include/linux/soc/qcom/llcc-qcom.h |  8 ++--
+ 2 files changed, 38 insertions(+), 51 deletions(-)
 ---
- drivers/net/wireless/ath/wcn36xx/main.c    |  4 +-
- drivers/net/wireless/ath/wcn36xx/smd.c     | 61 +++++++++++++++++++++-
- drivers/net/wireless/ath/wcn36xx/wcn36xx.h |  1 +
- 3 files changed, 64 insertions(+), 2 deletions(-)
+base-commit: 3f9cd19e764b782706dbaacc69e502099cb014ba
+change-id: 20260305-external_llcc_changes1set-bae0e71cd913
 
-diff --git a/drivers/net/wireless/ath/wcn36xx/main.c b/drivers/net/wireless/ath/wcn36xx/main.c
-index c3f0860873..6c90c13251 100644
---- a/drivers/net/wireless/ath/wcn36xx/main.c
-+++ b/drivers/net/wireless/ath/wcn36xx/main.c
-@@ -1438,7 +1438,7 @@ static int wcn36xx_init_ieee80211(struct wcn36xx *wcn)
- 		BIT(NL80211_IFTYPE_MESH_POINT);
- 
- 	wcn->hw->wiphy->bands[NL80211_BAND_2GHZ] = &wcn_band_2ghz;
--	if (wcn->rf_id != RF_IRIS_WCN3620)
-+	if (wcn->rf_id != RF_IRIS_WCN3620 && wcn->rf_id != RF_IRIS_WCN3610)
- 		wcn->hw->wiphy->bands[NL80211_BAND_5GHZ] = &wcn_band_5ghz;
- 
- 	if (wcn->rf_id == RF_IRIS_WCN3680)
-@@ -1535,6 +1535,8 @@ static int wcn36xx_platform_get_resources(struct wcn36xx *wcn,
- 	/* External RF module */
- 	iris_node = of_get_child_by_name(mmio_node, "iris");
- 	if (iris_node) {
-+		if (of_device_is_compatible(iris_node, "qcom,wcn3610"))
-+			wcn->rf_id = RF_IRIS_WCN3610;
- 		if (of_device_is_compatible(iris_node, "qcom,wcn3620"))
- 			wcn->rf_id = RF_IRIS_WCN3620;
- 		if (of_device_is_compatible(iris_node, "qcom,wcn3660") ||
-diff --git a/drivers/net/wireless/ath/wcn36xx/smd.c b/drivers/net/wireless/ath/wcn36xx/smd.c
-index 813553edcb..8d5a746de7 100644
---- a/drivers/net/wireless/ath/wcn36xx/smd.c
-+++ b/drivers/net/wireless/ath/wcn36xx/smd.c
-@@ -83,6 +83,61 @@ static struct wcn36xx_cfg_val wcn36xx_cfg_vals[] = {
- 	WCN36XX_CFG_VAL(LINK_FAIL_TX_CNT, 1000),
- };
- 
-+static struct wcn36xx_cfg_val wcn3610_cfg_vals[] = {
-+	WCN36XX_CFG_VAL(CURRENT_TX_ANTENNA, 1),
-+	WCN36XX_CFG_VAL(CURRENT_RX_ANTENNA, 1),
-+	WCN36XX_CFG_VAL(LOW_GAIN_OVERRIDE, 0),
-+	WCN36XX_CFG_VAL(POWER_STATE_PER_CHAIN, 785),
-+	WCN36XX_CFG_VAL(CAL_PERIOD, 5),
-+	WCN36XX_CFG_VAL(CAL_CONTROL, 1),
-+	WCN36XX_CFG_VAL(PROXIMITY, 0),
-+	WCN36XX_CFG_VAL(NETWORK_DENSITY, 3),
-+	WCN36XX_CFG_VAL(MAX_MEDIUM_TIME, 6000),
-+	WCN36XX_CFG_VAL(MAX_MPDUS_IN_AMPDU, 64),
-+	WCN36XX_CFG_VAL(RTS_THRESHOLD, 2347),
-+	WCN36XX_CFG_VAL(SHORT_RETRY_LIMIT, 15),
-+	WCN36XX_CFG_VAL(LONG_RETRY_LIMIT, 15),
-+	WCN36XX_CFG_VAL(FRAGMENTATION_THRESHOLD, 8000),
-+	WCN36XX_CFG_VAL(DYNAMIC_THRESHOLD_ZERO, 5),
-+	WCN36XX_CFG_VAL(DYNAMIC_THRESHOLD_ONE, 10),
-+	WCN36XX_CFG_VAL(DYNAMIC_THRESHOLD_TWO, 15),
-+	WCN36XX_CFG_VAL(FIXED_RATE, 0),
-+	WCN36XX_CFG_VAL(RETRYRATE_POLICY, 4),
-+	WCN36XX_CFG_VAL(RETRYRATE_SECONDARY, 131),
-+	WCN36XX_CFG_VAL(RETRYRATE_TERTIARY, 129),
-+	WCN36XX_CFG_VAL(FORCE_POLICY_PROTECTION, 5),
-+	WCN36XX_CFG_VAL(FIXED_RATE_MULTICAST_24GHZ, 1),
-+	WCN36XX_CFG_VAL(FIXED_RATE_MULTICAST_5GHZ, 5),
-+	WCN36XX_CFG_VAL(DEFAULT_RATE_INDEX_5GHZ, 5),
-+	WCN36XX_CFG_VAL(DEFAULT_RATE_INDEX_24GHZ, 6),
-+	WCN36XX_CFG_VAL(MAX_BA_SESSIONS, 40),
-+	WCN36XX_CFG_VAL(PS_DATA_INACTIVITY_TIMEOUT, 200),
-+	WCN36XX_CFG_VAL(PS_ENABLE_BCN_FILTER, 1),
-+	WCN36XX_CFG_VAL(PS_ENABLE_RSSI_MONITOR, 1),
-+	WCN36XX_CFG_VAL(NUM_BEACON_PER_RSSI_AVERAGE, 20),
-+	WCN36XX_CFG_VAL(STATS_PERIOD, 10),
-+	WCN36XX_CFG_VAL(CFP_MAX_DURATION, 30000),
-+	WCN36XX_CFG_VAL(FRAME_TRANS_ENABLED, 0),
-+	WCN36XX_CFG_VAL(BA_THRESHOLD_HIGH, 128),
-+	WCN36XX_CFG_VAL(MAX_BA_BUFFERS, 2560),
-+	WCN36XX_CFG_VAL(DYNAMIC_PS_POLL_VALUE, 0),
-+	WCN36XX_CFG_VAL(TX_PWR_CTRL_ENABLE, 1),
-+	WCN36XX_CFG_VAL(ENABLE_CLOSE_LOOP, 1),
-+	WCN36XX_CFG_VAL(ENABLE_LPWR_IMG_TRANSITION, 0),
-+	WCN36XX_CFG_VAL(BTC_EXECUTION_MODE, 2),
-+	WCN36XX_CFG_VAL(BTC_STATIC_OPP_WLAN_ACTIVE_WLAN_LEN, 90000),
-+	WCN36XX_CFG_VAL(BTC_STATIC_OPP_WLAN_ACTIVE_BT_LEN, 60000),
-+	WCN36XX_CFG_VAL(BTC_STATIC_OPP_WLAN_IDLE_WLAN_LEN, 30000),
-+	WCN36XX_CFG_VAL(BTC_STATIC_OPP_WLAN_IDLE_BT_LEN, 120000),
-+	WCN36XX_CFG_VAL(BTC_FAST_WLAN_CONN_PREF, 1),
-+	WCN36XX_CFG_VAL(BTC_STATIC_LEN_LE_BT, 120000),
-+	WCN36XX_CFG_VAL(BTC_STATIC_LEN_LE_WLAN, 30000),
-+	WCN36XX_CFG_VAL(MAX_ASSOC_LIMIT, 10),
-+	WCN36XX_CFG_VAL(ENABLE_MCC_ADAPTIVE_SCHEDULER, 0),
-+	WCN36XX_CFG_VAL(ENABLE_DYNAMIC_RA_START_RATE, 0),
-+	WCN36XX_CFG_VAL(LINK_FAIL_TX_CNT, 1000),
-+};
-+
- static struct wcn36xx_cfg_val wcn3680_cfg_vals[] = {
- 	WCN36XX_CFG_VAL(CURRENT_TX_ANTENNA, 1),
- 	WCN36XX_CFG_VAL(CURRENT_RX_ANTENNA, 1),
-@@ -632,6 +687,9 @@ int wcn36xx_smd_start(struct wcn36xx *wcn)
- 	if (wcn->rf_id == RF_IRIS_WCN3680) {
- 		cfg_vals = wcn3680_cfg_vals;
- 		cfg_elements = ARRAY_SIZE(wcn3680_cfg_vals);
-+	} else if (wcn->rf_id == RF_IRIS_WCN3610) {
-+		cfg_vals = wcn3610_cfg_vals;
-+		cfg_elements = ARRAY_SIZE(wcn3610_cfg_vals);
- 	} else {
- 		cfg_vals = wcn36xx_cfg_vals;
- 		cfg_elements = ARRAY_SIZE(wcn36xx_cfg_vals);
-@@ -2380,7 +2438,8 @@ int wcn36xx_smd_feature_caps_exchange(struct wcn36xx *wcn)
- 	mutex_lock(&wcn->hal_mutex);
- 	INIT_HAL_MSG(msg_body, WCN36XX_HAL_FEATURE_CAPS_EXCHANGE_REQ);
- 
--	wcn36xx_firmware_set_feat_caps(msg_body.feat_caps, STA_POWERSAVE);
-+	if (wcn->rf_id != RF_IRIS_WCN3610)
-+		wcn36xx_firmware_set_feat_caps(msg_body.feat_caps, STA_POWERSAVE);
- 	if (wcn->rf_id == RF_IRIS_WCN3680) {
- 		wcn36xx_firmware_set_feat_caps(msg_body.feat_caps, DOT11AC);
- 		wcn36xx_firmware_set_feat_caps(msg_body.feat_caps, WLAN_CH144);
-diff --git a/drivers/net/wireless/ath/wcn36xx/wcn36xx.h b/drivers/net/wireless/ath/wcn36xx/wcn36xx.h
-index 7ee79593cd..cb409d48f7 100644
---- a/drivers/net/wireless/ath/wcn36xx/wcn36xx.h
-+++ b/drivers/net/wireless/ath/wcn36xx/wcn36xx.h
-@@ -96,6 +96,7 @@ enum wcn36xx_ampdu_state {
- #define WCN36XX_MAX_POWER(__wcn) (__wcn->hw->conf.chandef.chan->max_power)
- 
- #define RF_UNKNOWN	0x0000
-+#define RF_IRIS_WCN3610	0x3610
- #define RF_IRIS_WCN3620	0x3620
- #define RF_IRIS_WCN3660	0x3660
- #define RF_IRIS_WCN3680	0x3680
+Best regards,
 -- 
-2.53.0
+Francisco Munoz Ruiz <francisco.ruiz@oss.qualcomm.com>
 
 
