@@ -1,85 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-95908-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cFm4HlEWq2nMZwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95908-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 19:00:49 +0100
+	id GKheMVYXq2nMZwEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 19:05:10 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id C8C7A22685C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 19:00:48 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C5412268B9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 19:05:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 123743013261
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2026 18:00:31 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 754A6307E27D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2026 18:05:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE46034E745;
-	Fri,  6 Mar 2026 18:00:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9971125A642;
+	Fri,  6 Mar 2026 18:04:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JffKQ+6e"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="arX55jjU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481E7352C22
-	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Mar 2026 18:00:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DFCB18FDBD
+	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Mar 2026 18:04:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772820029; cv=none; b=Ww1cjvkF4UWMYy5LSz213CgHzNH5F4iip6FhtOi/uZsNNM1tomMv00vjN35kbXHrPqx9JpxQ1aclHTcCXyYPAewAnMzVCz9uAzfaeMpQkjUUJG42MtQyeGcHvkTAtUSh63EL7SRoxy2NuLTalgAtR2zBfVU4eJ+Z9i3mjuPdGMY=
+	t=1772820299; cv=none; b=FotFI+XSG72AGKP0sk4hUuxUtehgEQzCPqEykhroi5uPosSJiYa+NEJJt6zQ+IN3YXwAZx9vBDTx5SNdZ+4B0SD0PFU5jc4JYKMuClcxh2ylxhaktylwiB+AArwa88JJ2OcKe8vdiSabf9k5csnIgWeDEM4NtI9o4gbncGNfSvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772820029; c=relaxed/simple;
-	bh=nFu/jPMO0Y+T7Fp90oKXBOnE6P1qus7goa3+wvgHzEA=;
+	s=arc-20240116; t=1772820299; c=relaxed/simple;
+	bh=YQOYef0T+IsmCM4l7gYcrDURSeU39E5b+TcSOrDCCuA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nNRKiXfHOs2SdtFOTLslCFHBTJ7ugJU1tGGVPipwAGdImT3oCVVrYdWNNceF51x1WyE2+SBdULAIf5AkwJ96dfOWobkQ4+H78L6eL7ytXs/0n45BeqZj63gLvSfgU5l+/KAHmgsBkSZfaCFO43HXNV5EvAcKMV+gAT+Hto+Pi/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JffKQ+6e; arc=none smtp.client-ip=209.85.221.46
+	 In-Reply-To:Content-Type; b=rBR6uQgMtFFWWDovlIIfIRdsMbNDpOA4uWosiSwzor5evqTPDu9hXAqo950ALJ+7fNCNP17Sr1Es9ttbvTEgvJROZ9MDjXTfC3KvAogXUllvmkORZmGSShISah+0G1Lk5keA7Vr4Iu2mPxo3KPM8CdfIjkpsUia6oyFxWn6V8As=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=arX55jjU; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-439ac15f35fso6114914f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Mar 2026 10:00:28 -0800 (PST)
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4837634de51so41694005e9.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Mar 2026 10:04:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1772820027; x=1773424827; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1772820295; x=1773425095; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=OQP/1gPedcx94rqwFZeBLzMOhFlSjadtYi29kmKkpXk=;
-        b=JffKQ+6edSUUmE9ublqTc6uGF11Ew0rEPv/vaywK5WScCgbIvB/cafkUPza+Mz6qHP
-         2aK1X4f3Ixll6oCyFYJfYPmXOeB/3RJU0WlpPZhbc6VUArHeBLYH3bNfZS/KwLDen4dy
-         Wa87eprkmXDzRqd6O09kuCVhaX+pWzN4rTA7+ZK85iaxMW0MtY4KJnchiL5ZoQhJm8cB
-         1Ed+uXyBo61rbI77HOAKbTzB3eepVJ++lPLf0qyeEmM1WgABNcmtzZHyHzW8bZPObsHj
-         wlGPUdA1Pf62DCxf/i5ZX6CaZqeyESgzsRl+6VXtBc0QZbDUHbCYWfoVmfNygDDnVfZ5
-         s75A==
+        bh=I/P8qpjTb/KNUh2ciZfsM7Ct12r9nUTtdTAu/7RgIPI=;
+        b=arX55jjUC0hwVrWSWJfYF457ibz6DZGhUcvycCqVkna1SkDHqmFLVpejaXtr3tVIEN
+         AzixtOpxP+5UDW0kKJNSKzA2uUCXgOyNllDvgPqoBaeC8Ni/m/YBpxQ5HmPKDspv3djm
+         waOfUDl0cI2YTWhb/c+xSsllDXUje83e4ssHEVILUSyymMok58E0RI4iNw/eqY8gBN8X
+         0tU0PSYPAdpTiZ1PiRg6zWW6M0dY1PsJv9X1waxP4fFhAjyb1zn2WuUkG9bRoS9IaQJE
+         +uRaGLqfL3HVPMFwexAhdqDDCE8tl76NwBtUAk/51LuCcyaR+qsAEtDWemtN9j6ySeHM
+         PYqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772820027; x=1773424827;
+        d=1e100.net; s=20230601; t=1772820295; x=1773425095;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=OQP/1gPedcx94rqwFZeBLzMOhFlSjadtYi29kmKkpXk=;
-        b=DRvqq1dq6eepuclwbV01wduU7Jo4S2XVySQO8TxPnn+3dMKTponfDf7Q2ECLNkaKbq
-         N5TaxBdDY7aSwnA0KQwxbD1O6eg+AUylcqH+Jgvcep6gSbvXy+gQrfGcnEASawGgh4VP
-         aheApOAQ7wCq1bkKALcc9Bt7jGrJ3bH2aeZq8FR4t08JdY3FRapzaQsnMXnUy/bTSeBH
-         U6Y0W4Zbg7Ng8KiLtB9p1CaRzqxQ4z2DZGQE+SnLhlyex5VpzyE/XrUFZNqLFKl6AW/X
-         zldNXax/ZSG2PjifXmNnOqEVU0B7XA3o6tekxlqK9oWQAWGwBedS1dLjZNqYRidcBZlq
-         /POA==
-X-Forwarded-Encrypted: i=1; AJvYcCVrNjA8oz/2rxiSKqwJhWozJUFgYZDCBI+WD5/Tn0YEZjXi3N+eIqgHZcR+X1+14Fn+V2XE/uC/s+Ntf3Iy@vger.kernel.org
-X-Gm-Message-State: AOJu0YzRAJkVxtbHlhH8BDm4N9WMqOmZs3Pqlvtj6f9sS0zYFtmPKKNk
-	MNyYR7YWJLRbw0eNIPAy4BpA08oPO7Rl4pl4NxXJCq2ngS5SjOi3hR/wiokNooMfom8MR4et4Pt
-	ahqzX
-X-Gm-Gg: ATEYQzyqKJ3EIJ+fc6vQLhbDYavBuHkl0nIoto6ZorMDFMhPdj9CZ1G+Nwl5T8LvOos
-	UjJ5Oln2W2JWJy4K7MhCOnE61u5OKjvGzi7hmpVfPdFumD23siPsqsyHfLOakVQvSV3t2kRnWu9
-	2odxD74gxY0Mu+mqedir311trmQ8HjLe72benOkcEB4665vGukGnMJhMY/b+kL+jaAMf1smb9f2
-	IuCC18l3uA2WaEFMFDVtADNPZ/5XV7jCJkOpoa0VVEBEcpTcF/x1OBnY/Rm0PT0UKnMCO3D2Klu
-	6sIgCOSuj9Qj3IiYS3q35wYEhOy9WBCLyZGCvvPfxI8O4/CzFboGfVw2MbGkmk1TjPhv5zNiNRS
-	1JqzboX8Y+kXwfr4PX7IJnaeqwF+SxesesuKxfR5LikcJANdvh237Sp1BwCSYlbKjcQI0zzqEq2
-	DyhM9VDDCr7WB+/W/XBaFglhHhGzYb4O5jxRk=
-X-Received: by 2002:a05:600c:4f0e:b0:477:73e9:dbe7 with SMTP id 5b1f17b1804b1-48526983becmr53304365e9.35.1772820026691;
-        Fri, 06 Mar 2026 10:00:26 -0800 (PST)
+        bh=I/P8qpjTb/KNUh2ciZfsM7Ct12r9nUTtdTAu/7RgIPI=;
+        b=MsB3hBaQbzyaG0y+pT0t/DzQFRUuxIK2zXRf5VSrqsxb4lvaJ3+67Ghw65YpXSeH8x
+         fJ2vwjSuuube38E89TAZIDZmu6PnDgRGtzCd37IWe/0i9igjkbrQkPCTEF3Bbr+LGBRG
+         awfC7rrJ+72ZD6Fbyeq0L1vyoFupLT++4KqcG+chxSHBHLCeNEH40to+ltB4R92LHWyL
+         K9M1L82prg+Dc/vrqPwBCgRW5sl3czZZUCvlIfdTwozuNJYu08cngfki67LtISdMhtN3
+         0+N30lqukB/LECfRauXg6FN1P0l5Z5MqO5gaO8y/zG51wU1Pd3/6KhgsKr5mAzJTsFkO
+         xKxw==
+X-Forwarded-Encrypted: i=1; AJvYcCVg74upOwk+8dPjf+S7q9z/deVjPkVbAnN812I7XeniYZdVkTb2oXg9cKJEi/bIUh6DDDiveu7YoX1gyJnS@vger.kernel.org
+X-Gm-Message-State: AOJu0YwgazfACRNwb2gADTbN5A4I/rTPwz0frN0wLSXSD7zukCzuHQcM
+	ioC2Y5enYJryFSs1rksI3Ebz9fl2W+UIYkB+Vn+GG9euLaTtdWnYyxRyryOhXik20Y4=
+X-Gm-Gg: ATEYQzxRrLscM5F4L6XaFpxhjWIrgOKE8YZcGZ5jVt19b8z6iWunkVh/RsVJsCCSJls
+	lDMUmU9tsBY49OwSVyg1Uj6usSGXG8D3z4EsLrgCc16yeyxVPACIpZqdv5Y1CQBFeTMm5gmUURf
+	MEmql/pWjX3kBvW7gvB6bZEH2MIKPduWoTDpNtXlsFERMTeUGK8z55buYXoDF/Sb+HXnAZ8i63k
+	eCZx1FwJzJw64IZIUHX1VABoplPdkgJnGagkKfQWwZmGoTGs7pN5m+uiNbLW4JuFRySMix070h/
+	LhFCGYQKoGvnYJeJEber+HNUAjezRvLZJkFM32/WCx7Kgtktjxr+e/CKfrb7KGYdmHOxebr5O+S
+	3TCTAtvB0v8wKgTrRL+RyUR+pULOD/flvCS58ajRfluG3V3JsqVmZXx5V8NPpF3Fa15SXjdFC2a
+	iAPb4rc01dG/GEeGqJjVTHx7vnCfLedFYoswY=
+X-Received: by 2002:a05:600c:4f0b:b0:480:68ed:1e70 with SMTP id 5b1f17b1804b1-4852697a114mr48328475e9.35.1772820295386;
+        Fri, 06 Mar 2026 10:04:55 -0800 (PST)
 Received: from [192.168.1.102] ([93.107.81.172])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4851fae538bsm170036725e9.7.2026.03.06.10.00.25
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-485237dd04bsm45125125e9.1.2026.03.06.10.04.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Mar 2026 10:00:26 -0800 (PST)
-Message-ID: <273f0a36-599f-43f3-ae88-6c332fcec21c@linaro.org>
-Date: Fri, 6 Mar 2026 18:00:23 +0000
+        Fri, 06 Mar 2026 10:04:54 -0800 (PST)
+Message-ID: <3e3ce8a3-e8fe-4d6b-978a-8bb8a9d996f4@linaro.org>
+Date: Fri, 6 Mar 2026 18:04:51 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -87,31 +86,32 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] media: camss: Add per-format BPL alignment helper
+Subject: Re: [PATCH 3/3] media: camss: vfe: Make PIX BPL alignment
+ format-based on CAMSS_2290
 To: Loic Poulain <loic.poulain@oss.qualcomm.com>,
  vladimir.zapolskiy@linaro.org
 Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  mchehab@kernel.org
 References: <20260306160006.1513177-1-loic.poulain@oss.qualcomm.com>
- <20260306160006.1513177-2-loic.poulain@oss.qualcomm.com>
+ <20260306160006.1513177-4-loic.poulain@oss.qualcomm.com>
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260306160006.1513177-2-loic.poulain@oss.qualcomm.com>
+In-Reply-To: <20260306160006.1513177-4-loic.poulain@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: C8C7A22685C
+X-Rspamd-Queue-Id: 6C5412268B9
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
 	TO_DN_SOME(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95908-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-95909-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
 	DKIM_TRACE(0.00)[linaro.org:+];
@@ -121,25 +121,91 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	NEURAL_HAM(-0.00)[-0.955];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	NEURAL_HAM(-0.00)[-0.948];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,linaro.org:dkim,linaro.org:mid]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:email,linaro.org:dkim,linaro.org:email,linaro.org:mid]
 X-Rspamd-Action: no action
 
 On 06/03/2026 16:00, Loic Poulain wrote:
+> Split the VFE bytes-per-line (BPL) alignment logic into separate
+> helpers for RDI and PIX paths. RDI is usually aligned on RDI write
+> engine bus constraint such as 64-bit or 128-bit. But PIX engine
+> is usually (at least on platform I looked at) based on pixel format.
+> 
+> On CAMSS_2290, PIX BPL alignment is set to 0 to indicate that the
+> alignment must be derived from the pixel format. This allows the
+> pipeline to use camss_format_get_bpl_alignment().
+> 
+> For other platforms, retain the legacy PIX default (16 bytes), until
+> PIX is properly tested/enabled.
+> 
+> A future improvement would be to remove platform-specific conditionals
+> from the VFE code and move the alignment requirements into the
+> per-platform VFE resource data.
+> 
+> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+> ---
+>   drivers/media/platform/qcom/camss/camss-vfe.c | 28 ++++++++++++++++---
+>   1 file changed, 24 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+> index 9c7ad8aa4058..c174c7d706e2 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+> @@ -1996,7 +1996,7 @@ static const struct media_entity_operations vfe_media_ops = {
+>   	.link_validate = v4l2_subdev_link_validate,
+>   };
+>   
+> -static int vfe_bpl_align(struct vfe_device *vfe)
+> +static int vfe_bpl_align_rdi(struct vfe_device *vfe)
+>   {
+>   	int ret = 8;
+>   
+> @@ -2019,6 +2019,25 @@ static int vfe_bpl_align(struct vfe_device *vfe)
+>   	return ret;
+>   }
+>   
+> +static int vfe_bpl_align_pix(struct vfe_device *vfe)
+> +{
+> +	int ret = 16;
+> +
+> +	switch (vfe->camss->res->version) {
+> +	case CAMSS_2290:
+> +		/* The alignment/bpl depends solely on the pixel format and is
+> +		 * computed dynamically in camss_format_get_bpl_alignment().
+> +		 */
+> +		ret = 0;
+> +		break;
 > +	default:
-> +		WARN(1, "Unsupported format/bpp (%u)", format->mbus_bpp);
+> +		break;
 > +	}
 > +
-> +	return 1;
+> +	return ret;
+> +}
+> +
+> +
+>   /*
+>    * msm_vfe_register_entities - Register subdev node for VFE module
+>    * @vfe: VFE device
+> @@ -2085,11 +2104,12 @@ int msm_vfe_register_entities(struct vfe_device *vfe,
+>   		}
+>   
+>   		video_out->ops = &vfe->video_ops;
+> -		video_out->bpl_alignment = vfe_bpl_align(vfe);
+> -		video_out->line_based = 0;
+>   		if (i == VFE_LINE_PIX) {
+> -			video_out->bpl_alignment = 16;
+> +			video_out->bpl_alignment = vfe_bpl_align_pix(vfe);
+>   			video_out->line_based = 1;
+> +		} else {
+> +			video_out->bpl_alignment = vfe_bpl_align_rdi(vfe);
+> +			video_out->line_based = 0;
+>   		}
+>   
+>   		video_out->nformats = vfe->line[i].nformats;
 
-An error should return an error not a default.
-
--ENONOTSUPP, -EINVAL, -ENOWAYDUDE something to indicate failure.
-
----
-bod
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
