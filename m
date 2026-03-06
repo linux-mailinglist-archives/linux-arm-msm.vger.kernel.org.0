@@ -1,180 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-95784-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95785-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id CMCmBNK0qml9VgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95784-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 12:04:50 +0100
+	id gLLYOp21qml9VgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95785-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 12:08:13 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A806121F6B0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 12:04:49 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6449D21F727
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 12:08:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id BED7A3019445
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2026 11:04:48 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id A6EE9304D665
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2026 11:08:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C6063822B7;
-	Fri,  6 Mar 2026 11:04:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8978A37DE89;
+	Fri,  6 Mar 2026 11:08:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eXEoZihR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="enhnqn0c"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EE423803CC
-	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Mar 2026 11:04:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 667F5C2FF
+	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Mar 2026 11:08:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772795084; cv=none; b=u0FBnlrilP75Zj2o5tKtx1QcTsXlpGtZPMAYHzgfJvVaXPRUrJvR2x3FJCH3HsrMuhYmw8lpQSii9hEu2hdcroeJufokcsgWBi9y5JjStvGZxOVM+K44uMg8MMygDkDQ4ZtAHzBebVdRm2l5oyQuzaHuhWimV1T7zSnXPmnFx5s=
+	t=1772795288; cv=none; b=RmcpJRsXwSGQIyCPGe1mNmlQ1nOXQ4gwvwl50IvaXb+U//qxIlFfU6Dh9QIPAt0t5L/dzfsWUWjWo2MG5ZvvRxKzDw+LrQSbm825EVdhZ8M85AdzUfBetM2fcuJBFU9Ea0zpS56USOtQTCJSgwW2uZiGDNd0ZCK1yGXGYt/eljM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772795084; c=relaxed/simple;
-	bh=8XP1eFWvh0Kk8uFTpykxii/ZLhv2yrSr5WeT6zc6P6Y=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=PCDwAg0s/kci5AytnVonR+8im5Yux0hxyoWotWvhyGUtlpIFxy2PeZ83NXWtri61EG1ZHwXLhp1k1d2TIdOQA/cCh+6k/tkCtKaJxiAYfQOozDesAhxQJ0hwO06mNoGCzI9yWwOUldZTOfUSMB0WGOOHTYCvL5JGTdBTEP9Jrk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eXEoZihR; arc=none smtp.client-ip=209.85.208.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-661568ce781so2533136a12.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Mar 2026 03:04:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772795081; x=1773399881; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fHrSIGCtwz+QUPj/e0xR8BNm6VPbuN89FwG5ueoHtFk=;
-        b=eXEoZihRmmBcQPhz8I5kopCH5IYSgcFXgvpmFQe48nm0l5i7nH/olZ9jV50yuD5MfS
-         VpW523f7tvjFi8KYMPHpw51IMssRv+v2KKxZ3uZKuxGhMtJ2Ma3qM4MYyksfYASGp27r
-         0w8pAMyDyTX+veaxu8ToqlEsIH1HXzHHk/53JuHfrqhnKaDLDHGmrY2eCIUSXooz8LrC
-         uOMZmQAwBEjjLNpO57HOUw6T9HPfbla7tguelkOSuA8StCG4d33lpjEn839/eS3UOaBt
-         KvpCi+UvNzNyyjXkxL0QjbAE9JQ6EgcoYLYh/+Ij+Vl2ngOAOuKUILJwEF1dNjqkC+PM
-         GN/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772795081; x=1773399881;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=fHrSIGCtwz+QUPj/e0xR8BNm6VPbuN89FwG5ueoHtFk=;
-        b=NTJ880f1DQ8OX9JNgV9Ud+9DBLZgYSMCyLDZEIkaQiB2NwIF+OveKUMeDAVsZWp3Ql
-         /9E7XVVF38xWg/dgadVWXE8BN5wHDADsC89c/0aH0H70rkHpLcsqSl8DnLPoRIaqpJsT
-         DaDvv0KvfZgzz75imaNwD3jfGY3b5/k5nOtgV0H2PcvnuyEOLAkWWQloewEa9GFI+lVL
-         6zFhbWFr0Og6V2C0xlEySIuxomwUxtFjOelZYQkpMCtxVZbNuL8Vasn50y2TQJ1DB3+g
-         tF+bZo4kpjU0DtzmoL7MsM6ZIY6cKqL1jLwLGOWZe0fv6NT4zQgJA1bq4B/KPewFTC0a
-         p8ng==
-X-Forwarded-Encrypted: i=1; AJvYcCWVkM3+aQU5KE9KDpbd7UJYSnbZJlJ+XqJO84p2ydh29aAxPRfye27cOFTQTR0AZcDEJSzi7IDnpmIMJ1cs@vger.kernel.org
-X-Gm-Message-State: AOJu0YxJIG/EpTeU2dXy4GbqNa5zjL69e1WgPORi4bpvojelCBiG3WYl
-	Kb5KFGrFNTIdtCyhgYwKOFP05v6H2q39gDw/hPqegGPA7n+FZ7LWdG3k
-X-Gm-Gg: ATEYQzzYo74MHhqy9FwIrZjb6st4ZRISsXKTnJTbezvPrpcqJGlnOiqVeTFmZNJ764F
-	J0DbB8Qt+aanGdRoWyrtl+SBZgixKXFrO642F6LVFeWuLnk8WULBIHKiVG94wso5NqvjIJ7NQ5O
-	HdYeo5yhWFPgilssyXufawxsVJpTCLFEvkgERqKasAvWq/qc33x3rL3w04eUZJ1ic5KZoUELZl9
-	7ki+/Bmh81PE4CKiXCoi6qD8FsGd53ZxGFclFcwxsVh5KxaFDXFEIqkNEOMyHHAqDTU3+cw3Vw5
-	ob3JoFHdxtFe+QifISpxBk3TtWyvAT1zIf0h73zddD/iT75XcEIqQiZkK+PQUJ9e/jgel3SCUf6
-	SAgC9IcCWoiyMtIOrlrvSulwdGWMWX4wptlIkSlk8zZ6/vv6T45OpNJ1nSWHSbigtMSD6hVApYe
-	RiMH4ynt9Zb0cVhI2BTq+Vdl+Q2lJRHAkDFJ9uVH4eMO9zMCqGoAOhczjU8gp1Ddeh8ppii2YLA
-	zd6IKdrrgNlaaGQ47CvTEmEO3HsclTMfcFiXXPIjh2pn0BIEVdVRZKWv67jWSDZSQ==
-X-Received: by 2002:a05:6402:358a:b0:65f:aecc:4f1d with SMTP id 4fb4d7f45d1cf-6619d54491bmr704724a12.24.1772795081346;
-        Fri, 06 Mar 2026 03:04:41 -0800 (PST)
-Received: from smtpclient.apple (89-66-237-154.dynamic.play.pl. [89.66.237.154])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-661a3c66f0asm374769a12.1.2026.03.06.03.04.39
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 06 Mar 2026 03:04:40 -0800 (PST)
-Content-Type: text/plain;
-	charset=utf-8
+	s=arc-20240116; t=1772795288; c=relaxed/simple;
+	bh=zvGkoOu6sc3DwKuM9+tCXqq+dXf2cC7y58uKtjKrGkA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CsSf7WH/OjjjrzG+kmPYsyaCkkyA0Z9P+P4BXs4rIxp+CNPmBAe6ynNix96wK24TvlOvrcDxB5SbmcTYed2vKdRVXv4HnGg+0tdjxxt/S8rQrlHWKSFW97mBMTfEjNueQYWoSoiVjDVeMdvouSVIHpyAiSu2bmmDRYGi/3RhqII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=enhnqn0c; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44200C4AF09
+	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Mar 2026 11:08:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772795288;
+	bh=zvGkoOu6sc3DwKuM9+tCXqq+dXf2cC7y58uKtjKrGkA=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=enhnqn0cQZOEfPg4lbr5H0FcIOxP/gaxG/zy4LHsHbA4Y//gAslwnbfUUjaIeSPwd
+	 /XqGAc1zKK9l/RwY+YKBm0jm2/l5eZ8bBH84Vl9gXweq54jTLN7PSUoS5wkA+sj52M
+	 OgrSO3Yc8VMOPu3u81jUj+NfsgMOtFEoNikq6bspa78MHsrfxKrY2l7pWKZc8O6DsX
+	 /kH3ojHcyPUAyuaR6CUWEXqo+2wa9wyMT8+h8PiUpnnAtMeoRI5n355eulvZupV3aQ
+	 OICqI7Ot9BXmBXN1FpeBIotaIPwdFoAwwGcAHoQHXlmbuZJgb7wZoYFsWqk3W4OCfo
+	 QmkMfSQbe73LA==
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5a0faa0d15cso2806441e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Mar 2026 03:08:08 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCV2ezgL94XY+AG0rsEjCfuwmUmVTvxJO1sASUmTHYJdNyDkAiBQEdku7ojvGbBHp8YVMzGTutWGhtx181DS@vger.kernel.org
+X-Gm-Message-State: AOJu0YwiOcmBPeM+JDXRXJzaJ3/cw8mLwmkzzM7rqnljAhDkZRvZp1u7
+	D/tGU/eXRzk3auGMsJNLuT78r4UcFnWyrBbTbZb6YDeIBvdJTkLQK8vecX7FNLDADo9nT6VebKC
+	q9iEKXIJlu+DWz0zL87Z56gDSzh5/by+M3wW7B0GGag==
+X-Received: by 2002:a05:6512:3719:b0:5a1:3b28:42fd with SMTP id
+ 2adb3069b0e04-5a13cd58785mr456080e87.47.1772795286638; Fri, 06 Mar 2026
+ 03:08:06 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.4\))
-Subject: Re: [PATCH] media: venus: allow interlaced video streams
-From: Piotr Oniszczuk <piotr.oniszczuk@gmail.com>
-In-Reply-To: <d3310437-2776-4c7f-a844-8dc5de0f6359@oss.qualcomm.com>
-Date: Fri, 6 Mar 2026 12:04:28 +0100
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
- Bryan O'Donoghue <bod@kernel.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Stanimir Varbanov <stanimir.varbanov@linaro.org>,
- Mauro Carvalho Chehab <mchehab+samsung@kernel.org>,
- linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
+MIME-Version: 1.0
+References: <20260302-qcom-qce-cmd-descr-v11-0-4bf1f5db4802@oss.qualcomm.com>
+ <scr5qvxa7f7k22pms4c6k5gwiky7lhssrw6qryfngexlek44g2@rayinnnwqgbt>
+ <aalwMwN3qMlzrql5@linaro.org> <CAMRc=MfjknN1AYF_NPLzR0YbdWuoET25D9o0zsvx56VN+u59HQ@mail.gmail.com>
+ <aamIf8JethKzLW93@linaro.org> <CAMRc=Mf=NjCqf0eqmM800Q3MEUC48V_DZ3ts6+4=qMCtrbvzzQ@mail.gmail.com>
+ <aamsL4uh58Fv5een@linaro.org>
+In-Reply-To: <aamsL4uh58Fv5een@linaro.org>
+From: Bartosz Golaszewski <brgl@kernel.org>
+Date: Fri, 6 Mar 2026 12:07:54 +0100
+X-Gmail-Original-Message-ID: <CAMRc=MfMJzVrRBo0kbgDbznRexFn2bc6GBkNh75k3L4Kw25VJg@mail.gmail.com>
+X-Gm-Features: AaiRm50SYPFbrtvBCgqbAD5XV2pariKnEghQc2LIPzo-Ehg13xkHUxUA3b9Bzso
+Message-ID: <CAMRc=MfMJzVrRBo0kbgDbznRexFn2bc6GBkNh75k3L4Kw25VJg@mail.gmail.com>
+Subject: Re: [PATCH RFC v11 00/12] crypto/dmaengine: qce: introduce BAM
+ locking and use DMA for register I/O
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>, 
+	Thara Gopinath <thara.gopinath@gmail.com>, Herbert Xu <herbert@gondor.apana.org.au>, 
+	"David S. Miller" <davem@davemloft.net>, Udit Tiwari <quic_utiwari@quicinc.com>, 
+	Md Sadre Alam <mdalam@qti.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>, Michal Simek <michal.simek@amd.com>, 
+	Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org, linux-doc@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-crypto@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <D3656655-844F-4369-97FF-0A57D023E988@gmail.com>
-References: <20260228-venus-mpeg2-v1-1-c13aa7cb6e93@oss.qualcomm.com>
- <4CA1838F-504D-4EEA-99F4-B3CC5EB10EDA@gmail.com>
- <goqowrvdp4uwbakbp5cztujh5q5z3jroql7m7dumlp64lj4yph@4n3mjqsj5n7i>
- <885a74d4-c61e-414e-92a1-863faad931ce@oss.qualcomm.com>
- <uis6txrcj2thbtkrk2u3w23orzzjkluuzynqcijpcix7zlsvz5@kyrmka6zwtyx>
- <d3310437-2776-4c7f-a844-8dc5de0f6359@oss.qualcomm.com>
-To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-X-Mailer: Apple Mail (2.3826.700.81.1.4)
-X-Rspamd-Queue-Id: A806121F6B0
+X-Rspamd-Queue-Id: 6449D21F727
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	MV_CASE(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	TAGGED_FROM(0.00)[bounces-95784-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,lwn.net,gmail.com,gondor.apana.org.au,davemloft.net,quicinc.com,qti.qualcomm.com,amd.com,vger.kernel.org,lists.infradead.org];
+	FROM_HAS_DN(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
+	TAGGED_FROM(0.00)[bounces-95785-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	MISSING_XM_UA(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[piotroniszczuk@gmail.com,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,samsung];
-	RCPT_COUNT_SEVEN(0.00)[10];
+	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com]
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCPT_COUNT_TWELVE(0.00)[23];
+	TO_DN_SOME(0.00)[]
 X-Rspamd-Action: no action
 
+On Thu, Mar 5, 2026 at 5:16=E2=80=AFPM Stephan Gerhold
+<stephan.gerhold@linaro.org> wrote:
+>
+> >
+> > You'd think so but the HPG actually does use the word "dummy" to
+> > describe the write operation with lock/unlock bits set. Though it does
+> > not recommend any particular register to do it.
+> >
+>
+> I guess the documentation I'm looking at (8.7.3.4 BAM operation in the
+> public APQ8016E TRM) might be an excerpt from some older version of the
+> BAM HPG. Is also has a note about "dummy" command descriptors:
+>
+>   "NOTE: Pipe locking and unlocking should appear only in
+>    command-descriptor. In case a lock is required on a data descriptor
+>    this can be implemented by a dummy command descriptor with
+>    lock/unlock bit asserted preceding/following the data descriptor."
+>
+> This one doesn't make any difference between READ and WRITE command
+> descriptors (and both are documented in the chapter).
+>
+> Personally, I would prefer using a read over a write if possible. Unless
+> you can confirm that the register used for the dummy write is actually
+> read-only *and* write-ignore, writing to the register is essentially
+> undefined behavior. It will probably do the right thing on most
+> platforms, but there could also be one out there where writing to the
+> register triggers an error or potentially even silently ends up writing
+> into another register. Register logic can be fun in practice, commit
+> e9a48ea4d90b ("irqchip/qcom-pdc: Workaround hardware register bug on
+> X1E80100") [1] is a good example of that. :')
+>
+> [1]: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/c=
+ommit/?id=3De9a48ea4d90be251e0d057d41665745caccb0351
 
+I agree in general but I also learned from the QCE team at Qualcomm
+that apparently there were some issues with register reads over DMA,
+which makes writes preferable. While the VERSION register is
+officially read-only, I've been told writing to it is safe. So it's a
+choice between doing a READ that may not work on some platforms and
+doing a WRITE that may theoretically not work on some platforms.
 
-> Wiadomo=C5=9B=C4=87 napisana przez Vikash Garodia =
-<vikash.garodia@oss.qualcomm.com> w dniu 4 mar 2026, o godz. 14:28:
->=20
->=20
->>>>=20
->>>> have any other ideas.
->>>>=20
->>>=20
->>> Venus should already support h264 interlace.
->> I guess, the question is: do we support interlaced H.264 streams?
->=20
-> Yes, we do support interlace.
->=20
+I'll send v12 which will be a proper series with using register
+metadata and correctly freeing resources and we can rediscuss. Doing
+one or the other is actually a minor details of the whole thing after
+all.
 
-Hmm - i'm curious: when you are saying "we do support " - it this mean:
-1. just support or,
-2. suport for demonstrating working state or,
-3. support for useful usage (i mean useful in user space like e.g media =
-players)
-
-Isn't target to have option3?
-
-I have qcs6490 and decoder fails on:
--kodi
--mythtv
--mpv
-
-Tested only on  3 major players as i'm afraid other exotic userspace is =
-rather niche for users...
-
-And believe me - repaying to mine users: "hey - my distro supports video =
-decoder on qcs6490 as i can prove it by showing you working test tools =
-on it" is not what they want to see.=20
-
-=20=
+Bart
 
