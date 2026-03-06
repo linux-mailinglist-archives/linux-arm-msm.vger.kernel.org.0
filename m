@@ -1,110 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-95827-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95829-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wHGvBY3fqmlqXwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95827-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 15:07:09 +0100
+	id 2KHIMMHfqmlqXwEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95829-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 15:08:01 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6EB002224B8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 15:07:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 258B0222511
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 15:08:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 5B8753157F16
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2026 14:03:02 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 041CE3018771
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2026 14:03:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 438043ACA5A;
-	Fri,  6 Mar 2026 14:02:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFA773ACF1E;
+	Fri,  6 Mar 2026 14:02:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="CPieP3ov";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="JeGZCTVd"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="j7aWQTs0";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="SLV02YTr"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B87B3A8FEA
-	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Mar 2026 14:02:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15FF23ACA43
+	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Mar 2026 14:02:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772805757; cv=none; b=iHlhw0y1BjX5lA7u7bK0VzvJ/67/W0NGdVnT9+r2kMNJ6gQ4XLvRfXzPI5gi+CO9lJIRbAUf597WUOUMhuqOexd0opvmXne9CwZIC6RqyOZ4F/vnQlWGCiJa/nIsJxXyYEbTRLFl9xNqXNMMVbhPJ/f2A9/mYCdw2TpJ6fcxJEQ=
+	t=1772805762; cv=none; b=iztIR/d/VEiYKhgoAD8Di5tQ8efN26fy7cuNlpZ0pHQXrS2hLIaj+w2mLIxosCxD/GtQVLr/WhLcrqzbFmUIaWZxePaP6DzvkrRE6jwOfqLyPYT6g66tGgrNO8E6ESn8K88C8yNZTUy/sWw+T2SY6U+YxLbZt7vJ2sYDlmy+EeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772805757; c=relaxed/simple;
-	bh=sm7EUyCxvaq5NY6t8LS6/a6tDz7jPLwkAccVFNr3oGU=;
+	s=arc-20240116; t=1772805762; c=relaxed/simple;
+	bh=XdypX5R7YHwAfdYLbFXiX9GcnSh1xUjeI6q+u07iB2Q=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=dFYQiYIU/3IS8N1bV6tyGfw9VplDJ0OfkjAJrUeeR/Ag9dYHJgUcsOuLmioaE9O8HfPdF157/EyhLgmVvniDfVFivjA7/57DgKpb1rlrNmULTvT3UPHWtltNESh6O98o8Hf9q4WGM5OAqCnpKGMwH+6yM0r8SLAvxJVEI4NbpM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=CPieP3ov; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=JeGZCTVd; arc=none smtp.client-ip=205.220.168.131
+	 MIME-Version; b=o/wiDAPigeLvfUMvK9FK3X8DeeemZ1Ec9ZiG05gDKsLn2ZwtJgn3Qhasqdwg4eYwCtK6unJ0LBpBNtM2ioPH8qrRlNJVl1H6q7VUo58VRIoZc1Dna9eVQmX8b3ZKE/wcC8YCLQlKb321VQ+7kE3Jn/gh2zPIaImGeajlLVs0bF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=j7aWQTs0; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=SLV02YTr; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 626Bb1Sf1188918
-	for <linux-arm-msm@vger.kernel.org>; Fri, 6 Mar 2026 14:02:33 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 626BbFd84150967
+	for <linux-arm-msm@vger.kernel.org>; Fri, 6 Mar 2026 14:02:38 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=fm7izIRkYuO
-	+LqMnhq/FgbiZNwhFGSbGw/65vuRq+Tc=; b=CPieP3ovovxXyTFoVTHJCYGucSU
-	uKOdWjGhd1dZymJbhIF9IUc75mgr7/+ucjgx0mCGkrqhxUf5wFgUTkJiTVluhd8r
-	zJ9zp2RXhQwmQO5qJAuLY/l+BL25kWX0aT/daketcGdqmszZlHuxgw98EmMtXj5r
-	zgnwK+9WWc4pe+SyTBAgWo0rVUVypddzstdcWKu+TfHqo2UPxxrFywREJno3EbsE
-	g2rLTZjMsI1aX9x42UeXalkJ0kmVJ8h/ErtWMlnUHrzJ/31UomQ2dPUlTVRqIM4o
-	qKRZnnAs6sLXehzJHFe9azJ/in9Pk95/ZraV5rb7I8DJDCdpLT8GdNYCVRQ==
+	:mime-version:references:subject:to; s=qcppdkim1; bh=c5Mh2h/OmTF
+	2BgN3VOSbtDREZ+HVddrQQ8YeRPNbPwQ=; b=j7aWQTs0N9GHkzkgqI7F+hmbMf0
+	U3cx0Kj/nMfK1HbV0v/g1tw3jipIxchskdhb9pHpxGOHgWBqXOOvPS3GtGgppkiU
+	nMeO6k6dWkDIwTo5VwTZu5QFX8HQr2t5Rh/VbreMFNl0wIdMGfMgpQ0koyPWHQqt
+	M4JOaRTX7CvWrKk4nDwMfyN7zSvfI9FFXD7phdkb7ps5WczDYNLkonsYD7VB5lkV
+	ELcGi7CQ6q8/75l6OEWG0o38ghQ2xplyhJqy1v0wzgI85SgiMmWNSBd2FxG1V0sr
+	3OVpVk+phDqKTmTc4mzPaDXv36kVuiP3uw4GvtMQ7PjU0KSCDby5g9GT+gw==
 Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com [209.85.222.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cqx14gduh-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cqf25ucr8-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 06 Mar 2026 14:02:33 +0000 (GMT)
-Received: by mail-ua1-f72.google.com with SMTP id a1e0cc1a2514c-94acebd8d64so12731496241.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Mar 2026 06:02:33 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 06 Mar 2026 14:02:37 +0000 (GMT)
+Received: by mail-ua1-f72.google.com with SMTP id a1e0cc1a2514c-94ad0d8eff8so68612467241.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Mar 2026 06:02:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1772805752; x=1773410552; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1772805757; x=1773410557; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fm7izIRkYuO+LqMnhq/FgbiZNwhFGSbGw/65vuRq+Tc=;
-        b=JeGZCTVdfF+id+RLRdMO2j4ReGArF+C9F9/G4JXaK2uMn68z3IPK/Ft9k5kWtM79yW
-         E/Dc/OfxvPF3rcC4H47MjP8j+dIPVFaoJAuqrVadMsOM6XMH51uhW20MzKFXq9wKnwfU
-         KC+LaTfKyqAX7Fwxaph77m6gaOLbE8mVHoBc1gz3D/Xe7GVAHSsfNcO3vXHfhwXGhQkw
-         WIUs+aWpxt6Zo0V5Pmbuuq5moIqH/MnjAyI48iT5Rm05zMcAayU2KnbVvtiHauxna2O1
-         VsrPnaHKlU7XuBwWRcJ+O/Sf5GshZ4p8/8gLjDuaVu1k7Hu9hmE035L6wBwxO87UJLa4
-         fixw==
+        bh=c5Mh2h/OmTF2BgN3VOSbtDREZ+HVddrQQ8YeRPNbPwQ=;
+        b=SLV02YTrQ6WWZWQ13wWrWcqZE0QV6jqgaOxB6/h0cnlA1YnB6+FKSLp9TIao9x4Kxa
+         E3Mw8cDm96QdtxIb3xUQrKlN6Nbke8B3A1J16a1lE985UX6IVJPgpphDFmlZxMJDDMWb
+         GL/ygEhvua+Vk2W5u70rd4cbtHvJ3uNsxyoelnmqwnioOo1XgKMbOY1E16S8IlQf2uy9
+         Cg2HBtsmRmV3LCMd5lSL5lNCTa4+A5XC0fAQPJpVPu4bb4SOPAhXHLZGDBYgtrwZa5d2
+         Yi8cINnKcr641xML42CVelZrj8LzP/MR23D0SVHevU65a3+iDZxgj0QiHG5cXu32/s8b
+         6Frg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772805752; x=1773410552;
+        d=1e100.net; s=20230601; t=1772805757; x=1773410557;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=fm7izIRkYuO+LqMnhq/FgbiZNwhFGSbGw/65vuRq+Tc=;
-        b=li/lffyLkyZMz/XRN1w8EcAAV6ayDTcPoeAD48lepRjslG1YjgXrEyWOSrD0X72Ryr
-         hjSbuFia9fOeE0dLoDDLG0ezZ73gcmmbu4izVZNhchzNuOO64KWnJbS8qOGNT8QdS4Yf
-         GQHrvmeUnHdjVSyrC3Yo+HwhZIRttg/BVsXJUIsk/PO0H9IkpGIDm5VtdQXColQkKoHb
-         zUdgie7fyDceT+i3Y2RvbI3Bi58d1bCMmQf/XPaB1bRUEAkiTLVTs6g4vEnyCJsiDYFH
-         wRPFGTF+pHgQg9qMWRaznnnYJYCUlgrWCbX6b1GMy7aboOQN+uSNGVwyrbtlfDNo0D39
-         I5nQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVhw3E9cjl7NKk1OnnXh5sw/g3XRDTXLfY6l24l6z2BUztOhlmiCenBwCNF5z/3iJjI7Q00zVt50naIvrUO@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz3mTH+UMO/K8wUcg1k6WmOQlvsRUBbTR8E6ibhXDrEwn+jL21W
-	goeHQmKLRYSQc4se9gPq27vfymsqkeWgBFfV+KH50LphkM9/d8BXMmghBJ+FPx2pYrovc1P8F3V
-	MN2B/aOkxrRKq4m4mNvhTUY0uoTVnjv3aRb4N3d4JIJdtfpngQwbSJuHrxfRBBERI9jOd
-X-Gm-Gg: ATEYQzxAINZ/oJxKP0HSquqC3zxMKwXAuruYDmyUnGJsXYlBrAsEKkNHmO+jPcR4vcO
-	G42P6QkYrtwiFt+DTw7y2aiPk3lCKECm+Ou2o8yRD/6k/3Im0ycr8aZlKi0XujBQgfzpISTub66
-	AgwGSsSDzT1MT/fo/KNwDYUYwcOwGSY15P3ppA1NkZEN0y/hqi24fUc0hDjEm05qCr47tP3TFmn
-	lIiSokulgNgeAj6HeqJFZY8ynY6K/t10pI5+1vAVIx2BG0xur93AiXTeS1PeY6smU/fsvrHMNY0
-	FtIEDhhq46Cl//yc2a6xmU7+YGnbzX65zKK6OhXrdEmBVlwrezTJN7JoNcTKMwEGUsYXKBsFaCp
-	ObSx9p5m0HOEFhv7rWdkVAymCIr2kuZej+g70UJEs3C7Ev0LrUuYEhrWgDHKM2Z1jE8r7coPoMZ
-	F39VRiH6Wfrs16YjyCNv+3H1Z1oTZSN+9LWhe3RO0P9g==
-X-Received: by 2002:a05:6102:442a:b0:5fd:ed98:cf0f with SMTP id ada2fe7eead31-5ffe61cfc88mr839489137.34.1772805751952;
-        Fri, 06 Mar 2026 06:02:31 -0800 (PST)
-X-Received: by 2002:a05:6102:442a:b0:5fd:ed98:cf0f with SMTP id ada2fe7eead31-5ffe61cfc88mr839281137.34.1772805750700;
-        Fri, 06 Mar 2026 06:02:30 -0800 (PST)
+        bh=c5Mh2h/OmTF2BgN3VOSbtDREZ+HVddrQQ8YeRPNbPwQ=;
+        b=XmBNC/zoHyI//jUYuiCyxsm7Tn0PYt7b+IdeQLEEWUn7CJzdCL04fRPRV+IxuIr4IP
+         MpNUGfOw6Qk+ivTFCEUWTJJ+D0qk6mSRe9hL7mnWx/DO2H/gefEKRrC0iTIZZ/TY7nC5
+         MUh5jJ13HOCfOp8IUMza1Q1XxbKagZaLPpDW/HonyYHcTwjYP5Jx9Zze6g4hIb/GumyI
+         1F0EK/1daqljsz6VuLhfTDphsJoash/GCQtrpnqh4CTlLFN4sAgLkpSKELLe3E8FwTpX
+         jfochVHNB4JfRIU4xwZCuJVgoWoQpo1qULj1eF0gv71JutfqZfQ1RIJ5odfNI7DEd0VD
+         qaPQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVGg8Xg3r9DJuy4tfR5A8xIsiPX5nowACZ8xgXlxZ3t4SvMTGrKIhNqYN3rt0GItuvzvjD1G8SL8wUN+Nhq@vger.kernel.org
+X-Gm-Message-State: AOJu0YwKH6eGffiqzTSzl6JTBaagXOFsmAHgDAwClDY/WpPnS5xoTo6w
+	JrzufunQIHHjdzjU4M422+PKHfZsjwzLB9JwOZvIFb5vP5zH9+U6UT/DAMuj3ODLMoL4so5yN7c
+	yTwAzIK1o87CHr2t9DVOXASVUU3rEB8isn4huECnPyPWlrEM5ZA8vFqG7vDLiQ/JK3GMA
+X-Gm-Gg: ATEYQzzlIvbyKf4X/B/DRoD41y9NMgnakz0J4xS8ztvjga3k/KrgRs10fq509Psw7xR
+	xtVPJa4EGU6r1NeTvz8iUs2FVcuKUE3Yj314rZeKYEzmmuCu8+dh2PlLB6FdVW6bx0zHO/kVtKr
+	pUsooaqBecFCita81QQD8B5v6cMvfQjDbIIxtacSrhhYG876G+2cqLaqTahExBEBLijiJb1ImUO
+	MvpNbP4v8BTumUZR6YkjzGJigijjLNWSm8QUaISMBQmuq6GEtGdDQvXEQYnwQlgt8jrGiwy8kH6
+	wUtKcbPMxFVtKZfBs94C/c8Xjm7O9WfltRuI3GMogk6AJzrtvMwf3njeQaKoWubu8/aBuDaBWxZ
+	VzssqHs6OFm1orMM9y2/x5jv9KJqKO9hdv6ZUv9p8L3sxtCw74Xd87V0NW/HtHnPaAgh5jGLbwq
+	rVN5iW+yow4e3bM3ahso38vB6wFHEQgkzGdTXnL06dLw==
+X-Received: by 2002:a05:6102:c10:b0:5fd:ea47:d317 with SMTP id ada2fe7eead31-5ffc8edc536mr2505952137.15.1772805753874;
+        Fri, 06 Mar 2026 06:02:33 -0800 (PST)
+X-Received: by 2002:a05:6102:c10:b0:5fd:ea47:d317 with SMTP id ada2fe7eead31-5ffc8edc536mr2505792137.15.1772805752700;
+        Fri, 06 Mar 2026 06:02:32 -0800 (PST)
 Received: from QCOM-eG0v1AUPpu.qualcomm.com (82-64-236-198.subs.proxad.net. [82.64.236.198])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-485237f2d2bsm20171425e9.4.2026.03.06.06.02.28
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-485237f2d2bsm20171425e9.4.2026.03.06.06.02.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Mar 2026 06:02:29 -0800 (PST)
+        Fri, 06 Mar 2026 06:02:31 -0800 (PST)
 From: Loic Poulain <loic.poulain@oss.qualcomm.com>
 To: bryan.odonoghue@linaro.org, vladimir.zapolskiy@linaro.org
 Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         mchehab@kernel.org, konrad.dybcio@oss.qualcomm.com,
         dmitry.baryshkov@oss.qualcomm.com,
         Loic Poulain <loic.poulain@oss.qualcomm.com>
-Subject: [PATCH v3 2/5] media: camss: csid-340: Add VC-to-interface mapping
-Date: Fri,  6 Mar 2026 15:02:17 +0100
-Message-Id: <20260306140220.1512341-3-loic.poulain@oss.qualcomm.com>
+Subject: [PATCH v3 3/5] media: qcom: camss: csid-340: Enable PIX interface routing
+Date: Fri,  6 Mar 2026 15:02:18 +0100
+Message-Id: <20260306140220.1512341-4-loic.poulain@oss.qualcomm.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260306140220.1512341-1-loic.poulain@oss.qualcomm.com>
 References: <20260306140220.1512341-1-loic.poulain@oss.qualcomm.com>
@@ -115,37 +115,37 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA2MDEzNCBTYWx0ZWRfX3pRoSOe+58Xn
- MKz3IwbeR0uLMfaQeFKiIi1iYDAlscFmRdx+QpWVRrpT9vk5X6gnYisZcUQ4pYtUMDDknmTmpuz
- Qfjb+V5J874SrXbY41NTUP6AW88Q9ZtlbcrKC/QyFobTcUgP5LhJC2G1U0RNINP7r/t4JfnRK/4
- ryAVF+2MMEw0aqDnCOmtmrBhLa7eVqN7ujCBBbF+sCkxzqsiqIk5LOmdmDBGHcVFLEZcjug+rxC
- QZKxg2JnjQ1Yi/jKL4aqLLjne9ya5xLjoEfWtBsjxx/2iJmFotf+CtrGpW38mdyTwUyRWFF332f
- n5fF3Aa6dVgor7HuvSoVEjzWwg98mDvD8sol9QTxCX+mNuo074U3MMulAaKhAescDVlDs0hJ8MH
- RWwXhcWWVZIS24aMLcv2mFLLSNqXcTXf0MePXlm50o4dMl0gZPRAP8l1SPt8S2QOuewFcF17tNN
- bwmUL24oLp8//TwdZKQ==
-X-Proofpoint-GUID: fxscFvN2DtDzNNisnOsKinp2Tbzno1-m
-X-Proofpoint-ORIG-GUID: fxscFvN2DtDzNNisnOsKinp2Tbzno1-m
-X-Authority-Analysis: v=2.4 cv=e/MLiKp/ c=1 sm=1 tr=0 ts=69aade79 cx=c_pps
+X-Proofpoint-ORIG-GUID: AK9il6BRuBtmP_7mk0f6tXGvspgPNhLY
+X-Authority-Analysis: v=2.4 cv=Uvdu9uwB c=1 sm=1 tr=0 ts=69aade7d cx=c_pps
  a=ULNsgckmlI/WJG3HAyAuOQ==:117 a=MDeckJw97qnk8wCBExTehA==:17
  a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=EUspDBNiAAAA:8
- a=KcpIjEZMv6ng1Yh-ZjkA:9 a=1WsBpfsz9X-RYQiigVTh:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=EUspDBNiAAAA:8
+ a=Qlv3vNw1l6VwQTj1CKsA:9 a=1WsBpfsz9X-RYQiigVTh:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA2MDEzNCBTYWx0ZWRfX8mGOhoGP/qs2
+ p0D0pWbVOuR4d01R/On+rWEdsn0A4KI+fR45Y0uCkaIxagFKjGoBcja1CTVph0lpmNNi6ZYIWxg
+ UBpIKyT+HdBzJCh4WdgT+Eefg2AvJw42SRl0jAG/Kr18Iu2mdrvmAnsjp16WXkJ8dvUivZNvep+
+ 5HRgMFhSH79/hk0pPUspJ9HX/ZochlZzi55R0gmI8eR6gB/vOLsKL9YKyak3TTBz9ebDT8DLYnu
+ pGvSbZjW+BErqjen6eq3V79HgPooaUFpVEbX6R9XJimN4yu2NxA8oJ29c6/8crPkQRxdIYf97vB
+ ZVY/1S658aviohSclep9SJonYwje+eJAJxTN+Fl30nW9OkeWYoIjgCbyhKmh4jTEt9DKbB8XqTx
+ CJmcF/ToeiiauR0z5nMoiv5wpaXLbCxGyYxv60O20xBuOILM4W3AhbtQ47QMuvHtS49ZSGwO2eA
+ uhEf9MS9PiuDAvgTVsA==
+X-Proofpoint-GUID: AK9il6BRuBtmP_7mk0f6tXGvspgPNhLY
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-06_04,2026-03-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 adultscore=0 clxscore=1015 spamscore=0
- phishscore=0 malwarescore=0 lowpriorityscore=0 suspectscore=0 impostorscore=0
+ lowpriorityscore=0 bulkscore=0 clxscore=1015 malwarescore=0 spamscore=0
+ priorityscore=1501 suspectscore=0 impostorscore=0 phishscore=0 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603060134
-X-Rspamd-Queue-Id: 6EB002224B8
+X-Rspamd-Queue-Id: 258B0222511
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_CONTAINS_FROM(1.00)[];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
@@ -153,7 +153,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MIME_TRACE(0.00)[0:+];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95827-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-95829-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
@@ -169,123 +169,91 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Action: no action
 
-The CSID-340 block uses different register offsets for the PIX and RDI
-interfaces, but the driver previously indexed these registers directly
-with the VC number. This happened to work for RDI because the VC index
-matches the RDI register layout, but this assumption breaks with upcoming
-PIX interface support
+Add PIX path support to the CSID-340 driver. The hardware exposes a
+dedicated PIX interface in addition to the existing RDI paths, but
+the driver only supported RDI stream configuration so far.
 
-Introduce an explicit VC-to-interface mapping and use the mapped iface
-index when programming CSID_CFG0 and CSID_CTRL. This replaces the
-standalone __csid_ctrl_rdi() helper and simplifies the RDI stream setup
-path.
+Implements a dedicated __csid_configure_pix_stream() helper. The
+PIX path is configured similarly to RDI but uses the primary stream
+(VC0/DT0) and the appropriate CSID_CFG0/CSID_CTRL registers. Stream
+selection logic is also updated so RDI and PIX paths are configured
+independently.
 
-Also correct the CSID_CFG0/CTRL base offsets and clean up the code in
-preparation for full PIX path support.
-
-Like RDI, PIX outputs Bayer frames but can also achieve some image
-processing such as scaling, cropping and generating statitics (e.g.
-histogram), it also offer more flexebility in term of image alignment
-and stride. All of that can then later be leveraged to improve
-software or hardware frames post-processing.
+The PIX pipeline can subsequently perform further processing,
+including scaling, cropping, and statistics.
 
 Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
 ---
- .../platform/qcom/camss/camss-csid-340.c      | 43 ++++++++++++-------
- 1 file changed, 27 insertions(+), 16 deletions(-)
+ .../platform/qcom/camss/camss-csid-340.c      | 32 ++++++++++++++++++-
+ 1 file changed, 31 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/media/platform/qcom/camss/camss-csid-340.c b/drivers/media/platform/qcom/camss/camss-csid-340.c
-index adcbe3e01d62..9e80408727ee 100644
+index 9e80408727ee..f61493d2e72e 100644
 --- a/drivers/media/platform/qcom/camss/camss-csid-340.c
 +++ b/drivers/media/platform/qcom/camss/camss-csid-340.c
-@@ -41,7 +41,7 @@
- #define		CSI2_RX_CFG1_MISR_EN			BIT(6)
- #define		CSI2_RX_CFG1_CGC_MODE			BIT(7)
- 
--#define CSID_CFG0(iface)					(0x300 + 0x100 * (iface))
-+#define CSID_CFG0(iface)					(0x200 + 0x100 * (iface))
- #define		CSID_CFG0_BYTE_CNTR_EN			BIT(0)
- #define		CSID_CFG0_TIMESTAMP_EN			BIT(1)
- #define		CSID_CFG0_DECODE_FORMAT_MASK		GENMASK(15, 12)
-@@ -51,10 +51,24 @@
- #define		CSID_CFG0_DTID_MASK			GENMASK(28, 27)
- #define		CSID_CFG0_ENABLE			BIT(31)
- 
--#define CSID_CTRL(iface)					(0x308 + 0x100 * (iface))
-+#define CSID_CTRL(iface)					(0x208 + 0x100 * (iface))
- #define CSID_CTRL_HALT_AT_FRAME_BOUNDARY		0
+@@ -56,6 +56,7 @@
  #define CSID_CTRL_RESUME_AT_FRAME_BOUNDARY		1
  
-+#define CSID_MAX_RDI_SRC_STREAMS	(MSM_CSID_MAX_SRC_STREAMS - 1)
-+
-+enum csid_iface {
-+	CSID_IFACE_PIX,
-+	CSID_IFACE_RDI0,
-+	CSID_IFACE_RDI1,
-+	CSID_IFACE_RDI2,
-+};
-+
-+static enum csid_iface csid_vc_iface_map[CSID_MAX_RDI_SRC_STREAMS] = {
-+	[0] = CSID_IFACE_RDI0,
-+	[1] = CSID_IFACE_RDI1,
-+	[2] = CSID_IFACE_RDI2,
-+};
+ #define CSID_MAX_RDI_SRC_STREAMS	(MSM_CSID_MAX_SRC_STREAMS - 1)
++#define CSID_PIX_SRC_STREAMS		CSID_MAX_RDI_SRC_STREAMS
+ 
+ enum csid_iface {
+ 	CSID_IFACE_PIX,
+@@ -64,10 +65,11 @@ enum csid_iface {
+ 	CSID_IFACE_RDI2,
+ };
+ 
+-static enum csid_iface csid_vc_iface_map[CSID_MAX_RDI_SRC_STREAMS] = {
++static enum csid_iface csid_vc_iface_map[MSM_CSID_MAX_SRC_STREAMS] = {
+ 	[0] = CSID_IFACE_RDI0,
+ 	[1] = CSID_IFACE_RDI1,
+ 	[2] = CSID_IFACE_RDI2,
++	[3] = CSID_IFACE_PIX,
+ };
  
  static void __csid_configure_rx(struct csid_device *csid, struct csid_phy_config *phy)
- {
-@@ -70,17 +84,13 @@ static void __csid_configure_rx(struct csid_device *csid, struct csid_phy_config
- 	writel_relaxed(val, csid->base + CSID_CSI2_RX_CFG1);
+@@ -123,6 +125,30 @@ static void __csid_configure_rdi_stream(struct csid_device *csid, bool enable, u
+ 	writel_relaxed(enable, csid->base + CSID_CTRL(iface));
  }
  
--static void __csid_ctrl_rdi(struct csid_device *csid, int enable, u8 rdi)
--{
--	writel_relaxed(!!enable, csid->base + CSID_CTRL(rdi));
--}
--
--static void __csid_configure_rdi_stream(struct csid_device *csid, u8 enable, u8 vc)
-+static void __csid_configure_rdi_stream(struct csid_device *csid, bool enable, u8 vc)
- {
- 	struct v4l2_mbus_framefmt *input_format = &csid->fmt[MSM_CSID_PAD_FIRST_SRC + vc];
- 	const struct csid_format_info *format = csid_get_fmt_entry(csid->res->formats->formats,
- 								   csid->res->formats->nformats,
- 								   input_format->code);
-+	enum csid_iface iface = csid_vc_iface_map[vc];
- 	u8 dt_id;
- 	u32 val;
- 
-@@ -106,23 +116,24 @@ static void __csid_configure_rdi_stream(struct csid_device *csid, u8 enable, u8
- 	if (enable)
- 		val |= CSID_CFG0_ENABLE;
- 
--	dev_dbg(csid->camss->dev, "CSID%u: Stream %s (dt:0x%x vc=%u)\n",
--		csid->id, enable ? "enable" : "disable", format->data_type, vc);
-+	dev_dbg(csid->camss->dev, "CSID%u: Stream %sable RDI (dt:0x%x vc:%u)\n",
-+		csid->id, enable ? "en" : "dis", format->data_type, vc);
- 
--	writel_relaxed(val, csid->base + CSID_CFG0(vc));
-+	writel_relaxed(val, csid->base + CSID_CFG0(iface));
-+	writel_relaxed(enable, csid->base + CSID_CTRL(iface));
- }
- 
++static void __csid_configure_pix_stream(struct csid_device *csid, bool enable)
++{
++	struct v4l2_mbus_framefmt *input_format = &csid->fmt[MSM_CSID_PADS_NUM - 1];
++	const struct csid_format_info *format = csid_get_fmt_entry(csid->res->formats->formats,
++								   csid->res->formats->nformats,
++								   input_format->code);
++	u32 val;
 +
++	val = FIELD_PREP(CSID_CFG0_DECODE_FORMAT_MASK, format->decode_format);
++	val |= FIELD_PREP(CSID_CFG0_DT_MASK, format->data_type);
++
++	/* For PIX we use the same VC/DTID as RDI0 (0) to capture the main stream */
++	val |= FIELD_PREP(CSID_CFG0_VC_MASK, 0);
++	val |= FIELD_PREP(CSID_CFG0_DTID_MASK, 0);
++
++	if (enable)
++		val |= CSID_CFG0_ENABLE;
++
++	dev_dbg(csid->camss->dev, "CSID%u: Stream %sable PIX (dt:0x%x df:0x%x)\n",
++		csid->id, enable ? "en" : "dis", format->data_type, format->decode_format);
++
++	writel_relaxed(val, csid->base + CSID_CFG0(CSID_IFACE_PIX));
++	writel_relaxed(enable, csid->base + CSID_CTRL(CSID_IFACE_PIX));
++}
+ 
  static void csid_configure_stream(struct csid_device *csid, u8 enable)
  {
- 	int i;
- 
- 	__csid_configure_rx(csid, &csid->phy);
- 
--	for (i = 0; i < MSM_CSID_MAX_SRC_STREAMS; i++) {
--		if (csid->phy.en_vc & BIT(i)) {
--			__csid_configure_rdi_stream(csid, enable, i);
--			__csid_ctrl_rdi(csid, enable, i);
--		}
-+	/* RDIs */
-+	for (i = 0; i < CSID_MAX_RDI_SRC_STREAMS; i++) {
-+		if (csid->phy.en_vc & BIT(i))
-+			__csid_configure_rdi_stream(csid, !!enable, i);
+@@ -135,6 +161,10 @@ static void csid_configure_stream(struct csid_device *csid, u8 enable)
+ 		if (csid->phy.en_vc & BIT(i))
+ 			__csid_configure_rdi_stream(csid, !!enable, i);
  	}
++
++	/* PIX */
++	if (csid->phy.en_vc & BIT(CSID_PIX_SRC_STREAMS))
++		__csid_configure_pix_stream(csid, !!enable);
  }
  
+ static int csid_reset(struct csid_device *csid)
 -- 
 2.34.1
 
