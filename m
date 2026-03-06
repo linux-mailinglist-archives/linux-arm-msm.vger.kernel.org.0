@@ -1,168 +1,244 @@
-Return-Path: <linux-arm-msm+bounces-95766-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95767-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id uLfWHWKuqmluVQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95766-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 11:37:22 +0100
+	id WFiSIaCxqmkhVgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95767-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 11:51:12 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3062221EE06
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 11:37:22 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 313C921F23C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 11:51:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 6CE1E300B76C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2026 10:37:18 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A7A0F302F72C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2026 10:51:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28BEF36309A;
-	Fri,  6 Mar 2026 10:37:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B10F3359A7F;
+	Fri,  6 Mar 2026 10:51:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="IIPRPf/V"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FOEJ4YYe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DBC137C10C
-	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Mar 2026 10:37:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF823368AD;
+	Fri,  6 Mar 2026 10:51:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772793434; cv=none; b=nlbKoa5udJYFeAEtkGzZTMoYkxHRLnaWCpNUPblqWIW4sbinIJakt6vZvqpqyCGP0XkjhZpC+wupH0KT1OoYYNOMW60iQ/6Xf9pZOq/StwBF42nX1GJHXGO20IW+vfxjONNUsUThQWEIGBILEnDve6ctKOJiWhOd+rTPQ9Lgma0=
+	t=1772794264; cv=none; b=n85DUn91BF333gTnEOfwX3bWo7Mrimlvo2g61t2aYi3zlqf7zUIJUXyBxoH/EyeNotZSg8CagNKkfYl29eZ8ePfb7j4ypZxpseh5IJLu25AIL2ayFVlwbrZsENd1H12Bukq3iVSTcjR2Rx4qqxtOXOyAd54txJdd7MmcpnlPoq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772793434; c=relaxed/simple;
-	bh=9mQW205gegUibeTid/1e5hyvVPikyOjbbJTshSUvqqE=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
-	 References:In-Reply-To; b=aw3j35qiMSroQl9ZxH0iSw44bZYcli5wt8xWoMH9joHAVC1wHSRcCMVt7qeon2W5jtLTiseUoAfX4tM+qx5vFnWJ6bTbxm9dIgI8/AwqJRmBSrEkv0uttX2K/K/zN0way7ihno/heL28CO1Z8kpXcA0+fv2CFeKIBZSxFN31nqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=IIPRPf/V; arc=none smtp.client-ip=209.85.218.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-b936b85cc71so1142864966b.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Mar 2026 02:37:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1772793429; x=1773398229; darn=vger.kernel.org;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9mQW205gegUibeTid/1e5hyvVPikyOjbbJTshSUvqqE=;
-        b=IIPRPf/VjAEUXK8IyQI6dB7AJahg7RWN0BIknY7cs1Al2aaH1qimHs6i7pawIGUrqX
-         aBc1Nslf7Kg9oY+W2vanwvTGk3ltaRcuCiCopK8wVNr8zNYLxxk4meZJPXmk9utElSw8
-         F41of/pPfqErHw2h00WlD4cOll990+Tze/4WHyv7MeabOpmirywwPV/uhtInqJkH0CFa
-         AOqTCp4ibA+NSsget7w2J3A683K91Rnzv9I5FxK9jwggUTGeUo8/lyxTzPUluFcavX+g
-         YuamSImqSprJnKZTqCh2xY094YPt5lgYF0eI498QHjdNiqLKSMboazlBT/PPI8hVjVbo
-         44Dw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772793429; x=1773398229;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9mQW205gegUibeTid/1e5hyvVPikyOjbbJTshSUvqqE=;
-        b=aIMdWYWImvlLOtld2s88MW9OVkE6BnU8EFjdL3/O7DkCzZ6al2i+mL9qpooLK/PWnG
-         Jgw6VtJOINY3DjXbGhNyQLd2H94unaAoOXsUcXYTXzudTs0ytdTHLzbKv5y+0QMXyr84
-         Wjq7NuPzXqLSZGLQv7Ntils8wLc/uDwm3u5dy3HLSpjsiZUTa/ES7B7Zk83pZEtsxm4E
-         Nh81mjm1A0NwhU8vHS/IX23u5EK0q/NFf2FxT6zEjO0ElIMwLTip+Q8Vkrf3W0fW3+0v
-         FCTOkttW79HzCE05FLRpTt5jioCOy25j16I086D27S2HkKaoxvE1O5QSxABO6UdkrfTU
-         IXOA==
-X-Forwarded-Encrypted: i=1; AJvYcCX9cKaFygqy8OdASp9efU+f0M32ZNljqd5Rj1Vdqr/mcvus66jH7v9FtW4SvjW6LvWMt/Lq+fFnTeIyj2PY@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy6GIm5Zo/wKS7k4kQ9uHwEQhVD0bJEW8c13xDXk5a+GGEdj+z7
-	ysC43cW9nqJyl3Yc1Te5dauh8Lj/VdBUhReUHjnUlM+d6iyk5073sTOeOobPaUcxFEY=
-X-Gm-Gg: ATEYQzxJZafWLmwuTHndN8wa1FZNzn59DXIxyBvM1MJH1m17wD8ba6uspodQfxNS9pM
-	PEo8OoBlVcH9XbdiBQILcaL9tAkm7SiOzuVDvyHcONwbjSRBBNhJnnWCbjO6mrY2MmAMbaGu+v2
-	BkxswukYm0L0/lULAJvqaVPa1+QZzEBOJ8YCakTO8rSxv8XTIRkLfJuBTGhGzTuapmQVTSqj9Qv
-	4CG7GOzTgpuOYS7TdqZnDgjTwjbT0lU+gU2H/TPpJMcPqovfC6dM1ZnxxajW/uE1h5zfhMbMHzA
-	FCj26E9VTnrujvl8fN+VTFXhJ+XnLmJTKa/OhEm4eg/2NYIttERqgnsHXwGeBb1rU0haiIoIhvh
-	36Ove6EGppZ2EtnTFXsGykg3MrC/5xjHALjd06699Py1vFUQGFkHwVOiZR44RyDAUSkJy9Ik7XT
-	SP4JGJQ8yV1jYN43QZ1gTPaHB4ScS8IdO4zrK2yeXQaC4nCiOFEqZttp0wBD3FenDsBFjO
-X-Received: by 2002:a17:907:9486:b0:b73:572d:3b07 with SMTP id a640c23a62f3a-b942dfb4369mr108342766b.28.1772793429277;
-        Fri, 06 Mar 2026 02:37:09 -0800 (PST)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b942ef8ad0fsm46007966b.19.2026.03.06.02.37.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Mar 2026 02:37:08 -0800 (PST)
+	s=arc-20240116; t=1772794264; c=relaxed/simple;
+	bh=N/un1ct3aC4OeKYTUVQo9SBlq9RdaM42L1qkY0h+EJk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=T7AXVMQiqr2vkSQGKxE3u3xREizgK4PRPP6fO4skVY7FmoBvmc7h/oGUY8jLd3ldugN4lZ2zs93ZgJSoiFO8qynWIGMizR93zwLXrPyzEGo+omPPD1cxSiN8Bynq+a25YmRR5YruX8951oeFF+wtzPscqH0sl/38xXqyln0wsfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FOEJ4YYe; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE76CC4CEF7;
+	Fri,  6 Mar 2026 10:50:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772794264;
+	bh=N/un1ct3aC4OeKYTUVQo9SBlq9RdaM42L1qkY0h+EJk=;
+	h=From:To:Cc:Subject:Date:From;
+	b=FOEJ4YYeVY/+uRUqYkk5lU/VGNZknbgr6QBcYs9Jk24o3j2FihSpo9So1NT2RiIMJ
+	 9SvHtEschlq/UlN7LoAcRN9iQ3WMaSRAYmSIDAEVFkEkBVlVvAs/SKoLy4NeTF/Lc0
+	 6145rbuUXU8SkvJlJGPqmnWam3h1QKIuJwst0Vb7EQSJ7d3DqAg4j/dYwYDgYNZbH+
+	 PEJr65S4SPBKJ0avG8pXvfU76ugRbBjluct4vvbVQV8TkG2YJgRvvnjG2UiGGuMSjK
+	 9jILTEiV0/MMhlzQD9mXBQaSEbZRj48pWLAB5KIrxbUuNi3dgcL9UBBgXd749UprpA
+	 J1RVkQMwyd1tg==
+From: Sumit Garg <sumit.garg@kernel.org>
+To: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	linux-media@vger.kernel.org,
+	netdev@vger.kernel.org,
+	linux-wireless@vger.kernel.org,
+	ath12k@lists.infradead.org,
+	linux-remoteproc@vger.kernel.org
+Cc: andersson@kernel.org,
+	konradybcio@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	robin.clark@oss.qualcomm.com,
+	sean@poorly.run,
+	akhilpo@oss.qualcomm.com,
+	lumag@kernel.org,
+	abhinav.kumar@linux.dev,
+	jesszhan0024@gmail.com,
+	marijn.suijten@somainline.org,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	vikash.garodia@oss.qualcomm.com,
+	dikshita.agarwal@oss.qualcomm.com,
+	bod@kernel.org,
+	mchehab@kernel.org,
+	elder@kernel.org,
+	andrew+netdev@lunn.ch,
+	davem@davemloft.net,
+	edumazet@google.com,
+	kuba@kernel.org,
+	pabeni@redhat.com,
+	jjohnson@kernel.org,
+	mathieu.poirier@linaro.org,
+	trilokkumar.soni@oss.qualcomm.com,
+	mukesh.ojha@oss.qualcomm.com,
+	pavan.kondeti@oss.qualcomm.com,
+	jorge.ramirez@oss.qualcomm.com,
+	tonyh@qti.qualcomm.com,
+	vignesh.viswanathan@oss.qualcomm.com,
+	srinivas.kandagatla@oss.qualcomm.com,
+	amirreza.zarrabi@oss.qualcomm.com,
+	jens.wiklander@linaro.org,
+	op-tee@lists.trustedfirmware.org,
+	apurupa@qti.qualcomm.com,
+	skare@qti.qualcomm.com,
+	Sumit Garg <sumit.garg@oss.qualcomm.com>
+Subject: [PATCH 00/14] firmware: qcom: Add OP-TEE PAS service support
+Date: Fri,  6 Mar 2026 16:20:13 +0530
+Message-ID: <20260306105027.290375-1-sumit.garg@kernel.org>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 06 Mar 2026 11:37:08 +0100
-Message-Id: <DGVMTLXR7VVA.3UCTHBGDDIKL7@fairphone.com>
-To: "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>, "Krzysztof Kozlowski"
- <krzk@kernel.org>, "Luca Weiss" <luca.weiss@fairphone.com>, "Taniya Das"
- <taniya.das@oss.qualcomm.com>
-Cc: "Georgi Djakov" <djakov@kernel.org>, "Bjorn Andersson"
- <andersson@kernel.org>, "Michael Turquette" <mturquette@baylibre.com>,
- "Stephen Boyd" <sboyd@kernel.org>, "Rob Herring" <robh@kernel.org>,
- "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley"
- <conor+dt@kernel.org>, <~postmarketos/upstreaming@lists.sr.ht>,
- <phone-devel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
- <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>
-Subject: Re: [PATCH 2/5] dt-bindings: clock: qcom,milos-camcc: Document
- interconnect path
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260116-milos-camcc-icc-v1-0-400b7fcd156a@fairphone.com>
- <20260116-milos-camcc-icc-v1-2-400b7fcd156a@fairphone.com>
- <20260117-efficient-fractal-sloth-aaf7c2@quoll>
- <59d9f7ff-4111-4304-a76c-40f4000545f5@oss.qualcomm.com>
- <9f8619d4-43ac-4bc0-9598-c498d59a27b8@oss.qualcomm.com>
-In-Reply-To: <9f8619d4-43ac-4bc0-9598-c498d59a27b8@oss.qualcomm.com>
-X-Rspamd-Queue-Id: 3062221EE06
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 313C921F23C
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
+X-Spamd-Result: default: False [0.84 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[fairphone.com,quarantine];
-	MV_CASE(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[fairphone.com:s=fair];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_MISSING_CHARSET(0.50)[];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[48];
 	MIME_TRACE(0.00)[0:+];
 	RCVD_TLS_LAST(0.00)[];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95766-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[fairphone.com:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-95767-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[kernel.org,oss.qualcomm.com,poorly.run,linux.dev,gmail.com,somainline.org,ffwll.ch,lunn.ch,davemloft.net,google.com,redhat.com,linaro.org,qti.qualcomm.com,lists.trustedfirmware.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[18];
-	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[luca.weiss@fairphone.com,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FROM_NEQ_ENVFROM(0.00)[sumit.garg@kernel.org,linux-arm-msm@vger.kernel.org];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TO_DN_SOME(0.00)[]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FROM_HAS_DN(0.00)[]
 X-Rspamd-Action: no action
 
-Hi Taniya,
+From: Sumit Garg <sumit.garg@oss.qualcomm.com>
 
-On Mon Jan 19, 2026 at 11:28 AM CET, Konrad Dybcio wrote:
-> On 1/19/26 11:20 AM, Konrad Dybcio wrote:
->> On 1/17/26 12:46 PM, Krzysztof Kozlowski wrote:
->>> On Fri, Jan 16, 2026 at 02:17:21PM +0100, Luca Weiss wrote:
->>>> Document an interconnect path for camcc that's required to enable
->>>> the CAMSS_TOP_GDSC power domain.
->>>
->>> I find it confusing. Enabling GDSC power domains is done via power
->>> domains, not via interconnects. Do not represent power domains as
->>> interconnects, it's something completely different.
->>=20
->> The name of the power domains is CAMSS_TOP_GDSC (seems you misread)
->>=20
->> For the power domain to successfully turn on, the MNoC needs to be
->> turned on (empirical evidence). The way to do it is to request a
->> nonzero vote on this interconnect path
->>=20
->> (presumably because the GDSC or its invisible providers require
->> something connected over that bus to carry out their enable sequences).
+Qcom platforms has the legacy of using non-standard SCM calls
+splintered over the various kernel drivers. These SCM calls aren't
+compliant with the standard SMC calling conventions which is a
+prerequisite to enable migration to the FF-A specifications from
+Arm.
 
-Do you have any details you can share for this discussion?
+OP-TEE as an alternative trusted OS to QTEE can't support these non-
+standard SCM calls. And even for newer architectures QTEE won't be able
+to support SCM calls either with FF-A requirements coming in. And with
+both OP-TEE and QTEE drivers well integrated in the TEE subsystem, it
+makes further sense to reuse the TEE bus client drivers infrastructure.
 
-Regards
-Luca
+The added benefit of TEE bus infrastructure is that there is support
+for discoverable/enumerable services. With that client drivers don't
+have to manually invoke a special SCM call to know the service status.
+
+So enable the generic Peripheral Authentication Service (PAS) provided
+by the firmware. It acts as the common layer with different TZ
+backends plugged in whether it's an SCM implementation or a proper
+TEE bus based PAS service implementation.
+
+The TEE PAS service ABI is designed to be extensible with additional API
+as PTA_QCOM_PAS_CAPABILITIES. This allows to accommodate any future
+extensions of the PAS service needed while still maintaining backwards
+compatibility.
+
+Currently OP-TEE support is being added to provide the backend PAS
+service implementation which can be found as part of this PR [1].
+This implementation has been tested on Kodiak/RB3Gen2 board with lemans
+EVK board being the next target. In addition to that WIN/IPQ targets
+planning to use OP-TEE will use this service too.
+
+Patch summary:
+- Patch #1: adds Kodiak EL2 overlay since boot stack with TF-A/OP-TEE
+  only allow UEFI and Linux to boot in EL2.
+- Patch #2: adds generic PAS service.
+- Patch #3: migrates SCM backend to generic PAS service.
+- Patch #4: adds TEE/OP-TEE backend for generic PAS service.
+- Patch #5-#13: migrates all client drivers to generic PAS service.
+- Patch #14: drops legacy PAS SCM exported APIs.
+
+The patch-set is based on v7.0-rc2 tag and can be found in git tree here
+[2].
+
+Merge strategy:
+----------------
+
+It is expected due to APIs dependency, the entire patch-set to go via
+the Qcom tree. All other subsystem maintainers, it will be great if I
+can get acks for the corresponding subsystem patches.
+
+[1] https://github.com/OP-TEE/optee_os/pull/7721
+[2] https://git.kernel.org/pub/scm/linux/kernel/git/sumit.garg/linux.git/log/?h=qcom-pas-v1
+
+Mukesh Ojha (1):
+  arm64: dts: qcom: kodiak: Add EL2 overlay
+
+Sumit Garg (13):
+  firmware: qcom: Add a generic PAS service
+  firmware: qcom_scm: Migrate to generic PAS service
+  firmware: qcom: Add a PAS TEE service
+  remoteproc: qcom_q6v5_pas: Switch over to generic PAS TZ APIs
+  remoteproc: qcom_q6v5_mss: Switch to generic PAS TZ APIs
+  soc: qcom: mdtloader: Switch to generic PAS TZ APIs
+  remoteproc: qcom_wcnss: Switch to generic PAS TZ APIs
+  remoteproc: qcom: Select QCOM_PAS_TEE service backend
+  drm/msm: Switch to generic PAS TZ APIs
+  media: qcom: Switch to generic PAS TZ APIs
+  net: ipa: Switch to generic PAS TZ APIs
+  wifi: ath12k: Switch to generic PAS TZ APIs
+  firmware: qcom_scm: Remove SCM PAS wrappers
+
+ arch/arm64/boot/dts/qcom/Makefile             |   2 +
+ arch/arm64/boot/dts/qcom/kodiak-el2.dtso      |  35 ++
+ drivers/firmware/qcom/Kconfig                 |  18 +
+ drivers/firmware/qcom/Makefile                |   2 +
+ drivers/firmware/qcom/qcom_pas.c              | 295 +++++++++++
+ drivers/firmware/qcom/qcom_pas.h              |  53 ++
+ drivers/firmware/qcom/qcom_pas_tee.c          | 478 ++++++++++++++++++
+ drivers/firmware/qcom/qcom_scm.c              | 304 ++++-------
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c         |   4 +-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c       |  11 +-
+ .../media/platform/qcom/iris/iris_firmware.c  |   9 +-
+ drivers/media/platform/qcom/venus/firmware.c  |  11 +-
+ drivers/net/ipa/ipa_main.c                    |  13 +-
+ drivers/net/wireless/ath/ath12k/ahb.c         |   8 +-
+ drivers/remoteproc/Kconfig                    |   1 +
+ drivers/remoteproc/qcom_q6v5_mss.c            |   5 +-
+ drivers/remoteproc/qcom_q6v5_pas.c            |  51 +-
+ drivers/remoteproc/qcom_wcnss.c               |  12 +-
+ drivers/soc/qcom/mdt_loader.c                 |  12 +-
+ include/linux/firmware/qcom/qcom_pas.h        |  41 ++
+ include/linux/firmware/qcom/qcom_scm.h        |  29 --
+ include/linux/soc/qcom/mdt_loader.h           |   6 +-
+ 22 files changed, 1097 insertions(+), 303 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/kodiak-el2.dtso
+ create mode 100644 drivers/firmware/qcom/qcom_pas.c
+ create mode 100644 drivers/firmware/qcom/qcom_pas.h
+ create mode 100644 drivers/firmware/qcom/qcom_pas_tee.c
+ create mode 100644 include/linux/firmware/qcom/qcom_pas.h
+
+-- 
+2.51.0
+
 
