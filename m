@@ -1,113 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-95830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95832-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8N0MFsjfqmlqXwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 15:08:08 +0100
+	id wE6mBFDfqmlqXwEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95832-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 15:06:08 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id A9EF6222520
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 15:08:07 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B11222246F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 15:06:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9F4B9316FAC1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2026 14:03:06 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id B6725305D4CC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2026 14:05:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E19E3ACEFF;
-	Fri,  6 Mar 2026 14:02:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 370E83B3C1B;
+	Fri,  6 Mar 2026 14:03:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="S4sAJMNu";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="XczGCMSq"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gcX/xm6H";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="C9X/K4GC"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001E63A9D8C
-	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Mar 2026 14:02:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3181D3AE71D
+	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Mar 2026 14:03:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772805763; cv=none; b=DmON6I4+pan06Fb3a3BL0u27TknQ5g4o+w7N2iAYHOzvUppiCNxa5xuYPb6Ocy8niNCBFltEVGUwQGjh1Q4DyJekHX9xNLp6PZoWpHq6UlZbslh9PyAi6b+9Pe1GUAi/7iJI2y+FAtsloIITBgAH64Ly03ujrTEWJXSPhcNKWuU=
+	t=1772805831; cv=none; b=GAm+GVxx1CcFolrLEKvjwTNF9z8OCOmHJEv3N+ObMSkWKvQXLNASwZoR22kX4fESAul8MXCQ2WCUVsE4CFlV6uW9XBrnwUE4MBM8ouw/CIF3v2VEMcfRyLd9xW/Xvh9VwLu5qvQRWJW2BXbcl9sbWQHfkd29eLID5icOrbuDP2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772805763; c=relaxed/simple;
-	bh=EDYsvqb5RsGmgJKZcirhixacxJ9cMh6CHZqD60mgbwQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=EyvPkwqtaA3NhbYcpbB8d2eZoPUl6wEu485grLNyvbnJxotUVf+LlqJmsiYVfIRxOfNTCLY3+/H2k/lThyobQBPDCQW/7YddOEAARsyW6YFBHo2e6RdFdq/z+3Pxl9WVO8fE0o3a42xcF8GmuVHTuT7yrD/FRTbQ8kh67F3NUOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=S4sAJMNu; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=XczGCMSq; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1772805831; c=relaxed/simple;
+	bh=kJAc7f5m5jxavMkgdIHdotCTd133ITydGJDsM8ctX+g=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ffeAnxE8eG9XMZ9vuygw0wG/y3zt8za8YwvBKDT3snRNy5kuCMyETAXOeJE6jW6dFulgkkF2mWrhVdHzxCyTVwfVX/pcffDbwfh9a9ABF+/ne8Viy/K/R9wHV8BtAc5iA3T8qkdBruJVvu69Cnz8ATAJNOK4zfRxfRZlSsE+B6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gcX/xm6H; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=C9X/K4GC; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 626BbKwc2022812
-	for <linux-arm-msm@vger.kernel.org>; Fri, 6 Mar 2026 14:02:39 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 626BbH6H2022741
+	for <linux-arm-msm@vger.kernel.org>; Fri, 6 Mar 2026 14:03:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=hUJtIXwURM+
-	mnrOq4kR+X5jB3iPfIoZRKw9f5krjPCU=; b=S4sAJMNuOL3Q3TKNm3kl21gXaUw
-	R4TCuj3qeghYfcWSYjQqkyio86mF/7BjYgu6ueZickJIoVm+EKTtabpAtd6UqMsJ
-	MVHhfbEQVgcAHg8EQU3cTrlDjZYe8W/CXk3SbcPKMlqLuKOqTKLjDQpLUw/5t1wb
-	7JLND6im1kvBM7f6aKaQXUiViBoqqfuHuXAd/aGuzBAxwUucBlhdgjrKH3b9P/CV
-	kIq7gc//627HHfvpyfDQ+WNd+LYiFqOLanomLGWyd01sNXd1T8YDiL+iGS4fmEch
-	ee4dwtRzngcUm3xmRxfU3etN6ulIkIRoKf/4xI1C2JI3UFcYp98AHVTnREg==
-Received: from mail-ua1-f69.google.com (mail-ua1-f69.google.com [209.85.222.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cqfg6bcca-1
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=thDMk6e40n+6IH98mjP5Yb1qMk17Ss9qvkj
+	Pv6/pb60=; b=gcX/xm6HmU67074MVmE9teSdUwGPWt3J/qIS1GhXSsOazi/ExHV
+	pJk6bTRxemgeDPsKFShQXxKJiAabAE5ssaIzRoi89goD5LalNGSCnMPuCYPx6JTW
+	PbNQkBJtoeNaWYXo9HtvOtYnw9gNM/gWcTqO3rCWksNEPaySjg+sIObP8Qe+89W6
+	uxff01OfydmJkr3AP7qge1bWiN31Et+sidktV/B9kYKJonuye7fa3DDKD1I9kBUd
+	7oBQn5lZlYMN4PxhpT/7PjK8wSXJQyQxzIsLNkrWMT2sQvAtx++zpaO0acSwvYd9
+	oGyiTQSa91e+U03q4t5jKKKaIiQPi9h7djw==
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com [74.125.82.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cqfg6bcge-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 06 Mar 2026 14:02:39 +0000 (GMT)
-Received: by mail-ua1-f69.google.com with SMTP id a1e0cc1a2514c-94ad0ada31bso83884747241.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Mar 2026 06:02:38 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 06 Mar 2026 14:03:47 +0000 (GMT)
+Received: by mail-dy1-f198.google.com with SMTP id 5a478bee46e88-2be21146933so6577480eec.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Mar 2026 06:03:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1772805758; x=1773410558; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hUJtIXwURM+mnrOq4kR+X5jB3iPfIoZRKw9f5krjPCU=;
-        b=XczGCMSqw1+dWVpQN29uMjHnRXO2dmULNXSdBlJTwI6KPiGMRIfpYpqqFqoup20+yB
-         JX25MZOhAFGN+74yZPIf4KIP0dUEveUpOap+tPDLyiODJ69S0WzMbTOZt0m9fkLc3ptT
-         W84PCRtMpBq6HilwAJ2pc6de8X3r3XAu+kPniyFBtTQiEfnJEaWjEI8QYA11EyJGUnv4
-         16GqzGpJE+XKO5LNkxocWv2anveAc4bXC54SqVmc+R1p0ot5ts2HPFZ+WeacXIwwxcuI
-         FG+xtYYNgOvIC3jrUTiCcmXFURd0mk6j9nNlVPXU+IXmjl2YL6n7NxoUTDW0EcHvFfE4
-         bNtQ==
+        d=oss.qualcomm.com; s=google; t=1772805827; x=1773410627; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=thDMk6e40n+6IH98mjP5Yb1qMk17Ss9qvkjPv6/pb60=;
+        b=C9X/K4GCviyYahOoB4o7NYj8g4SOm4Egf1ZHhwbbYr8KhapwTiFB67jIofac/0uEhf
+         HS5fYuLQ9u8HaD9uSqWFEGSWHvqAgqpXUUMSKmyjxW5N0e6KhDO6OaMF7t/xcA26qZeo
+         +It42emCIyKZkzG0oteFWohQHphfzbZq5eIVsxVzTjfzUsY2Zm38f5n9x1+uGnlIbjkA
+         40IDKacQs5k4dTavvbZtzU047wCeqwiMiZSaSHTZKhuf2KId4npB6GGE8kBc66Tlqym2
+         bu6+vfjeyQHC6JCksdSR6AbS6MsbpUCxhYHgQd+vS3OU+R9jgwGKO+waYzqQrAwIBSuh
+         Tepg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772805758; x=1773410558;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=hUJtIXwURM+mnrOq4kR+X5jB3iPfIoZRKw9f5krjPCU=;
-        b=g5IzcCAA/+85n881zTA8WvUxyKnauRFhZhRGNbxow/4avwD+YVVjkRNonelNJ7WD1c
-         8YwkY8yR5UsCUOnCWBKhv93lq5pWThO0Fg0m1JJtiV9ZzRhJDi16Hyp/ktHbOB/kLx+t
-         bimMjz/CGxzJT9m03MsA3q7O8lAog0mzsMggXaIxW9TFQjBlFIzkBOOvK7Ocvj/W6tGh
-         oeCvLhZfO5yzbeQCPer3BhUiGbZMhTik+eHv4jDYWkh5XSAWDvpJAIWQL2x7jLFUT6t8
-         ZyXWcOxTN6WuuPJK1lx0Pm3t1dBHxUDbBiHvQ313h00VzD2NrG6qAtpu99baLdz77O7n
-         cjbw==
-X-Forwarded-Encrypted: i=1; AJvYcCWJ91Vhvu9tzWRYfwPWPvbUqnz+SYowDz/EL2fZ8O/Hmx9aYohcB7g31o+Xt+BmdNT+o1ESVnfwW+TpE23K@vger.kernel.org
-X-Gm-Message-State: AOJu0YyAeM76OR1lWqF1gjls3tCSwi4GwyBIcJFl6m1ElcaGJpf4c2cL
-	AGUAz7VXHfl7mmYxVJhDokkmKJT9lKPGnR1r0XIKDboKMWQg2wTI0gew9HeD0mXbXJM+HYefno5
-	Mf5HhBnT99lXUtnH1AXq1/rlYvEynScIwpv8KUsWnE7vBKl8ZCNDbToqdKzE+GE929Ekm
-X-Gm-Gg: ATEYQzypb30VLpV6xZfdiVVk0ksC4yV+LUGxNaIxxXg51oim5kR37gEBzkoXNC1r/we
-	1jOMY33MyuQ45KTwdJsP43zfzZOrlxJsafATcYZfX0ImbgORkAuneQCGbY7twmyqXVFUmZvRuH2
-	JtcPwjPikfkQGvPGeFYGucUi0f3PsHTUUz7zq0pN7rb6E+PKtzIDn2nqRwWLtEgc5lVpElylgs/
-	0XP54MobZWeaT5aFiGLuahfmKUzykwTNIR8peNUqsAobVvmuz2KtkTL1jP7Ov4ryYqZgumeJftA
-	HPjMfYcVgb4BE3hYekXdc3Saqpkc037BwODomty+qZVErKuaSE1P+/zqkJsnVCHXL1tiRcANKf5
-	406KqDdH32u9MuxmVt49bSX0JbUoYJu34YpX92/qwPRXriebr+QbozhAxDLG6EazGvT6H9MfNE7
-	q4vhjKWekfGsVZ2l/lGaAjvhWw5S4hsv0SHRijr2bkPg==
-X-Received: by 2002:a05:6102:951:b0:5ff:9ef0:9978 with SMTP id ada2fe7eead31-5ffc8c6d768mr2946436137.6.1772805757796;
-        Fri, 06 Mar 2026 06:02:37 -0800 (PST)
-X-Received: by 2002:a05:6102:951:b0:5ff:9ef0:9978 with SMTP id ada2fe7eead31-5ffc8c6d768mr2946331137.6.1772805757092;
-        Fri, 06 Mar 2026 06:02:37 -0800 (PST)
-Received: from QCOM-eG0v1AUPpu.qualcomm.com (82-64-236-198.subs.proxad.net. [82.64.236.198])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-485237f2d2bsm20171425e9.4.2026.03.06.06.02.35
+        d=1e100.net; s=20230601; t=1772805827; x=1773410627;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=thDMk6e40n+6IH98mjP5Yb1qMk17Ss9qvkjPv6/pb60=;
+        b=KHr+xcRU2gzEGgYnybW63fDxiuRJfdtIIf6qrwsnShKGXbALZKRUfo9rpDuEPkJWwg
+         NfCblm0z0vrDQT1YX3/BT/IpPG7ZtjfIKRT/zHSe/TEBKYyc0dQvMMyhnHKre4BSc7OS
+         QGBgRiUfvNBxnOCSn3kxLe+JIP6ZwMr7xgp+JEG+Vuw4eJ752lXXzlASQA5+aZrkInz4
+         ZhANmlm8h0FvQwcYAxDZw6PRTLR0NyMqYfmiC0QbzP56sNPA3E6JmWL92ya+uTLEPfZK
+         Cvv0EEPzydo9/GJBw8CT0lWssbCD1p3copB7T8F4mtptPct85eabs9nOOUlGGXxFOSFr
+         YHNA==
+X-Forwarded-Encrypted: i=1; AJvYcCVbmypNlDXHf2f+Fa8ErA6xk5QdhAMEFGw96r99fXwOD0MO56inqahC2GfwNlQEQU87j3op1wmTrU7dApI8@vger.kernel.org
+X-Gm-Message-State: AOJu0YwVtmYxwRrvK2gecppTYiW1VlhBjvjntLJHdh2sjk9/u/VKB+Ru
+	ecKZSYANlY/GpsZaEVoeUtFwc0LEoBhbzPYik+dhsB/ERyimsrLg6yrQOExEix7CuEGl0cwvzth
+	loRbpcUg/d9ETd5wPEUzhIhR9AgcZA44uUk72hI2DfxeQaSBjchIchouRFH72JT2bIf87
+X-Gm-Gg: ATEYQzxsotX68IafWX56yL3FaGOFD7BgHxe+wlqMmJjIZ8/NAtyifTWIegPf6xBGKr4
+	xAPhCEGYUFCr13hdmeQPPyTAwmKbWqOuju5kcRIT1Nig73hYn5D7rXByW/IOhZ4NqZfJagFuNi2
+	FwKDCHQz+DSysHhjiom5I0L61n/aPL10AlNlow4BR9lq6d+Lpu6dsMrZjWq8CaLgXNkUK6d/FEf
+	3eRA4mM2VIcCsByacIFyiVbzoNzFAyfe4WBq/8K6vGr7T9U5DUodfpSguyzxJ9NimgVnDDa2Yk8
+	seGG+a1/fmu1gAmGTpavQldJNs715lrDesLvlA+FOPyZX79S0GdVbsuO+x9lY3XT2frDoLoZnzV
+	M5moPcRhlMwfktC6JuKBJClW1L0YuUBQD0TU5qk63Sf81YTxfaxo6ZF9t4HWMphQFggABmdo7KZ
+	in6o6JRQ==
+X-Received: by 2002:a05:7300:a44d:b0:2b8:6ad3:804e with SMTP id 5a478bee46e88-2be4e0555a3mr767855eec.22.1772805826477;
+        Fri, 06 Mar 2026 06:03:46 -0800 (PST)
+X-Received: by 2002:a05:7300:a44d:b0:2b8:6ad3:804e with SMTP id 5a478bee46e88-2be4e0555a3mr767820eec.22.1772805825537;
+        Fri, 06 Mar 2026 06:03:45 -0800 (PST)
+Received: from QCOM-aGQu4IUr3Y.qualcomm.com (i-global052.qualcomm.com. [199.106.103.52])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2be4f948631sm1200531eec.19.2026.03.06.06.03.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Mar 2026 06:02:36 -0800 (PST)
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
-To: bryan.odonoghue@linaro.org, vladimir.zapolskiy@linaro.org
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        mchehab@kernel.org, konrad.dybcio@oss.qualcomm.com,
-        dmitry.baryshkov@oss.qualcomm.com,
-        Loic Poulain <loic.poulain@oss.qualcomm.com>
-Subject: [PATCH v3 5/5] media: qcom: camss: vfe-340: Support for PIX client
-Date: Fri,  6 Mar 2026 15:02:20 +0100
-Message-Id: <20260306140220.1512341-6-loic.poulain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260306140220.1512341-1-loic.poulain@oss.qualcomm.com>
-References: <20260306140220.1512341-1-loic.poulain@oss.qualcomm.com>
+        Fri, 06 Mar 2026 06:03:44 -0800 (PST)
+From: Shawn Guo <shengchao.guo@oss.qualcomm.com>
+To: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>
+Cc: Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
+        Bartosz Golaszewski <brgl@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Shawn Guo <shengchao.guo@oss.qualcomm.com>
+Subject: [PATCH] dt-bindings: remoteproc: qcom: Drop types for firmware-name
+Date: Fri,  6 Mar 2026 22:03:06 +0800
+Message-ID: <20260306140306.1328719-1-shengchao.guo@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -115,21 +117,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: jWPyY6Z8c2Eff1FTubemvmG2fv46p5wG
-X-Proofpoint-ORIG-GUID: jWPyY6Z8c2Eff1FTubemvmG2fv46p5wG
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA2MDEzNCBTYWx0ZWRfX7HGOOVxQnusw
- PK6Uhdnpgts3WblCZyU2aLKAnfFna33V+YLW2bb6RieyVmFcg7916fhCS3A859x8GG+FX+Ev3If
- CRceqHS+La5WRBV9qbPe9s4pKnqxOC3CAl/x7qKlQKimM7kgH8iD6Da9TmzJGE2XXytJEdbbyO6
- BvJxCPdum3LCJiyeDDdLMgwgmsEKIoXLcirSGQU6H5WKMC9bUTAILmAQz8bkYjQZ7P5fVfX5MKG
- YJZXlOVrkn3vYsRgnT9SWvG8U+vXhfFf+n8DOGvZqomdljpHj9ccAOSDXTPtLRYCbtOAkeOsp84
- L7mAdapu5JHXGHeYa5cS79iCjeUBACXhnZ9VvccDgxfPmXBn4JWPEPM4CGMuj19JKH/8/VODSkT
- 512YyJLTtrTeRfoNAmFOjapPOAn/q5s2H1f3uXxuZXhO/PRUIlKF9vMHgmxyWVXZtWNcuW2zq1U
- SMKD/FhCZsV4z/OXUeA==
-X-Authority-Analysis: v=2.4 cv=XKg9iAhE c=1 sm=1 tr=0 ts=69aade7f cx=c_pps
- a=UbhLPJ621ZpgOD2l3yZY1w==:117 a=MDeckJw97qnk8wCBExTehA==:17
+X-Proofpoint-GUID: 2Fyx9zL8mFiYbOBdQNCe6DUvujibAPap
+X-Proofpoint-ORIG-GUID: 2Fyx9zL8mFiYbOBdQNCe6DUvujibAPap
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA2MDEzNCBTYWx0ZWRfX8N/Aqud9/M4t
+ KfBxFJs2hlK+pVrGEXhemFgFC4uHjLnhPdhJ0CZFSlIauOJneuMlBrQYZkbVlu1DpUt0gVv7D7+
+ cmjYCiuv9KqeGMU4xHfrGM9jEOr0W2H0a2tSe8ANXvzfjKdYO5bjT85Xy9R21mQm2xTAHw4xvu/
+ TmPmB+kalkZ/zJTKCX56/3hapbNDs0jhstwZh05MzwqUohfyH4jdr9pwfQm8NXzujSBDwPA9O3v
+ FpGObkFGJhB9zV2H6WVL7lPZz6Se6nYxhmE2JFi8TIV5Teh1dXw6syaUIJ4sUas3ip9GYexE6Nw
+ ibn7xFz5u1Be70xkF/1EElSlAsNWXKbUXBR0nKAqY+WuXzf0hMUG7AJR/+bN8w4KfULoN4BmToV
+ rkSSX6nX3hhyPRAIsRR2lcGE/+XykK/fnLcVQDC1o3Prw6A+97I/GFd+7vZCAQxoAl/Yk2VfUs/
+ IRTi3w2j6uAcEod30yw==
+X-Authority-Analysis: v=2.4 cv=XKg9iAhE c=1 sm=1 tr=0 ts=69aadec3 cx=c_pps
+ a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=b9+bayejhc3NMeqCNyeLQQ==:17
  a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
  a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=EUspDBNiAAAA:8
- a=T0JAYaUI_TIkQzIuI_sA:9 a=QEj_SxXEJzKJbFzb:21 a=TOPH6uDL9cOC6tEoww4z:22
+ a=nzWYI2exGoiye4W2V5EA:9 a=bBxd6f-gb0O0v-kibOvt:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-06_04,2026-03-06_02,2025-10-01_01
@@ -138,192 +140,151 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  malwarescore=0 spamscore=0 lowpriorityscore=0 impostorscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603060134
-X-Rspamd-Queue-Id: A9EF6222520
+X-Rspamd-Queue-Id: 7B11222246F
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+X-Spamd-Result: default: False [0.84 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95830-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-95832-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[loic.poulain@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[shengchao.guo@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
-	RCPT_COUNT_SEVEN(0.00)[8];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:dkim,qualcomm.com:email];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Action: no action
 
-Add support for the vfe-340 PIX write engine, enabling frame capture
-through the PIX video device (e.g. msm_vfe0_pix). The PIX path requires
-a separate configuration flow from RDI, including cropping setup, line-
-based write engine configuration, and the correct packer format based
-on the input pixel format.
+The type of firmware-name is already defined by core schemas.  Some of
+qcom remoteproc bindings define it redundantly, while others do not.
+Drop it to be consistent and avoid it being copied over to new files.
 
-In contrast to RDI, the PIX interface embeds a lightweight processing
-engine we can use for cropping, configuring custom stride/alignment,
-and, in the future, extracting frame statistics.
-
-The functionality has been validated on Arduino-Uno-Q with:
-media-ctl -d /dev/media0 --reset
-media-ctl -d /dev/media0 -l '"msm_csiphy0":1->"msm_csid0":0[1],"msm_csid0":4->"msm_vfe0_pix":0[1]'
-media-ctl -d /dev/media0 -V '"imx219 1-0010":0[fmt:SRGGB8_1X8/640x480 field:none]'
-media-ctl -d /dev/media0 -V '"msm_csiphy0":0[fmt:SRGGB8_1X8/640x480 field:none]'
-media-ctl -d /dev/media0 -V '"msm_csid0":0[fmt:SRGGB8_1X8/640x480 field:none]'
-media-ctl -d /dev/media0 -V '"msm_vfe0_pix":0[fmt:SRGGB8_1X8/640x480 field:none]'
-yavta -B capture-mplane --capture=3 -n 3 -f SRGGB8 -s 640x480 /dev/video3
-
-Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Signed-off-by: Shawn Guo <shengchao.guo@oss.qualcomm.com>
 ---
- .../media/platform/qcom/camss/camss-vfe-340.c | 85 ++++++++++++++++---
- 1 file changed, 75 insertions(+), 10 deletions(-)
+ .../devicetree/bindings/remoteproc/qcom,msm8916-mss-pil.yaml     | 1 -
+ .../devicetree/bindings/remoteproc/qcom,msm8996-mss-pil.yaml     | 1 -
+ .../devicetree/bindings/remoteproc/qcom,sa8775p-pas.yaml         | 1 -
+ .../devicetree/bindings/remoteproc/qcom,sc7180-mss-pil.yaml      | 1 -
+ .../devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml      | 1 -
+ .../devicetree/bindings/remoteproc/qcom,sc8280xp-pas.yaml        | 1 -
+ Documentation/devicetree/bindings/remoteproc/qcom,sdx55-pas.yaml | 1 -
+ .../devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml          | 1 -
+ 8 files changed, 8 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe-340.c b/drivers/media/platform/qcom/camss/camss-vfe-340.c
-index 2f8205fa40a4..fc2dcba43188 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe-340.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe-340.c
-@@ -54,6 +54,7 @@
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,msm8916-mss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,msm8916-mss-pil.yaml
+index c179b560572b..1e7c165f925e 100644
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,msm8916-mss-pil.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,msm8916-mss-pil.yaml
+@@ -137,7 +137,6 @@ properties:
+       - description: MPSS reserved region
  
- #define TFE_BUS_CLIENT_CFG(c)				BUS_REG(0x200 + (c) * 0x100)
- #define		TFE_BUS_CLIENT_CFG_EN		BIT(0)
-+#define		TFE_BUS_CLIENT_CFG_AUTORECOVER	BIT(4)
- #define		TFE_BUS_CLIENT_CFG_MODE_FRAME	BIT(16)
- #define TFE_BUS_IMAGE_ADDR(c)				BUS_REG(0x204 + (c) * 0x100)
- #define TFE_BUS_FRAME_INCR(c)				BUS_REG(0x208 + (c) * 0x100)
-@@ -63,12 +64,23 @@
- #define TFE_BUS_IMAGE_CFG_2(c)				BUS_REG(0x214 + (c) * 0x100)
- #define		TFE_BUS_IMAGE_CFG_2_DEFAULT	0xffff
- #define TFE_BUS_PACKER_CFG(c)				BUS_REG(0x218 + (c) * 0x100)
-+#define		TFE_BUS_PACKER_CFG_FMT_PLAIN8	0x1
- #define		TFE_BUS_PACKER_CFG_FMT_PLAIN64	0xa
-+#define		TFE_BUS_PACKER_CFG_FMT_MIPI10	0xc
-+#define		TFE_BUS_PACKER_CFG_FMT_MIPI12	0xd
- #define TFE_BUS_IRQ_SUBSAMPLE_CFG_0(c)			BUS_REG(0x230 + (c) * 0x100)
- #define TFE_BUS_IRQ_SUBSAMPLE_CFG_1(c)			BUS_REG(0x234 + (c) * 0x100)
- #define TFE_BUS_FRAMEDROP_CFG_0(c)			BUS_REG(0x238 + (c) * 0x100)
- #define TFE_BUS_FRAMEDROP_CFG_1(c)			BUS_REG(0x23c + (c) * 0x100)
+   firmware-name:
+-    $ref: /schemas/types.yaml#/definitions/string-array
+     items:
+       - description: Name of MBA firmware
+       - description: Name of modem firmware
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,msm8996-mss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,msm8996-mss-pil.yaml
+index 4d2055f283ac..1b65813cc8ad 100644
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,msm8996-mss-pil.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,msm8996-mss-pil.yaml
+@@ -126,7 +126,6 @@ properties:
+       - description: Metadata reserved region
  
-+#define PP_CROP_REG(a)					(0x2800 + (a))
-+#define TFE_PP_CROP_CFG					PP_CROP_REG(0x60)
-+#define		TFE_PP_CROP_CFG_EN	(BIT(0) | BIT(9))
-+#define	TFE_PP_CROP_LINE_CFG				PP_CROP_REG(0x68)
-+#define		TFE_PP_CROP_FIRST	GENMASK(29, 16)
-+#define		TFE_PP_CROP_LAST	GENMASK(13, 0)
-+#define	TFE_PP_CROP_PIX_CFG				PP_CROP_REG(0x6C)
-+
- enum tfe_client {
- 	TFE_CLI_BAYER,
- 	TFE_CLI_IDEAL_RAW,
-@@ -255,18 +267,72 @@ static void vfe_wm_update(struct vfe_device *vfe, u8 wm, u32 addr,
- 	writel_relaxed(addr, vfe->base + TFE_BUS_IMAGE_ADDR(client));
- }
+   firmware-name:
+-    $ref: /schemas/types.yaml#/definitions/string-array
+     items:
+       - description: Name of MBA firmware
+       - description: Name of modem firmware
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sa8775p-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sa8775p-pas.yaml
+index 188a25194000..bcd2bcf96e24 100644
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,sa8775p-pas.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,sa8775p-pas.yaml
+@@ -51,7 +51,6 @@ properties:
+     description: Reference to the AOSS side-channel message RAM.
  
-+static u32 vfe_packer_format(struct vfe_device *vfe, u32 pixelformat)
-+{
-+	const struct camss_formats *fmt = vfe->res->formats_rdi;
-+	int i;
-+
-+	for (i = 0; i < fmt->nformats; i++)
-+		if (fmt->formats[i].pixelformat == pixelformat)
-+			break;
-+
-+	if (i >= fmt->nformats)
-+		return TFE_BUS_PACKER_CFG_FMT_PLAIN64;
-+
-+	switch (fmt->formats[i].mbus_bpp) {
-+	case 8:
-+		return TFE_BUS_PACKER_CFG_FMT_PLAIN8;
-+	case 10:
-+		return TFE_BUS_PACKER_CFG_FMT_MIPI10;
-+	case 12:
-+		return TFE_BUS_PACKER_CFG_FMT_MIPI12;
-+	default:
-+		dev_err(vfe->camss->dev, "VFE%u: Unsupported pixelformat", vfe->id);
-+	}
-+
-+	return TFE_BUS_PACKER_CFG_FMT_PLAIN64;
-+}
-+
- static void vfe_wm_start(struct vfe_device *vfe, u8 wm, struct vfe_line *line)
- {
- 	struct v4l2_pix_format_mplane *pix = &line->video_out.active_fmt.fmt.pix_mp;
- 	u32 stride = pix->plane_fmt[0].bytesperline;
- 	u8 client = __wm_to_client(wm);
--
--	/* Configuration for plain RDI frames */
--	writel_relaxed(TFE_BUS_IMAGE_CFG_0_DEFAULT, vfe->base + TFE_BUS_IMAGE_CFG_0(client));
--	writel_relaxed(0u, vfe->base + TFE_BUS_IMAGE_CFG_1(client));
--	writel_relaxed(TFE_BUS_IMAGE_CFG_2_DEFAULT, vfe->base + TFE_BUS_IMAGE_CFG_2(client));
--	writel_relaxed(stride * pix->height, vfe->base + TFE_BUS_FRAME_INCR(client));
--	writel_relaxed(TFE_BUS_PACKER_CFG_FMT_PLAIN64, vfe->base + TFE_BUS_PACKER_CFG(client));
-+	u32 cfg = TFE_BUS_CLIENT_CFG_EN;
-+
-+	if (client == TFE_CLI_BAYER) { /* PIX - Line based */
-+		struct v4l2_rect *crop = &line->crop;
-+
-+		/* Cropping */
-+		writel_relaxed(TFE_PP_CROP_CFG_EN, vfe->base + TFE_PP_CROP_CFG);
-+		writel_relaxed(FIELD_PREP(TFE_PP_CROP_FIRST, crop->top) |
-+			       FIELD_PREP(TFE_PP_CROP_LAST, crop->top + crop->height - 1),
-+			       vfe->base + TFE_PP_CROP_LINE_CFG);
-+		writel_relaxed(FIELD_PREP(TFE_PP_CROP_FIRST, crop->left) |
-+			       FIELD_PREP(TFE_PP_CROP_LAST, crop->left + crop->width - 1),
-+			       vfe->base + TFE_PP_CROP_PIX_CFG);
-+
-+		/* Write Engine */
-+		writel_relaxed(pix->width + (pix->height << 16),
-+			       vfe->base + TFE_BUS_IMAGE_CFG_0(client));
-+		writel_relaxed(0u, vfe->base + TFE_BUS_IMAGE_CFG_1(client));
-+		writel_relaxed(stride, vfe->base + TFE_BUS_IMAGE_CFG_2(client));
-+		writel_relaxed(stride * pix->height, vfe->base + TFE_BUS_FRAME_INCR(client));
-+		writel_relaxed(vfe_packer_format(vfe, pix->pixelformat),
-+			       vfe->base + TFE_BUS_PACKER_CFG(client));
-+
-+		cfg |= TFE_BUS_CLIENT_CFG_AUTORECOVER;
-+	} else { /* RDI - Frame based */
-+		writel_relaxed(TFE_BUS_IMAGE_CFG_0_DEFAULT,
-+			       vfe->base + TFE_BUS_IMAGE_CFG_0(client));
-+		writel_relaxed(0u, vfe->base + TFE_BUS_IMAGE_CFG_1(client));
-+		writel_relaxed(TFE_BUS_IMAGE_CFG_2_DEFAULT,
-+			       vfe->base + TFE_BUS_IMAGE_CFG_2(client));
-+		writel_relaxed(stride * pix->height, vfe->base + TFE_BUS_FRAME_INCR(client));
-+		writel_relaxed(TFE_BUS_PACKER_CFG_FMT_PLAIN64,
-+			       vfe->base + TFE_BUS_PACKER_CFG(client));
-+		cfg |= TFE_BUS_CLIENT_CFG_MODE_FRAME;
-+	}
+   firmware-name:
+-    $ref: /schemas/types.yaml#/definitions/string-array
+     items:
+       - description: Firmware name of the Hexagon core
  
- 	/* No dropped frames, one irq per frame */
- 	writel_relaxed(0, vfe->base + TFE_BUS_FRAMEDROP_CFG_0(client));
-@@ -276,11 +342,10 @@ static void vfe_wm_start(struct vfe_device *vfe, u8 wm, struct vfe_line *line)
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sc7180-mss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sc7180-mss-pil.yaml
+index b1402bef0ebe..7c9accac92d0 100644
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,sc7180-mss-pil.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,sc7180-mss-pil.yaml
+@@ -98,7 +98,6 @@ properties:
+       - description: metadata reserved region
  
- 	vfe_enable_irq(vfe);
+   firmware-name:
+-    $ref: /schemas/types.yaml#/definitions/string-array
+     items:
+       - description: Name of MBA firmware
+       - description: Name of modem firmware
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml
+index 005cb21732af..f349c303fa07 100644
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-mss-pil.yaml
+@@ -98,7 +98,6 @@ properties:
+       - description: metadata reserved region
  
--	writel(TFE_BUS_CLIENT_CFG_EN | TFE_BUS_CLIENT_CFG_MODE_FRAME,
--	       vfe->base + TFE_BUS_CLIENT_CFG(client));
-+	writel(cfg, vfe->base + TFE_BUS_CLIENT_CFG(client));
+   firmware-name:
+-    $ref: /schemas/types.yaml#/definitions/string-array
+     items:
+       - description: Name of MBA firmware
+       - description: Name of modem firmware
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sc8280xp-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sc8280xp-pas.yaml
+index 5dbda3a55047..63ae3a30f626 100644
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,sc8280xp-pas.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,sc8280xp-pas.yaml
+@@ -42,7 +42,6 @@ properties:
+     description: Reference to the reserved-memory for the Hexagon core
  
- 	dev_dbg(vfe->camss->dev, "VFE%u: Started client %u width %u height %u stride %u\n",
--		vfe->id, client, pix->width, pix->height, client);
-+		vfe->id, client, pix->width, pix->height, stride);
- }
+   firmware-name:
+-    $ref: /schemas/types.yaml#/definitions/string
+     description: Firmware name for the Hexagon core
  
- static void vfe_wm_stop(struct vfe_device *vfe, u8 wm)
+ required:
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sdx55-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sdx55-pas.yaml
+index 5d463272165f..7e67eda13240 100644
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,sdx55-pas.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,sdx55-pas.yaml
+@@ -56,7 +56,6 @@ properties:
+   smd-edge: false
+ 
+   firmware-name:
+-    $ref: /schemas/types.yaml#/definitions/string
+     description: Firmware name for the Hexagon core
+ 
+ required:
+diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
+index 11b056d6a480..27b8c127d74f 100644
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
+@@ -52,7 +52,6 @@ properties:
+   smd-edge: false
+ 
+   firmware-name:
+-    $ref: /schemas/types.yaml#/definitions/string-array
+     items:
+       - description: Firmware name of the Hexagon core
+       - description: Firmware name of the Hexagon Devicetree
 -- 
-2.34.1
+2.43.0
 
 
