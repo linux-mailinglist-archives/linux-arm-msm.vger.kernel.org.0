@@ -1,84 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-95838-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95839-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id KEmaCHjjqmkTYAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95838-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 15:23:52 +0100
+	id UJCsBLfjqmkTYAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95839-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 15:24:55 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0404222939
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 15:23:51 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5476022299A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 15:24:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id D30F430268BB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2026 14:22:23 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 116073023D87
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2026 14:22:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECB8A3AA1BD;
-	Fri,  6 Mar 2026 14:22:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8551F3ACA5E;
+	Fri,  6 Mar 2026 14:22:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="0+OeJHCm"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="tpHDeP+9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F4527FD44
-	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Mar 2026 14:22:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E2E38E5CD
+	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Mar 2026 14:22:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772806941; cv=none; b=prVZXUHgnm1DkZ3RlGGiepazd0Q5G3XRxCA7F5/6LOwC85Ns4nqOi7XnTMJyzD3DewYbZFXOSAPm36Zy8o4Q5Si5o8rJE2GGNTzQQ+ni2kaFhYePHmD/kjL5HpGfpw/T7XGGgkOWT3NfGV1lbZzJVMIQXwYtrRH1B/2y1cLio18=
+	t=1772806944; cv=none; b=qT7s1cokxLd5KAQ3cfdjX/NVpsNzaXtRn5zP3qdoJQOqvh5SeF/hSAD8cN2uLP/QYd1pUGbybH0sBlT4SbCg9zWvAITzg1YdXzxz1NZPiWkWMDIpvYIPxXnKVuA6lDXGGK/YfJBw32jY7/KFdp/fV2uOp2FH00BkZG8Qgxskbfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772806941; c=relaxed/simple;
-	bh=arm7JnDlljRb1nmMKO4j6gwgpsWhDrf5OjYQKnPs3n0=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=tMsTNGBs/Tl1ppp6dPhozBskJu100cp1H1hfw3zGOhWCh3OgytFnCyYqD59RU7SjJeShYt42/EY2jApZhp4lcN28fvr6YdnrlNadiHE4bTfGT4GMU38mbfT7wEY3ii3E5P1gxbrqWtm2xITew7K4izjmyLY0CLwYXw4B9D69Fvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=0+OeJHCm; arc=none smtp.client-ip=209.85.208.45
+	s=arc-20240116; t=1772806944; c=relaxed/simple;
+	bh=ZG4vqB20u3oeYRitCqSlm46mL+bG1BN+RLcEZiDnQkU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=nIn38xjfMUWESvXX1p6ETjNl4K5EvL3F1qZcKo2ErBSjwTgU49FQSbDBPqo4XOz7ZL33j8MrU0C/HPbDgD9Zoe6uktI8tbnilOb5waClhynCZ3c8yWPOQ1OpHa0LsAmRQ48aYshWbekttST1fhke+snNP0vK0P3Gzc83b56yZ9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=tpHDeP+9; arc=none smtp.client-ip=209.85.208.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-65c4152313fso13651629a12.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Mar 2026 06:22:20 -0800 (PST)
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-65f8c8c3a4aso17086295a12.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Mar 2026 06:22:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1772806939; x=1773411739; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=VJcxss4DXIYyerBkpQqbK77YeNLvuOHewQEof3j5PJg=;
-        b=0+OeJHCmwDw27Jd8El7I45Ks2pJaPr41kBQloTWiVbZHqTZaL0Nhc0E3O4HI7Sht07
-         MeNL+nJeqVPW4fiAW8ROeh7BI3ZB7nO35x/xEvO2/EN9Xkjy4F0MyZds/XNbOp9NY1To
-         jEDL6sfgyS99PvfECvv0uoMAZxX8HtVL6BVUzqLlXLTfFQFrOsQiNsAaFXs7NXThlcp6
-         Xc3Ww2QMgjr994mJOnLJ2WyJ/9K8ShLbkJ+y8pG110hu/o/jd3CxCoxewmYNpB19G5hM
-         5Vt75kDuWJhYJRhpdlGt27Y2j3rJDeFXYMc4IcG90lqvcw5+FMwg5laJ5x14z5Go6j7u
-         clNQ==
+        d=fairphone.com; s=fair; t=1772806940; x=1773411740; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GN/9HJvWN9Iaz4c8c0n++HKlIZpjwx7e1ASpMCTtePY=;
+        b=tpHDeP+92NVfXnaiidl0+aAz3+9aATkukp/U4M8Q8kCRTKo422LBw49wAgopsonHDG
+         hWnsEReJ8XLxYhjtfnLC180M43K5M5Zq8P2k0t0oIamber6aqZCPX6ivKDpRlmx2phs3
+         pUbvxXX+x/ca0CefIuB1xD7j8rI/MGGcT/BX7fve+1q7CR6FRucs0ZmBU4gYqcFfbDdh
+         gVQGJqoZKqwewXXKbffQCy77sXwsjuNTL+vrVnMSrUkUper+UAEvMrm+7OjdqUew/8mZ
+         t/AZJvqoqs5H7yBVkUMY9qqlurlz7fSx8E8YLJoUsRXb8TZjlgoE+WEwHNAaixZV7F5/
+         7uUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772806939; x=1773411739;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VJcxss4DXIYyerBkpQqbK77YeNLvuOHewQEof3j5PJg=;
-        b=fH++OYk9HvFXMnJCGlhJ+wcIsdi14IO+U1mBg16ywXUtiwddrK7CT5f6X8DRRqNuQ0
-         3kQwgGKmRu4+c616wqGFaJxUvVliRPrEcpYljhL7h/dUKdiqcQv+jykhF0qsl+somDQd
-         ZzdP2TcyIY2JojUb+7u2zb1YKlExNMpXH7VdPR0JTCsoJuFdP1pcW5qYZcQahAR+VzpM
-         fUfWilXW/Rs7ZpvEHF6Q30VUD6yowbpls186omqT+2XmT90OIblNtf1nXz6xHFWFWABo
-         K3CGNDQJRjr32G7OJ5DvZtYQbOXX945i4JeuT4TIuGYBGIpIL/ajGDe+TL+cczwZtlRJ
-         lrQw==
-X-Forwarded-Encrypted: i=1; AJvYcCUv4lWs01WSlRgpdAHobwAwOrWfrNz5myP8PPrVik09ng/DswFoJL7PMkW2Yy7mbtmfZkN9EXjMsWA2WW9f@vger.kernel.org
-X-Gm-Message-State: AOJu0YzjdwPz9iliFYU+XeJWFhmesKYF3/wWFSoIa5Eojg1v5TRI237+
-	oUQM1+nuP2rs0d/BUXCN4DWWzgFEMQJt2CMWO1aZbVhucx31RAuoYd0YfnfBIEf/ldE=
-X-Gm-Gg: ATEYQzwJGgyPi9zq9vFqFopNWuBgz7qZhmTaAvO8LjJGCYVP2+QJyL1vXvCkXT5w2hu
-	aVRfbAp4qOKVKlcKlotx6y6VW1+EPkJQGDRqanmBhJxqyL4FqqIY8zSW9mI3MU3wi08a7TWd9LO
-	tcsAB9E6IjWAwStyiJD4uUFl4O0Atga6CW9rOAEPcUdY3SvpzAIe4tRjkdchM0/EoWVUXuFBi4Z
-	FIxY+/cpdv6HVyWk1TYWdLp9RLdjwJLuzR48/RQj92jLAtk/qhOX86sNs9henZMqlUpt1xJwZmG
-	soHe+X7Bv11ba3Zv5ZzvzV8IuChD9n3gDBDgnf5ZU+wDQDMhc0UxVm09VU95T/b4+9PgwEd7omf
-	uyqBfuC478VZyRCtaivJjBWVFmGIEELkum59RZ6Lt2wlQJPMHEFjq7k2q+MFj4ddaXgJarhhFiR
-	rO8mCdyF/MyMkxgIvQW+37jMKFcWhpAzKKaOf2BIyGd8tZ7Vx9fLgYAu5I1+2d7NdfVazE1Mlqq
-	ncE
-X-Received: by 2002:a17:907:72d3:b0:b94:2025:313 with SMTP id a640c23a62f3a-b942dfb4897mr136403966b.32.1772806938645;
-        Fri, 06 Mar 2026 06:22:18 -0800 (PST)
+        d=1e100.net; s=20230601; t=1772806940; x=1773411740;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=GN/9HJvWN9Iaz4c8c0n++HKlIZpjwx7e1ASpMCTtePY=;
+        b=V9nk66QlLWStwwFzv76267IPgqPI0/psjn2Si0SMLVwskdvc+X8E6gqaiJIqjauRM+
+         MDFz5j8Wn6hqulB/ISb1X0C0QDAwQMVBqC7HJWdzmzyyiybfVI1r24qHUFU7QX5T9AFu
+         MsPMhw77LX7IWEq+tnVdROL7csKwr125BTsMcTJi9S+4aU9VY/y3NM+2yZB3jb+rKtZj
+         dfMZfySvczHLmcr65ao6ORRwZ3Gt17EsZZ0cOY/2wyPIPCQSHE6pYg33pOrWmZEqFJlZ
+         usFII5HjaSlnBpn9WArAwYnG2DfEsfe5erTAz6vtf+z95srYlteUMpJ5/SqPfJm20Kb6
+         Tm/A==
+X-Forwarded-Encrypted: i=1; AJvYcCWkpfX3dAV9paLQzOINOYvGBEz02p8othkGGGVUne7MQN8vHFReziLQAhXqMUG9J0/Oa4IBncFXLH/9lhnR@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywtc52JHuDozkpDaTFIhFjyvcDqP3OstAXjXHTtLfUAukXW+bUi
+	tp+aoQynRuDGNMGmO/JanhLiVpd45QreaSSnn9wFPF9EM9q5m+h7m5lmJ+HsRiWFpzY=
+X-Gm-Gg: ATEYQzy2n/OhXNflKOemCzmaqDd63eZ0f4bM6pINR7/AJOA7cHtI7d18xAC8w99y/nI
+	m9n4yX9SpIwfjoWGnbLucISxPKsIGoV0xTygUL0bUIygfhvtaMhpTW6RgYUV/rMrJ7oOfQu/90F
+	k0QvcgoNIl+eAIA6YbFl/+B1Bmkw97CKgrMEIWeyHMZidhunysjm/Q96G6ZeOWMAytj3rXoVJvO
+	4zFRgJ/u87PwfCFpDoU5cbq/e9rnhqB58Kao9pmhgFSP/luWg5+bYOOnebIRjYa5j/ODwg1jfIf
+	8SybN1We3l+FM7mIZ3I9yo29DtdwcgXSHZQyXEZZaT1ZnT6Y5ZM664cwXhD+MMuoiOmIyemhIGa
+	/JbaUP3iXFnz+kx2q+F1uYhnLgIKN3nD0KRD3gbZi/cQWSu4fWxrEGGW5RlNp7jRTr4yFcH754E
+	WXStNwAVU0h/eGV192iE4CNPWX0zddcE3uEml5UeIq2X0pXRHUg/7rSt+zqpoqSRUv8O+vAe09V
+	55o
+X-Received: by 2002:a17:906:7307:b0:b8f:a26e:dec4 with SMTP id a640c23a62f3a-b942dbce6a2mr137162066b.7.1772806940159;
+        Fri, 06 Mar 2026 06:22:20 -0800 (PST)
 Received: from [172.16.240.99] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-661a3c66d3fsm517251a12.2.2026.03.06.06.22.17
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-661a3c66d3fsm517251a12.2.2026.03.06.06.22.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Mar 2026 06:22:18 -0800 (PST)
+        Fri, 06 Mar 2026 06:22:19 -0800 (PST)
 From: Luca Weiss <luca.weiss@fairphone.com>
-Subject: [PATCH 0/4] Add support for Milos LPASS LPI pinctrl
-Date: Fri, 06 Mar 2026 15:22:14 +0100
-Message-Id: <20260306-milos-pinctrl-lpi-v1-0-086946dbb855@fairphone.com>
+Date: Fri, 06 Mar 2026 15:22:15 +0100
+Subject: [PATCH 1/4] dt-bindings: pinctrl: qcom: Add Milos LPI pinctrl
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -87,11 +88,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/12Nyw6CMBBFf6WZtZO0FQH5FcOirQNOwqO2lZAQ/
- t1GXBiX5yb3nA0iBaYIjdgg0MKR5ymDOglwDzP1hHzPDFrqUp5liSMPc0TPk0thwMEzKnmtLNX
- Xi+kc5J8P1PH6cd7agwM9X1mdjhGsiYRuHkdOjZhoTfjVF/DbbcRftTMxBe+w9wGlLsrCKm1rX
- TWLgnbf3yylH+zNAAAA
-X-Change-ID: 20260306-milos-pinctrl-lpi-1097be895afc
+Message-Id: <20260306-milos-pinctrl-lpi-v1-1-086946dbb855@fairphone.com>
+References: <20260306-milos-pinctrl-lpi-v1-0-086946dbb855@fairphone.com>
+In-Reply-To: <20260306-milos-pinctrl-lpi-v1-0-086946dbb855@fairphone.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -101,27 +100,27 @@ Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
  Luca Weiss <luca.weiss@fairphone.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1772806937; l=1441;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1772806937; l=3950;
  i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
- bh=arm7JnDlljRb1nmMKO4j6gwgpsWhDrf5OjYQKnPs3n0=;
- b=B/rj599DN5JQ9pcRwlmOIBEqlKVgqx5oIF/zZahXcU3xXFaHnbRDiKAFtnRRqbdeLP5d8+P0O
- DLuweHEoxxjCYYOVbqMZCAyRKtcar4n+AFQmU/AW6Y5bV66LaE+p9Zw
+ bh=ZG4vqB20u3oeYRitCqSlm46mL+bG1BN+RLcEZiDnQkU=;
+ b=OAJkK1lyilgTaVbUADvWkxNsB0geeBBFLPZb9wjke7dZCGjzcAgc5fzWmWQBfKECKiMnjaKMS
+ bSFHpto6X04DKRly3wX4Z4F/zi+JWIE7pZ2R+/kbML4z4GzqH9M38jG
 X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
  pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
-X-Rspamd-Queue-Id: B0404222939
+X-Rspamd-Queue-Id: 5476022299A
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[fairphone.com,quarantine];
 	R_DKIM_ALLOW(-0.20)[fairphone.com:s=fair];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-95838-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-95839-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[172.105.105.114:from];
+	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2600:3c15:e001:75::12fc:5321:from];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	DKIM_TRACE(0.00)[fairphone.com:+];
 	RCPT_COUNT_TWELVE(0.00)[13];
@@ -132,46 +131,140 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[luca.weiss@fairphone.com,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[100.90.174.1:received,209.85.208.45:received,144.178.202.138:received];
+	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[209.85.208.47:received,144.178.202.138:received,100.90.174.1:received];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[fairphone.com:dkim,fairphone.com:email,fairphone.com:mid,0.52.125.128:email,devicetree.org:url]
 X-Rspamd-Action: no action
 
-Add the bindings, driver, arm64 defconfig and dts bits to support the
-LPASS LPI pinctrl on the Qualcomm Milos SoC.
-
-The devicetree changes require the addition of GPR in milos.dtsi (as
-specified in the b4 deps), the pinctrl changes have no dependency.
+Add bindings for pin controller in Milos Low Power Audio SubSystem
+(LPASS).
 
 Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 ---
-Luca Weiss (4):
-      dt-bindings: pinctrl: qcom: Add Milos LPI pinctrl
-      pinctrl: qcom: Add Milos LPASS LPI TLMM
-      arm64: defconfig: Enable Milos LPASS LPI pinctrl driver
-      arm64: dts: qcom: milos: Add LPASS LPI pinctrl node
+ .../pinctrl/qcom,milos-lpass-lpi-pinctrl.yaml      | 109 +++++++++++++++++++++
+ 1 file changed, 109 insertions(+)
 
- .../pinctrl/qcom,milos-lpass-lpi-pinctrl.yaml      | 109 +++++++++++
- arch/arm64/boot/dts/qcom/milos.dtsi                | 103 ++++++++++
- arch/arm64/configs/defconfig                       |   1 +
- drivers/pinctrl/qcom/Kconfig                       |  10 +
- drivers/pinctrl/qcom/Makefile                      |   1 +
- drivers/pinctrl/qcom/pinctrl-milos-lpass-lpi.c     | 217 +++++++++++++++++++++
- 6 files changed, 441 insertions(+)
----
-base-commit: 755bfcf32666f86ca2a9a2ea2c9dc7eca4c330a1
-change-id: 20260306-milos-pinctrl-lpi-1097be895afc
-prerequisite-change-id: 20260306-milos-fastrpc-gpr-02464b12b827:v1
-prerequisite-patch-id: de7e8d4b18a0684e3462fed3f2c82e4bfb7f726b
-prerequisite-patch-id: 08e5420023b3400e25c200e4cb39788b53601291
-prerequisite-patch-id: 1430b5aa008efe8ed72057da3adc4892d8043918
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,milos-lpass-lpi-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,milos-lpass-lpi-pinctrl.yaml
+new file mode 100644
+index 000000000000..73e84f188591
+--- /dev/null
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,milos-lpass-lpi-pinctrl.yaml
+@@ -0,0 +1,109 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/pinctrl/qcom,milos-lpass-lpi-pinctrl.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Milos SoC LPASS LPI TLMM
++
++maintainers:
++  - Luca Weiss <luca.weiss@fairphone.com>
++
++description:
++  Top Level Mode Multiplexer pin controller in the Low Power Audio SubSystem
++  (LPASS) Low Power Island (LPI) of Qualcomm Milos SoC.
++
++properties:
++  compatible:
++    const: qcom,milos-lpass-lpi-pinctrl
++
++  reg:
++    items:
++      - description: LPASS LPI TLMM Control and Status registers
++      - description: LPASS LPI MCC registers
++
++  clocks:
++    items:
++      - description: LPASS Core voting clock
++      - description: LPASS Audio voting clock
++
++  clock-names:
++    items:
++      - const: core
++      - const: audio
++
++patternProperties:
++  "-state$":
++    oneOf:
++      - $ref: "#/$defs/qcom-milos-lpass-state"
++      - patternProperties:
++          "-pins$":
++            $ref: "#/$defs/qcom-milos-lpass-state"
++        additionalProperties: false
++
++$defs:
++  qcom-milos-lpass-state:
++    type: object
++    description:
++      Pinctrl node's client devices use subnodes for desired pin configuration.
++      Client device subnodes use below standard properties.
++    $ref: qcom,lpass-lpi-common.yaml#/$defs/qcom-tlmm-state
++    unevaluatedProperties: false
++
++    properties:
++      pins:
++        description:
++          List of gpio pins affected by the properties specified in this
++          subnode.
++        items:
++          pattern: "^gpio([0-9]|1[0-9]|2[0-2])$"
++
++      function:
++        enum: [ dmic1_clk, dmic1_data, dmic2_clk, dmic2_data, dmic3_clk,
++                dmic3_data, dmic4_clk, dmic4_data, ext_mclk1_a, ext_mclk1_b,
++                ext_mclk1_c, ext_mclk1_d, ext_mclk1_e, gpio, i2s0_clk,
++                i2s0_data, i2s0_ws, i2s1_clk, i2s1_data, i2s1_ws, i2s2_clk,
++                i2s2_data, i2s2_ws, i2s3_clk, i2s3_data, i2s3_ws, qca_swr_clk,
++                qca_swr_data, slimbus_clk, slimbus_data, swr_rx_clk,
++                swr_rx_data, swr_tx_clk, swr_tx_data, wsa_swr_clk,
++                wsa_swr_data ]
++        description:
++          Specify the alternative function to be configured for the specified
++          pins.
++
++allOf:
++  - $ref: qcom,lpass-lpi-common.yaml#
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - clock-names
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/sound/qcom,q6dsp-lpass-ports.h>
++
++    pinctrl@3440000 {
++        compatible = "qcom,milos-lpass-lpi-pinctrl";
++        reg = <0x03440000 0x20000>,
++              <0x034d0000 0x10000>;
++        gpio-controller;
++        #gpio-cells = <2>;
++        gpio-ranges = <&lpass_tlmm 0 0 23>;
++
++        clocks = <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
++                 <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
++        clock-names = "core",
++                      "audio";
++
++        tx-swr-active-clk-state {
++            pins = "gpio0";
++            function = "swr_tx_clk";
++            drive-strength = <4>;
++            slew-rate = <1>;
++            bias-disable;
++        };
++    };
 
-Best regards,
 -- 
-Luca Weiss <luca.weiss@fairphone.com>
+2.53.0
 
 
