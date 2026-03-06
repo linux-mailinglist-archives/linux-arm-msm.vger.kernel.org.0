@@ -1,183 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-95788-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95789-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sPQPFJS4qmkiVwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95788-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 12:20:52 +0100
+	id oOX/FdO6qmmiVwEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95789-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 12:30:27 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id D853721F94F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 12:20:51 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B232C21FAA8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 06 Mar 2026 12:30:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id F2E0E304A2E4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2026 11:20:24 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C93FF305DEDE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Mar 2026 11:29:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3428837C11A;
-	Fri,  6 Mar 2026 11:20:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EE1F382F15;
+	Fri,  6 Mar 2026 11:29:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lrBprAtx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KqRr2BgD"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1152035F160;
-	Fri,  6 Mar 2026 11:20:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A23A3596E1;
+	Fri,  6 Mar 2026 11:29:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772796022; cv=none; b=NqNq8VnRaHApleGygWqqWJ97W82YA2Bqdsv3AcDPiVAXw0TX/0zNXCwgMDU/AfOFyHHVPzYAd9f6CCcg24BqIeMi8euPUnpULC8IaBFmZPJlIOryn8lxpSA8xCUEglt19HQEmHUR48et9OzX1QgZwGnqWCNdM0LQYWslyKL41iI=
+	t=1772796570; cv=none; b=lEA/pu8Gln3vfFrUNo9kVSkGJypqgV7aRlZKXF2gxl/94B9E5DOOWXmUFZg2SLX4j2wADgcaNhKzPfHRGJvEeAKh4RJq18t1i0jbFl64EQdnFJx8OTP+UIxJKsT/TuHDmF7gMv0Oxs5XWq7Xq+NMoF9toVU+JirL557jkozoGeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772796022; c=relaxed/simple;
-	bh=grKu34kNhrUBmHyAlC+6nh0pvMxynsxAC2rQuqGFPqY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=hKK8aRRWbuN3rSd+tVBo9ZKhfKZlFMv0KkLhWLJ39LhsYsZB9KMsgSmfBM2TQeeej+40wyfotY4JSjqz0/UTcXQT03mDnUVTAvZjrltCKAwY466LNjg4xCIGvSCbyeN2PEYfh7ZdPyyDv3Ag9p/TlCN/+XLOjU3uQX1lk4lTtuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lrBprAtx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16E85C4CEF7;
-	Fri,  6 Mar 2026 11:20:18 +0000 (UTC)
+	s=arc-20240116; t=1772796570; c=relaxed/simple;
+	bh=XryNqzJpAbwoPPJDceu+o/RMktCv0sL78kkwIFXfp2Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MOgBWwgizguscq8jIQ/mwve/p7V2i1CfEyscdd9Zld2jYhWiFZLu6ZIs0kwIj6ZgIgfakqnXBMSo4ndggom8aCFNBAcx/3l99c0O6iQGfKw9ZojNHYWuCKpU2P8E3mq+nLz5D4cexIIfHoImLfNqS/jl1BQCDIH0tpMoLGFWFwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KqRr2BgD; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE51C4CEF7;
+	Fri,  6 Mar 2026 11:29:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772796021;
-	bh=grKu34kNhrUBmHyAlC+6nh0pvMxynsxAC2rQuqGFPqY=;
-	h=From:Date:Subject:To:Cc:From;
-	b=lrBprAtxPGo5tYh3/07F4QjyrNPPzon2a8N63OAQLy4LiPo+KUeFfo8oH+JO8wjpK
-	 aTEydGR0SfOduUanCB44MrQnmW6jtiuv7VkLrrxxnoCYO9LqKrh9wPBxUAVTtEBjT+
-	 4bKyoWv63yvfepKw/fuwDWTsve+zy/UzSF/fNCgIPWsYAB+9VOCNtZ8UZpRppPo4/P
-	 arDnMFIG37vTObGnahQvUPGeLfcL7LaZgGRjhwdZoUqJ7NzMncLZsVgEEjfmdogHpA
-	 LnQ2McnKYwDk2akkKazjQS8i83LsSkPXzW9HKFjScR6mWDY7OYWLnvOLi3PtPFFFjr
-	 kjExWJdekosXQ==
-From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Fri, 06 Mar 2026 12:20:14 +0100
-Subject: [PATCH] soc: qcom: pmic_glink_altmode: Fix SVID=DP && unconnected
- edge case
+	s=k20201202; t=1772796569;
+	bh=XryNqzJpAbwoPPJDceu+o/RMktCv0sL78kkwIFXfp2Q=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=KqRr2BgDwmSvs5Hlh9XDngsdSc53G1yIc7aGX1uFjRRiZqnxwB1lRMQoq7QTxqesg
+	 JLfbnw7piKywWe9WtsSPASsCyxqBVPcdadgdgT3IM8ZM5CnX6N5rvkonx1QbasGG2s
+	 rOhRetD5OuGYkCOvvj+lWOYRVK7S6HfjiFhA0xcOZd9JPaT8sATuB85OOD8aiJnfRX
+	 y5ayFUc3Fe6Q8fXtNA6kFZrQTFk7fF/KAxeM4RQp7S34+xaBsSDpmKw6i5ncas/DuK
+	 yUG1/h2o/p2YUu+Yaxam0qqlC+uixpO1i7fkgLzVRc7uyVhZAefMsB+SrgcbquCpaD
+	 A65RtASmO4M2g==
+Date: Fri, 6 Mar 2026 11:29:18 +0000
+From: Lee Jones <lee@kernel.org>
+To: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Cc: linux-renesas-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Mark Brown <broonie@kernel.org>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ingo Molnar <mingo@redhat.com>, Will Deacon <will@kernel.org>,
+	Boqun Feng <boqun@kernel.org>, Waiman Long <longman@redhat.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Jonathan Cameron <jic23@kernel.org>,
+	David Lechner <dlechner@baylibre.com>,
+	Nuno =?iso-8859-1?Q?S=E1?= <nuno.sa@analog.com>,
+	Andy Shevchenko <andy@kernel.org>, Orson Zhai <orsonzhai@gmail.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Antonio Borneo <antonio.borneo@foss.st.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	linux-remoteproc@vger.kernel.org, linux-doc@vger.kernel.org,
+	driver-core@lists.linux.dev, linux-iio@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org
+Subject: Re: [PATCH v3 15/15] hwspinlock/treewide: refactor consumer.h from
+ public header
+Message-ID: <20260306112918.GG183676@google.com>
+References: <20260303192600.7224-17-wsa+renesas@sang-engineering.com>
+ <20260303192600.7224-32-wsa+renesas@sang-engineering.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260306-topic-pgaltmode_fixup-v1-1-ec154b2d8e89@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x2MWwqAIBAArxL7nWAPpbpKRJRttVApahGId0/6H
- IaZAA4toYMuC2DxIUf6SlDkGah9ujZktCSGkpeSV1wyrw0pZrbp8KdecFzpvQ2Tc900reRYCQG
- pNRaT+L/9EOMHd05ULWcAAAA=
-X-Change-ID: 20260306-topic-pgaltmode_fixup-6b488960e355
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Jack Pham <jack.pham@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Abel Vesa <abel.vesa@oss.qualcomm.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1772796018; l=3177;
- i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=/CPrTX1258m2K0Rx/+/segQx2195qtnbpZLh20i2S/8=;
- b=YiI321nkeZvFFu77TbGVoohiJ5JOUyH4Q/IOZHvp9MMF1FFz04dAY8GeD92eMaRH421gAr3T1
- ZUrMJlzapWwACw9tFDy5iTfenmmW4OYbC1u56gD5Jy7vcq5BVqqorzx
-X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Rspamd-Queue-Id: D853721F94F
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260303192600.7224-32-wsa+renesas@sang-engineering.com>
+X-Rspamd-Queue-Id: B232C21FAA8
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-95788-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-95789-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FREEMAIL_CC(0.00)[vger.kernel.org,kernel.org,huawei.com,linux.alibaba.com,infradead.org,redhat.com,lwn.net,linuxfoundation.org,baylibre.com,analog.com,gmail.com,foss.st.com,arndb.de,lists.linux.dev,st-md-mailman.stormreply.com,lists.infradead.org];
+	RCPT_COUNT_TWELVE(0.00)[40];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konradybcio@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[7];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[lee@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:mid,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:email]
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sang-engineering.com:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,huawei.com:email]
 X-Rspamd-Action: no action
 
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+On Tue, 03 Mar 2026, Wolfram Sang wrote:
 
-The commit referenced in Fixes started evaluating the value of
-alt_port->mux_ctrl before checking the active SVID. This led to
-drm_aux_hpd_bridge_notify() no longer being called for the 'DP unplug'
-case.
+> Factor out the entries only needed for consumers from the generic public
+> header. This allows for a clean separation between providers and
+> consumers. Also remove contact field in favor of MAINTAINERS entries.
+> Fix the users, too.
+> 
+> Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+> Acked-by: Mark Brown <broonie@kernel.org>
+> Acked-by: Jonathan Cameron <jonathan.cameron@huawei.com> # for IIO
+> ---
+>  Documentation/locking/hwspinlock.rst              |  2 +-
+>  MAINTAINERS                                       |  1 -
+>  drivers/base/regmap/regmap.c                      |  2 +-
+>  drivers/hwspinlock/hwspinlock_core.c              |  2 +-
+>  drivers/iio/adc/sc27xx_adc.c                      |  2 +-
+>  drivers/irqchip/irq-stm32mp-exti.c                |  2 +-
+>  drivers/mfd/syscon.c                              |  2 +-
 
-Perhaps somewhat interestingly, the firmware sends a notification with
-SVID=DP, mux_ctrl=MUX_CTRL_STATE_NO_CONN and pin_assignment=0 on
-unplug. 'pin_assignment' was previously interpreted as a bitfield
-excerpt from the second byte of the DP pg_altmode payload (and stored
-as an u8).
+Acked-by: Lee Jones <lee@kernel.org>
 
-That value is used in pmic_glink_altmode_sc8280xp_notify(), decremented
-by 1 (DPAM_HPD_A). Previously, this would result in an u8 underflow
-that would rollover to 0xff (which prior to the Fixes patch would have
-caused a pmic_glink_altmode_safe() and 'disconnected' bridge
-notification). That check was removed, without a replacement.
+>  drivers/nvmem/sc27xx-efuse.c                      |  2 +-
+>  drivers/nvmem/sprd-efuse.c                        |  2 +-
+>  drivers/pinctrl/stm32/pinctrl-stm32.c             |  2 +-
+>  drivers/soc/qcom/smem.c                           |  2 +-
+>  drivers/spi/spi-sprd-adi.c                        |  2 +-
+>  .../linux/{hwspinlock.h => hwspinlock/consumer.h} | 15 ++++++---------
 
-Resolve this issue by making sure the SID=DP && mux_ctrl=NO_CONN combo
-once again results in a HPD bridge notification.
-
-Fixes: 0539c5a6fdef ("soc: qcom: pmic_glink_altmode: Consume TBT3/USB4 mode notifications")
-Reported-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Tested-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
----
- drivers/soc/qcom/pmic_glink_altmode.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
-
-diff --git a/drivers/soc/qcom/pmic_glink_altmode.c b/drivers/soc/qcom/pmic_glink_altmode.c
-index d0afdcb96ee1..b496b88842a2 100644
---- a/drivers/soc/qcom/pmic_glink_altmode.c
-+++ b/drivers/soc/qcom/pmic_glink_altmode.c
-@@ -350,15 +350,17 @@ static void pmic_glink_altmode_worker(struct work_struct *work)
- 
- 	typec_switch_set(alt_port->typec_switch, alt_port->orientation);
- 
--	if (alt_port->mux_ctrl == MUX_CTRL_STATE_NO_CONN) {
--		pmic_glink_altmode_safe(altmode, alt_port);
--	} else if (alt_port->svid == USB_TYPEC_TBT_SID) {
-+	if (alt_port->svid == USB_TYPEC_TBT_SID) {
- 		pmic_glink_altmode_enable_tbt(altmode, alt_port);
- 	} else if (alt_port->svid == USB_TYPEC_DP_SID) {
--		pmic_glink_altmode_enable_dp(altmode, alt_port,
--					     alt_port->mode,
--					     alt_port->hpd_state,
--					     alt_port->hpd_irq);
-+		if (alt_port->mux_ctrl == MUX_CTRL_STATE_NO_CONN) {
-+			pmic_glink_altmode_safe(altmode, alt_port);
-+		} else {
-+			pmic_glink_altmode_enable_dp(altmode, alt_port,
-+						     alt_port->mode,
-+						     alt_port->hpd_state,
-+						     alt_port->hpd_irq);
-+		}
- 
- 		if (alt_port->hpd_state)
- 			conn_status = connector_status_connected;
-@@ -368,6 +370,8 @@ static void pmic_glink_altmode_worker(struct work_struct *work)
- 		drm_aux_hpd_bridge_notify(&alt_port->bridge->dev, conn_status);
- 	} else if (alt_port->mux_ctrl == MUX_CTRL_STATE_TUNNELING) {
- 		pmic_glink_altmode_enable_usb4(altmode, alt_port);
-+	} else if (alt_port->mux_ctrl == MUX_CTRL_STATE_NO_CONN) {
-+		pmic_glink_altmode_safe(altmode, alt_port);
- 	} else {
- 		pmic_glink_altmode_enable_usb(altmode, alt_port);
- 	}
-
----
-base-commit: fc7b1a72c6cd5cbbd989c6c32a6486e3e4e3594d
-change-id: 20260306-topic-pgaltmode_fixup-6b488960e355
-
-Best regards,
 -- 
-Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-
+Lee Jones [李琼斯]
 
