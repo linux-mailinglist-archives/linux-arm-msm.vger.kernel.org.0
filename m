@@ -1,105 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-95955-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95956-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id KM6XK58MrGnUjQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95955-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 07 Mar 2026 12:31:43 +0100
+	id uDN8BrMMrGnUjQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95956-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 07 Mar 2026 12:32:03 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15B9F22B6C7
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 07 Mar 2026 12:31:43 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 88E3922B6CE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 07 Mar 2026 12:32:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 46E0C3003621
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Mar 2026 11:31:35 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 7A95430138BA
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Mar 2026 11:32:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 938D729B233;
-	Sat,  7 Mar 2026 11:31:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E223629B233;
+	Sat,  7 Mar 2026 11:32:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="laH8BhUz";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="NFrMfOMw"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="f3ukz+05";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="MzFeRbos"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F501339A4
-	for <linux-arm-msm@vger.kernel.org>; Sat,  7 Mar 2026 11:31:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A12D1339A4
+	for <linux-arm-msm@vger.kernel.org>; Sat,  7 Mar 2026 11:31:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772883094; cv=none; b=rqlfYWorRErXZEhLUmCfTahIihxPlZRGNabnJ38+pwI/vqaGsZ5s7yoOYGt7+VxO0zgt4FS+kGfxbjCc8BQPmy2kTD0baX4fMfA3QdnZEq3FWZLxQLnJGq8kF6Jj2lAhfe0Z0O0TN02MSw1gAFo9b21+qASJDfg7fcDck4S5I1c=
+	t=1772883120; cv=none; b=ol9MrMS+ZLNLu4zJBhGraZ33XyKwdQxQuWcXJClrKm678X+BRQIS4QN7PNcrSL20we9aRcCbVtntnVcnpuPCKYD76DO037Ib7NHJ3E6YbVbepLx7SmxpG9crAYDbVeSOOAfLMeCvXLo5LPS1e0iMgcFC3aU6lXixASxrErxpqBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772883094; c=relaxed/simple;
-	bh=ngPvObfydwcnIrL+pxURGOLrmqXxnGFGmqfh8svoxVg=;
+	s=arc-20240116; t=1772883120; c=relaxed/simple;
+	bh=W5qYQRIrocV+S/W70Kv5NTkkkXqqQmMxV052KmfPm68=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mhFdY4M1nVFhxaIgW7MBvvQUef41K1cpox3vVG4zaOAn1xllGOURhrt2nCBMDwWHDG9Tskjiy789l7QpMJpZqtVbTlfrF8KcT0jReLKvtJli7IjwY0Hg28ge/6XcxHEpOIPpDSXT/tan5OzIc0yGHwHNDtpXgANlko8o+z2q+g8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=laH8BhUz; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=NFrMfOMw; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=k8l/wrkiaEHyiDzYKyncbuEsk+AIpSU1grk7foHA0ZbDDxkxOPR/f/nBJqU6HjYIFr2wCElLhJN3JmSIs9KSsExktSA2TBPJyg+PkS3W9m/66JH1sfUzlkP7Ntxs3V+UKG572gr+MrZAAEWWUEvTi1AkFymeRKo3dJVQCv8VI7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=f3ukz+05; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=MzFeRbos; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6276qqgc3098381
-	for <linux-arm-msm@vger.kernel.org>; Sat, 7 Mar 2026 11:31:32 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6276rWbh2454945
+	for <linux-arm-msm@vger.kernel.org>; Sat, 7 Mar 2026 11:31:58 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	bPMKZAFCwnAhy/5sPxmB0+k3Yj6RwbTx5MsJpU3YgEg=; b=laH8BhUzY/xJQbXX
-	Tgp6KP8ULlYClbIj42DcFP6Epk55uljRmoL4Vpmf9nix73rCgJEsRkGC1u9/GM/7
-	5LMWVb278lIOaGs5+KWG3zzp4d4g+xfgFdypTtNxXpvfmhHkv25Qi18gKaI8z/BN
-	B1eGcWk5Qs9ijVyXeO651CQOYIdtNTFpH7dhfaiW8zCZjUIBuBAzuY6UR36tTd2z
-	a8PXEjLTC3xo91nfTgQdPe44HYvrJDeCiGY0Pzratz4lQUobvqedA18JPcPON/ZI
-	p/shdYGgbTktReEx2u4bz/OxwfM+ofOjqDH5sAzpVhMXs1VgH66wSzMO1r/y4zFv
-	fW9dQw==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4crayrgty8-1
+	S8Y1mVslKFnmPFsOlBJckRzYi9sioOeJ7VsXu7tfSVc=; b=f3ukz+05AwNN8M9i
+	wfXr25ILgmz+SpVd+oWogPLxlgb91OBn8JooQTsxxS4ISxnP5tKPvi7i906SIe8A
+	XeYwuR5FyzE7dy1dimt2UTuC6sVwr02aICFZmzA+Ie7QIPvATcj+d/A7aN9h/EA1
+	G6JRwTZ7W83VINIAGpDyJEUInYGitpz0LyCj9fyJwv2X5KNcawuAzDJpty7Q0OyN
+	diUzTDeqNk5hiUno6VJHblWJHW1GxLOpNMpz2WrvTU0lcgkQJM80Czuz+d9twLQ3
+	FkCBSmBX5gntaUwnJo3hMrnOlMLZAe1dhkJPP9DdEMmp7Pbr1IDHYtQ2qQlnmYDO
+	4FylZQ==
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4crcd88nfk-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 07 Mar 2026 11:31:32 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2ae3badc00dso80987665ad.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 07 Mar 2026 03:31:32 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 07 Mar 2026 11:31:58 +0000 (GMT)
+Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-8299c57642cso8920028b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 07 Mar 2026 03:31:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1772883091; x=1773487891; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1772883117; x=1773487917; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=bPMKZAFCwnAhy/5sPxmB0+k3Yj6RwbTx5MsJpU3YgEg=;
-        b=NFrMfOMwKjS6WySeu0XinNgCZ2PEoo+0cTzsDB9jiQcYJmFIiBFkwCK6mCCIYqUK9+
-         FWp8FJigZjsWuZ4Y5jT5fBRAX5OGsIwoU3ZPx4sCniexjtWxK3KJL5RIr0KktoY3W+Qm
-         fyI38gWUZJgQbtHY2lj7liM0yv0+lm2G+M589Yikpw1DuZW0IGeCgdmL1g9X1cM/fTPa
-         mpwIHkNco3blYOPwVU1y6igtD3pGQKW4J6VSglhStfEUm0yEXvfdohZCKZ9LG2o//QqS
-         Qt9HLfY1L/3No+CCw1bYG4f/jw4m0UO7KQZQnVUzGUTuzB7cMdhEw87ZxDX6ase0t4cN
-         lChQ==
+        bh=S8Y1mVslKFnmPFsOlBJckRzYi9sioOeJ7VsXu7tfSVc=;
+        b=MzFeRboss1HWOWYc+CuGeY7JAah4ApLjGd5cA5TgQ9XkvTFD28INfAf8u2KiFsQFvu
+         6pnh7q7vJ7VXSi+WkIYPULkTJ3aqV1Hum7h0GHqyuaicTFXv2e7WKQe0wRmCNuAXYwzT
+         vV1rKpm4bEkSuf1HyxYh/xgwDctIdPYq0EjAXejD3gR6xRBqSrCX3KT5Sktm5Qnonno/
+         J1Qe0HiXsoxr5hxpw8fSKi6zzjesGwzjAlXXAbNAI3k41CTKwYr0PdK80V2kPalayVZD
+         5hLfFZRGTeSPCuOaaDULgoZBDPMo5D/UlkxtlQBrvzrR0ZjFInFSDQLJTukvMPpNLOPE
+         7lag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772883091; x=1773487891;
+        d=1e100.net; s=20230601; t=1772883117; x=1773487917;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=bPMKZAFCwnAhy/5sPxmB0+k3Yj6RwbTx5MsJpU3YgEg=;
-        b=mzo3N3Xo8FsNeEJ6pUrV3pVC1HBpuAquf4NeBf7kXEEi0vSmBaskcb1va3f5nIWlVX
-         xyLQLOzyQL9J6l2hBYix9kwcIfnJpkj+adbC6/i5UB4AmtmHfKKjsqVD1fscPaXCPPxe
-         ginYiCKbR36V/m+bG+32qY4L157TWZoLUbewlsgoX4FINV5UuYzdmhzlQpPr3PHHKElx
-         E4YS+XY4QaCAb3yvT7kdB8E6mXuplEulFwoQYUEGPGArZuACzV+ZC19YZ/qx4er6VQ6w
-         swfCMyRJojQK246Iu4UgU9gpzfDv6Q5MHe/L11PXQtkyPvLb2WEBc/iIZKQSLmjFI8zP
-         5a3A==
-X-Forwarded-Encrypted: i=1; AJvYcCUEPKYsc8UPWdKtj1rcMdRRaGIMOzFIvCgZtWP0+eT64h1HBmtCXPsEVii0H2W/r5Fz+OSDWsM/8UsjrEcU@vger.kernel.org
-X-Gm-Message-State: AOJu0YyfHiPvnqS2sa7Ro+R+2Re31Pt1uLAUmKVj+ffVBv8zm1lRaeSc
-	mpf1e4qU3ztp+c6DkwXh6CiZh7GfDnu/rWYcJTZpt+fmAx74o2Wv/mDsvLNMNI2+fZ7dtYZ/ebV
-	9a/4RFckyX4w6F3EHXtXdrr0/ViFLTH0gW6SuP7FzFCJ8V6fAP7Y2M1RAbgPu1XzzThsvKnv1m8
-	/R
-X-Gm-Gg: ATEYQzzHNR+hU3k2O44AS7nvd81blEMDaQTLpnNA2olbTymnMJpHn0kO2x1KGObSri0
-	y0CQ1j9Ae+mh+ix64lPdyK6YwI523WdbdXFMZs4hJjto0hFrei1gc/iGkf317w4o4wdd9p0JfIw
-	WIbpN0uYL1q8ga36IY9kg+ZtoId3pGbUN2vKLD7X4C67+xnTqztO8LBaWspi5SuLP6ZefVicWwR
-	uLwr4r+QKe6pMmHBFRDewKqMRYS4JvIAn6hGkCRX/C0Lp/2GsH3gWcAWkGKRsVujD8MB2ea2HI9
-	EcILdDPLfE8v8QBgvSw0TuRVbURnHGd0juHI7Z9hICego5LsvxYA57I+XgdAMmrs32t/azGLi2C
-	vHup0sGzSCezyyNFYHkhIGNL4BBNscrm2yySuQfggbiZJAeRZ0unA+d0=
-X-Received: by 2002:a17:903:3c6b:b0:2ae:3bf0:c086 with SMTP id d9443c01a7336-2ae8247f3d5mr59725135ad.44.1772883091530;
-        Sat, 07 Mar 2026 03:31:31 -0800 (PST)
-X-Received: by 2002:a17:903:3c6b:b0:2ae:3bf0:c086 with SMTP id d9443c01a7336-2ae8247f3d5mr59724815ad.44.1772883091019;
-        Sat, 07 Mar 2026 03:31:31 -0800 (PST)
+        bh=S8Y1mVslKFnmPFsOlBJckRzYi9sioOeJ7VsXu7tfSVc=;
+        b=aUWGKNW9ggHKhq1JcBvEy1snD2/+nV20GL1ZxX9DCaCry1F917bRnrQtLFufKqakGk
+         /c/18gNdf+pI5Qnv3ron1Bv3bK5wNdQIJoG4poOOWQqnmqeVu1nn4hXYElAOgylzO5H6
+         huUf+rom6t8OGbT8jPdQRIT/CHLHrIJLwemVQZyy5/mU/lHBMU2hF8eN4B2+u6M0ykTI
+         XtO/1VayA1fiz2DEaZbxrPGfrSGNlAHEJP5yfMAU1pnDidUI6DFVDv+/Q0kdwweyMt9L
+         1p7HGbXHMdNctsJefBUVLEH3vek6VR64kaYHwGkGUD1EoCeWeKf/sR2KZeZiXUA8+doH
+         EQoA==
+X-Forwarded-Encrypted: i=1; AJvYcCWilagv8uSsA5Nw999H/VH8xSLbt+90e4jrBYhK1SoErVb8nvidpmkSi9siY+v2s73DSMimnEzegu84TdBH@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyr2UMjBRc2ZTnO0QH03wvUZfgUD0tjvwsBlvM3M6MngUBHhDLv
+	NcmE1ZZvAXkubscFkjjxPXgkuA3K4erm1JXrRPVDvy//BddKN5oMlLS4OSHRSDCMrTD70/yz1Ql
+	bpCz0CcGF50Cof8TAcCMi5cTn9GeqtFLNp4rPtEoHUIanpnEnDtMNCEnbY3DU7krQX0yj
+X-Gm-Gg: ATEYQzxx0v7eKf8h1tFRCKlS3aTCYfmhpEaPiKQGMq0x/zUujkk1ZsCmIiKnjOOHXDe
+	U+IyPGbfYAwvc2Kg+s1+l5CV0Hazu7YCqUygNErQtBnNXKQL3tYWRWBsvG3bW7G/iDjUKNLPMuJ
+	shgGsX3Aj9vb73+FMapT4ng1bY9C7PLllGjCrTi7TNquKPHGOD5XLwfZroI/G94NyfYj2boxDVJ
+	K3OYsfDGAuM0Rv9pgvUwa7fSA3GW9l7G1Q6yVpYOGuMPwFbI9AYS5K+dMABPQX2mHXSn4khI7Sk
+	Jp2LgonrpNTjxx9W0VsXMfs5C8zPgAuBG90vOydKK3mfA/JWbUbOfPNG9L5TfiWYpSUEaq2AFp7
+	xk78b8V2K/VvN2u2aV62lSCQsQiLtdBJmHORejR2Tie4JXBjuafBMeHs=
+X-Received: by 2002:a05:6a00:4c95:b0:823:b1f:893c with SMTP id d2e1a72fcca58-829a2f126f8mr4281244b3a.33.1772883117066;
+        Sat, 07 Mar 2026 03:31:57 -0800 (PST)
+X-Received: by 2002:a05:6a00:4c95:b0:823:b1f:893c with SMTP id d2e1a72fcca58-829a2f126f8mr4281233b3a.33.1772883116550;
+        Sat, 07 Mar 2026 03:31:56 -0800 (PST)
 Received: from [192.168.0.215] ([49.205.244.213])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae83f77350sm55162475ad.51.2026.03.07.03.31.28
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-829a465c872sm5467852b3a.19.2026.03.07.03.31.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 07 Mar 2026 03:31:30 -0800 (PST)
-Message-ID: <ab548ca1-c758-4096-b6aa-bce886fd904f@oss.qualcomm.com>
-Date: Sat, 7 Mar 2026 17:01:27 +0530
+        Sat, 07 Mar 2026 03:31:56 -0800 (PST)
+Message-ID: <95956aa5-7a6d-4841-9d9c-81d6138802ce@oss.qualcomm.com>
+Date: Sat, 7 Mar 2026 17:01:52 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -107,68 +106,68 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 04/12] drivers: accel: Register Qualcomm AIC specific
- image tables with Sahara.
+Subject: Re: [PATCH v1 07/12] drivers: soc: qcom: Add sysfs support for DDR
+ training data in Sahara.
 To: Bjorn Andersson <andersson@kernel.org>
 Cc: jeff.hugo@oss.qualcomm.com, bjorn.andersson@oss.qualcomm.com,
         konradybcio@kernel.org, konrad.dybcio@oss.qualcomm.com,
         linux-arm-msm@vger.kernel.org
 References: <20250825101926.2160554-1-kishore.batta@oss.qualcomm.com>
- <20250825101926.2160554-5-kishore.batta@oss.qualcomm.com>
- <mftf4oqwa2mslfghmkohkrgyx2ka2cowfjmfnly35pdly337ny@3o4xk75ppmax>
+ <20250825101926.2160554-8-kishore.batta@oss.qualcomm.com>
+ <udlrclvrtmam3yfcof4mzwoyia54gbl7em7kabdfn5r42res5k@mbrild6mbahx>
 Content-Language: en-US
 From: Kishore Batta <kishore.batta@oss.qualcomm.com>
-In-Reply-To: <mftf4oqwa2mslfghmkohkrgyx2ka2cowfjmfnly35pdly337ny@3o4xk75ppmax>
+In-Reply-To: <udlrclvrtmam3yfcof4mzwoyia54gbl7em7kabdfn5r42res5k@mbrild6mbahx>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=U5qfzOru c=1 sm=1 tr=0 ts=69ac0c94 cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=KtsNJ/6bKgz7QsArn2OSsQ==:17
+X-Proofpoint-ORIG-GUID: 2D9wBRYdlfysTC-rNaIxdf7f-yD3tc47
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA3MDEwNSBTYWx0ZWRfXwxN9vI0TouWm
+ jUnE7K4Rg8MAJXeyPnhijCQwkQm1NOV34e9OB3pL184/9CcKUfoV9cNrhAu7yH8FswSonMyPvJZ
+ hJeJpl4cNf0zV//YgZntAszGZhIC5G144mU14rJwr1YswssqpJVQkgV4NlsDuOpvoH9lXVumUOV
+ tvcTTFB4qJjCJgQ5vrrv1K/XH0qoH0Yvypo0MYbO5DSrN5QdJ+5GdnrALj3H5kktZnXKhVwvsQO
+ RcWbz4GwgVkTnFzlWXPeO2kzushiibwvfSzePxcLJB+x+RBnPBeSzyJhCiwAUTQtqnkuUwMbRB2
+ ptj4W0jn8zrsCTJaVhuo5gjVY9mDuXaBSTcDur4igoMIO4493MkD+NBBmujkHQXCpayV9zh2FZN
+ N8AyLGyWPxjRVCzgv0d6LiBK7X4qmOy03PAO/2j7WPytNX5x/PmarSDceffaqcJVAEimfK6tP8V
+ RcKzMa+UODbE/9b/hNA==
+X-Authority-Analysis: v=2.4 cv=O/w0fR9W c=1 sm=1 tr=0 ts=69ac0cae cx=c_pps
+ a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=KtsNJ/6bKgz7QsArn2OSsQ==:17
  a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=EUspDBNiAAAA:8 a=jncRdyhB-QCM7_70OxYA:9 a=QEXdDO2ut3YA:10
- a=uG9DUKGECoFWVXl0Dc02:22
-X-Proofpoint-ORIG-GUID: S_2HHxazPWswFz3fvYobIqaLchI2M8IX
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA3MDEwNiBTYWx0ZWRfX5qSnm2zs5Di+
- 30XVI/7Ij2IYwXPYpF5ETPKJwhS6zovF/MA1LUOc7ySefmU7e4QWrXM+K4aPRCcOYSCYvWminDv
- W5eVQaifFf9aii0qX5HvfEAZG3mZmvPODJgcjG7AF3vElKcTyuvaEAII0tNBaeZFXPsSW14ntgP
- A+f16yqrnjsHsw4dYcVPWCAxGr4D9robLwr9uxX/d3ScA1f6CtUqNb+LV8b+/E19nOmNgEpm9bq
- ZLOAqsmE2F5Oa/JILbLU01dtdOs8uotYC5TCAv2WnSKcqIAZvzW+ND51bmyw4JBF0sODyaQ+qi9
- iL+OloYQQDYZ0LMQiqt54eQgZg3meUBzEQ4dgmYKMNRLiwrYt3rC/ATI9AovgW9qMyEVBl8/Xnm
- gU4yQuZzlAE66PhiIdsUHeKRHadg5ziGYPPkzOW0rZ6yEacvrmaUGaF8/6Z9McJYJbHhg/WJcyu
- vupl1pUofl+RNX4M8Zw==
-X-Proofpoint-GUID: S_2HHxazPWswFz3fvYobIqaLchI2M8IX
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=NEAV23lmAAAA:8 a=EUspDBNiAAAA:8 a=rT4DXIY4e1eAXfZkh5QA:9 a=QEXdDO2ut3YA:10
+ a=OpyuDcXvxspvyRM73sMx:22
+X-Proofpoint-GUID: 2D9wBRYdlfysTC-rNaIxdf7f-yD3tc47
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-07_04,2026-03-06_02,2025-10-01_01
+ definitions=2026-03-07_03,2026-03-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 adultscore=0 impostorscore=0 lowpriorityscore=0 phishscore=0
- bulkscore=0 malwarescore=0 priorityscore=1501 spamscore=0 suspectscore=0
+ malwarescore=0 clxscore=1015 spamscore=0 phishscore=0 priorityscore=1501
+ lowpriorityscore=0 adultscore=0 impostorscore=0 bulkscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603070106
-X-Rspamd-Queue-Id: 15B9F22B6C7
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603070105
+X-Rspamd-Queue-Id: 88E3922B6CE
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
 	TO_DN_SOME(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95955-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-95956-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:dkim,qualcomm.com:email];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
 	RCPT_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[kishore.batta@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	NEURAL_HAM(-0.00)[-0.949];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	NEURAL_HAM(-0.00)[-0.957];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
@@ -176,208 +175,251 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 X-Rspamd-Action: no action
 
 
-On 8/26/2025 3:08 AM, Bjorn Andersson wrote:
-> On Mon, Aug 25, 2025 at 03:49:18PM +0530, Kishore Batta wrote:
->> Register Qualcomm AIC-specific image tables with the Sahara protocol.
->> The Sahara protocol provides a method for client drivers to register
->> device-specific image tables, which is mandatory for firmware transfer.
->> During QAIC device initialization, the QAIC driver must register the
->> image table information with the Sahara protocol for firmware transfer
->> to occur. Once the device is probed, it sends the required Sahara packets
->> to the host. Based on the connected device, Sahara selects the appropriate
->> image table and sends the firmware image data back to the device.
-> This does describe things that is happening. But it doesn't describe the
-> purpose of this patch.
-ACK. In v2, i have rewritten it properly.
+On 8/26/2025 4:07 AM, Bjorn Andersson wrote:
+> On Mon, Aug 25, 2025 at 03:49:21PM +0530, Kishore Batta wrote:
+>
+> No "drivers: " prefix in subject please.
+>
+>> Add the Sahara training data structure and populate the DDR training data
+>> sysfs node.
+> Start with a problem description.
+>
+>> During device boot, the device performs DDR training and sends
+>> the training data back to the host once complete.
+> "The device"? All devices, some devices?
+>
+>> The host exposes this
+>> data to userspace via the sysfs interface.
+> I've read three sentences, you've given me breadcrumbs of what's going
+> on...but you're forcing me to guess how these three things fit together
+> and what you're trying to achieve...
+>
+>> The "ddr_training_data" sysfs
+>> node will be present in the MHI controller node (e.g., mhi0, mhi1) along
+>> with other existing sysfs nodes at /sys/bus/mhi/devices/mhi*/.
+>>
+>> When the host reboots, a userspace service is triggered via an udev rule to
+>> read the training data from the sysfs entry.
+> This describes one possible way to do that, but it's not the job of the
+> kernel to dictate how this is implemented. You should describe the
+> expected work to be performed by userspace, and you may suggest how
+> that could be implemented.
+>
+>> The service then copies the
+>> valid training data to the image firmware filesystem.
+> This sentence doesn't make sense to a general Linux user, because
+> there's no separate "image firmware filesystem".
+>
+>> This change includes
+>> the structures added for DDR training data and embeds them in the
+>> sahara_dev_driver_data structure. It also populates the sysfs attributes
+>> for DDR training data.
+> This half of the paragraph isn't directly related to the implementation
+> of the user space service, so better split it out in a paragraph of its
+> own.
+>
+ACK. Rewritten the commit message in v2.
+>> Userspace service - https://github.com/qualcomm/csm-utils
+>>
 >> Signed-off-by: Kishore Batta <kishore.batta@oss.qualcomm.com>
 >> ---
->>   drivers/accel/qaic/mhi_controller.c | 57 +++++++++++++++++++++++++++--
->>   drivers/accel/qaic/mhi_controller.h |  2 +
->>   drivers/accel/qaic/qaic_drv.c       |  7 ++++
->>   drivers/accel/qaic/sahara.c         | 17 +++++----
->>   drivers/accel/qaic/sahara.h         |  6 ---
->>   5 files changed, 73 insertions(+), 16 deletions(-)
+>>   drivers/soc/qcom/sahara/sahara.c | 109 ++++++++++++++++++++++++++++++-
+>>   1 file changed, 108 insertions(+), 1 deletion(-)
 >>
->> diff --git a/drivers/accel/qaic/mhi_controller.c b/drivers/accel/qaic/mhi_controller.c
->> index 5cc7994f4809..16c346e0e3b5 100644
->> --- a/drivers/accel/qaic/mhi_controller.c
->> +++ b/drivers/accel/qaic/mhi_controller.c
->> @@ -13,6 +13,7 @@
+>> diff --git a/drivers/soc/qcom/sahara/sahara.c b/drivers/soc/qcom/sahara/sahara.c
+>> index b07f6bd0e19f..df103473af3a 100644
+>> --- a/drivers/soc/qcom/sahara/sahara.c
+>> +++ b/drivers/soc/qcom/sahara/sahara.c
+>> @@ -60,6 +60,12 @@
+>>   #define SAHARA_MEM_DEBUG64_LENGTH	0x18
+>>   #define SAHARA_MEM_READ64_LENGTH	0x18
 >>   
->>   #include "mhi_controller.h"
->>   #include "qaic.h"
->> +#include "sahara_image_table_ops.h"
->>   
->>   #define MAX_RESET_TIME_SEC 25
->>   
->> @@ -801,8 +802,6 @@ const char * const aic100_image_table[] = {
->>   	[10] = "qcom/aic100/fw10.bin",
+>> +struct sahara_dev_trng_data {
+> trng - "True Random Number Generator"?
+Sorry for the confusion. I was referring to sahara device training data. 
+In v2, I have used a different structure and naming conventions are 
+properly used.
+>> +	void *trng_data;
+>> +	u64 trng_data_sz;
+>> +	bool receiving_trng_data;
+>> +};
+>> +
+>>   struct sahara_packet {
+>>   	__le32 cmd;
+>>   	__le32 length;
+>> @@ -177,6 +183,58 @@ struct sahara_context {
+>>   	bool				is_mem_dump_mode;
 >>   };
 >>   
->> -const size_t aic100_image_table_size = ARRAY_SIZE(aic100_image_table);
->> -
->>   const char * const aic200_image_table[] = {
->>   	[5]  = "qcom/aic200/uefi.elf",
->>   	[12] = "qcom/aic200/aic200-nsp.bin",
->> @@ -831,7 +830,59 @@ const char * const aic200_image_table[] = {
->>   	[75] = "qcom/aic200/pvs.bin",
->>   };
->>   
->> -const size_t aic200_image_table_size = ARRAY_SIZE(aic200_image_table);
->> +static struct sahara_image_table_provider aic100_provider = {
->> +	.image_table = aic100_image_table,
->> +	.image_table_size = ARRAY_SIZE(aic100_image_table),
->> +	.dev_name = "AIC100",
->> +	.fw_folder_name = "aic100",
->> +	.list = LIST_HEAD_INIT(aic100_provider.list)
->> +};
->> +
->> +static struct sahara_image_table_provider aic200_provider = {
->> +	.image_table = aic200_image_table,
->> +	.image_table_size = ARRAY_SIZE(aic200_image_table),
->> +	.dev_name = "AIC200",
->> +	.fw_folder_name = "aic200",
->> +	.list = LIST_HEAD_INIT(aic200_provider.list)
->> +};
->> +
->> +static struct sahara_image_table_provider *aic_providers[] = {
->> +	&aic100_provider,
->> +	&aic200_provider,
->> +};
->> +
->> +int qaic_sahara_register_image_tables(void)
->> +{
->> +	int ret;
->> +
->> +	for (int i = 0; i < ARRAY_SIZE(aic_providers); i++) {
->> +		ret = sahara_register_image_table_provider(aic_providers[i]);
->> +		if (ret) {
->> +			pr_err("qaic: Failed to register image table %d\n",
->> +			       ret);
->> +
->> +			/* Rollback previously registered providers */
->> +			while (--i >= 0)
->> +				sahara_unregister_image_table_provider(aic_providers[i]);
->> +
->> +			return ret;
->> +		}
->> +	}
->> +	return 0;
->> +}
->> +
->> +void qaic_sahara_unregister_image_tables(void)
->> +{
->> +	int ret;
->> +
->> +	for (int i = 0; i < ARRAY_SIZE(aic_providers); i++) {
->> +		ret = sahara_unregister_image_table_provider(aic_providers[i]);
->> +		if (ret)
->> +			pr_err("qaic: Failed to unregister image table %d\n",
->> +			       ret);
->> +	}
->> +}
->> +
->>   
->>   static int mhi_read_reg(struct mhi_controller *mhi_cntrl, void __iomem *addr, u32 *out)
->>   {
->> diff --git a/drivers/accel/qaic/mhi_controller.h b/drivers/accel/qaic/mhi_controller.h
->> index 8939f6ae185e..90c0f07cbdf6 100644
->> --- a/drivers/accel/qaic/mhi_controller.h
->> +++ b/drivers/accel/qaic/mhi_controller.h
->> @@ -12,5 +12,7 @@ struct mhi_controller *qaic_mhi_register_controller(struct pci_dev *pci_dev, voi
->>   void qaic_mhi_free_controller(struct mhi_controller *mhi_cntrl, bool link_up);
->>   void qaic_mhi_start_reset(struct mhi_controller *mhi_cntrl);
->>   void qaic_mhi_reset_done(struct mhi_controller *mhi_cntrl);
->> +int qaic_sahara_register_image_tables(void);
->> +void qaic_sahara_unregister_image_tables(void);
->>   
->>   #endif /* MHICONTROLLERQAIC_H_ */
->> diff --git a/drivers/accel/qaic/qaic_drv.c b/drivers/accel/qaic/qaic_drv.c
->> index e31bcb0ecfc9..5c4fab328003 100644
->> --- a/drivers/accel/qaic/qaic_drv.c
->> +++ b/drivers/accel/qaic/qaic_drv.c
->> @@ -688,6 +688,12 @@ static int __init qaic_init(void)
->>   		goto free_mhi;
->>   	}
->>   
->> +	ret = qaic_sahara_register_image_tables();
-> Now that you're doing this on a per-device basis (but actually per
-> driver), could this somehow be done from qaic_mhi_register_controller()
-> instead. So we don't run this code unless you actually have a QAIC
-> attached?
-I have removed registration mechanism in v2.
->> +	if (ret) {
->> +		pr_debug("qaic: Image table registration failed %d\n", ret);
-> That's not a debug print...which is also the reason why you pr_err()
-> inside the function. I.e. this is at best spamming the log.
-Removed in v2.
->> +		goto free_mhi;
->> +	}
->> +
-> Regards,
-> Bjorn
+>> +struct sahara_dev_driver_data {
+>> +	struct bin_attribute ddr_attr;
+>> +	struct sahara_dev_trng_data *sdev;
+> "sdev" as an abbreviation for "sahara device training data"? I would
+> have guessed it related tot he "sahara device driver data"...
 >
->>   	ret = qaic_timesync_init();
->>   	if (ret)
->>   		pr_debug("qaic: qaic_timesync_init failed %d\n", ret);
->> @@ -727,6 +733,7 @@ static void __exit qaic_exit(void)
->>   	 * reinitializing the link_up state after the cleanup is done.
->>   	 */
->>   	link_up = true;
->> +	qaic_sahara_unregister_image_tables();
->>   	qaic_ras_unregister();
->>   	qaic_bootlog_unregister();
->>   	qaic_timesync_deinit();
->> diff --git a/drivers/accel/qaic/sahara.c b/drivers/accel/qaic/sahara.c
->> index cf8f8b585223..7eae329396be 100644
->> --- a/drivers/accel/qaic/sahara.c
->> +++ b/drivers/accel/qaic/sahara.c
->> @@ -14,6 +14,7 @@
->>   #include <linux/workqueue.h>
->>   
->>   #include "sahara.h"
->> +#include "sahara_image_table_ops.h"
->>   
->>   #define SAHARA_HELLO_CMD		0x1  /* Min protocol version 1.0 */
->>   #define SAHARA_HELLO_RESP_CMD		0x2  /* Min protocol version 1.0 */
->> @@ -738,13 +739,15 @@ static int sahara_mhi_probe(struct mhi_device *mhi_dev, const struct mhi_device_
->>   	INIT_WORK(&context->fw_work, sahara_processing);
->>   	INIT_WORK(&context->dump_work, sahara_dump_processing);
->>   
->> -	if (!strcmp(mhi_dev->mhi_cntrl->name, "AIC200")) {
->> -		context->image_table = aic200_image_table;
->> -		context->table_size = aic200_image_table_size;
->> -	} else {
->> -		context->image_table = aic100_image_table;
->> -		context->table_size = aic100_image_table_size;
->> -	}
->> +	/* Get the image table for a given device name */
->> +	context->image_table = sahara_get_image_table(mhi_dev->mhi_cntrl->name);
->> +	if (!context->image_table)
+> Why do you have two separate structs for these?
+ACK. In v2, i have removed them.
+>> +	struct sahara_context *context;
+>> +};
+>> +
+>> +/* Exposes DDR training data via sysfs binary attribute for user-space access */
+>> +static ssize_t ddr_training_read(struct file *filp, struct kobject *kobj,
+>> +				 const struct bin_attribute *attr, char *buf,
+>> +				 loff_t offset, size_t count)
+>> +{
+>> +	struct sahara_dev_driver_data *sahara_data;
+>> +	struct sahara_dev_trng_data *sdev;
+>> +	size_t data_size;
+>> +
+>> +	sahara_data = container_of(attr, struct sahara_dev_driver_data, ddr_attr);
+>> +
+>> +	if (!sahara_data)
+>> +		return -EIO;
+>> +
+>> +	sdev = sahara_data->sdev;
+>> +
+>> +	if (!sdev || !sdev->trng_data)
+> This isn't assigned anywhere...
+ACK. In v2, i have rearranged the patches such that the changes are clean.
+>> +		return -EIO;
+>> +
+>> +	data_size = attr->size;
+>> +
+>> +	if (data_size == 0)
+>> +		return 0;
+>> +
+>> +	if (offset >= data_size)
 >> +		return -EINVAL;
 >> +
->> +	/* Get the image table size for a given device name */
->> +	context->table_size = sahara_get_image_table_size(mhi_dev->mhi_cntrl->name);
->> +	if (!context->table_size)
->> +		return -EINVAL;
+>> +	if (count > data_size - offset)
+>> +		count = data_size - offset;
+>> +
+>> +	/* Copy the training data into the buffer */
+>> +	memcpy(buf, (sdev->trng_data + offset), count);
+>> +
+>> +	/* Free memory after last read */
+>> +	if (offset + count >= data_size) {
+>> +		kfree(sdev->trng_data);
+>> +		sdev->trng_data = NULL;
+>> +		kfree(sdev);
+> Allowing the data to be read only one time and then failing subsequent
+> reads is going to be confusing to people. Imagine debugging this and
+> depending on how fast you can hexdump the attribute you either break the
+> userspace thing or you are unable to catch the data.
+ACK.
+>> +		sdev = NULL;
+>> +		kfree(sahara_data);
+> But you did device_create_bin_file() on &sahara_data->ddr_attr...what
+> happens now?
+ACK. Handled properly in v2.
+>> +		sahara_data = NULL;
+>> +	}
+>> +
+>> +	return count;
+>> +}
+>> +
+>>   static int sahara_find_image(struct sahara_context *context, u32 image_id)
+>>   {
+>>   	int ret;
+>> @@ -703,11 +761,42 @@ static void sahara_dump_processing(struct work_struct *work)
+>>   	sahara_send_reset(context);
+>>   }
+>>   
+>> +static int sahara_dev_populate_attribute(struct sahara_dev_driver_data *sahara_data)
+>> +{
+>> +	int ret;
+>> +	struct sahara_context *context = sahara_data->context;
+>> +
+>> +	/* DDR training data attribute */
+>> +	sahara_data->ddr_attr.attr.name = "ddr_training_data";
+>> +	sahara_data->ddr_attr.attr.mode = 0444;
+>> +	sahara_data->ddr_attr.read = ddr_training_read;
+>> +
+>> +	/* Size is populated during device bootup */
+> Where? In some other patch?
+Its during runtime of the device. Handled properly in v2 patchset so 
+that the assignments are in single patch.
+>
+>> +	sahara_data->ddr_attr.size = 0;
+>> +	sahara_data->ddr_attr.write = NULL;
+>> +
+>> +	/*
+>> +	 * Remove any existing sysfs binary attribute to avoid stale entries
+>> +	 * during warm boot or reinitialization. This ensures clean state before
+>> +	 * re-creating the attribute.
+> But why do you need to recreate it? What is the life cycle of this file
+> and how does it conflict with the life cycle of the sahara MHI device?
+ACK. Fixed properly in v2 by using controller scoped lifetime and device 
+managed resources.
+>> +	 */
+>> +	device_remove_bin_file(&context->mhi_dev->mhi_cntrl->mhi_dev->dev,
+>> +			       &sahara_data->ddr_attr);
+>> +
+>> +	/* Create the binary attribute */
+>> +	ret = device_create_bin_file(&context->mhi_dev->mhi_cntrl->mhi_dev->dev,
+>> +				     &sahara_data->ddr_attr);
+>> +
+>> +	return ret;
+>> +}
+>> +
+>>   static int sahara_mhi_probe(struct mhi_device *mhi_dev, const struct mhi_device_id *id)
+>>   {
+>>   	struct sahara_context *context;
+>>   	int ret;
+>>   	int i;
+>> +	struct sahara_dev_driver_data *sahara_data;
+>> +	struct sahara_dev_trng_data *sdev;
+> This had a nice reverse xmas tree feel to it...perhaps you can keep
+> that?
+ACK. Fixed in v2.
+>
+>>   
+>>   	context = devm_kzalloc(&mhi_dev->dev, sizeof(*context), GFP_KERNEL);
+>>   	if (!context)
+>> @@ -717,6 +806,17 @@ static int sahara_mhi_probe(struct mhi_device *mhi_dev, const struct mhi_device_
+>>   	if (!context->rx)
+>>   		return -ENOMEM;
+>>   
+>> +	sahara_data = kzalloc(sizeof(*sahara_data), GFP_KERNEL);
+> For the case where userspace doesn't read the DDR training data (e.g.
+> because the particular device doesn't implement/need that), where is
+> this freed?
+ACK. Memory allocations and de-allocations are now properly handled in v2.
+>> +	if (!sahara_data)
+>> +		return -ENOMEM;
+>> +
+>> +	sdev = kzalloc(sizeof(*sdev), GFP_KERNEL);
+>> +	if (!sdev)
+>> +		return -ENOMEM;
+>> +
+>> +	sahara_data->context = context;
+>> +	sahara_data->sdev = sdev;
+>> +
+>>   	/*
+>>   	 * AIC100 defines SAHARA_TRANSFER_MAX_SIZE as the largest value it
+>>   	 * will request for READ_DATA. This is larger than
+>> @@ -749,7 +849,14 @@ static int sahara_mhi_probe(struct mhi_device *mhi_dev, const struct mhi_device_
+>>   		return -EINVAL;
 >>   
 >>   	context->active_image_id = SAHARA_IMAGE_ID_NONE;
->>   	dev_set_drvdata(&mhi_dev->dev, context);
->> diff --git a/drivers/accel/qaic/sahara.h b/drivers/accel/qaic/sahara.h
->> index d7fd447ca85b..dde8c736d29e 100644
->> --- a/drivers/accel/qaic/sahara.h
->> +++ b/drivers/accel/qaic/sahara.h
->> @@ -8,10 +8,4 @@
->>   int sahara_register(void);
->>   void sahara_unregister(void);
+>> -	dev_set_drvdata(&mhi_dev->dev, context);
+>> +	dev_set_drvdata(&mhi_dev->dev, sahara_data);
+> sahara_mhi_remove and sahara_mhi_dl_xfer_cb still assumes that drvdata
+> is of type struct sahara_context.
+>
+> Regards,
+> Bjorn
+ACK. Fixed in v2.
+>> +
+>> +	ret = sahara_dev_populate_attribute(sahara_data);
+>> +	if (ret) {
+>> +		dev_err(&context->mhi_dev->dev,
+>> +			"Failed to populate bin attribute: %d\n", ret);
+>> +		return ret;
+>> +	}
 >>   
->> -extern const char * const aic200_image_table[];
->> -extern const size_t aic200_image_table_size;
->> -
->> -extern const char * const aic100_image_table[];
->> -extern const size_t aic100_image_table_size;
->> -
->>   #endif /* __SAHARA_H__ */
+>>   	ret = mhi_prepare_for_transfer(mhi_dev);
+>>   	if (ret)
 >> -- 
 >> 2.34.1
 >>
