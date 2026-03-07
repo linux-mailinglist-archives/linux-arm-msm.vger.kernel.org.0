@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-95979-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95980-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id gFujJu8lrGnnlwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95979-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 07 Mar 2026 14:19:43 +0100
+	id 0D1DHU4mrGnnlwEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95980-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 07 Mar 2026 14:21:18 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A446622BEAA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 07 Mar 2026 14:19:42 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2251E22BEDD
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 07 Mar 2026 14:21:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id C6491301AAA1
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Mar 2026 13:19:39 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 0892F302412C
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Mar 2026 13:20:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 808792459C9;
-	Sat,  7 Mar 2026 13:19:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B92826ED5D;
+	Sat,  7 Mar 2026 13:20:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EmnSQ3z3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l9QcVE9d"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8E2224AE0;
-	Sat,  7 Mar 2026 13:19:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 681C3262FE7
+	for <linux-arm-msm@vger.kernel.org>; Sat,  7 Mar 2026 13:20:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772889578; cv=none; b=fG/eMcwSdeRVB7U4apnzEuqPBC63i3qvQ6c1HR79BWchyPkrW7W7t/Vd0m6vHos1Y17ckXklxgagANm5CEeJC2odDX4aFjh1Lr25T/mPLsOIfGROM/Cs3AjzK1NVzNtZMf3EWI62iSzV2Xkf1/+zvoTNh2NMlFYnAMNLFq3zvMg=
+	t=1772889657; cv=none; b=e5pYnjSvemdtX7hiqf5GYSzxfGhhdy06RWzkk2dTIe74jrd3UghhCGHpn+5SxDWwMqgA51SU+nz+aix11uL19TNQ7b8uyF6Zqrh3sEPZ/CG1wLdPBt9QzhhEP5ka4UoIKkRiI7PBJGtc/P5f5XpRYJWViVfl2Ykh0v5KjLuO/zU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772889578; c=relaxed/simple;
-	bh=pr3747++w8dSaelqty/mpIF+KNeA1F9/t7Qdkco6Vkk=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=iS+AdAGGmD7Gkcu3SWzr9QT1YHgjI74SmkXXdXuTSH0Euu7ZPtQCkqD/ZT7GzrlG9e02C0QglqXDQpH5n2t5cyg5v3TQnOJiJyKjUQbr35kHUUZ+5hU/MbGLYCAKnKtWmL5OL4viy3y/tWpCmbhN+dPwnnE4oJzgiCXxykoqmEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EmnSQ3z3; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B91CDC19422;
-	Sat,  7 Mar 2026 13:19:34 +0000 (UTC)
+	s=arc-20240116; t=1772889657; c=relaxed/simple;
+	bh=MZhASFaRKvTy4ugdHi+gHurEaCQh/rgXenu0BMk6PMg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TP5qNExBwlYH14zwZg2WDo0Ov0WG0Par8iU+95uzni5eTVxCBWHAuQXzrimxeSXbWUBfUxh/kdWgb4FfdbgKMToBhJw0sOMY4DnQyRkNsDd24uvJif974mEsYXmLHk7Z09GvrKA226FpaquaBpwlOYbqLRWnYUE8afpP5vlNjW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l9QcVE9d; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1803C19422;
+	Sat,  7 Mar 2026 13:20:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772889578;
-	bh=pr3747++w8dSaelqty/mpIF+KNeA1F9/t7Qdkco6Vkk=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=EmnSQ3z3su1sIDZ7/T648XC703HeG6KtT8T8fqRlP2c7ZNDEBoXGySNH5jBQ7kBAC
-	 Fa6vr8Nr0HaDPlC6fhJwrikctTZwjZpujlox6sVWpgoSsD8yYz77aKcA4KmeonjDMP
-	 GhgHmk3F0E4oBJ+XE2fe/MOrCnzPP8nou+bUCFnIUOHDFliXfWR4DC114EySHZZ+ki
-	 vVPLTiSAPzbLY3SlSILZ0fHJmphwDQckhnBAhFQv7Om5bCNJIL+s23HYXsBi7LwR4k
-	 wsSU4JMxI7BcUJGo6of0xWRY80d0Qo/gbYogGH8x8OsB05bhyIRPKZmvsmpKINLYg+
-	 lYffO0NHwUQ8A==
-Message-ID: <2e0e4ad0-b012-40dd-8b35-7555390bf44a@kernel.org>
-Date: Sat, 7 Mar 2026 14:19:33 +0100
+	s=k20201202; t=1772889657;
+	bh=MZhASFaRKvTy4ugdHi+gHurEaCQh/rgXenu0BMk6PMg=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=l9QcVE9dy0BGzXP/ws3cvItYOJWmBJ5AXhPg084zG+2CdS7hbYBzZhg6IfD6eVkwJ
+	 T/x6sEX2as5uvD8RDskGY5nmGHOVDsbhqZdnOWyElAbtdtFcbUlBk6IVoiHWSQznAd
+	 TPk190DD7oiIuITyqlJtkCsQ5yUypNs3+FPoPGJNtnhEkHDPC+aUypKGOd4velpoKK
+	 fRmgztfEGou3LJ1znX1sxwe2rGiJrYsBJXUEmDgnPywvlsjxUBD9FepspmUAfaIQD8
+	 Z69dz9szepmieOfHISXpb826PO05uHhFIuqOlhRJ+1Eiv624PHdnUTU6PV1eaHnUoD
+	 4lSzr+CTXh+Cg==
+Message-ID: <c22930d4-38b1-4d34-b624-247a52fc9ae0@kernel.org>
+Date: Sat, 7 Mar 2026 14:20:53 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,23 +53,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/5] dt-bindings: media: qcom,sm8550-iris: Add X1P42100
- compatible
+Subject: Re: [PATCH v1 06/12] drivers: soc: qcom: Add support for Qualcomm QDU
+ device.
+To: Kishore Batta <kishore.batta@oss.qualcomm.com>,
+ jeff.hugo@oss.qualcomm.com, bjorn.andersson@oss.qualcomm.com,
+ konradybcio@kernel.org, konrad.dybcio@oss.qualcomm.com
+Cc: andersson@kernel.org, linux-arm-msm@vger.kernel.org
+References: <20250825101926.2160554-1-kishore.batta@oss.qualcomm.com>
+ <20250825101926.2160554-7-kishore.batta@oss.qualcomm.com>
+ <ab23acba-0e40-4065-968a-66307b17f5b4@kernel.org>
+ <182f5e1c-3037-4ac7-b2a9-df604e9b2211@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Wangao Wang <wangao.wang@oss.qualcomm.com>
-Cc: Bryan O'Donoghue <bod@kernel.org>,
- Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
- Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260306-enable_iris_on_purwa-v2-0-75fa80a0a9e3@oss.qualcomm.com>
- <20260306-enable_iris_on_purwa-v2-1-75fa80a0a9e3@oss.qualcomm.com>
- <20260307-olive-honeybee-of-luxury-b22bbd@quoll>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -114,49 +108,103 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260307-olive-honeybee-of-luxury-b22bbd@quoll>
+In-Reply-To: <182f5e1c-3037-4ac7-b2a9-df604e9b2211@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: A446622BEAA
+X-Rspamd-Queue-Id: 2251E22BEDD
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-95980-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95979-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[15];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-0.929];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.931];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCPT_COUNT_SEVEN(0.00)[7];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-On 07/03/2026 14:13, Krzysztof Kozlowski wrote:
-> On Fri, Mar 06, 2026 at 04:44:29PM +0800, Wangao Wang wrote:
->> Document the new compatible "qcom,x1p42100-iris", which is compatible
->> with SM8550 but adds an additional set of clocks. The BSE clock is
+On 07/03/2026 12:33, Kishore Batta wrote:
 > 
-> Then please express the compatibility. Device is or is not compatible
-> and you just wrote that it is.
-> 
+> On 8/28/2025 7:49 PM, Krzysztof Kozlowski wrote:
+>> On 25/08/2025 12:19, Kishore Batta wrote:
+>>> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+>>> index 99e490e3174e..8d036edf304a 100644
+>>> --- a/drivers/soc/qcom/Makefile
+>>> +++ b/drivers/soc/qcom/Makefile
+>>> @@ -41,3 +41,4 @@ obj-$(CONFIG_QCOM_INLINE_CRYPTO_ENGINE)	+= qcom_ice.o
+>>>   obj-$(CONFIG_QCOM_PBS) +=	qcom-pbs.o
+>>>   obj-$(CONFIG_QCOM_UBWC_CONFIG) += ubwc_config.o
+>>>   obj-$(CONFIG_QCOM_SAHARA_PROTOCOL) += sahara/
+>>> +obj-$(CONFIG_QCOM_QDU) += qdu.o
+>>> diff --git a/drivers/soc/qcom/qdu.c b/drivers/soc/qcom/qdu.c
+>>> new file mode 100644
+>>> index 000000000000..afd8011793fa
+>>> --- /dev/null
+>>> +++ b/drivers/soc/qcom/qdu.c
+>>> @@ -0,0 +1,85 @@
+>>> +// SPDX-License-Identifier: GPL-2.0-only
+>>> +
+>>> +/* Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries. */
+>>> +
+>>> +#include <linux/init.h>
+>>> +#include <linux/kernel.h>
+>>> +#include <linux/module.h>
+>>> +#include <linux/sahara_image_table_ops.h>
+>>> +
+>>> +static const char * const qdu100_image_table[] = {
+>>> +	[5] = "qcom/qdu100/uefi.elf",
+>>> +	[8] = "qcom/qdu100/qdsp6sw.mbn",
+>>> +	[16] = "qcom/qdu100/efs1.bin",
+>>> +	[17] = "qcom/qdu100/efs2.bin",
+>>> +	[20] = "qcom/qdu100/efs3.bin",
+>>> +	[23] = "qcom/qdu100/aop.mbn",
+>>> +	[25] = "qcom/qdu100/tz.mbn",
+>>> +	[29] = "qcom/qdu100/zeros_1sector.bin",
+>>> +	[33] = "qcom/qdu100/hypvm.mbn",
+>>> +	[34] = "qcom/qdu100/mdmddr.mbn",
+>>> +	[36] = "qcom/qdu100/multi_image_qti.mbn",
+>>> +	[37] = "qcom/qdu100/multi_image.mbn",
+>>> +	[38] = "qcom/qdu100/xbl_config.elf",
+>>> +	[39] = "qcom/qdu100/abl_userdebug.elf",
+>>> +	[40] = "qcom/qdu100/zeros_1sector.bin",
+>>> +	[41] = "qcom/qdu100/devcfg.mbn",
+>>> +	[42] = "qcom/qdu100/zeros_1sector.bin",
+>>> +	[43] = "qcom/qdu100/kernel_boot.elf",
+>> We should not accept this code because corresponding linux-firmware
+>> release was not properly authorized in Qualcomm. All of above might change.
+>>
+>> I can give more details in private.
+> Thanks for the comment. The QDu100 image table in v2 reflects the 
+> firmware images required by the device for boot. The sahara driver 
+> relies on request_firmware_nowarn() and does not make assumptions about 
+> firmware distributions or availability.
 
-... so maybe you wanted to say they are not compatible?
+You did not answer to my comment at all. It does not matter what it
+reflects to. You violated GPL license and that's NAK here.
+
+And responding to this after half a year with irrelevant comment of
+whatever is clearly:
+
+NAK
+
 
 Best regards,
 Krzysztof
