@@ -1,104 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-95953-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95954-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id uDs5Cn4MrGnUjQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95953-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 07 Mar 2026 12:31:10 +0100
+	id wDqvCowMrGnUjQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95954-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 07 Mar 2026 12:31:24 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6EB1E22B6B1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 07 Mar 2026 12:31:09 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D15822B6BF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 07 Mar 2026 12:31:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D5BCE301111F
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Mar 2026 11:31:07 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 1DC683017518
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Mar 2026 11:31:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4476F2D3225;
-	Sat,  7 Mar 2026 11:31:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CADA12E2DDD;
+	Sat,  7 Mar 2026 11:31:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="J0lyrcXn";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="J4APqsKh"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="HhvEJUuJ";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="B4+kJUmI"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA0E29B233
-	for <linux-arm-msm@vger.kernel.org>; Sat,  7 Mar 2026 11:31:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AFD41339A4
+	for <linux-arm-msm@vger.kernel.org>; Sat,  7 Mar 2026 11:31:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772883067; cv=none; b=VuSZ+IugDNu4d+0Bttto9R9rGlkT7H9/3GVhZ9zk0gRh14XH15ctrdMyJiWB4VOXh0Wu6K1hwrxN7nuvrYIY07oEQsXw86AtGD6q98r3E623T6rCxEqMdqEMkvZMo2iHtLshavsBaRCi6/veDJCAhn2gs2V+Jo8XlzK6qesh8n8=
+	t=1772883080; cv=none; b=b8cyfBoEfXvOtSyb5ThFUF4p1PifSb1Yj8/68wITFMFJk3Hd+5hYX3uIiHQa1xU9gc3BQJBeHo7PHk9Ai7SKVJsXpXkgFU+VddQrJEipsQ9UK6xJ67K0Xuv0hrjF55jbAg9PrLVqbXcZaguyCEORB82AiOPdvX5scDKYY98MIU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772883067; c=relaxed/simple;
-	bh=dw4NguK4z1kZct7/GNW5OzdJPNuHhVffj46S0FKXwfI=;
+	s=arc-20240116; t=1772883080; c=relaxed/simple;
+	bh=PUjBvppUi8u6FGdl5UVyB2X1AX7pXRZKiGKocJMXGJE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UCWGrU2DQ7D0weTIzbKUjev1EVFJPdczRn8c6DQTQQei5MRHxfF5SdK0+JTjVNsYTfU9c2wLn1E40yZrjhw7ksnFjVAv5LXYb5esNGLEDrdLo54RQ9TYo3LI4BbZnNGSlmzJm2fhr1TE6Fs0s52vOwCCEBchRBOcVCeZVIv49pg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=J0lyrcXn; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=J4APqsKh; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=Hxa2oNyA8d4VY8QKahs84n3GP9G2L5SwH1Qi+x3DAnvknGOr8uid8JXiL0CffCAkbrO5O0cBVhrvFInyz73qDPKorFFEKfgtJ3cUIEqwVXyZ0hOanEduXwpRB/tMhnxgw5OseKu3B41Bl3LyFHJ3369PN49FOxouQWMYIHmdsHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=HhvEJUuJ; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=B4+kJUmI; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6276s0LT2404971
-	for <linux-arm-msm@vger.kernel.org>; Sat, 7 Mar 2026 11:31:05 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6276r2WM2490366
+	for <linux-arm-msm@vger.kernel.org>; Sat, 7 Mar 2026 11:31:18 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	aObxS31+CMCRCq85OubM28T+YZ4utlQn84Huz04kQHM=; b=J0lyrcXnCCipYI7P
-	6Wl5j+tJoUgHe4zi80dkGUVzinkl1OmPrsUZhTNaANnQeKZWHSwz3ROgOY1honii
-	SQMd26T04kau3aiU/+rh451l3dKwRCP485773EoVVJ81hIiJ7KVbKf50x7uiBcVH
-	UCFwznqzq4Uo4XzHZrMEwX3AvEivYAI1fEhLuvczRuPxi1Lw6fC3VG7pKbSYSqtd
-	SUNau5Q3T7e8loC6BIsEyHPZjqGDIx6Gt739HeL+P6nHPsPD3CKSRfqJyLyJYjo/
-	5cqzIbhNWMYh0OvWPaF2lCW+O7jKiKN82XSu3ua2k3V3i/G1n2j1prbguhB6NCnF
-	3gjlog==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cr9qes0yd-1
+	QEK8loxNNRCGhL9b5XdhFW4/qfDHKLhoG2GkqslhM0E=; b=HhvEJUuJMCV+C4UU
+	uKiP2quPwG10Xrw16q6kIi93gldl7Xmwr0iaNCe7KPJOk63mtbuy7xRF5nJ47wM/
+	bgI+3WazVk5P2C2sgnu05mMTv1iaXIlNtGLL4f/2UtYjFQLnePnvtO5sYXODhu3O
+	inZaPBtFrYtRGr6go+oFYMiuSlc+NIlRc1IdcJ31VyI7qbCgTpm80L6/ictRKXb0
+	ox9Mi19maU4t99T2WO5mVDaBzOEMDWLXGwebebD3kyfbKdj+2A3bZMujjhmWgRa5
+	C8Vblx76E+2z5yZzpSgGSQ+hRWyxzZPTcJjLGq7jL3iVGJK2Neq3kMm0zrwmIUX0
+	O+LIlg==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4crc838p71-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 07 Mar 2026 11:31:04 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2ae4e20a414so346950365ad.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 07 Mar 2026 03:31:04 -0800 (PST)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 07 Mar 2026 11:31:18 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2ae4cdfc468so63749455ad.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 07 Mar 2026 03:31:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1772883064; x=1773487864; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1772883077; x=1773487877; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=aObxS31+CMCRCq85OubM28T+YZ4utlQn84Huz04kQHM=;
-        b=J4APqsKhOXnoCpXHBQbVDMINOr35b7LwJOJNyG7j8JcYwKBm+8rokeNBlN2O9SuIDO
-         NDUcQRlCUHOFTRy1jVtEy00WJaC2685tbrWzH1K9IMaaF06pAYC6zqZiiJN3bhRoPjQ3
-         nVp9da3YFrgq/GZYUMTkqV7yHqiuUsucaFtm7nLLQbKjlS2QIp+2+Ve2FPfKv9+AuwF+
-         y8R2xMkphNnKgb+h46rwPhI9nAHpiQn6nJ7Jp+3PBjeInkqyOHVOJ8dIO5364PCcuKoJ
-         GcMD3iZyDzIBKJyfEsKeLkugSVAqYklAbB779LcFZx8ftSGgbRL5Oz9JbbjcvTCZzfLG
-         hRNw==
+        bh=QEK8loxNNRCGhL9b5XdhFW4/qfDHKLhoG2GkqslhM0E=;
+        b=B4+kJUmITkVXZfgdl+Bj/npuHqMA0UoMYpBAZK1wbz4aaDHCIlzVT1+N3gUas3JynM
+         SQkc4Gn2BFJ48XuiMb6SuyRvAFRy0i0U1DI/K7aZDzph1ZUrVtuhNJ2rCDspCphNWc0x
+         0GOJg3INzpe508k7Qky1hs2Ox47+9vNQLyt0qzhPbpGkrs3UYbZDwXO4ud3Ep8VxxnBM
+         PrvHo8C0Hp52FgTiqGUl7KDkCoFLcPk8pa7J3r7vjMAxQFFX1uvTMyWiFhydPGYc9BuQ
+         w5NugeiyAx7jP/MNYsA1vSN3GL+hxfPhzTkn4ZuECoaW/V3/L05wiBFORoUlWVJGGpej
+         4X6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772883064; x=1773487864;
+        d=1e100.net; s=20230601; t=1772883077; x=1773487877;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=aObxS31+CMCRCq85OubM28T+YZ4utlQn84Huz04kQHM=;
-        b=SckZefb/Keb7ROe4bydpvC/h1XQwM+Q/mU4aDnwJZHtY452WYgei6UJlkmNScaafx5
-         rK4XUBm+pmcF9cwPZyLjErU0nIwRzlX+hNdDra3ua7bpVrOMx7GEwB+ECdvNrEtefUkv
-         MUjSI3JzLBMCssTWZod5mXNtTY0q85SrAVVuqRxZkj/FF53UlOS56MMoqcsVRnbEgscF
-         wHuvDLpcpZlRgO+kiHA4xQ+ogwu2BgHGn5A1c0bguJfATZ3FftfQXuKDVy3LWPD5nwch
-         YTXLxHeioM4KXvvZAIetM8FNG5Yw8hTvzkqlw2T8JkYHQULwkpkpmZERZ/A4eJoB4NN5
-         X4yQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVzjyfPmzFA+3Esj3Z747OPOXZSeI8gpoBQ1+YImziPNUcJDdH9QI520mS+u2dxGj6CdNIpDYO8rY0jKH5B@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyv3Fh+UZqC7D+9x+H1xc8dJfal4PZSDeu4sM9mwDIYAkgC/JIM
-	8GFsAIqr8Yh2oEueBeZl4tfVl8+NZkdeMa45lveIzL1Jk+eO8SY9nHZHjUeEbLnPZFa3SphIw4I
-	DN0NBx2/j9JlFiNVgqrWDcdRdIXmxUuAaYpqyjzXFqec5Aal2WTupRecTTzvNnmqAGK2Z
-X-Gm-Gg: ATEYQzxf2+h3Ogk2S8ok4JeL61ciM64z3bQoqu4+S6WBuq45Vv7cxXArmn25gUzItme
-	a+WrEAlBemPNEBwrwD0HEpLO6Wh4uZkoeGDzZDozSVNtDGHyXhrv8noIm8r16qQZjJBAq4LwtJZ
-	jN7iu18Skg0b5Zi+Dy0ZfdSGAeMF6mKqR1x3C6zTdT8FcHgbmuxb9iPBNWUkYv6dgbd40pFgy+p
-	RUzhAFvoXf4Mriu2hOQqJy3HaNFqhrCK+7OiDv7F/aPqB/hBk/xJQFHetE5enCdwpfJmZFM1uug
-	6zQGssmWvcm7zTvP1L5acUcTbPTF89l/w+QcVwjzHTWVE2VYS76PpurTsFB6IlLTSOjCVQfJ/kd
-	GpR8RBKUsoTI0x14eZ7p3ezQXN3QDXqUG0HMEqL5xpCTEv4ZDgoQa8U8=
-X-Received: by 2002:a17:903:380f:b0:2ae:4f2b:9263 with SMTP id d9443c01a7336-2ae82451675mr57528395ad.40.1772883064116;
-        Sat, 07 Mar 2026 03:31:04 -0800 (PST)
-X-Received: by 2002:a17:903:380f:b0:2ae:4f2b:9263 with SMTP id d9443c01a7336-2ae82451675mr57528195ad.40.1772883063648;
-        Sat, 07 Mar 2026 03:31:03 -0800 (PST)
+        bh=QEK8loxNNRCGhL9b5XdhFW4/qfDHKLhoG2GkqslhM0E=;
+        b=dsoHOjKPadsQaZP6KMslF65GhjOm7fLy56cas3hgNlL/NxwgQWFPk4dZOpN7wFJ7wT
+         DsSz6Y4YacgxrSSIRQFIn8hf2cqgWjwPwQo9hndN+vmNaxsiVIHzuYX+P9ygk7aBudR2
+         pyDUuvMBGDAm0ZhgS3Dpn70pDxfsQYwsk2TC3j4LTzAWrFIQxDZFnbbJryhBzc74WfMg
+         Awkgt2/vE0bS7zW+ABSAmaFbGxxmGd0WEt3fg2rHaKhNRVCCNhPA5PjsNBsEMWoQlVKx
+         5Yh22f05MXL5+GxwP/77IvtLJL+jzFS+SSbRcfJbC2TrD3A/aJxawqCgue5rVV7IKmDt
+         3fgA==
+X-Forwarded-Encrypted: i=1; AJvYcCULEBVaPFfjcWPn7HnV0hg3X/uBw/s8RL00h9JNVV3PEPRMkxXLWASfVUQRKtk7ilsqzT4iVOHKhe9yjdkN@vger.kernel.org
+X-Gm-Message-State: AOJu0YyeJrGsmHFxZyaH3OJAKYe9PoSldnQbhKqhycmIwvMTV5+xVzPQ
+	5PmRrvdWQPm1yOEWWPfnqdfZgU1/TiGchgMYYQwmVIw5IMP/qN1LTgH3kl2KzqKFEHcxpPzNoKw
+	VnOTdOHT+t0JZYvQXCvFZEhGUwtF3j422LrguZCRwSv2/hHbQBZ5BvlyXGnlHcyYHEhAnM9cX37
+	BM
+X-Gm-Gg: ATEYQzwbXZzcO+XGDzoJQXcDGMu4p4fD7ULXZRB0qAQxN4H5BXRxY/zZZNl9Dnowaud
+	mSz/oJs4jg5RIy4r3jLFh4qAbVb/HagaXD1JFKkLNh1vAUWyvRtC/lKslY90OOh0HPSxkNnHO+n
+	O/tnKXMnjx9xSs1wyFCcLd0C+I5KLqNfWJoNXxl1oKjmoovFcIrITU7hvKT/F3TyYnZxXzYa22I
+	Hfw4i23Wx+zqUmN/foEib2OyHjvlM7gjGE4QVHGd4Dug4FJBCeBcIDxE8bgNH1Z5R0JdpVU50Fn
+	z3Fn7/DsAjDZCAUucBjYtwhfU/9oNtOHg6d+zPrOFZ66kLDNUmbm5NlnTszOFmoD06dA/5eEMf5
+	h4OFCocr+3TnqtgDk6knpYWN3X5EjDFwnj6JF16xpCJdLdajexCO7UQk=
+X-Received: by 2002:a17:902:f78a:b0:2ae:7f4a:ce34 with SMTP id d9443c01a7336-2ae82367072mr48269375ad.10.1772883077337;
+        Sat, 07 Mar 2026 03:31:17 -0800 (PST)
+X-Received: by 2002:a17:902:f78a:b0:2ae:7f4a:ce34 with SMTP id d9443c01a7336-2ae82367072mr48269095ad.10.1772883076733;
+        Sat, 07 Mar 2026 03:31:16 -0800 (PST)
 Received: from [192.168.0.215] ([49.205.244.213])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae83f8cfb0sm66030525ad.67.2026.03.07.03.31.01
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae840ccb6csm64722535ad.92.2026.03.07.03.31.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 07 Mar 2026 03:31:03 -0800 (PST)
-Message-ID: <84e67d29-532f-4e47-a888-aef3a553b67b@oss.qualcomm.com>
-Date: Sat, 7 Mar 2026 17:00:59 +0530
+        Sat, 07 Mar 2026 03:31:16 -0800 (PST)
+Message-ID: <0c867deb-844a-49ad-826b-e05cc6f3e2c4@oss.qualcomm.com>
+Date: Sat, 7 Mar 2026 17:01:13 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -106,68 +107,68 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 02/12] drivers: accel : Move AIC specific image tables
- to mhi_controller.c file
+Subject: Re: [PATCH v1 03/12] drivers: accel: qaic: Support for registration
+ of image tables in Sahara.
 To: Bjorn Andersson <andersson@kernel.org>
 Cc: jeff.hugo@oss.qualcomm.com, bjorn.andersson@oss.qualcomm.com,
         konradybcio@kernel.org, konrad.dybcio@oss.qualcomm.com,
         linux-arm-msm@vger.kernel.org
 References: <20250825101926.2160554-1-kishore.batta@oss.qualcomm.com>
- <20250825101926.2160554-3-kishore.batta@oss.qualcomm.com>
- <b57hqn6vnej6uab43cppt2fj4ugsg5ifornc7puajaxipetu2e@nigbpn2f7k7c>
+ <20250825101926.2160554-4-kishore.batta@oss.qualcomm.com>
+ <acifjjzchr22da33pmriawuasn4hf2rqm5gborontjnxzcbiyq@skz2mqcq6i2p>
 Content-Language: en-US
 From: Kishore Batta <kishore.batta@oss.qualcomm.com>
-In-Reply-To: <b57hqn6vnej6uab43cppt2fj4ugsg5ifornc7puajaxipetu2e@nigbpn2f7k7c>
+In-Reply-To: <acifjjzchr22da33pmriawuasn4hf2rqm5gborontjnxzcbiyq@skz2mqcq6i2p>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: DEe515PqaVxz5g30-0rf4V95sXqtc-q7
-X-Proofpoint-GUID: DEe515PqaVxz5g30-0rf4V95sXqtc-q7
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA3MDEwNiBTYWx0ZWRfX14KrrDtF7sHm
- CwU0HvDRRcJ2FZqawWEQEzQ1jh42/2A7q3FhG3dXhz/zDY01HX4lqHuvT3ZDyXj2TrhD+Ue3iL5
- Eg4xyu/qjDwe/w+na1DPast43UIjSRlglzTvmDsujc8Gu3+7YsQO9PW8SxsrW5W5se6ltsoGbTB
- 0YcQnmwFwEFQvgwXiYlvDh4xiSjFzT2D69PH1hTUxntN4dpRpnd3pZx2Sy8yPD0s0ZQh8PobxV6
- bFnPyKAnuN0EpprZvB8kwfoWeQi3BFoTR3ioq6Kmwj1jRDNd9r4m+VTddxB/AK7e1DbrFqN10Gz
- pSYOG3MDa9OLUTPAyOFqYZ0oQWiuEeiUT/y00k426PqbgGWZy0sHaTgUcaBTGDZOgjBUWL98PsG
- oqJoTAno/trCuksH2mDxG+CBLeJprW2jJaDv06B/UqVT23Acymi4yUO2+SBakil4VEoNGu5P4Ud
- Q3lAyjaMapMrFxCcImw==
-X-Authority-Analysis: v=2.4 cv=dcqNHHXe c=1 sm=1 tr=0 ts=69ac0c78 cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=KtsNJ/6bKgz7QsArn2OSsQ==:17
+X-Authority-Analysis: v=2.4 cv=R9UO2NRX c=1 sm=1 tr=0 ts=69ac0c86 cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=KtsNJ/6bKgz7QsArn2OSsQ==:17
  a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=EUspDBNiAAAA:8 a=vj0EZtmO60hHu1s2-1AA:9 a=QEXdDO2ut3YA:10
- a=GvdueXVYPmCkWapjIL-Q:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=OoVoIzI7qbkkq6BcJHgA:9
+ a=ckXePCMR9Q5INyhz:21 a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA3MDEwNiBTYWx0ZWRfXz0vZkZhC2w7j
+ XKxBeFprbqAItrCNzAexBqJ0VS3sWMCTXI7yu8qTl91qjV6Py80sJnNahCw27phaoQt4BEGj9ME
+ VapuyVlfK8oeJ63Fj/Zl2oCAkGq/Vh/YgUZNV6NR7c0+T3davWjhz7Q+EoChbqbuqC9zhCjsCDn
+ hoKtVbRAWsUFh2XNahrfiNJSc2QlXzFRwe+XG+03K1QXH9d4f1AbcU6cNr0PQMvhvcR173XSmgu
+ e1bkzvV4vWHDCQwjkvY4B8/3Ikxu9iSTK0JW1AOWvKLxj4xuJ/x3Tu+OANTAK3E7N9z1QTMrC2n
+ KVxrK6txvot200YsZbVEs9gYxSUjVuuDiOM0+OO9qj9QLYV/CGtP4dCNjMYM+/TnUtbJaV02Xh2
+ 6ERNO7QHIPyOkKjBTqDzIwaj60Np6K96X78NvvTPmjbMZuAX1gvMimEnQL87TCIPagikZ1J4Ukh
+ CbeSKxQU8WUUx7vFDbg==
+X-Proofpoint-ORIG-GUID: GyW6xmmCzLqMg0vncgenmwupphS0JI8v
+X-Proofpoint-GUID: GyW6xmmCzLqMg0vncgenmwupphS0JI8v
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-07_04,2026-03-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 spamscore=0 lowpriorityscore=0 adultscore=0
- clxscore=1011 impostorscore=0 malwarescore=0 priorityscore=1501 phishscore=0
+ clxscore=1011 impostorscore=0 lowpriorityscore=0 phishscore=0 bulkscore=0
+ adultscore=0 priorityscore=1501 spamscore=0 malwarescore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603070106
-X-Rspamd-Queue-Id: 6EB1E22B6B1
+X-Rspamd-Queue-Id: 7D15822B6BF
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
 	TO_DN_SOME(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95953-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-95954-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,get_maintainers.pl:url];
 	RCPT_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[kishore.batta@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	NEURAL_HAM(-0.00)[-0.950];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	NEURAL_HAM(-0.00)[-0.954];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
@@ -175,191 +176,379 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 X-Rspamd-Action: no action
 
 
-On 8/26/2025 2:38 AM, Bjorn Andersson wrote:
-> On Mon, Aug 25, 2025 at 03:49:16PM +0530, Kishore Batta wrote:
+On 8/26/2025 2:56 AM, Bjorn Andersson wrote:
+> On Mon, Aug 25, 2025 at 03:49:17PM +0530, Kishore Batta wrote:
 >
-> "git log --oneline -- drivers/accel/qaic/sahara.c" says that subject
-> prefix should be "accel/qaic: "
+> Just noticed that your recipients list doesn't match get_maintainers.
+> Please adopt b4 and let it choose recipients for you.
 >
->> Move the AIC-specific image tables from the Sahara driver to the AIC
->> specific controller file. This change prevents the Sahara driver from
->> being tagged to a specific Qualcomm device, making it easier to add
->> support for new devices with their own image tables.
-> I don't have any concerns with moving the firmware mapping out of the
-> sahara driver, but the implementation already supports two different
-> devices...so it's not "tagged to a specific device".
+> And same subject prefix issues as all the patches.
+Acknowledged. For v2, I'm using b4 so recipients are pulled from 
+get_maintainers.pl automatically and the series is addresses to the 
+correct lists/maintainers.
 >
-> Also, while at it, please start your commit message with a problem
-> statement and finish it with the technical description of the change
-> you're doing.
-Apologies for the delayed response. It took some time to sort out the 
-issue with kernel_boot.elf image. Acknowledged. In v2, I'm no longer 
-claiming the driver is tagged to a single device. Instead, the 
-motivation is that the implementation lived under QAIC even though its 
-an MHI protocol driver used by multiple devices. The driver will now be 
-moved to drivers/bus/mhi and structured as a reusable MHI protocol 
-driver. In v2, all commit messages are rewritten to begin with the 
-problem being solved and then describe the technical approach/changes.
+>> Support the registration of image tables in the Sahara driver. Each
+>> Qualcomm device can define its own image table, and client drivers can
+>> register their image tables with the Sahara protocol. The Sahara protocol
+>> driver now exposes the necessary APIs to facilitate image table
+>> registration and de-registration. These image tables are used by Sahara
+>> to transfer images from the host filesystem to the device.
+>>
 >> Signed-off-by: Kishore Batta <kishore.batta@oss.qualcomm.com>
 >> ---
->>   drivers/accel/qaic/mhi_controller.c | 43 +++++++++++++++++++++++++++++
->>   drivers/accel/qaic/sahara.c         | 43 ++---------------------------
->>   drivers/accel/qaic/sahara.h         |  7 +++++
->>   3 files changed, 52 insertions(+), 41 deletions(-)
+>>   drivers/accel/qaic/Makefile                 |   3 +-
+>>   drivers/accel/qaic/sahara_image_table.c     | 173 ++++++++++++++++++++
+>>   drivers/accel/qaic/sahara_image_table_ops.h | 102 ++++++++++++
+>>   3 files changed, 277 insertions(+), 1 deletion(-)
+>>   create mode 100644 drivers/accel/qaic/sahara_image_table.c
+>>   create mode 100644 drivers/accel/qaic/sahara_image_table_ops.h
 >>
->> diff --git a/drivers/accel/qaic/mhi_controller.c b/drivers/accel/qaic/mhi_controller.c
->> index 13a14c6c6168..5cc7994f4809 100644
->> --- a/drivers/accel/qaic/mhi_controller.c
->> +++ b/drivers/accel/qaic/mhi_controller.c
->> @@ -790,6 +790,49 @@ static struct mhi_controller_config mhi_cntrl_configs[] = {
->>   	},
->>   };
+>> diff --git a/drivers/accel/qaic/Makefile b/drivers/accel/qaic/Makefile
+>> index 1106b876f737..586a6877e568 100644
+>> --- a/drivers/accel/qaic/Makefile
+>> +++ b/drivers/accel/qaic/Makefile
+>> @@ -12,6 +12,7 @@ qaic-y := \
+>>   	qaic_drv.o \
+>>   	qaic_ras.o \
+>>   	qaic_timesync.o \
+>> -	sahara.o
+>> +	sahara.o \
+>> +	sahara_image_table.o
 >>   
->> +const char * const aic100_image_table[] = {
->> +	[1]  = "qcom/aic100/fw1.bin",
->> +	[2]  = "qcom/aic100/fw2.bin",
->> +	[4]  = "qcom/aic100/fw4.bin",
->> +	[5]  = "qcom/aic100/fw5.bin",
->> +	[6]  = "qcom/aic100/fw6.bin",
->> +	[8]  = "qcom/aic100/fw8.bin",
->> +	[9]  = "qcom/aic100/fw9.bin",
->> +	[10] = "qcom/aic100/fw10.bin",
+>>   qaic-$(CONFIG_DEBUG_FS) += qaic_debugfs.o
+>> diff --git a/drivers/accel/qaic/sahara_image_table.c b/drivers/accel/qaic/sahara_image_table.c
+>> new file mode 100644
+>> index 000000000000..dd0793a33727
+>> --- /dev/null
+>> +++ b/drivers/accel/qaic/sahara_image_table.c
+>> @@ -0,0 +1,173 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +
+>> +/* Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries. */
+>> +
+>> +#include <linux/device.h>
+>> +#include <linux/list.h>
+>> +#include <linux/mutex.h>
+>> +
+>> +#include "sahara_image_table_ops.h"
+>> +
+>> +struct sahara_image_table_context {
+>> +	struct list_head provider_list;
+>> +	/* Protects access to provider_list and related operations */
+>> +	struct mutex provider_mutex;
+>> +};
+> Drop this struct and turn the two members global variables.
+I have removed the registration mechanism in v2.
+>
+>> +
+>> +static struct sahara_image_table_context sahara_img_ctx = {
+>> +	.provider_list = LIST_HEAD_INIT(sahara_img_ctx.provider_list),
+>> +	.provider_mutex = __MUTEX_INITIALIZER(sahara_img_ctx.provider_mutex),
 >> +};
 >> +
->> +const size_t aic100_image_table_size = ARRAY_SIZE(aic100_image_table);
+>> +/**
+>> + * sahara_register_image_table_provider - Register an image table provider.
+> https://docs.kernel.org/doc-guide/kernel-doc.html#function-documentation
+> says you should put () after the function name.
+>
+>> + * @provider: Pointer to the sahara_image_table_provider structure to be
+>> + *		registered.
+>> + *
+>> + * This function validates the provided sahara_image_table_provider structure
+>> + * and adds it to the global list of image table providers.
+> What is the key thing this function does? It validates the
+> image_table_provider! And then second to that it might add it to some
+> list...
+>
+>> The list is
+>> + * protected by a mutex to ensure thread-safe operations.
+> https://docs.kernel.org/doc-guide/kernel-doc.html#function-context
+I have removed the registration mechanism in v2.
+>> + *
+>> + * Return: 0 on success, -EINVAL if the provider or its required fields are
+>> + *		invalid.
+>> + */
+>> +int sahara_register_image_table_provider(struct sahara_image_table_provider
+>> +					  *provider)
+>> +{
+>> +	/* Validate the provider and its required fields */
+>> +	if (!provider || !provider->image_table || !provider->dev_name)
+>> +		return -EINVAL;
 >> +
->> +const char * const aic200_image_table[] = {
->> +	[5]  = "qcom/aic200/uefi.elf",
->> +	[12] = "qcom/aic200/aic200-nsp.bin",
->> +	[23] = "qcom/aic200/aop.mbn",
->> +	[32] = "qcom/aic200/tz.mbn",
->> +	[33] = "qcom/aic200/hypvm.mbn",
->> +	[39] = "qcom/aic200/aic200_abl.elf",
->> +	[40] = "qcom/aic200/apdp.mbn",
->> +	[41] = "qcom/aic200/devcfg.mbn",
->> +	[42] = "qcom/aic200/sec.elf",
->> +	[43] = "qcom/aic200/aic200-hlos.elf",
->> +	[49] = "qcom/aic200/shrm.elf",
->> +	[50] = "qcom/aic200/cpucp.elf",
->> +	[51] = "qcom/aic200/aop_devcfg.mbn",
->> +	[57] = "qcom/aic200/cpucp_dtbs.elf",
->> +	[62] = "qcom/aic200/uefi_dtbs.elf",
->> +	[63] = "qcom/aic200/xbl_ac_config.mbn",
->> +	[64] = "qcom/aic200/tz_ac_config.mbn",
->> +	[65] = "qcom/aic200/hyp_ac_config.mbn",
->> +	[66] = "qcom/aic200/pdp.elf",
->> +	[67] = "qcom/aic200/pdp_cdb.elf",
->> +	[68] = "qcom/aic200/sdi.mbn",
->> +	[69] = "qcom/aic200/dcd.mbn",
->> +	[73] = "qcom/aic200/gearvm.mbn",
->> +	[74] = "qcom/aic200/sti.bin",
->> +	[75] = "qcom/aic200/pvs.bin",
+>> +	/* Acquire the mutex before modifying the list */
+> If that isn't obvious from the line mutex_lock(something) consider
+> giving the lock a better name.
+>
+> It's obvious what this sequence does
+>
+> lock()
+> modify(list)
+> unlock()
+>
+> Document things that aren't obvious.
+>
+ACK.
+>> +	mutex_lock(&sahara_img_ctx.provider_mutex);
+>> +
+>> +	/* Add the provider to the list */
+>> +	list_add(&provider->list, &sahara_img_ctx.provider_list);
+>> +
+>> +	/* Release the mutex after modification */
+>> +	mutex_unlock(&sahara_img_ctx.provider_mutex);
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +/**
+>> + * sahara_get_image_table - Get the image table for a given device name
+>> + * @dev_name: The name of the device for which the image table is requested.
+>> + *
+>> + * This function iterates through the list of registered image table providers
+>> + * and returns the image table for the provider matching the given device name.
+>> + *
+>> + * Return: A pointer to the image table if found, or NULL if no matching
+>> + *		provider is found.
+>> + */
+>> +const char * const *sahara_get_image_table(const char *dev_name)
+>> +{
+>> +	struct sahara_image_table_provider *provider;
+>> +
+>> +	/* Validate the device name */
+>> +	if (!dev_name) {
+>> +		pr_debug("sahara: Invalid argument %s\n", dev_name);
+>> +		return NULL;
+>> +	}
+> This is overly defensive. You're writing the only code that should ever
+> call this function, just make sure you don't explicitly pass NULL when
+> you do...
+I have removed the registration mechanism in v2.
+>> +
+>> +	/* Iterate through the list to find the matching provider */
+>> +	list_for_each_entry(provider, &sahara_img_ctx.provider_list, list) {
+>> +		if (strcmp(provider->dev_name, dev_name) == 0)
+>> +			return provider->image_table;
+>> +	}
+>> +
+>> +	return NULL;
+>> +}
+>> +
+>> +/**
+>> + * sahara_get_image_table_size - Get the size of the image table for a given
+>> + *				device name.
+>> + * @dev_name: The name of the device for which the image table size is requested
+>> + *
+>> + * This function iterates through the list of registered image table providers
+>> + * and returns the size of the image table for the provider matching the given
+>> + * device name.
+>> + *
+>> + * Return: The size of the image table if found, or 0 if no matching provider
+>> + *         is found or if the device name is invalid.
+>> + */
+>> +size_t sahara_get_image_table_size(const char *dev_name)
+> You don't need two identical functions for getting the table and its
+> size, just add a "size_t *size" parameter to sahara_get_image_table()
+> and return both values in one - saves you 29 lines of ~copy-pasta.
+I have removed the registration mechanism in v2.
+>> +{
+>> +	struct sahara_image_table_provider *provider;
+>> +
+>> +	/* Validate the dev name */
+>> +	if (!dev_name) {
+>> +		pr_debug("sahara: Invalid argument %s\n", dev_name);
+>> +		return 0;
+>> +	}
+>> +
+>> +	/* Iterate through the list to find the matching provider */
+>> +	list_for_each_entry(provider, &sahara_img_ctx.provider_list, list) {
+>> +		if (strcmp(provider->dev_name, dev_name) == 0)
+>> +			return provider->image_table_size;
+>> +	}
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +/**
+>> + * sahara_unregister_image_table_provider - Unregister an image table provider.
+>> + * @provider: Pointer to the sahara_image_table_provider structure to be
+>> + *		unregistered
+>> + *
+>> + * This function validates the provided sahara_image_table_provider structure
+>> + * and removes it from the global list of image table providers. The list is
+>> + * protected by a mutex to ensure thread-safe operations.
+>> + *
+>> + * Return: 0 on success, -EINVAL if the provider is invalid.
+>> + */
+>> +int sahara_unregister_image_table_provider(struct sahara_image_table_provider
+>> +						*provider)
+> unregister functions typically return void, because there isn't much
+> useful one can do if it fails.
+I have removed the registration mechanism in v2.
+>> +{
+>> +	/* Validate the provider */
+>> +	if (!provider)
+>> +		return -EINVAL;
+> This doesn't really check that the point is valid, just that it's not
+> NULL. And per the intended usage, that can never happen. So I'd suggest
+> dropping this check.
+>
+>> +
+>> +	/* Acquire the mutex before modifying the list */
+>> +	mutex_lock(&sahara_img_ctx.provider_mutex);
+>> +
+>> +	/* Remove the provider from the list */
+>> +	list_del(&provider->list);
+>> +
+>> +	/* Release the mutex after modification */
+>> +	mutex_unlock(&sahara_img_ctx.provider_mutex);
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +/**
+>> + * sahara_get_fw_folder_name - Retrieve the firmware folder name for a given
+>> + *				device
+>> + * @dev_name: Name of the device for which the firmware folder name is requested
+>> + *
+>> + * This function searches through the list of Sahara image table providers to
+>> + * find the provider matching the given device name. If a matching provider is
+>> + * found, the firmware folder name associated with that provider is returned.
+>> + * If the device name is invalid or no matching provider is found, the function
+>> + * returns NULL.
+>> + *
+>> + * Return: Firmware folder name if found, otherwise NULL.
+>> + */
+>> +char *sahara_get_fw_folder_name(const char *dev_name)
+>> +{
+>> +	struct sahara_image_table_provider *provider;
+>> +
+>> +	/* Validate the device name */
+>> +	if (!dev_name) {
+>> +		pr_debug("sahara: Invalid argument %s\n", dev_name);
+>> +		return NULL;
+>> +	}
+>> +
+>> +	/* Iterate through the list to find the matching provider */
+>> +	list_for_each_entry(provider, &sahara_img_ctx.provider_list, list) {
+>> +		if (strcmp(provider->dev_name, dev_name) == 0)
+>> +			return provider->fw_folder_name;
+>> +	}
+>> +
+>> +	return NULL;
+>> +}
+>> diff --git a/drivers/accel/qaic/sahara_image_table_ops.h b/drivers/accel/qaic/sahara_image_table_ops.h
+>> new file mode 100644
+>> index 000000000000..f8496bd1aa35
+>> --- /dev/null
+>> +++ b/drivers/accel/qaic/sahara_image_table_ops.h
+>> @@ -0,0 +1,102 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-only */
+>> +
+>> +/* Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries. */
+>> +
+>> +#ifndef __SAHARA_IMAGE_TABLE_OPS_H__
+>> +#define __SAHARA_IMAGE_TABLE_OPS_H__
+>> +
+>> +#include <linux/list.h>
+>> +
+>> +/**
+>> + * struct sahara_image_table_provider - Structure representing an image table
+>> + *					provider.
+>> + * @image_table: Pointer to the image table
+>> + * @image_table_size: Size of the image table
+>> + * @dev_name: Device name to identify the provider
+>> + * @fw_folder_name: Name of the folder where the image binaries exist.
+>> + * @list: List head for linking providers in a list
+>> + *
+>> + * This structure is used to represent an image table provider in the Sahara
+>> + * driver. It contains a pointer to the image table, the size of the image
+>> + * table, the device name for identifying the provider, and a list head for
+>> + * linking providers in a linked list.
+>> + */
+>> +struct sahara_image_table_provider {
+>> +	const char * const *image_table;
+>> +	size_t image_table_size;
+>> +	const char *dev_name;
+>> +	char *fw_folder_name;
+>> +	struct list_head list;
 >> +};
 >> +
->> +const size_t aic200_image_table_size = ARRAY_SIZE(aic200_image_table);
->> +
->>   static int mhi_read_reg(struct mhi_controller *mhi_cntrl, void __iomem *addr, u32 *out)
->>   {
->>   	u32 tmp;
->> diff --git a/drivers/accel/qaic/sahara.c b/drivers/accel/qaic/sahara.c
->> index 3ebcc1f7ff58..cf8f8b585223 100644
->> --- a/drivers/accel/qaic/sahara.c
->> +++ b/drivers/accel/qaic/sahara.c
->> @@ -177,45 +177,6 @@ struct sahara_context {
->>   	bool				is_mem_dump_mode;
->>   };
->>   
->> -static const char * const aic100_image_table[] = {
->> -	[1]  = "qcom/aic100/fw1.bin",
->> -	[2]  = "qcom/aic100/fw2.bin",
->> -	[4]  = "qcom/aic100/fw4.bin",
->> -	[5]  = "qcom/aic100/fw5.bin",
->> -	[6]  = "qcom/aic100/fw6.bin",
->> -	[8]  = "qcom/aic100/fw8.bin",
->> -	[9]  = "qcom/aic100/fw9.bin",
->> -	[10] = "qcom/aic100/fw10.bin",
->> -};
->> -
->> -static const char * const aic200_image_table[] = {
->> -	[5]  = "qcom/aic200/uefi.elf",
->> -	[12] = "qcom/aic200/aic200-nsp.bin",
->> -	[23] = "qcom/aic200/aop.mbn",
->> -	[32] = "qcom/aic200/tz.mbn",
->> -	[33] = "qcom/aic200/hypvm.mbn",
->> -	[39] = "qcom/aic200/aic200_abl.elf",
->> -	[40] = "qcom/aic200/apdp.mbn",
->> -	[41] = "qcom/aic200/devcfg.mbn",
->> -	[42] = "qcom/aic200/sec.elf",
->> -	[43] = "qcom/aic200/aic200-hlos.elf",
->> -	[49] = "qcom/aic200/shrm.elf",
->> -	[50] = "qcom/aic200/cpucp.elf",
->> -	[51] = "qcom/aic200/aop_devcfg.mbn",
->> -	[57] = "qcom/aic200/cpucp_dtbs.elf",
->> -	[62] = "qcom/aic200/uefi_dtbs.elf",
->> -	[63] = "qcom/aic200/xbl_ac_config.mbn",
->> -	[64] = "qcom/aic200/tz_ac_config.mbn",
->> -	[65] = "qcom/aic200/hyp_ac_config.mbn",
->> -	[66] = "qcom/aic200/pdp.elf",
->> -	[67] = "qcom/aic200/pdp_cdb.elf",
->> -	[68] = "qcom/aic200/sdi.mbn",
->> -	[69] = "qcom/aic200/dcd.mbn",
->> -	[73] = "qcom/aic200/gearvm.mbn",
->> -	[74] = "qcom/aic200/sti.bin",
->> -	[75] = "qcom/aic200/pvs.bin",
->> -};
->> -
->>   static int sahara_find_image(struct sahara_context *context, u32 image_id)
->>   {
->>   	int ret;
->> @@ -779,10 +740,10 @@ static int sahara_mhi_probe(struct mhi_device *mhi_dev, const struct mhi_device_
->>   
->>   	if (!strcmp(mhi_dev->mhi_cntrl->name, "AIC200")) {
->>   		context->image_table = aic200_image_table;
->> -		context->table_size = ARRAY_SIZE(aic200_image_table);
->> +		context->table_size = aic200_image_table_size;
->>   	} else {
->>   		context->image_table = aic100_image_table;
->> -		context->table_size = ARRAY_SIZE(aic100_image_table);
->> +		context->table_size = aic100_image_table_size;
->>   	}
->>   
->>   	context->active_image_id = SAHARA_IMAGE_ID_NONE;
->> diff --git a/drivers/accel/qaic/sahara.h b/drivers/accel/qaic/sahara.h
->> index 640208acc0d1..d7fd447ca85b 100644
->> --- a/drivers/accel/qaic/sahara.h
->> +++ b/drivers/accel/qaic/sahara.h
->> @@ -7,4 +7,11 @@
->>   
->>   int sahara_register(void);
->>   void sahara_unregister(void);
->> +
->> +extern const char * const aic200_image_table[];
->> +extern const size_t aic200_image_table_size;
->> +
->> +extern const char * const aic100_image_table[];
->> +extern const size_t aic100_image_table_size;
-> Making sahara.c reference these arrays through extern declarations is
-> pretty ugly, and in patch 4 you're forgetting to add the "static"
-> keyword to the image_tables...
->
-> How about introducing patch 3 first, with special handling for AIC[12]00
-> and then squash this with what is now patch 4 to make the move in one
-> go?
-Fixed in v2 by removing extern based cross file linkage entirely. 
-Firmware image tables are now defined in the Sahara driver and selected 
-via a probe-time variant table, so there are no externs and all tables 
-remain static.
->
-> Still need a statement in one of these commit messages to why you don't
-> just add qdu_image_table[] to sahara.c...
+>> +/**
+>> + * sahara_register_image_table_provider - Register an image table provider.
+> You already provide kernel-doc in the implementation, no need to
+> duplicate it also in the header file.
 >
 > Regards,
 > Bjorn
-The QDU100 image table is now part of the Sahara driver and selected via 
-the SAHARA channel match using the probe time variant mechanism. This 
-avoids a separate QDU client driver and any registration API.
+ACK.
+>> + * @provider: Pointer to the sahara_image_table_provider structure to be
+>> + *            registered.
+>> + *
+>> + * This function validates the provided sahara_image_table_provider structure
+>> + * and adds it to the global list of image table providers. The list is
+>> + * protected by a mutex to ensure thread-safe operations.
+>> + *
+>> + * Return: 0 on success, -EINVAL if the provider or its required fields are
+>> + *         invalid.
+>> + */
+>> +int sahara_register_image_table_provider(struct sahara_image_table_provider
+>> +					  *provider);
 >> +
->>   #endif /* __SAHARA_H__ */
+>> +/**
+>> + * sahara_get_image_table - Get the image table for a given device name
+>> + * @dev_name: The name of the device for which the image table is requested.
+>> + *
+>> + * This function iterates through the list of registered image table providers
+>> + * and returns the image table for the provider matching the given device name.
+>> + *
+>> + * Return: A pointer to the image table if found, or NULL if no matching
+>> + *         provider is found.
+>> + */
+>> +const char * const *sahara_get_image_table(const char *dev_name);
+>> +
+>> +/**
+>> + * sahara_get_image_table_size - Get the size of the image table for a given
+>> + *                               device name.
+>> + * @dev_name: The name of the device for which the image table size is requested
+>> + *
+>> + * This function iterates through the list of registered image table providers
+>> + * and returns the size of the image table for the provider matching the given
+>> + * device name.
+>> + *
+>> + * Return: The size of the image table if found, or 0 if no matching provider
+>> + *         is found or if the device name is invalid.
+>> + */
+>> +size_t sahara_get_image_table_size(const char *dev_name);
+>> +
+>> +/**
+>> + * sahara_unregister_image_table_provider - Unregister an image table provider.
+>> + * @provider: Pointer to the sahara_image_table_provider structure to be
+>> + *            unregistered
+>> + *
+>> + * This function validates the provided sahara_image_table_provider structure
+>> + * and removes it from the global list of image table providers. The list is
+>> + * protected by a mutex to ensure thread-safe operations.
+>> + *
+>> + * Return: 0 on success, -EINVAL if the provider is invalid.
+>> + */
+>> +int sahara_unregister_image_table_provider(struct sahara_image_table_provider
+>> +						*provider);
+>> +
+>> +/**
+>> + * sahara_get_fw_folder_name - Retrieve the firmware folder name for a given
+>> + *                             device
+>> + * @dev_name: Name of the device for which the firmware folder name is requested
+>> + *
+>> + * This function searches through the list of Sahara image table providers to
+>> + * find the provider matching the given device name. If a matching provider is
+>> + * found, the firmware folder name associated with that provider is returned.
+>> + * If the device name is invalid or no matching provider is found, the function
+>> + * returns NULL.
+>> + *
+>> + * Return: Firmware folder name if found, otherwise NULL.
+>> + */
+>> +char *sahara_get_fw_folder_name(const char *dev_name);
+>> +
+>> +#endif // __SAHARA_IMAGE_TABLE_OPS_H__
 >> -- 
 >> 2.34.1
 >>
