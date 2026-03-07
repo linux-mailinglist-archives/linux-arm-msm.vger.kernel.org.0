@@ -1,204 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-95938-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95939-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sislOoHgq2mEhgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95938-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 07 Mar 2026 09:23:29 +0100
+	id IKS8ASj9q2mgiwEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95939-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 07 Mar 2026 11:25:44 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 262C222AB8F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 07 Mar 2026 09:23:29 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id A208422B049
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 07 Mar 2026 11:25:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id EA1E2301477B
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Mar 2026 08:23:27 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 5D1313021700
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Mar 2026 10:25:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2C2338734B;
-	Sat,  7 Mar 2026 08:23:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 741ED371066;
+	Sat,  7 Mar 2026 10:25:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="E9nxnjkB"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="dpunLiy6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ixit.cz [185.100.197.86])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEEEE1D5CFE;
-	Sat,  7 Mar 2026 08:23:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.100.197.86
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FF872F25E4;
+	Sat,  7 Mar 2026 10:25:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772871806; cv=none; b=E8xb3mIrie4VScCk9shWyszMiCnFom9cDqdOfa1fHS6rpseyr/ati/wDq3RdTeSq7An8ajogS6GjuRn7h72CPx6K4FvYRKnHzbXtDk4VDFt4ZMCRZx/Fp99UflO8E3oBweRp2XzfWk9LqHSyBV/vLBuQ6pITgHGTmsDWmp1qAdY=
+	t=1772879114; cv=none; b=M5VZtFgzQCRQnSMiHgLEkFUhCWWnB3/9WiBKWRvVJfEJZFDo8kjwISQP5uAMXj6QfFe/MBGWH7MO5jr2ffBGvZ3NbShgyGawAYdNtiYIx5j8rBZA2sMf3Ujg2LEEAGWh4NI5mp2Qy0eX6yu9cRnCahz9Y2s7nBB5ivgDvdZez+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772871806; c=relaxed/simple;
-	bh=2A4UKo2YAqS57Y107N17+GsBt/7b4pueiNXpK/kc18s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=a4lTcVkSJz/7azX4jX77mrHItxPLhj4XJtndKeU/8BoSyg22cHKxpIHnJZQU75kLfC+cJZLHQp8ZLHL7o1D3eDLDZwQ1iDpCGTZkSb97azXEZ1vSc9pySbIuUYP9y349fbvBm6dB2Hx3BQ93ylQIUJhGQoSPwYLSOpYGg1YiT+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=E9nxnjkB; arc=none smtp.client-ip=185.100.197.86
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [IPV6:2a02:f000:10bd:e301::1d7] (unknown [IPv6:2a02:f000:10bd:e301::1d7])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 3BB0D53412FB;
-	Sat, 07 Mar 2026 09:23:15 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1772871795;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=aAypqRBqp9/ve2X/R0yGMfpB4RQj/AD1xn5rsrsNCNo=;
-	b=E9nxnjkBYw3yN6vccoRJ3wNRxDx3eE5ARI4STvlL9iq680QFDipmzaqGDjb/H69o/M47l1
-	90Imn/HV57OXQovxxMQYfQDigMO4PctJdKk2srbt889Q/W+u/reQ/VUXCqk+Jwn9uisZ7O
-	qcJ6z+jeODlS9n+L7NtfSb90tdQOjxI=
-Message-ID: <b2cbd264-55c8-4dda-9545-fa79ce6517c6@ixit.cz>
-Date: Sat, 7 Mar 2026 09:23:14 +0100
+	s=arc-20240116; t=1772879114; c=relaxed/simple;
+	bh=7zO7aGmPRNM/2d2bS4B3dOXbH9VOChey5Vf66yraSW8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Yd+oRENFC4QxA7cD+TxpxTWEtIakd+/cyGJ7SUS0kR8/9TSjxlehtj9MykYqvdgr7wCBz44JE3+SKKc2jsV/EFbOhivPGMpRc4Uw1kAze1pI8+PKuz0BEG9ME2WzbusDwcfikxQgi60scs4ymLRff2V0QJ7i+pHs9CBZl85lflc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=dpunLiy6; arc=none smtp.client-ip=192.198.163.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1772879111; x=1804415111;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=7zO7aGmPRNM/2d2bS4B3dOXbH9VOChey5Vf66yraSW8=;
+  b=dpunLiy6yJB3dPIjFIylz3JiZN/YBUQB2fJ8PG+Ekp9F3pZQQYTIsI7N
+   Lg9KDvUnOVVWrJGBiCnhAVp6jTx8NgOFCNUR3R/IWC1avThZrM7TRiNFb
+   +t7apsB6eloqWN3mXQgnCH1NdB/yUL5YM096X2jwyEaV1tLtAM4gXQWHr
+   MKopPelCnY5va7KgtKK5pPsZm0hIDqMY3VswUaXJkzFyfbcr9bFznsBFr
+   43mkynpCw3wWd9WMr+YaTssKU73FXsJ47o/r+dLfORtiQ3+HYkVMJsFDN
+   5gh4EE2If3AAtNf81jHAYNkvW6SRJaLf7AxDltnmRFxVocKv/gxqivxAS
+   w==;
+X-CSE-ConnectionGUID: 7osKlMegQAiUFCnQnqsyww==
+X-CSE-MsgGUID: MEG4IvxnQRy2Pm87BgzE4A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11721"; a="73000704"
+X-IronPort-AV: E=Sophos;i="6.23,106,1770624000"; 
+   d="scan'208";a="73000704"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Mar 2026 02:25:11 -0800
+X-CSE-ConnectionGUID: 9FH9KpraQdys52Tf5oiftA==
+X-CSE-MsgGUID: 6ba6qCt1Tr+VmIMv2h+chQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,106,1770624000"; 
+   d="scan'208";a="257175900"
+Received: from lkp-server01.sh.intel.com (HELO 058beb05654c) ([10.239.97.150])
+  by orviesa001.jf.intel.com with ESMTP; 07 Mar 2026 02:25:05 -0800
+Received: from kbuild by 058beb05654c with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1vyoqD-000000001sf-1dCb;
+	Sat, 07 Mar 2026 10:25:01 +0000
+Date: Sat, 7 Mar 2026 18:24:51 +0800
+From: kernel test robot <lkp@intel.com>
+To: Pengyu Luo <mitltlatltl@gmail.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Krishna Manikandan <quic_mkrishn@quicinc.com>,
+	Jonathan Marek <jonathan@marek.ca>
+Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Tianyu Gao <gty0622@gmail.com>, White Lewis <liu224806@gmail.com>,
+	Pengyu Luo <mitltlatltl@gmail.com>
+Subject: Re: [PATCH v3 4/4] arm64: dts: qcom: sc8280xp: Add dsi nodes on
+ SC8280XP
+Message-ID: <202603071819.Xjfeftm2-lkp@intel.com>
+References: <20260228141715.35307-5-mitltlatltl@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] ARM: dts: qcom: msm8960: expressatt: Add camera flash
-To: guptarud@gmail.com, Lee Jones <lee@kernel.org>,
- Pavel Machek <pavel@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Linus Walleij <linusw@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20260306-expressatt_camera_flash-v1-0-b1996f7cdfdd@gmail.com>
- <20260306-expressatt_camera_flash-v1-3-b1996f7cdfdd@gmail.com>
-Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <20260306-expressatt_camera_flash-v1-3-b1996f7cdfdd@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 262C222AB8F
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260228141715.35307-5-mitltlatltl@gmail.com>
+X-Rspamd-Queue-Id: A208422B049
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [0.34 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[ixit.cz,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114];
-	R_DKIM_ALLOW(-0.20)[ixit.cz:s=dkim];
+	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	FREEMAIL_CC(0.00)[lists.linux.dev,vger.kernel.org,lists.freedesktop.org,gmail.com];
+	RCPT_COUNT_TWELVE(0.00)[28];
+	TAGGED_FROM(0.00)[bounces-95939-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FREEMAIL_TO(0.00)[gmail.com,kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-95938-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[13];
 	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_TO(0.00)[gmail.com,oss.qualcomm.com,kernel.org,linux.dev,poorly.run,somainline.org,linux.intel.com,suse.de,ffwll.ch,quicinc.com,marek.ca];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.911];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[david@ixit.cz,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[ixit.cz:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,ixit.cz:dkim,ixit.cz:email,ixit.cz:mid]
+	RCVD_COUNT_FIVE(0.00)[6];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[lkp@intel.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[intel.com:+];
+	NEURAL_HAM(-0.00)[-0.989];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[git-scm.com:url,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,01.org:url,intel.com:dkim,intel.com:email,intel.com:mid]
 X-Rspamd-Action: no action
 
-On 07/03/2026 01:58, Rudraksha Gupta via B4 Relay wrote:
-> From: Rudraksha Gupta <guptarud@gmail.com>
-> 
-> Add camera flash support for the Samsung Galaxy Express (expressatt).
-> 
-> The flash IC uses a one-wire pulse-count protocol on GPIO 3, gated by
-> PMIC MPP 4 which must be driven high to unlock the flash circuit.
-> 
-> Downstream references:
-> Link: https://github.com/LineageOS/android_kernel_samsung_d2/blob/stable/cm-12.0-YNG4N/drivers/leds/Makefile#L51
-> Link: https://github.com/LineageOS/android_kernel_samsung_d2/blob/stable/cm-12.0-YNG4N/arch/arm/mach-msm/board-apexq-camera.c#L591
-> 
-> Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
-> ---
->   .../dts/qcom/qcom-msm8960-samsung-expressatt.dts   | 31 ++++++++++++++++++++++
->   1 file changed, 31 insertions(+)
-> 
-> diff --git a/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts b/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
-> index c4b98af6955d..96460775a4ec 100644
-> --- a/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
-> +++ b/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
-> @@ -1,5 +1,6 @@
->   // SPDX-License-Identifier: GPL-2.0
->   #include <dt-bindings/input/input.h>
-> +#include <dt-bindings/leds/common.h>
->   #include <dt-bindings/reset/qcom,gcc-msm8960.h>
->   
->   #include "qcom-msm8960.dtsi"
-> @@ -61,6 +62,20 @@ touchkey_enable: touchkey-enable {
->   		regulator-boot-on;
->   	};
->   
-> +	camera_flash: led-controller {
-> +		compatible = "richtek,rt8515";
-> +		enf-gpios = <&tlmm 3 GPIO_ACTIVE_HIGH>;
-> +		unlock-gpios = <&pm8921_mpps 4 GPIO_ACTIVE_HIGH>;
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&cam_flash_en>;
-> +
+Hi Pengyu,
 
-LGTM, just please order pinctrl-n before pinctrl-names :)
+kernel test robot noticed the following build errors:
 
-Reviewed-by: David Heidelberg <david@ixit.cz>
+[auto build test ERROR on drm-misc/drm-misc-next]
+[also build test ERROR on drm/drm-next robh/for-next linus/master v7.0-rc2 next-20260305]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-Nitpick: if you can, add phone-devel@vger.kernel.org for next time,
-it's easier to distinguish the phone patches in huge linux-arm-msm pile :)
+url:    https://github.com/intel-lab-lkp/linux/commits/Pengyu-Luo/dt-bindings-display-msm-dsi-phy-7nm-Add-SC8280XP/20260228-222044
+base:   https://gitlab.freedesktop.org/drm/misc/kernel.git drm-misc-next
+patch link:    https://lore.kernel.org/r/20260228141715.35307-5-mitltlatltl%40gmail.com
+patch subject: [PATCH v3 4/4] arm64: dts: qcom: sc8280xp: Add dsi nodes on SC8280XP
+config: arm64-randconfig-002-20260307 (https://download.01.org/0day-ci/archive/20260307/202603071819.Xjfeftm2-lkp@intel.com/config)
+compiler: aarch64-linux-gcc (GCC) 11.5.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260307/202603071819.Xjfeftm2-lkp@intel.com/reproduce)
 
-David
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202603071819.Xjfeftm2-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+   Error: arch/arm64/boot/dts/qcom/sc8280xp.dtsi:4898.11-37 syntax error
+>> FATAL ERROR: Unable to parse input tree
 
 -- 
-David Heidelberg
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
