@@ -1,198 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-95949-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-95950-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id AIIqJiMGrGkxjAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-95949-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 07 Mar 2026 12:04:03 +0100
+	id 8KLjGmAIrGkWjQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-95950-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 07 Mar 2026 12:13:36 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 614BF22B50D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 07 Mar 2026 12:04:03 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5DF7F22B5EB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 07 Mar 2026 12:13:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id ECAD43022989
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Mar 2026 11:03:47 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C0CED301C3DD
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Mar 2026 11:13:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9390E33C18B;
-	Sat,  7 Mar 2026 11:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14FFB3491F4;
+	Sat,  7 Mar 2026 11:13:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="KfYWPFr2"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O+TziRSE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0840A322C99;
-	Sat,  7 Mar 2026 11:03:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFDB428314C
+	for <linux-arm-msm@vger.kernel.org>; Sat,  7 Mar 2026 11:13:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772881423; cv=none; b=rt74+Ctg8nnMWuOwQ5rsFJjjepJvu5/XJwO1bVRTShXFuosxpYMFzWFsrMc0yALadO+SVnDsUHjKD89onUCrMqXLvidZb8qxnmJ/KBnDvXUNTF1xsaWWBre5We5VvH7Xgncz9q1X20a0DIMb/Uuezw/hu2UA4EZuUlKcVrgNK2Y=
+	t=1772882012; cv=none; b=X1xo1bPbObpEXFeihSQeh3vj5dXa5tMjgeh5enphm1HgDJa6JH9+phDQfOWrXQC6HB0O9sEv7dQcnm1a9rcgbV77t9SUeigHQ1WHdoYPieufOWEjMLYIReHAYeolZloK39Z/OdtHWGj8nh/A+l7fcn4o+UIubK098m7dNjvpk1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772881423; c=relaxed/simple;
-	bh=sVNzSxlK1PzuAr8F/B4Bf+nuIbGcCC+LacFY6MERQig=;
-	h=In-Reply-To:References:From:To:Cc:Subject:MIME-Version:
-	 Content-Disposition:Content-Type:Message-Id:Date; b=pqlvsLhbCIcXu0rJtoCJceFUAYs7nUhh2RkmCJr2E2uJUUyvNINztoXvASmFY8qDJVJuzXd0Qzz4p+eSMOfWVijk9NIQ5X1dPlD5N9JNH85Qe9waYytaWNfsiKx41Y89yyAibKyKM9rEhJ71TOTuQ0cDZ9sqHtFZIJX/H6qoKgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=KfYWPFr2; arc=none smtp.client-ip=78.32.30.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Date:Sender:Message-Id:Content-Type:
-	Content-Transfer-Encoding:MIME-Version:Subject:Cc:To:From:References:
-	In-Reply-To:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=gKq7Ur0o7o0fnfG6VoXbzm/WfSG13rcROPhghnkiHuY=; b=KfYWPFr2YVcrUXRrfluFTGbIdz
-	zfP6GrfPdxzliFEeNl0EUGmWfcyryLQacMv+YTvtqKM+3Q+OmiV3uNxunJFspWh1m+t5LJSKdtHKa
-	5SSGGFOgivZjhIs8Oz7PdmUD+OHCk7OBIipXu1cJyvlr0wg/KdAKgl0GOyE+LTB/RTYdRVSQWbnRa
-	kKbyPGq4M4yQAfjH19uHnoof+jyOD6Ac6/x7xUeO3omUaSgO3oLcQKAkPv82lpBdTfHGM091t6YwL
-	ajg8IJI6neZctZHkKSkCWx5qLsSNAfLWjb8Cw+Bv7tP4Wr+qBbecwLWjZey17tioABP4T/hLw+f9L
-	iR9IRxfg==;
-Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:59388 helo=rmk-PC.armlinux.org.uk)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <rmk@armlinux.org.uk>)
-	id 1vypRE-00000000298-28R9;
-	Sat, 07 Mar 2026 11:03:18 +0000
-Received: from rmk by rmk-PC.armlinux.org.uk with local (Exim 4.98.2)
-	(envelope-from <rmk@rmk-PC.armlinux.org.uk>)
-	id 1vypR8-0000000CSwb-3P3f;
-	Sat, 07 Mar 2026 11:03:10 +0000
-In-Reply-To: <aawFuXTVAgVOrw4k@shell.armlinux.org.uk>
-References: <aawFuXTVAgVOrw4k@shell.armlinux.org.uk>
-From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
-To: Andrew Lunn <andrew@lunn.ch>
-Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	imx@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Jan Petrous <jan.petrous@oss.nxp.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	linux-arm-kernel@lists.infradead.org,
+	s=arc-20240116; t=1772882012; c=relaxed/simple;
+	bh=RdZMesHQHKMfD03vhRx8i9Hfe9ddar8z0zHf8d3CJr8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=FB+LvYnWy7M4KJjr/UF1jncHQQczJV7zhD20OEsMBJl53IhSi1IYXDEujUQK5vfT5c2zmIee4LEI0aw6gI7yefcAy7eEVWmRr7TKAnAqclgEv2I5PAEenB9i+7FROTpUPGv7Q4ftQNi9MqiEmbSzmbLZ9uh8XZISHdeq37B2JiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O+TziRSE; arc=none smtp.client-ip=209.85.216.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-359a5d8b3f8so2537975a91.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 07 Mar 2026 03:13:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1772882010; x=1773486810; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/gabd+hFXfCNsaU4VsDDssNuV3/DePYzj6ege99XJmg=;
+        b=O+TziRSE3BzJ4oepyUrWjt/hv5Q4FTdXlSoz6Lg/CfB9dX115QKoWqdXiODl3AeBrG
+         sR8ovQW7DpKTzQWiKWzP0w3rsqVAOxC3NejK68HYXFN4AqlmunKlPEZqRQOnRdnsxhaj
+         j9X+g+EMiSf2J/nzWICMefyHLJAsZZDCWjIfZepjqvPL/nbxS3vnls0GVGP2rB43jyI5
+         Ia2n1m7+TbEYcGr2BeGMJM9ELlTf0yOTTjEPXpo1oKyHspOuGMnNAv0dyg+UuWtmlyXy
+         NyYJyPn7V7ET6srpVrqaSgc8G/T5bfBmyVk/ut1kQB/7tt0heG3ZBsRVu7HRvh9YeKpc
+         +hYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1772882010; x=1773486810;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/gabd+hFXfCNsaU4VsDDssNuV3/DePYzj6ege99XJmg=;
+        b=eed251izhfNDs+OQeb4uq9U2QUvZVfn+7S9nuKG/jKzsOmfWsY/BruXGzgx7LTtJDb
+         40BJlrz9H5RPtXufp4KqfkejDVzIuqgclZzePnGxlHqrFYcaRs0y0drlSC6hKc1oiOoQ
+         texZmGUK/UwbRkaUxxKDUThlsGCWlKJSajLQDaxCHQrM9R237Zljsh1XTdOVmDQRmugj
+         c13B/fpYPppP0w7vRWyOwzzKCsrXOd+nOOpMV0iEqYvp4bQQtf6KHB1lzAljV6W470wH
+         NwStl4PgC+Kjc4WUsy9NHgZ+hgcDwwDalkNsqE1whP+BodZyyeqtAyKMsZ1NlSIenStM
+         uTcg==
+X-Forwarded-Encrypted: i=1; AJvYcCUNt7PCaw1y6JVkubwG4kAY6jYdBcYIuUC5srDJLWPyvZJeie4c5N4OGceGNOsHhKJ6uETl4TEWJhW59kmH@vger.kernel.org
+X-Gm-Message-State: AOJu0YwYyEvrRI1oJ/2ezAy1T64Ez8veCUhwCPFcir3xV2MUffLg6fYM
+	2YpJxD8n+D5fy7MU8c3xDQlxU6twRmajywll3xwaipe1rJkwuOXPdEIR
+X-Gm-Gg: ATEYQzyJaXWQN28ktprmVH4FzOXy4taUtVv3x5asAeVVppwaFji3WopzslNK+iyJ5/y
+	WZeaw+SDQ1YpBkahyQwJ+z5irbXgqk/X6VO7YsK+A0DofYiaLV2ewd3iMgYg4NP3VIg53u84YzB
+	hKlrzWXOAK57ieeaiT6kB7yRU1uy0ZITZMNI6arllcXUd6BDju+dmI36kGW2zlGZPXYqXFMy8ML
+	OX8TaLOo7vLZkqLeODP9uT0wKpl29HMiGTM97eRbXYqHuy9O4dvDT8Htcvlw7Zev61a1mbuzSCS
+	O1PHErwCEXLFs1dEgB13L6Flpe1afQ2TZkqPiW9CDaZoqVOZhIM/R4zp3zoFT8MObFdfPZulM/G
+	Nb2rpioVjVdtDIsf5vuvePQjYZhgBAG9zlmLgi4cbk6tcxmbtYMkUWvblwayBEy5MCFbeI2qgBV
+	lDSYLCu6quPI2M4AJR1Q==
+X-Received: by 2002:a17:902:ea11:b0:2ae:54ad:6057 with SMTP id d9443c01a7336-2ae82476956mr55642665ad.44.1772882010239;
+        Sat, 07 Mar 2026 03:13:30 -0800 (PST)
+Received: from nuvole ([109.166.36.159])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2ae83f74e7bsm47350265ad.46.2026.03.07.03.13.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 07 Mar 2026 03:13:29 -0800 (PST)
+From: Pengyu Luo <mitltlatltl@gmail.com>
+To: Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jesszhan0024@gmail.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>
+Cc: Pengyu Luo <mitltlatltl@gmail.com>,
 	linux-arm-msm@vger.kernel.org,
-	linux-mediatek@lists.infradead.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-sunxi@lists.linux.dev,
-	linux-tegra@vger.kernel.org,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>,
-	netdev@vger.kernel.org,
-	Paolo Abeni <pabeni@redhat.com>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	s32@nxp.com,
-	Samuel Holland <samuel@sholland.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Yao Zi <me@ziyao.cc>
-Subject: [PATCH net-next 7/7] net: stmmac: add documentation for clocks
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 1/2] drm/msm/dsi: fix bits_per_pclk
+Date: Sat,  7 Mar 2026 19:12:48 +0800
+Message-ID: <20260307111250.105772-1-mitltlatltl@gmail.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset="utf-8"
-Message-Id: <E1vypR8-0000000CSwb-3P3f@rmk-PC.armlinux.org.uk>
-Sender: Russell King <rmk@armlinux.org.uk>
-Date: Sat, 07 Mar 2026 11:03:10 +0000
-X-Rspamd-Queue-Id: 614BF22B50D
+X-Rspamd-Queue-Id: 5DF7F22B5EB
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [1.14 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	R_DKIM_REJECT(1.00)[armlinux.org.uk:s=pandora-2019];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
-	DMARC_POLICY_SOFTFAIL(0.10)[armlinux.org.uk : SPF not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-95949-lists,linux-arm-msm=lfdr.de,kernel];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[armlinux.org.uk:-];
-	RCPT_COUNT_TWELVE(0.00)[27];
-	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-95950-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[gmail.com,vger.kernel.org,lists.freedesktop.org];
+	FREEMAIL_FROM(0.00)[gmail.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MISSING_XM_UA(0.00)[];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	FROM_NEQ_ENVFROM(0.00)[rmk@armlinux.org.uk,linux-arm-msm@vger.kernel.org];
 	PRECEDENCE_BULK(0.00)[];
-	NEURAL_SPAM(0.00)[0.215];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mitltlatltl@gmail.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	RCVD_COUNT_FIVE(0.00)[5];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	NEURAL_HAM(-0.00)[-0.980];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,armlinux.org.uk:email,rmk-PC.armlinux.org.uk:mid]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-Add documentation covering stmmac_clk, pclk, clk_ptp_ref and clk_tx_i
-in the hope that this will help understand what each of these clocks
-are for.
+mipi_dsi_pixel_format_to_bpp return dst bpp not src bpp, dst bpp may
+not be the uncompressed data size. use src bpc * 3 to get src bpp,
+this aligns with pclk rate calculation.
 
-There is confusion around stmmac_clk and pclk which can't be easily
-resolved today as the Imagination Technologies Pistachio board that
-pclk was introduced for has no public documentation and is likely now
-obsolete. So the origins of pclk are lost to the winds of time.
-
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Fixes: ac47870fd795 ("drm/msm/dsi: fix hdisplay calculation when programming dsi registers")
+Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
 ---
- include/linux/stmmac.h | 33 ++++++++++++++++++++++++++++++++-
- 1 file changed, 32 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/stmmac.h b/include/linux/stmmac.h
-index 3521b88aa345..a9c0cb61dd50 100644
---- a/include/linux/stmmac.h
-+++ b/include/linux/stmmac.h
-@@ -300,10 +300,41 @@ struct plat_stmmacenet_data {
- 	struct phylink_pcs *(*select_pcs)(struct stmmac_priv *priv,
- 					  phy_interface_t interface);
- 	void *bsp_priv;
-+
-+	/* stmmac clocks:
-+	 *  stmmac_clk: CSR clock (which can be hclk_i, clk_csr_i, aclk_i,
-+	 *    or clk_app_i depending on GMAC configuration). This clock
-+	 *    generates the MDC clock.
-+	 *
-+	 *  pclk: introduced for Imagination Technologies Pistachio board -
-+	 *    see 5f9755d26fbf ("stmmac: Add an optional register interface
-+	 *    clock"). This is probably used for cases where separate clocks
-+	 *    are provided for the host interface and register interface. In
-+	 *    this case, as the MDC clock is derived from stmmac_clk, pclk
-+	 *    can only really be the "application clock" for the "host
-+	 *    interface" and not the "register interface" aka CSR clock as
-+	 *    it is never used when determining the divider for the MDC
-+	 *    clock.
-+	 *
-+	 *  clk_ptp_ref: optional PTP reference clock (clk_ptp_ref_i). When
-+	 *    present, this clock increments the timestamp value. Otherwise,
-+	 *    the rate of stmmac_clk will be used.
-+	 *
-+	 *  clk_tx_i: MAC transmit clock, which will be 2.5MHz for 10M,
-+	 *    25MHz for 100M, or 125MHz for 1G irrespective of the interface
-+	 *    mode. For the DWMAC PHY interface modes:
-+	 *
-+	 *    GMII/MII	PHY's transmit clock for 10M (2.5MHz) or 100M (25MHz),
-+	 *		or 125MHz local clock for 1G mode
-+	 *    RMII	50MHz RMII clock divided by 2 or 20.
-+	 *    RGMII	125MHz local clock divided by 1, 5, or 50.
-+	 *    SGMII	125MHz SerDes clock divided by 1, 5, or 50.
-+	 *    TBI/RTBI	125MHz SerDes clock
-+	 */
- 	struct clk *stmmac_clk;
- 	struct clk *pclk;
- 	struct clk *clk_ptp_ref;
--	struct clk *clk_tx_i;		/* clk_tx_i to MAC core */
-+	struct clk *clk_tx_i;
- 	unsigned long clk_ptp_rate;
- 	unsigned long clk_ref_rate;
- 	struct clk_bulk_data *clks;
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index e8e83ee61e..7c16216e8b 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -1030,7 +1030,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+ 		 */
+ 		h_total -= hdisplay;
+ 		if (wide_bus_enabled)
+-			bits_per_pclk = mipi_dsi_pixel_format_to_bpp(msm_host->format);
++			bits_per_pclk = dsc->bits_per_component * 3;
+ 		else
+ 			bits_per_pclk = 24;
+ 
 -- 
-2.47.3
+2.53.0
 
 
