@@ -1,166 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-96088-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96089-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6IrYNsf4rWlK+QEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96088-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Mar 2026 23:31:35 +0100
+	id QIZtJj8Ermlq+wEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96089-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 00:20:31 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 874D1232720
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Mar 2026 23:31:35 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B381232A2C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 00:20:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9340C300A764
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Mar 2026 22:22:25 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 57BAD3007BA3
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Mar 2026 23:20:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35272279798;
-	Sun,  8 Mar 2026 22:22:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3621234B683;
+	Sun,  8 Mar 2026 23:20:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="JgBXpDIE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay.hostedemail.com (smtprelay0013.hostedemail.com [216.40.44.13])
+Received: from mail-43100.protonmail.ch (mail-43100.protonmail.ch [185.70.43.100])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB1B51DE8BE;
-	Sun,  8 Mar 2026 22:22:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DAD828469A;
+	Sun,  8 Mar 2026 23:20:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.100
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773008545; cv=none; b=XiPQ897q5YcKhwCBWmWXV8ph3Aid/93nf7n5QspfGzVLVFyJ/5JVw8tVy9J1opydiemuGpcMFfkOLPBJgPr7zNBYBOi7WDhg2sU3JbhCa04V/rmbKlRzAC+p0SaMf2HJc7iIUg8aMwwJJ22XAkuUFKABJuKEdpWvsFDqOzdQKH4=
+	t=1773012029; cv=none; b=C9sw5NFsmPkUXzMJy/C2arV0qi6F8JC12oiF2g2o8O+an5rgqjbVxEygIdERQHcth8VULE9PFyUlX0ayPI/yywFvhowlD65rFFHJ2zbpNPWGA9C57Nd9S0LsqNtdA9cjO4FyOx8FV7VAa/fqlK77cioVzovNrzOQeyEaKSh7Osc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773008545; c=relaxed/simple;
-	bh=n8fdsNpksQMyzDLZEkSIk2mSFJWH1PAnAyRdAAkVywk=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=CMgBcMVhsuOLuwMxHF54Ytpp1e+83IjoZ62tEipsmr/13AbztmpOxwvt53sKRW1xQZHHB+joRtvphzzSRahATe/CPQdh+op/9FvQd9XbKXIlDU8FXpTD0G21edL8cL6+vpeMa+2Fra8odSRkPK1Vyd849vKOrxTepFiTEbrbYAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=perches.com; spf=pass smtp.mailfrom=perches.com; arc=none smtp.client-ip=216.40.44.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=perches.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=perches.com
-Received: from omf03.hostedemail.com (a10.router.float.18 [10.200.18.1])
-	by unirelay06.hostedemail.com (Postfix) with ESMTP id 42DD81B91B3;
-	Sun,  8 Mar 2026 22:22:21 +0000 (UTC)
-Received: from [HIDDEN] (Authenticated sender: joe@perches.com) by omf03.hostedemail.com (Postfix) with ESMTPA id BD6C56000E;
-	Sun,  8 Mar 2026 22:22:14 +0000 (UTC)
-Message-ID: <9fd14d166e860f26febfbc9061a6dcae6a166961.camel@perches.com>
-Subject: Re: [PATCH v2 phy-next 24/24] MAINTAINERS: add regexes for linux-phy
-From: Joe Perches <joe@perches.com>
-To: Vladimir Oltean <vladimir.oltean@nxp.com>
-Cc: linux-phy@lists.infradead.org, Vinod Koul <vkoul@kernel.org>, Neil
- Armstrong <neil.armstrong@linaro.org>, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-can@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, linux-ide@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
-	linux-pci@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, linux-rockchip@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev, 
-	linux-tegra@vger.kernel.org, linux-usb@vger.kernel.org,
- netdev@vger.kernel.org, 	spacemit@lists.linux.dev,
- UNGLinuxDriver@microchip.com
-Date: Sun, 08 Mar 2026 15:22:13 -0700
-In-Reply-To: <20260308205623.5trrqdmdrzj744hi@skbuf>
-References: <20260308114009.2546587-1-vladimir.oltean@nxp.com>
-	 <20260308114009.2546587-25-vladimir.oltean@nxp.com>
-	 <ca170cbaf2f8bcbc89bbda68914d8e0d7640f0e7.camel@perches.com>
-	 <20260308191017.kcyi7ka5pktq5jl4@skbuf>
-	 <8c4c5d0c5d014d5cc19eb10906ca1bd83ffb3ce5.camel@perches.com>
-	 <20260308205623.5trrqdmdrzj744hi@skbuf>
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
+	s=arc-20240116; t=1773012029; c=relaxed/simple;
+	bh=OVNfy1dOLR6fLlJ63dBBVUVhrWhM3UP4iVE9xKxc3T0=;
+	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=U+RD14w1l4sSYuLvz+scCuvaBeNRvhVW/naQSeJuF/oKUMilUryxbS/imIgCKMmxxjnjVZ+e9DInoP1qATfgk+Ii7QCfOE2Zf97USRlhb8XF5rrHiXNl8z0LSPKLLbVDN0B1iPF/iUmjIb00Y16NIUXMQDd5txNj7L7g6eYldR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=JgBXpDIE; arc=none smtp.client-ip=185.70.43.100
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1773012025; x=1773271225;
+	bh=hpW5dj12Cx/i71mCTHgcHn217TNHginpnW3eYHTykNE=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=JgBXpDIEzmNe7mu5gHGwkg1bsJEYI4e4YC/K25DQiMAJIwVnTc9AqMxFr54irgTui
+	 2V8hJ1MqaaRJpon1rNKh2uLRSxKtHNg5BmqfWWvWqHlAGoIs5WIpojNiH7KmYt9IYf
+	 relZTJ6EZno1cIsVoPBjv7byYhI8u8C53k59E2wwVQho94Q8IyryuqFIz8ULuqVgtL
+	 PN2Dx/6MH9VXeC2wlz7TMrjCmWsqB/lUpp6jmEYXX/4uFbT7JMAuQ3qflFhLDqM/X0
+	 0pN3vPgkSQAcBbGpO0cYnUA5+4azcMHjY+8uMGCKLXMmxYo3Ou6QM6PBw8JyLx4a2L
+	 TZJiHU1l3Xafw==
+Date: Sun, 08 Mar 2026 23:20:19 +0000
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Heikki Krogerus <heikki.krogerus@linux.intel.com>
+From: Alexander Koskovich <AKoskovich@pm.me>
+Cc: linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Alexander Koskovich <akoskovich@pm.me>
+Subject: [PATCH RFC 0/2] usb: typec: qcom: Add shared USBIN VBUS detection via GPIO
+Message-ID: <20260308-qcom-typec-shared-vbus-v1-0-7d574b91052a@pm.me>
+Feedback-ID: 37836894:user:proton
+X-Pm-Message-ID: 3cb58a88a9367d9540281d0dc09fd258b054381f
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Stat-Signature: zgtxuwsb3363ai68tf6p7s8zp8seinzy
-X-Session-Marker: 6A6F6540706572636865732E636F6D
-X-Session-ID: U2FsdGVkX19wsONHcaef5rI729O90pckRr9dLrQEYXs=
-X-HE-Tag: 1773008534-677296
-X-HE-Meta: U2FsdGVkX19zIqgNUKb+c+5Mu7Q3C+Gpl/B+X8eI5i6bGv7WE3zpj355qMm6YCbRSW7Vrhs2aumEBIt791syA8wOI3oaCj+46xwg3qNvWJkp2gLycZfqNtZEDdNuGCB0y349Wog5E09dSEbmxlYo3wEry6L0kQTHpHQi1eemnMz3eHRJ8lW0g+PBe0pZnw/seBVjwauSFyG+tNp9GhFkZXlt5WBWbJRv4eXsvXAwTvZLp/ToUvk9BlaA2J9NhuyWc4djQ+wNnPyIbjEf3YbjCt97pmlbZeZatO9Oxpnpbki4SgQq7YX4GOxv15JoA/1s08cXIoR5CaQiUuDxwOWahT02urVywBVxEzsYACoHDQg9R+OY8J92EbaYAELi/zOh
-X-Rspamd-Queue-Id: 874D1232720
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: 3B381232A2C
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [7.34 / 15.00];
-	URIBL_BLACK(7.50)[perches.com:mid];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
 	MAILLIST(-0.15)[generic];
-	BAD_REP_POLICIES(0.10)[];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	DMARC_NA(0.00)[perches.com];
-	TAGGED_FROM(0.00)[bounces-96088-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-96089-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	GREYLIST(0.00)[pass,body];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[24];
+	RCVD_COUNT_THREE(0.00)[3];
+	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	NEURAL_SPAM(0.00)[0.277];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	ARC_ALLOW(0.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	RCVD_COUNT_FIVE(0.00)[5];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[pm.me:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	MISSING_XM_UA(0.00)[];
+	NEURAL_HAM(-0.00)[-0.969];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[joe@perches.com,linux-arm-msm@vger.kernel.org];
-	TO_DN_SOME(0.00)[];
-	R_DKIM_NA(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FROM_NEQ_ENVFROM(0.00)[AKoskovich@pm.me,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	R_SPF_ALLOW(0.00)[+ip4:172.234.253.10:c];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[perl.org:url,perches.com:mid,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
-X-Rspamd-Action: add header
-X-Spam: Yes
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
+X-Rspamd-Action: no action
 
-On Sun, 2026-03-08 at 22:56 +0200, Vladimir Oltean wrote:
-> On Sun, Mar 08, 2026 at 12:25:32PM -0700, Joe Perches wrote:
-> > On Sun, 2026-03-08 at 21:10 +0200, Vladimir Oltean wrote:
-> On Sun, Mar 08, 2026 at 11:40:44AM -0700, Joe Perches wrote:
-> > > Perhaps if matching only the include uses:
-> > > > (/ is escaped because get_maintainer is stupid)
-> > > > something like:
-> > > >=20
-> > > > K:	include\s*\<linux\/phy\/phy(?:-common-props|-provider)?\.h\>
->=20
-> > > Why is get_maintainer stupid?
-> >=20
-> > The get_maintainer code used to match keywords is
-> >=20
-> 	    foreach my $line (keys %keyword_hash) {
-> 		if ($text =3D~ m/$keyword_hash{$line}/x) {
-> >=20
-> > so it seems the first / in the K: <foo> regex would terminate
-> > the match.
-> >=20
-> > It might have been better to use a different delimiter.
-> > Maybe:
-> >=20
-> 		if ($text =3D~ m{$keyword_hash{$line}}/x
->=20
-> So why does it match in my example?
+The ASUS ROG Phone 3 has two USB-C ports whose VBUS lines are both
+wired to the single USBIN input on the PM8150B PMIC. This means the
+Type-C port controller cannot distinguish which port is providing
+VBUS, causing one port to be unusable when the other has VBUS present
+from a charger or PC.
 
-Not sure really.  But it does match exactly.
-Maybe the regex code scans forward until the last /
-as the / character is not a "real" metacharacter.
+The downstream vendor driver also appears to be touching
+TYPE_C_CRUDE_SENSOR_CFG_REG for restoring CC detection after enabling
+BYPASS_VSAFE0V but does not appear to be necessary with the upstream
+TCPM stack?
 
-I added some test code and it produced:
+Feedback on whether additional register configuration is needed would be
+appreciated, but functionally this appears to work as is. After these
+changes and configuring the property in DTS I am able to use a flash
+drive on the side USB port (pm8150b_typec) while I am connected to a
+charger or my PC via the bottom USB port (rt1715).
 
-line:	<+#include <linux/phy/phy.h>>
-kw:	<(?:linux/phy/phy\.h|phy-props\.h|phy-provider\.h)>
-test:	<^[+-].*(?:linux/phy/phy\.h|phy-props\.h|phy-provider\.h)>
-match:	<+#include <linux/phy/phy.h>
+Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
+---
+Alexander Koskovich (2):
+      dt-bindings: usb: qcom,pmic-typec: Document vbus-detect-gpios propert=
+y
+      usb: typec: qcom: Add support for shared USBIN VBUS detection
 
-From https://perldoc.perl.org/perlrequick
+ .../devicetree/bindings/usb/qcom,pmic-typec.yaml   |  6 +++
+ drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c | 46 ++++++++++++++++++=
++++-
+ 2 files changed, 50 insertions(+), 2 deletions(-)
+---
+base-commit: 11439c4635edd669ae435eec308f4ab8a0804808
+change-id: 20260308-qcom-typec-shared-vbus-7d37c6b2d155
 
-Not all characters can be used 'as is' in a match.
-Some characters, called metacharacters, are considered special,
-and reserved for use in regex notation. The metacharacters are
+Best regards,
+--=20
+Alexander Koskovich <akoskovich@pm.me>
 
-{}[]()^$.|*+?\
 
-A metacharacter can be matched literally by putting a backslash before it:
-
-"2+2=3D4" =3D~ /2+2/;    # doesn't match, + is a metacharacter
-"2+2=3D4" =3D~ /2\+2/;   # matches, \+ is treated like an ordinary +
-'C:\WIN32' =3D~ /C:\\WIN/;                       # matches
-"/usr/bin/perl" =3D~ /\/usr\/bin\/perl/;  # matches
-
-In the last regex, the forward slash '/' is also backslashed, because it is=
- used to delimit the regex.
 
