@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-96019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96020-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id d86bNGk3rWlfzgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Mar 2026 09:46:33 +0100
+	id OJzIDds3rWlfzgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96020-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Mar 2026 09:48:27 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 29E3B22F10D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Mar 2026 09:46:32 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3233322F143
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Mar 2026 09:48:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 68E123001866
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Mar 2026 08:46:31 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 24B93300809D
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Mar 2026 08:48:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0CC93290C8;
-	Sun,  8 Mar 2026 08:46:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB43835F17A;
+	Sun,  8 Mar 2026 08:48:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FCn1btzd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N/gnMnjv"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD893368BD;
-	Sun,  8 Mar 2026 08:46:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A771C2E719C;
+	Sun,  8 Mar 2026 08:48:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772959590; cv=none; b=DUy8Is/4Sc57L66z7JvqAHhvztbt9JenvZP6Dn4f/CrsieNmi9v6EAOfbnyit+vkkAvcXmxFb+8JxI7PUqH9yT8tsvl0WNKNragF+WcjkHdzBHC3Nn2iUXTkvfxwIWVjs69EIMgAGv732Mp+rMQiBlD0HSgJvQp33I+Af33IV0I=
+	t=1772959701; cv=none; b=mCuT0SA2ec6ktOo9ugck+/H+D4RXJZIjXkewh3uoZCEYKiDCDfb74Lz4OpBvI8N5+J5haT6tL+3FX2Fn1is7ocoMBmnvJ6KL4Nggr3WQFUQREm8ELCJQD7f7ScOa4PsTsI1ZNsZVdowiyKQWvN+wmmpV3luuGb51dKh+l68VXhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772959590; c=relaxed/simple;
-	bh=IczzHoLtCIZefFO9iUsBq5WWFhnGUC6RW0p1iBGJjnQ=;
+	s=arc-20240116; t=1772959701; c=relaxed/simple;
+	bh=2lrv1DEdiy9qCNMNwd5fryQZRb0a3D8+LMV5BoFSBAY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=d6ix7kFLTw8HMmGW5DM1H3YFnnes82pNCK+ksWTOD7vpbsbBivUMHH+UmwVacb4g2OISi6N0Q8K518YDJV1MhpvgL+J95Bqom1/HF0VPQi3I/aXzkyBtP4QBDjKkoKGhMjLGlxb8JNRZDMeHmklJzvUOKVnz1GgQ11EoxNrtqDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FCn1btzd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E923C116C6;
-	Sun,  8 Mar 2026 08:46:28 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=jClIZJKumQ0d6kXoeacxg4cORfrAET0pi9bJ2lnS6lWk1qnLhW6C1KQ9npTAANl1SAFzi/D8AHSHv3lJ2kN01JRUqeeOvXfJ1miZYeIP0mXhwvfUamI96c7QJPZ+UmQcurGFHE1Tc6rvUCVWpotvkmeVLnBDKq9gUjQq1lvfibw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N/gnMnjv; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD2EC116C6;
+	Sun,  8 Mar 2026 08:48:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772959590;
-	bh=IczzHoLtCIZefFO9iUsBq5WWFhnGUC6RW0p1iBGJjnQ=;
+	s=k20201202; t=1772959701;
+	bh=2lrv1DEdiy9qCNMNwd5fryQZRb0a3D8+LMV5BoFSBAY=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=FCn1btzdfPZsjsOWcmvxwED3JFYAnEFSkji2sDIu40NaXGjk8MwJIzjRglxDqt1L7
-	 UneDFV6dmPIl0OZC7CZd1sS+jpJXB46ghmoseZJBXqvz0uGg7m53gK46ipMFXH+yKk
-	 eEdtJpWdk05DJlsI/CWZF4B2wa8siCAb7quMURH9t5MkDM4ccAj5xBPgR3+NH2quTz
-	 FNsmk1+2+fkllcOgvcZRoSetpA3zfkAe1IlU6BwH5uOiMMEMPI4Q3vI9ME3MIR+ptT
-	 wQUK/L1aonU+AsskqKfUTS0Btehw0wJibqvmFmw15fcoUbZ3raGtI8MmIU7OcPTEvG
-	 /f/iVWYWWB0jg==
-Message-ID: <2b260d55-71cd-442f-bf9f-a9771a2765c7@kernel.org>
-Date: Sun, 8 Mar 2026 09:46:26 +0100
+	b=N/gnMnjvxlAxmgFAwXf7mqgAiqXk0ZX0b4z+4kDKy70cvcSazppr+da+/H68Nw9Wl
+	 QWhLNfQny3ybWj6q7/vpk3V2JESU4mGvGibV29fjm8nW4F68kQkpv4kIPy3g4oxiEG
+	 dhxQpJ6X4kWhKHr6VLQAqwtJHYmcE1upevHYZEySZGTN+CHy13g4x+AoAjV9wzVYjU
+	 isRoB7MV9yOpeMlYZYnLsMDMh46Fp05ETZWVzmGr+jbrFx2SY/lPGvNZ9TliAwY7w9
+	 BBrIt9w/yM1Cgdv1uvL180O1+mmyv7yvb1/vzSsFB1DY/KCqtkUWr1EW0sL0XqtTpY
+	 f1H7Q+9m7Qg5w==
+Message-ID: <cf549a55-0818-4be6-b28f-c90a2dc09a5b@kernel.org>
+Date: Sun, 8 Mar 2026 09:48:16 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,15 +53,16 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sm8250: Add label for reserved-memory
- node
+Subject: Re: [PATCH] arm64: dts: qcom: sm8250: Add missing CPU7 3.09GHz OPP
 To: Alexander Koskovich <AKoskovich@pm.me>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>,
+ Thara Gopinath <thara.gopinath@linaro.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
-References: <20260308-sm8250-reserved-mem-v1-1-889eca3c11ca@pm.me>
+References: <20260307-sm8250-cpu7-opp-v1-1-435f5f6628a1@pm.me>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,63 +108,47 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260308-sm8250-reserved-mem-v1-1-889eca3c11ca@pm.me>
+In-Reply-To: <20260307-sm8250-cpu7-opp-v1-1-435f5f6628a1@pm.me>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 29E3B22F10D
+X-Rspamd-Queue-Id: 3233322F143
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-96019-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-96020-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.930];
+	NEURAL_HAM(-0.00)[-0.971];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[9];
+	RCPT_COUNT_SEVEN(0.00)[11];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,pm.me:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-On 08/03/2026 06:05, Alexander Koskovich wrote:
-> For some devices it makes more sense to just redefine reserved-memory,
-> for example on the ASUS ROG Phone 3 it is completely different with the
-> exception of hyp_mem, xbl_aop_mem, cmd_db and smem_mem.
-> 
-> Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
-> ---
->  arch/arm64/boot/dts/qcom/sm8250.dtsi | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> index c7dffa440074..3298c36c3e55 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> @@ -763,7 +763,7 @@ opp-120000000 {
->  		};
->  	};
->  
-> -	reserved-memory {
-> +	reserved_memory: reserved-memory {
+On 08/03/2026 05:26, Alexander Koskovich wrote:
+> This resolves the following error seen on the ASUS ROG Phone 3:
 
-There is no user for this, so change is pointless. labels do not exist
-in DTBs, so drop the entire patch or provide here - in the same commit -
-proper user.
+git grep "ASUS ROG Phone" gives me zero results so this is insufficient
+argument considering you are changing multiple other devices which might
+not support that.
+
 
 Best regards,
 Krzysztof
