@@ -1,155 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-96020-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96021-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OJzIDds3rWlfzgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96020-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Mar 2026 09:48:27 +0100
+	id CJHaDvs5rWndzgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96021-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Mar 2026 09:57:31 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3233322F143
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Mar 2026 09:48:26 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9673122F1A6
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Mar 2026 09:57:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 24B93300809D
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Mar 2026 08:48:23 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D84DD301CFBD
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Mar 2026 08:57:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB43835F17A;
-	Sun,  8 Mar 2026 08:48:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 938A736074F;
+	Sun,  8 Mar 2026 08:57:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N/gnMnjv"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="dPU/e8Kh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A771C2E719C;
-	Sun,  8 Mar 2026 08:48:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99DC23603D9;
+	Sun,  8 Mar 2026 08:57:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772959701; cv=none; b=mCuT0SA2ec6ktOo9ugck+/H+D4RXJZIjXkewh3uoZCEYKiDCDfb74Lz4OpBvI8N5+J5haT6tL+3FX2Fn1is7ocoMBmnvJ6KL4Nggr3WQFUQREm8ELCJQD7f7ScOa4PsTsI1ZNsZVdowiyKQWvN+wmmpV3luuGb51dKh+l68VXhY=
+	t=1772960225; cv=none; b=kvW0G0DBVOZTcPyTEEAIov0hnyHacjk/JF3EL63+Km/9ZX6ZW9UNLXnx4HECUjppjwhNTI+RysuPbY78L9msIIpqRGmLGC05JFTeDM1s1Fh/vbpbAla3TqzGuHknO2qwv/fjn969JuQgPMvzOclxMKIORpce4xjEWMqs6A2ywb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772959701; c=relaxed/simple;
-	bh=2lrv1DEdiy9qCNMNwd5fryQZRb0a3D8+LMV5BoFSBAY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jClIZJKumQ0d6kXoeacxg4cORfrAET0pi9bJ2lnS6lWk1qnLhW6C1KQ9npTAANl1SAFzi/D8AHSHv3lJ2kN01JRUqeeOvXfJ1miZYeIP0mXhwvfUamI96c7QJPZ+UmQcurGFHE1Tc6rvUCVWpotvkmeVLnBDKq9gUjQq1lvfibw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N/gnMnjv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD2EC116C6;
-	Sun,  8 Mar 2026 08:48:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772959701;
-	bh=2lrv1DEdiy9qCNMNwd5fryQZRb0a3D8+LMV5BoFSBAY=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=N/gnMnjvxlAxmgFAwXf7mqgAiqXk0ZX0b4z+4kDKy70cvcSazppr+da+/H68Nw9Wl
-	 QWhLNfQny3ybWj6q7/vpk3V2JESU4mGvGibV29fjm8nW4F68kQkpv4kIPy3g4oxiEG
-	 dhxQpJ6X4kWhKHr6VLQAqwtJHYmcE1upevHYZEySZGTN+CHy13g4x+AoAjV9wzVYjU
-	 isRoB7MV9yOpeMlYZYnLsMDMh46Fp05ETZWVzmGr+jbrFx2SY/lPGvNZ9TliAwY7w9
-	 BBrIt9w/yM1Cgdv1uvL180O1+mmyv7yvb1/vzSsFB1DY/KCqtkUWr1EW0sL0XqtTpY
-	 f1H7Q+9m7Qg5w==
-Message-ID: <cf549a55-0818-4be6-b28f-c90a2dc09a5b@kernel.org>
-Date: Sun, 8 Mar 2026 09:48:16 +0100
+	s=arc-20240116; t=1772960225; c=relaxed/simple;
+	bh=x3L8/hSJukNMi+lmDq/Se3gidbTHfKkxioCsvzYz/9c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FljA3yLxJAfulNn4SMpfJozzVWptTXTQKQw6EisY+6YphgoagdqxojIupbCKoiFn+UEdse3DUZa5WgvM2QNCSo5RhAocwr7Qg+IZvqJj+iH4456bBgn19Fyi6MUx2bDaPCFEyme8umFanA8vlUOaQ9VdaprM8CXr0fNH6zy942k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=dPU/e8Kh; arc=none smtp.client-ip=198.175.65.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1772960224; x=1804496224;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=x3L8/hSJukNMi+lmDq/Se3gidbTHfKkxioCsvzYz/9c=;
+  b=dPU/e8Kh57hbt9VxXkO0UP4ucbUkM9Ak+CFsBhjTwmMSK19jN77RVbfh
+   /vrMTmVwKjFz+O6pYW/mmmiUyYyoaHsaovz1NXBU1ljuOhHVAkjTdqycE
+   MWUL8lfeZFWAe5QKs/Ku4tIhIQQ39/TlkQ48zuMaQQ65goVHdkDtwGaGq
+   Q2XjAWQy03pl2SOfQTERYEJETm2RpOeJvFIgJb/7gx17o8vyDaqKkNHLc
+   /mVA1PUHVdSWhPlRINIAI5Z2mhFS9luN38WRncGlrq5CLPdl+pT5MUyIx
+   JVG1c01Aq/GJtecSGQZ2nzvRMji2/XCuPU+U8lfIzH7Mpp86LCqMxSH6F
+   A==;
+X-CSE-ConnectionGUID: SowMNRNYTV+R5gI00tNMqg==
+X-CSE-MsgGUID: ooY5WhT3SBK+m3LPTHE0zw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11722"; a="74202442"
+X-IronPort-AV: E=Sophos;i="6.23,108,1770624000"; 
+   d="scan'208";a="74202442"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Mar 2026 00:57:03 -0800
+X-CSE-ConnectionGUID: qaGVg+KyTWmMdGABz88xqw==
+X-CSE-MsgGUID: KiZ3vj7/QA+yk4CkqqYqtQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,108,1770624000"; 
+   d="scan'208";a="223920453"
+Received: from lkp-server01.sh.intel.com (HELO 058beb05654c) ([10.239.97.150])
+  by orviesa004.jf.intel.com with ESMTP; 08 Mar 2026 00:57:00 -0800
+Received: from kbuild by 058beb05654c with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1vz9wX-00000000305-2YXB;
+	Sun, 08 Mar 2026 08:56:57 +0000
+Date: Sun, 8 Mar 2026 16:56:15 +0800
+From: kernel test robot <lkp@intel.com>
+To: Kishore Batta <kishore.batta@oss.qualcomm.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+	Carl Vanderlip <carl.vanderlip@oss.qualcomm.com>,
+	Oded Gabbay <ogabbay@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>
+Cc: oe-kbuild-all@lists.linux.dev, linux-doc@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org, mhi@lists.linux.dev,
+	Kishore Batta <kishore.batta@oss.qualcomm.com>
+Subject: Re: [PATCH v2 4/9] bus: mhi: Centralize firmware image table
+ selection at probe time
+Message-ID: <202603081641.KSZC3Jla-lkp@intel.com>
+References: <20260307-sahara_protocol_new_v2-v2-4-29dc748b5e9c@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sm8250: Add missing CPU7 3.09GHz OPP
-To: Alexander Koskovich <AKoskovich@pm.me>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>,
- Thara Gopinath <thara.gopinath@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260307-sm8250-cpu7-opp-v1-1-435f5f6628a1@pm.me>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20260307-sm8250-cpu7-opp-v1-1-435f5f6628a1@pm.me>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 3233322F143
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260307-sahara_protocol_new_v2-v2-4-29dc748b5e9c@oss.qualcomm.com>
+X-Rspamd-Queue-Id: 9673122F1A6
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
+	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-96020-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-96021-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[intel.com:+];
+	MISSING_XM_UA(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.971];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo]
+	FROM_NEQ_ENVFROM(0.00)[lkp@intel.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	NEURAL_HAM(-0.00)[-0.955];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[01.org:url,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,intel.com:dkim,intel.com:email,intel.com:mid]
 X-Rspamd-Action: no action
 
-On 08/03/2026 05:26, Alexander Koskovich wrote:
-> This resolves the following error seen on the ASUS ROG Phone 3:
+Hi Kishore,
 
-git grep "ASUS ROG Phone" gives me zero results so this is insufficient
-argument considering you are changing multiple other devices which might
-not support that.
+kernel test robot noticed the following build warnings:
+
+[auto build test WARNING on a0ae2a256046c0c5d3778d1a194ff2e171f16e5f]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Kishore-Batta/Add-documentation-for-Sahara-protocol/20260307-194417
+base:   a0ae2a256046c0c5d3778d1a194ff2e171f16e5f
+patch link:    https://lore.kernel.org/r/20260307-sahara_protocol_new_v2-v2-4-29dc748b5e9c%40oss.qualcomm.com
+patch subject: [PATCH v2 4/9] bus: mhi: Centralize firmware image table selection at probe time
+config: arc-allyesconfig (https://download.01.org/0day-ci/archive/20260308/202603081641.KSZC3Jla-lkp@intel.com/config)
+compiler: arc-linux-gcc (GCC) 15.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260308/202603081641.KSZC3Jla-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202603081641.KSZC3Jla-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+   drivers/bus/mhi/sahara/sahara.c: In function 'sahara_select_variant':
+>> drivers/bus/mhi/sahara/sahara.c:270:32: warning: the comparison will always evaluate as 'true' for the address of 'chan' will never be NULL [-Waddress]
+     270 |                         if (id && id->chan && !strcmp(id->chan, v->match))
+         |                                ^~
+   In file included from drivers/bus/mhi/sahara/sahara.c:12:
+   include/linux/mod_devicetable.h:867:20: note: 'chan' declared here
+     867 |         const char chan[MHI_NAME_SIZE];
+         |                    ^~~~
 
 
-Best regards,
-Krzysztof
+vim +270 drivers/bus/mhi/sahara/sahara.c
+
+   260	
+   261	static const struct sahara_variant *sahara_select_variant(struct mhi_device *mhi_dev,
+   262								  const struct mhi_device_id *id)
+   263	{
+   264		int i;
+   265	
+   266		for (i = 0; i < ARRAY_SIZE(sahara_variants); i++) {
+   267			const struct sahara_variant *v = &sahara_variants[i];
+   268	
+   269			if (v->match_is_chan) {
+ > 270				if (id && id->chan && !strcmp(id->chan, v->match))
+   271					return v;
+   272			} else {
+   273				if (mhi_dev->mhi_cntrl && mhi_dev->mhi_cntrl->name &&
+   274				    !strcmp(mhi_dev->mhi_cntrl->name, v->match))
+   275					return v;
+   276			}
+   277		}
+   278		return NULL;
+   279	}
+   280	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
