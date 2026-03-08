@@ -1,182 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-96057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SI1NI16NrWlN4QEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Mar 2026 15:53:18 +0100
+	id qM9FKRugrWm45AEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Mar 2026 17:13:15 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 318B6230C82
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Mar 2026 15:53:18 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1D5C4231094
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Mar 2026 17:13:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id F37A4300752C
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Mar 2026 14:53:11 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 6EDCA300F5D9
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Mar 2026 16:13:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B3AB29B764;
-	Sun,  8 Mar 2026 14:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0477311958;
+	Sun,  8 Mar 2026 16:13:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kQ8XdQsd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rix8lANN"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 902142877CB;
-	Sun,  8 Mar 2026 14:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B344248F62;
+	Sun,  8 Mar 2026 16:13:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772981577; cv=none; b=ZC+5b2F4pd2XG28ORnsdB1zOJTP7pe6kLANw6f5/DIrGYrYf2Vrz25jPopmm3pv64gxgB2XJjbC9MGTtk3OwGWW4knpMV5SWyi1Qc1WIxIo6md1u3GWUO3mZhVwszs7GOzoCp7QAIInFJ3SAXBpRa4G58sTfLvfhFE3l8N84h34=
+	t=1772986392; cv=none; b=B8e7eWiAQj762e9vKc9MEHSpPzMxyDcIDo57AjFhvVtkJJK4l931Q2940YbmHl0kErBOaJI8fOrk1cjVwwSTfKBZUrvZe4wCTEqQqpCoMrPs5FUyC2xd2SfvB2YbYrSnaU7NXWRUg64uQh39aIwVku6Bxtnr13LUBmLMJueAq7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772981577; c=relaxed/simple;
-	bh=ITIzJ391ANp6nbjewwCbUe4dFguoK4zneXWK8YutLdc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=k/rwroH6Fxa2l2gxvUBKAhEENtfQjNRqjg0IVgzZiCKPyxeVmwGIdBSM/EEGJbeBGwiqfXaZSDIJJJ1cFG7zSzFWHU2XOY3jZzgXw08rzCT+Xe/L1RSgJ/BAKgQ1QL7/oY33JjBLJhy7RC0QDwfs2cv+SsoccMjJTf588H/8JPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kQ8XdQsd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 600E3C2BCB6;
-	Sun,  8 Mar 2026 14:52:57 +0000 (UTC)
+	s=arc-20240116; t=1772986392; c=relaxed/simple;
+	bh=BoBFYGkLL7TqDk+DfDcEAGsEN0Uye9/mFOlOrFnCLhM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pqwf/uKmUSEjfVI8SkWjMJxrlWzn52DUHdloknjYWjcAovuldn/TlWvbGI7MghSlsHceVhdK3K4QM1eXrIFvc76Q6kR/tzthQKp5CYnCOWUlUJH3CMK4mmFC97FF3Q4hN220BArl8EAOzVEJKRPQPWsACgoSFPGt60LIctCW/Lc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rix8lANN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 548C8C116C6;
+	Sun,  8 Mar 2026 16:13:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772981577;
-	bh=ITIzJ391ANp6nbjewwCbUe4dFguoK4zneXWK8YutLdc=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=kQ8XdQsdQmLI7EiLYwlL+xA98ZvRqiCGrgbzp1N+PFJKetCI34OfNLx2MFO01OPzs
-	 HUPLs9MCQsTynvlAQFbgoUKRhzaEY6flzNaSreTaXn8pLPKtdktsaR2BkGSWmr+9dO
-	 0kUPptQX11dOtKnmWiRZoJXEcslNXiy1eQaNhoFrpaVMB1UlBW6Z21R8dUv8DoxvgL
-	 lIfFKe2mSfCYWeMwuB+Ou5dKONJvWrAkpovDx7YEdYNJBAD987WzA+iDeryLLdWt3O
-	 s+1o6Js0yL0rLrvkodol7pW6GeEFpg59Rt3/tiFFDdW1aW+jIu0cbNfZ4v2N9gHmJX
-	 gieMt3C/7TsSw==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5419FEA8524;
-	Sun,  8 Mar 2026 14:52:57 +0000 (UTC)
-From: Cristian Cozzolino via B4 Relay <devnull+cristian_ci.protonmail.com@kernel.org>
-Date: Sun, 08 Mar 2026 16:52:46 +0100
-Subject: [PATCH 6/6] arm64: dts: qcom: msm8953-flipkart-rimob: Enable Hall
- sensor
+	s=k20201202; t=1772986392;
+	bh=BoBFYGkLL7TqDk+DfDcEAGsEN0Uye9/mFOlOrFnCLhM=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=rix8lANNMQAoky1lSyN0azZs2Q8vJuU1MZThKadEbAeNWDDUkY4iBVxhdwyANOAWf
+	 EB6x7xjp8HmOh/ug/u3OLR4ksfjUJ4d1jdXR64WzM1wzQmgppNXkfHesv7uPZaCb4L
+	 hj4nFMp41Z40bfJVxALNT+9P67go3eNJJplc7b4+3dOs7r0lckqxe94nAQ6qMqoV6A
+	 dnDSfu69itoGqjqriG8BanV0LqdZtR7r3qqlZ8oFZTb4VH6G7iwm9q5s7hh8TD8irI
+	 LB/uJet+rIoBTLaNtO6FBM6RRu+emzcf/SuAhjZhO3jCN9EP5b7++KoU6i7NLeD1QF
+	 8yx3KJ3s194VQ==
+Message-ID: <369b48d9-f089-49a2-89cb-a4e0c68f92fa@kernel.org>
+Date: Sun, 8 Mar 2026 17:13:06 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260308-rimob-new-features-v1-6-aa2c330572c0@protonmail.com>
-References: <20260308-rimob-new-features-v1-0-aa2c330572c0@protonmail.com>
-In-Reply-To: <20260308-rimob-new-features-v1-0-aa2c330572c0@protonmail.com>
-To: Neil Armstrong <neil.armstrong@linaro.org>, 
- Jessica Zhang <jesszhan0024@gmail.com>, David Airlie <airlied@gmail.com>, 
- Simona Vetter <simona@ffwll.ch>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/6] dt-bindings: display: panel: Add Novatek NT35532 LCD
+ DSI
+To: cristian_ci@protonmail.com, Neil Armstrong <neil.armstrong@linaro.org>,
+ Jessica Zhang <jesszhan0024@gmail.com>, David Airlie <airlied@gmail.com>,
+ Simona Vetter <simona@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>
-Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- Cristian Cozzolino <cristian_ci@protonmail.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1772985181; l=1434;
- i=cristian_ci@protonmail.com; s=20250620; h=from:subject:message-id;
- bh=/6j0+t2XKdKx1e1cFAgI0as9W1ExR5I7yqNCXHZ/Uzs=;
- b=NzbU54tsA4XN8Nz2MbLAnZnyrJar55S2NfzMDiqjaBAhTT2PFW84rbNSK+RHqLfbFlgz8pfgW
- brFoFv9OkFFCjXVwpiII9P8yS/qAxX8jxuvtydmjSD5egBN68AjQz/j
-X-Developer-Key: i=cristian_ci@protonmail.com; a=ed25519;
- pk=xH5IvIPUNHV1Q8R0/pq2CfuVFR/wTiAyuyi6IwedjZY=
-X-Endpoint-Received: by B4 Relay for cristian_ci@protonmail.com/20250620
- with auth_id=438
-X-Original-From: Cristian Cozzolino <cristian_ci@protonmail.com>
-Reply-To: cristian_ci@protonmail.com
-X-Rspamd-Queue-Id: 318B6230C82
+Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+References: <20260308-rimob-new-features-v1-0-aa2c330572c0@protonmail.com>
+ <20260308-rimob-new-features-v1-1-aa2c330572c0@protonmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20260308-rimob-new-features-v1-1-aa2c330572c0@protonmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Queue-Id: 1D5C4231094
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [1.34 / 15.00];
-	FREEMAIL_REPLYTO_NEQ_FROM(2.00)[];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-96057-lists,linux-arm-msm=lfdr.de,cristian_ci.protonmail.com];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[linaro.org,gmail.com,ffwll.ch,linux.intel.com,kernel.org,suse.de];
-	TO_DN_SOME(0.00)[];
+	TAGGED_FROM(0.00)[bounces-96068-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[19];
+	FREEMAIL_TO(0.00)[protonmail.com,linaro.org,gmail.com,ffwll.ch,linux.intel.com,kernel.org,suse.de];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	NEURAL_HAM(-0.00)[-0.986];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[lists.freedesktop.org,vger.kernel.org,lists.sr.ht,protonmail.com];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	FREEMAIL_REPLYTO(0.00)[protonmail.com];
-	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
-	HAS_REPLYTO(0.00)[cristian_ci@protonmail.com]
+	NEURAL_HAM(-0.00)[-0.967];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	TO_DN_SOME(0.00)[]
 X-Rspamd-Action: no action
 
-From: Cristian Cozzolino <cristian_ci@protonmail.com>
+On 08/03/2026 16:52, Cristian Cozzolino via B4 Relay wrote:
+> +
+> +  backlight: true
+> +  reset-gpios: true
+> +
+> +  vsn-supply:
+> +    description: negative voltage supply for analog circuits
 
-Enable the Hall effect sensor (flip cover) for Billion Capture+.
-The GPIO is mapped to SW_LID events as in other qcom devices.
+Blank line
 
-Signed-off-by: Cristian Cozzolino <cristian_ci@protonmail.com>
----
- .../arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts | 25 ++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+> +  vsp-supply:
+> +    description: positive voltage supply for analog circuits
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts b/arch/arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts
-index 709ea6fc9fbb..83812050a0a3 100644
---- a/arch/arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts
-@@ -44,6 +44,24 @@ framebuffer@90001000 {
- 		};
- 	};
- 
-+	gpio-hall-sensor {
-+		compatible = "gpio-keys";
-+
-+		pinctrl-0 = <&hall_sensor_default>;
-+		pinctrl-names = "default";
-+
-+		label = "GPIO Hall Effect Sensor";
-+
-+		event-hall-sensor {
-+			label = "Hall Effect Sensor";
-+			gpios = <&tlmm 46 GPIO_ACTIVE_LOW>;
-+			linux,input-type = <EV_SW>;
-+			linux,code = <SW_LID>;
-+			linux,can-disable;
-+			wakeup-source;
-+		};
-+	};
-+
- 	gpio-keys {
- 		compatible = "gpio-keys";
- 
-@@ -335,6 +353,13 @@ gpio_key_default: gpio-key-default-state {
- 		bias-pull-up;
- 	};
- 
-+	hall_sensor_default: hall-sensor-default-state {
-+		pins = "gpio46";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
- 	mdss_default: mdss-default-state {
- 		pins = "gpio61";
- 		function = "gpio";
+Both are odd. Datasheet says vci, vddi, vddam and optional avdd, avee.
 
--- 
-2.52.0
+There is no VSN and VSP. Otherwise please point the page in datasheet or
+some schematics.
 
-
+Best regards,
+Krzysztof
 
