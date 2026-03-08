@@ -1,61 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-96003-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96005-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sF+6Ddr/rGktxAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96003-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Mar 2026 05:49:30 +0100
+	id 8DS6FpUDrWncxAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96005-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Mar 2026 06:05:25 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id BFF4822E821
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Mar 2026 05:49:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C44FE22E8B8
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Mar 2026 06:05:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 16A513014118
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Mar 2026 04:49:19 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 977E7300B54E
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Mar 2026 05:05:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E7792D7DF2;
-	Sun,  8 Mar 2026 04:49:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00ECE23EA8B;
+	Sun,  8 Mar 2026 05:05:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="JmtxhbXP"
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="E9JjCrem"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
+Received: from mail-43101.protonmail.ch (mail-43101.protonmail.ch [185.70.43.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A78813959D
-	for <linux-arm-msm@vger.kernel.org>; Sun,  8 Mar 2026 04:49:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 972311548C
+	for <linux-arm-msm@vger.kernel.org>; Sun,  8 Mar 2026 05:05:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772945357; cv=none; b=rpgAdjc4/dT7CFDqLdfY1wHANd+5aWaYErxJTVhtjMQZcTcZjzRh+wfCCa3YOt9Hh4lXsTPV2y0+eL+Xc0WKPlxP7va+dYWmTBp5pMh0kFTQ/zVWKPtL6PV/j5WahU7EdH4KXFKJus8No3fhrtbP7Gjvi0L/JU8nLdPUyCJytJo=
+	t=1772946321; cv=none; b=NsFaBhjuGE2ag8SAm753WIed86ijiO5UaT9N8RLEsIJxX986IteRMud12XEYxIhGXd7m7UE7CMQ0OpjlnTA+/EvEU0moC71L0PesPKh5zSvAcYlUJ8DyQuzz96Aq1KgMUD0AojK3FxYno0gY7l8+axP/fjqtpCAm++HtgkAK1FQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772945357; c=relaxed/simple;
-	bh=8WnFsfPFD5fbvOYn9KlfgheFOUjRaRNY4DFf8Ml4u9I=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TiIyScXpNjTrKOZINnQGMQ1vP4hvOAaNTNSXIS+zVJbguM9fCKlCtkJXS8lpVXfmx4ACbPZ8EpNiGmFc49xnVkpWUm5ez7d0UNWMdem1GPRm1GMOuF5LzN/qfr8NagZ+HyRRdkqOPfoKrPlDCGk6FFh4DkdmJyj3E9Y9JL00epM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=JmtxhbXP; arc=none smtp.client-ip=185.70.43.16
+	s=arc-20240116; t=1772946321; c=relaxed/simple;
+	bh=qmyyTdaSmeoExNbUZsFnvRP52mfGOCmNy0V2Or4UnNc=;
+	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=iDJRLIRoZTaUI8kwrPUq3batJyBJmin7x+WV4iDz4ae8rFgsYp819Fzjxafpnz4+T25oyVRcTenzy8gRaMbQDER1ywbEIQb5lh13cjp6Ph4jlDbQrqNIqpRmV11ULnbgy8rd7chEtULUNyFNVH7K/lGx9OgnhEj2olArWR8dW3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=E9JjCrem; arc=none smtp.client-ip=185.70.43.101
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1772945349; x=1773204549;
-	bh=xJYM5Xqc2HUuSnrE+9bwPQ3CpzITCkMo2ABcsTbZWUk=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=JmtxhbXPS52RV+XAH9iWxcs/ctAF9UFVhNFmkDTfGki7nWZ8eHOzL/m+PHrIQp+A9
-	 lYdYxYB6V6LvtkC/ZY818qOhr739MKis4MlNrsSFa2v0JClRbkAe+2ysDprIZtZsYK
-	 FoPYftaqGvdzbEwVtbqsmcv7ffBdkGbfUGlPCSXxByJYTANfERILkG+LK2ey1uJIXe
-	 v0q+FxXS3bf5oq29xfERONqrJh6jJCT8hDlHRncYODXK4RHHadsIgVyTRJ7f25iICi
-	 8XU8d5YSna9DPIs/P/Ykd7xxIxmKXeyO4yGbttoSfM58u0KbuiXvEK3s4zsgxLjBom
-	 j6lVZppI1JE2A==
-Date: Sun, 08 Mar 2026 04:49:05 +0000
-To: Herbert Xu <herbert@gondor.apana.org.au>, "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
+	s=protonmail3; t=1772946312; x=1773205512;
+	bh=qmyyTdaSmeoExNbUZsFnvRP52mfGOCmNy0V2Or4UnNc=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=E9JjCremaLeRwm2nu/MDQdwHnIdTIqFkbPerlsEYYOwv79ef1r+ltIUuyKcT2O29T
+	 MFQk3jatIFPlzFHAlE1FYaYbJJmMU0tTgXQ+LKk5aRSYqMw48p0UTiK8lr3voXr+yI
+	 ao6brWm+ABFFyKNzygvfnGTOGxysJM6poP//gCab1FCc8reldTWQgBZQ0ZUA9f1kTz
+	 631idTKth6MHLa+j7s4/jB3DutrLr27AjAZeoTOBj4lLYxKioxBb8pYI1bH5JaDu5R
+	 cXUBvNpljxa3N9FWxjhwsxHE2oD6nnKUHC6Y+pS3JTTNKxuIwBaFObA2qUPcwJ1lSM
+	 fbRxcbHEYFQRw==
+Date: Sun, 08 Mar 2026 05:05:08 +0000
+To: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
 From: Alexander Koskovich <AKoskovich@pm.me>
-Cc: linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Alexander Koskovich <akoskovich@pm.me>
-Subject: [PATCH 2/2] arm64: dts: qcom: sm8250: Add inline crypto engine
-Message-ID: <20260307-sm8250-ice-v1-2-a0c987371c62@pm.me>
-In-Reply-To: <20260307-sm8250-ice-v1-0-a0c987371c62@pm.me>
-References: <20260307-sm8250-ice-v1-0-a0c987371c62@pm.me>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Alexander Koskovich <akoskovich@pm.me>
+Subject: [PATCH] arm64: dts: qcom: sm8250: Add label for reserved-memory node
+Message-ID: <20260308-sm8250-reserved-mem-v1-1-889eca3c11ca@pm.me>
 Feedback-ID: 37836894:user:proton
-X-Pm-Message-ID: f81b93a106e3390ea71d675c1bb1909f246291f5
+X-Pm-Message-ID: 2964390c5d265e97a036d657680c5090c6753b5d
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,77 +60,67 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: BFF4822E821
+X-Rspamd-Queue-Id: C44FE22E8B8
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
-	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-96005-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-96003-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[3];
+	DKIM_TRACE(0.00)[pm.me:+];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.966];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[AKoskovich@pm.me,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[pm.me:+];
+	MISSING_XM_UA(0.00)[];
+	NEURAL_HAM(-0.00)[-0.919];
+	RCPT_COUNT_SEVEN(0.00)[9];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,pm.me:dkim,pm.me:email,pm.me:mid]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[pm.me:dkim,pm.me:email,pm.me:mid,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-Add the ICE found on sm8250 and link it to the UFS node.
-
-qcom-ice 1d90000.crypto: Found QC Inline Crypto Engine (ICE) v3.1.81
+For some devices it makes more sense to just redefine reserved-memory,
+for example on the ASUS ROG Phone 3 it is completely different with the
+exception of hyp_mem, xbl_aop_mem, cmd_db and smem_mem.
 
 Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
 ---
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qco=
 m/sm8250.dtsi
-index c7dffa440074..4e8a960acc5e 100644
+index c7dffa440074..3298c36c3e55 100644
 --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -2513,6 +2513,8 @@ ufs_mem_hc: ufshc@1d84000 {
-=20
- =09=09=09power-domains =3D <&gcc UFS_PHY_GDSC>;
-=20
-+=09=09=09qcom,ice =3D <&ice>;
-+
- =09=09=09iommus =3D <&apps_smmu 0x0e0 0>, <&apps_smmu 0x4e0 0>;
-=20
- =09=09=09clock-names =3D
-@@ -2592,6 +2594,13 @@ ufs_mem_phy: phy@1d87000 {
- =09=09=09status =3D "disabled";
+@@ -763,7 +763,7 @@ opp-120000000 {
  =09=09};
+ =09};
 =20
-+=09=09ice: crypto@1d90000 {
-+=09=09=09compatible =3D "qcom,sm8250-inline-crypto-engine",
-+=09=09=09=09     "qcom,inline-crypto-engine";
-+=09=09=09reg =3D <0 0x01d90000 0 0x8000>;
-+=09=09=09clocks =3D <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
-+=09=09};
-+
- =09=09cryptobam: dma-controller@1dc4000 {
- =09=09=09compatible =3D "qcom,bam-v1.7.4", "qcom,bam-v1.7.0";
- =09=09=09reg =3D <0 0x01dc4000 0 0x24000>;
+-=09reserved-memory {
++=09reserved_memory: reserved-memory {
+ =09=09#address-cells =3D <2>;
+ =09=09#size-cells =3D <2>;
+ =09=09ranges;
 
+---
+base-commit: 11439c4635edd669ae435eec308f4ab8a0804808
+change-id: 20260308-sm8250-reserved-mem-93fd18152c95
+
+Best regards,
 --=20
-2.53.0
+Alexander Koskovich <akoskovich@pm.me>
 
 
 
