@@ -1,164 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-96072-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96073-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id oGBsC0q+rWla6wEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96072-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Mar 2026 19:22:02 +0100
+	id yBcLM8HCrWmU7AEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96073-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Mar 2026 19:41:05 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7878B2319A7
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Mar 2026 19:22:01 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79FDC231BA1
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Mar 2026 19:41:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1842B30131EC
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Mar 2026 18:22:00 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 26C4A30160D2
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Mar 2026 18:41:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4588C39283D;
-	Sun,  8 Mar 2026 18:21:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="OoYkYdyJ"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5103D394489;
+	Sun,  8 Mar 2026 18:41:02 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+Received: from relay.hostedemail.com (smtprelay0012.hostedemail.com [216.40.44.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB32A33E348;
-	Sun,  8 Mar 2026 18:21:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 020F930AACB;
+	Sun,  8 Mar 2026 18:41:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=216.40.44.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772994119; cv=none; b=aIVPY58svfnkqlIBQlaz07qwLmGHS8xcEq5xoQxH3qWp4CowyKZrPLSDUksrOLGzdT3Vp98PBs8Szg+17mojyqF6AS7unV25G1mf3YQqFE2wgYkcgdRl/98gQawGgkokd/1Bq4dqmEjUlJxGn3uzLyC1SmD9o+OmFdG58yBFBcA=
+	t=1772995262; cv=none; b=HYnBGHKS+lQ4Nh1imHQlJD0ZZ6nx3OnRYkifMyfD3LyWy/2vuH7dTVlL1tmbn0I889Cx3KIR+SMi34MbXng+Cl8J2XkvTrS870cBS8XIfduMKsAmJwffxSVkbhA8U9cvQpIpo/ZyhzlS32ZJfcl48GowB2TYibn6wy5BlCm9kkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772994119; c=relaxed/simple;
-	bh=3YpNhUfzjzCw0De09ObtjWaJqfKCcNvO8n38A1P2vdU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cnqcgaUtaJ5+eNhEQguzbbUGhMi1NArlQovKPNTFEllLHWBiA82lHxvNJ7Mv6Vaf897x9i7tTZpVxhF4FrxVdWO8czKzJzBQZ5Ec8p55TrppsFKn8ZDqa7lTt+VSyGg4A0nid8Q22K1M87RqJw5VUPAE3po1yI+wnJ6xS8GNBik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=OoYkYdyJ; arc=none smtp.client-ip=198.175.65.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1772994118; x=1804530118;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=3YpNhUfzjzCw0De09ObtjWaJqfKCcNvO8n38A1P2vdU=;
-  b=OoYkYdyJQTHb9f9lh1WaykUUGx9TphB+SuTGvGH4DxwCh7sV80+8i8g1
-   sbRibf4wfg0NeaTNSH0cJEnOhtpiMpxDY13x/k+0d/1FA91/Hxbr9bSRk
-   hJgDpWzfs4lZ1BW/hvQzk1QFSuMLIUmADNL36y7UMlZ8JmKxy/xnglaT7
-   7LVWIKjpR3L0UDVmLnz7IUAAIe+AajclTEOaZEhRc2avLGgIBx8i3RJ79
-   UyLtY4ig6ATs8YYRsfNSQ4wCHeudm6rrS2XJeWQC4BKcTE+qPXnxoeJ69
-   E0CKsJ5fOgBvy0DLa5ar4oDnhvWBrGaS9nBZh/EQTRCBm3fxL+r6akm+V
-   A==;
-X-CSE-ConnectionGUID: 4aVk5bAcTymyR8bw5+c3nA==
-X-CSE-MsgGUID: gAZpYP7CSDCFh/Hue4AUQg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11723"; a="74219099"
-X-IronPort-AV: E=Sophos;i="6.23,109,1770624000"; 
-   d="scan'208";a="74219099"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Mar 2026 11:21:57 -0700
-X-CSE-ConnectionGUID: uwj9rQQyS86OEypkWMiXbg==
-X-CSE-MsgGUID: OFGAQOw9QbSgG4PaQe0C1Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,109,1770624000"; 
-   d="scan'208";a="217633731"
-Received: from lkp-server01.sh.intel.com (HELO 058beb05654c) ([10.239.97.150])
-  by fmviesa008.fm.intel.com with ESMTP; 08 Mar 2026 11:21:53 -0700
-Received: from kbuild by 058beb05654c with local (Exim 4.98.2)
-	(envelope-from <lkp@intel.com>)
-	id 1vzIlB-000000003Jw-3Snu;
-	Sun, 08 Mar 2026 18:21:49 +0000
-Date: Mon, 9 Mar 2026 02:21:26 +0800
-From: kernel test robot <lkp@intel.com>
-To: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Abel Vesa <abelvesa@kernel.org>
-Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-mmc@vger.kernel.org,
-	linux-scsi@vger.kernel.org,
-	Sumit Garg <sumit.garg@oss.qualcomm.com>,
-	Neeraj Soni <neeraj.soni@oss.qualcomm.com>, stable@vger.kernel.org
-Subject: Re: [PATCH v5 1/5] soc: qcom: ice: Fix race between qcom_ice_probe()
- and of_qcom_ice_get()
-Message-ID: <202603090214.7xup4lZa-lkp@intel.com>
-References: <20260308-qcom-ice-fix-v5-1-e47e8a44b6c4@oss.qualcomm.com>
+	s=arc-20240116; t=1772995262; c=relaxed/simple;
+	bh=ZclR3MgADbuk8gJW1YDMUHbgzO8DIPC3p7HfmBQ2uv0=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=PgxHPiKsBanMGjkCgr5ygkGLjCp6Ccvt7qyGpv7IBnYvGZAydaT6kuIz5cs+WzxC1FNshwdEcU88HPRZB1R4ovx66h+q2jpDAdCJCV2zS5lYBmXOTD9Kd6yiIxts/MJQB3DUQO/ixxGLK+jbtSnIvtr43TAv3TTnZu3hnYmE/OU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=perches.com; spf=pass smtp.mailfrom=perches.com; arc=none smtp.client-ip=216.40.44.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=perches.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=perches.com
+Received: from omf19.hostedemail.com (a10.router.float.18 [10.200.18.1])
+	by unirelay09.hostedemail.com (Postfix) with ESMTP id D43C38CD9E;
+	Sun,  8 Mar 2026 18:40:51 +0000 (UTC)
+Received: from [HIDDEN] (Authenticated sender: joe@perches.com) by omf19.hostedemail.com (Postfix) with ESMTPA id 6CBA920025;
+	Sun,  8 Mar 2026 18:40:45 +0000 (UTC)
+Message-ID: <ca170cbaf2f8bcbc89bbda68914d8e0d7640f0e7.camel@perches.com>
+Subject: Re: [PATCH v2 phy-next 24/24] MAINTAINERS: add regexes for linux-phy
+From: Joe Perches <joe@perches.com>
+To: vladimir.oltean@nxp.com, linux-phy@lists.infradead.org
+Cc: Vinod Koul <vkoul@kernel.org>, Neil Armstrong
+ <neil.armstrong@linaro.org>, 	dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, 	linux-arm-kernel@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, 	linux-can@vger.kernel.org,
+ linux-gpio@vger.kernel.org, linux-ide@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
+	linux-pci@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+	linux-riscv@lists.infradead.org, linux-rockchip@lists.infradead.org, 
+	linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev, 
+	linux-tegra@vger.kernel.org, linux-usb@vger.kernel.org,
+ netdev@vger.kernel.org, 	spacemit@lists.linux.dev,
+ UNGLinuxDriver@microchip.com
+Date: Sun, 08 Mar 2026 11:40:44 -0700
+In-Reply-To: <20260308114009.2546587-25-vladimir.oltean@nxp.com>
+References: <20260308114009.2546587-1-vladimir.oltean@nxp.com>
+	 <20260308114009.2546587-25-vladimir.oltean@nxp.com>
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260308-qcom-ice-fix-v5-1-e47e8a44b6c4@oss.qualcomm.com>
-X-Rspamd-Queue-Id: 7878B2319A7
+X-Stat-Signature: mibobo4wkbramau4qyjthmehkiqudojz
+X-Session-Marker: 6A6F6540706572636865732E636F6D
+X-Session-ID: U2FsdGVkX1/1oqpGv8s8V8RuGZRFC80nZh9ljOj3ohI=
+X-HE-Tag: 1772995245-174125
+X-HE-Meta: U2FsdGVkX1+4XRzz60ugpVFQWsQctyjPh9D8dWNkk9O80wKikqTLI//fEpSwY7VKkjTAQqCbvy/bDztttYzuNBQP3PDd6DE18CINvDdnHew5cXtwNDDJn4KiBH3EXroYIs/0V5C/aytRQmLMTGCZZlkmVqa0mog1lMlvYoTUOPxP3MIGj9+OItuBdGt7SwG+E1NN8A/Yc9Sq4U8TJPe/XcW25BuE6rH2bXBjLakvy2b4imYLaL6YRBqKlFvDSAukFbzkOlERn3vJJPcvYBJiMotKjWx2PYK5v4pDPHYsRlN9R//2k7hsjvl6B3t7ELpdAjuD6CN+C7OKO7KQLV3bHimDBNhwcxGB9M1yVBNLk9v9/I7LPCcJRUT7SR2W+eai
+X-Rspamd-Queue-Id: 79FDC231BA1
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.34 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [-1.46 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-96072-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	TAGGED_FROM(0.00)[bounces-96073-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[lkp@intel.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[intel.com:+];
-	NEURAL_HAM(-0.00)[-0.976];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,manivannan.sadhasivam.oss.qualcomm.com];
+	RCVD_TLS_LAST(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DMARC_NA(0.00)[perches.com];
+	RCPT_COUNT_TWELVE(0.00)[24];
+	MIME_TRACE(0.00)[0:+];
+	NEURAL_SPAM(0.00)[0.420];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[01.org:url,intel.com:dkim,intel.com:email,intel.com:mid]
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[joe@perches.com,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCVD_COUNT_FIVE(0.00)[5];
+	MID_RHS_MATCH_FROM(0.00)[];
+	R_DKIM_NA(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,nxp.com:email]
 X-Rspamd-Action: no action
 
-Hi Manivannan,
+On Sun, 2026-03-08 at 13:40 +0200, vladimir.oltean@nxp.com wrote:
+> diff --git a/MAINTAINERS b/MAINTAINERS
+[]
+> @@ -10713,6 +10713,17 @@ F:	Documentation/devicetree/bindings/phy/
+> +K:	(?:linux/phy/phy\.h|phy-props\.h|phy-provider\.h)
 
-kernel test robot noticed the following build warnings:
+phy-props.h and phy-provider.h don't seem to exist.
+Are these going to be added later?
+Maybe this should be phy-common-props.h ?
 
-[auto build test WARNING on 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f]
+Perhaps if matching only the include uses:
+(/ is escaped because get_maintainer is stupid)
+something like:
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Manivannan-Sadhasivam-via-B4-Relay/soc-qcom-ice-Fix-race-between-qcom_ice_probe-and-of_qcom_ice_get/20260308-143016
-base:   6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f
-patch link:    https://lore.kernel.org/r/20260308-qcom-ice-fix-v5-1-e47e8a44b6c4%40oss.qualcomm.com
-patch subject: [PATCH v5 1/5] soc: qcom: ice: Fix race between qcom_ice_probe() and of_qcom_ice_get()
-config: arm-randconfig-r111-20260308 (https://download.01.org/0day-ci/archive/20260309/202603090214.7xup4lZa-lkp@intel.com/config)
-compiler: arm-linux-gnueabi-gcc (GCC) 10.5.0
-sparse: v0.6.5-rc1
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260309/202603090214.7xup4lZa-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202603090214.7xup4lZa-lkp@intel.com/
-
-sparse warnings: (new ones prefixed by >>)
->> drivers/soc/qcom/ice.c:117:1: sparse: sparse: symbol 'ice_handles' was not declared. Should it be static?
->> drivers/soc/qcom/ice.c:736:49: sparse: sparse: incorrect type in argument 3 (different address spaces) @@     expected void *entry @@     got void [noderef] __iomem *[assigned] base @@
-   drivers/soc/qcom/ice.c:736:49: sparse:     expected void *entry
-   drivers/soc/qcom/ice.c:736:49: sparse:     got void [noderef] __iomem *[assigned] base
-
-vim +/ice_handles +117 drivers/soc/qcom/ice.c
-
-   116	
- > 117	DEFINE_XARRAY(ice_handles);
-   118	static DEFINE_MUTEX(ice_mutex);
-   119	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+K:	include\s*\<linux\/phy\/phy(?:-common-props|-provider)?\.h\>
 
