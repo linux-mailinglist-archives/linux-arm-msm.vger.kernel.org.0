@@ -1,145 +1,231 @@
-Return-Path: <linux-arm-msm+bounces-96092-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96091-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id oPwKF5MErmlq+wEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96092-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 00:21:55 +0100
+	id cBhWA4sErmlq+wEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96091-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 00:21:47 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B867B232A79
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 00:21:54 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 703C2232A6A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 00:21:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C9B513040460
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Mar 2026 23:20:45 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id BFCC9301053D
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Mar 2026 23:20:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6683035AC09;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1560B1862;
 	Sun,  8 Mar 2026 23:20:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m+XmiQj6"
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="oeFBkwoh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-10628.protonmail.ch (mail-10628.protonmail.ch [79.135.106.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 434453563C6
-	for <linux-arm-msm@vger.kernel.org>; Sun,  8 Mar 2026 23:20:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 928F535A38B;
+	Sun,  8 Mar 2026 23:20:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.28
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773012044; cv=none; b=L8uCFEY4ji4DaiMEF1jrOLz0Q0AV6COwfpxtJOHF914j1zY7Sgi0b/JQ/0pxuNRT9nM9tx93eJuEX68rxWcdkLYkCSzBqMivDj4E7ik3ygLKE+aymAxpl7WTop8kXK0VDMrJxJMTMhOd3UsKyXIP5QIa6wRvPquLLP7G2poWMCI=
+	t=1773012044; cv=none; b=LelPM8v/8AaV7mo2wyFzf0dKROq3KtCutDXecbDLyyaOYtvMsduzD2qBjVYgFkSf045Y1UG1R7EKWIBqNAudr8c+E6gKhDYpQvlATG5ab/L6stRoj1rfwR5W+/025D5D5PUZpJM8CsC49ruPSBnFNxW6YKFbu2hRDpnZApNWhcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773012044; c=relaxed/simple;
-	bh=tkXNNyhuUcisfjOD9LDo6nQcYG7Q7JLlx58CMzSrFYY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mKUzvX4Eazun8JQfAMX9XeY9lzVjxJkL7GrItn/TomOWFPu6DXx/GL9l7OfPdVyMWVRmDmxe0C9qJ0vHgshNf9hSd5vxfP9SgrF6LUK89nzC3QPevyZpPezp5OBjI2jwpguyGYVBMLjQgPCaj7tXfolz+qdtxMJZS0yAgoLuYvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m+XmiQj6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E18C0C2BCB1
-	for <linux-arm-msm@vger.kernel.org>; Sun,  8 Mar 2026 23:20:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773012043;
-	bh=tkXNNyhuUcisfjOD9LDo6nQcYG7Q7JLlx58CMzSrFYY=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=m+XmiQj6edXjUVLc47BRamk/T9v5UYlAhJOO0jS2S1KyuSOVEjsPLpTMYGDiJz4bK
-	 +mmu5sDc09iltSZuZYsXL98tzYILxRQuplR1juawL4KjFhquEMV5NbViDIsDUX+CG2
-	 kX9vIu71IKo/1A9f4xGMOT77FCpk6KUTZ8O79LvQvZGjPKC++uerIKM6s7cGRheEl4
-	 S3W6f5cHr4BVgslP/3QByJVSGYX0Cosf8BgwYM+Q4S6QXJzoTYO2XRUI1hiMEulugA
-	 yLXoklsnPJ97ihVtFwCB3JQ7ArdeqTwbmcNuh2Md1innfkuMHbwvPIbNEUDwwU8SDn
-	 px0QoPQycIFPw==
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-79801df3e42so141292277b3.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Mar 2026 16:20:43 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCXwfPzmdFs3SzQnvdGjwE+xH4imx8askqP8Mq7ndRQ69KsR49PXbm+jf14dS8vGx82X2rgYl2uZccJCHAO+@vger.kernel.org
-X-Gm-Message-State: AOJu0YwaLSIsdqczrYVhKfPKVVrF98gbuRdXFYE2qiL/+ZPAte5tAoq6
-	SQz0SZ4FUNyGCLXhZcwYBpcYiuvssgw4WwtdwvEkaQS99/I+0Waj/JxNAClCkyeHcPCcLSH+ui4
-	waoEW2Wb95N5uUEN4WeFgPSiW6hZ9ncM=
-X-Received: by 2002:a05:690c:dd5:b0:794:c283:5fb8 with SMTP id
- 00721157ae682-798d1eebf82mr109540947b3.25.1773012043250; Sun, 08 Mar 2026
- 16:20:43 -0700 (PDT)
+	bh=RgJOa6yfBGNiuGxmhUx322FszEHIkBe5nei3mIBdkcU=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=qoA3hmnOY5grIqLOUhFwQqC05MDFuFSdcqC/oTOsyb/6KBh6NajfInH/yVHbhwgrVB6Zra36DHOoJbArei5oUywuGkoqqQ4QVX27xo/M+wOV3DQmChZMmgzQZ01cmBz9s6Eg9/t2QojKvwKi/DkTTZHJr2lXOGDmgzGByiwotWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=oeFBkwoh; arc=none smtp.client-ip=79.135.106.28
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1773012040; x=1773271240;
+	bh=E7aiP89oHRHkEkAMRjtP39QQVm2BmjvpXh/hYVnCB7M=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=oeFBkwohkQAheIMz+n0M+NKgnLQ2+0yKiamkEtI8nllzYCwNY/TXxqo+aUlFmES+g
+	 tkgxxFAjWm4Njol8VaLe9/PREt1KhJO+KmSKYM2vTTPEUyjVivJZHv1vMASJHBZBWF
+	 quyi6Uo1+DXClQtzVqM0JefXSv53qgQgAl+GcnyraXAizt4zoo1F9cTb00vQGg2kTP
+	 YmeH1/cKOuLaAGKjfH6ihA8Nf2ktBU1joo+i8kVSeVhyfM5ap6+8pWvgzsLo8AUN6d
+	 VvGT8Nu/tnrXKSdsGmyHp2cveuN2HOrH6BoG1Gm4Wed8qlwtT8z8ziiNXA1+nhpB6C
+	 0Dxl8V+YFLWng==
+Date: Sun, 08 Mar 2026 23:20:35 +0000
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Heikki Krogerus <heikki.krogerus@linux.intel.com>
+From: Alexander Koskovich <AKoskovich@pm.me>
+Cc: linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Alexander Koskovich <akoskovich@pm.me>
+Subject: [PATCH RFC 2/2] usb: typec: qcom: Add support for shared USBIN VBUS detection
+Message-ID: <20260308-qcom-typec-shared-vbus-v1-2-7d574b91052a@pm.me>
+In-Reply-To: <20260308-qcom-typec-shared-vbus-v1-0-7d574b91052a@pm.me>
+References: <20260308-qcom-typec-shared-vbus-v1-0-7d574b91052a@pm.me>
+Feedback-ID: 37836894:user:proton
+X-Pm-Message-ID: c1613f5bba6ccfb0859cd0880c9eeda82a1dd53e
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260306-expressatt_camera_flash-v1-0-b1996f7cdfdd@gmail.com> <20260306-expressatt_camera_flash-v1-1-b1996f7cdfdd@gmail.com>
-In-Reply-To: <20260306-expressatt_camera_flash-v1-1-b1996f7cdfdd@gmail.com>
-From: Linus Walleij <linusw@kernel.org>
-Date: Mon, 9 Mar 2026 00:20:32 +0100
-X-Gmail-Original-Message-ID: <CAD++jLkAQreycoUd=kjwn7xdL+Lksiuq06u4tQrVMfAUEbTRiQ@mail.gmail.com>
-X-Gm-Features: AaiRm51X6o73CYP4cBk8SLAEUC5--fTx6OgmFz_CKYLt2xdlJPzNDoXUUO8RZ3E
-Message-ID: <CAD++jLkAQreycoUd=kjwn7xdL+Lksiuq06u4tQrVMfAUEbTRiQ@mail.gmail.com>
-Subject: Re: [PATCH 1/3] dt-bindings: leds: rt8515: Support single-GPIO flash
- ICs with unlock gate
-To: guptarud@gmail.com
-Cc: Lee Jones <lee@kernel.org>, Pavel Machek <pavel@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	linux-leds@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: B867B232A79
+X-Rspamd-Queue-Id: 703C2232A6A
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-96092-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-96091-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com];
+	RCVD_COUNT_THREE(0.00)[3];
+	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DKIM_TRACE(0.00)[pm.me:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	MISSING_XM_UA(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
+	NEURAL_HAM(-0.00)[-0.967];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[linusw@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[AKoskovich@pm.me,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.948];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_SEVEN(0.00)[11];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,pm.me:dkim,pm.me:email,pm.me:mid]
 X-Rspamd-Action: no action
 
-Hi Rudraksha,
+On devices with multiple USB-C ports whose VBUS lines are wired to a
+single shared USBIN input on the PM8150B PMIC (e.g. ASUS ROG Phone 3), the
+Type-C port controller cannot distinguish which port is providing VBUS.
 
-thanks for your patch!
+In practice this shows up as being unable to use the affected Type-C port
+while the other port is connected to a device providing VBUS such as a PC
+or charger.
 
-On Sat, Mar 7, 2026 at 1:58=E2=80=AFAM Rudraksha Gupta via B4 Relay
-<devnull+guptarud.gmail.com@kernel.org> wrote:
+Add support for an optional vbus-detect-gpios property that allows the
+Type-C port controller to read VBUS state from a per-port GPIO instead of
+the shared USBIN input. When present, the driver also bypasses VSAFE0V
+checks and switches DRP toggling to TRY_SRC to avoid false source
+detection caused by VBUS present on USBIN from another port.
 
->    ent-gpios:
->      maxItems: 1
->      description: A connection to the 'ENT' (enable torch) pin.
-> +      Optional for single-GPIO flash ICs where enf-gpios is used for
-> +      both flash and torch modes.
+Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
+---
+ drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c | 46 ++++++++++++++++++=
++++-
+ 1 file changed, 44 insertions(+), 2 deletions(-)
 
-Fair enough, that can be done.
+diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c b/drivers/u=
+sb/typec/tcpm/qcom/qcom_pmic_typec_port.c
+index 8051eaa46991..c338e26651b0 100644
+--- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
++++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
+@@ -5,6 +5,7 @@
+=20
+ #include <linux/delay.h>
+ #include <linux/err.h>
++#include <linux/gpio/consumer.h>
+ #include <linux/interrupt.h>
+ #include <linux/kernel.h>
+ #include <linux/mod_devicetable.h>
+@@ -176,6 +177,8 @@ struct pmic_typec_port {
+ =09bool=09=09=09=09vbus_enabled;
+ =09struct mutex=09=09=09vbus_lock;=09=09/* VBUS state serialization */
+=20
++=09struct gpio_desc=09=09*vbus_detect_gpio;
++
+ =09int=09=09=09=09cc;
+ =09bool=09=09=09=09debouncing_cc;
+ =09struct delayed_work=09=09cc_debounce_dwork;
+@@ -277,7 +280,12 @@ static int qcom_pmic_typec_port_vbus_detect(struct pmi=
+c_typec_port *pmic_typec_p
+ {
+ =09struct device *dev =3D pmic_typec_port->dev;
+ =09unsigned int misc;
+-=09int ret;
++=09int ret, vbus;
++
++=09if (pmic_typec_port->vbus_detect_gpio) {
++=09=09vbus =3D gpiod_get_value_cansleep(pmic_typec_port->vbus_detect_gpio)=
+;
++=09=09return vbus;
++=09}
+=20
+ =09ret =3D regmap_read(pmic_typec_port->regmap,
+ =09=09=09  pmic_typec_port->base + TYPEC_MISC_STATUS_REG,
+@@ -307,6 +315,13 @@ static int qcom_pmic_typec_port_vbus_toggle(struct pmi=
+c_typec_port *pmic_typec_p
+ =09=09if (ret)
+ =09=09=09return ret;
+=20
++=09=09/*
++=09=09 * On devices with multiple ports sharing USBIN, VBUS from another
++=09=09 * port prevents VSAFE0V from being reached.
++=09=09 */
++=09=09if (pmic_typec_port->vbus_detect_gpio)
++=09=09=09return 0;
++
+ =09=09val =3D TYPEC_SM_VBUS_VSAFE0V;
+ =09}
+=20
+@@ -589,7 +604,14 @@ static int qcom_pmic_typec_port_start_toggling(struct =
+tcpc_dev *tcpc,
+ =09=09mode =3D EN_SNK_ONLY;
+ =09=09break;
+ =09case TYPEC_PORT_DRP:
+-=09=09mode =3D EN_TRY_SNK;
++=09=09/*
++=09=09 * VBUS from another port makes EN_TRY_SNK falsely detect
++=09=09 * a source. Start as Rp to reliably find sinks.
++=09=09 */
++=09=09if (pmic_typec_port->vbus_detect_gpio)
++=09=09=09mode =3D EN_TRY_SRC;
++=09=09else
++=09=09=09mode =3D EN_TRY_SNK;
+ =09=09break;
+ =09}
+=20
+@@ -677,6 +699,20 @@ static int qcom_pmic_typec_port_start(struct pmic_type=
+c *tcpm,
+ =09if (ret)
+ =09=09goto done;
+=20
++=09/*
++=09 * On devices with multiple USB-C ports sharing USBIN, bypass
++=09 * VSAFE0V so SRC attachment can complete despite VBUS being
++=09 * present on USBIN from another port.
++=09 */
++=09if (pmic_typec_port->vbus_detect_gpio) {
++=09=09ret =3D regmap_update_bits(pmic_typec_port->regmap,
++=09=09=09=09=09 pmic_typec_port->base + TYPEC_EXIT_STATE_CFG_REG,
++=09=09=09=09=09 BYPASS_VSAFE0V_DURING_ROLE_SWAP,
++=09=09=09=09=09 BYPASS_VSAFE0V_DURING_ROLE_SWAP);
++=09=09if (ret)
++=09=09=09goto done;
++=09}
++
+ =09pmic_typec_port->tcpm_port =3D tcpm_port;
+=20
+ =09for (i =3D 0; i < pmic_typec_port->nr_irqs; i++)
+@@ -724,6 +760,12 @@ int qcom_pmic_typec_port_probe(struct platform_device =
+*pdev,
+ =09if (IS_ERR(pmic_typec_port->vdd_vbus))
+ =09=09return PTR_ERR(pmic_typec_port->vdd_vbus);
+=20
++=09pmic_typec_port->vbus_detect_gpio =3D devm_gpiod_get_optional(dev, "vbu=
+s-detect",
++=09=09=09=09=09=09=09=09 GPIOD_IN);
++=09if (IS_ERR(pmic_typec_port->vbus_detect_gpio))
++=09=09return dev_err_probe(dev, PTR_ERR(pmic_typec_port->vbus_detect_gpio)=
+,
++=09=09=09=09     "failed to get vbus-detect GPIO\n");
++
+ =09pmic_typec_port->dev =3D dev;
+ =09pmic_typec_port->base =3D base;
+ =09pmic_typec_port->regmap =3D regmap;
 
-> +  unlock-gpios:
-> +    maxItems: 1
-> +    description: Optional GPIO to unlock the flash LED circuit. Some
-> +      boards use a PMIC MPP pin that must be driven high before the
-> +      flash IC will respond to the enable GPIOs.
+--=20
+2.53.0
 
-But this IC has no pin named "unlock". This is something else.
 
-Given the way it works it looks like a regulator enable signal.
-
-If you don't have any better idea about what this is, I would
-suggest adding
-
-vin-supply
-
-to the RT8615 bindings instead and then use a GPIO regulator
-in your device tree to provide the voltage to it from that GPIO.
-
-Yours,
-Linus Walleij
 
