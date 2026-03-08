@@ -1,113 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-96048-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id IE7DHnFlrWlp2QEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96048-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Mar 2026 13:02:57 +0100
+	id iOQnDEFlrWme2AEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Mar 2026 13:02:09 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 02E2523019F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Mar 2026 13:02:56 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D02DF23011C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Mar 2026 13:02:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id F382C30825C2
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Mar 2026 11:52:49 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 2E0F4301650B
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Mar 2026 12:02:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44D9C321F5F;
-	Sun,  8 Mar 2026 11:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E33135A383;
+	Sun,  8 Mar 2026 12:02:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="ayIyF9bm"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="FFzDtZuY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-06.mail-europe.com (mail-06.mail-europe.com [85.9.210.45])
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1739306B11;
-	Sun,  8 Mar 2026 11:52:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.9.210.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F45236C0C4;
+	Sun,  8 Mar 2026 12:02:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772970745; cv=none; b=oZBEBC61sZk1S/m6qd7QivwDvaHVYmjHAg+gcCe8BjZ7tGn1bODCwZPax8ekPc4b44X5wmbpAUb2cBi2VvyVb9FJ1w6FEUT/e137vgZmfq41Lm78GMqsIbQr0ZB3hj6uDhB+WfRe8EKlXvefPy+nIAkmozUTR2jsxEHmEYKtD4k=
+	t=1772971325; cv=none; b=dVpGj7ZKq3p/q3j8J1hKywYehkfVy7WuWEokYHNkBGeVuSfuhGEbTRLrgRZ7WvMCusJrf5ZjmrLt9tDX1Ls+ycLExN1v7TfdHTB+kW3QiI9p6ySbA/jBF5Dxx9IcOUVg52ytESkSqV9JcmHi1RockLh/ApA4A3C/ZF/djvGfjz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772970745; c=relaxed/simple;
-	bh=itefZKbk9DIeIY29bgUp/9OpWv9UnV4si0vIARTZ5m8=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aZFOA3Ts+/8mxEAtm0GD/gA/VJ9HeHcb4hwxSn+SqwJ6jOFYkkJghrQxfoxYpilwROIO7mN8EKV/23UlI3qEoHyFHmBCjUSgROLgeVTAUu/5tknOCFhOys39WMN6d6R2nZhLIVmNyNIONpeXzOjK4Bij3yh7uR1PlrkpymHllck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=ayIyF9bm; arc=none smtp.client-ip=85.9.210.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1772970733; x=1773229933;
-	bh=deOqS1v+V7VkWFrWEWsq7ObbQ1Jg2bAGdP/XlHX87yM=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=ayIyF9bm1eH+omWtJHdHQBSFtIOPnD1kEbttMKj2Bh5e8Hn8NFfRUuTDJwpNG1KGq
-	 gO55wzquActNuIzjGhxJttFN8CaUvgECUxuvTscagtJ4jgIzqkQP0LNbwRfpZPbsBA
-	 nPWxvJMR57DmM0sjAtkPAWbW0Nx8SCmEchGvVoCNcebXEGmub1qF1QUYn2zH9j7a14
-	 SoSlvt5BR0ycSpgv1oAPUiY9SF33yzO6MIH2AwJLKhtDa31Zor2PVBFcOrgj2GbR3c
-	 akDW9ZDWM3KAvsp+uGDhPItrvQKt8IeFINpuLA45hDu19wdRLEqDogWcI2G3jLOVR8
-	 zGXrTmEfffseQ==
-Date: Sun, 08 Mar 2026 11:52:07 +0000
-To: Krzysztof Kozlowski <krzk@kernel.org>
-From: Alexander Koskovich <AKoskovich@pm.me>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sm8250: Add label for reserved-memory node
-Message-ID: <yyLvPClplHmyd72RJgOMXVLx_z6GT8sDZP8FyzlHMV7MrCm26twtNmxebCmLwusqGABJQTrIIAe-AAwAW3uaIQ8Rw5TId1C4v5reyj71nmU=@pm.me>
-In-Reply-To: <2b260d55-71cd-442f-bf9f-a9771a2765c7@kernel.org>
-References: <20260308-sm8250-reserved-mem-v1-1-889eca3c11ca@pm.me> <2b260d55-71cd-442f-bf9f-a9771a2765c7@kernel.org>
-Feedback-ID: 37836894:user:proton
-X-Pm-Message-ID: aa3b8ca56e43e07eaa60d7cb891dc38ad227fa09
+	s=arc-20240116; t=1772971325; c=relaxed/simple;
+	bh=Bq7Wkz/Cpwn1dgha1SO/prRohbZTrXxPYbLnSfgU+/s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bD7dDMpVFszWvyrcajM6dQaSWRydPCJ6VlgIzppqiaWuHkfxgCLas9vmAQMdXiOYg0o2fiR6GNTX/Ydb+dQMBwi/p3Maq/2xO3BkBXDEzeqWSqQgx7lWV+jWwkP4233ntQrqHBov6HzVUgkwoF+02u4BsCY21Y9rcSDjOZe0Fkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=FFzDtZuY; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=g77KuUu7tZV2EWc/eRT4uXRlFQCkO7bU5cTH+0cVCG0=; b=FFzDtZuYkC0DnUyz163rl2C0J7
+	BlNREDfLbFSqsCDGG7wyqYQIkW9dVN3DggsHpt6BqHwHaaJCJYr5hlnQvXRkPPQ41ar85DzFhMEmB
+	gFC6oC5eK9H+7BsTfL2Qaie+4PSNMBteqELve/Q0cUSwwEHPGq6uEDlwML0R5lJ8E5ebW00T/Vzut
+	DuJXep+nuwECH8QlUkCKWVPiRO/PGZMUciO0bD5lSEzEqQr2CySIpJWpeB2FiLZRSgN1aKy5u1pjb
+	388/H2D8TPVbJxV+5QHfwZsd8BBR1NJAj5Afn5lTxCrADySNQUKbR+nvc2uheAu2RvUMjRHBcPj35
+	vAoAoQ0w==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:57616)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1vzCpK-000000002nH-1IFO;
+	Sun, 08 Mar 2026 12:01:42 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1vzCpF-000000003JS-0B1B;
+	Sun, 08 Mar 2026 12:01:37 +0000
+Date: Sun, 8 Mar 2026 12:01:36 +0000
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: vladimir.oltean@nxp.com
+Cc: linux-phy@lists.infradead.org, Vinod Koul <vkoul@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-can@vger.kernel.org, linux-gpio@vger.kernel.org,
+	linux-ide@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-media@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org, linux-riscv@lists.infradead.org,
+	linux-rockchip@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
+	linux-tegra@vger.kernel.org, linux-usb@vger.kernel.org,
+	netdev@vger.kernel.org, spacemit@lists.linux.dev,
+	UNGLinuxDriver@microchip.com,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Shawn Lin <shawn.lin@rock-chips.com>
+Subject: Re: [PATCH v2 phy-next 22/24] phy: include PHY provider header (2/2)
+Message-ID: <aa1lIBO3j_apIPjb@shell.armlinux.org.uk>
+References: <20260308114009.2546587-1-vladimir.oltean@nxp.com>
+ <20260308114009.2546587-23-vladimir.oltean@nxp.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: 02E2523019F
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260308114009.2546587-23-vladimir.oltean@nxp.com>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+X-Rspamd-Queue-Id: D02DF23011C
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.36 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
+	R_DKIM_REJECT(1.00)[armlinux.org.uk:s=pandora-2019];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
+	DMARC_POLICY_SOFTFAIL(0.10)[armlinux.org.uk : SPF not aligned (relaxed),none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[pm.me:+];
-	RCVD_COUNT_THREE(0.00)[3];
-	TAGGED_FROM(0.00)[bounces-96048-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	DKIM_TRACE(0.00)[armlinux.org.uk:-];
 	FROM_HAS_DN(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-96049-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	NEURAL_SPAM(0.00)[0.598];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCPT_COUNT_TWELVE(0.00)[26];
+	FROM_NEQ_ENVFROM(0.00)[linux@armlinux.org.uk,linux-arm-msm@vger.kernel.org];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[AKoskovich@pm.me,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	NEURAL_HAM(-0.00)[-0.930];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MISSING_XM_UA(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TO_DN_SOME(0.00)[]
 X-Rspamd-Action: no action
 
-On Sunday, March 8th, 2026 at 4:46 AM, Krzysztof Kozlowski <krzk@kernel.org=
-> wrote:
+On Sun, Mar 08, 2026 at 01:40:07PM +0200, vladimir.oltean@nxp.com wrote:
+> diff --git a/drivers/phy/qualcomm/phy-qcom-sgmii-eth.c b/drivers/phy/qualcomm/phy-qcom-sgmii-eth.c
+> index 5b1c82459c12..4f8ffc6524ab 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-sgmii-eth.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-sgmii-eth.c
+> @@ -7,10 +7,11 @@
+>  #include <linux/ethtool.h>
+>  #include <linux/module.h>
+>  #include <linux/of.h>
+> -#include <linux/phy/phy.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/regmap.h>
+>  
+> +#include "../phy-provider.h"
+> +
 
-> There is no user for this, so change is pointless. labels do not exist
-> in DTBs, so drop the entire patch or provide here - in the same commit -
-> proper user.
+As we know, this will conflict with my patch in net-next. I guess Vinod
+hasn't (yet?) merged the commit that Jakub provided.
 
-Want to submit the ROG 3 in a follow up change but was trying to get all de=
-pendencies for it merged beforehand.
-
-Should I just upload the devicetree and link to relevant patches?
-
->=20
-> Best regards,
-> Krzysztof
->=20
-> 
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
