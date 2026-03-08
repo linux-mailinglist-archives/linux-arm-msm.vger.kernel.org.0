@@ -1,225 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-96018-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id yLiDHh8grWlcygEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96018-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Mar 2026 08:07:11 +0100
+	id d86bNGk3rWlfzgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Mar 2026 09:46:33 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1765F22EDD9
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Mar 2026 08:07:11 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 29E3B22F10D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 08 Mar 2026 09:46:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 5A5B93006B48
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Mar 2026 07:07:10 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 68E123001866
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Mar 2026 08:46:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4B5E332633;
-	Sun,  8 Mar 2026 07:07:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0CC93290C8;
+	Sun,  8 Mar 2026 08:46:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MpAKOAcL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FCn1btzd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 247272D73A0
-	for <linux-arm-msm@vger.kernel.org>; Sun,  8 Mar 2026 07:07:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD893368BD;
+	Sun,  8 Mar 2026 08:46:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772953629; cv=none; b=eMmkj3AnlMn7znTHxvxB82oZBysiEqypN0ltmQfyKSaTEf9XZoW0GeLBKS1KgIcTd5LvAHzZPeYpr2vVdkjiYG4aNIxiVNrasJ/Lqbf7NzvJwrQ92EkBik7GF16+jkxjyIbnrCq/aPafczTwyyJ5xtA+wZVkgLr6EntKDSX/jzg=
+	t=1772959590; cv=none; b=DUy8Is/4Sc57L66z7JvqAHhvztbt9JenvZP6Dn4f/CrsieNmi9v6EAOfbnyit+vkkAvcXmxFb+8JxI7PUqH9yT8tsvl0WNKNragF+WcjkHdzBHC3Nn2iUXTkvfxwIWVjs69EIMgAGv732Mp+rMQiBlD0HSgJvQp33I+Af33IV0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772953629; c=relaxed/simple;
-	bh=d/aIafMJCdEMM7WRjiEliPE5eNxA6uu0vaLDPne0sb0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=GWlalyFFuwh/87x/1cWyRjD5Y/DqBqmsICpwGLVq9zjL2HkThch9siEVYKq+9FpZ/sYw/DP1fUmyBTbnutQQDXRKclRmvGDXsx3bRxNXKdtykUYB/cpDe3dt+yFcx0IQSTci6TXvr79OWx3uCcGQNzXYh2nEzhsUU6eVUtzElbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MpAKOAcL; arc=none smtp.client-ip=209.85.215.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-c738b98bfd9so1512125a12.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 07 Mar 2026 23:07:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772953626; x=1773558426; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=GFLfW5Q1Ig6hjSxU05JacS616Nm8ZTLRMtzhmvCENQY=;
-        b=MpAKOAcLwPs7zoIJaMS3By/tsr3nM0z7Bmz1sBpEMRFj67A+tzZ+uAPJSNQXofdYJG
-         ZM8QzIuQEMSDXmRxGUspYrRkxXLsy4CI9wvVoQZTlyiLz3APffcXZChRFCtT7l8R+t4P
-         553SsG/Md2pdo7FSEn3fIVAFbSuMaVtiMcralNnrXMJr9/nUO3/C2zh+Yb9WolLw6Xzn
-         pMksLShQlr+vn7g7EKTVZSPIc8I0PSvcXWvvDvY9EfL7TENlpj0XsSZpbPfoSb3GF4Bj
-         JXEw1kBsML0JqWMnXkMbZhtoYe2U1G6NfTWbcF+WXTPp7xxNKv0JSYU1Ic8LGwkGFZiO
-         m4zg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772953626; x=1773558426;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GFLfW5Q1Ig6hjSxU05JacS616Nm8ZTLRMtzhmvCENQY=;
-        b=fJ22o879GTIkMe4OU5OaMVLCVkvQsiXHGAfHez/hhlRICUguo5tWPQ/nUQaKrcm8hO
-         hNzMODMkHUMv3pec4fVmGpNtwpyofBir4O6zs1/MFdGWu7HnBnM/elk6cOuVTlRf3q9z
-         fUkfwkuJ1RTIUTf9VUhjpcUgyowgBxNiYfxgY40gP1OduNAagcnRBaeQnnKzfPd5NWsn
-         51VQvlgaasxuAq3HaOBPKrMz6rXZ7nYEQI+EMLdUIL+E+JqIC9mIqKR8TFckeq7NgC0f
-         RubuvB4DTU3cH1pf+lJUqlgfnbevYWTYI1Cm/JAffO6INFuC0q7lMirzbIt6/z06YCCi
-         tWLA==
-X-Forwarded-Encrypted: i=1; AJvYcCVWS9U9ES1de1C4CSDr7t5tdDJuRJKEI0w2Fvf7z2vIDsbM9lHwYpXIMY6jRVj2GVsAnAFPX8KF7iW+5Mz4@vger.kernel.org
-X-Gm-Message-State: AOJu0YwawoQiKvAjtFkB2uNZsNyG35yauqUtl3Y88pKBen0i2uXdy6y/
-	P249E7miXNthrRvKpcoPeYI9tyDR/BQz9VHZbt0l2Xpfj0ULHsnRs17E
-X-Gm-Gg: ATEYQzyruNjlqlGKdfq6YnKQvWkdElOGCLW/Op2MSoqN0Q03vhgZ2r8f9DOSUnzmP8S
-	d/KOk7TPD5T+xugk0jB5I+vD8lzXn6XDEwCognJltWM4Q9eHD8uxBl8kF+CV5GEmealCyUBlYmm
-	mugQ/AmJ3r+F07blUIp7otBg0k5A36k/n0Ans+xdZU55Nb5zih0CmdC9oUDuWoc7LyqD7rGk1Ts
-	qxH1A/gbao/b75+b5SOEk5yYDNWOOhCP7iArc9hvXzkJTfkqrtSQrRk5utime9cTJZ6NCPag5c3
-	T4FCatXJFlmT6jFqXsowHT3K1YeO9SOPKMV3rYH1F12kv04INdygKyv2GG4+GUSVwNPs/Z85Jpi
-	PVcYiTgaXADXjTOVZXrgm6Btw5WQMBFg6Ue+LYPEHEReVSJg6CncRV9Kyw6qJOJZ7XEh/yqThQe
-	o48wlZWtMJ8AK2Wyjeh7367F0H7ho6
-X-Received: by 2002:a05:6a21:6f16:b0:38d:ee4a:e82f with SMTP id adf61e73a8af0-398590d62b0mr6919892637.63.1772953626562;
-        Sat, 07 Mar 2026 23:07:06 -0800 (PST)
-Received: from nuvole ([109.166.36.159])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c739e0a7156sm6048604a12.2.2026.03.07.23.07.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Mar 2026 23:07:06 -0800 (PST)
-From: Pengyu Luo <mitltlatltl@gmail.com>
-To: Rob Clark <robin.clark@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jesszhan0024@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>
-Cc: Pengyu Luo <mitltlatltl@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v2] drm/msm/dsi: fix pclk calculation for bonded dsi
-Date: Sun,  8 Mar 2026 15:06:27 +0800
-Message-ID: <20260308070628.482527-1-mitltlatltl@gmail.com>
-X-Mailer: git-send-email 2.53.0
+	s=arc-20240116; t=1772959590; c=relaxed/simple;
+	bh=IczzHoLtCIZefFO9iUsBq5WWFhnGUC6RW0p1iBGJjnQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=d6ix7kFLTw8HMmGW5DM1H3YFnnes82pNCK+ksWTOD7vpbsbBivUMHH+UmwVacb4g2OISi6N0Q8K518YDJV1MhpvgL+J95Bqom1/HF0VPQi3I/aXzkyBtP4QBDjKkoKGhMjLGlxb8JNRZDMeHmklJzvUOKVnz1GgQ11EoxNrtqDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FCn1btzd; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E923C116C6;
+	Sun,  8 Mar 2026 08:46:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772959590;
+	bh=IczzHoLtCIZefFO9iUsBq5WWFhnGUC6RW0p1iBGJjnQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=FCn1btzdfPZsjsOWcmvxwED3JFYAnEFSkji2sDIu40NaXGjk8MwJIzjRglxDqt1L7
+	 UneDFV6dmPIl0OZC7CZd1sS+jpJXB46ghmoseZJBXqvz0uGg7m53gK46ipMFXH+yKk
+	 eEdtJpWdk05DJlsI/CWZF4B2wa8siCAb7quMURH9t5MkDM4ccAj5xBPgR3+NH2quTz
+	 FNsmk1+2+fkllcOgvcZRoSetpA3zfkAe1IlU6BwH5uOiMMEMPI4Q3vI9ME3MIR+ptT
+	 wQUK/L1aonU+AsskqKfUTS0Btehw0wJibqvmFmw15fcoUbZ3raGtI8MmIU7OcPTEvG
+	 /f/iVWYWWB0jg==
+Message-ID: <2b260d55-71cd-442f-bf9f-a9771a2765c7@kernel.org>
+Date: Sun, 8 Mar 2026 09:46:26 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 1765F22EDD9
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: sm8250: Add label for reserved-memory
+ node
+To: Alexander Koskovich <AKoskovich@pm.me>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20260308-sm8250-reserved-mem-v1-1-889eca3c11ca@pm.me>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20260308-sm8250-reserved-mem-v1-1-889eca3c11ca@pm.me>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Queue-Id: 29E3B22F10D
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-96018-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[gmail.com,oss.qualcomm.com,vger.kernel.org,lists.freedesktop.org];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-96019-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mitltlatltl@gmail.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	RCVD_COUNT_FIVE(0.00)[5];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	NEURAL_HAM(-0.00)[-0.981];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-0.930];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,qualcomm.com:email]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,pm.me:email]
 X-Rspamd-Action: no action
 
-Recently, we round up new_hdisplay once at most, for bonded dsi, we
-may need twice, since they are independent links, we should round up
-each half separately. This also aligns with the hdisplay we program
-later in dsi_timing_setup()
+On 08/03/2026 06:05, Alexander Koskovich wrote:
+> For some devices it makes more sense to just redefine reserved-memory,
+> for example on the ASUS ROG Phone 3 it is completely different with the
+> exception of hyp_mem, xbl_aop_mem, cmd_db and smem_mem.
+> 
+> Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> index c7dffa440074..3298c36c3e55 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> @@ -763,7 +763,7 @@ opp-120000000 {
+>  		};
+>  	};
+>  
+> -	reserved-memory {
+> +	reserved_memory: reserved-memory {
 
-Example:
-	full_hdisplay = 1904, dsc_bpp = 8, bpc = 8
-	new_full_hdisplay = DIV_ROUND_UP(1904 * 8, 8 * 3) = 635
+There is no user for this, so change is pointless. labels do not exist
+in DTBs, so drop the entire patch or provide here - in the same commit -
+proper user.
 
-if we use half display
-	new_half_hdisplay = DIV_ROUND_UP(952 * 8, 8 * 3) = 318
-	new_full_display = 636
-
-Fixes: 7c9e4a554d4a ("drm/msm/dsi: Reduce pclk rate for compression")
-Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
----
-v2: add a parameter desciption to the function doc (kernel test robot)
----
- drivers/gpu/drm/msm/dsi/dsi_host.c | 32 +++++++++++++++++++++++-------
- 1 file changed, 25 insertions(+), 7 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index e8e83ee61e..06f094fc32 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -569,6 +569,7 @@ void dsi_link_clk_disable_v2(struct msm_dsi_host *msm_host)
-  * dsi_adjust_pclk_for_compression() - Adjust the pclk rate for compression case
-  * @mode: The selected mode for the DSI output
-  * @dsc: DRM DSC configuration for this DSI output
-+ * @is_bonded_dsi: True if two DSI controllers are bonded
-  *
-  * Adjust the pclk rate by calculating a new hdisplay proportional to
-  * the compression ratio such that:
-@@ -584,13 +585,30 @@ void dsi_link_clk_disable_v2(struct msm_dsi_host *msm_host)
-  *  FIXME: Reconsider this if/when CMD mode handling is rewritten to use
-  *  transfer time and data overhead as a starting point of the calculations.
-  */
--static unsigned long dsi_adjust_pclk_for_compression(const struct drm_display_mode *mode,
--		const struct drm_dsc_config *dsc)
-+static unsigned long
-+dsi_adjust_pclk_for_compression(const struct drm_display_mode *mode,
-+				const struct drm_dsc_config *dsc,
-+				bool is_bonded_dsi)
- {
--	int new_hdisplay = DIV_ROUND_UP(mode->hdisplay * drm_dsc_get_bpp_int(dsc),
--			dsc->bits_per_component * 3);
-+	int hdisplay, new_hdisplay, new_htotal;
- 
--	int new_htotal = mode->htotal - mode->hdisplay + new_hdisplay;
-+	/*
-+	 * For bonded DSI, split hdisplay across two links and round up each
-+	 * half separately, passing the full hdisplay would only round up once.
-+	 * This also aligns with the hdisplay we program later in
-+	 * dsi_timing_setup()
-+	 */
-+	hdisplay = mode->hdisplay;
-+	if (is_bonded_dsi)
-+		hdisplay /= 2;
-+
-+	new_hdisplay = DIV_ROUND_UP(hdisplay * drm_dsc_get_bpp_int(dsc),
-+				    dsc->bits_per_component * 3);
-+
-+	if (is_bonded_dsi)
-+		new_hdisplay *= 2;
-+
-+	new_htotal = mode->htotal - mode->hdisplay + new_hdisplay;
- 
- 	return mult_frac(mode->clock * 1000u, new_htotal, mode->htotal);
- }
-@@ -603,12 +621,12 @@ static unsigned long dsi_get_pclk_rate(const struct drm_display_mode *mode,
- 	pclk_rate = mode->clock * 1000u;
- 
- 	if (dsc)
--		pclk_rate = dsi_adjust_pclk_for_compression(mode, dsc);
-+		pclk_rate = dsi_adjust_pclk_for_compression(mode, dsc, is_bonded_dsi);
- 
- 	/*
- 	 * For bonded DSI mode, the current DRM mode has the complete width of the
- 	 * panel. Since, the complete panel is driven by two DSI controllers,
--	 * the clock rates have to be split between the two dsi controllers.
-+	 * the clock rates have to be split between the two DSI controllers.
- 	 * Adjust the byte and pixel clock rates for each dsi host accordingly.
- 	 */
- 	if (is_bonded_dsi)
--- 
-2.53.0
-
+Best regards,
+Krzysztof
 
