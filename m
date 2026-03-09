@@ -1,225 +1,231 @@
-Return-Path: <linux-arm-msm+bounces-96308-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96309-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SK3YBCv/rmkxLQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96308-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 18:11:07 +0100
+	id iL+OKYz/rmkLLgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96309-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 18:12:44 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 86CA823D6B6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 18:11:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 16D9923D72A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 18:12:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9BDF8313ADD1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2026 17:05:18 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1A65230465EE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2026 17:06:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6FCF13B8948;
-	Mon,  9 Mar 2026 17:04:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09AF53B8BDA;
+	Mon,  9 Mar 2026 17:06:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KVuu04LI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="msJ9oAje"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8670E3B4E8F
-	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Mar 2026 17:04:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E38B3B52F5
+	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Mar 2026 17:06:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773075893; cv=none; b=sDWAIvqc/ucGpzsjIeNMT3COT/lQWY7Ak90y6EMlKh5bxBfyFnxQj3Gy/8CsnK6MEhF88MGQMomTgeFjAura+JbgPG81fCA7XRs6rS7suSGJ+BWDcuiRokxaqWGgX0ds8vXezDsJ22JOqA2N4YqkBrvGoPxn9cD0MpSam1qNruQ=
+	t=1773075962; cv=none; b=CjmmyxS4qSle0qDwlipK/ntuBT5e86rF5zPibHRZhWFhKeW1uqyGT4zYp5q9oAwdJyKyMNJO7WgTT+W2At++alij+rF6+dc2DmDyAi8Mk9qiPPBp84GPLTnDZeP0M7h+aDADEGdTiyDuAc4u4YNkjY80sHQA+lOTdgxhwduLhVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773075893; c=relaxed/simple;
-	bh=/dIZrM5IUttYsSyyQTMorm0yElUCp9TuGSDmE5kDcdU=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=nu73oqvtDIwCOpdR0IOjfNHSrChlZ4f7i0ygCwXX/4MeXU4DeF4Gs5VEkv4KOgM7NpqXraPz8F1cFGXS7zyW6h/PbjLve4W717fxLkny+Oyi8pXPcY7MgkhWz3pnnU7mRaji3JTCmYhJ0dPlUroYeTGAK3wx0dSqLfWozhbceAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KVuu04LI; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4853f2826f7so9526335e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2026 10:04:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773075888; x=1773680688; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=EjqtMmTP6qLcmK14ISsOFqL48TISXYv0ejZVuQlmDiE=;
-        b=KVuu04LIzBcrXS8Qv2YGmaAZKHlNy/Pw/EBzYhuFrf43rd0oesqY0zbpHtY6OERqqG
-         HWr8R15kFzUjuaYfq+mhKk4ULaisDyx/xn/GyC7f+Fc8vhWJOK/brMzRJ9z+0bVYaKsb
-         LchZaUJHepnJZVTKnD9lxawN3EKEQHQ36tizAvHkx5sfYX3b8sKnjW8MqH92Wk4TuEiq
-         Fk7UoHw0TW9NChdRNnVEs5/X2Q/P2dnD4gso3iiFJt6QWghaPWU/SYvjxU7ywKCwyWr0
-         ge6CutE7K1zS4kyiIYOaNnBs4Fbqi+5/S+zMNSiYjEkE5DSDcfTgBDHMyzwryt49mcME
-         KMDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773075888; x=1773680688;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EjqtMmTP6qLcmK14ISsOFqL48TISXYv0ejZVuQlmDiE=;
-        b=jintfcCWijb0NwMwW576BU/N0TrB6Leam3y6KbFczJar3C+F1qi/wMiQVkvokS35ok
-         ELf7B0UnEGkEm3h+lTzTRiLMo2ttftrTXCNpGjkmwv0X1+XCDMij4R6C4DsLIo78R5tq
-         MSa1JoJ9GbbyNk1Agkl3AeHawxpZLfjkgWxjoLmehyDYU/2vbij1O4NU6QnLSIfoT8QU
-         vWKOVMHyFCOKF6vnS6TAz2qTfACI1I6k3AIjxL7xPOJFm2xrVDtSkhyU5/aKV2AsWpW9
-         SJAJSvzq8QPJQstbsApYPGIAQSEpfNE1Faz0ZtFnmLNe/q04g3zV6BrVB3lCE7vw+Wo1
-         KP4Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWao6bTVyGwV2MLdlTpLX3577csi+mnQIOFg0hiPHbycHBac2xoGyQUBo1V1iTEeBXGpmMWpdiOGtCS/90H@vger.kernel.org
-X-Gm-Message-State: AOJu0YyRhpc46El8S7gT/jqrVc4pNvhh/ZuuMY3QKQugI0j9O9c0kK/F
-	MWoMT1SaZUjKAS6k0FR7zRRZ2RmveiU0km2q26yifCgXV5IKoSRmq5mn
-X-Gm-Gg: ATEYQzyVPFBTiwXffbl8bqLpt/bSA2nVwZwvkg4Mx8W73FxSOuf34pUbER4eqMLnLIp
-	kfAQE5JPPcmX14durdHvN+Ra/Xo3hDEov071k26TkUKnj9vTjoKgSuz1lmtuR8n0jMQA6B1Euwt
-	2qAvYEZDQjbAOJLYiltFNHH3SM0ESk80j+Rj1GSEpsWqSa8U4loJtVFDiLwCRp4XPBSIEYjD8q7
-	P2zgrsjgV+5WuVMwP0/YkoGEfFKbixXZZrwjhyLxBohgsDMTuzB5dZiiEVMV4HDPCXOtbUurQGU
-	x/09gk3xgVR2BWuv8rbt8naYw4WVQxF0HfH+yIjGh3IKut26umqxi9F3VwuSpkHd429NaIJtuae
-	ONJjUWT0+3Wr1RjqhNZH555xOiAsa2aGElf/FxAow4gASB2iy9s4gvH38eX31mWgKpWAHel813E
-	3H+kwR/D1WYrpb8/kdaa7/y3Q8tPY9ptiTDp7pnhN9FkPI+2+Crrt+aKScrOF4AOArITx54KFZ6
-	+WQeuf0+xn5ChzfmxCQFJcBDNm2vqzmLIdrrAlRUC0Xz1cdWr7vLAjiZZyWaq4=
-X-Received: by 2002:a05:600c:34d0:b0:477:5cc6:7e44 with SMTP id 5b1f17b1804b1-48526923c5cmr193755105e9.11.1773075887324;
-        Mon, 09 Mar 2026 10:04:47 -0700 (PDT)
-Received: from ?IPV6:2003:ea:8f46:ce00:5f9:7f3c:5f9a:2a3d? (p200300ea8f46ce0005f97f3c5f9a2a3d.dip0.t-ipconnect.de. [2003:ea:8f46:ce00:5f9:7f3c:5f9a:2a3d])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48541a9e549sm4543125e9.12.2026.03.09.10.04.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Mar 2026 10:04:46 -0700 (PDT)
-Message-ID: <b15b378a-fda2-44b9-9d63-bf82919b71b2@gmail.com>
-Date: Mon, 9 Mar 2026 18:04:46 +0100
+	s=arc-20240116; t=1773075962; c=relaxed/simple;
+	bh=Nl4HOblw010V5+pE2S/P/QX3P3lziK39Je/lLiEZbvE=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gp5YTeeIfC3LmEwIhjs57KGejcvk7bIMYg9ODnPvn21P0YX3oEdB+lMJdkGABXWn/q6RANIQvhd/rLwvNIX09KMa94sjT2blaEklUykR6uxyMIR68XhbaSI++FE+a3PoYffe3erubxBopxdAKZYWZrXiWio3uJPzmuuMTj8Ud4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=msJ9oAje; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9B0CC2BCB0
+	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Mar 2026 17:06:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773075961;
+	bh=Nl4HOblw010V5+pE2S/P/QX3P3lziK39Je/lLiEZbvE=;
+	h=From:In-Reply-To:References:Date:Subject:To:Cc:From;
+	b=msJ9oAje6XKRBiEcmRn6agM1ATb9XB+mU9szxDE5oy0CgM93IevTTJBgRvcMXGktR
+	 qRT3Pxw4P5kUEjZChe6QDzxP8PTH8eKaLqCpxyQYCI+ws7OTREm8BMNwjGcw4ExGDk
+	 qKwrcfrRcw2A+/EngBSaxms6bOiYHPLFyTpcxPHJbpwfy9gbbwPYY4BOEckGNpfUNT
+	 Gt795UqTJev2IoROC4z4YjFkqF+3tZevrIHbaykSVpvMtH32+i3+g38B1KBxsvJwaq
+	 Mtok5zno1dFBgDHxqDv0ni+cqE3lD5qb4aBQAEIMI6vrTqRRVdsl+f7eE+hzDy3rPv
+	 Pq2uWLNYztldg==
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-38a2a59baa6so48743831fa.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2026 10:06:01 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCWgTmJltxyDJ+JxIMQ6t8YGsBNK5LW/Ovr3bzgvXfZw8UQZNORHEZQfMssvYjGpfKMdNeyILqnHlapTzbAV@vger.kernel.org
+X-Gm-Message-State: AOJu0YxNy7KVBoMJQpM8PwgLQYKrOlkPjcu68zs036f7VbYAm69hS9b0
+	RhKPuXcqMLdXPRGJ4Bsrfecl6wc2ZFtKcHYweBy2ujImiaSfTq1CVOyYjNjzdqjblil6hSF40AB
+	bVhFFDJQ0eWOJIPaG4c5FmUntpRZFPJjXURS2jTvY5A==
+X-Received: by 2002:a05:651c:2212:b0:38a:42ec:9f84 with SMTP id
+ 38308e7fff4ca-38a42ec9ffcmr33518861fa.4.1773075960460; Mon, 09 Mar 2026
+ 10:06:00 -0700 (PDT)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 9 Mar 2026 10:05:59 -0700
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 9 Mar 2026 10:05:59 -0700
+From: Bartosz Golaszewski <brgl@kernel.org>
+In-Reply-To: <aayLkmDRLMuTzXZv@vaman>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: [PATCH v2 net-next 4/5] net: phy: move registering mdio_bus_class and
- mdio_bus_type to libphy
-From: Heiner Kallweit <hkallweit1@gmail.com>
-To: Andrew Lunn <andrew@lunn.ch>,
- Russell King - ARM Linux <linux@armlinux.org.uk>,
- Paolo Abeni <pabeni@redhat.com>, Jakub Kicinski <kuba@kernel.org>,
- David Miller <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Vinod Koul <vkoul@kernel.org>,
- Neil Armstrong <neil.armstrong@linaro.org>
-Cc: "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
- Philipp Zabel <p.zabel@pengutronix.de>,
- linux-arm-msm <linux-arm-msm@vger.kernel.org>, linux-clk@vger.kernel.org,
- linux-phy@lists.infradead.org
-References: <9d5724bc-e525-4f8f-b3f8-b16dd5a1164e@gmail.com>
-Content-Language: en-US
-In-Reply-To: <9d5724bc-e525-4f8f-b3f8-b16dd5a1164e@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 86CA823D6B6
+References: <20260302-qcom-qce-cmd-descr-v11-0-4bf1f5db4802@oss.qualcomm.com>
+ <20260302-qcom-qce-cmd-descr-v11-12-4bf1f5db4802@oss.qualcomm.com>
+ <aahHeR9j7q4_ynYK@vaman> <CAMRc=Mc48+NyMPkFRa8GPv-odCe=r9WXJWUZYkTsaY53Ev_stQ@mail.gmail.com>
+ <aayLkmDRLMuTzXZv@vaman>
+Date: Mon, 9 Mar 2026 10:05:59 -0700
+X-Gmail-Original-Message-ID: <CAMRc=MeJNQq8AF9SrJYY=CNOF62UXpaX7Tzuk5VSfaXoWSCGRg@mail.gmail.com>
+X-Gm-Features: AaiRm52AwUikzvApltwtSp3ZuI8KyckqNAj_xcMnQHdUmblkYlZhjv-tlMSJcGs
+Message-ID: <CAMRc=MeJNQq8AF9SrJYY=CNOF62UXpaX7Tzuk5VSfaXoWSCGRg@mail.gmail.com>
+Subject: Re: [PATCH RFC v11 12/12] dmaengine: qcom: bam_dma: add support for
+ BAM locking
+To: Vinod Koul <vkoul@kernel.org>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, Jonathan Corbet <corbet@lwn.net>, 
+	Thara Gopinath <thara.gopinath@gmail.com>, Herbert Xu <herbert@gondor.apana.org.au>, 
+	"David S. Miller" <davem@davemloft.net>, Udit Tiwari <quic_utiwari@quicinc.com>, 
+	Daniel Perez-Zoghbi <dperezzo@quicinc.com>, Md Sadre Alam <mdalam@qti.qualcomm.com>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Peter Ujfalusi <peter.ujfalusi@gmail.com>, 
+	Michal Simek <michal.simek@amd.com>, Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org, 
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Bartosz Golaszewski <brgl@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: 16D9923D72A
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCPT_COUNT_TWELVE(0.00)[16];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	TAGGED_FROM(0.00)[bounces-96308-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	TO_DN_EQ_ADDR_SOME(0.00)[];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-96309-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,lwn.net,gmail.com,gondor.apana.org.au,davemloft.net,quicinc.com,qti.qualcomm.com,kernel.org,amd.com,vger.kernel.org,lists.infradead.org,linaro.org];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,mail.gmail.com:mid,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[21];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MISSING_XM_UA(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[hkallweit1@gmail.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	RCVD_COUNT_FIVE(0.00)[5];
-	MID_RHS_MATCH_FROM(0.00)[];
-	NEURAL_HAM(-0.00)[-0.999];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Action: no action
 
-The MDIO consumer side shouldn't register class and bus_type.
-Therefore move this to libphy.
+On Sat, 7 Mar 2026 21:33:22 +0100, Vinod Koul <vkoul@kernel.org> said:
+> On 04-03-26, 16:27, Bartosz Golaszewski wrote:
+>> On Wed, Mar 4, 2026 at 3:53=E2=80=AFPM Vinod Koul <vkoul@kernel.org> wro=
+te:
+>> >
+>> > On 02-03-26, 16:57, Bartosz Golaszewski wrote:
+>> > > Add support for BAM pipe locking. To that end: when starting the DMA=
+ on
+>> > > an RX channel - wrap the already issued descriptors with additional
+>> > > command descriptors performing dummy writes to the base register
+>> > > supplied by the client via dmaengine_slave_config() (if any) alongsi=
+de
+>> > > the lock/unlock HW flags.
+>> > >
+>> > > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm=
+.com>
+>>
+>> [snip]
+>>
+>> > > +static struct bam_async_desc *
+>> > > +bam_make_lock_desc(struct bam_chan *bchan, struct scatterlist *sg,
+>> > > +                struct bam_cmd_element *ce, unsigned int flag)
+>> > > +{
+>> > > +     struct dma_chan *chan =3D &bchan->vc.chan;
+>> > > +     struct bam_async_desc *async_desc;
+>> > > +     struct bam_desc_hw *desc;
+>> > > +     struct virt_dma_desc *vd;
+>> > > +     struct virt_dma_chan *vc;
+>> > > +     unsigned int mapped;
+>> > > +     dma_cookie_t cookie;
+>> > > +     int ret;
+>> > > +
+>> > > +     async_desc =3D kzalloc_flex(*async_desc, desc, 1, GFP_NOWAIT);
+>> > > +     if (!async_desc) {
+>> > > +             dev_err(bchan->bdev->dev, "failed to allocate the BAM =
+lock descriptor\n");
+>> > > +             return NULL;
+>> > > +     }
+>> > > +
+>> > > +     async_desc->num_desc =3D 1;
+>> > > +     async_desc->curr_desc =3D async_desc->desc;
+>> > > +     async_desc->dir =3D DMA_MEM_TO_DEV;
+>> > > +
+>> > > +     desc =3D async_desc->desc;
+>> > > +
+>> > > +     bam_prep_ce_le32(ce, bchan->slave.dst_addr, BAM_WRITE_COMMAND,=
+ 0);
+>> > > +     sg_set_buf(sg, ce, sizeof(*ce));
+>> > > +
+>> > > +     mapped =3D dma_map_sg_attrs(chan->slave, sg, 1, DMA_TO_DEVICE,=
+ DMA_PREP_CMD);
+>> > > +     if (!mapped) {
+>> > > +             kfree(async_desc);
+>> > > +             return NULL;
+>> > > +     }
+>> > > +
+>> > > +     desc->flags |=3D cpu_to_le16(DESC_FLAG_CMD | flag);
+>> > > +     desc->addr =3D sg_dma_address(sg);
+>> > > +     desc->size =3D sizeof(struct bam_cmd_element);
+>> > > +
+>> > > +     vc =3D &bchan->vc;
+>> > > +     vd =3D &async_desc->vd;
+>> > > +
+>> > > +     dma_async_tx_descriptor_init(&vd->tx, &vc->chan);
+>> > > +     vd->tx.flags =3D DMA_PREP_CMD;
+>> > > +     vd->tx.desc_free =3D vchan_tx_desc_free;
+>> > > +     vd->tx_result.result =3D DMA_TRANS_NOERROR;
+>> > > +     vd->tx_result.residue =3D 0;
+>> > > +
+>> > > +     cookie =3D dma_cookie_assign(&vd->tx);
+>> > > +     ret =3D dma_submit_error(cookie);
+>> >
+>> > I am not sure I understand this.
+>> >
+>> > At start you add a descriptor in the queue, ideally which should be
+>> > queued after the existing descriptors are completed!
+>> >
+>> > Also I thought you want to append Pipe cmd to descriptors, why not do
+>> > this while preparing the descriptors and add the pipe cmd and start an=
+d
+>> > end of the sequence when you prepare... This was you dont need to crea=
+te
+>> > a cookie like this
+>> >
+>>
+>> Client (in this case - crypto engine) can call
+>> dmaengine_prep_slave_sg() multiple times adding several logical
+>> descriptors which themselves can have several hardware descriptors. We
+>> want to lock the channel before issuing the first queued descriptor
+>> (for crypto: typically data descriptor) and unlock it once the final
+>> descriptor is processed (typically command descriptor). To that end:
+>> we insert the dummy command descriptor with the lock flag at the head
+>> of the queue and the one with the unlock flag at the tail - "wrapping"
+>> the existing queue with lock/unlock operations.
+>
+> Why not do this per prep call submitted to the engine. It would be
+> simpler to just add lock and unlock to the start and end of transaction.
+>
 
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
----
- drivers/net/phy/mdio_bus.c   | 23 -----------------------
- drivers/net/phy/phy_device.c | 13 +++++++++++++
- 2 files changed, 13 insertions(+), 23 deletions(-)
+Becuase then we'd have:
 
-diff --git a/drivers/net/phy/mdio_bus.c b/drivers/net/phy/mdio_bus.c
-index c9a495390d2..9fb47332602 100644
---- a/drivers/net/phy/mdio_bus.c
-+++ b/drivers/net/phy/mdio_bus.c
-@@ -905,28 +905,5 @@ const struct bus_type mdio_bus_type = {
- };
- EXPORT_SYMBOL(mdio_bus_type);
- 
--static int __init mdio_bus_init(void)
--{
--	int ret;
--
--	ret = class_register(&mdio_bus_class);
--	if (!ret) {
--		ret = bus_register(&mdio_bus_type);
--		if (ret)
--			class_unregister(&mdio_bus_class);
--	}
--
--	return ret;
--}
--
--static void __exit mdio_bus_exit(void)
--{
--	class_unregister(&mdio_bus_class);
--	bus_unregister(&mdio_bus_type);
--}
--
--subsys_initcall(mdio_bus_init);
--module_exit(mdio_bus_exit);
--
- MODULE_LICENSE("GPL");
- MODULE_DESCRIPTION("MDIO bus/device layer");
-diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
-index d1cbcfc3d2a..0edff47478c 100644
---- a/drivers/net/phy/phy_device.c
-+++ b/drivers/net/phy/phy_device.c
-@@ -3913,6 +3913,14 @@ static int __init phy_init(void)
- {
- 	int rc;
- 
-+	rc = class_register(&mdio_bus_class);
-+	if (rc)
-+		return rc;
-+
-+	rc = bus_register(&mdio_bus_type);
-+	if (rc)
-+		goto err_class;
-+
- 	rtnl_lock();
- 	ethtool_set_ethtool_phy_ops(&phy_ethtool_phy_ops);
- 	phylib_register_stubs();
-@@ -3941,6 +3949,9 @@ static int __init phy_init(void)
- 	phylib_unregister_stubs();
- 	ethtool_set_ethtool_phy_ops(NULL);
- 	rtnl_unlock();
-+	bus_unregister(&mdio_bus_type);
-+err_class:
-+	class_unregister(&mdio_bus_class);
- 
- 	return rc;
- }
-@@ -3953,6 +3964,8 @@ static void __exit phy_exit(void)
- 	phylib_unregister_stubs();
- 	ethtool_set_ethtool_phy_ops(NULL);
- 	rtnl_unlock();
-+	bus_unregister(&mdio_bus_type);
-+	class_unregister(&mdio_bus_class);
- }
- 
- subsys_initcall(phy_init);
--- 
-2.53.0
+  [LOCK] [DATA] [UNLOCK] [LOCK] [CMD] [UNLOCK]
 
+while what we want is:
 
+  [LOCK] [DATA] [CMD] [UNLOCK]
+
+Bartosz
 
