@@ -1,433 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-96133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id EATRLnVurmn8EAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 07:53:41 +0100
+	id TXzUN+RvrmlPEQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 07:59:48 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D082234720
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 07:53:41 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E45D6234972
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 07:59:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 2FCE2300E17C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2026 06:53:40 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 3E6683002D23
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2026 06:58:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 599F73624A8;
-	Mon,  9 Mar 2026 06:53:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 265F7362141;
+	Mon,  9 Mar 2026 06:58:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UsIEUek4";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="gADuGPTg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f9rPG1Bc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDDD635DA41
-	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Mar 2026 06:53:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00048262D0B;
+	Mon,  9 Mar 2026 06:58:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773039217; cv=none; b=dPDxyNO74kJnn2/BbHkBJ2VxAD9kPyBKQEI/sYCwu1q1QG8IwqiBX26zzv84LHa3G7pg8ZeCVlLjYm5Wgz/hG1CHGfe3l2QnBIDodriiy0Uupe5A75jE+sRIa2Y2+/C7E63KGADAnKydCP4X+ESk3sZ+6OI4TBZCSNvTEnZ3Go0=
+	t=1773039521; cv=none; b=ehXD7VQpKVoWCRPptxFmcLfPhGiGdcnFhPSEb2v70ZVwoGjSComgXPc1UsV8s69yA6NVCT6OvQozdJPaC1grw9YpV5ojJkGvHsCSyacW7C0OmmW5Tp5DzdX5zgtYbwByPico8T4A+pdWEACbvekPiev6IS9gGVcpY1UmQtG8Ll0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773039217; c=relaxed/simple;
-	bh=inf3CvJ7ATeqqM3HBNoEykf6mIlvXg+5yMAPESU9CNc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gZ8mfemBeokq0TujUvgYZQwFJB7T6c6iiwQPr+S+bmrY5vH7tClp/i74cBvPgv4NUrwsd3GR2Gi6KpAEOzo5W1dQadULC+dcKiwt1BelyYUGYeHJZ45gEmFN+MEjgBH4ndVHsepzZyt5noL+AjVK4h2gCZIexHenZbeXwJsu4GU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UsIEUek4; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=gADuGPTg; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 629604bL1667805
-	for <linux-arm-msm@vger.kernel.org>; Mon, 9 Mar 2026 06:53:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	mVgFqX2DBPDBaFLa3PVw54gA+GcENZGtutXAv5LndUk=; b=UsIEUek4Fe3f4Aqn
-	fxQRIA/Kk6hOUiaqGNLJsR2oFJYcB3CDNQlg/Hb46GLjLpfJngErRAaLpqsnRq/4
-	FSNYnFEIsCGfpt6WEzzUinND8smSGzsVEC+gj9sxjAtZSU2Li1gZCTJPT0weTD7w
-	7BzN5yu3jPZ9FUkyo0Pb1cCM2yTwpmGzzZ5Klv6LBzCxJwELQM+Ttm3Abc0ogiV7
-	JytN8LDB7w9uVRnVv5ARinNUO3H5lEPndqIQ9KgWMLFs8HnK51AN/be03hiQ+uS4
-	V9OqsfmOJpvRXgd0UgEc4ziMwn9c2ZJWHV5jD55sisvRHFWv09Gv1SbonyLYpkl/
-	YZDBfQ==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4crc83c738-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2026 06:53:35 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-c629a3276e9so41362616a12.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Mar 2026 23:53:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1773039215; x=1773644015; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mVgFqX2DBPDBaFLa3PVw54gA+GcENZGtutXAv5LndUk=;
-        b=gADuGPTgfR+V/97EngJrgwvME0RjAydWGc/IE1Uc68FEavXPWFQ1Tvm/46c0REb4L0
-         +YzAuzkHdop6zsHl5bPnRlyE2xUZskTnf1R1My7MCk3HzvyIXg2qn08aqG+rCAI6v4EJ
-         /ysWY8l/mXiZUvRzYtwzNHlKIGTUa0sHwqbww1TD15kYe4v5cNAGu619dQo7IOhnKAKQ
-         wCwK1+zaNOFcTaaLKUy9Fn2+GGeRFziJxT6a309rnmBS7D3YI6EGnkOdsdo59hNy4Xkj
-         IAdBn7XG8kWdawTsr9/mge8fFncAaz8jWMkWIGrb2+F7H6SGM2LkW7XU1ZKcUdWnB6ue
-         ataQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773039215; x=1773644015;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mVgFqX2DBPDBaFLa3PVw54gA+GcENZGtutXAv5LndUk=;
-        b=kJBC1BFCf6Zs52lyN6amU77ktCW04feBX6Wl12vTgkXwKHdfiQQmns0P/DM2TjO81C
-         T/cLhpwyPXqR25EhI76cU+mRUIRItyxa9T1esmFFLzR6TmlOj9fdmAtUL3JzDz8o+xWX
-         XWnHegKISPg/2JdFhtz75N1XH5aLlL5dGaPwuHyOAFe9d64rYizkCLmecHUy9Csh/fee
-         OanKEO0JogaFNpvElMLRVKwi3nDG4rRSoivzrHsx20h/VPm10Qja+dvak4q6M5I2TJYI
-         Ezw1dm2gjxhx60w+ebH98Rcucmn22pjDGrwV+gPVOAjJ+0CBAMjJvBjPvJ8RCU3Eklua
-         PhMg==
-X-Forwarded-Encrypted: i=1; AJvYcCUmPERiclj0q7yP0gtPcPRnS+zHKxk620xUWWVCb+4Kyw5ZIuOVclBn2JP20ZK5usdjVsk8Ydd2s00mVet2@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz5YFFgrTAFeqGPumEe84TpcWtjsSjf00USbGd8sSEDkILnTfnA
-	neuOO+F5be7VUDvtpBAyYTEFP9vOV7wKAuW8e5hGyHhMu9Kjdr1tM+wRVa4bFe4BEEdhaKm4qxi
-	+AxPiDLNHGHhzI47HXzXFtg+oirs0VaVbxAiYjGZI8obAswmC9C3gk9PJQ2xL4fVnH/zx
-X-Gm-Gg: ATEYQzxSgGoxU833BGwSzdrkWIglA26e1A/c4HjSTI+rTZmfZihQZyFYSLHhrYDaqIZ
-	LW6ZHf79YvHdFma+TymgfMGaRZYLhrfKNaqdLejGqG+dbZ6dlerGPjNRcQpBAGpB49KUhfHs57g
-	DY6hOf8B/+POCEDgHr5BewWqBgXwgW8lCBez/ztnQriTTjsyN2QlIzEykyyfaXjrHu7mjUdEpVo
-	s6FpvKzvxyuV0fhwgsQLAZ07SgS8/R1brQGi+uzMzvNYD4goa8+L6Uw9XDMjLHf2fLe5vgI5NtP
-	0DpG9W9VVLoTY3UwcewKkPNlHaRn39rg5wyG2ubG13iMcIcenJ8dp1jPf0Gpq05ME0cVWymbTkh
-	CacQYOf3EjjIrNCGJMj933qAAg+UKq+b84t46ssjTI0uSdmZoxg==
-X-Received: by 2002:a05:6a00:1805:b0:829:7692:cddc with SMTP id d2e1a72fcca58-829a2e5a4b2mr10500553b3a.21.1773039214517;
-        Sun, 08 Mar 2026 23:53:34 -0700 (PDT)
-X-Received: by 2002:a05:6a00:1805:b0:829:7692:cddc with SMTP id d2e1a72fcca58-829a2e5a4b2mr10500515b3a.21.1773039214023;
-        Sun, 08 Mar 2026 23:53:34 -0700 (PDT)
-Received: from [10.206.99.28] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-829a48a54cesm9002319b3a.48.2026.03.08.23.53.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 08 Mar 2026 23:53:33 -0700 (PDT)
-Message-ID: <b4751c57-8ed2-4bed-8c0f-34f0a2e54345@oss.qualcomm.com>
-Date: Mon, 9 Mar 2026 12:23:25 +0530
+	s=arc-20240116; t=1773039521; c=relaxed/simple;
+	bh=UrB+nwLO5Nzq+PPEH+2q9A2ciYRrBSH/FL5LeliDRRU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=bbvBPqecUy9jVSjhuwMPLjMI3Q8wHFy9LxNxUZHnbIrnaitUxlv0Vb2ESSkCy5c3pV+OkBKEeiJ0eZdLZyN58Vqb77c1Y5s0bxQTlk1sDXrrM/7tkjhclz4NGpTIbWAwzOC7FGjZmTgP/4KhHKDS+5kMxR7uBZOCSTdBor53o8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f9rPG1Bc; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 93363C4CEF7;
+	Mon,  9 Mar 2026 06:58:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773039520;
+	bh=UrB+nwLO5Nzq+PPEH+2q9A2ciYRrBSH/FL5LeliDRRU=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=f9rPG1BcUBh0y/rj077iBSm6D0pD3VicAhAcVErEggRxVL683kcehZNctDcTDst87
+	 S2TLONMaFHVSuSLhTwmLiVJHIkrPW+VW55IbSJgtqHfN3IdV/hhdE04G7Hqfky5x3U
+	 L8OjfxMD2OXbc8zuA9Gwiw7vhM4Jshx62nDRB8ooUliTQwA1fabyfsJaSC9pVDetk4
+	 jJtvBtE8xFDrwy4JF/gxdiuAHBq+Yvcrwt5QCjRGJ1ztSroKkPALX6GOs3e2S4dhH1
+	 Tc+Gv9L3rg9pJMYevzoxmjvgCMgGhY81erXOuL5400WtBvON2ymLqWGF7/Bx27kXy+
+	 XLjum5t5P4eHQ==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 815A1EF36E9;
+	Mon,  9 Mar 2026 06:58:40 +0000 (UTC)
+From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>
+Subject: [PATCH v6 0/5] soc: qcom: ice: Fix race between qcom_ice_probe()
+ and of_qcom_ice_get()
+Date: Mon, 09 Mar 2026 12:28:30 +0530
+Message-Id: <20260309-qcom-ice-fix-v6-0-4dd3347df530@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 14/18] accel/qda: Add FastRPC dynamic invocation
- support
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Oded Gabbay <ogabbay@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
-        Shuah Khan <skhan@linuxfoundation.org>, Joerg Roedel <joro@8bytes.org>,
-        Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
-        dri-devel@lists.freedesktop.org, linux-doc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        iommu@lists.linux.dev, linux-media@vger.kernel.org,
-        linaro-mm-sig@lists.linaro.org,
-        Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-        Bharath Kumar <quic_bkumar@quicinc.com>,
-        Chenna Kesava Raju <quic_chennak@quicinc.com>
-References: <20260224-qda-firstpost-v1-0-fe46a9c1a046@oss.qualcomm.com>
- <20260224-qda-firstpost-v1-14-fe46a9c1a046@oss.qualcomm.com>
- <57we5xzyxvctwzgggqpemlqf7q524mbaqnczqxua6eaehqv6vw@bq4raxwkbava>
-Content-Language: en-US
-From: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
-In-Reply-To: <57we5xzyxvctwzgggqpemlqf7q524mbaqnczqxua6eaehqv6vw@bq4raxwkbava>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=R9UO2NRX c=1 sm=1 tr=0 ts=69ae6e6f cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=EUspDBNiAAAA:8 a=m5BqE4nBN3PhNdyHHPEA:9 a=QEXdDO2ut3YA:10
- a=3WC7DwWrALyhR5TkjVHa:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA5MDA2MiBTYWx0ZWRfXxlJ/fle7YWVZ
- K7paTy0qWtUWicJUGerX0hqIscbwW4AdIftoPAS5YTdmt5lKckmHNYguae2XFbEHcWz2hBRpDPl
- mYqJz7ni6csgY3WIIrSyk3vQdkNKV7DWdZP9CT5rIcWdKW+SdIot2zKf+oV2aB6q11QpM6iBEzR
- W5LmH+cGeW7a8Fcvqxv2qdqqZtfRLT4SQmthP70q1JsrSgQCVo10AInodA7wrxtHjBC76kWEy+A
- Bu2E6hI7s51smQ/KcoXOjRRSVlDqi6mo1NfMpgDRz+MkmCSqh7QJFeM1ga/f+vvn1h/PTBOrNfX
- 9F6uhQL0qJHUc3L7RHEalJGA8IX9JjnjqEBM8izFFRHQFwhLIj32FIMcNLWKhgEgPFxwlBcb87L
- MDUmTh57uUs8ZziT+N62KtGUVZUfytewoJg5p0def5pQkronHYUAUYAzvIq6SpMRhr3bWqgwp/O
- iBP2ZK0RHdCXzGnGEbw==
-X-Proofpoint-ORIG-GUID: Aa9QOAOrKyyMfJiXQh4iCfviKj-7fX8i
-X-Proofpoint-GUID: Aa9QOAOrKyyMfJiXQh4iCfviKj-7fX8i
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-09_02,2026-03-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 lowpriorityscore=0 phishscore=0 bulkscore=0
- adultscore=0 priorityscore=1501 spamscore=0 malwarescore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603090062
-X-Rspamd-Queue-Id: 7D082234720
+X-B4-Tracking: v=1; b=H4sIAJdvrmkC/3XOwQrCMAwG4FeRnq3ENO2mJ99DPHRt1II6XXUos
+ nc320UZ7hL4f5KPvFXmJnFW69lbNdymnOqLBDefqXD0lwPrFCUrBHSAS9C3UJ91Cqz36akjeuO
+ BbGUwKjm5Niz1wG13ko8p3+vmNegt9u0E1KIGvQpLX9noLGDY1Dkvbg9/kq3zQobqvdb8GGhGh
+ hHDBW9LcgZX+2LCoK9hAEcGiQHsbEHgbQxTf9hfoxwZVgymgktPVLlAf4yu6z6eyp7newEAAA=
+ =
+X-Change-ID: 20260210-qcom-ice-fix-d2a3a045b32d
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Adrian Hunter <adrian.hunter@intel.com>, 
+ Ulf Hansson <ulf.hansson@linaro.org>, 
+ Manivannan Sadhasivam <mani@kernel.org>, 
+ "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, 
+ "Martin K. Petersen" <martin.petersen@oracle.com>, 
+ Abel Vesa <abelvesa@kernel.org>, Abel Vesa <abelvesa@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-mmc@vger.kernel.org, linux-scsi@vger.kernel.org, 
+ Sumit Garg <sumit.garg@oss.qualcomm.com>, mani@kernel.org, 
+ Neeraj Soni <neeraj.soni@oss.qualcomm.com>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
+ stable@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2294;
+ i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
+ bh=UrB+nwLO5Nzq+PPEH+2q9A2ciYRrBSH/FL5LeliDRRU=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBprm+caLzDzWwmsdpiMx11AV2ItnugWPKaWQR9x
+ YJ5rdtbVuKJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCaa5vnAAKCRBVnxHm/pHO
+ 9T+wB/wOL3Np3hdKYPKOqHmCruktfr3OxHqw8OhBDfJWNoQtbQMk4IUFTx28LU8GrH931Z6vr4u
+ INN8lxfKMWHV4zE0vpdI65rykagJj7/8F8mGCzqn3+PzMV0vY011LEURD4XU7zF6ZeY6xNU3RWi
+ 0vj7FmfRNv18nBCSPDlLd5SbGAqXyvNUgpohNHbsxsKqjiq5OtEKN/gki/xqS+9uKg5qsi3z+xG
+ g8ooEjXd8vVs8+IyPzMdj1Qckbvg3he29eM2M6/8ypqMtEDtYmQqM/uraQ0MXSIri05oTuHzciW
+ jKvTG7tRlgJL1w3v1SQC99hHo4qljP2Ph+pEWHq9npN6AQEy
+X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
+X-Endpoint-Received: by B4 Relay for
+ manivannan.sadhasivam@oss.qualcomm.com/default with auth_id=461
+X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Reply-To: manivannan.sadhasivam@oss.qualcomm.com
+X-Rspamd-Queue-Id: E45D6234972
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCPT_COUNT_TWELVE(0.00)[24];
-	FREEMAIL_CC(0.00)[kernel.org,lwn.net,linuxfoundation.org,8bytes.org,arm.com,linux.intel.com,suse.de,gmail.com,ffwll.ch,linaro.org,amd.com,lists.freedesktop.org,vger.kernel.org,lists.linux.dev,lists.linaro.org,oss.qualcomm.com,quicinc.com];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-96133-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-96134-lists,linux-arm-msm=lfdr.de,manivannan.sadhasivam.oss.qualcomm.com];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,inv.sc:url,qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[ekansh.gupta@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	NEURAL_HAM(-0.00)[-0.978];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	MIME_TRACE(0.00)[0:+];
+	TO_DN_SOME(0.00)[];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	NEURAL_HAM(-0.00)[-0.936];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	HAS_REPLYTO(0.00)[manivannan.sadhasivam@oss.qualcomm.com];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:replyto,oss.qualcomm.com:mid,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo,qualcomm.com:email]
 X-Rspamd-Action: no action
 
+Hi,
 
+This series fixes the race betwen qcom_ice_probe() and of_qcom_ice_get()
+but synchronizing the two APIs and properly propagating the error codes to
+clients.
 
-On 2/24/2026 4:40 AM, Dmitry Baryshkov wrote:
-> On Tue, Feb 24, 2026 at 12:39:08AM +0530, Ekansh Gupta wrote:
->> Extend the QDA FastRPC implementation to support dynamic remote
->> procedure calls from userspace. A new DRM_QDA_INVOKE ioctl is added,
->> which accepts a qda_invoke_args structure containing a remote handle,
->> FastRPC scalars value and a pointer to an array of fastrpc_invoke_args
->> describing the individual arguments. The driver copies the scalar and
->> argument array into a fastrpc_invoke_context and reuses the existing
->> buffer overlap and packing logic to build a GEM-backed message buffer
->> for transport.
->>
->> The FastRPC core gains a FASTRPC_RMID_INVOKE_DYNAMIC method type and a
->> fastrpc_prepare_args_invoke() helper that reads the qda_invoke_args
->> header and argument descriptors from user or kernel memory using a
->> copy_from_user_or_kernel() helper. The generic fastrpc_prepare_args()
->> path is updated to handle the dynamic method alongside the existing
->> INIT_ATTACH and INIT_RELEASE control calls, deriving the number of
->> buffers and scalars from the provided FastRPC scalars encoding.
->>
->> On the transport side qda_ioctl_invoke() simply forwards the request
->> to fastrpc_invoke() with the dynamic method id, allowing the RPMsg
->> transport and context lookup to treat dynamic calls in the same way as
->> the existing control methods. This patch establishes the basic FastRPC
->> invoke mechanism on top of the QDA GEM and RPMsg infrastructure so
->> that future patches can wire up more complex DSP APIs.
->>
->> Signed-off-by: Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>
->> ---
->>  drivers/accel/qda/qda_drv.c     |  1 +
->>  drivers/accel/qda/qda_fastrpc.c | 48 +++++++++++++++++++++++++++++++++++++++++
->>  drivers/accel/qda/qda_fastrpc.h |  1 +
->>  drivers/accel/qda/qda_ioctl.c   |  5 +++++
->>  drivers/accel/qda/qda_ioctl.h   | 13 +++++++++++
->>  include/uapi/drm/qda_accel.h    | 21 ++++++++++++++++++
->>  6 files changed, 89 insertions(+)
->>
->> diff --git a/drivers/accel/qda/qda_drv.c b/drivers/accel/qda/qda_drv.c
->> index 3034ea660924..f94f780ea50a 100644
->> --- a/drivers/accel/qda/qda_drv.c
->> +++ b/drivers/accel/qda/qda_drv.c
->> @@ -162,6 +162,7 @@ static const struct drm_ioctl_desc qda_ioctls[] = {
->>  	DRM_IOCTL_DEF_DRV(QDA_GEM_CREATE, qda_ioctl_gem_create, 0),
->>  	DRM_IOCTL_DEF_DRV(QDA_GEM_MMAP_OFFSET, qda_ioctl_gem_mmap_offset, 0),
->>  	DRM_IOCTL_DEF_DRV(QDA_INIT_ATTACH, qda_ioctl_attach, 0),
->> +	DRM_IOCTL_DEF_DRV(QDA_INVOKE, qda_ioctl_invoke, 0),
->>  };
->>  
->>  static struct drm_driver qda_drm_driver = {
->> diff --git a/drivers/accel/qda/qda_fastrpc.c b/drivers/accel/qda/qda_fastrpc.c
->> index eda7c90070ee..a48b255ffb1b 100644
->> --- a/drivers/accel/qda/qda_fastrpc.c
->> +++ b/drivers/accel/qda/qda_fastrpc.c
->> @@ -12,6 +12,16 @@
->>  #include "qda_gem.h"
->>  #include "qda_memory_manager.h"
->>  
->> +static int copy_from_user_or_kernel(void *dst, const void __user *src, size_t size)
->> +{
->> +	if ((unsigned long)src >= PAGE_OFFSET) {
->> +		memcpy(dst, src, size);
->> +		return 0;
->> +	} else {
->> +		return copy_from_user(dst, src, size) ? -EFAULT : 0;
->> +	}
-> Nah, it's a direct route to failure. __user is for user pointers, it
-> can't be a kernel data. Define separate functions and be 100% sure
-> whether the data is coming from the user (and thus needs to be
-> sanitized) or of it is coming from the kernel. Otherwise a funny user
-> can pass kernel pointer and get away with your code copying data from or
-> writing data to the kernel buffer.
-I see, I get your comment on the other patch also, I'll fix this.
->
->> +}
->> +
->>  static int copy_to_user_or_kernel(void __user *dst, const void *src, size_t size)
->>  {
->>  	if ((unsigned long)dst >= PAGE_OFFSET) {
->> @@ -509,6 +519,41 @@ static int fastrpc_prepare_args_release_process(struct fastrpc_invoke_context *c
->>  	return 0;
->>  }
->>  
->> +static int fastrpc_prepare_args_invoke(struct fastrpc_invoke_context *ctx, char __user *argp)
->> +{
->> +	struct fastrpc_invoke_args *args = NULL;
->> +	struct qda_invoke_args inv;
->> +	int err = 0;
->> +	int nscalars;
->> +
->> +	if (!argp)
->> +		return -EINVAL;
->> +
->> +	err = copy_from_user_or_kernel(&inv, argp, sizeof(inv));
->> +	if (err)
->> +		return err;
->> +
->> +	nscalars = REMOTE_SCALARS_LENGTH(inv.sc);
->> +
->> +	if (nscalars) {
->> +		args = kcalloc(nscalars, sizeof(*args), GFP_KERNEL);
->> +		if (!args)
->> +			return -ENOMEM;
->> +
->> +		err = copy_from_user_or_kernel(args, (const void __user *)(uintptr_t)inv.args,
->> +					       nscalars * sizeof(*args));
-> So... You are allowing users to specify the address in the kernel
-> address space? Are you... sure?
-ack, I'll fix this
->
->> +		if (err) {
->> +			kfree(args);
->> +			return err;
->> +		}
->> +	}
->> +	ctx->sc = inv.sc;
->> +	ctx->args = args;
->> +	ctx->handle = inv.handle;
->> +
->> +	return 0;
->> +}
->> +
->>  int fastrpc_prepare_args(struct fastrpc_invoke_context *ctx, char __user *argp)
->>  {
->>  	int err;
->> @@ -521,6 +566,9 @@ int fastrpc_prepare_args(struct fastrpc_invoke_context *ctx, char __user *argp)
->>  	case FASTRPC_RMID_INIT_RELEASE:
->>  		err = fastrpc_prepare_args_release_process(ctx);
->>  		break;
->> +	case FASTRPC_RMID_INVOKE_DYNAMIC:
->> +		err = fastrpc_prepare_args_invoke(ctx, argp);
->> +		break;
->>  	default:
->>  		return -EINVAL;
->>  	}
->> diff --git a/drivers/accel/qda/qda_fastrpc.h b/drivers/accel/qda/qda_fastrpc.h
->> index 744421382079..bcadf9437a36 100644
->> --- a/drivers/accel/qda/qda_fastrpc.h
->> +++ b/drivers/accel/qda/qda_fastrpc.h
->> @@ -237,6 +237,7 @@ struct fastrpc_invoke_context {
->>  /* Remote Method ID table - identifies initialization and control operations */
->>  #define FASTRPC_RMID_INIT_ATTACH	0	/* Attach to DSP session */
->>  #define FASTRPC_RMID_INIT_RELEASE	1	/* Release DSP session */
->> +#define FASTRPC_RMID_INVOKE_DYNAMIC	0xFFFFFFFF	/* Dynamic method invocation */
->>  
->>  /* Common handle for initialization operations */
->>  #define FASTRPC_INIT_HANDLE		0x1
->> diff --git a/drivers/accel/qda/qda_ioctl.c b/drivers/accel/qda/qda_ioctl.c
->> index 1066ab6ddc7b..e90aceabd30d 100644
->> --- a/drivers/accel/qda/qda_ioctl.c
->> +++ b/drivers/accel/qda/qda_ioctl.c
->> @@ -192,3 +192,8 @@ int fastrpc_release_current_dsp_process(struct qda_dev *qdev, struct drm_file *f
->>  {
->>  	return fastrpc_invoke(FASTRPC_RMID_INIT_RELEASE, qdev->drm_dev, NULL, file_priv);
->>  }
->> +
->> +int qda_ioctl_invoke(struct drm_device *dev, void *data, struct drm_file *file_priv)
->> +{
->> +	return fastrpc_invoke(FASTRPC_RMID_INVOKE_DYNAMIC, dev, data, file_priv);
->> +}
->> diff --git a/drivers/accel/qda/qda_ioctl.h b/drivers/accel/qda/qda_ioctl.h
->> index 044c616a51c6..e186c5183171 100644
->> --- a/drivers/accel/qda/qda_ioctl.h
->> +++ b/drivers/accel/qda/qda_ioctl.h
->> @@ -63,4 +63,17 @@ int qda_ioctl_attach(struct drm_device *dev, void *data, struct drm_file *file_p
->>   */
->>  int fastrpc_release_current_dsp_process(struct qda_dev *qdev, struct drm_file *file_priv);
->>  
->> +/**
->> + * qda_ioctl_invoke - Invoke a remote procedure on the DSP
->> + * @dev: DRM device structure
->> + * @data: User-space data containing invocation parameters
->> + * @file_priv: DRM file private data
->> + *
->> + * This IOCTL handler initiates a remote procedure call on the DSP,
->> + * marshalling arguments, executing the call, and returning results.
->> + *
->> + * Return: 0 on success, negative error code on failure
->> + */
->> +int qda_ioctl_invoke(struct drm_device *dev, void *data, struct drm_file *file_priv);
->> +
->>  #endif /* _QDA_IOCTL_H */
->> diff --git a/include/uapi/drm/qda_accel.h b/include/uapi/drm/qda_accel.h
->> index 4d3666c5b998..01072a9d0a91 100644
->> --- a/include/uapi/drm/qda_accel.h
->> +++ b/include/uapi/drm/qda_accel.h
->> @@ -22,6 +22,9 @@ extern "C" {
->>  #define DRM_QDA_GEM_CREATE		0x01
->>  #define DRM_QDA_GEM_MMAP_OFFSET	0x02
->>  #define DRM_QDA_INIT_ATTACH		0x03
->> +/* Indexes 0x04 to 0x06 are reserved for other requests */
->> +#define DRM_QDA_INVOKE			0x07
->> +
->>  /*
->>   * QDA IOCTL definitions
->>   *
->> @@ -35,6 +38,8 @@ extern "C" {
->>  #define DRM_IOCTL_QDA_GEM_MMAP_OFFSET	DRM_IOWR(DRM_COMMAND_BASE + DRM_QDA_GEM_MMAP_OFFSET, \
->>  						 struct drm_qda_gem_mmap_offset)
->>  #define DRM_IOCTL_QDA_INIT_ATTACH	DRM_IO(DRM_COMMAND_BASE + DRM_QDA_INIT_ATTACH)
->> +#define DRM_IOCTL_QDA_INVOKE		DRM_IOWR(DRM_COMMAND_BASE + DRM_QDA_INVOKE, \
->> +						 struct qda_invoke_args)
->>  
->>  /**
->>   * struct drm_qda_query - Device information query structure
->> @@ -95,6 +100,22 @@ struct fastrpc_invoke_args {
->>  	__u32 attr;
->>  };
->>  
->> +/**
->> + * struct qda_invoke_args - User-space IOCTL arguments for invoking a function
->> + * @handle: Handle identifying the remote function to invoke
->> + * @sc: Scalars parameter encoding buffer counts and attributes
-> Encoding... how?
-I can add more details for this over here or over FASTRPC_BUILD_SCALARS definition.
->
->> + * @args: User-space pointer to the argument array
-> Which is defined at...?
->
->
-> Can you actually write the user code by looking at your uapi header?
-will add more details for this.
->
->> + *
->> + * This structure is passed from user-space to invoke a remote function
->> + * on the DSP. The scalars parameter encodes the number and types of
->> + * input/output buffers.
->> + */
->> +struct qda_invoke_args {
->> +	__u32 handle;
->> +	__u32 sc;
->> +	__u64 args;
->> +};
->> +
->>  #if defined(__cplusplus)
->>  }
->>  #endif
->>
->> -- 
->> 2.34.1
->>
+Merge Strategy
+==============
+
+Due to dependency, all patches should go through Qcom SoC tree.
+
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+---
+Changes in v6:
+- Fixed sparse warnings
+- Link to v5: https://lore.kernel.org/r/20260308-qcom-ice-fix-v5-0-e47e8a44b6c4@oss.qualcomm.com
+
+Changes in v5:
+- Used Xarray instead of platform drvdata for passing the pointer since driver
+  core frees drvdata on probe failure.
+- Link to v4: https://lore.kernel.org/r/20260302-qcom-ice-fix-v4-0-0e65740a5dcc@oss.qualcomm.com
+
+Changes in v4:
+- For supporting multi-ice instances in a SoC, stored the err ptr in platform
+  drvdata instead of in a global pointer.
+- Link to v3: https://lore.kernel.org/r/20260223-qcom-ice-fix-v3-0-6ca5846329f7@oss.qualcomm.com
+
+Changes in v3:
+- Dropped the platform driver removal patch and used the ice_handle to pass
+  error codes. This was done as I learned that we need to have the platform
+  driver design going forward and also removing it introduces other issues.
+- Link to v2: https://lore.kernel.org/r/20260210-qcom-ice-fix-v2-0-9c1ab5d6502c@oss.qualcomm.com
+
+Changes in v2:
+
+- Added MODULE_* macros back
+- Removed spurious platform_device_put()
+- Added patches to remove NULL return
+
+---
+Manivannan Sadhasivam (5):
+      soc: qcom: ice: Fix race between qcom_ice_probe() and of_qcom_ice_get()
+      soc: qcom: ice: Return -ENODEV if the ICE platform device is not found
+      soc: qcom: ice: Return proper error codes from devm_of_qcom_ice_get() instead of NULL
+      mmc: sdhci-msm: Remove NULL check from devm_of_qcom_ice_get()
+      scsi: ufs: ufs-qcom: Remove NULL check from devm_of_qcom_ice_get()
+
+ drivers/mmc/host/sdhci-msm.c | 10 ++++-----
+ drivers/soc/qcom/ice.c       | 49 ++++++++++++++++++++++++++++++++------------
+ drivers/ufs/host/ufs-qcom.c  | 10 ++++-----
+ 3 files changed, 46 insertions(+), 23 deletions(-)
+---
+base-commit: 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f
+change-id: 20260210-qcom-ice-fix-d2a3a045b32d
+
+Best regards,
+-- 
+Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+
 
 
