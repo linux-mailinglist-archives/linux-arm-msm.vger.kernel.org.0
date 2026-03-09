@@ -1,215 +1,225 @@
-Return-Path: <linux-arm-msm+bounces-96296-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96288-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OLjPEtDnrmlRKAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96296-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 16:31:28 +0100
+	id KB98I1zormlRKAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96288-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 16:33:48 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1B9D23BB55
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 16:31:27 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id EDA9323BBF4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 16:33:47 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id DED35305CA91
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2026 15:27:19 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 85E4030743E0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2026 15:24:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41FB03D7D6D;
-	Mon,  9 Mar 2026 15:26:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83A893DA5B5;
+	Mon,  9 Mar 2026 15:24:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="oJhxtnvN"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ezxlHF0h";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="aZUm2jtW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2A13D75D8
-	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Mar 2026 15:26:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A7443D75D8
+	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Mar 2026 15:24:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773069996; cv=none; b=e7c7BxQhplBForIBaWxTrcoR1Y6Q5qDpeZQLC5HKO/a7P16qU4iYEE6PrYHAjnF4GHXNqX9avIfbeVRqYEu1iA17hVvGxhM/pG5bASOQUg0yRDcO/kisgnUudBM1iRc6197cbJuZQXO5iHqCTR6OVQSdXA2iGhnol6yCRatDVqc=
+	t=1773069871; cv=none; b=pr6BpGwe7T9trIYLanv+YY5E5phQ+PnfmkuNC00nudgTGmqSSSPbqoMUeA/PFz7B0xr6yMwTCBX6LMzHbfoQ8P/DNqdzC6OGMv8hWHcgz2MusbvpiPVVlBD8UFATGHRyW3Gs23Lo/sBqb2Y+AzUsnjyG4Om5B0pVF6XUY6zF554=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773069996; c=relaxed/simple;
-	bh=fLdlgK54rTn34EKZI8AHzVRLbm2SJ8RTjlamikvXF3o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ewLwM+/0f1UC/P8lQKgoOYF4SS9SI3QcFs5nrSaacDuVVengcDtvFObA4Fif2SW2BQ33972SACVBHrx3OzXbJbSskHG8b7PARbOsXKLjZXbxvzm+uxlhNdYbWRet3hw+QqSIsH/9IhMp3USy2T89LRWRAw/QTvDuXQ6OrZcIbYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=oJhxtnvN; arc=none smtp.client-ip=209.85.167.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5a12cd0bcd8so6158639e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2026 08:26:34 -0700 (PDT)
+	s=arc-20240116; t=1773069871; c=relaxed/simple;
+	bh=i24TgRrLoGVPLjM+/eKgUisXgQ4vL+kM6dE3Nj1V3G4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=iQCC3x6PvRkSyd7Bo8B8caDryxhgjsBHXzHTJYONMCzjf3Ps1WERclzVcpOHesTReb21tKOGoXWts21I51ObqeERUXFZp1KgXo5ojRlNjCqFUsI7au3MOxWDc351D9aUN0n4WlZLwjRxWMQwcdV9j+EsMn+LGdX9ChwLtsXSWAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ezxlHF0h; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=aZUm2jtW; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 629EAWIb1249055
+	for <linux-arm-msm@vger.kernel.org>; Mon, 9 Mar 2026 15:24:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=yga3XbiT8rvRu5nMdqM4/M
+	FVlYqHPYbfjWpnYtaYAOw=; b=ezxlHF0hR5ibnUmPjHNsH86x148fYh/ke8b6Qk
+	Ur3tQcRVAnIt6cM9XG4yZfxit7Sv+N9Atet7J4DwCgNpG84l6omh51jyI54dUIA3
+	8JCSrBpgEzOZiQSKrCvLqCYJO4aPoKmHzsTDR0tmDiMdF7kCTzZmFNacVmRyhd4D
+	sc1DbV/IQskTu6KFA9EBC/Fm2EUGMB3HEEp7CcPUHq0eh689hVVkP/0aLGOXECrf
+	Hvsnnk/oZAxD/W7VplJ9QsaWWVrjmO4an60s5FyGy7na7iL9T9xdHtv79GhYMToG
+	hoWPIJqIt8/xGBw1HZBDBwS0VA+cWWqMAi32HGQ/3j9Ggtaw==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4csyr407sk-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2026 15:24:28 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-8cd7fc27cf7so872833685a.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2026 08:24:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1773069993; x=1773674793; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xKq8ulzy5MHQKDxfFMVcrLftpi/uwWVl0kgu6a2rhEE=;
-        b=oJhxtnvNSLAwxcoegdD3yehAgPXTS0Ww+A0ZrHOixHu0+C1b5j7nE/gTefUBdBmSSk
-         gcmlAiXLOXRzX6l0BwCK0eUmpb84q4sBnmFwdDsSinJoe7FKuvJNPW9FFZT1Sf84YCop
-         DqXKcQ2D8LInEyR9eDPeSlNMs7mGAVTnhclfg=
+        d=oss.qualcomm.com; s=google; t=1773069868; x=1773674668; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=yga3XbiT8rvRu5nMdqM4/MFVlYqHPYbfjWpnYtaYAOw=;
+        b=aZUm2jtWYOhlVzOFay8zKFb5ZXYCZ7TUn/rz7wsbqKTBpYCcFdX1QC4AVsPhTVyaeC
+         9TYdkWVwDiLrMy6lnd/huOhOFIfAlv+jrOL1ueiUW34mB4EIFCTUOuBaUr0mKn9yanJb
+         a8yHfqCD3QvnBbUrSYDcbu8dxb0MBhcKVtfU3z/B7eg+vahftxsPvqxiKuSZRJzXWOT5
+         ZLEx72suFIL+JFMtzJQw6vgonWGdSqed4/BlOoiD/zQGP1Ab58Y+/FoHuI9D4RUgouVU
+         G3DJK1BWHGmydW4V+NpqMHgMWmFtH5BrsK7jiqoib1S+HIfMXKozgRX90UMUPX4nb02f
+         aKKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773069993; x=1773674793;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=xKq8ulzy5MHQKDxfFMVcrLftpi/uwWVl0kgu6a2rhEE=;
-        b=VvZrTVtdBCZ1v3TPQqMJUrWvBJ7zCcZ0U2CLu7YLXTzzaPZ60mOeoal6BRs3xiqCeT
-         DCRqERN2MnStgWEakFhv7AVhTBIvMIvLUH1JIB2c3Tr7RXAbsD21gPexnyQnV2ZVJbZM
-         JevVBwq1aW+lrfKDvLu0bMFBBpr1jZTRKl08AtudZyncMY4rbifZQHZL/VDE2sujf+8c
-         0TwXqup28lQbJ12a2tLBOKp2a14ZPxf6uaQrdtJyWodoAIYHgLuSn/XiGOMhcy8Q5C/8
-         CURoJxbZaHBKc2dzTusjbHVkcgFNEsjf1C5Lj+eU3M1QZ+S4OkQu6ZOzgDh9bItvqR6A
-         JxtQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUzVYoItNy4XOg26xO8w/AeK/onGo/ZVwmkq6boFw87hDkkknV/qYcHQrF0hSBFfuGacXYHsQ858iCg0syy@vger.kernel.org
-X-Gm-Message-State: AOJu0YzkPxicCUPIw3rUD4+ujqcyPBzTzDqmlwd4XmuvRCpgn/hAm6E1
-	YvC1PZngsQBik1YRS74tc1JiNhgj6DFIkrNNarU+3GRj+I1y197wuo1Lt/ABFL/lTbb4XqgJrgj
-	agIsyW+CY
-X-Gm-Gg: ATEYQzwHmAZOlRvFhDsH0Sca1vu4/ROztmtOHzX/lK+y1leMG8JgG/RMy/VjnMwLz5m
-	iWFtZ28gXM8c3TBTOxyLrhPZuqwoA1mqeTJDOYwqZ/jIiKsysBk3ECopr1/Yng0uHM+odl4wR5M
-	F5Iu8QiO+ZooapmBaT0DlNVR3yG3P6gm2ltGv37FNt5lRYBhrNYS5ZxS2l6E1CCjdbuf5ZUcqrI
-	70TfBjY+Bz5/gFtvYPaBm2wo6J3jZueggeVqqNJpwDtTjtbb+jGKWYttk1jrYzE6VwLy78PeE5r
-	QPxFo/J543xVnLcmlgGBLz/052tTNcPipc2IxBnuLx3VpCBxhwOS1JVoaLxGFD97fW0bouosJCt
-	PSwq9k2byiAVvh6rW65xmNk7JtupYIupPCSiNyZZzkzPucFkiYJuLDM3j0egwlqkTrvbbe6z0QP
-	4biMb/pHwR+YupLeExmx9j2/dnbivxyBuRVaiFMdP5zuIzzgB2W9pQ1AGUb9pgcQ==
-X-Received: by 2002:a05:6512:3f10:b0:59e:24e5:a3a5 with SMTP id 2adb3069b0e04-5a13cceb81cmr3723079e87.29.1773069992565;
-        Mon, 09 Mar 2026 08:26:32 -0700 (PDT)
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com. [209.85.167.44])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a13d08d269sm2215491e87.84.2026.03.09.08.26.32
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Mar 2026 08:26:32 -0700 (PDT)
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-59e4989dacdso6205057e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2026 08:26:32 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVqyXyiRJfj14+YdnEXF5n49tOtTJ9B31/iOb/RGlUx1wHnoRkyZ1C7lSYZPpw0y1eQhZoet2R7XzZcjjj+@vger.kernel.org
-X-Received: by 2002:a17:907:1c2a:b0:b96:dcc0:2e19 with SMTP id
- a640c23a62f3a-b96dcc03e2bmr431706766b.56.1773069586848; Mon, 09 Mar 2026
- 08:19:46 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1773069868; x=1773674668;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yga3XbiT8rvRu5nMdqM4/MFVlYqHPYbfjWpnYtaYAOw=;
+        b=ERWwmwXUV9a1yjq6mhjJgf3EhzCIieCnPtk32gqmAT+401L6y8pa9XraKf6aNGQvMn
+         dY9Z5sSei7J3gjR6XuvykTCbKLKrHc1zBzj24gfXRL99FeJPOokFdGKiyel4Et0k2Jum
+         5HJA+sAMIQ98TDLTCDP35388RqAUqCCLAUcVDZteVg24eTiR+Rhd8oxcnMlN8gXHaUVG
+         Q0068JkxdhdTwmhFmqplMGz/SHyLc21qSj2c8o0+jwW9L0K42mTqY8NWUn3qJW1k0HXn
+         C7W91FaMdYPE9Sc9Y1oFUOgOjGRje9/kkngY3jhJH8t6cM3Vt3QYXF+KcIVwlw8G/K5z
+         g1Uw==
+X-Forwarded-Encrypted: i=1; AJvYcCV5tfUArF0SDM10Yokc0t+q8RLefGWRQkZ/PwumXe15hS7a0WsqUH1MjY2K4hfyyyj8APKOGP9slkKcl2yy@vger.kernel.org
+X-Gm-Message-State: AOJu0YxP/je7RfwQNsD80LQPRzWrKoJ6PrFaOt5C5e036wFLG2o8ur5q
+	KkZPl4cHINY2diLakokLxGZptHYabVHKdylHfOYuy3TKwIdtsM0SM2FMN3EnapFyXEmbshCx4a2
+	4fyctew5ZJ1VN3ElSo13pJt4HRydUYCI1xhmpRYhXLJLqnPmTpjJ5gWeJEAQhbYhPPU9/
+X-Gm-Gg: ATEYQzxIoTIa3cOtm6OJ/1sE+MLTWTjm/j/pdkhW6C2DLOwRVxD1gK4I7kFbZb3D8EZ
+	QatzSMRVNwWiF8Zjnh4wVoVqCFUnGXh3Ic7F6BhnYNGoAW4FI/lxNb90t8rYVF6ZfrfK6jLslx0
+	ras2LN6ljjIa39nMFpO5kj0t0Qzf3t+87EoPKocFouf32cD44rBjx42cEPmzPEi4Jl9027h1Mhz
+	CpAqMznR3tkD8TbPuJWLcSmhEOpScuE1Wlj8d9yl4/JCwutN5AG5pYphP94m/cPbC8/hcEJdOTs
+	HvBVLcdiljiSSkyKoBVQ7AXks5Kpl+wrK2ef0spEBuWj3PrQWUEftBEMLlJAHunts/m5kwidzuD
+	8NtIPxBV+1dT8R1m95a1LVLDwJ7pdKsg6EDSG6nUqMtDhRqwGo3p24KA=
+X-Received: by 2002:a05:620a:290e:b0:8ca:2baa:6656 with SMTP id af79cd13be357-8cd6d461f63mr1458821785a.55.1773069867935;
+        Mon, 09 Mar 2026 08:24:27 -0700 (PDT)
+X-Received: by 2002:a05:620a:290e:b0:8ca:2baa:6656 with SMTP id af79cd13be357-8cd6d461f63mr1458815085a.55.1773069867392;
+        Mon, 09 Mar 2026 08:24:27 -0700 (PDT)
+Received: from localhost.localdomain ([5.133.47.210])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4853a59fc36sm192812515e9.9.2026.03.09.08.24.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Mar 2026 08:24:26 -0700 (PDT)
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+To: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org
+Cc: richardcochran@gmail.com, geert+renesas@glider.be, arnd@arndb.de,
+        dmitry.baryshkov@oss.qualcomm.com, ebiggers@kernel.org,
+        michal.simek@amd.com, luca.weiss@fairphone.com, sven@kernel.org,
+        prabhakar.mahadev-lad.rj@bp.renesas.com,
+        kuninori.morimoto.gx@renesas.com, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        netdev@vger.kernel.org, m.facchin@arduino.cc, r.mereu@arduino.cc,
+        loic.poulain@oss.qualcomm.com,
+        Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Subject: [PATCH 0/7] arm64: dts: qcom: Add support for Arduino VENTUNOQ
+Date: Mon,  9 Mar 2026 15:24:11 +0000
+Message-ID: <20260309152420.1404349-1-srinivas.kandagatla@oss.qualcomm.com>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260216181002.3475421-1-dianders@chromium.org>
-In-Reply-To: <20260216181002.3475421-1-dianders@chromium.org>
-From: Doug Anderson <dianders@chromium.org>
-Date: Mon, 9 Mar 2026 08:19:33 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XosP+rpT7w1Dcr=Xu7K8MCnA-=hndCgvsdwRAeVXuUdA@mail.gmail.com>
-X-Gm-Features: AaiRm52PitiYzwSf40xttz_JauQBZgQS8kA13tji_SRNQ2F75XcOox36FcsJy20
-Message-ID: <CAD=FV=XosP+rpT7w1Dcr=Xu7K8MCnA-=hndCgvsdwRAeVXuUdA@mail.gmail.com>
-Subject: Re: [PATCH v3 00/15] mailbox: Stop sending NULL mailbox messages
-To: jassisinghbrar@gmail.com
-Cc: Frank.Li@nxp.com, Santosh Shilimkar <ssantosh@kernel.org>, 
-	Sascha Hauer <s.hauer@pengutronix.de>, andersson@kernel.org, arm-scmi@vger.kernel.org, 
-	cristian.marussi@arm.com, daniel.baluta@nxp.com, festevam@gmail.com, 
-	imx@lists.linux.dev, jay.buddhabhatti@amd.com, jonathanh@nvidia.com, 
-	kernel@pengutronix.de, konradybcio@kernel.org, krzk@kernel.org, 
-	lenb@kernel.org, linux-acpi@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
-	linux-tegra@vger.kernel.org, lucaswei@google.com, marco.crivellari@suse.com, 
-	mathieu.poirier@linaro.org, michal.simek@amd.com, nm@ti.com, 
-	rafael@kernel.org, robh@kernel.org, shawn.guo@linaro.org, 
-	sudeep.holla@kernel.org, tglx@kernel.org, thierry.reding@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: F1B9D23BB55
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA5MDEzOSBTYWx0ZWRfX6M9nZFce8eSC
+ mIcN5MfmVtg+pTO9xjankGJl4o/VRniqG3XVO3H4FhzGOEcAnBwId7LGBBjX147Wt+Sl5EtefAy
+ tO1BlZP9CXL2a6cC5zuqy+vHeNKH5gNbytW9lOoOGCer/8TqglA/CMMNEUS/NfnOcprlfY1/c/B
+ 2phrDrd2RmbqLCzr8dDvMHeQjJLds6L19lGOi2ZXq8AQwdrUlIn1jKjTlgYzAHmhMu6yDdnEpy/
+ xdB5RWRu6lt4QWa07nqLKbe8X5Xz5QGu98spXQ9NKKvBc3Cq4wO+4W1br9gsmTTUFbRTcnBmOFi
+ +0K3MiFZDeFWm2vssNDwG5P5GiF52nOEjyrN5Vdu9/1eCql4Oc3jH+YRH9Z6JYpyEpK/b223ewi
+ EkZh/XP42KQzXrkZBi2PbY3amwxzBYs9Id5BPBkW8NF6u/NkaWOgliHyfvxUNjjeu7UG/eSBuMM
+ iEMaIr+0rvA40+oiQaA==
+X-Proofpoint-GUID: 8qqYJs3c2Db4X7woOQu-iSFekRp9h46q
+X-Proofpoint-ORIG-GUID: 8qqYJs3c2Db4X7woOQu-iSFekRp9h46q
+X-Authority-Analysis: v=2.4 cv=KNRXzVFo c=1 sm=1 tr=0 ts=69aee62c cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=NEAV23lmAAAA:8 a=Ar_5JxPjAAAA:8 a=6arpMgwqxbr1QNdnrLkA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-09_04,2026-03-09_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 impostorscore=0 spamscore=0 bulkscore=0 priorityscore=1501
+ suspectscore=0 clxscore=1015 lowpriorityscore=0 malwarescore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603090139
+X-Rspamd-Queue-Id: EDA9323BBF4
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [0.34 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[chromium.org,none];
-	R_DKIM_ALLOW(-0.20)[chromium.org:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-96296-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[nxp.com,kernel.org,pengutronix.de,vger.kernel.org,arm.com,gmail.com,lists.linux.dev,amd.com,nvidia.com,lists.infradead.org,google.com,suse.com,linaro.org,ti.com];
-	RCPT_COUNT_TWELVE(0.00)[33];
+	RCPT_COUNT_TWELVE(0.00)[23];
+	FREEMAIL_CC(0.00)[gmail.com,glider.be,arndb.de,oss.qualcomm.com,kernel.org,amd.com,fairphone.com,bp.renesas.com,renesas.com,vger.kernel.org,arduino.cc];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	TAGGED_FROM(0.00)[bounces-96288-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,arduino.cc:url,qualcomm.com:dkim];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dianders@chromium.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[chromium.org:+];
-	NEURAL_HAM(-0.00)[-0.988];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
 	TO_DN_SOME(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[chromium.org:dkim,chromium.org:email,mail.gmail.com:mid,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[srinivas.kandagatla@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	NEURAL_HAM(-0.00)[-0.991];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,renesas];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Action: no action
 
-Hi Jassi,
+This patchset adds support for Arduino VENTUNO Q board, which is
+announced recently [1]
 
-On Mon, Feb 16, 2026 at 10:11=E2=80=AFAM Douglas Anderson <dianders@chromiu=
-m.org> wrote:
->
-> As talked about in the first patch in this series, passing NULL as the
-> 'mssg' argument to mbox_send_message() ends up causing confusion and
-> quirky behavior inside the mailbox core. Despite this, there are a
-> number of drivers that pass NULL.
->
-> It is plausible that some of the drivers passing NULL may have been
-> taking advantage of the quirks of the mailbox core. Specifically, they
-> may have been taking advantage that calling "tx_done" wasn't truly
-> necessary for NULL messages (it was a noop) or that NULL messages were
-> passed onto the mailbox controller right away without queuing.
->
-> This series introduces a new API call: mbox_ring_doorbell(). The new
-> API call tries to mimic the specific quirks that were helpful in the
-> old behavior and it's expected to be a nearly drop-in replacement.
->
-> There are some subtle differences between the new call and the old
-> behavior, but it's expected that all of these differences are only for
-> cases where the old behavior made little sense. The description of the
-> first patch details these differences.
->
-> The series attempts to convert all in-tree users to stop passing NULL
-> for mssg. As per above, there are some slight differences in behavior.
-> If any of the patches are causing problems, they can safely be
-> reverted while debugging the problems. Eventually, all code should be
-> converted over to stop passing NULL mssg.
->
-> Changes in v3:
-> - Suggest mbox_ring_doorbell in the warning message
-> - Updated patch description based on Cristian's response.
->
-> Changes in v2:
-> - Instead of just documenting NULL, introduce a new function
->
-> Douglas Anderson (15):
->   mailbox: Deprecate NULL mbox messages; Introduce mbox_ring_doorbell()
->   ACPI: PCC: Use mbox_ring_doorbell() instead of NULL message
->   firmware: arm_scmi: Use mbox_ring_doorbell() instead of NULL message
->   firmware: imx-dsp: Use mbox_ring_doorbell() instead of NULL message
->   firmware: tegra: bpmp: Use mbox_ring_doorbell() instead of NULL
->     message
->   irqchip/qcom-mpm: Use mbox_ring_doorbell() instead of NULL message
->   remoteproc: xlnx: Use mbox_ring_doorbell() instead of NULL message
->   rpmsg: qcom_glink_rpm: Use mbox_ring_doorbell() instead of NULL
->     message
->   rpmsg: glink: smem: Use mbox_ring_doorbell() instead of NULL message
->   rpmsg: qcom_smd: Use mbox_ring_doorbell() instead of NULL message
->   soc: qcom: aoss: Use mbox_ring_doorbell() instead of NULL message
->   soc: qcom: smp2p: Use mbox_ring_doorbell() instead of NULL message
->   soc: qcom: smsm: Use mbox_ring_doorbell() instead of NULL message
->   soc: ti: wkup_m3_ipc: Use mbox_ring_doorbell() instead of NULL message
->   drivers: firmware: xilinx: Use mbox_ring_doorbell() instead of NULL
->     message
+VENTUNO Q board is based on Qualcomm Dragonwing™ IQ8 Series processor
+along with a dedicated STM32H5 microcontroller.
+This patchset adds support for below peripherals
+    - USB Type‑C connector with dual‑role support
+    - ADV7535 DSI‑to‑HDMI bridge
+    - MAX98091 audio codec
+    - 2.5G Ethernet PHY (HSGMII)
+    - PCIe0 (to onboard WiFi chipset and USB bridge)
+    - PCIe1 (to M2/nvme)
 
-Just checking to see if there is any addional changes you need from me
-on this series. It looks like it's -rc3 which is maybe an ideal time
-for this series to get some linux-next bake time? A good number of the
-patches in this series have Acks from maintainers so they could all go
-in your tree, I think. For those that don't, I guess worst case they
-just don't land right now and I can re-post them later. ...or if you
-think they would be OK to pickup that would be cool too.
+To make dependencies easy for new audio dai ids, I have used numbers
+instead of defines.
 
-Thanks!
+Audio tplg is available at: https://github.com/linux-msm/audioreach-topology/pull/55
+Branch based on linux-next kernel: https://github.com/Srinivas-Kandagatla/linux/tree/arduino-VENTUNOQ 
 
--Doug
+Thanks,
+Srini
+
+[1]: https://blog.arduino.cc/2026/03/09/introducing-arduino-ventuno-q-your-new-ai-robotics-and-actuation-platform/
+
+
+Loic Poulain (4):
+  arm64: dts: qcom: monaco: Add HS/SS endpoints for USB1 controller
+  arm64: dts: qcom: Add Monaco Monza SoM
+  dt-bindings: arm: qcom: add Arduino Monza, VENTUNOQ
+  arm64: dts: qcom: Add Arduino Monza (VENTUNOQ) board support
+
+Srinivas Kandagatla (3):
+  arm64: dts: qcom: monaco: add dt entry for lpass lpi pinctrl
+  arm64: dts: qcom: monaco-arduino-monza: Add sound node
+  arm64: defconfig: Enable configs for Arduino VENTUNOQ
+
+ .../devicetree/bindings/arm/qcom.yaml         |   1 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../boot/dts/qcom/monaco-arduino-monza.dts    | 512 ++++++++++++++++++
+ .../arm64/boot/dts/qcom/monaco-monza-som.dtsi | 325 +++++++++++
+ arch/arm64/boot/dts/qcom/monaco.dtsi          |  89 +++
+ arch/arm64/configs/defconfig                  |   2 +
+ 6 files changed, 930 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/monaco-arduino-monza.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/monaco-monza-som.dtsi
+
+-- 
+2.47.3
+
 
