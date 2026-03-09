@@ -1,283 +1,257 @@
-Return-Path: <linux-arm-msm+bounces-96272-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96273-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id gHcoF4vZrmmKJQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96272-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 15:30:35 +0100
+	id WNrXBKfbrmkCJgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96273-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 15:39:35 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B5C8D23A8CA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 15:30:34 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id C2DBB23AACB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 15:39:34 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C5C37307B561
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2026 14:25:48 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id D8036300C037
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2026 14:39:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7675E3BE16B;
-	Mon,  9 Mar 2026 14:25:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D945D3D332B;
+	Mon,  9 Mar 2026 14:39:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="en1MnWJM";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Vy6Q4fNz"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="O0a2H3qk";
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b="YO8w+R6+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25826262FDC
-	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Mar 2026 14:25:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 679923CE4A0
+	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Mar 2026 14:39:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773066348; cv=none; b=II/z1cQcWBs2IJaoYhT2rBQTeHAMnsUg/ZMt/InMj6B19OfKiyltwIqcMFVqH/GeJaf48hs5qoCyFVIqdIWoqwirlpcMMP8OQwFX4au/l7gqEg4mTmEgPo3EQV+1OKaX1+t+wIgw1fxQWYwVMW8byCRF4N/VhED72Ez5yj6bdtg=
+	t=1773067165; cv=none; b=KjM2JDL2A3U5+rhdYtUQXC2DIKJazN7mKrq4zYDMDf8mGw6p6CxeogTi/pZdxbO8oQf3y/i2OApfGCIVtv+BDuy4TWl4g6lqY2i6OA6zCEVDiP0Ojx8pRllrdNvZzjkv01av/QqiKYDpxEB80gHiuREiq0AkeMq9ZgzSJtRt6xU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773066348; c=relaxed/simple;
-	bh=OgwCL6wtFQ6pj2MbVQ+aQMEXepn+nIhWnb6tqbbRseQ=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=h4xvF0eKJq2EMs5IyKgJuBCcuaxdzvmCX4/Xu5MpUZ98IPIMj/kwCm/JLKWYubM/lfmxCOzkBcGuLnjIINhN2RVZHbR3m2PRyfDWNBBXwCQMtJ4lHUBAEsjfPZO+Jscg/iPbA2COnQKJk+D83SMhTw7p+dAI2bWh7oC+6qAvIJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=en1MnWJM; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Vy6Q4fNz; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 629BMD3o1577725
-	for <linux-arm-msm@vger.kernel.org>; Mon, 9 Mar 2026 14:25:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	I3HKGFxJsqnEzVVfvTggPuLP8AphG6db+EDmeHUq/Mw=; b=en1MnWJMsyehApdT
-	8rWMyzwnvhOpWUdS5aQfbCAVYWyTE6F/p7QJ1jkDDUK9C7DiyprqSLFVheE1cij4
-	s6lyvF2D0ZDFuW749LskIbZ8RrOteQYlMILWV99MvrNcFHh+RAUYgQs0PnTePAVg
-	CsjIWh5mCy5aXCQ2ase/Fjpm4d+Zj28+Vv6a99b6zYs6BkACgPnj1LyWTWz5kr0O
-	TT+vVmimBEPdmYuoqtC6xNGybctnC54AR0pyNP4f1tYXKl9dS0pHXYR3EdWBCDEU
-	e5d+WIdfRtbNmZf+80reVm4q0fcg6eZZ6O1AVZbI3d4bHb3TwIPbmusaf2O5C8cJ
-	oHP/Kw==
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cr9qex2f3-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2026 14:25:46 +0000 (GMT)
-Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-c738662b963so3168377a12.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2026 07:25:46 -0700 (PDT)
+	s=arc-20240116; t=1773067165; c=relaxed/simple;
+	bh=RXu3NphZGUJJazeYHAThPbRn9NwLQx4SYJlxf+ZptIY=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=V7zG/KRDkksE/fH6cd/qaCpPKpnb/LOSRpiVIm9mF+HbgfzbAZ6lTFc5Ksw94NCJf5XsV1f30bqpPo1wcpgcL0JLsL99VYt62BkFPGns01yrKP7a4rIvGgclFc26LFXXk5FsdeCjkHmMpHLk1m0gSqH6WUi85X2h2Z3ITq3497Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=O0a2H3qk; dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b=YO8w+R6+; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1773067163;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=SoS+3CWZlZnGbnfPaYdYtldz6vhvlQlhdk/Ns0DT5PM=;
+	b=O0a2H3qkPlQvBh4QXtqIY97BvkliFa0NqOTmY6A+sqN5Bqz9EWwuS0u2y+JntG3rypSkE1
+	oq+jclRjQSUU4/mDBmAf52Ik7i50pN1CCr7XVpgWsggB2iN62hPJLqU5EBuw2usSl3CXFQ
+	6hT2Qsblcqd1jkGGLTb0M/uv1LIR6jg=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-286-hEhmVZJiM8eLpmnjCtT6bw-1; Mon, 09 Mar 2026 10:39:22 -0400
+X-MC-Unique: hEhmVZJiM8eLpmnjCtT6bw-1
+X-Mimecast-MFC-AGG-ID: hEhmVZJiM8eLpmnjCtT6bw_1773067162
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-8cb6291d95aso3821319685a.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2026 07:39:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1773066346; x=1773671146; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=I3HKGFxJsqnEzVVfvTggPuLP8AphG6db+EDmeHUq/Mw=;
-        b=Vy6Q4fNzwsvEANa9f2IxI/YYT1iPb80nEVi6X62ukL4hJj19vRvh5Yo2HNaUjgNKkT
-         s8gHmMGV/z0/OWEXtODCwfDB/9wk2zojOQpI958OpvNJr9m7Rk1T1iza/KMtQTvykmHR
-         4N3KS5AhuZd4QH7RX7Srew2auzYwE8nAd7JCdsERZNqcMktIXyGX1UENinBBxn5baUBZ
-         5/4JydFQSYt/Fzh+gMDTlXnsS+1cgfRWoH0wQpk7I48RoaOKbZJQ0/5D8TxqO1fSA4W6
-         5Yd2GBMDoGdq1BbzPexo24+Gw44YfkIjx8EE86RXTS/pBeDTRTU2pXxP5TzY/YUDAZ0b
-         Yfow==
+        d=redhat.com; s=google; t=1773067162; x=1773671962; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=SoS+3CWZlZnGbnfPaYdYtldz6vhvlQlhdk/Ns0DT5PM=;
+        b=YO8w+R6+R3oWx3JkD9pXszGBFh1KE+xVwi9daDEGTgcZmNiGJKovdedQ5ABLwW7Gy6
+         Ix1xQUBStlDRQQSITxh/H7Pop8M1Mclk52W91LNLA9Qf4b5AoagUuwoksol3fqLpPMNl
+         Wd7/HPqt6brsPUXU3LTLZyIJM5Ju3ScUOPX1h2m8OORF0DD1RmWUWSXA3r0nQTDZa74H
+         r6PAUC1zeOqrarAJQbL9yFktKPBow0OmmvmwQyGqU0cC+IslwFNv9pVw7z4bTdpxVPqS
+         OwopP/Lz5OsT5rrOAP3ss3Xx47imGShNfgegNBcmClriRQ5+TaAZ41VbKVqNI1lq6jFB
+         YhGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773066346; x=1773671146;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=I3HKGFxJsqnEzVVfvTggPuLP8AphG6db+EDmeHUq/Mw=;
-        b=XdnWekjZb8glsAQ1tgXr5MK6YcZl4bUVQax6e+2kOumiyI6jXCeOqm64bZXw39ssC7
-         rZJm1NNpUensdes0AU65op5gaoRoVGX8csRBZaWTvLEZVwN+bU97AI2FZtXmSMlLMTWk
-         ZgLhY2yMrE7rftC2v5Jz/LOmx03J7X5TYG23mvHytV+47B7DL39L7b+eE5rKiT7uQ1qr
-         Zuf3Aws7YIHLPJxxv0gUxmmtvy5XrXCgEPcDE1fqx/c5AuRY9NthSG19uhq9EvXti+h+
-         PR5S6WzC87BEJVy9EqB0pxzhHjYAVkZi1YcmodWW9r1DL9i6tU6DN6HYVSy58fezF6X4
-         CoLg==
-X-Forwarded-Encrypted: i=1; AJvYcCUdihFKXP2mjxhO0+c3Kp9B6xv+41QRh5oc614Am/OIB03mqMyDsr2tCAuly6lGygP2D7jcsUj0WX8Tibif@vger.kernel.org
-X-Gm-Message-State: AOJu0YwS06AyXcLKJFBXQoU0eOJoHVxDS/TAtGmMqW30ByQ1lKdOGRtw
-	+M1LXjbVkVsi1N08VqavQsb0lLFIWtdMc9l+QshH0QvEBhaiGP6MakG2CsbodqEBxNZYv//3fhD
-	kvvbV1IRBEnaeyaP7fEio0zoUiKgKhgnt4atrVsGAcNmonPW/n/oIfzAEOIWbZm6IEfkX
-X-Gm-Gg: ATEYQzyzMECX+kvaHkzionxTqsdJbAInTHetXML0ZOsNOQtlALUbWPvV33xfiNbhdQL
-	wxuga36JUl59E49WAtGFKCd7FB0YjCuurvYEqw0abnSrQuGuxlKugYm0TaeYFF/94T9V+UAC6ch
-	OHWVAFykIYvlmzPM9UvHLnrgCV9nOaPd4N5IdjOd92oxd3zX/HASAZAVSvRtH/kai5tRTbXMIgf
-	xTY6DOjjLjImmwhbaBsL7o/zQCeivK9c9scRSAI7DjWBdO+cs8zVBnzt1YFkrRjsFny1jO5pEDv
-	J/0e3687/GkVxSiJJk3PsmXxcYjGn3igVtg8VEuFFhHHg8VKmfFTuB8NH+hpuWHMJY3egzSwDCg
-	tmXnagpJ7kS2NSqJkyWmSPL344jkN2vUpq6y131Owl2zn7WZ2w2zlHxc=
-X-Received: by 2002:a05:6a21:8802:b0:398:7585:64cb with SMTP id adf61e73a8af0-398758572b2mr5843758637.69.1773066345654;
-        Mon, 09 Mar 2026 07:25:45 -0700 (PDT)
-X-Received: by 2002:a05:6a21:8802:b0:398:7585:64cb with SMTP id adf61e73a8af0-398758572b2mr5843733637.69.1773066345196;
-        Mon, 09 Mar 2026 07:25:45 -0700 (PDT)
-Received: from [192.168.0.215] ([49.205.244.213])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-829a4867e75sm10155561b3a.41.2026.03.09.07.25.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Mar 2026 07:25:44 -0700 (PDT)
-Message-ID: <88c953fa-8fcf-4c40-9a02-2f1b2918e2e2@oss.qualcomm.com>
-Date: Mon, 9 Mar 2026 19:55:40 +0530
+        d=1e100.net; s=20230601; t=1773067162; x=1773671962;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SoS+3CWZlZnGbnfPaYdYtldz6vhvlQlhdk/Ns0DT5PM=;
+        b=AwwUgwlZvBG4iwtCu1K5vmwdfTmBMaj4um3HU3y7IoGWkMSb0XloyYCuoyQ701zB9s
+         eQynKj1AT+EkGzxpSqhgRmvwpRu8Zsf7hG0QyR5OCZpOyuk9PhYoWcb3elmbIOnuK8nb
+         L0iEWwQW0yXKwaXNMLbDJVhd3tkqYsnKo29wm4JLuQ3ZBPV0fsr1oeq/RUbv1b7yj4bM
+         iWe5aBmqxxjE+KvjXpwuxkQ4wSdCgV0/0WaPgizwIOfBUhE1duk5jYtjnMeHC9791yUn
+         xS0pFZwqGUBEnlTYO0qGQTLbkf5LCaNFi1QWVmAgoHmoXyadKeK3iTIfbeR9dPzKnIo4
+         UO9g==
+X-Forwarded-Encrypted: i=1; AJvYcCWksnqss5OukAXNrlDjpt1vD5Ft10dd4KhdF5DQRh7eN9+z11Yfojt49TOzP+6lUppjzkK3XrFQpxmoYoAG@vger.kernel.org
+X-Gm-Message-State: AOJu0YybNEiyhvEvsjN4DhrGSXhuASU5d63o57bfivf9hm/B5GnL4Xza
+	i+bw0H+xT1qh5yaovDfb2sUG1ZGtzdVnJGQT+1R9LYvZFBxj3ePBnQy+mufcEo3IwR0D9dTkdXO
+	PHD3e5yExwPJbAn4qmCdIUZwBGJah7kUvMBWQS1fJM2xrYyVGC6DC2VKSqsFk6YSaEBQ=
+X-Gm-Gg: ATEYQzzj7DUg59UGZo4CBynBjtfFkhcVazUV1bGPIk7+QW2bvmxb1g+NWL4DPS/tv5d
+	gSHRJeAdD0MM5LdKYN0xKAggj4xe6ZMAVGS0U/9ytb3HynRIwN3yPIXTt6E/gvRQWmDiLYgSfFt
+	cyhBFDQoayxjdeJ99uxBrg2E0LjN4X3/R7ZLyB7D/zouJYquSD3WvORV2oDycOt9MkwuKOSSJXl
+	sYp4M74/eiD9PmMnobgBNnM6eRew81TkExHhwsnWYLqtGJa+wPue2oVRxQ4uPW2qYU3Vq5mBZ1q
+	CoJFe8RJ6Dq7MLbzdrCnuKTe3Q1nzoQvQV1jjYROh9dSiTrU5vOWpRvKvJwj/2qsTlD/tXazSD6
+	znNLLo8oeM0Qmv/f44OEEd37iDZ2skoBNVTEtvryWtCUmd4Of/UIUH8FenRhtig==
+X-Received: by 2002:a05:620a:40c3:b0:8cd:8da1:d655 with SMTP id af79cd13be357-8cd8da1dd9fmr294092585a.66.1773067161782;
+        Mon, 09 Mar 2026 07:39:21 -0700 (PDT)
+X-Received: by 2002:a05:620a:40c3:b0:8cd:8da1:d655 with SMTP id af79cd13be357-8cd8da1dd9fmr294088585a.66.1773067161333;
+        Mon, 09 Mar 2026 07:39:21 -0700 (PDT)
+Received: from [192.168.1.15] (c-73-183-52-120.hsd1.pa.comcast.net. [73.183.52.120])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cd6f49fcafsm756064985a.16.2026.03.09.07.39.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Mar 2026 07:39:20 -0700 (PDT)
+From: Brian Masney <bmasney@redhat.com>
+Subject: [PATCH v2 00/12] clk: add new flag CLK_ROUNDING_NOOP
+Date: Mon, 09 Mar 2026 10:38:39 -0400
+Message-Id: <20260309-clk-det-rate-fw-managed-v2-0-c48ef5a3100a@redhat.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 06/12] drivers: soc: qcom: Add support for Qualcomm QDU
- device.
-From: Kishore Batta <kishore.batta@oss.qualcomm.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>, jeff.hugo@oss.qualcomm.com,
-        bjorn.andersson@oss.qualcomm.com, konradybcio@kernel.org,
-        konrad.dybcio@oss.qualcomm.com
-Cc: andersson@kernel.org, linux-arm-msm@vger.kernel.org
-References: <20250825101926.2160554-1-kishore.batta@oss.qualcomm.com>
- <20250825101926.2160554-7-kishore.batta@oss.qualcomm.com>
- <ab23acba-0e40-4065-968a-66307b17f5b4@kernel.org>
- <182f5e1c-3037-4ac7-b2a9-df604e9b2211@oss.qualcomm.com>
- <c22930d4-38b1-4d34-b624-247a52fc9ae0@kernel.org>
- <d0cbb975-da2a-4b84-ba89-c475e711742f@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <d0cbb975-da2a-4b84-ba89-c475e711742f@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: WRy0IEWK17TnxyfFNBL-0KZkCyegpftV
-X-Proofpoint-GUID: WRy0IEWK17TnxyfFNBL-0KZkCyegpftV
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA5MDEzMCBTYWx0ZWRfXyy4FSxYmREna
- eVvlR/UK6x0u0A+LSocHHlIs+6/ewMpQpe0QGx6EUM1lyW+Lzkv9Iapa3K4dEgonJ83oZStUcxr
- oxCayCqGGYde1o49ckzLbi6dEEMk/Oia7gNqHCZGZlAkHCY8l4nAVwuq/969etYwuNNPaxKLYi9
- NK0eed19NTb7uubT3f0aoHHZP0hzE1GY4egN4M1XUtBzR9vzwXscO0RV3Bq6GHf/pigEqV7eG/v
- ODoK2XXtobjgoLk18hIhe3JLeYwOoVokGTdgi/QyJHHtioMMVshjoTPyVc6iarJtHrro4paYgGs
- IJdY9BI9AIJUg4JMbjcisBTFjkZu0TokvalbYm7XUG1pSPAITtE3i0VrD1M52bm03XGp+z/5UaK
- z5L84Hu3jsExE20usmgYTqh7/yOIA24jlyiBM/VwrzbfYMu7uscThlptAMbfs3kfteBtmBAJKSm
- 23QmrzTuftjwvWaOgwQ==
-X-Authority-Analysis: v=2.4 cv=dcqNHHXe c=1 sm=1 tr=0 ts=69aed86a cx=c_pps
- a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=KtsNJ/6bKgz7QsArn2OSsQ==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=xYxsOUmwuIY5F2UOIzQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=x9snwWr2DeNwDh03kgHS:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-09_03,2026-03-09_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 spamscore=0 lowpriorityscore=0 adultscore=0
- clxscore=1015 impostorscore=0 malwarescore=0 priorityscore=1501 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603090130
-X-Rspamd-Queue-Id: B5C8D23A8CA
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4WQy04DMQxFf6XKmqA4Lydd8R+oCyd2mBH0wcxQQ
+ FX/nXQqIbFieW2fa19f1CzTKLPabi5qkvM4j8dDF/Zho+pAhxfRI3etrLHRWBt1fXvVLIueaBH
+ dPvWeDvQirH1JbCI0B0VUp0+TtPFrdX7e3fUk7x99wXIvqhMtdej2203IkJNwzYEqJUs2O4vgk
+ NhSS1YqOJtDiavvL5X6lACa6DMCMFIyNSAmb5wjh42IOUAuf6kMFQukADUwogTjq89VYmngi2u
+ pJC/JRrpRhWbR9bjfj8t2gxxjhISuxRJ8xW4dMBnypjcKsWOfLKembmmHcV6O0/f61jOscf/94
+ Bm00d5bYLYtco1Pk/BAy2O/QO2u1+sPBLaoPq0BAAA=
+X-Change-ID: 20260226-clk-det-rate-fw-managed-4b8d061f31be
+To: Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>
+Cc: linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Brian Masney <bmasney@redhat.com>, Sudeep Holla <sudeep.holla@kernel.org>, 
+ Abel Vesa <abelvesa@kernel.org>, Andrea della Porta <andrea.porta@suse.com>, 
+ Baolin Wang <baolin.wang@linux.alibaba.com>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Chanwoo Choi <cw00.choi@samsung.com>, Frank Li <Frank.Li@nxp.com>, 
+ Geert Uytterhoeven <geert+renesas@glider.be>, 
+ Krzysztof Kozlowski <krzk@kernel.org>, Orson Zhai <orsonzhai@gmail.com>, 
+ Sascha Hauer <s.hauer@pengutronix.de>, 
+ Sylwester Nawrocki <s.nawrocki@samsung.com>, 
+ Tudor Ambarus <tudor.ambarus@linaro.org>, 
+ Alim Akhtar <alim.akhtar@samsung.com>, arm-scmi@vger.kernel.org, 
+ Chunyan Zhang <zhang.lyra@gmail.com>, 
+ Cristian Marussi <cristian.marussi@arm.com>, 
+ Fabio Estevam <festevam@gmail.com>, imx@lists.linux.dev, 
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
+ linux-renesas-soc@vger.kernel.org, linux-samsung-soc@vger.kernel.org, 
+ Peng Fan <peng.fan@nxp.com>, 
+ Pengutronix Kernel Team <kernel@pengutronix.de>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3788; i=bmasney@redhat.com;
+ s=20250903; h=from:subject:message-id;
+ bh=RXu3NphZGUJJazeYHAThPbRn9NwLQx4SYJlxf+ZptIY=;
+ b=owGbwMvMwCW2/dJd9di6A+2Mp9WSGDLX3e66+SC7zE6hgIdj/dIW3U+zT8tcCfZ+eipU+4TX9
+ wfSj6PNOkpZGMS4GGTFFFmW5BoVRKSusr13R5MFZg4rE8gQBi5OAZiIfBQjw7z3W7R3Wuxylu+4
+ fiOxTkAphlfb8O7FuM6HpgnPH6TLJDD8FdY5/qVtl8YMod7Q58vbnVKPG0+PUTsjL7FQYcbZN08
+ deAA=
+X-Developer-Key: i=bmasney@redhat.com; a=openpgp;
+ fpr=A46D32705865AA3DDEDC2904B7D2DD275D7EC087
+X-Rspamd-Queue-Id: C2DBB23AACB
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[redhat.com,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_DKIM_ALLOW(-0.20)[redhat.com:s=mimecast20190719,redhat.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,qualcomm.com:dkim];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-96272-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	FROM_NEQ_ENVFROM(0.00)[kishore.batta@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[vger.kernel.org,redhat.com,kernel.org,suse.com,linux.alibaba.com,samsung.com,nxp.com,glider.be,gmail.com,pengutronix.de,linaro.org,arm.com,lists.linux.dev,lists.infradead.org,oss.qualcomm.com];
+	TAGGED_FROM(0.00)[bounces-96273-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[32];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[redhat.com:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[bmasney@redhat.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-0.992];
+	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
 	MID_RHS_MATCH_FROM(0.00)[];
-	NEURAL_HAM(-0.00)[-0.949];
-	RCPT_COUNT_SEVEN(0.00)[7];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
+There are some clocks where the determine_rate clk op is just an empty
+function that returns 0. This can be either because the rounding is
+managed by the firmware, or the clock is capable of any rate. Add a
+new flag for these type of clocks, and update the clk core so that the
+determine_rate() clk op is not required when this flag is set.
 
-On 3/8/2026 11:42 AM, Kishore Batta wrote:
->
-> On 3/7/2026 6:50 PM, Krzysztof Kozlowski wrote:
->> On 07/03/2026 12:33, Kishore Batta wrote:
->>> On 8/28/2025 7:49 PM, Krzysztof Kozlowski wrote:
->>>> On 25/08/2025 12:19, Kishore Batta wrote:
->>>>> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
->>>>> index 99e490e3174e..8d036edf304a 100644
->>>>> --- a/drivers/soc/qcom/Makefile
->>>>> +++ b/drivers/soc/qcom/Makefile
->>>>> @@ -41,3 +41,4 @@ obj-$(CONFIG_QCOM_INLINE_CRYPTO_ENGINE)    += 
->>>>> qcom_ice.o
->>>>>    obj-$(CONFIG_QCOM_PBS) +=    qcom-pbs.o
->>>>>    obj-$(CONFIG_QCOM_UBWC_CONFIG) += ubwc_config.o
->>>>>    obj-$(CONFIG_QCOM_SAHARA_PROTOCOL) += sahara/
->>>>> +obj-$(CONFIG_QCOM_QDU) += qdu.o
->>>>> diff --git a/drivers/soc/qcom/qdu.c b/drivers/soc/qcom/qdu.c
->>>>> new file mode 100644
->>>>> index 000000000000..afd8011793fa
->>>>> --- /dev/null
->>>>> +++ b/drivers/soc/qcom/qdu.c
->>>>> @@ -0,0 +1,85 @@
->>>>> +// SPDX-License-Identifier: GPL-2.0-only
->>>>> +
->>>>> +/* Copyright (c) Qualcomm Technologies, Inc. and/or its 
->>>>> subsidiaries. */
->>>>> +
->>>>> +#include <linux/init.h>
->>>>> +#include <linux/kernel.h>
->>>>> +#include <linux/module.h>
->>>>> +#include <linux/sahara_image_table_ops.h>
->>>>> +
->>>>> +static const char * const qdu100_image_table[] = {
->>>>> +    [5] = "qcom/qdu100/uefi.elf",
->>>>> +    [8] = "qcom/qdu100/qdsp6sw.mbn",
->>>>> +    [16] = "qcom/qdu100/efs1.bin",
->>>>> +    [17] = "qcom/qdu100/efs2.bin",
->>>>> +    [20] = "qcom/qdu100/efs3.bin",
->>>>> +    [23] = "qcom/qdu100/aop.mbn",
->>>>> +    [25] = "qcom/qdu100/tz.mbn",
->>>>> +    [29] = "qcom/qdu100/zeros_1sector.bin",
->>>>> +    [33] = "qcom/qdu100/hypvm.mbn",
->>>>> +    [34] = "qcom/qdu100/mdmddr.mbn",
->>>>> +    [36] = "qcom/qdu100/multi_image_qti.mbn",
->>>>> +    [37] = "qcom/qdu100/multi_image.mbn",
->>>>> +    [38] = "qcom/qdu100/xbl_config.elf",
->>>>> +    [39] = "qcom/qdu100/abl_userdebug.elf",
->>>>> +    [40] = "qcom/qdu100/zeros_1sector.bin",
->>>>> +    [41] = "qcom/qdu100/devcfg.mbn",
->>>>> +    [42] = "qcom/qdu100/zeros_1sector.bin",
->>>>> +    [43] = "qcom/qdu100/kernel_boot.elf",
->>>> We should not accept this code because corresponding linux-firmware
->>>> release was not properly authorized in Qualcomm. All of above might 
->>>> change.
->>>>
->>>> I can give more details in private.
->>> Thanks for the comment. The QDu100 image table in v2 reflects the
->>> firmware images required by the device for boot. The sahara driver
->>> relies on request_firmware_nowarn() and does not make assumptions about
->>> firmware distributions or availability.
->> You did not answer to my comment at all. It does not matter what it
->> reflects to. You violated GPL license and that's NAK here.
->>
->> And responding to this after half a year with irrelevant comment of
->> whatever is clearly:
->>
->> NAK
->>
->>
->> Best regards,
->> Krzysztof
->
-> We understand the concern regarding GPL compliance and firmware 
-> redistribution. The kernel_boot.elf image required for this device is 
-> not authorized for inclusion in linux-firmware, and we agree that 
-> referencing a non-distributable firmware artifact directly from 
-> upstream kernel code is not appropriate. We also note that this 
-> kernel_boot.elf is no longer present in the linux-firmware repository.
->
-> From a technical standpoint, the QDU100 device does not boot without 
-> kernel_boot.elf being provided by the platform. However, given the 
-> redistribution constraints, we are looking for guidance on the 
-> preferred upstream approach in this situation.
->
-> Would you recommend:
->
-> 1. Dropping the explicit firmware reference from upstream and leaving 
-> firmware provisioning entirely to downstream/vendor kernels, or
->
-> 2. An alternative pattern that upstream considers acceptable when 
-> boot-critical firmware cannot be redistributed ?
->
+Based on discussions with Stephen at Linux Plumbers Conference, he
+suggested adding a flag for this particular case. So let's add a new
+flag, and update the clk core so that the determine_rate() clk op is
+not required when this flag is set.
 
-Following up on this thread.
+This series adds the flag, some kunit tests, and updates all of the
+relevant drivers under drivers/clk to use the new flag.
 
-Based on the feedback, I have reworked the patch to remove the 
-kernel_boot.elf reference from the qdu100_image_table and validated that 
-the device can still boot when the image is provisioned by the platform 
-downstream.
+Once this is merged, and in Linus's tree, I can update the few remaining
+clk drivers that are outside of drivers/clk via those subsystems at a
+later time.
 
-Unless there are objections, we will proceed with this approach and post 
-an updated revision(v3) reflecting these changes.
+Merge Strategy
+--------------
+All of this needs to be directly merged by Stephen as one series into
+his tree. Subsystem maintainers: please leave a Reviewed-by or Acked-by.
+To reduce the noise, I am only CCing people on their respective drivers.
+
+Note this series depends on 3 previously-posted patches in this git pull
+to Stephen for v7.1.
+https://lore.kernel.org/linux-clk/aZuK4-QJCXUeSxtL@redhat.com/
+
+Signed-off-by: Brian Masney <bmasney@redhat.com>
+---
+Changes in v2:
+- Renamed CLK_ROUNDING_FW_MANAGED to CLK_ROUNDING_NOOP
+- In clk.c, give an error on probe if the clk implements a
+  determine_rate() op and has CLK_ROUNDING_NOOP set.
+- Dropped renesas/rzg2l-cpg change since they plan to fill out this
+  driver's determine_rate op.
+- Link to v1: https://lore.kernel.org/r/20260226-clk-det-rate-fw-managed-v1-0-4421dd2f6dc6@redhat.com
+
+---
+Brian Masney (12):
+      clk: add new flag CLK_ROUNDING_NOOP
+      clk: test: add test suite for CLK_ROUNDING_NOOP flag
+      clk: rp1: drop determine_rate op and use CLK_ROUNDING_NOOP flag
+      clk: scpi: drop determine_rate op and use CLK_ROUNDING_NOOP flag
+      clk: hisilicon: hi3660-stub: drop determine_rate op and use CLK_ROUNDING_NOOP flag
+      clk: imx: scu: drop redundant init.ops variable assignment
+      clk: imx: scu: drop determine_rate op and use CLK_ROUNDING_NOOP flag
+      clk: qcom: rpm: drop determine_rate op and use CLK_ROUNDING_NOOP flag
+      clk: qcom: rpmh: drop determine_rate op and use CLK_ROUNDING_NOOP flag
+      clk: qcom: smd-rpm: drop determine_rate op and use CLK_ROUNDING_NOOP flag
+      clk: samsung: acpm: drop determine_rate op and use CLK_ROUNDING_NOOP flag
+      clk: sprd: drop determine_rate op and use CLK_ROUNDING_NOOP flag
+
+ drivers/clk/clk-rp1.c                   | 11 +----
+ drivers/clk/clk-scpi.c                  | 14 +-----
+ drivers/clk/clk.c                       | 31 ++++++++++--
+ drivers/clk/clk_test.c                  | 85 +++++++++++++++++++++++++++++++++
+ drivers/clk/hisilicon/clk-hi3660-stub.c | 14 +-----
+ drivers/clk/imx/clk-scu.c               | 23 +--------
+ drivers/clk/qcom/clk-rpm.c              | 16 ++-----
+ drivers/clk/qcom/clk-rpmh.c             |  8 +---
+ drivers/clk/qcom/clk-smd-rpm.c          | 15 +-----
+ drivers/clk/samsung/clk-acpm.c          | 14 +-----
+ drivers/clk/sprd/pll.c                  |  7 ---
+ drivers/clk/sprd/pll.h                  |  2 +-
+ include/linux/clk-provider.h            |  2 +
+ 13 files changed, 129 insertions(+), 113 deletions(-)
+---
+base-commit: 7d6661873f6b54c75195780a40d66bad3d482d8f
+change-id: 20260226-clk-det-rate-fw-managed-4b8d061f31be
+prerequisite-patch-id: 59198edc95aca82a29327137ad2af82ec13295b6
+prerequisite-patch-id: 8932e170649711d7a80c57784033a37faadd519b
+prerequisite-patch-id: 91c7b1851c5d77e504c49ce6bf14b3f8b84e826a
+
+Best regards,
+-- 
+Brian Masney <bmasney@redhat.com>
 
 
