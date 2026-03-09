@@ -1,192 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-96301-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96302-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 2G0TH3XtrmnvKQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96301-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 16:55:33 +0100
+	id 0J77DcburmkWKQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96302-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 17:01:10 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D711B23C339
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 16:55:32 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C3A823C564
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 17:01:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C3146301C8A9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2026 15:52:15 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E128F302C5DB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2026 15:55:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B93B3D4115;
-	Mon,  9 Mar 2026 15:52:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 751693E0C6F;
+	Mon,  9 Mar 2026 15:55:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AKJEFNEc"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j8IyccC3"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053D32765ED;
-	Mon,  9 Mar 2026 15:52:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5192E31AAAA;
+	Mon,  9 Mar 2026 15:55:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773071534; cv=none; b=cZWhmritvDRhQs/QHk13zzgkj1zL/FYNPTiohvlN9ikbQtf+j42wsT5LaE89IXGyFiq5iiMY/mexn1lRZJCUMHDLKIop18ea5fTHPnHpOmXyH1CsVLP0cKjLL+B0PYWwOlvotXNbtxLyjzWaYHAHXa42NghlNBDCRYjaKZc9JbE=
+	t=1773071738; cv=none; b=ZuSy3xDsTX4Tpe9f3M6Oufjp/Zv6SYau2lBzGq+a5QVm6kbRP8s2e0uKqMQQN93r6HqUIFLwikyNrlWhWPDoQ8KfW/coSTvcjecQ153EueOHwxj/n48pUHpOx6k6acyVczrdqhHDAKwm6V7hjVP/CHgRHZGuiYAfy/U/qCVFQL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773071534; c=relaxed/simple;
-	bh=mZGaIhlbKCzQALuhXRNQkznQD6emqCoT86PETfpqCVo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sHJ66SktwMuNYcFyQihI9RSPGxkAynghsiy/6mP9cyHzBB/LnJzFWfQTssvlaFfw0XJ8lJYSFBP/z9DyFbOJg10QElXQ4n+YD5krlHLYKX1QN6WIoEhM17gBV0BIkWN9SHXmYKCHG9ImqHdo7cyvZlw+NN0XSvaSlkgX5DYYfSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AKJEFNEc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A8ACC4CEF7;
-	Mon,  9 Mar 2026 15:52:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773071533;
-	bh=mZGaIhlbKCzQALuhXRNQkznQD6emqCoT86PETfpqCVo=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=AKJEFNEcM0HG6cc3ZTXqKPN6pZyqmxMxWcPf0MAKjNiXVTiufotLk0c1FPa1hIKGe
-	 EX3s1ogmSl300XhdbkPZXLbRcZe81mjBZ1/W/iPXc6vDgp/ZvC62MNAeBKuxaQMVE6
-	 W3vf7e9COdkuQ6gE/xrMx9DZlR3E+3qQoOEHoMNE+of5ju37MvRlIsVVh2oln3mIW2
-	 Aw+/WcHiDjgr4fV8pSOr2e3i1O20kepoTj+TiKp8PURMqwQPIaj3DWfBTcjbNJnQYP
-	 eegWPy7hAV8I+xWc/HKjPnyGaW6ID/Y5/64N7yCRFuVmP2i+XV3pn+Bt8QWWC6KSq/
-	 UMRnnl6AcE3Uw==
-Message-ID: <46c10f63-0915-4d7b-934b-8293a7230efb@kernel.org>
-Date: Mon, 9 Mar 2026 16:52:07 +0100
+	s=arc-20240116; t=1773071738; c=relaxed/simple;
+	bh=qXIJ+MnaMru8TxrmXBo3FzWMx/CodwsE3gYGQJwSBLI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qHkiNCFeaa9fj2vVWatl1FsNHVAbfNT1XKeUNEXX0CVrn3zaWBYWIqaIj1Xn0G4NdZ4o+77ApI8cybAYGLtVSYsi/WvHijwOTyWVh8a7rS8eKVX1Mk6sv3VqkUa9jTMgSJypPoAKrXYKGErgDr2imOtbgKc5YxLFKM7HeeDMIEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j8IyccC3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77AAEC4CEF7;
+	Mon,  9 Mar 2026 15:55:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1773071738;
+	bh=qXIJ+MnaMru8TxrmXBo3FzWMx/CodwsE3gYGQJwSBLI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=j8IyccC3leEcgtuq4KmLVPBMUW0iVnX6sLM2xG0Z0vDpGy8ek1c2UJzR4INNPsjXv
+	 En4HtDUlFLmcLOXMhP8aHCcFJgoHm79tl4MD/QNq5PMXPtDUNpibzFnoebwFcjEjVr
+	 NiTdSPPsnvzq70W2Fzidl9TXF7m31PZEiD/Z2riM=
+Date: Mon, 9 Mar 2026 16:55:35 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+Cc: Bartosz Golaszewski <brgl@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>, linux-arm-msm@vger.kernel.org,
+	driver-core@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RFT] driver core: faux: allow to set the firmware node
+ for a faux device
+Message-ID: <2026030921-dwindling-tarnish-6141@gregkh>
+References: <20260306-faux-dev-with-fwnode-v1-1-792a86a62530@oss.qualcomm.com>
+ <2026030649-evacuate-emotion-422c@gregkh>
+ <CAMRc=MebWaGPG=jMP-QbDsF+uaOSQFQyQ+T8Nhoh2jgo7VrFHg@mail.gmail.com>
+ <2026030612-collapse-empower-285f@gregkh>
+ <CAMRc=Mdyu=vHEOSfh6wuDaEW_XXS5gi+JO3PvgHB0q4+J+GMZg@mail.gmail.com>
+ <5488a169-777b-4bb3-9566-78083613d40a@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/7] arm64: dts: qcom: Add Arduino Monza (VENTUNOQ) board
- support
-To: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
- andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org
-Cc: richardcochran@gmail.com, geert+renesas@glider.be, arnd@arndb.de,
- dmitry.baryshkov@oss.qualcomm.com, ebiggers@kernel.org,
- michal.simek@amd.com, luca.weiss@fairphone.com, sven@kernel.org,
- prabhakar.mahadev-lad.rj@bp.renesas.com, kuninori.morimoto.gx@renesas.com,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, netdev@vger.kernel.org, m.facchin@arduino.cc,
- r.mereu@arduino.cc, loic.poulain@oss.qualcomm.com
-References: <20260309152420.1404349-1-srinivas.kandagatla@oss.qualcomm.com>
- <20260309152420.1404349-5-srinivas.kandagatla@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20260309152420.1404349-5-srinivas.kandagatla@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: D711B23C339
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <5488a169-777b-4bb3-9566-78083613d40a@oss.qualcomm.com>
+X-Rspamd-Queue-Id: 7C3A823C564
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [2.34 / 15.00];
+	MID_END_EQ_FROM_USER_PART(4.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[linuxfoundation.org,none];
+	MID_RHS_NOT_FQDN(0.50)[];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[linuxfoundation.org:s=korg];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-96301-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[gmail.com,glider.be,arndb.de,oss.qualcomm.com,kernel.org,amd.com,fairphone.com,bp.renesas.com,renesas.com,vger.kernel.org,arduino.cc];
-	RCPT_COUNT_TWELVE(0.00)[23];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-96302-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.986];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[linuxfoundation.org:+];
+	MISSING_XM_UA(0.00)[];
+	NEURAL_SPAM(0.00)[0.223];
+	RCPT_COUNT_SEVEN(0.00)[8];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,renesas];
+	FROM_NEQ_ENVFROM(0.00)[gregkh@linuxfoundation.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:email,linuxfoundation.org:dkim,linuxfoundation.org:email]
 X-Rspamd-Action: no action
 
-On 09/03/2026 16:24, Srinivas Kandagatla wrote:
-> +		};
-> +	};
-> +
-> +
-> +	vdc_3v3: regulator-vdc-3v3 {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vdc_3v3";
-> +		regulator-min-microvolt = <3300000>;
-> +		regulator-max-microvolt = <3300000>;
-> +	};
-> +
-> +	vdc_1v8: regulator-vdc-1v8 {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vdc_1v8";
-> +		regulator-min-microvolt = <1800000>;
-> +		regulator-max-microvolt = <1800000>;
-> +	};
-> +
-> +	vdc_5v: vdc-5v {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vdc_5v";
-> +		regulator-min-microvolt = <5000000>;
-> +		regulator-max-microvolt = <5000000>;
-> +		gpio = <&tlmm 49 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +		regulator-always-on;
-> +		startup-delay-us = <20000>;
-> +	};
-> +
-> +	vreg_nvme: m2-vreg-3p3 {
+On Mon, Mar 09, 2026 at 09:16:19PM +0530, Shivendra Pratap wrote:
+> 
+> 
+> On 06-03-2026 19:54, Bartosz Golaszewski wrote:
+> > On Fri, Mar 6, 2026 at 3:13 PM Greg Kroah-Hartman
+> > <gregkh@linuxfoundation.org> wrote:
+> > > 
+> > > On Fri, Mar 06, 2026 at 03:07:03PM +0100, Bartosz Golaszewski wrote:
+> > > > On Fri, Mar 6, 2026 at 2:54 PM Greg Kroah-Hartman
+> > > > <gregkh@linuxfoundation.org> wrote:
+> > > > > 
+> > > > > On Fri, Mar 06, 2026 at 02:45:56PM +0100, Bartosz Golaszewski wrote:
+> > > > > > Add a new variant of faux_device_create() taking a firmware node handle
+> > > > > > as argument and attaching it to the created faux device. This allows
+> > > > > > users to define and read device properties using the standard property
+> > > > > > accessors.
+> > > > > 
+> > > > > Why would a faux device have firmware backing?  Doesn't that mean it
+> > > > > should be a platform device?
+> > > > > 
+> > > > > > While at it: order includes in faux.c alphabetically for easier
+> > > > > > maintenance.
+> > > > > 
+> > > > > Hint, that should be a separate patch, and is never something that I
+> > > > > enforce or require in .c files I maintain :)
+> > > > > 
+> > > > > > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+> > > > > > ---
+> > > > > > Hi Shivendra et al!
+> > > > > > 
+> > > > > > This patch is related to my response to your reboot-mode patch[1].
+> > > > > > 
+> > > > > > You should be able to use the new function like:
+> > > > > > 
+> > > > > >    faux_device_create_full("psci-reboot-mode", NULL, NULL, NULL, of_fwnode_handle(np));
+> > > > > 
+> > > > > What is the fwnode handle here for?  Why is it required at all?  What
+> > > > > resources are involved that would want this?
+> > > > > 
+> > > > 
+> > > > Shivendra creates a faux device that registers with the reboot-mode
+> > > > subsystem which reads the reboot-mode definitions from devicetree. The
+> > > > faux device needs to have the "reboot-mode" OF-node attached. In his
+> > > > current proposal, Shivenda had to bypass faux device's probe() because
+> > > > he can't have the fwnode attached before probe() is called.
+> > > 
+> > > Why would a firmware device be attached to a faux device?  A firmware
+> > > device is, implicitly, already part of the firmware "device tree", so
+> > > there should be something for it to be a child of already in the system.
+> > > 
+> > 
+> > Shivendra: I rememeber there was an issue with using any proper
+> > devices like platform or auxiliary with this but - as the series is
+> > already at v20 - I can't find the actual discussion. Could you please
+> > describe what the issue with driver matching was?
+> 
+> reboot-mode node is a property of psci which defines the reboot commands.‌ As
+> its not an actual device we wanted to avoid creating platform or aux device.
+> few references here:
+> 
+> https://lore.kernel.org/all/rz7tnl5gg73gtyij3kmwk6hubikfsvu3krekjkpoofpdio6cwe@innio7qvotye/
+> 
+> Till v17, we were exposing an explicit of_node based registration in reboot
+> mode and then registering it from psci driver.
+> Post this, Lorenzo suggested to move this outside of psci and use a faux
+> device instead.
 
-You have kind of random regulator names. Some are regulators, some are
-nothing and some are vregs.
+As this is a "real" device that talks to hardware (i.e. you have a
+firmware device representation), please do not use a faux device, that
+is not what that interface is for.  Instead, as it is a firmware device,
+just use a platform one as you already have a representation of it
+somewhere in the system, right?
 
-Please use name for all fixed regulators which matches current format
-recommendation: 'regulator-[0-9]v[0-9]'
+thanks,
 
-https://web.git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/regulator/fixed-regulator.yaml
-
-Best regards,
-Krzysztof
+greg k-h
 
