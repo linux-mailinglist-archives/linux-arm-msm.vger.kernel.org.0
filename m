@@ -1,132 +1,223 @@
-Return-Path: <linux-arm-msm+bounces-96157-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96158-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id QCaVIu6ArmlfFQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96157-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 09:12:30 +0100
+	id wNfxDGuArmlfFQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96158-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 09:10:19 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 43CDF2355F0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 09:12:30 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id C781C235577
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 09:10:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 3FAF83029A76
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2026 08:08:54 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 966A7300822F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2026 08:09:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1128A36B061;
-	Mon,  9 Mar 2026 08:08:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00CB636B04E;
+	Mon,  9 Mar 2026 08:09:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="jbZ2xgFn"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tyIOucgK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-43101.protonmail.ch (mail-43101.protonmail.ch [185.70.43.101])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C40D364024
-	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Mar 2026 08:08:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC9CA2EB0F;
+	Mon,  9 Mar 2026 08:09:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773043731; cv=none; b=OP3NemrRngp7H8NK8kQMqUxBx4dTMXoocLvwqyFY0TUM1P4KQh7ilc99abe8XcqJrf+FIGbIAMBWRalNqTUx6VqePm22ILV+PryuIA3SSxhSYU4gRheGnzHkrVQtxg82xwUdKI3IsdpYCQldP26QKNBU0OOr4NhLZ6yRy4gvBS8=
+	t=1773043797; cv=none; b=XzsHEQfs5saiqcZeYhGD+Dqziu5Liyf8GnG4ubUFMiR56qnke1H83t67ZKhQ1Jab0zF8KJRQ/ec0JtYAJHcG+VYQyinWTyiXslGux8YHWd6eA/PieCsQXs6iYUFMZkUCulKWAiaPTTpUbTnWRAsEKdfPSQHsoV8/MzDLgnFhVAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773043731; c=relaxed/simple;
-	bh=yaBtMW9JGUwb77xGShB/9gW3SrXB1Su8/qEdx8/j5uU=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aXcqSFp0MYYEqgfckdudVrrQJaWJJp76VjfgFhnP7VmNxFjEg4z837nn4qP0jnj0B6NazrtzsGN0B0oHb07s2UMdWEpLF+pSbDHaFMz1wgZCzTD5yxt9gCWo4SnpdWyAMbMP7m7HVQCD+9Iuuwp+dRuf4ksUobahBI6Mg+yuhR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=jbZ2xgFn; arc=none smtp.client-ip=185.70.43.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1773043721; x=1773302921;
-	bh=cygezOMdtCf5kGQwAmrbWXBh1wLwpLmYehIZoWuwRq4=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=jbZ2xgFn2ytT95fpsGr5d31xHGAJB0B1hUrw8HM3gLmQUdnBpLCrZpAoK+4Uil4Su
-	 w+7iTii/6PbZfzCW0IDWc4O3y77YqiMqCrOTPhY/Ha1/TEez85hdicPouI7EsQPOyr
-	 rhWPMjzhOX91gpc8/GZ8bi9kZmL4BsgplXlJTZnykIPgabLcgBqagyT6Fkpi0Ws64c
-	 JtLDi7p22LfQjV3thtnZ41M3YbOD6W2RXft9aCrCqWMD1o73OuvSVxsJTnBS8+Q971
-	 L2uuKhz+RI9Ns2AsBn+muzEvmFBg096l3q9XiOLDV/gWSnyx6WnTzSeyOTfOQGIpeg
-	 +eJ7jFFp2xJ4g==
-Date: Mon, 09 Mar 2026 08:08:36 +0000
-To: Krzysztof Kozlowski <krzk@kernel.org>
-From: Alexander Koskovich <akoskovich@pm.me>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Kees Cook <kees@kernel.org>, Tony Luck <tony.luck@intel.com>, "Guilherme G. Piccoli" <gpiccoli@igalia.com>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: sm8250: Add label for reserved-memory node
-Message-ID: <NyBYVOuujgzbrN9E_Y1pYyOJMgys_1tE2jUI80-mtjgzxXUCQLaw1ZxuGVPpBANTMTQPsH7OhUlxkSRt7b_hiekBLuzEgPswCGy3_MqT5tY=@pm.me>
-In-Reply-To: <7641f6c4-6d80-4d62-b963-734371b14750@kernel.org>
-References: <20260308-sm8250-asus-obiwan-v1-0-3c72941eb796@pm.me> <20260308-sm8250-asus-obiwan-v1-2-3c72941eb796@pm.me> <20260309-orange-coot-of-speed-b3fa28@quoll> <7641f6c4-6d80-4d62-b963-734371b14750@kernel.org>
-Feedback-ID: 37836894:user:proton
-X-Pm-Message-ID: 55ea901cab488ea38d63b864a86410ef09eb8553
+	s=arc-20240116; t=1773043797; c=relaxed/simple;
+	bh=32FowEX4GYXUvlI6q5fHoPOHKDUD+8ybU58sR9odc3w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=D234cCKP4pCTzYsBNN6XAbGaiTrJ6EamYs8ZAdwmzXr0K98V1+FmtYjfbQ15KviqAdcp7vcKYuZcvjj4UTmb0iQ9Wymi65WrmD6RSmMCpb7sm59czn9dQOK6bp8tIm1rX0hFwkUq8B236YHLlcE2TBoxda2akD4DhUBD7+3VUqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tyIOucgK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C4ADC4CEF7;
+	Mon,  9 Mar 2026 08:09:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773043797;
+	bh=32FowEX4GYXUvlI6q5fHoPOHKDUD+8ybU58sR9odc3w=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=tyIOucgKAfmefa18DFYskVEvdTUmMUUmT8HnBszC9g+/3mu1ac4DRo0flCYJxEj76
+	 p271mDlGTOPyxk4+0+GHdecUdSQAZOM+L8gTNBNBGZwQHPKV8vC1thWGJZPeZBX8pr
+	 3X16t3RsqMIU6jLyG1xNhwWvWI5MieFe0lPzQJVGZ4F14tpOazzwn0lmuYQV9/WBGI
+	 HbVW0WlB742mIaR5ZW5z1fUpVHoaFEKrkIJaxV8wBnVjVXySu/7AfHLJAFTi3Qe+Mc
+	 W8hZg9dDIi4OWOFOSpENXZiP4Xr06c8ndff9g0yDDNCYcEa/Ggxfoc0bZVbfvGxE79
+	 J4OdC2YwDMUEQ==
+Date: Mon, 9 Mar 2026 13:39:38 +0530
+From: Sumit Garg <sumit.garg@kernel.org>
+To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	linux-media@vger.kernel.org, netdev@vger.kernel.org,
+	linux-wireless@vger.kernel.org, ath12k@lists.infradead.org,
+	linux-remoteproc@vger.kernel.org, andersson@kernel.org,
+	konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, robin.clark@oss.qualcomm.com, sean@poorly.run,
+	akhilpo@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
+	jesszhan0024@gmail.com, marijn.suijten@somainline.org,
+	airlied@gmail.com, simona@ffwll.ch, vikash.garodia@oss.qualcomm.com,
+	dikshita.agarwal@oss.qualcomm.com, bod@kernel.org,
+	mchehab@kernel.org, elder@kernel.org, andrew+netdev@lunn.ch,
+	davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+	pabeni@redhat.com, jjohnson@kernel.org, mathieu.poirier@linaro.org,
+	trilokkumar.soni@oss.qualcomm.com, pavan.kondeti@oss.qualcomm.com,
+	jorge.ramirez@oss.qualcomm.com, tonyh@qti.qualcomm.com,
+	vignesh.viswanathan@oss.qualcomm.com,
+	srinivas.kandagatla@oss.qualcomm.com,
+	amirreza.zarrabi@oss.qualcomm.com, jens.wiklander@linaro.org,
+	op-tee@lists.trustedfirmware.org, apurupa@qti.qualcomm.com,
+	skare@qti.qualcomm.com, Sumit Garg <sumit.garg@oss.qualcomm.com>
+Subject: Re: [PATCH 01/14] arm64: dts: qcom: kodiak: Add EL2 overlay
+Message-ID: <aa6AQtR4oEfomWPj@sumit-xelite>
+References: <20260306105027.290375-1-sumit.garg@kernel.org>
+ <20260306105027.290375-2-sumit.garg@kernel.org>
+ <20260309080049.si3vzro4z6qn7ewz@hu-mojha-hyd.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: 43CDF2355F0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260309080049.si3vzro4z6qn7ewz@hu-mojha-hyd.qualcomm.com>
+X-Rspamd-Queue-Id: C781C235577
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
-	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-96158-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-96157-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[3];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
 	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[48];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.freedesktop.org,lists.infradead.org,kernel.org,oss.qualcomm.com,poorly.run,linux.dev,gmail.com,somainline.org,ffwll.ch,lunn.ch,davemloft.net,google.com,redhat.com,linaro.org,qti.qualcomm.com,lists.trustedfirmware.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.970];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[pm.me:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[pm.me:dkim,pm.me:email,pm.me:mid,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
+	NEURAL_HAM(-0.00)[-0.985];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[sumit.garg@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,qualcomm.com:url,qualcomm.com:email]
 X-Rspamd-Action: no action
 
+On Mon, Mar 09, 2026 at 01:30:49PM +0530, Mukesh Ojha wrote:
+> On Fri, Mar 06, 2026 at 04:20:14PM +0530, Sumit Garg wrote:
+> > From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+> > 
+> > All the existing variants Kodiak boards are using Gunyah hypervisor
+> > which means that, so far, Linux-based OS could only boot in EL1 on those
+> > devices.  However, it is possible for us to boot Linux at EL2 on these
+> > devices [1].
+> > 
+> > When running under Gunyah, the remote processor firmware IOMMU
+> > streams are controlled by Gunyah. However, without Gunyah, the IOMMU is
+> > managed by the consumer of this DeviceTree. Therefore, describe the
+> > firmware streams for each remote processor.
+> > 
+> > Add a EL2-specific DT overlay and apply it to Kodiak IOT variant
+> > devices to create -el2.dtb for each of them alongside "normal" dtb.
+> > 
+> > [1]
+> > https://docs.qualcomm.com/bundle/publicresource/topics/80-70020-4/boot-developer-touchpoints.html#uefi
+> > 
+> > Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+> > [SG: watchdog fixup]
+> > Signed-off-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
+> 
+> Thanks for posting, I was about to add kodiak to the already existing
+> list monaco, talos here
+> https://lore.kernel.org/lkml/20260127-talos-el2-overlay-v2-0-b6a2266532c4@oss.qualcomm.com/
+> 
+> but did you really miss linux-kernel@vger.kernel.org or is it
+> intentional ?
 
-On Monday, March 9th, 2026 at 4:00 AM, Krzysztof Kozlowski <krzk@kernel.org=
-> wrote:
+Ah I see, I missed that list. Will add in v2. BTW, this patch in the
+series can be applied independently since it will work with existing
+SCM interfaces provided by QTEE.
 
-> On 09/03/2026 09:00, Krzysztof Kozlowski wrote:
-> > On Sun, Mar 08, 2026 at 08:40:38PM +0000, Alexander Koskovich wrote:
-> >> For some devices it makes more sense to just redefine reserved-memory,
-> >> for example on the ASUS ROG Phone 3 it is completely different with th=
-e
-> >> exception of hyp_mem, xbl_aop_mem, cmd_db and smem_mem.
-> >>
-> >> Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
-> >> ---
-> >>  arch/arm64/boot/dts/qcom/sm8250.dtsi | 2 +-
-> >
-> > Same comment as before. This makes no sense as its own patch.
->=20
-> And this is v2, not v1!
+-Sumit
 
-Are you saying it should be fully included in the ROG 3 patch instead of be=
-ing a separate change? Can just include into v2 of the ROG 3 series when I =
-resubmit later if that's the case.
-
-Oops on the version, should I increment version of a patch if the contents =
-themselves haven't changed? Or is it just for any resend of a patch, versio=
-n should be incremented?
-
->=20
-> Best regards,
-> Krzysztof
->=20
-
-Thanks,
-Alex
+> 
+> > ---
+> >  arch/arm64/boot/dts/qcom/Makefile        |  2 ++
+> >  arch/arm64/boot/dts/qcom/kodiak-el2.dtso | 35 ++++++++++++++++++++++++
+> >  2 files changed, 37 insertions(+)
+> >  create mode 100644 arch/arm64/boot/dts/qcom/kodiak-el2.dtso
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> > index f80b5d9cf1e8..09a7f943190e 100644
+> > --- a/arch/arm64/boot/dts/qcom/Makefile
+> > +++ b/arch/arm64/boot/dts/qcom/Makefile
+> > @@ -139,6 +139,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)	+= qcs615-ride.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-radxa-dragon-q6a.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2.dtb
+> > +qcs6490-rb3gen2-el2-dtbs := qcs6490-rb3gen2.dtb kodiak-el2.dtbo
+> > +dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2-el2.dtb
+> >  
+> >  qcs6490-rb3gen2-vision-mezzanine-dtbs := qcs6490-rb3gen2.dtb qcs6490-rb3gen2-vision-mezzanine.dtbo
+> >  qcs6490-rb3gen2-industrial-mezzanine-dtbs := qcs6490-rb3gen2.dtb qcs6490-rb3gen2-industrial-mezzanine.dtbo
+> > diff --git a/arch/arm64/boot/dts/qcom/kodiak-el2.dtso b/arch/arm64/boot/dts/qcom/kodiak-el2.dtso
+> > new file mode 100644
+> > index 000000000000..0b3a69a0d765
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/qcom/kodiak-el2.dtso
+> > @@ -0,0 +1,35 @@
+> > +// SPDX-License-Identifier: BSD-3-Clause
+> > +/*
+> > + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> > + *
+> > + * Kodiak specific modifications required to boot in EL2.
+> > + */
+> > +
+> > +
+> > +/dts-v1/;
+> > +/plugin/;
+> > +
+> > +&gpu_zap_shader {
+> > +	status = "disabled";
+> > +};
+> > +
+> > +&remoteproc_adsp {
+> > +	iommus = <&apps_smmu 0x1800 0x0>;
+> > +};
+> > +
+> > +&remoteproc_cdsp {
+> > +	iommus = <&apps_smmu 0x11a0 0x0400>;
+> > +};
+> > +
+> > +&remoteproc_wpss {
+> > +	iommus = <&apps_smmu 0x1c03 0x1>,
+> > +		 <&apps_smmu 0x1c83 0x1>;
+> > +};
+> > +
+> > +&venus {
+> > +	status = "disabled";
+> > +};
+> > +
+> > +&watchdog {
+> > +	status = "okay";
+> > +};
+> > -- 
+> > 2.51.0
+> > 
+> 
+> -- 
+> -Mukesh Ojha
+> 
 
