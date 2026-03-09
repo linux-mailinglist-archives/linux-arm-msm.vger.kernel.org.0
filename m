@@ -1,144 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-96387-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96388-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SA5aE0FBr2mYSwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96387-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 22:53:05 +0100
+	id gOcuBb9Er2n3TAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96388-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 23:07:59 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 981A1241E94
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 22:53:04 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id F0991242129
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 23:07:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id BB46931724C3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2026 21:50:43 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 60F143024913
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2026 22:07:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27A6635839D;
-	Mon,  9 Mar 2026 21:50:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 180D14266BC;
+	Mon,  9 Mar 2026 22:07:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="W5AGlw8G"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fQbai9Lc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-24417.protonmail.ch (mail-24417.protonmail.ch [109.224.244.17])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC18536C5B0;
-	Mon,  9 Mar 2026 21:50:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 258B0425CF9
+	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Mar 2026 22:07:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773093042; cv=none; b=ZTDqfg1WIJW/VXCsNHNijRqOKcq/T23SApD3IXotOXdSNR4H4t8IFeKtPgg9mdUiKxjekuG1waKYN6Zh7/WmU1K9Rj3oekcJ157IhVSyegk4PxhsaWUGdreyb4+k9Nq4wa0noSH2jqfnAJgZZD3zRmZl2pojwVNg6s8HvVJDmo0=
+	t=1773094074; cv=none; b=qbxU8y0sxkGLgFDMBZ5PuA0Cs9E/2JAlJzO27SPAXI41qIbPCnkwj/PwbvSpIj1fzKQLVkUfvGbGKmcAhvJwp0EOGrUOBlO0IWRZcLWNFNf0ySjRkIwgT7tqzMq+uq6rYS+fOIMki+en68gwG1Tn/1aB8e/vasnz3bdiwrywECo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773093042; c=relaxed/simple;
-	bh=BLwnTN/doYiYLxs22kfN13qTi3yC74+KoLLulJju9ds=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=k4FpMHKR3in1ODgBHM9aLD2HR7HXld7p34Sj+A4DPx7GutiHrxxWAToUYl5z2THodDKgDiZrxjIfPP3W/4Juoa1gOe1CJY/CnJtxHzqZFe4QJdxhesP/03DDk8AhigrtKQ4kJYWYt6HdUnp4fscmJoJKeAoibxPCUjej1uIsSDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=W5AGlw8G; arc=none smtp.client-ip=109.224.244.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1773093038; x=1773352238;
-	bh=MkcSEbNEv29g++i8rrpw/o3gQ1osp7RMsH/LfjL+u+0=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=W5AGlw8GOGMExHKxvQJNHxCDG3fHftNNREzuspXorr97btTIz91KrskmmHIgm7T3f
-	 VZx2FEHoFYqDH/B7Uw1ph3neErnKuJ9rK8sOXgF92v1FMhIu2V/fI8kBkgaxnpNACl
-	 8JNYNBuck+U7jS8AbNtPfkwjt1SZ6J1SR6fm66IrLFa5Z0DdqFNBZkwHmuTaGQ8dh4
-	 TSemmq3sNOwICgjTD1j/+R0OPWECZdRLdMim/2eZ/PZfIqdIOoBRaoFrUAXzI0VmZE
-	 WdSS9G5hCaSUe7aB1ttik+yGa8LPAf0XYMsDEjaDFipTqfmELHu1L6n5YtL/0W2yfC
-	 65Aw1Xf64XfGA==
-Date: Mon, 09 Mar 2026 21:50:35 +0000
-To: Herbert Xu <herbert@gondor.apana.org.au>, "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
-From: Alexander Koskovich <akoskovich@pm.me>
-Cc: linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Alexander Koskovich <akoskovich@pm.me>
-Subject: [PATCH v2 2/2] arm64: dts: qcom: sm8250: Add inline crypto engine
-Message-ID: <20260309-sm8250-ice-v2-2-0c8c46ccc814@pm.me>
-In-Reply-To: <20260309-sm8250-ice-v2-0-0c8c46ccc814@pm.me>
-References: <20260309-sm8250-ice-v2-0-0c8c46ccc814@pm.me>
-Feedback-ID: 37836894:user:proton
-X-Pm-Message-ID: 9418723da742b04029968d9c7aaf5a51e9c8dbdf
+	s=arc-20240116; t=1773094074; c=relaxed/simple;
+	bh=mXuEXkQj7Rg4dutsP6ny1KP87NvfEJ0+83zK4pvYZr4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JSFnijtPwLxs5Jos1Ywn68vAuvhEb6eG1JUEsTE1BrylGTbjOj9vKusum/majOFlsE5y1HrnJQf6KaySe6YEPKPmnllifn+iM8aCZ4RsDIfFe2mYFta4B3TTQoeCGRX1ucJwTrz5uv7veJPRvlLhGsyWJSBoNw1xjVawG9vou8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fQbai9Lc; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-48538c5956bso17468935e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2026 15:07:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1773094070; x=1773698870; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Dk5accODM7ezppgmsEo6ZlVd16xDcQunTBdBDruNkNk=;
+        b=fQbai9LcJlrJp7LHta2PUOQaEWQBCKry7hgxgC9IDhjff1qTboyTCcCWWs7KeCC++5
+         Lcz6nq+tcIvWdzdKPS5M+oQTIThkzVl9P16wFdMRlHXXOy635XGyDEi+k+PMVTK4ylnF
+         6rmvMM2nbRPQORp5zJ61ElHchC9H5EPr1SSBAjemPyU1/urLFN33y1E/OuATk3DGh1oK
+         Ak8wVblBAumy7Ek2VtdJNMp/uNa3vgXMjgd6+4oEfWyn8cc+5BFrMSDyfwxV4MvobP7o
+         2QpeZnUQ3D6WHb0R+ZI4m+EsKm1osgcJyGMMY5sVM87DmOdvTTC/eaO8g/bwSIGMMYNv
+         cQVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773094070; x=1773698870;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Dk5accODM7ezppgmsEo6ZlVd16xDcQunTBdBDruNkNk=;
+        b=t7gVtekiHk9LOc39Ngn/8Ohvq3hMErAXl2HCewIyqv6IHoyzZuZtaxS8/lRvm8B2f6
+         E32vSb/oN2gAg+Rf4fFXj8x+t4IZ6cQbzAvsVHplq71TdixG9OWfWRGp10pfa7SFf2oJ
+         2XvYmq1uugbHcryipMWeui4cdl93gkGy2lHxykX63FtYbHZ2baGTmc9Mcgjw/iAZqVia
+         Ik+c1GfZaseLfbF5Bw0V7hDmEDPuYaoVqqvZAH99k3mcoBOHYACcOMMvAWZmZps2H3gi
+         MoRpou/kZrCIDpt18EFhx3NHPc+t81AtnQjKRXuWnJiWhPYSHTIIYbI3p6JeQo9l9vjl
+         8seg==
+X-Forwarded-Encrypted: i=1; AJvYcCUIRjqU5cps+bDIBEQo92MC+2sWONscubo6qmzxWvGmqtyHaME16E8d4Dqyww0gPA0erUHuGBdY5/cRvCEx@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx1PgmvJZQSuhqEUwmH+qcInJiw6+FBxG0QXZ46VhLbPjucwIRZ
+	OWckrguWCklw3q1VkfqThADoAd+KtJTeTHn0YxmAFeWOfb+w7SBvTXlwHzCwBFnSzEc=
+X-Gm-Gg: ATEYQzwvmzjNup4Bn/BI5XcyQ3r/ftm2M6At4ZR1KYZ6vTjxDfBWhGIzyTMOyDlMYui
+	Zen3PpSC40pT85FjafZKHecl5b6mNrPn61X05fUfdJNyBwEAZeK+t9ENnzgcgCysOd+sJ8kRmHz
+	wolicCSeHqW56KigSboVNJfEMif8YdLNfP2fd3iJ0KCS3MhadB1aY34/KUKlZC9mgxbu/Jehkyd
+	kaPCuzcEOFvmrDkmJLZ2LG1SZ1XZi6kMa0Qxj8cBXWGcW8CnAV3Klyqx+n9TGf+S1Y0HQXRFzmT
+	SlSteWgdfWKs3Y/8RBFFuUWIoH1N5VRxadw/GOrdu84iwLMQjyMQa47IQ4+MTDyTw6+tihhMZJo
+	VSq+8eyUynV5DBqUkP2uNp4yKAntR6zdCwiA5M20koB5NZqVZuOSmtncAxu+ASlZt89u+6GCBaj
+	xTxjhwwqCj/EkilDZqCp76kpbcnnm8/LdAeO0=
+X-Received: by 2002:a05:600d:848a:b0:485:3294:fff0 with SMTP id 5b1f17b1804b1-48541a2b9f4mr12097815e9.17.1773094070519;
+        Mon, 09 Mar 2026 15:07:50 -0700 (PDT)
+Received: from linaro.org ([2a02:2454:ff23:4441:1c2c:7aff:fe45:362e])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-485419c2930sm44011255e9.0.2026.03.09.15.07.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Mar 2026 15:07:50 -0700 (PDT)
+Date: Mon, 9 Mar 2026 23:07:33 +0100
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Paul Adam <adamp@posteo.de>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+Subject: Re: [PATCH v4 3/3] arm64: dts: qcom: msm8916-wiko-chuppito: add
+ initial devicetree
+Message-ID: <aa9Epb7MQ0qVFWGO@linaro.org>
+References: <20260307-wiko-chuppito-v4-0-325ac66ae338@posteo.de>
+ <20260307-wiko-chuppito-v4-3-325ac66ae338@posteo.de>
+ <aa6P4rE7d2ftaeAw@linaro.org>
+ <aa8__ofJBdMfavbq@MyryksLaptop>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: 981A1241E94
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aa8__ofJBdMfavbq@MyryksLaptop>
+X-Rspamd-Queue-Id: F0991242129
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
-	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	DKIM_TRACE(0.00)[linaro.org:+];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-96387-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[3];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-96388-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	FROM_HAS_DN(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[pm.me:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,pm.me:dkim,pm.me:email,pm.me:mid,1d87000:email]
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[stephan.gerhold@linaro.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:dkim,linaro.org:mid,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-Add the ICE found on sm8250 and link it to the UFS node.
+On Mon, Mar 09, 2026 at 09:48:12PM +0000, Paul Adam wrote:
+> On 26/03/09 10:16, Stephan Gerhold wrote:
+> > > diff --git a/arch/arm64/boot/dts/qcom/msm8916-wiko-chuppito.dts b/arch/arm64/boot/dts/qcom/msm8916-wiko-chuppito.dts
+> > > new file mode 100644
+> > > index 000000000000..d927bae2b208
+> > > --- /dev/null
+> > > +++ b/arch/arm64/boot/dts/qcom/msm8916-wiko-chuppito.dts
+> > > @@ -0,0 +1,315 @@
+> > > [...]
+> > > +&sound {
+> > > +	audio-routing = "AMIC1", "MIC BIAS Internal1",
+> > > +		"AMIC2", "MIC BIAS Internal2",
+> > > +		"AMIC3", "MIC BIAS Internal1";
+> > 
+> > Sorry, just noticed this now:
+> > 
+> > This seems a bit suspicious (I would expect "MIC BIAS Internal3"), have
+> > you tested if the secondary microphone works?
+> > 
+> > Thanks,
+> > Stephan
+> 
+> The secondary microphone does not work yet, neither with Internal1
+> nor Internal3.
+> 
+> In the downstream devicetree its Internal1 for AMIC3.
+> 
+> Is there a way for me to check which one is correct?
+> 
 
-qcom-ice 1d90000.crypto: Found QC Inline Crypto Engine (ICE) v3.1.81
+To be absolutely sure, only with the schematic diagram of the board...
 
-Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+Another option would be that the secondary microphone simply does not
+exist at all (i.e. there is only one microphone). Any idea if it works
+on Android?
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qco=
-m/sm8250.dtsi
-index c7dffa440074..b49007934278 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -2513,6 +2513,8 @@ ufs_mem_hc: ufshc@1d84000 {
-=20
- =09=09=09power-domains =3D <&gcc UFS_PHY_GDSC>;
-=20
-+=09=09=09qcom,ice =3D <&ice>;
-+
- =09=09=09iommus =3D <&apps_smmu 0x0e0 0>, <&apps_smmu 0x4e0 0>;
-=20
- =09=09=09clock-names =3D
-@@ -2592,6 +2594,17 @@ ufs_mem_phy: phy@1d87000 {
- =09=09=09status =3D "disabled";
- =09=09};
-=20
-+=09=09ice: crypto@1d90000 {
-+=09=09=09compatible =3D "qcom,sm8250-inline-crypto-engine",
-+=09=09=09=09     "qcom,inline-crypto-engine";
-+=09=09=09reg =3D <0 0x01d90000 0 0x8000>;
-+=09=09=09clocks =3D <&gcc GCC_UFS_PHY_ICE_CORE_CLK>,
-+=09=09=09=09 <&gcc GCC_UFS_PHY_AHB_CLK>;
-+=09=09=09clock-names =3D "ice_core_clk",
-+=09=09=09=09      "iface_clk";
-+=09=09=09power-domains =3D <&gcc UFS_PHY_GDSC>;
-+=09=09};
-+
- =09=09cryptobam: dma-controller@1dc4000 {
- =09=09=09compatible =3D "qcom,bam-v1.7.4", "qcom,bam-v1.7.0";
- =09=09=09reg =3D <0 0x01dc4000 0 0x24000>;
+If in doubt, it would be better to remove the line for AMIC3.
 
---=20
-2.53.0
-
-
+Thanks,
+Stephan
 
