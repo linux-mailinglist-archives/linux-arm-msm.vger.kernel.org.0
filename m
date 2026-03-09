@@ -1,37 +1,37 @@
-Return-Path: <linux-arm-msm+bounces-96174-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96175-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aF/2LaaWrmnRGQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96174-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 10:45:10 +0100
+	id aFfsIamWrmnRGQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96175-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 10:45:13 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 232D223670E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 10:45:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3254F236725
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 10:45:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 6A592306A53F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2026 09:40:24 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id BDD62306CC16
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2026 09:40:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5CBC37BE85;
-	Mon,  9 Mar 2026 09:40:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BAEDD37BE76;
+	Mon,  9 Mar 2026 09:40:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="A0iR6F56"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="EklVRTMR"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A62836A01D;
-	Mon,  9 Mar 2026 09:40:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D6B36A01D;
+	Mon,  9 Mar 2026 09:40:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773049223; cv=none; b=p/8htViplv3YmXMQmfWlvKDksqRckuEq8aUct+XvRsMVuR+t5b0fR77FBq4TEq4Bn6kvAVKKu4rYzwKTuGO+xj+17xNpvnZQqVLGpmPj0DGgTdg/6eFqPntBHkWEdvYfvzIgZ2ADxp4zlcaRddsJU8ay97h423m3rRFHxME407k=
+	t=1773049226; cv=none; b=UaUHrxKeiKjiCQeFia9KEDsH9+j5w9dX8t7aaRY4jmE3qUUUCTXFr7ERfjyYsYDXXHrCt2XfGu/mLNBwxjdZWcHXG3YWKnGY367bQD0reVyCAV2bD2aUCD8dprqJAOpIceBq2sxfjRMU8YUyMZtPNEqoF02aTGh0zUyP0/YnE+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773049223; c=relaxed/simple;
-	bh=QlyzYKWgMFxRBz9AUTyI19iVQtClYc7iZW6bbYev70s=;
+	s=arc-20240116; t=1773049226; c=relaxed/simple;
+	bh=1UvZfhTmxc1Sgi0gmKv5ZxX8KNk4t0uGUxFewUZ1wK8=;
 	h=In-Reply-To:References:From:To:Cc:Subject:MIME-Version:
-	 Content-Disposition:Content-Type:Message-Id:Date; b=OIiLgsvkDhQP4YGQBTZTYYmEuNfGFRQdze6UYeDF7FEQo91vGhm6fCpgw22tUQHJt0hDtEGm+mS5B64ZjZvgCUdNrK42ReZy2qME8obMeoWMzjsnqg8GDE0fpTcMbxr7LjsCVCN4SmR2zGpwpfOXY4gEeHWZEc/BMu5wLAFuGKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=A0iR6F56; arc=none smtp.client-ip=78.32.30.218
+	 Content-Disposition:Content-Type:Message-Id:Date; b=dIjN9p016racosAKlqnWRJEJRZNvr5KOugjDJXRsN+phEPRpr/sidCrR9+kTB/ze9dxuoWUng8bLWiok145qHrNO7w0mXe1/BR7Diup/aJlfZLjqTOD1JiTtaowUodd8mNH4BetLnP34XPNInR/gbv9IUFj0kWZUoRpWeqCGBTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=EklVRTMR; arc=none smtp.client-ip=78.32.30.218
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
@@ -40,22 +40,22 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	In-Reply-To:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
 	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
 	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=+H0FEWCF1UemM/WizaowF59Zs24Cxl63eiclBzeUMEo=; b=A0iR6F56E1sUXW79EfEFSfC8bY
-	XXBYA2FwF6k95++IWIG05RYbVgVIE5zoQ8tKUGsW+Df16Cqj3Ycz6sThucEt30Xp2SqWlN3n7wPz7
-	Oi32fM1a6EyGU1bv+wVKd+tIuhHlDi/6deo6DLLKi3JeJ/o9Ao4vMszxnxsC4VjBeblGB0bm3f30K
-	kQ2QQisvOEZkxxClpBbCWMA+B+Zn5a5wTzP4hCHyUGWp2HXLT72+uiJGGJEIgPh3O9al1oYEHyiYG
-	tAd8WZO9GDri0QDGr1lXwIH9gVN8fsh1b6QK5ELnmJmkaLINP5sRavgk5cchOjr1xNyr5VlsQzf2n
-	LmfYovlA==;
-Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:60976 helo=rmk-PC.armlinux.org.uk)
+	bh=zzQHtoFn7yNl5mgP8jm0AT1Cso1q/JOg4cOlIoYOlsI=; b=EklVRTMRWDNJInw7wEHB7RRHb/
+	82NUrtdmUOum9ZETT2DLpiRY43/WK8IOOu87lPeRAGYSDpjRVO9oesANpI9vQi0E7VB33YhRMvBMZ
+	SIHih0mwONPxcnVTE6Ereza8VGeCCvuqfwi9K8X3OHY9xTu80AvcQXxccm/A5nU8Ylsb5NRkDSzdw
+	bKKy8TKdWHf3TCIdgv+wTIEl1EtRTmE0yvNJik+obwExy2HjdyiF8dJCTGf+EfBFajNfUR2lhSere
+	wbiXrG8vsmZo7evothQZHtEyc+vBt6LGoeF+WzhgY93seQQnrX8yobZX/fH+nBpFyJOq068bwsQUK
+	w4ABa7iw==;
+Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:44830 helo=rmk-PC.armlinux.org.uk)
 	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
 	(envelope-from <rmk@armlinux.org.uk>)
-	id 1vzX5Y-000000003VK-0PPK;
-	Mon, 09 Mar 2026 09:39:48 +0000
+	id 1vzX5e-000000003Vd-2jKM;
+	Mon, 09 Mar 2026 09:39:54 +0000
 Received: from rmk by rmk-PC.armlinux.org.uk with local (Exim 4.98.2)
 	(envelope-from <rmk@rmk-PC.armlinux.org.uk>)
-	id 1vzX5U-0000000CVsQ-162V;
-	Mon, 09 Mar 2026 09:39:44 +0000
+	id 1vzX5Z-0000000CVsb-1XTm;
+	Mon, 09 Mar 2026 09:39:49 +0000
 In-Reply-To: <aa6VEsmBK-S9eNYU@shell.armlinux.org.uk>
 References: <aa6VEsmBK-S9eNYU@shell.armlinux.org.uk>
 From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
@@ -86,8 +86,7 @@ Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Samuel Holland <samuel@sholland.org>,
 	Sascha Hauer <s.hauer@pengutronix.de>,
 	Yao Zi <me@ziyao.cc>
-Subject: [PATCH net-next v2 6/7] net: stmmac: add documentation for
- stmmac_dma_cfg members
+Subject: [PATCH net-next v2 7/7] net: stmmac: add documentation for clocks
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -97,10 +96,10 @@ MIME-Version: 1.0
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset="utf-8"
-Message-Id: <E1vzX5U-0000000CVsQ-162V@rmk-PC.armlinux.org.uk>
+Message-Id: <E1vzX5Z-0000000CVsb-1XTm@rmk-PC.armlinux.org.uk>
 Sender: Russell King <rmk@armlinux.org.uk>
-Date: Mon, 09 Mar 2026 09:39:44 +0000
-X-Rspamd-Queue-Id: 232D223670E
+Date: Mon, 09 Mar 2026 09:39:49 +0000
+X-Rspamd-Queue-Id: 3254F236725
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [1.14 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
@@ -111,7 +110,7 @@ X-Spamd-Result: default: False [1.14 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	DMARC_POLICY_SOFTFAIL(0.10)[armlinux.org.uk : SPF not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-96174-lists,linux-arm-msm=lfdr.de,kernel];
+	TAGGED_FROM(0.00)[bounces-96175-lists,linux-arm-msm=lfdr.de,kernel];
 	FROM_HAS_DN(0.00)[];
 	DKIM_TRACE(0.00)[armlinux.org.uk:-];
 	RCPT_COUNT_TWELVE(0.00)[27];
@@ -124,7 +123,7 @@ X-Spamd-Result: default: False [1.14 / 15.00];
 	RCVD_COUNT_FIVE(0.00)[5];
 	FROM_NEQ_ENVFROM(0.00)[rmk@armlinux.org.uk,linux-arm-msm@vger.kernel.org];
 	PRECEDENCE_BULK(0.00)[];
-	NEURAL_SPAM(0.00)[0.232];
+	NEURAL_SPAM(0.00)[0.215];
 	MID_RHS_MATCH_FROMTLD(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
@@ -132,57 +131,67 @@ X-Spamd-Result: default: False [1.14 / 15.00];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,rmk-PC.armlinux.org.uk:mid,armlinux.org.uk:email]
 X-Rspamd-Action: no action
 
-Add documentation of each of the struct stmmac_dma_cfg members. dche
-remains undocumented as I don't have documentation that covers this.
+Add documentation covering stmmac_clk, pclk, clk_ptp_ref and clk_tx_i
+in the hope that this will help understand what each of these clocks
+are for.
+
+There is confusion around stmmac_clk and pclk which can't be easily
+resolved today as the Imagination Technologies Pistachio board that
+pclk was introduced for has no public documentation and is likely now
+obsolete. So the origins of pclk are lost to the winds of time.
 
 Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 ---
- include/linux/stmmac.h | 23 ++++++++++++++++++++++-
- 1 file changed, 22 insertions(+), 1 deletion(-)
+ include/linux/stmmac.h | 33 ++++++++++++++++++++++++++++++++-
+ 1 file changed, 32 insertions(+), 1 deletion(-)
 
 diff --git a/include/linux/stmmac.h b/include/linux/stmmac.h
-index 11886189bf51..1af3a5e197c9 100644
+index 1af3a5e197c9..937985276e6b 100644
 --- a/include/linux/stmmac.h
 +++ b/include/linux/stmmac.h
-@@ -93,16 +93,37 @@ struct stmmac_mdio_bus_data {
- };
- 
- struct stmmac_dma_cfg {
-+	/* pbl: programmable burst limit
-+	 * txpbl: transmit programmable burst limit
-+	 * rxpbl: receive programmable burst limit
-+	 * If txpbl or rxpbl are zero, the value of pbl will be substituted.
-+	 * Range 0 - 63.
+@@ -300,10 +300,41 @@ struct plat_stmmacenet_data {
+ 	struct phylink_pcs *(*select_pcs)(struct stmmac_priv *priv,
+ 					  phy_interface_t interface);
+ 	void *bsp_priv;
++
++	/* stmmac clocks:
++	 *  stmmac_clk: CSR clock (which can be hclk_i, clk_csr_i, aclk_i,
++	 *    or clk_app_i depending on GMAC configuration). This clock
++	 *    generates the MDC clock.
++	 *
++	 *  pclk: introduced for Imagination Technologies Pistachio board -
++	 *    see 5f9755d26fbf ("stmmac: Add an optional register interface
++	 *    clock"). This is probably used for cases where separate clocks
++	 *    are provided for the host interface and register interface. In
++	 *    this case, as the MDC clock is derived from stmmac_clk, pclk
++	 *    can only really be the "application clock" for the "host
++	 *    interface" and not the "register interface" aka CSR clock as
++	 *    it is never used when determining the divider for the MDC
++	 *    clock.
++	 *
++	 *  clk_ptp_ref: optional PTP reference clock (clk_ptp_ref_i). When
++	 *    present, this clock increments the timestamp value. Otherwise,
++	 *    the rate of stmmac_clk will be used.
++	 *
++	 *  clk_tx_i: MAC transmit clock, which will be 2.5MHz for 10M,
++	 *    25MHz for 100M, or 125MHz for 1G irrespective of the interface
++	 *    mode. For the DWMAC PHY interface modes:
++	 *
++	 *    GMII/MII	PHY's transmit clock for 10M (2.5MHz) or 100M (25MHz),
++	 *		or 125MHz local clock for 1G mode
++	 *    RMII	50MHz RMII clock divided by 2 or 20.
++	 *    RGMII	125MHz local clock divided by 1, 5, or 50.
++	 *    SGMII	125MHz SerDes clock divided by 1, 5, or 50.
++	 *    TBI/RTBI	125MHz SerDes clock
 +	 */
- 	int pbl;
- 	int txpbl;
- 	int rxpbl;
-+	/* pblx8: multiplies pbl, txpbl, rxpbl by a factor of 8 for dwmac >=
-+	 * 3.50a, or a factor of 4 for previous versions.
-+	 */
- 	bool pblx8;
-+	/* fixed_burst:
-+	 *  when set, AXI bursts defined by axi_blen_regval are permitted.
-+	 *   AHB uses SINGLE, INCR4, INCR8 or INCR16 during burst transfers.
-+	 *  when clear, AXI and AHB use SINGLE or INCR bursts.
-+	 */
- 	bool fixed_burst;
-+	/* mixed_burst:
-+	 *  when set and fixed_burst is clear, AHB uses INCR for bursts > 16
-+	 *  and SINGLE or INCRx for bursts <= 16.
-+	 */
- 	bool mixed_burst;
-+	/* aal: address aligned bursts for AHB and AXI master interface */
- 	bool aal;
-+	bool dche;
- 	bool eame;
-+	/* multi_msi_en: stmmac core internal */
- 	bool multi_msi_en;
--	bool dche;
-+	/* atds: stmmac core internal */
- 	bool atds;
- };
- 
+ 	struct clk *stmmac_clk;
+ 	struct clk *pclk;
+ 	struct clk *clk_ptp_ref;
+-	struct clk *clk_tx_i;		/* clk_tx_i to MAC core */
++	struct clk *clk_tx_i;
+ 	unsigned long clk_ptp_rate;
+ 	unsigned long clk_ref_rate;
+ 	struct clk_bulk_data *clks;
 -- 
 2.47.3
 
