@@ -1,182 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-96098-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96103-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SNbwLI4IrmkN/AEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96098-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 00:38:54 +0100
+	id uPiNFpgcrmmk/gEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96103-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 02:04:24 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A18F232BEA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 00:38:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B5FFD233027
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 02:04:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id E933630467C6
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Mar 2026 23:37:15 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 230873041BEF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2026 01:03:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9A3435CB71;
-	Sun,  8 Mar 2026 23:37:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F14F2556E;
+	Mon,  9 Mar 2026 01:03:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sXuqJk0U"
+	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="jvhojoBA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-178.mta0.migadu.com (out-178.mta0.migadu.com [91.218.175.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 922D11DFE22
-	for <linux-arm-msm@vger.kernel.org>; Sun,  8 Mar 2026 23:37:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F5F41DF985
+	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Mar 2026 01:02:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773013035; cv=none; b=pmgQc+QYy+Xy68R6O6VhdUlK884YFPUGD3P4U3VrQdbIYyGjw5khODuuHGDQ9IevcEUNrWqrr4L6gZfy0MWnnooWndw/DkGlFYEC1ETkCasmTcWqWrLEJptSmiyDjuwpuZ0FS1Tm2MKHx6WaNlUmPExyvXODSi3E8kWtjHw+Puw=
+	t=1773018181; cv=none; b=EWpZKsjHd46/ZarACxYMVqfBNkbb4OxqQ8eVM5b7yeA/22Jo1XIefWZEXLCpIP3iBf8EUfuQq1chYxx9sVznM5EkJQNONTdVEUO1bem4p4GjrcvR4TTo2f1BCxUjih89/qKzrQC4EB8aNfYR/Bj3cUTdST61RboL6mV0vPr/nys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773013035; c=relaxed/simple;
-	bh=Y1OEgdq6oxx/yUdJofc5WjQU71h2hY0jeep/Kt+ouww=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CPJVlU9QidceQDkwRefs9NVZ+yAxIV/kughc5l1NX0FTjqcRrd8UEIeohYPSmHe7Z8c4L82cTDvDkKTNtEsJt9c0D0TDqW+TNFc2aHeit7VWwp8Db26LW1lCUda6Pj3HjUAKgj13XwBl5DyPtYfWbXH/UsFz0hYWBx1/OgxyCAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sXuqJk0U; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AF4BC4AF09
-	for <linux-arm-msm@vger.kernel.org>; Sun,  8 Mar 2026 23:37:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773013035;
-	bh=Y1OEgdq6oxx/yUdJofc5WjQU71h2hY0jeep/Kt+ouww=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=sXuqJk0UxkQ2fLoIcTQQYBKIZzzKxVvHeMtgKMUMTXQE9J2gxM3e6dFKeNsyFUEWf
-	 XkH9+xiMRoWFLhiIGZmRRQQZbBNla5oB2EHotVb3CvpB1Rx7PFCyPJJ+Llhp8sEc+w
-	 mrlOcfMMN4UjemD/0YG06TEW02auA/gVCJqz9OgxR0dg5pLcY9Dg6o3HtHKTqvtg/a
-	 uxwyR/zvMGfGIbLVmxoJy9k0cIBKDypXjUj5RQLVIulM/7E7RF3aikCaPVJ5zaKbwx
-	 G61hjS/k6+fDAVaHjuiX6I1Vr2EahN4+jcfvMOaMTwYIZN/2wB0UEaZYda2xte00Mz
-	 MnBF4/xA5BNcQ==
-Received: by mail-yx1-f52.google.com with SMTP id 956f58d0204a3-64ca09f2056so8059537d50.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Mar 2026 16:37:15 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCWBjjKRV+et0zm7mvCfsl4GDmXaS/Ich97lyNx/8mg8LI0ptubbwZYQDa9Y8sBUDC9sS7cso7wED96XE+ul@vger.kernel.org
-X-Gm-Message-State: AOJu0YyKWKSuS9WciJiIDh24qGNDUroH6/K9FHN4O9Cl1k8ZM9Rwc4DU
-	s6dX1krhmKL2izcrUGgYewyv6LowEFBv1ekoG02KqF5wpRDdSBcBq9i+y3+C9SGy6DX85cYVqGY
-	MC+/KjMZfXmB8btjf6PoWJZt2dTrwnn4=
-X-Received: by 2002:a53:b44f:0:b0:64a:cf8e:47f6 with SMTP id
- 956f58d0204a3-64d14350c6amr6887787d50.68.1773013034641; Sun, 08 Mar 2026
- 16:37:14 -0700 (PDT)
+	s=arc-20240116; t=1773018181; c=relaxed/simple;
+	bh=rRc/e6K/yWxakpik9GUm14LiUHLzoaW9X3Y/2OZeQZM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=X7E9d11qTvhKVveCT/e4r3em74/0CWD+2aieQ7D8IefOmmJPX4Mqg8wx16TYLL92lXlneftbAVxcc4MkQQPMs7gBvMN9gRGERYmGBn2JaPO2kfCtm2w8wxogJTlc6Z5L8w6KBtDNQbeYOy7Ds22iovkfiSkelNFFCzRp6ig20ps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=jvhojoBA; arc=none smtp.client-ip=91.218.175.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
+	s=key1; t=1773018167;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=jW4mW1GfYwAGUTP73I4AqgwxwPvoK4UJopMM4jq59Q8=;
+	b=jvhojoBASFCnkcme347c3UBfC/LO8ikwtiZEpISrAKLStuwCJeuozbZ9fTNFhD3aco4GqC
+	wq1go//OsTEZIOPQcHnQfrRcdvAROZPRH+dzM3ojdRayne2hB6cptJvNM4/sQs4f6bu2yL
+	VT2w/k60CouQG7gaFL1t/MaB2+PqswpCrEUhjrpANzaWp7YIcZNHORotlEJ+QNj3zwLHEO
+	mlmI8pXn/5atPTocsfsjPEu7q0c10jbyyC6RVrxLIcyYID2oRLy+hGwrC5YZjZIgIVXoWN
+	sYtwSJTK0HpVBJWDczs41DIxo7UfKd8lBjI8tBIqLXLYBcm4m3oPq3rrL7st6g==
+From: Val Packett <val@packett.cool>
+To: 
+Cc: Val Packett <val@packett.cool>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Maximilian Luz <luzmaximilian@gmail.com>,
+	linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 0/7] clk: qcom: sc8180x: PM-related fixes
+Date: Sun,  8 Mar 2026 22:00:22 -0300
+Message-ID: <20260309010214.224621-1-val@packett.cool>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260306-expressatt_camera_flash-v1-0-b1996f7cdfdd@gmail.com> <20260306-expressatt_camera_flash-v1-3-b1996f7cdfdd@gmail.com>
-In-Reply-To: <20260306-expressatt_camera_flash-v1-3-b1996f7cdfdd@gmail.com>
-From: Linus Walleij <linusw@kernel.org>
-Date: Mon, 9 Mar 2026 00:37:03 +0100
-X-Gmail-Original-Message-ID: <CAD++jLkbDAx3x4jRy5DjWmZHVJ_DwHEBSBbOOPB34P6WtmAS=A@mail.gmail.com>
-X-Gm-Features: AaiRm53H04DqIiqJZMOp22bNjrTYCtVSyTSkQUP-gMpoGaKl6snzd2vAfDw672Q
-Message-ID: <CAD++jLkbDAx3x4jRy5DjWmZHVJ_DwHEBSBbOOPB34P6WtmAS=A@mail.gmail.com>
-Subject: Re: [PATCH 3/3] ARM: dts: qcom: msm8960: expressatt: Add camera flash
-To: guptarud@gmail.com
-Cc: Lee Jones <lee@kernel.org>, Pavel Machek <pavel@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	linux-leds@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: 3A18F232BEA
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
+X-Rspamd-Queue-Id: B5FFD233027
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [0.84 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[packett.cool,quarantine];
+	R_DKIM_ALLOW(-0.20)[packett.cool:s=key1];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-96098-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com];
+	FREEMAIL_CC(0.00)[packett.cool,kernel.org,gmail.com,vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-96103-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[3];
 	MISSING_XM_UA(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[linusw@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.939];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[val@packett.cool,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[packett.cool:+];
+	NEURAL_HAM(-0.00)[-0.997];
+	TAGGED_RCPT(0.00)[linux-arm-msm,linaro];
+	RCPT_COUNT_SEVEN(0.00)[10];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,packett.cool:dkim,packett.cool:mid]
 X-Rspamd-Action: no action
 
-Hi Rudraksha,
+This series mostly ports the fixes that were made over the years to the
+sc8280xp drivers to the sc8180x ones. (With apologies to everyone for
+somewhat stealing the commit messages in places :D)
 
-thanks for your patch!
+The most pressing issue this resolves is s2idle exit on the Surface Pro X
+being slow and breaking NVMe:
 
-On Sat, Mar 7, 2026 at 1:58=E2=80=AFAM Rudraksha Gupta via B4 Relay
-<devnull+guptarud.gmail.com@kernel.org> wrote:
+    nvme 0002:01:00.0: Unable to change power state from D3cold to D0, device inaccessible
+    xhci-hcd xhci-hcd.0.auto: xHC error in resume, USBSTS 0x401, Reinit
+    usb usb1: root hub lost power or was reset
+    usb usb2: root hub lost power or was reset
+    nvme nvme0: controller is down; will reset: CSTS=0xffffffff, PCI_STATUS read failed (134)
+    nvme nvme0: Does your device have a faulty power saving mode enabled?
+    nvme nvme0: Try "nvme_core.default_ps_max_latency_us=0 pcie_aspm=off pcie_port_pm=off" and report a bug
+    nvme 0002:01:00.0: Unable to change power state from D3cold to D0, device inaccessible
 
-> From: Rudraksha Gupta <guptarud@gmail.com>
->
-> Add camera flash support for the Samsung Galaxy Express (expressatt).
->
-> The flash IC uses a one-wire pulse-count protocol on GPIO 3, gated by
-> PMIC MPP 4 which must be driven high to unlock the flash circuit.
->
-> Downstream references:
-> Link: https://github.com/LineageOS/android_kernel_samsung_d2/blob/stable/=
-cm-12.0-YNG4N/drivers/leds/Makefile#L51
-> Link: https://github.com/LineageOS/android_kernel_samsung_d2/blob/stable/=
-cm-12.0-YNG4N/arch/arm/mach-msm/board-apexq-camera.c#L591
->
-> Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
+Hopefully it also contributes towards improving power usage eventually..
 
-(...)
+One thing I'm left wondering about is 8d114b94fc39 ("clk: qcom:
+gcc-sc8280xp: use collapse-voting for PCIe GDSCs"), not sure if it
+applies and if it does, where I'd find the values. (Downstream dtsi for
+sdmshrike, which is the closest SoC that the msm kernel supports AFAIK,
+was my only reference and it doesn't seem to have anything related.)
 
-> +       camera_flash: led-controller {
-> +               compatible =3D "richtek,rt8515";
-> +               enf-gpios =3D <&tlmm 3 GPIO_ACTIVE_HIGH>;
+And 9410fb940114 ("clk: qcom: gcc-sc8280xp: use phy-mux clock for PCIe")
+.. we don't have the _src clocks for PCIe defined at all here (o.0)
 
-I think you should ideally define richtek,rfs-ohms, if it's impossible
-to find this information then use the default,
-richtek,rfs-ohms =3D <16000>;
+BTW there's also a dispcc patch I sent as an RFC but probably
+should've been part of this series:
 
-> +               unlock-gpios =3D <&pm8921_mpps 4 GPIO_ACTIVE_HIGH>;
+https://lore.kernel.org/all/20260307111801.631060-1-val@packett.cool/
 
-As mentioned I don't think this is right. The chip has no "unlock"
-signal. I think this is a simple regulator (such as a switch).
+Thanks,
+~val
 
-I would do:
+Val Packett (7):
+  dt-bindings: clock: qcom,gcc-sc8180x: Add missing GDSCs
+  clk: qcom: gcc-sc8180x: Add missing GDSCs
+  clk: qcom: gcc-sc8180x: Use retention for USB power domains
+  clk: qcom: gcc-sc8180x: Use retention for PCIe power domains
+  clk: qcom: gcc-sc8180x: Add missing GDSC flags
+  clk: qcom: gcc-sc8180x: Add runtime PM
+  clk: qcom: camcc-sc8180x: Disable always-on clocks on probe failure
 
-vin-supply =3D <&flash_gpio_reg>;
+ drivers/clk/qcom/camcc-sc8180x.c             |  14 ++-
+ drivers/clk/qcom/gcc-sc8180x.c               | 112 +++++++++++++++----
+ include/dt-bindings/clock/qcom,gcc-sc8180x.h |   5 +
+ 3 files changed, 109 insertions(+), 22 deletions(-)
 
-Then something like (better if you reserarch it a bit):
+-- 
+2.52.0
 
-flash_gpio_reg: regulator-gpio-ldo-3v3 {
-    compatible =3D "regulator-fixed";
-    /* Supplied in turn by VBAT? I guess so. It is between 2.8 and 5V */
-    regulator-name =3D "FLASH_3V3"; // Or whatever the rail is best called?
-    regulator-min-microvolt =3D <3300000>; // If you have better guesses, u=
-se them
-    regulator-max-microvolt =3D <3300000>; // If you know VBAT then use
-that voltage
-    gpio =3D <&pm8921_mpps 4 GPIO_ACTIVE_HIGH>;
-    startup-delay-us =3D <5000>; // FIXME
-    enable-active-high;
-    pinctrl-names =3D "default";
-    pinctrl-0 =3D <&flash_led_unlock>;
-};
-
-Notice:
-
-+&pm8921_mpps {
-+       flash_led_unlock: flash-led-unlock-state {
-+               pins =3D "mpp4";
-+               function =3D "digital";
-+               output-low;
-+               power-source =3D <PM8921_GPIO_S4>;
-+       };
-
-This seems completely unused in the current patch, but my addition
-above uses it.
-
-Yours,
-Linus Walleij
 
