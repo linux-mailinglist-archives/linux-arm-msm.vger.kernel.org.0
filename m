@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-96300-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96301-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id AOmkNZrurmkWKQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96300-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 17:00:26 +0100
+	id 2G0TH3XtrmnvKQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96301-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 16:55:33 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D31F23C500
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 17:00:26 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D711B23C339
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 09 Mar 2026 16:55:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id B98C9305B5EC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2026 15:50:33 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C3146301C8A9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Mar 2026 15:52:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 674833DA7E1;
-	Mon,  9 Mar 2026 15:50:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B93B3D4115;
+	Mon,  9 Mar 2026 15:52:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="solyXFWG"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AKJEFNEc"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 437A43D904F;
-	Mon,  9 Mar 2026 15:50:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053D32765ED;
+	Mon,  9 Mar 2026 15:52:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773071430; cv=none; b=R0JpLf1oGWazdH171u+2o6lsFrmH/o8td06ewyaRAC+bQKur6hvZd1QajOpp5BYe3O1CBJJbrWyaXSgoeat1qteKhNZGECDw2F7hDPm1Ee0b4tQFw/G9M/hp5ZK5FSpeZbGNNaJL9IWMSGEVPKUNhsaxWOcLDivAZl7KI3BEH7s=
+	t=1773071534; cv=none; b=cZWhmritvDRhQs/QHk13zzgkj1zL/FYNPTiohvlN9ikbQtf+j42wsT5LaE89IXGyFiq5iiMY/mexn1lRZJCUMHDLKIop18ea5fTHPnHpOmXyH1CsVLP0cKjLL+B0PYWwOlvotXNbtxLyjzWaYHAHXa42NghlNBDCRYjaKZc9JbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773071430; c=relaxed/simple;
-	bh=9OEPxMvg4IrQclqCeEwbfs/Byz88+tQZLyysbDmgGL4=;
+	s=arc-20240116; t=1773071534; c=relaxed/simple;
+	bh=mZGaIhlbKCzQALuhXRNQkznQD6emqCoT86PETfpqCVo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jz5AYTxsauT6S7Hfkf3skgb6Ddbh2IHnyeFVzaiaE0/jcLhOxUzuOqqqA3tF2774PbgzFM5F2FJ+dfiIH1ETOq7b9EGR8Rnwi01hmBsRnqeb7JDS4h31M10+eG4dzj/07ViyhpL/MS0aSHib3xINOvCIh4IBsqHhT1E9TCfniU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=solyXFWG; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47518C2BC9E;
-	Mon,  9 Mar 2026 15:50:24 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=sHJ66SktwMuNYcFyQihI9RSPGxkAynghsiy/6mP9cyHzBB/LnJzFWfQTssvlaFfw0XJ8lJYSFBP/z9DyFbOJg10QElXQ4n+YD5krlHLYKX1QN6WIoEhM17gBV0BIkWN9SHXmYKCHG9ImqHdo7cyvZlw+NN0XSvaSlkgX5DYYfSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AKJEFNEc; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A8ACC4CEF7;
+	Mon,  9 Mar 2026 15:52:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773071429;
-	bh=9OEPxMvg4IrQclqCeEwbfs/Byz88+tQZLyysbDmgGL4=;
+	s=k20201202; t=1773071533;
+	bh=mZGaIhlbKCzQALuhXRNQkznQD6emqCoT86PETfpqCVo=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=solyXFWGvXM3hf6VyfbS/rcmIthCFMmnY+wu/fWBWBOvvSWTFU4x/x8GyoqnEJJ4D
-	 5o7FgKfnBo4UNvRY/DoFPy0WkklX7anxFQZxsZmeNSoWafTcysEMFhQ2gpP6WHyvvD
-	 4PIvb5SU8nG4z1lzXE+lDdoCRv0XWtcZNVy7D0KLzVfHHDdetXOb+aksKhh0XruG/A
-	 Y14MzzIoQT+mSjLR07/ZQdUqK3w7fZmunXKFj0b0du4bjcFX10WThYV3a39NRt+mae
-	 rLNQdROHp0ezxOYjExFVDHzu2hzdY/hb1k72NEw2DShRlgoTXfINGMVWIwtZ9HYvBE
-	 gO2PzPS10R1Lg==
-Message-ID: <82b23341-d0ac-4b44-b50d-ad0eb5509974@kernel.org>
-Date: Mon, 9 Mar 2026 16:50:21 +0100
+	b=AKJEFNEcM0HG6cc3ZTXqKPN6pZyqmxMxWcPf0MAKjNiXVTiufotLk0c1FPa1hIKGe
+	 EX3s1ogmSl300XhdbkPZXLbRcZe81mjBZ1/W/iPXc6vDgp/ZvC62MNAeBKuxaQMVE6
+	 W3vf7e9COdkuQ6gE/xrMx9DZlR3E+3qQoOEHoMNE+of5ju37MvRlIsVVh2oln3mIW2
+	 Aw+/WcHiDjgr4fV8pSOr2e3i1O20kepoTj+TiKp8PURMqwQPIaj3DWfBTcjbNJnQYP
+	 eegWPy7hAV8I+xWc/HKjPnyGaW6ID/Y5/64N7yCRFuVmP2i+XV3pn+Bt8QWWC6KSq/
+	 UMRnnl6AcE3Uw==
+Message-ID: <46c10f63-0915-4d7b-934b-8293a7230efb@kernel.org>
+Date: Mon, 9 Mar 2026 16:52:07 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,7 +53,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/7] dt-bindings: arm: qcom: add Arduino Monza, VENTUNOQ
+Subject: Re: [PATCH 4/7] arm64: dts: qcom: Add Arduino Monza (VENTUNOQ) board
+ support
 To: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
  andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
  krzk+dt@kernel.org, conor+dt@kernel.org
@@ -65,7 +66,7 @@ Cc: richardcochran@gmail.com, geert+renesas@glider.be, arnd@arndb.de,
  linux-kernel@vger.kernel.org, netdev@vger.kernel.org, m.facchin@arduino.cc,
  r.mereu@arduino.cc, loic.poulain@oss.qualcomm.com
 References: <20260309152420.1404349-1-srinivas.kandagatla@oss.qualcomm.com>
- <20260309152420.1404349-4-srinivas.kandagatla@oss.qualcomm.com>
+ <20260309152420.1404349-5-srinivas.kandagatla@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -111,21 +112,21 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260309152420.1404349-4-srinivas.kandagatla@oss.qualcomm.com>
+In-Reply-To: <20260309152420.1404349-5-srinivas.kandagatla@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 7D31F23C500
+X-Rspamd-Queue-Id: D711B23C339
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-96300-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-96301-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
@@ -142,37 +143,49 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt,renesas];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,qualcomm.com:email]
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
 On 09/03/2026 16:24, Srinivas Kandagatla wrote:
-> From: Loic Poulain <loic.poulain@oss.qualcomm.com>
-> 
-> Document Arduino monza, VENTUNOQ codename. It combines Monaco
-> based SoM with STMicroelectronics STM32H5 microcontroller.
-> 
-> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-> Co-developed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+> +		};
+> +	};
+> +
+> +
+> +	vdc_3v3: regulator-vdc-3v3 {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vdc_3v3";
+> +		regulator-min-microvolt = <3300000>;
+> +		regulator-max-microvolt = <3300000>;
+> +	};
+> +
+> +	vdc_1v8: regulator-vdc-1v8 {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vdc_1v8";
+> +		regulator-min-microvolt = <1800000>;
+> +		regulator-max-microvolt = <1800000>;
+> +	};
+> +
+> +	vdc_5v: vdc-5v {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vdc_5v";
+> +		regulator-min-microvolt = <5000000>;
+> +		regulator-max-microvolt = <5000000>;
+> +		gpio = <&tlmm 49 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +		regulator-always-on;
+> +		startup-delay-us = <20000>;
+> +	};
+> +
+> +	vreg_nvme: m2-vreg-3p3 {
 
-I wonder how two people were developing simple one compatible change and...
+You have kind of random regulator names. Some are regulators, some are
+nothing and some are vregs.
 
-> ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> index 153664da91d9..2edef7e86175 100644
-> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> @@ -890,6 +890,7 @@ properties:
->            - enum:
->                - qcom,monaco-evk
->                - qcom,qcs8300-ride
-> +              - arduino,monza
+Please use name for all fixed regulators which matches current format
+recommendation: 'regulator-[0-9]v[0-9]'
 
-... still place it in wrong order.
+https://web.git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/regulator/fixed-regulator.yaml
 
 Best regards,
 Krzysztof
