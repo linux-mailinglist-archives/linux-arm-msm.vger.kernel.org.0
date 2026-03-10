@@ -1,56 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-96693-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96692-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id CF3WHrgzsGl2hAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96693-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	id QCv4ALgzsGl2hAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96692-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 16:07:36 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 30E3E252DFB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 16:07:36 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6AE1F252DEE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 16:07:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 9B14A32B40D6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 14:02:48 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id DDDBC32B40F1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 14:02:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49505399342;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48F9D397E9E;
 	Tue, 10 Mar 2026 14:02:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a6Ascwoa"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rRMr6uhD"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24355391E55;
-	Tue, 10 Mar 2026 14:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 243E1391E5C;
+	Tue, 10 Mar 2026 14:02:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773151341; cv=none; b=I7sRFhAYczYGfMyQS8CqXWYFMQE0h9TozvSOVwSyCTVC2sx5402YrHBR+oQKF9iCw2d/SVB5kK9WtoWWUaFEkGDPV59mmWNb+5DrvvOMNvKLJW88fZGCdoGjUsrmFlhxIWeP07/+2+NL0x5M5rtHE7U3LL1WraOeNZgabnHEpU8=
+	t=1773151341; cv=none; b=cBA8SP6RaU+NKgkp6Q44Ti0vRILe1Opy4QIUw2ZSvinCbBDT+F1qyI64CLFDSJJWIxTf62PD0y+KfZFWFSa8wAE+NDlaydgHUzWz1oYEJ451c8RaRvGptVzbZwhtYW5g3p95zQFdm5qjEMIcPujn8JyUCSZOT7w/OJVC9uO+IIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773151341; c=relaxed/simple;
-	bh=/1oXQSl8lOctBMm0s6V4ROPxq8kPUCe8v+kkkA6uVT4=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ipn6fGgxZt4Yir2bcHA6oLjwBPrQ2IwBIhlvigKA99aZBPhZDY64N1Fni1YuLUnGgxpZmUYTe2gl2TITJJVAEqQcyGvXfHjq05mZKx9NpRQ3kMj2BqkV2HyEVxaJKqL8NIbXRK+8pItCjHLEkzKjA12KKRNVhzmwTOoohFpywvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a6Ascwoa; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id B51ABC19423;
+	bh=e+CijSnACpAvUHE3G+ydvnXHYVPcarBDrd6Vye65l2c=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=M7drbIu6FjwGdaMBH5haJnIO5UIa+W2xBYOIoDpR00FHMsivMw3M6JYJAw4hA8tiaF9hVRQl8YMqNQVrPonUWehTuH0r5Ipqv2SR81XAVeE5/fuOObwMU0BsSs/bHUTzxj68loHguV6adIpsV8JlWCTbcZtHB0VuaaA8AC2NcN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rRMr6uhD; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id C8C66C19425;
 	Tue, 10 Mar 2026 14:02:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1773151340;
-	bh=/1oXQSl8lOctBMm0s6V4ROPxq8kPUCe8v+kkkA6uVT4=;
-	h=From:Subject:Date:To:Cc:Reply-To:From;
-	b=a6AscwoaKiH4Ca/n0QYxHQlBh3GonUFp4+NFHMdPElR0wdLHCLoNIMO+4inJslY8k
-	 AZfDhTy6vJLX1RrVztyRGHgQ/bouContf25YuLxspS6xnBZGoZuu+bfW3HZYghc40D
-	 co5mSz+tCaf+J/7C7eEFKOvfhOWWrdYeLC0TBGK3mQc+XIJeG0h4WwVHc7GxpOtSpM
-	 TcPNZZeYh8yF6JtIA7LO+VeOhIrw1w+XKUfscCDp6zgFq7JUCWz3wdLPHQhG/WzmJD
-	 dHCuu1T+ZcmUTTMAVTStgiTw/jc+6fmaQjnNnKvAfBl05DqpOy7PEtddfrqdt9E60/
-	 lShVALLUAE7KA==
+	bh=e+CijSnACpAvUHE3G+ydvnXHYVPcarBDrd6Vye65l2c=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=rRMr6uhDGG/EHpghKLYQCDX4tTJE/Qqta2nrySIKYuwJi6GUgT8qEEtBOQbz31Ksh
+	 cGKx+5EBlKR0qKLm5jHzjQ+u4w3QBMnZpAEltxg2TI90wPRk+ucg701iI+YftyquzP
+	 6RgZyIN9GclRffH4uBOx45q0nDeMhedcn+Yi3dzxTq4FxSk4fixzLX9klQaMw6iXNI
+	 Ip5PdETcw1nyM4WUUlgTjZtjbeIu8pbjF6MxHT+UIrF/KWQdzgt05pB3q9m/jGnUix
+	 HoTt6D0T22/PGU26F8weCO8VSEBqBmOaQutrsxVkZ7DsfgbnnRqYVnfAHqX7QWCqDe
+	 7hB082PhZNe/A==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A217EFD2D9F;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6A77FD2D9C;
 	Tue, 10 Mar 2026 14:02:20 +0000 (UTC)
 From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>
-Subject: [PATCH v7 0/4] PCI: Add support for resetting the Root Ports in a
- platform specific way
-Date: Tue, 10 Mar 2026 19:31:58 +0530
-Message-Id: <20260310-pci-port-reset-v7-0-9dd00ccc25ab@oss.qualcomm.com>
+Date: Tue, 10 Mar 2026 19:31:59 +0530
+Subject: [PATCH v7 1/4] PCI/ERR: Add support for resetting the Root Ports
+ in a platform specific way
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,11 +59,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAFYksGkC/33MQQ6CMBCF4auQri0plWmtK+9hXEA7SBOx2MFGQ
- 7i7hbW6meSf5H0zI4weiR2LmUVMnny459C7gtm+uV+Re5ebSSFB6Ar4aD0fQ5x4RMKJ185AZUC
- LSu5ZHo0RO//awPMld+9pCvG9+QnW708qARdcqgac1AfX1uIUiMrHs7nZMAxlPmwVk/qvqKyoz
- liLpkbdtl+UZVk+WqomYfkAAAA=
-X-Change-ID: 20250715-pci-port-reset-4d9519570123
+Message-Id: <20260310-pci-port-reset-v7-1-9dd00ccc25ab@oss.qualcomm.com>
+References: <20260310-pci-port-reset-v7-0-9dd00ccc25ab@oss.qualcomm.com>
+In-Reply-To: <20260310-pci-port-reset-v7-0-9dd00ccc25ab@oss.qualcomm.com>
 To: Bjorn Helgaas <bhelgaas@google.com>, 
  Mahesh J Salgaonkar <mahesh@linux.ibm.com>, 
  Oliver O'Halloran <oohall@gmail.com>, Will Deacon <will@kernel.org>, 
@@ -83,35 +81,35 @@ Cc: linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
  Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
  Frank Li <Frank.Li@nxp.com>, Manivannan Sadhasivam <mani@kernel.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4549;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3320;
  i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
- bh=/1oXQSl8lOctBMm0s6V4ROPxq8kPUCe8v+kkkA6uVT4=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBpsCRpmEGa2hN7YHyPGgSxWL0QcI1jloZjMug0C
- ziHFfnkJ4mJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCabAkaQAKCRBVnxHm/pHO
- 9dicB/9BFlu24MWD8df02ktuKIEzBuxaGoGisvvBQguIP1YvPxL6t7rSxiaEXEr6MBTkXbOJoey
- bpQXx2vbrVy0Gx1Txt+q8ulgdI9dyDYmzjCuiqo2VCispItRKXaXcAvLJrmNLMPWSxCTf45skF8
- Cs5UFPJ9199lg5Ytm6McfZ2sIpFUK1BYIRhDavMrcPCx0l4793mt+8SVEXQKFlB7AAgDVek0TBe
- aC7nIEbUbxZ4SZNoMHk/Bg9YY9geNxJ0XL/lAJQO5rbpSMad9w9UEZ+msF9kGXuEbaMNVcJjNFp
- sDgHozJQxUV/+G61M3/HBCoYnDYr2OVfAUvtib/7MHWyfq0P
+ bh=aIuqRb8fuH3xOsqx29xICH+yE2vzbaBFc8FQ37/gZEg=;
+ b=kA0DAAoBVZ8R5v6RzvUByyZiAGmwJGrIK+D57DvdlL7z3X181VCMvq/D7qe2Thyq3G7p5Xs5m
+ YkBMwQAAQoAHRYhBGelQyqBSMvYpFgnl1WfEeb+kc71BQJpsCRqAAoJEFWfEeb+kc71Wp4H/3cK
+ ODnO2eBBsukQIGEgP3e2NvJeNsuGlwwqXTdWBG19kbpSzCyBD4wpIbZrDBp8XXrVGpcxcF7z6dV
+ 8KvoURHI+nuJMje2pDNIUaCpqm3YC5Q7BQzf3lTbiRf8TxN32uUPjG2v39Z9SjcpzxtOs9lresP
+ aFTDdoSXB4BCmX7Hk4MbaiLZpPmM+Oz9rv1soh9RBN71C3E+CXWkR6qSiYEQefskb94p8rEEEsv
+ 903JEz1zg3QEydn3YGKWFiWRllJJw/wVEdvNdaH/yRsx6ZAnUoT9tMdoAm29X4k9W23NAOs0VUa
+ RCMktpuV94fAjd5Q7HHEgJYqF53Z/3EoH/3kVRI=
 X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
  fpr=C668AEC3C3188E4C611465E7488550E901166008
 X-Endpoint-Received: by B4 Relay for
  manivannan.sadhasivam@oss.qualcomm.com/default with auth_id=461
 X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 Reply-To: manivannan.sadhasivam@oss.qualcomm.com
-X-Rspamd-Queue-Id: 30E3E252DFB
+X-Rspamd-Queue-Id: 6AE1F252DEE
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-96693-lists,linux-arm-msm=lfdr.de,manivannan.sadhasivam.oss.qualcomm.com];
+	TAGGED_FROM(0.00)[bounces-96692-lists,linux-arm-msm=lfdr.de,manivannan.sadhasivam.oss.qualcomm.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FREEMAIL_TO(0.00)[google.com,linux.ibm.com,gmail.com,kernel.org,sntech.de,pengutronix.de];
@@ -125,105 +123,100 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
 	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	HAS_REPLYTO(0.00)[manivannan.sadhasivam@oss.qualcomm.com];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,oss.qualcomm.com:replyto,oss.qualcomm.com:mid,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[chromium.org:email,qualcomm.com:email,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,linaro.org:email,nxp.com:email,oss.qualcomm.com:replyto,oss.qualcomm.com:mid]
 X-Rspamd-Action: no action
 
-Hi,
+From: Manivannan Sadhasivam <mani@kernel.org>
 
-Currently, in the event of AER/DPC, PCI core will try to reset the slot (Root
-Port) and its subordinate devices by invoking bridge control reset and FLR. But
-in some cases like AER Fatal error, it might be necessary to reset the Root
-Ports using the PCI host bridge drivers in a platform specific way (as indicated
-by the TODO in the pcie_do_recovery() function in drivers/pci/pcie/err.c).
-Otherwise, the PCI link won't be recovered successfully.
+Some host bridge devices require resetting the Root Ports in a platform
+specific way to recover them from error conditions such as Fatal AER
+errors, Link Down etc... So introduce pci_host_bridge::reset_root_port()
+callback and call it from pcibios_reset_secondary_bus() if available. Also,
+save the Root Port config space before reset and restore it afterwards.
 
-So this series adds a new callback 'pci_host_bridge::reset_root_port' for the
-host bridge drivers to reset the Root Port when a fatal error happens.
+The 'reset_root_port' callback is responsible for resetting the given Root
+Port referenced by the 'pci_dev' pointer in a platform specific way and
+bring it back to the working state if possible. If any error occurs during
+the reset operation, relevant errno should be returned.
 
-Also, this series allows the host bridge drivers to handle PCI link down event
-by resetting the Root Ports and recovering the bus. This is accomplished by the
-help of the new 'pci_host_handle_link_down()' API. Host bridge drivers are
-expected to call this API (preferrably from a threaded IRQ handler) with
-relevant Root Port 'pci_dev' when a link down event is detected for the port.
-The API will reuse the pcie_do_recovery() function to recover the link if AER
-support is enabled, otherwise it will directly call the reset_root_port()
-callback of the host bridge driver (if exists).
-
-For reference, I've modified the pcie-qcom driver to call
-pci_host_handle_link_down() API with Root Port 'pci_dev' after receiving the
-LDn global_irq event and populated 'pci_host_bridge::reset_root_port()'
-callback to reset the Root Ports.
- 
-Testing
--------
-
-Tested on Qcom Lemans AU Ride platform with Host and EP SoCs connected over PCIe
-link. Simulated the LDn by disabling LTSSM_EN on the EP and I could verify that
-the link was getting recovered successfully.
-
-Changes in v7:
-- Dropped Rockchip Root port reset patch due to reported issues. But the series
-  works on other platforms as tested by others.
-- Added pci_{lock/unlock}_rescan_remove() to guard pci_bus_error_reset() as the
-  device could be removed in-between due to Native hotplug interrupt.
-- Rebased on top of v7.0-rc1
-- Link to v6: https://lore.kernel.org/r/20250715-pci-port-reset-v6-0-6f9cce94e7bb@oss.qualcomm.com
-
-Changes in v6:
-- Incorporated the patch: https://lore.kernel.org/all/20250524185304.26698-2-manivannan.sadhasivam@linaro.org/
-- Link to v5: https://lore.kernel.org/r/20250715-pci-port-reset-v5-0-26a5d278db40@oss.qualcomm.com
-
-Changes in v5:
-* Reworked the pci_host_handle_link_down() to accept Root Port instead of
-  resetting all Root Ports in the event of link down.
-* Renamed 'reset_slot' to 'reset_root_port' to avoid confusion as both terms
-  were used interchangibly and the series is intended to reset Root Port only.
-* Added the Rockchip driver change to this series.
-* Dropped the applied patches and review/tested tags due to rework.
-* Rebased on top of v6.16-rc1.
-
-Changes in v4:
-- Handled link down first in the irq handler
-- Updated ICC & OPP bandwidth after link up in reset_slot() callback
-- Link to v3: https://lore.kernel.org/r/20250417-pcie-reset-slot-v3-0-59a10811c962@linaro.org
-
-Changes in v3:
-- Made the pci-host-common driver as a common library for host controller
-  drivers
-- Moved the reset slot code to pci-host-common library
-- Link to v2: https://lore.kernel.org/r/20250416-pcie-reset-slot-v2-0-efe76b278c10@linaro.org
-
-Changes in v2:
-- Moved calling reset_slot() callback from pcie_do_recovery() to pcibios_reset_secondary_bus()
-- Link to v1: https://lore.kernel.org/r/20250404-pcie-reset-slot-v1-0-98952918bf90@linaro.org
-
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Tested-by: Brian Norris <briannorris@chromium.org>
+Tested-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Tested-by: Richard Zhu <hongxing.zhu@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 ---
-Manivannan Sadhasivam (4):
-      PCI/ERR: Add support for resetting the Root Ports in a platform specific way
-      PCI: host-common: Add link down handling for Root Ports
-      PCI: qcom: Add support for resetting the Root Port due to link down event
-      misc: pci_endpoint_test: Add AER error handlers
+ drivers/pci/pci.c      | 20 ++++++++++++++++++++
+ drivers/pci/pcie/err.c |  5 -----
+ include/linux/pci.h    |  1 +
+ 3 files changed, 21 insertions(+), 5 deletions(-)
 
- drivers/misc/pci_endpoint_test.c         |  20 +++++
- drivers/pci/controller/dwc/pcie-qcom.c   | 143 ++++++++++++++++++++++++++++++-
- drivers/pci/controller/pci-host-common.c |  35 ++++++++
- drivers/pci/controller/pci-host-common.h |   1 +
- drivers/pci/pci.c                        |  21 +++++
- drivers/pci/pcie/err.c                   |   6 +-
- include/linux/pci.h                      |   1 +
- 7 files changed, 221 insertions(+), 6 deletions(-)
----
-base-commit: 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f
-change-id: 20250715-pci-port-reset-4d9519570123
+diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
+index 8479c2e1f74f..6f09057d83e0 100644
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -4812,6 +4812,26 @@ void pci_reset_secondary_bus(struct pci_dev *dev)
+ 
+ void __weak pcibios_reset_secondary_bus(struct pci_dev *dev)
+ {
++	struct pci_host_bridge *host = pci_find_host_bridge(dev->bus);
++	int ret;
++
++	if (pci_is_root_bus(dev->bus) && host->reset_root_port) {
++		/*
++		 * Save the config space of the Root Port before doing the
++		 * reset, since the state could be lost. The Endpoint state
++		 * should've been saved by the caller.
++		 */
++		pci_save_state(dev);
++		ret = host->reset_root_port(host, dev);
++		if (ret)
++			pci_err(dev, "Failed to reset Root Port: %d\n", ret);
++		else
++			/* Now restore it on success */
++			pci_restore_state(dev);
++
++		return;
++	}
++
+ 	pci_reset_secondary_bus(dev);
+ }
+ 
+diff --git a/drivers/pci/pcie/err.c b/drivers/pci/pcie/err.c
+index bebe4bc111d7..13b9d9eb714f 100644
+--- a/drivers/pci/pcie/err.c
++++ b/drivers/pci/pcie/err.c
+@@ -256,11 +256,6 @@ pci_ers_result_t pcie_do_recovery(struct pci_dev *dev,
+ 	}
+ 
+ 	if (status == PCI_ERS_RESULT_NEED_RESET) {
+-		/*
+-		 * TODO: Should call platform-specific
+-		 * functions to reset slot before calling
+-		 * drivers' slot_reset callbacks?
+-		 */
+ 		status = PCI_ERS_RESULT_RECOVERED;
+ 		pci_dbg(bridge, "broadcast slot_reset message\n");
+ 		pci_walk_bridge(bridge, report_slot_reset, &status);
+diff --git a/include/linux/pci.h b/include/linux/pci.h
+index 1c270f1d5123..34c434b79abb 100644
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -644,6 +644,7 @@ struct pci_host_bridge {
+ 	void (*release_fn)(struct pci_host_bridge *);
+ 	int (*enable_device)(struct pci_host_bridge *bridge, struct pci_dev *dev);
+ 	void (*disable_device)(struct pci_host_bridge *bridge, struct pci_dev *dev);
++	int (*reset_root_port)(struct pci_host_bridge *bridge, struct pci_dev *dev);
+ 	void		*release_data;
+ 	unsigned int	ignore_reset_delay:1;	/* For entire hierarchy */
+ 	unsigned int	no_ext_tags:1;		/* No Extended Tags */
 
-Best regards,
 -- 
-Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+2.51.0
 
 
 
