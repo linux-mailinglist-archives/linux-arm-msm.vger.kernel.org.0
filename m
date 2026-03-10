@@ -1,229 +1,212 @@
-Return-Path: <linux-arm-msm+bounces-96686-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96687-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id kF9MMt4osGn/ggIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96686-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 15:21:18 +0100
+	id 0IUwM48nsGnYgQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96687-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 15:15:43 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 69C7B251C9C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 15:21:18 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 713462519BB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 15:15:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1ADF9344362B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 13:41:26 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 5D3C83156B14
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 13:50:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79EB92C0282;
-	Tue, 10 Mar 2026 13:41:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C1BE3806C1;
+	Tue, 10 Mar 2026 13:50:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KgsIsnZ6";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="FE676n9/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iD+BDVLW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B73140DFD6
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2026 13:41:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2884D199D8
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2026 13:50:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773150077; cv=none; b=VlGaFB4XbV9YSGfRv5KYm3mNjrkvB7KT64QwkNc0q5AX0Hxw6axBQi1u0jaWSl+d8EOWBEKLfs+jWUFUfyljkYiV/SaASjF9rAxUMuGk4VStH1+UT2Kynsqo791qd0mrEPWZk1omRRtw2TsmAiD/5vZ9ZZ8UVx7QAKPSvLhKzuY=
+	t=1773150635; cv=none; b=LfExct/k1aaZq1wxwX5eTWrBFFt5PrP+rDwYgfmFRn/FsxQvkZALx0Kur0klGheQ7cNs0I0v0gSQUpHwUnn99bVKkLKUl9xO+CYEmqX+zdvGX2HdoeWrB9t5tjf0eAOGgkzS7z9krvf3+SFNrGNq+sbA4PBrs59hBGjppnl4WzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773150077; c=relaxed/simple;
-	bh=2/lj6B8seo20eJVoikHZMdPOJJq4TtVmvM/xqVoEKIM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eZYuFS+UEtK35BW5LP0fI0x1bki+RTq4EB8iXVXilstLg276EOJswSOg3Jueulvt3Ci2of8LJhod/qGPM5BGoRtpaewjqvjLaQxhxuPN0vyqTu485NbLnv1xV53ryveD/MmZwcox9UmPxOpSMUjWy2gqMqohOMhai2pE1Xzg2bI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KgsIsnZ6; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=FE676n9/; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62ACafU61503512
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2026 13:41:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	2/lj6B8seo20eJVoikHZMdPOJJq4TtVmvM/xqVoEKIM=; b=KgsIsnZ66wvp0i7h
-	yMm/6WZCQ0gtSgzSPf0D/FHx+giZn3kulbmrM2QKK7AoXq3dD7qb8+G+LqLHJZEn
-	WQi6moMDMvf/jdJjGeqOx6U9gfOSvYJKgrMDLNGwW4fHpqG8oueIjUzv/XxFk/kU
-	o8ZvD5sl+7vwpC7S/ByfzCQteKZzoTqayZpjzRb6hnKbABI6wLWXPSbVNZ5xCOam
-	2eVSpxsTKd1TLuLtn9Mofe1jgYsnYv8HwnTt/z1Rjb/ldqL4mM9PAwdGV3ugoxbM
-	JQQzSkzOLJLxTTi5288IjMayl2AdL6GQ+mP+LSz+aT6ERKV5gQQhCXEQ4b6mI2YL
-	VjBO1w==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ctdf8hqqw-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2026 13:41:15 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8cb39de5c54so834803685a.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2026 06:41:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1773150074; x=1773754874; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2/lj6B8seo20eJVoikHZMdPOJJq4TtVmvM/xqVoEKIM=;
-        b=FE676n9/TvsfUbQJD4ZMpgUgD/69i8TGLo5havLv+Mu4/qEWb+9gH4TBjLlWJcz8wP
-         eFkYCTp28eWMhye2u8ePl4s/OU+4Pqs7rpaN7E/71e8PPi2lnP84Ciiy0lv6XCR701lq
-         KDsExXirXF8tcNLxkdA6jregMiuTcai5cn/Wx7xwGyOAeiDbf6WpG30GR0fGlHGG8wbK
-         rCcpr/ionZM7D3LrbUiJAa/rX568hUQSHmmUHbZZkBo/npJFqjjw4N0sy8UJj0Ar6+iC
-         JRBRPa0bI/woMg+Tet0O7pVQq4fODGBRUlsBvMkPw0Qg1B7q3cPySaqx5CCOfIACVCLR
-         gBmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773150074; x=1773754874;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2/lj6B8seo20eJVoikHZMdPOJJq4TtVmvM/xqVoEKIM=;
-        b=NVn6yODuoA0XIUD/dCrSkFhhK/Z2S+ARnOBkttCNeCxTuECfLY5CYzftpw/Kvcf+BB
-         7OWZBsSqNRzeLdIMGhyvw3sGMy8b5KqZC0ewXa4okqEbwgeYiXe54FxJOjhI23nOkQC0
-         FVKBomeyG2qq6oIZGkZEAEjGJdHKctXGsB9PUsq0rkDyZVhdHYuqdkT2wAo4GLgDBavS
-         oEBJz+Rr1nvzmJjGuINbpGQVaxyd+qy7vgx2u2/UVJ3YuPdlh5AEVx5UQ0+xRqIwHffW
-         239Ib5maAZ4tdWtIN98nMAfkKijI/bupwjU9fx8feGE0Wygylq4/7zWpu9K2zNN7m9nS
-         36lg==
-X-Forwarded-Encrypted: i=1; AJvYcCX7jGwIUkZ9rYihJAX6StfATLguEtR5ByNWP+w19R6qJidtPSGZ1L3qRKZGiR5Plt1erojwYk3SQzi9FXTl@vger.kernel.org
-X-Gm-Message-State: AOJu0YyoV45QlpKZdDMgz8c2qBSiRb74y3EVl0ctsF3wEx/fjowz2SLr
-	v8bfVvbpcprmdPCPE7ASYpzGNqZUYaQYXEI9YUKi+HZOBjFcjfp1VdGNcrLktG8fgsX/hZO6uWH
-	hd1+I8Zdiawbn12Ap1wRIkHqMtGtC89RBwBqfzULoXJ6MWpSHwJLqmyWQyxdLDizCi1uo
-X-Gm-Gg: ATEYQzw72aLIbjOUISlBJH+9yAUwhFViWrwEYckSVHyNiQKOfly6Um4RzqKNc8MCeu0
-	HSjMQ6cAIwtCVFAK5SPZx9MZmqYRtVIEktLTliZ1UwURpQATCWYfxEjNEf3PKzUwII6T8pFslru
-	3TmMqioujC73w4cCNmYCCcyVNCG3gJRS9p5il1z3iI1H4G6aEZAWsflbA8zYg4CUHm8PU2W3v7A
-	T8O2exaZiZ9rwj9N5dXE1RVVNK/ToD6yHejqtE3n51Ls0gJo5STJ1ZFdZyBDIirk54JOJJK7x0C
-	Ya9yCsNk92YUjT4QS9OLQAhLPc8VNyOqvPV9QPbhsVloNASGCILcEeA4Vu/+9upvoHX7YGXpOS0
-	13KnE5ShEAocWhAwoCnqLSRecNJ5vWx2JQhNA/GFQpl8etfvJly7de6M4Zm8AU9W/D1kHWZHCkL
-	Cpw+U=
-X-Received: by 2002:a05:620a:25d0:b0:8cb:3fa7:c4f0 with SMTP id af79cd13be357-8cd6d42bc36mr1494496185a.5.1773150074476;
-        Tue, 10 Mar 2026 06:41:14 -0700 (PDT)
-X-Received: by 2002:a05:620a:25d0:b0:8cb:3fa7:c4f0 with SMTP id af79cd13be357-8cd6d42bc36mr1494492485a.5.1773150074051;
-        Tue, 10 Mar 2026 06:41:14 -0700 (PDT)
-Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b94351894bfsm468701766b.1.2026.03.10.06.41.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Mar 2026 06:41:13 -0700 (PDT)
-Message-ID: <e878d01a-036f-444a-82ab-b823d7aa7525@oss.qualcomm.com>
-Date: Tue, 10 Mar 2026 14:41:10 +0100
+	s=arc-20240116; t=1773150635; c=relaxed/simple;
+	bh=rdUiPy2+hha7jKHz5R0tb6oJs3+2mZ0mZsIaAo22UjU=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WxQpX5dR5mfj2IY//kumxxHz79Bz+0362KtXQ00yOoUpywgVvjovpwXDqHHBvilxX/e+rHAKyUD6N4ZDeo5d0Jt79a37pp8KIrxEG/P1k8g1AK6UORujGD7vhpuF85/B4bqctkrv97a2Ygcj/dVIjQmdU2UzFU7203XHYkcx5Xg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iD+BDVLW; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6136C19423
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2026 13:50:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773150634;
+	bh=rdUiPy2+hha7jKHz5R0tb6oJs3+2mZ0mZsIaAo22UjU=;
+	h=From:In-Reply-To:References:Date:Subject:To:Cc:From;
+	b=iD+BDVLWIM5gKelp2lGniBHdneqFnctQ0qYo7K1X9zPLp66DY5DHC4xuWI7WHO50U
+	 vWKzA277e9alpN1wcHs2R1vBK0HKiKGTGcq8WfsCinZXjfr/5X8GjZCUBunjVRRQSY
+	 a4DNTnGlkQoswt7IYAkhDzemA7+HbZEheA+Mn6bDNhABrGlTFDdd87FUb+A+Ram23p
+	 8bdBLr7GNiRCmu11HjcKR0Z5J+vjFj4OPmHHyL7G0GGNfVCXVTbt0/DF91l+5N/5EQ
+	 hJbns3TXj0nX63YsdGswa6KLeeLcURu6YjMlO0OMUDZlnGXyNsG++ytHI913nwM1S4
+	 JEcK3yImCpLZw==
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5a126c8aab9so7381241e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2026 06:50:34 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCUmj8pZBqtAP5hkg196etru1DnZsR2bxT6XHzqrtodik8FstcpSpCqcm3ryDku8uPgaqK0lPL9lMy9wLrCz@vger.kernel.org
+X-Gm-Message-State: AOJu0YxL/EcSD++0MosJJJKq/MqO2rLP5wQe5DbGHkTBCEwWwpcX4tWA
+	VjboZ8ySPwrtTx0/oa0EkDOv/nn/tI2DV8L3R4OSmDxX6Xq2Q//uKbL+88dlf6FIqsaKbz9/tAv
+	yp3gOX6bhOlChAgIMqKogMKjaXP7eCqyNESTbeOav0A==
+X-Received: by 2002:a05:6512:32ca:b0:5a1:2efb:917f with SMTP id
+ 2adb3069b0e04-5a13caae6ccmr4333373e87.4.1773150633351; Tue, 10 Mar 2026
+ 06:50:33 -0700 (PDT)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 10 Mar 2026 06:50:30 -0700
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 10 Mar 2026 06:50:30 -0700
+From: Bartosz Golaszewski <brgl@kernel.org>
+In-Reply-To: <20260310-knp-soccp-v4-5-0a91575e0e7e@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] arm64: dts: qcom: msm8917-xiaomi-riva: Commonize for
- Redmi 4A and GO
-To: barnabas.czeman@mainlining.org
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, linux@mainlining.org,
-        phone-devel@vger.kernel.org
-References: <20260305-riva-common-v1-0-436f1f4b7399@mainlining.org>
- <20260305-riva-common-v1-1-436f1f4b7399@mainlining.org>
- <ab66ac70-9c63-4dbc-9ec4-8dc5344fb045@oss.qualcomm.com>
- <fabedbb450f409aa0aa415151de0263b@mainlining.org>
- <2255b753-4d40-4e49-a89c-22ee939c51d1@oss.qualcomm.com>
- <6665244d82ee8776826a7f6a4e64af99@mainlining.org>
- <a9658d1f-556e-4a58-828c-1d97e227dfd0@oss.qualcomm.com>
- <70ad0b19dbeee89c04c17a0618a9cecc@mainlining.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <70ad0b19dbeee89c04c17a0618a9cecc@mainlining.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEwMDExOSBTYWx0ZWRfX6lk8wABvHYNz
- EnMKvxjv4K6BzLNrWwq/JAFa+TVAAQBGrgu6aAoFh8Kak4wkEs80NI9HlcWFfw3HFoMa1zvPNLH
- OTNhGeN06QrMYfJkaPHfCoxz+czGtHkeg4FL2xbj3PiT0//dLXQC51Wu5nT9NgmkKazw+/Zd3Eo
- tBQsVfFaYlAHeUpNY8SPuS2/LO3nlzAmNxfSh9gFuy4dFEpq7Z7YuH25eg3FnA2rtoCjSDGm+hJ
- VC8kxNhrlQ+SW17CUtQz9PQ+cTdc7W1HESta/ZjljlNe7M05p/CI/yWRaRQSgX0Jz8OsaAunKKW
- 1w3iqECU59+lW6eSc9NqLY0V9foP/z7Hqqboxbwd/k1XbcBZxlplYcY1uq5iIczXbyx4YZJMOlc
- 2AozTQhqTXJ4wOD3nAh3Im3b/Mq7adHnBt2TzK1VdVBZHhQ8MplNkR+kiUCFtqeC8nEnB1ctbS9
- tGPItJrQrp+bLoA23KA==
-X-Proofpoint-ORIG-GUID: CqjCq1gQSqY-bgFcLJrjwko41pR9eAeZ
-X-Proofpoint-GUID: CqjCq1gQSqY-bgFcLJrjwko41pR9eAeZ
-X-Authority-Analysis: v=2.4 cv=b+W/I9Gx c=1 sm=1 tr=0 ts=69b01f7b cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=OuZLqq7tAAAA:8 a=fr_QDkp6JkS4JuZzObsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22 a=AKGiAy9iJ-JzxKVHQNES:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-10_02,2026-03-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 suspectscore=0 phishscore=0 priorityscore=1501
- clxscore=1015 impostorscore=0 malwarescore=0 lowpriorityscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603100119
-X-Rspamd-Queue-Id: 69C7B251C9C
+References: <20260310-knp-soccp-v4-0-0a91575e0e7e@oss.qualcomm.com> <20260310-knp-soccp-v4-5-0a91575e0e7e@oss.qualcomm.com>
+Date: Tue, 10 Mar 2026 06:50:30 -0700
+X-Gmail-Original-Message-ID: <CAMRc=MedT32COu-B_TsrN+jCrHjde2v5gnA6WOUmMQ2dEBY6WQ@mail.gmail.com>
+X-Gm-Features: AaiRm51ARcqlsmU2wIb7NleLQsLhCnonv2nK6lkxB23KnfmtQ9OYSi2lSUj0KNE
+Message-ID: <CAMRc=MedT32COu-B_TsrN+jCrHjde2v5gnA6WOUmMQ2dEBY6WQ@mail.gmail.com>
+Subject: Re: [PATCH v4 5/7] remoteproc: core: set recovery_disabled when doing rproc_add()
+To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+Cc: aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com, 
+	trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com, 
+	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bjorn Andersson <andersson@kernel.org>, Mathieu Poirier <mathieu.poirier@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Luca Weiss <luca.weiss@fairphone.com>, 
+	Bartosz Golaszewski <brgl@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Rspamd-Queue-Id: 713462519BB
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	TAGGED_FROM(0.00)[bounces-96686-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-96687-lists,linux-arm-msm=lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,qualcomm.com:email];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mainlining.org:email,qualcomm.com:dkim,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo];
-	TO_DN_SOME(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[18];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	MISSING_XM_UA(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	NEURAL_HAM(-0.00)[-0.999];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
 X-Rspamd-Action: no action
 
-On 3/10/26 2:26 PM, barnabas.czeman@mainlining.org wrote:
-> On 2026-03-10 14:21, Konrad Dybcio wrote:
->> On 3/10/26 2:11 PM, barnabas.czeman@mainlining.org wrote:
->>> On 2026-03-10 14:04, Konrad Dybcio wrote:
->>>> On 3/10/26 1:57 PM, barnabas.czeman@mainlining.org wrote:
->>>>> On 2026-03-09 13:55, Konrad Dybcio wrote:
->>>>>> On 3/5/26 6:28 PM, Barnabás Czémán wrote:
->>>>>>> Redmi 5A is very similar for Redmi 4A (rolex) and Redmi GO (tiare),
->>>>>>> it can be commonized for avoid unnecessary code duplications.
->>>>>>>
->>>>>>> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
->>>>>>> ---
->>>>>>
->>>>>> Could you please try adding the following to your gitconfig:
->>>>>>
->>>>>> [diff]
->>>>>>         renameLimit = 999999
->>>>>>         algorithm = histogram # or 'copies'
->>>>>>         renames = copies
->>>>>>
->>>>>> and see if this generates a shorter diff?
->>>>>>
->>>>>> Konrad
->>>>> One more question should i rename msm8917-xiaomi-riva-common to msm8917-wingtech-common,
->>>>> they are wingtech devices. Which naming is preferred?
->>>>
->>>> I think xiaomi-riva is easier for people to associate with a phone
->>>> they may have in their drawer than wingtech-s88503
->>> What about renaming just the common part to msm8917-wingtech-common?
->>
->> I think it adds more confusion without much benefit. Probably none
->> of these devices have been released without a Mi logo on the back.
-> Yes but riva codename is related to Redmi 5A and naming as msm8917-xiaomi-common
-> could cause confusion later when i would send Redmi Note 5A (ugglite) what is
-> none wingtech device and have much more difference.
+On Tue, 10 Mar 2026 11:03:21 +0100, Jingyi Wang
+<jingyi.wang@oss.qualcomm.com> said:
+> rproc_add() called by rproc probe function failure will tear down all
+> the resources including do device_del() and remove subdev etc. If
+> rproc_report_crash() is called in this path, the rproc_crash_handler_work
+> could be excuted asynchronously, rproc_boot_recovery()->rproc_stop() will
+> be called with recovery enabled, which may cause NULL pointer dereference
+> if the resource has already been cleaned up.
+>
+> [    5.251483] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000300
+> [    5.260499] Mem abort info:
+> [    5.263384]   ESR = 0x0000000096000006
+> [    5.267248]   EC = 0x25: DABT (current EL), IL = 32 bits
+> [    5.272711]   SET = 0, FnV = 0
+> [    5.275865]   EA = 0, S1PTW = 0
+> [    5.279106]   FSC = 0x06: level 2 translation fault
+> [    5.284125] Data abort info:
+> [    5.287101]   ISV = 0, ISS = 0x00000006, ISS2 = 0x00000000
+> [    5.292742]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+> [    5.297939]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+> [    5.303400] user pgtable: 4k pages, 48-bit VAs, pgdp=000000089e086000
+> [    5.310022] [0000000000000300] pgd=080000089e087403, p4d=080000089e087403, pud=080000089e088403, pmd=0000000000000000
+> [    5.320917] Internal error: Oops: 0000000096000006 [#1]  SMP
+> [    5.392494] Hardware name: Qualcomm Technologies, Inc. Kaanapali QRD (DT)
+> [    5.399466] Workqueue: rproc_recovery_wq rproc_crash_handler_work
+> [    5.405729] pstate: 23400005 (nzCv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+> [    5.412879] pc : qcom_glink_smem_unregister+0x14/0x48 [qcom_glink_smem]
+> [    5.419674] lr : glink_subdev_stop+0x1c/0x30 [qcom_common]
+> [    5.425308] sp : ffff800080ffbc90
+> [    5.428724] x29: ffff800080ffbc90 x28: ffff00081be833f0 x27: ffff000800059c00
+> [    5.436053] x26: 0000000000000000 x25: ffff000800a56f80 x24: 61c8864680b583eb
+> [    5.443384] x23: ffff00081be83038 x22: 0000000000000001 x21: ffff00081be83000
+> [    5.450714] x20: ffff00081be833c0 x19: 0000000000000000 x18: 0000000000000010
+> [    5.458043] x17: 0000000000000000 x16: 0000000000000000 x15: ffff0008042684f8
+> [    5.465374] x14: 00000000000002dd x13: ffff0008042684f8 x12: ffffd37f69f967a0
+> [    5.472705] x11: ffffd37f6a006800 x10: ffffd37f69fee7c0 x9 : ffffd37f69fee818
+> [    5.480036] x8 : 0000000000017fe8 x7 : c0000000ffffefff x6 : 0000000000000001
+> [    5.487366] x5 : ffff000d6536d408 x4 : 0000000000000001 x3 : 0000000000000000
+> [    5.494697] x2 : ffffd37f5703c18c x1 : 0000000000000001 x0 : 0000000000000000
+> [    5.502028] Call trace:
+> [    5.504549]  qcom_glink_smem_unregister+0x14/0x48 [qcom_glink_smem] (P)
+> [    5.511344]  glink_subdev_stop+0x1c/0x30 [qcom_common]
+> [    5.516622]  rproc_stop+0x58/0x17c
+> [    5.520127]  rproc_trigger_recovery+0xb0/0x150
+> [    5.524693]  rproc_crash_handler_work+0xa4/0xc4
+> [    5.529346]  process_scheduled_works+0x18c/0x2d8
+> [    5.534092]  worker_thread+0x144/0x280
+> [    5.537952]  kthread+0x124/0x138
+> [    5.541280]  ret_from_fork+0x10/0x20
+> [    5.544965] Code: a9be7bfd 910003fd a90153f3 aa0003f3 (b9430000)
+> [    5.551224] ---[ end trace 0000000000000000 ]---
+>
+> So set recovery_disabled during rproc_add().
+>
+> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+> ---
+>  drivers/remoteproc/remoteproc_core.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+> index b087ed21858a..f66dde712cec 100644
+> --- a/drivers/remoteproc/remoteproc_core.c
+> +++ b/drivers/remoteproc/remoteproc_core.c
+> @@ -2286,7 +2286,10 @@ int rproc_add(struct rproc *rproc)
+>  {
+>  	struct device *dev = &rproc->dev;
+>  	int ret;
+> +	bool rproc_recovery_save;
+>
+> +	rproc_recovery_save  = rproc->recovery_disabled;
+> +	rproc->recovery_disabled = true;
+>  	ret = rproc_validate(rproc);
+>  	if (ret < 0)
+>  		return ret;
+> @@ -2319,6 +2322,7 @@ int rproc_add(struct rproc *rproc)
+>  	list_add_rcu(&rproc->node, &rproc_list);
+>  	mutex_unlock(&rproc_list_mutex);
+>
+> +	rproc->recovery_disabled = rproc_recovery_save;
+>  	return 0;
+>
+>  rproc_remove_dev:
+>
+> --
+> 2.25.1
+>
+>
 
-Well, you never mentioned that!
+Ideally things like this would be passed to the rproc core in some kind of a
+config structure and only set when registration succeeds. This looks to me
+like papering over the real issue and I think it's still racy as there's no
+true synchronization.
 
-perhaps msm8917-xiaomi-wingtech.dtsi then?
+Wouldn't it be better to take rproc->lock for the entire duration of
+rproc_add()? It's already initialized in rproc_alloc().
 
-Konrad
+Bart
 
