@@ -1,218 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-96422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iKg1NaVvr2m6YQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 02:11:01 +0100
+	id gLzZAsByr2lPZgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 02:24:16 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3CDDA2435C9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 02:11:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 593122437F1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 02:24:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id E08EB3068EE4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 01:10:52 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 3C925305513C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 01:24:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F82E261B80;
-	Tue, 10 Mar 2026 01:10:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 423E7238C1F;
+	Tue, 10 Mar 2026 01:24:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="dbD6HfYZ";
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b="KZXjQUJc"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jQjjj4sW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B8C261B91
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2026 01:10:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 437992848AA
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2026 01:24:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773105051; cv=none; b=qy/VB+bFGdhtxkCAi5GfWpXwKhriNvTAhIli4M8HraDyvyAPWs+q+KZ+QBwssVPOfYLDuhjncEO0+hvof2aW42SdwY4XXoy/Wb4T85GaJ7mP4x6E5jUhSxNQc62lvvvn5gtY0P8vE2gTD7ZoU/y7qItIIKm5qaElLE48YH//eTQ=
+	t=1773105850; cv=none; b=IVNW925PJA6uKjc+g1aMHNFj6VDwUmDyxrtB1JGgzlTCDG2QaeRF3z35GPjLEaA2nTR/vLmSqSu8RVmJ/hktc46qzr7IXmvtzFScOpLg4wAGkqpMBmWiOED7yosFVj/b4m7LexfRQHg2z1i6U4049LW6wK58yO17/e7HfA+F34g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773105051; c=relaxed/simple;
-	bh=KTWcRe1uEdBcdV3dSWnFRmmQqhKcuVtF4VSklt2P5Ak=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=ekwt8hMzzTJn5uuKY+MyvqVDRg8nRr7DIdkNwj3Uqis/gD+jNvwq8uUxDaqeTcpcx9DeeLUo8LyQTdjCeAh49r+s+ZbBNUiDEhQPevRxQh7SZYoDkjl9YvHgl216EB+p8inks9jj26M1CKyXHJz+/7zUVT9JkpZLfUToQsJU1wQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=dbD6HfYZ; dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b=KZXjQUJc; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1773105049;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=KTWcRe1uEdBcdV3dSWnFRmmQqhKcuVtF4VSklt2P5Ak=;
-	b=dbD6HfYZofQSkCjS5/sPHuH7qID8izBljRHgUoXkIRLTM9ozInJNInbRTdi+jXqKTR/FqO
-	f6FtQfLGpsEX+k+FdD58u4uip101yQzCnhH9fQ3aifBC9+2DzV/6NxvDeDfv9PEvoSxceZ
-	b3Y1iInSfF5lvpx8O5XT9xEJ7Nj5UzU=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-41-2tLyAEH_PQmg7l0NW3_K8g-1; Mon, 09 Mar 2026 21:10:47 -0400
-X-MC-Unique: 2tLyAEH_PQmg7l0NW3_K8g-1
-X-Mimecast-MFC-AGG-ID: 2tLyAEH_PQmg7l0NW3_K8g_1773105047
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-89463017976so858627116d6.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2026 18:10:47 -0700 (PDT)
+	s=arc-20240116; t=1773105850; c=relaxed/simple;
+	bh=LiQ8EflkNH/uZA+ems0QOL+ZbRGh6LZN4zZMLOj1rXc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CEPq7BXEAXILNi/HnQ7FYSOfITJlUfKbzuNHmTKifPRWUQfyldJno1/j7f2H5XcxiV9oV4t3AHnNzUTxEPvpjwOpHRKK6x6ZJgae455O6cJc42pArLRIAMesAuCRiShkskTYW+gcypKFAaSJdCByu9cSFKIwoRsfKHyxY3SAjT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jQjjj4sW; arc=none smtp.client-ip=209.85.160.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-50917417efbso13214091cf.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2026 18:24:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=redhat.com; s=google; t=1773105047; x=1773709847; darn=vger.kernel.org;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=KTWcRe1uEdBcdV3dSWnFRmmQqhKcuVtF4VSklt2P5Ak=;
-        b=KZXjQUJcjgAHJDetunx4foLlQCvQaZjkAubtSBZ/Xb6KdQx4sq/PHRRIHywxiIxORW
-         kmi06fwVKuHqaA9W/mKKq5aDE298F0xRx1jBVAIOPtonDJqxxOCgiJNB13hldcEaVOrm
-         h56qVNjQ6gzSZlAZqnc7hysf2SqW/rIG9ndGme9t5ntz8eTwHOMTsKJvd1G+cRMZxpQK
-         xudYNP77IsqOvCdBjdxrCUTBLL9NJUgi+Ns7pPdt9d2j7rMjZHPdlFepp6WDlrDs3LK3
-         4E/ikrvQoHYUU7/kHmubyH7T4tCdzqSsudkcXCyM5dxFgrxQPcNqnM7bTe6y+tnArFn7
-         Ej/w==
+        d=gmail.com; s=20230601; t=1773105846; x=1773710646; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7CeMWLpnBLUWUr8MpkL2IM0mC+LILizg1OzjRtJe76M=;
+        b=jQjjj4sWjru06czyKnUE3iPes3HzZgXEDEQ30cZancv4ilEdVBI3v6jCs05RBLz3mG
+         iGuMEMGNMDHe+GJ2t3k1WEhZxY9jizavMUFOsfvRdN/nMICVNdg2TnOUExpIiYZueqNa
+         4E81sHQVOfDAb+o/447EEZZ4DERZJME9Y7IkTOORQAPKtMNkq9H/D4Zz8pm+dEGv7Csz
+         caAjURm4FOsr63oHq0DhXVT2hG4Z1xWi4LmcQxTDS5UoekZtrEQljy5DGYPOIV/81LHm
+         QqErcRi/scKh225pJ2sa7+uwlr6J4neKajpR9dbrpJ2JgrjUSmR4J+xTxLzuL/2lon60
+         axQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773105047; x=1773709847;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KTWcRe1uEdBcdV3dSWnFRmmQqhKcuVtF4VSklt2P5Ak=;
-        b=RFpZo429UsGUnI1nOszBJKxZeoy5CN1EwWG+gS45U98sxCxJ1KAKK4otXF/apeC+Pg
-         DJtznbtVVe5w47PH2r3zcj64VanBw03VwiRUAO3oEtuYa41OlIqzZ+R4hCD2jJw/dTfz
-         RivIX7Ae5c1K2jvCv4RilllRQY2sLqSB1U8BycahAJEoYLDzGidaVd4RPhiu0JQpOqQ9
-         umlSTPsRdui26IfK+uZKSzXoYX9wvSQvgrUngzPKu0dgm1ddqfEbh9x9TwmlLHWAY9ES
-         /Rbm5V6tD9YDP5ghzm67hB1qplIj6dGrJg2DRKI4mDNk0+RIEhSoCt8UVveswqNbhpmR
-         bOLw==
-X-Gm-Message-State: AOJu0YzHvdc0N0C5mVcA+Dj7tVopviEWevfUI1uSC9YytjFsHEtkGUF2
-	aaDZp2JNnZ4RD2jvcFCvlmbWOEIB4SQv61n53jOmPmaPqlHNAyxhdfNPrVcsuIl3ubQOsqwhOnS
-	J+y9RxDTpq2lb7grT8QPWZkUwhnVaYHDHjFC9EYDL1GO36Nq1v6nfSYQNFzOEv+X99Fw=
-X-Gm-Gg: ATEYQzxEiIsOp4jihD1ocQbvpBnwvJ70X4Mf1ehZgS75uAnZfNk4p9N4rBNULq+Uy9r
-	L3k1KB8oRpnvyPM/IePoYsmfwgSRNrw7ZmbsLVGDf03QXhOOL77B1CcwqrR8mrV0BBVNwKefMw9
-	PGLaxkR8XBtj4zGbBspuR6nemRVCdfw8C3hctpTMz36SSZ+r3jGpHBbfIsFNzuEXTTR4ttW5xcU
-	mgmxKSApYAfSV2lDie9RJIVyWmH7YzLFJD+10HhunyTm7TVMRZHAL2zVHp/AKJ7XOcUBKu6RgAN
-	ncdKymqHdFnxaiePW8BaynoVaDeeycGP5k+DjkqGbdjJaKTae3O/tx2Y3ZGcJZ00mXxY3f2UEdu
-	hgaMhuiYTP8jcwv0IYoUFnJR2d6u/z4x+d+TE3aepEjpY8982bUFm8xo6xhCCJGIQ2dzsgrm7AT
-	Yr01jXLAwxeuDnCw==
-X-Received: by 2002:a05:6214:d8b:b0:89a:258:c1d1 with SMTP id 6a1803df08f44-89a30ad1c78mr197365076d6.42.1773105047101;
-        Mon, 09 Mar 2026 18:10:47 -0700 (PDT)
-X-Received: by 2002:a05:6214:d8b:b0:89a:258:c1d1 with SMTP id 6a1803df08f44-89a30ad1c78mr197364236d6.42.1773105046575;
-        Mon, 09 Mar 2026 18:10:46 -0700 (PDT)
-Received: from thinkpad-p1.localdomain (pool-174-112-193-187.cpe.net.cable.rogers.com. [174.112.193.187])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-89a57a18252sm10681656d6.10.2026.03.09.18.10.42
+        d=1e100.net; s=20230601; t=1773105846; x=1773710646;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7CeMWLpnBLUWUr8MpkL2IM0mC+LILizg1OzjRtJe76M=;
+        b=v8sz65mhLGfOBIuioxr9oTlo1s3uK7ntVQeH2zCGpso7NentGVIUJg58/OyFLVtFMq
+         DWXLFYPA5TSXYHuYtaoVffPbfj3DyUHk1MJia5zR4Zctm0QKrZp4yBrCaL8k5rgYBWKY
+         9J8xe8SduHIF+S/kmTUlW9ALLgaDeCVW6koLp2CfekU+KcybUcL/NYKBgxKyddGp1t57
+         rh2ikvMXqSP5yp1+LdJ9bE5qnTyvL42zAfwT8NF/SWTsMsO7MMnPZtUKOBEai2UTcBfi
+         a4I0TimY4qWGFI0CsjIJE6P0BGoKD1thYeMiDzAYujRQX2dm9ZJCWIK6DCHJhvTvRk3O
+         A7Zg==
+X-Forwarded-Encrypted: i=1; AJvYcCVIIRIVi9IivmGjdEmX/Nx2c9QN5+hsR8+yUP/mQROvs8Rr6t2AphEcB7D0wPzs7E4lqqFpZKzxV4CpJLYw@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxa0+d/XWklvib4NWKsKuY9Tbakfxz11ONC4sBoEaOkoaxK7VBa
+	iME6S+r3U3OG0ENk/z/p212P7l4zgSffDV1ckQn4JuwbHx5mQYl/H9Oe
+X-Gm-Gg: ATEYQzyGyKgNGplDTXRtgrColt6Dw40ny54D4WQ8v8zTtVeQAMUIP/Kpsl7DekGVJIs
+	V7pvrCJYDncjCGf/vIHEX4wZwzjOe8ryaYqOYBtZ9ZThDPuMfhnZKuOULzX60DSCDRm3U08IO3v
+	vbW2N+GnXdsS9PnB6Z8jJIOUMOEFBb44kyOzDDn63mx/8mHNtGCS3DJxIZte5K0msnbiQ9t0LBC
+	jXTG8qlPLUO8poxCYXjZAEgthYDOW1D93GEr4uv4vaJJCQqQLdZGwbkXQETxItBCUc1m16uKlli
+	8Xz4Athh9CW05Fz61QWmdMzyQwdhrQ+aoRsu0UhiPfOrJvMqjybX4yiWkVVgEpr+l0x/agy1uDQ
+	A5/UsaJN45UVbRnK3se6uT4k9O3rMPMTKcEP+RZr67J7gO7CulnxW4NOeCHLcJDVVIlIgoR24gU
+	IsXp/ALQBGA4ql8Lb4vHadX/znPPL6XauhE0aQaQcZd45XOxij2A0uMbu+0IvrcpfnUDKoJ7hAH
+	eoF89MFp83AiI4=
+X-Received: by 2002:a05:622a:1350:b0:509:aa1:71eb with SMTP id d75a77b69052e-50925ff7427mr20643721cf.13.1773105846247;
+        Mon, 09 Mar 2026 18:24:06 -0700 (PDT)
+Received: from localhost (bras-base-toroon21-grc-75-184-144-58-243.dsl.bell.ca. [184.144.58.243])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50923ed69bbsm15741051cf.28.2026.03.09.18.24.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Mar 2026 18:10:45 -0700 (PDT)
-Message-ID: <4728554b256f016d9a5f3e019ed831387b0f059b.camel@redhat.com>
-Subject: Re: [PATCH net-next v7 0/7] net: stmmac: qcom-ethqos: add support
- for SCMI power domains
-From: Radu Rendec <rrendec@redhat.com>
-To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, Bjorn
- Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
- Rob Herring <robh@kernel.org>,  Krzysztof Kozlowski	 <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Richard Cochran	
- <richardcochran@gmail.com>, Andrew Lunn <andrew+netdev@lunn.ch>, "David S.
- Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jakub
- Kicinski <kuba@kernel.org>,  Paolo Abeni <pabeni@redhat.com>, Maxime
- Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue	
- <alexandre.torgue@foss.st.com>, Vinod Koul <vkoul@kernel.org>, Giuseppe
- Cavallaro <peppe.cavallaro@st.com>, Jose Abreu <joabreu@synopsys.com>,
- Chen-Yu Tsai <wens@kernel.org>,  Jernej Skrabec <jernej.skrabec@gmail.com>,
- Samuel Holland <samuel@sholland.org>, Matthew Gerlach	
- <matthew.gerlach@altera.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
- Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>,
- Martin Blumenstingl	 <martin.blumenstingl@googlemail.com>, Keguang Zhang
- <keguang.zhang@gmail.com>,  Shawn Guo <shawnguo@kernel.org>, Sascha Hauer
- <s.hauer@pengutronix.de>, Pengutronix Kernel Team	 <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>, Jan Petrous	 <jan.petrous@oss.nxp.com>,
- s32@nxp.com, Romain Gantois	 <romain.gantois@bootlin.com>, Lad Prabhakar	
- <prabhakar.mahadev-lad.rj@bp.renesas.com>, Heiko Stuebner
- <heiko@sntech.de>,  Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto
- <inochiama@gmail.com>, Emil Renner Berthing	 <kernel@esmil.dk>, Minda Chen
- <minda.chen@starfivetech.com>, Drew Fustini	 <fustini@kernel.org>, Guo Ren
- <guoren@kernel.org>, Fu Wei <wefu@redhat.com>,  Nobuhiro Iwamatsu
- <nobuhiro.iwamatsu.x90@mail.toshiba>, Geert Uytterhoeven
- <geert+renesas@glider.be>, Magnus Damm	 <magnus.damm@gmail.com>, Maxime
- Ripard <mripard@kernel.org>, Shuang Liang	
- <liangshuang@eswincomputing.com>, Zhi Li <lizhi2@eswincomputing.com>, 
- Shangjuan Wei <weishangjuan@eswincomputing.com>, "G. Jaya Kumaran"
- <vineetha.g.jaya.kumaran@intel.com>,  Clark Wang <xiaoning.wang@nxp.com>,
- Linux Team <linux-imx@nxp.com>, Frank Li <Frank.Li@nxp.com>, David Wu	
- <david.wu@rock-chips.com>, Samin Guo <samin.guo@starfivetech.com>, 
- Christophe Roullier <christophe.roullier@foss.st.com>, Swathi K S
- <swathi.ks@samsung.com>, Bartosz Golaszewski	 <brgl@kernel.org>, Mohd Ayaan
- Anwar <mohd.anwar@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
-	linux-stm32@st-md-mailman.stormreply.com,
- linux-arm-kernel@lists.infradead.org,  Drew Fustini
- <dfustini@tenstorrent.com>, linux-sunxi@lists.linux.dev,
- linux-amlogic@lists.infradead.org, 	linux-mips@vger.kernel.org,
- imx@lists.linux.dev, 	linux-renesas-soc@vger.kernel.org,
- linux-rockchip@lists.infradead.org, 	sophgo@lists.linux.dev,
- linux-riscv@lists.infradead.org, Bartosz Golaszewski	
- <bartosz.golaszewski@linaro.org>, Krzysztof Kozlowski	
- <krzysztof.kozlowski@oss.qualcomm.com>, Konrad Dybcio	
- <konrad.dybcio@oss.qualcomm.com>
-Date: Mon, 09 Mar 2026 21:10:41 -0400
-In-Reply-To: <20260306-qcom-sa8255p-emac-v7-0-d6a3013094b7@oss.qualcomm.com>
-References: <20260306-qcom-sa8255p-emac-v7-0-d6a3013094b7@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
+        Mon, 09 Mar 2026 18:24:05 -0700 (PDT)
+From: Richard Acayan <mailingradian@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-gpio@vger.kernel.org,
+	devicetree@vger.kernel.org
+Cc: Richard Acayan <mailingradian@gmail.com>
+Subject: [PATCH v2 0/5] SDM670 LPASS LPI pin controller support
+Date: Mon,  9 Mar 2026 21:24:41 -0400
+Message-ID: <20260310012446.32226-1-mailingradian@gmail.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Rspamd-Queue-Id: 3CDDA2435C9
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 593122437F1
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[redhat.com,quarantine];
-	R_DKIM_ALLOW(-0.20)[redhat.com:s=mimecast20190719,redhat.com:s=google];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DKIM_TRACE(0.00)[redhat.com:+];
-	FROM_HAS_DN(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-96422-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,gmail.com,lunn.ch,davemloft.net,google.com,redhat.com,foss.st.com,st.com,synopsys.com,sholland.org,altera.com,linaro.org,baylibre.com,googlemail.com,pengutronix.de,oss.nxp.com,nxp.com,bootlin.com,bp.renesas.com,sntech.de,outlook.com,esmil.dk,starfivetech.com,mail.toshiba,glider.be,eswincomputing.com,intel.com,rock-chips.com,samsung.com];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	RCVD_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[rrendec@redhat.com,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[gmail.com];
+	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-96423-lists,linux-arm-msm=lfdr.de];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	RCPT_COUNT_GT_50(0.00)[77];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mailingradian@gmail.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	RCPT_COUNT_SEVEN(0.00)[11];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev,renesas];
-	TO_DN_SOME(0.00)[]
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-On Fri, 2026-03-06 at 16:46 +0100, Bartosz Golaszewski wrote:
-> Add support for the firmware-managed variant of the DesignWare MAC on
-> the sa8255p platform. This series contains new DT bindings and driver
-> changes required to support the MAC in the STMMAC driver.
->=20
-> It also reorganizes the ethqos code quite a bit to make the introduction
-> of power domains into the driver a bit easier on the eye.
->=20
-> The DTS changes will go in separately.
+This adds support for the LPASS LPI pin controller on SDM670, which
+controls some audio pins (e.g. TDM or PDM busses). The ADSP patches are
+not sent yet.
 
-As Jakub pointed out, it conflicts with the latest net-next, but does
-apply cleanly on the latest mainline, so I tested there (on a SA8775P
-board running the SCMI firmware).
+This series depends on LMh because the LPI devicetree node is next to
+the LMh devicetree node (NOPUSH: link to LMh).
 
-The two NICs come up as expected. Basic iperf3 throughput and jitter
-tests look good. I would offer a Tested-by tag and a summary of the
-test results, but I think it's a moot point because you'll have to
-submit a new version anyway.
+Changes since v1 (https://lore.kernel.org/r/20260210021109.11906-1-mailingradian@gmail.com):
+- add LPASS in dt-bindings patch subject (2/5)
+- change pin names (2/5, 3/5, 4/5)
+- add reviewed-by from Krzysztof (2/5)
+- specify gpio-reserved-ranges (1/5, 5/5)
 
-I will wait for you to rebase, then test again and come back with the
-results.
+Richard Acayan (5):
+  dt-bindings: qcom: lpass-lpi-common: add reserved GPIOs property
+  dt-bindings: pinctrl: qcom: Add SDM670 LPASS LPI pinctrl
+  pinctrl: qcom: add sdm670 lpi tlmm
+  arm64: dts: qcom: sdm670: add lpi pinctrl
+  arm64: dts: qcom: sdm670-google: add reserved lpi gpios
 
---=20
-Best regards,
-Radu
+ .../pinctrl/qcom,lpass-lpi-common.yaml        |   6 +
+ .../qcom,sdm670-lpass-lpi-pinctrl.yaml        |  81 +++++++++
+ .../boot/dts/qcom/sdm670-google-common.dtsi   |   4 +
+ arch/arm64/boot/dts/qcom/sdm670.dtsi          |  73 ++++++++
+ drivers/pinctrl/qcom/Kconfig                  |  10 ++
+ drivers/pinctrl/qcom/Makefile                 |   1 +
+ .../pinctrl/qcom/pinctrl-sdm670-lpass-lpi.c   | 166 ++++++++++++++++++
+ 7 files changed, 341 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sdm670-lpass-lpi-pinctrl.yaml
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-sdm670-lpass-lpi.c
+
+-- 
+2.53.0
 
 
