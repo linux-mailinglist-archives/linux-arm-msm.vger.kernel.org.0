@@ -1,81 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-96417-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id eOKOIBFlr2koXAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96417-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 01:25:53 +0100
+	id cGtdAxRlr2koXAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 01:25:56 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 22ECA243002
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 01:25:53 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7980C24301F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 01:25:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 3C272300C012
+	by tor.lore.kernel.org (Postfix) with ESMTP id 9DA0230234EA
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 00:25:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E118418DB1A;
-	Tue, 10 Mar 2026 00:25:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97DFC1FDA61;
+	Tue, 10 Mar 2026 00:25:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NWj2Odie"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="msRV29QA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACCE41F30A4
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2026 00:25:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D2D1F30A4
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2026 00:25:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773102348; cv=none; b=HgO3UnxnzYbiIUTz2Fg+nmxZCYsc72c5Tl63T3BU+SFpSDrXP8Mt84yysSM2T5kIVGaFSi0SerWp/r4rW70sri5fidSTOv22vemVv4tsuJEIcdeK6yW++ECAHczWgc8OlWMaAvu1TJ2LLWOfIbjFMWxF1NQQNq29Wtb5WcoDlGg=
+	t=1773102350; cv=none; b=lVarjaBnB0HUzvTstRRJL0jtXjvoaU7EuvBfqOuGX0NnS23I1h/PUhTFvmDyWdV16Z9Hu9oW5dxTplYTweMtKCUoq4Qry9uOpuM3eeXwnbuXzfyh4pg28HJZl14U6Fhb3a7uIhjNlfA/T2EZ1pY1Faf4qQ9la7J3dW7nbYvRJb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773102348; c=relaxed/simple;
-	bh=8BBLTBSwAIEYdRXvp5NbCSOVYFS4vaGU807554Kprsk=;
+	s=arc-20240116; t=1773102350; c=relaxed/simple;
+	bh=e/7gEHtpwiXu5WZ4Uimad/U9BkJniCf8g0CLOuaSlJM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WJC0J3w6ro/kz/3ImERclDnVDKfF1IRONxRnmMZ0d4g2BljQw08g4Tw5FTh5nHn5pwNktHpDYgu4MHL5WXJl84OuigVTXiCnaCvISo2SIQXJ175wNLzkQ60aDMYOLARY810vzCjZlexI8KPDFPAYR561+AN9Nhaw3kiVBKDADdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NWj2Odie; arc=none smtp.client-ip=209.85.219.54
+	 MIME-Version; b=cX6SNuJlRbqrjID/PoH4lqlssbib0Wz/Vij+x1wKvgXVGU9UwmJuAI/nTLky21bRncCFTkQpQiBPwaJL+RxtyKS3gNkpHR1ZM1eVbyIWRr6evpRmnd41dDlOWoDXJ/7rwLv4ZQDnUMyGnBBI4kOqP20arbBfUIWOfHe96Y6pDIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=msRV29QA; arc=none smtp.client-ip=209.85.222.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-899efe93d4eso113448876d6.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2026 17:25:47 -0700 (PDT)
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-8cd7ecedf2cso204525685a.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2026 17:25:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773102346; x=1773707146; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1773102348; x=1773707148; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+7dUTQHe3pH1gAAHNL9YpLzRZx+MsgrrTaWx3Kb4WqM=;
-        b=NWj2OdieAHpPyHpnAagSr/20yk44rkmA0Wa2EwsfMHE1SSLnXDam74HhO9oZhbZl1k
-         PDY17lxa3vOMsdGuBlqcrEE99GFqPKBxQ6tDkFZ9svy4OjgkYWRgQnyEJOpckhJCpS9b
-         hzRsOgsv3XkQM7NpX2x8ZZUEWuD9oJy1zItae72SkgxRTudP2rBRvAajy+r9DLRgWdME
-         1VCTTOAfqphB+z8CXF0Nc5YAfHy83/osvV/qMcL4R5ZvE2b9Qt3Md/uq5H3NzMGnphH6
-         4Ya7295Cr72UvCjhIOjI2lN5SCUaifRrDSqh1/WAvs84JpU2P9WF/S7GeB7Ou3xeUg8x
-         52KA==
+        bh=qFBNJW1MGZfGu0QG/7Mnk9/1KLG5NOJNUh2Yxtb+sgE=;
+        b=msRV29QAEVO1XQ5Lc9fkcW7yEAIehT5GQkGm+I0P3eJFE4pvKgsBWLG8coWW0jp5e7
+         HwDZNia65IJdJZBN48AoLbaDB3ybr8KV9LZ3vqgeEqQkzVadR8RQVrNYtKwMqeJkfdIe
+         DTH0fMHFEP+vR4ZOZRoTYl9oHr+J19OA0oJS9UhAVy2NfXnY34T8SN7Pvatdyx1XbXFd
+         VtjGQbGcoDHEjYNIHtBI+2K3ZSIS3zBz0pzcpHwo7EXyncSTqa58SQF7gOh3EhiTICX1
+         vX1iS2XFguHnoq04/JYlBYbCHANidFRjc8VpyzwqEyVRnKAplSPAspnOd8iUU2pndAQx
+         vI8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773102346; x=1773707146;
+        d=1e100.net; s=20230601; t=1773102348; x=1773707148;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=+7dUTQHe3pH1gAAHNL9YpLzRZx+MsgrrTaWx3Kb4WqM=;
-        b=NDLD/ozMKbcRvIoUJ/mDk+hI0u0er7Uh5vl/axrI5P8QTyi65Znfq3kkdbTLPNBwHY
-         bKnU6Vj2AuEHobyC5JzxSaNPNf5zYN1m51/7TgaUezgVSigj5tWij2m3rSM7J7sAdldE
-         sbMsV9PjhKJ4bEvb8e4XdVRSIW0TO4Y3s+PYFJpOSNXGIrOdlHE0s3vJknmQ28ejRCfS
-         HwFEsG8G7yzjpRFvHEE8VKnSHC7rpdI3Q/0WvozkK9lLCEBQt6ykGdmocn8D2nWJ7Ffq
-         rlkHU52MBvyYZ0+YkJyRuk0HL9BTXA6RqGYygQLW+4n/K72+1Dg7IGrF68ggqFnzeRHq
-         xw5g==
-X-Forwarded-Encrypted: i=1; AJvYcCUWkgFO/80IiZ/Nxf7Huzdf/3+w2kmcWDO2XcvyYMXZnPTe6Qqbm1zIYv6hhmLh03n9b9fi+9WQWUVaDCKT@vger.kernel.org
-X-Gm-Message-State: AOJu0YzvWeufIrAaAtppd1PEac7p4DhzoPAUgwM45ew+Wg+hUblj1lny
-	0FHWlBa/4Kbn6czqBcPvVoSBYkpDJUgp5QNn0suaGW4G5b9Ihtf8uoW7
-X-Gm-Gg: ATEYQzyiMo6NyJs/rWwNpqm33UhdoWPWC7KD0bxOluHO5e6PIwt4uNz02jxCBp0+4+1
-	925ArHLJHva0UmHKzQ3x66D0RrPFNHLH8WEzcQQZqtj3CcpNUjv6vBHVBD71V2+Pctk52Wt0alt
-	uV8KqL4p6+Skwv5lvT5N/AsTCk3DfrBeOtItC6OIa6M1fotacqfB4d73DS8OkZ1v5Et/i/y/m1J
-	jyJX2Q1kRmlo7YEctkZv0TkI0zXAAPSk1U9St2H1Gl1nHt/rsI3m2rBKgRrBqeeI+gAk+u9RHwz
-	hDGQAnRs6dhHt0kTXEZEQbJrmPP2xU5y1ViD211wYkcrUEEpsbNf5Ilc7EOVSFhj5iCldA2tof5
-	BhuISjrDVBOEye6gb0DZfTe/IJpF3I11U+IB03FHyn7VyDD/Im1x/ENSarlzqzb4NptAOwk+mLI
-	6paSV5JhGI9KyyNH347aVNrMGfhw==
-X-Received: by 2002:a05:6214:2b08:b0:89a:64d:4b10 with SMTP id 6a1803df08f44-89a30a6988fmr191228136d6.26.1773102346217;
-        Mon, 09 Mar 2026 17:25:46 -0700 (PDT)
-Received: from localhost ([184.144.58.243])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-89a57c298e4sm8271156d6.40.2026.03.09.17.25.45
+        bh=qFBNJW1MGZfGu0QG/7Mnk9/1KLG5NOJNUh2Yxtb+sgE=;
+        b=KlhRelNiXAAoX9K9rLo7WxZqlVlWtExz5fNyYDAwEhL8Yel/B1UU96gZ+ougB8ordj
+         cqVZIHm+C4io15EzVjTQ7UZLgmKPJ5JOrw0FHivh+zFrsr5JwfJ343T6PClDg8xhwn4z
+         OBtxcXilcpiT6YbeJNRZxtqK8hZ8UKgQQzkfsENhjbcZO1n6TV9TeOC38ObTg7Wc6ssP
+         DDz9ki4b6YxooxAFJhjHnWzeJuYFElG80eV6rQ+mylZxoMVQuyQC0t/fl8BiV2pMgOVB
+         xSNtxr6fAGlkN8sve/A2unEedWS3borNRE34Fb9QcDwu5SyHPSiZjsKXPM0MonfWnk6R
+         wwyw==
+X-Forwarded-Encrypted: i=1; AJvYcCWPgKKA/B/ucdj8ZLQOPoBxEYBOsiy76/+kk1gBk8zyWZ9JbmyI35NtM/QnVmbs8+T/GzWfO1cnV1hu9JZu@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy2+8B/VjMSeIlIyrZKjuQ+UXLBRDEbY6CftLeOxkAiT+6QvEGs
+	SWIVaEYZESvwVuA0qXRR36Gwe0CmPby5zrF7W8U3QrCdMpQOfU3mLKeC
+X-Gm-Gg: ATEYQzxABwrNdAO7jaU3GN+NexZlC1dPwmZM3vFnYxW+YHelamV9ZHNHeknajyRugcN
+	KAKqCwS1juTbhMIfSAb75k9aKGOWKn1sr1Q6xBo+Hx0LHEVpSMTmxWZqsq4YtXZdMWCLbuD17yo
+	LwddPndZLADFg3OAmy45OHblKl9qH8bMSJJ6bBYm6xqCOYPJdOAKXIKE629ZOc+5GbukVJkhKM9
+	C7HGrC5swwHhKuoTieGeOKV6nn+TfIbOc9nrsYNLtWX8sQGsYIgdQtBu3tIqi3z+Ly4W+gNlH4n
+	AtnDA8FqxxF8sTR5yQC+6hF8/kM7ddChsx7KvskfSIvvvk1GKOgZUCCVuBGwpuM70SI3QjKIV9E
+	DVrVTUmetTMRBjd/6eeEq5LaicGFatsL0W0/ucc0oBKNctGeEfNpYvgWO46kyiNoB5dO6s33phO
+	YwAp+HMy7GaQr3aSNDBp/446dqgy/2uqtMt4GaTHjBWiRsCyHsfiGVkxgIfDS43Hpi3arhZhtdR
+	w/TCI2ix6dupD8=
+X-Received: by 2002:a05:620a:4694:b0:8cd:8635:c04f with SMTP id af79cd13be357-8cd8635c58emr707782385a.78.1773102348291;
+        Mon, 09 Mar 2026 17:25:48 -0700 (PDT)
+Received: from localhost (bras-base-toroon21-grc-75-184-144-58-243.dsl.bell.ca. [184.144.58.243])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cd7ea02664sm462704385a.5.2026.03.09.17.25.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Mar 2026 17:25:45 -0700 (PDT)
+        Mon, 09 Mar 2026 17:25:47 -0700 (PDT)
 From: Richard Acayan <mailingradian@gmail.com>
 To: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>,
@@ -96,9 +97,9 @@ To: Bjorn Andersson <andersson@kernel.org>,
 	dri-devel@lists.freedesktop.org
 Cc: Yifei Zhan <yifei@zhan.science>,
 	Richard Acayan <mailingradian@gmail.com>
-Subject: [PATCH v3 1/5] dt-bindings: arm: qcom: document google,bonito-tianma board
-Date: Mon,  9 Mar 2026 20:26:02 -0400
-Message-ID: <20260310002606.16413-2-mailingradian@gmail.com>
+Subject: [PATCH v3 2/5] dt-bindings: panel-simple-dsi: add nt37700f compatible
+Date: Mon,  9 Mar 2026 20:26:03 -0400
+Message-ID: <20260310002606.16413-3-mailingradian@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260310002606.16413-1-mailingradian@gmail.com>
 References: <20260310002606.16413-1-mailingradian@gmail.com>
@@ -109,7 +110,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 22ECA243002
+X-Rspamd-Queue-Id: 7980C24301F
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [0.84 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
@@ -118,13 +119,13 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
 	R_MISSING_CHARSET(0.50)[];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	FREEMAIL_FROM(0.00)[gmail.com];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-96417-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-96418-lists,linux-arm-msm=lfdr.de];
 	RCPT_COUNT_TWELVE(0.00)[19];
 	MIME_TRACE(0.00)[0:+];
 	RECEIVED_HELO_LOCALHOST(0.00)[];
@@ -140,38 +141,31 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	FROM_HAS_DN(0.00)[]
 X-Rspamd-Action: no action
 
-The Pixel 3a XL is code-named by Google as "bonito". The
-google,bonito-tianma compatible represents a variant of the Pixel 3a XL
-board with a Tianma/Novatek NT37700F panel. Document the google,bonito
-board compatible and the google,bonito-tianma variant in the bindings.
+Add the compatible for the NT37700F panel found on the Pixel 3a XL.
 
 Signed-off-by: Richard Acayan <mailingradian@gmail.com>
 Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 ---
- Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
- 1 file changed, 6 insertions(+)
+ .../devicetree/bindings/display/panel/panel-simple-dsi.yaml     | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index d48c625d3fc4..1a955d1b14bf 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -844,6 +844,12 @@ properties:
-               - google,sargo
-           - const: qcom,sdm670
- 
-+      - items:
-+          - enum:
-+              - google,bonito-tianma
-+          - const: google,bonito
-+          - const: qcom,sdm670
-+
-       - items:
-           - enum:
-               - qcom,sdx55-mtp
+diff --git a/Documentation/devicetree/bindings/display/panel/panel-simple-dsi.yaml b/Documentation/devicetree/bindings/display/panel/panel-simple-dsi.yaml
+index 2f90c887b7b8..cc8d795df732 100644
+--- a/Documentation/devicetree/bindings/display/panel/panel-simple-dsi.yaml
++++ b/Documentation/devicetree/bindings/display/panel/panel-simple-dsi.yaml
+@@ -49,6 +49,8 @@ properties:
+       - lg,lh500wx1-sd03
+         # Lincoln LCD197 5" 1080x1920 LCD panel
+       - lincolntech,lcd197
++        # Novatek NT37700F 1080x2160 AMOLED panel
++      - novatek,nt37700f
+         # One Stop Displays OSD101T2587-53TS 10.1" 1920x1200 panel
+       - osddisplays,osd101t2587-53ts
+         # Panasonic 10" WUXGA TFT LCD panel
 -- 
 2.53.0
 
