@@ -1,84 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-96499-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96500-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OLOdF/q3r2mKbwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96499-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 07:19:38 +0100
+	id SBbVIZG6r2nNbwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96500-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 07:30:41 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id B9494245C92
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 07:19:37 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id C6EE0245D3A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 07:30:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7A83B304C608
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 06:19:36 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id A8F8F30185E4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 06:30:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2F1F320CAD;
-	Tue, 10 Mar 2026 06:19:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A801933A717;
+	Tue, 10 Mar 2026 06:30:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Dv+D72SI"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cGWl8n4Z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C38D4264A97;
-	Tue, 10 Mar 2026 06:19:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3FC2336EDE;
+	Tue, 10 Mar 2026 06:30:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773123575; cv=none; b=BGT8smkYiMX4Z7qsTPJdYPLaf+hIAzL5wEQErt++9ba3eKioyf1XK8brpiq1/ty+qQKdYNeKFZ/pNT4HklVIo7KGNPOFZTyDM4BdOXLxTEp9jBT56kriFh2RfuKiERs8+vzLFYJTv+bNLxKj78TmDLIcfpGGaGDnCTkPyIB6Pl4=
+	t=1773124234; cv=none; b=SgswDeHgI5IxovnKOjV9AxhGhXIVCAGfecQJVI4/tqpkaJtgl67vsuh9u+V7RxYB0VsYP2jF0+b2Moipa0JA69vJOIE55UTvdh+eXywGNNl4sFzgTdkcKuUNVSf3A59QrwKC1Eun6kCwm29WcFCyygHTJrA9BOJOUATtBJ+BO8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773123575; c=relaxed/simple;
-	bh=Qc+fA2dy/0av/8fzQkRGgmdyXlmAQc0dSTfKkwbpp2o=;
+	s=arc-20240116; t=1773124234; c=relaxed/simple;
+	bh=b0tiJPx27kb7V2zoV7m0LrOZeVP6jVkMiY5HLsLJbdg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gb7XGoL15Jbzq81DD3qVPbnEgBV0ECVdWTuzrK3TRKulYV6qsHYS+K+z/dI/DqB0IeIGCa9t9uQZjMF2Ofy5kdqGzm6Q/CpRuh/euhgwWnqPbpbQVMjvjhZJvIRpqyplB6aBqKbY7gzbevjsKtV95VhqygqTiNQlLd5i4D+5R5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Dv+D72SI; arc=none smtp.client-ip=198.175.65.20
+	 Content-Type:Content-Disposition:In-Reply-To; b=dtO0XhRXrkJSybtz942u5KQZ10sRxQz9bfxtRDT+6qe3LS+NJf0iC6jNAVR/JQbnjsSSncBmqp45w4GYgtE9rUsJtgvOQgLzuz+4o4l/O3n8V0ZR5zKPqK4YkL+IqX/keEgG0dYxLx0OLLStgc2JFxceZznn99ftZZVfjcnZCxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cGWl8n4Z; arc=none smtp.client-ip=198.175.65.14
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1773123573; x=1804659573;
+  t=1773124233; x=1804660233;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=Qc+fA2dy/0av/8fzQkRGgmdyXlmAQc0dSTfKkwbpp2o=;
-  b=Dv+D72SIOAcdVassi+vHwcABBWwvYPU3wA4agDwkRd7zwyAiH56vPZtQ
-   mdIB+mIeYmLnmkWshbA2z3FSqDQ7zzaBkZRe+V9VcK30GKN74MgfBrx/q
-   adv6KIktTaDrJ4FzZW5ZBP9dZIBJU2BD9O4lgSK6GfCeGvG6N0k+xMSFS
-   E++ckod8DNkjW5TPJ9O+GYvgdVhaGCYgJ3lO1X6isgKMdnkamnocTid+s
-   Xlhd/i/E9GXpjZsYXBAMZbbfzeah0u4D0SQq1/FZqVHeELwjZjMIRBouc
-   ufgM7jXzwh5erej8XoVM9zZX4K31Fx2/pNHksEQH4rkHz9pREN2TuAGrS
-   Q==;
-X-CSE-ConnectionGUID: R6Vl8SyYRLSr9UIedfFmeQ==
-X-CSE-MsgGUID: qme370UsRaadwjv0ZApsvw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11724"; a="73861235"
+  bh=b0tiJPx27kb7V2zoV7m0LrOZeVP6jVkMiY5HLsLJbdg=;
+  b=cGWl8n4ZH0tW8nG0oG8315V9qnVul19+f0omSI0IU/p65DRhOwXMo9Ji
+   sLQo8YNF9fESLTRoqa1jtU5dutWckbVmI14Z+EfXuBHxD0sxLevf6lbhM
+   Xl1NzINFHwr6dr0KrJnf0+ejtY+WY5r76+Bkpxn38CIpJ1YKs8juNe+u1
+   jeVyf7+T4CpTWETNeNH/UMqh+smQxfMeBUVLbQym7uUQmsgefVH5Ieg+u
+   SHursvQDMGeBRKeSKNoi6qAknT3kXdNZ2kTjaoFCWDc/dyYowsjFUH8M/
+   R5IcnnuIVd2TR2OAb/xPYuel4pd5PK5Zglg591QIFf2T9r1FtFMI9xl/8
+   g==;
+X-CSE-ConnectionGUID: k63bo/InTpOqd6+I1D31UQ==
+X-CSE-MsgGUID: 1v+zMoktR9eOFvpqNxxNSg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11724"; a="78013856"
 X-IronPort-AV: E=Sophos;i="6.23,111,1770624000"; 
-   d="scan'208";a="73861235"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
-  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Mar 2026 23:19:33 -0700
-X-CSE-ConnectionGUID: Ay38AiUSS4OqjK+vrjfNNA==
-X-CSE-MsgGUID: fKJpariwQ8yAee/3VD6/eQ==
+   d="scan'208";a="78013856"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Mar 2026 23:30:32 -0700
+X-CSE-ConnectionGUID: AV9KxH1LRciBf+ShYMqSGg==
+X-CSE-MsgGUID: wPmB7sgLRz+J5P2emD/RQg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.23,111,1770624000"; 
-   d="scan'208";a="219963162"
+   d="scan'208";a="216417804"
 Received: from lkp-server01.sh.intel.com (HELO 434e41ea3c86) ([10.239.97.150])
-  by orviesa008.jf.intel.com with ESMTP; 09 Mar 2026 23:19:29 -0700
+  by fmviesa006.fm.intel.com with ESMTP; 09 Mar 2026 23:30:29 -0700
 Received: from kbuild by 434e41ea3c86 with local (Exim 4.98.2)
 	(envelope-from <lkp@intel.com>)
-	id 1vzqRB-000000001Sm-1ddf;
-	Tue, 10 Mar 2026 06:19:25 +0000
-Date: Tue, 10 Mar 2026 14:18:59 +0800
+	id 1vzqbq-000000001Tk-1NyS;
+	Tue, 10 Mar 2026 06:30:26 +0000
+Date: Tue, 10 Mar 2026 14:29:50 +0800
 From: kernel test robot <lkp@intel.com>
 To: Sibi Sankar <sibi.sankar@oss.qualcomm.com>, robh@kernel.org,
 	krzk+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
 	bryan.odonoghue@linaro.org, ilpo.jarvinen@linux.intel.com,
 	hansg@kernel.org
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	platform-driver-x86@vger.kernel.org,
+Cc: oe-kbuild-all@lists.linux.dev, conor+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, platform-driver-x86@vger.kernel.org,
 	Maya Matuszczyk <maccraft123mc@gmail.com>
 Subject: Re: [PATCH V3 2/5] platform: arm64: Add driver for EC found on
  Qualcomm reference devices
-Message-ID: <202603101317.ZR8NjiRC-lkp@intel.com>
+Message-ID: <202603101413.1egT3NBN-lkp@intel.com>
 References: <20260308233646.2318676-3-sibi.sankar@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -89,21 +88,21 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <20260308233646.2318676-3-sibi.sankar@oss.qualcomm.com>
-X-Rspamd-Queue-Id: B9494245C92
+X-Rspamd-Queue-Id: C6EE0245D3A
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [0.34 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCPT_COUNT_TWELVE(0.00)[16];
+	RCPT_COUNT_TWELVE(0.00)[15];
 	FREEMAIL_CC(0.00)[lists.linux.dev,kernel.org,vger.kernel.org,gmail.com];
-	TAGGED_FROM(0.00)[bounces-96499-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-96500-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
@@ -115,10 +114,10 @@ X-Spamd-Result: default: False [0.34 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[lkp@intel.com,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[intel.com:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[01.org:url,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,intel.com:dkim,intel.com:email,intel.com:mid]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:dkim,intel.com:email,intel.com:mid,01.org:url,sin.lore.kernel.org:rdns,sin.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
 Hi Sibi,
@@ -131,77 +130,98 @@ url:    https://github.com/intel-lab-lkp/linux/commits/Sibi-Sankar/dt-bindings-e
 base:   a0ae2a256046c0c5d3778d1a194ff2e171f16e5f
 patch link:    https://lore.kernel.org/r/20260308233646.2318676-3-sibi.sankar%40oss.qualcomm.com
 patch subject: [PATCH V3 2/5] platform: arm64: Add driver for EC found on Qualcomm reference devices
-config: hexagon-allmodconfig (https://download.01.org/0day-ci/archive/20260310/202603101317.ZR8NjiRC-lkp@intel.com/config)
-compiler: clang version 17.0.6 (https://github.com/llvm/llvm-project 6009708b4367171ccdbf4b5905cb6a803753fe18)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260310/202603101317.ZR8NjiRC-lkp@intel.com/reproduce)
+config: alpha-allyesconfig (https://download.01.org/0day-ci/archive/20260310/202603101413.1egT3NBN-lkp@intel.com/config)
+compiler: alpha-linux-gcc (GCC) 15.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260310/202603101413.1egT3NBN-lkp@intel.com/reproduce)
 
 If you fix the issue in a separate patch/commit (i.e. not just a new version of
 the same patch/commit), kindly add following tags
 | Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202603101317.ZR8NjiRC-lkp@intel.com/
+| Closes: https://lore.kernel.org/oe-kbuild-all/202603101413.1egT3NBN-lkp@intel.com/
 
 All errors (new ones prefixed by >>):
 
->> drivers/platform/arm64/qcom-hamoa-ec.c:170:37: error: call to undeclared function 'FIELD_GET'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-     170 |         cap->fan_cnt = max(EC_MAX_FAN_CNT, EC_THERMAL_FAN_CNT(resp[1]));
-         |                                            ^
-   drivers/platform/arm64/qcom-hamoa-ec.c:56:33: note: expanded from macro 'EC_THERMAL_FAN_CNT'
+   In file included from include/linux/ioport.h:16,
+                    from include/linux/acpi.h:13,
+                    from include/linux/i2c.h:13,
+                    from drivers/platform/arm64/qcom-hamoa-ec.c:7:
+   drivers/platform/arm64/qcom-hamoa-ec.c: In function 'qcom_ec_thermal_capabilities':
+>> drivers/platform/arm64/qcom-hamoa-ec.c:56:42: error: implicit declaration of function 'FIELD_GET' [-Wimplicit-function-declaration]
       56 | #define EC_THERMAL_FAN_CNT(x)           (FIELD_GET(GENMASK(1, 0), (x)))
-         |                                          ^
-   drivers/platform/arm64/qcom-hamoa-ec.c:171:18: error: call to undeclared function 'FIELD_GET'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-     171 |         cap->fan_type = EC_THERMAL_FAN_TYPE(resp[1]);
-         |                         ^
-   drivers/platform/arm64/qcom-hamoa-ec.c:57:34: note: expanded from macro 'EC_THERMAL_FAN_TYPE'
-      57 | #define EC_THERMAL_FAN_TYPE(x)          (FIELD_GET(GENMASK(4, 2), (x)))
-         |                                          ^
-   2 errors generated.
+         |                                          ^~~~~~~~~
+   include/linux/minmax.h:92:35: note: in definition of macro '__careful_cmp_once'
+      92 |         auto ux = (x); auto uy = (y);                   \
+         |                                   ^
+   include/linux/minmax.h:112:25: note: in expansion of macro '__careful_cmp'
+     112 | #define max(x, y)       __careful_cmp(max, x, y)
+         |                         ^~~~~~~~~~~~~
+   drivers/platform/arm64/qcom-hamoa-ec.c:170:24: note: in expansion of macro 'max'
+     170 |         cap->fan_cnt = max(EC_MAX_FAN_CNT, EC_THERMAL_FAN_CNT(resp[1]));
+         |                        ^~~
+   drivers/platform/arm64/qcom-hamoa-ec.c:170:44: note: in expansion of macro 'EC_THERMAL_FAN_CNT'
+     170 |         cap->fan_cnt = max(EC_MAX_FAN_CNT, EC_THERMAL_FAN_CNT(resp[1]));
+         |                                            ^~~~~~~~~~~~~~~~~~
 
 
-vim +/FIELD_GET +170 drivers/platform/arm64/qcom-hamoa-ec.c
+vim +/FIELD_GET +56 drivers/platform/arm64/qcom-hamoa-ec.c
 
-   137	
-   138	/*
-   139	 * EC Device Thermal Capabilities:
-   140	 *
-   141	 * Read Response:
-   142	 * ----------------------------------------------------------------------
-   143	 * | Offset	| Name		| Description				|
-   144	 * ----------------------------------------------------------------------
-   145	 * | 0x00	| Byte count	| Number of bytes in response		|
-   146	 * |		|		| (exluding byte count)			|
-   147	 * ----------------------------------------------------------------------
-   148	 * | 0x02 (LSB)	| EC Thermal	| Bit 0-1: Number of fans		|
-   149	 * | 0x3	| Capabilities	| Bit 2-4: Type of fan			|
-   150	 * |		|		| Bit 5-6: Reserved			|
-   151	 * |		|		| Bit 7: Data Valid/Invalid		|
-   152	 * |		|		|	 (Valid - 1, Invalid - 0)
-   153	 * |		|		| Bit 8-15: Thermistor 0 - 7 presence	|
-   154	 * |		|		|	    (0 present, 1 absent)	|
-   155	 * ----------------------------------------------------------------------
-   156	 *
-   157	 */
-   158	static int qcom_ec_thermal_capabilities(struct device *dev)
-   159	{
-   160		struct i2c_client *client = to_i2c_client(dev);
-   161		struct qcom_ec *ec = i2c_get_clientdata(client);
-   162		struct qcom_ec_thermal_cap *cap = &ec->thermal_cap;
-   163		u8 resp[EC_THERMAL_CAP_RESP_LEN];
-   164		int ret;
-   165	
-   166		ret = qcom_ec_read(ec, EC_THERMAL_CAP_CMD, EC_THERMAL_CAP_RESP_LEN, resp);
-   167		if (ret < 0)
-   168			return ret;
-   169	
- > 170		cap->fan_cnt = max(EC_MAX_FAN_CNT, EC_THERMAL_FAN_CNT(resp[1]));
-   171		cap->fan_type = EC_THERMAL_FAN_TYPE(resp[1]);
-   172		cap->thermistor_mask = EC_THERMAL_THERMISTOR_MASK(resp[2]);
-   173	
-   174		dev_dbg(dev, "Fan count: %d Fan Type: %d Thermistor Mask: %d\n",
-   175			cap->fan_cnt, cap->fan_type, cap->thermistor_mask);
-   176	
-   177		return 0;
-   178	}
-   179	
+   > 7	#include <linux/i2c.h>
+     8	#include <linux/kernel.h>
+     9	#include <linux/module.h>
+    10	#include <linux/pm.h>
+    11	#include <linux/thermal.h>
+    12	
+    13	#define EC_SCI_EVT_READ_CMD	0x05
+    14	#define EC_FW_VERSION_CMD	0x0e
+    15	#define EC_MODERN_STANDBY_CMD	0x23
+    16	#define EC_FAN_DBG_CONTROL_CMD	0x30
+    17	#define EC_SCI_EVT_CONTROL_CMD	0x35
+    18	#define EC_THERMAL_CAP_CMD	0x42
+    19	
+    20	#define EC_FW_VERSION_RESP_LEN	4
+    21	#define EC_THERMAL_CAP_RESP_LEN	3
+    22	#define EC_FAN_DEBUG_CMD_LEN	6
+    23	#define EC_FAN_SPEED_DATA_SIZE	4
+    24	
+    25	#define EC_MODERN_STANDBY_ENTER	0x01
+    26	#define EC_MODERN_STANDBY_EXIT	0x00
+    27	
+    28	#define EC_FAN_DEBUG_MODE_ON    BIT(0)
+    29	#define EC_FAN_ON               BIT(1)
+    30	#define EC_FAN_DEBUG_TYPE_PWM   BIT(2)
+    31	#define EC_MAX_FAN_CNT		2
+    32	#define EC_FAN_NAME_SIZE	20
+    33	#define EC_FAN_MAX_PWM		255
+    34	
+    35	enum qcom_ec_sci_events {
+    36		EC_FAN1_STATUS_CHANGE_EVT = 0x30,
+    37		EC_FAN2_STATUS_CHANGE_EVT,
+    38		EC_FAN1_SPEED_CHANGE_EVT,
+    39		EC_FAN2_SPEED_CHANGE_EVT,
+    40		EC_NEW_LUT_SET_EVT,
+    41		EC_FAN_PROFILE_SWITCH_EVT,
+    42		EC_THERMISTOR_1_THRESHOLD_CROSS_EVT,
+    43		EC_THERMISTOR_2_THRESHOLD_CROSS_EVT,
+    44		EC_THERMISTOR_3_THRESHOLD_CROSS_EVT,
+    45		/* Reserved: 0x39 - 0x3c/0x3f */
+    46		EC_RECOVERED_FROM_RESET_EVT = 0x3d,
+    47	};
+    48	
+    49	struct qcom_ec_version {
+    50		u8 main_version;
+    51		u8 sub_version;
+    52		u8 test_version;
+    53	};
+    54	
+    55	struct qcom_ec_thermal_cap {
+  > 56	#define EC_THERMAL_FAN_CNT(x)		(FIELD_GET(GENMASK(1, 0), (x)))
+    57	#define EC_THERMAL_FAN_TYPE(x)		(FIELD_GET(GENMASK(4, 2), (x)))
+    58	#define EC_THERMAL_THERMISTOR_MASK(x)	(FIELD_GET(GENMASK(7, 0), (x)))
+    59		u8 fan_cnt;
+    60		u8 fan_type;
+    61		u8 thermistor_mask;
+    62	};
+    63	
 
 -- 
 0-DAY CI Kernel Test Service
