@@ -1,298 +1,229 @@
-Return-Path: <linux-arm-msm+bounces-96689-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96693-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id WIQfLP0nsGnYgQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96689-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 15:17:33 +0100
+	id CF3WHrgzsGl2hAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96693-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 16:07:36 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5610D251AAD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 15:17:33 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 30E3E252DFB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 16:07:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 5A76E30D1454
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 13:52:31 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 9B14A32B40D6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 14:02:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6941E385528;
-	Tue, 10 Mar 2026 13:52:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49505399342;
+	Tue, 10 Mar 2026 14:02:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="NEKuwLaC";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Cd8pZbnd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a6Ascwoa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E2838B13C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2026 13:52:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24355391E55;
+	Tue, 10 Mar 2026 14:02:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773150741; cv=none; b=oZdcuGVZTqE1y7Ip1A9boK4qhaspd8x6f2hhNtlO9uH5ZUozv0rQY5pedkLGSgt+hDTI086PHYGkLqfTJJk6ysUOlhi3Btx2X0tzxAK/KIFfh4bny6K5qstkDJocClObeMEIaJXx8KB9V2evAkVVE8QsYaFGB7TSfDk+tW20gdo=
+	t=1773151341; cv=none; b=I7sRFhAYczYGfMyQS8CqXWYFMQE0h9TozvSOVwSyCTVC2sx5402YrHBR+oQKF9iCw2d/SVB5kK9WtoWWUaFEkGDPV59mmWNb+5DrvvOMNvKLJW88fZGCdoGjUsrmFlhxIWeP07/+2+NL0x5M5rtHE7U3LL1WraOeNZgabnHEpU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773150741; c=relaxed/simple;
-	bh=cmUO7eLo3YfN1R+TeCkHuV+UYuymQZWbHZ/FgYZVwRc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YwaKcP7E9RptPiIPUR6N2nB9UDMN/je2x24SZR7S3GhJQyC2dvUl2/mf3T1LEEioG6lfE7q8wNu1vW1EWEXpEL/8zMwPmeU13iEtY7EQZiyFW2Xx8N5A27w2w6sCemjyEeB4c1mi0kvDRJfy5LBnzEwzWd05yvBJ+g3gxyZvBL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=NEKuwLaC; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Cd8pZbnd; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62ACaYZn789294
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2026 13:52:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=E0X5Yam2Y/K
-	A0Hu2oSOl/+Yjcj2TbDdAlIdpUoAMbcc=; b=NEKuwLaCFFyhxPbtY8/CY5Wxngn
-	lCpWvwMlOjXjNf/k0giwW2jhpi8HYjpAgZQ/BkbJ5/viAOuKFsaETGPjWo+2xZOD
-	XVmJhVl0NLgNLc1g62kKn62nbzxC6urFERB1sxC7j+AdjRImMnuWwjeau8LXizvD
-	x4ZDo+pS+HXUTgA851wsdZPWHUguC6XTjlin9DQU/KhvH79THlvZK2MknwkuItSE
-	0OzCVOYzLHKFy377sLVetrfWX8dbmDFv/Yf4IN+AWyYyerGh59DuCXURImk9EVPF
-	edQEAmnXZlX1d5acJ0Ns65bnOC4AA+JWHBxIlAGi7CcCNCtywBcqqeWR8Ew==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ct1ekv4d8-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2026 13:52:19 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-35641c14663so13513591a91.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2026 06:52:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1773150738; x=1773755538; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=E0X5Yam2Y/KA0Hu2oSOl/+Yjcj2TbDdAlIdpUoAMbcc=;
-        b=Cd8pZbnddvfC9dzP/0H0SN+iKAgANdEYXHqMYy9z5hjI01ivQ5jT17gFKOMpXc9cTm
-         u4WpGA3iYRb+s40nT8bZpVUL0veXbLg4ecb/RCUGPJec131kqqYuQuCsREnIFLwfCJqA
-         sUIFS1ZXwG2zZwDMo2OEOvPCyX+zgO3ewJjB7T9LG6FTjh2bO+FI5HERcJaX8Cj+IzM3
-         ovqBPLenm7VtpPqLawSIfvRySseWDutm3x50wtMb/FuPxDgrHADJsBybUpkoay5NrlNH
-         RWydLC8EFEbO3wRBeAaevvkd41gjP+sFGUMSD0dxaNXeFr4jSAGuzpo7bted1i5KqGFy
-         JH1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773150738; x=1773755538;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=E0X5Yam2Y/KA0Hu2oSOl/+Yjcj2TbDdAlIdpUoAMbcc=;
-        b=dpVUnng73t2C7BWHY/jph8gpE/iasRCGyCv3S3DEIq7k2v9zFTyogtZaR6VqJE5sDM
-         CufKAFsSmKO0tAyySRMGkIBCpMb7z84opoPNnTqCbqPDtGeBy3EyN3YWRm9JLtZFOonD
-         i+QDsqKPBWbK5WbFz7ZqNgTj0RNGMKIRue/131DSXjjyYyzPVPlQE/CePqOfo7XjE50L
-         1qEl1osbNdrklMuwQYt9a3mzMiLSlDtO2aqBLenqTYntGsfBIvhfHjTvRXJJhE7ImcqV
-         mwfw7Wniiu0PCbm5AUXKf9XGE0RKF0oCM/Icjw+ZMnzZujxdMRSP7d2FYHoGUXJgg4+f
-         wsxQ==
-X-Gm-Message-State: AOJu0Yyuifssrrcxd7NaS5Wiu+BLRdh7M8XCQF+gsr2gQmfJmo7SjXWP
-	QMZghCoxecQn7Rd67SeXzEZRf+t1fjDBVM0fcDMbNJfiqMuISvYW5eswBsf7NOXXV/0V6yKTnkE
-	57oyucQ6T9soq23AIPTj5WUEZBp4be236UPyE5SebEJbAar4bcuj5s6Sqd6Rnfs0W/T/cDg3xKA
-	4r
-X-Gm-Gg: ATEYQzw1CVkUUYCWxrQwbVBxIVlN7auOd0BfTeWJfO9RZA4HwNg3WMdEoF2yq0VmVjF
-	0tUCelHZO3QIATp9/2T8A2sJzHis+NdWKIdK/7SXzMisbfQt1hPXd65qiVX+r6Iv/O41K9d4/Fd
-	HRTXBoOJG8KBaJefsdHvel7g+62Ea/Q8oMelciWORKGXJtSVHRKgjJsBNR741XIh3psqQSQPENw
-	0H+Agrsy4lgK723O3qLKrGiBcMvqu/3eYXA9qExKPuLNvJTQ9TLPHGdh3MTyDHAcy9/Eu59XlVZ
-	E1dumRoQNIVb8IQXHz7Eat/IKGU8HS8W5nGgHBTLpjUs1QKmbMKkJhsLm6uaBt0pAWanfbrak88
-	R/grIAOcYXNu6+/Fs/cgs/QSWRS9lDiKO/7x9GxsYUzlCHg6z
-X-Received: by 2002:a17:90b:1d44:b0:359:f825:5700 with SMTP id 98e67ed59e1d1-359f82559d6mr1598618a91.10.1773150738277;
-        Tue, 10 Mar 2026 06:52:18 -0700 (PDT)
-X-Received: by 2002:a17:90b:1d44:b0:359:f825:5700 with SMTP id 98e67ed59e1d1-359f82559d6mr1598583a91.10.1773150737703;
-        Tue, 10 Mar 2026 06:52:17 -0700 (PDT)
-Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-359f088e4bbsm3333149a91.9.2026.03.10.06.52.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Mar 2026 06:52:17 -0700 (PDT)
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] remoteproc: qcom: pas: Map/unmap subsystem region before auth_and_reset
-Date: Tue, 10 Mar 2026 19:22:05 +0530
-Message-ID: <20260310135205.2497789-2-mukesh.ojha@oss.qualcomm.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260310135205.2497789-1-mukesh.ojha@oss.qualcomm.com>
-References: <20260310135205.2497789-1-mukesh.ojha@oss.qualcomm.com>
+	s=arc-20240116; t=1773151341; c=relaxed/simple;
+	bh=/1oXQSl8lOctBMm0s6V4ROPxq8kPUCe8v+kkkA6uVT4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ipn6fGgxZt4Yir2bcHA6oLjwBPrQ2IwBIhlvigKA99aZBPhZDY64N1Fni1YuLUnGgxpZmUYTe2gl2TITJJVAEqQcyGvXfHjq05mZKx9NpRQ3kMj2BqkV2HyEVxaJKqL8NIbXRK+8pItCjHLEkzKjA12KKRNVhzmwTOoohFpywvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a6Ascwoa; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id B51ABC19423;
+	Tue, 10 Mar 2026 14:02:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773151340;
+	bh=/1oXQSl8lOctBMm0s6V4ROPxq8kPUCe8v+kkkA6uVT4=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=a6AscwoaKiH4Ca/n0QYxHQlBh3GonUFp4+NFHMdPElR0wdLHCLoNIMO+4inJslY8k
+	 AZfDhTy6vJLX1RrVztyRGHgQ/bouContf25YuLxspS6xnBZGoZuu+bfW3HZYghc40D
+	 co5mSz+tCaf+J/7C7eEFKOvfhOWWrdYeLC0TBGK3mQc+XIJeG0h4WwVHc7GxpOtSpM
+	 TcPNZZeYh8yF6JtIA7LO+VeOhIrw1w+XKUfscCDp6zgFq7JUCWz3wdLPHQhG/WzmJD
+	 dHCuu1T+ZcmUTTMAVTStgiTw/jc+6fmaQjnNnKvAfBl05DqpOy7PEtddfrqdt9E60/
+	 lShVALLUAE7KA==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A217EFD2D9F;
+	Tue, 10 Mar 2026 14:02:20 +0000 (UTC)
+From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>
+Subject: [PATCH v7 0/4] PCI: Add support for resetting the Root Ports in a
+ platform specific way
+Date: Tue, 10 Mar 2026 19:31:58 +0530
+Message-Id: <20260310-pci-port-reset-v7-0-9dd00ccc25ab@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: Py8wpshuVTlP5sOEpA0bKmdNqq7Kj5ny
-X-Proofpoint-ORIG-GUID: Py8wpshuVTlP5sOEpA0bKmdNqq7Kj5ny
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEwMDEyMCBTYWx0ZWRfX+wXCRfMu3IWE
- tTFo8aYOzA2YVyWhMTK0S2QjhWmIEeDvDJvUlujtg1NBc5+cuKb8oo2H4W8MSGg5kl+zmG/pZsC
- MkC1aqaAxaBF0bbEM/EosxBunWOaAF86wlVsSBWwB7vdJqxNWzVvTVcuxuzfirSqacv1ED+QgYI
- cDqY5IbPplEJWqOBMhCM4xraG2PGNL8IC2v+eBNDbimVcz+jDEJwFXFjKBMA56tv3+IigLEZSum
- F8fk9TMeCT/p4DsrYKo55HC9bOABs6yN+Z1rcONpixnheLqKePrAALZlusmYgQAWcydPO1ePwMe
- +RbTOElNG6GPs2EVeRzxLJXz4Fq/1cQfachZPm6LGsMj5Dp4CA+eH+cfdBdbPgVWw047b9n+Zjo
- raJw8+6hDPjb3W6pozvVQtFu3BFmtnHJWG80woZEF85ypa8MXdKn36SkR56ZjMm1UYhIls+p9s+
- GA97QFpxPyEutDt/YPg==
-X-Authority-Analysis: v=2.4 cv=eIEeTXp1 c=1 sm=1 tr=0 ts=69b02213 cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=EUspDBNiAAAA:8
- a=g0QXFxIELhCdF1mkvcsA:9 a=rl5im9kqc5Lf4LNbBjHf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-10_02,2026-03-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0 suspectscore=0
- spamscore=0 priorityscore=1501 malwarescore=0 clxscore=1015 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603100120
-X-Rspamd-Queue-Id: 5610D251AAD
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFYksGkC/33MQQ6CMBCF4auQri0plWmtK+9hXEA7SBOx2MFGQ
+ 7i7hbW6meSf5H0zI4weiR2LmUVMnny459C7gtm+uV+Re5ebSSFB6Ar4aD0fQ5x4RMKJ185AZUC
+ LSu5ZHo0RO//awPMld+9pCvG9+QnW708qARdcqgac1AfX1uIUiMrHs7nZMAxlPmwVk/qvqKyoz
+ liLpkbdtl+UZVk+WqomYfkAAAA=
+X-Change-ID: 20250715-pci-port-reset-4d9519570123
+To: Bjorn Helgaas <bhelgaas@google.com>, 
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>, 
+ Oliver O'Halloran <oohall@gmail.com>, Will Deacon <will@kernel.org>, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+ Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Heiko Stuebner <heiko@sntech.de>, Philipp Zabel <p.zabel@pengutronix.de>
+Cc: linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linuxppc-dev@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org, 
+ linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org, 
+ Niklas Cassel <cassel@kernel.org>, 
+ Wilfred Mallawa <wilfred.mallawa@wdc.com>, 
+ Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
+ mani@kernel.org, Lukas Wunner <lukas@wunner.de>, 
+ Richard Zhu <hongxing.zhu@nxp.com>, Brian Norris <briannorris@chromium.org>, 
+ Wilson Ding <dingwei@marvell.com>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
+ Frank Li <Frank.Li@nxp.com>, Manivannan Sadhasivam <mani@kernel.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4549;
+ i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
+ bh=/1oXQSl8lOctBMm0s6V4ROPxq8kPUCe8v+kkkA6uVT4=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBpsCRpmEGa2hN7YHyPGgSxWL0QcI1jloZjMug0C
+ ziHFfnkJ4mJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCabAkaQAKCRBVnxHm/pHO
+ 9dicB/9BFlu24MWD8df02ktuKIEzBuxaGoGisvvBQguIP1YvPxL6t7rSxiaEXEr6MBTkXbOJoey
+ bpQXx2vbrVy0Gx1Txt+q8ulgdI9dyDYmzjCuiqo2VCispItRKXaXcAvLJrmNLMPWSxCTf45skF8
+ Cs5UFPJ9199lg5Ytm6McfZ2sIpFUK1BYIRhDavMrcPCx0l4793mt+8SVEXQKFlB7AAgDVek0TBe
+ aC7nIEbUbxZ4SZNoMHk/Bg9YY9geNxJ0XL/lAJQO5rbpSMad9w9UEZ+msF9kGXuEbaMNVcJjNFp
+ sDgHozJQxUV/+G61M3/HBCoYnDYr2OVfAUvtib/7MHWyfq0P
+X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
+X-Endpoint-Received: by B4 Relay for
+ manivannan.sadhasivam@oss.qualcomm.com/default with auth_id=461
+X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Reply-To: manivannan.sadhasivam@oss.qualcomm.com
+X-Rspamd-Queue-Id: 30E3E252DFB
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-96689-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-96693-lists,linux-arm-msm=lfdr.de,manivannan.sadhasivam.oss.qualcomm.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
+	FREEMAIL_TO(0.00)[google.com,linux.ibm.com,gmail.com,kernel.org,sntech.de,pengutronix.de];
 	TO_DN_SOME(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mukesh.ojha@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[27];
+	FROM_HAS_DN(0.00)[];
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	RCPT_COUNT_FIVE(0.00)[6];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	HAS_REPLYTO(0.00)[manivannan.sadhasivam@oss.qualcomm.com];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,oss.qualcomm.com:replyto,oss.qualcomm.com:mid,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-Qualcomm remoteproc drivers such as qcom_q6v5_mss, which do not use the
-Peripheral Authentication Service (PAS), always map the MBA region before
-use and unmap it once the usage is complete. This behavior was introduced
-to avoid issues seen in the past where speculative accesses from the
-application processor to the MBA region after it was assigned to the remote
-Q6 led to an XPU violation. The issue was mitigated by unmapping the region
-before handing control to the remote Q6.
+Hi,
 
-Currently, most Qualcomm SoCs using the PAS driver run either with a
-standalone QHEE or the Gunyah hypervisor. In these environments, the
-hypervisor unmaps the Q6 memory from HLOS Stage-2 and remaps it into the
-Q6 Stage-2 page table. As a result, speculative accesses from HLOS cannot
-reach the region even if it remains mapped in HLOS Stage-1; therefore, XPU
-violations cannot occur.
+Currently, in the event of AER/DPC, PCI core will try to reset the slot (Root
+Port) and its subordinate devices by invoking bridge control reset and FLR. But
+in some cases like AER Fatal error, it might be necessary to reset the Root
+Ports using the PCI host bridge drivers in a platform specific way (as indicated
+by the TODO in the pcie_do_recovery() function in drivers/pci/pcie/err.c).
+Otherwise, the PCI link won't be recovered successfully.
 
-However, when the same SoC runs Linux at EL2, Linux itself must perform the
-unmapping to avoid such issues. It is still correct to apply this mapping/
-unmapping sequence even for SoCs that run under Gunyah, so this behavior
-should not be conditional.
+So this series adds a new callback 'pci_host_bridge::reset_root_port' for the
+host bridge drivers to reset the Root Port when a fatal error happens.
 
-Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Also, this series allows the host bridge drivers to handle PCI link down event
+by resetting the Root Ports and recovering the bus. This is accomplished by the
+help of the new 'pci_host_handle_link_down()' API. Host bridge drivers are
+expected to call this API (preferrably from a threaded IRQ handler) with
+relevant Root Port 'pci_dev' when a link down event is detected for the port.
+The API will reuse the pcie_do_recovery() function to recover the link if AER
+support is enabled, otherwise it will directly call the reset_root_port()
+callback of the host bridge driver (if exists).
+
+For reference, I've modified the pcie-qcom driver to call
+pci_host_handle_link_down() API with Root Port 'pci_dev' after receiving the
+LDn global_irq event and populated 'pci_host_bridge::reset_root_port()'
+callback to reset the Root Ports.
+ 
+Testing
+-------
+
+Tested on Qcom Lemans AU Ride platform with Host and EP SoCs connected over PCIe
+link. Simulated the LDn by disabling LTSSM_EN on the EP and I could verify that
+the link was getting recovered successfully.
+
+Changes in v7:
+- Dropped Rockchip Root port reset patch due to reported issues. But the series
+  works on other platforms as tested by others.
+- Added pci_{lock/unlock}_rescan_remove() to guard pci_bus_error_reset() as the
+  device could be removed in-between due to Native hotplug interrupt.
+- Rebased on top of v7.0-rc1
+- Link to v6: https://lore.kernel.org/r/20250715-pci-port-reset-v6-0-6f9cce94e7bb@oss.qualcomm.com
+
+Changes in v6:
+- Incorporated the patch: https://lore.kernel.org/all/20250524185304.26698-2-manivannan.sadhasivam@linaro.org/
+- Link to v5: https://lore.kernel.org/r/20250715-pci-port-reset-v5-0-26a5d278db40@oss.qualcomm.com
+
+Changes in v5:
+* Reworked the pci_host_handle_link_down() to accept Root Port instead of
+  resetting all Root Ports in the event of link down.
+* Renamed 'reset_slot' to 'reset_root_port' to avoid confusion as both terms
+  were used interchangibly and the series is intended to reset Root Port only.
+* Added the Rockchip driver change to this series.
+* Dropped the applied patches and review/tested tags due to rework.
+* Rebased on top of v6.16-rc1.
+
+Changes in v4:
+- Handled link down first in the irq handler
+- Updated ICC & OPP bandwidth after link up in reset_slot() callback
+- Link to v3: https://lore.kernel.org/r/20250417-pcie-reset-slot-v3-0-59a10811c962@linaro.org
+
+Changes in v3:
+- Made the pci-host-common driver as a common library for host controller
+  drivers
+- Moved the reset slot code to pci-host-common library
+- Link to v2: https://lore.kernel.org/r/20250416-pcie-reset-slot-v2-0-efe76b278c10@linaro.org
+
+Changes in v2:
+- Moved calling reset_slot() callback from pcie_do_recovery() to pcibios_reset_secondary_bus()
+- Link to v1: https://lore.kernel.org/r/20250404-pcie-reset-slot-v1-0-98952918bf90@linaro.org
+
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 ---
- drivers/remoteproc/qcom_q6v5_pas.c | 48 +++++++++++++++++++++++-------
- 1 file changed, 38 insertions(+), 10 deletions(-)
+Manivannan Sadhasivam (4):
+      PCI/ERR: Add support for resetting the Root Ports in a platform specific way
+      PCI: host-common: Add link down handling for Root Ports
+      PCI: qcom: Add support for resetting the Root Port due to link down event
+      misc: pci_endpoint_test: Add AER error handlers
 
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index 3bde37ac510c..033d618ccba9 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -138,6 +138,13 @@ static void qcom_pas_segment_dump(struct rproc *rproc,
- 		return;
- 	}
- 
-+	pas->mem_region = ioremap_wc(pas->mem_phys, pas->mem_size);
-+	if (!pas->mem_region) {
-+		dev_err(pas->dev, "unable to map memory region: %pa+%zx\n",
-+			&pas->mem_phys, pas->mem_size);
-+		return;
-+	}
-+
- 	memcpy_fromio(dest, pas->mem_region + total_offset, size);
- }
- 
-@@ -240,9 +247,18 @@ static int qcom_pas_load(struct rproc *rproc, const struct firmware *fw)
- 			return ret;
- 		}
- 
-+		pas->dtb_mem_region = ioremap_wc(pas->dtb_mem_phys, pas->dtb_mem_size);
-+		if (!pas->dtb_mem_region) {
-+			dev_err(pas->dev, "unable to map dtb memory region: %pa+%zx\n",
-+				&pas->dtb_mem_phys, pas->dtb_mem_size);
-+			goto release_dtb_metadata;
-+		}
-+
- 		ret = qcom_mdt_pas_load(pas->dtb_pas_ctx, pas->dtb_firmware,
- 					pas->dtb_firmware_name, pas->dtb_mem_region,
- 					&pas->dtb_mem_reloc);
-+		iounmap(pas->dtb_mem_region);
-+		pas->dtb_mem_region = NULL;
- 		if (ret)
- 			goto release_dtb_metadata;
- 	}
-@@ -320,8 +336,23 @@ static int qcom_pas_start(struct rproc *rproc)
- 		}
- 	}
- 
-+	/*
-+	 * During subsystem restart, when coredump is enabled, region is mapped but
-+	 * not unmapped there, NULL check to reuse the mapping if its already mapped.
-+	 */
-+	if (!pas->mem_region) {
-+		pas->mem_region = ioremap_wc(pas->mem_phys, pas->mem_size);
-+		if (!pas->mem_region) {
-+			dev_err(pas->dev, "unable to map memory region: %pa+%zx\n",
-+				&pas->mem_phys, pas->mem_size);
-+			goto release_pas_metadata;
-+		}
-+	}
-+
- 	ret = qcom_mdt_pas_load(pas->pas_ctx, pas->firmware, rproc->firmware,
- 				pas->mem_region, &pas->mem_reloc);
-+	iounmap(pas->mem_region);
-+	pas->mem_region = NULL;
- 	if (ret)
- 		goto release_pas_metadata;
- 
-@@ -447,6 +478,13 @@ static void *qcom_pas_da_to_va(struct rproc *rproc, u64 da, size_t len, bool *is
- 	if (is_iomem)
- 		*is_iomem = true;
- 
-+	pas->mem_region = ioremap_wc(pas->mem_phys, pas->mem_size);
-+	if (!pas->mem_region) {
-+		dev_err(pas->dev, "unable to map memory region: %pa+%zx\n",
-+			&pas->mem_phys, pas->mem_size);
-+		return NULL;
-+	}
-+
- 	return pas->mem_region + offset;
- }
- 
-@@ -637,11 +675,6 @@ static int qcom_pas_alloc_memory_region(struct qcom_pas *pas)
- 
- 	pas->mem_phys = pas->mem_reloc = res.start;
- 	pas->mem_size = resource_size(&res);
--	pas->mem_region = devm_ioremap_resource_wc(pas->dev, &res);
--	if (IS_ERR(pas->mem_region)) {
--		dev_err(pas->dev, "unable to map memory region: %pR\n", &res);
--		return PTR_ERR(pas->mem_region);
--	}
- 
- 	pas->pas_ctx = devm_qcom_scm_pas_context_alloc(pas->dev, pas->pas_id,
- 						       pas->mem_phys, pas->mem_size);
-@@ -660,11 +693,6 @@ static int qcom_pas_alloc_memory_region(struct qcom_pas *pas)
- 
- 	pas->dtb_mem_phys = pas->dtb_mem_reloc = res.start;
- 	pas->dtb_mem_size = resource_size(&res);
--	pas->dtb_mem_region = devm_ioremap_resource_wc(pas->dev, &res);
--	if (IS_ERR(pas->dtb_mem_region)) {
--		dev_err(pas->dev, "unable to map dtb memory region: %pR\n", &res);
--		return PTR_ERR(pas->dtb_mem_region);
--	}
- 
- 	pas->dtb_pas_ctx = devm_qcom_scm_pas_context_alloc(pas->dev, pas->dtb_pas_id,
- 							   pas->dtb_mem_phys,
+ drivers/misc/pci_endpoint_test.c         |  20 +++++
+ drivers/pci/controller/dwc/pcie-qcom.c   | 143 ++++++++++++++++++++++++++++++-
+ drivers/pci/controller/pci-host-common.c |  35 ++++++++
+ drivers/pci/controller/pci-host-common.h |   1 +
+ drivers/pci/pci.c                        |  21 +++++
+ drivers/pci/pcie/err.c                   |   6 +-
+ include/linux/pci.h                      |   1 +
+ 7 files changed, 221 insertions(+), 6 deletions(-)
+---
+base-commit: 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f
+change-id: 20250715-pci-port-reset-4d9519570123
+
+Best regards,
 -- 
-2.50.1
+Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+
 
 
