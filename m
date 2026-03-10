@@ -1,176 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-96746-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96747-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SNFaGOZdsGloigIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96746-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 19:07:34 +0100
+	id KJIHGw96sGnLjgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96747-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 21:07:43 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19C0425626F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 19:07:34 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7A1F2575D6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 21:07:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 0032C30CFAF0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 18:02:19 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 015ED31CF167
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 20:06:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34E5A3D171A;
-	Tue, 10 Mar 2026 18:02:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 376133E9280;
+	Tue, 10 Mar 2026 20:06:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V0FUhHBI"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A81T6Fu9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1060D3C9EDC;
-	Tue, 10 Mar 2026 18:02:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773165735; cv=none; b=nBXqJu9jcK5I5NMg6mXtWdUoPHnWU4AlfdYmP7gBFzNeqM/Nx4nVUZsZAiyrNtqRBi3HXpFYjOiYU3D7iZCMh6lLqOi/LlUHXXT1jQ0fMGzuEX1WSREGXgxGnfLhilP3yGq0dA7IW/M+L60xxQXZuPlAEzAxj1CtfvDAFK2ekoU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773165735; c=relaxed/simple;
-	bh=reQ/kmi8Sjb4oidTs+HBvwFOv2hwV16eAYsgx9QAHCA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=S355o9cv2O1I4BAbSd+EAOwz8e1a+CUsCxxXnT6uC2MlUOdk2sMiuKJKd+gq0FbG5WWKCDtU0OAfTCAZ/VXXuHKpa5kGf34LVmapsHfAAVL9VGVILOx8+nakVz8xl0A1eAjaMSlofCbeLrtYsUtGwz9pvP/8uXT+KJLJDCP0RXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V0FUhHBI; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1999EC19423;
-	Tue, 10 Mar 2026 18:02:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773165734;
-	bh=reQ/kmi8Sjb4oidTs+HBvwFOv2hwV16eAYsgx9QAHCA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=V0FUhHBIOE8xyfL7IJqPyDD5A6zRW1WI7QAp0NAB4zPoWIL5fi4TInx+tpkSKL2nZ
-	 lK/Uf0dExjHRhK2ot7tbkm+DHNEIWhHrao4crZCXJbURaWI8e4008x6hfQBeGF+9t+
-	 FoYZiIklAbw0F6MWvG9F/DXpxzAaYIj86NU1EMk1IqWDpmkk4wCkq1H3fq93xeLf+0
-	 /LkbEoUtuT+R34daM/sAHqPDqLeWTntpVpBGUPradpdxsw42syoasvXIVc5yBvlo1Q
-	 D2lReF7N4Xzo6JfhWrEzveyS9u6qvcjwz/KACelzv1PEQWOM06uzzP/yemEu6dpflD
-	 iFrEXL2Zy/i2w==
-Date: Tue, 10 Mar 2026 18:02:08 +0000
-From: Conor Dooley <conor@kernel.org>
-To: Luca Weiss <luca.weiss@fairphone.com>
-Cc: "David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Marcel Holtmann <marcel@holtmann.org>,
-	Johan Hedberg <johan.hedberg@gmail.com>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-	netdev@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: sm7225-fairphone-fp4: Add
- Bluetooth
-Message-ID: <20260310-maritime-silly-05e7b7e03aa6@spud>
-References: <20230421-fp4-bluetooth-v2-0-3de840d5483e@fairphone.com>
- <20230421-fp4-bluetooth-v2-4-3de840d5483e@fairphone.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 815FA3E2759
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2026 20:05:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.46
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773173162; cv=pass; b=V6ZUkjqXznxjl5x7DSJ8pBbOSfmprKzd63bgdWn/tU5HMnr968msEIfyP42MbwuYIjvufXUqcuv+C5nFSWQD/3sqitVfVY/iB9HmsKsThYINLZXBNLuhsbXTkPf0m1MKKZXf7uC8rAD2ho45NGdDzNFvBRXB+ubE3hgSQvtVoBk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773173162; c=relaxed/simple;
+	bh=yezyjNt08EO4rLNbf8RM2RzmwHaocfDMLvlwLMlLuy0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qulncNh5vz1pI5V9YZo6NXDAIXNaERhvCVjUE09BL0WqzsATbeJdqa9N2MKe6Qlp8P/eF9ZDKbg/87fnKOaqUyxZmiUADPgUWvlLP2Pmj7mPgwtzCS1dhzOkMX/jbgBsEhDI+aAeOgg5tJW4qvgiq9ayizQ3XDeKHd7dPATwGv4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A81T6Fu9; arc=pass smtp.client-ip=209.85.167.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-59e4989dacdso7824276e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2026 13:05:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773173158; cv=none;
+        d=google.com; s=arc-20240605;
+        b=VVIetvyhFxexeN56aDux30P+MiV6AFkBgVCvhT7CyOOHkTmYz0F/uJtQFqd34QsfPd
+         2wP4aYUWevypbWVDA6AkirGzUSfLQ8VfkxjLfCkJY5E1G9BExRFoUq/VRSIDxNlPs8kG
+         MRuMJz0LfhJZdr2kKZYhQKZLSp4r+FYJu+f0Gwf/Tkfh3DC7UcsIFLlJdCmFDxjd6m/d
+         O/vcj0K12NQYYUij8rmMK6ViLC41X1LHwdRSKn+1ZZuv1hh0XNhDCKbl2+/nBLb99mGM
+         A14xEAyCYLZ/Tlz7Su2befx0pXnHquGVZeeCRByc6cm2IddiEXwB0JjZHPz7TRVaHswo
+         rBmA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=pQIXMNQ0k52fsARofvqfUmvTDMoK9RXOBJmQNC6ddnQ=;
+        fh=GayqitBSaVI7FFhaURRae9FVwnU5Ev3UrPk8T1HjGME=;
+        b=bAY3ZFWn7ih/hFFz15saL2IQxWfKkJEpqSUaGWqODRaNagcuwlY5JLsaeTdAui0kgF
+         RS0dfuLfJRgUNdt7b3ULSu5ESWrKYhfRLYcB2dWBgm8E7Dfvn2ZmWnVjiWdoWa0b+POB
+         PGucXUYLCC4GqhHasBLno7oAHOOowBpBHZzgU8/VbY7d9FXkt1035TaGOf8ln2CCCa/h
+         OjC1E6ctwzz8kyVINJmkFf3OI34eLp3PvN2Vy8sa5mADQ/l+o2VO1gJWR4ffgiNGskcc
+         LdS1pREWXCQby8s/JrmLySFMhHMM/SSz03j2D4nKVsrklEetI/+7VEX9Bq/DQqXkKO3Y
+         5sXA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773173158; x=1773777958; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pQIXMNQ0k52fsARofvqfUmvTDMoK9RXOBJmQNC6ddnQ=;
+        b=A81T6Fu90tE2d7aINcwxIooqEeRxzxvPyJVvnk9Q8SsLzCkYaLcmyYwSGJqjvCpH3k
+         IzlFaFD0L1hYTS5v+TWuN22QrekBBncbbCGMeu7pZ606+DVIzo1pY6krCVcC0NpqZqa+
+         97yhb+9/8y8R4cJMC0el94KG9vnkwVSi+kV4bObO00WsF8CSIGw3FSmHmkovk1T2GbZF
+         3G9XB99nMUbAaKjdQ32J38Nop13AxC3utDRFM3j2jiR97c0OxeW/Bh0fmLLyj+Scnq95
+         C1CL3Owtt4cKJNQ1X6PLZkUchARdKtc1TCXVsUKRjnxNB6z9k8dvzRdCBYdWE0JLaeEv
+         TabA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773173158; x=1773777958;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=pQIXMNQ0k52fsARofvqfUmvTDMoK9RXOBJmQNC6ddnQ=;
+        b=WjhDKvzj2JZSX8h5CDX+g18VfpWipyiFkh8KhAc84ev3OWL6woMj5cTt8FDDqbiqnX
+         a6I9RrWyg1VQ7TDYs/mB4oFqorwGI+qW8SOjnk0rdZlgbDaUohJH66sqblbPsd+VVbrp
+         Id01+Lmhhzg/XPAq4Wi0quEjEzamUMJpWgQkH3g3imSXkfiD+cNU2Uzs81vRFLmizePi
+         o+RrXKSwx/Xy0sc+AR3aW8qyHh1cV0pr/u1kcVJsAW6ONJkvrkYW6c7X0Q4txyJCobe+
+         7iX01D9bseJMT0CCLQtzJ/8T3u82f1vy9eYipK5h7l+UACGpZKHpSWiBjRLYbOyglE9Y
+         ZBmA==
+X-Forwarded-Encrypted: i=1; AJvYcCUqp4VIf1xl7T6xijNziNFHn9XcTbMNp7GqlNqJA+N30XVGnYGqbOaIJfJv4xeQdT92cDzthkJiCCyUWK25@vger.kernel.org
+X-Gm-Message-State: AOJu0YzoZK92hta1vkBhwf1ER8JWsytYeQ10ti8/0sKJI9l841EElBg/
+	ie4C/EdysxMn8BWMkP6dWYiI23Jk9vs+aot8bVPULFbENqUZWatwOsK+Vs7nQxlYgk0n43nxTdK
+	cuyhE31BHdmrnxI53NX0N3CQPYmdIPWs=
+X-Gm-Gg: ATEYQzyY0vlD3XGuX2Z0dQ5OhxE7stycqEl+olYTQW7fDIGTS0gX1DUfLlBt7ePH8uT
+	BkGf2mNVtEB/Oh97GLLvTdiP33bUEqaK2v/gjk34aTmTW5IHSw7X5LeYh90yn4VA33RouGRtS1L
+	pazt6nJT9TkV3QNxZJH499nEht5gAxB76/DWMjKpSQiE3700mWF5Q7Gq/u8cIqhh9OTUByK8YWU
+	5yB1H7tYOsBPoSrHIDt5+R3Lt+gCIoAzs0079V9bxTXm9/POeTjDXrspER14qqO9exNlrynTIKa
+	+YNekoXHVHT3fONJgDOqWtXarcgEbYgYzjcOT7COV6QOQPF2Zos0gLJnQlueA2Ef6R9P
+X-Received: by 2002:a05:6512:608:10b0:5a1:3f3f:a299 with SMTP id
+ 2adb3069b0e04-5a13f3fa3a2mr3200287e87.45.1773173157485; Tue, 10 Mar 2026
+ 13:05:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="8vcYeGljaN9cb6WW"
-Content-Disposition: inline
-In-Reply-To: <20230421-fp4-bluetooth-v2-4-3de840d5483e@fairphone.com>
-X-Rspamd-Queue-Id: 19C0425626F
+References: <20260219-sm8550-ddr-bw-scaling-v3-0-75c19152e921@gmail.com>
+In-Reply-To: <20260219-sm8550-ddr-bw-scaling-v3-0-75c19152e921@gmail.com>
+From: Aaron Kling <webgeek1234@gmail.com>
+Date: Tue, 10 Mar 2026 15:05:44 -0500
+X-Gm-Features: AaiRm53YqtD7m1k1WfcVh97y8PC5B6LMFnLkyA1AYIHdfdl0-cKTgK4_AfI5oyY
+Message-ID: <CALHNRZ9R1XaYWeTneZmyAvGY-s2-rbSC_=bSV-nC8_zU+bGLqA@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] arm64: qcom: sm8550: add DDR, LLCC & L3 CPU
+ bandwidth scaling
+To: webgeek1234@gmail.com
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Georgi Djakov <djakov@kernel.org>, Sibi Sankar <sibi.sankar@oss.qualcomm.com>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: C7A1F2575D6
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-2.26 / 15.00];
-	SIGNED_PGP(-2.00)[];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	MIME_GOOD(-0.20)[multipart/signed,text/plain];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
+	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-96746-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-96747-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+,1:+,2:~];
+	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_TO(0.00)[gmail.com];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[21];
-	FREEMAIL_CC(0.00)[davemloft.net,google.com,kernel.org,redhat.com,linaro.org,holtmann.org,gmail.com,lists.sr.ht,vger.kernel.org];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[conor@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FROM_NEQ_ENVFROM(0.00)[webgeek1234@gmail.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
+On Thu, Feb 19, 2026 at 10:07=E2=80=AFPM Aaron Kling via B4 Relay
+<devnull+webgeek1234.gmail.com@kernel.org> wrote:
+>
+> Add the OSM L3 controller node then add the necessary interconnect
+> properties with the appropriate OPP table for each CPU cluster to
+> allow the DDR, LLCC & L3 CPU bandwidth to scale along the CPU
+> cluster operating point.
+>
+> Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
+> ---
+> Changes in v3:
+> - Squash the last two patches
+> - Link to v2: https://lore.kernel.org/r/20260218-sm8550-ddr-bw-scaling-v2=
+-0-43a2b6d47e70@gmail.com
+>
+> Changes in v2:
+> - Squash first two patches
+> - Update opp tables in last patch to match how the downstream driver
+>   parses those tables
+> - Link to v1: https://lore.kernel.org/r/20260207-sm8550-ddr-bw-scaling-v1=
+-0-d96c3f39ac4b@gmail.com
+>
+> ---
+> Aaron Kling (2):
+>       dt-bindings: interconnect: OSM L3: Document sm8550 OSM L3 compatibl=
+e
+>       arm64: dts: qcom: sm8550: add cpu OPP table with DDR, LLCC & L3 ban=
+dwidths
+>
+>  .../bindings/interconnect/qcom,osm-l3.yaml         |   1 +
+>  arch/arm64/boot/dts/qcom/sm8550.dtsi               | 367 +++++++++++++++=
+++++++
+>  2 files changed, 368 insertions(+)
+> ---
+> base-commit: 9845cf73f7db6094c0d8419d6adb848028f4a921
+> change-id: 20260207-sm8550-ddr-bw-scaling-b1524827f207
+>
+> Best regards,
+> --
+> Aaron Kling <webgeek1234@gmail.com>
 
---8vcYeGljaN9cb6WW
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+What is the normal merge sequence and window for linux-arm-msm? I see
+several things that have been picked up for -next recently, but none
+of my sm8550 patches that have been reviewed / approved have been
+picked up yet.
 
-On Fri, May 12, 2023 at 03:58:26PM +0200, Luca Weiss wrote:
-
-> +&qup_uart1_cts {
-> +	/*
-> +	 * Configure a bias-bus-hold on CTS to lower power
-> +	 * usage when Bluetooth is turned off. Bus hold will
-> +	 * maintain a low power state regardless of whether
-> +	 * the Bluetooth module drives the pin in either
-> +	 * direction or leaves the pin fully unpowered.
-> +	 */
-> +	bias-bus-hold;
-> +};
-> +
-> +&qup_uart1_rts {
-> +	/* We'll drive RTS, so no pull */
-> +	drive-strength = <2>;
-> +	bias-disable;
-> +};
-> +
-> +&qup_uart1_rx {
-> +	/*
-> +	 * Configure a pull-up on RX. This is needed to avoid
-> +	 * garbage data when the TX pin of the Bluetooth module is
-> +	 * in tri-state (module powered off or not driving the
-> +	 * signal yet).
-> +	 */
-> +	bias-pull-up;
-> +};
-> +
-> +&qup_uart1_tx {
-> +	/* We'll drive TX, so no pull */
-> +	drive-strength = <2>;
-> +	bias-disable;
-> +};
-
-I recently made some changes to pincfg-node.yaml to detect if there's
-conflicting properties used, and these got detected. Should these not
-do what has been done on the msm8998-xiaomi-sagit, and delete the
-inherited bias-foo from the dtsi?
-&blsp1_i2c5_sleep {
-	/delete-property/ bias-pull-up;
-	bias-disable;
-};
-
---8vcYeGljaN9cb6WW
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCabBcoAAKCRB4tDGHoIJi
-0rVMAQDnCWfS9SVgN5I9oCZV8sUIm4jsdwk8Z93loonuabpbDAD/dsTwIxMkuvPV
-hcf46FGtpSe1pKAkNjqG/Nqkn+5wBw0=
-=qt9u
------END PGP SIGNATURE-----
-
---8vcYeGljaN9cb6WW--
+Sincerely,
+Aaron
 
