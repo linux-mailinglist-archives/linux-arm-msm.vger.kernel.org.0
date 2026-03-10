@@ -1,91 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-96431-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96434-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cAvjGdGFr2lvaAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96431-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 03:45:37 +0100
+	id +Dm9KVCGr2lvaAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96434-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 03:47:44 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF2B624450A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 03:45:36 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 01A952445DF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 03:47:43 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 8F95F303FF19
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 02:45:16 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C442930CEA8C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 02:46:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 002541386C9;
-	Tue, 10 Mar 2026 02:45:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71EEB38BF91;
+	Tue, 10 Mar 2026 02:46:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OYQ4GzGr"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h64B7dvl"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D181D3A9D89
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2026 02:45:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D4E332B9A2;
+	Tue, 10 Mar 2026 02:46:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773110715; cv=none; b=oW3DpJQ4pkSnF/uDubhiWvGZPPWn/I2AhXDkQpfM09mfCHimU/y2WfQ1wd8cU+7p1NKQVHStOndV2+b5mpcPBVPlQo4VN9d63acHHKSymtDFkKPd5qJueYkIo7x5SihAgZjHku+6VFr00e3xwJDgVr21JAEfGFlScYr8RdMLWPE=
+	t=1773110773; cv=none; b=K8kHsuV8j1hF+I6mi6eXsDi2RxkXTEkbgsI1TS1V7/dHBmUMmrHJOW/9BlyV6hgaelBvmLbE+4LAvfK5WWkhQ7gDLsz+C3p/GahypxS5DxQu1NBy1GLom/KoANNAxGskjNdaqzvhLmwqZ1wz4XxuYLlJZrzUoDDHqn7QZ6uOZyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773110715; c=relaxed/simple;
-	bh=AiuSbGc4gyF+r0NsVvYBegnqTPdAIt4V0L/szs51RLs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jF7XuggBzxCWcW6RnyJgRa7MEGFk1moZMV/w+jpQUuGAAIfODUwiXABCRpM4BYvPGS4iwz/KaDocqpEHK+lIzeBiIccFXmq4durReC2S1qdkWGCrR0bDWgcx4Jb7tLau32g67jXIQlZl9hWCi5HbwkX3meV85q8DE213F6HQqaA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OYQ4GzGr; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3AC2C2BCB0
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2026 02:45:15 +0000 (UTC)
+	s=arc-20240116; t=1773110773; c=relaxed/simple;
+	bh=8ZSQ9NsNIH3PdEI8a25pi0HPrK42YnV+4hx7xxrVNRA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=QSs1K0xb4EFmiryTdc6ZvCvucXQQ1mGgPjs9428RKqNIFn1hk6Rj8QjchG74vY9eK7yVYHZBE4vLoNbJkS1w7D42NHcT3iGGHuPzT74DzvRLHKtFiwPGgEhRSbghojGKsIxlRpHtsx+jZd7DTVpChT1QxPbjUQbmr7Z0UQFvxDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h64B7dvl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D088BC4CEF7;
+	Tue, 10 Mar 2026 02:46:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773110715;
-	bh=AiuSbGc4gyF+r0NsVvYBegnqTPdAIt4V0L/szs51RLs=;
-	h=References:In-Reply-To:Reply-To:From:Date:Subject:To:Cc:From;
-	b=OYQ4GzGrjp8DJFWsl2mM6ocePlwxv12ixt2gG1IoJH8dIMcy2K9jYlYp0xrXUr1hj
-	 vdJ1Hmp0SjmxQ+VCPPiqJlGt8YHvrtJ6IjbgXtVQ4LMZbCg9LwXbL8lu4+PBO7sjsL
-	 4s38j0P9Pc/iUqjSuchyjIAcNbjA/RLX+hPcWwe8rEaxzhE3zj7CNgU19ws9MZxPyz
-	 jVvlhgVmpbBARm+YBqB5I7YjjmX/kwY2NwSC8hyTJgVaSFIJVMQTWw9r0B2mnIUaZ+
-	 dgdQe+dNt9cNuRA9+q+H8NVNiXnbOpLUOvVf27C6ZPPIJpRz4lQ5Rxab9sF8pu86xC
-	 ckfjVXnxFH4qg==
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-38a4118c4f7so43022851fa.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2026 19:45:15 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCUsKiofJrq4o8e4JpCM/kNLPzVxSimmBf46Hhh9F5aBemPcR1SOOWLYTEAlLtn5M6nnh+kJDihKy2anQbIX@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyhu4jQ6+GjMI07elgP4zHvqC+l5GxZQkiP3cXSSNQz15IVmn0c
-	E64kUJyUXr8waClUIVuXfNcBu35tGeK9mHEXo+Te8jQFSeyS03l4x76RxK+kQAbHQqqYgTuKiR8
-	q0okIEfzmqrVRiQ2BtP1ee69+QdD772A=
-X-Received: by 2002:a05:651c:1104:b0:385:c21f:37e1 with SMTP id
- 38308e7fff4ca-38a40b6a2d2mr40186201fa.15.1773110714064; Mon, 09 Mar 2026
- 19:45:14 -0700 (PDT)
+	s=k20201202; t=1773110773;
+	bh=8ZSQ9NsNIH3PdEI8a25pi0HPrK42YnV+4hx7xxrVNRA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=h64B7dvlNhd68KVGrvrpkCVLPEi+OBR2CqHCuqb54Cxb1fW3XDLIF07fRroeBEH1i
+	 GJSbwt+B9RJnWuawQ2M3mpxgZBqZWolxBFbXTgYTBw47rbNJG7fFOCHCdd4uAsbGAb
+	 CYpkOnm7jkMFcr9ciaQcRMRApqtaWm/g1pTiG0qZW0tZOa5XleE8tnH5n5mxEh2BM8
+	 ePIMl24N3Fdrb6RZt412R5df4FY1MN88SYCZHkjhutuZc/fDFK2Bnm3MH/C8q4Hl6z
+	 /gsIxltGIFYrL5YEGf8lefNiyzfQSUacuBSYyv2GAehJqWGfIh4y3Oot6XO5Yuibv0
+	 FAzq3Nsh1xmWg==
+From: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Gabriel Gonzales <semfault@disroot.org>,
+	Kees Cook <kees@kernel.org>,
+	Tony Luck <tony.luck@intel.com>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Biswapriyo Nath <nathbappai@gmail.com>,
+	=?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-hardening@vger.kernel.org,
+	phone-devel@vger.kernel.org,
+	~postmarketos/upstreaming@lists.sr.ht,
+	linux@mainlining.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: Re: [PATCH v3 0/7] Initial Redmi Note 8T support and more
+Date: Mon,  9 Mar 2026 21:45:24 -0500
+Message-ID: <177311073318.23763.5505178540690402680.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260126-xiaomi-willow-v3-0-aad7b106c311@mainlining.org>
+References: <20260126-xiaomi-willow-v3-0-aad7b106c311@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260309190842.927634-1-vladimir.oltean@nxp.com> <20260309190842.927634-18-vladimir.oltean@nxp.com>
-In-Reply-To: <20260309190842.927634-18-vladimir.oltean@nxp.com>
-Reply-To: wens@kernel.org
-From: Chen-Yu Tsai <wens@kernel.org>
-Date: Tue, 10 Mar 2026 10:45:01 +0800
-X-Gmail-Original-Message-ID: <CAGb2v65surpnqrmv4tbH4TSrx6SaTpdbsQtCsNqwse5xwdb8fA@mail.gmail.com>
-X-Gm-Features: AaiRm535EaFxYtCAjq5FIkHiBmgOxc7_e434rO98DZfg5NrM7RTttw3IOCzqW1Y
-Message-ID: <CAGb2v65surpnqrmv4tbH4TSrx6SaTpdbsQtCsNqwse5xwdb8fA@mail.gmail.com>
-Subject: Re: [PATCH v3 phy-next 17/24] media: sunxi: a83-mips-csi2: include
- PHY provider header
-To: Vladimir Oltean <vladimir.oltean@nxp.com>
-Cc: linux-phy@lists.infradead.org, Vinod Koul <vkoul@kernel.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-can@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, linux-ide@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
-	linux-pci@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, linux-rockchip@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org, linux-scsi@vger.kernel.org, 
-	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org, 
-	linux-usb@vger.kernel.org, netdev@vger.kernel.org, spacemit@lists.linux.dev, 
-	UNGLinuxDriver@microchip.com, Mauro Carvalho Chehab <mchehab@kernel.org>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: EF2B624450A
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Queue-Id: 01A952445DF
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
@@ -96,81 +89,63 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[lists.infradead.org,kernel.org,linaro.org,lists.freedesktop.org,vger.kernel.org,lists.linux.dev,microchip.com,gmail.com,sholland.org];
-	FROM_HAS_DN(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	RCPT_COUNT_TWELVE(0.00)[28];
-	TAGGED_FROM(0.00)[bounces-96431-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-96434-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_TO(0.00)[kernel.org,disroot.org,intel.com,igalia.com,gmail.com,mainlining.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	REPLYTO_ADDR_EQ_FROM(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[wens@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	NEURAL_HAM(-0.00)[-0.999];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	HAS_REPLYTO(0.00)[wens@kernel.org]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-On Tue, Mar 10, 2026 at 3:10=E2=80=AFAM Vladimir Oltean <vladimir.oltean@nx=
-p.com> wrote:
->
-> The introduction commit 576d196c522b ("media: sunxi: Add support for the
-> A83T MIPI CSI-2 controller") says:
->
->     This implementation splits the protocol and D-PHY registers and
->     uses the PHY framework internally. The D-PHY is not registered as a
->     standalone PHY driver since it cannot be used with any other
->     controller.
->
-> However, this does not matter, and is not the only instance of tight PHY
-> provider <-> consumer pairing. According to Vinod Koul, having PHY
-> provider drivers outside of drivers/phy/ is discouraged, although it
-> would be difficult for me to address a proper movement here.
->
-> So just include the private provider API header from drivers/phy/ and
-> leave a FIXME in place.
->
-> Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-Acked-by: Chen-Yu Tsai <wens@kernel.org>
+On Mon, 26 Jan 2026 17:34:50 +0100, Barnabás Czémán wrote:
+> Redmi Note 8 and 8T are sibling devices the only difference
+> is Redmi Note 8T have NFC.
+> This patch series is commonizing Redmi Note 8 devicetree
+> for a base for both devices.
+> 
+> The patch series also contains some fixes for Redmi Note 8:
+> - Fix reserved memory ranges, they were wrongly defined.
+> - Remove board-id, board-id is not neccessary for the bootloader.
+> - Fix reserved-gpio-ranges the reserved ranges was wrongly
+> defined what caused the device crash on the boot.
+> - Remove unnecessary usb-extcon, gpio102 is related to DisplayPort
+> what is not supported by these devices.
+> - Use memory-region property for framebuffer.
+> 
+> [...]
 
-> ---
-> Cc: Mauro Carvalho Chehab <mchehab@kernel.org>
-> Cc: Chen-Yu Tsai <wens@kernel.org>
-> Cc: Jernej Skrabec <jernej.skrabec@gmail.com>
-> Cc: Samuel Holland <samuel@sholland.org>
->
-> v1->v3: none
-> ---
->  .../media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_dphy.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t=
-_dphy.c b/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_dphy=
-.c
-> index 24bbcc85013d..1143feeb4fcb 100644
-> --- a/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_dphy.c
-> +++ b/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_dphy.c
-> @@ -4,9 +4,9 @@
->   * Author: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
->   */
->
-> -#include <linux/phy/phy.h>
->  #include <linux/regmap.h>
->
-> +#include "../../../../phy/phy-provider.h" /* FIXME */
->  #include "sun8i_a83t_dphy.h"
->  #include "sun8i_a83t_mipi_csi2.h"
->
-> --
-> 2.43.0
->
+Applied, thanks!
+
+[1/7] arm64: dts: qcom: sm6125-xiaomi-ginkgo: Remove board-id
+      commit: 535e5741bc9acef5ea2561aa300f28370599e7e2
+[2/7] arm64: dts: qcom: sm6125-xiaomi-ginkgo: Correct reserved memory ranges
+      commit: 242801cc24e865cb525ef7d826ce6ebeffcad606
+[3/7] arm64: dts: qcom: sm6125-xiaomi-ginkgo: Set memory-region for framebuffer
+      commit: f3d3a5924812eae3aedb431632c8a3b4c3f6bae1
+[4/7] arm64: dts: qcom: sm6125-xiaomi-ginkgo: Remove extcon
+      commit: 79664600fd3ed3972ad9321e13d1f80267730447
+[5/7] arm64: dts: qcom: sm6125-xiaomi-ginkgo: Fix reserved gpio ranges
+      commit: e8669e010991154bedadd1cd67700544e0362e99
+[6/7] dt-bindings: arm: qcom: Add Xiaomi Redmi Note 8T
+      commit: 32ace20ca1b65fcc2680b94cc8f00a80758eb76d
+[7/7] arm64: dts: qcom: Add Redmi Note 8T
+      commit: 7bb7c90e0ac18565a45c02072356bf3dffb81bcb
+
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
 
