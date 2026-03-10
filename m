@@ -1,213 +1,218 @@
-Return-Path: <linux-arm-msm+bounces-96421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id gJVGJjNlr2koXAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 01:26:27 +0100
+	id iKg1NaVvr2m6YQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 02:11:01 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id F376924306B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 01:26:26 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3CDDA2435C9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 02:11:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 8962830BE1CA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 00:26:10 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E08EB3068EE4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 01:10:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0737921ABB9;
-	Tue, 10 Mar 2026 00:26:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F82E261B80;
+	Tue, 10 Mar 2026 01:10:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Goa2CZPU"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="dbD6HfYZ";
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b="KZXjQUJc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397C81FDA61
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2026 00:26:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B8C261B91
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2026 01:10:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773102367; cv=none; b=kH9FEkV/VMtFgsiPn7ac1aK6AEgMk27SCy3XZ3uF9SDYmGb8RRrUnu2Nqsy76gt2T/fI6DoSj4BDarL8YUxv9v3Prs882uOBx/aTXrgC+KpfWyqM8WVuwHc1/9Nk9OZPeM43IGsaoLg9NjQWaA78EUOkrtgtJ3T1nhB+dym5WSA=
+	t=1773105051; cv=none; b=qy/VB+bFGdhtxkCAi5GfWpXwKhriNvTAhIli4M8HraDyvyAPWs+q+KZ+QBwssVPOfYLDuhjncEO0+hvof2aW42SdwY4XXoy/Wb4T85GaJ7mP4x6E5jUhSxNQc62lvvvn5gtY0P8vE2gTD7ZoU/y7qItIIKm5qaElLE48YH//eTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773102367; c=relaxed/simple;
-	bh=X1qzc/nIJzA160wcE7pmFrjlw+6pYusD0HI28tV+tqw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DRWIqkp/kD73lq5EVRB2bD3PfUgf5KtDM2XIezl5yjlpmJmnqtXtlH5IlQuiN/UohIbRoqBI03RsbC+zKtxvSiOxbBjXim3cKjCdBOHx8TXZjNdcsXGIdfwPY6/IEk+Bm0BAPf2GR7cwWQabQ6BOjbfS06eiQ5ILwwsEsQ5OtW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Goa2CZPU; arc=none smtp.client-ip=209.85.219.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-89a06bc2f1bso141101566d6.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2026 17:26:06 -0700 (PDT)
+	s=arc-20240116; t=1773105051; c=relaxed/simple;
+	bh=KTWcRe1uEdBcdV3dSWnFRmmQqhKcuVtF4VSklt2P5Ak=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=ekwt8hMzzTJn5uuKY+MyvqVDRg8nRr7DIdkNwj3Uqis/gD+jNvwq8uUxDaqeTcpcx9DeeLUo8LyQTdjCeAh49r+s+ZbBNUiDEhQPevRxQh7SZYoDkjl9YvHgl216EB+p8inks9jj26M1CKyXHJz+/7zUVT9JkpZLfUToQsJU1wQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=dbD6HfYZ; dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b=KZXjQUJc; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1773105049;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=KTWcRe1uEdBcdV3dSWnFRmmQqhKcuVtF4VSklt2P5Ak=;
+	b=dbD6HfYZofQSkCjS5/sPHuH7qID8izBljRHgUoXkIRLTM9ozInJNInbRTdi+jXqKTR/FqO
+	f6FtQfLGpsEX+k+FdD58u4uip101yQzCnhH9fQ3aifBC9+2DzV/6NxvDeDfv9PEvoSxceZ
+	b3Y1iInSfF5lvpx8O5XT9xEJ7Nj5UzU=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-41-2tLyAEH_PQmg7l0NW3_K8g-1; Mon, 09 Mar 2026 21:10:47 -0400
+X-MC-Unique: 2tLyAEH_PQmg7l0NW3_K8g-1
+X-Mimecast-MFC-AGG-ID: 2tLyAEH_PQmg7l0NW3_K8g_1773105047
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-89463017976so858627116d6.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Mar 2026 18:10:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773102365; x=1773707165; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5G48QN/VZ+uF+MLVtrv0+QLtpT3vFjLAIc/m9hMjl30=;
-        b=Goa2CZPUduspLOd1iOWNm0mm+TsdtgzMvRBoP1RVcJJhHdndnDHay4aJRG8ImjWjdU
-         e9YdsQqVd4xloZYaSdBQYqGo5UmxUwAb4jjVYise69b8bhvBodThWCHP4b5IY+U8dm4e
-         7Eg8hmEjb95gjxOaB0iWVZYL3oivflwkX/qkicQdLFU2Nn4WEA6uyHOLrPg4RyAa2fwn
-         srrWVYT8+rcOY8rM243lRx431KShrcfMm/kWVrNsoC4lMjQXg8rFBXqmKQDiU1MxEHOW
-         G7ov3zk7Ve5TOzUqtDCMwMhDTpkydj4XKwQuPd7eyVlyPaqyWB134Ctog623u4vwa77L
-         41Bw==
+        d=redhat.com; s=google; t=1773105047; x=1773709847; darn=vger.kernel.org;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=KTWcRe1uEdBcdV3dSWnFRmmQqhKcuVtF4VSklt2P5Ak=;
+        b=KZXjQUJcjgAHJDetunx4foLlQCvQaZjkAubtSBZ/Xb6KdQx4sq/PHRRIHywxiIxORW
+         kmi06fwVKuHqaA9W/mKKq5aDE298F0xRx1jBVAIOPtonDJqxxOCgiJNB13hldcEaVOrm
+         h56qVNjQ6gzSZlAZqnc7hysf2SqW/rIG9ndGme9t5ntz8eTwHOMTsKJvd1G+cRMZxpQK
+         xudYNP77IsqOvCdBjdxrCUTBLL9NJUgi+Ns7pPdt9d2j7rMjZHPdlFepp6WDlrDs3LK3
+         4E/ikrvQoHYUU7/kHmubyH7T4tCdzqSsudkcXCyM5dxFgrxQPcNqnM7bTe6y+tnArFn7
+         Ej/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773102365; x=1773707165;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=5G48QN/VZ+uF+MLVtrv0+QLtpT3vFjLAIc/m9hMjl30=;
-        b=rOslTFxRFi+GDbCNSzgUb1ifMilvkX8IS4wkdDWhpQbOzreewKwcRihK5oK2lsFhMN
-         ZFdHuoq/VzQV5TVJ/MinI22Chg1oeHtayzhWLT3Mb1cb429sfCdiv1oPepFjG8+gDDAO
-         1Lch3n6nu1UaJXN/gVe2bDI6yINWoVNasjp7th1CKt8LdQhQrGqGXKuwKHromR4oqQrc
-         ayob7I/pbMW2nC3fR5hVKvCL4TzoG8ZOBt7Kb/Uumhnz1jNarQhKCUAI6CF2sAczDtlU
-         XpW8jdgzr65Ac+iWnCABcDxn7vECfQGmQJcjnBxdawCiZUOgU/EPrXnCiMfoxoOw6Pfw
-         tLug==
-X-Forwarded-Encrypted: i=1; AJvYcCWyMFvTEVuoAiBasW7CKu5PwYZE1HJD83HuRj7G6m1d5lHb1e0naCxSaKFV77ac1zxeDKOhjxfcGGDI6VrZ@vger.kernel.org
-X-Gm-Message-State: AOJu0YzDicvIP6eZc1JptixMUo4dL5K1aWFOjqYgyvLzNJiMa7wUFdsa
-	q6hVvvkbG7M0Pw0Avxd6o4nWKczg1dQClULVj5WTBpVS+rdj7EmOwe8p
-X-Gm-Gg: ATEYQzym/Oh6uq7GE7ioTWXUnBm6oz7zxv/sZ190Le26ei/nDCnyjlHt2PXPfbCsvGd
-	eRBeH1fSrpk7j7lLeQONIESd99TiRJtwyTL0ZilNtIllbV/hmVztiaLQ+XA3aEhUiRKb6D/8D1K
-	XHDM+8iYmuQifz2iGen5nyb/xGeE3KGBT/pyj6MEy5C0/9k71bz/6J1/ony07fHix+IFL0XUZWX
-	oQlJcyL3QpyOiuIKnk6PBzU6jfvKUaNC03+BMs3e/wRatTynI/ulHemr0zuMacEWTp0gMhXe0gE
-	WiNgIpdniMP/TTrbGmORvFRU3OWIZxrg4zOgDyvOXZP1zrvZGigB5FS/zTQLNF3q0E8ANcwiSV9
-	vTxiowNK3wej+aW2QM7RhDLhSpbHIQ6Sgl4//P3t6SnNCO9CuROCXieUX7H7IhRIqzKRWpt0rBB
-	k6k8GVI3hsKOXdW2BicH7JlIKI+iwKN3dPRXJLutooMWpB3hJ10xbf2H0NMINsKTfqZ7UJQFlYN
-	Ta20IVC4519GmA=
-X-Received: by 2002:a05:6214:e4c:b0:897:255:d5c2 with SMTP id 6a1803df08f44-89a30a4d3cdmr196960136d6.26.1773102365255;
-        Mon, 09 Mar 2026 17:26:05 -0700 (PDT)
-Received: from localhost (bras-base-toroon21-grc-75-184-144-58-243.dsl.bell.ca. [184.144.58.243])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-89a57c48e3fsm8094586d6.51.2026.03.09.17.26.04
+        d=1e100.net; s=20230601; t=1773105047; x=1773709847;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KTWcRe1uEdBcdV3dSWnFRmmQqhKcuVtF4VSklt2P5Ak=;
+        b=RFpZo429UsGUnI1nOszBJKxZeoy5CN1EwWG+gS45U98sxCxJ1KAKK4otXF/apeC+Pg
+         DJtznbtVVe5w47PH2r3zcj64VanBw03VwiRUAO3oEtuYa41OlIqzZ+R4hCD2jJw/dTfz
+         RivIX7Ae5c1K2jvCv4RilllRQY2sLqSB1U8BycahAJEoYLDzGidaVd4RPhiu0JQpOqQ9
+         umlSTPsRdui26IfK+uZKSzXoYX9wvSQvgrUngzPKu0dgm1ddqfEbh9x9TwmlLHWAY9ES
+         /Rbm5V6tD9YDP5ghzm67hB1qplIj6dGrJg2DRKI4mDNk0+RIEhSoCt8UVveswqNbhpmR
+         bOLw==
+X-Gm-Message-State: AOJu0YzHvdc0N0C5mVcA+Dj7tVopviEWevfUI1uSC9YytjFsHEtkGUF2
+	aaDZp2JNnZ4RD2jvcFCvlmbWOEIB4SQv61n53jOmPmaPqlHNAyxhdfNPrVcsuIl3ubQOsqwhOnS
+	J+y9RxDTpq2lb7grT8QPWZkUwhnVaYHDHjFC9EYDL1GO36Nq1v6nfSYQNFzOEv+X99Fw=
+X-Gm-Gg: ATEYQzxEiIsOp4jihD1ocQbvpBnwvJ70X4Mf1ehZgS75uAnZfNk4p9N4rBNULq+Uy9r
+	L3k1KB8oRpnvyPM/IePoYsmfwgSRNrw7ZmbsLVGDf03QXhOOL77B1CcwqrR8mrV0BBVNwKefMw9
+	PGLaxkR8XBtj4zGbBspuR6nemRVCdfw8C3hctpTMz36SSZ+r3jGpHBbfIsFNzuEXTTR4ttW5xcU
+	mgmxKSApYAfSV2lDie9RJIVyWmH7YzLFJD+10HhunyTm7TVMRZHAL2zVHp/AKJ7XOcUBKu6RgAN
+	ncdKymqHdFnxaiePW8BaynoVaDeeycGP5k+DjkqGbdjJaKTae3O/tx2Y3ZGcJZ00mXxY3f2UEdu
+	hgaMhuiYTP8jcwv0IYoUFnJR2d6u/z4x+d+TE3aepEjpY8982bUFm8xo6xhCCJGIQ2dzsgrm7AT
+	Yr01jXLAwxeuDnCw==
+X-Received: by 2002:a05:6214:d8b:b0:89a:258:c1d1 with SMTP id 6a1803df08f44-89a30ad1c78mr197365076d6.42.1773105047101;
+        Mon, 09 Mar 2026 18:10:47 -0700 (PDT)
+X-Received: by 2002:a05:6214:d8b:b0:89a:258:c1d1 with SMTP id 6a1803df08f44-89a30ad1c78mr197364236d6.42.1773105046575;
+        Mon, 09 Mar 2026 18:10:46 -0700 (PDT)
+Received: from thinkpad-p1.localdomain (pool-174-112-193-187.cpe.net.cable.rogers.com. [174.112.193.187])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-89a57a18252sm10681656d6.10.2026.03.09.18.10.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Mar 2026 17:26:04 -0700 (PDT)
-From: Richard Acayan <mailingradian@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Jessica Zhang <jesszhan0024@gmail.com>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	dri-devel@lists.freedesktop.org
-Cc: Yifei Zhan <yifei@zhan.science>,
-	Richard Acayan <mailingradian@gmail.com>
-Subject: [PATCH v3 5/5] arm64: dts: qcom: add support for pixel 3a xl with the tianma panel
-Date: Mon,  9 Mar 2026 20:26:06 -0400
-Message-ID: <20260310002606.16413-6-mailingradian@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260310002606.16413-1-mailingradian@gmail.com>
-References: <20260310002606.16413-1-mailingradian@gmail.com>
+        Mon, 09 Mar 2026 18:10:45 -0700 (PDT)
+Message-ID: <4728554b256f016d9a5f3e019ed831387b0f059b.camel@redhat.com>
+Subject: Re: [PATCH net-next v7 0/7] net: stmmac: qcom-ethqos: add support
+ for SCMI power domains
+From: Radu Rendec <rrendec@redhat.com>
+To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, Bjorn
+ Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
+ Rob Herring <robh@kernel.org>,  Krzysztof Kozlowski	 <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Richard Cochran	
+ <richardcochran@gmail.com>, Andrew Lunn <andrew+netdev@lunn.ch>, "David S.
+ Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jakub
+ Kicinski <kuba@kernel.org>,  Paolo Abeni <pabeni@redhat.com>, Maxime
+ Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue	
+ <alexandre.torgue@foss.st.com>, Vinod Koul <vkoul@kernel.org>, Giuseppe
+ Cavallaro <peppe.cavallaro@st.com>, Jose Abreu <joabreu@synopsys.com>,
+ Chen-Yu Tsai <wens@kernel.org>,  Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Samuel Holland <samuel@sholland.org>, Matthew Gerlach	
+ <matthew.gerlach@altera.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+ Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>,
+ Martin Blumenstingl	 <martin.blumenstingl@googlemail.com>, Keguang Zhang
+ <keguang.zhang@gmail.com>,  Shawn Guo <shawnguo@kernel.org>, Sascha Hauer
+ <s.hauer@pengutronix.de>, Pengutronix Kernel Team	 <kernel@pengutronix.de>,
+ Fabio Estevam <festevam@gmail.com>, Jan Petrous	 <jan.petrous@oss.nxp.com>,
+ s32@nxp.com, Romain Gantois	 <romain.gantois@bootlin.com>, Lad Prabhakar	
+ <prabhakar.mahadev-lad.rj@bp.renesas.com>, Heiko Stuebner
+ <heiko@sntech.de>,  Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto
+ <inochiama@gmail.com>, Emil Renner Berthing	 <kernel@esmil.dk>, Minda Chen
+ <minda.chen@starfivetech.com>, Drew Fustini	 <fustini@kernel.org>, Guo Ren
+ <guoren@kernel.org>, Fu Wei <wefu@redhat.com>,  Nobuhiro Iwamatsu
+ <nobuhiro.iwamatsu.x90@mail.toshiba>, Geert Uytterhoeven
+ <geert+renesas@glider.be>, Magnus Damm	 <magnus.damm@gmail.com>, Maxime
+ Ripard <mripard@kernel.org>, Shuang Liang	
+ <liangshuang@eswincomputing.com>, Zhi Li <lizhi2@eswincomputing.com>, 
+ Shangjuan Wei <weishangjuan@eswincomputing.com>, "G. Jaya Kumaran"
+ <vineetha.g.jaya.kumaran@intel.com>,  Clark Wang <xiaoning.wang@nxp.com>,
+ Linux Team <linux-imx@nxp.com>, Frank Li <Frank.Li@nxp.com>, David Wu	
+ <david.wu@rock-chips.com>, Samin Guo <samin.guo@starfivetech.com>, 
+ Christophe Roullier <christophe.roullier@foss.st.com>, Swathi K S
+ <swathi.ks@samsung.com>, Bartosz Golaszewski	 <brgl@kernel.org>, Mohd Ayaan
+ Anwar <mohd.anwar@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
+	linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org,  Drew Fustini
+ <dfustini@tenstorrent.com>, linux-sunxi@lists.linux.dev,
+ linux-amlogic@lists.infradead.org, 	linux-mips@vger.kernel.org,
+ imx@lists.linux.dev, 	linux-renesas-soc@vger.kernel.org,
+ linux-rockchip@lists.infradead.org, 	sophgo@lists.linux.dev,
+ linux-riscv@lists.infradead.org, Bartosz Golaszewski	
+ <bartosz.golaszewski@linaro.org>, Krzysztof Kozlowski	
+ <krzysztof.kozlowski@oss.qualcomm.com>, Konrad Dybcio	
+ <konrad.dybcio@oss.qualcomm.com>
+Date: Mon, 09 Mar 2026 21:10:41 -0400
+In-Reply-To: <20260306-qcom-sa8255p-emac-v7-0-d6a3013094b7@oss.qualcomm.com>
+References: <20260306-qcom-sa8255p-emac-v7-0-d6a3013094b7@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: F376924306B
+X-Rspamd-Queue-Id: 3CDDA2435C9
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [0.84 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_MISSING_CHARSET(0.50)[];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[redhat.com,quarantine];
+	R_DKIM_ALLOW(-0.20)[redhat.com:s=mimecast20190719,redhat.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
+	DKIM_TRACE(0.00)[redhat.com:+];
+	FROM_HAS_DN(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-96421-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[19];
-	MIME_TRACE(0.00)[0:+];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-96422-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_TO(0.00)[kernel.org,linaro.org,gmail.com,ffwll.ch,linux.intel.com,suse.de,ravnborg.org,vger.kernel.org,lists.freedesktop.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mailingradian@gmail.com,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[zhan.science,gmail.com];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,gmail.com,lunn.ch,davemloft.net,google.com,redhat.com,foss.st.com,st.com,synopsys.com,sholland.org,altera.com,linaro.org,baylibre.com,googlemail.com,pengutronix.de,oss.nxp.com,nxp.com,bootlin.com,bp.renesas.com,sntech.de,outlook.com,esmil.dk,starfivetech.com,mail.toshiba,glider.be,eswincomputing.com,intel.com,rock-chips.com,samsung.com];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	FROM_HAS_DN(0.00)[]
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_FIVE(0.00)[6];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[rrendec@redhat.com,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCPT_COUNT_GT_50(0.00)[77];
+	MID_RHS_MATCH_FROM(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev,renesas];
+	TO_DN_SOME(0.00)[]
 X-Rspamd-Action: no action
 
-The Pixel 3a XL has variants with either a Samsung Display Controller (SDC)
-panel or a Tianma panel. Add the device tree for the variant with the
-Tianma panel.
+On Fri, 2026-03-06 at 16:46 +0100, Bartosz Golaszewski wrote:
+> Add support for the firmware-managed variant of the DesignWare MAC on
+> the sa8255p platform. This series contains new DT bindings and driver
+> changes required to support the MAC in the STMMAC driver.
+>=20
+> It also reorganizes the ethqos code quite a bit to make the introduction
+> of power domains into the driver a bit easier on the eye.
+>=20
+> The DTS changes will go in separately.
 
-Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/Makefile             |  1 +
- .../dts/qcom/sdm670-google-bonito-tianma.dts  | 32 +++++++++++++++++++
- 2 files changed, 33 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sdm670-google-bonito-tianma.dts
+As Jakub pointed out, it conflicts with the latest net-next, but does
+apply cleanly on the latest mainline, so I tested there (on a SA8775P
+board running the SCMI firmware).
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index f80b5d9cf1e8..7c158871ed1c 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -264,6 +264,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm632-fairphone-fp3.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm632-motorola-ocean.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm636-sony-xperia-ganges-mermaid.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm660-xiaomi-lavender.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sdm670-google-bonito-tianma.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm670-google-sargo.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c.dtb
- 
-diff --git a/arch/arm64/boot/dts/qcom/sdm670-google-bonito-tianma.dts b/arch/arm64/boot/dts/qcom/sdm670-google-bonito-tianma.dts
-new file mode 100644
-index 000000000000..42ddaf53d150
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sdm670-google-bonito-tianma.dts
-@@ -0,0 +1,32 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Device tree for Google Pixel 3a XL with the Tianma panel.
-+ *
-+ * Copyright (c) Richard Acayan. All rights reserved.
-+ */
-+
-+/dts-v1/;
-+
-+#include "sdm670-google-common.dtsi"
-+
-+/ {
-+	model = "Google Pixel 3a XL (with Tianma panel)";
-+	compatible = "google,bonito-tianma", "google,bonito", "qcom,sdm670";
-+};
-+
-+&battery {
-+	charge-full-design-microamp-hours = <3700000>;
-+};
-+
-+&framebuffer {
-+	height = <2160>;
-+};
-+
-+&panel {
-+	compatible = "novatek,nt37700f";
-+};
-+
-+&rmi4_f12 {
-+	touchscreen-x-mm = <69>;
-+	touchscreen-y-mm = <137>;
-+};
--- 
-2.53.0
+The two NICs come up as expected. Basic iperf3 throughput and jitter
+tests look good. I would offer a Tested-by tag and a summary of the
+test results, but I think it's a moot point because you'll have to
+submit a new version anyway.
+
+I will wait for you to rebase, then test again and come back with the
+results.
+
+--=20
+Best regards,
+Radu
 
 
