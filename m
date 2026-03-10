@@ -1,178 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-96556-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96557-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OBUKJkDdr2kzdAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96556-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 09:58:40 +0100
+	id QHaTLsndr2kzdAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96557-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 10:00:57 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42FDD247C31
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 09:58:40 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79590247CAE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 10:00:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 12AA8302C281
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 08:58:31 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 296193008E14
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Mar 2026 09:00:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA00943CECF;
-	Tue, 10 Mar 2026 08:58:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8503343C079;
+	Tue, 10 Mar 2026 09:00:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tZDQM11q"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XTmlE77F"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A600443CECB
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2026 08:58:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607A943636F;
+	Tue, 10 Mar 2026 09:00:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773133098; cv=none; b=ndPWl5Wa/PsewyXs+9AGWPxkdJYYlFEksdG9PAveb7oAP4edcd9hASP4grwXUVOzBVookeOqWgl+QjHpd4WAxuDnuOf73foQdg+oaDpkLZRMrOmlZQrrm5peGf/dwI6Aj7I8eIBVjTNoKGdRbfWlL11vurXwJ34FulnzhNb3ABc=
+	t=1773133227; cv=none; b=KHEvkn0DrmmFrM0sZSotUfACOFkEDSVJgZelf5FhBsYqK6BkeI1gf+F/jouXPc5Dx1JqWdD2NUxzra1T089V9IHoVY0/i17n/kqVsjeiuoyAotcovLRUdS9dFY2DQLNCdLF9n8gn31kr3MKM+vT5nsNg6l1TC2SzPadmQjOEZE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773133098; c=relaxed/simple;
-	bh=M6JPfbr9d5IciKIoqHHW920nfQtcVt9K8aP07ynrnlo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Q3LrorFmDnib+CDTO9mJmXiUj77jibs0csSwjlSCFTaAkwY0xFLypUpnNuZqVW8wNPZeT+N2XmnSoDs/7LH8AJhV3LsWcnQ2pGLUqY85Vvm92CfLc31xFNGLirPGpuBLmLXJWV+e22TtubiunIPt02v6z7ScFUrAzaUtvQni8hQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tZDQM11q; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81F67C2BCAF
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2026 08:58:18 +0000 (UTC)
+	s=arc-20240116; t=1773133227; c=relaxed/simple;
+	bh=Md7BIHPAB/DfIclY8o2/BpyMLpt1rCGHzfplstHLVvA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kD7Uol86gEpPllcCGAkzP5p3kWyJ0RNsTT1zzEE2u17rANMsmGasLWF5SOzFGTl9KXZITqJtR2mkwSJBO4vjNkRBWmxNdZfPdNgW9DlUO5MP74a3Vsbg8egugtVsjoQ5MECRlEgRPQXPvIu/kJBCn39EG2DWoThIdy0Zu39z0Nk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XTmlE77F; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CBBFC19423;
+	Tue, 10 Mar 2026 09:00:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773133098;
-	bh=M6JPfbr9d5IciKIoqHHW920nfQtcVt9K8aP07ynrnlo=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=tZDQM11qneSYqNndJJ+rDgCWCXaubztC0EU2cNYNl/DrHnKZ5Laa4TpxPCIr1Tr6A
-	 PCrDcHv6Dr+xwk0QDncYwcPtzLnCmHNdMwjuU0NrvakPKmAKW7k+3L6nvvlJD0ih2/
-	 PgVHQ6tQTtVwn6bAzDrJCbfg2qQHfwElUiTysHN8dwnn/Q2Rskunb3ViyCzBvLDBOB
-	 +gh0Ubvtbj7EF+ns8yNPoWO6SsLO0Wg79q7JFUVqTg9W/ek+Cjtdwq3h7GxILDIGiS
-	 vgWjY4s7SNRl8FPprWwQ3ndAPjFXStqqRlON74Ufj5u74XwPToW4LvPUfh5TVENmZb
-	 iWWiL4NaGQI4A==
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-38a5584e31fso16806671fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2026 01:58:18 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCW5XfCoXAt1ZSDKN640dUN1wWaQPoHyVdSdYUO8zNd1trMvjIBfSBjr81nNlF7QdlSLlv2rwhZ59lE0dzvn@vger.kernel.org
-X-Gm-Message-State: AOJu0YzXVmgfQbnZtDRDZV6BwBMruhQbULkLBwstJC4rG+u9ESOso8QP
-	Jpn0iDW4CPgpfyZvOwKiGzIbf65uisa+9x9LJaJKGWx9qDM0RTDGizVP+cC+LeMdGRMHfnV2cuu
-	PJwX52S3CwBczFB6poWHyhpvF8uRIKfw+RT+n/SuiSg==
-X-Received: by 2002:a2e:b012:0:b0:389:e2e8:4f4c with SMTP id
- 38308e7fff4ca-38a5d05131dmr6527231fa.21.1773133095795; Tue, 10 Mar 2026
- 01:58:15 -0700 (PDT)
+	s=k20201202; t=1773133227;
+	bh=Md7BIHPAB/DfIclY8o2/BpyMLpt1rCGHzfplstHLVvA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=XTmlE77F1z6GIbbIWrfOwGsSGVtzha8A8M8DC/YHTleP+kRbaMiLsKYqWv7SHzD7l
+	 R5FBs2Mvc9LEtTt6UtCTetyfvmM5m0j0pbviM/JszZAap1QWcdMZ6V3Itn+oi5WaSV
+	 nvReP/D3D9cMiHlKxEKvRKMPq41nNL9fdLPvvDNcjac026IeM8EnbD33WcVKqRUqxS
+	 GzBk5IM6Kg8Q0+SrXtEy5KL5cQvYmPYILIsCDDjQxvYqWNApH3kOJldPLPOJRdfW3/
+	 RHDqmqMuA/12RYbcHJX0Q0PwFhz5B2Hcyj6UDWs1TYTP48yCAssohseKih4Yb9QoCL
+	 m6kh/Ouc8LAwA==
+Date: Tue, 10 Mar 2026 10:00:24 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Richard Acayan <mailingradian@gmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Srinivas Kandagatla <srini@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 1/5] dt-bindings: qcom: lpass-lpi-common: add reserved
+ GPIOs property
+Message-ID: <20260310-rigorous-whimsical-pudu-5f4df6@quoll>
+References: <20260310012446.32226-1-mailingradian@gmail.com>
+ <20260310012446.32226-2-mailingradian@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260306-qcom-sa8255p-emac-v7-0-d6a3013094b7@oss.qualcomm.com> <4728554b256f016d9a5f3e019ed831387b0f059b.camel@redhat.com>
-In-Reply-To: <4728554b256f016d9a5f3e019ed831387b0f059b.camel@redhat.com>
-From: Bartosz Golaszewski <brgl@kernel.org>
-Date: Tue, 10 Mar 2026 09:58:03 +0100
-X-Gmail-Original-Message-ID: <CAMRc=Me8pw5ROaopJ8bcon_NGR5TEZdkJL-F4H1-8b-U2FU9GQ@mail.gmail.com>
-X-Gm-Features: AaiRm50drSEJRzFk2cE1mtMmfBxUomqwHAi_2o4urYZsnhjuUaH2OaO1HdaVg_g
-Message-ID: <CAMRc=Me8pw5ROaopJ8bcon_NGR5TEZdkJL-F4H1-8b-U2FU9GQ@mail.gmail.com>
-Subject: Re: [PATCH net-next v7 0/7] net: stmmac: qcom-ethqos: add support for
- SCMI power domains
-To: Radu Rendec <rrendec@redhat.com>
-Cc: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Richard Cochran <richardcochran@gmail.com>, Andrew Lunn <andrew+netdev@lunn.ch>, 
-	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Vinod Koul <vkoul@kernel.org>, Giuseppe Cavallaro <peppe.cavallaro@st.com>, 
-	Jose Abreu <joabreu@synopsys.com>, Chen-Yu Tsai <wens@kernel.org>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, 
-	Matthew Gerlach <matthew.gerlach@altera.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>, 
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
-	Keguang Zhang <keguang.zhang@gmail.com>, Shawn Guo <shawnguo@kernel.org>, 
-	Sascha Hauer <s.hauer@pengutronix.de>, Pengutronix Kernel Team <kernel@pengutronix.de>, 
-	Fabio Estevam <festevam@gmail.com>, Jan Petrous <jan.petrous@oss.nxp.com>, s32@nxp.com, 
-	Romain Gantois <romain.gantois@bootlin.com>, 
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>, Heiko Stuebner <heiko@sntech.de>, 
-	Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>, 
-	Emil Renner Berthing <kernel@esmil.dk>, Minda Chen <minda.chen@starfivetech.com>, 
-	Drew Fustini <fustini@kernel.org>, Guo Ren <guoren@kernel.org>, Fu Wei <wefu@redhat.com>, 
-	Nobuhiro Iwamatsu <nobuhiro.iwamatsu.x90@mail.toshiba>, 
-	Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, 
-	Maxime Ripard <mripard@kernel.org>, Shuang Liang <liangshuang@eswincomputing.com>, 
-	Zhi Li <lizhi2@eswincomputing.com>, Shangjuan Wei <weishangjuan@eswincomputing.com>, 
-	"G. Jaya Kumaran" <vineetha.g.jaya.kumaran@intel.com>, Clark Wang <xiaoning.wang@nxp.com>, 
-	Linux Team <linux-imx@nxp.com>, Frank Li <Frank.Li@nxp.com>, David Wu <david.wu@rock-chips.com>, 
-	Samin Guo <samin.guo@starfivetech.com>, 
-	Christophe Roullier <christophe.roullier@foss.st.com>, Swathi K S <swathi.ks@samsung.com>, 
-	Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	netdev@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, 
-	linux-arm-kernel@lists.infradead.org, Drew Fustini <dfustini@tenstorrent.com>, 
-	linux-sunxi@lists.linux.dev, linux-amlogic@lists.infradead.org, 
-	linux-mips@vger.kernel.org, imx@lists.linux.dev, 
-	linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, 
-	sophgo@lists.linux.dev, linux-riscv@lists.infradead.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, 
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: 42FDD247C31
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260310012446.32226-2-mailingradian@gmail.com>
+X-Rspamd-Queue-Id: 79590247CAE
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,gmail.com,lunn.ch,davemloft.net,google.com,redhat.com,foss.st.com,st.com,synopsys.com,sholland.org,altera.com,linaro.org,baylibre.com,googlemail.com,pengutronix.de,oss.nxp.com,nxp.com,bootlin.com,bp.renesas.com,sntech.de,outlook.com,esmil.dk,starfivetech.com,mail.toshiba,glider.be,eswincomputing.com,intel.com,rock-chips.com,samsung.com,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org,tenstorrent.com,lists.linux.dev];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-96556-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-96557-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_TO(0.00)[gmail.com];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MISSING_XM_UA(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[77];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev,renesas];
+	RSPAMD_EMAILBL_FAIL(0.00)[mailingradian.gmail.com:query timed out];
 	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[11];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,mail.gmail.com:mid]
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-On Tue, Mar 10, 2026 at 2:10=E2=80=AFAM Radu Rendec <rrendec@redhat.com> wr=
-ote:
->
-> On Fri, 2026-03-06 at 16:46 +0100, Bartosz Golaszewski wrote:
-> > Add support for the firmware-managed variant of the DesignWare MAC on
-> > the sa8255p platform. This series contains new DT bindings and driver
-> > changes required to support the MAC in the STMMAC driver.
-> >
-> > It also reorganizes the ethqos code quite a bit to make the introductio=
-n
-> > of power domains into the driver a bit easier on the eye.
-> >
-> > The DTS changes will go in separately.
->
-> As Jakub pointed out, it conflicts with the latest net-next, but does
-> apply cleanly on the latest mainline, so I tested there (on a SA8775P
-> board running the SCMI firmware).
->
-> The two NICs come up as expected. Basic iperf3 throughput and jitter
-> tests look good. I would offer a Tested-by tag and a summary of the
-> test results, but I think it's a moot point because you'll have to
-> submit a new version anyway.
->
-> I will wait for you to rebase, then test again and come back with the
-> results.
->
+On Mon, Mar 09, 2026 at 09:24:42PM -0400, Richard Acayan wrote:
+> There can be reserved GPIOs on the LPASS LPI pin controller to possibly
+> control sensors. Add the property for reserved GPIOs so they can be
+> avoided appropriately.
+> 
+> Adapted from the same entry in qcom,tlmm-common.yaml.
+> 
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> ---
+>  .../devicetree/bindings/pinctrl/qcom,lpass-lpi-common.yaml  | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,lpass-lpi-common.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,lpass-lpi-common.yaml
+> index 619341dd637c..0c3fa5d597e0 100644
+> --- a/Documentation/devicetree/bindings/pinctrl/qcom,lpass-lpi-common.yaml
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,lpass-lpi-common.yaml
+> @@ -27,6 +27,12 @@ properties:
+>    gpio-ranges:
+>      maxItems: 1
+>  
+> +  gpio-reserved-ranges:
+> +    description:
+> +      Pins can be reserved for trusted applications or for LPASS, thereby
+> +      inaccessible from the OS. This property can be used to mark the pins
+> +      which resources should not be accessed by the OS.
 
-Thank you for the tests. The rework after the changes turned out to be
-quite extensive. I should have it ready by the end of the week. I will
-appreciate if you could retest it again by then and leave your tag.
+minItems: 1
+maxItems: 30
 
-Bart
+I guess to have somoe sort reasonable limit.
+
+Best regards,
+Krzysztof
+
 
