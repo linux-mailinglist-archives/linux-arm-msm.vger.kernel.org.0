@@ -1,56 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-97060-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6LAaJBK4sWmTEwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97060-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 19:44:34 +0100
+	id AM4rAdW4sWmTEwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 19:47:49 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0E576268CA6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 19:44:34 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9CD0A268D81
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 19:47:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 047C7303C5AE
+	by sea.lore.kernel.org (Postfix) with ESMTP id 2280731A476D
 	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 18:44:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBA0635DA59;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4B66367F4A;
 	Wed, 11 Mar 2026 18:44:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="owxcJFHa"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QXm7xL4c"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96246279DAD;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9635230DD2F;
 	Wed, 11 Mar 2026 18:44:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773254671; cv=none; b=gnRUPZhGv83a/495RGOGdjhXvuGbKyg4S7LFceOUHjdQT6WWgX3OjJs8wmKZ5mMAYKoh0847FVc47+t3avb+r/bEH5duaFHyVNDdL4kzrzmIwp5ChHHHulcf5JCNlbSdsBWRSLN2saSRHvh42Pr5O8bSWJ8E4qp8LEpGswu9TS0=
+	t=1773254671; cv=none; b=RdhU2ZSbpBwp/zRR51O30CZL5VrUklvX9oDoh+05dgQcM69e4+6hQ9P459zbo2W2OO1CsVM1LTOtXFkc5sip7A6/JdVCcKa31I4AOSUzUUkA2e9+VfyDWdo/aux8Vdb2OU0Shpfq9KCUUK+Yc2DGCrJsxM3NjI9TWanD2xnKkLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773254671; c=relaxed/simple;
-	bh=8+88lGJnGD+j6NV1gC42NaIw5lR/TlH0YzC8mNmFOl8=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Vg08fw+SSaxlgwAaTNlOTJFgG6aWp1dEjw42avgJRBlvj5o9ncNN9ZaWrvGq8HKXuHlU2VVxlm3Gp71pviI2Sz0ASbyWB7uEUXz7NZIUzsmCNd8GiWWjM2qA+d+SZoTfN/ewMsKgopbE9jcl/m+sk5zEmPukZYomWVfgEiySjms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=owxcJFHa; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 3DD49C4CEF7;
+	bh=1hwN9lB39gZMN/iMHPqeoGVh2gh5ZyKeriDbiYZU+jE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=gGr1ynn1y18w+ixPd0Ugtgd7q/7w4ryfar/880+Vf7IkgoEvdnz24C9Q7JwRc6z/LR5FV5AWdpKO31W7lXrFZw0D+nsjf5tqzOU+rMmn3wdPTOIU0jWarrATVJb2tF2ulOLftucQRywdfPG0St/neNcRBBxF7qBafLlPjXqzhZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QXm7xL4c; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 4C86BC19425;
 	Wed, 11 Mar 2026 18:44:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1773254671;
-	bh=8+88lGJnGD+j6NV1gC42NaIw5lR/TlH0YzC8mNmFOl8=;
-	h=From:Subject:Date:To:Cc:Reply-To:From;
-	b=owxcJFHakyN7GlVGhsJbuWHEFegdVhxN8gSKITMcukJdB28sy4YwpfTnXbDIgJDLw
-	 w3T4Jx5cKDaYrphv/HlZSjuzMWqQ1JRy+MzBO1h7PxoRlHj6HLe+c0LlIivSMK4hzw
-	 H5r+75fkNWycghGoepzrBYn6Z/3L7DrndSjEwnhNCtp5K6ryZhMrkpFytXUWNWkVGv
-	 42d6Ths+9oc+fdOQ9w+5WBl0bVZ0hyOTGvmF6XPD/3Wghor/ctbVgA+917bmtDw9k0
-	 k8QYiUL3ttjl2tTweFu+fhrpxZdGwyBYdNkmzaM2usan2EEw/YnS/xtJ8l+g+C3IHM
-	 HvCvbhEVafD1A==
+	bh=1hwN9lB39gZMN/iMHPqeoGVh2gh5ZyKeriDbiYZU+jE=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=QXm7xL4c9zphgE4VjSSEtRdN95S2W5ZmGMzRPSAp3t6OgHC/eBXkwxMAe+i6SQugk
+	 23hI0xakdsWihG6Wk+vhv3hn5r5h4Q2uOBSWlibMikhdugUvIXnDUSsbzYALqauCFK
+	 CSkRsOwGzXbMgcwA0yRN0ydPhpLc8m0QZWKwvU8AmOYHtvybuUwkEHsosq8bzlCfH4
+	 HG74NtQrBTbwJPCEunTiUicDIQHpt7Bgw6AoHq4ZnDMeyYYfQvpdz7ABBM+l7f1uyp
+	 alI+onguGhzpRx5jN2oyTRPUc+H0L1t34kZS+t1HRlWGu5I2KaTjkezFL03mkn/7aN
+	 67+JRjSWJkDbg==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32F92112585A;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44D7A1125866;
 	Wed, 11 Mar 2026 18:44:31 +0000 (UTC)
 From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Subject: [PATCH 0/2] Add framebuffer on Xiaomi Poco F1 and disable the MDSS
- on tianma panel variant
-Date: Wed, 11 Mar 2026 19:44:28 +0100
-Message-Id: <20260311-beryllium-fb-v1-0-408a580d125e@ixit.cz>
+Date: Wed, 11 Mar 2026 19:44:29 +0100
+Subject: [PATCH 1/2] arm64: dts: qcom: sdm845-xiaomi-beryllium: Introduce
+ framebuffer
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,10 +59,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAy4sWkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDQwNz3aTUosqcnMzSXN20JN0U41QL86RkI4OkVAMloJaCotS0zAqwcdG
- xtbUA/dmuaV4AAAA=
-X-Change-ID: 20260107-beryllium-fb-d3e87bc20be0
+Message-Id: <20260311-beryllium-fb-v1-1-408a580d125e@ixit.cz>
+References: <20260311-beryllium-fb-v1-0-408a580d125e@ixit.cz>
+In-Reply-To: <20260311-beryllium-fb-v1-0-408a580d125e@ixit.cz>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -71,21 +70,21 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
  Petr Hodina <petr.hodina@protonmail.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=828; i=david@ixit.cz;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1053; i=david@ixit.cz;
  h=from:subject:message-id;
- bh=8+88lGJnGD+j6NV1gC42NaIw5lR/TlH0YzC8mNmFOl8=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpsbgOMYYduiFV4B7jZjUm5CNR6u5lX/4g4QjfR
- TMWRIBeuB2JAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCabG4DgAKCRBgAj/E00kg
- cpAdD/0YQ3QBWu+MFBZKBkilMx/g8Zg9tUGg4rfcYJN62QamaydFWZUXD4apwX6a2DGZ1ror9/N
- l10tC1PjDTt8c6L0MWwrTuc3OMQaUA/EtkFyy7n4ho+ehJ4C4OkRKLxRfu1RSu6hFgXvHirp8B1
- 4a2G6gPwyvGkdytzZBPKzCuOAYJnCCbQUfZK3qBYEwM+X4arhlePM0JUHebFK7DQACqanVA9jdl
- 7ReFnam0bbabxMcThcBXxNS/TWenURnR8xJ8vonUFVBNhhsfr9Ex9LLfwfWafZ0lDYey9dP3uqo
- Lj3zzNeg4HX5Ksc9MfnNMw6vFmQslKKluAUSbaerxUgHvlllF/Pq+7TQQ2BH2hSgKJ0hHToj/wf
- rBne2lB1c8BAxvGr5HPxj0JWgXHuwPhAkKhlvD66SOptJXyDBFVUZMYjgigkwkMN+DSEo1QNcHh
- m05Xuhdt58wpFKJM8NquRtPoYMnsAqZYg4+8pNWUivagsbY16wIOlKn9oVlYT8mKYDO2nvkq6zZ
- DTM1o8TqFOTsMERicW74UkWHdtQZ8bgSPYLQEkK73LC7Uss03B+yzS0PaGgnO0uRVWnNDY9ZVc1
- QUs0r2sM/Fg7ck1q7srj3jOfzebAVkDAAeVGtjQjADHZGVCvuP1AbHYG+4xZQBGJv2kZ3CKNQCA
- cEMr/+QwQ9KDcBQ==
+ bh=i+PpcsXJJ53DrxBp3ADnJsJTSeGIaZ45KNoGbwtVT7c=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpsbgO+vyDUcHpIKz/T39SZ3iI42Y1qchdCybkd
+ Sby9saxZLSJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCabG4DgAKCRBgAj/E00kg
+ coi6D/9E4h6y/4CrOKrqkUzpAtAdVD47dHUZ3BnJEqDl2xqoJx0vCQlX97QkiNSKsJ64e/S2lUg
+ naF0xH+f5hxXYfYYp7r6ZTxPNf6mdM8RPHAIlGhK3KFWNJz57joD1cRA7loPBLx4Aj7ZJxcmKG2
+ uWsxos0zIkAE8tLRdLYhimr4QcJ+nLO0KQ0w23KVVWSg97uUdsD29Gp2FolsomQdlOUh9jL5xOZ
+ +Cz4VfZKMQCqo9DELgoj+NRWUlA2VyR+7TYXNXj8Ec4EzBxI058/NMOYTN/W07KduTUcQesNaY+
+ B0vXbR6qXSR0YwACGvTF0ogjwFQMLVA3lo5BXUmkYDgCgq26Krnnnh+5/m14allMiPs8KXqMNp9
+ 0OEFHlizKEe30Wb2EKl0LtgAZnW3H3k1G+6/86UYwhEblpCf1hYWffMSgeXAbEMFGZJcx+Pp5kq
+ kq66KJchdxnoKu7NbefvqHa45UKFLhKnKEmLmWampYTuKefo+BQMOU0yT6meofeI9lHySARUYVt
+ ichOBjeYYqjFbHXO/hFP/SKyGhSb3OhtQJl8m2jFyN9Snz0v/5yivMqFpHgkoApmtq8bl1IVCTe
+ QzxYq4bm0letvP9zvOL3AwrpdQfawZWA/GDGWc5GktYK2INjQ0sUlgzQoFSm1J7ymjU3hYfmsp6
+ z8s3lxaHQIU2YCQ==
 X-Developer-Key: i=david@ixit.cz; a=openpgp;
  fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
 X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
@@ -95,12 +94,12 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-97060-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
+	TAGGED_FROM(0.00)[bounces-97062-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
 	FROM_HAS_DN(0.00)[];
 	FREEMAIL_CC(0.00)[vger.kernel.org,protonmail.com];
 	TO_DN_SOME(0.00)[];
@@ -118,35 +117,52 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCPT_COUNT_SEVEN(0.00)[11];
 	HAS_REPLYTO(0.00)[david@ixit.cz];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,protonmail.com:email]
-X-Rspamd-Queue-Id: 0E576268CA6
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,protonmail.com:email,9d400000:email]
+X-Rspamd-Queue-Id: 9CD0A268D81
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Enable framebuffer for early console output.
+From: Petr Hodina <petr.hodina@protonmail.com>
 
-Due to broken panel driver on tianma and no visual output it's better
-to disable the MDSS so the framebuffer stays on. 
-
-In case second patch gets rejected, please apply the first one standalone
+Add framebuffer for early console and u-boot support.
 
 Signed-off-by: Petr Hodina <petr.hodina@protonmail.com>
+Signed-off-by: David Heidelberg <david@ixit.cz>
 ---
-Petr Hodina (2):
-      arm64: dts: qcom: sdm845-xiaomi-beryllium: Introduce framebuffer
-      arm64: dts: qcom: sdm845-xiaomi-beryllium-tianma: Disable MDSS
-
  .../boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi    | 16 ++++++++++++++++
- .../boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts     | 10 ++++++++++
- 2 files changed, 26 insertions(+)
----
-base-commit: f90aadf1c67c8b4969d1e5e6d4fd7227adb6e4d7
-change-id: 20260107-beryllium-fb-d3e87bc20be0
+ 1 file changed, 16 insertions(+)
 
-Best regards,
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
+index 01b570d0880d6..bd6d7a3cfc0ac 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
+@@ -39,6 +39,22 @@ aliases {
+ 		serial1 = &uart6;
+ 	};
+ 
++	chosen {
++		#address-cells = <2>;
++		#size-cells = <2>;
++		ranges;
++
++		framebuffer: framebuffer@9d400000 {
++			compatible = "simple-framebuffer";
++			memory-region = <&cont_splash_mem>;
++
++			format = "a8r8g8b8";
++			stride = <(1080 * 4)>;
++			height = <2246>;
++			width = <1080>;
++		};
++	};
++
+ 	gpio-keys {
+ 		compatible = "gpio-keys";
+ 		autorepeat;
+
 -- 
-David Heidelberg <david@ixit.cz>
+2.53.0
 
 
 
