@@ -1,149 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-97038-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97040-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GMtPNmqosWn4EAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97038-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 18:37:46 +0100
+	id YALjLRqqsWmzEQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97040-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 18:44:58 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D5092681A2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 18:37:46 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A41982682A6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 18:44:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 343CE300D71C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 17:37:45 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 17BB8301BDCF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 17:44:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 74D253DCD9F;
-	Wed, 11 Mar 2026 17:37:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 561843E5573;
+	Wed, 11 Mar 2026 17:44:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="VismdqBP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sd3/oEOD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-24418.protonmail.ch (mail-24418.protonmail.ch [109.224.244.18])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 827BC2C326F;
-	Wed, 11 Mar 2026 17:37:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F30B23E51C3;
+	Wed, 11 Mar 2026 17:44:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773250662; cv=none; b=otX6OalKQxaDtUUCiIIZZrRxjnuu4/nzsHEpmbcv+OcnQYK65K8R6Aet7S49Zy79V+TYNaSq6+2YkWwceP/klhwDybAwnI3HwgBzyKOALcnpY5ewImT9gMxMuCGpJPDMFQ1oHwOLMEHx2ORdThXtT1YtsIwGrGIRALJx+/feiSs=
+	t=1773251089; cv=none; b=ZmMFpSxWlHy7LcrBC/myoPDDz4kvfdJP2ujQSuCzQAu7KZJKFoPPJL1U3Y/skDxPHR5XTAPCfor2EXn0AfuKNHyAm4Mk19nCCGV57f9ewW3jrj0TjTYYgs5n+ciSRWJp81hsEvPv0pDHzj2pKWfK6QPx07PEv6+7MYSdK6TiZy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773250662; c=relaxed/simple;
-	bh=8F6BHmOQ0WQmBv0RT0iBXkR32/SkaWmicNlgLyuCruA=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VQZAY95vLWd+eFeVF9VY6kpvCk0kBAgHCU6xvvQwbmXakjlte0448XvZ8lS32YSuzDvo+XG7AoEsxLCXJXiaEDsN6IMnkQELxaFD9IuLYUtLJua7Oe6v1gQHqJhc2BLEYzz0md36kqCCX8pz2b6M7c2M1SF4LazMoI7GWObAoBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=VismdqBP; arc=none smtp.client-ip=109.224.244.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1773250656; x=1773509856;
-	bh=XLguu/25DpLjHw3KFUyytX0/aU2oC0LZ4Zz8H5WpZFI=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=VismdqBPGjVnbIdwtV0hbsqtgBRWDpww7uVUL+TjcPDgX+3qQtsU40GuyAMeKo8DA
-	 BQhKOZRr8KIaxkupeq7pX71VaqRekG9oyewlXnvDMl0eCm/TYBeMvSx11XjwG5Q1Ee
-	 63CyhSLQpOEPb0n2DPwtFpDMuw4alAVWkrKcdtAU8qWp55SsMmWi6ogQxaX1iyZs9w
-	 XZ11fzBdZqVpJU4dudtZH+/OCq4gQNeLze9WWbpE0epmFnZnSh6bS+67IwG/h58PKX
-	 ro1Mylh2fzJtftF4kmCwCF3B2WoEYnGHKT396uh87xAH7d3TCdK4StD+mQtKdwYIcB
-	 lQkbHlGN573wQ==
-Date: Wed, 11 Mar 2026 17:37:33 +0000
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-From: Alexander Koskovich <akoskovich@pm.me>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Heikki Krogerus <heikki.krogerus@linux.intel.com>, linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RFC 0/2] usb: typec: qcom: Add shared USBIN VBUS detection via GPIO
-Message-ID: <v4m49h-DK1i8hRbJZVhc1GwDH7oBTRgeXg0hIE8chXTULQuFFfSibjXs19m5E4srNt4852h-x_YcxMoPaUjzPqmwYHI8-tRc2-X2DaIKI-A=@pm.me>
-In-Reply-To: <920ae606-3d7d-4f61-9d11-bd970abc5177@linaro.org>
-References: <20260308-qcom-typec-shared-vbus-v1-0-7d574b91052a@pm.me> <920ae606-3d7d-4f61-9d11-bd970abc5177@linaro.org>
-Feedback-ID: 37836894:user:proton
-X-Pm-Message-ID: 112f3eacc9316f0a5a46928f4cc3fbbed543c283
+	s=arc-20240116; t=1773251089; c=relaxed/simple;
+	bh=DHrlRUrGIAsGAgBu1A4lPkHX7PV0jeBMaHF4PfPMRP8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=b5wUL7hgaXDSXr6Qzr3dwWpUqX5hfu92y8bETae7VQqXGR/zj+n+DMdGN2vmzQHV0JjZphtNVTwcdHm1QfI622kMsaAnhPi4rp/4LMJ7Gf8gCQnClxNuWxzd3vY6Ag3B0cGlII+GrupkUkiV66cyiVt1BQKMLDZlbZ1OlUOcDg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sd3/oEOD; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 8A0C7C19421;
+	Wed, 11 Mar 2026 17:44:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773251088;
+	bh=DHrlRUrGIAsGAgBu1A4lPkHX7PV0jeBMaHF4PfPMRP8=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=sd3/oEODlVvpC/z5o7CSA81BN4zCXcRezVz1JFaEhU5vH/QWkCidhy4KSragrH0oq
+	 1RoCXNDjR2dHaMb+MngFyrdfZXXEfnUb/Dyq8xeJvadalrSFNoA5398ICXF26Cgwoq
+	 W2pp//p6mbbUlXx3h/xQGDEHS2d6TvQGbE9LF/T6GyVus26GEHloxX8qi2HTB+HDBV
+	 x+h97H9u4jvtZfoL0GmjiN200pr8FNalf/AdFX/a8/vwUKj+JFSNcdK5nfx3FeUtsh
+	 jIHeaO0WPn30g+nTCHx/QbQXEHyzj0GkXS3UWe2V3oIpfMOwWLCkdHkVohum2ruQHh
+	 5tT1LB3gHL8lw==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7130C112585A;
+	Wed, 11 Mar 2026 17:44:48 +0000 (UTC)
+From: Aaron Kling via B4 Relay <devnull+webgeek1234.gmail.com@kernel.org>
+Subject: [PATCH v2 0/5] arm64: dts: qcom: Support AYN QCS8550 Devices
+Date: Wed, 11 Mar 2026 12:44:36 -0500
+Message-Id: <20260311-ayn-qcs8550-v2-0-e66986e0f0cb@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-0.66 / 15.00];
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/1WPzW6DMBCEXwXtua68C9jAqe9R5eCfdWKpQGJT1
+ Cji3es4l/Y4I83MNw/InCJnmJoHJN5jjutSBL014C5mObOIvmggSUoSamHui7i5PPS9FKic1Fa
+ 1nklBSVwTh/hT2z5PL5349l1Kt5cJ1mQWbp3nuE1NGKUxPqBT2g22G9XokXtWvgteE2njreLOa
+ /gLU9gqCsmKsvPi1yQM9i2qwdFoadoRnuuXmLc13eu1Yj3na7RF/PdiRyFF4MFSKDjI5uM8m/j
+ 1XjDhdBzHL56r29gkAQAA
+X-Change-ID: 20260217-ayn-qcs8550-16c07b63de26
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Aaron Kling <webgeek1234@gmail.com>, 
+ Teguh Sobirin <teguh@sobir.in>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1773251087; l=2199;
+ i=webgeek1234@gmail.com; s=20250217; h=from:subject:message-id;
+ bh=DHrlRUrGIAsGAgBu1A4lPkHX7PV0jeBMaHF4PfPMRP8=;
+ b=cE91nB4s1qND9l9JvQ+bXa4SZqjDNCqWkN7H5CqHMAwaxWYhzWxGrRhx9dI3xba66K/jZcb7X
+ KsFqFfSIj9nC+3gCeMHBHfUmcP6wgIuD8Fd5P4hzL2/8n/2c2mS7TsB
+X-Developer-Key: i=webgeek1234@gmail.com; a=ed25519;
+ pk=TQwd6q26txw7bkK7B8qtI/kcAohZc7bHHGSD7domdrU=
+X-Endpoint-Received: by B4 Relay for webgeek1234@gmail.com/20250217 with
+ auth_id=342
+X-Original-From: Aaron Kling <webgeek1234@gmail.com>
+Reply-To: webgeek1234@gmail.com
+X-Spamd-Result: default: False [1.34 / 15.00];
+	FREEMAIL_REPLYTO_NEQ_FROM(2.00)[];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-97038-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[3];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-97040-lists,linux-arm-msm=lfdr.de,webgeek1234.gmail.com];
+	FROM_HAS_DN(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[pm.me:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	MISSING_XM_UA(0.00)[];
+	FREEMAIL_REPLYTO(0.00)[gmail.com];
+	TO_DN_SOME(0.00)[];
+	FREEMAIL_CC(0.00)[vger.kernel.org,gmail.com,sobir.in];
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	RCVD_COUNT_FIVE(0.00)[5];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
 	RCPT_COUNT_SEVEN(0.00)[10];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,pm.me:dkim,pm.me:mid]
-X-Rspamd-Queue-Id: 3D5092681A2
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	HAS_REPLYTO(0.00)[webgeek1234@gmail.com];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: A41982682A6
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Wednesday, March 11th, 2026 at 10:53 AM, Bryan O'Donoghue <bryan.odonogh=
-ue@linaro.org> wrote:
+This specifically includes:
+* Odin 2 Mini
+* Odin 2 Portal
+* Thor
 
-> On 08/03/2026 23:20, Alexander Koskovich wrote:
-> > The ASUS ROG Phone 3 has two USB-C ports whose VBUS lines are both
-> > wired to the single USBIN input on the PM8150B PMIC. This means the
-> > Type-C port controller cannot distinguish which port is providing
-> > VBUS, causing one port to be unusable when the other has VBUS present
-> > from a charger or PC.
->=20
-> Hrmm..
->=20
-> If you have a GPIO for VBUS detect then who is sourcing VBUS in host mode=
- ?
->=20
-> There should be a GPIO to switch it on aswell ? And in this case both
-> ports will become "hot" at the same time.
+The original Odin 2 dtso is not currently included as it has not yet
+been verified.
 
-For the side port this is the PM8150B's internal OTG regulator which is gat=
-ed
-onto the connector with an external load switch controlled by GPIO 11
-(downstream calls this POGO_OTG_EN).
+The initial port was done by Teguh Sobirin for ROCKNIX and was made
+available on the AYN github [0].
 
-For the bottom port there's an independent boost converter which is gated b=
-y
-GPIO 71 (downstream calls this BTM_OTG_EN), and doesn't have anything to do
-with the PM8150B OTG output.
+Support has been removed for things not yet supported by the upstream
+kernel, these will be added later when the related drivers are submitted
+and picked up. Such includes:
 
-For the ROG 3 I've modeled these in DTS as vreg_pm8150b_vbus & vreg_rt1715_=
-vbus,
-so they're the vbus-supply for each TCPM.
+* All panels
+* The Odin 2 Mini backlight and touch
+* All rgb leds
+* The built-in uart gamepad
 
->=20
-> How does VBUS work in host mode here ?
+This series depends on one other series as described in b4 deps. Namely,
+the one adding the AYN vendor [1]. This must be merged first for schema
+checks to succeed.
 
-When a USB device is plugged into one port CC detection sees the phone as
-source, and the OTG GPIO for the port is asserted to enable 5V.
+[0] https://github.com/AYNTechnologies/linux/commits/sm8550/v6.17.5/
+[1] https://lore.kernel.org/all/20260220-ayn-vendor-v1-1-292cbbb682b3@gmail.com/
 
-The VBUS detect GPIO won't read as active for this since OTG power takes a
-different path than the OVP ICs (2x BQ25968).
+Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
+---
+Changes in v2:
+- Drop awinic bindings dep as a duplicated patch already exists
+- Change Co-authored-by tags to Co-developed-by
+- Drop alias to currently unused uart15 in patch 2
+- Link to v1: https://lore.kernel.org/r/20260311-ayn-qcs8550-v1-0-fe8b2faad1ea@gmail.com
 
->=20
+---
+Aaron Kling (1):
+      dt-bindings: arm: qcom: Add AYN QCS8550 Devices
 
-Also here's a link to the downstream driver for reference: https://github.c=
-om/LineageOS/android_kernel_asus_sm8250/blob/lineage-19.1/drivers/power/sup=
-ply/qcom/smb5-lib.c
+Teguh Sobirin (4):
+      arm64: dts: qcom: Add AYN QCS8550 Common
+      arm64: dts: qcom: Add AYN Odin 2 Mini
+      arm64: dts: qcom: Add AYN Odin 2 Portal
+      arm64: dts: qcom: Add AYN Thor
 
-> ---
-> bod
->=20
-> 
+ Documentation/devicetree/bindings/arm/qcom.yaml    |   10 +
+ arch/arm64/boot/dts/qcom/Makefile                  |    7 +
+ arch/arm64/boot/dts/qcom/qcs8550-ayntec-common.dts | 1777 ++++++++++++++++++++
+ .../boot/dts/qcom/qcs8550-ayntec-odin2mini.dtso    |  147 ++
+ .../boot/dts/qcom/qcs8550-ayntec-odin2portal.dtso  |   79 +
+ arch/arm64/boot/dts/qcom/qcs8550-ayntec-thor.dtso  |  223 +++
+ 6 files changed, 2243 insertions(+)
+---
+base-commit: f90aadf1c67c8b4969d1e5e6d4fd7227adb6e4d7
+change-id: 20260217-ayn-qcs8550-16c07b63de26
+prerequisite-change-id: 20260220-ayn-vendor-a153168c29b2:v1
+prerequisite-patch-id: 042cab8f04748207ba5395dd0f23c445955aaa2b
+
+Best regards,
+-- 
+Aaron Kling <webgeek1234@gmail.com>
+
+
 
