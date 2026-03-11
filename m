@@ -1,56 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-97062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id AM4rAdW4sWmTEwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 19:47:49 +0100
+	id IDIyMNO4sWmxEwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 19:47:47 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9CD0A268D81
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 19:47:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C559A268D66
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 19:47:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 2280731A476D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 18:44:33 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id EAEAE319F883
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 18:44:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4B66367F4A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF90F36405E;
 	Wed, 11 Mar 2026 18:44:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QXm7xL4c"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j5mVhLxa"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9635230DD2F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962D33033D8;
 	Wed, 11 Mar 2026 18:44:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773254671; cv=none; b=RdhU2ZSbpBwp/zRR51O30CZL5VrUklvX9oDoh+05dgQcM69e4+6hQ9P459zbo2W2OO1CsVM1LTOtXFkc5sip7A6/JdVCcKa31I4AOSUzUUkA2e9+VfyDWdo/aux8Vdb2OU0Shpfq9KCUUK+Yc2DGCrJsxM3NjI9TWanD2xnKkLQ=
+	t=1773254671; cv=none; b=q3hXCqheRn87AZ7CPt7jsLzATvEp2KRiOUK0v4mYR1F3Q08ZjfqVYgy9t0C2mruyWTnHGNc2LrD83SDDllx6BPWxtwsNWpLaRlSgylB10xoDgSXnXItmkNNgiuXTG/LQvAfjT0yo7ThMq/rrzhQhf5pFjUTpmhqtHOwnRFbJ38I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773254671; c=relaxed/simple;
-	bh=1hwN9lB39gZMN/iMHPqeoGVh2gh5ZyKeriDbiYZU+jE=;
+	bh=Pzzmign7Hy4szkEHrZUkoI+XLqdJUVJ2mA0Db6ivvGU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=gGr1ynn1y18w+ixPd0Ugtgd7q/7w4ryfar/880+Vf7IkgoEvdnz24C9Q7JwRc6z/LR5FV5AWdpKO31W7lXrFZw0D+nsjf5tqzOU+rMmn3wdPTOIU0jWarrATVJb2tF2ulOLftucQRywdfPG0St/neNcRBBxF7qBafLlPjXqzhZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QXm7xL4c; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 4C86BC19425;
+	 In-Reply-To:To:Cc; b=ouOklpDP/L/E3Mc7KyoEMsMsf32zpCYXzfbF/8Srh5if7hc8RgDUGRf+LBrZ+B0kpAZ9crXHGBCWdc6q51tphUrcNiQSmLh3DIm1BCozSFGROIpKFmJAEsRXRNSO0g31xuB5hGVdoovSKayASew6TggzQzke3Xa1iY8aHl4AnJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j5mVhLxa; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 63AACC2BC86;
 	Wed, 11 Mar 2026 18:44:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1773254671;
-	bh=1hwN9lB39gZMN/iMHPqeoGVh2gh5ZyKeriDbiYZU+jE=;
+	bh=Pzzmign7Hy4szkEHrZUkoI+XLqdJUVJ2mA0Db6ivvGU=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=QXm7xL4c9zphgE4VjSSEtRdN95S2W5ZmGMzRPSAp3t6OgHC/eBXkwxMAe+i6SQugk
-	 23hI0xakdsWihG6Wk+vhv3hn5r5h4Q2uOBSWlibMikhdugUvIXnDUSsbzYALqauCFK
-	 CSkRsOwGzXbMgcwA0yRN0ydPhpLc8m0QZWKwvU8AmOYHtvybuUwkEHsosq8bzlCfH4
-	 HG74NtQrBTbwJPCEunTiUicDIQHpt7Bgw6AoHq4ZnDMeyYYfQvpdz7ABBM+l7f1uyp
-	 alI+onguGhzpRx5jN2oyTRPUc+H0L1t34kZS+t1HRlWGu5I2KaTjkezFL03mkn/7aN
-	 67+JRjSWJkDbg==
+	b=j5mVhLxa+mmB/8uKtDxb/rm/ccTNg9Rnd901FtcIMG6F4+OPX+4Wnc/ftL4w1QudP
+	 q4gYOaHjVUIAcP7wqmr2GrB/qiZend7iLPOPFvse3R5dJjZdeOMR9MX52GJh1+FaF/
+	 z6vGab0ldEueIDXP+14S43DFOm0YEgUn++tl5ToY7LpHRzY5ZcQd4Dws1ZB8OG670b
+	 tevtrmN3QQfsEyC6RlITRBdkTKXsbRMFoeLHyXID/PyokQFyByQMZJIPPKRmMvnn25
+	 Y2YAcLZawJJp1HN3no6eLo6nM9j4VSGso0ubv626qypLwnbaJcZ1zjI1x5qIFsyFUK
+	 ngp1h/itccJWw==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44D7A1125866;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55D871125865;
 	Wed, 11 Mar 2026 18:44:31 +0000 (UTC)
 From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Date: Wed, 11 Mar 2026 19:44:29 +0100
-Subject: [PATCH 1/2] arm64: dts: qcom: sdm845-xiaomi-beryllium: Introduce
- framebuffer
+Date: Wed, 11 Mar 2026 19:44:30 +0100
+Subject: [PATCH 2/2] arm64: dts: qcom: sdm845-xiaomi-beryllium-tianma:
+ Disable MDSS
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,7 +59,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260311-beryllium-fb-v1-1-408a580d125e@ixit.cz>
+Message-Id: <20260311-beryllium-fb-v1-2-408a580d125e@ixit.cz>
 References: <20260311-beryllium-fb-v1-0-408a580d125e@ixit.cz>
 In-Reply-To: <20260311-beryllium-fb-v1-0-408a580d125e@ixit.cz>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -70,21 +70,21 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
  Petr Hodina <petr.hodina@protonmail.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1053; i=david@ixit.cz;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=960; i=david@ixit.cz;
  h=from:subject:message-id;
- bh=i+PpcsXJJ53DrxBp3ADnJsJTSeGIaZ45KNoGbwtVT7c=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpsbgO+vyDUcHpIKz/T39SZ3iI42Y1qchdCybkd
- Sby9saxZLSJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCabG4DgAKCRBgAj/E00kg
- coi6D/9E4h6y/4CrOKrqkUzpAtAdVD47dHUZ3BnJEqDl2xqoJx0vCQlX97QkiNSKsJ64e/S2lUg
- naF0xH+f5hxXYfYYp7r6ZTxPNf6mdM8RPHAIlGhK3KFWNJz57joD1cRA7loPBLx4Aj7ZJxcmKG2
- uWsxos0zIkAE8tLRdLYhimr4QcJ+nLO0KQ0w23KVVWSg97uUdsD29Gp2FolsomQdlOUh9jL5xOZ
- +Cz4VfZKMQCqo9DELgoj+NRWUlA2VyR+7TYXNXj8Ec4EzBxI058/NMOYTN/W07KduTUcQesNaY+
- B0vXbR6qXSR0YwACGvTF0ogjwFQMLVA3lo5BXUmkYDgCgq26Krnnnh+5/m14allMiPs8KXqMNp9
- 0OEFHlizKEe30Wb2EKl0LtgAZnW3H3k1G+6/86UYwhEblpCf1hYWffMSgeXAbEMFGZJcx+Pp5kq
- kq66KJchdxnoKu7NbefvqHa45UKFLhKnKEmLmWampYTuKefo+BQMOU0yT6meofeI9lHySARUYVt
- ichOBjeYYqjFbHXO/hFP/SKyGhSb3OhtQJl8m2jFyN9Snz0v/5yivMqFpHgkoApmtq8bl1IVCTe
- QzxYq4bm0letvP9zvOL3AwrpdQfawZWA/GDGWc5GktYK2INjQ0sUlgzQoFSm1J7ymjU3hYfmsp6
- z8s3lxaHQIU2YCQ==
+ bh=3Pg7NvtymOOJ0LjoaS8anANtqZcNQW66vxuq+tyshlk=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpsbgOFN0ReCshfufGyULOQf7EZRyQs3GVsHVb9
+ K1qGZUzGRGJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCabG4DgAKCRBgAj/E00kg
+ ciqKD/wMixPocS60DrqpLPI/mYEJMYSsKvfDAZ28XU7nRLtzXMaKEeJC+q1g0AT3IV9Hl1Ygysw
+ SRuhlexk2kRycUualbhyrVMDe4GraTrbUGv1tW7dNTe/yKaizDeI41eXPuk47hQUPz/EtH8ZlfM
+ XVY2JfbG4rjxzmzNE7OUM3FiXmd0IXZj7njHiLAbn78811CYfbgTIQZwwb6tQysE+Z48jBu7jdx
+ 4bNrrzsPmeFin0kNutgsOblQUw9qO8bnYlwk54jM2Ds/bDCN68arPGK+N9kE6zVTPC9Mg8wMQbh
+ mUCm4AA0DL873Zl7rK12NDEzAafQHG0hrG5fRR+u5zQd4F017o8RIOt9AF4JUTUIXCxgs7LVDFP
+ c//aaFd25kXCkRGeUjmmEIBBfemvKitvPJZNq+qqPGPPFFzTeOcPqR6gWdjaWo1LoKMBCxp8U/p
+ AScPU3CoaWggcLY/6yGxdG5zGCF5mkohNZAlH39oud2sJU2WB/Ewi+EqpPkV2mEORJzXe8x5R3r
+ PHII+f2z8tI26KJvDa8y5UZ/RQAZgcbXe95GctyZ/wsIs4dtdqsSnMFSvhh6b4saHDNe+79IyOA
+ YyeiGv5sa6bLUswQghRJQDvMD05X4pYEE4DqvYW92ZPwo1iFZoJTvpuPyZjaiKBcDQTCl4q97eJ
+ HtJLiZeIPkb+foQ==
 X-Developer-Key: i=david@ixit.cz; a=openpgp;
  fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
 X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
@@ -99,7 +99,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-97062-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
+	TAGGED_FROM(0.00)[bounces-97061-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
 	FROM_HAS_DN(0.00)[];
 	FREEMAIL_CC(0.00)[vger.kernel.org,protonmail.com];
 	TO_DN_SOME(0.00)[];
@@ -118,48 +118,40 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	RCPT_COUNT_SEVEN(0.00)[11];
 	HAS_REPLYTO(0.00)[david@ixit.cz];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,protonmail.com:email,9d400000:email]
-X-Rspamd-Queue-Id: 9CD0A268D81
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,protonmail.com:email,0.0.0.1:email]
+X-Rspamd-Queue-Id: C559A268D66
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 From: Petr Hodina <petr.hodina@protonmail.com>
 
-Add framebuffer for early console and u-boot support.
+Currently the panel driver for tianma is broken.
+Disable MDSS to prevent DRM taking over the framebuffer.
 
 Signed-off-by: Petr Hodina <petr.hodina@protonmail.com>
 Signed-off-by: David Heidelberg <david@ixit.cz>
 ---
- .../boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi    | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-index 01b570d0880d6..bd6d7a3cfc0ac 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-@@ -39,6 +39,22 @@ aliases {
- 		serial1 = &uart6;
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts
+index b58964cde8342..d1c7bccaab500 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts
+@@ -36,3 +36,13 @@ touchscreen@1 {
+ 		touchscreen-size-y = <2246>;
  	};
- 
-+	chosen {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
+ };
 +
-+		framebuffer: framebuffer@9d400000 {
-+			compatible = "simple-framebuffer";
-+			memory-region = <&cont_splash_mem>;
++&dispcc {
++	/* Disable for now so simple-framebuffer continues working */
++	status = "disabled";
++};
 +
-+			format = "a8r8g8b8";
-+			stride = <(1080 * 4)>;
-+			height = <2246>;
-+			width = <1080>;
-+		};
-+	};
-+
- 	gpio-keys {
- 		compatible = "gpio-keys";
- 		autorepeat;
++&mdss {
++	/* Disable for now so simple-framebuffer continues working */
++	status = "disabled";
++};
 
 -- 
 2.53.0
