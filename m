@@ -1,313 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-96883-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96885-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id yFvdHGQNsWldqAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96883-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 07:36:20 +0100
+	id wKIgGMcPsWlwqQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96885-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 07:46:31 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1483F25CE8C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 07:36:20 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 411D025CF68
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 07:46:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 7CB843034275
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 06:36:19 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id C0AF930379C6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 06:46:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2E9D2BE63F;
-	Wed, 11 Mar 2026 06:36:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 903422D2496;
+	Wed, 11 Mar 2026 06:46:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fJYnITz2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p6RAbRP9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F6CC28CF4A;
-	Wed, 11 Mar 2026 06:36:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68A15295DAC;
+	Wed, 11 Mar 2026 06:46:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773210977; cv=none; b=bSxu1VO256dNP+eYR9Z2FSGr4mO56EuOOXO9T5TbrBkhIx39WPJ6plhqAp33M8PB6oF11SyOmJkiRWa9Ge4SvL92gawmLxbpRSNAth2TUvWNFlXz5zYE5TWdVsHvXsuDg1dokR1X/7QxFlf2gJUiLT4HY/DF1haqq1RZ7HSnrr4=
+	t=1773211586; cv=none; b=bxdzQc5OrDPAt7z3pktlsW4hhc/7zRmAxWRfLe6R52k9UYO6R9szBjIrIv7kykJBpOEYwfjV7kTlXVrQZ1yEHXr7bfg7RUfwlMJmAxe2T3CQUzwzfmLM04Dt+FkV96OhGQZ/j9wQ+XKGdPmj2dJlf9mKqsnd4p9YLDKXsfn/WJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773210977; c=relaxed/simple;
-	bh=AaTYLl8pCEA3iXBWjihENeLR+q/W7z4IGa5dYA772EQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mwiZMKRpkXMr7XPPmgeGlLQ2IwHNtfV5YErwFsOXBaWzQqh2EZ8V+BR2I4VUyWkooQjjh+4tsBS6gMHTcTd9kc2lfH7EvGurOnJNWCPRxwJ0vfyWlYlREsjy7niGHf8mjvN1aC02tHivz0C0rxJL5p8Elg9ARR3l0fk+ONfu5ts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fJYnITz2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B7FC4CEF7;
-	Wed, 11 Mar 2026 06:36:08 +0000 (UTC)
+	s=arc-20240116; t=1773211586; c=relaxed/simple;
+	bh=rB99ecEotGCkphZ8eWraRpsWMoAZ5MBKddrud5VAW7I=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=CwU7EqG0t64ny8HPGbs+lGFEZgAuFyBn3ZLHIldgctpq5oEa7L+s+044JEnMkCv2o7g/1GfGkBuwAwcD9JYPl10q0N/O9fBRzaJfjocid7qs0XUApUa1l6hdozmy9MSEpnoc8sORC1bwEMsj6eIjHEhJfkRy3KC9pQN3dMU8pKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p6RAbRP9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 16F90C4CEF7;
+	Wed, 11 Mar 2026 06:46:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773210977;
-	bh=AaTYLl8pCEA3iXBWjihENeLR+q/W7z4IGa5dYA772EQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fJYnITz2osAqv0HH//ILVmEPzzOf8UT4nPZBKqx+knGPqv1f6TRUA7INVPTOtfYNK
-	 IHjDdoKMq+rQ544yAK1id8Ee6ZsB/exdPnLaFhET8oE574S0L8gaMeBlbV+5zD1brD
-	 cAe0fcMTGl75c4tXnpOWH3rRvl/11IPJrgaD3cC9Afin7LOJ88FCUAm9bFg4hEKj80
-	 8tpfoCkdZB7aFKkwCPC1yJwEf0+NuWUVID9a9HjqZL09Ql9ZO2InbKNq21PYiPTN4w
-	 F4QPa6cWdA69B5knnhLRvTN4ot63Na+2vyccxLuTRkqeYKUnN3txDXUJpRTRvrtUYF
-	 Ecc8eG//9Vlng==
-Date: Wed, 11 Mar 2026 12:05:59 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Niklas Cassel <cassel@kernel.org>
-Cc: Minghuan Lian <minghuan.Lian@nxp.com>, Mingkai Hu <mingkai.hu@nxp.com>, 
-	Roy Zang <roy.zang@nxp.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Srikanth Thokala <srikanth.thokala@intel.com>, 
-	Thierry Reding <thierry.reding@gmail.com>, Jonathan Hunter <jonathanh@nvidia.com>, 
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>, Masami Hiramatsu <mhiramat@kernel.org>, 
-	Marek Vasut <marek.vasut+renesas@gmail.com>, Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>, 
-	Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, 
-	Kishon Vijay Abraham I <kishon@kernel.org>, Manikanta Maddireddy <mmaddireddy@nvidia.com>, 
-	Koichiro Den <den@valinux.co.jp>, Damien Le Moal <dlemoal@kernel.org>, Frank Li <Frank.Li@nxp.com>, 
-	linuxppc-dev@lists.ozlabs.org, linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	imx@lists.linux.dev, linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org, 
-	linux-renesas-soc@vger.kernel.org
-Subject: Re: [PATCH v3 1/9] PCI: endpoint: Introduce pci_epc_bar_type
- BAR_64BIT_UPPER
-Message-ID: <dtxdgxrewfby5hu3cu3pu5kljylm627uc43sw75gk7loimmm6r@ei4w6wmqgd6a>
-References: <20260302095913.48155-11-cassel@kernel.org>
- <20260302095913.48155-12-cassel@kernel.org>
+	s=k20201202; t=1773211586;
+	bh=rB99ecEotGCkphZ8eWraRpsWMoAZ5MBKddrud5VAW7I=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=p6RAbRP9NUHKpS6kqcr3DMBtMI9ZIoH78HAXAYkZXeJnkrgZ7lvMTwkZqtgF5QM+B
+	 hc43dD4d5P0qq+ayVexmb90anOzWZP5oo3w+jCvCNq5ZFIcmFGhUUjsi9Xof0n49/t
+	 jgA723W+aR1+ez9CtjF/iofcNxH1Dag2msx4FijWJJ2giLHzcXmriSIGGdrA9Fk/78
+	 lFKYkEjRrsqHqu3d4K0Z+YbmIQ4wpLMikhbOMpTNKFo41sUpuaVwaZPcl9s8QcJ1T9
+	 GaYg/HlRHvC112nfZFqPL/XVAF4zGbusNljDS4O/r4iVwW3JtTUMwD/TcbiA+swERi
+	 EvL4yoEZdz9LQ==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C5E1FD062F;
+	Wed, 11 Mar 2026 06:46:26 +0000 (UTC)
+From: Aaron Kling via B4 Relay <devnull+webgeek1234.gmail.com@kernel.org>
+Subject: [PATCH 0/5] arm64: dts: qcom: Support AYN QCS8550 Devices
+Date: Wed, 11 Mar 2026 01:46:03 -0500
+Message-Id: <20260311-ayn-qcs8550-v1-0-fe8b2faad1ea@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260302095913.48155-12-cassel@kernel.org>
-X-Rspamd-Queue-Id: 1483F25CE8C
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/22OO27DMBAFryKwDgHuUruidJXABT/LhIWlmHTkB
+ IbvHsZqUqScB8zD3FWTWqSpZbirKntpZVs7wMug4rtf30SX1FmhQTYIk/bfq77E5oiMBo5mCmy
+ TIKtufFTJ5ev59no6uMrls59ej1EF30TH7Xwu12XIMouVFNgjEAElgNEli57iOFKkkNI0A2f1N
+ 2YZjhQ0z5Rd1rRV7YEssIs4B1x2+M+w0I2bc8Cs803PxobMkxhG+DVOj8cPDPGoHA0BAAA=
+X-Change-ID: 20260217-ayn-qcs8550-16c07b63de26
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Aaron Kling <webgeek1234@gmail.com>, 
+ Teguh Sobirin <teguh@sobir.in>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1773211585; l=2253;
+ i=webgeek1234@gmail.com; s=20250217; h=from:subject:message-id;
+ bh=rB99ecEotGCkphZ8eWraRpsWMoAZ5MBKddrud5VAW7I=;
+ b=NxlmJvOo8WdRXKVhPcg8tIJKmIFRzNKf6kTs/g7eXdiuDaB9xshDw0lJG5TRliqEAa7BwyqRL
+ 8PfMYTksVFaAWEAA70jZA1zdbmw5+zamS0z8mHkADLEtLpBYm4m1YnK
+X-Developer-Key: i=webgeek1234@gmail.com; a=ed25519;
+ pk=TQwd6q26txw7bkK7B8qtI/kcAohZc7bHHGSD7domdrU=
+X-Endpoint-Received: by B4 Relay for webgeek1234@gmail.com/20250217 with
+ auth_id=342
+X-Original-From: Aaron Kling <webgeek1234@gmail.com>
+Reply-To: webgeek1234@gmail.com
+X-Rspamd-Queue-Id: 411D025CF68
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
+X-Spamd-Result: default: False [1.34 / 15.00];
+	FREEMAIL_REPLYTO_NEQ_FROM(2.00)[];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-96883-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-96885-lists,linux-arm-msm=lfdr.de,webgeek1234.gmail.com];
 	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[29];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[nxp.com,kernel.org,google.com,intel.com,gmail.com,nvidia.com,socionext.com,renesas.com,glider.be,valinux.co.jp,lists.ozlabs.org,vger.kernel.org,lists.infradead.org,lists.linux.dev];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_REPLYTO(0.00)[gmail.com];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[vger.kernel.org,gmail.com,sobir.in];
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo,nvidia.com:email,nxp.com:email,valinux.co.jp:email]
+	RCVD_COUNT_FIVE(0.00)[5];
+	NEURAL_HAM(-0.00)[-0.997];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	HAS_REPLYTO(0.00)[webgeek1234@gmail.com];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-On Mon, Mar 02, 2026 at 10:59:13AM +0100, Niklas Cassel wrote:
-> Add a pci_epc_bar_type BAR_64BIT_UPPER to more clearly differentiate from
-> BAR_RESERVED.
-> 
-> This BAR type will only be used for a BAR following a "only_64bit" BAR.
-> 
-> This makes the BAR description more clear, and the reader does no longer
-> need to check the BAR type for the preceding BAR to know how to interpret
-> the BAR type.
-> 
+This specifically includes:
+* Odin 2 Mini
+* Odin 2 Portal
+* Thor
 
-I find the naming a bit confusing. How about BAR_64BIT_UPPER_BASE? This also
-brings the question, do we really need to mark the preceding BAR? Why can't we
-let the PCI EPC core to always assume that if the previous BAR has 'only_64bit'
-bit set, next BAR cannot be used as a standalone 32bit BAR?
+The original Odin 2 dtso is not currently included as it has not yet
+been verified.
 
-I find it weird or redundant to mark both BARs.
+The initial port was done by Teguh Sobirin for ROCKNIX and was made
+available on the AYN github [0].
 
-- Mani
+Support has been removed for things not yet supported by the upstream
+kernel, these will be added later when the related drivers are submitted
+and picked up. Such includes:
 
-> No functional changes.
-> 
-> Tested-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
-> Reviewed-by: Frank Li <Frank.Li@nxp.com>
-> Tested-by: Koichiro Den <den@valinux.co.jp>
-> Signed-off-by: Niklas Cassel <cassel@kernel.org>
-> ---
->  drivers/pci/controller/dwc/pci-layerscape-ep.c |  4 ++--
->  drivers/pci/controller/dwc/pcie-keembay.c      |  6 +++---
->  drivers/pci/controller/dwc/pcie-qcom-ep.c      |  4 ++--
->  drivers/pci/controller/dwc/pcie-tegra194.c     |  2 +-
->  drivers/pci/controller/dwc/pcie-uniphier-ep.c  | 10 +++++-----
->  drivers/pci/controller/pcie-rcar-ep.c          |  6 +++---
->  drivers/pci/endpoint/pci-epc-core.c            |  3 ++-
->  include/linux/pci-epc.h                        |  5 ++++-
->  8 files changed, 22 insertions(+), 18 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pci-layerscape-ep.c b/drivers/pci/controller/dwc/pci-layerscape-ep.c
-> index a4a800699f89..5a03a8f895f9 100644
-> --- a/drivers/pci/controller/dwc/pci-layerscape-ep.c
-> +++ b/drivers/pci/controller/dwc/pci-layerscape-ep.c
-> @@ -251,9 +251,9 @@ static int __init ls_pcie_ep_probe(struct platform_device *pdev)
->  	pci->ops = pcie->drvdata->dw_pcie_ops;
->  
->  	ls_epc->bar[BAR_2].only_64bit = true;
-> -	ls_epc->bar[BAR_3].type = BAR_RESERVED;
-> +	ls_epc->bar[BAR_3].type = BAR_64BIT_UPPER;
->  	ls_epc->bar[BAR_4].only_64bit = true;
-> -	ls_epc->bar[BAR_5].type = BAR_RESERVED;
-> +	ls_epc->bar[BAR_5].type = BAR_64BIT_UPPER;
->  	ls_epc->linkup_notifier = true;
->  
->  	pcie->pci = pci;
-> diff --git a/drivers/pci/controller/dwc/pcie-keembay.c b/drivers/pci/controller/dwc/pcie-keembay.c
-> index 2666a9c3d67e..5a00b8cf5b53 100644
-> --- a/drivers/pci/controller/dwc/pcie-keembay.c
-> +++ b/drivers/pci/controller/dwc/pcie-keembay.c
-> @@ -313,11 +313,11 @@ static const struct pci_epc_features keembay_pcie_epc_features = {
->  	.msi_capable		= true,
->  	.msix_capable		= true,
->  	.bar[BAR_0]		= { .only_64bit = true, },
-> -	.bar[BAR_1]		= { .type = BAR_RESERVED, },
-> +	.bar[BAR_1]		= { .type = BAR_64BIT_UPPER, },
->  	.bar[BAR_2]		= { .only_64bit = true, },
-> -	.bar[BAR_3]		= { .type = BAR_RESERVED, },
-> +	.bar[BAR_3]		= { .type = BAR_64BIT_UPPER, },
->  	.bar[BAR_4]		= { .only_64bit = true, },
-> -	.bar[BAR_5]		= { .type = BAR_RESERVED, },
-> +	.bar[BAR_5]		= { .type = BAR_64BIT_UPPER, },
->  	.align			= SZ_16K,
->  };
->  
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> index 18460f01b2c6..e55675b3840a 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> @@ -850,9 +850,9 @@ static const struct pci_epc_features qcom_pcie_epc_features = {
->  	.msi_capable = true,
->  	.align = SZ_4K,
->  	.bar[BAR_0] = { .only_64bit = true, },
-> -	.bar[BAR_1] = { .type = BAR_RESERVED, },
-> +	.bar[BAR_1] = { .type = BAR_64BIT_UPPER, },
->  	.bar[BAR_2] = { .only_64bit = true, },
-> -	.bar[BAR_3] = { .type = BAR_RESERVED, },
-> +	.bar[BAR_3] = { .type = BAR_64BIT_UPPER, },
->  };
->  
->  static const struct pci_epc_features *
-> diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
-> index 06571d806ab3..31aa9a494dbc 100644
-> --- a/drivers/pci/controller/dwc/pcie-tegra194.c
-> +++ b/drivers/pci/controller/dwc/pcie-tegra194.c
-> @@ -1993,7 +1993,7 @@ static const struct pci_epc_features tegra_pcie_epc_features = {
->  	.msi_capable = true,
->  	.bar[BAR_0] = { .type = BAR_FIXED, .fixed_size = SZ_1M,
->  			.only_64bit = true, },
-> -	.bar[BAR_1] = { .type = BAR_RESERVED, },
-> +	.bar[BAR_1] = { .type = BAR_64BIT_UPPER, },
->  	.bar[BAR_2] = { .type = BAR_RESERVED, },
->  	.bar[BAR_3] = { .type = BAR_RESERVED, },
->  	.bar[BAR_4] = { .type = BAR_RESERVED, },
-> diff --git a/drivers/pci/controller/dwc/pcie-uniphier-ep.c b/drivers/pci/controller/dwc/pcie-uniphier-ep.c
-> index d52753060970..f873a1659592 100644
-> --- a/drivers/pci/controller/dwc/pcie-uniphier-ep.c
-> +++ b/drivers/pci/controller/dwc/pcie-uniphier-ep.c
-> @@ -426,9 +426,9 @@ static const struct uniphier_pcie_ep_soc_data uniphier_pro5_data = {
->  		.msix_capable = false,
->  		.align = 1 << 16,
->  		.bar[BAR_0] = { .only_64bit = true, },
-> -		.bar[BAR_1] = { .type = BAR_RESERVED, },
-> +		.bar[BAR_1] = { .type = BAR_64BIT_UPPER, },
->  		.bar[BAR_2] = { .only_64bit = true, },
-> -		.bar[BAR_3] = { .type = BAR_RESERVED, },
-> +		.bar[BAR_3] = { .type = BAR_64BIT_UPPER, },
->  		.bar[BAR_4] = { .type = BAR_RESERVED, },
->  		.bar[BAR_5] = { .type = BAR_RESERVED, },
->  	},
-> @@ -445,11 +445,11 @@ static const struct uniphier_pcie_ep_soc_data uniphier_nx1_data = {
->  		.msix_capable = false,
->  		.align = 1 << 12,
->  		.bar[BAR_0] = { .only_64bit = true, },
-> -		.bar[BAR_1] = { .type = BAR_RESERVED, },
-> +		.bar[BAR_1] = { .type = BAR_64BIT_UPPER, },
->  		.bar[BAR_2] = { .only_64bit = true, },
-> -		.bar[BAR_3] = { .type = BAR_RESERVED, },
-> +		.bar[BAR_3] = { .type = BAR_64BIT_UPPER, },
->  		.bar[BAR_4] = { .only_64bit = true, },
-> -		.bar[BAR_5] = { .type = BAR_RESERVED, },
-> +		.bar[BAR_5] = { .type = BAR_64BIT_UPPER, },
->  	},
->  };
->  
-> diff --git a/drivers/pci/controller/pcie-rcar-ep.c b/drivers/pci/controller/pcie-rcar-ep.c
-> index 657875ef4657..9b3f5391fabe 100644
-> --- a/drivers/pci/controller/pcie-rcar-ep.c
-> +++ b/drivers/pci/controller/pcie-rcar-ep.c
-> @@ -440,13 +440,13 @@ static const struct pci_epc_features rcar_pcie_epc_features = {
->  	/* use 64-bit BARs so mark BAR[1,3,5] as reserved */
->  	.bar[BAR_0] = { .type = BAR_FIXED, .fixed_size = 128,
->  			.only_64bit = true, },
-> -	.bar[BAR_1] = { .type = BAR_RESERVED, },
-> +	.bar[BAR_1] = { .type = BAR_64BIT_UPPER, },
->  	.bar[BAR_2] = { .type = BAR_FIXED, .fixed_size = 256,
->  			.only_64bit = true, },
-> -	.bar[BAR_3] = { .type = BAR_RESERVED, },
-> +	.bar[BAR_3] = { .type = BAR_64BIT_UPPER, },
->  	.bar[BAR_4] = { .type = BAR_FIXED, .fixed_size = 256,
->  			.only_64bit = true, },
-> -	.bar[BAR_5] = { .type = BAR_RESERVED, },
-> +	.bar[BAR_5] = { .type = BAR_64BIT_UPPER, },
->  };
->  
->  static const struct pci_epc_features*
-> diff --git a/drivers/pci/endpoint/pci-epc-core.c b/drivers/pci/endpoint/pci-epc-core.c
-> index e546b3dbb240..1ad2f62963c8 100644
-> --- a/drivers/pci/endpoint/pci-epc-core.c
-> +++ b/drivers/pci/endpoint/pci-epc-core.c
-> @@ -104,7 +104,8 @@ enum pci_barno pci_epc_get_next_free_bar(const struct pci_epc_features
->  
->  	for (i = bar; i < PCI_STD_NUM_BARS; i++) {
->  		/* If the BAR is not reserved, return it. */
-> -		if (epc_features->bar[i].type != BAR_RESERVED)
-> +		if (epc_features->bar[i].type != BAR_RESERVED &&
-> +		    epc_features->bar[i].type != BAR_64BIT_UPPER)
->  			return i;
->  	}
->  
-> diff --git a/include/linux/pci-epc.h b/include/linux/pci-epc.h
-> index c021c7af175f..c22f8a6cf9a3 100644
-> --- a/include/linux/pci-epc.h
-> +++ b/include/linux/pci-epc.h
-> @@ -192,12 +192,15 @@ struct pci_epc {
->   *		   NOTE: An EPC driver can currently only set a single supported
->   *		   size.
->   * @BAR_RESERVED: The BAR should not be touched by an EPF driver.
-> + * @BAR_64BIT_UPPER: Should only be set on a BAR if the preceding BAR is marked
-> + *		     as only_64bit.
->   */
->  enum pci_epc_bar_type {
->  	BAR_PROGRAMMABLE = 0,
->  	BAR_FIXED,
->  	BAR_RESIZABLE,
->  	BAR_RESERVED,
-> +	BAR_64BIT_UPPER,
->  };
->  
->  /**
-> @@ -207,7 +210,7 @@ enum pci_epc_bar_type {
->   * @only_64bit: if true, an EPF driver is not allowed to choose if this BAR
->   *		should be configured as 32-bit or 64-bit, the EPF driver must
->   *		configure this BAR as 64-bit. Additionally, the BAR succeeding
-> - *		this BAR must be set to type BAR_RESERVED.
-> + *		this BAR must be set to type BAR_64BIT_UPPER.
->   *
->   *		only_64bit should not be set on a BAR of type BAR_RESERVED.
->   *		(If BARx is a 64-bit BAR that an EPF driver is not allowed to
-> -- 
-> 2.53.0
-> 
+* All panels
+* The Odin 2 Mini backlight and touch
+* All rgb leds
+* The built-in uart gamepad
 
+This series depends on two other series as described in b4 deps. Namely,
+one adding the AYN vendor [1] and one adding bindings for firmware-name
+in aw88166 nodes [2]. Both must be merged first for schema checks to
+succeed.
+
+[0] https://github.com/AYNTechnologies/linux/commits/sm8550/v6.17.5/
+[1] https://lore.kernel.org/all/20260220-ayn-vendor-v1-1-292cbbb682b3@gmail.com/
+[2] https://lore.kernel.org/all/20260310-aw88166-fw-v1-1-2777563bb673@gmail.com/
+
+Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
+---
+Aaron Kling (1):
+      dt-bindings: arm: qcom: Add AYN QCS8550 Devices
+
+Teguh Sobirin (4):
+      arm64: dts: qcom: Add AYN QCS8550 Common
+      arm64: dts: qcom: Add AYN Odin 2 Mini
+      arm64: dts: qcom: Add AYN Odin 2 Portal
+      arm64: dts: qcom: Add AYN Thor
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |   10 +
+ arch/arm64/boot/dts/qcom/Makefile                  |    7 +
+ arch/arm64/boot/dts/qcom/qcs8550-ayntec-common.dts | 1778 ++++++++++++++++++++
+ .../boot/dts/qcom/qcs8550-ayntec-odin2mini.dtso    |  147 ++
+ .../boot/dts/qcom/qcs8550-ayntec-odin2portal.dtso  |   79 +
+ arch/arm64/boot/dts/qcom/qcs8550-ayntec-thor.dtso  |  223 +++
+ 6 files changed, 2244 insertions(+)
+---
+base-commit: fe9e3edb6a215515d1148d32a5c445c5bdd7916f
+change-id: 20260217-ayn-qcs8550-16c07b63de26
+prerequisite-change-id: 20260220-ayn-vendor-a153168c29b2:v1
+prerequisite-patch-id: 042cab8f04748207ba5395dd0f23c445955aaa2b
+prerequisite-change-id: 20260310-aw88166-fw-903bf67e0621:v1
+prerequisite-patch-id: 07d4bb3f77ef2c2ab22b4c2875761e440156e241
+prerequisite-patch-id: 0a9b339adadf6fd550bb9b74c163dc68dd2573d2
+
+Best regards,
 -- 
-மணிவண்ணன் சதாசிவம்
+Aaron Kling <webgeek1234@gmail.com>
+
+
 
