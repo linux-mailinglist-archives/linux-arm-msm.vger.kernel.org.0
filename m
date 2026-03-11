@@ -1,186 +1,227 @@
-Return-Path: <linux-arm-msm+bounces-97084-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97085-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 2GZeK9zusWnbHAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97084-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 23:38:20 +0100
+	id YH2ABnDzsWl7HQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97085-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 23:57:52 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2174E26AF19
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 23:38:20 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2283126B01A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 23:57:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C0CEC304CCD7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 22:38:16 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 2D9A83011D55
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 22:57:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25C5E394478;
-	Wed, 11 Mar 2026 22:38:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93983398912;
+	Wed, 11 Mar 2026 22:57:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="bn1+/UD1";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="GFnw5Ws6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [5.144.164.164])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 423352E62C6;
-	Wed, 11 Mar 2026 22:38:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.164
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63EE0397E73
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2026 22:57:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773268696; cv=none; b=f2f/mbQDZYfikdj7UHCQPlCV6BlJ3ewIRWmR5ed5BppNUrY3fZQI5OzAgvAN1GKYCSK6q/LLCM0EUTIkfOqb/ttCDkDULXug6kv3N1W30SM41s3zPo7qYNwfPasQT7PiJyF/+GxGoYcfUK3Ku/RS2jgeIIyKcIW9CmZStXR/B0s=
+	t=1773269866; cv=none; b=ET8XdfLBql9W7R0axmmsVRhrFeOwlPk+g4gLp3u3q7i/oM2thiEyyzdVdrqN2i2i2hZ7EfX80q4vgpJqzvnFY+BTlM9sGp9KeAPWnFvl189zvR49YSD/pOdpjy2bx34o+zF/zWW+nE9znZsPpaNxrm9jysO0UnT5rBNvd4x32Gs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773268696; c=relaxed/simple;
-	bh=aiCEMnxE1KwtxH/kdWOTMVqhx90a6pgfZa3LOt2qNaQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=pl/8OyGF82kWIOd1kj/Iz7Iy1acqTjM61cMHsByeiRlSz24MjHFp+4r8oiQx/eUPSvkicN3w7IUTl3neKQbQafxplCnhgZ9mUbUsYGbJBBVqCPp1BJpfipQ/rOdWoBDBn3SeauyR985YPmzE1sWx7z8//Hv/irrI13up/QZ2oUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.164
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
-Received: from Marijn-Arch-PC.localdomain (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 0886720A45;
-	Wed, 11 Mar 2026 23:31:10 +0100 (CET)
-From: Marijn Suijten <marijn.suijten@somainline.org>
-Date: Wed, 11 Mar 2026 23:31:09 +0100
-Subject: [PATCH] drm/msm/dsi: Restore widebus calculation for CMDMode
- panels
+	s=arc-20240116; t=1773269866; c=relaxed/simple;
+	bh=VHm6QSnAsA+602Lrd0emZ6caSFHzLyVnfrA1BntmvqE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=c/Tnxa2eVs53jyCaozpy+MsHzhbgjMW3pRHOi7Tv+Mnj5F6gPjZDVKSVecvi7ej8EFIFJZDY23e0SKrXGUn20evo184cEMYlU7llhCKloXN3h7Rnyjd4m0jBmVntz1VLBPlZbDe/XC3aK5SFENLpvGuIkC9EOmEVuop8PJLYxDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=bn1+/UD1; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=GFnw5Ws6; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62BMMgNu1207646
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2026 22:57:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	RtNHy2LyyuXRdz/OlobybRGnBBWQatheEUj0Up6bJVI=; b=bn1+/UD1+NWbHFOo
+	fXr9VtQHFwMIApd6ugoH3bqgeEFv6hKYPDHs4KQ8REJaPSIYIF8zKjUSptIvmLtb
+	uwj/BPuy8MPBMoBizqRglFwFcC/8MEds8MuDoWC9yb0pVQQOPaKbWCzDX4Yx3ief
+	40Dc1Q9dM+/5cToC/0H7TzrBZ8DT7TVOqbxR3tCIC4dKFVojaAqUzXSP8D2UUTl9
+	ipLm5HjozemfxQj+rOH0heOVXhzMOtOTsper/D80jbujfAvMDqzo0N/K2+nB9nqc
+	gJsaSVpkocSiD+InTaPpEU2zsP+/Yga5YHtEXtRgfPazYgJXPgPkWteQuqhs9x4w
+	pRNj5Q==
+Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com [209.85.167.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cuh4v02q8-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2026 22:57:44 +0000 (GMT)
+Received: by mail-oi1-f197.google.com with SMTP id 5614622812f47-46713069242so1300498b6e.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2026 15:57:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1773269864; x=1773874664; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=RtNHy2LyyuXRdz/OlobybRGnBBWQatheEUj0Up6bJVI=;
+        b=GFnw5Ws6rgTOoWnYyqyc33F+0RFTExcxPA3LLoqIxoArmYyOllQ0II1n416/++XXW2
+         RIyXCXXfIyx24wvI4bP7eIBQwyyCBmvTnbDyxQ7mPVgzfnhCAUbU4AuCNnIdP8kcLBbw
+         Zrxndfgpx50s/do1hY5U8qUAxtFkBjGxhrjX/XS4vODvi3FmYUKy7D+lIJIG+uRShiXD
+         OoMFq+RWbwtQ4pzK+KUgCutngceZBebgnqQ/pkvcTbQqtgsrD4XjdjVc5Oz8RtI+CBJo
+         n49Pgc4WjUMf1M2Nim2BZGy3kGFSJJEd1gYaxkprWW6ZCNMCsYff22fnqKp1m99R5Erv
+         oyhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773269864; x=1773874664;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RtNHy2LyyuXRdz/OlobybRGnBBWQatheEUj0Up6bJVI=;
+        b=iMI/w1y7KDCsdh9Cz2xP362HBGYCKWpSO6r4W2sUtlQo/Q5GI270pbyw4KaxIRgHT2
+         82Xk/8iAiFVrCCNz8wPsaOSFsu1k0FRUA+h1AN3r/D3WnECSYzSPj6N3BfNuXz9kKTgr
+         AV1eFiRRJ27Mi9UoxuygG7ey52XCxztFXTUJ0zbfJ1GbFqUjEweoQ3TGgY0wdVeQX6dC
+         or/x/hXPhJxqBfZyFgdbGw8M+2tfVYA2Y4syVvyqYd8D2K8sGXrNkmJ12GEgKXH4KCgX
+         aPSpi5NO9IXREAAGOtPhWNKofrYxeVTT/5M6okvMBR10wcGiJ5xKPwinT7/SAFOYMPaX
+         duMA==
+X-Forwarded-Encrypted: i=1; AJvYcCWfTo4MfFJSIzqlSRgNtRTs1r9HQDVZQs6UurAig3CsPSCzxxW0rbDbnyQmgPoNdt8+clyNLtCXs9mdJJhv@vger.kernel.org
+X-Gm-Message-State: AOJu0YyZdMFvr4u4mZFtqJ/Y+PmXg+X0Wq+jN23Cm810HE3B+gZ8tDje
+	3eOBvcSAZcCBPldp1C5uPyk7THgj/kDbdSnUf+MbgtfOYK9OWJYOjTQMgGMwlIpxHzNHiYoFabT
+	3VkNxyCdQRjURbYuq9NJZg/6GmLWnRzFCZFgvkKLM1GwNrUWgleUvgkAn1EIKNyBj7TXrOOj7gu
+	rF
+X-Gm-Gg: ATEYQzzqf6fINRynpakhnmFpWqk5tEXgGhR8kuvU3YT4zBjAIALurnrEhkWi8k4D2GK
+	yK/ELoG8mYUrPPdc2FkdBU0Z3+9hrE+m/IAQZfLLTBJGHUinYHdwoqautxljCXVD2k9UrhIRagr
+	34usLYv6anQfNM+h5WMXJZjXT/uaJtgEmM0kezKbBODvyT7FkSQ7RTexeV5pbefvoa5mj6WvfDY
+	iaX58617GEmWuR9tLHYzLAfZaMDz9VrXUJcTqfx41bPOo5Fgk9taRpeb5upuviWoRufrmftLFJP
+	m23cMv+Ib+/nynOh8QwXqJDsMqY3ehFX3Tgn9fgu7n3glrZX5c8X90+hT0OJEN5zSGdUpDdqt9g
+	lEU/E4uafRgt8ZbFhuxneimYDUJ7BLaruS/JIZmSGyikow2MSW16YsmHNis3L9C6YqsHEAEp8JU
+	lMR1g=
+X-Received: by 2002:a05:6808:1920:b0:45c:7b2c:10bb with SMTP id 5614622812f47-46733641014mr2342956b6e.60.1773269863620;
+        Wed, 11 Mar 2026 15:57:43 -0700 (PDT)
+X-Received: by 2002:a05:6808:1920:b0:45c:7b2c:10bb with SMTP id 5614622812f47-46733641014mr2342938b6e.60.1773269863167;
+        Wed, 11 Mar 2026 15:57:43 -0700 (PDT)
+Received: from [10.71.180.216] (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-46734340842sm2034184b6e.18.2026.03.11.15.57.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Mar 2026 15:57:42 -0700 (PDT)
+Message-ID: <c313921f-03ab-40b3-82cb-10b0a40d91f0@oss.qualcomm.com>
+Date: Wed, 11 Mar 2026 15:57:40 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260311-dsi-dsc-regresses-again-v1-1-6a422141eeea@somainline.org>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x2MsQrDMAwFf8VojsB2Qwr5ldLBsV8cLW6QoASC/
- 72mww033N1kUIHR6m5SfMXk04aEyVE+UqtgKcMp+rj4RwhcTAaZFVVhBuNUkzSeN8Rn2fPsfaB
- Rn4pdrv/59e79B22Ty/dpAAAA
-X-Change-ID: 20260311-dsi-dsc-regresses-again-4be27dfc4001
-To: Rob Clark <robin.clark@oss.qualcomm.com>, 
- Dmitry Baryshkov <lumag@kernel.org>, 
- Abhinav Kumar <abhinav.kumar@linux.dev>, 
- Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Pengyu Luo <mitltlatltl@gmail.com>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, 
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Martin Botka <martin.botka@somainline.org>, 
- Jami Kettunen <jami.kettunen@somainline.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2854;
- i=marijn.suijten@somainline.org; h=from:subject:message-id;
- bh=aiCEMnxE1KwtxH/kdWOTMVqhx90a6pgfZa3LOt2qNaQ=;
- b=owEBbQKS/ZANAwAKAfFi0jHH5IZ2AcsmYgBpse0u5Aw5JzOB2jWSvCSMl/ueEEhQI63jKpP6d
- LcmQYEP3hGJAjMEAAEKAB0WIQROiwG5pb6la1/WZxbxYtIxx+SGdgUCabHtLgAKCRDxYtIxx+SG
- dsosD/9RTuj7J7OIUc6ihAJTTnTw6CiwB9MHH9xY6ZkjAUONWueeZpOyBYLCG8thynoHj9ThMCS
- j/Eph0IHsQmu4Rb2r1vx/kx0mu76szPmCft/c2bkklHgtisNbIh0Tdm5odRg4wvzlEegft2a/W/
- sejIQ5w3SN0DMywr8G1Aveg4fammvnK7fVcH6rzduE5W04pE0ppTc6vbXhOLWpNSJ5h40kV9OQM
- ss8bTYFg4J9gXDu7c599QG/TJvIfZcoLVJOkycv2llTNEmoWhOLowhNv8sI6Pmgxv70+jDUnJV2
- z17T4ouF3kW4M742XnzY+w091KIvqhz4oqVOun7XOngawiXSisQfdOFd+ja7EIJDOlQnHBDu1pg
- cZSi6Vx1JIpicmLf0mq4MY/V2n2/0xdXpGEo1pODigdkuPv/wgC+0KVcqfGC3lTKGLnhypU2DWj
- FDJafVCawnWODMPi98o8c503QLpGWkzhHBojo3LisxZqs/sWk1c4Jgvz7yW2Tc1NFqNM6wBFUfJ
- v5nl69mvWn4/N5mUVu2W2scsfzujNZpF3YjNd+dLE/Ox4P9azDQYOy9ZbBM+vhe4PM4LVLn63wo
- /QCPluY9OlJtbyIancNfS9gZsrRAAkbXLNENSty4wdf2SbxQuUJTO9lKJUQMrSUkBxA9H55wJzh
- Iowrmw1QdhnJHhA==
-X-Developer-Key: i=marijn.suijten@somainline.org; a=openpgp;
- fpr=4E8B01B9A5BEA56B5FD66716F162D231C7E48676
-X-Spamd-Result: default: False [-1.46 / 15.00];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC v3 02/10] usb: misc: qcom_eud: add sysfs attribute for
+ port selection
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260309203337.803986-1-elson.serrao@oss.qualcomm.com>
+ <20260309203337.803986-3-elson.serrao@oss.qualcomm.com>
+ <2026031101-cornstalk-partner-a30e@gregkh>
+Content-Language: en-US
+From: Elson Serrao <elson.serrao@oss.qualcomm.com>
+In-Reply-To: <2026031101-cornstalk-partner-a30e@gregkh>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzExMDE5NiBTYWx0ZWRfX01ucSN4D9s2/
+ sUBbd6jhYFD/sUzqpYqSPexRx5nLh1o6DP7hoB0O5WsRZ6/tt9VkiMKCt3BVr1t1KjJav4jii1A
+ Y7EDSUv38ZD9IxJBV1bHh+i5296cEy2buZ4J/F1u3U8qx8tgVHNuvjWKNnebMdracINEbmyPshl
+ sbUDm+QqSWOV2BeGwbsPuaSwJvrJQOFL7Dr/VhNIG16eHT5n9rsnLWafQjh/6i8I/mbYkOhuP+1
+ Rll9tcpr2fswZ7FyklJZAW3cvZEBHVW8MPyWWXWJ7hkZJsSVgh7Il/LqQIGe1RzigCCZyYTEHLf
+ Fp0l07RvUgSd/Vqk9+jA91g9PYnwW1Vr0LJGLUZVkMunmJ5NqoI1yGAAwj0497vABlftsZBtiuH
+ IfPb0D2NWhRHGhE5dv02JURpUlHmQUAAiS8M+YcN74kVZhNGqS7p0M2ld8J+7UalVks3+fT/Aoh
+ oD8AzbIBxuN09b4dXiQ==
+X-Proofpoint-ORIG-GUID: -wB5FBjXQ-Q779C_oe8KysL1drWk2MVG
+X-Proofpoint-GUID: -wB5FBjXQ-Q779C_oe8KysL1drWk2MVG
+X-Authority-Analysis: v=2.4 cv=V7NwEOni c=1 sm=1 tr=0 ts=69b1f368 cx=c_pps
+ a=WJcna6AvsNCxL/DJwPP1KA==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=EUspDBNiAAAA:8 a=IAXstxnVdUbjqp5kDF4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=_Y9Zt4tPzoBS9L09Snn2:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-11_02,2026-03-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0 phishscore=0 adultscore=0 lowpriorityscore=0
+ impostorscore=0 malwarescore=0 spamscore=0 priorityscore=1501 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603110196
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns];
 	RCVD_TLS_LAST(0.00)[];
-	DMARC_NA(0.00)[somainline.org];
-	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-97084-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch];
-	RCPT_COUNT_TWELVE(0.00)[19];
+	TAGGED_FROM(0.00)[bounces-97085-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.947];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[marijn.suijten@somainline.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	R_DKIM_NA(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,somainline.org:email,somainline.org:mid]
-X-Rspamd-Queue-Id: 2174E26AF19
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[elson.serrao@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 2283126B01A
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Commit ac47870fd795 ("drm/msm/dsi: fix hdisplay calculation when
-programming dsi registers") makes a false and ungrounded statement that
-"Since CMD mode does not use this, we can remove !(msm_host->mode_flags
-& MIPI_DSI_MODE_VIDEO) safely." which isn't the case at all.
-dsi_timing_setup() affects both command mode and video mode panels, and
-by no longer having any path that sets bits_per_pclk = 48 (contrary to
-the updated code-comment) all DSI DSC panels on SM8350 and above (i.e.
-with widebus support) regress thanks to this patch.
 
-The entire reason that video mode was originally omitted from this code
-path is because it was never tested before; any change that enables
-widebus for video mode panels should not regress the command mode path.
 
-Thus add back the path allows 6 bytes or 48 bits to be sent per pclk
-on command mode DSI panels with widebus, restoring the panel on devices
-like the Sony Xperia 1 III and upwards.
+On 3/11/2026 6:16 AM, Greg Kroah-Hartman wrote:
+[...]
 
-Fixes: ac47870fd795 ("drm/msm/dsi: fix hdisplay calculation when programming dsi registers")
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
----
-In addition I can't say I understand the original commit message
-at all; it mentions a BPC=10 mode however the highest format that
-mipi_dsi_pixel_format_to_bpp supports is RGB888 thus it won't
-ever return anything above 24, which is the original amount the
-non-command-mode path defaulted to (regardless of widebus)...  Was that
-patch doing anything for video mode at all?
+>> +
+>> +What:		/sys/bus/platform/drivers/qcom_eud/.../port
+>> +Date:		January 2026
+>> +Contact:	Elson Serrao <elson.serrao@oss.qualcomm.com>
+>> +Description:
+>> +		Selects which USB port the Embedded USB Debugger (EUD)
+>> +		is mapped to on platforms providing multiple High-Speed
+>> +		USB ports.
+>> +
+>> +		Valid values:
+>> +		  0 - Primary USB port
+>> +		  1 - Secondary USB port
+> 
+> Why not use "primary" and "secondary" as values instead?  That makes
+> this much simpler to understand.
+> 
 
-It feels like the conditional introduced here is only making things more
-confusing, but I don't have enough input to confirm what the video-mode
-path should be doing in widebus mode (multiply BPC by the number of
-components and by 2 in case of widebus?).
----
- drivers/gpu/drm/msm/dsi/dsi_host.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+[...]
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index e8e83ee61eb0..168e37e38fc7 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -1029,10 +1029,14 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
- 		 * unused anyway.
- 		 */
- 		h_total -= hdisplay;
--		if (wide_bus_enabled)
--			bits_per_pclk = mipi_dsi_pixel_format_to_bpp(msm_host->format);
--		else
-+		if (wide_bus_enabled) {
-+			if (msm_host->mode_flags & MIPI_DSI_MODE_VIDEO)
-+				bits_per_pclk = mipi_dsi_pixel_format_to_bpp(msm_host->format);
-+			else
-+				bits_per_pclk = 48;
-+		} else {
- 			bits_per_pclk = 24;
-+		}
- 
- 		hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc) * 8, bits_per_pclk);
- 
+>>  
+>> +static ssize_t port_show(struct device *dev,
+>> +		struct device_attribute *attr, char *buf)
+>> +{
+>> +	struct eud_chip *chip = dev_get_drvdata(dev);
+>> +
+>> +	return sysfs_emit(buf, "%u\n", chip->port_idx);
+> 
+> Wait, you are returning a 0/1 here, yet using a u8?  How can that work?
+> 
 
----
-base-commit: 3fa5e5702a82d259897bd7e209469bc06368bf31
-change-id: 20260311-dsi-dsc-regresses-again-4be27dfc4001
+Thanks for the review, Greg.
+I’ll switch the sysfs attribute to use "primary"/"secondary" values
+(instead of numeric 0/1) as suggested and update the ABI doc and driver.
+This should also resolve the ambiguity around the current 0/1 output.
 
-Best regards,
--- 
-Marijn Suijten <marijn.suijten@somainline.org>
-
+Regards,
+Elson
 
