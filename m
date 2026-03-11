@@ -1,228 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-96960-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96961-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OKDrDi5RsWlCtAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96960-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 12:25:34 +0100
+	id YLjAEihXsWmGtwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96961-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 12:51:04 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9F9D262DF2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 12:25:33 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id B97702631C7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 12:51:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id C74D1304AA32
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 11:25:32 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id AC5CF3011C69
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 11:51:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 820DC3DBD4E;
-	Wed, 11 Mar 2026 11:25:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B75883DDDC2;
+	Wed, 11 Mar 2026 11:51:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gjEi7UaP"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Xytk/hOv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A62EB3BF667
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2026 11:25:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BFF33DD526
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2026 11:51:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773228329; cv=none; b=B6EuPYyCMuIjGFKae6P2ELArDMz+EudTtnsHA+S01VtdlCxnSUFBsAB485wd3dej5taXojmdiWcoNn393esLUXeAjWemkqS+Ecqrh/rRJDC5eEhVRtpsh0pz/26TttIiEJX8qY5GLPa6SfYo0ei2Qxl5KsClPWp5DMDMhKnUYis=
+	t=1773229861; cv=none; b=ujy/CNM/nXRxpg8m5iJdl+zFMv/w5xmSqG2oY4XYt8RFrp2srqssk41qFGDLZc8VMaWAvs40dfKSM4CjAyRwgD1RbVlmeQhT6VDlRfDVJ2d/PTjGMqECPihAzcylsPzAc2Qdmvpt10EkdIYAb5yK3ZZ9WocfQ5ggavdGepAxWhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773228329; c=relaxed/simple;
-	bh=Bz8L6lJ5ljmm0f1bzOA7lmmgPpBjGpva/qWmEvAb8MY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Fh7QfNBgflj3wqbEj02QCucNoTqG1w9+Oy40dSjxeabMyhwezYo30p96G9df0gG34wE5A954EuCMSNCCijX21g4ERAMLYCs1TD7c13bhOG3G6r9AYcT5zTP2bHK3eyYY7hRRof6BkaSGZZezZ00hVMHsheLIoeixudSP4C5RNJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gjEi7UaP; arc=none smtp.client-ip=209.85.221.44
+	s=arc-20240116; t=1773229861; c=relaxed/simple;
+	bh=Uecr21BaIjAMsFAUZnGkKoaoMnYN11yTcZleCmy3sho=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=S28wA98c8sFazZFV5966HrC4vrl7MZ+joCOz1k2USt0z0iwzNoQOwZaH8GrPJisrJ4HWe7FZoUEEXaJe5QuZvDacqy7/jGXZ4OS+JDc5oxuWQ/5psBZxPLA3WQMWrvuBOcuvPs7XrK6k7YApyJR2lU/qko3y9t5dzp5NXdmpFLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Xytk/hOv; arc=none smtp.client-ip=209.85.221.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-439cd6b09f8so5410900f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2026 04:25:25 -0700 (PDT)
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-439b9b1900bso7585221f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2026 04:51:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1773228324; x=1773833124; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=CJze5/pXmPew2sfHMpjfcTTl4xqaN7GKbsQ4t36q17Q=;
-        b=gjEi7UaPHAFk6q2s51w18yNUF03XkuvFUOBRtX4PJxLEfSWhntd03DcwQd5ef/DK6w
-         mgYzuEuj48AU/x0wUIEjswwwUyV+B7krb5hOMHQiJ8UwyyUPQHEDoTjt0SkHOW6R69L4
-         6L9THeytyGz8TFUzCmze6v2IRLNvaQK6qmx72iVPWCOSNhFL2EKpf9clVU+q4M7omaiJ
-         nZw52V/+sPJ1Xmws4PP4tBHosuOj65m8Be07hrsUkAKiw+WEOTcOnONlSuSzeTfRl9vJ
-         k9/OvMzkMYZQxOt3qvOZFEd6Kac7PJaY77UDEFkGn40X4PZZBV+EaC1uX2DUq2LM5YUt
-         4+fw==
+        d=linaro.org; s=google; t=1773229859; x=1773834659; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Uecr21BaIjAMsFAUZnGkKoaoMnYN11yTcZleCmy3sho=;
+        b=Xytk/hOvDF00hrRb0Yq/EusNd26162BrDBGz2sWnSbsSk/+p5rD5lLSiv2b7PY5urb
+         OPxEL64A57Qp3tqmHx6KHpff3lWanqPqOt6l6tPBkP5HHBIgcF2r5XtAqpBxUd/dzQ9s
+         j8O0AxVKizDNhSup3trigc0CmMRyu6gMGCNJG485cvPol3UbXCAo0qF7FNjwdwlXG9Jd
+         FOJ0RNuKWnPNUOKDCH/SjsV9ui4Ashli+wXyhZGNS13kvud1uCiF6oc+va0QIjDnBv80
+         2ufQgvlo4GMbOcKvzWmgaoot/MIUuD4DKlHSPgK0nLM5dT0nAerncHzQYGITENEwUbqH
+         /CtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773228324; x=1773833124;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CJze5/pXmPew2sfHMpjfcTTl4xqaN7GKbsQ4t36q17Q=;
-        b=lZ3c3nClAQCt6ZsJms/FKRxFfQnomRbyImpukpnQboFJf8/l69TrXLtWC+FZvGGQcH
-         49W6iseOAHyIGcFIHUNEVM+EkTMIq7kdGIL0YHMfJWhTCEmP5KK6TlnWf8GI0w5FpuXQ
-         UUuVPgz7yzxFvAJocTY2paDj90xCrBEne5uUlCSfbGb6FZPO6PPzkVr2i35VkQgLUip4
-         VNN4QTdSlMALzFCZTaVION93m41X6VNPg7A2T2PWnvRY0z0keldULdBn5WTMv1McqbFq
-         btK+4OLamhn+8xmZ/SIzRVxqZoOcsbkJdudDZS4g0+tKO0/8/4BlEpnX43T2+W+djO/j
-         fMIw==
-X-Forwarded-Encrypted: i=1; AJvYcCXjfI8ynmYZUzceJHMG3I40EPabLKfRy+VOXGtndPBj5QtiPsRwNo8Vye3JZ0VwITxk4yA9jAye6ahzClST@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxm3csqTzXW2gbCtkwOekGiZohNzrTSQfpFWaaADtO89RJzFD5u
-	UvMqsKNZKh6K2wX/mhC/v+ZAwVVVOLZaPYx58hRafj34oWfCHAqT4Tr6zAPPm8jvjCA=
-X-Gm-Gg: ATEYQzwEG8cA12HgCRLxJoO966Jqq28NhQEu/iVdreKTIatGzOezv4FA+Oq4YTd21uI
-	55rywmqjQt0R6i9tTShUuIJjWZVH4roTYqKMYAH8Dsqhz9/8YlzrCDvJWMDFA7jbZgZ+l2yMhuS
-	PTAaKhgpErNSIcO2rrLv9L9PNiQhq00aFqOynictReF1GS7qVtnPPNee0cIpZjv7W4+vLnGZUlU
-	y0V56ezqv0UpjxRGkAHQuLTxs+Rj3rYY3MdigwbeVbfiettiaPozf2gOvdzhoPRiXOuEPkwst/N
-	WhRtWHiASKyCYOlmAxFeXOm/yJ/9mrFnfaJ07ov7AkYkmAEKI6YT7GTtzKjjSU9VUIrHGYh91zn
-	XAxB8gRD5ySIV/64vaHh70190n0t6ajwCUpzB2/1eEikhvicfaBzCmN0eU0MRS51UMdZHsQ5UZO
-	zz0Wruep8NosGm0yR6dGX940v44p4sV5X99eBFkOqfUBmUvQ==
-X-Received: by 2002:a5d:5d0b:0:b0:439:b79d:b9a5 with SMTP id ffacd0b85a97d-439f8431382mr4099695f8f.37.1773228323834;
-        Wed, 11 Mar 2026 04:25:23 -0700 (PDT)
-Received: from linaro.org ([2a02:2454:ff23:4441:1c2c:7aff:fe45:362e])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-439f81f1318sm6682078f8f.21.2026.03.11.04.25.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Mar 2026 04:25:23 -0700 (PDT)
-Date: Wed, 11 Mar 2026 12:25:07 +0100
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Bartosz Golaszewski <brgl@kernel.org>
-Cc: Vinod Koul <vkoul@kernel.org>, Jonathan Corbet <corbet@lwn.net>,
-	Thara Gopinath <thara.gopinath@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>,
-	Udit Tiwari <quic_utiwari@quicinc.com>,
-	Daniel Perez-Zoghbi <dperezzo@quicinc.com>,
-	Md Sadre Alam <mdalam@qti.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Michal Simek <michal.simek@amd.com>, Frank Li <Frank.Li@kernel.org>,
-	dmaengine@vger.kernel.org, linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-crypto@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Subject: Re: [PATCH v12 05/12] dmaengine: qcom: bam_dma: add support for BAM
- locking
-Message-ID: <abFRE1qHgP-SYWZL@linaro.org>
-References: <20260310-qcom-qce-cmd-descr-v12-0-398f37f26ef0@oss.qualcomm.com>
- <20260310-qcom-qce-cmd-descr-v12-5-398f37f26ef0@oss.qualcomm.com>
- <abE9RQfGN6Ycns1B@linaro.org>
- <CAMRc=MeSfFyVYSJHzHvuynRR3TWRz04tyiOy1JvqyHP0aQKPOA@mail.gmail.com>
+        d=1e100.net; s=20230601; t=1773229859; x=1773834659;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Uecr21BaIjAMsFAUZnGkKoaoMnYN11yTcZleCmy3sho=;
+        b=GgANwWEQv872Zl3tqssodaG7K0bz79fAJ/wYHi5MuWrXS3rJB7ic0zuDnWGzUa1vqT
+         Hqdt0sOaC652PpJOd1YspqAeW9LX55TT1DCXl4KnitLRU9ENzVwKF17y7vGLH7Os6YuN
+         hPo2FNe5vAaawGx/pb04IG1KA1gkT7ywfh5zm5TbuN3pO2U4UO6UlZJ/ip6+bi9SePl8
+         D9bSgtDtXpw3J2pKSWQbFnDID8TaGULODbvv4eevyqZxqEPPaKOZJ38c+ratzVcp3eay
+         jFbcGayR5CENT0GHyDDuxvA4FggjfUP4Vnrn9je62k61nw2lGnDQWD4ddyct5BJamsqc
+         B/cw==
+X-Forwarded-Encrypted: i=1; AJvYcCUChjqAEFJTQAU7fTauPYkqJulzt7qzYGskIyRpbCwQDDNyhDv31pKd1bOGGJLbowAtgflvI+D2MSRy+skF@vger.kernel.org
+X-Gm-Message-State: AOJu0YyTsod9EBKabksun8nNKjFe19Uj8HhFjpfQgJ1d3DsX66qwhhNj
+	l6j1/pBC/zc9KS8eZr0s5b6wRT5LD2u/KivUD4wh14OITSFiUwV58aWgTXk8lm63b4U=
+X-Gm-Gg: ATEYQzzRNEWQwbxFLYTb6o17LF+fCnRFHfGfxp2h2pxUWqVf7JJeUhvooGIv5eBi2+C
+	CmpCKwzZuUx1a9jX+mAKdaOQ+RWB+lcb9pk2u3OEtUMBAV44T9l8mHjm+izgLbaS9mP55wU1eZz
+	vAi+2S9OiIDqyaJ/nxBNNSy/ExPE+G/jOL4Z0yDzstNZ+5Nv29YF0hWsQ9zj89R1IYVswpj7DU9
+	7fJbegiUpBljGq4MuTOKravL7JxpXqpgmlulhaOKtGWgeOyVqMjp3tM+hBtfJd+mjeaFlTC/VtL
+	39XXMEegwh2/7LIhEGqGZApP68lhPXcj6oNvbwd1IrknxhbChA6M1JGNLwAS2xMLxun6N5bsF2d
+	5g1tqdQfKEgbH8bnh+6RYAP7WM1uGvIPjFHXvptEcfr5YRwfoKmjOKR3IIkx4IL9Hu/D6U15/+J
+	OfgkHhLKpjsTWA9XVynHwnoWcoPP/z7O4=
+X-Received: by 2002:adf:e94c:0:b0:439:cb77:aa6 with SMTP id ffacd0b85a97d-439f8222fa6mr3599215f8f.42.1773229858683;
+        Wed, 11 Mar 2026 04:50:58 -0700 (PDT)
+Received: from [10.11.12.108] ([79.115.63.77])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-439f818d209sm5881724f8f.5.2026.03.11.04.50.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Mar 2026 04:50:58 -0700 (PDT)
+Message-ID: <c7d47b6d-caf7-426b-944e-7debb7d69045@linaro.org>
+Date: Wed, 11 Mar 2026 13:50:55 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMRc=MeSfFyVYSJHzHvuynRR3TWRz04tyiOy1JvqyHP0aQKPOA@mail.gmail.com>
-X-Rspamd-Queue-Id: D9F9D262DF2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/12] clk: add new flag CLK_ROUNDING_NOOP
+To: Brian Masney <bmasney@redhat.com>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
+Cc: linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Sudeep Holla <sudeep.holla@kernel.org>, Abel Vesa <abelvesa@kernel.org>,
+ Andrea della Porta <andrea.porta@suse.com>,
+ Baolin Wang <baolin.wang@linux.alibaba.com>,
+ Bjorn Andersson <andersson@kernel.org>, Chanwoo Choi
+ <cw00.choi@samsung.com>, Frank Li <Frank.Li@nxp.com>,
+ Geert Uytterhoeven <geert+renesas@glider.be>,
+ Krzysztof Kozlowski <krzk@kernel.org>, Orson Zhai <orsonzhai@gmail.com>,
+ Sascha Hauer <s.hauer@pengutronix.de>,
+ Sylwester Nawrocki <s.nawrocki@samsung.com>,
+ Alim Akhtar <alim.akhtar@samsung.com>, arm-scmi@vger.kernel.org,
+ Chunyan Zhang <zhang.lyra@gmail.com>,
+ Cristian Marussi <cristian.marussi@arm.com>,
+ Fabio Estevam <festevam@gmail.com>, imx@lists.linux.dev,
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ linux-renesas-soc@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
+ Peng Fan <peng.fan@nxp.com>, Pengutronix Kernel Team
+ <kernel@pengutronix.de>, Dmitry Baryshkov
+ <dmitry.baryshkov@oss.qualcomm.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+References: <20260309-clk-det-rate-fw-managed-v2-0-c48ef5a3100a@redhat.com>
+Content-Language: en-US
+From: Tudor Ambarus <tudor.ambarus@linaro.org>
+In-Reply-To: <20260309-clk-det-rate-fw-managed-v2-0-c48ef5a3100a@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Rspamd-Queue-Id: B97702631C7
 X-Rspamd-Server: lfdr
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[kernel.org,lwn.net,gmail.com,gondor.apana.org.au,davemloft.net,quicinc.com,qti.qualcomm.com,amd.com,vger.kernel.org,lists.infradead.org,linaro.org,oss.qualcomm.com];
-	TAGGED_FROM(0.00)[bounces-96960-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[vger.kernel.org,kernel.org,suse.com,linux.alibaba.com,samsung.com,nxp.com,glider.be,gmail.com,pengutronix.de,arm.com,lists.linux.dev,lists.infradead.org,oss.qualcomm.com];
+	TAGGED_FROM(0.00)[bounces-96961-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[21];
+	RCPT_COUNT_TWELVE(0.00)[31];
 	MIME_TRACE(0.00)[0:+];
 	DKIM_TRACE(0.00)[linaro.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[stephan.gerhold@linaro.org,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[tudor.ambarus@linaro.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	NEURAL_HAM(-0.00)[-0.999];
+	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo,linaro.org:dkim,linaro.org:email,linaro.org:mid]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:dkim,linaro.org:mid,tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-On Wed, Mar 11, 2026 at 03:32:38AM -0700, Bartosz Golaszewski wrote:
-> On Wed, Mar 11, 2026 at 11:00 AM Stephan Gerhold
-> <stephan.gerhold@linaro.org> wrote:
-> >
-> > I'm not entirely sure if this actually guarantees waiting with the
-> > unlock until the transaction is "done", for two reasons:
-> >
-> >  1. &bchan->vc.desc_issued looks like a "TODO" list for descriptors we
-> >     haven't fully managed to squeeze into the BAM FIFO yet. It doesn't
-> >     tell you which descriptors have been consumed and finished
-> >     processing inside the FIFO.
-> >
-> >     Consider e.g. the following case: The client has issued a number of
-> >     descriptors, they all fit into the FIFO. The first descriptor has a
-> >     callback assigned, so we ask the BAM to send us an interrupt when it
-> >     has been consumed. We get the interrupt for the first descriptor and
-> >     process_channel_irqs() marks it as completed, the rest of the
-> >     descriptors are still pending. &bchan->vc.desc_issued is empty, so
-> >     you queue the unlock command before the rest of the descriptors have
-> >     finished.
-> >
-> 
-> Thanks for looking into it. Good catch, I think you're right.
-> 
-> >  2. From reading the BAM chapter in the APQ8016E TRM I get the
-> >     impression that by default an interrupt for a descriptor just tells
-> >     you that the descriptor was consumed by the BAM (and forwarded to
-> >     the peripheral). If you want to guarantee that the transaction is
-> >     actually done on the peripheral side before allowing writes into
-> >     config registers, you would need to set the NWD (Notify When Done)
-> >     bit (aka DMA_PREP_FENCE) on the last descriptor before the unlock
-> >     command.
-> >
-> >     NWD seems to stall descriptor processing until the peripheral
-> >     signals completion, so this might allow you to immediately queue the
-> >     unlock command like in v11. The downside is that you would need to
-> >     make assumptions about the set of commands submitted by the client
-> >     again... The downstream driver seems to set NWD on the data
-> >     descriptor immediately before the UNLOCK command [1].
-> >
-> 
-> If what we have in the queue is:
-> 
->   [DATA] [DATA] [DATA] [CMD]
-> 
-> And we want to extend it with LOCK/UNLOCK like so:
-> 
->   [LOCK] [DATA] [DATA] [DATA] [CMD] [UNLOCK]
-> 
-> Should the NWD go with the last DATA descriptor or the last descriptor period
-> whether data or command?
-> 
-> It's, again, not very clear from reading tha part.
-> 
+Hi!
 
-I'm not sure, my impression is that the exact behavior of NWD is quite
-specific to the actual peripheral (i.e. QCE, QPIC NAND, etc). In the
-downstream drivers:
+On 3/9/26 4:38 PM, Brian Masney wrote:
+> Note this series depends on 3 previously-posted patches in this git pull
+> to Stephen for v7.1.
+> https://lore.kernel.org/linux-clk/aZuK4-QJCXUeSxtL@redhat.com/
 
- - QCE seems to add NWD to the last data descriptor before the UNLOCK
-   (as I wrote, it seems to queue command descriptors before data).
+There's no tags/clk-remove-deprecated-apis-v7.1 on
+https://github.com/masneyb/linux
 
- - QPIC NAND has a dedicated "cmd" pipe that doesn't get any data
-   descriptors, it specifies NWD always for the EXEC_CMD register write,
-   which isn't even the last descriptor. This is also done in mainline
-   already (see NAND_BAM_NWD in qcom_write_reg_dma() [1]).
-
-It is possible that NWD works only when attached to certain descriptors
-(when there is an actual operation running that gets completed by a
-certain descriptor), so we might not be able to simply add NWD to the
-last descriptor. :/
-
-I suppose you could argue that "make sure engine does not get
-re-configured while busy" is a requirement of QCE and not BAM, so
-perhaps it would be easiest and safest if you just add DMA_PREP_FENCE to
-the right descriptor inside the QCE driver. qcom_nandc has that already.
-
-Thanks,
-Stephan
-
-[1]: https://elixir.bootlin.com/linux/v7.0-rc3/source/drivers/mtd/nand/qpic_common.c#L484
+Cheers,
+ta
 
