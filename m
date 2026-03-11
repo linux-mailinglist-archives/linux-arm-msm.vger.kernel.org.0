@@ -1,69 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-97026-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97027-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id kH9IFliHsWmjCwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97026-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 16:16:40 +0100
+	id CPLkG1OXsWnkDAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97027-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 17:24:51 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C5D1526644A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 16:16:39 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C4A1267465
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 17:24:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id DD865308744A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 15:14:43 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 777E030391CD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 16:24:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF0CD30C602;
-	Wed, 11 Mar 2026 15:14:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 073123DCDBF;
+	Wed, 11 Mar 2026 16:24:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NzduROdM"
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="XBIHS5sR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-43103.protonmail.ch (mail-43103.protonmail.ch [185.70.43.103])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D44345758;
-	Wed, 11 Mar 2026 15:14:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E96E175A8F;
+	Wed, 11 Mar 2026 16:24:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.103
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773242072; cv=none; b=KF9f+BCxL85KpCzZvaLlAqGufJVyCfuyrOiwMBFUmic1tvlA4CtUDZbbzabDzH9/4ieU4S7z8pTiOC0GuT5gxtmrL4avLzSGsdFNFPaTAa1V6KXA8rfOxEZsADhfxqQTyCBgJ7KzTdBr6SBd1GE16eQMfTB48PTxofisxTPBKVo=
+	t=1773246273; cv=none; b=VUVySoO4pWphb3nfU6yidS8mSYt0WS5KEC8wRchjKgfhqdxYTDRRa2v7lvGasBaLU7IbfU3avsQRvpeepXIkXfthobBmG/K7+F7aA7E1Gi08hgLjpVIz5wYH1GDAQs6FDfYzVkUabfnY2crjbSGkKl/zBfSY3Yx2jMV+8udI12Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773242072; c=relaxed/simple;
-	bh=6G03Vmq9qwAjWyaMz8DPlElYYLptRloaQTWWkg09UaE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iGV15xdzCow/IrdeM5GnAmq5g/SEvTXlFk+yA0dunZtifFGgNk4UsbA9ENSZOX1Eu9YHdXpQmDTfhXE9nVCWrjQitmeTntuuwXrzpHlvVWsO6y67Mmw67qu7498LpqFsCb1d+C4hFGWSHRbnd4x8Y5+NCsKGxeFNudf6aHphD/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NzduROdM; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 545D8C4CEF7;
-	Wed, 11 Mar 2026 15:14:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773242072;
-	bh=6G03Vmq9qwAjWyaMz8DPlElYYLptRloaQTWWkg09UaE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NzduROdM4NtDkaC97uFQCxBxcQk2+/sdIAEDxDo46Sa1HI+QkJr/W69c2Ir2IcqT8
-	 yDFVqxVG6Uoy2C1u7z8hbctT5e6H4204OSpR7P4iULIE+LNSCndBNOIlZ0dDXL8MlQ
-	 l4WIr8beXU+M/Luz551S9xo13BT7i3wJ96J0SEPoSvzwaHCkwyUbIDiq2XIy4jfYuz
-	 6lmGZwceMWkMXv51jWNVTUZo9r1cbbfyd0lp6Nu0cpBU+Bp0/EqnBMeyriu5GpJ1GK
-	 ZQDhBsPe9f31JSjasOZkllQzRP2VjuZ7cfXP+Wwfto/f9PR5NPTFQ2Q6BSl5Ll9Fqa
-	 0LqOaXelYUCfA==
-Date: Wed, 11 Mar 2026 20:44:15 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Niklas Cassel <cassel@kernel.org>
-Cc: manivannan.sadhasivam@oss.qualcomm.com, 
-	Bjorn Helgaas <bhelgaas@google.com>, Mahesh J Salgaonkar <mahesh@linux.ibm.com>, 
-	Oliver O'Halloran <oohall@gmail.com>, Will Deacon <will@kernel.org>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Heiko Stuebner <heiko@sntech.de>, 
-	Philipp Zabel <p.zabel@pengutronix.de>, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linuxppc-dev@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org, 
-	Wilfred Mallawa <wilfred.mallawa@wdc.com>, Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
-	Lukas Wunner <lukas@wunner.de>, Richard Zhu <hongxing.zhu@nxp.com>, 
-	Brian Norris <briannorris@chromium.org>, Wilson Ding <dingwei@marvell.com>, Frank Li <Frank.Li@nxp.com>
-Subject: Re: [PATCH v7 0/4] PCI: Add support for resetting the Root Ports in
- a platform specific way
-Message-ID: <srdn3bspgwff7f7tnst7wzg4us4buifrv7o3ylo527hmuciyl3@6ioyrl6rfhaz>
-References: <20260310-pci-port-reset-v7-0-9dd00ccc25ab@oss.qualcomm.com>
- <abFMa6DCGGLUHddA@fedora>
- <dp2rem4gj7zhfgykvekmcrhq4ticm6m6ido6tbgflwzfcuuwkl@4wuxgle27eyx>
+	s=arc-20240116; t=1773246273; c=relaxed/simple;
+	bh=3RuMPtg/RVvPea6MW0G2XHf/DB6HivyTSRuRLqaYjlc=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=OG6KDAiVnF/nLrAYAPRmXYZZ9r9iVS+mjvbbgB3ICEWP96C9b5+Pi5UCM4bYFwD2qVNOAagc12dI7/RAPEDkPQ8VSFfC/X7ZkWgqQ7n/cJs9lNIJv5ewktJNUHUzSV23j4qXZNnAKDdht/bIjj4ax+XJzbsjyUxW0J7+HgCkN5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=XBIHS5sR; arc=none smtp.client-ip=185.70.43.103
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1773246268; x=1773505468;
+	bh=3RuMPtg/RVvPea6MW0G2XHf/DB6HivyTSRuRLqaYjlc=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=XBIHS5sRTkcx/wTYRSqnhUSDyJUdnzOf+/tR1+XjyrLSU5l8y76YT8w6Ltw4RnTBl
+	 uKy04YAQZAllp0eYYhz3vxXiK8fcLcU089lBLhFgyvumHWRFUtwUROefeSGfgb2qW2
+	 5ggXN0xZ8BLBybmSsHmaLp9hOthUHHqS8hLj/gpOybPj58K45jLYJxz7Y2zQbXFmHw
+	 fTy74k1Bzo4nzoEETjyruOGDKMyMkc5EKN5+TWSxiEcXq1UuSKnm2MnqciNYfmkEIE
+	 h9lEHkByU9Z4ZR3AtKurmKHj7a6Qrz9H3sYRy5qgBrgk+1oZ1tLAxmfN5Oy51cmAGX
+	 yLbzvtRKH0meA==
+Date: Wed, 11 Mar 2026 16:24:21 +0000
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Alexander Koskovich <akoskovich@pm.me>
+Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Heikki Krogerus <heikki.krogerus@linux.intel.com>, linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RFC 2/2] usb: typec: qcom: Add support for shared USBIN VBUS detection
+Message-ID: <oF1T50gf631F5puExIsmCok5PDcTsoQYoSt6WUVomFscijNjeTHK-n0_qz5xUWoG3zYwaj1OPX5biBT3jyw0D0zSf1AGuwpcORy0xlwkKqk=@pm.me>
+In-Reply-To: <5304144a-0907-4b7e-8c65-d0d37e74e9f8@oss.qualcomm.com>
+References: <20260308-qcom-typec-shared-vbus-v1-0-7d574b91052a@pm.me> <20260308-qcom-typec-shared-vbus-v1-2-7d574b91052a@pm.me> <5304144a-0907-4b7e-8c65-d0d37e74e9f8@oss.qualcomm.com>
+Feedback-ID: 37836894:user:proton
+X-Pm-Message-ID: 6a370b9c9a64c0b3acc4eb62e3bbd966af628c6b
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,82 +63,57 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <dp2rem4gj7zhfgykvekmcrhq4ticm6m6ido6tbgflwzfcuuwkl@4wuxgle27eyx>
-X-Spamd-Result: default: False [-1.66 / 15.00];
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-97026-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,google.com,linux.ibm.com,gmail.com,kernel.org,sntech.de,pengutronix.de,vger.kernel.org,lists.ozlabs.org,lists.infradead.org,wdc.com,wunner.de,nxp.com,chromium.org,marvell.com];
-	RCPT_COUNT_TWELVE(0.00)[24];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-97027-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_THREE(0.00)[3];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[pm.me:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	MISSING_XM_UA(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: C5D1526644A
+	FROM_NEQ_ENVFROM(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,qualcomm.com:email,pm.me:dkim,pm.me:mid]
+X-Rspamd-Queue-Id: 0C4A1267465
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Wed, Mar 11, 2026 at 08:09:53PM +0530, Manivannan Sadhasivam wrote:
-> On Wed, Mar 11, 2026 at 12:05:15PM +0100, Niklas Cassel wrote:
-> > On Tue, Mar 10, 2026 at 07:31:58PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
-> > > Changes in v7:
-> > > - Dropped Rockchip Root port reset patch due to reported issues. But the series
-> > >   works on other platforms as tested by others.
-> > 
-> > Are you referring to
-> > 
-> > ## On EP side:
-> > # echo 0 > /sys/kernel/config/pci_ep/controllers/a40000000.pcie-ep/start && \
-> >   sleep 0.1 && echo 1 > /sys/kernel/config/pci_ep/controllers/a40000000.pcie-ep/start
-> > 
-> > Then running pcitest only having 7 / 16 tests passed ?
-> > 
-> > If so, isn't that a problem also for qcom?
-> > 
-> 
-> No, tests are passing on my setup after link up.
-> 
-> > 
-> > There is no chance that the patch:
-> > "misc: pci_endpoint_test: Add AER error handlers"
-> > improves things in this regard?
-> > 
-> > Or will it simply avoid the "AER: device recovery failed" print?
-> > 
-> 
-> Yes, as mentioned in the commit message, it just avoids the AER recovery failure
-> message.
-> 
+On Wednesday, March 11th, 2026 at 9:02 AM, Konrad Dybcio <konrad.dybcio@oss=
+.qualcomm.com> wrote:
 
-I also realized that Endpoint state is not saved in all the code paths. So the
-pci_endpoint_test driver has to save/restore the state also. But it is still not
-clear why that didn't help you.
+>=20
+> I thought the intent here was to have 2 GPIOs, one per port - could
+> you please shed some light on this?
 
-Can you share the snapshot of the entire config space before and after reset
-using 'lspci -xxxx -s "0000:01:00"'?
+For the ROG 3 there is a pm8150b_typec and an rt1715, the pm8150b_typec is =
+the
+only one that needs this workaround as the rt1715 has it's own CC detection
+mechanism that doesn't get confused by the shared VBUS.
 
-- Mani
+Although there is a GPIO to detect VBUS on the bottom port as well, I just
+found that I only needed the one for pm8150b_typec atm.=20
 
--- 
-மணிவண்ணன் சதாசிவம்
+>=20
+> Konrad
+>=20
+
+Thanks,
+Alex
 
