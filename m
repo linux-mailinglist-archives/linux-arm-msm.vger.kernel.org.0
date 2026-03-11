@@ -1,178 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-96956-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96957-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aLvsOoBGsWlCtAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96956-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 11:40:00 +0100
+	id wITeDvZGsWlCtAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96957-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 11:41:58 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 89E34262613
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 11:40:00 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D68BD2626A8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 11:41:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 7502F30782B9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 10:38:46 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id CE02330C2DE2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 10:39:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C42C3CF672;
-	Wed, 11 Mar 2026 10:38:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D17333CFF41;
+	Wed, 11 Mar 2026 10:39:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iB74niwz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EPXTMuVt"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57B1B3CF02A;
-	Wed, 11 Mar 2026 10:38:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC5F83CF04D;
+	Wed, 11 Mar 2026 10:39:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773225523; cv=none; b=ZmQYMWJUWo6QN1zxcWiLb0SItWiEkYfnEWuh4i4horjAl0bokLLadn6ZNu0rJTbVIxEtFZwFWmk1qt3sCqNuktfXF+YAXaJtN+F2C1Eok4FbYP/wH92bQ+clQF+WjfjMFjSQuRSb9MhdfA2pHXR3j4FKLAbYflv/QPDufhyGfhk=
+	t=1773225540; cv=none; b=UzOBBPCxAQQv5kg/zT1hqixT4xTLLs+gTWtS1wkcU1tZ19mDujasgiPAVcvmrCwJnEAnfa21Fi/vSQIkFKb36bEELD1Wvs+N/C/IyEt4cgmL/uUkag5oMprTJuBTchAA3/UWkOO0+5OOQYvqPC4K5DD28voZiB1JsSdBfItRC8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773225523; c=relaxed/simple;
-	bh=7fLYMPNAfKidzlbuO1LeXfDQ8U5UEKHrnOvWTWygZyc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gFkCJUQ9YTTYzXtLGcRwu4CSXUrV4xBDQzefjLUS5CNfEOS2w1vsXvr/Br5kXksJLuNOmXETRtP+7VSdeVNWOBHDjpMauxdXjg1ajVaIg5SgXevvZzyWuxh/Y9xatE8/ORG/lAhAuqeBXRIbhanVlJHjzHvj55Cf0SIY2Jo2wPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iB74niwz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49EE4C4CEF7;
-	Wed, 11 Mar 2026 10:38:40 +0000 (UTC)
+	s=arc-20240116; t=1773225540; c=relaxed/simple;
+	bh=W7ULGNJxGs/DGU9Myuy1oXiG5LI/4bcuMikaWvPhafA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Vm+aP3yctBDRtCWqnFAbrhsLMv+GvCt7vAiOubkbb6owKfm1QtaPFF2r1dRxYhrliQ5saMHzH6WYaSEkEd8vQklpxTi+JQbZIB6rJ1YAW/iXzsBJtnbdRnPx1pr9l7rOqQuwGg+a/ZLITo4LFcdwOWRrTa0jestAHF7/3OD4AjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EPXTMuVt; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4256C2BC86;
+	Wed, 11 Mar 2026 10:38:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773225523;
-	bh=7fLYMPNAfKidzlbuO1LeXfDQ8U5UEKHrnOvWTWygZyc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=iB74niwzcNrPg0fBvxprgQHBoiGC1ibpoAAmXG8LTjqOhjULPMqDRPrKoKSaNTFPT
-	 QjnGCLrtJ/sH9XMuBxnwc9IWDrVL/QnniJmvZpYTQeia4ohQMUGPfRm/Ap510d1Je1
-	 oEyWqXAplh/xiPRJk6+Mn6MN5D3wC3OCXU3CsH3+bS6T/YDSRAyauX1lG51Y3FYUXd
-	 MaiRFogTxw08T2o6/2tPJNe7sicYThRaGwtrrt6K/8ZF+QS9zEAg8oUAkK0bEJxZCT
-	 82YkYcxH1zkiqH5p6dj8O8vdcYdWkNBZ/4eOv3uT5nJL9RJf6PEdPlOX59WjuM1Rjd
-	 7HM8ufUVDst8w==
-Message-ID: <b59eedda-e328-4f9c-b9b6-0b8bd660dd88@kernel.org>
-Date: Wed, 11 Mar 2026 11:38:38 +0100
+	s=k20201202; t=1773225540;
+	bh=W7ULGNJxGs/DGU9Myuy1oXiG5LI/4bcuMikaWvPhafA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=EPXTMuVttZqUZ/o7JPPcYnite3Um4wggHLpvXqpIoWuC2usNA6k425SfK6rMs77rB
+	 CYWeP0jsQTNUcUIy8PnTh9S3O1nsMJGjNBhq2Dq0SHWq7cP3w5ZyXyw9RdDTA3R1eW
+	 S440F5uh0GmInYEkvybjOxJt938zdDJqpyKVdapOCNKsje+vi1+1YLP/xkfpiLNDws
+	 05TBCJ8PNE7rD4f12++HjlcvSoHkNaTbYC0bbQKnbCiOof2KrsmYEZaZiY5R+JFXdj
+	 /8xPc+/68mvyzrREgIspZOqMj2/RD7sCmgpK/s0D84g4YnUN/WpSgEaH93P51o62GI
+	 KrW++eDJAd9HA==
+Date: Wed, 11 Mar 2026 11:38:50 +0100
+From: Niklas Cassel <cassel@kernel.org>
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: Minghuan Lian <minghuan.Lian@nxp.com>, Mingkai Hu <mingkai.hu@nxp.com>,
+	Roy Zang <roy.zang@nxp.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Srikanth Thokala <srikanth.thokala@intel.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Marek Vasut <marek.vasut+renesas@gmail.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Magnus Damm <magnus.damm@gmail.com>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Manikanta Maddireddy <mmaddireddy@nvidia.com>,
+	Koichiro Den <den@valinux.co.jp>,
+	Damien Le Moal <dlemoal@kernel.org>, Frank Li <Frank.Li@nxp.com>,
+	linuxppc-dev@lists.ozlabs.org, linux-pci@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org
+Subject: Re: [PATCH v3 1/9] PCI: endpoint: Introduce pci_epc_bar_type
+ BAR_64BIT_UPPER
+Message-ID: <abFGOoZUX_vexLWR@fedora>
+References: <20260302095913.48155-11-cassel@kernel.org>
+ <20260302095913.48155-12-cassel@kernel.org>
+ <dtxdgxrewfby5hu3cu3pu5kljylm627uc43sw75gk7loimmm6r@ei4w6wmqgd6a>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] scsi: ufs: qcom: dt-bindings: Document the Eliza UFS
- controller
-To: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Cc: Manivannan Sadhasivam <mani@kernel.org>,
- Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
- Bart Van Assche <bvanassche@acm.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20260310-eliza-bindings-ufs-v2-1-1fe14fc9009c@oss.qualcomm.com>
- <20260311-radical-bold-catfish-d7ccca@quoll>
- <3udticxb5sodqsjnolzpwwaajsmp5ugvhpxn6pl6jjyjyc5ygo@izze4ccdhyc4>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <3udticxb5sodqsjnolzpwwaajsmp5ugvhpxn6pl6jjyjyc5ygo@izze4ccdhyc4>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Rspamd-Queue-Id: 89E34262613
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <dtxdgxrewfby5hu3cu3pu5kljylm627uc43sw75gk7loimmm6r@ei4w6wmqgd6a>
+X-Rspamd-Queue-Id: D68BD2626A8
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-96957-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-96956-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[13];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[29];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[nxp.com,kernel.org,google.com,intel.com,gmail.com,nvidia.com,socionext.com,renesas.com,glider.be,valinux.co.jp,lists.ozlabs.org,vger.kernel.org,lists.infradead.org,lists.linux.dev];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[cassel@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	TO_DN_SOME(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-On 11/03/2026 11:27, Abel Vesa wrote:
->>
->> You need constraints for minItems: 2 for reg and reg-names. MCQ is
->> required. The mistake was doone for Kaanapali, but that patch was
->> applied without review, so it is not a correct example to base on.
-> 
-> OK, so something like the following then ?
-> 
-> @@ -68,6 +68,18 @@ required:
-> 
->  allOf:
->    - $ref: qcom,ufs-common.yaml
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            enum:
-> +              - qcom,eliza-ufshc
-> +    then:
-> +      properties:
-> +        reg:
-> +          minItems: 2
-> +        reg-names:
-> +          minItems: 2
-> 
+Hello Mani,
 
-Yes
+On Wed, Mar 11, 2026 at 12:05:59PM +0530, Manivannan Sadhasivam wrote:
 
-Best regards,
-Krzysztof
+(snip)
+
+> This also brings the question, do we really need to mark the preceding BAR?
+
+From a pure code PoV, marking the preceding BAR is enough even with the
+current code:
+https://github.com/torvalds/linux/blob/v7.0-rc3/drivers/pci/endpoint/pci-epc-core.c#L101-L103
+
+However, the current documentation claims that the succeeding BAR must be
+marked as BAR_RESERVED:
+https://github.com/torvalds/linux/blob/v7.0-rc3/include/linux/pci-epc.h#L207-L210
+
+I want to change this to BAR_64BIT_UPPER / BAR_64BIT_UPPER_BASE, so we can use
+BAR_RESERVED for BARs that expose fixed hardware resources (e.g. eDMA regs).
+
+
+Thus, an EPC driver does not strictly need mark the succeeding BAR with anything.
+This was done mostly for clarity. (E.g. with BAR_64BIT_UPPER_BASE it is obvious
+that this BAR cannot be a standalone 32-bit BAR.)
+
+If we don't mark the succeeding BAR with anything, IMO, it is less obvious that
+the succeeding BAR cannot be used as a standalone 32-bit BAR.
+
+But... since the code already does the "right thing". We could simply nuke this
+part of the documentation, and drop the .type for all BARs succeeding a
+.only_64bit BAR, if you prefer that option over having a dedicated type for the
+"upper base of a 64-bit BAR".
+
+
+> Why can't we let the PCI EPC core to always assume that if the previous BAR
+> has 'only_64bit' bit set, next BAR cannot be used as a standalone 32bit BAR?
+> 
+> I find it weird or redundant to mark both BARs.
+
+Redundant, yes, but in my opinion marking both BARs makes it unambigious
+that two BARs are used when a BAR is "only_64bit".
+
+E.g. Manikanta originally wanted to add code comments for the upper part of
+the 64-bit BAR:
+https://lore.kernel.org/linux-pci/20260217-master-v1-2-727e26cdfaf5@nvidia.com/
+
+Sure, we can just skip the .type for the succeeding BAR...
+But is that really better than clearly showing that a "forced" 64-bit BAR will
+always occupy two BARs?
+
+
+Tell me what you prefer:
+1) s/BAR_RESERVED/BAR_64BIT_UPPER_BASE/
+2) Change documentation and drop .type for a BAR following a .only_64bit BAR.
+
+And I will respin with that.
+
+
+Kind regards,
+Niklas
 
