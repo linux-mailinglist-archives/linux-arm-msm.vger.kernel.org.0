@@ -1,229 +1,235 @@
-Return-Path: <linux-arm-msm+bounces-96855-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MSVAMJr3sGkRpQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96855-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 06:03:22 +0100
+	id GJzdMeT3sGkRpQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 06:04:36 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19A0925C2DC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 06:03:22 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2465725C2FC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 06:04:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id AB2CE3051A9F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 05:03:20 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id AE96530F837E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 05:04:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 05AFA31F9B4;
-	Wed, 11 Mar 2026 05:03:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C000931F985;
+	Wed, 11 Mar 2026 05:04:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Qdcld3cY";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="TdkEx8Co"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nqL4eVSc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B52E131F9A8
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2026 05:03:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD57EEC0;
+	Wed, 11 Mar 2026 05:04:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773205399; cv=none; b=Uy5BQ1s/cDV4orbzmIW7rsMzq+Ze8AJMGbifDzJlY3Pgk3MIFcsQHQaNYWnruCxkheN5dtndAOwtGbjM+cnKgNUGtuIV2B8N0R30LprYFqrn7KXPFAzlE1y7rkXg89Lbqg+bx4DhSR+Bh99kOuwmqqgSpM7XPkI+C3WLy4LAVIE=
+	t=1773205473; cv=none; b=UUtQszQabVVZ6IjELD6XDv0tpXDsSnzXwr6BP0/KCEsNNNOLluaABkJ9asDqYE9yR6XalV7zELMt9QQTRjFQIoWpi4iFDHMQiiBKoGiD59uVeZ+974dZiuqE0VKeDBDGu7pOn4OhgQp2FH2HhDTgLe1wt2H4Y4XNxQL5PppygmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773205399; c=relaxed/simple;
-	bh=e8H0Xw+wh3kNLq/wPXj3gmYnFyaAHCTv7o59qJP51DE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lLGZ2Q50adDZUicjS3klEvUseovgxNysGGjvF/CedTzg7RvSoeOnEkyghREq5rBt0y7ENwGEY5PYNu6GdcX+4eRaLX3g7H+qvw2DsoMjA0j6NmctvWBl/EjvC/QR3rtHup9tT6EKyiuBWhh5OZ7hqqwHkXNzyXxShKglInchyRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Qdcld3cY; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=TdkEx8Co; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62B3FMvI248220
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2026 05:03:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	u0QC32ihlZ4NP7LPhxUY4DLpId8PCXDb46OZwe69QQY=; b=Qdcld3cYFEYTHWhI
-	JGvF2z+AtXUDaIpXwbe4pIjSacdXGxt8mJ2b7lDYR9MsA8ldDZua78DDnycOaEoG
-	aQn29Nun43M87IahQ3n9tdgcXa4tOJ9SelqK++RWONkwAzwakdE5d9/WYE1V9e5Y
-	4t0DqQESN8H4aJ6KogrVL30wzidC1+d9SPXIBTTNqq4CoIYEFMqkN7fqfUkkChmZ
-	En859WhxUnapLNyEOjisbxGWiBr478tF7hGyunWPi0yziZLubBuAa7g2cLl4tLNH
-	rULbFApaiEOQ12acFOZB7Wtk6riUO5vxIWsEXkjC7mya4+3fMKQMWEG48rcMdNCR
-	Y6++jA==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ctqv11xa0-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2026 05:03:17 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2ae65d5cc57so429165475ad.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Mar 2026 22:03:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1773205397; x=1773810197; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=u0QC32ihlZ4NP7LPhxUY4DLpId8PCXDb46OZwe69QQY=;
-        b=TdkEx8CoNMvuUOfwP6MMG/Y6HwRCbpJThQLGum9uwi/3tMYy4raPVOSs2p4BwHf/V/
-         SVljT6CRaNWgyLPjlbUtJ+4Uuosapp6HrRj2ePcHjE4p8Xl8P5DRD2nTYVugC+O6YHh7
-         +sOIGln9RNs86UYUWqTQVPCCWdrcpw6jxrxR3LzDfIHjMdiA6FUJJGCAsLwIcuhkLCGX
-         3lkGVDoQ8PfJoQo0oDqdI3dHwBBgWDQC2Vu7K4nJgf2/QZnz8VBwe/b02gniBHRjUV5m
-         rNPxcS2djWYNAF90HN6Eeso0E0RtnECHOpDa4p7K3Qr7HTT1hCK7yDQn2GUiuXPcu4L0
-         fHhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773205397; x=1773810197;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=u0QC32ihlZ4NP7LPhxUY4DLpId8PCXDb46OZwe69QQY=;
-        b=OIKfmGM/TLpyokgezZr7g+hnJ+YYq8c17Y+TO3UUa+uImyozM53VOeD6BUlvN4KrMg
-         BocWXvdr5teGBcXhFeu7x9x9y+d4KpGmPoEAtcbZiq7LkSIXlXN6KHETBHl5QIX9vs8t
-         tKGsJEGUSJ3s443NadSddSQLHB4KO0CKYKUTdUHzMNPGSxsE89OID2TAf9Oiwg1Sg8zW
-         iXF/u3jaa3Nfd5guXxocaQjNt8wuEW3CsfJkp+NR28a6/qH4Z3pp3cxpciWbdKssbYDF
-         pWQGhDJ3Sk1KoxkEqlci8+2yAjnl1VQbUCG1Lp8hw77oP/m1quYnrffRu8VBM0riSqFR
-         ypcg==
-X-Forwarded-Encrypted: i=1; AJvYcCXLoRxsZW7WR/A9LSqx2Zz90UsRpMDBJ/dc5u9+aY0JyCVOnGVQLz1DtlKnt4iSYqHLXpKshY1/CjmJoD8n@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy71PaMU/Hd5pLSMlX2YWU+l0L0uu5Mp75VWZEt7R7YO5UfaIzm
-	LDVEbujpYbxK0Ox3u8qERPEfZ0yAh47uAqgQQVOCwSK4WIbrk7sqm0Pvpu/JQNJ52NJZIcgFq3X
-	55r0AH3BMfBsjjgmGYYl1erEQ19w+xPFxGzYQ4RzBitG7K2FIhlAZYmg2PmkMmFzn0Kk4
-X-Gm-Gg: ATEYQzxylp0ZLMUn99WZVJIJVDRxTievFr8mnYR/BNyHsGqFPNijrGIGOqab48aSNta
-	e18HUytRQSN/xPUWVG0I34zzcjdS3TpP3ABGpYHPm6PVL2xLbDnBL1LR0WM8mUPebkNmfF2j8HI
-	Sawrv7AM0IoZI6bAWHO0DUR/YSkPpeNDGrMRdSCO2iK/X5iWFGlEtOfPWlR/VIC2W918QrYLKPH
-	wwy5Z5MrrCcaMSbiyv132z8vZLRSO6RZVwbvk5aOKJPtE588f9BOMLY0kOwUZSbkMhODzjo9HV5
-	nRMHnj13PJvb52JTaVKcnvNjeNKUPr+oAnc7101RH3ZnEU9gePIJ9aHq3GrJcXUDeENOXxrtDpP
-	xd6dLT56wvu0Gi3Jnoa9mkJghh43DVCNVBo7yNljCAUDpr3/9Jw==
-X-Received: by 2002:a17:903:2f81:b0:2ae:5745:f0e9 with SMTP id d9443c01a7336-2aeae76fcf8mr14505155ad.3.1773205396543;
-        Tue, 10 Mar 2026 22:03:16 -0700 (PDT)
-X-Received: by 2002:a17:903:2f81:b0:2ae:5745:f0e9 with SMTP id d9443c01a7336-2aeae76fcf8mr14504805ad.3.1773205396085;
-        Tue, 10 Mar 2026 22:03:16 -0700 (PDT)
-Received: from [10.217.217.147] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2aeae34de7bsm12095585ad.53.2026.03.10.22.03.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Mar 2026 22:03:15 -0700 (PDT)
-Message-ID: <fa004f9c-3c5b-45b4-8ffe-28f665671fc0@oss.qualcomm.com>
-Date: Wed, 11 Mar 2026 10:33:09 +0530
+	s=arc-20240116; t=1773205473; c=relaxed/simple;
+	bh=fYyP3Zu9FaIM29drE15IUXdeAZe+0BRP7elc4vr6eGc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pwYXNdDZi+2bVOcGcyxX+rsaQTp0e1rbH8qaqTm0YqH1bwW2DktqjhmwEX/8TKYN9NneBsv7qjXzuntR2uZ98ZWXuILyIi2qBursat9u0FTLsPlCvuBsvAXpJ9fM/Bg8rqIY4C/jfFE1oe29d6jacqZ/BsYwBY5RNr0dAQp7Wvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nqL4eVSc; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AB3FC4CEF7;
+	Wed, 11 Mar 2026 05:04:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773205473;
+	bh=fYyP3Zu9FaIM29drE15IUXdeAZe+0BRP7elc4vr6eGc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=nqL4eVSceLQkWZy2agF52UXOujfj7w7KrEuOhM4cOGhKUUw59uYN9x/5NytgiLzOR
+	 xyWmn0w8TWKhJQe9w/xoJxPfAi391pPUereu4K3uFM6v04Vy0yAg19kdVdcsk+Uybf
+	 M2Rb7gOuGWtqzdzH2HbGgZU1OqH3JIw2AyDnYgJBndJ7Du6iRkyELJwQFdExIOU4Ue
+	 Sm1dIkfSaGoEcCsDEFhczs0iyNeXbjA2koRhzqOeqDPtcX7Yl6WJiiPLg+Cqqkp7pf
+	 tKgqGLem++ya1KScueLxRfgME5XE5rfWQxjtKpmX42uZbg7S1f/VNDZtR75TxwvL13
+	 hssZiohpAg36Q==
+Date: Wed, 11 Mar 2026 10:34:17 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Shawn Lin <shawn.lin@rock-chips.com>
+Cc: manivannan.sadhasivam@oss.qualcomm.com, 
+	Bjorn Helgaas <bhelgaas@google.com>, Mahesh J Salgaonkar <mahesh@linux.ibm.com>, 
+	Oliver O'Halloran <oohall@gmail.com>, Will Deacon <will@kernel.org>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Heiko Stuebner <heiko@sntech.de>, 
+	Philipp Zabel <p.zabel@pengutronix.de>, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linuxppc-dev@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org, 
+	Niklas Cassel <cassel@kernel.org>, Wilfred Mallawa <wilfred.mallawa@wdc.com>, 
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, Lukas Wunner <lukas@wunner.de>, 
+	Richard Zhu <hongxing.zhu@nxp.com>, Brian Norris <briannorris@chromium.org>, 
+	Wilson Ding <dingwei@marvell.com>, Frank Li <Frank.Li@nxp.com>
+Subject: Re: [PATCH v7 2/4] PCI: host-common: Add link down handling for Root
+ Ports
+Message-ID: <vnsmjvtwaeticdxwz6u43dxnpi6duhc3r5motwnfer4l2bpqcm@noeme6lgq4jf>
+References: <20260310-pci-port-reset-v7-0-9dd00ccc25ab@oss.qualcomm.com>
+ <20260310-pci-port-reset-v7-2-9dd00ccc25ab@oss.qualcomm.com>
+ <2eb738fb-9dfe-1e88-6ea7-afdba9cb3d25@rock-chips.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/3] arm64: dts: qcom: sm8750: Add GPU clock & IOMMU
- nodes
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Pengyu Luo <mitltlatltl@gmail.com>
-Cc: abel.vesa@oss.qualcomm.com, ajit.pandey@oss.qualcomm.com,
-        Bjorn Andersson <andersson@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
-        imran.shaik@oss.qualcomm.com, jagadeesh.kona@oss.qualcomm.com,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh@kernel.org>, Stephen Boyd <sboyd@kernel.org>
-References: <CAH2e8h4R-nF+eV+OnkSySKSY5_H-V8Ndyfhac3=VNQ-bMaBeFg@mail.gmail.com>
- <af606d6c-3ce3-4342-bd5c-ce3ea28c6923@oss.qualcomm.com>
-Content-Language: en-US
-From: Taniya Das <taniya.das@oss.qualcomm.com>
-In-Reply-To: <af606d6c-3ce3-4342-bd5c-ce3ea28c6923@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzExMDA0MCBTYWx0ZWRfX9043H+lDPs8U
- 8ZUiqMRCQKAHhkj5mBh5ZdXRzH+dWBOW3abd3g29CzrajjRuzQSoulEPKYaxWjP9MYrnazhO0Ya
- oPmPP8g8tPliA3zi36JCQGysvJ2K10RaP7mhMyBD5Huvvpj/ZvACSJDSjQwL5s9lT+z6OYyMJUK
- xBoTLDPxvLNIuULr+WCz6fha7u+4/kleXxXxlXT4wbsQ3w8DpwLbv6oZxblLHKqn3ntL6e2d2ou
- uwXxG3ByTNewOJPVvxmBO7SdDmiIZMvCGd9pSoyUAzkFYYR5DAww8MbQnO4bBFKYWfzTmOolGLC
- AI1bc4y9wbeMu73LuREg7Xg/VisdW2iyf6AN59bIvdizrwtBLuOUPCt5wJMTakezbkFhLFzbbD0
- mXxD5chsKX1pRWo/qGwF4gTc6c/DnJB8sDVD6KO1H4QYsBhzrCx2vVMxAnEpLuiEzpdiln+amEL
- d8zoZ7OZacIVH1PBY8Q==
-X-Proofpoint-GUID: QPqtyZ4zkEzGNhK0QPNfDsmwxn8WG-W6
-X-Authority-Analysis: v=2.4 cv=S5vUAYsP c=1 sm=1 tr=0 ts=69b0f795 cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=EUspDBNiAAAA:8 a=4HF9s9dolvseeuFZ7A0A:9 a=QEXdDO2ut3YA:10
- a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-ORIG-GUID: QPqtyZ4zkEzGNhK0QPNfDsmwxn8WG-W6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-10_05,2026-03-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 impostorscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0
- malwarescore=0 adultscore=0 bulkscore=0 spamscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603110040
-X-Rspamd-Queue-Id: 19A0925C2DC
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <2eb738fb-9dfe-1e88-6ea7-afdba9cb3d25@rock-chips.com>
+X-Rspamd-Queue-Id: 2465725C2FC
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-96855-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,gmail.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[17];
+	TAGGED_FROM(0.00)[bounces-96856-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,google.com,linux.ibm.com,gmail.com,kernel.org,sntech.de,pengutronix.de,vger.kernel.org,lists.ozlabs.org,lists.infradead.org,wdc.com,wunner.de,nxp.com,chromium.org,marvell.com];
+	RCPT_COUNT_TWELVE(0.00)[25];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[taniya.das@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
+	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-0.999];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:rdns,sea.lore.kernel.org:helo,chromium.org:email,qualcomm.com:email]
 X-Rspamd-Action: no action
 
+On Wed, Mar 11, 2026 at 08:55:01AM +0800, Shawn Lin wrote:
+> Hi Mani
+> 
+> 在 2026/03/10 星期二 22:02, Manivannan Sadhasivam via B4 Relay 写道:
+> > From: Manivannan Sadhasivam <mani@kernel.org>
+> > 
+> > The PCI link, when down, needs to be recovered to bring it back. But on
+> > some platforms, that cannot be done in a generic way as link recovery
+> > procedure is platform specific. So add a new API
+> > pci_host_handle_link_down() that could be called by the host bridge drivers
+> > for a specific Root Port when the link goes down.
+> > 
+> > The API accepts the 'pci_dev' corresponding to the Root Port which observed
+> > the link down event. If CONFIG_PCIEAER is enabled, the API calls
+> > pcie_do_recovery() function with 'pci_channel_io_frozen' as the state. This
+> > will result in the execution of the AER Fatal error handling code. Since
+> > the link down recovery is pretty much the same as AER Fatal error handling,
+> > pcie_do_recovery() helper is reused here. First, the AER error_detected()
+> > callback will be triggered for the bridge and then for the downstream
+> > devices. Finally, pci_host_reset_root_port() will be called for the Root
+> > Port, which will reset the Root Port using 'reset_root_port' callback to
+> > recover the link. Once that's done, resume message will be broadcasted to
+> > the bridge and the downstream devices, indicating successful link recovery.
+> > 
+> > But if CONFIG_PCIEAER is not enabled in the kernel, only
+> > pci_host_reset_root_port() API will be called, which will in turn call
+> > pci_bus_error_reset() to just reset the Root Port as there is no way we
+> > could inform the drivers about link recovery.
+> > 
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> > Tested-by: Brian Norris <briannorris@chromium.org>
+> > Tested-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> > Tested-by: Richard Zhu <hongxing.zhu@nxp.com>
+> > Reviewed-by: Frank Li <Frank.Li@nxp.com>
+> > ---
+> >   drivers/pci/controller/pci-host-common.c | 35 ++++++++++++++++++++++++++++++++
+> >   drivers/pci/controller/pci-host-common.h |  1 +
+> >   drivers/pci/pci.c                        |  1 +
+> >   drivers/pci/pcie/err.c                   |  1 +
+> >   4 files changed, 38 insertions(+)
+> > 
+> > diff --git a/drivers/pci/controller/pci-host-common.c b/drivers/pci/controller/pci-host-common.c
+> > index d6258c1cffe5..15ebff8a542a 100644
+> > --- a/drivers/pci/controller/pci-host-common.c
+> > +++ b/drivers/pci/controller/pci-host-common.c
+> > @@ -12,9 +12,11 @@
+> >   #include <linux/of.h>
+> >   #include <linux/of_address.h>
+> >   #include <linux/of_pci.h>
+> > +#include <linux/pci.h>
+> >   #include <linux/pci-ecam.h>
+> >   #include <linux/platform_device.h>
+> > +#include "../pci.h"
+> >   #include "pci-host-common.h"
+> >   static void gen_pci_unmap_cfg(void *ptr)
+> > @@ -106,5 +108,38 @@ void pci_host_common_remove(struct platform_device *pdev)
+> >   }
+> >   EXPORT_SYMBOL_GPL(pci_host_common_remove);
+> > +static pci_ers_result_t pci_host_reset_root_port(struct pci_dev *dev)
+> > +{
+> > +	int ret;
+> > +
+> > +	pci_lock_rescan_remove();
+> > +	ret = pci_bus_error_reset(dev);
+> > +	pci_unlock_rescan_remove();
+> > +	if (ret) {
+> > +		pci_err(dev, "Failed to reset Root Port: %d\n", ret);
+> > +		return PCI_ERS_RESULT_DISCONNECT;
+> > +	}
+> > +
+> > +	pci_info(dev, "Root Port has been reset\n");
+> > +
+> > +	return PCI_ERS_RESULT_RECOVERED;
+> > +}
+> > +
+> > +static void pci_host_recover_root_port(struct pci_dev *port)
+> > +{
+> > +#if IS_ENABLED(CONFIG_PCIEAER)
+> > +	pcie_do_recovery(port, pci_channel_io_frozen, pci_host_reset_root_port);
+> > +#else
+> > +	pci_host_reset_root_port(port);
+> 
+> Since pci_host_reset_root_port() returns pci_ers_result_t, shouldn't we
+> check the result? If the return value is intentionally ignored here,
+> maybe pci_host_reset_root_port actually doesn't need a return value at
+> all?
+> 
 
+The return value is mostly for pcie_do_recovery() which iterates through the
+subordinate devices and calls pci_host_reset_root_port(). It also makes use of
+the return value, so we cannot make it void.
 
-On 3/10/2026 7:02 PM, Konrad Dybcio wrote:
-> On 3/9/26 11:27 AM, Pengyu Luo wrote:
->> On Thu, Mar 5, 2026 6:40 PM Taniya Das <taniya.das@oss.qualcomm.com> wrote:
->>> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->>>
->>> Add the GPU_CC and GX_CC (brand new! as far as we're concerned, this
->>> is simply a separate block housing the GX GDSC) nodes, required to
->>> power up the graphics-related hardware.
->>>
->>> Make use of it by enabling the associated IOMMU as well. The GPU itself
->>> needs some more work and will be enabled later.
->>>
->>> Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
->>> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
->>> Co-developed-by: Taniya Das <taniya.das@oss.qualcomm.com>
->>> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
->>> ---
->>>
->>
->> Hi Taniya and Konrad, GX GDSC stuck at 'on' on my device
->> the raw register values are
->>
->> 0x3d68024: 0x00000000
->> 0x3d68028: 0x00000000
+The reason why I skipped the return value in pci_host_handle_link_down() is
+that, we canot do much in the case of failure other than reporting the failure,
+which is already taken care in pci_host_reset_root_port().
+
+> > +#endif
+> > +}
+> > +
+> > +void pci_host_handle_link_down(struct pci_dev *port)
+> > +{
+> > +	pci_info(port, "Recovering Root Port due to Link Down\n");
+> > +	pci_host_recover_root_port(port);
+> > +}
+> > +EXPORT_SYMBOL_GPL(pci_host_handle_link_down);
 > 
-> These likely indicate that some clock or voltage rail is not accessible
-> at the very moment you're reading them back
+> This function shouldn't be called like in interrupt context because of
+> the pci_lock_rescan_remove() and pci_bus_error_reset()::pci_slot_mutex,
+> but it's not so obvious from the API name. It's prone for host drivers
+> to use it like:
 > 
-> GPU support for 8750 is not yet upstream (and A830 is somewhat different
-> vs the supported A840) - there may be something wrong in that sequence.
+> register_LDn_irq -> irq isr -> pci_host_handle_link_down()
 > 
-> I heard it's in the works though, so you may be better off waiting a bit.
+> So perhaps add a comment about it would be better.
 > 
 
-I am checking internally if any required clock is getting turned off and
-causing this.
+Yes, I agree. I mentioned in the cover letter that this API should be called
+from a threaded IRQ handler, but it should be mentioned in the API description
+too. I will add it in next version or ammend it while applying.
+
+- Mani
 
 -- 
-Thanks,
-Taniya Das
-
+மணிவண்ணன் சதாசிவம்
 
