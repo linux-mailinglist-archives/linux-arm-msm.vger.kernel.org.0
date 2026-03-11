@@ -1,80 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-96957-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-96958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wITeDvZGsWlCtAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-96957-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 11:41:58 +0100
+	id cDT4AyZLsWlCtAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-96958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 11:59:50 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D68BD2626A8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 11:41:57 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A3669262ABA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 11:59:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id CE02330C2DE2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 10:39:08 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id BD6B530087E6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 10:59:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D17333CFF41;
-	Wed, 11 Mar 2026 10:39:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B19773CD8B1;
+	Wed, 11 Mar 2026 10:59:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EPXTMuVt"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NbuVPsol"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC5F83CF04D;
-	Wed, 11 Mar 2026 10:39:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D2BA3C552E;
+	Wed, 11 Mar 2026 10:59:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773225540; cv=none; b=UzOBBPCxAQQv5kg/zT1hqixT4xTLLs+gTWtS1wkcU1tZ19mDujasgiPAVcvmrCwJnEAnfa21Fi/vSQIkFKb36bEELD1Wvs+N/C/IyEt4cgmL/uUkag5oMprTJuBTchAA3/UWkOO0+5OOQYvqPC4K5DD28voZiB1JsSdBfItRC8A=
+	t=1773226785; cv=none; b=P5l1GG9Eu+/LJfV+tI8qIzvIGTw7qHSi+zpk/LxvClgcIqlMeWDJfNCWH3OO9G5R9g9nnw0N82O4BdXSDLYpxzd0e/l0E9pw95JttAjGHOmdTtetH14b1gZlQ1x2xVqh5+dExHq3MQCzR+xSXL7wrOKb3DtB/i3pIVZFz0aCSUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773225540; c=relaxed/simple;
-	bh=W7ULGNJxGs/DGU9Myuy1oXiG5LI/4bcuMikaWvPhafA=;
+	s=arc-20240116; t=1773226785; c=relaxed/simple;
+	bh=NWbVZd2f0Apk9phlC10/UOc9VRa5mnywdugFB8KMC/E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Vm+aP3yctBDRtCWqnFAbrhsLMv+GvCt7vAiOubkbb6owKfm1QtaPFF2r1dRxYhrliQ5saMHzH6WYaSEkEd8vQklpxTi+JQbZIB6rJ1YAW/iXzsBJtnbdRnPx1pr9l7rOqQuwGg+a/ZLITo4LFcdwOWRrTa0jestAHF7/3OD4AjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EPXTMuVt; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4256C2BC86;
-	Wed, 11 Mar 2026 10:38:53 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=miIP6HzP6On7X+1jF7mlZ07dL9xG2fnqdUVa1yU9u0VDjxC1a0HD6n5TwFM2rq7aEAB7BOHu/ALmQJSlySn6ThTa+EF0oAvrXZ2qqSFeFFz+UMKtHeH4zzQSOM8OTJdEPg15YZ4GUDbEq8IHpfaRI5e9DnpbQ32NB8t/BpSCI1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NbuVPsol; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EC28C4CEF7;
+	Wed, 11 Mar 2026 10:59:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773225540;
-	bh=W7ULGNJxGs/DGU9Myuy1oXiG5LI/4bcuMikaWvPhafA=;
+	s=k20201202; t=1773226785;
+	bh=NWbVZd2f0Apk9phlC10/UOc9VRa5mnywdugFB8KMC/E=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=EPXTMuVttZqUZ/o7JPPcYnite3Um4wggHLpvXqpIoWuC2usNA6k425SfK6rMs77rB
-	 CYWeP0jsQTNUcUIy8PnTh9S3O1nsMJGjNBhq2Dq0SHWq7cP3w5ZyXyw9RdDTA3R1eW
-	 S440F5uh0GmInYEkvybjOxJt938zdDJqpyKVdapOCNKsje+vi1+1YLP/xkfpiLNDws
-	 05TBCJ8PNE7rD4f12++HjlcvSoHkNaTbYC0bbQKnbCiOof2KrsmYEZaZiY5R+JFXdj
-	 /8xPc+/68mvyzrREgIspZOqMj2/RD7sCmgpK/s0D84g4YnUN/WpSgEaH93P51o62GI
-	 KrW++eDJAd9HA==
-Date: Wed, 11 Mar 2026 11:38:50 +0100
+	b=NbuVPsolvA1iCHiziVg/YQZCU8nhtZ7WoL4OFlP5RwLzgJ8ArrunKkEZlqWrbRaYJ
+	 VBk5Qtaoeroo4VTY/puOUUpEjex4/xAumktU9Ae+/edkR6rDma9z09ZqbhCgTo31EQ
+	 JEIqOehOcaZ9n1lsgkD1NfopjyxKU5sCeljbyZDIQLdA20XdghhTsG33WMey843qNw
+	 XFit0QD5CNRi0jSpy/KZS+o5+dHVLz7VUn3xoVdN/fB6UYfebbTRY40RPHjVab1VcV
+	 Nx0myWJYpWKDdu9F9IEEE3t2zkSfCp/e7g2nXtc74xksA0IXjdRxu7ZQ5ncFzui+VT
+	 ncZE8tHF0hEwQ==
+Date: Wed, 11 Mar 2026 11:59:37 +0100
 From: Niklas Cassel <cassel@kernel.org>
 To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Minghuan Lian <minghuan.Lian@nxp.com>, Mingkai Hu <mingkai.hu@nxp.com>,
-	Roy Zang <roy.zang@nxp.com>,
+Cc: manivannan.sadhasivam@oss.qualcomm.com,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+	Oliver O'Halloran <oohall@gmail.com>, Will Deacon <will@kernel.org>,
 	Lorenzo Pieralisi <lpieralisi@kernel.org>,
 	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Srikanth Thokala <srikanth.thokala@intel.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Marek Vasut <marek.vasut+renesas@gmail.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Manikanta Maddireddy <mmaddireddy@nvidia.com>,
-	Koichiro Den <den@valinux.co.jp>,
-	Damien Le Moal <dlemoal@kernel.org>, Frank Li <Frank.Li@nxp.com>,
-	linuxppc-dev@lists.ozlabs.org, linux-pci@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org
-Subject: Re: [PATCH v3 1/9] PCI: endpoint: Introduce pci_epc_bar_type
- BAR_64BIT_UPPER
-Message-ID: <abFGOoZUX_vexLWR@fedora>
-References: <20260302095913.48155-11-cassel@kernel.org>
- <20260302095913.48155-12-cassel@kernel.org>
- <dtxdgxrewfby5hu3cu3pu5kljylm627uc43sw75gk7loimmm6r@ei4w6wmqgd6a>
+	Rob Herring <robh@kernel.org>, Heiko Stuebner <heiko@sntech.de>,
+	Philipp Zabel <p.zabel@pengutronix.de>, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-rockchip@lists.infradead.org,
+	Wilfred Mallawa <wilfred.mallawa@wdc.com>,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	Lukas Wunner <lukas@wunner.de>
+Subject: Re: [PATCH v6 0/4] PCI: Add support for resetting the Root Ports in
+ a platform specific way
+Message-ID: <abFLGRn9TYrsycRs@fedora>
+References: <20250715-pci-port-reset-v6-0-6f9cce94e7bb@oss.qualcomm.com>
+ <aHoh1XfhR8EB_5yY@ryzen>
+ <aHokdhpJUhSZ5FSp@ryzen>
+ <tujurux64if24z7w7h6wjxhrnh4owkgiv33u2fftp7zr5ucv2m@2ijo5ok5jhfk>
+ <aJ743hJw-T9y3waX@ryzen>
+ <lakgphb7ym3cybwmpdqyipzi4tlkwbfijzhd4r6hvhho3pc7iu@6ludgw6wqkjh>
+ <aLmcO8ukT-CDZMuT@ryzen>
+ <mevtdhght66tds7yhmr5a6xg5a75fb667b6lyvguoxqexmc74p@mroqidhzptxk>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,95 +80,79 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <dtxdgxrewfby5hu3cu3pu5kljylm627uc43sw75gk7loimmm6r@ei4w6wmqgd6a>
-X-Rspamd-Queue-Id: D68BD2626A8
+In-Reply-To: <mevtdhght66tds7yhmr5a6xg5a75fb667b6lyvguoxqexmc74p@mroqidhzptxk>
+X-Rspamd-Queue-Id: A3669262ABA
 X-Rspamd-Server: lfdr
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-96957-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-96958-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[29];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,google.com,linux.ibm.com,gmail.com,kernel.org,sntech.de,pengutronix.de,vger.kernel.org,lists.ozlabs.org,lists.infradead.org,wdc.com,wunner.de];
+	RCPT_COUNT_TWELVE(0.00)[20];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[nxp.com,kernel.org,google.com,intel.com,gmail.com,nvidia.com,socionext.com,renesas.com,glider.be,valinux.co.jp,lists.ozlabs.org,vger.kernel.org,lists.infradead.org,lists.linux.dev];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	NEURAL_HAM(-0.00)[-0.999];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[cassel@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:rdns,tor.lore.kernel.org:helo]
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:rdns,sto.lore.kernel.org:helo]
 X-Rspamd-Action: no action
 
-Hello Mani,
-
-On Wed, Mar 11, 2026 at 12:05:59PM +0530, Manivannan Sadhasivam wrote:
+On Tue, Mar 10, 2026 at 07:07:39PM +0530, Manivannan Sadhasivam wrote:
+> > 
+> > I tested your patch series + your suggested change above, and after a:
+> > 
+> > ## On EP side:
+> > # echo 0 > /sys/kernel/config/pci_ep/controllers/a40000000.pcie-ep/start && \
+> >   sleep 0.1 && echo 1 > /sys/kernel/config/pci_ep/controllers/a40000000.pcie-ep/start
+> > 
+> > Instead of:
+> > 
+> > # FAILED: 1 / 16 tests passed.
+> > 
+> > I now get:
+> > # FAILED: 7 / 16 tests passed.
+> > 
+> > Test cases 1-7 now passes (the test cases related to BARs),
+> > all other test cases still fail:
 
 (snip)
 
-> This also brings the question, do we really need to mark the preceding BAR?
+> I guess what is going wrong here is that you might be rebooting the device
+> *after* restoring the config space in 'slot_reset()' callback. So all the
+> previous config space contents would be lost and the device would've started
+> afresh.
 
-From a pure code PoV, marking the preceding BAR is enough even with the
-current code:
-https://github.com/torvalds/linux/blob/v7.0-rc3/drivers/pci/endpoint/pci-epc-core.c#L101-L103
+I'm confused.
 
-However, the current documentation claims that the succeeding BAR must be
-marked as BAR_RESERVED:
-https://github.com/torvalds/linux/blob/v7.0-rc3/include/linux/pci-epc.h#L207-L210
+# echo 0 > /sys/kernel/config/pci_ep/controllers/a40000000.pcie-ep/start && \
+  sleep 0.1 && echo 1 > /sys/kernel/config/pci_ep/controllers/a40000000.pcie-ep/start
 
-I want to change this to BAR_64BIT_UPPER / BAR_64BIT_UPPER_BASE, so we can use
-BAR_RESERVED for BARs that expose fixed hardware resources (e.g. eDMA regs).
-
-
-Thus, an EPC driver does not strictly need mark the succeeding BAR with anything.
-This was done mostly for clarity. (E.g. with BAR_64BIT_UPPER_BASE it is obvious
-that this BAR cannot be a standalone 32-bit BAR.)
-
-If we don't mark the succeeding BAR with anything, IMO, it is less obvious that
-the succeeding BAR cannot be used as a standalone 32-bit BAR.
-
-But... since the code already does the "right thing". We could simply nuke this
-part of the documentation, and drop the .type for all BARs succeeding a
-.only_64bit BAR, if you prefer that option over having a dedicated type for the
-"upper base of a 64-bit BAR".
+Will not reboot the device.
 
 
-> Why can't we let the PCI EPC core to always assume that if the previous BAR
-> has 'only_64bit' bit set, next BAR cannot be used as a standalone 32bit BAR?
 > 
-> I find it weird or redundant to mark both BARs.
+> I don't think we can restore the config space after rebooting the EP device,
+> because host has no idea about it. It can only restore the content after
+> recovering the device through platform specific means.
 
-Redundant, yes, but in my opinion marking both BARs makes it unambigious
-that two BARs are used when a BAR is "only_64bit".
+Am I missing something, or why are we talking about rebooting the device?
 
-E.g. Manikanta originally wanted to add code comments for the upper part of
-the 64-bit BAR:
-https://lore.kernel.org/linux-pci/20260217-master-v1-2-727e26cdfaf5@nvidia.com/
-
-Sure, we can just skip the .type for the succeeding BAR...
-But is that really better than clearly showing that a "forced" 64-bit BAR will
-always occupy two BARs?
-
-
-Tell me what you prefer:
-1) s/BAR_RESERVED/BAR_64BIT_UPPER_BASE/
-2) Change documentation and drop .type for a BAR following a .only_64bit BAR.
-
-And I will respin with that.
 
 
 Kind regards,
