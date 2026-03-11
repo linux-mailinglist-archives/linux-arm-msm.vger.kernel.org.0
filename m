@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-97055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4II4Hlm3sWl0EwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 19:41:29 +0100
+	id 0AKAEXK3sWmTEwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 19:41:54 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21DA5268C03
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 19:41:29 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D365F268C34
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 19:41:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 5FE6C312B7C7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 18:40:01 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1D863305364E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 18:40:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 30BD73EAC84;
-	Wed, 11 Mar 2026 18:39:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB9D33EB7F4;
+	Wed, 11 Mar 2026 18:40:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h9RkZO3v"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KsIX5GOj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F51235D5F8
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2026 18:39:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B58E3EAC6E
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2026 18:39:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773254398; cv=none; b=PJb5a2RLOVTbQx6H0TFUta8J6TXjCkW26QEcRNPyWQouPO5Kw/Ozdpwl/HN9w9TPkv6HGCarqKUGChq4dEpsbjWE/pQwCj4CASgQfcRDM0nDar6AmLcessLlnPYbAn6vLCbWv7FVul7lDyY6QHFL4A8BYZ3pKiorHm3puNM2Gxw=
+	t=1773254402; cv=none; b=KZLPecw7rdknWY95mjxNYHUAp1k6+EY2SGgAIySdbgdT/B/zsR5dTzCMqRJRO9rlHouSyGGxNNGQDxnPrrK+zv+2vNkt377OB/v3K+z/FR2ijfs+q+SdAer1DUt9SOFI1V25U2tdb79q1Oqhjo3a4AF0O5nrFfJNsxsxWvNgT04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773254398; c=relaxed/simple;
-	bh=lrGDoJIvEkpE2zwVZAdPXIJFuUAnlEGbHR8d+YDnzFg=;
+	s=arc-20240116; t=1773254402; c=relaxed/simple;
+	bh=l1kAITtOZcQOmSFLzPmQl3EIsJ/gX0Hpg+PJUyHpctc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N414HOT1YJZTVp284lCpF8bQ7x/EbR/HafVvrPGMwesd5bYTwL4QMeCnbY6CsnATCOzWQ4lsPii3dwrrxKfFYJR2R6NZvtgngIR+j/Rxzs3+H/vMECFu2z0hGXkocWMw8vqolnIVf9tDHCoBoA9dlvosPkYSafFRo9+xzMVJwtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h9RkZO3v; arc=none smtp.client-ip=209.85.128.48
+	 MIME-Version; b=qJypOl5OJNENrTMSJqvnkXFItYWtRC/PwpZxC5Jf9FDg4tySNqiAtfzx7zBPeLhetAeUyDWOHztuI8CnTD4j03wmqg4kRkntaE5B9XlwohiruHH1G1UOKowque1KcQTcfXj/6501MNUUVqkdb0NofVyU4bDk4oDVU41Us+6ADBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KsIX5GOj; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4852fdb36a8so1659245e9.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2026 11:39:55 -0700 (PDT)
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4853aec185aso1302675e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2026 11:39:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773254394; x=1773859194; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1773254395; x=1773859195; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kUyetPRGCWNiIDdvvCLAWBXfwDnSDbUudDfLRd5zU4g=;
-        b=h9RkZO3vr78Pq8IWHVmTz2vzzyODAAbi7cjf5PGaJNfDNHQ5lAYOoph7PuKSlZrN0y
-         kCI3wZLVMgdHCFQ4Lsl2Hl3ssk5bDyJwGFrif3zA+KD+ou+fd+qwtKwR4rug4oJOrdUW
-         PjzBf1psgrmPqSS0nF1EtVy+D480iRbYAMEstsT+323tNv06wrrDvEQCkMJpu6mHw3jo
-         7I7klp1yFa08gbomItuicuKcVOcDT5fsGm9CS5brTTC2Xd5Kxeh5qXWhPzXujwRMf3r+
-         EEEnC64JBvxSfNc/GBr1TeVFEGujpzC0DmmhwIWMwI3n1gzA/08IehEblVbwYW5+mieQ
-         GunQ==
+        bh=Cm4Ve62f3rcwFTWsVQvRStE/hVreGVU1FcOWBt3eIAU=;
+        b=KsIX5GOjYv/S8g6KCjuks1wZflpCKL1EH1okeJbbsWk9xPSk/B+D/EUYIP8rfS/nu7
+         NY8z6QVpUhyq+O46PPKCq5WVOeOJ1aez6GxGMmDuzngFD5G1mjvE1zREQ9x75uEmzNqi
+         LB4FdOrDlSO1OJxLYcKLpD0QO7KHAnOx7H6vhimK0RUZ16QsRnBMD/bHPcpFpNMfL2D+
+         7DxvqWa4vqYCt7focD+xufcIb4nIDqfIFwjjDN41X8Rt7db1yzoNqzNGprypHSEtBkNf
+         scZ6V7a6ilcLOdtFOnwlqVhSckmT8KyMjPucnsStUtGR+x3pN1I51qJdAKzErCvozxVo
+         Ujow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773254394; x=1773859194;
+        d=1e100.net; s=20230601; t=1773254395; x=1773859195;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=kUyetPRGCWNiIDdvvCLAWBXfwDnSDbUudDfLRd5zU4g=;
-        b=D867y5+1hIfItMu4GEr1eGl+7HiQ0S6FTAPs646SWdzZDvnIoK0xhTeX/ceORrTaeA
-         cDB1+c/WYd1oDOI+kBz2U1uwy/PH77aaHYGhFh2Tqqvjb3zt6k3YcSNQoYHvHtAH9R/A
-         cBiSCvZ5xg0ClOyqI9ZArQL8czq+eWLSVq+zPP1nIcHYU+BcBAkvKu31xFLaasWuXbvY
-         f7H3T9vVTrA7e79IhOeqgl/wRGzghgyr8tT2HalQ63DUzwyBPMHKrJFBqXss4WxdAz8t
-         6vmIchbdUiOja9e+Nvn4GNDXi222PzuN7UZzsH5FHHan6N05jpt+MaPUN3pnyZu28E3U
-         PPfw==
-X-Forwarded-Encrypted: i=1; AJvYcCUd4TdF9BtBbkK3bvcbSvHsedbOUxGFURHGYaUxvSmdSWGhd5v6aViLXJB3YFxT3oB6S40MIXruUwN+9nLv@vger.kernel.org
-X-Gm-Message-State: AOJu0YyDosDO/sS+2o3Tz5KuIzOnsJLG9aVOZsy8QKchub9CtzxV9mCh
-	wCz2gusBY6GCmVobgUGWhG2hWqJ4/qkRHCenCndWI+0N+4wcWW//DjAq
-X-Gm-Gg: ATEYQzwi/QVbA/7RL3pu8eHdS8Wc9fWYfYSwRxO490kYD1Bc8ysUNE/NOg9tsT0TOf1
-	JFkRzhJm458mRbHMrxk1IaPD0VHc0mp4MDOxPHVq+47S678fOqEYmPER0nTZTNHn5WXkQWOvXM/
-	qKsJhTb9N/JbcI+15JRSlyc8qjc+dCzGpL/sGm0cYuZJTuMaeeuL5z6XQOnzM11Yq0zuL7vd6Vm
-	pydKQGi9GysmgySYW+VDhv2ylzKEEWn6VbC2r5FaWfN2ImjXi0RtN9f4W4yHPuoPkKGixkGG1B+
-	+f2ZAQu46h0PpIvx4e0jnweiuV0W1GjD/hXvPVFzcy8rHoUbuI3wm1Z7YNmv9ySNOSgH7RXvQrV
-	uF5N4OPZ4WGzu/1R5KK3KOjPUi6XJI2VdfwKCjyhO712fIZO7cVzKt5mH96zUItsjD34Wz/NBnv
-	kKBUVzdCLE0alpWgL4kpf0E7BrlHjUXMX4w3Y814eUJVPQVaElScnMmcc=
-X-Received: by 2002:a05:600c:3b1a:b0:485:34b3:8585 with SMTP id 5b1f17b1804b1-4854b0d6ca4mr69627935e9.8.1773254393880;
-        Wed, 11 Mar 2026 11:39:53 -0700 (PDT)
+        bh=Cm4Ve62f3rcwFTWsVQvRStE/hVreGVU1FcOWBt3eIAU=;
+        b=Ktle39Gm468XW1GFdBYU6oYyBF8NNGhsvSqz90SypM/6lLSfwANx/FTduO2OSqHHzp
+         cviKB3cFBh/5qgbNxJyEeOBUt4mBobX/YVT+SYfU94a4Wgy3jZ2ml18Rj+oSlPa3+yt6
+         le/LcQUD532CAPV1+6L8g63QN45oxv5WllzxXSuBOZBJUK2kmanlwFK/YHRvdhQe6l6U
+         kq5slhGNTDdpTGUgnVUGgCy9M21jeuwmFeP1BkWtAi/cdF8UBysZk/3+EqDIIMlLkYD3
+         F81UtXNHwWnmRWd+0B1VcFTG2VQBDjNX4VnwHuVpWphBCWGBZu081J5vJdYmqL0ioVMJ
+         0o6g==
+X-Forwarded-Encrypted: i=1; AJvYcCUD4p+p1HOjEYXsT4dDOzUTDCzqEVyClxm0kOHft9IhvEqss9cIxO7RMuokjad2OpvSgXQaDx12yymvOKvA@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz/vg2jyJWZ+/hCwUzqXgZzviiDPLFs8cP4mSXm03gfd1vnnff2
+	FLYlPSMYtNwdfiMHetzbMikm+lrGW6b1/i2njUXhbZAg8+aUSYXZI3NQ
+X-Gm-Gg: ATEYQzw3qgPZfkspzHauzG6Muzs5XBEcAg1mfyDiDHA+Mo2aJtjkb1tdEuuK1Jwjurr
+	JK4hqpk/05qTHtCabTvr4CQgi5nPpM77/k4BZaCRjUFE3MhoDXizdb04m/hrTE027kBQOeyQRPu
+	o6FGhG+YL8+agWIoBtXQtmbfb3vC3eRDb8mnStCuBJwyYx0VOTsbgn/G3h2j13XTAsDqzWZaSx7
+	NdNE1BxgTf2E96GrRxwCcNCVpiNh3SGsl7ystcSOmsFZUvbNmH1/Q9P+O7q2rC0mkvjYfJ+QFmF
+	Xu34+2kEDVv3xMG+sO286rTeeangkK91QUKx6V3LEMWyOzKVvxCsogGgtj/l3e2k8EAkYOZ8e6b
+	0KxVnt4b4j0yURpET91l/Hhc4wZORv0aPT0FntUzUjexwDy+9V8sB/8oBPCrAAKDAdwALze2Too
+	IrkNBoaOevaZlbpeXC4GN1l1xEgu4+SaROciWcICIrnHvUzoXMHvP58o0=
+X-Received: by 2002:a05:600c:19cf:b0:485:49c5:8eb7 with SMTP id 5b1f17b1804b1-4854b1012b7mr62036215e9.22.1773254394912;
+        Wed, 11 Mar 2026 11:39:54 -0700 (PDT)
 Received: from Ansuel-XPS24 (93-34-88-122.ip49.fastwebnet.it. [93.34.88.122])
-        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-48541aac28bsm161176675e9.1.2026.03.11.11.39.52
+        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-48541aac28bsm161176675e9.1.2026.03.11.11.39.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Mar 2026 11:39:53 -0700 (PDT)
+        Wed, 11 Mar 2026 11:39:54 -0700 (PDT)
 From: Christian Marangi <ansuelsmth@gmail.com>
 To: Bjorn Andersson <andersson@kernel.org>,
 	Michael Turquette <mturquette@baylibre.com>,
@@ -90,9 +90,9 @@ To: Bjorn Andersson <andersson@kernel.org>,
 	linux-kernel@vger.kernel.org
 Cc: John Crispin <john@phrozen.org>,
 	Christian Marangi <ansuelsmth@gmail.com>
-Subject: [PATCH 1/4] dt-bindings: clock: qcom: Add CMN PLL support for IPQ6018
-Date: Wed, 11 Mar 2026 19:39:38 +0100
-Message-ID: <20260311183942.10134-2-ansuelsmth@gmail.com>
+Subject: [PATCH 2/4] clk: qcom: ipq-cmn-pll: Add IPQ6018 SoC support
+Date: Wed, 11 Mar 2026 19:39:39 +0100
+Message-ID: <20260311183942.10134-3-ansuelsmth@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260311183942.10134-1-ansuelsmth@gmail.com>
 References: <20260311183942.10134-1-ansuelsmth@gmail.com>
@@ -110,7 +110,7 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
@@ -120,7 +120,7 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	FREEMAIL_FROM(0.00)[gmail.com];
 	MIME_TRACE(0.00)[0:+];
 	RCPT_COUNT_TWELVE(0.00)[13];
-	TAGGED_FROM(0.00)[bounces-97055-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-97057-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
@@ -130,64 +130,58 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	RCVD_COUNT_FIVE(0.00)[5];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[phrozen.org:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 21DA5268C03
+X-Rspamd-Queue-Id: D365F268C34
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 From: John Crispin <john@phrozen.org>
 
-The CMN PLL block in the IPQ6018 SoC takes 48 MHz as the reference
-input clock. Its output clocks are the bias_pll_cc_clk (300 MHz) and
-bias_pll_nss_noc_clk (416.5 MHz) clocks used by the networking
-subsystem.
-
-Add the related compatible for IPQ6018 to the ipq9574-cmn-pll
-generic schema.
+The CMN PLL in IPQ6018 SoC supplies fixed clocks to the networking
+subsystem: bias_pll_cc_clk at 300 MHz and bias_pll_nss_noc_clk at
+416.5 MHz.
 
 Signed-off-by: John Crispin <john@phrozen.org>
 Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
 ---
- .../bindings/clock/qcom,ipq9574-cmn-pll.yaml      |  1 +
- include/dt-bindings/clock/qcom,ipq6018-cmn-pll.h  | 15 +++++++++++++++
- 2 files changed, 16 insertions(+)
- create mode 100644 include/dt-bindings/clock/qcom,ipq6018-cmn-pll.h
+ drivers/clk/qcom/ipq-cmn-pll.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,ipq9574-cmn-pll.yaml b/Documentation/devicetree/bindings/clock/qcom,ipq9574-cmn-pll.yaml
-index 817d51135fbf..3827cb9fdff3 100644
---- a/Documentation/devicetree/bindings/clock/qcom,ipq9574-cmn-pll.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,ipq9574-cmn-pll.yaml
-@@ -26,6 +26,7 @@ properties:
-     enum:
-       - qcom,ipq5018-cmn-pll
-       - qcom,ipq5424-cmn-pll
-+      - qcom,ipq6018-cmn-pll
-       - qcom,ipq9574-cmn-pll
+diff --git a/drivers/clk/qcom/ipq-cmn-pll.c b/drivers/clk/qcom/ipq-cmn-pll.c
+index dafbf5732048..28d655d6320a 100644
+--- a/drivers/clk/qcom/ipq-cmn-pll.c
++++ b/drivers/clk/qcom/ipq-cmn-pll.c
+@@ -52,6 +52,7 @@
+ #include <dt-bindings/clock/qcom,ipq-cmn-pll.h>
+ #include <dt-bindings/clock/qcom,ipq5018-cmn-pll.h>
+ #include <dt-bindings/clock/qcom,ipq5424-cmn-pll.h>
++#include <dt-bindings/clock/qcom,ipq6018-cmn-pll.h>
  
-   reg:
-diff --git a/include/dt-bindings/clock/qcom,ipq6018-cmn-pll.h b/include/dt-bindings/clock/qcom,ipq6018-cmn-pll.h
-new file mode 100644
-index 000000000000..28d325beb073
---- /dev/null
-+++ b/include/dt-bindings/clock/qcom,ipq6018-cmn-pll.h
-@@ -0,0 +1,15 @@
-+/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-+/*
-+ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
+ #define CMN_PLL_REFCLK_SRC_SELECTION		0x28
+ #define CMN_PLL_REFCLK_SRC_DIV			GENMASK(9, 8)
+@@ -117,6 +118,12 @@ static const struct cmn_pll_fixed_output_clk ipq5018_output_clks[] = {
+ 	{ /* Sentinel */ }
+ };
+ 
++static const struct cmn_pll_fixed_output_clk ipq6018_output_clks[] = {
++	CLK_PLL_OUTPUT(IPQ6018_BIAS_PLL_CC_CLK, "bias_pll_cc_clk", 300000000UL),
++	CLK_PLL_OUTPUT(IPQ6018_BIAS_PLL_NSS_NOC_CLK, "bias_pll_nss_noc_clk", 416500000UL),
++	{ /* Sentinel */ }
++};
 +
-+#ifndef _DT_BINDINGS_CLK_QCOM_IPQ6018_CMN_PLL_H
-+#define _DT_BINDINGS_CLK_QCOM_IPQ6018_CMN_PLL_H
-+
-+/* CMN PLL core clock. */
-+#define IPQ6018_CMN_PLL_CLK			0
-+
-+/* The output clocks from CMN PLL of IPQ6018. */
-+#define IPQ6018_BIAS_PLL_CC_CLK			1
-+#define IPQ6018_BIAS_PLL_NSS_NOC_CLK		2
-+#endif
+ static const struct cmn_pll_fixed_output_clk ipq5424_output_clks[] = {
+ 	CLK_PLL_OUTPUT(IPQ5424_XO_24MHZ_CLK, "xo-24mhz", 24000000UL),
+ 	CLK_PLL_OUTPUT(IPQ5424_SLEEP_32KHZ_CLK, "sleep-32khz", 32000UL),
+@@ -448,6 +455,7 @@ static const struct dev_pm_ops ipq_cmn_pll_pm_ops = {
+ static const struct of_device_id ipq_cmn_pll_clk_ids[] = {
+ 	{ .compatible = "qcom,ipq5018-cmn-pll", .data = &ipq5018_output_clks },
+ 	{ .compatible = "qcom,ipq5424-cmn-pll", .data = &ipq5424_output_clks },
++	{ .compatible = "qcom,ipq6018-cmn-pll", .data = &ipq6018_output_clks },
+ 	{ .compatible = "qcom,ipq9574-cmn-pll", .data = &ipq9574_output_clks },
+ 	{ }
+ };
 -- 
 2.53.0
 
