@@ -1,272 +1,198 @@
-Return-Path: <linux-arm-msm+bounces-97069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id eHPMOJ3JsWnvFAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 20:59:25 +0100
+	id mISwLV/NsWmQFQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 21:15:27 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4BE27269BCA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 20:59:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 15846269D04
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 21:15:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id F0B2330A253E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 19:59:14 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A27F530804FE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 20:15:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E0D537701D;
-	Wed, 11 Mar 2026 19:59:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E94738D013;
+	Wed, 11 Mar 2026 20:15:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="XlTlwCDB"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nWe/prAY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ixit.cz [185.100.197.86])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DF242F3C19;
-	Wed, 11 Mar 2026 19:59:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.100.197.86
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773259154; cv=none; b=eLWgCaWU9l6/uxltuI0Z3mjwjieyJw0kIYtzMGI4BKoqYslMMW/XpOcq/sImnuIayooXJmDUrT/aTBIzwNPNJilFJ6+C3BQQAhQl7JdhW8ZqouMcVJ3UwZFYNo4EPKvz6vfU14dnO8ZKYRXtz39FsrGPZr+fUH79d7wzyYrEwm4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773259154; c=relaxed/simple;
-	bh=8p4+LstFYZTdtEwWu8/zX3vtiS13K3rgUJAcloezkBQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RjpOxBy0ENPp9f8x90/wZuQSt1o2yizFnf3PIW4vVh3FOQR2x7dUg61XSk7WY4D5ww3MXMFVw5GS5dZRECfcwqQ46EFBtT8UQaZti1N3aGo+YJYeFp5o67vDuJxWbA/L1hn/mJSEqyN3CvezJLv9qi4aLmlsqwOKKiBL2nztIaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=XlTlwCDB; arc=none smtp.client-ip=185.100.197.86
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [IPV6:2a02:f000:10bd:e301::1d7] (unknown [IPv6:2a02:f000:10bd:e301::1d7])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id EB1C75341BB9;
-	Wed, 11 Mar 2026 20:59:05 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1773259146;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=QX5Jt6Z3lZJRoQ9C0CpYxGi1veLiB/YS80S7aSHNgRc=;
-	b=XlTlwCDBGIzl4Kf/jOISfEjeRdJSFfZYK1rV1x/bn0mztyhisQE6V10yA2ItdsHcEgfShx
-	UfcOVTaZqCuLW3jQq3diWy6vqhayecpEwterpG8Rcid4O9nb2dAgLtcBkmKk3IYzvaQJTb
-	RJ2UiEOVtMdF6In2oEEBoA4rOnhC5No=
-Message-ID: <4b44378b-171c-45b6-8000-b72d78166afe@ixit.cz>
-Date: Wed, 11 Mar 2026 20:59:05 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3BA638D006
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2026 20:15:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.47
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773260123; cv=pass; b=V7U6956/gV1Qc8A82yVkSAJTZdGsC/u+OH0d1vLoa2UydwWjLXhu3RBd0GsyvMT8GfZ2cAGXn8ZHylW7wO4RbEAUIhQeAu7kyMVa80AleNyWPaU7RC/Z8usvXRgULkISTWAVfgEKIZny/ri+bkcxlCK9UtkukAx5C0jzNTKfGYU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773260123; c=relaxed/simple;
+	bh=qCUYBGAUOheU0nTCcMZyCl5y4dtCdasyHwmyMVbOBCc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HZKhW+fzym6EVpgkZYrD6cQRCSvhfE5MKoP2FfZ0H0adEV3xclxv+2Het6RKmPRHarRzMzxM4K7rBKXwR2Qqe4Cgo4mzHQzEKUOc1I1e9GKKG7Hrf9Mfi5aecIKer9FIwhVpXTevlkUYsHOGH5W2etaFyG33NcbTF5h+fEexG6I=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nWe/prAY; arc=pass smtp.client-ip=209.85.218.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-b886fc047d5so33405166b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2026 13:15:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773260121; cv=none;
+        d=google.com; s=arc-20240605;
+        b=O/B6usPVM8FLkosmxr0KRE7wDOLt7iOSF+mNIl+dCaJ8Xq0iSKD1r9bceX5+oaMnzc
+         koOPCtIU2rnQTtpNivj8ivZZCdQVwmaI754eKWahh0QPmTtUx5rTRuGWtdk32xLaXBIV
+         zhdYk6dsW+VBbF6tdPahpWs+k9dOMVUNfuX8dkh7WqzqCqGBFg1sU4/jfqkw6gKW4AUn
+         8gGgQ5q26KU4o1A1y5LWUIeC8bpgxjBCl8YrO5iVkTFtvi8y1zsrvKTN7QJcN/3j42Kr
+         QiLUv+7mfb7V5JMDD5Sikvr23uEK0pp+RdwT0PLFDCvHd8q3UdjLMc4yTPXDOuIFIc+S
+         zxzQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=i6F+UW8vpaPOSbe+aow4A6qQsDdfkrJCugB1bxi2H3M=;
+        fh=8D55jvndxQxByjMT7gSjb2noFNic3anhnIAlKPkQZiA=;
+        b=huuLMdchiaYB2tm9K96LbK1wEHQh0nfuQhwuwCUgtKEbJFJDK8Tu/VvPW+2UbOgEMt
+         5ZVxe4ofDEvx0YtB5WSsC3+SGsLP9b8LEuFbggmCkehQr5S+eeQr3lULI5641aINUvn6
+         ICmsDFJxLxANzjcKMnvtLv6x458wPVYLhS0xt8vcRvV1DZi17FiK13Il8CFVBVsei+F/
+         fbgiDXMGgBeS97WM7xCeOJbQNCzIq6qv5uBTjJI+hhomBshczwABXvdSwuJoBzAE2JYR
+         YXly+9FwFyvjQli++TGy5Fy/k0Jcl/ubhE9MCtV1YMYzAOYBtrGGGJ0lA10ijPW55jMR
+         AXHA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773260121; x=1773864921; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=i6F+UW8vpaPOSbe+aow4A6qQsDdfkrJCugB1bxi2H3M=;
+        b=nWe/prAYzvBDiutVXiO6S+1K2vIf87NlcJjxfML+QuWQ2JitCchpJ0EET506sfrXvv
+         yTqYq99l9QF3PfHVikdeebx8GwUPquPD9q449ZlwFS+Gmq4WtrvtfFwT3NRZxQL5R5Vd
+         LmxYUDee4Gq/dzzYlZixAwza8lw7PWwWTa0XW8fQ13XWdwmB4OjH3rBvrsIz0DPh8/Vt
+         opkVQQY1LGDxOUs5vestd7+UHQ24SjLdOTWKX1ix7I+rEA+8wEqUpk2vVsZ4FZCgoY7R
+         k1FrYcNQAn/VR0SG2J+xoY64k5Hkt2owRDbGWJ29GCC34FAy65MIdVnhQhXTBbMWjhCg
+         QFoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773260121; x=1773864921;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=i6F+UW8vpaPOSbe+aow4A6qQsDdfkrJCugB1bxi2H3M=;
+        b=Lia11z0pRVQHecMNv6zr97pTMicRQSe3ioXvomXpW2kp4KD8037ucKz5wW/YnhFCqt
+         QRAG3agifK9N8BTtycjAeogrcxeTU57xUyLQRND1JMsmsyXdbEvScq2FNjIkERa8Mjb9
+         fYAvW2URNZx5xQt4u2XCAOI0r7PkWCM6o/wJuT5SPrxMxt+chT1EyE9V4YmilO4YXRzq
+         PgEWLafPCnBjo7rPAp5lAErJzaC8HzLbnr4kc8tqSxWMAw8C/+4Exh7+oW6mhP/84HIn
+         b6Ftc+wPTdhA0QmnGyYN+WSqQvqvyE+ddELrb/nENDN5WW5iQfJsnLvtWrMhoFe6YDUv
+         Vl6A==
+X-Forwarded-Encrypted: i=1; AJvYcCVaRTycfKo6vZeEBHGIoiLrS3NIq2MLX14xBnXH3b1+o9N3dSccP4fk9kGVyULHVjPots5TPlANxKbmtdO2@vger.kernel.org
+X-Gm-Message-State: AOJu0YzJQDKsqslDVqwsu6Q5x71xIGWJOMC1EmKdOIQMW9JG7i1I1Cze
+	eCHWS7c488ZY4+pkDK+GFtJk5s+rzWgtsfsjy5bppkR/gWcZmwl+e2SlTy02G64S1+8FTOUZPfG
+	4LLExPMLj2CFrCf4d4/azim+koDQzQD0=
+X-Gm-Gg: ATEYQzxruIvvshDbU3hSqOIuzTmZzhz3BK7kM7br5WEwE04qu5yuEKAHdvTclDK0uE2
+	pWSYDhO5Q9CxmRiaGI9BodAFbwKS223BuAaVc/HH4SnSNBHJfs4A3uzHR8YqmBOBX03HAMlXnGB
+	t9pbGTXR01fDjxNKlDeGVIB6axtbblLgP9OC5gao5z24Uk7gXAzdq3ouNSuwrZgQeTzNBQh6OsM
+	n2AugJsngoyxV6w+wYClXON71nSkvdjg0Tx9H5f0uZQTvF8CTedceifM0+DByjMwCHmkJ4KHazZ
+	vLk14hjANgWYeBvLeDW1htRhIxODRg/trVeED1gxc/RR4v10htqs7GBG8DhluiqENObj/rgaYwg
+	mBqUZKk9pr5M5cnY6HA==
+X-Received: by 2002:a17:907:fd17:b0:b94:1df4:3525 with SMTP id
+ a640c23a62f3a-b972e20f6c9mr213172366b.1.1773260120699; Wed, 11 Mar 2026
+ 13:15:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 7/7] arm64: dts: qcom: sdm670-google-sargo: add imx355
- front camera
-To: Richard Acayan <mailingradian@gmail.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Tianshu Qiu
- <tian.shu.qiu@intel.com>, Sakari Ailus <sakari.ailus@linux.intel.com>,
- linux-media@vger.kernel.org, devicetree@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-Cc: Robert Mader <robert.mader@collabora.com>, phone-devel@vger.kernel.org
-References: <20260217002738.133534-1-mailingradian@gmail.com>
- <20260217002738.133534-8-mailingradian@gmail.com>
-Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <20260217002738.133534-8-mailingradian@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20251112-gpio-shared-v4-0-b51f97b1abd8@linaro.org>
+ <20251112-gpio-shared-v4-3-b51f97b1abd8@linaro.org> <921ba8ce-b18e-4a99-966d-c763d22081e2@nvidia.com>
+In-Reply-To: <921ba8ce-b18e-4a99-966d-c763d22081e2@nvidia.com>
+From: Andy Shevchenko <andy.shevchenko@gmail.com>
+Date: Wed, 11 Mar 2026 22:14:43 +0200
+X-Gm-Features: AaiRm50gZlAiM-5_F_zUlx0D2HjCtugUtf3WuAOsTMIp9Wv8sMtNxrZngwvWk-o
+Message-ID: <CAHp75VevThmDMm6VoVB9P0YbUGGGsmgnzr2gn9=1xtJZt-kuQw@mail.gmail.com>
+Subject: Re: [PATCH v4 03/10] gpiolib: implement low-level, shared GPIO support
+To: Jon Hunter <jonathanh@nvidia.com>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Kees Cook <kees@kernel.org>, Mika Westerberg <westeri@kernel.org>, 
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Andrew Morton <akpm@linux-foundation.org>, 
+	Linus Walleij <linus.walleij@linaro.org>, Manivannan Sadhasivam <mani@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Saravana Kannan <saravanak@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Andy Shevchenko <andy@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+	Alexey Klimov <alexey.klimov@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-hardening@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-sound@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+	"linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[ixit.cz,quarantine];
-	R_DKIM_ALLOW(-0.20)[ixit.cz:s=dkim];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-97069-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_TO(0.00)[gmail.com,kernel.org,linaro.org,intel.com,linux.intel.com,vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-97070-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[18];
+	TO_DN_EQ_ADDR_SOME(0.00)[];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	FREEMAIL_CC(0.00)[bgdev.pl,kernel.org,gmail.com,linux-foundation.org,linaro.org,google.com,linuxfoundation.org,arm.com,perex.cz,suse.com,vger.kernel.org,lists.infradead.org];
+	RCPT_COUNT_TWELVE(0.00)[32];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[david@ixit.cz,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[ixit.cz:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[andyshevchenko@gmail.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[ixit.cz:dkim,ixit.cz:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,collabora.com:email,linaro.org:email,1a:email]
-X-Rspamd-Queue-Id: 4BE27269BCA
+	DBL_BLOCKED_OPENRESOLVER(0.00)[nvidia.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,mail.gmail.com:mid]
+X-Rspamd-Queue-Id: 15846269D04
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 17/02/2026 01:27, Richard Acayan wrote:
-> The Sony IMX355 is the front camera on the Pixel 3a, mounted in portrait
-> mode. It is connected to CSIPHY1 and CCI I2C1, and uses MCLK2. Add
-> support for it.
-> 
-> Co-developed-by: Robert Mader <robert.mader@collabora.com>
-> Signed-off-by: Robert Mader <robert.mader@collabora.com>
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> ---
->   .../boot/dts/qcom/sdm670-google-sargo.dts     | 95 +++++++++++++++++++
->   1 file changed, 95 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts b/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts
-> index ed55646ca419..e925cba0381f 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm670-google-sargo.dts
-> @@ -172,6 +172,34 @@ vreg_s2b_1p05: vreg-s2b-regulator {
->   		regulator-min-microvolt = <1050000>;
->   		regulator-max-microvolt = <1050000>;
->   	};
-> +
-> +	cam_front_ldo: cam-front-ldo-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "cam_front_ldo";
-> +		regulator-min-microvolt = <1352000>;
-> +		regulator-max-microvolt = <1352000>;
-> +		regulator-enable-ramp-delay = <135>;
-> +
-> +		gpios = <&pm660l_gpios 4 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +
-> +		pinctrl-0 = <&cam_front_ldo_pin>;
-> +		pinctrl-names = "default";
-> +	};
-> +
+On Wed, Mar 11, 2026 at 8:38=E2=80=AFPM Jon Hunter <jonathanh@nvidia.com> w=
+rote:
+> On 12/11/2025 13:55, Bartosz Golaszewski wrote:
 
-[...]
+...
 
-> +
-> +&cci_i2c1 {
-> +	camera@1a {
-> +		compatible = "sony,imx355";
-> +		reg = <0x1a>;
-> +
-> +		clocks = <&camcc CAM_CC_MCLK2_CLK>;
-> +
-> +		assigned-clocks = <&camcc CAM_CC_MCLK2_CLK>;
-> +		assigned-clock-rates = <19200000>;
-> +
-> +		reset-gpios = <&tlmm 9 GPIO_ACTIVE_LOW>;
-> +
-> +		avdd-supply = <&cam_front_ldo>;
-> +		dvdd-supply = <&cam_front_ldo>;
+> On Tegra234, the main gpio controller has a total of 164 GPIOs (see
+> the tegra234_main_ports in drivers/gpio/gpio-tegra186.c). The GPIOs
+> are assigned a index by the kernel from 0-163, but these GPIOs are
+> not contiguous with respect to the device-tree specifier.
 
-It's unlikely that one supply is used both for digital and analog supply?
+If I may ask...
 
-I see downstream does it, but I don't think it's correct.
+Why? Is it sparse because there are pads that can't be used as GPIOs?
 
-> +		dovdd-supply = <&cam_vio_ldo>;
-> +
-> +		pinctrl-0 = <&cam_mclk2_default>;
-> +		pinctrl-names = "default";
-> +
-> +		rotation = <270>;
-> +		orientation = <0>;
-> +
-> +		port {
-> +			cam_front_endpoint: endpoint {
-> +				link-frequencies = /bits/ 64 <360000000>;
-> +				remote-endpoint = <&camss_endpoint1>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
->   &gcc {
->   	protected-clocks = <GCC_QSPI_CORE_CLK>,
->   			   <GCC_QSPI_CORE_CLK_SRC>,
-> @@ -490,6 +571,14 @@ &pm660_charger {
->   	status = "okay";
->   };
->   
-> +&pm660_gpios {
-> +	cam_vio_pin: cam-vio-state {
-> +		pins = "gpio13";
-> +		function = "normal";
-> +		power-source = <0>;
-> +	};
-> +};
-> +
->   &pm660_rradc {
->   	status = "okay";
->   };
-> @@ -508,6 +597,12 @@ led-0 {
->   };
->   
->   &pm660l_gpios {
-> +	cam_front_ldo_pin: cam-front-state {
-> +		pins = "gpio4";
-> +		function = "normal";
-> +		power-source = <0>;
-> +	};
-> +
->   	vol_up_pin: vol-up-state {
->   		pins = "gpio7";
->   		function = "normal";
+> For example, in device-tree, if I have a shared-gpio with the
+> following specifier ...
+>
+>   gpios =3D <&gpio TEGRA234_MAIN_GPIO(AF, 1) GPIO_ACTIVE_LOW>;
+>
+> The macro TEGRA234_MAIN_GPIO(AF, 1) evaluates to (23 * 8) + 1 =3D 185.
 
--- 
-David Heidelberg
+To me it sounds like a bad design of the driver for this SoC/platform.
 
+> This is greater than 164 and this is causing the above crash because
+> 'entry->offset' in gpio_device_setup_shared() is greater than
+> 'gdev->ngpio' and this causes us to access invalid memory.
+>
+> This is what I have been able to determine so far and wanted to get
+> your inputs.
+
+
+--=20
+With Best Regards,
+Andy Shevchenko
 
