@@ -1,481 +1,252 @@
-Return-Path: <linux-arm-msm+bounces-97066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wAdtDMS4sWmTEwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 19:47:32 +0100
+	id eHkPBJe6sWmxEwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 19:55:19 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D3E22268D41
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 19:47:31 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 64DB1268ED5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 19:55:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 2DF66305A2F2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 18:47:16 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1A8D83028834
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Mar 2026 18:55:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55E5B3EBF29;
-	Wed, 11 Mar 2026 18:47:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2F653EBF2E;
+	Wed, 11 Mar 2026 18:55:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nsIARa3U"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bECnSL7+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2313F3EAC77;
-	Wed, 11 Mar 2026 18:47:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773254826; cv=none; b=o8pgw0yJab6QKhuu51+h72KZJYZ/Q7go+AAvFQVXLYlJrsF7iw2sEGLp1Y7iVG78GyC3LqlO5Y7uT7R2MiDDVyRPmrWgzCK2a79RR77eK832sOEE/kB9/n8wzhCb+e+R8uKIewLlyPl2Bf4Lzp0a+yod7rwmI68+c0xUJ3JyDo0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773254826; c=relaxed/simple;
-	bh=23ehR3e9GdT43vFDxfGchV095S8HkQ6dk0lxHCCc42o=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=IoLthA/xqHJ/5zi+wvQpG7E3LXOAdNQHKnj2JgaXYkH6IsgrWosdpfPDh1chNWsg9PA0vgNIgmkZcnyhAH8HyiuBJyRoyVu12OFM8Xtq+1Hknrt8cHmenLOODeph9yLCVxE1sF2IG4j/+U3KL9Mdt+4zT+ivY/vWmcq7IXFshQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nsIARa3U; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id F260DC2BCB0;
-	Wed, 11 Mar 2026 18:47:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773254826;
-	bh=23ehR3e9GdT43vFDxfGchV095S8HkQ6dk0lxHCCc42o=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=nsIARa3U/K8XrZWPs7uGnQiqcR0LViChgv8EEkVZootDy2JYDJKrRhzjxKfok5wVp
-	 N2S0jkF9d2UKpD1e2VT95EuksPe+kTlp6vEMZGZ5XtQ8tq/HhhxUpnJYs+2CtNOPxC
-	 Hu0alQ3us18SBMl4Zs+9/qJoIpngRbJ2OFsYFzaQ1ij8A+VFOARk4Gl5JuVxkjVr+0
-	 nK/6djcQ1Yx43O+N1E9+/QLcsovIoQncga30i5JGWRcLae27oROVu7IaITHY9t6QEk
-	 R6sUeQFUzPoWhcgpQMzyPZBYTw7oZrxQAFwLt78P7CsK/lgNVxm/cUFK1woMhRA/3x
-	 wrThs+owgYgEQ==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2D77112586A;
-	Wed, 11 Mar 2026 18:47:05 +0000 (UTC)
-From: Paul Adam via B4 Relay <devnull+adamp.posteo.de@kernel.org>
-Date: Wed, 11 Mar 2026 19:46:07 +0100
-Subject: [PATCH v5 3/3] arm64: dts: qcom: msm8916-wiko-chuppito: add
- initial devicetree
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E153D3EB81A
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2026 18:55:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.42
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773255311; cv=pass; b=qfPubVXML8SC90IdZaJSVGcZw1A7PILAs8OVfTUairrnUHIfFtpoB+cUX1niWk9dxb9cERphhlJVX7yb5ORD3Ak8OCFUtL08+YViALJObndNNw82LX2kXQ8R6qnkBIKJD+jzWrl4xnYGAewvaOjd1h4i8HNjS++Y8U+g4dTUffo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773255311; c=relaxed/simple;
+	bh=irxwBx6UP69oFnPVwuxdcfosSKIVNRJAx/pAMZWSGhM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZUj1sMXCqayfSje0vXkNTEWa1e8bhAE3X+5i+vyRRx5i9a6OTXtU3zovJfW/LNXFUYWwhdbNQ2QpXsjHtwLVMyPm4q5BslVG1a+uITLF+LvzqT8CBQ1+8Bu2PlBsv+Nz33rk2Fs0cjq4xzlxG77pLJXdL+B/qIgJYDR09XYtTpU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bECnSL7+; arc=pass smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-b942424d231so20056766b.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2026 11:55:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773255307; cv=none;
+        d=google.com; s=arc-20240605;
+        b=cOI8xtwlhCPFn1w+wf/OK0h+qac9/CHUh3zsk5FEGyhWZ0gtmAJvZYOv4AY+SSlY8+
+         /ZZ4IZtptuFtsdIhoN/hxAiKo89XdJxi+3kOijyd5YKYgwbwuK26tlz83AqoLx0lFlhM
+         yvPX2MtHcgVAOg1j4tIUSLDDGgr2c79XzdsiB3Icj9cXXSeI/DNNShEeEJGqPttBfqOl
+         j+w9kcL6n/n2AWg0W7SpGwYnBpE9jW97U+TBROmrbmRInWZsQX5waNlnN2MgebdiKtHN
+         I9BYHIviDIuiMbDW+ee7YmpwOO7lpo5PRDcHvzcOy79an1CoxF+JdaqT/0e7fF6u3UOO
+         37MA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=hHaBAq1X6Cs9R/WovG2TDPIdkyxlD9U7dFf+lUqKaZ0=;
+        fh=ZjF1Q/Z8gcxr9dW4S3xCKcLncD0R5oFnepEQnP1YNJU=;
+        b=Bf7t9QJB5gslLKJ43V974wEmrqmQas3RBaGypWVO5smpRv8/UBOLqKNAtTyqbmYcvd
+         0/EUZ6mh9fnzv4VDygv+ggNSmHt+zut5/yUpAtjtWCcOPVjEAlMo+MM0h4W0WXKrKZ5E
+         hWm7vB8iDVFs+kkyW+LWuZFW/1RATS0WgAoMdBkM5xm66SHSSYLz6yFFRIg+Jp5HsK9j
+         B3/pqMcJ0ezMhbEH7fHKlhW/a9xzuHkEhd6ZihNicRr6Pos4SIJSeuVuN8tdwwR6dcV4
+         4AbCIApGMOnU1wTAsNjXLUrfaiWSwJvqkHju+9s2vkReilqKsjNYFpxbXhHlwf79PH2V
+         JIQQ==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773255307; x=1773860107; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hHaBAq1X6Cs9R/WovG2TDPIdkyxlD9U7dFf+lUqKaZ0=;
+        b=bECnSL7+eP9KFKgOMAqfs2V0+7MyCvE+Fa0vmsxxUjc20FzB8I8Hj6vrfTJjGaKPAX
+         Djg9nbqWr2nsP3+yZwzMbSUbU8wBVxrpPfDTDdExD5qHDBVBCh+FcvxOaTquYtVEuqfg
+         QmL2iVUdTmAcM66JCsxyzcADK8Lxun93awA1IoeJEz0sqONjOvslr/Tj6qeYN3d7CJoV
+         y+/XyEzW4YuAqqjRPoV8PRfuDSyIaFwMECmC7QUYOpwotHF0D0miq2t/gYSOlf1HTtkv
+         KPSZ39isQLTl7beC1Iqfxwaxj1j+Nu686iypeeBblPCeLQG/og+fy8OFKVha7cCpKKVG
+         9UGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773255307; x=1773860107;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=hHaBAq1X6Cs9R/WovG2TDPIdkyxlD9U7dFf+lUqKaZ0=;
+        b=DCPeGiZbD4iHYZ4X3b67L6R80YS16p6ov+F1HxEHpmhKjPzvm6BKHBWeoPawAsnkY6
+         uqWowp4pk5NxggkaVIw3SC1Idz9DgYfC0Vzat9Lc0JO9r0EJhDs5yFCgFOYEdHtc8q/o
+         tHhQvYRvBkqnWe+Xgh6o+YcBVb94m1OlMpf9UiXdi6riLD9dq4IS04KUG0xBrkFyzk8C
+         F7k8kRjVNSag2Ywe0QeMDb06JifSVy7MjFlBUP7DBTre89xSaVN//s1cGgABn1hsQQSC
+         3lRzChhd2r+3rHI/XH6wXDg5Iaf8IJWIt9ls0zUh1WClOIaRU4mWe7oY0Xz6tu94NsrD
+         caKQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVO4BaBJaVqBXHkmqs+RKewY2p2eNPUA+BlyPuAJs1dp1VnXa/EdCI9zVhXd7FgTo3YFKnZRA8fX/zdA55F@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw2836UPSUckLVHrFGJ9J3H4r4q1D2lmGd+iOMi8YfkfCKI5WGE
+	1o5F51p6sXPfYSBJbGcYzjHcBDle7flF+Ozg6CFPpQ3Dbc80hsnrsC0daPhEoHY51mxLQHz8Adg
+	n583ka8+kvYQMamro8orAKCnBTsoyjVU=
+X-Gm-Gg: ATEYQzw7SOP7PuUn343kidpg6rHS7yLL59gWKnCczlSHjfQjacB1NHgCJfo8XQX4cPS
+	aGzKzgQxM29LYPkTWAKMsXNSCUCCMljbh3OC959UIaDhDkINCDzCz2KeDsu0unrhSXCQuWoZEsa
+	hm17Hl31VoxUV1SLuak/dCGU2Jeh5pbQuc1xfsSKa1Kd5m3lSwmG2wdwsQ+d9SLDRLns4tNBEsF
+	l/tb9BDWFFRceR9nmnllh/dgdKNMSqQ12h+wfXL9vTwJ/68tJsRTPGqm4nqGzTXxK1PCqjE6bcB
+	59z90wwf41YOccabBwjNQEB2yLABhAWTq9OcsMXwzSeyW7bG6Ry2qvhFWgL1o1LTO+FJhwKrL25
+	8l04i+rVrBWlU6uB6
+X-Received: by 2002:a17:907:980f:b0:b73:544d:b963 with SMTP id
+ a640c23a62f3a-b972e1fb818mr215294466b.13.1773255306700; Wed, 11 Mar 2026
+ 11:55:06 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260311-wiko-chuppito-v5-3-0a8656cca1b3@posteo.de>
-References: <20260311-wiko-chuppito-v5-0-0a8656cca1b3@posteo.de>
-In-Reply-To: <20260311-wiko-chuppito-v5-0-0a8656cca1b3@posteo.de>
-To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
- phone-devel@vger.kernel.org, Paul Adam <adamp@posteo.de>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1773254823; l=7866;
- i=adamp@posteo.de; s=20260215; h=from:subject:message-id;
- bh=gUEGfocX6FZEAHCOkCMohPSEZtjQN06ZmSd94+6ahnk=;
- b=kfnCLSlI5njQRZIE9UxTpvCme8EbabTynGkX50nCJl4zNyRab51vWcakmjqQhcTfzPU3/hQbK
- zhfDCkzHloiC7MnV6D4oPd0QVXjQiYTgj57EsurMItY2OI3bSYrb+W0
-X-Developer-Key: i=adamp@posteo.de; a=ed25519;
- pk=mtrPhSn7htywc4S5zrKNrWM6laAdfnaJzIs0BDiCyAs=
-X-Endpoint-Received: by B4 Relay for adamp@posteo.de/20260215 with
- auth_id=640
-X-Original-From: Paul Adam <adamp@posteo.de>
-Reply-To: adamp@posteo.de
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+References: <20260306222148.8200-1-rosenp@gmail.com> <2026031127-siding-caress-7ed9@gregkh>
+In-Reply-To: <2026031127-siding-caress-7ed9@gregkh>
+From: Rosen Penev <rosenp@gmail.com>
+Date: Wed, 11 Mar 2026 11:54:55 -0700
+X-Gm-Features: AaiRm53qW5bk3kKh7rdlWXHeQ5YAkvINL-7BQnfjicz7nmTpcD6zasMPluist-A
+Message-ID: <CAKxU2N_dJY60Tp4UgLMZ97ZJywNEktmA1At3z6VOPhhSCRx-1w@mail.gmail.com>
+Subject: Re: [PATCH] usb: typec: qcom-pmic-typec: simplify allocation
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: linux-usb@vger.kernel.org, "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, 
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>, Kees Cook <kees@kernel.org>, 
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>, 
+	"open list:QUALCOMM TYPEC PORT MANAGER DRIVER" <linux-arm-msm@vger.kernel.org>, open list <linux-kernel@vger.kernel.org>, 
+	"open list:KERNEL HARDENING (not covered by other areas):Keyword:b__counted_by(_le|_be)?b" <linux-hardening@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-2.16 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-97066-lists,linux-arm-msm=lfdr.de,adamp.posteo.de];
 	FROM_HAS_DN(0.00)[];
-	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
-	TO_DN_SOME(0.00)[];
+	TAGGED_FROM(0.00)[bounces-97067-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	HAS_REPLYTO(0.00)[adamp@posteo.de];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
-	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
+	TO_DN_SOME(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	MISSING_XM_UA(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.11:email,0.0.0.1:email,0.0.0.39:email,0.0.0.68:email,0.0.0.48:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,posteo.de:email,posteo.de:replyto,posteo.de:mid]
-X-Rspamd-Queue-Id: D3E22268D41
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[rosenp@gmail.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,checkpatch.pl:url]
+X-Rspamd-Queue-Id: 64DB1268ED5
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-From: Paul Adam <adamp@posteo.de>
-
-Add an initial device tree for Wiko PULP 4G.
-Includes support for:
-- UART
-- USB (no OTG)
-- Internal storage
-- MicroSD
-- Volume keys + Power button
-- Touchscreen
-- Backlight
-- Accelerometer: Invensense MPU6880
-- Magnetometer: Asahi Kasei AK09911
-- Hall sensor: Rohm BU52021HFV
-- Proximity sensor
-- Vibrator
-- Earpiece
-- Microphone 1
-- Headphones
-- Wifi
-- Bluetooth
-- GPU
-
-Signed-off-by: Paul Adam <adamp@posteo.de>
----
- arch/arm64/boot/dts/qcom/Makefile                  |   1 +
- arch/arm64/boot/dts/qcom/msm8916-wiko-chuppito.dts | 314 +++++++++++++++++++++
- 2 files changed, 315 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index f80b5d9cf1e8..5a3a9a823503 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -75,6 +75,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-rossa.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-serranove.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-thwc-uf896.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-thwc-ufi001c.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wiko-chuppito.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt86518.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt86528.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt88047.dtb
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-wiko-chuppito.dts b/arch/arm64/boot/dts/qcom/msm8916-wiko-chuppito.dts
-new file mode 100644
-index 000000000000..262d9a959e6a
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8916-wiko-chuppito.dts
-@@ -0,0 +1,314 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+
-+/dts-v1/;
-+
-+#include "msm8916-pm8916.dtsi"
-+#include "msm8916-modem-qdsp6.dtsi"
-+
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/input/input.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-mpp.h>
-+
-+/ {
-+	model = "Wiko Pulp 4G";
-+	compatible = "wiko,chuppito", "qcom,msm8916";
-+	chassis-type = "handset";
-+
-+	aliases {
-+		mmc0 = &sdhc_1; /* eMMC */
-+		mmc1 = &sdhc_2; /* SD card */
-+		serial0 = &blsp_uart2;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0";
-+	};
-+
-+	backlight: backlight {
-+		compatible = "pwm-backlight";
-+		pwms = <&pm8916_pwm 0 100000>;
-+		brightness-levels = <0 255>;
-+		num-interpolated-steps = <255>;
-+		default-brightness-level = <255>;
-+		enable-gpios = <&tlmm 119 GPIO_ACTIVE_HIGH>;
-+		pinctrl-0 = <&button_backlight_default>;
-+		pinctrl-names = "default";
-+	};
-+
-+	gpio-hall-sensor {
-+		compatible = "gpio-keys";
-+		pinctrl-0 = <&gpio_hall_sensor_default>;
-+		pinctrl-names = "default";
-+		label = "Hall Effect Sensor";
-+
-+		event-hall-sensor {
-+			label = "Hall Effect Sensor";
-+			gpios = <&tlmm 117 GPIO_ACTIVE_LOW>;
-+			linux,input-type = <EV_SW>;
-+			linux,code = <SW_LID>;
-+			linux,can-disable;
-+		};
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+		pinctrl-0 = <&gpio_keys_default>;
-+		pinctrl-names = "default";
-+		label = "Buttons";
-+
-+		button-volume-up {
-+			label = "Volume up";
-+			gpios = <&tlmm 107 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEUP>;
-+		};
-+	};
-+
-+	usb_id: usb-id {
-+		compatible = "linux,extcon-usb-gpio";
-+		id-gpios = <&tlmm 110 GPIO_ACTIVE_HIGH>;
-+		pinctrl-0 = <&usb_id_default>;
-+		pinctrl-names = "default";
-+	};
-+};
-+
-+&blsp_i2c2 {
-+	status = "okay";
-+
-+	magnetometer@c {
-+		compatible = "asahi-kasei,ak09911";
-+		reg = <0x0c>;
-+		vdd-supply = <&pm8916_l17>;
-+		vid-supply = <&pm8916_l6>;
-+		reset-gpios = <&tlmm 120 GPIO_ACTIVE_LOW>;
-+		pinctrl-0 = <&mag_reset_default>;
-+		pinctrl-names = "default";
-+		mount-matrix = "1",  "0", "0",
-+			       "0", "1", "0",
-+			       "0",  "0", "1";
-+	};
-+
-+	proximity@48 {
-+		compatible = "sensortek,stk3310";
-+		reg = <0x48>;
-+		interrupts-extended = <&tlmm 113 IRQ_TYPE_EDGE_FALLING>;
-+		pinctrl-0 = <&proximity_int_default>;
-+		pinctrl-names = "default";
-+	};
-+
-+	imu@68 {
-+		compatible = "invensense,mpu6880";
-+		reg = <0x68>;
-+		interrupts-extended = <&tlmm 115 IRQ_TYPE_EDGE_FALLING>;
-+		vdd-supply = <&pm8916_l17>;
-+		vddio-supply = <&pm8916_l6>;
-+		pinctrl-0 = <&imu_int_default>;
-+		pinctrl-names = "default";
-+		mount-matrix = "0",  "-1", "0",
-+			       "-1", "0", "0",
-+			       "0",  "0", "-1";
-+	};
-+};
-+
-+&blsp_i2c5 {
-+	status = "okay";
-+
-+	touchscreen@39 {
-+		compatible = "syna,rmi4-i2c";
-+		reg = <0x39>;
-+		interrupts-extended = <&tlmm 13 IRQ_TYPE_EDGE_FALLING>;
-+		vdd-supply = <&pm8916_l17>;
-+		vio-supply = <&pm8916_l6>;
-+		pinctrl-0 = <&touchscreen_default>;
-+		pinctrl-names = "default";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		syna,startup-delay-ms = <100>;
-+		syna,reset-delay-ms = <160>;
-+
-+		rmi4-f01@1 {
-+			reg = <0x1>;
-+			syna,nosleep-mode = <1>;
-+		};
-+
-+		rmi4-f11@11 {
-+			reg = <0x11>;
-+			syna,sensor-type = <1>;
-+		};
-+	};
-+};
-+
-+&blsp_uart2 {
-+	status = "okay";
-+};
-+
-+&gpu {
-+	status = "okay";
-+};
-+
-+&mdss {
-+	status = "okay";
-+};
-+
-+&mpss_mem {
-+	reg = <0x0 0x86800000 0x0 0x5600000>;
-+};
-+
-+&pm8916_codec {
-+	qcom,hphl-jack-type-normally-open;
-+};
-+
-+&pm8916_mpps {
-+	pwm_out: mpp4-state {
-+		pins = "mpp4";
-+		function = "digital";
-+		power-source = <PM8916_MPP_VPH>;
-+		output-low;
-+		qcom,dtest = <1>;
-+	};
-+};
-+
-+&pm8916_pwm {
-+	pinctrl-0 = <&pwm_out>;
-+	pinctrl-names = "default";
-+
-+	status = "okay";
-+};
-+
-+&pm8916_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
-+
-+	status = "okay";
-+};
-+
-+&pm8916_rpm_regulators {
-+	pm8916_l17: l17 {
-+		regulator-min-microvolt = <2850000>;
-+		regulator-max-microvolt = <2850000>;
-+	};
-+};
-+
-+&pm8916_vib {
-+	status = "okay";
-+};
-+
-+&sdhc_1 {
-+	status = "okay";
-+};
-+
-+&sdhc_2 {
-+	pinctrl-0 = <&sdc2_default>, <&sdc2_cd_default>;
-+	pinctrl-1 = <&sdc2_sleep>, <&sdc2_cd_default>;
-+	pinctrl-names = "default", "sleep";
-+	cd-gpios = <&tlmm 38 GPIO_ACTIVE_HIGH>;
-+
-+	status = "okay";
-+};
-+
-+&sound {
-+	audio-routing = "AMIC1", "MIC BIAS Internal1",
-+		"AMIC2", "MIC BIAS Internal2";
-+};
-+
-+&tlmm {
-+	button_backlight_default: button-backlight-default-state {
-+		pins = "gpio119";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	gpio_hall_sensor_default: gpio-hall-sensor-default-state {
-+		pins = "gpio117";
-+		function = "gpio";
-+		drive-strength = <6>;
-+		bias-pull-up;
-+	};
-+
-+	gpio_keys_default: gpio-keys-default-state {
-+		pins = "gpio107";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+
-+	imu_int_default: imu-int-default-state {
-+		pins = "gpio115";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	mag_reset_default: mag-reset-default-state {
-+		pins = "gpio120";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	proximity_int_default: proximity-int-default-state {
-+		pins = "gpio113";
-+		function = "gpio";
-+		drive-strength = <6>;
-+		bias-pull-up;
-+	};
-+
-+	sdc2_cd_default: sdc2-cd-default-state {
-+		pins = "gpio38";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	touchscreen_default: touchscreen-default-state {
-+		touchscreen-pins {
-+			pins = "gpio13";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+
-+		reset-pins {
-+			pins = "gpio12";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+	};
-+
-+	usb_id_default: usb-id-default-state {
-+		pins = "gpio110";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-pull-up;
-+	};
-+};
-+
-+&usb {
-+	extcon = <&usb_id>, <&usb_id>;
-+
-+	status = "okay";
-+};
-+
-+&usb_hs_phy {
-+	extcon = <&usb_id>;
-+};
-+
-+&venus {
-+	status = "okay";
-+};
-+
-+&venus_mem {
-+	status = "okay";
-+};
-+
-+&wcnss {
-+	status = "okay";
-+};
-+
-+&wcnss_iris {
-+	compatible = "qcom,wcn3620";
-+};
-+
-+&wcnss_mem {
-+	status = "okay";
-+};
-
--- 
-2.53.0
-
-
+On Wed, Mar 11, 2026 at 7:47=E2=80=AFAM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> On Fri, Mar 06, 2026 at 02:21:48PM -0800, Rosen Penev wrote:
+> > Change kzalloc + kcalloc to just kzalloc with a flexible array member.
+> >
+> > Add __counted_by for extra runtime analysis when requested.
+> >
+> > Shuffle some code in probe to provide a clearer picture.
+> >
+> > Signed-off-by: Rosen Penev <rosenp@gmail.com>
+> > ---
+> >  .../typec/tcpm/qcom/qcom_pmic_typec_pdphy.c   | 27 ++++++++-----------
+> >  .../typec/tcpm/qcom/qcom_pmic_typec_port.c    | 26 ++++++++----------
+> >  2 files changed, 22 insertions(+), 31 deletions(-)
+> >
+> > diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c b/driv=
+ers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
+> > index c8b1463e6e8b..4b3915c6894a 100644
+> > --- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
+> > +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
+> > @@ -95,13 +95,13 @@ struct pmic_typec_pdphy {
+> >       struct regmap                   *regmap;
+> >       u32                             base;
+> >
+> > -     unsigned int                    nr_irqs;
+> > -     struct pmic_typec_pdphy_irq_data        *irq_data;
+> > -
+> >       struct work_struct              reset_work;
+> >       struct work_struct              receive_work;
+> >       struct regulator                *vdd_pdphy;
+> >       spinlock_t                      lock;           /* Register atomi=
+city */
+> > +
+> > +     unsigned int                    nr_irqs;
+> > +     struct pmic_typec_pdphy_irq_data        irq_data[] __counted_by(n=
+r_irqs);
+> >  };
+> >
+> >  static void qcom_pmic_typec_pdphy_reset_on(struct pmic_typec_pdphy *pm=
+ic_typec_pdphy)
+> > @@ -560,31 +560,26 @@ int qcom_pmic_typec_pdphy_probe(struct platform_d=
+evice *pdev,
+> >       struct pmic_typec_pdphy_irq_data *irq_data;
+> >       int i, ret, irq;
+> >
+> > -     pmic_typec_pdphy =3D devm_kzalloc(dev, sizeof(*pmic_typec_pdphy),=
+ GFP_KERNEL);
+> > -     if (!pmic_typec_pdphy)
+> > -             return -ENOMEM;
+> > -
+> >       if (!res->nr_irqs || res->nr_irqs > PMIC_PDPHY_MAX_IRQS)
+> >               return -EINVAL;
+> >
+> > -     irq_data =3D devm_kcalloc(dev, res->nr_irqs, sizeof(*irq_data),
+> > -                             GFP_KERNEL);
+> > -     if (!irq_data)
+> > +     pmic_typec_pdphy =3D devm_kzalloc(dev, struct_size(pmic_typec_pdp=
+hy, irq_data, res->nr_irqs), GFP_KERNEL);
+>
+> extra long line, checkpatch.pl didn't complain about this?
+>
+> > +     if (!pmic_typec_pdphy)
+> >               return -ENOMEM;
+> >
+> > +     pmic_typec_pdphy->nr_irqs =3D res->nr_irqs;
+> > +     pmic_typec_pdphy->dev =3D dev;
+> > +     pmic_typec_pdphy->base =3D base;
+> > +     pmic_typec_pdphy->regmap =3D regmap;
+> >       pmic_typec_pdphy->vdd_pdphy =3D devm_regulator_get(dev, "vdd-pdph=
+y");
+> >       if (IS_ERR(pmic_typec_pdphy->vdd_pdphy))
+> >               return PTR_ERR(pmic_typec_pdphy->vdd_pdphy);
+> >
+> > -     pmic_typec_pdphy->dev =3D dev;
+> > -     pmic_typec_pdphy->base =3D base;
+> > -     pmic_typec_pdphy->regmap =3D regmap;
+> > -     pmic_typec_pdphy->nr_irqs =3D res->nr_irqs;
+> > -     pmic_typec_pdphy->irq_data =3D irq_data;
+> >       spin_lock_init(&pmic_typec_pdphy->lock);
+> >       INIT_WORK(&pmic_typec_pdphy->reset_work, qcom_pmic_typec_pdphy_si=
+g_reset_work);
+> >
+> > -     for (i =3D 0; i < res->nr_irqs; i++, irq_data++) {
+> > +     for (i =3D 0; i < res->nr_irqs; i++) {
+> > +             irq_data =3D &pmic_typec_pdphy->irq_data[i];
+> >               irq =3D platform_get_irq_byname(pdev, res->irq_params[i].=
+irq_name);
+> >               if (irq < 0)
+> >                       return irq;
+> > diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c b/drive=
+rs/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
+> > index 8051eaa46991..7c5cf8061f04 100644
+> > --- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
+> > +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
+>
+> Can you just convert one driver at a time please?  This should be a
+> patch series.
+This is not the same driver?
+>
+> thanks,
+>
+> greg k-h
 
