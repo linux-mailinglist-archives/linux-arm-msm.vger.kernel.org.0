@@ -1,215 +1,260 @@
-Return-Path: <linux-arm-msm+bounces-97132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cMlRM8pKsml7LQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 06:10:34 +0100
+	id KEUkAOdasmngLwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 07:19:19 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C22B26D4DF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 06:10:34 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 68E9F26D90E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 07:19:18 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 463C5302B204
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 05:10:33 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 578CC304C953
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 06:17:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C05A7397682;
-	Thu, 12 Mar 2026 05:10:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBB2933D503;
+	Thu, 12 Mar 2026 06:17:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QMCHbv8k"
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="oP7xL2nA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com [209.85.221.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-244116.protonmail.ch (mail-244116.protonmail.ch [109.224.244.116])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6212F38C2C2
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Mar 2026 05:10:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.173
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773292232; cv=pass; b=P3HNCkLfY74Q3aQUFBZG7HUkdrjVxE1bNUyrgfsbN5HR9gKH2LZ9au6r9zw0WlKNBzPrc09I+lPy4SjX5srBXu2z6iwZ5NECKnkVVCZszVXihS/UU6BaKr37vTzFLvn0uZbw/Ez1H3OFwDcDrRHlP7BQyxD8irQzkNNNZC1PW2Q=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773292232; c=relaxed/simple;
-	bh=2RvlbfyPBp0OCTZSWXAzRVccTVdOZnBY4R9F6Vzx7h0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IV5Rgs6LHtCLpEKkHy4MPrSi8ppY6QmH28ivm1/XVIptenKuW480N5EpahJGt6kigrfGzVjbUnsFFI+ArIc88igALulJ1eN6C7DcPFHv0TTxtm2+USyZf4Oyvjg85iu7KVfGGCjCQ63WS6yBPRcRkXM44OC+hQnHremgW62t+N0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QMCHbv8k; arc=pass smtp.client-ip=209.85.221.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vk1-f173.google.com with SMTP id 71dfb90a1353d-56b255b1dd0so614211e0c.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Mar 2026 22:10:31 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773292230; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Zbc+dUbV5Pq9CxbB8TbhmxwfgQNe92YmKpP1jy4TkkrzlyBzphEHXUJddll/2CnmP8
-         nHdahHrYMSeUkS7NNeieGXP4/I+g27IRjRiN68XotCXa6z11+mix6sxhH/qySVkQfTcq
-         mjLxN1w5ZIdYjBYPGo65nXB1WoWbaOmzmAeQdWc9Y+OE/S5qCTTIvkGvxJPt5MrZBBww
-         NnVXrkHgEBo+apwgdfrmjDTOsPMXopGQ8F6TKIk3Cw9PO9iYIzKOHpsZJlxTLV5GGTX5
-         YxrnNndqe5+4ajIMKCkV5wJ+c+FlYQznzz6AVq0INueQruP4KhhQzrhZIa4ZKcC/hor4
-         obKg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=PWcvi8r5zhb1XtI8LQ0y1u0RL/IpsZ2+XzabNVzn4i0=;
-        fh=RHlbS9d8AXhd27VfOUqGVYoFj0k2xjDKORVS9+iOpMM=;
-        b=CmGxBM76w8/0GG5TkS6yqXNHg/93JwbOUyL08DG1lSRIIQzysdAzeL2pKkAsrFvvua
-         MBxBS9lp8Mqie/MkV0rPpXtBARZ3E6VCsOo2llyYMYTZwACYbZI3tngmMg0o1n0JMDtw
-         KkQtVm5tPHeQjBOiVKNxIw2vIHQShuFxBnyOgGaRbm4FjQbuIpuSQlhFXt8V5IO/Ovbg
-         WyNZgPeka7rAIHoOA+cV0UtODC5mzJ6MBj/0qOYtRqgfsl2C+kh6JkseaicYJByOHhoc
-         bp2gK1agqHTEVsGuwqSoaH9OyHWz3zuyI8vw7inqpVzql6L7jh+2dM+jD3h8t7An0gJT
-         6ArQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773292230; x=1773897030; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PWcvi8r5zhb1XtI8LQ0y1u0RL/IpsZ2+XzabNVzn4i0=;
-        b=QMCHbv8kLVxJznYrwYGfwwSqbS+h9Xrevus0zwsEersgFxZ1YEP03b/CRjo3gqZCbC
-         neWKX9q03uITjU5BgagUkDwGVScqz1JNR2OmK+mJUm1QijKxqLLLUAhszWLcjLeLXEcl
-         QcrzHrncGOumvpFxaqlHKrjUAGTwOHSIB3OK58MLWU6Euq0Umh35X3sVDHocqQWkY7LA
-         XX9yiZkslcJcWfqKBsc6DnNDIBtyIHDTz8u7yjYEcyNI3lj7cvPk3mF0T9WqwkHFzok9
-         LPZQ0QlRzIpvD7IVigaqwiEL+bFWV8qI0YMqKJY0VopyJrYTisPGxwp6ZczQx83ujgJ6
-         nixw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773292230; x=1773897030;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=PWcvi8r5zhb1XtI8LQ0y1u0RL/IpsZ2+XzabNVzn4i0=;
-        b=KqXJ3hXthBBm4j3434Ttfvr6XTcGPQVi359bwBKb2R7dohMWzubxNbxt6d0sDrK06e
-         YskuiDOPEGeFl+xNg6pfz288MUE4+p6+kmUqgMvBa51IRs3IpkCVMZELmp3Qi+LY/Msk
-         HkiJHHxrpIckQMxFKCV1W8Bmrav0xpdTYAD50ZgVwZXBFS3GlGeB+rXYE4lL6Bv4J9Ng
-         wd94ORHfijtKFH3WdnANwcsB/Hh3VVsJzmZPbfQxuP6I6coCnl6rPuHzgWOHXXXtn994
-         uZr6sOCh7m6ogAAd0dMBL4BIBTIjRlyUPccsFrwMPKNQ77fCkgGT7PEQ8rXhoLuRXodF
-         zy8A==
-X-Forwarded-Encrypted: i=1; AJvYcCVWx5F2H8vskrLCHR2NgSfAFveiBgxt5SZdwVuW+runNSgGWq050KRh4BpnDeVRWHlsFyqmeajlzzHHkLYG@vger.kernel.org
-X-Gm-Message-State: AOJu0YyZ6f8NeicFvoivjWu5p/zpErIfKvAntW1x3vqsemyNwdc0qmS3
-	XKAg3+cWI5Yjs6ZkV9sPPASHjKnVtq57rq0n4Bd2bpIZcTfmahSCSuDyJ5wKBIUVJjQq201ygm9
-	lXWwsuFV5mTcdy5RNFKSjxu1sx0lObeNAMEdLdop2pg==
-X-Gm-Gg: ATEYQzzLFDBkDRe/45JqAghsx+2OwC4taWpC40LThTawCvCZLeYoghSG0DaNlKKVi9f
-	/rZxB0IRYhxLSU0HXElAsKyaHxfV2x2GSG3L+0FqJ1n3eO8hD8veDvnms1EsRZs+dduZZhx7jO5
-	LfrBgrGByMeqO9ncX9HSZjVLqVqxuQO0VsmOYJIlfyjgbf8gwFEqz06YH+L3pOEK4BVgQcrBoV+
-	5BSKJAmifX0YvyipcDBEkw+aqWEXpEVNJSVIGVbSqlZPjV7f3VJINS4lIn0mNwUyjPtTFTsjxnQ
-	LOlvtU1e
-X-Received: by 2002:a05:6122:905:b0:559:ed61:4693 with SMTP id
- 71dfb90a1353d-56b47502a82mr1980826e0c.10.1773292230367; Wed, 11 Mar 2026
- 22:10:30 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5BC21C3BFC
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Mar 2026 06:17:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.116
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773296233; cv=none; b=vDXauX4C74kgXN81ATYsMB/0Mbj3zURQkp6tp41pmDqt4hclAiUNTvRlSdJ/KChQCOaDIgW35PhndGvENDEMGBP1rowr3OK2i3uv4JQvo5fHIelor89pc12w8Ic1SmSeIZCHp0pFeAq1jZ/5bKu5NdOfrF0oeRssCfBW9HeojD0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773296233; c=relaxed/simple;
+	bh=RwETkPauWLPu8/cpRZEAFRTB7migRPlSchRkeRn0J1o=;
+	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=FxiD4pKA6s1l+bMFgbitvWDB1tskTJSzwkpgQFdnr153wGfdWSgCpqu/ndjbP4J8VlqYsXmqF5C1afGsigJz4B5xfT5OS+mlQLsa1Zz8yS7lS4G8lDgcyXUkrO+JYRflcILMnJgiE/HFtLK72BNNGAKl8Pyk5ixTQuqLrJh6PK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=oP7xL2nA; arc=none smtp.client-ip=109.224.244.116
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1773296222; x=1773555422;
+	bh=3wBo0UCe9WJRN1U7aQiitye13RIjQxmKywtDbgS4TT8=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=oP7xL2nA9DjztUMjAe5dQhSwuSorXZvftpvnowLANdn0k5It5BCi7s0Vbp706FXf6
+	 j/o8gsCJkJ1QMRb8DD5Iy8O651Mn0KBy1tomUH1hDXWug3IABG0XYZsw0fJXl//e1H
+	 1Q5uFb6DudQlO00/DBHWKFunpNO8HoMZVU6A7cao/oUtYKNZKqK6FGEAo3hPjYHzcm
+	 PKzHyV0uYCxRCJQv5FelDRp9RdrqydJRJStXGLmJmfmPvUvUBLTRy7sIbRk7LoqLU7
+	 TUdKg8p3iiUhsRlNfg17a/jqOMg8oUJgBoYS3YB3NM9ZkjsbYf+24ppogYne80cIa7
+	 9UJPjZIUa1yew==
+Date: Thu, 12 Mar 2026 06:16:58 +0000
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Heikki Krogerus <heikki.krogerus@linux.intel.com>
+From: Alexander Koskovich <akoskovich@pm.me>
+Cc: linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Alexander Koskovich <akoskovich@pm.me>
+Subject: [PATCH v2] usb: typec: qcom: Add support for per port VBUS detection
+Message-ID: <20260312-qcom-typec-shared-vbus-v2-1-99ed9e500947@pm.me>
+Feedback-ID: 37836894:user:proton
+X-Pm-Message-ID: 96e83a83952ba69daff8dce48679cbb1f8b710d6
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260311-dsi-dsc-regresses-again-v1-1-6a422141eeea@somainline.org>
-In-Reply-To: <20260311-dsi-dsc-regresses-again-v1-1-6a422141eeea@somainline.org>
-From: Pengyu Luo <mitltlatltl@gmail.com>
-Date: Thu, 12 Mar 2026 13:10:07 +0800
-X-Gm-Features: AaiRm5032nIOTt8byfCch6Yp4UmYC08WVVLg9N-eS-xixBXOUFqlyg4aKIp8AV0
-Message-ID: <CAH2e8h4qnF3UxWFrU59BrStWMDc-=Vz9ZNmuq8Q3smhHeUzxyw@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dsi: Restore widebus calculation for CMDMode panels
-To: Marijn Suijten <marijn.suijten@somainline.org>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>, 
-	Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	~postmarketos/upstreaming@lists.sr.ht, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Martin Botka <martin.botka@somainline.org>, 
-	Jami Kettunen <jami.kettunen@somainline.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
+	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-97132-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,ffwll.ch,lists.sr.ht,collabora.com,somainline.org,vger.kernel.org,lists.freedesktop.org];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[18];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-97133-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_THREE(0.00)[3];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[pm.me:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	MISSING_XM_UA(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mitltlatltl@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,mail.gmail.com:mid]
-X-Rspamd-Queue-Id: 4C22B26D4DF
+	FROM_NEQ_ENVFROM(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,pm.me:dkim,pm.me:email,pm.me:mid]
+X-Rspamd-Queue-Id: 68E9F26D90E
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Thu, Mar 12, 2026 at 6:31=E2=80=AFAM Marijn Suijten
-<marijn.suijten@somainline.org> wrote:
->
-> Commit ac47870fd795 ("drm/msm/dsi: fix hdisplay calculation when
-> programming dsi registers") makes a false and ungrounded statement that
-> "Since CMD mode does not use this, we can remove !(msm_host->mode_flags
-> & MIPI_DSI_MODE_VIDEO) safely." which isn't the case at all.
-> dsi_timing_setup() affects both command mode and video mode panels, and
-> by no longer having any path that sets bits_per_pclk =3D 48 (contrary to
-> the updated code-comment) all DSI DSC panels on SM8350 and above (i.e.
-> with widebus support) regress thanks to this patch.
->
-> The entire reason that video mode was originally omitted from this code
-> path is because it was never tested before; any change that enables
-> widebus for video mode panels should not regress the command mode path.
->
-> Thus add back the path allows 6 bytes or 48 bits to be sent per pclk
-> on command mode DSI panels with widebus, restoring the panel on devices
-> like the Sony Xperia 1 III and upwards.
->
-> Fixes: ac47870fd795 ("drm/msm/dsi: fix hdisplay calculation when programm=
-ing dsi registers")
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> ---
+This is required for devices (e.g. ASUS ROG Phone 3) where more than
+one USB port can act as a sink and both share a single USBIN input on
+the PMIC.
 
-Apologies, I messed up, I had sent the same fixes days ago.
-https://lore.kernel.org/linux-arm-msm/20260307111250.105772-2-mitltlatltl@g=
-mail.com/
+Because the PM8150B uses USBIN to determine VBUS presence, a charger
+connected to one port causes the PMIC to falsely detect VBUS on the
+other port, preventing it from entering source mode.
 
-> In addition I can't say I understand the original commit message
-> at all; it mentions a BPC=3D10 mode however the highest format that
-> mipi_dsi_pixel_format_to_bpp supports is RGB888 thus it won't
-> ever return anything above 24, which is the original amount the
-> non-command-mode path defaulted to (regardless of widebus)...  Was that
-> patch doing anything for video mode at all?
->
+For example, plugging a charger into one port prevents using the other
+port for a flash drive.
 
-RGB888 is the dst bpc, which is tied to qcom,mdss-dsi-bpp in the downstream=
-.
+Fix this by adding support for the vbus-gpios connector binding so the
+driver can use an external GPIO for per-port VBUS presence detection
+instead of the shared USBIN register.
 
-Actually, we should use src bpc here, another fixe
-https://lore.kernel.org/linux-arm-msm/20260307111250.105772-1-mitltlatltl@g=
-mail.com/
+Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
+---
+Changes in v2:
+- Dropped RFC prefix
+- Remove redundant vbus-detect-gpios, instead use existing vbus-gpios from =
+usb-connector (Dmitry)
+- Updated cover to better describe scenario where this change is relevant
+- Update comment for EN_TRY_SRC to make more sense
+- Skip vSafe5V poll too not just vSafe0V
+- return gpiod_get_value_cansleep (Konrad)
+- regmap_update_bits -> regmap_set_bits (Konrad)
+- Get vbus-gpios per connector (Konrad)
+- Add bracket to if (IS_ERR(pmic_typec_port->vbus_detect_gpio)) (Bryan)
+- Link to v1: https://lore.kernel.org/r/20260308-qcom-typec-shared-vbus-v1-=
+0-7d574b91052a@pm.me
+---
+ drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c | 53 ++++++++++++++++++=
++++-
+ 1 file changed, 52 insertions(+), 1 deletion(-)
 
-> It feels like the conditional introduced here is only making things more
-> confusing, but I don't have enough input to confirm what the video-mode
-> path should be doing in widebus mode (multiply BPC by the number of
-> components and by 2 in case of widebus?).
+diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c b/drivers/u=
+sb/typec/tcpm/qcom/qcom_pmic_typec_port.c
+index 8051eaa46991..a8f6687a3522 100644
+--- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
++++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
+@@ -5,6 +5,7 @@
+=20
+ #include <linux/delay.h>
+ #include <linux/err.h>
++#include <linux/gpio/consumer.h>
+ #include <linux/interrupt.h>
+ #include <linux/kernel.h>
+ #include <linux/mod_devicetable.h>
+@@ -176,6 +177,8 @@ struct pmic_typec_port {
+ =09bool=09=09=09=09vbus_enabled;
+ =09struct mutex=09=09=09vbus_lock;=09=09/* VBUS state serialization */
+=20
++=09struct gpio_desc=09=09*vbus_detect_gpio;
++
+ =09int=09=09=09=09cc;
+ =09bool=09=09=09=09debouncing_cc;
+ =09struct delayed_work=09=09cc_debounce_dwork;
+@@ -279,6 +282,9 @@ static int qcom_pmic_typec_port_vbus_detect(struct pmic=
+_typec_port *pmic_typec_p
+ =09unsigned int misc;
+ =09int ret;
+=20
++=09if (pmic_typec_port->vbus_detect_gpio)
++=09=09return gpiod_get_value_cansleep(pmic_typec_port->vbus_detect_gpio);
++
+ =09ret =3D regmap_read(pmic_typec_port->regmap,
+ =09=09=09  pmic_typec_port->base + TYPEC_MISC_STATUS_REG,
+ =09=09=09  &misc);
+@@ -310,6 +316,13 @@ static int qcom_pmic_typec_port_vbus_toggle(struct pmi=
+c_typec_port *pmic_typec_p
+ =09=09val =3D TYPEC_SM_VBUS_VSAFE0V;
+ =09}
+=20
++=09/*
++=09 * On devices with multiple ports sharing USBIN, VBUS from another
++=09 * port makes the USBIN-based vsafe polls unreliable.
++=09 */
++=09if (pmic_typec_port->vbus_detect_gpio)
++=09=09return 0;
++
+ =09/* Poll waiting for transition to required vSafe5V or vSafe0V */
+ =09ret =3D regmap_read_poll_timeout(pmic_typec_port->regmap,
+ =09=09=09=09       pmic_typec_port->base + TYPEC_SM_STATUS_REG,
+@@ -589,7 +602,15 @@ static int qcom_pmic_typec_port_start_toggling(struct =
+tcpc_dev *tcpc,
+ =09=09mode =3D EN_SNK_ONLY;
+ =09=09break;
+ =09case TYPEC_PORT_DRP:
+-=09=09mode =3D EN_TRY_SNK;
++=09=09/*
++=09=09 * With VBUS present on USBIN from another port, EN_TRY_SNK
++=09=09 * keeps the port in sink mode. Use EN_TRY_SRC so the port
++=09=09 * tries to source first.
++=09=09 */
++=09=09if (pmic_typec_port->vbus_detect_gpio)
++=09=09=09mode =3D EN_TRY_SRC;
++=09=09else
++=09=09=09mode =3D EN_TRY_SNK;
+ =09=09break;
+ =09}
+=20
+@@ -677,6 +698,19 @@ static int qcom_pmic_typec_port_start(struct pmic_type=
+c *tcpm,
+ =09if (ret)
+ =09=09goto done;
+=20
++=09/*
++=09 * On devices with multiple USB-C ports sharing USBIN, bypass
++=09 * VSAFE0V so SRC attachment can complete despite VBUS being
++=09 * present on USBIN from another port.
++=09 */
++=09if (pmic_typec_port->vbus_detect_gpio) {
++=09=09ret =3D regmap_set_bits(pmic_typec_port->regmap,
++=09=09=09=09     pmic_typec_port->base + TYPEC_EXIT_STATE_CFG_REG,
++=09=09=09=09     BYPASS_VSAFE0V_DURING_ROLE_SWAP);
++=09=09if (ret)
++=09=09=09goto done;
++=09}
++
+ =09pmic_typec_port->tcpm_port =3D tcpm_port;
+=20
+ =09for (i =3D 0; i < pmic_typec_port->nr_irqs; i++)
+@@ -704,6 +738,7 @@ int qcom_pmic_typec_port_probe(struct platform_device *=
+pdev,
+ =09struct device *dev =3D &pdev->dev;
+ =09struct pmic_typec_port_irq_data *irq_data;
+ =09struct pmic_typec_port *pmic_typec_port;
++=09struct fwnode_handle *connector;
+ =09int i, ret, irq;
+=20
+ =09pmic_typec_port =3D devm_kzalloc(dev, sizeof(*pmic_typec_port), GFP_KER=
+NEL);
+@@ -724,6 +759,22 @@ int qcom_pmic_typec_port_probe(struct platform_device =
+*pdev,
+ =09if (IS_ERR(pmic_typec_port->vdd_vbus))
+ =09=09return PTR_ERR(pmic_typec_port->vdd_vbus);
+=20
++=09connector =3D device_get_named_child_node(dev, "connector");
++=09if (connector) {
++=09=09pmic_typec_port->vbus_detect_gpio =3D
++=09=09=09devm_fwnode_gpiod_get(dev, connector, "vbus",
++=09=09=09=09=09      GPIOD_IN, NULL);
++=09=09fwnode_handle_put(connector);
++
++=09=09if (IS_ERR(pmic_typec_port->vbus_detect_gpio)) {
++=09=09=09ret =3D PTR_ERR(pmic_typec_port->vbus_detect_gpio);
++=09=09=09pmic_typec_port->vbus_detect_gpio =3D NULL;
++=09=09=09if (ret !=3D -ENOENT)
++=09=09=09=09return dev_err_probe(dev, ret,
++=09=09=09=09=09=09     "failed to get vbus GPIO\n");
++=09=09}
++=09}
++
+ =09pmic_typec_port->dev =3D dev;
+ =09pmic_typec_port->base =3D base;
+ =09pmic_typec_port->regmap =3D regmap;
 
-I left a comment. For CMD mode, it consumes 6 bytes, for Video mode,
+---
+base-commit: 1f318b96cc84d7c2ab792fcc0bfd42a7ca890681
+change-id: 20260308-qcom-typec-shared-vbus-7d37c6b2d155
 
-  * DPU sends 3 bytes per pclk cycle to DSI. If widebus is
-- * enabled, bus width is extended to 6 bytes.
-+ * enabled, MDP always sends out 48-bit compressed data per
-+ * pclk and on average, DSI consumes an amount of compressed
-+ * data equivalent to the uncompressed pixel depth per pclk.
+Best regards,
+--=20
+Alexander Koskovich <akoskovich@pm.me>
 
 
-
-Best wishes,
-Pengyu Luo
 
