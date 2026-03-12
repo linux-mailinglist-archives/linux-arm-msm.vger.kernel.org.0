@@ -1,191 +1,247 @@
-Return-Path: <linux-arm-msm+bounces-97171-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8PTmM+OHsml4NQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97171-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 10:31:15 +0100
+	id 0LvaKh6Rsml5NgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 11:10:38 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35FE726F985
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 10:31:15 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1BC562701EB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 11:10:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 47D6F3099EA2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 09:29:08 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D9F75322E308
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 10:04:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F49E3B4E87;
-	Thu, 12 Mar 2026 09:29:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE2AA2D77F7;
+	Thu, 12 Mar 2026 10:04:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="X9g10wqZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mpQmvkcs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 394B63B3883;
-	Thu, 12 Mar 2026 09:29:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD0CD375AC6
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Mar 2026 10:04:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773307746; cv=none; b=bcxn0TKq7rnH7r4MSfMh13U8ploF5ySCb2PqKl0HxVrJSoT6jXOaknimNstMcLhiR9wPdU2qauv7UIm5cUNFZwYpCkR6VTGuJzbRf3u4z4t69NJWpF+/cTfm8UNgBF6DJADEWP57Iz1xzjzitEfw0N9hM0tOaSQW9mguAOvW9DY=
+	t=1773309884; cv=none; b=t2wIXVqZPwT/u5DsedaTcaG6T1JogxS/O7+V4KW8EgdYBzmMA69mRV5J2slB3OgFaVfDgK2fnmbnjIB1uiR2W68tAn9+v/mpA6xAkzkzPURFUrHPr7lumHyD1pwIRAuSy8QHWFGcwDVoLdZpWSNx8qExj13yulb25+8VIufCEos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773307746; c=relaxed/simple;
-	bh=lEOtM4zhrzldYTBWFHJI+Dhum9TqJxp4kJWyKgJHjgI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c4XkqIBVc0HuLQ2LKFWeSIKN9E6JTRKgfgUw/RY52NS9tmLNITPUC/mxwhr9SsVJ+W5PTWQyl2v++0tkAsM5lDbvexUFSzKsrPc0wZNyZkDx92MQL3OXynhwNrWM7h+vDm09sbld4NqGlY/3Xo9Z+IPQ7ZUFTQNtbdQPcrZn1Cs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=X9g10wqZ; arc=none smtp.client-ip=198.175.65.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1773307746; x=1804843746;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=lEOtM4zhrzldYTBWFHJI+Dhum9TqJxp4kJWyKgJHjgI=;
-  b=X9g10wqZqAmEM5vSWCPr/Ruzf4QTcZsEbYueqsf1/AgN9LfUMS74UduT
-   CG7lKo0scf1n04LSeqZw4xi5FAQ2P/TFA+G0fuxVnks9AUlesiioEF5A2
-   8BbEXyg/XRQpbU+KACVpOA7OOcvGmzYbzOg5Abhx8iRTU93NU7rnchDnX
-   IBNQYikfBwIqceM+jCw4Fn01JQOwWE0sxyWYisQ/C+LG9x55qSMd44ZOU
-   Bk2XMY//pqEcEQAqPozNXOdzW6/s3fULeichpTYXcQcCs5ZaU+p7ZiYIo
-   9HU+enNRuTYue4l/PU0URuuBs30kE4QUa9DODKRlytrlYf8+c2p3kn5NI
-   Q==;
-X-CSE-ConnectionGUID: n+YsjcfVSfWPpvi5GAl82A==
-X-CSE-MsgGUID: SB4bSls8QCGf7JD+GE8sIw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11726"; a="74285414"
-X-IronPort-AV: E=Sophos;i="6.23,116,1770624000"; 
-   d="scan'208";a="74285414"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Mar 2026 02:29:05 -0700
-X-CSE-ConnectionGUID: Bmp7J73lQ2KkDt15aqIghA==
-X-CSE-MsgGUID: VGjzDg/3SbWUY6CwzC6H8A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,116,1770624000"; 
-   d="scan'208";a="225466070"
-Received: from pgcooper-mobl3.ger.corp.intel.com (HELO localhost) ([10.245.245.112])
-  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Mar 2026 02:28:57 -0700
-Date: Thu, 12 Mar 2026 11:28:55 +0200
-From: Andy Shevchenko <andriy.shevchenko@intel.com>
-To: Jon Hunter <jonathanh@nvidia.com>
-Cc: wens@kernel.org, Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Bartosz Golaszewski <brgl@bgdev.pl>, Kees Cook <kees@kernel.org>,
-	Mika Westerberg <westeri@kernel.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Saravana Kannan <saravanak@google.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Andy Shevchenko <andy@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Alexey Klimov <alexey.klimov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-hardening@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	"linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>
-Subject: Re: [PATCH v4 03/10] gpiolib: implement low-level, shared GPIO
- support
-Message-ID: <abKHV7RSJWI0U-sK@ashevche-desk.local>
-References: <20251112-gpio-shared-v4-0-b51f97b1abd8@linaro.org>
- <20251112-gpio-shared-v4-3-b51f97b1abd8@linaro.org>
- <921ba8ce-b18e-4a99-966d-c763d22081e2@nvidia.com>
- <CAHp75VevThmDMm6VoVB9P0YbUGGGsmgnzr2gn9=1xtJZt-kuQw@mail.gmail.com>
- <64f6e02d-c7cb-40cb-b1fb-2d3523433c66@nvidia.com>
- <CAGb2v67mmt=X8rbsUo+Gwe6uHXTNpBFGzBbrXZYEGsftHL4Ejg@mail.gmail.com>
- <2d4e69cb-a43c-4d13-9f7b-20b95cee43a7@nvidia.com>
+	s=arc-20240116; t=1773309884; c=relaxed/simple;
+	bh=cNHwcyvjlqOn/sSK9BepZUE0uOreTt3cfgNnXEYhuwA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WSvLCzkB9hgtaFhjFUGF4KLdVxL/RajniXxIHv3aWQRDSUENkUSTv+blovnjbCnT8u3BKjfxxSDJEGxW0N87S4HytN8+oZDr73YMjHsqx2ZnCtUT9dtU3Bh+nhiY/Pbqd0SzJ1dw4vPhxgbPz4GLICPtN3y+HBLbdnNU3Uocqw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mpQmvkcs; arc=none smtp.client-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-66281b1018bso1358927a12.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Mar 2026 03:04:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1773309878; x=1773914678; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+szYmIVQmnY3WCiXmubWFb8BEwrcKI82m+hDxFjwnOQ=;
+        b=mpQmvkcsfWFSRVNp8jk32zicic75KC8/YK6azrgab+NAghob2HnuDNT1hwQRzATAgz
+         UglhlVmkrtdGr5tVeHGfz3uG1nYwukjTmhhhoS1FUIbttCH4hyBj2mfKVy4nt542JYBE
+         nm7iBxMabr/HTvMcgUxCmvBhzCoom9JpnkeexNoRKk//G5UY62CHKprob7jwQfk8iQ1K
+         qvit+mXI04XbdEn7dInFfe+lRJpehfkPAj4xAMo4/3ckrG2ElzNaWqE4mof8AXexzPCa
+         u9L0TwLFYeCAsfZS1f6HQhnKOIpK7hF2DPUGIjPFlKN4hyuWQ1RdB+z/Q02pseTnFIMS
+         ER6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773309878; x=1773914678;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+szYmIVQmnY3WCiXmubWFb8BEwrcKI82m+hDxFjwnOQ=;
+        b=ddOFitESsdqLIzlX+XcsOcLayd8vKorHeYJJ0L9gCVHvId7itvf5kVkgzyAes+UvBI
+         fWthFzcDj3lfLj1JnPc1aqDQ+Qcydni41Xw7I8qQqArpq9Zv6WyEiFN8gB4NkoXh6GYg
+         fZWgfCX5UmDrbTDW1X76YQyzh4xGPZVPEGni81H+9AhVBQ433UrqVaZb+ydxy0K1gMCQ
+         nmrNj0ZT2IvzRnGnC36J0EAfwheDy4Ey+GqBEcA98aTsotk+Kb0Tqs6+hw1+bYA6S4ff
+         OyCqLRFMj3OC2ClTofdXQLvv43f9xbKNHQuLkbjZQt+F4wnRmmL55qqI2DVb8tB/9K31
+         QBnQ==
+X-Gm-Message-State: AOJu0YychpAPfm8Yonx1P/MopQrHJ3LwQ7rHMce7F2ZzjVysjoOOmbfd
+	+zG+k6Xe421SWkotCfQjIGAmVTU/ZBSxzb5tbXwVtABKCwaKijgT23fSdbAhmNrNPdo=
+X-Gm-Gg: ATEYQzzZEsjaphJdrqMwaHJIyFxscSXCSmBSfu8aIO4szniojNUk+6Ieem3c3N95mhc
+	5KgngBT9h68iK9aTxZ3PzuoG81njSEGdL3C4GrHkzjpgm9WNihMr+0BbWF/Osio2O6LO1dF9/yJ
+	sr8oOcCPlpjMpvzHEFuNLgx8g3vEAS7g/luP6r4076yXJJzXjN1fzHj00qnYs3a0EhAu1bYm+up
+	YNw+VtrxGYZ2/8s79A1Ji9Id1H8ptqdmhQKXOfDlEz5Wfa/GvS2uEd04+MZKRK5ZZLuCJ7y98Ph
+	FTF258Yq/a04kNyhEwhwZhBUieAYEpFzfGoh1sicVyNo38ZwYcqgC0vAoArOSUm7W2cMWjiBX0X
+	RFoqnOzbyujSk1Z+jtxvs3M67UFIhHBA+OtNLNR3TSvd1V+brE2nBbY/tPJz3cEp/bIR/X9wOoP
+	Ca0O2rBYuYG2WqWcXmbFDR/OuAcizaH1jXid79Ga15gOFC
+X-Received: by 2002:a05:6402:4445:b0:663:9739:6279 with SMTP id 4fb4d7f45d1cf-663973967f3mr240730a12.10.1773309877960;
+        Thu, 12 Mar 2026 03:04:37 -0700 (PDT)
+Received: from [192.168.0.101] ([109.77.88.70])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6634fdc8932sm427254a12.14.2026.03.12.03.04.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Mar 2026 03:04:37 -0700 (PDT)
+Message-ID: <11a4c0e8-de4e-4c11-862b-0c58cad969f6@linaro.org>
+Date: Thu, 12 Mar 2026 10:04:35 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2d4e69cb-a43c-4d13-9f7b-20b95cee43a7@nvidia.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] usb: typec: qcom: Add support for per port VBUS
+ detection
+To: Alexander Koskovich <akoskovich@pm.me>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260312-qcom-typec-shared-vbus-v2-1-99ed9e500947@pm.me>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260312-qcom-typec-shared-vbus-v2-1-99ed9e500947@pm.me>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[34];
-	TAGGED_FROM(0.00)[bounces-97171-lists,linux-arm-msm=lfdr.de];
-	HAS_ORG_HEADER(0.00)[];
-	TO_DN_EQ_ADDR_SOME(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_CC(0.00)[kernel.org,gmail.com,bgdev.pl,linux-foundation.org,linaro.org,google.com,linuxfoundation.org,arm.com,perex.cz,suse.com,vger.kernel.org,lists.infradead.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[andriy.shevchenko@intel.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[linaro.org:+];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[intel.com:+];
-	RCVD_COUNT_FIVE(0.00)[5];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-97172-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TO_DN_SOME(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:dkim,ashevche-desk.local:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 35FE726F985
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:dkim,linaro.org:email,linaro.org:mid,pm.me:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 1BC562701EB
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Thu, Mar 12, 2026 at 08:41:03AM +0000, Jon Hunter wrote:
-> On 12/03/2026 07:49, Chen-Yu Tsai wrote:
-
-...
-
-> > > > To me it sounds like a bad design of the driver for this SoC/platform.
-> > > 
-> > > I am not sure why you think that. Assuming a 1:1 mapping of the kernel's
-> > > GPIO index to the GPIO controller + h/w port + 1 GPIO number seems fragile.
-
-You may use valid mask (which is also available via GPIO device properties) or
-as said below. In any case this thread just convinces me even more that driver
-has a design flaw.
-
-> > If the hardware has uneven number of actual pins for each bank, either
-> > you end up using the deprecated static GPIO number allocation and
-> > have holes in the GPIO range (sunxi currently does this), or you use
-> > dynamic allocation, which gives you no holes in the GPIO range, but
-> > not directly calculable mapping between DT and GPIO numbers.
-> > 
-> > The driver handles the mapping by providing an .xlate callback. A
-> > consumer shouldn't assume anything. The shared GPIO library probably
-> > shouldn't be try parsing the property itself and use the result to
-> > grab the GPIO descriptor, but just rely on the gpiochip's .xlate
-> > callback in some way.
+On 12/03/2026 06:16, Alexander Koskovich wrote:
+> This is required for devices (e.g. ASUS ROG Phone 3) where more than
+> one USB port can act as a sink and both share a single USBIN input on
+> the PMIC.
 > 
-> Right. I was thinking that isn't this why we have the xlate callbacks in the
-> first place to handle such things and not make these assumptions?
+> Because the PM8150B uses USBIN to determine VBUS presence, a charger
+> connected to one port causes the PMIC to falsely detect VBUS on the
+> other port, preventing it from entering source mode.
 > 
-> I am curious if other platforms could have the same issue? I did not see
-> this immediately with v6.19 because it is only one specific platform  we
-> have that showed this. So very much a corner case that will only be seen if
-> a platform uses shared GPIOs and the shared GPIO happens to be high enough
-> to overflow the descriptor array. Even if we don't crash, at least for
-> Tegra, we could be using the wrong descriptor too for shared GPIOs.
+> For example, plugging a charger into one port prevents using the other
+> port for a flash drive.
+> 
+> Fix this by adding support for the vbus-gpios connector binding so the
+> driver can use an external GPIO for per-port VBUS presence detection
+> instead of the shared USBIN register.
+> 
+> Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
+> ---
+> Changes in v2:
+> - Dropped RFC prefix
+> - Remove redundant vbus-detect-gpios, instead use existing vbus-gpios from usb-connector (Dmitry)
+> - Updated cover to better describe scenario where this change is relevant
+> - Update comment for EN_TRY_SRC to make more sense
+> - Skip vSafe5V poll too not just vSafe0V
+> - return gpiod_get_value_cansleep (Konrad)
+> - regmap_update_bits -> regmap_set_bits (Konrad)
+> - Get vbus-gpios per connector (Konrad)
+> - Add bracket to if (IS_ERR(pmic_typec_port->vbus_detect_gpio)) (Bryan)
+> - Link to v1: https://lore.kernel.org/r/20260308-qcom-typec-shared-vbus-v1-0-7d574b91052a@pm.me
+> ---
+>   drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c | 53 +++++++++++++++++++++-
+>   1 file changed, 52 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
+> index 8051eaa46991..a8f6687a3522 100644
+> --- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
+> +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
+> @@ -5,6 +5,7 @@
+>   
+>   #include <linux/delay.h>
+>   #include <linux/err.h>
+> +#include <linux/gpio/consumer.h>
+>   #include <linux/interrupt.h>
+>   #include <linux/kernel.h>
+>   #include <linux/mod_devicetable.h>
+> @@ -176,6 +177,8 @@ struct pmic_typec_port {
+>   	bool				vbus_enabled;
+>   	struct mutex			vbus_lock;		/* VBUS state serialization */
+>   
+> +	struct gpio_desc		*vbus_detect_gpio;
+> +
+>   	int				cc;
+>   	bool				debouncing_cc;
+>   	struct delayed_work		cc_debounce_dwork;
+> @@ -279,6 +282,9 @@ static int qcom_pmic_typec_port_vbus_detect(struct pmic_typec_port *pmic_typec_p
+>   	unsigned int misc;
+>   	int ret;
+>   
+> +	if (pmic_typec_port->vbus_detect_gpio)
+> +		return gpiod_get_value_cansleep(pmic_typec_port->vbus_detect_gpio);
+> +
+>   	ret = regmap_read(pmic_typec_port->regmap,
+>   			  pmic_typec_port->base + TYPEC_MISC_STATUS_REG,
+>   			  &misc);
+> @@ -310,6 +316,13 @@ static int qcom_pmic_typec_port_vbus_toggle(struct pmic_typec_port *pmic_typec_p
+>   		val = TYPEC_SM_VBUS_VSAFE0V;
+>   	}
+>   
+> +	/*
+> +	 * On devices with multiple ports sharing USBIN, VBUS from another
+> +	 * port makes the USBIN-based vsafe polls unreliable.
+> +	 */
+> +	if (pmic_typec_port->vbus_detect_gpio)
+> +		return 0;
+> +
+>   	/* Poll waiting for transition to required vSafe5V or vSafe0V */
+>   	ret = regmap_read_poll_timeout(pmic_typec_port->regmap,
+>   				       pmic_typec_port->base + TYPEC_SM_STATUS_REG,
+> @@ -589,7 +602,15 @@ static int qcom_pmic_typec_port_start_toggling(struct tcpc_dev *tcpc,
+>   		mode = EN_SNK_ONLY;
+>   		break;
+>   	case TYPEC_PORT_DRP:
+> -		mode = EN_TRY_SNK;
+> +		/*
+> +		 * With VBUS present on USBIN from another port, EN_TRY_SNK
+> +		 * keeps the port in sink mode. Use EN_TRY_SRC so the port
+> +		 * tries to source first.
+> +		 */
+> +		if (pmic_typec_port->vbus_detect_gpio)
+> +			mode = EN_TRY_SRC;
+> +		else
+> +			mode = EN_TRY_SNK;
+>   		break;
+>   	}
+>   
+> @@ -677,6 +698,19 @@ static int qcom_pmic_typec_port_start(struct pmic_typec *tcpm,
+>   	if (ret)
+>   		goto done;
+>   
+> +	/*
+> +	 * On devices with multiple USB-C ports sharing USBIN, bypass
+> +	 * VSAFE0V so SRC attachment can complete despite VBUS being
+> +	 * present on USBIN from another port.
+> +	 */
+> +	if (pmic_typec_port->vbus_detect_gpio) {
+> +		ret = regmap_set_bits(pmic_typec_port->regmap,
+> +				     pmic_typec_port->base + TYPEC_EXIT_STATE_CFG_REG,
+> +				     BYPASS_VSAFE0V_DURING_ROLE_SWAP);
 
-None of Intel platforms has this issue, for the rest I have no clue.
+off-by-one
 
--- 
-With Best Regards,
-Andy Shevchenko
-
-
+once fixed:
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
