@@ -1,177 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-97158-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97159-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6LPyNL9wsmmuMgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97158-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 08:52:31 +0100
+	id YOuWIiBysmmuMgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97159-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 08:58:24 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5320126E7D0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 08:52:31 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8E70C26E877
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 08:58:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 15568303B968
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 07:51:51 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 9C21C300380D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 07:58:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C028F3A545F;
-	Thu, 12 Mar 2026 07:51:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6441F3B7766;
+	Thu, 12 Mar 2026 07:58:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="IphPqAi1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+Received: from mail-43166.protonmail.ch (mail-43166.protonmail.ch [185.70.43.166])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93EE43AC0D0
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Mar 2026 07:51:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 619CE3B7771;
+	Thu, 12 Mar 2026 07:58:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.166
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773301910; cv=none; b=MXv0SMwKRxTZXDH9Q/9wJbvFiVBZ17Oi060iq2E9tnAJrs2rRg4KDN8KHaVG05s8fkMK7hVPECQy7HC1roxRMyKbrVzQQrDxiPFgfb0Ka3D1KBxu+ZAJoXiHaWE9BcrxTmACYz37l73NHaJbKBoo/vVlVPVWiNbGiH5IEzkm4bM=
+	t=1773302299; cv=none; b=W3AO9Ib3bqQeJ/M+kPm6E25guEPCM0VTBNnbSa711LdrKLxEy5XEfSy/X++Ygq5MYBuTUZ1AraKBD/20aWhdPQ83tvhVJnbIDB2HwXkx8SCu1f9uW8tIPqq763ix4r0ddj89W1DTrkMs27/LfDjVCiiIVk1fqoUp6HYSr/JamhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773301910; c=relaxed/simple;
-	bh=O0W4dyeZXINL1xMPgfaiUp8T/xt+gRpsnXCZ1iL32IQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B8jRqRVok1/QIf7FsW3qte3BBjQ1/tH3VtHBcDJiBvAK7Qcw7ebDy98K+JvNiBDEXJaX7Mb2WNDWuKX+qWvk24QELjxOGlSUUUCWBlx1L2E6k/RKpPfqzphFlplW11ITl8edcu5x0YSKsvZcUqUSYgH2WvYSc/xf78KTjMkpy8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <mkl@pengutronix.de>)
-	id 1w0apM-0000j6-G5; Thu, 12 Mar 2026 08:51:28 +0100
-Received: from moin.white.stw.pengutronix.de ([2a0a:edc0:0:b01:1d::7b] helo=bjornoya.blackshift.org)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <mkl@pengutronix.de>)
-	id 1w0apK-004zEN-11;
-	Thu, 12 Mar 2026 08:51:27 +0100
-Received: from pengutronix.de (p4ffb2dc6.dip0.t-ipconnect.de [79.251.45.198])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(Client did not present a certificate)
-	(Authenticated sender: mkl-all@blackshift.org)
-	by smtp.blackshift.org (Postfix) with ESMTPSA id 4A4814FF6DF;
-	Thu, 12 Mar 2026 07:51:27 +0000 (UTC)
-Date: Thu, 12 Mar 2026 08:51:26 +0100
-From: Marc Kleine-Budde <mkl@pengutronix.de>
-To: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, mani@kernel.org, thomas.kopp@microchip.com, mailhol@kernel.org, 
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, andersson@kernel.org, 
-	konradybcio@kernel.org, linux-can@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, mukesh.savaliya@oss.qualcomm.com, 
-	anup.kulkarni@oss.qualcomm.com
-Subject: Re: [PATCH v1 2/2] arm64: dts: qcom: qcs6490-rb3gen2: Enable CAN bus
- controller
-Message-ID: <20260312-fragrant-blond-velociraptor-bf449f-mkl@pengutronix.de>
-X-AI: stop_reason: "refusal"
-References: <n6affntgff5wy4xmm255v5h2ejpepicpz2cybcuvsxmry5td6u@jucskv7zrzvv>
- <5cdfe5a5-3c78-45a2-886c-768b224ad776@oss.qualcomm.com>
- <wbx2qrkhpsntggzqkzkpi4sa6qv3buhkjbwmjoa7zgw2oc4b7u@qugyhcxb6qrh>
- <316fa702-6cd8-4842-aecf-c176a5a53e2e@oss.qualcomm.com>
- <qvuokwiqllm6zmlzj3pfvziylrr5krjya5rnf3ojeycdoutlro@fl5qukh4vorm>
- <5486697e-d02e-4b12-9a60-99d0de343515@oss.qualcomm.com>
- <2ho25tzct6t7gsuyufyg7m4a2ikmblhukb4uddwc7p35wd6yne@heippz3lh4kj>
- <465ab63f-3d0c-46f7-a08e-cdc5fc26b600@oss.qualcomm.com>
- <73nfsa3r3isf2shizemroctjpleya4wnnel634g7b5qyvvmze5@vre6wrdxxpet>
- <0bf0a64c-0f05-49ea-b7a2-e1b1345a3d7f@oss.qualcomm.com>
+	s=arc-20240116; t=1773302299; c=relaxed/simple;
+	bh=491ncjziD5diK7qZMyd3XE7NLPLH14xdPjd/dh21Jek=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=WdFfQMEwwPJya77gB0x7UD8lrdUHgDtPRRRh15MZwn1fv2J4Pi5ehdEUXKKCGgzEZhgQfYFhVJC92McPxWZn4fL6o5aS3u2GvmXXg/kk4OnX4iQTYvU8hS3hBBgMF+L7KbGuJVu0Hhcz/r6sbmht68D6xxbdkvBjSWMTD6jZh9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=IphPqAi1; arc=none smtp.client-ip=185.70.43.166
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1773302289; x=1773561489;
+	bh=OA/G2wWdlXzbBQo1bZvmaqv8EVQbrJ106sAu8h8qkkQ=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=IphPqAi1ld/Exhs7oyK4gtIkMoVIFZ9PZeGqxDvcEUx63g2mgPoyn4Lt+0px7sTxq
+	 Uum/OT1pXx1sbKYwKLuJOPoR++Q/sZ5OIANPjYWA0bWF7eQaSdhR8FS0d9tgHF9MMb
+	 NZy3nUflOu8FLDpWw487gCtZvIUgswc3FreZAWzTYopk6NvBc4bRxbwqQrViCIfsAu
+	 C9Mz4FzvbFbMNkmDuws4PXJk5O01IRDWrRNFnxksvcY8LgdXWR+OscvqJmskyU0Iv9
+	 YdPRyonLsKh7tIADxag29efRq8GOQD0Eq/HsA8r1LOBdLwWd4tQWksyp9bEIVeSTop
+	 ItsAzvFQugx1A==
+Date: Thu, 12 Mar 2026 07:58:04 +0000
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: cristian_ci <cristian_ci@protonmail.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Neil Armstrong <neil.armstrong@linaro.org>, Jessica Zhang <jesszhan0024@gmail.com>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+Subject: Re: [PATCH 3/6] arm64: dts: qcom: msm8953-flipkart-rimob: Enable display and GPU
+Message-ID: <TVEaCiufQE0XjfNRlD6DUS6UjDw6nPyHh6ENYRSpFQT0ZD_o5sBH_Albc17WmU0B06PyfSq7elJ0c9C68kjDSgzBHcwYaOPl79XnKBPIU8M=@protonmail.com>
+In-Reply-To: <e6m5xhnexza6fnmz6cczwsrp3ec6n643yjukj64gvync627sl3@2pldnf7ldcpi>
+References: <20260308-rimob-new-features-v1-0-aa2c330572c0@protonmail.com> <20260308-rimob-new-features-v1-3-aa2c330572c0@protonmail.com> <ne3i5tmvperssm4pivae7jhmqzvyy7ftkwnacpaf4ukdqojtha@53mhrxlraw3k> <f309905e-6f7f-440e-b463-7bda54298164@oss.qualcomm.com> <BP1Sd6YH7pfwUcIQzlAHRokbTdR0TiORnTMO27J1CcPV_O1R1HO85gyIJf_J1szOiMAXn2taMlmC2iUt0Cpr4jKjB7wTeukWuIBFzj5eBdU=@protonmail.com> <e6m5xhnexza6fnmz6cczwsrp3ec6n643yjukj64gvync627sl3@2pldnf7ldcpi>
+Feedback-ID: 27475468:user:proton
+X-Pm-Message-ID: fa75426f96d157ea5eec068a36d4617ab6ed608e
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="sukssa3pp322mpwk"
-Content-Disposition: inline
-In-Reply-To: <0bf0a64c-0f05-49ea-b7a2-e1b1345a3d7f@oss.qualcomm.com>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: mkl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
-X-Spamd-Result: default: False [-2.56 / 15.00];
-	SIGNED_PGP(-2.00)[];
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	MIME_GOOD(-0.20)[multipart/signed,text/plain];
+	DMARC_POLICY_ALLOW(-0.50)[protonmail.com,quarantine];
+	R_DKIM_ALLOW(-0.20)[protonmail.com:s=protonmail3];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
+	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-97158-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-97159-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	DMARC_NA(0.00)[pengutronix.de];
-	MIME_TRACE(0.00)[0:+,1:+,2:~];
+	RCVD_COUNT_THREE(0.00)[3];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FREEMAIL_FROM(0.00)[protonmail.com];
+	RCPT_COUNT_TWELVE(0.00)[20];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,linaro.org,gmail.com,ffwll.ch,linux.intel.com,kernel.org,suse.de,lists.freedesktop.org,vger.kernel.org,lists.sr.ht];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mkl@pengutronix.de,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	RCVD_COUNT_FIVE(0.00)[6];
-	R_DKIM_NA(0.00)[];
-	NEURAL_HAM(-0.00)[-0.995];
+	FROM_NEQ_ENVFROM(0.00)[cristian_ci@protonmail.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[protonmail.com:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,pengutronix.de:mid,pengutronix.de:url]
-X-Rspamd-Queue-Id: 5320126E7D0
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,0.0.0.0:email,protonmail.com:dkim,protonmail.com:email,protonmail.com:mid]
+X-Rspamd-Queue-Id: 8E70C26E877
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 
---sukssa3pp322mpwk
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v1 2/2] arm64: dts: qcom: qcs6490-rb3gen2: Enable CAN bus
- controller
-MIME-Version: 1.0
+On Tuesday, March 10th, 2026 at 23:30, Dmitry Baryshkov <dmitry.baryshkov@o=
+ss.qualcomm.com> wrote:
 
-On 12.03.2026 12:04:47, Viken Dadhaniya wrote:
-> I measured the standby pin voltage with only XSTBYEN=3D1 set
-> (TRIS0 left at reset default of 1 =3D input): the pin is HIGH
-> (~3.3V), meaning the transceiver remains in standby.
->
-> The root cause is that after reset TRIS0=3D1 (input direction),
-> so the pin is not driven. XSTBYEN=3D1 alone has no effect while
-> the pin is configured as input.
->
-> Clearing TRIS0=3D0 (output) atomically with XSTBYEN=3D1 fixes this:
->
->   regmap_update_bits(priv->map_reg, MCP251XFD_REG_IOCON,
->                      MCP251XFD_REG_IOCON_XSTBYEN |
->                      MCP251XFD_REG_IOCON_TRIS0   |
->                      MCP251XFD_REG_IOCON_LAT0,
->                      MCP251XFD_REG_IOCON_XSTBYEN);
->
-> After the above change: pin is LOW (~0V), IOCON =3D 0x03020042,
-> transceiver active, CAN communication works. Verified on RB3
-> Gen2 with PCAN-USB FD.
->
-> Should I send a patch implementing this, gated on a DT property
-> such as "microchip,xstbyen"?
+> On Tue, Mar 10, 2026 at 04:42:43PM +0000, cristian_ci wrote:
+> > On Tuesday, March 10th, 2026 at 12:28, Konrad Dybcio <konrad.dybcio@oss=
+.qualcomm.com> wrote:
+> >
+> > > On 3/8/26 4:01 PM, Dmitry Baryshkov wrote:
+> > > > On Sun, Mar 08, 2026 at 04:52:43PM +0100, Cristian Cozzolino via B4=
+ Relay wrote:
+> > > >> From: Cristian Cozzolino <cristian_ci@protonmail.com>
+> > > >>
+> > > >> Add the description for the display panel found on this phone.
+> > > >> And with this done we can also enable the GPU and set the zap shad=
+er
+> > > >> firmware path.
+> > > >>
+> > > >> Signed-off-by: Cristian Cozzolino <cristian_ci@protonmail.com>
+> > > >> ---
+> > > >>  .../arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts | 80 +++++++++=
++++++++++++++
+> > > >>  1 file changed, 80 insertions(+)
+> > > >>
+> > > >> +
+> > > >> +&mdss_dsi0 {
+> > > >> +=09vdda-supply =3D <&pm8953_s3>;
+> > > >> +=09vddio-supply =3D <&pm8953_l6>;
+> > > >> +
+> > > >> +=09pinctrl-0 =3D <&mdss_default>;
+> > > >> +=09pinctrl-1 =3D <&mdss_sleep>;
+> > > >> +=09pinctrl-names =3D "default", "sleep";
+> > > >
+> > > > It might be better to move pinctrl nodes to the panel device, becau=
+se
+> > > > they control the panel reset pin (rather than some kind if DSI-rela=
+ted
+> > > > pin).
+> > >
+> > > +1, perhaps let's rename that pin to panel_reset while at it
+> >
+> > So, something like (plus related renaming in tlmm node):
+> >
+> > =09panel: panel@0 {
+> > =09=09compatible =3D "novatek,nt35532";
+> > =09=09reg =3D <0>;
+> >
+> > =09=09backlight =3D <&pmi8950_wled>;
+> > =09=09reset-gpios =3D <&tlmm 61 GPIO_ACTIVE_LOW>;
+> > =09=09vsp-supply =3D <&lab>;
+> > =09=09vsn-supply =3D <&ibb>;
+> >
+> > =09=09pinctrl-0 =3D <&panel_default>;
+> > =09=09pinctrl-1 =3D <&panel_reset>;
+> > =09=09pinctrl-names =3D "default", "reset";
+>=20
+> No, "reset" would not be recognized. Use "sleep" as before.
 
-Sounds good, make it so.
+so, something like:
 
-regards,
-Marc
+ =09=09pinctrl-1 =3D <&panel_sleep>;
+ =09=09pinctrl-names =3D "default", "sleep";
 
---=20
-Pengutronix e.K.                 | Marc Kleine-Budde          |
-Embedded Linux                   | https://www.pengutronix.de |
-Vertretung N=C3=BCrnberg              | Phone: +49-5121-206917-129 |
-Amtsgericht Hildesheim, HRA 2686 | Fax:   +49-5121-206917-9   |
+?
 
---sukssa3pp322mpwk
-Content-Type: application/pgp-signature; name="signature.asc"
+Also, should I remove 'sleep' state if panel handles only one state ('defau=
+lt')
+instead of two states (like mdss)?
 
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQSl+MghEFFAdY3pYJLMOmT6rpmt0gUCabJwfAAKCRDMOmT6rpmt
-0i+VAQD/pM/3ElXgQQT6o0izqhNruQmbv9GQ2oAKqT8CSu6uHwD/dlMVovtUZD8A
-tingrin1tghEh/0VWtmoLpd/EOwCsgw=
-=er+K
------END PGP SIGNATURE-----
-
---sukssa3pp322mpwk--
+> >
+> > =09=09port {
+> > =09=09=09panel_in: endpoint {
+> > =09=09=09=09remote-endpoint =3D <&mdss_dsi0_out>;
+> > =09=09=09};
+> > =09=09};
+> > =09};
+> >
+> > this?
+> >
+> > > Konrad
+> > >
+> >
+> > Regards
+>=20
+> --
+> With best wishes
+> Dmitry
+> 
 
