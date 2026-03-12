@@ -1,57 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-97199-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97200-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OL/LDxmtsmkjOwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97199-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 13:10:01 +0100
+	id SDYQOs6tsmlGOwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97200-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 13:13:02 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C03E5271729
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 13:09:58 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 441602717F3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 13:13:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 25D413014506
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 12:09:57 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7CFA6307C8A0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 12:11:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EEE83B7B6C;
-	Thu, 12 Mar 2026 12:09:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 577123BE638;
+	Thu, 12 Mar 2026 12:11:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="g79vdLK/"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="xOqDPRj5"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from ixit.cz (ixit.cz [185.100.197.86])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA4B3B8944;
-	Thu, 12 Mar 2026 12:09:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD97388E47;
+	Thu, 12 Mar 2026 12:10:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.100.197.86
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773317393; cv=none; b=DcmNRw1cv14V1u4dhvRCEhCWEOwvffl1UHB4gTPbZ60sqey9i4DK+PSFxQ2CsXmTFvo36HDlB9LSnVnDKjTgOh9M8gZOukdWwAmmK2dWSBybV5rkL9Ky1qmIOnzlP3mxfPcQeZNg+oL+uEoXNR/zZkfLxGOKptG2DU2eEhzKSHA=
+	t=1773317462; cv=none; b=jh1HM435IIbPVd82QOnVVExQ0ciPMegfSrSKr9TNG8yDTnTva358jUx/Kc5jgBJTo1fkuVoBhm28w3n/adyF0dr1bRArry3SE6LsGyK1gLsALRoWwRh0hgEqfQiXkMqwcW3WR0sB6f7zeV6WW6ta5rilt3hYgV8W6MVsGHU4rcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773317393; c=relaxed/simple;
-	bh=JxK38VEcEu4D0JlBeHscPHRjEhWqpJcsFuamvp8Xiyc=;
+	s=arc-20240116; t=1773317462; c=relaxed/simple;
+	bh=HRLEhaUN0mz8wj7Z5lOno+QS4SMY5r1ux0+x4z4wwVo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bZojypbarwi9+Rf8JWi/Go4gl8qdvB1z5/WGZxfHQTL7sE2oKHBrUP59/k2nxBVdZwK7D0/xBr8JkOgHQ24sGWmZn9Lly1Hbxkp46M/ylIjxCS6YZ75Fm2YS093KyF7eK5t+qboEvVJAnbXwkb4OEZbU6I5OGRJ3w+lJHVlpX+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=g79vdLK/; arc=none smtp.client-ip=185.100.197.86
+	 In-Reply-To:Content-Type; b=qhTDzRtrc+7BKMRozvFAJLGd2toc2TfrifiWlBl3qIdZP6B2ouh93WKhd/RrnM8tOL3yAu4z6My7q+sfbd2qxTSPGb41bEIO8TvXXq/t5ZndR6X8BeMftCBxeXx6S2dGdyZ/qSZQPkNY+6banv0w2R9HNaKwe2F65HebFstI+OI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=xOqDPRj5; arc=none smtp.client-ip=185.100.197.86
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
 Received: from [IPV6:2a02:f000:10bd:e301::1d7] (unknown [IPv6:2a02:f000:10bd:e301::1d7])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange x25519)
 	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 3DE6B53400FD;
-	Thu, 12 Mar 2026 13:09:35 +0100 (CET)
+	by ixit.cz (Postfix) with ESMTPSA id BBFB1534013D;
+	Thu, 12 Mar 2026 13:10:55 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1773317376;
+	t=1773317455;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=YgUody75rJUQE1fojs3LrS2xdVlGscbJtNJbUj3bZfA=;
-	b=g79vdLK/m4SXw65tWgKvHxSNvFGMOw0lJYI7+UgZZJ0TZ/FUgZKPFwindidQj9m/I6HQST
-	SCuEK93nTSxn1PH7T9hIbCAbAargB2YLJQIZGqaO5eLeGYgQIEH5q/OlSbf96hAGRCzDQJ
-	IjD2xlEGz6yHHMdYbhVX4lJoap1lUYE=
-Message-ID: <1029b5b9-c2ab-42be-a0cf-71304e40e6d8@ixit.cz>
-Date: Thu, 12 Mar 2026 13:09:34 +0100
+	bh=Tvq7GQJwl/j3BUAgZ1VOMmT4Qpydp7UKM1IKuxDlQQc=;
+	b=xOqDPRj54kOMDCm6khK6Egma7GyPbPlhwksAoctT0nMJS1PTKGx4p+Zu0rIDOtqUr9MHHv
+	H3xgn6lLW6e2jQ8LJYakgZXpsljoiIIXvLf5tJTxJxDptE/4pChs45RrxB5dVV5yvyiz99
+	OBsyakgzTtlSRJCNXpIwiJUozk3PU+E=
+Message-ID: <29621ceb-b95f-4123-8237-e1465c02c8df@ixit.cz>
+Date: Thu, 12 Mar 2026 13:10:55 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,9 +71,9 @@ To: Yedaya Katsman <yedaya.ka@gmail.com>,
  Conor Dooley <conor+dt@kernel.org>, =?UTF-8?Q?Kamil_Go=C5=82da?=
  <kamil.golda@protonmail.com>, Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc: phone-devel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
 References: <20260312-panel-patches-v3-0-6ed8c006d0be@gmail.com>
  <20260312-panel-patches-v3-2-6ed8c006d0be@gmail.com>
 Content-Language: en-US
@@ -129,16 +129,16 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[ixit.cz,quarantine];
 	R_DKIM_ALLOW(-0.20)[ixit.cz:s=dkim];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-97199-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-97200-lists,linux-arm-msm=lfdr.de];
 	FREEMAIL_TO(0.00)[gmail.com,linaro.org,ffwll.ch,linux.intel.com,kernel.org,suse.de,protonmail.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[20];
+	RCPT_COUNT_TWELVE(0.00)[19];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
@@ -150,9 +150,9 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,ixit.cz:dkim,ixit.cz:email,ixit.cz:mid]
-X-Rspamd-Queue-Id: C03E5271729
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[protonmail.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,ixit.cz:dkim,ixit.cz:email,ixit.cz:mid]
+X-Rspamd-Queue-Id: 441602717F3
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
@@ -170,11 +170,6 @@ On 12/03/2026 12:55, Yedaya Katsman wrote:
 >   .../gpu/drm/panel/panel-samsung-s6e8fco-m1906f9.c  | 302 +++++++++++++++++++++
 >   4 files changed, 317 insertions(+)
 > 
-
-Thanks for sending the panel upstream,
-
-see few thoughts below:
-
 > diff --git a/MAINTAINERS b/MAINTAINERS
 > index d7aee8dab903cd42c245fea3cf8971dcd99b2196..d00775a09445a8a1bd626ecfd27903471d08d33a 100644
 > --- a/MAINTAINERS
@@ -197,365 +192,16 @@ see few thoughts below:
 >   
 > +config DRM_PANEL_SAMSUNG_S6E8FCO_M1906F9
 > +	tristate "Samsung M1906F9 panel with S6E8FCO DSI controller"
-
-I believe here it should be only S6E8FC0 mentioned, as the list of supported 
-panels can grow in the future.
-
-The supported panel should be definitely named in description (incl. where found 
-as you did), also panel structure should be named as you named whole driver. 
-Rest of the more generic calls and function I would recomend using only s6e8fc0 
-identification.
-
-
-Same the structs naming inside the panel, etc.
-
 > +	depends on OF
 > +	depends on BACKLIGHT_CLASS_DEVICE
 > +	select DRM_MIPI_DSI
 > +	select VIDEOMODE_HELPERS
-> +	help
-> +	  Say Y or M here if you want to enable support for the Samsung video
-> +	  mode panel M1906F9 (M1906F9SH or M1906F9SI), which uses the Samsung
-> +	  S6E8FCO DSI controller. The panel has a 6.09 inch AMOLED display,
-> +	  with a resolution of 720x1560.
-> +	  Found in the Xiaomi Mi A3 smartphone (xiaomi-laurel).
-> +
->   config DRM_PANEL_SAMSUNG_SOFEF00
->   	tristate "Samsung SOFEF00 DSI panel controller"
->   	depends on OF
-> diff --git a/drivers/gpu/drm/panel/Makefile b/drivers/gpu/drm/panel/Makefile
-> index b9562a6fdcb38bfd0dfee9e8c11e16149ada4386..19e1e898dfd4af2d34eafe7a6ded5ad74fc7ee04 100644
-> --- a/drivers/gpu/drm/panel/Makefile
-> +++ b/drivers/gpu/drm/panel/Makefile
-> @@ -91,6 +91,7 @@ obj-$(CONFIG_DRM_PANEL_SAMSUNG_S6E88A0_AMS427AP24) += panel-samsung-s6e88a0-ams4
->   obj-$(CONFIG_DRM_PANEL_SAMSUNG_S6E88A0_AMS452EF01) += panel-samsung-s6e88a0-ams452ef01.o
->   obj-$(CONFIG_DRM_PANEL_SAMSUNG_S6E8AA0) += panel-samsung-s6e8aa0.o
->   obj-$(CONFIG_DRM_PANEL_SAMSUNG_S6E8AA5X01_AMS561RA01) += panel-samsung-s6e8aa5x01-ams561ra01.o
-> +obj-$(CONFIG_DRM_PANEL_SAMSUNG_S6E8FCO_M1906F9) += panel-samsung-s6e8fco-m1906f9.o
->   obj-$(CONFIG_DRM_PANEL_SAMSUNG_SOFEF00) += panel-samsung-sofef00.o
->   obj-$(CONFIG_DRM_PANEL_SEIKO_43WVF1G) += panel-seiko-43wvf1g.o
->   obj-$(CONFIG_DRM_PANEL_SHARP_LQ079L1SX01) += panel-sharp-lq079l1sx01.o
-> diff --git a/drivers/gpu/drm/panel/panel-samsung-s6e8fco-m1906f9.c b/drivers/gpu/drm/panel/panel-samsung-s6e8fco-m1906f9.c
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..ccf18da59271dc4926a536f795a38d8eae349e00
-> --- /dev/null
-> +++ b/drivers/gpu/drm/panel/panel-samsung-s6e8fco-m1906f9.c
-> @@ -0,0 +1,302 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +// Copyright (c) Kamil Gołda <kamil.golda@protonmail.com>
-> +// Copyright (c) Yedaya Katsman <yedaya.ka@gmail.com>
-> +// Generated with linux-mdss-dsi-panel-driver-generator from vendor device tree:
-> +//   Copyright (c) The Linux Foundation. All rights reserved.
-> +
-> +#include <linux/backlight.h>
-> +#include <linux/delay.h>
-> +#include <linux/gpio/consumer.h>
-> +#include <linux/mod_devicetable.h>
-> +#include <linux/module.h>
-> +#include <linux/regulator/consumer.h>
-> +
-> +#include <video/mipi_display.h>
-> +
-> +#include <drm/drm_mipi_dsi.h>
-> +#include <drm/drm_modes.h>
-> +#include <drm/drm_panel.h>
-> +#include <drm/drm_probe_helper.h>
-> +
-> +struct s6e8fco_m1906f9_ctx {
-> +	struct drm_panel panel;
-> +	struct mipi_dsi_device *dsi;
-> +	struct regulator_bulk_data *supplies;
-> +	struct gpio_desc *reset_gpio;
-> +};
-> +
-> +static const struct regulator_bulk_data s6e8fco_m1906f9_supplies[] = {
-> +	{ .supply = "vddi" },
-> +	{ .supply = "vci" },
-> +};
-> +
-> +static inline
-> +struct s6e8fco_m1906f9_ctx *to_s6e8fco_m1906f9_ctx(struct drm_panel *panel)
-> +{
-> +	return container_of_const(panel, struct s6e8fco_m1906f9_ctx, panel);
-> +}
-> +
-> +static void s6e8fco_m1906f9_reset(struct s6e8fco_m1906f9_ctx *ctx)
-> +{
-> +	gpiod_set_value_cansleep(ctx->reset_gpio, 0);
-> +	usleep_range(12000, 13000);
-> +	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
-> +	usleep_range(2000, 3000);
-> +	gpiod_set_value_cansleep(ctx->reset_gpio, 0);
-> +	usleep_range(10000, 11000);
-> +}
-> +
-> +#define s6e8fco_m1906f9_test_key_on_lvl2(ctx) \
-> +	mipi_dsi_dcs_write_seq_multi(ctx, 0xf0, 0x5a, 0x5a)
-> +#define s6e8fco_m1906f9_test_key_off_lvl2(ctx) \
-> +	mipi_dsi_dcs_write_seq_multi(ctx, 0xf0, 0xa5, 0xa5)
-> +#define s6e8fco_m1906f9_test_key_on_lvl3(ctx) \
-> +	mipi_dsi_dcs_write_seq_multi(ctx, 0xfc, 0x5a, 0x5a)
-> +#define s6e8fco_m1906f9_test_key_off_lvl3(ctx) \
-> +	mipi_dsi_dcs_write_seq_multi(ctx, 0xfc, 0xa5, 0xa5)
-> +
-> +static int s6e8fco_m1906f9_on(struct s6e8fco_m1906f9_ctx *ctx)
-> +{
-> +	struct mipi_dsi_multi_context dsi_ctx = { .dsi = ctx->dsi };
-> +
-> +	s6e8fco_m1906f9_test_key_on_lvl3(&dsi_ctx);
-> +
-> +	mipi_dsi_dcs_set_display_brightness_multi(&dsi_ctx, 0x0000);
-> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, MIPI_DCS_WRITE_CONTROL_DISPLAY,
-> +				     0x20);
-> +	mipi_dsi_dcs_exit_sleep_mode_multi(&dsi_ctx);
-> +	mipi_dsi_msleep(&dsi_ctx, 50);
-> +	mipi_dsi_dcs_set_display_on_multi(&dsi_ctx);
-> +
-> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xb0, 0x04, 0xed);
-> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xed,
-> +				     0xe4, 0x08, 0x96, 0xa4, 0x2a, 0x72, 0xe2,
-> +				     0xca, 0x00);
-> +	s6e8fco_m1906f9_test_key_off_lvl3(&dsi_ctx);
-> +	s6e8fco_m1906f9_test_key_on_lvl2(&dsi_ctx);
-> +	s6e8fco_m1906f9_test_key_on_lvl3(&dsi_ctx);
-> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xe1, 0x93);
-> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xb0, 0x05, 0xf4);
-> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xf4, 0x03);
-> +	mipi_dsi_dcs_write_seq_multi(&dsi_ctx, 0xed, 0x01, 0x81, 0x04);
-> +	s6e8fco_m1906f9_test_key_off_lvl2(&dsi_ctx);
-> +	s6e8fco_m1906f9_test_key_off_lvl3(&dsi_ctx);
-> +
-> +	return dsi_ctx.accum_err;
-> +}
-> +
-> +static int s6e8fco_m1906f9_off(struct s6e8fco_m1906f9_ctx *ctx)
-> +{
-> +	struct mipi_dsi_multi_context dsi_ctx = { .dsi = ctx->dsi };
-> +
-> +	mipi_dsi_dcs_set_display_off_multi(&dsi_ctx);
-> +	mipi_dsi_msleep(&dsi_ctx, 20);
-> +	mipi_dsi_dcs_enter_sleep_mode_multi(&dsi_ctx);
-> +	mipi_dsi_msleep(&dsi_ctx, 120);
-> +
-> +	return dsi_ctx.accum_err;
-> +}
-> +
-> +static int s6e8fco_m1906f9_prepare(struct drm_panel *panel)
-> +{
-> +	struct s6e8fco_m1906f9_ctx *ctx = to_s6e8fco_m1906f9_ctx(panel);
-> +	struct device *dev = &ctx->dsi->dev;
-> +	int ret;
-> +
-> +	ret = regulator_bulk_enable(ARRAY_SIZE(s6e8fco_m1906f9_supplies), ctx->supplies);
-> +	if (ret < 0) {
-> +		dev_err(dev, "Failed to enable regulators: %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	s6e8fco_m1906f9_reset(ctx);
-> +
-> +	ret = s6e8fco_m1906f9_on(ctx);
-> +	if (ret < 0) {
-> +		dev_err(dev, "Failed to initialize panel: %d\n", ret);
-> +		gpiod_set_value_cansleep(ctx->reset_gpio, 1);
-> +		regulator_bulk_disable(ARRAY_SIZE(s6e8fco_m1906f9_supplies), ctx->supplies);
-> +		return ret;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static int s6e8fco_m1906f9_unprepare(struct drm_panel *panel)
-> +{
-> +	struct s6e8fco_m1906f9_ctx *ctx = to_s6e8fco_m1906f9_ctx(panel);
-> +	struct device *dev = &ctx->dsi->dev;
-> +	int ret;
-> +
-> +	ret = s6e8fco_m1906f9_off(ctx);
-> +	if (ret < 0)
-> +		dev_err(dev, "Failed to un-initialize panel: %d\n", ret);
-> +
-> +	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
-> +	regulator_bulk_disable(ARRAY_SIZE(s6e8fco_m1906f9_supplies), ctx->supplies);
-> +
-> +	return 0;
-> +}
-> +
-> +static const struct drm_display_mode s6e8fco_m1906f9_samsungp_mode = {
-> +	.clock = (720 + 350 + 40 + 294) * (1560 + 17 + 2 + 5) * 60 / 1000,
-> +	.hdisplay = 720,
-> +	.hsync_start = 720 + 350,
-> +	.hsync_end = 720 + 350 + 40,
-> +	.htotal = 720 + 350 + 40 + 294,
-> +	.vdisplay = 1560,
-> +	.vsync_start = 1560 + 17,
-> +	.vsync_end = 1560 + 17 + 2,
-> +	.vtotal = 1560 + 17 + 2 + 5,
-> +	.width_mm = 65,
-> +	.height_mm = 140,
-> +	.type = DRM_MODE_TYPE_DRIVER,
-> +};
-> +
-> +static int s6e8fco_m1906f9_get_modes(struct drm_panel *panel,
-> +				      struct drm_connector *connector)
-> +{
-> +	return drm_connector_helper_get_modes_fixed(connector, &s6e8fco_m1906f9_samsungp_mode);
-> +}
-> +
-> +static const struct drm_panel_funcs s6e8fco_m1906f9_panel_funcs = {
-> +	.prepare = s6e8fco_m1906f9_prepare,
-> +	.unprepare = s6e8fco_m1906f9_unprepare,
-> +	.get_modes = s6e8fco_m1906f9_get_modes,
-> +};
-> +
-> +static int s6e8fco_m1906f9_bl_update_status(struct backlight_device *bl)
-> +{
-> +	struct mipi_dsi_device *dsi = bl_get_data(bl);
-> +	u16 brightness = backlight_get_brightness(bl);
-> +	int ret;
-> +
-> +	dsi->mode_flags &= ~MIPI_DSI_MODE_LPM;
-> +
-> +	ret = mipi_dsi_dcs_set_display_brightness_large(dsi, brightness);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	dsi->mode_flags |= MIPI_DSI_MODE_LPM;
-> +
-> +	return 0;
-> +}
-> +
-> +static int s6e8fco_m1906f9_bl_get_brightness(struct backlight_device *bl)
-> +{
-> +	struct mipi_dsi_device *dsi = bl_get_data(bl);
-> +	u16 brightness;
-> +	int ret;
-> +
-> +	dsi->mode_flags &= ~MIPI_DSI_MODE_LPM;
-> +
-> +	ret = mipi_dsi_dcs_get_display_brightness_large(dsi, &brightness);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	dsi->mode_flags |= MIPI_DSI_MODE_LPM;
-> +
-> +	return brightness;
-> +}
-> +
-> +static const struct backlight_ops s6e8fco_m1906f9_bl_ops = {
-> +	.update_status = s6e8fco_m1906f9_bl_update_status,
-> +	.get_brightness = s6e8fco_m1906f9_bl_get_brightness,
-> +};
-> +
-> +static struct backlight_device *
-> +s6e8fco_m1906f9_create_backlight(struct mipi_dsi_device *dsi)
-> +{
-> +	struct device *dev = &dsi->dev;
-> +	const struct backlight_properties props = {
-> +		.type = BACKLIGHT_RAW,
-> +		.brightness = 512,
-> +		// The downstream dts claims 2047, but seems to ignore the MSB.
 
-I think this type of comment is useful for initial reviewers (maybe below the 
---- in commit message, but not must-have in the code itself).
-
-> +		.max_brightness = 1023,
-> +	};
-> +
-> +	return devm_backlight_device_register(dev, dev_name(dev), dev, dsi,
-> +					      &s6e8fco_m1906f9_bl_ops, &props);
-> +}
-> +
-> +static int s6e8fco_m1906f9_probe(struct mipi_dsi_device *dsi)
-> +{
-> +	struct device *dev = &dsi->dev;
-> +	struct s6e8fco_m1906f9_ctx *ctx;
-> +	int ret;
-> +
-> +	ctx = devm_drm_panel_alloc(dev, struct s6e8fco_m1906f9_ctx, panel,
-> +				   &s6e8fco_m1906f9_panel_funcs,
-> +				   DRM_MODE_CONNECTOR_DSI);
-> +	if (IS_ERR(ctx))
-> +		return PTR_ERR(ctx);
-> +
-> +	ret = devm_regulator_bulk_get_const(dev,
-> +					    ARRAY_SIZE(s6e8fco_m1906f9_supplies),
-> +					    s6e8fco_m1906f9_supplies,
-> +					    &ctx->supplies);
-> +	if (ret < 0)
-> +		return ret;
-> +
-> +	ctx->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_HIGH);
-> +	if (IS_ERR(ctx->reset_gpio))
-> +		return dev_err_probe(dev, PTR_ERR(ctx->reset_gpio),
-> +				     "Failed to get reset-gpios\n");
-> +
-> +	ctx->dsi = dsi;
-> +	mipi_dsi_set_drvdata(dsi, ctx);
-> +
-> +	dsi->lanes = 4;
-> +	dsi->format = MIPI_DSI_FMT_RGB888;
-> +	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
-> +			  MIPI_DSI_CLOCK_NON_CONTINUOUS;
-> +
-> +	ctx->panel.prepare_prev_first = true;
-> +
-> +	ctx->panel.backlight = s6e8fco_m1906f9_create_backlight(dsi);
-> +	if (IS_ERR(ctx->panel.backlight))
-> +		return dev_err_probe(dev, PTR_ERR(ctx->panel.backlight),
-> +				     "Failed to create backlight\n");
-> +
-> +	drm_panel_add(&ctx->panel);
-> +
-> +	ret = mipi_dsi_attach(dsi);
-> +	if (ret < 0) {
-> +		drm_panel_remove(&ctx->panel);
-> +		return dev_err_probe(dev, ret, "Failed to attach to DSI host\n");
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static void s6e8fco_m1906f9_remove(struct mipi_dsi_device *dsi)
-> +{
-> +	struct s6e8fco_m1906f9_ctx *ctx = mipi_dsi_get_drvdata(dsi);
-> +	int ret;
-> +
-> +	ret = mipi_dsi_detach(dsi);
-> +	if (ret < 0)
-> +		dev_err(&dsi->dev, "Failed to detach from DSI host: %d\n", ret);
-> +
-> +	drm_panel_remove(&ctx->panel);
-> +}
-> +
-> +static const struct of_device_id samsung_s6e8fco_m1906f9_of_match[] = {
-> +	{ .compatible = "samsung,s6e8fco-m1906f9" },
-> +	{ /* sentinel */ }
-> +};
-> +MODULE_DEVICE_TABLE(of, samsung_s6e8fco_m1906f9_of_match);
-> +
-> +static struct mipi_dsi_driver s6e8fco_m1906f9_driver = {
-> +	.probe = s6e8fco_m1906f9_probe,
-> +	.remove = s6e8fco_m1906f9_remove,
-> +	.driver = {
-> +		.name = "panel-samsung-s6e8fco-m1906f9",
-> +		.of_match_table = samsung_s6e8fco_m1906f9_of_match,
-> +	},
-> +};
-> +module_mipi_dsi_driver(s6e8fco_m1906f9_driver);
-> +
-> +MODULE_AUTHOR("Kamil Gołda <kamil.golda@protonmail.com>");
-> +MODULE_DESCRIPTION("DRM driver for Samsubng s6e8fco DSI controller for m1906f9 amoled video mode panel");
-
-typo in Samsung, also here feel free to drop "for m190..." part
-
-Except the nitpicks, looks really good.
+one more small nit - please double check you need VIDEOMODE_HELPERS
 
 David
 
-> +MODULE_LICENSE("GPL");
-> 
-
+[...]
 -- 
 David Heidelberg
 
