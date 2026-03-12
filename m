@@ -1,104 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-97169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97170-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id CEIHIgOAsml2NAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 09:57:39 +0100
+	id uJL2MT+Asml2NAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97170-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 09:58:39 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF86026F46F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 09:57:38 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0429C26F48D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 09:58:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 2FB3B30B0118
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 08:54:35 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 9C292313A2BB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 08:55:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2AF1338B123;
-	Thu, 12 Mar 2026 08:54:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08BD538B13F;
+	Thu, 12 Mar 2026 08:55:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="JvRUjeIK";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="fLxss9eO"
+	dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b="PCj4EbSo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3757232692B
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Mar 2026 08:54:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03C1A38B124;
+	Thu, 12 Mar 2026 08:55:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.167.242.64
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773305674; cv=none; b=J4RtlqYL+57a7fP1PFiobkILvNG4OIaqG9fKOvPHJ8b6fclY+oWecJx0pz1EYe3QJt1HCct3UfQt3RrsePQLXLCP7f7Ovh0dTpMd3XkdksrjPRvcfkNuIeOwAg4dv/8i454HiJ8/VqzOkZOVBkx8tox9IJY/vL+w735htmkCEdI=
+	t=1773305719; cv=none; b=J++vASlQ4P3GuygflUrE0iqjXYNtrtePFX9TufnKEBHQMagNGHimcbaWglreHFYsWy2H+Ja1A2I3fiudWtL9h/a77bRBdHSheGI8hLb/pRs0LLA18+icoqwL/yyGq+s0efVi6f2peLyQbp7aj4tTKKiyf3ObtQ/uRWREN3Beyig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773305674; c=relaxed/simple;
-	bh=W6hiN826Nj47dmuat69Ci+wnnicZJ77Cn5oLCDUc+fM=;
+	s=arc-20240116; t=1773305719; c=relaxed/simple;
+	bh=Zlw2pnya/OaJ1VxnB8BPExMvf19QwK1ysreWBJN45KE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TattAFBCBp0o6e64x/Wccu5Jq7F5QMPA55en286JE9Qf8T/3r6yNK28ngRPtSGmQP0Ia30viU8/hzj24ujFB8fKUb2cnDZfKZIU+ayLozXVKps2kqvsIEVejiGwYj6dWs0jy2ID29gFkJWPHRQ+Y4eEIQ6TI0dwQCpv7yJJuyxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=JvRUjeIK; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=fLxss9eO; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62BMMpag3136615
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Mar 2026 08:54:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Ex6SR5AntwjH2hwV8Pxt06HDLsYD3NW0CR+gEG/N2zw=; b=JvRUjeIK8VTnhp9t
-	q3Hg0aEdaIqihYMPsopJf8cAVk5ztzRhE3pJxN8X4R9VeciRfrJrRfzx9Ia9s/I+
-	+ZSsnVn+xLCUk0moE4Qkf/fr7bz4o1I8QP/XdfAv4lQkbmnxVYlgSgnq01/n8QIO
-	LDfZfb1KQJ3dNhoLEYBo+xlEbyNzgbf4rN4N/VrJ3GnnmUqtQpsgQ+5ZZgwHceRX
-	19eE4xQ0eDemioYGRO8EBalv6qAhqMApimXG+4qoSQOMFH9IOjwdOG9IzzKqFrax
-	fLwN8TfmwV7z/FjBa2ogHW5r/NFzkwwMLllvhtCwXfrmgEoTHDfZvDhtfuMtjzAD
-	1oOszQ==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cuh4w9h1a-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Mar 2026 08:54:31 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2ae405e95f5so9372505ad.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Mar 2026 01:54:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1773305671; x=1773910471; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ex6SR5AntwjH2hwV8Pxt06HDLsYD3NW0CR+gEG/N2zw=;
-        b=fLxss9eO+qaKjkGaiODBOh60bxNOM8kCKaIMjfGuM1hIbbniBEgLFyYAWlvtqhWSpL
-         xIrqJC6+fF+10wHX3Pn4mQ0UX9UM06KyuGbtHo5x3MKG/lfFdlnZogGYQp4Kcty2mg3L
-         wDjO7f3gkp8CbAEbmDL9Iqoc62OSyS9BJG7Obmf8SUXiZfBBTccgrc5v062nforN2xy/
-         TNJcUoLu+DwzQTk/2ZsjGvJvlFnElcRcyQB/E3vGteyeS3qiiG74ZXGfz56NpsbEURVn
-         4Ws81CPRvSPBCZ5/KKZIj4YCA/KwbBEChzY3z7n/uE1UwZkrKgk3v8i6dY6E2tXBi8Du
-         41Ew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773305671; x=1773910471;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Ex6SR5AntwjH2hwV8Pxt06HDLsYD3NW0CR+gEG/N2zw=;
-        b=JD+8q+IyInr5MzYSwICzh5SwbcKQyT+FeexqOXcauyDcq7JnW/LrBGsEhUNWYl4OXq
-         nqM66jS+CcHFPfP/d39yCm2w6uK5apNxr5E3z8Jt6cCfzWeegBaMrbn56rmDnrjOHyfE
-         hSHqNVg0WeADZCKyBq8QKUVRHH2WjyBzXJgDYNROJzGw0YBzr5kqoUpRAaCkWLbKE45Y
-         8KaIAOnZH8eYwn8qAhRmovB9DiBekHlCaDp5ltr8Ge+9p7Xy5VtiYClyjPyf/+QMnoKA
-         XZIPjdJ2f9ehhKC/CrGtwCb0Y9q+2CBQrrkaBGRwzTbiJUwIRx46hDg3tqFqPWTkbvg9
-         B89g==
-X-Forwarded-Encrypted: i=1; AJvYcCWjrGGQZcYxBQ29MqIjEIeluTjmMfYptMSu79iO0KAiHPg2ihIUHh5d5J1W0PAo7lOvX4HtGimvl4ugeIvr@vger.kernel.org
-X-Gm-Message-State: AOJu0YyXrlgzNu6aqWo5VHHbrZ9qyXmctvksBDDhvlhlZX5pe/wzkRJ7
-	r3eCKCUctUWz9Az3jzoCPh8RE1XBfxnwCJG1xMeV/QYcL3YkOqcBVYdlnlKNzY+/gqh41jNscsv
-	5uUXhYd3Is6tu5E7XujnhrVi+QU8Iy9pqM8QuqlskQPBpMTFGYSoy8KBjFbJ2LlG+inWA
-X-Gm-Gg: ATEYQzwmkuI7ttnyxQjwBWVmNA0dhsLInJwvfUrme/7EPx5U0NGHiXqqbIcbYImzpFs
-	N9Qi6/b5Eq7kgX7QCG92rSsHiYTMP4usqBlMLsWdYb/Q1/QWPu5QuA+OeGJAFmLpYfALrJKfvPP
-	XB96CnmZN8P55BksELTrIfdT4luLKc1rmRVW+RfFkNSsypDc8zOVFt6HLHasiK6PMiTDN7Q/KkJ
-	FGCohGvV1bVzLIKTvEaG3z8cLXBF65FM6vdrCt98CGVGTVhhH5I5IbbPDG9dHpHJs7DtQXoJo6h
-	hlMV7KZadaYErYc9sOiZD7C6zmHEJ2t5Agiprploe08fqzz8dj4aMa4oJ5dMUvBCLvBJtYDNJiR
-	2fAUZByX4zr0YjJHKfaCNRwdvIqCgezcdTQUbOh8lIvqNyU8KMhUS+Lxnk0VYVuU=
-X-Received: by 2002:a17:903:32cb:b0:2ae:608d:ecc8 with SMTP id d9443c01a7336-2aeae85a33cmr49717015ad.27.1773305670812;
-        Thu, 12 Mar 2026 01:54:30 -0700 (PDT)
-X-Received: by 2002:a17:903:32cb:b0:2ae:608d:ecc8 with SMTP id d9443c01a7336-2aeae85a33cmr49716735ad.27.1773305670339;
-        Thu, 12 Mar 2026 01:54:30 -0700 (PDT)
-Received: from [10.30.144.113] ([152.58.131.236])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2aeae222e2fsm66922835ad.2.2026.03.12.01.54.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Mar 2026 01:54:29 -0700 (PDT)
-Message-ID: <509fc515-aa29-44be-86f7-a64e2d8f3f98@oss.qualcomm.com>
-Date: Thu, 12 Mar 2026 14:24:19 +0530
+	 In-Reply-To:Content-Type; b=YmtqrrpaFhL3aogTMTdpNWhB6kBBIo3zFyeFdtcc24hOH/4+YpQcbQLTy7e2dc08AEbT0WUbJIT3RPQBEwa3iIiV1bz0eUa2Acg6yLxVp6BiufIB2RffYXk+2HFstDieL3qWo0SQpr5KSR/QqvpJHUzBblYgd3M+B0UmQEtLtok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com; spf=pass smtp.mailfrom=ideasonboard.com; dkim=pass (1024-bit key) header.d=ideasonboard.com header.i=@ideasonboard.com header.b=PCj4EbSo; arc=none smtp.client-ip=213.167.242.64
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ideasonboard.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ideasonboard.com
+Received: from [192.168.88.20] (91-158-153-178.elisa-laajakaista.fi [91.158.153.178])
+	by perceval.ideasonboard.com (Postfix) with ESMTPSA id 93869594;
+	Thu, 12 Mar 2026 09:54:02 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+	s=mail; t=1773305644;
+	bh=Zlw2pnya/OaJ1VxnB8BPExMvf19QwK1ysreWBJN45KE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=PCj4EbSo9M+nhHO3YMM4wzqVA4FGezdG+MvXFQFOZZ8CgexMrQdcoESlaOrLqzf2j
+	 QVCBNoXUx4jB/v0V61h//xEOqEOoBymApHk4BImhdAqPNKBFKFKADpMA2eIMmo0+B6
+	 ObAiKPqh8+BeAMCqndRA9HlNyI879370Uc/TD4y0=
+Message-ID: <19fef8f8-9746-426f-91e5-51ff8b13c441@ideasonboard.com>
+Date: Thu, 12 Mar 2026 10:55:07 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -106,125 +53,194 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v20 01/10] power: reset: reboot-mode: Remove devres based
- allocations
-To: Sebastian Reichel <sebastian.reichel@collabora.com>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
-        Souvik Chakravarty <Souvik.Chakravarty@arm.com>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Andy Yan
- <andy.yan@rock-chips.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        John Stultz
- <john.stultz@linaro.org>,
-        Moritz Fischer <moritz.fischer@ettus.com>,
-        Bartosz Golaszewski <brgl@kernel.org>,
-        Sudeep Holla
- <sudeep.holla@kernel.org>,
-        Florian Fainelli <florian.fainelli@broadcom.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-        Andre Draszik <andre.draszik@linaro.org>,
-        Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, Srinivas Kandagatla <srini@kernel.org>
-References: <20260304-arm-psci-system_reset2-vendor-reboots-v20-0-cf7d346b8372@oss.qualcomm.com>
- <20260304-arm-psci-system_reset2-vendor-reboots-v20-1-cf7d346b8372@oss.qualcomm.com>
- <abEzdgQ6pe0fC-5z@venus>
+Subject: Re: [PATCH v5 0/4] drm/atomic: Allocate drm_private_state through a
+ callback
+To: Maxime Ripard <mripard@kernel.org>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>,
+ Simona Vetter <simona@ffwll.ch>
+Cc: dri-devel@lists.freedesktop.org, Harry Wentland <harry.wentland@amd.com>,
+ Leo Li <sunpeng.li@amd.com>, Rodrigo Siqueira <siqueira@igalia.com>,
+ Alex Deucher <alexander.deucher@amd.com>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ amd-gfx@lists.freedesktop.org, Thierry Reding <thierry.reding@gmail.com>,
+ Mikko Perttunen <mperttunen@nvidia.com>,
+ Jonathan Hunter <jonathanh@nvidia.com>, linux-tegra@vger.kernel.org,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Liviu Dudau <liviu.dudau@arm.com>, =?UTF-8?Q?Ma=C3=ADra_Canal?=
+ <mcanal@igalia.com>, Andrzej Hajda <andrzej.hajda@intel.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
+ Paul Cercueil <paul@crapouillou.net>,
+ Dave Stevenson <dave.stevenson@raspberrypi.com>,
+ Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+ Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
+ linux-mips@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org, Jessica Zhang <jesszhan0024@gmail.com>
+References: <20260224-drm-private-obj-reset-v5-0-5a72f8ec9934@kernel.org>
+From: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
 Content-Language: en-US
-From: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-In-Reply-To: <abEzdgQ6pe0fC-5z@venus>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=tomi.valkeinen@ideasonboard.com; keydata=
+ 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
+In-Reply-To: <20260224-drm-private-obj-reset-v5-0-5a72f8ec9934@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: LEQcH_EwyAOY_7-FXO6ozsVwPhaYRG7I
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEyMDA3MSBTYWx0ZWRfX2UVDvXQlFRAB
- BUhuhJWTnYaDCvTwaHlG8z9K2fZ1RR8571ridYGVwyfi9fQVSC4Cao29M2z5JusIUUANegHOb6n
- JJLpUycSIS5nBrpFsrYs6fZ7T4WpEn3aIWgKOohKJeHC2KUFPfWhHoHw6Trb/9iOnH1xjRSarFH
- oLEkkqPgdkWQNX1Bq4vpszMfc3ra+RbRpcUAyPzvTAL9FzG5DdSblOTek445g08WvC654uTxQcT
- 9+c04gam6SR6X/3K5KDmJB7g/FMr7v0jnr3uWh7nEksw/Mwvzj/FbmmsTxiKzqL2bY6sZKZBf0S
- UcVCfYtF1OBjeC3ROMPEUjM9nd8+9Lm74fZxLbIB6VvqwVnCrGpsrh0EhWRMNX27tNwL1Gq8eLJ
- AXuYE8iLy6gOHmhn2Yyak3cW6vGDmJRH9qsA/bpoT5Xt87WiHZe4/v4lu7EnKZIBZOS4TD0aU5Q
- BYqvactFmkmOrAGiaDA==
-X-Authority-Analysis: v=2.4 cv=YucChoYX c=1 sm=1 tr=0 ts=69b27f47 cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=kINRXkAo9yxRtpb0MKIxjw==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=EUspDBNiAAAA:8 a=QX4gbG5DAAAA:8 a=8-yduQQsOBGYcPy-76YA:9 a=QEXdDO2ut3YA:10
- a=zZCYzV9kfG8A:10 a=GvdueXVYPmCkWapjIL-Q:22 a=AbAUZ8qAyYyZVLSsDulk:22
-X-Proofpoint-GUID: LEQcH_EwyAOY_7-FXO6ozsVwPhaYRG7I
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-11_02,2026-03-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 impostorscore=0 phishscore=0 clxscore=1015 priorityscore=1501
- adultscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603120071
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[ideasonboard.com,none];
+	R_DKIM_ALLOW(-0.20)[ideasonboard.com:s=mail];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[kernel.org,arndb.de,arm.com,rock-chips.com,gmail.com,linaro.org,ettus.com,broadcom.com,oss.qualcomm.com,vger.kernel.org,lists.infradead.org];
-	TAGGED_FROM(0.00)[bounces-97169-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[collabora.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:dkim,qualcomm.com:email];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[28];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[shivendra.pratap@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-97170-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_TO(0.00)[kernel.org,linux.intel.com,suse.de,gmail.com,ffwll.ch];
+	RCPT_COUNT_TWELVE(0.00)[35];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[lists.freedesktop.org,amd.com,igalia.com,gmail.com,nvidia.com,vger.kernel.org,oss.qualcomm.com,arm.com,intel.com,linaro.org,kernel.org,crapouillou.net,raspberrypi.com,ideasonboard.com,kwiboo.se,linux.dev,poorly.run,somainline.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[tomi.valkeinen@ideasonboard.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[ideasonboard.com:+];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: DF86026F46F
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,ideasonboard.com:dkim,ideasonboard.com:email,ideasonboard.com:mid]
+X-Rspamd-Queue-Id: 0429C26F48D
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
+Hi,
 
-
-On 11-03-2026 14:51, Sebastian Reichel wrote:
+On 24/02/2026 18:10, Maxime Ripard wrote:
 > Hi,
 > 
-> On Wed, Mar 04, 2026 at 11:33:01PM +0530, Shivendra Pratap wrote:
->> Devres APIs are intended for use in drivers, where the managed lifetime
->> of resources is tied directly to the driver attach/detach cycle. In
->> shared subsystem code, there is no guarantee that the subsystem
->> functions will only be called after a driver has been attached, nor that
->> they will not be referenced after the managed resources have been
->> released during driver detach.
->>
->> To ensure correct lifetime handling, avoid using devres-based
->> allocations in the reboot-mode and explicitly handle allocation and
->> cleanup of resources.
->>
->> Fixes: 4fcd504edbf7 ("power: reset: add reboot mode driver")
->> Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
->> ---
+> This series started from my work on the hardware state readout[1], and
+> was suggested by Dmitry[2].
 > 
-> Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+> This series deal with the fact that drm_private_obj (and thus bridges)
+> are not initialized using the same pattern than any other object. This
+> series solves that inconsistency by aligning it to what we're doing for
+> all the other objects.
 > 
-> The patch does not apply, though.
+> This was tested on a TI SK-AM62, with three bridges.
+> 
+> Let me know what you think,
+> Maxime
 
-thanks. Will re-base it.
+Looks fine to me, except for one thing: the return value of
+drm_atomic_private_obj_init() is ignored everywhere, so we won't catch
+ENOMEM. Is there a plan or follow-up series for that? If yes:
 
-thanks,
-Shivendra
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+
+ Tomi
+
+> 1: https://lore.kernel.org/dri-devel/20250902-drm-state-readout-v1-0-14ad5315da3f@kernel.org/
+> 2: https://lore.kernel.org/dri-devel/zvqtehg66dbrrdmik6ylo2kdk74umfzo5hbfkizwsb352nlyqv@jgouvmbfwa4x/
+> 
+> Signed-off-by: Maxime Ripard <mripard@kernel.org>
+> ---
+> Changes in v5:
+> - Rebase to drm-misc-next
+> - Link to v4: https://lore.kernel.org/r/20260128-drm-private-obj-reset-v4-0-90891fa3d3b0@redhat.com
+> 
+> Changes in v4:
+> - Fix a circular dependencies between modules by calling
+>   __drm_atomic_helper_private_obj_create_state from
+>   __drm_atomic_helper_bridge_reset instead of
+>   drm_bridge_atomic_create_priv_state()
+> - Link to v3: https://lore.kernel.org/r/20260119-drm-private-obj-reset-v3-0-b931abe3a5e3@redhat.com
+> 
+> Changes in v3:
+> - EDITME: describe what is new in this series revision.
+> - EDITME: use bulletpoints and terse descriptions.
+> - Link to v2: https://lore.kernel.org/r/20251014-drm-private-obj-reset-v2-0-6dd60e985e9d@kernel.org
+> 
+> Changes in v2:
+> - Switch to a new hook instead of reset since some drm_private_objs want
+>   to persist across suspends
+> - Drop the call to drm_private_obj_funcs.reset in
+>   drm_mode_config_reset()
+> - Link to v1: https://lore.kernel.org/r/20251008-drm-private-obj-reset-v1-0-805ab43ae65a@kernel.org
+> 
+> ---
+> Maxime Ripard (4):
+>       drm/amdgpu: Switch private_obj initialization to atomic_create_state
+>       drm/omapdrm: Switch private_obj initialization to atomic_create_state
+>       drm/tegra: Switch private_obj initialization to atomic_create_state
+>       drm/atomic: Remove state argument to drm_atomic_private_obj_init
+> 
+>  drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c  | 51 ++++++++++++----------
+>  .../drm/arm/display/komeda/komeda_private_obj.c    | 16 +++----
+>  drivers/gpu/drm/display/drm_dp_mst_topology.c      |  1 -
+>  drivers/gpu/drm/display/drm_dp_tunnel.c            |  2 +-
+>  drivers/gpu/drm/drm_atomic.c                       | 22 +++-------
+>  drivers/gpu/drm/drm_bridge.c                       |  1 -
+>  drivers/gpu/drm/ingenic/ingenic-drm-drv.c          |  2 +-
+>  drivers/gpu/drm/ingenic/ingenic-ipu.c              |  2 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |  1 -
+>  drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c           |  1 -
+>  drivers/gpu/drm/omapdrm/omap_drv.c                 | 22 +++++++---
+>  drivers/gpu/drm/tegra/hub.c                        | 22 +++++++---
+>  drivers/gpu/drm/vc4/vc4_kms.c                      |  4 +-
+>  include/drm/drm_atomic.h                           |  1 -
+>  14 files changed, 76 insertions(+), 72 deletions(-)
+> ---
+> base-commit: 196b2b95fec447c2c4460f753b277d840633fbef
+> change-id: 20251008-drm-private-obj-reset-ae1e2741027a
+> 
+> Best regards,
+
 
