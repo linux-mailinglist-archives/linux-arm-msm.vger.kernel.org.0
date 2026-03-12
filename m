@@ -1,52 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-97183-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id QMhoJZeismnwOQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97183-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 12:25:11 +0100
+	id mCz2CMGjsmnwOQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 12:30:09 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 28B81270DB9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 12:25:11 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7BD83270EEE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 12:30:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 488CD305B5AC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 11:24:44 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 5F3E6315DB79
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 11:24:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 019E63BE64F;
-	Thu, 12 Mar 2026 11:24:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A64F43BF67C;
+	Thu, 12 Mar 2026 11:24:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="epMDnH1M"
+	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="QOqc7FP7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-179.mta1.migadu.com (out-179.mta1.migadu.com [95.215.58.179])
+Received: from out-188.mta1.migadu.com (out-188.mta1.migadu.com [95.215.58.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A11E3BD25F
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Mar 2026 11:24:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E7A3BF670
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Mar 2026 11:24:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773314673; cv=none; b=QH7NtYri8w6J4pRWnJVhk/J5eftjhvakJh+8VcXYOXBLJAL+DrGvv1AtLOg5BcBDmgZ3xoMqL3Fwj6s1Q9p9qooOepIca1cJPDZ7w/SfhJCClY4HxG7i6USxPL9LxPkgGpATlTAjYmaQ1FyyxOWjNoFApureBSKbtdc0tCNa4Ag=
+	t=1773314678; cv=none; b=SLtXVT30o7elOymPtLnR/nP+Z3WwRPpkrJYXb1Kuw8aufJrZBnKSTapaFD5XVhvBbo5KvDPv+8iG888c+Y6N1xndaGD7FDroOb7Idkv/aeptSWqGqS5Qe/SZz9X1Mugrv5Vvb17Tnrp3GaiDCg9+DFjveIWnEfBO/Ri8CUX2ws4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773314673; c=relaxed/simple;
-	bh=/tmKxqWvNYa6MuUMQn+keyh63vEc8tPLub4G+YWIYJs=;
+	s=arc-20240116; t=1773314678; c=relaxed/simple;
+	bh=uYs3JHAd/jxTQEVzpORrcnhgntV0JK5nGBynUCea0wM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HOcdKIhzPiFNzoC7RUHoyKLdpLJqITA6Ly6tdCVNP9C5PufE9UbFMmKdY2Q8M5e+BPLz0cpU1P8DR/77HQIKRGY+U+b4HiicUflLQi0r/qRwpDYlF5YGKzChou/cd4pSdwt37yCAlwCJ4qKDGkesvbJEw+c+hwHjfyv3hgftOLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=epMDnH1M; arc=none smtp.client-ip=95.215.58.179
+	 MIME-Version; b=GkvibpBXF4ebPzENdYqZCNmV9rNF2g+qh1ObACp1iDSpjwmV8e8qp1lH1N/pjGqK68ZcOWcrn/LwBWBfWJOiecyU3ETCWuCa+zMhK5fuyRW/JJUCWsGCV1URBuVsXrNtbh1MkuvRy7/VF/J7aQhYxdUlIu/EaCf6HzV07BF7IEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=QOqc7FP7; arc=none smtp.client-ip=95.215.58.188
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
-	s=key1; t=1773314671;
+	s=key1; t=1773314675;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=CzW6GgYT0Hq52fgkX18bHoLKVtz4DvDWuePNOqfPfZY=;
-	b=epMDnH1MBr9n2q5qyz6OUtR5PLmPfJKXqHht82KSgIV9rMPdn68oqjkSukJIenyrCp5mTL
-	hx3IjIvHHG6WZ5GqIlGavqdkPjW5RH/SfyyCdwk5lix6RWibJIZOYFcCXnz8/xLBFRtXtq
-	+sbl4A2EPZpdEIwJWAtq+x01fBPkAvgtN+zgLR1k0J3aNTn7RBEEtwABtVCmHcdo5RZ3nx
-	lPoBIXdAf/xWvolCabVsfRjwnwDYoExjovcjXbs21ehO+3CIaVt+nHnVsXd4EjfweZoi3k
-	mxuzQoZ1VhSZMZm4w1UdKldKGMVAwoR/Yi+Fa8VeDG2sCiK4Cg8cprkyTyhNKQ==
+	bh=c6bg3vbkQkQwI35FQJs6xm3Hr9kxqB+NBTc/GQ3vahI=;
+	b=QOqc7FP7egtUy4YxR8zfb3602SOEEB9rhWA/QnV+2f5JaKXfW1kyJE8VTartiIybviRMdL
+	eIfihcVwp2HsuMfqgetT4XofMWV0mr8sHWPW+su/TkpNUKwZbgkraCBN32xpkSfOYpTPQe
+	e+dPBsGYka3cZ5r1M3jXy+YD9JluGTvMUqg4kItug+w4kH2rwal9luVaeGejllx/0Z+EMH
+	8rsnyP3xZ+e+26zbDtJ7/n+GWTS2LN3trI1BC2KWTPT5PJN2HG1nyI9JQoYkPh9CH7nhL9
+	Q3PDS2HCIA6LH3e6fUvh0SELS6WFLem1VFYehe/lVds7PUFqhw1JAzMErDZi8w==
 From: Val Packett <val@packett.cool>
 To: Bjorn Andersson <andersson@kernel.org>,
 	Michael Turquette <mturquette@baylibre.com>,
@@ -61,9 +61,9 @@ Cc: Val Packett <val@packett.cool>,
 	linux-arm-msm@vger.kernel.org,
 	linux-clk@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v2 07/11] clk: qcom: dispcc-sm8250: Use shared ops on the mdss vsync clk
-Date: Thu, 12 Mar 2026 08:12:12 -0300
-Message-ID: <20260312112321.370983-8-val@packett.cool>
+Subject: [PATCH v2 08/11] clk: qcom: dispcc-sm8250: Enable parents for pixel clocks
+Date: Thu, 12 Mar 2026 08:12:13 -0300
+Message-ID: <20260312112321.370983-9-val@packett.cool>
 In-Reply-To: <20260312112321.370983-1-val@packett.cool>
 References: <20260312112321.370983-1-val@packett.cool>
 Precedence: bulk
@@ -81,14 +81,14 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	DMARC_POLICY_ALLOW(-0.50)[packett.cool,quarantine];
 	R_MISSING_CHARSET(0.50)[];
 	R_DKIM_ALLOW(-0.20)[packett.cool:s=key1];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	FREEMAIL_CC(0.00)[packett.cool,kernel.org,gmail.com,vger.kernel.org];
 	RCVD_COUNT_THREE(0.00)[3];
 	RCPT_COUNT_TWELVE(0.00)[13];
-	TAGGED_FROM(0.00)[bounces-97183-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-97184-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
@@ -99,43 +99,46 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	FROM_HAS_DN(0.00)[];
 	DKIM_TRACE(0.00)[packett.cool:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm,linaro];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,packett.cool:dkim,packett.cool:email,packett.cool:mid]
-X-Rspamd-Queue-Id: 28B81270DB9
+	DBL_BLOCKED_OPENRESOLVER(0.00)[packett.cool:dkim,packett.cool:email,packett.cool:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 7BD83270EEE
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-mdss_gdsc can get stuck on boot due to RCGs being left on from last boot.
-As a fix, commit 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon
-registration") introduced a callback to ensure the RCG is off upon init.
-However, the fix depends on all shared RCGs being marked as such in code.
-
-For SM8150/SC8180X/SM8250 the MDSS vsync clock was using regular ops,
-unlike the same clock in the SC7180 code. This was causing display to
-frequently fail to initialize after rebooting on the Surface Pro X.
-Fix by using shared ops for this clock.
+Add CLK_OPS_PARENT_ENABLE to MDSS pixel clock sources to ensure parent
+clocks are enabled during clock operations, preventing potential
+stability issues during display configuration.
 
 Fixes: 80a18f4a8567 ("clk: qcom: Add display clock controller driver for SM8150 and SM8250")
 Signed-off-by: Val Packett <val@packett.cool>
 ---
- drivers/clk/qcom/dispcc-sm8250.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/qcom/dispcc-sm8250.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/clk/qcom/dispcc-sm8250.c b/drivers/clk/qcom/dispcc-sm8250.c
-index 8f433e1e7028..cdfdb2cfb02b 100644
+index cdfdb2cfb02b..e59cdadd5647 100644
 --- a/drivers/clk/qcom/dispcc-sm8250.c
 +++ b/drivers/clk/qcom/dispcc-sm8250.c
-@@ -632,7 +632,7 @@ static struct clk_rcg2 disp_cc_mdss_vsync_clk_src = {
- 		.parent_data = disp_cc_parent_data_1,
- 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_1),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
+@@ -578,7 +578,7 @@ static struct clk_rcg2 disp_cc_mdss_pclk0_clk_src = {
+ 		.name = "disp_cc_mdss_pclk0_clk_src",
+ 		.parent_data = disp_cc_parent_data_6,
+ 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_6),
+-		.flags = CLK_SET_RATE_PARENT,
++		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
+ 		.ops = &clk_pixel_ops,
  	},
  };
- 
+@@ -592,7 +592,7 @@ static struct clk_rcg2 disp_cc_mdss_pclk1_clk_src = {
+ 		.name = "disp_cc_mdss_pclk1_clk_src",
+ 		.parent_data = disp_cc_parent_data_6,
+ 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_6),
+-		.flags = CLK_SET_RATE_PARENT,
++		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
+ 		.ops = &clk_pixel_ops,
+ 	},
+ };
 -- 
 2.52.0
 
