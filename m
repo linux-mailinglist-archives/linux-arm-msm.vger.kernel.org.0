@@ -1,52 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-97181-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97182-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 2AM3FX2jsmnwOQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97181-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 12:29:01 +0100
+	id qN1aM4CismkOOQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97182-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 12:24:48 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A653D270EA2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 12:29:00 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 13544270D99
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 12:24:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A73DE320D276
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 11:24:25 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 6A0D7301F589
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Mar 2026 11:24:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 609B43B9DB2;
-	Thu, 12 Mar 2026 11:24:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE62A3BD634;
+	Thu, 12 Mar 2026 11:24:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="Okx812Rt"
+	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="ZNpMw/ie"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-181.mta1.migadu.com (out-181.mta1.migadu.com [95.215.58.181])
+Received: from out-177.mta1.migadu.com (out-177.mta1.migadu.com [95.215.58.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C58E03BBA0E;
-	Thu, 12 Mar 2026 11:24:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1397C3BD25C
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Mar 2026 11:24:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773314665; cv=none; b=kDJax79bK1JHZfsfzvvp54EGfMOKotlgbl3TPjJyf8s97kzlPIA+EMNvimrpg36xhvpcxyh+FPCVYFCo/d5qcTKlSkoq45jk1MuqGIKJZbf+vJWlCvaBGlOcUNqPRLIQBRHF/DknNpT2cSlQo5p65+hUyusrYcA9X3R6OjvnKRk=
+	t=1773314669; cv=none; b=JzwrgqWgt0Xhgha2sWiDCE+yDOp/b1SCtY86ClLBvloEXP3qvEe39EnqMktb6+Hzy4hJOZZLQXIYLI/fvCESH2i+f8AEF7uQpe9q0sgNzfjqFgVOV26pqQMmDAghw0AoZfPdTg1OHkRPLfL+dSIRMqUp7CSLZnfMWQHZOqa7ugo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773314665; c=relaxed/simple;
-	bh=cgaPZinUPDr1PYA2GyKMdYtFxWLsPXtHju41DxXVaTE=;
+	s=arc-20240116; t=1773314669; c=relaxed/simple;
+	bh=YBOjOezRXgSWTxZGDoyuvFIEMJrV2161nYB8kYXjU8w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BjDdi4HgE8lPHBwTFpdEbrsh5E9B7CF8G4gOGZCyQDpLsij9ME6Zvs62bUyIF/pEbQIrJp+9z7lHsjBjkLTC2MRyYJg2UKjR386Zjz56YG4OG9hSJcEltO88qOxtGcf0m5KyI0T10meIXjPrIC6ylt+gPNJ5pNNBx23XIjX/xUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=Okx812Rt; arc=none smtp.client-ip=95.215.58.181
+	 MIME-Version; b=PINqLYOaiIRBSv1cpoT3jld1nvIoZs5Rn1ujBKA+oz2YiI8oDRxGXNSzCh+YdPE4+5fc99phN+emtkdeZvofKrcpSP1EnIGcXOt9Ptpn9jW5J92e+9gz9HrCdaJ1yWvAHw91BfGbJ/16xyDGoSY7o3RPVIf2v3UMgefYFT5dZMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=ZNpMw/ie; arc=none smtp.client-ip=95.215.58.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
-	s=key1; t=1773314662;
+	s=key1; t=1773314666;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=CeQ/ayI+gqt2blZgg3ZnKYaoMVG/Kc0EQV8JnYiTbYA=;
-	b=Okx812RtnWpBrMaKI+Tws5cKkhgFP3UCX+i01EtVRQAPM/7IfDbXc4rBMEf40+UPg3sOZc
-	4VhDnAjngZhmsT8PhtebTL/WcecLAwv3K9T+2HzdYdIDc8lOepDbp1NgWxQe3F4kqy9VJb
-	E4D2GnVAV+/z+Ai0Aj13ru4pbU3TEFstc3WKhG/SnRiGNZumRT48D6l4tmUmiMAmBa7JuG
-	mt376acdulvW9dvaI7qzE5PA2lDLvKlEq6mu67eHLKQualX1eBvuBe9zRfWt1ltKDxT7tV
-	rjKsz+pT+uDE4bgU8dNs8gbcaB0yPZoY8MvOpbIJIB332vaIAwzbS2lTKpn9Zw==
+	bh=0ffXIwn/SipTvQjaI8IylarOlKCDGzLC/zRz4bzxuSs=;
+	b=ZNpMw/ieXOT5ObySb1m1BNRS57ZVqFAoyoF2sppfKUNESCbPJ83auE8qBEXwYgfrDsCliD
+	A/WWsxntqfXRmgJD8NGpES2OokU+sL2Yct5fFTpc3VyulCT8GoCrZecYMBcmjlDXU1wYmV
+	D8ElThhu/7R2iazVY0pcfawU6pMMVNKO8bOJ7JW0gcehUvnP9dAiAZPAZubyEQAa0UQ0b1
+	cHPrvTAkKZhko4t+sbO993EJLXF2KQWT8z1NCA6q/ZkVfsFdb+ZnXhtx6BOXu0VQ8K8a3m
+	3ywMvfHq3s8HkRuvGyYlXL3B2V4vFl3BAVX+o22IgvslUC4wZinL44f4nejCQw==
 From: Val Packett <val@packett.cool>
 To: Bjorn Andersson <andersson@kernel.org>,
 	Michael Turquette <mturquette@baylibre.com>,
@@ -60,9 +60,9 @@ Cc: Val Packett <val@packett.cool>,
 	linux-arm-msm@vger.kernel.org,
 	linux-clk@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v2 05/11] clk: qcom: gcc-sc8180x: Enable runtime PM support
-Date: Thu, 12 Mar 2026 08:12:10 -0300
-Message-ID: <20260312112321.370983-6-val@packett.cool>
+Subject: [PATCH v2 06/11] clk: qcom: gcc-sc8180x: Refactor to use qcom_cc_driver_data
+Date: Thu, 12 Mar 2026 08:12:11 -0300
+Message-ID: <20260312112321.370983-7-val@packett.cool>
 In-Reply-To: <20260312112321.370983-1-val@packett.cool>
 References: <20260312112321.370983-1-val@packett.cool>
 Precedence: bulk
@@ -80,14 +80,14 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	DMARC_POLICY_ALLOW(-0.50)[packett.cool,quarantine];
 	R_MISSING_CHARSET(0.50)[];
 	R_DKIM_ALLOW(-0.20)[packett.cool:s=key1];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	FREEMAIL_CC(0.00)[packett.cool,kernel.org,gmail.com,vger.kernel.org];
 	RCVD_COUNT_THREE(0.00)[3];
 	RCPT_COUNT_TWELVE(0.00)[12];
-	TAGGED_FROM(0.00)[bounces-97181-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-97182-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
@@ -98,36 +98,124 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	FROM_HAS_DN(0.00)[];
 	DKIM_TRACE(0.00)[packett.cool:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm,linaro];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[packett.cool:dkim,packett.cool:email,packett.cool:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: A653D270EA2
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,packett.cool:dkim,packett.cool:email,packett.cool:mid]
+X-Rspamd-Queue-Id: 13544270D99
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-The GCC block on SC8180X is powered by the CX rail. We need to ensure
-that it's enabled to prevent unwanted power collapse.
+Use a qcom_cc_driver_data struct instead of a long custom probe
+callback to align with modern qcom/gcc-*.c style.
 
-Enable runtime PM to keep the power flowing only when necessary.
+No functional change intended.
 
 Signed-off-by: Val Packett <val@packett.cool>
 ---
- drivers/clk/qcom/gcc-sc8180x.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/clk/qcom/gcc-sc8180x.c | 61 +++++++++++++++++-----------------
+ 1 file changed, 31 insertions(+), 30 deletions(-)
 
 diff --git a/drivers/clk/qcom/gcc-sc8180x.c b/drivers/clk/qcom/gcc-sc8180x.c
-index 4095a1f54a09..2888c4ebd5e8 100644
+index 2888c4ebd5e8..88b95d5326d9 100644
 --- a/drivers/clk/qcom/gcc-sc8180x.c
 +++ b/drivers/clk/qcom/gcc-sc8180x.c
-@@ -4663,6 +4663,7 @@ static const struct qcom_cc_desc gcc_sc8180x_desc = {
- 	.num_resets = ARRAY_SIZE(gcc_sc8180x_resets),
+@@ -4605,7 +4605,7 @@ static const struct qcom_reset_map gcc_sc8180x_resets[] = {
+ 	[GCC_VIDEO_AXI1_CLK_BCR] = { .reg = 0xb028, .bit = 2, .udelay = 150 },
+ };
+ 
+-static const struct clk_rcg_dfs_data gcc_dfs_clocks[] = {
++static const struct clk_rcg_dfs_data gcc_sc8180x_dfs_clocks[] = {
+ 	DEFINE_RCG_DFS(gcc_qupv3_wrap0_s0_clk_src),
+ 	DEFINE_RCG_DFS(gcc_qupv3_wrap0_s1_clk_src),
+ 	DEFINE_RCG_DFS(gcc_qupv3_wrap0_s2_clk_src),
+@@ -4647,6 +4647,19 @@ static struct gdsc *gcc_sc8180x_gdscs[] = {
+ 	[HLOS1_VOTE_TURING_MMU_TBU1_GDSC] = &hlos1_vote_turing_mmu_tbu1_gdsc,
+ };
+ 
++static u32 gcc_sc8180x_critical_cbcrs[] = {
++	0xb004,  /* GCC_VIDEO_AHB_CLK */
++	0xb008,  /* GCC_CAMERA_AHB_CLK */
++	0xb00c,  /* GCC_DISP_AHB_CLK */
++	0xb040,  /* GCC_VIDEO_XO_CLK */
++	0xb044,  /* GCC_CAMERA_XO_CLK */
++	0xb048,  /* GCC_DISP_XO_CLK */
++	0x48004, /* GCC_CPUSS_GNOC_CLK */
++	0x48190, /* GCC_CPUSS_DVM_BUS_CLK */
++	0x4d004, /* GCC_NPU_CFG_AHB_CLK */
++	0x71004, /* GCC_GPU_CFG_AHB_CLK */
++};
++
+ static const struct regmap_config gcc_sc8180x_regmap_config = {
+ 	.reg_bits	= 32,
+ 	.reg_stride	= 4,
+@@ -4655,6 +4668,21 @@ static const struct regmap_config gcc_sc8180x_regmap_config = {
+ 	.fast_io	= true,
+ };
+ 
++static void clk_sc8180x_regs_configure(struct device *dev, struct regmap *regmap)
++{
++	/* Disable the GPLL0 active input to NPU and GPU via MISC registers */
++	regmap_update_bits(regmap, 0x4d110, 0x3, 0x3);
++	regmap_update_bits(regmap, 0x71028, 0x3, 0x3);
++}
++
++static struct qcom_cc_driver_data gcc_sc8180x_driver_data = {
++	.clk_cbcrs = gcc_sc8180x_critical_cbcrs,
++	.num_clk_cbcrs = ARRAY_SIZE(gcc_sc8180x_critical_cbcrs),
++	.dfs_rcgs = gcc_sc8180x_dfs_clocks,
++	.num_dfs_rcgs = ARRAY_SIZE(gcc_sc8180x_dfs_clocks),
++	.clk_regs_configure = clk_sc8180x_regs_configure,
++};
++
+ static const struct qcom_cc_desc gcc_sc8180x_desc = {
+ 	.config = &gcc_sc8180x_regmap_config,
+ 	.clks = gcc_sc8180x_clocks,
+@@ -4664,6 +4692,7 @@ static const struct qcom_cc_desc gcc_sc8180x_desc = {
  	.gdscs = gcc_sc8180x_gdscs,
  	.num_gdscs = ARRAY_SIZE(gcc_sc8180x_gdscs),
-+	.use_rpm = true,
+ 	.use_rpm = true,
++	.driver_data = &gcc_sc8180x_driver_data,
  };
  
  static const struct of_device_id gcc_sc8180x_match_table[] = {
+@@ -4674,35 +4703,7 @@ MODULE_DEVICE_TABLE(of, gcc_sc8180x_match_table);
+ 
+ static int gcc_sc8180x_probe(struct platform_device *pdev)
+ {
+-	struct regmap *regmap;
+-	int ret;
+-
+-	regmap = qcom_cc_map(pdev, &gcc_sc8180x_desc);
+-	if (IS_ERR(regmap))
+-		return PTR_ERR(regmap);
+-
+-	/* Keep some clocks always-on */
+-	qcom_branch_set_clk_en(regmap, 0xb004); /* GCC_VIDEO_AHB_CLK */
+-	qcom_branch_set_clk_en(regmap, 0xb008); /* GCC_CAMERA_AHB_CLK */
+-	qcom_branch_set_clk_en(regmap, 0xb00c); /* GCC_DISP_AHB_CLK */
+-	qcom_branch_set_clk_en(regmap, 0xb040); /* GCC_VIDEO_XO_CLK */
+-	qcom_branch_set_clk_en(regmap, 0xb044); /* GCC_CAMERA_XO_CLK */
+-	qcom_branch_set_clk_en(regmap, 0xb048); /* GCC_DISP_XO_CLK */
+-	qcom_branch_set_clk_en(regmap, 0x48004); /* GCC_CPUSS_GNOC_CLK */
+-	qcom_branch_set_clk_en(regmap, 0x48190); /* GCC_CPUSS_DVM_BUS_CLK */
+-	qcom_branch_set_clk_en(regmap, 0x4d004); /* GCC_NPU_CFG_AHB_CLK */
+-	qcom_branch_set_clk_en(regmap, 0x71004); /* GCC_GPU_CFG_AHB_CLK */
+-
+-	/* Disable the GPLL0 active input to NPU and GPU via MISC registers */
+-	regmap_update_bits(regmap, 0x4d110, 0x3, 0x3);
+-	regmap_update_bits(regmap, 0x71028, 0x3, 0x3);
+-
+-	ret = qcom_cc_register_rcg_dfs(regmap, gcc_dfs_clocks,
+-					ARRAY_SIZE(gcc_dfs_clocks));
+-	if (ret)
+-		return ret;
+-
+-	return qcom_cc_really_probe(&pdev->dev, &gcc_sc8180x_desc, regmap);
++	return qcom_cc_probe(pdev, &gcc_sc8180x_desc);
+ }
+ 
+ static struct platform_driver gcc_sc8180x_driver = {
 -- 
 2.52.0
 
