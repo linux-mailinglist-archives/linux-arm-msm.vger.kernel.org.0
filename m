@@ -1,233 +1,236 @@
-Return-Path: <linux-arm-msm+bounces-97444-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97445-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iLE9KX38s2nWeQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97444-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	id 4JzaJX38s2nWeQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97445-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
 	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 13:01:01 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2BA7282980
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 13:01:00 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E1E0282981
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 13:01:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 277B73044959
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 12:00:06 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id C5A513016B88
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 12:01:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8861B390C8E;
-	Fri, 13 Mar 2026 11:59:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5313F2DA755;
+	Fri, 13 Mar 2026 12:00:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="BtF5t7GB";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="PlmaDAl8"
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="ipunXlra"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mail-24418.protonmail.ch (mail-24418.protonmail.ch [109.224.244.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 291A939023F
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 11:59:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9F941DDC28;
+	Fri, 13 Mar 2026 12:00:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773403193; cv=none; b=h3BaO9rS7xWaJcQlZGfNLMSjDV9bS1z1v7uU9VvU2wzyev6Tkcfdsa8boyB5nSyNiSGAXQ3nJqdL0ai49CvpA28iIeZnFBBSjri110Sdsl13Dn4/WmenefekskOm42ZpwibaA3CDa/cX4aWdvY0IAs8Hf/8MX6BstE5qSkjFHzI=
+	t=1773403259; cv=none; b=LUA0LHItt8isUJFfp25WA/si/sO2YdTwl+004jBUQWYO2CX13kwbIrsb2yVCI1bZxUd79TD0fqxnOO6Fgn2GMIIqdt02K7hcGkCwUQSd/lV8rAe/i2CdtVjc5GHkeORhddOZmI8peCFaTcr1L62HmulKEThrwHGboqI/4Tnprio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773403193; c=relaxed/simple;
-	bh=z0sVzBAcv13vC9l86gQlsXV87u5QGlJTtmJZRwdqpj4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oGFhmrOU3SBPPtujTEMbt+iRprklNnUHNe5beBK9LrGJXrIaMGhDpm645gcYgBewXSDNXRg57uhOLlFIQbwo5bE3pIUd1Uef+xZbvKXCXNMxLR9V5QhmtY+Rn1FBMsNSFouVUqn/tgxMi8BlZRNLYDv2ygQqMZXAI8oZYljVAB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=BtF5t7GB; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=PlmaDAl8; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62D6oSPA793119
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 11:59:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	dAPyYNhQ7Nilvok6h06J0gKQb9GOg5VVQtkr6R/ZE0I=; b=BtF5t7GBYwJUfunD
-	K43XSiJjqXqPrGS9E8flXCr/CG5vIzZB66CCfxSHHBaYu0uwieMm12oxuvkNOvfn
-	ja1fqd3U2vZCiW3Y2q84CzAew3ijeJVFVuXE8q02dxQeLmSC/U35nIun4/hmsow+
-	nJ+GO+Q1e83yw5oaj2VXlWSDhAIR+ibLLDcmtaDgISq5duMFyJCELzm4PVV4UY4B
-	SV8LUlYila5uJookHMR4p4SvrL6NiWFc3JWjX0wSHLWFPXNJJIAK4BQlerda9t1B
-	ZkjFryzFs6FJxSgd7s57853V0JBinDvp3wrKXg1lOh3G0zcuEbVTvDDA1BhnosAh
-	AIyQAg==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cvdnt120v-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 11:59:51 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8cd8e89d19bso114413285a.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 04:59:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1773403190; x=1774007990; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=dAPyYNhQ7Nilvok6h06J0gKQb9GOg5VVQtkr6R/ZE0I=;
-        b=PlmaDAl8vrOd2KP38BpdysJzWxfF+75kyVkAxGmJEHGPnKNRdH6k/G63rNmIKdIb3B
-         kpqmfloClxBuLzhSuEBjE9mtlr5mgJN5F++0B7/j7Ze/2yl9eiLpPaXqQyIjLcy0LSXC
-         //BO/Dcewl3WzuhdQa/yY4AcfatDnTOxKS2QyOXpHcU7102cULuIx/plhz6ovMx2gRxn
-         D3RZMiQppcRnTY14InkrUrcoq0pg98sIiMZv8t4hQlez2+5ZIUA+3c8mfMHs3Yr9+IT5
-         NmHUaFcAP4hsM0IRUqlbDztR3wssT5K44vLRd8OSrQejJ4LM3pfKDVHKnkOzJy8NM/E1
-         uCkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773403190; x=1774007990;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dAPyYNhQ7Nilvok6h06J0gKQb9GOg5VVQtkr6R/ZE0I=;
-        b=IUu8VpjUO6YzeE2IeVH0EPYpzYK7ghcTjRHtFiuf19gAyyfXFOcQGCio7pgXaT3A7K
-         vrmiaRIZs2grEm0bT+Z5r8LD/ADhGbo/9RalS5I1OdthCO4ebBidij91LHYqtic2o7vs
-         89GHECGhP/q9cF3VjnbiqigTjIUZW0PbVrPkmz8sHE3Qy4LhPdlIALOvyIfXy946l2lN
-         tDn6mcgdyrLJqhaNBf2Ew9Nq/AEAf6rDyrL0p1kiR+HAIBmK2hsnhi20CfcOTtzOcRSn
-         knUc7PF6xp4+Q0TWT2K+s/TBf71HpRvjRxs7NqtpezoV+++w7gaeaKK+gANfo7IzY3/W
-         Q5BA==
-X-Forwarded-Encrypted: i=1; AJvYcCX5cNFOjLOI+V7fy681mEA1pHZ0Nz+xhkTSy6MN8/WUNaDRl0fmUNzEz7EKUwN/p9xY2JqZVw2byebTnE90@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy2M8GSMHdVI4N3MlUKw2dbQUl7J8cfkle4v0czlKAISIctZlNW
-	cVi16V2hUgvQb+fzIxUi+t83KItz8EJDK2oV46zhi4pcSwykh41SuqtgjtGxgvkW0hPqYNv0pkb
-	QGpHl58tWoZRTAzm2osTp6IC96TxEAzeMbAf/fxhvJjKcDjN5ZzFwcDbOEHLxv6xSsbUc
-X-Gm-Gg: ATEYQzw/yqrpMzVCAXrHdueHWFbMc5Gjtq0hNKjgaAYzqB7pTRyESjaOl5wJ0/rBeGr
-	HnshS+FKFAl7OZnP2OlHFGMmeE/e/ydT3oHTl9GQJtXxN4AtS7sAO1TswKm6gQ9Y94WX4dIAHHg
-	k3Gm2WkTvFIicB3cjkM58lWFBlywDG05HsbSKpbBGj2IelooKbG9nOxuIRCiY8GAWymmL2lSyHE
-	Zsj9txm1gkOKbGCCU8R3TC1/EmU4+B8iKG+GiNckrkCi3SwXy6TcXI9RGn5YXfTLS7097Akbqw8
-	s50GUrWx6Fv3Gdqk49wvfdxtiuUNq6MRXBs7cU7jBm1njLW5qKNj5HHyjaLPrNyT+wd8ZOZpk4w
-	pW15yF32xEVop/6uPvhcimjcM1Bp0o9nVA94taf0eRONLdCPTOYREjKSLnekY428121iGAUEHhZ
-	96HbA=
-X-Received: by 2002:a05:620a:1990:b0:8cb:3fa7:c4f0 with SMTP id af79cd13be357-8cdb5b42e6amr292516485a.5.1773403190150;
-        Fri, 13 Mar 2026 04:59:50 -0700 (PDT)
-X-Received: by 2002:a05:620a:1990:b0:8cb:3fa7:c4f0 with SMTP id af79cd13be357-8cdb5b42e6amr292513185a.5.1773403189637;
-        Fri, 13 Mar 2026 04:59:49 -0700 (PDT)
-Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b976cf49fa6sm39747866b.58.2026.03.13.04.59.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Mar 2026 04:59:48 -0700 (PDT)
-Message-ID: <90b3a7df-cd02-4878-b614-1499589f0906@oss.qualcomm.com>
-Date: Fri, 13 Mar 2026 12:59:46 +0100
+	s=arc-20240116; t=1773403259; c=relaxed/simple;
+	bh=W2mUS43aORt1zRKA6gfMdflGbFTTwsVtdNzIwhRGRKs=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=h/aM88Cg5tcehataiqqfdpczp7/s9NfpUL0k19w4eK25x8jrTspyXyReLYYy96pmlYCM8iqnvKworci1DoJclJrNwMaO1vNQVQ9oZXzPVJofLRDg6BV5n87LgXihfCdX5sYVd1w+qiGW5DPbfqQZTEtUorTdb22GABS8UGGmQBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=ipunXlra; arc=none smtp.client-ip=109.224.244.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1773403246; x=1773662446;
+	bh=W2mUS43aORt1zRKA6gfMdflGbFTTwsVtdNzIwhRGRKs=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=ipunXlrao4PR8yT0aaoVrpCk+pJ/DJEiphXOav6ulTK+0KtY6S1moAKigzjugnFOV
+	 pc04dezk2rHMyq7OBugdK/lbiTImD/23uTEmqvtOfgsQBJYWfQQ61I5swQ5nOp6ifk
+	 hKCGUbZrhSaVXgUihwFlGQMUgoLZQSCRHJ3ApXNW8QRUnCI2bkwH4MDzU6smlFDRrV
+	 5PmJGa4nsDGsV0vzYsDFeMwpC1ZHWOZXLLeavf/+PExfzBIPN+p0wtL6/HW3dAhTUd
+	 +33KIc+rufygp5gZg/CkyIlZRw3Mr76mmJI1wtxQ+9oarH8BWzNu2SB46tWioL5PsO
+	 ZPUjm/YT74x/w==
+Date: Fri, 13 Mar 2026 12:00:40 +0000
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Srinivas Kandagatla <srini@kernel.org>
+From: Tj <tj.iam.tj@proton.me>
+Cc: linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org
+Subject: Re: qcom_slim_ngd_ctrl_probe: blocked on a mutex
+Message-ID: <539a5f37-e06f-44be-abda-3afa69397711@proton.me>
+In-Reply-To: <7672009d-7b14-4df2-b057-1ca5ef4fe79e@oss.qualcomm.com>
+References: <f1a1e72f-318b-4888-b03f-4f38ab4cee6e@proton.me> <7672009d-7b14-4df2-b057-1ca5ef4fe79e@oss.qualcomm.com>
+Feedback-ID: 113488376:user:proton
+X-Pm-Message-ID: cbe9177e93d266503985d71be99283f383f94317
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] arm64: dts: qcom: x1e80100: Remove interconnect from
- SCM device
-To: "Maulik Shah (mkshah)" <maulik.shah@oss.qualcomm.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, Thomas Gleixner <tglx@kernel.org>,
-        Linus Walleij <linusw@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-gpio@vger.kernel.org, Sneh Mankad <sneh.mankad@oss.qualcomm.com>
-References: <20260312-hamoa_pdc-v1-0-760c8593ce50@oss.qualcomm.com>
- <20260312-hamoa_pdc-v1-1-760c8593ce50@oss.qualcomm.com>
- <bnaxwhrfeer3n62xp5rka4pq4mz6y5xxwsin2vavc5zcj3ymxj@splrj22ki445>
- <198ccf60-a4b9-438b-ad92-bc4d2cc84b83@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <198ccf60-a4b9-438b-ad92-bc4d2cc84b83@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=KZrfcAYD c=1 sm=1 tr=0 ts=69b3fc37 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=D3rGKGdzeZ1DfF1dGIIA:9 a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-GUID: _vLLgVrTdew4d6hJ_tm8MvD6G-ui-YNf
-X-Proofpoint-ORIG-GUID: _vLLgVrTdew4d6hJ_tm8MvD6G-ui-YNf
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEzMDA5NSBTYWx0ZWRfX7y4ca9xyrJCR
- SlJKXjk//YMSkKyakJ8WKSUw7bNHmv4bZNM/l97HSWYUEhfKugl8X8jrudkK4cOaEWo4cohpJUk
- mnQtPiio/rpmGEeeqbJyI1BhsOuMDDZs0gpCpBZuCf0FVgD4vZK2u7nZ1+o2YlxWfuRC39eAkY8
- lu+8/tuHKbANLjfZVaD0jja2YhJWOrBwKKYf+Yp+kjxmDaS0DNTKEabDu5LoJ2nRYKcHTmlqdnz
- 1kzDCsIjdjFe7/fYqefWDra6v6KjCPEL6nzoxIGWq1D1/qeHCqNMpbEmT8AZqNQ2adeSj/plMpY
- vvXwS9B0dSe7xkfehobbbMoRJVsw+8CgXUf8GD92iNtCuIrAEaMQnO0wjPEPQni+X2v0bXfZJ0F
- m1IIpZmwbc4sPtF7x/RgVGYMWF56hbAUPaa7370LKe7DYIreZaj+SBtm5rU7e8Mv2q6z2hZ2ENT
- eLCtWmlGh35EfoxEvfA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-13_02,2026-03-13_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 spamscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
- malwarescore=0 impostorscore=0 adultscore=0 clxscore=1015 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603130095
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[proton.me,quarantine];
+	R_DKIM_ALLOW(-0.20)[proton.me:s=protonmail];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	TAGGED_FROM(0.00)[bounces-97444-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[proton.me:+];
+	TAGGED_FROM(0.00)[bounces-97445-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[3];
 	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_THREE(0.00)[4];
+	MISSING_XM_UA(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[tj.iam.tj@proton.me,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: F2BA7282980
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,proton.me:dkim,proton.me:mid]
+X-Rspamd-Queue-Id: 5E1E0282981
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 3/13/26 11:12 AM, Maulik Shah (mkshah) wrote:
-> 
-> 
-> On 3/13/2026 7:41 AM, Dmitry Baryshkov wrote:
->> On Thu, Mar 12, 2026 at 09:26:35PM +0530, Maulik Shah wrote:
->>> Interconnect from SCM device are optional and were added to get
->>> additional performance benefit. These nodes however delays the
->>> SCM firmware device probe due to dependency on interconnect and
->>> results in NULL pointer dereference for the users of SCM device
->>> driver APIs, such as PDC driver.
->>
->> This sounds like a bug in the PDC driver. It should reject being probed
->> before SCM is available.
-> 
-> The SCM driver provides no way to check if its ready or not to decide to reject/defer the probe.
-> A new API like below would be needed here,
+On 13/03/2026 09:54, Konrad Dybcio wrote:
+> On 3/12/26 1:14 AM, Tj wrote:
+>> Currently working on sdm850 device (Samsung Galaxy Book2 W737) and
+>> seeing kernel hang early and never recover when probing qcom-ngd-ctrl
+>> platform driver.=C2=A0 Only able to capture a photo of the stack traces =
+as a
+>> result; I'll try to transcribe the important parts here. My diagnosis
+>> suggests that the module is calling __platform_driver_register() twice
+>> and may be the cause of the hang.
+> https://lore.kernel.org/all/20260309-slim-ngd-dev-v1-0-5843e3ed62a3@oss.q=
+ualcomm.com/
+>
+> should be able to help with some of that
 
-There is, qcom_scm_is_available()
+Thank-you. This morning I'd just resolved the platform_driver_register=20
+issue myself so now seeing
+
+qcom,slim-ngd-ctrl 171c0000.slim-ngd: SLIM SAT: Rcvd master capability
+qcom,slim-ngd-ctrl 171c0000.slim-ngd: SLIM controller Registered
+
+However the order of registration of the two drivers is important; ctrl=20
+should be last, so I'm surprised that Patch 1 works.
+
+My local fix is:
+
+ =C2=A0 =C2=A0 slimbus: ngd: fix lock hang on probe
+
+ =C2=A0 =C2=A0 Module contains two platform_drivers. The initial probe call=
+s
+ =C2=A0 =C2=A0 platform_register_driver() with the second struct platform_d=
+river.
+
+ =C2=A0 =C2=A0 This caused a hung task due to mutex lock in __driver_attach=
+():
+
+ =C2=A0 =C2=A0 INFO: task swapper/0:1 blocked for more than 1232 seconds.
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Not tainted 7.0.0.-=
+rc2-sdm845 #89
+ =C2=A0 =C2=A0 task:swapper/0=C2=A0 =C2=A0 state:D pid:1 tgid:1 ppid:0 task=
+_flags:0x0140=20
+flags:0x00000010
+ =C2=A0 =C2=A0 Call trace:
+ =C2=A0 =C2=A0 __switch_to_0x104/0x1c8 (T)
+ =C2=A0 =C2=A0 __schedule+0x438/0x1168
+ =C2=A0 =C2=A0 schedule+0x3c/0x120
+ =C2=A0 =C2=A0 schedule_preempt_disabled+0x2c/0x50
+ =C2=A0 =C2=A0 __mutex_lock.constprop.0+0x3d0/0x938
+ =C2=A0 =C2=A0 __mutex_lock_slowpath+0x1c/0x30
+ =C2=A0 =C2=A0 __driver_attach+0x38/0x280
+ =C2=A0 =C2=A0 bus_for_each_dev+0x80/0xc8
+ =C2=A0 =C2=A0 driver_attach+0x2c/0x40
+ =C2=A0 =C2=A0 bus_add_driver+0x128/0x258
+ =C2=A0 =C2=A0 driver_register+0x68/0x138
+ =C2=A0 =C2=A0 __platform_driver_register+0x2c/0x40
+ =C2=A0 =C2=A0 qcom_slim_ngd_ctrl_probe+0x1f4/0x400
+ =C2=A0 =C2=A0 platform_probe+0x64/0xa8
+ =C2=A0 =C2=A0 really_probe+0xc8/0x3f0
+ =C2=A0 =C2=A0 __driver_probe_device+0x88/0x190
+ =C2=A0 =C2=A0 driver_probe_device+0x44/0x120
+ =C2=A0 =C2=A0 __driver_attach+0x138/0x280
+ =C2=A0 =C2=A0 bus_for_each_dev+0x80/0xc8
+ =C2=A0 =C2=A0 driver_attach+0x2c/0x40
+ =C2=A0 =C2=A0 bus_add_driver+0x128/0x258
+ =C2=A0 =C2=A0 driver_register+0x68/0x138
+ =C2=A0 =C2=A0 __platform_driver_register+0x2c/0x40
+ =C2=A0 =C2=A0 qcom_slim_ngd_ctrl_driver_init+0x24/0x38
+ =C2=A0 =C2=A0 do_one_initcall+0x60/0x450
+ =C2=A0 =C2=A0 kernel_init_freeable+0x23c/0x630
+ =C2=A0 =C2=A0 kernel_init+0x2c/0x1f8
+ =C2=A0 =C2=A0 ret_from_fork+0x10/0x20
+ =C2=A0 =C2=A0 INFO: task swapper/0:1 is blocked on a mutex likely owned by=
+ task
+ =C2=A0 =C2=A0 swapper/0:1.
+
+ =C2=A0 =C2=A0 Showing all locks held in the system:
+ =C2=A0 =C2=A0 2 locks held by swapper/0/1:
+ =C2=A0 =C2=A0 =C2=A0#0: ffff000080ff80f8 (&dev->mutex){....}-{4:4}, at:
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0__driver_attach+0x19c/0x2c0
+ =C2=A0 =C2=A0 =C2=A0#1: ffff000080ff80f8 (&dev->mutex){....}-{4:4}, at:
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0__driver_attach+0x38/0x2c0
+ =C2=A0 =C2=A0 1 lock held by khungtaskd/73:
+ =C2=A0 =C2=A0 =C2=A0#0: ffffbc5dfc38f1d8 (rcu_read_lock){....}-{1:3}, at:
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0debug_show_all_locks+0x18/0x1f0
+
+ =C2=A0 =C2=A0 After this fix:
+
+ =C2=A0 =C2=A0 qcom,slim-ngd-ctrl 171c0000.slim-ngd: SLIM SAT: Rcvd master =
+capability
+ =C2=A0 =C2=A0 qcom,slim-ngd-ctrl 171c0000.slim-ngd: SLIM controller Regist=
+ered
+
+diff --git a/drivers/slimbus/qcom-ngd-ctrl.c=20
+b/drivers/slimbus/qcom-ngd-ctrl.c
+index 9aa7218b4e8d2..abdd4ad57f2d2 100644
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -1664,7 +1664,6 @@ static int qcom_slim_ngd_ctrl_probe(struct=20
+platform_device *pdev)
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 goto err_pdr_looku=
+p;
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 }
+
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0platform_driver_register(&qcom_slim_ngd_driver)=
+;
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 return of_qcom_slim_ngd_register(dev, ctrl);
+
+ =C2=A0err_pdr_alloc:
+@@ -1754,6 +1753,23 @@ static struct platform_driver=20
+qcom_slim_ngd_driver =3D {
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 },
+ =C2=A0};
+
+-module_platform_driver(qcom_slim_ngd_ctrl_driver);
++static struct platform_driver * const qcom_slim_ngd_drivers[] =3D {
++=C2=A0 =C2=A0 =C2=A0 =C2=A0/* Order here is important; ctrl last */
++=C2=A0 =C2=A0 =C2=A0 =C2=A0&qcom_slim_ngd_driver,
++=C2=A0 =C2=A0 =C2=A0 =C2=A0&qcom_slim_ngd_ctrl_driver,
++};
++
++static int __init qcom_slim_ngd_init(void)
++{
++=C2=A0 =C2=A0 =C2=A0 =C2=A0return platform_register_drivers(qcom_slim_ngd_=
+drivers,=20
+ARRAY_SIZE(qcom_slim_ngd_drivers));
++}
++module_init(qcom_slim_ngd_init);
++
++static void __exit qcom_slim_ngd_exit(void)
++{
++=C2=A0 =C2=A0 =C2=A0 =C2=A0return platform_unregister_drivers(qcom_slim_ng=
+d_drivers,=20
+ARRAY_SIZE(qcom_slim_ngd_drivers));
++}
++module_exit(qcom_slim_ngd_exit);
++
+ =C2=A0MODULE_LICENSE("GPL v2");
+ =C2=A0MODULE_DESCRIPTION("Qualcomm SLIMBus NGD controller");
 
 
-> Let me know any preferences from below options or any other.
-> 
-> a) Add the API like qcom_scm_ready(), this has been tested and works fine.
-> b) Move interconnects from SCM to remoteproc PAS driver for all devices
->    Take the vote before invoking SCM API and release after return.
-
-I think this is not the right decision. The crypto path is only necessary,
-because cryptographic checks must be carried out in the TZ in order to
-(dis)allow a certain firmware binary. This is not a characteristic of the
-remoteprocs themselves, as with a non-prudent TZ, the firmware loading
-would amount to a memcpy() (and some SMMU/XPU configs via reg writes)
-
-> c) Remove the interconnects from SCM and rely on crypto driver already
->    placing the vote, Route the remote proc to SCM call via crypto API,
->    This would ensure crpyto is being used and it would have placed the required vote.
-
-I think this would make things even worse, because instead of waiting on
-the interconnect driver, we'd now have to wait on the interconnect driver,
-the clock driver and the crypto driver
-
-> d) Add separate SCM child device (with interconnects) under SoC.
-
-We'd then have to probe it as an aux device or something, which would
-either delay the probing of SCM, or introduce the need to ping-pong for
-PAS availability between the API provider and consumer, since some calls
-work perfectly fine without the ICC path, while others could really use
-it
-
-Konrad
 
