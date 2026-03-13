@@ -1,105 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-97324-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97325-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GHVHF92zs2lYZwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97324-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 07:51:09 +0100
+	id UARcMQC0s2lYZwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97325-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 07:51:44 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 055EC27E580
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 07:51:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A69A27E5BB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 07:51:44 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id CF992303B7DB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 06:49:44 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 4C754306FCEB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 06:49:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E6DC034DB57;
-	Fri, 13 Mar 2026 06:49:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08D2D25B2F4;
+	Fri, 13 Mar 2026 06:49:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ORo/TkM4";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="kZZowGQ9"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="oj8NB/Fb";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="kGpOOiK2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E374306B37
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 06:49:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3252034D3BF
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 06:49:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773384582; cv=none; b=GlXox3UUrU23wrMoSE+AVPt1ircW4rS5HgRS2shAyYe031B7eX1sM9o0H+8UtdGqE2+4y10V6eZBSvKPzl1/TJIz8hTlfvTwHzzUssva0aHirLUvMq7+8CXR4FRZScOuOsGzhfd8sZ8bmQvohmsyhKhW+SPvrnJ9hUrxZLBfLqQ=
+	t=1773384588; cv=none; b=oZmOmvcM4qw1DGRt9M3aVNoNPpZiECgPOkMiPOcfq13r/q455xGtNP6a6Bb64rJ+Q4vl+ulTSCcHW0pOkjnWVvy0Bb3NOw0kbGHy7eRwDQI+a9boNTE5DPhEfDsoHdxSPum9uXM3jWuVLCjRf13Q1zQJyMVN3+KrDZv5Xw4bO78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773384582; c=relaxed/simple;
-	bh=faXKEtQyA2DTIzeO2K5IHN8H57kiNXjaxWsjCCelmCg=;
+	s=arc-20240116; t=1773384588; c=relaxed/simple;
+	bh=k6vgIbvxkBkgZrvr1Ay0S0k9wxYlh+Jlh1SzYi04ePs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Y9G56w0+x+KyNKyR5L7A1Ih3rb/RDb54WBTRGpHeZNgcwyfce7bEnw2ndU6emT48gj1tLhbzqqFO7XlQL1gqRQb89Uf4Pv/xK2Sq1TFOcwTY1Mh8xDDIfdWT40PxuSdeP/f6i2X8uZhNaEiwbocuA3FgeCpKHAQ9Bos8Cnk+RqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ORo/TkM4; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=kZZowGQ9; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:To:Cc; b=n88ZCIgUFMe0ww0mhoIuUm+Aso7T+olHKBKQyFaPBnobpsBlO0ZiF296CZohYdLM7+cjdA6gUZ1ZAeSF9jH4qn/qD2Iu+Ge/1fJLWq/9LnGXoa6UaYuiWORAKKmsUVS2B/V8HV7/l3J5KTIAJDLnu7e6VqZQEGb3YqHtzQ8Hr1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=oj8NB/Fb; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=kGpOOiK2; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62D5tbW3070440
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 06:49:40 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62D5teUf4140749
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 06:49:45 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	s5un1i+j/A+PfM8ZiDy+fOOTdwY75I+GuvNvd3FITUY=; b=ORo/TkM4tzI9nn5v
-	9W2AXPdJ4lpj5mr17kqVoUZirEWO2jJhKdpLjT1M3hd/ZXnYm6+dtznbc+3t5NTm
-	RX3bKGT2XDGMeGZw/iobyKB5NQh5Dh+L5QOnQJgH/DBXyiqFNFWCOKJX3Y8rpJwA
-	NiXcz/rK2xkrW4bwZh7m/AKm8DvBmAzT3okjvkP1rzf94C8cAV6+4J8qBZLMPrPq
-	aMUiZHEsgRspYy3RqkU6TkQ7wRTok7mtdoHw7YhtHp4+rz2Ne5f4ehMbDQRIEO2V
-	EIBHWs4n1pV0FmXMl9RDWvwlJM+oFquXJMTlvp6XQBYPFqX/ZhWila6c2AFan/Ok
-	wOAFCg==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cuh4ymv3d-1
+	WI/YHY7kRAO8WhJyXthZ+dRzS9S21OyP3MUfXR4/TeQ=; b=oj8NB/FbvBsFQAJK
+	WrTZiBScbi/PtOJXIJN6NL7pOjQ3NrMQ3128lPFNyzMLRZeL4dxAzeYUU2Z4y1rc
+	en+qIkshpM3Y8BieldEnmmiJGlag2vuQMOslxt94rdXcA25xpEtppHVVQEtPr4AV
+	iYMXaVq8ALBW19Fu9UDHunuHLiXL6qkK4S4kp1F8x5Rv4Uy7zq7OfeAJdSWDSr08
+	xa9ZKjzucB6qU/HxxghQ66esArUIl/WqWUrmm75eXxjJlM79ax8r8DPl+1ZY0FmA
+	4x/22qYQlrK9JaGJO/4yjVicKldToXR9HqD+EKwnt0qlHiAepNkVMISwFvpYwURo
+	dC8CSw==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cvbn28cj6-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 06:49:40 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-c738bebd53fso7215369a12.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Mar 2026 23:49:40 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 06:49:45 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2ae4b96c259so30288925ad.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Mar 2026 23:49:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1773384579; x=1773989379; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1773384585; x=1773989385; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=s5un1i+j/A+PfM8ZiDy+fOOTdwY75I+GuvNvd3FITUY=;
-        b=kZZowGQ9HUALrg77NFrYjllw+HCKJR/bK1yr8AhNEQ0fFSFvszb3oDGSfiEZGrtBeW
-         8hjdFo8kFsX4GDjrc+nZ/JcjGDSVdx6O6R3PQAwR5ozVYz+xSgkgWGHcJE8OiXzg03MN
-         Oioyd5gUmdXoI99lWGRGz4BNPGEei+zJCt6KO50bO3gtVccvOt1pCTcaRVJ8Iwx9AMdB
-         PRnSPOpdMYE2U3HExgUn6BIYDx/2iSLLQ/XwhgbaxZt5CipGxYTr4UhbDfq0BWpdR3KF
-         DPgAQrh/7mAFdafKie/wWXazSY1IeimMW12Em9j49JNHMzgES0OmzMfdbkF1lCpayWU3
-         5beQ==
+        bh=WI/YHY7kRAO8WhJyXthZ+dRzS9S21OyP3MUfXR4/TeQ=;
+        b=kGpOOiK2C8kUpqZyC2g6x+rtR/1z8DqexlqVlNoxt404vko2J/Ebq3xEWPlvJrHpPK
+         6OeWJ98OWL3Xfai2/5qp4DftxoKmy65AYWeu1HPCfuYAJWEG0OzLr4dEyV1DmZYY2ww6
+         mBrfC5S6pmL6G/RokisNlr/nMGzA5iTO9iY+IxGoTxv7GxBUoML8CQ6OXELa04RYGcTx
+         wCd8w2VD1dU8/fqwwJNEq6jGcnbxDxAoHDbbG2vbE890xiTdTFEad2TBV7iG9a3+7V8X
+         TL+F0uCLwSuysLtNOe7v3K+mX9XNtIqGd9sdEyY8Yg+38tFborAVG1OBaRKyU35ZW3Zl
+         Lp+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773384579; x=1773989379;
+        d=1e100.net; s=20251104; t=1773384585; x=1773989385;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=s5un1i+j/A+PfM8ZiDy+fOOTdwY75I+GuvNvd3FITUY=;
-        b=AqlN4wgAItFPO707nqzkqK2VBNsDqOPAdjwFd2ta9SAaqE2AJBbUkWI2uOxVfDpxsH
-         oqoRKbcgw9BHGfTiGIjO2VJxlYR0EfwqsZFMErWOa8mh1Q78TCcAmdCREAwghow+TtVX
-         WXAr8kkgOBanV/zhhZVoiRONZQIzXdlNIDlXA0j9TZTFIqNwV+svSli24bQxrxWHdcSG
-         M0A8oyyvpySUEdpx48RKRnHYwe8c7V+u+aNLvq//Kxcjp/k3SvlFYdj3qWM4H5pqhQB2
-         ctjsWdrnebhFd8FDOjibcpSm07grjc8u4eAdo7Vuw1QR33uM8imOCehWX5jPiLbuAmFZ
-         4bUg==
-X-Forwarded-Encrypted: i=1; AJvYcCVeBlLrsV0CT5n8/lUt3DFMyupUHiPOvGxOXvw/KX+PrOAyXJ+sK1kRCTDHslm+AYjuqZP2DOqLU8nz1xjw@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw9pt78UpAHdbxAvsteYpEuvdtRTaWkWoM+vWSSwUt+foGbDUYr
-	KFgkf63sunqSOZkDMygJYP7PEevzR3YgEs7ddoCBBeLBlMQR5QltqdIaP6BnxMIXPhFywRCUnaM
-	AuXuT4HDo4VNCZX6YHendhcnanncCiK2N3JSYSWLJxTxaWMJ1GUFlpV9W5DAB8FdUqCwZ
-X-Gm-Gg: ATEYQzxzpDOr3hHmEhDH51VnXIffa4CzOX88q2rXLMJ94MgPn7Hr+sfWaxs9dgTNLG9
-	7lLne+SZgGU87uOEB6YOY1lmRmLY2PusgcdjCffEs1FrJVtY5RaGaI5Gwrrp3Q/MaBpCwn1Qytb
-	2apmpypGHilrfSlch4Eleu0PNv+gxs7t5DJTmwUereroVEDw0ryxKuJbyzsF5iepQkNAdJvslGT
-	I7qsTGU25nruQMPnROSNkmUQe6x3IRI4AQlvd3cEqvcsaiuCM3igXsC8kya39qGvu/qJwPW19QC
-	7eNaxp28lWqnc4HVxxohJdUVuzCoVJ9+4/thQSQNPW1ee3OXn06WRmYQ+Yhkbm39s6yiVlOyqU5
-	zEQEp/Wvd1HfihbGZkExFwx55OIQW2CNClxmMqtSB4j6J5RE=
-X-Received: by 2002:a05:6a21:a02:b0:398:690c:d027 with SMTP id adf61e73a8af0-398eca8d63amr1820469637.20.1773384579128;
-        Thu, 12 Mar 2026 23:49:39 -0700 (PDT)
-X-Received: by 2002:a05:6a21:a02:b0:398:690c:d027 with SMTP id adf61e73a8af0-398eca8d63amr1820427637.20.1773384578453;
-        Thu, 12 Mar 2026 23:49:38 -0700 (PDT)
+        bh=WI/YHY7kRAO8WhJyXthZ+dRzS9S21OyP3MUfXR4/TeQ=;
+        b=azUqclT3kNZUPMbTpV2pXFYOlfTazOB+i2Uy0Q8XHq8g4au4Is6d3agwo1fN5WXt4D
+         Wbqc883wU8mMuGpjvTeqDySZNbbSzENj6skQ64nmASgJn3m9/jPM+RWb+j9DfI7Tl+CV
+         ZBVi5AS8qYdOFEaWBnCzM53qGv68fqxS7wn/vETQ1sE5ZqSGB6nsVwxxpX+xMdEczW2z
+         Q6m4nSWUcRofdhSCduEL2yK97q4XQVe3dFmGTKJK12QN5i4G9Z35rBgbmZ3Ek2d/QFdS
+         TwZnYSzOfZyn8mThYTtAdN4CtB8VVqLbTQllKg+ZF7ohmQ/qIHaXcktjhnuhVct/gp6R
+         V6hQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXGw8YW+npfRB0Y6/7fMG7KgraPCu04Sxo1nyiorqpDMrhX4Kt4EIW6er78f1Nuph6qGizGOdo2P5ZBpMOj@vger.kernel.org
+X-Gm-Message-State: AOJu0YwUV3VcZ5cCh5a+tXziv42iBpqC3hxGlHhzC/zPAyPLT7IyISoH
+	4wl7bY1PHOKEmocAFvFFqXwgdZu91lVj4sashAdb1BTe7UJt+N6R+3L72EY51l/OCP5pXY0694S
+	h/l7fI/EJ/o9kPGYhXnuAEy8oLKYc1cGqzZIAxMk0eBfXEbj228QST1VmoizPYxBarB2g
+X-Gm-Gg: ATEYQzztU1iHVKrGaZ0fN1XPf5h7/L9K8hOkF0nsOnEDS24rj2B35zBCS2fur0MqGzz
+	M4I3KCHqjNNmFMRrG8wKS/cj5+O+HKXw/tTcUcXJxNcQ/0+I/d88XXWWVyAics43M/cVnybotl9
+	/9/kL2DWV45ZIU0LWzduNZolEZPMhgY9wmwjoD8ub/yMU0cqADo2w+dr3kHVPLT60HzUkaBJ0Sn
+	D28G+NkD9gMTHYj8CZ5mLm/7PLLyOQyJYrIcY6crCJBDwiZaElhBAOvaan1yWiE3OnHxI673Ibu
+	WqJJ0nzlcGYwJCvVCVjp7sGJs5uxyD55+2Bv1yVwwODIEkuq4AlC2bu7lYapwNfhGQquLdo9Lhb
+	BJazpwILdgLVcwwK80cKqfwbMH5atbYbp0kAQg9oLywvH+E4=
+X-Received: by 2002:a05:6a20:2d09:b0:398:87a9:fe2 with SMTP id adf61e73a8af0-398eb1d70c5mr1849867637.25.1773384584660;
+        Thu, 12 Mar 2026 23:49:44 -0700 (PDT)
+X-Received: by 2002:a05:6a20:2d09:b0:398:87a9:fe2 with SMTP id adf61e73a8af0-398eb1d70c5mr1849833637.25.1773384584078;
+        Thu, 12 Mar 2026 23:49:44 -0700 (PDT)
 Received: from hu-sumk-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c73eb97b41dsm936160a12.5.2026.03.12.23.49.33
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c73eb97b41dsm936160a12.5.2026.03.12.23.49.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Mar 2026 23:49:38 -0700 (PDT)
+        Thu, 12 Mar 2026 23:49:43 -0700 (PDT)
 From: Sumit Kumar <sumit.kumar@oss.qualcomm.com>
-Date: Fri, 13 Mar 2026 12:19:25 +0530
-Subject: [PATCH 1/3] dmaengine: Add multi-buffer support in single DMA
- transfer
+Date: Fri, 13 Mar 2026 12:19:26 +0530
+Subject: [PATCH 2/3] PCI: epf-mhi: Add batched DMA read support
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -108,7 +107,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260313-dma_multi_sg-v1-1-8fabb0d1a759@oss.qualcomm.com>
+Message-Id: <20260313-dma_multi_sg-v1-2-8fabb0d1a759@oss.qualcomm.com>
 References: <20260313-dma_multi_sg-v1-0-8fabb0d1a759@oss.qualcomm.com>
 In-Reply-To: <20260313-dma_multi_sg-v1-0-8fabb0d1a759@oss.qualcomm.com>
 To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
@@ -126,35 +125,35 @@ Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org,
         Sumit Kumar <sumit.kumar@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1773384567; l=9280;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1773384567; l=7035;
  i=sumit.kumar@oss.qualcomm.com; s=20250409; h=from:subject:message-id;
- bh=faXKEtQyA2DTIzeO2K5IHN8H57kiNXjaxWsjCCelmCg=;
- b=0FmZZc/JAoE1+Mfa2hsGxVfxnhTB+AVaGJQyW+ZM+3JrDVVfrBNthZHWxcgnHjHuvN0gj/K95
- fSvQY9POy+7D0vKMz+GlCBIbKjdamtZXNFy8fvYEfHIftDQYdK/lYja
+ bh=k6vgIbvxkBkgZrvr1Ay0S0k9wxYlh+Jlh1SzYi04ePs=;
+ b=9rakX7K74VAxnZ8NzPQjT3GERB9y7D6V/TUxZjoPmC7LqQa4Xyy75MoogT6Fx1BxFU9D4VO8S
+ vnbN0h/NtmVA57SHjyMKEhLXOF3H8g9j/z6/D068L/SCJuJVhIFwUn9
 X-Developer-Key: i=sumit.kumar@oss.qualcomm.com; a=ed25519;
  pk=3cys6srXqLACgA68n7n7KjDeM9JiMK1w6VxzMxr0dnM=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEzMDA1MyBTYWx0ZWRfX+53t09MabpVB
- tjFNHVMTTWD6UgZGmYZbWY7Y/TucJA7Cf9MJ//5lX0UWPo6TaJmK1HK50PVGCN4jIPw9WGOCvny
- q6DKML39FkOtaVmV/hwQF2kLvrz4s2joVT9J9SxCGXNZN6XOLbMTFiW9SYd7IRzUlNAn/qy3f44
- Rq7af+mTIgWCIYDTu/b6RGg1WXD4FGQ5Ns1qYWtqHAdVZG9Hpu99tqLB2JdBJ0z/sgUCnL2R1oZ
- 2cGBwVTjypIGjOVsnK/NUdg/n9Kw492sd2oI7I+ARcNqsU6xzvEag+H5ov1eqiqGiaUStr45Qn0
- bucc4Qz2dcdjMJjzQAh3EpYHFvRPC9H5+mJgwuwQTA8NvlNbF+Ihf8Ymwox3JdSbW1S5qkTGp7g
- EYM20fyw/d8pWEMM+pSMilaWvyflbbRbjkYzHCjfb3OwgRC8x19C6QjfikmsnJ2/BGC6FIneJ73
- dmbGlJh0ZJqLTM8vqFQ==
-X-Proofpoint-ORIG-GUID: 2deHgd-IIWLmWqcMo6A8fXugSYT01-h7
-X-Authority-Analysis: v=2.4 cv=C+7kCAP+ c=1 sm=1 tr=0 ts=69b3b384 cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+X-Proofpoint-ORIG-GUID: zvjHGQoIu7LWXNNx7SjLEYLHa-sHpDpI
+X-Proofpoint-GUID: zvjHGQoIu7LWXNNx7SjLEYLHa-sHpDpI
+X-Authority-Analysis: v=2.4 cv=ZKfaWH7b c=1 sm=1 tr=0 ts=69b3b389 cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
  a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=EUspDBNiAAAA:8 a=WV2dQidlXXH6c0LHWD8A:9 a=QEXdDO2ut3YA:10
- a=bFCP_H2QrGi7Okbo017w:22
-X-Proofpoint-GUID: 2deHgd-IIWLmWqcMo6A8fXugSYT01-h7
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=EUspDBNiAAAA:8 a=bHNg01yGDDtxrYhjzSoA:9 a=QEXdDO2ut3YA:10
+ a=324X-CrmTo6CU4MGRt3R:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEzMDA1MyBTYWx0ZWRfX4V96pVDGMNER
+ uIGa5dbWxS/Fm8mYNdEWggg2fgnyaSfZZIJ8E64BwjyXpl4ahLlx7XfuWfAyP2kQH8HLVkapvKD
+ s2RECHLSwO4Gir9Re0o5LTkmJJl7k+mTpMSyxnoDiAqHAiLzMBLaqtNE7Gb8yZcUDYH7jceauOs
+ oYuIxy5GcNSQOhW2RxWY2FUsaztZgVIKU5+RS3rsOagVsHOZ+AV1KAdtOuj4Vaj0AcwTwxgpAZL
+ WaCrgDxomrnZpWcfa7s38FDolDMTeZVmrAIH3BGnXA/rzrPg9TuZkR3WbP0NWCqIUkWVKXfs4G9
+ ycRvkWbpF20SBUP4C2neZT9r6q4mhF5NeQm07RZRI3AbqxHRIrJdVU0T0G5ZCcw1CzHCOtpOLd1
+ vJ/soKDhu6dycaR0/Sfl4WXJ1FMCBLeKU3mDuB8lXLdJWMQEjnAKt0Ji9wmZHVBtiFNkCdPHjYw
+ J4nWpn9PB/6vNx+qovw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-13_01,2026-03-12_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 priorityscore=1501 phishscore=0 adultscore=0 suspectscore=0
- bulkscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0 spamscore=0
+ impostorscore=0 clxscore=1015 spamscore=0 malwarescore=0 suspectscore=0
+ lowpriorityscore=0 bulkscore=0 adultscore=0 priorityscore=1501 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603130053
 X-Spamd-Result: default: False [-2.16 / 15.00];
@@ -167,7 +166,7 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
 	RCPT_COUNT_TWELVE(0.00)[18];
-	TAGGED_FROM(0.00)[bounces-97324-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-97325-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
@@ -183,244 +182,206 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 055EC27E580
+X-Rspamd-Queue-Id: 6A69A27E5BB
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Add dmaengine_prep_batch_sg API for batching multiple independent buffers
-in a single DMA transaction. Each scatter-gather entry specifies both
-source and destination addresses. This allows multiple non-contiguous
-memory regions to be transferred in a single DMA transaction instead of
-separate operations, significantly reducing submission overhead and
-interrupt overhead.
+Add support for batched DMA transfers in the PCI EPF MHI driver to
+improve performance when reading multiple buffers from the host.
 
-Extends struct scatterlist with optional dma_dst_address field
-and implements support in dw-edma driver.
+Implement two variants of the read_batch() callback:
+- pci_epf_mhi_edma_read_batch(): DMA-optimized implementation using
+  dmaengine_prep_batch_sg_dma() to transfer multiple buffers in a single
+  DMA transaction.
+- pci_epf_mhi_iatu_read_batch(): CPU-copy fallback that sequentially
+  processes buffers using IATU.
+
+This enables the MHI endpoint stack to efficiently cache ring data,
+particularly for wraparound scenarios where ring data spans two
+non-contiguous memory regions.
 
 Signed-off-by: Sumit Kumar <sumit.kumar@oss.qualcomm.com>
 ---
- drivers/dma/dw-edma/Kconfig        |  1 +
- drivers/dma/dw-edma/dw-edma-core.c | 40 ++++++++++++++++++++++++++++++++++----
- drivers/dma/dw-edma/dw-edma-core.h |  3 ++-
- include/linux/dmaengine.h          | 29 ++++++++++++++++++++++++++-
- include/linux/scatterlist.h        |  7 +++++++
- kernel/dma/Kconfig                 |  3 +++
- 6 files changed, 77 insertions(+), 6 deletions(-)
+ drivers/pci/endpoint/functions/Kconfig       |   1 +
+ drivers/pci/endpoint/functions/pci-epf-mhi.c | 120 +++++++++++++++++++++++++++
+ include/linux/mhi_ep.h                       |   3 +
+ 3 files changed, 124 insertions(+)
 
-diff --git a/drivers/dma/dw-edma/Kconfig b/drivers/dma/dw-edma/Kconfig
-index 2b6f2679508d93b94b7efecd4e36d5902f7b4c99..0472a6554ff38d4cf172a90b6bf0bdaa9e7f4b95 100644
---- a/drivers/dma/dw-edma/Kconfig
-+++ b/drivers/dma/dw-edma/Kconfig
-@@ -5,6 +5,7 @@ config DW_EDMA
- 	depends on PCI && PCI_MSI
- 	select DMA_ENGINE
- 	select DMA_VIRTUAL_CHANNELS
+diff --git a/drivers/pci/endpoint/functions/Kconfig b/drivers/pci/endpoint/functions/Kconfig
+index 0c9cea0698d7bd3d8bd11aa1db0195978d9406b9..43131b6db8a2ca57b7a4f0eba8affba3a77f9ad7 100644
+--- a/drivers/pci/endpoint/functions/Kconfig
++++ b/drivers/pci/endpoint/functions/Kconfig
+@@ -41,6 +41,7 @@ config PCI_EPF_VNTB
+ config PCI_EPF_MHI
+ 	tristate "PCI Endpoint driver for MHI bus"
+ 	depends on PCI_ENDPOINT && MHI_BUS_EP
 +	select NEED_SG_DMA_DST_ADDR
  	help
- 	  Support the Synopsys DesignWare eDMA controller, normally
- 	  implemented on endpoints SoCs.
-diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-index 8e5f7defa6b678eefe0f312ebc59f654677c744f..04314cfd82edbed6ed3665eb4c8e6b428339c207 100644
---- a/drivers/dma/dw-edma/dw-edma-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -411,6 +411,9 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
- 			return NULL;
- 		if (!xfer->xfer.il->src_inc || !xfer->xfer.il->dst_inc)
- 			return NULL;
-+	} else if (xfer->type == EDMA_XFER_DUAL_ADDR_SG) {
-+		if (xfer->xfer.sg.len < 1)
-+			return NULL;
- 	} else {
- 		return NULL;
- 	}
-@@ -438,7 +441,7 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
- 
- 	if (xfer->type == EDMA_XFER_CYCLIC) {
- 		cnt = xfer->xfer.cyclic.cnt;
--	} else if (xfer->type == EDMA_XFER_SCATTER_GATHER) {
-+	} else if (xfer->type == EDMA_XFER_SCATTER_GATHER || xfer->type == EDMA_XFER_DUAL_ADDR_SG) {
- 		cnt = xfer->xfer.sg.len;
- 		sg = xfer->xfer.sg.sgl;
- 	} else if (xfer->type == EDMA_XFER_INTERLEAVED) {
-@@ -447,7 +450,8 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
- 	}
- 
- 	for (i = 0; i < cnt; i++) {
--		if (xfer->type == EDMA_XFER_SCATTER_GATHER && !sg)
-+		if ((xfer->type == EDMA_XFER_SCATTER_GATHER ||
-+		     xfer->type == EDMA_XFER_DUAL_ADDR_SG) && !sg)
- 			break;
- 
- 		if (chunk->bursts_alloc == chan->ll_max) {
-@@ -462,7 +466,8 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
- 
- 		if (xfer->type == EDMA_XFER_CYCLIC)
- 			burst->sz = xfer->xfer.cyclic.len;
--		else if (xfer->type == EDMA_XFER_SCATTER_GATHER)
-+		else if (xfer->type == EDMA_XFER_SCATTER_GATHER ||
-+			 xfer->type == EDMA_XFER_DUAL_ADDR_SG)
- 			burst->sz = sg_dma_len(sg);
- 		else if (xfer->type == EDMA_XFER_INTERLEAVED)
- 			burst->sz = xfer->xfer.il->sgl[i % fsz].size;
-@@ -486,6 +491,9 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
- 				 */
- 			} else if (xfer->type == EDMA_XFER_INTERLEAVED) {
- 				burst->dar = dst_addr;
-+			} else if (xfer->type == EDMA_XFER_DUAL_ADDR_SG) {
-+				burst->sar = dw_edma_get_pci_address(chan, sg_dma_address(sg));
-+				burst->dar = sg_dma_dst_address(sg);
- 			}
- 		} else {
- 			burst->dar = dst_addr;
-@@ -503,10 +511,14 @@ dw_edma_device_transfer(struct dw_edma_transfer *xfer)
- 				 */
- 			}  else if (xfer->type == EDMA_XFER_INTERLEAVED) {
- 				burst->sar = src_addr;
-+			} else if (xfer->type == EDMA_XFER_DUAL_ADDR_SG) {
-+				burst->sar = sg_dma_address(sg);
-+				burst->dar = dw_edma_get_pci_address(chan, sg_dma_dst_address(sg));
- 			}
- 		}
- 
--		if (xfer->type == EDMA_XFER_SCATTER_GATHER) {
-+		if (xfer->type == EDMA_XFER_SCATTER_GATHER ||
-+		    xfer->type == EDMA_XFER_DUAL_ADDR_SG) {
- 			sg = sg_next(sg);
- 		} else if (xfer->type == EDMA_XFER_INTERLEAVED) {
- 			struct dma_interleaved_template *il = xfer->xfer.il;
-@@ -603,6 +615,25 @@ static void dw_hdma_set_callback_result(struct virt_dma_desc *vd,
- 	res->residue = residue;
+ 	   Enable this configuration option to enable the PCI Endpoint
+ 	   driver for Modem Host Interface (MHI) bus in Qualcomm Endpoint
+diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
+index 6643a88c7a0ce38161bc6253c09d29f1c36ba394..198201d734cc2c6d09be229464a8efdafc3cd611 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
++++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
+@@ -448,6 +448,124 @@ static int pci_epf_mhi_edma_write(struct mhi_ep_cntrl *mhi_cntrl,
+ 	return ret;
  }
  
-+static struct dma_async_tx_descriptor *
-+dw_edma_device_prep_batch_sg_dma(struct dma_chan *dchan,
-+				 struct scatterlist *sg,
-+				 unsigned int nents,
-+				 enum dma_transfer_direction direction,
-+				 unsigned long flags)
++static int pci_epf_mhi_iatu_read_batch(struct mhi_ep_cntrl *mhi_cntrl,
++				       struct mhi_ep_buf_info *buf_info_array,
++				       u32 num_buffers)
 +{
-+	struct dw_edma_transfer xfer;
++	int ret;
++	u32 i;
 +
-+	xfer.dchan = dchan;
-+	xfer.direction = direction;
-+	xfer.xfer.sg.sgl = sg;
-+	xfer.xfer.sg.len = nents;
-+	xfer.flags = flags;
-+	xfer.type = EDMA_XFER_DUAL_ADDR_SG;
++	for (i = 0; i < num_buffers; i++) {
++		ret = pci_epf_mhi_iatu_read(mhi_cntrl, &buf_info_array[i]);
++		if (ret < 0)
++			return ret;
++	}
 +
-+	return dw_edma_device_transfer(&xfer);
++	return 0;
 +}
 +
- static void dw_edma_done_interrupt(struct dw_edma_chan *chan)
++static int pci_epf_mhi_edma_read_batch(struct mhi_ep_cntrl *mhi_cntrl,
++				       struct mhi_ep_buf_info *buf_info_array,
++				       u32 num_buffers)
++{
++	struct pci_epf_mhi *epf_mhi = to_epf_mhi(mhi_cntrl);
++	struct device *dma_dev = epf_mhi->epf->epc->dev.parent;
++	struct dma_chan *chan = epf_mhi->dma_chan_rx;
++	struct device *dev = &epf_mhi->epf->dev;
++	struct dma_async_tx_descriptor *desc;
++	struct dma_slave_config config = {};
++	DECLARE_COMPLETION_ONSTACK(complete);
++	struct scatterlist *sg;
++	dma_addr_t *dst_addrs;
++	dma_cookie_t cookie;
++	int ret;
++	u32 i;
++
++	if (num_buffers == 0)
++		return -EINVAL;
++
++	mutex_lock(&epf_mhi->lock);
++
++	sg = kcalloc(num_buffers, sizeof(*sg), GFP_KERNEL);
++	if (!sg) {
++		ret = -ENOMEM;
++		goto err_unlock;
++	}
++
++	dst_addrs = kcalloc(num_buffers, sizeof(*dst_addrs), GFP_KERNEL);
++	if (!dst_addrs) {
++		ret = -ENOMEM;
++		goto err_free_sg;
++	}
++
++	sg_init_table(sg, num_buffers);
++
++	for (i = 0; i < num_buffers; i++) {
++		dst_addrs[i] = dma_map_single(dma_dev, buf_info_array[i].dev_addr,
++					      buf_info_array[i].size, DMA_FROM_DEVICE);
++		ret = dma_mapping_error(dma_dev, dst_addrs[i]);
++		if (ret) {
++			dev_err(dev, "Failed to map buffer %u\n", i);
++			goto err_unmap;
++		}
++
++		sg_dma_address(&sg[i]) = buf_info_array[i].host_addr;
++		sg_dma_dst_address(&sg[i]) = dst_addrs[i];
++		sg_dma_len(&sg[i]) = buf_info_array[i].size;
++	}
++
++	config.direction = DMA_DEV_TO_MEM;
++	ret = dmaengine_slave_config(chan, &config);
++	if (ret) {
++		dev_err(dev, "Failed to configure DMA channel\n");
++		goto err_unmap;
++	}
++
++	desc = dmaengine_prep_batch_sg_dma(chan, sg, num_buffers,
++					   DMA_DEV_TO_MEM,
++					   DMA_CTRL_ACK | DMA_PREP_INTERRUPT);
++	if (!desc) {
++		dev_err(dev, "Failed to prepare batch sg DMA\n");
++		ret = -EIO;
++		goto err_unmap;
++	}
++
++	desc->callback = pci_epf_mhi_dma_callback;
++	desc->callback_param = &complete;
++
++	cookie = dmaengine_submit(desc);
++	ret = dma_submit_error(cookie);
++	if (ret) {
++		dev_err(dev, "Failed to submit DMA\n");
++		goto err_unmap;
++	}
++
++	dma_async_issue_pending(chan);
++
++	ret = wait_for_completion_timeout(&complete, msecs_to_jiffies(1000));
++	if (!ret) {
++		dev_err(dev, "DMA transfer timeout\n");
++		dmaengine_terminate_sync(chan);
++		ret = -ETIMEDOUT;
++		goto err_unmap;
++	}
++
++	ret = 0;
++
++err_unmap:
++	for (i = 0; i < num_buffers; i++) {
++		if (dst_addrs[i])
++			dma_unmap_single(dma_dev, dst_addrs[i],
++					 buf_info_array[i].size, DMA_FROM_DEVICE);
++	}
++	kfree(dst_addrs);
++err_free_sg:
++	kfree(sg);
++err_unlock:
++	mutex_unlock(&epf_mhi->lock);
++	return ret;
++}
++
+ static void pci_epf_mhi_dma_worker(struct work_struct *work)
  {
- 	struct dw_edma_desc *desc;
-@@ -818,6 +849,7 @@ static int dw_edma_channel_setup(struct dw_edma *dw, u32 wr_alloc, u32 rd_alloc)
- 	dma->device_prep_slave_sg = dw_edma_device_prep_slave_sg;
- 	dma->device_prep_dma_cyclic = dw_edma_device_prep_dma_cyclic;
- 	dma->device_prep_interleaved_dma = dw_edma_device_prep_interleaved_dma;
-+	dma->device_prep_batch_sg_dma = dw_edma_device_prep_batch_sg_dma;
+ 	struct pci_epf_mhi *epf_mhi = container_of(work, struct pci_epf_mhi, dma_work);
+@@ -803,11 +921,13 @@ static int pci_epf_mhi_link_up(struct pci_epf *epf)
+ 	mhi_cntrl->unmap_free = pci_epf_mhi_unmap_free;
+ 	mhi_cntrl->read_sync = mhi_cntrl->read_async = pci_epf_mhi_iatu_read;
+ 	mhi_cntrl->write_sync = mhi_cntrl->write_async = pci_epf_mhi_iatu_write;
++	mhi_cntrl->read_batch = pci_epf_mhi_iatu_read_batch;
+ 	if (info->flags & MHI_EPF_USE_DMA) {
+ 		mhi_cntrl->read_sync = pci_epf_mhi_edma_read;
+ 		mhi_cntrl->write_sync = pci_epf_mhi_edma_write;
+ 		mhi_cntrl->read_async = pci_epf_mhi_edma_read_async;
+ 		mhi_cntrl->write_async = pci_epf_mhi_edma_write_async;
++		mhi_cntrl->read_batch = pci_epf_mhi_edma_read_batch;
+ 	}
  
- 	dma_set_max_seg_size(dma->dev, U32_MAX);
+ 	/* Register the MHI EP controller */
+diff --git a/include/linux/mhi_ep.h b/include/linux/mhi_ep.h
+index 7b40fc8cbe77ab8419d167e89264b69a817b9fb1..15554f966e4be1aea1f3129c5f26253f5087edba 100644
+--- a/include/linux/mhi_ep.h
++++ b/include/linux/mhi_ep.h
+@@ -107,6 +107,7 @@ struct mhi_ep_buf_info {
+  * @write_sync: CB function for writing to host memory synchronously
+  * @read_async: CB function for reading from host memory asynchronously
+  * @write_async: CB function for writing to host memory asynchronously
++ * @read_batch: CB function for reading from host memory in batches synchronously
+  * @mhi_state: MHI Endpoint state
+  * @max_chan: Maximum channels supported by the endpoint controller
+  * @mru: MRU (Maximum Receive Unit) value of the endpoint controller
+@@ -164,6 +165,8 @@ struct mhi_ep_cntrl {
+ 	int (*write_sync)(struct mhi_ep_cntrl *mhi_cntrl, struct mhi_ep_buf_info *buf_info);
+ 	int (*read_async)(struct mhi_ep_cntrl *mhi_cntrl, struct mhi_ep_buf_info *buf_info);
+ 	int (*write_async)(struct mhi_ep_cntrl *mhi_cntrl, struct mhi_ep_buf_info *buf_info);
++	int (*read_batch)(struct mhi_ep_cntrl *mhi_cntrl, struct mhi_ep_buf_info *buf_info_array,
++			  u32 num_buffers);
  
-diff --git a/drivers/dma/dw-edma/dw-edma-core.h b/drivers/dma/dw-edma/dw-edma-core.h
-index 71894b9e0b1539c636171738963e80a0a5ef43a4..1a266dc58315edb3d5fd9eddb19fc350f1ed9a1b 100644
---- a/drivers/dma/dw-edma/dw-edma-core.h
-+++ b/drivers/dma/dw-edma/dw-edma-core.h
-@@ -36,7 +36,8 @@ enum dw_edma_status {
- enum dw_edma_xfer_type {
- 	EDMA_XFER_SCATTER_GATHER = 0,
- 	EDMA_XFER_CYCLIC,
--	EDMA_XFER_INTERLEAVED
-+	EDMA_XFER_INTERLEAVED,
-+	EDMA_XFER_DUAL_ADDR_SG,
- };
- 
- struct dw_edma_chan;
-diff --git a/include/linux/dmaengine.h b/include/linux/dmaengine.h
-index 99efe2b9b4ea9844ca6161208362ef18ef111d96..fdba75b5c40f805904a6697fce3062303fea762a 100644
---- a/include/linux/dmaengine.h
-+++ b/include/linux/dmaengine.h
-@@ -939,7 +939,11 @@ struct dma_device {
- 		size_t period_len, enum dma_transfer_direction direction,
- 		unsigned long flags);
- 	struct dma_async_tx_descriptor *(*device_prep_interleaved_dma)(
--		struct dma_chan *chan, struct dma_interleaved_template *xt,
-+	    struct dma_chan *chan, struct dma_interleaved_template *xt,
-+		unsigned long flags);
-+	struct dma_async_tx_descriptor *(*device_prep_batch_sg_dma)
-+	    (struct dma_chan *chan, struct scatterlist *sg, unsigned int nents,
-+	    enum dma_transfer_direction direction,
- 		unsigned long flags);
- 
- 	void (*device_caps)(struct dma_chan *chan, struct dma_slave_caps *caps);
-@@ -1060,6 +1064,29 @@ static inline struct dma_async_tx_descriptor *dmaengine_prep_interleaved_dma(
- 	return chan->device->device_prep_interleaved_dma(chan, xt, flags);
- }
- 
-+/**
-+ * dmaengine_prep_batch_sg_dma() - Prepare single DMA transfer for multiple independent buffers.
-+ * @chan: DMA channel
-+ * @sg: Scatter-gather list with both source (dma_address) and destination (dma_dst_address)
-+ * @nents: Number of entries in the list
-+ * @direction: Transfer direction (DMA_MEM_TO_MEM, DMA_DEV_TO_MEM, DMA_MEM_TO_DEV)
-+ * @flags: DMA engine flags
-+ *
-+ * Each SG entry contains both source (sg_dma_address) and destination (sg_dma_dst_address).
-+ * This allows multiple independent transfers in a single DMA transaction.
-+ * Requires CONFIG_NEED_SG_DMA_DST_ADDR to be enabled.
-+ */
-+static inline struct dma_async_tx_descriptor *dmaengine_prep_batch_sg_dma
-+		(struct dma_chan *chan, struct scatterlist *sg, unsigned int nents,
-+		enum dma_transfer_direction direction, unsigned long flags)
-+{
-+	if (!chan || !chan->device || !chan->device->device_prep_batch_sg_dma ||
-+	    !sg || !nents)
-+		return NULL;
-+
-+	return chan->device->device_prep_batch_sg_dma(chan, sg, nents, direction, flags);
-+}
-+
- /**
-  * dmaengine_prep_dma_memset() - Prepare a DMA memset descriptor.
-  * @chan: The channel to be used for this descriptor
-diff --git a/include/linux/scatterlist.h b/include/linux/scatterlist.h
-index 29f6ceb98d74b118d08b6a3d4eb7f62dcde0495d..20b65ffcd5e2a65ec5026a29344caf6baa09700b 100644
---- a/include/linux/scatterlist.h
-+++ b/include/linux/scatterlist.h
-@@ -19,6 +19,9 @@ struct scatterlist {
- #ifdef CONFIG_NEED_SG_DMA_FLAGS
- 	unsigned int    dma_flags;
- #endif
-+#ifdef CONFIG_NEED_SG_DMA_DST_ADDR
-+	dma_addr_t	dma_dst_address;
-+#endif
- };
- 
- /*
-@@ -36,6 +39,10 @@ struct scatterlist {
- #define sg_dma_len(sg)		((sg)->length)
- #endif
- 
-+#ifdef CONFIG_NEED_SG_DMA_DST_ADDR
-+#define sg_dma_dst_address(sg)	((sg)->dma_dst_address)
-+#endif
-+
- struct sg_table {
- 	struct scatterlist *sgl;	/* the list */
- 	unsigned int nents;		/* number of mapped entries */
-diff --git a/kernel/dma/Kconfig b/kernel/dma/Kconfig
-index 31cfdb6b4bc3e33c239111955d97b3ec160baafa..3539b5b1efe27be7ccbfebb358dbb9cad2868f11 100644
---- a/kernel/dma/Kconfig
-+++ b/kernel/dma/Kconfig
-@@ -32,6 +32,9 @@ config NEED_SG_DMA_LENGTH
- config NEED_DMA_MAP_STATE
- 	bool
- 
-+config NEED_SG_DMA_DST_ADDR
-+	bool
-+
- config ARCH_DMA_ADDR_T_64BIT
- 	def_bool 64BIT || PHYS_ADDR_T_64BIT
+ 	enum mhi_state mhi_state;
  
 
 -- 
