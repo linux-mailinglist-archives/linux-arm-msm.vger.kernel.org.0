@@ -1,104 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-97325-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97326-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UARcMQC0s2lYZwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97325-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 07:51:44 +0100
+	id AK2GEh+0s2lYZwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97326-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 07:52:15 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6A69A27E5BB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 07:51:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A89C627E5E2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 07:52:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4C754306FCEB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 06:49:49 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B8D5930C0FC0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 06:49:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08D2D25B2F4;
-	Fri, 13 Mar 2026 06:49:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9DD5344D92;
+	Fri, 13 Mar 2026 06:49:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="oj8NB/Fb";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="kGpOOiK2"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="B/60IyaF";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="CG3Tz/jK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3252034D3BF
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 06:49:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D3A933F8B4
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 06:49:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773384588; cv=none; b=oZmOmvcM4qw1DGRt9M3aVNoNPpZiECgPOkMiPOcfq13r/q455xGtNP6a6Bb64rJ+Q4vl+ulTSCcHW0pOkjnWVvy0Bb3NOw0kbGHy7eRwDQI+a9boNTE5DPhEfDsoHdxSPum9uXM3jWuVLCjRf13Q1zQJyMVN3+KrDZv5Xw4bO78=
+	t=1773384593; cv=none; b=lbAh21gWF3+DSidRUV5k4gj+OXMnGyhaZn+lApBT1UUeAtTssisAXkj/eN2UI2FraTtPPQuuXhVtKHvGiBEaJxpOJciaalppuZvRx/fOREjUckFqQf+83XxM+V4WffDlPqgWE23/AUOeIfsMtgRMXM49tjQYR4E1l/WhTnuq/k0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773384588; c=relaxed/simple;
-	bh=k6vgIbvxkBkgZrvr1Ay0S0k9wxYlh+Jlh1SzYi04ePs=;
+	s=arc-20240116; t=1773384593; c=relaxed/simple;
+	bh=1MnAcOLx4PCMb5gcpoEh/1Z1hW023S7M6GRMHHtlKLA=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=n88ZCIgUFMe0ww0mhoIuUm+Aso7T+olHKBKQyFaPBnobpsBlO0ZiF296CZohYdLM7+cjdA6gUZ1ZAeSF9jH4qn/qD2Iu+Ge/1fJLWq/9LnGXoa6UaYuiWORAKKmsUVS2B/V8HV7/l3J5KTIAJDLnu7e6VqZQEGb3YqHtzQ8Hr1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=oj8NB/Fb; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=kGpOOiK2; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:To:Cc; b=Hz9zffNm0bwQAVRZqvauL4pGhXLAq7Ej4NUfbpmjQ9RqxRQle2kjYnJR4VZBGZ0CyCdMgdHfmfFvkI+zQiEku1n+yU45m3hjGoJR8br6iNUdvOxQ16m/12DCaj6I4hvj/OlfbFxC//wIWtJGusZ1Wp8Vy7VApavsaAaOxmAg+Ng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=B/60IyaF; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=CG3Tz/jK; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62D5teUf4140749
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 06:49:45 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62D5tbRB3466738
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 06:49:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	WI/YHY7kRAO8WhJyXthZ+dRzS9S21OyP3MUfXR4/TeQ=; b=oj8NB/FbvBsFQAJK
-	WrTZiBScbi/PtOJXIJN6NL7pOjQ3NrMQ3128lPFNyzMLRZeL4dxAzeYUU2Z4y1rc
-	en+qIkshpM3Y8BieldEnmmiJGlag2vuQMOslxt94rdXcA25xpEtppHVVQEtPr4AV
-	iYMXaVq8ALBW19Fu9UDHunuHLiXL6qkK4S4kp1F8x5Rv4Uy7zq7OfeAJdSWDSr08
-	xa9ZKjzucB6qU/HxxghQ66esArUIl/WqWUrmm75eXxjJlM79ax8r8DPl+1ZY0FmA
-	4x/22qYQlrK9JaGJO/4yjVicKldToXR9HqD+EKwnt0qlHiAepNkVMISwFvpYwURo
-	dC8CSw==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cvbn28cj6-1
+	RxmfRvfiRh5EUIJOf3+nb5lHp4eC5Rxoat19w1qMQgw=; b=B/60IyaFTEQblyBL
+	IWqXfMOW93sgSJnlSuyg8UJQUHGrkISHXzwsiqxVLeyqfowDemIZguR6K5OCUk06
+	yAcyBmXo9jnhy6rifmSpzLnd1SMw8PB5IzUndIT6BblqZ8QgcjD9D60qrp33TD9r
+	F0bFhL19SmdQOHHywN19FycNWVG2oQWFuM75HfuYT2t9mr4LZp/m1uYM1jfRQ06j
+	Tu0BmG3PElLOiz3D9jLQyd6Kqp+cQdSlIQTngs2GUGHda0/38Y/6y1+Sym+v1R+S
+	ascgmSwQKDaJjKegdOYATATjrVyO/p97n4Ed+IBcOfQNmbXw+z+X3aAkfZ3m+1o9
+	LOrTYA==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cuh60mv48-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 06:49:45 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2ae4b96c259so30288925ad.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Mar 2026 23:49:45 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 06:49:51 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2ae50463ba8so149047935ad.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Mar 2026 23:49:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1773384585; x=1773989385; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1773384590; x=1773989390; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=WI/YHY7kRAO8WhJyXthZ+dRzS9S21OyP3MUfXR4/TeQ=;
-        b=kGpOOiK2C8kUpqZyC2g6x+rtR/1z8DqexlqVlNoxt404vko2J/Ebq3xEWPlvJrHpPK
-         6OeWJ98OWL3Xfai2/5qp4DftxoKmy65AYWeu1HPCfuYAJWEG0OzLr4dEyV1DmZYY2ww6
-         mBrfC5S6pmL6G/RokisNlr/nMGzA5iTO9iY+IxGoTxv7GxBUoML8CQ6OXELa04RYGcTx
-         wCd8w2VD1dU8/fqwwJNEq6jGcnbxDxAoHDbbG2vbE890xiTdTFEad2TBV7iG9a3+7V8X
-         TL+F0uCLwSuysLtNOe7v3K+mX9XNtIqGd9sdEyY8Yg+38tFborAVG1OBaRKyU35ZW3Zl
-         Lp+A==
+        bh=RxmfRvfiRh5EUIJOf3+nb5lHp4eC5Rxoat19w1qMQgw=;
+        b=CG3Tz/jKMdelq4t5HeO5dTpyzC74l01FlHPuxFSdmgTkuvdjjSuXcMVaWdVxNkB+Y4
+         atlfzItjzTMiATWke27yFoS7C1a587UiiA3N51xyYGUhhLN79qpPw1b9C2C/s/uOynu9
+         8gwFw4ct4H+gbJDZeKS7AWAycCzKPsSpE5m1RFAsVjtPtQHOwqL+IwAWpk4GkkzLOc9P
+         iW9NxMpUjQOrqA6I4KBRksNERvAW5YtpOpBUIZpbfCPxAeyecaMId77GlyvObuS2BMAh
+         jytnN8T7mPVHTh2cutf63a6k9LoJTWO9TEobhQR+GTApWh7VAXRGYjycX/ejqqMeayVM
+         XbNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773384585; x=1773989385;
+        d=1e100.net; s=20251104; t=1773384590; x=1773989390;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=WI/YHY7kRAO8WhJyXthZ+dRzS9S21OyP3MUfXR4/TeQ=;
-        b=azUqclT3kNZUPMbTpV2pXFYOlfTazOB+i2Uy0Q8XHq8g4au4Is6d3agwo1fN5WXt4D
-         Wbqc883wU8mMuGpjvTeqDySZNbbSzENj6skQ64nmASgJn3m9/jPM+RWb+j9DfI7Tl+CV
-         ZBVi5AS8qYdOFEaWBnCzM53qGv68fqxS7wn/vETQ1sE5ZqSGB6nsVwxxpX+xMdEczW2z
-         Q6m4nSWUcRofdhSCduEL2yK97q4XQVe3dFmGTKJK12QN5i4G9Z35rBgbmZ3Ek2d/QFdS
-         TwZnYSzOfZyn8mThYTtAdN4CtB8VVqLbTQllKg+ZF7ohmQ/qIHaXcktjhnuhVct/gp6R
-         V6hQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXGw8YW+npfRB0Y6/7fMG7KgraPCu04Sxo1nyiorqpDMrhX4Kt4EIW6er78f1Nuph6qGizGOdo2P5ZBpMOj@vger.kernel.org
-X-Gm-Message-State: AOJu0YwUV3VcZ5cCh5a+tXziv42iBpqC3hxGlHhzC/zPAyPLT7IyISoH
-	4wl7bY1PHOKEmocAFvFFqXwgdZu91lVj4sashAdb1BTe7UJt+N6R+3L72EY51l/OCP5pXY0694S
-	h/l7fI/EJ/o9kPGYhXnuAEy8oLKYc1cGqzZIAxMk0eBfXEbj228QST1VmoizPYxBarB2g
-X-Gm-Gg: ATEYQzztU1iHVKrGaZ0fN1XPf5h7/L9K8hOkF0nsOnEDS24rj2B35zBCS2fur0MqGzz
-	M4I3KCHqjNNmFMRrG8wKS/cj5+O+HKXw/tTcUcXJxNcQ/0+I/d88XXWWVyAics43M/cVnybotl9
-	/9/kL2DWV45ZIU0LWzduNZolEZPMhgY9wmwjoD8ub/yMU0cqADo2w+dr3kHVPLT60HzUkaBJ0Sn
-	D28G+NkD9gMTHYj8CZ5mLm/7PLLyOQyJYrIcY6crCJBDwiZaElhBAOvaan1yWiE3OnHxI673Ibu
-	WqJJ0nzlcGYwJCvVCVjp7sGJs5uxyD55+2Bv1yVwwODIEkuq4AlC2bu7lYapwNfhGQquLdo9Lhb
-	BJazpwILdgLVcwwK80cKqfwbMH5atbYbp0kAQg9oLywvH+E4=
-X-Received: by 2002:a05:6a20:2d09:b0:398:87a9:fe2 with SMTP id adf61e73a8af0-398eb1d70c5mr1849867637.25.1773384584660;
-        Thu, 12 Mar 2026 23:49:44 -0700 (PDT)
-X-Received: by 2002:a05:6a20:2d09:b0:398:87a9:fe2 with SMTP id adf61e73a8af0-398eb1d70c5mr1849833637.25.1773384584078;
-        Thu, 12 Mar 2026 23:49:44 -0700 (PDT)
+        bh=RxmfRvfiRh5EUIJOf3+nb5lHp4eC5Rxoat19w1qMQgw=;
+        b=W740Qr/OKHDQp4rC+NdWSjmeVB0tE7CLhhsu8QSCiHtWF3CqATLy9+pUgaNccm5bIb
+         CWzAiqXtbIGy04yv011HHikTfnY591vuri9F60gOtd7dIILIahBqkdvlH9YPC4+3UkAv
+         u6IkI5Q3+m920t0ucxUhyfoiqNZg2RcBVsZfUfp40fYT3STVyQP/JmIyyEwAxKauwMLQ
+         JBBuoh6LXJZOlL8BHOJGJMAWIw5LxpGwgPGIYya2x8OfaPfvdgSKEZLr9zBw0RRHI7OT
+         cciYDC7mW7xQcHNvNmZZ8UWBiMBP3KuQficmpdu5e/VgA4/S9n8tpd5jiThTee5Vg7Rz
+         59qQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXkS8FQhRTueQNHD4Va129L+iweH8zQ2vKvaVJ+xmjp7o8//6he4B+LSxaZMhLKgjmFaJO2inWlJ82ijBol@vger.kernel.org
+X-Gm-Message-State: AOJu0YxvVz6yToKQLqgNdXy4nAcFLgyUIfwRjQSKQXndzk+gIQi0xgbZ
+	Iod4DaSKibbe/PW2TmkPbXjnyLM/ANgUyJegKqyjNyQ5P8JW7077B8YNefWqf23xnjJL7PL0aHK
+	KfWq6xKwzaM1h831cYgmq8/2G4fQcSwVzz2nO/oGzq6gf/w0zlgu6tWFnRQUgeXll5rg1
+X-Gm-Gg: ATEYQzzNXqf7N6hkMxI5zuZNmYt/y2RVJNhha8aEAwPCYsB91BnV/k1lSB8veQsFFSY
+	jAQuvLtEsEK5/iT2y45axjFJsEKONfpvFTb4FjSdetT9lVCWECkq8FPj3EyACBTZyv3nuyMM4Y+
+	MMsmW5Geu1hcykJyWaHAMJ2a8twVQ+Fejb7Z1eiTGQ5oVTRma4HILBvGbKDp8A0rgAf9RwwKPk9
+	b5O2dUa9YJDCmF5+72+Ea/+rfEC8vrVMm/IQISTjw5Gb0bXjjMY+xM0URtcnDH0Gq4joLUSJEVp
+	JLLdNhKHORc8KDtxPjG+rdy2N9dCNFz3gSXvW0F1vXO+gKKiOsOpSWfLw0H3CSjDnPfQMPboIOW
+	tQPc0lenJWX2LZacFk6fZ9qXECriFblN/UBHZ0qkOIiwtExs=
+X-Received: by 2002:a05:6a21:7704:b0:398:c0ba:9cef with SMTP id adf61e73a8af0-398ec9bb845mr1879510637.4.1773384590114;
+        Thu, 12 Mar 2026 23:49:50 -0700 (PDT)
+X-Received: by 2002:a05:6a21:7704:b0:398:c0ba:9cef with SMTP id adf61e73a8af0-398ec9bb845mr1879489637.4.1773384589622;
+        Thu, 12 Mar 2026 23:49:49 -0700 (PDT)
 Received: from hu-sumk-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c73eb97b41dsm936160a12.5.2026.03.12.23.49.38
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c73eb97b41dsm936160a12.5.2026.03.12.23.49.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Mar 2026 23:49:43 -0700 (PDT)
+        Thu, 12 Mar 2026 23:49:49 -0700 (PDT)
 From: Sumit Kumar <sumit.kumar@oss.qualcomm.com>
-Date: Fri, 13 Mar 2026 12:19:26 +0530
-Subject: [PATCH 2/3] PCI: epf-mhi: Add batched DMA read support
+Date: Fri, 13 Mar 2026 12:19:27 +0530
+Subject: [PATCH 3/3] bus: mhi: ep: Use batched read for ring caching
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -106,8 +106,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260313-dma_multi_sg-v1-2-8fabb0d1a759@oss.qualcomm.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260313-dma_multi_sg-v1-3-8fabb0d1a759@oss.qualcomm.com>
 References: <20260313-dma_multi_sg-v1-0-8fabb0d1a759@oss.qualcomm.com>
 In-Reply-To: <20260313-dma_multi_sg-v1-0-8fabb0d1a759@oss.qualcomm.com>
 To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
@@ -125,35 +125,35 @@ Cc: dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org,
         Sumit Kumar <sumit.kumar@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1773384567; l=7035;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1773384567; l=3155;
  i=sumit.kumar@oss.qualcomm.com; s=20250409; h=from:subject:message-id;
- bh=k6vgIbvxkBkgZrvr1Ay0S0k9wxYlh+Jlh1SzYi04ePs=;
- b=9rakX7K74VAxnZ8NzPQjT3GERB9y7D6V/TUxZjoPmC7LqQa4Xyy75MoogT6Fx1BxFU9D4VO8S
- vnbN0h/NtmVA57SHjyMKEhLXOF3H8g9j/z6/D068L/SCJuJVhIFwUn9
+ bh=1MnAcOLx4PCMb5gcpoEh/1Z1hW023S7M6GRMHHtlKLA=;
+ b=NG0SR4yVM0HV9OxMyQEnpKZl7hPzWEPlYMzQKUu/FDNzjAOqk6TmOE7GksQxJPF6zYeVbDVTJ
+ 96I85imVw15Ar0TX2v3sEbYcdkfX+Awb8CRi+kd2+Xn4L5c6xARalAW
 X-Developer-Key: i=sumit.kumar@oss.qualcomm.com; a=ed25519;
  pk=3cys6srXqLACgA68n7n7KjDeM9JiMK1w6VxzMxr0dnM=
-X-Proofpoint-ORIG-GUID: zvjHGQoIu7LWXNNx7SjLEYLHa-sHpDpI
-X-Proofpoint-GUID: zvjHGQoIu7LWXNNx7SjLEYLHa-sHpDpI
-X-Authority-Analysis: v=2.4 cv=ZKfaWH7b c=1 sm=1 tr=0 ts=69b3b389 cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+X-Proofpoint-ORIG-GUID: 3BYOk0-NBWVhrAdjaxy5pOgCVlF9Tk9T
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEzMDA1MyBTYWx0ZWRfX2FCK8n9brMql
+ ZHANLhpynl9wbTfHpXIE0ZYysEJTMt0drT3ZR5/tc78XHaIpg4ox6ut/Up9jxNQREuMIcT2gMx+
+ a8S8I43WAx0q17j6LN37F1/R0NXsaUQim1AIGobgmJ3CZ062+CDB/K3cSTPzTq7dK/5eHJYHTkq
+ RL8HzdnM3srexwabeRQVkpvZvsz3mpMGG/CqF6z67A8MOhF7Wg+aY8nJ9cD5XKG9n1rFbqr7lsQ
+ ealtqudoqWmLA5yKFU9pH68FdkZW9Xkv2485yWFX27UQ05yDDHuW6OeNdk/nth4cEkzSaNQB44a
+ W2nPkimCEB7hizvGRARbwdadRiRmmKySI4zZRoJ98IRLetbjr+6FlXZgbI84IMVQlX6AuO93sJ1
+ 927AI9jDfkNpVqKWhotJDm8FhSwgP40BLYxotoouJueI8WD4gigFzWIkRpuZQNL/uT0EjMM+KYW
+ UMft1Dd60xtPFkpielQ==
+X-Authority-Analysis: v=2.4 cv=DsRbOW/+ c=1 sm=1 tr=0 ts=69b3b38f cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
  a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=EUspDBNiAAAA:8 a=bHNg01yGDDtxrYhjzSoA:9 a=QEXdDO2ut3YA:10
- a=324X-CrmTo6CU4MGRt3R:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEzMDA1MyBTYWx0ZWRfX4V96pVDGMNER
- uIGa5dbWxS/Fm8mYNdEWggg2fgnyaSfZZIJ8E64BwjyXpl4ahLlx7XfuWfAyP2kQH8HLVkapvKD
- s2RECHLSwO4Gir9Re0o5LTkmJJl7k+mTpMSyxnoDiAqHAiLzMBLaqtNE7Gb8yZcUDYH7jceauOs
- oYuIxy5GcNSQOhW2RxWY2FUsaztZgVIKU5+RS3rsOagVsHOZ+AV1KAdtOuj4Vaj0AcwTwxgpAZL
- WaCrgDxomrnZpWcfa7s38FDolDMTeZVmrAIH3BGnXA/rzrPg9TuZkR3WbP0NWCqIUkWVKXfs4G9
- ycRvkWbpF20SBUP4C2neZT9r6q4mhF5NeQm07RZRI3AbqxHRIrJdVU0T0G5ZCcw1CzHCOtpOLd1
- vJ/soKDhu6dycaR0/Sfl4WXJ1FMCBLeKU3mDuB8lXLdJWMQEjnAKt0Ji9wmZHVBtiFNkCdPHjYw
- J4nWpn9PB/6vNx+qovw==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=EUspDBNiAAAA:8 a=gm0tR4x7yrig-FKTUfQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-GUID: 3BYOk0-NBWVhrAdjaxy5pOgCVlF9Tk9T
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-13_01,2026-03-12_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1015 spamscore=0 malwarescore=0 suspectscore=0
- lowpriorityscore=0 bulkscore=0 adultscore=0 priorityscore=1501 phishscore=0
+ malwarescore=0 priorityscore=1501 impostorscore=0 suspectscore=0 adultscore=0
+ clxscore=1015 bulkscore=0 spamscore=0 phishscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603130053
 X-Spamd-Result: default: False [-2.16 / 15.00];
@@ -166,7 +166,7 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
 	RCPT_COUNT_TWELVE(0.00)[18];
-	TAGGED_FROM(0.00)[bounces-97325-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-97326-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
@@ -182,206 +182,89 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 6A69A27E5BB
+X-Rspamd-Queue-Id: A89C627E5E2
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Add support for batched DMA transfers in the PCI EPF MHI driver to
-improve performance when reading multiple buffers from the host.
-
-Implement two variants of the read_batch() callback:
-- pci_epf_mhi_edma_read_batch(): DMA-optimized implementation using
-  dmaengine_prep_batch_sg_dma() to transfer multiple buffers in a single
-  DMA transaction.
-- pci_epf_mhi_iatu_read_batch(): CPU-copy fallback that sequentially
-  processes buffers using IATU.
-
-This enables the MHI endpoint stack to efficiently cache ring data,
-particularly for wraparound scenarios where ring data spans two
-non-contiguous memory regions.
+Simplify ring caching logic by using the new read_batch() callback
+for all ring read operations, replacing the previous approach that
+used separate read_sync() calls.
 
 Signed-off-by: Sumit Kumar <sumit.kumar@oss.qualcomm.com>
 ---
- drivers/pci/endpoint/functions/Kconfig       |   1 +
- drivers/pci/endpoint/functions/pci-epf-mhi.c | 120 +++++++++++++++++++++++++++
- include/linux/mhi_ep.h                       |   3 +
- 3 files changed, 124 insertions(+)
+ drivers/bus/mhi/ep/ring.c | 43 +++++++++++++++++++++++--------------------
+ 1 file changed, 23 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/pci/endpoint/functions/Kconfig b/drivers/pci/endpoint/functions/Kconfig
-index 0c9cea0698d7bd3d8bd11aa1db0195978d9406b9..43131b6db8a2ca57b7a4f0eba8affba3a77f9ad7 100644
---- a/drivers/pci/endpoint/functions/Kconfig
-+++ b/drivers/pci/endpoint/functions/Kconfig
-@@ -41,6 +41,7 @@ config PCI_EPF_VNTB
- config PCI_EPF_MHI
- 	tristate "PCI Endpoint driver for MHI bus"
- 	depends on PCI_ENDPOINT && MHI_BUS_EP
-+	select NEED_SG_DMA_DST_ADDR
- 	help
- 	   Enable this configuration option to enable the PCI Endpoint
- 	   driver for Modem Host Interface (MHI) bus in Qualcomm Endpoint
-diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-index 6643a88c7a0ce38161bc6253c09d29f1c36ba394..198201d734cc2c6d09be229464a8efdafc3cd611 100644
---- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-@@ -448,6 +448,124 @@ static int pci_epf_mhi_edma_write(struct mhi_ep_cntrl *mhi_cntrl,
- 	return ret;
- }
- 
-+static int pci_epf_mhi_iatu_read_batch(struct mhi_ep_cntrl *mhi_cntrl,
-+				       struct mhi_ep_buf_info *buf_info_array,
-+				       u32 num_buffers)
-+{
-+	int ret;
-+	u32 i;
-+
-+	for (i = 0; i < num_buffers; i++) {
-+		ret = pci_epf_mhi_iatu_read(mhi_cntrl, &buf_info_array[i]);
-+		if (ret < 0)
-+			return ret;
-+	}
-+
-+	return 0;
-+}
-+
-+static int pci_epf_mhi_edma_read_batch(struct mhi_ep_cntrl *mhi_cntrl,
-+				       struct mhi_ep_buf_info *buf_info_array,
-+				       u32 num_buffers)
-+{
-+	struct pci_epf_mhi *epf_mhi = to_epf_mhi(mhi_cntrl);
-+	struct device *dma_dev = epf_mhi->epf->epc->dev.parent;
-+	struct dma_chan *chan = epf_mhi->dma_chan_rx;
-+	struct device *dev = &epf_mhi->epf->dev;
-+	struct dma_async_tx_descriptor *desc;
-+	struct dma_slave_config config = {};
-+	DECLARE_COMPLETION_ONSTACK(complete);
-+	struct scatterlist *sg;
-+	dma_addr_t *dst_addrs;
-+	dma_cookie_t cookie;
-+	int ret;
-+	u32 i;
-+
-+	if (num_buffers == 0)
-+		return -EINVAL;
-+
-+	mutex_lock(&epf_mhi->lock);
-+
-+	sg = kcalloc(num_buffers, sizeof(*sg), GFP_KERNEL);
-+	if (!sg) {
-+		ret = -ENOMEM;
-+		goto err_unlock;
-+	}
-+
-+	dst_addrs = kcalloc(num_buffers, sizeof(*dst_addrs), GFP_KERNEL);
-+	if (!dst_addrs) {
-+		ret = -ENOMEM;
-+		goto err_free_sg;
-+	}
-+
-+	sg_init_table(sg, num_buffers);
-+
-+	for (i = 0; i < num_buffers; i++) {
-+		dst_addrs[i] = dma_map_single(dma_dev, buf_info_array[i].dev_addr,
-+					      buf_info_array[i].size, DMA_FROM_DEVICE);
-+		ret = dma_mapping_error(dma_dev, dst_addrs[i]);
-+		if (ret) {
-+			dev_err(dev, "Failed to map buffer %u\n", i);
-+			goto err_unmap;
-+		}
-+
-+		sg_dma_address(&sg[i]) = buf_info_array[i].host_addr;
-+		sg_dma_dst_address(&sg[i]) = dst_addrs[i];
-+		sg_dma_len(&sg[i]) = buf_info_array[i].size;
-+	}
-+
-+	config.direction = DMA_DEV_TO_MEM;
-+	ret = dmaengine_slave_config(chan, &config);
-+	if (ret) {
-+		dev_err(dev, "Failed to configure DMA channel\n");
-+		goto err_unmap;
-+	}
-+
-+	desc = dmaengine_prep_batch_sg_dma(chan, sg, num_buffers,
-+					   DMA_DEV_TO_MEM,
-+					   DMA_CTRL_ACK | DMA_PREP_INTERRUPT);
-+	if (!desc) {
-+		dev_err(dev, "Failed to prepare batch sg DMA\n");
-+		ret = -EIO;
-+		goto err_unmap;
-+	}
-+
-+	desc->callback = pci_epf_mhi_dma_callback;
-+	desc->callback_param = &complete;
-+
-+	cookie = dmaengine_submit(desc);
-+	ret = dma_submit_error(cookie);
-+	if (ret) {
-+		dev_err(dev, "Failed to submit DMA\n");
-+		goto err_unmap;
-+	}
-+
-+	dma_async_issue_pending(chan);
-+
-+	ret = wait_for_completion_timeout(&complete, msecs_to_jiffies(1000));
-+	if (!ret) {
-+		dev_err(dev, "DMA transfer timeout\n");
-+		dmaengine_terminate_sync(chan);
-+		ret = -ETIMEDOUT;
-+		goto err_unmap;
-+	}
-+
-+	ret = 0;
-+
-+err_unmap:
-+	for (i = 0; i < num_buffers; i++) {
-+		if (dst_addrs[i])
-+			dma_unmap_single(dma_dev, dst_addrs[i],
-+					 buf_info_array[i].size, DMA_FROM_DEVICE);
-+	}
-+	kfree(dst_addrs);
-+err_free_sg:
-+	kfree(sg);
-+err_unlock:
-+	mutex_unlock(&epf_mhi->lock);
-+	return ret;
-+}
-+
- static void pci_epf_mhi_dma_worker(struct work_struct *work)
+diff --git a/drivers/bus/mhi/ep/ring.c b/drivers/bus/mhi/ep/ring.c
+index 26357ee68dee984d70ae5bf39f8f09f2cbcafe30..03c60c579e12c3bad100c7e1b6a75ae0e5646281 100644
+--- a/drivers/bus/mhi/ep/ring.c
++++ b/drivers/bus/mhi/ep/ring.c
+@@ -30,7 +30,7 @@ static int __mhi_ep_cache_ring(struct mhi_ep_ring *ring, size_t end)
  {
- 	struct pci_epf_mhi *epf_mhi = container_of(work, struct pci_epf_mhi, dma_work);
-@@ -803,11 +921,13 @@ static int pci_epf_mhi_link_up(struct pci_epf *epf)
- 	mhi_cntrl->unmap_free = pci_epf_mhi_unmap_free;
- 	mhi_cntrl->read_sync = mhi_cntrl->read_async = pci_epf_mhi_iatu_read;
- 	mhi_cntrl->write_sync = mhi_cntrl->write_async = pci_epf_mhi_iatu_write;
-+	mhi_cntrl->read_batch = pci_epf_mhi_iatu_read_batch;
- 	if (info->flags & MHI_EPF_USE_DMA) {
- 		mhi_cntrl->read_sync = pci_epf_mhi_edma_read;
- 		mhi_cntrl->write_sync = pci_epf_mhi_edma_write;
- 		mhi_cntrl->read_async = pci_epf_mhi_edma_read_async;
- 		mhi_cntrl->write_async = pci_epf_mhi_edma_write_async;
-+		mhi_cntrl->read_batch = pci_epf_mhi_edma_read_batch;
+ 	struct mhi_ep_cntrl *mhi_cntrl = ring->mhi_cntrl;
+ 	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+-	struct mhi_ep_buf_info buf_info = {};
++	struct mhi_ep_buf_info buf_info[2] = {};
+ 	size_t start;
+ 	int ret;
+ 
+@@ -44,35 +44,38 @@ static int __mhi_ep_cache_ring(struct mhi_ep_ring *ring, size_t end)
+ 
+ 	start = ring->wr_offset;
+ 	if (start < end) {
+-		buf_info.size = (end - start) * sizeof(struct mhi_ring_element);
+-		buf_info.host_addr = ring->rbase + (start * sizeof(struct mhi_ring_element));
+-		buf_info.dev_addr = &ring->ring_cache[start];
++		/* No wraparound */
++		buf_info[0].size = (end - start) * sizeof(struct mhi_ring_element);
++		buf_info[0].host_addr = ring->rbase + (start * sizeof(struct mhi_ring_element));
++		buf_info[0].dev_addr = &ring->ring_cache[start];
+ 
+-		ret = mhi_cntrl->read_sync(mhi_cntrl, &buf_info);
++		ret = mhi_cntrl->read_batch(mhi_cntrl, buf_info, 1);
+ 		if (ret < 0)
+ 			return ret;
++
++		dev_dbg(dev, "Cached ring: start %zu end %zu size %zu\n", start, end,
++			buf_info[0].size);
+ 	} else {
+-		buf_info.size = (ring->ring_size - start) * sizeof(struct mhi_ring_element);
+-		buf_info.host_addr = ring->rbase + (start * sizeof(struct mhi_ring_element));
+-		buf_info.dev_addr = &ring->ring_cache[start];
++		/* Wraparound */
++
++		/* Buffer 0: Tail portion (start → ring_size) */
++		buf_info[0].size = (ring->ring_size - start) * sizeof(struct mhi_ring_element);
++		buf_info[0].host_addr = ring->rbase + (start * sizeof(struct mhi_ring_element));
++		buf_info[0].dev_addr = &ring->ring_cache[start];
+ 
+-		ret = mhi_cntrl->read_sync(mhi_cntrl, &buf_info);
++		/* Buffer 1: Head portion (0 → end) */
++		buf_info[1].size = end * sizeof(struct mhi_ring_element);
++		buf_info[1].host_addr = ring->rbase;
++		buf_info[1].dev_addr = &ring->ring_cache[0];
++
++		ret = mhi_cntrl->read_batch(mhi_cntrl, buf_info, 2);
+ 		if (ret < 0)
+ 			return ret;
+ 
+-		if (end) {
+-			buf_info.host_addr = ring->rbase;
+-			buf_info.dev_addr = &ring->ring_cache[0];
+-			buf_info.size = end * sizeof(struct mhi_ring_element);
+-
+-			ret = mhi_cntrl->read_sync(mhi_cntrl, &buf_info);
+-			if (ret < 0)
+-				return ret;
+-		}
++		dev_dbg(dev, "Cached ring (batched): start %zu end %zu tail_size %zu head_size %zu\n",
++			start, end, buf_info[0].size, buf_info[1].size);
  	}
  
- 	/* Register the MHI EP controller */
-diff --git a/include/linux/mhi_ep.h b/include/linux/mhi_ep.h
-index 7b40fc8cbe77ab8419d167e89264b69a817b9fb1..15554f966e4be1aea1f3129c5f26253f5087edba 100644
---- a/include/linux/mhi_ep.h
-+++ b/include/linux/mhi_ep.h
-@@ -107,6 +107,7 @@ struct mhi_ep_buf_info {
-  * @write_sync: CB function for writing to host memory synchronously
-  * @read_async: CB function for reading from host memory asynchronously
-  * @write_async: CB function for writing to host memory asynchronously
-+ * @read_batch: CB function for reading from host memory in batches synchronously
-  * @mhi_state: MHI Endpoint state
-  * @max_chan: Maximum channels supported by the endpoint controller
-  * @mru: MRU (Maximum Receive Unit) value of the endpoint controller
-@@ -164,6 +165,8 @@ struct mhi_ep_cntrl {
- 	int (*write_sync)(struct mhi_ep_cntrl *mhi_cntrl, struct mhi_ep_buf_info *buf_info);
- 	int (*read_async)(struct mhi_ep_cntrl *mhi_cntrl, struct mhi_ep_buf_info *buf_info);
- 	int (*write_async)(struct mhi_ep_cntrl *mhi_cntrl, struct mhi_ep_buf_info *buf_info);
-+	int (*read_batch)(struct mhi_ep_cntrl *mhi_cntrl, struct mhi_ep_buf_info *buf_info_array,
-+			  u32 num_buffers);
- 
- 	enum mhi_state mhi_state;
+-	dev_dbg(dev, "Cached ring: start %zu end %zu size %zu\n", start, end, buf_info.size);
+-
+ 	return 0;
+ }
  
 
 -- 
