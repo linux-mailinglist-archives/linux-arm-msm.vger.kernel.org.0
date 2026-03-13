@@ -1,165 +1,238 @@
-Return-Path: <linux-arm-msm+bounces-97611-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97613-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id eKhVOWZVtGk4kAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97611-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 19:20:22 +0100
+	id 4N37NgtWtGk4kAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97613-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 19:23:07 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 64C67288AAF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 19:20:22 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 51ACA288B41
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 19:23:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 71A66301024C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 18:19:02 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1D4BD31FF072
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 18:21:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BB0336164D;
-	Fri, 13 Mar 2026 18:19:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 736953B777E;
+	Fri, 13 Mar 2026 18:21:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WkuBmUY5"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kuBsEYIh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B753537D0;
-	Fri, 13 Mar 2026 18:18:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773425939; cv=none; b=u2eRhWdZ3ljPwVyhhIzLNbd6MrCCzMlsHM0RrIFBaCyuKJKTNSutS1lUDYiHjS9Kfc3UbZ8O1+0QoELj6t2SdkELV8urmUAaid5ne/w6kyAREdmVEXRn2BpVXQEhBZKD82q7e9IrwyQVlEf4SLP763SJ20tzXSeFIEHl5uQ3p4g=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773425939; c=relaxed/simple;
-	bh=2NXO+yF+55T7F+hpfAb0nuG4E5nybIth2x/Lfeit0v0=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=XdwrgaZZAJv4G6I2UYoHtplsnchdY864Qi/qvJk+Xqy+XDc4jRVhZloSebu+7pIWdk1cSgcI6A4W80mmNYDf2T47G4VdFANHSMLbCOn4Yf0mcZ9nprQJpDyw3AV55v3l/uRPUJh6/jwUAqjKgtgvcIRDDlihMozx6u9HKWkkcnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WkuBmUY5; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49944C19421;
-	Fri, 13 Mar 2026 18:18:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773425939;
-	bh=2NXO+yF+55T7F+hpfAb0nuG4E5nybIth2x/Lfeit0v0=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=WkuBmUY5zECY4w8HigOp4c5Dc0Y7y2nfHD6yuEYwFaBxRHSoHOnEVTjF7hkT0eQkA
-	 AFvQ0/U9ShmNbMyzF+0wQhrhDsQwyNxKjC32q2tl+0EsRInNZqjgNxUjA0SajeBrn6
-	 kHFj31oHvk4O5GY8i8NmF5RD6dgQrjiCuW1ZNS0TlFAoxlpUagAwvkYpFuqyVtZphY
-	 QVlHtHnRkgjRr9/4FntuZCDQbU9JYgsYDVeDARhaRlMuvQRsZqk8X1fkK1i1jrac4k
-	 8sYPWv4uyylodoV2LcLxP/nDTVvuq2bcgK0cxCWY0hcOSstFpl3VMDzH3SGAkgADCP
-	 f+nDIUI0cgl7Q==
-Date: Fri, 13 Mar 2026 13:18:58 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Christian Bruel <christian.bruel@foss.st.com>
-Cc: Koichiro Den <den@valinux.co.jp>, jingoohan1@gmail.com, mani@kernel.org,
-	lpieralisi@kernel.org, kwilczynski@kernel.org, robh@kernel.org,
-	bhelgaas@google.com, cassel@kernel.org, Frank.Li@nxp.com,
-	vigneshr@ti.com, s-vadapalli@ti.com, hongxing.zhu@nxp.com,
-	l.stach@pengutronix.de, shawnguo@kernel.org, s.hauer@pengutronix.de,
-	kernel@pengutronix.de, festevam@gmail.com, minghuan.Lian@nxp.com,
-	mingkai.hu@nxp.com, roy.zang@nxp.com, jesper.nilsson@axis.com,
-	heiko@sntech.de, srikanth.thokala@intel.com,
-	marek.vasut+renesas@gmail.com, yoshihiro.shimoda.uh@renesas.com,
-	geert+renesas@glider.be, magnus.damm@gmail.com,
-	mcoquelin.stm32@gmail.com, alexandre.torgue@foss.st.com,
-	thierry.reding@gmail.com, jonathanh@nvidia.com,
-	hayashi.kunihiko@socionext.com, mhiramat@kernel.org,
-	kishon@kernel.org, jirislaby@kernel.org, rongqianfeng@vivo.com,
-	18255117159@163.com, shawn.lin@rock-chips.com,
-	nicolas.frattaroli@collabora.com, linux.amoon@gmail.com,
-	vidyas@nvidia.com, shuah@kernel.org, linux-omap@vger.kernel.org,
-	linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org, imx@lists.linux.dev,
-	linuxppc-dev@lists.ozlabs.org, linux-arm-kernel@axis.com,
-	linux-rockchip@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-tegra@vger.kernel.org, linux-kselftest@vger.kernel.org
-Subject: Re: [PATCH v10 3/8] PCI: dwc: Advertise dynamic inbound mapping
- support
-Message-ID: <20260313181858.GA1427542@bhelgaas>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D57AB3C9EE4
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 18:21:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.170
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773426116; cv=pass; b=VRwX6Ip9tOBOvOhn1KJKnvV60u8CRUHV4O8hdnUuQ7Pg9PoaDVlsmQQWJ/kwknxMiFYCjuYYrK3ij0unAxjV2nwZGOSjEX2eRGYOgsY3h1VH0aoyB2zqfbQWbjiYDdG3EQOMFHZ0Xhi8UrXiJRZDtr2l7Z83WWOIAko73yiE9zU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773426116; c=relaxed/simple;
+	bh=t3VIXYxJvScX8DcFkQw5mRjFHdDDtX7Yu3o+V3syG+o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=aGMdsp0wae5exR9glbXabm9mkaKhXZff0siZYY+eX4TznCagXDoMKg8cMzAEiUWDvMSkOzCUlhyn9aBdVZomge9zXxnuTG/RXep8c6Mwnj5lmHe15AgjXPf0sZ6P4QCk7rAKy67nnpPYbJLJzkX5ok2Vx0YL7fvgqItn7ofopU8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kuBsEYIh; arc=pass smtp.client-ip=209.85.208.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-38a3225d59fso18493631fa.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 11:21:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773426112; cv=none;
+        d=google.com; s=arc-20240605;
+        b=S/Wy3xtnMzDBg3kCeGXCd3iuFRZO407GlegHUy3ObzFtIciUKjlzhUzrxc4dkHNQx0
+         IeNVIy54iZAnsu8weeMHweFvdvwoR1X2QI/l2gCFl6asJzO/b1DU+Hn+srlNibhGplRf
+         aOOhb9IioOUqoTMu1108vT+kV/sRBhcT5NnEHvkEoZuB/dp9TSk+iR/Y9JWQWEZvSPQZ
+         CpDgGI4BWgVGpGs1lCRM3h92NiNiNwSwY2T2nhvXNWi1AhjQ3Qq8ZzvhzS7c9XimCu7t
+         7/ZPIHMJWqNkYpZ3j9pPRQ3fZgu8UzfT+bTBZDALo5IKAf+YZJcghDhF/RSeaAMeu1Fl
+         lzCg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=mhe6xthfcWah7P+HBBDo0nXAhJwmZMBl0Ad6yrU6lI0=;
+        fh=QUqnHzU3ZalTMDuKbTnBcJ9NOC+dEY53cMwQDPyfXFE=;
+        b=bMUyE8V7trIFDMiD1st+QZJ7+19BP7s7Qxw5731+1QAvrpUDn2EFm9xSe7prRLPepJ
+         aIMBL4Y9Y1+qkkSpTOPt3PF9FkNy2bW0LMcPbflihZ31ay02PTsM2c5pxBtEpOxtjUAO
+         klPZEVZg8AhSGE3po6d5maQZBCyvFn2ebUmOPOSsPwQl+IfWtU6+CxjqUiBy7bnmBv40
+         cXfITMBdrXCpmE5W9Z3hwA5yMNmUF736teOB1wzHkTrQvIwShKecqp/ixlj8QVekcCaB
+         41smVLHkaxyGHIKutALtKltU3rMzn2cf9PC8k5e7u0vvnEbfBXWCx2q8hHBRdj9XkPjP
+         bl2g==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773426112; x=1774030912; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mhe6xthfcWah7P+HBBDo0nXAhJwmZMBl0Ad6yrU6lI0=;
+        b=kuBsEYIhzwOt+//tvEB32yQLdIBelDbDJ9Ut3dH3wa/SNez92ZouTY2kdc2IBi0Hjw
+         ev4HSO2roUzPgsRegmlYPSiY0UJ+qq7/5sMQvjqezdVhrjG+gap1+LGJ6IISm+pMUN3l
+         FUeIQETYd9KLfnLfqh8buNYd0vSNf5YLFM+EpfPL3bsT1NRCZ7qjWwfW90WJg8E/Hxnt
+         s7xreGEUd7gqQ+NM+FU7PXRixbj0DqOnraqNhP/HjOI7d62ToWo7d0Pvc3w0hfDEFQ1e
+         i6bNYF5pK0/BWUL/QyYXgWR7x8EgKD2BTMmShTO+7VMs8T+TFDSM/tRqqnIfOA8uzQva
+         vrLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773426112; x=1774030912;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=mhe6xthfcWah7P+HBBDo0nXAhJwmZMBl0Ad6yrU6lI0=;
+        b=aYRvH0Bo2oeHdO8674VgZTRDo+W6Wq2Jb5NDiuv+iA6CEINE2zBTWEs/Tr6tiFchlz
+         LoPvjzWVTIhStPkzyiv1I9uci/MTCkL6nYy8m5nmx+U3N+eJy4qMItar+xINGd3sy7zy
+         UiPqD8tVP/Ybl+qxBVb+vs87hyiEDAjGkE4IxHkFRrfDu4W8C/6KFrcpgyL6G9FDatw+
+         Qd/8pG4ik9OzMvDYIMRq6c6d+htUOSLxkfCsBiXh8T5oLHcOQQ6nh6g5AZsuioPnkh59
+         ZX+oHNYTzcIT2N3ZhNinFIYnHQg6wKdWATCx1Tonm68kzUoigwcK8f5nmSsnsiXdk8U4
+         3g2w==
+X-Forwarded-Encrypted: i=1; AJvYcCWaTgLROmmAZWi02aoGNb/TSLPRSZX6m7tBpFR7k2/Oo5n7avsLIodODSw3OgM9ZhAtIPtmZQ4sFKzUjOWv@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy+CNX8iCK1k3bHI/MEuRPWgVBF5j7N2EM1rkTJJPXf9b5h6M7R
+	PrRUxhle/GN5AoQ4O4GH3t5ysTaf9kBXMJIMlAseq3KYZILIHeKmw9cqUhITHqk+0T4c1xfEe9x
+	u3vXEMXkr5f0qYold28h3YmSIVWqGyuy4LojK
+X-Gm-Gg: ATEYQzy7E3oKKlZ8Iv+Vg3EJmCb2QoLeIGbyRJ1a52WX5RZExRzNyzkfwNI4X5blCsN
+	XIlrC4W+8k7VR6y3NYWdFwPao9N0Q6Sw/iUhzdxwxpRIg5d1rhMSjvbhHLWczTOSIDopoijEc4T
+	2vUlsTvRYbpovs2ZK+hztlFaK8g5TWaKrqDz9CwjMIpbsqyMFFyB3JhKmR7LzfX3yNkaLG1A1Wr
+	Gl7S4or5YHyAStXGBIQ6lgYMZ4UlNALAsTTU4/qlBUQ7R8pMIhEeHH0sCqqD/NveZNZDVdBSW/C
+	BKOYT3BdMV2fbt2m3VhdOLTnvtbdLPAEYZvsYU24jeLjq5+divLo1y98O3KRs43I0fba
+X-Received: by 2002:a05:651c:506:b0:38a:4dd3:6a0c with SMTP id
+ 38308e7fff4ca-38a8973de99mr15657101fa.20.1773426111648; Fri, 13 Mar 2026
+ 11:21:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b2b03ebe-9482-4a13-b22f-7b44da096eed@foss.st.com>
-X-Spamd-Result: default: False [-0.16 / 15.00];
+References: <20260311-ayn-qcs8550-v2-0-e66986e0f0cb@gmail.com>
+ <20260311-ayn-qcs8550-v2-2-e66986e0f0cb@gmail.com> <4757fd22-fe9f-4228-a0a5-11d9309549ac@packett.cool>
+ <CALHNRZ_RU+uHXfUtSO+8pKOYfBuK9jbYgqWE70WMQ=5Qz2MvvQ@mail.gmail.com>
+ <quybzbqxlohu6kiqmno2wzyltwejnc2vebxdgvdl3fdib7zg7u@wz3bkop7psu6>
+ <20260313-urban-prawn-of-success-cff01f@quoll> <CALHNRZ8iBqGGRDKhDNOasfyf8TY43ne1N82irkuzDZfWUuV5sg@mail.gmail.com>
+ <wzle4bdmemfknhflwhxikq7rk7x3ao3z474bhsr5zdkvtp67cc@jddzjpzwlfrc>
+In-Reply-To: <wzle4bdmemfknhflwhxikq7rk7x3ao3z474bhsr5zdkvtp67cc@jddzjpzwlfrc>
+From: Aaron Kling <webgeek1234@gmail.com>
+Date: Fri, 13 Mar 2026 13:21:39 -0500
+X-Gm-Features: AaiRm52nuUYqsufIb2LwpbE8xJSHAc15-enL1mOre2K3hsBoRUxu8TsvMhHFtCM
+Message-ID: <CALHNRZ8_Lzn=mr89dezkC6hVwgxh9kYmg8ntLf5RDuNydc9VLQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/5] arm64: dts: qcom: Add AYN QCS8550 Common
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, Val Packett <val@packett.cool>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Teguh Sobirin <teguh@sobir.in>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-97611-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_CC(0.00)[valinux.co.jp,gmail.com,kernel.org,google.com,nxp.com,ti.com,pengutronix.de,axis.com,sntech.de,intel.com,renesas.com,glider.be,foss.st.com,nvidia.com,socionext.com,vivo.com,163.com,rock-chips.com,collabora.com,vger.kernel.org,lists.infradead.org,lists.linux.dev,lists.ozlabs.org,st-md-mailman.stormreply.com];
+	TAGGED_FROM(0.00)[bounces-97613-lists,linux-arm-msm=lfdr.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
 	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	RCPT_COUNT_TWELVE(0.00)[12];
 	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[56];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[helgaas@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
 	TO_DN_SOME(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 64C67288AAF
+	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[webgeek1234@gmail.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,qualcomm.com:email,sobir.in:email,packett.cool:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 51ACA288B41
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Fri, Mar 13, 2026 at 04:59:26PM +0100, Christian Bruel wrote:
-> Hello,
-> 
-> While testing after this series, I encountered regressions on the STM32MP2,
-> which I am unsure how to fix. The failures depend on the order in which the
-> tests are run.
+On Fri, Mar 13, 2026 at 12:48=E2=80=AFPM Dmitry Baryshkov
+<dmitry.baryshkov@oss.qualcomm.com> wrote:
+>
+> On Fri, Mar 13, 2026 at 12:34:21PM -0500, Aaron Kling wrote:
+> > On Fri, Mar 13, 2026 at 3:37=E2=80=AFAM Krzysztof Kozlowski <krzk@kerne=
+l.org> wrote:
+> > >
+> > > On Fri, Mar 13, 2026 at 05:19:27AM +0200, Dmitry Baryshkov wrote:
+> > > > On Wed, Mar 11, 2026 at 08:39:37PM -0500, Aaron Kling wrote:
+> > > > > On Wed, Mar 11, 2026 at 7:49=E2=80=AFPM Val Packett <val@packett.=
+cool> wrote:
+> > > > > >
+> > > > > > On 3/11/26 2:44 PM, Aaron Kling wrote:
+> > > > > >
+> > > > > > > From: Teguh Sobirin <teguh@sobir.in>
+> > > > > > >
+> > > > > > > This adds a base dtb of everything common between the AYN QCS=
+8550
+> > > > > > > devices. It is intended to be extended by device specific ove=
+rlays.
+> > > > > > >
+> > > > > > > Signed-off-by: Teguh Sobirin <teguh@sobir.in>
+> > > > > > > Co-developed-by: Aaron Kling <webgeek1234@gmail.com>
+> > > > > > > Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
+> > > > > > > ---
+> > > > > > >   arch/arm64/boot/dts/qcom/Makefile                  |    1 +
+> > > > > > >   arch/arm64/boot/dts/qcom/qcs8550-ayntec-common.dts | 1777 +=
++++++++++++++++++++
+> > >
+> > > Common is not a board, NAK. This could only be DTSI if you provide so=
+me
+> > > sort of HARDWARE arguments explaining the common parts of schematics =
+or
+> > > hardware design.
+> > >
+> >
+> > > Not enough. We do not add compatibles not representing actual hardwar=
+e,
+> > > just to streamline boot image handling.
+> > >
+> > > Plus this code is not even truly correct.
+> > >
+> > > We do not write DTS to fulfill broken Android boot process.
+> >
+> > I have been trying rather hard to find a reasonable compromise between
+> > mainline requirements and a normal Android use case, something I can
+> > actually ship to normal users. This seemed fairly reasonable to me,
+> > since it can generate standalone dtb's transparently. But if my use
+> > case can never meet submission requirements, then why am I even here,
+> > getting shamed for working on Android? If I have to fork the
+> > device-tree anyways to fit my requirements, then there's no reason for
+> > me to put the time and effort in to submitting something I can't use.
+> > I'd be better off just keeping everything out of tree as googles
+> > kernel-platform supports. And never look at mainline qcom again.
+>
+> Well... It's a tough argument. Getting your DTs into mainline would help
+> occasional users that would like to run something else than Android
+> (PmOS or some other distro). Also it ensures that you can run Android
+> even when Google (Qualcomm) EOL the current SM8550 msm-something tree.
 
-c0f1506f6354 ("PCI: dwc: Advertise dynamic inbound mapping support")
-appeared in v7.0-rc1, so apparently we added a regression in v7.0?  Do
-we need to revert this?
+Oh, I'm not working on the downstream kernel either way. The question
+is whether device support gets mainlined or if I keep all support out
+of tree and only update when Google forks the ack from a new lts.
 
-> The STM32 ATU has 4 inbound entries. After enumeration, the first 4 ATU
-> entries are allocated within ib_window_map.
-> 
-> On the first run of ./pci_endpoint_test -v BAR3(for example),
-> SUBRRANGE_SETUP calls dw_pcie_ep_ib_atu_addr(), which frees only one ATU
-> entry (BAR3), because we were in the bar_to_atu case, for the first submap
-> but fails to allocate the second submap. So the test FAILs.
-> 
-> On the second run with a different BAR, SUBRRANGE_SETUP test calls
-> dw_pcie_ep_ib_atu_addr() again, freeing the required ATU entry (BAR1) and
-> successfully using the second ATU entry (3), which was left unallocated by
-> the first test. then now the test PASSes
-> 
-> Therefore, the first invocation of ./pci_endpoint_test on any BAR always
-> fails. Other invocations are fine because the first one has left the missing
-> necessary ATU entry free. Whatever initial BAR number is used
-> 
-> I am unsure how to fix this. Always freeing all BARs before calling
-> set_bar() in the epf-test seems overkill, but safe.
-> I am also considering modifying dw_pcie_ep_clear_ib_maps() to clear N
-> num_submap entries even if ib_atu_indexes was not used yet, since only the
-> full BAR is used during the first invocation from bar_to_atu. But the
-> question is which ATU entry to select ? BAR+1 ?. This seems empirical.
-> 
-> I am not bothered by test failures due to an insufficient number of BARs
-> (this is already the case for BAR5,6), but the fact that the failures depend
-> on the test order is frustrating and show a regression.
-> 
-> But I'm not satisfied with either of the 2 possible fixes mentioned above.
-> 
-> Do you have any other thought ?
-> 
-> thank you
-> 
-> Christian
+> Speaking about the boot process. I remember that historically it was
+> possible to pass several DTBs in the the Android boot image. Is it no
+> longer the case? Is there any way to identify the boards (I think
+> historical code was using qcom,board-id for that)? Then you would be
+> able to squash all your DTBs in a single boot image.
+
+That functionality is still there, the concatenated dtb slot in the
+vendor_boot image. Unfortunately for this context, the odm did not
+change those ids per hardware variant. I think they just left them at
+the hdk or qrd default that came with the bsp. I do have to jump some
+software hoops to slot in the correct dtbo to the dtbo partition
+during inline updates because of this, but it's not terrible. And
+that's not something I can reasonably do for the vendor_boot image. To
+my knowledge, there is no way for the bootloader to tell these devices
+apart and any attempt to do so would require a custom abl build,
+probably per variant, which would then desync the boot firmware from
+the official OS, plus make first install more difficult for users,
+both of which I'm trying not to do.
+
+Aaron
 
