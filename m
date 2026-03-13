@@ -1,63 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-97516-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97517-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id oDAVBmwTtGlkgwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97516-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 14:38:52 +0100
+	id UNGdHQwZtGkihQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97517-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 15:02:52 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 887D22840B9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 14:38:51 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F62A28470A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 15:02:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 277BC3087C30
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 13:34:01 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id AF1BB311A340
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 13:36:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D63D63BE62D;
-	Fri, 13 Mar 2026 13:25:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 346BA3A3E70;
+	Fri, 13 Mar 2026 13:29:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U2GeQNG3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IVfhP+rs"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16F43BD24F;
-	Fri, 13 Mar 2026 13:25:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1049F3264F3;
+	Fri, 13 Mar 2026 13:29:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773408315; cv=none; b=dJb/Y+mVtr+FQZmPLQXZPlR/dIWQCKJu8qwOYkUgqIK3TaIMYrTW52wu0cUhWisaTGtwZEbdhwIsKjCx/upSZ68sJIJdFhF/LzsB7js8EexyxxxVRv+a4lNPXik0sDtAgqb4YXmvxA0kWZE+FvCqUwFalnbpIyBI0wRSCyq5YYY=
+	t=1773408561; cv=none; b=dl1WCKai07lrtEyuTYa2uNNwbuYsgVJCbX+GDmzVCsplUtfhMkl/vD8G5sXsYlkJ6s1GH+OZ1dFVJWPxhsBtDxxmq04V/5UmTomfRtQCHeJ8o3bSG2JVoTxlnHDuItRcg2UZPPirD/nPZw3lQg6u6GQEVoQ6zUuomGyhLSJaBww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773408315; c=relaxed/simple;
-	bh=4c86BLk/dI3NXdF++uHeN10FLncIlDSsx+Zc0PHkiYE=;
+	s=arc-20240116; t=1773408561; c=relaxed/simple;
+	bh=mHNhZ03zfau6eX8H6TCWVw0KXYoxPIRYjfKW+oWukeQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EZKJJG3SuzNbgqGFMaGsgzcp1bxkkXHGsJX43VC0ZQKdUIEnKWDG8Ur+z+Y3sE7RZDaib1xoThX8Hl8iLUV4cRDaNtdQY0V9paXZUdG1IZpZ3KWxsrQbg/n2vWCi03arJVCt7JZlkanjLe38gQChIyBXEXsLvkhnHSXCNcRbYHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U2GeQNG3; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2EA1C19425;
-	Fri, 13 Mar 2026 13:25:14 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=TK343m7clF0DUllE6yMDaAtDoLaO6Y7q95/cGjeHXey+2xvLay15uye1zoapWHMYxn1LZ9H2+y2Q4i+TRVPKCtPPrEeJCaiIVWjzSUse611ooQWjMNQU4D1nw7vCrWQIYiElCxCNm+I+jHO4aiInW0XeKmtmDr/XbBPJT4JNgXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IVfhP+rs; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FCE2C19421;
+	Fri, 13 Mar 2026 13:29:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773408315;
-	bh=4c86BLk/dI3NXdF++uHeN10FLncIlDSsx+Zc0PHkiYE=;
+	s=k20201202; t=1773408560;
+	bh=mHNhZ03zfau6eX8H6TCWVw0KXYoxPIRYjfKW+oWukeQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=U2GeQNG3fSVCdV+Hv0LKEuvolEub88KtSSZ2NhkQ8rB+eWnywyD619eA1h0Ff5v8c
-	 vgaaKvYdZPJnD23f6m+/wrAFpwRxe+jiNLm/JClwQlzCeq8ZFCuXFoN+0/QZNLfGNR
-	 nQDkjiCu5os1Hhek96SmSDOtmYlmYz5cOHoB20ZjkAI9IXuwwEqkcuJ0Q8ou0sCj4R
-	 tH8hPKXWWmy58MxZpkzWX3hWOMMt4UdxJJ7fWAhZ69ADoBXvk6cZ6JN4EljU9UUVY5
-	 p/KLnwgb1LwsQRR/alXvn1Y/6wK/2JUmJmJyHM3+rtU/hRPvDvPvjAfcgPF9TySkCW
-	 Bw/JInl12LTug==
-Date: Fri, 13 Mar 2026 14:25:12 +0100
+	b=IVfhP+rs4cqnhi7doSpJgURhOUX4ptbAk9UDrr3VBQKqlu7RoobylVilcp0aRkkpl
+	 OLp6x2esDmuNO9an7KpZ54GTrnQySZCjlLXHhgt1CU07hXZaP8WJKqGINS6uWOGSyy
+	 cK+LRifEnlWEp5leomxoJPriaT9fZqDwvsN1xA6zFzhhHvpyxdoUcMy0LNhfE6NVO/
+	 WcvSgyOdq32hcOrvI96+KUB3lEZbYZeXi08VzJwJvBGmNCg8FRKqsKDlzR2eoL2imD
+	 9TsW7FCwjjUJTwllMyGVqd5Gf09L69Wt5PRJEujL6hk1qOvuSo6F6pSvFQjoheqq3k
+	 BgxLU3/MSlZ6g==
+Date: Fri, 13 Mar 2026 14:29:18 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Philipp Zabel <p.zabel@pengutronix.de>, Linus Walleij <linusw@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>, 
-	Robert Marko <robimarko@gmail.com>, Guru Das Srinagesh <linux@gurudas.dev>, 
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, linux-mmc@vger.kernel.org
-Subject: Re: [PATCH 0/9] Add minimal boot support for Qualcomm IPQ5210
-Message-ID: <20260313-serious-calm-chamois-4a0af3@quoll>
-References: <20260311-ipq5210_boot_to_shell-v1-0-fe857d68d698@oss.qualcomm.com>
+To: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Cc: andersson@kernel.org, linusw@kernel.org, robh@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, konradybcio@kernel.org, srini@kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, sibi.sankar@oss.qualcomm.com, 
+	mohammad.rafi.shaik@oss.qualcomm.com
+Subject: Re: [PATCH 1/3] dt-bindings: pinctrl: qcom,sm8650-lpass-lpi-pinctrl:
+ Add Glymur pinctrl
+Message-ID: <20260313-brawny-tidy-bullfrog-a99a63@quoll>
+References: <20260311124230.2241781-1-srinivas.kandagatla@oss.qualcomm.com>
+ <20260311124230.2241781-2-srinivas.kandagatla@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,46 +65,49 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260311-ipq5210_boot_to_shell-v1-0-fe857d68d698@oss.qualcomm.com>
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+In-Reply-To: <20260311124230.2241781-2-srinivas.kandagatla@oss.qualcomm.com>
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-97516-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[19];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-97517-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[14];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[kernel.org,baylibre.com,pengutronix.de,linaro.org,gmail.com,gurudas.dev,vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 887D22840B9
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 9F62A28470A
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Wed, Mar 11, 2026 at 03:15:42PM +0530, Kathiravan Thirumoorthy wrote:
-> The IPQ5210 is Qualcomm's SoC for Routers, Gateways and Access Points. This
-> series adds minimal board boot support for ipq5210-rdp504 board.
+On Wed, Mar 11, 2026 at 12:42:28PM +0000, Srinivas Kandagatla wrote:
+> Document compatible for Qualcomm Glymur SoC LPASS TLMM pin controller,
+> fully compatible with previous SM8650 generation (same amount of pins
+> and functions).
+> 
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+> ---
+>  .../bindings/pinctrl/qcom,sm8650-lpass-lpi-pinctrl.yaml       | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 
-You combined around four or five independent subsystems. Where are
-dependencies and merging conflicts/strategy explained?
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
 Best regards,
 Krzysztof
