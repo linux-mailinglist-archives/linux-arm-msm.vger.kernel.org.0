@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-97295-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97300-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id oO/8Mb16s2kZXAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97295-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 03:47:25 +0100
+	id ED1bDLWDs2msXQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97300-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 04:25:41 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2FAB327CE54
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 03:47:25 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2834227D113
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 04:25:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id ACFFD30D546E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 02:46:12 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 1D6243017AB9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 03:25:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63C5C1C84D0;
-	Fri, 13 Mar 2026 02:46:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6EC32D97B8;
+	Fri, 13 Mar 2026 03:25:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="M8Wjyn0Y"
+	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="LM6+Tvo2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-m1973189.qiye.163.com (mail-m1973189.qiye.163.com [220.197.31.89])
+Received: from mail-m155105.qiye.163.com (mail-m155105.qiye.163.com [101.71.155.105])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AE8623EAB4;
-	Fri, 13 Mar 2026 02:46:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.89
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD02304BDC;
+	Fri, 13 Mar 2026 03:25:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=101.71.155.105
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773369971; cv=none; b=kKkTX4uXHMAvQcDJeR3qnYSHNG3oux+O54wNPmSyN7ovGkMlKzz8gziFMRlT8cC9IEblk3OQl4wArOSVtMotTg7MwUlro4+8PNLyBjob4JsPprKHVZKBn/QdVauDFA2EXl88lYgNbYDhdXF20mnZwNoy8fLUIRSMlAVU3VTLee0=
+	t=1773372335; cv=none; b=Z0G0IYW7qABDJLT8DrhmQCWe52h9aQOvscdwko80L/WoQueLNU1htlLwFdi6Rcqj1nGbI6n2TOct0m5iHhPR+l9UBPsMk9mlcqqPSesr4X62CS79l8Trhzy7TuZKVZ+h07xRHasTPuYBV6pFH5R+MKCPfkv2j0RW0x0D0IiuzPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773369971; c=relaxed/simple;
-	bh=fswSJKNrf4EoT/tF0WAuknxmOAME5KLLvIeNgbDli0M=;
+	s=arc-20240116; t=1773372335; c=relaxed/simple;
+	bh=7IroXPo25acpPgw/E5upv97HBXA+EjYkyKQvzU7Uoh0=;
 	h=Cc:Subject:To:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=udDVGyyB5kStDZiXtAVC6Oqm1K6CZvXQ43qyz+jqFv0K6cfm2OFNa0JWcEGsFqfrshxuKu0MBjz64j52P2c2CuRIBoBt5lhp4oG8e8wSSGZ2MFp8QetcBzut0ygUeOxrMyvy26knciI8mABkUloFNoEIPyAXrk5kk8t4ZTzDXmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=M8Wjyn0Y; arc=none smtp.client-ip=220.197.31.89
+	 In-Reply-To:Content-Type; b=oWH8wxKCcF/QNesTK3W2vC76mOS10+E63DEE0eYZuQfDglhVukTxE8OzWg2+E5AQxfPRZ2aIivAOhZCUhFveAlKtWROXx76k8jWpmOtNRWRul/jpkZwYY/7TkdiwmihOIsHsTDqLhZnumxlU1HjvSpnHA2y426KKRuHCnZGCyJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=LM6+Tvo2; arc=none smtp.client-ip=101.71.155.105
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
-Received: from [172.16.12.17] (unknown [58.22.7.114])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 36c8f51b3;
-	Fri, 13 Mar 2026 10:45:58 +0800 (GMT+08:00)
+Received: from [192.168.61.151] (unknown [110.83.51.2])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 36c931471;
+	Fri, 13 Mar 2026 10:49:56 +0800 (GMT+08:00)
 Cc: shawn.lin@rock-chips.com, linux-pci@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
  mayank.rana@oss.qualcomm.com, quic_vbadigan@quicinc.com
-Subject: Re: [PATCH v3 2/3] PCI: dwc: Add helper to Program T_POWER_ON
+Subject: Re: [PATCH v3 3/3] PCI: qcom: Program T_POWER_ON
 To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
  Manivannan Sadhasivam <mani@kernel.org>,
  Lorenzo Pieralisi <lpieralisi@kernel.org>,
@@ -48,10 +48,10 @@ To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
  Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
  Jingoo Han <jingoohan1@gmail.com>
 References: <20260311-t_power_on_fux-v3-0-9b1f1d09c6f3@oss.qualcomm.com>
- <20260311-t_power_on_fux-v3-2-9b1f1d09c6f3@oss.qualcomm.com>
+ <20260311-t_power_on_fux-v3-3-9b1f1d09c6f3@oss.qualcomm.com>
 From: Shawn Lin <shawn.lin@rock-chips.com>
-Message-ID: <ce2381fd-7c5c-be49-753a-bfc86346a0a9@rock-chips.com>
-Date: Fri, 13 Mar 2026 10:45:58 +0800
+Message-ID: <04fdfe0b-5867-0a94-75ec-44cec913756d@rock-chips.com>
+Date: Fri, 13 Mar 2026 10:49:56 +0800
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.11.0
 Precedence: bulk
@@ -60,24 +60,24 @@ List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <20260311-t_power_on_fux-v3-2-9b1f1d09c6f3@oss.qualcomm.com>
+In-Reply-To: <20260311-t_power_on_fux-v3-3-9b1f1d09c6f3@oss.qualcomm.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-HM-Tid: 0a9ce516219809cckunm8c60b179698cf
+X-HM-Tid: 0a9ce519c35809cckunmfe456f736a738
 X-HM-MType: 1
 X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFDSUNOT01LS0k3V1ktWUFJV1kPCRoVCBIfWUFZGRhCH1ZLTh1PSUxDSxkYSB5WFRQJFh
-	oXVRMBExYaEhckFA4PWVdZGBILWUFZTkNVSUlVTFVKSk9ZV1kWGg8SFR0UWUFZT0tIVUpLSU9PT0
-	hVSktLVUpCS0tZBg++
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlDGUkdVkwdGk9PTB8fQhgYS1YVFAkWGhdVEwETFh
+	oSFyQUDg9ZV1kYEgtZQVlKSktVQ0hVTkpVSVlXWRYaDxIVHRRZQVlPS0hVSktJT09PSFVKS0tVSk
+	JLS1kG
 DKIM-Signature: a=rsa-sha256;
-	b=M8Wjyn0Y8Ij7HefnvbzLlU8ZMn0Fa9L1S7FHzNq0/jQBDf4FEB4ZPN9FQRbnXNiU+hEN1L3Ne/baQWXl0P6TLkaZEf5Sls7eGwh3ZiGuegl10SDXIQqACMkD2O8C4BtUPAQETG8l5O1WPziNqQmaPwH3zINR8k12u6N0Xty1UmU=; s=default; c=relaxed/relaxed; d=rock-chips.com; v=1;
-	bh=9LeyQWEFO3EX3gB1qmDkWaeYNHuXwpLGCY0ywMDqlMo=;
+	b=LM6+Tvo2c2bxR7lHJdkU5WhYkmEWZ5aaEQhLXrt88R54BmcnsYg+swaLmqJ9HWzChGGiS+RjWzh7v9CSgrFc7ljXbVaOgZqHgq8M5p3MXRrmSxFfHS+DcgvPjblZ553/bu7uNKgbIKWXUPSt37zHIZiRFYYluEAWccjprnvyUHA=; s=default; c=relaxed/relaxed; d=rock-chips.com; v=1;
+	bh=XcX4EUH+vO15CDcdQiC0rQ1HswKB0uSszqiEkuDD5i0=;
 	h=date:mime-version:subject:message-id:from;
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[rock-chips.com,none];
 	R_DKIM_ALLOW(-0.20)[rock-chips.com:s=default];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
@@ -85,7 +85,7 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	RCVD_COUNT_THREE(0.00)[4];
 	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,google.com,gmail.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-97295-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-97300-lists,linux-arm-msm=lfdr.de];
 	RCPT_COUNT_TWELVE(0.00)[13];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
@@ -94,88 +94,85 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[shawn.lin@rock-chips.com,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[rock-chips.com:+];
-	NEURAL_HAM(-0.00)[-1.000];
+	NEURAL_HAM(-0.00)[-0.998];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,rock-chips.com:dkim,rock-chips.com:email,rock-chips.com:mid]
-X-Rspamd-Queue-Id: 2FAB327CE54
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,rock-chips.com:dkim,rock-chips.com:mid,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 2834227D113
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 在 2026/03/11 星期三 20:40, Krishna Chaitanya Chundru 写道:
-> The T_POWER_ON indicates the time (in μs) that a Port requires the port
-> on the opposite side of Link to wait in L1.2.Exit after sampling CLKREQ#
-> asserted before actively driving the interface. This value is used by
-> the ASPM driver to compute the LTR_L1.2_THRESHOLD.
-> 
-> Currently, some controllers exposes T_POWER_ON value of zero in the L1SS
-> capability registers, leading to incorrect LTR_L1.2_THRESHOLD calculations,
-> which can result in improper L1.2 exit behavior and if AER happens to be
+> Some platforms have incorrect T_POWER_ON value programmed in hardware.
+> Generally these will be corrected by bootloaders, but not all targets
+> support bootloaders to program correct values due to that
+> LTR_L1.2_THRESHOLD value calculated by aspm driver can be wrong, which
+> can result in improper L1.2 exit behavior and if AER happens to be
 > supported and enabled, the error may be *reported* via AER.
 > 
-> Add a helper to override T_POWER_ON value by the DWC controller drivers.
+> Parse "t-power-on-us" property from each root port node and program them
+> as part of host initialization using dw_pcie_program_t_power_on() before
+> link training.
 > 
-
-Tested-by: Shawn Lin <shawn.lin@rock-chips.com>
-Reviewed-by: Shawn Lin <shawn.lin@rock-chips.com>
-
+> This property in added to the dtschema here[1].
+> 
 > Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> Link[1]: https://lore.kernel.org/all/20260205093346.667898-1-krishna.chundru@oss.qualcomm.com/
 > ---
->   drivers/pci/controller/dwc/pcie-designware.c | 28 ++++++++++++++++++++++++++++
->   drivers/pci/controller/dwc/pcie-designware.h |  1 +
->   2 files changed, 29 insertions(+)
+>   drivers/pci/controller/dwc/pcie-qcom.c | 13 +++++++++++++
+>   1 file changed, 13 insertions(+)
 > 
-> diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
-> index 5741c09dde7f40487c6da6dfd66f7c8d96a74259..6289329ef2b2a4ac9264d1c6cb5ea4e88c261634 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware.c
-> +++ b/drivers/pci/controller/dwc/pcie-designware.c
-> @@ -1249,6 +1249,34 @@ void dw_pcie_hide_unsupported_l1ss(struct dw_pcie *pci)
->   	dw_pcie_writel_dbi(pci, l1ss + PCI_L1SS_CAP, l1ss_cap);
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 67a16af69ddc75fca1b123e70715e692a91a9135..63d5628e988d3c07f42099c0d86e6b80fd54ce32 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -269,6 +269,7 @@ struct qcom_pcie_perst {
+>   struct qcom_pcie_port {
+>   	struct list_head list;
+>   	struct phy *phy;
+> +	u32 l1ss_t_power_on;
+
+u16?
+
+>   	struct list_head perst;
+>   };
+>   
+> @@ -1283,6 +1284,14 @@ static int qcom_pcie_phy_power_on(struct qcom_pcie *pcie)
+>   	return 0;
 >   }
 >   
-> +/* TODO: Need to handle multi root ports */
-> +void dw_pcie_program_t_power_on(struct dw_pcie *pci, u16 t_power_on)
+> +static void qcom_pcie_configure_ports(struct qcom_pcie *pcie)
 > +{
-> +	u8 scale, value;
-> +	u16 offset;
-> +	u32 val;
+> +	struct qcom_pcie_port *port;
 > +
-> +	if (!t_power_on)
-> +		return;
-> +
-> +	offset = dw_pcie_find_ext_capability(pci, PCI_EXT_CAP_ID_L1SS);
-> +	if (!offset)
-> +		return;
-> +
-> +	pcie_encode_t_power_on(t_power_on, &scale, &value);
-> +
-> +	dw_pcie_dbi_ro_wr_en(pci);
-> +
-> +	val = readl(pci->dbi_base + offset + PCI_L1SS_CAP);
-> +	val &= ~(PCI_L1SS_CAP_P_PWR_ON_SCALE | PCI_L1SS_CAP_P_PWR_ON_VALUE);
-> +	FIELD_MODIFY(PCI_L1SS_CAP_P_PWR_ON_SCALE, &val, scale);
-> +	FIELD_MODIFY(PCI_L1SS_CAP_P_PWR_ON_VALUE, &val, value);
-> +
-> +	writel(val, pci->dbi_base + offset + PCI_L1SS_CAP);
-> +
-> +	dw_pcie_dbi_ro_wr_dis(pci);
+> +	list_for_each_entry(port, &pcie->ports, list)
+> +		dw_pcie_program_t_power_on(pcie->pci, port->l1ss_t_power_on);
 > +}
 > +
->   void dw_pcie_setup(struct dw_pcie *pci)
+>   static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
 >   {
->   	u32 val;
-> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-> index ae6389dd9caa5c27690f998d58729130ea863984..da67beece3f11e33d9a1937fa23d443feea3bbc7 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware.h
-> +++ b/drivers/pci/controller/dwc/pcie-designware.h
-> @@ -602,6 +602,7 @@ int dw_pcie_prog_ep_inbound_atu(struct dw_pcie *pci, u8 func_no, int index,
->   				u8 bar, size_t size);
->   void dw_pcie_disable_atu(struct dw_pcie *pci, u32 dir, int index);
->   void dw_pcie_hide_unsupported_l1ss(struct dw_pcie *pci);
-> +void dw_pcie_program_t_power_on(struct dw_pcie *pci, u16 t_power_on);
->   void dw_pcie_setup(struct dw_pcie *pci);
->   void dw_pcie_iatu_detect(struct dw_pcie *pci);
->   int dw_pcie_edma_detect(struct dw_pcie *pci);
+>   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> @@ -1317,6 +1326,8 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
+>   	dw_pcie_remove_capability(pcie->pci, PCI_CAP_ID_MSIX);
+>   	dw_pcie_remove_ext_capability(pcie->pci, PCI_EXT_CAP_ID_DPC);
+>   
+> +	qcom_pcie_configure_ports(pcie);
+> +
+>   	qcom_pcie_perst_deassert(pcie);
+>   
+>   	if (pcie->cfg->ops->config_sid) {
+> @@ -1759,6 +1770,8 @@ static int qcom_pcie_parse_port(struct qcom_pcie *pcie, struct device_node *node
+>   	if (ret)
+>   		return ret;
+>   
+> +	of_property_read_u32(node, "t-power-on-us", &port->l1ss_t_power_on);
+
+Ditto?
+
+> +
+>   	port->phy = phy;
+>   	INIT_LIST_HEAD(&port->list);
+>   	list_add_tail(&port->list, &pcie->ports);
 > 
 
