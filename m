@@ -1,310 +1,191 @@
-Return-Path: <linux-arm-msm+bounces-97357-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97358-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sAgTDGPJs2kqawAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97357-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 09:22:59 +0100
+	id UMfnCqHKs2n6awAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97358-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 09:28:17 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8629E27F883
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 09:22:58 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id A04BA27FA57
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 09:28:16 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id CED553205792
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 08:16:07 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7029E3053B8E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 08:25:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40FD737F017;
-	Fri, 13 Mar 2026 08:15:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 132223803F3;
+	Fri, 13 Mar 2026 08:25:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="n+sZ2bp7";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="GQtrihuX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gGc9xT4P"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA679375F65
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 08:15:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE2A737FF40;
+	Fri, 13 Mar 2026 08:25:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773389756; cv=none; b=VT5H2tByO6tKcLrQLPSskvtnjTl/Gh34mL8T9oRmsT1AXPYBTecARy4RMpo3uGmBZ75HD1a/2FLrSRThuEBcrFDWmezmCcZV4J+cycPtlABDTXLzldDTkrIE1V96XLU3tZURMVCUHDJkmKnJ2thmeGZ3sFon7/ltd27518/7tzo=
+	t=1773390319; cv=none; b=Ypa/qDTaBRMj902+2VBPWT1MOnoVxnlGf1e8T6b+oq5Rwo6jAUj9FifoR/TsitcgR91KE5QMOSp6pffLLZy+mEfOWsbejUneFb8f0F1tB1TZ2qmm/EJ9Z9tuFPbOlPjTVXfMCtgHY54uif10dlyF7qZIaCWG2q47I8+qLNc9N0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773389756; c=relaxed/simple;
-	bh=HtZ7UHaIZ5d4GpPFkpIcr7qnrP+FXUHAis/ov3Tet4o=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=El5RPN9YoAkm0vACmyeNFUrrgSX1sPY56AbpihPbREpPhcWxIksIwDjv9LfCMNiyaAeb6fl3J0zSTmA7wU0UREe0yHfYxTxq6ZNShywnlUqWeMus7pr59I/VL4SJQadvLEXjHtBMVsJu8CX0V50EumML9LFWFnr7TXkKvgWmVKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=n+sZ2bp7; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=GQtrihuX; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62D5tgIe1176553
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 08:15:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=xfR7KDCiWXdpXvk8xsnZ6c1wZFLaqKZZVra
-	zB8UN08k=; b=n+sZ2bp7B4KzaAUFuTWXGLZRjpqBmhZsyq2vzha5b1j/z9DMLpZ
-	0z/WBPFv9K72gqpJ35bBeEP0zg6svVS8K/q5q8hCE0gcWcxY8eeL0rMhSlx2O1lp
-	1kQiRTygCWX8sGSGe9JVLAlfDEEVN/no69V2AuRsMvCKUy1/yvGn0xvRTCVtTt/c
-	xEYjEpJciziCpsjuXsM1AUkWjVGQe8SYcpV0iBZnEwx4UoCl0cqepy3Yd3SQMF4n
-	XfC2DyVJvjabuNdWw499Zt3LR0VpPvfxmrfJbmQdSMkGWjIaFSVT8q38bjleqDXc
-	l3Z2MYkWwmVwVsG5dVcFfF2W1utSV4P0NaA==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cumvqcm69-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 08:15:54 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-35a0b5cf34dso2200742a91.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 01:15:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1773389753; x=1773994553; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=xfR7KDCiWXdpXvk8xsnZ6c1wZFLaqKZZVrazB8UN08k=;
-        b=GQtrihuX4cwCEi9al412MtoV8DuUZ8B1R9l/AOrbapcCQxKRfuwoxNXhvqHuohJ56D
-         c7XHk4dbbo9F1B7/ZugkX6wfqSGMB2XA85w4j33gT2nNoZvi9b3FZs54o9N5dEBmJGVc
-         zeOTsYlX4ZqMiiewtE4TW5I4H/AlD/rxt+DrhBt6o/mB8HjM15W1GqdWsBgH6E8XSDBb
-         Uk5FqMLh+R6fydz4WzfEO0nUE7LNyCJLOWAsmovEVwE35+8oOX7bcgzTl7Nh3k3NTQwK
-         JujJ4gmJPQjpL2Pym6wl72wp5YfGQ89JxfK6RPe13XYfWjbINeXJ8plSCDN9jQlG+/Lz
-         ZjAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773389753; x=1773994553;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xfR7KDCiWXdpXvk8xsnZ6c1wZFLaqKZZVrazB8UN08k=;
-        b=SDpGLTNB5YtwkKsBQkYtF2ny4oKKOPtl6PDevfBbbm/6wq1RX31xHM7UzDq0gNlpir
-         XB5O6i0wFw5n5u+C0O+ZeYkv3jjyGlUcz6Xl9Ys4R+ZO22tDVYYRRdz5cgDYXG0WZjKK
-         yJ+7kFMdpLOGC1SE+xgf/m/i6XT2Yr0P7fRVSZpvgxE2ugotD6tECtd0HDkImhmSFeJ5
-         S+rwtyh8rULNlgBcBUq0NEycwsXJ4VkGSKv4M0L8O9hQCWpgJOcM4jOOWZt8nph4ZRBx
-         6EwJFpzRJgGohP95ao447MI6JrGwfp509OarW3eEIW+4UVEvVw4A+q7/k43TuHeUI3Qd
-         I5Aw==
-X-Forwarded-Encrypted: i=1; AJvYcCXQ9eljeYhW0WGJefvO0jrhrZ+OsYxChBP84mDkLBKFY77ob4g2lI6PdITRdq7JM5vT2h91fIUYgUiseonN@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy7SWS9QsgJhlgBIGbeSU1X4o+3C+DjFejto0G/NzlNzEhnMrfZ
-	/DMnw6pPUfDJGoAYgTYSkXqdj0EcheQuFg6nw3JUYQTfU/0F1Di5+ma4YGuDtRqvtjFGL2xpQA0
-	mXhBwZM1adaGR86cflgpn4AT+MvWVknRQSuctRxuMxyM7MFeFOwfTy3f3EJyD2kXMCyyt
-X-Gm-Gg: ATEYQzysreAC8J0F5ivmNbIHMdJ2yOPyinFiLRdbcl/a9SpnHY3qpwb2M0mwUVxOdq6
-	lEQF5muMiPSxgzJyd60rdq5t9HgEZFOcV5mAVrrtF3pQ/89PaJ/myJeMNlUJPV2F5dYjY54VAMF
-	JsbPE+Ai7m1UuAsSTJ77RQhMjY4dC0t3ZL21xh9agAWFGVC+Yv1+bBtO+MIan+lOXwynonPr8QK
-	gHw2pI9Qgj8HNO8kw4yIawpjx7njZhvChnYouPLOBws33zCh8MRWj3NEcRYDUZagr/NM6jmIZTv
-	mBv2UK+GsdIAcgEwMykXl5mHdc+MwM0rQ0PpfSZbx6i9UsII0hpXKk2YT+EoQ7LVxndeN1l73nM
-	YY/KFTBPq00rDp9P/qGXa2xn/ArA2jb+JNN4G54pwzKUsB3UlVZuJ
-X-Received: by 2002:a17:90b:2e45:b0:356:2fc5:30e5 with SMTP id 98e67ed59e1d1-35a21fc20e7mr2198966a91.21.1773389753279;
-        Fri, 13 Mar 2026 01:15:53 -0700 (PDT)
-X-Received: by 2002:a17:90b:2e45:b0:356:2fc5:30e5 with SMTP id 98e67ed59e1d1-35a21fc20e7mr2198944a91.21.1773389752817;
-        Fri, 13 Mar 2026 01:15:52 -0700 (PDT)
-Received: from hu-neersoni-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35a02e9861csm8039046a91.8.2026.03.13.01.15.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Mar 2026 01:15:52 -0700 (PDT)
-From: Neeraj Soni <neeraj.soni@oss.qualcomm.com>
-To: adrian.hunter@intel.com, ulf.hansson@linaro.org, ebiggers@kernel.org,
-        abel.vesa@linaro.org
-Cc: linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, neeraj.soni@oss.qualcomm.com,
-        wenjia.zhang@oss.qualcomm.com
-Subject: [PATCH v5] mmc: host: sdhci-msm: Add support for wrapped keys
-Date: Fri, 13 Mar 2026 13:45:48 +0530
-Message-Id: <20260313081548.3556577-1-neeraj.soni@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1773390319; c=relaxed/simple;
+	bh=DuLitpuybVxUQnulRmNUsGWTqFTdphbtKq8xNVvHdNM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=IuxpMphc8pMRpdi7JJmmyYu7jiCdpiphcojwBRcok3e3/qlNmsxU+y/Mhf1dMolUzFaY+t5jYjgXKqK5+0FDVbY7iGNPEC1hfpJsJw5g2/RV30Ux7K+rfC4jmsMCZ5yASmgEXA1im/9DwsXZyX0Q0tjw3fHJcnZlGSrZfQ//mIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gGc9xT4P; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9810AC2BC87;
+	Fri, 13 Mar 2026 08:25:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773390319;
+	bh=DuLitpuybVxUQnulRmNUsGWTqFTdphbtKq8xNVvHdNM=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=gGc9xT4Pyi/BTauyuzBfsSeM1+tvxPG9id25um2k5qX2Ci52WhQWp0KdFNFaGk1Ye
+	 evfC8DMet+TYWkDHqMjGzjBRnCJo0DaR9F2M7gAFlhNl+sBNvDQomxO5FAlduVIYGc
+	 CkwzfZVEuPKrTiYtcCVCmyhOqfcSllyeG7TatcuiXFlYetZkBK2rJCxwTm2J4OpQFK
+	 xIVMv7oODgvua4juGro75OCJFxvUc3bfb6Tc5y6M33mc2Gb7l8uaYERrBJGXxIXMWQ
+	 1m65AvRkMr+s0gJr28ycAeKzzdaF/tEaf2veFSiwYgdeGV/bWUsSWyctL6GQNHBc2U
+	 TvK/U2tCySOxw==
+Message-ID: <341cc7b5-0566-4fa1-b710-c486f318a7e8@kernel.org>
+Date: Fri, 13 Mar 2026 09:25:14 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: 1biz5FgpUGWTLom2Cah63cB32VogxfV6
-X-Proofpoint-GUID: 1biz5FgpUGWTLom2Cah63cB32VogxfV6
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEzMDA2MyBTYWx0ZWRfXyK58eh4lOD0r
- 4jiD+f9oYnBtJaKWGJK0K812QhU5NkJQTVWTUbeEWFQvWx/eQ9iKP/eGmomfbxOX1rTmxme7uUQ
- TiIRWk6n7MZzS7oocnFPdYKa19G4CNpNxB3OZHacQbq+rfZ+jejLrtgeSiqbuzJ8wKfgec4nuiL
- ZS3eL1awbi6d1lJDKQU335gZwwpwsqwqh/h0u+RjL1Ek6KFMH35YdyOTpbUj/aPUFJHcCMlOyrP
- Da9sS2TJZQJzHEYkXKCeeRfkjAVGr+jHVkEYZIqr545iZ0sRbPGeA7A1Ix0PPk4nbaS59t6AM0g
- qMtpEAgxFrYaJJtQ22sJW4wNCDwNWxDrpg6YMzbtzkatbO6BB9/CxUYy/xPxUP0k4uUeh4xtr+p
- 9SGUaFDTnfnQLWG66eST0Xilqw4anMSh2NPm8LTZCXXdqSS7L4XykXTdOJEGzQFL0MQty+ZgirK
- u3njftKN9e1kdaK5iGQ==
-X-Authority-Analysis: v=2.4 cv=ccHfb3DM c=1 sm=1 tr=0 ts=69b3c7ba cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=NEAV23lmAAAA:8
- a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=QyXUC8HyAAAA:8
- a=qqNy_vziDfUGqepx9HcA:9 a=iS9zxrgQBfv6-_F4QbHw:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-13_01,2026-03-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0 malwarescore=0 suspectscore=0 clxscore=1015
- priorityscore=1501 lowpriorityscore=0 spamscore=0 adultscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603130063
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/6] media: dt-bindings: Document SC8280XP/SM8350 Iris
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+ Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+ Bryan O'Donoghue <bod@kernel.org>, Mauro Carvalho Chehab
+ <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Bjorn Andersson <andersson@kernel.org>, David Heidelberg <david@ixit.cz>,
+ Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+ linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Johan Hovold <johan+linaro@kernel.org>
+References: <20260312-iris-sc8280xp-v4-0-a047ef1e3c7d@oss.qualcomm.com>
+ <20260312-iris-sc8280xp-v4-1-a047ef1e3c7d@oss.qualcomm.com>
+ <20260313-resourceful-saluki-from-sirius-f4e1be@quoll>
+ <ksk3hjyauhbzvytvch2xip7kusuicnatbw4xlmg7wtfiyatzpv@y5q7xjvl7esf>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <ksk3hjyauhbzvytvch2xip7kusuicnatbw4xlmg7wtfiyatzpv@y5q7xjvl7esf>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	TAGGED_FROM(0.00)[bounces-97357-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,intel.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:dkim,qualcomm.com:email];
+	TAGGED_FROM(0.00)[bounces-97358-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[neeraj.soni@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[19];
 	FROM_HAS_DN(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TO_DN_NONE(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[9];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 8629E27F883
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,linaro];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: A04BA27FA57
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Add the wrapped key support for sdhci-msm by implementing the needed
-methods in struct blk_crypto_ll_ops and setting the appropriate flag in
-blk_crypto_profile::key_types_supported.
+On 13/03/2026 09:14, Dmitry Baryshkov wrote:
+> On Fri, Mar 13, 2026 at 08:55:00AM +0100, Krzysztof Kozlowski wrote:
+>> On Thu, Mar 12, 2026 at 05:14:22PM +0200, Dmitry Baryshkov wrote:
+>>> The Iris block on SM8350 and SC8280XP is compatible with the Iris
+>>> (Venus) on SM8250. Document those two IP cores, using qcom,sm8250-venus
+>>> as a fallback compatible.
+>>>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+>>> ---
+>>>  Documentation/devicetree/bindings/media/qcom,sm8250-venus.yaml | 10 ++++++++--
+>>>  1 file changed, 8 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/media/qcom,sm8250-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sm8250-venus.yaml
+>>> index 43a10d9f664e..3700f8fe91cc 100644
+>>> --- a/Documentation/devicetree/bindings/media/qcom,sm8250-venus.yaml
+>>> +++ b/Documentation/devicetree/bindings/media/qcom,sm8250-venus.yaml
+>>> @@ -10,7 +10,7 @@ maintainers:
+>>>    - Stanimir Varbanov <stanimir.varbanov@linaro.org>
+>>>  
+>>>  description: |
+>>> -  The Venus IP is a video encode and decode accelerator present
+>>> +  The Iris2 IP is a video encode and decode accelerator present
+>>
+>> Why Venus name disappears? And why now this is Iris2, not Iris? It's the
+>> first time such name is used. Just call it Venus/Iris if the new devices
+>> renamed the block.
+> 
+> SM8150, SC8180X had Iris 1.xx. SM8250 and SC7280 have Iris 2.xx. But
+> when the bindings were written, it seems, it wasn't obvious (or
+> important enough). I will change this to Venus / Iris 2.xx
 
-Tested on SC7280 eMMC variant.
+Then "Iris v2.xx", how we call versions of blocks in all other cases.
+The block is simply Iris, not Iris2, right?
 
-How to test:
 
-Use the "v1.3.0" tag from https://github.com/google/fscryptctl and build
-fscryptctl that supports generating wrapped keys.
-
-Enable the following config options:
-CONFIG_BLK_INLINE_ENCRYPTION=y
-CONFIG_QCOM_INLINE_CRYPTO_ENGINE=y
-CONFIG_FS_ENCRYPTION_INLINE_CRYPT=y
-CONFIG_MMC_CRYPTO=y
-
-Enable "qcom_ice.use_wrapped_keys" via kernel command line.
-
-$ mkfs.ext4 -F -O encrypt,stable_inodes /dev/disk/by-partlabel/vm-data
-$ mount /dev/disk/by-partlabel/vm-data -o inlinecrypt /mnt
-$ fscryptctl generate_hw_wrapped_key /dev/disk/by-partlabel/vm-data > /mnt/key.longterm
-$ fscryptctl prepare_hw_wrapped_key /dev/disk/by-partlabel/vm-data < /mnt/key.longterm > /tmp/key.ephemeral
-$ KEYID=$(fscryptctl add_key --hw-wrapped-key < /tmp/key.ephemeral /mnt)
-$ rm -rf /mnt/dir
-$ mkdir /mnt/dir
-$ fscryptctl set_policy --iv-ino-lblk-32 "$KEYID" /mnt/dir
-$ dmesg > /mnt/dir/test.txt
-$ sync
-
-Reboot the board
-
-$ mount /dev/disk/by-partlabel/vm-data -o inlinecrypt /mnt
-$ ls /mnt/dir # File should be encrypted
-$ fscryptctl prepare_hw_wrapped_key /dev/disk/by-partlabel/vm-data < /mnt/key.longterm > /tmp/key.ephemeral
-$ KEYID=$(fscryptctl add_key --hw-wrapped-key < /tmp/key.ephemeral /mnt)
-$ fscryptctl set_policy --iv-ino-lblk-32 "$KEYID" /mnt/dir
-$ cat /mnt/dir/test.txt # File should now be decrypted
-
-Tested-by: Wenjia Zhang <wenjia.zhang@oss.qualcomm.com>
-Signed-off-by: Neeraj Soni <neeraj.soni@oss.qualcomm.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Eric Biggers <ebiggers@kernel.org>
-
----
-This is a reworked version of the patchset
-https://lore.kernel.org/all/20241101031539.13285-1-quic_spuppala@quicinc.com/
-that was sent by Seshu Madhavi Puppala.
-
-My changes rebase it to use the custom crypto profile support.
-
-Changes in v5:
-- Rebased on mmc-next.
-
-Changes in v4:
-- Updated the link for fscryptctl tool in commit message to "https://github.com/google/fscryptctl".
-- Aligned the indentation at few places.
-- Unwrapped few lines of code.
-
-Changes in v3:
-- Updated commit message with test details and moved "Signed-off-by" above the
-  scissors line.
-
-Changes in v2:
-- Updated commit message for clarity.
-
-Changes in v1:
-- Added initial support for wrapped keys.
----
- drivers/mmc/host/sdhci-msm.c | 42 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 41 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index da356627d9de..b4131b12df56 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -1944,7 +1944,7 @@ static int sdhci_msm_ice_init(struct sdhci_msm_host *msm_host,
- 
- 	profile->ll_ops = sdhci_msm_crypto_ops;
- 	profile->max_dun_bytes_supported = 4;
--	profile->key_types_supported = BLK_CRYPTO_KEY_TYPE_RAW;
-+	profile->key_types_supported = qcom_ice_get_supported_key_type(ice);
- 	profile->dev = dev;
- 
- 	/*
-@@ -2024,6 +2024,42 @@ static int sdhci_msm_ice_keyslot_evict(struct blk_crypto_profile *profile,
- 	return qcom_ice_evict_key(msm_host->ice, slot);
- }
- 
-+static int sdhci_msm_ice_derive_sw_secret(struct blk_crypto_profile *profile,
-+					  const u8 *eph_key, size_t eph_key_size,
-+					  u8 sw_secret[BLK_CRYPTO_SW_SECRET_SIZE])
-+{
-+	struct sdhci_msm_host *msm_host = sdhci_msm_host_from_crypto_profile(profile);
-+
-+	return qcom_ice_derive_sw_secret(msm_host->ice, eph_key, eph_key_size,
-+					 sw_secret);
-+}
-+
-+static int sdhci_msm_ice_import_key(struct blk_crypto_profile *profile,
-+				    const u8 *raw_key, size_t raw_key_size,
-+				    u8 lt_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE])
-+{
-+	struct sdhci_msm_host *msm_host = sdhci_msm_host_from_crypto_profile(profile);
-+
-+	return qcom_ice_import_key(msm_host->ice, raw_key, raw_key_size, lt_key);
-+}
-+
-+static int sdhci_msm_ice_generate_key(struct blk_crypto_profile *profile,
-+				      u8 lt_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE])
-+{
-+	struct sdhci_msm_host *msm_host = sdhci_msm_host_from_crypto_profile(profile);
-+
-+	return qcom_ice_generate_key(msm_host->ice, lt_key);
-+}
-+
-+static int sdhci_msm_ice_prepare_key(struct blk_crypto_profile *profile,
-+				     const u8 *lt_key, size_t lt_key_size,
-+				     u8 eph_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE])
-+{
-+	struct sdhci_msm_host *msm_host = sdhci_msm_host_from_crypto_profile(profile);
-+
-+	return qcom_ice_prepare_key(msm_host->ice, lt_key, lt_key_size, eph_key);
-+}
-+
- static void sdhci_msm_non_cqe_ice_init(struct sdhci_host *host)
- {
- 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
-@@ -2089,6 +2125,10 @@ static void sdhci_msm_request(struct mmc_host *mmc, struct mmc_request *mrq)
- static const struct blk_crypto_ll_ops sdhci_msm_crypto_ops = {
- 	.keyslot_program	= sdhci_msm_ice_keyslot_program,
- 	.keyslot_evict		= sdhci_msm_ice_keyslot_evict,
-+	.derive_sw_secret	= sdhci_msm_ice_derive_sw_secret,
-+	.import_key		= sdhci_msm_ice_import_key,
-+	.generate_key		= sdhci_msm_ice_generate_key,
-+	.prepare_key		= sdhci_msm_ice_prepare_key,
- };
- 
- #else /* CONFIG_MMC_CRYPTO */
--- 
-2.34.1
-
+Best regards,
+Krzysztof
 
