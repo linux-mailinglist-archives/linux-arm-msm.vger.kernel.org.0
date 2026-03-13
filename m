@@ -1,1085 +1,253 @@
-Return-Path: <linux-arm-msm+bounces-97309-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97310-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id qNfSNOaFs2msXQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97309-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 04:35:02 +0100
+	id CMegKzeHs2nPXgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97310-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 04:40:39 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C92127D297
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 04:35:02 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 713DE27D2E3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 04:40:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9C8A03207778
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 03:31:00 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 996D4305DD12
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 03:40:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67ACE34CFAD;
-	Fri, 13 Mar 2026 03:31:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E76F35AC35;
+	Fri, 13 Mar 2026 03:40:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VKUpdUsP";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="epOsivQ7"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="OcDW0IOX";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="RLboecII"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FBBC35966
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 03:30:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21608331A63
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 03:40:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773372660; cv=none; b=AMEb74HUX14wQegtO3AB4tobTY2ZMNZED8ymg0RYq4mRGv8oeYwQsCclRVqlYACJKw1W9JqulONgIqIiZ5Way1TAhL4JlvNbKkRYbFJbE0zHd+W/+c4/t9oYlSbHY1bzT7iLZ/Ptr9L7S7g7bSJYxk479C7Vn9mADj+Ina6aDyw=
+	t=1773373232; cv=none; b=jc8NhusLLT9bB+lG/ORZvEnUFzAN0q/nBZoj56MfgakLXQ009PODjQ3PwuGbVkzUw8VGNLIwklOzR0U58LGq1DOx7QL5bN9GlwqzTee9GzZBHpGuBPc4bU1SKhiWIlHQ6Q0C7fUBlan3n3LdoqsvCAzHWT5mdIPHcvxx1/kXwQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773372660; c=relaxed/simple;
-	bh=llgn5+aRY11LAEHGCdg1w363ucJvDrCF+1WvaFjtJAU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=PtOn6cqThSA8wPy/+SrUhB7VFREQ8/qzgs6edYi/y7DHdDHCsTGIwmwXbcwj8ZuQL3dJEWj2RVpZp+f/NMJQ89XbMll5c3PXg1F07ON/nEFkUIz6JWzFGgH8J94bbY4rBRbwM/lNLIMz44TgRceTt6WqcfARZyPIpu0VzqpGov8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VKUpdUsP; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=epOsivQ7; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1773373232; c=relaxed/simple;
+	bh=ltfiDfE5g5QX5g0lY3vlmncGCmA0gES71uxsyvPSnYM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IKs2vvUwPRP8hltk6QgNEkrovqqPEP9j/6lilRHQDRw/3yT5tnit/l2QYQdrpkJ7QBeJVqX67KNUq/xXBBMihljRAbTFw6kINgTwo25WIY2ifjNVyOO4hpHZM2eVfMqoctEpfxx4T8vqWdGmnKnguKp6cwub2vAEPyNJaGzdPk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=OcDW0IOX; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=RLboecII; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62CGN6OK509441
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 03:30:57 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62CIBF3m1922473
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 03:40:29 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	5ln8PcjzRvCT/TsPhFYbVkCzE9JVz5WGtnHzoya0sXg=; b=VKUpdUsPE89ZT67q
-	povq1OWl+FTLTxFKXagRGp6wOG4k+hh/cfXFkhzg+HFDpmSyMIFBnqhKqzl4DBMo
-	o/ZIt+f55NPeRMtu/yG2Ef3sfrjg0WOyUEdpUSUd00fm0Gh4/W9wVdt+/UkFT7VX
-	SzA1ijbuOKsFNih1bqkYJ4w+I+PG7TR5mwLtRT6rgMvfKOpqjie7qCD4g/BhFJO4
-	qHYKq1QoP8OT/xBxSXbgE+w6dtAUc5JkUmeaBowDWFQeOK0MnttxlPoXE2WUZaEw
-	Km7EpnCWArFfpXSAQAbuWfqzI7+/gdlLYtOI+S4qzy1YH9KOMCuxSlUYpxRWaT7B
-	4zYTOg==
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=soEEFrnJQV4WHOjC4LmqXnEi
+	VPaJ6DsC6HzsKtXirtE=; b=OcDW0IOX8DiRuMOWbMLiaqj2cc2fPYtrLgoalHmr
+	VLs901+9+eD+dSKPSHWjKB1RuCmPLrstfkzpqOfoARO5MxIpNp0sFpqkXKN0XJf8
+	wlzm/9djEt+8K9eB5VcZzP3yaV/Q9YHtFegqXVe2PiGFPIU7H/Zfz+nhLdIAfzpY
+	LQdmtnTD5k+4w0Nv3mA+VokYxaMUldg4J/vpIwin0TguOPFqvWMYYCTQgYee5Blb
+	bdmNpU/tn03y2FR5JnQgc1uDA2hQ34xmdR5p2UNvOwXBNw0TXQ90iKkkkjAdJlPF
+	X34vB8maTZInbz9NbQlZyxIm4Ok+MWtj4JVC7H6qvgoFqA==
 Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cus9w318y-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cuh4wvcab-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 03:30:57 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-8cd781c0d90so1554964885a.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Mar 2026 20:30:56 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 03:40:29 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-8cd7a25c5a9so968048285a.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Mar 2026 20:40:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1773372656; x=1773977456; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5ln8PcjzRvCT/TsPhFYbVkCzE9JVz5WGtnHzoya0sXg=;
-        b=epOsivQ79NDuVOFA8zTGYrxVs6Wp6Ml0N9Nn/0Tp1bQj0HFeicWJ71UqjQuq2Dv4A0
-         mkncgljSGknQF3sxnhJpST9MLsnK9hR2pSSuAD4D4eHCWP4A313dR8Qg+PuKMRwabSah
-         VM6diBMWgep/LEheMdll/o2Kvkt0d49/J1mf8oDB6n86nR6A43jPEabg2d8dP5G2nBPx
-         59G8vclHeU98JccXqauLFmClm96yfWz+86pBlht8O3+GAUllpR3qhMNwrun8zIZ8JLlj
-         +7+A1tI6nOzMGGg3f6vq2P1agj61+DaJPpBJEZQgysc8chLBxmKQlBRfKA+U8Z5T+TNT
-         G5IA==
+        d=oss.qualcomm.com; s=google; t=1773373228; x=1773978028; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=soEEFrnJQV4WHOjC4LmqXnEiVPaJ6DsC6HzsKtXirtE=;
+        b=RLboecIIy3bbBziDSVLesmVNSq7LmqL7Uf0niQiRzcilay4grevdaj6wXhgMtTeba6
+         xI7nCRcvg+19n+X9KCAMYYPpbsipbHDGpSB9VbLVDwIC6Vh2dqwwdFxGkjX6+pWFMlpU
+         5AmQx3TK588yfsAbNs8VEpXRwaJu3VL2/VHprjX1R+02zbvwlwst69FNg63EGbelN3rr
+         IMCQS1C1CVvIYk10Awvh/UA15EwmzJqVhoXztNOoNb9yWrHlCQbAGVnBZHfKl9FhMYls
+         oIs+zgFMCJTkoG7sfM2JnZVaXhczlqznA8Bnjhb8kfHceF7XgDP6Q59aJXBxjXAeSHKB
+         5Keg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773372656; x=1773977456;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=5ln8PcjzRvCT/TsPhFYbVkCzE9JVz5WGtnHzoya0sXg=;
-        b=OOhO65R3cf185vDzHrsIVCVPMGc5QSQnWV/rpw96bhElFVDaCqy3dsOZNIo+tGXzgD
-         sGZAXbBtNTihP9yKwC5WAGn4U73uAYiWMo+wusVq5rGmFUzHUjP4KQAZRI00bUvZFoZb
-         x8muH9ucCDs7HN94fdJ9NEECloOskUtn1w5EHKwDas6q4Wi728nOLABpNlEVSVg4TMG6
-         /HHHwX65QNqWRf396gjyhdIdHIonFoUTlewAYZgM/xi+Q/qdLHxCwORLO/NymF4g1we8
-         VdhQIXxnNXmB0HoduyZDmsrwGNYHgADAzxGQEuCbhwcuXo1rvOJwLFmhrR6fPY2Gw9fS
-         ylGg==
-X-Forwarded-Encrypted: i=1; AJvYcCU0dvACxxEMIMIJxvkW9Jywu2IWfzqxH9RteYrzLFArV8Uor+g11eiyKv6gg/FRZI2F+jdXpmZ9sPFvGdrM@vger.kernel.org
-X-Gm-Message-State: AOJu0YwcCv0nSxS5/vHkG9UlBLeu3QQ2LRyaSz+2mX/QT3y+2EJ8dDdM
-	QcflcdW1FGy98r+5PMfqHt3IVDMJyP0kaRfkriXSlE+tqSN3NePV7xhVH7i7bJ157RlVNN3MvJ/
-	grhQICMLfhCBlwfcTUA4kjJzSZCuaCwMfYyLEJdVgbbBFK9Z9Udvqp6EYAI1f5LbwbwBH
-X-Gm-Gg: ATEYQzz2o3KMiMX6zE75IgrkkII6Z+aOK402swFbJYim7JmOsATnnOuygAGmncCZSqC
-	C5si2q2IU2yspnA7YZ9dbUjOsU1OJ6wA/w7BtKeg8tY2lffCYs+JcX1z5xBRyc8RzqeoFp8T5Kp
-	nGdkISfY1LiAX+rH+9zAQgksoBiBemwilCVXBT5m7h4uJ/I90rJ3DUz3fofRQr/BEt7dVJ68Hg/
-	+/OshDoU5pgKq0H/IKeDkPdEWA6LW9OcNIqyR8rqqRv6yZnBWqkaWFOOefbjWcuML2x13R4/+s4
-	kMcHqa3b1kkJJh7WQXUND1xxbKolyqlChWGOfmqlm5+iTV0qOlwQnR8U3vwbdCqeXGF74J455NF
-	y3rGu+MCrCQURpTCRsCOFTnO1xoiD3F/PX9yfKzli/ycxaTKEXENw8UenaaTzmkLleMfIBWCj/N
-	W+WWJw7PF5nGiwhrJuLF3ydqy4VvxfQs1Lslc=
-X-Received: by 2002:a05:620a:700b:b0:891:7008:f2e0 with SMTP id af79cd13be357-8cdaa779799mr850820685a.8.1773372656020;
-        Thu, 12 Mar 2026 20:30:56 -0700 (PDT)
-X-Received: by 2002:a05:620a:700b:b0:891:7008:f2e0 with SMTP id af79cd13be357-8cdaa779799mr850817885a.8.1773372655440;
-        Thu, 12 Mar 2026 20:30:55 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1773373228; x=1773978028;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=soEEFrnJQV4WHOjC4LmqXnEiVPaJ6DsC6HzsKtXirtE=;
+        b=MQGOpe0Wql3ZiQSdrhYV+lQd46V584E8feVP4R2AAs7dDaAr5/U7Jt7ZPLPVqjS0l6
+         gi4y8Mu/YXNr/bWEYFQWOnmdHN5QPAunc1GTrLJahJlMIy6b8QEBqIYOXvJi3pE2v1Hv
+         zoTb46FMg6uiRokLJzUcux7YQVYplJmQxTTxoDKkpx1AKa2VQNsSUxoXUEiVW3lUdqSy
+         S9OZR6ZwNoKidNBbmaV1bl4IjWCVjHHbkB1nFLpMOwC56uvAGuHcsrp6IhMMj1CMXVeK
+         B/F/l2aNOKb8J6nHsCGMNDh+CCIkjrpzz5ji0YWOFzP+Xbhb6Hxh9K2q7QzDZleipjpe
+         cgOw==
+X-Forwarded-Encrypted: i=1; AJvYcCWt8MN+UJp+fb2f74MWW6u0w7HlA9CDwn6xjVUyuaIdc9cMaaneZhRhr4UUVLSjuxxVBgXc2hZ5AOUgQBf7@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxc83z/Vro8g2F/I4R6i02Ssuvy/zRRRwh+oLwzjQa5sAXx+exN
+	KrrwyDbyvYEhldB2xcGKi1qOgojDuO3kp4Kfb8Kr+EKEyih1GJW2bOR2dj5okNsCzZeCXQW1sUU
+	0u7wIkFESkrHyRWBur4pIxUwNGzMhpZQTvHvZUkyoMl6dOUNgZSWFpRxczbX/hMx6EhbH
+X-Gm-Gg: ATEYQzzCBpnZ1CRYHZKeFxXsk0aLY/yST4dTfubYCbUrF9PBWqCfeg389ADeLx9KJjG
+	7rTTsmb+w0WJUBTXtuhFdLiguxfbkllk6X+93vy0Lo7CC3+0jh1NgKQCjUsEalyrjs+WF2gyPC+
+	EDUAc1bXV5OwCJOtrrS34rnZceas7BxfsEJUBVrylZ+lt1Jr052QG4qNh4jLc9I1bgXUowrVEF9
+	RzpI0nOfK6xoCy7hYUpL4wBv8CXi9EZZXPEriW95c+XL+mrnGWO52pJo9S9QWivPEK9mclw7VWt
+	Zv5KZiHO7Th9iEGU9PpCKINnAp11aGRLfSR2VuaYGJrFU27Ia9nk2mSyMtHcBaS0uEER0t2AqHz
+	pOHF4pclNec4wdksSeoVJ/+zbXkd6noVAZR8ydNL05MkAStcxqSkN0ntnCQ5hEL2XVX7mOE5rGF
+	y/+iJGPY/nlRXvFM59DDHVIOXgdQhpCLwk3S0=
+X-Received: by 2002:a05:620a:2802:b0:8c6:a034:9225 with SMTP id af79cd13be357-8cdb5a8d001mr285941085a.35.1773373228198;
+        Thu, 12 Mar 2026 20:40:28 -0700 (PDT)
+X-Received: by 2002:a05:620a:2802:b0:8c6:a034:9225 with SMTP id af79cd13be357-8cdb5a8d001mr285939985a.35.1773373227693;
+        Thu, 12 Mar 2026 20:40:27 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38a67d93576sm11254901fa.11.2026.03.12.20.30.51
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a156162ab8sm1274609e87.51.2026.03.12.20.40.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Mar 2026 20:30:53 -0700 (PDT)
+        Thu, 12 Mar 2026 20:40:25 -0700 (PDT)
+Date: Fri, 13 Mar 2026 05:40:22 +0200
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Fri, 13 Mar 2026 05:30:25 +0200
-Subject: [PATCH v4 8/8] media: qcom: iris: split platform data from
- firmware data
+To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] remoteproc: qcom: pas: Map/unmap subsystem region
+ before auth_and_reset
+Message-ID: <55oglwp3ejolkjyksn4am2dnx43k7axf5zl6tevkuuuww3n33u@jcffxhtaxxaq>
+References: <20260310135205.2497789-1-mukesh.ojha@oss.qualcomm.com>
+ <20260310135205.2497789-2-mukesh.ojha@oss.qualcomm.com>
+ <uwqpxa4jqf3k3pbcf7mkszzuhrqulich4iujiejtuey4vrtg5d@umlik2vhdkvi>
+ <20260311084918.q4vonsudasta7dll@hu-mojha-hyd.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260313-iris-platform-data-v4-8-14927df4906d@oss.qualcomm.com>
-References: <20260313-iris-platform-data-v4-0-14927df4906d@oss.qualcomm.com>
-In-Reply-To: <20260313-iris-platform-data-v4-0-14927df4906d@oss.qualcomm.com>
-To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bod@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=32132;
- i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
- bh=llgn5+aRY11LAEHGCdg1w363ucJvDrCF+1WvaFjtJAU=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBps4TMvIqyVfRh+7snzM6FCV5GCfZZrHzd3vhrD
- 8meuvqyJsyJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCabOEzAAKCRCLPIo+Aiko
- 1WU1B/92tFZmEgtZHEuV1IVqUhIuVtAeNrfkLM865StinlBCI5MqG8cgcbBYy6pY8Xe9yPO6hT2
- XKp74gbQZ7ZOsJsMFIQwZa4RBQgFupYarhqGrKWCMm7e6cFN1caru0SFBzIS7K6c7bbFPUu1Ttz
- P0i1hOUV+jRy/PTyiiPYWguq6wsxvEQ02jGjdCHCg5VjwOb4UYlTANhR8K6NuFs/sJREgMzFJBB
- NCNjdLHzviRAxc14unWYQzGumvBw1VWPIa/prLt+YH2FQ2oNwYv+VsvpHzAuIcPTpvM3RJU5353
- OT2kzbmL1o83enVjtP96b0FrqvCQzJGDopF4XYiokkKrg1/v
-X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
-X-Proofpoint-GUID: Et4KBoax8EHRR3k0u7GdoEc2OyMjex2Z
-X-Authority-Analysis: v=2.4 cv=IIIPywvG c=1 sm=1 tr=0 ts=69b384f1 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260311084918.q4vonsudasta7dll@hu-mojha-hyd.qualcomm.com>
+X-Authority-Analysis: v=2.4 cv=GcoaXAXL c=1 sm=1 tr=0 ts=69b3872d cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
  a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22 a=EUspDBNiAAAA:8
- a=Q_Tj2gVLSrreCV9GCYEA:9 a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEzMDAyNiBTYWx0ZWRfX6t2HhhDunAyR
- wb1gxFUDEO0yKJmXDAEb4g439vE2N/ylbkh0DFL7xUprDFHVIoylf4syttA19FeMC622js1ZfVJ
- RoV6AywOuiNmk8VwjQaX6H4US7RXlimXacCj2EVwKX9Zkg4PvnPz8IUG/L3unlEUrPcIVJuS7rY
- faVcGv/gDT02BgNuTTW7UUh6aJ/vAHax8RlS+xMsD2MuFU1PWPn6NoPafknbaAb/13DHY3IP3+b
- +hvq3qlb91MntqkTySJg980KG63yEQyP9MjyTn78vvuWeLUgkznNnl9KjOWmsShiIf+N1opZSVp
- ImndZBcLBlaRlSMVxTKTVUw00XrjnA1NF8bL3NsyMY8K4flonuUtZ8DCNgHg3eJ3tdaeuyOZIIz
- wWIL8V+RCAZf7tVFfmOePJeI+HWTsl/ItwkxWDIV4WpSwb34pFfCY8M8v9Rt3hvooI8nILsi09N
- 6hNiOzTOUlxNFL66o8g==
-X-Proofpoint-ORIG-GUID: Et4KBoax8EHRR3k0u7GdoEc2OyMjex2Z
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=EUspDBNiAAAA:8
+ a=3lGklYKCIXtHXvz2TNgA:9 a=CjuIK1q_8ugA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-GUID: 2ka46dhMx4DDcCY2F8l8yN-2Lm7gKoJg
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEzMDAyNiBTYWx0ZWRfX3hXYtk3gg1ld
+ SrmBT3HxAmpEfyobw4Sq1BB49gLL6JkvmmafhXYuwThXDdT9dxapW2z4bdTKGO2zZNO6kqJZsVH
+ JfmGprNBxuVMyEoKyYwZSTGYzFsjGDvaccZNqrOJn5htTY2u8sjSnF0w141EV6hFTEdRt24bzTE
+ FUvRizMfjfXwXjocStq1oV13KRxv5YPjl13Rq5xNQwF39sb0DzcJUtcEBUPFc7p8XIMJsKOoDvZ
+ 1xska9yxekcXtmNzxI4KPrltRzvBFUuOFH61jJ8KY71TQhgmSpTg+ZLEC3G+5BLiSnFBG4NLgG6
+ ZSRSu9oRJgsV62y2SiiR1jpjR3qsiynEnjbpFLvZD6p4SsCrnfzXcUO/WWHOtEArHd3l703axHj
+ lOzpAg0LfpD2BNu/dylREuSXT/IdNMo0Z4HDdxrXB9mkshWX1X/phdVzGqMfLfF3t6Nkec0S1TH
+ NUKT8APUilki2WSYwOQ==
+X-Proofpoint-ORIG-GUID: 2ka46dhMx4DDcCY2F8l8yN-2Lm7gKoJg
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-12_03,2026-03-12_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 priorityscore=1501 phishscore=0 lowpriorityscore=0
- clxscore=1015 adultscore=0 impostorscore=0 spamscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603130026
-X-Spamd-Result: default: False [-2.16 / 15.00];
+ clxscore=1015 phishscore=0 suspectscore=0 spamscore=0 adultscore=0
+ impostorscore=0 malwarescore=0 priorityscore=1501 bulkscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
+ definitions=main-2603130026
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[60fps:email,qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-97309-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-97310-lists,linux-arm-msm=lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,oss.qualcomm.com:dkim];
 	MIME_TRACE(0.00)[0:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	MISSING_XM_UA(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[8];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCPT_COUNT_FIVE(0.00)[6];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 4C92127D297
+X-Rspamd-Queue-Id: 713DE27D2E3
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Finalize the logical separation of the software and hardware interface
-descriptions by moving hardware properties to the files specific to the
-particular VPU version.
+On Wed, Mar 11, 2026 at 02:19:18PM +0530, Mukesh Ojha wrote:
+> On Wed, Mar 11, 2026 at 04:34:53AM +0200, Dmitry Baryshkov wrote:
+> > On Tue, Mar 10, 2026 at 07:22:05PM +0530, Mukesh Ojha wrote:
+> > > Qualcomm remoteproc drivers such as qcom_q6v5_mss, which do not use the
+> > > Peripheral Authentication Service (PAS), always map the MBA region before
+> > > use and unmap it once the usage is complete. This behavior was introduced
+> > > to avoid issues seen in the past where speculative accesses from the
+> > > application processor to the MBA region after it was assigned to the remote
+> > > Q6 led to an XPU violation. The issue was mitigated by unmapping the region
+> > > before handing control to the remote Q6.
+> > > 
+> > > Currently, most Qualcomm SoCs using the PAS driver run either with a
+> > > standalone QHEE or the Gunyah hypervisor. In these environments, the
+> > > hypervisor unmaps the Q6 memory from HLOS Stage-2 and remaps it into the
+> > > Q6 Stage-2 page table. As a result, speculative accesses from HLOS cannot
+> > > reach the region even if it remains mapped in HLOS Stage-1; therefore, XPU
+> > > violations cannot occur.
+> > > 
+> > > However, when the same SoC runs Linux at EL2, Linux itself must perform the
+> > > unmapping to avoid such issues. It is still correct to apply this mapping/
+> > > unmapping sequence even for SoCs that run under Gunyah, so this behavior
+> > > should not be conditional.
+> > > 
+> > > Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+> > > ---
+> > >  drivers/remoteproc/qcom_q6v5_pas.c | 48 +++++++++++++++++++++++-------
+> > >  1 file changed, 38 insertions(+), 10 deletions(-)
+> > > 
+> > > diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+> > > index 3bde37ac510c..033d618ccba9 100644
+> > > --- a/drivers/remoteproc/qcom_q6v5_pas.c
+> > > +++ b/drivers/remoteproc/qcom_q6v5_pas.c
+> > > @@ -138,6 +138,13 @@ static void qcom_pas_segment_dump(struct rproc *rproc,
+> > >  		return;
+> > >  	}
+> > >  
+> > > +	pas->mem_region = ioremap_wc(pas->mem_phys, pas->mem_size);
+> > 
+> > Which will be called once per segment. Move this to qcom_pas_minidump()
+> > and call iounmap() afterwards.
+> 
+> Good eyes!, Ah!! my bad.
+> 
+> And moving it to qcom_pas_minidump() will cover minidump cases and
+> fallback cases to full dumps if minidump_id is mentioned for a
+> subsystem. However, we may miss mapping for pure rproc_coredump() case
+> when the framework assigned .coredump = rproc_coredump when vendor
+> coredump callback is not provided when subsystem does not have minidump_id
+> mentioned. Do you think writing qcom_pas_coredump() wrapper over
+> rproc_coredump() will be fine ?
+> 
+> --- a/drivers/remoteproc/qcom_q6v5_pas.c
+> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
+> @@ -141,6 +141,11 @@ static void qcom_pas_segment_dump(struct rproc *rproc,
+>         memcpy_fromio(dest, pas->mem_region + total_offset, size);
+>  }
+> 
+> +static void qcom_pas_coredump(struct rproc *rproc)
+> +{
+> +       rproc_coredump(rproc);
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
----
- drivers/media/platform/qcom/iris/Makefile          |   6 +-
- .../iris/{iris_platform_gen1.c => iris_hfi_gen1.c} | 133 -------------
- .../iris/{iris_platform_gen2.c => iris_hfi_gen2.c} | 218 ---------------------
- .../platform/qcom/iris/iris_platform_common.h      |   4 +
- .../platform/qcom/iris/iris_platform_sm8250.h      |  29 +++
- .../platform/qcom/iris/iris_platform_sm8550.h      |  31 +++
- .../media/platform/qcom/iris/iris_platform_vpu2.c  | 124 ++++++++++++
- .../media/platform/qcom/iris/iris_platform_vpu3.c  | 210 ++++++++++++++++++++
- 8 files changed, 402 insertions(+), 353 deletions(-)
+It won't be that simple, most likely. You'd need to call ioremap_wc()
+before and iounmap() afterwards. Then it would make sense.
 
-diff --git a/drivers/media/platform/qcom/iris/Makefile b/drivers/media/platform/qcom/iris/Makefile
-index 2fde45f81727..67a12f42b3a6 100644
---- a/drivers/media/platform/qcom/iris/Makefile
-+++ b/drivers/media/platform/qcom/iris/Makefile
-@@ -4,14 +4,16 @@ qcom-iris-objs += iris_buffer.o \
-              iris_ctrls.o \
-              iris_firmware.o \
-              iris_hfi_common.o \
-+             iris_hfi_gen1.o \
-              iris_hfi_gen1_command.o \
-              iris_hfi_gen1_response.o \
-+             iris_hfi_gen2.o \
-              iris_hfi_gen2_command.o \
-              iris_hfi_gen2_packet.o \
-              iris_hfi_gen2_response.o \
-              iris_hfi_queue.o \
--             iris_platform_gen1.o \
--             iris_platform_gen2.o \
-+             iris_platform_vpu2.o \
-+             iris_platform_vpu3.o \
-              iris_power.o \
-              iris_probe.o \
-              iris_resources.o \
-diff --git a/drivers/media/platform/qcom/iris/iris_platform_gen1.c b/drivers/media/platform/qcom/iris/iris_hfi_gen1.c
-similarity index 68%
-rename from drivers/media/platform/qcom/iris/iris_platform_gen1.c
-rename to drivers/media/platform/qcom/iris/iris_hfi_gen1.c
-index 27f2ef04cffe..c02ed908caee 100644
---- a/drivers/media/platform/qcom/iris/iris_platform_gen1.c
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1.c
-@@ -3,38 +3,17 @@
-  * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
--#include "iris_core.h"
- #include "iris_ctrls.h"
- #include "iris_platform_common.h"
--#include "iris_resources.h"
- #include "iris_hfi_gen1.h"
- #include "iris_hfi_gen1_defines.h"
- #include "iris_vpu_buffer.h"
--#include "iris_vpu_common.h"
--#include "iris_instance.h"
--
--#include "iris_platform_sc7280.h"
- 
- #define BITRATE_MIN		32000
- #define BITRATE_MAX		160000000
- #define BITRATE_PEAK_DEFAULT	(BITRATE_DEFAULT * 2)
- #define BITRATE_STEP		100
- 
--static struct iris_fmt platform_fmts_sm8250_dec[] = {
--	[IRIS_FMT_H264] = {
--		.pixfmt = V4L2_PIX_FMT_H264,
--		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
--	},
--	[IRIS_FMT_HEVC] = {
--		.pixfmt = V4L2_PIX_FMT_HEVC,
--		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
--	},
--	[IRIS_FMT_VP9] = {
--		.pixfmt = V4L2_PIX_FMT_VP9,
--		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
--	},
--};
--
- static struct platform_inst_fw_cap inst_fw_cap_sm8250_dec[] = {
- 	{
- 		.cap_id = PIPE,
-@@ -248,56 +227,6 @@ static const struct platform_inst_fw_cap inst_fw_cap_sm8250_enc[] = {
- 	},
- };
- 
--static struct platform_inst_caps platform_inst_cap_sm8250 = {
--	.min_frame_width = 128,
--	.max_frame_width = 8192,
--	.min_frame_height = 128,
--	.max_frame_height = 8192,
--	.max_mbpf = 138240,
--	.mb_cycles_vsp = 25,
--	.mb_cycles_vpp = 200,
--	.max_frame_rate = MAXIMUM_FPS,
--	.max_operating_rate = MAXIMUM_FPS,
--};
--
--static const struct icc_info sm8250_icc_table[] = {
--	{ "cpu-cfg",    1000, 1000     },
--	{ "video-mem",  1000, 15000000 },
--};
--
--static const char * const sm8250_clk_reset_table[] = { "bus", "core" };
--
--static const struct bw_info sm8250_bw_table_dec[] = {
--	{ ((4096 * 2160) / 256) * 60, 2403000 },
--	{ ((4096 * 2160) / 256) * 30, 1224000 },
--	{ ((1920 * 1080) / 256) * 60,  812000 },
--	{ ((1920 * 1080) / 256) * 30,  416000 },
--};
--
--static const char * const sm8250_pmdomain_table[] = { "venus", "vcodec0" };
--
--static const char * const sm8250_opp_pd_table[] = { "mx", "mmcx" };
--
--static const struct platform_clk_data sm8250_clk_table[] = {
--	{IRIS_AXI_CLK,  "iface"        },
--	{IRIS_CTRL_CLK, "core"         },
--	{IRIS_HW_CLK,   "vcodec0_core" },
--};
--
--static const char * const sm8250_opp_clk_table[] = {
--	"vcodec0_core",
--	NULL,
--};
--
--static const struct tz_cp_config tz_cp_config_sm8250[] = {
--	{
--		.cp_start = 0,
--		.cp_size = 0x25800000,
--		.cp_nonpixel_start = 0x01000000,
--		.cp_nonpixel_size = 0x24800000,
--	},
--};
--
- static const u32 sm8250_vdec_input_config_param_default[] = {
- 	HFI_PROPERTY_CONFIG_VIDEOCORES_USAGE,
- 	HFI_PROPERTY_PARAM_UNCOMPRESSED_FORMAT_SELECT,
-@@ -357,65 +286,3 @@ const struct iris_firmware_data iris_hfi_gen1_data = {
- 	.enc_ip_int_buf_tbl = sm8250_enc_ip_int_buf_tbl,
- 	.enc_ip_int_buf_tbl_size = ARRAY_SIZE(sm8250_enc_ip_int_buf_tbl),
- };
--
--const struct iris_platform_data sm8250_data = {
--	.firmware_data = &iris_hfi_gen1_data,
--	.vpu_ops = &iris_vpu2_ops,
--	.icc_tbl = sm8250_icc_table,
--	.icc_tbl_size = ARRAY_SIZE(sm8250_icc_table),
--	.clk_rst_tbl = sm8250_clk_reset_table,
--	.clk_rst_tbl_size = ARRAY_SIZE(sm8250_clk_reset_table),
--	.bw_tbl_dec = sm8250_bw_table_dec,
--	.bw_tbl_dec_size = ARRAY_SIZE(sm8250_bw_table_dec),
--	.pmdomain_tbl = sm8250_pmdomain_table,
--	.pmdomain_tbl_size = ARRAY_SIZE(sm8250_pmdomain_table),
--	.opp_pd_tbl = sm8250_opp_pd_table,
--	.opp_pd_tbl_size = ARRAY_SIZE(sm8250_opp_pd_table),
--	.clk_tbl = sm8250_clk_table,
--	.clk_tbl_size = ARRAY_SIZE(sm8250_clk_table),
--	.opp_clk_tbl = sm8250_opp_clk_table,
--	/* Upper bound of DMA address range */
--	.dma_mask = 0xe0000000 - 1,
--	.fwname = "qcom/vpu-1.0/venus.mbn",
--	.inst_iris_fmts = platform_fmts_sm8250_dec,
--	.inst_iris_fmts_size = ARRAY_SIZE(platform_fmts_sm8250_dec),
--	.inst_caps = &platform_inst_cap_sm8250,
--	.tz_cp_config_data = tz_cp_config_sm8250,
--	.tz_cp_config_data_size = ARRAY_SIZE(tz_cp_config_sm8250),
--	.hw_response_timeout = HW_RESPONSE_TIMEOUT_VALUE,
--	.num_vpp_pipe = 4,
--	.max_session_count = 16,
--	.max_core_mbpf = NUM_MBS_8K,
--	.max_core_mbps = ((7680 * 4320) / 256) * 60,
--};
--
--const struct iris_platform_data sc7280_data = {
--	.firmware_data = &iris_hfi_gen1_data,
--	.vpu_ops = &iris_vpu2_ops,
--	.icc_tbl = sm8250_icc_table,
--	.icc_tbl_size = ARRAY_SIZE(sm8250_icc_table),
--	.bw_tbl_dec = sc7280_bw_table_dec,
--	.bw_tbl_dec_size = ARRAY_SIZE(sc7280_bw_table_dec),
--	.pmdomain_tbl = sm8250_pmdomain_table,
--	.pmdomain_tbl_size = ARRAY_SIZE(sm8250_pmdomain_table),
--	.opp_pd_tbl = sc7280_opp_pd_table,
--	.opp_pd_tbl_size = ARRAY_SIZE(sc7280_opp_pd_table),
--	.clk_tbl = sc7280_clk_table,
--	.clk_tbl_size = ARRAY_SIZE(sc7280_clk_table),
--	.opp_clk_tbl = sc7280_opp_clk_table,
--	/* Upper bound of DMA address range */
--	.dma_mask = 0xe0000000 - 1,
--	.fwname = "qcom/vpu/vpu20_p1.mbn",
--	.inst_iris_fmts = platform_fmts_sm8250_dec,
--	.inst_iris_fmts_size = ARRAY_SIZE(platform_fmts_sm8250_dec),
--	.inst_caps = &platform_inst_cap_sm8250,
--	.tz_cp_config_data = tz_cp_config_sm8250,
--	.tz_cp_config_data_size = ARRAY_SIZE(tz_cp_config_sm8250),
--	.hw_response_timeout = HW_RESPONSE_TIMEOUT_VALUE,
--	.num_vpp_pipe = 1,
--	.no_aon = true,
--	.max_session_count = 16,
--	.max_core_mbpf = 4096 * 2176 / 256 * 2 + 1920 * 1088 / 256,
--	/* max spec for SC7280 is 4096x2176@60fps */
--	.max_core_mbps = 4096 * 2176 / 256 * 60,
--};
-diff --git a/drivers/media/platform/qcom/iris/iris_platform_gen2.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2.c
-similarity index 78%
-rename from drivers/media/platform/qcom/iris/iris_platform_gen2.c
-rename to drivers/media/platform/qcom/iris/iris_hfi_gen2.c
-index a83f6910f8b7..734a47ab6510 100644
---- a/drivers/media/platform/qcom/iris/iris_platform_gen2.c
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2.c
-@@ -4,40 +4,15 @@
-  * Copyright (c) 2025 Linaro Ltd
-  */
- 
--#include "iris_core.h"
- #include "iris_ctrls.h"
- #include "iris_hfi_gen2.h"
- #include "iris_hfi_gen2_defines.h"
- #include "iris_platform_common.h"
- #include "iris_vpu_buffer.h"
--#include "iris_vpu_common.h"
--
--#include "iris_platform_qcs8300.h"
--#include "iris_platform_sm8650.h"
--#include "iris_platform_sm8750.h"
- 
- #define VIDEO_ARCH_LX 1
- #define BITRATE_MAX				245000000
- 
--static struct iris_fmt platform_fmts_sm8550_dec[] = {
--	[IRIS_FMT_H264] = {
--		.pixfmt = V4L2_PIX_FMT_H264,
--		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
--	},
--	[IRIS_FMT_HEVC] = {
--		.pixfmt = V4L2_PIX_FMT_HEVC,
--		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
--	},
--	[IRIS_FMT_VP9] = {
--		.pixfmt = V4L2_PIX_FMT_VP9,
--		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
--	},
--	[IRIS_FMT_AV1] = {
--		.pixfmt = V4L2_PIX_FMT_AV1,
--		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
--	},
--};
--
- static const struct platform_inst_fw_cap inst_fw_cap_sm8550_dec[] = {
- 	{
- 		.cap_id = PROFILE_H264,
-@@ -742,58 +717,6 @@ static const struct platform_inst_fw_cap inst_fw_cap_sm8550_enc[] = {
- 	},
- };
- 
--static struct platform_inst_caps platform_inst_cap_sm8550 = {
--	.min_frame_width = 96,
--	.max_frame_width = 8192,
--	.min_frame_height = 96,
--	.max_frame_height = 8192,
--	.max_mbpf = (8192 * 4352) / 256,
--	.mb_cycles_vpp = 200,
--	.mb_cycles_fw = 489583,
--	.mb_cycles_fw_vpp = 66234,
--	.num_comv = 0,
--	.max_frame_rate = MAXIMUM_FPS,
--	.max_operating_rate = MAXIMUM_FPS,
--};
--
--static const struct icc_info sm8550_icc_table[] = {
--	{ "cpu-cfg",    1000, 1000     },
--	{ "video-mem",  1000, 15000000 },
--};
--
--static const char * const sm8550_clk_reset_table[] = { "bus" };
--
--static const struct bw_info sm8550_bw_table_dec[] = {
--	{ ((4096 * 2160) / 256) * 60, 1608000 },
--	{ ((4096 * 2160) / 256) * 30,  826000 },
--	{ ((1920 * 1080) / 256) * 60,  567000 },
--	{ ((1920 * 1080) / 256) * 30,  294000 },
--};
--
--static const char * const sm8550_pmdomain_table[] = { "venus", "vcodec0" };
--
--static const char * const sm8550_opp_pd_table[] = { "mxc", "mmcx" };
--
--static const struct platform_clk_data sm8550_clk_table[] = {
--	{IRIS_AXI_CLK,  "iface"        },
--	{IRIS_CTRL_CLK, "core"         },
--	{IRIS_HW_CLK,   "vcodec0_core" },
--};
--
--static const char * const sm8550_opp_clk_table[] = {
--	"vcodec0_core",
--	NULL,
--};
--
--static const struct tz_cp_config tz_cp_config_sm8550[] = {
--	{
--		.cp_start = 0,
--		.cp_size = 0x25800000,
--		.cp_nonpixel_start = 0x01000000,
--		.cp_nonpixel_size = 0x24800000,
--	},
--};
--
- static const u32 sm8550_vdec_input_config_params_default[] = {
- 	HFI_PROP_BITSTREAM_RESOLUTION,
- 	HFI_PROP_CROP_OFFSETS,
-@@ -1035,144 +958,3 @@ const struct iris_firmware_data iris_hfi_gen2_vpu33_data = {
- 	.enc_op_int_buf_tbl = sm8550_enc_op_int_buf_tbl,
- 	.enc_op_int_buf_tbl_size = ARRAY_SIZE(sm8550_enc_op_int_buf_tbl),
- };
--
--const struct iris_platform_data sm8550_data = {
--	.firmware_data = &iris_hfi_gen2_data,
--	.vpu_ops = &iris_vpu3_ops,
--	.icc_tbl = sm8550_icc_table,
--	.icc_tbl_size = ARRAY_SIZE(sm8550_icc_table),
--	.clk_rst_tbl = sm8550_clk_reset_table,
--	.clk_rst_tbl_size = ARRAY_SIZE(sm8550_clk_reset_table),
--	.bw_tbl_dec = sm8550_bw_table_dec,
--	.bw_tbl_dec_size = ARRAY_SIZE(sm8550_bw_table_dec),
--	.pmdomain_tbl = sm8550_pmdomain_table,
--	.pmdomain_tbl_size = ARRAY_SIZE(sm8550_pmdomain_table),
--	.opp_pd_tbl = sm8550_opp_pd_table,
--	.opp_pd_tbl_size = ARRAY_SIZE(sm8550_opp_pd_table),
--	.clk_tbl = sm8550_clk_table,
--	.clk_tbl_size = ARRAY_SIZE(sm8550_clk_table),
--	.opp_clk_tbl = sm8550_opp_clk_table,
--	/* Upper bound of DMA address range */
--	.dma_mask = 0xe0000000 - 1,
--	.fwname = "qcom/vpu/vpu30_p4.mbn",
--	.inst_iris_fmts = platform_fmts_sm8550_dec,
--	.inst_iris_fmts_size = ARRAY_SIZE(platform_fmts_sm8550_dec),
--	.inst_caps = &platform_inst_cap_sm8550,
--	.tz_cp_config_data = tz_cp_config_sm8550,
--	.tz_cp_config_data_size = ARRAY_SIZE(tz_cp_config_sm8550),
--	.core_arch = VIDEO_ARCH_LX,
--	.hw_response_timeout = HW_RESPONSE_TIMEOUT_VALUE,
--	.num_vpp_pipe = 4,
--	.max_session_count = 16,
--	.max_core_mbpf = NUM_MBS_8K * 2,
--	.max_core_mbps = ((7680 * 4320) / 256) * 60,
--};
--
--/*
-- * Shares most of SM8550 data except:
-- * - vpu_ops to iris_vpu33_ops
-- * - clk_rst_tbl to sm8650_clk_reset_table
-- * - controller_rst_tbl to sm8650_controller_reset_table
-- * - fwname to "qcom/vpu/vpu33_p4.mbn"
-- */
--const struct iris_platform_data sm8650_data = {
--	.firmware_data = &iris_hfi_gen2_vpu33_data,
--	.vpu_ops = &iris_vpu33_ops,
--	.icc_tbl = sm8550_icc_table,
--	.icc_tbl_size = ARRAY_SIZE(sm8550_icc_table),
--	.clk_rst_tbl = sm8650_clk_reset_table,
--	.clk_rst_tbl_size = ARRAY_SIZE(sm8650_clk_reset_table),
--	.controller_rst_tbl = sm8650_controller_reset_table,
--	.controller_rst_tbl_size = ARRAY_SIZE(sm8650_controller_reset_table),
--	.bw_tbl_dec = sm8550_bw_table_dec,
--	.bw_tbl_dec_size = ARRAY_SIZE(sm8550_bw_table_dec),
--	.pmdomain_tbl = sm8550_pmdomain_table,
--	.pmdomain_tbl_size = ARRAY_SIZE(sm8550_pmdomain_table),
--	.opp_pd_tbl = sm8550_opp_pd_table,
--	.opp_pd_tbl_size = ARRAY_SIZE(sm8550_opp_pd_table),
--	.clk_tbl = sm8550_clk_table,
--	.clk_tbl_size = ARRAY_SIZE(sm8550_clk_table),
--	.opp_clk_tbl = sm8550_opp_clk_table,
--	/* Upper bound of DMA address range */
--	.dma_mask = 0xe0000000 - 1,
--	.fwname = "qcom/vpu/vpu33_p4.mbn",
--	.inst_iris_fmts = platform_fmts_sm8550_dec,
--	.inst_iris_fmts_size = ARRAY_SIZE(platform_fmts_sm8550_dec),
--	.inst_caps = &platform_inst_cap_sm8550,
--	.tz_cp_config_data = tz_cp_config_sm8550,
--	.tz_cp_config_data_size = ARRAY_SIZE(tz_cp_config_sm8550),
--	.core_arch = VIDEO_ARCH_LX,
--	.hw_response_timeout = HW_RESPONSE_TIMEOUT_VALUE,
--	.num_vpp_pipe = 4,
--	.max_session_count = 16,
--	.max_core_mbpf = NUM_MBS_8K * 2,
--	.max_core_mbps = ((7680 * 4320) / 256) * 60,
--};
--
--const struct iris_platform_data sm8750_data = {
--	.firmware_data = &iris_hfi_gen2_vpu33_data,
--	.vpu_ops = &iris_vpu35_ops,
--	.icc_tbl = sm8550_icc_table,
--	.icc_tbl_size = ARRAY_SIZE(sm8550_icc_table),
--	.clk_rst_tbl = sm8750_clk_reset_table,
--	.clk_rst_tbl_size = ARRAY_SIZE(sm8750_clk_reset_table),
--	.bw_tbl_dec = sm8550_bw_table_dec,
--	.bw_tbl_dec_size = ARRAY_SIZE(sm8550_bw_table_dec),
--	.pmdomain_tbl = sm8550_pmdomain_table,
--	.pmdomain_tbl_size = ARRAY_SIZE(sm8550_pmdomain_table),
--	.opp_pd_tbl = sm8550_opp_pd_table,
--	.opp_pd_tbl_size = ARRAY_SIZE(sm8550_opp_pd_table),
--	.clk_tbl = sm8750_clk_table,
--	.clk_tbl_size = ARRAY_SIZE(sm8750_clk_table),
--	.opp_clk_tbl = sm8550_opp_clk_table,
--	/* Upper bound of DMA address range */
--	.dma_mask = 0xe0000000 - 1,
--	.fwname = "qcom/vpu/vpu35_p4.mbn",
--	.inst_iris_fmts = platform_fmts_sm8550_dec,
--	.inst_iris_fmts_size = ARRAY_SIZE(platform_fmts_sm8550_dec),
--	.inst_caps = &platform_inst_cap_sm8550,
--	.tz_cp_config_data = tz_cp_config_sm8550,
--	.tz_cp_config_data_size = ARRAY_SIZE(tz_cp_config_sm8550),
--	.core_arch = VIDEO_ARCH_LX,
--	.hw_response_timeout = HW_RESPONSE_TIMEOUT_VALUE,
--	.num_vpp_pipe = 4,
--	.max_session_count = 16,
--	.max_core_mbpf = NUM_MBS_8K * 2,
--	.max_core_mbps = ((7680 * 4320) / 256) * 60,
--};
--
--/*
-- * Shares most of SM8550 data except:
-- * - inst_caps to platform_inst_cap_qcs8300
-- */
--const struct iris_platform_data qcs8300_data = {
--	.firmware_data = &iris_hfi_gen2_data,
--	.vpu_ops = &iris_vpu3_ops,
--	.icc_tbl = sm8550_icc_table,
--	.icc_tbl_size = ARRAY_SIZE(sm8550_icc_table),
--	.clk_rst_tbl = sm8550_clk_reset_table,
--	.clk_rst_tbl_size = ARRAY_SIZE(sm8550_clk_reset_table),
--	.bw_tbl_dec = sm8550_bw_table_dec,
--	.bw_tbl_dec_size = ARRAY_SIZE(sm8550_bw_table_dec),
--	.pmdomain_tbl = sm8550_pmdomain_table,
--	.pmdomain_tbl_size = ARRAY_SIZE(sm8550_pmdomain_table),
--	.opp_pd_tbl = sm8550_opp_pd_table,
--	.opp_pd_tbl_size = ARRAY_SIZE(sm8550_opp_pd_table),
--	.clk_tbl = sm8550_clk_table,
--	.clk_tbl_size = ARRAY_SIZE(sm8550_clk_table),
--	.opp_clk_tbl = sm8550_opp_clk_table,
--	/* Upper bound of DMA address range */
--	.dma_mask = 0xe0000000 - 1,
--	.fwname = "qcom/vpu/vpu30_p4_s6.mbn",
--	.inst_iris_fmts = platform_fmts_sm8550_dec,
--	.inst_iris_fmts_size = ARRAY_SIZE(platform_fmts_sm8550_dec),
--	.inst_caps = &platform_inst_cap_qcs8300,
--	.tz_cp_config_data = tz_cp_config_sm8550,
--	.tz_cp_config_data_size = ARRAY_SIZE(tz_cp_config_sm8550),
--	.core_arch = VIDEO_ARCH_LX,
--	.hw_response_timeout = HW_RESPONSE_TIMEOUT_VALUE,
--	.num_vpp_pipe = 2,
--	.max_session_count = 16,
--	.max_core_mbpf = ((4096 * 2176) / 256) * 4,
--	.max_core_mbps = (((3840 * 2176) / 256) * 120),
--};
-diff --git a/drivers/media/platform/qcom/iris/iris_platform_common.h b/drivers/media/platform/qcom/iris/iris_platform_common.h
-index 1a870fec4f31..5be028af5ec6 100644
---- a/drivers/media/platform/qcom/iris/iris_platform_common.h
-+++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
-@@ -40,6 +40,10 @@ enum pipe_type {
- 	PIPE_4 = 4,
- };
- 
-+extern const struct iris_firmware_data iris_hfi_gen1_data;
-+extern const struct iris_firmware_data iris_hfi_gen2_data;
-+extern const struct iris_firmware_data iris_hfi_gen2_vpu33_data;
-+
- extern const struct iris_platform_data qcs8300_data;
- extern const struct iris_platform_data sc7280_data;
- extern const struct iris_platform_data sm8250_data;
-diff --git a/drivers/media/platform/qcom/iris/iris_platform_sm8250.h b/drivers/media/platform/qcom/iris/iris_platform_sm8250.h
-new file mode 100644
-index 000000000000..50306043eb8e
---- /dev/null
-+++ b/drivers/media/platform/qcom/iris/iris_platform_sm8250.h
-@@ -0,0 +1,29 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/*
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-+ */
-+
-+#ifndef __IRIS_PLATFORM_SM8250_H__
-+#define __IRIS_PLATFORM_SM8250_H__
-+
-+static const struct bw_info sm8250_bw_table_dec[] = {
-+	{ ((4096 * 2160) / 256) * 60, 2403000 },
-+	{ ((4096 * 2160) / 256) * 30, 1224000 },
-+	{ ((1920 * 1080) / 256) * 60,  812000 },
-+	{ ((1920 * 1080) / 256) * 30,  416000 },
-+};
-+
-+static const char * const sm8250_opp_pd_table[] = { "mx", "mmcx" };
-+
-+static const struct platform_clk_data sm8250_clk_table[] = {
-+	{IRIS_AXI_CLK,  "iface"        },
-+	{IRIS_CTRL_CLK, "core"         },
-+	{IRIS_HW_CLK,   "vcodec0_core" },
-+};
-+
-+static const char * const sm8250_opp_clk_table[] = {
-+	"vcodec0_core",
-+	NULL,
-+};
-+
-+#endif
-diff --git a/drivers/media/platform/qcom/iris/iris_platform_sm8550.h b/drivers/media/platform/qcom/iris/iris_platform_sm8550.h
-new file mode 100644
-index 000000000000..a9d9709c2e35
---- /dev/null
-+++ b/drivers/media/platform/qcom/iris/iris_platform_sm8550.h
-@@ -0,0 +1,31 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/*
-+ * Copyright (c) Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+#ifndef __IRIS_PLATFORM_SM8550_H__
-+#define __IRIS_PLATFORM_SM8550_H__
-+
-+static const char * const sm8550_clk_reset_table[] = { "bus" };
-+
-+static const struct platform_clk_data sm8550_clk_table[] = {
-+	{IRIS_AXI_CLK,  "iface"        },
-+	{IRIS_CTRL_CLK, "core"         },
-+	{IRIS_HW_CLK,   "vcodec0_core" },
-+};
-+
-+static struct platform_inst_caps platform_inst_cap_sm8550 = {
-+	.min_frame_width = 96,
-+	.max_frame_width = 8192,
-+	.min_frame_height = 96,
-+	.max_frame_height = 8192,
-+	.max_mbpf = (8192 * 4352) / 256,
-+	.mb_cycles_vpp = 200,
-+	.mb_cycles_fw = 489583,
-+	.mb_cycles_fw_vpp = 66234,
-+	.num_comv = 0,
-+	.max_frame_rate = MAXIMUM_FPS,
-+	.max_operating_rate = MAXIMUM_FPS,
-+};
-+
-+#endif
-diff --git a/drivers/media/platform/qcom/iris/iris_platform_vpu2.c b/drivers/media/platform/qcom/iris/iris_platform_vpu2.c
-new file mode 100644
-index 000000000000..74c8f38e849b
---- /dev/null
-+++ b/drivers/media/platform/qcom/iris/iris_platform_vpu2.c
-@@ -0,0 +1,124 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+#include "iris_core.h"
-+#include "iris_ctrls.h"
-+#include "iris_platform_common.h"
-+#include "iris_resources.h"
-+#include "iris_hfi_gen1.h"
-+#include "iris_hfi_gen1_defines.h"
-+#include "iris_vpu_buffer.h"
-+#include "iris_vpu_common.h"
-+#include "iris_instance.h"
-+
-+#include "iris_platform_sc7280.h"
-+#include "iris_platform_sm8250.h"
-+
-+static struct iris_fmt platform_fmts_sm8250_dec[] = {
-+	[IRIS_FMT_H264] = {
-+		.pixfmt = V4L2_PIX_FMT_H264,
-+		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
-+	},
-+	[IRIS_FMT_HEVC] = {
-+		.pixfmt = V4L2_PIX_FMT_HEVC,
-+		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
-+	},
-+	[IRIS_FMT_VP9] = {
-+		.pixfmt = V4L2_PIX_FMT_VP9,
-+		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
-+	},
-+};
-+
-+static struct platform_inst_caps platform_inst_cap_sm8250 = {
-+	.min_frame_width = 128,
-+	.max_frame_width = 8192,
-+	.min_frame_height = 128,
-+	.max_frame_height = 8192,
-+	.max_mbpf = 138240,
-+	.mb_cycles_vsp = 25,
-+	.mb_cycles_vpp = 200,
-+	.max_frame_rate = MAXIMUM_FPS,
-+	.max_operating_rate = MAXIMUM_FPS,
-+};
-+
-+static const struct icc_info sm8250_icc_table[] = {
-+	{ "cpu-cfg",    1000, 1000     },
-+	{ "video-mem",  1000, 15000000 },
-+};
-+
-+static const char * const sm8250_clk_reset_table[] = { "bus", "core" };
-+
-+static const char * const sm8250_pmdomain_table[] = { "venus", "vcodec0" };
-+
-+static const struct tz_cp_config tz_cp_config_sm8250[] = {
-+	{
-+		.cp_start = 0,
-+		.cp_size = 0x25800000,
-+		.cp_nonpixel_start = 0x01000000,
-+		.cp_nonpixel_size = 0x24800000,
-+	},
-+};
-+
-+const struct iris_platform_data sc7280_data = {
-+	.firmware_data = &iris_hfi_gen1_data,
-+	.vpu_ops = &iris_vpu2_ops,
-+	.icc_tbl = sm8250_icc_table,
-+	.icc_tbl_size = ARRAY_SIZE(sm8250_icc_table),
-+	.bw_tbl_dec = sc7280_bw_table_dec,
-+	.bw_tbl_dec_size = ARRAY_SIZE(sc7280_bw_table_dec),
-+	.pmdomain_tbl = sm8250_pmdomain_table,
-+	.pmdomain_tbl_size = ARRAY_SIZE(sm8250_pmdomain_table),
-+	.opp_pd_tbl = sc7280_opp_pd_table,
-+	.opp_pd_tbl_size = ARRAY_SIZE(sc7280_opp_pd_table),
-+	.clk_tbl = sc7280_clk_table,
-+	.clk_tbl_size = ARRAY_SIZE(sc7280_clk_table),
-+	.opp_clk_tbl = sc7280_opp_clk_table,
-+	/* Upper bound of DMA address range */
-+	.dma_mask = 0xe0000000 - 1,
-+	.fwname = "qcom/vpu/vpu20_p1.mbn",
-+	.inst_iris_fmts = platform_fmts_sm8250_dec,
-+	.inst_iris_fmts_size = ARRAY_SIZE(platform_fmts_sm8250_dec),
-+	.inst_caps = &platform_inst_cap_sm8250,
-+	.tz_cp_config_data = tz_cp_config_sm8250,
-+	.tz_cp_config_data_size = ARRAY_SIZE(tz_cp_config_sm8250),
-+	.hw_response_timeout = HW_RESPONSE_TIMEOUT_VALUE,
-+	.num_vpp_pipe = 1,
-+	.no_aon = true,
-+	.max_session_count = 16,
-+	.max_core_mbpf = 4096 * 2176 / 256 * 2 + 1920 * 1088 / 256,
-+	/* max spec for SC7280 is 4096x2176@60fps */
-+	.max_core_mbps = 4096 * 2176 / 256 * 60,
-+};
-+
-+const struct iris_platform_data sm8250_data = {
-+	.firmware_data = &iris_hfi_gen1_data,
-+	.vpu_ops = &iris_vpu2_ops,
-+	.icc_tbl = sm8250_icc_table,
-+	.icc_tbl_size = ARRAY_SIZE(sm8250_icc_table),
-+	.clk_rst_tbl = sm8250_clk_reset_table,
-+	.clk_rst_tbl_size = ARRAY_SIZE(sm8250_clk_reset_table),
-+	.bw_tbl_dec = sm8250_bw_table_dec,
-+	.bw_tbl_dec_size = ARRAY_SIZE(sm8250_bw_table_dec),
-+	.pmdomain_tbl = sm8250_pmdomain_table,
-+	.pmdomain_tbl_size = ARRAY_SIZE(sm8250_pmdomain_table),
-+	.opp_pd_tbl = sm8250_opp_pd_table,
-+	.opp_pd_tbl_size = ARRAY_SIZE(sm8250_opp_pd_table),
-+	.clk_tbl = sm8250_clk_table,
-+	.clk_tbl_size = ARRAY_SIZE(sm8250_clk_table),
-+	.opp_clk_tbl = sm8250_opp_clk_table,
-+	/* Upper bound of DMA address range */
-+	.dma_mask = 0xe0000000 - 1,
-+	.fwname = "qcom/vpu-1.0/venus.mbn",
-+	.inst_iris_fmts = platform_fmts_sm8250_dec,
-+	.inst_iris_fmts_size = ARRAY_SIZE(platform_fmts_sm8250_dec),
-+	.inst_caps = &platform_inst_cap_sm8250,
-+	.tz_cp_config_data = tz_cp_config_sm8250,
-+	.tz_cp_config_data_size = ARRAY_SIZE(tz_cp_config_sm8250),
-+	.hw_response_timeout = HW_RESPONSE_TIMEOUT_VALUE,
-+	.num_vpp_pipe = 4,
-+	.max_session_count = 16,
-+	.max_core_mbpf = NUM_MBS_8K,
-+	.max_core_mbps = ((7680 * 4320) / 256) * 60,
-+};
-diff --git a/drivers/media/platform/qcom/iris/iris_platform_vpu3.c b/drivers/media/platform/qcom/iris/iris_platform_vpu3.c
-new file mode 100644
-index 000000000000..2c0e5be72920
---- /dev/null
-+++ b/drivers/media/platform/qcom/iris/iris_platform_vpu3.c
-@@ -0,0 +1,210 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2025 Linaro Ltd
-+ */
-+
-+#include "iris_core.h"
-+#include "iris_ctrls.h"
-+#include "iris_hfi_gen2.h"
-+#include "iris_hfi_gen2_defines.h"
-+#include "iris_platform_common.h"
-+#include "iris_vpu_buffer.h"
-+#include "iris_vpu_common.h"
-+
-+#include "iris_platform_qcs8300.h"
-+#include "iris_platform_sm8550.h"
-+#include "iris_platform_sm8650.h"
-+#include "iris_platform_sm8750.h"
-+
-+#define VIDEO_ARCH_LX 1
-+
-+static struct iris_fmt platform_fmts_sm8550_dec[] = {
-+	[IRIS_FMT_H264] = {
-+		.pixfmt = V4L2_PIX_FMT_H264,
-+		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
-+	},
-+	[IRIS_FMT_HEVC] = {
-+		.pixfmt = V4L2_PIX_FMT_HEVC,
-+		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
-+	},
-+	[IRIS_FMT_VP9] = {
-+		.pixfmt = V4L2_PIX_FMT_VP9,
-+		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
-+	},
-+	[IRIS_FMT_AV1] = {
-+		.pixfmt = V4L2_PIX_FMT_AV1,
-+		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
-+	},
-+};
-+
-+static const struct icc_info sm8550_icc_table[] = {
-+	{ "cpu-cfg",    1000, 1000     },
-+	{ "video-mem",  1000, 15000000 },
-+};
-+
-+static const struct bw_info sm8550_bw_table_dec[] = {
-+	{ ((4096 * 2160) / 256) * 60, 1608000 },
-+	{ ((4096 * 2160) / 256) * 30,  826000 },
-+	{ ((1920 * 1080) / 256) * 60,  567000 },
-+	{ ((1920 * 1080) / 256) * 30,  294000 },
-+};
-+
-+static const char * const sm8550_pmdomain_table[] = { "venus", "vcodec0" };
-+
-+static const char * const sm8550_opp_pd_table[] = { "mxc", "mmcx" };
-+
-+static const char * const sm8550_opp_clk_table[] = {
-+	"vcodec0_core",
-+	NULL,
-+};
-+
-+static const struct tz_cp_config tz_cp_config_sm8550[] = {
-+	{
-+		.cp_start = 0,
-+		.cp_size = 0x25800000,
-+		.cp_nonpixel_start = 0x01000000,
-+		.cp_nonpixel_size = 0x24800000,
-+	},
-+};
-+
-+/*
-+ * Shares most of SM8550 data except:
-+ * - inst_caps to platform_inst_cap_qcs8300
-+ */
-+const struct iris_platform_data qcs8300_data = {
-+	.firmware_data = &iris_hfi_gen2_data,
-+	.vpu_ops = &iris_vpu3_ops,
-+	.icc_tbl = sm8550_icc_table,
-+	.icc_tbl_size = ARRAY_SIZE(sm8550_icc_table),
-+	.clk_rst_tbl = sm8550_clk_reset_table,
-+	.clk_rst_tbl_size = ARRAY_SIZE(sm8550_clk_reset_table),
-+	.bw_tbl_dec = sm8550_bw_table_dec,
-+	.bw_tbl_dec_size = ARRAY_SIZE(sm8550_bw_table_dec),
-+	.pmdomain_tbl = sm8550_pmdomain_table,
-+	.pmdomain_tbl_size = ARRAY_SIZE(sm8550_pmdomain_table),
-+	.opp_pd_tbl = sm8550_opp_pd_table,
-+	.opp_pd_tbl_size = ARRAY_SIZE(sm8550_opp_pd_table),
-+	.clk_tbl = sm8550_clk_table,
-+	.clk_tbl_size = ARRAY_SIZE(sm8550_clk_table),
-+	.opp_clk_tbl = sm8550_opp_clk_table,
-+	/* Upper bound of DMA address range */
-+	.dma_mask = 0xe0000000 - 1,
-+	.fwname = "qcom/vpu/vpu30_p4_s6.mbn",
-+	.inst_iris_fmts = platform_fmts_sm8550_dec,
-+	.inst_iris_fmts_size = ARRAY_SIZE(platform_fmts_sm8550_dec),
-+	.inst_caps = &platform_inst_cap_qcs8300,
-+	.tz_cp_config_data = tz_cp_config_sm8550,
-+	.tz_cp_config_data_size = ARRAY_SIZE(tz_cp_config_sm8550),
-+	.core_arch = VIDEO_ARCH_LX,
-+	.hw_response_timeout = HW_RESPONSE_TIMEOUT_VALUE,
-+	.num_vpp_pipe = 2,
-+	.max_session_count = 16,
-+	.max_core_mbpf = ((4096 * 2176) / 256) * 4,
-+	.max_core_mbps = (((3840 * 2176) / 256) * 120),
-+};
-+
-+const struct iris_platform_data sm8550_data = {
-+	.firmware_data = &iris_hfi_gen2_data,
-+	.vpu_ops = &iris_vpu3_ops,
-+	.icc_tbl = sm8550_icc_table,
-+	.icc_tbl_size = ARRAY_SIZE(sm8550_icc_table),
-+	.clk_rst_tbl = sm8550_clk_reset_table,
-+	.clk_rst_tbl_size = ARRAY_SIZE(sm8550_clk_reset_table),
-+	.bw_tbl_dec = sm8550_bw_table_dec,
-+	.bw_tbl_dec_size = ARRAY_SIZE(sm8550_bw_table_dec),
-+	.pmdomain_tbl = sm8550_pmdomain_table,
-+	.pmdomain_tbl_size = ARRAY_SIZE(sm8550_pmdomain_table),
-+	.opp_pd_tbl = sm8550_opp_pd_table,
-+	.opp_pd_tbl_size = ARRAY_SIZE(sm8550_opp_pd_table),
-+	.clk_tbl = sm8550_clk_table,
-+	.clk_tbl_size = ARRAY_SIZE(sm8550_clk_table),
-+	.opp_clk_tbl = sm8550_opp_clk_table,
-+	/* Upper bound of DMA address range */
-+	.dma_mask = 0xe0000000 - 1,
-+	.fwname = "qcom/vpu/vpu30_p4.mbn",
-+	.inst_iris_fmts = platform_fmts_sm8550_dec,
-+	.inst_iris_fmts_size = ARRAY_SIZE(platform_fmts_sm8550_dec),
-+	.inst_caps = &platform_inst_cap_sm8550,
-+	.tz_cp_config_data = tz_cp_config_sm8550,
-+	.tz_cp_config_data_size = ARRAY_SIZE(tz_cp_config_sm8550),
-+	.core_arch = VIDEO_ARCH_LX,
-+	.hw_response_timeout = HW_RESPONSE_TIMEOUT_VALUE,
-+	.num_vpp_pipe = 4,
-+	.max_session_count = 16,
-+	.max_core_mbpf = NUM_MBS_8K * 2,
-+	.max_core_mbps = ((7680 * 4320) / 256) * 60,
-+};
-+
-+/*
-+ * Shares most of SM8550 data except:
-+ * - vpu_ops to iris_vpu33_ops
-+ * - clk_rst_tbl to sm8650_clk_reset_table
-+ * - controller_rst_tbl to sm8650_controller_reset_table
-+ * - fwname to "qcom/vpu/vpu33_p4.mbn"
-+ */
-+const struct iris_platform_data sm8650_data = {
-+	.firmware_data = &iris_hfi_gen2_vpu33_data,
-+	.vpu_ops = &iris_vpu33_ops,
-+	.icc_tbl = sm8550_icc_table,
-+	.icc_tbl_size = ARRAY_SIZE(sm8550_icc_table),
-+	.clk_rst_tbl = sm8650_clk_reset_table,
-+	.clk_rst_tbl_size = ARRAY_SIZE(sm8650_clk_reset_table),
-+	.controller_rst_tbl = sm8650_controller_reset_table,
-+	.controller_rst_tbl_size = ARRAY_SIZE(sm8650_controller_reset_table),
-+	.bw_tbl_dec = sm8550_bw_table_dec,
-+	.bw_tbl_dec_size = ARRAY_SIZE(sm8550_bw_table_dec),
-+	.pmdomain_tbl = sm8550_pmdomain_table,
-+	.pmdomain_tbl_size = ARRAY_SIZE(sm8550_pmdomain_table),
-+	.opp_pd_tbl = sm8550_opp_pd_table,
-+	.opp_pd_tbl_size = ARRAY_SIZE(sm8550_opp_pd_table),
-+	.clk_tbl = sm8550_clk_table,
-+	.clk_tbl_size = ARRAY_SIZE(sm8550_clk_table),
-+	.opp_clk_tbl = sm8550_opp_clk_table,
-+	/* Upper bound of DMA address range */
-+	.dma_mask = 0xe0000000 - 1,
-+	.fwname = "qcom/vpu/vpu33_p4.mbn",
-+	.inst_iris_fmts = platform_fmts_sm8550_dec,
-+	.inst_iris_fmts_size = ARRAY_SIZE(platform_fmts_sm8550_dec),
-+	.inst_caps = &platform_inst_cap_sm8550,
-+	.tz_cp_config_data = tz_cp_config_sm8550,
-+	.tz_cp_config_data_size = ARRAY_SIZE(tz_cp_config_sm8550),
-+	.core_arch = VIDEO_ARCH_LX,
-+	.hw_response_timeout = HW_RESPONSE_TIMEOUT_VALUE,
-+	.num_vpp_pipe = 4,
-+	.max_session_count = 16,
-+	.max_core_mbpf = NUM_MBS_8K * 2,
-+	.max_core_mbps = ((7680 * 4320) / 256) * 60,
-+};
-+
-+const struct iris_platform_data sm8750_data = {
-+	.firmware_data = &iris_hfi_gen2_vpu33_data,
-+	.vpu_ops = &iris_vpu35_ops,
-+	.icc_tbl = sm8550_icc_table,
-+	.icc_tbl_size = ARRAY_SIZE(sm8550_icc_table),
-+	.clk_rst_tbl = sm8750_clk_reset_table,
-+	.clk_rst_tbl_size = ARRAY_SIZE(sm8750_clk_reset_table),
-+	.bw_tbl_dec = sm8550_bw_table_dec,
-+	.bw_tbl_dec_size = ARRAY_SIZE(sm8550_bw_table_dec),
-+	.pmdomain_tbl = sm8550_pmdomain_table,
-+	.pmdomain_tbl_size = ARRAY_SIZE(sm8550_pmdomain_table),
-+	.opp_pd_tbl = sm8550_opp_pd_table,
-+	.opp_pd_tbl_size = ARRAY_SIZE(sm8550_opp_pd_table),
-+	.clk_tbl = sm8750_clk_table,
-+	.clk_tbl_size = ARRAY_SIZE(sm8750_clk_table),
-+	.opp_clk_tbl = sm8550_opp_clk_table,
-+	/* Upper bound of DMA address range */
-+	.dma_mask = 0xe0000000 - 1,
-+	.fwname = "qcom/vpu/vpu35_p4.mbn",
-+	.inst_iris_fmts = platform_fmts_sm8550_dec,
-+	.inst_iris_fmts_size = ARRAY_SIZE(platform_fmts_sm8550_dec),
-+	.inst_caps = &platform_inst_cap_sm8550,
-+	.tz_cp_config_data = tz_cp_config_sm8550,
-+	.tz_cp_config_data_size = ARRAY_SIZE(tz_cp_config_sm8550),
-+	.core_arch = VIDEO_ARCH_LX,
-+	.hw_response_timeout = HW_RESPONSE_TIMEOUT_VALUE,
-+	.num_vpp_pipe = 4,
-+	.max_session_count = 16,
-+	.max_core_mbpf = NUM_MBS_8K * 2,
-+	.max_core_mbps = ((7680 * 4320) / 256) * 60,
-+};
+And alternative option would be to use
+rproc_coredump_add_custom_segment() and add a custom function which
+would perform ioremap() / memcpy() / iounmap().
+
+> +}
+> +
+>  static void qcom_pas_minidump(struct rproc *rproc)
+>  {
+>         struct qcom_pas *pas = rproc->priv;
 
 -- 
-2.47.3
-
+With best wishes
+Dmitry
 
