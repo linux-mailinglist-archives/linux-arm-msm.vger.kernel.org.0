@@ -1,84 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-97457-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97458-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id ENBvD2gAtGnCfAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97457-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 13:17:44 +0100
+	id WJGFLC8BtGnCfAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97458-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 13:21:03 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C142282D3D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 13:17:43 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E5B7282DC5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 13:21:03 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 27F70300A598
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 12:17:40 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 81CBD322D361
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 12:18:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D462339185F;
-	Fri, 13 Mar 2026 12:17:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1EA88392802;
+	Fri, 13 Mar 2026 12:18:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="S2zuPGlI"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JrqUxBkD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 723CA1FF7C8
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 12:17:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 451F8391821
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 12:18:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773404258; cv=none; b=pv560WIoElbpJxcdOSOeoTS4xXN+/pgeAE9InQavDoRz0v4aCrYvzhgoA5XTItJjKSDCfYfRVV/SCkSuXmwfNN/6vOtyxqy1Tvnp3HjMlJZvzpCYhXxybMMrH0rvRk4gOstcqiYrbWfisSrBD+IHiKFJt3m3aHFsb4L2C5aU9/U=
+	t=1773404329; cv=none; b=DuzjrfTgW6H3t5VpR9/vYCxr7QPRaJWZcSseJB1W+vqtRZ+Nadj7Sppe4NTZOJ40Q1FHx7C28rnBab0vu8tNgpke6D8XhkwJ6UlIqv9d+0EzPEtQS0kSx3MZWrNU39+KWdEl57HOyETirC6NmAkr2ByVJGv04aypkJods6/asn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773404258; c=relaxed/simple;
-	bh=dH/LRUSNBatrGwHvEX3Iy06egEiIiZiFcoxmr7F53lw=;
+	s=arc-20240116; t=1773404329; c=relaxed/simple;
+	bh=V+lC6EjJY4lOyB1rR22LNtAT1Vlotp4LU45DmHO/UY8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IU9FdC1dZC90skuQnU3CUX9RdqsUnwIP0jSRHrm3OKsuhcBzteTiPZqYb71jxki1rVGjQ1eUgTUYzgNlz3NQAqL5fKit5kv0ssQRZ3c9QsEpve5M5OaqMniD84s2bwLptjvBWUPi5iO1REIcO11JXMsJcP5M2NI7FsdD4NdrpLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=S2zuPGlI; arc=none smtp.client-ip=209.85.218.47
+	 In-Reply-To:Content-Type; b=qkLYdcgs70Sk0EMNBw9uJP+dk5IhW5FQI+6G/kOdy9+WQUmS6pyUKEYrjnfOp8HdtMAlon7lYG+4JA6lCD1fkexIUU1bWXM9D9KEbK4ib9QnM2cDzTt65BnzS3DuvO2KaaXU+gFB013Xr/y9gXpSzok9hjDdKtrtTf7IQw2QtXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JrqUxBkD; arc=none smtp.client-ip=209.85.221.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-b9734adc503so361027466b.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 05:17:37 -0700 (PDT)
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-439f59dfda2so1722650f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 05:18:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1773404256; x=1774009056; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1773404325; x=1774009125; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=3s5B4wCXYFxF46H+9RZgBJPAFEqIaUF6//FgPVVAHcY=;
-        b=S2zuPGlIvMArgiJbiTh839YX2dUIZitVPKFFfae4E4KrnUwsEU5zfTDpwC7/yPuxne
-         46IoNzj5dgBt//MxZK9J5PVdo97x0hOe90mChE0M1AXFizXkWrPyzt0tQWFUnWdFNnJW
-         2twpsABjZgr2XSOC2ytpD4qsYfhhiZnqXehNVc4QteLvDl2UiC71FbcHrpCGGIiYQbIe
-         YUNjD+leYjMZYO709jzCqiIxC7jDcuIlLG3XaMvCjRAD07ikJ7lHwOJJ6lkzmoiWkG9t
-         s4pE9n+q0NQztZiDV14T5oMHac52F2clHH/12FfXusd/ECoD63K2IuInIVl4/SZuXqEF
-         OZFQ==
+        bh=4vDJxFgdwUwROzjUq7xJrFddmidfBuen5YK8xbhB4mk=;
+        b=JrqUxBkDQ1mGhDDPyP6dFy94qBy4M0i1jFwdzAEY4iIrU/r6QcFnAa1uYwD4yeIppj
+         KYYtSR8EgZSoXk9ropGM4VI8AHt1i8rvRMXbIoCdS9CEi96ia8ZItgSjrCxzgFNSTYZw
+         2kYZE7I+tXeg8Ubw+QvWdnaBNp9e+tKc4fshi72fLNe8SVTzZ6h+icIIvk71W85gs2dq
+         L5sbGLj2gzUKqYPnxTVVcpbrYkLFsrDy2u+R7oyK6lEAxRQsPBQ5TlQ/gsk0rO7e70aQ
+         JAyHSQy7O83ZhaIibtpKuTkQbvFhK1ffWet9vwLH7ajgiR/3Gl7A0XgZxjmRjz00wOLp
+         PsFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773404256; x=1774009056;
+        d=1e100.net; s=20251104; t=1773404325; x=1774009125;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=3s5B4wCXYFxF46H+9RZgBJPAFEqIaUF6//FgPVVAHcY=;
-        b=OgvesDd4s6m0f1qMtqKTdh64uBi5/0gi/4dLjrlRynhARsb0U4o5NOCKWAEfnoCwVz
-         q8+7+LC2ZfMiZw1qILoTDG1AhyVOp3TwPxlwESXSeVcsffw3mES0dU/Uqv9fWD6v5SXu
-         wXd/ahqaKruGAydRCANnouf5ICf/+we4klkFt6gbuu9pKOhf/ur6hplegcU52L7cCDKu
-         dpNZx43m/GtD7PcuMylg9woZ5pu5hi7zYxgcHftWoEYd0o0b/MmYMYSnEirmhBhYzdUO
-         KEgeN7tOWXGpLo5SG7C1CuKWOFsXjh0XoidkrYC27FaY5Rif6N7TVl35WcRUj5nAsR4v
-         4ASw==
-X-Gm-Message-State: AOJu0Yymcdm3OVW6d99JhLnP+EBIePx48qtlOctGVaTkxPA1voAuS9sL
-	ZwJSZ+GkgyiwmYfMMBFjjVptidaPdH/T2Olc5lmie0jIdV4Wz9Dw5KA9SVgBuSYpRFa2zCu972n
-	9lVa+2Rs=
-X-Gm-Gg: ATEYQzwCh5cU+lEEJN7IVOrLIA5jlOtUwaHLA695UUSduo5RrfSRdUIeVlmrpB/FpsL
-	FCH9z+MZZ4s97MAraQ/LMZyJPuRvcdOrUjWaWu9sXcl38Bg9hTxIIkif57ctw/6hkdzJkQqcnYm
-	CNolYkeN6NLRQGwmwq+WBTYstzex4t1riDB6rxxavrUSqtDeGRFqCDPsVPpQ0CTEBjaEQ+QXyaf
-	NtIueMmLPGVb5KEctjm689cL41ufp8t3qggDxzB21/AiOLuz3MgFKUrqaev1aUDRe7KtjRkI4FA
-	LfV+yLvskF7dNRbz6wEncaipm0zg2BLJgXvOJPGNVPQIoLKIphzFzanr2H2J7Onhx+9AO94CrFr
-	qWa3Ykw85EBymBhueKUJKfW8iQQFUzyE1fQQYP1GmM4sZzg70IwYobokdHF6y/YK254Kzg/Vhoe
-	zWxYg17/F6tNFET2BgtndevH4sfpSZJjLn190=
-X-Received: by 2002:a17:907:174a:b0:b96:7e03:166c with SMTP id a640c23a62f3a-b97651b4282mr160852266b.53.1773404255612;
-        Fri, 13 Mar 2026 05:17:35 -0700 (PDT)
+        bh=4vDJxFgdwUwROzjUq7xJrFddmidfBuen5YK8xbhB4mk=;
+        b=D/rpGL616AhBBbS3fWQNm74Yk4qOZOGByz73DaWbmKAw7fj4RjE9CJOn//+PysyiQe
+         YlhrEplN38byWrxyJSnFSVFgbugzsxZlUECZIBe1zyaDpx39zepCa3yqgyw5c59alPIU
+         IktWKeKwzvox/fRFr+5bxYCRNc5RYFzvNf+GXfDFShlb/uRtpaDJPULHWhRQF0/8sQ4U
+         K1OrlLrf4RbxSCwb7zIqKRd4phDtiXFzYoKkMzRDw5NnbGaCuXeLJF9Yl/VbpC/YDxTN
+         SpP/+A3Bd0Mp6b+Jz5Yk7tm9msIZ2bQ42EdUXTKJ5wNfNYBE/PwcjRkWHtcgD8b4kIZ7
+         1MNA==
+X-Gm-Message-State: AOJu0YxTqGx1E8k8Yh0IA5MIW9gInP0/HbkV63WVF9J10m0P8nT2PU02
+	naNc68hf6C1+TAWYAVbGikavfKXE+2kujA7SvqAYtHRjQ9JjCi8tim2fjQh7Tv94eWk=
+X-Gm-Gg: ATEYQzwM2kKHZN9T3UPcz854q6XPmYFaD6gr2rzfPMfdLKxUOtltyQCRMV8hwybmIMM
+	dlw1+/cppCSIal1rikoJ8C8N+9ARgxJCFyU3A/v4gpkwCO+xjLxQ2h5Ry8Lc6N1Szq4tpzeuSZc
+	HdxRF0vjs0Ow02vtExPgMGLjROk6gjgo0tHxNrLJwzys4XnofIaDm+NV6UHzIp8AcabFx6pvIlD
+	hc4Z+c5Y1vnhduLNxOMqnE+3V+p1NK+2MpQuHR9AjTxy91Rl5VqoxIWuggW9FdNYwi0pFGVu251
+	VcqxLVvFBs7vj/zlSyazXXjigS+iP131U5rq0p5JZwJ/Rfq4rm1t8PJvZIOauOhHKG7Fwc1S+U0
+	P2jdJDQWbwLcXvzWSAKko6HHAvYwX55LR/HuXSjl+kWbR6z22XGdEkQjG+TsfxB1rzfISJ4DSdN
+	KQCs82rjKGYhDvKZBaFUDeNN0Al5p1Fq5BDMA=
+X-Received: by 2002:a5d:64e7:0:b0:439:b59e:5e6a with SMTP id ffacd0b85a97d-43a04d816cemr6178617f8f.14.1773404324041;
+        Fri, 13 Mar 2026 05:18:44 -0700 (PDT)
 Received: from [192.168.0.35] ([109.76.176.163])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b97756e59c4sm23182566b.35.2026.03.13.05.17.34
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-439fe19ac5fsm17764848f8f.1.2026.03.13.05.18.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Mar 2026 05:17:35 -0700 (PDT)
-Message-ID: <9241da21-6b02-434d-a746-6bccc25a335d@linaro.org>
-Date: Fri, 13 Mar 2026 12:17:38 +0000
+        Fri, 13 Mar 2026 05:18:43 -0700 (PDT)
+Message-ID: <132116be-2964-4b98-be2b-1baae5bfb58e@linaro.org>
+Date: Fri, 13 Mar 2026 12:18:47 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -86,8 +85,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/5] platform: arm64: Add driver for EC found on
- Qualcomm reference devices
+Subject: Re: [PATCH v4 0/5] Add driver for EC found on Qualcomm reference
+ devices
 To: Anvesh Jain P <anvesh.p@oss.qualcomm.com>,
  Sibi Sankar <sibi.sankar@oss.qualcomm.com>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
@@ -99,30 +98,29 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, platform-driver-x86@vger.kernel.org,
  Maya Matuszczyk <maccraft123mc@gmail.com>
 References: <20260313-v04-add-driver-for-ec-v4-0-ca9d0efd62aa@oss.qualcomm.com>
- <20260313-v04-add-driver-for-ec-v4-2-ca9d0efd62aa@oss.qualcomm.com>
 Content-Language: en-US
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20260313-v04-add-driver-for-ec-v4-2-ca9d0efd62aa@oss.qualcomm.com>
+In-Reply-To: <20260313-v04-add-driver-for-ec-v4-0-ca9d0efd62aa@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	FREEMAIL_CC(0.00)[vger.kernel.org,gmail.com];
-	TAGGED_FROM(0.00)[bounces-97457-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-97458-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[14];
 	MIME_TRACE(0.00)[0:+];
 	DKIM_TRACE(0.00)[linaro.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
@@ -132,30 +130,73 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 3C142282D3D
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,linaro.org:dkim,linaro.org:mid,qualcomm.com:email]
+X-Rspamd-Queue-Id: 5E5B7282DC5
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 On 13/03/2026 10:29, Anvesh Jain P wrote:
-> + * Read Response:
-> + * ----------------------------------------------------------------------
-> + * | Offset	| Name		| Description				|
-> + * ----------------------------------------------------------------------
-> + * | 0x00	| Byte count	| Number of bytes in response		|
-> + * |		|		| (exluding byte count)			|
+> From: Anvesh Jain P <anvesh.p@oss.qualcomm.com>
+> 
+> Add Embedded controller driver support for Hamoa/Purwa/Glymur Qualcomm
+> reference boards. It handles fan control, temperature sensors, access
+> to EC state changes and supports reporting suspend entry/exit to the EC.
+> 
+> ---
+> Changes in v4:
+>    - Fix fan count calculation to use min() instead of max() to correctly
+>      cap fan_cnt at EC_MAX_FAN_CNT.
+>    - Remove unnecessary mutex lock/unlock.
+>    - Disable fan debug mode on ec module removal.
+>    - Fix issue reported by kernel test robot.
+>    - Consolidate hamoa-iot-evk specific changes into hamoa-iot-evk.dts.
+>    - Add board-specific compatible strings as per review comments.
+>    - Link to v3: https://lore.kernel.org/all/20260308233646.2318676-1-sibi.sankar@oss.qualcomm.com/
+> 
+> Changes in v3:
+>    - Revamp the bindings and driver to support generic ec specification
+>      that works across Qualcomm Hamoa/Purwa and Glymur reference devices.
+>    - Add ec nodes to Hamoa/Purwa CRDs and IOT-EVKs.
+>    - Add ec node to Glymur CRDs.
+>    - Link to v2: https://lore.kernel.org/lkml/20241219200821.8328-1-maccraft123mc@gmail.com/
+>    - Link to v1: https://lore.kernel.org/lkml/20240927185345.3680-1-maccraft123mc@gmail.com/
+> 
+> ---
+> Maya Matuszczyk (1):
+>        dt-bindings: embedded-controller: Add EC bindings for Qualcomm reference devices
+> 
+> Sibi Sankar (4):
+>        platform: arm64: Add driver for EC found on Qualcomm reference devices
+>        arm64: dts: qcom: glymur-crd: Add Embedded controller node
+>        arm64: dts: qcom: x1-crd: Add Embedded controller node
+>        arm64: dts: qcom: hamoa-iot-evk: Add Embedded controller node
+> 
+>   .../embedded-controller/qcom,hamoa-ec.yaml         |  56 +++
+>   MAINTAINERS                                        |   8 +
+>   arch/arm64/boot/dts/qcom/glymur-crd.dts            |  22 +
+>   arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts         |  16 +
+>   arch/arm64/boot/dts/qcom/x1-crd.dtsi               |  16 +
+>   drivers/platform/arm64/Kconfig                     |  12 +
+>   drivers/platform/arm64/Makefile                    |   1 +
+>   drivers/platform/arm64/qcom-hamoa-ec.c             | 468 +++++++++++++++++++++
+>   8 files changed, 599 insertions(+)
+> ---
+> base-commit: a0ae2a256046c0c5d3778d1a194ff2e171f16e5f
+> change-id: 20260309-v04-add-driver-for-ec-3fa478f264d9
+> 
+> Best regards,
 
-Great to see this documented in the code.
 
-Please run checkpatch and take heed of what it says.
+echo 'file qcom-hamoa-ec.c +p' > /sys/kernel/debug/dynamic_debug/control
+echo 6-0076 > /sys/bus/i2c/drivers/qcom-hamoa-ec/unbind
+echo 6-0076 > /sys/bus/i2c/drivers/qcom-hamoa-ec/bind
+dmesg | tail -n 15
 
-0002-platform-arm64-Add-driver-for-EC-found-on-Qualcomm-r.patch has no 
-obvious style problems and is ready for submission.
-0002-platform-arm64-Add-driver-for-EC-found-on-Qualcomm-r.patch:184: 
-exluding ==> excluding, exuding
-0002-platform-arm64-Add-driver-for-EC-found-on-Qualcomm-r.patch:224: 
-exluding ==> excluding, exuding
-total: 0 errors, 0 warnings, 0 checks, 28 lines checked
+[   27.301126] qcom-hamoa-ec 6-0076: EC Version 0.35.0
+[   27.311768] qcom-hamoa-ec 6-0076: Fan count: 0 Fan Type: 0 Thermistor 
+Mask: 0
+
+?
 
 ---
 bod
