@@ -1,79 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-97642-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97643-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id CL74J/2NtGnBpgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97642-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 23:21:49 +0100
+	id 2oPCA46btGmIrAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97643-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Mar 2026 00:19:42 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 085D228A5B1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 23:21:48 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id D462828AA28
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Mar 2026 00:19:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A158930D131A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 22:21:47 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id BE27330406A2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 23:19:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0803E376463;
-	Fri, 13 Mar 2026 22:21:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C01A33E3D92;
+	Fri, 13 Mar 2026 23:19:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WxvcIc5x"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ANVgSB1I"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D969426A08A;
-	Fri, 13 Mar 2026 22:21:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294A23D8119;
+	Fri, 13 Mar 2026 23:19:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773440505; cv=none; b=P3xB70MTSCbsXyzRNj3pq0Cd+NzP0fra3kZk/iiAQ9BSowfpQ1W8Ne0o9X5KsLXs4Z60uMrk+mBsW+x1TrqTYNfrhZhmwzyYOMSo22N+818jULSOXN2nZjIlNJadlVHgDCp2k8tqiKm5+8EZNFV62+gp93cfh7Y+nZoZQ8x6VPI=
+	t=1773443974; cv=none; b=OaXHfsjGScA8UVHuVTatwRSem2scJLfh9413ZwSQfacBX7DsAE6q/48LMbVFV9wB7l3Afm1bnQzhiLAbHToe4qCY7YAgtY+9gCNm8vjEenAsf51Pd7Q26iFMzGLYU2CFlARbOHQ7AaVmqMEl7IvvX8spvlzex6nNHndl0hcznZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773440505; c=relaxed/simple;
-	bh=slTUBvEk2/VauNtzlqOM1N32mBa6lkN38sBtq4JuXCc=;
+	s=arc-20240116; t=1773443974; c=relaxed/simple;
+	bh=taL4VuSTv2A1JaSTkD9QBZhRkJcauZHEdBcYGm6zPLA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OYJCYFyv/DnATxOCoLQy6KwWLZH4cRR4aNCGTsl5GAuAxkoscr473OCjtbeyIU+OMBp/0cIMwu9Ru5vmNdYnfEwDpwrvb7VaeiPXBFNXZ1sySsjPFxF07kfHiF6wHOO1eMb6d6DCirl+CjFZ3+OZMO1h1huj0Bm1ufuK33Gl2U4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WxvcIc5x; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EDD3C19421;
-	Fri, 13 Mar 2026 22:21:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773440505;
-	bh=slTUBvEk2/VauNtzlqOM1N32mBa6lkN38sBtq4JuXCc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=WxvcIc5xVmgRXcUWNzELYdshfb2Cswzyw3mdYbT45IbyCOf4UxClkuHxK/cuF46um
-	 V4AA8Llhq5sG4pBed2y1oucMkmua2aQ8Ee5KNDveF5Pe7dBvoounbGbXPzMdUF6aKh
-	 z2mSWmeHBCIPObO+gxhxS/QTNBRQ5J+/1vU3VcHyHuKQg48VbCbJq3mrR8RWx+NyYq
-	 DtGWjawhi9lVz7Q/iIQYgtnqiLlRHtA1bnKgITsUGYZOpcXeCnvQ5Iwn7zknGsJmvw
-	 6t4v3Zj6PhtJJt5QefXmia5hZTAIckVaQ2cqtr5XKvE/cSP9FUAulrjTWnACu8ki4P
-	 JxlFPyHZ8r9TA==
-Date: Fri, 13 Mar 2026 17:21:44 -0500
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Sean Paul <sean@poorly.run>, linux-kernel@vger.kernel.org,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-	David Airlie <airlied@gmail.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	devicetree@vger.kernel.org, Konrad Dybcio <konradybcio@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Jonathan Marek <jonathan@marek.ca>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Krishna Manikandan <quic_mkrishn@quicinc.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Jessica Zhang <jesszhan0024@gmail.com>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	dri-devel@lists.freedesktop.org, Conor Dooley <conor+dt@kernel.org>,
-	Simona Vetter <simona@ffwll.ch>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Subject: Re: [PATCH v2 3/8] dt-bindings: display/msm: dsi-controller-main:
- Add Eliza SoC
-Message-ID: <177344050369.3547140.13640398793199962366.robh@kernel.org>
-References: <20260304-drm-display-eliza-v2-0-ea0579f62358@oss.qualcomm.com>
- <20260304-drm-display-eliza-v2-3-ea0579f62358@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=ThRTCrpwslF+JkoiwTHxF5qjs5bF2nKm9CxtCts+jwwoln8v8n47g3A5NyYFMBF/JQhl8TaUZEJLIjcrMsz7nkqcdfdXtv4TV4xr+/zjfundX8IJbRTlk/XyRpnS4C9y/k+mszHpbo30I5JVZtnfMq7LxalEYiXMVMHujRA1Rew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ANVgSB1I; arc=none smtp.client-ip=192.198.163.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1773443971; x=1804979971;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=taL4VuSTv2A1JaSTkD9QBZhRkJcauZHEdBcYGm6zPLA=;
+  b=ANVgSB1IGfaL7yy+pg+djyynKkd5tWUUCzzmjcVfCoPgOke0TuZ4Yeva
+   2UzqEwcuRCx4d0ZpcNTBYHBG67rr/zkNT0Ovhnd9ROWtexAWQ52hHd0sA
+   ScZSaVEw3NEaQYiBxJyx9QJ7FDa+RKjUdgPWmTQbGqSifk3VZEi+1eoYQ
+   9457FJBb6mliyZNHgnx9zAeedPq63Q00SjQRQbkd506yyjINxN6dxTjNY
+   pB0NMHRKXU9Yrwe9KYJWDgeTiXwxN3TbmgVWBnjth/KKVo6TKrypVsjX8
+   NDlSr7wa0O4gOHDVhLWVkFpeqSuerHx5lnMsOAbIJnMxtFntYasBp0UPU
+   A==;
+X-CSE-ConnectionGUID: AIdbteINQu6BLcfWMssTIA==
+X-CSE-MsgGUID: MLg6OsTHRW2kReUlFa/M4A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11728"; a="77163505"
+X-IronPort-AV: E=Sophos;i="6.23,119,1770624000"; 
+   d="scan'208";a="77163505"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Mar 2026 16:19:30 -0700
+X-CSE-ConnectionGUID: 20DZDlkLT22uPy9QR+yoag==
+X-CSE-MsgGUID: I5XDbt38SwKG+gCbSTqdfQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,119,1770624000"; 
+   d="scan'208";a="217268540"
+Received: from lkp-server01.sh.intel.com (HELO 418530b1a366) ([10.239.97.150])
+  by fmviesa006.fm.intel.com with ESMTP; 13 Mar 2026 16:19:25 -0700
+Received: from kbuild by 418530b1a366 with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1w1Bms-000000004OZ-3Iu0;
+	Fri, 13 Mar 2026 23:19:22 +0000
+Date: Sat, 14 Mar 2026 07:19:20 +0800
+From: kernel test robot <lkp@intel.com>
+To: Hans Zhang <18255117159@163.com>, lpieralisi@kernel.org,
+	jingoohan1@gmail.com, mani@kernel.org, kwilczynski@kernel.org,
+	bhelgaas@google.com, helgaas@kernel.org,
+	florian.fainelli@broadcom.com, jim2101024@gmail.com
+Cc: oe-kbuild-all@lists.linux.dev, robh@kernel.org,
+	ilpo.jarvinen@linux.intel.com, linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-renesas-soc@vger.kernel.org, claudiu.beznea.uj@bp.renesas.com,
+	linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org,
+	linux-omap@vger.kernel.org, bcm-kernel-feedback-list@broadcom.com,
+	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Hans Zhang <18255117159@163.com>
+Subject: Re: [PATCH v8 1/5] PCI: Add pcie_get_link_speed() helper for safe
+ array access
+Message-ID: <202603140748.u17h0ZM8-lkp@intel.com>
+References: <20260312163652.113228-2-18255117159@163.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,52 +91,63 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260304-drm-display-eliza-v2-3-ea0579f62358@oss.qualcomm.com>
-X-Spamd-Result: default: False [0.34 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
+In-Reply-To: <20260312163652.113228-2-18255117159@163.com>
+X-Spamd-Result: default: False [-1.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCPT_COUNT_TWELVE(0.00)[27];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,poorly.run,vger.kernel.org,suse.de,lists.freedesktop.org,gmail.com,somainline.org,kernel.org,quicinc.com,marek.ca,linux.dev,linaro.org,ffwll.ch,linux.intel.com];
-	TAGGED_FROM(0.00)[bounces-97642-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-97643-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[lists.linux.dev,kernel.org,linux.intel.com,vger.kernel.org,lists.infradead.org,bp.renesas.com,broadcom.com,163.com];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[163.com,kernel.org,gmail.com,google.com,broadcom.com];
 	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[23];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[lkp@intel.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[intel.com:+];
+	NEURAL_HAM(-0.00)[-1.000];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: 085D228A5B1
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,intel.com:dkim,intel.com:email,intel.com:mid,01.org:url]
+X-Rspamd-Queue-Id: D462828AA28
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
+Hi Hans,
 
-On Wed, 04 Mar 2026 13:58:45 +0100, Krzysztof Kozlowski wrote:
-> Add DSI controller Qualcomm Eliza SoC using exactly the same block as
-> SM8750.
-> 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-> ---
->  .../devicetree/bindings/display/msm/dsi-controller-main.yaml          | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
+kernel test robot noticed the following build warnings:
 
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
+[auto build test WARNING on 80234b5ab240f52fa45d201e899e207b9265ef91]
 
+url:    https://github.com/intel-lab-lkp/linux/commits/Hans-Zhang/PCI-Add-pcie_get_link_speed-helper-for-safe-array-access/20260313-220734
+base:   80234b5ab240f52fa45d201e899e207b9265ef91
+patch link:    https://lore.kernel.org/r/20260312163652.113228-2-18255117159%40163.com
+patch subject: [PATCH v8 1/5] PCI: Add pcie_get_link_speed() helper for safe array access
+config: alpha-allnoconfig (https://download.01.org/0day-ci/archive/20260314/202603140748.u17h0ZM8-lkp@intel.com/config)
+compiler: alpha-linux-gcc (GCC) 15.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260314/202603140748.u17h0ZM8-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202603140748.u17h0ZM8-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> Warning: drivers/pci/probe.c:793 expecting prototype for pcie_link_speed_value(). Prototype was for pcie_get_link_speed() instead
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
