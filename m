@@ -1,218 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-97639-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97640-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GojkMxuLtGlCpgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97639-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 23:09:31 +0100
+	id QA+tMJCNtGnBpgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97640-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 23:20:00 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 69CF028A447
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 23:09:31 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id D709828A543
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 23:19:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id AC43D301F38D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 22:09:30 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 537E7301B866
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 22:19:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6C9E382F00;
-	Fri, 13 Mar 2026 22:09:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBB2D372699;
+	Fri, 13 Mar 2026 22:19:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b="EiiSUDgg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KnyeCv1g"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from 013.lax.mailroute.net (013.lax.mailroute.net [199.89.1.16])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26B943845C7;
-	Fri, 13 Mar 2026 22:09:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=199.89.1.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C855128852E;
+	Fri, 13 Mar 2026 22:19:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773439767; cv=none; b=rujoa4GRwoQZw7tn/Iwb8mVK0t9cy1ELUwDGdWp/hkja5Poqc4KEYlmBGA0oasvD7dTcVCks+B2cj+k1mtKHibxextcwix3nK2ENS0HYeNxm0wG3ZYK08UNs0ni3AV5YPmsKN/R4jUuh1YPY0ea1F5wBsHewqRhmB7aA6UhOlzQ=
+	t=1773440389; cv=none; b=f7wIy4rmjNCL240FANfeB0F8S5/XQM7DX/mAe3GMwQt5yO3DO7kgKhP8dPJC5QHr0KWDAp/2smeEvC3u+4gS175rbWJdmy1oDyA5Qaf+v0q2zXntZ7jpxCSX5F2QIgCcI4Zm9z94Pw9WJKpinWVFnR38NXOM9vzn8UwlPm36dDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773439767; c=relaxed/simple;
-	bh=2RFzESXteaG9PRkf92qALY+qWP+Yr1pLeEnxN88IEf4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QaQHS+3UQNCrbNaZ9ZrrpDa0s6MNaxixtWc6Je4IWS1WAfMQgoM2uViKHwi45J/LGMyOb+NiB7U81J+vwEXdUhBUg9/zZZny4aiy1YmBJSPMNjxOm2dyBWO5iPY97Wi/8lbJ4d3gSCU9954OPFBQF6XEuqFwa1jps3sR+8trE2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org; spf=pass smtp.mailfrom=acm.org; dkim=pass (2048-bit key) header.d=acm.org header.i=@acm.org header.b=EiiSUDgg; arc=none smtp.client-ip=199.89.1.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=acm.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=acm.org
-Received: from localhost (localhost [127.0.0.1])
-	by 013.lax.mailroute.net (Postfix) with ESMTP id 4fXdtr3Yg6zlfgfG;
-	Fri, 13 Mar 2026 22:09:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=acm.org; h=
-	content-transfer-encoding:content-type:content-type:in-reply-to
-	:from:from:content-language:references:subject:subject
-	:user-agent:mime-version:date:date:message-id:received:received;
-	 s=mr01; t=1773439748; x=1776031749; bh=wG4Mk7n9a3KJbym01Ex6ddbG
-	HyReReOxJaeGp+QfjVw=; b=EiiSUDggAbDN741zNUtPvkEmiBs/8fU8NAHvA866
-	Ekt0EPS3Ao28nSSTI2CDvN9+h3oEgjXkCk+o27IN/DLDgr9yCo5AviQzOuMB91Jg
-	otE1KqyTy9cT2OTbOZFlpT2rBkBjf9A/1lehnN+9N+OgI9PXTQkJ8S2GJVUpTwYh
-	5FGccKmzXkV2Cypig5nfBEmliM4OMX1xv+a+PJcQ3A34A4LGJkSYQF+p69yKL7ra
-	5m1Lnded5H/dE+vXk3yTXi/yKgnyXB/TrTZa1MCBoV3pnqSuXSwLvLIQCeRxiPaz
-	wkKKsbdVqf9WElcmlwydUzcTCGZIeox4j51vE4sY4meYbA==
-X-Virus-Scanned: by MailRoute
-Received: from 013.lax.mailroute.net ([127.0.0.1])
- by localhost (013.lax [127.0.0.1]) (mroute_mailscanner, port 10029) with LMTP
- id rvzoD7aQMck2; Fri, 13 Mar 2026 22:09:08 +0000 (UTC)
-Received: from [100.119.48.131] (unknown [104.135.180.219])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: bvanassche@acm.org)
-	by 013.lax.mailroute.net (Postfix) with ESMTPSA id 4fXdtQ5jBczlfl7l;
-	Fri, 13 Mar 2026 22:09:02 +0000 (UTC)
-Message-ID: <fff6bc07-169b-48aa-a6c2-0d243bad0d82@acm.org>
-Date: Fri, 13 Mar 2026 15:09:01 -0700
+	s=arc-20240116; t=1773440389; c=relaxed/simple;
+	bh=0MkZk4pZGxHmnsDZni06Nwrm9u06R9hz2Qn+nuX7Cvg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mgPSRtWJZvOvB0Uekxo6NFLEHL4JIejc4KFUDlVJpIhRoag8IMI4s2J7RICttLX7epK5iTKLMboP/LCPewcgEwNlqJd39G2y4d3u6ku+7drXnCtE88oVH1heN73OoW3cMtd/5BSyOrtrGYAsW8yE1RZW1M6+wP11cApow+LzBG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KnyeCv1g; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B6D6C19421;
+	Fri, 13 Mar 2026 22:19:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773440389;
+	bh=0MkZk4pZGxHmnsDZni06Nwrm9u06R9hz2Qn+nuX7Cvg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=KnyeCv1gSsIriEpaxrHzP+lygHlT20gcMrzLgx4mwTE9NC003vla9SwA6mjLFJo3V
+	 N9PUfcT0xJjk5ahSc++qRBynsjJ+/IgpBthKjD/l+QTbShW47g3X9/rFXEebQB1Cl5
+	 pE2R67JWynOy/FtJqcF60LBRmjxO/NuhLuyO5OxdahYFbDfGKzaRgMCQwLtNxwy887
+	 AdFaDjrmiLIleuGmc6HDd5sxF70qT6MVLSDUGy1hoDeOO7UPsL+JuLgDUlePxBYTD2
+	 9soSwKPHAGVr262Kto0nhn2O9XrpA8aKGkfcCRYuYj3W6JdLLlTUys/BxzzFYCtOpq
+	 Z182JWHydSmWg==
+Date: Fri, 13 Mar 2026 17:19:48 -0500
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Cc: Dmitry Baryshkov <lumag@kernel.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Jessica Zhang <jesszhan0024@gmail.com>,
+	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Simona Vetter <simona@ffwll.ch>, Jonathan Marek <jonathan@marek.ca>,
+	Krishna Manikandan <quic_mkrishn@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	dri-devel@lists.freedesktop.org,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	David Airlie <airlied@gmail.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	linux-arm-msm@vger.kernel.org, Sean Paul <sean@poorly.run>,
+	linux-kernel@vger.kernel.org,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v2 1/8] dt-bindings: display/msm: dp-controller: Add
+ Eliza SoC
+Message-ID: <177344038742.3527195.4769688326442777545.robh@kernel.org>
+References: <20260304-drm-display-eliza-v2-0-ea0579f62358@oss.qualcomm.com>
+ <20260304-drm-display-eliza-v2-1-ea0579f62358@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 01/12] scsi: ufs: core: Introduce a new ufshcd vops
- negotiate_pwr_mode()
-To: Can Guo <can.guo@oss.qualcomm.com>, avri.altman@wdc.com,
- beanhuo@micron.com, martin.petersen@oracle.com, mani@kernel.org
-Cc: linux-scsi@vger.kernel.org, Alim Akhtar <alim.akhtar@samsung.com>,
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
- Sai Krishna Potthuri <sai.krishna.potthuri@amd.com>,
- Ajay Neeli <ajay.neeli@amd.com>, Peter Griffin <peter.griffin@linaro.org>,
- Krzysztof Kozlowski <krzk@kernel.org>, Peter Wang <peter.wang@mediatek.com>,
- Chaotian Jing <chaotian.jing@mediatek.com>,
- Stanley Jhu <chu.stanley@gmail.com>, Orson Zhai <orsonzhai@gmail.com>,
- Baolin Wang <baolin.wang@linux.alibaba.com>,
- Chunyan Zhang <zhang.lyra@gmail.com>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- "Bao D. Nguyen" <quic_nguyenb@quicinc.com>,
- Adrian Hunter <adrian.hunter@intel.com>,
- Archana Patni <archana.patni@intel.com>,
- open list <linux-kernel@vger.kernel.org>,
- "open list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..."
- <linux-samsung-soc@vger.kernel.org>,
- "moderated list:ARM/SAMSUNG S3C, S5P AND EXYNOS ARM ARCHITECTURES"
- <linux-arm-kernel@lists.infradead.org>,
- "moderated list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..."
- <linux-mediatek@lists.infradead.org>,
- "open list:ARM/QUALCOMM MAILING LIST" <linux-arm-msm@vger.kernel.org>
-References: <20260308151409.3779137-1-can.guo@oss.qualcomm.com>
- <20260308151409.3779137-2-can.guo@oss.qualcomm.com>
-Content-Language: en-US
-From: Bart Van Assche <bvanassche@acm.org>
-In-Reply-To: <20260308151409.3779137-2-can.guo@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-0.66 / 15.00];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260304-drm-display-eliza-v2-1-ea0579f62358@oss.qualcomm.com>
+X-Spamd-Result: default: False [0.34 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[acm.org,reject];
-	R_DKIM_ALLOW(-0.20)[acm.org:s=mr01];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-97639-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,samsung.com,HansenPartnership.com,amd.com,linaro.org,kernel.org,mediatek.com,gmail.com,linux.alibaba.com,collabora.com,quicinc.com,intel.com,lists.infradead.org];
-	RCPT_COUNT_TWELVE(0.00)[28];
+	FREEMAIL_CC(0.00)[kernel.org,somainline.org,quicinc.com,gmail.com,lists.freedesktop.org,vger.kernel.org,oss.qualcomm.com,linux.dev,ffwll.ch,marek.ca,linux.intel.com,suse.de,poorly.run,linaro.org];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-97640-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bvanassche@acm.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[acm.org:+];
+	RCPT_COUNT_TWELVE(0.00)[26];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[acm.org:dkim,acm.org:mid,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 69CF028A447
+	MISSING_XM_UA(0.00)[];
+	TO_DN_SOME(0.00)[]
+X-Rspamd-Queue-Id: D709828A543
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 3/8/26 8:13 AM, Can Guo wrote:
-> +static int exynos_ufs_negotiate_pwr_mode(struct ufs_hba *hba,
-> +					 const struct ufs_pa_layer_attr *dev_max_params,
-> +					 struct ufs_pa_layer_attr *dev_req_params)
-> +{
-> +	struct ufs_host_params host_params;
-> +	int ret;
-> +
-> +	if (!dev_req_params) {
-> +		pr_err("%s: incoming dev_req_params is NULL\n", __func__);
-> +		return -EINVAL;
-> +	}
-> +
-> +	ufshcd_init_host_params(&host_params);
-> +
-> +	/* This driver only support symmetric gear setting e.g. hs_tx_gear == hs_rx_gear */
-> +	host_params.hs_tx_gear = exynos_ufs_get_hs_gear(hba);
-> +	host_params.hs_rx_gear = exynos_ufs_get_hs_gear(hba);
-> +
-> +	ret = ufshcd_negotiate_pwr_params(&host_params, dev_max_params, dev_req_params);
-> +	if (ret)
-> +		pr_err("%s: failed to determine capabilities\n", __func__);
-> +
-> +	return ret;
-> +}
 
-The dev_req_params test is not necessary since the UFS core never passes 
-a NULL pointer as third argument, isn't it? I propose to remove the
-dev_req_params test.
+On Wed, 04 Mar 2026 13:58:43 +0100, Krzysztof Kozlowski wrote:
+> Add DisplayPort controller for Qualcomm Eliza SoC fully compatible with
+> SM8650.  The device looks very similar to SM8750 (same DP TX block
+> v1.5.1) but with a differences in DP PHY: Eliza and SM8650 use DP PHY
+> 4nm v7.0, SM8750 uses 3nm v8.0.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+> 
+> ---
+> 
+> Changes in v2:
+> 1. Commit msg
+> ---
+>  Documentation/devicetree/bindings/display/msm/dp-controller.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
 
-> +static int ufs_hisi_negotiate_pwr_mode(struct ufs_hba *hba,
-> +				       const struct ufs_pa_layer_attr *dev_max_params,
-> +				       struct ufs_pa_layer_attr *dev_req_params)
-> +{
-> +	struct ufs_host_params host_params;
-> +	int ret;
-> +
-> +	if (!dev_req_params) {
-> +		dev_err(hba->dev, "%s: incoming dev_req_params is NULL\n", __func__);
-> +		return -EINVAL;
-> +	}
-> +
-> +	ufs_hisi_set_dev_cap(&host_params);
-> +	ret = ufshcd_negotiate_pwr_params(&host_params, dev_max_params, dev_req_params);
-> +	if (ret)
-> +		dev_err(hba->dev, "%s: failed to determine capabilities\n", __func__);
-> +
-> +	return ret;
-> +}
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
 
-Same comment here - please remove the dev_req_params test.
-
-> +static int ufs_qcom_negotiate_pwr_mode(struct ufs_hba *hba,
-> +				       const struct ufs_pa_layer_attr *dev_max_params,
-> +				       struct ufs_pa_layer_attr *dev_req_params)
->   {
->   	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
->   	struct ufs_host_params *host_params = &host->host_params;
-> +	int ret;
-> +
-> +	if (!dev_req_params) {
-> +		pr_err("%s: incoming dev_req_params is NULL\n", __func__);
-> +		return -EINVAL;
-> +	}
-> +
-> +	ret = ufshcd_negotiate_pwr_params(host_params, dev_max_params, dev_req_params);
-> +	if (ret)
-> +		dev_err(hba->dev, "%s: failed to determine capabilities\n", __func__);
-> +
-> +	return ret;
-> +}
-
-Also here, please remove the dev_req_params test.
-
-Additionally, I see that identical "if (ret) dev_err(...)" code occurs
-in the three callbacks shown above. Shouldn't that code be moved into
-the only caller of these functions in the UFS core?
-
-Thanks,
-
-Bart.
 
