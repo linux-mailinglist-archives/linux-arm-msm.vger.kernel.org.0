@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-97617-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97618-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sI29JyNftGmKmgAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97617-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 20:01:55 +0100
+	id ADH5JSNgtGmKmgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97618-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 20:06:11 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0269A289095
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 20:01:54 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id BFBF4289200
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 20:06:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 3E6B6317EC81
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 19:01:38 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id DE2D0302FB95
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 19:05:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E83563CC9EC;
-	Fri, 13 Mar 2026 19:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA43335DA6F;
+	Fri, 13 Mar 2026 19:05:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iSktqZJc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QCTKdFuF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C25337F74F;
-	Fri, 13 Mar 2026 19:01:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8567A33509B;
+	Fri, 13 Mar 2026 19:05:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773428496; cv=none; b=j0YvPeKsorP1K9O7X1WgbAV3oXlIpmjhmcgOvkVe+82EZTJQF/7Y5f2eyvAzbc/6/guwbFgiYnpIG7cR34RoplW3Xn95IAGVicuBN2CO/LqOzdX/DDoFeNkd4thG1LVV4QMI5gSd0r/awme/yVXFt2ZPgk7gZL+CscX60DgGXF0=
+	t=1773428719; cv=none; b=rSODLX4ZXudWN6tn7QTpUzrJhzhtLYqIWK6ZQ/Un15A7CQ4Y0nS7bGy2l9iDsHbEEJrWCCrkAyw4JtBbay09vAasfxzl/Sjtogh9Q3ck3YTUFRiGz9eq5g1KzQ0te/r6iGIMK/2wY2sqyKS7/Y6BHN2tBNqOJDjrvDX16UiXYFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773428496; c=relaxed/simple;
-	bh=t7JM9fIIXNM6OiUZarv073oEP0ElLeNWb1KjAs3Deuc=;
+	s=arc-20240116; t=1773428719; c=relaxed/simple;
+	bh=c2hH6Lrx9ATt7ZsuyZJbysDITkWvNswzZdHsyImcfO8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=N7woxNhQE1gr8i8oo1ldkU8ITBMHM4tKSz1oXM0J8zp52gL58rzXPQNPfnbB2/iGdaMNxXwKknMS7ZHlGTx69oGrMwUhpaQfyO2dcjz1tK+ftfn2UgV50qgODSfnzQ9tDTVFBKh6I75YOXjbXPK3WyfST4sPNBjAyIyuSWkDBkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iSktqZJc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93E2AC19421;
-	Fri, 13 Mar 2026 19:01:32 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=UBEepP1KRd/SMWzuNBrEaa+LPGb70BOK26nqRskhQ3tywYqoRsnUvNXq3f88sJl8lks1oFz+BSHxcO0MakHRUVh8q/pPiaOZ9nPiMx8R1EHByOK6OuCktRDwUrN8ZmhDMFATxqCfPpqGDroLPxv2hAf4fxrLGJjuooFdTMAEcyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QCTKdFuF; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 032AFC19421;
+	Fri, 13 Mar 2026 19:05:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773428495;
-	bh=t7JM9fIIXNM6OiUZarv073oEP0ElLeNWb1KjAs3Deuc=;
+	s=k20201202; t=1773428719;
+	bh=c2hH6Lrx9ATt7ZsuyZJbysDITkWvNswzZdHsyImcfO8=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=iSktqZJcjVlBkJDRMeU3Jymnki2j6NB3oVjPbh72r6cjQ6JjrQ9qMLWpywEodY7A/
-	 +AjLFldfkmWnK+DWlCjlNiTK/PqMq+kPkDfWb14Ipg3Sw6xpgzG8+aDKedYf2Trk2+
-	 Nn1Lkqed26LmolYZNvUtYleOjtFSVS+opF6zQPYjJHpt1X5YkvY0TsDIcQOoVjxVgT
-	 Bs8Cqqt0r7/3pnKOGyBNKilMNRIVqN32+5sKugLx9E2ofO/mnnIjTSZBH7gRvH4y2F
-	 7KQcsjj1LT9l6/YUboK2G0H//aXi9wxArIBdYfCWh4nco6K9nKk4vWJQphCP/MxcMM
-	 MpsXo/k8Y5YNw==
-Message-ID: <de539038-7e9d-488b-a6a6-45396247bf63@kernel.org>
-Date: Fri, 13 Mar 2026 20:01:30 +0100
+	b=QCTKdFuFWkd4Oj6b7WOQ6B6Ee6P0xwzgFyluMCKnwwA7U6/vBoHNeHt/XrgDFl9Jd
+	 Wcno5WaSRu2crar2SSmPangmB3EDnSkX3CKeU/QfXY+VBkLHL8yWLyPzH+l2NtcMgz
+	 Z31Lt/9MNRQWQATUxxQhGBQnAtX9YBgl+TViSVwRu7M/ptLzdboRIfcbZmD5SpdNzM
+	 qEDEbJtmUuw2HfDOtsWSj8IyGPH0EXJTo1JeN/RebbrmUmHX62eSeSmueII5uCj0TV
+	 ZJuu6So2kPsOdCN69pgeAuwNrRZvwYijwnZxRL8cPKk7rg0Sy9n0M/wwLz692Rwqrm
+	 aZjSShcK5r0Gw==
+Message-ID: <af0aabd3-26cb-4f5e-91ce-d3902b0a7147@kernel.org>
+Date: Fri, 13 Mar 2026 20:05:14 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,8 +53,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/5] dt-bindings: embedded-controller: Add EC bindings
- for Qualcomm reference devices
+Subject: Re: [PATCH v4 2/5] platform: arm64: Add driver for EC found on
+ Qualcomm reference devices
 To: Anvesh Jain P <anvesh.p@oss.qualcomm.com>,
  Sibi Sankar <sibi.sankar@oss.qualcomm.com>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
@@ -67,7 +67,7 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, platform-driver-x86@vger.kernel.org,
  Maya Matuszczyk <maccraft123mc@gmail.com>
 References: <20260313-v04-add-driver-for-ec-v4-0-ca9d0efd62aa@oss.qualcomm.com>
- <20260313-v04-add-driver-for-ec-v4-1-ca9d0efd62aa@oss.qualcomm.com>
+ <20260313-v04-add-driver-for-ec-v4-2-ca9d0efd62aa@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -113,7 +113,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260313-v04-add-driver-for-ec-v4-1-ca9d0efd62aa@oss.qualcomm.com>
+In-Reply-To: <20260313-v04-add-driver-for-ec-v4-2-ca9d0efd62aa@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spamd-Result: default: False [-0.66 / 15.00];
@@ -121,11 +121,11 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-97617-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-97618-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
@@ -142,49 +142,135 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,devicetree.org:url,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 0269A289095
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: BFBF4289200
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 On 13/03/2026 11:29, Anvesh Jain P wrote:
-> From: Maya Matuszczyk <maccraft123mc@gmail.com>
-> 
-> Add bindings for the EC firmware running on Hamoa/Purwa and Glymur
-> reference devices.
-> 
-> Signed-off-by: Maya Matuszczyk <maccraft123mc@gmail.com>
-> Co-developed-by: Sibi Sankar <sibi.sankar@oss.qualcomm.com>
-> Signed-off-by: Sibi Sankar <sibi.sankar@oss.qualcomm.com>
-> Co-developed-by: Anvesh Jain P <anvesh.p@oss.qualcomm.com>
-> Signed-off-by: Anvesh Jain P <anvesh.p@oss.qualcomm.com>
+> +
+> +static irqreturn_t qcom_ec_irq(int irq, void *data)
+> +{
+> +	struct qcom_ec *ec = data;
+> +	struct device *dev = &ec->client->dev;
+> +	int val;
+> +
+> +	val = i2c_smbus_read_byte_data(ec->client, EC_SCI_EVT_READ_CMD);
+> +	if (val < 0) {
+> +		dev_err(dev, "Failed to read EC SCI Event: %d\n", val);
 
-A nit, subject: drop second/last, redundant "bindings for". The
-"dt-bindings" prefix is already stating that these are bindings.
-See also:
-https://elixir.bootlin.com/linux/v6.17-rc3/source/Documentation/devicetree/bindings/submitting-patches.rst#L18
+ratelimit
 
-> ---
->  .../embedded-controller/qcom,hamoa-ec.yaml         | 56 ++++++++++++++++++++++
->  1 file changed, 56 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/embedded-controller/qcom,hamoa-ec.yaml b/Documentation/devicetree/bindings/embedded-controller/qcom,hamoa-ec.yaml
-> new file mode 100644
-> index 000000000000..baa95f06644a
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/embedded-controller/qcom,hamoa-ec.yaml
-> @@ -0,0 +1,56 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/embedded-controller/qcom,hamoa-ec.yaml#
+> +		return IRQ_HANDLED;
+> +	}
+> +
+> +	switch (val) {
+> +	case EC_FAN1_STATUS_CHANGE_EVT:
+> +		dev_dbg(dev, "Fan1 status changed\n");
 
-Filename must match compatible.
+ratelimit everywhere further. You are in interrupt handler so imagine
+same interrupt keep happening because of constant overheat.
 
-This is a standard review comment already documented in kernel and your
-internal guideline, no?
+> +		break;
+> +	case EC_FAN2_STATUS_CHANGE_EVT:
+> +		dev_dbg(dev, "Fan2 status changed\n");
+> +		break;
+> +	case EC_FAN1_SPEED_CHANGE_EVT:
+> +		dev_dbg(dev, "Fan1 speed crossed low/high trip point\n");
+> +		break;
+> +	case EC_FAN2_SPEED_CHANGE_EVT:
+> +		dev_dbg(dev, "Fan2 speed crossed low/high trip point\n");
+> +		break;
+> +	case EC_NEW_LUT_SET_EVT:
+> +		dev_dbg(dev, "New LUT set\n");
+> +		break;
+> +	case EC_FAN_PROFILE_SWITCH_EVT:
+> +		dev_dbg(dev, "FAN Profile switched\n");
+> +		break;
+> +	case EC_THERMISTOR_1_THRESHOLD_CROSS_EVT:
+> +		dev_dbg(dev, "Thermistor 1 threshold crossed\n");
+> +		break;
+> +	case EC_THERMISTOR_2_THRESHOLD_CROSS_EVT:
+> +		dev_dbg(dev, "Thermistor 2 threshold crossed\n");
+> +		break;
+> +	case EC_THERMISTOR_3_THRESHOLD_CROSS_EVT:
+> +		dev_dbg(dev, "Thermistor 3 threshold crossed\n");
+> +		break;
+> +	case EC_RECOVERED_FROM_RESET_EVT:
+> +		dev_dbg(dev, "EC recovered from reset\n");
+> +		break;
+> +	default:
+> +		dev_dbg(dev, "Unknown EC event: %d\n", val);
+> +		break;
+> +	}
+> +
 
+
+...
+
+> +
+> +	ret = devm_request_threaded_irq(dev, client->irq, NULL, qcom_ec_irq,
+> +					IRQF_ONESHOT, "qcom_ec", ec);
+> +	if (ret < 0)
+> +		return dev_err_probe(dev, ret, "Failed to get irq\n");
+
+No need for message, just return ret.
+
+> +
+> +	i2c_set_clientdata(client, ec);
+> +
+> +	ret = qcom_ec_read_fw_version(dev);
+> +	if (ret < 0)
+> +		return dev_err_probe(dev, ret, "Failed to read ec firmware version\n");
+> +
+> +	ret = qcom_ec_thermal_capabilities(dev);
+> +	if (ret < 0)
+> +		return dev_err_probe(dev, ret, "Failed to read thermal capabilities\n");
+> +
+> +	ret = qcom_ec_sci_evt_control(dev, true);
+> +	if (ret < 0)
+> +		return dev_err_probe(dev, ret, "Failed to enable SCI events\n");
+> +
+> +	ec->ec_cdev = devm_kcalloc(dev, ec->thermal_cap.fan_cnt, sizeof(*ec->ec_cdev), GFP_KERNEL);
+> +	if (!ec->ec_cdev)
+> +		return -ENOMEM;
+> +
+> +	for (i = 0; i < ec->thermal_cap.fan_cnt; i++) {
+> +		struct qcom_ec_cooling_dev *ec_cdev = &ec->ec_cdev[i];
+> +		char name[EC_FAN_NAME_SIZE];
+> +
+> +		snprintf(name, EC_FAN_NAME_SIZE, "qcom_ec_fan_%d", i);
+> +		ec_cdev->fan_id = i + 1;
+> +		ec_cdev->parent_dev = dev;
+> +
+> +		ec_cdev->cdev = thermal_cooling_device_register(name, ec_cdev,
+> +								&qcom_ec_thermal_ops);
+> +		if (IS_ERR(ec_cdev->cdev)) {
+> +			dev_err_probe(dev, PTR_ERR(cdev),
+> +				      "Thermal cooling device registration failed\n");
+> +			ret = -EINVAL;
+
+Why do you override actual return code?
+
+> +			goto unroll_cooling_dev;
+> +		}
+> +	}
+> +
+> +	return 0;
+> +
+> +unroll_cooling_dev:
+> +	for (i--; i >= 0; i--) {
+> +		struct qcom_ec_cooling_dev *ec_cdev = &ec->ec_cdev[i];
+> +
+> +		if (ec_cdev->cdev) {
+> +			thermal_cooling_device_unregister(ec_cdev->cdev);
+> +			ec_cdev->cdev = NULL;
+> +		}
+> +	}
+> +
+> +	return ret;
+> +}
 
 
 Best regards,
