@@ -1,84 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-97567-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97569-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MJNICGI1tGn4igAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97567-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 17:03:46 +0100
+	id yIo3JXk1tGn4igAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97569-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 17:04:09 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C5F4286995
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 17:03:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4BCBA2869BE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 17:04:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 166A4307EAE9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 16:00:46 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 44C9430ED7B8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 16:00:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 84DE73BD25E;
-	Fri, 13 Mar 2026 16:00:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E08C3C3459;
+	Fri, 13 Mar 2026 16:00:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="r+uhas9o"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="N4x7VirN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D632D3B47C6
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 16:00:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 434013B6342
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 16:00:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773417645; cv=none; b=uCH6jOXpAq4UhGpsvAVuSnmI3QmKW9nA/ueqP2kQ/54miofFILY8UNz/yHwSI94JBPrRIFxp1nYWqGFAKTAqCZ6jQpaCy85wx56e92wfS5g+W9yd5pwb5PmOA+x31VespEnnP9HyFHouZf1is9NrmK6g1jazpUzx011++HfTfD4=
+	t=1773417647; cv=none; b=VYxaf7WdTnxtDEW5mMECP9UxU2isWMCLGq18789Bb9DjJzV5r5WOTT+ddBerd7fM2PFaQRtBfVJY4UY8+ia04+YLE0ax5MGSuBIMAkR8KPIpDSWcWmoM8pMhf2bgrdYHAyC3p0OU9dljO3Id5KLoOX7U/FU5xzA7Rc+W8bOuvtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773417645; c=relaxed/simple;
-	bh=0lcl4kwg6xMYcX6I2qw/0Bb3kvOyEwVkS+hMsOdcTEM=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=nUx2hFtKHd2jm33o2gdn58owZTr7bPoIrSviE5EitQAM1ST/c8r/RxFzxUutdYy31U2V3jiOHLMN0yts7xPaRLFJXsSqtkmgSNPRXg/jgsvjwSGbLiIQa3iTMCR7yzpLevVrzkTAmPxixvEPVLTbVs+FG/ZAuLK6xeAfdSvBwrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=r+uhas9o; arc=none smtp.client-ip=209.85.208.44
+	s=arc-20240116; t=1773417647; c=relaxed/simple;
+	bh=kU3UxSV+thy88CWdYS8ajqS2HsdwARkWF8FHIB7M0vg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=qENANdYMm88LpWqjkBbWibTttj9rZipxa23KqMCeANFYCi/cslZU0B5M6Ild/ZJk3E29OyU/sc3n4PqbqBnPNeNEVqsbCTccuHju93rwm7OPYJl06j8iBuVD/MCfBpZp9EqXEiOmTV6heSHL4ni+Y1b+2rwet39WYoX1qQREU4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=N4x7VirN; arc=none smtp.client-ip=209.85.208.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-660a58841d4so2971765a12.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 09:00:42 -0700 (PDT)
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-661b16ac011so4169561a12.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 09:00:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1773417641; x=1774022441; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=PHqknoZKE7fsrxy779b3139XeipLuzq0YFxuewlpd04=;
-        b=r+uhas9oYeidnAhxYrZj9o0V/4zlIDxs1RnkrhJ23pshr1JBLUJNXCralaIRYPV44q
-         4qbKm5GVgAK3HJD+FwATkWmJmvRy8LjByhYhPS35VGtenK9YstKycLXkCiw+80JWV7/f
-         VWZ8QckRsNnwrVuBvjWXxuSzLT9MZ5NCT99KoODljUr3Zp2pKuwVTjj1BWZk4lTsHN47
-         A3eccmsB4oIQ5nkkbwKQMGBI/yisZlCRabHTzbkQmdvdHkv3EQKiCYz24KVBnl51mL+m
-         N1000uQgoaYGU0eEpp445w08IVmhiDVjdUCqChHyEGdQo1qk8Cl5mRSFL2D7iUB6xt3b
-         8Pmg==
+        d=fairphone.com; s=fair; t=1773417642; x=1774022442; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=R2kPp/p9iZu44Vzh1qojKHtTrTqRdtYbnN73SyFGMzA=;
+        b=N4x7VirN8G348DO1TRK3fvYVlZmiKJMkkRTv4DKptZV/jozeD/9vDLYRDgaJCeB9Bu
+         kDHcxTINrNW7VI230UGduKF1wlbU8gxcTcJcm0jpWdxCumte1Hl/47M/jvD08jr0u4TS
+         4TDQnhFfUAc49GuJRLaidBybKkspRCklxCzMfU3xhRYEBwj3u3MaAr4iz83SSum6+3EY
+         Cfo/4xe0+osxMyRR7QhuNOJL8HzwdqsEZoFHtqN4f8sXob+4ksC20BzlXZ86/62g9GAX
+         hDvAtgau4tjK2hyfmCk5vZiXf5WUn4ZzWZLBGWcjL8hS81dEjUDbTr73wP6KYNvASHIW
+         zO0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773417641; x=1774022441;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PHqknoZKE7fsrxy779b3139XeipLuzq0YFxuewlpd04=;
-        b=DfPP7IJld6Q2BXTW3zd5HGyqFwAk3JV3ZgmRrzCv5QO7rtS7L7+r98rcFqVXzPNFJh
-         mlWTqio5e883oKz7ORSiNjcFYnm4GJgLOObnY9fOfo92PVxf/BrVEYpJ2pdiWNmWCQCN
-         AsM0lp6myjHq5osJsSirx1szHmLOYz8sG5TP9R4X66FaLJOm+oSdbOO+wsKmHbnSqB+6
-         +E4LaXNn0AHKMLKlsVQN8RmwlHviilNrIqwR0/cUHx7udRavf+XyaxM9LpL54kMewd1F
-         ZkgiARTVG1XBibAup8ik4gz0J4DeOnx0nKdH59FiNeIXTwKqAW6ifCbS6M5X9FmFOKHq
-         Cg8A==
-X-Forwarded-Encrypted: i=1; AJvYcCUaDzSjR4P0xKb5TMYs7uMkESTe9Cg3bTAYjircF6JW+FoudExcUUidL8BtLuZ7Q0ligM9r7RYV4MPohNcI@vger.kernel.org
-X-Gm-Message-State: AOJu0YygOyXrN0VKZvsrIUvbaXckCeqlnmF3kO19G3rhhbqL+zPtv6Up
-	A1PehxOxH79V8K7GO7qEcPljECVjAZ88DdYYKtikzG9hLuLU58oSx6h5c/smqqAWqq4=
-X-Gm-Gg: ATEYQzzYE0FiBsU5NaG6UvTxEh7xluM7xIes9qzfnGBqMhnaGh8lEVCenbvKTuVkCCZ
-	kCJGMdcbHo2z4xBce4YPyE3Xi2tKwoJ+gdWs13dt3STkePf19CxaZkhWAqNfaFVyKSbqNkoH9Uk
-	5CicbyISrVqCHRGCC/2GL0/UASYkXbcEnqz0fVcdmb++9nhz8EaqoMdcaEAwRdK6cNOssCmGPPf
-	r1xnfQdKvVjRL6cMPBaOaF7qOO4L5RQz68czCZX1YhKLQF8IGB23Sx6kiNO0gxq0ABQWvBmqzIp
-	ETBGPZo1JKgl02uKOHZcCEl1WdOOfrxNkHnWWEZSOYz4CfSNdGWWMBtfFtvZiKQmcIbp0Z+LZuj
-	8qcBcZabWzpilOPAjtoq5OJCTY95oPFwyWImQIdH9aoKm+WPwPLONIkJkj7bXi/qwRYStiXuo5Z
-	cgNhQl0B/cBBc3J8Pfdgsye3RCwTzqV/6sZoRwCtinqOinYcMYDugdJBJnWhIQfPGtU6CFhJeEK
-	yH+0w==
-X-Received: by 2002:a05:6402:3642:b0:660:a23d:4666 with SMTP id 4fb4d7f45d1cf-663babf0b28mr1753883a12.18.1773417641046;
-        Fri, 13 Mar 2026 09:00:41 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1773417642; x=1774022442;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=R2kPp/p9iZu44Vzh1qojKHtTrTqRdtYbnN73SyFGMzA=;
+        b=XH8/o+RmaVQAab9MD26UhpAOkOcihCiTGuBVZ0zbn2xTy7na8YX1yc9MscVX3GgzMB
+         Zn671RWwV1qKeCVyDBa/RF/jlQ1cbbX3lp3WX8RmIdG7rdmWjEIapI3N1RUYwlP8Ch+T
+         vczTg3q5cwOSBCgx3+NCbm9tJCDhW/mf++n1FonYpDMNTVFvuawvnvQUIxVBz0W9QoWr
+         qzTd6V4auyrb/Fk/npd0wS02ROhtp58NgacYSjsre8andcPt0t8gWVuQK8q+nDgJflpQ
+         BiHOLkuf8wNtn/q/mb4IihiLNvJJyfvTYmlrLOluCApXoPIF3JjoCn0VwkUJKM0iM48w
+         BtKw==
+X-Forwarded-Encrypted: i=1; AJvYcCW9wOxx+KKum9zR03rqS/+DchSOlJlLUBxE6l4YMIz01y2QZl0cJdEWBjTDP7pz14KPq2+RGsb5vQwwSPpT@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywzyg7KDwEIeyZoZ5uLJ1enTkmALNl/MYXOITIbkz/Ggmal/OYh
+	JYoncSDA5ByOIT7wEvLNEBEE98YIJqIY3/1lSZ2yGSP5L0Gu40LZYDTztKZbjsFm6/s=
+X-Gm-Gg: ATEYQzwTo5tDlhgMFr08vua8Qnb0LX/3jBHhqYAJOx24gjNgR3d761GVm5+X//0rye0
+	MhvRzyC5ZUukJaEex0FGMcgswUMDI5yZkat7k43VECqrckdABAf2pV/tuScSDjpcpPHFqrT7QEO
+	sRXFmwYl25tRHbUK4qJH9f5yezZ6Bu3z6AMGXSJI9yXv/9SPEIG1qjr1fYjEn2pCaJ1bACy77wb
+	OcZf/5xpTQQJI4JVfSNuuOZhDPvp6do3ELdG6wIr8VUbWO6qWBSdaBQjBhBIeeznGSXKey4ykPP
+	1UY9QVcqhLHrqZsxAxejy3vrx9+GfR4deNcTFk+sinq9jlhcfMq0N2Sa89kgxcEqvIPrP45phFk
+	L9V3ZqZqGsyVDidaTN1epg2N07EcZBfiyTMmonle1CvadnXYkaloM39sG5sRG2pi8U1VNsQWSNd
+	339FJnEiry3wN0ScQ0hGM1RyUC5fI7ohlEtIa4N2ueq4JFBKGMZPgbVzqw2U81e9XWmSdY7+cLa
+	+uzKA==
+X-Received: by 2002:a05:6402:35cd:b0:65f:830b:1034 with SMTP id 4fb4d7f45d1cf-663ba101109mr2296343a12.6.1773417642212;
+        Fri, 13 Mar 2026 09:00:42 -0700 (PDT)
 Received: from [172.16.240.100] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6634fbb94afsm1397100a12.4.2026.03.13.09.00.40
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6634fbb94afsm1397100a12.4.2026.03.13.09.00.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Mar 2026 09:00:40 -0700 (PDT)
+        Fri, 13 Mar 2026 09:00:41 -0700 (PDT)
 From: Luca Weiss <luca.weiss@fairphone.com>
-Subject: [PATCH 0/3] Front camera enablement on Fairphone 5
-Date: Fri, 13 Mar 2026 17:00:37 +0100
-Message-Id: <20260313-fp5-s5kjn1-v1-0-fa4f1c727318@fairphone.com>
+Date: Fri, 13 Mar 2026 17:00:38 +0100
+Subject: [PATCH 1/3] arm64: dts: qcom: qcm6490-fairphone-fp5: Sort pinctrl
+ nodes by pins
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -87,10 +89,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMywqDMBCF4VcJs+6UXDAVX6W4SNOxnRajTqwI4
- rsb6vI7cP4NMglThkZtILRw5iEVmIuC+A7pRcjPYrDaeu2Mw26sMFffTzJY61B7H4isN1AOo1D
- H6z92b08LTb/SnM8RHiETxqHveW7UcrtqlOig3fcD97HygIgAAAA=
-X-Change-ID: 20260313-fp5-s5kjn1-80a866aee261
+Message-Id: <20260313-fp5-s5kjn1-v1-1-fa4f1c727318@fairphone.com>
+References: <20260313-fp5-s5kjn1-v1-0-fa4f1c727318@fairphone.com>
+In-Reply-To: <20260313-fp5-s5kjn1-v1-0-fa4f1c727318@fairphone.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -100,11 +101,11 @@ Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1773417640; l=764;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1773417640; l=2814;
  i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
- bh=0lcl4kwg6xMYcX6I2qw/0Bb3kvOyEwVkS+hMsOdcTEM=;
- b=ovAVA3KQzaGRmmd4JKjyFPLw4kz43Y4QJcFmAvJQAJNw1pZ+a9dDk7n6jyOfMBVxb56N4zxoG
- lB9uuQn4m9cCsdZpKVScM5y/6iOHvRiz/fRgXLLPBJk3CWIlxcU3p2g
+ bh=kU3UxSV+thy88CWdYS8ajqS2HsdwARkWF8FHIB7M0vg=;
+ b=8ths/u7f4S7gPNmFszVyhlCsdnOU+Bf+PStFeIBt6nuBralUzmznUoFlN8osvDGhrPhsMMGy5
+ QradTLd9VE/CttINqtrVxGuZiWRNLGCTCII6uId/YjPbhfU9vfsYyhh
 X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
  pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
 X-Spamd-Result: default: False [-0.66 / 15.00];
@@ -119,7 +120,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MIME_TRACE(0.00)[0:+];
 	RCPT_COUNT_TWELVE(0.00)[12];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-97567-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-97569-lists,linux-arm-msm=lfdr.de];
 	DKIM_TRACE(0.00)[fairphone.com:+];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
@@ -134,29 +135,126 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[fairphone.com:dkim,fairphone.com:email,fairphone.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 8C5F4286995
+X-Rspamd-Queue-Id: 4BCBA2869BE
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Since the Samsung S5KJN1 driver was upstreamed recently, we can enable
-the camera upstream by adding a few bits to dts.
+As per DTS Coding Style, sort pinctrl subnodes by the "pins" property,
+in preparation to add more pinctrl states.
 
 Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 ---
-Luca Weiss (3):
-      arm64: dts: qcom: qcm6490-fairphone-fp5: Sort pinctrl nodes by pins
-      arm64: dts: qcom: qcm6490-fairphone-fp5: Add front camera support
-      arm64: defconfig: Enable S5KJN1 camera sensor
+ arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 74 +++++++++++-----------
+ 1 file changed, 37 insertions(+), 37 deletions(-)
 
- arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 128 +++++++++++++++------
- arch/arm64/configs/defconfig                       |   1 +
- 2 files changed, 91 insertions(+), 38 deletions(-)
----
-base-commit: 3daa4f5dc6cc1ac1ab2f95b5b4c16bc5fb87f48f
-change-id: 20260313-fp5-s5kjn1-80a866aee261
+diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
+index 455e5c9bb072..c9c24c36ba7e 100644
+--- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
++++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
+@@ -1257,41 +1257,6 @@ &tlmm {
+ 	 */
+ 	gpio-reserved-ranges = <32 2>, <56 4>;
+ 
+-	bluetooth_enable_default: bluetooth-enable-default-state {
+-		pins = "gpio85";
+-		function = "gpio";
+-		output-low;
+-		bias-disable;
+-	};
+-
+-	disp_reset_n_active: disp-reset-n-active-state {
+-		pins = "gpio44";
+-		function = "gpio";
+-		drive-strength = <8>;
+-		bias-disable;
+-	};
+-
+-	disp_reset_n_suspend: disp-reset-n-suspend-state {
+-		pins = "gpio44";
+-		function = "gpio";
+-		drive-strength = <2>;
+-		bias-pull-down;
+-	};
+-
+-	hall_sensor_default: hall-sensor-default-state {
+-		pins = "gpio155";
+-		function = "gpio";
+-		drive-strength = <2>;
+-		bias-pull-up;
+-	};
+-
+-	mdp_vsync: mdp-vsync-state {
+-		pins = "gpio80";
+-		function = "mdp_vsync";
+-		drive-strength = <2>;
+-		bias-pull-down;
+-	};
+-
+ 	pm8008_int_default: pm8008-int-default-state {
+ 		pins = "gpio25";
+ 		function = "gpio";
+@@ -1345,9 +1310,17 @@ qup_uart7_sleep_rx: qup-uart7-sleep-rx-state {
+ 		bias-pull-up;
+ 	};
+ 
+-	sw_ctrl_default: sw-ctrl-default-state {
+-		pins = "gpio86";
++	disp_reset_n_active: disp-reset-n-active-state {
++		pins = "gpio44";
+ 		function = "gpio";
++		drive-strength = <8>;
++		bias-disable;
++	};
++
++	disp_reset_n_suspend: disp-reset-n-suspend-state {
++		pins = "gpio44";
++		function = "gpio";
++		drive-strength = <2>;
+ 		bias-pull-down;
+ 	};
+ 
+@@ -1359,12 +1332,39 @@ usb_redrive_1v8_en_default: usb-redrive-1v8-en-default-state {
+ 		output-high;
+ 	};
+ 
++	mdp_vsync: mdp-vsync-state {
++		pins = "gpio80";
++		function = "mdp_vsync";
++		drive-strength = <2>;
++		bias-pull-down;
++	};
++
++	bluetooth_enable_default: bluetooth-enable-default-state {
++		pins = "gpio85";
++		function = "gpio";
++		output-low;
++		bias-disable;
++	};
++
++	sw_ctrl_default: sw-ctrl-default-state {
++		pins = "gpio86";
++		function = "gpio";
++		bias-pull-down;
++	};
++
+ 	aw86927_int_default: aw86927-int-default-state {
+ 		pins = "gpio101";
+ 		function = "gpio";
+ 		drive-strength = <2>;
+ 		bias-pull-up;
+ 	};
++
++	hall_sensor_default: hall-sensor-default-state {
++		pins = "gpio155";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-pull-up;
++	};
+ };
+ 
+ &uart5 {
 
-Best regards,
 -- 
-Luca Weiss <luca.weiss@fairphone.com>
+2.53.0
 
 
