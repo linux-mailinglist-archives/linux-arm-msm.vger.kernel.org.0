@@ -1,50 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-97524-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97525-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4FhFHecetGlLhQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97524-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 15:27:51 +0100
+	id kEQ9FtsbtGlLhQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97525-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 15:14:51 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 49A6A284F67
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 15:27:50 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id C796E284B4D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 15:14:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 3BA193123890
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 13:57:12 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 155473257023
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 13:58:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D470C39DBE9;
-	Fri, 13 Mar 2026 13:56:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C95C396593;
+	Fri, 13 Mar 2026 13:57:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="egCCOVNc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mAvFT91T"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4400439D6F7;
-	Fri, 13 Mar 2026 13:56:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67918390CAC;
+	Fri, 13 Mar 2026 13:57:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773410177; cv=none; b=masQjKUgbcjgyYoZwzFbgosasIZvFKvK8js0XmlpRU68wEbUGzxsX0j7eBfU6w/Z7hKAmyLz0dPgzD7GLTyUfjiknywBqXjEO5wj6H6PyrykBb1u5g2323HXZGS6VzEvs7akZVu96QBvT35LhVHOoq8ldz2T4EApxdAwC4JhVRc=
+	t=1773410262; cv=none; b=u6zsqbidS+q7IBlOwmG0ckylFpLfTbnq6J+LXkqwhFuVA82LnM7CUc6w6JtBaDdOTHiMAOpHuRp9kmwSLTbIDGIMHKwL1iiZavaqMMrJZrXGoE7MwR1dYbOMh2KjzJbvJx28p2nga6tWIR3MgmY6nzK1OtdvQsSRIq1TwkK/JyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773410177; c=relaxed/simple;
-	bh=AfUuvMmUPh7+rCPHo8vBeqM7WKY9Juqcu4mjMPVhq74=;
+	s=arc-20240116; t=1773410262; c=relaxed/simple;
+	bh=oMEuXKjEZ4NHtN9jhnX9CU7Lde3Dj86Gy/6HHl6NgGw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mWX3KbMCVIiKeC9k0lC85zQLaxeR0gEfhrOq4c0B+TEwOsMJ4fK8NcjBoh1Oa/GBJCxqX9NahpuI9x0lTH62qGgNUWeEdbekfKlh98Pma46AbTPg6sXpYQp5/WjFkzSxBlHLxLgGbwPk9kKubHU+cJj6168fzrw4nOVoXJcZOAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=egCCOVNc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9059FC19421;
-	Fri, 13 Mar 2026 13:56:16 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=Lv831EVNcVo9QZiSXAj/FaNBav4wTqi8VN63uYh4NhtddaO1kn9Yt3JNKSv4IDra7q4x/GUASLWpU+kKij10+1DLJ1czrZcWAIhlTgeXKJETZuwMyGmFPgpo0ieLSaF2kBr7FO3LNl5QhSME+Hbnd/0RPtsf1gCWieWtdiMh3i8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mAvFT91T; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF56BC2BC86;
+	Fri, 13 Mar 2026 13:57:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773410177;
-	bh=AfUuvMmUPh7+rCPHo8vBeqM7WKY9Juqcu4mjMPVhq74=;
+	s=k20201202; t=1773410262;
+	bh=oMEuXKjEZ4NHtN9jhnX9CU7Lde3Dj86Gy/6HHl6NgGw=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=egCCOVNcX9FEnu7FetIYFGgJL4sZ/SKKInD7m2z0qhXUiFPazoEcqPD9vNlfv6jHH
-	 wUgWV325YrqrZAKcu3T82SyuV+Ai+IgR9jK9n0gERIfh5m9Jz0ht7wSUf54W/S+A6X
-	 q+8GJW0T6lwwvPfnM3TEresU4SIx4HLah4WFR5i+oVFkq5rOn24ASHD5himKJ/VQ7w
-	 efiSv+WfZWq96vrwVJJnQQe1l9ZTfbkJA8pDLYc82vq2h209FcLAjemB1BIkkcw3hd
-	 rmaEJ9FN2iUao9llOKDOJSDpYf1dpcScSEUEmrRd9Lyl8652lhPEWPoH9PnWbUmC/y
-	 G6Qk2cu/rukiw==
-Date: Fri, 13 Mar 2026 14:56:14 +0100
+	b=mAvFT91TqcjApsTdR1a2RxdKn3wNM+WRbYInsw4qQ8Uh4k0DVwoGZR1OITCwcbepZ
+	 t2sHQuqoMn5S6gI1Oiz8uhbPgPNg/Oa/2fj8EZyRXFuMRvbvGTJucfph9tpxH7KaV6
+	 HwzKLpOmzbsV6WNo8xtPrmrf4khRnNY/ezvFN1RnMFswmskCUdQzx1mAcAp0NFBiRn
+	 XRBcddyvzViBY9CMBJ3EKH8Nfk0joO+CFgqqdn5s0Zvb5toXE3Ro03NwMlrJiMglK0
+	 ABFpPopPB2mosr0Hr/V2gKrvL+bIzd4ZXnE+JcetHzVlPN1cjFLJwYzYDurYWNrtmh
+	 cVmK48q5007pA==
+Date: Fri, 13 Mar 2026 14:57:39 +0100
 From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Maulik Shah <maulik.shah@oss.qualcomm.com>
 Cc: Bjorn Andersson <andersson@kernel.org>, 
@@ -53,11 +53,10 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 	Thomas Gleixner <tglx@kernel.org>, Linus Walleij <linusw@kernel.org>, linux-arm-msm@vger.kernel.org, 
 	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
 	Sneh Mankad <sneh.mankad@oss.qualcomm.com>
-Subject: Re: [PATCH 1/5] arm64: dts: qcom: x1e80100: Remove interconnect from
- SCM device
-Message-ID: <20260313-nippy-seahorse-of-security-b1b6f6@quoll>
+Subject: Re: [PATCH 4/5] arm64: dts: qcom: x1e80100: Add deepest idle state
+Message-ID: <20260313-accomplished-unnatural-rhino-59ccbe@quoll>
 References: <20260312-hamoa_pdc-v1-0-760c8593ce50@oss.qualcomm.com>
- <20260312-hamoa_pdc-v1-1-760c8593ce50@oss.qualcomm.com>
+ <20260312-hamoa_pdc-v1-4-760c8593ce50@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,20 +65,20 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260312-hamoa_pdc-v1-1-760c8593ce50@oss.qualcomm.com>
+In-Reply-To: <20260312-hamoa_pdc-v1-4-760c8593ce50@oss.qualcomm.com>
 X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-97524-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-97525-lists,linux-arm-msm=lfdr.de];
 	RCPT_COUNT_TWELVE(0.00)[13];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
@@ -90,45 +89,65 @@ X-Spamd-Result: default: False [-1.66 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: 49A6A284F67
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,af00000:email]
+X-Rspamd-Queue-Id: C796E284B4D
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Thu, Mar 12, 2026 at 09:26:35PM +0530, Maulik Shah wrote:
-> Interconnect from SCM device are optional and were added to get
-> additional performance benefit. These nodes however delays the
-> SCM firmware device probe due to dependency on interconnect and
-
-So fix drivers.
-
-> results in NULL pointer dereference for the users of SCM device
-> driver APIs, such as PDC driver.
+On Thu, Mar 12, 2026 at 09:26:38PM +0530, Maulik Shah wrote:
+> Add deepest idle state along with pdc config reg to make GPIO IRQs work
+> as wakeup capable interrupts in deepest idle state.
 > 
-> Remove them from the scm device to unblock the user.
+> Add QMP handle to allow PDC device to place a SoC level low power mode
+> restriction.
 > 
 > Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
 > ---
->  arch/arm64/boot/dts/qcom/hamoa.dtsi | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
+>  arch/arm64/boot/dts/qcom/hamoa.dtsi | 16 +++++++++++++---
+>  1 file changed, 13 insertions(+), 3 deletions(-)
 > 
 > diff --git a/arch/arm64/boot/dts/qcom/hamoa.dtsi b/arch/arm64/boot/dts/qcom/hamoa.dtsi
-> index d7596ccf63b90a8a002ad6e77c0fb2c1b32ec9c8..ebecf43e0d462c431540257e299e3ace054901fd 100644
+> index ebecf43e0d462c431540257e299e3ace054901fd..8f560fd140661ad720fec979eabe3ca8ffb34273 100644
 > --- a/arch/arm64/boot/dts/qcom/hamoa.dtsi
 > +++ b/arch/arm64/boot/dts/qcom/hamoa.dtsi
-> @@ -308,8 +308,7 @@ eud_in: endpoint {
->  	firmware {
->  		scm: scm {
->  			compatible = "qcom,scm-x1e80100", "qcom,scm";
-> -			interconnects = <&aggre2_noc MASTER_CRYPTO QCOM_ICC_TAG_ALWAYS
-> -					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
-> +			/* TODO: add interconnects */
+> @@ -290,6 +290,14 @@ cluster_cl5: cluster-sleep-1 {
+>  				exit-latency-us = <4000>;
+>  				min-residency-us = <7000>;
+>  			};
+> +
+> +			domain_ss3: domain-sleep-0 {
+> +				compatible = "domain-idle-state";
+> +				arm,psci-suspend-param = <0x0200c354>;
+> +				entry-latency-us = <2800>;
+> +				exit-latency-us = <4400>;
+> +				min-residency-us = <9000>;
+> +			};
+>  		};
+>  	};
+>  
+> @@ -447,7 +455,7 @@ cluster_pd2: power-domain-cpu-cluster2 {
+>  
+>  		system_pd: power-domain-system {
+>  			#power-domain-cells = <0>;
+> -			/* TODO: system-wide idle states */
+> +			domain-idle-states = <&domain_ss3>;
+>  		};
+>  	};
+>  
+> @@ -6013,8 +6021,10 @@ dispcc: clock-controller@af00000 {
+>  
+>  		pdc: interrupt-controller@b220000 {
+>  			compatible = "qcom,x1e80100-pdc", "qcom,pdc";
+> -			reg = <0 0x0b220000 0 0x30000>, <0 0x174000f0 0 0x64>;
+> -
+> +			reg = <0 0x0b220000 0 0x30000>,
+> +			      <0 0x174000f0 0 0x64>,
+> +			      <0 0x0b2045e8 0 0x4>;
 
-NAK, interconnects were there already. So after applying your patch I
-can just revert it immediately solving the TODO.
+One register is not device's address space.
 
 Best regards,
 Krzysztof
