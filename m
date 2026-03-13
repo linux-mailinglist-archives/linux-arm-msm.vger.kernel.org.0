@@ -1,185 +1,290 @@
-Return-Path: <linux-arm-msm+bounces-97526-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97527-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id YPFhAZkatGlLhQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97526-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 15:09:29 +0100
+	id kBgsIaghtGnahgAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97527-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 15:39:36 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA28B284971
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 15:09:28 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id A6E93285270
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 15:39:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id F2A9F303903C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 14:01:06 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id F3C743056BCF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 14:08:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B69B131E820;
-	Fri, 13 Mar 2026 14:01:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDDD03368AB;
+	Fri, 13 Mar 2026 14:08:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="FSGfmcBH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GMkTawqY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9DE31F981
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 14:01:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AACA8332EB1;
+	Fri, 13 Mar 2026 14:08:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773410465; cv=none; b=QVS1tIRwZfkOR3JRMwxCbBH7Xd0w/uqFAmzwmeifgQ+HCePvmS54WYIDL/RjolRbpD3nSHuDgnRFfJ5jDCpCzgs333E50VaJPXYGaVnWXjUbrSfK2RrzqguKpe/ijEAj4S66KcjcjLGg0jMrsnIwy2FxFbdNSODlQfXWu7SjeN4=
+	t=1773410892; cv=none; b=SK4SIJB59yJLGsmh/KRH8udCVHnJuubR893UOh/Pmh1wb1+a7nw55vRt2d1t0YW/flj1x4yJT4ryNRpEYvvpPDmsz9q0abs9iD3CFE6Gm0KY7omCfXPRo637B8mntywXzyy7BMux1gXV9yijS2oNYhjG3MJe/Y5XqoCq/F0fPWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773410465; c=relaxed/simple;
-	bh=X2YXoo5oelC/yO2ZVmRm/ASMJDAS7BiQnBAfPRY5clk=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=tmsM5vf3NnCAsHRRzGYhmNGGMu7hG1V8KsXK1F+8GPUuLbp5gnQuQhs+SSiwFFFow/xge63QY591LaNO88tPN06KkVlrXaKBRE2leB0At5TeABW9WCmQFPKMn6utV6qqkAo6Co/pGMtmdzxMw2thPYWmY2hm9I0UVPa7leNm2CY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=FSGfmcBH; arc=none smtp.client-ip=209.85.208.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-65c4152313fso3147181a12.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 07:01:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1773410462; x=1774015262; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EhAra/BMCH0n/XOw/db/nSkVgG1PExpVOvX16LQ7Y04=;
-        b=FSGfmcBHqRtqrE7Fk18MOZx9o3FRpU7JxXWfxQoDokwxTzBwpFV3FACYRbxijp1lHw
-         HN1u8NCEBF0A+6KUT8hTJyYkr8enWR0xf3gJv+8OzxPe4ZL1TehJPSBzE//uzzFayQwv
-         vc97UoXGtsd0Qopxc0vbApSx1leL9jfuve5DF9f8x2hAfxsxe58HpHV6r7JYLhXPcRif
-         WHy03mKAG3t4wk40TJa+2ifSq1Hup2QDLRlXHiJhzsFipldhnahEKpTwLHU1N/Tpw5cd
-         MlN01FhH23d4OHBNdDbheLyt7EKMpNo9ZSzhRUYfXo05JqoAbYYA8Ei92lbgeVdToMQ0
-         uJ8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773410462; x=1774015262;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=EhAra/BMCH0n/XOw/db/nSkVgG1PExpVOvX16LQ7Y04=;
-        b=AOsmEU4VAKdHJTZpFASlm+U73Vw3+Wn8ZcAYdUbsWLCKZQddFfQVucek68CD6meRaI
-         iJkHVGGqojZpBUPaJLTUvjvwkJ7E/UEfq6j65JHDK3tqq9CbLvfKOhvDQBVsZjnmwYAa
-         Z4y/2y459rIzk4PGte+rJUOOYGf3ZIh+WAwPssDQaxYWX4CfEjV+O5yfLwpHmq1f5/7i
-         I3yd706vcbKZy6tIiM4CTPENkBDSVnfJ5h71XAE3Y8aZDwz4UIxIAWyccXK8mVQe2zmp
-         xYE246ZA2daehLJuoj566nQlSMkHaUwVIyekrZxq0tqFsYRI1KA80KaSeXTP0EJT4cn0
-         vgLQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX4NwSVxpUThhMlzN54qWmAim1fZ5BiTB+F/oGI4h5WgPXhhS/e2kM7s1FW1bUlbA1TahuA5GSRrFAqF8ej@vger.kernel.org
-X-Gm-Message-State: AOJu0YyzhWXAkpW1aH3rFjWc0e9NAkz5Cm3D7fK//ne4pkWapmOUYa1s
-	aQIe9ya+neXlSf8C8lt/5bFotavd9WmCcN/JcW1iE0MYRQthJ2P49gKti1/j1bLml2Y=
-X-Gm-Gg: ATEYQzxF6FyQEp9jSKyXgRpXRXXE4IKeptAhC4wntbQc2+dbisnhiCK/986uEQDK+mB
-	NxM5Xgm+r0w9KD3WU8qwCLMcuAm/7d3r09ZI3yxwdPit/WcXGgpX1Fk2eBma4mLIMrFri0Nq8tG
-	ReCDP4ubqttdanCekk0xBFCczyrTWONDkdkw18ktncP9xEradYn2jmX0IA4B2VCJBlWMFH54TAw
-	qWxzHFMwHzRfv6M7nGaKFF6xjPHvVzvFPeJ8KSRrf6qewHIoQuZmegsOvJvYb/KXkNeZ+bXQjwa
-	sQKqtVjUbV+T1aSgBxdba7qT/pTrKNWqI5pNuB+XoczbHkpeHdxG8/0T7VkAZBQw0r5tUBpWgwv
-	I4XSps5LTpeYL+rguLtmnYM3ZkS8qd2gim/mSp3cbGKETBQmCK8vojhQfb9cgKzWZd286mcO2Yc
-	+9IfO4Y1zn/C3SdIUB0r/Cq0LgOUsbELoZCnXYyrxF5XbZcH5S6C+s6DCtDnQzLBcrvUEp
-X-Received: by 2002:a17:907:7421:b0:b8e:d4ed:5eab with SMTP id a640c23a62f3a-b976534655emr128493966b.31.1773410462146;
-        Fri, 13 Mar 2026 07:01:02 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b976cba2e01sm48940266b.9.2026.03.13.07.00.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Mar 2026 07:00:54 -0700 (PDT)
+	s=arc-20240116; t=1773410892; c=relaxed/simple;
+	bh=rW0sgZRNUegVJJyrf1fUfLQePGpW2MmN0lOZ5hihc6c=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=q3ErMny9X/D0FWSOUIQhCLACxXQpxkHRpCJMJ8bDP9BxTDiv0AO3+BxhTOYP71soeAnkVYQPcZ7d6XWh523eO8cOuNs/vGGYti/+UhovxTVVBKU2h4r0tRye0E6YX8gGuysmvGlBR8CnRbnbr/WCgkDqilfws+p7XASaH4QJpOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GMkTawqY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1B4BC19421;
+	Fri, 13 Mar 2026 14:08:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773410892;
+	bh=rW0sgZRNUegVJJyrf1fUfLQePGpW2MmN0lOZ5hihc6c=;
+	h=From:Date:Subject:To:Cc:From;
+	b=GMkTawqYSicfgpDcvLv6vT/QBn3fbebhBoLR23SdIv7xMHegxOMdUmgpuV6MQ1Gju
+	 sE5k7cLKK1Hr43Sg1dm4AdVec8AnKW++yP3oERtJr2uF/oAdD8MI90jkjX6uHTl6zm
+	 HiGjpEr0RvZDTTlC+1W3vtVscqceoLogYkkPegvIguoK49yMwSjirFAj9cGMafsueg
+	 77ztUCOa7z1pRReebRBUT9yRCTgNEiIf0Ri++gAzAKWUnnjKRfbl1mTErAKDhRVvAS
+	 JvNqCk+4k/TifGIpsyBKn6nyDtTo78hpFSR0yuGooYjYHhm3xYGcgvkQetLBOGKu6v
+	 O11HOdBu9dmIA==
+From: Konrad Dybcio <konradybcio@kernel.org>
+Date: Fri, 13 Mar 2026 15:08:03 +0100
+Subject: [PATCH] arm64: dts: qcom: sc8280xp: Enable USB OTG on functional
+ Type-C ports
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 13 Mar 2026 15:00:53 +0100
-Message-Id: <DH1PJFGWESQU.1OEKLN0CX3IZE@fairphone.com>
-Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
- <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <devicetree@vger.kernel.org>
-Subject: Re: [PATCH 4/5] arm64: dts: qcom: milos-fairphone-fp6: Enable
- Bluetooth
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Luca Weiss" <luca.weiss@fairphone.com>, "Konrad Dybcio"
- <konrad.dybcio@oss.qualcomm.com>, "Bjorn Andersson" <andersson@kernel.org>,
- "Konrad Dybcio" <konradybcio@kernel.org>, "Rob Herring" <robh@kernel.org>,
- "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley"
- <conor+dt@kernel.org>, "Alexander Koskovich" <AKoskovich@pm.me>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260116-milos-fp6-bt-wifi-v1-0-27b4fbb77e9c@fairphone.com>
- <20260116-milos-fp6-bt-wifi-v1-4-27b4fbb77e9c@fairphone.com>
- <52fffc84-2fb5-47aa-835c-b0dd8c110d59@oss.qualcomm.com>
- <DH1L9UD68SKL.21KTH1XGR724Y@fairphone.com>
-In-Reply-To: <DH1L9UD68SKL.21KTH1XGR724Y@fairphone.com>
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260313-topic-x13s_otg-v1-1-cb2e4a08e25d@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x3MTQqAIBBA4avErBOcpB+6SkSIjTWbFJUQxLsnL
+ b/FewUiBaYIa1cg0MuR3dOAfQfm1s9Fgs9mGOQwSYUokvNsREYVD5cuMaK1iyZptJqhRT6Q5fw
+ Pt73WD2kilxhgAAAA
+X-Change-ID: 20260311-topic-x13s_otg-51ff8ae0ca37
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1773410889; l=4990;
+ i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
+ bh=ExBImoQoNri/JtsYEeEQo60qtjsA+equUB3YrZJCDtQ=;
+ b=Fm9yEm9U6T7c4bWLKdE7dbFWUq2GrpliRjKsQFB54KHvjPo1MYaytNUMs5AYAWdaLXYze8eF/
+ rywXInPaKf3CbgDVOxledLeHWaQtiTEiru5gLCthLD2VPGkEsI+abCd
+X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[fairphone.com,quarantine];
-	MV_CASE(0.50)[];
-	R_DKIM_ALLOW(-0.20)[fairphone.com:s=fair];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-97526-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-97527-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[fairphone.com:+];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[luca.weiss@fairphone.com,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	NEURAL_HAM(-0.00)[-1.000];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[konradybcio@kernel.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,fairphone.com:dkim,fairphone.com:email,fairphone.com:mid]
-X-Rspamd-Queue-Id: BA28B284971
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,a800000:email,oss.qualcomm.com:mid,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: A6E93285270
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Fri Mar 13, 2026 at 11:40 AM CET, Luca Weiss wrote:
-> On Wed Jan 21, 2026 at 12:52 PM CET, Konrad Dybcio wrote:
->> On 1/16/26 3:50 PM, Luca Weiss wrote:
->>> Add the nodes to describe the WCN6755 chip with its PMU and Bluetooth
->>> parts.
->>>=20
->>> Thanks to Alexander Koskovich for helping with the bringup, adding
->>> 'clocks' to the PMU node to make Bluetooth work.
->>>=20
->>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->>> ---
->>>  arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts | 174 +++++++++++++++=
-++++++++
->>>  1 file changed, 174 insertions(+)
->>>=20
->>> diff --git a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts b/arch/ar=
-m64/boot/dts/qcom/milos-fairphone-fp6.dts
->>> index 52895dd9e4fa..cbe1507b0aaa 100644
->>> --- a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
->>> +++ b/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-<snip>
+The two non-multiport USB controllers present on the platform are
+role-switch capable, so mark them as such. They need no additional
+plumbing, as tested on the X13s.
 
->>> +	bluetooth_enable_default: bluetooth-enable-default-state {
->>> +		pins =3D "gpio53";
->>> +		function =3D "gpio";
->>> +		output-low;
->>> +		bias-disable;
->>> +	};
->>
->> Not sure if we need to drive that pin.. perhaps a pull-down would
->> suffice?
->
-> I'll give it a shot, this pinctrl is coming from downstream but perhaps
-> the downstream btpower.c driver is differing in behavior to the upstream
-> PMU driver.
+Enable OTG for all devices featuring a data-role provider in one fell
+swoop to prevent hitting the edge case where UCSI code would time out
+trying to get a reference to a struct usb_role_switch, which wouldn't
+be registered if dr_mode was set to anything other than (the default)
+OTG.
 
-Seems to work, but honestly I'm not sure what the actual effects of this
-change are?
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+---
+ arch/arm64/boot/dts/qcom/sc8280xp-crd.dts                  | 8 --------
+ arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts       | 8 --------
+ arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 8 --------
+ arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts     | 8 --------
+ arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts  | 8 --------
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi                     | 4 ++++
+ 6 files changed, 4 insertions(+), 40 deletions(-)
 
--               output-low;
--               bias-disable;
-+               bias-pull-down;
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+index c53e00cae465..3acb63017fe3 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+@@ -819,10 +819,6 @@ &usb_0 {
+ 	status = "okay";
+ };
+ 
+-&usb_0_dwc3 {
+-	dr_mode = "host";
+-};
+-
+ &usb_0_dwc3_hs {
+ 	remote-endpoint = <&pmic_glink_con0_hs>;
+ };
+@@ -856,10 +852,6 @@ &usb_1 {
+ 	status = "okay";
+ };
+ 
+-&usb_1_dwc3 {
+-	dr_mode = "host";
+-};
+-
+ &usb_1_dwc3_hs {
+ 	remote-endpoint = <&pmic_glink_con1_hs>;
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts b/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
+index 9819454abe13..e4513b66261b 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-huawei-gaokun3.dts
+@@ -1132,10 +1132,6 @@ &usb_0 {
+ 	status = "okay";
+ };
+ 
+-&usb_0_dwc3 {
+-	dr_mode = "host";
+-};
+-
+ &usb_0_dwc3_hs {
+ 	remote-endpoint = <&ucsi0_hs_in>;
+ };
+@@ -1169,10 +1165,6 @@ &usb_1 {
+ 	status = "okay";
+ };
+ 
+-&usb_1_dwc3 {
+-	dr_mode = "host";
+-};
+-
+ &usb_1_dwc3_hs {
+ 	remote-endpoint = <&ucsi1_hs_in>;
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+index d84ca010ab9d..f83947c8b1b8 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+@@ -1341,10 +1341,6 @@ &usb_0 {
+ 	status = "okay";
+ };
+ 
+-&usb_0_dwc3 {
+-	dr_mode = "host";
+-};
+-
+ &usb_0_dwc3_hs {
+ 	remote-endpoint = <&pmic_glink_con0_hs>;
+ };
+@@ -1379,10 +1375,6 @@ &usb_1 {
+ 	status = "okay";
+ };
+ 
+-&usb_1_dwc3 {
+-	dr_mode = "host";
+-};
+-
+ &usb_1_dwc3_hs {
+ 	remote-endpoint = <&pmic_glink_con1_hs>;
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
+index f2b4470d4407..82ad20c5c7a4 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
+@@ -758,10 +758,6 @@ &usb_0 {
+ 	status = "okay";
+ };
+ 
+-&usb_0_dwc3 {
+-	dr_mode = "host";
+-};
+-
+ &usb_0_dwc3_hs {
+ 	remote-endpoint = <&pmic_glink_con0_hs>;
+ };
+@@ -795,10 +791,6 @@ &usb_1 {
+ 	status = "okay";
+ };
+ 
+-&usb_1_dwc3 {
+-	dr_mode = "host";
+-};
+-
+ &usb_1_dwc3_hs {
+ 	remote-endpoint = <&pmic_glink_con1_hs>;
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts
+index 00bbeeef6f14..1effb30c93af 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts
++++ b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dts
+@@ -986,10 +986,6 @@ &usb_0 {
+ 	status = "okay";
+ };
+ 
+-&usb_0_dwc3 {
+-	dr_mode = "host";
+-};
+-
+ &usb_0_dwc3_hs {
+ 	remote-endpoint = <&pmic_glink_con0_hs>;
+ };
+@@ -1023,10 +1019,6 @@ &usb_1 {
+ 	status = "okay";
+ };
+ 
+-&usb_1_dwc3 {
+-	dr_mode = "host";
+-};
+-
+ &usb_1_dwc3_hs {
+ 	remote-endpoint = <&pmic_glink_con1_hs>;
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+index 58876b25dd23..6303a0d572f2 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+@@ -4080,6 +4080,8 @@ usb_0_dwc3: usb@a600000 {
+ 				snps,dis-u1-entry-quirk;
+ 				snps,dis-u2-entry-quirk;
+ 
++				usb-role-switch;
++
+ 				ports {
+ 					#address-cells = <1>;
+ 					#size-cells = <0>;
+@@ -4159,6 +4161,8 @@ usb_1_dwc3: usb@a800000 {
+ 				snps,dis-u1-entry-quirk;
+ 				snps,dis-u2-entry-quirk;
+ 
++				usb-role-switch;
++
+ 				ports {
+ 					#address-cells = <1>;
+ 					#size-cells = <0>;
 
-Regards
-Luca
+---
+base-commit: 5c9e55fecf9365890c64f14761a80f9413a3b1d1
+change-id: 20260311-topic-x13s_otg-51ff8ae0ca37
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+
 
