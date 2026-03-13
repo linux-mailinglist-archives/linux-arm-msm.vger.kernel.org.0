@@ -1,85 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-97390-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97391-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id qLL7CM/ds2ktcQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97390-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 10:50:07 +0100
+	id cORFFf3es2ktcQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97391-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 10:55:09 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6369280CA9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 10:50:06 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id ECBBA280ED3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 10:55:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id BC7953032067
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 09:49:29 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 0F811302A57F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 09:54:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 596653563EF;
-	Fri, 13 Mar 2026 09:49:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49F8538838E;
+	Fri, 13 Mar 2026 09:54:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HPsUIKkz"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DhbjcMKN";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="isfkRUtt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86BBF381AF2
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 09:49:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0542A38947F
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 09:54:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773395368; cv=none; b=AFCSRcCcMZRreec4JQuwnYq/VZZsLlW2Msg0F9XM5hcsgCPCS90qVdB52PtAVS44ffWZl4u6iqMjWbZ+PR7jdUKDrXNDnQryN56LOgLtp9kGnpX+oGdkRCpBBFjOr6V/xOecn1q3awyyCmMHi/JUUQF+xcH/d9qvlsjfILJBj/c=
+	t=1773395654; cv=none; b=hQDCbSiKxJOcttCf/+6K5VuF7lKAttnmVk9EaQVaJQ4HjfP9QPr4x7eT2idHo+yejyGBZ0Sg6qqxulJtexNqA7xPgdSopUSsavQ0Ep1SNsTj5/nH6EWfQiJWMQW83jfggJtHko2PS796YH8sE7pobU1n9SqPnijK/DMT0EL2Kw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773395368; c=relaxed/simple;
-	bh=IwcaY8eaggeIn6MMtHGJ1IROj49OmXUpwa6sUyG68vw=;
+	s=arc-20240116; t=1773395654; c=relaxed/simple;
+	bh=jF+RGW1oq+A2HAK5SMqoEpl7vhxLMd3h55OdaY/EqoM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VycadYxwsSTLP3N+VV6o8D64u8smkTLFf3hwJRNKD53TQJ8+H7oCjx63cziYjEBWPATaxattSumPMUmDbicOWPn6Coo1OARH5BK/WG7/sS8qkk/nelxhdrVbPUFQf1h1w2m2XGqothwhDeAUPjaedHs6d4T3Wcnzy8jVApQ/VRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HPsUIKkz; arc=none smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-661b08b04deso2201529a12.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 02:49:26 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=OFHwAegXvzP7PNUWyyHNirPHGWVGV3jWjqZeNNIJ3Ns2WFe7fXdM99bpl9zvpG/O54ovLi1ZlDBeHMydtW/3G2lodba00yjMnslKpUW9B+P5UZXErMy/KwdnCIRBu2I+L+Vn0AxnO1ZsRhFJvD8V3xWRxYqIJCWLnDdh85O8lIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DhbjcMKN; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=isfkRUtt; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62D5thVH3342929
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 09:54:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	UMs7baKzQP96vz7tn8LFJ/luoeqtWF5RUkw5fVAin8U=; b=DhbjcMKNsVvJF9GM
+	vz8KZkmTiptrfvp/Yr0Z+E29KWdeEdwTmrpGuq/egQhqW95QgTM12N47JGeJxxg0
+	JGEBA2l9tRow0UCgsmxEwuhPLDpF/j0OTbglLEXXvc50M8tbpDiq80iSbcYLqwq/
+	7J5KWZxNP43gpSd75yz97uPUheTY3VTsLUpSYkdClFapx9AzFePNDxqS6ywQBYvK
+	klH5B1rTbiEc/erg1OsbweQ5lAwWpCE0f8gkia/tBKb5siwXn8YZRjIrPYY2cNSQ
+	+O0EqrTFiEbXrSI4hjy9PKg+3G7cErqisjm94i64s/YtMmFWKNlppAULwLYXMktL
+	cHqQVA==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cus9w48ys-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 09:54:11 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-5091327215dso128243651cf.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 02:54:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1773395365; x=1774000165; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
+        d=oss.qualcomm.com; s=google; t=1773395651; x=1774000451; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=M8FS5yYGjX67AwqiomjlT3iHM2nG+cI6PJzSIUbSTVE=;
-        b=HPsUIKkzS5xXndD/Mu6md4Myn8EJoc55Ws3BZlogUARhzhof1toQw+RAjE3ZVjb8cb
-         tF87CBbgITMEEB48oxjljByJND1a2aOJbrYKHiDRQOsfPAmsYptw4oqpSwZkyt05W3RM
-         DbgwGRkiX/Y+Q/o4trKFnRCbGGTo2xFPEQyW4gcxup8lby4mx3HPNi9Z8TOPiQaeb3JZ
-         kyG3AeV+SflD+56TSLJxHY5F/5+KUGTCQBQ45+NxmahqUCsgoFSFdxzx+d9CbogbDfR8
-         FLED8HhCVNTZpwEVappKHYmvCuTkxqVij6aA7E5VyM80MiNugQj1S73LZsa0VXvOo45B
-         PjoQ==
+        bh=UMs7baKzQP96vz7tn8LFJ/luoeqtWF5RUkw5fVAin8U=;
+        b=isfkRUttxuyvpm6LHjq36eIMdbGLTzeiHovzqcgE1RjlCrTGg1o+BqxTHvGCEnwOkL
+         fwelSsn2OnrjP/YalfhuePsLqQMr0glnKS7Puu7ShF77jmN1odfJvFxg+aW8nXOFfogY
+         /nb/GvoyDrXdrEz486VaQbyzyiRxGWfogSWwJfvdu/iC9/FJijQMm6uCyYhqUy44ZUJ0
+         HXjcoubXNy+MTjmAfADYUYZZzKlXG44DXV9m3XJREsBXPBixXl9DMZA0/3KYX2nnPw3W
+         tEcQYVyIJxCjxbtFU8Dtuishq6X2hYdgUVooWW13ue0Mc5Afa2227GHFAt18q2waeC1/
+         EKcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773395365; x=1774000165;
-        h=content-transfer-encoding:in-reply-to:content-language:from
+        d=1e100.net; s=20251104; t=1773395651; x=1774000451;
+        h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=M8FS5yYGjX67AwqiomjlT3iHM2nG+cI6PJzSIUbSTVE=;
-        b=Ho5TbzwVMgNbkNhYVvQDFtj8L8SXgkRBYJtOu75b1prX1ys/vddR/8OuVCi7nYfauz
-         jxr//HG6Cf9fA2M8v0Pi9VaJGSrJ1YHkCYC9qvxuXil1Ojm3uZYOSRCOILe/XzAkp1Rc
-         eDpDlAlfXnqQGuMrEl6IusNKCz3HO1c2KacQMEh8XzBfjhf8U82QfvBOcLzaefr1gyfb
-         SQ1/yc79P5Vfo4X77B8tnikAi/8mfeU6os/5xESkvuEPg506BlQsXTMW0pxGM19KS5h3
-         zcf4ypY4whggEhNKDLk4ZhgoZuwTiKkbOTZOZDFyvJNMDDhyJEkOh/S1BdWV5xISGL6r
-         LsRQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVSLOEyz8ClSHWCba26Ddf4DqfJ8/Gd+IPCcGe9P0FhHFPfMTLXHckVJA46UqISSG/99qiMhu4rbFDwvrtS@vger.kernel.org
-X-Gm-Message-State: AOJu0YwJeS0u4GggGYr4KDFHvIgz7Vf675rKUiqt2r5vMqq0PIBrc45d
-	OvVX7ER93nmKD2nNHifEqgl+XI6eMK93AMq1jxiauKSEIc7mumkj9bhJTz4hFKkaReszjqiNeHZ
-	M8Bo1Af0=
-X-Gm-Gg: ATEYQzyvr9bVjod+OLHgO+uuFfb44hyTW9fN9Q83HYYtpxgyrmT4MDCjqynXfxrjRN/
-	t6HNZ/ojXV8dmJKMjkbRYNi6fXbCqRGx4ZMsWrULLL6MWaxLD4bfCjdPcBU8LmNalcX6A8yPlds
-	mF1vt7/Ny5UC9bnGn5GY13YPdFdM8HTIBVHhjDBsJ2vW0T17p48UqTzhsaZ3781WD9w5MscyGOF
-	E55ehMiFEWILOMJf6Es2IThvtJsraQD6wdbAqTn++U+yNn5EkjouENEb9QXAJ1s0+5NS+JISQXV
-	m4gkekrbgeQo3ktUyTTQ+0FaNPgBaOuIFKzZtAAua0uFL+9cf/WQSnfnFFEhgJ06GTPPSSRVsw2
-	5pAwgtD+4Ie6NRYmlqHUh3jVL70hxGcMfwwLqQfIXXimDL3C3oLIJcrDlZtwj+Myb2Bu1W1Oq6s
-	mcM2swE4In/zo7qIVLTG3fH3ZcFEZEJRi/qDht
-X-Received: by 2002:a17:907:7294:b0:b8a:f61a:edf2 with SMTP id a640c23a62f3a-b9765352458mr149879066b.50.1773395364637;
-        Fri, 13 Mar 2026 02:49:24 -0700 (PDT)
-Received: from [192.168.0.101] ([109.76.176.163])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b976d0b7722sm32825966b.66.2026.03.13.02.49.23
+        bh=UMs7baKzQP96vz7tn8LFJ/luoeqtWF5RUkw5fVAin8U=;
+        b=HaKebr36hosSGNcSGB4RhsVUeWMKLjMHUfpDbohx28EiZnWh8LINszbKXd6P7XeNdx
+         SVMUVkR/0LvDs0aq23V2LZch6FF8ZWA3Ea2KTa3Wle712ZBfT9b8PGUbAIffi6qyWZKL
+         P66QNe4dtJz0zdCVqpHFGtfS5zOcBcR8iwgWR99VsgE6f++3NYK8g9Nnp8gqOXavCFdp
+         glAbzPtSl4jxwLTxDdJn/FH7pQKAE62/6g1OEOO92oZJI/26Gzurrj2Q65xPjW8MTJaK
+         wN4WFWCi9H0mDrxk1+rq2AcnjWSogufiSrgn1SuxKw39uN8nGEH5vdnA9xLJGv71s3be
+         qNDg==
+X-Forwarded-Encrypted: i=1; AJvYcCU+rS7vAqPBOprdVkwM10MoviJ065CY3BDgC0wlPI/Hk9kwKQsvtRbYhF4FVJ8LFbW5pSqhTKPZpELfg7CX@vger.kernel.org
+X-Gm-Message-State: AOJu0YzAENU/A5zTdL2iHUoSAM+9FjP2FugTjzChZr1itpAMgISCaJkw
+	NbQO4OwgJLg4pMRdtvEP6t2EtePSQPZjs8yRHNRB5pDMeX4xe2dW2vFfyzQVNdZabY/znInfh0a
+	Oq3Yt3ynZ4R9ZBQTmWpSnVgob9QfBuSWVIk1AsqmY2YIIoHs8xnoiIK0Gpv6zcW1nr85e
+X-Gm-Gg: ATEYQzzK1A0MdcGEy1Y8c+O70x2eN2usnETYg/dUzlFmJ/ZYhzKBYVWvpv9XghPOIeQ
+	W8ZJtM6Xj/cZ+iAZ6RT4ZuwrUy4vUE2bvSi6U1mw5hzNyrPMIJFvYAwU7Q2P3nHtT7s7GwE9g26
+	uErhq0Y5IUink5hGQjkTg+TaMu+rKhTJ8RyX4Ke54Je+A19Wy5zPv5nOpgt0gyUQT+MlndYllZj
+	0mFXYUT/uaQYlil60kVBBjZlycIdtEYYi8FEvYpdlkfG/GX7kl12UC1TswPQMfPN9VEM0kKqfSo
+	pTPF0XH98yzwiJr2Ouyfihjke61aYfdHGZBFBBcFGTL/QoRd9eKevOviTuv3Yzz0N8Jf/TY+SRd
+	9qB8P+8GAJYXP65VKdD945//8Kcxsu1N67UGlVu8vnYQOEXTKXgyMwGwxycun342psz+JEdwgSv
+	5eue732jg=
+X-Received: by 2002:ac8:5ad6:0:b0:509:2448:41a with SMTP id d75a77b69052e-50957e6d955mr32552261cf.42.1773395651230;
+        Fri, 13 Mar 2026 02:54:11 -0700 (PDT)
+X-Received: by 2002:ac8:5ad6:0:b0:509:2448:41a with SMTP id d75a77b69052e-50957e6d955mr32552001cf.42.1773395650735;
+        Fri, 13 Mar 2026 02:54:10 -0700 (PDT)
+Received: from [10.111.173.3] (Global_NAT1_IAD_FW.qualcomm.com. [129.46.232.65])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5093a0ea844sm63722031cf.17.2026.03.13.02.54.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Mar 2026 02:49:23 -0700 (PDT)
-Message-ID: <e29545a0-ea31-446c-abec-866e3572c91b@linaro.org>
-Date: Fri, 13 Mar 2026 09:49:22 +0000
+        Fri, 13 Mar 2026 02:54:10 -0700 (PDT)
+Message-ID: <9f5839d8-ccc7-4e7a-856b-46b947993df1@oss.qualcomm.com>
+Date: Fri, 13 Mar 2026 17:53:42 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -87,181 +107,116 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] media: qcom: camss: Add missing clocks for VFE lite
- on 8775p
-To: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>, Robert Foss
- <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Hans Verkuil <hverkuil+cisco@kernel.org>,
- Vikram Sharma <quic_vikramsa@quicinc.com>,
- Suresh Vankadara <quic_svankada@quicinc.com>,
- Wenmeng Liu <quic_wenmliu@quicinc.com>
+Subject: Re: [PATCH 1/2] media: qcom: camss: Fix csid clock configuration and
+ IRQ offset for 8775p
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Hans Verkuil <hverkuil+cisco@kernel.org>,
+        Vikram Sharma <quic_vikramsa@quicinc.com>,
+        Suresh Vankadara <quic_svankada@quicinc.com>,
+        Wenmeng Liu <quic_wenmliu@quicinc.com>
 Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
+        linux-kernel@vger.kernel.org
 References: <20260313-vfelite_fix-v1-0-2ee7de00dee7@oss.qualcomm.com>
- <20260313-vfelite_fix-v1-2-2ee7de00dee7@oss.qualcomm.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+ <20260313-vfelite_fix-v1-1-2ee7de00dee7@oss.qualcomm.com>
+ <3499e8ad-ee87-410b-9db1-215d6c20e195@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260313-vfelite_fix-v1-2-2ee7de00dee7@oss.qualcomm.com>
+From: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
+In-Reply-To: <3499e8ad-ee87-410b-9db1-215d6c20e195@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: GF9Qk1EICS_-dKElN44ProgiyDVEaV_E
+X-Authority-Analysis: v=2.4 cv=IIIPywvG c=1 sm=1 tr=0 ts=69b3dec3 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=EUspDBNiAAAA:8 a=fbPyYwy2ZK-1YPEEdNgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEzMDA3NSBTYWx0ZWRfX9ir520upDVOY
+ D39pJfCgM1rdJ4fPuGqJIjkR3gnSHVeWNM+Q54TUeSDM5epAVnIPTmf3JSUi4M3cenFHs6043iW
+ Gm2lNW6DxccqV2LGRlZjN5xp91at068ZSFTPm1XUs4l4Mbcu8Atqhay5YEd1myMlAvFtbPtJFjB
+ YCev/VXRtX4Q05HsKG++DhatM9LL+GHUpMNLNR4OY82iF1eeOX7RTwc/oeH6ubK5Vtm2zLIPjqn
+ gSpstusjfMnXzvrfOBR+RTExDwkSXLf2s0jesetCitjo0J798Di8mCd9UtXyJtZxggPuc21v4wM
+ cbB3qEgnUkwRxEjc8csYTQpT+a/jpwi4s/rbSPD6K/hrlauNo8xvKtv9Wf5sYlDGI0VI/5l+sts
+ 9nfFSHEfkuno0sI5pvgABo1K0MJ/H+qNu7CNb2N4WowHN6KdTmspv1E11q6dMErgGAA/siOby+8
+ Xi1Q2W2y5grIfbK9aUg==
+X-Proofpoint-ORIG-GUID: GF9Qk1EICS_-dKElN44ProgiyDVEaV_E
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-13_01,2026-03-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 bulkscore=0 priorityscore=1501 phishscore=0 lowpriorityscore=0
+ clxscore=1015 adultscore=0 impostorscore=0 spamscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603130075
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-97390-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,gmail.com,linaro.org,quicinc.com];
+	TAGGED_FROM(0.00)[bounces-97391-lists,linux-arm-msm=lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns];
+	FREEMAIL_TO(0.00)[linaro.org,kernel.org,gmail.com,quicinc.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[12];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[wenmeng.liu@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,cisco];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:dkim,linaro.org:email,linaro.org:mid,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: B6369280CA9
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: ECBBA280ED3
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 13/03/2026 09:42, Wenmeng Liu wrote:
-> Add missing required clocks (cpas_ahb and camnoc_axi) for VFE lite
-> instances on 8775p platform. These clocks are necessary for proper
-> VFE lite operation:
+Hi Bryan,
+
+On 3/13/2026 5:46 PM, Bryan O'Donoghue wrote:
+> On 13/03/2026 09:42, Wenmeng Liu wrote:
+>> Fix two issues in csid driver for 8775p platform:
+>>
+>> 1. Simplify clock configuration for csid lite by removing unused clocks
+>>     and correcting clock rates. Only vfe_lite_csid and vfe_lite_cphy_rx
+>>     clocks are actually needed.
 > 
-> Fixes: e7b59e1d06fb ("media: qcom: camss: Add support for VFE 690")
-> Signed-off-by: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
+> This should be its own patch and should that patch have a Fixes: ?
+> 
+> Simplification != fixing a bug.
+
+Sure, There is also an issue with the clock here, I will also modify the 
+description.
+
+> 
+>> 2. Fix BUF_DONE_IRQ_STATUS_RDI_OFFSET calculation for csid lite on
+>>     sa8775p platform. The offset should be 0 for csid lite on sa8775p,
+>>
+>> Fixes: ed03e99de0fa ("media: qcom: camss: Add support for CSID 690")
+>> Signed-off-by: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
+> 
+> Yeah this should be standalone then.
+> 
+> My general rule here is if your patch requires line items to explain 
+> various things being done, then those line-items deserve their own patch.
+ACK.
+> 
 > ---
->   drivers/media/platform/qcom/camss/camss.c | 40 +++++++++++++++++++------------
->   1 file changed, 25 insertions(+), 15 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-> index 4a0bf8acd7645f8cd8c1b4cb9b6ff6f3a54d42e8..d325539defbecc7f4fbcb9d20fb69884e109a459 100644
-> --- a/drivers/media/platform/qcom/camss/camss.c
-> +++ b/drivers/media/platform/qcom/camss/camss.c
-> @@ -3746,15 +3746,17 @@ static const struct camss_subdev_resources vfe_res_8775p[] = {
->   	/* VFE2 (lite) */
->   	{
->   		.regulators = {},
-> -		.clock = { "cpas_vfe_lite", "vfe_lite_ahb",
-> +		.clock = { "cpas_ahb", "cpas_vfe_lite", "vfe_lite_ahb",
->   			   "vfe_lite_csid", "vfe_lite_cphy_rx",
-> -			   "vfe_lite"},
-> +			   "vfe_lite", "camnoc_axi"},
->   		.clock_rate = {
-> -			{ 0, 0, 0, 0  },
-> +			{ 0 },
-> +			{ 0 },
->   			{ 300000000, 400000000, 400000000, 400000000 },
->   			{ 400000000, 400000000, 400000000, 400000000 },
->   			{ 400000000, 400000000, 400000000, 400000000 },
->   			{ 480000000, 600000000, 600000000, 600000000 },
-> +			{ 400000000 },
->   		},
->   		.reg = { "vfe_lite0" },
->   		.interrupt = { "vfe_lite0" },
-> @@ -3769,15 +3771,17 @@ static const struct camss_subdev_resources vfe_res_8775p[] = {
->   	/* VFE3 (lite) */
->   	{
->   		.regulators = {},
-> -		.clock = { "cpas_vfe_lite", "vfe_lite_ahb",
-> +		.clock = { "cpas_ahb", "cpas_vfe_lite", "vfe_lite_ahb",
->   			   "vfe_lite_csid", "vfe_lite_cphy_rx",
-> -			   "vfe_lite"},
-> +			   "vfe_lite", "camnoc_axi"},
->   		.clock_rate = {
-> -			{ 0, 0, 0, 0  },
-> +			{ 0 },
-> +			{ 0 },
->   			{ 300000000, 400000000, 400000000, 400000000 },
->   			{ 400000000, 400000000, 400000000, 400000000 },
->   			{ 400000000, 400000000, 400000000, 400000000 },
->   			{ 480000000, 600000000, 600000000, 600000000 },
-> +			{ 400000000 },
->   		},
->   		.reg = { "vfe_lite1" },
->   		.interrupt = { "vfe_lite1" },
-> @@ -3792,15 +3796,17 @@ static const struct camss_subdev_resources vfe_res_8775p[] = {
->   	/* VFE4 (lite) */
->   	{
->   		.regulators = {},
-> -		.clock = { "cpas_vfe_lite", "vfe_lite_ahb",
-> +		.clock = { "cpas_ahb", "cpas_vfe_lite", "vfe_lite_ahb",
->   			   "vfe_lite_csid", "vfe_lite_cphy_rx",
-> -			   "vfe_lite"},
-> +			   "vfe_lite", "camnoc_axi"},
->   		.clock_rate = {
-> -			{ 0, 0, 0, 0  },
-> +			{ 0 },
-> +			{ 0 },
->   			{ 300000000, 400000000, 400000000, 400000000 },
->   			{ 400000000, 400000000, 400000000, 400000000 },
->   			{ 400000000, 400000000, 400000000, 400000000 },
->   			{ 480000000, 600000000, 600000000, 600000000 },
-> +			{ 400000000 },
->   		},
->   		.reg = { "vfe_lite2" },
->   		.interrupt = { "vfe_lite2" },
-> @@ -3815,15 +3821,17 @@ static const struct camss_subdev_resources vfe_res_8775p[] = {
->   	/* VFE5 (lite) */
->   	{
->   		.regulators = {},
-> -		.clock = { "cpas_vfe_lite", "vfe_lite_ahb",
-> +		.clock = { "cpas_ahb", "cpas_vfe_lite", "vfe_lite_ahb",
->   			   "vfe_lite_csid", "vfe_lite_cphy_rx",
-> -			   "vfe_lite"},
-> +			   "vfe_lite", "camnoc_axi"},
->   		.clock_rate = {
-> -			{ 0, 0, 0, 0  },
-> +			{ 0 },
-> +			{ 0 },
->   			{ 300000000, 400000000, 400000000, 400000000 },
->   			{ 400000000, 400000000, 400000000, 400000000 },
->   			{ 400000000, 400000000, 400000000, 400000000 },
->   			{ 480000000, 600000000, 600000000, 600000000 },
-> +			{ 400000000 },
->   		},
->   		.reg = { "vfe_lite3" },
->   		.interrupt = { "vfe_lite3" },
-> @@ -3838,15 +3846,17 @@ static const struct camss_subdev_resources vfe_res_8775p[] = {
->   	/* VFE6 (lite) */
->   	{
->   		.regulators = {},
-> -		.clock = { "cpas_vfe_lite", "vfe_lite_ahb",
-> +		.clock = { "cpas_ahb", "cpas_vfe_lite", "vfe_lite_ahb",
->   			   "vfe_lite_csid", "vfe_lite_cphy_rx",
-> -			   "vfe_lite"},
-> +			   "vfe_lite", "camnoc_axi"},
->   		.clock_rate = {
-> -			{ 0, 0, 0, 0  },
-> +			{ 0 },
-> +			{ 0 },
->   			{ 300000000, 400000000, 400000000, 400000000 },
->   			{ 400000000, 400000000, 400000000, 400000000 },
->   			{ 400000000, 400000000, 400000000, 400000000 },
->   			{ 480000000, 600000000, 600000000, 600000000 },
-> +			{ 400000000 },
->   		},
->   		.reg = { "vfe_lite4" },
->   		.interrupt = { "vfe_lite4" },
-> 
+> bod
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Thanks,
+Wenmeng
 
----
-bod
 
