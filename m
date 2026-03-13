@@ -1,236 +1,248 @@
-Return-Path: <linux-arm-msm+bounces-97445-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97446-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4JzaJX38s2nWeQAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97445-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 13:01:01 +0100
+	id 4BFfLIf9s2mWewAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97446-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 13:05:27 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E1E0282981
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 13:01:01 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 38121282AA5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 13:05:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id C5A513016B88
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 12:01:00 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 4C935309E503
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 12:02:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5313F2DA755;
-	Fri, 13 Mar 2026 12:00:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6606B1DD525;
+	Fri, 13 Mar 2026 12:02:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="ipunXlra"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="l6jf8jpb";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="jYvUDFUh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-24418.protonmail.ch (mail-24418.protonmail.ch [109.224.244.18])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9F941DDC28;
-	Fri, 13 Mar 2026 12:00:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100B21A6827
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 12:02:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773403259; cv=none; b=LUA0LHItt8isUJFfp25WA/si/sO2YdTwl+004jBUQWYO2CX13kwbIrsb2yVCI1bZxUd79TD0fqxnOO6Fgn2GMIIqdt02K7hcGkCwUQSd/lV8rAe/i2CdtVjc5GHkeORhddOZmI8peCFaTcr1L62HmulKEThrwHGboqI/4Tnprio=
+	t=1773403364; cv=none; b=V3Jg8ROxV7dYmlZj1vqQVH9wv+n2+Apb/mKwJQ1xAGyXTp5+mbWwiy42PuxF8S3RmZ8r88OCSwYLNjsfFAQnmSrFv5AkSjjog5Dirujk3ALfoJAT568mjKLXrNAJ7N3JR7y5B+5FuoUsOjVJfpuvdRrUZEOSCsZncBsSnDL1G0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773403259; c=relaxed/simple;
-	bh=W2mUS43aORt1zRKA6gfMdflGbFTTwsVtdNzIwhRGRKs=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=h/aM88Cg5tcehataiqqfdpczp7/s9NfpUL0k19w4eK25x8jrTspyXyReLYYy96pmlYCM8iqnvKworci1DoJclJrNwMaO1vNQVQ9oZXzPVJofLRDg6BV5n87LgXihfCdX5sYVd1w+qiGW5DPbfqQZTEtUorTdb22GABS8UGGmQBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=ipunXlra; arc=none smtp.client-ip=109.224.244.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1773403246; x=1773662446;
-	bh=W2mUS43aORt1zRKA6gfMdflGbFTTwsVtdNzIwhRGRKs=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=ipunXlrao4PR8yT0aaoVrpCk+pJ/DJEiphXOav6ulTK+0KtY6S1moAKigzjugnFOV
-	 pc04dezk2rHMyq7OBugdK/lbiTImD/23uTEmqvtOfgsQBJYWfQQ61I5swQ5nOp6ifk
-	 hKCGUbZrhSaVXgUihwFlGQMUgoLZQSCRHJ3ApXNW8QRUnCI2bkwH4MDzU6smlFDRrV
-	 5PmJGa4nsDGsV0vzYsDFeMwpC1ZHWOZXLLeavf/+PExfzBIPN+p0wtL6/HW3dAhTUd
-	 +33KIc+rufygp5gZg/CkyIlZRw3Mr76mmJI1wtxQ+9oarH8BWzNu2SB46tWioL5PsO
-	 ZPUjm/YT74x/w==
-Date: Fri, 13 Mar 2026 12:00:40 +0000
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Srinivas Kandagatla <srini@kernel.org>
-From: Tj <tj.iam.tj@proton.me>
-Cc: linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org
-Subject: Re: qcom_slim_ngd_ctrl_probe: blocked on a mutex
-Message-ID: <539a5f37-e06f-44be-abda-3afa69397711@proton.me>
-In-Reply-To: <7672009d-7b14-4df2-b057-1ca5ef4fe79e@oss.qualcomm.com>
-References: <f1a1e72f-318b-4888-b03f-4f38ab4cee6e@proton.me> <7672009d-7b14-4df2-b057-1ca5ef4fe79e@oss.qualcomm.com>
-Feedback-ID: 113488376:user:proton
-X-Pm-Message-ID: cbe9177e93d266503985d71be99283f383f94317
+	s=arc-20240116; t=1773403364; c=relaxed/simple;
+	bh=odNxuZ2hFNSu8jD2vAcFjGgfyV/5IK4E8dvc2tmLiuY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=EP2ZeDUthWyzCCmi2cUq9GeovuVxNzTxtwo+7PVwClsXgKPqPjNuCeYjBVpicbH0q2HqWSvsEbD2lzxP+hJ8oNZjQySRtikMATzk4WYcEv4gNjWYR4Umj85RnN0RRmJE/yqr7kb7y2O/y/0rsFCmh7S3oKIr4qilQBs7nqZ14UU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=l6jf8jpb; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=jYvUDFUh; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62D5tktb3342956
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 12:02:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	FaY2p71Y8woVoAKqknbA108WzRsqxJMopTu79NgnvF0=; b=l6jf8jpb4SnIiKgv
+	nxlb7jzxD5YeRPvIhIYLcW/epYQgKj7hY/NLGjusHgk8H9yM9vaqQlQoxXcA+5MV
+	CUQHuP42Qjp7JT26OnygNri9s0YZqMNe4AZ9Yrlkr22wFVecU5AgI7cv3wuXfAOS
+	Qk9uQ6QQja1RO6V7nUYSHCdSRG2CZ/6HH9Sm06vTcjVrF0A3UWJHsu8rL7tIUoXh
+	Jku3lNSHM2eYjpwGG/eLsMMb/NkCgZLNWPpF4I2FBKgdFULCG+PqVjZdrfDujF4C
+	PEvpndY6yQOLQ1+YbBGfwEWc74eBtCI8aBqRu5wF4/bBwzIaEAzgs/sS+m79YK8/
+	Kho9MQ==
+Received: from mail-oa1-f71.google.com (mail-oa1-f71.google.com [209.85.160.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cus9w4ndh-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 12:02:41 +0000 (GMT)
+Received: by mail-oa1-f71.google.com with SMTP id 586e51a60fabf-4173c7c80ccso1425777fac.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 05:02:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1773403361; x=1774008161; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=FaY2p71Y8woVoAKqknbA108WzRsqxJMopTu79NgnvF0=;
+        b=jYvUDFUhRzrRKs9gt2Gp77Vq1cwSOhKX8X7pv7kROCRCc3c4YgP1QO1sCHtr4pwC+R
+         FJlKk+v4b1iZE3m8Pq3Gp+1LpAQhi+8Vi8lY7GUe9h1//OJqR7tnOVnFWFeFZPDRqVPC
+         8CVFoI1MCQun0mqAwr5MV2skxuTVqr9qKYAz6fgJwnVOBAkgK41P5AUh0wubEZDr/LV4
+         5jsrKIhJaedfVGs/yKmMSzhd/Xhdg046m0jvZ4DGMpXfIxsbA4JyDPM32EYRHnZ8+/CB
+         Tol/gMZpRqxn/uZAYbZtUWl63zZ/FQNI4zjDuI/6f5x4B7lShGYVaZBNFlTziR24VMeT
+         ascQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773403361; x=1774008161;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FaY2p71Y8woVoAKqknbA108WzRsqxJMopTu79NgnvF0=;
+        b=bGgduIl8LwqcmpcXGAZ95voRjIyEZyBFEagQEdeDEi+sds02xbkWfxozuDZew9iSco
+         txtOZgga940zdPgsfsg3IVG/5Vla3NZooAVes8sKcu2I5N8Nl52N5CezjeZCA1ctgqKR
+         4qGXf2ZojtbGYshFM8sf6UFWu8V47G9uVFh/4IZh0npc5pfm1sXkcnb1cTyj5SbvHh+g
+         CNHly7YK6ukrBfViZOVmjWz6FubSk4TpvP0WyJCk27JWWY5HHlpyBpZ5cfXYaFzqMlPl
+         9NBbvZBrFi7gieY8qdqI0vuJgj5a6hq8rH4vl2HqYzfde6MJ8dQdlym5wKl6sMqItV4D
+         KRCQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUEhkum5sit/rikfHvVqD8tEy7pThYImTTGjpn4uQgYdwmTIBAOIDhED54XgxkUA6ozV4WS3i5wxXUPpawC@vger.kernel.org
+X-Gm-Message-State: AOJu0YzQjAuFHP/1OL1cM/vu/dW2ZkWNmFPpI3RohQFwWEV25qML+v3u
+	jrsgIioz46gmXymf2+0nkFiQ+vJXllHIyvLWUGNd8FwZGmMlVtAkIpqX5Dx+VGA5dhiEoqTlfX0
+	aJ4M3QzJ5f5EkgC0b7Pc+jIG7MuikC67EW6hfECYyaxov0X9u/7xwfnuhFwu585i/rvB9
+X-Gm-Gg: ATEYQzwnLW13yvJxoRcBPw797kYQpRnax2d/T2lpgF+X1U02xxw5PGVoQmE/mAfspFS
+	qkUjeliKx7MW0SPjjKAaxrqQT5ixL7ul2uxERrxygWsFL7k9ICQwmw+nMQzRYqo/fAvrzQuQ2ol
+	T4fknT1wVlSLlgXsxrWN4W+6Lp+BuU9pl3tLMjvlcrXUmuql/qAqOVvJST6hIrwa5J2vqpRNNQ3
+	1A0Oq8H5wvINm4oXrKW3wV/LIcsb8xr+mxOEjIjCn/HjyNVUSVSCpltUJluHKZqg46w2vGJ09aY
+	Gb1dTn8f+OnC4wwdUK2QDhpltmM4hNqnRtBFK5czjaWHKxnUWdnGO82C7cmOlhQN0ZDgsEZ3jrA
+	KzRxOIMY8hc1LGSyelUUB689vAeaOXmrmxj1nto07Q6kdwCVuiQxJdbCFmy5DqW5dV1m83Tg7uj
+	xAXjw=
+X-Received: by 2002:a05:6870:d146:b0:417:48c5:5982 with SMTP id 586e51a60fabf-417b93f4be4mr1352559fac.6.1773403361026;
+        Fri, 13 Mar 2026 05:02:41 -0700 (PDT)
+X-Received: by 2002:a05:6870:d146:b0:417:48c5:5982 with SMTP id 586e51a60fabf-417b93f4be4mr1352533fac.6.1773403360471;
+        Fri, 13 Mar 2026 05:02:40 -0700 (PDT)
+Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b976cdb1d20sm40152166b.41.2026.03.13.05.02.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 Mar 2026 05:02:39 -0700 (PDT)
+Message-ID: <0811deda-3763-4092-a4b4-8977199ae4f8@oss.qualcomm.com>
+Date: Fri, 13 Mar 2026 13:02:35 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-2.16 / 15.00];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 3/3] arm64: dts: qcom: sm8750: Add GPU clock & IOMMU
+ nodes
+To: Pengyu Luo <mitltlatltl@gmail.com>
+Cc: taniya.das@oss.qualcomm.com, abel.vesa@oss.qualcomm.com,
+        ajit.pandey@oss.qualcomm.com, Bjorn Andersson <andersson@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
+        imran.shaik@oss.qualcomm.com, jagadeesh.kona@oss.qualcomm.com,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh@kernel.org>, Stephen Boyd <sboyd@kernel.org>
+References: <CAH2e8h4R-nF+eV+OnkSySKSY5_H-V8Ndyfhac3=VNQ-bMaBeFg@mail.gmail.com>
+ <af606d6c-3ce3-4342-bd5c-ce3ea28c6923@oss.qualcomm.com>
+ <CAH2e8h4Vp9fJYAUUbOmoHSKB25wakPBvmpwa62BTRqgRQbMWuw@mail.gmail.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <CAH2e8h4Vp9fJYAUUbOmoHSKB25wakPBvmpwa62BTRqgRQbMWuw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: UJ_7HJrXIXI5s_jLL-lteuUD1HvIn2xr
+X-Authority-Analysis: v=2.4 cv=IIIPywvG c=1 sm=1 tr=0 ts=69b3fce1 cx=c_pps
+ a=CWtnpBpaoqyeOyNyJ5EW7Q==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=EUspDBNiAAAA:8 a=JfrnYn6hAAAA:8 a=A4iZcLwekUeCbZ0gfxgA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=vh23qwtRXIYOdz9xvnmn:22 a=1CNFftbPRP8L7MoqJWF3:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEzMDA5NSBTYWx0ZWRfX7p19JevSzNgy
+ 0Qd31KnxNp+ITjP2jddouYTb0ZNad16Et4G86YUbhsxMz5LBHAYI8NGs6yiLDmoXfsFHdcdHvMS
+ KnF7yDuwJ7wsBKgpRJI7NOpjbVIO5KZaHCQ/S0KAkwSRN3BJJFviN5rAfzgx2HKAjjwkDo9cu6X
+ GXzZgAAg/df2Z470uI//52am/SbD0IioxgoXXH6GvxAEJQXaM7DUJBg2QEVvftBSQ1Jqpj0OJ8D
+ TWEsScWf0Bftu32quCEAW/q7P3GyNw7E/8US0ba6622fQIVb5ToDsQmFnc05d7unZYjFzEWtuJN
+ W2mkgsam5Xz83ZyH8uypNaC7sriPjlABtGkmEG8oW1eY0BRr0U2tFvpnn9x33hWt/wf1dcYe1rW
+ kOfMlx77xR6HBXdb4JwgmtAZ/MgLfJAcsbVyD8jvgNLS0WxYFmgLsq099Hoy4CfX09qvgfpE1Aj
+ lhoNs2565dWrZSPWriQ==
+X-Proofpoint-ORIG-GUID: UJ_7HJrXIXI5s_jLL-lteuUD1HvIn2xr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-13_02,2026-03-13_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 bulkscore=0 priorityscore=1501 phishscore=0 lowpriorityscore=0
+ clxscore=1015 adultscore=0 impostorscore=0 spamscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603130095
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[proton.me,quarantine];
-	R_DKIM_ALLOW(-0.20)[proton.me:s=protonmail];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DKIM_TRACE(0.00)[proton.me:+];
-	TAGGED_FROM(0.00)[bounces-97445-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[3];
-	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-97446-lists,linux-arm-msm=lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[infradead.org:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,qualcomm.com:dkim,qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns];
+	FREEMAIL_TO(0.00)[gmail.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_THREE(0.00)[4];
-	MISSING_XM_UA(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[tj.iam.tj@proton.me,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,proton.me:dkim,proton.me:mid]
-X-Rspamd-Queue-Id: 5E1E0282981
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 38121282AA5
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 13/03/2026 09:54, Konrad Dybcio wrote:
-> On 3/12/26 1:14 AM, Tj wrote:
->> Currently working on sdm850 device (Samsung Galaxy Book2 W737) and
->> seeing kernel hang early and never recover when probing qcom-ngd-ctrl
->> platform driver.=C2=A0 Only able to capture a photo of the stack traces =
-as a
->> result; I'll try to transcribe the important parts here. My diagnosis
->> suggests that the module is calling __platform_driver_register() twice
->> and may be the cause of the hang.
-> https://lore.kernel.org/all/20260309-slim-ngd-dev-v1-0-5843e3ed62a3@oss.q=
-ualcomm.com/
->
-> should be able to help with some of that
+On 3/12/26 7:40 AM, Pengyu Luo wrote:
+> On Tue, Mar 10, 2026 at 9:32 PM Konrad Dybcio
+> <konrad.dybcio@oss.qualcomm.com> wrote:
+>>
+>> On 3/9/26 11:27 AM, Pengyu Luo wrote:
+>>> On Thu, Mar 5, 2026 6:40 PM Taniya Das <taniya.das@oss.qualcomm.com> wrote:
+>>>> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>>>>
+>>>> Add the GPU_CC and GX_CC (brand new! as far as we're concerned, this
+>>>> is simply a separate block housing the GX GDSC) nodes, required to
+>>>> power up the graphics-related hardware.
+>>>>
+>>>> Make use of it by enabling the associated IOMMU as well. The GPU itself
+>>>> needs some more work and will be enabled later.
+>>>>
+>>>> Reviewed-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>>>> Co-developed-by: Taniya Das <taniya.das@oss.qualcomm.com>
+>>>> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+>>>> ---
+>>>>
+>>>
+>>> Hi Taniya and Konrad, GX GDSC stuck at 'on' on my device
+>>> the raw register values are
+>>>
+>>> 0x3d68024: 0x00000000
+>>> 0x3d68028: 0x00000000
+>>
+>> These likely indicate that some clock or voltage rail is not accessible
+>> at the very moment you're reading them back
+>>
+> 
+> It seems to be harmless. In the downstream, they are always zero too.
+> TB322FC:/ # devmem 0x3d68024
+> 0x00000000
+> TB322FC:/ # devmem 0x3d68028
+> 0x00000000
+> 
+> In [1], the commit log mentioned
+> The GX GDSC is modelled to aid the GMU in powering down the GPU in the
+> event that the GPU crashes.
+> 
+>> GPU support for 8750 is not yet upstream (and A830 is somewhat different
+>> vs the supported A840) - there may be something wrong in that sequence.
+>>
+> 
+> Indeed. Chances are that I can't enable gpu. I must reboot again and again to
+> match the sequence by luck, then I can enable it[2], and I must
+> disable register protection.(I just noticed the hack from here[3])
+> 
+>> I heard it's in the works though, so you may be better off waiting a bit.
+>>
+> 
+> Glad to hear that. I am looking forward to it.
+> 
+> Slightly off-topic, do you know if anyone is working on wcn786x/wcn7880,
+> sm8750 QRD SKU2 V8 Power Grid uses this.
 
-Thank-you. This morning I'd just resolved the platform_driver_register=20
-issue myself so now seeing
+I don't know. You can try asking on ath12k@lists.infradead.org
 
-qcom,slim-ngd-ctrl 171c0000.slim-ngd: SLIM SAT: Rcvd master capability
-qcom,slim-ngd-ctrl 171c0000.slim-ngd: SLIM controller Registered
-
-However the order of registration of the two drivers is important; ctrl=20
-should be last, so I'm surprised that Patch 1 works.
-
-My local fix is:
-
- =C2=A0 =C2=A0 slimbus: ngd: fix lock hang on probe
-
- =C2=A0 =C2=A0 Module contains two platform_drivers. The initial probe call=
-s
- =C2=A0 =C2=A0 platform_register_driver() with the second struct platform_d=
-river.
-
- =C2=A0 =C2=A0 This caused a hung task due to mutex lock in __driver_attach=
-():
-
- =C2=A0 =C2=A0 INFO: task swapper/0:1 blocked for more than 1232 seconds.
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Not tainted 7.0.0.-=
-rc2-sdm845 #89
- =C2=A0 =C2=A0 task:swapper/0=C2=A0 =C2=A0 state:D pid:1 tgid:1 ppid:0 task=
-_flags:0x0140=20
-flags:0x00000010
- =C2=A0 =C2=A0 Call trace:
- =C2=A0 =C2=A0 __switch_to_0x104/0x1c8 (T)
- =C2=A0 =C2=A0 __schedule+0x438/0x1168
- =C2=A0 =C2=A0 schedule+0x3c/0x120
- =C2=A0 =C2=A0 schedule_preempt_disabled+0x2c/0x50
- =C2=A0 =C2=A0 __mutex_lock.constprop.0+0x3d0/0x938
- =C2=A0 =C2=A0 __mutex_lock_slowpath+0x1c/0x30
- =C2=A0 =C2=A0 __driver_attach+0x38/0x280
- =C2=A0 =C2=A0 bus_for_each_dev+0x80/0xc8
- =C2=A0 =C2=A0 driver_attach+0x2c/0x40
- =C2=A0 =C2=A0 bus_add_driver+0x128/0x258
- =C2=A0 =C2=A0 driver_register+0x68/0x138
- =C2=A0 =C2=A0 __platform_driver_register+0x2c/0x40
- =C2=A0 =C2=A0 qcom_slim_ngd_ctrl_probe+0x1f4/0x400
- =C2=A0 =C2=A0 platform_probe+0x64/0xa8
- =C2=A0 =C2=A0 really_probe+0xc8/0x3f0
- =C2=A0 =C2=A0 __driver_probe_device+0x88/0x190
- =C2=A0 =C2=A0 driver_probe_device+0x44/0x120
- =C2=A0 =C2=A0 __driver_attach+0x138/0x280
- =C2=A0 =C2=A0 bus_for_each_dev+0x80/0xc8
- =C2=A0 =C2=A0 driver_attach+0x2c/0x40
- =C2=A0 =C2=A0 bus_add_driver+0x128/0x258
- =C2=A0 =C2=A0 driver_register+0x68/0x138
- =C2=A0 =C2=A0 __platform_driver_register+0x2c/0x40
- =C2=A0 =C2=A0 qcom_slim_ngd_ctrl_driver_init+0x24/0x38
- =C2=A0 =C2=A0 do_one_initcall+0x60/0x450
- =C2=A0 =C2=A0 kernel_init_freeable+0x23c/0x630
- =C2=A0 =C2=A0 kernel_init+0x2c/0x1f8
- =C2=A0 =C2=A0 ret_from_fork+0x10/0x20
- =C2=A0 =C2=A0 INFO: task swapper/0:1 is blocked on a mutex likely owned by=
- task
- =C2=A0 =C2=A0 swapper/0:1.
-
- =C2=A0 =C2=A0 Showing all locks held in the system:
- =C2=A0 =C2=A0 2 locks held by swapper/0/1:
- =C2=A0 =C2=A0 =C2=A0#0: ffff000080ff80f8 (&dev->mutex){....}-{4:4}, at:
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0__driver_attach+0x19c/0x2c0
- =C2=A0 =C2=A0 =C2=A0#1: ffff000080ff80f8 (&dev->mutex){....}-{4:4}, at:
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0__driver_attach+0x38/0x2c0
- =C2=A0 =C2=A0 1 lock held by khungtaskd/73:
- =C2=A0 =C2=A0 =C2=A0#0: ffffbc5dfc38f1d8 (rcu_read_lock){....}-{1:3}, at:
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0debug_show_all_locks+0x18/0x1f0
-
- =C2=A0 =C2=A0 After this fix:
-
- =C2=A0 =C2=A0 qcom,slim-ngd-ctrl 171c0000.slim-ngd: SLIM SAT: Rcvd master =
-capability
- =C2=A0 =C2=A0 qcom,slim-ngd-ctrl 171c0000.slim-ngd: SLIM controller Regist=
-ered
-
-diff --git a/drivers/slimbus/qcom-ngd-ctrl.c=20
-b/drivers/slimbus/qcom-ngd-ctrl.c
-index 9aa7218b4e8d2..abdd4ad57f2d2 100644
---- a/drivers/slimbus/qcom-ngd-ctrl.c
-+++ b/drivers/slimbus/qcom-ngd-ctrl.c
-@@ -1664,7 +1664,6 @@ static int qcom_slim_ngd_ctrl_probe(struct=20
-platform_device *pdev)
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 goto err_pdr_looku=
-p;
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 }
-
--=C2=A0 =C2=A0 =C2=A0 =C2=A0platform_driver_register(&qcom_slim_ngd_driver)=
-;
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 return of_qcom_slim_ngd_register(dev, ctrl);
-
- =C2=A0err_pdr_alloc:
-@@ -1754,6 +1753,23 @@ static struct platform_driver=20
-qcom_slim_ngd_driver =3D {
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 },
- =C2=A0};
-
--module_platform_driver(qcom_slim_ngd_ctrl_driver);
-+static struct platform_driver * const qcom_slim_ngd_drivers[] =3D {
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0/* Order here is important; ctrl last */
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0&qcom_slim_ngd_driver,
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0&qcom_slim_ngd_ctrl_driver,
-+};
-+
-+static int __init qcom_slim_ngd_init(void)
-+{
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0return platform_register_drivers(qcom_slim_ngd_=
-drivers,=20
-ARRAY_SIZE(qcom_slim_ngd_drivers));
-+}
-+module_init(qcom_slim_ngd_init);
-+
-+static void __exit qcom_slim_ngd_exit(void)
-+{
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0return platform_unregister_drivers(qcom_slim_ng=
-d_drivers,=20
-ARRAY_SIZE(qcom_slim_ngd_drivers));
-+}
-+module_exit(qcom_slim_ngd_exit);
-+
- =C2=A0MODULE_LICENSE("GPL v2");
- =C2=A0MODULE_DESCRIPTION("Qualcomm SLIMBus NGD controller");
-
-
+Konrad
 
