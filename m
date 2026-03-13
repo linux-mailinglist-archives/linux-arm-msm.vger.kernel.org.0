@@ -1,57 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-97489-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97490-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id eH+JLn4NtGlvfwAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97489-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 14:13:34 +0100
+	id SLuHH9ENtGlvfwAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97490-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 14:14:57 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 303E5283884
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 14:13:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 27DA92838D0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 14:14:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 030EA31CF5D4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 13:09:32 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7FA29329CCEB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 13:10:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABBD2313E3F;
-	Fri, 13 Mar 2026 13:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EC84391E7E;
+	Fri, 13 Mar 2026 13:10:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="S3IAVA0e"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="keouMhkn"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from ixit.cz (ixit.cz [185.100.197.86])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC793164B4;
-	Fri, 13 Mar 2026 13:09:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67082EC54C;
+	Fri, 13 Mar 2026 13:10:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.100.197.86
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773407372; cv=none; b=GUtldJ5G2nL0O/RA+aIL/H+h+NSXQuhp+4+4qAo+k/Lyy2yaB5TMOzRvFRHX4dK4m5+I3C9Rg9gYNEI5MO5SsUrguY9XFJhoMuXl/Zsfp3SRa/FY5vaOh2Gs0IJ6MLy91Ru6XtUDbEfRpcdOwfWJ2dKrvHzkIFH//LsTVf7tfxc=
+	t=1773407438; cv=none; b=kLdDnROtn6t5gsDH/hLOOC8LF5tSVe2B23swkaBHmrLgFiPgvGo5W0ldGmxGo8qP21XUvl59lr7Nc378/Rb/+Fuxp/pwjBXGmDJIdI7PQlLUa9PIZwz8qnp83dLHqWku+1sylQ131ijJNd09eiBDm9vP07JtM3N8HumpvQIMVy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773407372; c=relaxed/simple;
-	bh=gaPIcy61Pt/6wvBcSN+Gyc66S8RetLYWWhpKR/i9qk0=;
+	s=arc-20240116; t=1773407438; c=relaxed/simple;
+	bh=Y4l6K59hqBNIDCyN+2XCfbfOcbqnt76lkyr7rMyf9so=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ijKJV6/RQnRQRh43xAgy2NDWaFRu+zGwBHSwe6f4kOMw1a/GprfKePInZcdG4StFxhd1rm2Eo6R9UyuQ1/lZWrpPvpW/2/p080gdfm+0rHeLapMaf8didU7fXWhJEfykvICnzB8I70//T1YWAmbmrHhfiQyaA24lhoEs1Pr8kFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=S3IAVA0e; arc=none smtp.client-ip=185.100.197.86
+	 In-Reply-To:Content-Type; b=sylb+D/D3or/jfl1jPTB/oLRxYh52wxAxwYQbw7iE/kjJpaqKISxg8t2u+Byg2w2MN4Ow/8VBSbeW+Epjefkzus7RN7a5kRL+yj2MnTsYVelcqRCHthroBM1AcBCTE2XjTpkFI0wDuo1J5DXz6wo2rMhj45b/UbtNPw156PpWxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=keouMhkn; arc=none smtp.client-ip=185.100.197.86
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
 Received: from [192.168.1.110] (109-81-2-35.rct.o2.cz [109.81.2.35])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange x25519)
 	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 7C67553400DE;
-	Fri, 13 Mar 2026 14:09:19 +0100 (CET)
+	by ixit.cz (Postfix) with ESMTPSA id 69FA35340118;
+	Fri, 13 Mar 2026 14:10:33 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1773407359;
+	t=1773407433;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=pSw+LSHVdnBLOEdayhFuL9lCDLMPEVX00ozM6jrquAc=;
-	b=S3IAVA0eamGrIaaF+qlwzH0FE6HMUw/XTCSE4vKHV9qNtTjjllSf6CLN3HOAhY+aSDsDtu
-	mR8sXXXJ9KFmpQ7yBgQeObGgp6z53/vzGPn4aAzfuG8/5UC/3GgRUOxIL9P+xpBRQOIpMj
-	x9jPBwQ/90fz0kwHbqbpL3Zs079g4ZA=
-Message-ID: <e93d3d7d-1df3-45e1-bf9b-d2ccb937aced@ixit.cz>
-Date: Fri, 13 Mar 2026 14:09:18 +0100
+	bh=8u1hQo+x5oOCVn8hM5jXEEEYz9+xIKPVb+MljKe4XhM=;
+	b=keouMhknfhnjRMAdUHgPZnUymGnGuFwBTuDSivhxPe2yaAqCLhP81LfnDxglVcnGcKyx63
+	NFrGvxIOCmyHQnMcWMmCKuCjay6zxk9cah8GIlKRuBQTdfrTW6RwwbhPqe7FL9amEyRjc2
+	y2Au1/Yg1aMz8QNFEwXqjlz7FAJWYwU=
+Message-ID: <fd95f7bb-2aba-44d3-ab61-7c79df18722f@ixit.cz>
+Date: Fri, 13 Mar 2026 14:10:33 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,21 +59,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sdm845-xiaomi-beryllium-tianma:
- Disable MDSS
+Subject: Re: [PATCH] arm64: dts: qcom: Mark l1a regulator as powered during
+ boot
 To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ <conor+dt@kernel.org>, Amit Pundir <amit.pundir@linaro.org>,
+ Joel Selvaraj <foss@joelselvaraj.com>
+Cc: Konrad Dybcio <konradybcio@gmail.com>, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- phone-devel@vger.kernel.org, Petr Hodina <petr.hodina@protonmail.com>
-References: <20260311-beryllium-fb-v1-0-408a580d125e@ixit.cz>
- <20260311-beryllium-fb-v1-2-408a580d125e@ixit.cz>
- <t4uhjpxdvjxda4dxkoxktv6xlxg3xvzyslgerluu3t2dzxv33v@k46gvwv4uf22>
- <137c19a3-136a-4e0e-b4ea-8cc474172d81@ixit.cz>
- <e65ebd79-9edb-4001-a5c1-c4b6a67d5234@oss.qualcomm.com>
+ phone-devel@vger.kernel.org
+References: <20260312-beryllium-booton-v1-1-59c83ab91b78@ixit.cz>
+ <70e9a500-3fbe-42b5-8ea3-87b417c16064@oss.qualcomm.com>
 Content-Language: en-US
 From: David Heidelberg <david@ixit.cz>
 Autocrypt: addr=david@ixit.cz; keydata=
@@ -119,27 +117,29 @@ Autocrypt: addr=david@ixit.cz; keydata=
  zRKcgRumz2Tc1ouHj6qINlzEe3a5ldctIn/dvR1l2Ko7GBTG+VGp9U5NOAEkGpxHG9yg6eeY
  fFYnMme51H/HKiyUlFiE3yd5LSmv8Dhbf+vsI4x6BOOOq4Iyop/Exavj1owGxW0hpdUGcCl1
  ovlwVPO/6l/XLAmSGwdnGqok5eGZQzSst0tj9RC9O0dXO1TZocOsf0tJ8dR2egX4kxM=
-In-Reply-To: <e65ebd79-9edb-4001-a5c1-c4b6a67d5234@oss.qualcomm.com>
+In-Reply-To: <70e9a500-3fbe-42b5-8ea3-87b417c16064@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[ixit.cz,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[ixit.cz:s=dkim];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-97490-lists,linux-arm-msm=lfdr.de];
+	URIBL_MULTI_FAIL(0.00)[ixit.cz:server fail,sea.lore.kernel.org:server fail];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-97489-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[kernel.org,vger.kernel.org,protonmail.com];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[gmail.com,vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[david@ixit.cz,linux-arm-msm@vger.kernel.org];
@@ -147,37 +147,45 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[ixit.cz:dkim,ixit.cz:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,protonmail.com:email]
-X-Rspamd-Queue-Id: 303E5283884
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[ixit.cz:dkim,ixit.cz:email,ixit.cz:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 27DA92838D0
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 13/03/2026 13:38, Konrad Dybcio wrote:
-> On 3/12/26 12:25 PM, David Heidelberg wrote:
->> On 12/03/2026 03:46, Dmitry Baryshkov wrote:
->>> On Wed, Mar 11, 2026 at 07:44:30PM +0100, David Heidelberg via B4 Relay wrote:
->>>> From: Petr Hodina <petr.hodina@protonmail.com>
->>>>
->>>> Currently the panel driver for tianma is broken.
->>>
->>> How broken? Can it be fixed instead?
+On 13/03/2026 13:06, Konrad Dybcio wrote:
+> On 3/12/26 12:49 AM, David Heidelberg via B4 Relay wrote:
+>> From: David Heidelberg <david@ixit.cz>
 >>
->> No output to the panel. Definitely can be fixed, but current situation is that we don't have anyone who has available time or device to tackle the problem.
+>> This regulator provides for the display subsystem, thus must be on.
 >>
->> I know it's not optimal, but on a way to achieve working mainline phones, my thinking is better to mark it as broken in mainline until someone fixes (assuming Fixes tag and backport) then just going black display (when we have at least framebuffer now).
+>> Fixes: 77809cf74a8c ("arm64: dts: qcom: Add support for Xiaomi Poco F1 (Beryllium)")
+>> Signed-off-by: David Heidelberg <david@ixit.cz>
+>> ---
 > 
-> If you have a person with limited time, would simply copying this:
+>    regulator-boot-on:
+>      description: bootloader/firmware enabled regulator.
+>        It's expected that this regulator was left on by the bootloader.
+>        If the bootloader didn't leave it on then OS should turn it on
+>        at boot but shouldn't prevent it from being turned off later.
+>        This property is intended to only be used for regulators where
+>        software cannot read the state of the regulator.
 > 
-> 2b973ca48ff3 ("drm/panel: sony-td4353-jdi: Enable prepare_prev_first")
+> While I believe what you're doing is okay, the commit message could
+> be interpreted in two ways:
+> 
+> 1. The regulator must be on, since it provides the display subsystem
+>     [and therefore the bootloader had turned it on before Linux booted]
+> 
+> 2. The display subsystem requires that this regulator is on, so for that
+>     subsystem to function, we must ensure that it's enabled [by Linux]
+> 
+> I'm almost certain you meant 1., but please make that explicit
 
-Sorry, I don't follow. You meant introducing prepare_prev_first?
+Yes, I meant 1. (I'm aware of the documentation here).
 
-I asked if it's possible to test, but looking at the rest of the driver, it'll 
-need refactor anyway.
+David
 
-David>
-> fix it?
 > 
 > Konrad
 
