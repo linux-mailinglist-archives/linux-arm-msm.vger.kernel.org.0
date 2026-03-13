@@ -1,216 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-97327-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97329-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sLL3BAq1s2l5aAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97327-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 07:56:10 +0100
+	id 0PkqFV+5s2nbaAAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97329-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 08:14:39 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC0AB27E65E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 07:56:09 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE2A927EA7A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 08:14:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id C859830244CA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 06:56:08 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id EB7E8312672F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 07:10:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14FFA363C64;
-	Fri, 13 Mar 2026 06:56:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E356129B224;
+	Fri, 13 Mar 2026 07:10:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="eL6cErav";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="agrBEDao"
+	dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b="JzZpZOrh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mail-m3270.qiye.163.com (mail-m3270.qiye.163.com [220.197.32.70])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C577F287503
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 06:56:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93B87364943;
+	Fri, 13 Mar 2026 07:10:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.32.70
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773384965; cv=none; b=rIm6ROY23Iv+q+WGy+0tjUE8WnvQPi34jJsL0TzeNo3icnn8oO3vMhNHLOIw2jR17Bw2H5dFb3h6y/zjfxem5P3zW/ncxkqkUPGy9T5oKdnhGm1qfvOG+fS1aAto5mJnn+2ahBTsgIzAqyi7E8exZCFcvQ1uAxiMRcbGZyhlPuU=
+	t=1773385828; cv=none; b=SGGUX79B9vUyb89zEDdM+JAoWsgPwP5GnBgsN7/AoncoMWluw84MnBg1GM9hJxLz3RrGF+FUh5qUKxBecz9Cy8nd34ZRR6z2L1psIcW3gaaXr/T2P5efHNUEphDGrqiCJut2/QbRLcSVO57bYYyBKO8WGHZ6mfOuxuJ8pGPCIEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773384965; c=relaxed/simple;
-	bh=uF95rIddmYlrMzYa9Kf3n/hva62Lji7bAUf8s7PNsYE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=C1VD3SePqv4v6Ng07dIQxVg6ER7GnufVFJjZ2PusEQpdW27oSdAjE3F0Ld7drIpXqkbvJM8cdgt2G2f8ALQByuAWTrYSkKl3/tsMwdQKLWBVa5dADN+tU2Wv9rRmvov9bER2/servnCEU51BTHCM+iQj4kv1I9GhywxSurS9iqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=eL6cErav; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=agrBEDao; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62D5tpZM1015150
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 06:56:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	bPZfbfumfeK3hXgzqvEDf1QRNXOajCPeUAJoFy2K1fM=; b=eL6cEravUWJWbYEV
-	VbW+jlgiN3+63IntwGwDr3LN2mB4Vkc0EiP6+MUO2h4/alASxQCagXzp4tiNK7Ya
-	9ReVk9MPCCUKIZ1H0G37dqwrJ0HdLa0JwoCCZi3wtIjt7aLPEoq0rcWms4Yc0zQm
-	QpkINSixvQ7R6BD59yxF98NFm/5HrQZGu2mpAQSQoCwFd8OTxCYqBgsEGbPvCrz4
-	bXMEg+jemy0PRhU11qXhGbNcYqqA6T3KojQtL7AylzjmkRGUDD5uCARFE+i+lRTB
-	QlAiig/bcfO0au9Ot2SQJcu1dCuecEnpA1/bqpr+trx1p3clrKlvrwmHC9Tjy5IL
-	UpjWbw==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cumvdm87c-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 06:56:02 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2ae3e462daeso12314655ad.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Mar 2026 23:56:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1773384962; x=1773989762; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=bPZfbfumfeK3hXgzqvEDf1QRNXOajCPeUAJoFy2K1fM=;
-        b=agrBEDaobD8iInpIavWXRC3SR7Mcp/mEaX0Z+fAVLpjqbADsUGspwVjCu3GOcf51M/
-         ZmtO95Bb8BKlXjrzWCplT2Up5NMMA6JooevEU/jHnukqOpBpTbqwb8DT7Wj7Uhj7+L1J
-         dmSy759NxjcUGckSmQfNdXb9Pz88KcI3KEmTzJ6rX0S8fDmJYYA+9l3T0fXQaf+PEqYE
-         P/Exoos4e4a5HNqDYyM1HY+2B0QXdFP8bGtRTxeTrR2Fwep1dq5BVy8SjY6zmW7PBMX2
-         oTghkgL9dWhrFkRK78MrH7TnK72ig+XvIZi+HrWCv3nA+FqEouQCWis2pt27GxCOXs2C
-         fnLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773384962; x=1773989762;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bPZfbfumfeK3hXgzqvEDf1QRNXOajCPeUAJoFy2K1fM=;
-        b=D+EZeshk4lbhEXyqHmHKG7srsSrSpw99Xr54lZIbwOOyOjFyb3B+N6MRbzGuRlIsj6
-         ajam/5KyrNDBdEc86tpUZW8f/HargrAZ8L6EmifEW0SfgHC4Z59wAjNiqHWeZrtcZK8J
-         Ix0VO1d2llwp2gg2lBI6uwyF/9WwF+p+IP7dKpsMlV2CDKspj7xsT8vmbe9it3/Axyha
-         pNO3Kw0LDqK6+D3QK8THiLca9T/mlZ7FHOymHZ3wWFkZXQRRwuSvu/941rin/RMj0gzH
-         CM5/IdqW/nZd/jrGoB+UU6/V14bL9/LMchmfBlQflZsX1v8A7MIyz2RB3N6l4En+1m/q
-         xoCw==
-X-Forwarded-Encrypted: i=1; AJvYcCU6YCSTJFqpmrHu/2u02BYt62RryUket5jM8XGNYkqdYEo9QoWWnXvk7XC/AzpJTtp9GzSYGiiikci6oPA3@vger.kernel.org
-X-Gm-Message-State: AOJu0YyEKb1o9w0djLf7VgE990Kv0t6WkFGU8HKu8T2gxO4vWtJC0ZJi
-	ek+3rKFylCL7F+sAV/OKNRIUj+kt5suY1FkUeFd2FtEu/OgXcCpOM8bMEcAsgF/AkCB8UR21a2G
-	WzAiu+pxeOV6kJcV6cHuq5JbEPKG9/vG/Udfl2oeWFxCeM7AeMHSOO5oLOFejOM7JRKVX
-X-Gm-Gg: ATEYQzyhRZwzcpFPEQyf8J3LQ8g++YAUvpy6+mh0u5FVUjXkL5i1h+WGa7fqVNSZMji
-	5ZreDw1zLjiYGSrlTuN0I2f9lOKlCk98Y1w38wTeThaF5tg2SdvQ/MOEcHWUdkh5/HTR1z2fQPD
-	ZYtGBkkYGtiuAG5cUrDm+c2C54MrJYXUMxUjEiDrratMc/86M9NjiPsqqnznQXeAsPFqO2s0P2F
-	4aU40MLkE30YVCtBlTOyYrXCmDbVYVo4tpgWADi/fj3nyVwogCWY4WRvFfMAVVnjEuM6oWrCHWm
-	oKfmiq+D7lTEtehfJGs77Oz9j7K+xE++7uaoM8fmaarRNnxE4Ct5bOLctxKZBrDG9zlc2AZRbGP
-	5q6bdFw39vs5g11QRaUQ/gWnfq7U0xOR/fomMSKOmD2wYhP4MY5v92IPhQfwwOH0bZw==
-X-Received: by 2002:a17:903:2b04:b0:2ae:ceb0:d5f0 with SMTP id d9443c01a7336-2aeceb0daeemr10380195ad.47.1773384961683;
-        Thu, 12 Mar 2026 23:56:01 -0700 (PDT)
-X-Received: by 2002:a17:903:2b04:b0:2ae:ceb0:d5f0 with SMTP id d9443c01a7336-2aeceb0daeemr10380035ad.47.1773384961198;
-        Thu, 12 Mar 2026 23:56:01 -0700 (PDT)
-Received: from [10.151.37.217] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2aece7ed9cdsm11279715ad.60.2026.03.12.23.55.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Mar 2026 23:56:00 -0700 (PDT)
-Message-ID: <0a8996ac-a9ea-4c47-ae44-246d8ec93b4c@oss.qualcomm.com>
-Date: Fri, 13 Mar 2026 12:25:54 +0530
+	s=arc-20240116; t=1773385828; c=relaxed/simple;
+	bh=FzhcRqA7yckGocPIkjx5upnX4gCmTMBT6vfh5S1xWxs=;
+	h=Cc:Subject:To:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=EMFwGuMlklhFhC8tVsijGS2I9FqKXys4Je6+0UYyUdlY1qe3ZQtao4DO93tEgYyr8j27a75SBHRSIF2kcELspVBnELuVS7wO7NgULo5SMxdgvTWq4jraB1yTNoEs0kBpc0AvgktqzpXqSwiLV2agzv0f1Qey8t9OOJdPitu98tU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com; spf=pass smtp.mailfrom=rock-chips.com; dkim=pass (1024-bit key) header.d=rock-chips.com header.i=@rock-chips.com header.b=JzZpZOrh; arc=none smtp.client-ip=220.197.32.70
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=rock-chips.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=rock-chips.com
+Received: from [192.168.61.151] (unknown [110.83.51.2])
+	by smtp.qiye.163.com (Hmail) with ESMTP id 36d232d0a;
+	Fri, 13 Mar 2026 15:05:00 +0800 (GMT+08:00)
+Cc: shawn.lin@rock-chips.com, robh@kernel.org, ilpo.jarvinen@linux.intel.com,
+ linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-renesas-soc@vger.kernel.org, claudiu.beznea.uj@bp.renesas.com,
+ linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org,
+ linux-omap@vger.kernel.org, bcm-kernel-feedback-list@broadcom.com,
+ linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v8 5/5] PCI: of: Remove max-link-speed generation
+ validation
+To: Hans Zhang <18255117159@163.com>, lpieralisi@kernel.org,
+ jingoohan1@gmail.com, mani@kernel.org, kwilczynski@kernel.org,
+ bhelgaas@google.com, helgaas@kernel.org, florian.fainelli@broadcom.com,
+ jim2101024@gmail.com
+References: <20260312163652.113228-1-18255117159@163.com>
+ <20260312163652.113228-6-18255117159@163.com>
+From: Shawn Lin <shawn.lin@rock-chips.com>
+Message-ID: <44e74dff-c321-7cfe-e304-a21644ac7787@rock-chips.com>
+Date: Fri, 13 Mar 2026 15:04:59 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/9] Add minimal boot support for Qualcomm IPQ5210
-To: Linus Walleij <linusw@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Ulf Hansson
- <ulf.hansson@linaro.org>,
-        Robert Marko <robimarko@gmail.com>,
-        Guru Das Srinagesh <linux@gurudas.dev>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-mmc@vger.kernel.org
-References: <20260311-ipq5210_boot_to_shell-v1-0-fe857d68d698@oss.qualcomm.com>
- <CAD++jL=P+0nY3yVM9MCrRfG5xLtg=R6Xgpi1xrbzzLPD-Y8KKQ@mail.gmail.com>
-Content-Language: en-US
-From: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
-In-Reply-To: <CAD++jL=P+0nY3yVM9MCrRfG5xLtg=R6Xgpi1xrbzzLPD-Y8KKQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <20260312163652.113228-6-18255117159@163.com>
+Content-Type: text/plain; charset=gbk; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEzMDA1MyBTYWx0ZWRfX3/D/p56mmX6Y
- on5ctXUOHikX67KJgOEv+okLilHfEO1SssL7amzPZADeSyabiBIuQJ/NgTkcC3EDavuP4KuRQAN
- LQQtfNWTmcEykn6IpKOYl6vuQBy6loDb8aoI83Xw4PhMrmr2HiffVH0xbownRdwm5UEKjaAo7O3
- wWn/57NTEC6Gnv+1jpJr6UcwwgxW8vxWHddNheIlStETZNDQHG5AlO9xAn5zRa0+qBQ8WCfhpGN
- ow92ducZBMkN/1q78PxYG6b6A1eOazrsyw8rW3We+v3r18nHx2PvVWc9Qv/KxIMv7KSCHWXDoi+
- SeC78e3hSW9F/q4c4SgLIyUjq4XqjwKVoffxglk8yFqYTjCahaIaw0PF/RemRXB8YDf+cbTv3hc
- WH2Hf43uHbgJBHc9k0q+0Xt6Du4LW4eb9rN0WnhwqSF1w5M+nQSfhSoKW2t8Td//NOc+iVSpPdQ
- w/UOf9upWk2HP3I3HYw==
-X-Proofpoint-GUID: tlXANpPcB1PKAeaZDstpquusfziWz3NH
-X-Proofpoint-ORIG-GUID: tlXANpPcB1PKAeaZDstpquusfziWz3NH
-X-Authority-Analysis: v=2.4 cv=XsT3+FF9 c=1 sm=1 tr=0 ts=69b3b502 cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=EUspDBNiAAAA:8 a=TA_BZAN9T5C4Y3A0SdkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-13_01,2026-03-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 spamscore=0 bulkscore=0 clxscore=1015 adultscore=0
- priorityscore=1501 impostorscore=0 lowpriorityscore=0 malwarescore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
- definitions=main-2603130053
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-HM-Tid: 0a9ce603472b09cckunm7514b9b4e3126
+X-HM-MType: 1
+X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlCQ0IZVkpPSxpIGhgZSUtLS1YVFAkWGhdVEwETFh
+	oSFyQUDg9ZV1kYEgtZQVlKSktVQ0hVTkpVSVlXWRYaDxIVHRRZQVlPS0hVSktJT09PSFVKS0tVSk
+	JLS1kG
+DKIM-Signature: a=rsa-sha256;
+	b=JzZpZOrhxa/p+OxsGMsQFBDF5BmwYT/jD9es/4d2sYQDihM0+OEkYVO2RfHRWGr/vm5MJ0hubEDkQvQa38A1Dfuf1ZAa/0pUGvHKzllpRUYyZ1dmGteisUVSGQW/Qo2e8A0b7YOZgSX9+IObi8GJtscky6tOipCyAPIfkGeTA28=; s=default; c=relaxed/relaxed; d=rock-chips.com; v=1;
+	bh=f3xm6U44fEGSntAWOFNv+gR52dvtb+FgLKg5beQSpUM=;
+	h=date:mime-version:subject:message-id:from;
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[rock-chips.com,none];
+	R_DKIM_ALLOW(-0.20)[rock-chips.com:s=default];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[kernel.org,baylibre.com,pengutronix.de,linaro.org,gmail.com,gurudas.dev,vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-97327-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,qualcomm.com:dkim,qualcomm.com:email];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[18];
+	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[163.com,kernel.org,gmail.com,google.com,broadcom.com];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-97329-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[22];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[kathiravan.thirumoorthy@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[shawn.lin@rock-chips.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[rock-chips.com:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: AC0AB27E65E
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: AE2A927EA7A
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
+Hi Hans
 
-On 3/11/2026 6:31 PM, Linus Walleij wrote:
-> Hi Kathiravan,
->
-> thanks for your patches!
->
-> On Wed, Mar 11, 2026 at 10:45鈥疉M Kathiravan Thirumoorthy
-> <kathiravan.thirumoorthy@oss.qualcomm.com> wrote:
->
->>        dt-bindings: pinctrl: qcom: add IPQ5210 pinctrl
->>        pinctrl: qcom: Introduce IPQ5210 TLMM driver
-> Can you send these two separately?
->
-> It seems I can just apply them to the pinctrl tree after review,
-> no dependency on the other patches, right?
+在 2026/03/13 星期五 0:36, Hans Zhang 写道:
+> The of_pci_get_max_link_speed() function currently validates the
+> "max-link-speed" DT property to be in the range 1..4 (Gen1..Gen4).
+> This imposes a maintenance burden because each new PCIe generation
+> would require updating this validation.
+> 
+> Remove the range check so the function returns the raw property value
+> (or a negative error code if the property is missing or malformed).
+> Callers must now validate the returned speed against the range they
+> support. A subsequent patch adds such validation to the DWC driver,
+> which is the primary user of this function.
+> 
+> Removing the validation from this common function allows future PCIe
+> generations to be supported without modifying drivers/pci/of.c.
+> 
+> Signed-off-by: Hans Zhang <18255117159@163.com>
+> ---
+>   drivers/pci/of.c | 12 +++++++-----
+>   1 file changed, 7 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/pci/of.c b/drivers/pci/of.c
+> index 9f8eb5df279e..fbb779a94202 100644
+> --- a/drivers/pci/of.c
+> +++ b/drivers/pci/of.c
+> @@ -875,8 +875,9 @@ EXPORT_SYMBOL_GPL(of_pci_supply_present);
+>    * of_pci_get_max_link_speed - Find the maximum link speed of the given device node.
+>    * @node: Device tree node with the maximum link speed information.
+>    *
+> - * This function will try to find the limitation of link speed by finding
+> - * a property called "max-link-speed" of the given device node.
+> + * This function will try to read the "max-link-speed" property of the given
+> + * device tree node. It does NOT validate the value of the property (e.g.,
+> + * range checks for PCIe generations).
+>    *
+>    * Return:
+>    * * > 0	- On success, a maximum link speed.
 
+Thanks for the patch. However, after applying it, I noticed this part
+still seems off. There is a detailed comment in the file saying this
+function checks if the max-link-speed is invalid, just a few lines below
+your change. Could you please take another look at that comment and
+adjust them?
 
-Thanks, Linus. Dmitry has reviewed the driver. Should I wait for the DT 
-maintainers to review the binding, and once it is reviewed, send it 
-separately, or would you prefer that I send it now?
-
-
->
-> Yours,
-> Linus Walleij
+> @@ -889,10 +890,11 @@ EXPORT_SYMBOL_GPL(of_pci_supply_present);
+>   int of_pci_get_max_link_speed(struct device_node *node)
+>   {
+>   	u32 max_link_speed;
+> +	int ret;
+>   
+> -	if (of_property_read_u32(node, "max-link-speed", &max_link_speed) ||
+> -	    max_link_speed == 0 || max_link_speed > 4)
+> -		return -EINVAL;
+> +	ret = of_property_read_u32(node, "max-link-speed", &max_link_speed);
+> +	if (ret)
+> +		return ret;
+>   
+>   	return max_link_speed;
+>   }
+> 
 
