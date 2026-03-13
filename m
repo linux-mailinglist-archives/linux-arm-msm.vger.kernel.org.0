@@ -1,235 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-97460-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97461-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aHrwDjgCtGnCfAAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97460-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 13:25:28 +0100
+	id uJ34H0MDtGnjfQAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97461-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 13:29:55 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7F595282EAF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 13:25:27 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id D300F282FC4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 13:29:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 2B77C30CEAA9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 12:22:50 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 4577830D639C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Mar 2026 12:28:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD87D3921D7;
-	Fri, 13 Mar 2026 12:22:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 166EC392C3D;
+	Fri, 13 Mar 2026 12:28:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="HAtEBCD5";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="V2c4rQFg"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="VA0Ph9jU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81CAC35AC37
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 12:22:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6835A346A1E;
+	Fri, 13 Mar 2026 12:28:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773404569; cv=none; b=QudFo7dmyFdQ3xZ9hACP/Eqe3LKj/5ZiMpOhqLJqu06rHaYhdakOlL4j28mbFBxoneZNm6XSPm+WJDtyYlEDNlEt0pRm+jzCr920ooRIGzkqUibbDznNw41/yYpul0xVAyNoC3g4ZMCm+hWtdRiQzMV7UIAdZ3C8vu3BY7ZG1sM=
+	t=1773404925; cv=none; b=Q1R593Ayo8R4JAUjKHjFEa8VyNF31mPGEEAPSEU1+PpI1noqzZqa2mA5lPAJDbS4BKD5n3n1m+3ATzgytbGov7FjEmvp4UJzRvkvWTWBrtjuLjsSpsgF3yKZ3CG7rKnysLV0iV0JDArstYRmJqrvi2hCRqABKWPhdLCAqhnuPdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773404569; c=relaxed/simple;
-	bh=IiLcCmOPvD3FoVkoRDXLMc1j/Ghty07iKgvAHB7xElg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=LJB41rXM6gUvJSs0sXe59XmEK5PBpdnMwAgjDcJe3LqbJk+pTVhdMiRKItYVmUB/aT7HxidmgGZGrm8Mk13jIDE95Kw7cbL4gLWGrdNsS3AgvpSM0FS3bmu+2sa+RVMaHNG+E0gYZHFgqnx4gHl5juqZEXkAGE/Y6pmjVDLFKGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=HAtEBCD5; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=V2c4rQFg; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62DAsF2C525821
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 12:22:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=DvbP8Pa1ntgz41T4salejD
-	91ZOa7k4Yxu5DSIy2ubz4=; b=HAtEBCD56WkY1V0fOWNpZ9deFF1qTi/pPtG3wL
-	kQMr19gDERySiFSJd66GnbB/b6QI7D4QmwU1LF2wKfr/rpXvKyA7zNHeabcWqOd6
-	S9/Y2vrQ1WbodUr3U6tu19fuKDvJAsqJrMA36RS23qRfbmOnv+M+XpUJNabmiqJ5
-	OZxUbfP8TYGFgyC4qnbGWsrjTOEEjenTX1mGKMkWKB7v4p3Z0gqhFina9j2qUUj6
-	W5SNbhF7b4f4EmYWwn/6txvO/LMAcjmX8jFtugZhF0jfJH7/7bl6zULlAOK7+KDD
-	5hGJU/uC2Lh07DUkr2RmQ160gSc81iZVL6F6UeDJAtxuzgNw==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cvh84r7xm-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 12:22:47 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-8cd7fc27cf7so1146667685a.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Mar 2026 05:22:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1773404567; x=1774009367; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=DvbP8Pa1ntgz41T4salejD91ZOa7k4Yxu5DSIy2ubz4=;
-        b=V2c4rQFglNxIVgNUmJJ7HZhYBWh/LtBDduG3AjDJ/6fYC2Ld2B8nnA3VDichYapBFh
-         mQ5sEwwiqdp/vvNktgVclkimGRvuEItE2RtHq9QXwY3guKTw13eZrkmyDJMfMt82ktxl
-         ukTGWhhy5mGyQway6BWFtgQ7Qk1cbDWePfSIrALt3Sx1iHIqtoUhk2/+JmD3QJIGNcYg
-         QHvoMn4iA7X61URcucuJJZ0YUH+kvmPafqNsn3SchQw2erIktUWFXTlJhPdePoYZM/tN
-         tyQT0MxArsP6oFvWZMn8W1SQVJOkX5gJlujmwJoyWBmGRFw9ed0Jlodwwj+0JynSoI+V
-         gR7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773404567; x=1774009367;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DvbP8Pa1ntgz41T4salejD91ZOa7k4Yxu5DSIy2ubz4=;
-        b=tOurlMe8lwXYvwtZXIgfTAxtdhbOvf3Ms/fT7w9HmO6PDORzuRxqOvLYjG0kygtJq/
-         YBshVLov5gz/ys0pqKimeeZRtB6aAighUmvykT8QtFwLl+O2+0j+Pj26SXwaSzaXK6uO
-         YsrY5MAeT/AzH1SFuHmsFW0iW2QV7Ef1IZHQ+q0oRPYbGMgOR1/KZgfAyK4WmWhx2aEE
-         fb8+Q4zrAj5DPVbc/bXVYUCfwQ7u6DdoGc+9h0v3/+2mcrGVyqxiWbaGIT8XM0tVO3+T
-         whyDGs/8VQ3nU56RlQ6Vh95BWUYpfYF1bwI22t0v0WllwCbiAoh7nYXTbyUu7x7hjBzO
-         nAVQ==
-X-Gm-Message-State: AOJu0YxN1ne6cW8pRpKdzy+AAAJM+gmExYTGcZwyd7uDvkfSbV+5PYxK
-	RX8LInYxhvmTuajeDs3sQQqDIVJ/IRw9Ok62vBsekqxodED4v8C2vNb4X8JOA9L4UlDE0BVrKf8
-	n5dIjDpGhiY+49leKwG9USksVajS2JoSV2YNO5/fI0iRpxa7KS2GiyulNyiJALFLd5m9u
-X-Gm-Gg: ATEYQzyXIICMle/iRrXgx7mnjMBcySd2CrYALZxHbWoNVXMl7vcuHIaqsaesRxFh9iU
-	nRP1H+xdqn43MOqcjKeh0pUqJF4+krkOeRjLO1/Z8H9opet15WwStecaCjfEFqJQVLSX+yuEKOQ
-	fW6yEylhHyoaHQ6rDXka4h2j3AtVINZGi7R1O640xGibwYKRReo7h2aiWVcNQIqYJ1+H4c6MF0E
-	S2h+XEOLrKyV0UkGzn+xErYKybcQf7sdRGjlWgUud0x+D5fO9InOllg2BBEwcoEe+OMJlr1ICcF
-	KVVQC5dmlgToTDKLjQn+u+TTJHtNsIt2UvNxWKhhaqu480/3viNlGdCAnUnaPwniAZSRpq7KXxn
-	NYpQqxjfN/GtqzFPV5ayIb34DfPM=
-X-Received: by 2002:a05:620a:6c86:b0:8ca:123e:819b with SMTP id af79cd13be357-8cdb5a06043mr384661885a.13.1773404566814;
-        Fri, 13 Mar 2026 05:22:46 -0700 (PDT)
-X-Received: by 2002:a05:620a:6c86:b0:8ca:123e:819b with SMTP id af79cd13be357-8cdb5a06043mr384657585a.13.1773404566285;
-        Fri, 13 Mar 2026 05:22:46 -0700 (PDT)
-Received: from hackbox.lan ([82.79.95.133])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4855778eda8sm33286775e9.5.2026.03.13.05.22.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Mar 2026 05:22:45 -0700 (PDT)
-From: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Date: Fri, 13 Mar 2026 14:22:38 +0200
-Subject: [PATCH v3] dt-bindings: spmi: qcom,x1e80100-spmi-pmic-arb:
- Document Eliza compatible
+	s=arc-20240116; t=1773404925; c=relaxed/simple;
+	bh=FIhcf2HabOis2K0VXT9uCLzluZfIzvfF2J+2VTdHSWM=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=jYEGZrMS/inJ82GZDA8VXcIoCzyCt64A2/1MJffcWADgerifYK/T6GL/st6tEIK8jLoL8Fb38+kzHY0QsuozqotmrnbxPhDf/u5vN/m/EkZzUJ9OIGxfhJEoMa3uN4M2ebjvCkuFd4eBSNr9OZNPxOXezwIu2yZI3VY5k/AUzts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=VA0Ph9jU; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:Content-Type:MIME-Version:
+	Message-ID:Subject:Cc:To:From:Date:Reply-To:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=PPt4n11Wo/S9hRlGUV2kynAxDiBlLfFjx/Ch8r1+pdg=; b=VA0Ph9jUYkB7fUd1THREroZgFR
+	sAhZngmquEBkAtJA+LVdLytWDeEpL7wOG7bmk/kts0Y/0smSXBUkfTssh+pP/nBYc//1flSAkUHxs
+	Zr1iUb1CFIQ2aaaXTqrf1N73VmX0vONriTGBDPds+arRhKDeorVzWR8Dwss/cEsNMXPM4D6M72Of2
+	QuBnjTsVz8fCHx1g3OvgPNGvtzE3e9XNBNJXEV8aCPB8fkzb6eft/RkhgkQuGBaxGS8QSIQ7oh+Tp
+	nIgipLr+lAClR7qpagWuRbta70hJdfas6nCjaRi7PTrvnXwRMf99Zgx1hmA2ye0iFo1IDVzgqIj36
+	au+nruow==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:48808)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1w11d4-000000000uI-3Ulc;
+	Fri, 13 Mar 2026 12:28:34 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1w11d0-000000008DR-1o7q;
+	Fri, 13 Mar 2026 12:28:30 +0000
+Date: Fri, 13 Mar 2026 12:28:30 +0000
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Andrew Lunn <andrew@lunn.ch>
+Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>,
+	netdev@vger.kernel.org, Paolo Abeni <pabeni@redhat.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH net-next 0/8] net: stmmac: improve PCS support
+Message-ID: <abQC7r38QLhSeadl@shell.armlinux.org.uk>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260313-eliza-bindings-spmi-v3-1-b8ff1e0a6171@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAI0BtGkC/42NywrCMBBFf6VkbUqSah+u/A9xkSZjO9KXnTaop
- f9uUrciMjBw4d5zFkYwIhA7RgsbwSFh3/mQ7CJmat1VwNH6zJRQqUik5NDgS/MSO4tdRZyGFnl
- u90UpdSqtSJhfDiNc8bFRz5dPprm8gZkCKjRqpKkfn5vWydD7bXCS+9NKABgpswJOPVF8n3Vj+
- raN/WNB5NQfKBVQKssTk2aHwhZfUOu6vgEkgr2rGgEAAA==
-X-Change-ID: 20260311-eliza-bindings-spmi-8d49b1a61d03
-To: Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, Abel Vesa <abel.vesa@oss.qualcomm.com>
-X-Mailer: b4 0.15-dev-7ae85
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1730;
- i=abel.vesa@oss.qualcomm.com; h=from:subject:message-id;
- bh=IiLcCmOPvD3FoVkoRDXLMc1j/Ghty07iKgvAHB7xElg=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBptAGQmn96j3ke0Hz5RRAS5bn3GHsSGLS/ROPPH
- 1ZQDAzquPCJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCabQBkAAKCRAbX0TJAJUV
- VkrMD/wNl+LmG8LEjvizuSxu0SSdXoJvYg4sz5Lce8hvDPNiHPe6i9VVcYG0fTrwGozMnwtF4ty
- S8gBeWRbsymwTrZ5MH4GEgH4XYD9mX8a8MGqh6pQ2RYkidIwW4sAnAHAiaDo4zqgYnKYVCMP40j
- G6MjmRp99rH4gNS5ysfeT4yu9L5hjNn4gpnphstFSEygc0oZhnSuTAVRKuNkMhJ1w/p3HJSi0WU
- FTNLuKrvZEgJutcmKTBjsbnTNj35CYTeBBbgnXe0qyyrFl9h1DdtPfae9T7wUP7iy9jwj9mSw9d
- ACPQL4K/MpH2fBYXWlbwFpUZkypImraczqnQhe4HIQtIsIE/qJ8Ij5pITK9jYmkMJmLAtRz+ap3
- ZxGNIB/f2UvzgnomIyJ6RNZww91trCm7kRPvx5hkuuNn7irHb3KY8XfFxORyTF6U0NQ2iEQGZsq
- +lUlk5U2TMUZRp500+CsG7OzjO/5XWidDNQbubLJQDsb5OhjdHTFWKd6JKZ4Ki9tE2ICGcTWKFA
- /n2IiIZDY1VmBHSr/g8mewjv4z6YlgCsg3OCnpqXSORXzPueBl1+Zhr3z/qArMO7CIb6HtcCzmj
- /1mp8LsIXPKi41y+qZFgeVOg3/avda/gdXC/dnl+bzXAeOYaj4VNzrr16uYD+11mgY+w3NmglEX
- Itd9kgDnnrkJmFw==
-X-Developer-Key: i=abel.vesa@oss.qualcomm.com; a=openpgp;
- fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
-X-Authority-Analysis: v=2.4 cv=OMoqHCaB c=1 sm=1 tr=0 ts=69b40197 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=iKs3dpp2RB4k51ZqCjcyjQ==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=bC-a23v3AAAA:8 a=EUspDBNiAAAA:8 a=fNS8NsvCbKrWdB45dbUA:9 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22 a=FO4_E8m0qiDe52t0p3_H:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEzMDA5OCBTYWx0ZWRfX4p0nGrrbAVdE
- bfQZJY8C7fE6dRzGsgjEH0itTHCjFdrEcu9Hs9hAYgpj3TQmDB274Jt1kg8aAZleuxdqXkszgKb
- bMvzhDDzTIeJYPdeSz11zcBIfZC4WLZvm4MtOTLfM8/H7ItUoRZ93XNAFTg7Pw60U7lplH/wVDA
- hhbzx5H/Qrbz6MReHeMZW86qR5/VBDDd30fK2GKXbQXP0BV1khJTMFQqd1XUP9jcsaly5pbB4ot
- HWLNbMJ/Po6OLwL5qhyZJHeyn+v5bKbBq7BSPscett6Coe6+Ch+Jgff3ZGzZB33hWNvwbkmEoxD
- pIlOSWqVubbaBs6ynXxNYUqq1u5CcI6s/R1GVAPHyePm3QWdkmN4x85Q52/REEw9SWBlSsGdHgc
- OK7vtnOyIQTUAjanq+J/kKm/MorIU4JtLQbi2/T7DV1ObcG5ZUTYszHjpSE9lDQxQpzBuWZTYpu
- oGxbx5ak5khkdORpYYg==
-X-Proofpoint-ORIG-GUID: JisFRQDG_ueH4fxfwYTGr5gLGXd7DsPK
-X-Proofpoint-GUID: JisFRQDG_ueH4fxfwYTGr5gLGXd7DsPK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-13_02,2026-03-13_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 priorityscore=1501 impostorscore=0 suspectscore=0 phishscore=0
- bulkscore=0 adultscore=0 spamscore=0 lowpriorityscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603130098
-X-Spamd-Result: default: False [-2.16 / 15.00];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+X-Spamd-Result: default: False [1.14 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_REJECT(1.00)[armlinux.org.uk:s=pandora-2019];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
+	DMARC_POLICY_SOFTFAIL(0.10)[armlinux.org.uk : SPF not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,msgid.link:url];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-97460-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	FROM_NEQ_ENVFROM(0.00)[abel.vesa@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-97461-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[armlinux.org.uk:-];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	FROM_NEQ_ENVFROM(0.00)[linux@armlinux.org.uk,linux-arm-msm@vger.kernel.org];
 	PRECEDENCE_BULK(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[8];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 7F595282EAF
+	MISSING_XM_UA(0.00)[];
+	NEURAL_HAM(-0.00)[-0.886];
+	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,armlinux.org.uk:url]
+X-Rspamd-Queue-Id: D300F282FC4
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-The SPMI multi-master Arbiter found on Eliza is version 7.2.0, yet
-driver-wise, still compatible with the one featured on Hamoa (X1E80100),
-which is 7.0.1.
+This series is the next of the three part series sorting out the PCS
+support in stmmac, building on part 2:
 
-So document the Eliza compatible and allow Hamoa one as fallback.
+	net: stmmac: qcom-ethqos: further serdes reorganisation
 
-Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
----
-Changes in v3:
-- Add back enum for eliza and sar2130p, just like in v1, but keep the
-  const for x1e80100 as is.
-- Link to v2: https://patch.msgid.link/20260311-eliza-bindings-spmi-v2-1-12783c6759d9@oss.qualcomm.com
+Similar patches have been posted previously. This series does away with
+the common SerDes PHY support, instead using a flag to indicate whether
+2500Mbps mode is supported (STMMAC_FLAG_SERDES_SUPPORTS_2500M.) At this
+time, I have no plans to resurect the common SerDes PHY support - the
+generic PHY layer implementations are just too random to consider that,
+and I certainly do not want the extra work of fixing that.
 
-Changes in v2:
-- Instead of reworking the whole oneOf for compatibles,
-  add Eliza similar to sar2130p.
-- Link to v1: https://patch.msgid.link/20260311-eliza-bindings-spmi-v1-1-1a20eec1179e@oss.qualcomm.com
----
- .../devicetree/bindings/spmi/qcom,x1e80100-spmi-pmic-arb.yaml         | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+Changes from RFC v3:
+- only set default_an_inband if using SGMII/2500BASE-X mode.
 
-diff --git a/Documentation/devicetree/bindings/spmi/qcom,x1e80100-spmi-pmic-arb.yaml b/Documentation/devicetree/bindings/spmi/qcom,x1e80100-spmi-pmic-arb.yaml
-index 08369fdd2161..0f7089e0950a 100644
---- a/Documentation/devicetree/bindings/spmi/qcom,x1e80100-spmi-pmic-arb.yaml
-+++ b/Documentation/devicetree/bindings/spmi/qcom,x1e80100-spmi-pmic-arb.yaml
-@@ -24,7 +24,9 @@ properties:
-   compatible:
-     oneOf:
-       - items:
--          - const: qcom,sar2130p-spmi-pmic-arb
-+          - enum:
-+              - qcom,eliza-spmi-pmic-arb
-+              - qcom,sar2130p-spmi-pmic-arb
-           - const: qcom,x1e80100-spmi-pmic-arb
-       - const: qcom,x1e80100-spmi-pmic-arb
- 
+ drivers/net/ethernet/stmicro/stmmac/common.h       |   4 -
+ .../ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c    |   2 +
+ drivers/net/ethernet/stmicro/stmmac/dwmac1000.h    |  12 +-
+ .../net/ethernet/stmicro/stmmac/dwmac1000_core.c   |  11 +-
+ drivers/net/ethernet/stmicro/stmmac/dwmac4.h       |  10 +-
+ drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c  |  10 +-
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c  |   8 +-
+ drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.c   | 156 +++++++++++++++++++--
+ drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h   |  29 +++-
+ include/linux/stmmac.h                             |   1 +
+ 10 files changed, 197 insertions(+), 46 deletions(-)
 
----
-base-commit: 7109a2155340cc7b21f27e832ece6df03592f2e8
-change-id: 20260311-eliza-bindings-spmi-8d49b1a61d03
-
-Best regards,
---  
-Abel Vesa <abel.vesa@oss.qualcomm.com>
-
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
