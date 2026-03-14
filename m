@@ -1,125 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-97705-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97706-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OG0HK9SxtWmR3gAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97705-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Mar 2026 20:07:00 +0100
+	id wK5rIFO3tWkj4AAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97706-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Mar 2026 20:30:27 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id EEC3228E8DD
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Mar 2026 20:06:59 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2591E28E992
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Mar 2026 20:30:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id B6F6A30154A3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Mar 2026 19:06:58 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 7DB6B300ACA6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Mar 2026 19:30:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81033308F1D;
-	Sat, 14 Mar 2026 19:06:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6FA47267B07;
+	Sat, 14 Mar 2026 19:30:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="E1xR2ydD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MBG4Cnp8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-181.mta1.migadu.com (out-181.mta1.migadu.com [95.215.58.181])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE8CE202997
-	for <linux-arm-msm@vger.kernel.org>; Sat, 14 Mar 2026 19:06:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3F6CA52;
+	Sat, 14 Mar 2026 19:30:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773515216; cv=none; b=Pdpov7XyapzIA9+ve6muBYP9ZFyTTkWavt7nznj6rVjlwN5Py+Gu9O9npzumt+Or+vsi0d6OwxBmpYOnw+vBuAPMgjqvmTpOnVuBxRRCOKo9Md1vYeWI/5Tz2kvdu1xDzjDI5baLLJbZXnFVV+lauJA/BZVeAfc9eDBarOOY7AY=
+	t=1773516625; cv=none; b=JyWBuZfjkCbB5J0adnmULdiyBu7+CgQljaHCl0m1VGZ48tp4I2ZJZCDvqH8XZMFk/kbS0tS7n015kYexQo/vRkO4Va8hqLRnprQ/B+I4YEovLHTHIra5xRPKYnD/e/fiTvw8uhsXwFVo51p2hR8iyH9JTqinz+aiVB4teiWgbeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773515216; c=relaxed/simple;
-	bh=7SOhBYgZ1tDBIsohOqzU1uIMagLQbWQ6HsjjsQ3UjNA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=b1F6KtWSDEUj5pvWcOdQexXbH53gdJGakGGygtBnypSs0Z/mofuQe3BEWWZSU2Z/AwdgiBCcCJKEzKQ9tJY8Cmx1KOmmv8MSbm8DbThK8024eimZggdGKZTznC7t5ePa2FR1d0MpUCy0+jjFk6gK6OvLzCUMX3I9WeBbro7okxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=E1xR2ydD; arc=none smtp.client-ip=95.215.58.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
-Message-ID: <776a18d5-9d7e-45ff-8cfd-4823522ea375@packett.cool>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
-	s=key1; t=1773515211;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=VELqPgIB6lJjzY4lY2q9OaKX2wH9iEVX9q3tH0RH+Hw=;
-	b=E1xR2ydDousep9/udzvTFKguVHFOIubLRyTYA9vAg05jT4/16msSO4zEzaY28OaUwWWcqo
-	prJaX0gj+XqoGfj437iFmLKbAb3AyOvsmDUv8Tf3UveaArscXvIkbr+gZRrOxLuCpmcukF
-	/UXituodo6xpkTSLfUbClARVpEfLdHIXqV2oEjfICkVaNmvb/cDupwtywElcj+Q8WQYtnt
-	h4vx09lxV3Snar5UtCD4fnPdCt7484HOggAG8nUj2rCEqvfnxqJS8PoyluZqmWF/hArCLo
-	4JIEpHO2LWk2Qr3EqzjgHTQuHnEjBp0cpNL0aNcakmssshQiMF3pixX7OorRyA==
-Date: Sat, 14 Mar 2026 16:06:37 -0300
+	s=arc-20240116; t=1773516625; c=relaxed/simple;
+	bh=APmw1QrkydnSiEcDg6aTb/isY0wGSJupEcg3DG3VK6w=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=Q8Rc1tO4miaOb9vXCjNH0E5AWkZsn3uudm00QiykSI/hLzMcI4L0eWDpBya6du1HaFxBRsSAMJ8mGjUDVroNtYudEtx9Pujf6ocfilV83KJ2Ru1NhX1Qd/KpZbvuw8qT1p1WoAG2KC76A4FwLRs5zZ7eCrmpaOlT9cUQ0PSxLn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MBG4Cnp8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE5B6C116C6;
+	Sat, 14 Mar 2026 19:30:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773516624;
+	bh=APmw1QrkydnSiEcDg6aTb/isY0wGSJupEcg3DG3VK6w=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=MBG4Cnp8TmSjYJ/nPnxaC9+u2NQoMP5Cuns3a18+6BsdMwq9YZ2NcgatqyssIO/b7
+	 WRdMneJ1Q0MBpcryi8nG3wDYPAIRKGv+KQgfJ2SwuSrkblVhuYBhuZ7URoUzgkB/D8
+	 CasuGk9/Vhz7SeKuOeCaXo2xctKobdWBw2EYfECkMCJeip56kGhSX377yFKzD+tirE
+	 LvgF3hW192z/pFCLEPUHIOVOSYB1yxQNseNgEK79wl9Dt/Tb+jigpAdOUZBMfj+BRH
+	 y4BV8zPhsbdhvYpu/SGqTQaNYj4Nm9qjf6jVDh+4klURhPzMzZ0XJ88KxTXJaCg8sS
+	 SToMnoVEOdOGw==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 4007B3808200;
+	Sat, 14 Mar 2026 19:30:20 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH RFT v2] drm/msm/dpu: enable virtual planes by default
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Rob Clark <robin.clark@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20260226-dpu-enable-virt-planes-v2-1-87971236fe86@oss.qualcomm.com>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Val Packett <val@packett.cool>
-In-Reply-To: <20260226-dpu-enable-virt-planes-v2-1-87971236fe86@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v2 net-next 0/5] net: phy: further decouple provider from
+ consumer part
+From: patchwork-bot+netdevbpf@kernel.org
+Message-Id: 
+ <177351661903.1763199.2542451163758230122.git-patchwork-notify@kernel.org>
+Date: Sat, 14 Mar 2026 19:30:19 +0000
+References: <9d5724bc-e525-4f8f-b3f8-b16dd5a1164e@gmail.com>
+In-Reply-To: <9d5724bc-e525-4f8f-b3f8-b16dd5a1164e@gmail.com>
+To: Heiner Kallweit <hkallweit1@gmail.com>
+Cc: andrew@lunn.ch, linux@armlinux.org.uk, pabeni@redhat.com, kuba@kernel.org,
+ davem@davemloft.net, edumazet@google.com, andersson@kernel.org,
+ mturquette@baylibre.com, sboyd@kernel.org, vkoul@kernel.org,
+ neil.armstrong@linaro.org, netdev@vger.kernel.org, p.zabel@pengutronix.de,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-phy@lists.infradead.org
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[packett.cool,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[packett.cool:s=key1];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_HAS_DN(0.00)[];
-	TAGGED_FROM(0.00)[bounces-97705-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-97706-lists,linux-arm-msm=lfdr.de,netdevbpf];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[3];
+	FROM_NEQ_ENVFROM(0.00)[patchwork-bot@kernel.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_TO(0.00)[gmail.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,quicinc.com,poorly.run,somainline.org,gmail.com,ffwll.ch];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	RCPT_COUNT_TWELVE(0.00)[17];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[packett.cool:+];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	MISSING_XM_UA(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[val@packett.cool,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[11];
+	FROM_NO_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,packett.cool:dkim,packett.cool:email,packett.cool:mid]
-X-Rspamd-Queue-Id: EEC3228E8DD
+	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 2591E28E992
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 2/26/26 10:49 AM, Dmitry Baryshkov wrote:
+Hello:
 
-> Turn on the switch and use virtual planes by default, enhancing
-> utilisation of the display pipelines. It is still possible to use legacy
-> implementation by using `msm.dpu_use_virtual_planes=false` kernel boot
-> parameter.
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> ---
-> This is being sent as an RFT for now. Please give it a test with your
-> compositor of choice. X11. Weston. Sway. Wlroot. CrOS. I plan to turn
-> the switch for 7.1
+This series was applied to netdev/net-next.git (main)
+by Jakub Kicinski <kuba@kernel.org>:
 
-Tested-by: Val Packett <val@packett.cool> # x1e80100-dell-latitude-7455, 
-with niri
+On Mon, 9 Mar 2026 18:01:16 +0100 you wrote:
+> This series aims at further decoupling the provider and consumer part
+> in phylib.
+> 
+> v2:
+> - patch 2: add needed Kconfig dependency changes
+> - patch 5: explain false positive checkpatch error
+> 
+> [...]
 
-Running with this for a few days, seems like no change, everything works 
-as before. Any way to confirm virtual planes are being used?
+Here is the summary with links:
+  - [v2,net-next,1/5] net: phy: move mdio_device reset handling functions in the code
+    https://git.kernel.org/netdev/net-next/c/2d7bebc9dd79
+  - [v2,net-next,2/5] net: phy: make mdio_device.c part of libphy
+    https://git.kernel.org/netdev/net-next/c/6df1459605ce
+  - [v2,net-next,3/5] net: phy: move (of_)mdio_find_bus to mdio_bus_provider.c
+    https://git.kernel.org/netdev/net-next/c/b69ceb387aca
+  - [v2,net-next,4/5] net: phy: move registering mdio_bus_class and mdio_bus_type to libphy
+    https://git.kernel.org/netdev/net-next/c/25b23d828318
+  - [v2,net-next,5/5] net: phy: move remaining provider code to mdio_bus_provider.c
+    https://git.kernel.org/netdev/net-next/c/c4399af5e556
 
-~val
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
 
