@@ -1,146 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-97704-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97705-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id gFOkLdlutWlz0QAAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97704-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Mar 2026 15:21:13 +0100
+	id OG0HK9SxtWmR3gAAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97705-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Mar 2026 20:07:00 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F45E28D7E4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Mar 2026 15:21:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EEC3228E8DD
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Mar 2026 20:06:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 1AD58301A16A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Mar 2026 14:21:12 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id B6F6A30154A3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Mar 2026 19:06:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33F00361DC4;
-	Sat, 14 Mar 2026 14:21:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81033308F1D;
+	Sat, 14 Mar 2026 19:06:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g6sqYRo+"
+	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="E1xR2ydD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out-181.mta1.migadu.com (out-181.mta1.migadu.com [95.215.58.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 102A8239E76;
-	Sat, 14 Mar 2026 14:21:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE8CE202997
+	for <linux-arm-msm@vger.kernel.org>; Sat, 14 Mar 2026 19:06:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773498069; cv=none; b=iICgfNVpefuLu2pl/a2qOqYmRk41B4Wg0OdeRyYYdSzL4qJVdcI7LMf9PusDMKNffO0Ijd+F7SMIhuCpLS5EmGUrgB2rNm7sa1pNuJF5w2EEgIU8emc7F+GoeP/eS534a0+gnqX6VArIONmtxSuio9xUbGMpp/1WlFCl3RNn4rA=
+	t=1773515216; cv=none; b=Pdpov7XyapzIA9+ve6muBYP9ZFyTTkWavt7nznj6rVjlwN5Py+Gu9O9npzumt+Or+vsi0d6OwxBmpYOnw+vBuAPMgjqvmTpOnVuBxRRCOKo9Md1vYeWI/5Tz2kvdu1xDzjDI5baLLJbZXnFVV+lauJA/BZVeAfc9eDBarOOY7AY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773498069; c=relaxed/simple;
-	bh=YdVf07ou5a2k64Dde6YPstlshLKg9I/2efrQvGdUQpU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rJif83SR8xjc2ReriBEXdwlr39pe44wazh31IkbNPjpYa9j7dsZzwIoLdQ/3mGFDkS0uScYnVI20TzeXIYRbIHQPzmj+a6s8lg8m08W0xgb0YyAR3HnsJdyjWsKZ6mcUm1zCJvnVlWnOdeSbDcM0q+gd7c0v/l/XB2+xP6MhHpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g6sqYRo+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2560C116C6;
-	Sat, 14 Mar 2026 14:20:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773498068;
-	bh=YdVf07ou5a2k64Dde6YPstlshLKg9I/2efrQvGdUQpU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=g6sqYRo+OmrrdWF3NQFAgx4mE/BObaNhmv+978Slt6FXdRWuUfDqoGz0LqPxY4ygA
-	 IYYFWzOcoZHqgdu6/+PBxzus+2qRBhdkYJ2v0LnzajnLHrmTwOPAEUysX2vGdJMOxo
-	 u4sdVBnB5cIkeBQTjUW1m3aQMUyqVi0GHU3s1KnTrJ4ujUILAYZKOYSntrGCy8OWW0
-	 bLqMaoWptbo+TESpD2gnkNjFCJMCwP+6pjrocwJtoeRmNe1Jz7/VaWk7K0EYqvY/Lf
-	 e3m8fItzg1l4H/1m9s7iJy09kIZNyVFmfi3MEqBgmGLVSmGWXK5v+dkvbuYZluZOIS
-	 hMhEOdCy4hnRA==
-Date: Sat, 14 Mar 2026 19:50:50 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>, andersson@kernel.org, 
-	konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	jingoohan1@gmail.com, lpieralisi@kernel.org, kwilczynski@kernel.org, 
-	bhelgaas@google.com, johan+linaro@kernel.org, vkoul@kernel.org, kishon@kernel.org, 
-	neil.armstrong@linaro.org, abel.vesa@linaro.org, kw@linux.com, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-pci@vger.kernel.org, linux-phy@lists.infradead.org, qiang.yu@oss.qualcomm.com, 
-	quic_krichai@quicinc.com, quic_vbadigan@quicinc.com
-Subject: Re: [PATCH v1 1/1] arm64: dts: qcom: hamoa: Move PCIe PERST and Wake
- GPIOs to port nodes
-Message-ID: <en5a7jrgpbn4bsmw5qwprugb2qmjkqw2x5eey6jxxu63634duz@b43rhcsqkj3o>
-References: <20260313094618.1361418-1-ziyue.zhang@oss.qualcomm.com>
- <20260313164542.GA1405513@bhelgaas>
+	s=arc-20240116; t=1773515216; c=relaxed/simple;
+	bh=7SOhBYgZ1tDBIsohOqzU1uIMagLQbWQ6HsjjsQ3UjNA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=b1F6KtWSDEUj5pvWcOdQexXbH53gdJGakGGygtBnypSs0Z/mofuQe3BEWWZSU2Z/AwdgiBCcCJKEzKQ9tJY8Cmx1KOmmv8MSbm8DbThK8024eimZggdGKZTznC7t5ePa2FR1d0MpUCy0+jjFk6gK6OvLzCUMX3I9WeBbro7okxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=E1xR2ydD; arc=none smtp.client-ip=95.215.58.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
+Message-ID: <776a18d5-9d7e-45ff-8cfd-4823522ea375@packett.cool>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
+	s=key1; t=1773515211;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=VELqPgIB6lJjzY4lY2q9OaKX2wH9iEVX9q3tH0RH+Hw=;
+	b=E1xR2ydDousep9/udzvTFKguVHFOIubLRyTYA9vAg05jT4/16msSO4zEzaY28OaUwWWcqo
+	prJaX0gj+XqoGfj437iFmLKbAb3AyOvsmDUv8Tf3UveaArscXvIkbr+gZRrOxLuCpmcukF
+	/UXituodo6xpkTSLfUbClARVpEfLdHIXqV2oEjfICkVaNmvb/cDupwtywElcj+Q8WQYtnt
+	h4vx09lxV3Snar5UtCD4fnPdCt7484HOggAG8nUj2rCEqvfnxqJS8PoyluZqmWF/hArCLo
+	4JIEpHO2LWk2Qr3EqzjgHTQuHnEjBp0cpNL0aNcakmssshQiMF3pixX7OorRyA==
+Date: Sat, 14 Mar 2026 16:06:37 -0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260313164542.GA1405513@bhelgaas>
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+Subject: Re: [PATCH RFT v2] drm/msm/dpu: enable virtual planes by default
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Rob Clark <robin.clark@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20260226-dpu-enable-virt-planes-v2-1-87971236fe86@oss.qualcomm.com>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Val Packett <val@packett.cool>
+In-Reply-To: <20260226-dpu-enable-virt-planes-v2-1-87971236fe86@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	DMARC_POLICY_ALLOW(-0.50)[packett.cool,quarantine];
 	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_DKIM_ALLOW(-0.20)[packett.cool:s=key1];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-97704-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,gmail.com,google.com,linaro.org,linux.com,vger.kernel.org,lists.infradead.org,quicinc.com];
-	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[25];
+	TAGGED_FROM(0.00)[bounces-97705-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[3];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,quicinc.com,poorly.run,somainline.org,gmail.com,ffwll.ch];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[packett.cool:+];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	MISSING_XM_UA(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,linaro];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: 2F45E28D7E4
+	FROM_NEQ_ENVFROM(0.00)[val@packett.cool,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,packett.cool:dkim,packett.cool:email,packett.cool:mid]
+X-Rspamd-Queue-Id: EEC3228E8DD
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Fri, Mar 13, 2026 at 11:45:42AM -0500, Bjorn Helgaas wrote:
-> On Fri, Mar 13, 2026 at 05:46:18PM +0800, Ziyue Zhang wrote:
-> > Commit 960609b22be5 ("arm64: dts: qcom: hamoa: Move PHY, PERST, and Wake
-> > GPIOs to PCIe port nodes and add port Nodes for all PCIe ports") did not
-> > convert all Hamoa‑based platforms to the new method of defining PERST and
-> > Wake GPIOs in the PCIe root port nodes.
-> > 
-> > Without the change PCIe probe will fail. The probe failure happens because
-> > the PHY stays in the controller node while the PERST/Wake GPIOs were moved
-> > to the port nodes.
-> > 
-> > This fixes probe failures seen on the following platforms:
-> >  - x1-hp-omnibook-x14
-> >  - x1-microsoft-denali
-> >  - x1e80100-lenovo-yoga-slim7x
-> >  - x1e80100-medion-sprchrgd-14-s1
-> >  - x1p42100-lenovo-thinkbook-16
-> >  - x1-asus-zenbook-a14
-> >  - x1-crd
-> >  - x1-dell-thena
-> > 
-> > Fixes: 960609b22be5 ("arm64: dts: qcom: hamoa: Move PHY, PERST, and Wake GPIOs to PCIe port nodes and add port Nodes for all PCIe ports")
-> 
-> Are you saying that DTs in the field broke because of some kernel
-> change?  That's not supposed to happen.  Even though PHY, PERST, and
-> Wake GPIOs should be described in Root Port nodes instead of the Root
-> Complex node in *future* DTs, the kernel is still supposed to accept
-> the old style with them described in the Root Complex node.
-> 
+On 2/26/26 10:49 AM, Dmitry Baryshkov wrote:
 
-This is not related to the driver change. The driver correctly parses all Root
-Port properties either in the Root Complex node (old binding) or Root Port node
-(new binding). But commit 960609b22be5, left converting mentioned board DTS to
-the new binding, leaving those affected platforms in a half baked state i.e.,
-some properties in RC node and some in Root Port node. Driver cannot parse such
-combinations, so it fails correctly so.
+> Turn on the switch and use virtual planes by default, enhancing
+> utilisation of the display pipelines. It is still possible to use legacy
+> implementation by using `msm.dpu_use_virtual_planes=false` kernel boot
+> parameter.
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> ---
+> This is being sent as an RFT for now. Please give it a test with your
+> compositor of choice. X11. Weston. Sway. Wlroot. CrOS. I plan to turn
+> the switch for 7.1
 
-- Mani
+Tested-by: Val Packett <val@packett.cool> # x1e80100-dell-latitude-7455, 
+with niri
 
--- 
-மணிவண்ணன் சதாசிவம்
+Running with this for a few days, seems like no change, everything works 
+as before. Any way to confirm virtual planes are being used?
+
+~val
+
 
