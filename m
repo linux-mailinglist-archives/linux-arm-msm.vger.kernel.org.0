@@ -1,367 +1,299 @@
-Return-Path: <linux-arm-msm+bounces-97746-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97747-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id CJgRF79Et2lKPAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97746-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 00:46:07 +0100
+	id eKh0HypGt2m/PAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97747-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 00:52:10 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id AEC0B29307E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 00:46:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D703E2930A3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 00:52:09 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 0E0C530086DA
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Mar 2026 23:46:05 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 12C83301226E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Mar 2026 23:52:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98B3D218ACC;
-	Sun, 15 Mar 2026 23:46:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 038E02C11DE;
+	Sun, 15 Mar 2026 23:52:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="HjieKR2N";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="hM9ZxIMH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lSAcQIUx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E90E2770A
-	for <linux-arm-msm@vger.kernel.org>; Sun, 15 Mar 2026 23:46:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5334C226CFE
+	for <linux-arm-msm@vger.kernel.org>; Sun, 15 Mar 2026 23:52:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773618364; cv=none; b=K8957YWDlzNJkX3mhuPbAXSseqQdUUrE5xunaAXkNnm2KHJh/Q4QOOKyMRcJpja2FSQYjiUVY8CaYv+NgUlN5oTl6dTx+2sGlLfXjbSXdsLHYaOnUD6W/NXiMMSgAPujWNiZiUVYUNgzuZpc5+6/YCqEvp2eIGmL9uNFWgU68YI=
+	t=1773618724; cv=none; b=mONBtCmSpakTNVutkix5fy+r31ZvO2ArnLQ6UllLzpN83ftO3eUNLc3Znmi6GYv/u4fm7caTq4QDgi2ul3dFQoH6WvvLxEUaeyK5Nbc9OCXtIH4QKiCbwJIiezkbEEtGSg0Wgf9lJ8xk9ANUI0rlB+qZSigT6xznay5P5V+OpzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773618364; c=relaxed/simple;
-	bh=KdFDrr71J8LoR2xT035mhXyIlBgN5GbB8uEGxEEj/Uw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tte03zFKRGkgTYYWdcDJRz45sJBy5WJnsVvybh3owPmSJz7qIVBrwYHKQyvXFd+9V84oWxin6C9YPzh16MyEImY1PEVYQc6OEfQffDokUxXIsE6605tBFsqepC9ecp6xhL8Kpv+EusaAJGy1+CgDWJcBaYO+QOMnvytdXjkPPXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=HjieKR2N; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=hM9ZxIMH; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62FKwT2i133963
-	for <linux-arm-msm@vger.kernel.org>; Sun, 15 Mar 2026 23:46:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=jtCQPLyj84+GsPspBnbaXy0y
-	TRP7zEyOqjhe8ajtp8U=; b=HjieKR2NHTaR0CwoSzqXoqYE6PRpZxOASHyaEDNH
-	QFshIG5NlEVem27vTrGoaT878Ez1LcvJ5yroYihhQSlIfIsb4SWjehyOFqvFrggo
-	Kv3mt9KXQ9KPGVabe9T3vdIBUbyFvgN58FgzvPMxSgQAq+KxdmqwxDTVgF0DFqvk
-	kbQX0mkdZ/VYLq+QoT/R6wGACbbqXQxMP8qdfdT6Pah6uXNZR2S83++I+2/tKUYD
-	i4Gy2/SOAou9iJepI5mvkigfvpADUZsiI5wgfczhOQxjnzrE1h4o+eXNjuOkl5FH
-	Rcvg1kTObzAPWjcdiosC37p/YSrV8bfWCOw//vG07RXvjg==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cvyyc3drx-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sun, 15 Mar 2026 23:46:02 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-b6097ca315bso21476967a12.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Mar 2026 16:46:01 -0700 (PDT)
+	s=arc-20240116; t=1773618724; c=relaxed/simple;
+	bh=sMMbQEiUeWf+kDDlhoTkTh5kwD/XswPnWe+ZNrnBHTc=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=etr7TeXf0t25zuT86RDSRVAUibI1eFGgC0G/QekrBhyU6eb+mWcWddp86dIjPDi+EIbufpIoO0w89Jae1BMuVW+3zAe81mvCRbkaBJPkHe1is5CwivrHfqOgCuhKsatcztuxGutWGiaRj4xaE5I9gXa0ldgO5nxP15y66NvTwAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lSAcQIUx; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-48534237460so44174985e9.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Mar 2026 16:52:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1773618361; x=1774223161; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=jtCQPLyj84+GsPspBnbaXy0yTRP7zEyOqjhe8ajtp8U=;
-        b=hM9ZxIMHH6DMGF5C1ZK24p/p5W0H0OxJLn6nSQtXBt7o98to1YUM4PDJhYPfW+TK13
-         UNDrlFWIjkV+jAaw6QqFVYx2jnMUKLmvhq2mlbjbj9uWJ4hrIuZ+br374uMszuuC0dbo
-         UG3HTL5dzOLBrgpsfOyXwGv+g472oUkFtMEafjX7Cp0LxMFIl5nqKKUl5LCrKt3qhTE3
-         xOJRZZZI5ytJm2typsvnjjl4yS9U69Ia91J2YCxRGtX7sFD/cKvlZnyA00Pm+ztuE/OX
-         rZmOED6zYVM1zy8PbktasJJGpwTrjDjiYWNys9sOF1Ff7znMr3n5TmfRmTGWVyM6UQCM
-         CffA==
+        d=linaro.org; s=google; t=1773618722; x=1774223522; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=CeAP1oP3Dnt8GZq/o666y9/izbW8uVxcaynApzkMhWk=;
+        b=lSAcQIUxUfA1FyF7Q1gfqZe3TEUGLORQWcZB8jThZbUlrTZgR1eu03w54ecVmnlKBD
+         C/jEMpuOJ7W+WA6CAWNtehBSvIGcw6YZCBBgwE1Tyy45/Uq+9hVW0YSmA6ecIlQhTnqy
+         VEygoskgqZsIO4JHk5y1mS0UYTchDjyumTaNahN6WczYKiheN/KSkjtyzzSuxIlVl2Jh
+         Kya2ZhqalUQpmDmUIywv+i3mdNX7Ri547OZWeYQS3YXTqMNyZEig3lA1Vo//Jovj2wHK
+         7OW9dXfcG/5urUyp+IGTuv92dpu9lhf6g/Xf1JD7uZLYKFXEcIL9mRH2bt+AT+TgQtCl
+         a73Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773618361; x=1774223161;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=jtCQPLyj84+GsPspBnbaXy0yTRP7zEyOqjhe8ajtp8U=;
-        b=ipOqZ350uv483yeF9pEW35/RmQqE+dA3Xyxd81l+N5w0cNh51rNwtn1MxiUCNsvmka
-         Ha7eXPyFxPxGRNFvmUekqV9uA0XDTEE+v0soxlIyFtFFPWVj/VXXxa7Ykg4T6PKDHAng
-         xUqxQ+4h4V0aRxbG8SkQr9st4Cp791ocmADsEAPKuDScgyhmd9pLs7ELi/bDdfeVCdFd
-         SZSpIpwcLQ6+LIaMKipVKW/GVCcczCEvQoVtyX3aLT/qajQX0ftHVxwFzFBZVGnnjGwD
-         qBfO4Sitzm7GSGyc/G1TLulrGbi9jj1rkA3AhAhX65v7rcJJrIkN8TnT394MvzU5V56A
-         Yq0Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWEBgLKQ1KFsut8bYw29MBy4TCYszIWFVc3nkmWQtv5lfZnWUy3Uualhpd6EVGP4mTGrQTe2l7FTKaQOlAb@vger.kernel.org
-X-Gm-Message-State: AOJu0YzSoiMutaKG2Bmf/9kyDRkHRupM+QlQQX+f7gyrYFsYwv0h2zeS
-	zMKpySPJr73Ld8w+KCGFUxU9tGQ71P0GZWMgcnx+0+cncWMVojYZlqsn6s7rk8EGX8W8KywQxGi
-	YyIjjBIMX67Dy49QjRz6JxFXMrMeghxSgnpt+44KdECXG7eugCG2UbPAYdlPz4XC79Xdc
-X-Gm-Gg: ATEYQzw0492SuxYzLjBmlnSbz6yUEHsiypUA22ulW1CnEofJ9yNH/hS+Tsp+8w9DGD1
-	Ic2o8bV6sN0rxiljL8uu5bo3aiDih56GLaQhxrnnpb5yejzScAVqlhzIMGEOnUDGfgzRNUef8WV
-	CNWkG3F5Wgec0PXLkrwrQwqEdn4GjgvNjQMsceIyH7L9CTwsLmwiHC/rLGyehfZe7FR6BFm+4KU
-	8DBFmINaRTmTKeg1yBeher4yi5PPM1iEboYJ8HGdnYt1e9elPCDL6WpInmR0Pjwn7EIBzfzV4LQ
-	ss2Y0SsNbt4sDs23Ws04weU2essxAipvLRf0IQUyM9To93dIDK6mnK9D8MnG3sYMvDGbxi8XPQG
-	GWq0iP5+jTkFIxy/QCsInecFBF5mJdErPPyE=
-X-Received: by 2002:a05:6a00:1a93:b0:829:793f:da6c with SMTP id d2e1a72fcca58-82a19899de0mr9844289b3a.39.1773618361037;
-        Sun, 15 Mar 2026 16:46:01 -0700 (PDT)
-X-Received: by 2002:a05:6a00:1a93:b0:829:793f:da6c with SMTP id d2e1a72fcca58-82a19899de0mr9844265b3a.39.1773618360324;
-        Sun, 15 Mar 2026 16:46:00 -0700 (PDT)
-Received: from oss.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82a073b1d29sm11455561b3a.63.2026.03.15.16.45.56
+        d=1e100.net; s=20251104; t=1773618722; x=1774223522;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CeAP1oP3Dnt8GZq/o666y9/izbW8uVxcaynApzkMhWk=;
+        b=qqHG+0ETqg0GoLehBohaCEW9mUGkPAcXB4NCV7WiEt2xJrmIIkFzCkMOMUnTlgaYAB
+         CzcJIkqGj+fiAapKYKMU2CzIGNTVIANP99Z6fqAWCQSfCQHtwriI3vUDVZhNHEDICVF6
+         ADL2isQbx/QQcUzyDbEbdx+cdZe2cJO8JLZgFM+LCrX957/4YR+VDeA0XGmrKBJM+Ete
+         NPwOQXSFtLeI4zIOmBhlzo3Kv6vqzCIPMCizXKkTK4A+fyk+g18lnJJoligAkc4fDh3b
+         mcV00qUPq08oUZKyueZH/PYksV6Dqg9wc92CN8ktbCVD6PkvksCrKgQ8/ymrm8kr4jkw
+         8Wmw==
+X-Forwarded-Encrypted: i=1; AJvYcCXrzhOZCvLRkwXOFU7hW43XR/1I/QzI0s9vZtnTYhlABZysr+YATJp2Yjl0aJokyvd77XRUcr77XIau7h7F@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx+ulyJo0WbIc600K28J3NmlLf178zY6OfJ7Yvm8xD7aa6teWbO
+	qQB4rsgS/CeBrcBi+Zwunsp6KZyVKDRjCQqOavf1rQqqS9arhSfEhB+y6P0qembByAw=
+X-Gm-Gg: ATEYQzzlJakDxagvlUqM7GKJX7C334+lqpa+RJQuVzgxtHa04iVo5CSLAVkNMVKQ7OT
+	HjqSzlrNCOARuNQfgmiqW//Wd+V51hKvfG0x5BW3I+VKzZVmDuaFmnCZBgXw61ZThiD3NNFVKAw
+	u37XelchrxOxiF8uUkUE7X8/gx11kvdgSh+xRZW7FD+ebvJO7erCIaeyMp7UH83MJtPSMXFl53k
+	Efo1w3FE7uSqc4+6AoIT9qf8anE5omFrdtSnIrqQI7SXxWWe5xXwMrhVnioTsux+edJLVO1bQGX
+	BhKzEDJbGtYra2rYAGkoK/TlVgikVlSC6qQJo6RMMzir4eY5qlsIy2UGXlh8+1m8a/7V8INy3g0
+	ZzQ2zunEDjCO9AwJgclxSk9vrBAWfimgiwg1Oae2dC+RlyRPRCyHO3IuySvKA37E3jiqkoFVcMy
+	tYXCFY3rp7+rWc/GwhTO4cZdhQt0KRHPQ6wdU=
+X-Received: by 2002:a05:600c:8b72:b0:485:3c2d:d02b with SMTP id 5b1f17b1804b1-485566f7a1bmr168448495e9.22.1773618721582;
+        Sun, 15 Mar 2026 16:52:01 -0700 (PDT)
+Received: from [192.168.0.35] ([109.76.190.215])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-439fe20b544sm38233082f8f.20.2026.03.15.16.51.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 15 Mar 2026 16:45:59 -0700 (PDT)
-Date: Mon, 16 Mar 2026 05:15:53 +0530
-From: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
-To: "Russell King (Oracle)" <linux@armlinux.org.uk>
-Cc: Andrew Lunn <andrew@lunn.ch>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Andrew Lunn <andrew+netdev@lunn.ch>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-stm32@st-md-mailman.stormreply.com, netdev@vger.kernel.org,
-        Paolo Abeni <pabeni@redhat.com>, Vinod Koul <vkoul@kernel.org>
-Subject: Re: [PATCH net-next 0/8] net: stmmac: improve PCS support
-Message-ID: <abdEscs44fU4kRag@oss.qualcomm.com>
-References: <abQC7r38QLhSeadl@shell.armlinux.org.uk>
+        Sun, 15 Mar 2026 16:52:00 -0700 (PDT)
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH v4 0/2] phy: qcom-mipi-csi2: Add a CSI2 MIPI DPHY driver
+Date: Sun, 15 Mar 2026 23:52:05 +0000
+Message-Id: <20260315-x1e-csi2-phy-v4-0-90c09203888d@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <abQC7r38QLhSeadl@shell.armlinux.org.uk>
-X-Authority-Analysis: v=2.4 cv=euXSD4pX c=1 sm=1 tr=0 ts=69b744ba cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=kj9zAlcOel0A:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=LzynlxIp8I5r7-4e--YA:9 a=CjuIK1q_8ugA:10 a=_Vgx9l1VpLgwpw_dHYaR:22
-X-Proofpoint-GUID: 3YRlgupb2bRI0pwBRvT1ssRGeTXfMk3L
-X-Proofpoint-ORIG-GUID: 3YRlgupb2bRI0pwBRvT1ssRGeTXfMk3L
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE1MDE4OSBTYWx0ZWRfXzrzZiCw65Oea
- 3XkRMUwp5FJ26jHng1++p+yHExZPdz6HCiZqR9eQUkwSzNX4iiptZY1u2sJFc2JjB/Bt096qVkv
- DCS8BcONWc4lKxQY8qZOv/J6I5g2d4Ki1Zk+FbGGSMfHpruLFzup2W0fs4uMlVXEXBeHI4e+bc3
- HAKtvpRTxY74Cu8xXrnPiqMb0fGdKKwN05TAtc38x9IKDMAzu0RhYUGzPSHikim3FO+17Mi0Fd0
- y1ZubDSl/zFpzm1c+1a30ZVm3o6o/Ymed/Z3Dh3NajQyyODGkFFY0TTPC99Z8CnmczRqJEZ7902
- 3rfgy6IBk+jcfIrJ/7OwNveNyBiFSvapcsjgB9R+EAS748fKZ2D8iKVIqCbtBzVfmchwNwsrqdA
- OxOVRN570nMRAarw/L60gQ8geEWm633CbpyV698C0qpuaoP77plyzPjWqTMCleAiwclMOVIl7gl
- H8lmLB5WvoYCAlHvK8g==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-15_08,2026-03-13_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 adultscore=0 bulkscore=0 malwarescore=0 spamscore=0
- impostorscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603150189
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACVGt2kC/3XM3QqCMBjG8VuRHbfYu8/qqPuIDjZ91UGobDEU8
+ d6bQlBGh88Dv/9MIgaPkVyKmQRMPvq+y0MeClK2tmuQ+ipvwhlXzACjIyAto+d0aCdaaymk0wo
+ qYUkmQ8Daj1vuds+79fHZh2mrJ1jfP6EElFEjbemccqC5uz58Z0N/7END1lLib60Z52qn+aqN0
+ lg5bdCef7T41HqnRdYAqNnJqLME9qWXZXkBiH9GFyUBAAA=
+X-Change-ID: 20250710-x1e-csi2-phy-f6434b651d3a
+To: Vinod Koul <vkoul@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Bryan O'Donoghue <bod@kernel.org>, 
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
+ linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+ linux-media@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6513;
+ i=bryan.odonoghue@linaro.org; h=from:subject:message-id;
+ bh=sMMbQEiUeWf+kDDlhoTkTh5kwD/XswPnWe+ZNrnBHTc=;
+ b=owEBbQKS/ZANAwAKASJxO7Ohjcg6AcsmYgBpt0YnD2CZhIxL5ri2NHRVe2dtspeGez/CD6B4A
+ FkX+F4xz+CJAjMEAAEKAB0WIQTmk/sqq6Nt4Rerb7QicTuzoY3IOgUCabdGJwAKCRAicTuzoY3I
+ OnhFD/9c897WAlC1Ggfrv6XTwPfftsSynyU/kXgUm0Xl83AOAUrc5O4gC4bwlYtseFiUD64kqtf
+ FW4QJgbx968EfZR82DhHgIojGU4WQsfrXfT0VuKzmYqGBpSQkjrzo3afGrzMRcEONg0JULz5d5v
+ TiEAgjvJR0/nethpfExOItB4nSj9IrlyLzRp6+zN4A0lgvhe9mpUP/G34h1TjJMY817AjN0B7So
+ KcvSYBjE1B19xS8zpxijdz+5n+FbeDnv0Ny5k/S+9+ePUXlvs3k+8+QKEvfMD0WV5J1XJy7bYRu
+ qJxx6chxqWawgM8iT/3NplLl4f519B4a6u+rtBNq4jshxUEbzmbPuj0u3CExx8epfj/YgVL7aJe
+ Ed2xN2FosVFYgzvqHqmfxilcG8jZSEuYje5QJp9x3IFvtbdhlbeoJG+Ji75/DgLG4ljOz7JYAAR
+ xYGnH2lKBhvAIs4N0YucJMNvt8GZb1++gDfAR2e4Tpj41ZJfF0BiwJ55xDfr2yv1Yu4Wv0pTOoy
+ pVs1iqQ5W1EzJTQl9Klf7ZmMB0T4imRgaknDjIJFky0KmZZwx/1uQmKF4bIPXQ/Ry416THX85iR
+ urE0BtFlAQuFZCv4VPHnty1hcUt/IdcLbTRYqTs1DA8HhjIXwy511L79n4HKiOHXoWRQIKUiXKi
+ M6DySzzJY2OxGsA==
+X-Developer-Key: i=bryan.odonoghue@linaro.org; a=openpgp;
+ fpr=E693FB2AABA36DE117AB6FB422713BB3A18DC83A
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-97746-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:dkim];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	TAGGED_FROM(0.00)[bounces-97747-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[linaro.org:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mohd.anwar@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: AEC0B29307E
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,linaro.org:dkim,linaro.org:email,linaro.org:mid]
+X-Rspamd-Queue-Id: D703E2930A3
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi Russell,
-On Fri, Mar 13, 2026 at 12:28:30PM +0000, Russell King (Oracle) wrote:
-> This series is the next of the three part series sorting out the PCS
-> support in stmmac, building on part 2:
-> 
-> 	net: stmmac: qcom-ethqos: further serdes reorganisation
-> 
-> Similar patches have been posted previously. This series does away with
-> the common SerDes PHY support, instead using a flag to indicate whether
-> 2500Mbps mode is supported (STMMAC_FLAG_SERDES_SUPPORTS_2500M.) At this
-> time, I have no plans to resurect the common SerDes PHY support - the
-> generic PHY layer implementations are just too random to consider that,
-> and I certainly do not want the extra work of fixing that.
-> 
-> Changes from RFC v3:
-> - only set default_an_inband if using SGMII/2500BASE-X mode.
->
+v4:
+- MMCX, MCX and MX/MXA power-domains added - Dmitry, Vijay, Konrad
+- power-domain-names added as required - bod
+- opp-tables amended to capture RPMHPD deps - Dmitry, Vijay
+- Switched to dev_pm_opp_set_rate, dev_pm_domain_attach_by_name etc
+  dropped inherited CAMSS code - Dmitry
+- Amended parameters structure to specify power-domain name list - bod
+- Removed dead defines - Dmitry
+- Noted in CSIPHY commit log intention to rework patterns of
+  PHY lane configs into loops/defines/bit-fields later - Dmitry, bod
+- Lowercase hex throughout - Dmitry
+- The yaml and code in this driver doesn't care if the node is a
+  sibling or a sub-node of CAMSS confirmed to work both ways - Dmitry, bod
+- Link to v3: https://lore.kernel.org/r/20260226-x1e-csi2-phy-v3-0-11e608759410@linaro.org
 
-I encountered two NULL pointer dereferences and had to add a few
-workarounds to proceed with testing.
+v3:
 
-1. On QCS9100 Ride R3, the mdio subnode is only defined for ethernet0
-   (see lemans-ride-ethernet-aqr115c.dtsi). ethernet1 uses ethernet0's
-   MDIO bus, so plat_dat->mdio_bus_data is NULL for ethernet1. Therefore,
-   we get:
-	[    9.205979] Hardware name: Qualcomm Technologies, Inc. Lemans Ride Rev3 (DT)
-	[    9.221071] pc : qcom_ethqos_probe+0xc4/0x478 [dwmac_qcom_ethqos]
-	[    9.221078] lr : qcom_ethqos_probe+0x7c/0x478 [dwmac_qcom_ethqos]
-	[    9.221080] sp : ffff800081aa37f0
-	[    9.221081] x29: ffff800081aa3860 x28: ffffcf84de69cfe8 x27: 0000000000000001
-	[    9.221084] x26: 0000000000000000 x25: ffff0000b4577c80 x24: ffff0000818fd010
-	[    9.221087] x23: ffff000ec7057628 x22: 0000000000000000 x21: ffffcf84ca2ce028
-	[    9.221089] x20: ffff0000818fd000
-	[    9.236975]  x19: ffff0000b3301740 x18: 00000000ffffffff
-	[    9.236977] x17: 0000000000000000 x16: ffffcf84dc4a5448 x15: ffff0000b3301ec5
-	[    9.236980] x14: 0000000000000000 x13: 0000000000000030 x12: 0101010101010101
-	[    9.236982] x11: 7f7f7f7f7f7f7f7f x10: 00000000001305b0 x9 : 0000000000000000
-	[    9.236984] x8 : ffff0000b3301780 x7 : 0000000000000000 x6 : 000000000000003f
-	[    9.236986] x5 : 0000000000000040 x4 : 0000000000000000 x3 : ffff0000818fd210
-	[    9.236988] x2 : 0000000000000017 x1 : 0000000000000000 x0 : 0000000000000001
-	[    9.236991] Call trace:
-	[    9.236991]  qcom_ethqos_probe+0xc4/0x478 [dwmac_qcom_ethqos] (P)
-	[    9.236994]  platform_probe+0x5c/0xac
-				...
-	[    9.343300] Code: 910a7000 f9400b21 f9010320 52800020 (39005420)
-	[    9.343302] ---[ end trace 0000000000000000 ]---
+- Resending this to make clear this submission is additive to x1e/Hamoa
+  The existing bindings and code will continue to work 
+  Bindings are added only, nothing is subtracted from existing ABI.
+- Link to v2: https://lore.kernel.org/r/20260225-x1e-csi2-phy-v2-0-7756edb67ea9@linaro.org
 
-   I added the following workaround:
-	--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-	+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-	@@ -765,7 +767,10 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
-			case PHY_INTERFACE_MODE_SGMII:
-					ethqos->configure_func = ethqos_configure_sgmii;
-					plat_dat->mac_finish = ethqos_mac_finish_serdes;
-	-               plat_dat->mdio_bus_data->default_an_inband = true;
-	+               if (plat_dat->mdio_bus_data)
-	+                       plat_dat->mdio_bus_data->default_an_inband = true;
-	+               else
-	+                       dev_err(dev, "plat_dat->mdio_bus_data is NULL");
-					break;
-			default:
-					dev_err(dev, "Unsupported phy mode %s\n",
+v2:
 
-2. After working around issue 1, I hit the following:
-	[   27.822907] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-	[   27.831944] Mem abort info:
-	[   27.834832]   ESR = 0x0000000086000006
-	[   27.838693]   EC = 0x21: IABT (current EL), IL = 32 bits
-	[   27.844163]   SET = 0, FnV = 0
-	[   27.847320]   EA = 0, S1PTW = 0
-	[   27.850563]   FSC = 0x06: level 2 translation fault
-	[   27.855587] user pgtable: 4k pages, 48-bit VAs, pgdp=0000000134b1c000
-	[   27.862212] [0000000000000000] pgd=080000010185c403, p4d=080000010185c403, pud=0800000134884403, pmd=0000000000000000
-	[   27.873107] Internal error: Oops: 0000000086000006 [#1]  SMP
-	[   28.001619] Hardware name: Qualcomm Technologies, Inc. Lemans Ride Rev3 (DT)
-	[   28.008853] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-	[   28.016001] pc : 0x0
-	[   28.018259] lr : phylink_pcs_an_restart+0x50/0x5c
-	[   28.023092] sp : ffff8000869fb900
-				...
-	[   28.185967] ---[ end trace 0000000000000000 ]---
+In this updated version
 
-   This occurs due to pl->pcs->ops->pcs_an_restart being NULL. I added
-   the following workaround:
-	--- a/drivers/net/phy/phylink.c
-	+++ b/drivers/net/phy/phylink.c
-	@@ -1026,7 +1026,8 @@ static void phylink_pcs_an_restart(struct phylink *pl)
-			if (pl->pcs && linkmode_test_bit(ETHTOOL_LINK_MODE_Autoneg_BIT,
-							 pl->link_config.advertising) &&
-			    phy_interface_mode_is_8023z(pl->link_config.interface) &&
-	-		    phylink_autoneg_inband(pl->act_link_an_mode))
-	+		    phylink_autoneg_inband(pl->act_link_an_mode) &&
-	+		    pl->pcs->ops->pcs_an_restart)
-					pl->pcs->ops->pcs_an_restart(pl->pcs);
-	 }
+- Added operating-point support
+  The csiphy clock sets the OPP prior to setting the rate
+  for csiphy and csiphy_timer - Konrad
 
-3. With the recent VLAN filter changes in net-next, ndo_open takes a long
-   time to complete as vlan_restore_hw_rx_fltr() tries to write filters
-   for all 32 indices. This board previously timed out once, but now
-   times out for each index. This is a separate issue unrelated to this
-   series but I added the following workaround to rule out any timing
-   issues.
-	--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_vlan.c
-	+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_vlan.c
-	@@ -158,7 +158,8 @@ static void vlan_restore_hw_rx_fltr(struct net_device *dev,
+- Combo mode
+  Combo mode in CAMSS yaml has been added. Right now
+  no code has been changed in the PHY driver to support it as
+  I don't have hardware to test. In principle though it can
+  be supported. - Vladimir
 
-			/* Extended Rx VLAN Filter Enable */
-			for (i = 0; i < hw->num_vlan; i++)
-	-               vlan_write_filter(dev, hw, i, hw->vlan_filter[i]);
-	+               if (hw->vlan_filter[i])
-	+                       vlan_write_filter(dev, hw, i, hw->vlan_filter[i]);
-	 }
+- CSIPHY init sequences
+  I left these as their "magic number formats". With my diminished
+  status as a non-qcom VPN person - I can no longer see what the bits
+  map to. Moreover this is the situation any non-VPN community member
+  will be in when submitting CSIPHY sequences derived from downstream.
 
-	 static void vlan_update_hash(struct mac_device_info *hw, u32 hash,
+  I think it is perfectly reasonable to take public CSIPHY init sequences
+  as magic numbers. If someone with bit-level access wants to enumerate
+  the bits that's fine but, it shouldn't gate in the interim. - Konrad/bod
 
+- Sensor endpoints
+  I've stuck to the format used by every other CSIPHY in upstream.
+  Sensor endpoints hit the CAMSS/CSID endpoint not a endpoint in the PHY.
+  Given the proposed changes to CAMSS though to support "combo mode" I
+  think this should achieve the same outcome - multiple sensors on the one
+  PHY without introducing endpoints into the PHY that no other CSIPHY in
+  upstream currently has.
 
-With the above workarounds in place, 2.5G works fine, but 1G (and 100M)
-do not. With the RFC v1 series, only the 2.5G->1G speed change was
-broken. With this series, the link does not come up at 1G at all.
+- Bitmask of enabled lanes
+  Work needs to be done in the v4l2 layer to really support this.
+  I propose making a separate series dedicated to non-linear bit
+  interpretation after merging this so as to contain the scope of the
+  series to something more bite (byte haha) sized. - Konrad/bod
 
-Some observations from my failed attempt at debugging so far:
- - No change in behaviour after adding the provisioning code in
-   aqr_gen4_config_init().
- - Setting GMAC_AN_CTRL_RAN in dwmac_integrated_pcs_config() did not
-   help.
- - After shifting to 1G, GMAC_AN_STATUS reads 0x00000008, i.e.,
-   BMSR_LSTATUS (bit 2) is clear. 
+- Link to v1: https://lore.kernel.org/r/20250710-x1e-csi2-phy-v1-0-74acbb5b162b@linaro.org
 
+v1:
+This short series adds a CSI2 MIPI PHY driver, initially supporting D-PHY
+mode. The core logic and init sequences come directly from CAMSS and are
+working on at least five separate x1e devices.
 
-Sharing logs for two 1G scenarios (net-next + this series + the three
-workarounds above):
+The rationale to instantiate CSI2 PHYs as standalone devices instead of as
+sub-nodes of CAMSS is as follows.
 
-# Booting up with a 1G link
-	[    8.730854] qcom-ethqos 23040000.ethernet: IRQ eth_wake_irq not found
-	[    8.766778] qcom-ethqos 23040000.ethernet: User ID: 0x20, Synopsys ID: 0x52
-	[    8.780465] qcom-ethqos 23040000.ethernet:   DWMAC4/5
-	[    8.794253] qcom-ethqos 23040000.ethernet: DMA HW capability register supported
-	[    8.794258] qcom-ethqos 23040000.ethernet: Active PHY interface: SGMII (2)
-	<snip>
-	[    8.865690] qcom-ethqos 23040000.ethernet: Using 36/40 bits DMA host/device width
-	[    8.865707] qcom-ethqos 23040000.ethernet: clk_csr value out of range (0xffffff00 exceeds mask 0x00000f00), truncating
-	[   10.860749] qcom-ethqos 23040000.ethernet eth1: Register MEM_TYPE_PAGE_POOL RxQ-0
-	[   10.861119] qcom-ethqos 23040000.ethernet eth1: Register MEM_TYPE_PAGE_POOL RxQ-1
-	[   10.861510] qcom-ethqos 23040000.ethernet eth1: Register MEM_TYPE_PAGE_POOL RxQ-2
-	[   10.861906] qcom-ethqos 23040000.ethernet eth1: Register MEM_TYPE_PAGE_POOL RxQ-3
-	[   10.871763] qcom-ethqos 23040000.ethernet eth1: Enabling Safety Features
-	[   10.907513] qcom-ethqos 23040000.ethernet eth1: IEEE 1588-2008 Advanced Timestamp supported
-	[   10.921216] qcom-ethqos 23040000.ethernet eth1: registered PTP clock
-	[   10.921220] qcom-ethqos 23040000.ethernet eth1: configuring for inband/2500base-x link mode
-	[   10.921223] qcom-ethqos 23040000.ethernet eth1: major config, requested inband/2500base-x
-	[   10.921226] qcom-ethqos 23040000.ethernet eth1: interface 2500base-x inband modes: pcs=01 phy=00
-	[   10.921228] qcom-ethqos 23040000.ethernet eth1: major config, active inband/inband,an-disabled/2500base-x
-	[   10.921230] qcom-ethqos 23040000.ethernet eth1: phylink_mac_config: mode=inband/2500base-x/none adv=00000000,00000000,00008000,0000e240 pause=04
+1. Precedence
+   CAMSS has a dedicated I2C bus called CCI Camera Control Interface.
+   We model this controller as its own separate device in devicetree.
+   This makes sense and CCI/I2C is a well defined bus type already modelled
+   in Linux.
 
-No further messages appear after this point, and the link does not come
-up at 1G.
+   MIPI CSI2 PHY devices similarly fit into a well defined separate
+   bus/device structure.
 
-# Switching from 2.5G to 1G
-	[    8.368113] qcom-ethqos 23040000.ethernet: IRQ eth_wake_irq not found
-	[    8.379601] qcom-ethqos 23040000.ethernet: User ID: 0x20, Synopsys ID: 0x52
-	[    8.392900] qcom-ethqos 23040000.ethernet:   DWMAC4/5
-	[    8.432379] qcom-ethqos 23040000.ethernet: DMA HW capability register supported
-	<snip>
-	[    8.480319] qcom-ethqos 23040000.ethernet: Using 36/40 bits DMA host/device width
-	[    8.488609] qcom-ethqos 23040000.ethernet: clk_csr value out of range (0xffffff00 exceeds mask 0x00000f00), truncating
-	[   11.192140] qcom-ethqos 23040000.ethernet eth1: Register MEM_TYPE_PAGE_POOL RxQ-0
-	[   11.200567] qcom-ethqos 23040000.ethernet eth1: Register MEM_TYPE_PAGE_POOL RxQ-1
-	[   11.216466] qcom-ethqos 23040000.ethernet eth1: Register MEM_TYPE_PAGE_POOL RxQ-2
-	[   11.232393] qcom-ethqos 23040000.ethernet eth1: Register MEM_TYPE_PAGE_POOL RxQ-3
-	[   11.250011] qcom-ethqos 23040000.ethernet eth1: Enabling Safety Features
-	[   11.269722] qcom-ethqos 23040000.ethernet eth1: IEEE 1588-2008 Advanced Timestamp supported
-	[   11.286758] qcom-ethqos 23040000.ethernet eth1: registered PTP clock
-	[   11.300593] qcom-ethqos 23040000.ethernet eth1: configuring for inband/2500base-x link mode
-	[   11.300596] qcom-ethqos 23040000.ethernet eth1: major config, requested inband/2500base-x
-	[   11.300599] qcom-ethqos 23040000.ethernet eth1: interface 2500base-x inband modes: pcs=01 phy=00
-	[   11.316311] qcom-ethqos 23040000.ethernet eth1: major config, active inband/inband,an-disabled/2500base-x
-	[   11.316317] qcom-ethqos 23040000.ethernet eth1: phylink_mac_config: mode=inband/2500base-x/none adv=00000000,00000000,00008000,0000e240 pause=04
-	[   14.125773] qcom-ethqos 23040000.ethernet: PCS Link Up
-	[   14.131081] qcom-ethqos 23040000.ethernet eth1: pcs link up
-	[   14.147059] qcom-ethqos 23040000.ethernet eth1: Link is Up - 2.5Gbps/Full - flow control rx/tx
-	<link speed changed to 1G>
-	[   25.868674] qcom-ethqos 23040000.ethernet: PCS Link Down
-	[   25.874184] qcom-ethqos 23040000.ethernet eth1: pcs link down
-	[   25.874745] qcom-ethqos 23040000.ethernet eth1: Link is Down
+   Contrast to another CAMSS component such as VFE, CSID or TPG these
+   components only interact with other CAMSS inputs/outputs unlike CSIPHY
+   which interacts with non-SoC components.
 
-No further messages appear after "Link is Down".
+2. Hardware pinouts and rails
+   The CSI2 PHY has its own data/clock lanes out from the SoC and indeed
+   has its own incoming power-rails.
 
-I have been having some issues with the IQ9 EVK (QCA8081 PHY), so no
-results to report for it yet.
+3. Other devicetree schemas
+   There are several examples throughout the kernel of CSI PHYs modeled as
+   standalone devices which one assumes follows the same reasoning as given
+   above.
 
-	Ayaan
- 
+I've been working on this on-and-off since the end of April:
+Link: https://lore.kernel.org/linux-media/c5cf0155-f839-4db9-b865-d39b56bb1e0a@linaro.org
+
+There is another proposal to have the PHYs be subdevices of CAMSS but, I
+believe we should go with a "full fat" PHY to match best practices in
+drivers/phy/qualcomm/*.
+
+Using the standard PHY API and the parameter passing that goes with it
+allows us to move away from custom interfaces in CAMSS and to conform more
+clearly to established PHY paradigms such as the QMP combo PHY.
+
+Looking at existing compat strings I settled on
+"qcom,x1e80100-mipi-csi2-combo-phy" deliberately omitting reference to the
+fact the PHY is built on a four nano-meter process node, which seems to
+match recent submissions to QMP PHY.
+
+My first pass at this driver included support for the old two phase
+devices:
+
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/commit/a504c28d109296c93470340cfe7281231f573bcb#b6e59ed7db94c9da22e492bb03fcda6a4300983c
+
+I realised that the device tree schema changes required to support a
+comprehensive conversion of all CAMSS to this driver would be an
+almost certainly be unacceptable ABI break or at the very least an enormous
+amount of work and verification so I instead aimed to support just one new
+SoC in the submission.
+
+I've retained the callback indirections give us scope to add in another type of
+future PHY including potentially adding in the 2PH later on.
+
+This driver is tested and working on x1e/Hamoa and has been tested as not
+breaking sc8280xp/Makena and sm8250/Kona.
+
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+---
+Bryan O'Donoghue (2):
+      dt-bindings: phy: qcom: Add CSI2 C-PHY/DPHY schema
+      phy: qcom-mipi-csi2: Add a CSI2 MIPI DPHY driver
+
+ .../bindings/phy/qcom,x1e80100-csi2-phy.yaml       | 133 ++++++++
+ MAINTAINERS                                        |  11 +
+ drivers/phy/qualcomm/Kconfig                       |  13 +
+ drivers/phy/qualcomm/Makefile                      |   5 +
+ drivers/phy/qualcomm/phy-qcom-mipi-csi2-3ph-dphy.c | 364 +++++++++++++++++++++
+ drivers/phy/qualcomm/phy-qcom-mipi-csi2-core.c     | 289 ++++++++++++++++
+ drivers/phy/qualcomm/phy-qcom-mipi-csi2.h          | 101 ++++++
+ 7 files changed, 916 insertions(+)
+---
+base-commit: c824345288d11e269ce41b36c105715bc2286050
+change-id: 20250710-x1e-csi2-phy-f6434b651d3a
+
+Best regards,
+-- 
+Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
 
