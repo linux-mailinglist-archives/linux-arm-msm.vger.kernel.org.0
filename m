@@ -1,202 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-97743-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97744-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id mFWYGlYPt2mXMAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97743-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Mar 2026 20:58:14 +0100
+	id 4PxwNL4nt2m+NAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97744-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Mar 2026 22:42:22 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B2CA292475
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Mar 2026 20:58:14 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 80C38292ABF
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Mar 2026 22:42:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 94DFB3025E7D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Mar 2026 19:58:12 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 5EC1D3044820
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Mar 2026 21:42:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A066B374191;
-	Sun, 15 Mar 2026 19:58:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D307137CD25;
+	Sun, 15 Mar 2026 21:42:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="imeiwhSi"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PytlC6sr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ixit.cz [185.100.197.86])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 337252405EB;
-	Sun, 15 Mar 2026 19:58:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.100.197.86
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24762202F70
+	for <linux-arm-msm@vger.kernel.org>; Sun, 15 Mar 2026 21:42:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773604689; cv=none; b=XEehGbR+IJxwJjFRdpQXy2V58D8J598Q+sp+lTjbrS7U6wWaov7xNus0WyP88qphC6fDpYwhp5T4TzIaqzN1C9StBomMERrYWvVM7cT3rNbnwEpkQbk+Siv8D76WGnndeMrkGMpolA0rJeEYa9jFaAi9iNiWVEWWHFKQIa5ia8U=
+	t=1773610933; cv=none; b=Rq73+5Z8k/bQFqWF2GffetFSv/s/2iXLkXX3fqJHU6iUfw/RBpKDrf+foOar+0Tz/uOujXZOagjaB3CxwA7TbNcNkoYrvXqQlv377RMMbKVQsNAbUarj8obpzT2Lp251dTzqD4xQh/CaIqhqyelwPxEM4YmAkLaZ9EnD1yHyHi4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773604689; c=relaxed/simple;
-	bh=x96j8XO+2iH9YowIPbKyGsM/h8FrQzlL5x2emsPhfIk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=D7A3MqIcl1x4NFN+t1BATNhThTrFrzVRwWmSEAIiERehi3G5o+JDVc7I6OmC0tI8bDA5MQY8g5UaAj7WijMmAMB4hLQzOrx1SyTkiv4C9S1kFcILlFTDMNYIvIUotEUiqgW8usqa8loH1bmJ3DuaHoWRAh/HuF5lVWYB6+Z25Qs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=imeiwhSi; arc=none smtp.client-ip=185.100.197.86
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [IPV6:2a02:f000:10bd:e301::1d7] (unknown [IPv6:2a02:f000:10bd:e301::1d7])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 472D6534145A;
-	Sun, 15 Mar 2026 20:58:02 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1773604682;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=7sJdIxx0exETUEjfCjE9PaVKicNXP3HPBaOLcABEZDA=;
-	b=imeiwhSiEIV5stgQrEcHY1JgjeL0s4RERD+a8flXzc/dh93+LqzPXnacZmyS0cGdVkKWXp
-	HcfaK+m58yCx69In33qCjRHk/d+cGv6Hw/yDodt8y+He48Vs6YSqNbtiHbHsG8WTUjeeRe
-	JS/qswnUSciG6DKF0VbHBuMFZuYyVH0=
-Message-ID: <6bf1a210-6597-4d97-9871-ff82b5aeff50@ixit.cz>
-Date: Sun, 15 Mar 2026 20:58:01 +0100
+	s=arc-20240116; t=1773610933; c=relaxed/simple;
+	bh=l49tgpINxgLlt4RIwK+onaV/lm+OjQDLgCOi7+pmJQ4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=AGKWBnxA3MeFcVEh3DXHux637EzJi9E2c74gSpqR3a0vsj/ap5t2Q1AMcBh2g2OQbMOmRShxL1OQoE5wKIRNLxnH3PAhbvXJsWBBsKRFfiZPeIU4bWUKowRC7sZyrwOCLKSW/RS3W/z154d7hNkTdyD6H6AeSvl264kXWzHh9Sw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PytlC6sr; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2ae3a2f6007so29639865ad.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Mar 2026 14:42:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773610931; x=1774215731; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=QGzlmojAeYWZ15xUYmvWFth9QXCu+msLbAW7T3Gc0xU=;
+        b=PytlC6sr+FRPibLnScYLnLPohLvZvsl+IAA3vdqPsblsxW9khBu1IqW5mimSbSyALL
+         KdrexN9j1HyhRLF3Z4ZlaH29qYNqZ5vDxBDj1b/USo7+IzoC7pyp6N5alMWG1BwTG/X7
+         5tiyk3pN71oEqO92Xhu8X4CrWfdkGUldn1o3oUUHXUN9yvkevLX1TGpjJqVrRIFKoHGJ
+         C9KHu3y7Xlqx8sG7T7RF4tluyJw0//4x+nb5kK8kJIZgO+KwcZj/K3F6JPu/vUgO4BUE
+         Sd8fhDbX8STp34hXxuukSuonOdylR0555wsitLq7eYxpEctqQZT4R98aIPoWT1Q/mxYh
+         ezHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773610931; x=1774215731;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QGzlmojAeYWZ15xUYmvWFth9QXCu+msLbAW7T3Gc0xU=;
+        b=gkzR2Al6Nr8YtNAlk+Fe4A1t4pbK8TzbD2bg52v1DRRFgXlqysafFzH3ZybURFUgbH
+         VEkzrmWlPqzvCNiyiRxov48zkUleotokseqdsVGhu3sxPcJlOez3qY7UecUjibbwz53L
+         rBgto72qUxxZPaCUY/ck63BYxHffPGiFXzjWY9rQR7NMNWA6PBU7TB15uBCAuQbnXbPx
+         vjnEUxFwYolTwWLt1KU7VeS0NyyHQxCmw5OPHPBo1Jo2l8/Qe/ZWxf/7F6f1uiGsoLpa
+         OpAXdNeKcm1rXLvHHdiXoN6GBrcyKSy3j+LRlollppp0n5RTbfG90ZL6VvnpQsMRAgz+
+         ht4A==
+X-Forwarded-Encrypted: i=1; AJvYcCUIEggak0gykMJjzDlBx/l3XGE6wpMS/CBRVidrB9o79qSzOiWtpIP2HGCoBF4j4mwm0vAgsBMW8F9CZ2Y3@vger.kernel.org
+X-Gm-Message-State: AOJu0YzmvVHIl1vCvi6MEAm2wkfF3rYZMaEJQps/5sLpUZE8smRv9X6I
+	o0+c6NBRlVcIB+NCdMXYqOLNJXGP9ZAQQuNgnGI1Rwevs/XDmee5U0D0
+X-Gm-Gg: ATEYQzzD7b8kM5yhBMEGCxzb1EfjdQYJOhErc3wBmKwvDg+Y7h6oW+PE6QoIM5EgeYt
+	nrgHB1EgsZioHseXeSmJH76x4/bCtJvC+cQqca3fIY3MTPpForYQ5WHBGTEDd2R2BBCSwV0BmgA
+	CTYP00TilQiasWiFY1ct5kcT1sd33HozuOkoNuWFvqy3avyoamyfzUArk0HnFl/J1VWaq/z1YHY
+	74EvtOddS4yU5+Lla4YRjc4WhvSNHokqs5tLgSlor7OEDctBn3DYfHihxsLyXtoFAi4f1+ifcQb
+	BZjNefnpQNPSTZxEKcKW9qMKebNTK/rTam1edoKM2MZJK3h6EKYXV3ltrsnMddjIQuFFwneJfVn
+	rT8oNicODm1SWapkVyn3oMI+UZy4jUcjCDDnvMrTa6IsXLkoyr/uLVJESjOsWel6+m9+Qhq1abb
+	/j12BvAvQMKQN83peH3czwHBfqFoB9hMqPK11BHNHfz2E7SH8xsFNMaQk=
+X-Received: by 2002:a17:902:d548:b0:2ae:5f65:171 with SMTP id d9443c01a7336-2aecab1ee59mr116748185ad.33.1773610931360;
+        Sun, 15 Mar 2026 14:42:11 -0700 (PDT)
+Received: from ryzen ([2601:644:8000:56f5::8bd])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2aece56c7b5sm94185815ad.9.2026.03.15.14.42.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 15 Mar 2026 14:42:10 -0700 (PDT)
+From: Rosen Penev <rosenp@gmail.com>
+To: linux-pm@vger.kernel.org
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	linux-arm-msm@vger.kernel.org (open list:QUALCOMM CORE POWER REDUCTION (CPR) AVS DRIVER),
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] pmdomain: qcom: cpr: simplify main allocation
+Date: Sun, 15 Mar 2026 14:41:53 -0700
+Message-ID: <20260315214153.3682-1-rosenp@gmail.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/6] arm64: dts: qcom: msm8917-xiaomi-wingtech: Add
- goodix touch
-To: =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20260315-riva-common-v3-0-897f130786ed@mainlining.org>
- <20260315-riva-common-v3-3-897f130786ed@mainlining.org>
-Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <20260315-riva-common-v3-3-897f130786ed@mainlining.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[ixit.cz,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[ixit.cz:s=dkim];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-97743-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	TAGGED_FROM(0.00)[bounces-97744-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	DKIM_TRACE(0.00)[ixit.cz:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	NEURAL_HAM(-0.00)[-1.000];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCPT_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[david@ixit.cz,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[11];
+	FROM_NEQ_ENVFROM(0.00)[rosenp@gmail.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	NEURAL_HAM(-0.00)[-0.999];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: 2B2CA292475
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 80C38292ABF
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 15/03/2026 17:26, BarnabÃ¡s CzÃ©mÃ¡n wrote:
-> There are variants from MSM8917 wingtech xiaomis what
-> are using goodix touch controller instead of focaltech.
-> Add goodix node for make it able to use touch on all
-> variants.
-> 
-> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
-> ---
->   arch/arm64/boot/dts/qcom/msm8917-xiaomi-wingtech.dtsi | 16 ++++++++++++++++
+Remove kcalloc by using a flexible array member to combine allocations.
 
-The file is not in the linux-next or linus tree.
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+---
+ drivers/pmdomain/qcom/cpr.c | 13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
-If this patch depends on another series, it should be stated here and preferably 
-also reference (can be done with b4 tool).
-
-David
-
->   1 file changed, 16 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8917-xiaomi-wingtech.dtsi b/arch/arm64/boot/dts/qcom/msm8917-xiaomi-wingtech.dtsi
-> index 714e75de014b..69eda5f42c06 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8917-xiaomi-wingtech.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8917-xiaomi-wingtech.dtsi
-> @@ -102,6 +102,22 @@ edt_ft5306: touchscreen@38 {
->   
->   		status = "disabled";
->   	};
-> +
-> +	goodix_gt911: touchscreen@5d {
-> +		compatible = "goodix,gt911";
-> +		reg = <0x5d>;
-> +		interrupts-extended = <&tlmm 65 IRQ_TYPE_LEVEL_LOW>;
-> +		irq-gpios = <&tlmm 65 GPIO_ACTIVE_HIGH>;
-> +		reset-gpios = <&tlmm 64 GPIO_ACTIVE_HIGH>;
-> +		pinctrl-0 = <&tsp_int_rst_default>;
-> +		pinctrl-names = "default";
-> +		AVDD28-supply = <&pm8937_l10>;
-> +		VDDIO-supply = <&pm8937_l5>;
-> +		touchscreen-size-x = <720>;
-> +		touchscreen-size-y = <1280>;
-> +
-> +		status = "disabled";
-> +	};
->   };
->   
->   &pm8937_gpios {
-> 
-
+diff --git a/drivers/pmdomain/qcom/cpr.c b/drivers/pmdomain/qcom/cpr.c
+index 3ee8184e4be3..c30690ef6919 100644
+--- a/drivers/pmdomain/qcom/cpr.c
++++ b/drivers/pmdomain/qcom/cpr.c
+@@ -239,7 +239,6 @@ struct cpr_drv {
+ 	u32			gcnt;
+ 	unsigned long		flags;
+ 
+-	struct fuse_corner	*fuse_corners;
+ 	struct corner		*corners;
+ 
+ 	const struct cpr_desc *desc;
+@@ -247,6 +246,8 @@ struct cpr_drv {
+ 	const struct cpr_fuse *cpr_fuses;
+ 
+ 	struct dentry *debugfs;
++
++	struct fuse_corner	fuse_corners[];
+ };
+ 
+ static bool cpr_is_allowed(struct cpr_drv *drv)
+@@ -1600,19 +1601,15 @@ static int cpr_probe(struct platform_device *pdev)
+ 	if (!data || !data->cpr_desc || !data->acc_desc)
+ 		return -EINVAL;
+ 
+-	drv = devm_kzalloc(dev, sizeof(*drv), GFP_KERNEL);
++	drv = devm_kzalloc(dev,
++			struct_size(drv, fuse_corners, data->cpr_desc->num_fuse_corners),
++			GFP_KERNEL);
+ 	if (!drv)
+ 		return -ENOMEM;
+ 	drv->dev = dev;
+ 	drv->desc = data->cpr_desc;
+ 	drv->acc_desc = data->acc_desc;
+ 
+-	drv->fuse_corners = devm_kcalloc(dev, drv->desc->num_fuse_corners,
+-					 sizeof(*drv->fuse_corners),
+-					 GFP_KERNEL);
+-	if (!drv->fuse_corners)
+-		return -ENOMEM;
+-
+ 	np = of_parse_phandle(dev->of_node, "acc-syscon", 0);
+ 	if (!np)
+ 		return -ENODEV;
 -- 
-David Heidelberg
+2.53.0
 
 
