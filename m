@@ -1,104 +1,43 @@
-Return-Path: <linux-arm-msm+bounces-97886-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97887-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id EJKoI5rTt2n0VgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97886-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 10:55:38 +0100
+	id CLXgDDPUt2n0VgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97887-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 10:58:11 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0F1AC2977B9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 10:55:38 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id C9EA6297899
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 10:58:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id A24093090095
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 09:48:48 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 993FF3099212
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 09:51:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4666C39023B;
-	Mon, 16 Mar 2026 09:46:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AMNRTUwm";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="VlL2B0Ol"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A49B38E126;
+	Mon, 16 Mar 2026 09:50:51 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFD1F38F64E
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 09:46:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27A4D38E11F;
+	Mon, 16 Mar 2026 09:50:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773654416; cv=none; b=LU9tV4r7Hd5FcdY7P6YCuU5+n39tx9BsPwVR7tOHM7mhIuReycA3XOJXUr9qAyKhaIpLr//zQSlPwqiHxHXc916mqChLIP9m4C5TD6SZgojEY4e20mAuP4UikaUPBVb/XaFx14H3de1Qm+PkPSeWkZ7mopttXUbKF89RKcpS+5g=
+	t=1773654651; cv=none; b=dM1Fcq7OUWE+ADhVQWpfyNmoZTBGXUG2Z/yGwMD6p3rjPzF6Plipr0SdWumjnrMHxP1M3Uv92g+dfyKZdgz0uNiqJaEqwi5nIRwVKvmewfUF2bS5m4m5OLPWhhfQ89HD6DnBaDfKnVxhs2z2d8Cy/dqATug1ppGcnAOl1K7r9pc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773654416; c=relaxed/simple;
-	bh=5GAIeFCS0uUPv2PKBNS/6Rzen3mfcjnDIRp5SqOEd4c=;
+	s=arc-20240116; t=1773654651; c=relaxed/simple;
+	bh=PqA5IV4bBfivPPpAKgL2UMU1yNVHj70TuOWi6O1SY1w=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ksI4Ga+GC53yy8vpoWg3hFl9XmQEnDOFAHxqxDCkbSrgQ56SmpfGDDML6Jg0msVVlEe64SD2IXotqPcXwNTAY9aUkzNed+Fb4lPF9Xnv0vZ1zOCMFwv4lZugQuckmnf7SkQFyrfkzYAtQWkqSKVTD+jX07iaep7Dd2HiwUwhUQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AMNRTUwm; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=VlL2B0Ol; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62G7n27S041951
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 09:46:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	xGZEmgt8LPoPXTKdramnEFd7yZk6ZE7MCzHzNUdrRCE=; b=AMNRTUwma2/9IaeH
-	bhQbeiAOg6wVPg+ZoBY3OsJG18ZcZBfk7PTWVMNihK04XX8qfQ9e/1UGleaTNLVu
-	PFVSxBTBwPXD1vu8TzOSue0qk3xB/egG3rvTqE6C9+0sTixg6dgloz9+aU5fga7r
-	zIO2TCs7GJohbO/gFOWsiges1KCkuVy7etOnDAPMcrulHg63jpSl8Bs+SaSA9eCQ
-	ZK0O63a9WuSEhBBSEMR3Oz2hl7g/kT0epWeU50EPS59X5uO7/vcmR0zmOX75NWEc
-	cP7V3bc8DcQcEKLkA2g3A5RoET2BmGQC0MrvHu40CwekY2tR4pd7br6chi9O3xUB
-	TZxJVQ==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cxdt80dsv-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 09:46:54 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-89a04e9d4faso35460426d6.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 02:46:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1773654413; x=1774259213; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xGZEmgt8LPoPXTKdramnEFd7yZk6ZE7MCzHzNUdrRCE=;
-        b=VlL2B0Ol3dngjeW5xO3YCotO9cWt3Z7eVQ1jFabFA9ihS+ihCcS+lwrYJO7dzKtt5w
-         b3qaqVf6X/v13B7M8y8/zpyC0PJQ2mW/MtuHjYOA8cS3Lt0VzT7eXMtTB7V0TZvFJDoD
-         qg0ajbAGype4P5LJY7pASOvE8n6ll0YS7u8tG6MzS2o4dhWaPGznAVSctTTNpfuW9bwv
-         DGV/pmkdwPhOCgCiqt6p/abEtI9RElMgnyewRjifJoMjuPABtbRl4RtLp+8d9Jby3Sfq
-         NrBP0Nbcw0Ovt2UwVnGMmpI7jLHBi/MIJwOuyUizd0D2ihZRMwjKddCcdS8N4YqtQ1we
-         MlTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773654413; x=1774259213;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xGZEmgt8LPoPXTKdramnEFd7yZk6ZE7MCzHzNUdrRCE=;
-        b=Yc36WtRkoM/B/oQW7PHcSCShs33mXKVEEaG++FgK2xKaE/6MadL7NQwNvS3bjJOWNI
-         V/Aoy332h7+/T/QbjUHrvNKjwgfnuUZ3ADcwwqchJHRKQf/zESizQWpI+LltNaDiey0c
-         6MtBdNzwLwVGYahSxjZCS4SIqab9wLQcaEwM/K+8Wm+rqkkgl3stF2etjsWDTNiN8GXP
-         Ii0729Gab6eGmEGbVZ1HmvXgt71ieikUodCytTsD4an2HwNXnQ1vwLeSSanqvM2N3Nhx
-         fboyUnU3snBdFh3Z6TF/HyPw0Udafc6WL8xdkOYmpEB7aITnRp8YSm0ZmiVZ7BeiQveb
-         lIvw==
-X-Gm-Message-State: AOJu0YwpneBJW6g5n4rd6TjlzfbgAGidjzMJ1khZC/DOnF86kDHw2Tz1
-	EvQ99w6bTfFXKxNrtJaU63rJO7wGd6L7yvwHXJwwfuCTDuwSwz2SBjizVJZ8Xanj1+qhammcl/s
-	M0aNEX70Llr+STP8ckyD81u3BYOZBlm/kkZ7ph15I+/oEbxlSM/Lbp6V/k16JZXr6Ju9T
-X-Gm-Gg: ATEYQzx84Miv/hY1DxnAI+uN0qVq3P98wYvMOTNflgNA4yMYQt3Bi8PyzqJgU/lpWTN
-	6laIU9N3NljvD5dJikiNff2crNNw+WdgL11od83YjULVaz9arV4Lbo+K/2xVCswyy5Wepauqu65
-	iFKQ1nAZvrQ0yvZC1FnbDzLBkKT2WNCAls45BfjrtksWn/w83S2jLh2L886LRWnuc1S1743F6hn
-	xypeJgVqrE/rfLIBkFGSRYpaY88OWyuXh2OTa769uIvQA5m1Bc5SLb6oWKxGwplaIheqHz33rSx
-	5g3XVyFBVG8l0nN0x5/cCTS3RZKwwv9YhOo/QAWC6CprfYCHet3OpEJwBMp53Q75BU3oqRNHJ1Z
-	Y5iRHtTDGohjZV+5RUQd0HRa7Mj7pB7lADDvMSVcP9uii0gLSzZgK2q8edLJseb4Xj6YHmm/c7N
-	KS/ZU=
-X-Received: by 2002:a05:6214:601c:b0:89a:6263:feae with SMTP id 6a1803df08f44-89a81cce148mr121904536d6.2.1773654413458;
-        Mon, 16 Mar 2026 02:46:53 -0700 (PDT)
-X-Received: by 2002:a05:6214:601c:b0:89a:6263:feae with SMTP id 6a1803df08f44-89a81cce148mr121904266d6.2.1773654413056;
-        Mon, 16 Mar 2026 02:46:53 -0700 (PDT)
-Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b97ae89ebc4sm237981866b.34.2026.03.16.02.46.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Mar 2026 02:46:52 -0700 (PDT)
-Message-ID: <c89449b8-f28c-4364-a1be-5267f0d99c01@oss.qualcomm.com>
-Date: Mon, 16 Mar 2026 10:46:48 +0100
+	 In-Reply-To:Content-Type; b=JjJ1mt9H6dt4mLvDesJBbmh8f6cti+i8gA3QDWLwlRfFaOaeSU1nzo4gMRbUFyM3+RVmwmGR5oexz5OztG09FfLfW1aMMWVm7KhQmu3evXSLmDBAWL0/lHaUUuMj9AVv55khpeDpccX//GnN8Cw6Ma8oaGbAeSveMPzTNXBBn2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 866331477;
+	Mon, 16 Mar 2026 02:50:42 -0700 (PDT)
+Received: from [10.1.28.15] (e127648.arm.com [10.1.28.15])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D56AE3F778;
+	Mon, 16 Mar 2026 02:50:46 -0700 (PDT)
+Message-ID: <3d56b0db-7ece-48f7-ba59-fb1679aee804@arm.com>
+Date: Mon, 16 Mar 2026 09:50:44 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -106,131 +45,120 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/9] pinctrl: qcom: Introduce IPQ5210 TLMM driver
-To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Linus Walleij <linusw@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Robert Marko <robimarko@gmail.com>,
-        Guru Das Srinagesh <linux@gurudas.dev>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-mmc@vger.kernel.org
-References: <20260311-ipq5210_boot_to_shell-v1-0-fe857d68d698@oss.qualcomm.com>
- <20260311-ipq5210_boot_to_shell-v1-4-fe857d68d698@oss.qualcomm.com>
- <05a1dcfc-7df1-4b20-a504-468814a87b3d@oss.qualcomm.com>
- <1eef0fc0-d33a-452a-9da5-3d0903b1712f@oss.qualcomm.com>
+Subject: Re: [PATCH] cpuidle: Deny idle entry when CPU already have IPI
+ interrupt pending
+To: Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>,
+ Maulik Shah <maulik.shah@oss.qualcomm.com>,
+ "Rafael J. Wysocki" <rafael@kernel.org>,
+ Daniel Lezcano <daniel.lezcano@kernel.org>,
+ Ulf Hansson <ulf.hansson@linaro.org>
+Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+References: <20260316-cpuidle_ipi-v1-1-d0ff6350f4e2@oss.qualcomm.com>
+ <39ffe4f6-5716-400d-963b-06675a727225@arm.com>
+ <ba23f8c8-a842-4498-b52f-528baed62325@oss.qualcomm.com>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <1eef0fc0-d33a-452a-9da5-3d0903b1712f@oss.qualcomm.com>
+From: Christian Loehle <christian.loehle@arm.com>
+In-Reply-To: <ba23f8c8-a842-4498-b52f-528baed62325@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 681uRFjfuGCTxeXLcP3qxOl3im04lMgT
-X-Authority-Analysis: v=2.4 cv=CKInnBrD c=1 sm=1 tr=0 ts=69b7d18e cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=EUspDBNiAAAA:8 a=-I31x9S0JgnQQLvGL8gA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=1HOtulTD9v-eNWfpl4qZ:22
-X-Proofpoint-ORIG-GUID: 681uRFjfuGCTxeXLcP3qxOl3im04lMgT
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE2MDA3NSBTYWx0ZWRfXx9WBiugNcbAQ
- 2FighMdOEnUhZhsU7CrmRfVy4yqqPmUZCVVyAIadCXVMYZhTK9XGzITIKvERZSpRhHarea+DQPv
- R2HKgw7eng8CicuBsjYrhCaDvXb/kP9JiKv5jxsk27S8izITNfJdVHPye2YJ3JFn+lCZDYMc2Eq
- JTqSXJt9h3zc7soJUHhDFIac+MGpDt39JCrOCWYNW2e4Ljk1vziTvSSvUy3WsurRbtbMqWtIyUb
- Y8M3XvLyfINEq8XDMrk5hRUhekJxBxBD/m1EhtnINAs9oxTfXU0P3/AgWXLnkfCOM8I5LbzSC/h
- WLeH1xhikmrvegBHN8fPFR2ztb6DdILkht6pCn1MQRDBWg9fHEJtLJV84BWE6F4OHjs+KAUHVPf
- DUxS8Us3C0U2fqdEJbKBbG0G3bdRmhXuB9+/FlOEQOInRmV84GPav1yB+V3hrIPbl/RCLrH0Ov9
- Knxa1enH/BKIfmmZJow==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-16_03,2026-03-13_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 lowpriorityscore=0 phishscore=0 priorityscore=1501 bulkscore=0
- adultscore=0 impostorscore=0 suspectscore=0 spamscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603160075
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-1.36 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
+	DMARC_POLICY_SOFTFAIL(0.10)[arm.com : SPF not aligned (relaxed), No valid DKIM,none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-97886-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,qualcomm.com:dkim,qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,baylibre.com,pengutronix.de,linaro.org,gmail.com,gurudas.dev];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-97887-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[19];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 0F1AC2977B9
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MID_RHS_MATCH_FROM(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[christian.loehle@arm.com,linux-arm-msm@vger.kernel.org];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	R_DKIM_NA(0.00)[];
+	NEURAL_HAM(-0.00)[-0.939];
+	RCPT_COUNT_SEVEN(0.00)[8];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,arm.com:mid]
+X-Rspamd-Queue-Id: C9EA6297899
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 3/16/26 9:58 AM, Kathiravan Thirumoorthy wrote:
-> 
-> On 3/13/2026 6:24 PM, Konrad Dybcio wrote:
->> On 3/11/26 10:45 AM, Kathiravan Thirumoorthy wrote:
->>> Qualcomm's IPQ5210 SoC comes with a TLMM block, like all other platforms,
->>> so add a driver for it.
+On 3/16/26 09:32, Daniel Lezcano wrote:
+> On 3/16/26 09:55, Christian Loehle wrote:
+>> On 3/16/26 07:37, Maulik Shah wrote:
+>>> CPU can get IPI interrupt from another CPU while it is executing
+>>> cpuidle_select() or about to execute same. The selection do not account
+>>> for pending interrupts and may continue to enter selected idle state only
+>>> to exit immediately.
 >>>
->>> Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+>>> Example trace collected when there is cross CPU IPI.
+>>>
+>>>   [000] 154.892148: sched_waking: comm=sugov:4 pid=491 prio=-1 target_cpu=007
+>>>   [000] 154.892148: ipi_raise: target_mask=00000000,00000080 (Function call interrupts)
+>>>   [007] 154.892162: cpu_idle: state=2 cpu_id=7
+>>>   [007] 154.892208: cpu_idle: state=4294967295 cpu_id=7
+>>>   [007] 154.892211: irq_handler_entry: irq=2 name=IPI
+>>>   [007] 154.892211: ipi_entry: (Function call interrupts)
+>>>   [007] 154.892213: sched_wakeup: comm=sugov:4 pid=491 prio=-1 target_cpu=007
+>>>   [007] 154.892214: ipi_exit: (Function call interrupts)
+>>>
+>>> This impacts performance and the above count increments.
+>>>
+>>> commit ccde6525183c ("smp: Introduce a helper function to check for pending
+>>> IPIs") already introduced a helper function to check the pending IPIs and
+>>> it is used in pmdomain governor to deny the cluster level idle state when
+>>> there is a pending IPI on any of cluster CPUs.
+>>>
+>>> This however does not stop CPU to enter CPU level idle state. Make use of
+>>> same at CPUidle to deny the idle entry when there is already IPI pending.
+>>>
+>>> With change observing glmark2 [1] off screen scores improving in the range
+>>> of 25% to 30% on Qualcomm lemans-evk board which is arm64 based having two
+>>> clusters each with 4 CPUs.
+>>>
+>>> [1] https://github.com/glmark2/glmark2
+>>>
+>>> Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
 >>> ---
->> [...]
->>
->>> +static const char *const Led00_groups[] = {
->> odd uppercase
-> 
-> 
-> Yeah,  in HW document also only this name has the uppercase. So I just left it to align with the HW document. Do you prefer to change it to lower case to maintain consistency?
-
-Yes, please - I would assume the original author had made a typo and
-didn't really intend to have a single random occurrence of an uppercase
-letter
-
-> 
-> 
->>
->>> +    "gpio23",
->>> +};
+>>>   drivers/cpuidle/cpuidle.c | 3 +++
+>>>   1 file changed, 3 insertions(+)
+>>>
+>>> diff --git a/drivers/cpuidle/cpuidle.c b/drivers/cpuidle/cpuidle.c
+>>> index c7876e9e024f9076663063ad21cfc69343fdbbe7..c88c0cbf910d6c2c09697e6a3ac78c081868c2ad 100644
+>>> --- a/drivers/cpuidle/cpuidle.c
+>>> +++ b/drivers/cpuidle/cpuidle.c
+>>> @@ -224,6 +224,9 @@ noinstr int cpuidle_enter_state(struct cpuidle_device *dev,
+>>>       bool broadcast = !!(target_state->flags & CPUIDLE_FLAG_TIMER_STOP);
+>>>       ktime_t time_start, time_end;
+>>>   +    if (cpus_peek_for_pending_ipi(drv->cpumask))
+>>> +        return -EBUSY;
 >>> +
->>> +static const char *const led01_groups[] = {
->>> +    "gpio39",
->>> +};
->>> +
->>> +static const char *const led02_groups[] = {
->>> +    "gpio6",
->>> +};
->> What do these 'ledN[012]' functions represent? Are they muxes for
->> getting activity/status signals for eth/wlan ports?
+>>>       instrumentation_begin();
+>>>         /*
+>>>
+>>> ---
+>>> base-commit: b84a0ebe421ca56995ff78b66307667b62b3a900
+>>> change-id: 20260316-cpuidle_ipi-4c64036f9a48
+>>>
+>>> Best regards,
+>>
+>> So we already do a per-CPU IPI need_resched() check in the idle path.
 > 
+> The need_resched() is not the same check. Here the interrupts are off, the test check if there is a pending IPI before entering the sleep routine which will in any case abort because of it. This check saves the costs related to preparing entering the idle state, the call to the firmware and the rollback. Those add an overhead in terms of latency and energy for nothing. As stated in the description, this ultimate check before going idle was introduced also for the cluster idle state and showed a significant improvement [1].
 > 
-> Yes, that's right. These LED functions used for the eth/wlan status.
-
-Can we better group them, e.g. into threes in 'led[012]' functions?
-(or whichever way they're coupled?)
-
-Konrad
+> [1] https://lore.kernel.org/all/20251105095415.17269-1-ulf.hansson@linaro.org/
+So I didn't mean this as "it's unnecessary", but it did make me question how big
+the "performance" impact of this really is, in particular for per-CPU idle states (i.e.
+at most sleep / powerdown for you?)
+But if this is only about cluster states (The original patch wasn't really clear on that?)
+then one issue is that the non-pmdomain case (e.g. psci PC-mode) we don't actually know
+what a cluster is and therefore which CPUs to check for pending IPIs, right?
 
