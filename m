@@ -1,249 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-97758-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97760-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id kEOfHtNYt2nQQAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97758-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 02:11:47 +0100
+	id MAz2DiNZt2nQQAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97760-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 02:13:07 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D936A2934B4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 02:11:46 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB80E2934F8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 02:13:06 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A52A330115AA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 01:11:43 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 918A4301413B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 01:12:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0998E1F12E0;
-	Mon, 16 Mar 2026 01:11:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EE8E231A41;
+	Mon, 16 Mar 2026 01:12:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="CUhMUAGe"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oKuHhdOo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2C54CB5B;
-	Mon, 16 Mar 2026 01:11:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B4FB176FB1
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 01:12:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773623502; cv=none; b=WVK9Ixi406MS2jczcVzAqOstlyT1p/xT8mdrycmDlZBPppckPwCsv1Osj6dmqGBsULiqUUXTY9oPyMrHi4Den2ehBuZR+TbWFLanVAhuOANbpzXX2aF4TMwcNlQCgY0XrWbgGOYFD7r5k5Zn3N5cQu3X2CBaWrAlOk43jX10kJo=
+	t=1773623574; cv=none; b=Umfcw51KNpxxNI17BAgsioKTHzo41GY+nC01nZM9hy6pIXdontp2aeKDxRl/RSr5o2rX09JoofVnbMaO8PceE8jRpiWRD9FvvFeKADxILdap2Vg+gdhej2vzpUer5H+cc3S6nlgHpLb0UAOHLwWBA8ytlXBrAG9W52wBCB7VDDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773623502; c=relaxed/simple;
-	bh=ZK2gOS7KzWSBWZYEGA0gRr9SzqhenigYWzus2OduNP8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SpLmmME8Hl+Vjq1xlnMDQRXYM+4odETUIfzripQnHxHSV5bcYnqdDq9WLv/1kO6w+q5jYA9iwgcgBnxEakFXgdEYErbPRHChHd7ZHYL5u+1M2vF/8TLMVMyhogSoAzdOH0HfS51k3ROPXvjuI7l6TnUxLFAH/hUr/vBaMog+jHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=CUhMUAGe; arc=none smtp.client-ip=78.32.30.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=HXOdXMtQPkX3JhHjejsDb3lWeyiFtHpKaRrKgt4OkHc=; b=CUhMUAGeYZEJFOoF7gMbHrExvU
-	w+T8qqlDYDUp2Sxo9ZNprsUpT8PRMjHgQrXFSHOYMEADRouvXCsT9ye2bXZmejFsZ2sGxvQLtTddU
-	cmaT5xqO5qMVnKTy37T6NelRwqMp5y134Rr0Epn14n/AqQ+c+uNQv1XEF34wDRVYyp4zGa1r2wnDw
-	jgMGWEEMmRoA1a2PlGki0k847nu75Mt4N5WjOGGguP23ZV9IncgX8lCURAr4wicQ/nAB2hNF5zdok
-	IfkZCnKnDBeGUZ1KOPXuos2VKJnlS+t6ZzWYsWYfuxb7MfKHlv/JMfv38xxmYLi48xoBkY+P8funr
-	M1rYCDNg==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:56306)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1w1wUS-000000003AQ-0pDz;
-	Mon, 16 Mar 2026 01:11:28 +0000
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1w1wUN-000000004bS-1Asp;
-	Mon, 16 Mar 2026 01:11:23 +0000
-Date: Mon, 16 Mar 2026 01:11:23 +0000
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
-Cc: Andrew Lunn <andrew@lunn.ch>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com, netdev@vger.kernel.org,
-	Paolo Abeni <pabeni@redhat.com>, Vinod Koul <vkoul@kernel.org>
-Subject: Re: [PATCH net-next 0/8] net: stmmac: improve PCS support
-Message-ID: <abdYu864OmNWiWIW@shell.armlinux.org.uk>
-References: <abQC7r38QLhSeadl@shell.armlinux.org.uk>
- <abdEscs44fU4kRag@oss.qualcomm.com>
+	s=arc-20240116; t=1773623574; c=relaxed/simple;
+	bh=lleP+dZ1M4ikI3wkRvrhCVjSquc05hbvVS1eFDvgTjw=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=OTt7y5wWZnufV7puFPajoW8QZtauaq0J1JryQRojpdHA+sy1wf/B4w5eP5zCUdyoB2f7gIIwCtyluGRaPVB3y7URwO6VMrvQuoUcEyyAwtTS0pcr1DTydNN3anjLqfVSLPBuxWptaDn7xL8HNreFXLOut9gpfAazkwIOvIhjA+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oKuHhdOo; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-48538c5956bso37394605e9.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Mar 2026 18:12:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1773623570; x=1774228370; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=EChIGu/DeO6fv3NYyMOGMCFtawKChx/oOawWgYiN6CI=;
+        b=oKuHhdOohXwtv2eKFeKNwSM6UcW/MX9nKhsLonmrxH9K6HoNYmiIRbCQ4zKchLJ/5j
+         uULE6Jb66Up9Zdy2WnfrHFYRc5gTEm7n4Ux+FXoPhC7vkm8x14MZIc6+DZ2V4lYDKUFf
+         ozKaz7FzKqrzhZkyGe5a+AukeJPIitmuVP7+1S871x3MEO3E2h3+aBg8szJLTCB17/Eh
+         FNaUkGmHwb43B1RxNTzH8OIC2Nzt+0y10hZdSzexvAkaY/sgJvPkyR2VcWJn637q5DGT
+         QB9X4DplSuWDZGBKf9AifOqQeKWz0kMc6C1TrRkAEqkJUwnyMuiEiSS4POc/rUMy5/V1
+         99yQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773623570; x=1774228370;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EChIGu/DeO6fv3NYyMOGMCFtawKChx/oOawWgYiN6CI=;
+        b=D4Ts+WS+mVsJHd3b+7xBgu41NuBnYP1pZfq9gkjStEQS4YpeLmgJElOfwHWgEF5ejd
+         hmfbNAhaRceV1bcPckkCEtcbPhbLw8Kb2LDwlHUeCRwOpeyKUDPBGzxDFAXjNGtLsy0g
+         Dh8d7fknv2o3L83v4yFubbKD2dTwrk5DpjFQ22rxYMDQnCfz/jOJhjXLnlVH7SUFbImC
+         oGRbwyheRqfkD9aYpwosWazRqURM42if+eHDeHnCmRCgic0iWVg1jEoUvs5q9diUQy0H
+         w18V4kZgZT/FsMC7mj0wJakxo6EcVUW1LwwNBYEMGXrZlqzuBhvhimjSQL6v3U7U3d2D
+         mjNA==
+X-Gm-Message-State: AOJu0YyMapKSZw4s4mOoeJKBpNEn+pawIhz+Viz/WrLY8hDLIUzu7jwm
+	YvaUqLeMBOeNm5tBtwOLNq8eX59KH6ck/B/7Xe8omon2eIxVqpGD9kZo6V0DmJT/rJs=
+X-Gm-Gg: ATEYQzxPlzla5eoJ6FzF3KxQ6RfoRViZvW0si2rwt4JpH98IFcdmMhoHwDA0llh+yYa
+	sd0rI8wBhpp680FFU9yc66avXShxkD4W44Jwy4s8M2lKyhZ4tHlUtAgNtk0J3Blb7y5FPTSYZZU
+	hy+Ub5iyoig+DPDpNZc0XZSZFkTfP9yVLVIytdZin6BqmwpPam3pOw34XRcp/Wo7UK2v9unlP0e
+	OT+ovPUueX+r0iL2FIqvTSNKV7xWgx0Wtsg7tUO63O77ySBvX9n58OitdYcJfa775dyYStzyGUW
+	ZTTnuzOl9FSi1Vhr89YJc7qQccg01aOYOER8/cK+tsyuz1tNWrWFIaRNVwBrU207fVwnXbT4jKQ
+	wNmpRTyCEQJhRE0DJ6bqIx2O2jHIR7xZl13Boy2iXZgbN5AZxhcFsWdBU5gmno29vUcxs41OXPw
+	oQPXbBTOY1PaIVEuPm6us3sfJ61hyp4k1LriXo3kNzsqbudQ==
+X-Received: by 2002:a05:600c:6290:b0:485:33b7:573d with SMTP id 5b1f17b1804b1-48555ab0a59mr164645265e9.1.1773623570493;
+        Sun, 15 Mar 2026 18:12:50 -0700 (PDT)
+Received: from [192.168.0.35] ([109.76.190.215])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48541aba60esm560918225e9.5.2026.03.15.18.12.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 15 Mar 2026 18:12:50 -0700 (PDT)
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: [PATCH v2 00/11] arm64: dts: qcom: Add x1e/Hamoa camera DTSI
+Date: Mon, 16 Mar 2026 01:12:42 +0000
+Message-Id: <20260316-x1e-camss-csi2-phy-dtsi-v2-0-859f3fa55790@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <abdEscs44fU4kRag@oss.qualcomm.com>
-Sender: Russell King (Oracle) <linux@armlinux.org.uk>
-X-Spamd-Result: default: False [1.14 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAtZt2kC/4WNTQ6CMBBGr0Jm7ZgyAqIr72FY1P7AJEpJhxAI6
+ d2tXMDle8n3vh3ERXYC92KH6BYWDmMGOhVgBj32DtlmBlLUKKIG19Kh0R8RNMKE07ChnYWxJtP
+ WRtnK6hbyeorO83qUn13mgWUOcTuOlvJn/zeXEhX6i79a61++rW6PN486hnOIPXQppS+I5B8qv
+ wAAAA==
+X-Change-ID: 20260226-x1e-camss-csi2-phy-dtsi-52c85c0d4da8
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2169;
+ i=bryan.odonoghue@linaro.org; h=from:subject:message-id;
+ bh=lleP+dZ1M4ikI3wkRvrhCVjSquc05hbvVS1eFDvgTjw=;
+ b=owEBbQKS/ZANAwAKASJxO7Ohjcg6AcsmYgBpt1kYDZ6WAnxPpBqK4qVACaucAJejpSL3IzsIs
+ s6oTaU0zfyJAjMEAAEKAB0WIQTmk/sqq6Nt4Rerb7QicTuzoY3IOgUCabdZGAAKCRAicTuzoY3I
+ Om2fEACDnVnD3Zl+/vXNgwlXz8Ot9/EL3ecL/oupZkpkWsQPVqXye9HDe9lkbv2sAQdq1HaWNNd
+ SAvhph0ymH5xBE3lSVBh8CJP5JCvTGHAYKy7sTNFG79dgX6PGHQdtaVEzpg0JTXZL7gQTWH2EuM
+ 3kxYjxgIkSq8YaV32veawrOb1sKTvzEwmEkWrE0E/6fzwZFo/Yy3MxJ6FYF5RwjF5BVA5BZ1LAb
+ qmwx1leujUw2qr6gWABUuYacBPW5EhepX8Y/tXy7LEX2brl+O6SS+/k2EJspbUzbignfZ58ekdE
+ mZepGNl5G1nzPTTd7UBy5M+rU87EkkUD3o6AWdy8IqbxyQxetK+bG4IAf+zMZCgIf5IHdYlIV8o
+ qbp4ZEM28k4+ZOBG/UTdR1IE4vrluVO3KAfrt7jIY31aBFcOmCbRzo+fqToTKVwJLZH5AUwshGP
+ af5+FqtiUQVAf7cVR8I19qrGBplyWmVMUfQPETSrsTn5WpFLWaZhBTLL1636TZrg8ba0qCWOqJx
+ SLKEcYgYNC0Se1TrBZVL1Q18uvP9FrMNBcndqOnvyle4cnHpqwkR6G8yfgZQgYIO7klum/LsW3x
+ 5h+JqBtf7UDL0+gy39x28iDN6Zlz/k51K+640WTPp8ClMFbPQZQ1Z4i+qjkZTbacYLaspmJW3qE
+ NGXWeGbfIB3cpKg==
+X-Developer-Key: i=bryan.odonoghue@linaro.org; a=openpgp;
+ fpr=E693FB2AABA36DE117AB6FB422713BB3A18DC83A
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_DKIM_REJECT(1.00)[armlinux.org.uk:s=pandora-2019];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
-	DMARC_POLICY_SOFTFAIL(0.10)[armlinux.org.uk : SPF not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-97758-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[armlinux.org.uk:-];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	FREEMAIL_CC(0.00)[vger.kernel.org,linaro.org,oss.qualcomm.com,gmail.com];
 	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-97760-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[linaro.org:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
-	FROM_NEQ_ENVFROM(0.00)[linux@armlinux.org.uk,linux-arm-msm@vger.kernel.org];
 	PRECEDENCE_BULK(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	NEURAL_HAM(-0.00)[-0.914];
-	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,shell.armlinux.org.uk:mid,armlinux.org.uk:url]
-X-Rspamd-Queue-Id: D936A2934B4
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,linaro.org:dkim,linaro.org:email,linaro.org:mid]
+X-Rspamd-Queue-Id: AB80E2934F8
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Mon, Mar 16, 2026 at 05:15:53AM +0530, Mohd Ayaan Anwar wrote:
-> Hi Russell,
-> 
-> 1. On QCS9100 Ride R3, the mdio subnode is only defined for ethernet0
->    (see lemans-ride-ethernet-aqr115c.dtsi). ethernet1 uses ethernet0's
->    MDIO bus, so plat_dat->mdio_bus_data is NULL for ethernet1. Therefore,
->    we get:
-> 	[    9.205979] Hardware name: Qualcomm Technologies, Inc. Lemans Ride Rev3 (DT)
-> 	[    9.221071] pc : qcom_ethqos_probe+0xc4/0x478 [dwmac_qcom_ethqos]
-> 	[    9.221078] lr : qcom_ethqos_probe+0x7c/0x478 [dwmac_qcom_ethqos]
-> 	[    9.221080] sp : ffff800081aa37f0
-> 	[    9.221081] x29: ffff800081aa3860 x28: ffffcf84de69cfe8 x27: 0000000000000001
-> 	[    9.221084] x26: 0000000000000000 x25: ffff0000b4577c80 x24: ffff0000818fd010
-> 	[    9.221087] x23: ffff000ec7057628 x22: 0000000000000000 x21: ffffcf84ca2ce028
-> 	[    9.221089] x20: ffff0000818fd000
-> 	[    9.236975]  x19: ffff0000b3301740 x18: 00000000ffffffff
-> 	[    9.236977] x17: 0000000000000000 x16: ffffcf84dc4a5448 x15: ffff0000b3301ec5
-> 	[    9.236980] x14: 0000000000000000 x13: 0000000000000030 x12: 0101010101010101
-> 	[    9.236982] x11: 7f7f7f7f7f7f7f7f x10: 00000000001305b0 x9 : 0000000000000000
-> 	[    9.236984] x8 : ffff0000b3301780 x7 : 0000000000000000 x6 : 000000000000003f
-> 	[    9.236986] x5 : 0000000000000040 x4 : 0000000000000000 x3 : ffff0000818fd210
-> 	[    9.236988] x2 : 0000000000000017 x1 : 0000000000000000 x0 : 0000000000000001
-> 	[    9.236991] Call trace:
-> 	[    9.236991]  qcom_ethqos_probe+0xc4/0x478 [dwmac_qcom_ethqos] (P)
-> 	[    9.236994]  platform_probe+0x5c/0xac
-> 				...
-> 	[    9.343300] Code: 910a7000 f9400b21 f9010320 52800020 (39005420)
-> 	[    9.343302] ---[ end trace 0000000000000000 ]---
-> 
->    I added the following workaround:
-> 	--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-> 	+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-> 	@@ -765,7 +767,10 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
-> 			case PHY_INTERFACE_MODE_SGMII:
-> 					ethqos->configure_func = ethqos_configure_sgmii;
-> 					plat_dat->mac_finish = ethqos_mac_finish_serdes;
-> 	-               plat_dat->mdio_bus_data->default_an_inband = true;
-> 	+               if (plat_dat->mdio_bus_data)
-> 	+                       plat_dat->mdio_bus_data->default_an_inband = true;
-> 	+               else
-> 	+                       dev_err(dev, "plat_dat->mdio_bus_data is NULL");
-> 					break;
-> 			default:
-> 					dev_err(dev, "Unsupported phy mode %s\n",
+v2:
+- Defines CSIPHY as sub-nodes of CAMSS
+- Includes updated OPP tables for those PHYs
+- Fixes supply names for RGB sensor on slim7x
 
-This means we need to move default_an_inband out of mdio_bus_data.
+- Depends-on: https://lore.kernel.org/r/20260315-x1e-csi2-phy-v4-0-90c09203888d@linaro.org
+- Depends-on: https://lore.kernel.org/r/20260316-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v10-0-fdfe984fe941@linaro.org
+- Link to v1: https://lore.kernel.org/r/20260226-x1e-camss-csi2-phy-dtsi-v1-0-f3f7ddfbf849@linaro.org
 
-> 
-> 2. After working around issue 1, I hit the following:
-> 	[   27.822907] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-> 	[   27.831944] Mem abort info:
-> 	[   27.834832]   ESR = 0x0000000086000006
-> 	[   27.838693]   EC = 0x21: IABT (current EL), IL = 32 bits
-> 	[   27.844163]   SET = 0, FnV = 0
-> 	[   27.847320]   EA = 0, S1PTW = 0
-> 	[   27.850563]   FSC = 0x06: level 2 translation fault
-> 	[   27.855587] user pgtable: 4k pages, 48-bit VAs, pgdp=0000000134b1c000
-> 	[   27.862212] [0000000000000000] pgd=080000010185c403, p4d=080000010185c403, pud=0800000134884403, pmd=0000000000000000
-> 	[   27.873107] Internal error: Oops: 0000000086000006 [#1]  SMP
-> 	[   28.001619] Hardware name: Qualcomm Technologies, Inc. Lemans Ride Rev3 (DT)
-> 	[   28.008853] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> 	[   28.016001] pc : 0x0
-> 	[   28.018259] lr : phylink_pcs_an_restart+0x50/0x5c
-> 	[   28.023092] sp : ffff8000869fb900
-> 				...
-> 	[   28.185967] ---[ end trace 0000000000000000 ]---
-> 
->    This occurs due to pl->pcs->ops->pcs_an_restart being NULL. I added
->    the following workaround:
-> 	--- a/drivers/net/phy/phylink.c
-> 	+++ b/drivers/net/phy/phylink.c
-> 	@@ -1026,7 +1026,8 @@ static void phylink_pcs_an_restart(struct phylink *pl)
-> 			if (pl->pcs && linkmode_test_bit(ETHTOOL_LINK_MODE_Autoneg_BIT,
-> 							 pl->link_config.advertising) &&
-> 			    phy_interface_mode_is_8023z(pl->link_config.interface) &&
-> 	-		    phylink_autoneg_inband(pl->act_link_an_mode))
-> 	+		    phylink_autoneg_inband(pl->act_link_an_mode) &&
-> 	+		    pl->pcs->ops->pcs_an_restart)
-> 					pl->pcs->ops->pcs_an_restart(pl->pcs);
-> 	 }
+v1:
+Add the dtsi for 
+- CAMSS
+- CAMCC
+- CSIPHY
+- CCI
 
-Gah, should've added a pcs_an_restart() implementation.
+Add dts for RGB sensors on
+- x1 crd
+- Lenovo t14s
+- Lenovo Slim7x
+- Dell Inspiron 14p
 
-> 3. With the recent VLAN filter changes in net-next, ndo_open takes a long
->    time to complete as vlan_restore_hw_rx_fltr() tries to write filters
->    for all 32 indices. This board previously timed out once, but now
->    times out for each index. This is a separate issue unrelated to this
->    series but I added the following workaround to rule out any timing
->    issues.
-> 	--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_vlan.c
-> 	+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_vlan.c
-> 	@@ -158,7 +158,8 @@ static void vlan_restore_hw_rx_fltr(struct net_device *dev,
-> 
-> 			/* Extended Rx VLAN Filter Enable */
-> 			for (i = 0; i < hw->num_vlan; i++)
-> 	-               vlan_write_filter(dev, hw, i, hw->vlan_filter[i]);
-> 	+               if (hw->vlan_filter[i])
-> 	+                       vlan_write_filter(dev, hw, i, hw->vlan_filter[i]);
-> 	 }
-> 
-> 	 static void vlan_update_hash(struct mac_device_info *hw, u32 hash,
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+---
+Bryan O'Donoghue (11):
+      arm64: dts: qcom: x1e80100: Add CAMCC block definition
+      arm64: dts: qcom: x1e80100: Add CCI definitions
+      arm64: dts: qcom: x1e80100: Add CAMSS block definition
+      arm64: dts: qcom: x1e80100-crd: Add pm8010 CRD pmic,id=m regulators
+      arm64: dts: qcom: x1e80100-crd: Add ov08x40 RGB sensor on CSIPHY4
+      arm64: dts: qcom: x1e80100-t14s: Add pm8010 camera PMIC with voltage levels for IR and RGB camera
+      arm64: dts: qcom: x1e80100-t14s: Add on ov02c10 RGB sensor on CSIPHY4
+      arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x: Add pm8010 camera PMIC with voltage levels for IR and RGB camera
+      arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x: Add l7b_2p8 voltage regulator for RGB camera
+      arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x: Add ov02c10 RGB sensor on CSIPHY4
+      arm64: dts: qcom: x1e80100-dell-inspiron14-7441: Switch on CAMSS RGB sensor
 
-This problem needs solving, and I suspect we need more than the
-loopback here. It needs detailed information about your hardware
-design, and comes down to the missing receive clock. stmmac is
-unusual that missing clocks affect the accessibility of the host.
+ arch/arm64/boot/dts/qcom/hamoa.dtsi                | 534 +++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/x1-crd.dtsi               | 106 ++++
+ arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi        |  61 +++
+ .../dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi    | 136 ++++++
+ .../boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts  | 135 ++++++
+ 5 files changed, 972 insertions(+)
+---
+base-commit: a35d7301e99cac05f09cf70edf731f544461b2d2
+change-id: 20260226-x1e-camss-csi2-phy-dtsi-52c85c0d4da8
 
-> With the above workarounds in place, 2.5G works fine, but 1G (and 100M)
-> do not. With the RFC v1 series, only the 2.5G->1G speed change was
-> broken. With this series, the link does not come up at 1G at all.
-
-This will be because we're not attaching any PHYs when phylink is
-being told to operate in 2500BASE-X with inband, since it thinks
-that's the media. That, and, because stmmac has a long history, it
-needed a special phylink_expects_phy() check added in stmmac_init_phy()
-which his what prevents the PHY being attached.
-
-One workaround for this would be to specify SGMII in DT rather than
-2500base-X. However, that's not a solution for mainline.
-
-I'm going to have to have another think about this... stmmac is
-beginning to get too painful to solve this problem. As I've said
-elsewhere, in hind sight, I wish I had blocked dwmac-qcom-ethqos from
-being merged because of it's direct fiddling with the integrated PCS.
-
-I'm beginning to wonder whether stmmac can ever be sorted out, or
-whether the driver has gone too far, and the best thing now is to
-totally decouple it from phylink.
-
+Best regards,
 -- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
 
