@@ -1,103 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-97990-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97991-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id eEyEEeM4uGmpagEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97990-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 18:07:47 +0100
+	id 0OvALTQ6uGmpagEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97991-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 18:13:24 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id C67D229DD14
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 18:07:46 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 48E9429DE83
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 18:13:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 5BD3C302EF8D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 17:07:33 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 93FF33028B14
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 17:07:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF5743CFF7B;
-	Mon, 16 Mar 2026 17:07:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6415E3CF669;
+	Mon, 16 Mar 2026 17:07:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PpJVhDc0";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="NlAsuBo0"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="X+Nlgmj4";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="jsSgPz9/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75B983CFF61
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 17:07:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F193CF685
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 17:07:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773680842; cv=none; b=SWXXKL7zaHUFwkTWdZEGyjn3IW6Jgc3PR+7wHvQocLcXunr/eKcV1fWcmvoVXxjfb+utJtHSRjUp42qTgxD3oB0s9/J4wXIu/YHJ7itVTozK3wywnwe3zDnUgwd097UuF6NFdhAS4eRF8g39IKudvsEgNiTY+cm6PFz/3RKwA7M=
+	t=1773680863; cv=none; b=sh0H00NSe97pQiM/CDQwUzzB3vf03Nm7Xyc9fAZ/DKatRQFAWCa7BrNy/GVkd6SaQpULSYCwv7VhbODJPk6DSMQcsd115Q5s2T1cGRggctPB6O6Pl8KFNg93FfdZf3uBrfyFCcnueJEfZCdTUQGNUXMRR7/uVfFcPZZqn/54Ejc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773680842; c=relaxed/simple;
-	bh=3Mogh2U0/iA6Ose2HBYTR0xZeYXsqplF/lZI95BMgXI=;
+	s=arc-20240116; t=1773680863; c=relaxed/simple;
+	bh=ndSyZFZJ0iMwREzqBpvvKbaR/JlX2TVhp1ZhDsVoAMw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cKXUVehIqS2y0LHjRGm1DjUODZ6/1/65wRN5EHDQdWZh0zWOo3HpxGD9z521QRPPizlDTfuNU4GjYqJfdLZrD/bdNOWmF4i7EgRipyeupzX+LMagtCtBuOlNlFmR9vmWiLhu8Bu53vfxi90QidLWlfkRWSzqLKAtCLcIOJ3NQMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PpJVhDc0; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=NlAsuBo0; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=n0QtsXlPKnbxMnnCFK5cn3b75ZgVxFULDG0Di6e61saoWE8BMFagLEvxHPq59uohM17TqP6TFVxyNDTnmw0O9wE/XOxAV5b0+RCXGlVRqlNIaI4Xu44QPE4sUC6POtvlznjpx+zhsps0H8u5x5ZiBlWJ3dp9GNtI35ksP62eV4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=X+Nlgmj4; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=jsSgPz9/; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62GF4V8K795536
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 17:07:21 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62GE86152375146
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 17:07:41 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	HDEvxOZLlq6f31hKlp51kGtXwhLqo+UTN8SDiRaUXi0=; b=PpJVhDc0gQs3b6i6
-	ZR1lE0tgnjfugzPTJ+feZb5ty2PZloJrIoHci6DLhH9O1ytzb3XF5J/9mB2AhDpg
-	Hcpbt2b6FnnhrtelKCrOP2zmch2iiPGJtVLZf2mAi2sEFEB8S/rGeKkrbiVwhWPx
-	ZSLSbFb4LQ37Dk72Ij2ny7lAObCL9ZyvZILGFUOFXQl8NXNqAmFXRVex2z14FaPs
-	t8oGnLaBTZV3QqqtyH65kHD7gy8biGDVgkxXSYCaRpeenYUT+CvHipd2cesplN26
-	wbHYmhb+Zs/GzGaRpLSd4R6aCD3dKlvg+XsG7BOO1z7erDx9HAQoPr/1/OlOeZVE
-	e/63FQ==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cxm6d0fg3-1
+	n1xeMoYeUM0iSmvPxnEiOO/lpTwBXAxToBC2I8g5MT0=; b=X+Nlgmj4OOaKssRg
+	4e+d6j+YInLZbUUYEhBCPUFKoIM4YtGoc99GwqQ10TJmPjB/CmSuHpPwmbV7wSg+
+	gmPOqgVaLk8ZRcWDLGYwb4WoBNwYGGAQu9LwjKdtBF4Vq/PP8ILX80VePosnAn9/
+	VUBBXlO9VluIzXokZac37bTWrwu/A3+s3GmM9CEKFq++6YzLLn0yfllLDnndTx2S
+	kyronXorVd/CLR6pMaqTIWmB5SUN5szZpHBFg6AuY1JRWB88ClPlvnATCqj73Fae
+	8wnwP1NqnvRuRn/MfB0lX8kaZ0Fjrfu8XnfDTCed23SOC09MYiYYPVBbVNuAGwNZ
+	/Pg+zA==
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cxkby0pcy-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 17:07:20 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2b056b2f0cfso17900035ad.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 10:07:20 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 17:07:41 +0000 (GMT)
+Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-8298150caddso4366009b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 10:07:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1773680840; x=1774285640; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1773680861; x=1774285661; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=HDEvxOZLlq6f31hKlp51kGtXwhLqo+UTN8SDiRaUXi0=;
-        b=NlAsuBo0Uy5e7y3tipr0G7Jb5e68MsHomkfShkEnNvn/Qnq1nBw5QihgB0vnJDaqdZ
-         +LcseYi10F9tn7pDM531swj5oJWFTtM/E0L9gXp2HWc6UToUu7RjikqjtpulsL+xS+oD
-         2ivg+ymWsqmPW1xRpN9zIjJkFmRzww7Cw0f2yqZq8z+GHwx/m8LdSO0kkd0KECjYmDSP
-         2hNDcDmTLqQinTBwL6DVxiCMZ6ZQhNuhsd2Uy7dkGGqUWE2HQf3E2vW1oO3QLgI+tiiL
-         U+h2VOboQS/tz+kOmPm4YSEOVrUAuxj7NI0lZmxZzT0NI+S1msH/f8qV5T43YOVPWb7W
-         HmRg==
+        bh=n1xeMoYeUM0iSmvPxnEiOO/lpTwBXAxToBC2I8g5MT0=;
+        b=jsSgPz9/LhZj9guteIaZiJ4CCd5b5CESPdwTK0jA57JAE7UpT01KfWIWlJhpqhpPUs
+         N5u3CJrO5NMXiFKfpP7K/r8TyLUuPton5RESYPoc/5hKPVEVZVeS+Q72nqwLEGo9bxSU
+         uq02hmCuIgClO67Qzw3KKkiqU7w0j75fbEnYZsq9ztrAn8d+M6p5w7a6D1UapRepgDDx
+         khMMbhXOY4ITgqs8FBCuNDC06TfJyB9bQ436+VZg6wMjvW5Zx7z8/CneXp6HVZCnX0c8
+         Z67hLTbeVNtg7TTwJPdeF0ktwEwuW9N0itH9CvNLe5x6KCMkwPV/MtUnVHe7AAdIsiHH
+         PwSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773680840; x=1774285640;
+        d=1e100.net; s=20251104; t=1773680861; x=1774285661;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=HDEvxOZLlq6f31hKlp51kGtXwhLqo+UTN8SDiRaUXi0=;
-        b=Q9iwf4S4+z5w9xgzll0KH0AfasvJJUdq9Lk73fNGmextJsVUbN68+g2Z/GNAbt19nB
-         WKaE3LfkbJ6rjeQj5e7fg+kqrQqmI+Q4/q7xcNJq7vvCWbxWttccBBuSnagQ+ftDX/ve
-         hyyVCerCrgLco2fhOsy2BkN6n0nDAbrpK10R+aFw61iQqxPCI8Z9vL7fc1EzZCjMWdFx
-         JwC8sebhnzN54iPIIHClg9tYIgaXhkJJRAjb2m9GUSZw5xx9oHK+qS313ZffOTVStfbU
-         e6gsXySebcu+Hy+bBk6qajrlPYyNziE+xEz9nqEvm+o9WaQBgIo7oQorMhMnX8LBOnHn
-         AhJA==
-X-Gm-Message-State: AOJu0Yw7G2Ryt04lWRZcXLDd4sfuHWe2LWWMtV9jevBkf3QI2NU40e/3
-	NU7Yive/Ccg+bk2hCfSauCwvXd4x3XrJ4GUNg22YoKnXUJ9qay2tvVYUpF6R3J9gLzbED8DSoha
-	RiUGt96ES0Dk01dZl+0AfCojIssFfdWteIKQ9Ukqibr+BdhDe//DOfgRPV/lDZA1FUzOV
-X-Gm-Gg: ATEYQzy4QQ90vOaQHc9pJP+2nsslRqkEyCrlIEfRgGwBIabaBFcPAXJHumXFYOoo/JK
-	pY8UYEWi9KV8Mr7rurdFaDEzGBf/tEkgHSFwy1sSQLP+cS5StydaueNaiEGyiWVZ6ZBiYWCqflp
-	s3SCirwJJYPtACfDZYmQylzit7/HrOwRdXnkp35D3ER9UoDvcKISEB1k6tu2JbkBAwwLemmkyMl
-	tI32xDaKKCQvUR27QiJhb6EugrC701NYyP3+IS86pcpZFgG8FrN2DI6Yuus54CqRoE8hoqDlghy
-	NrW6Lgx62lPnBj1Stc7AYp4WYoCsdCawFe3WeYU/yWFWFqjO2ug4phMNxGo8l6whXVaWv5MI0wt
-	3XmAxAteMnBwJQOrwVJ94r+mwrpcK/3s8YZSqy1cTAA==
-X-Received: by 2002:a17:902:d54b:b0:2ae:8288:9122 with SMTP id d9443c01a7336-2aeca94050dmr155868495ad.5.1773680839815;
-        Mon, 16 Mar 2026 10:07:19 -0700 (PDT)
-X-Received: by 2002:a17:902:d54b:b0:2ae:8288:9122 with SMTP id d9443c01a7336-2aeca94050dmr155867825ad.5.1773680839040;
-        Mon, 16 Mar 2026 10:07:19 -0700 (PDT)
-Received: from [192.168.1.8] ([101.0.62.48])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2aece8233e1sm112823905ad.71.2026.03.16.10.07.14
+        bh=n1xeMoYeUM0iSmvPxnEiOO/lpTwBXAxToBC2I8g5MT0=;
+        b=aAfAlV8vOnR2vvgTgMBtGAYddbaIvYKIUyplBlTMhNUJtQp/yIyx5fdwtvyL/4KctH
+         6cf7nvnj3P6fKQCWBlhttASVkIUQcQ7WkJbXoy5ICFlpw9xwr6wnG1uBkAWe+7e0WRUV
+         zmhshEHx0z2GMxuzt4q7L2+XQt42UG+rY6w1dALi4zcbRxfmAZByGIxhF6Ig/FupDesu
+         svb0yLcKPWvVT7OdWfHdNwbPnFGx0MF9tU4fWPkoHGtANN/7kLZ/xbbvcijY1FqUOtlV
+         OCUHRWXWp2DbKyJGDyCcB390b5Fea5KeWbUx9q+p7fvo+zmViN8aN/puVSZmGqDCHuvK
+         nQhQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW+tSwoeunY6dGP97BIkrzrk7BZFlwEOoxjMDHifhQs4sR6jRRw9vPOg8lf329Fx1BY9qLj3/rXxeb065wD@vger.kernel.org
+X-Gm-Message-State: AOJu0YymEy4JtTmDMimBRE5EzjQehLbTlr3w3ACBZs36X3B685rBl1WX
+	BN/XZimkokzdT3b+tcFXTZhA7DF+RLyLQQAw+Jvk2Wpheul4Hg1yaBMLIGhjBVrPKCbiHAClCtK
+	AgPL160NZLyDrvGM8KT+YowMdqToOe34VVC3jFa11nva3N+NGTkMuX3TcU8d51qTMh5yy
+X-Gm-Gg: ATEYQzw2xcnMyQTuLr136CFRFyj99lK8Vz5N9lABYD0Qh46jZjppu69eKGAsMyXd+Mm
+	t8CXSWlMGXXnR763562aH3O0DcSFeO3OyTmA0aqhZMGvvkwTyW8jG9Kp5agsiJmk48NCwbhS+8g
+	R04FI0Pn2LeyRBul9b4TP7yP0tRRCYGOD9w7j3EmqI/1ST3uBEbFEDSQ1EKmCM92t3liOUyDSBl
+	b4XVjr7lYr3ZlUlQSK4Dnhpa2AKHBXM5aS1/WK/l3XiRem32GovdakF6Xuk/F8K1ftcRclL+1Y/
+	IJvcAojKv1Wp6lKPNQRFdiCl+WWXX8Ko8mvClBGWpzPNK3kP0S1g/zoKdWeNTW/9UR6YFyhRqAi
+	owZ23LJ3SwWJQ0++dgVYqKvV+jsUomHn07codN9sVt1ZcQA5oNDoFpf04Qg==
+X-Received: by 2002:a05:6a00:854:b0:81e:81fb:b392 with SMTP id d2e1a72fcca58-82a196d9795mr12519518b3a.11.1773680860302;
+        Mon, 16 Mar 2026 10:07:40 -0700 (PDT)
+X-Received: by 2002:a05:6a00:854:b0:81e:81fb:b392 with SMTP id d2e1a72fcca58-82a196d9795mr12519484b3a.11.1773680859759;
+        Mon, 16 Mar 2026 10:07:39 -0700 (PDT)
+Received: from [192.168.1.12] ([38.254.186.229])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82a072418e9sm14954842b3a.3.2026.03.16.10.07.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Mar 2026 10:07:18 -0700 (PDT)
-Message-ID: <417e71b5-1956-4841-bfb7-4116d20f3dc5@oss.qualcomm.com>
-Date: Mon, 16 Mar 2026 22:37:12 +0530
+        Mon, 16 Mar 2026 10:07:39 -0700 (PDT)
+Message-ID: <dbfcbc9c-2175-49a3-aee4-434b69cbaece@oss.qualcomm.com>
+Date: Mon, 16 Mar 2026 22:37:25 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -105,74 +106,95 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/5] platform: arm64: Add driver for EC found on
- Qualcomm reference devices
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
-        Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH v10 2/3] of: factor arguments passed to of_map_id() into a
+ struct
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Nipun Gupta <nipun.gupta@amd.com>,
+        Nikhil Agarwal
+ <nikhil.agarwal@amd.com>,
+        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>, Marc Zyngier <maz@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Thomas Gleixner <tglx@kernel.org>,
+        Saravana Kannan <saravanak@kernel.org>,
+        Richard Zhu <hongxing.zhu@nxp.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Bjorn Helgaas
+ <bhelgaas@google.com>, Frank Li <Frank.Li@nxp.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>, Juergen Gross <jgross@suse.com>,
+        Stefano Stabellini <sstabellini@kernel.org>,
+        Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+        Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, Hans de Goede <hansg@kernel.org>,
-        =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, platform-driver-x86@vger.kernel.org,
-        Maya Matuszczyk <maccraft123mc@gmail.com>
-References: <20260313-v04-add-driver-for-ec-v4-0-ca9d0efd62aa@oss.qualcomm.com>
- <20260313-v04-add-driver-for-ec-v4-2-ca9d0efd62aa@oss.qualcomm.com>
- <6eb3a173-c364-431f-93e4-7bbb7a32431e@oss.qualcomm.com>
+        Prakash Gupta <prakash.gupta@oss.qualcomm.com>,
+        Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+        linux-kernel@vger.kernel.org, iommu@lists.linux.dev,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-pci@vger.kernel.org, imx@lists.linux.dev,
+        xen-devel@lists.xenproject.org, linux-arm-msm@vger.kernel.org,
+        Charan Teja Kalla <charan.kalla@oss.qualcomm.com>
+References: <20260309-parse_iommu_cells-v10-0-c62fcaa5a1d8@oss.qualcomm.com>
+ <20260309-parse_iommu_cells-v10-2-c62fcaa5a1d8@oss.qualcomm.com>
+ <esfzpgpgenydif2sxahsetkglz6kewsgjhkmzr6ulrrkctnkbq@a4zsfdmhbxui>
+ <27edd195-b0d3-4214-9df3-74a84da1e3e1@oss.qualcomm.com>
+ <dyjdwxaq4oc7ahri3iuhnmobh3gwmn6drhox7t2elep4rlqhuq@fe4gp5t7q5r5>
 Content-Language: en-US
-From: Anvesh Jain P <anvesh.p@oss.qualcomm.com>
-In-Reply-To: <6eb3a173-c364-431f-93e4-7bbb7a32431e@oss.qualcomm.com>
+From: Vijayanand Jitta <vijayanand.jitta@oss.qualcomm.com>
+In-Reply-To: <dyjdwxaq4oc7ahri3iuhnmobh3gwmn6drhox7t2elep4rlqhuq@fe4gp5t7q5r5>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=c7+mgB9l c=1 sm=1 tr=0 ts=69b838c8 cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=+2ldRcY3HLWus9HqRSG52w==:17
+X-Proofpoint-GUID: ZF0LunhZdKsmdN2UZ5vc1Ivtw5m6OHWd
+X-Proofpoint-ORIG-GUID: ZF0LunhZdKsmdN2UZ5vc1Ivtw5m6OHWd
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE2MDEzMyBTYWx0ZWRfX4eJSjT+S84hE
+ yUMu1Q0CxiARFfAeD3cz2UCYgKL6+u98H5EDNUsPDYoYZ4yo2vn1IaSYYros49snqkldBjgBCo+
+ VkAKjVYoD1dYTzQ0FwlJ+GxzhXe48JCmGN+MpdIlvznkfN2YXJ1sYNp/TdLh6Q6aLlbHbATBKBf
+ McudMKrS4/z98hOexktyxBE5/wXEBcQ/EH3OiVFRF7AKhlvsacPF4DEe0a3l2Bnp5DhJQ44216J
+ 0MHHyNV1CDxcaUIlsIiC1iKd8kVmNWhCfEPIBG0S8vHyvdWEy3UJvOQ1KkNX44BQvKjfDtsbEf9
+ lf4erQgV10OSDdYO1dI/e6tvLnvHkiQuta06RpFZ5LcZYXy8JZ6zF+OZw5Y4j8Sul2J2MuzLkKj
+ d+FkPol5wpW6BLwLKpQ5VJujgDXe9bTuOUW0KmBj78lDkW2xA41/Icj+x0MokLR/p1njzYxqBst
+ xPTHyuuhKy3a6rvX/fA==
+X-Authority-Analysis: v=2.4 cv=ZpLg6t7G c=1 sm=1 tr=0 ts=69b838dd cx=c_pps
+ a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=FuYIH7Xx0xzBSkYrynBYgw==:17
  a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=tYnmyoo4TD5ZbBYe2wsA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=GvdueXVYPmCkWapjIL-Q:22
-X-Proofpoint-ORIG-GUID: MA5kSiNW84IYdLZIeOlUQvGKGxKaF5-P
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE2MDEzMyBTYWx0ZWRfXze5o3tgxxfoj
- 3cbPlSJmqS8bXZ0P90RwVYo2vwqU2OR5npXR07i8bDsPjYj7XJLbOC6TJR1q94PO0iP2WZgsd/r
- EtWMf+r68i0jFDTww/2t/k7vJRmQx5IF2Yja3MA1zc8xQHxnoM6Nbfum9PoXkc8aSWz4u/bOTLl
- oDUckB2XLv7Tscajal6m0BxFTwM1Sh6yf+4W4MExrqfKizaz9S/zsFk1Xb7eS8iupu46ReTfDQM
- qlJSjmxm08K5ube44l0sZ7+SuThiRVt7OI+El/A9okcsgrOFu4n34BfERU4UNueMzdLj2sjyFqB
- AkN2gK3PVnxyeLxfW5btcO8DdL9E7LXO1j7cT8fvpvNoAb4H+qTczh1Dv9lWaXVF3o2WmpfXUx2
- IlDoePyPC/YKLnxZLza3mInWCpisqAQsUyC7zWTUf1dfCSWtpHFqcryDztqJAmGxyeIF3v9YuOt
- Z8nSvvGAuFXj+kulkRg==
-X-Proofpoint-GUID: MA5kSiNW84IYdLZIeOlUQvGKGxKaF5-P
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=GQrJT2J37VpXmJLvS4cA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=OpyuDcXvxspvyRM73sMx:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-16_04,2026-03-16_04,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0 priorityscore=1501 suspectscore=0 phishscore=0
- clxscore=1015 lowpriorityscore=0 spamscore=0 malwarescore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603160133
+ lowpriorityscore=0 suspectscore=0 bulkscore=0 clxscore=1015
+ priorityscore=1501 malwarescore=0 impostorscore=0 adultscore=0 phishscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
+ definitions=main-2603160133
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,gmail.com];
-	TAGGED_FROM(0.00)[bounces-97990-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
+	FREEMAIL_CC(0.00)[amd.com,8bytes.org,kernel.org,arm.com,nxp.com,pengutronix.de,google.com,gmail.com,suse.com,epam.com,oss.qualcomm.com,vger.kernel.org,lists.linux.dev,lists.infradead.org,lists.xenproject.org];
+	TAGGED_FROM(0.00)[bounces-97991-lists,linux-arm-msm=lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[15];
+	RCPT_COUNT_TWELVE(0.00)[38];
 	MIME_TRACE(0.00)[0:+];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[anvesh.p@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[vijayanand.jitta@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
@@ -180,147 +202,103 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: C67D229DD14
+X-Rspamd-Queue-Id: 48E9429DE83
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 
 
-On 3/16/2026 3:57 PM, Konrad Dybcio wrote:
-> On 3/13/26 11:29 AM, Anvesh Jain P wrote:
->> From: Sibi Sankar <sibi.sankar@oss.qualcomm.com>
+On 3/12/2026 7:48 PM, Dmitry Baryshkov wrote:
+> On Thu, Mar 12, 2026 at 05:12:51PM +0530, Vijayanand Jitta wrote:
 >>
->> Add Embedded controller driver support for Hamoa/Purwa/Glymur qualcomm
->> reference boards. It handles fan control, temperature sensors, access
->> to EC state changes and supports reporting suspend entry/exit to the
->> EC.
 >>
->> Co-developed-by: Maya Matuszczyk <maccraft123mc@gmail.com>
->> Signed-off-by: Maya Matuszczyk <maccraft123mc@gmail.com>
->> Signed-off-by: Sibi Sankar <sibi.sankar@oss.qualcomm.com>
->> Co-developed-by: Anvesh Jain P <anvesh.p@oss.qualcomm.com>
->> Signed-off-by: Anvesh Jain P <anvesh.p@oss.qualcomm.com>
->> ---
+>> On 3/10/2026 2:53 AM, Dmitry Baryshkov wrote:
+>>> On Mon, Mar 09, 2026 at 01:03:38AM +0530, Vijayanand Jitta wrote:
+>>>> From: Charan Teja Kalla <charan.kalla@oss.qualcomm.com>
+>>>>
+>>>> Change of_map_id() to take a pointer to struct of_phandle_args
+>>>> instead of passing target device node and translated IDs separately.
+>>>> Update all callers accordingly.
+>>>>
+>>>> Subsequent patch will make use of the args_count field in
+>>>> struct of_phandle_args.
+>>>>
+>>>> Suggested-by: Rob Herring (Arm) <robh@kernel.org>
+>>>> Signed-off-by: Charan Teja Kalla <charan.kalla@oss.qualcomm.com>
+>>>> Signed-off-by: Vijayanand Jitta <vijayanand.jitta@oss.qualcomm.com>
+>>>> ---
+>>>>  drivers/cdx/cdx_msi.c                    |  5 ++-
+>>>>  drivers/iommu/of_iommu.c                 |  2 +-
+>>>>  drivers/irqchip/irq-gic-its-msi-parent.c | 11 ++++--
+>>>>  drivers/of/base.c                        | 63 ++++++++++++++++----------------
+>>>>  drivers/of/irq.c                         |  8 +++-
+>>>>  drivers/pci/controller/dwc/pci-imx6.c    | 16 ++++++--
+>>>>  drivers/pci/controller/pcie-apple.c      |  5 ++-
+>>>>  drivers/xen/grant-dma-ops.c              |  4 +-
+>>>>  include/linux/of.h                       | 12 +++---
+>>>>  9 files changed, 76 insertions(+), 50 deletions(-)
+>>>>
+>>>> diff --git a/drivers/cdx/cdx_msi.c b/drivers/cdx/cdx_msi.c
+>>>> index 63b3544ec997..03232b5ffbca 100644
+>>>> --- a/drivers/cdx/cdx_msi.c
+>>>> +++ b/drivers/cdx/cdx_msi.c
+>>>> @@ -121,6 +121,7 @@ static int cdx_msi_prepare(struct irq_domain *msi_domain,
+>>>>  			   struct device *dev,
+>>>>  			   int nvec, msi_alloc_info_t *info)
+>>>>  {
+>>>> +	struct of_phandle_args msi_spec = { .np = NULL };
+>>>
+>>> Why do you need to set it? Parse functions ignore passed args, don't
+>>> they?
+>>>
+>>
+>> The parse function does check arg->np on input — if it is non-NULL,
+>> it is used to match only entries targeting that specific node.
+>>
+>> Also, there is this existing path in drivers/pci/msi/irqdomain.c which
+>> pre-sets the node and passes it as input to of_msi_xlate(), so the node
+>> pointer is not ignored by the parse code:
 > 
-> [...]
-> 
->> + * ------------------------------------------------------------------------------
->> + * | Offset		| Name		| Description				|
->> + * ------------------------------------------------------------------------------
->> + * | 0x00		| Byte count	| Number of bytes in response		|
->> + * |			|		| (exluding byte count)			|
->> + * ------------------------------------------------------------------------------
->> + * | 0x02 (LSB)	| EC Thermal	| Bit 0-1: Number of fans		|
->> + * | 0x3		| Capabilities	| Bit 2-4: Type of fan			|
->> + * |			|		| Bit 5-6: Reserved			|
->> + * |			|		| Bit 7: Data Valid/Invalid		|
->> + * |			|		|	 (Valid - 1, Invalid - 0)	|
->> + * |			|		| Bit 8-15: Thermistor 0 - 7 presence	|
->> + * |			|		|	    (0 present, 1 absent)	|
-> 						     ^ huh??
-> 
-> I see that it's not currently used, but I think flipping these
-> bits would make it easier to comprehend down the line
-> 
-> [...]
-> 
-
-Thanks for taking time to review the series
-
-The 0=present encoding was taken directly from the EC firmware spec, but
-on closer inspection this appears to be a typo in the spec — the correct
-behavior is 1=present, 0=absent. Will update the comment in v5.
-
->> +	default:
->> +		dev_dbg(dev, "Unknown EC event: %d\n", val);
-> 
-> Maybe dev_notice(), this would be good to log
->
-
-Agreed, will switch to dev_notice for unknown EC events in v5.
-
->> +		break;
->> +	}
->> +
->> +	return IRQ_HANDLED;
->> +}
->> +
->> +static int qcom_ec_sci_evt_control(struct device *dev, bool enable)
->> +{
->> +	struct i2c_client *client = to_i2c_client(dev);
->> +	u8 control = enable ? 1 : 0;
->> +	int ret;
->> +
->> +	ret = i2c_smbus_write_byte_data(client, EC_SCI_EVT_CONTROL_CMD, control);
->> +
->> +	return ret;
-> 
-> return i2c_smbus_write_byte_data(client, EC_SCI_EVT_CONTROL_CMD, !!enable);
-> 
-> [...]
+> Is it only being used for MSIs? If so, can we make that explicit in the
+> API by having the 'filter' device_node pointer?
 > 
 
-Agreed, will simplify in v5
+Yes, I see this is used only in the MSI path via of_msi_xlate(). 
 
->> +static int qcom_ec_resume(struct device *dev)
->> +{
->> +	struct i2c_client *client = to_i2c_client(dev);
->> +	int ret;
->> +
->> +	ret = i2c_smbus_write_byte_data(client, EC_MODERN_STANDBY_CMD, EC_MODERN_STANDBY_ENTER);
->> +
->> +	return ret;
-> 
-> In a pattern like this, unless you have some error checking/logging to
-> do, you can just return directly
-> 
-> [...]
-> 
+By filter do you mean the below changes ? here of_map_id() and of_map_msi_id() would accept the filter
+as a separate parameter so that arg becomes a pure output:
 
-Agreed, will simplify in v5.
 
->> +	ret = qcom_ec_read_fw_version(dev);
->> +	if (ret < 0)
->> +		return dev_err_probe(dev, ret, "Failed to read ec firmware version\n");
-> 
-> "EC"
-> 
-> [...]
-> 
+int of_map_id(const struct device_node *np, u32 id, const char *map_name,
+              const char *cells_name, const char *map_mask_name,
+              const struct device_node *filter_np, struct of_phandle_args *arg);
 
-Agreed, will fix in v5
+int of_map_msi_id(const struct device_node *np, u32 id,
+                  const struct device_node *filter_np, struct of_phandle_args *arg);
 
->> +	for (i = 0; i < ec->thermal_cap.fan_cnt; i++) {
->> +		struct qcom_ec_cooling_dev *ec_cdev = &ec->ec_cdev[i];
->> +		char name[EC_FAN_NAME_SIZE];
->> +
->> +		snprintf(name, EC_FAN_NAME_SIZE, "qcom_ec_fan_%d", i);
->> +		ec_cdev->fan_id = i + 1;
->> +		ec_cdev->parent_dev = dev;
->> +
->> +		ec_cdev->cdev = thermal_cooling_device_register(name, ec_cdev,
->> +								&qcom_ec_thermal_ops);
->> +		if (IS_ERR(ec_cdev->cdev)) {
->> +			dev_err_probe(dev, PTR_ERR(cdev),
->> +				      "Thermal cooling device registration failed\n");
->> +			ret = -EINVAL;
->> +			goto unroll_cooling_dev;
->> +		}
->> +	}
->> +
->> +	return 0;
->> +
->> +unroll_cooling_dev:
-> 
-> For those cases, one would usually add add a devres-managed version of
-> the helper (devm_foo_bar()), removing the need to repeat this in the 
-> driver remove callback as well
-> 
-> Konrad
-Agreed, will switch to devm_thermal_of_cooling_device_register in v5
+of_msi_xlate() would then pass *msi_np as filter_np down to of_map_msi_id
+and IOMMU callers would pass NULL to of_map_id. 
 
--- 
-Best Regards,
-Anvesh
+Does this look fine ? I can include this in v11.
+
+Thanks,
+Vijay
+
+>>
+>> u32 pci_msi_domain_get_msi_rid(struct irq_domain *domain, struct pci_dev *pdev)
+>> {
+>>         struct device_node *of_node;
+>>         u32 rid = pci_dev_id(pdev);
+>>
+>>         pci_for_each_dma_alias(pdev, get_msi_id_cb, &rid);
+>>
+>>         of_node = irq_domain_get_of_node(domain);
+>>         rid = of_node ? of_msi_xlate(&pdev->dev, &of_node, rid) :
+>>                         iort_msi_map_id(&pdev->dev, rid);
+>>
+>>         return rid;
+>> }
+>>
+> 
 
 
