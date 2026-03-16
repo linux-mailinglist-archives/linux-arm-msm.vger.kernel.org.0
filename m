@@ -1,230 +1,238 @@
-Return-Path: <linux-arm-msm+bounces-97960-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UMa6FdoEuGlpYAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97960-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 14:25:46 +0100
+	id eBRKOH4EuGlpYAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 14:24:14 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9380C29A4E2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 14:25:45 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8458229A4A0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 14:24:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 11E813016B02
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 13:24:24 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 9DCAC300C011
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 13:24:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5BBE397E62;
-	Mon, 16 Mar 2026 13:24:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1A3A397695;
+	Mon, 16 Mar 2026 13:24:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="djTK11N+";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="GLk7JEtu"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="aObIXB/M"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F24397691
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 13:24:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF24B396B76;
+	Mon, 16 Mar 2026 13:24:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773667461; cv=none; b=Z1QkaPF68DDLDb69P2ko6qqYzYjEPuc5MNbsdp2GW4GuGdVPQU1aPYSlFqX/AyMeQ4gW6cELKV7gqfjUaXSFMl7TJWfVzOepAseUAmGAW/3gidAEMRD6QY8mcDR0EUatEe8n8PZRIeoap7HMuZrBJg8PAXe+STkHGKBNiNuPOOc=
+	t=1773667450; cv=none; b=Owrv4tLNMdnfinPdj0uLFsrmtmWIQ73CO5CVQ748Jrjib/YDA5sCmNqJY0pGVTwrDgoellwwdHq0/vQUTpOu8jOfOYDEES4663y0tk+rLUBlV2+FFhT5ZFG/eGfCPL/YcMOlcQg7Qal1XFgyl5XIvYgIiP9BXVW6YXZvhgXUxVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773667461; c=relaxed/simple;
-	bh=nzqy+hSON4ND/X1vo5z3WIJHZSGtctE4GPV5DLK9Pgw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=s95oT8xiHDrrU722y6oEDaU3THYurHrMHVfc2Oap8Y6lAHnk6wIdnDVXuHitT9V5fWE6DT2gtpnHsFEgmiGbngomvtIRNMaYJxwlgFQOIjVLCM5fryMePTPSJCjgo4rwSqnwpfvCz18KFX2TtbMJJeC+CtCeRZQXwVgATkkMcs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=djTK11N+; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=GLk7JEtu; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62GBhtwK2672154
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 13:24:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=TykivBUS0GQn7Dlm1dBGtz
-	uFnfmr8W6go4PhlR2QyM0=; b=djTK11N+YBMw7tqp98Wqs5otQiFVZuX+g3R6F2
-	VaI6Ctf0B37TclyT5uAAGEU7NPwODLhWoMxDyLuQlEVSkMo2RELHpfjVZBwCrFYv
-	cgE9UGTM13ueYgz+j/fnjRvcWo0yyaHBHTnSs80maPOQo4G4B7JUGSKPaK8WzCj6
-	dIOL3garX0YglUUjOr7IoBTnWff3IVsTTlRto1KKahFRr1YNz9VLNyxuyyULRIwc
-	q8X9ZaXgDjXQxV/c8MZy+mLdGjUmqfaut3XY2damcEltmLJyyT+bBHRCTjIg7OBF
-	BMg3N1/lUVpbkmBXbg8g4kgY/LpmAmNgX6YmG1AhuQxvaSSw==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cw03xnyr4-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 13:24:19 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-354bc535546so4804300a91.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 06:24:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1773667458; x=1774272258; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=TykivBUS0GQn7Dlm1dBGtzuFnfmr8W6go4PhlR2QyM0=;
-        b=GLk7JEtukgU68/ysbbVoNgPACYSwI8nxe0fJTUv9g1pbyvsEujOfuvbpaFV2y5cOeq
-         EcImSaM+KY9SHKDNN0oHZlUycdGL4Z97YWLR3EMjE28TRVOcXQjxdD57V2UthuHOiLqN
-         9AQBVSqyQEYx1hSo+6e1UFxe8x3i1yVmxSVwtiQxmWhVcFWFWdRfUBSIgZusfRfmgJoY
-         BPXrD3Sl6B+OCyrETNvPny3drkYD+8dbhyHZa1Y9B6RNoowAySv0cl3YGWRwa5DOJ/1i
-         dRXklAiJf42LO1gfOjWj/app619hNguqTuAOyHixp/0QTrS7SRdqubC9RGPf+k3iEcyZ
-         lVMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773667458; x=1774272258;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TykivBUS0GQn7Dlm1dBGtzuFnfmr8W6go4PhlR2QyM0=;
-        b=p53YXdf6xjADspveQ+EsxoObwzqpwTQPD4hAaYypLNk2M/eHkh0Hn0/bhW4niGv1oA
-         GK+fVqhlzSI6ce70EXadll00gS0fcVoISth1HbvEK9hbJDcnFDNDq+s0vYqgSW3Y2vGF
-         3G2KEiuUt46uBHj+aG/bPfs9g5AYacgDJYjnOZiccMSWdsjrj9RaYWZtJ6YpGeO5FIyR
-         hVUq5026GO6REA6eFppE5PkHgsm7/1MXU5sp0g3o/wIpjWcLLm2vMituQ09dchlb6xPI
-         WIj6+QlfhL7A37z6tL2Aac2TB1TLY4isFcBUsapCPTKn019o/IFWcc2S8u2KSBQA3Mns
-         93vw==
-X-Forwarded-Encrypted: i=1; AJvYcCUzAEbfuVG2J2t4H06JOcAySVz+4+YB/9kQrEfG6SXa9mKO2jM0/wbWXbCylz2zJFXVvU0wlSrBVrOKylS1@vger.kernel.org
-X-Gm-Message-State: AOJu0YypsTrqQAYIKp6Cbv7zIioMa+ynVVOKeQNOx4H35UbkXNjxqmLj
-	HN6z6CQAc6krODeV+gVDW0/OvzOhCBw/uSMslX3Z0eTP8smRFzHOOOm4H7M7K48IcT8xAL+BWy+
-	86Px+9nVrHPoIm1ioc2AxAv9UqOSes6FTNgGKRfk8yQVyhXOF0rFpeaWTm4fvFagNfsiF
-X-Gm-Gg: ATEYQzzgBqnjgiy8YtmOeMugVAOk4R/gpxM91YTF4esy72iwyZ8icTbb9efB0D5wXhz
-	cSUvP6mgD0XKayd/K0w+3/AY4NQ8Xzfc2WhDF0wEiqyEO+b4eEgxDu9jo1AkkiWDq3Y7ljiJRf3
-	PbP4XDeeAUcGNzvkhk9R577wnhXGvszOoP4uWzQRasIl/5HMXIxzk07Ah6OxL4YO5lMV2Axf99A
-	BxdMtoTtCocw81tWz1yYu1VxyyDwiT5+jjWbE0aN7TrR1xru4iKEiYh1pXC+rAdHDTlLjaIUQEY
-	i+Lg9g0H1wGds2uVr6ygTKDl/qqumKSefK9b4q6/JYphaZAvAa7YTFprkhgYR+h208llaufXztX
-	QutCnzEk++epQSnzBFg7994/MPhl9MZjhW2Th3KGzSn4=
-X-Received: by 2002:a17:90b:5345:b0:35b:93d8:6ab7 with SMTP id 98e67ed59e1d1-35b93d86c97mr5359848a91.28.1773667457982;
-        Mon, 16 Mar 2026 06:24:17 -0700 (PDT)
-X-Received: by 2002:a17:90b:5345:b0:35b:93d8:6ab7 with SMTP id 98e67ed59e1d1-35b93d86c97mr5359817a91.28.1773667457498;
-        Mon, 16 Mar 2026 06:24:17 -0700 (PDT)
-Received: from [10.213.103.163] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35b929558d1sm2493497a91.4.2026.03.16.06.24.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Mar 2026 06:24:17 -0700 (PDT)
-From: Maramaina Naresh <naresh.maramaina@oss.qualcomm.com>
-Date: Mon, 16 Mar 2026 18:53:31 +0530
-Subject: [PATCH v1] spi: geni-qcom: Fix CPHA and CPOL mode change detection
+	s=arc-20240116; t=1773667450; c=relaxed/simple;
+	bh=NMlLH2VFH/Y5/XY1P7lMtQNhv2RSfsbBoVRQz0IvbBQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Obks05p8b/nzSz0OYftF8a+vVePs+667UKIBCP8R4fD+EWfC7h2Ex7Qmnp+s+pP8TGwKVlTbfFRJq/PnAoQ/cr9UVZa51OBVrHLQQ3/oi/x6cRCulhUmzecoA4BbEAdPcTHEGplJhAOOvYQ8vWkP0iwuze9qco9QAhP3hbhXRQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=aObIXB/M; arc=none smtp.client-ip=198.175.65.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1773667448; x=1805203448;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=NMlLH2VFH/Y5/XY1P7lMtQNhv2RSfsbBoVRQz0IvbBQ=;
+  b=aObIXB/MJSwDGCgEShvQRfMGUrvGXUMiVusF3KJiGQXfyGosrCZfqBhn
+   mmhnQbbXIHJdf41lbEa0WL85h2Q8nkpNujpUtB1my6aSTiqcVUJ4PuPGs
+   H3gNV35Th34SrJsgQBE/xUg421UdFY+0I5PYs1NfQcBcm3Tl+Y88oEf2m
+   EEuSCob3CZNM6/gZRkeGfoBOrgahbiAZCvrEmEHFbGeMN5bKHGerHkNb7
+   j+92kkLq7qAgCznZS/RPRyZtUIBjV8EfdBRS3njLwggGozM46XeAOHBwG
+   PnZJamVsmabO20Ya4bpDhXNt5SDoq75nwI+fuF3S8hry2eOlaQpY9d5bi
+   Q==;
+X-CSE-ConnectionGUID: Wq9VJHrZRgGeKdZxCOqRhQ==
+X-CSE-MsgGUID: K7VG6avDQumRhldbRDzJVQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11731"; a="78529580"
+X-IronPort-AV: E=Sophos;i="6.23,124,1770624000"; 
+   d="scan'208";a="78529580"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Mar 2026 06:24:07 -0700
+X-CSE-ConnectionGUID: 9/YWBNp3T6SmxeRKZ+Wv9w==
+X-CSE-MsgGUID: SyKXNVf/Qj6adp44vZHmBw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,124,1770624000"; 
+   d="scan'208";a="259821298"
+Received: from lkp-server01.sh.intel.com (HELO 892944969b78) ([10.239.97.150])
+  by orviesa001.jf.intel.com with ESMTP; 16 Mar 2026 06:24:04 -0700
+Received: from kbuild by 892944969b78 with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1w27vM-000000000i6-1PkI;
+	Mon, 16 Mar 2026 13:24:00 +0000
+Date: Mon, 16 Mar 2026 21:23:33 +0800
+From: kernel test robot <lkp@intel.com>
+To: Anvesh Jain P <anvesh.p@oss.qualcomm.com>,
+	Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Hans de Goede <hansg@kernel.org>,
+	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>
+Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	platform-driver-x86@vger.kernel.org,
+	Anvesh Jain P <anvesh.p@oss.qualcomm.com>,
+	Maya Matuszczyk <maccraft123mc@gmail.com>
+Subject: Re: [PATCH v4 2/5] platform: arm64: Add driver for EC found on
+ Qualcomm reference devices
+Message-ID: <202603162107.pwsms8tn-lkp@intel.com>
+References: <20260313-v04-add-driver-for-ec-v4-2-ca9d0efd62aa@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260316-spi-geni-cpha-cpol-fix-v1-1-4cb44c176b79@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAFIEuGkC/x2MUQqAIBAFrxL73UIqSnWV6ENyq4VQUYggvHtLP
- wMz8N4LlQpThbl7odDNlVMUUX0H2+njQchBHPSg3WCUw5oZD4qMWz69IF2484PjpLSjYK3RFmS
- cC0n+jxe4FaytfaIAwpNsAAAA
-X-Change-ID: 20260316-spi-geni-cpha-cpol-fix-89126ed55325
-To: Mark Brown <broonie@kernel.org>, Jonathan Marek <jonathan@marek.ca>,
-        konrad.dybcio@oss.qualcomm.com
-Cc: kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org,
-        stable@vger.kernel.org, dmitry.baryshkov@oss.qualcomm.com,
-        bjorande@quicinc.com, mukesh.savaliya@oss.qualcomm.com,
-        praveen.talari@oss.qualcomm.com, jyothi.seerapu@oss.qualcomm.com,
-        naresh.maramaina@oss.qualcomm.com
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1773667453; l=2079;
- i=naresh.maramaina@oss.qualcomm.com; s=20260316; h=from:subject:message-id;
- bh=nzqy+hSON4ND/X1vo5z3WIJHZSGtctE4GPV5DLK9Pgw=;
- b=KbIDaMv5XyHWZjr46USGkKLK+8aSZrOHTD5aWp+gPDk0pGYv+SkDzPx0VBHJiKYblI5nL6Rty
- 4WFB3ovD672DVJ6361LFXPP11MuuvDoe9iONv9nRSMj4cKxWbQSs/jb
-X-Developer-Key: i=naresh.maramaina@oss.qualcomm.com; a=ed25519;
- pk=j7iST9yrLbsgWcWrqdlUNIOWl2WBl4wV1q35/n9SCkg=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE2MDEwMiBTYWx0ZWRfX1wmrSR9fCIxG
- Re/1ScmAgSCYpzycmH6Ruub77k4IFHNb4WpMyphFiGK5HIv3NIJfgQsTnZu8b8VjbtmYoe4AyG8
- IrVlNahO2luvSvmqOxFcs6lhrqPOuBDF1rBXnwQ7/WYwY7NYV/OTA3lOWEqJI/ItiiRTZC8VzDa
- tJX7gJNWd1T3atDSPd1lFb3SmUiO2cdDanpj8TuwkpybE7oX9ljxovDV5zbxTHXbY8xenvQQ7iA
- mngxgxUduWV62U2wvYcQyfhEazwKenRfJSTfW/yJ7jjqzLbF0RQO0NyRdIeysOsmsyCXPP14zYD
- atooUA/Zw/cmEOf/ixh5NJUCbbmG1PaAGoX1m4P9JRTnDbCzZEwwupSZsDXKddC78PLFU3KiYgA
- 1d3GyzhcwAMp40JnwYHeblYVzRv+uKB2Cu9AoBHHy4hwdlUgIODp8TBrz3zIjTAu//VgK4NUnm5
- Hp2qETQ/a2DDiojWp0Q==
-X-Authority-Analysis: v=2.4 cv=YLOSCBGx c=1 sm=1 tr=0 ts=69b80483 cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=EUspDBNiAAAA:8 a=D3EvElEm-D6odJYB-dYA:9 a=QEXdDO2ut3YA:10
- a=rl5im9kqc5Lf4LNbBjHf:22
-X-Proofpoint-ORIG-GUID: cwzXF073jvVclP8sEiG5RKkmMm161ek3
-X-Proofpoint-GUID: cwzXF073jvVclP8sEiG5RKkmMm161ek3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-16_04,2026-03-16_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 adultscore=0 clxscore=1011 priorityscore=1501 impostorscore=0
- spamscore=0 malwarescore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603160102
-X-Spamd-Result: default: False [-2.16 / 15.00];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260313-v04-add-driver-for-ec-v4-2-ca9d0efd62aa@oss.qualcomm.com>
+X-Spamd-Result: default: False [0.34 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64];
+	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-97960-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[lists.linux.dev,vger.kernel.org,oss.qualcomm.com,gmail.com];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-97959-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[naresh.maramaina@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[lkp@intel.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[intel.com:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 9380C29A4E2
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	TO_DN_SOME(0.00)[]
+X-Rspamd-Queue-Id: 8458229A4A0
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-setup_fifo_params computes mode_changed from spi->mode flags but tests
-it against SE_SPI_CPHA and SE_SPI_CPOL, which are register offsets,
-not SPI mode bits. This causes CPHA and CPOL updates to be skipped
-on mode switches, leaving the controller with stale clock phase
-and polarity settings.
+Hi Anvesh,
 
-Fix this by using SPI_CPHA and SPI_CPOL to detect mode changes before
-updating the corresponding registers.
+kernel test robot noticed the following build warnings:
 
-Fixes: 781c3e71c94c ("spi: spi-geni-qcom: rework setup_fifo_params")
-Signed-off-by: Maramaina Naresh <naresh.maramaina@oss.qualcomm.com>
----
-This patch fixes SPI mode change detection in the spi-geni-qcom driver.
+[auto build test WARNING on a0ae2a256046c0c5d3778d1a194ff2e171f16e5f]
 
-setup_fifo_params compared spi->mode against SE_SPI_CPHA/SE_SPI_CPOL,
-which are register offsets instead of SPI_CPHA/SPI_CPOL mode bits.
-This could skip CPHA/CPOL updates on mode switches and leave stale
-clock configuration.
+url:    https://github.com/intel-lab-lkp/linux/commits/Anvesh-Jain-P/dt-bindings-embedded-controller-Add-EC-bindings-for-Qualcomm-reference-devices/20260314-163112
+base:   a0ae2a256046c0c5d3778d1a194ff2e171f16e5f
+patch link:    https://lore.kernel.org/r/20260313-v04-add-driver-for-ec-v4-2-ca9d0efd62aa%40oss.qualcomm.com
+patch subject: [PATCH v4 2/5] platform: arm64: Add driver for EC found on Qualcomm reference devices
+config: csky-allmodconfig (https://download.01.org/0day-ci/archive/20260316/202603162107.pwsms8tn-lkp@intel.com/config)
+compiler: csky-linux-gcc (GCC) 15.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260316/202603162107.pwsms8tn-lkp@intel.com/reproduce)
 
-This is a single-patch series.
----
- drivers/spi/spi-geni-qcom.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202603162107.pwsms8tn-lkp@intel.com/
 
-diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index 43ce47f2454c..772b7148ba5f 100644
---- a/drivers/spi/spi-geni-qcom.c
-+++ b/drivers/spi/spi-geni-qcom.c
-@@ -359,9 +359,9 @@ static int setup_fifo_params(struct spi_device *spi_slv,
- 		writel((spi_slv->mode & SPI_LOOP) ? LOOPBACK_ENABLE : 0, se->base + SE_SPI_LOOPBACK);
- 	if (cs_changed)
- 		writel(chipselect, se->base + SE_SPI_DEMUX_SEL);
--	if (mode_changed & SE_SPI_CPHA)
-+	if (mode_changed & SPI_CPHA)
- 		writel((spi_slv->mode & SPI_CPHA) ? CPHA : 0, se->base + SE_SPI_CPHA);
--	if (mode_changed & SE_SPI_CPOL)
-+	if (mode_changed & SPI_CPOL)
- 		writel((spi_slv->mode & SPI_CPOL) ? CPOL : 0, se->base + SE_SPI_CPOL);
- 	if ((mode_changed & SPI_CS_HIGH) || (cs_changed && (spi_slv->mode & SPI_CS_HIGH)))
- 		writel((spi_slv->mode & SPI_CS_HIGH) ? BIT(chipselect) : 0, se->base + SE_SPI_DEMUX_OUTPUT_INV);
+All warnings (new ones prefixed by >>):
 
----
-base-commit: 7109a2155340cc7b21f27e832ece6df03592f2e8
-change-id: 20260316-spi-geni-cpha-cpol-fix-89126ed55325
+   drivers/platform/arm64/qcom-hamoa-ec.c: In function 'qcom_ec_probe':
+>> drivers/platform/arm64/qcom-hamoa-ec.c:388:63: warning: '%d' directive output may be truncated writing between 1 and 11 bytes into a region of size 8 [-Wformat-truncation=]
+     388 |                 snprintf(name, EC_FAN_NAME_SIZE, "qcom_ec_fan_%d", i);
+         |                                                               ^~
+   drivers/platform/arm64/qcom-hamoa-ec.c:388:50: note: directive argument in the range [-2147483641, 254]
+     388 |                 snprintf(name, EC_FAN_NAME_SIZE, "qcom_ec_fan_%d", i);
+         |                                                  ^~~~~~~~~~~~~~~~
+   drivers/platform/arm64/qcom-hamoa-ec.c:388:17: note: 'snprintf' output between 14 and 24 bytes into a destination of size 20
+     388 |                 snprintf(name, EC_FAN_NAME_SIZE, "qcom_ec_fan_%d", i);
+         |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Best regards,
+
+vim +388 drivers/platform/arm64/qcom-hamoa-ec.c
+
+   347	
+   348	static int qcom_ec_probe(struct i2c_client *client)
+   349	{
+   350		struct qcom_ec_cooling_dev *cdev;
+   351		struct device *dev = &client->dev;
+   352		struct qcom_ec *ec;
+   353		int ret, i;
+   354	
+   355		ec = devm_kzalloc(dev, sizeof(*ec), GFP_KERNEL);
+   356		if (!ec)
+   357			return -ENOMEM;
+   358	
+   359		ec->client = client;
+   360	
+   361		ret = devm_request_threaded_irq(dev, client->irq, NULL, qcom_ec_irq,
+   362						IRQF_ONESHOT, "qcom_ec", ec);
+   363		if (ret < 0)
+   364			return dev_err_probe(dev, ret, "Failed to get irq\n");
+   365	
+   366		i2c_set_clientdata(client, ec);
+   367	
+   368		ret = qcom_ec_read_fw_version(dev);
+   369		if (ret < 0)
+   370			return dev_err_probe(dev, ret, "Failed to read ec firmware version\n");
+   371	
+   372		ret = qcom_ec_thermal_capabilities(dev);
+   373		if (ret < 0)
+   374			return dev_err_probe(dev, ret, "Failed to read thermal capabilities\n");
+   375	
+   376		ret = qcom_ec_sci_evt_control(dev, true);
+   377		if (ret < 0)
+   378			return dev_err_probe(dev, ret, "Failed to enable SCI events\n");
+   379	
+   380		ec->ec_cdev = devm_kcalloc(dev, ec->thermal_cap.fan_cnt, sizeof(*ec->ec_cdev), GFP_KERNEL);
+   381		if (!ec->ec_cdev)
+   382			return -ENOMEM;
+   383	
+   384		for (i = 0; i < ec->thermal_cap.fan_cnt; i++) {
+   385			struct qcom_ec_cooling_dev *ec_cdev = &ec->ec_cdev[i];
+   386			char name[EC_FAN_NAME_SIZE];
+   387	
+ > 388			snprintf(name, EC_FAN_NAME_SIZE, "qcom_ec_fan_%d", i);
+   389			ec_cdev->fan_id = i + 1;
+   390			ec_cdev->parent_dev = dev;
+   391	
+   392			ec_cdev->cdev = thermal_cooling_device_register(name, ec_cdev,
+   393									&qcom_ec_thermal_ops);
+   394			if (IS_ERR(ec_cdev->cdev)) {
+   395				dev_err_probe(dev, PTR_ERR(cdev),
+   396					      "Thermal cooling device registration failed\n");
+   397				ret = -EINVAL;
+   398				goto unroll_cooling_dev;
+   399			}
+   400		}
+   401	
+   402		return 0;
+   403	
+   404	unroll_cooling_dev:
+   405		for (i--; i >= 0; i--) {
+   406			struct qcom_ec_cooling_dev *ec_cdev = &ec->ec_cdev[i];
+   407	
+   408			if (ec_cdev->cdev) {
+   409				thermal_cooling_device_unregister(ec_cdev->cdev);
+   410				ec_cdev->cdev = NULL;
+   411			}
+   412		}
+   413	
+   414		return ret;
+   415	}
+   416	
+
 -- 
-Maramaina Naresh <naresh.maramaina@oss.qualcomm.com>
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
