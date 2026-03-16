@@ -1,50 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-97835-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97836-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id mJ1iIUqMt2niSgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97835-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 05:51:22 +0100
+	id ABVXJfGMt2niSgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97836-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 05:54:09 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1D60294AB7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 05:51:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E9733294AD3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 05:54:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9ED32300C934
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 04:51:19 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1EA0B300D967
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 04:54:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC6C41C84DE;
-	Mon, 16 Mar 2026 04:51:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1492E241139;
+	Mon, 16 Mar 2026 04:54:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CX7KAFbb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OA3bDCCD"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971AB2AE78;
-	Mon, 16 Mar 2026 04:51:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E62161C84DE;
+	Mon, 16 Mar 2026 04:54:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773636677; cv=none; b=Ld9yOLohFBwnQ/uCvTlM8hXpBQW8t4fPerFQMZYSy/xp02+mwQrtGLwwN81XSPVYKd8gcvhp2Q5XmFQ/vurSwhNpWV2NWNr2Jtu7d/8m67rzgnr2xvbrRIQyo5R1r8NBUA9Nh2EfWreXfmNw+gcI8ZnIOo533L2h48IuNDb/MDs=
+	t=1773636846; cv=none; b=dUpdqHMFAQUoaF3EIuPpPn40stLQ+mTn1ULXPo2NMS1jM5p8r2ounnK6/A7rE/238AozjtFZIJjzt5vGVaK1Cklr3CdnyyYMfqZjOgYU3lqlnrafVh6aJNrp+T1624yjqHQhe3aa1xNGafI2RNae6u4om9gzzole/UitBX4D3Nk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773636677; c=relaxed/simple;
-	bh=rUy6W1gr1K6gq0BcK3bObcb2dEGog6yR+Jgr5yTG2xU=;
+	s=arc-20240116; t=1773636846; c=relaxed/simple;
+	bh=CmXCQjIOoeBEaHIQ8nhMucM0P+y6BE836pFoje8TgPc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uauM45P/2kFWcMKVIKcOeG4u37ThysdzfAwxb0VuhDVUQuVx96+fmpbzpPUsToc9xCJSBhaBkL3sTle708RHNofK5J2iZ1eE9pP+Q+ci++VfnlO87QJ8f93aE/OzvUZw60MPr12cXQ06JjP/9QVKhZO3CR8/Y93TJgWcGuovBo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CX7KAFbb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC33AC19425;
-	Mon, 16 Mar 2026 04:51:13 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=rl27Ur0JVqLOcNmIfJd/8WJ4tz1lRhXOVqcJrLD1e0icwiMZwPeTY+UZeOAQFd9sl4k3gwG/3EZxyB3lap35QJ0rNOAFTSOotO1oaTOUUrnux7Z6GX1sePeAEzLoXxsTTz+A2JMH5IByYbw65QTOgZSpS2DQy3Nyy4j3Cac9JiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OA3bDCCD; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D2EBC19425;
+	Mon, 16 Mar 2026 04:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773636677;
-	bh=rUy6W1gr1K6gq0BcK3bObcb2dEGog6yR+Jgr5yTG2xU=;
+	s=k20201202; t=1773636845;
+	bh=CmXCQjIOoeBEaHIQ8nhMucM0P+y6BE836pFoje8TgPc=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=CX7KAFbbeU4498EusalmTyAlvSRLtQKDAQ2u5SdvKOoyPRM5bUvBTvaJUr/zDgUYn
-	 QETOVmf4G4D38bwYygPQIUCLVYlP+PVPDWIR8NoevN5dKBn5zjG4tcupdAX58YC8bK
-	 c/5p+N0tSGTCLS8/bJ1n4rRH/+ZMy3P0gcg0MRFGp+/pUSC7WJe5xFUFHzlZ2dK52L
-	 18TZZgtRzLCZWfyK4v6VrIbdGGTY8Zv2QVHswkD8crd59yXet36j2AQ6zfiiLKVpb3
-	 kobxiUFTEqeYeWiuGSkPhHoyjH4aw/GPQO98QJYY9mKRssCXzW6G+imiwdb7iXvgW0
-	 fjpi2dpC7Z8iA==
-Date: Mon, 16 Mar 2026 10:21:10 +0530
+	b=OA3bDCCDz/RQ8piBkuNpfhBXuJ/ZLXfX7MVAfq6kzVVweqSwEF3cn03mPu0mjFbA8
+	 SM3UOSR9Ij3n9/QjDbRtZDAxMbnn63LjDrUT48Mn3gq5FSWvRT977A3vaU7KtK1IhK
+	 uq77fvr/wImXcBuFL80bfnUtplJiV9teL9oACmjyY65uel4A+oRt9/tq4TC/10F7xd
+	 j1awbmd+Z8WxfiknUu0zvZNNvbRP0LIQuKG4TVoDCPqhv5AMsAiLnq3qlbQGd2MBBy
+	 5kULgTnW5OO/isrH1OVLky7bIJh4wL+u1ANp08J4UHIuRZ9ylLqlMfzlCHZ+Wl/C8B
+	 Ev2TQQPYey2bw==
+Date: Mon, 16 Mar 2026 10:23:58 +0530
 From: Manivannan Sadhasivam <mani@kernel.org>
 To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>, 
@@ -52,11 +52,10 @@ Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
 	Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>, linux-pci@vger.kernel.org, 
 	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, mayank.rana@oss.qualcomm.com, 
 	quic_vbadigan@quicinc.com
-Subject: Re: [PATCH v3 1/3] PCI/ASPM: Add helper to encode L1SS T_POWER_ON
- fields
-Message-ID: <fwa3hatuesbbsnk3o34nhi6ohpozkr74rmnqbqwxmesh5bws3r@abidzslkrily>
+Subject: Re: [PATCH v3 3/3] PCI: qcom: Program T_POWER_ON
+Message-ID: <wofjlohumsdyyfhndrdwf4ujxiwlrajm2rpobd6gofpqyasttb@ze54bm6pwbgq>
 References: <20260311-t_power_on_fux-v3-0-9b1f1d09c6f3@oss.qualcomm.com>
- <20260311-t_power_on_fux-v3-1-9b1f1d09c6f3@oss.qualcomm.com>
+ <20260311-t_power_on_fux-v3-3-9b1f1d09c6f3@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,7 +65,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260311-t_power_on_fux-v3-1-9b1f1d09c6f3@oss.qualcomm.com>
+In-Reply-To: <20260311-t_power_on_fux-v3-3-9b1f1d09c6f3@oss.qualcomm.com>
 X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
@@ -77,7 +76,7 @@ X-Spamd-Result: default: False [-1.66 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	FREEMAIL_CC(0.00)[kernel.org,google.com,gmail.com,vger.kernel.org,oss.qualcomm.com,quicinc.com];
-	TAGGED_FROM(0.00)[bounces-97835-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-97836-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
@@ -95,97 +94,75 @@ X-Spamd-Result: default: False [-1.66 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: E1D60294AB7
+X-Rspamd-Queue-Id: E9733294AD3
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Wed, Mar 11, 2026 at 06:10:38PM +0530, Krishna Chaitanya Chundru wrote:
-> Add a shared helper to encode the PCIe L1 PM Substates T_POWER_ON
-> parameter into the T_POWER_ON_Scale and T_POWER_ON_Value fields.
+On Wed, Mar 11, 2026 at 06:10:40PM +0530, Krishna Chaitanya Chundru wrote:
+> Some platforms have incorrect T_POWER_ON value programmed in hardware.
+> Generally these will be corrected by bootloaders, but not all targets
+> support bootloaders to program correct values due to that
+> LTR_L1.2_THRESHOLD value calculated by aspm driver can be wrong, which
+> can result in improper L1.2 exit behavior and if AER happens to be
+> supported and enabled, the error may be *reported* via AER.
 > 
-> This helper can be used by the controller drivers to change the
-> default/wrong value of T_POWER_ON in L1ss capability register to
-> avoid incorrect calculation of LTR_L1.2_THRESHOLD value.
+> Parse "t-power-on-us" property from each root port node and program them
+> as part of host initialization using dw_pcie_program_t_power_on() before
+> link training.
 > 
-> The helper converts a T_POWER_ON time specified in microseconds into
-> the appropriate scale/value encoding defined by the PCIe spec r7.0,
-> sec 7.8.3.2. Values that exceed the maximum encodable range are clamped
-> to the largest representable encoding.
+> This property in added to the dtschema here[1].
 > 
 > Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> Link[1]: https://lore.kernel.org/all/20260205093346.667898-1-krishna.chundru@oss.qualcomm.com/
 > ---
->  drivers/pci/pci.h       |  2 ++
->  drivers/pci/pcie/aspm.c | 43 +++++++++++++++++++++++++++++++++++++++++++
->  2 files changed, 45 insertions(+)
+>  drivers/pci/controller/dwc/pcie-qcom.c | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
 > 
-> diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
-> index 13d998fbacce6698514d92500dfea03cc562cdc2..48964602d802e114a6a2481df3fb75d9e178a31b 100644
-> --- a/drivers/pci/pci.h
-> +++ b/drivers/pci/pci.h
-> @@ -1105,6 +1105,7 @@ void pcie_aspm_pm_state_change(struct pci_dev *pdev, bool locked);
->  void pcie_aspm_powersave_config_link(struct pci_dev *pdev);
->  void pci_configure_ltr(struct pci_dev *pdev);
->  void pci_bridge_reconfigure_ltr(struct pci_dev *pdev);
-> +void pcie_encode_t_power_on(u16 t_power_on_us, u8 *scale, u8 *value);
->  #else
->  static inline void pcie_aspm_remove_cap(struct pci_dev *pdev, u32 lnkcap) { }
->  static inline void pcie_aspm_init_link_state(struct pci_dev *pdev) { }
-> @@ -1113,6 +1114,7 @@ static inline void pcie_aspm_pm_state_change(struct pci_dev *pdev, bool locked)
->  static inline void pcie_aspm_powersave_config_link(struct pci_dev *pdev) { }
->  static inline void pci_configure_ltr(struct pci_dev *pdev) { }
->  static inline void pci_bridge_reconfigure_ltr(struct pci_dev *pdev) { }
-> +static inline void pcie_encode_t_power_on(u16 t_power_on_us, u8 *scale, u8 *value) { }
->  #endif
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 67a16af69ddc75fca1b123e70715e692a91a9135..63d5628e988d3c07f42099c0d86e6b80fd54ce32 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -269,6 +269,7 @@ struct qcom_pcie_perst {
+>  struct qcom_pcie_port {
+>  	struct list_head list;
+>  	struct phy *phy;
+> +	u32 l1ss_t_power_on;
+>  	struct list_head perst;
+>  };
 >  
->  #ifdef CONFIG_PCIE_ECRC
-> diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
-> index 21f5d23e0b61bd7e1163cc869fe9356d1ab87b34..d7f9ae9e48c25dbc2d9b4887e2f74623688098e0 100644
-> --- a/drivers/pci/pcie/aspm.c
-> +++ b/drivers/pci/pcie/aspm.c
-> @@ -525,6 +525,49 @@ static u32 calc_l12_pwron(struct pci_dev *pdev, u32 scale, u32 val)
+> @@ -1283,6 +1284,14 @@ static int qcom_pcie_phy_power_on(struct qcom_pcie *pcie)
 >  	return 0;
 >  }
 >  
-> +/**
-> + * pcie_encode_t_power_on - Encode T_POWER_ON into scale and value fields
-> + * @t_power_on_us: T_POWER_ON time in microseconds
-> + * @scale: Encoded T_POWER_ON_Scale (0..2)
-> + * @value: Encoded T_POWER_ON_Value
-
-Nit:
-
-s/T_POWER_ON_Scale/T_POWER_ON Scale
-s/T_POWER_ON_Value/T_POWER_ON Value
-
-Same everywhere.
-
-> + *
-> + * T_POWER_ON is encoded as:
-> + *   T_POWER_ON(us) = scale_unit(us) * value
-> + *
-> + * where scale_unit is selected by @scale:
-> + *   0: 2us
-> + *   1: 10us
-> + *   2: 100us
-> + *
-> + * If @t_power_on_us exceeds the maximum representable value, the result
-> + * is clamped to the largest encodable T_POWER_ON.
-> + *
-> + * See PCIe r7.0, sec 7.8.3.2.
-> + */
-> +void pcie_encode_t_power_on(u16 t_power_on_us, u8 *scale, u8 *value)
+> +static void qcom_pcie_configure_ports(struct qcom_pcie *pcie)
 > +{
-> +	u8 maxv = FIELD_MAX(PCI_L1SS_CTL2_T_PWR_ON_VALUE);
-
-Since this API is for changing the 'capabilities register', you should use
-PCI_L1SS_CAP_P_PWR_ON_VALUE.
-
+> +	struct qcom_pcie_port *port;
 > +
-> +	/*
-> +	 * T_POWER_ON_Value ("value") is a 5-bit field with max
-> +	 * value of 31.
+> +	list_for_each_entry(port, &pcie->ports, list)
+> +		dw_pcie_program_t_power_on(pcie->pci, port->l1ss_t_power_on);
+> +}
+> +
+>  static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
+>  {
+>  	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> @@ -1317,6 +1326,8 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
+>  	dw_pcie_remove_capability(pcie->pci, PCI_CAP_ID_MSIX);
+>  	dw_pcie_remove_ext_capability(pcie->pci, PCI_EXT_CAP_ID_DPC);
+>  
+> +	qcom_pcie_configure_ports(pcie);
+> +
+>  	qcom_pcie_perst_deassert(pcie);
+>  
+>  	if (pcie->cfg->ops->config_sid) {
+> @@ -1759,6 +1770,8 @@ static int qcom_pcie_parse_port(struct qcom_pcie *pcie, struct device_node *node
+>  	if (ret)
+>  		return ret;
+>  
+> +	of_property_read_u32(node, "t-power-on-us", &port->l1ss_t_power_on);
+> +
 
-Use max 80 columns for comments.
+Since this is going to be common for all controller drivers, it'd be good to
+move this inside the dwc API.
 
 - Mani
 
