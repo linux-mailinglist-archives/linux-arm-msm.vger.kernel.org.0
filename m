@@ -1,100 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-97921-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97922-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MDn2LALkt2mzWwEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97921-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 12:05:38 +0100
+	id GEOuIyrlt2mzWwEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97922-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 12:10:34 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2EBAF29876C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 12:05:38 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id E75CD29883C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 12:10:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 90BAE30292F0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 11:05:03 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id DF64E3022957
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 11:05:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A7C92749E6;
-	Mon, 16 Mar 2026 11:05:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70B6326ED41;
+	Mon, 16 Mar 2026 11:05:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="VAX7nOJB";
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b="sX62fuGg"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="TmZDZCCd";
+	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b="tAHROEEh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9DD26D4E5
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 11:05:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6FB1DF723
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 11:05:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773659102; cv=none; b=uD5IcGW+UgZus09fSzud/hgZPQa+T2YuStDzNlFVhqh5b0XwP0awKmZsWJIJZ7xeAuDwL7bgHMrGJGcs2Q9WzepdHaCgQShF8Nzkg9J8RjtpliJY6hbRfGmqd5x/952Q31GBDvX8gl9f/u0ndpTOP7DtE3kd0V+5Tx99lutbO/0=
+	t=1773659143; cv=none; b=dQtzlo+tknJxR4r3x+08IDY7kJynJvZZ+yp+lrUcQcOkBE1zqlCPLm+aBXX1Z27XLIlDOd6yk0J6ZQ2N8tljTxomVydwnoiepYJNaf9vDU6PHCyvCij+jletMrpGT19ah21KG/Qau7Ut6vetxYl0udm1q1KrOJVVyBQIgduzMAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773659102; c=relaxed/simple;
-	bh=TnLlXCOEwB+F51krmexkeVovZ5TzhMYqfqPBDnMdWqc=;
+	s=arc-20240116; t=1773659143; c=relaxed/simple;
+	bh=Ad453GyO/zo6v2miyh1zTsFX+JblatB8NS4t5mLlf4A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cZwiot6VmkEJpjum+8/ze/7bf9ph/25ofkJ79e7sIH6C0+5QIXIH13/efamMF/PoGT1E0DQvFAMOdYW4eng0IE1KOJb/Nyuua12PpO37rFxa6r2H0s+OSMefZT1Lt8MglD0Y4wE1GG62a8YBWU+8FeutOUQkfsdfGmpkpEdd2mg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=VAX7nOJB; dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b=sX62fuGg; arc=none smtp.client-ip=170.10.133.124
+	 Content-Type:Content-Disposition:In-Reply-To; b=bprtbvX7yLXBA7a2nBtIp5dvMU1KuKBS4LdIi5VGv4Qyd/TOXyPcpPKVwW3bJ+ysDtTLbhn9MPg7DRfOG6lN19SveK4Yu5a09m0FjOWPof5o1yjvTeC1xzTRRJ+eQSOjduI2qO+LIti38aVi02Q3uR/jLL1FtDsOX9Puhq5cz6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=TmZDZCCd; dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b=tAHROEEh; arc=none smtp.client-ip=170.10.129.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1773659099;
+	s=mimecast20190719; t=1773659141;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=Q0dYerS74j221fuo3Jw2PY9y8EQKWVdbS7rEMHtWNq8=;
-	b=VAX7nOJBgN+hroQySovJN0QZ8QHk4/nhz1ZHjVKPFrCDgy9fpZeTIdZiwOwLzw5sEaLaFO
-	R1do0Y9tinVCistxO3OdQYoe3aXymb7gMx6LXSrR4/peu3GRU4JJem0yt6SB0KDk1TEzSC
-	u5ppDy3YIZJtyrVXeERy2JbsPi47WUE=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=35G1xZGf0uqjk0dykU1nJVs0B6K9SxHlDxmUBHf6ahQ=;
+	b=TmZDZCCdc8je/3bwcYCe/YVWToPHsGLE7f4eAwtXfFCIsF86b9czFzfT3eBkBOGpO2lFQq
+	L0arwpVkqGjJz73P/WEtCVUGEjykDXqNYNgrkPAutn/qAWOS0zqqzx8qgFYNFyP4N6Aemd
+	hIYVv+RdDFSTvgCyUx/0aRcMb9D4LjY=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-588-QKV-eoSNOUiVTiqKXS94Jg-1; Mon, 16 Mar 2026 07:04:58 -0400
-X-MC-Unique: QKV-eoSNOUiVTiqKXS94Jg-1
-X-Mimecast-MFC-AGG-ID: QKV-eoSNOUiVTiqKXS94Jg_1773659098
-Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-89c56a7e610so41390516d6.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 04:04:58 -0700 (PDT)
+ us-mta-227-vI3rvWqMPvieWjmzkch2PA-1; Mon, 16 Mar 2026 07:05:39 -0400
+X-MC-Unique: vI3rvWqMPvieWjmzkch2PA-1
+X-Mimecast-MFC-AGG-ID: vI3rvWqMPvieWjmzkch2PA_1773659139
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-50917996cfaso14014591cf.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 04:05:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=redhat.com; s=google; t=1773659098; x=1774263898; darn=vger.kernel.org;
+        d=redhat.com; s=google; t=1773659139; x=1774263939; darn=vger.kernel.org;
         h=user-agent:in-reply-to:content-disposition:mime-version:references
          :message-id:subject:cc:to:from:date:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Q0dYerS74j221fuo3Jw2PY9y8EQKWVdbS7rEMHtWNq8=;
-        b=sX62fuGgP5eQS2XTvCxEBEF0tVOD5eiBBKzp/IuV7RaDHjFvofI/I8cRt4sVpPqXh1
-         PguMMPjrVEI3HyzQ7hty97cQcD1qJgvIf+sz+F46ZFw4NndpfsChl0+C3i3bs/dQsj1b
-         uc9Ek5MZKrY2wy0ytzeyh/WqhJ2Ui6gqYJbobg/16cm5YQb+7Cd7psl+WMgmmmCvl+JB
-         DZ9Gp2bONklUHc2j+142mzPYAPdnlBDfxssafH7DSQ0WPxJkHWzoyaSe7MuH7yCHLo4V
-         wQdac1VE5eoKzlPrFZww/MigoPrCUEZMD2VSdaMqsQ136uLmBFV4TsQlXebI85RHdy+K
-         9JiA==
+        bh=35G1xZGf0uqjk0dykU1nJVs0B6K9SxHlDxmUBHf6ahQ=;
+        b=tAHROEEhgHw50qcYusB2vUaMI4r4cQqp4MeLY0lOe/xUNRMLm32tkAQK1EHx5JMFIR
+         KMj8mtq5LOQ0LiCmrjT4D+ZZ4gULeZAJe1l/uBYGU9zGLkFF3aa9OawW9h3z0fDnkYvw
+         LUBteXZn+o/9L8nqskWFgZWoFe2ZOCYpjaKImZN2c9F16uusQjjMHzqsL20vN4T7g2aD
+         l/GrI23le39zTdfU0AK+feM9Xke9LPKU2RvbxJwIj9okKF2tlvs5Ka16yB14TFUkapmY
+         LLd8uQ5SnjHMAurSEkIwnY/GKJWWLNwQm10eCVggOhnmBZRnGLjOVQBaX3RTOdDw6WHB
+         TXCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773659098; x=1774263898;
+        d=1e100.net; s=20251104; t=1773659139; x=1774263939;
         h=user-agent:in-reply-to:content-disposition:mime-version:references
          :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Q0dYerS74j221fuo3Jw2PY9y8EQKWVdbS7rEMHtWNq8=;
-        b=BgtVHIukF/EpBa7KM2i8osgejPNvHPC603u/UF/nU/0JKVO9qlilGExrs+6VUV7FFc
-         Swkpj4EiDSI45bujnpxVWJKuzqBZhOpvrhDZRYLNgglnoqyj7bE97YjAp1IwX3l++pxG
-         0hGEAedUcskqWf8brmNa8dM/2iDU0wQT0J4l16H5v/guPyZip7H2HLA8D4ib8PeEPnez
-         E5tLrz8TZEjZpRCbsbkYb2RWEbNMX7s7rYD6AgV7v9BbNJsd4iHsrlKTn+QLb16LD8tM
-         jc/a7hMC5mSVPREsu7envkZnv9qMFE/XKiGU3hVFFJv3lMlSONx2Fl5NitpkK5K/iqzX
-         Xe+g==
-X-Forwarded-Encrypted: i=1; AJvYcCVuqM1I4RVuKU+zvxNqTtVxoZrQV9HMtzT2+6MOzVEL3EdtDDalJ3MAmI/Rrntv5Y9juwCMyPiaIuQaUvEi@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx01EjtzrP4hEZ4xby3Rk2/85JcHR76QhMtxM/fx1ChwtQxwDmd
-	Xqn4+eLQ91mv116bUnFkqpE16Wkq9JOOt109t/GAKcHA15NAO0TjtaS1JUHMf7SgpPfEM+Aw6qV
-	Gd6VLspO5fx5JBhd0EVzMCa1n8SvDbMjqHsJO/Z1sX6GCTjIRAuCRMDZBXkjAETpFhVY=
-X-Gm-Gg: ATEYQzwKVscRRUS1rzZwBzf5W2NqeukJjCamSsDc1opE0VwIr4sowTNFOiMk2NJR74R
-	iavcZ6hvrhiY2UEhwAzLPmBzbm5a896UcfduwXkID4Z018yl/wjUxI6tGQss2Wri1Fyht0M5qkz
-	HEsV1HKEtlp1OtDz6zFLaghO9+UR02ciXipItUQ9Ux78nJtVzllHm413KossGfKBNLG4mD+brfj
-	7ijamZLpseUaCu3dD5Bmu4Hx8p/1CbbQOkFjTXz7IYdi09W6KuHnrAgeJZXL+ViIP1+JcxtWvgl
-	DjxSyEdFSXl2Yvf/aEmSC0OipP9sxi/4E+qqtz7nO2Q0IUZv0hKF9m9lFMR5U7bokoagAVzkJaZ
-	pOLJH1mB9PCPLDIgp5jRy3hVuY0DY3NIntFvb3+Pqtq0rhr1vKyIFyw7U
-X-Received: by 2002:a05:6214:2482:b0:899:ac2b:6ddc with SMTP id 6a1803df08f44-89a820c9ea5mr179578836d6.62.1773659095394;
-        Mon, 16 Mar 2026 04:04:55 -0700 (PDT)
-X-Received: by 2002:a05:6214:2482:b0:899:ac2b:6ddc with SMTP id 6a1803df08f44-89a820c9ea5mr179574986d6.62.1773659092023;
-        Mon, 16 Mar 2026 04:04:52 -0700 (PDT)
+        bh=35G1xZGf0uqjk0dykU1nJVs0B6K9SxHlDxmUBHf6ahQ=;
+        b=lc8MmCtJJA6M4NHw4wsxi3KV3O4OsUE8FaWQY3i3c5lQ11gIKUEoGKIE/QoKTBBP/X
+         cLXP8k52DCbQC4+BiwZNPh5GYwRIMGlrk+7Zgta1TsBkWOVRPXmWh6BSKbqht3kIf1Pc
+         y5jWHbWSVmptbmvnBlDgmzq6XR/Hs+EjoFDzIepgaH2tswpIllM5W80Eko/pJYiYcj64
+         B/r49Ey9F9DPprYSqwMtxuEvtf15+S8skdqujxkaljEqZokNDjmZ075mHdcuOzm5SgOa
+         GzLXmwyudn+VDcbhCG2GGLURXDWwpxrq8kmck48L+vtQnCpOvsjzh1jxv+KaTr1VNPZ/
+         Y59A==
+X-Forwarded-Encrypted: i=1; AJvYcCWw/spx9uRB9SFbnJuIV0c6KmWCQG77byeX7LulsVB3pOjDhQic01UbfUJdEXgZ5mtUaj77yhKDN5hMLhLU@vger.kernel.org
+X-Gm-Message-State: AOJu0YznUXmFggKbqeAKCiHbPL4BWmIVOToE0+TekJ96o7yJudQcYvi/
+	rdfQ6Z+vfHI4Lafg9Uk/wFdiiPUoA3E165C9lD85CKN3ge6OtDhn8appuh0xHipa5rVlnOqPwAF
+	BNwW9mIc++fNweCWdf5LW/PMWdpwr2+XEBUZ7nlolNdxifvrpMVSEC3VgycD4471XMzA=
+X-Gm-Gg: ATEYQzz1CbIPBvzGB71rHwMwL5/CbCglMewEOqnEZTBqiNUvz77M7dVL+1mmcRCcWhN
+	69CHBj2doLMZpY6fIKKmw+iNsOtwPA+RMS9OfxiFibXsAsNR7W+g/EFFSElmRXpb5Lb3y9yjwtk
+	iN2uytuPUTlQQBPmhqXBhTUa6D+Kh40Q5WcvWjsCid+AFlA/wFNhG5NJq/XuBSm2KJBrB2+qjzw
+	TC1mm7TRCgg3gllLlq0V11UiXtf1y+5Kg0+uyB+jJNt1YFoGeC0lzPLTd3Wl4br79d+WP9OP3y4
+	EoqZKCjdo6z+WocGzNuwkSgvQ8/Pk9vCLGIosRYMhrWjK9y8v+3HASyJ8gfIGfrt35B8cgKjMxZ
+	DKtLmpkgKx8Z88ajBHLFrw96S1vJvlmFgq4bvmmeqrQ/L4lATnXq4R9Yq
+X-Received: by 2002:ac8:5914:0:b0:509:350e:743e with SMTP id d75a77b69052e-50957cf28eemr172911451cf.22.1773659139219;
+        Mon, 16 Mar 2026 04:05:39 -0700 (PDT)
+X-Received: by 2002:ac8:5914:0:b0:509:350e:743e with SMTP id d75a77b69052e-50957cf28eemr172911031cf.22.1773659138822;
+        Mon, 16 Mar 2026 04:05:38 -0700 (PDT)
 Received: from redhat.com (c-73-183-52-120.hsd1.pa.comcast.net. [73.183.52.120])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-89c463af405sm45050026d6.48.2026.03.16.04.04.50
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-5093a14d7a6sm113916121cf.33.2026.03.16.04.05.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Mar 2026 04:04:51 -0700 (PDT)
-Date: Mon, 16 Mar 2026 07:04:49 -0400
+        Mon, 16 Mar 2026 04:05:38 -0700 (PDT)
+Date: Mon, 16 Mar 2026 07:05:36 -0400
 From: Brian Masney <bmasney@redhat.com>
 To: Gabriele Paoloni <gpaoloni@redhat.com>
 Cc: mani@kernel.org, jassisinghbrar@gmail.com,
@@ -102,11 +102,11 @@ Cc: mani@kernel.org, jassisinghbrar@gmail.com,
 	mpapini@redhat.com, dnita@qti.qualcomm.com,
 	rballati@qti.qualcomm.com, bijothom@qti.qualcomm.com,
 	wchadwic@redhat.com
-Subject: Re: [PATCH 1/2] mailbox: qcom-ipcc: amend qcom_ipcc_domain_map() to
+Subject: Re: [PATCH 2/2] mailbox: qcom-ipcc: amend qcom_ipcc_irq_fn() to
  report errors
-Message-ID: <abfj0bpnv6yqJBPR@redhat.com>
+Message-ID: <abfkAFIheKCuLRKk@redhat.com>
 References: <20260316102618.7953-1-gpaoloni@redhat.com>
- <20260316102618.7953-2-gpaoloni@redhat.com>
+ <20260316102618.7953-3-gpaoloni@redhat.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -115,12 +115,12 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260316102618.7953-2-gpaoloni@redhat.com>
+In-Reply-To: <20260316102618.7953-3-gpaoloni@redhat.com>
 User-Agent: Mutt/2.3.0 (2026-01-25)
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[redhat.com,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[redhat.com:s=mimecast20190719,redhat.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
@@ -130,7 +130,7 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	FREEMAIL_CC(0.00)[kernel.org,gmail.com,vger.kernel.org,redhat.com,qti.qualcomm.com];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-97921-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-97922-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
@@ -138,65 +138,63 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	RCVD_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[bmasney@redhat.com,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
 	RCPT_COUNT_SEVEN(0.00)[10];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 2EBAF29876C
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: E75CD29883C
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Mon, Mar 16, 2026 at 11:26:17AM +0100, Gabriele Paoloni wrote:
-> Currently qcom_ipcc_domain_map() ignores errors returned by
-> irq_set_chip_data() and invokes irq_set_chip_and_handler()
-> that in turn ignores errors returned by irq_set_chip().
-> This patch fixes both issues; no other functional changes
-> are implemented.
+On Mon, Mar 16, 2026 at 11:26:18AM +0100, Gabriele Paoloni wrote:
+> check the virq value returned by irq_find_mapping(), also
+> check the return value of generic_handle_irq(); return IRQ_NONE
+> if either of the checks fails.
 > 
 > Signed-off-by: Gabriele Paoloni <gpaoloni@redhat.com>
 > ---
->  drivers/mailbox/qcom-ipcc.c | 14 +++++++++++---
->  1 file changed, 11 insertions(+), 3 deletions(-)
+>  drivers/mailbox/qcom-ipcc.c | 10 ++++++++--
+>  1 file changed, 8 insertions(+), 2 deletions(-)
 > 
 > diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
-> index d957d989c0ce..c23efaaa64a1 100644
+> index c23efaaa64a1..0795184591f0 100644
 > --- a/drivers/mailbox/qcom-ipcc.c
 > +++ b/drivers/mailbox/qcom-ipcc.c
-> @@ -116,12 +116,20 @@ static struct irq_chip qcom_ipcc_irq_chip = {
->  static int qcom_ipcc_domain_map(struct irq_domain *d, unsigned int irq,
->  				irq_hw_number_t hw)
+> @@ -75,7 +75,7 @@ static irqreturn_t qcom_ipcc_irq_fn(int irq, void *data)
 >  {
-> +	int ret;
->  	struct qcom_ipcc *ipcc = d->host_data;
+>  	struct qcom_ipcc *ipcc = data;
+>  	u32 hwirq;
+> -	int virq;
+> +	int virq, ret;
 
 Put variables in reverse Christmas tree order.
 
->  
-> -	irq_set_chip_and_handler(irq, &qcom_ipcc_irq_chip, handle_level_irq);
-
-Should irq_set_chip_and_handler() and irq_set_chip_and_handler_name() be
-updated to return an int to reduce boiler plate code?
-
-> -	irq_set_chip_data(irq, ipcc);
-> -	irq_set_noprobe(irq);
-> +	ret = irq_set_chip(irq, &qcom_ipcc_irq_chip);
-> +	if (ret)
-> +		return ret;
-> +
-> +	irq_set_handler(irq, handle_level_irq);
->  
-> +	ret = irq_set_chip_data(irq, ipcc);
-> +	if (ret)
-> +		return ret;
-> +
-> +	irq_set_noprobe(irq);
->  	return 0;
-
-The newline before the return 0 is removed. That should also remove the
-irq_set_noprobe() change from the diffstat.
-
 Brian
+
+
+>  
+>  	for (;;) {
+>  		hwirq = readl(ipcc->base + IPCC_REG_RECV_ID);
+> @@ -83,8 +83,14 @@ static irqreturn_t qcom_ipcc_irq_fn(int irq, void *data)
+>  			break;
+>  
+>  		virq = irq_find_mapping(ipcc->irq_domain, hwirq);
+> +		if (unlikely(!virq))
+> +			return IRQ_NONE;
+> +
+>  		writel(hwirq, ipcc->base + IPCC_REG_RECV_SIGNAL_CLEAR);
+> -		generic_handle_irq(virq);
+> +
+> +		ret = generic_handle_irq(virq);
+> +		if (unlikely(ret))
+> +			return IRQ_NONE;
+>  	}
+>  
+>  	return IRQ_HANDLED;
+> -- 
+> 2.48.1
+> 
 
 
