@@ -1,236 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-98000-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98001-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iLnENV4+uGmxawEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98000-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 18:31:10 +0100
+	id uLafAHE+uGmpagEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98001-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 18:31:29 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 693C329E489
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 18:31:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B711E29E49F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 18:31:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 55959303AA8A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 17:29:42 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 0C7BF3046D39
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 17:29:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCBA93D332B;
-	Mon, 16 Mar 2026 17:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E0863D0920;
+	Mon, 16 Mar 2026 17:29:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MQw3Blgr"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SeG1bDmb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 678403D1CA2;
-	Mon, 16 Mar 2026 17:29:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 654113CEBBA;
+	Mon, 16 Mar 2026 17:29:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773682165; cv=none; b=UvR7o4g293a/J110Az/aobYfeoVW3T4h4ERxVOXIKct23x63EuIZCU1odajsbYYZ9h+UY9aQg6CtHuCmHZruwRiVwqjkEhx55uyn1ZmPHH2jZMmjfH1PaVSYRWx6NXbwSI4pbVI5v9XfXD3RgdmLcUexf+EAroiTinm6wj58Owg=
+	t=1773682179; cv=none; b=LCmI36OfbxmwBREnfER0vtSvUKNMItv2T5OgqArhMgjrN7Uzwz7GTHqWJN+Cn3IiwxRwlPb7dPwCf3kWwATX3BhTNrFQOEuxziy0RUSMSv8xuOIudySvkVJHx62lXacdf4GObb0Z3bCd9A1ZQkIwLcGFi7lU0NqOWuGDktkusYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773682165; c=relaxed/simple;
-	bh=wxGX2gFq5BLquXVP03f8zC0BP5xU9gLN5ZVoUeJPYYw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FyxGGkiQqz48NBI+MivvvXFTr8/uA4djN9qjWNpSQ/SgE4VheymDBNXzJ2zYJHbgBLY+tit4U8G8ta/kV+pnX3qqFttGHu9ZdDC8PVMK5toAmTDPLCafcePAWtmHa0K0MjOuhX8kFkLf+t05leUsQ7gTMBi3EfEKU07hVhx4gG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=MQw3Blgr; arc=none smtp.client-ip=198.175.65.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1773682165; x=1805218165;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=wxGX2gFq5BLquXVP03f8zC0BP5xU9gLN5ZVoUeJPYYw=;
-  b=MQw3Blgr6nSpDymMAP/XYCsl3klwX+vhPgJ3CC6ftxZy3cqbf/Xso1HU
-   6thS1uDqPdkZU9o4g9CadifWW6c0GVdw3bs7VAS1q7BV86925TlX8OGUN
-   WUFcZMcwdvDMhyROXMp/8r4YZuAJZnK+QyeQLZLYFoRnOGvBzgvuGxay3
-   BiXRJmrUnZ+mr3wXzgTn7dN+jpnM0e7vjTgcgeuYvi0w/O1OqhTpPmkjn
-   vh0y6k7lEhzf3Ccmpzp9MkggzOTDH8g+vDLsTAyUBc4JChg5JeURNjGeI
-   Wc5DMJNgylOY8/m+PN2gc+bubVa5vRiaARtH8pJd/RgmhHDZq/lF1SG5T
-   A==;
-X-CSE-ConnectionGUID: fxWzHr+bSDqog2Yar4VRuQ==
-X-CSE-MsgGUID: hrHMeoADT0StZIKEZmsSVQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11731"; a="74596434"
-X-IronPort-AV: E=Sophos;i="6.23,124,1770624000"; 
-   d="scan'208";a="74596434"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Mar 2026 10:29:24 -0700
-X-CSE-ConnectionGUID: p4T2LBjYQ9+H18eSc/Zk4Q==
-X-CSE-MsgGUID: /P4nI6lSQaKad0WXq5uuyA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,124,1770624000"; 
-   d="scan'208";a="252507405"
-Received: from lkp-server01.sh.intel.com (HELO 892944969b78) ([10.239.97.150])
-  by orviesa002.jf.intel.com with ESMTP; 16 Mar 2026 10:29:20 -0700
-Received: from kbuild by 892944969b78 with local (Exim 4.98.2)
-	(envelope-from <lkp@intel.com>)
-	id 1w2Bki-00000000130-3hfX;
-	Mon, 16 Mar 2026 17:29:16 +0000
-Date: Tue, 17 Mar 2026 01:28:29 +0800
-From: kernel test robot <lkp@intel.com>
-To: Anvesh Jain P <anvesh.p@oss.qualcomm.com>,
-	Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Hans de Goede <hansg@kernel.org>,
-	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, platform-driver-x86@vger.kernel.org,
-	Anvesh Jain P <anvesh.p@oss.qualcomm.com>,
-	Maya Matuszczyk <maccraft123mc@gmail.com>
-Subject: Re: [PATCH v4 2/5] platform: arm64: Add driver for EC found on
- Qualcomm reference devices
-Message-ID: <202603170132.IivRdk9p-lkp@intel.com>
-References: <20260313-v04-add-driver-for-ec-v4-2-ca9d0efd62aa@oss.qualcomm.com>
+	s=arc-20240116; t=1773682179; c=relaxed/simple;
+	bh=Ysd3eBupfSljhrNmOpuGPKVMPzOcnIp/9ypCnnttjrY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gO8u7FmVtjzYSA+F/HQHi7I2z2LbiCl2Pts2wpagVfgIfgPnN99na+WstfE4h7cmCyfhPwlWTTCm7siCf7yBM7QEvRv+7xH+urRgyDgK0kLGBR4jj4ZFh3WjDRPdn0sVvU/EV+BZfqPNVPtHkz2GUR/CvE2ZUEgS0Nme0E+I/Wg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SeG1bDmb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5089EC2BC87;
+	Mon, 16 Mar 2026 17:29:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773682178;
+	bh=Ysd3eBupfSljhrNmOpuGPKVMPzOcnIp/9ypCnnttjrY=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=SeG1bDmb2FosihW0Q0vHpHDd6Vq9zHI/km9LM9pVc+W9ySVDXWNuYswxphJ768iy+
+	 rRTo4LFSUsqxFYgG+8R5d0PCs94v7ggs1ZV94QtxtKZemNboI/SB6zraswF7lRv/V0
+	 4dRzPiYhaMGMP5SoiQOyyHwGQgu4ORDieCfhRvo7rhFoRx8WGR5BN5Zduj9HcYol5y
+	 xigRuamu6mn78C8lcPsh5eNPMZw4UmXPzfzEmZKk8UyxEMqKXHMUVbtQQdAJZBIRKO
+	 fqFw06ytMbWL1ifvXu8nl9a+xt365ou5fLzGd/1kCY837nZwvVw1ifY2Dp/xBaICkO
+	 C+r3Fk7Yn1mQQ==
+Message-ID: <846c077d-f1ca-45bc-b3d4-52ba71c34909@kernel.org>
+Date: Mon, 16 Mar 2026 18:29:27 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260313-v04-add-driver-for-ec-v4-2-ca9d0efd62aa@oss.qualcomm.com>
-X-Spamd-Result: default: False [0.34 / 15.00];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH net-next v9 1/6] dt-bindings: net: qcom: document the
+ ethqos device for SCMI-based systems
+To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Andrew Lunn <andrew+netdev@lunn.ch>,
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>,
+ Vinod Koul <vkoul@kernel.org>, Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+ Chen-Yu Tsai <wens@kernel.org>, Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>,
+ Shawn Guo <shawnguo@kernel.org>, Fabio Estevam <festevam@gmail.com>,
+ Jan Petrous <jan.petrous@oss.nxp.com>, s32@nxp.com,
+ Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>,
+ Romain Gantois <romain.gantois@bootlin.com>,
+ Geert Uytterhoeven <geert+renesas@glider.be>,
+ Magnus Damm <magnus.damm@gmail.com>, Maxime Ripard <mripard@kernel.org>,
+ Christophe Roullier <christophe.roullier@foss.st.com>,
+ Bartosz Golaszewski <brgl@kernel.org>, Radu Rendec <rrendec@redhat.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org, Drew Fustini
+ <dfustini@tenstorrent.com>, linux-sunxi@lists.linux.dev,
+ linux-amlogic@lists.infradead.org, linux-mips@vger.kernel.org,
+ imx@lists.linux.dev, linux-renesas-soc@vger.kernel.org,
+ linux-rockchip@lists.infradead.org, sophgo@lists.linux.dev,
+ linux-riscv@lists.infradead.org,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+ Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+ Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+References: <20260316-qcom-sa8255p-emac-v9-0-c58934e76ff2@oss.qualcomm.com>
+ <20260316-qcom-sa8255p-emac-v9-1-c58934e76ff2@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20260316-qcom-sa8255p-emac-v9-1-c58934e76ff2@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
-	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[lists.linux.dev,vger.kernel.org,oss.qualcomm.com,gmail.com];
+	FREEMAIL_CC(0.00)[vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org,tenstorrent.com,lists.linux.dev,linaro.org,googlemail.com,oss.qualcomm.com,bp.renesas.com];
+	TAGGED_FROM(0.00)[bounces-98001-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-98000-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[lkp@intel.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[intel.com:+];
-	NEURAL_HAM(-0.00)[-1.000];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,lunn.ch,davemloft.net,google.com,redhat.com,gmail.com,foss.st.com,st.com,linaro.org,baylibre.com,oss.nxp.com,nxp.com,bootlin.com,glider.be];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_TWELVE(0.00)[18];
+	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_GT_50(0.00)[51];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev,renesas];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: 693C329E489
+X-Rspamd-Queue-Id: B711E29E49F
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi Anvesh,
+On 16/03/2026 13:05, Bartosz Golaszewski wrote:
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +
+> +    ethernet: ethernet@7a80000 {
 
-kernel test robot noticed the following build warnings:
+Wrong unit address.
 
-[auto build test WARNING on a0ae2a256046c0c5d3778d1a194ff2e171f16e5f]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Anvesh-Jain-P/dt-bindings-embedded-controller-Add-EC-bindings-for-Qualcomm-reference-devices/20260314-163112
-base:   a0ae2a256046c0c5d3778d1a194ff2e171f16e5f
-patch link:    https://lore.kernel.org/r/20260313-v04-add-driver-for-ec-v4-2-ca9d0efd62aa%40oss.qualcomm.com
-patch subject: [PATCH v4 2/5] platform: arm64: Add driver for EC found on Qualcomm reference devices
-config: riscv-allmodconfig (https://download.01.org/0day-ci/archive/20260317/202603170132.IivRdk9p-lkp@intel.com/config)
-compiler: clang version 23.0.0git (https://github.com/llvm/llvm-project f46a5153850c1303d687233d4adf699b01041da8)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260317/202603170132.IivRdk9p-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202603170132.IivRdk9p-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
->> drivers/platform/arm64/qcom-hamoa-ec.c:395:31: warning: variable 'cdev' is uninitialized when used here [-Wuninitialized]
-     395 |                         dev_err_probe(dev, PTR_ERR(cdev),
-         |                                                    ^~~~
-   drivers/platform/arm64/qcom-hamoa-ec.c:350:34: note: initialize the variable 'cdev' to silence this warning
-     350 |         struct qcom_ec_cooling_dev *cdev;
-         |                                         ^
-         |                                          = NULL
-   1 warning generated.
+> +        compatible = "qcom,sa8255p-ethqos";
+> +        reg = <0x23040000 0x10000>,
+> +              <0x23056000 0x100>;
 
 
-vim +/cdev +395 drivers/platform/arm64/qcom-hamoa-ec.c
-
-   347	
-   348	static int qcom_ec_probe(struct i2c_client *client)
-   349	{
-   350		struct qcom_ec_cooling_dev *cdev;
-   351		struct device *dev = &client->dev;
-   352		struct qcom_ec *ec;
-   353		int ret, i;
-   354	
-   355		ec = devm_kzalloc(dev, sizeof(*ec), GFP_KERNEL);
-   356		if (!ec)
-   357			return -ENOMEM;
-   358	
-   359		ec->client = client;
-   360	
-   361		ret = devm_request_threaded_irq(dev, client->irq, NULL, qcom_ec_irq,
-   362						IRQF_ONESHOT, "qcom_ec", ec);
-   363		if (ret < 0)
-   364			return dev_err_probe(dev, ret, "Failed to get irq\n");
-   365	
-   366		i2c_set_clientdata(client, ec);
-   367	
-   368		ret = qcom_ec_read_fw_version(dev);
-   369		if (ret < 0)
-   370			return dev_err_probe(dev, ret, "Failed to read ec firmware version\n");
-   371	
-   372		ret = qcom_ec_thermal_capabilities(dev);
-   373		if (ret < 0)
-   374			return dev_err_probe(dev, ret, "Failed to read thermal capabilities\n");
-   375	
-   376		ret = qcom_ec_sci_evt_control(dev, true);
-   377		if (ret < 0)
-   378			return dev_err_probe(dev, ret, "Failed to enable SCI events\n");
-   379	
-   380		ec->ec_cdev = devm_kcalloc(dev, ec->thermal_cap.fan_cnt, sizeof(*ec->ec_cdev), GFP_KERNEL);
-   381		if (!ec->ec_cdev)
-   382			return -ENOMEM;
-   383	
-   384		for (i = 0; i < ec->thermal_cap.fan_cnt; i++) {
-   385			struct qcom_ec_cooling_dev *ec_cdev = &ec->ec_cdev[i];
-   386			char name[EC_FAN_NAME_SIZE];
-   387	
-   388			snprintf(name, EC_FAN_NAME_SIZE, "qcom_ec_fan_%d", i);
-   389			ec_cdev->fan_id = i + 1;
-   390			ec_cdev->parent_dev = dev;
-   391	
-   392			ec_cdev->cdev = thermal_cooling_device_register(name, ec_cdev,
-   393									&qcom_ec_thermal_ops);
-   394			if (IS_ERR(ec_cdev->cdev)) {
- > 395				dev_err_probe(dev, PTR_ERR(cdev),
-   396					      "Thermal cooling device registration failed\n");
-   397				ret = -EINVAL;
-   398				goto unroll_cooling_dev;
-   399			}
-   400		}
-   401	
-   402		return 0;
-   403	
-   404	unroll_cooling_dev:
-   405		for (i--; i >= 0; i--) {
-   406			struct qcom_ec_cooling_dev *ec_cdev = &ec->ec_cdev[i];
-   407	
-   408			if (ec_cdev->cdev) {
-   409				thermal_cooling_device_unregister(ec_cdev->cdev);
-   410				ec_cdev->cdev = NULL;
-   411			}
-   412		}
-   413	
-   414		return ret;
-   415	}
-   416	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Best regards,
+Krzysztof
 
