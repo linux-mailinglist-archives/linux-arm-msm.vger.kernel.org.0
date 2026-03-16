@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-97839-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97840-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sPjvNHGSt2k0TAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97839-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 06:17:37 +0100
+	id wHfAAgiVt2nmTAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97840-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 06:28:40 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98393294BC2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 06:17:37 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 640FF294CA7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 06:28:39 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 8D7B5300D928
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 05:17:36 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 0E10A300E727
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 05:28:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6726C33D4F0;
-	Mon, 16 Mar 2026 05:17:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1AD533FE0F;
+	Mon, 16 Mar 2026 05:28:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t2KdofcF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jzAU86nT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4380733A701;
-	Mon, 16 Mar 2026 05:17:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D37733CEAA;
+	Mon, 16 Mar 2026 05:28:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773638253; cv=none; b=AQ2LIVH8Lsv5Q55kV9AG4eZaux0n5yZatoN7ZPYH6RGTV7V8sjCwwD1gzgXhLGECdlW8P8TLUpwLysa81krHbURiHk3ztfyfMu4gQCxAtn6AUW3mPLYmKcDkZsQeie4+OHk814jZVZQx+IF9CFWTBqCLav9XhyXtlatpRveQBvk=
+	t=1773638914; cv=none; b=E1q14nl8tME4gVcShJrE19bxbaGaMt9bZeycpPlfe9Zrl5slXkpqhc6/tAnAfji7x+T+XGVdCGbIWbJ7p025Lk2DMdDvoySbYE9nyJLXtftL/0HiNSn4ZvZH3j6sw6Zpw9BTd8kFXVCRbAajsdr0bV0yV3959m1ImofqrIMDNYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773638253; c=relaxed/simple;
-	bh=8Kq0QOVq5TW1W5RtFpnmQ8CbqgCezmXcnXqBqPSEbhQ=;
+	s=arc-20240116; t=1773638914; c=relaxed/simple;
+	bh=qEDCrQ2v7dJci3xSiyFWef/LSE6H7UffGnv9arRsU4k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iV93heyNOgdIX66Nyf4CXXHPDKs5Q8+KsHLKi8kRioEasy2F0NB+ZEiW6Y2kegWuPLZimcqkILfXN/PDzoE2J4UNsB0y4uS7vOabeQPwMfeEKm6KvcARaqQBjdJ6PNSPhxE9l8yKc76f7jiT3A6B8iQjYLCBJw9EuDLycMVPBFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t2KdofcF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B8ACC19425;
-	Mon, 16 Mar 2026 05:17:28 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=JLyvvH3gIS5vDM+cJ8pQGVCB3+ij/0R+WlTCiCzNG74HmLHHbBCkYV01a1jLrOrVmZd7DjT1GedhLu5+2p9OpCIFPxsaz98NDKBr6aomu0o3mBgMlsiD5YSI/PmowDYxfig0PDxj4A01Y6pVZLTfYzaDHggyiI4KNV82xR3VHAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jzAU86nT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A967CC19425;
+	Mon, 16 Mar 2026 05:28:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773638252;
-	bh=8Kq0QOVq5TW1W5RtFpnmQ8CbqgCezmXcnXqBqPSEbhQ=;
+	s=k20201202; t=1773638914;
+	bh=qEDCrQ2v7dJci3xSiyFWef/LSE6H7UffGnv9arRsU4k=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=t2KdofcFE+0r8caqCK4Qc58hKhA89QcGGeZ7c30zCNgqXyqq8Kju6WpdCYZsrtb2Y
-	 Vbvaf8wJWEGPcszKoBavx+1OQqtmGFh5ob8nHXjRAQAKw1BIJa0xfZhb1PyczKcXCg
-	 VNlYsdQ+ri8GUJz2c+uUs/wgjlrMJQ+B6hLEoEaoloeLnHx/HoWqess5/GeWN3Caed
-	 DLJb+6vpUKYj82uZ4N6YBOp0FADEVS4D9t25W2cJzRAB9NCym+LyDedAlY+6xOaGVt
-	 CosZIbOipnqtzZsanhNqTgfZKMCvE6cryVwHAVdsbQc0b3HB9UDDLdYL4WL0y8PnKC
-	 I+LBUEDzFUzaA==
-Date: Mon, 16 Mar 2026 10:47:24 +0530
+	b=jzAU86nTbiyaRtuzpGIWRxf8Caw/dR4ABTg+vefUMEOyolPHn5h0fzbKoNiUQw1y1
+	 hyhCQgnaYNXKNvHajeMY6VY6zZHS7wlAz3xaY9Me/19ILxhtZWO0DGKAFjWv9sxCgj
+	 YIYQaAS5IrsAe1uy4qkmrUsRKqWUrfnRPk/TZNv3ov3sCQELxBNwOEu+RKGpzdSN2i
+	 sHqhiAGM/CFU6XwoShVsA/mBFqedrQslmn5QL+oWNRULDcib+zmrSwm3RDn6YhCRV6
+	 KR0UyZeYYDRGElmYuQhnJjn4XdIq0IrkolCTSQ7opMNsC/Al+fhsaH1Y4kxNkXny2x
+	 tecFgtTLw0uUQ==
+Date: Mon, 16 Mar 2026 10:58:26 +0530
 From: Manivannan Sadhasivam <mani@kernel.org>
 To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: Jingoo Han <jingoohan1@gmail.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Will Deacon <will@kernel.org>, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, jonathanh@nvidia.com, 
-	bjorn.andersson@oss.qualcomm.com
-Subject: Re: [PATCH v3 1/5] PCI: host-common: Add helper to determine host
- bridge D3cold eligibility
-Message-ID: <de4eszg7j54ijsbxaajnldm2zccxn3vcmxxty4zn5awwtq3w5h@7lisdbxc6la4>
-References: <20260311-d3cold-v3-0-4d85dc7c2695@oss.qualcomm.com>
- <20260311-d3cold-v3-1-4d85dc7c2695@oss.qualcomm.com>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>, linux-pci@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, mayank.rana@oss.qualcomm.com, 
+	quic_vbadigan@quicinc.com
+Subject: Re: [PATCH v3 3/3] PCI: qcom: Program T_POWER_ON
+Message-ID: <moefzqwp3srzpewsuhecxp22cheuplvdhacct5hejzneukdnmu@cchguntsnto4>
+References: <20260311-t_power_on_fux-v3-0-9b1f1d09c6f3@oss.qualcomm.com>
+ <20260311-t_power_on_fux-v3-3-9b1f1d09c6f3@oss.qualcomm.com>
+ <wofjlohumsdyyfhndrdwf4ujxiwlrajm2rpobd6gofpqyasttb@ze54bm6pwbgq>
+ <7ac68128-a3d2-4244-9435-a39f6eec1d1a@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,113 +67,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260311-d3cold-v3-1-4d85dc7c2695@oss.qualcomm.com>
+In-Reply-To: <7ac68128-a3d2-4244-9435-a39f6eec1d1a@oss.qualcomm.com>
 X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	FREEMAIL_CC(0.00)[kernel.org,google.com,gmail.com,vger.kernel.org,oss.qualcomm.com,quicinc.com];
+	TAGGED_FROM(0.00)[bounces-97840-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-97839-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[gmail.com,kernel.org,google.com,vger.kernel.org,lists.infradead.org,nvidia.com,oss.qualcomm.com];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MISSING_XM_UA(0.00)[];
 	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[11];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 98393294BC2
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 640FF294CA7
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Wed, Mar 11, 2026 at 03:56:46PM +0530, Krishna Chaitanya Chundru wrote:
-> Add a common helper, pci_host_common_d3cold_possible(), to determine
-> whether a PCI host bridge can safely transition to D3cold.
+On Mon, Mar 16, 2026 at 10:35:50AM +0530, Krishna Chaitanya Chundru wrote:
+> 
+> 
+> On 3/16/2026 10:23 AM, Manivannan Sadhasivam wrote:
+> > On Wed, Mar 11, 2026 at 06:10:40PM +0530, Krishna Chaitanya Chundru wrote:
+> > > Some platforms have incorrect T_POWER_ON value programmed in hardware.
+> > > Generally these will be corrected by bootloaders, but not all targets
+> > > support bootloaders to program correct values due to that
+> > > LTR_L1.2_THRESHOLD value calculated by aspm driver can be wrong, which
+> > > can result in improper L1.2 exit behavior and if AER happens to be
+> > > supported and enabled, the error may be *reported* via AER.
+> > > 
+> > > Parse "t-power-on-us" property from each root port node and program them
+> > > as part of host initialization using dw_pcie_program_t_power_on() before
+> > > link training.
+> > > 
+> > > This property in added to the dtschema here[1].
+> > > 
+> > > Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> > > Link[1]: https://lore.kernel.org/all/20260205093346.667898-1-krishna.chundru@oss.qualcomm.com/
+> > > ---
+> > >   drivers/pci/controller/dwc/pcie-qcom.c | 13 +++++++++++++
+> > >   1 file changed, 13 insertions(+)
+> > > 
+> > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > index 67a16af69ddc75fca1b123e70715e692a91a9135..63d5628e988d3c07f42099c0d86e6b80fd54ce32 100644
+> > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > @@ -269,6 +269,7 @@ struct qcom_pcie_perst {
+> > >   struct qcom_pcie_port {
+> > >   	struct list_head list;
+> > >   	struct phy *phy;
+> > > +	u32 l1ss_t_power_on;
+> > >   	struct list_head perst;
+> > >   };
+> > > @@ -1283,6 +1284,14 @@ static int qcom_pcie_phy_power_on(struct qcom_pcie *pcie)
+> > >   	return 0;
+> > >   }
+> > > +static void qcom_pcie_configure_ports(struct qcom_pcie *pcie)
+> > > +{
+> > > +	struct qcom_pcie_port *port;
+> > > +
+> > > +	list_for_each_entry(port, &pcie->ports, list)
+> > > +		dw_pcie_program_t_power_on(pcie->pci, port->l1ss_t_power_on);
+> > > +}
+> > > +
+> > >   static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
+> > >   {
+> > >   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> > > @@ -1317,6 +1326,8 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
+> > >   	dw_pcie_remove_capability(pcie->pci, PCI_CAP_ID_MSIX);
+> > >   	dw_pcie_remove_ext_capability(pcie->pci, PCI_EXT_CAP_ID_DPC);
+> > > +	qcom_pcie_configure_ports(pcie);
+> > > +
+> > >   	qcom_pcie_perst_deassert(pcie);
+> > >   	if (pcie->cfg->ops->config_sid) {
+> > > @@ -1759,6 +1770,8 @@ static int qcom_pcie_parse_port(struct qcom_pcie *pcie, struct device_node *node
+> > >   	if (ret)
+> > >   		return ret;
+> > > +	of_property_read_u32(node, "t-power-on-us", &port->l1ss_t_power_on);
+> > > +
+> > Since this is going to be common for all controller drivers, it'd be good to
+> > move this inside the dwc API.
+> As this per root port, we can summit changes to merge first so that we can
+> move this to
+> dwc.
 > 
 
-Host bridge cannot be transitioned to D3Cold, it can only transition the
-devices to D3Cold state. You need to reword it throughout the patch.
-
-> This helper is intended to be used by PCI host controller drivers to
-> decide whether they may safely put the host bridge into D3cold based on
-> the power state and wakeup capabilities of downstream endpoints.
-> 
-> The helper walks all devices on the bridge's primary bus
-
-What do you mean by 'primary bus' here?  The helper is supposed to walk through
-all busses starting from the Root bus, no?
-
-> and only allows
-> the host bridge to enter D3cold if all PCIe endpoints are already in
-> PCI_D3hot. This ensures that we do not power off the host bridge while
-> any active endpoint still requires the link to remain powered.
-> 
-> For devices that may wake the system, the helper additionally requires
-> that the device supports PME wake from D3cold (via WAKE#). Devices that
-> do not have wakeup enabled are not restricted by this check and do not
-> block the host bridge from entering D3cold.
-> 
-> Devices without a bound driver and with PCI not enabled via sysfs are
-> treated as inactive and therefore do not prevent the host bridge from
-> entering D3cold. This allows controllers to power down more aggressively
-> when there are no actively managed endpoints.
-> 
-> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> ---
->  drivers/pci/controller/pci-host-common.c | 47 ++++++++++++++++++++++++++++++++
->  drivers/pci/controller/pci-host-common.h |  2 ++
->  2 files changed, 49 insertions(+)
-> 
-> diff --git a/drivers/pci/controller/pci-host-common.c b/drivers/pci/controller/pci-host-common.c
-> index d6258c1cffe5ec480fd2a7e50b3af39ef6ac4c8c..bff23bcdb5d032d2781d963eebe4a3fac0505517 100644
-> --- a/drivers/pci/controller/pci-host-common.c
-> +++ b/drivers/pci/controller/pci-host-common.c
-> @@ -106,5 +106,52 @@ void pci_host_common_remove(struct platform_device *pdev)
->  }
->  EXPORT_SYMBOL_GPL(pci_host_common_remove);
->  
-> +static int __pci_host_common_d3cold_possible(struct pci_dev *pdev, void *userdata)
-> +{
-> +	bool *d3cold_possible = userdata;
-> +
-> +	if (pci_pcie_type(pdev) != PCI_EXP_TYPE_ENDPOINT)
-> +		return 0;
-> +
-> +	if (!pdev->dev.driver && !pci_is_enabled(pdev))
-> +		return 0;
-> +
-> +	if (pdev->current_state != PCI_D3hot)
-> +		goto exit;
-> +
-> +	if (device_may_wakeup(&pdev->dev) && !pci_pme_capable(pdev, PCI_D3cold))
-> +		goto exit;
-> +
-> +	return 0;
-> +
-> +exit:
-> +	*d3cold_possible = false;
-> +
-> +	return -EOPNOTSUPP;
-> +}
-> +
-> +/**
-> + * pci_host_common_d3cold_possible - Determine whether a host bridge can enter D3cold
-
-"Determine whether the host bridge can transition the devices into D3Cold"
+Fair. Atleast add a TODO here.
 
 - Mani
 
