@@ -1,43 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-97864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id uOwGGJDFt2kRVQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 09:55:44 +0100
+	id WOHXKs3Ft2kkVQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 09:56:45 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id BDF6429682C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 09:55:43 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0E85529685C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 09:56:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 734E33016527
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 08:55:42 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id D91DB301B719
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 08:56:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61B96382362;
-	Mon, 16 Mar 2026 08:55:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EE82382368;
+	Mon, 16 Mar 2026 08:56:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Egtk9RdF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACEB7381B18;
-	Mon, 16 Mar 2026 08:55:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EDC9382362
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 08:56:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773651341; cv=none; b=jLfq7vr5TQb6J2ztF3KPNm3ewbZ3nMZ8CznfgBbanKQCxxGna64gSpl5vppdmLWO+qmPqJ+k+OLncFbmgjTtXvqIdbCASZtyDsgyp2HR6Md9GtsJb817XcPh2VUU7ZoV+4Ov3Cd15dl1JZTPRyicG2ZMQlSaUEkGl7yYq1+6t8s=
+	t=1773651394; cv=none; b=eSELfheW7GvoWljE/+dalghiwnt0vQiwLSKNqjwqKq4/DddF3gJeletkhH5+JIdIBi/lyS9XdxR87MaKg6fJw5lkZVc6quaNxyy2PRWlf2kZjs7ucXqLojwtsPfEXYfgsoV4XSIWj9MDfqyM45Irbub4k3lxJirJJerrONWS/iI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773651341; c=relaxed/simple;
-	bh=pCU3ArB83GLUEr67Ft5BzirQf/RGFiR4NjupEoOpV2A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oh3WdTUP+a1Mm1+i8ELsC9Kdovc0I4l7OJtAAZUqXgN4LOWvHDPqMicy8ALirKyD6k/CDc8m8HBYlNN8p5A2JUxovmImDhmFbDeaBccxwGNL8LDP9ArwJpUMaxteSddx8zUPU49rVUcZMO8mU+OhnYer6haT68voMgPtQ8YHGfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D0B8C1477;
-	Mon, 16 Mar 2026 01:55:32 -0700 (PDT)
-Received: from [10.1.28.15] (e127648.arm.com [10.1.28.15])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 6BB173F73B;
-	Mon, 16 Mar 2026 01:55:37 -0700 (PDT)
-Message-ID: <39ffe4f6-5716-400d-963b-06675a727225@arm.com>
-Date: Mon, 16 Mar 2026 08:55:35 +0000
+	s=arc-20240116; t=1773651394; c=relaxed/simple;
+	bh=KqzY/khJNB8puHnDrvTaUqT6oG4aeRRp+ADDOc6nP4Q=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=joqTxDL0hN6lu8Stg6O2O/9chJXqRt8bQ+sYYEAtwS+JU8qcTf3e0xupnyd/JIizNTsRcX2GU4JVBDJuaAq+zmFSOixAF3AYwmGTtA0wV+QMICk9LMJX0s9lNhYyHHLVfZtXFXNa2YZqapwJ9EqpZydIc1rr6AhgQorgCmWxueo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Egtk9RdF; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-43b45bb7548so318351f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 01:56:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1773651391; x=1774256191; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9vmKP6u4FwroVFUfi/7BBPQxTky4D+MDVK9LQ7y8Ms8=;
+        b=Egtk9RdFhxtV+c1loSqVKZyTZwb+FLQ/tR4qyW4HzDpfcN0cyd0Nt4/CJlO2uSyIjn
+         25ejrUkwucoVIP/4ZUBD+AzCrY2o0+NLMHFc1h3zbyX7OSJaI1qQxIksp109eNtuK1X2
+         k2xRK03WVR/6tIdH4lL2CnTC8LaAKGwd7TehO6rR8lQFVoaLtKPfbm8r6KGJ4+m29213
+         ywdvAWlDLY9fzyZ+42slcwiXj0p9c7QjVaqBGS1S3+4Bo+Y8pC8kgleO2jfzFfppgzIV
+         AYfV/VifbDx1EzxrqUZmybRNTEK/wGuRxfRSWfjqOj/s63ZfhMkzjdQRFQdmFkvqfM3y
+         DDIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773651391; x=1774256191;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9vmKP6u4FwroVFUfi/7BBPQxTky4D+MDVK9LQ7y8Ms8=;
+        b=L1y4cCK83Th8R7yWU7RLL7xwd3tthBuVVKnCZHCLGdMurLEo7aRIiitxlgUcXAmo3Q
+         SiD4OttWV/ORMrg6CWLt/bomE/4Lg3cCSEOuIGcwI3TzsW6EQQ6OWHBq+crbm7cP7SIt
+         MZSD5ipKq+Gf13/lG8kjX+DP+cZZ0Qlbq9IN4OfeGNMyfvOKW3OxQ/fGji+2NdrjPvB4
+         lj+LNnesgdytpxFcgB259UkgTdqFp0IUpL4f4ShCnlGOe+6Cd43oCgRaE920b0v+T3hA
+         XGWtsW0ffNMQeoKM0n1/KEjcOevVpP4x4BXPdoRgqydk3p3RYpt+A3MHTNRJFYMqV2t0
+         R+Cw==
+X-Forwarded-Encrypted: i=1; AJvYcCWz5++sWdbXNu5/X6JlQ7b34L9ANdjvoPZIm8xLEkhYc/AgJCxRMt2WoSGgRjAk1jFJUVH9EvW0kaAu7Mwx@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzai/gMW3VeFSAFgJ0PTi9/furbbguT98Ca9gZfjwyc+LtJrR/J
+	6oMBi61hE+ZRcUHiP5jo3IgDA2A+S7uK0f4FBu0/SzuxYTbZ0zF+lP311lidasy/TsY=
+X-Gm-Gg: ATEYQzwEHS8NeDu+D+yKpvgwSD4DigWQTk3GLLhN5Dw/e/EcYny4am5XIY/HOnI6yaE
+	VWrGXH3f6NSgHNAJPGIfwg8QrgEgjqSJn1v3AouJBQ+Qhw7u6VQ3gn//GYgwXBAlYKUrpHy1iJG
+	RFlPgIb5qGUPbEU1ni26/8tbUavnGGi3Mh9AaGFuHOIYbOmrSYz6RcvH+KwrliOzdiXKSqOx1pZ
+	DKlQnymMHBY5Sg8y6667fAoO3Wg5HlYCUW+uRPcUyP/ZRSA/WKoOfRGwPi2IwYlPLIG1uC7O/L5
+	hEwhOGdlYR0pystJTxzkauotRvlK5HpQP/pUFQa48avsXkatmGcBSWvE5NRlAW4l2r+tVOsZzzd
+	0lynXo6tMla1QpNm2M34W532t7x4PToXdY+jStfBPxYOpHHnH5VKtjpzuSWux1+EyEVf5AALxpG
+	QV7n+7tzq50Yf4OXXsrltNK+R99gp8+DX3LRAnGczWQulxHxraN2OAPye6w21VTYUy579uBM4yr
+	96RjLU=
+X-Received: by 2002:a05:6000:250d:b0:439:b440:b8a2 with SMTP id ffacd0b85a97d-43a04daf226mr21725520f8f.28.1773651391285;
+        Mon, 16 Mar 2026 01:56:31 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:106d:1080:a12d:6e5e:e745:c5e8? ([2a01:e0a:106d:1080:a12d:6e5e:e745:c5e8])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43b41065f8csm13173675f8f.30.2026.03.16.01.56.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 16 Mar 2026 01:56:30 -0700 (PDT)
+Message-ID: <ca380a0e-2c6e-402e-a444-2332a81c9bdd@linaro.org>
+Date: Mon, 16 Mar 2026 09:56:30 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -45,109 +88,115 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] cpuidle: Deny idle entry when CPU already have IPI
- interrupt pending
-To: Maulik Shah <maulik.shah@oss.qualcomm.com>,
- "Rafael J. Wysocki" <rafael@kernel.org>,
- Daniel Lezcano <daniel.lezcano@kernel.org>,
- Ulf Hansson <ulf.hansson@linaro.org>
-Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20260316-cpuidle_ipi-v1-1-d0ff6350f4e2@oss.qualcomm.com>
-Content-Language: en-US
-From: Christian Loehle <christian.loehle@arm.com>
-In-Reply-To: <20260316-cpuidle_ipi-v1-1-d0ff6350f4e2@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v2 2/6] arm64: dts: qcom: sm8650: Fix xo clock supply of
+ SD host controller
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Abel Vesa <abelvesa@kernel.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20260314023715.357512-1-vladimir.zapolskiy@linaro.org>
+ <20260314023715.357512-3-vladimir.zapolskiy@linaro.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20260314023715.357512-3-vladimir.zapolskiy@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-1.36 / 15.00];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
-	DMARC_POLICY_SOFTFAIL(0.10)[arm.com : SPF not aligned (relaxed), No valid DKIM,none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DKIM_TRACE(0.00)[linaro.org:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-97864-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-97865-lists,linux-arm-msm=lfdr.de];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:dkim,linaro.org:email,linaro.org:replyto,linaro.org:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
+	HAS_ORG_HEADER(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROM(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[christian.loehle@arm.com,linux-arm-msm@vger.kernel.org];
 	TO_DN_SOME(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	HAS_REPLYTO(0.00)[neil.armstrong@linaro.org];
 	RCVD_COUNT_FIVE(0.00)[5];
-	R_DKIM_NA(0.00)[];
-	NEURAL_HAM(-0.00)[-0.810];
-	RCPT_COUNT_SEVEN(0.00)[7];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: BDF6429682C
+	NEURAL_HAM(-0.00)[-1.000];
+	DBL_PROHIBIT(0.00)[0.134.86.160:email];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	MID_RHS_MATCH_FROM(0.00)[];
+	REPLYTO_EQ_FROM(0.00)[]
+X-Rspamd-Queue-Id: 0E85529685C
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 3/16/26 07:37, Maulik Shah wrote:
-> CPU can get IPI interrupt from another CPU while it is executing
-> cpuidle_select() or about to execute same. The selection do not account
-> for pending interrupts and may continue to enter selected idle state only
-> to exit immediately.
+On 3/14/26 03:37, Vladimir Zapolskiy wrote:
+> The expected frequency of SD host controller core supply clock is 19.2MHz,
+> while RPMH_CXO_CLK clock frequency on SM8650 platform is 38.4MHz.
 > 
-> Example trace collected when there is cross CPU IPI.
+> Apparently the overclocked supply clock could be good enough on some
+> boards and even with the most of SD cards, however some low-end UHS-I
+> SD cards in SDR104 mode of the host controller produce I/O errors in
+> runtime, fortunately this problem is gone, if the "xo" clock frequency
+> matches the expected 19.2MHz clock rate.
 > 
->  [000] 154.892148: sched_waking: comm=sugov:4 pid=491 prio=-1 target_cpu=007
->  [000] 154.892148: ipi_raise: target_mask=00000000,00000080 (Function call interrupts)
->  [007] 154.892162: cpu_idle: state=2 cpu_id=7
->  [007] 154.892208: cpu_idle: state=4294967295 cpu_id=7
->  [007] 154.892211: irq_handler_entry: irq=2 name=IPI
->  [007] 154.892211: ipi_entry: (Function call interrupts)
->  [007] 154.892213: sched_wakeup: comm=sugov:4 pid=491 prio=-1 target_cpu=007
->  [007] 154.892214: ipi_exit: (Function call interrupts)
-> 
-> This impacts performance and the above count increments.
-> 
-> commit ccde6525183c ("smp: Introduce a helper function to check for pending
-> IPIs") already introduced a helper function to check the pending IPIs and
-> it is used in pmdomain governor to deny the cluster level idle state when
-> there is a pending IPI on any of cluster CPUs.
-> 
-> This however does not stop CPU to enter CPU level idle state. Make use of
-> same at CPUidle to deny the idle entry when there is already IPI pending.
-> 
-> With change observing glmark2 [1] off screen scores improving in the range
-> of 25% to 30% on Qualcomm lemans-evk board which is arm64 based having two
-> clusters each with 4 CPUs.
-> 
-> [1] https://github.com/glmark2/glmark2
-> 
-> Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
+> Fixes: 10e024671295 ("arm64: dts: qcom: sm8650: add interconnect dependent device nodes")
+> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 > ---
->  drivers/cpuidle/cpuidle.c | 3 +++
->  1 file changed, 3 insertions(+)
+>   arch/arm64/boot/dts/qcom/sm8650.dtsi | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/drivers/cpuidle/cpuidle.c b/drivers/cpuidle/cpuidle.c
-> index c7876e9e024f9076663063ad21cfc69343fdbbe7..c88c0cbf910d6c2c09697e6a3ac78c081868c2ad 100644
-> --- a/drivers/cpuidle/cpuidle.c
-> +++ b/drivers/cpuidle/cpuidle.c
-> @@ -224,6 +224,9 @@ noinstr int cpuidle_enter_state(struct cpuidle_device *dev,
->  	bool broadcast = !!(target_state->flags & CPUIDLE_FLAG_TIMER_STOP);
->  	ktime_t time_start, time_end;
->  
-> +	if (cpus_peek_for_pending_ipi(drv->cpumask))
-> +		return -EBUSY;
-> +
->  	instrumentation_begin();
->  
->  	/*
-> 
-> ---
-> base-commit: b84a0ebe421ca56995ff78b66307667b62b3a900
-> change-id: 20260316-cpuidle_ipi-4c64036f9a48
-> 
-> Best regards,
+> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> index 357e43b90740..e915e7209750 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> @@ -4957,7 +4957,7 @@ sdhc_2: mmc@8804000 {
+>   
+>   			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
+>   				 <&gcc GCC_SDCC2_APPS_CLK>,
+> -				 <&rpmhcc RPMH_CXO_CLK>;
+> +				 <&bi_tcxo_div2>;
+>   			clock-names = "iface",
+>   				      "core",
+>   				      "xo";
 
-So we already do a per-CPU IPI need_resched() check in the idle path.
-Your patch uses drv->cpumask, which will contain all CPUs, preventing idle entry if
-any CPU has an IPI pending?
+Thanks, I confirm the sdhc block is feed with the xo/2.
+
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+
+Thanks,
+Neil
 
