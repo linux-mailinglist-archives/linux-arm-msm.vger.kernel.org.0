@@ -1,247 +1,249 @@
-Return-Path: <linux-arm-msm+bounces-97757-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97758-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cGT0LEBXt2lsQAEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97757-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 02:05:04 +0100
+	id kEOfHtNYt2nQQAEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97758-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 02:11:47 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 328AB29347F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 02:05:04 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D936A2934B4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 02:11:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 985CD3033883
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 01:02:58 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A52A330115AA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 01:11:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43419299A90;
-	Mon, 16 Mar 2026 01:02:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0998E1F12E0;
+	Mon, 16 Mar 2026 01:11:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mu6eNfD0"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="CUhMUAGe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEFD227FD4B
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 01:02:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2C54CB5B;
+	Mon, 16 Mar 2026 01:11:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773622937; cv=none; b=pHCYBbvbMqcX7OQy5OyMMGDA39+jnmcBaTp1xnh+kV4GIRUq5uJ2LPBbtTjshMXxl0oCN0eR5To7KcKYi7kaBYAuE0moC7cWwaxS7Dzaq4dYYmxH44MK+Wom2V5+etQ0AMGWKEjPle92v5MVCeSpD/BrZdpwvbUka1ez/P6dJhQ=
+	t=1773623502; cv=none; b=WVK9Ixi406MS2jczcVzAqOstlyT1p/xT8mdrycmDlZBPppckPwCsv1Osj6dmqGBsULiqUUXTY9oPyMrHi4Den2ehBuZR+TbWFLanVAhuOANbpzXX2aF4TMwcNlQCgY0XrWbgGOYFD7r5k5Zn3N5cQu3X2CBaWrAlOk43jX10kJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773622937; c=relaxed/simple;
-	bh=aVDiNWO67RvcaLKortzpEYBNU1wRvtLFUoiyUFNRkzQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=rp3Wg/aSGaQ/9laqtIriox1VBRq8NKbEe0HFZRCDzasGrbO1t3UQoZPoZsX46/EzdgLET1ABISLR8eCxz6XyIottNJZUjeSSYuEvqJFNjJuvWa4P1ljxoPpPo3V99BIYm77PYI2GPPlh/XeZGAwm5ZnyoDlAtgCYiSYOXTf5LnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mu6eNfD0; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4852ff06541so45097955e9.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 15 Mar 2026 18:02:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1773622933; x=1774227733; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=aSn7hQ5i66Q0S46ZKJZuvK8H5ifNzHdzpxgp/ADQRCI=;
-        b=mu6eNfD0XUeJO5TDPO5Q5DsaOO0noMtnEpdE5n0ICroYzdN8kb9rGmOWBNRG55jJBd
-         w0EdmNY/coSq/11OX/pkGYxiq0Hmif9d8nvSulucMGsqiHfoiWIShSUywZ6YeB43HSyp
-         ljfZwEpS39TePW0VdVBTXNSYsJd8T4w8zm0j5gmYftJmMpIDoiyD6egoyb+Mift1H8mf
-         vCUYXCzSWXtgv5CUqfsR/WxGHhA8xMuenLZZAy6leGHmDyqxB6SXtrnkB2TYzp8WgVLd
-         OW+jVSWU3KofLJ+WxeYwxCanHkGNBZX9gRUsS929K22H+XMUH8OZ7JB7a2/h9JaKcZl3
-         hfFg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773622933; x=1774227733;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=aSn7hQ5i66Q0S46ZKJZuvK8H5ifNzHdzpxgp/ADQRCI=;
-        b=Xs7mxa0aZV4MovrIwQx7J03GDCoM4J566eAikNrCQfjlONQNS2fUM8DAG6WkuhFm82
-         q1A91cIafWZt1pnUI7+7IJS5dofgueq5fo+dfbn8LHcYLEG4IK4KS+jUoR/8YqtCQmzJ
-         XSPSkwrcwOZ+mPhKZZLYSB+Ee1DalK3jzx/w9e4DY2LTaqROQ+T3UKuF12+biT/4qk5J
-         ehmDqoV+geC2BtyC+no/ci6eXnh2nWfiy3e9x3MKtyG2uNsALKCXkTPvFM1bhlcIUwMt
-         5muf5hCTwVfzXMY/ZhlIZKsgcwP/fv6O2xIuhE7E0kwR/AY+NxvGXXKcPcE/O1fwnVqo
-         /lqw==
-X-Gm-Message-State: AOJu0Yy+ZsZEqbN010fEJzLxwwOGT+py7DpUeZohjrKI4jg4aRSr6tgA
-	OfrLRcxUqFFTc9hwFLQLENMLqVHckiF5SogsBQlfIqSh6UHVu5FI6AYmEJjopQNRNHA=
-X-Gm-Gg: ATEYQzyVwINQ5J8c8Cs9nyY51wbhKrjwuTmbIvtUEsOGpgZY8IDbuP1X7QKtK0aeHaR
-	o76ZeCbYs+rxDCnDVsB9d4oDPGlBErZHV2UK+OVS/cef0ab6aJBPZJx18NR8XeOI2E3rQMJw8vi
-	QX0baTHMQk7m9+xOs+X8ZHij1RE93uZbW1+44YGuxfr9rRWWNq28KyAhrHk2ks6TN4soZVmAqbI
-	P5R+/xP4NxZio6pgJgP550/SY+kwWjkRpkbxRYEZdUKVYZkLLp8LmCbWfp5aQ88UPtUHaseIrAw
-	HePFoX7VZiUxoQkTP28mIs9E7E/tghdlP/jtkqJLSdMZ9JsJDA0pe0ac4PM9Ql9QP2CrGetZeIi
-	rivsfA1yl+1hbekvJ6OS5MCk3Ho91rbOUOXJtzeHZD9IwKYyu6seCnl7G3pOoPxu19+/7nLWc9c
-	vlezULub4gKt/hV48/Bkcdkshyb3esaeogGms=
-X-Received: by 2002:a05:600c:548a:b0:485:4100:1eee with SMTP id 5b1f17b1804b1-4855670e7f9mr200978105e9.24.1773622933127;
-        Sun, 15 Mar 2026 18:02:13 -0700 (PDT)
-Received: from [192.168.0.35] ([109.76.190.215])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-439fe228986sm34729700f8f.35.2026.03.15.18.02.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 15 Mar 2026 18:02:11 -0700 (PDT)
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Date: Mon, 16 Mar 2026 01:02:07 +0000
-Subject: [PATCH v10 7/7] media: qcom: camss: Drop legacy PHY descriptions
- from x1e
+	s=arc-20240116; t=1773623502; c=relaxed/simple;
+	bh=ZK2gOS7KzWSBWZYEGA0gRr9SzqhenigYWzus2OduNP8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SpLmmME8Hl+Vjq1xlnMDQRXYM+4odETUIfzripQnHxHSV5bcYnqdDq9WLv/1kO6w+q5jYA9iwgcgBnxEakFXgdEYErbPRHChHd7ZHYL5u+1M2vF/8TLMVMyhogSoAzdOH0HfS51k3ROPXvjuI7l6TnUxLFAH/hUr/vBaMog+jHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=CUhMUAGe; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=HXOdXMtQPkX3JhHjejsDb3lWeyiFtHpKaRrKgt4OkHc=; b=CUhMUAGeYZEJFOoF7gMbHrExvU
+	w+T8qqlDYDUp2Sxo9ZNprsUpT8PRMjHgQrXFSHOYMEADRouvXCsT9ye2bXZmejFsZ2sGxvQLtTddU
+	cmaT5xqO5qMVnKTy37T6NelRwqMp5y134Rr0Epn14n/AqQ+c+uNQv1XEF34wDRVYyp4zGa1r2wnDw
+	jgMGWEEMmRoA1a2PlGki0k847nu75Mt4N5WjOGGguP23ZV9IncgX8lCURAr4wicQ/nAB2hNF5zdok
+	IfkZCnKnDBeGUZ1KOPXuos2VKJnlS+t6ZzWYsWYfuxb7MfKHlv/JMfv38xxmYLi48xoBkY+P8funr
+	M1rYCDNg==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:56306)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1w1wUS-000000003AQ-0pDz;
+	Mon, 16 Mar 2026 01:11:28 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1w1wUN-000000004bS-1Asp;
+	Mon, 16 Mar 2026 01:11:23 +0000
+Date: Mon, 16 Mar 2026 01:11:23 +0000
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
+Cc: Andrew Lunn <andrew@lunn.ch>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com, netdev@vger.kernel.org,
+	Paolo Abeni <pabeni@redhat.com>, Vinod Koul <vkoul@kernel.org>
+Subject: Re: [PATCH net-next 0/8] net: stmmac: improve PCS support
+Message-ID: <abdYu864OmNWiWIW@shell.armlinux.org.uk>
+References: <abQC7r38QLhSeadl@shell.armlinux.org.uk>
+ <abdEscs44fU4kRag@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260316-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v10-7-fdfe984fe941@linaro.org>
-References: <20260316-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v10-0-fdfe984fe941@linaro.org>
-In-Reply-To: <20260316-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v10-0-fdfe984fe941@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>, 
- Todor Tomov <todor.too@gmail.com>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
- Bryan O'Donoghue <bod@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-media@vger.kernel.org, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Krzysztof Kozlowski <krzk@kernel.org>, 
- Christopher Obbard <christopher.obbard@linaro.org>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3159;
- i=bryan.odonoghue@linaro.org; h=from:subject:message-id;
- bh=aVDiNWO67RvcaLKortzpEYBNU1wRvtLFUoiyUFNRkzQ=;
- b=owEBbQKS/ZANAwAKASJxO7Ohjcg6AcsmYgBpt1aNiTUxan9LQk2eGkEMbeN+4hDN1CC/SHfks
- MpN3KerCBeJAjMEAAEKAB0WIQTmk/sqq6Nt4Rerb7QicTuzoY3IOgUCabdWjQAKCRAicTuzoY3I
- OkcJD/9ncxjPqP8d7ijCG/48u6PPqFiDjus2c3VUQBQA3QGuObdumglfCpbzKeoO7ljmLEzR2j2
- EhU2jJqfGNWXS2BrCrfxXGvH6Caa7Z5o9dCDYN1MYAKcIhkXRgyGdEQ6vn1uDVYYC4lUY0MPkbz
- 3caYMr5AZiAZBkxvM6Nnb9dpoWYpIvZnhU1aPwew0W0HQAkx3iuiXBzcptCR125hl3SHww6MG+H
- DxpGB76xwB0dvzlUwLb5YNJx7QcqWxHmnPrk4xTH76QVg9BC4HzzYip3BZlFgAt/nayE28rl+Vd
- /OfRZS2ITOnkF+LlY2OLebOXqWKG+b2mbetwXKdmqv7woE8d82XoajqZ4ATFC7bWVEZC5oB4sAK
- k9mzHSUMvfvWQcWRvZTb51H4sNx21meG72knIIm7593amZGSmoyVmm39OtDgmVOsPbF0u1DsUKm
- ct50qOTT1uxUJonNfyNuxeJP3E2DcYiM6eoM+6TzeCXVnQCJtDQ7V6ghIuPuHQfWfQz43N833oz
- 5+RGqI4uNrRIQeSx+HdrKm/BTs0g2cfmAAG0AEWxWv4uEg4PJ05Om4sj8q2ceR8jVsRY1b71KkR
- Zpg3TR00LdxM3Plq6yjbfWiUm3X9HbWpUd+Gg2wFQH+qgGWaLDsRTPHjuWiv8F79LapMANNM68F
- UUsZHZtpFD2eCTA==
-X-Developer-Key: i=bryan.odonoghue@linaro.org; a=openpgp;
- fpr=E693FB2AABA36DE117AB6FB422713BB3A18DC83A
-X-Spamd-Result: default: False [-2.16 / 15.00];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <abdEscs44fU4kRag@oss.qualcomm.com>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+X-Spamd-Result: default: False [1.14 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	R_DKIM_REJECT(1.00)[armlinux.org.uk:s=pandora-2019];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
+	DMARC_POLICY_SOFTFAIL(0.10)[armlinux.org.uk : SPF not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-97757-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[kernel.org,baylibre.com,gmail.com,linaro.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	RCPT_COUNT_TWELVE(0.00)[20];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-97758-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[armlinux.org.uk:-];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
+	FROM_NEQ_ENVFROM(0.00)[linux@armlinux.org.uk,linux-arm-msm@vger.kernel.org];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	NEURAL_HAM(-0.00)[-0.914];
+	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,linaro.org:dkim,linaro.org:email,linaro.org:mid]
-X-Rspamd-Queue-Id: 328AB29347F
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,shell.armlinux.org.uk:mid,armlinux.org.uk:url]
+X-Rspamd-Queue-Id: D936A2934B4
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-x1e is the first CAMSS SoC to use the new PHY interface. Drop the redundant
-legacy CSIPHY descriptions.
+On Mon, Mar 16, 2026 at 05:15:53AM +0530, Mohd Ayaan Anwar wrote:
+> Hi Russell,
+> 
+> 1. On QCS9100 Ride R3, the mdio subnode is only defined for ethernet0
+>    (see lemans-ride-ethernet-aqr115c.dtsi). ethernet1 uses ethernet0's
+>    MDIO bus, so plat_dat->mdio_bus_data is NULL for ethernet1. Therefore,
+>    we get:
+> 	[    9.205979] Hardware name: Qualcomm Technologies, Inc. Lemans Ride Rev3 (DT)
+> 	[    9.221071] pc : qcom_ethqos_probe+0xc4/0x478 [dwmac_qcom_ethqos]
+> 	[    9.221078] lr : qcom_ethqos_probe+0x7c/0x478 [dwmac_qcom_ethqos]
+> 	[    9.221080] sp : ffff800081aa37f0
+> 	[    9.221081] x29: ffff800081aa3860 x28: ffffcf84de69cfe8 x27: 0000000000000001
+> 	[    9.221084] x26: 0000000000000000 x25: ffff0000b4577c80 x24: ffff0000818fd010
+> 	[    9.221087] x23: ffff000ec7057628 x22: 0000000000000000 x21: ffffcf84ca2ce028
+> 	[    9.221089] x20: ffff0000818fd000
+> 	[    9.236975]  x19: ffff0000b3301740 x18: 00000000ffffffff
+> 	[    9.236977] x17: 0000000000000000 x16: ffffcf84dc4a5448 x15: ffff0000b3301ec5
+> 	[    9.236980] x14: 0000000000000000 x13: 0000000000000030 x12: 0101010101010101
+> 	[    9.236982] x11: 7f7f7f7f7f7f7f7f x10: 00000000001305b0 x9 : 0000000000000000
+> 	[    9.236984] x8 : ffff0000b3301780 x7 : 0000000000000000 x6 : 000000000000003f
+> 	[    9.236986] x5 : 0000000000000040 x4 : 0000000000000000 x3 : ffff0000818fd210
+> 	[    9.236988] x2 : 0000000000000017 x1 : 0000000000000000 x0 : 0000000000000001
+> 	[    9.236991] Call trace:
+> 	[    9.236991]  qcom_ethqos_probe+0xc4/0x478 [dwmac_qcom_ethqos] (P)
+> 	[    9.236994]  platform_probe+0x5c/0xac
+> 				...
+> 	[    9.343300] Code: 910a7000 f9400b21 f9010320 52800020 (39005420)
+> 	[    9.343302] ---[ end trace 0000000000000000 ]---
+> 
+>    I added the following workaround:
+> 	--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> 	+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> 	@@ -765,7 +767,10 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+> 			case PHY_INTERFACE_MODE_SGMII:
+> 					ethqos->configure_func = ethqos_configure_sgmii;
+> 					plat_dat->mac_finish = ethqos_mac_finish_serdes;
+> 	-               plat_dat->mdio_bus_data->default_an_inband = true;
+> 	+               if (plat_dat->mdio_bus_data)
+> 	+                       plat_dat->mdio_bus_data->default_an_inband = true;
+> 	+               else
+> 	+                       dev_err(dev, "plat_dat->mdio_bus_data is NULL");
+> 					break;
+> 			default:
+> 					dev_err(dev, "Unsupported phy mode %s\n",
 
-Reviewed-by: Christopher Obbard <christopher.obbard@linaro.org>
-Tested-by: Christopher Obbard <christopher.obbard@linaro.org>
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- drivers/media/platform/qcom/camss/camss.c | 37 -------------------------------
- 1 file changed, 37 deletions(-)
+This means we need to move default_an_inband out of mdio_bus_data.
 
-diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-index b1737b5d52160..0ebe634f5d96b 100644
---- a/drivers/media/platform/qcom/camss/camss.c
-+++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -3895,15 +3895,6 @@ static const struct resources_icc icc_res_sa8775p[] = {
- static const struct camss_subdev_resources csiphy_res_x1e80100[] = {
- 	/* CSIPHY0 */
- 	{
--		.regulators = {
--			{ .supply = "vdd-csiphy-0p8", .init_load_uA = 105000 },
--			{ .supply = "vdd-csiphy-1p2", .init_load_uA = 58900 }
--		},
--		.clock = { "csiphy0", "csiphy0_timer" },
--		.clock_rate = { { 300000000, 400000000, 480000000 },
--				{ 266666667, 400000000 } },
--		.reg = { "csiphy0" },
--		.interrupt = { "csiphy0" },
- 		.csiphy = {
- 			.id = 0,
- 			.hw_ops = &csiphy_ops_3ph_1_0,
-@@ -3912,15 +3903,6 @@ static const struct camss_subdev_resources csiphy_res_x1e80100[] = {
- 	},
- 	/* CSIPHY1 */
- 	{
--		.regulators = {
--			{ .supply = "vdd-csiphy-0p8", .init_load_uA = 105000 },
--			{ .supply = "vdd-csiphy-1p2", .init_load_uA = 58900 }
--		},
--		.clock = { "csiphy1", "csiphy1_timer" },
--		.clock_rate = { { 300000000, 400000000, 480000000 },
--				{ 266666667, 400000000 } },
--		.reg = { "csiphy1" },
--		.interrupt = { "csiphy1" },
- 		.csiphy = {
- 			.id = 1,
- 			.hw_ops = &csiphy_ops_3ph_1_0,
-@@ -3929,15 +3911,6 @@ static const struct camss_subdev_resources csiphy_res_x1e80100[] = {
- 	},
- 	/* CSIPHY2 */
- 	{
--		.regulators = {
--			{ .supply = "vdd-csiphy-0p8", .init_load_uA = 105000 },
--			{ .supply = "vdd-csiphy-1p2", .init_load_uA = 58900 }
--		},
--		.clock = { "csiphy2", "csiphy2_timer" },
--		.clock_rate = { { 300000000, 400000000, 480000000 },
--				{ 266666667, 400000000 } },
--		.reg = { "csiphy2" },
--		.interrupt = { "csiphy2" },
- 		.csiphy = {
- 			.id = 2,
- 			.hw_ops = &csiphy_ops_3ph_1_0,
-@@ -3946,15 +3919,6 @@ static const struct camss_subdev_resources csiphy_res_x1e80100[] = {
- 	},
- 	/* CSIPHY4 */
- 	{
--		.regulators = {
--			{ .supply = "vdd-csiphy-0p8", .init_load_uA = 105000 },
--			{ .supply = "vdd-csiphy-1p2", .init_load_uA = 58900 }
--		},
--		.clock = { "csiphy4", "csiphy4_timer" },
--		.clock_rate = { { 300000000, 400000000, 480000000 },
--				{ 266666667, 400000000 } },
--		.reg = { "csiphy4" },
--		.interrupt = { "csiphy4" },
- 		.csiphy = {
- 			.id = 4,
- 			.hw_ops = &csiphy_ops_3ph_1_0,
-@@ -5362,7 +5326,6 @@ static const struct camss_resources sm8650_resources = {
- static const struct camss_resources x1e80100_resources = {
- 	.version = CAMSS_X1E80100,
- 	.pd_name = "top",
--	.legacy_phy = true,
- 	.csiphy_res = csiphy_res_x1e80100,
- 	.csid_res = csid_res_x1e80100,
- 	.vfe_res = vfe_res_x1e80100,
+> 
+> 2. After working around issue 1, I hit the following:
+> 	[   27.822907] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+> 	[   27.831944] Mem abort info:
+> 	[   27.834832]   ESR = 0x0000000086000006
+> 	[   27.838693]   EC = 0x21: IABT (current EL), IL = 32 bits
+> 	[   27.844163]   SET = 0, FnV = 0
+> 	[   27.847320]   EA = 0, S1PTW = 0
+> 	[   27.850563]   FSC = 0x06: level 2 translation fault
+> 	[   27.855587] user pgtable: 4k pages, 48-bit VAs, pgdp=0000000134b1c000
+> 	[   27.862212] [0000000000000000] pgd=080000010185c403, p4d=080000010185c403, pud=0800000134884403, pmd=0000000000000000
+> 	[   27.873107] Internal error: Oops: 0000000086000006 [#1]  SMP
+> 	[   28.001619] Hardware name: Qualcomm Technologies, Inc. Lemans Ride Rev3 (DT)
+> 	[   28.008853] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+> 	[   28.016001] pc : 0x0
+> 	[   28.018259] lr : phylink_pcs_an_restart+0x50/0x5c
+> 	[   28.023092] sp : ffff8000869fb900
+> 				...
+> 	[   28.185967] ---[ end trace 0000000000000000 ]---
+> 
+>    This occurs due to pl->pcs->ops->pcs_an_restart being NULL. I added
+>    the following workaround:
+> 	--- a/drivers/net/phy/phylink.c
+> 	+++ b/drivers/net/phy/phylink.c
+> 	@@ -1026,7 +1026,8 @@ static void phylink_pcs_an_restart(struct phylink *pl)
+> 			if (pl->pcs && linkmode_test_bit(ETHTOOL_LINK_MODE_Autoneg_BIT,
+> 							 pl->link_config.advertising) &&
+> 			    phy_interface_mode_is_8023z(pl->link_config.interface) &&
+> 	-		    phylink_autoneg_inband(pl->act_link_an_mode))
+> 	+		    phylink_autoneg_inband(pl->act_link_an_mode) &&
+> 	+		    pl->pcs->ops->pcs_an_restart)
+> 					pl->pcs->ops->pcs_an_restart(pl->pcs);
+> 	 }
+
+Gah, should've added a pcs_an_restart() implementation.
+
+> 3. With the recent VLAN filter changes in net-next, ndo_open takes a long
+>    time to complete as vlan_restore_hw_rx_fltr() tries to write filters
+>    for all 32 indices. This board previously timed out once, but now
+>    times out for each index. This is a separate issue unrelated to this
+>    series but I added the following workaround to rule out any timing
+>    issues.
+> 	--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_vlan.c
+> 	+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_vlan.c
+> 	@@ -158,7 +158,8 @@ static void vlan_restore_hw_rx_fltr(struct net_device *dev,
+> 
+> 			/* Extended Rx VLAN Filter Enable */
+> 			for (i = 0; i < hw->num_vlan; i++)
+> 	-               vlan_write_filter(dev, hw, i, hw->vlan_filter[i]);
+> 	+               if (hw->vlan_filter[i])
+> 	+                       vlan_write_filter(dev, hw, i, hw->vlan_filter[i]);
+> 	 }
+> 
+> 	 static void vlan_update_hash(struct mac_device_info *hw, u32 hash,
+
+This problem needs solving, and I suspect we need more than the
+loopback here. It needs detailed information about your hardware
+design, and comes down to the missing receive clock. stmmac is
+unusual that missing clocks affect the accessibility of the host.
+
+> With the above workarounds in place, 2.5G works fine, but 1G (and 100M)
+> do not. With the RFC v1 series, only the 2.5G->1G speed change was
+> broken. With this series, the link does not come up at 1G at all.
+
+This will be because we're not attaching any PHYs when phylink is
+being told to operate in 2500BASE-X with inband, since it thinks
+that's the media. That, and, because stmmac has a long history, it
+needed a special phylink_expects_phy() check added in stmmac_init_phy()
+which his what prevents the PHY being attached.
+
+One workaround for this would be to specify SGMII in DT rather than
+2500base-X. However, that's not a solution for mainline.
+
+I'm going to have to have another think about this... stmmac is
+beginning to get too painful to solve this problem. As I've said
+elsewhere, in hind sight, I wish I had blocked dwmac-qcom-ethqos from
+being merged because of it's direct fiddling with the integrated PCS.
+
+I'm beginning to wonder whether stmmac can ever be sorted out, or
+whether the driver has gone too far, and the best thing now is to
+totally decouple it from phylink.
 
 -- 
-2.52.0
-
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
