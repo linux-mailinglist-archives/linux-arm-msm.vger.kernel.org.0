@@ -1,105 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-97878-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97879-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MHScKP3Nt2mDVgEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97878-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 10:31:41 +0100
+	id qHUNIErOt2mDVgEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97879-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 10:32:58 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0760E297093
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 10:31:40 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42FAF29710B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 10:32:58 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 89D8C300FC60
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 09:30:39 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 128A73019176
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 09:32:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D815837B021;
-	Mon, 16 Mar 2026 09:30:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D84F37C10A;
+	Mon, 16 Mar 2026 09:32:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="koW/HKn7";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="VHOBtDJ2"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="JePlYEyh";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="fA9sBT96"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6C7E3890E8
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 09:30:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D8F733FE06
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 09:32:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773653438; cv=none; b=PzBmiwUdWzqybm+TQzLmdWCWQ3QB2WfNwuM3GUK9eDoq2701uD7b68sNotwPdwnDuKkfJj5bKicjioAzDumFCUpb1YQJz3RNeOsoLziqpzJS4p1MQ1djajG0u7NHHa/0qznCSNOBPOHkbOV6LRyhvRwXyDq9RcQKaO5hUR3EB/Q=
+	t=1773653529; cv=none; b=eNR+E8znpckR6L8e6fUfRIRnPR9cieHZW6AaKdUqG+LtNZAtsCgKeRqA3ZVa5fXIUDpK1l1VSKdD7+h2LS6EI2UFzyfHOZNNI44UW2fhwOBar76TS+p+rkIvwfBXBEPqc/QeztigBlHzDl3cuc1g/wQkeqGfqCrv2MoyipQ9t0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773653438; c=relaxed/simple;
-	bh=rOmD/tTSLtI4sGePVuziYUR2ACOxJnPfU42NIVxWQFI=;
+	s=arc-20240116; t=1773653529; c=relaxed/simple;
+	bh=XJqokLOZsKTYJReR4cyIg3v1eo4NKzO7ugmYAgK7NWE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=J6IILbrWKnuM8bhCnH7cwB2YfMpy9Z6urAeoexonnqpmSxkIdk5DHKEHM+4Lco+GrYInh88W+KWGC5p+p1l3j7O8z8smqYulOthkNPC1iNeJHTFP5C2q2y6V2iGyCiz7SgIL2iIrwtj/TbjlqJRKED/Q6O1MQGStyD7LWo1Iwqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=koW/HKn7; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=VHOBtDJ2; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=IXvKZec6HXLHjMdnmEqw6ervAHqWcqfIPpl+vY0GKeXET3T3Sz4ih+368dpcuio72BVi4KOlCnllIjIveZuLZpo6gdu+tJOgGRW+BVwpv3fuPA5wwJqw0ee90849dqfgUx72PRQ30aOzbAf1mwoZCuKQ4MMySYu9ZYmDIfsAbZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=JePlYEyh; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=fA9sBT96; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62G64ag83777629
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 09:30:34 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62G652Nr2129563
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 09:32:07 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	bCVKI/eKLtlamMd2/D4n7rtJjm8TbWgtnqjVuvE5Ek0=; b=koW/HKn7jRlpg8rG
-	CHgAzn+oKT3A0UScRhwWUQyFgmBxKjPwNMag3iOzB7gALOQ93035Fgw8COl07E+I
-	Htm0JWaRNvI4NpZsFFNxeOWKM81bYYuLcOe03228k1jdCrOUJjZsyjoDlnUogV+3
-	Vguf5XuJZN8jpcep5R7jTOA2lY2wDO+8h8fXCOyYtuAqTJ3Ia8x86e24gz1x4Tsg
-	48kHBxsWIbone4i4xIY880tvuermVtXUqtfCztjFx+B0UYsLkoAiuHrXPSQ9Eba9
-	54Ken8JoeBoFusq+pKr4ttJDUoywTpiT6sCkJ6LpUPKn4XsbbRSR4yfTHL1Bww1C
-	yQOP9Q==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cw0y7vwyy-1
+	f8X5kFWCBMHnHAO6UFq3igterPL5sWg/kPVCVlpvea4=; b=JePlYEyhlCzzXls6
+	LZ2P+MaAKZ5JahO6nscuCySZNkWfk30ZcQ4xJ3/Y2uRH9nqnblZTMAF8OWFrSEPI
+	rVZKqXQ+5kVKsIkUHmWONICVePSvzDKAwyafuhyFOkm9QJbxjEOhbRJwqKT9MBze
+	GWTklqboGjbvlxhDPB2bOvjrT0jo1vYaQpXiKUE4tUYgTuyJLDnEeon8wnzskyYw
+	EnUl0cPicCScLFq60prGJNts9wbABE1N1USnzRoqdhOyw5HOaq4QPGBUPvQTwV2+
+	wYxhW4jj/rtyx8j2LDo8YI6hpOf2osdafuLhe8NAS8B3OSZ11RtLATUPNkIWSraR
+	s2yThA==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cw00an3yp-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 09:30:33 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-89a5b38affdso33110466d6.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 02:30:33 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 09:32:07 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-8cd84943c76so3967693485a.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 02:32:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1773653433; x=1774258233; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1773653526; x=1774258326; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=bCVKI/eKLtlamMd2/D4n7rtJjm8TbWgtnqjVuvE5Ek0=;
-        b=VHOBtDJ2rXvlqoP9oL9dNbxjRCa55zooraO9zFCXrDSFpZmDgu9Yb/pcxXjUvqTmEX
-         nl2MUg4CU1oHF7cZGX3coySJk4tEBACFJn86Pbqe1QuOo4msx5aBXNGaJEjfrutt5TTb
-         TLkU3mI588b8nMRYeXkfOWUj4/EHVmwUIA1cmsPkYeMnR7PdEnooNsNeFK/OZAywodOk
-         YMbw5BOgOYtnuv/oTuS5trgWc5SGGv8ek2uJ2SNhCIEz84U8taJp07h64WpoqyP/1sva
-         bnrisZo/lvOYeY60M+Ebb7gElGGdUNNRAISPn9rizjb2cefQBKn6P333RmEGBPmLMKbp
-         YPlQ==
+        bh=f8X5kFWCBMHnHAO6UFq3igterPL5sWg/kPVCVlpvea4=;
+        b=fA9sBT965t7Dd9ov+TbJ2AHU/+GUF71qsf52yQV649o2SUau0ZAhVlXJqlr7iZugDM
+         Zi8n7v9OBKZqw1CD/quikp9lfAhsjao/um5XDPZAZ1FQOEppNZb039X0uv9z76t0NGa8
+         HLGCgRkLY9jyPGRau1mQ+44S+5S4YJyPFrwciX53uVqUBGOHT1m6RFFgRdWcj5w2QZez
+         PE7gIfVhlrUgjgaVSkaRha3YIIVdZIdBSn08fkrKDphOfxl1/5sMaA6YdYrhCml37fJQ
+         3ZlcO/ONtqR66U4NXtnijHmf266Wc1pNDyMsCWenYQQYtBf8KERpJJSKZWLvFVVEup9C
+         BHMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773653433; x=1774258233;
+        d=1e100.net; s=20251104; t=1773653526; x=1774258326;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=bCVKI/eKLtlamMd2/D4n7rtJjm8TbWgtnqjVuvE5Ek0=;
-        b=KZrQJ7Tg6WPf86Js2h1gM7EjFwoAFZ8XDey/rEjt69V+iOXZzYgq3IfLpf7L05bcBX
-         v4DkkzcA6BTENoxDHsyrHV8TvknP0VIpXliVkXRC7jqjDIhY2jF9DXzHf0Oi8NbNXz5Z
-         JkJMbchazHCNbq+yahgqyr4l2f48RFcjwi0cWawTgb+AmpvsPEaErrkxs5cLAX4MvOxB
-         Y3hW6OgeqjOsUlI8frV78uYGJ/nnsH+5myl78uLQ2VD60sJ1IihgscCnolrIqVad2nef
-         gCKR7oSdXPchcVjQKE/QbRmkGKoM9wEvFFMzzPVq6lySo8mIUAITquMUuCdwAlQqHvsX
-         n8Ow==
-X-Forwarded-Encrypted: i=1; AJvYcCUPCO1u7BItpwhcvAFI1m/ju6xrlRec830SKci8VY1JrLfLKSd4Em5DwFcMEF8vQUAjdmfA4Ar6G+kIr3WQ@vger.kernel.org
-X-Gm-Message-State: AOJu0YxRHecreV1j8eRLh3+M0RhjyQnzpT1/UIywkAK5k10Ic5U6ZDk9
-	ixd/0tiXulT4njvQ4kYy27vwxMUWn9sVfvB3v86pFPqQDY2WekGesN3n5I3uR+rucsU2JQG5XwH
-	QVWmzbEsVmw+XqEC1Be7QifIFC1OOo3At1E7R9RVB2JNnxOL9+uwBWmYybvF4Jrc16N7/
-X-Gm-Gg: ATEYQzwTKP4j/7X6mZYE+Dt5bXhj+WtunIgTjsbzbHzfeY6bwCRNN5runI5fxdzti7P
-	PPoXdqQHruFkk8TWWeurP6EwSvC9a6yQmSvMZ6DLC0GAlFZZSjgq7i6KF7n1qtrnfFMfi1xV+ib
-	pP9hkeFcIqcRh7HSV3OL+Qx4Hj8C1Kcl7LEVA2biQQQYger7OPGKCA/r/kXbpDYJYuGnX+/cDn3
-	5UhmMhkCYNflYgnw4zKkpVXGrcGWciRWUfbhO15QUongadJ72r9xD/0m5p+icUoECrjdfZHmfkR
-	K5dXNDZaKSf+abi01+Munxalc3xpX7DFNTt3dgNoJUmMLSMhL1YGmekQ4md4yS2Swf2Qv3ftl2q
-	+Opfn7xmkMCQGn8v8RkP377m4dUnv3YtwxdyCFlKk1Zw0gwurEguGYqN4NYEY+Wg3tuN23G6NI1
-	Ms9II=
-X-Received: by 2002:a05:6214:809c:b0:89a:4c1b:4f6d with SMTP id 6a1803df08f44-89a81fb81e7mr122910096d6.6.1773653432940;
-        Mon, 16 Mar 2026 02:30:32 -0700 (PDT)
-X-Received: by 2002:a05:6214:809c:b0:89a:4c1b:4f6d with SMTP id 6a1803df08f44-89a81fb81e7mr122909756d6.6.1773653432457;
-        Mon, 16 Mar 2026 02:30:32 -0700 (PDT)
-Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b97afca45c3sm231447766b.13.2026.03.16.02.30.30
+        bh=f8X5kFWCBMHnHAO6UFq3igterPL5sWg/kPVCVlpvea4=;
+        b=HAUM45mXYFyAc1eP+aEkhYbFHN/wFY/nsq+SRLdO0LHfsx/+gVD0ATKCduLZ8TDXfH
+         UaIJscTAQIzK6OK9sBA2/NirwHFu2dgsuDxltCVLpJC9sF69r0i6Aeqq5XU9oOQcanY0
+         1t3+xCkaOKukzOTkbWP2nRHaz12dyVgtVe+HN+5jB9IcEPaD/Wt53daGtAw92ypnC3Tz
+         f+oWtSIHEYDw9Cz0FpD+hrL7i9wkP5r6Haokzsx3b6oDHSyM6LJbbB9q6mIaV08zhIPT
+         Lxi696xja6plbullrK48d+Wk9otP2vSuThxwtNcXAGqDltdw7rlpSU0Ielou+/1NvbKk
+         Utzg==
+X-Forwarded-Encrypted: i=1; AJvYcCXoXwRU/gu0pQIU4BrLvuNStsr7D9AIbIbEJY3GxdNsSovtM4TwVG6Q6uUYKCjfNpXjJ0SttWlC+d4Dr0qx@vger.kernel.org
+X-Gm-Message-State: AOJu0YyXgc2q84LOSJ7isSjgqde4nphVKaRj5gbjvwujv8s4s9GUGSgH
+	flAw3pgrkW52z7xhw/OF7x+G2NPi0XV6gY+QMYUVk4Jq+79tiL6r1ow6jSLAgpVDM8Q6vtasvVW
+	vW9bTdjjxt4ldjTgf2gafgYVoeWZQePXyjFc9M54NthJUETU5ZoPHne66J5h2dC6C9hqT
+X-Gm-Gg: ATEYQzz4y09DZGnnsdiCMwNjhrW+zTJkIvi4s1ktOXmB82sSaxP2rZHQkB3GFYnHnzh
+	CJgLKxMa7JJ2JP8yTQCR/5YEZvkW1WEDJZapDdaD5iZ9lbC0HS0K/Em742H5Nx4R2NVSMvtknYY
+	Ll/L9cr/dk9wXLOxlgmYgK8Vy8MSzuYkFuNHGXiBOfUta2pdptygDPI4ol9AfVhHYz4X9uwLUxl
+	NBu4cpi5gyIKq17ZnGXs0QQGVcUkwJHhVP/KzfgJ6dzFN1Dalg4t0f1QXZYaLhlrFbIiqmbAv7X
+	zG/xgVOIWQMNmeU1qWkdsoLlxhsYURQi4FAqja4cO17yOSCYCLlwhFoJgMeNX/bvraBZLYlnSpu
+	Juvh6AqxeoLiB2unKSKhYQ3n33XAax3cQV26LwquRrhCZiGelnl+B9o0sABxbpnbOn7oTQEBQKH
+	yr1dQ6zbsU
+X-Received: by 2002:a05:620a:4441:b0:8c7:110e:9cd5 with SMTP id af79cd13be357-8cdaa8c59c8mr2259642185a.45.1773653525763;
+        Mon, 16 Mar 2026 02:32:05 -0700 (PDT)
+X-Received: by 2002:a05:620a:4441:b0:8c7:110e:9cd5 with SMTP id af79cd13be357-8cdaa8c59c8mr2259638385a.45.1773653525298;
+        Mon, 16 Mar 2026 02:32:05 -0700 (PDT)
+Received: from ?IPV6:2a05:6e02:1041:c10:5dfc:3995:22ce:d286? ([2a05:6e02:1041:c10:5dfc:3995:22ce:d286])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48541b6f6e6sm871921055e9.10.2026.03.16.02.32.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Mar 2026 02:30:31 -0700 (PDT)
-Message-ID: <e242dc13-9818-4445-b835-86a87965090e@oss.qualcomm.com>
-Date: Mon, 16 Mar 2026 10:30:28 +0100
+        Mon, 16 Mar 2026 02:32:04 -0700 (PDT)
+Message-ID: <ba23f8c8-a842-4498-b52f-528baed62325@oss.qualcomm.com>
+Date: Mon, 16 Mar 2026 10:32:04 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -107,111 +107,152 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sdm845-xiaomi-beryllium-tianma:
- Disable MDSS
-To: David Heidelberg <david@ixit.cz>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        phone-devel@vger.kernel.org, Petr Hodina <petr.hodina@protonmail.com>
-References: <20260311-beryllium-fb-v1-0-408a580d125e@ixit.cz>
- <20260311-beryllium-fb-v1-2-408a580d125e@ixit.cz>
- <t4uhjpxdvjxda4dxkoxktv6xlxg3xvzyslgerluu3t2dzxv33v@k46gvwv4uf22>
- <137c19a3-136a-4e0e-b4ea-8cc474172d81@ixit.cz>
- <e65ebd79-9edb-4001-a5c1-c4b6a67d5234@oss.qualcomm.com>
- <e93d3d7d-1df3-45e1-bf9b-d2ccb937aced@ixit.cz>
+Subject: Re: [PATCH] cpuidle: Deny idle entry when CPU already have IPI
+ interrupt pending
+To: Christian Loehle <christian.loehle@arm.com>,
+        Maulik Shah <maulik.shah@oss.qualcomm.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>
+Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20260316-cpuidle_ipi-v1-1-d0ff6350f4e2@oss.qualcomm.com>
+ <39ffe4f6-5716-400d-963b-06675a727225@arm.com>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <e93d3d7d-1df3-45e1-bf9b-d2ccb937aced@ixit.cz>
-Content-Type: text/plain; charset=UTF-8
+From: Daniel Lezcano <daniel.lezcano@oss.qualcomm.com>
+In-Reply-To: <39ffe4f6-5716-400d-963b-06675a727225@arm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: d--ahZE1FYo_Zp-hhtPps7ZmAxyrCWtR
-X-Proofpoint-ORIG-GUID: d--ahZE1FYo_Zp-hhtPps7ZmAxyrCWtR
-X-Authority-Analysis: v=2.4 cv=D9xK6/Rj c=1 sm=1 tr=0 ts=69b7cdb9 cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=sfOm8-O8AAAA:8 a=xNKo-it-qOgi_xrJINUA:9 a=QEXdDO2ut3YA:10
- a=pJ04lnu7RYOZP9TFuWaZ:22 a=TvTJqdcANYtsRzA46cdi:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE2MDA3MyBTYWx0ZWRfX85yWM0OqEMQi
- VVIcF7X+onA7e1TjHWkUQhGi7/8WmuFBLsUbv5trTCfZoMy6+LZ9I4MoAuyfPSC15pxGtni7hoe
- Ha2Evgdvr9PT8u9adR9pnv+YMb1pOOR4ijNbJR2ZpLvE2MAKnMDESnKDu+3mZkfsed9IomEtqie
- eb+nJEcuF4csAX/Jq5sdiB3vfLc4/D7CT9Nvqj85aq+2LedMgzoqi+2cc7/zRN9XyrF68SLfl6a
- qlH0wTh2PA6RP3JEqbDf1tF+98Q6DIsE1b6dgLz/enl5Km9bMOSbZNDiGj3+JVrbtr13fqLEIzP
- eqUBc3pkeE0BL0iTs9KSktMpi9C7FndMUpK7nwYNa04UmNI5m4yGvkdhTnVBb2Kfn8HqqLKhqsY
- UeHXHtOtAt2+6W9y+BUZwQYVwRT5rDK3COwjphdJySyGSu2V34ZrxPvURv990HTitHzMjKHaCuU
- lr+0iu84//CXYdlOT9w==
+X-Proofpoint-GUID: qV2VVABJ4xxItTsRX1R2uKJ8y0n7edSD
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE2MDA3MyBTYWx0ZWRfX26fJNfUXeLV8
+ WNdVPAgkcXWzB2uqMxCflV4/jnITrmnGX+zxP4P2dE7SiP9R/YLyGTF3UdB4MGgUKl3iNRhL7P0
+ NubQLPr44biJQVuzCvgQ0hx8azjcArfZBSsHIIXNrWZlhWxshprFu9RZv6yHcmSsbSKLofhMaWu
+ N2NUk7U2GOotCUsbQw0EPfB+gFKgG9b3VB5v3qJLQ7SRHCh47GAyTpM1oHR0NR31eon25bXga45
+ LtPAqrT76H9pnhbX9Cn019s/TIXlpBrdlHUmClAE0dMHmXolh19Nbsm9N6L7WLTrfEezhjAXe4I
+ O8kt/MQbQkcwCXFKtMctoC0PjPRUdLj4b6UvvA+Acw73xeSrfOnU2cuM3nM9BepTjwlVvHTrtxe
+ 3ysh4EWwHUJhEYs9cUdPeHeFCeaThBO98HU0AX893Ow8nr3jt+lTO4Z6i3M8wkCEAsOu1vIcaD2
+ 9Curi95N0lxFy5zeqYQ==
+X-Proofpoint-ORIG-GUID: qV2VVABJ4xxItTsRX1R2uKJ8y0n7edSD
+X-Authority-Analysis: v=2.4 cv=ebIwvrEH c=1 sm=1 tr=0 ts=69b7ce17 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=NEAV23lmAAAA:8
+ a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=lggpn7pwzXPsZ0vCzx8A:9
+ a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-16_03,2026-03-13_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 impostorscore=0 lowpriorityscore=0 spamscore=0 suspectscore=0
- clxscore=1015 bulkscore=0 priorityscore=1501 phishscore=0 adultscore=0
+ bulkscore=0 adultscore=0 suspectscore=0 spamscore=0 priorityscore=1501
+ clxscore=1015 phishscore=0 lowpriorityscore=0 malwarescore=0 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603160073
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[kernel.org,vger.kernel.org,protonmail.com];
-	TAGGED_FROM(0.00)[bounces-97878-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,protonmail.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-97879-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FROM_NEQ_ENVFROM(0.00)[daniel.lezcano@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[8];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 0760E297093
+X-Rspamd-Queue-Id: 42FAF29710B
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 3/13/26 2:09 PM, David Heidelberg wrote:
-> On 13/03/2026 13:38, Konrad Dybcio wrote:
->> On 3/12/26 12:25 PM, David Heidelberg wrote:
->>> On 12/03/2026 03:46, Dmitry Baryshkov wrote:
->>>> On Wed, Mar 11, 2026 at 07:44:30PM +0100, David Heidelberg via B4 Relay wrote:
->>>>> From: Petr Hodina <petr.hodina@protonmail.com>
->>>>>
->>>>> Currently the panel driver for tianma is broken.
->>>>
->>>> How broken? Can it be fixed instead?
->>>
->>> No output to the panel. Definitely can be fixed, but current situation is that we don't have anyone who has available time or device to tackle the problem.
->>>
->>> I know it's not optimal, but on a way to achieve working mainline phones, my thinking is better to mark it as broken in mainline until someone fixes (assuming Fixes tag and backport) then just going black display (when we have at least framebuffer now).
+On 3/16/26 09:55, Christian Loehle wrote:
+> On 3/16/26 07:37, Maulik Shah wrote:
+>> CPU can get IPI interrupt from another CPU while it is executing
+>> cpuidle_select() or about to execute same. The selection do not account
+>> for pending interrupts and may continue to enter selected idle state only
+>> to exit immediately.
 >>
->> If you have a person with limited time, would simply copying this:
+>> Example trace collected when there is cross CPU IPI.
 >>
->> 2b973ca48ff3 ("drm/panel: sony-td4353-jdi: Enable prepare_prev_first")
+>>   [000] 154.892148: sched_waking: comm=sugov:4 pid=491 prio=-1 target_cpu=007
+>>   [000] 154.892148: ipi_raise: target_mask=00000000,00000080 (Function call interrupts)
+>>   [007] 154.892162: cpu_idle: state=2 cpu_id=7
+>>   [007] 154.892208: cpu_idle: state=4294967295 cpu_id=7
+>>   [007] 154.892211: irq_handler_entry: irq=2 name=IPI
+>>   [007] 154.892211: ipi_entry: (Function call interrupts)
+>>   [007] 154.892213: sched_wakeup: comm=sugov:4 pid=491 prio=-1 target_cpu=007
+>>   [007] 154.892214: ipi_exit: (Function call interrupts)
+>>
+>> This impacts performance and the above count increments.
+>>
+>> commit ccde6525183c ("smp: Introduce a helper function to check for pending
+>> IPIs") already introduced a helper function to check the pending IPIs and
+>> it is used in pmdomain governor to deny the cluster level idle state when
+>> there is a pending IPI on any of cluster CPUs.
+>>
+>> This however does not stop CPU to enter CPU level idle state. Make use of
+>> same at CPUidle to deny the idle entry when there is already IPI pending.
+>>
+>> With change observing glmark2 [1] off screen scores improving in the range
+>> of 25% to 30% on Qualcomm lemans-evk board which is arm64 based having two
+>> clusters each with 4 CPUs.
+>>
+>> [1] https://github.com/glmark2/glmark2
+>>
+>> Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
+>> ---
+>>   drivers/cpuidle/cpuidle.c | 3 +++
+>>   1 file changed, 3 insertions(+)
+>>
+>> diff --git a/drivers/cpuidle/cpuidle.c b/drivers/cpuidle/cpuidle.c
+>> index c7876e9e024f9076663063ad21cfc69343fdbbe7..c88c0cbf910d6c2c09697e6a3ac78c081868c2ad 100644
+>> --- a/drivers/cpuidle/cpuidle.c
+>> +++ b/drivers/cpuidle/cpuidle.c
+>> @@ -224,6 +224,9 @@ noinstr int cpuidle_enter_state(struct cpuidle_device *dev,
+>>   	bool broadcast = !!(target_state->flags & CPUIDLE_FLAG_TIMER_STOP);
+>>   	ktime_t time_start, time_end;
+>>   
+>> +	if (cpus_peek_for_pending_ipi(drv->cpumask))
+>> +		return -EBUSY;
+>> +
+>>   	instrumentation_begin();
+>>   
+>>   	/*
+>>
+>> ---
+>> base-commit: b84a0ebe421ca56995ff78b66307667b62b3a900
+>> change-id: 20260316-cpuidle_ipi-4c64036f9a48
+>>
+>> Best regards,
 > 
-> Sorry, I don't follow. You meant introducing prepare_prev_first?
+> So we already do a per-CPU IPI need_resched() check in the idle path.
 
-Yes, just setting that single flag
+The need_resched() is not the same check. Here the interrupts are off, 
+the test check if there is a pending IPI before entering the sleep 
+routine which will in any case abort because of it. This check saves the 
+costs related to preparing entering the idle state, the call to the 
+firmware and the rollback. Those add an overhead in terms of latency and 
+energy for nothing. As stated in the description, this ultimate check 
+before going idle was introduced also for the cluster idle state and 
+showed a significant improvement [1].
 
-> I asked if it's possible to test, but looking at the rest of the driver, it'll need refactor anyway.
+[1] 
+https://lore.kernel.org/all/20251105095415.17269-1-ulf.hansson@linaro.org/
 
-Well I'dve assumed it worked at least at some point in time given it's
-in mainline?
+> Your patch uses drv->cpumask, which will contain all CPUs, preventing idle entry if
+> any CPU has an IPI pending?
 
-Konrad
+
 
