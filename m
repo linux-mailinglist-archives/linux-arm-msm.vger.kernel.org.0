@@ -1,207 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-97856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-97857-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id eNdBAB60t2nUUQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-97856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 08:41:18 +0100
+	id YDAfAHK0t2nUUQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-97857-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 08:42:42 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97911295C1C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 08:41:17 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E5C6295C69
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 08:42:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 03D0C30071D9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 07:41:17 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B64CB30125CF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 07:42:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8F083502A7;
-	Mon, 16 Mar 2026 07:41:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 097A7351C04;
+	Mon, 16 Mar 2026 07:42:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="um1BZURC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h6bNMHPa"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 930C934DCFD;
-	Mon, 16 Mar 2026 07:41:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D87883502AC;
+	Mon, 16 Mar 2026 07:42:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773646875; cv=none; b=hzD0JyPp7C68+K82mxGCzqPIID0RewyKR7TE70RcwS5UgJjksf/75xKBNAQSI9kjVNKI3YzRtUFvl2nS5epZDsLS3s1i6wK9g/Ya8qa1OiUeYGKxhEXQdjCW7QeuCIp1B7TWQ6X3XsmvyFWkE6gmMpUUh7e5SI0hq0yDTKuMNWw=
+	t=1773646946; cv=none; b=HB+ux8mD8wqxBPSoM7Ut7aTCyQxDiXA25O2BfkUX159/B/Efg2ZXfKf8UtONap/m5eOtMsF+8pXOPYF7szk7xr/vOZu+EKgqSjNR0VtKKdFh37ow1omoCuoJHh7PK1GW/+66IBTc2Y7VIRbYPv1knTsEpbMYNeQ30ozHobobFEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773646875; c=relaxed/simple;
-	bh=bvnKnTTKrFPBTrpfbUIBNLxdfydPWsv3H6LeIn2IluU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mjKsR+4ViteGKZS/lo1FKcXKDPeVvUyF1JEYlsGdkSnc41GIRZKFsQISpOuNZ/ZMfc7nuefrGJpaw3n0XyH9PQ0NP2j+wS/Id6GolokVpvmKukHh33us3UahNHsbYsiwBucHhte4qcCK33UG642oEwJeA9MdpFikzW174OtJmm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=um1BZURC; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E431C19421;
-	Mon, 16 Mar 2026 07:41:11 +0000 (UTC)
+	s=arc-20240116; t=1773646946; c=relaxed/simple;
+	bh=hIUAKDh+REJ0MMUHOyhuYjsuX8c4XRSYMvOE9eLEEDE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Z4jluUYZyDl7iZzQcVQqWEz/+f4Y7xU8wggAMjSpH3pebHwWEs5dsa3U4lHOjkkw51IDpTdu2w/15c/F1T00zhebYuglCKlAvgJ30f/VFwsdAk7SCrVGE7zQZBeM/KWv4Rn4Ma9IQykZBX+Z4Jc+TqhM/M0jPrQFcsHRtAWsin8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h6bNMHPa; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6FCAC19421;
+	Mon, 16 Mar 2026 07:42:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773646875;
-	bh=bvnKnTTKrFPBTrpfbUIBNLxdfydPWsv3H6LeIn2IluU=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=um1BZURC7OlPYxSC6QuugMfJ/K6uvAz0rKuSypl2A1Flnsi6XqnlyXpPTLFxVMzia
-	 opqGoEoR2t2ajUd+b3it7dGnpREbAryZIG40pcQKUwBCBZoGoZywETM/8ZXZILQvNu
-	 NYYsLVUonzfFkfG2t2RhREEY3cEK7YkHTAgvcqOFASPIrmfimka8GC2PDbJan563j+
-	 p0KH+Uy9fcRT8JcrSDJSnms67OogeqRzTogkSyUmaLOosf1K/tbA8avrKrvWH22PS9
-	 yDn1A2t5SvQA7uKlrAJdg77T2+hwQkjsBjMkO5s7Km38A6lhnL6BVXnwfTNgjCSnF/
-	 hBjrTnU9mBVag==
-Message-ID: <f1248497-5ed7-4741-869e-ac25db1a3973@kernel.org>
-Date: Mon, 16 Mar 2026 08:41:09 +0100
+	s=k20201202; t=1773646946;
+	bh=hIUAKDh+REJ0MMUHOyhuYjsuX8c4XRSYMvOE9eLEEDE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=h6bNMHPat9SO9xY6/+I/reiLeceXOiPu8gWq6ZE245Yn3McMB8r9KfytkN5gwoMow
+	 ALpB5+OiLrSlGhk67s1gU1t38XbR3EvWAsdOOq7t8BRdmjKDbVhz45F2RVbnKHSj8n
+	 NWoTFOcvQYq8y3A9BFKsYOo2Y6scQYiaDSXsSRSof+ZlTKAvsBrSoTyrntWhO1cOMO
+	 YLunE7lrBAfX8ecEzMevpF9ePJaubsQ+BvyBeDq8wh5HCp9FxnI16+sn4U0MPpJCoL
+	 eI6uHp1Ue7drsyhXzmB7pcg3Dg3ZlF9utm1UUWYfbC/GrBVVavCV+zTetcQxciw6VI
+	 qRsF4atGhEoCg==
+Date: Mon, 16 Mar 2026 08:42:23 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: Vinod Koul <vkoul@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Bryan O'Donoghue <bod@kernel.org>, 
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+	linux-media@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 1/2] dt-bindings: phy: qcom: Add CSI2 C-PHY/DPHY schema
+Message-ID: <20260316-delightful-cordial-jaybird-2d409e@quoll>
+References: <20260315-x1e-csi2-phy-v4-0-90c09203888d@linaro.org>
+ <20260315-x1e-csi2-phy-v4-1-90c09203888d@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8750: Enable TSENS and thermal
- zones
-To: Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>
-Cc: Amit Kucheria <amitk@kernel.org>,
- Thara Gopinath <thara.gopinath@gmail.com>,
- "Rafael J. Wysocki" <rafael@kernel.org>,
- Daniel Lezcano <daniel.lezcano@kernel.org>, Zhang Rui <rui.zhang@intel.com>,
- Lukasz Luba <lukasz.luba@arm.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, linux-pm@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, aastha.pandey@oss.qualcomm.com,
- dipa.mantre@oss.qualcomm.com,
- Manaf Meethalavalappu Pallikunhi <quic_manafm@quicinc.com>
-References: <20260313-sm8750_tsens-v1-0-250fcc3794a2@oss.qualcomm.com>
- <20260313-sm8750_tsens-v1-2-250fcc3794a2@oss.qualcomm.com>
- <20260314-accurate-curassow-of-acumen-c05e67@quoll>
- <c235ff5a-3a9f-4f97-b7b9-d6a95a68e393@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <c235ff5a-3a9f-4f97-b7b9-d6a95a68e393@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260315-x1e-csi2-phy-v4-1-90c09203888d@linaro.org>
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-97856-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[kernel.org,gmail.com,intel.com,arm.com,vger.kernel.org,oss.qualcomm.com,quicinc.com];
-	RCPT_COUNT_TWELVE(0.00)[19];
+	TAGGED_FROM(0.00)[bounces-97857-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[14];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,0.0.0.14:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,quicinc.com:email,c228000:email]
-X-Rspamd-Queue-Id: 97911295C1C
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,linaro.org:email]
+X-Rspamd-Queue-Id: 5E5C6295C69
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 16/03/2026 08:33, Gaurav Kohli wrote:
+On Sun, Mar 15, 2026 at 11:52:06PM +0000, Bryan O'Donoghue wrote:
+> Add a base schema initially compatible with x1e80100 to describe MIPI CSI2
+> PHY devices.
 > 
+> The hardware can support both C-PHY and D-PHY modes. The CSIPHY devices
+> have their own pinouts on the SoC as well as their own individual voltage
+> rails.
 > 
-> On 3/14/2026 4:01 PM, Krzysztof Kozlowski wrote:
->> On Fri, Mar 13, 2026 at 04:04:18PM +0530, Gaurav Kohli wrote:
->>> From: Manaf Meethalavalappu Pallikunhi <quic_manafm@quicinc.com>
->>>
->>> The sm8750 includes four TSENS instances, with a total of 47 thermal
->>> sensors distributed across various locations on the SoC.
->>>
->>> The TSENS max/reset threshold is configured to 130°C in the hardware.
->>> Enable all TSENS instances, and define the thermal zones with a hot trip
->>> at 120°C and critical trip at 125°C.
->>>
->>> Signed-off-by: Manaf Meethalavalappu Pallikunhi <quic_manafm@quicinc.com>
->>> Signed-off-by: Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>
->>> ---
->>>   arch/arm64/boot/dts/qcom/sm8750.dtsi | 897 +++++++++++++++++++++++++++++++++++
->>>   1 file changed, 897 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sm8750.dtsi b/arch/arm64/boot/dts/qcom/sm8750.dtsi
->>> index f56b1f889b85..db2a97cb228d 100644
->>> --- a/arch/arm64/boot/dts/qcom/sm8750.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sm8750.dtsi
->>> @@ -20,6 +20,7 @@
->>>   #include <dt-bindings/soc/qcom,gpr.h>
->>>   #include <dt-bindings/soc/qcom,rpmh-rsc.h>
->>>   #include <dt-bindings/sound/qcom,q6dsp-lpass-ports.h>
->>> +#include <dt-bindings/thermal/thermal.h>
->>>   
->>>   / {
->>>   	interrupt-parent = <&intc>;
->>> @@ -5457,6 +5458,902 @@ compute-cb@14 {
->>>   				};
->>>   			};
->>>   		};
->>> +
->>> +		tsens0: thermal-sensor@c228000 {
->>
->> Please read carefully DTS coding style before posting patches. Actually,
->> read also Linux kernel coding style as well.
->>
+> The need to model voltage rails on a per-PHY basis leads us to define
+> CSIPHY devices as individual nodes.
 > 
-> Thanks Krzysztof for review.
+> Two nice outcomes in terms of schema and DT arise from this change.
 > 
-> Can i use temperature-sensor instead of thermal-sensor as per 
-> generic-names-recommendation ?
+> 1. The ability to define on a per-PHY basis voltage rails.
+> 2. The ability to require those voltage.
+> 
+> We have had a complete bodge upstream for this where a single set of
+> voltage rail for all CSIPHYs has been buried inside of CAMSS.
+> 
+> Much like the I2C bus which is dedicated to Camera sensors - the CCI bus in
+> CAMSS parlance, the CSIPHY devices should be individually modelled.
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>  .../bindings/phy/qcom,x1e80100-csi2-phy.yaml       | 133 +++++++++++++++++++++
+>  1 file changed, 133 insertions(+)
+>
 
-Both work for me.
+<form letter>
+This is a friendly reminder during the review process.
+
+It seems my or other reviewer's previous comments were not fully
+addressed. Maybe the feedback got lost between the quotes, maybe you
+just forgot to apply it. Please go back to the previous discussion and
+either implement all requested changes or keep discussing them.
+
+Thank you.
+</form letter>
 
 Best regards,
 Krzysztof
+
 
