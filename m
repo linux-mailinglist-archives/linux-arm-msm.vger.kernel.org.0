@@ -1,254 +1,215 @@
-Return-Path: <linux-arm-msm+bounces-98036-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98037-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id ILY0LHt9uGmVewEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98036-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 23:00:27 +0100
+	id CBAtJMOGuGndfQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98037-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 23:40:03 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B9FF2A1388
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 23:00:27 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E7D322A19F8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 23:40:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 0FB77302DE54
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 22:00:26 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id AAE6D3016924
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Mar 2026 22:39:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9DA42066F7;
-	Mon, 16 Mar 2026 22:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9A56372EE4;
+	Mon, 16 Mar 2026 22:39:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GIRdWJXb"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="c4lEHNXz";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ExzN9yL4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E7B15530C;
-	Mon, 16 Mar 2026 22:00:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B29A373C1B
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 22:39:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773698423; cv=none; b=Kwv4BguednFAiTnzKN9VkQCXNMY8fb3atSXCNywqNtnfm1NG8UfWokT7z29LnUs7WxRvUfYwiJLNgvOOv3lBpUHmht+4R4qDraWhc4mfyEYakm1utkRpqcCdl6n+4LuqWa2JV6HAbi88lw/haYrvyTFjN1WGYZCGPsRb2x7M+yc=
+	t=1773700744; cv=none; b=VCTNh6g3KWng03WOc1gu0gwCt8sJQuAJMH/EX8XkNHaxHNg/tb3l0frObr3p3cWKZBN/zRWkyYwlH2v0DO9CRT+0vSlxFosvILK0g49VZ4c7WKt9rU3SnBu6dwh0PM3xUUXlbB0P1IArYQkEvX+1mjGFwa3sK52gpl6dbPrcS1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773698423; c=relaxed/simple;
-	bh=xL6C4abJanh+hfi8o4mFZdvcfY8JVOwpGp3AtvrmmwU=;
-	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=J107GnwaPrCw5J0ji2oCfkGq6FlepLkIykyH3/loVrgTSTFPZEdfmGpItjgVEb/OqmXjOuOUgzCDSe3UHOW+y8bhLCpvb5F1URsgFBxKhquHKTTlXHCf7SWEe/yPhORgIXnTpeZ1TNH9qNb16rPu1VgZcIXGP0Vn2nMKXJtOCF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GIRdWJXb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44837C19421;
-	Mon, 16 Mar 2026 22:00:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773698423;
-	bh=xL6C4abJanh+hfi8o4mFZdvcfY8JVOwpGp3AtvrmmwU=;
-	h=From:To:In-Reply-To:References:Subject:Date:From;
-	b=GIRdWJXbCPNC5aI/K8ATvHrqt/f9EBFULmJFXBLVPaJ06WIkzGYKy4zsT3C6Let7r
-	 3OoRTnlFRWJ9QtjS97xaiyf1myGdVmVbpB2ylpHqp341yJO21yVCbSjEpg+Xrm4XsM
-	 X7TguCXJd23WhZaWaWOPSTql6NwmjVUq3/qNN0asCYLiZqrQpwbYLdoEYnvVB4Ax5D
-	 3wgrqWdZZzpxauJ/bgM3aVgN4BqUxtuzBLtlLIFYDDBtSnLUEALE18oefqVuUmxKFA
-	 /QKTnOYSC00T7q3aox5ixr0IYO99/cmkFGw4tLV3uZqWgma0fA3+245s5J1TfVCE5u
-	 Fm8SiaAiSuTJg==
-From: Mark Brown <broonie@kernel.org>
-To: =?utf-8?q?Martin_Povi=C3=85=C2=A1er?= <povik+lin@cutebit.org>, 
- Alexandre Belloni <alexandre.belloni@bootlin.com>, 
- Alexandre Torgue <alexandre.torgue@foss.st.com>, 
- Andrei Simion <andrei.simion@microchip.com>, 
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>, 
- Baolin Wang <baolin.wang@linux.alibaba.com>, 
- Bard Liao <yung-chuan.liao@linux.intel.com>, 
- Benson Leung <bleung@chromium.org>, Biju Das <biju.das.jz@bp.renesas.com>, 
- Cezary Rojewski <cezary.rojewski@intel.com>, 
- Cheng-Yi Chiang <cychiang@chromium.org>, 
- Chunyan Zhang <zhang.lyra@gmail.com>, 
- Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
- Cyril Chao <Cyril.Chao@mediatek.com>, 
- Dan Carpenter <dan.carpenter@linaro.org>, 
- Daniel Baluta <daniel.baluta@nxp.com>, Daniel Mack <daniel@zonque.org>, 
- Fabio Estevam <festevam@gmail.com>, Frank Li <Frank.Li@nxp.com>, 
- Geert Uytterhoeven <geert+renesas@glider.be>, 
- Guenter Roeck <groeck@chromium.org>, 
- Haojian Zhuang <haojian.zhuang@gmail.com>, 
- Herve Codina <herve.codina@bootlin.com>, Jaroslav Kysela <perex@perex.cz>, 
- Jonathan Hunter <jonathanh@nvidia.com>, 
- Kai Vehmanen <kai.vehmanen@linux.intel.com>, 
- Kunihiko Hayashi <hayashi.kunihiko@socionext.com>, 
- Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>, 
- Lars-Peter Clausen <lars@metafoo.de>, Liam Girdwood <lgirdwood@gmail.com>, 
- Masami Hiramatsu <mhiramat@kernel.org>, 
- Matthias Brugger <matthias.bgg@gmail.com>, 
- Max Filippov <jcmvbkbc@gmail.com>, 
- Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
- Michal Simek <michal.simek@amd.com>, 
- Nicolas Ferre <nicolas.ferre@microchip.com>, 
- Nicolin Chen <nicoleotsuka@gmail.com>, Oder Chiou <oder_chiou@realtek.com>, 
- Olivier Moysan <olivier.moysan@foss.st.com>, 
- Orson Zhai <orsonzhai@gmail.com>, 
- Peter Ujfalusi <peter.ujfalusi@linux.intel.com>, 
- Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>, 
- Ranjani Sridharan <ranjani.sridharan@linux.intel.com>, 
- Ray Jui <rjui@broadcom.com>, Robert Jarzmik <robert.jarzmik@free.fr>, 
- Sascha Hauer <s.hauer@pengutronix.de>, 
- Scott Branden <sbranden@broadcom.com>, Sheetal <sheetal@nvidia.com>, 
- Shengjiu Wang <shengjiu.wang@gmail.com>, 
- Srinivas Kandagatla <srini@kernel.org>, 
- Sylwester Nawrocki <s.nawrocki@samsung.com>, Takashi Iwai <tiwai@suse.com>, 
- Thierry Reding <thierry.reding@gmail.com>, Tim Bird <tim.bird@sony.com>, 
- Tzung-Bi Shih <tzungbi@kernel.org>, 
- Venkata Prasad Potturu <venkataprasad.potturu@amd.com>, 
- Vijendar Mukunda <Vijendar.Mukunda@amd.com>, 
- Vincenzo Frascino <vincenzo.frascino@arm.com>, 
- Xiubo Li <Xiubo.Lee@gmail.com>, chrome-platform@lists.linux.dev, 
- imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org, 
- linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
- linux-sound@vger.kernel.org, 
- Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-In-Reply-To: <87bjgoldf9.wl-kuninori.morimoto.gx@renesas.com>
-References: <87bjgoldf9.wl-kuninori.morimoto.gx@renesas.com>
-Subject: Re: [PATCH v2 00/29] ASoC: soc-component: re-add
- pcm_new()/pcm_free()
-Message-Id: <177369837337.303905.11618232899340248621.b4-ty@kernel.org>
-Date: Mon, 16 Mar 2026 21:59:33 +0000
+	s=arc-20240116; t=1773700744; c=relaxed/simple;
+	bh=BwdX5YBGKqxs++fBPlS4wWWg5PtwQeRiKD/Ivgn44AM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=jxtgMxPzbO+dSvyknq9acFgU9D7/yeI5LkS0kNbdG3cWShrVaOVR1xGPtXNJHp6G3N0H0Z19nT/v3A6/jjTfGccuUJ9SzvENbzJCoYe7ULhGv2y+SZ4XoMnQZf9KOEp+Cpm45PqpUrVdrdqs773OWRtbA21Ob+BmP3MhFilDTfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=c4lEHNXz; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ExzN9yL4; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62GGMvb13101974
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 22:39:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=4IbsLGrI1KKIjHx8jj+lvuMaQvi9KqTTUAq
+	216gBs4E=; b=c4lEHNXzOMMt6Tsnrcv8LX2gDNa01bQ9WGJWzrcpWAwL8MrFHat
+	8HAObURz4QPkv7sE2VBirGtBLz83IWik32HUQtRnH/3uaGCyU0zUp69xrSK4Hkxj
+	UQTS2nScvde5/iCi+5Gsj/TBRbSkUvlgGduDKwfBATFAweadu+REEmu4whhOL6N6
+	UVpNdKMqAWf91/11Wf4SWMTAVefTmoy7rWzNFluNky92zxhcIl+MeNbb/Eag2ARE
+	kAaSFtA2OKZGOf4kC4XQryTCBSRN3xyXTLS83XKGECezw85d/nvVxjG8rzadSDcu
+	ydAuS0CmTWYki9/waK7WBgv608mXq4yfipQ==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cxnb796ma-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 22:39:01 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-35a0998a441so32338889a91.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Mar 2026 15:39:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1773700741; x=1774305541; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=4IbsLGrI1KKIjHx8jj+lvuMaQvi9KqTTUAq216gBs4E=;
+        b=ExzN9yL4uZ9a2SnZLTzbYApmg0ZBOKWUPPwU1j99kyUpfiGerGQ+CYgmdEkI9I0aCg
+         W5xvFOQ4jEhSI406cg/cPmyMbmcO1hg4MQsTLb9wzFG6VEfL+q+WIMFe9v2Nn+1kdSga
+         FUchrKnPZcxQN91RtbpKfBLYE6oKrI48W4QVS7hMKKymhwOBQN496xTaouLOUSm3zNdM
+         CnkkDk1ea7cbsXqQekasz/mh8Rj2UNcvwn9de02AWL/f/X8YdCrm3LsP84MQJM038iuz
+         h6fX/d9pXP6V/C5uupkYAAljyC6fJryVaJ7Zx6gHHDyAjdx3jfWCo3M7p1dHcvuuDbT3
+         yxtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773700741; x=1774305541;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4IbsLGrI1KKIjHx8jj+lvuMaQvi9KqTTUAq216gBs4E=;
+        b=HI55ep42/TVNe2ocWnsmTdEwJzyRhPx2yfg9IZiq5sGguEiuwrwBvw4U+VyWfgMvly
+         CbiwXHWgn7syOXWS+mUlBi+6pcDvX/vq8kvLkztrE7HW+YAqJ8PIZC2SakgxcC1gy0/Q
+         iu49jP+rBmgtEPn4ctGZJzyyJL5G100/g2ujwgjcTw9yQYTSnbwsdHZI+uBR0b8/beZM
+         LUgVAYfwqd4gCKwGwJ1Y7x6jw0NOZzo7q2isze7qZnt8tCE2ZghyUhFz7GjIS9u3c4L1
+         IoZ1W+OKwOiP9Aqy4k46tI2TvPZ1RRYN7MJSYMNucIho4MmNNSnz6yc8TQaCR/H+AGMn
+         WYHw==
+X-Gm-Message-State: AOJu0YxfS0apWzQv6Hlx8GyMjHjH6nymzl0qQlmx8IOf/J23CXiJ2Qlz
+	fB6Cacn0SI+95P2xA/oiuLjlyIhvqAZX002bq5EdJhqIylqjDyoPcPVo/zM4nasyeyxwozKAl26
+	pxMQdNEiG//1tNiRDiR2ucUe5luZlLh+BtA8zig08EEKpklm/Frozd7BbzCHOsZV568SS
+X-Gm-Gg: ATEYQzy5U1kA7gurW34MYHU9zRYSx5ez4MLwLmVC4vm30bVKlJRK16LL7UUrPDxezQA
+	FmRM8MC0exQN324cXvjofmQXeJ4YDN50Y0dOb9zA1zTUDVMhWu33FjtAVLaqmsFBODkR6n33zMX
+	PpmYwl8cx17CDD1CF3xSylExQjkJGdrS/xng6NvTCH6LyhnDpJ1TRa4EX48spzJlA8IH+dIeL3y
+	ag8rS77VbOoU01V9n5+xTtJcwJNq2ObK1rf1Ds/PjDY7ZeXDUaAh/HLs0m2SBi6H16rzKxCjZqC
+	rUYlizJEWEdTnAQ6MkdUL28nnHjlQOx6du2iAciysN2fPfbv0b2o3rGsK2Tp9N466VoZ4AV+uJd
+	VsuGdou6NBKyFI4tIM1ab5XUiFoE0/njG
+X-Received: by 2002:a05:6a21:398d:b0:398:c4e6:fec1 with SMTP id adf61e73a8af0-398eca9c789mr13168481637.23.1773700740997;
+        Mon, 16 Mar 2026 15:39:00 -0700 (PDT)
+X-Received: by 2002:a05:6a21:398d:b0:398:c4e6:fec1 with SMTP id adf61e73a8af0-398eca9c789mr13168449637.23.1773700740490;
+        Mon, 16 Mar 2026 15:39:00 -0700 (PDT)
+Received: from localhost ([2601:1c0:5000:d5c:4ec8:83f5:8254:6891])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82a072612e2sm18573605b3a.21.2026.03.16.15.38.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Mar 2026 15:39:00 -0700 (PDT)
+From: Rob Clark <robin.clark@oss.qualcomm.com>
+To: dri-devel@lists.freedesktop.org
+Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+        David Airlie <airlied@gmail.com>, Dmitry Baryshkov <lumag@kernel.org>,
+        Jessica Zhang <jesszhan0024@gmail.com>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        linux-kernel@vger.kernel.org (open list),
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Maxime Ripard <mripard@kernel.org>, Sean Paul <sean@poorly.run>,
+        Simona Vetter <simona@ffwll.ch>,
+        Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [RFC 0/2] drm: Add sysrq handler to kill GPU
+Date: Mon, 16 Mar 2026 15:38:48 -0700
+Message-ID: <20260316223855.711574-1-robin.clark@oss.qualcomm.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-f420f
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4727; i=broonie@kernel.org;
- h=from:subject:message-id; bh=xL6C4abJanh+hfi8o4mFZdvcfY8JVOwpGp3AtvrmmwU=;
- b=owEBbQGS/pANAwAKASTWi3JdVIfQAcsmYgBpuH1r9Kn8pWQBjJQ8Y5RpE+swsy6zuOjsx/msy
- y6SCK3/KtWJATMEAAEKAB0WIQSt5miqZ1cYtZ/in+ok1otyXVSH0AUCabh9awAKCRAk1otyXVSH
- 0FIfB/0cRLGXje6cSJBA+IBPmVIwVkpFBMEk+YKZtf0XQjffrDz4g0tW0wTQXBOadYw6XK7KyTr
- NZdJrNVBhWILSRhBWLKZa4sRnksZOKBOZJAs7tIhqDjnZx0xh5+JTv+d8utKWKUxZYp6a5VaGlG
- XHQVEAwku0IFPaGMIg/CvpFG/qpqKjSExIiceM8gbZk1f8X+o24DupIHYfxr2BrMNJDDzz1OyWn
- HqyWxhj/ZWkPzi5qPfvDSvWKDlcT93pluJ4sBnqM8rzQEvo5/9M7c1aL60ge4meVfhB8dOfzc+F
- /OeClVJqWDCLdpKmdb+c/LYEwGmyuZKSJ759bbF4oYfrcsS4
-X-Developer-Key: i=broonie@kernel.org; a=openpgp;
- fpr=3F2568AAC26998F9E813A1C5C3F436CA30F5D8EB
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE2MDE4NyBTYWx0ZWRfX6iKrqPBLV8e3
+ nEWokzhPRC0ambdzHc20ZEBP1oyS1JESpjOrNjFd6ycRr/1Iia2s9p2ft9SubT9nalbuimjxXCV
+ WOTkv7jrSOu7hi9SsFgv2eepbFt2u09h/S5R7IUwPfM6nTSddj9qqVZ5vdOO/oSGAqzRy87y0OI
+ fF1GM71iZDj2FGcyECwUDiMK9L+ouyf7VJbkav2TqQXLN5iqQVimeQeLe19u53lZ8eWssTIs4Kr
+ HEY0GNq7PQ39glYkwBGc0c6S/1HVeynj27qANGaDjri1xZZciudgJQoVT07qmnXFsocajBNT5km
+ W5JW70r0q6xn++Ym5X159JWWn1sqmb2j5XOEWw+J4HwCLrNKX+gJB6bouTI2KjsaHOKpjURFTWa
+ LJEDV10xqUYXM1M5i9m8LjI9n2oJCCuaGg9v+BdIbJj6iMeLC/QVv4DZnqqbpforUkTQYC5bj+m
+ t6cE0tXIAAuN6PEfbEg==
+X-Authority-Analysis: v=2.4 cv=D7pK6/Rj c=1 sm=1 tr=0 ts=69b88685 cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=xqWC_Br6kY4A:10 a=Yq5XynenixoA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=DJpcGTmdVt4CTyJn9g5Z:22 a=zUJ0Y04Mm8-B5XzwJDsA:9 a=iS9zxrgQBfv6-_F4QbHw:22
+X-Proofpoint-ORIG-GUID: z2iNHJXFQbvg5fWZOJ0a93bjB4CKelEO
+X-Proofpoint-GUID: z2iNHJXFQbvg5fWZOJ0a93bjB4CKelEO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-16_06,2026-03-16_06,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 adultscore=0 clxscore=1015 suspectscore=0 spamscore=0
+ malwarescore=0 lowpriorityscore=0 phishscore=0 bulkscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603160187
 X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_TO(0.00)[cutebit.org,bootlin.com,foss.st.com,microchip.com,collabora.com,linux.alibaba.com,linux.intel.com,chromium.org,bp.renesas.com,intel.com,gmail.com,tuxon.dev,mediatek.com,linaro.org,nxp.com,zonque.org,glider.be,perex.cz,nvidia.com,socionext.com,metafoo.de,kernel.org,amd.com,realtek.com,linux.dev,broadcom.com,free.fr,pengutronix.de,samsung.com,suse.com,sony.com,arm.com,lists.linux.dev,lists.infradead.org,vger.kernel.org,renesas.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-98036-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.freedesktop.org,oss.qualcomm.com,linux.dev,gmail.com,kernel.org,linux.intel.com,somainline.org,poorly.run,ffwll.ch,suse.de];
+	TAGGED_FROM(0.00)[bounces-98037-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_GT_50(0.00)[67];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[robin.clark@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,lin,renesas];
-	MID_RHS_MATCH_FROM(0.00)[];
+	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: 2B9FF2A1388
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: E7D322A19F8
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Mon, 16 Mar 2026 02:24:02 +0000, Kuninori Morimoto wrote:
-> ASoC: soc-component: re-add pcm_new()/pcm_free()
-> 
-> Hi Mark
-> 
-> Because old pcm_new()/pcm_free() didn't care about parameter component,
-> to avoid name collisions, we have added pcm_construct()/pcm_destruct() by
-> commit c64bfc9066007 ("ASoC: soc-core: add new pcm_construct/pcm_destruct")
-> 
-> [...]
+Depending on contraints around preemption (ie. on what boundaries can
+the GPU preempt) and priority of other processes using the GPU, the
+compositor can get starved behind a long-running job.
 
-Applied to
+This can be handled by a hangcheck timer that kills jobs that run too
+long, but then there is a conflict between legit long running jobs
+(opencl) and UI responsiveness.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-7.1
+This series adds a new sysrq key handler (SysRq-G because SysRq-g was
+already taken) that kills the current job running on the GPU.  So a
+longer hangcheck timer could be used but the user could still reclaim
+their "hung" desktop by using SysRq-G to kill the background GPU job.
 
-Thanks!
+Sending this out as RFC to see what others think of the idea.  Possibly
+the driver implementation should check how long the job has been
+running to make sure it is only killing a long running job.  Possibly
+we should kill the process behind the long running job, or at least
+mark the context as unusable to prevent it from spamming more long
+running jobs.  Etc.
 
-[01/29] ASoC: soc-component: re-add pcm_new()/pcm_free()
-        https://git.kernel.org/broonie/sound/c/68130eef1e0d
-[02/29] ASoC: amd: name back to pcm_new()/pcm_free()
-        https://git.kernel.org/broonie/sound/c/fe33a69681e3
-[03/29] ASoC: apple: name back to pcm_new()/pcm_free()
-        https://git.kernel.org/broonie/sound/c/d28e19350490
-[04/29] ASoC: atmel: name back to pcm_new()/pcm_free()
-        https://git.kernel.org/broonie/sound/c/83cce46863b0
-[05/29] ASoC: au1x: name back to pcm_new()/pcm_free()
-        https://git.kernel.org/broonie/sound/c/8ec624ef881c
-[06/29] ASoC: bcm: name back to pcm_new()/pcm_free()
-        https://git.kernel.org/broonie/sound/c/3859e15cc9d8
-[07/29] ASoC: codecs: cros_ec_codec: name back to pcm_new()/pcm_free()
-        https://git.kernel.org/broonie/sound/c/2a97dfda9e53
-[08/29] ASoC: codecs: rt5xxx-spi: name back to pcm_new()/pcm_free()
-        https://git.kernel.org/broonie/sound/c/a1f956d85199
-[09/29] ASoC: dwc: name back to pcm_new()/pcm_free()
-        https://git.kernel.org/broonie/sound/c/c42b65583773
-[10/29] ASoC: fsl: name back to pcm_new()/pcm_free()
-        https://git.kernel.org/broonie/sound/c/fe8112d6d2a6
-[11/29] ASoC: generic: name back to pcm_new()/pcm_free()
-        https://git.kernel.org/broonie/sound/c/2905b2266ac6
-[12/29] ASoC: google: name back to pcm_new()/pcm_free()
-        https://git.kernel.org/broonie/sound/c/71a559061006
-[13/29] ASoC: intel: name back to pcm_new()/pcm_free()
-        https://git.kernel.org/broonie/sound/c/6f2b7bd59882
-[14/29] ASoC: kirkwood: name back to pcm_new()/pcm_free()
-        https://git.kernel.org/broonie/sound/c/31447bd2149e
-[15/29] ASoC: loongson: name back to pcm_new()/pcm_free()
-        https://git.kernel.org/broonie/sound/c/7fce3691e131
-[16/29] ASoC: mediatek: name back to pcm_new()/pcm_free()
-        https://git.kernel.org/broonie/sound/c/6f3658d6ee73
-[17/29] ASoC: pxa: name back to pcm_new()/pcm_free()
-        https://git.kernel.org/broonie/sound/c/0828e050415f
-[18/29] ASoC: qcom: name back to pcm_new()/pcm_free()
-        https://git.kernel.org/broonie/sound/c/df202b5e6d3e
-[19/29] ASoC: renesas: name back to pcm_new()/pcm_free()
-        https://git.kernel.org/broonie/sound/c/2840266185be
-[20/29] ASoC: samsung: name back to pcm_new()/pcm_free()
-        https://git.kernel.org/broonie/sound/c/7ef8b7a10c4b
-[21/29] ASoC: soc-generic-dmaengine-pcm: name back to pcm_new()/pcm_free()
-        https://git.kernel.org/broonie/sound/c/7d803acf6181
-[22/29] ASoC: sof: name back to pcm_new()/pcm_free()
-        https://git.kernel.org/broonie/sound/c/e56decec6bae
-[23/29] ASoC: sprd: name back to pcm_new()/pcm_free()
-        https://git.kernel.org/broonie/sound/c/90a2dbecc20f
-[24/29] ASoC: stm: name back to pcm_new()/pcm_free()
-        https://git.kernel.org/broonie/sound/c/4e2f7ecb5db3
-[25/29] ASoC: tegra: name back to pcm_new()/pcm_free()
-        https://git.kernel.org/broonie/sound/c/1f7fc5f1f084
-[26/29] ASoC: uniphier: name back to pcm_new()/pcm_free()
-        https://git.kernel.org/broonie/sound/c/88e277ef789a
-[27/29] ASoC: xilinx: name back to pcm_new()/pcm_free()
-        https://git.kernel.org/broonie/sound/c/7649b2f1f8b2
-[28/29] ASoC: xtensa: name back to pcm_new()/pcm_free()
-        https://git.kernel.org/broonie/sound/c/667fb65f5164
-[29/29] ASoC: soc-component: remove pcm_construct()/pcm_destruct()
-        https://git.kernel.org/broonie/sound/c/175f733325ac
+Rob Clark (2):
+  drm: Add sysrq key to kill current job on GPU
+  drm/msm: Add sysrq_kill handler
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+ drivers/gpu/drm/Makefile        |  1 +
+ drivers/gpu/drm/drm_dev_sysrq.c | 67 +++++++++++++++++++++++++++++++++
+ drivers/gpu/drm/drm_drv.c       |  3 ++
+ drivers/gpu/drm/drm_internal.h  | 11 ++++++
+ drivers/gpu/drm/msm/msm_drv.c   | 12 ++++++
+ drivers/gpu/drm/msm/msm_gpu.c   | 18 +++++++++
+ drivers/gpu/drm/msm/msm_gpu.h   |  1 +
+ include/drm/drm_device.h        |  8 ++++
+ include/drm/drm_drv.h           |  7 ++++
+ 9 files changed, 128 insertions(+)
+ create mode 100644 drivers/gpu/drm/drm_dev_sysrq.c
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+-- 
+2.53.0
 
 
