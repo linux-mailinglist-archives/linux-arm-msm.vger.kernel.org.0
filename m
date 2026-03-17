@@ -1,52 +1,52 @@
-Return-Path: <linux-arm-msm+bounces-98203-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98204-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id QOQcI+xquWmvEQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98203-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 15:53:32 +0100
+	id UBZUHYtruWmvEQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98204-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 15:56:11 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E61842AC673
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 15:53:31 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id E0BA72AC774
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 15:56:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7798F31D8922
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 14:42:38 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 76F203255AF9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 14:42:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 407A03E8C76;
-	Tue, 17 Mar 2026 14:41:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C67E03ECBE3;
+	Tue, 17 Mar 2026 14:41:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KkE6Ja/W"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Sii8nsql"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A5373E8683;
-	Tue, 17 Mar 2026 14:41:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A16683E9F76;
+	Tue, 17 Mar 2026 14:41:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773758492; cv=none; b=HtVDmzN8OteCRJ9NVF1XIw5HJCITjHMzBLqJ9eBOwUkRbsN/9+lrbTygSbznd4i94Sd7b3n5LMnaiprYVCpylLvTNPSb0jrguYFQrDeNxWP1BLj6Coc4gJex0K4Xi5vOoZglK+D2d+b7sGKkVNRvAdpFQ4uW2rRYmAGGRpfdHlQ=
+	t=1773758497; cv=none; b=nNd6FQxHDgFF0IZlE8z+UO+PN0xGg4bIEliPuVUa6talTnqL8q5rtC+jKdXYOM4aqewTJbDJIour7VSRo4E1tHGTjYO4PCShuQ0sX3kE+JH3m9u8NV0/tzyn+mNAmDokc2M6fPoq0qYyqkNFAzOF1hWtWSP4UNVJso90bD2g5/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773758492; c=relaxed/simple;
-	bh=dZyi8aJaXqtR/ot1ORt6HlY0Ip6jwoOIidfODrIOwss=;
+	s=arc-20240116; t=1773758497; c=relaxed/simple;
+	bh=J+ele563bLep0xRPuk6NBG/vQwrP5Vlo47Rd5hTDtSg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=DPNWpIy+3xixWR6sgu02kIpOI0d7FQ+cKvAOl4MghGifHHAqrYlX1qLfXYI7cEUBr2S1e9kBwitnpJnCJjQDfLD3IPEJRjbM3tQN7gPopml29eEA1Np3F2gXl2wIa2pz5Oz6U+5K1mpJBwKn/yuHova8paC75ik0YhYdquO5Pbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KkE6Ja/W; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F725C19424;
-	Tue, 17 Mar 2026 14:41:26 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=YWzWTddCP/S/LnlbtCFg+qUOPbfX1s0/xn5jeO7qBO/pOhHKTDmsmSVvWMxOGI6/kZJ9VY7fZEz6pJ/GMk3QjqGeaR8OnrkUBxR45X0w6fcKoZJvK4NicSXTWSNltrqxHqpKNISAufI5XNHqXxfaGZVYSafMWB6l2xjb9AS86FM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Sii8nsql; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33DD3C4CEF7;
+	Tue, 17 Mar 2026 14:41:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773758491;
-	bh=dZyi8aJaXqtR/ot1ORt6HlY0Ip6jwoOIidfODrIOwss=;
+	s=k20201202; t=1773758497;
+	bh=J+ele563bLep0xRPuk6NBG/vQwrP5Vlo47Rd5hTDtSg=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=KkE6Ja/WiS29KJLVnGkI2OceQirO1q0Qgu8hNcMmMvbMKyMbx5ih10J9nnGR0CJV3
-	 Z2dgpr13ML1zQBUeM2cfjn8HXtTtoRW8Z5FZsnfG9l1Bvg+FcUmAI/Q0ndArwZoIVb
-	 acfbv04NStWQLd9tPXwh/c1IZrnK6bWMqG6I1+9JZDhVLeGJ0MyXhb7FGSwJiefCUn
-	 S86HHT4kiT7kVHImA+QFzcVErbSnhv+JsMjCa7HDDBzSj4tje+C9rUJn9KpUKKHY/d
-	 P0RTqcbhkSynTE/2a78gAnmmvNzqn1Ai59MVJ74kRAYasvGJAj9r37gIdV1Zp4InKI
-	 SdZxNikYE+g8Q==
+	b=Sii8nsql6lHEP0YGPfJq16zjII2hsg2VjEfwbw/cSVWkfI91HaU8oOsspBFMx/66b
+	 sXPHHX5IhvNySmEBQOOTBk9fbdgKOiW/SiEVKqIaos/vl3j9eYMzol4Dq+rbPC3cin
+	 Isbg6bgWhbGB0XSPARBynERz92ixNHq+XfLrG8SdHzF2G3bsU/Ka6qXN4hBIt72SQf
+	 gntVZobREdqqCt0CUDyY+TDIs/+ZfxVKwn3Bsy9kj4O4h/15QbEGEO5D0aEpIHYvhv
+	 lsq21bMLv8ypvH27qmze4DT8UktC2vLDUHiSp6sDMGF5jg6Ds1f1urR6nOnloGFhvI
+	 WGO4GDA7NTrlw==
 From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Tue, 17 Mar 2026 15:41:15 +0100
-Subject: [PATCH 2/6] arm64: dts: qcom: milos: Fix GIC_ITS range length
+Date: Tue, 17 Mar 2026 15:41:16 +0100
+Subject: [PATCH 3/6] arm64: dts: qcom: sm8450: Fix GIC_ITS range length
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,7 +55,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260317-topic-its_range_fixup-v1-2-49be8076adb1@oss.qualcomm.com>
+Message-Id: <20260317-topic-its_range_fixup-v1-3-49be8076adb1@oss.qualcomm.com>
 References: <20260317-topic-its_range_fixup-v1-0-49be8076adb1@oss.qualcomm.com>
 In-Reply-To: <20260317-topic-its_range_fixup-v1-0-49be8076adb1@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -76,24 +76,24 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, Jishnu Prakash <quic_jprakash@quicinc.com>, 
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1773758475; l=793;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1773758475; l=812;
  i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
- bh=7g69GUVaZMAOA7HXfOnKUbAu1o/HUL2Ti6Lbhkg3OW8=;
- b=YVhj60riGGS+JQw8xNXBMxwHLUs2/f+vwwUwFjPA51++MYzuwXuCxwBh428voIEZd+fKl9f8O
- xxVMg/lv412A3NCYvUIyQcYH/MUlIOnU+Bys3aq92z3HkYxgUHsjOAE
+ bh=MV1RGdaGMDoCB0P7jePlxEjkHpwLUd+82N5zh8U+6Kw=;
+ b=1B2DpPFvOZpmb1/stEdqBif/xA5KrCTFJ3QdoNzs/IU2JmPNTOvH76WXdcQJ6dwB90ZXMco0m
+ PeFs9hjMB2WA6XxzxqUkBOIm7ydfSt0vos+Hx3MPJ/cm94IR/EPT+Kr
 X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-98203-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-98204-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
@@ -107,9 +107,9 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:mid,1.5.137.32:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: E61842AC673
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[1.5.137.32:email,qualcomm.com:email,oss.qualcomm.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,1.4.236.224:email]
+X-Rspamd-Queue-Id: E0BA72AC774
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
@@ -117,25 +117,25 @@ From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
 Currently, the GITS_SGIR register is cut off. Fix it up.
 
-Fixes: d9d59d105f98 ("arm64: dts: qcom: Add initial Milos dtsi")
+Fixes: fc8b0b9b630d ("arm64: dts: qcom: sm8450 add ITS device tree node")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
- arch/arm64/boot/dts/qcom/milos.dtsi | 2 +-
+ arch/arm64/boot/dts/qcom/sm8450.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/milos.dtsi b/arch/arm64/boot/dts/qcom/milos.dtsi
-index e1a51d43943f..084be5316e0d 100644
---- a/arch/arm64/boot/dts/qcom/milos.dtsi
-+++ b/arch/arm64/boot/dts/qcom/milos.dtsi
-@@ -1911,7 +1911,7 @@ ppi_cluster1: interrupt-partition-1 {
+diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+index fd2d5648b92a..1f31d3eea4f0 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+@@ -5104,7 +5104,7 @@ intc: interrupt-controller@17100000 {
  
  			gic_its: msi-controller@17140000 {
  				compatible = "arm,gic-v3-its";
 -				reg = <0x0 0x17140000 0x0 0x20000>;
 +				reg = <0x0 0x17140000 0x0 0x40000>;
- 
  				msi-controller;
  				#msi-cells = <1>;
+ 			};
 
 -- 
 2.53.0
