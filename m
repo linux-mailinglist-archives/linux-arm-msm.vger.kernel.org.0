@@ -1,140 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-98211-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98212-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id YJIZISlsuWl6EgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98211-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 15:58:49 +0100
+	id YP+YL0hquWmZDwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98212-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 15:50:48 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 06C632AC893
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 15:58:48 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 63F392AC5B5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 15:50:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id C4D8B307751A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 14:48:52 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id CF723303CB07
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 14:50:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 472923E3D81;
-	Tue, 17 Mar 2026 14:48:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2B023E8680;
+	Tue, 17 Mar 2026 14:50:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="1vSt24yX"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="LXjn5oH/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B173C1996;
-	Tue, 17 Mar 2026 14:48:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B61C43E8C52
+	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Mar 2026 14:50:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773758932; cv=none; b=BWar9UrMczjbgRhN3hQjjC24lWfopjGYwyw/DMzjwt7085aE0rBWY5N6kbmF9w023R3OpxtVMF4hsDsMDfuvXm7Ipqnne6fcUT3vF/gxAdzy5N+5mCn33t7gtmN+emRxWL15QMD1tE4ZY4ycEQlgSzmDpAU1FlMnvCS/jNmDaOg=
+	t=1773759014; cv=none; b=h1B8Qfq75OvuTB6/gmbyuk3JufcfSYIvtzIHgGTnZ7s6qxWGhoDRto1zEmoZzu2gk1euXQy8KQvq0HT9QRu076eXqdzGVjhy1RG95OrE5de93O5hRP1rs6+6WrtQoHeRjo65vNLf+VPS3UWBbyOyvlLbPdZmwmXaWwFYnlt2eQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773758932; c=relaxed/simple;
-	bh=NcLRT2jfRcS3/EWO8ugDg/YDV4/gGMzfDy/lruWgLuk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PM1Ee2iu1crXvmKUYBxIKqVFOfhQ7HtUrReBOZ/EbserjNV2wxuSWgUBhhl8ARVNKayLtUs3AsGk3g492dmtR7kYiHmvtUsSqhkaSB/dXJx4BcdmSpQUT7crZq+m5BTLYCgyFDruAkEaeqjRO7rtHhJsGN6tEZKCjyJ5oOKTub4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=1vSt24yX; arc=none smtp.client-ip=78.32.30.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=uBLyAAnBvC4Y6dlPU+VQ8J/Go3H/Rpdcc6gQ7q2rdNM=; b=1vSt24yX6OiavMjiOSTcAQRqR1
-	uA/E2DbMceTjg7uSYVVHh1h7VuI7SW2cB08Wg235S2FUZtHr7U2bo9BoKDmtDo8L1VqLGQTDw4Bzk
-	Jkh4Y4/J4K3ze0MRStvQgKEo0bXeI+ErvXEcOt7viJ/rRGdNxsWtnSob1I+uGztbeLmvU+yMoJu52
-	/aLtGZsfQYgflkyudQ87Rg/H/lr5MZQslAae89dvQEPjb+w9pnikmzu5jbrf7WuDXTzX1vl8OnZhq
-	v8c0jCPEGj4cONRgAZiQiuVuhpQr2JFNdDJeaUrnYuuLwvQTbWGpk3DvyDge2poLH5L5af+LKg45p
-	TwfCWwdQ==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:42608)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1w2Vis-000000005NL-3Zzy;
-	Tue, 17 Mar 2026 14:48:42 +0000
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1w2Vip-0000000067Q-3LVa;
-	Tue, 17 Mar 2026 14:48:39 +0000
-Date: Tue, 17 Mar 2026 14:48:39 +0000
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
-Cc: Andrew Lunn <andrew@lunn.ch>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com, netdev@vger.kernel.org,
-	Paolo Abeni <pabeni@redhat.com>, Vinod Koul <vkoul@kernel.org>
-Subject: Re: [PATCH net-next 0/8] net: stmmac: improve PCS support
-Message-ID: <ablpxwGks9m38fhM@shell.armlinux.org.uk>
-References: <abQC7r38QLhSeadl@shell.armlinux.org.uk>
- <abdEscs44fU4kRag@oss.qualcomm.com>
- <abdYu864OmNWiWIW@shell.armlinux.org.uk>
+	s=arc-20240116; t=1773759014; c=relaxed/simple;
+	bh=fv4N5ZnqgMnUNaISGXM3ZCoWJDtQS/dualFJmaFPuuU=;
+	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
+	 References:In-Reply-To; b=Jo0vFyVND4TZvFeKM3P9et+JpBWGvaG2S3xy9Nk6SMnItlG60QwAMDQHHz1pvgeGYlAMeePoHmc/iiZAcYOcCwyzYPVi4TVKMDf1EfY/D45MJNzAi9GGtCxhO00Dp5wiM4yQgiGwJE+v4f1ghnpAJQ3RA/lE89psOztNZXjrujU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=LXjn5oH/; arc=none smtp.client-ip=209.85.218.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-b7cf4a975d2so782345666b.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Mar 2026 07:50:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1773759010; x=1774363810; darn=vger.kernel.org;
+        h=in-reply-to:references:from:subject:cc:to:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TvLCj8O+Yxg0F9nK1kMfsPFMXTAA+Wcc2r9kgyX0HS0=;
+        b=LXjn5oH/q83u9zvRBc19fJGNHgLfDuB1gfVfsnHkpximCYbF1NbbDCzk0ZVXQIury+
+         bXXBp/otTNZPqUeiV1dRUZRTXgzDVZslpN8D35lNOdBSW5SR5zOhqSgrllobjDlzIbxQ
+         Tgjm8Wf9Csc/DGlu731InOVjVbCZTH6tB3ntrzj3qGI6XWYYI63AoRH/BtnCeAscGE4u
+         fbJdAAHgaqoFFmZnfiLSUWO0sgTHOZpXHq7SJSqC5GCEhOgnBTvSNMKhPkLtylvSZewE
+         gabmMp++47HegPHBsAvBEXOLX95eh3SGA50dmeBZUi42QhK1Q1DgDvUy12PdVKIz9ke8
+         0bww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773759010; x=1774363810;
+        h=in-reply-to:references:from:subject:cc:to:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=TvLCj8O+Yxg0F9nK1kMfsPFMXTAA+Wcc2r9kgyX0HS0=;
+        b=rV86g8O522b3ZC4jkbEJq2vmczl+F0HwqrhE108Bx8NE/ycwCXQaf02V3EF6qHnSQt
+         8gqr+2+Y+k5siFIzICCmRUogJQT5/XdSAu2qdkhrlz5CHcT052vTNptczpRieb7j0e+9
+         H+qxhBWNEPPhIvNNh1PY5To/TjDAFAoSMiKb68ZeagxGzCKAevaFD8+kzqVs260wZAuB
+         TmMtMOO7EVj1en6MW6qyhVHJLSxgfL/Qy+nRtHih6kQ1fNuOSrZavQ6oKNjsxQwLKm6I
+         kVrRU57sknVnsPi2zV2i1lYZ9b49MpnYse3HbgOfYs0+gCHbFJC2SOPCpcSoJwU6YbGu
+         2CZw==
+X-Gm-Message-State: AOJu0YyyfN/c7B6YEM6ti9Z1OL5zhc2DDFHgQnVQDPEl1lgMN+O9y6Bs
+	cKBCgly2tFJ9h4DBDFF4qFTY8o0daMxIfBQma27OLUVRpX88QOM2PsdRhzKyYAT4Yts=
+X-Gm-Gg: ATEYQzxr+l1pf2r6TDodSgIbGKb9iC+w1KaXlFBXNpxTS/42uEycJm2J5f3J2TyBt4H
+	kss65jWzsOioBDVymL2EyTyR6jsHQ8IkhyYEI5jjPNXMNbLxuIcPWDCDBTSl0cNds0+2bm9Xdk2
+	bpjAhDW3ZDn7GRMLI64Df3wDzaM5VHJNTIHMfeT1P4VhFVoXoauiTdUbDwJ5JRHGekIM7jU9cy8
+	eeHFfl71D1nQcO1FBQQ7oT761Yd3tYwkMoD45Ee5/0TnVTqY2bhDi6PgHKwhhvlTqzCYcpJyWUK
+	wPXjLtkCf4Z1yWyjRZWejgsj6EItyeFT1Bo3W4AOxRMpCXioPhitoSjaljQj4zJJCW6ABd+voFR
+	+4aCyoWltgs/ISqP4Nw9P3Ip8wI0NWvE1VjKblw9Hn+69YcQXu7ateGaPlECGkXV0cEudu614by
+	zKUCFZim1s6mR46XlkC7l5OfVKzypdguBZp9dklG7EQa/cI/FYCox/7F1d6zuVHBbTmCAL
+X-Received: by 2002:a17:906:7953:b0:b97:73ae:e1f with SMTP id a640c23a62f3a-b9773ae1114mr1036316166b.34.1773759009888;
+        Tue, 17 Mar 2026 07:50:09 -0700 (PDT)
+Received: from localhost (144-178-202-139.static.ef-service.nl. [144.178.202.139])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-667ac611b88sm59632a12.0.2026.03.17.07.50.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Mar 2026 07:50:08 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <abdYu864OmNWiWIW@shell.armlinux.org.uk>
-Sender: Russell King (Oracle) <linux@armlinux.org.uk>
-X-Spamd-Result: default: False [1.14 / 15.00];
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 17 Mar 2026 15:50:07 +0100
+Message-Id: <DH553B1YAFG5.1UT90QXHUSGM1@fairphone.com>
+To: "Konrad Dybcio" <konradybcio@kernel.org>, "Bjorn Andersson"
+ <andersson@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
+ "Tengfei Fan" <tengfei.fan@oss.qualcomm.com>, "Dmitry Baryshkov"
+ <dmitry.baryshkov@oss.qualcomm.com>, "Jingyi Wang"
+ <jingyi.wang@oss.qualcomm.com>, "Luca Weiss" <luca.weiss@fairphone.com>,
+ "Vinod Koul" <vkoul@kernel.org>, "Dmitry Baryshkov" <lumag@kernel.org>,
+ "Sai Prakash Ranjan" <quic_saipraka@quicinc.com>, "Neil Armstrong"
+ <neil.armstrong@linaro.org>, "Abel Vesa" <abelvesa@kernel.org>, "Raviteja
+ Laggyshetty" <quic_rlaggysh@quicinc.com>, "Melody Olvera"
+ <quic_molvera@quicinc.com>, "Taniya Das" <quic_tdas@quicinc.com>
+Cc: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, "Jishnu Prakash"
+ <quic_jprakash@quicinc.com>, "Konrad Dybcio"
+ <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH 2/6] arm64: dts: qcom: milos: Fix GIC_ITS range length
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20260317-topic-its_range_fixup-v1-0-49be8076adb1@oss.qualcomm.com> <20260317-topic-its_range_fixup-v1-2-49be8076adb1@oss.qualcomm.com>
+In-Reply-To: <20260317-topic-its_range_fixup-v1-2-49be8076adb1@oss.qualcomm.com>
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_DKIM_REJECT(1.00)[armlinux.org.uk:s=pandora-2019];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[fairphone.com,quarantine];
+	MV_CASE(0.50)[];
+	R_DKIM_ALLOW(-0.20)[fairphone.com:s=fair];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
-	DMARC_POLICY_SOFTFAIL(0.10)[armlinux.org.uk : SPF not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-98211-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[armlinux.org.uk:-];
-	RCPT_COUNT_TWELVE(0.00)[13];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[22];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-98212-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	TO_DN_SOME(0.00)[];
+	DKIM_TRACE(0.00)[fairphone.com:+];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	RCVD_COUNT_FIVE(0.00)[5];
-	FROM_NEQ_ENVFROM(0.00)[linux@armlinux.org.uk,linux-arm-msm@vger.kernel.org];
 	PRECEDENCE_BULK(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	NEURAL_HAM(-0.00)[-0.666];
-	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[luca.weiss@fairphone.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	NEURAL_HAM(-0.00)[-1.000];
+	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[shell.armlinux.org.uk:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,armlinux.org.uk:url]
-X-Rspamd-Queue-Id: 06C632AC893
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,qualcomm.com:email,1.5.137.32:email]
+X-Rspamd-Queue-Id: 63F392AC5B5
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Mon, Mar 16, 2026 at 01:11:23AM +0000, Russell King (Oracle) wrote:
-> This will be because we're not attaching any PHYs when phylink is
-> being told to operate in 2500BASE-X with inband, since it thinks
-> that's the media. That, and, because stmmac has a long history, it
-> needed a special phylink_expects_phy() check added in stmmac_init_phy()
-> which his what prevents the PHY being attached.
+On Tue Mar 17, 2026 at 3:41 PM CET, Konrad Dybcio wrote:
+> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>
+> Currently, the GITS_SGIR register is cut off. Fix it up.
+>
+> Fixes: d9d59d105f98 ("arm64: dts: qcom: Add initial Milos dtsi")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> ---
+>  arch/arm64/boot/dts/qcom/milos.dtsi | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/milos.dtsi b/arch/arm64/boot/dts/qc=
+om/milos.dtsi
+> index e1a51d43943f..084be5316e0d 100644
+> --- a/arch/arm64/boot/dts/qcom/milos.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/milos.dtsi
+> @@ -1911,7 +1911,7 @@ ppi_cluster1: interrupt-partition-1 {
+> =20
+>  			gic_its: msi-controller@17140000 {
+>  				compatible =3D "arm,gic-v3-its";
+> -				reg =3D <0x0 0x17140000 0x0 0x20000>;
+> +				reg =3D <0x0 0x17140000 0x0 0x40000>;
 
-Okay, another idea that I hope will work. Please drop the "net: stmmac:
-qcom-ethqos: enable inband mode for SGMII" patch so we go back to using
-outband mode for everything.
+The .FLAT doesn't make it super obvious what the size should be, but
+yes, GITS0_SGIR would be outside the range with 0x20000, and 0x40000
+looks sane given at 0x1718_0000 the next register after GITS0_SGIR is
+located.
 
-Then, disable the call to ethqos_pcs_set_inband() so inband mode
-doesn't get enabled for SGMII - as phylink will be telling the PHY to
-disable inband mode.
+Reviewed-by: Luca Weiss <luca.weiss@fairphone.com>
 
-Does that result in functional 100M, 1G and 2.5G speeds?
 
-Thanks.
+> =20
+>  				msi-controller;
+>  				#msi-cells =3D <1>;
 
--- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
