@@ -1,56 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-98273-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98272-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6A3mCujRuWnuOAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98273-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 23:12:56 +0100
+	id EEEwGuXRuWnuOAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98272-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 23:12:53 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6DBB2B2FD4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 23:12:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D44EC2B2FBD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 23:12:52 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 753D030838C9
+	by sea.lore.kernel.org (Postfix) with ESMTP id 004FF30783A3
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 22:12:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F46E35F198;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C7A435AC0B;
 	Tue, 17 Mar 2026 22:12:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="luC509gb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WK2Frx8r"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26933330D24;
-	Tue, 17 Mar 2026 22:12:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 268A52C11CF;
+	Tue, 17 Mar 2026 22:12:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773785555; cv=none; b=R5NSleWN+VxE4f+MsAC04O8zpguVn1e31Xk3jzj1FiUtQ+SsdY19dyHjMNp04dqrNx2ABkOkmK305qeuWOnrdjK2bjzwN9Pw1YskLLu6j3vKgPGbrlruIcbE4iDCDofEgYxSKMHHPda6bsk2gZOKQFmHJdu2Bx7QyrcaDa1TR4M=
+	t=1773785555; cv=none; b=Zeyiu6B1yvIdoYWyjBXfcYv2tToz72A6HXOHPsM03DmQiatILT4H2ljqkfnDYIM5W+UHT2vD/p9gSdWjfaBevWNxV2b2ahUgdOu715aeGaGkmEdJwdUQDQt8f7eUGidJER4Y4euHgZ9QYU9sxmp8tXWUe7fSDS1jFWN8njze7ZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773785555; c=relaxed/simple;
-	bh=y243D6Ne6ta8m6pwl19zt5ZKjdhAH8edxSmktq9NqqU=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=DxtuVUlrPAFGW/YMJwi5jVPYM8thqw5du59OIOGxs6t+Ayy/B5CPQe2R7RTTmCJ3CYkh++L7rusNfoCok/9RyJ9ZkGY7xBb+snhKIYi/FGm+qJJuUOFKXzRgGndoPTzGBT/8HYvZG7hwf+VholtorGLRABgyxmoIPH49F/hMJ84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=luC509gb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id C30DBC2BC9E;
+	bh=CVEkaoGx0ekmMxMLvFp6JCug4ttN7GX5WgoeEx0P+jg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=W9AXY7oXQsEW5bj4XAjOSfeogElwA6OOgHvh8yVB+cWZ/+GsYFOLNCLfdhRwucuE1j+ddf8M1K0eFoyL60K6aBHHIqwgOePeIWUNiAE/kKPoOKHRI0hCRMR8+b1GAgrlJYE5Ka2F0zgMxR2gNz+ngXaoSFl0dTQfHs96DMSG/6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WK2Frx8r; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id DDB61C2BCB0;
 	Tue, 17 Mar 2026 22:12:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773785554;
-	bh=y243D6Ne6ta8m6pwl19zt5ZKjdhAH8edxSmktq9NqqU=;
-	h=From:Subject:Date:To:Cc:Reply-To:From;
-	b=luC509gb9U3Qs4KURDJFp3wzckE74/JwLjlbhTOCDPhCY2CCQZvAyAv8aWdBK7lY0
-	 UxwAqOK3ikbhbXuMaWFrZPr2Z4ogCLgM9iSg1h68TtTMKtTokAl/VPvkDzQLu69NOO
-	 +9TfHpQgvzIAZjXO7jZPD2qGf/8aAfumYHjo67cnaxyMD7+97Ntmu22jgctKoR8KuV
-	 jvBQtK3N4PkPu2F6Uel1913slsfWAnGj7Fm3w6hMlRowYCgD3KCaCY5BfSAS2/Xp+E
-	 +DGHsSJ+OpZBajlUlNHso+kzybdvAjLFqebuwpOj9YZJ4eQ9efpkGEMCSXNIFx2EzM
-	 hlz6ScSmiFURQ==
+	s=k20201202; t=1773785555;
+	bh=CVEkaoGx0ekmMxMLvFp6JCug4ttN7GX5WgoeEx0P+jg=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=WK2Frx8rLGCdp3JH/YmxhGqtviHYo+gS4FjOt69qJL3wGgtpKnwj4nhVppZFDGx2q
+	 KBgJVICS8npleL4LzUB9bccEa9YkR7wG6nh5XKM70XOrADnu2n0eFtn+eyAOw/USE4
+	 0P8h0E+O5D/sGCg9CuV+Em+9TzebgPMKbqYy9M4d30CBU6s9qpj/al1YagmUKKi88+
+	 kRezBKY9mTuPz4mJ8bLSg341I5wh3URj8PrkfsmyUwwi27OeJnaGpNarcutSTkEmdH
+	 loVH6BIFVPNej0kR8A0wx2U3FrytmYR/DbibcHXb9XEEly6tYs0TT57VEc1vh1LR1u
+	 W34KHnNLnd3Fg==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF3B0FF6E8D;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4002FF6E8C;
 	Tue, 17 Mar 2026 22:12:34 +0000 (UTC)
 From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Subject: [PATCH v2 0/5] Add framebuffer on Xiaomi Poco F1 and disable the
- MDSS on tianma panel variant
-Date: Tue, 17 Mar 2026 23:12:30 +0100
-Message-Id: <20260317-beryllium-fb-v2-0-36b69dfb760c@ixit.cz>
+Date: Tue, 17 Mar 2026 23:12:31 +0100
+Subject: [PATCH v2 1/5] arm64: dts: qcom: sdm845-xiaomi-beryllium:
+ Introduce framebuffer
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,10 +59,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAM7RuWkC/1XMQQ6CMBCF4auQWVszLSKNK+9hWNB2kEkQTIsNS
- Hp3K65c/i953waBPFOAS7GBp8iBpzGHOhRg+3a8k2CXGxSqM0qshSG/DgO/HqIzwpWka2MVGkL
- Il6enjpeduzW5ew7z5Nddj/K7/qBSyn8oSoHihLqtNDqpKrrywvPRvqFJKX0AauYrz6YAAAA=
-X-Change-ID: 20260107-beryllium-fb-d3e87bc20be0
+Message-Id: <20260317-beryllium-fb-v2-1-36b69dfb760c@ixit.cz>
+References: <20260317-beryllium-fb-v2-0-36b69dfb760c@ixit.cz>
+In-Reply-To: <20260317-beryllium-fb-v2-0-36b69dfb760c@ixit.cz>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -73,21 +72,21 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
  Petr Hodina <petr.hodina@protonmail.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1522; i=david@ixit.cz;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1046; i=david@ixit.cz;
  h=from:subject:message-id;
- bh=y243D6Ne6ta8m6pwl19zt5ZKjdhAH8edxSmktq9NqqU=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpudHQ+dDsZMmxVdjdT95CwZwEQ8WZdO1Y+hAJi
- SsMoNpogICJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCabnR0AAKCRBgAj/E00kg
- cpoID/wJY1PrVCkHjF7CseuHrjO2y4z5UerUXFD04e8qh3pgNpH9epcpN6kNdhMFux3NmidW8wq
- hh93DpYgfyZ5AAfRhXJFspw78jTBPwZHZuhxZkBIfosoklUFqTKiIZGxSaz+V+CExThbNx9r9t7
- IOTMBx0am1Jbnc2SD3J26EgDwboRfSnQ++QAvVPcWCALMhkNTsJB4I9fF56hmj9h08DXfzHd9qv
- E6KQsIjlH4h0IncecABl106/2odbezK+XzBRZgEkgBow5132oEFEF3CUmoIsg+/H91GCZ5Rp/FT
- tCNd7H5zNHVKGTSWgclVUB7zrd9zkoxs8sic8ziJCTH1L2WRp0Rjx2nTj5F4gbBdSHPKRN1lT8v
- 21iZ+h72jATQriYLraONUxdrrojSOpuCCI8k/zDs9P9GW146YXDzlCXSmH+pxttsm7bz6V5fmlq
- 9T9xFoM25xOk2NM1EWn7/oPvk1nv33MLdSwriQAb30z/HWtKsFSMk2te2m5T5k8kz2ZmTjZ6aas
- YG4kbZe3AIVM/1Fhi/Q2gVl8jCO3NIXDWPIpeC/4ZCfisGmDXrqNUE50pQ8nFe+VkrS593OvKq7
- s5QCh4KOTxiIYviKaXib8AFkQAuobp+qGP93uwL9wJgVML/GU/h7E9cIG0yFPXRbrJTXrQYxcLz
- Ew7FghT0H4GxX6Q==
+ bh=aBIkL87wWUcWlDR+ZE8iL72LYcdYRCKY1o3iHR+l8wY=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpudHQlvN1ADBZ3DT2mCEvHMpnoid8nzZid/Q86
+ 7f5RN5azeOJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCabnR0AAKCRBgAj/E00kg
+ coTrEACfP2nwQrJ8aAFTHbRP0sIm0Ptb4P0AoN/M2q1jMe+OO7b9e4+yWmTxikPHzAUzK89tGRf
+ 2WLJZgoUYX2RlNf46OA6DVhvsbVF9bYnc/hYcFaTbSwCiuXLeCLlOcqks16tmBr6mzGvwZb/Xt1
+ mM67QDFtEjk1Fck74RCquk5/gUju9N50D3YiwfmYRlEKkzPd6yrl61n5H1q/jM/YGEjkV9dP1T3
+ efVQnFo7q1B4CS/vbIrba0DsbuytQO1iVlDe1bft1DQtHu2n3S2H85n/DJfdHLxkBEbMSiAALPE
+ iCT8XKcr0KFmbGN6sY1Xj7JEMO4u8pMemwBuLH9z0Hj4LcPpJpv5vlPamQ46l77RqO0i06xjIo5
+ MpDDISb4pPvewwetOgf9UUFwe7gDXaaNbyTKB7Ozcmhjvcwh2I7msR78Isa460lHUZKbmwLHZaJ
+ aLc654E0mj6ITPwOMjOh4PQfyc5EPpjVDARutT0c9lXufSeqncXjzi9gjeRAX+gM0V5KK3a10+J
+ WVPxGClgtz3ech3KMYACwba6NUEC3SkgPEnyT5QTM1CCYUh4hOhsCzBzahYXVIHusx2jr802PCS
+ joT1UAYN0ItwahCRg0KSn5S690e6avReEJI3aBDmAYmbvYyz5Gn0zASero0Whqaj49bu8/VpEgI
+ 17du+yzG6ppBVcQ==
 X-Developer-Key: i=david@ixit.cz; a=openpgp;
  fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
 X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
@@ -103,7 +102,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-98273-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
+	TAGGED_FROM(0.00)[bounces-98272-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[13];
@@ -122,47 +121,50 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	HAS_REPLYTO(0.00)[david@ixit.cz];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,ixit.cz:email,ixit.cz:replyto,ixit.cz:mid,protonmail.com:email]
-X-Rspamd-Queue-Id: C6DBB2B2FD4
+X-Rspamd-Queue-Id: D44EC2B2FBD
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Enable framebuffer for early console output.
+From: Petr Hodina <petr.hodina@protonmail.com>
 
-Due to broken panel driver on tianma and no visual output it's better
-to disable the MDSS so the framebuffer stays on. 
-
-In case second patch gets rejected, please apply the first one standalone
+Add framebuffer for early console and u-boot support.
 
 Signed-off-by: Petr Hodina <petr.hodina@protonmail.com>
+Signed-off-by: David Heidelberg <david@ixit.cz>
 ---
-Changes in v2:
-- Added few conversion to use memory-region.
-- Corrected framebuffer node name. (Konrad)
-- Link to v1: https://lore.kernel.org/r/20260311-beryllium-fb-v1-0-408a580d125e@ixit.cz
-
----
-David Heidelberg (3):
-      arm64: dts: qcom: sdm845-oneplus: Drop address from framebuffer node
-      arm64: dts: qcom: sdm845-shift-axolotl: Convert fb to use memory-region
-      arm64: dts: qcom: sdm845-samsung-starqltechn: Convert fb to use memory-region
-
-Petr Hodina (2):
-      arm64: dts: qcom: sdm845-xiaomi-beryllium: Introduce framebuffer
-      arm64: dts: qcom: sdm845-xiaomi-beryllium-tianma: Disable MDSS
-
- arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi      |  2 +-
- arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts  |  7 ++++---
- arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts        |  6 +++---
  .../boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi    | 16 ++++++++++++++++
- .../boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts     | 10 ++++++++++
- 5 files changed, 34 insertions(+), 7 deletions(-)
----
-base-commit: 8e5a478b6d6a5bb0a3d52147862b15e4d826af19
-change-id: 20260107-beryllium-fb-d3e87bc20be0
+ 1 file changed, 16 insertions(+)
 
-Best regards,
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
+index 01b570d0880d6..b928100f6464b 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
+@@ -39,6 +39,22 @@ aliases {
+ 		serial1 = &uart6;
+ 	};
+ 
++	chosen {
++		#address-cells = <2>;
++		#size-cells = <2>;
++		ranges;
++
++		framebuffer: framebuffer-0 {
++			compatible = "simple-framebuffer";
++			memory-region = <&cont_splash_mem>;
++
++			format = "a8r8g8b8";
++			stride = <(1080 * 4)>;
++			height = <2246>;
++			width = <1080>;
++		};
++	};
++
+ 	gpio-keys {
+ 		compatible = "gpio-keys";
+ 		autorepeat;
+
 -- 
-David Heidelberg <david@ixit.cz>
+2.53.0
 
 
 
