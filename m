@@ -1,56 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-98274-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98275-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id gNnDMunRuWnuOAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98274-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 23:12:57 +0100
+	id ICrnGdrRuWnMOAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98275-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 23:12:42 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6FAC42B2FED
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 23:12:57 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65A492B2FA7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 23:12:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C63F33088248
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 22:12:37 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 5B03F3026D86
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 22:12:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58129363093;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FB9C374E71;
 	Tue, 17 Mar 2026 22:12:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DCaUGdRN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nr/w6Ket"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269CE3321C1;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 347C233B95A;
 	Tue, 17 Mar 2026 22:12:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773785555; cv=none; b=AsZXy0gkbCmPVbQ9+5BXkyemoHoiorvEn/+wT8gMqwLYu1YMWw/KTQqmeF+C3p8SE3g3efPr7P9DXB6HCkZ6aPg/B2MHybNdxNzE/VY7Zzsema0PXvGZFfyNjJoXLL+JtZclsZ7N1Curab4ttkKnqEOWHiP7Xt1R4dN8a4zm4IA=
+	t=1773785555; cv=none; b=t3wg1evjES07gOqg7SBT0lMQL/lNfll6QrbnKsnadfvyYgrB9mtcG979I2OXIuVfoYvba9l+CzFUUYSUrpqjkNEYmvSktYlL36jD3kMz2Z4vKqgwrMoUhL4HOCwIoPxn+Ev3dkhlDnwDjOyueUebu3dWvSxjAUiCS80MwGmiX3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773785555; c=relaxed/simple;
-	bh=YThPh5dk++SwOGnz1EIZgFOedIDRBgVyDkr3FQpkK5I=;
+	bh=r/yElUZS/gc9f5qHyxpx5JoP/OOqScMFAh1nAa0d74E=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Pzx3mTXx/J6B25CAeeG4QjPEgqPuKpCv/x2QKfICMurYrRbyb85r0c/1+Z8GjuP8ZksWIVjHtVR4jfSo+U3LRyS9V3M5pMRuaypv27Jv1kaJM3my5Dr71Fzx8wRmTEdVLdwQRSXZycJWMtcbhUyXwPUX5hJYbcEguQfSwAUXcv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DCaUGdRN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id E69AAC4AF0B;
-	Tue, 17 Mar 2026 22:12:34 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=RC9iwrXPU+cyDLQ/6c+WIJtGwaetm06d8v0mcpnARrhE38mrUBzV6EJSBvWD4MkQieS88jZsUz9NsVoto5yXiAok26L9bcpCFErm1PZk167oNJFDGbEbx4t7cX9teyRYVIygBYEiJyLH5CDD6o4rwy1Hvp1jNkekuwTzkHYJP6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nr/w6Ket; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 057A1C2BCB2;
+	Tue, 17 Mar 2026 22:12:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1773785555;
-	bh=YThPh5dk++SwOGnz1EIZgFOedIDRBgVyDkr3FQpkK5I=;
+	bh=r/yElUZS/gc9f5qHyxpx5JoP/OOqScMFAh1nAa0d74E=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=DCaUGdRNpSstYL8lvre+UnoLoDiJ7n1hm7DlwqaVga0044UtehEUlUZ4IkBG5gGEb
-	 tYdZ7pC9CsaJGjZQlW6Zai6Ue3aZ6jGbsHNhyl/TGU72tr4Rg9a406OW+mxJyCCivU
-	 xzVnQRnfz/vSabJUqHAfpIFBSwWwRqR0VVBrefuvQPd9hNus7r4N2Jx0LBaWAjbRFa
-	 aXKgmmzLxWYiL+1+5TAikJ1JC+F4TOC+39G5ga0cRsPWAZVqb+dmaxkTnYrNNJmHut
-	 mh/uPO8hLuOsW5llTl+UrMgjszyK1JhA/VBDdd2uGma1I6bn13N92/16BYOIAqWPDl
-	 93vi9bdNRVDZA==
+	b=nr/w6KetPA5m1MqKr+iNzv65Ip4qbE7miX2uy6eRZrsli/eVXmADipiO8R+N99fin
+	 O1WrjUJfQ6ey3Y/dFXGoRUMflnjcvcVxH0Qzd6oaQ8tXIStL9rQNXC2Y914CHmkIak
+	 zl4vlwYwjV8UGz+Gf2WuNnVz5pxtEmNBLBk8Sf/SRmEJHz8HpyrVY3RqT+cq6jrk3y
+	 0RPxjIOMfFMiW3aC3bfmFtiIqhN+/3XM/XAOtOQdfiUrZZY2RvF9Lj/mbeHEj8cRyN
+	 b3yG4r3T9FNgX05WTnyluup300j5tRtoiW3PjZyj6fXepm68bIB1LLfv/DIkzCoIzo
+	 kDaImSaX5tiyQ==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D99B2FF6E87;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ECD76FF6E8E;
 	Tue, 17 Mar 2026 22:12:34 +0000 (UTC)
 From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Date: Tue, 17 Mar 2026 23:12:32 +0100
-Subject: [PATCH v2 2/5] arm64: dts: qcom: sdm845-oneplus: Drop address from
- framebuffer node
+Date: Tue, 17 Mar 2026 23:12:33 +0100
+Subject: [PATCH v2 3/5] arm64: dts: qcom: sdm845-shift-axolotl: Convert fb
+ to use memory-region
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,7 +59,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260317-beryllium-fb-v2-2-36b69dfb760c@ixit.cz>
+Message-Id: <20260317-beryllium-fb-v2-3-36b69dfb760c@ixit.cz>
 References: <20260317-beryllium-fb-v2-0-36b69dfb760c@ixit.cz>
 In-Reply-To: <20260317-beryllium-fb-v2-0-36b69dfb760c@ixit.cz>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -72,21 +72,21 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
  Petr Hodina <petr.hodina@protonmail.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=857; i=david@ixit.cz;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1114; i=david@ixit.cz;
  h=from:subject:message-id;
- bh=KVG+oAo4IX+FcwkDj3OQjurvcb14N3Vls6N/xvndJuU=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpudHQjlabPKJ1x8fxqZ/sZSs8UqV4aoymK2u93
- U7q6IL5v12JAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCabnR0AAKCRBgAj/E00kg
- cn6fD/9NJ9RJT1D+qtD3fv1V0M5bqR0HnLU5hcs5cyFND1uIk8RGu3Vsj2ujZpcdlgVfdg0+wdx
- 8NqE2InzM68848IRGbMxd4Z1AhNg7x/1hmOmAKFyW3OnKP67DOs1cbiHatUD3HMx1DrU+Mw7UMi
- YsVeBzNfrcJp4RUmpotJ6ewe9jk/osyAHPO64tE3sYpB1tarD91TFtsmjdHoKDJENUmc0n8UVBI
- pG4XJNgrHWg+8es1gfuT30jwhf10z4k5yBerutPIRcaRtIpsfS+Q9hcSv9Oi0xHXTLycO/erpBH
- adtH/X2EBhzmWw5TYFr1fcogTDoB24auqzLZ08fcNEITdZ4lMaRdxQmSP9i86rAM+feF/snYEna
- M+Bfm6v+Je/4GSUf1xregFwyon8H3wL647FrjEceWwu04bRIzKanKLLFuEeW95wY9wQrX/nTkh4
- G46OnCXhYoGfp8r9M9dy8PufldzpuGUM3Kx+Fng0s4l0MA0yaUyXaHI3wUJyw4SD9a8RHo3t9ZZ
- KvaGiLOCnGwKMnPLsPOhqkwVsWdbPVKDtSOwzVcIL+icYfGe4uoWEM6oGGbhdE3Wd+vAkthb6yg
- +tErEqC/X0/hLinD0qXsj9naacxz0uZkS1cg0WeL0C1TxHSrS/972o1q6lpBi1fULEcaTwwUaqc
- AT56VqMMiz8+hvQ==
+ bh=+J1GiE3/gu+Ex4529cyTBsEBCOk3gC0OobsfViZGQVA=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpudHR+/5GlKmBFroZ+rrEc7ox3nBpoo4sRrRck
+ mtBmnTSuPiJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCabnR0QAKCRBgAj/E00kg
+ chhnEACDhIYCHFrtbVidzFiokgVEvko7c1vNLICH17a+Ctjjf1CZsVQilUcOxcUDmABnOyNxm8/
+ 01zQthhInphazePhHYzMTiYwy/9iyUwRddnMShd4pf4qsjA59TNOxxnIgPDCe92QPzFnoi0VK8G
+ utgm1Oj/uc1biV4JMFP/UEqKjb8NMZkHEtrtNwW3bLHLm2vfGX6zZ0noeKd4Uc4Dhx56I4kTtGJ
+ BEQPqLIXyevNkJx/tvaIcovzm6a8ZQCVLPiJOBZymwt+tUM+l0sSeDgHZd9Z3YiDwgQSa/J7ZtC
+ CyMmVMSH2USPmAeJxPwOJLF4I6PNMfG15D38wmawpzNss6YXQnIicgxAktkSP+Nuf6H0KHsa/8N
+ wGiqrVdj0kfTAqSlEIqNlvCdxcJr6LWgsSY3JMaA1RL7CZjL5rn/Y5XlS3B/rKKGOCogZj7VNs1
+ +/S4DyoQR5UrpuXO2NuDK/r/bI8NhtrIrssfcuo6pK3urqblE8hSPXA9CP1SB3r7S414ZTah6zq
+ ufxa6Y7AUwuwkEP8R1EcUYt1XKMPwz3L2AK4LCWa4V300m0s/hdF+II+w17VMxMHuial0RF485r
+ s0/QF/XwcdAOFL1tmRFlwsoFNesv+sZCFzhUYknemVdQ2RJyzZL7IZbcQ6ZzZzkwZF+9bFgM3Fa
+ 0T6j/5SvZHUa4gQ==
 X-Developer-Key: i=david@ixit.cz; a=openpgp;
  fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
 X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
@@ -97,12 +97,12 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-98274-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
+	TAGGED_FROM(0.00)[bounces-98275-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[13];
@@ -116,39 +116,49 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
 	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	HAS_REPLYTO(0.00)[david@ixit.cz];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,ixit.cz:email,ixit.cz:replyto,ixit.cz:mid]
-X-Rspamd-Queue-Id: 6FAC42B2FED
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,ixit.cz:email,ixit.cz:replyto,ixit.cz:mid]
+X-Rspamd-Queue-Id: 65A492B2FA7
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 From: David Heidelberg <david@ixit.cz>
 
-This node has no 'reg' property, so it shouldn't have a unit address
-(after '@') either
+Instead of manually specifying reg, reuse the memory region.
 
-Fixes: b0d5c96e860c ("arm64: dts: qcom: sdm845-oneplus: Add framebuffer")
 Signed-off-by: David Heidelberg <david@ixit.cz>
 ---
- arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-index 5b121ea5520f5..f5fd213d4a1fd 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-@@ -37,7 +37,7 @@ chosen {
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+index 51b041f91d3e2..27a0facd174c8 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+@@ -36,9 +36,9 @@ chosen {
+ 		stdout-path = "serial0";
  
- 		stdout-path = "serial0:115200n8";
- 
--		framebuffer: framebuffer@9d400000 {
-+		framebuffer: framebuffer-0 {
+ 		/* Use framebuffer setup by the bootloader. */
+-		framebuffer0: framebuffer@9d400000 {
++		framebuffer0: framebuffer-0 {
  			compatible = "simple-framebuffer";
- 			memory-region = <&cont_splash_mem>;
+-			reg = <0x0 0x9d400000 0x0 (1080 * 2160 * 4)>;
++			memory-region = <&framebuffer_mem>;
+ 			width = <1080>;
+ 			height = <2160>;
+ 			stride = <(1080 * 4)>;
+@@ -62,7 +62,7 @@ key-vol-up {
+ 	};
  
+ 	reserved-memory {
+-		framebuffer@9d400000 {
++		framebuffer_mem: framebuffer@9d400000 {
+ 			reg = <0x0 0x9d400000 0x0 (1080 * 2160 * 4)>;
+ 			no-map;
+ 		};
 
 -- 
 2.53.0
