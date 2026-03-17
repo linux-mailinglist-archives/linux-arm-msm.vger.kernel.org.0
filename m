@@ -1,205 +1,203 @@
-Return-Path: <linux-arm-msm+bounces-98096-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98101-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id Z+DIFscSuWkmpQEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98096-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 09:37:27 +0100
+	id qNSJIXgTuWkmpQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98101-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 09:40:24 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE55A2A5C42
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 09:37:26 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 290872A5CAE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 09:40:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 81D553055C42
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 08:36:29 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 3338A300F5B8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 08:40:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE90338E5D6;
-	Tue, 17 Mar 2026 08:36:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D328A3932EE;
+	Tue, 17 Mar 2026 08:40:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="Hg6H0WPl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ixit.cz (ixit.cz [185.100.197.86])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 880073947B4
-	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Mar 2026 08:36:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3889639A072;
+	Tue, 17 Mar 2026 08:40:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.100.197.86
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773736587; cv=none; b=XYxica0z7HVTCcz4aOLuiiNURuIggSuWB6wOWMjk8DKVKKkD4AurrHIShsJ4Uu86UiYtIEeWS54KjhxWcfXb+GoR08Gi9kXNgZgKJ+D6vwSwfWdGplZUtMBc88uuD33/kxSvVKpfSau41dasPPtu4dTXiN/5uD7hRE+6HImaZu4=
+	t=1773736820; cv=none; b=R8Jw6wCvOO5+79/AXT51ltvc77CFiYxSYFpWy03ul2LvhKVNLnVDDvAqZ6tu3JwsebWMLEA6Z2mwAL+vo6vjdttYGx6yy1lerGCbvsMAXPQlp2WKXpvUliiJwQ/BtReukKWQa/zWB8HSMsaUS5Kh9ZpmT23S3cV8WJn06cWVYWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773736587; c=relaxed/simple;
-	bh=1IbAI1LF70M+Kjw+h3BaLZwBsh7cf418N6PFDl+oOnk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=g/tGwwyAJJaNVpy2Jbc+wnqoCK9C+yVvO4Np+Sq886W+HllSaOTiBgvkzsh7aez5d77yDIOm9kv3a74bxVN5v9MlxlWolSizbcpWZuzGIY7ltrHbv5Bzlb4JpkfPK5inruJbjyiuzdN9RkYYKMzfvbagi7rEgsKsCfVls0A+bfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-950de852f31so470124241.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Mar 2026 01:36:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773736585; x=1774341385;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=idH2bB7nbOzzZw2WFTC74GwVow5g1kiitlzGsuFZK5o=;
-        b=W3+iZAZ5aZSJ81uUVatSmMa/w6LjdtU6Rrsk6CD/Xp50KYlPb0pVQRZYr70RMe1hBi
-         s6Vr+UMKaKAKn6oDRWZ2HoWpL5ssqJNDFXUmkKTDTHj0fusG76ZzzBJBWo33lNxl7Bxb
-         vmQsoIzM8kNr6aBJGLEZ2g6h5tQIR71fkW50JAB6NNWia4yAmRJPka2uqIXpxAwuOlGh
-         ay4nc3UXw6Ise4ovJ16ZVxKxTASmLN1V/XQ2A55BR4R9VR8a9CyhyQCUIKLnju47toH6
-         KpngRNQUfxvqwt29dmlt4Rw9HPR4qnoVkbpMWlehufXL7wv4zCy12EiBwQsOubmzoTej
-         Ofyw==
-X-Forwarded-Encrypted: i=1; AJvYcCUWfbXHOUxEcKJULCdUIzXIxCwrTRCh43/wwi0p5ER8OaQdJVwlnc2a9frm+At6kWa6JqTsoMGl/WARPCR/@vger.kernel.org
-X-Gm-Message-State: AOJu0YyE3nZNs1iTb7tBHWqLMdL1DW8pSu4NGS93wcp9v3AXppBIRYOz
-	GAJ/0qVfqar8kkGUnFWtkb35yfzIbDuloUSYMKyRgLIDvufzg/ll32loDmkzhAJs
-X-Gm-Gg: ATEYQzx+lvlg2invEoYLI3uwfZDDH5l6gH8CjE2UhQLlhl2fgfRtbqTXnDjeWgnJ5Mb
-	LlK+6izlKqQanQazeVSeeFZFL4SP8Nv0kOKYTEnu7A3GEM8OUVzJASGSjM4O1mNOocsWg9/SZ0j
-	cY72SUs4U+6QL6vVRSLaCLPzqwdjmpFBY8LpyX90MtYyuy+iyM2otupRRCnOtUUtZnw0RlDlra+
-	jZo6r3tIZsT46s7dvKFF9c0bUdBbSiailqcCIgqPVZlzpOE9Z3fVoaH4F/N9nuc8qBuoJxrbWDk
-	CREhnBorEUBAH/A/pdH10RTt9ElCouhHNjIy8/RiSd7CuvBoMJFKey/maYrPOGAWmRJ/pUaxXzE
-	OVGcy5kBQHWBXIi3sS2Gv7dafVUOHz33e2j1G6s5Ix/yBmYtDDSqjU+gLosRfDiDrf04Eel+cxd
-	LKmUL+X0FIR+Kvy9O+Odv9qIdqiQRv7FhvTlibq7FuaHm6fkEKN7mtNci/wkYWo/ol
-X-Received: by 2002:a05:6102:ccd:b0:600:11e1:2a4b with SMTP id ada2fe7eead31-6020e5a22bbmr6033992137.34.1773736585440;
-        Tue, 17 Mar 2026 01:36:25 -0700 (PDT)
-Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com. [209.85.221.170])
-        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-601d505285bsm8164064137.0.2026.03.17.01.36.24
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Mar 2026 01:36:24 -0700 (PDT)
-Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-56a8fdaddebso2008669e0c.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Mar 2026 01:36:24 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCXkfxilejWBYTU3FXmvnHUY/bmgOz1122QEMcfDjxyFPlO9SSropwNsUnhe21RuAVJ4D/AeUb2+oHphd9YO@vger.kernel.org
-X-Received: by 2002:a05:6102:5127:b0:5ff:2569:cfe7 with SMTP id
- ada2fe7eead31-6020e2129e6mr6024902137.10.1773736584585; Tue, 17 Mar 2026
- 01:36:24 -0700 (PDT)
+	s=arc-20240116; t=1773736820; c=relaxed/simple;
+	bh=iR51IgqDLrePRMXylU7T4WoyWjFBLamD+zTHk3FgwnY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=MlmqWDqDrzHuMYP3hKMLfK+M8apoMw4pmHngxQSvMYeYTFSAoyt/r2Yw36sRPiR81cKhw8h0xN6Bwg16HSKoBYrglDaeeGDQ4uF7vP2W/PqNvdmiaZMqUlC/bp4qo/V3NOA1wq+MSG4fKmNRoreuKVZ1Z4H6+xaap4FJLah1qwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=Hg6H0WPl; arc=none smtp.client-ip=185.100.197.86
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
+Received: from [10.65.3.249] (unknown [87.58.114.210])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ixit.cz (Postfix) with ESMTPSA id 0515353400F0;
+	Tue, 17 Mar 2026 09:40:04 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+	t=1773736806;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=rw0Qp/gUQyiHMUxNeOL0g8aT47rCKytoyrfPeu124hM=;
+	b=Hg6H0WPlxGhfOD1rzBoj8P7cA/T2fFHZUw3apBmp1cERGkAeXHHx6spvK4oEzjkbrMRXPB
+	VDZdbi8OlPro7rsiXlJjJFumAAXxKWCJCOoloNKZjifZJUI5/J0xGf1rXNqC6s511JtugD
+	jet/G8SPQlqdsLGv+VNHlyy7aQ4aqNA=
+Message-ID: <b43a2558-f20a-408c-95c3-26d1937a2648@ixit.cz>
+Date: Tue, 17 Mar 2026 09:40:03 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260303115720.48783-1-dakr@kernel.org> <20260303115720.48783-5-dakr@kernel.org>
- <DH4M3DJ4P58T.1BGVAVXN71Z09@kernel.org>
-In-Reply-To: <DH4M3DJ4P58T.1BGVAVXN71Z09@kernel.org>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Tue, 17 Mar 2026 09:36:13 +0100
-X-Gmail-Original-Message-ID: <CAMuHMdW=hfK82_QKXL=n-nMos-HjScKuw9jNTy4xsxJ2qnPYyA@mail.gmail.com>
-X-Gm-Features: AaiRm50LJFP1R3ITAUSRjqb1napf13plX5N5KjefHP89RPorlF5H9VKuGn2urAs
-Message-ID: <CAMuHMdW=hfK82_QKXL=n-nMos-HjScKuw9jNTy4xsxJ2qnPYyA@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] driver core: platform: use generic driver_override infrastructure
-To: Danilo Krummrich <dakr@kernel.org>
-Cc: gregkh@linuxfoundation.org, rafael@kernel.org, hanguidong02@gmail.com, 
-	ysato@users.sourceforge.jp, dalias@libc.org, glaubitz@physik.fu-berlin.de, 
-	abelvesa@kernel.org, srini@kernel.org, s.nawrocki@samsung.com, 
-	nuno.sa@analog.com, brgl@kernel.org, driver-core@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, imx@lists.linux.dev, 
-	linux-hwmon@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-sound@vger.kernel.org, linux-sh@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spamd-Result: default: False [-1.46 / 15.00];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sdm845-xiaomi-beryllium-tianma:
+ Disable MDSS
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Petr Hodina <petr.hodina@protonmail.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ phone-devel@vger.kernel.org
+References: <20260311-beryllium-fb-v1-0-408a580d125e@ixit.cz>
+ <20260311-beryllium-fb-v1-2-408a580d125e@ixit.cz>
+ <t4uhjpxdvjxda4dxkoxktv6xlxg3xvzyslgerluu3t2dzxv33v@k46gvwv4uf22>
+ <137c19a3-136a-4e0e-b4ea-8cc474172d81@ixit.cz>
+ <e65ebd79-9edb-4001-a5c1-c4b6a67d5234@oss.qualcomm.com>
+ <e93d3d7d-1df3-45e1-bf9b-d2ccb937aced@ixit.cz>
+ <e242dc13-9818-4445-b835-86a87965090e@oss.qualcomm.com>
+Content-Language: en-US
+From: David Heidelberg <david@ixit.cz>
+Autocrypt: addr=david@ixit.cz; keydata=
+ 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
+In-Reply-To: <e242dc13-9818-4445-b835-86a87965090e@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[ixit.cz,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_DKIM_ALLOW(-0.20)[ixit.cz:s=dkim];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[linuxfoundation.org,kernel.org,gmail.com,users.sourceforge.jp,libc.org,physik.fu-berlin.de,samsung.com,analog.com,lists.linux.dev,vger.kernel.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[19];
-	TAGGED_FROM(0.00)[bounces-98096-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	DMARC_NA(0.00)[linux-m68k.org];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	TAGGED_FROM(0.00)[bounces-98101-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[6];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,protonmail.com];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[ixit.cz:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	RCPT_COUNT_TWELVE(0.00)[12];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[geert@linux-m68k.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	NEURAL_HAM(-0.00)[-0.955];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	R_DKIM_NA(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[david@ixit.cz,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,linux-m68k.org:email,glider.be:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: DE55A2A5C42
+	TO_DN_SOME(0.00)[]
+X-Rspamd-Queue-Id: 290872A5CAE
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi Danilo,
 
-On Tue, 17 Mar 2026 at 00:57, Danilo Krummrich <dakr@kernel.org> wrote:
-> On Tue Mar 3, 2026 at 12:53 PM CET, Danilo Krummrich wrote:
-> > diff --git a/arch/sh/drivers/platform_early.c b/arch/sh/drivers/platform_early.c
-> > index 143747c45206..3cd17bb0be67 100644
-> > --- a/arch/sh/drivers/platform_early.c
-> > +++ b/arch/sh/drivers/platform_early.c
-> > @@ -25,10 +25,12 @@ static int platform_match(struct device *dev, struct device_driver *drv)
-> >  {
-> >       struct platform_device *pdev = to_platform_device(dev);
-> >       struct platform_driver *pdrv = to_platform_driver(drv);
-> > +     int ret;
-> >
-> >       /* When driver_override is set, only bind to the matching driver */
-> > -     if (pdev->driver_override)
-> > -             return !strcmp(pdev->driver_override, drv->name);
-> > +     ret = device_match_driver_override(dev, drv);
-> > +     if (ret >= 0)
-> > +             return ret;
-> >
-> >       /* Then try to match against the id table */
-> >       if (pdrv->id_table)
->
-> I was just about to pick up this series, but then noticed that checking for
-> driver_override in the platform_early case doesn't make sense in the first place
-> and was accidentally added when the platform_match() callback was copied over in
-> commit 507fd01d5333 ("drivers: move the early platform device support to
-> arch/sh").
->
-> Thus, I'm going to drop this hunk and add in the following patch; please let me
-> know if there are any concerns.
->
-> commit 39cae4095efda4b00b436c0fc46f21de84128969
-> Author: Danilo Krummrich <dakr@kernel.org>
-> Date:   Tue Mar 17 00:37:15 2026 +0100
->
->     sh: platform_early: remove pdev->driver_override check
->
->     In commit 507fd01d5333 ("drivers: move the early platform device support to
->     arch/sh") platform_match() was copied over to the sh platform_early
->     code, accidentally including the driver_override check.
->
->     This check does not make sense for platform_early, as sysfs is not even
->     available in first place at this point in the boot process, hence remove
->     the check.
->
->     Fixes: 507fd01d5333 ("drivers: move the early platform device support to arch/sh")
->     Signed-off-by: Danilo Krummrich <dakr@kernel.org>
->
-> diff --git a/arch/sh/drivers/platform_early.c b/arch/sh/drivers/platform_early.c
-> index 143747c45206..48ddbc547bd9 100644
-> --- a/arch/sh/drivers/platform_early.c
-> +++ b/arch/sh/drivers/platform_early.c
-> @@ -26,10 +26,6 @@ static int platform_match(struct device *dev, struct device_driver *drv)
->         struct platform_device *pdev = to_platform_device(dev);
->         struct platform_driver *pdrv = to_platform_driver(drv);
->
-> -       /* When driver_override is set, only bind to the matching driver */
-> -       if (pdev->driver_override)
-> -               return !strcmp(pdev->driver_override, drv->name);
-> -
->         /* Then try to match against the id table */
->         if (pdrv->id_table)
->                 return platform_match_id(pdrv->id_table, pdev) != NULL;
 
-Nice catch!
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+On 16/03/2026 10:30, Konrad Dybcio wrote:
+> On 3/13/26 2:09 PM, David Heidelberg wrote:
+>> On 13/03/2026 13:38, Konrad Dybcio wrote:
+>>> On 3/12/26 12:25 PM, David Heidelberg wrote:
+>>>> On 12/03/2026 03:46, Dmitry Baryshkov wrote:
+>>>>> On Wed, Mar 11, 2026 at 07:44:30PM +0100, David Heidelberg via B4 Relay wrote:
+>>>>>> From: Petr Hodina <petr.hodina@protonmail.com>
+>>>>>>
+>>>>>> Currently the panel driver for tianma is broken.
+>>>>>
+>>>>> How broken? Can it be fixed instead?
+>>>>
+>>>> No output to the panel. Definitely can be fixed, but current situation is that we don't have anyone who has available time or device to tackle the problem.
+>>>>
+>>>> I know it's not optimal, but on a way to achieve working mainline phones, my thinking is better to mark it as broken in mainline until someone fixes (assuming Fixes tag and backport) then just going black display (when we have at least framebuffer now).
+>>>
+>>> If you have a person with limited time, would simply copying this:
+>>>
+>>> 2b973ca48ff3 ("drm/panel: sony-td4353-jdi: Enable prepare_prev_first")
+>>
+>> Sorry, I don't follow. You meant introducing prepare_prev_first?
+> 
+> Yes, just setting that single flag
+> 
+>> I asked if it's possible to test, but looking at the rest of the driver, it'll need refactor anyway.
+> 
+> Well I'dve assumed it worked at least at some point in time given it's
+> in mainline?
 
-Gr{oetje,eeting}s,
+That's not sure, for previous panel drivers (OP6/6T) upstreamed drivers didn't 
+worked on mainline at all.
 
-                        Geert
+Trying prepare_prev_first could work thou. Hopefully Petr will be able to give 
+it a shot.
 
---
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+David
 
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+> 
+> Konrad
+
+-- 
+David Heidelberg
+
 
