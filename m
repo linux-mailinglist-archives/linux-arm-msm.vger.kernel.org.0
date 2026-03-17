@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-98249-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98250-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id oATsFJSTuWnKKgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98249-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 18:47:00 +0100
+	id iHLOHc6OuWnQKQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98250-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 18:26:38 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id C41252B0216
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 18:46:59 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id E74C62AF8CC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 18:26:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4FC8C33650B7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 17:23:38 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id D9FC330031E9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 17:26:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0B023368AE;
-	Tue, 17 Mar 2026 17:23:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06480330D54;
+	Tue, 17 Mar 2026 17:26:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RCkoeK1Z"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="txtA7q5q"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C0552FD69D;
-	Tue, 17 Mar 2026 17:23:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5DDF280A21;
+	Tue, 17 Mar 2026 17:26:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768202; cv=none; b=QD3i6oNdWPiwHHcBU/uicXULgVLAvq4zuFOXGq7RXI+TbhhgTqR7iBGBbFPs9LtUqA/9V09bQdEbsRcFaaRub6SwGJqZQN5pDA+kqX5dWUSyKGpoyU3zZ/W9vBn0szoZcl1cBaZsoxvMHuzDoi/dvlwrdChW7VQfaPXnqaNrwng=
+	t=1773768395; cv=none; b=Ee4xNEuiBf5RuHc5FZ9vKuj2BWT7qHk76VnmWEpH3KafSanI0EqHdY/hkT76EXCwB+NYWZTU9h2iQB75qNPgow93qrjZUHtuHcy5CPnNGjSUySkjwmS1mkbf8rb8NGPf4Iy8Kd+Vnx7KxM0awFc+Gi5WMke5Tjk+9+EE/A29avE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768202; c=relaxed/simple;
-	bh=qbdWrWMtgiIztcIXiVHuO2Pm4IYpFHo86dECloWuNxE=;
+	s=arc-20240116; t=1773768395; c=relaxed/simple;
+	bh=WM7vqYR2qO1yM/22u3yyS5QrYQQYNEb4Ka8WVAxFcBY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WQuNsNAg8aKp3q4mve4u7jr0NBF40SV6IQCO+9lpMSfg2W2psEC8Ft3ouiKHzZeVi7h5pezUXP3vOKv/UxaCMXKxuyzvXKDkDyMzVpVQqwMxOKpa3vqunnzBVEF/uP/LRouw6CqkNEcu3Cyssmb9/8ugMLYz+O7ahXn6TfgMccg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RCkoeK1Z; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A3ADC4CEF7;
-	Tue, 17 Mar 2026 17:23:18 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=nxiq2PvfG1vQO4xxY0aQYSqLgP3cwkqGnxq5rG7ZKVI9HcIg9Lgv93Z2CbXMuZs23Zu53jZM1SWIufTjOyAnSzjzoi67CD9nxm/VY6nJoXZckgZFDCafmr+7uJ57GQLisJi1Ze8RfCCHF1EHqdzrtAgIusCrf9cidU0Z2rJJpA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=txtA7q5q; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E6CAC19424;
+	Tue, 17 Mar 2026 17:26:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773768202;
-	bh=qbdWrWMtgiIztcIXiVHuO2Pm4IYpFHo86dECloWuNxE=;
+	s=k20201202; t=1773768395;
+	bh=WM7vqYR2qO1yM/22u3yyS5QrYQQYNEb4Ka8WVAxFcBY=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=RCkoeK1Zj1yz/h2sbd3RxN/Yt4yYNNM4XZ97CgrwPcgFo8X/MRGxdPLgtEGRWicVg
-	 3hz3MuCn40fCHAajRFaw7Iyz3op3GwGPuj9X7LadDL5cITTnIx3ZmvRXQvhqzQOShF
-	 1v046HoEZq10OWEKaflsT84wFLqtIsMjzHLYzo8r4Pyi9YQhoyf4nkMZc//4RUmxGu
-	 YO1Qr9txv9eE0FiZBuulgDDmSLPCnkAnDNKEPgBO0nsXKNxowY0dtfa6WTgcwO9G8t
-	 yRGVww292N3Soqd1j/wgHeqFs3PBSudwd6/H79g8YwOBWEqcEym6UPwcMUMvufFC+Y
-	 1/x9HtYWjMD8A==
-Message-ID: <253ee25d-3096-407d-8d2e-3c9d1072b2ae@kernel.org>
-Date: Tue, 17 Mar 2026 18:23:16 +0100
+	b=txtA7q5qzPaWS1Z3kLTEHIS39zHZat0AopK3tw/J6oiHgQNFzwXkEEBX1cLJ+5Fwz
+	 cszofU9XgsQYhmrv7YZcJaZgCXCJT/GDJ/tpFU3TTCVsZ9qSDj2BVZEYgyZsYLEMo3
+	 mH0F4nT7SSucPPOq/rcey11OEEXTAJVia5f62S+NY7Ngt8gjhjdjZd7YicECxSFMaS
+	 RYmb2NHiWMKrR72RbVGdHkPe08h31J1ZIz3eCzDNBvbIpzMDZy0R5jnHU8Z8lcLKXT
+	 lqCvbi+546/wMMNwxWm7XAeO8fvGklSEO2oLhrvUGTTgbbHPjV8ZxFFZtV+cYtxpko
+	 LVcnivAOkI6Aw==
+Message-ID: <1b28cd99-3a6c-442f-9668-23aca9b1fea8@kernel.org>
+Date: Tue, 17 Mar 2026 18:26:30 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,8 +53,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/7] Add support for Video, Camera, Graphics clock
- controllers on Eliza
+Subject: Re: [PATCH 7/7] arm64: defconfig: Enable clock controllers on
+ Qualcomm Eliza SoC
 To: Taniya Das <taniya.das@oss.qualcomm.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
@@ -69,6 +69,7 @@ Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-arm-kernel@lists.infradead.org
 References: <20260317-eliza_mm_clock_controllers_v1-v1-0-4696eeda8cfb@oss.qualcomm.com>
+ <20260317-eliza_mm_clock_controllers_v1-v1-7-4696eeda8cfb@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -114,7 +115,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260317-eliza_mm_clock_controllers_v1-v1-0-4696eeda8cfb@oss.qualcomm.com>
+In-Reply-To: <20260317-eliza_mm_clock_controllers_v1-v1-7-4696eeda8cfb@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spamd-Result: default: False [-0.66 / 15.00];
@@ -122,18 +123,18 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-98249-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-98250-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[17];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
@@ -143,35 +144,43 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: C41252B0216
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: E74C62AF8CC
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 On 17/03/2026 18:14, Taniya Das wrote:
-> Add driver for Eliza SoC camera, graphics and Video clock controllers.
-> The camera clock controller supports the cambist clock controller and
-> the regular camera clock controller.
-> 
-> Dependency:
-> https://lore.kernel.org/lkml/20260305-gpucc_sm8750_v2-v5-0-78292b40b053@oss.qualcomm.com/
+> Enable the video, camera and gpu clock controllers for their respective
+> functionalities on the Qualcomm Eliza boards.
 > 
 > Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
 > ---
-> Taniya Das (7):
->       dt-bindings: clock: qcom: Add video clock controller on Eliza SoC
->       dt-bindings: clock: qcom: document the Eliza GPU Clock Controller
->       dt-bindings: clock: qcom: Add support for CAMCC for Eliza
->       clk: qcom: videocc: Add video clock controller driver for Eliza
->       clk: qcom: gpucc: Add GPU Clock Controller driver for Eliza
->       clk: qcom: camcc: Add support for camera clock controller for Eliza
->       arm64: defconfig: Enable clock controllers on Qualcomm Eliza SoC
+>  arch/arm64/configs/defconfig | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> index 18881bd239f9c53e74ad5caa492bace394e4fde7..dd45d275d30a32fd567432b5c324896518aa4ad8 100644
+> --- a/arch/arm64/configs/defconfig
+> +++ b/arch/arm64/configs/defconfig
+> @@ -1458,6 +1458,11 @@ CONFIG_COMMON_CLK_MT8192_SCP_ADSP=y
+>  CONFIG_COMMON_CLK_MT8192_VDECSYS=y
+>  CONFIG_COMMON_CLK_MT8192_VENCSYS=y
+>  CONFIG_COMMON_CLK_QCOM=y
+> +CONFIG_CLK_ELIZA_CAMCC=m
+> +CONFIG_CLK_ELIZA_GCC=y
+> +CONFIG_CLK_ELIZA_GPUCC=m
+> +CONFIG_CLK_ELIZA_TCSRCC=m
+I told you already twice, don't send duplicated patches. Once when you
+sent sm8750 videocc, even though it was all ready and posted. Second
+today when you completely ignored one month of development of Eliza in
+Qualcomm tree (so your tree).
 
-On which device did you test it? Considering that you told me you did
-not hear about integration branch with patches before, I have doubts you
-could ever actually test it without our changes.
+Now this. You keep sending patches interfering with work which was
+already posted.
 
-But regardless - on which hardware exactly?
+NAK
+
+https://lore.kernel.org/all/20260316-arm64-defconfig-enable-eliza-basic-providers-v1-1-7ae581670aa8@oss.qualcomm.com/
 
 Best regards,
 Krzysztof
