@@ -1,163 +1,191 @@
-Return-Path: <linux-arm-msm+bounces-98277-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98278-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UAbBLgvSuWnuOAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98277-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 23:13:31 +0100
+	id mEwkOBrTuWnMOAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98278-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 23:18:02 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5CDDB2B300D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 23:13:31 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A341E2B3081
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 23:18:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 48B8A3059FC0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 22:12:42 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 89E71305B49C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 22:18:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA89D37D12C;
-	Tue, 17 Mar 2026 22:12:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D5FA392818;
+	Tue, 17 Mar 2026 22:17:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tA5yxOjc"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Lc+cZaHh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E5A735F18E;
-	Tue, 17 Mar 2026 22:12:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02008377029;
+	Tue, 17 Mar 2026 22:17:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773785555; cv=none; b=dvM4XJPvlodyE1B1y+ItdHGannJGeCQbnk6nr7/WDKZR3LCgIzFnSparTmYHI43jC+4DkvtK+R2tU1u76BQbqlcao8Euzf4UC83CiNGFQyR5HzoWQ5Pgzz6S9XogXWeXBB4y1WcsTj0j13lSdrsDK+z/o91TBO+pO05DrasKHoA=
+	t=1773785879; cv=none; b=oiWKy0JGViaqI70dx9590OJuY6FVi/CgSsXI52gGfvDE7JIkCV5HiUBTiqQ0lVfYXuRq8kUMfPqlJ0YvFJoRI1kHvTa/0pEY+d0sQVj7m/LOEg2+VQPdts0yEMeCcMTVW1GLgCq0ccpNNJXHw608P+6C6Sz3/qk7jnfQ0ap7hmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773785555; c=relaxed/simple;
-	bh=Pzzmign7Hy4szkEHrZUkoI+XLqdJUVJ2mA0Db6ivvGU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=k7CnlYZ1eqKM7uWFgheyib8TI4DbRez8Fv9wdmrM5qxTqRiP2LWN+NcZeFgcpzO3IC7j3mnxaPs4pYrHs/sX0AlnVDe+gO8qmwdEasH3u0eOYEuT7MCMs3x/AJvSAwh4Yl7OCB1tpkuLiaCPj3lhy9JDtUXCeiLiCjWme4J4zcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tA5yxOjc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 27C2BC2BCC7;
-	Tue, 17 Mar 2026 22:12:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773785555;
-	bh=Pzzmign7Hy4szkEHrZUkoI+XLqdJUVJ2mA0Db6ivvGU=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=tA5yxOjct2iTyg/GC3e1EpzvL4i/kfA0isYnlfYNfnoeVtgZYfrUghE2EktjwAcwn
-	 Qj6UJeTjnrbBq3zrn/7zwuyrXRm9EUCMMVNw6VEte29169IoJBac8U2cvNziddQVqD
-	 oROCenYNDqQQOi62NpgxjOz0uaor412v/zF4hkFKYiKuRTWaBw/c36T/A1QQHYZ8YF
-	 k5RkzfkH9yVLQrLPadF5sF2+nqxaAV5BDZKCt440MAn2Tik88rtxiY2O3Lc+qbTKhV
-	 zIApa5qbV7q/g1TtDrTyCUG47xEPYZnY7sTJi4Z2iusLbxj3Pb7YgKgDlnqaFyHGPo
-	 XMaDhwnIHSjFQ==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D96BFF6E8F;
-	Tue, 17 Mar 2026 22:12:35 +0000 (UTC)
-From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Date: Tue, 17 Mar 2026 23:12:35 +0100
-Subject: [PATCH v2 5/5] arm64: dts: qcom: sdm845-xiaomi-beryllium-tianma:
- Disable MDSS
+	s=arc-20240116; t=1773785879; c=relaxed/simple;
+	bh=FNWIPBES0YKSmK+pgav9TGtnCBJV8EEE9Co9MfCjjrI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LuzcaUDRCJXSyImieGDMUSKBPP84ENhVeJvIvO7mN+kwg4SMmj1bDWZvVbvLUHa2g697IqbIKRxxDWkgrpkdRkvNfnIQsstoVa5aTuTylMk1RjgSpmfDk0pusA38B7O5DBcqgr8HMM6MzL3bpZZMrjVQ4j9rKsxgS0gyi9xBlUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Lc+cZaHh; arc=none smtp.client-ip=192.198.163.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1773785877; x=1805321877;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=FNWIPBES0YKSmK+pgav9TGtnCBJV8EEE9Co9MfCjjrI=;
+  b=Lc+cZaHhqwABNw5JpP6esfp9Mjcm7LJ5jFm75MurN5IWP25k/CnGAGQK
+   AdFv2uOPVMf0bq3AO0CsxGTrivfnnLryCQLf7OO+E7XufcuoMEPNGHVVO
+   F1607CFW3D7aQ3DouMJhFyo7HGcUtVOE3AYHHNNgWd21up/gZCnPz9AVF
+   RJ9nR981WrjqT9hBTI+oczTYLZCWPhzFYP6HEI0oTymrAxZo6Np5SVi8z
+   ptD+sfnUDS+LRzFbBJLfaSBdyziwTVphBmFTacWCHLsL/QbIGSS/fqgm0
+   2ZFT0e4AJ5LBEHWYeb9Wr95xvE2vric/pdCS9suNl4MQXPFOhAOwVaUD2
+   A==;
+X-CSE-ConnectionGUID: HNRMyHQCRPqoGLWYZNr5Sg==
+X-CSE-MsgGUID: UmCsiPMTSu6lyGk1ha7KCQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11732"; a="100293805"
+X-IronPort-AV: E=Sophos;i="6.23,126,1770624000"; 
+   d="scan'208";a="100293805"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Mar 2026 15:17:56 -0700
+X-CSE-ConnectionGUID: 00Dw8TaWSC+6yJmQpnHcEQ==
+X-CSE-MsgGUID: fVwSoFFSRdiAqNVwH5HOiw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,126,1770624000"; 
+   d="scan'208";a="218493195"
+Received: from lkp-server01.sh.intel.com (HELO 63737dd503cb) ([10.239.97.150])
+  by fmviesa010.fm.intel.com with ESMTP; 17 Mar 2026 15:17:49 -0700
+Received: from kbuild by 63737dd503cb with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1w2cjS-0000000026D-0zP9;
+	Tue, 17 Mar 2026 22:17:46 +0000
+Date: Wed, 18 Mar 2026 06:17:31 +0800
+From: kernel test robot <lkp@intel.com>
+To: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nicolas.schier@linux.dev>,
+	Hans de Goede <hansg@kernel.org>,
+	Ilpo =?iso-8859-1?Q?J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	"Derek J. Clark" <derekjohn.clark@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Marcel Holtmann <marcel@holtmann.org>,
+	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: oe-kbuild-all@lists.linux.dev, linux-serial@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org,
+	platform-driver-x86@vger.kernel.org, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-bluetooth@vger.kernel.org, linux-pm@vger.kernel.org,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Dmitry Baryshkov <lumag@kernel.org>, linux-acpi@vger.kernel.org
+Subject: Re: [PATCH v6 9/9] power: sequencing: pcie-m2: Create serdev device
+ for WCN7850 bluetooth
+Message-ID: <202603180609.ucspJefN-lkp@intel.com>
+References: <20260317-pci-m2-e-v6-9-9c898f108d3d@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260317-beryllium-fb-v2-5-36b69dfb760c@ixit.cz>
-References: <20260317-beryllium-fb-v2-0-36b69dfb760c@ixit.cz>
-In-Reply-To: <20260317-beryllium-fb-v2-0-36b69dfb760c@ixit.cz>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, David Heidelberg <david@ixit.cz>, 
- Sam Day <me@samcday.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
- Petr Hodina <petr.hodina@protonmail.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=960; i=david@ixit.cz;
- h=from:subject:message-id;
- bh=3Pg7NvtymOOJ0LjoaS8anANtqZcNQW66vxuq+tyshlk=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpudHR0dYPx2NAiTEfwG9J2cJNYLUHEIUq2Fqrr
- p9dyPncKZaJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCabnR0QAKCRBgAj/E00kg
- cgj0EACvjR2Ds4u6CWeByHcVIabwWqa5Ly6NdWfhFeXL3uuKD38KDCa5nBLIB4W1CKbGJBRKfaq
- 8KYEjGW3H31ePbPLayVGHvNdTn73Y+vlMffFP4tP83ulyG4Dr3C630nmUqbEpXwWXKNpZkLwXRT
- GnSW48Nt+QJjQnrOi4vMZKJMYl2q6A4n0UdJgXNaZP32jtaPyOpt3d14T6GRGQPnReGgQFTfT38
- btkGY6SKOtlPL8dNxLS9aHFKb8ZaPH8YsQiDm2nHHtNP+kZy/nJH6k8zG8k38g/Eadaf5P29qER
- pozHIpixetaB4Z7MEZwByZbtbG884BCItGQz66iMCYP7uazdfot8x7FyTNBOOL1dy52HR4qejLH
- 4dYmKYvKjEDq9O+Celt3IeBPbqC1HbXs9VoJNRlfuthWHBicqlUHPZaIY7jrY5uk/jwJUW6dNUd
- 4XzkswT3nx/WC2AagO8gagQTovfHLJJktieujrHUuA0JYz4OPuLkD6X4hDTUELvpvUcel7tUdyF
- ExYk+Tdax9uH02Xf1IOo/bjz5pnlS7jXpL6M2KV8XNNocKS7zFTq6KUETeF4lu1KHWw8vsaoG81
- L2bQOfbvRbkjxPx82qDAaaZQr21ngVgPpWLV04AjgYWBjI0JTaWksPimneVJZgnlX30Uc9tOdpN
- C0bXxrbeTCPH65Q==
-X-Developer-Key: i=david@ixit.cz; a=openpgp;
- fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
-X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
-X-Original-From: David Heidelberg <david@ixit.cz>
-Reply-To: david@ixit.cz
-X-Spamd-Result: default: False [-0.66 / 15.00];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260317-pci-m2-e-v6-9-9c898f108d3d@oss.qualcomm.com>
+X-Spamd-Result: default: False [0.34 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
+	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-98277-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,protonmail.com];
-	RCPT_COUNT_TWELVE(0.00)[13];
+	TAGGED_FROM(0.00)[bounces-98278-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_TO(0.00)[kernel.org,linuxfoundation.org,linux.dev,linux.intel.com,squebb.ca,gmail.com,holtmann.org,bgdev.pl];
 	MIME_TRACE(0.00)[0:+];
-	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
-	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
-	HAS_REPLYTO(0.00)[david@ixit.cz];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	DBL_PROHIBIT(0.00)[0.0.0.1:email];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	NEURAL_HAM(-0.00)[-1.000];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[30];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,ixit.cz:email,ixit.cz:replyto,ixit.cz:mid,protonmail.com:email]
-X-Rspamd-Queue-Id: 5CDDB2B300D
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[lkp@intel.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[intel.com:+];
+	NEURAL_HAM(-0.00)[-1.000];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,manivannan.sadhasivam.oss.qualcomm.com,dt];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:dkim,intel.com:email,intel.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: A341E2B3081
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-From: Petr Hodina <petr.hodina@protonmail.com>
+Hi Manivannan,
 
-Currently the panel driver for tianma is broken.
-Disable MDSS to prevent DRM taking over the framebuffer.
+kernel test robot noticed the following build errors:
 
-Signed-off-by: Petr Hodina <petr.hodina@protonmail.com>
-Signed-off-by: David Heidelberg <david@ixit.cz>
----
- arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+[auto build test ERROR on 559f264e403e4d58d56a17595c60a1de011c5e20]
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts
-index b58964cde8342..d1c7bccaab500 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts
-@@ -36,3 +36,13 @@ touchscreen@1 {
- 		touchscreen-size-y = <2246>;
- 	};
- };
-+
-+&dispcc {
-+	/* Disable for now so simple-framebuffer continues working */
-+	status = "disabled";
-+};
-+
-+&mdss {
-+	/* Disable for now so simple-framebuffer continues working */
-+	status = "disabled";
-+};
+url:    https://github.com/intel-lab-lkp/linux/commits/Manivannan-Sadhasivam-via-B4-Relay/serdev-Convert-to_serdev_-helpers-to-macros-and-use-container_of_const/20260317-123910
+base:   559f264e403e4d58d56a17595c60a1de011c5e20
+patch link:    https://lore.kernel.org/r/20260317-pci-m2-e-v6-9-9c898f108d3d%40oss.qualcomm.com
+patch subject: [PATCH v6 9/9] power: sequencing: pcie-m2: Create serdev device for WCN7850 bluetooth
+config: nios2-allmodconfig (https://download.01.org/0day-ci/archive/20260318/202603180609.ucspJefN-lkp@intel.com/config)
+compiler: nios2-linux-gcc (GCC) 11.5.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260318/202603180609.ucspJefN-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202603180609.ucspJefN-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+   drivers/power/sequencing/pwrseq-pcie-m2.c: In function 'pwrseq_pcie_m2_free_resources':
+>> drivers/power/sequencing/pwrseq-pcie-m2.c:185:34: error: 'pci_bus_type' undeclared (first use in this function); did you mean 'pci_pcie_type'?
+     185 |         bus_unregister_notifier(&pci_bus_type, &ctx->nb);
+         |                                  ^~~~~~~~~~~~
+         |                                  pci_pcie_type
+   drivers/power/sequencing/pwrseq-pcie-m2.c:185:34: note: each undeclared identifier is reported only once for each function it appears in
+   drivers/power/sequencing/pwrseq-pcie-m2.c: In function 'pwrseq_pcie_m2_register_notifier':
+   drivers/power/sequencing/pwrseq-pcie-m2.c:340:54: error: 'pci_bus_type' undeclared (first use in this function); did you mean 'pci_pcie_type'?
+     340 |                         ret = bus_register_notifier(&pci_bus_type, &ctx->nb);
+         |                                                      ^~~~~~~~~~~~
+         |                                                      pci_pcie_type
+
+
+vim +185 drivers/power/sequencing/pwrseq-pcie-m2.c
+
+   179	
+   180	static void pwrseq_pcie_m2_free_resources(void *data)
+   181	{
+   182		struct pwrseq_pcie_m2_ctx *ctx = data;
+   183	
+   184		serdev_device_remove(ctx->serdev);
+ > 185		bus_unregister_notifier(&pci_bus_type, &ctx->nb);
+   186		of_changeset_revert(ctx->ocs);
+   187		of_changeset_destroy(ctx->ocs);
+   188		regulator_bulk_free(ctx->num_vregs, ctx->regs);
+   189	}
+   190	
 
 -- 
-2.53.0
-
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
