@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-98094-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98098-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wF8KIYoSuWmFowEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98094-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 09:36:26 +0100
+	id gEW4MeoSuWkmpQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98098-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 09:38:02 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id DA8462A5BF8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 09:36:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 692D92A5C5F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 09:38:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 8FA433008D3B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 08:36:24 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B3A39306DA66
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 08:36:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A08EE38F620;
-	Tue, 17 Mar 2026 08:36:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97579396564;
+	Tue, 17 Mar 2026 08:36:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=thundersoft.com header.i=@thundersoft.com header.b="gtFT0+6b"
+	dkim=pass (1024-bit key) header.d=thundersoft.com header.i=@thundersoft.com header.b="Hhb6RwPy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-m1973196.qiye.163.com (mail-m1973196.qiye.163.com [220.197.31.96])
+Received: from mail-m32124.qiye.163.com (mail-m32124.qiye.163.com [220.197.32.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF88630ACF0;
-	Tue, 17 Mar 2026 08:36:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.96
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52159396565;
+	Tue, 17 Mar 2026 08:36:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.32.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773736583; cv=none; b=t3wJMoyw8ny55dSHUR2dSrQveHQdxnOo5PAcH+CX53U0E0suRsy1yEm+SelPKgAq/riG48vPK+KP5BRhwY6pEHKn0cLYhpV3Ry7gG9+1DCxJf7j9NZzDyo8QT9LL2656zdSSBO7E3cYuqYNEbf9nYwHgi56v5iM42mNvqEl9EZs=
+	t=1773736593; cv=none; b=fkIBVzQwkjxkUU/E3w3Do75wwvJhXFpGzmZSs0Liwhk/7TTm+iLrW4EJgKfZHyWVyQj/AW3Y6ouhN6RDcQA9Vy51OF6gI7ToGi/ZT0tgRxpS9b0JwdD97wTMYWQgjBVB/m7IYb5hS94xc8JToSLK7uR41D1Mmxos6jL+JVMB+4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773736583; c=relaxed/simple;
-	bh=3WhNxKXKIK+jL31bp/APuAywSvRCK9e4YyOkDA/hN2A=;
+	s=arc-20240116; t=1773736593; c=relaxed/simple;
+	bh=4x8ZTwVz12Ky+tRkT1T5HIQ0yrrQKIADrgChMaCGw00=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Kt1plu+bImnkj4w0RJZN0T06BJ7Lho6JZYOsnRaya0x4bpBcBk0himydYfZi/e8l70GPEmviTL+lk5R7am19po4TA6bTOkThfX4AtLm/mghA7mpkejHn6bnyImOnYO42rvEYvIoSX9w1rP6TLVLJVmxp8pPhsoYgUYX/trGbsc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=thundersoft.com; spf=pass smtp.mailfrom=thundersoft.com; dkim=pass (1024-bit key) header.d=thundersoft.com header.i=@thundersoft.com header.b=gtFT0+6b; arc=none smtp.client-ip=220.197.31.96
+	 In-Reply-To:To:Cc; b=Babm3Qk9k7sd+hFLTA75RFkF6F44MoYoCvU9xdUVZ5gHencmPEKnG7KXtsK18DzGE7CweUF2P20SEZznSec5VDeFhvvyWTiAt006JZU6ze8ffFWsfauKATSSaRQhksErWXFCBL4f8fN3qKHyfeyErNpyRtbiNi4HfcbSNMtbjeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=thundersoft.com; spf=pass smtp.mailfrom=thundersoft.com; dkim=pass (1024-bit key) header.d=thundersoft.com header.i=@thundersoft.com header.b=Hhb6RwPy; arc=none smtp.client-ip=220.197.32.124
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=thundersoft.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=thundersoft.com
 Received: from [127.0.1.1] (unknown [36.129.139.90])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 373e3b48a;
-	Tue, 17 Mar 2026 16:36:14 +0800 (GMT+08:00)
+	by smtp.qiye.163.com (Hmail) with ESMTP id 373e3b498;
+	Tue, 17 Mar 2026 16:36:16 +0800 (GMT+08:00)
 From: Hongyang Zhao <hongyang.zhao@thundersoft.com>
-Date: Tue, 17 Mar 2026 16:35:41 +0800
-Subject: [PATCH v2 2/6] ASoC: es8316: Get sysclk rate from MCLK clock when
- not explicitly set
+Date: Tue, 17 Mar 2026 16:35:42 +0800
+Subject: [PATCH v2 3/6] ASoC: qcom: qdsp6: q6prm: add the missing MCLK
+ clock IDs
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -49,7 +49,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260317-rubikpi-next-20260304-v2-2-5634fabe0c43@thundersoft.com>
+Message-Id: <20260317-rubikpi-next-20260304-v2-3-5634fabe0c43@thundersoft.com>
 References: <20260317-rubikpi-next-20260304-v2-0-5634fabe0c43@thundersoft.com>
 In-Reply-To: <20260317-rubikpi-next-20260304-v2-0-5634fabe0c43@thundersoft.com>
 To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
@@ -66,22 +66,22 @@ Cc: linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
  Roger Shimizu <rosh@debian.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
  Hongyang Zhao <hongyang.zhao@thundersoft.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1773736570; l=905;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1773736570; l=1938;
  i=hongyang.zhao@thundersoft.com; s=20260127; h=from:subject:message-id;
- bh=3WhNxKXKIK+jL31bp/APuAywSvRCK9e4YyOkDA/hN2A=;
- b=BoPy63R+aaxm+07RZl6U+d+Ys5JoaDn9lwHVFtlRBNwQhnuXQaZW8JbYPTcjM6QQeoXVEGfKy
- J7THW20AbPoAMbAvCMugsnPJkxHyrfdY6ISxFJqv2cvDu2PyPn0iUYv
+ bh=4x8ZTwVz12Ky+tRkT1T5HIQ0yrrQKIADrgChMaCGw00=;
+ b=U7iLX8C3SK0reJhCVMmgVl/g9m+YAXhpFKdFQuo0opdiw9Tf2c25pGuZn7W44CuKY9RNTEA5o
+ 17DjDb7BGmvD5P4TgCghEQr+FxuE3lsj2QsI5xwuZBwqAslH8qBs3wt
 X-Developer-Key: i=hongyang.zhao@thundersoft.com; a=ed25519;
  pk=D9yL5W9Zj0lPBDAq9gzY++1849VlXuTWAkROzZ88J/4=
-X-HM-Tid: 0a9cfaf03f4b09d5kunm8391965e39c995
+X-HM-Tid: 0a9cfaf0470e09d5kunm8391965e39c9b1
 X-HM-MType: 1
 X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkZHRoaVhgdHhpPHU1IHx5JTVYVFAkWGhdVEwETFh
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVlCSk5KVh0YSR1JSxlDSE4aSlYVFAkWGhdVEwETFh
 	oSFyQUDg9ZV1kYEgtZQVlITVVKSUJVSkhCVUJLWVdZFhoPEhUdFFlBWU9LSFVKS0lPT09IVUpLS1
 	VKQktLWQY+
 DKIM-Signature: a=rsa-sha256;
-	b=gtFT0+6bfFhsiGMetfuzK5fQXOkEcyMdynm4eS5izWH3bJ1sJsywScfFVAdLfI54gv90Yn1hlysQuMigMCHI/zYbOmcY8pYWOPbG3JpoxQiLE87gSzF8pudaCTFqVBPKPfmuK0CCl8vw0a6QTKKKbKhav8F6u3V4h836pzczmQ8=; c=relaxed/relaxed; s=default; d=thundersoft.com; v=1;
-	bh=7o3HthpByf2f1sOcDO5CRZwMDKyB5mdUkD56e5BdYmo=;
+	b=Hhb6RwPyboqcSrvj79m/LCV+e6UPo+rFUY1Qo/+A96A1l4FKIBIVpQjF1tKHVrVb1us575yTQMnz5YvJueBUW3NEvrLRFcTJoKrskw9rH3vowt/xv1e7nBsFIicsPlghDuHMhP15da/2KRkVSo8pAhIptYwcweXJVA5n30YGsIM=; c=relaxed/relaxed; s=default; d=thundersoft.com; v=1;
+	bh=GdC5YQNGKdJMv418WALrveWB5hYD4dGAViPMRUB4GJU=;
 	h=date:mime-version:subject:message-id:from;
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
@@ -93,7 +93,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-98094-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-98098-lists,linux-arm-msm=lfdr.de];
 	FREEMAIL_TO(0.00)[gmail.com,kernel.org,endlessm.com,katsuster.net,loongson.cn,perex.cz,suse.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
@@ -109,35 +109,57 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: DA8462A5BF8
+	DBL_BLOCKED_OPENRESOLVER(0.00)[thundersoft.com:dkim,thundersoft.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,linaro.org:email]
+X-Rspamd-Queue-Id: 692D92A5C5F
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-When the sysclk has not been set via set_sysclk(), try to get the clock
-rate from the MCLK clock provider. This is useful when the codec's MCLK
-is managed by an external clock controller and the machine driver does
-not explicitly call set_sysclk().
+Add the missing MCLK ids for the q6prm DSP interface.
 
-Signed-off-by: Hongyang Zhao <hongyang.zhao@thundersoft.com>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- sound/soc/codecs/es8316.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/soc/qcom/qdsp6/q6prm-clocks.c |  5 +++++
+ sound/soc/qcom/qdsp6/q6prm.h        | 11 +++++++++++
+ 2 files changed, 16 insertions(+)
 
-diff --git a/sound/soc/codecs/es8316.c b/sound/soc/codecs/es8316.c
-index 9245c33700de..3889cb36a654 100644
---- a/sound/soc/codecs/es8316.c
-+++ b/sound/soc/codecs/es8316.c
-@@ -774,6 +774,9 @@ static int es8316_probe(struct snd_soc_component *component)
- 		return ret;
- 	}
+diff --git a/sound/soc/qcom/qdsp6/q6prm-clocks.c b/sound/soc/qcom/qdsp6/q6prm-clocks.c
+index 4c574b48ab00..51b131fa9531 100644
+--- a/sound/soc/qcom/qdsp6/q6prm-clocks.c
++++ b/sound/soc/qcom/qdsp6/q6prm-clocks.c
+@@ -42,6 +42,11 @@ static const struct q6dsp_clk_init q6prm_clks[] = {
+ 	Q6PRM_CLK(LPASS_CLK_ID_INT5_MI2S_IBIT),
+ 	Q6PRM_CLK(LPASS_CLK_ID_INT6_MI2S_IBIT),
+ 	Q6PRM_CLK(LPASS_CLK_ID_QUI_MI2S_OSR),
++	Q6PRM_CLK(LPASS_CLK_ID_MCLK_1),
++	Q6PRM_CLK(LPASS_CLK_ID_MCLK_2),
++	Q6PRM_CLK(LPASS_CLK_ID_MCLK_3),
++	Q6PRM_CLK(LPASS_CLK_ID_MCLK_4),
++	Q6PRM_CLK(LPASS_CLK_ID_MCLK_5),
+ 	Q6PRM_CLK(LPASS_CLK_ID_WSA_CORE_MCLK),
+ 	Q6PRM_CLK(LPASS_CLK_ID_WSA_CORE_NPL_MCLK),
+ 	Q6PRM_CLK(LPASS_CLK_ID_VA_CORE_MCLK),
+diff --git a/sound/soc/qcom/qdsp6/q6prm.h b/sound/soc/qcom/qdsp6/q6prm.h
+index a988a32086fe..7a3f2ad7bbd4 100644
+--- a/sound/soc/qcom/qdsp6/q6prm.h
++++ b/sound/soc/qcom/qdsp6/q6prm.h
+@@ -52,6 +52,17 @@
+ /* Clock ID for QUINARY MI2S OSR CLK  */
+ #define Q6PRM_LPASS_CLK_ID_QUI_MI2S_OSR                         0x116
  
-+	if (es8316->mclk)
-+		es8316->sysclk = clk_get_rate(es8316->mclk);
++/* Clock ID for MCLK1 */
++#define Q6PRM_LPASS_CLK_ID_MCLK_1                                 0x300
++/* Clock ID for MCLK2 */
++#define Q6PRM_LPASS_CLK_ID_MCLK_2                                 0x301
++/* Clock ID for MCLK3 */
++#define Q6PRM_LPASS_CLK_ID_MCLK_3                                 0x302
++/* Clock ID for MCLK4 */
++#define Q6PRM_LPASS_CLK_ID_MCLK_4                                 0x303
++/* Clock ID for MCLK5 */
++#define Q6PRM_LPASS_CLK_ID_MCLK_5                                 0x305
 +
- 	/* Reset codec and enable current state machine */
- 	snd_soc_component_write(component, ES8316_RESET, 0x3f);
- 	usleep_range(5000, 5500);
+ #define Q6PRM_LPASS_CLK_ID_WSA_CORE_MCLK			0x305
+ #define Q6PRM_LPASS_CLK_ID_WSA_CORE_NPL_MCLK			0x306
+ 
 
 -- 
 2.43.0
