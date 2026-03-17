@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-98250-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98251-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iHLOHc6OuWnQKQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98250-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 18:26:38 +0100
+	id mEhnJk6PuWk5KQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98251-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 18:28:46 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id E74C62AF8CC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 18:26:37 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 39BB72AFA46
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 18:28:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id D9FC330031E9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 17:26:36 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 8E0DF30094E8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 17:28:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06480330D54;
-	Tue, 17 Mar 2026 17:26:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E218346797;
+	Tue, 17 Mar 2026 17:28:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="txtA7q5q"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aIpvl6a9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5DDF280A21;
-	Tue, 17 Mar 2026 17:26:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 096582D739D;
+	Tue, 17 Mar 2026 17:28:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768395; cv=none; b=Ee4xNEuiBf5RuHc5FZ9vKuj2BWT7qHk76VnmWEpH3KafSanI0EqHdY/hkT76EXCwB+NYWZTU9h2iQB75qNPgow93qrjZUHtuHcy5CPnNGjSUySkjwmS1mkbf8rb8NGPf4Iy8Kd+Vnx7KxM0awFc+Gi5WMke5Tjk+9+EE/A29avE=
+	t=1773768483; cv=none; b=EyakGOw9QuzILZFovqlBzvrmE3zl2Zx3wKWmUrurSlxycudgYkz6abty0ZlQ5WIE7VyPKVVJG80lLRCovH5MX2SOOoe0yxXZCBxOcQW7+pCmQwikdIwCjs5gZv0bpTfLhRvOs4uM/g27rXa/Z/o1mWh59zWrDjOEJT2t3NhdeSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768395; c=relaxed/simple;
-	bh=WM7vqYR2qO1yM/22u3yyS5QrYQQYNEb4Ka8WVAxFcBY=;
+	s=arc-20240116; t=1773768483; c=relaxed/simple;
+	bh=UWVFtOs9bdJBFkz+rj2VtdCTPh/WPVU/CAIFIogbO9k=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nxiq2PvfG1vQO4xxY0aQYSqLgP3cwkqGnxq5rG7ZKVI9HcIg9Lgv93Z2CbXMuZs23Zu53jZM1SWIufTjOyAnSzjzoi67CD9nxm/VY6nJoXZckgZFDCafmr+7uJ57GQLisJi1Ze8RfCCHF1EHqdzrtAgIusCrf9cidU0Z2rJJpA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=txtA7q5q; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E6CAC19424;
-	Tue, 17 Mar 2026 17:26:32 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=mzspolXxlOHSPlHvlb7W9v4jBwH6nGMl+mAxKlyxhUyMjzSR64Qs5JnMDehYcYXh+Hjld6cKhmoEGruT/kG+QcBjDcehCc5y7KdbUcVVgDOs2RFpqkMqxQvLjbOCfnI28n4owjMTMJxqVTpknJ7Zdf5OieFWF4ZXrxosPAuh39s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aIpvl6a9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11337C4CEF7;
+	Tue, 17 Mar 2026 17:27:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773768395;
-	bh=WM7vqYR2qO1yM/22u3yyS5QrYQQYNEb4Ka8WVAxFcBY=;
+	s=k20201202; t=1773768482;
+	bh=UWVFtOs9bdJBFkz+rj2VtdCTPh/WPVU/CAIFIogbO9k=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=txtA7q5qzPaWS1Z3kLTEHIS39zHZat0AopK3tw/J6oiHgQNFzwXkEEBX1cLJ+5Fwz
-	 cszofU9XgsQYhmrv7YZcJaZgCXCJT/GDJ/tpFU3TTCVsZ9qSDj2BVZEYgyZsYLEMo3
-	 mH0F4nT7SSucPPOq/rcey11OEEXTAJVia5f62S+NY7Ngt8gjhjdjZd7YicECxSFMaS
-	 RYmb2NHiWMKrR72RbVGdHkPe08h31J1ZIz3eCzDNBvbIpzMDZy0R5jnHU8Z8lcLKXT
-	 lqCvbi+546/wMMNwxWm7XAeO8fvGklSEO2oLhrvUGTTgbbHPjV8ZxFFZtV+cYtxpko
-	 LVcnivAOkI6Aw==
-Message-ID: <1b28cd99-3a6c-442f-9668-23aca9b1fea8@kernel.org>
-Date: Tue, 17 Mar 2026 18:26:30 +0100
+	b=aIpvl6a9J7sNccZGfZfSnbhwYDQBxQ67ZUG7JnY53lPzAsxkSpA7Youyv8tjA+V1G
+	 JPNNyoTQ916BOd/yupQWUcnq9agIU6Fy8Q4nn8vjO5aTkoMesVnChUtErzXMYv/nd2
+	 zdC3j9h1jrZMwsBYhmhh/aj7Vpd82MNNkcdkHV7g5Uj/+GBcx2475R2q7zhGY9UQuC
+	 wfoA7pUFE2xD+HlNFJ6ky39q+/8SGtg5fo31TQeaxLogLpa48NZw5GcRZJQ3lVxMyw
+	 sQYxbBq86jmlgbG5WGFJa6l+mN9i41M6a0FVFav5aWySkXdTBfDFN1RFEM2mgtj3FV
+	 P4JJTxZbaQ7uw==
+Message-ID: <64fc1d80-b4db-4766-996c-257009fe489e@kernel.org>
+Date: Tue, 17 Mar 2026 18:27:57 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,8 +53,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/7] arm64: defconfig: Enable clock controllers on
- Qualcomm Eliza SoC
+Subject: Re: [PATCH 1/7] dt-bindings: clock: qcom: Add video clock controller
+ on Eliza SoC
 To: Taniya Das <taniya.das@oss.qualcomm.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
@@ -69,7 +69,7 @@ Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-arm-kernel@lists.infradead.org
 References: <20260317-eliza_mm_clock_controllers_v1-v1-0-4696eeda8cfb@oss.qualcomm.com>
- <20260317-eliza_mm_clock_controllers_v1-v1-7-4696eeda8cfb@oss.qualcomm.com>
+ <20260317-eliza_mm_clock_controllers_v1-v1-1-4696eeda8cfb@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -115,7 +115,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260317-eliza_mm_clock_controllers_v1-v1-7-4696eeda8cfb@oss.qualcomm.com>
+In-Reply-To: <20260317-eliza_mm_clock_controllers_v1-v1-1-4696eeda8cfb@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spamd-Result: default: False [-0.66 / 15.00];
@@ -123,18 +123,18 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-98250-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-98251-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[17];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
@@ -144,43 +144,17 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: E74C62AF8CC
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 39BB72AFA46
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 On 17/03/2026 18:14, Taniya Das wrote:
-> Enable the video, camera and gpu clock controllers for their respective
-> functionalities on the Qualcomm Eliza boards.
-> 
-> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
-> ---
->  arch/arm64/configs/defconfig | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
-> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> index 18881bd239f9c53e74ad5caa492bace394e4fde7..dd45d275d30a32fd567432b5c324896518aa4ad8 100644
-> --- a/arch/arm64/configs/defconfig
-> +++ b/arch/arm64/configs/defconfig
-> @@ -1458,6 +1458,11 @@ CONFIG_COMMON_CLK_MT8192_SCP_ADSP=y
->  CONFIG_COMMON_CLK_MT8192_VDECSYS=y
->  CONFIG_COMMON_CLK_MT8192_VENCSYS=y
->  CONFIG_COMMON_CLK_QCOM=y
-> +CONFIG_CLK_ELIZA_CAMCC=m
-> +CONFIG_CLK_ELIZA_GCC=y
-> +CONFIG_CLK_ELIZA_GPUCC=m
-> +CONFIG_CLK_ELIZA_TCSRCC=m
-I told you already twice, don't send duplicated patches. Once when you
-sent sm8750 videocc, even though it was all ready and posted. Second
-today when you completely ignored one month of development of Eliza in
-Qualcomm tree (so your tree).
+> Add compatible string for Eliza video clock controller and the bindings
+> for Eliza Qualcomm SoC.
 
-Now this. You keep sending patches interfering with work which was
-already posted.
-
-NAK
-
-https://lore.kernel.org/all/20260316-arm64-defconfig-enable-eliza-basic-providers-v1-1-7ae581670aa8@oss.qualcomm.com/
+Why this is not compatible with SM8750? You have entire commit msg to
+explain that, if you insist on doing parallel work not.
 
 Best regards,
 Krzysztof
