@@ -1,394 +1,205 @@
-Return-Path: <linux-arm-msm+bounces-98100-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98096-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GIdEF64SuWmFowEAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98100-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 09:37:02 +0100
+	id Z+DIFscSuWkmpQEAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98096-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 09:37:27 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C72AB2A5C39
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 09:37:01 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id DE55A2A5C42
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 09:37:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id D6C743053280
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 08:36:39 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 81D553055C42
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 08:36:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1DFA339D6D4;
-	Tue, 17 Mar 2026 08:36:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=thundersoft.com header.i=@thundersoft.com header.b="jS3av/tC"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE90338E5D6;
+	Tue, 17 Mar 2026 08:36:27 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-m49226.qiye.163.com (mail-m49226.qiye.163.com [45.254.49.226])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3E1188596;
-	Tue, 17 Mar 2026 08:36:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.254.49.226
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 880073947B4
+	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Mar 2026 08:36:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773736595; cv=none; b=OYX52/RfsRE/YPLw0H7iwTgpqWrxWDQG81/NHGG1k4hiXN2M2FssectGpc1UxID5/g5gnZIwzcHtQcSviFiy5Vu4352+U6wyosveF5KKp6JgopBQLU4ENFg2UcvTHz6kuAMafCzUN9onIhbFbygWTviu2ZX6aLvC7TwFX/N/5UA=
+	t=1773736587; cv=none; b=XYxica0z7HVTCcz4aOLuiiNURuIggSuWB6wOWMjk8DKVKKkD4AurrHIShsJ4Uu86UiYtIEeWS54KjhxWcfXb+GoR08Gi9kXNgZgKJ+D6vwSwfWdGplZUtMBc88uuD33/kxSvVKpfSau41dasPPtu4dTXiN/5uD7hRE+6HImaZu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773736595; c=relaxed/simple;
-	bh=baQNeXBE7npKcDlGStryNc13Z0dROADUrGzSelzrQT4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=kNtOnRE18+C720SwmZqPMDeGj7ILS+0Q3xWJxU55iQi3TyWiHkVCA7GUUapYOe6rNrCYFcpz6lIqxfSTA/vQtHTa2axSdbgeX5AwdoIY0PL9aMRtZur4eLYvs9XMtKSREJo/d+zdZwY/sb4fQA+aGym3nOMAMV9/vp3B+5hm8go=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=thundersoft.com; spf=pass smtp.mailfrom=thundersoft.com; dkim=pass (1024-bit key) header.d=thundersoft.com header.i=@thundersoft.com header.b=jS3av/tC; arc=none smtp.client-ip=45.254.49.226
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=thundersoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=thundersoft.com
-Received: from [127.0.1.1] (unknown [36.129.139.90])
-	by smtp.qiye.163.com (Hmail) with ESMTP id 373e3b4b7;
-	Tue, 17 Mar 2026 16:36:22 +0800 (GMT+08:00)
-From: Hongyang Zhao <hongyang.zhao@thundersoft.com>
-Date: Tue, 17 Mar 2026 16:35:45 +0800
-Subject: [PATCH v2 6/6] arm64: dts: qcom: qcs6490-rubikpi3: Add audio
- support
+	s=arc-20240116; t=1773736587; c=relaxed/simple;
+	bh=1IbAI1LF70M+Kjw+h3BaLZwBsh7cf418N6PFDl+oOnk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=g/tGwwyAJJaNVpy2Jbc+wnqoCK9C+yVvO4Np+Sq886W+HllSaOTiBgvkzsh7aez5d77yDIOm9kv3a74bxVN5v9MlxlWolSizbcpWZuzGIY7ltrHbv5Bzlb4JpkfPK5inruJbjyiuzdN9RkYYKMzfvbagi7rEgsKsCfVls0A+bfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-950de852f31so470124241.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Mar 2026 01:36:26 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773736585; x=1774341385;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=idH2bB7nbOzzZw2WFTC74GwVow5g1kiitlzGsuFZK5o=;
+        b=W3+iZAZ5aZSJ81uUVatSmMa/w6LjdtU6Rrsk6CD/Xp50KYlPb0pVQRZYr70RMe1hBi
+         s6Vr+UMKaKAKn6oDRWZ2HoWpL5ssqJNDFXUmkKTDTHj0fusG76ZzzBJBWo33lNxl7Bxb
+         vmQsoIzM8kNr6aBJGLEZ2g6h5tQIR71fkW50JAB6NNWia4yAmRJPka2uqIXpxAwuOlGh
+         ay4nc3UXw6Ise4ovJ16ZVxKxTASmLN1V/XQ2A55BR4R9VR8a9CyhyQCUIKLnju47toH6
+         KpngRNQUfxvqwt29dmlt4Rw9HPR4qnoVkbpMWlehufXL7wv4zCy12EiBwQsOubmzoTej
+         Ofyw==
+X-Forwarded-Encrypted: i=1; AJvYcCUWfbXHOUxEcKJULCdUIzXIxCwrTRCh43/wwi0p5ER8OaQdJVwlnc2a9frm+At6kWa6JqTsoMGl/WARPCR/@vger.kernel.org
+X-Gm-Message-State: AOJu0YyE3nZNs1iTb7tBHWqLMdL1DW8pSu4NGS93wcp9v3AXppBIRYOz
+	GAJ/0qVfqar8kkGUnFWtkb35yfzIbDuloUSYMKyRgLIDvufzg/ll32loDmkzhAJs
+X-Gm-Gg: ATEYQzx+lvlg2invEoYLI3uwfZDDH5l6gH8CjE2UhQLlhl2fgfRtbqTXnDjeWgnJ5Mb
+	LlK+6izlKqQanQazeVSeeFZFL4SP8Nv0kOKYTEnu7A3GEM8OUVzJASGSjM4O1mNOocsWg9/SZ0j
+	cY72SUs4U+6QL6vVRSLaCLPzqwdjmpFBY8LpyX90MtYyuy+iyM2otupRRCnOtUUtZnw0RlDlra+
+	jZo6r3tIZsT46s7dvKFF9c0bUdBbSiailqcCIgqPVZlzpOE9Z3fVoaH4F/N9nuc8qBuoJxrbWDk
+	CREhnBorEUBAH/A/pdH10RTt9ElCouhHNjIy8/RiSd7CuvBoMJFKey/maYrPOGAWmRJ/pUaxXzE
+	OVGcy5kBQHWBXIi3sS2Gv7dafVUOHz33e2j1G6s5Ix/yBmYtDDSqjU+gLosRfDiDrf04Eel+cxd
+	LKmUL+X0FIR+Kvy9O+Odv9qIdqiQRv7FhvTlibq7FuaHm6fkEKN7mtNci/wkYWo/ol
+X-Received: by 2002:a05:6102:ccd:b0:600:11e1:2a4b with SMTP id ada2fe7eead31-6020e5a22bbmr6033992137.34.1773736585440;
+        Tue, 17 Mar 2026 01:36:25 -0700 (PDT)
+Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com. [209.85.221.170])
+        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-601d505285bsm8164064137.0.2026.03.17.01.36.24
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Mar 2026 01:36:24 -0700 (PDT)
+Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-56a8fdaddebso2008669e0c.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Mar 2026 01:36:24 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCXkfxilejWBYTU3FXmvnHUY/bmgOz1122QEMcfDjxyFPlO9SSropwNsUnhe21RuAVJ4D/AeUb2+oHphd9YO@vger.kernel.org
+X-Received: by 2002:a05:6102:5127:b0:5ff:2569:cfe7 with SMTP id
+ ada2fe7eead31-6020e2129e6mr6024902137.10.1773736584585; Tue, 17 Mar 2026
+ 01:36:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260317-rubikpi-next-20260304-v2-6-5634fabe0c43@thundersoft.com>
-References: <20260317-rubikpi-next-20260304-v2-0-5634fabe0c43@thundersoft.com>
-In-Reply-To: <20260317-rubikpi-next-20260304-v2-0-5634fabe0c43@thundersoft.com>
-To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Daniel Drake <drake@endlessm.com>, 
- Katsuhiro Suzuki <katsuhiro@katsuster.net>, 
- Matteo Martelli <matteomartelli3@gmail.com>, 
- Binbin Zhou <zhoubinbin@loongson.cn>, Jaroslav Kysela <perex@perex.cz>, 
- Takashi Iwai <tiwai@suse.com>, Srinivas Kandagatla <srini@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-sound@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- Roger Shimizu <rosh@debian.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
- Hongyang Zhao <hongyang.zhao@thundersoft.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1773736570; l=6173;
- i=hongyang.zhao@thundersoft.com; s=20260127; h=from:subject:message-id;
- bh=baQNeXBE7npKcDlGStryNc13Z0dROADUrGzSelzrQT4=;
- b=IujKd+wE/AnfU/oXPX0Qb+AkRVIlAjg55tBv+clUjSX0BAKgXm9IRE5WJZu6K2R9TFTf1wc1l
- oH9os5SwZ56AcsDNXaRBhFSLeSRZsazPCPM3yO1dpYxqXd6yMJafAor
-X-Developer-Key: i=hongyang.zhao@thundersoft.com; a=ed25519;
- pk=D9yL5W9Zj0lPBDAq9gzY++1849VlXuTWAkROzZ88J/4=
-X-HM-Tid: 0a9cfaf05dcf09d5kunm8391965e39c9fd
-X-HM-MType: 1
-X-HM-Spam-Status: e1kfGhgUHx5ZQUpXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkZQkxIVk9MSUlJTBkfTEtJGVYVFAkWGhdVEwETFh
-	oSFyQUDg9ZV1kYEgtZQVlITVVKSUJVSkhCVUJLWVdZFhoPEhUdFFlBWU9LSFVKS0lPT09IVUpLS1
-	VKQktLWQY+
-DKIM-Signature: a=rsa-sha256;
-	b=jS3av/tCvh3Ssnp4GnbVhGGjCirZupfTYy+AhJdKW4xFPrrY6FDVVcqVIPtX5QlZ4/Ntoz5dm+Npb5VJozE4y0RdhUCZjU/tx6S1c7rcyFkO1SKL4MWu8M1vLNMz+/uT+u3rgZhDq6/wJJ2SMIc3gYBrcn/CWINptSfGvWXhwSU=; c=relaxed/relaxed; s=default; d=thundersoft.com; v=1;
-	bh=KJyt/o2RLmptR4AhuSOo/qFkP0iWcCxeErwly/5Q4II=;
-	h=date:mime-version:subject:message-id:from;
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+References: <20260303115720.48783-1-dakr@kernel.org> <20260303115720.48783-5-dakr@kernel.org>
+ <DH4M3DJ4P58T.1BGVAVXN71Z09@kernel.org>
+In-Reply-To: <DH4M3DJ4P58T.1BGVAVXN71Z09@kernel.org>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Tue, 17 Mar 2026 09:36:13 +0100
+X-Gmail-Original-Message-ID: <CAMuHMdW=hfK82_QKXL=n-nMos-HjScKuw9jNTy4xsxJ2qnPYyA@mail.gmail.com>
+X-Gm-Features: AaiRm50LJFP1R3ITAUSRjqb1napf13plX5N5KjefHP89RPorlF5H9VKuGn2urAs
+Message-ID: <CAMuHMdW=hfK82_QKXL=n-nMos-HjScKuw9jNTy4xsxJ2qnPYyA@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] driver core: platform: use generic driver_override infrastructure
+To: Danilo Krummrich <dakr@kernel.org>
+Cc: gregkh@linuxfoundation.org, rafael@kernel.org, hanguidong02@gmail.com, 
+	ysato@users.sourceforge.jp, dalias@libc.org, glaubitz@physik.fu-berlin.de, 
+	abelvesa@kernel.org, srini@kernel.org, s.nawrocki@samsung.com, 
+	nuno.sa@analog.com, brgl@kernel.org, driver-core@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, imx@lists.linux.dev, 
+	linux-hwmon@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-sound@vger.kernel.org, linux-sh@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spamd-Result: default: False [-1.46 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[thundersoft.com,none];
-	R_DKIM_ALLOW(-0.20)[thundersoft.com:s=default];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-98100-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com,kernel.org,endlessm.com,katsuster.net,loongson.cn,perex.cz,suse.com];
+	FREEMAIL_CC(0.00)[linuxfoundation.org,kernel.org,gmail.com,users.sourceforge.jp,libc.org,physik.fu-berlin.de,samsung.com,analog.com,lists.linux.dev,vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[21];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	TAGGED_FROM(0.00)[bounces-98096-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	DMARC_NA(0.00)[linux-m68k.org];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
-	DBL_PROHIBIT(0.00)[0.0.0.11:email,0.0.0.39:email];
+	RCVD_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[hongyang.zhao@thundersoft.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[thundersoft.com:+];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: C72AB2A5C39
+	FROM_NEQ_ENVFROM(0.00)[geert@linux-m68k.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	NEURAL_HAM(-0.00)[-0.955];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	R_DKIM_NA(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,linux-m68k.org:email,glider.be:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: DE55A2A5C42
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Add audio support for the Thundercomm RubikPi3 board:
-- Enable AudioReach via qcs6490-audioreach.dtsi
-- Add ES8316 codec on I2C0 with MCLK from LPASS PRM and jack detection
-- Add fixed 3.3V regulator for ES8316 power supply
-- Add MI2S playback/capture dai-links for ES8316
-- Add HDMI audio via LT9611 bridge on quaternary MI2S
-- Add SPDIF TX/RX on tertiary MI2S exposed at the board 40‑pin header
-- Add LPASS pin configurations for quaternary MI2S and LPI I2S1
+Hi Danilo,
 
-Signed-off-by: Hongyang Zhao <hongyang.zhao@thundersoft.com>
----
- .../boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts | 191 +++++++++++++++++++++
- 1 file changed, 191 insertions(+)
+On Tue, 17 Mar 2026 at 00:57, Danilo Krummrich <dakr@kernel.org> wrote:
+> On Tue Mar 3, 2026 at 12:53 PM CET, Danilo Krummrich wrote:
+> > diff --git a/arch/sh/drivers/platform_early.c b/arch/sh/drivers/platform_early.c
+> > index 143747c45206..3cd17bb0be67 100644
+> > --- a/arch/sh/drivers/platform_early.c
+> > +++ b/arch/sh/drivers/platform_early.c
+> > @@ -25,10 +25,12 @@ static int platform_match(struct device *dev, struct device_driver *drv)
+> >  {
+> >       struct platform_device *pdev = to_platform_device(dev);
+> >       struct platform_driver *pdrv = to_platform_driver(drv);
+> > +     int ret;
+> >
+> >       /* When driver_override is set, only bind to the matching driver */
+> > -     if (pdev->driver_override)
+> > -             return !strcmp(pdev->driver_override, drv->name);
+> > +     ret = device_match_driver_override(dev, drv);
+> > +     if (ret >= 0)
+> > +             return ret;
+> >
+> >       /* Then try to match against the id table */
+> >       if (pdrv->id_table)
+>
+> I was just about to pick up this series, but then noticed that checking for
+> driver_override in the platform_early case doesn't make sense in the first place
+> and was accidentally added when the platform_match() callback was copied over in
+> commit 507fd01d5333 ("drivers: move the early platform device support to
+> arch/sh").
+>
+> Thus, I'm going to drop this hunk and add in the following patch; please let me
+> know if there are any concerns.
+>
+> commit 39cae4095efda4b00b436c0fc46f21de84128969
+> Author: Danilo Krummrich <dakr@kernel.org>
+> Date:   Tue Mar 17 00:37:15 2026 +0100
+>
+>     sh: platform_early: remove pdev->driver_override check
+>
+>     In commit 507fd01d5333 ("drivers: move the early platform device support to
+>     arch/sh") platform_match() was copied over to the sh platform_early
+>     code, accidentally including the driver_override check.
+>
+>     This check does not make sense for platform_early, as sysfs is not even
+>     available in first place at this point in the boot process, hence remove
+>     the check.
+>
+>     Fixes: 507fd01d5333 ("drivers: move the early platform device support to arch/sh")
+>     Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+>
+> diff --git a/arch/sh/drivers/platform_early.c b/arch/sh/drivers/platform_early.c
+> index 143747c45206..48ddbc547bd9 100644
+> --- a/arch/sh/drivers/platform_early.c
+> +++ b/arch/sh/drivers/platform_early.c
+> @@ -26,10 +26,6 @@ static int platform_match(struct device *dev, struct device_driver *drv)
+>         struct platform_device *pdev = to_platform_device(dev);
+>         struct platform_driver *pdrv = to_platform_driver(drv);
+>
+> -       /* When driver_override is set, only bind to the matching driver */
+> -       if (pdev->driver_override)
+> -               return !strcmp(pdev->driver_override, drv->name);
+> -
+>         /* Then try to match against the id table */
+>         if (pdrv->id_table)
+>                 return platform_match_id(pdrv->id_table, pdev) != NULL;
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts b/arch/arm64/boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts
-index 0b64a0b91202..6831a576fefb 100644
---- a/arch/arm64/boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs6490-thundercomm-rubikpi3.dts
-@@ -19,6 +19,7 @@
- #include "pm7325.dtsi"
- #include "pm8350c.dtsi" /* PM7350C */
- #include "pmk8350.dtsi" /* PMK7325 */
-+#include "qcs6490-audioreach.dtsi"
- 
- /delete-node/ &adsp_mem;
- /delete-node/ &cdsp_mem;
-@@ -128,6 +129,23 @@ fan0: pwm-fan {
- 		pinctrl-names = "default";
- 	};
- 
-+	vreg_es8316_3v3: vreg-es8316-3v3 {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "vreg_es8316_3v3";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&tlmm 117 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&es8316_power_on>;
-+		pinctrl-names = "default";
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+
- 	vreg_eth_1v8: regulator-eth-1v8 {
- 		compatible = "regulator-fixed";
- 
-@@ -364,6 +382,16 @@ usb1_sbu_mux: endpoint {
- 			};
- 		};
- 	};
-+
-+	spdif_rx: spdif-rx {
-+		compatible = "linux,spdif-dir";
-+		#sound-dai-cells = <0>;
-+	};
-+
-+	spdif_tx: spdif-tx {
-+		compatible = "linux,spdif-dit";
-+		#sound-dai-cells = <0>;
-+	};
- };
- 
- &apps_rsc {
-@@ -727,6 +755,23 @@ &gpu_zap_shader {
- 	firmware-name = "qcom/qcs6490/a660_zap.mbn";
- };
- 
-+&i2c0 {
-+	status = "okay";
-+
-+	es8316: audio-codec@11 {
-+		compatible = "everest,es8316";
-+		reg = <0x11>;
-+		#sound-dai-cells = <0>;
-+
-+		clocks = <&q6prmcc LPASS_CLK_ID_MCLK_1 LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-+		clock-names = "mclk";
-+
-+		interrupts-extended = <&tlmm 63 IRQ_TYPE_EDGE_BOTH>;
-+
-+		everest,jack-detect-inverted;
-+	};
-+};
-+
- /* Pin 3, 5 in 40-pin connector */
- &i2c1 {
- 	status = "okay";
-@@ -740,6 +785,7 @@ &i2c9 {
- 	lt9611_codec: hdmi-bridge@39 {
- 		compatible = "lontium,lt9611";
- 		reg = <0x39>;
-+		#sound-dai-cells = <1>;
- 
- 		interrupts-extended = <&tlmm 20 IRQ_TYPE_EDGE_FALLING>;
- 		reset-gpios = <&tlmm 21 GPIO_ACTIVE_HIGH>;
-@@ -970,6 +1016,15 @@ &pon_resin {
- 	status = "okay";
- };
- 
-+&q6apmbedai {
-+	pinctrl-0 = <&mi2s0_data0>, <&mi2s0_data1>, <&mi2s0_mclk>,
-+		    <&mi2s0_sclk>, <&mi2s0_ws>,
-+		    <&lpass_qua_mi2s_sclk>, <&lpass_qua_mi2s_ws>, <&lpass_qua_mi2s_data>,
-+		    <&lpass_lpi_i2s1_clk>, <&lpass_lpi_i2s1_ws>,
-+		    <&lpass_lpi_i2s1_data0>, <&lpass_lpi_i2s1_data1>;
-+	pinctrl-names = "default";
-+};
-+
- &qupv3_id_0 {
- 	firmware-name = "qcom/qcm6490/qupv3fw.elf";
- 
-@@ -1006,6 +1061,91 @@ &sdhc_2 {
- 	status = "okay";
- };
- 
-+&sound {
-+	compatible = "qcom,qcs6490-rb3gen2-sndcard";
-+	model = "QCS6490-Thundercomm-RubikPi3";
-+
-+	mi2s-playback-dai-link {
-+		link-name = "MI2S-LPAIF-RX-PRIMARY";
-+
-+		codec {
-+			sound-dai = <&es8316>;
-+		};
-+
-+		cpu {
-+			sound-dai = <&q6apmbedai PRIMARY_MI2S_RX>;
-+		};
-+
-+		platform {
-+			sound-dai = <&q6apm>;
-+		};
-+	};
-+
-+	mi2s-capture-dai-link {
-+		link-name = "MI2S-LPAIF-TX-PRIMARY";
-+
-+		codec {
-+			sound-dai = <&es8316>;
-+		};
-+
-+		cpu {
-+			sound-dai = <&q6apmbedai PRIMARY_MI2S_TX>;
-+		};
-+
-+		platform {
-+			sound-dai = <&q6apm>;
-+		};
-+	};
-+
-+	quaternary-mi2s-playback-dai-link {
-+		link-name = "MI2S-LPAIF_RXTX-RX-PRIMARY";
-+
-+		codec {
-+			sound-dai = <&lt9611_codec 0>;
-+		};
-+
-+		cpu {
-+			sound-dai = <&q6apmbedai QUATERNARY_MI2S_RX>;
-+		};
-+
-+		platform {
-+			sound-dai = <&q6apm>;
-+		};
-+	};
-+
-+	tert-mi2s-playback-dai-link {
-+		link-name = "MI2S-LPAIF-RX-TERTIARY";
-+
-+		codec {
-+			sound-dai = <&spdif_tx>;
-+		};
-+
-+		cpu {
-+			sound-dai = <&q6apmbedai TERTIARY_MI2S_RX>;
-+		};
-+
-+		platform {
-+			sound-dai = <&q6apm>;
-+		};
-+	};
-+
-+	tert-mi2s-capture-dai-link {
-+		link-name = "MI2S-LPAIF-TX-TERTIARY";
-+
-+		codec {
-+			sound-dai = <&spdif_rx>;
-+		};
-+
-+		cpu {
-+			sound-dai = <&q6apmbedai TERTIARY_MI2S_TX>;
-+		};
-+
-+		platform {
-+			sound-dai = <&q6apm>;
-+		};
-+	};
-+};
-+
- /* Pin 19, 21, 23, 24 in 40-pin connector */
- &spi12 {
- 	status = "okay";
-@@ -1220,6 +1360,50 @@ &sdc2_data {
- 	drive-strength = <10>;
- };
- 
-+&lpass_tlmm {
-+	lpass_qua_mi2s_sclk: qua-mi2s-sclk-state {
-+		pins = "gpio0";
-+		function = "qua_mi2s_sclk";
-+		drive-strength = <8>;
-+		bias-disable;
-+		output-high;
-+	};
-+
-+	lpass_qua_mi2s_ws: qua-mi2s-ws-state {
-+		pins = "gpio1";
-+		function = "qua_mi2s_ws";
-+		drive-strength = <8>;
-+		output-high;
-+	};
-+
-+	lpass_qua_mi2s_data: qua-mi2s-data-state {
-+		pins = "gpio2", "gpio3", "gpio4";
-+		function = "qua_mi2s_data";
-+		drive-strength = <8>;
-+		bias-disable;
-+	};
-+
-+	lpass_lpi_i2s1_clk: lpi-i2s1-clk-state {
-+		pins = "gpio6";
-+		function = "i2s1_clk";
-+	};
-+
-+	lpass_lpi_i2s1_ws: lpi-i2s1-ws-state {
-+		pins = "gpio7";
-+		function = "i2s1_ws";
-+	};
-+
-+	lpass_lpi_i2s1_data0: lpi-i2s1-data0-state {
-+		pins = "gpio8";
-+		function = "i2s1_data";
-+	};
-+
-+	lpass_lpi_i2s1_data1: lpi-i2s1-data1-state {
-+		pins = "gpio9";
-+		function = "i2s1_data";
-+	};
-+};
-+
- &tlmm {
- 	pcie1_reset_n: pcie1-reset-n-state {
- 		pins = "gpio2";
-@@ -1387,6 +1571,13 @@ pcie0_wake_n: pcie0-wake-n-state {
- 		bias-pull-up;
- 	};
- 
-+	es8316_power_on: es8316-power-on-state {
-+		pins = "gpio117";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
- 	wifi_power_on: wifi-power-on-state {
- 		pins = "gpio125";
- 		function = "gpio";
+Nice catch!
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
 
--- 
-2.43.0
+Gr{oetje,eeting}s,
 
+                        Geert
+
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
 
