@@ -1,105 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-98195-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98196-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id IEcxOs9juWmZDQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98195-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 15:23:11 +0100
+	id yLmXLElkuWlsCwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98196-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 15:25:13 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A96F2ABC66
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 15:23:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3E46D2ABDA3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 15:25:13 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 99C573268E15
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 14:15:43 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 9A86A319E21C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 14:17:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 951CD3E3DAC;
-	Tue, 17 Mar 2026 14:13:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14F8C3E3D8C;
+	Tue, 17 Mar 2026 14:14:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tZAEscpa"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kdeq5Pbm"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 715E63E3DAA
-	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Mar 2026 14:13:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7EEB3E3C64;
+	Tue, 17 Mar 2026 14:14:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773756787; cv=none; b=lqWqSwoSs1SCwsIBC4b+6zez/05cdIfwaQgC9+gomaFnnuIa5ZVMxRSohGujMCr1/atwsP/1J6lWZgcJefF09QNapwqLa42pGYqo4jaSCovVMvJSV2fgdjGhtghnJz1xQpY9Mcoy43nwjQUKetfDY2gBjQUIJ6qyw/4KhzVxRhE=
+	t=1773756885; cv=none; b=AU0oVXn4EzzgYjrPMUSBPUPPoIR/YbQ1AFe1LdTb4UBKEsgKnCXCbo2rNYOu52BYrb6ryU9S6WwWUk6/5lQIyHRl/JqqW54MkIFOA1+xcWy3CxiO6I3v9LFzeSvg6tAOnQjHwrE4pZB7RfREDVMUsYA33mGRHOOWASiTfP+691A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773756787; c=relaxed/simple;
-	bh=9QDalKJYBUEDUJPFs8n5F17T6oCLIOfRdQADKKa+dtg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qE8hUtlTn09ckTBbdjSEXFYV/AHbOXXKvpPVQQ24uryxHzQIZKFfS6zisP6roECbdk1Dn2OdUlRLOlzRvbDcIiDrHOTcuNufxX0Uj40YavQC98q5fjkK5uNHp3lbwxV7E8i6WKBSR8nN6SMf9EbE9Ih6xvryy50gyqCQWkQLYQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tZAEscpa; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B4FDC2BCB2
-	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Mar 2026 14:13:07 +0000 (UTC)
+	s=arc-20240116; t=1773756885; c=relaxed/simple;
+	bh=vzyUBQC/PtIalKKBemzwI8n5sXQNDqBwffwxeJyopxo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=eho7up1HixEqhglXOu2FYkH+PNg4HLFzPmlyqSlvDfJo6n6DwYBRYTRYptH+oCdflKBi8yKyqZjE8ikjApZFpH4u1j1b/P1tjimmqc1BZbImwKmb5IZkQ5bkVroEUxUWZsh3mWcRnWWklsltixhYWYTHSQtRV2mBR3sek19ZHWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kdeq5Pbm; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16B2EC4CEF7;
+	Tue, 17 Mar 2026 14:14:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773756787;
-	bh=9QDalKJYBUEDUJPFs8n5F17T6oCLIOfRdQADKKa+dtg=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=tZAEscpa8SCC5cIZ2JquMfgXyJ2cYbjRRZovEZ4pp9iCwMtzoyZvoUvuYiYMbRTYC
-	 SnQwovSWExy1qzNu8gKN2Re3kiqbZF6sZmkIooWlWa9EIx1ERfsbgtRs5rZB0SAIxf
-	 3lPrGMQ4Ue2TuM4ia8nL9lBYQlDl9Z6+Gmi7Vne8vrfCzyTk9J2Ck3dsbBaTLAPSfD
-	 NPCO+IQ8fm5HTfq9yr/wXF7f1MJldHxMFhyKqH3oTfoTSoTC0Dh5v2G2YRcDRDQgL5
-	 ObXNTsitNLuKk+KvWrgZ9pPDroH39BoYVIyc5TZiwHYdHQ131NS6aY+w9jvXRnJOfo
-	 pYQYSw8TEnjrw==
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-38ad26e3992so5511471fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Mar 2026 07:13:07 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCXj2K8V8QS5PSg4Wz6csWP5vuy6XU99HEgLC7+v/8lwciFGBDuRux0rNTTJNYbYzfFBfrsGnXNc6LVvHcDa@vger.kernel.org
-X-Gm-Message-State: AOJu0YwKEt8n12y5o/OwY/1mUxhJdUOkRl0hYQxByL1xS68zN6exUGeh
-	c20WrqMOqiMHhGm8FGBuuN/JD2HpCUqUZwewuDn8ptAdYUf9Lr/kp9ezFubGmeD8M1aY2DJN3js
-	k3glwEWaEfwDsrtlP+7MJnoysONc57YfrID0xcQeZJA==
-X-Received: by 2002:a05:651c:2115:b0:37f:c5ca:a6d4 with SMTP id
- 38308e7fff4ca-38a89666433mr58706271fa.6.1773756785569; Tue, 17 Mar 2026
- 07:13:05 -0700 (PDT)
+	s=k20201202; t=1773756885;
+	bh=vzyUBQC/PtIalKKBemzwI8n5sXQNDqBwffwxeJyopxo=;
+	h=From:Date:Subject:To:Cc:From;
+	b=kdeq5PbmUSX2Sd51cN0XUZH7oEmVQTDag/r9tTIZt+56e/bERfVVn4AAldtljv92D
+	 8Act5G04+Uq0MxpOhLk8CbFdx7L4upBJFvBPkjQap9v8rNQfZmGQ/b2lSvPy+erGOV
+	 yd/csO+ONkpC5mqjVXBhc3cj2nXo523FN1MJmCaW3SZRDTgXuodRHE8916eGuFu6/p
+	 Rht25rI+7GMWV74nOGCR0ztDtIhU/o5XTaGRfP6pxEbRQZBKYpBidHcvAKvNSecIaM
+	 mLv5Uyb1HowlfXocz/nr8EGYw0lVsyYtF4h84O3JuhqAldlkleDDrVJmtuasEp6zj0
+	 LDuKiP3tbmQ/Q==
+From: Konrad Dybcio <konradybcio@kernel.org>
+Date: Tue, 17 Mar 2026 15:14:40 +0100
+Subject: [PATCH] soc: qcom: pmic_glink_altmode: Fix TBT->SAFE->!TBT
+ transition
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260316-qcom-sa8255p-emac-v9-0-c58934e76ff2@oss.qualcomm.com> <64d282fd94be1546df75d7df5b47eacc0479797a.camel@redhat.com>
-In-Reply-To: <64d282fd94be1546df75d7df5b47eacc0479797a.camel@redhat.com>
-From: Bartosz Golaszewski <brgl@kernel.org>
-Date: Tue, 17 Mar 2026 15:12:53 +0100
-X-Gmail-Original-Message-ID: <CAMRc=MfNcK3MLndik1jy-yhHAph5=amnTGgn-MpXXG0Uv1ifpQ@mail.gmail.com>
-X-Gm-Features: AaiRm52mh793CgOH9S8BNXU-tBYi1I-pfEq9XQjt50faEkjR5xH42aEvJgG19dM
-Message-ID: <CAMRc=MfNcK3MLndik1jy-yhHAph5=amnTGgn-MpXXG0Uv1ifpQ@mail.gmail.com>
-Subject: Re: [PATCH net-next v9 0/6] net: stmmac: qcom-ethqos: add support for
- SCMI power domains
-To: Radu Rendec <rrendec@redhat.com>
-Cc: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Vinod Koul <vkoul@kernel.org>, Giuseppe Cavallaro <peppe.cavallaro@st.com>, 
-	Chen-Yu Tsai <wens@kernel.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Kevin Hilman <khilman@baylibre.com>, 
-	Jerome Brunet <jbrunet@baylibre.com>, Shawn Guo <shawnguo@kernel.org>, 
-	Fabio Estevam <festevam@gmail.com>, Jan Petrous <jan.petrous@oss.nxp.com>, s32@nxp.com, 
-	Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>, Romain Gantois <romain.gantois@bootlin.com>, 
-	Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, 
-	Maxime Ripard <mripard@kernel.org>, Christophe Roullier <christophe.roullier@foss.st.com>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
-	linux-stm32@st-md-mailman.stormreply.com, 
-	linux-arm-kernel@lists.infradead.org, Drew Fustini <dfustini@tenstorrent.com>, 
-	linux-sunxi@lists.linux.dev, linux-amlogic@lists.infradead.org, 
-	linux-mips@vger.kernel.org, imx@lists.linux.dev, 
-	linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, 
-	sophgo@lists.linux.dev, linux-riscv@lists.infradead.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>, 
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>, 
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260317-topic-tbt_pg_fixup-v1-1-325b8647bc82@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/x2MWwqAIBAArxL7naBGz6tESNlq+1OiFoF496TPY
+ ZhJENATBpiqBB4fCnSdBURdgT7W0yKjvTBILjveiJ7Fy5FmcYvKWWXovR3jokOjxxZ3OUAJncc
+ i/um85PwBoVYkd2QAAAA=
+X-Change-ID: 20260317-topic-tbt_pg_fixup-016efc95ed28
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1773756883; l=3028;
+ i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
+ bh=Mt/45ufEKyuu26PusILxu/GRnBr8BCxZIrDEk3T9SgQ=;
+ b=BUhOHk3EjyppH+ZOLXlpkASWuW/N5cQ3D8M0Qj1npDF6rXd8cr8sojBidsH0PbVuDv7VXPmU9
+ Tpo5khiFCu0DMx1RLJsjUpwzj5ceEez+xdHCY9+ESPJybJPRuuNFXcI
+X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
@@ -107,83 +80,103 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,lunn.ch,davemloft.net,google.com,redhat.com,gmail.com,foss.st.com,st.com,linaro.org,baylibre.com,oss.nxp.com,nxp.com,bootlin.com,glider.be,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org,tenstorrent.com,lists.linux.dev,googlemail.com,bp.renesas.com];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-98195-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCVD_COUNT_THREE(0.00)[4];
+	SUBJECT_HAS_EXCLAIM(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-98196-lists,linux-arm-msm=lfdr.de];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
-	MISSING_XM_UA(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[51];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev,renesas];
+	FROM_NEQ_ENVFROM(0.00)[konradybcio@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,mail.gmail.com:mid]
-X-Rspamd-Queue-Id: 8A96F2ABC66
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: 3E46D2ABDA3
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Mon, Mar 16, 2026 at 7:31=E2=80=AFPM Radu Rendec <rrendec@redhat.com> wr=
-ote:
->
-> On Mon, 2026-03-16 at 13:05 +0100, Bartosz Golaszewski wrote:
-> > Add support for the firmware-managed variant of the DesignWare MAC on
-> > the sa8255p platform. This series contains new DT bindings and driver
-> > changes required to support the MAC in the STMMAC driver.
-> >
-> > It also reorganizes the ethqos code quite a bit to make the introductio=
-n
-> > of power domains into the driver a bit easier on the eye.
-> >
-> > The DTS changes will go in separately.
->
-> I'm seeing some weird behavior with this version. The probe part looks
-> good (but see below), but when I try to bring an interface up, it fails
-> with ETIMEDOUT. The relevant part of the stack trace leading to the
-> error is this:
->
-> dwmac4_dma_reset+0x208/0x220 [stmmac]
-> stmmac_reset+0x2c/0x68 [stmmac]
-> stmmac_init_dma_engine+0x108/0x400 [stmmac]
-> stmmac_hw_setup+0x5c/0x538 [stmmac]
-> __stmmac_open+0xc8/0x2a0 [stmmac]
-> stmmac_open+0xcc/0x238 [stmmac]
-> __dev_open+0x138/0x2a8
->
-> Now dwmac4_dma_reset() is very simple. It sets the soft reset bit in
-> the DMA_BUS_MODE register, then waits for the hardware to clear it, and
-> that never happens.
->
-> Now, getting back to the probe part, there is one extra message
-> (compared to my previous successful test on v7), which I see at the
-> very end of the probing:
->
->   qcom-ethqos 23040000.ethernet: clk_csr value out of range (0xffffff00
->   exceeds mask 0x00000f00), truncating
->
-> This is a sa8775p ride board, so there are two stmmac devices. I only
-> see that message for the 2nd one, which is also the one I'm trying to
-> enable, and which fails.
->
-> I realize this may or may not be related to your changes. But there is
-> no way to test on a SCMI-pd board without them. I'm not sure how
-> relevant it would be to test on the non-SCMI variant. I'm assuming the
-> DMA part should work the same way (regardless of SCMI-pd), so if I can
-> reproduce it there, and since I know it works on mainline Linux (that's
-> where I tested v7), I could bisect and see which commit in net-next
-> breaks it. If you don't have any better idea, let me know and I can
-> try. Meanwhile, I'll keep poking at v9.
->
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-Does current net-next on its own still work? Or is the second
-interface broken even without this series?
+Similar to the case of commit d48708500610 ("soc: qcom:
+pmic_glink_altmode: Fix SVID=DP && unconnected edge case"), leaving the
+TBT altmode makes pmic_glink_altmode report a SVID=TBT && mux_ctrl=0
+message.
 
-Bart
+Said commit reordered the check such that the SVID is processed before
+checking for NO_CONN. Rework this to take into account valid values of
+mux_ctrl first and hopefully solve this for good..
+
+Fixes: d48708500610 ("soc: qcom: pmic_glink_altmode: Fix SVID=DP && unconnected edge case")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+---
+ drivers/soc/qcom/pmic_glink_altmode.c | 23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/soc/qcom/pmic_glink_altmode.c b/drivers/soc/qcom/pmic_glink_altmode.c
+index b496b88842a2..619bad2c27ee 100644
+--- a/drivers/soc/qcom/pmic_glink_altmode.c
++++ b/drivers/soc/qcom/pmic_glink_altmode.c
+@@ -62,6 +62,9 @@ struct usbc_notify {
+ 	u8 orientation;
+ 	u8 mux_ctrl;
+ #define MUX_CTRL_STATE_NO_CONN			0
++#define MUX_CTRL_STATE_USB3_ONLY		1
++#define MUX_CTRL_STATE_DP4LN			2
++#define MUX_CTRL_STATE_USB3_DP			3
+ #define MUX_CTRL_STATE_TUNNELING		4
+ 
+ 	u8 res;
+@@ -350,9 +353,12 @@ static void pmic_glink_altmode_worker(struct work_struct *work)
+ 
+ 	typec_switch_set(alt_port->typec_switch, alt_port->orientation);
+ 
+-	if (alt_port->svid == USB_TYPEC_TBT_SID) {
+-		pmic_glink_altmode_enable_tbt(altmode, alt_port);
+-	} else if (alt_port->svid == USB_TYPEC_DP_SID) {
++	/*
++	 * MUX_CTRL_STATE_DP4LN/USB3_DP may only be set if SVID=DP, but we need
++	 * to special-case the SVID=DP && mux_ctrl=NO_CONN case to deliver a
++	 * HPD notification
++	 */
++	if (alt_port->svid == USB_TYPEC_DP_SID) {
+ 		if (alt_port->mux_ctrl == MUX_CTRL_STATE_NO_CONN) {
+ 			pmic_glink_altmode_safe(altmode, alt_port);
+ 		} else {
+@@ -369,11 +375,18 @@ static void pmic_glink_altmode_worker(struct work_struct *work)
+ 
+ 		drm_aux_hpd_bridge_notify(&alt_port->bridge->dev, conn_status);
+ 	} else if (alt_port->mux_ctrl == MUX_CTRL_STATE_TUNNELING) {
+-		pmic_glink_altmode_enable_usb4(altmode, alt_port);
++		if (alt_port->svid == USB_TYPEC_TBT_SID)
++			pmic_glink_altmode_enable_tbt(altmode, alt_port);
++		else
++			pmic_glink_altmode_enable_usb4(altmode, alt_port);
++	} else if (alt_port->mux_ctrl == MUX_CTRL_STATE_USB3_ONLY) {
++		pmic_glink_altmode_enable_usb(altmode, alt_port);
+ 	} else if (alt_port->mux_ctrl == MUX_CTRL_STATE_NO_CONN) {
+ 		pmic_glink_altmode_safe(altmode, alt_port);
+ 	} else {
+-		pmic_glink_altmode_enable_usb(altmode, alt_port);
++		dev_err(altmode->dev, "Got unknown mux_ctrl: %u on port %u, forcing safe mode\n",
++			alt_port->mux_ctrl, alt_port->index);
++		pmic_glink_altmode_safe(altmode, alt_port);
+ 	}
+ 
+ 	pmic_glink_altmode_request(altmode, ALTMODE_PAN_ACK, alt_port->index);
+
+---
+base-commit: 95c541ddfb0815a0ea8477af778bb13bb075079a
+change-id: 20260317-topic-tbt_pg_fixup-016efc95ed28
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+
 
