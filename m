@@ -1,120 +1,400 @@
-Return-Path: <linux-arm-msm+bounces-98270-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98271-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id ENCkGyy4uWnJMQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98270-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 21:23:08 +0100
+	id WKCeHRq5uWn6MgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98271-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 21:27:06 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C36FC2B2336
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 21:23:07 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id CFD9D2B23EE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 21:27:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A20AB30FE756
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 20:17:39 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 239FF304D27D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 20:25:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7781F3845C7;
-	Tue, 17 Mar 2026 20:17:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 679C1386C2F;
+	Tue, 17 Mar 2026 20:25:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TL6fitv2"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="EafpF6VG";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="i5q/Q427"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51338340285;
-	Tue, 17 Mar 2026 20:17:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2FDD34AB00
+	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Mar 2026 20:25:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773778659; cv=none; b=ZQS/nBL3cC88Qabw/oOxDuABoj4VoZDgPAhRd8XYG+Gka3qmKcNUZ/qGH5JMm6NmlKh2UCpBJ32kc5xk8/CmOXyBrsK0oNg8CISY9Y16TL8AvP8Ix1Q56+gs2VI8jWb6JuaqeKd6PfThB51AsCg/ZvMn7SyZfzgoi0Ur/IUnjgo=
+	t=1773779113; cv=none; b=pZkH4PuP921+0uGahJUmgRbuYCh8pBGSMviO/zjaSnsZIEa7+LU53UjD+Va6ePmknLkEwXxZ3Kl6kL9DXDl39rUMb3ezHVIzmDYM1FmA8Cr1QebSKTxJLfn0CwuC/ZD2kdQls/tmVK7VyLXEOdHaPX55ZXKHjzlVVy5ETO6hQ9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773778659; c=relaxed/simple;
-	bh=vYhbs/VqbUOKt2/+DJcPYXjJLKtcAFfOEyK6uBlyvd4=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:From:Subject:Cc:
-	 References:In-Reply-To; b=oEkxUguZ9lWRsrLY7kp8nzw0S8b1S1UhQQJmV0uOKw90TSKWT3xn1aWLTFaN9MhWpGJW2xSH+yFzqBDebMMdKrtQSC+SZbwN+fBzoAwoX2Cj4dNHO1prcSDCvKA6a5ENse6h8N7JAKAlqIMTqv/XKA5J9t109VHxkQtKECiwlpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TL6fitv2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBB44C4CEF7;
-	Tue, 17 Mar 2026 20:17:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773778658;
-	bh=vYhbs/VqbUOKt2/+DJcPYXjJLKtcAFfOEyK6uBlyvd4=;
-	h=Date:To:From:Subject:Cc:References:In-Reply-To:From;
-	b=TL6fitv25V9dtHUgFpTeEY4MRw6fZh5+uYq1cUU+38l/vbuVWNjRKd5VDX6wIMXet
-	 iguOOKTZv9cbNV7KGKq224mYvMZtpZXotZeSACvoVh7eU8hsliC/+L0Qd4k46RPkkw
-	 F53ovtApR/gfyu2EG6KS7JmAxHNJWVZjL/1pPhEv4q6bO1VI/QD8GHj5hJv2LspdIG
-	 pZke5+A1LmhqtJdkGXrUDL8e+CH9v0WV7NpeKByPJsakjBWNEvvk+Tp4H59WY0U9Ql
-	 d/mSXyym3Hex7sj3/5kXjt4R/A8yznIe/AciY0lOTmwK9XSpygr9myoyaCJBg3FLGz
-	 IC2UHZmSiy8ZQ==
+	s=arc-20240116; t=1773779113; c=relaxed/simple;
+	bh=FXPrAptZbKbJgYhpXOo04M5q5MKfzmnXxEIleDkGkJw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=EZ2gDiOCJ4udfd5AkXY46YhZCyv5N6NvQHCpVGPkGhC5MHFuSyGKXsAWdugD0dKnPgn+z1Kl1RtJhNeveVoO9kfTTepmABmoh9w1cS2gkCNGVpWIHiut5+6082ioJ6p4rlConvHNh83pXc+VU5w6wqedSIDCH52OdZDyXtfSF7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=EafpF6VG; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=i5q/Q427; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62HIJDKW3281317
+	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Mar 2026 20:25:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	GpbFY1gjKra/+bdktVPmJK8BdIX5dAmrnofgrI5SFpY=; b=EafpF6VGrZJ5QKDM
+	DW+oQbHSm8fFBlteSX42GqhhCoLCuBxfvGH67lOfq0igWX9yuAJGl4bmqWGraW4a
+	xE+dgCvOI0R0lehs8JTZ8pMzJMJWnNJR+7gRdmO4aW/TqGyR4ZOAdaXcsEujY5YO
+	olNF5FdCM6mC9UxLcMdqUPM7hDUZ7mwY0qnFhTu6+8skxlti7ZQXrkz8wGFAVNeh
+	UXWGFcJfdUE2q4hmoqHtmmbUyQdsUWt/zh+dbegDEml6aEUwe+mFnXscqt4xm5Ml
+	iZH6RpEqI30PxIZIHxpvr8dUzVaNMOXX2gws8POb8Mbolju8E/SqKChEDmgIApst
+	NXW5Eg==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com [74.125.82.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cya62s24f-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Mar 2026 20:25:10 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id 5a478bee46e88-2ba8013a9e3so4906212eec.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Mar 2026 13:25:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1773779110; x=1774383910; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=GpbFY1gjKra/+bdktVPmJK8BdIX5dAmrnofgrI5SFpY=;
+        b=i5q/Q427/u4Dj2NS17lbccUNoOpWayT92lIij9eDjKAG2lbflaT6k73CaxLPPsj2P0
+         AUfHQObSzASxa3LBUhTkEbuNxFi1knFVOEfpkn5giJiUZdZdGmbXaSMani8/E3XFutGh
+         PqmyFuSaO/3NZ2noJlPBQl0hMAAICCGWNNeAxeNiIssMr49E3yTVNrxP+HeMH39JkhFw
+         NWuboanB5OVmDNgpvRTq3qJH/COtTAPxnY+80r+CUer4ceLOgpLmXMjCpvDPomXRx7Kf
+         m/HpUyZ1cxShvVDAx8Qdn/KgsEnEL3/jAs4E7za4VlAgjhmIKNilOSiAdkyZL/LWv6cy
+         vufQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773779110; x=1774383910;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GpbFY1gjKra/+bdktVPmJK8BdIX5dAmrnofgrI5SFpY=;
+        b=SGKjlUmFLkB6olWYA0SQ1yB8ktnD+ZWWn4rtGpGVjk822vL8aY2shSetMO3K4hCl3G
+         ppKNvPa2crWmi4eHKlb5tyx4vXaRobak05nB+L83bqg30DNZwthTSG1Q5ZKm2yF5AJEO
+         NO4kgu1y0KfioH6NdIR3ASb9cDJQtRA16CFdPsal0SyFIsjtxcd9yxXn+KZK49fXPd7/
+         fH01g/mAhGo73i7FljhFSs3jwuenkQd9aQGmAunrzpNi8qQVQh19yI5prfQ6H7A9EEQa
+         xU4If4sVcSoHWm6+wus9dQv/F+vQTUnG0j9OQFsXDcJ+ukVY8G7N68AZInOIFucyHwwf
+         Rb8Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWNI4Pr/sdQ2MsH5nnNaqNdNxwJsVXxY30TggP5OxCSw/Tkk0h8gFe1iWLwZRYSMDskuEyTztskgYHnQihk@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzgs33EEO9/OR3JNmJ44xmQ/KPBWU3FsQcP1GlBf8JTwQWzHHEk
+	V3jcYKSOsjy4j5Ff8sw7ZLDxh8++SW+IkoK37ie6dpdNcgmkD+Lohs04BMg2c5WFjbjOCUE0mco
+	Gh5cTBpDdY4HLui0FglvRS92ynms1Fe4NgXmC0/DM0hFEcTsy1VqmzJYj/Mro4mmc2Msg
+X-Gm-Gg: ATEYQzzLWTUGHFu7Om9auTgzwEVSiu4EgZ8A/rFij++diGMrJ8cYxljstYyI2ufjjA9
+	I5fCyUIsxrXkgGufbI5bFOCmT0zgDqXc49R/l/EK+fzd/aH9Kh12TEAtRfAFimDlWZnzfk4M/d+
+	1ZB+tWM/TL2ZdFlj5tHILHqrLCx0UcHVb/WGe3pqxM/cqTNou/OluW4vqxWOTHPzrQjiWPixkxc
+	qtI8keJOeqtQy61GpU3mjY6CvHDsRrh44YmtmS5aziYKWil+bHPYyfc/Ie18pK/MFfXebb3Lrjj
+	oR2p7RJyA1VXYSGZLaBIFc8KSHY5P+C8rEVQoF9LiPGHjIJH2oYo4zQfvmmaEsY+m/DQmFjOzZu
+	bhBKH3GFm09IhmW9M0kwKFH7J+9EtHFK5XRU7EVo0dj5ciXLZbSpsOhNLh9ddTdCDLuA3y87e9D
+	FWINvT
+X-Received: by 2002:a05:7300:a54b:b0:2be:80c4:2c8c with SMTP id 5a478bee46e88-2c0e4ffa9d0mr398499eec.8.1773779109507;
+        Tue, 17 Mar 2026 13:25:09 -0700 (PDT)
+X-Received: by 2002:a05:7300:a54b:b0:2be:80c4:2c8c with SMTP id 5a478bee46e88-2c0e4ffa9d0mr398479eec.8.1773779108900;
+        Tue, 17 Mar 2026 13:25:08 -0700 (PDT)
+Received: from [10.62.37.228] (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2c0e55a53fcsm1134929eec.24.2026.03.17.13.25.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Mar 2026 13:25:08 -0700 (PDT)
+Message-ID: <4afceefe-8053-4c10-8595-39dab9379aab@oss.qualcomm.com>
+Date: Tue, 17 Mar 2026 13:25:07 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 17 Mar 2026 21:17:34 +0100
-Message-Id: <DH5C20DDJ8M0.4EKTFQYJYF7I@kernel.org>
-To: <gregkh@linuxfoundation.org>, <rafael@kernel.org>,
- <hanguidong02@gmail.com>, <ysato@users.sourceforge.jp>, <dalias@libc.org>,
- <glaubitz@physik.fu-berlin.de>, <abelvesa@kernel.org>, <srini@kernel.org>,
- <s.nawrocki@samsung.com>, <nuno.sa@analog.com>
-From: "Danilo Krummrich" <dakr@kernel.org>
-Subject: Re: [PATCH v2 0/4] driver core: generalize driver_override
- infrastructure
-Cc: <driver-core@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
- <imx@lists.linux.dev>, <linux-hwmon@vger.kernel.org>,
- <linux-arm-msm@vger.kernel.org>, <linux-sound@vger.kernel.org>,
- <linux-sh@vger.kernel.org>
-References: <20260303115720.48783-1-dakr@kernel.org>
-In-Reply-To: <20260303115720.48783-1-dakr@kernel.org>
-X-Spamd-Result: default: False [-1.66 / 15.00];
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/2] dt-bindings: phy: qcom: Add CSI2 C-PHY/DPHY schema
+To: Bryan O'Donoghue <bod@kernel.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Vinod Koul
+ <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20260315-x1e-csi2-phy-v4-0-90c09203888d@linaro.org>
+ <20260315-x1e-csi2-phy-v4-1-90c09203888d@linaro.org>
+ <3VqSGUgMUKaCja5WYOrOP8nJ_mw_eDPdItA8d1CvqUg4ASPS5IUc_aT2E-XIo0YmnYo8QltXVw8_6NDxtdqGGw==@protonmail.internalid>
+ <5705b48a-fc24-4c5f-aa6d-40952f0070d9@oss.qualcomm.com>
+ <edf766b8-2664-4dac-b626-551807b3e5ef@kernel.org>
+Content-Language: en-US
+From: Vijay Kumar Tumati <vijay.tumati@oss.qualcomm.com>
+In-Reply-To: <edf766b8-2664-4dac-b626-551807b3e5ef@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=Ns3cssdJ c=1 sm=1 tr=0 ts=69b9b8a6 cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=gEfo2CItAAAA:8 a=KKAkSRfTAAAA:8 a=VwQbUJbxAAAA:8 a=CIW99FJ8g63gKaA5L-sA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22
+ a=sptkURWiP4Gy88Gu7hUp:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: ukvdPhm2RsmTznNe9C_CWaVqoOZqYjPz
+X-Proofpoint-GUID: ukvdPhm2RsmTznNe9C_CWaVqoOZqYjPz
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE3MDE4MCBTYWx0ZWRfXznQGUgvSVyLN
+ m8XeiInUh6e6YcoJ7cpuwwEK708WZR/OTZdChjokGO6/LrqhcMS3/YnL1n7R6LMdklVeSGTSzFh
+ Y16DPYiY9dMwmDdKu0oxqOFk1+TWYw73CuCS7vlBnlgJ7XXkArYkDQyUf18ds0a5Vm4Aqm7rPqq
+ O8Kgm2tVxdqSg4eh/XKW+C8RoaWw+HtPMqt6NmE+pdCxVH1zqythoqxooYE6kmTIvNUaH8qz+Pw
+ lJ1cANqAMMbVs4X8uMEcbUOyhl2yecW7Brx8YpGu00SURgIqGEiAlQMZtOMHzu/r9oFoEKYkJNv
+ no47h43Vxpgn8u5KP1bYkm1E8Z25KRc9FGfZSwIQIjDKe24Mzj6iDttXv2QyUi6vnxMIS8UV/T4
+ dALn9SLN27CSkxqd+M/MJ3tlykajzLKONWEIcyIyJ9D2a0BtocpbcYxaDlu0GnvAwAV6HaqJWSw
+ cDLZiKzlSYtjXxI7rWQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-17_04,2026-03-17_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 phishscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0
+ priorityscore=1501 malwarescore=0 adultscore=0 spamscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603170180
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	MV_CASE(0.50)[];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-98270-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[linuxfoundation.org,kernel.org,gmail.com,users.sourceforge.jp,libc.org,physik.fu-berlin.de,samsung.com,analog.com];
-	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	TAGGED_FROM(0.00)[bounces-98271-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TO_DN_NONE(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,devicetree.org:url,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:dkim,linaro.org:email,ace4000:email];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dakr@kernel.org,linux-arm-msm@vger.kernel.org];
-	MISSING_XM_UA(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FROM_NEQ_ENVFROM(0.00)[vijay.tumati@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_TWELVE(0.00)[17];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: C36FC2B2336
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: CFD9D2B23EE
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Tue Mar 3, 2026 at 12:53 PM CET, Danilo Krummrich wrote:
 
-Applied to driver-core-linus, thanks!
 
->   driver core: generalize driver_override in struct device
+On 3/16/2026 10:26 PM, Bryan O'Donoghue wrote:
+> On 16/03/2026 21:31, Vijay Kumar Tumati wrote:
+>> Hi Bryan,
+>>
+>> On 3/15/2026 4:52 PM, Bryan O'Donoghue wrote:
+>>> Add a base schema initially compatible with x1e80100 to describe MIPI 
+>>> CSI2
+>>> PHY devices.
+>>>
+>>> The hardware can support both C-PHY and D-PHY modes. The CSIPHY devices
+>>> have their own pinouts on the SoC as well as their own individual 
+>>> voltage
+>>> rails.
+>>>
+>>> The need to model voltage rails on a per-PHY basis leads us to define
+>>> CSIPHY devices as individual nodes.
+>>>
+>>> Two nice outcomes in terms of schema and DT arise from this change.
+>>>
+>>> 1. The ability to define on a per-PHY basis voltage rails.
+>>> 2. The ability to require those voltage.
+>>>
+>>> We have had a complete bodge upstream for this where a single set of
+>>> voltage rail for all CSIPHYs has been buried inside of CAMSS.
+>>>
+>>> Much like the I2C bus which is dedicated to Camera sensors - the CCI 
+>>> bus in
+>>> CAMSS parlance, the CSIPHY devices should be individually modelled.
+>>>
+>>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>>> ---
+>>>    .../bindings/phy/qcom,x1e80100-csi2-phy.yaml       | 133 +++++++++ 
+>>> ++++++++++++
+>>>    1 file changed, 133 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/phy/qcom,x1e80100- 
+>>> csi2-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,x1e80100- 
+>>> csi2-phy.yaml
+>>> new file mode 100644
+>>> index 0000000000000..b83c2d65ebc6e
+>>> --- /dev/null
+>>> +++ b/Documentation/devicetree/bindings/phy/qcom,x1e80100-csi2-phy.yaml
+>>> @@ -0,0 +1,133 @@
+>>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>>> +%YAML 1.2
+>>> +---
+>>> +$id: http://devicetree.org/schemas/phy/qcom,x1e80100-csi2-phy.yaml#
+>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>>> +
+>>> +title: Qualcomm CSI2 PHY
+>>> +
+>>> +maintainers:
+>>> +  - Bryan O'Donoghue <bod@kernel.org>
+>>> +
+>>> +description:
+>>> +  Qualcomm MIPI CSI2 C-PHY/D-PHY combination PHY. Connects MIPI CSI2 
+>>> sensors
+>>> +  to Qualcomm's Camera CSI Decoder. The PHY supports both C-PHY and 
+>>> D-PHY
+>>> +  modes.
+>>> +
+>>> +properties:
+>>> +  compatible:
+>>> +    const: qcom,x1e80100-csi2-phy
+>>> +
+>>> +  reg:
+>>> +    maxItems: 1
+>>> +
+>>> +  "#phy-cells":
+>>> +    const: 1
+>>> +
+>>> +  clocks:
+>>> +    maxItems: 4
+>>> +
+>>> +  clock-names:
+>>> +    items:
+>>> +      - const: csiphy
+>>> +      - const: csiphy_timer
+>>> +      - const: camnoc_axi
+>>> +      - const: cpas_ahb
+>>> +
+>>> +  interrupts:
+>>> +    maxItems: 1
+>>> +
+>>> +  operating-points-v2:
+>>> +    maxItems: 1
+>>> +
+>>> +  power-domains:
+>>> +    items:
+>>> +      - description: TITAN TOP GDSC
+>>> +      - description: MXC or MXA voltage rail
+>> Would it be better to provision MXA or MXC as an additional optional
+>> power domain? I see 'cam_cc_cphy_rx_clk_src', the parent of all CSIPHYx
+>> clocks, need all three power domains on this chipset.
+> 
+> I don't think this should be optional. Have the dts point to an "mx" 
+> power-domain and then select which one is right for a PHY MX/MXA or MXC.
+> 
+> Your worst case here is some future PHY which has more or fewer PDs 
+> which is then either a special case in this file or a whole new file for 
+> that compat.
+> 
+I think it is the case on x1e* as well, Bryan.
+>>> +      - description: MMCX voltage rail
+>>> +
+>>> +  power-domain-names:
+>>> +    items:
+>>> +      - const: top
+>>> +      - const: mx
+>>> +      - const: mmcx
+>>> +
+>>> +  vdda-0p8-supply:
+>>> +    description: Phandle to a 0.8V regulator supply to a PHY.
+>>> +
+>>> +  vdda-1p2-supply:
+>>> +    description: Phandle to 1.2V regulator supply to a PHY.
+>>> +
+>>> +required:
+>>> +  - compatible
+>>> +  - reg
+>>> +  - "#phy-cells"
+>>> +  - clocks
+>>> +  - clock-names
+>>> +  - interrupts
+>>> +  - operating-points-v2
+>>> +  - power-domains
+>>> +  - power-domain-names
+>>> +  - vdda-0p8-supply
+>>> +  - vdda-1p2-supply
+>>> +
+>>> +additionalProperties: false
+>>> +
+>>> +examples:
+>>> +  - |
+>>> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+>>> +    #include <dt-bindings/clock/qcom,x1e80100-camcc.h>
+>>> +    #include <dt-bindings/clock/qcom,x1e80100-gcc.h>
+>>> +    #include <dt-bindings/phy/phy.h>
+>>> +    #include <dt-bindings/power/qcom,rpmhpd.h>
+>>> +
+>>> +    csiphy@ace4000 {
+>>> +        compatible = "qcom,x1e80100-csi2-phy";
+>>> +        reg = <0x0ace4000 0x2000>;
+>>> +        #phy-cells = <1>;
+>>> +
+>>> +        clocks = <&camcc CAM_CC_CSIPHY0_CLK>,
+>>> +                 <&camcc CAM_CC_CSI0PHYTIMER_CLK>,
+>>> +                 <&camcc CAM_CC_CAMNOC_AXI_RT_CLK>,
+>>> +                 <&camcc CAM_CC_CPAS_AHB_CLK>;
+>>> +        clock-names = "csiphy",
+>>> +                      "csiphy_timer",
+>>> +                      "camnoc_axi",
+>>> +                      "cpas_ahb";
+>> Although it's not a concern from my side, just want to be explicitly
+>> sure that everyone is happy with the clock names, just to avoid any
+>> changes later on when other modules are separated out.
+> 
+> These are the names we already use in CAMSS so ... they're good enough 
+> to start from.
+> 
+Sure, FYI: Dmitry, Konrad.
+>>> +
+>>> +        operating-points-v2 = <&csiphy_opp_table>;
+>>> +
+>>> +        interrupts = <GIC_SPI 477 IRQ_TYPE_EDGE_RISING>;
+>>> +
+>>> +        power-domains = <&camcc CAM_CC_TITAN_TOP_GDSC>,
+>>> +                        <&rpmhpd RPMHPD_MX>,
+>>> +                        <&rpmhpd RPMHPD_MMCX>;
+>>> +        power-domain-names = "top",
+>>> +                             "mx",
+>>> +                             "mmcx";
+>>> +
+>>> +        vdda-0p8-supply = <&vreg_l2c_0p8>;
+>>> +        vdda-1p2-supply = <&vreg_l1c_1p2>;
+>>> +    };
+>>> +
+>>> +    csiphy_opp_table: opp-table {
+>>> +        compatible = "operating-points-v2";
+>>> +
+>>> +        opp-300000000 {
+>>> +            opp-hz = /bits/ 64 <300000000>;
+>>> +            required-opps = <&rpmhpd_opp_low_svs_d1>,
+>>> +                            <&rpmhpd_opp_low_svs_d1>;
+>>> +        };
+>>> +
+>>> +        opp-400000000 {
+>>> +            opp-hz = /bits/ 64 <400000000>;
+>>> +            required-opps = <&rpmhpd_opp_low_svs>,
+>>> +                            <&rpmhpd_opp_low_svs>;
+>>> +        };
+>>> +
+>>> +        opp-480000000 {
+>>> +            opp-hz = /bits/ 64 <480000000>;
+>>> +            required-opps = <&rpmhpd_opp_low_svs>,
+>>> +                            <&rpmhpd_opp_low_svs>;
+>> 480mhz should be svs?
+> 
+> Yes you're right thanks for spotting.
+> 
+>>> +        };
+>>> +    };
+>>>
+>> Thanks,
+>> Vijay.
+> 
+Thanks,
+Vijay.
 
-    [ Use dev->bus instead of sp->bus for consistency; fix commit message t=
-o
-      refer to the struct bus_type's driver_override feature flag. - Danilo=
- ]
-
->   docs: driver-model: document driver_override
->   hwmon: axi-fan: don't use driver_override as IRQ name
-
-    sh: platform_early: remove pdev->driver_override check
-
->   driver core: platform: use generic driver_override infrastructure
 
