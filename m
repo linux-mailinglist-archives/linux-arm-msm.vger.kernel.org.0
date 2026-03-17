@@ -1,400 +1,168 @@
-Return-Path: <linux-arm-msm+bounces-98271-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98273-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id WKCeHRq5uWn6MgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98271-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 21:27:06 +0100
+	id 6A3mCujRuWnuOAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98273-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 23:12:56 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id CFD9D2B23EE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 21:27:05 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id C6DBB2B2FD4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 23:12:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 239FF304D27D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 20:25:14 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 753D030838C9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Mar 2026 22:12:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 679C1386C2F;
-	Tue, 17 Mar 2026 20:25:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F46E35F198;
+	Tue, 17 Mar 2026 22:12:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="EafpF6VG";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="i5q/Q427"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="luC509gb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2FDD34AB00
-	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Mar 2026 20:25:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26933330D24;
+	Tue, 17 Mar 2026 22:12:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773779113; cv=none; b=pZkH4PuP921+0uGahJUmgRbuYCh8pBGSMviO/zjaSnsZIEa7+LU53UjD+Va6ePmknLkEwXxZ3Kl6kL9DXDl39rUMb3ezHVIzmDYM1FmA8Cr1QebSKTxJLfn0CwuC/ZD2kdQls/tmVK7VyLXEOdHaPX55ZXKHjzlVVy5ETO6hQ9U=
+	t=1773785555; cv=none; b=R5NSleWN+VxE4f+MsAC04O8zpguVn1e31Xk3jzj1FiUtQ+SsdY19dyHjMNp04dqrNx2ABkOkmK305qeuWOnrdjK2bjzwN9Pw1YskLLu6j3vKgPGbrlruIcbE4iDCDofEgYxSKMHHPda6bsk2gZOKQFmHJdu2Bx7QyrcaDa1TR4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773779113; c=relaxed/simple;
-	bh=FXPrAptZbKbJgYhpXOo04M5q5MKfzmnXxEIleDkGkJw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EZ2gDiOCJ4udfd5AkXY46YhZCyv5N6NvQHCpVGPkGhC5MHFuSyGKXsAWdugD0dKnPgn+z1Kl1RtJhNeveVoO9kfTTepmABmoh9w1cS2gkCNGVpWIHiut5+6082ioJ6p4rlConvHNh83pXc+VU5w6wqedSIDCH52OdZDyXtfSF7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=EafpF6VG; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=i5q/Q427; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62HIJDKW3281317
-	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Mar 2026 20:25:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	GpbFY1gjKra/+bdktVPmJK8BdIX5dAmrnofgrI5SFpY=; b=EafpF6VGrZJ5QKDM
-	DW+oQbHSm8fFBlteSX42GqhhCoLCuBxfvGH67lOfq0igWX9yuAJGl4bmqWGraW4a
-	xE+dgCvOI0R0lehs8JTZ8pMzJMJWnNJR+7gRdmO4aW/TqGyR4ZOAdaXcsEujY5YO
-	olNF5FdCM6mC9UxLcMdqUPM7hDUZ7mwY0qnFhTu6+8skxlti7ZQXrkz8wGFAVNeh
-	UXWGFcJfdUE2q4hmoqHtmmbUyQdsUWt/zh+dbegDEml6aEUwe+mFnXscqt4xm5Ml
-	iZH6RpEqI30PxIZIHxpvr8dUzVaNMOXX2gws8POb8Mbolju8E/SqKChEDmgIApst
-	NXW5Eg==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com [74.125.82.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cya62s24f-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Mar 2026 20:25:10 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id 5a478bee46e88-2ba8013a9e3so4906212eec.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Mar 2026 13:25:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1773779110; x=1774383910; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GpbFY1gjKra/+bdktVPmJK8BdIX5dAmrnofgrI5SFpY=;
-        b=i5q/Q427/u4Dj2NS17lbccUNoOpWayT92lIij9eDjKAG2lbflaT6k73CaxLPPsj2P0
-         AUfHQObSzASxa3LBUhTkEbuNxFi1knFVOEfpkn5giJiUZdZdGmbXaSMani8/E3XFutGh
-         PqmyFuSaO/3NZ2noJlPBQl0hMAAICCGWNNeAxeNiIssMr49E3yTVNrxP+HeMH39JkhFw
-         NWuboanB5OVmDNgpvRTq3qJH/COtTAPxnY+80r+CUer4ceLOgpLmXMjCpvDPomXRx7Kf
-         m/HpUyZ1cxShvVDAx8Qdn/KgsEnEL3/jAs4E7za4VlAgjhmIKNilOSiAdkyZL/LWv6cy
-         vufQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773779110; x=1774383910;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GpbFY1gjKra/+bdktVPmJK8BdIX5dAmrnofgrI5SFpY=;
-        b=SGKjlUmFLkB6olWYA0SQ1yB8ktnD+ZWWn4rtGpGVjk822vL8aY2shSetMO3K4hCl3G
-         ppKNvPa2crWmi4eHKlb5tyx4vXaRobak05nB+L83bqg30DNZwthTSG1Q5ZKm2yF5AJEO
-         NO4kgu1y0KfioH6NdIR3ASb9cDJQtRA16CFdPsal0SyFIsjtxcd9yxXn+KZK49fXPd7/
-         fH01g/mAhGo73i7FljhFSs3jwuenkQd9aQGmAunrzpNi8qQVQh19yI5prfQ6H7A9EEQa
-         xU4If4sVcSoHWm6+wus9dQv/F+vQTUnG0j9OQFsXDcJ+ukVY8G7N68AZInOIFucyHwwf
-         Rb8Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWNI4Pr/sdQ2MsH5nnNaqNdNxwJsVXxY30TggP5OxCSw/Tkk0h8gFe1iWLwZRYSMDskuEyTztskgYHnQihk@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzgs33EEO9/OR3JNmJ44xmQ/KPBWU3FsQcP1GlBf8JTwQWzHHEk
-	V3jcYKSOsjy4j5Ff8sw7ZLDxh8++SW+IkoK37ie6dpdNcgmkD+Lohs04BMg2c5WFjbjOCUE0mco
-	Gh5cTBpDdY4HLui0FglvRS92ynms1Fe4NgXmC0/DM0hFEcTsy1VqmzJYj/Mro4mmc2Msg
-X-Gm-Gg: ATEYQzzLWTUGHFu7Om9auTgzwEVSiu4EgZ8A/rFij++diGMrJ8cYxljstYyI2ufjjA9
-	I5fCyUIsxrXkgGufbI5bFOCmT0zgDqXc49R/l/EK+fzd/aH9Kh12TEAtRfAFimDlWZnzfk4M/d+
-	1ZB+tWM/TL2ZdFlj5tHILHqrLCx0UcHVb/WGe3pqxM/cqTNou/OluW4vqxWOTHPzrQjiWPixkxc
-	qtI8keJOeqtQy61GpU3mjY6CvHDsRrh44YmtmS5aziYKWil+bHPYyfc/Ie18pK/MFfXebb3Lrjj
-	oR2p7RJyA1VXYSGZLaBIFc8KSHY5P+C8rEVQoF9LiPGHjIJH2oYo4zQfvmmaEsY+m/DQmFjOzZu
-	bhBKH3GFm09IhmW9M0kwKFH7J+9EtHFK5XRU7EVo0dj5ciXLZbSpsOhNLh9ddTdCDLuA3y87e9D
-	FWINvT
-X-Received: by 2002:a05:7300:a54b:b0:2be:80c4:2c8c with SMTP id 5a478bee46e88-2c0e4ffa9d0mr398499eec.8.1773779109507;
-        Tue, 17 Mar 2026 13:25:09 -0700 (PDT)
-X-Received: by 2002:a05:7300:a54b:b0:2be:80c4:2c8c with SMTP id 5a478bee46e88-2c0e4ffa9d0mr398479eec.8.1773779108900;
-        Tue, 17 Mar 2026 13:25:08 -0700 (PDT)
-Received: from [10.62.37.228] (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2c0e55a53fcsm1134929eec.24.2026.03.17.13.25.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Mar 2026 13:25:08 -0700 (PDT)
-Message-ID: <4afceefe-8053-4c10-8595-39dab9379aab@oss.qualcomm.com>
-Date: Tue, 17 Mar 2026 13:25:07 -0700
+	s=arc-20240116; t=1773785555; c=relaxed/simple;
+	bh=y243D6Ne6ta8m6pwl19zt5ZKjdhAH8edxSmktq9NqqU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=DxtuVUlrPAFGW/YMJwi5jVPYM8thqw5du59OIOGxs6t+Ayy/B5CPQe2R7RTTmCJ3CYkh++L7rusNfoCok/9RyJ9ZkGY7xBb+snhKIYi/FGm+qJJuUOFKXzRgGndoPTzGBT/8HYvZG7hwf+VholtorGLRABgyxmoIPH49F/hMJ84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=luC509gb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id C30DBC2BC9E;
+	Tue, 17 Mar 2026 22:12:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773785554;
+	bh=y243D6Ne6ta8m6pwl19zt5ZKjdhAH8edxSmktq9NqqU=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=luC509gb9U3Qs4KURDJFp3wzckE74/JwLjlbhTOCDPhCY2CCQZvAyAv8aWdBK7lY0
+	 UxwAqOK3ikbhbXuMaWFrZPr2Z4ogCLgM9iSg1h68TtTMKtTokAl/VPvkDzQLu69NOO
+	 +9TfHpQgvzIAZjXO7jZPD2qGf/8aAfumYHjo67cnaxyMD7+97Ntmu22jgctKoR8KuV
+	 jvBQtK3N4PkPu2F6Uel1913slsfWAnGj7Fm3w6hMlRowYCgD3KCaCY5BfSAS2/Xp+E
+	 +DGHsSJ+OpZBajlUlNHso+kzybdvAjLFqebuwpOj9YZJ4eQ9efpkGEMCSXNIFx2EzM
+	 hlz6ScSmiFURQ==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF3B0FF6E8D;
+	Tue, 17 Mar 2026 22:12:34 +0000 (UTC)
+From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
+Subject: [PATCH v2 0/5] Add framebuffer on Xiaomi Poco F1 and disable the
+ MDSS on tianma panel variant
+Date: Tue, 17 Mar 2026 23:12:30 +0100
+Message-Id: <20260317-beryllium-fb-v2-0-36b69dfb760c@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/2] dt-bindings: phy: qcom: Add CSI2 C-PHY/DPHY schema
-To: Bryan O'Donoghue <bod@kernel.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Vinod Koul
- <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20260315-x1e-csi2-phy-v4-0-90c09203888d@linaro.org>
- <20260315-x1e-csi2-phy-v4-1-90c09203888d@linaro.org>
- <3VqSGUgMUKaCja5WYOrOP8nJ_mw_eDPdItA8d1CvqUg4ASPS5IUc_aT2E-XIo0YmnYo8QltXVw8_6NDxtdqGGw==@protonmail.internalid>
- <5705b48a-fc24-4c5f-aa6d-40952f0070d9@oss.qualcomm.com>
- <edf766b8-2664-4dac-b626-551807b3e5ef@kernel.org>
-Content-Language: en-US
-From: Vijay Kumar Tumati <vijay.tumati@oss.qualcomm.com>
-In-Reply-To: <edf766b8-2664-4dac-b626-551807b3e5ef@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=Ns3cssdJ c=1 sm=1 tr=0 ts=69b9b8a6 cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=gEfo2CItAAAA:8 a=KKAkSRfTAAAA:8 a=VwQbUJbxAAAA:8 a=CIW99FJ8g63gKaA5L-sA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22
- a=sptkURWiP4Gy88Gu7hUp:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: ukvdPhm2RsmTznNe9C_CWaVqoOZqYjPz
-X-Proofpoint-GUID: ukvdPhm2RsmTznNe9C_CWaVqoOZqYjPz
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE3MDE4MCBTYWx0ZWRfXznQGUgvSVyLN
- m8XeiInUh6e6YcoJ7cpuwwEK708WZR/OTZdChjokGO6/LrqhcMS3/YnL1n7R6LMdklVeSGTSzFh
- Y16DPYiY9dMwmDdKu0oxqOFk1+TWYw73CuCS7vlBnlgJ7XXkArYkDQyUf18ds0a5Vm4Aqm7rPqq
- O8Kgm2tVxdqSg4eh/XKW+C8RoaWw+HtPMqt6NmE+pdCxVH1zqythoqxooYE6kmTIvNUaH8qz+Pw
- lJ1cANqAMMbVs4X8uMEcbUOyhl2yecW7Brx8YpGu00SURgIqGEiAlQMZtOMHzu/r9oFoEKYkJNv
- no47h43Vxpgn8u5KP1bYkm1E8Z25KRc9FGfZSwIQIjDKe24Mzj6iDttXv2QyUi6vnxMIS8UV/T4
- dALn9SLN27CSkxqd+M/MJ3tlykajzLKONWEIcyIyJ9D2a0BtocpbcYxaDlu0GnvAwAV6HaqJWSw
- cDLZiKzlSYtjXxI7rWQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-17_04,2026-03-17_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0
- priorityscore=1501 malwarescore=0 adultscore=0 spamscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603170180
-X-Spamd-Result: default: False [-2.16 / 15.00];
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAM7RuWkC/1XMQQ6CMBCF4auQWVszLSKNK+9hWNB2kEkQTIsNS
+ Hp3K65c/i953waBPFOAS7GBp8iBpzGHOhRg+3a8k2CXGxSqM0qshSG/DgO/HqIzwpWka2MVGkL
+ Il6enjpeduzW5ew7z5Nddj/K7/qBSyn8oSoHihLqtNDqpKrrywvPRvqFJKX0AauYrz6YAAAA=
+X-Change-ID: 20260107-beryllium-fb-d3e87bc20be0
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, David Heidelberg <david@ixit.cz>, 
+ Sam Day <me@samcday.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
+ Petr Hodina <petr.hodina@protonmail.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1522; i=david@ixit.cz;
+ h=from:subject:message-id;
+ bh=y243D6Ne6ta8m6pwl19zt5ZKjdhAH8edxSmktq9NqqU=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpudHQ+dDsZMmxVdjdT95CwZwEQ8WZdO1Y+hAJi
+ SsMoNpogICJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCabnR0AAKCRBgAj/E00kg
+ cpoID/wJY1PrVCkHjF7CseuHrjO2y4z5UerUXFD04e8qh3pgNpH9epcpN6kNdhMFux3NmidW8wq
+ hh93DpYgfyZ5AAfRhXJFspw78jTBPwZHZuhxZkBIfosoklUFqTKiIZGxSaz+V+CExThbNx9r9t7
+ IOTMBx0am1Jbnc2SD3J26EgDwboRfSnQ++QAvVPcWCALMhkNTsJB4I9fF56hmj9h08DXfzHd9qv
+ E6KQsIjlH4h0IncecABl106/2odbezK+XzBRZgEkgBow5132oEFEF3CUmoIsg+/H91GCZ5Rp/FT
+ tCNd7H5zNHVKGTSWgclVUB7zrd9zkoxs8sic8ziJCTH1L2WRp0Rjx2nTj5F4gbBdSHPKRN1lT8v
+ 21iZ+h72jATQriYLraONUxdrrojSOpuCCI8k/zDs9P9GW146YXDzlCXSmH+pxttsm7bz6V5fmlq
+ 9T9xFoM25xOk2NM1EWn7/oPvk1nv33MLdSwriQAb30z/HWtKsFSMk2te2m5T5k8kz2ZmTjZ6aas
+ YG4kbZe3AIVM/1Fhi/Q2gVl8jCO3NIXDWPIpeC/4ZCfisGmDXrqNUE50pQ8nFe+VkrS593OvKq7
+ s5QCh4KOTxiIYviKaXib8AFkQAuobp+qGP93uwL9wJgVML/GU/h7E9cIG0yFPXRbrJTXrQYxcLz
+ Ew7FghT0H4GxX6Q==
+X-Developer-Key: i=david@ixit.cz; a=openpgp;
+ fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
+X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
+X-Original-From: David Heidelberg <david@ixit.cz>
+Reply-To: david@ixit.cz
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	TAGGED_FROM(0.00)[bounces-98271-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,devicetree.org:url,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:dkim,linaro.org:email,ace4000:email];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[vijay.tumati@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-98273-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	NEURAL_HAM(-0.00)[-1.000];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	MIME_TRACE(0.00)[0:+];
+	TO_DN_SOME(0.00)[];
+	FREEMAIL_CC(0.00)[vger.kernel.org,protonmail.com];
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
+	NEURAL_HAM(-0.00)[-0.999];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: CFD9D2B23EE
+	HAS_REPLYTO(0.00)[david@ixit.cz];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,ixit.cz:email,ixit.cz:replyto,ixit.cz:mid,protonmail.com:email]
+X-Rspamd-Queue-Id: C6DBB2B2FD4
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
+Enable framebuffer for early console output.
 
+Due to broken panel driver on tianma and no visual output it's better
+to disable the MDSS so the framebuffer stays on. 
 
-On 3/16/2026 10:26 PM, Bryan O'Donoghue wrote:
-> On 16/03/2026 21:31, Vijay Kumar Tumati wrote:
->> Hi Bryan,
->>
->> On 3/15/2026 4:52 PM, Bryan O'Donoghue wrote:
->>> Add a base schema initially compatible with x1e80100 to describe MIPI 
->>> CSI2
->>> PHY devices.
->>>
->>> The hardware can support both C-PHY and D-PHY modes. The CSIPHY devices
->>> have their own pinouts on the SoC as well as their own individual 
->>> voltage
->>> rails.
->>>
->>> The need to model voltage rails on a per-PHY basis leads us to define
->>> CSIPHY devices as individual nodes.
->>>
->>> Two nice outcomes in terms of schema and DT arise from this change.
->>>
->>> 1. The ability to define on a per-PHY basis voltage rails.
->>> 2. The ability to require those voltage.
->>>
->>> We have had a complete bodge upstream for this where a single set of
->>> voltage rail for all CSIPHYs has been buried inside of CAMSS.
->>>
->>> Much like the I2C bus which is dedicated to Camera sensors - the CCI 
->>> bus in
->>> CAMSS parlance, the CSIPHY devices should be individually modelled.
->>>
->>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>> ---
->>>    .../bindings/phy/qcom,x1e80100-csi2-phy.yaml       | 133 +++++++++ 
->>> ++++++++++++
->>>    1 file changed, 133 insertions(+)
->>>
->>> diff --git a/Documentation/devicetree/bindings/phy/qcom,x1e80100- 
->>> csi2-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,x1e80100- 
->>> csi2-phy.yaml
->>> new file mode 100644
->>> index 0000000000000..b83c2d65ebc6e
->>> --- /dev/null
->>> +++ b/Documentation/devicetree/bindings/phy/qcom,x1e80100-csi2-phy.yaml
->>> @@ -0,0 +1,133 @@
->>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->>> +%YAML 1.2
->>> +---
->>> +$id: http://devicetree.org/schemas/phy/qcom,x1e80100-csi2-phy.yaml#
->>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>> +
->>> +title: Qualcomm CSI2 PHY
->>> +
->>> +maintainers:
->>> +  - Bryan O'Donoghue <bod@kernel.org>
->>> +
->>> +description:
->>> +  Qualcomm MIPI CSI2 C-PHY/D-PHY combination PHY. Connects MIPI CSI2 
->>> sensors
->>> +  to Qualcomm's Camera CSI Decoder. The PHY supports both C-PHY and 
->>> D-PHY
->>> +  modes.
->>> +
->>> +properties:
->>> +  compatible:
->>> +    const: qcom,x1e80100-csi2-phy
->>> +
->>> +  reg:
->>> +    maxItems: 1
->>> +
->>> +  "#phy-cells":
->>> +    const: 1
->>> +
->>> +  clocks:
->>> +    maxItems: 4
->>> +
->>> +  clock-names:
->>> +    items:
->>> +      - const: csiphy
->>> +      - const: csiphy_timer
->>> +      - const: camnoc_axi
->>> +      - const: cpas_ahb
->>> +
->>> +  interrupts:
->>> +    maxItems: 1
->>> +
->>> +  operating-points-v2:
->>> +    maxItems: 1
->>> +
->>> +  power-domains:
->>> +    items:
->>> +      - description: TITAN TOP GDSC
->>> +      - description: MXC or MXA voltage rail
->> Would it be better to provision MXA or MXC as an additional optional
->> power domain? I see 'cam_cc_cphy_rx_clk_src', the parent of all CSIPHYx
->> clocks, need all three power domains on this chipset.
-> 
-> I don't think this should be optional. Have the dts point to an "mx" 
-> power-domain and then select which one is right for a PHY MX/MXA or MXC.
-> 
-> Your worst case here is some future PHY which has more or fewer PDs 
-> which is then either a special case in this file or a whole new file for 
-> that compat.
-> 
-I think it is the case on x1e* as well, Bryan.
->>> +      - description: MMCX voltage rail
->>> +
->>> +  power-domain-names:
->>> +    items:
->>> +      - const: top
->>> +      - const: mx
->>> +      - const: mmcx
->>> +
->>> +  vdda-0p8-supply:
->>> +    description: Phandle to a 0.8V regulator supply to a PHY.
->>> +
->>> +  vdda-1p2-supply:
->>> +    description: Phandle to 1.2V regulator supply to a PHY.
->>> +
->>> +required:
->>> +  - compatible
->>> +  - reg
->>> +  - "#phy-cells"
->>> +  - clocks
->>> +  - clock-names
->>> +  - interrupts
->>> +  - operating-points-v2
->>> +  - power-domains
->>> +  - power-domain-names
->>> +  - vdda-0p8-supply
->>> +  - vdda-1p2-supply
->>> +
->>> +additionalProperties: false
->>> +
->>> +examples:
->>> +  - |
->>> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
->>> +    #include <dt-bindings/clock/qcom,x1e80100-camcc.h>
->>> +    #include <dt-bindings/clock/qcom,x1e80100-gcc.h>
->>> +    #include <dt-bindings/phy/phy.h>
->>> +    #include <dt-bindings/power/qcom,rpmhpd.h>
->>> +
->>> +    csiphy@ace4000 {
->>> +        compatible = "qcom,x1e80100-csi2-phy";
->>> +        reg = <0x0ace4000 0x2000>;
->>> +        #phy-cells = <1>;
->>> +
->>> +        clocks = <&camcc CAM_CC_CSIPHY0_CLK>,
->>> +                 <&camcc CAM_CC_CSI0PHYTIMER_CLK>,
->>> +                 <&camcc CAM_CC_CAMNOC_AXI_RT_CLK>,
->>> +                 <&camcc CAM_CC_CPAS_AHB_CLK>;
->>> +        clock-names = "csiphy",
->>> +                      "csiphy_timer",
->>> +                      "camnoc_axi",
->>> +                      "cpas_ahb";
->> Although it's not a concern from my side, just want to be explicitly
->> sure that everyone is happy with the clock names, just to avoid any
->> changes later on when other modules are separated out.
-> 
-> These are the names we already use in CAMSS so ... they're good enough 
-> to start from.
-> 
-Sure, FYI: Dmitry, Konrad.
->>> +
->>> +        operating-points-v2 = <&csiphy_opp_table>;
->>> +
->>> +        interrupts = <GIC_SPI 477 IRQ_TYPE_EDGE_RISING>;
->>> +
->>> +        power-domains = <&camcc CAM_CC_TITAN_TOP_GDSC>,
->>> +                        <&rpmhpd RPMHPD_MX>,
->>> +                        <&rpmhpd RPMHPD_MMCX>;
->>> +        power-domain-names = "top",
->>> +                             "mx",
->>> +                             "mmcx";
->>> +
->>> +        vdda-0p8-supply = <&vreg_l2c_0p8>;
->>> +        vdda-1p2-supply = <&vreg_l1c_1p2>;
->>> +    };
->>> +
->>> +    csiphy_opp_table: opp-table {
->>> +        compatible = "operating-points-v2";
->>> +
->>> +        opp-300000000 {
->>> +            opp-hz = /bits/ 64 <300000000>;
->>> +            required-opps = <&rpmhpd_opp_low_svs_d1>,
->>> +                            <&rpmhpd_opp_low_svs_d1>;
->>> +        };
->>> +
->>> +        opp-400000000 {
->>> +            opp-hz = /bits/ 64 <400000000>;
->>> +            required-opps = <&rpmhpd_opp_low_svs>,
->>> +                            <&rpmhpd_opp_low_svs>;
->>> +        };
->>> +
->>> +        opp-480000000 {
->>> +            opp-hz = /bits/ 64 <480000000>;
->>> +            required-opps = <&rpmhpd_opp_low_svs>,
->>> +                            <&rpmhpd_opp_low_svs>;
->> 480mhz should be svs?
-> 
-> Yes you're right thanks for spotting.
-> 
->>> +        };
->>> +    };
->>>
->> Thanks,
->> Vijay.
-> 
-Thanks,
-Vijay.
+In case second patch gets rejected, please apply the first one standalone
+
+Signed-off-by: Petr Hodina <petr.hodina@protonmail.com>
+---
+Changes in v2:
+- Added few conversion to use memory-region.
+- Corrected framebuffer node name. (Konrad)
+- Link to v1: https://lore.kernel.org/r/20260311-beryllium-fb-v1-0-408a580d125e@ixit.cz
+
+---
+David Heidelberg (3):
+      arm64: dts: qcom: sdm845-oneplus: Drop address from framebuffer node
+      arm64: dts: qcom: sdm845-shift-axolotl: Convert fb to use memory-region
+      arm64: dts: qcom: sdm845-samsung-starqltechn: Convert fb to use memory-region
+
+Petr Hodina (2):
+      arm64: dts: qcom: sdm845-xiaomi-beryllium: Introduce framebuffer
+      arm64: dts: qcom: sdm845-xiaomi-beryllium-tianma: Disable MDSS
+
+ arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi      |  2 +-
+ arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts  |  7 ++++---
+ arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts        |  6 +++---
+ .../boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi    | 16 ++++++++++++++++
+ .../boot/dts/qcom/sdm845-xiaomi-beryllium-tianma.dts     | 10 ++++++++++
+ 5 files changed, 34 insertions(+), 7 deletions(-)
+---
+base-commit: 8e5a478b6d6a5bb0a3d52147862b15e4d826af19
+change-id: 20260107-beryllium-fb-d3e87bc20be0
+
+Best regards,
+-- 
+David Heidelberg <david@ixit.cz>
+
 
 
