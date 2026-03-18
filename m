@@ -1,57 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-98370-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98373-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id oJOcDGR0umkeWwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98370-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 10:46:12 +0100
+	id sGa8CYF0ummTWwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98373-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 10:46:41 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9DD4E2B958F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 10:46:11 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D13A2B95A7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 10:46:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id D5A4930A3F01
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 09:41:30 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 826B9306A96E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 09:41:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4134B3A7850;
-	Wed, 18 Mar 2026 09:41:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC87A38C432;
+	Wed, 18 Mar 2026 09:41:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="qW/She3I"
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="jjDM9OCj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-4316.protonmail.ch (mail-4316.protonmail.ch [185.70.43.16])
+Received: from mail-05.mail-europe.com (mail-05.mail-europe.com [85.9.206.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0057F2877CB
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Mar 2026 09:41:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DE6036B04E
+	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Mar 2026 09:41:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.9.206.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773826870; cv=none; b=Zz5v0+znsnJGMc32JuEiQjHARyaBn+i9jY7c4aHyo/YgIz1SOW7YU/Oc/RUYeh//SQNVVkbeTbHttEcUGcM3jK4G2VOUS1PWvLbvHo9ECIsJgektutJUnkk7Sl2fR69yH/4fNsdJaVD53sFs46zbr7tetsOWtyuoLHAWfVOuyTc=
+	t=1773826882; cv=none; b=jpEOERvqFrmYTDVVj0zubdbOy4wk64yaektgmF37mCQ44x0kvvIW8wX1aeZWrtH9urEMYH0jqMDSgX85KRQ9Tp793DjF9/Iw5esFFNbW7VBeL17CTFjmEUDrJag78nkXLaP0Am2+/M+cE+lljvzp/M6wYxswJO9JMdlugf8/pXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773826870; c=relaxed/simple;
-	bh=WidLuYQsUGglTqAsrPHs/5HEHfQTG4ZBQG5lgnow91o=;
-	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=nJimCWhJ+i2Ekfbnu9Lj1xxoJoR+6MCo0xUalz70r60kFw2cVok8FRgT7H404vEDoeFKu8le0NBJK0AN36qKbLDyJSYWvo9NO6yUUTzIHPZekM1RwyY1At3MAMZVz+epSQnTi5njEsMypAcEtX/GoEaq0rVb/zrHsNtyVFSD0mo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=qW/She3I; arc=none smtp.client-ip=185.70.43.16
+	s=arc-20240116; t=1773826882; c=relaxed/simple;
+	bh=e8BFK1m08UzgrYFFBt6dCGTjWCawWzRQ5mu9DCpAQCg=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=o7wvMWJJDHkxmUmScV7klynira51ZapkWgH0AwPhXCmL74UzIrXf5K/hL+kJrLqNpuF3g1wNCvuO1+iVZCki5IXiIAAuWcON3TTHep8XPxe0iPSQxiFWCUPc2PtZhL+Jsc1AiYIjaMnIMOm0noILRFNPm80qPdiXD+mbXV9kJCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=jjDM9OCj; arc=none smtp.client-ip=85.9.206.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1773826859; x=1774086059;
-	bh=O8NvNXddRHC58zg8IZi+YXxbSeJrGgRudFwpnQQCLOI=;
-	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=qW/She3IcHNH9eyby4cVencADqZlqCCAecmUBWR7bGPfXEa+hxFyeA1tc7gKb2mfV
-	 geKtdAj3FkZjv0aUjxFXoQ1qKhSucsvYkIM7+D6vnSqyckR7S1rqfK/IObGWVN9Cmk
-	 OlrgH2IbSQnox200PTBnf5Id5+UvHqj76UQmvn44U9W3i2DocmzrGMVkmC0B4Rhtdb
-	 FTvTvkGMHWHpcpvPAMYEwbjgvfG4lDTQnaRdgGelCECL9c7S3fWaAHe5Tv1i8jQ5uD
-	 NR97KNKNUwXWWEpCrSY3dtV0t0Jltg1ZDR2VneJ4yaIo/5znDrKa0E1BzgCYFFKV0J
-	 p8XxSDpNLtddQ==
-Date: Wed, 18 Mar 2026 09:40:55 +0000
+	s=protonmail3; t=1773826864; x=1774086064;
+	bh=e8BFK1m08UzgrYFFBt6dCGTjWCawWzRQ5mu9DCpAQCg=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=jjDM9OCjnNxJGlCevuNHFR54zEXe5xAXzA7i5vI39WRPNqqkJR3LON+BkdSFHa+4i
+	 XfHeOzHNQSA77F2z9YN10v/vNeCUlOIYMFsUYRcRGSix2Eb8F+N+nFcPkfoYd7Upst
+	 5q34JC2I8cV0pH4IxtlNFcy+qxSEexXQH5FVjmRO6UYSEAvAVKi10TY209ppWSVwme
+	 n4NHoGbXwLeiH60mHANMsBkroiWzoNyQTzQh0apZbhAmQ8KSLwTj+sHoVg2GElt3Dk
+	 Ij7QfAkYhx8NGrUqT/qKUN4hAeTKlGIQB54LRdgnDOOo4IXZRGy1KHCdcrLau+d7fh
+	 7HLqTtjaUMVMA==
+Date: Wed, 18 Mar 2026 09:41:00 +0000
 To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>
 From: Alexander Koskovich <akoskovich@pm.me>
 Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, Alexander Koskovich <akoskovich@pm.me>
-Subject: [PATCH 0/3] drm/msm: add RGB101010 pixel format and fix 10-bit DSC timing
-Message-ID: <20260318-dsi-rgb101010-support-v1-0-6021eb79e796@pm.me>
+Subject: [PATCH 1/3] drm/mipi-dsi: add RGB101010 pixel format
+Message-ID: <20260318-dsi-rgb101010-support-v1-1-6021eb79e796@pm.me>
+In-Reply-To: <20260318-dsi-rgb101010-support-v1-0-6021eb79e796@pm.me>
+References: <20260318-dsi-rgb101010-support-v1-0-6021eb79e796@pm.me>
 Feedback-ID: 37836894:user:proton
-X-Pm-Message-ID: d5e723548ab3334420aaaa0fc3e529ba89d8c0c5
+X-Pm-Message-ID: 9b2600adb2bed490e714af3ccd60263349fcbd2a
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,7 +68,7 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
 	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
@@ -72,7 +76,7 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	RCVD_COUNT_THREE(0.00)[3];
 	FREEMAIL_TO(0.00)[linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,oss.qualcomm.com,linux.dev,poorly.run,somainline.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-98370-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-98373-lists,linux-arm-msm=lfdr.de];
 	RCPT_COUNT_TWELVE(0.00)[16];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
@@ -83,45 +87,50 @@ X-Spamd-Result: default: False [-2.16 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[pm.me:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,pm.me:dkim,pm.me:email,pm.me:mid]
-X-Rspamd-Queue-Id: 9DD4E2B958F
+	DBL_BLOCKED_OPENRESOLVER(0.00)[pm.me:dkim,pm.me:email,pm.me:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 9D13A2B95A7
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-This series adds support for the RGB101010 (30bpp) pixel format and
-fixes a DSC timing bug exposed by non 8 bit panels.
-
-Tested on the BOE BF068MWM-TD0 panel (10 bit DSC) on the Nothing
-Phone (3a).
-
-Note, I'd appreciate a comment on the INTF timing change from someone
-at QCOM who knows the DPU hardware a bit better, this appears to be
-what downstream is doing regardless of bpp, but let me know if there's
-a better solution here.
+Add MIPI_DSI_FMT_RGB101010 for 30 bit (10,10,10 RGB) pixel format,
+corresponding to the packed 30 bit pixel stream defined in MIPI DSI
+v1.3 Section 8.8.17.
 
 Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
 ---
-Alexander Koskovich (3):
-      drm/mipi-dsi: add RGB101010 pixel format
-      drm/msm/dsi: Add support for RGB101010 pixel format
-      drm/msm/dpu: fix video mode DSC INTF timing width for non 8 bit panel=
-s
+ include/drm/drm_mipi_dsi.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 12 +++++++-----
- drivers/gpu/drm/msm/dsi/dsi_host.c                   |  2 ++
- drivers/gpu/drm/msm/registers/display/dsi.xml        |  4 +++-
- include/drm/drm_mipi_dsi.h                           |  4 ++++
- 4 files changed, 16 insertions(+), 6 deletions(-)
----
-base-commit: f338e77383789c0cae23ca3d48adcc5e9e137e3c
-change-id: 20260318-dsi-rgb101010-support-4956b1cd8657
+diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
+index 3aba7b380c8d..a822e9e876af 100644
+--- a/include/drm/drm_mipi_dsi.h
++++ b/include/drm/drm_mipi_dsi.h
+@@ -140,6 +140,7 @@ struct mipi_dsi_host *of_find_mipi_dsi_host_by_node(str=
+uct device_node *node);
+ #define MIPI_DSI_HS_PKT_END_ALIGNED=09BIT(12)
+=20
+ enum mipi_dsi_pixel_format {
++=09MIPI_DSI_FMT_RGB101010,
+ =09MIPI_DSI_FMT_RGB888,
+ =09MIPI_DSI_FMT_RGB666,
+ =09MIPI_DSI_FMT_RGB666_PACKED,
+@@ -235,6 +236,9 @@ extern const struct bus_type mipi_dsi_bus_type;
+ static inline int mipi_dsi_pixel_format_to_bpp(enum mipi_dsi_pixel_format =
+fmt)
+ {
+ =09switch (fmt) {
++=09case MIPI_DSI_FMT_RGB101010:
++=09=09return 30;
++
+ =09case MIPI_DSI_FMT_RGB888:
+ =09case MIPI_DSI_FMT_RGB666:
+ =09=09return 24;
 
-Best regards,
 --=20
-Alexander Koskovich <akoskovich@pm.me>
+2.53.0
 
 
 
