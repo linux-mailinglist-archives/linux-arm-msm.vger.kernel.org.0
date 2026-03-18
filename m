@@ -1,243 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-98356-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98357-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aEH3BDBmumklWAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98356-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 09:45:36 +0100
+	id CHjCK6RnumnnWAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98357-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 09:51:48 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C1702B8552
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 09:45:35 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C74F2B8736
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 09:51:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 2A800300B9C8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 08:45:31 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 53ED9300D751
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 08:51:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2DC038F632;
-	Wed, 18 Mar 2026 08:45:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B642638F954;
+	Wed, 18 Mar 2026 08:51:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="IQTZRtCx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LPtPphYN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 804FC2BB1D
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Mar 2026 08:45:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908041DD889;
+	Wed, 18 Mar 2026 08:51:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773823528; cv=none; b=fUxqaUXRqZH2V8Nsm+mPxlEv4ex05XaQxN10IZ8zil59ByhTWdGWvPi+/CtBeNstfa3uWP5FOr22DkZClHSE4ZH39Mwy1o0bC1SnO4W/Si8EXXd7E01PGc4Y9pUESPf49g0W+mwUcvFJk9KObVbshyTOSOkJVT8SpceQuV3Qapg=
+	t=1773823904; cv=none; b=VltUBid9sLzwKjcoUMwM4wiNwyjWJ8hStabbcfOakEL4DidG9B+YHtC/eUe/DwUQolDN5cQfzH+45+qz6HclswElgeoLHpJHylBe6TDxL/yfVcSIbdd1lC6nco1B4bx0Zga6kk48UuxKrkmdFdhK/Qe8dUtMS47DaH8PuhgUIJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773823528; c=relaxed/simple;
-	bh=vpkIzwAlbt2wev8FSusK7M7mrMVmaNBRwgRTC9/C208=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
-	 References:In-Reply-To; b=RKIrOuigrQRy4j9Q+YBZ3mMc+OHgm54//rzpqk2cCxUanOFIF6lzOaK2+eO6AoMKdo+RYbzzX4D1Mo8n9VnpSq3TbuIVf+gGzJHC4gDrpIjYAss7e8Q6ruf5QamVu5c1BmnczNY7sf39w9cs0w/GJYYGH6CNaVOk+8aHGR3m1T8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=IQTZRtCx; arc=none smtp.client-ip=209.85.208.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-6611f41eebcso8878340a12.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Mar 2026 01:45:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1773823525; x=1774428325; darn=vger.kernel.org;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=M2NVg5azhBgjIMGuyOtSlU5XnHGYpWJdykiqlxTKsf8=;
-        b=IQTZRtCxePGZNmG+parrgZ0y1XGi2JA7E0cEsjMvfyCRE7lBvxrb3thls84sefgYjy
-         3OklI4aayVwjHpsoHsyecpIVOgptUAQX7cCB3nHeKX4bv+2Ig4wf3h62vxA7F2CYc3Kn
-         5Q3svzRRpxmsPEeyj7APadxwjaREYta4XQyyOyovINSiXC59pNPNrUTVd40uMP6vvzoa
-         VEAyhUsoqIcG8UzSlL84yNiHJFpRZxAgk9DIJLkpj7nYoHt3k7w9wEvdfd/+2NzXEPTe
-         dZiADn/zIC8Xu6PyLdUqWkh10KIG6VVNqBxeFFVVmpigkzRLdEUOKiU1Gsy4ikKfgDqP
-         bqBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773823525; x=1774428325;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=M2NVg5azhBgjIMGuyOtSlU5XnHGYpWJdykiqlxTKsf8=;
-        b=JrvOGfMCmhtfwVCJAtluv1xFC4+FYRZTmiTwRhIxBJLfxdu4qc9/fxYr+SXpoxFduh
-         FpyBIcrG0FsENt584x+KYddJ4tjzUwPkMQpEU4TpcT0WKNzaKsnAj13pVL0kUJ+e4lxz
-         n4K+ChjSKKrrFY7mxDzgERwmgCKIFcXxysDOGMg3pMlb+f89XeQGjHClSCaGNB3WJ1u8
-         dcZnLyIoxKdKfJYtk2740JF+sdFXMyAvXI1ayB2w8zZ5SOjVknhSPCF8Ewbma3tOvCJQ
-         ZEzgfGX7x9CRhxtavTrIYUtlLjqbmTVgKHGptlyxpSvAyVIQwPImjxjmPdjLzPVpWQIc
-         CSMg==
-X-Forwarded-Encrypted: i=1; AJvYcCVPN9/fiwgxEsUQgZyrJQ6E+vqLdh2qii66K8cEPAFe4uMha9tlO8TCvM2i8STiGWETV4v1eZ9vosF5XXz4@vger.kernel.org
-X-Gm-Message-State: AOJu0YzEU1vOUeEyJiwuDnAU05ivaH+LWxThSawPArsD+836bxv5a4IP
-	vQDvqFRDL7DhsPq0q3uiidYXN/22DH4EVZhwSr8Btrv3jrswBg3ZwdS+2LIhJyt5iz8=
-X-Gm-Gg: ATEYQzywAX/LpWNCGxovy1ZgoVYB91VSG5wQHT0Wwdg/V7pTUVHHP3WZ81IOhmumE8e
-	eAInOGZm0E7q8cuSMVtIj1hYyc0OerlrI+ybLum8SBrfgwFT+W6cQDZshoINjy2v4tEry3K9hNz
-	a+1i82Efz07UXjUMYAaZsTat9DS23mYUKNVMGtAdDEt815Xh7FOQjtQw2RHFhn1oXmbNOCDOmoA
-	Y2ZxN2SPw9pCIRuFv6cE/ubUs8ciHV/fhwKX/iNST64jEfWcwodCL9AL40yYg6vbCtEwkqA2LMr
-	bGjSQTdkPaxBw2ags8O46x2vFvQ10Ycsq1eRmjtef6C/ZkqQRIGw8PxLKxaLi2lVHEJObfkztS4
-	PZU8+hKjwkpFxTSGJZSgaRHKuKyo12/PhCjZZYgFy13eZZglaqHMNY14icVGA9toXspqIbcSa2r
-	orLearmK/uM0MmMwKnEJOfjIfMeWnuYQDyry5P6+SyxF0Olxltty0la4gIbCmBXC91CH0G
-X-Received: by 2002:a05:6402:144b:b0:666:d8bb:85ea with SMTP id 4fb4d7f45d1cf-667b06e45e7mr1800366a12.0.1773823524789;
-        Wed, 18 Mar 2026 01:45:24 -0700 (PDT)
-Received: from localhost (144-178-202-139.static.ef-service.nl. [144.178.202.139])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-667b0eb986esm1186045a12.17.2026.03.18.01.45.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Mar 2026 01:45:24 -0700 (PDT)
+	s=arc-20240116; t=1773823904; c=relaxed/simple;
+	bh=/O4uJLxBP1x0RPFjiDP/U3zIbVfq8Y+9lVJPyWWLG4I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WXzqWPmTquQx1ZrDSlaNgXk9l8cAsfSfCv4+1cKBCGlwQc0EcVN51kjolW5ovIqC/ik3rP2cxZLfuSsX9qhE2luQk0UOVb36WrPfNDhqtc9gHJ3NqhbXNI2ynyRFN/IFPx8aHgk8sbLjWGjT7YinWhSMU1xVgEhZLaBl7u7ITKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LPtPphYN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2068C19424;
+	Wed, 18 Mar 2026 08:51:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773823904;
+	bh=/O4uJLxBP1x0RPFjiDP/U3zIbVfq8Y+9lVJPyWWLG4I=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=LPtPphYNZVgxPl9DcybBpjPYwmbFyPPGhPwYpttQQCZbpEI6rAptOYdxTnuAuoOrP
+	 sMkxP8HFL4gLTGwerekQO+XaN7WMO3MEXPNEnJD8CRx+Vj+sZmTIk5xAsvAGx4IzpY
+	 zPeNOCSRIF/GeSfeqcHewXB0qZkfqK3OUK98PqjjZLGrk5AUkrslQGFISv/QchyXS3
+	 forXeZ5LwyV/dkqjUlEhFxHfu/uDpOAoSI0nbcdDJgqxVsjxncZwuOQe95lkKYg3Hv
+	 XBqY9ndA0vJtsxS46WSs06ndvbL0mhZRXVAh1xs7SjfiJBt7waXXQsaWPagANbQ+nw
+	 e+QVLoAPURhlw==
+Message-ID: <52854742-b458-42db-881f-bef8eac3dab5@kernel.org>
+Date: Wed, 18 Mar 2026 09:51:39 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: Add qcs9075-radxa-airbox-q900
+To: Mecid Urganci <mecid@mecomediagroup.de>, andersson@kernel.org,
+ konradybcio@kernel.org
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ richardcochran@gmail.com, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ netdev@vger.kernel.org
+References: <20260318083621.470826-1-mecid@mecomediagroup.de>
+ <20260318083621.470826-2-mecid@mecomediagroup.de>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20260318083621.470826-2-mecid@mecomediagroup.de>
 Content-Type: text/plain; charset=UTF-8
-Date: Wed, 18 Mar 2026 09:45:23 +0100
-Message-Id: <DH5RYL9A77TQ.QE2CS4OFZ1LT@fairphone.com>
-To: "Dmitry Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>, "Luca Weiss"
- <luca.weiss@fairphone.com>
-Cc: "Mahadevan P" <mahadevan.p@oss.qualcomm.com>, "Rob Clark"
- <robin.clark@oss.qualcomm.com>, "Dmitry Baryshkov" <lumag@kernel.org>,
- "Abhinav Kumar" <abhinav.kumar@linux.dev>, "Jessica Zhang"
- <jesszhan0024@gmail.com>, "Sean Paul" <sean@poorly.run>, "Marijn Suijten"
- <marijn.suijten@somainline.org>, "David Airlie" <airlied@gmail.com>,
- "Simona Vetter" <simona@ffwll.ch>, "Krishna Manikandan"
- <quic_mkrishn@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
- <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
- <linux-kernel@vger.kernel.org>, <regressions@lists.linux.dev>
-Subject: Re: [PATCH v2] drm/msm/disp/dpu: add merge3d support for sc7280
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260101-4k-v2-1-712ae3c1f816@oss.qualcomm.com>
- <DH1IKLU0YZYU.2SW4WYO7H3H4R@fairphone.com>
- <tbi5mwg4jt5scvr76lpzpvi5zj3kn3entoorsd4dior4g23czd@xtobadslhfrz>
- <DH437ESQRIAF.2336WF7XZBTI@fairphone.com>
- <7tcmh65lhy7t452mwkiv37pxqwh6dbuh6voelaag6kph7tfr65@cskiwvoafbdy>
-In-Reply-To: <7tcmh65lhy7t452mwkiv37pxqwh6dbuh6voelaag6kph7tfr65@cskiwvoafbdy>
-X-Spamd-Result: default: False [-1.66 / 15.00];
+Content-Transfer-Encoding: 7bit
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[fairphone.com,quarantine];
-	MV_CASE(0.50)[];
-	R_DKIM_ALLOW(-0.20)[fairphone.com:s=fair];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-98356-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch,quicinc.com,vger.kernel.org,lists.freedesktop.org,lists.linux.dev];
+	FREEMAIL_CC(0.00)[kernel.org,gmail.com,vger.kernel.org];
 	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_FROM(0.00)[bounces-98357-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	DKIM_TRACE(0.00)[fairphone.com:+];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[luca.weiss@fairphone.com,linux-arm-msm@vger.kernel.org];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FROM_HAS_DN(0.00)[];
+	MIME_TRACE(0.00)[0:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_SEVEN(0.00)[11];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,fairphone.com:dkim,fairphone.com:mid,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 0C1702B8552
+	TO_DN_SOME(0.00)[]
+X-Rspamd-Queue-Id: 7C74F2B8736
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Tue Mar 17, 2026 at 6:45 PM CET, Dmitry Baryshkov wrote:
-> On Mon, Mar 16, 2026 at 10:08:47AM +0100, Luca Weiss wrote:
->> Hi Dmitry,
->>=20
->> On Fri Mar 13, 2026 at 6:14 PM CET, Dmitry Baryshkov wrote:
->> > On Fri, Mar 13, 2026 at 09:33:18AM +0100, Luca Weiss wrote:
->> >> Hi Mahadevan,
->> >>=20
->> >> On Thu Jan 1, 2026 at 6:04 AM CET, Mahadevan P wrote:
->> >> > On SC7280 targets, display modes with a width greater than the
->> >> > max_mixer_width (2400) are rejected during mode validation when
->> >> > merge3d is disabled. This limitation exists because, without a
->> >> > 3D merge block, two layer mixers cannot be combined(non-DSC interfa=
-ce),
->> >> > preventing large layers from being split across mixers. As a result=
-,
->> >> > higher resolution modes cannot be supported.
->> >> >
->> >> > Enable merge3d support on SC7280 to allow combining streams from
->> >> > two layer mixers into a single non-DSC interface. This capability
->> >> > removes the width restriction and enables buffer sizes beyond the
->> >> > 2400-pixel limit.
->> >> >
->> >> > Fixes: 591e34a091d1 ("drm/msm/disp/dpu1: add support for display fo=
-r SC7280 target")
->> >> > Signed-off-by: Mahadevan P <mahadevan.p@oss.qualcomm.com>
->> >>=20
->> >> This patch is causing display regression on QCM6490 fairphone-fp5.
->> >>=20
->> >> With this patch in 7.0-rc3 (or 6.18.16) there's just pink noise on th=
-e
->> >> screen. When reverting this patch everything becomes working again.
->> >>=20
->> >> See also https://salsa.debian.org/Mobian-team/devices/kernels/qcom-li=
-nux/-/issues/41
->> >>=20
->> >> @Dmitry: Can we revert this for later 7.0-rc, in case it's not fixed
->> >> quickly?
->> >
->> > Could you please provide the resource allocation parts of
->> > debugfs/dri/0/state for both working and non-working cases?
->>=20
->> Working (patch reverted)
->>=20
->> resource mapping:
->>         pingpong=3D# # 68 # - - - - - - - - -=20
->>         mixer=3D# - 68 # - - - -=20
->>         ctl=3D68 # # # - - - -=20
->>         dspp=3D# - - - - - - -=20
->>         dsc=3D68 - - - - - - -=20
->>         cdm=3D#=20
->>         sspp=3D# - - - - - - - # # # - - - - -=20
->>         cwb=3D- - - -=20
->>=20
->>=20
->> Broken (with the patch)
->>=20
->> resource mapping:
->>         pingpong=3D# # 68 68 - - - - - - - - -=20
->>         mixer=3D# - 68 68 - - - -=20
->>         ctl=3D68 # # # - - - -=20
->>         dspp=3D# - - - - - - -=20
->>         dsc=3D68 - - - - - - -=20
->>         cdm=3D#=20
->>         sspp=3D# - - - - - - - # # # - - - - -=20
->>         cwb=3D- - - -=20
->
-> As we have identified that the issue is what downstream calls
-> DUALPIPE_3DMERGE_DSC topology, could you please also check several
-> things (with the broken kernel):
->
-> - What is being returned by dpu_encoder_helper_get_3d_blend_mode() (in
->   the broken config)?
->
-> - If there is any difference in working and broken configs between
->   values being passed to (and programmed to the DSC) in
->   dpu_encoder_prep_dsc() ?
->
-> - The same question for pclk calculation in dsi_host.c
+On 18/03/2026 09:36, Mecid Urganci wrote:
+> Add device tree binding for the Radxa AirBox Q900 board based on
+> the Qualcomm QCS9075 SoC.
 
-Is this helpful?
+What is QCS9075? It's the first time this compatible appears and the
+only other reference is socinfo commit which told nothing.
 
-Broken:
-[    1.247165] dsi_calc_pclk:649 DBG pclk=3D111546490, bclk=3D83659867
-[    1.490559] dpu_encoder_helper_get_3d_blend_mode:309 DBG BLEND_3D_H_ROW_=
-INT
-[    1.491008] dpu_encoder_prep_dsc:2061 DBG dsc_common_mode=3D0 initial_li=
-nes=3D1
+> 
+> Signed-off-by: Mecid Urganci <mecid@mecomediagroup.de>
+> ---
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> index 8c3df8efaa4d..2c492f4d784a 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> @@ -909,6 +909,12 @@ properties:
+>                - qcom,sa8775p-ride-r3
+>            - const: qcom,sa8775p
+>  
+> +      - items:
+> +          - enum:
+> +              - radxa,airbox-q900
+> +          - const: qcom,qcs9075
+> +          - const: qcom,sa8775p
 
-Working:
-[    0.998043] dsi_calc_pclk:649 DBG pclk=3D111546490, bclk=3D83659867
-[    1.233836] dpu_encoder_helper_get_3d_blend_mode:313 DBG BLEND_3D_NONE
-[    1.234277] dpu_encoder_prep_dsc:2061 DBG dsc_common_mode=3D0 initial_li=
-nes=3D1
+Why qcs9075 is compatible with sa8775p?
 
-Or do you need some more things? There's a lot of data being passed into
-dpu_encoder_dsc_pipe_cfg() for example so I'm not sure which values are
-relevant for this.
+> +
+>        - items:
+>            - enum:
+>                - qcom,lemans-evk
 
-Regards
-Luca
+
+Best regards,
+Krzysztof
 
