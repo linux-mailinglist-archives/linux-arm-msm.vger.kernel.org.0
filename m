@@ -1,86 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-98529-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98530-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8Dm9BGLGumlobwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98529-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 16:36:02 +0100
+	id 2M9dCSrDumkGbgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98530-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 16:22:18 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1752B2BE54C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 16:36:01 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 900182BE1A0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 16:22:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 5AD2431E050B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 15:15:56 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 722A83070784
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 15:19:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0CF413E558A;
-	Wed, 18 Mar 2026 15:14:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D43F30F53C;
+	Wed, 18 Mar 2026 15:18:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="h07Xrt2u"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OXcQJ+CQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E22113E51FA
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Mar 2026 15:13:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3754030E838;
+	Wed, 18 Mar 2026 15:18:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773846842; cv=none; b=ugoA9mPQj7Vg2wAgPbDJmY0Sbr7JuCYXX2QvmBl6LRmvAT6nt/PN3caEjjZ5PpTFvFLTKLE91t/F2DSryN7LR/Lhj7g2mvoU5LAxd/PJdTlFwuxBUdXF/scvH5m2GG6aJXmR9MWCAJQCo6HQ96+4JrSDhTUcyDjTnm55FAhzOnw=
+	t=1773847133; cv=none; b=iZ9Q/2wgVtGNql2o5x5cHk0g9MAUULZ7gXyFnk5Ux33LFDtSkMEZW/lJ5LFg52xCxCUKMyFMvDtCEOJAHdT83d+/0WWuyG3WjAgARigaRjnlw14RJ2kiwzxcGPN7nqkf6aVrUqTJPQAaD6s4rLtcb0CauR4RgGbVGoOxstZ4egc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773846842; c=relaxed/simple;
-	bh=Oaf6s37Gmuplz9+ZkhZCP8Y1y9iAbkHpKVFbPTN2SEI=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=ORvy6eQH+n6aQFx6bbKjz/CTj/zdjBf36QrFiNePj8J8OPg1GDrf3vKc8RaTaE0oiE2/b+bJzk3m7+s8f8W/UaPUfPJLpUAYgAoyPDHMdtfXn4elUK+vribpZaO8qenHoGqjabxpvIXISL+r66mtAy9vDeMDdtvk65TllNZDnTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=h07Xrt2u; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-43b48ac2727so2148420f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Mar 2026 08:13:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1773846836; x=1774451636; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ZgaShgnFpvjv0oqeZGBghNfivWunnVPbXktyhMiueac=;
-        b=h07Xrt2u7x+/VrBA4qMCkyYgd39jYQE/xs9lb4Pabb9hzBdoiVELYGhI3POItr/84Q
-         5CnvG9dKsFSMkMuDWfFpfj0qXzLeUUzZeTCc7LuXF+T1qbkHz7f1RWztUSN23BQB8xFJ
-         g3OMUtIajj0xUHJgtSFqMXJrIG2CylHmIbLDet4uNsSYghvhdF4OtqBKGnjZhbkwYjgd
-         ZMV7cum8kZWbkc1Oel+GDywDXFLSTbAxRODrmPWAU7hUtXFTPUQarsMxyGDQHv3Avq5a
-         ES6LgUpzUQuH8fFIfZJBu/4eO4AF1mRqv6RPzGMP6i4DYGRLmLNkcfM6irwvOcL9eQZ9
-         H8qg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773846836; x=1774451636;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZgaShgnFpvjv0oqeZGBghNfivWunnVPbXktyhMiueac=;
-        b=re20rmP6jxxdrtpZhm7TEdjeDZkfilUuOdEsWomBYycwToXQ8CUTowsWSQ3I75VE1F
-         aZ1xsJB54RP9F+dTK/34D6V8T6BLf+6uhe0P6on2qQt72sJsXwXTQPlSIPChaUvv5QnV
-         uhe/SkKdhXx1R5B9nd5UrPGuLHFcF3CCRFK5tSE8y+hGTCP+4CTAQxQsDnabfvwcmvkL
-         eVUGSKUxpGXQlhldDjzcs+6HMNmQpFGO88Opdcw3AVBv+X7CVJizEK6fSMvKF+QqgPr2
-         hoN7wCFofSFzZvE4qDMEtRKkQQk74makIB9RZeRXCm/uxCNazXERe62aZULcq1LYHbg6
-         vwww==
-X-Forwarded-Encrypted: i=1; AJvYcCV+7J8UGUbcj4AlqrYMa4WeXwUkS0OuHHVQACkB4U1MdH1jn6TTxGKwLYdJFOxCfw9B9R0kdFWg6RaNbCrI@vger.kernel.org
-X-Gm-Message-State: AOJu0YzB/9WQO8xcqu9DENbFDIMjzK5/6SN+VCvfzXqFCe0t/YZZB535
-	9jK4daTGxgGynfDttbeXj66VpuCGVlwFk4RCNb09/fAcwGd3Od6MmQWNKRtE80d4eqU=
-X-Gm-Gg: ATEYQzyLogimLhGiLeL7E5OP5AfRoG6BEV8VlPFAPMPxBZ46Vnqal3+zDxYGcdT6j9w
-	Hwpvn/xU+ewAMD8qrfyYz8GQOXnkhqg5mN72YjJVHNaGPszx+Wcvg5w5lRNyjmzA2Ak+KHKj9zj
-	ZWRJqn9KTyPUPWuW97wQ4H053ko15k58SlGkNrwFWv27NuPe8Qk3MNQ2z9vKJsCN7A0Lro0Jwq8
-	FWFnY3xovIFDFCgWOaSo3toKg7uJR5Z0dhsF2fWQ6q2EIS4+mdqDMN1gcpuOsB3cJ4Xkl9nE7wM
-	LtZa1spwb1Zo/3yt5O3zr5QceCGo9K8WLm2VWvcbK0A+F26oKhgRgW/XhspcG/p6uxxr2qzq3Gn
-	4loc6oP3YdSiUuczed/AS+KyDVQC5S6yFX4hpnfKjds99cEqQFJHiXJOrJnnt7lPwzurjGkja3J
-	rpfRercXmcPU8hV+0+xN3eHqZnAtJVRwS958EFuzJyEPY2PufsU6mlBbvqKF73J66L4vQ2HqTcT
-	cCqR+k=
-X-Received: by 2002:a05:600c:8183:b0:486:f634:ef1 with SMTP id 5b1f17b1804b1-486f634100dmr42063005e9.17.1773846835528;
-        Wed, 18 Mar 2026 08:13:55 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:106d:1080:ac75:790f:ef3c:2eb0? ([2a01:e0a:106d:1080:ac75:790f:ef3c:2eb0])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-486f46320e7sm23631045e9.9.2026.03.18.08.13.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Mar 2026 08:13:55 -0700 (PDT)
-Message-ID: <c2cb0bac-1921-40d9-902f-15f682184cc0@linaro.org>
-Date: Wed, 18 Mar 2026 16:13:53 +0100
+	s=arc-20240116; t=1773847133; c=relaxed/simple;
+	bh=v1kABP4SPzJlDc32hr91YfoLTI/cKMuwiXNSRVVhsiQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=p5YPuNbc4K8fLi/c3KsiG8gCcOFNeMtGHDdQIBsi3o3n96L14Li0+sbuBabL6gUsxD8RgaPLMXvUV0HISMBBs9iFarAtsQ5/HgR/rhJPpeGXIGco6XRLwPts/HkdPxI+QM/J9CRUL0TNTY5fDd7Dewt7BalxHz6dpxv5BLXFkBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OXcQJ+CQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05BC8C2BC87;
+	Wed, 18 Mar 2026 15:18:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773847132;
+	bh=v1kABP4SPzJlDc32hr91YfoLTI/cKMuwiXNSRVVhsiQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=OXcQJ+CQh5mUVRQ0+FKvABIQ+X0r/fUJ1KMO/iBz3YggA+E1Nqcr0EPmlwO8yq8y0
+	 pc2SaMeT1Mu1d+T1F8oTK23oT4Ptbc7LY2Qt1y0vYnG7YN+PV2qWwyu0N52OjUF2LL
+	 CMK6ajZBqtqPGCJvNN5qcxoVp/+o6HSDCOMEIzZImyt+seJCDJiRnWfhhbW6cdcpbH
+	 OlFEVNu56rCb/nJjaY+60dToknI07Jcb7kYhgM1YPUuW7KiBmFCu9X59X/oMI2bN/W
+	 NRjjdcdfCfGgNs9sQCuD1tctgOkpBGg/S0tY68z7sujZ46hTVngtlmFwdWIKL96DC+
+	 763/y2gM8VVXw==
+Message-ID: <71f6a6bc-4f46-4fe1-8ea1-072d6717070d@kernel.org>
+Date: Wed, 18 Mar 2026 16:18:48 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,180 +53,229 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v5 0/9] arm64: dts: qcom: Add support for the Ayaneo
- Pocket S2
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Geert Uytterhoeven <geert+renesas@glider.be>,
- Magnus Damm <magnus.damm@gmail.com>, Bartosz Golaszewski <brgl@kernel.org>,
- Manivannan Sadhasivam <mani@kernel.org>, Bjorn Helgaas
- <bhelgaas@google.com>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>
-Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
- linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- KancyJoe <kancy2333@outlook.com>
-References: <20260220-topic-sm8650-ayaneo-pocket-s2-base-v5-0-1ad79caa1efa@linaro.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20260220-topic-sm8650-ayaneo-pocket-s2-base-v5-0-1ad79caa1efa@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v2 2/3] clk: qcom: dispcc-eliza: Add Eliza display clock
+ controller support
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260318-clk-qcom-dispcc-eliza-v2-0-8c05581168d1@oss.qualcomm.com>
+ <20260318-clk-qcom-dispcc-eliza-v2-2-8c05581168d1@oss.qualcomm.com>
+ <1a00582d-66d6-4325-aafd-156cfacee8cd@oss.qualcomm.com>
+ <d2975a1a-04bb-4026-a0cd-34571f99ae02@oss.qualcomm.com>
+ <2227a9d2-fb34-4d54-8122-c00f54009de1@oss.qualcomm.com>
+ <846ae47c-8e0e-4fdb-899d-de679d013fa5@oss.qualcomm.com>
+ <xofpfzgcsmjhprnnffqrwbauisbsctg7bedtri2vxtxk5zowz4@rjlmceevwesg>
+ <9ea16bfe-ac9b-405c-8597-e4f398347d8f@oss.qualcomm.com>
+ <oqgc2rtmtr725u723vwueew2g7oq5aro47744j445373j4pp2z@e4oaur2fggyp>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <oqgc2rtmtr725u723vwueew2g7oq5aro47744j445373j4pp2z@e4oaur2fggyp>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:dkim,linaro.org:email,linaro.org:replyto,linaro.org:mid,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,ayaneo.com:url,msgid.link:url];
-	FREEMAIL_CC(0.00)[vger.kernel.org,oss.qualcomm.com,outlook.com];
-	TAGGED_FROM(0.00)[bounces-98529-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_TO(0.00)[linuxfoundation.org,kernel.org,glider.be,gmail.com,google.com];
-	HAS_ORG_HEADER(0.00)[];
-	TO_DN_SOME(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[24];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	HAS_REPLYTO(0.00)[neil.armstrong@linaro.org];
-	PRECEDENCE_BULK(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	FROM_NEQ_ENVFROM(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-98530-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.998];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,renesas];
+	NEURAL_HAM(-0.00)[-0.999];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	REPLYTO_EQ_FROM(0.00)[]
-X-Rspamd-Queue-Id: 1752B2BE54C
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 900182BE1A0
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi,
+On 18/03/2026 16:05, Dmitry Baryshkov wrote:
+>>>
+>>> Then please follow the internal company guidelines as outlined in the
+>>> legal&marketing documents.
+>>
+>> That's not your task to instruct people what internal stuff should they
+>> follow or not.
+> 
+> Well... For me it's not different from your comments telling other
+> submitters to follow "internal guidelines" when submitting patches. Or
+> not to follow them.
 
-On 2/20/26 16:04, Neil Armstrong wrote:
-> The Ayaneo Pocket S2 is a gaming console based on the Qualcomm
-> Snapdragon 8 Gen 3. It has an internal UFS storage, WiFi,
-> Bluetooth, gaming buttons, SDCard, 2K display and USB-C
-> connector.
-> 
-> Product Page [1].
-> 
-> The Initial linux port was done by KancyJoe (Sunflower2333)
-> at [2].
-> 
-> [1] https://www.ayaneo.com/goods/9344082149621
-> [2] https://github.com/sunflower2333/linux/tree/master
+I am telling them to use go/upstream, only because they do not follow
+public guidelines, so we created a streamlined version for them.
 
-@bjorn @Bartosz @mani what's the best way for get this merged ?
+It is only convenience and all of the internal guidelines are based
+purely on upstream rules. They do not introduce anything else, no new
+rules, no weird copyright rewriting rules.
 
-Should I send the pci pwrctrl as a separate patchset ?
+I understand however how my comments could be misleading and someone
+might think I recommend following some corporate legal stuff. Thank you
+for bringing it up.
+
+I will indeed change my comments and say they need to read Linux kernel
+docs.
+
 
 > 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
-> Changes in v5:
-> - Rebased on -next
-> - Collected tags
-> - Rebased/renamed slot to generic based on changes from Bjorn
-> - Link to v4: https://patch.msgid.link/20260216-topic-sm8650-ayaneo-pocket-s2-base-v4-0-802c82795431@linaro.org
+> I don't want to argue about the corporate guidelines. If you think they
+> are incorrect, please change them.
+
+No. You brought them. I did not want to discuss them, I did not say they
+are right or wrong. You brought them as review so you must defend them.
+
+Otherwise do not bring arguments you are not willing to discuss and
+reply "please change them [corpo rules]".
+
 > 
-> Changes in v4:
-> - Renamed slot to generic, in the code as well, fixed Kconfig & commit message
-> - Switched the UPD72020x bindings additionalProperties to true to allow devices subnodes
-> - Collected acks
-> - Link to v3: https://patch.msgid.link/20260206-topic-sm8650-ayaneo-pocket-s2-base-v3-0-5b79c5d61a03@linaro.org
+>>
+>> Especially not implied by previous comment "Then".
+>>
+>>>
+>>> JFYI, several other Qualcomm maintainers also enforce use of copyright
+>>> headers for Qualcomm-provided patches. Konrad is not unique here.
+>>
+>> I already objected to one of them, so I know.
+>>
+>> You do understand that this is completely broken review process? As
+>> every contributor, I can object to that comment with arguments (and I
+>> did in the past), however you as reviewer do not bring any
+>> counter-arguments for that all. You just refer "follow legal internal
+>> stuff". No, this does not work for that.
+>>
+>> If you bring review comment you must be able to justify it, when it is
+>> being discussed. You cannot refer "but legal team said".
 > 
-> Changes in v3:
-> - Made renesas,upd720201-pci bindings supplies required
-> - Fixed description and example of renesas,upd720201-pci bindings
-> - Renamed slot to generic, added renesas,upd720201-pci entry
-> - Used PMIC_GPIO_STRENGTH_LOW instead of numbers
-> - Removed all output-low in pinconf
-> - Link to v2: https://patch.msgid.link/20260127-topic-sm8650-ayaneo-pocket-s2-base-v2-0-c55ec1b5d8bf@linaro.org
+> If you want to put it that way, sure. As a Qualcomm employee you have a
+> set of internal rules you have to adhere to. One of them is this
+
+In the context of discussing code and contributions, it's none of your
+business where do I work, what is my employment status and what rules my
+employment or lack of that implies.
+
+> copyright string. I'd rather not have legal department pre-review all
+> our contributions. Been there (in another company), thanks, but no.
+
+Again, nothing related here. If these are your feelings, fine, but do
+not impose some rules on the community because of that. Whatever you
+have with legal department, please keep for yourself.
+
 > 
-> Changes in v2:
-> - Add proper regulators for the USB controller, with bindings & power ctrl
-> - Add proper regulators for FAN
-> - Dropped support for headset over USB-C, audio is connected to a jack port
-> - Cleaned up Audio routing and fixed the DP endpoint index
-> - Added i2c clk frequencies
-> - Renamed fan node and used interrupts-extended
-> - Dropped the usb-c self-powered
-> - Reordered nodes alphabetically
-> - Renamed pcieport1 to pcie1_port0
-> - Link to v1: https://patch.msgid.link/20260121-topic-sm8650-ayaneo-pocket-s2-base-v1-0-bb3f95f1c085@linaro.org
+> In my opinion, the maintainers and reviewers should ensure correctness
+> of the patch. Correct legal header is one of those. Consider someone
+
+And the patch is perfectly correct. I carried over original copyrights
+which is the correct thing to do.
+
+Please bring any document from upstream Linux kernel suggesting it is
+not correct.
+
+> submitting patches which has copyright strings such as "(c) qwalkomm" or
+> "(c) lunix foundacion". They would be questioned for correctness.
+
+Patch hash perfectly correct copyright statements, carried over from
+code I was using.
+
+The rule is rather that we do not touch copyright statements.
+
+> Likewise when somebody from Qualcomm submits a patch with "(c) QuIC",
+> they were asked to change it to the current form. It doesn't concern
+
+That's not the case here.
+
+> non-Qualcomm employees, because they cannot change the copyright of the
+> material.
 > 
-> ---
-> KancyJoe (1):
->        arm64: dts: qcom: add basic devicetree for Ayaneo Pocket S2 gaming console
+>>
+>> Otherwise look for comments for your contributions where you are going
+>> to receive review "please remove all boilerplate because my legal team
+>> told me that and I am not going to provide actual arguments why".
 > 
-> Neil Armstrong (8):
->        dt-bindings: usb: document the Renesas UPD720201/UPD720202 USB 3.0 xHCI Host Controller
->        pci: pwrctrl: slot: fix dev_err_probe() usage
->        pci: pwrctrl: rename pci-pwrctrl-slot as generic
->        pci: pwrctrl: generic: support for the UPD720201/UPD720202 USB 3.0 xHCI Host Controller
->        arm64: defconfig: enable pci-pwrctrl-generic as module
->        dt-binding: vendor-prefixes: document the Ayaneo brand
->        dt-bindings: arm: qcom: document the Ayaneo Pocket S2
->        arm64: dts: qcom: sm8650: Add sound DAI prefix for DP
-> 
->   Documentation/devicetree/bindings/arm/qcom.yaml    |    1 +
->   .../bindings/usb/renesas,upd720201-pci.yaml        |   61 +
->   .../devicetree/bindings/vendor-prefixes.yaml       |    2 +
->   arch/arm64/boot/dts/qcom/Makefile                  |    1 +
->   .../boot/dts/qcom/sm8650-ayaneo-pocket-s2.dts      | 1551 ++++++++++++++++++++
->   arch/arm64/boot/dts/qcom/sm8650.dtsi               |   47 +-
->   arch/arm64/configs/defconfig                       |    1 +
->   drivers/pci/controller/dwc/Kconfig                 |    4 +-
->   drivers/pci/pwrctrl/Kconfig                        |   13 +-
->   drivers/pci/pwrctrl/Makefile                       |    4 +-
->   drivers/pci/pwrctrl/generic.c                      |  143 ++
->   drivers/pci/pwrctrl/slot.c                         |  140 --
->   12 files changed, 1795 insertions(+), 173 deletions(-)
-> ---
-> base-commit: df94cc5ccb88d2f6ebc0cac480a1b94162f4ff0f
-> change-id: 20260121-topic-sm8650-ayaneo-pocket-s2-base-05c348efd86d
-> 
-> Best regards,
+> In this case there is one. "Because I assume that you have a requirement
+> to do so from your company". If I were reviewing patches for e.g.
+
+You have no clue what are my requirements from whatever there is my
+company and it is none of your business to even suggest or decide that I
+have.
+
+Don't make assumptions about other people's employment, regardless
+whether the actual guess is correct or not, because my contract and my
+employment is only my business.
+
+> Mediatek driver, if I knew the guideline for the patches and if I saw
+> any of the guidelines to be breached, I'd have reacted in exactly the
+> same way.
+
+Then don't. I have no clue what rules internally Mediatek has thus I
+absolutely should never say that one has to follow some internal
+copyright rules. Neither should you.
+
+Of course you can comment about public community rules and guidelines
+about such things, but that is not the case here or in your example from
+Mediatek.
+
+Best regards,
+Krzysztof
 
 
