@@ -1,66 +1,67 @@
-Return-Path: <linux-arm-msm+bounces-98498-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98499-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sEitNv6xumlGawIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98498-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 15:09:02 +0100
+	id IH5uFguyumlWawIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98499-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 15:09:15 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 431BB2BCABB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 15:09:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A00B82BCB08
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 15:09:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1D5DD3190267
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 13:54:54 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 463583251A7A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 13:55:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C16C33E716D;
-	Wed, 18 Mar 2026 13:51:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 667803E8C5D;
+	Wed, 18 Mar 2026 13:51:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UaRUdEM0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZuzwE6wt"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E2203E6391;
-	Wed, 18 Mar 2026 13:51:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 434133E8C56;
+	Wed, 18 Mar 2026 13:51:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773841878; cv=none; b=WhnGqP8OokQHt13sudRVtK3Jq7tcy8cS4e9a/EcdBNXnrzk1PbWX7cYSnT5D3nkZBGBzWLlpHe2G6C5MiVB2ih/HRyppcC+LQfg4NQwAgVM5CIYgedMyFPpgfnJ3aJzJRmljYfe8uwbiBKrV8YK5l/LNi0FHc3XfNbezVaTARcU=
+	t=1773841880; cv=none; b=dLi4c71Ot4mm3eoRfYWB/12ELiRiwytdMaB+A8zT8GNoUj2mcngICvM6QCHynaA+Bt+abTetjpZjNsg+GFNxrRK6//bhOLc3Se2M4wncHyf8mLRhqAAdVAAS5Lx43FibJCp6MjAGe5g5hnzx3LCEBZ3FYvDABRHUCt+wPWAO9xU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773841878; c=relaxed/simple;
-	bh=NgFCyD93QvS9tG8glqI7VKoCbWTimTFIPCfv75Xlqno=;
+	s=arc-20240116; t=1773841880; c=relaxed/simple;
+	bh=eRabq99M3xj9xoKIDM+R18YTgPDBCwl+S6wGL6ihD0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Z/pS8gDD6QTzTt4wbiJoqwkpXyh6r3L94AsszBhlcWwtPwUoeGr8/Yk2rsEZ+IMoNyUjFm6ueAOmG8pPxElsrtOoyz/4Zw59wrTYu649HV5BQ4m+JQEI8yQXIM8dKTcUgts457ZCPxC23C8lgwHxk610TCJrxrGhIhOBVOmDFUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UaRUdEM0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67A17C19421;
-	Wed, 18 Mar 2026 13:51:17 +0000 (UTC)
+	 MIME-Version:Content-Type; b=gI6SpDxEtykqoErr4Gx0U+kOO7eOiviDrxnKdDkPIC8a7tJqsL7CaBxhonlCIqJUPmmGeLuuVzD9eQ3MgtzNOQ2i42tXPk9g1recy7kPiILU1aO12Iki5JtnLpG0ZB700EhNKTbCq0XWWhsoh5mZnrO/n9ETyVnZ/pnq1hGBcz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZuzwE6wt; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3245C2BC87;
+	Wed, 18 Mar 2026 13:51:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773841878;
-	bh=NgFCyD93QvS9tG8glqI7VKoCbWTimTFIPCfv75Xlqno=;
+	s=k20201202; t=1773841879;
+	bh=eRabq99M3xj9xoKIDM+R18YTgPDBCwl+S6wGL6ihD0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UaRUdEM0hsIdzbAFTG9bUP+ysTjC87okAfIm54VBqZ37M3gAmNqyTv3+5An7lJEiU
-	 W0IV6wSwb37Try7iAAYsic5FZ1Meh/IIi/zk7HzrU5suAbgcxA9Q7MRpx1sNqGD55w
-	 yHRM2U4Od1fJWbB24ghxb+BUJf8KbqKXIKVLe7MK3JZMkfFI0vWutT0w9eF3My3k1w
-	 8P9c76aAZgFjA/bmGYRtV9Ux8516rO03gLa3xEDRpR2UxaL+EhVS4tm1LlMB3giSzs
-	 DmI/zBSzizco+8Egd3UY+7pQeVWTgnMs+S+py697IcrAJ2Ue48jge5vuGh4mWZOdBO
-	 VvcItUQY6/V1g==
+	b=ZuzwE6wtjsbzJCf2+aTEn3CLmqcpeI7rUvkQEfNfhUyKrgaMZxqeV/bEqjAHC2dG+
+	 Pdn6R5IPAKvvtZaE6xgKSSPmDjrzG6SegCSitbz4CPSGWfvE2WTxRfYqUVBY5mXc2a
+	 RC+aO3yiTW0s5wqlyPu5RdpKe0cIYBrVWxxxF4GmTjXh27bgb/0p5jCGmR1307piP1
+	 56c2N3nq84DV4DvQ7BH6Y51walPxhIOu+GY2x2xZCByIMdThCPMKwFa80jwHqHTXSC
+	 sl40rYvIo1JVp0B2nEX8asCUKWr6AZ+El8sLzTIxAja6pduWHEMjMLIjSuQBjMgxHo
+	 xH0LIk1M4VFbg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Erikas Bitovtas <xerikasxx@gmail.com>
+To: konradybcio@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	Xin Liu <xin.liu@oss.qualcomm.com>
 Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	~postmarketos/upstreaming@lists.sr.ht,
-	phone-devel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: msm8939-asus-z00t: add ambient light and proximity sensor
-Date: Wed, 18 Mar 2026 08:50:29 -0500
-Message-ID: <177384182918.14526.1161243063385825907.b4-ty@kernel.org>
+	tingwei.zhang@oss.qualcomm.com,
+	jie.gan@oss.qualcomm.com,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>
+Subject: Re: [PATCH v3] arm64: dts: qcom: hamoa: Add remoteproc IOMMUS in EL2 device trees
+Date: Wed, 18 Mar 2026 08:50:30 -0500
+Message-ID: <177384182873.14526.13138679628509416816.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260225-z00t-capella-sensor-v1-1-99f767bc326a@gmail.com>
-References: <20260225-z00t-capella-sensor-v1-1-99f767bc326a@gmail.com>
+In-Reply-To: <20260203063244.1498699-1-xin.liu@oss.qualcomm.com>
+References: <20260203063244.1498699-1-xin.liu@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,8 +70,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
@@ -78,44 +78,45 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-98498-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_FROM(0.00)[bounces-98499-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	FREEMAIL_TO(0.00)[kernel.org,gmail.com];
 	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MIME_TRACE(0.00)[0:+];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[11];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 431BB2BCABB
+	TO_DN_SOME(0.00)[]
+X-Rspamd-Queue-Id: A00B82BCB08
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 
-On Wed, 25 Feb 2026 16:43:24 +0200, Erikas Bitovtas wrote:
-> This device uses Capella CM36686 as its ambient light and proximity
-> sensor. It is fully compatible with Vishay VCNL4040. Downstream device
-> tree reports Capella CM36283, but upon probe, a device ID for CM36686 is
-> actually found. This commit adds support for Capella CM36686 ambient
-> light and proximity sensor.
+On Mon, 02 Feb 2026 22:32:44 -0800, Xin Liu wrote:
+> All the existing variants Hamoa boards are using Gunyah hypervisor
+> which means that, so far, Linux-based OS could only boot in EL1 on
+> those devices. However, it is possible for us to boot Linux at EL2
+> on these devices [1].
 > 
+> When running under Gunyah, the remote processor firmware IOMMU streams
+> are controlled by Gunyah. However, without Gunyah, the IOMMU is managed
+> by the consumer of this DeviceTree. Therefore, describe the firmware
+> streams for each remote processor.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: msm8939-asus-z00t: add ambient light and proximity sensor
-      commit: 83a06a3afb36818f09d68490d5939e7e56cb96d2
+[1/1] arm64: dts: qcom: hamoa: Add remoteproc IOMMUS in EL2 device trees
+      commit: 47c88db49f6ced5592331c38ef95978fe3497704
 
 Best regards,
 -- 
