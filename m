@@ -1,68 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-98347-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98346-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id KOfwGOJlumklWAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98347-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 09:44:18 +0100
+	id eJl1AGZkumklWAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98346-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 09:37:58 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 034FF2B84E8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 09:44:17 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id A36EB2B82C3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 09:37:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C88323034296
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 08:38:52 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id E841A300AEC4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 08:37:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6183338236D;
-	Wed, 18 Mar 2026 08:38:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41FF1382F2C;
+	Wed, 18 Mar 2026 08:37:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mecomediagroup.de header.i=@mecomediagroup.de header.b="kJFcEgLz"
+	dkim=pass (2048-bit key) header.d=mecomediagroup.de header.i=@mecomediagroup.de header.b="GAvjUyuv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay.yourmailgateway.de (relay.yourmailgateway.de [185.244.194.184])
+Received: from relay.yourmailgateway.de (relay.yourmailgateway.de [188.68.63.166])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 005C321B918;
-	Wed, 18 Mar 2026 08:38:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.244.194.184
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D748377022;
+	Wed, 18 Mar 2026 08:37:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.68.63.166
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773823131; cv=none; b=tdXQKgCmbmIrtdl5zxHgchx2fOtNhcmA2uGLiiqPt+3aCuYS62rJULfjU7CZTqVisqacfKcHvqX4z6ItsKqMohzBhAg6qgAtSE+8VJ0hBmVuKbKJpHtaN/K/EpVOxYLs09kG5M3MlnLVvRHRZE9J8TxboPU5o1oCDYjFR+fbvU8=
+	t=1773823066; cv=none; b=Q/sexF/RGSxvMudg/IuCvIXrt5UapwNWPNPT80x46aosdIH9n+YtYIWKzAXgUnHrzuMmxMJ9VsJnJfSeRHPHvD3e8JaAF1fsjQ2soN4x8dePeacYbbCBBlz5/UQWsNDR1F5uBos4ByKm6tHjCs8WMJKxlf3h2IyMf3FHiEfXHOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773823131; c=relaxed/simple;
-	bh=Tul8i66V9Ox8kqaavmP4X0LXSUE8QW6mGiDdQLOB3m8=;
+	s=arc-20240116; t=1773823066; c=relaxed/simple;
+	bh=ucCoLr8Dr7E38V8fFVilgB+yf7aDdbKpzphOemV6MZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sTcslk2zYgo1OGtVpLaO/FW3yxgOPFRpSnhwa8pY3+V28Xi7KYvRT6EGaTcC/Lz4c5rLVp38NRI7TVcnByt1fzxaA3vbJiDRGnpMLu4BgbUSY3otlqHOBLS1Cmd7sN5o5IQrRI8oIPgUyX0QNq16Ta4I4Jrx+k5MHR+jn8JfvcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mecomediagroup.de; spf=pass smtp.mailfrom=mecomediagroup.de; dkim=pass (2048-bit key) header.d=mecomediagroup.de header.i=@mecomediagroup.de header.b=kJFcEgLz; arc=none smtp.client-ip=185.244.194.184
+	 MIME-Version; b=Ngtr6zAvpFQFfH97UH9okaAlRu1A5Nm86uZThPDLAsWgNLOE4vbtnlOEIToIMFlTPCrTFzlQSpnJi/NOHnr8maSJHwfOTaqn4Xzm0Mik/f33vHYq3/gxflGcBx4enpdBESkdWs7O71N0Hu9dg+FA83xyYHLjCvGWjyuvD4Ck9Vs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mecomediagroup.de; spf=pass smtp.mailfrom=mecomediagroup.de; dkim=pass (2048-bit key) header.d=mecomediagroup.de header.i=@mecomediagroup.de header.b=GAvjUyuv; arc=none smtp.client-ip=188.68.63.166
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mecomediagroup.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mecomediagroup.de
-Received: from relay01-mors.netcup.net (localhost [127.0.0.1])
-	by relay01-mors.netcup.net (Postfix) with ESMTPS id 4fbMdp2nCdz8ypn;
-	Wed, 18 Mar 2026 09:37:34 +0100 (CET)
+Received: from mors-relay-8202.netcup.net (localhost [127.0.0.1])
+	by mors-relay-8202.netcup.net (Postfix) with ESMTPS id 4fbMdb56tNz3xth;
+	Wed, 18 Mar 2026 09:37:23 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mecomediagroup.de;
-	s=key2; t=1773823054;
-	bh=Tul8i66V9Ox8kqaavmP4X0LXSUE8QW6mGiDdQLOB3m8=;
+	s=key2; t=1773823043;
+	bh=ucCoLr8Dr7E38V8fFVilgB+yf7aDdbKpzphOemV6MZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kJFcEgLzQ+Q9IvzDIYBJYLUpczNM4Z9dfOm/JHA1HyjT2gKGIGw6FGU8P4khMkGm0
-	 2L/dPZQcIBpmw88XwqxZ3f2i/U8qt/rGNY2gqeQjzE/bwBaNZ6WbkJJagTNDPs2kbn
-	 3IqEuarh7OQksE+yTH3FRnWPkSBAsbsjtGVlPWAdu5mHI0eaSlrcnqRcoeo+x3/RPW
-	 Gyeq6CsbiJ/6UYFwQ6q3JDyAMKr3EnVHmzUJNPUtB98npm+1FkF2YXYH1TJk+a31UN
-	 PjNQ31X42wphZWGEXW4fS2ttbqevvLAw0+EHQG8iv7BwJ6OzToyThwccf+ggmVfhoM
-	 bmbYtoeEQFnVA==
-Received: from policy01-mors.netcup.net (unknown [46.38.225.35])
-	by relay01-mors.netcup.net (Postfix) with ESMTPS id 4fbMdJ04Mkz7vFY;
-	Wed, 18 Mar 2026 09:37:08 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at policy01-mors.netcup.net
-X-Spam-Flag: NO
-X-Spam-Score: -2.899
-X-Spam-Level: 
+	b=GAvjUyuvRmhQKwkB8ffnp2nbfxYN0K7GVaCvVZGZk3zJqPN9VwPAPPit0y0mu1Q0j
+	 z44mMAQgqaTDbT9sKLjub+/2BwjD9zoxAbxjB49TG1LJcVpwoZn29rVi6+7BpXgNay
+	 496GbQ2xwpC1x10Lm4pxP7/l/sKmVsxdqHoHTmRS1fyGgGjRW+t1+i8SE3ztXHCxF5
+	 /CQQWFvr7LDs6DCZdxfM2KCm0I1nho6Dj+miWobaVS39qFOVn6WQYkS37QdAUYDc7s
+	 OaKoMY8tGgfu2V8lRQjlWIbegDdB8nNh7NltKoF8MAU/iKEzGdKQfUu9fr0dE5+LLl
+	 xHeS8bX5aQllA==
+Received: from policy02-mors.netcup.net (unknown [46.38.225.35])
+	by mors-relay-8202.netcup.net (Postfix) with ESMTPS id 4fbMdL2RgYz3ym7;
+	Wed, 18 Mar 2026 09:37:10 +0100 (CET)
 Received: from mxe95c.netcup.net (unknown [10.243.12.53])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by policy01-mors.netcup.net (Postfix) with ESMTPS id 4fbMdH37kxz8tYX;
-	Wed, 18 Mar 2026 09:37:07 +0100 (CET)
+	by policy02-mors.netcup.net (Postfix) with ESMTPS id 4fbMdK5H4yz8svH;
+	Wed, 18 Mar 2026 09:37:09 +0100 (CET)
 Received: from debian.fritz.box (ip-178-203-082-069.um48.pools.vodafone-ip.de [178.203.82.69])
-	by mxe95c.netcup.net (Postfix) with ESMTPSA id 4F37E801CA;
-	Wed, 18 Mar 2026 09:37:06 +0100 (CET)
+	by mxe95c.netcup.net (Postfix) with ESMTPSA id 5C5C0801CA;
+	Wed, 18 Mar 2026 09:37:08 +0100 (CET)
 Authentication-Results: mxe95c;
 	spf=pass (sender IP is 178.203.82.69) smtp.mailfrom=mecid@mecomediagroup.de smtp.helo=debian.fritz.box
 Received-SPF: pass (mxe95c: connection is authenticated)
@@ -78,9 +74,9 @@ Cc: robh@kernel.org,
 	linux-kernel@vger.kernel.org,
 	netdev@vger.kernel.org,
 	Mecid Urganci <mecid@mecomediagroup.de>
-Subject: [PATCH 1/2] dt-bindings: arm: qcom: Add qcs9075-radxa-airbox-q900
-Date: Wed, 18 Mar 2026 09:36:20 +0100
-Message-ID: <20260318083621.470826-2-mecid@mecomediagroup.de>
+Subject: [PATCH 2/2] arm64: dts: qcom: Add qcs9075-radxa-airbox-q900
+Date: Wed, 18 Mar 2026 09:36:21 +0100
+Message-ID: <20260318083621.470826-3-mecid@mecomediagroup.de>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260318083621.470826-1-mecid@mecomediagroup.de>
 References: <20260318083621.470826-1-mecid@mecomediagroup.de>
@@ -92,15 +88,15 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-PPP-Message-ID: 
- <177382302702.1405000.12757176945499536815@mxe95c.netcup.net>
-X-NC-CID: mO6rgpQkQxrWdgUm1gl+Y+1xwpEIeC9yFEcCt59w/E62xlHomu8Q
+ <177382302909.1405014.15579517616222260863@mxe95c.netcup.net>
+X-NC-CID: WnKX97FCq05kkANfj3RxodBWWhhoZ4ANoE1l9909etZvr5kzoyuy
 X-Spamd-Result: default: False [0.84 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[mecomediagroup.de,none];
 	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[mecomediagroup.de:s=key2];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
@@ -109,7 +105,7 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	FROM_HAS_DN(0.00)[];
 	FREEMAIL_CC(0.00)[kernel.org,gmail.com,vger.kernel.org,mecomediagroup.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-98347-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-98346-lists,linux-arm-msm=lfdr.de];
 	FROM_NEQ_ENVFROM(0.00)[mecid@mecomediagroup.de,linux-arm-msm@vger.kernel.org];
 	RCVD_TLS_LAST(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
@@ -117,41 +113,1065 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCPT_COUNT_SEVEN(0.00)[11];
 	NEURAL_HAM(-0.00)[-1.000];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mecomediagroup.de:dkim,mecomediagroup.de:email,mecomediagroup.de:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.0:email,0.0.0.1:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,0.0.0.50:email,0.0.0.68:email,mecomediagroup.de:dkim,mecomediagroup.de:email,mecomediagroup.de:mid];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 034FF2B84E8
+X-Rspamd-Queue-Id: A36EB2B82C3
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Add device tree binding for the Radxa AirBox Q900 board based on
-the Qualcomm QCS9075 SoC.
+Add device tree support for the Radxa AirBox Q900 board based on the
+Qualcomm QCS9075 SoC (Lemans Family).
+
+This board features HDMI 2.0 via dp0, 2x USB 3.1 Gen 2 ports,
+2x 2.5GbE Ethernet ports and onboard UFS storage.
+
+Further information: https://radxa.com/products/fogwise/airbox-q900/
+
+Functionality has been tested and confirmed working via an Armbian
+Debian Trixie build.
 
 Signed-off-by: Mecid Urganci <mecid@mecomediagroup.de>
+Made-with: Cursor
 ---
- Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/arm64/boot/dts/qcom/Makefile             |    1 +
+ .../dts/qcom/qcs9075-radxa-airbox-q900.dts    | 1012 +++++++++++++++++
+ 2 files changed, 1013 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/qcs9075-radxa-airbox-q900.dts
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index 8c3df8efaa4d..2c492f4d784a 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -909,6 +909,12 @@ properties:
-               - qcom,sa8775p-ride-r3
-           - const: qcom,sa8775p
+diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+index a4dc9e8b2d25..c8b7dd67806d 100644
+--- a/arch/arm64/boot/dts/qcom/Makefile
++++ b/arch/arm64/boot/dts/qcom/Makefile
+@@ -180,6 +180,7 @@ qcs8300-ride-el2-dtbs := qcs8300-ride.dtb monaco-el2.dtbo
  
-+      - items:
-+          - enum:
-+              - radxa,airbox-q900
-+          - const: qcom,qcs9075
-+          - const: qcom,sa8775p
+ dtb-$(CONFIG_ARCH_QCOM)	+= qcs8300-ride-el2.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= qcs8550-aim300-aiot.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= qcs9075-radxa-airbox-q900.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride-r3.dtb
+ 
+diff --git a/arch/arm64/boot/dts/qcom/qcs9075-radxa-airbox-q900.dts b/arch/arm64/boot/dts/qcom/qcs9075-radxa-airbox-q900.dts
+new file mode 100644
+index 000000000000..8b5202b527cb
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/qcs9075-radxa-airbox-q900.dts
+@@ -0,0 +1,1012 @@
++// SPDX-License-Identifier: BSD-3-Clause
++/*
++ * Copyright (c) 2026 Mecid Urganci
++ */
 +
-       - items:
-           - enum:
-               - qcom,lemans-evk
++/dts-v1/;
++
++#include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/leds/common.h>
++#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
++
++#include "lemans.dtsi"
++#include "lemans-pmics.dtsi"
++
++/ {
++	model = "Radxa AIRbox Q900";
++	compatible = "radxa,airbox-q900", "qcom,qcs9075", "qcom,sa8775p";
++
++	aliases {
++		ethernet0 = &ethernet0;
++		ethernet1 = &ethernet1;
++		i2c15 = &i2c15;
++		i2c18 = &i2c18;
++		serial0 = &uart10;
++		ufshc1 = &ufs_mem_hc;
++	};
++
++	chosen {
++		stdout-path = "serial0:115200n8";
++	};
++
++	vcc_5v0_regulator: vcc-5v0-regulator {
++		compatible = "regulator-fixed";
++		regulator-name = "vcc_5v0";
++		gpio = <&pmm8654au_3_gpios 6 GPIO_ACTIVE_HIGH>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&vcc_5v0_en_state>;
++		regulator-min-microvolt = <5000000>;
++		regulator-max-microvolt = <5000000>;
++		regulator-boot-on;
++		enable-active-high;
++		regulator-always-on;
++	};
++
++	vcc5v0_usb30_otg_regulator: vcc5v0-usb30-otg-regulator {
++		compatible = "regulator-fixed";
++		regulator-name = "vcc5v0_usb30_otg";
++		gpio = <&pmm8654au_2_gpios 3 GPIO_ACTIVE_HIGH>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&vcc3v3_usb30_otg_en_state>;
++		regulator-min-microvolt = <5000000>;
++		regulator-max-microvolt = <5000000>;
++		regulator-boot-on;
++		enable-active-high;
++		regulator-always-on;
++	};
++
++	vcc5v0_usb30_regulator: vcc5v0-usb30-regulator {
++		compatible = "regulator-fixed";
++		regulator-name = "vcc5v0_usb30";
++		gpio = <&pmm8654au_2_gpios 4 GPIO_ACTIVE_HIGH>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&vcc3v3_usb30_en_state>;
++		regulator-min-microvolt = <5000000>;
++		regulator-max-microvolt = <5000000>;
++		regulator-boot-on;
++		enable-active-high;
++		regulator-always-on;
++	};
++
++	vcc_3v3_ssd_regulator: vcc-3p3-ssd-regulator {
++		compatible = "regulator-fixed";
++		regulator-name = "vcc_3v3_ssd";
++		gpio = <&pmm8654au_1_gpios 9 GPIO_ACTIVE_HIGH>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&vcc_3v3_ssd_en_state>;
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++		regulator-boot-on;
++		enable-active-high;
++		regulator-always-on;
++	};
++
++	vcc3v3_minipcie_regulator: vcc3v3-minipcie-regulator {
++		compatible = "regulator-fixed";
++		regulator-name = "vcc3v3_minipcie";
++		gpio = <&pmm8654au_2_gpios 10 GPIO_ACTIVE_HIGH>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&vcc3v3_minipcie_en_state>;
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++		regulator-boot-on;
++		enable-active-high;
++		regulator-always-on;
++	};
++
++	gpio_leds: gpio-leds {
++		compatible = "gpio-leds";
++		pinctrl-names = "default";
++		pinctrl-0 = <&status_led_state>, <&power_led_state>;
++
++		status-led {
++			gpios = <&pmm8654au_1_gpios 11 GPIO_ACTIVE_HIGH>;
++			linux,default-trigger = "heartbeat";
++			function = LED_FUNCTION_STATUS;
++			color = <LED_COLOR_ID_BLUE>;
++		};
++
++		power-led {
++			gpios = <&tlmm 98 GPIO_ACTIVE_HIGH>;
++			linux,default-trigger = "default-on";
++			function = LED_FUNCTION_POWER;
++			color = <LED_COLOR_ID_GREEN>;
++		};
++	};
++
++	gpio_keys: gpio-keys {
++		compatible = "gpio-keys";
++
++		pinctrl-0 = <&gpio_keys_default>;
++		pinctrl-names = "default";
++
++		power-key {
++			label = "Power Off";
++			gpios = <&tlmm 97 GPIO_ACTIVE_LOW>;
++			linux,code = <KEY_POWER>;
++			wakeup-source;
++			debounce-interval = <30>;
++		};
++	};
++
++	fan0: gpio-fan {
++		compatible = "gpio-fan";
++		gpios = <&pmm8654au_1_gpios 12 GPIO_ACTIVE_HIGH>;
++		gpio-fan,speed-map = <0 0>, <5000 1>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&fan_en_state>;
++		#cooling-cells = <2>;
++	};
++
++	dp0-connector {
++		compatible = "dp-connector";
++		label = "eDP0";
++		type = "full-size";
++
++		port {
++			dp0_connector_in: endpoint {
++				remote-endpoint = <&mdss0_dp0_out>;
++			};
++		};
++	};
++};
++
++&apps_rsc {
++	regulators-0 {
++		compatible = "qcom,pmm8654au-rpmh-regulators";
++		qcom,pmic-id = "a";
++
++		vreg_s4a: smps4 {
++			regulator-name = "vreg_s4a";
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1816000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_s5a: smps5 {
++			regulator-name = "vreg_s5a";
++			regulator-min-microvolt = <1850000>;
++			regulator-max-microvolt = <1996000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_s9a: smps9 {
++			regulator-name = "vreg_s9a";
++			regulator-min-microvolt = <535000>;
++			regulator-max-microvolt = <1120000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l4a: ldo4 {
++			regulator-name = "vreg_l4a";
++			regulator-min-microvolt = <788000>;
++			regulator-max-microvolt = <1050000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++						   RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l5a: ldo5 {
++			regulator-name = "vreg_l5a";
++			regulator-min-microvolt = <870000>;
++			regulator-max-microvolt = <950000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++						   RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l6a: ldo6 {
++			regulator-name = "vreg_l6a";
++			regulator-min-microvolt = <870000>;
++			regulator-max-microvolt = <970000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++						   RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l7a: ldo7 {
++			regulator-name = "vreg_l7a";
++			regulator-min-microvolt = <720000>;
++			regulator-max-microvolt = <950000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++						   RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l8a: ldo8 {
++			regulator-name = "vreg_l8a";
++			regulator-min-microvolt = <2504000>;
++			regulator-max-microvolt = <3300000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++						   RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l9a: ldo9 {
++			regulator-name = "vreg_l9a";
++			regulator-min-microvolt = <2970000>;
++			regulator-max-microvolt = <3544000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++						   RPMH_REGULATOR_MODE_HPM>;
++		};
++	};
++
++	regulators-1 {
++		compatible = "qcom,pmm8654au-rpmh-regulators";
++		qcom,pmic-id = "c";
++
++		vreg_l1c: ldo1 {
++			regulator-name = "vreg_l1c";
++			regulator-min-microvolt = <1140000>;
++			regulator-max-microvolt = <1260000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++						   RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l2c: ldo2 {
++			regulator-name = "vreg_l2c";
++			regulator-min-microvolt = <900000>;
++			regulator-max-microvolt = <1100000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++						   RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l3c: ldo3 {
++			regulator-name = "vreg_l3c";
++			regulator-min-microvolt = <1100000>;
++			regulator-max-microvolt = <1300000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++						   RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l4c: ldo4 {
++			regulator-name = "vreg_l4c";
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1200000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			/*
++			 * FIXME: This should have regulator-allow-set-load but
++			 * we're getting an over-current fault from the PMIC
++			 * when switching to LPM.
++			 */
++		};
++
++		vreg_l5c: ldo5 {
++			regulator-name = "vreg_l5c";
++			regulator-min-microvolt = <1100000>;
++			regulator-max-microvolt = <1300000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++						   RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l6c: ldo6 {
++			regulator-name = "vreg_l6c";
++			regulator-min-microvolt = <1620000>;
++			regulator-max-microvolt = <1980000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++						   RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l7c: ldo7 {
++			regulator-name = "vreg_l7c";
++			regulator-min-microvolt = <1620000>;
++			regulator-max-microvolt = <2000000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++						   RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l8c: ldo8 {
++			regulator-name = "vreg_l8c";
++			regulator-min-microvolt = <2400000>;
++			regulator-max-microvolt = <3300000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++						   RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l9c: ldo9 {
++			regulator-name = "vreg_l9c";
++			regulator-min-microvolt = <1650000>;
++			regulator-max-microvolt = <2700000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++						   RPMH_REGULATOR_MODE_HPM>;
++		};
++	};
++
++	regulators-2 {
++		compatible = "qcom,pmm8654au-rpmh-regulators";
++		qcom,pmic-id = "e";
++
++		vreg_s4e: smps4 {
++			regulator-name = "vreg_s4e";
++			regulator-min-microvolt = <970000>;
++			regulator-max-microvolt = <1520000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_s7e: smps7 {
++			regulator-name = "vreg_s7e";
++			regulator-min-microvolt = <1010000>;
++			regulator-max-microvolt = <1170000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_s9e: smps9 {
++			regulator-name = "vreg_s9e";
++			regulator-min-microvolt = <300000>;
++			regulator-max-microvolt = <570000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l6e: ldo6 {
++			regulator-name = "vreg_l6e";
++			regulator-min-microvolt = <1280000>;
++			regulator-max-microvolt = <1450000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++						   RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l8e: ldo8 {
++			regulator-name = "vreg_l8e";
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1950000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++						   RPMH_REGULATOR_MODE_HPM>;
++		};
++	};
++};
++
++&ethernet0 {
++	phy-handle = <&sgmii_phy0>;
++	phy-mode = "2500base-x";
++
++	pinctrl-0 = <&ethernet0_default>;
++	pinctrl-names = "default";
++
++	snps,mtl-rx-config = <&mtl_rx_setup>;
++	snps,mtl-tx-config = <&mtl_tx_setup>;
++	snps,ps-speed = <2500>;
++
++	status = "okay";
++
++	mdio {
++		compatible = "snps,dwmac-mdio";
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		sgmii_phy0: ethernet-phy@1c {
++			compatible = "ethernet-phy-id004d.d101";
++			reg = <0x1c>;
++			reset-gpios = <&pmm8654au_2_gpios 8 GPIO_ACTIVE_LOW>;
++			reset-assert-us = <11000>;
++			reset-deassert-us = <70000>;
++
++			leds {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				led@0 {
++					reg = <0>;
++					active-low;
++					color = <LED_COLOR_ID_YELLOW>;
++				};
++
++				led@1 {
++					reg = <1>;
++					active-low;
++					color = <LED_COLOR_ID_GREEN>;
++				};
++			};
++		};
++	};
++
++	mtl_rx_setup: rx-queues-config {
++		snps,rx-queues-to-use = <4>;
++		snps,rx-sched-sp;
++
++		queue0 {
++			snps,dcb-algorithm;
++			snps,map-to-dma-channel = <0x0>;
++			snps,route-up;
++			snps,priority = <0x1>;
++		};
++
++		queue1 {
++			snps,dcb-algorithm;
++			snps,map-to-dma-channel = <0x1>;
++			snps,route-ptp;
++		};
++
++		queue2 {
++			snps,avb-algorithm;
++			snps,map-to-dma-channel = <0x2>;
++			snps,route-avcp;
++		};
++
++		queue3 {
++			snps,avb-algorithm;
++			snps,map-to-dma-channel = <0x3>;
++			snps,priority = <0xc>;
++		};
++	};
++
++	mtl_tx_setup: tx-queues-config {
++		snps,tx-queues-to-use = <4>;
++
++		queue0 {
++			snps,dcb-algorithm;
++		};
++
++		queue1 {
++			snps,dcb-algorithm;
++		};
++
++		queue2 {
++			snps,avb-algorithm;
++			snps,send_slope = <0x1000>;
++			snps,idle_slope = <0x1000>;
++			snps,high_credit = <0x3e800>;
++			snps,low_credit = <0xffc18000>;
++		};
++
++		queue3 {
++			snps,avb-algorithm;
++			snps,send_slope = <0x1000>;
++			snps,idle_slope = <0x1000>;
++			snps,high_credit = <0x3e800>;
++			snps,low_credit = <0xffc18000>;
++		};
++	};
++};
++
++&ethernet1 {
++	phy-handle = <&sgmii_phy1>;
++	phy-mode = "2500base-x";
++
++	pinctrl-0 = <&ethernet1_default>;
++	pinctrl-names = "default";
++
++	snps,mtl-rx-config = <&mtl_rx_setup1>;
++	snps,mtl-tx-config = <&mtl_tx_setup1>;
++	snps,ps-speed = <2500>;
++
++	status = "okay";
++
++	mdio {
++		compatible = "snps,dwmac-mdio";
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		sgmii_phy1: ethernet-phy@1c {
++			compatible = "ethernet-phy-id004d.d101";
++			reg = <0x1c>;
++			reset-gpios = <&pmm8654au_2_gpios 9 GPIO_ACTIVE_LOW>;
++			reset-assert-us = <11000>;
++			reset-deassert-us = <70000>;
++
++			leds {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				led@0 {
++					reg = <0>;
++					active-low;
++					color = <LED_COLOR_ID_YELLOW>;
++				};
++
++				led@1 {
++					reg = <1>;
++					active-low;
++					color = <LED_COLOR_ID_GREEN>;
++				};
++			};
++		};
++	};
++
++	mtl_rx_setup1: rx-queues-config {
++		snps,rx-queues-to-use = <4>;
++		snps,rx-sched-sp;
++
++		queue0 {
++			snps,dcb-algorithm;
++			snps,map-to-dma-channel = <0x0>;
++			snps,route-up;
++			snps,priority = <0x1>;
++		};
++
++		queue1 {
++			snps,dcb-algorithm;
++			snps,map-to-dma-channel = <0x1>;
++			snps,route-ptp;
++		};
++
++		queue2 {
++			snps,avb-algorithm;
++			snps,map-to-dma-channel = <0x2>;
++			snps,route-avcp;
++		};
++
++		queue3 {
++			snps,avb-algorithm;
++			snps,map-to-dma-channel = <0x3>;
++			snps,priority = <0xc>;
++		};
++	};
++
++	mtl_tx_setup1: tx-queues-config {
++		snps,tx-queues-to-use = <4>;
++
++		queue0 {
++			snps,dcb-algorithm;
++		};
++
++		queue1 {
++			snps,dcb-algorithm;
++		};
++
++		queue2 {
++			snps,avb-algorithm;
++			snps,send_slope = <0x1000>;
++			snps,idle_slope = <0x1000>;
++			snps,high_credit = <0x3e800>;
++			snps,low_credit = <0xffc18000>;
++		};
++
++		queue3 {
++			snps,avb-algorithm;
++			snps,send_slope = <0x1000>;
++			snps,idle_slope = <0x1000>;
++			snps,high_credit = <0x3e800>;
++			snps,low_credit = <0xffc18000>;
++		};
++	};
++};
++
++&i2c15 {
++	clock-frequency = <400000>;
++	status = "okay";
++
++	eeprom: eeprom@50 {
++		compatible = "atmel,24c16";
++		reg = <0x50>;
++		pagesize = <16>;
++	};
++};
++
++&i2c18 {
++	clock-frequency = <400000>;
++	pinctrl-0 = <&qup_i2c18_default>;
++	pinctrl-names = "default";
++	status = "okay";
++
++	/* RTC RS4C411ZAE */
++	rtc_m41t11: rtc@68 {
++		compatible = "st,m41t11";
++		reg = <0x68>;
++	};
++};
++
++&gpu {
++	status = "okay";
++};
++
++&gpu_zap_shader {
++	firmware-name = "qcom/sa8775p/a663_zap.mbn";
++};
++
++&iris {
++	firmware-name = "qcom/vpu/vpu30_p4_s6.mbn";
++	status = "okay";
++};
++
++&mdss0 {
++	status = "okay";
++};
++
++&mdss0_dp0 {
++	pinctrl-0 = <&dp_hot_plug_det>;
++	pinctrl-names = "default";
++
++	status = "okay";
++};
++
++&mdss0_dp0_out {
++	data-lanes = <0 1 2 3>;
++	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
++	remote-endpoint = <&dp0_connector_in>;
++};
++
++&mdss0_dp0_phy {
++	vdda-phy-supply = <&vreg_l1c>;
++	vdda-pll-supply = <&vreg_l4a>;
++
++	status = "okay";
++};
++
++&pcie0 {
++	perst-gpios = <&tlmm 2 GPIO_ACTIVE_LOW>;
++	wake-gpios = <&tlmm 0 GPIO_ACTIVE_HIGH>;
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pcie0_default_state>;
++
++	status = "okay";
++};
++
++&pcie1 {
++	perst-gpios = <&tlmm 4 GPIO_ACTIVE_LOW>;
++	wake-gpios = <&tlmm 5 GPIO_ACTIVE_HIGH>;
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pcie1_default_state>;
++
++	status = "okay";
++};
++
++&pcie0_phy {
++	vdda-phy-supply = <&vreg_l5a>;
++	vdda-pll-supply = <&vreg_l1c>;
++
++	status = "okay";
++};
++
++&pcie1_phy {
++	vdda-phy-supply = <&vreg_l5a>;
++	vdda-pll-supply = <&vreg_l1c>;
++
++	status = "okay";
++};
++
++&pmm8654au_0_pon_resin {
++	linux,code = <KEY_VOLUMEDOWN>;
++	status = "okay";
++};
++
++&qupv3_id_0 {
++	status = "okay";
++};
++
++&qupv3_id_1 {
++	status = "okay";
++};
++
++&qupv3_id_2 {
++	status = "okay";
++};
++
++&remoteproc_adsp {
++	firmware-name = "qcom/sa8775p/adsp.mbn";
++	status = "okay";
++};
++
++&remoteproc_cdsp0 {
++	firmware-name = "qcom/sa8775p/cdsp0.mbn";
++	status = "okay";
++};
++
++&remoteproc_cdsp1 {
++	firmware-name = "qcom/sa8775p/cdsp1.mbn";
++	status = "okay";
++};
++
++&remoteproc_gpdsp0 {
++	firmware-name = "qcom/sa8775p/gpdsp0.mbn";
++	status = "okay";
++};
++
++&remoteproc_gpdsp1 {
++	firmware-name = "qcom/sa8775p/gpdsp1.mbn";
++	status = "okay";
++};
++
++&serdes0 {
++	phy-supply = <&vreg_l5a>;
++	vdda-0p9-supply = <&vreg_l4a>;
++
++	status = "okay";
++};
++
++&serdes1 {
++	phy-supply = <&vreg_l5a>;
++	vdda-0p9-supply = <&vreg_l4a>;
++
++	status = "okay";
++};
++
++&sleep_clk {
++	clock-frequency = <32768>;
++};
++
++&uart10 {
++	compatible = "qcom,geni-debug-uart";
++	status = "okay";
++};
++
++&ufs_mem_hc {
++	reset-gpios = <&tlmm 149 GPIO_ACTIVE_LOW>;
++	vcc-supply = <&vreg_l8a>;
++	vcc-max-microamp = <1100000>;
++	vccq-supply = <&vreg_l4c>;
++	vccq-max-microamp = <1200000>;
++
++	status = "okay";
++};
++
++&ufs_mem_phy {
++	vdda-phy-supply = <&vreg_l4a>;
++	vdda-pll-supply = <&vreg_l1c>;
++
++	status = "okay";
++};
++
++&usb_0 {
++	dr_mode = "host";
++
++	status = "okay";
++};
++
++&usb_0_hsphy {
++	vdda-pll-supply = <&vreg_l7a>;
++	vdda18-supply = <&vreg_l6c>;
++	vdda33-supply = <&vreg_l9a>;
++
++	status = "okay";
++};
++
++&usb_0_qmpphy {
++	vdda-phy-supply = <&vreg_l1c>;
++	vdda-pll-supply = <&vreg_l7a>;
++
++	status = "okay";
++};
++
++&usb_1 {
++	dr_mode = "host";
++
++	status = "okay";
++};
++
++&usb_1_hsphy {
++	vdda-pll-supply = <&vreg_l7a>;
++	vdda18-supply = <&vreg_l6c>;
++	vdda33-supply = <&vreg_l9a>;
++
++	status = "okay";
++};
++
++&usb_1_qmpphy {
++	vdda-phy-supply = <&vreg_l1c>;
++	vdda-pll-supply = <&vreg_l7a>;
++
++	status = "okay";
++};
++
++&usb_2 {
++	dr_mode = "host";
++
++	status = "okay";
++};
++
++&usb_2_hsphy {
++	vdda-pll-supply = <&vreg_l7a>;
++	vdda18-supply = <&vreg_l6c>;
++	vdda33-supply = <&vreg_l9a>;
++
++	status = "okay";
++};
++
++&xo_board_clk {
++	clock-frequency = <38400000>;
++};
++
++&pmm8654au_1_gpios {
++	vcc_3v3_ssd_en_state: vcc-3v3-ssd-en-state {
++		pins = "gpio9";
++		function = "normal";
++		output-high;
++		bias-pull-up;
++	};
++
++	status_led_state: status-led-state {
++		pins = "gpio11";
++		function = "normal";
++		output-high;
++		bias-pull-up;
++	};
++
++	fan_en_state: fan-en-state {
++		pins = "gpio12";
++		function = "normal";
++		output-low;
++		bias-pull-down;
++	};
++};
++
++&pmm8654au_2_gpios {
++	vcc3v3_usb30_otg_en_state: vcc3v3-usb30-otg-en-state {
++		pins = "gpio3";
++		function = "normal";
++		output-high;
++		bias-pull-up;
++	};
++
++	vcc3v3_usb30_en_state: vcc3v3-usb30-en-state {
++		pins = "gpio4";
++		function = "normal";
++		output-high;
++		bias-pull-up;
++	};
++
++	vcc3v3_minipcie_en_state: vcc3v3-minipcie-en-state {
++		pins = "gpio10";
++		function = "normal";
++		output-high;
++		bias-pull-up;
++	};
++};
++
++&pmm8654au_3_gpios {
++	vcc_5v0_en_state: vcc-5v0-en-state {
++		pins = "gpio6";
++		function = "normal";
++		output-high;
++		bias-pull-up;
++	};
++};
++
++&tlmm {
++	dp_hot_plug_det: dp-hot-plug-det-state {
++		pins = "gpio101";
++		function = "edp0_hot";
++		bias-disable;
++	};
++
++	ethernet0_default: ethernet0-default-state {
++		ethernet0_mdc: ethernet0-mdc-pins {
++			pins = "gpio8";
++			function = "emac0_mdc";
++			drive-strength = <16>;
++			bias-pull-up;
++		};
++
++		ethernet0_mdio: ethernet0-mdio-pins {
++			pins = "gpio9";
++			function = "emac0_mdio";
++			drive-strength = <16>;
++			bias-pull-up;
++		};
++	};
++
++	ethernet1_default: ethernet1-default-state {
++		ethernet1_mdc: ethernet1-mdc-pins {
++			pins = "gpio20";
++			function = "emac1_mdc";
++			drive-strength = <16>;
++			bias-pull-up;
++		};
++
++		ethernet1_mdio: ethernet1-mdio-pins {
++			pins = "gpio21";
++			function = "emac1_mdio";
++			drive-strength = <16>;
++			bias-pull-up;
++		};
++	};
++
++	pcie0_default_state: pcie0-default-state {
++		perst-pins {
++			pins = "gpio2";
++			function = "gpio";
++			drive-strength = <2>;
++			bias-pull-down;
++		};
++
++		clkreq-pins {
++			pins = "gpio1";
++			function = "pcie0_clkreq";
++			drive-strength = <2>;
++			bias-pull-up;
++		};
++
++		wake-pins {
++			pins = "gpio0";
++			function = "gpio";
++			drive-strength = <2>;
++			bias-pull-up;
++		};
++	};
++
++	pcie1_default_state: pcie1-default-state {
++		perst-pins {
++			pins = "gpio4";
++			function = "gpio";
++			drive-strength = <2>;
++			bias-pull-down;
++		};
++
++		clkreq-pins {
++			pins = "gpio3";
++			function = "pcie1_clkreq";
++			drive-strength = <2>;
++			bias-pull-up;
++		};
++
++		wake-pins {
++			pins = "gpio5";
++			function = "gpio";
++			drive-strength = <2>;
++			bias-pull-up;
++		};
++	};
++
++	qup_i2c18_default: qup-i2c18-state {
++		pins = "gpio95", "gpio96";
++		function = "qup2_se4";
++		drive-strength = <2>;
++		bias-pull-up;
++	};
++
++	gpio_keys_default: gpio-keys-default-state {
++		pins = "gpio97";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-pull-up;
++	};
++
++	power_led_state: power-led-state {
++		pins = "gpio98";
++		function = "gpio";
++		output-high;
++		bias-pull-up;
++	};
++};
++
++/ {
++	thermal-zones {
++		cpu-0-0-0-thermal {
++			polling-delay-passive = <1000>;
++			polling-delay = <5000>;
++
++			trips {
++				fan_on: fan-on {
++					temperature = <40000>;
++					hysteresis = <5000>;
++					type = "active";
++				};
++			};
++
++			cooling-maps {
++				map-fan {
++					trip = <&fan_on>;
++					cooling-device = <&fan0 1 1>;
++				};
++			};
++		};
++	};
++};
 -- 
 2.47.3
 
