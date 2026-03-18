@@ -1,225 +1,398 @@
-Return-Path: <linux-arm-msm+bounces-98311-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98312-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id ILyICVUQumk2RAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98311-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 03:39:17 +0100
+	id SdRAEVMdumlURwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98312-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 04:34:43 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7945D2B53F5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 03:39:16 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id C9C8B2B57AE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 04:34:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 2BAB13028ED1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 02:39:15 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id E90593016B9F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 03:34:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F22111E1C11;
-	Wed, 18 Mar 2026 02:39:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABA60282F11;
+	Wed, 18 Mar 2026 03:34:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="EVzNt4Md";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="B072wxnk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZB9Q99Ul"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADE29271A71
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Mar 2026 02:39:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80D792AEF5;
+	Wed, 18 Mar 2026 03:34:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773801553; cv=none; b=oiUBLQ12WlZaegvdBaTz+pgYCVijhuAh5X2n1+/YSFcQymTmfqfH5EDmGlP/oI4SQI/SnRufbwyQWaINnH7greREiEfWzMPkjw11Tbnlr+KgqT8eXlrEbvDlGPYTOGzh+jJ1SvoKshN8ZCQ6eIkShF+Uf3grynNUKSLLI16taxI=
+	t=1773804877; cv=none; b=Q4IuCanYJv1fHlHyoycZY08YL6Lb/q22aFSFz0c+INMb1eAniGT7s5wMml1yLvrl4ory0jey5vrvbOu/pMTpdRmM6CQAdIgdltf3QDJaiyhgwbVSysywByPloRr0PETISyaZkXCwmZ6qaOdoBQO4fT1fGIVBoAyifZWpTp//q5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773801553; c=relaxed/simple;
-	bh=jFGeopBZPQsRok1FIlD1DbqC9aGHt4P59acUQ5h3hfI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nWRqRDnpRnuq8lUIbM5TX2aotTCm3++xXuYhLZJlU9y9F7JxL5d7WO7rkEYCCiQJlCDEM56ZTfpRsQt1MCI6M37EUg5PvjS9asK+BKSn2IVUstfY2sr7blMucEozWz4D4sAh1EBR9fvHitHJXoq2Hi4OGmChPaF4lrIcQwN6KX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=EVzNt4Md; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=B072wxnk; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62HIJQH2402719
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Mar 2026 02:39:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	21i545n9MI16ugockY6mfvxsGYXy84KbkzbH+BLNxSU=; b=EVzNt4MdqTBhV936
-	k3/p8HHx6OErn+EXF+fVcfsaw8swJN+a7DfnuvW+fBKU+CSiKYgMmqt4qDvIZfGN
-	KNqrh16Z47wpI8Jyrx60GHFMJVZp50SGukp7zr9StwhXhnTMeTn21s63+XUKRikA
-	Bsxi/9x0MwHcNYWV9ZMc9XN3544P7ROE1/rmiy6sRzWOydbjF7t9gbtc7ghGuqxv
-	KevM315fdII3g76xZrtrp0UNSbDHJ5l+BDswfm/slVuCcSb/yRIwGh5wOu7239Wu
-	VjTv7rjqz+DH8UbzCqOpK5JwqWEHOZI6FTcB0GUmIw5D/M/L2Yq4V+Lrruw7bV8Y
-	XooHrQ==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cyc4dsk9a-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Mar 2026 02:39:11 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-35ba237d2e0so3265499a91.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Mar 2026 19:39:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1773801551; x=1774406351; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=21i545n9MI16ugockY6mfvxsGYXy84KbkzbH+BLNxSU=;
-        b=B072wxnkrMo0v2Kw2G/4RqUJCnzoiUDEni2pDxueTUWl2VkiAG1LpE2BB/pbRgZ38y
-         fMXCWL1CDJ9wcf0rlDbJnhj7Ry0zo5Zv3ws7xCPEzu5VhgAj9g/gQMMkP2Xs09RoDiZw
-         adUg1ybMNzyQ81pRc1ovhAc4iWCv1sd9irwdQhpH1y6yqjx3TYHKtjq5qmddjLD7Z528
-         AGScFKEbv855ETzYsH/wG/eeBOyVzr3f/pFENT+OBeoCBbsVD6P25j0ScVRt4Ex6yuWD
-         k56eMAiB6Dr1r43AVIi77UmE0hUVRdB4H+QNfiCYkpFsP5zS+A2D5/xnyeebNoYgPpBo
-         j4Hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773801551; x=1774406351;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=21i545n9MI16ugockY6mfvxsGYXy84KbkzbH+BLNxSU=;
-        b=h/zXegnR2YZnaVtL2q6KxvztRwJcfp0adjs5mIoSO6CJVg6dIGjv0IbFRuhxuNAmij
-         1fWI/Mwi8CuEf1CJuINbF+UBRP1GVupA8EVwjt+txpJgWr9Lim9qYvAWrGjvq3e+9lIr
-         wm9VFDsgQKwY6dgh9veY+9NRsLAvMM7Cn728wPqztaQ2HjYlqaUr/JPyv4MKsOf3WkrK
-         E0l7g7+0UVfu2qnd0+qj0Xpu251RM9MczW9vxHAQ1J0gbHDgucGxFS6WzRs9dvPBXrI8
-         avwtDZlXP2vmwTVtW7L6CcQ096hdBFm6vd7196pyASi2nPBtSOF9TTvN579+9l+l8nRO
-         C0Vg==
-X-Gm-Message-State: AOJu0YxXMNEiSVlLFURANqGoO8TGeCnfbhOlFfuimJCRma3o3AlAPeZP
-	NC4MsUSAWrkru+vT3AEhuhYaJgVgkzZf39W5HRvh728JZj5spZuRT5YaJTYa3hTigBASq2yZcpX
-	+ScOk/gkBYiHTkn7L/haHmsIXJ+QUN3q0NIayEosIPl2xkDjLOdCKJVGuFb9meqzkTjfL
-X-Gm-Gg: ATEYQzxtQYCevU1xeKrsWO+PHIuI7ev8m/ydvPCYYvAOvwWq544Ms8ctcGZYqM9LoXy
-	5/JwkJ7Nh4nEskjUGeiFhYvOEBO94GdeajczntHRnCKB4jHdHu+rbcNJb3yuG76HM+kY6tqOmFI
-	GCuh8xU/JQ5+kdnuKYlIFNRxDq9mPR8CHjxXhpOOKMH8jipxJqaO12mRxkkD1z3bWtE7umNI6YH
-	y9D++nlWspTkQ03hsyFQlukmO6xyyU+l6sxqNflzh1DsDqRqyfEzAdsS/TjFutmj2jZW6Sw86Ny
-	6l7lTvO8xqpBQIMrO2qUpApI7y6hwbfHtOe3qFvXlcbzB4d8sjw8LK6d6JWWag5WgOiRQRWqz1W
-	yg5MbRqIG4F4lMj6WGw5UaEHFtHpXkoCvAO0B7tSXK1UZGXo5
-X-Received: by 2002:a17:90b:2691:b0:35b:9ab6:1d4e with SMTP id 98e67ed59e1d1-35bb9f24ecamr1376906a91.28.1773801550636;
-        Tue, 17 Mar 2026 19:39:10 -0700 (PDT)
-X-Received: by 2002:a17:90b:2691:b0:35b:9ab6:1d4e with SMTP id 98e67ed59e1d1-35bb9f24ecamr1376887a91.28.1773801550166;
-        Tue, 17 Mar 2026 19:39:10 -0700 (PDT)
-Received: from [10.239.97.158] ([114.94.8.21])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35bbad9e5d7sm263439a91.5.2026.03.17.19.39.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 17 Mar 2026 19:39:09 -0700 (PDT)
-Message-ID: <f036e127-3291-4928-838e-1ad301010196@oss.qualcomm.com>
-Date: Wed, 18 Mar 2026 10:39:04 +0800
+	s=arc-20240116; t=1773804877; c=relaxed/simple;
+	bh=/2/SBIzIdR3PZ4M8jjOi91iS4jaETueAP3+eBIV8ysM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JcbO2COTLABQRCkXEJuedXwrjaVt4d6ijSwayESkiRcxc7tbEHaEGqGbRwbBHrAawq03GQYE+ZrMvtxzp0pBQGoo64TTxUqsa+cwx2A1y0/c+mIAeb7IIIt3h+mVQT7Z2t1jq/E68+sToDJGcejsqpx/EP/+YoCi8j+NvqLNq74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZB9Q99Ul; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C11DCC19421;
+	Wed, 18 Mar 2026 03:34:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773804877;
+	bh=/2/SBIzIdR3PZ4M8jjOi91iS4jaETueAP3+eBIV8ysM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ZB9Q99UlzL+AgiMYGkaJQYJc6Tsqk4VzkVmWkpanuHFytqx63D6uHxRXQjNk2r1fe
+	 o158Y+icpZPAk1WWAPebopTfXaDSl13TGoENld0PK4AIZUi8FhfyoMXD6FwsVCKXyt
+	 dJySRTaX8v19FFXj6K0TrRKI44LPalAwwAYnWJXdBjjhvKFugnfFm3uylVPgwXAB0/
+	 D5UHgDUpML1ykLNmD4tC2FrVIoJDMwBGJq87ad4y73t6ZYpMESdds2yYwUi8ivFFAx
+	 7zCkq4I+OgM5MpxT0MVjoEYItXK/wbxnb4bBHrPM3mPsLKF4basmwFjf5fDJkoVn4Q
+	 Fp67c+axrxPEA==
+Date: Wed, 18 Mar 2026 09:04:24 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Bartosz Golaszewski <brgl@kernel.org>
+Cc: manivannan.sadhasivam@oss.qualcomm.com, 
+	Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>, linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-kbuild@vger.kernel.org, platform-driver-x86@vger.kernel.org, linux-pci@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
+	linux-pm@vger.kernel.org, Stephan Gerhold <stephan.gerhold@linaro.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, linux-acpi@vger.kernel.org, 
+	Hans de Goede <johannes.goede@oss.qualcomm.com>, Rob Herring <robh@kernel.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
+	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas.schier@linux.dev>, 
+	Hans de Goede <hansg@kernel.org>, Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, 
+	Mark Pearson <mpearson-lenovo@squebb.ca>, "Derek J. Clark" <derekjohn.clark@gmail.com>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+	Bartosz Golaszewski <brgl@bgdev.pl>, Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: Re: [PATCH v6 9/9] power: sequencing: pcie-m2: Create serdev device
+ for WCN7850 bluetooth
+Message-ID: <aikoyhpzukxgiupdche55er4iddtdckc44kxkrqrzqid6hcptl@qtjbtg7drgpb>
+References: <20260317-pci-m2-e-v6-0-9c898f108d3d@oss.qualcomm.com>
+ <20260317-pci-m2-e-v6-9-9c898f108d3d@oss.qualcomm.com>
+ <CAMRc=MeNZGr=zDVQYd1YgeUNdaenpbDEgmT6h7CuU89sHQuMcA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] arm64: dts: qcom: hamoa-iot-evk: support Bluetooth
- over both USB and UART
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        cheng.jiang@oss.qualcomm.com, quic_chezhou@quicinc.com,
-        wei.deng@oss.qualcomm.com, jinwang.li@oss.qualcomm.com,
-        mengshi.wu@oss.qualcomm.com
-References: <20260311090921.1892191-1-shuai.zhang@oss.qualcomm.com>
- <cffdb8ab-a293-4535-860c-378a4b8a3d33@oss.qualcomm.com>
- <97a3f3f2-e9e2-44ac-a682-0e0f0c100a45@oss.qualcomm.com>
- <eefb75dd-95f9-477b-9251-dcabfae47c8b@oss.qualcomm.com>
-Content-Language: en-US
-From: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
-In-Reply-To: <eefb75dd-95f9-477b-9251-dcabfae47c8b@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE4MDAyMCBTYWx0ZWRfXwp5M6g7BMWMr
- Yjx3UPTxkIR9/0fPVGcm6mlTxpDxZ24ZgbXXjkxXLeQVz0NHjp8AQBZ2WsIEtbmhgSFN/opbTye
- 4UhWv5KVyCfyq7P8y/Vv5dHLSPUpqoosGfGbUpFBciLw0+RQT0cGhMhA4TMv8jfY7fcJL3g+cIW
- +D2A9jFB0tKQeEPfHY1WTURmgiu37ozZyLvsXZOHUFTdQVkm4e86Bo5WwFs5AT/iwqo7w+iAUSt
- fd5p8cUM3VDUu8UpujaVsBPvGlRyDBQlzK383phXHUxu2k6TjdEnDZg65E7N4Rr3QPlwLznJ9g2
- FRUo+PGbdJ7pZuELzPXjHH8rf1gWhlPCcCQY10NKY4BKCJ/WdvfTtWm/brV0uU1dC32slYkef9j
- KH4FqtnjfQaNMjwwEBR+c4nB32rUiHv/3yMZwCAs2QjqFtGLkmJMrTve6nsMwr4dunRBFZc1MPr
- s9jz4qttI1RZiQpfvLg==
-X-Proofpoint-GUID: oqNRz0lNXs1kOKUuW-aRiHRQs1aI7OWY
-X-Authority-Analysis: v=2.4 cv=DfQaa/tW c=1 sm=1 tr=0 ts=69ba104f cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=Uz3yg00KUFJ2y2WijEJ4bw==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=8MRJ8AJfQqww6RVhRvMA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=rl5im9kqc5Lf4LNbBjHf:22
-X-Proofpoint-ORIG-GUID: oqNRz0lNXs1kOKUuW-aRiHRQs1aI7OWY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-17_05,2026-03-17_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 suspectscore=0 impostorscore=0 lowpriorityscore=0 adultscore=0
- priorityscore=1501 clxscore=1015 spamscore=0 bulkscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603180020
-X-Spamd-Result: default: False [-2.16 / 15.00];
+In-Reply-To: <CAMRc=MeNZGr=zDVQYd1YgeUNdaenpbDEgmT6h7CuU89sHQuMcA@mail.gmail.com>
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[15];
-	TAGGED_FROM(0.00)[bounces-98311-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-98312-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[shuai.zhang@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[31];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,vger.kernel.org,linaro.org,linuxfoundation.org,linux.dev,linux.intel.com,squebb.ca,gmail.com,holtmann.org,bgdev.pl];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,manivannan.sadhasivam.oss.qualcomm.com,dt];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 7945D2B53F5
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: C9C8B2B57AE
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi Konrad
+On Tue, Mar 17, 2026 at 09:06:20AM -0400, Bartosz Golaszewski wrote:
+> On Tue, 17 Mar 2026 05:29:59 +0100, Manivannan Sadhasivam via B4 Relay
+> <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org> said:
+> > From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> >
+> > For supporting bluetooth over the non-discoverable UART interface of
+> > WCN7850, create the serdev device after enumerating the PCIe interface.
+> > This is mandatory since the device ID is only known after the PCIe
+> > enumeration and the ID is used for creating the serdev device.
+> >
+> > Since by default there is no OF or ACPI node for the created serdev,
+> > create a dynamic OF 'bluetooth' node with the 'compatible' property and
+> > attach it to the serdev device. This will allow the serdev device to bind
+> > to the existing bluetooth driver.
+> >
+> > Tested-by: Hans de Goede <johannes.goede@oss.qualcomm.com> # ThinkPad T14s gen6 (arm64)
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> > ---
+> >  drivers/power/sequencing/Kconfig          |   3 +-
+> >  drivers/power/sequencing/pwrseq-pcie-m2.c | 178 +++++++++++++++++++++++++++++-
+> >  2 files changed, 177 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/drivers/power/sequencing/Kconfig b/drivers/power/sequencing/Kconfig
+> > index f5fff84566ba..55aeef125e6f 100644
+> > --- a/drivers/power/sequencing/Kconfig
+> > +++ b/drivers/power/sequencing/Kconfig
+> > @@ -37,7 +37,8 @@ config POWER_SEQUENCING_TH1520_GPU
+> >
+> >  config POWER_SEQUENCING_PCIE_M2
+> >  	tristate "PCIe M.2 connector power sequencing driver"
+> > -	depends on OF || COMPILE_TEST
+> > +	depends on (PCI && OF) || COMPILE_TEST
+> > +	select OF_DYNAMIC
+> >  	help
+> >  	  Say Y here to enable the power sequencing driver for PCIe M.2
+> >  	  connectors. This driver handles the power sequencing for the M.2
+> > diff --git a/drivers/power/sequencing/pwrseq-pcie-m2.c b/drivers/power/sequencing/pwrseq-pcie-m2.c
+> > index 3507cdcb1e7b..77357439ba81 100644
+> > --- a/drivers/power/sequencing/pwrseq-pcie-m2.c
+> > +++ b/drivers/power/sequencing/pwrseq-pcie-m2.c
+> > @@ -12,9 +12,11 @@
+> >  #include <linux/of.h>
+> >  #include <linux/of_graph.h>
+> >  #include <linux/of_platform.h>
+> > +#include <linux/pci.h>
+> >  #include <linux/platform_device.h>
+> >  #include <linux/pwrseq/provider.h>
+> >  #include <linux/regulator/consumer.h>
+> > +#include <linux/serdev.h>
+> >  #include <linux/slab.h>
+> >
+> >  struct pwrseq_pcie_m2_pdata {
+> > @@ -30,6 +32,9 @@ struct pwrseq_pcie_m2_ctx {
+> >  	struct notifier_block nb;
+> >  	struct gpio_desc *w_disable1_gpio;
+> >  	struct gpio_desc *w_disable2_gpio;
+> > +	struct serdev_device *serdev;
+> > +	struct of_changeset *ocs;
+> > +	struct device *dev;
+> >  };
+> >
+> >  static int pwrseq_pcie_m2_vregs_enable(struct pwrseq_device *pwrseq)
+> > @@ -172,13 +177,176 @@ static int pwrseq_pcie_m2_match(struct pwrseq_device *pwrseq,
+> >  	return PWRSEQ_NO_MATCH;
+> >  }
+> >
+> > -static void pwrseq_pcie_m2_free_regulators(void *data)
+> > +static void pwrseq_pcie_m2_free_resources(void *data)
+> >  {
+> >  	struct pwrseq_pcie_m2_ctx *ctx = data;
+> >
+> > +	serdev_device_remove(ctx->serdev);
+> > +	bus_unregister_notifier(&pci_bus_type, &ctx->nb);
+> > +	of_changeset_revert(ctx->ocs);
+> > +	of_changeset_destroy(ctx->ocs);
+> >  	regulator_bulk_free(ctx->num_vregs, ctx->regs);
+> >  }
+> >
+> > +static int pwrseq_m2_pcie_create_bt_node(struct pwrseq_pcie_m2_ctx *ctx,
+> > +					struct device_node *parent)
+> > +{
+> > +	struct device *dev = ctx->dev;
+> > +	struct device_node *np;
+> > +	int ret;
+> > +
+> > +	ctx->ocs = devm_kzalloc(dev, sizeof(*ctx->ocs), GFP_KERNEL);
+> > +	if (!ctx->ocs)
+> > +		return -ENOMEM;
+> > +
+> > +	of_changeset_init(ctx->ocs);
+> > +
+> > +	np = of_changeset_create_node(ctx->ocs, parent, "bluetooth");
+> > +	if (!np) {
+> > +		dev_err(dev, "Failed to create bluetooth node\n");
+> > +		ret = -ENODEV;
+> > +		goto err_destroy_changeset;
+> > +	}
+> > +
+> > +	ret = of_changeset_add_prop_string(ctx->ocs, np, "compatible", "qcom,wcn7850-bt");
+> > +	if (ret) {
+> > +		dev_err(dev, "Failed to add bluetooth compatible: %d\n", ret);
+> > +		goto err_destroy_changeset;
+> > +	}
+> > +
+> > +	ret = of_changeset_apply(ctx->ocs);
+> > +	if (ret) {
+> > +		dev_err(dev, "Failed to apply changeset: %d\n", ret);
+> > +		goto err_destroy_changeset;
+> > +	}
+> > +
+> > +	ret = device_add_of_node(&ctx->serdev->dev, np);
+> > +	if (ret) {
+> > +		dev_err(dev, "Failed to add OF node: %d\n", ret);
+> > +		goto err_revert_changeset;
+> > +	}
+> > +
+> > +	return 0;
+> > +
+> > +err_revert_changeset:
+> > +	of_changeset_revert(ctx->ocs);
+> > +err_destroy_changeset:
+> > +	of_changeset_destroy(ctx->ocs);
+> > +
+> > +	return ret;
+> > +}
+> > +
+> > +static int pwrseq_m2_pcie_notify(struct notifier_block *nb, unsigned long action,
+> > +			      void *data)
+> > +{
+> > +	struct pwrseq_pcie_m2_ctx *ctx = container_of(nb, struct pwrseq_pcie_m2_ctx, nb);
+> > +	struct pci_dev *pdev = to_pci_dev(data);
+> > +	struct serdev_controller *serdev_ctrl;
+> > +	struct device *dev = ctx->dev;
+> > +	int ret;
+> > +
+> > +	/*
+> > +	 * Check whether the PCI device is associated with this M.2 connector or
+> > +	 * not, by comparing the OF node of the PCI device parent and the Port 0
+> > +	 * (PCIe) remote node parent OF node.
+> > +	 */
+> > +	struct device_node *pci_parent __free(device_node) =
+> > +			of_graph_get_remote_node(dev_of_node(ctx->dev), 0, 0);
+> > +	if (!pci_parent || (pci_parent != pdev->dev.parent->of_node))
+> > +		return NOTIFY_DONE;
+> > +
+> > +	switch (action) {
+> > +	case BUS_NOTIFY_ADD_DEVICE:
+> > +		/* Create serdev device for WCN7850 */
+> > +		if (pdev->vendor == PCI_VENDOR_ID_QCOM && pdev->device == 0x1107) {
+> > +			struct device_node *serdev_parent __free(device_node) =
+> > +				of_graph_get_remote_node(dev_of_node(ctx->dev), 1, 1);
+> > +			if (!serdev_parent)
+> > +				return NOTIFY_DONE;
+> > +
+> > +			serdev_ctrl = of_find_serdev_controller_by_node(serdev_parent);
+> > +			if (!serdev_ctrl)
+> > +				return NOTIFY_DONE;
+> > +
+> > +			/*
+> > +			 * Bail out if the device was already attached to this
+> > +			 * controller.
+> > +			 */
+> > +			if (serdev_ctrl->serdev)
+> > +				return NOTIFY_DONE;
+> > +
+> > +			ctx->serdev = serdev_device_alloc(serdev_ctrl);
+> > +			if (!ctx->serdev)
+> > +				return NOTIFY_BAD;
+> 
+> If you bail out here, on driver unbind you'll call serdev_device_remove() which
+> uncoditionally dereferences the serdev pointer.
+> 
+> > +
+> > +			ret = pwrseq_m2_pcie_create_bt_node(ctx, serdev_parent);
+> 
+> If this doesn't succeed, ctx->ocs remains set to NULL (correct me if I'm wrong)
+> and you end up calling of_changeset_revert() which will unconditionally
+> dereference the of_changeset pointer in __of_changeset_entry_invert().
+> 
+> > +			if (ret) {
+> > +				serdev_device_put(ctx->serdev);
+> > +				return notifier_from_errno(ret);
+> > +			}
+> > +
+> > +			ret = serdev_device_add(ctx->serdev);
+> > +			if (ret) {
+> > +				dev_err(dev, "Failed to add serdev for WCN7850: %d\n", ret);
+> > +				of_changeset_revert(ctx->ocs);
+> > +				of_changeset_destroy(ctx->ocs);
+> > +				serdev_device_put(ctx->serdev);
+> > +				return notifier_from_errno(ret);
+> > +			}
+> > +		}
+> > +		break;
+> > +	case BUS_NOTIFY_REMOVED_DEVICE:
+> > +		/* Destroy serdev device for WCN7850 */
+> > +		if (pdev->vendor == PCI_VENDOR_ID_QCOM && pdev->device == 0x1107) {
+> > +			serdev_device_remove(ctx->serdev);
+> > +			of_changeset_revert(ctx->ocs);
+> > +			of_changeset_destroy(ctx->ocs);
+> > +		}
+> > +		break;
+> > +	}
+> > +
+> > +	return NOTIFY_OK;
+> > +}
+> > +
+> > +static bool pwrseq_pcie_m2_check_remote_node(struct device *dev, u8 port, u8 endpoint,
+> > +					     const char *node)
+> > +{
+> > +	struct device_node *remote __free(device_node) =
+> > +			of_graph_get_remote_node(dev_of_node(dev), port, endpoint);
+> > +
+> > +	if (remote && of_node_name_eq(remote, node))
+> > +		return true;
+> > +
+> > +	return false;
+> > +}
+> > +
+> > +/*
+> > + * If the connector exposes a non-discoverable bus like UART, the respective
+> > + * protocol device needs to be created manually with the help of the notifier
+> > + * of the discoverable bus like PCIe.
+> > + */
+> > +static int pwrseq_pcie_m2_register_notifier(struct pwrseq_pcie_m2_ctx *ctx, struct device *dev)
+> > +{
+> > +	int ret;
+> > +
+> > +	/*
+> > +	 * Register a PCI notifier for Key E connector that has PCIe as Port
+> > +	 * 0/Endpoint 0 interface and Serial as Port 3/Endpoint 0 interface.
+> > +	 */
+> > +	if (pwrseq_pcie_m2_check_remote_node(dev, 3, 0, "serial")) {
+> > +		if (pwrseq_pcie_m2_check_remote_node(dev, 0, 0, "pcie")) {
+> > +			ctx->dev = dev;
+> > +			ctx->nb.notifier_call = pwrseq_m2_pcie_notify;
+> > +			ret = bus_register_notifier(&pci_bus_type, &ctx->nb);
+> > +			if (ret)
+> > +				return dev_err_probe(dev, ret,
+> > +						     "Failed to register notifier for serdev\n");
+> > +		}
+> > +	}
+> > +
+> > +	return 0;
+> > +}
+> > +
+> >  static int pwrseq_pcie_m2_probe(struct platform_device *pdev)
+> >  {
+> >  	struct device *dev = &pdev->dev;
+> > @@ -218,7 +386,7 @@ static int pwrseq_pcie_m2_probe(struct platform_device *pdev)
+> >
+> >  	ctx->num_vregs = ret;
+> >
+> > -	ret = devm_add_action_or_reset(dev, pwrseq_pcie_m2_free_regulators, ctx);
+> > +	ret = devm_add_action_or_reset(dev, pwrseq_pcie_m2_free_resources, ctx);
+> >  	if (ret)
+> >  		return ret;
+> >
+> > @@ -233,7 +401,11 @@ static int pwrseq_pcie_m2_probe(struct platform_device *pdev)
+> >  		return dev_err_probe(dev, PTR_ERR(ctx->pwrseq),
+> >  				     "Failed to register the power sequencer\n");
+> 
+> If you bail out here, you will call bus_unregister_notifier() before your
+> registered it. Kernel docs are not clear on whether that's a bug but it still
+> looks fishy to me.
+> 
+> Am I not seeing something or is the error path broken? I'm doubting myself
+> here. :)
+> 
 
-Thanks for your review.
+No, it was me who has gone bonkers with the error path. I was so delusional to
+assume that these APIs handle NULL ptrs :/
 
-On 3/13/2026 8:34 PM, Konrad Dybcio wrote:
-> On 3/13/26 7:37 AM, Shuai Zhang wrote:
->> Hi Konrad
->>
->> On 3/11/2026 9:07 PM, Konrad Dybcio wrote:
->>> On 3/11/26 10:09 AM, Shuai Zhang wrote:
->>>> When Bluetooth supports both USB and UART, the BT UART driver is
->>>> always loaded, while USB is hot-pluggable. As a result, when Bluetooth
->>>> is used over USB, the UART driver still be probed and drive BT_EN low,
->>>> which causes the Bluetooth device on USB to be disconnected.
->>> Is bluetooth connected over UART *and* USB simultaneously?
->> BT uses either UART or USB, never both at the same time.
->>
->> On platforms supporting both, the UART driver is always probed, while USB is hot‑pluggable.
->>
->> As a result, when BT runs over USB, the UART driver still probes and pulls BT_EN low,
->>
->> unintentionally powering off the USB BT device.
-> Please describe in more detail how that difference can appear in practice.
->
-> Is there an M.2 slot, into which different kinds of cards (i.e. ones with
-> BT-over-USB vs BT-over-UART) may be plugged in?
+> This is why I advised to split pwrseq_pcie_m2_free_resources() and only schedule
+> individual devres actions after their allocation succeeds.
+> 
+> As it is now, you're better off providing a remove() callback with NULL checks.
+> 
 
-Yes, this is an M.2 slot that can accommodate different types of cards.
-Additionally, the maintainer proposed option [1], which should be able 
-to resolve my issue.
+Makes sense. I'll fix them all in next version.
 
-I am currently evaluating it.
+- Mani
 
-[1]https://lore.kernel.org/r/20260224-pci-m2-e-v5-9-dd9b9501d33c@oss.qualcomm.com
-
->
-> Konrad
-
-
-Thanks,
-Shuai
-
+-- 
+மணிவண்ணன் சதாசிவம்
 
