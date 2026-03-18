@@ -1,67 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-98345-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98347-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id CDbsEYNlumklWAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98345-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 09:42:43 +0100
+	id KOfwGOJlumklWAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98347-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 09:44:18 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9CC652B8450
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 09:42:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 034FF2B84E8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 09:44:17 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id DE64C30107D9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 08:37:12 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C88323034296
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 08:38:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 12AFA3822AC;
-	Wed, 18 Mar 2026 08:37:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6183338236D;
+	Wed, 18 Mar 2026 08:38:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mecomediagroup.de header.i=@mecomediagroup.de header.b="AY+3hnC6"
+	dkim=pass (2048-bit key) header.d=mecomediagroup.de header.i=@mecomediagroup.de header.b="kJFcEgLz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay.yourmailgateway.de (relay.yourmailgateway.de [188.68.61.107])
+Received: from relay.yourmailgateway.de (relay.yourmailgateway.de [185.244.194.184])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1569D3859CC;
-	Wed, 18 Mar 2026 08:37:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.68.61.107
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 005C321B918;
+	Wed, 18 Mar 2026 08:38:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.244.194.184
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773823030; cv=none; b=P4h34B8CNMb7zFvboqs+b3ASBr0O4SPVBBBfUrs6qwYNyO6qhHByQi8ol9W8o3bBAk+czi6j8Xnh/Yz/Qf76qX3JiOZi98h0Qf/qR4qJzmwQrc/+pYYoZ6n8yf9D5r7pJ/mhePlgSwa5TYFHxn0ztJamAED95edJjvhR2FVTKAA=
+	t=1773823131; cv=none; b=tdXQKgCmbmIrtdl5zxHgchx2fOtNhcmA2uGLiiqPt+3aCuYS62rJULfjU7CZTqVisqacfKcHvqX4z6ItsKqMohzBhAg6qgAtSE+8VJ0hBmVuKbKJpHtaN/K/EpVOxYLs09kG5M3MlnLVvRHRZE9J8TxboPU5o1oCDYjFR+fbvU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773823030; c=relaxed/simple;
-	bh=KGrmAH1uTyXyNrTbl1TGWouuSEucSOJOt+07xVH030k=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=o4poThkt8bd6BNEQBEj44+agXDnJRmlgXOzXRX0fZcbDILKaqbnwLIV7deQR3xyAquDUFDDMokYONuD9K0qjdfsB7e0wWnADNX4eAN4p1mQO7QoWecZkR0FdUSGqJbBdLdc+Aa9IHEx7DwIuV97cnXnxknK3bv0t707046bBp6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mecomediagroup.de; spf=pass smtp.mailfrom=mecomediagroup.de; dkim=pass (2048-bit key) header.d=mecomediagroup.de header.i=@mecomediagroup.de header.b=AY+3hnC6; arc=none smtp.client-ip=188.68.61.107
+	s=arc-20240116; t=1773823131; c=relaxed/simple;
+	bh=Tul8i66V9Ox8kqaavmP4X0LXSUE8QW6mGiDdQLOB3m8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=sTcslk2zYgo1OGtVpLaO/FW3yxgOPFRpSnhwa8pY3+V28Xi7KYvRT6EGaTcC/Lz4c5rLVp38NRI7TVcnByt1fzxaA3vbJiDRGnpMLu4BgbUSY3otlqHOBLS1Cmd7sN5o5IQrRI8oIPgUyX0QNq16Ta4I4Jrx+k5MHR+jn8JfvcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mecomediagroup.de; spf=pass smtp.mailfrom=mecomediagroup.de; dkim=pass (2048-bit key) header.d=mecomediagroup.de header.i=@mecomediagroup.de header.b=kJFcEgLz; arc=none smtp.client-ip=185.244.194.184
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mecomediagroup.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mecomediagroup.de
-Received: from mors-relay-8405.netcup.net (localhost [127.0.0.1])
-	by mors-relay-8405.netcup.net (Postfix) with ESMTPS id 4fbMd821Mlz77Rj;
-	Wed, 18 Mar 2026 09:37:00 +0100 (CET)
+Received: from relay01-mors.netcup.net (localhost [127.0.0.1])
+	by relay01-mors.netcup.net (Postfix) with ESMTPS id 4fbMdp2nCdz8ypn;
+	Wed, 18 Mar 2026 09:37:34 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mecomediagroup.de;
-	s=key2; t=1773823020;
-	bh=KGrmAH1uTyXyNrTbl1TGWouuSEucSOJOt+07xVH030k=;
-	h=From:To:Cc:Subject:Date:From;
-	b=AY+3hnC6LCC/LVPLmyjp+fbIQK+7lGwlTtOu/K7bOSjPkbmQ2azn4b3JCgUkTRu/h
-	 L1YUjaWNZTAN57qsTY5l+8iw/tp7Eh8z7CRmUMnf3iTlOfRtozX24HLdrzybiXX/ru
-	 hlk4GTbkXA2ND+dnsXn1G48SLz8vx+W+7L4Qvznjv5H2ymYBSSRrOBSAbSanuqGwAB
-	 N0t28HVfCVgzgiEZWQXeIES17UZjSX7uunmDre1EilpaPuTYrrJcX+WjuzZefbrhdw
-	 9m4EUoR9o6XS0H/xrF77kC5zH1t7qcAMb2Vz8gWpDkAb2RmlBgBBxaNJYvw1fp1XoV
-	 5qCm3GVz0D4eQ==
+	s=key2; t=1773823054;
+	bh=Tul8i66V9Ox8kqaavmP4X0LXSUE8QW6mGiDdQLOB3m8=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=kJFcEgLzQ+Q9IvzDIYBJYLUpczNM4Z9dfOm/JHA1HyjT2gKGIGw6FGU8P4khMkGm0
+	 2L/dPZQcIBpmw88XwqxZ3f2i/U8qt/rGNY2gqeQjzE/bwBaNZ6WbkJJagTNDPs2kbn
+	 3IqEuarh7OQksE+yTH3FRnWPkSBAsbsjtGVlPWAdu5mHI0eaSlrcnqRcoeo+x3/RPW
+	 Gyeq6CsbiJ/6UYFwQ6q3JDyAMKr3EnVHmzUJNPUtB98npm+1FkF2YXYH1TJk+a31UN
+	 PjNQ31X42wphZWGEXW4fS2ttbqevvLAw0+EHQG8iv7BwJ6OzToyThwccf+ggmVfhoM
+	 bmbYtoeEQFnVA==
 Received: from policy01-mors.netcup.net (unknown [46.38.225.35])
-	by mors-relay-8405.netcup.net (Postfix) with ESMTPS id 4fbMd81Hq8z77Rg;
-	Wed, 18 Mar 2026 09:37:00 +0100 (CET)
+	by relay01-mors.netcup.net (Postfix) with ESMTPS id 4fbMdJ04Mkz7vFY;
+	Wed, 18 Mar 2026 09:37:08 +0100 (CET)
 X-Virus-Scanned: Debian amavisd-new at policy01-mors.netcup.net
 X-Spam-Flag: NO
-X-Spam-Score: -2.901
+X-Spam-Score: -2.899
 X-Spam-Level: 
 Received: from mxe95c.netcup.net (unknown [10.243.12.53])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by policy01-mors.netcup.net (Postfix) with ESMTPS id 4fbMd74GPYz8tXj;
-	Wed, 18 Mar 2026 09:36:59 +0100 (CET)
+	by policy01-mors.netcup.net (Postfix) with ESMTPS id 4fbMdH37kxz8tYX;
+	Wed, 18 Mar 2026 09:37:07 +0100 (CET)
 Received: from debian.fritz.box (ip-178-203-082-069.um48.pools.vodafone-ip.de [178.203.82.69])
-	by mxe95c.netcup.net (Postfix) with ESMTPSA id 9FBBD801CA;
-	Wed, 18 Mar 2026 09:36:58 +0100 (CET)
+	by mxe95c.netcup.net (Postfix) with ESMTPSA id 4F37E801CA;
+	Wed, 18 Mar 2026 09:37:06 +0100 (CET)
 Authentication-Results: mxe95c;
 	spf=pass (sender IP is 178.203.82.69) smtp.mailfrom=mecid@mecomediagroup.de smtp.helo=debian.fritz.box
 Received-SPF: pass (mxe95c: connection is authenticated)
@@ -77,10 +78,12 @@ Cc: robh@kernel.org,
 	linux-kernel@vger.kernel.org,
 	netdev@vger.kernel.org,
 	Mecid Urganci <mecid@mecomediagroup.de>
-Subject: [PATCH 0/2] arm64: dts: qcom: Add support for Radxa AirBox Q900
-Date: Wed, 18 Mar 2026 09:36:19 +0100
-Message-ID: <20260318083621.470826-1-mecid@mecomediagroup.de>
+Subject: [PATCH 1/2] dt-bindings: arm: qcom: Add qcs9075-radxa-airbox-q900
+Date: Wed, 18 Mar 2026 09:36:20 +0100
+Message-ID: <20260318083621.470826-2-mecid@mecomediagroup.de>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260318083621.470826-1-mecid@mecomediagroup.de>
+References: <20260318083621.470826-1-mecid@mecomediagroup.de>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,8 +92,8 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-PPP-Message-ID: 
- <177382301927.1404972.16337686860877317893@mxe95c.netcup.net>
-X-NC-CID: it72/Sv2sCF582kIxXHp5GOrZ9HwzfHK7TBqtuL1XrAzyqvqeXGu
+ <177382302702.1405000.12757176945499536815@mxe95c.netcup.net>
+X-NC-CID: mO6rgpQkQxrWdgUm1gl+Y+1xwpEIeC9yFEcCt59w/E62xlHomu8Q
 X-Spamd-Result: default: False [0.84 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	MID_CONTAINS_FROM(1.00)[];
@@ -106,7 +109,7 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	FROM_HAS_DN(0.00)[];
 	FREEMAIL_CC(0.00)[kernel.org,gmail.com,vger.kernel.org,mecomediagroup.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-98345-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-98347-lists,linux-arm-msm=lfdr.de];
 	FROM_NEQ_ENVFROM(0.00)[mecid@mecomediagroup.de,linux-arm-msm@vger.kernel.org];
 	RCVD_TLS_LAST(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
@@ -114,41 +117,41 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCPT_COUNT_SEVEN(0.00)[11];
 	NEURAL_HAM(-0.00)[-1.000];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,mecomediagroup.de:dkim,mecomediagroup.de:mid];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mecomediagroup.de:dkim,mecomediagroup.de:email,mecomediagroup.de:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 9CC652B8450
+X-Rspamd-Queue-Id: 034FF2B84E8
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-This series adds device tree support for the Radxa AirBox Q900,
-a device based on the Qualcomm QCS9075 SoC (Lemans Family).
+Add device tree binding for the Radxa AirBox Q900 board based on
+the Qualcomm QCS9075 SoC.
 
-The board features:
-  - HDMI 2.0 output via dp0
-  - 2x USB 3.1 Gen 2 ports
-  - 2x 2.5GbE Ethernet ports (QCA8081 PHY)
-  - Onboard UFS storage
+Signed-off-by: Mecid Urganci <mecid@mecomediagroup.de>
+---
+ Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-Patch 1 adds the compatible string to the arm/qcom binding.
-Patch 2 adds the board DTS.
-
-Tested on Armbian Debian Trixie with HDMI output, Ethernet, USB and
-UFS confirmed working.
-
-Mecid Urganci (2):
-  dt-bindings: arm: qcom: Add qcs9075-radxa-airbox-q900
-  arm64: dts: qcom: Add qcs9075-radxa-airbox-q900
-
- .../devicetree/bindings/arm/qcom.yaml         |    6 +
- arch/arm64/boot/dts/qcom/Makefile             |    1 +
- .../dts/qcom/qcs9075-radxa-airbox-q900.dts    | 1012 +++++++++++++++++
- 3 files changed, 1019 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/qcs9075-radxa-airbox-q900.dts
-
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 8c3df8efaa4d..2c492f4d784a 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -909,6 +909,12 @@ properties:
+               - qcom,sa8775p-ride-r3
+           - const: qcom,sa8775p
+ 
++      - items:
++          - enum:
++              - radxa,airbox-q900
++          - const: qcom,qcs9075
++          - const: qcom,sa8775p
++
+       - items:
+           - enum:
+               - qcom,lemans-evk
 -- 
 2.47.3
 
