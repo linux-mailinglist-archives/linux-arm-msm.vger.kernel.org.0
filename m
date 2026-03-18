@@ -1,157 +1,205 @@
-Return-Path: <linux-arm-msm+bounces-98541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id EGXoJCDeumk3cwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 18:17:20 +0100
+	id 4JLuGy3eumk3cwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 18:17:33 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 377C92C00F4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 18:17:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 589592C0111
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 18:17:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 8472430022D9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 17:17:19 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 6CD56300D1E9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 17:17:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9FE9C27FB37;
-	Wed, 18 Mar 2026 17:17:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6202E2D77F5;
+	Wed, 18 Mar 2026 17:17:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=adishatz.org header.i=@adishatz.org header.b="uHtL/fXI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q/ojEgzR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from adishatz.org (ns314768.ip-37-187-26.eu [37.187.26.192])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 962B7280CE0;
-	Wed, 18 Mar 2026 17:17:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=37.187.26.192
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B45F2D63E8;
+	Wed, 18 Mar 2026 17:17:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773854235; cv=none; b=rsImcbFZiOYybrltcGXB5mUohwkzTXOkKyckiF0UYxBh1nf9tPP9aVodPKyz1qAFqQbn2jqYG3eo2k1kmCF+UHcL7/0A7SIaNF98BXT0hdbAmJ2F96AiIG76z3UFp+I1L+KPkV6ghDH6XEIP0y0/4GsaaEu0R+EZYclA9TR2REg=
+	t=1773854247; cv=none; b=kpBST7KGfpUWCc+RgTgq7r2n1l64cMdVfdC6Dv5MnLnhVIYeLa0nmrqIezWzR7QhnPMbDfmBXzcVnJtIIpD0vUBtBeMbZ4kO+AerD7uGMidSh1UTpKDy/qotIEP5Rx7zQkkCvH6PHpHAgMyZrPr/TmGycSsWGw1HN32XxORYjwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773854235; c=relaxed/simple;
-	bh=ID6Gn30lagt0qu/a3VSQdpleOirf8ZE9bHTYiRi/yV8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=h5w3F7dVBZKail+HaoRLgZKnuK3pOjerV2MgoXGiHvbEDnFbPba4rH4MiBftxdjQ9FGBSO7GQeKAisJGCZY5MTdAodsg/MCUj0BUuA3gPJ0gtVfJk2H5pQkaUXRMrW5bJxb2PScgyw4GXYhfCEmfgHoB049j2DA0JDi7S5fqwZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=adishatz.org; spf=pass smtp.mailfrom=adishatz.org; dkim=pass (2048-bit key) header.d=adishatz.org header.i=@adishatz.org header.b=uHtL/fXI; arc=none smtp.client-ip=37.187.26.192
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=adishatz.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=adishatz.org
-Received: from p-si-bellegarde (34.33.83.79.rev.sfr.net [79.83.33.34])
-	by adishatz.org (Postfix) with ESMTPSA id 1634D4C0389;
-	Wed, 18 Mar 2026 18:17:09 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=adishatz.org;
-	s=mail; t=1773854229;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=T4LY9UfzYIzAn7pMCdrUujOdWjd1Qk9yuxMAzyoMrDE=;
-	b=uHtL/fXI4D/vg8REBqeKgn9qEBNfMNNPsTB5SQiguO1H0qqdUaXZDHf04dElUh5B2qMf5p
-	NoTbwJ74ItChxOta1thdXjGpt8Y4k+6SmQIV6yTxuFjc/z3/RHou4i4O95HsOAAlcoWPMm
-	4+zikVVLwd8CuxMf7RbhAMHQKCogmBSM0n+Y98nzERDxPwsDQhljitSoDIapK+YVBkL1Z7
-	2yeDyie6T9p1n/6bP2+MVoTknuivUWk5Kg9ws8dRauJP61eWEY2XXKFx7e+50oWCLgo2Qy
-	0BTksF/9B2xbRIzeuGbhkK0aIpG1qx1ufzayraAtvCTPc1N4pQcICSfaoLCXSw==
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=cedric.bellegarde smtp.mailfrom=cedric.bellegarde@adishatz.org
-From: =?UTF-8?q?C=C3=A9dric=20Bellegarde?= <cedric.bellegarde@adishatz.org>
-To: robin.clark@oss.qualcomm.com
-Cc: lumag@kernel.org,
-	abhinav.kumar@linux.dev,
-	jessica.zhang@oss.qualcomm.com,
-	sean@poorly.run,
-	marijn.suijten@somainline.org,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	cedric.bellegarde@adishatz.org,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org,
-	phone-devel@vger.kernel.org
-Subject: [PATCH] drm/msm/dpu: fix vblank IRQ registration before atomic_mode_set
-Date: Wed, 18 Mar 2026 18:17:00 +0100
-Message-ID: <20260318171700.394945-1-cedric.bellegarde@adishatz.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <ubxvfyx4tugfliwffrrlbe2oliep6nhp5dbpjry4vmamldz2ow@qncsubi7heex>
-References: <ubxvfyx4tugfliwffrrlbe2oliep6nhp5dbpjry4vmamldz2ow@qncsubi7heex>
+	s=arc-20240116; t=1773854247; c=relaxed/simple;
+	bh=HUY2/4gRri/fQKhRFzorL7GriVv5EjbW739jiuuwp0U=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=mhpXyNRN5OAYmNkPZFwPSx7f5k+WyG1HxZyVyDUL7L2nxRs08yRfz5pKjEz3N7bs+XW5VPbVhsqQ4YU/G+fVp0IwAAUi94YHtMVBi+ceKBzisCTTh2S1zPh0LPO/na3G/pf2+0w20FTNhcugUpGmFF3naXJjpMlbNzzBfN5EYIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q/ojEgzR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FA09C2BC87;
+	Wed, 18 Mar 2026 17:17:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773854246;
+	bh=HUY2/4gRri/fQKhRFzorL7GriVv5EjbW739jiuuwp0U=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=q/ojEgzRMGqWsFJMKjs4TmIgH82cHym+DiGxaj2RijNg+xIYF7bCvrIFR7o5zQU18
+	 ife29DKfY0KKotPYZdhQNXoj4YEO8g53meoDP3Ti+C8V2BG4mAsFPF8/GUYQe+MlWr
+	 LW/4zb2WyOzJZT6xhQFbVOPzOV7BeW7FeHJq9g2qPi/rphmyhfUMcjNHEUzqiS633p
+	 5JPO8CgAVucJCSclLy9fVmbGHn0hfkfHLlLyoJb8xVbqtPKfS/7gIHZ8gtUWo2Mzvh
+	 W3bS516UnGNCW+VzsLi9Qfg8/0xLvyJVc9Ff6nEY3expCSodivO3kqLKv0371Tt9Xh
+	 VmwFlxz+YOYNg==
+Date: Wed, 18 Mar 2026 12:17:25 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Magnus Damm <magnus.damm@gmail.com>,
+	Bartosz Golaszewski <brgl@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	KancyJoe <kancy2333@outlook.com>
+Subject: Re: [PATCH v5 0/9] arm64: dts: qcom: Add support for the Ayaneo
+ Pocket S2
+Message-ID: <20260318171725.GA51567@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-1.16 / 15.00];
-	MID_CONTAINS_FROM(1.00)[];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260220-topic-sm8650-ayaneo-pocket-s2-base-v5-0-1ad79caa1efa@linaro.org>
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[adishatz.org,reject];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
-	R_DKIM_ALLOW(-0.20)[adishatz.org:s=mail];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[kernel.org,linux.dev,oss.qualcomm.com,poorly.run,somainline.org,gmail.com,ffwll.ch,adishatz.org,vger.kernel.org,lists.freedesktop.org];
-	TAGGED_FROM(0.00)[bounces-98541-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-98542-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[25];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[linuxfoundation.org,kernel.org,glider.be,gmail.com,google.com,vger.kernel.org,oss.qualcomm.com,outlook.com];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_NONE(0.00)[];
+	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-0.923];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[cedric.bellegarde@adishatz.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[adishatz.org:+];
-	NEURAL_HAM(-0.00)[-0.998];
+	FROM_NEQ_ENVFROM(0.00)[helgaas@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,renesas];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,adishatz.org:dkim,adishatz.org:email,adishatz.org:mid]
-X-Rspamd-Queue-Id: 377C92C00F4
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[msgid.link:url,linaro.org:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 589592C0111
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-dpu_encoder_toggle_vblank_for_crtc() can call control_vblank_irq()
-at any time in response to a userspace vblank request, independently
-of the atomic commit sequence. If this happens before the encoder's
-first atomic_mode_set(), irq[INTR_IDX_RDPTR] is still zero.
+On Fri, Feb 20, 2026 at 04:04:39PM +0100, Neil Armstrong wrote:
+> The Ayaneo Pocket S2 is a gaming console based on the Qualcomm
+> Snapdragon 8 Gen 3. It has an internal UFS storage, WiFi,
+> Bluetooth, gaming buttons, SDCard, 2K display and USB-C
+> connector.
+> 
+> Product Page [1].
+> 
+> The Initial linux port was done by KancyJoe (Sunflower2333)
+> at [2].
+> 
+> [1] https://www.ayaneo.com/goods/9344082149621
+> [2] https://github.com/sunflower2333/linux/tree/master
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+> Changes in v5:
+> - Rebased on -next
+> - Collected tags
+> - Rebased/renamed slot to generic based on changes from Bjorn
+> - Link to v4: https://patch.msgid.link/20260216-topic-sm8650-ayaneo-pocket-s2-base-v4-0-802c82795431@linaro.org
+> 
+> Changes in v4:
+> - Renamed slot to generic, in the code as well, fixed Kconfig & commit message
+> - Switched the UPD72020x bindings additionalProperties to true to allow devices subnodes
+> - Collected acks
+> - Link to v3: https://patch.msgid.link/20260206-topic-sm8650-ayaneo-pocket-s2-base-v3-0-5b79c5d61a03@linaro.org
+> 
+> Changes in v3:
+> - Made renesas,upd720201-pci bindings supplies required
+> - Fixed description and example of renesas,upd720201-pci bindings
+> - Renamed slot to generic, added renesas,upd720201-pci entry
+> - Used PMIC_GPIO_STRENGTH_LOW instead of numbers
+> - Removed all output-low in pinconf
+> - Link to v2: https://patch.msgid.link/20260127-topic-sm8650-ayaneo-pocket-s2-base-v2-0-c55ec1b5d8bf@linaro.org
+> 
+> Changes in v2:
+> - Add proper regulators for the USB controller, with bindings & power ctrl
+> - Add proper regulators for FAN
+> - Dropped support for headset over USB-C, audio is connected to a jack port
+> - Cleaned up Audio routing and fixed the DP endpoint index
+> - Added i2c clk frequencies
+> - Renamed fan node and used interrupts-extended
+> - Dropped the usb-c self-powered
+> - Reordered nodes alphabetically
+> - Renamed pcieport1 to pcie1_port0
+> - Link to v1: https://patch.msgid.link/20260121-topic-sm8650-ayaneo-pocket-s2-base-v1-0-bb3f95f1c085@linaro.org
+> 
+> ---
+> KancyJoe (1):
+>       arm64: dts: qcom: add basic devicetree for Ayaneo Pocket S2 gaming console
+> 
+> Neil Armstrong (8):
+>       dt-bindings: usb: document the Renesas UPD720201/UPD720202 USB 3.0 xHCI Host Controller
+>       pci: pwrctrl: slot: fix dev_err_probe() usage
+>       pci: pwrctrl: rename pci-pwrctrl-slot as generic
+>       pci: pwrctrl: generic: support for the UPD720201/UPD720202 USB 3.0 xHCI Host Controller
+>       arm64: defconfig: enable pci-pwrctrl-generic as module
+>       dt-binding: vendor-prefixes: document the Ayaneo brand
+>       dt-bindings: arm: qcom: document the Ayaneo Pocket S2
+>       arm64: dts: qcom: sm8650: Add sound DAI prefix for DP
 
-Passing irq_idx=0 to dpu_core_irq_register_callback() is treated as
-invalid, and DPU_IRQ_REG(0) and DPU_IRQ_BIT(0) produce misleading
-values of 134217727 and 31 respectively due to unsigned wraparound
-in the (irq_idx - 1) macros, resulting in the confusing error:
+I applied the drivers/pci/pwrctrl patches to pci/pwrctrl for v7.1,
+thanks!
 
-  [dpu error]invalid IRQ=[134217727, 31]
+I reordered the rename to be first (and used "git mv") and updated the
+subject lines to match the history.
 
-Since irq[INTR_IDX_RDPTR] will be properly populated by
-atomic_mode_set() and registered by irq_enable() as part of the
-normal modeset sequence, silently skip the vblank IRQ registration
-when the index has not yet been initialized. This matches the
-existing pattern of the master encoder check above it.
-
-Signed-off-by: Cédric Bellegarde <cedric.bellegarde@adishatz.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-index 1aa74ecb08be..b583284d8508 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-@@ -256,6 +256,12 @@ static int dpu_encoder_phys_cmd_control_vblank_irq(
- 	if (!dpu_encoder_phys_cmd_is_master(phys_enc))
- 		goto end;
- 
-+	/* IRQ not yet initialized */
-+	if (!phys_enc->irq[INTR_IDX_RDPTR]) {
-+		ret = -EINVAL;
-+		goto end;
-+	}
-+
- 	/* protect against negative */
- 	if (!enable && refcount == 0) {
- 		ret = -EINVAL;
--- 
-2.53.0
-
+>  Documentation/devicetree/bindings/arm/qcom.yaml    |    1 +
+>  .../bindings/usb/renesas,upd720201-pci.yaml        |   61 +
+>  .../devicetree/bindings/vendor-prefixes.yaml       |    2 +
+>  arch/arm64/boot/dts/qcom/Makefile                  |    1 +
+>  .../boot/dts/qcom/sm8650-ayaneo-pocket-s2.dts      | 1551 ++++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sm8650.dtsi               |   47 +-
+>  arch/arm64/configs/defconfig                       |    1 +
+>  drivers/pci/controller/dwc/Kconfig                 |    4 +-
+>  drivers/pci/pwrctrl/Kconfig                        |   13 +-
+>  drivers/pci/pwrctrl/Makefile                       |    4 +-
+>  drivers/pci/pwrctrl/generic.c                      |  143 ++
+>  drivers/pci/pwrctrl/slot.c                         |  140 --
+>  12 files changed, 1795 insertions(+), 173 deletions(-)
+> ---
+> base-commit: df94cc5ccb88d2f6ebc0cac480a1b94162f4ff0f
+> change-id: 20260121-topic-sm8650-ayaneo-pocket-s2-base-05c348efd86d
+> 
+> Best regards,
+> -- 
+> Neil Armstrong <neil.armstrong@linaro.org>
+> 
 
