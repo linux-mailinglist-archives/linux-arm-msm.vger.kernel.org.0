@@ -1,234 +1,226 @@
-Return-Path: <linux-arm-msm+bounces-98418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id WNkVE0+DumkxXgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 11:49:51 +0100
+	id cE58EOGIumnSXgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 12:13:37 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A205F2BA34A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 11:49:50 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D02752BA9C1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 12:13:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 3A0AC307092C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 10:48:27 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 32FB930D73B7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Mar 2026 11:04:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26DB1375AD3;
-	Wed, 18 Mar 2026 10:48:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CC5F3C5DDF;
+	Wed, 18 Mar 2026 11:03:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="IiABON2P";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="S0Kd+Onz"
+	dkim=pass (2048-bit key) header.d=adishatz.org header.i=@adishatz.org header.b="p8CLN+8F"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from adishatz.org (ns314768.ip-37-187-26.eu [37.187.26.192])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE9035B63B
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Mar 2026 10:48:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5795B37703A;
+	Wed, 18 Mar 2026 11:03:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=37.187.26.192
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773830906; cv=none; b=m1+8aYXXHoMflMysqOksv5nN3ggqqTSHFlMhXoAPLBGJ8F+O0jL9RIv/y3HtOnDedSP7TmP476GkCToS1AtORCn4SiTWwzAwlpEfS5uGPUOOrXwsS5mT493AzRLouOtWfm2KeUz+2qmHB5viq+ba0+4gM6VdilHPBQNGAXBLZSc=
+	t=1773831801; cv=none; b=HOSyQA/DTelyC4fHTJYjg48tPNquveGx4ibPvvr9dn2XFhgmqebppIUpOKk1gnI3KZ9R6ib9Yitb5NbFslpRvkTTXth+YbxrCUDCcaPB/fyKvL06Xolz6QhfM39x7F2+iei8CXxx4V8bEALb5Jz6SB4lOoTfO6ydSgDCHLVeZno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773830906; c=relaxed/simple;
-	bh=cF1DROYnjX8skY1YrSMzROf4KbayS8Sh+36OpO6N74M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XBdzWE8hQ3+FcK7XsaOlUsfSXeJfKYCyqIj/Mfdc38RJSlyoOpFb65/veHR+pZAsSGSCB8m1dfv36p4+D/n2gr6FdRK63S24/8cQxR6qAl1C4Us8zqjs/0P6L/CDYc/yFwpJU0IIaxF6SkSmGbRCKKQtiAI14+AHO8FkXNPVkgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=IiABON2P; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=S0Kd+Onz; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62IAhxV2008387
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Mar 2026 10:48:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	XK80EzlkLMXAuOZQ++FquWS/RLEA4ilvvwe4PY609zc=; b=IiABON2P0C6eYenj
-	otioN3BgR0vJ+e9M6XS7iC0QRAkqCoVOu8vfR5h5hM3ztY5qpfZ0l0Fu10d2QcKJ
-	YdfSpdI0ttcFPZqj5EqEWe1SlgsyoyktHTiSGqkZ+HLk3IFN0Pb3r/qLeMXDGurI
-	nDNHl1fZz/n5POruk3OMPe40n6zjHhEMcTsAc4moYkTwxv5fOUMWHWKWJQ5VwOvj
-	moNHEXce3QcyQU14EbahIbX1maQ3MEtlNtkSeDQw7hnFsWKxJA0LBjgZjL1U/iqu
-	RBarclO1kPzU+N46L8OPobZSAExdVZNLuMXa16vrAjphxFFxJR5rd9rb28Db58im
-	5j+M4w==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cytj500fx-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Mar 2026 10:48:22 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-5093245c2d4so28625811cf.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Mar 2026 03:48:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1773830902; x=1774435702; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=XK80EzlkLMXAuOZQ++FquWS/RLEA4ilvvwe4PY609zc=;
-        b=S0Kd+Onz50GPy0vHWK+VHFsAjFBPnctwm/xrP2OLctR9MYiPAMlgU0ZMzmzsXNmGnA
-         mr6aIKrZLUuT8i/YMhw9zdsoag8LAIJOHxKebiBfoM4TtVUle31DBV9JItDySfP6Fgq6
-         CoiQfIrR84U5qFU5jWXqDiOd2lbCcHHvzBm7JSY4IpmrDYtuH1bPGKA59yqi1068n8I4
-         BuLTi/LuayA9R0Ho+71J9gnZfW9vCB1+ZKVCef36ECZ7nWkmrp4VGRqeeeNYiuRjC49l
-         gpcd8CaoFHZ23GSfhIgpJffeSKu7p7148rQDu/KMdPU1mCwcdZztYH2E2zUAc7IJLw6y
-         sUcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773830902; x=1774435702;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=XK80EzlkLMXAuOZQ++FquWS/RLEA4ilvvwe4PY609zc=;
-        b=N6646pfnHrrj5OeTfpVxralBitwcuFub43Apqm9lopx7MF6J+1n5q77qkmsjFtU662
-         yeWgfv0C/2vWqumcQ0lUBDFU+XeADDHz20u0KyevvxlRObIvn2ykGhCqiFVB3lh7mEhd
-         I9KEynhQFLtsh1TrUw8e1jsKhzzEGZFKYNHCb+6S5s3IQnKCZAghonyimLXvCvxLOyMf
-         fEFtwihOkJADBTqhxbWlYNBqUKgf/jj1WI+mnrRNUEk52H4vcZIVB4+JEPy4j0guwOvL
-         R3935Q+oiAxudy7D4gHnDacsL4RpWomEN2u1zRas07145R9w0VTVNnw7CtWOZjj2OR54
-         Lf+g==
-X-Gm-Message-State: AOJu0YxCYb0kBE1kclqZK1NpUIQrKxco3MFbp9HtEGPtLtX4lwDQkk4D
-	Rb/Fo0yyHku6eVYeguz5w701SMfBzIkweDiBYBKbIfBE9QF37LRhf7M0427ei8TnbbvdF7Yt10Y
-	pC0UlquH+x4BVNTqBr3vGKsxPygxGQcdSG13mOGfgbnQatdz6Gcw5Gnn816ygv9klTSyZ
-X-Gm-Gg: ATEYQzzDm8IUBFjfC5FXvruPMRau9+Q3TvIJ0Ar6yuZImVVO0tJPdHhav++qFUrsu2V
-	R7w6/83nHZrSGmPHhkxpyRVk6sCb252zXAFpSUtjA1fpbYlNxY8xXKb1BZJfQpYFIASwF1eATvX
-	yyZMCROjSopLnvKwEh8/+YP4jMaqrXmr+zENmLRuE5ZN0kR6/EWm8zcTOuRLdKu6zflXfPFtvAS
-	d0bZ12MkBaKzdi/3JUllh1K0ChI8QpStTxpwJ72zmo3t5kK4pRQP86lPhqmsW5y4GJ61FlWsy6y
-	+wnpByUqsOkDMfpiKQIOykU1OEvgtiaKLl2sCucAjclvW2IqGENpW6XYG1+xHpwIqTJ6Ya7OGRo
-	XWNTRhONhQL7WtsiK+1w+QymIRAono9XAjhlPaGBpOdImYDsEmdvhzgDz3Mf9Su3xrGfkNQloUB
-	I/jhw=
-X-Received: by 2002:ac8:7d4c:0:b0:509:24e8:ec48 with SMTP id d75a77b69052e-50b148afafcmr22900071cf.6.1773830901902;
-        Wed, 18 Mar 2026 03:48:21 -0700 (PDT)
-X-Received: by 2002:ac8:7d4c:0:b0:509:24e8:ec48 with SMTP id d75a77b69052e-50b148afafcmr22899851cf.6.1773830901370;
-        Wed, 18 Mar 2026 03:48:21 -0700 (PDT)
-Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b97f142cb46sm178339866b.21.2026.03.18.03.48.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Mar 2026 03:48:20 -0700 (PDT)
-Message-ID: <1a00582d-66d6-4325-aafd-156cfacee8cd@oss.qualcomm.com>
-Date: Wed, 18 Mar 2026 11:48:18 +0100
+	s=arc-20240116; t=1773831801; c=relaxed/simple;
+	bh=HYUi5lezWyzzXNzBGCQtTWHkockAR26Kostc1Ad1Q9M=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=d3HZR6zDvOxclqK/sG/6gAIFni/Fh2Svc4KhkqTavEIFrW8DBy3EjgvXul45QkN5tr+K+OLvoZMMvzvbdyDywHbPMscanCP4qSmH/XMfQ6bSdMBkW4cPxPoDim2yYfCfvAPvdFqG78TkrivBPZbA4TsbSXrdco+JMF3gkxfmf28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=adishatz.org; spf=pass smtp.mailfrom=adishatz.org; dkim=pass (2048-bit key) header.d=adishatz.org header.i=@adishatz.org header.b=p8CLN+8F; arc=none smtp.client-ip=37.187.26.192
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=adishatz.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=adishatz.org
+Received: from p-si-bellegarde.ad.iut-nantes.univ-nantes.prive (235.33.83.79.rev.sfr.net [79.83.33.235])
+	by adishatz.org (Postfix) with ESMTPSA id D10344C01D7;
+	Wed, 18 Mar 2026 11:56:57 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=adishatz.org;
+	s=mail; t=1773831418;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=BGfJw6XwE9tAljPxpX4xQiqwZDvXpIL/LNmJcXZ1cQw=;
+	b=p8CLN+8FZxrOpaurp3R9Q+94Tc7Jek+VWcLxwoWpAYcFa8WQ+jXO2aDaAm9mgnwhV6gEj7
+	igx/Eavip08P41dMHnmGLYeTbq2oZAEo7Fr6MDOpS4bXsb8sfRhA/0HpHF7uScoP7wY5/F
+	wLQ74urq4Z1AjEAfliX2t+Tp7xCAlqSW22eTYL7Cm1L/FwugwZdPQi9vsT9eAWeN611JpY
+	AsWwaV4Oh0M+1q9m8uy37mJiE00BgpL3GI0JH7M8UB9SVhKvIzfFpk7aTXUO7Zk7lfx7OU
+	nYrnNvduKomgZpksOuHx6ijOKE8+NWDxsisDG7j/PqQBO4EVQwRT3mMBABrdEQ==
+Authentication-Results: ORIGINATING;
+	auth=pass smtp.auth=cedric.bellegarde smtp.mailfrom=cedric.bellegarde@adishatz.org
+From: =?UTF-8?q?C=C3=A9dric=20Bellegarde?= <cedric.bellegarde@adishatz.org>
+To: robin.clark@oss.qualcomm.com
+Cc: lumag@kernel.org,
+	abhinav.kumar@linux.dev,
+	jesszhan0024@gmail.com,
+	sean@poorly.run,
+	marijn.suijten@somainline.org,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	antomani103@gmail.com,
+	mitltlatltl@gmail.com,
+	krzk@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org,
+	=?UTF-8?q?C=C3=A9dric=20Bellegarde?= <cedric.bellegarde@adishatz.org>
+Subject: [PATCH] drm/msm/dsi: fix race between cmd transfer and host power off
+Date: Wed, 18 Mar 2026 11:56:35 +0100
+Message-ID: <20260318105635.270949-1-cedric.bellegarde@adishatz.org>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] clk: qcom: dispcc-eliza: Add Eliza display clock
- controller support
-To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20260318-clk-qcom-dispcc-eliza-v2-0-8c05581168d1@oss.qualcomm.com>
- <20260318-clk-qcom-dispcc-eliza-v2-2-8c05581168d1@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20260318-clk-qcom-dispcc-eliza-v2-2-8c05581168d1@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE4MDA4NiBTYWx0ZWRfX2l98tUoy0jIe
- HRznJZg3/6ub2RIo2VGIDzcaOpjPD96czYZbwtF39+tIfD/KqEThKqeZD+PMqKqabeaaAbNUDrT
- cEeLfT/Rg/3SM+AiGJmja86IvxD9CroNqwN1I6VUB6CHprWNlRdwulNN1gbXLB+m7cQcikr6Hh4
- pRkTLHEtif/FH7O++ymJ63DAQtk20A4LZa81j7d+hKCmvIN0HL8FK3g4CIpth3lwzwtVyjEwLRb
- qedNXNTIIlIHwjvW8EQPpr5dNKxHT5sqch+sw0egI5Uf4hYOymVS89HpHfPpLoAwKTqGjhgfd0W
- pFaxZB9zzFPFT+y4DX5pq45ha7Mtg6f1Wd2IsC9p4OISiDtC6I7Zm+0atiyyxBQXGLqq1vqa6vp
- HeT774DVMXrTsDvxOJpoNEle5OMJ1dH7gubRfx2dQnFaCU3QfWwOyjMw1BVHvnc6aOUZWrT93/a
- I1YRrvFRdzCVKzQ6NCA==
-X-Proofpoint-ORIG-GUID: RyWVzMc3RXPnVayTm-PcJC3Ix4XSLa_l
-X-Proofpoint-GUID: RyWVzMc3RXPnVayTm-PcJC3Ix4XSLa_l
-X-Authority-Analysis: v=2.4 cv=dM+rWeZb c=1 sm=1 tr=0 ts=69ba82f6 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=EUspDBNiAAAA:8 a=vXNxit1Icg9rXcKRa9sA:9 a=QEXdDO2ut3YA:10
- a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-18_01,2026-03-17_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 adultscore=0 clxscore=1015 priorityscore=1501
- phishscore=0 impostorscore=0 bulkscore=0 lowpriorityscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603180086
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-1.16 / 15.00];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[adishatz.org,reject];
+	R_DKIM_ALLOW(-0.20)[adishatz.org:s=mail];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-98418-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_CC(0.00)[kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch,vger.kernel.org,lists.freedesktop.org,adishatz.org];
+	TAGGED_FROM(0.00)[bounces-98422-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[cedric.bellegarde@adishatz.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[adishatz.org:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: A205F2BA34A
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,adishatz.org:dkim,adishatz.org:email,adishatz.org:mid]
+X-Rspamd-Queue-Id: D02752BA9C1
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 3/18/26 11:39 AM, Krzysztof Kozlowski wrote:
-> Add a driver for the display clock controller on Qualcomm Eliza SoC,
-> which is copied from SM8750 driver plus changes:
-> 
-> 1. Additional DT_HDMI_PHY_PLL_CLK clock input,
-> 2. Eight new HDMI clocks,
-> 3. Different PLLs (lucid and pongo).
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-> ---
+The transfer function dsi_host_transfer() guards against the DSI host
+being inactive by checking msm_host->power_on. However, power_on is
+cleared at the end of msm_dsi_host_power_off(), after clocks have
+already been disabled. This creates a window where a concurrent DCS
+command (e.g. a brightness update from the backlight driver) can pass
+the power_on check, call xfer_prepare()/xfer_restore(), and toggle
+link clocks that are already being torn down, leaving
+disp_cc_mdss_byte0_clk stuck in the 'on' state.
 
-[...]
+Checking enabled instead of power_on closes the race by rejecting
+transfers as soon as the bridge starts tearing down, before any clocks
+are touched.
 
+[11816.846734] disp_cc_mdss_byte0_clk status stuck at 'on'
+[11816.846752] WARNING: CPU: 4 PID: 26399 at drivers/clk/qcom/clk-branch.c:=
+88 clk_branch_toggle+0x128/0x178
+[11816.861715] Modules linked in: rfcomm rmnet algif_hash algif_skcipher q6=
+asm_dai q6voice_dai q6routing q6afe_dai q6voice q6adm q6cvp q6afe q6asm q6m=
+vm q6cvs q6voice_common snd_q6dsp_common q6core bnep gpio_wcd934x snd_soc_w=
+cd934x snd_soc_wcd_mbhc soundwire_qcom snd_soc_wcd_classh venus_enc venus_d=
+ec imx371 wcd934x regmap_slimbus imx376 lc898217xc videobuf2_dma_contig fas=
+trpc v4l2_cci qrtr_smd rpmsg_ctrl hci_uart btqca btbcm bluetooth ecdh_gener=
+ic ecc pwrseq_core snd_soc_max98927 qcom_camss ath10k_snoc videobuf2_dma_sg=
+ snd_soc_sdm845 videobuf2_memops venus_core ath10k_core qcom_smbx leds_qcom=
+_flash snd_soc_rt5663 leds_qcom_lpg ath v4l2_mem2mem snd_soc_qcom_sdw video=
+buf2_v4l2 v4l2_fwnode videobuf2_common v4l2_async snd_soc_qcom_common bq27x=
+xx_battery_i2c qcom_pbs bq27xxx_battery led_class_multicolor mac80211 snd_s=
+oc_rl6231 rtc_pm8xxx libarc4 soundwire_bus videodev qcom_stats qcom_spmi_rr=
+adc reset_qcom_pdc i2c_qcom_cci cfg80211 camcc_sdm845 rfkill mc qcom_rng ip=
+a qcom_q6v5_mss slim_qcom_ngd_ctrl qcom_wdt icc_bwmon qrtr
+[11816.861812]  qcom_q6v5_pas qcom_pil_info qcom_q6v5 qcom_sysmon qcom_comm=
+on qcom_glink_smem joydev zram zsmalloc uhid uinput nft_reject_inet nft_rej=
+ect nf_reject_ipv6 nf_reject_ipv4 nft_ct nf_conntrack nf_defrag_ipv6 nf_def=
+rag_ipv4 nf_tables fuse nfnetlink ipv6 qcom_spmi_haptics rmi_i2c rmi_core
+[11816.978965] CPU: 4 UID: 0 PID: 26399 Comm: (sd-bright) Tainted: G       =
+ W           6.16.7-sdm845 #1000-postmarketos-qcom-sdm845 PREEMPT
+[11816.991580] Tainted: [W]=3DWARN
+[11816.994637] Hardware name: OnePlus 6 (DT)
+[11816.998735] pstate: 604000c5 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=
+=3D--)
+[11817.005844] pc : clk_branch_toggle+0x128/0x178
+[11817.010384] lr : clk_branch_toggle+0x124/0x178
+[11817.014956] sp : ffff8000991f3970
+[11817.018358] x29: ffff8000991f3980 x28: ffff0000dad38000 x27: 00000000000=
+00000
+[11817.025634] x26: 0000000000000000 x25: 0000000000000000 x24: 00000000000=
+00000
+[11817.032887] x23: 0000000000000000 x22: ffffa63e2af42178 x21: ffffa63e2b5=
+6e128
+[11817.040169] x20: ffffa63e29da5a90 x19: 0000000000000000 x18: 00000000000=
+00003
+[11817.047451] x17: 0000000000000000 x16: 000000000000000c x15: 00000000000=
+00003
+[11817.054701] x14: ffffa63e2b2f6a10 x13: 0000000000000003 x12: 00000000000=
+00003
+[11817.061982] x11: 00000000ffffefff x10: c0000000ffffefff x9 : e43cc05c499=
+6c100
+[11817.069260] x8 : e43cc05c4996c100 x7 : 7461206b63757473 x6 : 00000000000=
+00027
+[11817.076511] x5 : ffffa63e2b8726d3 x4 : ffffa63e2ae146c4 x3 : 00000000000=
+00000
+[11817.083792] x2 : 0000000000000000 x1 : ffff8000991f3710 x0 : 00000000fff=
+ffff0
+[11817.091042] Call trace:
+[11817.093572]  clk_branch_toggle+0x128/0x178 (P)
+[11817.098112]  clk_branch2_disable+0x28/0x40
+[11817.102308]  clk_core_disable+0x64/0x1b8
+[11817.106358]  clk_core_disable_lock+0x90/0x120
+[11817.110810]  clk_disable+0x2c/0x40
+[11817.114298]  dsi_link_clk_disable_6g+0x78/0x98
+[11817.118871]  msm_dsi_host_xfer_restore+0xf0/0x120
+[11817.123667]  msm_dsi_manager_cmd_xfer+0xfc/0x178
+[11817.128411]  dsi_host_transfer+0x48/0x110
+[11817.132509]  mipi_dsi_dcs_set_display_brightness_large+0x8c/0xd0
+[11817.138651]  sofef00_panel_bl_update_status+0x3c/0x60
+[11817.143802]  backlight_device_set_brightness+0x88/0x128
+[11817.149124]  brightness_store+0x64/0xa8
+[11817.153082]  dev_attr_store+0x24/0x40
+[11817.156835]  sysfs_kf_write+0x8c/0xb8
+[11817.160591]  kernfs_fop_write_iter+0xe4/0x190
+[11817.165073]  do_iter_readv_writev+0x168/0x1c8
+[11817.169515]  vfs_writev+0x16c/0x378
+[11817.173122]  do_writev+0x84/0x130
+[11817.176523]  __arm64_sys_writev+0x2c/0x40
+[11817.180618]  invoke_syscall+0x48/0x100
+[11817.184460]  el0_svc_common+0x88/0xe8
+[11817.188217]  do_el0_svc+0x28/0x40
+[11817.191621]  el0_svc+0x38/0x88
+[11817.194766]  el0t_64_sync_handler+0x78/0x108
+[11817.199161]  el0t_64_sync+0x198/0x1a0
 
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2021, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2023-2024, Linaro Ltd.
-> + * Copyright (c) 2024-2025, Qualcomm Innovation Center, Inc. All rights reserved.
+Signed-off-by: C=C3=A9dric Bellegarde <cedric.bellegarde@adishatz.org>
+---
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
--> Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/d=
+si_host.c
+index 4d75529c0e85..f66f138cfba0 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -1652,7 +1652,7 @@ static ssize_t dsi_host_transfer(struct mipi_dsi_host=
+ *host,
+ 	struct msm_dsi_host *msm_host =3D to_msm_dsi_host(host);
+ 	int ret;
+=20
+-	if (!msg || !msm_host->power_on)
++	if (!msg || !msm_host->enabled)
+ 		return -EINVAL;
+=20
+ 	mutex_lock(&msm_host->cmd_mutex);
+--=20
+2.53.0
 
-[...]
-
-> +static struct gdsc *disp_cc_eliza_gdscs[] = {
-> +	[MDSS_GDSC] = &mdss_gdsc,
-> +	[MDSS_INT2_GDSC] = &mdss_int2_gdsc,
-> +};
-> +
-> +static const struct regmap_config disp_cc_eliza_regmap_config = {
-> +	.reg_bits = 32,
-> +	.reg_stride = 4,
-> +	.val_bits = 32,
-> +	.max_register = 0xf004, /* 0x10000, 0x10004 and maybe others are for TZ */
-
-0x11014 is the last register
-
-[...]
-
-> +	/* Enable clock gating for MDP clocks */
-> +	regmap_update_bits(regmap, DISP_CC_MISC_CMD, BIT(4), BIT(4));
-
-regmap_set_bits()
-
-
-with that:
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-
-Konrad
 
