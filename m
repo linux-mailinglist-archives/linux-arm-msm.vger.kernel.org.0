@@ -1,57 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-98732-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98733-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id kA2PN+bku2njpQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98732-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 12:58:30 +0100
+	id wBScKvvku2njpQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98733-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 12:58:51 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 93E412CAC1D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 12:58:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B7D02CAC3C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 12:58:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 7A5993025110
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 11:58:04 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id EF36230340BC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 11:58:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89DF737E317;
-	Thu, 19 Mar 2026 11:57:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CC5D3C943D;
+	Thu, 19 Mar 2026 11:58:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="YJug8NNn"
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="IKIt3sAG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-244123.protonmail.ch (mail-244123.protonmail.ch [109.224.244.123])
+Received: from mail-24417.protonmail.ch (mail-24417.protonmail.ch [109.224.244.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 039193C199D
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 11:57:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.123
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89A953CD8D7
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 11:58:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773921478; cv=none; b=IjmVtPuBxW+fBCCzj+Zu2I3ftiTHMNTwVCJw5RrCI+TUPmBJzM62bzZKpQ75DWGZmAR094G2ufrlxHOlzWePDDZA+IxH2MQ210eEtpvAS9i368/Tj1xW2+ii0scfLpPEScESIr0YhdvCaWusUFylZp3GPUrYvzA8L1vziifO3C8=
+	t=1773921483; cv=none; b=gPGloD71S1bS76bEwAAPIQcvj87O1XKV3g0fQRUO2OjVujjGHm75QYlfPz0cJaPVGGk2MQ0ZhAYSTSCz11JDJOQ4ewEk/BBXvSuCQGV0vr2Z2MkXAIYd2P5fS8Us9vjqw8ej6WQg6jeB5OjBZzFfJJYF854BjGGIQORKz7vFXVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773921478; c=relaxed/simple;
-	bh=ryakE13+AFMRWTGA92j3MCniO/v5nDsCCMEy2rw5S+g=;
-	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=XGTI8VWQtrSQLinY8hnRgUry3/CNNJJTHy2ie9JSidTmkhjZETgvJBUfQ8BaJ/PDpAIod+r8KwUBHRWVcyFqPKCD8g9sCDclpNKIC3NQ4sXngpFY2IamZvmTnN54UsR7gabKnZ3BpIsK7zwAcSEJrdQa/ZqFJfFSc1hjj1cQpVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=YJug8NNn; arc=none smtp.client-ip=109.224.244.123
+	s=arc-20240116; t=1773921483; c=relaxed/simple;
+	bh=mEBBmmKkewV68WUhcRxlXKoX+eqcn8AWTduVHXPX4BA=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=UTEisKN0xOeWyr7nCa+1yPR4dTln/O9ttz260oHOyYWGwvtc0FVmX5BVPZ5GPC7gTPJ06r1qnru/WCQsrNpJomVhqWJ/TDV2U0VDAzV+igDC2u/EjdyvEzUSaaEdsDaKJnV5ZLVT2rbVvWvcrqinGmrM9W57Hou6pc5uNP38IMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=IKIt3sAG; arc=none smtp.client-ip=109.224.244.17
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1773921466; x=1774180666;
-	bh=sEVl3HuB7ehM4vExON+7mh6z/VnbwN4gR3kLK+MIxl0=;
-	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=YJug8NNn1MFIYmrO+WS5olRPbVwpVsh9T02JEgnlcqqHIRy1DivoOkIZ4ny1ITNx+
-	 6fVsLiLIiLkY5gt7K43CKGm5GzBZXHkKQZ6AYfHhMN4XZX2ZjtoeF8Mve6nolpcSru
-	 1aaNsOJWCRBNGJ2eEf3OMu7O8Y9VKwOntQX9/OPOzwz3qWwWMAzIs6D76tSysomKTd
-	 B1+YtA4M2rbZ+x5NXpor1SUmtz5otoRnLGNNzKk5cLeS3gy+uA19bTfkG3cZBMPXuh
-	 QdBpvEBT7skqjvtanBlZCloGu+5vcP0BpBVpIpnVy6DeGXxxrsDPcv284fGDvKPp3+
-	 0hUEHedL7nVTg==
-Date: Thu, 19 Mar 2026 11:57:42 +0000
+	s=protonmail3; t=1773921473; x=1774180673;
+	bh=mEBBmmKkewV68WUhcRxlXKoX+eqcn8AWTduVHXPX4BA=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=IKIt3sAGOeIxPaCMUocRU+SoP7Tx2/8Gy90HmLHwY77ezeexR36SxfYHixGsqX2tO
+	 NA6suNR3LDNdRVz7vXnaAS8rYKE0cj4P+a7FXE3M9sbc1K5hBNOxKRTf00u0kh9FtH
+	 VhBouK/lPLslmWCqS5c1ydNeMN9Pw28k9zmhBZ7IrJOr61yeHEQ6r8DFYArWu0GxTR
+	 hZri0iMjdqDL7x1i6ETzLTq8wAWYSgM4tULTbGiJf5htR3Xx8Z942dUoRvDCiL5EEP
+	 /vLGAilJhB6igsMqCuGvCWV1gGe7QfmhDBQNmygw46rcrmEJ12dBEdtEuKqyDKVMyS
+	 1Vz13/mIRTArw==
+Date: Thu, 19 Mar 2026 11:57:47 +0000
 To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
 From: Alexander Koskovich <akoskovich@pm.me>
 Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, Alexander Koskovich <akoskovich@pm.me>
-Subject: [PATCH v3 0/4] drm/msm: add RGB101010 pixel format and fix 10-bit DSC timing
-Message-ID: <20260319-dsi-rgb101010-support-v3-0-85b99df2d090@pm.me>
+Subject: [PATCH v3 1/4] drm/msm/dsi: rename MSM8998 DSI version from V2_2_0 to V2_0_0
+Message-ID: <20260319-dsi-rgb101010-support-v3-1-85b99df2d090@pm.me>
+In-Reply-To: <20260319-dsi-rgb101010-support-v3-0-85b99df2d090@pm.me>
+References: <20260319-dsi-rgb101010-support-v3-0-85b99df2d090@pm.me>
 Feedback-ID: 37836894:user:proton
-X-Pm-Message-ID: eb0a5f7f6133b232632ff827dfcf3168d202003c
+X-Pm-Message-ID: 2976adefa00dd9004104e9d67642b07ae93d6130
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,7 +74,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-98732-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-98733-lists,linux-arm-msm=lfdr.de];
 	FREEMAIL_TO(0.00)[linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,oss.qualcomm.com,linux.dev,poorly.run,somainline.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[3];
@@ -79,7 +83,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.967];
+	NEURAL_HAM(-0.00)[-0.977];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[pm.me:+];
@@ -87,53 +91,61 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,pm.me:dkim,pm.me:email,pm.me:mid]
-X-Rspamd-Queue-Id: 93E412CAC1D
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 4B7D02CAC3C
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-This series adds support for the RGB101010 (30bpp) pixel format and
-fixes a DSC timing bug exposed by non 8 bit panels.
+The MSM8998 DSI controller is v2.0.0 as stated in commit 7b8c9e203039
+("drm/msm/dsi: Add support for MSM8998 DSI controller"). The value was
+always correct just the name was wrong.
 
-Tested on the BOE BF068MWM-TD0 panel (10 bit DSC) on the Nothing
-Phone (3a).
+Rename and reorder to maintain version sorting.
 
+Fixes: 7b8c9e203039 ("drm/msm/dsi: Add support for MSM8998 DSI controller")
 Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
 ---
-Changes in v3:
-- Fix typo for MSM8998 DSI version name (V2_2 -> V_2_0)
-- Add msm_dsi_host_version_is_gt per Konrad and use for RGB101010 check
-- Fix up comment & commit message for video mode DSC INTF timing width chan=
-ge per Neil/Konrad
-- Link to v2: https://lore.kernel.org/r/20260318-dsi-rgb101010-support-v2-0=
--698b7612eaeb@pm.me
+ drivers/gpu/drm/msm/dsi/dsi_cfg.c | 4 ++--
+ drivers/gpu/drm/msm/dsi/dsi_cfg.h | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-Changes in v2:
-- Only allow RGB101010 if MSM_DSI_6G_VER >=3D V2.1.0
-- Link to v1: https://lore.kernel.org/r/20260318-dsi-rgb101010-support-v1-0=
--6021eb79e796@pm.me
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.c b/drivers/gpu/drm/msm/dsi/ds=
+i_cfg.c
+index bd3c51c350e7..da3fe6824495 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_cfg.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
+@@ -317,10 +317,10 @@ static const struct msm_dsi_cfg_handler dsi_cfg_handl=
+ers[] =3D {
+ =09=09&msm8996_dsi_cfg, &msm_dsi_6g_host_ops},
+ =09{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V1_4_2,
+ =09=09&msm8976_dsi_cfg, &msm_dsi_6g_host_ops},
++=09{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_0_0,
++=09=09&msm8998_dsi_cfg, &msm_dsi_6g_v2_host_ops},
+ =09{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_1_0,
+ =09=09&sdm660_dsi_cfg, &msm_dsi_6g_v2_host_ops},
+-=09{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_2_0,
+-=09=09&msm8998_dsi_cfg, &msm_dsi_6g_v2_host_ops},
+ =09{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_2_1,
+ =09=09&sdm845_dsi_cfg, &msm_dsi_6g_v2_host_ops},
+ =09{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_3_0,
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.h b/drivers/gpu/drm/msm/dsi/ds=
+i_cfg.h
+index 5dc812028bd5..ccf06679608e 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_cfg.h
++++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
+@@ -19,8 +19,8 @@
+ #define MSM_DSI_6G_VER_MINOR_V1_3_1=090x10030001
+ #define MSM_DSI_6G_VER_MINOR_V1_4_1=090x10040001
+ #define MSM_DSI_6G_VER_MINOR_V1_4_2=090x10040002
++#define MSM_DSI_6G_VER_MINOR_V2_0_0=090x20000000
+ #define MSM_DSI_6G_VER_MINOR_V2_1_0=090x20010000
+-#define MSM_DSI_6G_VER_MINOR_V2_2_0=090x20000000
+ #define MSM_DSI_6G_VER_MINOR_V2_2_1=090x20020001
+ #define MSM_DSI_6G_VER_MINOR_V2_3_0=090x20030000
+ #define MSM_DSI_6G_VER_MINOR_V2_3_1=090x20030001
 
----
-Alexander Koskovich (4):
-      drm/msm/dsi: rename MSM8998 DSI version from V2_2_0 to V2_0_0
-      drm/msm/dsi: add DSI version >=3D comparison helper
-      drm/msm/dsi: Add support for RGB101010 pixel format
-      drm/msm/dpu: fix video mode DSC INTF timing width calculation
-
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c    |  9 ++++-----
- drivers/gpu/drm/msm/dsi/dsi_cfg.c                   |  4 ++--
- drivers/gpu/drm/msm/dsi/dsi_cfg.h                   |  2 +-
- drivers/gpu/drm/msm/dsi/dsi_host.c                  | 21 +++++++++++++++++=
-++--
- drivers/gpu/drm/msm/registers/display/dsi.xml       |  5 ++++-
- 5 files changed, 30 insertions(+), 11 deletions(-)
----
-base-commit: f338e77383789c0cae23ca3d48adcc5e9e137e3c
-change-id: 20260318-dsi-rgb101010-support-4956b1cd8657
-
-Best regards,
 --=20
-Alexander Koskovich <akoskovich@pm.me>
+2.53.0
 
 
 
