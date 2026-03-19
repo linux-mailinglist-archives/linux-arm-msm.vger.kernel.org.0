@@ -1,204 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-98747-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98748-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id IPMcFuTyu2lOqgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98747-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 13:58:12 +0100
+	id oAFgIQH0u2nkqQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98748-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 14:02:57 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id F10EA2CB8A4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 13:58:11 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C4AA2CB9CE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 14:02:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 0DF92300E5B7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 12:58:10 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E9D673014C03
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 12:58:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE31E3D4105;
-	Thu, 19 Mar 2026 12:58:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B0A83D34B3;
+	Thu, 19 Mar 2026 12:58:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GT0iLIPv";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="EPvypnVS"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="zxpv3RsH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 615893CFF7B
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 12:57:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2243D34AB;
+	Thu, 19 Mar 2026 12:58:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773925081; cv=none; b=U76Jp4V2PkjGFYYxlOzBkaydegqWqpgxZ2CCKHlV1kVni5ODmWKDvaGs9koPUJr7S0g2a9NOoAD2qeRQtEJUy4XnP4fnYxZBdDNr6FBtdeS/C3ajaiM5f5Q1LI/Q6tXzR+hzaJm/RXBWsYcVBEQ/iBTqAlSpv5it/cXQIUApZ6U=
+	t=1773925113; cv=none; b=RJ2BuOrlAGAKF6QdlGiivym+YpO2+SK8nSbdawtBk3hdsEhZ/SEfidYPmFDxaDCpbnkGUbIBgp/5hSPo+xRT0sA8c3xfwWBuIBxDQeyNPYIeywpq6PJv+xDnIKx0jfq2+ea82vRu9iaIteOqZ4MKhXA6w9wljdCrWGxOViqPiLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773925081; c=relaxed/simple;
-	bh=zIvYJTY6gH0tywfJsDr0iY9gInR/p8kKtR1ilofgYwM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=N/75xrwxcHM+Cbud47rloKnEajuiN2KNVbSL+hV60Mnv5XHMHe/JIifTIRpIg7vPSmv3FtI5f3oSKQ2OjWXUh9077/T58+z/2u4ENNuAelYlDiI4POlJ6bXGaDHiLSdLAwix17LbkeNl50lGiHXzCOMPzl70zJc6mvpB+In6ZrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GT0iLIPv; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=EPvypnVS; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62J746Lu1898948
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 12:57:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	MfuF/PlZWMgF3ErD0zfEEpE4i/iFIciw6YjqRozDOSI=; b=GT0iLIPvcgEkI18t
-	RqrGsWYCMxUKkcGWtFcyAqOT4bYfG28CXoZOS4g8py0AKbM8x3FzpxcJh7rH5lZN
-	1MVc/LAniCBG+d3D9kQb8CMDr3eT4EnvZ9m41mInGtzhlzo1SQF/CN1ws/Jz9D/O
-	+ypAokzAg6PC5G8db0mBkPTpyjBq1usKy9ED+nT9V3zWuZYRDD8u2N2rlLC8vf9b
-	qN7XrQF/MBm368nXCsPo4M5yp7MJaSwYtpZaOfRy1Hw5CknZHzuQx9o7V7BQC5Yv
-	dg+2X0ZGtJ65SM95uSxW3JONEUBj5TCoLKWIqsMhvyjO3gTiiQCbJxyDs5xZXfo/
-	hXSwGg==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cyyhgbeqf-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 12:57:58 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-89c6717b74dso7123486d6.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 05:57:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1773925078; x=1774529878; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=MfuF/PlZWMgF3ErD0zfEEpE4i/iFIciw6YjqRozDOSI=;
-        b=EPvypnVSZauC4qxBqMBZ+a6CHwUtTH6Dd6X5uXQ1QH8v+wlgPtjD4TyioThyb7X4AF
-         9K2zJVX/nDSDWOSa6uBjGkTGmD2LyrE1kK0QJdfxkOLYooFQJsMCsMz3ELG3HOD6nId3
-         otRwbtgDjqoWTgSX7YbNlovrriJQ22/MOmCwmbgonvqP3wi67UnW8Q3PD6Eth79nnTby
-         IGswTwdEqpvCiKbTPeUG8e5uhLGrcOa8usHcNlPccdzgcOV4Ft7sZ/fTWcKw27Emfy8A
-         QPaMetfGLdrmt0IajgckjP9jEmDxzkBRIkcf24qRPHh2vwwi63hHiHOXsAZiNK+IH3uQ
-         UXxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773925078; x=1774529878;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MfuF/PlZWMgF3ErD0zfEEpE4i/iFIciw6YjqRozDOSI=;
-        b=Dq5u9c0Y4d5euXtXhVWxZbM8xCdwtDqo59RPsD8E5q9FJr45RJrF4wAgMiLRRZOqlm
-         A19J4sVJZxL4c9wADkG8E6jQtBKX0XR62IMAyVjL0ORd1KKcuRsjlQVbdU07qFrbl+Xp
-         v1wVaVZY4VoXZL9yKf4vQrDViGfwcdbNRdF1B+LXmczR4vP2/Na9Mpr0ILBZ3iLTOlZF
-         QVS/eZiF/mp2nZlwX+ouqeyDbelePNfOngxP91+K8JcUoKswZB4XwYzD59LGiWCio+7C
-         lZ/cGgIbEUQDkVMoQ89CWBOZIdicsr3t3q/qu9AyW/hTbVp2bmdnxvE1zKumHsaztsOr
-         5TwA==
-X-Forwarded-Encrypted: i=1; AJvYcCW5OU8HDlk1+LOXZbMXlGn+19HsFIZGuelTo2FUY204RJiiYQ1x5Tda/FinUTudu3dVEh7ooOvBpY+4JOWI@vger.kernel.org
-X-Gm-Message-State: AOJu0YyV82+0pTmQRkE7yDdA+6Tl2HLWCJ4YRnGBsMLHEe8hnQKDp48a
-	yAlrobw2/11GJOilpKVf0SIoP+UMBwOtyYKvnLTWGDyiOY9eRhlVrZPkqhufRSJYwJmuGR2d4ax
-	2NtZrdaxquryE9Rml2+VVrLhjfznTBhl/JvLIvo2YcProrMEeB2vTp2IYrYEKQg3yh6q7
-X-Gm-Gg: ATEYQzzRzoudFpD5Vqe1dit4PLTmgYdfPHmp7XVgpQS8u8ypmVkeodJnSYXiVqcsvIk
-	RCPWGq6QZuyeqSZ7xXoqjuVyxjpUhdxXYg4OCc06UueEzDJHH9/TWusB2hgY3vKgTFSlce3w891
-	6U/qOw9cyWV0zc+Ga0TDrY+fBsWRBBpm7Je4ztN0zlIdkvsmc5hYRlrly5F1Z/jOiJnStEpVCh9
-	YvVZPpEFbilX57aa3Mu095pLnHTwudvv1aaTn9k4IpWWOdPyOHh68ZrHlN/oFp3qPnXs/shEsCe
-	5m4Z5pIpMSkGJbifdkYjytcy6JC95bLqqZK9a3/w3Uic0xitVCxJ7dSn7jhOxsI6xzdKcESGX/m
-	bGTGjPLCqjKclklSJxJO14t1MAoYISKY3KjKLMSL4LBFImZ6ETwaBBhWCJkqL+rGPs8cYsAsFxi
-	0sg3c=
-X-Received: by 2002:a05:6214:f2e:b0:89c:5159:ea52 with SMTP id 6a1803df08f44-89c6b5c8893mr82541626d6.7.1773925077668;
-        Thu, 19 Mar 2026 05:57:57 -0700 (PDT)
-X-Received: by 2002:a05:6214:f2e:b0:89c:5159:ea52 with SMTP id 6a1803df08f44-89c6b5c8893mr82541176d6.7.1773925077104;
-        Thu, 19 Mar 2026 05:57:57 -0700 (PDT)
-Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b97f142a785sm449977466b.14.2026.03.19.05.57.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Mar 2026 05:57:56 -0700 (PDT)
-Message-ID: <34c67717-0d6a-424d-be5f-0e514b71d180@oss.qualcomm.com>
-Date: Thu, 19 Mar 2026 13:57:54 +0100
+	s=arc-20240116; t=1773925113; c=relaxed/simple;
+	bh=cdknfVDKZfirBjvPbVt1AvVgcyHfvS3/uHlqeMpnjZg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iDyEm9T7zD1TQGs4DxiBnw8lalFUNDvDkZPgEGDer3S28s+F1MhxoIPbb3xt73XgP4fQcBEzbwUhg1+/F8zaz5dXYCFmBM7ziYWu7YhPm4vMW1VaZrZIpWGSEBCGyLrDM3oAcUgd+xZLCO9F+8LtEjYHOha4oyldGORJGhZnfeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=zxpv3RsH; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=Z7R0pn7ZfdsYWdr21Qctdy5ZMqO7uhqsnnOEXcHNYDI=; b=zxpv3RsH1j0RgeyxZ9QHdWZhmC
+	lFnfS4AluSgqoW0Ktrf02KNVAy4qiftcMGC3jfrsFBWzpTqaQwAJ1AW+g8chPTOCmutDfi9k7Evaz
+	KU1VJpc58NGgX2euaAZJhqiE0RxEiAteyQi7WxqXmCzkESLPGJxSWIbrWWcgCfW3TTTRkyNFQLIXB
+	EpziFXgvzqIcLeViTs1sUUW1tm4DKdlRYwgOB+5xgeUF+zg0+vO5W6gqv3y1cvRlVZYExQpTEsBVW
+	Pvzr1i6JlyzfF5+3xYYuwRhiSeImWqBxXJDeLeT40ly4HU9dvNv0LeJES9IpMlxtewEnK079koyAH
+	UKG0/sxw==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:45602)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1w3CxC-000000004lO-0Uh7;
+	Thu, 19 Mar 2026 12:58:22 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1w3Cx8-0000000088u-3p1e;
+	Thu, 19 Mar 2026 12:58:18 +0000
+Date: Thu, 19 Mar 2026 12:58:18 +0000
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com, netdev@vger.kernel.org,
+	Paolo Abeni <pabeni@redhat.com>, Vinod Koul <vkoul@kernel.org>
+Subject: Re: [PATCH net-next 0/8] net: stmmac: improve PCS support
+Message-ID: <abvy6nZyjyxUXMuf@shell.armlinux.org.uk>
+References: <abQC7r38QLhSeadl@shell.armlinux.org.uk>
+ <abdEscs44fU4kRag@oss.qualcomm.com>
+ <abdYu864OmNWiWIW@shell.armlinux.org.uk>
+ <ablpxwGks9m38fhM@shell.armlinux.org.uk>
+ <absjNQ2s3Z5N2Zwo@oss.qualcomm.com>
+ <abtE7sDT75I7uPnk@shell.armlinux.org.uk>
+ <abvAuHFZzCFobO-V@shell.armlinux.org.uk>
+ <7566c66b-2dda-4b29-b59e-4e4a7e159e21@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/7] clk: qcom: camcc: Add support for camera clock
- controller for Eliza
-To: Taniya Das <taniya.das@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
-        Imran Shaik <imran.shaik@oss.qualcomm.com>,
-        Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20260317-eliza_mm_clock_controllers_v1-v1-0-4696eeda8cfb@oss.qualcomm.com>
- <20260317-eliza_mm_clock_controllers_v1-v1-6-4696eeda8cfb@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20260317-eliza_mm_clock_controllers_v1-v1-6-4696eeda8cfb@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE5MDEwMSBTYWx0ZWRfX03P1PI07LoDH
- hH9471c7L2ISE8Py34O43FLoDFykSXSCnRLxhawxaaZeCmgWWTYhuvTOT5aQzSdJki4Qi2A/F14
- Geizjhkb0ShDNEMzQReGhz5cRBEQrG/1CMKTFKGN9fGY8S7iwoU3N0ORf8EQxnBfHkGY/w6ZqqF
- 0l/21fIAKnX745qqVLA7zHyiKatd95vry1V8EHi0ZgvMDIyWrYSwgpDhGetJ8RjQahq84Ll4YAD
- Z8Ducg+ZWX1/hf8uMVhSDm2fVIbp6VbNcZh9hQtvWRz8wLCmC8g0M/GG8tU3htXsOTRIh5pgy4p
- r7bXw4FbwuNhEcDgdDMA8Q3+pNk/nkbx4WqEvfVQ5VC8d0PLr8lnTh8do5z0aLv+HAOmCnWb3Qo
- kGL0Orthybr208yXJ6jXE9jG4OphPgeo83Qvzuekp1siRVHCrYeOJSE75gXfan3xqlqYDTOcw3K
- M3CBxunIoFFFOTgu9NQ==
-X-Proofpoint-ORIG-GUID: VGLf4u-rp0eUJnoxco--YtUuvOiC-3tM
-X-Authority-Analysis: v=2.4 cv=IbSKmGqa c=1 sm=1 tr=0 ts=69bbf2d6 cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=EUspDBNiAAAA:8 a=jdZfh6YgxIVJxXzoon8A:9 a=QEXdDO2ut3YA:10
- a=1HOtulTD9v-eNWfpl4qZ:22
-X-Proofpoint-GUID: VGLf4u-rp0eUJnoxco--YtUuvOiC-3tM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-19_01,2026-03-19_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 suspectscore=0 lowpriorityscore=0 spamscore=0 impostorscore=0
- clxscore=1015 adultscore=0 malwarescore=0 phishscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603190101
-X-Spamd-Result: default: False [-0.66 / 15.00];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7566c66b-2dda-4b29-b59e-4e4a7e159e21@oss.qualcomm.com>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+X-Spamd-Result: default: False [1.14 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
+	R_DKIM_REJECT(1.00)[armlinux.org.uk:s=pandora-2019];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
+	DMARC_POLICY_SOFTFAIL(0.10)[armlinux.org.uk : SPF not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-98747-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-98748-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	NEURAL_HAM(-0.00)[-0.997];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
+	DKIM_TRACE(0.00)[armlinux.org.uk:-];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	FROM_NEQ_ENVFROM(0.00)[linux@armlinux.org.uk,linux-arm-msm@vger.kernel.org];
+	PRECEDENCE_BULK(0.00)[];
+	NEURAL_SPAM(0.00)[0.717];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: F10EA2CB8A4
+	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,armlinux.org.uk:url]
+X-Rspamd-Queue-Id: 1C4AA2CB9CE
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 3/17/26 6:14 PM, Taniya Das wrote:
-> Add support for the Camera Clock Controller (CAMCC) on the Eliza
-> platform.
+On Thu, Mar 19, 2026 at 11:09:33AM +0100, Konrad Dybcio wrote:
+> On 3/19/26 10:24 AM, Russell King (Oracle) wrote:
+> > On Thu, Mar 19, 2026 at 12:35:58AM +0000, Russell King (Oracle) wrote:
+> >> On Thu, Mar 19, 2026 at 03:42:05AM +0530, Mohd Ayaan Anwar wrote:
+> >>> [    8.650486] qcom-ethqos 23040000.ethernet: clk_csr value out of range (0xffffff00 exceeds mask 0x00000f00), truncating
+> >>
+> >> Please look into this first - with the MDIO bus operating at
+> >> who-knows-what frequency, this could make reading from the PHY
+> >> unreliable.
+> > 
+> > My guess is clk_get_rate(priv->plat->stmmac_clk) is returning zero,
+> > which means we don't know the rate of the CSR clock.
+> > 
+> > From what I can see in drivers/clk/qcom/gcc-qcs404.c and
+> > drivers/clk/qcom/gcc-sdx55.c, this looks like this case - the
+> > struct clk_branch makes no mention of any clock rate, nor does it
+> > have any parent. From what I can see, neither of these drivers
+> > specify any rates for any of their clocks, which likely means that
+> > clk_get_rate() will be zero for all of them.
+> > 
+> > Sadly, when I designed the clk API, I didn't think that people would
+> > be stupid enough not to implement the API properly, more fool me.
+> > 
+> > Under the old code, we would've used STMMAC_CSR_20_35M, which means
+> > we're assuming that the CSR clock is between 20 and 35MHz, even
+> > though the value is zero. Is that the case? If it's higher than
+> > 35MHz, then you've been operating the MDIO bus out of IEEE 802.3
+> > specification, which can make PHY access unrealible.
+> > 
+> > In any case, please fix your clock drivers.
 > 
-> The CAMCC block on Eliza includes both the primary camera clock
-> controller and the Camera BIST clock controller, which provides the
-> functional MCLK required for camera operations.
-> 
-> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
-> ---
+> I'm not 100% sure the currently-passed AXI clock is what we want
+> there and the docs aren't super helpful.. is there a synopsys-name
+> for it? What rates would you expect it to run at?
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+There is no easy answer to that - it depends on the bus interfaces
+and whether the CSR (register) clock is separate.
 
-Konrad
+The likely possible names are hclk_i (for AHB master), aclk_i (for
+AXI master), or clk_csr_i.
+
+It does state that the CSR clock should have a minimum frequency of
+25MHz to allow all statistics to be properly collected.
+
+The rate of the CSR clock needs to be known, as selecting the divider
+for generating MDC within IEEE 802.3 specifications is rather
+fundamental. You may find something there which hints at what rate
+the dwmac's CSR clock runs at.
+
+Hope this helps.
+
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
