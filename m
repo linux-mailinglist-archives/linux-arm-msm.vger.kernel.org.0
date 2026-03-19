@@ -1,104 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-98708-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aKXgDDnQu2k4owIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98708-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 11:30:17 +0100
+	id AKg2HPvQu2k4owIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 11:33:31 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 81EB32C97CE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 11:30:16 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id DD12A2C9870
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 11:33:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 01E0E301FD7E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 10:28:41 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id C694F301F164
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 10:33:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA5CE374197;
-	Thu, 19 Mar 2026 10:28:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38E9538B14C;
+	Thu, 19 Mar 2026 10:33:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="k0zXsckJ";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="hF7fQUx/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KANm/jRz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F6634D383
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 10:28:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 874D437AA99
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 10:33:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773916120; cv=none; b=d/dtGfuSC15UySCDFAnrxcUjhARxbK68XhFlxRUgSPsvCM9/bURHuXCPhElQr/BZwjute7Q2Yuvn9SC0QUqnJjVuOAgCfB9gLnAv+oLOSxFqCSEotVn8lu5fVo7FkccvXOzXPTKSp1nP8Qg3Kweh4YcxmEft92PiNfKvhhGQkL0=
+	t=1773916409; cv=none; b=iFO3T9u7xbnlF7Jre2ypae3jfXUm/RxH1NVG8FnQqpCXdrwgwvDP9guB1whPi4tdggPEoKdfgBciBvKjUEqV3trGZo6TwEHLDugpgl98mD/P7xFWiB1vb0+6bG9ov2zTq2OaEeibYmPStiiFijW2dOGxMQx8rCW1M8KxOhgmKuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773916120; c=relaxed/simple;
-	bh=RW0su65Wt79SZqs3yg3hV0A+0UpOj7mP5bnUmras9hQ=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=gMu+5PeZ6bA+dI0rcf9o8oq5bC71akoyU4RzimdXqhu5T9H8S+NUpI6/naL1VMVRWW/DvlYlILP6S5GQc7akPgWAPmgrOXAR3kOt5Sr9eN2NITfP4/PPp6ifURmxPnMuDKAxLZ9p1DLlw+Nz9UydR6pj9wB3wBd8BtYjGCEQba4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=k0zXsckJ; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=hF7fQUx/; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62J73uuQ1770610
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 10:28:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	wdLyDXI27K7D8gFcDd/WiAUwtco8d/k78JRULpZmNxo=; b=k0zXsckJWZ5odq07
-	X5Qzyf2cQT8gE2Dp4sqUwEwChjJozO/Ybvp9LflQgYkpyCVAtebwF2MPAG+pQEic
-	iRAm9BohHAQBL1hLh4BSUpBrvK82Rq0Zc/VlORshGoK7L5NMLqGJ2T36xWy6Npka
-	Ftd1Z6kep6bpTdCq9a77l5QER2wuV2RXomfzXffDDafU7/6UiMVNuO++VNLTzsNh
-	YM8CZZsM/HAORDkNz7vLMANE7Q0Vl9ZboJ08fWNhuz/qwwFg/xDYroNT6SfTiaZD
-	7p2m1FgxjOF5QUmFy9XWF2d8bjrYtN5NS36D0ype7XJF9PJyyPcVAA1jRR+0C8TI
-	lj4L2g==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cyy75u3qm-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 10:28:38 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-50b33a19837so385341cf.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 03:28:38 -0700 (PDT)
+	s=arc-20240116; t=1773916409; c=relaxed/simple;
+	bh=LB9475tVL3n9Qwmvm7hVWtEZg7/8iA41jkMdL9/Bvv4=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=NNzoobRgKIrXeW0cb14bzhn/7FmCn73r65ZzGyzdZV26zn4r0oRrsr5kn8i3tNNtEsd1Yv8NRd+q57THAi4swiiRGnqCFy4fBzE8fIPLIEicS9VNEj3iGPVZIA1/Ku3peWgorBlthdKe+mlwJc/ZZzVeBXcrDEWb6GNUcLvoco4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KANm/jRz; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-486b9675d36so3883495e9.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 03:33:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1773916118; x=1774520918; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=wdLyDXI27K7D8gFcDd/WiAUwtco8d/k78JRULpZmNxo=;
-        b=hF7fQUx/7R6SjEbGZtx68uVsPOip7RelMjHerrwaYmvEFAiuMxWmV15pZMVhAhDEah
-         Z37uVh31ONR9WX5poli6eByhkEkUj2BLebz3eWNxRd7kIhkB3NuNzOmpj0YIN5OWtSl0
-         pIVG5mhpX6J8A5IxVDeo8nkUaWjmqm9UqpEJeMMD4Ldlw8EcnAohyEoCU07AgC+/XF0r
-         6nDSvoKaJ7DADvZRnPHo3s8LZmA7Yxnlj4VprdFzMf8JYXQWHl3lxInr2F5RFu5aT8C0
-         A5ypHqh12nza2weTyxtHkv2txqMdw8796j+oJSoioBWfV5T7Aly1KEiYvWXBNXzfTvwr
-         Hd+g==
+        d=linaro.org; s=google; t=1773916406; x=1774521206; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ErO3x4eMWQB/57fETjq+oKLlpjxWHpiaCaJPFs1ooGg=;
+        b=KANm/jRz9/b/M+5hOA9H74odeiYa22K5xxQSFt3Im5LBVcbFhWsxW4CrJHSmaJS3nU
+         KHnNvTq8vkQdUjMG9FlPREz33I4lOvZJ2Ya55V0IKSdiiyIo0q3GJnDJ1vl3hkhOx1me
+         nuyTAirFYfIANpmxmWkzqRmcz9cPFZtLSGQCsjyzkEetclXAIQZRmMQLANXL5xqajNDG
+         6Cn/4GcZeL9yxRCrPogb9b5HRZmMBRq6tJHMrVjM6c24aGsTHX3FTs8zn1aqL97U69+c
+         zXFnFQgUlDqimX51g+UCa2KXbF6jWgfAA6vK2umupjG6DfLL4jvJfqZRgRv46cS0x2gJ
+         8Q9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773916118; x=1774520918;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wdLyDXI27K7D8gFcDd/WiAUwtco8d/k78JRULpZmNxo=;
-        b=pHcJwtj+cNALx8q7NBqitwUOR2Dfv/YaKLrQHL/YN1+4Tpnb4+qyqurwoUPc+AgqM8
-         W+kYlBw/RVJYzqOcHozwu9XBpM788YQJ854X/MDQWs7b4bvvQDfJJ/pJeEGpvvLMPNye
-         39+ED+9R4HCAPWTYT0SjyRa1QlpxPI6DgkKAljBD34GfHUz518PsrcJdTv7CmZeg2xIy
-         JMEQzBzOPpezyI3uCa2wGiAO1TDPgl3g0icoQKfsogLD3cWm6Z8eL36qWlqc9ZSjCQy8
-         YNa1sLsp002FLQ/qwhhVQ1HZdTasClMgczzs+gMgirIsBubZwbTksEiMauaW0dwq+0T8
-         i7gw==
-X-Forwarded-Encrypted: i=1; AJvYcCXrEvOwuF1Kls3fa01+4qEqd+LNa3tOBIOuE/HCLKJYql8Z89AfbBN7g8juRw2QN5p1NxtXAROUq7kQVQCV@vger.kernel.org
-X-Gm-Message-State: AOJu0YwYs1QQgxbgetonDH0bBSxrHb7kNYiS+9gg01aRdzRt27Cy8ByJ
-	xVBvVYtXJxkEdSr6SBSqlFj7a92TdUVVra6N2nv3U/V39T4EfCkb7aOTQdGUKRK8Iux7slNV78R
-	ViZ0NQThLGgv9MOLe4IJwzXJzXFPTH6WcIRVlRp9OrjBq3+EUfb02CKtr0gAHol/uW9fs
-X-Gm-Gg: ATEYQzwD7SxWDoPFo7tb+NDhRaSwafTVeP+2hBPMubEP59lj/EvFDNb0+tepffJpzBp
-	IZicp/bAAvc66n0tCAgGxJOjwEm492sUFqPR+tiL3RBElzBoUEvdwyjOpGUWLCkD0aNMucsHrSS
-	zhE/BSoczNsiQJcmLvrSWpdKIkoqB85DwCTK+ZMjqL21969/FVi8UITM4UTa1bTemXrq4iX+u7C
-	IuB7khPqMQH40EXnYvL1X6/Jxigjn0KENZcrfaL6JkaXpuLm3x9soGga6sDrxRhuMkzIIE4jOim
-	/JQGWq7+WPDeyb2AjMYfq81aKHKJf/1De1jGC8OqsqYmZ6yn24ibmwdMV8IYZzB+tBh57g1mauR
-	nG5+ehd+g0B7sVzTb+gCnxw3ByJcoa6MBScDbcVZnOHeBMoVxf+yy/M0Zd1HRDFb4bzOHs071uL
-	uZAsY=
-X-Received: by 2002:a05:622a:610:b0:509:47e2:9dfd with SMTP id d75a77b69052e-50b14949a02mr66570091cf.9.1773916117548;
-        Thu, 19 Mar 2026 03:28:37 -0700 (PDT)
-X-Received: by 2002:a05:622a:610:b0:509:47e2:9dfd with SMTP id d75a77b69052e-50b14949a02mr66569791cf.9.1773916117066;
-        Thu, 19 Mar 2026 03:28:37 -0700 (PDT)
-Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-667b0eb9affsm3448046a12.18.2026.03.19.03.28.34
+        d=1e100.net; s=20251104; t=1773916406; x=1774521206;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ErO3x4eMWQB/57fETjq+oKLlpjxWHpiaCaJPFs1ooGg=;
+        b=F551/vB9IwDrMJtiak3tYUTR4+DVlThoONa/kclwoEYeG+1Ko6sxK/rz/yPKXUXpmT
+         3o3cCHGnMr7Dz7aLUl5YpMD2PEA9D51H8Ut2aFpLrQqTGXvJpMNpEBbJsw/gBDy6frpx
+         xSB2PUa7+g5STXi8SKGq+8P7HdcGSLQQju+cBWs4g2bYbCwtd9oP5uilr0JalRY9GXay
+         3sSKcGGINkXTCenixNEBDs2VddJQ5QsjyzavuXC0FFF/VmO/Htu+TDiljpDY60LfirSP
+         gHNj2SbcjsnhNLZDcwo0XEBhjtywfyHEC6Q3bY8B49jHLxNGwxsZ6Brcz6+Rm0mxk9eo
+         8IAA==
+X-Forwarded-Encrypted: i=1; AJvYcCWAldS0Yjg4M08QWKsBlhwxI7gWmLy0NX5sP9+wD90vn9ei9mWr3j0fVL3UZd4QjDFaF6gp4xaJO2b079C7@vger.kernel.org
+X-Gm-Message-State: AOJu0YykbB5hKdd5Tle1R58sdHOh13UHcj4c5/bV8uR0z6FdDTciuUa+
+	dqHngT2C8iajbK2x64wERv21tOrQSMtKN19x+uMpqCJIBQM9qWUnNliYNpZVRNAye80=
+X-Gm-Gg: ATEYQzw3zpOrlNHqblIfekW7yIshFU3mf5n4Q4U2UunsQOqh0xG91VDGylGbc5KQ3Kh
+	8L55dykrtufS8/x14R9qT+EjA9U9PkcIOgWDDUvSVk6/t9Ojch91W5tXmzGrwSZvA0IKq+kYy4z
+	D1/a8JW+SrtvmH970sFiX9YZPsUVw46n2uVUEV0BvvLbFRE4Vwxx28hCyApTkvIzj5uKVDI2qD6
+	RxxJgpJOMeFNqjhXFty+bd317ARqVXuzVZCDGXrsSL+O+B+JrZSRn7jxRqj2mYu3OtA9MR8bo0v
+	2l21Iz9XO71iqWfXgq4BrqCnPYhcHF9r6cdJgjgsULdGSSBaYWPtd0XINLSNbK7ATJ2gLyGAOyb
+	a09TKQCvpMxliYQGaPS4/h2beU7Ib0oQeSiToK+60/jevf9wm6taANsYVOg8DxSw0GnqyZCiNDW
+	iXMyVCvmMyWIpBvbhrVBjI/W5cwMdVVSf3CHc+mMqgvc+EodUx4GP+19MvCUgRkWgS4jfUo128Y
+	ga/8z4=
+X-Received: by 2002:a05:600c:8b85:b0:485:4135:5c92 with SMTP id 5b1f17b1804b1-486f41ffff7mr112681655e9.0.1773916405763;
+        Thu, 19 Mar 2026 03:33:25 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:106d:1080:8e54:fbaf:8cb6:e9f7? ([2a01:e0a:106d:1080:8e54:fbaf:8cb6:e9f7])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-486f8ba4a74sm56533335e9.12.2026.03.19.03.33.24
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Mar 2026 03:28:36 -0700 (PDT)
-Message-ID: <393a9fed-4d21-482d-a211-8808e2f79eea@oss.qualcomm.com>
-Date: Thu, 19 Mar 2026 11:28:33 +0100
+        Thu, 19 Mar 2026 03:33:25 -0700 (PDT)
+Message-ID: <90623d8f-6eee-40e5-ace7-6bd701dd2868@linaro.org>
+Date: Thu, 19 Mar 2026 11:33:24 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -106,108 +88,206 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] drm/msm/dsi: support DSC configurations with
- slice_per_pkt > 1
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-To: Alexander Koskovich <akoskovich@pm.me>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov
- <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Jonathan Marek <jonathan@marek.ca>
-References: <20260318-dsi-dsc-slice-per-pkt-v2-0-0a1b316f8250@pm.me>
- <20260318-dsi-dsc-slice-per-pkt-v2-2-0a1b316f8250@pm.me>
- <b56abd7c-1fc0-4627-aae5-06ec8c47ff15@gmail.com>
-Content-Language: en-US
-In-Reply-To: <b56abd7c-1fc0-4627-aae5-06ec8c47ff15@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v2 3/3] drm/msm/dpu: fix video mode DSC INTF timing width
+ for non 8 bit panels
+To: Alexander Koskovich <akoskovich@pm.me>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
+ <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+References: <20260318-dsi-rgb101010-support-v2-0-698b7612eaeb@pm.me>
+ <20260318-dsi-rgb101010-support-v2-3-698b7612eaeb@pm.me>
+ <c9d14a74-8e59-43bb-827b-577c8f675c8f@linaro.org>
+ <_varXMigTiaLa1CVxsqWY0wJNnR8xZGw5lAS8MmyxrVAjHPK1Mu-H-heiIMxB9SdcJoEhjUDUtUo8dZvTi_GsQwYKsuGnc1tsFlSDqoKfA0=@pm.me>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <_varXMigTiaLa1CVxsqWY0wJNnR8xZGw5lAS8MmyxrVAjHPK1Mu-H-heiIMxB9SdcJoEhjUDUtUo8dZvTi_GsQwYKsuGnc1tsFlSDqoKfA0=@pm.me>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE5MDA4MyBTYWx0ZWRfXw+93OzQqlpNq
- Egq+op0BExCwfHdrz+Tgp8ZniZdRnTVtDH6nJm3fHQSoHCs56ug/NqoWPO4DQN3Fim9iBZZjR9L
- lBQ5s9sMa9PqmghSGngRASeqOQupGz8ttO2ChPYzYiKs+5vcmFnAaT8H+rLVTQh8uHeybDomh6G
- bFV6SUcmLn/IONqlmUJTWkTCYbJU+Tpi3d35jGDdzD/r1S0xdWumNY59ctt7aGgM11Jh/ofYMCP
- V4bqDYbARXuaC+O6phKBU+Uv0UthSB2sjkCA5mGZH08OJLMH7YlG4noF5ZkKICj7BUJBA49m3/5
- +gQQBYpMQFYrgGt1kqT8TRUbFSoyVamZLxD0D9/TRhIfhjRcAlEXPBGyxmNF81FZtCJ8QCgJ7HM
- 4Pz/aTvAI5/d8NYPg9KSr/GUt97gJ+eqvo6UaBYUPcPg4YNIP5MHmR3GY+sUFqM6YqsqpHCwufI
- kxQ6lXvxyssjGCimzAw==
-X-Proofpoint-ORIG-GUID: KG1U4wU-KgAkCqdh1aQwur-aU6iXcLwp
-X-Authority-Analysis: v=2.4 cv=A7hh/qWG c=1 sm=1 tr=0 ts=69bbcfd6 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=RAbU-raeAAAA:8 a=EUspDBNiAAAA:8 a=YgiteBLtTPqnhqBJ560A:9 a=QEXdDO2ut3YA:10
- a=dawVfQjAaf238kedN5IG:22 a=JiizpSU_mAIq9zsZDqn2:22
-X-Proofpoint-GUID: KG1U4wU-KgAkCqdh1aQwur-aU6iXcLwp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-19_01,2026-03-17_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 clxscore=1015 bulkscore=0
- suspectscore=0 impostorscore=0 spamscore=0 phishscore=0 adultscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
- definitions=main-2603190083
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-98708-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[pm.me,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,oss.qualcomm.com,linux.dev,poorly.run,somainline.org];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[pm.me:email,qualcomm.com:dkim,qualcomm.com:email,marek.ca:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
+	RCPT_COUNT_TWELVE(0.00)[16];
 	TO_DN_SOME(0.00)[];
+	FREEMAIL_CC(0.00)[linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,lists.freedesktop.org,vger.kernel.org];
+	HAS_ORG_HEADER(0.00)[];
+	TAGGED_FROM(0.00)[bounces-98709-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[linaro.org:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[pm.me:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,linaro.org:dkim,linaro.org:email,linaro.org:replyto,linaro.org:mid];
+	HAS_REPLYTO(0.00)[neil.armstrong@linaro.org];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	RCVD_COUNT_FIVE(0.00)[5];
+	FROM_NEQ_ENVFROM(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	NEURAL_HAM(-0.00)[-0.999];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 81EB32C97CE
+	FORGED_SENDER_MAILLIST(0.00)[];
+	REPLYTO_EQ_FROM(0.00)[]
+X-Rspamd-Queue-Id: DD12A2C9870
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 3/19/26 11:26 AM, Konrad Dybcio wrote:
-> On 3/18/26 10:54 AM, Alexander Koskovich wrote:
->> From: Jonathan Marek <jonathan@marek.ca>
->>
->> Some panels support multiple slice to be sent in a single DSC packet and
->> this feature is a must for specific panels, such as the JDI LPM026M648C.
->>
->> Use the MIPI_DSI_MODE_DSC_ALL_SLICES_IN_PKT flag to derive slice_per_pkt
->> from slice_count, note that most panels are expected to just work with
->> just one slice per packet.
->>
->> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
->> Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
->> ---
+On 3/19/26 09:48, Alexander Koskovich wrote:
+> On Thursday, March 19th, 2026 at 4:35 AM, Neil Armstrong <neil.armstrong@linaro.org> wrote:
 > 
-> Matches various formulas in the docs
+>> On 3/19/26 05:00, Alexander Koskovich wrote:
+>>> Using bits_per_component * 3 as the divisor for the compressed INTF
+>>> timing width produces constant FIFO errors for panels such as the BOE
+>>> BF068MWM-TD0 which is a 10 bit panel.
+>>>
+>>> The downstream driver calculates the compressed timing width by
+>>> dividing the total compressed bytes per line by 3 which does not depend
+>>> on bits_per_component. Switch the divisor to 24 to match downstream.
+>>>
+>>> Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
+>>> ---
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 12 +++++++-----
+>>>    1 file changed, 7 insertions(+), 5 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+>>> index 0ba777bda253..9b046a0e77aa 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+>>> @@ -122,19 +122,21 @@ static void drm_mode_to_intf_timing_params(
+>>>    	}
+>>>
+>>>    	/*
+>>> -	 * for DSI, if compression is enabled, then divide the horizonal active
+>>> -	 * timing parameters by compression ratio. bits of 3 components(R/G/B)
+>>> -	 * is compressed into bits of 1 pixel.
+>>> +	 * For DSI, if DSC is enabled, use a fixed divisor of 24 rather than
+>>> +	 * bits_per_component * 3 when calculating the compressed timing width.
+>>> +	 *
+>>> +	 * This matches the downstream driver and is required for panels with
+>>> +	 * bits_per_component != 8.
+>>>    	 */
+>>>    	if (phys_enc->hw_intf->cap->type != INTF_DP && timing->compression_en) {
+>>>    		struct drm_dsc_config *dsc =
+>>>    		       dpu_encoder_get_dsc_config(phys_enc->parent);
+>>> +
+>>>    		/*
+>>>    		 * TODO: replace drm_dsc_get_bpp_int with logic to handle
+>>>    		 * fractional part if there is fraction
+>>>    		 */
+>>> -		timing->width = timing->width * drm_dsc_get_bpp_int(dsc) /
+>>> -				(dsc->bits_per_component * 3);
+>>> +		timing->width = timing->width * drm_dsc_get_bpp_int(dsc) / 24;
+>>
+>>
+>>
+>> @bits_per_component: Bits per component to code (8/10/12) <= how the DSC pixels are encoded in the stream
+>> @bits_per_pixel: Target bits per pixel with 4 fractional bits, bits_per_pixel << 4 <= the target display pixels
+>>
+>> - bits_per_component is the transport width
+>> - bits_per_pixel is the display width
+>> - 3 is the DSC compression ratio
+>>
+>> So for a RGB101010 DSC display bits_per_pixel should be 10 << 4
+>>
+>> But here you say bits_per_component should be 8 ? can you share the downstream config of your panel ?
 > 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> This is what is defined downstream for this panel, they're using 8:
+> https://github.com/NothingOSS/android_kernel_msm-6.1_nothing_sm7635/blob/sm7635/b/mr/vendor/qcom/proprietary/display-devicetree/display/dsi-panel-rm69220-dsc-fhd-plus-120hz-vid-boe.dtsi
+> 
+>>
+>> Are you sure about the bits_per_component & bits_per_pixel values you set in the dsc parameters ?
+> 
+> I'm pretty sure they're correct, here's the panel driver I have atm:
+> https://github.com/AKoskovich/linux/blob/asteroids-6.19.y/drivers/gpu/drm/panel/panel-boe-bf068mwm-td0.c
 
-Sorry for a sloppy trailer, let me try again with the right From:..
+So I looked at downstream, and bit-per-component is not used at all for the width calculation.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Here's the full downstream calculation with your panel:
 
-Konrad
+
+intf_width = mode->timing.h_active;		=> 1080
+
+slice_per_pkt = dsc_info->slice_per_pkt;	=> 2
+slice_per_intf = DIV_ROUND_UP(intf_width, dsc_info->config.slice_width);	=> 1080/540 = 2
+
+if (slice_per_pkt > slice_per_intf)
+	slice_per_pkt = 1;
+
+bpp = DSC_BPP(dsc_info->config);	=> 8
+
+bytes_in_slice = DIV_ROUND_UP(dsc_info->config.slice_width * bpp, 8);	=> 540 * 8 / 8 = 540
+
+
+dsc_info->bytes_per_pkt = bytes_in_slice * slice_per_pkt;	=> 540 * 2 = 1080
+dsc_info->pkt_per_line = slice_per_intf / slice_per_pkt;	=> 2 / 2 = 1
+
+...
+
+phys->dce_bytes_per_line = comp_info->dsc_info.bytes_per_pkt * comp_info->dsc_info.pkt_per_line; => 1080 * 1 = 1080
+
+...
+
+if (p->compression_en) {
+	if (p->wide_bus_en)
+		data_width = DIV_ROUND_UP(p->dce_bytes_per_line, 6); => 1080 / 6 = 180
+	else
+		data_width = DIV_ROUND_UP(p->dce_bytes_per_line, 3); => 1080 / 3 = 360
+}
+
+So you're right, it should be a fixed (8 * 3) division, and a (8 * 6) in case of widebus, but DSI widebus is not yet handled.
+
+Neil
+
+> 
+>>
+>> Neil
+>>
+>>
+>>>    		timing->xres = timing->width;
+>>>    	}
+>>>    }
+>>>
+>>
+>>
+> 
+> Thanks,
+> Alex
+
 
