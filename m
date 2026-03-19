@@ -1,192 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-98750-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98751-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6PIgNp71u2nkqQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98750-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 14:09:50 +0100
+	id QA58Esr1u2nkqQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98751-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 14:10:34 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C7D02CBAD9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 14:09:50 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id E38872CBB26
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 14:10:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id B74A830632AF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 13:09:09 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 3BA07317A96A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 13:09:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C51E83C73E8;
-	Thu, 19 Mar 2026 13:09:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F1923D3329;
+	Thu, 19 Mar 2026 13:09:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mGJ1CkoC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qygsp4SY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91D53D3CFA
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 13:09:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E6F194AE6
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 13:09:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773925748; cv=none; b=RH138l1SM1UQosA8G9c2CqsvnplhhJQg1+mS6SrFejNmXV0/a6ieIP0Ft/KTn6kOtd26XDRsO8jRtgaj5o/XvZ4NwtYy9E6CeZl8d6aFvEDPvqcq9m8aNDij8NumjanLNqIK1FjPpsLdWH2WcpANPQ22Qt9C7Y0CUT6ny/resqU=
+	t=1773925760; cv=none; b=bbF0yuSmetw0kPvdf1h5j9nXUYKLKhvclhKSaEfANB0C9uQ2hHjIh1sAxv3ZHhwdx9OWxL4YkiihsIo6Sp1Ka+OZ7DqCdyWEnkVp2pBJ3rbQ4grGmUzDs0JuNji35Xcp9CoHWwbOwKkaYCyL1k5uWVNiIDYzSixC5+kKVGobDz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773925748; c=relaxed/simple;
-	bh=4E0ID7APL8YcpCqvbHlYRlwfw2W4WtPyVECj5Xxm2x4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=c6wRJzLJA6kvpSwx/9j4AMgitXL7MogtcQYnILSvMtaeIDYeto9IITOD3wcYRo7b8tgCEUBQFzq2l+NJ6pHzGwCV/HekZHXuv52ARo5ggdJvfQZMnYNXFXrvIDfcAnzbb3vJqWl0QGUBOcMFQzIfIifRE0F2R07rTg9ggttyJWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mGJ1CkoC; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5a277403370so64684e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 06:09:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1773925743; x=1774530543; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eK3EVuDFkrZ7hmAmWn6xkd27Z8e5d83PJyq1D4T9NcA=;
-        b=mGJ1CkoCxdSLZtzgMFHhLgi+wX9pb66mYGGg5lShsFCMidWTeJJzV5AaG3Rwv/26eF
-         2MQA0c+4zqIO1l4mY5LmJWTB60zBpxns747JG909/q5j+LUz8tIHbVGYFIsMg85UW2Ph
-         M45ikSOHtX+vFHliA7T41AdsP/gHjVFH+g42ieM/kmBDDLoN1h7je/SzDNmMSi5TWSo+
-         2LYnZMDoD00g47TRNBpUewsaP2qNKwVKyeLxESk28rADq3cl3X+4cb5MIK55J3EIOhAT
-         ChUByRAiIpT/tkErMdXn1D0MZpEv6JwmyEh19CgLSWDhDQomHk2Y++qjJY0byLC+fm7w
-         EmpA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773925743; x=1774530543;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=eK3EVuDFkrZ7hmAmWn6xkd27Z8e5d83PJyq1D4T9NcA=;
-        b=H68/CTROupBdr3gGNdcYp5kVbgvrQnQy8RFqoCgf3rezoi14zPk/Ggb3Vt+V0sL7nA
-         cStUqzAloojq0d5S6DHOD54zWe45kc3RgY6Sqj4/q5Xghl9zP4g/mD3cXkVnhYaKeyWp
-         KiSHpiRhQfPnUqvnG9/hFB4VW9wnRih/bE4Vj1zFleQ7XYhNr7fqgnOkc8GYub/6UNF8
-         won/FNr7CKNl8Wv53cyT+UrWkivEZ+qaqdX+1p0U58XhEVIoHHZ+ExIm920ok3bDalDP
-         1NVEckqgzvMkNlipe3j7yoAznGP3L91YsnIlfK6KHUwp3j6xIA96JsI/y141mZylsxem
-         wS9g==
-X-Forwarded-Encrypted: i=1; AJvYcCWCq5ZpB0TMIanMPqH0vIYQFpAZljpOghiDrrbPr0evF3bMUpal6n5O602iheJox5mAtbqiLJKdSd0I4/e9@vger.kernel.org
-X-Gm-Message-State: AOJu0YzenVarAlzn/LxYy8jomHu/tkZvJVaz7e8XYlNx3KvkCzaBhlZ0
-	IcAxRZNAyO924D2SB1JWVNIwLo3/5B9wjd+LGjDYo2Rt5i4QCQD7OGvIufIAYbXrBE4=
-X-Gm-Gg: ATEYQzwLpa66k6MqyiwfBovfyoTEacQMdohuxSRo1POhyRs1mhO/HrjXVwgWqPgB/63
-	5W3wpP2qNkdS9fVjMlmxP4K2mYWzmgFYsD71rgJDXjLHQWxmJihsVkVj7pzNS8GT2Yv2dkh+ycJ
-	Npr3MAs1GMRpVCfeEdFYdRyh4Kktif5/A23MVXSCx9wsEbhT8cJHsQoU7pBInqC5AQPN2jgkkcE
-	qeYPU8gPwwNQICKHbnqjZFztWpWNioPizdoMo+Eq0fsvQsy48FmTmwgAJnK9sLKMMxmUiMJ6EwM
-	DfKVXMe05Vffn/cZPcBFqWbuBSh2bbjR/Am8khPIctJF7zKicz3e+D6eKNiSuSUcf5Y1aAYdl5H
-	P2bNZ/aAynephboUV8lFyCcXa8H4iMPvEttBWLrtWvnoKrTG6rQy2XdyYaM0AQyjuzoziZnAxPe
-	b6kF+8PTi0l2YEVjY9RUK0ptb3U2Dkkhk8CJXlQv1jBLaWuBoN2DyhRvSkgahxaektWPMPANQ8L
-	HR1dg==
-X-Received: by 2002:a05:6512:114f:b0:5a2:7b70:6b9f with SMTP id 2adb3069b0e04-5a27b706d4fmr1208493e87.2.1773925742648;
-        Thu, 19 Mar 2026 06:09:02 -0700 (PDT)
-Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a279c27490sm1148020e87.13.2026.03.19.06.09.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 19 Mar 2026 06:09:02 -0700 (PDT)
-Message-ID: <65e06b2e-eeb9-45af-97ac-4ae60f652361@linaro.org>
-Date: Thu, 19 Mar 2026 15:08:55 +0200
+	s=arc-20240116; t=1773925760; c=relaxed/simple;
+	bh=Q6j72inhTsH6ewxfYJqIA8kdxCdrfzZ/qo9HHgaCAUs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jq0JMuOCM8mz2mLIoENkXhScPhjyqAY3w7UUDteQwbUm+br6mwuSiZcMsm9auSdnXO+3h/em0wAcxQysunrjWJKqP/BrWB06cYHR70bXo4RybOSBSbJj9/Vut7QKMfFeTpUd6/McQFmXyVWhsLp9/03YFbL0SuWxniGSdj58mJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qygsp4SY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5974C2BCB3
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 13:09:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773925759;
+	bh=Q6j72inhTsH6ewxfYJqIA8kdxCdrfzZ/qo9HHgaCAUs=;
+	h=References:In-Reply-To:Reply-To:From:Date:Subject:To:Cc:From;
+	b=Qygsp4SYDnjNIkRepZ6B/Da7WIVTVHYU4iXoNk8PmGV1OM/gGOd5/M9BvufNOMbpX
+	 L3fe8ghS0ZDexaf/xoBcCNoxfpzJGgcSymUOSQM8LFCm7B7oLjrOmUhDXWw83okB85
+	 JQKsLI1aTMKRjTk8mRQm4qDfSybEOQ/uU2kuBX7DlPaciRMwXzFDcFiQGi1TZaeY7U
+	 /kYnMWhOloiKv/Vxw9DHsIIOnyr5Jm2RgGOup9G6c0BG3+vMniwNt0YL5DyO74/QJY
+	 tvIbSDut+lE9CHg5aThsCyDdx3qXRcHu/ur7TUusVV3mLOE3vNUfEnXpdq66baJQkI
+	 rj9/ECGl7VWpA==
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-38bda6da51cso6855561fa.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 06:09:19 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCVgoqUGF3LrWRppmQEwDVR0hQdBg2b6O8zr5P58P6H3wSZ3kQKOZ9fyuh9WrYm4zC25oVkR4zJpBYaZUuv7@vger.kernel.org
+X-Gm-Message-State: AOJu0YxRtymQEjjZheOJra5xLo8PpBw81V4E9ENCkcHM0Hx7VksC/R/R
+	BvDAZvfTwCkZIwIH5pYapj96dRq9CBOISDjyOeUhHmcaQYo9gvdA7Am3Qg+lCrfssOxHrA3v31R
+	258HAJ6L/jA0LnwmG7ijrjn8IHrovtuw=
+X-Received: by 2002:a05:651c:201e:b0:38a:4a27:1b58 with SMTP id
+ 38308e7fff4ca-38bd58700a4mr22921261fa.23.1773925758025; Thu, 19 Mar 2026
+ 06:09:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/2] phy: qcom-mipi-csi2: Add a CSI2 MIPI DPHY driver
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bryan O'Donoghue <bod@kernel.org>,
- linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- linux-media@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260315-x1e-csi2-phy-v4-0-90c09203888d@linaro.org>
- <20260315-x1e-csi2-phy-v4-2-90c09203888d@linaro.org>
- <3f11de22-b729-4d06-b6c8-18e649e1979c@linaro.org>
- <80ddc2b4-d6f8-4e8d-a45e-69c05d100aa2@linaro.org>
- <16b10f17-ecd3-4cdd-ac3f-f64127d60ace@linaro.org>
- <ulenfus552ggobis4gmi7eh27tikdaxbgm2oj63b5l2vemlfxc@ib5f2xaqurj6>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <ulenfus552ggobis4gmi7eh27tikdaxbgm2oj63b5l2vemlfxc@ib5f2xaqurj6>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20260319105947.6237-1-wsa+renesas@sang-engineering.com> <20260319105947.6237-11-wsa+renesas@sang-engineering.com>
+In-Reply-To: <20260319105947.6237-11-wsa+renesas@sang-engineering.com>
+Reply-To: wens@kernel.org
+From: Chen-Yu Tsai <wens@kernel.org>
+Date: Thu, 19 Mar 2026 21:09:04 +0800
+X-Gmail-Original-Message-ID: <CAGb2v673oGgYbK9vxtgzCNSKR0=d+yT+3tD_bp_0AwLdVbht7w@mail.gmail.com>
+X-Gm-Features: AaiRm51-S2qI8OWMlxRbpEKWhlUg86es_OnJ0C138mWD9n1SBCUMxkSAhbQynxE
+Message-ID: <CAGb2v673oGgYbK9vxtgzCNSKR0=d+yT+3tD_bp_0AwLdVbht7w@mail.gmail.com>
+Subject: Re: [PATCH v5 10/15] hwspinlock: handle hwspinlock device allocation
+ in the core
+To: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Cc: linux-renesas-soc@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bjorn Andersson <andersson@kernel.org>, Baolin Wang <baolin.wang@linux.alibaba.com>, 
+	Peter Zijlstra <peterz@infradead.org>, Ingo Molnar <mingo@redhat.com>, Will Deacon <will@kernel.org>, 
+	Boqun Feng <boqun@kernel.org>, Waiman Long <longman@redhat.com>, Jonathan Corbet <corbet@lwn.net>, 
+	Shuah Khan <skhan@linuxfoundation.org>, Orson Zhai <orsonzhai@gmail.com>, 
+	Chunyan Zhang <zhang.lyra@gmail.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+	Alexandre Torgue <alexandre.torgue@foss.st.com>, Wilken Gottwalt <wilken.gottwalt@posteo.net>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, 
+	linux-remoteproc@vger.kernel.org, linux-doc@vger.kernel.org, 
+	linux-omap@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-stm32@st-md-mailman.stormreply.com, 
+	linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-98750-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[linaro.org:+];
+	TAGGED_FROM(0.00)[bounces-98751-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
+	FREEMAIL_CC(0.00)[vger.kernel.org,kernel.org,linux.alibaba.com,infradead.org,redhat.com,lwn.net,linuxfoundation.org,gmail.com,foss.st.com,posteo.net,sholland.org,st-md-mailman.stormreply.com,lists.infradead.org,lists.linux.dev];
+	RCPT_COUNT_TWELVE(0.00)[26];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[vladimir.zapolskiy@linaro.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	NEURAL_HAM(-0.00)[-0.995];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
+	REPLYTO_ADDR_EQ_FROM(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[wens@kernel.org,linux-arm-msm@vger.kernel.org];
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
+	NEURAL_HAM(-0.00)[-0.885];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:dkim,linaro.org:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 5C7D02CBAD9
+	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
+	HAS_REPLYTO(0.00)[wens@kernel.org];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,sang-engineering.com:email,mail.gmail.com:mid]
+X-Rspamd-Queue-Id: E38872CBB26
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 3/18/26 17:27, Dmitry Baryshkov wrote:
-> On Wed, Mar 18, 2026 at 04:07:39PM +0100, Neil Armstrong wrote:
->> On 3/18/26 14:17, Bryan O'Donoghue wrote:
->>> On 18/03/2026 10:15, Neil Armstrong wrote:
->>>>> +    /*
->>>>> +     * phy_configure_opts_mipi_dphy.lanes starts from zero to
->>>>> +     * the maximum number of enabled lanes.
->>>>> +     *
->>>>> +     * TODO: add support for bitmask of enabled lanes and polarities
->>>>> +     * of those lanes to the phy_configure_opts_mipi_dphy struct.
->>>>> +     * For now take the polarities as zero and the position as fixed
->>>>> +     * this is fine as no current upstream implementation maps otherwise.
->>>>> +     */
->>>>
->>>> This is wrong since you loose the lanes mapping defined in DT, which is still in CAMSS
->>>> but is a PHY property. The lanes layout is not a property of the CSI controller,
->>>> CSI controller only need to know the lanes count, and not the layout.
->>>
->>> Lane layout is a PHY concern but, the PHY API gives us phy_configure_opts_mipi_dphy which should be extended to provide layout and polarity. This would then be of benefit to more than just qcom/camss.
->>
->> Why ? the only concern between a controller and a PHY is the lane count to calculate the bandwidth, the actual pin layout is certainly not a controller concern.
-> 
-> I think that the DT should be providing the information about the
-> connection of the lanes and their number on the board. Then the CSI host
-> might want to limit this further for whatever reasons. But I don't think
-> that the properties of the lanes should be configurable between the
-> controller and the PHY.
-> 
->>
->>>
->>> Right now none of the CAMSS users for this driver depend on any other mapping and I propose a separate series to fix phy_configure_opts_mipi_dphy rather than introduce data-lanes to DPHY.
->>
->> None of the upstream users of camss.
->>
->> The problem is even larger, as you replied in [1], the csiphy is still exposed as a media element from the CAMSS driver, this means this driver is not complete,
->> it should be a media driver entirely with eventually an internal PHY aux driver, but this would be entirely implementation specific.
->>
->> Either the PHY is standalone and the PHY consumer only calls phy_open/init/configure/power_on/power_off/exit, otherwise it's not a fully standaline PHY but a composite device like here.
->>
->> I propose that you write a proper media driver for the qcom csiphy, which eventually spins a PHY driver as an aux device.
-> 
-> Why do you want a media driver? Isn't PHY driver enough?
-> 
+On Thu, Mar 19, 2026 at 7:00=E2=80=AFPM Wolfram Sang
+<wsa+renesas@sang-engineering.com> wrote:
+>
+> Providers have been refactored to avoid using core internal structures.
+> As a result, they do not need to allocate the hwspinlock device on their
+> own anymore because they can access everything they need with helpers.
+>
+> So, the allocation is moved to the core. As a result, the registering
+> functions now return a pointer to the (soon) opaque hwspinlock device
+> which may be needed for unregistering only.
+>
+> Because the argument list of the registering functions is changed, all
+> users are changed here as well.
+>
+> Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+> ---
+>  Documentation/locking/hwspinlock.rst  |  6 ++--
+>  drivers/hwspinlock/hwspinlock_core.c  | 48 +++++++++++++++------------
+>  drivers/hwspinlock/omap_hwspinlock.c  | 10 ++----
+>  drivers/hwspinlock/qcom_hwspinlock.c  | 11 ++----
+>  drivers/hwspinlock/sprd_hwspinlock.c  | 17 ++++------
+>  drivers/hwspinlock/stm32_hwspinlock.c |  7 ++--
 
-As for today CAMSS CSIPHY are already media devices, and a user applies media
-specific properties to them, for instance media bus format, resolution etc.
-Technically this might be removed from CAMSS, but if so, then it should be
-done before this new PHY driver model is applied.
+>  drivers/hwspinlock/sun6i_hwspinlock.c | 12 ++-----
 
--- 
-Best wishes,
-Vladimir
+Acked-by: Chen-Yu Tsai <wens@kernel.org> # for sun6i
 
