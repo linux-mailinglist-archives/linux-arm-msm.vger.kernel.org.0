@@ -1,73 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-98752-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98753-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id oDLMHwz2u2nkqQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98752-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 14:11:40 +0100
+	id WDQJJM71u2nkqQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98753-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 14:10:38 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2BC32CBB7C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 14:11:39 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 29D2D2CBB3F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 14:10:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 0EDF131E7B8B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 13:09:58 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 5C5F030074BE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 13:10:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4D3C38BF61;
-	Thu, 19 Mar 2026 13:09:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77E8A3C3453;
+	Thu, 19 Mar 2026 13:10:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RacmPq1b"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Bo01snnR"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D45271443
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 13:09:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 540673D3486
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 13:10:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773925797; cv=none; b=GJnzD3J+rE7kl5PCixF/6CtDcXkKongJ4JX2Gy9zaSJn7zFqIH0uBtev+/igzLhGwcPFKOio7b4Exj/ApoXCqO0Wpl2vZkT2/fGMD9pQJyQfiFgAdE/kddLEnbftg+7SS3rXF1M3gHJHLWaZrvdc2Zjf16lHe/pKzs9TvfjMVx0=
+	t=1773925832; cv=none; b=VY1Vy4gHhnpO/KL6ffd2xRofWvo6q1vfvmfOUYiEsZT4WYRTuqvs/gh9k7lqmlP1RrL+/rEToIZGDLiLtR2b0TYM5Vd4fCzzrddhv+9n4VegCf7sVO9j1zEWk41aDd715GkXIr9/avE3IL6WldRQHRcC1Sm2s+lLkSwfNbkM/Ok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773925797; c=relaxed/simple;
-	bh=Ts/ZBzEhwzBq6L1alBpL4MrUmv33n0V3E/Ul5uCiuTo=;
+	s=arc-20240116; t=1773925832; c=relaxed/simple;
+	bh=/z6FEu0IUK6nCL3Uiqn1iq1VRQstHdDNDk6ymaE5UrI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=G7nXuLvJb61Onbe5WQlopp1DmF4xp2TFyaNzfA/EAPHJyUryWC2Tzl3O8Z14qfWwmE0FJsOExBm+jm/Z4IWTUooa/30KjYEm2R00IMe1RLsWjdeNvIYQDpf7S9BqLRHwTZp3qNuj7ENt8lCZr+IvisekBV2AXXR+9Mdr43t4KtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RacmPq1b; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5268C4AF09
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 13:09:57 +0000 (UTC)
+	 To:Cc:Content-Type; b=ZD6zvjOL7P/WMC8lq2AsMq9XPabnbcr+Z6hsf0P3NexOoMCwm4uNPhPWLx+VyJx0noIBwEkNzl7eRS04VvU7MoT1X3shSnQ6sB07MdIEho7QxEV52l07sGbH1Rcg422rb9ifMvnHJmt0lZfNoaVP49hFcZc9fvUY+MzLG5TANXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Bo01snnR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BE78C2BCB8
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 13:10:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773925797;
-	bh=Ts/ZBzEhwzBq6L1alBpL4MrUmv33n0V3E/Ul5uCiuTo=;
+	s=k20201202; t=1773925832;
+	bh=/z6FEu0IUK6nCL3Uiqn1iq1VRQstHdDNDk6ymaE5UrI=;
 	h=References:In-Reply-To:Reply-To:From:Date:Subject:To:Cc:From;
-	b=RacmPq1bIqMeMcyhxiEK10j6ygmP3LMQK2Z2fVE3HCOxsgvgXy03lL3FuvuLQQvgj
-	 GiQcbk0Gc68ea8eJ4LngePUDz9C5XojYstENdaRQM1y0oSw68pXH0FB/x9xYOoXLj5
-	 yzHUkBwYEvcieaKcpfVCPm7nVCORUUsT0yOyNlGzfZbyxsZTMYNRLeKm/6/LsH6iAi
-	 g+KwM2FKgeEjnQE4mZhq0fF6zUla5vAiMm1h5fjWA7LIX/ZFlm4NfZRaEHQvb0eRdn
-	 ro9atKpn/5SRW63zxRDjmZnik2psm1mFQ05jHWL2srdHA6o0dMoRIWg/vWUDnwIL81
-	 7blFfhRQzZ9RQ==
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-38ad12fb595so16225851fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 06:09:57 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVkfzqFct8OEGAwmdeEoW1DXBceSoOiP34oX5lMMacApADHirt02GP9mMuo7xX7tiBDzYW4PiKEjbmVaq0b@vger.kernel.org
-X-Gm-Message-State: AOJu0YwKcf7or+Yf7dXHl8tSO8KBXVmLxCO3bG0tGyDYJTCkt5W0EVsD
-	2jTvKQSgwd3Uf6m+GDS9EFBwbCIp15fS2Mx+yG6ifICfIdfHn0pMbhMhzzd04G0GGg135b6qZQ7
-	ozR8qgJENUnBYIRl1EGawia3Tk/P8HL8=
-X-Received: by 2002:a05:651c:324f:b0:38a:d354:cb2a with SMTP id
- 38308e7fff4ca-38be5f51b90mr10131901fa.18.1773925796044; Thu, 19 Mar 2026
- 06:09:56 -0700 (PDT)
+	b=Bo01snnRFCsVSU9jXLHYlBSQbxAuKL8IlZztOzE7GGenHwqVix5ssfwMi9T3optQG
+	 d+gdZbHjid/FAQoMdnnvLy7M2K/MKgAstWlXld4NzDhgAaD4vtKGHzQIdX788cS21V
+	 dFWydrgXzY/v9glSzQoEPDrKsVEti1U+5GfLE/NEDAwz+HH1o3l/SSY5ICwNs7lfQE
+	 SgYxMuBjZ2CuTOrkXPv4s5eyPP1f6e/bZWIElN+S6x7LjeGeeI3xFgd0/YAfwDebPv
+	 qUmCFKkrzQXaTuT5I2A/RKhCEe1nrU8iKbsxLH3L/Inc4Pn/eW0rhPQhZNZyKFwJJv
+	 5fv/h7nyjmQUQ==
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5a278e0f7f6so1215041e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 06:10:31 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCX7ZAuj1W7pWps19U84o5u+H+ZpJDWZlB7KiH98N3wrzteTga1vpGHyqAjNjJX1MUmj8YRvj2/Xyr6IvVPg@vger.kernel.org
+X-Gm-Message-State: AOJu0YwlEX1SC/ymvobu42vDOU7XrTi2jaJSGCCf4yKeN06ilJbfdhkG
+	7Dmul7C/yikqw6uKQ0J+kWnuIt7UU5g2Z0Nd1m1TzrvNAIgE0SY3g+WseQBcxY7kwEUjJm9wWqL
+	w/tpfzEltPYj4AYXqrqxh9VbKOMjnQxw=
+X-Received: by 2002:ac2:4303:0:b0:5a1:49a0:af35 with SMTP id
+ 2adb3069b0e04-5a27958560emr2184109e87.10.1773925830317; Thu, 19 Mar 2026
+ 06:10:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260319105947.6237-1-wsa+renesas@sang-engineering.com> <20260319105947.6237-12-wsa+renesas@sang-engineering.com>
-In-Reply-To: <20260319105947.6237-12-wsa+renesas@sang-engineering.com>
+References: <20260319105947.6237-1-wsa+renesas@sang-engineering.com> <20260319105947.6237-15-wsa+renesas@sang-engineering.com>
+In-Reply-To: <20260319105947.6237-15-wsa+renesas@sang-engineering.com>
 Reply-To: wens@kernel.org
 From: Chen-Yu Tsai <wens@kernel.org>
-Date: Thu, 19 Mar 2026 21:09:43 +0800
-X-Gmail-Original-Message-ID: <CAGb2v67j91R7vsY2WOjgWQxyD-2Y8mRXe1go-F2jsL+9vbrBPQ@mail.gmail.com>
-X-Gm-Features: AaiRm52DzwyqScnSD_1lE5a2W4uRQaDkIK3TFFUruN1gvKxXkVMyOzXMy0U3Fs4
-Message-ID: <CAGb2v67j91R7vsY2WOjgWQxyD-2Y8mRXe1go-F2jsL+9vbrBPQ@mail.gmail.com>
-Subject: Re: [PATCH v5 11/15] hwspinlock: move entries from internal to public header
+Date: Thu, 19 Mar 2026 21:10:16 +0800
+X-Gmail-Original-Message-ID: <CAGb2v668mhN7XnjbA5Zg4ExRXLVqn8d9kDjap4wVNEEL780p7g@mail.gmail.com>
+X-Gm-Features: AaiRm53ZA49QZnlP2rMulPZJ-bDSE_dydGwTankSFX-RnHDx5Riad08-AOxumlo
+Message-ID: <CAGb2v668mhN7XnjbA5Zg4ExRXLVqn8d9kDjap4wVNEEL780p7g@mail.gmail.com>
+Subject: Re: [PATCH v5 14/15] hwspinlock: refactor provider.h from public header
 To: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Cc: linux-renesas-soc@vger.kernel.org, linux-kernel@vger.kernel.org, 
 	Bjorn Andersson <andersson@kernel.org>, Baolin Wang <baolin.wang@linux.alibaba.com>, 
@@ -84,12 +84,12 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-98752-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-98753-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
@@ -97,42 +97,42 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	FREEMAIL_CC(0.00)[vger.kernel.org,kernel.org,linux.alibaba.com,gmail.com,foss.st.com,posteo.net,sholland.org,st-md-mailman.stormreply.com,lists.infradead.org,lists.linux.dev];
 	RCPT_COUNT_TWELVE(0.00)[18];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
 	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
 	REPLYTO_ADDR_EQ_FROM(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[wens@kernel.org,linux-arm-msm@vger.kernel.org];
-	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
-	NEURAL_HAM(-0.00)[-0.542];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	NEURAL_HAM(-0.00)[-0.959];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
 	HAS_REPLYTO(0.00)[wens@kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sang-engineering.com:email,mail.gmail.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: F2BC32CBB7C
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sang-engineering.com:email,mail.gmail.com:mid,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 29D2D2CBB3F
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 On Thu, Mar 19, 2026 at 7:00=E2=80=AFPM Wolfram Sang
 <wsa+renesas@sang-engineering.com> wrote:
 >
-> Providers need the ops-structure and the hwlock_to_id-function. Move
-> these entries to the public header. With this change, all providers are
-> also updated to use the public header only. The internal header is now
-> used by the core only.
+> Factor out the entries only needed for providers from the generic public
+> header. This allows for a clean separation between providers and
+> consumers. All providers are in the hwspinlock subsystem currently and
+> are trivially converted here as well.
 >
 > Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 > ---
->  drivers/hwspinlock/hwspinlock_core.c     |  8 +++++++
->  drivers/hwspinlock/hwspinlock_internal.h | 29 ------------------------
->  drivers/hwspinlock/omap_hwspinlock.c     |  2 --
->  drivers/hwspinlock/qcom_hwspinlock.c     |  2 --
->  drivers/hwspinlock/sprd_hwspinlock.c     |  2 --
->  drivers/hwspinlock/stm32_hwspinlock.c    |  2 --
+>  MAINTAINERS                           |  1 +
+>  drivers/hwspinlock/hwspinlock_core.c  |  1 +
+>  drivers/hwspinlock/omap_hwspinlock.c  |  2 +-
+>  drivers/hwspinlock/qcom_hwspinlock.c  |  2 +-
+>  drivers/hwspinlock/sprd_hwspinlock.c  |  2 +-
+>  drivers/hwspinlock/stm32_hwspinlock.c |  2 +-
 
->  drivers/hwspinlock/sun6i_hwspinlock.c    |  2 --
+>  drivers/hwspinlock/sun6i_hwspinlock.c |  2 +-
 
 Acked-by: Chen-Yu Tsai <wens@kernel.org> # for sun6i
 
