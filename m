@@ -1,242 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-98804-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98805-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id WHxRFng1vGl3uwIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98804-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 18:42:16 +0100
+	id QD0pIgE2vGl3uwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98805-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 18:44:33 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F7362D02BD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 18:42:15 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 00FEE2D0345
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 18:44:32 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 5B304302D49A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 17:31:59 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id D3203307A66F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 17:42:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DFE72BFC7B;
-	Thu, 19 Mar 2026 17:31:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 21A83397E67;
+	Thu, 19 Mar 2026 17:40:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="SCItzt50"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VZ1ErVZo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-43101.protonmail.ch (mail-43101.protonmail.ch [185.70.43.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BFF2FFF81
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 17:31:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 999C33F165E
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 17:39:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773941510; cv=none; b=u7V47iRFuydQPnPew2qvgedX7wh8OgYEqn5NJx5YVLKaAIizZc5/iPCZRg64BKWepzXKniR5JCeChfhKiuXS4w+NspS3kPguadxolmwLzy69nkQGsSu98NZu5pfBoK6Fp9YqtB2EwfsfbwO7Q99yZJCaai8HDX55odwMyEATpi8=
+	t=1773942005; cv=none; b=dpkcQNWlJNn94gSnU9HISLtCMds1RV9dI1tAZemnnRx2zh3CKG46nM/W+q8kahZwQcZ+DDujuGsjZZ/uGmPv9awUYMj+4UDtmV4OZaQE2/Ugi1x2lIg7x6UCd+g/5gx9sIBQKLIPozHsKsvXXRvVX1fhBD+74KzmdJxxSaY7Src=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773941510; c=relaxed/simple;
-	bh=BGrW2i21aU6SxYACQdwr7P1HONyoX0vwRbl5dsPFbvI=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IzK9nwKcHwYJN5Iw0qUUF4lihjwGoM7H2EuOD06QxkSBUdxk0sfltfUVSzrHUO+1kxPbwaLP8QpGA9Lz4cMb2ROPfQVZBGxcxFL5RexYK5d/lAlx6h7VBe1GXw9xurwUtvhnPahy3Azchjel4CMd9l5BsaEH27Wk9h8P58pEhnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=SCItzt50; arc=none smtp.client-ip=185.70.43.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1773941497; x=1774200697;
-	bh=RvMMo0NAF7orTfavYi+xzo3XwN7ul4xPql6mf0zDMBA=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=SCItzt50M2hsKF/KJzBDcKLrd0PwQGDXRmDFMfBDKyI4i1Lfy5rbsLjFwOqwFy1Ex
-	 mQHItr7Es0hTUT1ldkm2xCAqm4Wg0BLCqOFatWhMJOV14lI3sbuL9OlERV+PZXDo0G
-	 yVeAwfKyCJ+w3H25/kFFiNuRv+VfjPIJq5rmMurL0KK1tf++1DgnXlBTf7mZdAtZ/V
-	 LDtbuF/9Or7N8UVNRI0fWbw9rs5JMD35CsGC+RVxcr0lSaI7i1/u4sEIGKKwcgXNFd
-	 ccAz4/geTCqgXjvX4/l+5HN8dAOq9fX9SvRXk6q6sGnAYPTlsG7ewW2OIz9WIdsDRf
-	 ydJAdw4VMoOWQ==
-Date: Thu, 19 Mar 2026 17:31:35 +0000
-To: Jonathan Marek <jonathan@marek.ca>
-From: Alexander Koskovich <akoskovich@pm.me>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, Jeffrey Hugo <jeffrey.l.hugo@gmail.com>, dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v3 4/4] drm/msm/dpu: fix video mode DSC INTF timing width calculation
-Message-ID: <EEQIOfQNcsc4wya1P0uxlYBG4w9lAeW4OcTZpsxmpGCzf-tgl_3YO0H5zoZyU5XIwBKurxuki_gGca-Z9YfcdYOXN_wpwixoK8q_fITL1bw=@pm.me>
-In-Reply-To: <7fb9dd9d-13f9-7bba-93d1-08f42dd6ee38@marek.ca>
-References: <20260319-dsi-rgb101010-support-v3-0-85b99df2d090@pm.me> <20260319-dsi-rgb101010-support-v3-4-85b99df2d090@pm.me> <1360a31d-669e-48df-a1be-f0af4a253cd7@linaro.org> <3gLK4s97giqqXagfHKhfiIHbfbl2snwfOj9dcTNGPUYi10w9-1EdATqzz1LPCVTpz4bLFYOm8u_Fl8PfC7t5yabows4UCzRKVwjraEWW6hc=@pm.me> <3f8763af-aad2-4d92-90c8-cfd290212503@linaro.org> <7fb9dd9d-13f9-7bba-93d1-08f42dd6ee38@marek.ca>
-Feedback-ID: 37836894:user:proton
-X-Pm-Message-ID: d2b1ed9fad43303dd5f9f8c1a38a2936ff8bc4ec
+	s=arc-20240116; t=1773942005; c=relaxed/simple;
+	bh=K8lUyo5z6V19brJx0RL+7buzN6w590v5sjtJQ6fEL78=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=aezHPmTnBwkQ9WLW50P3esrXvMQZ7Dx6Agc+gYFIZesRSOpKlXY76zaDUDmsTayFXCcgVtveW8Uf3nJzvLTS1K2z2Qxkq+eNW/wUQYwafOzPWBNpxCViI0Xe0scOZQd4groy+DnyKQ/+6M36DWA7smWNMkIrCQJzQv28EOUwZms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VZ1ErVZo; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-48628ce9ab5so15916195e9.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 10:39:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1773941998; x=1774546798; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4DcGpNehVMlOMwMq5jxWCnF0zEBU9hVO79S4un3Z6Go=;
+        b=VZ1ErVZo9C2Nph80eujHIrMc6+MeGojb9RHnGuCbQy0Cv7U45JVutMbIqAIGn65eyo
+         jx96wkinj0HeP2BcO6UTqmD4Mcu6NmFyGZPutV/qtnVhaCSV3gGMTRksmzDHmlb3QkAy
+         IOLgftmvF0MH8U0lhjwEsVYvfMQnn9kbvrxxWXDGrGwwUD5TwGNQGSSlXagu0iy7zkD7
+         C+shDIL0mCa1pnVlSFokTH++I3T+Wh63g54moNQ+s9y9f6EpwAGTmqw5ONyqe2icnAwg
+         dNTAuVIJPoUDtZAWxxdBqsvFJ2k0UMIsVle2fJLGRcRlNkV0gsp5CPI7Azmz9vq9nNRb
+         MIJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773941998; x=1774546798;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=4DcGpNehVMlOMwMq5jxWCnF0zEBU9hVO79S4un3Z6Go=;
+        b=UYiAmM/ag3SSf7VYYJAeSbsRMhTAua93RZ4zcOsdOHH3Yd5ojdIC+ReDRNlCxDOKpw
+         0HaVtXO/3ShckJ5ZgEmQEZ9gSP5BnT2gqcy6cvh8o7g9RFt3+ep9RTajr7xRy3UG3C7u
+         kNqSstUdpkRFUGE4FQAPYXVm3RF6JwG+bfyhWRQpCQ3cKEdaZZfWMHif6ThIzcA9dbxH
+         qLp5mMj1916JVdGyVyg9Q20EnsTM5Ym1qn0yJQRT6nCLfgACPdNLhU2SsbVQLah9kj43
+         ZpQ1aRC9iYeT8jYR7if7PicUOMpuquf20gqdja8yePHSHGpRjyhqSU6PmWjeNqHt00in
+         eaNQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVJQq/4EAJnOExyMu2GWv8fNXSpsEldUJ3nAflvFhQjPGFlvJL74yEiYBolGBybjJc/U1PxGG1XiCIQxk8C@vger.kernel.org
+X-Gm-Message-State: AOJu0YxQl5FCEcQbseDWG+c/WaZLdXI1c/Qhr0KFk/v8ZYgGno0Nxu2D
+	XfZ+KW3BOorx+d3SDyNpFnfdv/UFSXiX+jTrHY3vDgz32m49BL7JxcknHDY+6BM1s5w=
+X-Gm-Gg: ATEYQzwZGLo9f2d/FOicBQlD4hVCLz8k1+xWVWqOhuK0f1EoB1VrUKKGxwgueSJMOyp
+	2LoW4UPSfN2W9lcrjUyBJ/WsPPp5nHPYw6RQ70EUZZmPTu+HM0oNU06wgsmYymdRAIVZCLbKqQM
+	xg8VHDBfxtGs5VhdvcA+M6vJb0SGG1L7ahRkOCp9vjADoKry6FVooaPwFlF5uEO0+dp8xQJwlMD
+	CwDWFUy2BAejCn0NJnvTW8kj6XpH3cD4vd01EDclc9Dxa4AmhIJlMDxW9QTLhchE5t9Tl/vvJ5x
+	fn5HyvoQIxA5lrg/JkdXX6TxH7htCaqnCxj6EL4Jd6d9fPcjHNo9Fg3buvhWDYnojOL/2XYYxXv
+	qen/E6pCnJgO3jVjl7NEkC0Z9U3Gn4VNQ6kjLEEREcUgFKwg8icaIxSstPgjEUBsSNY9Nci1JQ+
+	AA+bcLVHeomv1MG4+TxqjHVyOejIneti3ZKR29FOVfKwa7m2rMZPrlolKipjQbQwTHGYfhvJy6O
+	W71
+X-Received: by 2002:a05:600c:3d90:b0:485:4535:73d with SMTP id 5b1f17b1804b1-486f442e607mr132291005e9.2.1773941997619;
+        Thu, 19 Mar 2026 10:39:57 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:106d:1080:55fd:bfb9:c88:691c? ([2a01:e0a:106d:1080:55fd:bfb9:c88:691c])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-486fc4d90f4sm49410245e9.1.2026.03.19.10.39.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 Mar 2026 10:39:57 -0700 (PDT)
+Message-ID: <117d9294-87ce-4060-9c8b-71190b649e64@linaro.org>
+Date: Thu, 19 Mar 2026 18:39:56 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v4 2/2] phy: qcom-mipi-csi2: Add a CSI2 MIPI DPHY driver
+To: Bryan O'Donoghue <bod@kernel.org>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
+ <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260315-x1e-csi2-phy-v4-0-90c09203888d@linaro.org>
+ <20260315-x1e-csi2-phy-v4-2-90c09203888d@linaro.org>
+ <3f11de22-b729-4d06-b6c8-18e649e1979c@linaro.org>
+ <80ddc2b4-d6f8-4e8d-a45e-69c05d100aa2@linaro.org>
+ <16b10f17-ecd3-4cdd-ac3f-f64127d60ace@linaro.org>
+ <ulenfus552ggobis4gmi7eh27tikdaxbgm2oj63b5l2vemlfxc@ib5f2xaqurj6>
+ <26XTdUyQTB41Oc4D5HnMtSm_QpZRjlkljQRJVw-u1Zp3Ltn9s4LVU-LQkP6drdl3Z3GGssLCCbsVYPFEqssHcQ==@protonmail.internalid>
+ <65e06b2e-eeb9-45af-97ac-4ae60f652361@linaro.org>
+ <9578400d-30ac-4d8c-9295-ee4ec8af3b2c@kernel.org>
+ <d6616fc0-75fb-47e2-96cd-ae81fa1a8e82@linaro.org>
+ <f3c62284-ac78-42c6-a4f0-cd984b7124cd@linaro.org>
+ <7eda931a-f30e-4e01-a130-996ec7f450d1@linaro.org>
+ <a42f837c-4b90-4e0f-a98f-793fbd20a140@kernel.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <a42f837c-4b90-4e0f-a98f-793fbd20a140@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
-	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-98804-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[3];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[linaro.org,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,lists.freedesktop.org,vger.kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[18];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.955];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	TAGGED_FROM(0.00)[bounces-98805-lists,linux-arm-msm=lfdr.de];
+	HAS_ORG_HEADER(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	DKIM_TRACE(0.00)[linaro.org:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,linaro.org:dkim,linaro.org:replyto,linaro.org:mid];
+	HAS_REPLYTO(0.00)[neil.armstrong@linaro.org];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[pm.me:+];
+	RCVD_COUNT_FIVE(0.00)[5];
+	FROM_NEQ_ENVFROM(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	NEURAL_HAM(-0.00)[-0.999];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,marek.ca:email,linaro.org:email,pm.me:dkim,pm.me:email,pm.me:mid]
-X-Rspamd-Queue-Id: 5F7362D02BD
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	REPLYTO_EQ_FROM(0.00)[]
+X-Rspamd-Queue-Id: 00FEE2D0345
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Thursday, March 19th, 2026 at 1:23 PM, Jonathan Marek <jonathan@marek.ca=
-> wrote:
-
-> On 3/19/26 10:54 AM, Neil Armstrong wrote:
-> > On 3/19/26 15:40, Alexander Koskovich wrote:
-> >> On Thursday, March 19th, 2026 at 10:13 AM, Neil Armstrong
-> >> <neil.armstrong@linaro.org> wrote:
-> >>
-> >>> Hi,
-> >>>
-> >>> On 3/19/26 12:58, Alexander Koskovich wrote:
-> >>>> Using bits_per_component * 3 as the divisor for the compressed INTF
-> >>>> timing width produces constant FIFO errors for the BOE BF068MWM-TD0
-> >>>> panel due to bits_per_component being 10 which results in a divisor
-> >>>> of 30 instead of 24.
-> >>>>
-> >>>> Regardless of the compression ratio and pixel depth, 24 bits of
-> >>>> compressed data are transferred per pclk, so the divisor should
-> >>>> always be 24.
-> >>>
-> >>> Not true with widebus, specify why 24 and because DSI widebus is not
-> >>> implemented yet.
-> >>>
->=20
-> DSI widebus is implemented, and always used when available. The
-> adjustment for DSI widebus just doesn't happen in this function.
->=20
-> >>>>
-> >>>> Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
-> >>>> ---
-> >>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 9 ++++----=
--
-> >>>>    1 file changed, 4 insertions(+), 5 deletions(-)
-> >>>>
-> >>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> >>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> >>>> index 0ba777bda253..5419ef0be137 100644
-> >>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> >>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> >>>> @@ -122,19 +122,18 @@ static void drm_mode_to_intf_timing_params(
-> >>>>        }
-> >>>>
-> >>>>        /*
-> >>>> -     * for DSI, if compression is enabled, then divide the
-> >>>> horizonal active
-> >>>> -     * timing parameters by compression ratio. bits of 3
-> >>>> components(R/G/B)
-> >>>> -     * is compressed into bits of 1 pixel.
-> >>>> +     * For DSI, if DSC is enabled, 24 bits of compressed data are
-> >>>> +     * transferred per pclk regardless of the source pixel depth.
-> >>>>         */
-> >>>>        if (phys_enc->hw_intf->cap->type !=3D INTF_DP &&
-> >>>> timing->compression_en) {
-> >>>>            struct drm_dsc_config *dsc =3D
-> >>>>                   dpu_encoder_get_dsc_config(phys_enc->parent);
-> >>>> +
-> >>> Drop this change
-> >>>
-> >>>>            /*
-> >>>>             * TODO: replace drm_dsc_get_bpp_int with logic to handle
-> >>>>             * fractional part if there is fraction
-> >>>>             */
-> >>>> -        timing->width =3D timing->width * drm_dsc_get_bpp_int(dsc) =
-/
-> >>>> -                (dsc->bits_per_component * 3);
-> >>>> +        timing->width =3D timing->width * drm_dsc_get_bpp_int(dsc) =
-/ 24;
-> >>>
-> >>> It would be helpful to somehow show that 24 is 8 * 3, 8 being the
-> >>> byte width and 3 the compression ratio.
-> >>
-> >> Can you clarify what the 3 represents? My panel should have a 3.75:1
-> >> compression
-> >> ratio (30/8) so the final divisor of 24 would be wrong for my panel if
-> >> its the
-> >> compression ratio?
-> >
-> > So my guess is that while the exact ratio on the DSI lanes is 3.75:1,
-> > the ratio
-> > used to calculate the INTF timings is 3, then the DSC encoder probably
-> > does the
-> > magic to feed 10bpp into a 3.75:1 ratio over the DSI lanes.
-> >
->=20
-> That's not how it works. INTF (which feeds DSI) is after DSC compression.
->=20
-> INTF timings are always in RGB888 (24-bit) units. Ignoring widebus
-> details, the INTF timing should match what is programmed on the DSI side
-> (hdisplay, which is calculated as bytes per line / 3).
->=20
-> (fwiw, the current "timing->width =3D ..." calculation here blames to me,
-> but what I wrote originally was just "timing->width =3D timing->width / 3=
-"
-> with a comment about being incomplete.)
->=20
-> > In dsi_adjust_pclk_for_compression, the pclk is adjusted to take in
-> > account bits_per_component,
-> > so I presume the actual DSI pclk _is_  timing->width *
-> > drm_dsc_get_bpp_int(dsc) / (dsc->bits_per_component * 3),
-> > which is your 3.75:1, but the INTF needs to generate timing->width *
-> > drm_dsc_get_bpp_int(dsc) / (8 * 3) pixels
-> > to the DSC encoder which will emit timing->width *
-> > drm_dsc_get_bpp_int(dsc) / (dsc->bits_per_component * 3) pixels.
-> >
->=20
-> The hdisplay calculation in dsi_adjust_pclk_for_compression (which only
-> affects the clock rate) seems to be wrong, and I think Alexander's panel
-> must be running at a 20% lower clock because of it. dsi_timing_setup has
-> the right hdisplay adjustment.
-
-Checked against downstream and the clocks seem to match more or less:
-
-downstream:
-pclk: 110070156
-byte: 103190771
-
-upstream:
-pclk: 110073457
-byte: 103193865
-
-
->=20
-> > In any case, 24 _is_ 3 * 8, 3 being the DSC compression ratio on the
-> > INTF side.
-> >
-> > Dmitry, Konrad, could you help confirming this ?
-> >
-> > Neil
-> >
-> >>
-> >>>
-> >>>>            timing->xres =3D timing->width;
-> >>>>        }
-> >>>>    }
-> >>>>
-> >>>
-> >>>
-> >>>
-> >>
-> >> Thanks,
-> >> Alex
-> >
+On 3/19/26 17:56, Bryan O'Donoghue wrote:
+> On 19/03/2026 16:08, Neil Armstrong wrote:
+>> On 3/19/26 16:18, Bryan O'Donoghue wrote:
+>>> On 19/03/2026 14:56, Vladimir Zapolskiy wrote:
+>>>>> There's no reason to remove that from CAMSS - it would be an ABI break
+>>>>> in user-space anyway.
+>>>>
+>>>> If technically CAMSS CSIPHY could be excluded from the list of CAMSS media
+>>>> subdevices, then for the sake of simplification it should be done for all
+>>>> supported platforms in advance, such a change will be independent from this
+>>>> particular phy series, and vice versa, this CAMSS only driver change will
+>>>> prepare a ground for media-less CAMSS CSIPHY device drivers, hence it shall
+>>>> precede this particular CAMSS CSIPHY series.
+>>>>
+>>>> For backward compatibility with userspace a noop stub will be good enough,
+>>>> it's not an issue at all.
+>>>
+>>> The standalone PHY driver doesn't require removing the CSIPHY media
+>>> entity from CAMSS. They serve different purposes and coexist - its important to have a NOP from user-space perspective for legacy and indeed for new implementations.
+>>>
+>>> How the PHY gets represented in the kernel is of zero interest to user-sapce.
+>>>
+>>> That said, stubbing out the media entity is independent work that can happen in any order and IMO is a separate debate. Whether or not CSIPHY init sequences live inside of a monolithic CAMSS driver or live inside off a discrete csiphy driver is not related to the media graph.
+>>>
+>>> Happy to have that debate - and if indicated, carefully apply patches separately.
+>>
+>> So what does this actually solves ?
+>>
+>> Neil
+> Per-PHY voltage rails, per-PHY power domains and per-PHY OPP scaling.
 > 
+> Using the PHY API instead of rolling our own, as well as separate nodes in the DT.
+> 
+> We've been getting away with power-domains, opp scaling etc by sheer luck. The feedback from the list alone now addressed in this driver makes the conversion worthwhile.
+
+The PHY API doesn't solve that, having proper nodes solves that, you could add a separate csiphy node, add a port/endpoint between camss and the csiphy and attach a camss aux driver to the node, and it would have the same effect with little code change.
+And this could be done for all the CAMSS hardware elements incrementally, and if you wish the move the electrical phy part under the phy API then you just spin a PHY aux driver controlled by the csiphy media element.
+
+I understand you find it simpler to use the phys property in camss, but it has plenty of drawbacks like not be able to describe data link properties specific to the CSIPHY properties or easily describe new hardware layouts without having a fixed association table between phy-names and whatever CAMSS media elements interconnections.
+
+My question would be that if we were to completely split out the CAMSS into several separate nodes linked with port/endpoint graph, to which hardware element the phys would be associated to ? is there a fixed connection between a CSID and a CSIPHY ? is seems the CSID gen2 & gen3 can actually connect to different CSIPHY meaning a CSIPHY is a not simple electrical PHY but can be dynamically connected to different consumers.
+There's no way we can handle that with the PHY API.
+
+Neil
+
+> 
+> ---
+> bod
+
 
