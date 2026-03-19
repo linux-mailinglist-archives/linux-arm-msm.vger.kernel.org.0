@@ -1,98 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-98661-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98662-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sDMZMPmzu2k8mgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98661-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 09:29:45 +0100
+	id yF6fBzy1u2ksmwIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98662-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 09:35:08 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4A3742C7E38
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 09:29:45 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id B79ED2C7F23
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 09:35:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 546DA3019162
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 08:29:35 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 8E2E03004F26
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 08:35:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BAF23A9D9E;
-	Thu, 19 Mar 2026 08:29:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93D453A9616;
+	Thu, 19 Mar 2026 08:35:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="S+AgGMCS";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="8pcZ2dwV";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="S+AgGMCS";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="8pcZ2dwV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FKB3VwkW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88B73A9D92
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 08:29:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E4CD2DCF74
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 08:35:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773908968; cv=none; b=cuSLeedz/N4b1jeEZ1t/GQG6VNmtv/f8d45LynRxQhsi0gIiYeTpi8xxhYHYZ9AYVqKyCkflHhcUeTU2TadJPth4uc7evforCmPrOZXCcNszXk9sTZZzLHwbUQ5ch1i+s4bLhhcC/PLAPhfgZ9N65LXb1oaNw/0mSNlevknkdhs=
+	t=1773909302; cv=none; b=Kz9S0+gWOOjcJ63nfkc2M4/XyN/uceiH9HImY+BMT4ZuwctL4mkdZJjJyIvE0nDDeAePwyzWkonpgeJaf59gh4cqI/nNjRysfNMULNDKqc8ZD8u6iwlCL0qQ46ZithjVhnk86hGc821NvAKIPWkHUyS6Tg81LpI9y+oSc5XHJAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773908968; c=relaxed/simple;
-	bh=pJVhq7hxbXIQ7CKLqDq7kL2nsX95Dyjd3xsfL2oMuOE=;
+	s=arc-20240116; t=1773909302; c=relaxed/simple;
+	bh=8pUgiNVCyxHsRsGrGqsKlWjbAdD/+lqFZMZAxnLVClE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Nz/0qf2jM6WuLYsHDbA/yyA8pUQNH+eNdmDyzYrAxAHJ5keape/6vq1UNPKBlIuOL5JYGqGlrxSD1AwihAbvRgjgL4ZriIthJBoFmf/EbaoEGvdcRZcSUZwaXGt2OnoOFCaKulXkR/XkgHz1GXxyaJB3ieqK7QyP0SjJ2p9uA5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=S+AgGMCS; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=8pcZ2dwV; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=S+AgGMCS; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=8pcZ2dwV; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 0919C5BD23;
-	Thu, 19 Mar 2026 08:29:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1773908962; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=uepIOdIe1KDBAdOR2nVFfKPb1oLN4//z8c2D1VPKCns=;
-	b=S+AgGMCSXeJliUMRbJImB4/IfpfwkHgvUO7xXbehPl6BSsU8qP1/tqAKtzzkZ2TDvspYYM
-	xp0lW+/DeyF2ROg5CCKt7W413Tzs9QFuTE8fEf0Qw/viAUB9yDKBheoXXyIRQx/03PkbJe
-	IB7wGLlKvhu6a/xa7SqJUfO8erhCdCg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1773908962;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=uepIOdIe1KDBAdOR2nVFfKPb1oLN4//z8c2D1VPKCns=;
-	b=8pcZ2dwVitZL8DLsqHjvhQci1vcFMh5jy1/u9c91WLJ82iDazWply9/R8OnN7C09QiHQF0
-	RYdYYThEEJTD97Cg==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1773908962; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=uepIOdIe1KDBAdOR2nVFfKPb1oLN4//z8c2D1VPKCns=;
-	b=S+AgGMCSXeJliUMRbJImB4/IfpfwkHgvUO7xXbehPl6BSsU8qP1/tqAKtzzkZ2TDvspYYM
-	xp0lW+/DeyF2ROg5CCKt7W413Tzs9QFuTE8fEf0Qw/viAUB9yDKBheoXXyIRQx/03PkbJe
-	IB7wGLlKvhu6a/xa7SqJUfO8erhCdCg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1773908962;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=uepIOdIe1KDBAdOR2nVFfKPb1oLN4//z8c2D1VPKCns=;
-	b=8pcZ2dwVitZL8DLsqHjvhQci1vcFMh5jy1/u9c91WLJ82iDazWply9/R8OnN7C09QiHQF0
-	RYdYYThEEJTD97Cg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 030304273B;
-	Thu, 19 Mar 2026 08:29:20 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id JuLvOeCzu2n6dgAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Thu, 19 Mar 2026 08:29:20 +0000
-Message-ID: <29c59b0f-c86c-4197-8cf5-47e4132c730b@suse.de>
-Date: Thu, 19 Mar 2026 09:29:20 +0100
+	 In-Reply-To:Content-Type; b=UCUkQLa8LzcpiZwAzqte0UVA1mVzkxPjf9sCml48pYgTXA+B2lGRHiwkahYhMy0nYMcyuEK2EQitbBiVm73FwRZY9TttJYtATbHWV5cgEAbwT5IMDdW2fyK2DjPtOEg6G9FERHmG2B8PKjXqoN+D8eijU3C9tmZYWLvpdNzgr6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FKB3VwkW; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4852f8ac7e9so4010265e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 01:35:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1773909299; x=1774514099; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZHeGhSHAyZHfpsSBccIQu+12DxQmOjEjuujaPyfYiZk=;
+        b=FKB3VwkWId/TMytDt0xhO7BRpK3NuiVzCHewx/ilBg/+iht5HVuQv0QJlMEoKWbRbk
+         wh5lBAr92fvSLQBQDr+anxUpOjW58KX8sM8lqCMSv0a7qtR9KJb7pHyeJi+hVPNLmALP
+         NVONzp4XCV2ub3tW4RQYLoVqUuNQDbrIDkwZEI1HLQsIyypVlko2VXy6DoBS97I4jKJO
+         nWOFe1+0LiWUx72BEK2sfV7+wAWWAsa0oadgh4WMZE8d3cLE79e78i7Glu5sf/C/rey4
+         BMEw5Q79G2jMz3CdZvD2jmVR9ZxM7ZKbdBB2a/S5aP8a7sWp0cQBjxHWB5jVRPicNE/B
+         Q6Ug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773909299; x=1774514099;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZHeGhSHAyZHfpsSBccIQu+12DxQmOjEjuujaPyfYiZk=;
+        b=VaGEGK7sUA6sJbXdI3/eoCQ91XoNJHhlYCR+jqA7fwmQpWvPaKmUljKKQe8ikC71iX
+         R5iN2NC9cSVgSbd1hL9DJOJalqLKNBR4lRB01ZhCPykavJjC1oyPkk1pqC3qN9DK+6vO
+         a774x5RgbyVkss5tODsQX0nwjJ0Gn5Hr4Tx9yqmgsO74E8pIKmtG+pCLUodiXaegrwIz
+         SS0KEFuc+TmdDxWhC7v3P4/OAp4kWsANPGH3qKx5nn1GzfmcB+dVMVUlwr5JcIIcVn6k
+         OwVqfHhX9lrwbOMkTzQC5TKBTb32xGwBT2ejIUHVNbon10fNkgyX6pVZspLa78fVcBrD
+         vV/w==
+X-Forwarded-Encrypted: i=1; AJvYcCUqIVotKtsapoKsB7EUbF+wcnH5X75gw/vJAVBFNbievFDcofiKZXJhZYyiKosOzrIhFbhAvQlDMl0vTtC2@vger.kernel.org
+X-Gm-Message-State: AOJu0YyW+ke84FpAoPIKuA76+8zcO1wQ7vwvrOHSbPwimxa7JpmgmjMW
+	0t1qVSMf7EzN76jS6oFkYNRUQFycYWR8lukZrtN6d4QsRKWjjJUIEy6wlEDRYqhEk7A=
+X-Gm-Gg: ATEYQzyFTG5XSCDaxAbxwBXV6Kn3dq5kpr8K+Pmuog/hWdqmlhQkqkTNQVUvZ2NJNDW
+	RLUAJr0lvW9rcRumLDuGWKbbOKth4Zz+bxpcJbY47ZQpOgZydgbZ8gtQd+hW5qVnvHC0n8GttJr
+	HjujjjncPIbE6hAbGk/Y8TDogMnX8Uv7Uk7zpJey8ktMs+h8VzJ7ddsWSpaAKK+W2TLAb+hgmsS
+	ZZYX0vWjq+hcq+LbtGhpWk10s2L6+QDC4NYpp25BeS1Lr1XMB/ZOUGCsTY2kr6h7+ZSfCBnHDUW
+	6CEU8SkkRure15Ujp4RMifX08dWE4sLUbNL3qLY+sCp7KTK2Z0VDJ18VOvI+BA07DUGOb2leMQR
+	x2GB7dxbB5DZMTUD2WA/nbdmii/1shnynB53P6AybU8JMkiKGmcNPcpVPeyJc8WJjbbLN6rpnWb
+	+u2M0eciVay0YBu5SYoymjXn5e5lJM2pJF/c2m34bzIA8AzvfRQjLIvG/1tmTTHLFhedNKyjFOM
+	kRGLp8=
+X-Received: by 2002:a05:600c:3551:b0:485:3e00:9440 with SMTP id 5b1f17b1804b1-486f4474b56mr107037965e9.24.1773909299273;
+        Thu, 19 Mar 2026 01:34:59 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:106d:1080:8e54:fbaf:8cb6:e9f7? ([2a01:e0a:106d:1080:8e54:fbaf:8cb6:e9f7])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-486f4ba73b4sm39934325e9.22.2026.03.19.01.34.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 Mar 2026 01:34:58 -0700 (PDT)
+Message-ID: <c9d14a74-8e59-43bb-827b-577c8f675c8f@linaro.org>
+Date: Thu, 19 Mar 2026 09:34:58 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -100,188 +88,149 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/4] drm/atomic: Allocate drm_private_state through a
- callback
-To: Maxime Ripard <mripard@kernel.org>,
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v2 3/3] drm/msm/dpu: fix video mode DSC INTF timing width
+ for non 8 bit panels
+To: Alexander Koskovich <akoskovich@pm.me>,
  Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
-Cc: dri-devel@lists.freedesktop.org, Harry Wentland <harry.wentland@amd.com>,
- Leo Li <sunpeng.li@amd.com>, Rodrigo Siqueira <siqueira@igalia.com>,
- Alex Deucher <alexander.deucher@amd.com>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
- amd-gfx@lists.freedesktop.org,
- Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
- Thierry Reding <thierry.reding@gmail.com>,
- Mikko Perttunen <mperttunen@nvidia.com>,
- Jonathan Hunter <jonathanh@nvidia.com>, linux-tegra@vger.kernel.org,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Liviu Dudau <liviu.dudau@arm.com>, =?UTF-8?Q?Ma=C3=ADra_Canal?=
- <mcanal@igalia.com>, Andrzej Hajda <andrzej.hajda@intel.com>,
- Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
- Paul Cercueil <paul@crapouillou.net>,
- Dave Stevenson <dave.stevenson@raspberrypi.com>,
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
- Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
- linux-mips@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- freedreno@lists.freedesktop.org, Jessica Zhang <jesszhan0024@gmail.com>
-References: <20260224-drm-private-obj-reset-v5-0-5a72f8ec9934@kernel.org>
-Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <20260224-drm-private-obj-reset-v5-0-5a72f8ec9934@kernel.org>
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
+ <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>
+Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+References: <20260318-dsi-rgb101010-support-v2-0-698b7612eaeb@pm.me>
+ <20260318-dsi-rgb101010-support-v2-3-698b7612eaeb@pm.me>
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20260318-dsi-rgb101010-support-v2-3-698b7612eaeb@pm.me>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Score: -2.80
-X-Spam-Level: 
-X-Spam-Flag: NO
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+Content-Transfer-Encoding: 7bit
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[suse.de,none];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-98661-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	TO_DN_SOME(0.00)[];
+	TAGGED_FROM(0.00)[bounces-98662-lists,linux-arm-msm=lfdr.de];
+	HAS_ORG_HEADER(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[kernel.org,linux.intel.com,gmail.com,ffwll.ch];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[lists.freedesktop.org,amd.com,igalia.com,ideasonboard.com,gmail.com,nvidia.com,vger.kernel.org,oss.qualcomm.com,arm.com,intel.com,linaro.org,kernel.org,crapouillou.net,raspberrypi.com,kwiboo.se,linux.dev,poorly.run,somainline.org];
-	RCPT_COUNT_TWELVE(0.00)[35];
+	FREEMAIL_TO(0.00)[pm.me,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,oss.qualcomm.com,linux.dev,poorly.run,somainline.org];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	DKIM_TRACE(0.00)[linaro.org:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[6];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[pm.me:email,linaro.org:dkim,linaro.org:replyto,linaro.org:mid,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns];
+	HAS_REPLYTO(0.00)[neil.armstrong@linaro.org];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[tzimmermann@suse.de,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[suse.de:+];
-	NEURAL_HAM(-0.00)[-0.996];
+	RCVD_COUNT_FIVE(0.00)[5];
+	FROM_NEQ_ENVFROM(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,suse.de:dkim,suse.de:email,suse.de:mid,suse.com:url]
-X-Rspamd-Queue-Id: 4A3742C7E38
+	FORGED_SENDER_MAILLIST(0.00)[];
+	REPLYTO_EQ_FROM(0.00)[]
+X-Rspamd-Queue-Id: B79ED2C7F23
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi
-
-Am 24.02.26 um 17:10 schrieb Maxime Ripard:
-> Hi,
->
-> This series started from my work on the hardware state readout[1], and
-> was suggested by Dmitry[2].
->
-> This series deal with the fact that drm_private_obj (and thus bridges)
-> are not initialized using the same pattern than any other object. This
-> series solves that inconsistency by aligning it to what we're doing for
-> all the other objects.
->
-> This was tested on a TI SK-AM62, with three bridges.
->
-> Let me know what you think,
-> Maxime
->
-> 1: https://lore.kernel.org/dri-devel/20250902-drm-state-readout-v1-0-14ad5315da3f@kernel.org/
-> 2: https://lore.kernel.org/dri-devel/zvqtehg66dbrrdmik6ylo2kdk74umfzo5hbfkizwsb352nlyqv@jgouvmbfwa4x/
->
-> Signed-off-by: Maxime Ripard <mripard@kernel.org>
+On 3/19/26 05:00, Alexander Koskovich wrote:
+> Using bits_per_component * 3 as the divisor for the compressed INTF
+> timing width produces constant FIFO errors for panels such as the BOE
+> BF068MWM-TD0 which is a 10 bit panel.
+> 
+> The downstream driver calculates the compressed timing width by
+> dividing the total compressed bytes per line by 3 which does not depend
+> on bits_per_component. Switch the divisor to 24 to match downstream.
+> 
+> Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
 > ---
-> Changes in v5:
-> - Rebase to drm-misc-next
-> - Link to v4: https://lore.kernel.org/r/20260128-drm-private-obj-reset-v4-0-90891fa3d3b0@redhat.com
->
-> Changes in v4:
-> - Fix a circular dependencies between modules by calling
->    __drm_atomic_helper_private_obj_create_state from
->    __drm_atomic_helper_bridge_reset instead of
->    drm_bridge_atomic_create_priv_state()
-> - Link to v3: https://lore.kernel.org/r/20260119-drm-private-obj-reset-v3-0-b931abe3a5e3@redhat.com
->
-> Changes in v3:
-> - EDITME: describe what is new in this series revision.
-> - EDITME: use bulletpoints and terse descriptions.
-> - Link to v2: https://lore.kernel.org/r/20251014-drm-private-obj-reset-v2-0-6dd60e985e9d@kernel.org
->
-> Changes in v2:
-> - Switch to a new hook instead of reset since some drm_private_objs want
->    to persist across suspends
-> - Drop the call to drm_private_obj_funcs.reset in
->    drm_mode_config_reset()
-> - Link to v1: https://lore.kernel.org/r/20251008-drm-private-obj-reset-v1-0-805ab43ae65a@kernel.org
->
-> ---
-> Maxime Ripard (4):
->        drm/amdgpu: Switch private_obj initialization to atomic_create_state
->        drm/omapdrm: Switch private_obj initialization to atomic_create_state
->        drm/tegra: Switch private_obj initialization to atomic_create_state
->        drm/atomic: Remove state argument to drm_atomic_private_obj_init
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 12 +++++++-----
+>   1 file changed, 7 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> index 0ba777bda253..9b046a0e77aa 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> @@ -122,19 +122,21 @@ static void drm_mode_to_intf_timing_params(
+>   	}
+>   
+>   	/*
+> -	 * for DSI, if compression is enabled, then divide the horizonal active
+> -	 * timing parameters by compression ratio. bits of 3 components(R/G/B)
+> -	 * is compressed into bits of 1 pixel.
+> +	 * For DSI, if DSC is enabled, use a fixed divisor of 24 rather than
+> +	 * bits_per_component * 3 when calculating the compressed timing width.
+> +	 *
+> +	 * This matches the downstream driver and is required for panels with
+> +	 * bits_per_component != 8.
+>   	 */
+>   	if (phys_enc->hw_intf->cap->type != INTF_DP && timing->compression_en) {
+>   		struct drm_dsc_config *dsc =
+>   		       dpu_encoder_get_dsc_config(phys_enc->parent);
+> +
+>   		/*
+>   		 * TODO: replace drm_dsc_get_bpp_int with logic to handle
+>   		 * fractional part if there is fraction
+>   		 */
+> -		timing->width = timing->width * drm_dsc_get_bpp_int(dsc) /
+> -				(dsc->bits_per_component * 3);
+> +		timing->width = timing->width * drm_dsc_get_bpp_int(dsc) / 24;
 
-Nice cleanup. For the whole series:
 
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
 
-Best regards
-Thomas
+@bits_per_component: Bits per component to code (8/10/12) <= how the DSC pixels are encoded in the stream
+@bits_per_pixel: Target bits per pixel with 4 fractional bits, bits_per_pixel << 4 <= the target display pixels
 
->
->   drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c  | 51 ++++++++++++----------
->   .../drm/arm/display/komeda/komeda_private_obj.c    | 16 +++----
->   drivers/gpu/drm/display/drm_dp_mst_topology.c      |  1 -
->   drivers/gpu/drm/display/drm_dp_tunnel.c            |  2 +-
->   drivers/gpu/drm/drm_atomic.c                       | 22 +++-------
->   drivers/gpu/drm/drm_bridge.c                       |  1 -
->   drivers/gpu/drm/ingenic/ingenic-drm-drv.c          |  2 +-
->   drivers/gpu/drm/ingenic/ingenic-ipu.c              |  2 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |  1 -
->   drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c           |  1 -
->   drivers/gpu/drm/omapdrm/omap_drv.c                 | 22 +++++++---
->   drivers/gpu/drm/tegra/hub.c                        | 22 +++++++---
->   drivers/gpu/drm/vc4/vc4_kms.c                      |  4 +-
->   include/drm/drm_atomic.h                           |  1 -
->   14 files changed, 76 insertions(+), 72 deletions(-)
-> ---
-> base-commit: 196b2b95fec447c2c4460f753b277d840633fbef
-> change-id: 20251008-drm-private-obj-reset-ae1e2741027a
->
-> Best regards,
+- bits_per_component is the transport width
+- bits_per_pixel is the display width
+- 3 is the DSC compression ratio
 
--- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstr. 146, 90461 Nürnberg, Germany, www.suse.com
-GF: Jochen Jaser, Andrew McDonald, Werner Knoblich, (HRB 36809, AG Nürnberg)
+So for a RGB101010 DSC display bits_per_pixel should be 10 << 4
 
+But here you say bits_per_component should be 8 ? can you share the downstream config of your panel ?
+
+Are you sure about the bits_per_component & bits_per_pixel values you set in the dsc parameters ?
+
+Neil
+
+
+>   		timing->xres = timing->width;
+>   	}
+>   }
+> 
 
 
