@@ -1,188 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-98771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98772-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 0PaROD4NvGkArgIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 15:50:38 +0100
+	id +ACaJjULvGkArgIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98772-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 15:41:57 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id F26E52CD296
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 15:50:37 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id F0FF52CD0CA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 15:41:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id D5BB93004D1E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 14:39:41 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id EA732310099E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 14:41:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 718D036D50B;
-	Thu, 19 Mar 2026 14:39:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B5AA93D413F;
+	Thu, 19 Mar 2026 14:41:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mT+ZBbBa"
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="iLHMnU5V"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-106118.protonmail.ch (mail-106118.protonmail.ch [79.135.106.118])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C2352DF6EA;
-	Thu, 19 Mar 2026 14:39:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB473D16EC
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 14:41:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.118
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773931181; cv=none; b=Qif4AspTY3bLwLWKEYNTEH9RERyZX5cJraReMDFUWIxig3ImX1mxJRzCqOvygDjSAoteIbOSY+2RFkEIGE3KzxmLGBNTtC1momJzGoHnlth8TsM0cmBpu1hilUnsFEL1aAqUzb/oxQvCD67Sa8htOlQrnp7V//4TymNbfIumVxU=
+	t=1773931266; cv=none; b=Cn6FwHBUqlSDOYARWF0yAJ+q2qI3MLZmpXYv2VsVLh6g813eidc8OJCLXspZJBBMSR80YykeBc+rJf2q4PQEmV634RopKJBU5nWirYNx4RrYbSrGIU865W72GwHF594ZSaXqglqNizVaRh0wNo9BMICqEBXkSKCfLmQ4VkrKZow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773931181; c=relaxed/simple;
-	bh=HNVaOtoRdCYXT6gd3FxRG1pIEFjqEZUE1ASwiWFTJA0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=njs4k/7tJlIeAhsr4E13PlltXFNLLUENO9y6xeRpiL8Dqz9KNBMBOKPj+pQ3zmaTiSZeB9mDL1odCcHI0Mc1luxv4xpLzJmcI7eCuYNDGiMtCJo6hRD6CnARv+2rn4zCpJCjukSY4oZdg0anZgVfnzx/n8YuppXGqLTUtUzATT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mT+ZBbBa; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2CD2C19424;
-	Thu, 19 Mar 2026 14:39:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773931180;
-	bh=HNVaOtoRdCYXT6gd3FxRG1pIEFjqEZUE1ASwiWFTJA0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=mT+ZBbBaTwAEVSZoGmSo0Bu5a7DOA6GSLCEQjG5KZOzijgInyoCc1ZXe3SLswaLxD
-	 ZWwABlAeMjS+WsfEPHFy699QHaFHFkNrbNdxCYfnA9RPErURY2QdMf57eTE7AvZCzv
-	 CE2pcK10GzQTfjBxk6zIG6F7kRXrR3guOJY9qARso5BwZAEicYMv2KGJ48uV8Na4fX
-	 xq3+fmEkWwUclDV+oUhFsUJZaw4vTTdyzR1wbGCLS0JJcTyJhqMkhtuGCBJ5u8WN0g
-	 vwdA1ytsWSek8B55qPtA62BeGmAUGGyZeqAr1MfxJoXv5eouN07uHKBYIn5P8L0rqL
-	 usewqo6lEJRqA==
-Date: Thu, 19 Mar 2026 14:39:36 +0000
-From: Conor Dooley <conor@kernel.org>
-To: Luca Weiss <luca.weiss@fairphone.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sm7225-fairphone-fp4: Fix conflicting
- bias pinctrl
-Message-ID: <20260319-persecute-subzero-341eda9c575e@spud>
-References: <20260319-fp4-uart1-fix-v1-1-f6b3fedef583@fairphone.com>
+	s=arc-20240116; t=1773931266; c=relaxed/simple;
+	bh=pMRqysFxwahQPN1ndIC750Si6tdhw6BU9OY20FS2f48=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=X2nQbIq7nmd7k1LpgF+rep2gvu+CPbIYVAGf8tUvyO3iMw+1QLk41VtudPG48X1x/OqXC7EJvKXUzxryounmeRWk014kG7klzaINwV8iiS550p3rb9fGQFmmv/r7QaXUaX0kclGbQ2WUNq3G6EvO1KnTxrtZgAX9P6c+XAPPVgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=iLHMnU5V; arc=none smtp.client-ip=79.135.106.118
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1773931254; x=1774190454;
+	bh=2ry14m7uPfswpHvhZSiuWQzbmbQ/crOXJDMqiWlZEZg=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=iLHMnU5V0lCGv1dm4w9hsRcN0+zxQwdHU3QFBGjxAYwLsKbpRUd8YQcytc85zgwRJ
+	 L+gHYyDuDFYXml8X64fwWsZmvZKaS+lNjLYyAij8Xumg/9/QbFVSKqG63ub9dCMXWq
+	 Pr5pxfEY1iQhZ5rJTJejvniXjk2tkw1dSkb4OEPxtL+kb3PbrMeO1PFifOswtNmcxS
+	 XeJKlOyl/7sHKLVg7sSid5tqFkv88A+cTy/TIUHn/skbxRR53mwoTOCclCz1I/iXb6
+	 5vSh3TOTUsTNu7eh/WQ16ZZvn1p3BNHmgJuAdWEB4iOIAG0Hbj2uivAVUgUilT657L
+	 ycLOHvKHzEIZA==
+Date: Thu, 19 Mar 2026 14:40:48 +0000
+To: Neil Armstrong <neil.armstrong@linaro.org>
+From: Alexander Koskovich <akoskovich@pm.me>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, Jeffrey Hugo <jeffrey.l.hugo@gmail.com>, dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v3 4/4] drm/msm/dpu: fix video mode DSC INTF timing width calculation
+Message-ID: <3gLK4s97giqqXagfHKhfiIHbfbl2snwfOj9dcTNGPUYi10w9-1EdATqzz1LPCVTpz4bLFYOm8u_Fl8PfC7t5yabows4UCzRKVwjraEWW6hc=@pm.me>
+In-Reply-To: <1360a31d-669e-48df-a1be-f0af4a253cd7@linaro.org>
+References: <20260319-dsi-rgb101010-support-v3-0-85b99df2d090@pm.me> <20260319-dsi-rgb101010-support-v3-4-85b99df2d090@pm.me> <1360a31d-669e-48df-a1be-f0af4a253cd7@linaro.org>
+Feedback-ID: 37836894:user:proton
+X-Pm-Message-ID: 6a9b462a04febf44f134204d15bf2f50d0035867
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="27GuC2fY6ZBWv570"
-Content-Disposition: inline
-In-Reply-To: <20260319-fp4-uart1-fix-v1-1-f6b3fedef583@fairphone.com>
-X-Spamd-Result: default: False [-2.26 / 15.00];
-	SIGNED_PGP(-2.00)[];
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	MIME_GOOD(-0.20)[multipart/signed,text/plain];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64];
+	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
+	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
+	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-98771-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-98772-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[3];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+,1:+,2:~];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	MISSING_XM_UA(0.00)[];
-	NEURAL_HAM(-0.00)[-0.920];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[conor@kernel.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,lists.freedesktop.org,vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,microchip.com:email,fairphone.com:email]
-X-Rspamd-Queue-Id: F26E52CD296
+	NEURAL_HAM(-0.00)[-0.899];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[pm.me:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[pm.me:dkim,pm.me:email,pm.me:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: F0FF52CD0CA
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
+On Thursday, March 19th, 2026 at 10:13 AM, Neil Armstrong <neil.armstrong@l=
+inaro.org> wrote:
 
---27GuC2fY6ZBWv570
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, Mar 19, 2026 at 09:55:00AM +0100, Luca Weiss wrote:
-> The pinctrl nodes from sm6350.dtsi already contain a bias-* property, so
-> that needs to be deleted, otherwise the dtb will contain two conflicting
-> bias-* properties.
+> Hi,
 >=20
-> Reported-by: Conor Dooley <conor@kernel.org>
-> Closes: https://lore.kernel.org/r/20260310-maritime-silly-05e7b7e03aa6@sp=
-ud/
-> Fixes: c4ef464b24c5 ("arm64: dts: qcom: sm7225-fairphone-fp4: Add Bluetoo=
-th")
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-
-Thanks Luca.
-
-> ---
->  arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts | 4 ++++
->  1 file changed, 4 insertions(+)
+> On 3/19/26 12:58, Alexander Koskovich wrote:
+> > Using bits_per_component * 3 as the divisor for the compressed INTF
+> > timing width produces constant FIFO errors for the BOE BF068MWM-TD0
+> > panel due to bits_per_component being 10 which results in a divisor
+> > of 30 instead of 24.
+> >
+> > Regardless of the compression ratio and pixel depth, 24 bits of
+> > compressed data are transferred per pclk, so the divisor should
+> > always be 24.
 >=20
-> diff --git a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts b/arch/arm=
-64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-> index a3c2b26736f4..3964aae47fd4 100644
-> --- a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-> @@ -1019,12 +1019,14 @@ &qup_uart1_cts {
->  	 * the Bluetooth module drives the pin in either
->  	 * direction or leaves the pin fully unpowered.
->  	 */
-> +	/delete-property/ bias-disable;
->  	bias-bus-hold;
->  };
-> =20
->  &qup_uart1_rts {
->  	/* We'll drive RTS, so no pull */
->  	drive-strength =3D <2>;
-> +	/delete-property/ bias-pull-down;
->  	bias-disable;
->  };
-> =20
-> @@ -1035,12 +1037,14 @@ &qup_uart1_rx {
->  	 * in tri-state (module powered off or not driving the
->  	 * signal yet).
->  	 */
-> +	/delete-property/ bias-disable;
->  	bias-pull-up;
->  };
-> =20
->  &qup_uart1_tx {
->  	/* We'll drive TX, so no pull */
->  	drive-strength =3D <2>;
-> +	/delete-property/ bias-pull-up;
->  	bias-disable;
->  };
-> =20
+> Not true with widebus, specify why 24 and because DSI widebus is not impl=
+emented yet.
 >=20
-> ---
-> base-commit: de79886ae0ce739608514f6b1ae91c14c6a9e600
-> change-id: 20260319-fp4-uart1-fix-9fe390294499
+> >
+> > Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
+> > ---
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 9 ++++-----
+> >   1 file changed, 4 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/dri=
+vers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> > index 0ba777bda253..5419ef0be137 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> > @@ -122,19 +122,18 @@ static void drm_mode_to_intf_timing_params(
+> >   =09}
+> >
+> >   =09/*
+> > -=09 * for DSI, if compression is enabled, then divide the horizonal ac=
+tive
+> > -=09 * timing parameters by compression ratio. bits of 3 components(R/G=
+/B)
+> > -=09 * is compressed into bits of 1 pixel.
+> > +=09 * For DSI, if DSC is enabled, 24 bits of compressed data are
+> > +=09 * transferred per pclk regardless of the source pixel depth.
+> >   =09 */
+> >   =09if (phys_enc->hw_intf->cap->type !=3D INTF_DP && timing->compressi=
+on_en) {
+> >   =09=09struct drm_dsc_config *dsc =3D
+> >   =09=09       dpu_encoder_get_dsc_config(phys_enc->parent);
+> > +
+> Drop this change
 >=20
-> Best regards,
-> --=20
-> Luca Weiss <luca.weiss@fairphone.com>
+> >   =09=09/*
+> >   =09=09 * TODO: replace drm_dsc_get_bpp_int with logic to handle
+> >   =09=09 * fractional part if there is fraction
+> >   =09=09 */
+> > -=09=09timing->width =3D timing->width * drm_dsc_get_bpp_int(dsc) /
+> > -=09=09=09=09(dsc->bits_per_component * 3);
+> > +=09=09timing->width =3D timing->width * drm_dsc_get_bpp_int(dsc) / 24;
+>=20
+> It would be helpful to somehow show that 24 is 8 * 3, 8 being the byte wi=
+dth and 3 the compression ratio.
+
+Can you clarify what the 3 represents? My panel should have a 3.75:1 compre=
+ssion
+ratio (30/8) so the final divisor of 24 would be wrong for my panel if its =
+the
+compression ratio?
+
+>=20
+> >   =09=09timing->xres =3D timing->width;
+> >   =09}
+> >   }
+> >
+>=20
+>=20
 >=20
 
---27GuC2fY6ZBWv570
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCabwKqAAKCRB4tDGHoIJi
-0hIYAP9n7Nzbkhhzi88pEdeoxPfi4Wh3Ii/PRmgWsIQgCD7EoAD/Xxm8phLSqXq9
-nUvdFafiz3mFQTzozvH1NmnawQcXgw0=
-=I7sb
------END PGP SIGNATURE-----
-
---27GuC2fY6ZBWv570--
+Thanks,
+Alex
 
