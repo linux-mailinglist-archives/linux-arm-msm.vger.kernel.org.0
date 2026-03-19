@@ -1,102 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-98790-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98791-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8LjkNbsXvGlEsQIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98790-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 16:35:23 +0100
+	id 4KaQOCcYvGlEsQIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98791-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 16:37:11 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 48BDC2CDCA7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 16:35:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 213002CDCFF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 16:37:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id B2BEB3132922
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 15:31:05 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 8E7A2300C904
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 15:36:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F0703E7172;
-	Thu, 19 Mar 2026 15:30:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85FF73E6DC9;
+	Thu, 19 Mar 2026 15:36:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ioBMm7Kp";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="NJdI93gE"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="I4B+o8++"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 346853E6DF6
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 15:30:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0AAB34404F
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 15:36:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773934259; cv=none; b=Wmc8qd6H12zlpcqBZ6J51WvbYQqE37N9l5OKjMGjQkHR6Qf1C+EU49SusVWMBqYBkKi/g1FuBJ2yQsiZLM+VevizBoYL52s2d7lgYyt/cmYnSm23u8/MW95eSBA1Q+PtlZINdNTzUSnCch2MTseq7IbRY+tErimh6zMiLjKfudQ=
+	t=1773934599; cv=none; b=pt6CygL1i9AhsKONFLUQMARUnixTRzaWA32eTtxFxk/NCycW04lSQ12CXW7r76SKBSLw8ZqGHLJGGq1Ej0yzyUrfbt9+zEx1mHNQGusBQfXHCSNcQSvoIkPx9d+byja2I8/jtQxtndjK2KqvlN6HmthwFLecq7Lhgk0IDdCRcko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773934259; c=relaxed/simple;
-	bh=YSMTij5qLJWoQMRLFi5RDILjJ+GLHo6QCE5SPTFBYRY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=tgscut5yYeLOYjy0Iufy9/1IEh7lU1umyK0HPdLZWCGnNtFbdhVs+DjfXglWRzt175wSyVocw+91xZmUSPWioyzKwXEP0+EYDilNj8QxConE+zcdJYwySjB+jb+uMoK2EtvTDjc0wpmoQfNaXOOIG7Zyte4Se5a6wPKI66eQcbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ioBMm7Kp; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=NJdI93gE; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62JEW5Xq2981415
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 15:30:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=7qDr/QzkkKfZPljDfvfL8j
-	5LUyG5PbnV4OWI0F/OpHY=; b=ioBMm7KpBxs9Y6f/aQXfKpyZEAy2r3iEdlWFSq
-	cq5wNT1tfnhZG/DkezARcqKpF52xqSjhdJxlZbmZhIiuv124SNWC1G3VAgAwrvui
-	0gSQMsGQCkSmfSMzch225YJgEvo1dCd+RYzh/Rybz9x4MzK4uCvqWmM2lHoFmTkG
-	5MbpyC6Pd8yccwBXYqUACltsqDfIUU3VzAXRqOy8PhV/ZdKm87FnIz9hlcSLzexx
-	dnSsh+bhWvfsSY/jte8C4/KO+KPP7YhHe1Tq32hl0TTCkU8KNSHP6vbvxh0IyEAj
-	hixGCYCv6SjonWPYpP6fdHAtT+NhzxNT0vdwxtJlYtsdur/Q==
-Received: from mail-vs1-f70.google.com (mail-vs1-f70.google.com [209.85.217.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d0k0806nq-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 15:30:56 +0000 (GMT)
-Received: by mail-vs1-f70.google.com with SMTP id ada2fe7eead31-60132c655bfso11393704137.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 08:30:56 -0700 (PDT)
+	s=arc-20240116; t=1773934599; c=relaxed/simple;
+	bh=uAUYh5Zld8KPgz29e5iG1SuJPPPdsG27z4mX5mhXib0=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=bLAuKTog1h+iHZiMC/mecujtb/4vLmVaNAUets520A/4oyU0hbHvAdkoZIzYTkAyBdSAkatsOQqtfNOrXOoekfLNONVv5mQ763TRbi7bmM0uBjvnyVaJYtU4VbGTZ5qbY+/QmYpjK0NFIT8THwueWOBD1F4fID2GLy7cddRO/ko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=I4B+o8++; arc=none smtp.client-ip=209.85.218.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-b8f9568e074so156275466b.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 08:36:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1773934256; x=1774539056; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=7qDr/QzkkKfZPljDfvfL8j5LUyG5PbnV4OWI0F/OpHY=;
-        b=NJdI93gEUDkTCJTc3dee4o7XSACl9qBRN5rvUJLp1dytdSGHQdgE7lR5kHNGRJ8Gb3
-         QFYMq5IG+ZjxIqT8hLQLqi2iVpk7FvandjSepkH6vIjBZD2mlveqtgMc3bakofktF+ey
-         jbh0GG3UQUfVc+Gpylnr9BDgV0uTwSYvEW4YqhiDLoM7wt001601AOtpb6qtDkUlQbPM
-         vp8nnVG05s6gONo5UMSHrTxndh4WrLEdFtIqQw4A+UmsUzbP52ir0TwFd85wFttY4JNY
-         itL9lgavtuZLbw+HDDORLfZ6MGmkeM2BSL6SqEiRooO9s9arhiSPExs0grEAiACfaRLz
-         3WkA==
+        d=fairphone.com; s=fair; t=1773934596; x=1774539396; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BFh9idnvGIKmQrvQtE6/tEDjWeUaVvRU4QnDPM5nnUU=;
+        b=I4B+o8++WG1QQXfhewiWFMUgPZJiX3WbDuPRAxTdGQO9rf80M1ooIcj7N8uCvr97JT
+         okbjZE0EYcJRXyz7AUCoq+4/B93+LTUDmXJG4fzctjN/AXh8uQsd13G41PtaFyxfu5RK
+         z5d9yAfSpAOytsObdwyYtZ+sbty0HbYWMR/J0WyWzUmh7gG+BuRKgdEqUxdZnvlzqnV0
+         hMW+IgcYaRga1Y25aUH2uGJ2DYwPWG3OAUszY6SO5e/1nTD6gH6iUps1UeC9TREUN3ay
+         odj9u8H/XM6xhQc2aWy2vKZDsaOaoi3LpMGwOA6u+61fwlhoKykdsxaKR+GWlD7UgWJx
+         JJCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773934256; x=1774539056;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20251104; t=1773934596; x=1774539396;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7qDr/QzkkKfZPljDfvfL8j5LUyG5PbnV4OWI0F/OpHY=;
-        b=Ec6Vk2XiyhlDLWFPGjXQ6dSrXtPguu/NjGvtQYPWePycYTy/kwyjqY87a2Zg1DfXxo
-         Dbx258z171dD33mYBZbi9DYPEMxoCOZ3/1NgB6jPm/u/KyOtnyoBrqwKGSm+J7NFKRTR
-         4fpniftGeavu6VpTDIppW1vU7l0sVyn9yhFa/iHw0MDIBhxxRXsxtU7atwIuao/sbAnP
-         A3spShuZdVosB/lsVU23QcWMu/ItUyOO51+zdwF5p/mogRddQkXIc6rlKFH7w6oMPh7L
-         oFMX7Gm6ef4qZmi/SVSc9xOliVlxtKHdP3+zphPGQ5qap8CDILjfUVUj6zqUpOcFbWxS
-         i/GA==
-X-Gm-Message-State: AOJu0YyjqQalnOp8vM+rVlgw6fLxv+Zr680K/qhNEYSVD2HQd4ByZuM1
-	nl0mDkAN1iDKa+OgUY8LXGpBnECeKQbGNR7wgwj/Ku1f4plVX3ff+rKsZP1ToMddE5zZkaVJ35j
-	6N4LSZnr11P9BEpNYTcmBYfroTSCoaElHNwGkncpiZGtQjOZmwZzCilb4DzHxpS7t3gBmNHgR+s
-	PL
-X-Gm-Gg: ATEYQzwPLPeD1buKfPXgNI+gj4zYAtYDv0vlmyEWzMLqQfVwHAvNz1b669uEjke17xN
-	WOF9kOXE401fKp4r+kOpl4Ef03QCd3PTdrtjNihtrfhzIv9tf46BOq12X3CJGesM0wGxVHavOvb
-	gVPK8SJPkB2ao7/9OkHw9Z6/S4+jpKgjcAmD/dS+U4WUIb+/E3PFySyq2m1wk087henBlO5hxq7
-	zFlDeeXTP9iYArRSbp2CUnNqUwz1VZ2bZWLkOncd3DnLDYw9bAuLbjkvwVeoTQuOfzuV7GVqld7
-	fRnAmNY+1dd94iMUgDCeg792fqJM3yGGdEaB8KKBmC4HF8GHCAzClCFcxTqKTFoTBssHm3WeKY4
-	YwCqPyGaJPWyMVcXtmHy6NejKc5M=
-X-Received: by 2002:a05:6102:f85:b0:5ff:fac2:836e with SMTP id ada2fe7eead31-602956a84e6mr1960233137.4.1773934255546;
-        Thu, 19 Mar 2026 08:30:55 -0700 (PDT)
-X-Received: by 2002:a05:6102:f85:b0:5ff:fac2:836e with SMTP id ada2fe7eead31-602956a84e6mr1960194137.4.1773934254930;
-        Thu, 19 Mar 2026 08:30:54 -0700 (PDT)
-Received: from hackbox.lan ([82.79.95.133])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-486f8b0b9fdsm78590705e9.2.2026.03.19.08.30.52
+        bh=BFh9idnvGIKmQrvQtE6/tEDjWeUaVvRU4QnDPM5nnUU=;
+        b=oLBSS4J6uVNFV7a1xpK5ZXKN2UqJGbCcMkihZDgP99Kep9AwpdRM7/cjfXEAkVe0SO
+         b9TAu+zOCLH+rMZMBqnNpteQYkDFqqlXRUefuF/TNmbb9Ep0nqRenp1l9NIQMCHUDsbK
+         gYk+TMx5KRDIay0hgBgzHh+HMpvXL82+ANS0Gmlm3Jn1K47lQwzpjIGYQFx/HMoVex74
+         HlxJduhDEOeKBo6SPxYMvtukN+X6Fu+H+JQ9oSLDCoUKaemA7blIv1vQ0plOHai/jNOh
+         Wn949sGBS1Xxn261WZ3EsxSFdwBvxSqw4qfQq+UDmofLS0RLZeQ1lPSpJ5Igdd/kOofP
+         X5iQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVj9xAvu2t9kxMwFd0ItmrhfANCH8jsggglZ8ooIcyQPWuUcq/9WQwiUkHPwDH9khOQnV00QLCMXAGVnjhw@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw7IH4MKMDco1OqHeIVLSxV9M8LBUbQcPz7z+Z3/w0xpbnK4ha9
+	q2vtNIfELaDgEb5WUIDryAfwXeHjbaDnvwHmaiWgPJ+xe3UxMe8lTK0mejniFTf7pRA=
+X-Gm-Gg: ATEYQzw5OZhfqUalvmVL6T6daQxohQWeadALejDJPLwwmTrXFG+alk3Z6e2vyp8pcOf
+	TLbam3zzK3aaL7Zaur4AcDsFu/Ko7OBcpVld7YbgP1eHfJzuQf1v9kpPT4Ga98DFU0ZQQf8JKPe
+	ZlDmGyVijiO2wFF3T+Uyxsvi0qa25THrjiCkCpCEU20cmDeLOX7wY5LgpB6zTfAdI3thWovknaW
+	UpmWVFNZ0x3oqXBe/UuELQNrs769tbcX7AW26FIe4lq4TMiZ2sDGbq1ZSCAkb6BHrdakSCu4Rfk
+	a0LsdZlSmCm+/ni5qClUY1d91a/xaYwKA3yXwEzP7a8d464RseZVKYZAjtC5LD/zGuV/7muwuJu
+	lAFhUg9pe8vctPheyqUeAsUDb7JIfAaAT7OESZ4OVnHkM0AFPqFeX+/QrqsSWWtPVeBf8hjAcr7
+	2jVJG5KKxAr6/lANLfVjxdxCySxilklttVFc1jvswfoBpizE2+ITJ44LX7GfPwDOjo+kWfFkUp3
+	k7kfg==
+X-Received: by 2002:a17:907:da16:b0:b90:4b42:a982 with SMTP id a640c23a62f3a-b97f49d8f36mr523464266b.41.1773934596177;
+        Thu, 19 Mar 2026 08:36:36 -0700 (PDT)
+Received: from [172.16.220.101] (144-178-202-139.static.ef-service.nl. [144.178.202.139])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b97f173a3ccsm457568366b.59.2026.03.19.08.36.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Mar 2026 08:30:53 -0700 (PDT)
-From: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Date: Thu, 19 Mar 2026 17:30:48 +0200
-Subject: [PATCH v5] arm64: dts: qcom: glymur-crd: Enable keyboard, trackpad
- and touchscreen
+        Thu, 19 Mar 2026 08:36:35 -0700 (PDT)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH v3 0/2] Front camera enablement on Fairphone 5
+Date: Thu, 19 Mar 2026 16:36:27 +0100
+Message-Id: <20260319-fp5-s5kjn1-v3-0-9cf4b8c09567@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -105,303 +87,88 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260319-glymur-dts-crd-enable-kbd-tp-ts-v5-1-4a440594348b@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAKcWvGkC/43QUW/CIBAH8K/S8LwzQFuQPvk9lj0UOJVN2wq00
- Ri/+6BuSbPM6EvDEfq7/92VBPQOA2mKK/E4ueD6LhX1W0HMvu12CM6mmnDKBS2pgt3hchw92Bj
- AeAvYtfqA8KUtxAHy5ZoaarRcq4qSpAwet+48d3j/uNdh1J9oYmZ/Xng8jal1vD8jug0Ipj8eX
- WyKDs8R7u3ZmixzNUUx37MUK+c5pV9+87XWwhg0hHEYeh9BMKmFVZaW3DST+OM8ZPKImUI7AC2
- 3NJ1RyZpmIk+zdyH2/jKvb2Jz+Jc3NTFgUAtMrhSqlWLTh7A6je0hj75Kn7nFxBcs489ZnljOp
- dSIlalF9YAtl2z5nC0TK4Sprd1i2oF9wFZL9oUlVIlNopAtKyul/lvC7Xb7BrZClOGoAgAA
-X-Change-ID: 20260309-glymur-dts-crd-enable-kbd-tp-ts-c80c0cb78940
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Abel Vesa <abel.vesa@oss.qualcomm.com>
-X-Mailer: b4 0.15-dev-7ae85
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5832;
- i=abel.vesa@oss.qualcomm.com; h=from:subject:message-id;
- bh=YSMTij5qLJWoQMRLFi5RDILjJ+GLHo6QCE5SPTFBYRY=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBpvBar7vyS6YnR8y7enRoMOX0fyoD3ZoYoF9v2B
- AeSr0oymnGJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCabwWqwAKCRAbX0TJAJUV
- Vm0tD/46h8P1ZLUqx15xbo0hOFXj/CZHBlrLvwpF3E4rFlQuI2J+9fNxkq6ubRFFJKTFJWT0OkQ
- hswz9fEpLetopIKvKOOlKGF5RDISTXV/zDETyNXJegfDovkaEybx4HD1Rpa4TCuxVnrWztDxH6r
- QvyXc4dP59jQpU2T97webh7LdiVxLhH80E0VxNmjklek51T1jfrvei9/yfm7wn3KA1ap4xfOc1y
- n0D0LQVBap0KicDILcbcqTOhyhG+Y16dY3GihUukubSclY3n8lJUJUwFw8iaijzs88hLORJNR0V
- BFwjs+v+zgGMLl+LeN4apStc9nmtnvAP5Nb+69BByI5XNtqy/yeZ0XIKJNwV/Mgl4Vo7o+XkJec
- eWXIQDwORI9U7ol6znd21iOtCSEyIHboOny92km4QSY2RgLVT6HWDaTfdvD3zpaTdaBFn2ZjdNt
- qj6vGr1Kz0EvQiHwBOJOa3ZfFJB+1MZ5ITY0hNnN+ljCJJWwUxV+CHCQaJvjNoLZP8nmkyLtoo4
- F3+HagQy33qAQso8Y5rGShwUKBuohmPjYIH9Bt7FeqnQI//OJSsz7n8qpaFhqtkUTcigTBxU1wW
- 9Klwny9GJKjIbCZuR8nkplnNE7aFEmUNmWe6mDlqNEnA18spueXF+/ksWLQmLImRvwEhjMjMCWf
- La8c3Q5urLR9wLQ==
-X-Developer-Key: i=abel.vesa@oss.qualcomm.com; a=openpgp;
- fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
-X-Authority-Analysis: v=2.4 cv=MYhhep/f c=1 sm=1 tr=0 ts=69bc16b1 cx=c_pps
- a=N1BjEkVkxJi3uNfLdpvX3g==:117 a=iKs3dpp2RB4k51ZqCjcyjQ==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=bC-a23v3AAAA:8 a=EUspDBNiAAAA:8 a=BKRdnOoi8ktybqyubDMA:9 a=QEXdDO2ut3YA:10
- a=crWF4MFLhNY0qMRaF8an:22 a=FO4_E8m0qiDe52t0p3_H:22
-X-Proofpoint-ORIG-GUID: YGMbzQMFUuXaoIXf1gmsVwvkWhSncjYR
-X-Proofpoint-GUID: YGMbzQMFUuXaoIXf1gmsVwvkWhSncjYR
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE5MDEyMyBTYWx0ZWRfX3R6ESYSs089U
- VbScvdi44o0RQSQzZQgx1Cx8nMxjiTjofpyj/vFsqeMb7WCZKt7Ht8bMgz61nXOhMhhhC2JnH4R
- NFxyiIrMKXl5GkDLhD066QEH/M48RiBHRN+1p9mhWLLlKb2yqFoyZKO9iXgyLZBsv0r9L1lf+lF
- FxbLwF1myUHQ3z4tjPhSZZrmUWs9zoXrgOmCR2r+yBU6qyaWm94tmwpBxo1K9zR3o1KEhFVF3Gb
- LsNUbl+d/OGwy+lrx1oXehtxXm9ow+UQNvkuLOi9dsJSVYQ5VtKpa+u7wih8s8vI/xur0Yi8+IT
- 5kV6Fs7HGVg4I4WTig3aYWGj/dS1Ale1O7iqqRKBJq9yP8JUZrpFkKo4aEFYvW1dBArGa0yZM86
- SZU8Fi5xuDqQlR3W0MeH5qPqfrcRo4c5u8kHGksiDO4Av0R9h8CbKqjAZWlIqGYkaz1/Jt0YK1t
- AKxHgnhV08uRK3K9S+Q==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-19_01,2026-03-19_05,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 suspectscore=0 phishscore=0 priorityscore=1501
- lowpriorityscore=0 malwarescore=0 impostorscore=0 adultscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603190123
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/22Nyw7CIBQFf6VhLYZXKbryP4wLQi8WjVChEk3Tf
+ 5fWhY+4nJPMnBEliA4S2lYjipBdcsEX4KsKmU77I2DXFkaMMEk45dj2NU71+eQpVkQrKTUAkxQ
+ VoY9g3X2J7Q8vjnC9lebwHjuXhhAfy2Gm8/q3nSkm2GphqWlYw6naWe1i3wUPaxMuaE5l9qlvv
+ nRWdKkEafVGmLoRv/o0TU9KutSJ/AAAAA==
+X-Change-ID: 20260313-fp5-s5kjn1-80a866aee261
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1773934595; l=1161;
+ i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
+ bh=uAUYh5Zld8KPgz29e5iG1SuJPPPdsG27z4mX5mhXib0=;
+ b=yrLm0tOH2JQg9X98E+PvcMiPIwh8ekEX9M+YCBUg12RV3F6OI6U8khr48Qn9Qs1eRXWnc+/dK
+ bYDx4ta2mWcBV4sK5Ip1yjbB9sBH5YJLt45RFOYu5Fr0SSb1cQB+my3
+X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
+ pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	DMARC_POLICY_ALLOW(-0.50)[fairphone.com,quarantine];
+	R_DKIM_ALLOW(-0.20)[fairphone.com:s=fair];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	TAGGED_FROM(0.00)[bounces-98790-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[fairphone.com:+];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-98791-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TO_DN_SOME(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[abel.vesa@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[luca.weiss@fairphone.com,linux-arm-msm@vger.kernel.org];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	NEURAL_HAM(-0.00)[-0.999];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	MID_RHS_MATCH_FROM(0.00)[];
+	NEURAL_HAM(-0.00)[-0.993];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 48BDC2CDCA7
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_SOME(0.00)[]
+X-Rspamd-Queue-Id: 213002CDCFF
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On CRD, the keyboard, trackpad and touchscreen are connected over I2C
-and all share a 3.3V regulator.
+Since the Samsung S5KJN1 driver was upstreamed recently, we can enable
+the camera upstream by adding a few bits to dts.
 
-So describe the regulator and each input device along with their
-pinctrl states.
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 ---
-Changes in v5:
-- Since this depends on Displat DT patchset and since that one
-  had to be respun in order to drop the non-merging phy patch
-  dependency, this one had to be respun as well so that the dependency
-  tree is correct.
-- Link to v4: https://patch.msgid.link/20260319-glymur-dts-crd-enable-kbd-tp-ts-v4-1-dfe67a134996@oss.qualcomm.com
-
-Changes in v4:
-- Rebased on next-20260318.
-- Dropped all dependencies except the USB DT and Display DT patchesets,
-  which are needed for this one to apply cleanly.
-- Link to v3: https://patch.msgid.link/20260313-glymur-dts-crd-enable-kbd-tp-ts-v3-1-66c5ddfee97d@oss.qualcomm.com
-
 Changes in v3:
-- Picked up Dmitry's and Konrad's R-b tags.
-- Drop the output-high and add bias-disable to the reset pin of the
-  touchscreen default state.
-- Link to v2: https://patch.msgid.link/20260312-glymur-dts-crd-enable-kbd-tp-ts-v2-1-2277bee4c564@oss.qualcomm.com
+- Drop clock-lanes property (Vladimir)
+- Sort s5kjn1 supplies alphabetically (Vladimir)
+- Add newline between reset-gpios and pinctrl-0
+- Link to v2: https://lore.kernel.org/r/20260319-fp5-s5kjn1-v2-0-6840da94c574@fairphone.com
 
 Changes in v2:
-- Rebased on next-20260311
-- Re-ordered pinctrl properties in vreg_misc_3p3, as Konrad suggested.
-- Dropped next level dependency patchset.
-- Link to v1: https://patch.msgid.link/20260309-glymur-dts-crd-enable-kbd-tp-ts-v1-1-56e03f769a76@oss.qualcomm.com
----
- arch/arm64/boot/dts/qcom/glymur-crd.dts | 117 ++++++++++++++++++++++++++++++++
- 1 file changed, 117 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/glymur-crd.dts b/arch/arm64/boot/dts/qcom/glymur-crd.dts
-index 38cdcf662ba7..5089ff7cdca3 100644
---- a/arch/arm64/boot/dts/qcom/glymur-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/glymur-crd.dts
-@@ -13,6 +13,8 @@
- #include "pmk8850.dtsi"         /* SPMI0: SID-0                  */
- #include "smb2370.dtsi"         /* SPMI2: SID-9/10/11            */
- 
-+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-+
- / {
- 	model = "Qualcomm Technologies, Inc. Glymur CRD";
- 	compatible = "qcom,glymur-crd", "qcom,glymur";
-@@ -139,6 +141,23 @@ vreg_edp_3p3: regulator-edp-3p3 {
- 		regulator-boot-on;
- 	};
- 
-+	vreg_misc_3p3: regulator-misc-3p3 {
-+		 compatible = "regulator-fixed";
-+
-+		regulator-name = "VREG_MISC_3P3";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&pmh0110_f_e0_gpios 6 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&misc_3p3_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+		regulator-always-on;
-+	};
-+
- 	vreg_nvme: regulator-nvme {
- 		compatible = "regulator-fixed";
- 
-@@ -446,6 +465,64 @@ vreg_l4h_e0_1p2: ldo4 {
- 	};
- };
- 
-+&i2c0 {
-+	clock-frequency = <400000>;
-+
-+	status = "okay";
-+
-+	touchpad@2c {
-+		compatible = "hid-over-i2c";
-+		reg = <0x2c>;
-+
-+		hid-descr-addr = <0x20>;
-+		interrupts-extended = <&tlmm 3 IRQ_TYPE_LEVEL_LOW>;
-+
-+		vdd-supply = <&vreg_misc_3p3>;
-+		vddl-supply = <&vreg_l15b_e0_1p8>;
-+
-+		pinctrl-0 = <&tpad_default>;
-+		pinctrl-names = "default";
-+
-+		wakeup-source;
-+	};
-+
-+	keyboard@3a {
-+		compatible = "hid-over-i2c";
-+		reg = <0x3a>;
-+
-+		hid-descr-addr = <0x1>;
-+		interrupts-extended = <&tlmm 67 IRQ_TYPE_LEVEL_LOW>;
-+
-+		vdd-supply = <&vreg_misc_3p3>;
-+		vddl-supply = <&vreg_l15b_e0_1p8>;
-+
-+		pinctrl-0 = <&kybd_default>;
-+		pinctrl-names = "default";
-+
-+		wakeup-source;
-+	};
-+};
-+
-+&i2c8 {
-+	clock-frequency = <400000>;
-+
-+	status = "okay";
-+
-+	touchscreen@38 {
-+		compatible = "hid-over-i2c";
-+		reg = <0x38>;
-+
-+		hid-descr-addr = <0x1>;
-+		interrupts-extended = <&tlmm 51 IRQ_TYPE_LEVEL_LOW>;
-+
-+		vdd-supply = <&vreg_misc_3p3>;
-+		vddl-supply = <&vreg_l15b_e0_1p8>;
-+
-+		pinctrl-0 = <&ts0_default>;
-+		pinctrl-names = "default";
-+	};
-+};
-+
- &i2c5 {
- 	clock-frequency = <400000>;
- 
-@@ -626,6 +703,19 @@ key_vol_up_default: key-vol-up-default-state {
- 	};
- };
- 
-+&pmh0110_f_e0_gpios {
-+	misc_3p3_reg_en: misc-3p3-reg-en-state {
-+		pins = "gpio6";
-+		function = "normal";
-+		bias-disable;
-+		input-disable;
-+		output-enable;
-+		drive-push-pull;
-+		power-source = <1>; /* 1.8 V */
-+		qcom,drive-strength = <PMIC_GPIO_STRENGTH_LOW>;
-+	};
-+};
-+
- &pmk8850_rtc {
- 	qcom,no-alarm;
- };
-@@ -664,6 +754,33 @@ edp_reg_en: edp-reg-en-state {
- 		bias-disable;
- 	};
- 
-+	kybd_default: kybd-default-state {
-+		pins = "gpio67";
-+		function = "gpio";
-+		bias-disable;
-+	};
-+
-+	tpad_default: tpad-default-state {
-+		pins = "gpio3";
-+		function = "gpio";
-+		bias-disable;
-+	};
-+
-+	ts0_default: ts0-default-state {
-+		int-n-pins {
-+			pins = "gpio51";
-+			function = "gpio";
-+			bias-disable;
-+		};
-+
-+		reset-n-pins {
-+			pins = "gpio48";
-+			function = "gpio";
-+			drive-strength = <16>;
-+			bias-disable;
-+		};
-+	};
-+
- 	pcie4_default: pcie4-default-state {
- 		clkreq-n-pins {
- 			pins = "gpio147";
+- Move cam-mclk3-default-state to kodiak.dtsi
+- Pick up tags, drop applied patch
+- Link to v1: https://lore.kernel.org/r/20260313-fp5-s5kjn1-v1-0-fa4f1c727318@fairphone.com
 
 ---
-base-commit: 54526d6c29ce58d5399cd4e2237d631266ebaaef
-change-id: 20260309-glymur-dts-crd-enable-kbd-tp-ts-c80c0cb78940
-prerequisite-change-id:  20260109-dts-qcom-glymur-add-usb-support-617b6d9d032c:v6
-prerequisite-patch-id: 7ec5f802a334d96421d8f95d4d9e9773655cc947
-prerequisite-patch-id: 8d9e016b49979fa817cf9eab70b809fdb9d4656f
-prerequisite-change-id: 20260109-dts-qcom-glymur-crd-add-edp-03f0adde9750:v6
-prerequisite-patch-id: 7ec5f802a334d96421d8f95d4d9e9773655cc947
-prerequisite-patch-id: 8d9e016b49979fa817cf9eab70b809fdb9d4656f
-prerequisite-patch-id: 346f2db0933c551a039f63b945f989a5c8320657
-prerequisite-patch-id: 919020405b70d588fa4356a5cbfb44e67006102e
+Luca Weiss (2):
+      arm64: dts: qcom: qcm6490-fairphone-fp5: Sort pinctrl nodes by pins
+      arm64: dts: qcom: qcm6490-fairphone-fp5: Add front camera support
+
+ arch/arm64/boot/dts/qcom/kodiak.dtsi               |   7 ++
+ arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 121 ++++++++++++++-------
+ 2 files changed, 90 insertions(+), 38 deletions(-)
+---
+base-commit: a282db4e6cca214bf1be92ea3060f31123172cce
+change-id: 20260313-fp5-s5kjn1-80a866aee261
 
 Best regards,
---  
-Abel Vesa <abel.vesa@oss.qualcomm.com>
+-- 
+Luca Weiss <luca.weiss@fairphone.com>
 
 
