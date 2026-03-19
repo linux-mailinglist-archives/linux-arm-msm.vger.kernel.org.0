@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-98798-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98799-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id yKyLHd0tvGnquAIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98798-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 18:09:49 +0100
+	id yC4uMOotvGnquAIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98799-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 18:10:02 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id EE5302CF866
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 18:09:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 41D892CF875
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 18:10:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 721AA30CFA47
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 17:01:04 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 63ADC30D3EE9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Mar 2026 17:01:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9195F3EF0CC;
-	Thu, 19 Mar 2026 16:57:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 784953F0756;
+	Thu, 19 Mar 2026 16:58:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yu/cVmrd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="guXMm5PA"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E743CEBA8;
-	Thu, 19 Mar 2026 16:57:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271F43EF640;
+	Thu, 19 Mar 2026 16:58:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773939469; cv=none; b=b8MDyuPyLJ0r4386sXym1dXTK6sNARbAUcztkoNYobXDLRgXBlBdDpYwEnXi2ezFhhT0Es6tn15T1himLbcwEHqlrOqZL+WUi/096xVBbiHDUqqLies2Ej6JbdRvwKcs0FMDkgt/7DemGGgOVSrCDkxXrlbv7EfSgHpTtbI+5Ao=
+	t=1773939501; cv=none; b=Kq+JOG8606a38mDpBgW0UxNhYFrZi/1aCkJq9RP0VmpJ+8f2GImgdXPI/K+41e3xB510Gun3AeHJ5+S5FxPv1Bw/RfU+HMYelAo9U52gZsmKY/I5K5mcfII8XYQDe/ktSD5K6PFJEamRPqUUneLIjzhGDlk7uXegu2Vq2YHNbXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773939469; c=relaxed/simple;
-	bh=PMa+X0U2PeomHaHg6uhR7OgjSKNl8hs+7lBszyloPrw=;
+	s=arc-20240116; t=1773939501; c=relaxed/simple;
+	bh=rg6J9N85u6xJs3PXLO+BIo+m8K1UZLALF0VVoYiTiYc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SKpQSEUB6/ioMwFuip6sf9iSwKZnFGohrqpMsJ85sMgBkUojLBU4XntGRc0XcJwuDCZBDxbJVe7aKqu5ay0X3rLO35rvi1hnyBpjiapX5leyTEp7ZJSsAYc4hniNa4RfDBsVl2UUpqT65hOVpKralV3so48HnBvqq8Qu4Dc6M5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yu/cVmrd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E7F3C19424;
-	Thu, 19 Mar 2026 16:57:45 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=DPObA3xOIf21ZWdVcIvTD2YZEJnLUF5sM6xmnihZoZOIPGIUymB0cMCjnyqXF346K59XDV+38h6NRLTUaZ2gotjApM2HR7Qdf7aHHX70gmydzuibSfl70rrGqEnUbRfTQF0yumlwUtCv0pe6WfNbYbG9JZvFGo/4HdAMr1ka5wU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=guXMm5PA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C04A5C19424;
+	Thu, 19 Mar 2026 16:58:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773939468;
-	bh=PMa+X0U2PeomHaHg6uhR7OgjSKNl8hs+7lBszyloPrw=;
+	s=k20201202; t=1773939500;
+	bh=rg6J9N85u6xJs3PXLO+BIo+m8K1UZLALF0VVoYiTiYc=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Yu/cVmrd2Ry8lkUJW0xivS/p4L0jVr160phF6pSxzYDgzNaTfhf3vSX2l+OHo0ima
-	 RuvtszFkblHCgs3YlYE92SihidCa3ls7nZTAWFmWqngU017hfTY0+ePIMuajY6RoCE
-	 9qkn+kwJOF7n7GeNRVTWdwT63zBLTKWp99HJMYV3B9fknGhLIDewxeqykqOQwlkyvf
-	 +t2RydyavosUKhrTkZb4LlQ8sDmR1+mAiB96aryzTZCYiqvj4q4h7yBZaMjc727eGr
-	 Bj+yHBwJWHRol8Mp+E+e8MnKljqGY8i8SSysSnx+3Errd9apNPgSDo+qxNeATbOT81
-	 Hm9RJzhlyXkAA==
-Message-ID: <dda55478-472d-46de-9c70-44b9ed20296c@kernel.org>
-Date: Thu, 19 Mar 2026 17:57:43 +0100
+	b=guXMm5PA+NpdwjFPCPaeW51LbNtf4IeM4D0oBf7Ysf1sLkmk/qIPaSzNKy9cR53SH
+	 r098soGYIRvLkDz3jHYdKwG36fnb7FgeA37xeFlNbFCtvAtOIrxOrhMzVOUjn5BmTC
+	 MVMoT3YjQwqBnnt7Q+MmWHFwgdwI/ePIoqneT5PHDi7/8nFY3X388ts/maZmSWAW+W
+	 nkRlc7NcJQEhmG3bCfI3gv+7g9zQ9DvSg83m3rYsX9f782zPs2+SGOq4HhValtkHJT
+	 jNeSpmeho8/hqkE/K66ucFfcWijqr8aL2BH8KMdmd7jY0QH5uhBSGLw+hnxUm7VsZX
+	 rPy6RhRU/dWZA==
+Message-ID: <7d3f650e-38f3-44e3-bd70-319a16d142a1@kernel.org>
+Date: Thu, 19 Mar 2026 17:58:14 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,17 +55,25 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 2/4] dt-bindings: i2c: qcom-cci: Document Milos compatible
 To: Luca Weiss <luca.weiss@fairphone.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
  Bartosz Golaszewski <brgl@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
  <conor+dt@kernel.org>, Loic Poulain <loic.poulain@oss.qualcomm.com>,
  Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
  Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
  linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
 References: <20260116-milos-cci-v1-0-28e01128da9c@fairphone.com>
  <20260116-milos-cci-v1-2-28e01128da9c@fairphone.com>
+ <20260117-obedient-galago-from-eldorado-8e0ba4@quoll>
+ <cb2430f2-8601-4c72-af6b-10f1ff16c188@oss.qualcomm.com>
+ <DGDV2EMXHDS3.2377AQBNDDHAV@fairphone.com>
+ <DH1LC0C4QD0Y.1XKV1PWFCBQRN@fairphone.com>
+ <jexys4ypbizesa3whuvtq36t6hpqm4httlbwtzkulz5pld4yul@lf3joaistvfb>
+ <DH41T22PJEW9.3EO3P50QRXG8H@fairphone.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -111,7 +119,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260116-milos-cci-v1-2-28e01128da9c@fairphone.com>
+In-Reply-To: <DH41T22PJEW9.3EO3P50QRXG8H@fairphone.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spamd-Result: default: False [-0.66 / 15.00];
@@ -124,11 +132,11 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-98798-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-98799-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[16];
+	RCPT_COUNT_TWELVE(0.00)[18];
 	FROM_HAS_DN(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
@@ -140,22 +148,22 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: EE5302CF866
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 41D892CF875
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 16/01/2026 14:38, Luca Weiss wrote:
-> Add Milos compatible for the CAMSS CCI interfaces.
+On 16/03/2026 09:03, Luca Weiss wrote:
+>>
+>> I went on and checked. No Milos's soc_ahb != camnoc_axi. They serve
+>> different purposes.
 > 
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
->  .../devicetree/bindings/i2c/qcom,i2c-cci.yaml          | 18 ++++++++++++++++++
->  1 file changed, 18 insertions(+)
+> Thanks Dmitry, appreciate it!
 > 
+> @Krzysztof: Could you take another look at the binding then please?
 
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+It is two months old patch, so for sure you need to resend it, but I
+gave my tag now.
 
 Best regards,
 Krzysztof
