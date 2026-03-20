@@ -1,56 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-98958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SB74FOR3vWmt9wIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 17:37:56 +0100
+	id 8Lw9Lkx4vWmt9wIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 17:39:40 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE6A82DD8BC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 17:37:55 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 36ED42DD947
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 17:39:40 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id E4771324AA00
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 16:32:19 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id A9A1931470B0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 16:32:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F0AF3D47BC;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B49CE3D47D1;
 	Fri, 20 Mar 2026 16:29:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FeDvdT91"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="otAfZQ4R"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D58D13CB2CC;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F349C3CA49D;
 	Fri, 20 Mar 2026 16:29:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774024147; cv=none; b=jPB5hnBY4iTsKee6L2E6EfXld9xrGgEIwtXWrdJssTI44KtvQRvoHEmMC/CQ+NHkski7EZ0aSXFpSgli0gl7ccM48gnrY85jKRUJ/BZBm6+HBgjeeqj2gp0tpQBx/3iEP4QuYCiBCyZe9xRjlPZIxWe5sPIGf3TbqpOkUfMc7K8=
+	t=1774024148; cv=none; b=j09POWrflLBpchxT+uT47Riv7kSWywjJUf2uY1YBvokcj18iXgq6p8/2jYQHvKvj0Xj7phQzrnaPMiIw5KOFQosIteRrSrtPwE32TTl7tlWtvR0S6Dz6XsmNH5mwSjI2ncZhfg9eHp8u+X0Dpdg+fzVObfGgpjMlHdGpEJvwc6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774024147; c=relaxed/simple;
-	bh=Tl0cBmQFO6SzEUpIlcnPS82ad0RFGxin1DOyrGX5yXw=;
+	s=arc-20240116; t=1774024148; c=relaxed/simple;
+	bh=doCFxmNpKvuUGePPN9SMPEgw8akhQ9Xe3OPFaRcrB6U=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=DN8whqmz13hU0H7Wbs8Kqnhkgk1VfrSUNzE8I4Kon3YhwdUo7yprBg1mqaOFFXN9SjXNIY29a88CixnL/Bbs4osZly9FD+t3BTJaP87kBzofbzaytsjO6HMomc0VVaeCE4GdStD8qGg7vvE5DUVfNgbTCuDlKC3NyqZHEqgzb2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FeDvdT91; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 8800CC2BCB2;
+	 In-Reply-To:To:Cc; b=HQzGh9tgOq1+BhUxR5CYBTfNmQkN2DczkyE+bIhzmRY4RvVqhDOsJcOwnAUup/RwzxVQt5+lYd593Pg0uJI0lBKTiQ9e5IEpqKjvVmslSD/xsOv0Eet+DspQ6zeg1sRoHTno+04rAIfJejAIOMQaIFd2QQcGP63HG6V3CuK7+AA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=otAfZQ4R; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 9499AC2BCB0;
 	Fri, 20 Mar 2026 16:29:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1774024147;
-	bh=Tl0cBmQFO6SzEUpIlcnPS82ad0RFGxin1DOyrGX5yXw=;
+	bh=doCFxmNpKvuUGePPN9SMPEgw8akhQ9Xe3OPFaRcrB6U=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=FeDvdT91vIwsLVq4lcN92cxGQyWsEd/Gv4+Evz03U/snfyQe598kthY06MU4CvyqH
-	 AIqLV95x3Ofeh9HSTzmMHAy8ezwKrb5g2ZfEW/ysoSkxB3iAW9ZlEP7vaNclxbuflX
-	 VcF18Ejo+rcoodi26CuKafcn8B6h12yklH+pyjXfDVZbbrOSlhoJdOMx0UI6nhZA/o
-	 U8nLaHhT6m7fct+WRN8xqQVQW2XBDdCjFJ0AP77Kyg91sBakcq/CRyATd1oLbheYnl
-	 y/fjF2OETFahpnGmFMwmTxjbg4fGcdwdHyR/6RyMC3mU1BkU7LA4ABpIvXio1e3Yfa
-	 Y1RhAZZZ8txfg==
+	b=otAfZQ4RBvOsn5SLwPelWwPydQH/XvUQa3TBfzFvF6MNV2eRdovCFl4w0b+ci6ZI3
+	 EvPGRipjs2T3TSUh4MEBlaXdqakqI+eCqhpABASxC9eN1JAhs+dR0xCdoWd1IVDI0Y
+	 9a7PYQRJD8/DvNlnAgq8wlvkg8Cb0pQRlgT1PUZvv2lBr3MaNWbWok/0Wl8g6ruPEX
+	 itJHIyLbaO65V5e4dvN9RmwlM6u/GtDfn7tYx60FPhgkBrLp0HiGcvgpVUte69hV0r
+	 8yi6mjgGQOn5iuWDJ+kgdMPHVsAgDKtoMXwZltUFeiKVp7l3le/j8Bv8w1djHWEt4p
+	 DN3vhJpCQ8qwQ==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D47710987A9;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C4FC10987A5;
 	Fri, 20 Mar 2026 16:29:07 +0000 (UTC)
 From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Date: Fri, 20 Mar 2026 17:29:06 +0100
-Subject: [PATCH 2/3] arm64: dts: qcom: sdm845-shift-axolotl: Set higher
- touchscreen i2c clock
+Date: Fri, 20 Mar 2026 17:29:07 +0100
+Subject: [PATCH 3/3] arm64: dts: qcom: sdm845-shift-axolotl: Enable TFA9890
+ codec
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,7 +59,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260320-axolotl-misc-p1-v1-2-89c9b5ecb26e@ixit.cz>
+Message-Id: <20260320-axolotl-misc-p1-v1-3-89c9b5ecb26e@ixit.cz>
 References: <20260320-axolotl-misc-p1-v1-0-89c9b5ecb26e@ixit.cz>
 In-Reply-To: <20260320-axolotl-misc-p1-v1-0-89c9b5ecb26e@ixit.cz>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -69,23 +69,23 @@ To: Bjorn Andersson <andersson@kernel.org>,
 Cc: linux-arm-msm@vger.kernel.org, Petr Hodina <phodina@protonmail.com>, 
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
  phone-devel@vger.kernel.org, David Heidelberg <david@ixit.cz>, 
- Casey Connolly <casey.connolly@linaro.org>
+ Alexander Martinz <amartinz@shiftphones.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=710; i=david@ixit.cz;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=911; i=david@ixit.cz;
  h=from:subject:message-id;
- bh=NWMLGsbNtB42CC2D75yqh2SFHZ5p3oShA6K4n6umXsA=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpvXXRS/+Km3l7C1DG/t7dCgJjAdgot+rf29dhN
- jt4ERVzIPSJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCab110QAKCRBgAj/E00kg
- cslvD/4rmQAp2oOFc4SkQ7dqC96MF9OisFgjRJGBUddN9wyRTpdQrrJn1+/EvbSdVfywTgKy9Zi
- X05D9nVGTw/mshz5G1wAgACKTyR9M5m0tQTpNcG7UEejecxkiH8DH20bAUh/CZSX9k9RWu4ZZCI
- vklamp6rcg7ENAkkbLvca8nXhjxVnvQy6caG7l5E4mDx8HI0P3q8RiaWFuopfF6Ayg47ytSZkAD
- 99q/kzpo6ToQiazkX6ZnwyEB6g+VJh8sUt/9Y2zUrG9KhzvrXttpf4FgE48ug70peyTPTqweQZj
- okjm1pIHT51e/7mekJpyegKO9FS11mb/gqvpkR1aFZbOK7lIiP8CzNJsAjmXO4a2i/NFkc8rO1R
- Uq6/P9/zn5bwCWoKFUD4AuyhpiybvN0aOgTw4CZgOnHX/vWTi8BtGAc4mWCSUkuDjlKbWK+IWA+
- a4ondhVOoGvob4kZQmxdZ4mcOhs3PeNGZeYeBggCKIx45suHEHR0eQBN/xCWmL/pBHCqX8I6xG8
- YE55pl45rnXi7N1uWTeti5hNJ4H1phEnex67cLmTbbCvOysIp5p+ruJaB2LOkSKINw4hJ50158T
- ASoycnYL/18J9PyPfSTdwe02quBdVgAOImIQGB9bHDEMFEdLAzisJoSXV335rdmJkdBR7Krex6J
- 6fBpxYjyTRPWJfg==
+ bh=Ov8oJIG4M8hmwoQmv1DzA7EPUBix4liphXxxKjQuoNU=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpvXXSAMpVqP+hZkPnDy0Q5QUS9B9CUdop9254Q
+ y1WAMFu00WJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCab110gAKCRBgAj/E00kg
+ cpiYD/0UGwtF9lcrdulCQ5uWch/L17jw1zYjmBUP6VCrwbb7elp6o5RhCPwVh7oZVMD90ivShkt
+ 7jyGd8iR/DCwsGUgXVRRWUrJlXypfsyVVvSYmJph033ldNwR5bexhXNcEe7Sn/ibLWkqJ3v4HEF
+ An7oyoPI73pPacOlfdixDe15B8goJAc2wpKnY9JcKJDcz0PT4ZqB4Po3CwldAGK6aR+Os3THy1j
+ Esgy+COP2bAMiLXkY/X7fhjmGfd39wYvow4SxeYTBS5DP1ttpFqyK0dCY1ZxsfaHH/ztfGfQiup
+ VIEeSBWbxaHLnufWN6sxcHuUVLqhFEszxVt4bR0cNFuRDW+L+jNY7oOW9sJ8tq2ke7DpPcfeKy+
+ yREvtOAwBgUCa1+4qMxrhoXFTlW5KK+nd9j1LU/z0rzoWeuJMxxSOP5gQrfIDfD+STpL1CsjSKS
+ pmlZ8oKiJu3I7MQ5Jn4DIxHNGJCgzIuNMkpVLEoMgO/+oTRdiVyBBgQp1tGbJY2RSv8jJgJ8K33
+ DLMEchJey5IkgbrdtAQN5iOVihLOSkgNVOZnYiG6k++nx4D5Ea4yOBb3Jo2wJFRGyfYJDDc7bSn
+ Ir/XqX+KlXL1U3ENtDfjdimJvK7P/bgCNLGZ4pXxa2tD7IiW520BGq44j7ET8YaEdwS8V16qqXs
+ mRxG8tE0ckikqow==
 X-Developer-Key: i=david@ixit.cz; a=openpgp;
  fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
 X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
@@ -96,59 +96,68 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-98958-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-98959-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,protonmail.com,ixit.cz,linaro.org];
 	RCPT_COUNT_TWELVE(0.00)[13];
 	MIME_TRACE(0.00)[0:+];
-	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
+	TO_DN_SOME(0.00)[];
+	FREEMAIL_CC(0.00)[vger.kernel.org,protonmail.com,ixit.cz,shiftphones.com];
 	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
-	HAS_REPLYTO(0.00)[david@ixit.cz];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	DBL_PROHIBIT(0.00)[0.0.0.38:email];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
 	NEURAL_HAM(-0.00)[-0.995];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	HAS_REPLYTO(0.00)[david@ixit.cz];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,ixit.cz:email,ixit.cz:replyto,ixit.cz:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: AE6A82DD8BC
+	DBL_BLOCKED_OPENRESOLVER(0.00)[ixit.cz:email,ixit.cz:replyto,ixit.cz:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,shiftphones.com:email,0.0.0.12:email,0.0.0.34:email]
+X-Rspamd-Queue-Id: 36ED42DD947
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-From: Casey Connolly <casey.connolly@linaro.org>
+From: Alexander Martinz <amartinz@shiftphones.com>
 
-Sets a higher rate than the default for good responsiveness of
-touchscreen.
+Audio amplifier TFA9890 is present on the board.
 
-Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
+Signed-off-by: Alexander Martinz <amartinz@shiftphones.com>
 Signed-off-by: David Heidelberg <david@ixit.cz>
 ---
- arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-index 1f21da310b762..8d4bf858b238b 100644
+index 8d4bf858b238b..80148ff9c3788 100644
 --- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
 +++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-@@ -432,6 +432,8 @@ &gpu_zap_shader {
+@@ -459,6 +459,19 @@ &i2c10 {
+ 	/* SMB1355@0x0C */
  };
  
- &i2c5 {
++&i2c11 {
 +	clock-frequency = <400000>;
 +
- 	status = "okay";
- 
- 	touchscreen@38 {
++	status = "okay";
++
++	audio-codec@34 {
++		compatible = "nxp,tfa9890";
++		reg = <0x34>;
++		vddd-supply = <&vreg_s4a_1p8>;
++		#sound-dai-cells = <0>;
++	};
++};
++
+ &ipa {
+ 	qcom,gsi-loader = "self";
+ 	memory-region = <&ipa_fw_mem>;
 
 -- 
 2.53.0
