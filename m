@@ -1,146 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-98901-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GCFiAOQNvWkO5gIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98901-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 10:05:40 +0100
+	id ePfQCooPvWkz6QIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 10:12:42 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B6DF2D7B78
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 10:05:39 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD79D2D7D0B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 10:12:41 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id E4C6530065DF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 09:05:38 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 26333303B7DB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 09:10:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D068E378D76;
-	Fri, 20 Mar 2026 09:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8049F37BE8F;
+	Fri, 20 Mar 2026 09:10:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lcvRcE/1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="owSuaNZb"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253443161BF;
-	Fri, 20 Mar 2026 09:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE65D345CAF;
+	Fri, 20 Mar 2026 09:10:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773997536; cv=none; b=Y6/ZHVEOr4dPCpbiDBFKUTYTzP5TEaA/ss9ZDpTfZEG/rSACxgo9wtX7xJWb9Hcfz0TvFvM+5suUSVWVDwaiU4gZVrQzOCcAX/X8lTTK0sueCAVlhsKaIjgdcHWCQKUjGzu3AZm+GF6F8tq/zDMqJuuCiEfkrvI1xZaEJ0Ly5NA=
+	t=1773997840; cv=none; b=K5NhgPbGuK85yVmrlvB1rNQRXxFNqQ5yK3kKvELTSac/lWl7bVZF0m3PUqoVCC5d+sehtcq0HMqkvPPyQJ80494C0pV4jQpcr5OL72nwpBfBiSWWmZGLu5NQQ8jOwhfGXCx5EJFnBBW4asN2YzAcgMJyJMv55gndcnBV4/zT1Nw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773997536; c=relaxed/simple;
-	bh=1+/V3M72eicHKatX91jOMQbyAysvN6oRz5SSDh43k3U=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=piVnOhjjtjcejevwgSAdyeLr3l/naBefXtHugmxGlBzXRRdfgbz0ipPLt7tPLFxYnIObZKNzcL8X05YLAvVnJdqmto1AYuMLvrOxh/8olxue6j8E+ZlkxTsdxhTwN+Am3BP+kDlsAvP+o8T0PuCoA5G0/+On5N3rXCMyQKZYxxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lcvRcE/1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22591C4CEF7;
-	Fri, 20 Mar 2026 09:05:35 +0000 (UTC)
+	s=arc-20240116; t=1773997840; c=relaxed/simple;
+	bh=PNOisM2kgw/GdUFX85mllyLkoEQu+1U1Y0mPVUR9LaM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=u2f1YkgRgyhtEQir+bOdnShTjYB7r8M2T5cEV3b8P42cfuY8whZ8d1jc8rdUXMpAZ8mZETG+RKUV8a9pSY0pl3kcJ2rhC830huu0ncCgailOWMY23jC6I62TOEeQhYZ7V6fBakJPitm07vhwVXOHZ/0o7OFB0gAj65nvLnotNDA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=owSuaNZb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EE86C2BC9E;
+	Fri, 20 Mar 2026 09:10:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773997535;
-	bh=1+/V3M72eicHKatX91jOMQbyAysvN6oRz5SSDh43k3U=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lcvRcE/1AlZ1LeZ6wPkfYP5/RYZNjCMZxUocYBkwsIiIaMUKjzOT51HHNMB5Zkd85
-	 fFRt2lS1uOx0lF4ZOkruQg8cr5awaWrPR+zVIuXbBrR5p/+HNhCuciG4owx+mcVOMA
-	 0OC9y/yYCAboum5FvrQnYMljnyjJ9Mz7fIDvyuMq6wvSes8wQ7rk1csUqDNhgHowAk
-	 V85kOj+gxW/isVA7z6TAiwIuklrtv9iVM58oY+eMF3anFrWiWUF02se2qdIjk72b8U
-	 0mMr7ZHck8q+Xzkl5+YARVfoEE1rB8OKKSRI7qin5EH8xDuIAzulM0qp6ZwtPFX/E9
-	 CLSJTesLIwlww==
-From: Maxime Ripard <mripard@kernel.org>
-To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	Maxime Ripard <mripard@kernel.org>
-Cc: dri-devel@lists.freedesktop.org,
-	Harry Wentland <harry.wentland@amd.com>,
-	Leo Li <sunpeng.li@amd.com>,
-	Rodrigo Siqueira <siqueira@igalia.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	amd-gfx@lists.freedesktop.org,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	linux-tegra@vger.kernel.org,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Robert Foss <rfoss@kernel.org>,
-	Paul Cercueil <paul@crapouillou.net>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
-	linux-mips@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org,
-	Jessica Zhang <jesszhan0024@gmail.com>
-Subject: Re: [PATCH v5 0/4] drm/atomic: Allocate drm_private_state through a callback
-Date: Fri, 20 Mar 2026 10:05:30 +0100
-Message-ID: <177399752799.2530289.3477869792206272729.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260224-drm-private-obj-reset-v5-0-5a72f8ec9934@kernel.org>
-References: <20260224-drm-private-obj-reset-v5-0-5a72f8ec9934@kernel.org>
+	s=k20201202; t=1773997840;
+	bh=PNOisM2kgw/GdUFX85mllyLkoEQu+1U1Y0mPVUR9LaM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=owSuaNZbkxX3OpA0mUNk6Ac8jQumQtE4MEHFVJAZoryw3gQMB5oDuBM0nzSOrIv0N
+	 W60EaG+2UfHiqT9ZHRu+rpGtwlPh8NA9cwb8vz1gGQvs7XoKJPBtAU9ZZcQz8b5FWl
+	 HQXQhblqNmXz3d8VUmnugMUk15c+salGvt9kB8qJdoI6Fq9dLU2SjnSC3jUfM8iien
+	 yEJbwps7wXns7B2ZROMCThEbZ9mewXizpf2bwVkiAqJhN60Jj3Xia/WDOlUhA3/aNL
+	 B3wqKNkmamcT4089jQpY7ihM/orNfKaNSSJCsk8Mt6PbfRR0hiN0+w9Ifj3jbU2ETx
+	 tSf0GuB3sOeew==
+Date: Fri, 20 Mar 2026 10:10:37 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Wangao Wang <wangao.wang@oss.qualcomm.com>
+Cc: Bryan O'Donoghue <bod@kernel.org>, 
+	Vikash Garodia <vikash.garodia@oss.qualcomm.com>, Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>, 
+	Abhinav Kumar <abhinav.kumar@linux.dev>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 1/5] dt-bindings: media: qcom,sm8550-iris: Add
+ X1P42100 compatible
+Message-ID: <20260320-honored-kangaroo-of-merriment-fd03c4@quoll>
+References: <20260319-enable_iris_on_purwa-v3-0-bf8f3e9a8c9c@oss.qualcomm.com>
+ <20260319-enable_iris_on_purwa-v3-1-bf8f3e9a8c9c@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260319-enable_iris_on_purwa-v3-1-bf8f3e9a8c9c@oss.qualcomm.com>
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-98901-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-98902-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_TO(0.00)[linux.intel.com,suse.de,gmail.com,ffwll.ch,kernel.org];
-	RCPT_COUNT_TWELVE(0.00)[36];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[lists.freedesktop.org,amd.com,igalia.com,ideasonboard.com,gmail.com,nvidia.com,vger.kernel.org,oss.qualcomm.com,arm.com,intel.com,linaro.org,kernel.org,crapouillou.net,raspberrypi.com,kwiboo.se,linux.dev,poorly.run,somainline.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.988];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mripard@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	MID_RHS_MATCH_FROM(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-0.994];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 8B6DF2D7B78
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TO_DN_SOME(0.00)[]
+X-Rspamd-Queue-Id: BD79D2D7D0B
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Tue, 24 Feb 2026 17:10:25 +0100, Maxime Ripard wrote:
-> This series started from my work on the hardware state readout[1], and
-> was suggested by Dmitry[2].
+On Thu, Mar 19, 2026 at 05:23:53PM +0800, Wangao Wang wrote:
+> Document the new compatible string "qcom,x1p42100-iris".
 > 
-> This series deal with the fact that drm_private_obj (and thus bridges)
-> are not initialized using the same pattern than any other object. This
-> series solves that inconsistency by aligning it to what we're doing for
-> all the other objects.
+> The hardware shares the same IP block and binding as SM8550, but is
+> described by a separate compatible string due to differences in the
+> clock topology.
+
+It would be described by a separate compatible even if clock topology
+was identical, so false implication. Drop the incorrect part and just
+describe the hardware.
+
 > 
-> [...]
+> In particular, x1p42100 adds an additional clock for the Bitstream
+> Engine (BSE), which is not present on SM8550. This clock requires
+> explicit enable/disable handling and frequency configuration, so it
+> cannot fall back to sm8550.
 
-Applied to misc/kernel.git (drm-misc-next).
+So same IP block implies devices are compatible, but you say they are
+not. How is the BSE clock handled in SM8550 in such case?
 
-Thanks!
-Maxime
+
+Best regards,
+Krzysztof
+
 
