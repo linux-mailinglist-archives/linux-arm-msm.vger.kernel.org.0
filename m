@@ -1,125 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-98902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98903-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id ePfQCooPvWkz6QIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 10:12:42 +0100
+	id EKA7Gc4SvWnG6QIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98903-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 10:26:38 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD79D2D7D0B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 10:12:41 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id BE8A52D7FC1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 10:26:37 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 26333303B7DB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 09:10:43 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 801303010B82
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 09:26:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8049F37BE8F;
-	Fri, 20 Mar 2026 09:10:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 123DE361674;
+	Fri, 20 Mar 2026 09:26:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="owSuaNZb"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lE7vjFKL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE65D345CAF;
-	Fri, 20 Mar 2026 09:10:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B75AF33F5BA;
+	Fri, 20 Mar 2026 09:26:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773997840; cv=none; b=K5NhgPbGuK85yVmrlvB1rNQRXxFNqQ5yK3kKvELTSac/lWl7bVZF0m3PUqoVCC5d+sehtcq0HMqkvPPyQJ80494C0pV4jQpcr5OL72nwpBfBiSWWmZGLu5NQQ8jOwhfGXCx5EJFnBBW4asN2YzAcgMJyJMv55gndcnBV4/zT1Nw=
+	t=1773998796; cv=none; b=n04PrF/FAVbT0omCTd7+ssf6itOsI2vlaBfDDjZJMdI0YsZ4dM0uxKCBfj95TOkXkicxYoA40pCSZMwvmKhRAQnnN47v2xfaTk6Zn3t/DdDx5Z6QRcI8N7Y8Pd7zKM6LyUCeiaBvZYGGtNHfuywklNINCBfLw6yGE8XazU6jh0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773997840; c=relaxed/simple;
-	bh=PNOisM2kgw/GdUFX85mllyLkoEQu+1U1Y0mPVUR9LaM=;
+	s=arc-20240116; t=1773998796; c=relaxed/simple;
+	bh=DOGaCuBCTRkz1PBAmYE+qDUnukQ0pca3NhU408CcktE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=u2f1YkgRgyhtEQir+bOdnShTjYB7r8M2T5cEV3b8P42cfuY8whZ8d1jc8rdUXMpAZ8mZETG+RKUV8a9pSY0pl3kcJ2rhC830huu0ncCgailOWMY23jC6I62TOEeQhYZ7V6fBakJPitm07vhwVXOHZ/0o7OFB0gAj65nvLnotNDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=owSuaNZb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EE86C2BC9E;
-	Fri, 20 Mar 2026 09:10:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773997840;
-	bh=PNOisM2kgw/GdUFX85mllyLkoEQu+1U1Y0mPVUR9LaM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=owSuaNZbkxX3OpA0mUNk6Ac8jQumQtE4MEHFVJAZoryw3gQMB5oDuBM0nzSOrIv0N
-	 W60EaG+2UfHiqT9ZHRu+rpGtwlPh8NA9cwb8vz1gGQvs7XoKJPBtAU9ZZcQz8b5FWl
-	 HQXQhblqNmXz3d8VUmnugMUk15c+salGvt9kB8qJdoI6Fq9dLU2SjnSC3jUfM8iien
-	 yEJbwps7wXns7B2ZROMCThEbZ9mewXizpf2bwVkiAqJhN60Jj3Xia/WDOlUhA3/aNL
-	 B3wqKNkmamcT4089jQpY7ihM/orNfKaNSSJCsk8Mt6PbfRR0hiN0+w9Ifj3jbU2ETx
-	 tSf0GuB3sOeew==
-Date: Fri, 20 Mar 2026 10:10:37 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Wangao Wang <wangao.wang@oss.qualcomm.com>
-Cc: Bryan O'Donoghue <bod@kernel.org>, 
-	Vikash Garodia <vikash.garodia@oss.qualcomm.com>, Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>, 
-	Abhinav Kumar <abhinav.kumar@linux.dev>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 1/5] dt-bindings: media: qcom,sm8550-iris: Add
- X1P42100 compatible
-Message-ID: <20260320-honored-kangaroo-of-merriment-fd03c4@quoll>
-References: <20260319-enable_iris_on_purwa-v3-0-bf8f3e9a8c9c@oss.qualcomm.com>
- <20260319-enable_iris_on_purwa-v3-1-bf8f3e9a8c9c@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=E2/5kLy53T9LsyA+TYj8iCUasAd1+08f47U+kCkp52Tvjj+eaLZ/Go++6Yl8W3l1brj/F73/z0Y46z3PFoIQlXFb6FNTRpceqkJ+k2QAnipQcrN0yJrfiHINbFnyLrOvdA5jOjD412JbW5bJdYJUxMQOFSGJKK+SDahL8YMbDTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=lE7vjFKL; arc=none smtp.client-ip=192.198.163.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1773998795; x=1805534795;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=DOGaCuBCTRkz1PBAmYE+qDUnukQ0pca3NhU408CcktE=;
+  b=lE7vjFKLo3fnUv+L7/SPtCF62vh6NZf2Rx65mOfV4W5+FCspx6U8Jhgq
+   DLYjrIMKIAjd9KWWQckSW7WVQOYWGAL/Z+rThZimXVTj4sPbjewVRfmtj
+   kEwFejGbjxVCSXOb82gr6YupadYvwhbhJVSkS2UAv7q3g9RqQqOjdVQrX
+   j2IQ3QN3kj/2Ak74agmv82PuEYgiGE3Otz5xXDUUnVbU2aJ3z8TnoiL8b
+   hSRoMW6y8fOf0Ub5MHHBEXsJlafVUZYkEZazOSNa2IIwLKWhGbr8HyiW6
+   ZRNftFSFMDHTgf7aHqKa+8DQrRb2piolsrO0YmhpRyRAjjWtihWuynXfg
+   A==;
+X-CSE-ConnectionGUID: KmOQgPpkQJebWTE0hA0WUQ==
+X-CSE-MsgGUID: wL8mxRLtRXq495phBne95w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11734"; a="85782605"
+X-IronPort-AV: E=Sophos;i="6.23,130,1770624000"; 
+   d="scan'208";a="85782605"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2026 02:26:34 -0700
+X-CSE-ConnectionGUID: 6CMDdqN/R2qCbE52BuaMXA==
+X-CSE-MsgGUID: AWRO+khYT12j2nQa9yZPfA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,130,1770624000"; 
+   d="scan'208";a="228171443"
+Received: from lkp-server02.sh.intel.com (HELO a51c2a36b9df) ([10.239.97.151])
+  by orviesa005.jf.intel.com with ESMTP; 20 Mar 2026 02:26:29 -0700
+Received: from kbuild by a51c2a36b9df with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1w3W63-000000002Cd-33yE;
+	Fri, 20 Mar 2026 09:25:07 +0000
+Date: Fri, 20 Mar 2026 17:22:56 +0800
+From: kernel test robot <lkp@intel.com>
+To: Alexander Koskovich <akoskovich@pm.me>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+	Alexander Koskovich <akoskovich@pm.me>
+Subject: Re: [PATCH v3 3/4] drm/msm/dsi: Add support for RGB101010 pixel
+ format
+Message-ID: <202603201719.MxZJCZoY-lkp@intel.com>
+References: <20260319-dsi-rgb101010-support-v3-3-85b99df2d090@pm.me>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260319-enable_iris_on_purwa-v3-1-bf8f3e9a8c9c@oss.qualcomm.com>
-X-Spamd-Result: default: False [-1.66 / 15.00];
+In-Reply-To: <20260319-dsi-rgb101010-support-v3-3-85b99df2d090@pm.me>
+X-Spamd-Result: default: False [0.34 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
+	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-98902-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-98903-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_TO(0.00)[pm.me,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,oss.qualcomm.com,linux.dev,poorly.run,somainline.org];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MISSING_XM_UA(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[15];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[20];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.994];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: BD79D2D7D0B
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[lkp@intel.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[intel.com:+];
+	NEURAL_HAM(-0.00)[-0.974];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[01.org:url,intel.com:dkim,intel.com:email,intel.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: BE8A52D7FC1
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Thu, Mar 19, 2026 at 05:23:53PM +0800, Wangao Wang wrote:
-> Document the new compatible string "qcom,x1p42100-iris".
-> 
-> The hardware shares the same IP block and binding as SM8550, but is
-> described by a separate compatible string due to differences in the
-> clock topology.
+Hi Alexander,
 
-It would be described by a separate compatible even if clock topology
-was identical, so false implication. Drop the incorrect part and just
-describe the hardware.
+kernel test robot noticed the following build errors:
 
-> 
-> In particular, x1p42100 adds an additional clock for the Bitstream
-> Engine (BSE), which is not present on SM8550. This clock requires
-> explicit enable/disable handling and frequency configuration, so it
-> cannot fall back to sm8550.
+[auto build test ERROR on f338e77383789c0cae23ca3d48adcc5e9e137e3c]
 
-So same IP block implies devices are compatible, but you say they are
-not. How is the BSE clock handled in SM8550 in such case?
+url:    https://github.com/intel-lab-lkp/linux/commits/Alexander-Koskovich/drm-msm-dsi-rename-MSM8998-DSI-version-from-V2_2_0-to-V2_0_0/20260320-011528
+base:   f338e77383789c0cae23ca3d48adcc5e9e137e3c
+patch link:    https://lore.kernel.org/r/20260319-dsi-rgb101010-support-v3-3-85b99df2d090%40pm.me
+patch subject: [PATCH v3 3/4] drm/msm/dsi: Add support for RGB101010 pixel format
+config: sparc64-allmodconfig (https://download.01.org/0day-ci/archive/20260320/202603201719.MxZJCZoY-lkp@intel.com/config)
+compiler: clang version 23.0.0git (https://github.com/llvm/llvm-project 4abb927bacf37f18f6359a41639a6d1b3bffffb5)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260320/202603201719.MxZJCZoY-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202603201719.MxZJCZoY-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+>> drivers/gpu/drm/msm/dsi/dsi_host.c:760:7: error: use of undeclared identifier 'MIPI_DSI_FMT_RGB101010'
+     760 |         case MIPI_DSI_FMT_RGB101010:    return VID_DST_FORMAT_RGB101010;
+         |              ^~~~~~~~~~~~~~~~~~~~~~
+   drivers/gpu/drm/msm/dsi/dsi_host.c:773:7: error: use of undeclared identifier 'MIPI_DSI_FMT_RGB101010'
+     773 |         case MIPI_DSI_FMT_RGB101010:    return CMD_DST_FORMAT_RGB101010;
+         |              ^~~~~~~~~~~~~~~~~~~~~~
+   drivers/gpu/drm/msm/dsi/dsi_host.c:1710:21: error: use of undeclared identifier 'MIPI_DSI_FMT_RGB101010'
+    1710 |         if (dsi->format == MIPI_DSI_FMT_RGB101010 &&
+         |                            ^~~~~~~~~~~~~~~~~~~~~~
+   3 errors generated.
 
 
-Best regards,
-Krzysztof
+vim +/MIPI_DSI_FMT_RGB101010 +760 drivers/gpu/drm/msm/dsi/dsi_host.c
 
+   755	
+   756	static inline enum dsi_vid_dst_format
+   757	dsi_get_vid_fmt(const enum mipi_dsi_pixel_format mipi_fmt)
+   758	{
+   759		switch (mipi_fmt) {
+ > 760		case MIPI_DSI_FMT_RGB101010:	return VID_DST_FORMAT_RGB101010;
+   761		case MIPI_DSI_FMT_RGB888:	return VID_DST_FORMAT_RGB888;
+   762		case MIPI_DSI_FMT_RGB666:	return VID_DST_FORMAT_RGB666_LOOSE;
+   763		case MIPI_DSI_FMT_RGB666_PACKED:	return VID_DST_FORMAT_RGB666;
+   764		case MIPI_DSI_FMT_RGB565:	return VID_DST_FORMAT_RGB565;
+   765		default:			return VID_DST_FORMAT_RGB888;
+   766		}
+   767	}
+   768	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
