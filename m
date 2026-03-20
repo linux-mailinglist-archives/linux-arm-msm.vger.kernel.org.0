@@ -1,228 +1,221 @@
-Return-Path: <linux-arm-msm+bounces-98912-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98913-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id kEziHUErvWmI7QIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98912-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 12:10:57 +0100
+	id +NBsGmgrvWmI7QIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98913-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 12:11:36 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD98E2D955D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 12:10:56 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D2CB2D9589
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 12:11:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7597030420B0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 11:10:55 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 970453007AC6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 11:11:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 15F783803DC;
-	Fri, 20 Mar 2026 11:10:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86BEC36EAB1;
+	Fri, 20 Mar 2026 11:11:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aP54ksD2"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PCJ4TDWq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f169.google.com (mail-vk1-f169.google.com [209.85.221.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E562036EAB1;
-	Fri, 20 Mar 2026 11:10:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774005055; cv=none; b=MiqEaNcP845bAlXo2GKUlBOoGT67i0AHWf3RgZ1M+5fia9x6uDAAY79Gxk88Kp3UL5dSJmP1Uh5l58tj+2d602yoYtYpICM+ajFgUx69huk/ScpTCqPtTCyFqM0BrrnCCH7pWwNuAovshNuf/yhF3uRvWLjNtw4/V89+rA2qhJU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774005055; c=relaxed/simple;
-	bh=+y+avXhMzYG0CBSofwymbat0oAWsHpSMzB8CErtsq08=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZhYJs9uHkfD0A//cbWzMyXJrA3r5WhM7YAPUAwquYjGbXwk+rc4f4CXuGWxGjfvs/xPJkFXlgj7YFphcSGI16QFzJO+NmgK6wtR398rG17n+ZiNldCWHL04JXwCEBSJ2mAgT6TVQZTrfUnBE7fmACQ1vy3yd892XzUwqu4babyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aP54ksD2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDF24C4CEF7;
-	Fri, 20 Mar 2026 11:10:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774005054;
-	bh=+y+avXhMzYG0CBSofwymbat0oAWsHpSMzB8CErtsq08=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=aP54ksD2KLlfd/RAHI2AlfY5DDKcULhMSgnNeFgDLAuwJx7SxqNxPraPv2X2MMTBS
-	 +CC7wsCzXIBwShmRmAorCvj/8C6UbvJbpqJ+iCTuaszJvi/mRBbZx8v0gi96MH8XSu
-	 twIN9Vk20aRzFC1xs42ApKcy62aTfeRTbCCTzkiCEndOJfHNrtKomwT+6WZeYymBkD
-	 EYpekVGyJCkqsZ9YzJ2sAUakSZbWoCwbZhnkbFgmUoTVSN+XTDFHIkAYiyGn3s/CZp
-	 sl9KFu4/A4WkCOO7uOdWHVrv+JdC/KzsQ0hA/cPldiPc0WIEowDCwEnUEU3iEPfHqf
-	 zCs77tai9JULg==
-Date: Fri, 20 Mar 2026 11:10:50 +0000
-From: Sudeep Holla <sudeep.holla@kernel.org>
-To: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Cc: Maulik Shah <maulik.shah@oss.qualcomm.com>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>, linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] arm64: suspend: Remove forcing error from suspend
- finisher
-Message-ID: <20260320-spirited-gentle-swift-86f50e@sudeepholla>
-References: <20260316-suspend_ret-v1-1-1a30b110bb7d@oss.qualcomm.com>
- <20260319-tiny-coucal-of-tranquility-ce0bd4@sudeepholla>
- <20260319-ruddy-fierce-honeybee-8fc7b9@sudeepholla>
- <ab0dtAC+bPtc9gdT@lpieralisi>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D88B3803DC
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Mar 2026 11:11:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.169
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774005091; cv=pass; b=csvzQi8l0XHWSgFua6dQ9+7cINgsfjSJ3Tfm1cufYb3RO2l5VSW7yxzmywk7Inzyip9N9WXjDhf0l71vic0FeK6RZQGi0Rc8aZXAqOayySa/RFgEqcBl51kOy7Mi4sO0qvRcWuSTcEh7DSkmWnBETD3thYNHcJOzU3oBo79FUNE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774005091; c=relaxed/simple;
+	bh=WRibP/OoI676PLydacDy5RffaFgff7fcmTDwhtz6leM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sQVEqeNKDNtI6Z012JtXqD1O35zC5JGB4iRxtgAEc4j0Zr0rw+VuG+wsVtEY4bY3wdB7nIDFaTEAjZm5/UOgoLJJmKwZaIYUhDZ+VokRhjcpGG3ZZV0mqo2nnzxBadjRjbxfjNsFIU0lhMH+81HbAz9zQNwqQPPR2+SiDD1hulM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PCJ4TDWq; arc=pass smtp.client-ip=209.85.221.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-vk1-f169.google.com with SMTP id 71dfb90a1353d-5637886c92aso230114e0c.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Mar 2026 04:11:30 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774005089; cv=none;
+        d=google.com; s=arc-20240605;
+        b=bpTjWWdrJ0+cxWPEALpbIKQhtgWe26b56sFXhHU8cpUe0RwFvX0tZDmlENnaRXsvKC
+         i6U5En+rd450ou5IM1DwP02bWqmdM1eateBTEp56p0lXJGHAZARoNXlzQpLqsNssokpi
+         yqlqlOEr5WD7Ml4ltbGzA2ok18uQoKkKHaZx7yO9bXIBDHYXYkM1Q1UhFMtZZ7mPlPGt
+         aqUjCjz9qb39fQij48k/JJkNQT2wQUg2LqkvxREAx5D2fEQZo4M7iVJF5RrY+weUKgTy
+         P6rnMw78D+ctX2FyBhY7Wcsu3kYOH5iJQfOvvrE1yvD7ADnDzRA4u1sXmIeB0JW6okJG
+         GdTw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=9te/j8HOzFHtjUgjcdp2trlsf+HhnDZ+SK/gHrL1Pnw=;
+        fh=A+cQclyS/Nyo8v5yPCbxtLPnU0itNNd4GAipgUneH64=;
+        b=DTYIowQjBl6KSxGYSyZ5vsjh5OFGhYLHUqB2iFH6dYGNXRIHjoue7k/rc8OR/ubfkb
+         ckEiFcJJ5sWIBJ1wtKD99q1/2+jv8Ir9WqJbkj4iwvOnqMhJAdeD/olihGDpc9aCy87s
+         K1dwDvnpcyTfhuJ6azdJcdgvFITZYvJ/PI9+82k+vNze9c+37pHLP9oGJ1ixsSJr2Fih
+         MzZE66eSymFwTOJCji5iKgkqxhVuo7vD+dSCh4LPjcZCQ45QUzxtAJ6lYhv0AMyE3pdQ
+         dQnUFozCbr1T+dkuOnQkcHCxj4vv6OoLBrY55WZ8mWCSw/iYHa1Mv9w1Cfz1WJPRUZnD
+         +wDA==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1774005089; x=1774609889; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9te/j8HOzFHtjUgjcdp2trlsf+HhnDZ+SK/gHrL1Pnw=;
+        b=PCJ4TDWqYDfMWrqfFyJcP/IJFM9bnwCtQT9RpiyK3cvdlvgEvC880wCuazLMDFkr2n
+         yrZ0DhtQrN37GrvAv7ezR8a9oq6f33RsRLh89Glzqf+n2ueAcqG5oOKu0tMlO/4dpmq8
+         yhfTK19wD6oYXxWqcOUbUDYHbu7uGijKPYMWCDC+O8WzQSWd2Iz/geMCfEdao5P8kO+O
+         /QEp8SMRBn6PzYReuiZHm5KS78w0tES4GrAhEEFCjjXYmneYqOkJ+Wmr/e6r5f3AmuAX
+         a8Hf5tdkUTYVgNRNnTFEEZTIGNDJRVcaTSrzzdJ/HFVGueXwsh4u6QZkinZPVkTWGvQv
+         xJ/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774005089; x=1774609889;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=9te/j8HOzFHtjUgjcdp2trlsf+HhnDZ+SK/gHrL1Pnw=;
+        b=cr3v4NcF8KneKR8QGTvRZ/qo09I07yB++n/qPvvBZJvS8YfcrAr1X/u+ChQCN04yhb
+         WEKzjrbKvgDTmqsN6bqY/F4nXW+kLOag6d/mbE9LoABD1YOicjWljx6yWSR5s0/Yg2z2
+         TIfl/caxDR6f3hf4fA9TeE5WM8UIdevmmJF1h2neUy9leLUbpwK2V5tMipECpCUbXPwQ
+         RnGCFtJkKUy5LPWBZ+ky5G0sD5DEHs43Rp7zHxuaTViH7pacnpyaIUmCiSZbDdCw/KRV
+         2hxvyzvusc3WZwe5ReI/DtoF3wKIX7A8PWnSgRYEQOLwQCBiThBM6ZDUQc5uHjrdR+v4
+         vreQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVH0vlgGgRQd2h4kJLo5IzVN/h6rtbkPyHgxUkD/3soNZcIEkq9Tqj/ICQGOXlw3JEVPyXNUS2BPrMFZrGx@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzhfzoq12qFQDz/ht8OlTURsQUkTPsJAN04k4hRW4kwVO8aYNPS
+	esVY8kdolW39wONG86+5AD9UTPBvnv9+c4zTVdvJMNWbs0ybx7MhJoJdnzgVGv2hmN+fqzle4hj
+	NsMCT74xumkp9hTbUA0/6kfnbnAZ33e5SHTx9Npjg6g==
+X-Gm-Gg: ATEYQzxzjcMP+t3RZn1U0iKqNhaSGTh87AJfD/LAl7lzoaCwFN4m+9TAbP42ybU0+to
+	yuh8XzY3fnEqZow5L9JOhy3GVe5DH8w9/srGLvGYX/qozhNacqjonDKCf0AbaIsbrgfn2+uQohg
+	ulCNJhD4KZjL6V2ZjKvmvZq1PUNHNvmOcSqTqCqzVhj9Irwb5l7ofYEPRhocjPuHw/N9GMkIJ8V
+	ecBOOhFIP3X0GCF89rHcV9CrZ4wqBtin0HwTTDPQ3REpj3QlGhWJqXaFDG6h/SPobXHSEZj0jCf
+	plAKNwGw
+X-Received: by 2002:a05:6122:d1c:b0:56a:f576:cfca with SMTP id
+ 71dfb90a1353d-56cde3237a8mr1152700e0c.2.1774005089107; Fri, 20 Mar 2026
+ 04:11:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ab0dtAC+bPtc9gdT@lpieralisi>
-X-Spamd-Result: default: False [-1.66 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+References: <20260307111250.105772-1-mitltlatltl@gmail.com> <dggubmwmcgepioyev4jfibntdgmmiiomahnrvodewcw6ktplo3@bngbsgvzuzoa>
+In-Reply-To: <dggubmwmcgepioyev4jfibntdgmmiiomahnrvodewcw6ktplo3@bngbsgvzuzoa>
+From: Pengyu Luo <mitltlatltl@gmail.com>
+Date: Fri, 20 Mar 2026 19:11:02 +0800
+X-Gm-Features: AaiRm53l5G2RJnBS28ANAAiFgm5ukjN8S-QGG4QvRtKJpZSwLznLfIzx_bEm3mo
+Message-ID: <CAH2e8h4pn+xRcpEEO6CjbM3=WO+2C4HfyH6quhh0opoDFmaEFA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] drm/msm/dsi: fix bits_per_pclk
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-2.16 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-98912-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_FROM(0.00)[bounces-98913-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch,vger.kernel.org,lists.freedesktop.org];
+	RCPT_COUNT_TWELVE(0.00)[13];
 	MIME_TRACE(0.00)[0:+];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[sudeep.holla@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	NEURAL_HAM(-0.00)[-0.992];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-0.780];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mitltlatltl@gmail.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[8];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FREEMAIL_FROM(0.00)[gmail.com];
 	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: CD98E2D955D
+X-Rspamd-Queue-Id: 9D2CB2D9589
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Fri, Mar 20, 2026 at 11:13:08AM +0100, Lorenzo Pieralisi wrote:
-> On Thu, Mar 19, 2026 at 04:52:18PM +0000, Sudeep Holla wrote:
-> > On Thu, Mar 19, 2026 at 03:14:01PM +0000, Sudeep Holla wrote:
-> > > On Mon, Mar 16, 2026 at 02:18:18PM +0530, Maulik Shah wrote:
-> > > > Successful cpu_suspend() may not always want to return to cpu_resume() to
-> > > > save the work and latency involved.
-> > > > 
-> > > > consider a scenario,
-> > > > 
-> > > > when single physical CPU (pCPU) is used on different virtual machines (VMs)
-> > > > as virtual CPUs (vCPUs). VM-x's vCPU can request a powerdown state after
-> > > > saving the context by invoking __cpu_suspend_enter() whereas VM-y's vCPU is
-> > > > requesting a shallower than powerdown state. The hypervisor aggregates to a
-> > > > non powerdown state for pCPU. A wakeup event for VM-x's vCPU may want to
-> > > > resume the execution at the same place instead of jumping to cpu_resume()
-> > > > as the HW never reached till powerdown state which would have lost the
-> > > > context.
-> > > > 
-> > > 
-> > > Though I don't fully understand the intention/use-case for presenting the
-> > > VMs with powerdown states ....
-> > > 
-> > > > While the vCPU of VM-x had latency impact of saving the context in suspend
-> > > > entry path but having the return to same place saves the latency to restore
-> > > > the context in resume path.
-> > > > 
-> > > 
-> > > I understand the exit-latency aspect, though the register set involved is not
-> > > very large unless the driver notifier list is sizable on some platforms. This
-> > > is typically the case in Platform Coordinated mode.
-> > > 
-> > > > consider another scenario,
-> > > > 
-> > > > Newer CPUs include a feature called “powerdown abandon”. The feature is
-> > > > based on the observation that events like GIC wakeups have a high
-> > > > likelihood of happening while the CPU is in the middle of its powerdown
-> > > > sequence (at wfi). Older CPUs will powerdown and immediately power back
-> > > > up when this happens. The newer CPUs will “give up” mid way through if
-> > > > no context has been lost yet. This is possible as the powerdown operation
-> > > > is lengthy and a large part of it does not lose context [1].
-> > > > 
-> > > 
-> > > When you say "large part" above, do you mean that none of the CPU context, as
-> > > visible to software, is lost? Otherwise, we would need to discuss that "large
-> > > part" in more detail. From the kernel point of view, this is a simple boolean:
-> > > context is either lost or retained. Anything in between is not valid, as we do
-> > > not support partial context loss.
-> > > 
-> > > > As the wakeup arrived after SW powerdown is done but before HW is fully
-> > > > powered down. From SW view this is still a successful entry to suspend
-> > > > and since the HW did not loose the context there is no reason to return at
-> > > > entry address cpu_resume() to restore the context.
-> > > > 
-> > > 
-> > > Yes, that may be worth considering from an optimization perspective. However,
-> > > if the hardware aborts the transition, then returning success regardless of the
-> > > software state should still be counted as a failure. That would keep the
-> > > cpuidle entry statistics more accurate than returning success. And it is
-> > > a failure as the OS expected to enter that powerdown state but there was
-> > > as H/W abort.
-> > > 
-> > > > Remove forcing the failure at kernel if the execution does not resume at
-> > > > cpu_resume() as kernel has no reason to treat such returns as failures
-> > > > when the firmware has already filled in return as success.
-> > > > 
-> > > 
-> > > This is not possible with the current PSCI spec:
-> > > "Powerdown states do not return on success because restart is through the
-> > > entry point address at wakeup."
-> > > 
-> > 
-> > OK, my bad. Sorry for that.
-> > For some reason, I read "do not return" as "must not return".
-> > 
-> > The spec allows this:
-> >   |  The caller must not assume that a powerdown request will return using the
-> >   |  specified entry point address. The powerdown request might not complete due,
-> >   |  for example, to pending interrupts. It is also possible that, because of
-> >   |  coordination with other cores, the actual state entered is shallower
-> >   |  than the one requested. Because of this it is possible for an
-> >   |  implementation to downgrade the powerdown state request to a standby
-> >   |  state. In the case of a downgrade to standby, the implementation
-> >   |  returns at the instruction following the PSCI call, at the Exception
-> >   |  level of the caller, instead of returning by the specified entry point
-> >   |  address. The return code in this case is SUCCESS. In the case of an
-> >   |  early return due to a pending wakeup event, the implementation can
-> >   |  return at the next instruction, with a return code of SUCCESS, or
-> >   |  resume at the specified entry point address
-> > 
-> > So we need to dig and check if there was any reason for returning "NOT
-> > SUPPORTED" when the call returned success.
-> 
-> Because we have no clue whatsoever about what happened. We need to get
-> back to the cpu_suspend() caller and either say "we entered state X instead
-> of Y" or report a failure (because an interrupted power down sequence *is* a
-> failure for Linux - unless we want to make things up), we just can't know so
-> to me the code seems good as it is (we can debate about the error code, yes
-> but the gist does not change).
+On Fri, Mar 20, 2026 at 9:48=E2=80=AFAM Dmitry Baryshkov
+<dmitry.baryshkov@oss.qualcomm.com> wrote:
+>
+> On Sat, Mar 07, 2026 at 07:12:48PM +0800, Pengyu Luo wrote:
+> > mipi_dsi_pixel_format_to_bpp return dst bpp not src bpp, dst bpp may
+> > not be the uncompressed data size. use src bpc * 3 to get src bpp,
+> > this aligns with pclk rate calculation.
+> >
+> > Fixes: ac47870fd795 ("drm/msm/dsi: fix hdisplay calculation when progra=
+mming dsi registers")
+> > Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
+> > ---
+> >  drivers/gpu/drm/msm/dsi/dsi_host.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> Pengyu, what is your target platform?
 >
 
-Completely agreed. The current code clearly survives a successful return, so,
-in my opinion, nothing is broken. It is really just a matter of exploring
-whether there is a better way to express this error condition. I doubt that is
-possible, since it is either success or error; it cannot be both.
+SM8750, my device is lenovo legion y700 gen4, the display is a native
+10-bit video mode panel.
+Recently, in 10-bit input bpc/30-bit src bpp with 8-bit output
+bpc/24-bit dst bpp mode, works well
+on this device with some hacks to intf block. full 10-bit input and
+output won't work for now.
 
-Just to clarify, my earlier comment was purely about the error code, not about
-success versus error.
+Once I added this comment in ac47870fd795 ("drm/msm/dsi: fix hdisplay
+calculation when programming dsi registers")
+> DSI consumes an amount of compressed data equivalent to the uncompressed =
+pixel depth per pclk.
+This explanation is picked up from the downstream msm kernel, since
+there is no public datasheet for the hardware.
+And this should be the video mode case, cmd mode should consume 6
+bytes. (It seems no explanation)
 
-> Is that we want to tell CPUidle that entering the state was successful even if
-> the power down sequence was interrupted or the state demoted ?
+If we follow the downstream, then the uncompressed pixel depth per
+pclk should be 3 * bits_per_component.
+This is what this patch fixed.
 
-That sounds like the ask to me, but that would be incorrect.
+About the test, I did it on the video mode panel, I have no cmd panel
+device with dsc/widen bus enabled. And I overlooked something, I
+thought
+cmd panel didn't use hdisplay, then I removed the right value for the
+cmd panel case, I fixed it in patch 2/2.
 
-> That's tantamount to lying IMO and would skew the power stats, no ?
+Best wishes,
+Pengyu
+
+
+> >
+> > diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/d=
+si/dsi_host.c
+> > index e8e83ee61e..7c16216e8b 100644
+> > --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> > +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> > @@ -1030,7 +1030,7 @@ static void dsi_timing_setup(struct msm_dsi_host =
+*msm_host, bool is_bonded_dsi)
+> >                */
+> >               h_total -=3D hdisplay;
+> >               if (wide_bus_enabled)
+> > -                     bits_per_pclk =3D mipi_dsi_pixel_format_to_bpp(ms=
+m_host->format);
+> > +                     bits_per_pclk =3D dsc->bits_per_component * 3;
+> >               else
+> >                       bits_per_pclk =3D 24;
+> >
+> > --
+> > 2.53.0
+> >
 >
-
-Yes, I agree.
-
-> Let me know, I am just trying to understand this patch's goal.
->
-
-I will let Maulik present his opinion, as I am aligned with you, Lorenzo.
-
--- 
-Regards,
-Sudeep
+> --
+> With best wishes
+> Dmitry
 
