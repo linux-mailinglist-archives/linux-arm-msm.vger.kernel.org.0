@@ -1,168 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-98970-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98971-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GAyjFcemvWkAAAMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98970-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 20:57:59 +0100
+	id MLX0G1+1vWkqAwMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98971-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 22:00:15 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id CAC502E09DE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 20:57:58 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 066E82E10F1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 22:00:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 0ACD730525E6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 19:48:37 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id EF02E301301F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 21:00:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3072C351C16;
-	Fri, 20 Mar 2026 19:48:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70C7F30FC34;
+	Fri, 20 Mar 2026 21:00:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=amazon.com header.i=@amazon.com header.b="HI36ZShg"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="EbUsn77F"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pdx-out-009.esa.us-west-2.outbound.mail-perimeter.amazon.com (pdx-out-009.esa.us-west-2.outbound.mail-perimeter.amazon.com [35.155.198.111])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C15B346FCA;
-	Fri, 20 Mar 2026 19:48:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.155.198.111
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7C5366DC4
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Mar 2026 21:00:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774036114; cv=none; b=SYiClRDrzr1jIpT+pPYv/G0VaUKrh5Duvr8vjeVEoMh4nA5yfYax1dDBkMAs1kJj2xh+CCNcJ0OCYwfkmaC3dUh0DgCnsnuJlnRCJLTP6xrBE6UL+RdcOJotEP2ghuODJIxvExodrYWUTa+/sV9cO3thVKxlRo/b/90H2xtRhXU=
+	t=1774040412; cv=none; b=otSwXvDY6WgtQr5TLFSRAgZQv3tWBLfVBg7xrx8c29CXxgOmgikZTv/dNaJ+2Rhizl3nnSyRLfXFMs/kYt2NaJJOr7+GYfB9ybg+PqtwMoXNpxQlcq8o3IX8KSsgCMsvmPb/smlQjngWz9ulT30N1TE2Qx85YCkuJmemPgcQ5kk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774036114; c=relaxed/simple;
-	bh=7ytz/z5ALk+SscFAnn7t/xKn1lxJTNR51Ag/WSCQ48k=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kzTeEmMm2J1XAVpna+LrqS/63elO9t//LCe5pycwEp7c2XgXGi1esA64dDZIFvsdm/o6qGIYkfCKTPaBiCkT0ZzZA8Rw5vgIMjT9vCfUEcGAcqfQCWGxt+ehMGQwUs274AM9PiLQg0n1O8IJVxYNCFtHGi/hCCd08Kn+0JgV99k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com; spf=pass smtp.mailfrom=amazon.com; dkim=pass (2048-bit key) header.d=amazon.com header.i=@amazon.com header.b=HI36ZShg; arc=none smtp.client-ip=35.155.198.111
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
-  t=1774036113; x=1805572113;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Q4TiEgfIAvMzCqc4KEMYNYNKQ830eOmdK/ypgIVMnB0=;
-  b=HI36ZShguwu6FWGH6onECBlfEw14c0gwZSxv9TnrUSdb8S/xvg35xfxW
-   i7Qml2b7qrBey99oFZynuLZljs3iXvR+67zQFOiECBdF3A8KX/gZTCjqb
-   jWaLRxVHgtSuFQodJhusyBS59Kz76dWjRIRZnmj/1jbCVeL+eotudoNPc
-   VX9T7FViwgMWQJ4MjBLu9ScoG60SC8/yIPl0qGpkVok/tR6CUJ910d70+
-   gtA+5Bnil3eme1WvprALx6fSlGNbe55/p55FL1D0g5WaOpQ3YRr+TTc5+
-   OXoUEunuueExjbj25X2cl9u8OtnH0/FWoIMm996DY7BMpl7OxChtUW7ih
-   A==;
-X-CSE-ConnectionGUID: eQzROiltQkKsAskOTuVL+A==
-X-CSE-MsgGUID: EKPiCysSRaKnStZUN8gGPQ==
-X-IronPort-AV: E=Sophos;i="6.23,130,1770595200"; 
-   d="scan'208";a="15374064"
-Received: from ip-10-5-0-115.us-west-2.compute.internal (HELO smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.0.115])
-  by internal-pdx-out-009.esa.us-west-2.outbound.mail-perimeter.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2026 19:48:32 +0000
-Received: from EX19MTAUWA002.ant.amazon.com [205.251.233.178:5335]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.60.23:2525] with esmtp (Farcaster)
- id cf03d1ac-a93d-4cd4-8130-2bf2729af980; Fri, 20 Mar 2026 19:48:32 +0000 (UTC)
-X-Farcaster-Flow-ID: cf03d1ac-a93d-4cd4-8130-2bf2729af980
-Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.37;
- Fri, 20 Mar 2026 19:48:32 +0000
-Received: from localhost (10.187.171.32) by EX19D001UWA001.ant.amazon.com
- (10.13.138.214) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.37; Fri, 20 Mar 2026
- 19:48:31 +0000
-Date: Fri, 20 Mar 2026 12:48:29 -0700
-From: Cory Keitz <ckeitz@amazon.com>
-To: <david@ixit.cz>
-CC: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, "Bryan
- O'Donoghue" <bryan.odonoghue@linaro.org>, Vladimir Zapolskiy
-	<vladimir.zapolskiy@linaro.org>, Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Luca Weiss <luca.weiss@fairphone.com>, Petr Hodina <phodina@protonmail.com>,
-	Casey Connolly <casey.connolly@linaro.org>, "Dr. Git" <drgitx@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Joel Selvaraj
-	<foss@joelselvaraj.com>, Kieran Bingham <kbingham@kernel.org>, Sakari Ailus
-	<sakari.ailus@linux.intel.com>, <linux-media@vger.kernel.org>,
-	<linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-	<phone-devel@vger.kernel.org>
-Subject: Re: [PATCH WIP v4 9/9] media: qcom: camss: Account for C-PHY when
- calculating link frequency
-Message-ID: <ab2kjbN0Igbkp6sw@bcd074ae11bb>
-References: <20260301-qcom-cphy-v4-0-e53316d2cc65@ixit.cz>
- <20260301-qcom-cphy-v4-9-e53316d2cc65@ixit.cz>
+	s=arc-20240116; t=1774040412; c=relaxed/simple;
+	bh=HNE8C7w9g1/4voggQpftBytVvmz2Z92PQTdjhQWvvQY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=UOnUBULjcDS5qA+ECQcUn08yldQRnvjKBAuWa73EJi9b5Q976/OCY8xtdupLQjooBC+PmZ0FNX7Td5zP7UXTVCv461nTJ3SGt8c2xXKm9iHFM8ekFWc97AXbrXPIFC1Kd9IMlitMoWsKzoh/vEj6ZnbkYXswqUMclSBht4/eMoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=EbUsn77F; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1774040410;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=er/L2lgzVHVQDMDgXULdYtorAV7nNEDpgqz9pFsg7cs=;
+	b=EbUsn77FracORtABgIwGEYcGFoclm5nDbJLLNnv9WDp9Z/yE2eYnemRlWjExgKefaX2qER
+	vvSHKZsxgs7C9asNYG3MWiPViI4yeXggo0wAn4+Mb2lk0KeX3Qp46AV2psRpsVdueH5F2v
+	GKS0i8Wu66mz2WcTKvjtj8nOfsK9ygc=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-62-ABoiZTcQPWO6KyCACFc1og-1; Fri,
+ 20 Mar 2026 17:00:04 -0400
+X-MC-Unique: ABoiZTcQPWO6KyCACFc1og-1
+X-Mimecast-MFC-AGG-ID: ABoiZTcQPWO6KyCACFc1og_1774040403
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id CC1B61956096;
+	Fri, 20 Mar 2026 21:00:02 +0000 (UTC)
+Received: from thinkpad-p1.kanata.rendec.net (unknown [10.22.80.230])
+	by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP id 73D2730002DF;
+	Fri, 20 Mar 2026 21:00:00 +0000 (UTC)
+From: Radu Rendec <rrendec@redhat.com>
+To: linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org
+Cc: Lei Wang <quic_leiwan@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Subject: [PATCH 0/2] Add Qualcomm SA8650P SoC to socinfo
+Date: Fri, 20 Mar 2026 16:59:31 -0400
+Message-ID: <20260320205933.992852-1-rrendec@redhat.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-In-Reply-To: <20260301-qcom-cphy-v4-9-e53316d2cc65@ixit.cz>
-X-ClientProxiedBy: EX19D031UWA004.ant.amazon.com (10.13.139.19) To
- EX19D001UWA001.ant.amazon.com (10.13.138.214)
-X-Spamd-Result: default: False [-7.16 / 15.00];
-	WHITELIST_DMARC(-7.00)[amazon.com:D:+];
-	SUSPICIOUS_RECIPS(1.50)[];
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[amazon.com,quarantine];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[amazon.com:s=amazoncorp2];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[redhat.com,quarantine];
+	R_MISSING_CHARSET(0.50)[];
+	R_DKIM_ALLOW(-0.20)[redhat.com:s=mimecast20190719];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-98970-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[18];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[kernel.org,gmail.com,linaro.org,fairphone.com,protonmail.com,oss.qualcomm.com,joelselvaraj.com,linux.intel.com,vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[ckeitz@amazon.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-98971-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[amazon.com:+];
-	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCVD_COUNT_FIVE(0.00)[6];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[rrendec@redhat.com,linux-arm-msm@vger.kernel.org];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[redhat.com:+];
 	MISSING_XM_UA(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: CAC502E09DE
+	PRECEDENCE_BULK(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	NEURAL_HAM(-0.00)[-1.000];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 066E82E10F1
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Sun, Mar 01, 2026 at 01:51:28AM +0100, David Heidelberg via B4 Relay wrote:
-> -static int csid_set_clock_rates(struct csid_device *csid)
-> +static int csid_set_clock_rates(struct v4l2_subdev *sd, struct csid_device *csid)
->  {
->  	struct device *dev = csid->camss->dev;
-> +	struct csiphy_device *csiphy = v4l2_get_subdevdata(sd);
-> +	struct csiphy_lanes_cfg *lane_cfg = &csiphy->cfg.csi2->lane_cfg;
+Add SoC ID for SA8650P to socinfo.
 
-I believe there's a regression here from v3. I've been testing v4 of
-this series on SA8775P (kernel 6.18) with a GMSL2 camera pipeline and
-hit an invalid pointer dereference in csid_set_clock_rates() during
-pipeline power-up:
+Note: Posting patches originally by Lei Wang <quic_leiwan@quicinc.com>.
+Minor edits to commit messages for better clarity and to match previous
+submissions that add a SoC to socinfo.
 
-  pc : camss_get_link_freq+0x1c/0xc4 [qcom_camss]
-  lr : csid_set_power+0xc8/0x404 [qcom_camss]
-  Code: 910003fd a90153f3 aa0003f4 a9025bf5 (b9400040)
+Lei wang (2):
+  dt-bindings: arm: qcom,ids: Add SoC ID for SA8650P
+  soc: qcom: socinfo: Add SoC ID for SA8650P
 
-The sd passed here from csid_set_power() is the csid subdev, so the
-subdevdata is a csid_device rather than a csiphy_device. The csid_device
-stores its linked csiphy_id during csid_link_setup(), so the fix is to
-look it up through the camss device array:
+ drivers/soc/qcom/socinfo.c         | 1 +
+ include/dt-bindings/arm/qcom,ids.h | 1 +
+ 2 files changed, 2 insertions(+)
 
-    static int csid_set_clock_rates(struct csid_device *csid)
-    {
-        struct csiphy_device *csiphy = &csid->camss->csiphy[csid->phy.csiphy_id];
-        struct csiphy_lanes_cfg *lane_cfg = &csiphy->cfg.csi2->lane_cfg;
+-- 
+2.53.0
 
-This also lets us drop the v4l2_subdev parameter entirely since it's
-no longer needed. With the above change my pipeline powers on and
-streams correctly.
-
-Tested-by: Cory Keitz <ckeitz@amazon.com>
-
----
-
-Regards,
-Cory
 
