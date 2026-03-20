@@ -1,189 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-98967-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98968-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8AxIOPKMvWnY+wIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98967-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 19:07:46 +0100
+	id 2IZgDquTvWnY+wIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98968-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 19:36:27 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B56B2DF2BD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 19:07:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 90CB92DF833
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 19:36:26 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4BBAA32017D1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 18:01:09 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 73CD730B3F59
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 18:29:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87E80313E10;
-	Fri, 20 Mar 2026 18:00:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C69203E5EF1;
+	Fri, 20 Mar 2026 18:29:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="iPIVF3eB"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rBl+rERW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B9A331195B;
-	Fri, 20 Mar 2026 18:00:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A39CA2F691D
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Mar 2026 18:29:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774029646; cv=none; b=RhXdXhSk6AAvwfGHCPi8UTMK6Mf6Ulf2+vyrklXG+LWPr16KgdR7/mu0e8Sv21Yud5xTrZqkx/FkqPQ2+USJA2OgutSyFLwyuXOQuN5gdesyWr5w12iehL2AZfGU4OUuoQpKomWJadr1IfCuMQXzKddit4i5zXMi+zWWRpfDs5I=
+	t=1774031367; cv=none; b=psjva+hJxgfaFn/xzIW8cNMrdva3CM0yoVpADi582W7m/QKGB6xjRnnly0ze9A+93imcCYYniI4AvKtH5SVtfWvxtC+NZT4iYkpL7DT8v9xPG4i2J0K5bTLXZv7sHjsZWcrRq+bz4bHVMLlSCc4EnaU39nNjQv2tMvNrzlMPXyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774029646; c=relaxed/simple;
-	bh=JAKhDVpWULNM63a81nEywXv/dwdhQnpFeD/g/i5odis=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eYKm7+JlEbUUcly/C2aMI1ye5ngUHuASXmqtFDT1boQXcPNzvGeOpbpltZPOcdUrbvVjBSgkdzJukv4Lln6GAiYYTeb+us1OX8bwxrkhtDbm0AJYTiEURN6BcWuDudgYB4sbgteC7xxtJpRrWZXGf3hNsqKef1xfBOGViLMhib0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=iPIVF3eB; arc=none smtp.client-ip=192.198.163.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1774029645; x=1805565645;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=JAKhDVpWULNM63a81nEywXv/dwdhQnpFeD/g/i5odis=;
-  b=iPIVF3eBMzNnpGbugYRYVNVo4HVJXmV8z6QKzdNmEG7ZDEpb6few3WvK
-   pgy7XX66f9LOWo5ybziJVJMpTBj9JSwbbI1FcgzWT2x9i0iKu69mR9Pqt
-   DOJgmvYfe0idpfXvnSppFVunsuN8iikcqffqZV982YTRYTIbOQEGnJQlt
-   SDN3t75fo8oWBscNOAkN182OWFIYIxmPMJ9vlcVBywxMyUbZcBt8hmgsD
-   S8KLYgKaXS6eWtZdN5RH9Nl0GuwGu53oa4QZivCBN34eE2P+yIJQJpwCJ
-   uG0GQbyDEYn/eurAqTtVcTv1shPu71vwMzc/AA5OyOkrqpmi6+6I/4p6c
-   A==;
-X-CSE-ConnectionGUID: UZkBpEtFTM2ha1sEGNQsUw==
-X-CSE-MsgGUID: 2p7HBgWMS3WzQJsuABnbRw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11735"; a="100576041"
-X-IronPort-AV: E=Sophos;i="6.23,130,1770624000"; 
-   d="scan'208";a="100576041"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2026 11:00:44 -0700
-X-CSE-ConnectionGUID: gtnG+l8iT0SHlGf0CDnykA==
-X-CSE-MsgGUID: 5fEKEnjNSUKImcK/2/uthA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,130,1770624000"; 
-   d="scan'208";a="246392798"
-Received: from lkp-server02.sh.intel.com (HELO ef9b23065726) ([10.239.97.151])
-  by fmviesa002.fm.intel.com with ESMTP; 20 Mar 2026 11:00:40 -0700
-Received: from kbuild by ef9b23065726 with local (Exim 4.98.2)
-	(envelope-from <lkp@intel.com>)
-	id 1w3e8U-00000000049-3YRM;
-	Fri, 20 Mar 2026 18:00:15 +0000
-Date: Sat, 21 Mar 2026 01:58:45 +0800
-From: kernel test robot <lkp@intel.com>
-To: Alexander Koskovich <akoskovich@pm.me>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc: oe-kbuild-all@lists.linux.dev, dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org,
-	Alexander Koskovich <akoskovich@pm.me>
-Subject: Re: [PATCH v3 3/4] drm/msm/dsi: Add support for RGB101010 pixel
- format
-Message-ID: <202603210139.i7hnShAJ-lkp@intel.com>
-References: <20260319-dsi-rgb101010-support-v3-3-85b99df2d090@pm.me>
+	s=arc-20240116; t=1774031367; c=relaxed/simple;
+	bh=Ui1LMtolXUlaS9y3lEyQSIQB+UiTyBSjgH+rPDVPRG0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MJYcshnPZCM0svpqfHYa8vIpeBOx2TxH0ypREufyU8LDLo/5Nb9b9LT8C/QeVGiLww5+BBNv7OSJ2s00y3y1mJf39/rOjD2yRmjBGGfN0Np7rpGd00NUucZakqx9QUoXqgUhEmBkkgQm9UFBNLT0YrYOTVeKzBE8akgyb42lYqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rBl+rERW; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59BE6C4DDE2
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Mar 2026 18:29:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1774031367;
+	bh=Ui1LMtolXUlaS9y3lEyQSIQB+UiTyBSjgH+rPDVPRG0=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=rBl+rERWcLrlYKl/SjKqlgPjZl+6AExaY8d0XVznzJZkqKM9GK4BDsOgxXFM1XKwm
+	 hLYXkV/zyIH+giQozNL7buuUWBRVcsyg2I2cR+ZCvjQRozzk3+R+u9toNcQj7kvGd5
+	 NnsXe9NmkdePosVqxmZRUpsNPerYWiF7Hi+aCHjciFdBA4+7sVlX0ewb2MHNCP+kSK
+	 dvisiofeP+whMKa5VdmC7AqFiPIFyURLAK7JYwxwbXWdmPffzjw3mVYlXw+yQIqzBS
+	 A1ugjfdehUY/ckORhtVuOeAg5PIneb0mKvPMiHqyr0+a9qm9RtiBtlCExVB5I0KX5Z
+	 53b1HQr7gB7uQ==
+Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-40429b1d8baso819368fac.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Mar 2026 11:29:27 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCULcW16wtCOY21K7SJdxVfIkWrYBpWuRnWt1Y5w5O3+jvbKg2deh7yADH0Y6hrn9FNsAkXdSxQx2sdywJOS@vger.kernel.org
+X-Gm-Message-State: AOJu0YwOwcsNpeuAz8gWaGycdS2MQnH5tG1vj3aKIovHkDGE6TkXgaNs
+	Naos804C6FgbAIOhxZQIJo5ds8CkeKc7M3OquRdTf1niaZHfxxmhi4s7pV8FRIXO0n+i5pAnO4j
+	mS2lKY1KYyd5LonJHvHBqfv+ECbBP/VU=
+X-Received: by 2002:a05:6871:3851:b0:41c:25b1:9318 with SMTP id
+ 586e51a60fabf-41c25b19ab5mr1162173fac.36.1774031366491; Fri, 20 Mar 2026
+ 11:29:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260319-dsi-rgb101010-support-v3-3-85b99df2d090@pm.me>
-X-Spamd-Result: default: False [0.34 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+References: <20260316-cpuidle_ipi-v1-1-d0ff6350f4e2@oss.qualcomm.com>
+In-Reply-To: <20260316-cpuidle_ipi-v1-1-d0ff6350f4e2@oss.qualcomm.com>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Fri, 20 Mar 2026 19:29:15 +0100
+X-Gmail-Original-Message-ID: <CAJZ5v0hv+t8=mT39-xOkGUS5i6vckJxwfQfqGZ4foxK2rFn8gw@mail.gmail.com>
+X-Gm-Features: AaiRm50lpWFrKCn6KRaJTYKQwv6QBAgtF8jFi_EETMk7a9ySSewrI0ssB9gKKQ4
+Message-ID: <CAJZ5v0hv+t8=mT39-xOkGUS5i6vckJxwfQfqGZ4foxK2rFn8gw@mail.gmail.com>
+Subject: Re: [PATCH] cpuidle: Deny idle entry when CPU already have IPI
+ interrupt pending
+To: Maulik Shah <maulik.shah@oss.qualcomm.com>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>, Daniel Lezcano <daniel.lezcano@kernel.org>, 
+	Christian Loehle <christian.loehle@arm.com>, Ulf Hansson <ulf.hansson@linaro.org>, 
+	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
-	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-98967-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_TO(0.00)[pm.me,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,oss.qualcomm.com,linux.dev,poorly.run,somainline.org];
 	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[19];
-	FROM_HAS_DN(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-98968-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[lkp@intel.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[intel.com:+];
-	NEURAL_HAM(-0.00)[-0.973];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,01.org:url,intel.com:dkim,intel.com:email,intel.com:mid]
-X-Rspamd-Queue-Id: 5B56B2DF2BD
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[rafael@kernel.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	NEURAL_HAM(-0.00)[-0.869];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCPT_COUNT_SEVEN(0.00)[8];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,mail.gmail.com:mid]
+X-Rspamd-Queue-Id: 90CB92DF833
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi Alexander,
+On Mon, Mar 16, 2026 at 8:38=E2=80=AFAM Maulik Shah
+<maulik.shah@oss.qualcomm.com> wrote:
+>
+> CPU can get IPI interrupt from another CPU while it is executing
+> cpuidle_select() or about to execute same. The selection do not account
+> for pending interrupts and may continue to enter selected idle state only
+> to exit immediately.
+>
+> Example trace collected when there is cross CPU IPI.
+>
+>  [000] 154.892148: sched_waking: comm=3Dsugov:4 pid=3D491 prio=3D-1 targe=
+t_cpu=3D007
+>  [000] 154.892148: ipi_raise: target_mask=3D00000000,00000080 (Function c=
+all interrupts)
+>  [007] 154.892162: cpu_idle: state=3D2 cpu_id=3D7
+>  [007] 154.892208: cpu_idle: state=3D4294967295 cpu_id=3D7
+>  [007] 154.892211: irq_handler_entry: irq=3D2 name=3DIPI
+>  [007] 154.892211: ipi_entry: (Function call interrupts)
+>  [007] 154.892213: sched_wakeup: comm=3Dsugov:4 pid=3D491 prio=3D-1 targe=
+t_cpu=3D007
+>  [007] 154.892214: ipi_exit: (Function call interrupts)
+>
+> This impacts performance and the above count increments.
+>
+> commit ccde6525183c ("smp: Introduce a helper function to check for pendi=
+ng
+> IPIs") already introduced a helper function to check the pending IPIs and
+> it is used in pmdomain governor to deny the cluster level idle state when
+> there is a pending IPI on any of cluster CPUs.
 
-kernel test robot noticed the following build errors:
+You seem to be overlooking the fact that resched wakeups need not be
+signaled via IPIs, but they may be updates of a monitored cache line.
 
-[auto build test ERROR on f338e77383789c0cae23ca3d48adcc5e9e137e3c]
+> This however does not stop CPU to enter CPU level idle state. Make use of
+> same at CPUidle to deny the idle entry when there is already IPI pending.
+>
+> With change observing glmark2 [1] off screen scores improving in the rang=
+e
+> of 25% to 30% on Qualcomm lemans-evk board which is arm64 based having tw=
+o
+> clusters each with 4 CPUs.
+>
+> [1] https://github.com/glmark2/glmark2
+>
+> Signed-off-by: Maulik Shah <maulik.shah@oss.qualcomm.com>
+> ---
+>  drivers/cpuidle/cpuidle.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/drivers/cpuidle/cpuidle.c b/drivers/cpuidle/cpuidle.c
+> index c7876e9e024f9076663063ad21cfc69343fdbbe7..c88c0cbf910d6c2c09697e6a3=
+ac78c081868c2ad 100644
+> --- a/drivers/cpuidle/cpuidle.c
+> +++ b/drivers/cpuidle/cpuidle.c
+> @@ -224,6 +224,9 @@ noinstr int cpuidle_enter_state(struct cpuidle_device=
+ *dev,
+>         bool broadcast =3D !!(target_state->flags & CPUIDLE_FLAG_TIMER_ST=
+OP);
+>         ktime_t time_start, time_end;
+>
+> +       if (cpus_peek_for_pending_ipi(drv->cpumask))
+> +               return -EBUSY;
+> +
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Alexander-Koskovich/drm-msm-dsi-rename-MSM8998-DSI-version-from-V2_2_0-to-V2_0_0/20260320-011528
-base:   f338e77383789c0cae23ca3d48adcc5e9e137e3c
-patch link:    https://lore.kernel.org/r/20260319-dsi-rgb101010-support-v3-3-85b99df2d090%40pm.me
-patch subject: [PATCH v3 3/4] drm/msm/dsi: Add support for RGB101010 pixel format
-config: arc-allyesconfig (https://download.01.org/0day-ci/archive/20260321/202603210139.i7hnShAJ-lkp@intel.com/config)
-compiler: arc-linux-gcc (GCC) 15.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260321/202603210139.i7hnShAJ-lkp@intel.com/reproduce)
+So what if the driver handles all CPUs in the system and there are
+many of them (say ~500) and if IPIs occur rarely (because resched
+events are not IPIs)?
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202603210139.i7hnShAJ-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   drivers/gpu/drm/msm/dsi/dsi_host.c: In function 'dsi_get_vid_fmt':
->> drivers/gpu/drm/msm/dsi/dsi_host.c:760:14: error: 'MIPI_DSI_FMT_RGB101010' undeclared (first use in this function); did you mean 'MIPI_DSI_FMT_RGB565'?
-     760 |         case MIPI_DSI_FMT_RGB101010:    return VID_DST_FORMAT_RGB101010;
-         |              ^~~~~~~~~~~~~~~~~~~~~~
-         |              MIPI_DSI_FMT_RGB565
-   drivers/gpu/drm/msm/dsi/dsi_host.c:760:14: note: each undeclared identifier is reported only once for each function it appears in
-   drivers/gpu/drm/msm/dsi/dsi_host.c: In function 'dsi_get_cmd_fmt':
-   drivers/gpu/drm/msm/dsi/dsi_host.c:773:14: error: 'MIPI_DSI_FMT_RGB101010' undeclared (first use in this function); did you mean 'MIPI_DSI_FMT_RGB565'?
-     773 |         case MIPI_DSI_FMT_RGB101010:    return CMD_DST_FORMAT_RGB101010;
-         |              ^~~~~~~~~~~~~~~~~~~~~~
-         |              MIPI_DSI_FMT_RGB565
-   drivers/gpu/drm/msm/dsi/dsi_host.c: In function 'dsi_host_attach':
-   drivers/gpu/drm/msm/dsi/dsi_host.c:1710:28: error: 'MIPI_DSI_FMT_RGB101010' undeclared (first use in this function); did you mean 'MIPI_DSI_FMT_RGB565'?
-    1710 |         if (dsi->format == MIPI_DSI_FMT_RGB101010 &&
-         |                            ^~~~~~~~~~~~~~~~~~~~~~
-         |                            MIPI_DSI_FMT_RGB565
-
-
-vim +760 drivers/gpu/drm/msm/dsi/dsi_host.c
-
-   755	
-   756	static inline enum dsi_vid_dst_format
-   757	dsi_get_vid_fmt(const enum mipi_dsi_pixel_format mipi_fmt)
-   758	{
-   759		switch (mipi_fmt) {
- > 760		case MIPI_DSI_FMT_RGB101010:	return VID_DST_FORMAT_RGB101010;
-   761		case MIPI_DSI_FMT_RGB888:	return VID_DST_FORMAT_RGB888;
-   762		case MIPI_DSI_FMT_RGB666:	return VID_DST_FORMAT_RGB666_LOOSE;
-   763		case MIPI_DSI_FMT_RGB666_PACKED:	return VID_DST_FORMAT_RGB666;
-   764		case MIPI_DSI_FMT_RGB565:	return VID_DST_FORMAT_RGB565;
-   765		default:			return VID_DST_FORMAT_RGB888;
-   766		}
-   767	}
-   768	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+>         instrumentation_begin();
+>
+>         /*
+>
+> ---
 
