@@ -1,270 +1,203 @@
-Return-Path: <linux-arm-msm+bounces-98878-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98879-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 2Bp4DW7FvGkY2wIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98878-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 04:56:30 +0100
+	id mP4+DDnMvGkk3AIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98879-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 05:25:29 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2FE12D5A70
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 04:56:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C0822D5C4F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 05:25:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D07E230515E3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 03:55:41 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 131E43067A0F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 04:25:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFB392773D8;
-	Fri, 20 Mar 2026 03:55:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 994322E7162;
+	Fri, 20 Mar 2026 04:25:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="UmkTdwkn"
+	dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b="ZCdr9Eta"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-4322.protonmail.ch (mail-4322.protonmail.ch [185.70.43.22])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 492D575809
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Mar 2026 03:55:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3298C2E8B8A
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Mar 2026 04:25:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773978941; cv=none; b=pzuOTrNm6PAJZp8XRxC7qO3pz/H/PafGxuSsnm++fDH6NdbA+9i7zsX8LSpVS2KkaYFo7sj1z712r/Ma1HvNWixi/wweJ3H/hDeKjyluVCyia29dwVfV2Qt0fUr2lfDKZj6Y2BL3PlfqDlUsI+DWTNFKpUbu/Q9lMPwmUan47HI=
+	t=1773980726; cv=none; b=D1gN7Yfq+keXGoNVO8WdBLGaCDHzZmnR5WE2XdaAU2dGIRxoOD2k1Oj9Vr6Mt3ROLBrISEumu+OSyn71MqOAUpiLmimgKXPf+3elE8oXKuOz/WrLK/+khmcP8L/ui5zFBNENaSMAg4ToOnquHPWx9HYydZAfr9manhjlulHVyh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773978941; c=relaxed/simple;
-	bh=xrlPZA+rVsBp0HmSAZ6xpYu95HI12xRzXllym65bSO8=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dGveh6PN0HkboH8s9omG/iawU3C1pdA52qKM5mCOGZli+2zXJqcufwsxPv3xfLVq71YyFk1/zrSnne76QxDtCjf7Lw2nsDKnl26+eTKuR1WOnWDl8fws+twUisKQC+0Oqt9qzlNDVYVm+j+16yjJSUJM74Z6c64gR0fPok1xgMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=UmkTdwkn; arc=none smtp.client-ip=185.70.43.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1773978929; x=1774238129;
-	bh=6hSHoAw+FRg4yq7oAQNcLdcehITdZuUHNxQc1UYr+tQ=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=UmkTdwknZC4PQKwvcBvl6lE8BO7HtecVoEMgnk0Xa+PTjHeN7ir0CEbRHH8H+vevr
-	 lzJKtK7aLpp6GOkGf0FXEid0USpYtzZraxtfLKY9pVvqzTKnGkETKaJAOpvmxaDrQV
-	 i/Mf0YiEor6qIklVuiaiSIvyNf0hDVWitncFYAKQ0bDKbaQ8J6Gunsb9zl0essO7u0
-	 rM2fSWEAT1C1aWsDwLM+O6H9wBvweJgr4DYssDPUotXHcigWsBGuoBmE3Mhx3tCOqO
-	 6YPQnzH2zvJp8QuthcdgqoK/0SPEekqPKd+QJ4vFyR7N2UtZG5UzKSg2Mj8R9+vJUB
-	 gf3kduvyQ2XKw==
-Date: Fri, 20 Mar 2026 03:55:24 +0000
+	s=arc-20240116; t=1773980726; c=relaxed/simple;
+	bh=6IbZCnAgMzbyfScoEQp8CPfeU2ha+EwH+CWvVv7ealw=;
+	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=Q7l9wuoSHttbl/Z/F2VvDAb2du0ncfVaaV/e5saksALsPKg6XhU+HqltauPVciq1n+CnCFNZOk+rn+XqexF1V0R2EEr2+C80caYxUQ1xq/J0L4LREY8tmOuhA5Yglcwr9IO7SUTW2419fGHJxPziYD7ZTASGKgZK4bFw3AeGVFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca; spf=pass smtp.mailfrom=marek.ca; dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b=ZCdr9Eta; arc=none smtp.client-ip=209.85.160.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=marek.ca
+Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-5090c7e9081so14412231cf.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Mar 2026 21:25:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek.ca; s=google; t=1773980724; x=1774585524; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=CTWWaO+/XhoNRCAuJEz9H+WLHO2eUwKG5OIDlVViY4s=;
+        b=ZCdr9EtamSWNboAJ18U7F4emlerQpM5zBgWRRoo+CHf11fAfS6qsGFJHwxrFK3pCRT
+         tQXfrOIoOOllV1Sl+In39EF7Vc6QBAcZeh5i+HCdxXe/G9tD8kcYyrmbFjhsOSyQmqhQ
+         mJdzV3dDpx/Egv85RWX2HgenXdIMhDHk0XjZ/D2FtiYAMRyhfqKFFEQ+fRSWjvAGxU24
+         OGpmCkJTC6WH2oQMeCwxNt/ow67EdhpiGJyM7WQG7w4qCFx5nk65Oy2GoG3ZNiCVQcAP
+         vJlOXkUdLFWuVz2x4PrH5TpwrYQgubzLDPztgG8vVGzHNioqOdM0syWFUe4G54kciWEu
+         ISLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773980724; x=1774585524;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CTWWaO+/XhoNRCAuJEz9H+WLHO2eUwKG5OIDlVViY4s=;
+        b=iWdB6TjRK1pCUq5l5w7oisyXrop+T/Yb+t09ndSWGgcH5Qkph4MfaarxWfPOhdi7IB
+         WcA6LSENguct35a/lIAclQL7ff0n3sfU31PA0bwLDmE94lrtyTXWKeGaYOi8U5oaLqqo
+         WPmGJnTcgd6uhr4JZo5IXp+vRyzc/v/xML2x5x4f5Z6nKsUkAss2W5gHNuUSCvFiJ4e2
+         F7SLHMc6TU5wBrfxMNVOA/FFE+lUfNuPNiadJFLHnH7n9OoED+EnWlTvwD4XMTgFNKON
+         pRn62Tmgulyr4FgIlkUxXxHyS0jUchpO0mRWbtcZvw8GR8nGs+kMyeNV6W2iFFR042jn
+         8VTw==
+X-Forwarded-Encrypted: i=1; AJvYcCUi9N1lwcA6zSNQv2FY96XWBSwOt+DNXs7wJDbDQL3WIb7EU5TpbsD+8SwYrihUcM8VSIetRCKkC0HTON+m@vger.kernel.org
+X-Gm-Message-State: AOJu0YxbPAEtdixmBkjl6sAjeAd6I+TzoyHzTtS98Y9Wz42/Sl6Ddu5f
+	kmzrczsYb6uhfA0OBTFLSdH3cO+LPIOnFJv801TOzm3HCVCM6skUD6vp6i5ajphZEMo=
+X-Gm-Gg: ATEYQzyaD8O0/LnQLVJT92l4egLJqxcWvBHuHUBtyLnThjdBNT6WAPSmUWsR/QBLzIJ
+	s5/pEF1yFqjW0fofeId3lxbyprbzMygQg2Tos6AHStJWuEVoovQS5hcSLV1hw5bhSixTsx+LJXp
+	kusCckEZ5On4QP1NqD3ICbgQdHVp3IJUr3Ao9Zei9H+Fa2erMuN7YZpHqucx7apGSPF71i0/ZIs
+	k+StvmWcP/HuJGHLvwoAcVkLaHEU4exW1OSZrVW4vCRxzYw9mzNiSuAN9/BXQRRXc24ew/ArKGC
+	xKwXOb5HeiXMhuAmXc6hw69EdKaM2I1wE0YmodxJO/9V7kRDVwILppxy4Y1QZWpBXCxYgX5E9vT
+	/P0n/87mV9FYjKQqw8OuAiw4VpeN7DPUWKI+qfkLidyHbUjz8DRGjXwzxdnWV3/h5IVX01TALI6
+	A83CYXbNxg3tj/wucBhGYH72XWSow4/ObFt2FY7vVuFHYO1C8DK0efsT1N+8uv5cPiz/02bA==
+X-Received: by 2002:a05:622a:1249:b0:509:1b76:e9b2 with SMTP id d75a77b69052e-50b37503075mr24487301cf.55.1773980724006;
+        Thu, 19 Mar 2026 21:25:24 -0700 (PDT)
+Received: from [192.168.0.189] (modemcable125.110-19-135.mc.videotron.ca. [135.19.110.125])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-89c85251e32sm12201056d6.16.2026.03.19.21.25.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 19 Mar 2026 21:25:23 -0700 (PDT)
+Subject: Re: [PATCH v3 4/4] drm/msm/dpu: fix video mode DSC INTF timing width
+ calculation
 To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-From: Alexander Koskovich <akoskovich@pm.me>
-Cc: Jonathan Marek <jonathan@marek.ca>, Neil Armstrong <neil.armstrong@linaro.org>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, Jeffrey Hugo <jeffrey.l.hugo@gmail.com>, dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v3 4/4] drm/msm/dpu: fix video mode DSC INTF timing width calculation
-Message-ID: <PbBNYyLi9hlGibM2kCPIHwRs8B3rnYEFgShF5AYjmRTTHPMjnQAcE-KQXZJ1nkSf_r8bl2XQYlTa-6LuCw3_JvqJz1oqaYQ7I_4MD6Dqeoo=@pm.me>
-In-Reply-To: <oihbfczsj5cg7qfjjt6jvyodjnjbezyrv6f32vmg444g5bx6ow@r54epj7ilsyt>
-References: <20260319-dsi-rgb101010-support-v3-0-85b99df2d090@pm.me> <20260319-dsi-rgb101010-support-v3-4-85b99df2d090@pm.me> <1360a31d-669e-48df-a1be-f0af4a253cd7@linaro.org> <3gLK4s97giqqXagfHKhfiIHbfbl2snwfOj9dcTNGPUYi10w9-1EdATqzz1LPCVTpz4bLFYOm8u_Fl8PfC7t5yabows4UCzRKVwjraEWW6hc=@pm.me> <3f8763af-aad2-4d92-90c8-cfd290212503@linaro.org> <7fb9dd9d-13f9-7bba-93d1-08f42dd6ee38@marek.ca> <oihbfczsj5cg7qfjjt6jvyodjnjbezyrv6f32vmg444g5bx6ow@r54epj7ilsyt>
-Feedback-ID: 37836894:user:proton
-X-Pm-Message-ID: b39faaa2045b0f5a2a636019996afd901f86c9aa
+Cc: Neil Armstrong <neil.armstrong@linaro.org>,
+ Alexander Koskovich <akoskovich@pm.me>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
+ <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Jeffrey Hugo <jeffrey.l.hugo@gmail.com>, dri-devel@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org
+References: <20260319-dsi-rgb101010-support-v3-0-85b99df2d090@pm.me>
+ <20260319-dsi-rgb101010-support-v3-4-85b99df2d090@pm.me>
+ <1360a31d-669e-48df-a1be-f0af4a253cd7@linaro.org>
+ <3gLK4s97giqqXagfHKhfiIHbfbl2snwfOj9dcTNGPUYi10w9-1EdATqzz1LPCVTpz4bLFYOm8u_Fl8PfC7t5yabows4UCzRKVwjraEWW6hc=@pm.me>
+ <3f8763af-aad2-4d92-90c8-cfd290212503@linaro.org>
+ <7fb9dd9d-13f9-7bba-93d1-08f42dd6ee38@marek.ca>
+ <oihbfczsj5cg7qfjjt6jvyodjnjbezyrv6f32vmg444g5bx6ow@r54epj7ilsyt>
+From: Jonathan Marek <jonathan@marek.ca>
+Message-ID: <da050aad-381d-ffb7-ec7d-8ed8a80d790a@marek.ca>
+Date: Fri, 20 Mar 2026 00:25:00 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-0.66 / 15.00];
+In-Reply-To: <oihbfczsj5cg7qfjjt6jvyodjnjbezyrv6f32vmg444g5bx6ow@r54epj7ilsyt>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
-	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
+	R_DKIM_ALLOW(-0.20)[marek.ca:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-98879-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-98878-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[3];
+	DMARC_NA(0.00)[marek.ca];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[marek.ca,linaro.org,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,lists.freedesktop.org,vger.kernel.org];
+	FREEMAIL_CC(0.00)[linaro.org,pm.me,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,lists.freedesktop.org,vger.kernel.org];
 	RCPT_COUNT_TWELVE(0.00)[19];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.892];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[pm.me:+];
-	MID_RHS_MATCH_FROM(0.00)[];
+	DKIM_TRACE(0.00)[marek.ca:+];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[jonathan@marek.ca,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-0.986];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,pm.me:dkim,pm.me:email,pm.me:mid]
-X-Rspamd-Queue-Id: D2FE12D5A70
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,marek.ca:dkim,marek.ca:mid]
+X-Rspamd-Queue-Id: 8C0822D5C4F
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Thursday, March 19th, 2026 at 9:45 PM, Dmitry Baryshkov <dmitry.baryshko=
-v@oss.qualcomm.com> wrote:
-
+On 3/19/26 9:45 PM, Dmitry Baryshkov wrote:
 > On Thu, Mar 19, 2026 at 01:23:03PM -0400, Jonathan Marek wrote:
-> > On 3/19/26 10:54 AM, Neil Armstrong wrote:
-> > > On 3/19/26 15:40, Alexander Koskovich wrote:
-> > > > On Thursday, March 19th, 2026 at 10:13 AM, Neil Armstrong
-> > > > <neil.armstrong@linaro.org> wrote:
-> > > >
-> > > > > Hi,
-> > > > >
-> > > > > On 3/19/26 12:58, Alexander Koskovich wrote:
-> > > > > > Using bits_per_component * 3 as the divisor for the compressed =
-INTF
-> > > > > > timing width produces constant FIFO errors for the BOE BF068MWM=
--TD0
-> > > > > > panel due to bits_per_component being 10 which results in a div=
-isor
-> > > > > > of 30 instead of 24.
-> > > > > >
-> > > > > > Regardless of the compression ratio and pixel depth, 24 bits of
-> > > > > > compressed data are transferred per pclk, so the divisor should
-> > > > > > always be 24.
-> > > > >
-> > > > > Not true with widebus, specify why 24 and because DSI widebus is
-> > > > > not implemented yet.
-> > > > >
-> >
-> > DSI widebus is implemented, and always used when available. The adjustm=
-ent
-> > for DSI widebus just doesn't happen in this function.
-> >
-> > > > > >
-> > > > > > Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
-> > > > > > ---
-> > > > > >    drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 9 +++=
-+-----
-> > > > > >    1 file changed, 4 insertions(+), 5 deletions(-)
-> > > > > >
-> > > > > > diff --git
-> > > > > > a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> > > > > > b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> > > > > > index 0ba777bda253..5419ef0be137 100644
-> > > > > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> > > > > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> > > > > > @@ -122,19 +122,18 @@ static void drm_mode_to_intf_timing_param=
-s(
-> > > > > >        }
-> > > > > >
-> > > > > >        /*
-> > > > > > -     * for DSI, if compression is enabled, then divide the
-> > > > > > horizonal active
-> > > > > > -     * timing parameters by compression ratio. bits of 3
-> > > > > > components(R/G/B)
-> > > > > > -     * is compressed into bits of 1 pixel.
-> > > > > > +     * For DSI, if DSC is enabled, 24 bits of compressed data =
-are
-> > > > > > +     * transferred per pclk regardless of the source pixel dep=
-th.
-> > > > > >         */
-> > > > > >        if (phys_enc->hw_intf->cap->type !=3D INTF_DP &&
-> > > > > > timing->compression_en) {
-> > > > > >            struct drm_dsc_config *dsc =3D
-> > > > > >                   dpu_encoder_get_dsc_config(phys_enc->parent);
-> > > > > > +
-> > > > > Drop this change
-> > > > >
-> > > > > >            /*
-> > > > > >             * TODO: replace drm_dsc_get_bpp_int with logic to h=
-andle
-> > > > > >             * fractional part if there is fraction
-> > > > > >             */
-> > > > > > -        timing->width =3D timing->width * drm_dsc_get_bpp_int(=
-dsc) /
-> > > > > > -                (dsc->bits_per_component * 3);
-> > > > > > +        timing->width =3D timing->width * drm_dsc_get_bpp_int(=
-dsc) / 24;
-> > > > >
-> > > > > It would be helpful to somehow show that 24 is 8 * 3, 8 being
-> > > > > the byte width and 3 the compression ratio.
-> > > >
-> > > > Can you clarify what the 3 represents? My panel should have a 3.75:=
-1
-> > > > compression
-> > > > ratio (30/8) so the final divisor of 24 would be wrong for my panel
-> > > > if its the
-> > > > compression ratio?
-> > >
-> > > So my guess is that while the exact ratio on the DSI lanes is 3.75:1,
-> > > the ratio
-> > > used to calculate the INTF timings is 3, then the DSC encoder probabl=
-y
-> > > does the
-> > > magic to feed 10bpp into a 3.75:1 ratio over the DSI lanes.
-> > >
-> >
-> > That's not how it works. INTF (which feeds DSI) is after DSC compressio=
-n.
-> >
-> > INTF timings are always in RGB888 (24-bit) units. Ignoring widebus deta=
-ils,
-> > the INTF timing should match what is programmed on the DSI side (hdispl=
-ay,
-> > which is calculated as bytes per line / 3).
-> >
-> > (fwiw, the current "timing->width =3D ..." calculation here blames to m=
-e, but
-> > what I wrote originally was just "timing->width =3D timing->width / 3" =
-with a
-> > comment about being incomplete.)
-> >
+...
+>>
+>> That's not how it works. INTF (which feeds DSI) is after DSC compression.
+>>
+>> INTF timings are always in RGB888 (24-bit) units. Ignoring widebus details,
+>> the INTF timing should match what is programmed on the DSI side (hdisplay,
+>> which is calculated as bytes per line / 3).
+>>
+>> (fwiw, the current "timing->width = ..." calculation here blames to me, but
+>> what I wrote originally was just "timing->width = timing->width / 3" with a
+>> comment about being incomplete.)
+>>
 > Okay. After reading the docs (sorry, it took a while).
->=20
+> 
 > - When widebus is not enabled, the transfer is always 24 bit of
->   compressed data. Thus if it is not in play, pclk and timing->width
->   should be scaled by source_pixel_depth / compression_ratio / 24. In
->   case of the code it is 'drm_dsc_get_bpp_int(dsc) / 24'.
->=20
->   For RGB101010 / 8bpp DSC this should result in the PCLK being lowered
->   by the factor of 3 (=3D 24 / (30 / 3.75))
->=20
+>    compressed data. Thus if it is not in play, pclk and timing->width
+>    should be scaled by source_pixel_depth / compression_ratio / 24. In
+>    case of the code it is 'drm_dsc_get_bpp_int(dsc) / 24'.
+> 
+>    For RGB101010 / 8bpp DSC this should result in the PCLK being lowered
+>    by the factor of 3 (= 24 / (30 / 3.75))
+> 
 > - When widebus is in play (MDSS 6.x+, DSI 2.4+), the transfer takes
->   more than 24 bits. In this case the PCLK and timing->width should be
->   scaled exactly by the DSC compression ratio, which is
->   'drm_dsc_get_bpp_int(dsc) / (3 * dsc->bits_per_component).
->=20
+>    more than 24 bits. In this case the PCLK and timing->width should be
+>    scaled exactly by the DSC compression ratio, which is
+>    'drm_dsc_get_bpp_int(dsc) / (3 * dsc->bits_per_component).
+> 
 > So, this piece of code needs to be adjusted to check for the widebus
 > being enabled or not.
->=20
+> 
 
-Modified drm_mode_to_intf_timing_params & dsi_adjust_pclk_for_compression t=
-o account for widebus, but the hdisplay I get is different from stock with =
-widebus factored in. Getting 288 instead of 360 now which produces constant=
- FIFO errors.
+The widebus adjustment on the MDP/INTF side is already in 
+dpu_hw_intf_setup_timing_engine: the "data width" is divided by 2 for 
+48-bit widebus instead of 24-bit. there shouldn't be any other 
+adjustment (downstream doesn't have any other adjustment).
 
-This is with widebus enabled, using 3 * dsc->bits_per_component. Should it =
-be 24 regardless of widebus?
+a relevant downstream comment: "In DATABUS-WIDEN mode, MDP always sends 
+out 48-bit compressed data per pclk and on average, DSI consumes an 
+amount of compressed data equivalent to the uncompressed pixel depth per 
+pclk."
 
-> > > In dsi_adjust_pclk_for_compression, the pclk is adjusted to take in
-> > > account bits_per_component,
-> > > so I presume the actual DSI pclk _is_  timing->width *
-> > > drm_dsc_get_bpp_int(dsc) / (dsc->bits_per_component * 3),
-> > > which is your 3.75:1, but the INTF needs to generate timing->width *
-> > > drm_dsc_get_bpp_int(dsc) / (8 * 3) pixels
-> > > to the DSC encoder which will emit timing->width *
-> > > drm_dsc_get_bpp_int(dsc) / (dsc->bits_per_component * 3) pixels.
-> > >
-> >
-> > The hdisplay calculation in dsi_adjust_pclk_for_compression (which only
-> > affects the clock rate) seems to be wrong, and I think Alexander's pane=
-l
-> > must be running at a 20% lower clock because of it. dsi_timing_setup ha=
-s the
-> > right hdisplay adjustment.
->=20
-> That function also needs to be adjusted accordingly. I think only the
-> dsi_timing_setup() is correct at this point. Note, widebus / not-widebus
-> cases should be handled separately.
->=20
-> > > In any case, 24 _is_ 3 * 8, 3 being the DSC compression ratio on the
-> > > INTF side.
->=20
-> In this case DSC compression ratio is 3.75, so it's not true.
->=20
-> --
-> With best wishes
-> Dmitry
->=20
+Based on that comment, this patch is correct, and the 
+''drm_dsc_get_bpp_int(dsc) / (3 * dsc->bits_per_component)' adjustment 
+only applies to DSI. (note: newer downstream looks like it would divide 
+by 3.75 here, which doesn't make sense. older downstream would divide by 
+3 here. I guess downstream is broken now and video mode + 10-bit dsc 
+doesn't get tested?)
 
-Thanks,
-Alex
+on DSI side, "uncompressed pixel depth" shouldn't matter either: DSI 
+only sees the compressed data. But based on that comment, when widebus 
+is enabled, by setting DSI_VID_CFG0_DST_FORMAT(?) to 30bpp, then the DSI 
+pclk is in 30-bit units instead of 24-bits. And with this series DSI 
+side ends up with the right result if 30bpp format and widebus is enabled.
 
