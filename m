@@ -1,261 +1,301 @@
-Return-Path: <linux-arm-msm+bounces-98929-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98930-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MOgeHhlJvWlr8gIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98929-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 14:18:17 +0100
+	id wNthFr9JvWlr8gIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98930-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 14:21:03 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77B9B2DAD52
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 14:18:16 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9BA372DADE0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 14:21:02 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 6D28D301372B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 13:18:13 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 428BD3096A51
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 13:18:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A06D3B38A3;
-	Fri, 20 Mar 2026 13:18:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D54793B38B9;
+	Fri, 20 Mar 2026 13:18:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DHKcB61j";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="QKfkaNg4"
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="eh6ftGeC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mail-106120.protonmail.ch (mail-106120.protonmail.ch [79.135.106.120])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D25E23803CE
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Mar 2026 13:18:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05AE340DFC6
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Mar 2026 13:18:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.120
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774012692; cv=none; b=BsCI8gIITHJ2LcNtcAziqLwTIxpZcxDj5txutfaSWRAgqxMdNIQqOQYUfGH32ruDPMcnBncK31KDZIiN9bq5IiAg9wzZH/ddqEShMLQnyT6ZM54tc+5ACfHY05vKd6/h2BBgCqr/5+XKuB74EGmfXShfcDzJTBsh1ccWzPRcvGM=
+	t=1774012735; cv=none; b=u5ZNJKK/iZn4ApeLkOFOOvw5NUq3BxzxHAvXaVvBYzAwysAobvorQs9JLcFU8tKJgw4VIMuGj6JyjpJjnexpSIMJMmd82MWGSg07s/mfC5n87UImyF1ISmzPSXgwdJ5PC5RrRst5D5kQC16vXmkHHxW8l3fL+N/iAQMQ4s/H8Ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774012692; c=relaxed/simple;
-	bh=GFtPOIS2d3ylVKkbDZTigEDzxkx3dmQGhTmUhaceH9E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=X5tkqhIi1Hd5+bi+kMcSnyOi5Ict4z0jkKI5RXC9y8YJVZzBfSRQvJxURaFEKHZG9XfJSRRfSPO+uV5DCcTWYc8C2SHLcfFH+upozRecyoXc6sdvJnLE7NjkU9bS8wfUcmDCeEqY8IQl+j7RiB15U92+qlJLcSQSZf/zC71950Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DHKcB61j; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=QKfkaNg4; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62KA7cLG3347646
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Mar 2026 13:18:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	nN+EpZcfjM4UEYkobqRL5eWDhWbXf0Ts9cWhVsyvUK8=; b=DHKcB61jHehqeBur
-	ss7vEYVwG5/86QEBhdc5juXAPznv6NDzswrrwyitGdWZY4seY8+/omgW0UhALkVM
-	KUT/Mpkk5vL6xY4TvchmS/CR/4c9yU8SbB+och1eilD+Qo1N+7LRcMSJIJFy//Wh
-	TSBaNIxnHhmJbeyLYXv74rew620b19Knd5zW/Ey0ForBmo53M1xE0JKHDwRkVkPT
-	9cUH5tPyJAPqztFLviX561xyipwrj35theXNHy+sVE2bqlxp5xjTDw1H4v0g39sT
-	+W2Rd4KqxtIGImrOLhd2yeP+5hcNs8819L/z9l9Y2RXPOoRf7E3Q9gYV9jq3yO7k
-	rQxsDg==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d1479rdp5-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Mar 2026 13:18:10 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-c738b1f630eso7376859a12.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Mar 2026 06:18:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1774012690; x=1774617490; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=nN+EpZcfjM4UEYkobqRL5eWDhWbXf0Ts9cWhVsyvUK8=;
-        b=QKfkaNg4DNPeOmwvjiGfEUTitMe5CcUgoAKAqrG/mf82FU/fO+BrRGpeC6HcWdaU71
-         FUobN0E9X5waTYRFrpYvThY4+gUjmkBTmdEDlLdvd+21qPjRo1gHcQM8NF0F2TVqZ/VY
-         LBzT6NTYQRBS6wqeAPDXCSLIc9nfmyyAo1ZO1EGUhfwenF1lpAki5s1cKZAZcHb7YifQ
-         8suFVNrkeIvYVsUkMcvfeKkASYAdx4Hpjch4U5bXT0TcL6nwMXtfipzp2uo+KcertUMj
-         O8TqmQ7V9Bz9Hm96uSvJM09lRKDuXgiqQyLssexD/UN+P5qKULPePOjdwQtgHLNQYXfu
-         JWig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774012690; x=1774617490;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nN+EpZcfjM4UEYkobqRL5eWDhWbXf0Ts9cWhVsyvUK8=;
-        b=U+vjXEs0oP3bL++XzkAORBg98Obh0RLDbA0IyU9LmRDo+pgTPw0Tq9K+2TRXg1vq4Q
-         /zF6NEKZlBs4vOvaxZdBis5QJh+bkxzXFbi7l5dqM7Wdbtw6Ud+XMK1KbpM54ZU1apCb
-         ybAbINj8Kg9El0Ai7nVauTPnmg1hWrHG+C8VdbkpEeiSlH7rW8IIFQB/E1mxeVD+68Bu
-         tHUva1oRs0awKpdgmdxolA/DizyomJt5s/5BdpZJ4EMAXTedrmTLq3tOyfCrvVlZH9Yr
-         ejRmg5R0cWz/rLCHbfpgA3tNDV+Oq1FGWKSUBJ0bSSA8sqS5H6urCvlLIUy9c6rUOL3c
-         AyAg==
-X-Forwarded-Encrypted: i=1; AJvYcCUtZEy0aGwVNJzr3YYZ+WBaCNCu0dzzMtGVMKwmgIImGsdf/M7UXgXRC8v8MoKGjyVrey0zR1zh6KbEf3KH@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzo1PhIVZRIA29dJ+CbRHSLH6FGLSvVd0PdH4wBjpVNV54Bt8Dl
-	H7nsHLYot6KxwqNahMuo1PyhWeKJhbR0robnKj8F0Vpwhfravobj2TbQhJOHVlOCjLr8Mt9KMvf
-	oJx0KQ2SQwEHzsFjn6gkomP4i6vZnyt+d735Ko3GEdL2fMo8A/gRMToZquTwkwkltovb8
-X-Gm-Gg: ATEYQzwwInr2Vb6dQ9PeIxhSROrwKiD5NzNEib3p+RI8DsTKVzHacRWz+j+01N/6TER
-	+7M+XuAjMlwNs9HWrd/XEWr9LZBKFYvLyKpFMDUCnSxko5yTg9N7W8ye69JCE2M/zb4pKblEWX+
-	EaUv9qyD2TmLI/ze4zAmKWf0oNt4M7sACKUdXE+STrRGdGJFt2bkIFq5enXlRqUybNJLbLOgCHa
-	lQ6YH1t6oUVAoux6wGdNgf0ZsV+zQso7QAefZjRGJ8NtF9obGwH9B2Va2NuKqLk89rZwYCZHrWv
-	cVuaDuE9Y+7C3IafsmL6048FsUxiFh75NoZuV3gfdkdN7TYiWFGohFJ03gNNEEx3IaW1PX/Nlfn
-	e54RKF7DxLpQQz76kcJFxdr2Fw0bQbRWukoGT51XLlHrz/O61buQohI8p
-X-Received: by 2002:a05:6a21:3295:b0:398:8766:4d0a with SMTP id adf61e73a8af0-39bce9c06d7mr2867291637.19.1774012689406;
-        Fri, 20 Mar 2026 06:18:09 -0700 (PDT)
-X-Received: by 2002:a05:6a21:3295:b0:398:8766:4d0a with SMTP id adf61e73a8af0-39bce9c06d7mr2867236637.19.1774012688756;
-        Fri, 20 Mar 2026 06:18:08 -0700 (PDT)
-Received: from [192.168.1.8] ([106.222.229.133])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c74487b5b8csm1872880a12.31.2026.03.20.06.18.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Mar 2026 06:18:08 -0700 (PDT)
-Message-ID: <bf9196ae-d03e-435c-9e57-ca053a4a19b1@oss.qualcomm.com>
-Date: Fri, 20 Mar 2026 18:48:02 +0530
+	s=arc-20240116; t=1774012735; c=relaxed/simple;
+	bh=+VPmp7IMlJPgzTMrLHwZOofrcHFn1EyzWO7VxzWbh+8=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=hk0Gh0/gQ1cJJLkAp1jC+//9Kp1K0XTIuhQ4agRq10kWCQOtvBAaDYkiow6mNwJZnqzoMMR6H/3D+Gk6I+xtTseTc7x66YzKLqsGLZzupWzuwyi5YcW5I3B7r8+MFnrRd0bQVPFNItXbZs/Qii+mqdPWKR8dJkjQj+KNRxrw6Wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=eh6ftGeC; arc=none smtp.client-ip=79.135.106.120
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1774012730; x=1774271930;
+	bh=L+RYU5Awoi88xADCO5KONFOAwA1IRVD7DZ8uuZNypIc=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=eh6ftGeC5chEVxJBe+/3xQE/if7WjUSCeg/3mAmrN8gJJ5x+6y4dfRbL02tn6WmuL
+	 5NBI5+jfwhwwJBsE9CkQOI4mmdhmGxRjdUd4r5A+O6KaEDpAnB15tOgpC5wzY9NCMV
+	 ffMYRU/jR6NA/laCADImOfD0/5ex7hLQv0MgEUpondjp7m1JpCdip7FPsz6sr7ZEX2
+	 Qu88tQcmOUWfOrg9wqfS8JGZHEN9bsbXS+PebZPl7lVX7X20H5aNozWgrdGh5BS3VB
+	 PJAMAYcwHQTmE+EqTXPI2PmvR8H2OC28tkLHGFUfSZZcqB+61fmSBLABXt5xfwichM
+	 PeDFgTXOHKotw==
+Date: Fri, 20 Mar 2026 13:18:44 +0000
+To: Pengyu Luo <mitltlatltl@gmail.com>
+From: Alexander Koskovich <akoskovich@pm.me>
+Cc: Abhinav Kumar <abhinav.kumar@linux.dev>, David Airlie <airlied@gmail.com>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, jeffrey.l.hugo@gmail.com, Jessica Zhang <jesszhan0024@gmail.com>, Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, Dmitry Baryshkov <lumag@kernel.org>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Marijn Suijten <marijn.suijten@somainline.org>, Maxime Ripard <mripard@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, Simona Vetter <simona@ffwll.ch>, Thomas Zimmermann <tzimmermann@suse.de>
+Subject: Re: [PATCH v3 4/4] drm/msm/dpu: fix video mode DSC INTF timing width calculation
+Message-ID: <ZPf83Rxo54mgr4un9o9CNu9rXp4-8cQ8jkYIfHZODIzbJXEMISRS2PZKYqDCijOAq1N2eq0Wnt-kS0ys9KV0uB5TawUQLNjNcSzfQeUWe10=@pm.me>
+In-Reply-To: <CAH2e8h5tns-sXZ3-cvBmeAgbkNT1sG0kxNeaUGZnHoFEYh-Tjg@mail.gmail.com>
+References: <CAH2e8h6oinKxN1ndcvHCSc+=bFLXVVDZVAVF0cQHoiaMvEwhPQ@mail.gmail.com> <X2fV9mpVHV6Qk8-ImS7vxqDQXFt4K85jPKJWnxVono324hHaRh7x13f2HYM4CKNK-UDqrmP8Jz79-oVklw8vLBfaxPbVuQq4FBfblu27R9s=@pm.me> <CAH2e8h5tns-sXZ3-cvBmeAgbkNT1sG0kxNeaUGZnHoFEYh-Tjg@mail.gmail.com>
+Feedback-ID: 37836894:user:proton
+X-Pm-Message-ID: 98c4ebea40feaa728b7e8c1b654babb38ba4c093
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: qcs6490-rb3gen2: Enable CAN bus
- controller
-To: Marc Kleine-Budde <mkl@pengutronix.de>
-Cc: mani@kernel.org, thomas.kopp@microchip.com, mailhol@kernel.org,
-        robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-        andersson@kernel.org, konradybcio@kernel.org,
-        linux-can@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        mukesh.savaliya@oss.qualcomm.com, anup.kulkarni@oss.qualcomm.com
-References: <20260316131950.859748-1-viken.dadhaniya@oss.qualcomm.com>
- <20260316131950.859748-4-viken.dadhaniya@oss.qualcomm.com>
- <20260316-garrulous-saluki-of-advertising-b0a726-mkl@pengutronix.de>
-Content-Language: en-US
-From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
-In-Reply-To: <20260316-garrulous-saluki-of-advertising-b0a726-mkl@pengutronix.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: eddsCWjCMicaHnvMzMw5kHl_KFCZeXYM
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzIwMDEwNSBTYWx0ZWRfX9U2NOu9ymo7x
- c67/kEbOKeYJ1fG+7BIsf30YEQAbvgXsSQs62qLBcibjlIgiG4IQgaABY/4QV0EAQeDWP2iKIGv
- vyfxwp80JfNQhZtwSxfEhROoBK6TJOl+eX0ajAhhARxG2GoIlmRJwjyNeIFDd4PXkw3Eck5oWS9
- skLtx2wa6kqN/HIllMVjupaXTKiryTyEenGbXo/Lm+N5OkIilW4JWwqbNZzxGydI4vrYd0FKAiK
- 5A+fOIN6vv3SXevLsu4RJyonxTPxMm1fs1X6AMDp/wLlWO/MS3IwvcyyPx/SSbL1LezbevgLP78
- SGfPotU87nWFD8mlu5id961IV5VMUQJVp8lOeUjHqT9w5SpOITF2KTKp1oxIHnjZCSi6GLW3P7e
- RPInm3o6kuf01Gph64/KwPocFA7bWsaFTnhqKKXzGGOUaaWjoJx6Gp5sYrWviw37n3p9pOSxP5E
- Ykzos8Ce6UoYf33ShXw==
-X-Proofpoint-ORIG-GUID: eddsCWjCMicaHnvMzMw5kHl_KFCZeXYM
-X-Authority-Analysis: v=2.4 cv=fOo0HJae c=1 sm=1 tr=0 ts=69bd4912 cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=cGBE/nqsz5+qsjWdF/9VHQ==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=LcWsMGrysshWCZgQONgA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=_Vgx9l1VpLgwpw_dHYaR:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-20_02,2026-03-19_05,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 phishscore=0 malwarescore=0 spamscore=0
- adultscore=0 priorityscore=1501 bulkscore=0 clxscore=1015 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603200105
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
+	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[15];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-98929-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,qualcomm.com:dkim,qualcomm.com:email,0.0.0.0:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[viken.dadhaniya@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-98930-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	NEURAL_HAM(-0.00)[-0.991];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_THREE(0.00)[3];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_TO(0.00)[gmail.com];
+	RCPT_COUNT_TWELVE(0.00)[20];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[linux.dev,gmail.com,oss.qualcomm.com,lists.freedesktop.org,marek.ca,vger.kernel.org,kernel.org,linux.intel.com,somainline.org,linaro.org,poorly.run,ffwll.ch,suse.de];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-0.913];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[pm.me:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 77B9B2DAD52
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[marek.ca:email,pm.me:dkim,pm.me:email,pm.me:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: 9BA372DADE0
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
+On Friday, March 20th, 2026 at 8:20 AM, Pengyu Luo <mitltlatltl@gmail.com> =
+wrote:
+
+> On Fri, Mar 20, 2026 at 8:14=E2=80=AFPM Alexander Koskovich <akoskovich@p=
+m.me> wrote:
+> >
+> > On Friday, March 20th, 2026 at 8:08 AM, Pengyu Luo <mitltlatltl@gmail.c=
+om> wrote:
+> >
+> > > On Fri, Mar 20, 2026 at 4:17=E2=80=AFPM Alexander Koskovich <akoskovi=
+ch@pm.me> wrote:
+> > > > >
+> > > > > On Friday, March 20th, 2026 at 3:36 AM, Dmitry Baryshkov <dmitry.=
+baryshkov@oss.qualcomm.com> wrote:
+> > > > >
+> > > > > > On Fri, Mar 20, 2026 at 07:02:54AM +0000, Alexander Koskovich w=
+rote:
+> > > > > > > On Friday, March 20th, 2026 at 2:50 AM, Alexander Koskovich <=
+akoskovich@pm.me> wrote:
+> > > > > > >
+> > > > > > > > On Friday, March 20th, 2026 at 2:38 AM, Dmitry Baryshkov <d=
+mitry.baryshkov@oss.qualcomm.com> wrote:
+> > > > > > > >
+> > > > > > > > > On Fri, Mar 20, 2026 at 04:46:02AM +0000, Alexander Kosko=
+vich wrote:
+> > > > > > > > > > On Friday, March 20th, 2026 at 12:25 AM, Jonathan Marek=
+ <jonathan@marek.ca> wrote:
+> > > > > > > > > >
+> > > > > > > > > > > On 3/19/26 9:45 PM, Dmitry Baryshkov wrote:
+> > > > > > > > > > > > On Thu, Mar 19, 2026 at 01:23:03PM -0400, Jonathan =
+Marek wrote:
+> > > > > > > > > > > ...
+> > > > > > > > > > > >>
+> > > > > > > > > > > >> That's not how it works. INTF (which feeds DSI) is=
+ after DSC compression.
+> > > > > > > > > > > >>
+> > > > > > > > > > > >> INTF timings are always in RGB888 (24-bit) units. =
+Ignoring widebus details,
+> > > > > > > > > > > >> the INTF timing should match what is programmed on=
+ the DSI side (hdisplay,
+> > > > > > > > > > > >> which is calculated as bytes per line / 3).
+> > > > > > > > > > > >>
+> > > > > > > > > > > >> (fwiw, the current "timing->width =3D ..." calcula=
+tion here blames to me, but
+> > > > > > > > > > > >> what I wrote originally was just "timing->width =
+=3D timing->width / 3" with a
+> > > > > > > > > > > >> comment about being incomplete.)
+> > > > > > > > > > > >>
+> > > > > > > > > > > > Okay. After reading the docs (sorry, it took a whil=
+e).
+> > > > > > > > > > > >
+> > > > > > > > > > > > - When widebus is not enabled, the transfer is alwa=
+ys 24 bit of
+> > > > > > > > > > > >    compressed data. Thus if it is not in play, pclk=
+ and timing->width
+> > > > > > > > > > > >    should be scaled by source_pixel_depth / compres=
+sion_ratio / 24. In
+> > > > > > > > > > > >    case of the code it is 'drm_dsc_get_bpp_int(dsc)=
+ / 24'.
+> > > > > > > > > > > >
+> > > > > > > > > > > >    For RGB101010 / 8bpp DSC this should result in t=
+he PCLK being lowered
+> > > > > > > > > > > >    by the factor of 3 (=3D 24 / (30 / 3.75))
+> > > > > > > > > > > >
+> > > > > > > > > > > > - When widebus is in play (MDSS 6.x+, DSI 2.4+), th=
+e transfer takes
+> > > > > > > > > > > >    more than 24 bits. In this case the PCLK and tim=
+ing->width should be
+> > > > > > > > > > > >    scaled exactly by the DSC compression ratio, whi=
+ch is
+> > > > > > > > > > > >    'drm_dsc_get_bpp_int(dsc) / (3 * dsc->bits_per_c=
+omponent).
+> > > > > > > > > > > >
+> > > > > > > > > > > > So, this piece of code needs to be adjusted to chec=
+k for the widebus
+> > > > > > > > > > > > being enabled or not.
+> > > > > > > > > > > >
+> > > > > > > > > > >
+> > > > > > > > > > > The widebus adjustment on the MDP/INTF side is alread=
+y in
+> > > > > > > > > > > dpu_hw_intf_setup_timing_engine: the "data width" is =
+divided by 2 for
+> > > > > > > > > > > 48-bit widebus instead of 24-bit. there shouldn't be =
+any other
+> > > > > > > > > > > adjustment (downstream doesn't have any other adjustm=
+ent).
+> > > > > > > > > > >
+> > > > > > > > > > > a relevant downstream comment: "In DATABUS-WIDEN mode=
+, MDP always sends
+> > > > > > > > > > > out 48-bit compressed data per pclk and on average, D=
+SI consumes an
+> > > > > > > > > > > amount of compressed data equivalent to the uncompres=
+sed pixel depth per
+> > > > > > > > > > > pclk."
+> > > > > > > > > > >
+> > > > > > > > > > > Based on that comment, this patch is correct, and the
+> > > > > > > > > > > ''drm_dsc_get_bpp_int(dsc) / (3 * dsc->bits_per_compo=
+nent)' adjustment
+> > > > > > > > > > > only applies to DSI.
+> > > > > > > > > >
+> > > > > > > > > > If I keep the INTF side at /24 and change the DSI side =
+to:
+> > > > > > > > > >
+> > > > > > > > > > if (wide_bus)
+> > > > > > > > > >         new_hdisplay =3D DIV_ROUND_UP(mode->hdisplay * =
+drm_dsc_get_bpp_int(dsc), dsc->bits_per_component * 3);
+> > > > > > > > > > else
+> > > > > > > > > >         new_hdisplay =3D DIV_ROUND_UP(mode->hdisplay * =
+drm_dsc_get_bpp_int(dsc), 24);
+> > > > > > > > >
+> > > > > > > > > Please check the actual fps (I'm usually using a vblank-s=
+ynced GL, e.g.
+> > > > > > > > > kmscube).
+> > > > > > > > >
+> > > > > > > > > At least this matches my expectations.
+> > > > > > > >
+> > > > > > > > Hmmm with kmscube I am getting 120FPS with 24 and 100FPS wi=
+th 30. So I guess that's a no go
+> > > > > > >
+> > > > > > > Although it was using dsc->bits_per_component * 3 regardless =
+before for
+> > > > > > > dsi_adjust_pclk_for_compression so I guess that's what Jonath=
+an was
+> > > > > > > referring to earlier...
+> > > > > >
+> > > > > > Do you have any of the patches by Marijn or Pengyu?
+> > > > > >
+> > > > > > - https://lore.kernel.org/linux-arm-msm/20260311-dsi-dsc-regres=
+ses-again-v1-1-6a422141eeea@somainline.org/
+> > > > > >
+> > > > > > - https://lore.kernel.org/linux-arm-msm/20260307111250.105772-1=
+-mitltlatltl@gmail.com/
+> > > > >
+> > > > > Nope, I can test with them though if you'd like
+> > > >
+> > > > Tested the following 3 patches on top of this series:
+> > > > drm/msm/dsi: fix hdisplay calculation when programming dsi register=
+s
+> > > > drm/msm/dsi: fix bits_per_pclk
+> > > > drm/msm/dsi: fix hdisplay calculation for CMD mode panel
+> > > >
+> > > > Getting constant FIFO errors with them applied:
+> > > > [   64.851635] dsi_err_worker: status=3D4
+> > > > [   64.851692] dsi_err_worker: status=3D4
+> > > > [   64.851730] dsi_err_worker: status=3D4
+> > > > [   64.851766] dsi_err_worker: status=3D4
+> > > > [   64.851802] dsi_err_worker: status=3D4
+> > > > [   64.851837] dsi_err_worker: status=3D4
+> > > > [   64.851903] dsi_err_worker: status=3D4
+> > > > [   64.851940] dsi_err_worker: status=3D4
+> > > > [   64.851976] dsi_err_worker: status=3D4
+> > > > [   64.852011] dsi_err_worker: status=3D4
+> > >
+> > > Personally, I use
+> > > timing->width =3D DIV_ROUND_UP(timing->width * drm_dsc_get_bpp_int(ds=
+c),
+> > >                          dsc->bits_per_component * 3);
+> > >
+> > > DIV_ROUND_UP is magic for me. If not, I got status=3D4 too.
+> > >
+> > > This works for 8-bit dst bpc with 10-bit src bpc.
+> >
+> > Did a quick test with that (plus the 3 changes listed above), still get=
+ting the
+> > FIFO errors and no display.
+> >
+> > Are you using RGB101010?
+> >
+>=20
+> RGB101010(dst bpp) downstream, my panel supports RGB101010, and I can
+> use RGB888 for it too.
+> I am testing rgb101010.
+> BTW, have you dumped registers? compared with downstream.
+>=20
+> I hardcode
+> display_data_hctl =3D (0xbe << 16) | hsync_data_start_x;
+> in dpu_hw_intf.c
+> downstream uses 0xbe for data_width
+
+Can you try this series with ac47870fd ("drm/msm/dsi: fix hdisplay calculat=
+ion when programming dsi registers") reverted and with the following 2 chan=
+ges?
+
+https://github.com/AKoskovich/linux/commit/af24b0e2ee212153953dfee040da5cc0=
+77567363
+https://github.com/AKoskovich/linux/commit/e334675c0caf47956a838e2eafda22fb=
+689a967d
 
 
-On 3/16/2026 6:59 PM, Marc Kleine-Budde wrote:
-> On 16.03.2026 18:49:50, Viken Dadhaniya wrote:
->> Enable the MCP2518FD CAN controller on the QCS6490 RB3 Gen2 platform.
->> The controller is connected via SPI3 and uses a 40 MHz oscillator.
->>
->> The setup was tested with CAN-FD loopback and actual data transfer
->> using an external PCAN-USB FD adapter.
-> 
-> IIRC a board DT update should go independent of the driver update.
-
-Sure, I will send the device tree changes separately.
-
-> 
->> Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
->> ---
->> v1 -> v2:
->>
->> - Drop the gpio-hog property.
->> - Add the microchip,xstbyen property to enable transceiver standby control.
->>
->> v1 Link: https://lore.kernel.org/all/20260108125200.2803112-3-viken.dadhaniya@oss.qualcomm.com/
->> ---
->> ---
->>  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 22 ++++++++++++++++++++
->>  1 file changed, 22 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
->> index e3d2f01881ae..245961722f84 100644
->> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
->> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
->> @@ -44,6 +44,14 @@ chosen {
->>  		stdout-path = "serial0:115200n8";
->>  	};
->>
->> +	clocks {
->> +		mcp2518fd_osc: can-clk {
->> +			compatible = "fixed-clock";
->> +			clock-frequency = <40000000>;
->> +			#clock-cells = <0>;
->> +		};
->> +	};
->> +
->>  	dp-connector {
->>  		compatible = "dp-connector";
->>  		label = "DP";
->> @@ -1151,6 +1159,20 @@ platform {
->>  	};
->>  };
->>
->> +&spi3 {
->> +	status = "okay";
->> +
->> +	can@0 {
->> +		compatible = "microchip,mcp2518fd";
->> +		reg = <0>;
->> +		interrupts-extended = <&tlmm 7 IRQ_TYPE_LEVEL_LOW>;
->> +		clocks = <&mcp2518fd_osc>;
->> +		spi-max-frequency = <10000000>;
-> 
-> Why do you limit the frequency to 10 MHz? Is this a HW limitation?
-> 
-> With a 40 MHz clock the chip supports up to 17 MHz (not 20 MHz due to
-> the erratum).
-
-The 10 MHz was overly conservative. Testing on this board shows:
-
-  spi-max-frequency = <14000000>: actual SCK = 12.8 MHz  => OK
-  spi-max-frequency = <15000000>: actual SCK = 15.0 MHz  => FAIL
-
-Any SCK >= 14.7 MHz fails to initialize the MCP251xFD on this board,
-so 12.8 MHz is the highest reliable SCK within the erratum limit of
-17 MHz.
-
-Will update to spi-max-frequency = <14000000>.
-
-> 
-> Marc
+>=20
+> Best wishes,
+> Pengyu
+> > >
+> > > Best wishes,
+> > > Pengyu
+> > >
+> >
+> > Thanks,
+> > Alex
+>=20
 > 
 
