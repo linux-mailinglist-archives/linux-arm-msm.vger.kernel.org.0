@@ -1,183 +1,203 @@
-Return-Path: <linux-arm-msm+bounces-98903-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98904-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id EKA7Gc4SvWnG6QIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98903-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 10:26:38 +0100
+	id 8HK7IkcavWnG6QIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98904-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 10:58:31 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE8A52D7FC1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 10:26:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0DE862D8601
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 10:58:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 801303010B82
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 09:26:36 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 49B4030B3D4D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 09:56:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 123DE361674;
-	Fri, 20 Mar 2026 09:26:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B86A3590AE;
+	Fri, 20 Mar 2026 09:56:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lE7vjFKL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uyHPrjR3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B75AF33F5BA;
-	Fri, 20 Mar 2026 09:26:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCBB9383C6B;
+	Fri, 20 Mar 2026 09:56:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773998796; cv=none; b=n04PrF/FAVbT0omCTd7+ssf6itOsI2vlaBfDDjZJMdI0YsZ4dM0uxKCBfj95TOkXkicxYoA40pCSZMwvmKhRAQnnN47v2xfaTk6Zn3t/DdDx5Z6QRcI8N7Y8Pd7zKM6LyUCeiaBvZYGGtNHfuywklNINCBfLw6yGE8XazU6jh0U=
+	t=1774000606; cv=none; b=W7lanbxKW757+HF0tErp1G5yD6kD80vxYXuEgjQNJ+XqfjZnBuyQifYFlYIPh4fWKCv1HmmW803rg5DlUy/jWbd3zgM8Vu9mCphxBQAsZfbLgolNNcVYDxOE1by6XyuMPMn2smFuh8Sj9faQhWvZ8DPfkaMM1GcuoL3wNxU0wyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773998796; c=relaxed/simple;
-	bh=DOGaCuBCTRkz1PBAmYE+qDUnukQ0pca3NhU408CcktE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=E2/5kLy53T9LsyA+TYj8iCUasAd1+08f47U+kCkp52Tvjj+eaLZ/Go++6Yl8W3l1brj/F73/z0Y46z3PFoIQlXFb6FNTRpceqkJ+k2QAnipQcrN0yJrfiHINbFnyLrOvdA5jOjD412JbW5bJdYJUxMQOFSGJKK+SDahL8YMbDTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=lE7vjFKL; arc=none smtp.client-ip=192.198.163.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1773998795; x=1805534795;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=DOGaCuBCTRkz1PBAmYE+qDUnukQ0pca3NhU408CcktE=;
-  b=lE7vjFKLo3fnUv+L7/SPtCF62vh6NZf2Rx65mOfV4W5+FCspx6U8Jhgq
-   DLYjrIMKIAjd9KWWQckSW7WVQOYWGAL/Z+rThZimXVTj4sPbjewVRfmtj
-   kEwFejGbjxVCSXOb82gr6YupadYvwhbhJVSkS2UAv7q3g9RqQqOjdVQrX
-   j2IQ3QN3kj/2Ak74agmv82PuEYgiGE3Otz5xXDUUnVbU2aJ3z8TnoiL8b
-   hSRoMW6y8fOf0Ub5MHHBEXsJlafVUZYkEZazOSNa2IIwLKWhGbr8HyiW6
-   ZRNftFSFMDHTgf7aHqKa+8DQrRb2piolsrO0YmhpRyRAjjWtihWuynXfg
-   A==;
-X-CSE-ConnectionGUID: KmOQgPpkQJebWTE0hA0WUQ==
-X-CSE-MsgGUID: wL8mxRLtRXq495phBne95w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11734"; a="85782605"
-X-IronPort-AV: E=Sophos;i="6.23,130,1770624000"; 
-   d="scan'208";a="85782605"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2026 02:26:34 -0700
-X-CSE-ConnectionGUID: 6CMDdqN/R2qCbE52BuaMXA==
-X-CSE-MsgGUID: AWRO+khYT12j2nQa9yZPfA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,130,1770624000"; 
-   d="scan'208";a="228171443"
-Received: from lkp-server02.sh.intel.com (HELO a51c2a36b9df) ([10.239.97.151])
-  by orviesa005.jf.intel.com with ESMTP; 20 Mar 2026 02:26:29 -0700
-Received: from kbuild by a51c2a36b9df with local (Exim 4.98.2)
-	(envelope-from <lkp@intel.com>)
-	id 1w3W63-000000002Cd-33yE;
-	Fri, 20 Mar 2026 09:25:07 +0000
-Date: Fri, 20 Mar 2026 17:22:56 +0800
-From: kernel test robot <lkp@intel.com>
-To: Alexander Koskovich <akoskovich@pm.me>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-	Alexander Koskovich <akoskovich@pm.me>
-Subject: Re: [PATCH v3 3/4] drm/msm/dsi: Add support for RGB101010 pixel
- format
-Message-ID: <202603201719.MxZJCZoY-lkp@intel.com>
-References: <20260319-dsi-rgb101010-support-v3-3-85b99df2d090@pm.me>
+	s=arc-20240116; t=1774000606; c=relaxed/simple;
+	bh=SzI5t4N0FZ4IAeW8BhjweNtPA/RkXoLwNTDxzHATD1w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rb99M5QwMzFuHS158er7KteQjocqE9HMkAoTuN8xh5Lipez1xYBHo6ExL9hssvP/SJUU/5rhnpMZBg9CVb1jwFkHOgb6pZaRGQjqREZFQNYca3oKp8m2DmEi1u+CK2AQB4X2vY43IitI1NMN+i9f5cumkSAL3utJ2s074NZP6BU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uyHPrjR3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 693F6C2BC9E;
+	Fri, 20 Mar 2026 09:56:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1774000605;
+	bh=SzI5t4N0FZ4IAeW8BhjweNtPA/RkXoLwNTDxzHATD1w=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=uyHPrjR3+YS3hIv+Vg1KVooBJPWYvxp1ylXz+0wufQwK1BQVCzZIbAJICGq8c8aLU
+	 ujGVye+HQSFndavhlxf5a+Wy4kZbDcYd6SKofNhSlbj7ZfR+jmncjmjcjVvntwSm+V
+	 38V7PmAe03PHEmnctKKezxxClyuk3hzAbr0ueemSrb5dJIiyc5dogFS8tGvd9h/5A9
+	 u99QwDSwRY3H0p2hn0dNwnoyTw7tU73QZxLgjADKjirEJ3B3Z3IvjEbx3OjHC54V3K
+	 WWlfyOdfp2lyf3WxQuJgF7sArvhva/cDiq4NhlH0RR/2/J0LffmgfO0BEFIbVI9OcS
+	 z0PkN5gGfKqNg==
+Message-ID: <369229e0-06fd-4a22-b6d8-6dfebb5ca3b2@kernel.org>
+Date: Fri, 20 Mar 2026 09:56:40 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260319-dsi-rgb101010-support-v3-3-85b99df2d090@pm.me>
-X-Spamd-Result: default: False [0.34 / 15.00];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/2] phy: qcom-mipi-csi2: Add a CSI2 MIPI DPHY driver
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
+ <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260315-x1e-csi2-phy-v4-0-90c09203888d@linaro.org>
+ <20260315-x1e-csi2-phy-v4-2-90c09203888d@linaro.org>
+ <3f11de22-b729-4d06-b6c8-18e649e1979c@linaro.org>
+ <80ddc2b4-d6f8-4e8d-a45e-69c05d100aa2@linaro.org>
+ <16b10f17-ecd3-4cdd-ac3f-f64127d60ace@linaro.org>
+ <ulenfus552ggobis4gmi7eh27tikdaxbgm2oj63b5l2vemlfxc@ib5f2xaqurj6>
+ <26XTdUyQTB41Oc4D5HnMtSm_QpZRjlkljQRJVw-u1Zp3Ltn9s4LVU-LQkP6drdl3Z3GGssLCCbsVYPFEqssHcQ==@protonmail.internalid>
+ <65e06b2e-eeb9-45af-97ac-4ae60f652361@linaro.org>
+ <9578400d-30ac-4d8c-9295-ee4ec8af3b2c@kernel.org>
+ <d6616fc0-75fb-47e2-96cd-ae81fa1a8e82@linaro.org>
+ <f3c62284-ac78-42c6-a4f0-cd984b7124cd@linaro.org>
+ <oULvLfFEPeTlWNrZF9lVwMEK-bN53nncdYFGaOgjvBQAtxaUS_SrfFhorc49TcxiPQK3CIOk46vbnkXZQ24Nfg==@protonmail.internalid>
+ <5b23408d-c996-4785-8294-233d79168a1b@linaro.org>
+From: Bryan O'Donoghue <bod@kernel.org>
+Content-Language: en-US
+In-Reply-To: <5b23408d-c996-4785-8294-233d79168a1b@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
-	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-98903-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_TO(0.00)[pm.me,linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,oss.qualcomm.com,linux.dev,poorly.run,somainline.org];
+	TAGGED_FROM(0.00)[bounces-98904-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[20];
+	RCPT_COUNT_TWELVE(0.00)[14];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[lkp@intel.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[intel.com:+];
-	NEURAL_HAM(-0.00)[-0.974];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[01.org:url,intel.com:dkim,intel.com:email,intel.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: BE8A52D7FC1
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-0.996];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 0DE862D8601
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi Alexander,
+On 20/03/2026 00:37, Vladimir Zapolskiy wrote:
+> On 3/19/26 17:18, Bryan O'Donoghue wrote:
+>> On 19/03/2026 14:56, Vladimir Zapolskiy wrote:
+>>>> There's no reason to remove that from CAMSS - it would be an ABI break
+>>>> in user-space anyway.
+>>> If technically CAMSS CSIPHY could be excluded from the list of CAMSS media
+>>> subdevices, then for the sake of simplification it should be done for all
+>>> supported platforms in advance, such a change will be independent from this
+>>> particular phy series, and vice versa, this CAMSS only driver change will
+>>> prepare a ground for media-less CAMSS CSIPHY device drivers, hence it shall
+>>> precede this particular CAMSS CSIPHY series.
+>>>
+>>> For backward compatibility with userspace a noop stub will be good enough,
+>>> it's not an issue at all.
+>> The standalone PHY driver doesn't require removing the CSIPHY media
+>> entity from CAMSS. They serve different purposes and coexist - its
+>> important to have a NOP from user-space perspective for legacy and
+>> indeed for new implementations.
+>>
+> There should be no two CAMSS CSIPHY device (or subdevice) drivers, where
+> one chop of CAMSS CSIPHY device driver remains to sit under media, and
+> another one is under phy subsystem, since it's a further degradation from
+> the current already pretty awful state of the CAMSS driver, but at least
+> CSIPHY is not scattered over different subsystems today.
+> 
+> It might be fine to move device driver parts related to CAMSS CSIPHY
+> driver from media subsystem to phy subsystem, however if only a partial
+> transition is planned, and CSIPHY device support is split into two device
+> (sub-)drivers, then it merely exposes a quite severe design flaw.
 
-kernel test robot noticed the following build errors:
+It's not two drivers for the same device. It's two layers:
 
-[auto build test ERROR on f338e77383789c0cae23ca3d48adcc5e9e137e3c]
+- The media entity in CAMSS is a pipeline routing abstraction.
+   It validates formats and connects pads. It does not program
+   CSIPHY hardware directly.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Alexander-Koskovich/drm-msm-dsi-rename-MSM8998-DSI-version-from-V2_2_0-to-V2_0_0/20260320-011528
-base:   f338e77383789c0cae23ca3d48adcc5e9e137e3c
-patch link:    https://lore.kernel.org/r/20260319-dsi-rgb101010-support-v3-3-85b99df2d090%40pm.me
-patch subject: [PATCH v3 3/4] drm/msm/dsi: Add support for RGB101010 pixel format
-config: sparc64-allmodconfig (https://download.01.org/0day-ci/archive/20260320/202603201719.MxZJCZoY-lkp@intel.com/config)
-compiler: clang version 23.0.0git (https://github.com/llvm/llvm-project 4abb927bacf37f18f6359a41639a6d1b3bffffb5)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260320/202603201719.MxZJCZoY-lkp@intel.com/reproduce)
+- The PHY driver programs the hardware — registers, clocks,
+   regulators, power domains.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202603201719.MxZJCZoY-lkp@intel.com/
+This is the same layering as rkisp1 (media pipeline) +
+phy-rockchip-inno-csidphy (electrical config). The ISP's media
+entities and the standalone PHY coexist in different subsystems
+without conflict.
 
-All errors (new ones prefixed by >>):
-
->> drivers/gpu/drm/msm/dsi/dsi_host.c:760:7: error: use of undeclared identifier 'MIPI_DSI_FMT_RGB101010'
-     760 |         case MIPI_DSI_FMT_RGB101010:    return VID_DST_FORMAT_RGB101010;
-         |              ^~~~~~~~~~~~~~~~~~~~~~
-   drivers/gpu/drm/msm/dsi/dsi_host.c:773:7: error: use of undeclared identifier 'MIPI_DSI_FMT_RGB101010'
-     773 |         case MIPI_DSI_FMT_RGB101010:    return CMD_DST_FORMAT_RGB101010;
-         |              ^~~~~~~~~~~~~~~~~~~~~~
-   drivers/gpu/drm/msm/dsi/dsi_host.c:1710:21: error: use of undeclared identifier 'MIPI_DSI_FMT_RGB101010'
-    1710 |         if (dsi->format == MIPI_DSI_FMT_RGB101010 &&
-         |                            ^~~~~~~~~~~~~~~~~~~~~~
-   3 errors generated.
+No CSIPHY functionality is duplicated across subsystems. This segmenting 
+of concepts and functionality isn't even unique. We see this constantly 
+with USB (where the MAC lives in drivers/usb/ and the electricals in 
+drivers/phy/) and Display/DSI.
 
 
-vim +/MIPI_DSI_FMT_RGB101010 +760 drivers/gpu/drm/msm/dsi/dsi_host.c
+> It looks like it's still undecided, if CAMSS CSIPHY IP is a phy or media
+> device, it can not be both at the same time.
 
-   755	
-   756	static inline enum dsi_vid_dst_format
-   757	dsi_get_vid_fmt(const enum mipi_dsi_pixel_format mipi_fmt)
-   758	{
-   759		switch (mipi_fmt) {
- > 760		case MIPI_DSI_FMT_RGB101010:	return VID_DST_FORMAT_RGB101010;
-   761		case MIPI_DSI_FMT_RGB888:	return VID_DST_FORMAT_RGB888;
-   762		case MIPI_DSI_FMT_RGB666:	return VID_DST_FORMAT_RGB666_LOOSE;
-   763		case MIPI_DSI_FMT_RGB666_PACKED:	return VID_DST_FORMAT_RGB666;
-   764		case MIPI_DSI_FMT_RGB565:	return VID_DST_FORMAT_RGB565;
-   765		default:			return VID_DST_FORMAT_RGB888;
-   766		}
-   767	}
-   768	
+We are maintaining the existing user-space setup which presents a 
+msm_csiphyX v4l2-media device, whilst moving the PHY component out into 
+drivers/phy where it belongs - completely transparently to user-space. 
+So we already have a dependency in user-space which needs to be maintained.
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+The concrete hardware benefits, as I alluded to Neil, are:
+
+- Per-PHY voltage rails
+- Per-PHY power domains
+- Per-PHY operating points (OPPs)
+
+Those are real-world hardware fixes which "just work" as a result of 
+dedicated device nodes and a driver specifically written to relieve the 
+technical debt we've been accruing with the existing model, for years.
+
+Having been educated - brought to the realisation on OPPS, Power-domains 
+and yes voltage rails it is amazing to me this whole legacy system 
+hasn't exploded before now but, its certainly way past time to fix it.
+
+We should proceed with moving init sequences, voltages, PDs and OPPs to 
+drivers/phy.
+
+I'm happy to have a debate about the status of the PHY media device 
+after, however I have to say I'm skeptical about removing the media 
+device - something we could do whether the init sequences live in 
+drivers/media/qcom/camss or in drivers/phy BTW - I'm skeptical about 
+removing that v4l2 node specifically because we've had it in user-space 
+for a long time and I do therefore think that constitutes an ABI.
+
+As I've said already though `rm -rf /dev/v4l2-subdev::msm_csiphy*" is 
+basically an entirely separate debate.
+
+---
+bod
 
