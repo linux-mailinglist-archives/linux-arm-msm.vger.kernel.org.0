@@ -1,225 +1,228 @@
-Return-Path: <linux-arm-msm+bounces-98918-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98919-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id gDsDCtYuvWmI7QIAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98918-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 12:26:14 +0100
+	id SGVDCgEvvWmI7QIAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98919-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 12:26:57 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD0512D983B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 12:26:13 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F7812D9862
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 12:26:56 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 7DB0A3025E50
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 11:25:45 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 81C6E30157E8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 11:26:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEEDA3A7837;
-	Fri, 20 Mar 2026 11:25:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93CC339934F;
+	Fri, 20 Mar 2026 11:26:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="OoafE7D1";
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b="KopCsRXq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JI0DX/8V"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f53.google.com (mail-vs1-f53.google.com [209.85.217.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 488DE3A5425
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Mar 2026 11:25:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A5B22BE7DD
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Mar 2026 11:26:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.217.53
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774005942; cv=pass; b=Gw71GognlLVyXAc0g9zd4A2n1gOUmChc1jGyg5iDzNO6EsDp8OT/cZA7gGI//HqHLyM/loVR+Q4jgn/pfOoJVnImzl6u1hMpZJluqLOOEyUJ4+gnE8K8JKt3clNA1X5BgZm+mZZWxxO3QP+KJpfeM5IbsBzuHeMaY/FimXrFBTE=
+	t=1774006013; cv=pass; b=a+zoFp3u8Xdh848f1afENk8exePPe6YM471I3jEBM8V0rJUGn7PcTeYV7fQwaBLyvNqhCMMisi1yD8u4kMXAVms0ph6fm/ki6KWkAFwawDKZLJoEE0j9KmkvjV60/1Dl6cb/b1ucRN4NE9HbWPR9hzGKGgW8N2mzXz5cAx8AxjI=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774005942; c=relaxed/simple;
-	bh=RNIvwxYBawEsoKjvUbwJjouh30hNq6ha7UwLiuoB+zk=;
+	s=arc-20240116; t=1774006013; c=relaxed/simple;
+	bh=1sOSgEAVx29c/NNSIaMW0bL0jGuJYDuyH8xI1WN49rM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kv2Ko8YqvESb7SXeBDU341Ess/BJXRNrYrd0s+XGHB+bGcr2ERmdqtQm969zwm57XN7FqXQP0Ip7kdubygPEagcJHgyw9Dld33nUQFjPa5MfrC6IXJbpZJR0TUdlnd91iuVtlvI/McKeT4dIfvwQCM/N79aKWaHRsltIuyAE8Vs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=OoafE7D1; dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b=KopCsRXq; arc=pass smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1774005939;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=/YGGD21InUo9U6XJg3OIFb765OI3zldLEMwq0XgS09U=;
-	b=OoafE7D1RK5EwHUDX3p6Oj2JZKKeQRZMStRMykKVsUwcb4dtWJH4DVzJMd7cFuD4ZubbAx
-	Y0h0F1wEGitiArSEqS38zi/aQC+PvcChx6vWlhdRdrWle1yde7ttq5Ue7sb26AjdCxlGds
-	Wp+/s2jzPrB0tcDmTM2UL5Cw2NkAGbc=
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
- [209.85.210.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-556-Vc9w_LS-OlOJh04UVVZisw-1; Fri, 20 Mar 2026 07:25:38 -0400
-X-MC-Unique: Vc9w_LS-OlOJh04UVVZisw-1
-X-Mimecast-MFC-AGG-ID: Vc9w_LS-OlOJh04UVVZisw_1774005937
-Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-829a655f5e4so250337b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Mar 2026 04:25:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774005937; cv=none;
+	 To:Cc:Content-Type; b=Ff0wZ1vU6LAv0BNd2Gd0bipspQt0ZYt0zx3sAEuTr9/nDcC5qXPotYq4hGD+fu/9g5Fk7z7HYKBGyjJZe3a03Jg6feS2Cuu8ytSXx5t9+HppNIL1R/eU91jMcSAsFK1XfuYoJA5ddcUB0bH3NkJG9fBcmwbXzPLlfdsSGBiFydM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JI0DX/8V; arc=pass smtp.client-ip=209.85.217.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-vs1-f53.google.com with SMTP id ada2fe7eead31-5ffe41e8e83so1163865137.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Mar 2026 04:26:50 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774006009; cv=none;
         d=google.com; s=arc-20240605;
-        b=QNUKvqjbefcy81UKMuBmSMHYq/RJYLTFILma+Jq0/8PIpwlKVnoK5VavxAW0Tun2SX
-         bpsBCkr/FZMlYoVC1+Uw6hAbT5qqCkT0IJVxdRvAB6kXjfYlRrrovd/L4kRFzJsPVjPd
-         1bzCtM0DlXorQ38lt05fvfqwd3lYkZ/rf7Bx7pykHX/0Y+1+LeXLVguZjvZ4ltbr8UJE
-         mn7WXxqM6g65L4ibRXyjiVkhLPNte90C1b2ilhmuaBpR9xCdNagtAh9uPm3QcR07XbTH
-         HalHBBb2jC8Qy11tU2w72F52ZcDV5RJsSQWDmgA6E0aiFAvZnsX9y5qtq/moczDV6InT
-         06QQ==
+        b=k+Avo7VTFRxVUwPuvUVKAlQPRRRs9gqWCIg7CoqQMwXMbqam1r8n91CaBLNlV1kJgb
+         cOn3gaqKI+eTTOm6w3o1iNQhjsUdkMzyN4c7iBIzWhhC10JuSMVMsNIbvPbDCIOU2SUS
+         dfZEZrRX5+idwzKOkmhmhWen5zBcKIXc9v9TBlNZZ8EXjQafNWls+xqkf/D5yEzE7eFb
+         WjDGcaiGFshSQ35tc7eqhsH+UG0APcLJJyKrjKeTA3DrJx/zDcUKMoa31bs5p6JBx0v5
+         /pMaUp8HC30aXyYhI0NIPYmJ/0zS6hK/31FUxBJZtMMq1AuM2sc6fPIXyrb7/Fy40OkC
+         kX2w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:dkim-signature;
-        bh=/YGGD21InUo9U6XJg3OIFb765OI3zldLEMwq0XgS09U=;
-        fh=3S8sPd2bCCLn39+VSuIqhBxj9cSV6b1kDGh4AgPOYEM=;
-        b=RaGzIKLr00i0r02ng4/ly4UGmZxOlTjeeBjAQZN6i8Y82JsR47LM0BrGJd4qqA8zZs
-         pnxPSvqT5O9669TmcdA1cts4vzumiHo5IP33BH6Ddk5qB5Vecd4xCB47ynD83EGdtrur
-         CeX6FJUsRd0b6YPNc0ilmj7SNGthZn4OT6F1hex3nb2Zi7xRTRebxjSvClnjW5SLuSPb
-         SMXE/MFUQ8mF5mshy3fDQApvXGsemCywqYzlppyJXFXZl+YqWVSSOAdZcIGr0arHH3b+
-         MPWxrzXX49Q1o491Tpycpi0P+RIP+VDe5lQh/poZSeXEFjrNEOpO51ZvrAuYOiFs8NuE
-         Cziw==;
+        bh=V1QVEp1NAJLSNLfoGBFW6OhL3H1i4QLW676hGym3nBY=;
+        fh=eON6Prygk9LskbMucMt/gjh9UJYZWGTlNIgTzRO7/6o=;
+        b=lL73nSIkNbupCZMOda4oNu0H80WV/GwqmRBmWqhBKjFkKKLSL08o4QuI43T5QYDYMd
+         dKwtOFFdriN3eE93cR4u6LXtSAdQH3SLKQLy4PWixsMQeuIGpMCSPzewYVTxA0UPr8Xw
+         EsU+xSvVJSg4apCsC0xbS79zE5TT/dPOSiOR7B7UfP6Jpp8Aeue+mlsXYcd9vHZDKpnN
+         Qkuf+Hftic44q61vxUn2TTVEeGGG6lnWBW9qnretDw0ZeghyZpy/mtkpzE+TvzqBEpQu
+         KamNVY5zff1ohAQRQIq+zDg5fh66sjBON7wue3wJhcJZoBFJ9IoqhjA/hCvWJTndR06y
+         1SVQ==;
         darn=vger.kernel.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=redhat.com; s=google; t=1774005937; x=1774610737; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1774006009; x=1774610809; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/YGGD21InUo9U6XJg3OIFb765OI3zldLEMwq0XgS09U=;
-        b=KopCsRXqpyMoTzrUQic0oC6+Nc/bi92g595xk2mHchV+xUV/4Gix4UWuKx1gYw3vgX
-         YbpHpL3aIgmx8uZMV0+1/WFt6fZo7ycNR8F9tqbGFs6fIbv4Ox2Do3kpVVfd34pH3guU
-         tNyIBAdV9E6gdwyMhhKO2ozu0dF//6d7OGWv387GiKSp5ghcqn01puJbA4ZgovB2I9cQ
-         2qr7Af/G772EVVeE3CS+RFz0ht08RD0zFON9hyOW5pzQfynUpQWae8FkjNgus1x2A6Ns
-         GcrkxEa9luL02Z4F5uklKk8Gj4XMIerkmJQ4cLOm+/vVCN9acX/MOlr05Rplbvta51LJ
-         lLnw==
+        bh=V1QVEp1NAJLSNLfoGBFW6OhL3H1i4QLW676hGym3nBY=;
+        b=JI0DX/8VslHup3jjOE8Ib5k0p1N3eAcVRPs/xkANz1bm0J3FfKywcm2zSinMcgC+pR
+         9KfS8F0qGhBcAPynZS1Nq8bPoq6jtfI/ah8JHujau4/ey4JNs8qrRvapTBD1IfJCuyAQ
+         XDXksRiVfmYP8nMevlxnSq5YunNUmBMkbVxoclLno6fxTadEy3LuVVLvaEIblj7rTfPA
+         7UOWscWZnG1Z8MiT5nk0MgU+igxN9taABvLevXR2FrFs1qj5EdGMBdg3sDflzFxliLEK
+         XWP6WgR7JdmzmVm2hdN5uI/jlnkcqiT7+VzH+1cMFtWPcTsb3vZHuQt+v327rgQC4td7
+         AgFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774005937; x=1774610737;
+        d=1e100.net; s=20251104; t=1774006009; x=1774610809;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=/YGGD21InUo9U6XJg3OIFb765OI3zldLEMwq0XgS09U=;
-        b=sGJvm1N4XqGSjP4AZSDvX7d53DV+KtP1mtzdoGjXQPckNIQrDFqxXEa+huhJIhACsv
-         mTzXuJSw6wbiKkkbZDLtYZU2hMKd/goBuYLmbuaqjeTLHDzv2gA5diTK4SIgeAj5Pxmx
-         UB2dE0MgW1tx3AEmMjwbsANElxKJMTAOA9vQ3fa+lMBbK6VdcHRLDx7tSkuu5SmaqZUM
-         OLPsIPgNruhdN9RvRVKEnCLXtSonf1nRw2WWc0j8j2+R7gbhC/fUhHQBBB43XW6vM4uH
-         SgW6oPWlwvcHGYfdBu7Ul5uIQJxIj/kyy8VJFrm9QJjfxFImIE/V0t9KcZkAYKftSi1k
-         7wkw==
-X-Forwarded-Encrypted: i=1; AJvYcCWIK8QPtCHAGHrIkCin97TDoVtpLYWDTGUwgUHbxKropPMCSKSigYP0zkA8vde6XGRo+nZgAUnSaJSzcwSg@vger.kernel.org
-X-Gm-Message-State: AOJu0YwpDmBe8fechmyTAYc5sFelLtQ8SB34enEvS7OjEpcPPBS45Poc
-	t7nUVsCIx8mSWBiAyblKul4pK6eIdxK+Bci0/rmEZm/995pXxHl4vOg2Birpn+yEyUTR2+6bLQ4
-	7upFVRXqqfjNt/eAmDQ1u20cCaEwpL8MThK/ulRJrIXVCNmMF/qLDQMTRZryHdCCW9m/x/iOIka
-	zZb3ECTgJyg9ukf1egqVVcPLtjHpj/VBRhdF6rY27ffw==
-X-Gm-Gg: ATEYQzzcLblrwAoymX/a1XERBh5IDvaVFg7OgOFO86zbSXZg9hpb4RG0sJz9zq8rGC9
-	HgJMk1yrGvPPwJC+PBCOFYQRSMM5u6iPFyw3LyeJdGx/HkgKHc0GVZFICsjyaysD+f3ztMEaXuh
-	ol62pWAEcVK0C4DfhM0AhSLwhf8uBzlWS+EdIC+IaLGslGKCpK2gAaGIuRv7SN/3JpEhHqEhuee
-	1uzZmk/Z9nmLE1s4M/f1hzgwC/k0Oekkg6QPqU=
-X-Received: by 2002:a05:6a00:2d1d:b0:82a:7771:2f17 with SMTP id d2e1a72fcca58-82a8c36eceamr2176784b3a.49.1774005937056;
-        Fri, 20 Mar 2026 04:25:37 -0700 (PDT)
-X-Received: by 2002:a05:6a00:2d1d:b0:82a:7771:2f17 with SMTP id
- d2e1a72fcca58-82a8c36eceamr2176766b3a.49.1774005936676; Fri, 20 Mar 2026
- 04:25:36 -0700 (PDT)
+        bh=V1QVEp1NAJLSNLfoGBFW6OhL3H1i4QLW676hGym3nBY=;
+        b=WQbuyJNjrKu0XtoInboz/4cfWKSk41GUv+fXfbg5E9K4IMrkrWcqIDYIsSnYwYdj6a
+         jfgBIimPbWgXHmy4AewP6uh7Ouh0ykiFJuDE7SQ2/3A4QY/6TzDyMq+R1jcOlR01P0ZQ
+         Bh3yRapfT4Mhu0WGcEzziBLSWMMdDXvw7tAShv6P8zGzM1Eh3mp8wXcAYFVejW4+4Umi
+         9xEykFqQYNMcgIhPGa0UtA/YbZEZ9zIqmgJiFDpjbDamucTRX521GuknZTOpIN+3hH0s
+         0X57yZVZRf/Ewml+2sIiugONGFIHHV8f3GdsijTgwzkOMgZ5a9uC6lc4TYrlwrZqVrwR
+         1/jQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWm43nUmNstUf8REdSWy1qiHJ/gO2xAjT9mVuKbTlYBK2vUoUm6jhNeOt/Rfan3qh/jtzKPo2CS4+zHIySV@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxin3LlabS9sOaS8ZNcKRaUFv5vh5d/GAvWnrmvqV1dX/C89F3o
+	hmgcCMGumWLd0r8mr+dl1CR/4ySsG8XW/3lev6LYMcrmi9kmM+be0e30Aqxw19hFF3nDdo1FoMc
+	8T8syG1Mo9EalbNE/PlzbRXpjHA/YXMs=
+X-Gm-Gg: ATEYQzydjbkcjVDOFLZyDgGWx+5nqfJGxNyMk5rBvqZlehK7vabbRZmD6+yiHzuw3Ma
+	G9bnBU60EjHnoB15i85wTXj0gpWvXGxSzFfaxFWkq/WeqR6LPOEeUBA+GuQnMGWMUE6Cn9cFrms
+	NcvN+ubSLVO9sXh+ED8RfoUPNmA3ufWXQSnB57YPySGZ6FU/7k9/+HmYUhN3bapykbG9MAvy3ws
+	EvdJ1XEkRRoyFhpXCELGGgsaVdn6wVpc4QxT1n7BWA0HjJ6JMrNt5ToV/TCV+2A+aHlbR4Qk/2p
+	r0y5rdRutV2IEeOznNM=
+X-Received: by 2002:a05:6102:8017:b0:602:896a:84ba with SMTP id
+ ada2fe7eead31-60295f9905emr3268532137.17.1774006009050; Fri, 20 Mar 2026
+ 04:26:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260316102618.7953-1-gpaoloni@redhat.com> <20260316102618.7953-3-gpaoloni@redhat.com>
- <abfkAFIheKCuLRKk@redhat.com>
-In-Reply-To: <abfkAFIheKCuLRKk@redhat.com>
-From: Gabriele Paoloni <gpaoloni@redhat.com>
-Date: Fri, 20 Mar 2026 12:25:24 +0100
-X-Gm-Features: AaiRm51GCaU2sAO0AFS4qEc2O2t9mjFMogfXF5NPI8Xp_K4fxqAhhAXH13EBCoc
-Message-ID: <CA+wEVJYH=fM9Gp7-g0C38ovqTKzHnN+LVkpapb-PuFJ_vowVxg@mail.gmail.com>
-Subject: Re: [PATCH 2/2] mailbox: qcom-ipcc: amend qcom_ipcc_irq_fn() to
- report errors
-To: Brian Masney <bmasney@redhat.com>
-Cc: mani@kernel.org, jassisinghbrar@gmail.com, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, mpapini@redhat.com, dnita@qti.qualcomm.com, 
-	rballati@qti.qualcomm.com, bijothom@qti.qualcomm.com, wchadwic@redhat.com
+References: <20260311-dsi-dsc-regresses-again-v1-1-6a422141eeea@somainline.org>
+ <CAH2e8h4qnF3UxWFrU59BrStWMDc-=Vz9ZNmuq8Q3smhHeUzxyw@mail.gmail.com> <a2xtesu626vmfetdoykojm33at44h7zxgvo6ytf2txlg6gn7ls@34jctkwswjnk>
+In-Reply-To: <a2xtesu626vmfetdoykojm33at44h7zxgvo6ytf2txlg6gn7ls@34jctkwswjnk>
+From: Pengyu Luo <mitltlatltl@gmail.com>
+Date: Fri, 20 Mar 2026 19:26:22 +0800
+X-Gm-Features: AaiRm51EcYplGbV3dSE_DXh3DQrzYh4J3puFHwKOmm3oxqdDTptp9H77tGPLNmE
+Message-ID: <CAH2e8h4p4fyoPXTcjbhSXVgWEm54PH_=yCWiCGWOsDaMZu1bvw@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/dsi: Restore widebus calculation for CMDMode panels
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, Rob Clark <robin.clark@oss.qualcomm.com>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
+	Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	~postmarketos/upstreaming@lists.sr.ht, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Martin Botka <martin.botka@somainline.org>, 
+	Jami Kettunen <jami.kettunen@somainline.org>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[redhat.com,quarantine];
-	R_DKIM_ALLOW(-0.20)[redhat.com:s=mimecast20190719,redhat.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[redhat.com:+];
+	TAGGED_FROM(0.00)[bounces-98919-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-98918-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[kernel.org,gmail.com,vger.kernel.org,redhat.com,qti.qualcomm.com];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[somainline.org,oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,ffwll.ch,lists.sr.ht,collabora.com,vger.kernel.org,lists.freedesktop.org];
+	RCPT_COUNT_TWELVE(0.00)[18];
 	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-0.882];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[gpaoloni@redhat.com,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	RCVD_COUNT_FIVE(0.00)[5];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	NEURAL_HAM(-0.00)[-0.983];
+	FROM_NEQ_ENVFROM(0.00)[mitltlatltl@gmail.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FREEMAIL_FROM(0.00)[gmail.com];
 	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: AD0512D983B
+X-Rspamd-Queue-Id: 8F7812D9862
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Mon, Mar 16, 2026 at 12:05=E2=80=AFPM Brian Masney <bmasney@redhat.com> =
-wrote:
+On Fri, Mar 20, 2026 at 9:59=E2=80=AFAM Dmitry Baryshkov
+<dmitry.baryshkov@oss.qualcomm.com> wrote:
 >
-> On Mon, Mar 16, 2026 at 11:26:18AM +0100, Gabriele Paoloni wrote:
-> > check the virq value returned by irq_find_mapping(), also
-> > check the return value of generic_handle_irq(); return IRQ_NONE
-> > if either of the checks fails.
+> On Thu, Mar 12, 2026 at 01:10:07PM +0800, Pengyu Luo wrote:
+> > On Thu, Mar 12, 2026 at 6:31=E2=80=AFAM Marijn Suijten
+> > <marijn.suijten@somainline.org> wrote:
+> > >
+> > > Commit ac47870fd795 ("drm/msm/dsi: fix hdisplay calculation when
+> > > programming dsi registers") makes a false and ungrounded statement th=
+at
+> > > "Since CMD mode does not use this, we can remove !(msm_host->mode_fla=
+gs
+> > > & MIPI_DSI_MODE_VIDEO) safely." which isn't the case at all.
+> > > dsi_timing_setup() affects both command mode and video mode panels, a=
+nd
+> > > by no longer having any path that sets bits_per_pclk =3D 48 (contrary=
+ to
+> > > the updated code-comment) all DSI DSC panels on SM8350 and above (i.e=
+.
+> > > with widebus support) regress thanks to this patch.
+> > >
+> > > The entire reason that video mode was originally omitted from this co=
+de
+> > > path is because it was never tested before; any change that enables
+> > > widebus for video mode panels should not regress the command mode pat=
+h.
+> > >
+> > > Thus add back the path allows 6 bytes or 48 bits to be sent per pclk
+> > > on command mode DSI panels with widebus, restoring the panel on devic=
+es
+> > > like the Sony Xperia 1 III and upwards.
+> > >
+> > > Fixes: ac47870fd795 ("drm/msm/dsi: fix hdisplay calculation when prog=
+ramming dsi registers")
+> > > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> > > ---
 > >
-> > Signed-off-by: Gabriele Paoloni <gpaoloni@redhat.com>
-> > ---
-> >  drivers/mailbox/qcom-ipcc.c | 10 ++++++++--
-> >  1 file changed, 8 insertions(+), 2 deletions(-)
+> > Apologies, I messed up, I had sent the same fixes days ago.
+> > https://lore.kernel.org/linux-arm-msm/20260307111250.105772-2-mitltlatl=
+tl@gmail.com/
 > >
-> > diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
-> > index c23efaaa64a1..0795184591f0 100644
-> > --- a/drivers/mailbox/qcom-ipcc.c
-> > +++ b/drivers/mailbox/qcom-ipcc.c
-> > @@ -75,7 +75,7 @@ static irqreturn_t qcom_ipcc_irq_fn(int irq, void *da=
-ta)
-> >  {
-> >       struct qcom_ipcc *ipcc =3D data;
-> >       u32 hwirq;
-> > -     int virq;
-> > +     int virq, ret;
+> > > In addition I can't say I understand the original commit message
+> > > at all; it mentions a BPC=3D10 mode however the highest format that
+> > > mipi_dsi_pixel_format_to_bpp supports is RGB888 thus it won't
+> > > ever return anything above 24, which is the original amount the
+> > > non-command-mode path defaulted to (regardless of widebus)...  Was th=
+at
+> > > patch doing anything for video mode at all?
+> > >
+> >
+> > RGB888 is the dst bpc, which is tied to qcom,mdss-dsi-bpp in the downst=
+ream.
+> >
+> > Actually, we should use src bpc here, another fixe
+> > https://lore.kernel.org/linux-arm-msm/20260307111250.105772-1-mitltlatl=
+tl@gmail.com/
 >
-> Put variables in reverse Christmas tree order.
+> I'm really torn between your two patchsets here.
+>
+> Marijn, Pengyu, what are your testing platforms and are you testing
+> video or command mode panels?
+>
 
-Note, many thanks. I will fix this in v2
+SM8750, I am testing on a native 10-bit video mode panel.
 
-Gab
+My thoughts are we should restore 6 for the cmd panel, and we should
+fix video mode too.
+As I mentioned, I overlooked something, I thought the cmd panel didn't
+use the value, which
+made the value for the cmd panel wrong. So we can restore it for the
+cmd panel (though I can't say why 6).
 
->
-> Brian
->
->
-> >
-> >       for (;;) {
-> >               hwirq =3D readl(ipcc->base + IPCC_REG_RECV_ID);
-> > @@ -83,8 +83,14 @@ static irqreturn_t qcom_ipcc_irq_fn(int irq, void *d=
-ata)
-> >                       break;
-> >
-> >               virq =3D irq_find_mapping(ipcc->irq_domain, hwirq);
-> > +             if (unlikely(!virq))
-> > +                     return IRQ_NONE;
-> > +
-> >               writel(hwirq, ipcc->base + IPCC_REG_RECV_SIGNAL_CLEAR);
-> > -             generic_handle_irq(virq);
-> > +
-> > +             ret =3D generic_handle_irq(virq);
-> > +             if (unlikely(ret))
-> > +                     return IRQ_NONE;
-> >       }
-> >
-> >       return IRQ_HANDLED;
-> > --
-> > 2.48.1
-> >
->
-
+Best wishes,
+Pengyu
 
