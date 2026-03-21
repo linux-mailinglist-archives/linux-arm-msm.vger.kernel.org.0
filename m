@@ -1,213 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-99006-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99007-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id qNpALZJ9vmm8QwMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99006-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 12:14:26 +0100
+	id 4KPEJTuJvmkOSQMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99007-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 13:04:11 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1CDF22E4FC4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 12:14:25 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 181882E531D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 13:04:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A27D5300A8F2
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 11:10:50 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id D99E3301CC66
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 12:01:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8248236B07E;
-	Sat, 21 Mar 2026 11:10:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2EAA1C5F11;
+	Sat, 21 Mar 2026 12:01:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=canonical.com header.i=@canonical.com header.b="Vq2XJNPe"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YHdwSY/g"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E9136CE03
-	for <linux-arm-msm@vger.kernel.org>; Sat, 21 Mar 2026 11:10:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=185.125.188.123
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774091448; cv=pass; b=guoKDHwkWP1FUkM3EyUcXmgJmNpYOsPWAmHCc/1O1+HoAc5Win86vBXiUzELaj2e0nGE78Ubb996hGDT7FpBoRO0YsoaiSYE54C0fduPS38/wfR/0VvLzR9t3WIQHI8Fwz6QyyZWu0nhJs9+lXUlsnF++cWkNhf2pQ1ThK+Cnv4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774091448; c=relaxed/simple;
-	bh=0zaCarWFAl1I5M4Ha2lpH48OPsCWNyPVRVrHK4Vc+a0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aLn4UcV/P9H7G9FC119G4mKXM0LGmVRwyV1cmMK9OQMM7QGnOoOHtQs+aIoJqT5tb1c+lr0LZh813uzLYjTTbJcHRGhOLVGcNIpoY9Aeh6ydsLzxAeE85chamJIUnCm6YAFT0khhXXptpe+1sNvFZ6n1zrygJwA/rHEtM3UFwZI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=canonical.com; spf=pass smtp.mailfrom=canonical.com; dkim=pass (4096-bit key) header.d=canonical.com header.i=@canonical.com header.b=Vq2XJNPe; arc=pass smtp.client-ip=185.125.188.123
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=canonical.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=canonical.com
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com [209.85.218.72])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id DB5923F747
-	for <linux-arm-msm@vger.kernel.org>; Sat, 21 Mar 2026 11:10:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20251003; t=1774091436;
-	bh=2A9/wfVwmSsIZQua3y5VdJJ3emu+4yWYLgcT1QszORo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type;
-	b=Vq2XJNPenaBzkVQ1VIeKHTy4HzTpxytfbufEmlyaoEGkoxMvt2dR9vA8fyhTKUNRO
-	 CIb1kmOkQ+2e0ZxenPP7wkn3jNI+GVV7vjW1lWSEThhxUcFfkcQhIwZwQs0VekRavX
-	 +55GWhHIIT/DkRqsPQfVjdxStIxufr62veGu3quZZ/9cMMP1+OvlwgmHwwwY24u38/
-	 QQdJRbPdG+uudJ6JaUwj4zNyuPF2zZndolTvRWfSqQa1V83tpzbNEqp7FS33kHqUD4
-	 bMTJbGOwhzAxQSsSYeIO4fA7VIcd0oLK/wfJCScxgp62rnwJ3odFz2PA+FDRCBjMBR
-	 hu17XRHyKs8wNOVjs+wNTlF+xcwbCqyj9O+FLGdciwsZoaHCyRttfRJwCuqc/t0kl3
-	 HdmO2rxYXrbr6e5PzeFuOz2btathp6vUxqcYQ8wAcnSfQ0zOdE8vt7K6RORjtAySIg
-	 trEuXIKau7It3bQTp2471r15jYCwuUWVWfU5kfwroFRJEQawr7aienJA47FMjp7bj+
-	 Qblb738LJfIujJPfOQ+Pex2ZGzOw/gn5BD0g0Lm2jQimIeZB+cHTmS/DsGQR+ISTeK
-	 un511AkV0FlDgLjyetR7GFJfSSZLg5u7uZ6m4g3AU0AGA+5B0JtV5pHDZVhoU7cYiA
-	 mSJlzt9HR+zXynBbfv/THKNo=
-Received: by mail-ej1-f72.google.com with SMTP id a640c23a62f3a-b8f5bce308dso364658066b.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Mar 2026 04:10:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774091436; cv=none;
-        d=google.com; s=arc-20240605;
-        b=J/Q4cKbs5a5E37Mew/n7jzlwuuPaGS/vNkdQxQjtRo58GDSEUVGdVf/fCllKCZfqzb
-         ynN1XD28jE8aLUBthWqGL8fSZ+iydOPeOIu5u+u5uWlyOscUgiSmU6k6eq6qYXC5DEEM
-         OgjbjySeeUyugZg6gW+0PwBby45kbEzz6WAUL4+YagUC4UKF2Tb6qHwut76d+PMwUo2T
-         QG5f+p9oHwIP6jeibRxisCKcWRDzS1AAgHa4HDuha10SLkwQP80vM+qaA/hlK5oU+gb9
-         xc5iN6OJIMxjAyHrcJpbr0fUfDhCf9czUupkI6Cdvx+lRE0tIvZoe9a9RlBOrpPBNoJm
-         t7tw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version;
-        bh=2A9/wfVwmSsIZQua3y5VdJJ3emu+4yWYLgcT1QszORo=;
-        fh=hKogeWh1l01ycnQ9wCQF/JjHWGGpPVKg2UedHmaIgJU=;
-        b=O3Ygbmrf/Y7E9WyhrR7PLAP0prEpnMlhIGMhz9WR5xmvNgAhZ3tShA0wGkRN0Lblm1
-         kMR3YqJT6GIssiIxyBR0ekHmcpJDAyTJe47UUZrFv1rIA8oaTYTxyQ4Pt2g132WnVj1W
-         nWUo1PP0G8wtvwNV/d6/rlP+NtqOHgo8VRqaZM0UTC5s4C5FFIYcGARsLFEEI3i7dnx4
-         k/TaZa/zL/DeGAzdPcpdvQUoo07QVUM2ysnM5hEpn88lv2M1o8sRGsy+kpW+ryinT41h
-         afbos6kJPRrFK+B1GX8H4F0mieOUmavDlDrV9G8jTdYtDCdmrS2Qi9stGgisi1gIFBOl
-         2KKA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774091436; x=1774696236;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=2A9/wfVwmSsIZQua3y5VdJJ3emu+4yWYLgcT1QszORo=;
-        b=XYohEBuTvCApNvFe+M1zyon1KVFDxuwORf9qTYLo3rnmohNfctd3p+QHlxTH6LScuI
-         MenCoYbdaGSfKa6b89XxLwrq3PRysOEFHUpmm7GO5ZplK27cVeE92vzLUEGzMbFI4XY6
-         LlL8jaUHlK560eicmc+o+QXUrMYudmI+1DyAFgTBxOd++ljfLqhfEnqYutmUMZGjS8Av
-         M/2u0Gom3D4DiBRK0Aga/7aJP+QuvTw0sANYm0Oo+RxNwmDh4bSfGlks52oeqGsSi7C+
-         QyNUcIdUBiqw7fZXJqJtNDx9jPc6BwJmXyXr1xL6LWsmNLGiWnolIhs1M51aAXd0SwOv
-         5c6w==
-X-Forwarded-Encrypted: i=1; AJvYcCUoZ9D9AXdF/SFbTmo8FyJWrh3ZtWuvpml3fODA5DPEvOonrsZLfVvvJpdVKEH8FROzaQYFE9qGbpOYZXvj@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw5mlpUlJvgDmOK8FZRA8WUyNAt9AAmDu4YxgEd9ot2APSMUnr/
-	IGCFrP22wKh7VIGEMHAMnI8BCuk/s9lFnD03djD/dkFEwZVywrYdZQb/uDrUne7bOODB0gyUR3M
-	KnBUBXbp70Qx9dysrPq0cA6F7MhT5YYlQfN/r4qCEdCzfmeewzOwG6cexYFmtRu7YO3hRnuYeVy
-	4pL46mclzNI+QR5FFUP7eY1MPGcpdux/WfuolnNW0NIKdcib7n45iNAkPOHw==
-X-Gm-Gg: ATEYQzwvFOKcTldEtNYTXKPUnXaYD3HaZXm4KSkFl85k/E0+JoSyA1sk8vlUBYg8vFo
-	B9njK4Z5iQQpeFZhOn61jahT1nfdTDES0bDek2sfpNTFQhfpN2zTIWEktDOQpKRsGR+r2IX1sKk
-	knXgBAq214w6XS+wW/Rn4V7dWFG7JmAaezj8Bbtwqd71DUvFRZLrys+eyNpynoozZqtJC+18Exn
-	vYQu/6ujwwWOAcnzl/gguiY5kAu3KM8/Dk4iA==
-X-Received: by 2002:a17:907:96aa:b0:b98:528b:8462 with SMTP id a640c23a62f3a-b98528b96c7mr73398066b.55.1774091436341;
-        Sat, 21 Mar 2026 04:10:36 -0700 (PDT)
-X-Received: by 2002:a17:907:96aa:b0:b98:528b:8462 with SMTP id
- a640c23a62f3a-b98528b96c7mr73395966b.55.1774091435897; Sat, 21 Mar 2026
- 04:10:35 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03E42E63C;
+	Sat, 21 Mar 2026 12:01:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774094481; cv=none; b=pJ/NiA/gyPDKhygxW9vvWJK0RmMz7+RfRAYQ6bfZEap9bQJG4vxVZPlielk+fkjt31zCd8Uecumf7VVNbWty9908EAymarvlmMCrnZ+vq1WYwklGLgoMCKudhxVpfkXoqp8ErPXqPaTG9OjdX6GAuuEdqvkvC/a5Un4ONUsI11w=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774094481; c=relaxed/simple;
+	bh=VM52w2SMnOLQgAP0JEn4EpWJ1f7+pz7wfeF1c3g1Hto=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=l6OAWXGNPMrTlX1jOY+NI8HQYhXboc2hoNelcNcwxljXSEHKggQZSRdUbe9zTRQf4Kax3f1YMtv0N3VzEBOh6nwDP8QHjNXDE7sN7MFioP+a+ETpvqY4Dnr2i3y6iR3G/UrDfirZ7u7zeKiq/mj/I5jKPelrSEw2Iu/nDuFQpHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YHdwSY/g; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF605C19421;
+	Sat, 21 Mar 2026 12:01:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1774094481;
+	bh=VM52w2SMnOLQgAP0JEn4EpWJ1f7+pz7wfeF1c3g1Hto=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=YHdwSY/g+e/zFQkrAGp+H/YaIDRd1cWaStTrZw1ErIVGfOz9grEeCR9IgxJYV3N5+
+	 4VtTN4xVncouHImp3h8v58/ogqerRZKGxBNzC28Ngp4cqPgmgj+OEoZ/ZPMGNFEKwz
+	 jmtFL84iSHhdBACdq7z1uwArYjw0Ssn4nW7w70M5V5xhXDoPxgsCPA2bXSBl/q2k56
+	 KDMghG1QEkdLTpOC5eQ0wS74+SeNi2aMgFYZrH88o4hT3l62ifiYrZleMCyAii/v8c
+	 tb+Z4hOtU+UEcFNVXOevlzJEyyp6EDlsZb1WupOqogJnL5piYosemKUDphAz9/WdaV
+	 w7eTCW7AD4t/Q==
+Date: Sat, 21 Mar 2026 17:31:08 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] PCI: qcom: Advertise hotplug with no command completion
+ support
+Message-ID: <jhh5xvjssci4z53vsvskyp7327sgit2z7gqu7kra7e3nkaa2r7@rhe74dh2z3sa>
+References: <20260314-hotplug-v1-1-96ac87d93867@oss.qualcomm.com>
+ <t66kmmr22z5anjhhez3mwfbmy64pz5246e4oepvpwf5j5l3u5o@i3gsh22x4dst>
+ <015d00db-9ed5-45a7-83f8-1b10bc2ee457@oss.qualcomm.com>
+ <e94f9da7-3daf-4393-9455-6707cb963e0c@oss.qualcomm.com>
+ <4649cbd8-7128-4c24-8d8d-c12bfd2a677c@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260316-x1e-camss-csi2-phy-dtsi-v2-0-859f3fa55790@linaro.org> <20260316-x1e-camss-csi2-phy-dtsi-v2-9-859f3fa55790@linaro.org>
-In-Reply-To: <20260316-x1e-camss-csi2-phy-dtsi-v2-9-859f3fa55790@linaro.org>
-From: Tobias Heider <tobias.heider@canonical.com>
-Date: Sat, 21 Mar 2026 12:10:24 +0100
-X-Gm-Features: AaiRm52499M8HYTgFplXiLLRqQ-Avz-L10LhPTnrV7OoeTxB3gRN_PnUea12HP4
-Message-ID: <CAARv3RSQbAQwDFsfBrcrkXem_jtVy0Xttqi1UZfuNT86twxmJw@mail.gmail.com>
-Subject: Re: [PATCH v2 09/11] arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x:
- Add l7b_2p8 voltage regulator for RGB camera
-To: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[canonical.com,reject];
-	R_DKIM_ALLOW(-0.20)[canonical.com:s=20251003];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <4649cbd8-7128-4c24-8d8d-c12bfd2a677c@oss.qualcomm.com>
+X-Spamd-Result: default: False [-1.66 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_CC(0.00)[kernel.org,vger.kernel.org,gmail.com];
 	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[canonical.com:+];
-	TAGGED_FROM(0.00)[bounces-99006-lists,linux-arm-msm=lfdr.de];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-99007-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[tobias.heider@canonical.com,linux-arm-msm@vger.kernel.org];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	MISSING_XM_UA(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	RCPT_COUNT_SEVEN(0.00)[10];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[canonical.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,mail.gmail.com:mid,linaro.org:email]
-X-Rspamd-Queue-Id: 1CDF22E4FC4
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: 181882E531D
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Mon, Mar 16, 2026 at 2:15=E2=80=AFAM Bryan O'Donoghue
-<bryan.odonoghue@linaro.org> wrote:
->
-> Some sleuthing work by Aleksandrs Vinarskis in the bowels of the ACPI
-> tables for this part shows we need l7b_2p8 for the avdd supply.
->
-> Suggested-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts | 7 +++++++
->  1 file changed, 7 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts b/a=
-rch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-> index f10dff1da7f8e..1611bf7302ddf 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-> @@ -552,6 +552,13 @@ vreg_l2b_3p0: ldo2 {
->                         regulator-initial-mode =3D <RPMH_REGULATOR_MODE_H=
-PM>;
->                 };
->
-> +               vreg_l7b_2p8: ldo7 {
-> +                       regulator-name =3D "vreg_l7b_2p8";
-> +                       regulator-min-microvolt =3D <3072000>;
-> +                       regulator-max-microvolt =3D <3072000>;
+On Fri, Mar 20, 2026 at 07:10:19AM +0530, Krishna Chaitanya Chundru wrote:
+> 
+> 
+> On 3/19/2026 4:29 PM, Konrad Dybcio wrote:
+> > On 3/16/26 1:22 PM, Krishna Chaitanya Chundru wrote:
+> > > 
+> > > On 3/15/2026 3:39 PM, Manivannan Sadhasivam wrote:
+> > > > On Sat, Mar 14, 2026 at 07:26:34AM +0530, Krishna Chaitanya Chundru wrote:
+> > > > > QCOM PCIe controller advertise hotplug capability in hardware but do not
+> > > > > support hotplug command completion. As a result, the PCI core registers
+> > > > > the pciehp service and issues hotplug commands that never gets completions,
+> > > > > leading to repeated timeout warnings and multi-second delays during boot
+> > > > > and suspend/resume.
+> > > > > 
+> > > > > Commit a54db86ddc153 ("PCI: qcom: Do not advertise hotplug capability for
+> > > > > IPs v2.7.0 and v1.9.0") avoided these timeouts by clearing the Hot-Plug
+> > > > > Capability bit entirely, which also disabled all hotplug functionality.
+> > > > > 
+> > > > Just some background: I added commit a54db86ddc153 to disable hotplug for Qcom
+> > > > PCIe Root Ports since we were seeing completion timeouts for hotplug commands
+> > > > and also the PRSNT# signal was not exposed on any of our SoCs. After checking
+> > > > with some internal folks I learned that hotplug functionality was not exercised
+> > > > in Linux. So these facts made me believe that hotplug was not suppored at all.
+> > > > 
+> > > > But it turned out that the Qcom Root Ports support "Data Link Layer State
+> > > > Changed Events" such as DL_Up/Down events.
+> > > > 
+> > > > > Instead of disabling hotplug, mark these controllers as not supporting
+> > > > > command completion by setting the No Command Completed Support (NCCS) bit
+> > > > > in the Slot Capabilities register. This prevents the PCI hotplug driver
+> > > > > from waiting for commands completion while still allowing hotplug-related
+> > > > > functionality such as Data Link Layer state change events.
+> > > > > 
+> > > > > Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> > > > > ---
+> > > > >    drivers/pci/controller/dwc/pcie-qcom.c | 2 +-
+> > > > >    1 file changed, 1 insertion(+), 1 deletion(-)
+> > > > > 
+> > > > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > > > index 67a16af69ddc75fca1b123e70715e692a91a9135..a2924610f3625f2456a491473c135840e31bafb9 100644
+> > > > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > > > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > > > @@ -358,7 +358,7 @@ static void qcom_pcie_clear_hpc(struct dw_pcie *pci)
+> > > > >        dw_pcie_dbi_ro_wr_en(pci);
+> > > > >          val = readl(pci->dbi_base + offset + PCI_EXP_SLTCAP);
+> > > > > -    val &= ~PCI_EXP_SLTCAP_HPC;
+> > > > > +    val |= PCI_EXP_SLTCAP_NCCS;
+> > > > Are you sure that this is the only non-supported capability? What about
+> > > > Attention, Presence, Power Fault, MRL etc...?
+> > > Even though there no signals required for attention, presence etc in the hardware
+> > > there is a way to generate these MSI's with these bits set through parf, so technically
+> > > so other co-processor in the system can trigger interrupts.
+> > Are you saying that the RC itself will not generate them based on what
+> > happens on the bus, but they can be triggered artificially?
+> Yes there are parf registers through which msi's can be triggered
+> artificially.
+> 
 
-I included this in my Ubuntu test kernel builds and got reports about
-reboot loops
-on the Lenovo Yoga Slim 7x.
+As Krishna said, it seems there are ways to *inject* these events through
+platform specific means (through PARF register space), even if the associated
+signals are not exposed to the slot. And we might end up using those events at
+some point.
 
-Your change seems to be based on
-https://github.com/alexVinarskis/linux/commit/a94d1f4e1d025398060d7e0dc2270=
-b8e375f6f60
-which I had previously tested too and didn't see any issues with.
-The only difference is that your version uses different
-regulator-min-microvolt and
-regulator-max-microvolt values (3072000 vs 2800000).
+So it is OK from my opinion to just disable NCCS. But this also warrants a
+comment in the code.
 
-Setting them to 2800000 like in Aleksandrs patch seems to fix the boot issu=
-e.
+- Mani
 
-> +                       regulator-initial-mode =3D <RPMH_REGULATOR_MODE_H=
-PM>;
-> +               };
-> +
->                 vreg_l8b_3p0: ldo8 {
->                         regulator-name =3D "vreg_l8b_3p0";
->                         regulator-min-microvolt =3D <3072000>;
->
-> --
-> 2.52.0
->
->
+-- 
+மணிவண்ணன் சதாசிவம்
 
