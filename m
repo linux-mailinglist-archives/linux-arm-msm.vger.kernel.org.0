@@ -1,185 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-99002-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99003-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cBQzAhVqvmlYPAMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99002-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 10:51:17 +0100
+	id MCFTM2BrvmnGPAMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99003-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 10:56:48 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id A4CF52E4845
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 10:51:16 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 78D5B2E488C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 10:56:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 66FF5301D310
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 09:51:13 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id AD0BE300D0CF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 09:56:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 004DD2D4B68;
-	Sat, 21 Mar 2026 09:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9250C2F1FEC;
+	Sat, 21 Mar 2026 09:56:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hVm6gEZx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fiij6ej8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DD12848AA
-	for <linux-arm-msm@vger.kernel.org>; Sat, 21 Mar 2026 09:51:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D15C14A60F;
+	Sat, 21 Mar 2026 09:56:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774086672; cv=none; b=HU+Acov0jPCPvO+7+BI8toTW5lPGSsGdYvW7U2ztezNNuNT7vAJ0R2HgrHKr+FusD8H80jIESnCqDFt4p5xSV30qs8HXqTph0TgbaNFwqzIvnpI89bh4kIDtBsZ0hd/TNWJ/sfbjQGqC8ML5Y8xCPVxAQt9/QahI5Umr1qvj9oo=
+	t=1774087004; cv=none; b=HlnGCgDtMNQlOFwNGWBXp0DCfI+M9IzFRamzWZeuzY4L1x7qExjDb2IVzt6hAXryT8OMlLaW1dBtWH3wZ/f7GykOG3tgG7fsybR/NjiUgiM7fjC1o0EXRHAQr12a40HVX529IMDbVDL9Ioc5CBuYZoEsvg1WDLnjqeBPuN0DHvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774086672; c=relaxed/simple;
-	bh=oYGllORQe1KtTW7SJUoYEU6wdznpdgBDarm6BDzeQYs=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=j3MfTdK0oS8143e0hcDIKfi7Tn34g8tEDhwUicFfrDZwloSNryadgls20cmEOnvOOG550FKVWsXwKfZjarZhD/VXzPxzYlR9sdDgUGyLe1dDrH8FSN8GzHvcStlZl9OOYsAUPsaAGT8tAgynZjjWeRQDRgPrjFl0c+wbR043R/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hVm6gEZx; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2ab39b111b9so6171335ad.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Mar 2026 02:51:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774086670; x=1774691470; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=bGQi8LEv7kZuoyjue24gJuvJD8zF1I0JZAlNaZK/Ick=;
-        b=hVm6gEZx1fI8m0t2TMocpsirmw76ToBGwNd0D8B+sIRgo3O0IJm5XdpATTX3H5fOj2
-         hORzgjTH35pT3BQYsMSHSkCWOVt6ZMk+OyuAv5W6bMWcDozHrUKsMBanwa5F+XebkDMc
-         scQqf2SJ6oZ92XOwgL93F8fb73i5AJ+AsFpfu4S4VxVh8sXhafNIz+yDojUPLMfE/ZFR
-         Uvo5rqBtxWuK/hUIiFTTe7fan+nuZS0gvzUGnpV0GOKCOyxvaK6gQmqtGufT/QjC9ZYL
-         QCVna+5Z7gqegkEkKn8pEoaXRalVGEVC+x4KU/iLACmei3kcQwj+cvkHiNxdGD0mBGN0
-         bU7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774086670; x=1774691470;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bGQi8LEv7kZuoyjue24gJuvJD8zF1I0JZAlNaZK/Ick=;
-        b=jWvzvhxmI0bdjqYpGp2zw8zl1VzpQKbhOygDBtn4CAq1PwxEncQ7pqd5aR/JgflPiY
-         5MpiFnlJ1SKkjE+zYzm62DdG4nop9oIyPUDaMX/jvwAx62jUrH/CfIfms3/42cEDBxh3
-         hNRn0eY3AGpkPvukKW9AIoDk0ZTNE3+lrmh2tsWCNioSUZZgJZUGj6SipzgSbbyeV6p8
-         vOVQ+c/rLMWauf/zakm0a/lJLQFbDB/0topo/auTjZ9vpzAlMvLBviaWR888x0jGyEzb
-         lnuJIjKU1vSLN+Ro7hKMZwfDm3iMWQ8hGkH5RVKpxorJehc+ozXl3uYfC1Q/RIhetLs8
-         /pkg==
-X-Forwarded-Encrypted: i=1; AJvYcCW4BuZrCoQZlh76r6XrUM4WfomejCZiDtA3b9PcYNR/rME5dvKeeJiYfh5nPbaLhohSx/ImkgbSZyR/nt81@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz8Wl8l8acou0eAsnM91CwyqgqnqPEd/R5i1Vf/Y4cDh6zlfwIw
-	5QWZro+rRTgD0lSFYn09qM+p1f5sMn/hYUTSmT0NSoci3z8DYlhDlqYv
-X-Gm-Gg: ATEYQzynkTcoXc8WWGCFGOk673Brw5rGw3JfUNe1FqOzzUPL3i9wr5Z8AxIkYJ03Dae
-	Y/0HjySO94OdqAT0vITWmSXm+Hpo2Xloi2N0WClQIYu+tZU+UVyHOYiLtPnBvmjVgY/76wrW1IN
-	WxKtdLWhJYfxfGrBQeOKVmNVCdj/6pUSLV3PVXPt2gYigow1tlucmuE0IfZlf0BZUDr4Pj3UOkt
-	uNWPC8ZX1fGpaVpyMjo5S0YK8PMTU6KpWTEB5NxR8YeLDH84lhoAjZXVsZjDyprMVdU4slpw5qT
-	I4fZkgiqujNcy2FAHJstKpFEoereQUwV/yRDHjjCxvLY05yfVwO5j+F2tO22s70xD+zd1KYByHr
-	CTSt9LD5wCtUM/OsEr/FQeraMio3+lcxAjFBRSaDSk3w/ffYVa++2fdm6jG0zcGyCZwz2CJJZ53
-	iij24+omLEMzaa7rJE/qWVfyNV
-X-Received: by 2002:a17:902:cece:b0:2b0:69bf:a3df with SMTP id d9443c01a7336-2b0827a4fd6mr56886375ad.27.1774086670002;
-        Sat, 21 Mar 2026 02:51:10 -0700 (PDT)
-Received: from nuvole ([5.180.78.78])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2b083549f63sm46739095ad.30.2026.03.21.02.51.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Mar 2026 02:51:09 -0700 (PDT)
-From: Pengyu Luo <mitltlatltl@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>
-Cc: Pengyu Luo <mitltlatltl@gmail.com>,
-	linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] clk: qcom: rcg2: expand frac table for mdss_pixel_clk_src
-Date: Sat, 21 Mar 2026 17:50:28 +0800
-Message-ID: <20260321095029.2259489-1-mitltlatltl@gmail.com>
-X-Mailer: git-send-email 2.53.0
+	s=arc-20240116; t=1774087004; c=relaxed/simple;
+	bh=+LVNkCkCMdRhAgRtq1Pu/cBRkMFNTx5E4/plQSuuNBs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=G0pd8gt+bGrtPYhDHoqBjB5cW90tI9TK7cqWWxI33nVfP2Hlci1Br3l073He3Fh66R3Y6vAq1GyOMSLWfvj9OLckhPDNaCEo/8nB73nl3VM6cxk5qKVHPdhtVHAryF0Z9sF2knD8sJE7H3DR7FTy4OCLJgN6s69F2+TIfQEf7tQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fiij6ej8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E9F0C19421;
+	Sat, 21 Mar 2026 09:56:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1774087004;
+	bh=+LVNkCkCMdRhAgRtq1Pu/cBRkMFNTx5E4/plQSuuNBs=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=fiij6ej82yH+M+mEq4Jf73Xe124BHToVVWaE8kFcgvpmd2mtfo/xSgSm0pBe/83SB
+	 EgG6vS9iBCKib2rZr/mN1IIk2HlrcI/nSod1hUsq12PHob0e5XeZzxyL+26mJlcTyv
+	 CA1osB+90HHxRFOoXEVcL1pZ5+4H7vxP2yq9EyAtCZhU4+TAk6QABpAbHV4cLIt3ng
+	 +B12VEtlzrkL8NAnygYUr+3VpVWBMLkewV7TzzYOlBTMJ/VgsKisYKyiWbsKLmpgMS
+	 eggDRPvZVwMJ040cVEflITfqg46fh3Ahgmt+Sur8hsA8h0fb4TB7rCMNreG8sWFzLP
+	 JMO9jDVQYg7fA==
+Message-ID: <9bb6e4ac-c7f2-4f1d-aff0-70eefec810a2@kernel.org>
+Date: Sat, 21 Mar 2026 10:56:38 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/6] dt-bindings: display: panel: Add Novatek NT35532
+ LCD DSI
+To: cristian_ci <cristian_ci@protonmail.com>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>,
+ Jessica Zhang <jesszhan0024@gmail.com>, David Airlie <airlied@gmail.com>,
+ Simona Vetter <simona@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, dri-devel@lists.freedesktop.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+ phone-devel@vger.kernel.org
+References: <20260318-rimob-new-features-v2-0-c1bf8917449e@protonmail.com>
+ <20260318-rimob-new-features-v2-1-c1bf8917449e@protonmail.com>
+ <20260319-amorphous-pastoral-turtle-851af9@quoll>
+ <oMTrCB7euJojLz1EUHDhHCq071GQWD0g7-sqwahA62CnM-sVw08UCNhKdgHX2NrEN3H8iRhc0suejuq5JZ39UA2nEfKhRq9qwYJWSxCrAtc=@protonmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <oMTrCB7euJojLz1EUHDhHCq071GQWD0g7-sqwahA62CnM-sVw08UCNhKdgHX2NrEN3H8iRhc0suejuq5JZ39UA2nEfKhRq9qwYJWSxCrAtc=@protonmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_MISSING_CHARSET(0.50)[];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_CC(0.00)[gmail.com,vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-99002-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_FIVE(0.00)[5];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-99003-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mitltlatltl@gmail.com,linux-arm-msm@vger.kernel.org];
+	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_TO(0.00)[protonmail.com];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[linaro.org,gmail.com,ffwll.ch,linux.intel.com,kernel.org,suse.de,lists.freedesktop.org,vger.kernel.org,lists.sr.ht];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[7];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	FREEMAIL_FROM(0.00)[gmail.com];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: A4CF52E4845
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 78D5B2E488C
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Recently, when testing 10-bit dsi C-PHY panel, clks are different
-from the usual. (dsi0_phy_pll_out_dsiclk's parent is dsi0_pll_bit_clk
-now (dsiclk_sel = 0)) And we failed to set dsiclk's children.
+On 20/03/2026 23:32, cristian_ci wrote:
+> On Thursday, March 19th, 2026 at 10:09, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+> 
+>> On Wed, Mar 18, 2026 at 11:28:09PM +0100, Cristian Cozzolino wrote:
+>>> +  avdd-supply:
+>>> +    description: positive boost supply regulator
+>>> +
+>>> +  avee-supply:
+>>> +    description: negative boost supply regulator
+>>> +
+>>> +  vci-supply:
+>>> +    description: regulator that supplies the analog voltage
+>>> +
+>>> +  vddam-supply:
+>>> +    description: power supply for MIPI interface
+>>> +
+>>> +  vddi-supply:
+>>> +    description: regulator that supplies the I/O voltage
+>>> +
+>>> +  port: true
+>>> +
+>>> +required:
+>>> +  - compatible
+>>> +  - reg
+>>> +  - reset-gpios
+>>> +  - avdd-supply
+>>> +  - avee-supply
+>>> +  - vci-supply
+>>
+>> Only VDDI is required according to datasheet (see page 11 and page 16).
+> 
+> Just to be sure, are you mentioning the part saying there are multiple 
+> power modes (2-1PWR, 2-2PWR, 3éWR and 4PWR) related to NT35532? 
+> 
+>> Others are needed only in specific configurations, which I would ignore
+>> for the simplicity of the binding. Drop these three.
+>>
+>> Previous discussion point was about this - write bindings based on
+>> datasheet, since it is available.
+> 
+> I've removed avdd, avee and vci supplies from 'required' properties 
+> and I've also tested the new bindings (just for completeness). Now, 
+> I'm going to reintroduce again the issue already raised previously 
+> (for which I received no replies in v1): should I submit a v3 
+> series including my new changes or I've to stick with v2 here, in 
+> order to address review concerns about binding, first?
+> 
 
-dsi_link_clk_set_rate_6g: Set clk rates: pclk=172992000, byteclk=108120000
+I don't understand the question. This is v2, right? So I asked to make
+changes to it, thus you should submit v3 after receiving some more
+review for example.
 
-byteclk was set first to 108120000, so the vco rate was set to
-108120000 * 7 * 1 * 1 = 756840000. When we was trying to set
-172992000 on mdss_pixel_clk_src later.
-
-Since there was no matched ratio, we failed to set it. And dsiclk
-divider ratio was set to 15:1 (wrong cached register value 0xf and
-didn't update), we finally got 50455997, apparently wrong.
-
-  dsi0vco_clk                1       1        0        756839941
-     dsi0_pll_out_div_clk    1       1        0        756839941
-        dsi0_pll_post_out_div_clk 0       0        0        216239983
-        dsi0_pll_bit_clk     2       2        0        756839941
-           dsi0_phy_pll_out_dsiclk 2       2        0        50455997
-              disp_cc_mdss_pclk1_clk_src 1       1        0        50455997
-           dsi0_pll_by_2_bit_clk 0       0        0        378419970
-           dsi0_phy_pll_out_byteclk 2       2        0        108119991
-              disp_cc_mdss_byte1_clk_src 2       2        0        108119991
-
-Downstream clk_summary shows the mdss_pixel_clk_src support the
-ratio(35:16)
-
- dsi0_phy_pll_out_dsiclk             2       2        0        378420000
-     disp_cc_mdss_pclk1_clk_src       1       1        0        172992000
- dsi0_phy_pll_out_byteclk            2       2        0        108120000
-     disp_cc_mdss_byte1_clk_src       2       2        0        108120000
-
-After checking downstream source, 15:4 also seems to be supported,
-add them two.
-
-Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
----
- drivers/clk/qcom/clk-rcg2.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-index fc696b66cc..6064a0e17d 100644
---- a/drivers/clk/qcom/clk-rcg2.c
-+++ b/drivers/clk/qcom/clk-rcg2.c
-@@ -1117,6 +1117,8 @@ static const struct frac_entry frac_table_pixel[] = {
- 	{ 4, 9 },
- 	{ 1, 1 },
- 	{ 2, 3 },
-+	{ 16, 35},
-+	{ 4, 15},
- 	{ }
- };
- 
--- 
-2.53.0
-
+Best regards,
+Krzysztof
 
