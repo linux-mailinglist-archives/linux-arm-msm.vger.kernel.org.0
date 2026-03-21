@@ -1,156 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-98976-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98977-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id CHJ7NwfLvWlgCAMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98976-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 23:32:39 +0100
+	id cLIYEMgBvmkaFQMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98977-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 03:26:16 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4BE9D2E1CCC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 23:32:39 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id B190B2E2EA0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 03:26:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id CF17230125F3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Mar 2026 22:32:36 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 98A1B30333A6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 02:26:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D430938BF6C;
-	Fri, 20 Mar 2026 22:32:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C813C29BD88;
+	Sat, 21 Mar 2026 02:26:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="vFq6emCH"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UL3lja34"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-10696.protonmail.ch (mail-10696.protonmail.ch [79.135.106.96])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D50F7314A65
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Mar 2026 22:32:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.96
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0E71A3165;
+	Sat, 21 Mar 2026 02:26:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774045955; cv=none; b=mLf60Wp2t6j/h+3tbjYSJ2OYQmQ1cvoZ+EDwwpM5+5fruEav7c96RCErva9TW633jMo3ZBPOfrz/nQz50+QMApNkNNuI2i3lJzmq3lkj/i4rJbyQRhCYJ+OGAFhMXDEl7ttsd9jijFkVSPZ8+lXPs1yBp5tzWGyBeqqlJlyCu5Y=
+	t=1774059971; cv=none; b=LB+dNT9qZGuyXD2AjTmBGKvp3VMg6Q1ncQ8enDiHWigAUI5/Szl4PHcLmMTN06v0JeUss58gJdAvXnhUNqbJhdcnEKf/axG8t+zjk4oSvw82HLvMePwLcOen0Nx3Pi4a+koxDIlUStr/oFXJArpFQrH4iKMXhPSXoCD/4HheZ3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774045955; c=relaxed/simple;
-	bh=AbAJ6kJCpxIex40lxJPqgz8FVRA08Ydz8UH2X5iXfY8=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gK+j59R1i2WL5gcl4+hRFkaCELKHoyk/ZAdnoC5XtV97Rpgp657Ao2WdIuMi7BzvmHsrTXeTw+Pf/ITKl0jSAlSc2zTn14ybRUlefiFwdUBLvO/blYxTYnVLlxJIMbADWl0UxhyqYewKvgsIzwGL7YIVjnBfm3+7TzzU5UuQM7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=vFq6emCH; arc=none smtp.client-ip=79.135.106.96
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1774045944; x=1774305144;
-	bh=QyU3KziqZxd9HOhx4Gs65M6cMH9dTEoOjkIOFlgjlAc=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=vFq6emCHQOyQdgP2aUob/id6mm+oqQrrLlZ0+Br2YAZCJIfE+0p1PO7CNZqeL+S8O
-	 Ce0CGIzI/T+aWIqq175gvxn67Pf0xf/y4YEm1qunOk8NApn8xoZkrWdlYZ09ZuRr22
-	 AUqFDNDwaJ8aOFkXGRq9XVelRMOBbwl/FEWkWZ3x5V181w54WtNeaoS3plf0VrhrA+
-	 wbHiMiCviLIUboZpHG0lX/KDlaB9e1jriYoIAjgVOmTuxPVvvNDNrKXuxTn7G5gQuB
-	 xgN1Hqo1XNX3uw8q+CqX+d6qHf25GkpYKu5Q5R9TEmN/5Fs6Dn/ZxZ4BuQT/FzyHh7
-	 XDemqkqBxICHQ==
-Date: Fri, 20 Mar 2026 22:32:18 +0000
-To: Krzysztof Kozlowski <krzk@kernel.org>
-From: cristian_ci <cristian_ci@protonmail.com>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>, Jessica Zhang <jesszhan0024@gmail.com>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-Subject: Re: [PATCH v2 1/6] dt-bindings: display: panel: Add Novatek NT35532 LCD DSI
-Message-ID: <oMTrCB7euJojLz1EUHDhHCq071GQWD0g7-sqwahA62CnM-sVw08UCNhKdgHX2NrEN3H8iRhc0suejuq5JZ39UA2nEfKhRq9qwYJWSxCrAtc=@protonmail.com>
-In-Reply-To: <20260319-amorphous-pastoral-turtle-851af9@quoll>
-References: <20260318-rimob-new-features-v2-0-c1bf8917449e@protonmail.com> <20260318-rimob-new-features-v2-1-c1bf8917449e@protonmail.com> <20260319-amorphous-pastoral-turtle-851af9@quoll>
-Feedback-ID: 27475468:user:proton
-X-Pm-Message-ID: aa5d67d40f9ced9875dfeb1b6597c0c1dad3b0c0
+	s=arc-20240116; t=1774059971; c=relaxed/simple;
+	bh=eG5LkS+9cCOeVxm20ZTUca9k3IWxWt9/hMQ4+PWUen0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sB1rp34azQHz7vYIdb7wUo4Sxs86O9uCDKKho1zwYey3CmLs9C6qjRS0XqaiZ2bKqq1tvnzk32tRxFh1sy91XeMF2Dyq8KAMoCUX6AwVi/zXfg0NYf2MCUDizlZiIGgXAUU0v1GyjkYP4J3nm+nPZAYvlrKcVe3fV+y5owXZOHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=UL3lja34; arc=none smtp.client-ip=192.198.163.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1774059969; x=1805595969;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=eG5LkS+9cCOeVxm20ZTUca9k3IWxWt9/hMQ4+PWUen0=;
+  b=UL3lja342nStXdPKoKxDE5G4uz+pYWAnwLxT7ahLR5veXnHO4dmkuDPS
+   kv7hrqWLp/SlTBiTzqteMEmVEvWsJc7XyySRBKjc7PZqZwk9ABCgQioDT
+   zTg1xEA63Ux1WAjLWNqhE6fTMRD0kX5tzgY+nQYpqdc26D3+lfpB3fG5f
+   X7imsRQXcZ/LcmKLkkppUA7uiEpB/5X3f27EZ8i9m26M9TXJBlrz62z/x
+   BlCuFLZlYMbGbBSZpR4MiirshdfyqDDRCIv60pjR1KJe9NxTF/5lB9S7j
+   0U80cnlYkNaEIH00EOiZeWk1/HzHT8X/xuGVYlWpB6AZPIhFsEH4AxZsP
+   g==;
+X-CSE-ConnectionGUID: WlezhvJbTs6alU7Z/RrR6A==
+X-CSE-MsgGUID: 0ayDyIC/StGq+WzjItOMmA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11735"; a="86513223"
+X-IronPort-AV: E=Sophos;i="6.23,132,1770624000"; 
+   d="scan'208";a="86513223"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2026 19:26:08 -0700
+X-CSE-ConnectionGUID: o0WWiGR5QOOQvsToiLyxHg==
+X-CSE-MsgGUID: wLO7713QQmCTMFZ6fN/fgg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,132,1770624000"; 
+   d="scan'208";a="223679709"
+Received: from lkp-server02.sh.intel.com (HELO d7fefbca0d04) ([10.239.97.151])
+  by orviesa007.jf.intel.com with ESMTP; 20 Mar 2026 19:26:04 -0700
+Received: from kbuild by d7fefbca0d04 with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1w3m2C-000000000CD-0ohq;
+	Sat, 21 Mar 2026 02:25:53 +0000
+Date: Sat, 21 Mar 2026 10:25:04 +0800
+From: kernel test robot <lkp@intel.com>
+To: Mahadevan P <mahadevan.p@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jesszhan0024@gmail.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+	Mahadevan P <mahadevan.p@oss.qualcomm.com>
+Subject: Re: [PATCH v2] drm/msm: default separate_gpu_kms to auto selection
+Message-ID: <202603211049.NkgQVReV-lkp@intel.com>
+References: <20260317-separate_gpu_kms-v2-1-b027ca97b9fe@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260317-separate_gpu_kms-v2-1-b027ca97b9fe@oss.qualcomm.com>
+X-Spamd-Result: default: False [-1.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[protonmail.com,quarantine];
-	R_DKIM_ALLOW(-0.20)[protonmail.com:s=protonmail3];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
+	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-98976-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[3];
+	TAGGED_FROM(0.00)[bounces-98977-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,poorly.run,kernel.org,linux.dev,gmail.com,somainline.org,ffwll.ch];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_FROM(0.00)[protonmail.com];
-	RCPT_COUNT_TWELVE(0.00)[19];
-	FREEMAIL_CC(0.00)[linaro.org,gmail.com,ffwll.ch,linux.intel.com,kernel.org,suse.de,lists.freedesktop.org,vger.kernel.org,lists.sr.ht];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[cristian_ci@protonmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[protonmail.com:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_TWELVE(0.00)[18];
+	FROM_HAS_DN(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 4BE9D2E1CCC
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[lkp@intel.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[intel.com:+];
+	NEURAL_HAM(-0.00)[-1.000];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:dkim,intel.com:email,intel.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: B190B2E2EA0
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Thursday, March 19th, 2026 at 10:09, Krzysztof Kozlowski <krzk@kernel.or=
-g> wrote:
+Hi Mahadevan,
 
-> On Wed, Mar 18, 2026 at 11:28:09PM +0100, Cristian Cozzolino wrote:
-> > +  avdd-supply:
-> > +    description: positive boost supply regulator
-> > +
-> > +  avee-supply:
-> > +    description: negative boost supply regulator
-> > +
-> > +  vci-supply:
-> > +    description: regulator that supplies the analog voltage
-> > +
-> > +  vddam-supply:
-> > +    description: power supply for MIPI interface
-> > +
-> > +  vddi-supply:
-> > +    description: regulator that supplies the I/O voltage
-> > +
-> > +  port: true
-> > +
-> > +required:
-> > +  - compatible
-> > +  - reg
-> > +  - reset-gpios
-> > +  - avdd-supply
-> > +  - avee-supply
-> > +  - vci-supply
->=20
-> Only VDDI is required according to datasheet (see page 11 and page 16).
+kernel test robot noticed the following build errors:
 
-Just to be sure, are you mentioning the part saying there are multiple=20
-power modes (2-1PWR, 2-2PWR, 3=C3=A9WR and 4PWR) related to NT35532?=20
+[auto build test ERROR on b84a0ebe421ca56995ff78b66307667b62b3a900]
 
-> Others are needed only in specific configurations, which I would ignore
-> for the simplicity of the binding. Drop these three.
->=20
-> Previous discussion point was about this - write bindings based on
-> datasheet, since it is available.
+url:    https://github.com/intel-lab-lkp/linux/commits/Mahadevan-P/drm-msm-default-separate_gpu_kms-to-auto-selection/20260318-063854
+base:   b84a0ebe421ca56995ff78b66307667b62b3a900
+patch link:    https://lore.kernel.org/r/20260317-separate_gpu_kms-v2-1-b027ca97b9fe%40oss.qualcomm.com
+patch subject: [PATCH v2] drm/msm: default separate_gpu_kms to auto selection
+config: loongarch-randconfig-002-20260321 (https://download.01.org/0day-ci/archive/20260321/202603211049.NkgQVReV-lkp@intel.com/config)
+compiler: clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+rustc: rustc 1.88.0 (6b00bc388 2025-06-23)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260321/202603211049.NkgQVReV-lkp@intel.com/reproduce)
 
-I've removed avdd, avee and vci supplies from 'required' properties=20
-and I've also tested the new bindings (just for completeness). Now,=20
-I'm going to reintroduce again the issue already raised previously=20
-(for which I received no replies in v1): should I submit a v3=20
-series including my new changes or I've to stick with v2 here, in=20
-order to address review concerns about binding, first?
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202603211049.NkgQVReV-lkp@intel.com/
 
-> > +  - vddi-supply
-> > +  - port
-> > +
-> > +additionalProperties: false
->=20
-> Best regards,
-> Krzysztof
->=20
-> 
+All errors (new ones prefixed by >>, old ones prefixed by <<):
+
+>> ERROR: modpost: "msm_mdss_count_masters" [drivers/gpu/drm/msm/msm.ko] undefined!
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
