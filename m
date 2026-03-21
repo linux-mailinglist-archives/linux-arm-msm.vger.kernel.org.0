@@ -1,501 +1,295 @@
-Return-Path: <linux-arm-msm+bounces-98985-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98986-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id KDNDJfQqvmmaIAMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98985-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 06:21:56 +0100
+	id sM0LNSZCvmmhKwMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98986-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 08:00:54 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id D077A2E35C6
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 06:21:55 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3982E2E3DFF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 08:00:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id E00AD303454E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 05:20:03 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7A4F0300917C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 06:58:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6102E2D0C7E;
-	Sat, 21 Mar 2026 05:20:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A152375AB0;
+	Sat, 21 Mar 2026 06:58:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gllKGBee"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jSQfUl24";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Z2iKbX9b"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vk1-f171.google.com (mail-vk1-f171.google.com [209.85.221.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA621F0E25
-	for <linux-arm-msm@vger.kernel.org>; Sat, 21 Mar 2026 05:19:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.221.171
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774070403; cv=pass; b=X1uHYX3mzRpCLHEUXKYxynqCwE+TBiwng7qjpvZB9fnDZv5q79vMXMQXwUgWuiLYUom+H/PbAPKpe0DNWYi1WA9IanX2DDxlvsyeERvGDcIFPBSUJFCayDMfURM5LI315V0//EcC4yIq/TMNOYKeq/kisag+03MXTpzv3NrXHyY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774070403; c=relaxed/simple;
-	bh=SEZbQkWF+yEBGQfOuUplRC48LoBThxzx4kC+AICDU30=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YLfoeCLFI2oOrXrqoTLtCVP0PDrKu7jLIc5lzqn6Qfr9vQZFw6Aq11E1JpufYNjadKxXjnaiapAMIEHWOqImapvaG/Fkcf4kCDN9nbgV6gmd7vZ13IMQF3p5hfyqVY0W/IMu+iWRWa1r38vJCpBFL7CAESm01U+nYNL7D8s8zcg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gllKGBee; arc=pass smtp.client-ip=209.85.221.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vk1-f171.google.com with SMTP id 71dfb90a1353d-5674d8be45eso991234e0c.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Mar 2026 22:19:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774070398; cv=none;
-        d=google.com; s=arc-20240605;
-        b=ScvqrDbX6PswCR1uKKQhGRUICYzJ5gbEAKHwfJYwSYFV1XUJmRrEjmIgZFG4yI2pk7
-         DeAeMj79FOpOOT56JwEsidUJlwMAFrG/HSOvlivlRXzA5q3MReiGuykDdsNiINJhYQFS
-         fxH0KXMI4XPwtbvtGxG4AM9542qBh4vvjmISO0762vRW+f8h23yOpoxVQszR4SV3FU9t
-         e9Oyt3WH/eZMhyRclWHtpsAZw99jYeeaDCTSlpO68nqJqnINdaZy3QPKf+FSoew1Mq9T
-         1TRrWU4/nL0RFc9hNVzHVP+hlU5nYhv8j4QFWegJlCPxiXmDOWftRVmoUg1ShJcnX2pS
-         bymw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=LnFDGG/qO8xQBCsXITOmY6HdAR3OjQn9h41sAssDEU4=;
-        fh=iLLTkdYYmNc3O8snlSFyThomNvJCLqBFt+djgwsFEEM=;
-        b=Zuge3R4r3PxRz94VO0KL5jHOK9kSyfO4OxcZcPDIKG62gDCi/0IBX4R67Md2d/t/Er
-         GAaYbwpW8UN+KUAgeqN+TDR9MVrDat2i2a0bqNXwvoAI6dsjoD7Pg9XMwBVWYkNtanEp
-         rCxlwqkCAzMWzfqobAFifC/yXFjMATj1CL5tDNVXu+HiChfjVMCeG1BwDXfpqkjiYmav
-         CnYV7UFLeyq5riHznjaCgde2RIr7SNBro7wRXu+8Ljs5pdFOmdR9CzG5Rwap+j21vSvz
-         UUlFjWF0FDrbRt6lFIgscZcgJaTgPhjOj4OnR7r0QezrGr/IJvm7Zv5aqkR6WokOuK5k
-         87sQ==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31DE2FF65B
+	for <linux-arm-msm@vger.kernel.org>; Sat, 21 Mar 2026 06:58:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774076317; cv=none; b=YwufZf4EhWMSyM+zthG1ZdgfjqKbKCPAzZy8WwxS/7aLUQH5sjdBlhnX+YtzMbvC+GfEU7f0DtfkHoiKMX8j6vKL7+r7UE/vxoHm/i98eQqdYd6i8uZDEp2RYjC+7yq/VzTsZ5qCzLWk7BwPXT+Lxj4eAjQ4cHEUaR/xeeW1Bd8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774076317; c=relaxed/simple;
+	bh=8w/zODLveHtE0IP60XvUcrbU2F6f7Uq9BB8L37MKFvM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VmTqHS2xoa1y0d9XRiATNJ1UiuyjmbmiBOPegbuaSCL/fPSBZpPqLNNJa3amKwWrsxYFDrgwckk66oO0cN0dylXEmn807JIivHGXrF3mc14rcd2yanWWwA+gmDJ4FIW0Uvl/yBBXKm0GtfTUHpf+zoUO2K9wcVs3/slxDsQv5OI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jSQfUl24; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Z2iKbX9b; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62L3kN5J357737
+	for <linux-arm-msm@vger.kernel.org>; Sat, 21 Mar 2026 06:58:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	fx9CE9f51VzBgzn1kxsg7836BTv0Nom3EGRHf/E0df0=; b=jSQfUl24jTU+BYAr
+	cKqQgU28PzHNEd+6XYbfUO41jB7YzeOxvD3FVArvR55SjCHdzDrHBe1PGCj5SrUz
+	yW5lgvDSYaWb7udTgCGNBWHuT9Ca6lRjBoXrPp1/TxlWj/UVaCVA1KQjWuk5SxDJ
+	L/UAnBLodCOGeVJrRfAZxZOloTn6re7LDrAWjTIU7ov2EaXHaUBoNy1GQ5IVnGqg
+	INDp5/WnIGWa4qToEnCfQNw4fbFFuR9rnP9A2mU6QtHZJ2othAads/wo692H80m8
+	BsWTlGLBb8SjFV5WDdXmhzJiRk1rrvXKQsEVDPlhMkrVVlm+ESuunq46z8BkR+fk
+	dhptkg==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d1kq5r7jw-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 21 Mar 2026 06:58:34 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-2b05a3c2421so30667605ad.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Mar 2026 23:58:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774070398; x=1774675198; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LnFDGG/qO8xQBCsXITOmY6HdAR3OjQn9h41sAssDEU4=;
-        b=gllKGBeeF6UPGMNXiPh3wPCjZNUo0pKBFUTMB17Spzs2zigQxYme/xzkl49k22uQ2k
-         lh6/JbifBratX2NjSDz6wtrOQ+NmO4UQWerh8FqflPEbkWalbpGaYrXirtmVevu5A5IG
-         Ep1ifRGovoYAkPxzvwDTYk3pUNTs5DxlNvsYOHA1KYaziU4iZ5FTEpqZ3Y8BC+BE2/fL
-         hU5OPfKCdzux8oN4/AZLkPvJlxEtKHF1xgF/48OgLQ5iaS4LIfqC7+5wkao1SGYH3SfE
-         TdS1WBLSWJzKNm14mfwbInOqVmNkVXUy52yzdBHl7+bK9piqEHrvSnYBIlqjfgxAIpkp
-         Yo5w==
+        d=oss.qualcomm.com; s=google; t=1774076313; x=1774681113; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fx9CE9f51VzBgzn1kxsg7836BTv0Nom3EGRHf/E0df0=;
+        b=Z2iKbX9bbFRRyWr9pHufSEOZV5bCYIo42O5vOQzJj7UYPQrsQ97gTrAbDykvF8pb4B
+         XerzZhu5zMpGN2actmraHY6Ol3ahC9fWsTr2OwLXUZxgY6iBRbdVnQqN4bCl+9qjbUAN
+         6ROXN4fmxZIzKblfDuNAtsgxLjqJc1h8cD0V5bsV3yAY5oV6CpOORvM+i5TPuVQImQhK
+         K/EjftKrYKEIgUvpOfE+7mI8ZRuFUDJDJTVCS/Y7zHEKpXQA8Joy96zR88n4tn8Z7eaD
+         2QhB+Bc/vJMZUOgQy7DgcEB1T3CsIkKq+BTvIJHSBdpwa6we9QAjnwsGdWewx/AE7fEM
+         xc3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774070398; x=1774675198;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=LnFDGG/qO8xQBCsXITOmY6HdAR3OjQn9h41sAssDEU4=;
-        b=NmmBXtHccogRBObhatr4vPLG6V/u4pl2jo1yeCdkOdZaXSYEMimguHG33kcapU5ngh
-         NKtRCBtXtaRnqsBE9Wu3joJwElDenH4bdDP9TyhQ2gwdZghHx/g0vJjl0EXbyCOZ/4Mu
-         OZfLM6IhNpJ1Ezxrr0epO1tZO4nNgELGRi+dzh7Su2VYqwZjDff5f0SVt8xnTijiab82
-         9eWEuuVQM5CREsa3nvQom4mZUTuZT6NHxHYhPxTAWEFy+IOsXbwtyPmzAWDTqWjLQ9rH
-         oDc+3R8pBM3gTSABlnpPb1f/zfdS48iPCLFiZRsVny+A5IwtYkxAz/MVa/VluhCXCCLo
-         K2PA==
-X-Forwarded-Encrypted: i=1; AJvYcCWmtoYKI2SqGa+4l50RTwJE7YNVrJRkr1Q0KOz1CleZP7dD4pQSOw5YC82VKo4k0aakHZJOycm9M7X9wqPe@vger.kernel.org
-X-Gm-Message-State: AOJu0YwjdOwoyP/nkH6K7G1Pyln/kYkOms0dRi2K6dgfkEB/n13+35Tx
-	BHUVTyoiGqFj8fGReu4C5M+CyJ4Dp4kibz9pEdW/6lgsarCCW8n/xjFKpBEmbMPq852X6jObVoi
-	gvJ9F7oXpqP4jMFIjtDWWkbqcGheRdLo=
-X-Gm-Gg: ATEYQzxgIrb/0cg7rZtqq3nit9PByNBmjoLpKMPjcyrUA6bob92K3KkuW6l9zt4/PfM
-	t+u0VGXVQ6wsd0WhB0Lm/Ps8Crba0PJvnbFQx4uHfFVaX00dgA6unOvEncoCZ4AXybkL/FNFEQL
-	S1bnUmaW8dIrxXooGfRBYud8yuRJR/9BoTy3sKCebrEU/atLx/jekVCLFU3VMJk9AXIIeZXg5QD
-	u7loW5oLih/FPtchh2PG7JSagkPdJpHtVFYWjKWMYtJ58ZR3JuCf7hMvtSnO/FKcTIeA1Xw6PRV
-	tulqh79SCat4geU=
-X-Received: by 2002:a05:6122:6991:b0:56c:d401:4aff with SMTP id
- 71dfb90a1353d-56cde1d346amr2343537e0c.0.1774070398385; Fri, 20 Mar 2026
- 22:19:58 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1774076313; x=1774681113;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fx9CE9f51VzBgzn1kxsg7836BTv0Nom3EGRHf/E0df0=;
+        b=m8IxrGiUUZgI5YgnZ9Vku5QPfY6cUb+85J+XvBIweAHp35WACNvRAnGrjeMjBMcjBj
+         f0fhF8WzEZRjZtA5Ax3GjZbj20+tfEtFmQds6wDk3v0n/AnJQ6AnKr9u2JWCh/KTp0/Z
+         4P/Lq/0rIzjZ5dLva/3NbTlFb2O4jlWX+VL05KwsVpfWEwcnyJd1p1fvCFUSxINNt0E/
+         xac7nuJVH1kV3taWUsy3g69rdV7P6ntQB10RPxLl/9mTao63JHbSBX1XdFcs6aHK7APd
+         MbSvC2ekaHB3MpVhy/kaNzqqLLTXJOUOjrN/ma+yaH6G/kzvXUGfdW0iQtx+4nfXtPQf
+         ARAw==
+X-Forwarded-Encrypted: i=1; AJvYcCV0TK/bswUfLK6cr9lzlL+Ve23Z5V477/AFfEolf3PYz5YDE5HpPrdfklH6HWHjcM5D3jl/mJOz9d/CAx5r@vger.kernel.org
+X-Gm-Message-State: AOJu0YwHG4tbRgyzX7Spr/gkjt3pkSbgd+cotxGV/Uen5wzFhBE8XcBD
+	GxBwen2Pwvb3qdklXQNu9+PRZuOCuOqapPtrfzBbRq1HQTdM77qH571CGaErGyPRG1h5QPeUakw
+	zhCgFG7HoMKBOC00jgdmLRC/B7E75myzzx9zN+S7+C35DGkdEczEKOFG/Jjva5wQ+Ai38
+X-Gm-Gg: ATEYQzyAOEb2l+VXV3DgwZ8/PmZPuZ5HFaMJK3R3AraEsyQ8nOZwTkrb6uiNeuyHIC5
+	zJXTCKM6CdywY6OwodtxAkJKH6ygUDDV94mZ9ZjCcPWBsgWoBvhDXtHX3s0yuLkjnYQnBDFqNrA
+	eFkWrSEHuVVRHTQm5h4hopW7EUOaXz+SH2rhyPSFpSeaJutXNQEkebA5lWsx2vRX0TRbgZpESoP
+	YFSPoHFFTbwqYA6ivzqvcCL34pz2gIMrIuLyTjhPdMI7R/G1VqGQg1OULg+7XwLbe3FLAWp6b+q
+	E2tKMeqp5LBa3fGd9sqoY2m9qn7smII5mBlIqPiwUkpLH9ulYKoXr1YfPqDusu704EfaI+IPamB
+	+hf7CYdcTgaQgP/XOaqBD1ScrQruMKvMfk5VIIIpEX6JBcR81iFzeN8h9Lg==
+X-Received: by 2002:a05:6a21:99a6:b0:398:849a:847a with SMTP id adf61e73a8af0-39bcec0c6f8mr5028574637.42.1774076313538;
+        Fri, 20 Mar 2026 23:58:33 -0700 (PDT)
+X-Received: by 2002:a05:6a21:99a6:b0:398:849a:847a with SMTP id adf61e73a8af0-39bcec0c6f8mr5028560637.42.1774076312974;
+        Fri, 20 Mar 2026 23:58:32 -0700 (PDT)
+Received: from [192.168.29.146] ([49.43.232.136])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c743a9391b0sm3085441a12.15.2026.03.20.23.58.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 20 Mar 2026 23:58:32 -0700 (PDT)
+Message-ID: <f99d4889-7334-45df-9148-1f2eb54010e2@oss.qualcomm.com>
+Date: Sat, 21 Mar 2026 12:28:28 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAH2e8h6oinKxN1ndcvHCSc+=bFLXVVDZVAVF0cQHoiaMvEwhPQ@mail.gmail.com>
- <X2fV9mpVHV6Qk8-ImS7vxqDQXFt4K85jPKJWnxVono324hHaRh7x13f2HYM4CKNK-UDqrmP8Jz79-oVklw8vLBfaxPbVuQq4FBfblu27R9s=@pm.me>
- <CAH2e8h5tns-sXZ3-cvBmeAgbkNT1sG0kxNeaUGZnHoFEYh-Tjg@mail.gmail.com>
- <ZPf83Rxo54mgr4un9o9CNu9rXp4-8cQ8jkYIfHZODIzbJXEMISRS2PZKYqDCijOAq1N2eq0Wnt-kS0ys9KV0uB5TawUQLNjNcSzfQeUWe10=@pm.me>
- <CAH2e8h6wvab7tvZRUt0xS=SA5+hnKopQKCayT0JEgWL9_e3uTQ@mail.gmail.com> <z5Q2MMTkjlFG1ye2Vv0uZrEyVqazEnPeBWDmYwlvpZKK1m5tRSfP94gZNEUbec9qKSiaUQpzyqveE8ehad3JkL69HRKnHMSKJUhOm7mP1nE=@pm.me>
-In-Reply-To: <z5Q2MMTkjlFG1ye2Vv0uZrEyVqazEnPeBWDmYwlvpZKK1m5tRSfP94gZNEUbec9qKSiaUQpzyqveE8ehad3JkL69HRKnHMSKJUhOm7mP1nE=@pm.me>
-From: Pengyu Luo <mitltlatltl@gmail.com>
-Date: Sat, 21 Mar 2026 13:19:30 +0800
-X-Gm-Features: AaiRm509pDsaLob8VR2rUbuqVPa4XMCfftiC0fPCVru4BUfq5hnC8J6WJxEZoeg
-Message-ID: <CAH2e8h7RJA5w2XnJ6inr_a3w-3YMmtjzXErGNCr0Z-qELNz-fQ@mail.gmail.com>
-Subject: Re: [PATCH v3 4/4] drm/msm/dpu: fix video mode DSC INTF timing width calculation
-To: Alexander Koskovich <akoskovich@pm.me>
-Cc: Abhinav Kumar <abhinav.kumar@linux.dev>, David Airlie <airlied@gmail.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, jeffrey.l.hugo@gmail.com, 
-	Jessica Zhang <jesszhan0024@gmail.com>, Jonathan Marek <jonathan@marek.ca>, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Dmitry Baryshkov <lumag@kernel.org>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Maxime Ripard <mripard@kernel.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Rob Clark <robin.clark@oss.qualcomm.com>, 
-	Sean Paul <sean@poorly.run>, Simona Vetter <simona@ffwll.ch>, 
-	Thomas Zimmermann <tzimmermann@suse.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: qcm6490-idp: Enable PCIe1
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20260212-qcm6490-idp-v1-1-80a45bd46ac5@oss.qualcomm.com>
+ <j64qo4pnfviycyb32fuva46j54sb72djapjk2thqho4j5cbalt@4qykle6nrizo>
+Content-Language: en-US
+From: Sushrut Shree Trivedi <sushrut.trivedi@oss.qualcomm.com>
+In-Reply-To: <j64qo4pnfviycyb32fuva46j54sb72djapjk2thqho4j5cbalt@4qykle6nrizo>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=GNoF0+NK c=1 sm=1 tr=0 ts=69be419a cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=RObWm1bxEibDRpuCBrDfiQ==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=EUspDBNiAAAA:8 a=ZNl6TJjcOq9ufUx7pSgA:9 a=QEXdDO2ut3YA:10
+ a=1OuFwYUASf3TG4hYMiVC:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzIxMDA1NCBTYWx0ZWRfX6MusIc0qQ12v
+ 61M8Oea8c0bLpRbA5DAnSt1Az3TnfQBd4DdawAXj8/Mtrf4nEWPccqKIjjgGBvgSyqyd29ca2Wc
+ d2qwtycgjpvjpi0WTitwfsmUYDgM3Y+3qUpFxoBX0lHj9FmBdF6DpEXCAc35EA5HQwWKdxBsUHR
+ 7p+E1KeQWXQlqMCicxox3bQRB/nSJgO+ucQNNFeeu16D0uK8ORCCco/Q6tOB9vHHpSU40GDyKsv
+ aOpqUBSy/e5aKr6kWg9wNm5REMN+BIPAtnTtqviGLxqn5Cbl+Uex/GCkcUOGtAV53jBQyAjOoW4
+ ooA5aKx7OcFEJitKCXMoItun4tZuCiLS3swMYeu+XhyMSMHSXgTMjSiZft/8k6Fsr8Jvkywcwuq
+ /GnkwcQ7oR7FnSQMiKaIKKn8DewkldvwaEfwEtXP8/wcCZpeY7BxAz21M/OBzt7v8dxpoZQK18x
+ yFPdjNBznopjzMub3YA==
+X-Proofpoint-ORIG-GUID: ul3Wtv-hJdfPO9GNzinp6SceRx3Frzlu
+X-Proofpoint-GUID: ul3Wtv-hJdfPO9GNzinp6SceRx3Frzlu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-21_02,2026-03-20_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 lowpriorityscore=0 clxscore=1015 suspectscore=0
+ spamscore=0 adultscore=0 bulkscore=0 phishscore=0 impostorscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
+ definitions=main-2603210054
+X-Spamd-Result: default: False [-2.16 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-98985-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[20];
-	FREEMAIL_CC(0.00)[linux.dev,gmail.com,oss.qualcomm.com,lists.freedesktop.org,marek.ca,vger.kernel.org,kernel.org,linux.intel.com,somainline.org,linaro.org,poorly.run,ffwll.ch,suse.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-98986-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FROM_NEQ_ENVFROM(0.00)[sushrut.trivedi@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mitltlatltl@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,gitlab.freedesktop.org:url,qualcomm.com:email,pm.me:email]
-X-Rspamd-Queue-Id: D077A2E35C6
+	MID_RHS_MATCH_FROM(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[8];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 3982E2E3DFF
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Sat, Mar 21, 2026 at 3:13=E2=80=AFAM Alexander Koskovich <akoskovich@pm.=
-me> wrote:
->
->
-> On Friday, March 20th, 2026 at 9:36 AM, Pengyu Luo <mitltlatltl@gmail.com=
-> wrote:
->
-> > On Fri, Mar 20, 2026 at 9:18=E2=80=AFPM Alexander Koskovich <akoskovich=
-@pm.me> wrote:
-> > >
-> > > On Friday, March 20th, 2026 at 8:20 AM, Pengyu Luo <mitltlatltl@gmail=
-.com> wrote:
-> > >
-> > > > On Fri, Mar 20, 2026 at 8:14=E2=80=AFPM Alexander Koskovich <akosko=
-vich@pm.me> wrote:
-> > > > >
-> > > > > On Friday, March 20th, 2026 at 8:08 AM, Pengyu Luo <mitltlatltl@g=
-mail.com> wrote:
-> > > > >
-> > > > > > On Fri, Mar 20, 2026 at 4:17=E2=80=AFPM Alexander Koskovich <ak=
-oskovich@pm.me> wrote:
-> > > > > > > >
-> > > > > > > > On Friday, March 20th, 2026 at 3:36 AM, Dmitry Baryshkov <d=
-mitry.baryshkov@oss.qualcomm.com> wrote:
-> > > > > > > >
-> > > > > > > > > On Fri, Mar 20, 2026 at 07:02:54AM +0000, Alexander Kosko=
-vich wrote:
-> > > > > > > > > > On Friday, March 20th, 2026 at 2:50 AM, Alexander Kosko=
-vich <akoskovich@pm.me> wrote:
-> > > > > > > > > >
-> > > > > > > > > > > On Friday, March 20th, 2026 at 2:38 AM, Dmitry Barysh=
-kov <dmitry.baryshkov@oss.qualcomm.com> wrote:
-> > > > > > > > > > >
-> > > > > > > > > > > > On Fri, Mar 20, 2026 at 04:46:02AM +0000, Alexander=
- Koskovich wrote:
-> > > > > > > > > > > > > On Friday, March 20th, 2026 at 12:25 AM, Jonathan=
- Marek <jonathan@marek.ca> wrote:
-> > > > > > > > > > > > >
-> > > > > > > > > > > > > > On 3/19/26 9:45 PM, Dmitry Baryshkov wrote:
-> > > > > > > > > > > > > > > On Thu, Mar 19, 2026 at 01:23:03PM -0400, Jon=
-athan Marek wrote:
-> > > > > > > > > > > > > > ...
-> > > > > > > > > > > > > > >>
-> > > > > > > > > > > > > > >> That's not how it works. INTF (which feeds D=
-SI) is after DSC compression.
-> > > > > > > > > > > > > > >>
-> > > > > > > > > > > > > > >> INTF timings are always in RGB888 (24-bit) u=
-nits. Ignoring widebus details,
-> > > > > > > > > > > > > > >> the INTF timing should match what is program=
-med on the DSI side (hdisplay,
-> > > > > > > > > > > > > > >> which is calculated as bytes per line / 3).
-> > > > > > > > > > > > > > >>
-> > > > > > > > > > > > > > >> (fwiw, the current "timing->width =3D ..." c=
-alculation here blames to me, but
-> > > > > > > > > > > > > > >> what I wrote originally was just "timing->wi=
-dth =3D timing->width / 3" with a
-> > > > > > > > > > > > > > >> comment about being incomplete.)
-> > > > > > > > > > > > > > >>
-> > > > > > > > > > > > > > > Okay. After reading the docs (sorry, it took =
-a while).
-> > > > > > > > > > > > > > >
-> > > > > > > > > > > > > > > - When widebus is not enabled, the transfer i=
-s always 24 bit of
-> > > > > > > > > > > > > > >    compressed data. Thus if it is not in play=
-, pclk and timing->width
-> > > > > > > > > > > > > > >    should be scaled by source_pixel_depth / c=
-ompression_ratio / 24. In
-> > > > > > > > > > > > > > >    case of the code it is 'drm_dsc_get_bpp_in=
-t(dsc) / 24'.
-> > > > > > > > > > > > > > >
-> > > > > > > > > > > > > > >    For RGB101010 / 8bpp DSC this should resul=
-t in the PCLK being lowered
-> > > > > > > > > > > > > > >    by the factor of 3 (=3D 24 / (30 / 3.75))
-> > > > > > > > > > > > > > >
-> > > > > > > > > > > > > > > - When widebus is in play (MDSS 6.x+, DSI 2.4=
-+), the transfer takes
-> > > > > > > > > > > > > > >    more than 24 bits. In this case the PCLK a=
-nd timing->width should be
-> > > > > > > > > > > > > > >    scaled exactly by the DSC compression rati=
-o, which is
-> > > > > > > > > > > > > > >    'drm_dsc_get_bpp_int(dsc) / (3 * dsc->bits=
-_per_component).
-> > > > > > > > > > > > > > >
-> > > > > > > > > > > > > > > So, this piece of code needs to be adjusted t=
-o check for the widebus
-> > > > > > > > > > > > > > > being enabled or not.
-> > > > > > > > > > > > > > >
-> > > > > > > > > > > > > >
-> > > > > > > > > > > > > > The widebus adjustment on the MDP/INTF side is =
-already in
-> > > > > > > > > > > > > > dpu_hw_intf_setup_timing_engine: the "data widt=
-h" is divided by 2 for
-> > > > > > > > > > > > > > 48-bit widebus instead of 24-bit. there shouldn=
-'t be any other
-> > > > > > > > > > > > > > adjustment (downstream doesn't have any other a=
-djustment).
-> > > > > > > > > > > > > >
-> > > > > > > > > > > > > > a relevant downstream comment: "In DATABUS-WIDE=
-N mode, MDP always sends
-> > > > > > > > > > > > > > out 48-bit compressed data per pclk and on aver=
-age, DSI consumes an
-> > > > > > > > > > > > > > amount of compressed data equivalent to the unc=
-ompressed pixel depth per
-> > > > > > > > > > > > > > pclk."
-> > > > > > > > > > > > > >
-> > > > > > > > > > > > > > Based on that comment, this patch is correct, a=
-nd the
-> > > > > > > > > > > > > > ''drm_dsc_get_bpp_int(dsc) / (3 * dsc->bits_per=
-_component)' adjustment
-> > > > > > > > > > > > > > only applies to DSI.
-> > > > > > > > > > > > >
-> > > > > > > > > > > > > If I keep the INTF side at /24 and change the DSI=
- side to:
-> > > > > > > > > > > > >
-> > > > > > > > > > > > > if (wide_bus)
-> > > > > > > > > > > > >         new_hdisplay =3D DIV_ROUND_UP(mode->hdisp=
-lay * drm_dsc_get_bpp_int(dsc), dsc->bits_per_component * 3);
-> > > > > > > > > > > > > else
-> > > > > > > > > > > > >         new_hdisplay =3D DIV_ROUND_UP(mode->hdisp=
-lay * drm_dsc_get_bpp_int(dsc), 24);
-> > > > > > > > > > > >
-> > > > > > > > > > > > Please check the actual fps (I'm usually using a vb=
-lank-synced GL, e.g.
-> > > > > > > > > > > > kmscube).
-> > > > > > > > > > > >
-> > > > > > > > > > > > At least this matches my expectations.
-> > > > > > > > > > >
-> > > > > > > > > > > Hmmm with kmscube I am getting 120FPS with 24 and 100=
-FPS with 30. So I guess that's a no go
-> > > > > > > > > >
-> > > > > > > > > > Although it was using dsc->bits_per_component * 3 regar=
-dless before for
-> > > > > > > > > > dsi_adjust_pclk_for_compression so I guess that's what =
-Jonathan was
-> > > > > > > > > > referring to earlier...
-> > > > > > > > >
-> > > > > > > > > Do you have any of the patches by Marijn or Pengyu?
-> > > > > > > > >
-> > > > > > > > > - https://lore.kernel.org/linux-arm-msm/20260311-dsi-dsc-=
-regresses-again-v1-1-6a422141eeea@somainline.org/
-> > > > > > > > >
-> > > > > > > > > - https://lore.kernel.org/linux-arm-msm/20260307111250.10=
-5772-1-mitltlatltl@gmail.com/
-> > > > > > > >
-> > > > > > > > Nope, I can test with them though if you'd like
-> > > > > > >
-> > > > > > > Tested the following 3 patches on top of this series:
-> > > > > > > drm/msm/dsi: fix hdisplay calculation when programming dsi re=
-gisters
-> > > > > > > drm/msm/dsi: fix bits_per_pclk
-> > > > > > > drm/msm/dsi: fix hdisplay calculation for CMD mode panel
-> > > > > > >
-> > > > > > > Getting constant FIFO errors with them applied:
-> > > > > > > [   64.851635] dsi_err_worker: status=3D4
-> > > > > > > [   64.851692] dsi_err_worker: status=3D4
-> > > > > > > [   64.851730] dsi_err_worker: status=3D4
-> > > > > > > [   64.851766] dsi_err_worker: status=3D4
-> > > > > > > [   64.851802] dsi_err_worker: status=3D4
-> > > > > > > [   64.851837] dsi_err_worker: status=3D4
-> > > > > > > [   64.851903] dsi_err_worker: status=3D4
-> > > > > > > [   64.851940] dsi_err_worker: status=3D4
-> > > > > > > [   64.851976] dsi_err_worker: status=3D4
-> > > > > > > [   64.852011] dsi_err_worker: status=3D4
-> > > > > >
-> > > > > > Personally, I use
-> > > > > > timing->width =3D DIV_ROUND_UP(timing->width * drm_dsc_get_bpp_=
-int(dsc),
-> > > > > >                          dsc->bits_per_component * 3);
-> > > > > >
-> > > > > > DIV_ROUND_UP is magic for me. If not, I got status=3D4 too.
-> > > > > >
-> > > > > > This works for 8-bit dst bpc with 10-bit src bpc.
-> > > > >
-> > > > > Did a quick test with that (plus the 3 changes listed above), sti=
-ll getting the
-> > > > > FIFO errors and no display.
-> > > > >
-> > > > > Are you using RGB101010?
-> > > > >
-> > > >
-> > > > RGB101010(dst bpp) downstream, my panel supports RGB101010, and I c=
-an
-> > > > use RGB888 for it too.
-> > > > I am testing rgb101010.
-> > > > BTW, have you dumped registers? compared with downstream.
-> > > >
-> > > > I hardcode
-> > > > display_data_hctl =3D (0xbe << 16) | hsync_data_start_x;
-> > > > in dpu_hw_intf.c
-> > > > downstream uses 0xbe for data_width
-> > >
-> > > Can you try this series with ac47870fd ("drm/msm/dsi: fix hdisplay ca=
-lculation when programming dsi registers") reverted and with the following =
-2 changes?
-> > >
-> > > https://github.com/AKoskovich/linux/commit/af24b0e2ee212153953dfee040=
-da5cc077567363
-> > > https://github.com/AKoskovich/linux/commit/e334675c0caf47956a838e2eaf=
-da22fb689a967d
-> > >
-> >
-> > I don't mind testing it, but some parameters are obviously wrong for me=
-.
->
-> Did some additional testing, reverted the change in dpu_encoder_phys_vid.=
-c and
-> picked only "drm/msm/dsi: fix hdisplay calculation when programming dsi
-> registers". This results in the FIFO errors. But then when I mirror data_=
-width
-> calculation I see downstream, display then works.
->
 
-Yes, that would work. I recently hardcoded data_width(not dig it yet),
-after I fixed
-clock issues(mentioned in the last email) last night, 10b input w/
-output works well now.
-But the clock issues may not confuse you. My panel is 2 * 952*3040
-with C-PHY native
-10b, pclk goes unusual, the ratio(35/16) only shows in 10b in with10b out m=
-ode.
+On 2/19/2026 7:02 PM, Bjorn Andersson wrote:
+> On Thu, Feb 12, 2026 at 05:36:29PM +0530, Sushrut Shree Trivedi wrote:
+>> Remove PCIe1 clocks from protected-list and enable PCIe1 controller
+>> and its corresponding PHY nodes on qcm6490-idp platform.
+>>
+> Does this mean that the firmware has changed or does it mean that the
+> protected-clocks list has been wrong all along? Is the remaining part
+> of the list correct?
+No, there is no change in firmware. During initial chipset bring-up, 
+clocks related
+to unused peripherals are marked as protected to prevent them from being
+turned on by mistake. If there is a need to enable a particular peripheral
+later on (e.g. PCIe1 here), the respective clocks can be removed from 
+protected
+list so they can be enabled by respective drivers.
 
- dsi0_phy_pll_out_dsiclk             2       2        0        378420000
-     disp_cc_mdss_pclk1_clk_src       1       1        0        172992000
- dsi0_phy_pll_out_byteclk            2       2        0        108120000
-     disp_cc_mdss_byte1_clk_src       2       2        0        108120000
-
-> Can you try with just this (ignore other change I suggested):
-> https://github.com/AKoskovich/linux/commit/af24b0e2ee212153953dfee040da5c=
-c077567363
+The remaining list contains clocks for currently unused peripherals.
+>> PCIe1 is used to connect NVMe based SSD's on this platform.
+>>
+> "used to connect" sounds like it's optional. If the NVMe is soldered to
+> the board then say that in the commit message.
+Ack'd
 >
-> That should make the display_data_hctl calculation correct so you don't n=
-eed to
-> hardcode (I think)
+>> Signed-off-by: Sushrut Shree Trivedi <sushrut.trivedi@oss.qualcomm.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 39 +++++++++++++++++++++++++++-----
+>>   1 file changed, 33 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+>> index 089a027c57d5..1fac051ab3e7 100644
+>> --- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+>> +++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+>> @@ -533,12 +533,7 @@ vreg_bob_3p296: bob {
+>>   };
+>>   
+>>   &gcc {
+>> -	protected-clocks = <GCC_AGGRE_NOC_PCIE_1_AXI_CLK> ,<GCC_PCIE_1_AUX_CLK>,
+>> -			   <GCC_PCIE_1_AUX_CLK_SRC>, <GCC_PCIE_1_CFG_AHB_CLK>,
+>> -			   <GCC_PCIE_1_MSTR_AXI_CLK>, <GCC_PCIE_1_PHY_RCHNG_CLK_SRC>,
+>> -			   <GCC_PCIE_1_PIPE_CLK>, <GCC_PCIE_1_PIPE_CLK_SRC>,
+>> -			   <GCC_PCIE_1_SLV_AXI_CLK>, <GCC_PCIE_1_SLV_Q2A_AXI_CLK>,
+>> -			   <GCC_QSPI_CNOC_PERIPH_AHB_CLK>, <GCC_QSPI_CORE_CLK>,
+>> +	protected-clocks = <GCC_QSPI_CNOC_PERIPH_AHB_CLK>, <GCC_QSPI_CORE_CLK>,
+>>   			   <GCC_QSPI_CORE_CLK_SRC>,<GCC_USB30_SEC_MASTER_CLK>,
+>>   			   <GCC_USB30_SEC_MASTER_CLK_SRC>, <GCC_USB30_SEC_MOCK_UTMI_CLK>,
+>>   			   <GCC_USB30_SEC_MOCK_UTMI_CLK_SRC>,
+>> @@ -615,6 +610,22 @@ &mdss_dsi_phy {
+>>   	status = "okay";
+>>   };
+>>   
+>> +&pcie1 {
+>> +	perst-gpios = <&tlmm 2 GPIO_ACTIVE_LOW>;
+>> +
+>> +	pinctrl-0 = <&pcie1_reset_n>, <&pcie1_wake_n>, <&pcie1_clkreq_n>;
+>> +	pinctrl-names = "default";
+>> +
+>> +	status = "okay";
+>> +};
+>> +
+>> +&pcie1_phy {
+>> +	vdda-phy-supply = <&vreg_l10c_0p88>;
+>> +	vdda-pll-supply = <&vreg_l6b_1p2>;
+>> +
+>> +	status = "okay";
+>> +};
+>> +
+>>   &pm7250b_gpios {
+>>   	lcd_disp_bias_en: lcd-disp-bias-en-state {
+>>   		pins = "gpio2";
+>> @@ -920,6 +931,22 @@ &tlmm {
+>>   	gpio-reserved-ranges = <32 2>, /* ADSP */
+>>   			       <48 4>; /* NFC */
+>>   
+>> +	pcie1_reset_n: pcie1-reset-n-state {
+>> +		pins = "gpio2";
+>> +		function = "gpio";
+>> +		drive-strength = <16>;
+>> +		output-low;
+>> +		bias-disable;
+>> +		};
+> That doesn't look right.
+There seems to be multiple default pinctrl configurations for perst.
+On rb3 industrial kit we used the same output-low & bias-disable
+configuration while for other targets, I see we have used bias-pull-up.
+I feel the current config is more appropriate since it ensures the endpoint
+remains under reset and doesn't try to link-up with host until the
+controller driver initiates link training.
+
+Do you suggest a different configuration ?
+>> +
+>> +	pcie1_wake_n: pcie1-wake-n-state {
+>> +		pins = "gpio3";
+>> +		function = "gpio";
+>> +		drive-strength = <2>;
+>> +		bias-pull-up;
+>> +	};
+>> +
+>> +
+> Extra white space.
+Ack'd
 >
-
-Awesome! I will later. I hope this will fix the data_width issue finally.
-
-Best wishes,
-Pengyu
-
-> >
-> > int new_hdisplay =3D DIV_ROUND_UP(mode->hdisplay * drm_dsc_get_bpp_int(=
-dsc),
-> >             dsc->bits_per_component * 3);
-> >
-> > This gives the correct clkrate with fixes([1]).
-> >
-> > fixed ac47870fd([2]) will give me the right hdisplay register value
-> > @0xae94024 (I compared with downstream)
-> >
-> > [1]: https://gitlab.freedesktop.org/drm/msm/-/commit/e4eb11b34d6c84f398=
-d8f08d7cb4d6c38e739dd2
-> > [2]: https://lore.kernel.org/linux-arm-msm/20260307111250.105772-1-mitl=
-tlatltl@gmail.com/
-> >
-> > BTW, I can only do 8-bit dst and 10-bit src test, 10-bit dst and
-> > 10-bit src gave me
-> >
-> > Mar 20 20:46:00 qcom kernel: dsi_mgr_bridge_mode_set: set mode:
-> > "1904x3040": 120 915552 1904 2180 2212 2244 3040 3066 3070 3400 0x48
-> >  0x0
-> > Mar 20 20:46:00 qcom kernel: dsi_mgr_bridge_pre_enable: id=3D0
-> > Mar 20 20:46:00 qcom kernel: dsi_mgr_bridge_power_on: id=3D0
-> > Mar 20 20:46:00 qcom kernel: msm_dsi_host_reset_phy:
-> > Mar 20 20:46:00 qcom kernel: msm_dsi_host_reset_phy:
-> > Mar 20 20:46:00 qcom kernel: dsi_calc_pclk: pclk=3D172992000, bclk=3D10=
-8120000
-> > Mar 20 20:46:00 qcom kernel: dsi_calc_pclk: pclk=3D172992000, bclk=3D10=
-8120000
-> > Mar 20 20:46:00 qcom kernel: dsi_link_clk_set_rate_6g: Set clk rates:
-> > pclk=3D172992000, byteclk=3D108120000
-> > Mar 20 20:46:00 qcom kernel: dsi_link_clk_set_rate_6g: Failed to set
-> > rate pixel clk, -22
-> > Mar 20 20:46:00 qcom kernel: msm_dsi_host_power_on: failed to enable
-> > link clocks. ret=3D-22
-> > Mar 20 20:46:00 qcom kernel: dsi_mgr_bridge_power_on: power on host 0
-> > failed, -22
-> > Mar 20 20:46:00 qcom kernel: msm_dsi ae94000.dsi: Power on failed: -22
-> > Mar 20 20:46:00 qcom kernel: bias enabled
-> > Mar 20 20:46:00 qcom kernel: panel-nt36536 ae94000.dsi.0: sending dcs
-> > data ff 20 failed: -22
-> > Mar 20 20:46:00 qcom kernel: panel-nt36536 ae94000.dsi.0: Failed to
-> > initialize panel: -22
-> > Mar 20 20:46:00 qcom kernel: [drm:dpu_encoder_phys_vid_enable:471] enc3=
-3 intf2
-> > Mar 20 20:46:00 qcom kernel:
-> > [drm:dpu_encoder_phys_vid_setup_timing_engine:292] enc33 intf2
-> > enabling mode:
-> > Mar 20 20:46:00 qcom kernel:
-> > [drm:dpu_encoder_phys_vid_setup_timing_engine:304] enc33 intf2
-> > split_role 2, halve horizontal 952 1122
-> > 1090 1106 0
-> > Mar 20 20:46:00 qcom kernel:
-> > [drm:dpu_encoder_phys_vid_setup_timing_engine:315] enc33 intf2
-> > fmt_fourcc 0x34324752
-> > Mar 20 20:46:00 qcom kernel:
-> > [drm:programmable_fetch_get_num_lines:202] enc33 intf2 prog fetch is
-> > not needed, large vbp+vsw
-> > Mar 20 20:46:00 qcom kernel:
-> > [drm:programmable_fetch_get_num_lines:217] enc33 intf2 v_front_porch
-> > 26 v_back_porch 330 vsync_pulse_wi
-> > dth 4
-> > Mar 20 20:46:00 qcom kernel:
-> > [drm:programmable_fetch_get_num_lines:221] enc33 intf2 wc_lines 24
-> > needed_vfp_lines 4294966986 actual_v
-> > fp_lines 0
-> > Mar 20 20:46:00 qcom kernel: [drm:programmable_fetch_config:261] enc33
-> > intf2 vfp_fetch_lines 0 vfp_fetch_start_vsync_counter 0
-> > Mar 20 20:46:00 qcom kernel: [drm:dpu_encoder_phys_vid_enable:507]
-> > enc33 intf2 update pending flush ctl 0 intf 3
-> > Mar 20 20:46:00 qcom kernel: [drm:dpu_encoder_phys_vid_enable:471] enc3=
-3 intf1
-> > Mar 20 20:46:00 qcom kernel:
-> > [drm:dpu_encoder_phys_vid_setup_timing_engine:292] enc33 intf1
-> > enabling mode:
-> > Mar 20 20:46:00 qcom kernel:
-> > [drm:dpu_encoder_phys_vid_setup_timing_engine:304] enc33 intf1
-> > split_role 1, halve horizontal 952 1122
-> > 1090 1106 0
-> > Mar 20 20:46:00 qcom kernel:
-> > [drm:dpu_encoder_phys_vid_setup_timing_engine:315] enc33 intf1
-> > fmt_fourcc 0x34324752
-> >
-> >
-> > Best wishes,
-> > Pengyu
-> >
-> > >
-> > > >
-> > > > Best wishes,
-> > > > Pengyu
-> > > > > >
-> > > > > > Best wishes,
-> > > > > > Pengyu
-> > > > > >
-> > > > >
-> > > > > Thanks,
-> > > > > Alex
-> > > >
-> > > >
-> >
-> >
+> Thanks,
+> Bjorn
+>
+>>   	sd_cd: sd-cd-state {
+>>   		pins = "gpio91";
+>>   		function = "gpio";
+>>
+>> ---
+>> base-commit: 4f938c7d3b25d87b356af4106c2682caf8c835a2
+>> change-id: 20260212-qcm6490-idp-24f7b6a1812d
+>>
+>> Best regards,
+>> -- 
+>> Sushrut Shree Trivedi <sushrut.trivedi@oss.qualcomm.com>
+>>
 
