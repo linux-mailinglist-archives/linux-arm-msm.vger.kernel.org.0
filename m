@@ -1,153 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-98977-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-98978-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cLIYEMgBvmkaFQMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-98977-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 03:26:16 +0100
+	id 0IOWKQELvmk/FwMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-98978-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 04:05:37 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id B190B2E2EA0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 03:26:15 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id AAD952E3003
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 04:05:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 98A1B30333A6
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 02:26:14 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id DACC23010225
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 03:05:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C813C29BD88;
-	Sat, 21 Mar 2026 02:26:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 820422E175F;
+	Sat, 21 Mar 2026 03:05:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UL3lja34"
+	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="fVBcEMd9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
+Received: from out-187.mta1.migadu.com (out-187.mta1.migadu.com [95.215.58.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0E71A3165;
-	Sat, 21 Mar 2026 02:26:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A94D32DE6E3
+	for <linux-arm-msm@vger.kernel.org>; Sat, 21 Mar 2026 03:05:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774059971; cv=none; b=LB+dNT9qZGuyXD2AjTmBGKvp3VMg6Q1ncQ8enDiHWigAUI5/Szl4PHcLmMTN06v0JeUss58gJdAvXnhUNqbJhdcnEKf/axG8t+zjk4oSvw82HLvMePwLcOen0Nx3Pi4a+koxDIlUStr/oFXJArpFQrH4iKMXhPSXoCD/4HheZ3Y=
+	t=1774062326; cv=none; b=Hhqb/8AJDDc5isSG6agsKnebjwpkHZmQNOvd6xUqGZpW2eC4CIgJ02suf2rSYahNXFMYs/SeyJ+816ETQpRCC8rU4n04ArFivkaI1I/RmhmkDy5rstmpm4AV87undKqg11hOGPkPdcWxY1nfuXMh2OXRYEGkY8JDUKjirn+Bp+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774059971; c=relaxed/simple;
-	bh=eG5LkS+9cCOeVxm20ZTUca9k3IWxWt9/hMQ4+PWUen0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sB1rp34azQHz7vYIdb7wUo4Sxs86O9uCDKKho1zwYey3CmLs9C6qjRS0XqaiZ2bKqq1tvnzk32tRxFh1sy91XeMF2Dyq8KAMoCUX6AwVi/zXfg0NYf2MCUDizlZiIGgXAUU0v1GyjkYP4J3nm+nPZAYvlrKcVe3fV+y5owXZOHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=UL3lja34; arc=none smtp.client-ip=192.198.163.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1774059969; x=1805595969;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=eG5LkS+9cCOeVxm20ZTUca9k3IWxWt9/hMQ4+PWUen0=;
-  b=UL3lja342nStXdPKoKxDE5G4uz+pYWAnwLxT7ahLR5veXnHO4dmkuDPS
-   kv7hrqWLp/SlTBiTzqteMEmVEvWsJc7XyySRBKjc7PZqZwk9ABCgQioDT
-   zTg1xEA63Ux1WAjLWNqhE6fTMRD0kX5tzgY+nQYpqdc26D3+lfpB3fG5f
-   X7imsRQXcZ/LcmKLkkppUA7uiEpB/5X3f27EZ8i9m26M9TXJBlrz62z/x
-   BlCuFLZlYMbGbBSZpR4MiirshdfyqDDRCIv60pjR1KJe9NxTF/5lB9S7j
-   0U80cnlYkNaEIH00EOiZeWk1/HzHT8X/xuGVYlWpB6AZPIhFsEH4AxZsP
-   g==;
-X-CSE-ConnectionGUID: WlezhvJbTs6alU7Z/RrR6A==
-X-CSE-MsgGUID: 0ayDyIC/StGq+WzjItOMmA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11735"; a="86513223"
-X-IronPort-AV: E=Sophos;i="6.23,132,1770624000"; 
-   d="scan'208";a="86513223"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2026 19:26:08 -0700
-X-CSE-ConnectionGUID: o0WWiGR5QOOQvsToiLyxHg==
-X-CSE-MsgGUID: wLO7713QQmCTMFZ6fN/fgg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,132,1770624000"; 
-   d="scan'208";a="223679709"
-Received: from lkp-server02.sh.intel.com (HELO d7fefbca0d04) ([10.239.97.151])
-  by orviesa007.jf.intel.com with ESMTP; 20 Mar 2026 19:26:04 -0700
-Received: from kbuild by d7fefbca0d04 with local (Exim 4.98.2)
-	(envelope-from <lkp@intel.com>)
-	id 1w3m2C-000000000CD-0ohq;
-	Sat, 21 Mar 2026 02:25:53 +0000
-Date: Sat, 21 Mar 2026 10:25:04 +0800
-From: kernel test robot <lkp@intel.com>
-To: Mahadevan P <mahadevan.p@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jesszhan0024@gmail.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-	Mahadevan P <mahadevan.p@oss.qualcomm.com>
-Subject: Re: [PATCH v2] drm/msm: default separate_gpu_kms to auto selection
-Message-ID: <202603211049.NkgQVReV-lkp@intel.com>
-References: <20260317-separate_gpu_kms-v2-1-b027ca97b9fe@oss.qualcomm.com>
+	s=arc-20240116; t=1774062326; c=relaxed/simple;
+	bh=hkEbWHvoyfi4N2vi01N5wh/+M84rhTi8RB7e+26RNm8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TOwiHR8JV+mH+ZTRRSMZApz5t5a+vWwykRdAXHiXDdjYOAx9p21ng3+j0jnFZmB0zirPnqP2W6Uq0mPXB1wflT1zkaEfQeHjRfFpefGXc8aR/bnK+SouNy3azqawm2LIym+Ik1yYJuZ80v6/HIE+iGvA63HWx0rIg8VOCARFf9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=fVBcEMd9; arc=none smtp.client-ip=95.215.58.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
+Message-ID: <2d0ca19b-9b8b-4cca-9679-56983ae75b99@packett.cool>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
+	s=key1; t=1774062312;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ZXbJCxPsCXe3gsiN6EBXHO7z8maO4HKWRtMFfUGI4KM=;
+	b=fVBcEMd9yEFI3jf8A/z7nxnlZMEmz4yTOmzHKogS4+FtOL7Ny0USYNvvotZHinWUAQKVg4
+	gEOc7sRm9P36Qx903N8JR4Q3KZFe6CmPL+1mtUJ7p6tGK1iBVSqs9Xz0whu+QrPOmjswPk
+	ogQhAbrqirF10XpeOJEpFUr//t2GM5xRnIo+6zSwl5S8HiDSDFom/6SO5z7eIKwR7TLcsu
+	XXGzZ7vHFpj6Zsm16SXXtgTvWHADnNkC0PO1D/ipqUHnvqCvmqmhufN2PNV/XMfRjPCVuL
+	r6KI/AWZR7Kz8U2wWl9mEwgeUtxhq5DsNypCzk8a7FGVL7YdtprBRjcF9iVWXQ==
+Date: Sat, 21 Mar 2026 00:04:55 -0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260317-separate_gpu_kms-v2-1-b027ca97b9fe@oss.qualcomm.com>
-X-Spamd-Result: default: False [-1.16 / 15.00];
+Subject: Re: [PATCH v1] spi: geni-qcom: Fix CPHA and CPOL mode change
+ detection
+To: Jonathan Marek <jonathan@marek.ca>,
+ Maramaina Naresh <naresh.maramaina@oss.qualcomm.com>,
+ Mark Brown <broonie@kernel.org>, konrad.dybcio@oss.qualcomm.com
+Cc: kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
+ linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org,
+ stable@vger.kernel.org, dmitry.baryshkov@oss.qualcomm.com,
+ bjorande@quicinc.com, mukesh.savaliya@oss.qualcomm.com,
+ praveen.talari@oss.qualcomm.com, jyothi.seerapu@oss.qualcomm.com
+References: <20260316-spi-geni-cpha-cpol-fix-v1-1-4cb44c176b79@oss.qualcomm.com>
+ <4a7d89ef-0f63-a7c3-e996-ff9fc476a04e@marek.ca>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Val Packett <val@packett.cool>
+In-Reply-To: <4a7d89ef-0f63-a7c3-e996-ff9fc476a04e@marek.ca>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
-	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	DMARC_POLICY_ALLOW(-0.50)[packett.cool,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_DKIM_ALLOW(-0.20)[packett.cool:s=key1];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-98977-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,poorly.run,kernel.org,linux.dev,gmail.com,somainline.org,ffwll.ch];
+	TAGGED_FROM(0.00)[bounces-98978-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[3];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[18];
-	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	DKIM_TRACE(0.00)[packett.cool:+];
 	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[lkp@intel.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[intel.com:+];
-	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:dkim,intel.com:email,intel.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: B190B2E2EA0
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[val@packett.cool,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,marek.ca:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: AAD952E3003
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi Mahadevan,
 
-kernel test robot noticed the following build errors:
+On 3/16/26 2:13 PM, Jonathan Marek wrote:
+> Reviewed-by: Jonathan Marek <jonathan@marek.ca>
+>
+> at least it doesn't look like this stupid mistake breaks anything 
+> upstream (no spi-cpha/spi-cpol in any qcom dts)
 
-[auto build test ERROR on b84a0ebe421ca56995ff78b66307667b62b3a900]
+There might not have been any users upstream but you never know what 
+people are working on :)
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Mahadevan-P/drm-msm-default-separate_gpu_kms-to-auto-selection/20260318-063854
-base:   b84a0ebe421ca56995ff78b66307667b62b3a900
-patch link:    https://lore.kernel.org/r/20260317-separate_gpu_kms-v2-1-b027ca97b9fe%40oss.qualcomm.com
-patch subject: [PATCH v2] drm/msm: default separate_gpu_kms to auto selection
-config: loongarch-randconfig-002-20260321 (https://download.01.org/0day-ci/archive/20260321/202603211049.NkgQVReV-lkp@intel.com/config)
-compiler: clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
-rustc: rustc 1.88.0 (6b00bc388 2025-06-23)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260321/202603211049.NkgQVReV-lkp@intel.com/reproduce)
+Looks like this might've unblocked my progress with one of the phones I 
+have WIP for (sm6115-motorola-guamp) which has a Himax touchscreen 
+(yuck[1]) that uses SPI mode 3. Only tested quickly but at least one 
+reply in the early init sequence makes sense now!
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202603211049.NkgQVReV-lkp@intel.com/
+Before:
 
-All errors (new ones prefixed by >>, old ones prefixed by <<):
+hx83102j spi0.0: himax_spi_read: xfer_tx_data: f3 08 00
+hx83102j spi0.0: himax_spi_read: xfer_rx_data: 08 00 00 00
+hx83102j spi0.0: hx83102j_sense_off: Do not need wait FW, Status = 0x08!
+[..]
+hx83102j spi0.0: himax_spi_read: xfer_tx_data: f3 08 00
+hx83102j spi0.0: himax_spi_read: xfer_rx_data: 18 00 00 00
 
->> ERROR: modpost: "msm_mdss_count_masters" [drivers/gpu/drm/msm/msm.ko] undefined!
+After:
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+hx83102j spi0.0: himax_spi_read: xfer_tx_data: f3 08 00
+hx83102j spi0.0: himax_spi_read: xfer_rx_data: 04 00 00 00
+hx83102j spi0.0: hx83102j_sense_off: Do not need wait FW, Status = 0x04!
+[..]
+hx83102j spi0.0: himax_spi_read: xfer_tx_data: f3 08 00
+hx83102j spi0.0: himax_spi_read: xfer_rx_data: 0c 00 00 00
+hx83102j spi0.0: hx83102j_sense_off: Safe mode entered
+
+So that's a very late
+
+Tested-by: Val Packett <val@packett.cool>
+
+
+BTW, spi-cpha/spi-cpol in DTS is not an entirely reliable indicator it 
+seems? Loooots of drivers set SPI_MODE_x in code explicitly, my 
+understanding is that that overrides dts.
+
+
+[1]: 
+https://lore.kernel.org/all/TY0PR06MB561105A3386E9D76F429110D9E0F2@TY0PR06MB5611.apcprd06.prod.outlook.com/
+
+> On 3/16/26 9:23 AM, Maramaina Naresh wrote:
+>> setup_fifo_params computes mode_changed from spi->mode flags but tests
+>> it against SE_SPI_CPHA and SE_SPI_CPOL, which are register offsets,
+>> not SPI mode bits. This causes CPHA and CPOL updates to be skipped
+>> on mode switches, leaving the controller with stale clock phase
+>> and polarity settings.
+>>
+>> Fix this by using SPI_CPHA and SPI_CPOL to detect mode changes before
+>> updating the corresponding registers.
+>>
+>> Fixes: 781c3e71c94c ("spi: spi-geni-qcom: rework setup_fifo_params")
+>> Signed-off-by: Maramaina Naresh <naresh.maramaina@oss.qualcomm.com>
+>> ---
+>> This patch fixes SPI mode change detection in the spi-geni-qcom driver.
+>>
+>> setup_fifo_params compared spi->mode against SE_SPI_CPHA/SE_SPI_CPOL,
+>> which are register offsets instead of SPI_CPHA/SPI_CPOL mode bits.
+>> This could skip CPHA/CPOL updates on mode switches and leave stale
+>> clock configuration.
+>> […]
+
+Thanks a lot for finding this!!
+
+~val
+
 
