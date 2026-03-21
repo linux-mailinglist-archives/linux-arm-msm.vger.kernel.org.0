@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-99034-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99035-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id CDaZCq7yvmlxlAMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99034-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 20:34:06 +0100
+	id OI0ZNX/yvmlxlAMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99035-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 20:33:19 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF7B52E705A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 20:34:05 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6534E2E7034
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 20:33:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9845E301C5A2
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 19:32:44 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 428493013030
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 19:33:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBAAB31A556;
-	Sat, 21 Mar 2026 19:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA14B31D375;
+	Sat, 21 Mar 2026 19:33:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tlwKyVJL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oGYZIFN9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7732303A35;
-	Sat, 21 Mar 2026 19:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 944232D73A1;
+	Sat, 21 Mar 2026 19:33:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774121563; cv=none; b=oCaJINEsixCgopIH6Hr2oqOCtKZvNl417H7a3+cFl+AkUH8EDN2C5OVzHVgxIs8agCTCLwzYG83/p5dIjuyEA9LSbKOUNk+dAHQmA2K5GWJ43SUtGiyFREOKZsYZ85NxxzjsxQngpiLmlHwjJL2kowldXahb7n5bXv0AspzkGKg=
+	t=1774121595; cv=none; b=s7e3UDO4jdBMNXg28M8Rzee2Ty9mQbp5On1PMi1+4eEuaLRPM/ZA5PH/E6aV2WTIfpJJJrwjCcQwgwD/qWc/TmL3xatKM2fBkuehQTUp1fANFlUtvy708FACL54mzhhJXuD4/xNdksfgTKYq3kxh5X6W472J0XN/fi3aWWEaUf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774121563; c=relaxed/simple;
-	bh=ertbsjj7Z+Xd4lkyrocnofivw48zxMRQvtwcilU5V4I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=p0bz9xlQ94fiQWVhJkqedMCZNtoo2ugz7lwV6NlEkQC6odM7+p6FK2mHAQ6GprQWE0+mxKZJOBQpj5lTfxbaI9lEuz2h+QI3lDeQ7Bs0IKFkkG/xWOysukOYnhlXImUbiiSCB6w4hBdGB7ZP4gJOFc5QaYw7ujn2qSClw3Mgdcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tlwKyVJL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58466C19421;
-	Sat, 21 Mar 2026 19:32:41 +0000 (UTC)
+	s=arc-20240116; t=1774121595; c=relaxed/simple;
+	bh=1ysuEZ4CN7vYfOB7yKF+v9rLLbfHZpl0aDBRgBkWaBA=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=q1GU+JS+jhC6ktcXUwQWy/bvtCP4qHu73eqNFE0/6FQjOGvr8TBNL3nCStch13T1qKJ/jLlhmETrscNEdJhp7zbyZa2pQq0gcmc+TFEMgL+lDC6hrzDY6uMpe6fWrNmedSVMQXw0u2JOkfaV8R2xzkwzcbauHFpPEZiiCt4bhRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oGYZIFN9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D185C19421;
+	Sat, 21 Mar 2026 19:33:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774121563;
-	bh=ertbsjj7Z+Xd4lkyrocnofivw48zxMRQvtwcilU5V4I=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=tlwKyVJLUOvERyiC6dzkdRKoSck+JyG5mQwMb6VV6ogNr3p4NiQf18xHj/QE1MaWN
-	 lLbL2g+Yb8+z+gnoVhJC/pDlxLS4ZmWKws0CnoeHGQJq4hWbGMEpn/JzX2qW2hRSF9
-	 vxI2SabRAZbqRIZ9yNPgSH76ONDNm0K+v1FkMXKufOZajLI0JAmJuVkHLOjcx8nIWw
-	 kk3+dE6Bh3DQN2pgtxJVg37ByTkUvYNU47feBc8wx5SPma+cqdXu5iryL/3gMtpJko
-	 eKSjFudbddJQcdTEZrxmsHHHUCT2dGY8XQMTX+bQBe3bw8M7Tu7VU0k22IfKDIVpIX
-	 7sxCKByko0A9g==
-Message-ID: <f619fcbf-8d43-4606-94b2-61b52c24920c@kernel.org>
-Date: Sat, 21 Mar 2026 20:32:39 +0100
+	s=k20201202; t=1774121595;
+	bh=1ysuEZ4CN7vYfOB7yKF+v9rLLbfHZpl0aDBRgBkWaBA=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=oGYZIFN9k4JlZRz9nykRWbrZiCpVvXiXLKcDgwcdONMuTAe8QdB0ACKa/r9+4U6cC
+	 8JsJytW644WOJ9lBCU3PAl4ny9BTdx6AyWjS71aFy4JCFgVAEzgQRc2vTfu5n4IHu/
+	 PQsUDDvYIVihhDNhO2CjglXHZD/NkKXhpIRzLNvzy4+Gq9EiI0ZV+futNf6nXTbIYb
+	 nAgjAv+RPdeHok6fkHQYJ+gMUz3ZFuHFMF+DLbU9D9+xsjk3ByKg+SpA5v7urUQ2ai
+	 N7ITisyruVaDdf7asC2uLY1cCdy+D1iUhtsj2jPoSwNbTPuQmYT7sBbpM6Hz9yzNU+
+	 jS/r0kq7ytwDA==
+Message-ID: <6a1260a8-8988-4839-a7a3-edb9a1bf71fa@kernel.org>
+Date: Sat, 21 Mar 2026 20:33:11 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,18 +53,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom,ids: Add SoC ID for SA8650P
+Subject: Re: [PATCH v2 1/2] dt-bindings: arm: qcom,ids: Add SoC ID for SA8650P
+From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Radu Rendec <rrendec@redhat.com>, linux-arm-msm@vger.kernel.org,
  linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Cc: Lei Wang <quic_leiwan@quicinc.com>, Bjorn Andersson
+Cc: Lei wang <quic_leiwan@quicinc.com>, Bjorn Andersson
  <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
  Conor Dooley <conor+dt@kernel.org>
-References: <20260320205933.992852-1-rrendec@redhat.com>
- <20260320205933.992852-2-rrendec@redhat.com>
- <d6176542-335e-4f35-8ab6-cb4d50546543@kernel.org>
- <cff35ebb2a9bc94ed2381f4ddda7b62d82d4d561.camel@redhat.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+References: <20260321152307.9131-1-rrendec@redhat.com>
+ <20260321152307.9131-2-rrendec@redhat.com>
+ <a7144f45-cfb6-47ac-8f32-c97a7eef9e97@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -109,21 +108,21 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <cff35ebb2a9bc94ed2381f4ddda7b62d82d4d561.camel@redhat.com>
+In-Reply-To: <a7144f45-cfb6-47ac-8f32-c97a7eef9e97@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-99034-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-99035-lists,linux-arm-msm=lfdr.de];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
@@ -133,35 +132,35 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCPT_COUNT_SEVEN(0.00)[10];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[quicinc.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: BF7B52E705A
+	DBL_BLOCKED_OPENRESOLVER(0.00)[quicinc.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: 6534E2E7034
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 21/03/2026 16:12, Radu Rendec wrote:
-> On Sat, 2026-03-21 at 11:03 +0100, Krzysztof Kozlowski wrote:
->> On 20/03/2026 21:59, Radu Rendec wrote:
->>> From: Lei wang <quic_leiwan@quicinc.com>
->>>
->>> Add unique ID for Qualcomm SA8650P SoC.
->>>
->>> Signed-off-by: Lei Wang <quic_leiwan@quicinc.com>
+On 21/03/2026 20:29, Krzysztof Kozlowski wrote:
+> On 21/03/2026 16:23, Radu Rendec wrote:
+>> From: Lei wang <quic_leiwan@quicinc.com>
 >>
->> Please keep consistent spelling of identities. Not sure where the
->> mistake was done - either by Lei or you added his SoB?
+>> Add unique ID for Qualcomm SA8650P SoC.
+>>
+>> Signed-off-by: Lei wang <quic_leiwan@quicinc.com>
+>> Signed-off-by: Radu Rendec <rrendec@redhat.com>
+>> ---
 > 
-> Yes, sorry, my bad! By the time I realized what I did, I had already
-> sent it. I'll send out v2 shortly.
+> 
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+> 
+> <form letter>
+> This is a friendly reminder during the review process.
+> 
 
-Does that mean there was no original Signed-off-by? If so, you should
-not add it, because you cannot certify for someone else.
-
-Please explain the origins of this patch.
+And I read now answer to v1, so the DCO and patch provenance still needs
+clarifications.
 
 Best regards,
 Krzysztof
