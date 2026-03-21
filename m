@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-99003-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99004-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MCFTM2BrvmnGPAMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99003-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 10:56:48 +0100
+	id WPx9GYFtvmm6PQMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99004-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 11:05:53 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 78D5B2E488C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 10:56:48 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 119752E498F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 11:05:53 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id AD0BE300D0CF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 09:56:47 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 118D23005763
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 10:03:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9250C2F1FEC;
-	Sat, 21 Mar 2026 09:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41D9E2BE7A7;
+	Sat, 21 Mar 2026 10:03:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fiij6ej8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o4bYhWJO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D15C14A60F;
-	Sat, 21 Mar 2026 09:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E36E284883;
+	Sat, 21 Mar 2026 10:03:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774087004; cv=none; b=HlnGCgDtMNQlOFwNGWBXp0DCfI+M9IzFRamzWZeuzY4L1x7qExjDb2IVzt6hAXryT8OMlLaW1dBtWH3wZ/f7GykOG3tgG7fsybR/NjiUgiM7fjC1o0EXRHAQr12a40HVX529IMDbVDL9Ioc5CBuYZoEsvg1WDLnjqeBPuN0DHvU=
+	t=1774087428; cv=none; b=uHYdS/Zd2vbAT0BdW1HrPzwhY0OUyTCLhiBBAriFI0g+uvbXTMb+f71/OXFGtCefbOpV6XShEUh+teGdgoRoeb7HNSGJiT0D2tdeM8jKDj3kd1cXD9Xr73oNq9FeMHnHfOdiUH5Q773bVv6iYnqEN/asGWlGhCnL+O70obCOTJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774087004; c=relaxed/simple;
-	bh=+LVNkCkCMdRhAgRtq1Pu/cBRkMFNTx5E4/plQSuuNBs=;
+	s=arc-20240116; t=1774087428; c=relaxed/simple;
+	bh=zozhIXqLJXsPgjnQoOYafHx/4N069SIYpV9pSCplPoY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=G0pd8gt+bGrtPYhDHoqBjB5cW90tI9TK7cqWWxI33nVfP2Hlci1Br3l073He3Fh66R3Y6vAq1GyOMSLWfvj9OLckhPDNaCEo/8nB73nl3VM6cxk5qKVHPdhtVHAryF0Z9sF2knD8sJE7H3DR7FTy4OCLJgN6s69F2+TIfQEf7tQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fiij6ej8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E9F0C19421;
-	Sat, 21 Mar 2026 09:56:39 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=QA0UwFPdAzvInz8W1HQoqQ96bENr/c+YgnhlwO6ysZ1XIU5CK2uvlZBkUenByuvZNdWVlU3BWqDNKBL9LKwifSuPw2zfDsmrlYgGTgirnW6S6aoXYveVUW3V7AfJfJTzPxjgaPUN1yrU1Kor7NKMnOvooDJpF8EgwK8Zw5LiV/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o4bYhWJO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AA80C19421;
+	Sat, 21 Mar 2026 10:03:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774087004;
-	bh=+LVNkCkCMdRhAgRtq1Pu/cBRkMFNTx5E4/plQSuuNBs=;
+	s=k20201202; t=1774087427;
+	bh=zozhIXqLJXsPgjnQoOYafHx/4N069SIYpV9pSCplPoY=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=fiij6ej82yH+M+mEq4Jf73Xe124BHToVVWaE8kFcgvpmd2mtfo/xSgSm0pBe/83SB
-	 EgG6vS9iBCKib2rZr/mN1IIk2HlrcI/nSod1hUsq12PHob0e5XeZzxyL+26mJlcTyv
-	 CA1osB+90HHxRFOoXEVcL1pZ5+4H7vxP2yq9EyAtCZhU4+TAk6QABpAbHV4cLIt3ng
-	 +B12VEtlzrkL8NAnygYUr+3VpVWBMLkewV7TzzYOlBTMJ/VgsKisYKyiWbsKLmpgMS
-	 eggDRPvZVwMJ040cVEflITfqg46fh3Ahgmt+Sur8hsA8h0fb4TB7rCMNreG8sWFzLP
-	 JMO9jDVQYg7fA==
-Message-ID: <9bb6e4ac-c7f2-4f1d-aff0-70eefec810a2@kernel.org>
-Date: Sat, 21 Mar 2026 10:56:38 +0100
+	b=o4bYhWJOmAYozOERUgJhEp15l9FEXH1ezstVwmUyjFGV5DAyT7HHlFWqsnq46tmVf
+	 5nViInytbYaSIDhxgQHgRVlGbqG2Iw3yrmlk/TELIfgm5onOT4qtr9lUvFRtfd7lPf
+	 8mm2ymCuDMuOAhJXfPr6U4WdV8VcztTwyPk1NyqddsfW+DEll3o+dxSUog1NdCWx+A
+	 nRCJm0q6/QfBG9s+i2BVQQm9sJ7kO+aW34/8EoeWWQSDMBPREUTcRmtHtJ3N/gT2qc
+	 S/bmq4bTxb35zg7vEjq9vmHvwk8l5AUoWpJCMxNvt0ajAMxXbO7IWqjcm6gXLD7s4v
+	 3XBuDaiOW+AfQ==
+Message-ID: <d6176542-335e-4f35-8ab6-cb4d50546543@kernel.org>
+Date: Sat, 21 Mar 2026 11:03:43 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,24 +53,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/6] dt-bindings: display: panel: Add Novatek NT35532
- LCD DSI
-To: cristian_ci <cristian_ci@protonmail.com>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>,
- Jessica Zhang <jesszhan0024@gmail.com>, David Airlie <airlied@gmail.com>,
- Simona Vetter <simona@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom,ids: Add SoC ID for SA8650P
+To: Radu Rendec <rrendec@redhat.com>, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Cc: Lei Wang <quic_leiwan@quicinc.com>, Bjorn Andersson
+ <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, dri-devel@lists.freedesktop.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
- phone-devel@vger.kernel.org
-References: <20260318-rimob-new-features-v2-0-c1bf8917449e@protonmail.com>
- <20260318-rimob-new-features-v2-1-c1bf8917449e@protonmail.com>
- <20260319-amorphous-pastoral-turtle-851af9@quoll>
- <oMTrCB7euJojLz1EUHDhHCq071GQWD0g7-sqwahA62CnM-sVw08UCNhKdgHX2NrEN3H8iRhc0suejuq5JZ39UA2nEfKhRq9qwYJWSxCrAtc=@protonmail.com>
+ Conor Dooley <conor+dt@kernel.org>
+References: <20260320205933.992852-1-rrendec@redhat.com>
+ <20260320205933.992852-2-rrendec@redhat.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -116,93 +107,56 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <oMTrCB7euJojLz1EUHDhHCq071GQWD0g7-sqwahA62CnM-sVw08UCNhKdgHX2NrEN3H8iRhc0suejuq5JZ39UA2nEfKhRq9qwYJWSxCrAtc=@protonmail.com>
+In-Reply-To: <20260320205933.992852-2-rrendec@redhat.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-99003-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_TO(0.00)[protonmail.com];
-	RCPT_COUNT_TWELVE(0.00)[19];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[linaro.org,gmail.com,ffwll.ch,linux.intel.com,kernel.org,suse.de,lists.freedesktop.org,vger.kernel.org,lists.sr.ht];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-99004-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 78D5B2E488C
+	RCPT_COUNT_SEVEN(0.00)[10];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[quicinc.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 119752E498F
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 20/03/2026 23:32, cristian_ci wrote:
-> On Thursday, March 19th, 2026 at 10:09, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+On 20/03/2026 21:59, Radu Rendec wrote:
+> From: Lei wang <quic_leiwan@quicinc.com>
 > 
->> On Wed, Mar 18, 2026 at 11:28:09PM +0100, Cristian Cozzolino wrote:
->>> +  avdd-supply:
->>> +    description: positive boost supply regulator
->>> +
->>> +  avee-supply:
->>> +    description: negative boost supply regulator
->>> +
->>> +  vci-supply:
->>> +    description: regulator that supplies the analog voltage
->>> +
->>> +  vddam-supply:
->>> +    description: power supply for MIPI interface
->>> +
->>> +  vddi-supply:
->>> +    description: regulator that supplies the I/O voltage
->>> +
->>> +  port: true
->>> +
->>> +required:
->>> +  - compatible
->>> +  - reg
->>> +  - reset-gpios
->>> +  - avdd-supply
->>> +  - avee-supply
->>> +  - vci-supply
->>
->> Only VDDI is required according to datasheet (see page 11 and page 16).
+> Add unique ID for Qualcomm SA8650P SoC.
 > 
-> Just to be sure, are you mentioning the part saying there are multiple 
-> power modes (2-1PWR, 2-2PWR, 3éWR and 4PWR) related to NT35532? 
-> 
->> Others are needed only in specific configurations, which I would ignore
->> for the simplicity of the binding. Drop these three.
->>
->> Previous discussion point was about this - write bindings based on
->> datasheet, since it is available.
-> 
-> I've removed avdd, avee and vci supplies from 'required' properties 
-> and I've also tested the new bindings (just for completeness). Now, 
-> I'm going to reintroduce again the issue already raised previously 
-> (for which I received no replies in v1): should I submit a v3 
-> series including my new changes or I've to stick with v2 here, in 
-> order to address review concerns about binding, first?
+> Signed-off-by: Lei Wang <quic_leiwan@quicinc.com>
+
+Please keep consistent spelling of identities. Not sure where the
+mistake was done - either by Lei or you added his SoB?
+
+> Signed-off-by: Radu Rendec <rrendec@redhat.com>
+> ---
+>  include/dt-bindings/arm/qcom,ids.h | 1 +
+>  1 file changed, 1 insertion(+)
 > 
 
-I don't understand the question. This is v2, right? So I asked to make
-changes to it, thus you should submit v3 after receiving some more
-review for example.
 
 Best regards,
 Krzysztof
