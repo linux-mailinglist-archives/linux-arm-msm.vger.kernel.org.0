@@ -1,56 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-99017-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id KLXhDvG3vmkkYgMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99017-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 16:23:29 +0100
+	id sBYPLya4vmkkYgMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99019-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 16:24:22 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id D39652E60A7
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 16:23:28 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 47E232E60EC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 16:24:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id ADE0F300E3AA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 15:23:13 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 3D3CC302617F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 15:23:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1F19392C2D;
-	Sat, 21 Mar 2026 15:23:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D8EE39526D;
+	Sat, 21 Mar 2026 15:23:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B2MdO8pk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J3TD85s7"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6F1372B3C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C7338BF76;
 	Sat, 21 Mar 2026 15:23:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774106591; cv=none; b=EI/3Jhar1JgmSPDqgJ8SgpULB21HhVn4YBiQzqr2pYwDI8uEFO6m9Qqluo4ePB34ywalqS02pkdKjXcw0LMOq9YHONvYuI/OpJBBIGnwYgJU/cTPvzQ/hmi4DD/3cePliufPJFUhGXfyd5UrW70o5Bw0BuJShw4N+2ohc8G9NFE=
+	t=1774106591; cv=none; b=NLA88sF+8ojOmTP7dgp7fPCS6TqBsen5IIYDMB2ZCftr9v3fmV84dYqS5y3YQce+k7Uww9Xqq5jLKzaek3DXJIibZUepN236d6whVaUQPBaMViYfYHFW+2qwIQ8kK96Y3gxESGRObNn9UXPOl/pIlgj6mT1khcgqq223tIRCeWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1774106591; c=relaxed/simple;
-	bh=GpDywJE4lv+WKaQwWmudJo8czmdfCXwQdG8fx5funFE=;
+	bh=T2rJglXqEaThMrUso1MGsNq2k7fvUdqrAGUd+QI2xhk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=U0TzkVv7LplXzo0xiD+YXbfeI9FQbndUzQwL9N4WGHKqc41UXgeF7E5H4YGYC+IFex4L6ITVQp3gurQMLOxbhIFBTeqg+NzvpOpewR9tOe+JjAj1dcl3B3RYsSUyEc2luaSKZVTi2eKlnDKR7QOlV43PGangK4kqxbJatPL9FYg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B2MdO8pk; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 59D2FC2BCC4;
+	 In-Reply-To:To:Cc; b=oK1ALo1aykPfBvAQwfHRTbnS1eLm6aJrgPoY/bpq83Xwp1c+mwu7KZt+/2VE6m0JJ+5BZ9yFJUbgBmQvJVTekGPGBVdT6Y3ZTlMxSn0bCE1xGKibf6M87FbSXd1CQA/vomIn2DtzogiMy62uJ9lsWykv8/2MxfiYuuB2g/ODfMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J3TD85s7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 6BA4BC2BCC9;
 	Sat, 21 Mar 2026 15:23:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1774106591;
-	bh=GpDywJE4lv+WKaQwWmudJo8czmdfCXwQdG8fx5funFE=;
+	bh=T2rJglXqEaThMrUso1MGsNq2k7fvUdqrAGUd+QI2xhk=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=B2MdO8pkpzpeoO7NfeyPtt9jWlDWs7V1aXpQieIXj3FMzy2nr6Slz+GftJ21FoLAJ
-	 2/crOOVvUFzm87bhxS9CWcybScJCsBndXozViDGiMylUWY62TzF3A9gTpG/usui3s7
-	 b9f9Aj/SW5+fD+G+kCzMKx7dV8Jd0BMbn/W/auIT6EdjT22rU72FXWjvbiEPX0rCC0
-	 jQ62Z92UHU64QlzZNxnomY8HjU5+7AHWoWFAdNEpPe9mhQ+xxhw6ND/HJUiKy3c5S5
-	 8HihOWGaBU08jok53xtQih7LKta0HEjxtfZFBWgoSYEyrk2el12JN0eKE3GDDKJ0jO
-	 chlto1KemPIvg==
+	b=J3TD85s7BCCcEvJR2j9NrcDLrVlFSThEX2ufYnXx9BbC1tHVLvhYP/qhtxNFsCqP3
+	 B9YOlsFvgqEE9qG2IfL3/O59RVaC7nrSBsTXlP9QygSMKVVdPTBfdZyCRfOztQOLp4
+	 97FGtS4Bm4uPQw9fTN13lpvs53YiuyvInhPUk3D86jPNuMMNrRODovTJv9zxpQQtPf
+	 rxED5UDh3Cn5vPbZaePdm7mpnhHEIXsH8r1m53UNo9WPHGcUaBU8JwKXXgRAK3flN4
+	 HxRPlQoDixx2DYHyF+7kenndH1v4oecvzrZu3gy9kRw84rVreg6TpO520scDThzVdt
+	 nh/0hNqGSFEHQ==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 507781094478;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DC9B1094486;
 	Sat, 21 Mar 2026 15:23:11 +0000 (UTC)
 From: Cristian Cozzolino via B4 Relay <devnull+cristian_ci.protonmail.com@kernel.org>
-Date: Sat, 21 Mar 2026 17:23:22 +0100
-Subject: [PATCH v3 3/6] arm64: dts: qcom: msm8953-flipkart-rimob: Enable
- display and GPU
+Date: Sat, 21 Mar 2026 17:23:23 +0100
+Subject: [PATCH v3 4/6] arm64: dts: qcom: msm8953-flipkart-rimob: Enable
+ WiFi/Bluetooth
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,7 +59,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260321-rimob-new-features-v3-3-d4b8ee867de7@protonmail.com>
+Message-Id: <20260321-rimob-new-features-v3-4-d4b8ee867de7@protonmail.com>
 References: <20260321-rimob-new-features-v3-0-d4b8ee867de7@protonmail.com>
 In-Reply-To: <20260321-rimob-new-features-v3-0-d4b8ee867de7@protonmail.com>
 To: Neil Armstrong <neil.armstrong@linaro.org>, 
@@ -73,13 +73,15 @@ To: Neil Armstrong <neil.armstrong@linaro.org>,
 Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
  ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- Cristian Cozzolino <cristian_ci@protonmail.com>
+ Cristian Cozzolino <cristian_ci@protonmail.com>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1774110230; l=2395;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1774110230; l=1054;
  i=cristian_ci@protonmail.com; s=20250620; h=from:subject:message-id;
- bh=VyUvBSXd0jNEXP9pnCsEQXXkOKHY91F/ZfnedxNcwXE=;
- b=kvU71w3QnZER8tVg+MaJZWGefcXQJ/RnYFCZYYFgv+W3f9k1qLjegzq2Sip1XJfT7zat2FS3Q
- SujGu+gDcU0Diyevzo20ysLzzUai7z/aADdBjdlspOl43amuoCPSar5
+ bh=m6V8I4T0WqUEJHQUdFENcdM3juf5Ya0wQ/8ytPVjnmI=;
+ b=Gs/Bpq7Ng08eKrwYI+h6XMtirKeL0hCvbhxbLree7c6Jg7PK88hRS7r/6ZAf56musOOU7q9xN
+ ls/j2vPCN80Cb6MmG8pr6Zy7D/5dRwIV8ScvedtM412YdcDFmXfhQVQ
 X-Developer-Key: i=cristian_ci@protonmail.com; a=ed25519;
  pk=xH5IvIPUNHV1Q8R0/pq2CfuVFR/wTiAyuyi6IwedjZY=
 X-Endpoint-Received: by B4 Relay for cristian_ci@protonmail.com/20250620
@@ -92,151 +94,71 @@ X-Spamd-Result: default: False [1.34 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-99017-lists,linux-arm-msm=lfdr.de,cristian_ci.protonmail.com];
 	RCVD_TLS_LAST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,0.0.0.0:email,protonmail.com:email,protonmail.com:replyto,protonmail.com:mid];
+	TAGGED_FROM(0.00)[bounces-99019-lists,linux-arm-msm=lfdr.de,cristian_ci.protonmail.com];
 	FREEMAIL_TO(0.00)[linaro.org,gmail.com,ffwll.ch,linux.intel.com,kernel.org,suse.de];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	TO_DN_SOME(0.00)[];
 	FREEMAIL_REPLYTO(0.00)[protonmail.com];
-	RCPT_COUNT_TWELVE(0.00)[19];
-	FREEMAIL_CC(0.00)[lists.freedesktop.org,vger.kernel.org,lists.sr.ht,protonmail.com];
-	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
-	HAS_REPLYTO(0.00)[cristian_ci@protonmail.com];
-	PRECEDENCE_BULK(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[21];
 	FROM_HAS_DN(0.00)[];
 	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
-	NEURAL_HAM(-0.00)[-0.999];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	HAS_REPLYTO(0.00)[cristian_ci@protonmail.com];
+	RCVD_COUNT_FIVE(0.00)[5];
+	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[lists.freedesktop.org,vger.kernel.org,lists.sr.ht,protonmail.com,oss.qualcomm.com];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DKIM_TRACE(0.00)[kernel.org:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: D39652E60A7
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[protonmail.com:email,protonmail.com:replyto,protonmail.com:mid,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 47E232E60EC
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 From: Cristian Cozzolino <cristian_ci@protonmail.com>
 
-Add the description for the display panel found on this phone.
-And with this done we can also enable the GPU and set the zap shader
-firmware path.
+Configure and enable the WCNSS which provides WiFi and Bluetooth on this
+device using the WCN3660B chip.
 
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Cristian Cozzolino <cristian_ci@protonmail.com>
 ---
- .../arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts | 74 ++++++++++++++++++++++
- 1 file changed, 74 insertions(+)
+ arch/arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts b/arch/arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts
-index ef4faf763132..d07303a37b2c 100644
+index d07303a37b2c..eab310ffa07b 100644
 --- a/arch/arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts
 +++ b/arch/arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts
-@@ -78,6 +78,13 @@ vph_pwr: vph-pwr-regulator {
- 	};
+@@ -327,3 +327,18 @@ &usb3 {
+ &usb3_dwc3 {
+ 	dr_mode = "peripheral";
  };
- 
-+&gpu {
-+	status = "okay";
-+};
 +
-+&gpu_zap_shader {
-+	firmware-name = "qcom/msm8953/flipkart/rimob/a506_zap.mbn";
-+};
- 
- &hsusb_phy {
- 	vdd-supply = <&pm8953_l3>;
-@@ -87,11 +94,70 @@ &hsusb_phy {
- 	status = "okay";
- };
- 
-+&ibb {
-+	qcom,discharge-resistor-kohms = <32>;
-+};
-+
-+&lab {
-+	qcom,soft-start-us = <800>;
-+};
-+
-+&mdss {
-+	status = "okay";
-+};
-+
-+&mdss_dsi0 {
-+	vdda-supply = <&pm8953_s3>;
-+	vddio-supply = <&pm8953_l6>;
-+
-+	status = "okay";
-+
-+	panel: panel@0 {
-+		compatible = "novatek,nt35532";
-+		reg = <0>;
-+
-+		backlight = <&pmi8950_wled>;
-+		reset-gpios = <&tlmm 61 GPIO_ACTIVE_LOW>;
-+		avdd-supply = <&lab>;
-+		avee-supply = <&ibb>;
-+		vci-supply = <&pm8953_l17>;
-+		vddi-supply = <&pm8953_l6>;
-+
-+		pinctrl-0 = <&panel_default>;
-+		pinctrl-names = "default";
-+
-+		port {
-+			panel_in: endpoint {
-+				remote-endpoint = <&mdss_dsi0_out>;
-+			};
-+		};
-+	};
-+};
-+
-+&mdss_dsi0_out {
-+	data-lanes = <0 1 2 3>;
-+	remote-endpoint = <&panel_in>;
-+};
-+
-+&mdss_dsi0_phy {
-+	vcca-supply = <&pm8953_l3>;
++&wcnss {
++	vddpx-supply = <&pm8953_l5>;
 +
 +	status = "okay";
 +};
 +
- &pm8953_resin {
- 	linux,code = <KEY_VOLUMEDOWN>;
- 	status = "okay";
- };
- 
-+&pmi8950_wled {
-+	qcom,current-limit-microamp = <10000>;
-+	qcom,num-strings = <3>;
-+	qcom,ovp-millivolt = <29500>;
++&wcnss_iris {
++	compatible = "qcom,wcn3660b";
 +
-+	status = "okay";
++	vddxo-supply = <&pm8953_l7>;
++	vddrfa-supply = <&pm8953_l19>;
++	vddpa-supply = <&pm8953_l9>;
++	vdddig-supply = <&pm8953_l5>;
 +};
-+
- &rpm_requests {
- 	regulators {
- 		compatible = "qcom,rpm-pm8953-regulators";
-@@ -244,6 +310,14 @@ gpio_key_default: gpio-key-default-state {
- 		drive-strength = <2>;
- 		bias-pull-up;
- 	};
-+
-+	panel_default: panel-default-state {
-+		pins = "gpio61";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-disable;
-+		output-high;
-+	};
- };
- 
- &usb3 {
 
 -- 
 2.53.0
