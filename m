@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-99033-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99034-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id AKufAPXxvmlxlAMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99033-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 20:31:01 +0100
+	id CDaZCq7yvmlxlAMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99034-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 20:34:06 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 806F62E6FDF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 20:31:00 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id BF7B52E705A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 20:34:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 6F1B7301DD89
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 19:30:33 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 9845E301C5A2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 19:32:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38397320CCC;
-	Sat, 21 Mar 2026 19:30:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBAAB31A556;
+	Sat, 21 Mar 2026 19:32:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vl2u9CSK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tlwKyVJL"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 139C42D1F44;
-	Sat, 21 Mar 2026 19:30:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7732303A35;
+	Sat, 21 Mar 2026 19:32:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774121430; cv=none; b=l6qKFfzmbNqNBzm4Nfkf4MQF7CctMgBsBNXy9iScVEYLteV6QDF7M00vgJ/CiRqzVxnEpV1CAmDjlWwEp3XVabp2j7Zb1Fgb1t7JxxfMtGuFt1jbjCxd8B2XiEMAQcx+OkYEcN7esVshPC88lK0mQW0avIst+ZGAD4Ih/HfmS6A=
+	t=1774121563; cv=none; b=oCaJINEsixCgopIH6Hr2oqOCtKZvNl417H7a3+cFl+AkUH8EDN2C5OVzHVgxIs8agCTCLwzYG83/p5dIjuyEA9LSbKOUNk+dAHQmA2K5GWJ43SUtGiyFREOKZsYZ85NxxzjsxQngpiLmlHwjJL2kowldXahb7n5bXv0AspzkGKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774121430; c=relaxed/simple;
-	bh=wOI0ZW0uOmgfpOawo7vkUm1g5JJ5ghyDRdnzkSBmRUI=;
+	s=arc-20240116; t=1774121563; c=relaxed/simple;
+	bh=ertbsjj7Z+Xd4lkyrocnofivw48zxMRQvtwcilU5V4I=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tUVOVlSz20Q4wHq/UYqfN7REfSrAH964TSSZEPOnSMplQFliYj8vlqZrgr20OZRvIqQBoSUZwSPHBhlEfs9Gw8IFKiVPP1n/rKHu1ej/m+73N5tnLM0ljwglNYjC0pruklBYU1vbEZ05rQ4/R/aMfaqrz9vwcGL9M40CJfv4H0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vl2u9CSK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EA30C19421;
-	Sat, 21 Mar 2026 19:30:27 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=p0bz9xlQ94fiQWVhJkqedMCZNtoo2ugz7lwV6NlEkQC6odM7+p6FK2mHAQ6GprQWE0+mxKZJOBQpj5lTfxbaI9lEuz2h+QI3lDeQ7Bs0IKFkkG/xWOysukOYnhlXImUbiiSCB6w4hBdGB7ZP4gJOFc5QaYw7ujn2qSClw3Mgdcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tlwKyVJL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58466C19421;
+	Sat, 21 Mar 2026 19:32:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774121429;
-	bh=wOI0ZW0uOmgfpOawo7vkUm1g5JJ5ghyDRdnzkSBmRUI=;
+	s=k20201202; t=1774121563;
+	bh=ertbsjj7Z+Xd4lkyrocnofivw48zxMRQvtwcilU5V4I=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Vl2u9CSK4OIrPM+MyBHwQXCKjShHyUeVy44hAyiyDe4fYmz+GsBufwyrbPikM9tY4
-	 7kjD5swQ8pz4TA/spzrPDoFKSrX68NOLNeT5HYyJMX39D9lAMv8LtSpjGqXZ3IoYa2
-	 fOayFzhEAO1ncAtFz0E7+H+K35YKDwTEH2YBZ9NU9dJcR6hYgPPuGhkvoEAN4uYYyQ
-	 kM/epaq7WlexVHRRhqnXE49UkI9+AuFkh/T54hS65xrw2ccF+KjsrM6hzwY8mHl234
-	 RaC7NBRfdulyi4nn4KGu+ptNHRR5Tkkg7r/zH1QBrZa0vUKNd1sCLMhf/edkEGGfAq
-	 pZNQRGE8fPQBg==
-Message-ID: <c3763ad2-4e57-46b6-81e1-6963d850e7ed@kernel.org>
-Date: Sat, 21 Mar 2026 20:30:25 +0100
+	b=tlwKyVJLUOvERyiC6dzkdRKoSck+JyG5mQwMb6VV6ogNr3p4NiQf18xHj/QE1MaWN
+	 lLbL2g+Yb8+z+gnoVhJC/pDlxLS4ZmWKws0CnoeHGQJq4hWbGMEpn/JzX2qW2hRSF9
+	 vxI2SabRAZbqRIZ9yNPgSH76ONDNm0K+v1FkMXKufOZajLI0JAmJuVkHLOjcx8nIWw
+	 kk3+dE6Bh3DQN2pgtxJVg37ByTkUvYNU47feBc8wx5SPma+cqdXu5iryL/3gMtpJko
+	 eKSjFudbddJQcdTEZrxmsHHHUCT2dGY8XQMTX+bQBe3bw8M7Tu7VU0k22IfKDIVpIX
+	 7sxCKByko0A9g==
+Message-ID: <f619fcbf-8d43-4606-94b2-61b52c24920c@kernel.org>
+Date: Sat, 21 Mar 2026 20:32:39 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,15 +53,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] soc: qcom: socinfo: Add SoC ID for SA8650P
+Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom,ids: Add SoC ID for SA8650P
 To: Radu Rendec <rrendec@redhat.com>, linux-arm-msm@vger.kernel.org,
  linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Cc: Lei wang <quic_leiwan@quicinc.com>, Bjorn Andersson
+Cc: Lei Wang <quic_leiwan@quicinc.com>, Bjorn Andersson
  <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
  Conor Dooley <conor+dt@kernel.org>
-References: <20260321152307.9131-1-rrendec@redhat.com>
- <20260321152307.9131-3-rrendec@redhat.com>
+References: <20260320205933.992852-1-rrendec@redhat.com>
+ <20260320205933.992852-2-rrendec@redhat.com>
+ <d6176542-335e-4f35-8ab6-cb4d50546543@kernel.org>
+ <cff35ebb2a9bc94ed2381f4ddda7b62d82d4d561.camel@redhat.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,21 +109,21 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260321152307.9131-3-rrendec@redhat.com>
+In-Reply-To: <cff35ebb2a9bc94ed2381f4ddda7b62d82d4d561.camel@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-99033-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-99034-lists,linux-arm-msm=lfdr.de];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
@@ -131,48 +133,35 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCPT_COUNT_SEVEN(0.00)[10];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,bootlin.com:url,quicinc.com:email,qualcomm.com:email]
-X-Rspamd-Queue-Id: 806F62E6FDF
+	DBL_BLOCKED_OPENRESOLVER(0.00)[quicinc.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: BF7B52E705A
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 21/03/2026 16:23, Radu Rendec wrote:
-> From: Lei wang <quic_leiwan@quicinc.com>
+On 21/03/2026 16:12, Radu Rendec wrote:
+> On Sat, 2026-03-21 at 11:03 +0100, Krzysztof Kozlowski wrote:
+>> On 20/03/2026 21:59, Radu Rendec wrote:
+>>> From: Lei wang <quic_leiwan@quicinc.com>
+>>>
+>>> Add unique ID for Qualcomm SA8650P SoC.
+>>>
+>>> Signed-off-by: Lei Wang <quic_leiwan@quicinc.com>
+>>
+>> Please keep consistent spelling of identities. Not sure where the
+>> mistake was done - either by Lei or you added his SoB?
 > 
-> Add SoC ID table entry for Qualcomm SA8650P.
-> 
-> Signed-off-by: Lei wang <quic_leiwan@quicinc.com>
-> Signed-off-by: Radu Rendec <rrendec@redhat.com>
-> ---
+> Yes, sorry, my bad! By the time I realized what I did, I had already
+> sent it. I'll send out v2 shortly.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Does that mean there was no original Signed-off-by? If so, you should
+not add it, because you cannot certify for someone else.
 
-Here tag is missing as well.
-
-<form letter>
-This is a friendly reminder during the review process.
-
-It looks like you received a tag and forgot to add it.
-
-If you do not know the process, here is a short explanation:
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new versions
-of patchset, under or above your Signed-off-by tag, unless patch changed
-significantly (e.g. new properties added to the DT bindings). Tag is
-"received", when provided in a message replied to you on the mailing
-list. Tools like b4 can help here. However, there's no need to repost
-patches *only* to add the tags. The upstream maintainer will do that for
-tags received on the version they apply.
-
-Please read:
-https://elixir.bootlin.com/linux/v6.12-rc3/source/Documentation/process/submitting-patches.rst#L577
-
-If a tag was not added on purpose, please state why and what changed.
-</form letter>
+Please explain the origins of this patch.
 
 Best regards,
 Krzysztof
