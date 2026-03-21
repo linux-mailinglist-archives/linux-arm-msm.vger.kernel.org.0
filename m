@@ -1,61 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-99029-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99030-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8AlkKdnOvmmMdQMAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99029-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 18:01:13 +0100
+	id SLZuC+nRvmlEeAMAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99030-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 18:14:17 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B02912E66E9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 18:01:12 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D6152E6772
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 18:14:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id BA1B6300C82A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 17:01:05 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 25308301CF84
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Mar 2026 17:13:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29E2F30FC06;
-	Sat, 21 Mar 2026 17:01:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD183333730;
+	Sat, 21 Mar 2026 17:13:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="PF0hEiMc"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="XGSzzgAQ";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="LG1u+LrG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-244123.protonmail.ch (mail-244123.protonmail.ch [109.224.244.123])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 027D22BE7DD;
-	Sat, 21 Mar 2026 17:01:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.123
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A72430FF2A
+	for <linux-arm-msm@vger.kernel.org>; Sat, 21 Mar 2026 17:13:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774112465; cv=none; b=YHN/9QltcgH+S2ytBhzlDkEKTrjecEhpv9QM2pitmop2ujKPmhL0B1oO3dPDbL3qEDwQ5MUizj11nb0PwkcjiqAzAbldV39r6smXKj1nt/npMnrANwJwjYa4QWc0J7eq1gTqlGPUr1t4iUvPUzoZbTmxL36g/kQwtHNGr6M9Aps=
+	t=1774113209; cv=none; b=H0lg8eRybaa/qdE9Z6ita0S/b/jZMmNW5j4fR38bPSQr5bwbO6FMhUpSqy7M35HAa1CzOMO57OHLIfOQ7arYYQN7IWB+byDYB9C0ckrkoL91aMQ7YGIlWt9y5Nb3fSUOj3My1bGg9Ss0iRAMu/7IqPvZ91ovBdKvU1ANQ7UV4tI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774112465; c=relaxed/simple;
-	bh=ENqqM1Q1go9mTo7eoJdUQli7jgltaQ6H/21fDAMGAYA=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gSPvhdnNbMoBLTGQwIlLPYuWwT/Y3Xz2+thhH1CIgZfKgs2K133VTs0eZDsO9qBeXu+l639xv+nx8jMgICYKCDq8vFLlX+jIaXSNgRun1NGsV6YmpUxHiI6d8mESlUlqGscPEmWm8tcstLXSqn02ODF3MbGFM0+lSUTRnsiO2uU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=PF0hEiMc; arc=none smtp.client-ip=109.224.244.123
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1774112452; x=1774371652;
-	bh=1OM4rWpkj1T0cXzZpr+z7zesTCcJVC2475fibc3dyfg=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=PF0hEiMcbcNWJaWJ/IBCjMb5eImHjsenSbgj/HaCWH3IudT3ZnPS8TKDaQuRZIkym
-	 IA5nHd3QbHyHivLqBSZV1wuPBmgZVp2DKFoebBTB8wbn22MSMNx1jXdWGnjVM97eSY
-	 C0fLN+PZ6yic5mhDiRnDcA02lo2yhWV7gvWfzlIAKSRvaCjhlX+g/oTpgib5STVmNc
-	 seqkIoVGcwSScUZPPzaua0W7BVNXv8/Uzyv9EMXxzQz0qs7yedWsT7icnTvyP5GCFd
-	 i4G1cM4EVcx+yS4v5MPjtDNNrJRNtSZLdnhSJo9N3Nhh8ED0eS24a7laUGdAf6BbcZ
-	 /Wge5qiXPcTew==
-Date: Sat, 21 Mar 2026 17:00:48 +0000
-To: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Kees Cook <kees@kernel.org>, Tony Luck <tony.luck@intel.com>, "Guilherme G. Piccoli" <gpiccoli@igalia.com>
-From: Alexander Koskovich <akoskovich@pm.me>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Alexander Koskovich <akoskovich@pm.me>
-Subject: [PATCH 3/3] arm64: dts: qcom: Add the Nothing Phone (3a)
-Message-ID: <20260321-asteroids-v1-3-4b902901cb49@pm.me>
-In-Reply-To: <20260321-asteroids-v1-0-4b902901cb49@pm.me>
-References: <20260321-asteroids-v1-0-4b902901cb49@pm.me>
-Feedback-ID: 37836894:user:proton
-X-Pm-Message-ID: 05fbe999eac7d6086974c0e5a17f239eebf871e8
+	s=arc-20240116; t=1774113209; c=relaxed/simple;
+	bh=cEpeK/EQp8Ga6cicqBJKqpm6GXMGqpApCOqIQcDfjKY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lZM15tFABFKwArlePeKaSajfQbJzZ5bfYOEzjpNIvtOnlnqFTTX0pS+GIDOhvlffPtKk5PIIM9P9Vm+Ce0lvbq54JXrX3vGSJyQxG76iS/HFt6QV0JEdlXKDewgCMuVwEmOQIGZ6scXFgR21qV8gpQc/xD/6ivQOlNBht3onH1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XGSzzgAQ; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=LG1u+LrG; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62LFL32h757469
+	for <linux-arm-msm@vger.kernel.org>; Sat, 21 Mar 2026 17:13:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	QFf7aXwCd58nYJo9hHkhjmLhGi/IQ+sjJ88oicm+khs=; b=XGSzzgAQIUIsl4y3
+	4NMSUDU9lhahsw8T83hP3QZ7CjU2mdN/0sJAoO8N2uWU5EUlKfI9ppmCxpmHZge1
+	YZpX1aYUmDPwpiKydZqqA8uVfny5i9kBgxj8Xxw0TXdIIICaDns8GWDNTWlxfSay
+	wvwp2xLTEFyZpufSl4M+daK8PCPk8ldCqFCmjL6GZlj4Gqx7BN61Xnaos1YgRzvp
+	Zz8w62PDGr7ZmjBk6oPA0f7bfWC+zZYktX0sTLHjRLV5pXFnyZVZhyrPijKc79ZQ
+	uf0W5ynA5yGR+aLSpOyFb1ylvUbSgrUHey8HKZej++JVP0ziEhnJGi95TfDZBnqF
+	Othokw==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d1h1e17n6-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 21 Mar 2026 17:13:26 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-50b52a2d70cso6458661cf.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Mar 2026 10:13:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1774113205; x=1774718005; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=QFf7aXwCd58nYJo9hHkhjmLhGi/IQ+sjJ88oicm+khs=;
+        b=LG1u+LrGVWrzrr1EslQfRluXXK4B/Pj1upO+9g9V1XvvK8CnMBZmppwdfI2xU8BCEf
+         lSAHBiBW2kDEpOzVrUeCIxgd9Gf5mIBruxwg4pPiXf3an4VYGpSv8zFu4zrsPyIOlSz3
+         R2furPvAWyLoE4wenmR08QUvd4rq8dFi2ntc1w6iROz0cHK+F/REl2eLEPcQp0ll5whx
+         hVW/sp6DMlKDiP1rOBc9TgHBJ1DRTPX0fVji9vByZWvmrmpoi/AUPghgipBdcvdorDtQ
+         AM/RCHzrP1YHLM5kXhagfopNf4rAne1jbF/PfwvW1SRVOQZdUzC23um4OykM+PSs8JQe
+         /c+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774113205; x=1774718005;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QFf7aXwCd58nYJo9hHkhjmLhGi/IQ+sjJ88oicm+khs=;
+        b=YrNBTEjTAyIVyGREYSLvkjybA+ElOz7y4sFd5enaR06rlZDELlHjKQID0lnmsBg5jr
+         4vNFqm/hXA9YtYQ5m2fUMPz4+nZZzBOQhCTk4TZO2ry/d6g9V/mFsQe+TVlQw2wnOrqt
+         xVKRc1li5/drwZtINEDvp1HWcnOtRhM71nd0RUS1tlDF0cT1+pIjbNVn8EhD2UYDyiaq
+         lDK5ENRPo5/ODkBlpr8arVgquIkZ6WtVcsw+TGYE2ERIZTxuFM314g5ws74ApPSx4v+g
+         l7wDYz7E1AF5U/X5AqtMNVhqdndekaxECHC8wcgn2HEFEJdfQO8AhkOe6HNECBEHbzdj
+         lHTA==
+X-Forwarded-Encrypted: i=1; AJvYcCUttEXUp+J9Gqi1eQkF95yEWf5CVmqGzCNVy0NNoq4jn5zu2wdub68sScqCLeXR5ewC8uYWNW4H1FElAzK3@vger.kernel.org
+X-Gm-Message-State: AOJu0YylXQ+/95FUG1nhoDKSRNS67ArEm2WnTFkxnQPLmKJ9fFs4Iyp3
+	D+TeIKH5E56ME6OqomnhBzBkmDzBcq5MfB/HU7Nu9CfTA/Yw7dQCNJD6SgH32Ic+IIXlB6yApgV
+	FF+avUajnJyRWXVB1txEapgoXM2+Rppyw/etFX6zvSUdWOlfeX5MBGp08gYZ0FGHMo9I1
+X-Gm-Gg: ATEYQzx8kvI9plGXfUj05kwxt0cAp4OkeIWJa3TkIMMB2uO8DwETVeDxJsjXSIBEtd4
+	8J360fsmZXvGXikFYb628YAL8CYfSyd0xkG8hpeDF8fhej4BZueZrRnC0x6t6+WdT8hfNbHP99i
+	e8GZnzISqA3EDEC0KeOEY8TZ2I4DciQTkI6CXO/Md2/3pVlD4MO1199PTfO+d1rM2D2Gvk885gc
+	X0A6ckoedgAvLTNVpEuSxJ4gEK8RdzfiTkOBA+agBChg07H3QK4aKFaZ+lsutlniAwS/lMBp905
+	SU2Fj3OkEFJRjLtZ8XHjhKlcrCtvOOH4fgxSogs9dtKyJTIwcYra1ZJbn2AsqRXs1sNO/XeG4au
+	F6aiQ7fEZ7Gzn38XhD65DT0UEGnzNCyhfq4x4uNrCp7eZ/MFi6ren3xBcV/pxINTeVC5D2MwYxq
+	eqKkbS9uh9sLwhlrUGgkVfE9WDcPczKYXn7Rk=
+X-Received: by 2002:a05:622a:156:b0:50b:4e60:93b7 with SMTP id d75a77b69052e-50b4e60a658mr23830321cf.43.1774113205400;
+        Sat, 21 Mar 2026 10:13:25 -0700 (PDT)
+X-Received: by 2002:a05:622a:156:b0:50b:4e60:93b7 with SMTP id d75a77b69052e-50b4e60a658mr23829911cf.43.1774113204955;
+        Sat, 21 Mar 2026 10:13:24 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a28530cf9esm1214568e87.82.2026.03.21.10.13.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 21 Mar 2026 10:13:23 -0700 (PDT)
+Date: Sat, 21 Mar 2026 19:13:21 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Rob Clark <rob.clark@oss.qualcomm.com>
+Cc: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bod@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v9 10/11] media: qcom: iris: use new firmware name for
+ SM8250
+Message-ID: <23y6nehk5z6z6lyclrmtllirzz47igbav3lep47xyomfnuqdo5@77nfhlqeyph3>
+References: <20260320-iris-platform-data-v9-0-3939967f4752@oss.qualcomm.com>
+ <20260320-iris-platform-data-v9-10-3939967f4752@oss.qualcomm.com>
+ <CACSVV00Es3dGirfe9aHKwvaZog=DtEx9-ZPz1YeuStKobcpT7A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,1045 +120,112 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACSVV00Es3dGirfe9aHKwvaZog=DtEx9-ZPz1YeuStKobcpT7A@mail.gmail.com>
+X-Proofpoint-ORIG-GUID: 4pvy343KNrPRsTgQeqHfSeqk_Ulx1Hps
+X-Authority-Analysis: v=2.4 cv=epXSD4pX c=1 sm=1 tr=0 ts=69bed1b6 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=EUspDBNiAAAA:8
+ a=cQr6lTdKrn-CZv5RVjkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzIxMDE0NiBTYWx0ZWRfXzRgI+dK/wkhU
+ 2R/ylmKmXikvSInpDZ5fbtNf2FOg+Z5VYyVbC+DXRXIMREMhj7NcbpyLOOb1bQmsEQ8Dk25t+uP
+ a8P03u+yPo+sKPUfxK5nQ5Trj9GX/z5zHO2zo5uONylBFIFsut4ykZpM9zIt3TCmf04faZkSqgA
+ cUq6lkRmw9Pz45/q6ty4TXoUSiOV9oY5T64jzBQfzrJpLhyzNdw4TNGZA6a2DNQTRrA4HhwygY4
+ KP8P5AtUYPASTq8rvtOQce5vxUooIyCfW4pN6gmkYF2BYYWHaNjxbzgKAeNuxvtkNj/8JDafS3e
+ /7ZAWQXdFMpKM5xggEtF6VrIFyFhCcsT83w/aKh3lpGOVLAs+x98O9dRF/InDAKZGPQoo+e5P8l
+ ScHdRZ65PVEnbEC9PuCHvC3TN6HkG61UGHxKze6Z9aCrNXLftaVKZEizzxJJcWX/T1OJX2uNvv5
+ pKvN4JRv9SBU1ah3MkQ==
+X-Proofpoint-GUID: 4pvy343KNrPRsTgQeqHfSeqk_Ulx1Hps
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-21_05,2026-03-20_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 malwarescore=0 spamscore=0 phishscore=0 lowpriorityscore=0
+ priorityscore=1501 bulkscore=0 clxscore=1015 adultscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603210146
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
-	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-99029-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[3];
 	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	TAGGED_FROM(0.00)[bounces-99030-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[pm.me:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:dkim];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: B02912E66E9
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 9D6152E6772
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Add a devicetree for the Nothing Phone (3a) smartphone, which is based
-on the Milos/SM7635 SoC.
+On Sat, Mar 21, 2026 at 07:56:47AM -0700, Rob Clark wrote:
+> On Sat, Mar 21, 2026 at 7:45 AM Dmitry Baryshkov
+> <dmitry.baryshkov@oss.qualcomm.com> wrote:
+> >
+> > The linux-firmware is providing the vpuNN_pM.mbn firmware for SM8250
+> > since August of 2024. Stop using the legacy firmware name
+> > (vpu-1.0/venus.mbn) and switch to the standard firmware name schema
+> > (vpu/vpu20_p4.mbn).
+> 
+> drive-by... how useful is it at all to list signed fw name in the
+> driver, when it's going to have to be overridden by dts for basically
+> everyone that isnt' a qc employee?  On the GPU side, we stopped
+> listing zap fw names for this reason.
 
-Supported functionality as of this initial submission:
-* Camera flash/torch LED
-* Debug UART
-* Glyph LEDs (AW20036)
-* PMIC-GLINK (Charger, Fuel gauge, USB-C mode switching)
-* Assistant Key, Power Button, Volume Keys
-* Regulators (PM7550, PM8550VS, PMR735B)
-* Remoteprocs (ADSP, CDSP, MPSS, WPSS)
-* USB (USB2 + FSA4480)
+True, that would be a good idea for the next platforms. Fot the existing
+ones we have to support existing DTs, which don't list the firmware
+name.
 
-Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
----
- arch/arm64/boot/dts/qcom/Makefile                  |   1 +
- .../boot/dts/qcom/milos-nothing-asteroids.dts      | 964 +++++++++++++++++=
-++++
- 2 files changed, 965 insertions(+)
+> 
+> BR,
+> -R
+> 
+> > Reviewed-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> > ---
+> >  drivers/media/platform/qcom/iris/iris_platform_vpu2.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/media/platform/qcom/iris/iris_platform_vpu2.c b/drivers/media/platform/qcom/iris/iris_platform_vpu2.c
+> > index ab2a19aa9c36..692fbc2aab56 100644
+> > --- a/drivers/media/platform/qcom/iris/iris_platform_vpu2.c
+> > +++ b/drivers/media/platform/qcom/iris/iris_platform_vpu2.c
+> > @@ -111,7 +111,7 @@ const struct iris_platform_data sm8250_data = {
+> >         .opp_clk_tbl = sm8250_opp_clk_table,
+> >         /* Upper bound of DMA address range */
+> >         .dma_mask = 0xe0000000 - 1,
+> > -       .fwname = "qcom/vpu-1.0/venus.mbn",
+> > +       .fwname = "qcom/vpu/vpu20_p4.mbn",
+> >         .inst_iris_fmts = iris_fmts_vpu2_dec,
+> >         .inst_iris_fmts_size = ARRAY_SIZE(iris_fmts_vpu2_dec),
+> >         .inst_caps = &platform_inst_cap_vpu2,
+> >
+> > --
+> > 2.47.3
+> >
+> >
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/M=
-akefile
-index f80b5d9cf1e8..bb7ac369682c 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -44,6 +44,7 @@ lemans-evk-el2-dtbs :=3D lemans-evk.dtb lemans-el2.dtbo
-=20
- dtb-$(CONFIG_ARCH_QCOM)=09+=3D lemans-evk-el2.dtb
- dtb-$(CONFIG_ARCH_QCOM)=09+=3D milos-fairphone-fp6.dtb
-+dtb-$(CONFIG_ARCH_QCOM)=09+=3D milos-nothing-asteroids.dtb
- dtb-$(CONFIG_ARCH_QCOM)=09+=3D monaco-evk.dtb
- dtb-$(CONFIG_ARCH_QCOM)=09+=3D msm8216-samsung-fortuna3g.dtb
- dtb-$(CONFIG_ARCH_QCOM)=09+=3D msm8916-acer-a1-724.dtb
-diff --git a/arch/arm64/boot/dts/qcom/milos-nothing-asteroids.dts b/arch/ar=
-m64/boot/dts/qcom/milos-nothing-asteroids.dts
-new file mode 100644
-index 000000000000..882e51ddb782
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/milos-nothing-asteroids.dts
-@@ -0,0 +1,964 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+
-+/dts-v1/;
-+
-+#define PMIV0104_SID 7
-+
-+#include <dt-bindings/leds/common.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-+#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-+
-+#include "milos.dtsi"
-+#include "pm7550.dtsi"
-+#include "pm8550vs.dtsi"
-+#include "pmiv0104.dtsi" /* PMIV0102 */
-+#include "pmk8550.dtsi" /* PMK7635 */
-+#include "pmr735b.dtsi"
-+
-+/ {
-+=09model =3D "Nothing Phone (3a)";
-+=09compatible =3D "nothing,asteroids", "qcom,milos";
-+=09chassis-type =3D "handset";
-+
-+=09aliases {
-+=09=09serial0 =3D &uart5;
-+=09};
-+
-+=09chosen {
-+=09=09#address-cells =3D <2>;
-+=09=09#size-cells =3D <2>;
-+=09=09ranges;
-+
-+=09=09framebuffer0: framebuffer@e3940000 {
-+=09=09=09compatible =3D "simple-framebuffer";
-+=09=09=09reg =3D <0x0 0xe3940000 0x0 (2392 * 1080 * 4)>;
-+=09=09=09width =3D <1080>;
-+=09=09=09height =3D <2392>;
-+=09=09=09stride =3D <(1080 * 4)>;
-+=09=09=09format =3D "a8r8g8b8";
-+=09=09=09panel =3D <&panel>;
-+=09=09=09interconnects =3D <&mmss_noc MASTER_MDP QCOM_ICC_TAG_ALWAYS
-+=09=09=09=09=09 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
-+=09=09=09clocks =3D <&gcc GCC_DISP_HF_AXI_CLK>;
-+
-+=09=09=09/* Dummy panel for simple-framebuffer dimension info */
-+=09=09=09panel: dummy-panel {
-+=09=09=09=09compatible =3D "boe,bf068mwm-td0";
-+=09=09=09=09height-mm =3D <157>;
-+=09=09=09=09width-mm =3D <71>;
-+=09=09=09};
-+=09=09};
-+=09};
-+
-+=09gpio-keys {
-+=09=09compatible =3D "gpio-keys";
-+
-+=09=09pinctrl-0 =3D <&assist_default>, <&volume_up_default>;
-+=09=09pinctrl-names =3D "default";
-+
-+=09=09key-assist {
-+=09=09=09gpios =3D <&tlmm 71 GPIO_ACTIVE_LOW>;
-+=09=09=09label =3D "Assistant";
-+=09=09=09linux,code =3D <KEY_LEFTMETA>;
-+=09=09};
-+
-+=09=09key-volume-up {
-+=09=09=09gpios =3D <&pm7550_gpios 6 GPIO_ACTIVE_LOW>;
-+=09=09=09label =3D "Volume Up";
-+=09=09=09linux,code =3D <KEY_VOLUMEUP>;
-+=09=09};
-+=09};
-+
-+=09pmic-glink {
-+=09=09compatible =3D "qcom,milos-pmic-glink",
-+=09=09=09     "qcom,sm8550-pmic-glink",
-+=09=09=09     "qcom,pmic-glink";
-+=09=09#address-cells =3D <1>;
-+=09=09#size-cells =3D <0>;
-+=09=09orientation-gpios =3D <&tlmm 131 GPIO_ACTIVE_HIGH>;
-+
-+=09=09connector@0 {
-+=09=09=09compatible =3D "usb-c-connector";
-+=09=09=09reg =3D <0>;
-+
-+=09=09=09data-role =3D "dual";
-+=09=09=09power-role =3D "dual";
-+
-+=09=09=09ports {
-+=09=09=09=09#address-cells =3D <1>;
-+=09=09=09=09#size-cells =3D <0>;
-+
-+=09=09=09=09port@0 {
-+=09=09=09=09=09reg =3D <0>;
-+
-+=09=09=09=09=09pmic_glink_hs_in: endpoint {
-+=09=09=09=09=09=09remote-endpoint =3D <&usb_1_dwc3_hs>;
-+=09=09=09=09=09};
-+=09=09=09=09};
-+
-+=09=09=09=09port@1 {
-+=09=09=09=09=09reg =3D <1>;
-+
-+=09=09=09=09=09pmic_glink_sbu: endpoint {
-+=09=09=09=09=09=09remote-endpoint =3D <&fsa4480_sbu_mux>;
-+=09=09=09=09=09};
-+=09=09=09=09};
-+=09=09=09};
-+=09=09};
-+=09};
-+
-+=09vph_pwr: regulator-vph-pwr {
-+=09=09compatible =3D "regulator-fixed";
-+=09=09regulator-name =3D "vph_pwr";
-+=09=09regulator-min-microvolt =3D <3700000>;
-+=09=09regulator-max-microvolt =3D <3700000>;
-+
-+=09=09regulator-always-on;
-+=09=09regulator-boot-on;
-+=09};
-+
-+=09reserved-memory {
-+=09=09#address-cells =3D <2>;
-+=09=09#size-cells =3D <2>;
-+=09=09ranges;
-+
-+=09=09ramoops@81f20000 {
-+=09=09=09compatible =3D "ramoops";
-+=09=09=09reg =3D <0x0 0x81f20000 0x0 0x400000>;
-+=09=09=09console-size =3D <0x200000>;
-+=09=09=09mem-type =3D <2>;
-+=09=09=09pmsg-size =3D <0x200000>;
-+=09=09};
-+
-+=09=09/*
-+=09=09 * ABL is powering down display and controller if this node is
-+=09=09 * not named exactly "splash_region".
-+=09=09 */
-+=09=09splash_region@e3940000 {
-+=09=09=09reg =3D <0x0 0xe3940000 0x0 0x2b00000>;
-+=09=09=09no-map;
-+=09=09};
-+=09};
-+};
-+
-+&apps_rsc {
-+=09regulators-0 {
-+=09=09compatible =3D "qcom,pm7550-rpmh-regulators";
-+
-+=09=09vdd-l1-supply =3D <&vreg_s1b>;
-+=09=09vdd-l2-l3-supply =3D <&vreg_s3b>;
-+=09=09vdd-l4-l5-supply =3D <&vreg_s2b>;
-+=09=09vdd-l7-supply =3D <&vreg_s1b>;
-+=09=09vdd-l8-supply =3D <&vreg_s1b>;
-+=09=09vdd-l9-l10-supply =3D <&vreg_s1b>;
-+=09=09vdd-l11-supply =3D <&vreg_s1b>;
-+=09=09vdd-l12-l14-supply =3D <&vreg_bob>;
-+=09=09vdd-l13-l16-supply =3D <&vreg_bob>;
-+=09=09vdd-l15-l17-l18-l19-l20-l21-l22-l23-supply =3D <&vreg_bob>;
-+=09=09vdd-s1-supply =3D <&vph_pwr>;
-+=09=09vdd-s2-supply =3D <&vph_pwr>;
-+=09=09vdd-s3-supply =3D <&vph_pwr>;
-+=09=09vdd-s4-supply =3D <&vph_pwr>;
-+=09=09vdd-s5-supply =3D <&vph_pwr>;
-+=09=09vdd-s6-supply =3D <&vph_pwr>;
-+=09=09vdd-bob-supply =3D <&vph_pwr>;
-+
-+=09=09qcom,pmic-id =3D "b";
-+
-+=09=09vreg_s1b: smps1 {
-+=09=09=09regulator-name =3D "vreg_s1b";
-+=09=09=09regulator-min-microvolt =3D <1800000>;
-+=09=09=09regulator-max-microvolt =3D <2080000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_s2b: smps2 {
-+=09=09=09regulator-name =3D "vreg_s2b";
-+=09=09=09regulator-min-microvolt =3D <1256000>;
-+=09=09=09regulator-max-microvolt =3D <1408000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_s3b: smps3 {
-+=09=09=09regulator-name =3D "vreg_s3b";
-+=09=09=09regulator-min-microvolt =3D <880000>;
-+=09=09=09regulator-max-microvolt =3D <1040000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_s4b: smps4 {
-+=09=09=09regulator-name =3D "vreg_s4b";
-+=09=09=09regulator-min-microvolt =3D <300000>;
-+=09=09=09regulator-max-microvolt =3D <1004000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l1b: ldo1 {
-+=09=09=09regulator-name =3D "vreg_l1b";
-+=09=09=09regulator-min-microvolt =3D <1800000>;
-+=09=09=09regulator-max-microvolt =3D <1800000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l2b: ldo2 {
-+=09=09=09regulator-name =3D "vreg_l2b";
-+=09=09=09regulator-min-microvolt =3D <880000>;
-+=09=09=09regulator-max-microvolt =3D <912000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l3b: ldo3 {
-+=09=09=09regulator-name =3D "vreg_l3b";
-+=09=09=09regulator-min-microvolt =3D <880000>;
-+=09=09=09regulator-max-microvolt =3D <912000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l4b: ldo4 {
-+=09=09=09regulator-name =3D "vreg_l4b";
-+=09=09=09regulator-min-microvolt =3D <1200000>;
-+=09=09=09regulator-max-microvolt =3D <1200000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l5b: ldo5 {
-+=09=09=09regulator-name =3D "vreg_l5b";
-+=09=09=09regulator-min-microvolt =3D <1200000>;
-+=09=09=09regulator-max-microvolt =3D <1200000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l7b: ldo7 {
-+=09=09=09regulator-name =3D "vreg_l7b";
-+=09=09=09regulator-min-microvolt =3D <1800000>;
-+=09=09=09regulator-max-microvolt =3D <1800000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l8b: ldo8 {
-+=09=09=09regulator-name =3D "vreg_l8b";
-+=09=09=09regulator-min-microvolt =3D <1800000>;
-+=09=09=09regulator-max-microvolt =3D <1800000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l9b: ldo9 {
-+=09=09=09regulator-name =3D "vreg_l9b";
-+=09=09=09regulator-min-microvolt =3D <1800000>;
-+=09=09=09regulator-max-microvolt =3D <1800000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l10b: ldo10 {
-+=09=09=09regulator-name =3D "vreg_l10b";
-+=09=09=09regulator-min-microvolt =3D <1800000>;
-+=09=09=09regulator-max-microvolt =3D <1800000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l11b: ldo11 {
-+=09=09=09regulator-name =3D "vreg_l11b";
-+=09=09=09regulator-min-microvolt =3D <1800000>;
-+=09=09=09regulator-max-microvolt =3D <1800000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l12b: ldo12 {
-+=09=09=09regulator-name =3D "vreg_l12b";
-+=09=09=09regulator-min-microvolt =3D <2952000>;
-+=09=09=09regulator-max-microvolt =3D <2952000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l13b: ldo13 {
-+=09=09=09regulator-name =3D "vreg_l13b";
-+=09=09=09regulator-min-microvolt =3D <2700000>;
-+=09=09=09regulator-max-microvolt =3D <3300000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l14b: ldo14 {
-+=09=09=09regulator-name =3D "vreg_l14b";
-+=09=09=09regulator-min-microvolt =3D <3300000>;
-+=09=09=09regulator-max-microvolt =3D <3304000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l15b: ldo15 {
-+=09=09=09regulator-name =3D "vreg_l15b";
-+=09=09=09regulator-min-microvolt =3D <3300000>;
-+=09=09=09regulator-max-microvolt =3D <3304000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l16b: ldo16 {
-+=09=09=09regulator-name =3D "vreg_l16b";
-+=09=09=09regulator-min-microvolt =3D <3008000>;
-+=09=09=09regulator-max-microvolt =3D <3008000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l17b: ldo17 {
-+=09=09=09regulator-name =3D "vreg_l17b";
-+=09=09=09regulator-min-microvolt =3D <3104000>;
-+=09=09=09regulator-max-microvolt =3D <3104000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l18b: ldo18 {
-+=09=09=09regulator-name =3D "vreg_l18b";
-+=09=09=09regulator-min-microvolt =3D <2800000>;
-+=09=09=09regulator-max-microvolt =3D <2800000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l19b: ldo19 {
-+=09=09=09regulator-name =3D "vreg_l19b";
-+=09=09=09regulator-min-microvolt =3D <3000000>;
-+=09=09=09regulator-max-microvolt =3D <3000000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l20b: ldo20 {
-+=09=09=09regulator-name =3D "vreg_l20b";
-+=09=09=09regulator-min-microvolt =3D <1620000>;
-+=09=09=09regulator-max-microvolt =3D <3544000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l21b: ldo21 {
-+=09=09=09regulator-name =3D "vreg_l21b";
-+=09=09=09regulator-min-microvolt =3D <1620000>;
-+=09=09=09regulator-max-microvolt =3D <3544000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l22b: ldo22 {
-+=09=09=09regulator-name =3D "vreg_l22b";
-+=09=09=09regulator-min-microvolt =3D <3200000>;
-+=09=09=09regulator-max-microvolt =3D <3200000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l23b: ldo23 {
-+=09=09=09regulator-name =3D "vreg_l23b";
-+=09=09=09regulator-min-microvolt =3D <1650000>;
-+=09=09=09regulator-max-microvolt =3D <3544000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_bob: bob {
-+=09=09=09regulator-name =3D "vreg_bob";
-+=09=09=09regulator-min-microvolt =3D <3008000>;
-+=09=09=09regulator-max-microvolt =3D <3960000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+=09};
-+
-+=09regulators-1 {
-+=09=09compatible =3D "qcom,pm8550vs-rpmh-regulators";
-+
-+=09=09vdd-l1-supply =3D <&vreg_s3b>;
-+=09=09vdd-l2-supply =3D <&vreg_s3b>;
-+=09=09vdd-l3-supply =3D <&vreg_s3b>;
-+=09=09vdd-s3-supply =3D <&vph_pwr>;
-+=09=09vdd-s4-supply =3D <&vph_pwr>;
-+=09=09vdd-s5-supply =3D <&vph_pwr>;
-+=09=09vdd-s6-supply =3D <&vph_pwr>;
-+
-+=09=09qcom,pmic-id =3D "c";
-+
-+=09=09vreg_s3c: smps3 {
-+=09=09=09regulator-name =3D "vreg_s3c";
-+=09=09=09regulator-min-microvolt =3D <1010000>;
-+=09=09=09regulator-max-microvolt =3D <1120000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_s4c: smps4 {
-+=09=09=09regulator-name =3D "vreg_s4c";
-+=09=09=09regulator-min-microvolt =3D <352000>;
-+=09=09=09regulator-max-microvolt =3D <812000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_s5c: smps5 {
-+=09=09=09regulator-name =3D "vreg_s5c";
-+=09=09=09regulator-min-microvolt =3D <540000>;
-+=09=09=09regulator-max-microvolt =3D <884000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_s6c: smps6 {
-+=09=09=09regulator-name =3D "vreg_s6c";
-+=09=09=09regulator-min-microvolt =3D <352000>;
-+=09=09=09regulator-max-microvolt =3D <904000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l1c: ldo1 {
-+=09=09=09regulator-name =3D "vreg_l1c";
-+=09=09=09regulator-min-microvolt =3D <320000>;
-+=09=09=09regulator-max-microvolt =3D <1004000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l2c: ldo2 {
-+=09=09=09regulator-name =3D "vreg_l2c";
-+=09=09=09regulator-min-microvolt =3D <320000>;
-+=09=09=09regulator-max-microvolt =3D <650000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l3c: ldo3 {
-+=09=09=09regulator-name =3D "vreg_l3c";
-+=09=09=09regulator-min-microvolt =3D <320000>;
-+=09=09=09regulator-max-microvolt =3D <912000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+=09};
-+
-+=09regulators-2 {
-+=09=09compatible =3D "qcom,pmr735b-rpmh-regulators";
-+
-+=09=09vdd-l1-l2-supply =3D <&vreg_s3b>;
-+=09=09vdd-l3-supply =3D <&vreg_s3b>;
-+=09=09vdd-l4-supply =3D <&vreg_s1b>;
-+=09=09vdd-l5-supply =3D <&vreg_s2b>;
-+=09=09vdd-l7-l8-supply =3D <&vreg_s2b>;
-+=09=09vdd-l9-supply =3D <&vreg_s3b>;
-+=09=09vdd-l10-supply =3D <&vreg_s1b>;
-+=09=09vdd-l11-supply =3D <&vreg_s3b>;
-+=09=09vdd-l12-supply =3D <&vreg_s3b>;
-+
-+=09=09qcom,pmic-id =3D "f";
-+
-+=09=09vreg_l1f: ldo1 {
-+=09=09=09regulator-name =3D "vreg_l1f";
-+=09=09=09regulator-min-microvolt =3D <852000>;
-+=09=09=09regulator-max-microvolt =3D <950000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l2f: ldo2 {
-+=09=09=09regulator-name =3D "vreg_l2f";
-+=09=09=09regulator-min-microvolt =3D <751000>;
-+=09=09=09regulator-max-microvolt =3D <824000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l3f: ldo3 {
-+=09=09=09regulator-name =3D "vreg_l3f";
-+=09=09=09regulator-min-microvolt =3D <650000>;
-+=09=09=09regulator-max-microvolt =3D <880000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l4f: ldo4 {
-+=09=09=09regulator-name =3D "vreg_l4f";
-+=09=09=09regulator-min-microvolt =3D <1700000>;
-+=09=09=09regulator-max-microvolt =3D <1950000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l5f: ldo5 {
-+=09=09=09regulator-name =3D "vreg_l5f";
-+=09=09=09regulator-min-microvolt =3D <1140000>;
-+=09=09=09regulator-max-microvolt =3D <1260000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l7f: ldo7 {
-+=09=09=09regulator-name =3D "vreg_l7f";
-+=09=09=09regulator-min-microvolt =3D <1080000>;
-+=09=09=09regulator-max-microvolt =3D <1350000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l9f: ldo9 {
-+=09=09=09regulator-name =3D "vreg_l9f";
-+=09=09=09regulator-min-microvolt =3D <870000>;
-+=09=09=09regulator-max-microvolt =3D <970000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l10f: ldo10 {
-+=09=09=09regulator-name =3D "vreg_l10f";
-+=09=09=09regulator-min-microvolt =3D <1500000>;
-+=09=09=09regulator-max-microvolt =3D <1800000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l11f: ldo11 {
-+=09=09=09regulator-name =3D "vreg_l11f";
-+=09=09=09regulator-min-microvolt =3D <320000>;
-+=09=09=09regulator-max-microvolt =3D <864000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+
-+=09=09vreg_l12f: ldo12 {
-+=09=09=09regulator-name =3D "vreg_l12f";
-+=09=09=09regulator-min-microvolt =3D <480000>;
-+=09=09=09regulator-max-microvolt =3D <884000>;
-+=09=09=09regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
-+=09=09};
-+=09};
-+};
-+
-+&dispcc {
-+=09/* Disable for now so simple-framebuffer continues working */
-+=09status =3D "disabled";
-+};
-+
-+&gcc {
-+=09protected-clocks =3D <GCC_PCIE_1_AUX_CLK>, <GCC_PCIE_1_AUX_CLK_SRC>,
-+=09=09=09   <GCC_PCIE_1_CFG_AHB_CLK>, <GCC_PCIE_1_MSTR_AXI_CLK>,
-+=09=09=09   <GCC_PCIE_1_PHY_RCHNG_CLK>, <GCC_PCIE_1_PHY_RCHNG_CLK_SRC>,
-+=09=09=09   <GCC_PCIE_1_PIPE_CLK>, <GCC_PCIE_1_PIPE_CLK_SRC>,
-+=09=09=09   <GCC_PCIE_1_PIPE_DIV2_CLK>, <GCC_PCIE_1_PIPE_DIV2_CLK_SRC>,
-+=09=09=09   <GCC_PCIE_1_SLV_AXI_CLK>, <GCC_PCIE_1_SLV_Q2A_AXI_CLK>;
-+};
-+
-+&i2c7 {
-+=09clock-frequency =3D <400000>;
-+
-+=09status =3D "okay";
-+
-+=09led-controller@3a {
-+=09=09compatible =3D "awinic,aw20036";
-+=09=09reg =3D <0x3a>;
-+=09=09#address-cells =3D <1>;
-+=09=09#size-cells =3D <0>;
-+
-+=09=09enable-gpios =3D <&tlmm 54 GPIO_ACTIVE_HIGH>;
-+
-+=09=09led@0 {
-+=09=09=09reg =3D <0x0>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-1";
-+=09=09=09function-enumerator =3D <0>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@1 {
-+=09=09=09reg =3D <0x1>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-1";
-+=09=09=09function-enumerator =3D <1>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@2 {
-+=09=09=09reg =3D <0x2>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-1";
-+=09=09=09function-enumerator =3D <2>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@3 {
-+=09=09=09reg =3D <0x3>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-1";
-+=09=09=09function-enumerator =3D <3>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@4 {
-+=09=09=09reg =3D <0x4>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-1";
-+=09=09=09function-enumerator =3D <4>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@5 {
-+=09=09=09reg =3D <0x5>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-1";
-+=09=09=09function-enumerator =3D <5>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@6 {
-+=09=09=09reg =3D <0x6>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-1";
-+=09=09=09function-enumerator =3D <6>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@7 {
-+=09=09=09reg =3D <0x7>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-2";
-+=09=09=09function-enumerator =3D <0>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@8 {
-+=09=09=09reg =3D <0x8>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-3";
-+=09=09=09function-enumerator =3D <0>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@9 {
-+=09=09=09reg =3D <0x9>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-3";
-+=09=09=09function-enumerator =3D <1>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@a {
-+=09=09=09reg =3D <0xa>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-3";
-+=09=09=09function-enumerator =3D <2>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@b {
-+=09=09=09reg =3D <0xb>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-3";
-+=09=09=09function-enumerator =3D <3>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@c {
-+=09=09=09reg =3D <0xc>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-1";
-+=09=09=09function-enumerator =3D <7>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@d {
-+=09=09=09reg =3D <0xd>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-1";
-+=09=09=09function-enumerator =3D <8>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@e {
-+=09=09=09reg =3D <0xe>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-1";
-+=09=09=09function-enumerator =3D <9>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@f {
-+=09=09=09reg =3D <0xf>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-1";
-+=09=09=09function-enumerator =3D <10>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@10 {
-+=09=09=09reg =3D <0x10>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-1";
-+=09=09=09function-enumerator =3D <11>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@11 {
-+=09=09=09reg =3D <0x11>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-1";
-+=09=09=09function-enumerator =3D <12>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@12 {
-+=09=09=09reg =3D <0x12>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-1";
-+=09=09=09function-enumerator =3D <13>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@13 {
-+=09=09=09reg =3D <0x13>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-2";
-+=09=09=09function-enumerator =3D <1>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@14 {
-+=09=09=09reg =3D <0x14>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-2";
-+=09=09=09function-enumerator =3D <2>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@15 {
-+=09=09=09reg =3D <0x15>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-3";
-+=09=09=09function-enumerator =3D <4>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@16 {
-+=09=09=09reg =3D <0x16>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-3";
-+=09=09=09function-enumerator =3D <5>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@17 {
-+=09=09=09reg =3D <0x17>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-3";
-+=09=09=09function-enumerator =3D <6>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@18 {
-+=09=09=09reg =3D <0x18>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-1";
-+=09=09=09function-enumerator =3D <14>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@19 {
-+=09=09=09reg =3D <0x19>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-1";
-+=09=09=09function-enumerator =3D <15>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@1a {
-+=09=09=09reg =3D <0x1a>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-1";
-+=09=09=09function-enumerator =3D <16>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@1b {
-+=09=09=09reg =3D <0x1b>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-1";
-+=09=09=09function-enumerator =3D <17>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@1c {
-+=09=09=09reg =3D <0x1c>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-1";
-+=09=09=09function-enumerator =3D <18>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@1d {
-+=09=09=09reg =3D <0x1d>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-1";
-+=09=09=09function-enumerator =3D <19>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@1e {
-+=09=09=09reg =3D <0x1e>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-2";
-+=09=09=09function-enumerator =3D <3>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@1f {
-+=09=09=09reg =3D <0x1f>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-2";
-+=09=09=09function-enumerator =3D <4>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@20 {
-+=09=09=09reg =3D <0x20>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-3";
-+=09=09=09function-enumerator =3D <7>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@21 {
-+=09=09=09reg =3D <0x21>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-3";
-+=09=09=09function-enumerator =3D <8>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@22 {
-+=09=09=09reg =3D <0x22>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-3";
-+=09=09=09function-enumerator =3D <9>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+
-+=09=09led@23 {
-+=09=09=09reg =3D <0x23>;
-+=09=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09=09function =3D "glyph-3";
-+=09=09=09function-enumerator =3D <10>;
-+=09=09=09led-max-microamp =3D <6560>;
-+=09=09};
-+=09};
-+
-+=09typec-mux@42 {
-+=09=09compatible =3D "fcs,fsa4480";
-+=09=09reg =3D <0x42>;
-+
-+=09=09vcc-supply =3D <&vph_pwr>;
-+
-+=09=09mode-switch;
-+=09=09orientation-switch;
-+
-+=09=09port {
-+=09=09=09fsa4480_sbu_mux: endpoint {
-+=09=09=09=09remote-endpoint =3D <&pmic_glink_sbu>;
-+=09=09=09};
-+=09=09};
-+=09};
-+};
-+
-+&pm7550_flash {
-+=09status =3D "okay";
-+
-+=09led-0 {
-+=09=09function =3D LED_FUNCTION_FLASH;
-+=09=09color =3D <LED_COLOR_ID_WHITE>;
-+=09=09led-sources =3D <1>, <4>;
-+=09=09led-max-microamp =3D <350000>;
-+=09=09flash-max-microamp =3D <1500000>;
-+=09=09flash-max-timeout-us =3D <400000>;
-+=09};
-+};
-+
-+&pm7550_gpios {
-+=09volume_up_default: volume-up-default-state {
-+=09=09pins =3D "gpio6";
-+=09=09function =3D PMIC_GPIO_FUNC_NORMAL;
-+=09=09power-source =3D <1>;
-+=09=09bias-pull-up;
-+=09};
-+};
-+
-+&pm8550vs_c {
-+=09status =3D "okay";
-+};
-+
-+&pmiv0104_eusb2_repeater {
-+=09vdd18-supply =3D <&vreg_l7b>;
-+=09vdd3-supply =3D <&vreg_l17b>;
-+
-+=09qcom,tune-res-fsdif =3D /bits/ 8 <0x5>;
-+=09qcom,tune-usb2-amplitude =3D /bits/ 8 <0x8>;
-+=09qcom,tune-usb2-disc-thres =3D /bits/ 8 <0x7>;
-+=09qcom,tune-usb2-preem =3D /bits/ 8 <0x6>;
-+};
-+
-+&pon_pwrkey {
-+=09status =3D "okay";
-+};
-+
-+&pon_resin {
-+=09linux,code =3D <KEY_VOLUMEDOWN>;
-+
-+=09status =3D "okay";
-+};
-+
-+&qupv3_id_0 {
-+=09status =3D "okay";
-+};
-+
-+&qupv3_id_1 {
-+=09status =3D "okay";
-+};
-+
-+&remoteproc_adsp {
-+=09firmware-name =3D "qcom/milos/nothing/asteroids/adsp.mbn",
-+=09=09=09"qcom/milos/nothing/asteroids/adsp_dtb.mbn";
-+
-+=09status =3D "okay";
-+};
-+
-+&remoteproc_cdsp {
-+=09firmware-name =3D "qcom/milos/nothing/asteroids/cdsp.mbn",
-+=09=09=09"qcom/milos/nothing/asteroids/cdsp_dtb.mbn";
-+
-+=09status =3D "okay";
-+};
-+
-+&remoteproc_mpss {
-+=09firmware-name =3D "qcom/milos/nothing/asteroids/modem.mbn";
-+
-+=09status =3D "okay";
-+};
-+
-+&remoteproc_wpss {
-+=09firmware-name =3D "qcom/milos/nothing/asteroids/wpss.mbn";
-+
-+=09status =3D "okay";
-+};
-+
-+&tlmm {
-+=09gpio-reserved-ranges =3D <13 1>, /* Display */
-+=09=09=09       <63 2>; /* WLAN UART */
-+
-+=09assist_default: assist-default-state {
-+=09=09pins =3D "gpio71";
-+=09=09function =3D "gpio";
-+=09=09bias-pull-up;
-+=09};
-+};
-+
-+&trusted_apps_mem {
-+=09reg =3D <0x0 0xe9500000 0x0 0x5500000>;
-+};
-+
-+/*
-+ * UART_RX and UART_TX are routed to test points on board, not
-+ * available over USB.
-+ */
-+&uart5 {
-+=09status =3D "okay";
-+};
-+
-+&usb_1 {
-+=09dr_mode =3D "otg";
-+
-+=09/* USB 2.0 only, HW does not support USB 3.x */
-+=09qcom,select-utmi-as-pipe-clk;
-+
-+=09status =3D "okay";
-+};
-+
-+&usb_1_dwc3_hs {
-+=09remote-endpoint =3D <&pmic_glink_hs_in>;
-+};
-+
-+&usb_1_hsphy {
-+=09vdd-supply =3D <&vreg_l2b>;
-+=09vdda12-supply =3D <&vreg_l4b>;
-+
-+=09phys =3D <&pmiv0104_eusb2_repeater>;
-+
-+=09status =3D "okay";
-+};
-
---=20
-2.53.0
-
-
+-- 
+With best wishes
+Dmitry
 
