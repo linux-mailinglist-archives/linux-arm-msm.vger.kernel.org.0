@@ -1,197 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-99066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wOncD4g5wGkvFAQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Mar 2026 19:48:40 +0100
+	id gL5lOk5GwGkRFgQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Mar 2026 20:43:10 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D9242EA5E7
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Mar 2026 19:48:39 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4889F2EA865
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Mar 2026 20:43:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 7C1F9300B9A3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Mar 2026 18:48:28 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id DB4FB3008750
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Mar 2026 19:43:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62E842F3C13;
-	Sun, 22 Mar 2026 18:48:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5A6233F59F;
+	Sun, 22 Mar 2026 19:43:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="emA7uTEb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N3/hNNV+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-106121.protonmail.ch (mail-106121.protonmail.ch [79.135.106.121])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8921E1B78F3
-	for <linux-arm-msm@vger.kernel.org>; Sun, 22 Mar 2026 18:48:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.121
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADE63C14A;
+	Sun, 22 Mar 2026 19:43:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774205307; cv=none; b=RKjgWD7QoM8Cib21iYWrj149AU/yuonh503m4J04plxtePjLQXYdvjV2NANrLVN0qH4IktAe0U6cFYhUC8xmGp5Svsm5NzgvXvX7L6Z/q8amOTzhdtqlDtWfT+fJYtD8/5sLMBZswGgpDKzOoKwXgd2cAYOrJjTS5pabhRentpY=
+	t=1774208586; cv=none; b=FBS0tWPChFCAsHmokRXJTDC8712i/MT1Vk98EbDxs5ZrQ3Arnac+arpAGbT4ta+s426cNT8pPJb6fLpTxDc+9cPt/bu6jrvccsma3fWtTDD+lRSdFpjIowJSKk50AicQbjANX9WSt6NVLIGIzUw5JP9G//7reJcow0U90/4PtBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774205307; c=relaxed/simple;
-	bh=q8WdoOQnLFlKMthCaNNS1wcc56rilLpUD3yzl7joAaA=;
-	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=jUQZt9+5SoLFGJMJmPArZWehasC5W2a65jIl/fMT+qcS6Yawo8qANFe8SgNiS3IsADpkQdBwyVwEp9EyT56y9noqf1ofyZqlVShYjsRX+wG/nYwhLVaCHmkKxMq9H5a+ByDRJ94LFR+D9n9PSWN0bcK5JbuFuexDF1+lqiOkUDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=emA7uTEb; arc=none smtp.client-ip=79.135.106.121
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1774205296; x=1774464496;
-	bh=W2vGcjC6o/9rSwUMT8OLICaUBrAZ7/2I6vU0gYR4kkI=;
-	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=emA7uTEbUSB1oLP8p8Qfqf3JY4Ah2oLbQEHzVwPVwpsJiypdw9g9gxhVLWtIwV7t/
-	 6jWcwvikiTzA0HwQMpK8laie4hIDdn0yjZKUzRBXRgwjPCb2XUK1d/AriteyNhZ5kK
-	 DHWpG/wvWPpY951Wee/DLhxlIO307BpjjvtvHd93n3/stWlHd1d8b4LrdMGd0c6P5d
-	 UpRbOEVb3rBXCezInh5WXfImlckCPEYkT8XTZe+mlEX9AhkgrZopqeXN6GwoohF8U4
-	 evuntgGhVq7wSf+Gm4GkaNVdcIrBkJaIrwTC+jpNi1Og2GtAlpJ5QZ4CfwXvzoWxZF
-	 zZvCoqxC+x49g==
-Date: Sun, 22 Mar 2026 18:48:09 +0000
-To: Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
-From: Alexander Koskovich <akoskovich@pm.me>
-Cc: Jonathan Marek <jonathan@marek.ca>, Neil Armstrong <neil.armstrong@linaro.org>, Pengyu Luo <mitltlatltl@gmail.com>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, Alexander Koskovich <akoskovich@pm.me>
-Subject: [PATCH v2] drm/msm/dpu: calculate data_width like downstream
-Message-ID: <20260322-fix-data-width-calc-v2-1-d5f28136bc4e@pm.me>
-Feedback-ID: 37836894:user:proton
-X-Pm-Message-ID: 42764064717d064bdc2b817f89f4066be9490a98
+	s=arc-20240116; t=1774208586; c=relaxed/simple;
+	bh=t+DBll46l7iShAyp/mY/QSOKFveuxaoDCYkGSH6LzqI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Jw183QtV6EVMrP2mh+92hZrH7IQQaPyPNsxIGQm/9hHQo30XwwcmFmxwrz8DSDnX05qA3EKyHLAeWlj2Ajku15QGVwkzJolX+GfrrRnjUjMjW5sU8YYf3o1OaZIaor2BLkN+ZNRaxGTaT2ePgWCSUItlURqMRQRgSbZ42bKHH/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N3/hNNV+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8360C19424;
+	Sun, 22 Mar 2026 19:43:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1774208586;
+	bh=t+DBll46l7iShAyp/mY/QSOKFveuxaoDCYkGSH6LzqI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=N3/hNNV+ItyjarGBGJ6Ak+X1vW8fx724Fe2Dkftv9k1VSiNTMtQ1sOBNgSQT4s6dS
+	 6fJB/VNplrSlQaTHdLC1hS9YU+tGusVdlySYqvdsm6NoxXl/lbUU+n/e+kDu0NPvCY
+	 mCZ9uw5sYPt0UJcGP3jNIu7SOcPAu/c2yjt/Z0VKO512Kvo+nVSnZCm0QMZGN/yam8
+	 hxHWLQaja0eSPcoJNKlKPlEGHz8i/i/MAuyJluMaSzGbgVSweOdDVVe/VDJw2eiP9N
+	 cG2Y9xS+Spu2yt9Wdr/dVuETh+kdTH27BMf1/A5VqEYZBJfiiy1J8+AaNscCNWE7Df
+	 K3RnHrVFhDEKw==
+Message-ID: <f213a0ac-e978-4d4a-8f1f-d8dba1522b80@kernel.org>
+Date: Sun, 22 Mar 2026 20:43:01 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: eliza: Disable UFS MCQ mode
+To: Abel Vesa <abel.vesa@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20260322-eliza-base-dt-fixes-v1-0-c633a6064a24@oss.qualcomm.com>
+ <20260322-eliza-base-dt-fixes-v1-3-c633a6064a24@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20260322-eliza-base-dt-fixes-v1-3-c633a6064a24@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
-	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-99066-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-99067-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch];
-	FREEMAIL_CC(0.00)[marek.ca,linaro.org,gmail.com,vger.kernel.org,lists.freedesktop.org,pm.me];
-	RCPT_COUNT_TWELVE(0.00)[16];
-	RCVD_COUNT_THREE(0.00)[3];
-	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[pm.me:+];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,pm.me:dkim,pm.me:email,pm.me:mid]
-X-Rspamd-Queue-Id: 9D9242EA5E7
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 4889F2EA865
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Derive INTF data_width from dce_bytes_per_line rather than
-timing->width when DSC is enabled. Use DIV_ROUND_UP to avoid
-rounding errors.
+On 22/03/2026 17:08, Abel Vesa wrote:
+> The UFS MCQ mode is currently not functional in the driver. Eliza is
+> the first platform enabling it, which results in UFS failures at runtime
+> with errors such as:
+> 
+>   ufshcd-qcom 1d84000.ufshc: ufshcd_abort: Device abort task at tag 4
+>   ufs_device_wlun 0:0:0:49488: tag#4 CDB: opcode=0x1b 1b 00 00 00 10 00
+> 
+> The failures occur when accessing the UFS device, while the controller
+> and PHY initialize correctly.
+> 
+> Disable MCQ mode by removing the corresponding register range. This can
+> be reverted once MCQ support is fixed in the driver.
+> 
+> Fixes: db7fe6963466 ("arm64: dts: qcom: Introduce Eliza Soc base dtsi")
+> Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+> ---
+>  arch/arm64/boot/dts/qcom/eliza.dtsi | 6 ++----
+>  1 file changed, 2 insertions(+), 4 deletions(-)
+> 
 
-Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
----
-Changes in v2:
-- Added back comment about DSC & DP
-- Link to v1: https://lore.kernel.org/r/20260322-fix-data-width-calc-v1-1-1=
-28880f5a067@pm.me
----
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   |  2 ++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        | 26 +++++++++++++++++-=
-----
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h        |  1 +
- 3 files changed, 24 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers=
-/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-index 0ba777bda253..ba810f26ea30 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-@@ -10,6 +10,7 @@
- #include "dpu_formats.h"
- #include "dpu_trace.h"
- #include "disp/msm_disp_snapshot.h"
-+#include "msm_dsc_helper.h"
-=20
- #include <drm/display/drm_dsc_helper.h>
- #include <drm/drm_managed.h>
-@@ -136,6 +137,7 @@ static void drm_mode_to_intf_timing_params(
- =09=09timing->width =3D timing->width * drm_dsc_get_bpp_int(dsc) /
- =09=09=09=09(dsc->bits_per_component * 3);
- =09=09timing->xres =3D timing->width;
-+=09=09timing->dce_bytes_per_line =3D msm_dsc_get_bytes_per_line(dsc);
- =09}
- }
-=20
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/=
-msm/disp/dpu1/dpu_hw_intf.c
-index 7e620f590984..ac82b69aedf6 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-@@ -173,13 +173,29 @@ static void dpu_hw_intf_setup_timing_engine(struct dp=
-u_hw_intf *intf,
- =09data_width =3D p->width;
-=20
- =09/*
--=09 * If widebus is enabled, data is valid for only half the active window
--=09 * since the data rate is doubled in this mode. But for the compression
--=09 * mode in DP case, the p->width is already adjusted in
--=09 * drm_mode_to_intf_timing_params()
-+=09 * If widebus is disabled:
-+=09 * For uncompressed stream, the data is valid for the entire active
-+=09 * window period.
-+=09 * For compressed stream, data is valid for a shorter time period
-+=09 * inside the active window depending on the compression ratio.
-+=09 *
-+=09 * If widebus is enabled:
-+=09 * For uncompressed stream, data is valid for only half the active
-+=09 * window, since the data rate is doubled in this mode.
-+=09 * For compressed stream, data validity window needs to be adjusted for
-+=09 * compression ratio and then further halved.
-+=09 *
-+=09 * For the compression mode in DP case, the p->width is already
-+=09 * adjusted in drm_mode_to_intf_timing_params().
- =09 */
--=09if (p->wide_bus_en && !dp_intf)
-+=09if (p->compression_en && !dp_intf) {
-+=09=09if (p->wide_bus_en)
-+=09=09=09data_width =3D DIV_ROUND_UP(p->dce_bytes_per_line, 6);
-+=09=09else
-+=09=09=09data_width =3D DIV_ROUND_UP(p->dce_bytes_per_line, 3);
-+=09} else if (p->wide_bus_en && !dp_intf) {
- =09=09data_width =3D p->width >> 1;
-+=09}
-=20
- =09/* TODO: handle DSC+DP case, we only handle DSC+DSI case so far */
- =09if (p->compression_en && !dp_intf &&
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h b/drivers/gpu/drm/=
-msm/disp/dpu1/dpu_hw_intf.h
-index f6ef2c21b66d..badd26305fc9 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-@@ -35,6 +35,7 @@ struct dpu_hw_intf_timing_params {
-=20
- =09bool wide_bus_en;
- =09bool compression_en;
-+=09u32 dce_bytes_per_line;
- };
-=20
- struct dpu_hw_intf_prog_fetch {
-
----
-base-commit: f338e77383789c0cae23ca3d48adcc5e9e137e3c
-change-id: 20260322-fix-data-width-calc-c44287df08b8
+MCQ should be disabled in the driver, not via DTS. You have specific
+eliza compatible for exactly this purpose.
 
 Best regards,
---=20
-Alexander Koskovich <akoskovich@pm.me>
-
-
+Krzysztof
 
