@@ -1,87 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-99069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GKq4GyNswGmmHgQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Mar 2026 23:24:35 +0100
+	id sEmZIYZswGmmHgQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Mar 2026 23:26:14 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D4EB72EAFD7
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Mar 2026 23:24:34 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 21CE42EB01F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Mar 2026 23:26:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 0BB03300515A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Mar 2026 22:24:33 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 8B91F3003357
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Mar 2026 22:26:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B979A376BE5;
-	Sun, 22 Mar 2026 22:24:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CE2231F9B4;
+	Sun, 22 Mar 2026 22:26:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aaXQ7Ftn"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h6+E9+uL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-dy1-f182.google.com (mail-dy1-f182.google.com [74.125.82.182])
+Received: from mail-dy1-f180.google.com (mail-dy1-f180.google.com [74.125.82.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC4633314D0
-	for <linux-arm-msm@vger.kernel.org>; Sun, 22 Mar 2026 22:24:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02673315D40
+	for <linux-arm-msm@vger.kernel.org>; Sun, 22 Mar 2026 22:26:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774218269; cv=none; b=HvQFXUgXipRHIJ8k4HBC4ojfsLRxG4eEQ7uhmmsYu7sMorrH6pImbQYJMxQgaOuMBKsiS8Yr52oO1EORQU9sp5bmAbiV5rEAs+ULIpLu61BDHaHeh9A0XtZbr233w6Efh/BhzUPFHXxGB1ys0/HmXNlYuq9/S140DSSV9lhyInU=
+	t=1774218369; cv=none; b=JqGHgWVW9El5CUOL9r+pTWE7unpPExh/EFsFxU04ZbMXMVzLFGmF4Vir1zM2MaIFtw6DckRm5zntxrnIk0MOQpNpSBV0RzyBQ+fc1ZxNwp7lQP/jDGW2VoWPOizWop1Ufi0N4zPo9IbXWkgmA+zhtpKUPMKqmtQcPp7gLzK6CZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774218269; c=relaxed/simple;
-	bh=YMkX6r2NEeeGAVKAmeo/RTP8S5oRupKhDNo1SE7wpzs=;
+	s=arc-20240116; t=1774218369; c=relaxed/simple;
+	bh=ELcx204Cby/dJnsY8H4NrZVX+UUsPAla3X1U1xwxuPU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SRdB02g4EXaxvsbZrR3cHPIv5bhywROe/YRRE9PLoJtDZs3ROunE/RRXroIJ6I+SErWfHRA0OPHdkbqGqpgjnpelM3cNtIFAmQcqtKXxqkq/iBzDhHjPUQH6HTwU9S7EKOY7T92cDuX1BqM8TEpGh1piv9LPDR8o8PA8hD4x+kE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aaXQ7Ftn; arc=none smtp.client-ip=74.125.82.182
+	 Content-Type:Content-Disposition:In-Reply-To; b=V7K6Fgw9INwCyY7oQPQ7cl8oEPZ7riZ4OSDKHqhaDZ2PnxfQ2PeDhlRGcGtudO7NvpUbXmTTsF61u/aH9+NdQXngo147CRpWwtPqbOOE8l4r2ebDZcaVz54RV6AjlnGFPAE8SZwDNUgrC8D/6BBBaPdDHQ5eMMikm/D6uPmvRco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h6+E9+uL; arc=none smtp.client-ip=74.125.82.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-dy1-f182.google.com with SMTP id 5a478bee46e88-2c0ecaae7dfso6138574eec.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Mar 2026 15:24:27 -0700 (PDT)
+Received: by mail-dy1-f180.google.com with SMTP id 5a478bee46e88-2c0f754e756so3426037eec.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Mar 2026 15:26:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774218267; x=1774823067; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1774218367; x=1774823167; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=wHlux91S1pcszks5LnQqDKbd7Lhdihe1iwVw4ZIiPgU=;
-        b=aaXQ7Ftnbu7tCcuKXH+FgmtDYIuzIUZvoyrMg2S9hF68XsNFaBQQ1GMW6c0CsCPmCw
-         5/+VPIQ1zYJLhJPghk/oQGNtyzZ3a2ez5G+S430E2EPwI8leNcpVXB6cDM0e7zKf3MOm
-         40kV/gIaCNZ5Vm5NfejbsyBk++oMfCkr6Og4l9mMKjsHsegJO/ms7qpamno4WzKr9XM0
-         6/KKCdb1dMTh1P1VuvJitv7JZQlQF7GH2DGGEj1CI5AhQGPBSemx1fLz4kxy0aHKqJSe
-         F5EnHxlRcPkLZZyB5hDyzhObwU0mqV6ndQNnLmD4yDBIxG7AOJz+2cpiIS483wwACNPY
-         SzRg==
+        bh=+mst3cEdRUvZvV8FPAK+ab6xPtMgdVjX2HSYh8y/2ug=;
+        b=h6+E9+uLA8xRXNgJferHczQafyyNfWNDUBvAT4x0tADovM1UnNssK7ZVWrjyvYG82n
+         Am2bw6wx3hSf2XkDhk8z93gIdfdRT5bMOzuapMmK2n3Xp+aSv8B3jQf5lliuOAeM6BaO
+         YaUtkUyAay0I8wYaSqZPGvsoQ7M5JmNqQkcfNrIwVbwfIzAGeW3o8GGYwyvDCr+RK3TW
+         wus0I234JZvMLDHBR7LSi/4r//62KExFUSPOXXndjXv3DfrX04UBwt4PAs+sMNQ0yJ3c
+         +5uTEUOkVhomhMkKraS7iP5Iz84IhS0t6NqKzSJBOs16ht0izRnh8okWM4aR/76An0ch
+         Hvhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774218267; x=1774823067;
+        d=1e100.net; s=20251104; t=1774218367; x=1774823167;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=wHlux91S1pcszks5LnQqDKbd7Lhdihe1iwVw4ZIiPgU=;
-        b=ZfBZKXojdvH0+ZKGZFPZ5iSvn5yKv169JjxubG5stzhL3EwqFTzHlhDS8/lAl4Mo9o
-         E4plbJ1rkijyz7RU6TXSvgK4qIe6gdI3Ui6oW3d/oDFfgeLmRrZBnegLem9FrY1gKvez
-         79Y5SVixhcFawjHktJ70rWbYyjxaxkjfu7NMI3IDaWiKcNVPJXuMMJjjzvGBKGfxwz8f
-         Mxmmo/9gRN3ZHM2atHs3Va5D3oc35bXOC35CYi1pnGevH5sjTBO5R4eHHgq9OAcEX5bS
-         ItXzAoR91+7Verdb9EgkjeOa0ibdcjHrWtuqG+iY47DyGAnW0KSMEto+hwv3mkCPER0x
-         eK/w==
-X-Forwarded-Encrypted: i=1; AJvYcCXs+d78uQ6H11AlZvARPPVDbd2yayKyFmTqorQw1soCc9TlBVbnOAE/bQK/XTaEwBIav8zTLWRwo+Xs08RE@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw1C4jHWXpvLNqnKAY26/cXhKOVoJnJWE5HblNWrdoJyQw3bfPH
-	2z4HoaTxT7NK7BBnkRP9md+dwb7Pr7JZwq6+WSh+mZiX4KB+0L8k5mHb
-X-Gm-Gg: ATEYQzwaYR734tW1I6oiPMyDVwFfKpwW9nvHZeBn8uFYkvbCJnZ1PUUXRmm1RHoBBhE
-	oOLhpwfGgraVtr//t3cSL3MJQdiZJ3aIHLoET/mffzLYhd5xwGPM+X/ATDb4/kucPmiCR3BAnkK
-	di0ILk2ZeSGoRm9Oca3keOy5VWeYiMIeJPW5/KNPzTNriKPzfGIzyymSDM9uILSVkGyzzbss/+B
-	8php4NBBpY8RHkKjMHP4JqP+owj1xVs1gq3TOBStYitPJvFlb+gwSrJMFtTVtLNJMZ6+Rn+LcCM
-	QDNl2MQ11ZloLEzzaNqDyPdEtNizUOIzkjH0rSTQ8I3bSUre2E4XQMF/9LUJPy1Xr37sA10qOMn
-	IRKCW3YJphGindX0g+5I3D4Q4bcJfSjVpMM9gksGBjRLwro5uREbYaOecMOK2avvxAhw0AE5kr9
-	J8Hlr5dKTjrHBUVyIrSQEHXcJSZhWkNlHTWCeQaxmPRBHJm0rarXS/4p4Osx1o3YJVHtrJ4A5iN
-	MA=
-X-Received: by 2002:a05:7300:134a:b0:2c1:7ca:ceb1 with SMTP id 5a478bee46e88-2c109567522mr4864099eec.6.1774218266887;
-        Sun, 22 Mar 2026 15:24:26 -0700 (PDT)
+        bh=+mst3cEdRUvZvV8FPAK+ab6xPtMgdVjX2HSYh8y/2ug=;
+        b=S/ALae4xBKtbbzGu7qcRyv6uoJlMZ9yVTiWjRbIflUNH8pDa6jC9+1R5GO+U5Pl2bZ
+         NuEmQ9Y/1H5lMpaYTJ0Nht9Ys3TBlkstcuLQwBHGng8P9wiJpMixMMFR+WqGzCHfUS5J
+         tVHciZvgwO6z2gE8Yi8krHsPHclwxKn+zrLAGEBWWrJzEZfwhKqT4oxZyX9qp8KjjssZ
+         RpccRjbyulohBKE+pCZserelxticX6W8t2STtZvweNH1SW58w098ri8XyapMigVhvabQ
+         z+wG9vqcFPEma4xkoPaO/rF46AK/O7vtJbkHlTwQrwiJDWYmeO6NpFNAwZYHmFTWd7kn
+         59HA==
+X-Forwarded-Encrypted: i=1; AJvYcCXiTo+Kw94MXnP8diqbKeNb/65v9ID0j6uEfl5S1FE43gjd6fWMjrp8Nv0s4XgFrkgxAb4cqi6cRHUD8piR@vger.kernel.org
+X-Gm-Message-State: AOJu0YyBunnWliNRpwM1asHHs5tz6NhMmbZh2a/wG7imYRDV/2ZLfhMe
+	1hgW1Wh23RefDbdLOIuCKXCm8kqg8RE5jmRpSLuN3LKE1CAxP7uTkC+Y
+X-Gm-Gg: ATEYQzz8sB9JMrSRUwYpLYKQ7qX+AXM5gY5BNmatv9DONRDIznNR2MA5Y5cb9oDyWfd
+	gDohFLvKe6C0ai5IVbbib7cG0mQQ8h3+BmWCarUroO4wU0CL4wHfjNg/1DCSZagiLfkU1zqGeYe
+	+kHcaV1TZ98FoWupsUPH8V12rNu6ORFh6QEou8If3sAJB6sRHJ0NxvQOAh8JVmNx2ESm1Y5z8Dl
+	FkEO88pUcsT/oye86oKg3Gthf0Y4sL/M5BJDdjCV3dPa2034Qf3wnCzSsz9UbQq0AAdOo5pyyUY
+	mZrtF2VMWnIJqSr5mlN8TuVnbfWNkolUzy5V5QKyEECMNTM43NCrOgOGSWdO+qW0z7LAIMUG2HD
+	+uckRWsNTnQUImWrXSCWl76ma9pJiWbt2qQoFLLWygxsbmf7oMqUfxaAq2iYyAW5gFNFYa7hsHJ
+	ZJkA+snehCBm1sphDpUHMQzFJXMFITT7euVZwLWMj526Ms3HMnQbqwkore6mtVTJ6f
+X-Received: by 2002:a05:7300:aca2:b0:2c0:be45:6815 with SMTP id 5a478bee46e88-2c10981e483mr3694786eec.32.1774218367042;
+        Sun, 22 Mar 2026 15:26:07 -0700 (PDT)
 Received: from google.com ([2a00:79e0:2ebe:8:b768:22ed:3eba:aeb3])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2c10b1a88e5sm13452469eec.13.2026.03.22.15.24.23
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2c10b31bef1sm13678234eec.26.2026.03.22.15.26.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Mar 2026 15:24:26 -0700 (PDT)
-Date: Sun, 22 Mar 2026 15:24:21 -0700
+        Sun, 22 Mar 2026 15:26:06 -0700 (PDT)
+Date: Sun, 22 Mar 2026 15:26:01 -0700
 From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To: Romain Gantois <romain.gantois@bootlin.com>
-Cc: MyungJoo Ham <myungjoo.ham@samsung.com>, 
-	Chanwoo Choi <cw00.choi@samsung.com>, Guenter Roeck <linux@roeck-us.net>, 
-	Peter Rosin <peda@axentia.se>, Jonathan Cameron <jic23@kernel.org>, 
+To: Jonathan Cameron <jic23@kernel.org>
+Cc: Romain Gantois <romain.gantois@bootlin.com>, 
+	MyungJoo Ham <myungjoo.ham@samsung.com>, Chanwoo Choi <cw00.choi@samsung.com>, 
+	Guenter Roeck <linux@roeck-us.net>, Peter Rosin <peda@axentia.se>, 
 	David Lechner <dlechner@baylibre.com>, Nuno =?utf-8?B?U8Oh?= <nuno.sa@analog.com>, 
 	Andy Shevchenko <andy@kernel.org>, Lars-Peter Clausen <lars@metafoo.de>, 
 	Michael Hennerich <Michael.Hennerich@analog.com>, Mariel Tinaco <Mariel.Tinaco@analog.com>, 
@@ -111,9 +110,11 @@ Cc: MyungJoo Ham <myungjoo.ham@samsung.com>,
 	linux-stm32@st-md-mailman.stormreply.com, Sebastian Reichel <sebastian.reichel@collabora.com>, 
 	Andy Shevchenko <andriy.shevchenko@intel.com>
 Subject: Re: [PATCH v2 2/2] iio: inkern: Use namespaced exports
-Message-ID: <acBr-W2ILu9tnMyd@google.com>
+Message-ID: <acBsI0PxvxDGymCa@google.com>
 References: <20251209-iio-inkern-use-namespaced-exports-v2-0-9799a33c4b7f@bootlin.com>
  <20251209-iio-inkern-use-namespaced-exports-v2-2-9799a33c4b7f@bootlin.com>
+ <20260111170222.43aee69a@jic23-huawei>
+ <20260322122529.62093f12@jic23-huawei>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -122,25 +123,25 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251209-iio-inkern-use-namespaced-exports-v2-2-9799a33c4b7f@bootlin.com>
+In-Reply-To: <20260322122529.62093f12@jic23-huawei>
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[samsung.com,roeck-us.net,axentia.se,kernel.org,baylibre.com,analog.com,metafoo.de,capellamicro.com,linaro.org,csie.org,diasemi.com,crapouillou.net,iskren.info,castello.eng.br,gmail.com,collabora.com,linux.alibaba.com,intel.com,arm.com,bp.renesas.com,perex.cz,suse.com,foss.st.com,bootlin.com,vger.kernel.org,lists.infradead.org,st-md-mailman.stormreply.com];
+	FREEMAIL_CC(0.00)[bootlin.com,samsung.com,roeck-us.net,axentia.se,baylibre.com,analog.com,kernel.org,metafoo.de,capellamicro.com,linaro.org,csie.org,diasemi.com,crapouillou.net,iskren.info,castello.eng.br,gmail.com,collabora.com,linux.alibaba.com,intel.com,arm.com,bp.renesas.com,perex.cz,suse.com,foss.st.com,vger.kernel.org,lists.infradead.org,st-md-mailman.stormreply.com];
 	FROM_HAS_DN(0.00)[];
 	DKIM_TRACE(0.00)[gmail.com:+];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-99069-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-99070-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
@@ -151,28 +152,46 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	FREEMAIL_FROM(0.00)[gmail.com]
-X-Rspamd-Queue-Id: D4EB72EAFD7
+X-Rspamd-Queue-Id: 21CE42EB01F
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Tue, Dec 09, 2025 at 09:25:56AM +0100, Romain Gantois wrote:
-> Use namespaced exports for IIO consumer API functions.
+On Sun, Mar 22, 2026 at 12:25:29PM +0000, Jonathan Cameron wrote:
+> On Sun, 11 Jan 2026 17:02:22 +0000
+> Jonathan Cameron <jic23@kernel.org> wrote:
 > 
-> This will make it easier to manage the IIO export surface. Consumer drivers
-> will only be provided access to a specific set of functions, thereby
-> restricting usage of internal IIO functions by other parts of the kernel.
+> > On Tue, 09 Dec 2025 09:25:56 +0100
+> > Romain Gantois <romain.gantois@bootlin.com> wrote:
+> > 
+> > > Use namespaced exports for IIO consumer API functions.
+> > > 
+> > > This will make it easier to manage the IIO export surface. Consumer drivers
+> > > will only be provided access to a specific set of functions, thereby
+> > > restricting usage of internal IIO functions by other parts of the kernel.
+> > > 
+> > > This change cannot be split into several parts without breaking
+> > > bisectability, thus all of the affected drivers are modified at once.
+> > > 
+> > > Acked-by: Sebastian Reichel <sebastian.reichel@collabora.com> # for power-supply
+> > > Acked-by: Guenter Roeck <linux@roeck-us.net>
+> > > Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+> > > Signed-off-by: Romain Gantois <romain.gantois@bootlin.com>  
+> > Ideally looking for a couple more Acks.
+> > 
+> > If any of the maintainers of other trees who haven't already replied
+> > have time for a quick glance that would be great.  I'll spin an
+> > immutable branch but I'm not really expecting any non trivial
+> > conflicts unless there is a new user in flight that I've forgotten
+> > about.
 > 
-> This change cannot be split into several parts without breaking
-> bisectability, thus all of the affected drivers are modified at once.
-> 
-> Acked-by: Sebastian Reichel <sebastian.reichel@collabora.com> # for power-supply
-> Acked-by: Guenter Roeck <linux@roeck-us.net>
-> Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-> Signed-off-by: Romain Gantois <romain.gantois@bootlin.com>
+> At this stage, given I'm still waiting on replies from a couple of
+> subsystem maintainers, I'm thinking we'll do this next cycle and I'll
+> provide an immutable branch based on rc1 for anyone to grab if they
+> run into merge conflicts in linux-next.
 
-For input:
-
-Acked-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Sorry, I just acked the input bits in the patch, but in general I feel
+these kind of mechanical changes in consumers do not require an ack and
+you can just go an apply such changes.
 
 Thanks.
 
