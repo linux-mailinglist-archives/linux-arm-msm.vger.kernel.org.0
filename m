@@ -1,193 +1,215 @@
-Return-Path: <linux-arm-msm+bounces-99049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99050-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id yLE5Lp77v2m9CQQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Mar 2026 15:24:30 +0100
+	id GHd3CND9v2lZCgQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99050-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Mar 2026 15:33:52 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5BFCA2E9A1A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Mar 2026 15:24:30 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 747482E9AFA
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Mar 2026 15:33:51 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 8E62B300D62C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Mar 2026 14:24:24 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 167863029E4E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Mar 2026 14:31:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 689DA36402A;
-	Sun, 22 Mar 2026 14:24:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 584C926299;
+	Sun, 22 Mar 2026 14:31:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hcXcmrpP"
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="fznH3kr9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-07.mail-europe.com (mail-0701.mail-europe.com [51.83.17.38])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22510363C49;
-	Sun, 22 Mar 2026 14:24:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C3035950
+	for <linux-arm-msm@vger.kernel.org>; Sun, 22 Mar 2026 14:31:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=51.83.17.38
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774189462; cv=none; b=gxQf+hjGpwEs7Csn79ljM76GgoVvUkJBNLpA3tfweZdOFeARphqfC35f0FEMQ3kQvLbtrGTaEsEZQlr1nh4YuYtQva12wWb8b7IU2fqsIcesnpckxcxBl6gepNvfC/rDu7e41/wS8QfRaP4Shlg9mBiQGJ2ySIou+afjJZjRw6Q=
+	t=1774189896; cv=none; b=faL2Sszmid4NpEmr7YsQWld8xiIcrFjg639ZfW0kjzv96SMWy55Kjnq/NI1lD02N3RO63aEqA6DSYGLJe4K6kq2S3uI/fRTxcFgANyAr35S9XkziyfQenjJqPN1EQRxRUflKQPn1x2mhggjuHfdQ0yTwR66yuRPCEqFv98CHUt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774189462; c=relaxed/simple;
-	bh=XbUqrT7qss2bjTqlhu4hDVM7HCLgTM5ifxyigq2ux68=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=VvNybMn1L31zfbw0xaveFkeDF6Czgz3t21+jFDTGZSzffOYFoLoafBsLlNNuPaODverq8nc2La8Z1cX6WIlcqwtYkBpCXpZXRBY85cKXMgYEuR+p4B+Q0E5Ev6CEBtdNmjcDqVQeAPJojsri9y2RTUMbduj+gbfiXrI3TH3cRvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hcXcmrpP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id CD126C2BCB5;
-	Sun, 22 Mar 2026 14:24:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774189461;
-	bh=XbUqrT7qss2bjTqlhu4hDVM7HCLgTM5ifxyigq2ux68=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=hcXcmrpP05MSLZE7pWiVF4+knrfygILa5n2u4r+giuWYP9GnhYAtnMdarlYABw6a7
-	 lgOrj8l+01w8Vlsuyn7ZtMqm8lNRVUM1MAX0OoCJt2DNvZvT+bRNMgj2P0YQq/ssQ5
-	 mw76pdDch9ur6uHXCPhndFgxZjxgKeABhsFxH4pv/K2tiZW+Plt9x/jlpp1otU+Q2m
-	 c1xCc+E++H86dDPBHiAVKuZqtUcoONDLb4gd6UtIP6KX191cqURPCTKd/k4uwTLWgd
-	 PwdCb58sgAf+km4Etrtpu162oHBExOTiX5Hef+AZomyyydbN3GUNfMARqDfwnT2Pr8
-	 Dr+bphBKXmYIg==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5606FC72C8;
-	Sun, 22 Mar 2026 14:24:21 +0000 (UTC)
-From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Date: Sun, 22 Mar 2026 15:24:20 +0100
-Subject: [PATCH QUESTION 2/2] arm64: dts: qcom: sdm845-shift-axolotl:
- Enable NFC
+	s=arc-20240116; t=1774189896; c=relaxed/simple;
+	bh=jVQfrfA5Kkg0FOsH98hYlX75FgOGvbDIYqr1mrVFMVg=;
+	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=KhiKfKmYMOFQcZUMqbU5b7EzGaLdMq23hM+9UGY0y0KnY2m0oeeTFHSfr5n7k3LNS4wg0YgzNR+ifBOS3gLAx//t5AkFEbGzoTywg5E96ov61DhBOIEhtvnY05qZGUiHj1wNJvHrpVQwFekfR/EpLM6ycd21D2Y8FL20k59QiQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=fail smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=fznH3kr9; arc=none smtp.client-ip=51.83.17.38
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=pm.me
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
+	s=protonmail3; t=1774189878; x=1774449078;
+	bh=TZXkJdJ9ML2LISNVgOvnIHtIpHF+r1CvhpF/XXj5VkM=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=fznH3kr9VZB2EpPfs4eXrgsfIKUfoOgBLHHWte2GxA3jjakHFIoAIMNOUutg4ZpJd
+	 nBs/0QYDCUffBLXH4UDJw98Gr2tJqSKK/9Sbxy7+jheye68+SRtePWcEolK/wCNwuh
+	 ysUoSTUNGlrVWYr5nkOOoLIK3Jc3I29DNftnuwoSYQlUgPDr+Bwhg/yXAAzbgJcT6K
+	 wOSP24Gjhn2cZwBDCS9mvczqHwtSiubFiiuVhRMeThdcq/gIJkKTUovp0Rtz9lWFl7
+	 beeca7lrQBeOhd1EPbCzdWZIjmPGhxuMInwVu18E7VF/vVgoEYFESwAu7zopJm60rO
+	 p5ex2htrQoHWw==
+Date: Sun, 22 Mar 2026 14:31:13 +0000
+To: Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+From: Alexander Koskovich <akoskovich@pm.me>
+Cc: Jonathan Marek <jonathan@marek.ca>, Neil Armstrong <neil.armstrong@linaro.org>, Pengyu Luo <mitltlatltl@gmail.com>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, Alexander Koskovich <akoskovich@pm.me>
+Subject: [PATCH RFC] drm/msm/dpu: calculate data_width like downstream
+Message-ID: <20260322-fix-data-width-calc-v1-1-128880f5a067@pm.me>
+Feedback-ID: 37836894:user:proton
+X-Pm-Message-ID: b2250f69380c06374677a845eaed5e451dbd539b
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260322-oneplus-nfc-v1-2-5f22f544f0e2@ixit.cz>
-References: <20260322-oneplus-nfc-v1-0-5f22f544f0e2@ixit.cz>
-In-Reply-To: <20260322-oneplus-nfc-v1-0-5f22f544f0e2@ixit.cz>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: Petr Hodina <petr.hodina@protonmail.com>, 
- biemster <l.j.beemster@gmail.com>, netdev@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, oe-linux-nfc@lists.linux.dev, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- phone-devel@vger.kernel.org, David Heidelberg <david@ixit.cz>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1522; i=david@ixit.cz;
- h=from:subject:message-id;
- bh=bg/8Mn64amhNeliB/CDjN88OEUAaoSKykTAgAGciekI=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpv/uUH1GaubGxzAbpeIoZHLVihTMq2aub8E8R/
- HEKSiFPJvCJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCab/7lAAKCRBgAj/E00kg
- ciRmD/4ocnaCQSjo5z+kVKbzx56vvvy5UY4RX218IPBYHq7G+VUq2b5ofKiz3WvOb5kGXEbsJoi
- AJF7U8/PLvcEvOaylm8BOlLjBM5BQ0XsTRzIRKg9emYKmTpXgDjnfGijCzAhL6FdsEVbcwjp0bL
- NUDyy9p7ZN2cjA1HZJ0T0d6TuIrgDb5vTILZQ0lgL/f57A0lfudJkVoFF0dpDbLrjdpZgRfDqF1
- FWzKNN2SkFCDKj2J8tv4lGgu4XUnLPIGVHrhtx4Z/GtazO7owFj1j+fKC5CiNifsQFcbj0eV/Np
- BZ6HLiTrr/tQ2cKt+YN6MRIhMt8YGX7kJT3wzbkeVPf57QEznZK3RRRhB1nAQw4fX1s1l+zISgQ
- CASZl+kmtMO/1k89mVvgQVBr505ApP1ildlMeOJzmUlVI1ikWviKvogH2Nck81X6RTnBFRkUG+P
- PvNwfj00GgXktjexXgH41LTlijfDc7+AZFzeOYuHpJblsicWanHo0cUp2vEq3lK6LgBlj7m9pvT
- NdSryJeqI5B0gSd7Z4ziZAotDvKaGZXcOVx7Ngrhe4sW/UAtvqOAo2+R7/BaHBYTXYzUQHe05sG
- Rsf/6jVVUs8PeQq6NILxAEFVWhouE6xRjZUlib+y4+nyaTkoKbl5Sopp7GmTrgSPpC6WqJLlJDe
- 2g7ekbKaDy4+wtw==
-X-Developer-Key: i=david@ixit.cz; a=openpgp;
- fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
-X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
-X-Original-From: David Heidelberg <david@ixit.cz>
-Reply-To: david@ixit.cz
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
+	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-99049-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_CC(0.00)[protonmail.com,gmail.com,vger.kernel.org,lists.linux.dev,ixit.cz];
-	RCPT_COUNT_TWELVE(0.00)[14];
+	TAGGED_FROM(0.00)[bounces-99050-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch];
+	FREEMAIL_CC(0.00)[marek.ca,linaro.org,gmail.com,vger.kernel.org,lists.freedesktop.org,pm.me];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	RCVD_COUNT_THREE(0.00)[3];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	DBL_PROHIBIT(0.00)[0.0.0.28:email];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	NEURAL_HAM(-0.00)[-1.000];
 	TO_DN_SOME(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	HAS_REPLYTO(0.00)[david@ixit.cz]
-X-Rspamd-Queue-Id: 5BFCA2E9A1A
+	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[pm.me:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,pm.me:dkim,pm.me:email,pm.me:mid]
+X-Rspamd-Queue-Id: 747482E9AFA
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-From: David Heidelberg <david@ixit.cz>
+Derive INTF data_width from dce_bytes_per_line rather than
+timing->width when DSC is enabled. Use DIV_ROUND_UP to avoid
+rounding errors.
 
-Definition of the NFC.
-
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
 ---
- arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts | 33 +++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+This patch changes the data_width calculation to match downstream,
+and avoids needing to change the divisor for timing->width to /24.
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-index 51b041f91d3e2..bc336584c9fb9 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-@@ -431,6 +431,25 @@ &gpu_zap_shader {
- 	firmware-name = "qcom/sdm845/SHIFT/axolotl/a630_zap.mbn";
+However I am not sure if this is a correct approach, but at least
+with this I get the same values for data_width as downstream now:
+
+data_width w/ no widebus
+before: 288
+after: 360
+
+data_with w/ widebus
+before: 144
+after: 180
+
+This was tested with the BOE BF068MWM-TD0 on the Nothing Phone (3a),
+it would be greatly appreciated if someone from QCOM could weigh in
+on if this is a correct approach.
+
+Tested with kmscube and getting 120FPS, also note that this was
+tested with a few other changes:
+
+(drm/msm/dsi: fix hdisplay calculation when programming dsi registers)
+(drm/msm/dsi: fix pclk rate calculation for bonded dsi)
+(drm/msm/dsi: fix bits_per_pclk)
+(drm/msm/dsi: fix hdisplay calculation for CMD mode panel)
+---
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c   |  2 ++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        | 23 +++++++++++++++++-=
+----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h        |  1 +
+ 3 files changed, 21 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers=
+/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+index 0ba777bda253..ba810f26ea30 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+@@ -10,6 +10,7 @@
+ #include "dpu_formats.h"
+ #include "dpu_trace.h"
+ #include "disp/msm_disp_snapshot.h"
++#include "msm_dsc_helper.h"
+=20
+ #include <drm/display/drm_dsc_helper.h>
+ #include <drm/drm_managed.h>
+@@ -136,6 +137,7 @@ static void drm_mode_to_intf_timing_params(
+ =09=09timing->width =3D timing->width * drm_dsc_get_bpp_int(dsc) /
+ =09=09=09=09(dsc->bits_per_component * 3);
+ =09=09timing->xres =3D timing->width;
++=09=09timing->dce_bytes_per_line =3D msm_dsc_get_bytes_per_line(dsc);
+ =09}
+ }
+=20
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/=
+msm/disp/dpu1/dpu_hw_intf.c
+index 7e620f590984..de6b5b0f70c4 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+@@ -173,13 +173,26 @@ static void dpu_hw_intf_setup_timing_engine(struct dp=
+u_hw_intf *intf,
+ =09data_width =3D p->width;
+=20
+ =09/*
+-=09 * If widebus is enabled, data is valid for only half the active window
+-=09 * since the data rate is doubled in this mode. But for the compression
+-=09 * mode in DP case, the p->width is already adjusted in
+-=09 * drm_mode_to_intf_timing_params()
++=09 * If widebus is disabled:
++=09 * For uncompressed stream, the data is valid for the entire active
++=09 * window period.
++=09 * For compressed stream, data is valid for a shorter time period
++=09 * inside the active window depending on the compression ratio.
++=09 *
++=09 * If widebus is enabled:
++=09 * For uncompressed stream, data is valid for only half the active
++=09 * window, since the data rate is doubled in this mode.
++=09 * For compressed stream, data validity window needs to be adjusted for
++=09 * compression ratio and then further halved.
+ =09 */
+-=09if (p->wide_bus_en && !dp_intf)
++=09if (p->compression_en && !dp_intf) {
++=09=09if (p->wide_bus_en)
++=09=09=09data_width =3D DIV_ROUND_UP(p->dce_bytes_per_line, 6);
++=09=09else
++=09=09=09data_width =3D DIV_ROUND_UP(p->dce_bytes_per_line, 3);
++=09} else if (p->wide_bus_en && !dp_intf) {
+ =09=09data_width =3D p->width >> 1;
++=09}
+=20
+ =09/* TODO: handle DSC+DP case, we only handle DSC+DSI case so far */
+ =09if (p->compression_en && !dp_intf &&
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h b/drivers/gpu/drm/=
+msm/disp/dpu1/dpu_hw_intf.h
+index f6ef2c21b66d..badd26305fc9 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+@@ -35,6 +35,7 @@ struct dpu_hw_intf_timing_params {
+=20
+ =09bool wide_bus_en;
+ =09bool compression_en;
++=09u32 dce_bytes_per_line;
  };
- 
-+&i2c3 {
-+	clock-frequency = <400000>;
-+
-+	status = "okay";
-+
-+	nfc@28 {
-+		compatible = "nxp,nq310", "nxp,nxp-nci-i2c";
-+		reg = <0x28>;
-+
-+		interrupts-extended = <&tlmm 63 IRQ_TYPE_EDGE_RISING>;
-+
-+		enable-gpios = <&tlmm 12 GPIO_ACTIVE_HIGH>;
-+		firmware-gpios = <&tlmm 62 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-0 = <&nfc_int_default &nfc_enable_default>;
-+		pinctrl-names = "default";
-+	};
-+};
-+
- &i2c5 {
- 	status = "okay";
- 
-@@ -609,6 +628,20 @@ &slpi_pas {
- &tlmm {
- 	gpio-reserved-ranges = <0 4>, <81 4>;
- 
-+	nfc_int_default: nfc-int-default-state {
-+		pins = "gpio63";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+
-+	nfc_enable_default: nfc-enable-default-state {
-+		pins = "gpio12", "gpio62";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+
- 	sde_dsi_active: sde-dsi-active-state {
- 		pins = "gpio6", "gpio11";
- 		function = "gpio";
+=20
+ struct dpu_hw_intf_prog_fetch {
 
--- 
-2.53.0
+---
+base-commit: f338e77383789c0cae23ca3d48adcc5e9e137e3c
+change-id: 20260322-fix-data-width-calc-c44287df08b8
+
+Best regards,
+--=20
+Alexander Koskovich <akoskovich@pm.me>
 
 
 
