@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-99067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id gL5lOk5GwGkRFgQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Mar 2026 20:43:10 +0100
+	id yMdhBIxHwGkqFgQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Mar 2026 20:48:28 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4889F2EA865
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Mar 2026 20:43:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C9AA2EA8A6
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Mar 2026 20:48:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id DB4FB3008750
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Mar 2026 19:43:07 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 042B83007F6C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Mar 2026 19:48:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5A6233F59F;
-	Sun, 22 Mar 2026 19:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7F1037C0FD;
+	Sun, 22 Mar 2026 19:48:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N3/hNNV+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IJynRHho"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADE63C14A;
-	Sun, 22 Mar 2026 19:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801011A6815;
+	Sun, 22 Mar 2026 19:48:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774208586; cv=none; b=FBS0tWPChFCAsHmokRXJTDC8712i/MT1Vk98EbDxs5ZrQ3Arnac+arpAGbT4ta+s426cNT8pPJb6fLpTxDc+9cPt/bu6jrvccsma3fWtTDD+lRSdFpjIowJSKk50AicQbjANX9WSt6NVLIGIzUw5JP9G//7reJcow0U90/4PtBw=
+	t=1774208905; cv=none; b=Ee+q1JzziceDlP/gpB7e6pJ0fvDfGYuljdv94Fnze4hqSSkzdZrcTKLaVdZpPICEFBAG/e6jY4jYXr2An2YQbf5u7ac32N2tQCSnfUCl9vlhPPrDXlaDlJcTfElBi1m1aK9b2vtp9DBbF9KXdsihpPzT3/tt+ofiOoyLl9MS6So=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774208586; c=relaxed/simple;
-	bh=t+DBll46l7iShAyp/mY/QSOKFveuxaoDCYkGSH6LzqI=;
+	s=arc-20240116; t=1774208905; c=relaxed/simple;
+	bh=hsLkvAUgRxRQJzXQcQZokLRvOtZGiaYVCTbdJvhfGkM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Jw183QtV6EVMrP2mh+92hZrH7IQQaPyPNsxIGQm/9hHQo30XwwcmFmxwrz8DSDnX05qA3EKyHLAeWlj2Ajku15QGVwkzJolX+GfrrRnjUjMjW5sU8YYf3o1OaZIaor2BLkN+ZNRaxGTaT2ePgWCSUItlURqMRQRgSbZ42bKHH/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N3/hNNV+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8360C19424;
-	Sun, 22 Mar 2026 19:43:03 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=YLXZHPC/r4ckggNcfL50oLQ+Ea0SiEXbiRWFL8DDhD/7Io3OC3pJ2q2/+Pq5GSoRB6GuL9UHlKx5GzakU0egEGMDhemPFL0ENbE6WHKMpcUNET6U1bK5AmUrkxxL9JpWxRYHHCRPmeoYjU3tXTkxTrw/0/j2uVtUT+ROWCrbCcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IJynRHho; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4414DC19424;
+	Sun, 22 Mar 2026 19:48:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774208586;
-	bh=t+DBll46l7iShAyp/mY/QSOKFveuxaoDCYkGSH6LzqI=;
+	s=k20201202; t=1774208905;
+	bh=hsLkvAUgRxRQJzXQcQZokLRvOtZGiaYVCTbdJvhfGkM=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=N3/hNNV+ItyjarGBGJ6Ak+X1vW8fx724Fe2Dkftv9k1VSiNTMtQ1sOBNgSQT4s6dS
-	 6fJB/VNplrSlQaTHdLC1hS9YU+tGusVdlySYqvdsm6NoxXl/lbUU+n/e+kDu0NPvCY
-	 mCZ9uw5sYPt0UJcGP3jNIu7SOcPAu/c2yjt/Z0VKO512Kvo+nVSnZCm0QMZGN/yam8
-	 hxHWLQaja0eSPcoJNKlKPlEGHz8i/i/MAuyJluMaSzGbgVSweOdDVVe/VDJw2eiP9N
-	 cG2Y9xS+Spu2yt9Wdr/dVuETh+kdTH27BMf1/A5VqEYZBJfiiy1J8+AaNscCNWE7Df
-	 K3RnHrVFhDEKw==
-Message-ID: <f213a0ac-e978-4d4a-8f1f-d8dba1522b80@kernel.org>
-Date: Sun, 22 Mar 2026 20:43:01 +0100
+	b=IJynRHho/9IV0v/RSzh7fxYdgT/lyOvO3O8QsZQmVmjayvPkC4t+NWUbhTJMHWtVm
+	 IfV613+T/NebAdRZJ09PoBNevgB5muW+4n96gDcNPz9QnFtBJW8i5nGS+bKE6tmGBl
+	 iCBHEdU+88gW5SaIbvekm+ZEASVCxpyJvdr8cyxwbPx2oPmTJgu424vC6vjj/h9hDh
+	 n+su0sSp8AaHG2PU1Jw7kNOACjH8uxm0DVJpoNZG4o6eHL+CFxLoIDIWAdlASD2bMv
+	 XlSsTiPqojypo+A/U+37yGwkDfeY2yuW8pG+5IMLL/p7WLhFAs0UFU/tzig2wFY/XP
+	 U0Kt/yn9WVFFA==
+Message-ID: <eb316800-0be6-4aa7-b9f6-e2b17646d1a0@kernel.org>
+Date: Sun, 22 Mar 2026 20:48:20 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,17 +53,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: eliza: Disable UFS MCQ mode
-To: Abel Vesa <abel.vesa@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
+Subject: Re: [PATCH QUESTION 0/2] NFC support in Linux (and support for
+ Qualcomm SDM845 devices)
+To: david@ixit.cz, Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260322-eliza-base-dt-fixes-v1-0-c633a6064a24@oss.qualcomm.com>
- <20260322-eliza-base-dt-fixes-v1-3-c633a6064a24@oss.qualcomm.com>
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: Petr Hodina <petr.hodina@protonmail.com>,
+ biemster <l.j.beemster@gmail.com>, netdev@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, oe-linux-nfc@lists.linux.dev,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ phone-devel@vger.kernel.org
+References: <20260322-oneplus-nfc-v1-0-5f22f544f0e2@ixit.cz>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,62 +109,86 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260322-eliza-base-dt-fixes-v1-3-c633a6064a24@oss.qualcomm.com>
+In-Reply-To: <20260322-oneplus-nfc-v1-0-5f22f544f0e2@ixit.cz>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-99067-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-99068-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FREEMAIL_CC(0.00)[protonmail.com,gmail.com,vger.kernel.org,lists.linux.dev];
+	RCPT_COUNT_TWELVE(0.00)[14];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[11];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 4889F2EA865
+X-Rspamd-Queue-Id: 6C9AA2EA8A6
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 22/03/2026 17:08, Abel Vesa wrote:
-> The UFS MCQ mode is currently not functional in the driver. Eliza is
-> the first platform enabling it, which results in UFS failures at runtime
-> with errors such as:
+On 22/03/2026 15:24, David Heidelberg via B4 Relay wrote:
+> There isn't upstream driver.
 > 
->   ufshcd-qcom 1d84000.ufshc: ufshcd_abort: Device abort task at tag 4
->   ufs_device_wlun 0:0:0:49488: tag#4 CDB: opcode=0x1b 1b 00 00 00 10 00
+> I'm openining this as a starter. We need a NFC drivers I assume. I tried
+> quick check, but both of NFC drivers register
 > 
-> The failures occur when accessing the UFS device, while the controller
-> and PHY initialize correctly.
+> nfc: nfc_init: NFC Core ver 0.1
+> NET: Registered PF_NFC protocol family
 > 
-> Disable MCQ mode by removing the corresponding register range. This can
-> be reverted once MCQ support is fixed in the driver.
+> but efficiently does nothing. In the See section, there are some ways
+> how to make NFC work, but rely on patched vendor libs, missing updates
+> etc.
 > 
-> Fixes: db7fe6963466 ("arm64: dts: qcom: Introduce Eliza Soc base dtsi")
-> Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
-> ---
->  arch/arm64/boot/dts/qcom/eliza.dtsi | 6 ++----
->  1 file changed, 2 insertions(+), 4 deletions(-)
+> 1. What hardware is present on Snapdragon 845, is there some
+>    documentation? It seems that both sdm845 devices has almost identical
+>    setup, thus it's NFC solution integrated? @Qualcomm
 > 
+> 2. What's the right approach to continue? Should we upstream these
+>    definitions and then start developing user-space stack? @netdev (I
+>    see orphaned)
 
-MCQ should be disabled in the driver, not via DTS. You have specific
-eliza compatible for exactly this purpose.
+User space stack is there already.
+
+> 
+> Since looking at NFC mailing list (oe-linux-nfc) and seeing it's pretty
+> much dead, would be cool to revive it.
+> 
+> Also there is some effort from Arch people [1], but likely without clean
+> path to mainline.
+> 
+> Can we revieve the NFC effort? I'm offering limited maintanance (in case
+> people would send patches).
+> 
+> See:
+>  - https://gitlab.com/sdm845-mainline/linux/-/merge_requests/62
+>  - https://github.com/NXPNFCLinux/linux_libnfc-nci/
+
+I don't know which interface libnfc-nci is using. There are multiple NFC
+stack implementations in general, but the one using kernel interface is
+neard.
+
+You will not get another stack, but taking care of Linux nfc and neard
+would be appreciated.
+
+Let me release a new version for it.
 
 Best regards,
 Krzysztof
