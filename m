@@ -1,120 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-99070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sEmZIYZswGmmHgQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99070-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Mar 2026 23:26:14 +0100
+	id OfJOCV18wGmlIAQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 00:33:49 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21CE42EB01F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Mar 2026 23:26:14 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 862272EB256
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 00:33:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 8B91F3003357
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Mar 2026 22:26:13 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 1DF293008281
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Mar 2026 23:33:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CE2231F9B4;
-	Sun, 22 Mar 2026 22:26:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B655433F8D6;
+	Sun, 22 Mar 2026 23:33:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h6+E9+uL"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jhvKPZt3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-dy1-f180.google.com (mail-dy1-f180.google.com [74.125.82.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02673315D40
-	for <linux-arm-msm@vger.kernel.org>; Sun, 22 Mar 2026 22:26:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3644136672;
+	Sun, 22 Mar 2026 23:33:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774218369; cv=none; b=JqGHgWVW9El5CUOL9r+pTWE7unpPExh/EFsFxU04ZbMXMVzLFGmF4Vir1zM2MaIFtw6DckRm5zntxrnIk0MOQpNpSBV0RzyBQ+fc1ZxNwp7lQP/jDGW2VoWPOizWop1Ufi0N4zPo9IbXWkgmA+zhtpKUPMKqmtQcPp7gLzK6CZo=
+	t=1774222424; cv=none; b=M6TlntEjXdUcHpqUrf2Rayu1lrZ22PhzPbyw0Jcgkuzgw5EwCd39sksJRoi22iqDoGoZ3XwfKaPdPFJ5mBYlze+nrVi8k/UOlodQVNO4v7p/6Gf1fkh4+hEQPcS3SdHchGCuVIa+oNHhBrAl9YiVIOwHY6Ka5kaIxo3S7DSZr9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774218369; c=relaxed/simple;
-	bh=ELcx204Cby/dJnsY8H4NrZVX+UUsPAla3X1U1xwxuPU=;
+	s=arc-20240116; t=1774222424; c=relaxed/simple;
+	bh=Iyq/kR8m/ROKeqOrN3lBBgrhZ0QikXX9ty57LXSzHu0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=V7K6Fgw9INwCyY7oQPQ7cl8oEPZ7riZ4OSDKHqhaDZ2PnxfQ2PeDhlRGcGtudO7NvpUbXmTTsF61u/aH9+NdQXngo147CRpWwtPqbOOE8l4r2ebDZcaVz54RV6AjlnGFPAE8SZwDNUgrC8D/6BBBaPdDHQ5eMMikm/D6uPmvRco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h6+E9+uL; arc=none smtp.client-ip=74.125.82.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-dy1-f180.google.com with SMTP id 5a478bee46e88-2c0f754e756so3426037eec.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Mar 2026 15:26:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774218367; x=1774823167; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=+mst3cEdRUvZvV8FPAK+ab6xPtMgdVjX2HSYh8y/2ug=;
-        b=h6+E9+uLA8xRXNgJferHczQafyyNfWNDUBvAT4x0tADovM1UnNssK7ZVWrjyvYG82n
-         Am2bw6wx3hSf2XkDhk8z93gIdfdRT5bMOzuapMmK2n3Xp+aSv8B3jQf5lliuOAeM6BaO
-         YaUtkUyAay0I8wYaSqZPGvsoQ7M5JmNqQkcfNrIwVbwfIzAGeW3o8GGYwyvDCr+RK3TW
-         wus0I234JZvMLDHBR7LSi/4r//62KExFUSPOXXndjXv3DfrX04UBwt4PAs+sMNQ0yJ3c
-         +5uTEUOkVhomhMkKraS7iP5Iz84IhS0t6NqKzSJBOs16ht0izRnh8okWM4aR/76An0ch
-         Hvhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774218367; x=1774823167;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+mst3cEdRUvZvV8FPAK+ab6xPtMgdVjX2HSYh8y/2ug=;
-        b=S/ALae4xBKtbbzGu7qcRyv6uoJlMZ9yVTiWjRbIflUNH8pDa6jC9+1R5GO+U5Pl2bZ
-         NuEmQ9Y/1H5lMpaYTJ0Nht9Ys3TBlkstcuLQwBHGng8P9wiJpMixMMFR+WqGzCHfUS5J
-         tVHciZvgwO6z2gE8Yi8krHsPHclwxKn+zrLAGEBWWrJzEZfwhKqT4oxZyX9qp8KjjssZ
-         RpccRjbyulohBKE+pCZserelxticX6W8t2STtZvweNH1SW58w098ri8XyapMigVhvabQ
-         z+wG9vqcFPEma4xkoPaO/rF46AK/O7vtJbkHlTwQrwiJDWYmeO6NpFNAwZYHmFTWd7kn
-         59HA==
-X-Forwarded-Encrypted: i=1; AJvYcCXiTo+Kw94MXnP8diqbKeNb/65v9ID0j6uEfl5S1FE43gjd6fWMjrp8Nv0s4XgFrkgxAb4cqi6cRHUD8piR@vger.kernel.org
-X-Gm-Message-State: AOJu0YyBunnWliNRpwM1asHHs5tz6NhMmbZh2a/wG7imYRDV/2ZLfhMe
-	1hgW1Wh23RefDbdLOIuCKXCm8kqg8RE5jmRpSLuN3LKE1CAxP7uTkC+Y
-X-Gm-Gg: ATEYQzz8sB9JMrSRUwYpLYKQ7qX+AXM5gY5BNmatv9DONRDIznNR2MA5Y5cb9oDyWfd
-	gDohFLvKe6C0ai5IVbbib7cG0mQQ8h3+BmWCarUroO4wU0CL4wHfjNg/1DCSZagiLfkU1zqGeYe
-	+kHcaV1TZ98FoWupsUPH8V12rNu6ORFh6QEou8If3sAJB6sRHJ0NxvQOAh8JVmNx2ESm1Y5z8Dl
-	FkEO88pUcsT/oye86oKg3Gthf0Y4sL/M5BJDdjCV3dPa2034Qf3wnCzSsz9UbQq0AAdOo5pyyUY
-	mZrtF2VMWnIJqSr5mlN8TuVnbfWNkolUzy5V5QKyEECMNTM43NCrOgOGSWdO+qW0z7LAIMUG2HD
-	+uckRWsNTnQUImWrXSCWl76ma9pJiWbt2qQoFLLWygxsbmf7oMqUfxaAq2iYyAW5gFNFYa7hsHJ
-	ZJkA+snehCBm1sphDpUHMQzFJXMFITT7euVZwLWMj526Ms3HMnQbqwkore6mtVTJ6f
-X-Received: by 2002:a05:7300:aca2:b0:2c0:be45:6815 with SMTP id 5a478bee46e88-2c10981e483mr3694786eec.32.1774218367042;
-        Sun, 22 Mar 2026 15:26:07 -0700 (PDT)
-Received: from google.com ([2a00:79e0:2ebe:8:b768:22ed:3eba:aeb3])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2c10b31bef1sm13678234eec.26.2026.03.22.15.26.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Mar 2026 15:26:06 -0700 (PDT)
-Date: Sun, 22 Mar 2026 15:26:01 -0700
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To: Jonathan Cameron <jic23@kernel.org>
-Cc: Romain Gantois <romain.gantois@bootlin.com>, 
-	MyungJoo Ham <myungjoo.ham@samsung.com>, Chanwoo Choi <cw00.choi@samsung.com>, 
-	Guenter Roeck <linux@roeck-us.net>, Peter Rosin <peda@axentia.se>, 
-	David Lechner <dlechner@baylibre.com>, Nuno =?utf-8?B?U8Oh?= <nuno.sa@analog.com>, 
-	Andy Shevchenko <andy@kernel.org>, Lars-Peter Clausen <lars@metafoo.de>, 
-	Michael Hennerich <Michael.Hennerich@analog.com>, Mariel Tinaco <Mariel.Tinaco@analog.com>, 
-	Kevin Tsai <ktsai@capellamicro.com>, Linus Walleij <linus.walleij@linaro.org>, 
-	Eugen Hristev <eugen.hristev@linaro.org>, Vinod Koul <vkoul@kernel.org>, 
-	Kishon Vijay Abraham I <kishon@kernel.org>, Sebastian Reichel <sre@kernel.org>, Chen-Yu Tsai <wens@csie.org>, 
-	Hans de Goede <hansg@kernel.org>, Support Opensource <support.opensource@diasemi.com>, 
-	Paul Cercueil <paul@crapouillou.net>, Iskren Chernev <me@iskren.info>, 
-	Krzysztof Kozlowski <krzk@kernel.org>, Marek Szyprowski <m.szyprowski@samsung.com>, 
-	Matheus Castello <matheus@castello.eng.br>, Saravanan Sekar <sravanhome@gmail.com>, 
-	Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Casey Connolly <casey.connolly@linaro.org>, 
-	Pali =?utf-8?B?Um9ow6Fy?= <pali@kernel.org>, Orson Zhai <orsonzhai@gmail.com>, 
-	Baolin Wang <baolin.wang@linux.alibaba.com>, Chunyan Zhang <zhang.lyra@gmail.com>, 
-	Amit Kucheria <amitk@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>, Daniel Lezcano <daniel.lezcano@linaro.org>, 
-	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>, 
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>, Liam Girdwood <lgirdwood@gmail.com>, 
-	Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
-	Sylwester Nawrocki <s.nawrocki@samsung.com>, Olivier Moysan <olivier.moysan@foss.st.com>, 
-	Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
-	Alexandre Torgue <alexandre.torgue@foss.st.com>, Thomas Petazzoni <thomas.petazzoni@bootlin.com>, 
-	linux-kernel@vger.kernel.org, linux-hwmon@vger.kernel.org, linux-iio@vger.kernel.org, 
-	linux-input@vger.kernel.org, linux-phy@lists.infradead.org, linux-pm@vger.kernel.org, 
-	linux-mips@vger.kernel.org, linux-mediatek@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org, 
-	linux-stm32@st-md-mailman.stormreply.com, Sebastian Reichel <sebastian.reichel@collabora.com>, 
-	Andy Shevchenko <andriy.shevchenko@intel.com>
-Subject: Re: [PATCH v2 2/2] iio: inkern: Use namespaced exports
-Message-ID: <acBsI0PxvxDGymCa@google.com>
-References: <20251209-iio-inkern-use-namespaced-exports-v2-0-9799a33c4b7f@bootlin.com>
- <20251209-iio-inkern-use-namespaced-exports-v2-2-9799a33c4b7f@bootlin.com>
- <20260111170222.43aee69a@jic23-huawei>
- <20260322122529.62093f12@jic23-huawei>
+	 Content-Type:Content-Disposition:In-Reply-To; b=Viy27kS7bz3wjkEDa0ncnGFi8+E0E6S1+2NbOZfD6dphSp/CkPiFhGPgLO7oC/IO5zj8obY0j222R6ezDHqn+WBRgcq6XH7ujBVs4RfRuQZzIGKfs0kCyhoFj2N4NJ47OWSSFvHPq3JKPHVY7qMbrQFxu39vtL+MQBrEc/f0GtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jhvKPZt3; arc=none smtp.client-ip=192.198.163.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1774222422; x=1805758422;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=Iyq/kR8m/ROKeqOrN3lBBgrhZ0QikXX9ty57LXSzHu0=;
+  b=jhvKPZt3TN5WA4MRJ2XBr/+SErkOiNcnBZS8e/cMUxKjmgGFxzMdk4D1
+   aG2JlIgS/8uxLoCZVzxFZCOifUYLOqIqnTMCElDl7BrE2pWkIy7K3GwqI
+   kYl5aTqqS/1f+rzt1Zp1OeECtZA6w+QXtC48F1sQ1k4x87DVbwxJizinp
+   vbXDE4xkeTwfKuhoyDxryOKHEQ7ZppE08Y9E8NOTG/Pll8zTsR5njXXqi
+   QsfyoKKFPhDRptP3G+n5Z+Jy/OBXQa14gDxe3cUaFKxW1Kc9//p25D8Kg
+   C+QTY9xgn3bB4+Jx/emPj7dLTyg0ULmNFBVfDkQfxuPQWoqDtLuOh7+Pz
+   Q==;
+X-CSE-ConnectionGUID: H+3kxTO9SQy8l9eRMQzoYw==
+X-CSE-MsgGUID: JK/qAADcQHKBo+B5JvmcbQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11737"; a="75343991"
+X-IronPort-AV: E=Sophos;i="6.23,136,1770624000"; 
+   d="scan'208";a="75343991"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Mar 2026 16:33:41 -0700
+X-CSE-ConnectionGUID: L5lU3e1hSneBMqQipXjSAA==
+X-CSE-MsgGUID: LXf5SMqNRLiXfBtk9LP7DQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,136,1770624000"; 
+   d="scan'208";a="261766636"
+Received: from lkp-server02.sh.intel.com (HELO 391eea459618) ([10.239.97.151])
+  by orviesa001.jf.intel.com with ESMTP; 22 Mar 2026 16:32:45 -0700
+Received: from kbuild by 391eea459618 with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1w4SHh-0000000007Z-2kCJ;
+	Sun, 22 Mar 2026 23:32:41 +0000
+Date: Mon, 23 Mar 2026 07:31:52 +0800
+From: kernel test robot <lkp@intel.com>
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	Bryan O'Donoghue <bod@kernel.org>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+	linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 2/2] phy: qcom-mipi-csi2: Add a CSI2 MIPI DPHY driver
+Message-ID: <202603230713.5uOUC5EI-lkp@intel.com>
+References: <20260315-x1e-csi2-phy-v4-2-90c09203888d@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -123,78 +91,82 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260322122529.62093f12@jic23-huawei>
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+In-Reply-To: <20260315-x1e-csi2-phy-v4-2-90c09203888d@linaro.org>
+X-Spamd-Result: default: False [-1.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20230601];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
+	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[bootlin.com,samsung.com,roeck-us.net,axentia.se,baylibre.com,analog.com,kernel.org,metafoo.de,capellamicro.com,linaro.org,csie.org,diasemi.com,crapouillou.net,iskren.info,castello.eng.br,gmail.com,collabora.com,linux.alibaba.com,intel.com,arm.com,bp.renesas.com,perex.cz,suse.com,foss.st.com,vger.kernel.org,lists.infradead.org,st-md-mailman.stormreply.com];
+	TAGGED_FROM(0.00)[bounces-99071-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-99070-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dmitrytorokhov@gmail.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[intel.com:+];
 	MISSING_XM_UA(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[64];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[lkp@intel.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[6];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FREEMAIL_FROM(0.00)[gmail.com]
-X-Rspamd-Queue-Id: 21CE42EB01F
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[01.org:url,intel.com:dkim,intel.com:email,intel.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 862272EB256
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Sun, Mar 22, 2026 at 12:25:29PM +0000, Jonathan Cameron wrote:
-> On Sun, 11 Jan 2026 17:02:22 +0000
-> Jonathan Cameron <jic23@kernel.org> wrote:
-> 
-> > On Tue, 09 Dec 2025 09:25:56 +0100
-> > Romain Gantois <romain.gantois@bootlin.com> wrote:
-> > 
-> > > Use namespaced exports for IIO consumer API functions.
-> > > 
-> > > This will make it easier to manage the IIO export surface. Consumer drivers
-> > > will only be provided access to a specific set of functions, thereby
-> > > restricting usage of internal IIO functions by other parts of the kernel.
-> > > 
-> > > This change cannot be split into several parts without breaking
-> > > bisectability, thus all of the affected drivers are modified at once.
-> > > 
-> > > Acked-by: Sebastian Reichel <sebastian.reichel@collabora.com> # for power-supply
-> > > Acked-by: Guenter Roeck <linux@roeck-us.net>
-> > > Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-> > > Signed-off-by: Romain Gantois <romain.gantois@bootlin.com>  
-> > Ideally looking for a couple more Acks.
-> > 
-> > If any of the maintainers of other trees who haven't already replied
-> > have time for a quick glance that would be great.  I'll spin an
-> > immutable branch but I'm not really expecting any non trivial
-> > conflicts unless there is a new user in flight that I've forgotten
-> > about.
-> 
-> At this stage, given I'm still waiting on replies from a couple of
-> subsystem maintainers, I'm thinking we'll do this next cycle and I'll
-> provide an immutable branch based on rc1 for anyone to grab if they
-> run into merge conflicts in linux-next.
+Hi Bryan,
 
-Sorry, I just acked the input bits in the patch, but in general I feel
-these kind of mechanical changes in consumers do not require an ack and
-you can just go an apply such changes.
+kernel test robot noticed the following build errors:
 
-Thanks.
+[auto build test ERROR on c824345288d11e269ce41b36c105715bc2286050]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Bryan-O-Donoghue/dt-bindings-phy-qcom-Add-CSI2-C-PHY-DPHY-schema/20260316-081353
+base:   c824345288d11e269ce41b36c105715bc2286050
+patch link:    https://lore.kernel.org/r/20260315-x1e-csi2-phy-v4-2-90c09203888d%40linaro.org
+patch subject: [PATCH v4 2/2] phy: qcom-mipi-csi2: Add a CSI2 MIPI DPHY driver
+config: riscv-allyesconfig (https://download.01.org/0day-ci/archive/20260323/202603230713.5uOUC5EI-lkp@intel.com/config)
+compiler: clang version 16.0.6 (https://github.com/llvm/llvm-project 7cbf1a2591520c2491aa35339f227775f4d3adf6)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260323/202603230713.5uOUC5EI-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202603230713.5uOUC5EI-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+>> drivers/phy/qualcomm/phy-qcom-mipi-csi2-3ph-dphy.c:360:13: error: initializer element is not a compile-time constant
+           .opp_clk = x1e_clks[2],
+                      ^~~~~~~~~~~
+   1 error generated.
+
+
+vim +360 drivers/phy/qualcomm/phy-qcom-mipi-csi2-3ph-dphy.c
+
+   347	
+   348	const struct mipi_csi2phy_soc_cfg mipi_csi2_dphy_4nm_x1e = {
+   349		.ops = &phy_qcom_mipi_csi2_ops_3ph_1_0,
+   350		.reg_info = {
+   351			.init_seq = lane_regs_x1e80100,
+   352			.lane_array_size = ARRAY_SIZE(lane_regs_x1e80100),
+   353			.common_regs_offset = 0x1000,
+   354			.generation = GEN2,
+   355		},
+   356		.supply_names = (const char **)x1e_supplies,
+   357		.num_supplies = ARRAY_SIZE(x1e_supplies),
+   358		.clk_names = (const char **)x1e_clks,
+   359		.num_clk = ARRAY_SIZE(x1e_clks),
+ > 360		.opp_clk = x1e_clks[2],
 
 -- 
-Dmitry
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
