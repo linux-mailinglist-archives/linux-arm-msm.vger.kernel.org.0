@@ -1,198 +1,216 @@
-Return-Path: <linux-arm-msm+bounces-99234-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cByEF6o0wWm7RQQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99234-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 13:40:10 +0100
+	id IEAfFw01wWm7RQQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 13:41:49 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id D58042F20C8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 13:40:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D28A72F2151
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 13:41:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id EFA38304CCF7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 12:32:33 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A07C6303A5F3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 12:35:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E01BEEC3;
-	Mon, 23 Mar 2026 12:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C00F39EF0B;
+	Mon, 23 Mar 2026 12:35:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="xBy72gcI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QlhB9nVZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E44683A758B
-	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2026 12:32:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2698E3AA182;
+	Mon, 23 Mar 2026 12:35:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774269134; cv=none; b=pQDnbDeQLfbwkvbVwfDob96aP6OtyGSStj+cc5TpZipHYxXL+yzcauKds+ufZOUOKc+bF04QPvB/xFY8Zpt14RgMt0BkiC0oS36hdBeFAuV2/Qv79RlSO2lI9Xw1FxijigvgQFbELQbxL8+IMSKzO8pWTo3x6d6pCNK+8bdST+c=
+	t=1774269329; cv=none; b=KPYrOOH+mtHRrcvBif28lYBPz/mXc7tNfK7/sQOiBLYZC3F2VQCoBg9+DP8TixQ8x5UsYfuuV53FxPJfEYMvbmU2wFsiLvSXO91Zx8+1ohpOBOA8zYb9KAMKvK158Ac5Rn0zCKIUz7r8OY0wQcOZZjOdiCFeh77mjnfh9nvG2sE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774269134; c=relaxed/simple;
-	bh=EaMqpe7Gvk+f0KkZM1xdoZcB1Kyhx8cGrASNkvb3ncI=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
-	 References:In-Reply-To; b=dnuWvWYtAsdxeuPwfxAHZ4tYIn+/GTg7Y4vmqDZA6Bddy6dfLs+8oxs6kOVofXj4JsAuse0iqCtBD25399mbGC+MAZMwaZ5V3rzDjfDZ1+i+2DOTHG4hsqLoEQHqtTLM4+aRnRMMj5ClmtzJR/9yY13vD27u42aAcHsT1sfweGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=xBy72gcI; arc=none smtp.client-ip=209.85.208.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-6676d55d01dso4278566a12.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2026 05:32:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1774269127; x=1774873927; darn=vger.kernel.org;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ikFz1SRcP/rW6eUkyNzFzTyCYVUG4zpcRXdMo2dV/lA=;
-        b=xBy72gcIHizD3dp1XJMExUtijLYSrEIFPd24HaLDVnm0GFrq2QLitUGuc1ldeG75r5
-         2pGqAbjF1jIwRQ3LwkAMa3Xpp1z/HXQvCa2Oekwd9GHAP/QhGya9OP5q7j/+hiw42cWc
-         ZRdJ0Xrp09FKmmuE/8LAI1RWqUxBEMuC9uv6I2NHLHEymZ+lCmHIPlBz9dfWEW1Wb3AA
-         LeJn+Pk/tlRuTH6z3klUCl8rCzC+i8zrqO3RMS2eK+fSogh2/KK+ScFvTjH4xy0fJ4gR
-         sZnKdtRynxNM9MA0OXLNQmUzhyiCW/huyIZSVy+BAPotQtWr5F9I468sxjtQiaNOYJRp
-         H8ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774269127; x=1774873927;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ikFz1SRcP/rW6eUkyNzFzTyCYVUG4zpcRXdMo2dV/lA=;
-        b=AaMFFgX7+ubqgqsuyl4HE45vgQTUR2BBFfO+0FSQclBpdmWkJtYb1OtBxiRdS7nbxk
-         iwil3LbSVN8hd3s1ZR6N8Okdq1l/wsVm8B4olBh7ZDMGpecoFoyvlAzLey5wMuzo39BQ
-         GrvGPTmlmXD1w4hqsExxGGosPsV542cvwJ/V1WeDWdwvcaR9Q58iNpItzIerFrc7KGei
-         oQE7zD8K8iHmWWKvg6rHUuF3a457Y6WCTMRwh+8f8x6eDk6C7Zy5lYmEzxMc8L5mVvPE
-         uuuJDIow2CHkkbLPfzmnUtIlc89vNjnjWkgFiVbVrMzvqEtlmHPLYp/XJ59ZyKrxL8SO
-         EwOw==
-X-Gm-Message-State: AOJu0Yz/4kHOkTP7HLpglGYTrkKJECr7VdkjXUet4L4MwZBVSuPEBlyy
-	QzLDdydj0LBpckYqCJqIxmt+IRnqesWhRdcMZ1ZimYnADr5FycQYEIim5TFAIu8NStA=
-X-Gm-Gg: ATEYQzyGGaKhSj0VwcA7p+ouduopDSNVn/XKp/8mp7GvCICumcI3SVElaGJK6Yu+d2z
-	hyKohs5ug31hKvwVmE9x5O0Jdptpw+uUhdtp15WH9xNPOw9fdSnpi14D3ydWt4wbYwwkM9++taq
-	OFMcYxQgiqhJQRduY09I4TKQo31v+UwPf2B+a/LI1QX2wJULKV3EZV7xiKoBVf2JRNjakjjqIAW
-	8LcYS3ES2Xc6PHjPMP4XNlJS4EIOdnBMmJszQ8H5EEtR1/moJ5xNixEJkK6nG6C/JOHheN/xVP1
-	IBDEEZvMgvtngLXng8oWHumf3ZysZa3YYjqVPMSE3BNR2D3bYV2VForIafCvR3nV/WtnJtw4Wzn
-	ZVLpISDebijtm2+4b1D/KEKXeruBUdGlnz2kHG6+h7tgFZKEfNeKwcM1DXdjrCxc1miCmvCx558
-	zW9tVuv6zH+BSdmN4Q/GzuyK3H77e52iOXkWN7017IFWokrR+iF0yB8fnfjRV8aqV5OShP
-X-Received: by 2002:a05:6402:685:b0:669:cc03:3367 with SMTP id 4fb4d7f45d1cf-669cc0336d9mr1300928a12.23.1774269127428;
-        Mon, 23 Mar 2026 05:32:07 -0700 (PDT)
-Received: from localhost (144-178-202-139.static.ef-service.nl. [144.178.202.139])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-668cf7e2b69sm3771489a12.7.2026.03.23.05.32.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Mar 2026 05:32:07 -0700 (PDT)
+	s=arc-20240116; t=1774269329; c=relaxed/simple;
+	bh=XApBBnOOJ5elwtHWxmuUDE0TpYF+/pV3i4s0gOrBn4Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=R/dIvQQdqm28YGsQBYjDDMNBYD0R9vNObdKmp/cdG46UmHljJd48ppsWdepW5KF3ljc+vziuqSyy+8nixVxp3U5wStE16DvrwDYzjsPukB7RaOYaFcQCIbEONJP8WK40UwLiDVkUneyoHuc6llKzUspEy8GBi57TRuQi0acl4Dk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QlhB9nVZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B68E5C4CEF7;
+	Mon, 23 Mar 2026 12:35:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1774269328;
+	bh=XApBBnOOJ5elwtHWxmuUDE0TpYF+/pV3i4s0gOrBn4Q=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=QlhB9nVZJCPUurPUHX3n53uyZPTjebWMYxKOBXWmj7h7mKdR6Hw3Ja1TuoOUfAaAV
+	 bdk9LheDCb+crooqJkKtSN1jcx5vyS1YmgbIu80kJKujowxa0JPBEirKu7b+Ij8aoP
+	 UVPtnxT3E/isDy9NhWSnC8zaHLitzT7eKlMPhm6oTl94aqJWVsITJpHJUV3G+SL3DU
+	 b+DY5ous6EJdv7oCGf38atKvYfY8Xfk1UDkxfHLFY+IqlT4gKFgEnyhPXZ2YiQ7o04
+	 jD0Hy9szb3QpCy/nXiWhVc2r1n2GsUt2PIas9ZhDRGVUZn9isX6v1SvxUiH9O5lIo5
+	 85o6XacVa8pUg==
+Date: Mon, 23 Mar 2026 18:05:09 +0530
+From: Sumit Garg <sumit.garg@kernel.org>
+To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	linux-media@vger.kernel.org, netdev@vger.kernel.org,
+	linux-wireless@vger.kernel.org, ath12k@lists.infradead.org,
+	linux-remoteproc@vger.kernel.org, andersson@kernel.org,
+	konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, robin.clark@oss.qualcomm.com, sean@poorly.run,
+	akhilpo@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
+	jesszhan0024@gmail.com, marijn.suijten@somainline.org,
+	airlied@gmail.com, simona@ffwll.ch, vikash.garodia@oss.qualcomm.com,
+	dikshita.agarwal@oss.qualcomm.com, bod@kernel.org,
+	mchehab@kernel.org, elder@kernel.org, andrew+netdev@lunn.ch,
+	davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+	pabeni@redhat.com, jjohnson@kernel.org, mathieu.poirier@linaro.org,
+	trilokkumar.soni@oss.qualcomm.com, pavan.kondeti@oss.qualcomm.com,
+	jorge.ramirez@oss.qualcomm.com, tonyh@qti.qualcomm.com,
+	vignesh.viswanathan@oss.qualcomm.com,
+	srinivas.kandagatla@oss.qualcomm.com,
+	amirreza.zarrabi@oss.qualcomm.com, jens.wiklander@linaro.org,
+	op-tee@lists.trustedfirmware.org, apurupa@qti.qualcomm.com,
+	skare@qti.qualcomm.com, linux-kernel@vger.kernel.org,
+	Sumit Garg <sumit.garg@oss.qualcomm.com>
+Subject: Re: [PATCH v2 01/15] arm64: dts: qcom: kodiak: Add EL2 overlay
+Message-ID: <acEzfd8I9UjByadc@sumit-xelite>
+References: <20260312062756.694390-1-sumit.garg@kernel.org>
+ <20260312062756.694390-2-sumit.garg@kernel.org>
+ <20260313060451.hswg6snnnexchmzs@hu-mojha-hyd.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 23 Mar 2026 13:32:05 +0100
-Message-Id: <DHA5WVPN3F25.2Q71FMM8PD7UL@fairphone.com>
-To: "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>, "Alexander Koskovich"
- <akoskovich@pm.me>, "Bjorn Andersson" <andersson@kernel.org>, "Konrad
- Dybcio" <konradybcio@kernel.org>, "Rob Herring" <robh@kernel.org>,
- "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley"
- <conor+dt@kernel.org>, "Kees Cook" <kees@kernel.org>, "Tony Luck"
- <tony.luck@intel.com>, "Guilherme G. Piccoli" <gpiccoli@igalia.com>
-Cc: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 1/3] arm64: dts: qcom: milos: Reduce rmtfs_mem size to
- 2.5MiB
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260321-asteroids-v1-0-4b902901cb49@pm.me>
- <20260321-asteroids-v1-1-4b902901cb49@pm.me>
- <bd33bd53-2539-42ee-ba3c-4a544a61b621@oss.qualcomm.com>
-In-Reply-To: <bd33bd53-2539-42ee-ba3c-4a544a61b621@oss.qualcomm.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260313060451.hswg6snnnexchmzs@hu-mojha-hyd.qualcomm.com>
 X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[fairphone.com,quarantine];
-	MV_CASE(0.50)[];
-	R_DKIM_ALLOW(-0.20)[fairphone.com:s=fair];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[13];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-99234-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-99235-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[fairphone.com:+];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[luca.weiss@fairphone.com,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[49];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.freedesktop.org,lists.infradead.org,kernel.org,oss.qualcomm.com,poorly.run,linux.dev,gmail.com,somainline.org,ffwll.ch,lunn.ch,davemloft.net,google.com,redhat.com,linaro.org,qti.qualcomm.com,lists.trustedfirmware.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	NEURAL_HAM(-0.00)[-1.000];
 	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[sumit.garg@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[pm.me:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: D58042F20C8
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,qualcomm.com:url,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: D28A72F2151
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Mon Mar 23, 2026 at 10:51 AM CET, Konrad Dybcio wrote:
-> On 3/21/26 6:00 PM, Alexander Koskovich wrote:
->> The rmtfs_mem region is currently sized at 6MiB but the default for
->> milos downstream is 2.5MiB. This causes remoteproc crashes on devices
->> that expect the smaller size:
->>=20
->> modem_ac.c:281:Access Control Error: Could not protect the region specif=
-ied:Start:e1f00000 End:e2180000, PID:1
->>=20
->> Reduce the default to 2.5MiB to match the QCOM downstream config, and
->> override the size for FP6.
->>=20
->> Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
->> ---
->>  arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts | 4 ++++
->>  arch/arm64/boot/dts/qcom/milos.dtsi              | 2 +-
->>  2 files changed, 5 insertions(+), 1 deletion(-)
->>=20
->> diff --git a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts b/arch/arm=
-64/boot/dts/qcom/milos-fairphone-fp6.dts
->> index 52895dd9e4fa..c0981ab731c4 100644
->> --- a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
->> +++ b/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
->> @@ -724,6 +724,10 @@ &remoteproc_wpss {
->>  	status =3D "okay";
->>  };
->> =20
->> +&rmtfs_mem {
->> +	reg =3D <0x0 0xe1f00000 0x0 0x600000>;
->
-> +Luca
+On Fri, Mar 13, 2026 at 11:34:51AM +0530, Mukesh Ojha wrote:
+> On Thu, Mar 12, 2026 at 11:57:42AM +0530, Sumit Garg wrote:
+> > From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+> > 
+> > All the existing variants Kodiak boards are using Gunyah hypervisor
+> > which means that, so far, Linux-based OS could only boot in EL1 on those
+> > devices.  However, it is possible for us to boot Linux at EL2 on these
+> > devices [1].
+> > 
+> > When running under Gunyah, the remote processor firmware IOMMU
+> > streams are controlled by Gunyah. However, without Gunyah, the IOMMU is
+> > managed by the consumer of this DeviceTree. Therefore, describe the
+> > firmware streams for each remote processor.
+> > 
+> > Add a EL2-specific DT overlay and apply it to Kodiak IOT variant
+> > devices to create -el2.dtb for each of them alongside "normal" dtb.
+> > 
+> > [1]
+> > https://docs.qualcomm.com/bundle/publicresource/topics/80-70020-4/boot-developer-touchpoints.html#uefi
+> > 
+> > Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+> > [SG: watchdog fixup]
+> > Signed-off-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/Makefile        |  2 ++
+> >  arch/arm64/boot/dts/qcom/kodiak-el2.dtso | 35 ++++++++++++++++++++++++
+> >  2 files changed, 37 insertions(+)
+> >  create mode 100644 arch/arm64/boot/dts/qcom/kodiak-el2.dtso
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> > index f80b5d9cf1e8..09a7f943190e 100644
+> > --- a/arch/arm64/boot/dts/qcom/Makefile
+> > +++ b/arch/arm64/boot/dts/qcom/Makefile
+> > @@ -139,6 +139,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)	+= qcs615-ride.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-radxa-dragon-q6a.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2.dtb
+> > +qcs6490-rb3gen2-el2-dtbs := qcs6490-rb3gen2.dtb kodiak-el2.dtbo
+> > +dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2-el2.dtb
+> 
+> We may need to add for couple of more variants..
 
-You didn't actually Cc me, but I found it on the mailing list anyways :)
+Sure, those can be follow up patches if Bjorn is happy to pick this one
+independently.
 
->
-> Could you please confirm that this was intentional in the first place?
->
-> FWIW I see that volcano.dtsi indeed only requests 0x280_000 on a "clean"
-> Qualcomm tree
+> 
+> >  
+> >  qcs6490-rb3gen2-vision-mezzanine-dtbs := qcs6490-rb3gen2.dtb qcs6490-rb3gen2-vision-mezzanine.dtbo
+> >  qcs6490-rb3gen2-industrial-mezzanine-dtbs := qcs6490-rb3gen2.dtb qcs6490-rb3gen2-industrial-mezzanine.dtbo
+> > diff --git a/arch/arm64/boot/dts/qcom/kodiak-el2.dtso b/arch/arm64/boot/dts/qcom/kodiak-el2.dtso
+> > new file mode 100644
+> > index 000000000000..0b3a69a0d765
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/qcom/kodiak-el2.dtso
+> > @@ -0,0 +1,35 @@
+> > +// SPDX-License-Identifier: BSD-3-Clause
+> > +/*
+> > + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> > + *
+> > + * Kodiak specific modifications required to boot in EL2.
+> > + */
+> > +
+> > +
+> > +/dts-v1/;
+> > +/plugin/;
+> > +
+> > +&gpu_zap_shader {
+> > +	status = "disabled";
+> > +};
+> > +
+> > +&remoteproc_adsp {
+> > +	iommus = <&apps_smmu 0x1800 0x0>;
+> > +};
+> > +
+> > +&remoteproc_cdsp {
+> > +	iommus = <&apps_smmu 0x11a0 0x0400>;
+> > +};
+> > +
+> > +&remoteproc_wpss {
+> > +	iommus = <&apps_smmu 0x1c03 0x1>,
+> > +		 <&apps_smmu 0x1c83 0x1>;
+> > +};
+> > +
+> > +&venus {
+> > +	status = "disabled";
+> > +};
+> > +
+> > +&watchdog {
+> > +	status = "okay";
+> > +};
+> 
+> 
+> rb3gen2 has modem as well, did we test that as well ?
 
-Yes, it's intentional that it's 6 MiB on Fairphone (Gen. 6):
+OP-TEE don't have access to modem, it's locked down in XBL-SEC.
 
-https://gerrit-public.fairphone.software/plugins/gitiles/platform/vendor/qc=
-om/proprietary/devicetree/+/b3744ffef87e1f2a232b26e9cb270a1f82554bc3%5E!/
-
-I think Fixes is appropriate since the default for Milos should be
-0x280_000 and not 0x600_000?
-
-Fixes: d9d59d105f98 ("arm64: dts: qcom: Add initial Milos dtsi")
-
-And maybe a comment like this on top of the node?
-
-/* Increase the size from 2.5 MiB to 6 MiB */
-
-Anyways:
-
-Reviewed-by: Luca Weiss <luca.weiss@fairphone.com>
-
-
-Regards
-Luca
+-Sumit
 
