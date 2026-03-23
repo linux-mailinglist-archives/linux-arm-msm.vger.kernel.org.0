@@ -1,276 +1,477 @@
-Return-Path: <linux-arm-msm+bounces-99280-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99281-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id gNFyHfFDwWnpRwQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99280-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 14:45:21 +0100
+	id gIY6HvpCwWnPRwQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99281-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 14:41:14 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D0CE72F33A4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 14:45:20 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1DC942F3215
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 14:41:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7CFFA3047E72
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 13:37:15 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id E899F301BDE5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 13:39:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B0B23AC0D0;
-	Mon, 23 Mar 2026 13:37:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FE353AC0C6;
+	Mon, 23 Mar 2026 13:39:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m7zrVHz8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oRBk8eXi"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D62613AC0CC
-	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2026 13:37:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2842856472;
+	Mon, 23 Mar 2026 13:39:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774273032; cv=none; b=NprMKY8QykE5Xd7Ol8dA6d7MIZcWL8JJ7O0vsVRcRhycze8AhmJD3KZPHExnpIB0E0d/BkmZEi8I4oBtFKeBDnei3pmr+XSrCzh8HacgjKA0sFT9orxzljkfDroEH2pU18758ndNiT4v7jbpkBss6ox+csHPxxHQcZo1HR0DSfE=
+	t=1774273150; cv=none; b=nlzxEVVbHx5YM5E1aFKvXH02qU4cujKYp3jsdiViKSeinuqheETVMD3df6ttUPyKZekilyNMLSLqSUKb4Yj23SNIDXJC6kGOpheEKFREgPkzyqdoCo9uA7y/Wsqkt1ZLVMwr9Zl38E7dHhGcFLvwR1XbFKgdFnt3rGjEOnBiZlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774273032; c=relaxed/simple;
-	bh=bv/SaUq1HdOMFnRKapZs5n44wqZCvMp+Q5Yg1ZUqQT4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=AbGn1c8UJCAN2PDZW96vogb2nBwAliJ1lwASjvFOPLh6g9iAHhn7QCwRU9WUHEPwRoFqd0qaEwHgdtybEwAUY5ZrCH/JnN0ZPDzfwvt/C1sL9hAw1ARpwk0idTfATgzwClF6Mi68NKpLouoT4vQ9HDAYUFk7L+rGmp/UC2hswaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m7zrVHz8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F5BFC2BCB4
-	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2026 13:37:12 +0000 (UTC)
+	s=arc-20240116; t=1774273150; c=relaxed/simple;
+	bh=gPWJH6rDtWUpyVY8+/ms057nqk3vn1iH6qLQB5FBhCo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZYMiTd6wF2trYJNtbEvDO+nfRcMJGDp+SJxhjRg7THwuaLgFWcWpneakaQgpSOBdFvO17MGlxtuNmOve4iXOrmj1YM7BFub6iWoQRwOU5iVjC8THGOwMU8umPzFaq/iaSy5IWQXhslqU742RB7zcpvDK6EQHze4QTd8PfmEKu2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oRBk8eXi; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FF91C2BCB4;
+	Mon, 23 Mar 2026 13:38:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774273032;
-	bh=bv/SaUq1HdOMFnRKapZs5n44wqZCvMp+Q5Yg1ZUqQT4=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=m7zrVHz8jG70gOBJcuvGd9dQDhChoJnZeciGZMEwB53wUhOugKsxbQdtTrzaMLE3K
-	 woO/Y0CCFVTtdfxh7PBN0MdrIo/XxqM+d1R6o95whzgIxItgVy1RiPKVlCgpnSYUJn
-	 3rC/v/c6EyhgWN07TN5XFfJM0fHtI7fIJ6Ax7QK1CyvhBX6dJJqIycyep4Lr0vs/3K
-	 5vf/eoZ90MF5eg1u1jFqhozl0yY8btTvkEWzPUtTccVnHiwkQN12MKkhvfz1G0OJkN
-	 LEn9AaxmO+cngxDe3AgvKNSpPpZyP6KFlH3OLBIfRGoQYTmaZiRBHIvCCB3vbuQo1K
-	 xrIdkAq1a9mqg==
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-5a13f6bcbf4so182556e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2026 06:37:12 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCWar7btAyq8WPWBY2mxXfdtV5R2Hx5cnguac5xOMGK4AfBBJlp/qKbe1kU7ncx5iMJYTgLm/qctVgeL3i/W@vger.kernel.org
-X-Gm-Message-State: AOJu0YxAZola8urMB7JTs3hotvqPnPAKRwV3JJyz0R5j69hdd+i4J1Ss
-	BYcGUsMhQeoiwa22sE10ak36SBW7Siuq7pxuJXgV8chjeQkNoIrPjgnfrTFgx4zBidK7aBovJ+P
-	8hD8XwdAWaV+HIWhvk9MuUvv03XWIMcYd2WamLDWdwA==
-X-Received: by 2002:a05:6512:10d3:b0:5a1:7458:c17e with SMTP id
- 2adb3069b0e04-5a285b55dd3mr3848196e87.37.1774273031248; Mon, 23 Mar 2026
- 06:37:11 -0700 (PDT)
+	s=k20201202; t=1774273150;
+	bh=gPWJH6rDtWUpyVY8+/ms057nqk3vn1iH6qLQB5FBhCo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=oRBk8eXigZhibY0HFWUug2BOlPIlV5LCyvsetVd9O8kSjzC0vyx1CT6hhQNzX8Lpa
+	 gtxpsRyYpi6UfWuT8JJb8Uugtk/0C5PDwk1Bj1RVibpWpF0Qx9RB16y9YlMaX1TPKp
+	 7LFJFj0c0DFlunc4yCl9Soa/jo/5zR5BoYhx84ZXiYzykwX0kC5geK+dKEDW0Pmfqn
+	 hAtYjf//49SwJA3o1ZbRremC8+eybFMEQiBKTbcF/r1LUPyRLeT5wVU0q4FO32+4Nz
+	 xPwOtglAT0t8IQCTe55ApzIGAqPDQIszRW1VQXtndEal0zphH06yBK5DO4cQ0FDe5e
+	 IakkD3F4r/oKw==
+Date: Mon, 23 Mar 2026 19:08:52 +0530
+From: Sumit Garg <sumit.garg@kernel.org>
+To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	linux-media@vger.kernel.org, netdev@vger.kernel.org,
+	linux-wireless@vger.kernel.org, ath12k@lists.infradead.org,
+	linux-remoteproc@vger.kernel.org, andersson@kernel.org,
+	konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, robin.clark@oss.qualcomm.com, sean@poorly.run,
+	akhilpo@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
+	jesszhan0024@gmail.com, marijn.suijten@somainline.org,
+	airlied@gmail.com, simona@ffwll.ch, vikash.garodia@oss.qualcomm.com,
+	dikshita.agarwal@oss.qualcomm.com, bod@kernel.org,
+	mchehab@kernel.org, elder@kernel.org, andrew+netdev@lunn.ch,
+	davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+	pabeni@redhat.com, jjohnson@kernel.org, mathieu.poirier@linaro.org,
+	trilokkumar.soni@oss.qualcomm.com, pavan.kondeti@oss.qualcomm.com,
+	jorge.ramirez@oss.qualcomm.com, tonyh@qti.qualcomm.com,
+	vignesh.viswanathan@oss.qualcomm.com,
+	srinivas.kandagatla@oss.qualcomm.com,
+	amirreza.zarrabi@oss.qualcomm.com, jens.wiklander@linaro.org,
+	op-tee@lists.trustedfirmware.org, apurupa@qti.qualcomm.com,
+	skare@qti.qualcomm.com, linux-kernel@vger.kernel.org,
+	Sumit Garg <sumit.garg@oss.qualcomm.com>
+Subject: Re: [PATCH v2 04/15] firmware: qcom: Add a PAS TEE service
+Message-ID: <acFCbLZNOvhrm0Wh@sumit-xelite>
+References: <20260312062756.694390-1-sumit.garg@kernel.org>
+ <20260312062756.694390-5-sumit.garg@kernel.org>
+ <20260313110747.v5bx2snpbtyja3ur@hu-mojha-hyd.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260317-qcom-qce-cmd-descr-v13-0-0968eb4f8c40@oss.qualcomm.com>
- <20260317-qcom-qce-cmd-descr-v13-5-0968eb4f8c40@oss.qualcomm.com> <hohx2judes5c6na4svpah254hqbaf4kbeyu7prwkprfv5dy7hj@26nxwlvb76yp>
-In-Reply-To: <hohx2judes5c6na4svpah254hqbaf4kbeyu7prwkprfv5dy7hj@26nxwlvb76yp>
-From: Bartosz Golaszewski <brgl@kernel.org>
-Date: Mon, 23 Mar 2026 14:36:59 +0100
-X-Gmail-Original-Message-ID: <CAMRc=McostnmVjE=uV=2KA7-dqLvQ2BAJYTXzANacFpPGgS+Sw@mail.gmail.com>
-X-Gm-Features: AaiRm52smHlzaZX3o3c7rJCXBkH0quFZvqCL-0liNookxclyfizWuRA5g5cCXoU
-Message-ID: <CAMRc=McostnmVjE=uV=2KA7-dqLvQ2BAJYTXzANacFpPGgS+Sw@mail.gmail.com>
-Subject: Re: [PATCH v13 05/12] dmaengine: qcom: bam_dma: add support for BAM locking
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, Vinod Koul <vkoul@kernel.org>, 
-	Jonathan Corbet <corbet@lwn.net>, Thara Gopinath <thara.gopinath@gmail.com>, 
-	Herbert Xu <herbert@gondor.apana.org.au>, "David S. Miller" <davem@davemloft.net>, 
-	Udit Tiwari <quic_utiwari@quicinc.com>, Md Sadre Alam <mdalam@qti.qualcomm.com>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Stephan Gerhold <stephan.gerhold@linaro.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Peter Ujfalusi <peter.ujfalusi@gmail.com>, 
-	Michal Simek <michal.simek@amd.com>, Frank Li <Frank.Li@kernel.org>, dmaengine@vger.kernel.org, 
-	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-0.66 / 15.00];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260313110747.v5bx2snpbtyja3ur@hu-mojha-hyd.qualcomm.com>
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-99280-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,lwn.net,gmail.com,gondor.apana.org.au,davemloft.net,quicinc.com,qti.qualcomm.com,linaro.org,amd.com,vger.kernel.org,lists.infradead.org];
+	TAGGED_FROM(0.00)[bounces-99281-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[22];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[49];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.freedesktop.org,lists.infradead.org,kernel.org,oss.qualcomm.com,poorly.run,linux.dev,gmail.com,somainline.org,ffwll.ch,lunn.ch,davemloft.net,google.com,redhat.com,linaro.org,qti.qualcomm.com,lists.trustedfirmware.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[sumit.garg@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,mail.gmail.com:mid]
-X-Rspamd-Queue-Id: D0CE72F33A4
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,qualcomm.com:email]
+X-Rspamd-Queue-Id: 1DC942F3215
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Mon, Mar 23, 2026 at 10:35=E2=80=AFAM Manivannan Sadhasivam <mani@kernel=
-.org> wrote:
->
-> On Tue, Mar 17, 2026 at 03:02:12PM +0100, Bartosz Golaszewski wrote:
-> > Add support for BAM pipe locking. To that end: when starting DMA on an =
-RX
-> > channel - prepend the existing queue of issued descriptors with an
-> > additional "dummy" command descriptor with the LOCK bit set. Once the
-> > transaction is done (no more issued descriptors), issue one more dummy
-> > descriptor with the UNLOCK bit.
->
-> I've left some comments in v12, but looks like you've missed them.
-
-Sorry for that, as I explained in private, this email did not end up
-in my inbox and I didn't see it on lore.
-
-> >
-> > +static int bam_metadata_attach(struct dma_async_tx_descriptor *desc, v=
-oid *data, size_t len)
+On Fri, Mar 13, 2026 at 04:37:47PM +0530, Mukesh Ojha wrote:
+> On Thu, Mar 12, 2026 at 11:57:45AM +0530, Sumit Garg wrote:
+> > From: Sumit Garg <sumit.garg@oss.qualcomm.com>
+> > 
+> > Add support for Peripheral Authentication Service (PAS) driver based
+> > on TEE bus with OP-TEE providing the backend PAS service implementation.
+> > 
+> > The TEE PAS service ABI is designed to be extensible with additional API
+> > as PTA_QCOM_PAS_CAPABILITIES. This allows to accommodate any future
+> > extensions of the PAS service needed while still maintaining backwards
+> > compatibility.
+> > 
+> > Signed-off-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
+> > ---
+> >  drivers/firmware/qcom/Kconfig        |   9 +
+> >  drivers/firmware/qcom/Makefile       |   1 +
+> >  drivers/firmware/qcom/qcom_pas_tee.c | 477 +++++++++++++++++++++++++++
+> >  3 files changed, 487 insertions(+)
+> >  create mode 100644 drivers/firmware/qcom/qcom_pas_tee.c
+> > 
+> > diff --git a/drivers/firmware/qcom/Kconfig b/drivers/firmware/qcom/Kconfig
+> > index 9a12ae2b639d..fff47abdaafd 100644
+> > --- a/drivers/firmware/qcom/Kconfig
+> > +++ b/drivers/firmware/qcom/Kconfig
+> > @@ -14,6 +14,15 @@ config QCOM_PAS
+> >  	  backends plugged in whether it's an SCM implementation or a proper
+> >  	  TEE bus based PAS service implementation.
+> >  
+> > +config QCOM_PAS_TEE
+> > +	tristate
+> > +	select QCOM_PAS
+> > +	depends on TEE
+> > +	depends on !CPU_BIG_ENDIAN
+> > +	help
+> > +	  Enable the generic Peripheral Authentication Service (PAS) provided
+> > +	  by the firmware TEE implementation as the backend.
+> > +
+> >  config QCOM_SCM
+> >  	select QCOM_PAS
+> >  	select QCOM_TZMEM
+> > diff --git a/drivers/firmware/qcom/Makefile b/drivers/firmware/qcom/Makefile
+> > index dc5ab45f906a..48801d18f37b 100644
+> > --- a/drivers/firmware/qcom/Makefile
+> > +++ b/drivers/firmware/qcom/Makefile
+> > @@ -9,3 +9,4 @@ obj-$(CONFIG_QCOM_TZMEM)	+= qcom_tzmem.o
+> >  obj-$(CONFIG_QCOM_QSEECOM)	+= qcom_qseecom.o
+> >  obj-$(CONFIG_QCOM_QSEECOM_UEFISECAPP) += qcom_qseecom_uefisecapp.o
+> >  obj-$(CONFIG_QCOM_PAS)		+= qcom_pas.o
+> > +obj-$(CONFIG_QCOM_PAS_TEE)	+= qcom_pas_tee.o
+> > diff --git a/drivers/firmware/qcom/qcom_pas_tee.c b/drivers/firmware/qcom/qcom_pas_tee.c
+> > new file mode 100644
+> > index 000000000000..7db9fd736369
+> > --- /dev/null
+> > +++ b/drivers/firmware/qcom/qcom_pas_tee.c
+> > @@ -0,0 +1,477 @@
+> > +// SPDX-License-Identifier: GPL-2.0
+> > +/*
+> > + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> > + */
+> > +
+> > +#include <linux/delay.h>
+> > +#include <linux/of.h>
+> > +#include <linux/firmware/qcom/qcom_pas.h>
+> > +#include <linux/kernel.h>
+> > +#include <linux/module.h>
+> > +#include <linux/slab.h>
+> > +#include <linux/tee_drv.h>
+> > +#include <linux/uuid.h>
+> > +
+> > +#include "qcom_pas.h"
+> > +
+> > +/*
+> > + * Peripheral Authentication Service (PAS) supported.
+> > + *
+> > + * [in]  params[0].value.a:	Unique 32bit remote processor identifier
+> > + */
+> > +#define PTA_QCOM_PAS_IS_SUPPORTED		1
+> > +
+> > +/*
+> > + * PAS capabilities.
+> > + *
+> > + * [in]  params[0].value.a:	Unique 32bit remote processor identifier
+> > + * [out] params[1].value.a:	PAS capability flags
+> > + */
+> > +#define PTA_QCOM_PAS_CAPABILITIES		2
+> > +
+> > +/*
+> > + * PAS image initialization.
+> > + *
+> > + * [in]  params[0].value.a:	Unique 32bit remote processor identifier
+> > + * [in]  params[1].memref:	Loadable firmware metadata
+> > + */
+> > +#define PTA_QCOM_PAS_INIT_IMAGE			3
+> > +
+> > +/*
+> > + * PAS memory setup.
+> > + *
+> > + * [in]  params[0].value.a:	Unique 32bit remote processor identifier
+> > + * [in]  params[0].value.b:	Relocatable firmware size
+> > + * [in]  params[1].value.a:	32bit LSB relocatable firmware memory address
+> > + * [in]  params[1].value.b:	32bit MSB relocatable firmware memory address
+> > + */
+> > +#define PTA_QCOM_PAS_MEM_SETUP			4
+> > +
+> > +/*
+> > + * PAS get resource table.
+> > + *
+> > + * [in]     params[0].value.a:	Unique 32bit remote processor identifier
+> > + * [inout]  params[1].memref:	Resource table config
+> > + */
+> > +#define PTA_QCOM_PAS_GET_RESOURCE_TABLE		5
+> > +
+> > +/*
+> > + * PAS image authentication and co-processor reset.
+> > + *
+> > + * [in]  params[0].value.a:	Unique 32bit remote processor identifier
+> > + * [in]  params[0].value.b:	Firmware size
+> > + * [in]  params[1].value.a:	32bit LSB firmware memory address
+> > + * [in]  params[1].value.b:	32bit MSB firmware memory address
+> > + * [in]  params[2].memref:	Optional fw memory space shared/lent
+> > + */
+> > +#define PTA_QCOM_PAS_AUTH_AND_RESET		6
+> > +
+> > +/*
+> > + * PAS co-processor set suspend/resume state.
+> > + *
+> > + * [in]  params[0].value.a:	Unique 32bit remote processor identifier
+> > + * [in]  params[0].value.b:	Co-processor state identifier
+> > + */
+> > +#define PTA_QCOM_PAS_SET_REMOTE_STATE		7
+> > +
+> > +/*
+> > + * PAS co-processor shutdown.
+> > + *
+> > + * [in]  params[0].value.a:	Unique 32bit remote processor identifier
+> > + */
+> > +#define PTA_QCOM_PAS_SHUTDOWN			8
+> > +
+> > +#define TEE_NUM_PARAMS				4
+> > +
+> > +/**
+> > + * struct qcom_pas_tee_private - PAS service private data
+> > + * @dev:		PAS service device.
+> > + * @ctx:		TEE context handler.
+> > + * @session_id:		PAS TA session identifier.
+> > + */
+> > +struct qcom_pas_tee_private {
+> > +	struct device *dev;
+> > +	struct tee_context *ctx;
+> > +	u32 session_id;
+> > +};
+> > +
+> > +static bool qcom_pas_tee_supported(struct device *dev, u32 pas_id)
 > > +{
-> > +     struct bam_chan *bchan =3D to_bam_chan(desc->chan);
-> > +     const struct bam_device_data *bdata =3D bchan->bdev->dev_data;
-> > +     struct bam_desc_metadata *metadata =3D data;
+> > +	struct qcom_pas_tee_private *data = dev_get_drvdata(dev);
+> > +	struct tee_ioctl_invoke_arg inv_arg = {
+> > +		.func = PTA_QCOM_PAS_IS_SUPPORTED,
+> > +		.session = data->session_id,
+> > +		.num_params = TEE_NUM_PARAMS
+> > +	};
+> > +	struct tee_param param[4] = {
+> > +		[0] = {
+> > +			.attr = TEE_IOCTL_PARAM_ATTR_TYPE_VALUE_INPUT,
+> > +			.u.value.a = pas_id
+> > +		}
+> > +	};
+> > +	int ret;
 > > +
-> > +     if (!data)
-> > +             return -EINVAL;
+> > +	ret = tee_client_invoke_func(data->ctx, &inv_arg, param);
+> > +	if (ret < 0 || inv_arg.ret != 0) {
+> > +		dev_err(dev, "PAS not supported, pas_id: %d, err: %x\n",
+> > +			pas_id, inv_arg.ret);
+> > +		return false;
+> > +	}
 > > +
-> > +     if (!bdata->pipe_lock_supported)
-> > +             return -EOPNOTSUPP;
->
-> As mentioned in v12, you should return 0 to avoid erroring out the client=
-s if
-> pipe lock is not supported.
->
-
-If the client attaches the scratchpad register then it probably does
-want to use locking, right? On the other hand, I assume you're
-thinking about a situation where the client wants locking but BAM does
-not support it. It's unlikely but ok, I'll change it.
-
-> >
-> > +static struct bam_async_desc *
-> > +bam_make_lock_desc(struct bam_chan *bchan, struct scatterlist *sg,
-> > +                struct bam_cmd_element *ce, unsigned long flag)
-> > +{
-> > +     struct dma_chan *chan =3D &bchan->vc.chan;
-> > +     struct bam_async_desc *async_desc;
-> > +     struct bam_desc_hw *desc;
-> > +     struct virt_dma_desc *vd;
-> > +     struct virt_dma_chan *vc;
-> > +     unsigned int mapped;
-> > +     dma_cookie_t cookie;
-> > +     int ret;
-> > +
-> > +     sg_init_table(sg, 1);
-> > +
-> > +     async_desc =3D kzalloc_flex(*async_desc, desc, 1, GFP_NOWAIT);
-> > +     if (!async_desc) {
-> > +             dev_err(bchan->bdev->dev, "failed to allocate the BAM loc=
-k descriptor\n");
-> > +             return NULL;
-> > +     }
-> > +
-> > +     async_desc->num_desc =3D 1;
-> > +     async_desc->curr_desc =3D async_desc->desc;
-> > +     async_desc->dir =3D DMA_MEM_TO_DEV;
-> > +
-> > +     desc =3D async_desc->desc;
-> > +
-> > +     bam_prep_ce_le32(ce, bchan->scratchpad_addr, BAM_WRITE_COMMAND, 0=
-);
-> > +     sg_set_buf(sg, ce, sizeof(*ce));
-> > +
-> > +     mapped =3D dma_map_sg_attrs(chan->slave, sg, 1, DMA_TO_DEVICE, DM=
-A_PREP_CMD);
-> > +     if (!mapped) {
-> > +             kfree(async_desc);
-> > +             return NULL;
-> > +     }
-> > +
-> > +     desc->flags |=3D cpu_to_le16(DESC_FLAG_CMD | flag);
-> > +     desc->addr =3D sg_dma_address(sg);
-> > +     desc->size =3D sizeof(struct bam_cmd_element);
-> > +
-> > +     vc =3D &bchan->vc;
-> > +     vd =3D &async_desc->vd;
-> > +
-> > +     dma_async_tx_descriptor_init(&vd->tx, &vc->chan);
-> > +     vd->tx.flags =3D DMA_PREP_CMD;
-> > +     vd->tx.desc_free =3D vchan_tx_desc_free;
-> > +     vd->tx_result.result =3D DMA_TRANS_NOERROR;
-> > +     vd->tx_result.residue =3D 0;
-> > +
-> > +     cookie =3D dma_cookie_assign(&vd->tx);
-> > +     ret =3D dma_submit_error(cookie);
-> > +     if (ret)
-> > +             return NULL;
->
-> You are leaking async_desc here.
->
-
-Yeah, not only that but also should unmap the sg here too. Thanks.
-
-> > +
-> > +     return async_desc;
+> > +	return true;
 > > +}
 > > +
-> > +static int bam_do_setup_pipe_lock(struct bam_chan *bchan, bool lock)
+> > +static int qcom_pas_tee_init_image(struct device *dev, u32 pas_id,
+> > +				   const void *metadata, size_t size,
+> > +				   struct qcom_pas_context *ctx)
 > > +{
-> > +     struct bam_device *bdev =3D bchan->bdev;
-> > +     const struct bam_device_data *bdata =3D bdev->dev_data;
-> > +     struct bam_async_desc *lock_desc;
-> > +     struct bam_cmd_element *ce;
-> > +     struct scatterlist *sgl;
-> > +     unsigned long flag;
+> > +	struct qcom_pas_tee_private *data = dev_get_drvdata(dev);
+> > +	struct tee_ioctl_invoke_arg inv_arg = {
+> > +		.func = PTA_QCOM_PAS_INIT_IMAGE,
+> > +		.session = data->session_id,
+> > +		.num_params = TEE_NUM_PARAMS
+> > +	};
+> > +	struct tee_param param[4] = {
+> > +		[0] = {
+> > +			.attr = TEE_IOCTL_PARAM_ATTR_TYPE_VALUE_INPUT,
+> > +			.u.value.a = pas_id
+> > +		},
+> > +		[1] = {
+> > +			.attr = TEE_IOCTL_PARAM_ATTR_TYPE_MEMREF_INPUT,
+> > +		}
+> > +	};
+> > +	struct tee_shm *mdata_shm;
+> > +	u8 *mdata_buf = NULL;
+> > +	int ret;
 > > +
-> > +     lockdep_assert_held(&bchan->vc.lock);
+> > +	mdata_shm = tee_shm_alloc_kernel_buf(data->ctx, size);
+> > +	if (IS_ERR(mdata_shm)) {
+> > +		dev_err(dev, "mdata_shm allocation failed\n");
+> > +		return PTR_ERR(mdata_shm);
+> > +	}
 > > +
-> > +     if (!bdata->pipe_lock_supported || !bchan->scratchpad_addr ||
-> > +         bchan->slave.direction !=3D DMA_MEM_TO_DEV)
-> > +             return 0;
+> > +	mdata_buf = tee_shm_get_va(mdata_shm, 0);
+> > +	if (IS_ERR(mdata_buf)) {
+> > +		dev_err(dev, "mdata_buf get VA failed\n");
+> > +		tee_shm_free(mdata_shm);
+> > +		return PTR_ERR(mdata_buf);
+> > +	}
+> > +	memcpy(mdata_buf, metadata, size);
 > > +
-> > +     if (lock) {
-> > +             sgl =3D &bchan->lock_sg;
-> > +             ce =3D &bchan->lock_ce;
-> > +             flag =3D DESC_FLAG_LOCK;
-> > +     } else {
-> > +             sgl =3D &bchan->unlock_sg;
-> > +             ce =3D &bchan->unlock_ce;
-> > +             flag =3D DESC_FLAG_UNLOCK;
-> > +     }
+> > +	param[1].u.memref.shm = mdata_shm;
+> > +	param[1].u.memref.size = size;
 > > +
-> > +     lock_desc =3D bam_make_lock_desc(bchan, sgl, ce, flag);
-> > +     if (!lock_desc)
-> > +             return -ENOMEM;
+> > +	ret = tee_client_invoke_func(data->ctx, &inv_arg, param);
+> > +	if (ret < 0 || inv_arg.ret != 0) {
+> > +		dev_err(dev, "PAS init image failed, pas_id: %d, err: %x\n",
+> > +			pas_id, inv_arg.ret);
+> > +		tee_shm_free(mdata_shm);
+> > +		return -EINVAL;
+> > +	}
+> > +	ctx->ptr = (void *)mdata_shm;
 > > +
-> > +     if (lock)
-> > +             list_add(&lock_desc->vd.node, &bchan->vc.desc_issued);
-> > +     else
-> > +             list_add_tail(&lock_desc->vd.node, &bchan->vc.desc_issued=
-);
+> > +	return 0;
+> > +}
 > > +
-> > +     bchan->locked =3D lock;
->
-> What is this flag for?
->
+> > +static int qcom_pas_tee_mem_setup(struct device *dev, u32 pas_id,
+> > +				  phys_addr_t addr, phys_addr_t size)
+> > +{
+> > +	struct qcom_pas_tee_private *data = dev_get_drvdata(dev);
+> > +	struct tee_ioctl_invoke_arg inv_arg = {
+> > +		.func = PTA_QCOM_PAS_MEM_SETUP,
+> > +		.session = data->session_id,
+> > +		.num_params = TEE_NUM_PARAMS
+> > +	};
+> > +	struct tee_param param[4] = {
+> > +		[0] = {
+> > +			.attr = TEE_IOCTL_PARAM_ATTR_TYPE_VALUE_INPUT,
+> > +			.u.value.a = pas_id,
+> > +			.u.value.b = size,
+> > +		},
+> > +		[1] = {
+> > +			.attr = TEE_IOCTL_PARAM_ATTR_TYPE_VALUE_INPUT,
+> > +			.u.value.a = lower_32_bits(addr),
+> > +			.u.value.b = upper_32_bits(addr),
+> > +		}
+> > +	};
+> > +	int ret;
+> > +
+> > +	ret = tee_client_invoke_func(data->ctx, &inv_arg, param);
+> > +	if (ret < 0 || inv_arg.ret != 0) {
+> > +		dev_err(dev, "PAS mem setup failed, pas_id: %d, err: %x\n",
+> > +			pas_id, inv_arg.ret);
+> > +		return -EINVAL;
+> > +	}
+> > +
+> > +	return 0;
+> > +}
+> > +
+> > +DEFINE_FREE(shm_free, struct tee_shm *, tee_shm_free(_T))
+> > +
+> > +static void *qcom_pas_tee_get_rsc_table(struct device *dev,
+> > +					struct qcom_pas_context *ctx,
+> > +					void *input_rt, size_t input_rt_size,
+> > +					size_t *output_rt_size)
+> > +{
+> > +	struct qcom_pas_tee_private *data = dev_get_drvdata(dev);
+> > +	struct tee_ioctl_invoke_arg inv_arg = {
+> > +		.func = PTA_QCOM_PAS_GET_RESOURCE_TABLE,
+> > +		.session = data->session_id,
+> > +		.num_params = TEE_NUM_PARAMS
+> > +	};
+> > +	struct tee_param param[4] = {
+> > +		[0] = {
+> > +			.attr = TEE_IOCTL_PARAM_ATTR_TYPE_VALUE_INPUT,
+> > +			.u.value.a = ctx->pas_id,
+> > +		},
+> > +		[1] = {
+> > +			.attr = TEE_IOCTL_PARAM_ATTR_TYPE_MEMREF_INOUT,
+> > +			.u.memref.size = input_rt_size,
+> > +		}
+> > +	};
+> > +	void *rt_buf = NULL;
+> > +	int ret;
+> > +
+> > +	ret = tee_client_invoke_func(data->ctx, &inv_arg, param);
+> 
+> What is the purpose of this function ? looks like, this is for, how
+> much Linux need to allocate for output buffer ?
 
-Just a leftover. I'll drop it, thanks.
+That's right.
 
-> >
-> > +struct bam_desc_metadata {
-> > +     phys_addr_t scratchpad_addr;
->
-> I think it'd be worth adding a comment for this.
->
+> 
+> > +	if (ret < 0 || inv_arg.ret != 0) {
+> > +		dev_err(dev, "PAS get RT failed, pas_id: %d, err: %x\n",
+> > +			ctx->pas_id, inv_arg.ret);
+> > +		return ERR_PTR(-EINVAL);
+> > +	}
+> > +
+> > +	if (param[1].u.memref.size) {
+> > +		struct tee_shm *rt_shm __free(shm_free) =
+> > +			tee_shm_alloc_kernel_buf(data->ctx,
+> > +						 param[1].u.memref.size);
+> > +		void *rt_shm_va;
+> > +
+> > +		if (IS_ERR(rt_shm)) {
+> > +			dev_err(dev, "rt_shm allocation failed\n");
+> > +			return rt_shm;
+> > +		}
+> > +
+> > +		rt_shm_va = tee_shm_get_va(rt_shm, 0);
+> > +		if (IS_ERR_OR_NULL(rt_shm_va)) {
+> > +			dev_err(dev, "rt_shm get VA failed\n");
+> > +			return ERR_PTR(-EINVAL);
+> > +		}
+> > +		memcpy(rt_shm_va, input_rt, input_rt_size);
+> > +
+> > +		param[1].u.memref.shm = rt_shm;
+> 
+> Here, you are passing only one buffer for both input and output ?
+> 
+> Like, you are allocating of buffer of size returned from qtee which I
 
-Will do.
+s/qtee/optee/
 
-Bart
+> assume includes both input + output rt size and copying the input_rt
+> and calling invoke and in return you will get combine table in return ?
+
+That's right.
+
+> 
+> > +		ret = tee_client_invoke_func(data->ctx, &inv_arg, param);
+> > +		if (ret < 0 || inv_arg.ret != 0) {
+> > +			dev_err(dev, "PAS get RT failed, pas_id: %d, err: %x\n",
+> > +				ctx->pas_id, inv_arg.ret);
+> > +			return ERR_PTR(-EINVAL);
+> > +		}
+> > +
+> > +		if (param[1].u.memref.size) {
+> > +			*output_rt_size = param[1].u.memref.size;
+> > +			rt_buf = kmalloc(param[1].u.memref.size, GFP_KERNEL);
+> > +			if (!rt_buf)
+> > +				return ERR_PTR(-ENOMEM);
+> > +
+> > +			memcpy(rt_buf, rt_shm_va, *output_rt_size);
+> 
+> rt_buf = kmemdup(rt_shm_va, *output_rt_size, GFP_KERNEL);
+> 
+> https://lore.kernel.org/lkml/20260310140255.2520230-1-mukesh.ojha@oss.qualcomm.com/
+> 
+
+Sure, I will use that instead.
+
+-Sumit
 
