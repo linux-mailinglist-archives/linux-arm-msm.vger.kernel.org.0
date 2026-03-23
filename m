@@ -1,203 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-99431-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99432-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cJZRKsDEwWlTWQQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99431-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 23:54:56 +0100
+	id +OErEyTFwWlTWQQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99432-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 23:56:36 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2DBC92FE9CE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 23:54:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BDD362FEA37
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 23:56:35 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 473873028349
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 22:54:37 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id ABEF1301E990
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 22:56:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE16438237A;
-	Mon, 23 Mar 2026 22:54:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 12B1C384228;
+	Mon, 23 Mar 2026 22:56:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V6yjebVf"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="zljAhxzM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ixit.cz (ixit.cz [185.100.197.86])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8477A383C91
-	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2026 22:54:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.216.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774306474; cv=pass; b=Qvo/FelchzFGTwFPgp3HMKbPHpNmQ3awlAQ6jO5PEhGoUgf8bdprG9+Y8f8qS6bFR30p8eMCvPQvM06s+t9fcTeAoQviqpONwwm9R4VgDJwx9oQLp+WIAMpoFCxk9OBsp1qLhmFVxs1CQFDSTzA0qxxj2R66Rgy0A0/XYrFQaYA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774306474; c=relaxed/simple;
-	bh=74FSSwDQ9VkzRO9upV5vmlls4IOhzKbCMLQTvk0LK1g=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JlyM/grtoDltnBqqBO2AnwHe3n+8rUzRRIT2y6PM7nu8ak+cE7OWVNUWE9EsdYIOWrZYuzaRJPDrI9Dwom8/5jv86WRFZOGa6x68T3C4IEve3aIElbiNy9qNYOs4v96kIUTylhkm1sQGXsTmohzadIvzO3gblcwcP12kSx3qXaU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V6yjebVf; arc=pass smtp.client-ip=209.85.216.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-35448ca4689so434951a91.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2026 15:54:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774306473; cv=none;
-        d=google.com; s=arc-20240605;
-        b=XwQks/CqpzMLzQGg/+AfEFPMDsQ45+ZO7bKvczeUBpis0YShVxkZ7U26eW9x22Kx5K
-         GzGIMPT0Bl5ATAlIMSeuWwV1SGg4WqVMMrBWOrNrXXj69xm4tgTIJ5wreAVA2ZA8a5OP
-         3FQJNWPj6KzNUClxhW7fI8qKKOTZrEYqTBMkh9KhVJQ4jQX3s7JyCdVZtQF/lDcB6Fob
-         9Q79qYV9ROJWiiULKM6nIPJ+oZsmWTYjJZs7GvkPpN/CgVUKk3s+rAYstx2P5YcFNcZU
-         ijU4SWoiBINAB4b6thViqzy6IVxdL6vj1htucK4Bpw4zGMF4y/NpwknXdxjlEhvfSIFw
-         3lYQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=aLfrCEkXhRllBwye3r7LV622d9pqnMxcK044kOIY8FU=;
-        fh=9/TSZRX4ofzhDBO4Cnyac/yKgrxISCXugb1bwR7gr3w=;
-        b=c8f7fS+FwvUepkRUHJ78CtJYlJtHroiHDWc0IB5sHWLWy5Ck3mdJT/Jj4YRVvZZ1CS
-         2lwdc6oOs69SBzC8uM2KAcViQaO1UtvzlWzIOEM764MDErsGzjKiA/Ra21sBhAUgKKuC
-         se2SHCse5xA5JA9BTL8SMoArXLt5BNcNow/WlGnqLzRv2rpl5fwNTG94U8MtsZRiOOyi
-         5zANG+/sEclsgSd/dguIB64xRoNcjLuJhO693X2bymxhyNjxbBaw/xYeP4q2Moz8A0Do
-         4td468y14eR5pcCA/wTtE0ri+mo3qNDD5T6YEOjL7Nkmdeub48+zIgrFQViBYuposcNI
-         gG5A==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774306473; x=1774911273; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aLfrCEkXhRllBwye3r7LV622d9pqnMxcK044kOIY8FU=;
-        b=V6yjebVfAaR9DyN1K0pAp1F+RxmDRdo8sthOqSdriRWk59RwJJKtFszbJwDxuPJKx2
-         8RPgNAgXrG+fPDuBwDGLRczWfbBlR3knSJ5X9PwWmrv1KYl4cEjqHiNNXeXbNmNF/Ooc
-         uyNnsGw87KgK4yzTlA5OzofBqbl8i8RmFUJjW8ZTGY+1POQB1S3BnhcM/r1k4ih/YfWt
-         SBj27zKkM28sNzzX7F0OFVPwlzj/rC+An58GZPrrSek9FYRbRwbhzzVpIoyFGfFlj1YX
-         StdyGReJcSOeU+FRfcYT/Vib1CmzZ+rLg2WyVol4BBqM9KG0CVsSnPr6OSt8CmmcOz2R
-         oSfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774306473; x=1774911273;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=aLfrCEkXhRllBwye3r7LV622d9pqnMxcK044kOIY8FU=;
-        b=PESzx+kAojCe533W7zstslmWfwJErBMOwY736JINwKLbsXe2ggnIhHXP/XIIE5hvb4
-         MDXSYMDimRvslu4wr8UYvyKI8/HCDpeRXV0wSlvIc+Hh3pzkl3tGaZPwEHjHl9BmY/fu
-         mA+863pbFTRb57fQxTMCYwP1ixGyVwSDtUldbBVvJMnkjtMuAWn+fVlaMri2zE5KIyiS
-         0WXSXccVmI35VVVHGCu6zWYOBWYtcQnGL6lKZkCLh06qOOlWkVFpXuwMgpoHLYn7yd5g
-         iQBTRxiFbaeP0goqjJIdQV+CNmFv8FwmzWwh7FZt/HVursnb5mj37/JvHQ8rNq6rdvQq
-         U9hQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVoQWuvfCdyrVFOPivVYel/NvcXaOrzZFOBpPcEnSkd98hLit56VxJXJkbss5VIV++NSnTb3x3he9qUOoo1@vger.kernel.org
-X-Gm-Message-State: AOJu0YxZ8tEUOHbT+eD4A2+OdBxgNrhsiUiU3tXSTz60GicKh2DFs0Ui
-	Rxw5TqpBDilN2aq5PHdfV4piAliPOI8WjNdA3Y8Z6y0ossWoyw6h9Skxz/UUgFDfYaUQOVVPHC7
-	bXzXh4IRPo07Bs+TDSZxYZ1y2KBzJA6k=
-X-Gm-Gg: ATEYQzzQxPMvbUOUq7Ww5/ivzzfa5h+bqA/SJAfb9IT3VVvJg0JiK4rDZq95yOVkv1o
-	rmD0sz8uN6WhOKSxDrUuIJO643W1n1fW9nHJQNqb0lx5nwtYbeW6/pDcFL37DJmWmEwYdktzOyv
-	/iY/rIQkI6uJt9XYtKIEOXjw+EWQKZcYAgvXpjjbLsYj57WGwmfO0zUR+q9XdBCN1F8mweGEYcz
-	Tj/JXIPuOEIZEljKHPEP3uIKhXOUkXsEBLnN9Par4XB1gIXNkHwv52f0w/scNWA5QaReTBHKEtZ
-	/VH/Pjw=
-X-Received: by 2002:a17:90b:50d0:b0:359:8e93:4fd6 with SMTP id
- 98e67ed59e1d1-35bd2cb346fmr8560500a91.4.1774306472800; Mon, 23 Mar 2026
- 15:54:32 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4886037F733;
+	Mon, 23 Mar 2026 22:56:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.100.197.86
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774306594; cv=none; b=mOQm4zT18kATduGXbZvUeggK39T+JRubCiD5YtWr6xOFrvPuCKH0LFLwbzzeTLhYZdM6jVuYhHHCGhp7rRYdr44I4ptH2Q+xHJCPemgNPQe1LhPCcprNhWTokc1pBzocV0wy5PUDF7TIpiQcs/xc7exLL5wwGax7OG2EdBgyK5k=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774306594; c=relaxed/simple;
+	bh=VV1Zsp1M4XHUL282IN9IWHoYkJMVQ5E3aDc9mkpuoSM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mXyIvqEErE/DidbQphfiNKTpe86l0/C7kkPyr9g9JhF0yyCGoaU5sfczVtqEjnfl6wq8ByHQz3MX6DGRHWMJJskysgiYPbkp0iAdzlk0d2lacKpNNT7lL8txf4OgqGLonBRlLxShp9L+mF8oTRtutlR8SJp/51Kh0AvletD3xyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=zljAhxzM; arc=none smtp.client-ip=185.100.197.86
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
+Received: from [IPV6:2a02:f000:10bd:e301::1d7] (unknown [IPv6:2a02:f000:10bd:e301::1d7])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ixit.cz (Postfix) with ESMTPSA id AC99C5340DB3;
+	Mon, 23 Mar 2026 23:56:23 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+	t=1774306583;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=l2am5SjhL+EBD0s7bFRr7LcFzU84yONY+yyZv43z2iE=;
+	b=zljAhxzM9W/1YTUGQMWYnoN04Ls7zSy6ORP0pUU2roeTW8WzlnuEe6OY84KL15t28eWVx8
+	xWTbe0fslZn+jdQFDe6X5lvtiBYSVir2iPGAGkZqllG5ul3tweuHKy+zPjBkOhUQyafcGf
+	DYY1I6F7at04N8moYm2Pqd5Vvapl61Y=
+Message-ID: <9cb387c2-5690-44aa-a5ad-0416d6bb3374@ixit.cz>
+Date: Mon, 23 Mar 2026 23:56:23 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260324-a8xx-gpu-batch2-v1-0-fc95b8d9c017@oss.qualcomm.com>
- <20260324-a8xx-gpu-batch2-v1-16-fc95b8d9c017@oss.qualcomm.com> <4cj3yheakuxh75hf4r33ukokswa7fbr4cetezrj7mujb5mcxjl@fqoek3yfi6ep>
-In-Reply-To: <4cj3yheakuxh75hf4r33ukokswa7fbr4cetezrj7mujb5mcxjl@fqoek3yfi6ep>
-From: Connor Abbott <cwabbott0@gmail.com>
-Date: Mon, 23 Mar 2026 18:54:21 -0400
-X-Gm-Features: AaiRm53hFiG8c1KgnSj9JcdEvJhhSQ0Ko88DFgY_jlrVuts--4wM3FRhLLDQCpI
-Message-ID: <CACu1E7EkjbUs9bc3BD69AaAo4B0t3si-8U-VfCYvi4KVk=Utkw@mail.gmail.com>
-Subject: Re: [PATCH 16/16] drm/msm/adreno: Expose a PARAM to check AQE support
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Akhil P Oommen <akhilpo@oss.qualcomm.com>, Rob Clark <robin.clark@oss.qualcomm.com>, 
-	Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
-	Jessica Zhang <jesszhan0024@gmail.com>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Antonino Maniscalco <antomani103@gmail.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH QUESTION 0/2] NFC support in Linux (and support for
+ Qualcomm SDM845 devices)
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: Petr Hodina <petr.hodina@protonmail.com>,
+ biemster <l.j.beemster@gmail.com>, netdev@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, oe-linux-nfc@lists.linux.dev,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ phone-devel@vger.kernel.org
+References: <20260322-oneplus-nfc-v1-0-5f22f544f0e2@ixit.cz>
+ <eb316800-0be6-4aa7-b9f6-e2b17646d1a0@kernel.org>
+Content-Language: en-US
+From: David Heidelberg <david@ixit.cz>
+Autocrypt: addr=david@ixit.cz; keydata=
+ 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
+In-Reply-To: <eb316800-0be6-4aa7-b9f6-e2b17646d1a0@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[ixit.cz,quarantine];
+	R_DKIM_ALLOW(-0.20)[ixit.cz:s=dkim];
 	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-99431-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-99432-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,poorly.run,kernel.org,linux.dev,gmail.com,somainline.org,ffwll.ch,linux.intel.com,suse.de,vger.kernel.org,lists.freedesktop.org];
-	FREEMAIL_FROM(0.00)[gmail.com];
 	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[19];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[protonmail.com,gmail.com,vger.kernel.org,lists.linux.dev];
+	RCPT_COUNT_TWELVE(0.00)[14];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[cwabbott0@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[david@ixit.cz,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[ixit.cz:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 2DBC92FE9CE
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: BDD362FEA37
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Mon, Mar 23, 2026 at 5:36=E2=80=AFPM Dmitry Baryshkov
-<dmitry.baryshkov@oss.qualcomm.com> wrote:
->
-> On Tue, Mar 24, 2026 at 01:42:28AM +0530, Akhil P Oommen wrote:
-> > AQE (Applicaton Qrisc Engine) is required to support VK ray-pipeline. T=
-wo
-> > conditions should be met to use this HW:
-> >   1. AQE firmware should be loaded and programmed
-> >   2. Preemption support
-> >
-> > Expose a new MSM_PARAM to allow userspace to query its support.
-> >
-> > Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-> > ---
-> >  drivers/gpu/drm/msm/adreno/a6xx_gpu.c   | 13 +++++++++++++
-> >  drivers/gpu/drm/msm/adreno/adreno_gpu.c |  4 ++++
-> >  drivers/gpu/drm/msm/adreno/adreno_gpu.h |  1 +
-> >  include/uapi/drm/msm_drm.h              |  1 +
-> >  4 files changed, 19 insertions(+)
-> >
-> > diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
-> > index 5c67294edc95..b99098792371 100644
-> > --- a/include/uapi/drm/msm_drm.h
-> > +++ b/include/uapi/drm/msm_drm.h
-> > @@ -117,6 +117,7 @@ struct drm_msm_timespec {
-> >   * ioctl will throw -EPIPE.
-> >   */
-> >  #define MSM_PARAM_EN_VM_BIND 0x16  /* WO, once */
-> > +#define MSM_PARAM_AQE             0x17  /* RO */
-> >
-> >  /* For backwards compat.  The original support for preemption was base=
-d on
-> >   * a single ring per priority level so # of priority levels equals the=
- #
-> >
->
-> I think this also requires a version bump in msm_drv.c
+> 
+> You will not get another stack, but taking care of Linux nfc and neard
+> would be appreciated.
 
-Not really. We can just assume it's not there if the ioctl returns
--EINVAL, like the other queries we've added recently.
+Just tested with `neard`, `nfctool -d nfc0 -p` and the HW is able to detect tag 
+(didn't do more testing for now, but it's good start).
 
-Connor
+Thank you for the new release!
 
->
->
-> --
-> With best wishes
-> Dmitry
+I'll send non-QUESTION series ~ tomorrow.
+
+David
+
+> 
+> Let me release a new version for it.
+> 
+> Best regards,
+> Krzysztof
+
+-- 
+David Heidelberg
+
 
