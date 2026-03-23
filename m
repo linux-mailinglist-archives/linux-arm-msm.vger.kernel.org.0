@@ -1,37 +1,37 @@
-Return-Path: <linux-arm-msm+bounces-99265-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99264-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id mBu6Dz0+wWlaRwQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99265-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 14:21:01 +0100
+	id gMSCM9s/wWlnRwQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99264-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 14:27:55 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B0332F2C07
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 14:21:00 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2DF6A2F2E7C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 14:27:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 6D884300B44D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 13:20:45 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 8767A3023DF4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 13:20:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6787E37C90E;
-	Mon, 23 Mar 2026 13:20:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDF593A9D9E;
+	Mon, 23 Mar 2026 13:20:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="ZJefgWNU"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="SGyNTWIy"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95A863A9D8F
-	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2026 13:20:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BCC83A9D88
+	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2026 13:20:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774272043; cv=none; b=YyLsuHVGS7GuOBt8NzxG/ukp4RBdD/4giaBtjxD1p5uZjAAVd2NSFPszqOA2hB4xBAUJBAk08j3EoKnojr77dkPVcQwu0GZosQSRrsxJE7f0XjhTSJbI5hpLP1OGbFfG3mNKFwOkrRiDAaVCMJJnw3tZxtf1XMAzMd0fK1HkJO8=
+	t=1774272042; cv=none; b=RDim7kqkhL9kvwjLDG3nFzxwOuK5jPPJzGftxil64zcMYs8PqazeXf8EtfHz4AGGVFxmhabSNjXht6tOScLwGLv/pQL2unuGaoHGmBZT9IloUPy9HWe9RWvwHhxfZtlYgKyQLzCLl2TOVVwzRcD42WzskQZ2HuMp1pDeLZtIGJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774272043; c=relaxed/simple;
-	bh=+mZ9HGVAYAV2WMmZ1AB0XgPjDPrCGjzj/g/l7rsJ6Pk=;
+	s=arc-20240116; t=1774272042; c=relaxed/simple;
+	bh=WXQPiMkew25K2C6yWipgnGYgd2AsmfFBRRpO8UD4zSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dFBcDfw2O6rs6VOB7Nfrl70qwz0qoP0EGce6+Ex9L87NVTjqPOLloq/in2+L2HRjh8bBNFJqacMgLXI5RUitNuKlDLJNV0E3Xxop29ssIKyO5WWu3kg5OSnjulvHUrDWyP8UvJGYjbCJm1JP91uV9U3pjWQdb8rAme4gT1/zWHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=ZJefgWNU; arc=none smtp.client-ip=213.97.179.56
+	 MIME-Version; b=bBbaEErnHvDjJhDTroBDlup1imQdf9M0aBZhqXAQcj+kKt0qigqEUAlBGU8t4r5SuBuxH7lDlV/YZEtTZJjxtTPKCwh6QZ72Vo0bJDZPeUbPX8BSJ5MLofBtyJwdLo5IC0R4BpryfUvabEowHlMW5EnLr09FilnEhLXbSOLKyYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=SGyNTWIy; arc=none smtp.client-ip=213.97.179.56
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
@@ -40,16 +40,16 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
 	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
 	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
 	List-Post:List-Owner:List-Archive;
-	bh=ukfnB5R8mZ+GokTHvDOlZuqhmwMNQHpfoizw9ZvrQYk=; b=ZJefgWNUTW3RjV72Ofd0m3/Enm
-	wze3OwftYF3ek/6YRRXVUJ6J2/GK+tTIx6lAlbXYU6NINTXAOyinbQTdOzsg4oPPwtwVIbkV70qn6
-	RxA6yavXiy42lDAZA2TYDR9SMlMDOA+KcWwGCGG6Lz2wNlE9DYjqB83L24/6Ks4iqIfSGpDGoLgyV
-	scllkqNjF1++/uf2kqqokRMI4FxUaFxUQ0rqsEtx8R/P+OU9/+WdYFrXuIB2j1jsBXrv59NeDr89M
-	DGEStSiRKVWOSfXxbCFiY7HJg1spYir0q9710jWIar88crNkLTp3SIzlsp0rQA8SXzQod3CvkK0Bo
-	3L44eA2A==;
+	bh=fjgq01+zdtEciRBp9/sjCTWpbq8puyxzm8gScgWhTEs=; b=SGyNTWIyoa/AS23i9CHrbHQRYy
+	xuR3xLoPXxh+LSFt4zx49fvkJrXSByv15o+3AbR6+wjBbo0tGXc3GoyA3YMaBFosg1ZnQ0pt9G4HV
+	GAgTz+Cj6yYTuenLvETWN8SVmJv0leFGFKr0CE2jzZ+0ofwIsZKlV1JAOnWRkXi5MepwMIv1IwVzS
+	uwy1ZAlo04sQ6yo76dhE5Y6McUTVXweUUVDBF/1aTDlpZlKNurlOaLR2m+lHODUxeuEO+UH7DkXqG
+	covmLmFoHdnR1i74RejdTsjAhVPnVb6U2hQj6p5UsNCP/yaCOK1WlLhWKc0PpG1+vJOalqY4A9wQx
+	knYF/Y6w==;
 Received: from [186.208.74.38] (helo=killbill.home)
 	by fanzine2.igalia.com with esmtpsa 
 	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
-	id 1w4fCI-004rx9-9A; Mon, 23 Mar 2026 14:19:58 +0100
+	id 1w4fCO-004rx9-KP; Mon, 23 Mar 2026 14:20:05 +0100
 From: Melissa Wen <mwen@igalia.com>
 To: airlied@gmail.com,
 	alexander.deucher@amd.com,
@@ -77,9 +77,9 @@ Cc: Alex Hung <alex.hung@amd.com>,
 	linux-arm-msm@vger.kernel.org,
 	dri-devel@lists.freedesktop.org,
 	freedreno@lists.freedesktop.org
-Subject: [PATCH v2 1/2] drm/atomic: track individual colorop updates
-Date: Mon, 23 Mar 2026 10:15:13 -0300
-Message-ID: <20260323131942.494217-2-mwen@igalia.com>
+Subject: [PATCH v2 2/2] drm/amd/display: use plane color_mgmt_changed to track colorop changes
+Date: Mon, 23 Mar 2026 10:15:14 -0300
+Message-ID: <20260323131942.494217-3-mwen@igalia.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323131942.494217-1-mwen@igalia.com>
 References: <20260323131942.494217-1-mwen@igalia.com>
@@ -95,13 +95,13 @@ X-Spamd-Result: default: False [1.14 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_CONTAINS_FROM(1.00)[];
 	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	DMARC_POLICY_SOFTFAIL(0.10)[igalia.com : SPF not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	TAGGED_FROM(0.00)[bounces-99265-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-99264-lists,linux-arm-msm=lfdr.de];
 	FREEMAIL_CC(0.00)[amd.com,intel.com,emersion.fr,kde.org,lists.freedesktop.org,igalia.com,oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,vger.kernel.org];
 	MIME_TRACE(0.00)[0:+];
 	RCVD_TLS_LAST(0.00)[];
@@ -115,182 +115,50 @@ X-Spamd-Result: default: False [1.14 / 15.00];
 	FROM_HAS_DN(0.00)[];
 	DKIM_TRACE(0.00)[igalia.com:-];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	NEURAL_SPAM(0.00)[0.134];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[igalia.com:email,igalia.com:mid,amd.com:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 3B0332F2C07
+	NEURAL_SPAM(0.00)[0.083];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[igalia.com:email,igalia.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,amd.com:email]
+X-Rspamd-Queue-Id: 2DF6A2F2E7C
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-As we do for CRTC color mgmt properties, use color_mgmt_changed flag to
-track any value changes in the color pipeline of a given plane, so that
-drivers can update color blocks as soon as plane color pipeline or
-individual colorop values change.
+Ensure the driver tracks changes in any colorop property of a plane
+color pipeline by using the same mechanism of CRTC color management and
+update plane color blocks when any colorop property changes. It fixes an
+issue observed on gamescope settings for night mode which is done via
+shaper/3D-LUT updates.
 
-Reviewed-by: Harry Wentland <harry.wentland@amd.com> #v1
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
 Signed-off-by: Melissa Wen <mwen@igalia.com>
 ---
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
- v2: add linux types to provide bool for MSM driver (kernel bot)
----
- drivers/gpu/drm/drm_atomic_uapi.c | 53 ++++++++++++++++++++++++-------
- include/drm/drm_atomic_uapi.h     |  4 ++-
- 2 files changed, 45 insertions(+), 12 deletions(-)
-
-diff --git a/drivers/gpu/drm/drm_atomic_uapi.c b/drivers/gpu/drm/drm_atomic_uapi.c
-index 87de41fb4459..713fa9e81732 100644
---- a/drivers/gpu/drm/drm_atomic_uapi.c
-+++ b/drivers/gpu/drm/drm_atomic_uapi.c
-@@ -265,13 +265,19 @@ EXPORT_SYMBOL(drm_atomic_set_fb_for_plane);
-  *
-  * Helper function to select the color pipeline on a plane by setting
-  * it to the first drm_colorop element of the pipeline.
-+ *
-+ * Return: true if plane color pipeline value changed, false otherwise.
-  */
--void
-+bool
- drm_atomic_set_colorop_for_plane(struct drm_plane_state *plane_state,
- 				 struct drm_colorop *colorop)
- {
- 	struct drm_plane *plane = plane_state->plane;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index dfe95c9b8746..dc3f284d0834 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -9955,7 +9955,7 @@ static void amdgpu_dm_commit_planes(struct drm_atomic_state *state,
+ 			continue;
  
-+	/* Color pipeline didn't change */
-+	if (plane_state->color_pipeline == colorop)
-+		return false;
+ 		bundle->surface_updates[planes_count].surface = dc_plane;
+-		if (new_pcrtc_state->color_mgmt_changed) {
++		if (new_pcrtc_state->color_mgmt_changed || new_plane_state->color_mgmt_changed) {
+ 			bundle->surface_updates[planes_count].gamma = &dc_plane->gamma_correction;
+ 			bundle->surface_updates[planes_count].in_transfer_func = &dc_plane->in_transfer_func;
+ 			bundle->surface_updates[planes_count].gamut_remap_matrix = &dc_plane->gamut_remap_matrix;
+@@ -11695,6 +11695,10 @@ static bool should_reset_plane(struct drm_atomic_state *state,
+ 	if (new_crtc_state->color_mgmt_changed)
+ 		return true;
+ 
++	/* Plane color pipeline or its colorop changes. */
++	if (new_plane_state->color_mgmt_changed)
++		return true;
 +
- 	if (colorop)
- 		drm_dbg_atomic(plane->dev,
- 			       "Set [COLOROP:%d] for [PLANE:%d:%s] state %p\n",
-@@ -283,6 +289,8 @@ drm_atomic_set_colorop_for_plane(struct drm_plane_state *plane_state,
- 			       plane->base.id, plane->name, plane_state);
- 
- 	plane_state->color_pipeline = colorop;
-+
-+	return true;
- }
- EXPORT_SYMBOL(drm_atomic_set_colorop_for_plane);
- 
-@@ -600,7 +608,7 @@ static int drm_atomic_plane_set_property(struct drm_plane *plane,
- 		if (val && !colorop)
- 			return -EACCES;
- 
--		drm_atomic_set_colorop_for_plane(state, colorop);
-+		state->color_mgmt_changed |= drm_atomic_set_colorop_for_plane(state, colorop);
- 	} else if (property == config->prop_fb_damage_clips) {
- 		ret = drm_property_replace_blob_from_id(dev,
- 					&state->fb_damage_clips,
-@@ -709,11 +717,11 @@ drm_atomic_plane_get_property(struct drm_plane *plane,
- static int drm_atomic_color_set_data_property(struct drm_colorop *colorop,
- 					      struct drm_colorop_state *state,
- 					      struct drm_property *property,
--					      uint64_t val)
-+					      uint64_t val,
-+					      bool *replaced)
- {
- 	ssize_t elem_size = -1;
- 	ssize_t size = -1;
--	bool replaced = false;
- 
- 	switch (colorop->type) {
- 	case DRM_COLOROP_1D_LUT:
-@@ -735,28 +743,39 @@ static int drm_atomic_color_set_data_property(struct drm_colorop *colorop,
- 						 &state->data,
- 						 val,
- 						 -1, size, elem_size,
--						 &replaced);
-+						 replaced);
- }
- 
- static int drm_atomic_colorop_set_property(struct drm_colorop *colorop,
- 					   struct drm_colorop_state *state,
- 					   struct drm_file *file_priv,
- 					   struct drm_property *property,
--					   uint64_t val)
-+					   uint64_t val,
-+					   bool *replaced)
- {
- 	if (property == colorop->bypass_property) {
--		state->bypass = val;
-+		if (state->bypass != val) {
-+			state->bypass = val;
-+			*replaced = true;
-+		}
- 	} else if (property == colorop->lut1d_interpolation_property) {
- 		colorop->lut1d_interpolation = val;
- 	} else if (property == colorop->curve_1d_type_property) {
--		state->curve_1d_type = val;
-+		if (state->curve_1d_type != val) {
-+			state->curve_1d_type = val;
-+			*replaced = true;
-+		}
- 	} else if (property == colorop->multiplier_property) {
--		state->multiplier = val;
-+		if (state->multiplier != val) {
-+			state->multiplier = val;
-+			*replaced = true;
-+		}
- 	} else if (property == colorop->lut3d_interpolation_property) {
- 		colorop->lut3d_interpolation = val;
- 	} else if (property == colorop->data_property) {
- 		return drm_atomic_color_set_data_property(colorop, state,
--							  property, val);
-+							  property, val,
-+							  replaced);
- 	} else {
- 		drm_dbg_atomic(colorop->dev,
- 			       "[COLOROP:%d:%d] unknown property [PROP:%d:%s]\n",
-@@ -1273,6 +1292,8 @@ int drm_atomic_set_property(struct drm_atomic_state *state,
- 	case DRM_MODE_OBJECT_COLOROP: {
- 		struct drm_colorop *colorop = obj_to_colorop(obj);
- 		struct drm_colorop_state *colorop_state;
-+		struct drm_plane_state *plane_state;
-+		bool replaced = false;
- 
- 		colorop_state = drm_atomic_get_colorop_state(state, colorop);
- 		if (IS_ERR(colorop_state)) {
-@@ -1281,7 +1302,17 @@ int drm_atomic_set_property(struct drm_atomic_state *state,
- 		}
- 
- 		ret = drm_atomic_colorop_set_property(colorop, colorop_state,
--						      file_priv, prop, prop_value);
-+						      file_priv, prop, prop_value,
-+						      &replaced);
-+		if (ret || !replaced)
-+			break;
-+
-+		plane_state = drm_atomic_get_plane_state(state, colorop->plane);
-+		if (IS_ERR(plane_state)) {
-+			ret = PTR_ERR(plane_state);
-+			break;
-+		}
-+		plane_state->color_mgmt_changed = true;
- 		break;
- 	}
- 	default:
-diff --git a/include/drm/drm_atomic_uapi.h b/include/drm/drm_atomic_uapi.h
-index 436315523326..4e7e78f711e2 100644
---- a/include/drm/drm_atomic_uapi.h
-+++ b/include/drm/drm_atomic_uapi.h
-@@ -29,6 +29,8 @@
- #ifndef DRM_ATOMIC_UAPI_H_
- #define DRM_ATOMIC_UAPI_H_
- 
-+#include <linux/types.h>
-+
- struct drm_crtc_state;
- struct drm_display_mode;
- struct drm_property_blob;
-@@ -50,7 +52,7 @@ drm_atomic_set_crtc_for_plane(struct drm_plane_state *plane_state,
- 			      struct drm_crtc *crtc);
- void drm_atomic_set_fb_for_plane(struct drm_plane_state *plane_state,
- 				 struct drm_framebuffer *fb);
--void drm_atomic_set_colorop_for_plane(struct drm_plane_state *plane_state,
-+bool drm_atomic_set_colorop_for_plane(struct drm_plane_state *plane_state,
- 				      struct drm_colorop *colorop);
- int __must_check
- drm_atomic_set_crtc_for_connector(struct drm_connector_state *conn_state,
+ 	/*
+ 	 * On zpos change, planes need to be reordered by removing and re-adding
+ 	 * them one by one to the dc state, in order of descending zpos.
 -- 
 2.53.0
 
