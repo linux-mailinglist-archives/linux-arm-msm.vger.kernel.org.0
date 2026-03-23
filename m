@@ -1,270 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-99297-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99298-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id oBBIL85PwWnLSAQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99297-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 15:35:58 +0100
+	id 6EYUIShQwWnLSAQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99298-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 15:37:28 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70A502F4CE8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 15:35:58 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2CDD82F4DFA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 15:37:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 17FE130AFE82
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 14:20:06 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id A6BBF305B8D7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 14:21:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7781139768D;
-	Mon, 23 Mar 2026 14:20:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EC2A1FFC48;
+	Mon, 23 Mar 2026 14:21:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IaYY+t0s"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jRRbZic9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E4A43C07A;
-	Mon, 23 Mar 2026 14:20:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7742C181;
+	Mon, 23 Mar 2026 14:21:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275603; cv=none; b=m+HZbWUAVGdiwH0YfvfTlB5PSJBqRWyFGuMXfi1WlHdriX3Igs0/YDgli17V1xNg5XkfUO5WDqvkAAVs5ec5fQJv2OiUJ6ql1fBhjLJjJ5swiTjnAo2mtvTrYXc+SQjZaF7WCp+aJmZWbUsoys7VHNbH6Cwly09vC2SD9AchAto=
+	t=1774275687; cv=none; b=SAqJzLQcbZOOI1GI0rXXZNzdGISWmcRkSIyHyKv3GepMWdOY4BYvfqLimGr83X74dRA+/9Z3GxYSXcIcvaqL+Y6zWGReft7I0TsvP2YKosmFwN5nZTGPkkxHBeUt/ajodbJQsvRTlz3XrC7fMhdG0CrLHHAPlnPXPIiB3afgPNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275603; c=relaxed/simple;
-	bh=BE6MT0FJ+XUj3GwSQ9qgEIvygG/gVGIFXxDyZdfpswc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=apDrAaVCokHNob/v8UkCN+XO7nKMDhTHa6eE2IopmFlDcvpDIXGDZQqKtkx/FDZJg2YTxxnbgF0j8mb0xkQZFif8K77kJ/B5JMV5DdKMMyWD4O3QDjsXejA9hKffH/ESF6q0Etqq3HWu/Pd2nis2iPKgsM3o7kbi/++eMmXZlxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IaYY+t0s; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19EE1C4CEF7;
-	Mon, 23 Mar 2026 14:19:52 +0000 (UTC)
+	s=arc-20240116; t=1774275687; c=relaxed/simple;
+	bh=a88TESX1Hu0X1wrFY8lw1w3IuOKX7l0HLHK4iS2EV8M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=l2pl/md1szuztR/y/y0BklhZtWOki0J6MEeLNoKkQtMHkfonFr9G7EwFw6TjJASRcksMBCc3/bdIUyBoKObukgI7qiM4Xs6YYKYgpqOCKZy1JIPEK2lybKDR/wyU4LCy1hmLFUWgvAaxDnfrsWnraMqFxSBEGAfBtuTaemSo9FY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jRRbZic9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 154BEC2BCB1;
+	Mon, 23 Mar 2026 14:21:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774275603;
-	bh=BE6MT0FJ+XUj3GwSQ9qgEIvygG/gVGIFXxDyZdfpswc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=IaYY+t0sUKB+Oai1ewL9iEqpzedfY6957Q+aYeuzYErZ0WG5KKgc6gjaLnkycEHHU
-	 57o8WJbTS+DqA7aYbaboA4yB0o5/jfOHE947fTNvOhMHinnJKpqXZDwsRMYxfQ8kXj
-	 vywA06bH2lkHXaBD113FOICmQFdGmMdmCWLsx9Iflf8eWt+sS8XJePjFf79ctuQN3W
-	 bFY+D/xocjGPxkylj4BVEh5/X235VYk24uo83lQvU3XJt8R1JAbGnDk+1zzwc0i5QM
-	 j6sNfhIBaBdcFpdspi3mCLi7Lbix2YLo4LPojb60zxr2qrxFpg6o0YeMW5murOwutt
-	 exiL7qU5k9gwg==
-Message-ID: <5c5b49aa-7819-44c6-b5f7-19ec780d73fa@kernel.org>
-Date: Mon, 23 Mar 2026 15:19:50 +0100
+	s=k20201202; t=1774275687;
+	bh=a88TESX1Hu0X1wrFY8lw1w3IuOKX7l0HLHK4iS2EV8M=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=jRRbZic94GyJaGb66tgifIdwogStiZ8rYWMGU7lCpdD+vrYqNyFoflHIYeMf5ethr
+	 UU4d6QZsTvS1BUX5AUxaIpBRXMMQ5t/7YaIksh98yFDaY9w783liYvNcA8YLuu+siF
+	 SrSfWMYEtgUBpur5AR4KvRxF5IjWGCiOHLwd8WjFLebFI5yNC8KvUOWiEpY34jPOwr
+	 uutwhBCL35eAT4aWK93hQk01uiDVP/8dCtiP8hJY1mmJBOCjB5pNpFSyOD2Adek0i1
+	 uqrHBdDVAYutp3bVQjZZQuU2RuQrdHScdFzGR8hX4A4wJjT2Gow9L9AOrfG73CY+nH
+	 WjcIkog//9Eaw==
+Date: Mon, 23 Mar 2026 09:21:22 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Pragnesh Papaniya <pragnesh.papaniya@oss.qualcomm.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	sibi.sankar@oss.qualcomm.com, pankaj.patil@oss.qualcomm.com, rajendra.nayak@oss.qualcomm.com
+Subject: Re: [PATCH] arm64: dts: qcom: glymur: Add glymur BWMONs
+Message-ID: <acFLk7i7FMFBTbQS@baldur>
+References: <20260302-glymur_bwmon_dt-v1-1-f4939d75bd47@oss.qualcomm.com>
+ <fcd9de7f-b65f-4a30-a74b-57bdd690422f@oss.qualcomm.com>
+ <2d6d813b-b2e7-408c-bf58-86d25859bb40@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/15] firmware: qcom: Add a generic PAS service
-To: Sumit Garg <sumit.garg@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
- linux-media@vger.kernel.org, netdev@vger.kernel.org,
- linux-wireless@vger.kernel.org, ath12k@lists.infradead.org,
- linux-remoteproc@vger.kernel.org, andersson@kernel.org,
- konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, robin.clark@oss.qualcomm.com, sean@poorly.run,
- akhilpo@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
- jesszhan0024@gmail.com, marijn.suijten@somainline.org, airlied@gmail.com,
- simona@ffwll.ch, vikash.garodia@oss.qualcomm.com,
- dikshita.agarwal@oss.qualcomm.com, bod@kernel.org, mchehab@kernel.org,
- elder@kernel.org, andrew+netdev@lunn.ch, davem@davemloft.net,
- edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
- jjohnson@kernel.org, mathieu.poirier@linaro.org,
- trilokkumar.soni@oss.qualcomm.com, mukesh.ojha@oss.qualcomm.com,
- pavan.kondeti@oss.qualcomm.com, jorge.ramirez@oss.qualcomm.com,
- tonyh@qti.qualcomm.com, vignesh.viswanathan@oss.qualcomm.com,
- srinivas.kandagatla@oss.qualcomm.com, amirreza.zarrabi@oss.qualcomm.com,
- jens.wiklander@linaro.org, op-tee@lists.trustedfirmware.org,
- apurupa@qti.qualcomm.com, skare@qti.qualcomm.com,
- linux-kernel@vger.kernel.org, Sumit Garg <sumit.garg@oss.qualcomm.com>
-References: <20260312062756.694390-1-sumit.garg@kernel.org>
- <20260312062756.694390-3-sumit.garg@kernel.org>
- <28d63822-f191-400a-8005-5185dd480dbb@kernel.org>
- <acE-kAi2tkPh2qie@sumit-xelite>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <acE-kAi2tkPh2qie@sumit-xelite>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2d6d813b-b2e7-408c-bf58-86d25859bb40@oss.qualcomm.com>
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,lists.freedesktop.org,lists.infradead.org,kernel.org,oss.qualcomm.com,poorly.run,linux.dev,gmail.com,somainline.org,ffwll.ch,lunn.ch,davemloft.net,google.com,redhat.com,linaro.org,qti.qualcomm.com,lists.trustedfirmware.org];
 	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_FROM(0.00)[bounces-99297-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-99298-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_GT_50(0.00)[50];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MISSING_XM_UA(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[12];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev];
-	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: 70A502F4CE8
+X-Rspamd-Queue-Id: 2CDD82F4DFA
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 23/03/2026 14:22, Sumit Garg wrote:
-> On Mon, Mar 16, 2026 at 08:51:16AM +0100, Krzysztof Kozlowski wrote:
->> On 12/03/2026 07:27, Sumit Garg wrote:
->>> From: Sumit Garg <sumit.garg@oss.qualcomm.com>
->>>
->>> Qcom platforms has the legacy of using non-standard SCM calls
->>> splintered over the various kernel drivers. These SCM calls aren't
->>> compliant with the standard SMC calling conventions which is a
->>> prerequisite to enable migration to the FF-A specifications from Arm.
->>>
->>> OP-TEE as an alternative trusted OS to Qualcomm TEE (QTEE) can't
->>> support these non-standard SCM calls. And even for newer architectures
->>> with S-EL2 and Hafnium support, QTEE won't be able to support SCM
->>> calls either with FF-A requirements coming in. And with both OP-TEE
->>> and QTEE drivers well integrated in the TEE subsystem, it makes further
->>> sense to reuse the TEE bus client drivers infrastructure.
->>>
->>> The added benefit of TEE bus infrastructure is that there is support
->>> for discoverable/enumerable services. With that client drivers don't
->>> have to manually invoke a special SCM call to know the service status.
->>>
->>> So enable the generic Peripheral Authentication Service (PAS) provided
->>> by the firmware. It acts as the common layer with different TZ
->>> backends plugged in whether it's an SCM implementation or a proper
->>> TEE bus based PAS service implementation.
->>>
->>> Signed-off-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
->>> ---
->>>  drivers/firmware/qcom/Kconfig          |   8 +
->>>  drivers/firmware/qcom/Makefile         |   1 +
->>>  drivers/firmware/qcom/qcom_pas.c       | 298 +++++++++++++++++++++++++
->>>  drivers/firmware/qcom/qcom_pas.h       |  53 +++++
->>>  include/linux/firmware/qcom/qcom_pas.h |  41 ++++
->>>  5 files changed, 401 insertions(+)
->>>  create mode 100644 drivers/firmware/qcom/qcom_pas.c
->>>  create mode 100644 drivers/firmware/qcom/qcom_pas.h
->>>  create mode 100644 include/linux/firmware/qcom/qcom_pas.h
->>>
->>> diff --git a/drivers/firmware/qcom/Kconfig b/drivers/firmware/qcom/Kconfig
->>> index b477d54b495a..8653639d06db 100644
->>> --- a/drivers/firmware/qcom/Kconfig
->>> +++ b/drivers/firmware/qcom/Kconfig
->>> @@ -6,6 +6,14 @@
->>>  
->>>  menu "Qualcomm firmware drivers"
->>>  
->>> +config QCOM_PAS
->>> +	tristate
->>> +	help
->>> +	  Enable the generic Peripheral Authentication Service (PAS) provided
->>> +	  by the firmware. It acts as the common layer with different TZ
->>> +	  backends plugged in whether it's an SCM implementation or a proper
->>> +	  TEE bus based PAS service implementation.
->>> +
->>>  config QCOM_SCM
->>>  	select QCOM_TZMEM
->>>  	tristate
->>> diff --git a/drivers/firmware/qcom/Makefile b/drivers/firmware/qcom/Makefile
->>> index 0be40a1abc13..dc5ab45f906a 100644
->>> --- a/drivers/firmware/qcom/Makefile
->>> +++ b/drivers/firmware/qcom/Makefile
->>> @@ -8,3 +8,4 @@ qcom-scm-objs += qcom_scm.o qcom_scm-smc.o qcom_scm-legacy.o
->>>  obj-$(CONFIG_QCOM_TZMEM)	+= qcom_tzmem.o
->>>  obj-$(CONFIG_QCOM_QSEECOM)	+= qcom_qseecom.o
->>>  obj-$(CONFIG_QCOM_QSEECOM_UEFISECAPP) += qcom_qseecom_uefisecapp.o
->>> +obj-$(CONFIG_QCOM_PAS)		+= qcom_pas.o
->>> diff --git a/drivers/firmware/qcom/qcom_pas.c b/drivers/firmware/qcom/qcom_pas.c
->>> new file mode 100644
->>> index 000000000000..beb1bae55546
->>> --- /dev/null
->>> +++ b/drivers/firmware/qcom/qcom_pas.c
->>> @@ -0,0 +1,298 @@
->>> +// SPDX-License-Identifier: GPL-2.0
->>> +/*
->>> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
->>> + */
->>> +
->>> +#include <linux/device/devres.h>
->>> +#include <linux/firmware/qcom/qcom_pas.h>
->>> +#include <linux/kernel.h>
->>> +#include <linux/module.h>
->>> +
->>> +#include "qcom_pas.h"
->>> +
->>> +struct qcom_pas_ops *ops_ptr;
->>
->> Same comment as before. Don't create singletons. And for sure not global
->> ones.
+On Tue, Mar 03, 2026 at 05:52:53PM +0530, Pragnesh Papaniya wrote:
 > 
-> This pattern has been carried from the PAS API contract among kernel
-> clients and the SCM PAS service earlier. The clients don't hold a
-> reference to the PAS data like underlying platform or TEE device etc.
-> Hence the need to have a global data pointer to hold reference to the
-> ops data structure registered by drivers having different lifetime of
-> devices. Also, the PAS APIs can be called from very different client
-> driver contexts.
 > 
-> Surely, avoiding global data is always better given a better alternative
-> is there. Do you have any better alternative proposal here?
+> On 3/2/2026 6:27 PM, Konrad Dybcio wrote:
+> > On 3/2/26 12:46 PM, Pragnesh Papaniya wrote:
+> >> Add the CPU BWMON nodes for glymur SoCs.
+> >>
+> >> Co-developed-by: Sibi Sankar <sibi.sankar@oss.qualcomm.com>
+> >> Signed-off-by: Sibi Sankar <sibi.sankar@oss.qualcomm.com>
+> >> Signed-off-by: Pragnesh Papaniya <pragnesh.papaniya@oss.qualcomm.com>
+> >> ---
+> >>  arch/arm64/boot/dts/qcom/glymur.dtsi | 87 ++++++++++++++++++++++++++++++++++++
+> >>  1 file changed, 87 insertions(+)
+> >>
+> >> diff --git a/arch/arm64/boot/dts/qcom/glymur.dtsi b/arch/arm64/boot/dts/qcom/glymur.dtsi
+> >> index e269cec7942c..fd947b1a17dd 100644
+> >> --- a/arch/arm64/boot/dts/qcom/glymur.dtsi
+> >> +++ b/arch/arm64/boot/dts/qcom/glymur.dtsi
+> >> @@ -2264,6 +2264,93 @@ &config_noc SLAVE_QUP_0 QCOM_ICC_TAG_ALWAYS>,
+> >>  			};
+> >>  		};
+> >>  
+> >> +		/* cluster0 */
+> >> +		bwmon_cluster0: pmu@100c400 {
+> >> +			compatible = "qcom,glymur-cpu-bwmon", "qcom,sdm845-bwmon";
+> >> +			reg = <0x0 0x0100c400 0x0 0x600>;
+> >> +
+> >> +			interrupts = <GIC_SPI 903 IRQ_TYPE_LEVEL_HIGH>;
+> >> +
+> >> +			interconnects = <&hsc_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
+> >> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ACTIVE_ONLY>;
+> >> +
+> >> +			operating-points-v2 = <&cpu_bwmon_opp_table>;
+> >> +
+> >> +			cpu_bwmon_opp_table: opp-table {
+> >> +				compatible = "operating-points-v2";
+> >> +
+> >> +				opp-0 {
+> >> +					opp-peak-kBps = <800000>;
+> >> +				};
+> > 
+> > Can these values remain unchanged vs hamoa? Glymur has more memory
+> > channels (as reflected in the icc driver) so the values send to rpmh
+> > will be a third lower
+> > 
+> > Similarly, hamoa has roughly the same values as kona, which has half
+> > the channels
+> > 
+> > Konrad
+> opp-peak-kBps is proportional to bus_width and is calculated as follows:
+>  
+> opp-peak-kBps = (Hz * node_bus_width)/ 1000
+>  
+> All the existing targets do the same, since bcm_aggregate() in 
+> bcm-voter.c divides max_peak with buswidth.
+> 
 
-Why it cannot be part of the context?
+So if we make the bus 100x wider, we still have/want/get the same MB/s
+throughput?
 
-Look at your API, e.g.:
-qcom_pas_init_image(). It takes struct qcom_pas_context which should
-contain the ops.
+Regards,
+Bjorn
 
-Best regards,
-Krzysztof
+> -Pragnesh
 
