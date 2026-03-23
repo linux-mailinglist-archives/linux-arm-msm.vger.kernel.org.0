@@ -1,221 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-99303-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99304-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iJlrIm1TwWkYSQQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99303-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 15:51:25 +0100
+	id SBzxMY5lwWlESwQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99304-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 17:08:46 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 219162F54F2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 15:51:25 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4EDB32F79D8
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 17:08:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 6146930333C6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 14:29:49 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 8C9C030FBEAF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 14:30:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB3693AD513;
-	Mon, 23 Mar 2026 14:29:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E3393AD525;
+	Mon, 23 Mar 2026 14:30:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EarLjfEg"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Lb8LHQlb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E624A3ACEED
-	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2026 14:29:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.218.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774276188; cv=pass; b=qYFG7RFyJpBReLbhxHPQtABdfQN7AV0Ziz6E7OzvS/hfIds7b+s5or5XoG9q1VT3unu61/t9F6d0r9/BqzEjejVU4zlFOcTZjxkJjVkp0a0I+AMC6VWRYFZjIkjQNuGNS6tJ5E12owqLbeOxtgoKStoKpAUZfUkU4h3WDlcw7sI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774276188; c=relaxed/simple;
-	bh=+on5q4N8SL0w5EOH9rEDfmQSu2nzNibcQeALQEa6kg4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pJJ1VDW6dwSU5enXChIL+YnHjeI6Vwf8iukaR63KdFS0w3mEJlQvVO4jrAzzAhbTYcdgRz65xi+LSuXhpVHxV7S4DR2UfXRu4oQI+KX9H9TKhg6fVDc+apkFZ0E4bJb7NjZsHMMcX787cpccpcQn4UPyOUgg5P6izc9/WtjczDk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EarLjfEg; arc=pass smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B02D33ACF03
+	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2026 14:30:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774276202; cv=none; b=RXoR0n/oBW7YExNaCJJ8mAwRI/2phOK5VcXp1vTby1OCTXKpSfTAlvbrEFxOhP8AoOwLvPZBFjauEAjYOyZsjSgawvlLQEpEi/e8t0b8hGf4Iv99G3AX+qm+6zdbnEH9NPGa46BpszliVxKKOwxART6Yo224PDNiZaF6/llbXBc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774276202; c=relaxed/simple;
+	bh=L9ELsUTCwMNy2+pfr3ESCvpylSNoN2JspHLhkSAs054=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Kk/vbmXWp1kMJdpxd4zN9JA6k5hLDnrh15l+F2tCWHV1CwMClVqurGEqhAef4OdNmchHWaUUUMzWvUM9lIPPNMYdm8AvDG+gkh6rybsGdxRD6TolL3SgvbbZ4nfJAYZ4O9P98qbt9wbkcfwKb2mJM/zg1OEPFaCUihPOrJqEbDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Lb8LHQlb; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-b980785a0bfso36481566b.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2026 07:29:46 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774276185; cv=none;
-        d=google.com; s=arc-20240605;
-        b=brGLPxUhPkoo0gdLVxnbNNelRkSN5846Hy6oTPRh898V9DXbV7XLwbOfRru5TABEvG
-         ySQIsRNwSXswdHlOsHeFwN55PxO4k5uuD3YIV0rp/wDpG9mwGuUG40nsIQk2ohbi8EsT
-         tuOTqXVo8YiYsmMb0NybeNMF7KReUR7OGa7psDyP+iXMLTtLG/beaI5WqsHa40fUgNup
-         ziJlgv/U2DEe4GniaaBr33I2+15uV4bBvM1YOPIsNdlz6foKb7GWIMcQrQGMWPxZFCvY
-         nNJ2OZfWeHDZ4ipxmF1bF//5Nm8HDz98isq4A2Fr40r0i8ZuLYpIQ0wKqJucF6xPmzjp
-         JpHQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=HJ90V3WnYMZ+Bz1s0rTfRxBxtHCI8HjCYpnHgbscmPs=;
-        fh=CcS/0Omoh6EbvC8PEN3S+KTgD2eRf7omGiwgWTSWbNY=;
-        b=B8ItGe8eF0O5RGytWuNXIbTIQXfv607qgaj5hqC8B3/DhJz0oez1l8aeu8ZEWjM7Gy
-         ekHgqpuQG0RGyhsnNWeCYqUczbo2otRfkLTGbPKiDrTZ+A+8pl/MU4e3oaiUcvHyfYfZ
-         m+u4X20n/WHkg6VyBxRDvwtkvXeWu2eqGjodgRXGyBW1GlAdCQdP6Iiw4tnTAEG2aacH
-         xON0aHg1E+9QjbuBVCqEIyFbDcQaEANz/mxpH3IizgtNpZb5jt5Kcq9qgA7NTz71QDH9
-         xZNLs5Gk/LsEaiDYo9qe+gd3RWx1b1mka7cXbOPAwpTn8/YmOjl8J15x9FUW/Ml/JB/L
-         hiKg==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-4852e9ca034so27209565e9.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2026 07:30:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1774276185; x=1774880985; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=HJ90V3WnYMZ+Bz1s0rTfRxBxtHCI8HjCYpnHgbscmPs=;
-        b=EarLjfEgA8q0L+mwlFDSb/Jsya1AqkRGVOEPLdSMAJ77MX5lxnxT+QRFA0oAznGfEF
-         2nN+mUJ0plLWWYiAPW/X1kXuZKOVozD0xKj2u2YsNGCv0YXdcpgmH3G00mjovvMWi1u+
-         /AxLT5kjY7lPXfaIQ/4EbEPfCluifk1XH3imnJFze0Ftux+Ji82Nxqsb8txMGrYfFaTT
-         93M5cbt8/BlNKpA2GbQ09bmrdbHGNBbSE+SKiH5g2ai09kT60GSOlzA7KnUI02sydvxx
-         yJ75R0Og09ge7PwUlcRLj5WxOb470X98xhzXrScpCjYJmg7vW8Xl8LaVKgYzEi0ZyGyf
-         w/mA==
+        d=linaro.org; s=google; t=1774276199; x=1774880999; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UWptjvE5w87hMNihQLfqZsM0Pn6ChnKPjJO5RmlXBPI=;
+        b=Lb8LHQlbKCo8jnCkYk0SS4Sk8py8AGYKtQSSS8x/8BzBxO+yznjbRN4EE+Oqp597r/
+         fPdxnn3QwpnDC+626DI0u33YaFEe3IL9ZsE81A2HnNGjXUKZ764Q+YtDMg4YRCwnchm1
+         5I9e6+S0g6WHKTw8tsfPSYm94spwnD+sNmp+dCs1Do81gZmJ7rd2sNOAV8WH6/jxd6Vo
+         0ALUlJxM2V0VNCYnXsdg46wcmVIQE2Dc3/GrDNjmbEMuL/qeiMkxIPHR6CiIcKfIgOiz
+         VsDIVaQEGPoS80YsgNWPhRnttJY0EInETY5bbl0+CyfKOdH3MdVEbMYP4xalRS0ZPFKi
+         6nZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774276185; x=1774880985;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HJ90V3WnYMZ+Bz1s0rTfRxBxtHCI8HjCYpnHgbscmPs=;
-        b=q0JxaVx4WW5uqi5rDbagwE0e2ER3PQERr9yMNiCcTER5UvwLeyejDk/2rUJt45FrSA
-         lqJ8wCrm+4kRy7pRvHawCpBpwQ2Id7KDyGzgO+EYX8PTSjFbp2mJhQ/7qT2TkZfyJWXL
-         Uw/H8QmFT/9fLgwalPgv1pGn1GAUtj4DGNLTpIuzAasG45L0qMjdjrFVY0Gv0Cmfzvo3
-         BG/OS80jrc2DBV7rna2gxFxUbryGZiEoBE5DkSa49TvtG2Fb4wIm0MymH+EaWfbuKq39
-         xnxE5ofkedppC4h/O6JQ0EcWYVA21Z+X6njIZVoWJ29uxCfFHjEm7UI4rhajblF+DYEo
-         1ZLw==
-X-Forwarded-Encrypted: i=1; AJvYcCWcD1K1oMKorRc0S7JMlZMBnCjB9PGDlS5EK9GbO/BzQz0CQ/ARSY2NsZFlDbZnOFEQXkOdMZH2imCshvbN@vger.kernel.org
-X-Gm-Message-State: AOJu0YyO4gBQzDPz0d3gRYfkTmVg2zx8EnKdjTQ/zYslwvepxDxE3D2/
-	GSzscbcMvyFaRYWZlYqPkOMT0Ycto/fXuR2CyZpMT6RW84XYTQn8S1DqZr0JsI1vIx4dtYGYi61
-	/3D+U8swe5PErz9xSHyFVnEWTjxuGRwJsMfVH8GxRzA==
-X-Gm-Gg: ATEYQzxqHL123ZQyGdFzKTmsn3MpyXIeQXVVnJdkQoHDR7l6clfmy6aPrVGjk9voxpD
-	Pvs4LidVTBtX5Y7bUE0CFkrmRTCin7qL5MTQxz2OfQ9FbnM7uRDmaTToQd538gipfjZu80EcKDs
-	pC55lnTPSQTngrfp2S3f7FzntME1SLcATLcT5rVwvZqPa5esUSnRr0WOy/8TO6WY5Mg/Rs6djeR
-	0ep/wGnc95dOocYMNOrtltPndpb25scXf5//J4dRProd11CHvIjYJvZyDFIKtpK9RFe6Ur0DRLA
-	ZkQU+ADsoqwQdjYlahJhsWbGw4AOCmQtZQT8oWmUxQ==
-X-Received: by 2002:a17:907:a18b:b0:b98:2b20:6680 with SMTP id
- a640c23a62f3a-b982ee95138mr577158566b.0.1774276185012; Mon, 23 Mar 2026
- 07:29:45 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1774276199; x=1774880999;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=UWptjvE5w87hMNihQLfqZsM0Pn6ChnKPjJO5RmlXBPI=;
+        b=Qf1r86dTFbJOI2i7INz1+7/bZxTYD8GRMITjRlGVbyv+Z4XntxwdzuRq/9lqAsPMug
+         aSYWUbXduN8cVKaiwNV/ot5RvABQvdQE8p+FUyv0rCaPkjZsp3t1I530y3+TxbJ/TfOX
+         7h8zXSde/BWMMpR7EuLZISYtniWCEP745sVBSOltoRR2/4/32vlIFjCzL0BcR44M0uYG
+         j+4cE26e7pE4rt80ngf8h+qaBD1fPkCBUNAD74pfQa31Vo1cHgNSt0z/FRFPRoxwKcpM
+         6E7cVN8FTpLf90ezZHm6CFY6si1z5f2vt1remx9FzugmMfDdzbFz+8eNDGMHY/9Xfxms
+         v6iw==
+X-Forwarded-Encrypted: i=1; AJvYcCV6PuOf9i7xupaIzC6VluzRVxscJvtwoLVbebQBTxBhkcFJi2VQRuLD4XDViV4dZkchdAkU6WeJc374TIqR@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxv7cevzXf0Rvd2yfxY2UlpDM8ssfz7xG+i0G1f9Euv+esnw/EK
+	5cFj4e1GdZm3AU8uwFsS9pErL0/9jbzgS4b/Od2lPMcMGaw5HjH4w4HgQDKSm01eVWQ=
+X-Gm-Gg: ATEYQzynBMlAEojZP9P7WVjcFHeNiX2elm68W2ESicJiyht9CmbLijxBNIrS1LzFzJ/
+	d4X+HtOjTUrFkCI0bdo8YYQzfAzqDFHyvgEPiyboEMDAPAyZySxPBFsLOLKymJMerS+fyWKXw3r
+	Yoz1ic7IjUwU/rJlZvUfO8k/Vnzo/QgQui9SZR6OMG3hDJeZ67JwwC5X2BxlefAwztmiL8yvO2b
+	nLe55yhNkRpnVrsnjle3Qzg/GHzFFfBI5sresDm91vQCYk6c6IrdF/jOcYufYSx5VqLLzif0H52
+	QfIMqKtdbb7pwDVHUag66nvwse0gSONWlajKEOwCe0jizo/4BCRlexkEP4lEqnqZl+eNYhsX6fB
+	LyuHLseMqURb7l7v2mTPxDQ1EBK0uOgG2xFG3A/jHdkW35hgS8Ca5855pFAez4M5+j65HDxf7mL
+	yjfIj92UyC9f+Jr1Ioe8QOgxGBfspJAzhSP4ZY
+X-Received: by 2002:a05:600c:698e:b0:486:f4d2:eac6 with SMTP id 5b1f17b1804b1-486fedd80c9mr156967985e9.13.1774276198953;
+        Mon, 23 Mar 2026 07:29:58 -0700 (PDT)
+Received: from [192.168.0.167] ([109.76.102.198])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-486fe967c64sm280452265e9.2.2026.03.23.07.29.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Mar 2026 07:29:58 -0700 (PDT)
+Message-ID: <8acb3888-0ef8-440a-a680-14478bba3ed1@linaro.org>
+Date: Mon, 23 Mar 2026 14:29:56 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260317-rpmsg-send-const-v3-0-4d7fd27f037f@oss.qualcomm.com>
-In-Reply-To: <20260317-rpmsg-send-const-v3-0-4d7fd27f037f@oss.qualcomm.com>
-From: Mathieu Poirier <mathieu.poirier@linaro.org>
-Date: Mon, 23 Mar 2026 08:29:33 -0600
-X-Gm-Features: AQROBzDAtL1nQ4PFq47to0a6JE1kiVHOZBw70rBZKtJtzPk95r669W13VmBQzzg
-Message-ID: <CANLsYkxVRDd941sVq9rdn_O0eDbDcVctPpKTACVi5vfYhzgYKQ@mail.gmail.com>
-Subject: Re: [PATCH v3 0/5] ASoC / rpmsg / remoteproc / soc: qcom: Constify
- buffer passed to send functions
-To: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
-	Srinivas Kandagatla <srini@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
-	Mauro Carvalho Chehab <mchehab@kernel.org>, linux-remoteproc@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
-	linux-sound@vger.kernel.org, linux-media@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/2] dt-bindings: phy: qcom: Add CSI2 C-PHY/DPHY schema
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Vijay Kumar Tumati <vijay.tumati@oss.qualcomm.com>,
+ Bryan O'Donoghue <bod@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20260315-x1e-csi2-phy-v4-0-90c09203888d@linaro.org>
+ <20260315-x1e-csi2-phy-v4-1-90c09203888d@linaro.org>
+ <3VqSGUgMUKaCja5WYOrOP8nJ_mw_eDPdItA8d1CvqUg4ASPS5IUc_aT2E-XIo0YmnYo8QltXVw8_6NDxtdqGGw==@protonmail.internalid>
+ <5705b48a-fc24-4c5f-aa6d-40952f0070d9@oss.qualcomm.com>
+ <edf766b8-2664-4dac-b626-551807b3e5ef@kernel.org>
+ <4afceefe-8053-4c10-8595-39dab9379aab@oss.qualcomm.com>
+ <4b1b5b79-df37-499e-99c4-1a965a9b2455@oss.qualcomm.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Content-Language: en-US
+In-Reply-To: <4b1b5b79-df37-499e-99c4-1a965a9b2455@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spamd-Result: default: False [-2.16 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-99303-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	TAGGED_FROM(0.00)[bounces-99304-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FREEMAIL_CC(0.00)[kernel.org,gmail.com,collabora.com,perex.cz,suse.com,vger.kernel.org,lists.infradead.org];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[18];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mathieu.poirier@linaro.org,linux-arm-msm@vger.kernel.org];
+	RCVD_TLS_LAST(0.00)[];
 	DKIM_TRACE(0.00)[linaro.org:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: 219162F54F2
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,linaro.org:dkim,linaro.org:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 4EDB32F79D8
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Tue, 17 Mar 2026 at 06:37, Krzysztof Kozlowski
-<krzysztof.kozlowski@oss.qualcomm.com> wrote:
->
-> This got acks from Mathieu (remoteproc) and Mark (audio), so can we
-> funnel everything via Qualcomm remoteproc tree?
->
+On 23/03/2026 14:22, Konrad Dybcio wrote:
+>> Sure, FYI: Dmitry, Konrad.
+> I'll admit I haven't yet read up on all of the background discussions that you
+> guys had on LKML, but*if* we're going to put the PHY under camss, the GDSC and
+> CPAS_AHB/CAMNOC_AXI_RT references should be unnecessary, given they're not
+> related strictly to this PHY itself, rather it sitting in a specific corner of
+> the subsystem that needs them to be active (see related:
+> https://lore.kernel.org/linux-arm-msm/cb2430f2-8601-4c72- 
+> af6b-10f1ff16c188@oss.qualcomm.com/
+> )
 
-I'm good with that.
+That's fair comment with the PHYs inside of the CAMSS block. Obviously 
+if its outside of the block we need the full gamut of clocks defined.
 
-> Dependencies / merging
-> ======================
-> Entire patchset is one logical chain, all further patches depend on
-> previous ones, thus everything should be taken via same tree or shared
-> between trees with tags.  Probably everything should go via ASoC with
-> necessary acks.
->
-> Changes in v3:
-> - Subject fixes (Angelo)
-> - Tags
-> - Link to v2: https://patch.msgid.link/20260310-rpmsg-send-const-v2-0-0e94c5db9bf4@oss.qualcomm.com
->
-> Changes in v2:
-> - New patch #5: media: platform: mtk-mdp3: Constify buffer passed to mdp_vpu_sendmsg()
-> - Rebase, add acks.
-> - Link to v1: https://patch.msgid.link/20251130-rpmsg-send-const-v1-0-cb11c7e0a024@oss.qualcomm.com
->
-> Description
-> ===========
-> The remoteproc and rpmsg send-like functions should not modify data
-> being sent, so buffer should be marked as pointer to const.  This is not
-> only self-documenting code but actually increases the actual safety and
-> clearly documents who is the owner of passed buffer.
->
-> Best regards,
-> Krzysztof
->
-> ---
-> Krzysztof Kozlowski (5):
->       remoteproc: mtk_scp_ipi: Constify buffer passed to scp_ipi_send()
->       remoteproc: mtk_scp: Constify buffer passed to scp_send_ipi()
->       rpmsg: Constify buffer passed to send API
->       ASoC: qcom:: Constify GPR packet being send over GPR interface
->       media: platform: mtk-mdp3: Constify buffer passed to mdp_vpu_sendmsg()
->
->  .../media/platform/mediatek/mdp3/mtk-mdp3-vpu.c    |  2 +-
->  drivers/remoteproc/mtk_scp.c                       |  2 +-
->  drivers/remoteproc/mtk_scp_ipi.c                   |  2 +-
->  drivers/rpmsg/mtk_rpmsg.c                          |  4 ++--
->  drivers/rpmsg/qcom_glink_native.c                  | 13 +++++++-----
->  drivers/rpmsg/qcom_smd.c                           | 10 +++++----
->  drivers/rpmsg/rpmsg_core.c                         |  8 ++++----
->  drivers/rpmsg/rpmsg_internal.h                     |  8 ++++----
->  drivers/rpmsg/virtio_rpmsg_bus.c                   | 24 ++++++++++++----------
->  drivers/soc/qcom/apr.c                             |  8 ++++----
->  include/linux/remoteproc/mtk_scp.h                 |  2 +-
->  include/linux/rpmsg.h                              | 17 +++++++--------
->  include/linux/rpmsg/mtk_rpmsg.h                    |  2 +-
->  include/linux/soc/qcom/apr.h                       |  4 ++--
->  sound/soc/qcom/qdsp6/audioreach.c                  |  6 +++---
->  sound/soc/qcom/qdsp6/audioreach.h                  |  4 ++--
->  sound/soc/qcom/qdsp6/q6apm.c                       |  3 ++-
->  sound/soc/qcom/qdsp6/q6apm.h                       |  2 +-
->  18 files changed, 65 insertions(+), 56 deletions(-)
-> ---
-> base-commit: 2360a9a195d2eae6f7d0cac2cbe920ae8a06c54f
-> change-id: 20251130-rpmsg-send-const-ae216a1fbd8f
->
-> Best regards,
-> --
-> Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
->
+..
+
+Yeah I think I'm happy enough to drop these predicated on sub-nodes.
+
+> For the other names, I*think* we won't need to rely on them (i.e. only operate
+> the resources through PHY APIs from the V4L2 driver) and can come up with new
+> ones. And hence I think we can turn "csiphy" to "core" and "csiphy_timer" to
+> "timer" (because we really don't need to repeat the csiphy_ prefix)
+
+Works for me.
+
+---
+bod
 
