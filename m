@@ -1,245 +1,242 @@
-Return-Path: <linux-arm-msm+bounces-99345-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99346-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8GJBG6BvwWnmTAQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99345-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 17:51:44 +0100
+	id wIXOIvxxwWkQTQQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99346-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 18:01:48 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id EE6542F8EF5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 17:51:43 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D37512F94F6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 18:01:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 63A4B30D3942
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 16:08:16 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 109D830C005B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 16:10:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E0BA3491C7;
-	Mon, 23 Mar 2026 16:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 642753B2FF5;
+	Mon, 23 Mar 2026 16:10:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="YR/oE/DY";
-	dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b="Zp8+J9CK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NvwXyc4S"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339FF253932
-	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2026 16:08:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=170.10.129.124
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282090; cv=pass; b=JUsE09EigkLwjTMqscniBq/upmmRCVDy3uY9Oi0+Q8mEiJE5SmBFW9XnkXBuc1QHmvoBiD4uiVV3h3B0Q6rf2VvEoA3uWBKgQgMWnKXH0JLcWXaeIwULdYRtzmV8V698pYaSFDDQzTKDh88rCwJlzVcFZtpRNi0Bnls3bOrGhe8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282090; c=relaxed/simple;
-	bh=iKHq+WQ5shR1PuWWlRfHcjvkyXm7PwO1wqXAron3psY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=P2/FWBMM13xBCBlbSdM42M93TD30Yc4ET8jX3dS7dgtbz+5ZyCaYPQHhdrOUVp2bzDGXG+RFikbWa4KwcLmGPrILNv8jH51/ygnHfi6KD2rmlAPJ0kXdweGb+Bf6c+v9h+rBeIC1Rndl0/zsNIDyqtXd8aI0LgCPVOIGk33jwI0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=YR/oE/DY; dkim=pass (2048-bit key) header.d=redhat.com header.i=@redhat.com header.b=Zp8+J9CK; arc=pass smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1774282081;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=OlpYSn4iu4HLAmc0XU2T1L/rpeJuBDganTKgWCdzs8w=;
-	b=YR/oE/DYFeDes7++DJLbaPIbYGAT52DR5X8b0Egg6g/8kG2luUAJLVQ7zl+/fmN5ZV6LbS
-	rOHsqC/4hIlo2ZOZnKgPYTznY/O8BZiUDYMyq1ta6e0HqZ6VUPwLUPoDNcbuVRh3hPGneY
-	tBXTFcOaiYlgScGrO2WVBhCUZbY+Of4=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-263-MD6cHavXPxy0tL2QIxgzOw-1; Mon, 23 Mar 2026 12:08:00 -0400
-X-MC-Unique: MD6cHavXPxy0tL2QIxgzOw-1
-X-Mimecast-MFC-AGG-ID: MD6cHavXPxy0tL2QIxgzOw_1774282079
-Received: by mail-ej1-f70.google.com with SMTP id a640c23a62f3a-b90484c398cso360173066b.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2026 09:08:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774282079; cv=none;
-        d=google.com; s=arc-20240605;
-        b=bWNL9KBlY2k7LVbvzdzqoQs6nIl6YpHfXune5bvVkavqkvakXCXi7tIbESg7U6Ahnh
-         z76uthTJ2ytNiskPUW+x6b/wwoNbdm3zVTb/iz6lRkGN1Zq4H7/H0BpMoFz1dEmUnhNZ
-         YmuuiU/7f5+By0skMSvGbvDa9Kkn0qwj+/hE1nxkA5mEAEcahLnB9UA9YsTMXY21Yxkh
-         El4AMJRlNOAiyll+sWVEc2q9E2GxbtGEAgz8MvP+sq3gQrrkTm9J8jozF9pK91QKF+6l
-         zQiQiAB3gilo3OjZBK1E4ZVSKv7rk7mdvzs4z+S9Q4w+cwKGq0/Ue2lbzirXCOOs4FRS
-         Orbw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=OlpYSn4iu4HLAmc0XU2T1L/rpeJuBDganTKgWCdzs8w=;
-        fh=LfxAcmtwSfttO2a7mSDNQ6waFGWuoGYRCLHxqTRYY3Q=;
-        b=Tu7Q1PyZyPCZLraWNPpPSZKvTCn84joSDhr1aVwcXTmsO+sqIZSX6JIJDnx5GYHP0I
-         Xi+/fgCR2NNi3Q0xKavByuSA7MjZLXZyRCYcfslM2h8/F+EB6myrdXodWHy1eBWGIXjn
-         KCI65CZcp0mGG12o7rFNln+UU8jk827BovB4uz4iu8gqu6i4ET7mApwUEOLs/b5d/lqj
-         tk9cxb8odOnOOVRTfJnKvpSgusenUC5AiuW4r/MGIUtkrRuDnXP7ZRCkPMCxTy3DAQpn
-         xukLD5Gai+rWwvuc7g3Y8NMzUh92L8tW6YnCsBhfDdl7LmkdjbK7BYrS1SroVRx9Ho0q
-         g19g==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=redhat.com; s=google; t=1774282079; x=1774886879; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OlpYSn4iu4HLAmc0XU2T1L/rpeJuBDganTKgWCdzs8w=;
-        b=Zp8+J9CKiaNKxIvDN1scLhWcTxcnl1bi8ny4CK7U9tG/J00bMJRDKpNtvGCI93+Zcq
-         RpoHv7qTRzohDRZRJXl4h5cax1d0vbWHLo7bXgnyIHM7+ydY0CKs7SVQa8apyxgXSQR6
-         T6tXfUpjD7q5cnEedUtgkNhyloeDOWFRshFhkALW4TQsluSRtoQlXudYRY6oc0eaNb2s
-         +ZZ2Qu+rcjRHy3TuLBySBHTMQ2qyV2NxVbJVEleEorvuKH4a4Cksr15z5yv3XU3O1oO2
-         TsE7b40ZkezgC3pC9HVLsdjwlUImPJiOj7Oah86Kh0zCYpVk7hzM9SdGeeM7c0Run5Sx
-         JQdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774282079; x=1774886879;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=OlpYSn4iu4HLAmc0XU2T1L/rpeJuBDganTKgWCdzs8w=;
-        b=IBVZNDThY/gwqP1B0cxKesde2PSQjZgfQdbn4TMdUALoGwgOgFAe8rNVtWvVFiua3E
-         aHIdCgbhJMXeVTR5G+KyKkDvQnRMW2nK0q0iHInXwWZ9CK15Lqui1c+RIdcBXalLrRsN
-         lbKMv3U6YAJSwyGLqSl5sg71A1J/h0rYJhCpEqwWdy7DdEU2gR7kWI8Oc7KZVU4OC2qx
-         yiIlNoT8dGBh2iaTV73i9fe7qYP56Of8MGdQDRSdVzIhGAWCRU5CS4SbzTE8t5+9M4Tr
-         fUOPrukwFsmCKn+8C0kEB4pQtebWnE95Y/UoW48vXVUZe0UpE8tYHuMc5uqpMUte7zol
-         Zdfg==
-X-Forwarded-Encrypted: i=1; AJvYcCVBDRkV8Lat3uayW6/qsm7dicUX0y5rQaK3GWGnk7R09RvAGlA0OX6MtLyNAdE8WsY33HHlbbRBtKc3oBk+@vger.kernel.org
-X-Gm-Message-State: AOJu0YyPsT6iKjkPKZcimvhaBROsLIrHiyW+pCHvwMibE61dxreeXJwt
-	KFqSYWxTdA5Qsh0cUgPkcCFNz1Sdasqjk9YtAZokHDk5L4GLXqBWqTfsPEJ+z+iG8urAJs8IH7I
-	kW5Ta9T4TVxdDo/0TrokSyxaAw2Iyc+7DiHIn813EO3c0fJLrCgFnEMJV4owqHfcRjKDD+RRIGu
-	eHvad8kt8Dcqxh0a8j3IdTQUqpN0PEvbMmXOYXy/vUZA==
-X-Gm-Gg: ATEYQzy2Is/e0BVLkJBmyqcn7jWcJ2rAI/48fr7Afz5SP2OX4ZzkDcJbw8J+gK6qnE9
-	ehdodfMMLKUn7wTl0hHvtps0beLCNihstDq1h/INyt39q0eFhShUtnLRxd43ZiLvUoe5ksk0dQV
-	stdESy3jr8rwnwPSMWBF1/Q9mj4J2272vikPGXXQwL0yjyYP7JmwG8nH38JDS48I6AflT/nPYcm
-	dXFiQ==
-X-Received: by 2002:a17:907:2d22:b0:b98:4abb:cc49 with SMTP id a640c23a62f3a-b984abbd83cmr576686466b.5.1774282078847;
-        Mon, 23 Mar 2026 09:07:58 -0700 (PDT)
-X-Received: by 2002:a17:907:2d22:b0:b98:4abb:cc49 with SMTP id
- a640c23a62f3a-b984abbd83cmr576684466b.5.1774282078277; Mon, 23 Mar 2026
- 09:07:58 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC543B19AF;
+	Mon, 23 Mar 2026 16:10:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774282221; cv=none; b=JegIF1Sa6BAtn/f5dzo6uZ+zTusSDS4thT2ynhxWdAv0r1t90RAfZ2RoMgEkYb0V3SHcxWbE41C4ZohoHUMvKig8rLGVWa4m6gTJqDZeed8KuokdGrBaysR4M8529FNgeNOy8+FeKRWCjFym0F8y1sfxPSDjmPn+4HKwGlAdskc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774282221; c=relaxed/simple;
+	bh=VsUdHqlhlUvKyc0L42d22zQZPq5fA8QvNwLkufbeD1c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=P/2nj8wAiZWI6m9RPjdgR81HP27zaFjTwdNrdMm+KxbX4pRg2HfdAg1sZ3saaKmcZ6hDcHBsMtshEKnVlZ1bNC8+JKKlZ+irxntmr/ajDudcAwa4IuRA7Om/PdEzah1ohdv2Mr86if4uR62VXV2ZfMw0F304c59oHjWg3YkDvXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NvwXyc4S; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7B58C4CEF7;
+	Mon, 23 Mar 2026 16:10:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1774282220;
+	bh=VsUdHqlhlUvKyc0L42d22zQZPq5fA8QvNwLkufbeD1c=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=NvwXyc4SAjEhAiKz0fyLNIoXMjAq9f8xSn9n6quSTymEUZHI/zNPV4zBufs6qus4b
+	 INXCXaqdZF4gVbyFy353rpJRYyU4ssJEz/YuWpnQQhBCyxttjo+17dRCcOsQH1Iv3s
+	 z5p/NbDUdWkdI2hNI4WjXAV7DsiKGLjwW76xXo/D9FafW2AZa+qeR4Jak37GPR2+ue
+	 GHY9izFAlZkqdoDeTxjVJ26xKhrtUbL67JX6TmE6p0nemDW3f2FWy4ayn7GrNh6T0e
+	 yMnBFLRgNSDFNfKRNEWWxGo/4vdmO56gELXngeZEJiFpyzbyRpXMLOnPk/XHi1iZRq
+	 Y99CjmVdq9Wng==
+Message-ID: <478a3bbf-ea44-4bc4-a841-f7f0eba1d963@kernel.org>
+Date: Mon, 23 Mar 2026 17:10:13 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260303115550.9279-1-mitltlatltl@gmail.com> <d2cdaa7e-1a17-4e6b-879d-266844958410@oss.qualcomm.com>
- <aahGtIkxtNPeeWKc@redhat.com> <CAH2e8h5oHvaADPgE_GdPQsWrU00XUT1d0ktbE25ztMeBEE51Yw@mail.gmail.com>
- <CABx5tqJ_spoZrhX7n91rTOaMcp1G_n8jB5aJV-rNbSPYZBZxEA@mail.gmail.com>
- <abRBT4niX2CB9XVR@redhat.com> <22a469ef-0a25-48f6-bdc7-95ae5541e834@oss.qualcomm.com>
-In-Reply-To: <22a469ef-0a25-48f6-bdc7-95ae5541e834@oss.qualcomm.com>
-From: Brian Masney <bmasney@redhat.com>
-Date: Mon, 23 Mar 2026 12:07:46 -0400
-X-Gm-Features: AaiRm52Fb_ecUHD2iOtrqixZEdn0xZt7-HVJ3bLxAUlwoeK0LemmZuTmskYK78g
-Message-ID: <CABx5tqK3MymYQZ4owofnzFLnjt+96njw5RG2Vwxo7UJ93A-42g@mail.gmail.com>
-Subject: Re: [PATCH] clk: qcom: dispcc-sc8280xp: remove CLK_SET_RATE_PARENT
- from byte_div_clk_src dividers
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Pengyu Luo <mitltlatltl@gmail.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	White Lewis <liu224806@gmail.com>, Maxime Ripard <mripard@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 1/3] dt-bindings: media: qcom: Add CAMSS Offline
+ Processing Engine (OPE)
+To: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Cc: bod@kernel.org, vladimir.zapolskiy@linaro.org,
+ laurent.pinchart@ideasonboard.com, kieran.bingham@ideasonboard.com,
+ robh@kernel.org, krzk+dt@kernel.org, andersson@kernel.org,
+ konradybcio@kernel.org, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, johannes.goede@oss.qualcomm.com,
+ mchehab@kernel.org
+References: <20260323125824.211615-1-loic.poulain@oss.qualcomm.com>
+ <20260323125824.211615-2-loic.poulain@oss.qualcomm.com>
+ <94b415bf-9a76-4d31-add4-6283e8b43b72@kernel.org>
+ <CAFEp6-3xmL4q9eSLpUZjdP5z1yCr_AJxSLmzqF70S05DK7Or1Q@mail.gmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <CAFEp6-3xmL4q9eSLpUZjdP5z1yCr_AJxSLmzqF70S05DK7Or1Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[redhat.com,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[redhat.com:s=mimecast20190719,redhat.com:s=google];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[gmail.com,kernel.org,baylibre.com,vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-99345-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-99346-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[redhat.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	MISSING_XM_UA(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bmasney@redhat.com,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	RSPAMD_EMAILBL_FAIL(0.00)[krzk.kernel.org:query timed out,loic.poulain.oss.qualcomm.com:query timed out];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_TWELVE(0.00)[12];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: EE6542F8EF5
+X-Rspamd-Queue-Id: D37512F94F6
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi Konrad,
+On 23/03/2026 17:03, Loic Poulain wrote:
+> Hi Krzysztof,
+> 
+> On Mon, Mar 23, 2026 at 2:04 PM Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>>
+>> On 23/03/2026 13:58, Loic Poulain wrote:
+>>> Add Devicetree binding documentation for the Qualcomm Camera Subsystem
+>>> Offline Processing Engine (OPE) found on platforms such as Agatti.
+>>> The OPE is a memory-to-memory image processing block which operates
+>>> on frames read from and written back to system memory.
+>>>
+>>> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+>>
+>> I don't see explanation in cover letter why this is RFC, so I assume
+>> this is not ready, thus not a full review but just few nits to spare you
+>> resubmits later when this becomes reviewable.
+>>
+>>> ---
+>>>  .../bindings/media/qcom,camss-ope.yaml        | 86 +++++++++++++++++++
+>>>  1 file changed, 86 insertions(+)
+>>>  create mode 100644 Documentation/devicetree/bindings/media/qcom,camss-ope.yaml
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/media/qcom,camss-ope.yaml b/Documentation/devicetree/bindings/media/qcom,camss-ope.yaml
+>>> new file mode 100644
+>>> index 000000000000..509b4e89a88a
+>>> --- /dev/null
+>>> +++ b/Documentation/devicetree/bindings/media/qcom,camss-ope.yaml
+>>
+>> Filename must match compatible.
+> 
+> Some bindings (for example clock/qcom,mmcc.yaml) do not strictly
+> follow this rule and instead use a more generic filename that groups
+> multiple device-specific compatibles. I mention this because my
+> intention with a generic filename was to allow the binding to cover
+> additional compatibles in the future.
+> 
+> As I understand it, in the current state I should either:
+> - rename the file so that it matches the specific compatible, e.g.
+> qcom,qcm2290-camss-ope.yaml, or
 
-On Mon, Mar 23, 2026 at 8:48=E2=80=AFAM Konrad Dybcio
-<konrad.dybcio@oss.qualcomm.com> wrote:
-> On 3/13/26 5:54 PM, Brian Masney wrote:
-> > On Fri, Mar 06, 2026 at 06:27:20PM -0500, Brian Masney wrote:
-> >> On Wed, Mar 4, 2026 at 10:08=E2=80=AFAM Pengyu Luo <mitltlatltl@gmail.=
-com> wrote:
-> >>> On Wed, Mar 4, 2026 at 10:50=E2=80=AFPM Brian Masney <bmasney@redhat.=
-com> wrote:
-> >>>> On Tue, Mar 03, 2026 at 01:10:43PM +0100, Konrad Dybcio wrote:
-> >>>>> On 3/3/26 12:55 PM, Pengyu Luo wrote:
->
-> [...]
->
-> > Ignore my previous patch set. In my v6 that I just posted, I updated
-> > clk-divider.c to support the new v2 clk negotiation logic. The
-> > clk_regmap_div_ops uses this driver, so you shouldn't have to make any
-> > code changes.
-> >
-> > Anyways, would someone from Qualcomm be willing to test this? The
-> > procedure is fairly simple:
->
-> Unfortunately, I don't think it's easy to get your hands on a 8280
-> device with DSI.. maybe Pengyu could test that on his tablet/laptop.
+This one.
 
-It doesn't have to be an 8280 SoC. It could be any device that has the
-issue where the parent rate change screws up that portion of the clock
-tree, and crashes the device. This has been a long-standing issue in
-the clk framework.  I know you recently posted a series for 5 other
-SoCs with a similar change [1], so any of those other devices should
-work as well.
+> - keep the generic filename (qcom,camss-ope.yaml) and add a top-level
+> const: qcom,camss-ope compatible to justify the generic naming.
 
-[1] https://lore.kernel.org/linux-arm-msm/20260304-topic-dsi_byte_fixup-v1-=
-0-b79b29f83176@oss.qualcomm.com/
+Because this would be a reverse logic... Name of file is never an
+argument/reason to add a compatible.
 
-The kunit tests in my clk scaling patch set demonstrate the issues
-that I have worked on. For example, in my test scenario, I start with
-a parent, and two children. The parent can do any rate. The two
-children are simple dividers. This is the current behavior today:
 
-        KUNIT_ASSERT_EQ(test, clk_get_rate(ctx->parent_clk), 24 * HZ_PER_MH=
-Z);
-        KUNIT_ASSERT_EQ(test, clk_get_rate(ctx->child1_clk), 24 * HZ_PER_MH=
-Z);
-        KUNIT_ASSERT_EQ(test, clk_get_rate(ctx->child2_clk), 24 * HZ_PER_MH=
-Z);
+> 
+> Any preferred/valid direction?
+> 
+>>
+>>> @@ -0,0 +1,86 @@
+>>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+>>> +%YAML 1.2
+>>
+>> ...
+>>> +
+>>> +required:
+>>> +  - compatible
+>>> +  - reg
+>>> +  - reg-names
+>>> +  - clocks
+>>> +  - clock-names
+>>> +  - interrupts
+>>> +  - interconnects
+>>> +  - interconnect-names
+>>> +  - iommus
+>>> +  - power-domains
+>>> +  - power-domain-names
+>>> +
+>>> +additionalProperties: true
+>>
+>> There are no bindings like that. You cannot have here true.
+> 
+> ok.
+> 
+>>
+>> Also, lack of example is a no-go.
+> 
+> Ouch, yes. Would it make sense to have dt_binding_check catch this
+> kind of issue?
 
-        ret =3D clk_set_rate(ctx->child1_clk, 32 * HZ_PER_MHZ);
+Not sure if worth implementing. Every new binding is a copy of existing
+one and 99% of them have examples, so how new binding could be created
+without one? This is highly unlikely and most likely there are other
+issues as well, because process is broken, so dtschema won't help.
 
-        /*
-         * The last sibling rate change is the one that was successful, and
-         * wins. The parent, and two children are all changed to 32 MHz.
-         */
-        KUNIT_EXPECT_EQ(test, clk_get_rate(ctx->parent_clk), 32 * HZ_PER_MH=
-Z);
-        KUNIT_EXPECT_EQ(test, clk_get_rate(ctx->child1_clk), 32 * HZ_PER_MH=
-Z);
-        KUNIT_EXPECT_EQ(test, clk_get_rate(ctx->child2_clk), 32 * HZ_PER_MH=
-Z);
+And with LLM you can write whatever will pass dtschema but still make
+not sense.
 
-With my changes, the clk framework will land on 96 MHz for the parent,
-and 24 MHz and 32 MHz for the two children.
-
-Anyways, it would be great if someone from Qualcomm would be willing
-to help me test my changes on real hardware. If it requires code
-changes to a specific clk provider, then I'm willing to also do that
-work if someone can test for me. Getting confirmation that this is
-fixed on real hardware will help to land my series that will provide a
-solution to this problem that has existing in the clk framework since
-it was introduced over 12 years ago.
-
-Thanks,
-
-Brian
-
+Best regards,
+Krzysztof
 
