@@ -1,245 +1,333 @@
-Return-Path: <linux-arm-msm+bounces-99150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6JWeLrgGwWmtPwQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 10:24:08 +0100
+	id 4EWpOqQHwWmtPwQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 10:28:04 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 67F9D2EEFDD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 10:24:08 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 661212EF0EC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 10:28:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 4F0E53032F9C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 09:21:05 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id A13F130387FC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Mar 2026 09:21:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98DBE38759C;
-	Mon, 23 Mar 2026 09:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECE973890E4;
+	Mon, 23 Mar 2026 09:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Kddp+ydx";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="CKXNudTU"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="bd3tzLgw";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="aMv7lVDL"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 455643876AC
-	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2026 09:19:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADAF738737A
+	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2026 09:19:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774257595; cv=none; b=q56n2sHQIg3LhxkBw4urIgUh/xqg/MCMAR96LqC4E9vRLKrlTjK+I31X4kSsQSgdDnz+XDp4Sass5Bbo5JV7xMl8UlvjV50nQuqwwjttzfOa8bldEP++7xaDbJdj1PbqRohJEYbaN18g3lJDZDrKNuS9Wpl2MusSJGfqoYscoQ8=
+	t=1774257601; cv=none; b=RmzpGKnzS4JhZcB/sjAQz0+DC3FD368JEEZMespEIc9aX9nvfAlr6z7d2RV6BiqCFuTcDqlcEPGrf1aeda9pOM2Ful7KTIMvn+CBws89FByX8T5ssfPiAG0IKC8coWhW6Iq+RViGfBW3fwLsgoduJ5AlTtucI7i63s1iA+lTlgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774257595; c=relaxed/simple;
-	bh=4gCokkHZ2GjRf5B+A9Zqx/4PsUp2LAmyJ4JNgVsWI14=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=CEo75jdAkj+UNTMXOg9yC6QgnRe5gxCSFaTMhYAgUR1WBkbfwpGnFossQglV3xH9mgCOThwOTvlcKA3KJwH862KatKNl7m3baobVSlOLhA/vRgqSQzyWL3V8UirjxbhK7qDBywjbqolYFVkfFkd0LCpwjAHb27pgQ2xrtyi34QA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Kddp+ydx; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=CKXNudTU; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1774257601; c=relaxed/simple;
+	bh=E6PeMWwuZ7Do5d7jRekumyJIWFatcfbhRUHhMcf/ruQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=icOR0uJXTBaIYGmOuVottNu1qGdx0wmQAzHZ/1lbX1SX+hH0xQr1yatMVeL39SrlMfMBGKUyErKElIkXlmFNuUXICDDdY5/8yYA1nClfDQLPgSKQhqI9Ry9bap7PjGbIXFlD314/FxV0+QLSJY5XxjPDJypOyDtH7jQUHgEK324=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=bd3tzLgw; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=aMv7lVDL; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62N7tkCN1627278
-	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2026 09:19:52 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62N7tBG92291169
+	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2026 09:19:59 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	zpbpg0hPnfQaJ1hYQGaQ316b4Tnqdwkw1WSwGLLXo6Y=; b=Kddp+ydx6NynhTSU
-	Fnn8ufuOmm5/WZKJ69ZFHmVLX7OLuY7EZ79mFTuDVt2zs3XjC5Vm7BIDUI8hXbRC
-	FUAjBi+BaFQhG5uX+rRdqWVZcG6b3GRkp9Zlge/TpszsfmMEqiW6oQpms3IyFgKh
-	6fdwj04WeicsYbcskgGAaAR10m9fzW/NCiZqU/x5K8L3q8iMa6QgNQOkyV43m22F
-	YEq20AKdqOpGyoosNBt/G9U8ZStB2DVMPUDcLNieIKw+iYuW2ukmhCOfE+uPGRKa
-	0A23Tm5UQN2IPav7V1sUSh8h/gyyuCi5IwO5Z/junGeLez7CoK86mskz6OG/1LJQ
-	m6zQVA==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d31jc09gm-1
+	PLTDXBuMarjLK9bkndtm90sNFItNPmFhARTRwjr7SxU=; b=bd3tzLgw2XKHW0eB
+	ipSduEB3ZjuxRqg1bj9diqyAor3UB33obLEN6gWa3cIp07r6YIKdw6171CHLRca5
+	cORQuDA1RnO+3jbWwjR06l/8yfE31+aPs7khvqvo+8tIUO84PF1OYpGDqKXVD32N
+	UeHiZcXrVHbRVfA8+Rc9ggry02Vbz276rzEKr3HM06G2s5AZbpkcJ30VFJ/Ap/N2
+	isjZCUN/U5kbKCDocWgca30YCAyNyGC8BrrevJ5HbETS5mr7htzx/CRG3Zsc9k6+
+	3n14lR8EMd3ElgtAo2oSO5KUCko9dZUWeHZPqTwoz0/OEOs6I7qGpeqUvvZdYeNU
+	uQBSlA==
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d31j7099k-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2026 09:19:52 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-3595485abbbso5413657a91.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2026 02:19:52 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2026 09:19:58 +0000 (GMT)
+Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-c73781252edso17668915a12.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2026 02:19:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1774257592; x=1774862392; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zpbpg0hPnfQaJ1hYQGaQ316b4Tnqdwkw1WSwGLLXo6Y=;
-        b=CKXNudTUTvvT2FPnw11mj9AQaAqnNnFkTQiAn715iVftZ/3HiXklxmZaeRJwQqm57K
-         Ezhu6kgPRlX5af54eo3qlrsXnqH/taM5In3c8k7Y5RQJblbp4TBsXxkZUONwkxphsR0p
-         QUHcLMOCDoKVi1XvBIALYc7+casD9WIyIENFLWxUQdBbBMGOaMR+xJEmjL5twaxlbVza
-         FR1BifX8qqFd9vZ1TAxikLiRXMBjGcA4UlOKElobIWvwjrBorqmSf1Z+WT9yGP46Bo69
-         gG/Th3zevvNpkVOVIIIWvIP5/YfSch2dhwCvJ6wCexj9PV7f41209HDuycx9nneu1UKE
-         IUJw==
+        d=oss.qualcomm.com; s=google; t=1774257598; x=1774862398; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=PLTDXBuMarjLK9bkndtm90sNFItNPmFhARTRwjr7SxU=;
+        b=aMv7lVDLqR8QYqXYZLphY7eS7u0A2GKPfRPdwkeTAGpzIKe5ssE+G6FDVoRD6Y62H7
+         i9ojWO2uimEcsW5hQio00vcMn7XZivWJ+preLDKroINUetWu61/W+/OCd0K03WoDzqQ+
+         gihPDjiktPV/IfqlsI3dybDR06XCRVSpDJv44zEEXRy4eTAu6XzY6u53RLx/xMwLpn2d
+         mwlBIwweWZcIHidsvVDJOJ9wxMUvHEOwnKdNmAjkaJAkyiHDDBM0Adr9+cmhOwrAg3Sz
+         1vMogMmbyaAfblvBwwl5s/SO7oSiYL3XMDJkYIpuhkKpBbkcX6hNLzWv4EGRr6WNuo5b
+         r1+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774257592; x=1774862392;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=zpbpg0hPnfQaJ1hYQGaQ316b4Tnqdwkw1WSwGLLXo6Y=;
-        b=snt2paOPoxecrPBetUE8rphfg+sxiZsFIKwMNHM4dpwd/S0vZfiwXbq9B7neRhKZBH
-         9ahQnQ9/cV/CjFLjeYKUWQfDKz7HfLiCC7zmt2vS8O2zcvhR8Vt8HafCQ+ITDkeP1Re7
-         KP4XUoJa8XfN+3nkEiK2AEdWDxeq2k2vy+VV8WdSIZKAuAEvPwXpHOd8ncr1bxHWdGoZ
-         sbfYEpV6QDxKjtC362NqcHSkO/PqBKuVYXqdghsEXnLSJvz4JBlRzpD1pkefj8KzzdzZ
-         2mN1V7ZBlF3dw9rE5rnTt+slvyXo0cjCa2H4TJJD4UfkOW2DupmTnOdS7GDc04xP+++b
-         fIaQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWiG9LORtX8QeghNW5CWIPs4QFRSnERxUiyPrlM0yYnEXrwaBIMj9U53x3RqQBNgudBApwF1f67srJtPaw1@vger.kernel.org
-X-Gm-Message-State: AOJu0YzBmN139KxsFr22CG/P8aHJTfXAg1afRpM1KvQ7Sl7mR0SeuF0v
-	WMtNRJcALa2KsVm6q7VV9n13FCmUzeodcr9XbWDCrwjZizzEqWkwiXi4bSvUV59AAoMXpnfGP3n
-	TjrMvO2EMgNmliPbuLpT8psmNyaG8KkHmX3kn7Yw/PXmQ0hXxSYr3IfT32tkJ/gpPz+oE
-X-Gm-Gg: ATEYQzzGjJGIy8GvK0THop9122yIxr0mXrUuzbBr79BAqmwbu2H6dNQMsyHsbDsYe6v
-	sjy6B7elCjg5ed5zXT4rH5eHqApiE5F4ho95nJzVxXqEgwUxsXM2++ps6ab6lQdKlzFNT+RAjMB
-	ICL8DzHWKbd2dqgkADNIoazCc83skaPnZ2NANsfTE4iGQmXW3D4/+MXXgSWQ6n4Axzqny9kJ6oC
-	hcKLKlseiPcji23oH8iub0DuG68dn2hPlqOxF6HQNA1/aJlHZhS8spgT10nmTAAcVfAC5/m6Jxv
-	czEvm0D/gEcTyGd/o2AUrHzby2dQFuGnRrcyb+k8zkQ4IoIw/KfbPmn/5e2+ugyKjKLZMgBPery
-	hrQtQg7HbLF7IHyleYNevOo5xPRwQE4O7cjsPp3kAwjV5X9A=
-X-Received: by 2002:a17:90b:3d85:b0:359:1063:6aed with SMTP id 98e67ed59e1d1-35bd2cb3e52mr9251832a91.22.1774257591869;
-        Mon, 23 Mar 2026 02:19:51 -0700 (PDT)
-X-Received: by 2002:a17:90b:3d85:b0:359:1063:6aed with SMTP id 98e67ed59e1d1-35bd2cb3e52mr9251785a91.22.1774257591273;
-        Mon, 23 Mar 2026 02:19:51 -0700 (PDT)
-Received: from hu-hdev-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35bd358b5ecsm3923448a91.5.2026.03.23.02.19.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Mar 2026 02:19:50 -0700 (PDT)
-From: Harshal Dev <harshal.dev@oss.qualcomm.com>
-Date: Mon, 23 Mar 2026 14:48:04 +0530
-Subject: [PATCH v4 11/11] arm64: dts: qcom: sm8750: Add power-domain and
- iface clk for ice node
+        d=1e100.net; s=20251104; t=1774257598; x=1774862398;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PLTDXBuMarjLK9bkndtm90sNFItNPmFhARTRwjr7SxU=;
+        b=R/ZdvW4F/ZK5EptsKwDLUwxPyEgWbFkvWmyHa5VR82uERAp4hCSO3z9Wa8zI6K0tMj
+         tppIVmw/L0r15tPgt1QAFUbhx4i3JMDyOslWfMmLiuKQJ+V777q97tbWuwdNRY6Dxoog
+         FGlQgWOpBhSbeb1BnqLy/qPzSRDGLms0FRcTzD1jjGHzuJ8XVsNm0ExhkL8ILNrQ+WNB
+         2tirhmNqmc8caWX2P2F/bRQ7Px4SVJcpHvgVQbO7TuZj/izUc/q877xwhVEkwZaIZB1e
+         jJMrSIYk9cY7XN18ZZRb7sZsYflB1HM+EY3wgONIYUrKLRbsAypb5inp5pKEMXLqMlHR
+         G9bw==
+X-Forwarded-Encrypted: i=1; AJvYcCWg+0ALkR9i5lDUs2aSWdoIrGBJ/R/GM3OmYJGapdonqenNjlqhSX7dacM1uPtG8B3xaOYx2aaC9vzQ64wk@vger.kernel.org
+X-Gm-Message-State: AOJu0YzQzpW7SNqh+N+sTtiiZV+CX2Qy7WkZL1mYWDzZZrks+fV4HVy7
+	D6hb0zOHsf+oVILAN4dR5xev6gvmUvGURdxzkqJJ6PQGvsyo5Ai3z17uIBmpikoV1Qw368961SW
+	DahZ/VtquFCJChr08aJn7XYQ9HtuOfC7H+D6Pz7g6SAW0NEoNS8gk0C2DwR+V85lSq6P7
+X-Gm-Gg: ATEYQzy9wuuNa7hU61r6w71wE/W2RRd73HbSCZ3tbo79S5CmAlkgc536aKW8ZH/DPJb
+	ejP1eCkA9A4gqnYo6EGCQOgy4btbHLWeP+bsAcKzJV8QrT4o0q8abiN+qWSviw9vqeXCf0B+lR7
+	WxOpkBcOVI7aoYQvQAG5oPYCAFZ9Iglmf2KCwAeWh9OwyALGW8iKDiJ2vktuYLLcD0xx720hH9F
+	XJplh6Jqw4/g6dbNYhtMkEatkYihYMh8xqCnQP/CsVeuvkKZ7X3PlPBI/GX1VnqBT+4X+Mv/Me7
+	eaIx24kVMAvAi6t8zN8Qv9Gaxst7aw6tHyXo3A+wD6PUTA0TtTJtAJOLSSdjTe+lqE4fkbD954e
+	S0hp8cT95ADjVZJVMSM0xMh0ndskdotsxQymray1tEbBbCLnehNE=
+X-Received: by 2002:a05:6a20:430c:b0:39c:1f90:2867 with SMTP id adf61e73a8af0-39c1f903186mr1629755637.59.1774257597938;
+        Mon, 23 Mar 2026 02:19:57 -0700 (PDT)
+X-Received: by 2002:a05:6a20:430c:b0:39c:1f90:2867 with SMTP id adf61e73a8af0-39c1f903186mr1629732637.59.1774257597418;
+        Mon, 23 Mar 2026 02:19:57 -0700 (PDT)
+Received: from [10.217.198.242] ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c74453295a8sm7783715a12.28.2026.03.23.02.19.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Mar 2026 02:19:57 -0700 (PDT)
+Message-ID: <9bd9e5c2-fe9a-4329-bf5a-4971ee94faa6@oss.qualcomm.com>
+Date: Mon, 23 Mar 2026 14:49:52 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260323-qcom_ice_power_and_clk_vote-v4-11-e36044bbdfe9@oss.qualcomm.com>
-References: <20260323-qcom_ice_power_and_clk_vote-v4-0-e36044bbdfe9@oss.qualcomm.com>
-In-Reply-To: <20260323-qcom_ice_power_and_clk_vote-v4-0-e36044bbdfe9@oss.qualcomm.com>
-To: Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Abel Vesa <abel.vesa@oss.qualcomm.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-        cros-qcom-dts-watchers@chromium.org,
-        Eric Biggers <ebiggers@google.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
-        Tengfei Fan <tengfei.fan@oss.qualcomm.com>,
-        Bartosz Golaszewski <brgl@kernel.org>,
-        David Wronek <davidwronek@gmail.com>,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        Alexander Koskovich <akoskovich@pm.me>
-Cc: Brian Masney <bmasney@redhat.com>,
-        Neeraj Soni <neeraj.soni@oss.qualcomm.com>,
-        Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>,
-        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Kuldeep Singh <kuldeep.singh@oss.qualcomm.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-        Harshal Dev <harshal.dev@oss.qualcomm.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1774257482; l=1456;
- i=harshal.dev@oss.qualcomm.com; s=20251124; h=from:subject:message-id;
- bh=4gCokkHZ2GjRf5B+A9Zqx/4PsUp2LAmyJ4JNgVsWI14=;
- b=RswpYVENgXtuJbX4xVStbksk7BFMx7jSFT0f1TB6KQum/olhlBcJk/LgtEnVSjBqp2WNzexDI
- j24z+9Fl6TJC6vKXj+9p1xre4eFuyfcqRcwxcl1ntu5GX3AGZpbp+7L
-X-Developer-Key: i=harshal.dev@oss.qualcomm.com; a=ed25519;
- pk=SHJ8K4SglF5t7KmfMKXl6Mby40WczSeLs4Qus7yFO7c=
-X-Authority-Analysis: v=2.4 cv=fKc0HJae c=1 sm=1 tr=0 ts=69c105b8 cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: suspend: Remove forcing error from suspend
+ finisher
+To: Sudeep Holla <sudeep.holla@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>
+Cc: Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20260316-suspend_ret-v1-1-1a30b110bb7d@oss.qualcomm.com>
+ <20260319-tiny-coucal-of-tranquility-ce0bd4@sudeepholla>
+ <20260319-ruddy-fierce-honeybee-8fc7b9@sudeepholla>
+ <ab0dtAC+bPtc9gdT@lpieralisi>
+ <20260320-spirited-gentle-swift-86f50e@sudeepholla>
+Content-Language: en-US
+From: "Maulik Shah (mkshah)" <maulik.shah@oss.qualcomm.com>
+In-Reply-To: <20260320-spirited-gentle-swift-86f50e@sudeepholla>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=ArXjHe9P c=1 sm=1 tr=0 ts=69c105be cx=c_pps
+ a=rz3CxIlbcmazkYymdCej/Q==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
  a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=EUspDBNiAAAA:8 a=IPGZAGG64n0kybUxs1kA:9 a=QEXdDO2ut3YA:10
- a=mQ_c8vxmzFEMiUWkPHU9:22
-X-Proofpoint-GUID: 3Knfs73MnLKydfQm4gWX9HIbVXb5HXY7
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzIzMDA3MSBTYWx0ZWRfX2lzC/b7B97Ic
- RpXT76eeDH7UWhz8dM0LJrnUkXUxh6FCieZsRCNYiAB5+oFwUhSfVP/nxxhRe55nl9mZivSxFcJ
- IRh8w3pVtqmaN3Uusb0vfd1lK6LYWM/9g31rIFq7Kc2vmUydHm+UXlanDC4YgS98WfrybegTbmf
- DdBwe9Cfbw/ztWg/sLHb2cFWj2p1h3rU+y/z0SshRKhAvjCiPyacFRqU78ChFFXiDqV3RJ8rSY5
- az90ZKk7dEHJOANO6Fm6JDJrBxbHfSpMDFXTC/uITnau6CP/dkOzAm2s8e5g6XOB+H2LF6Too+M
- ugFHFQrq0dkjWgZR2g+l+GURmGsjI+JdLa7JaWs0Ppyk5pXgtQAg653tl7dcqU7JzhiuzRqeOhH
- DbvVXnltAwy9cEINNBTLxTmEeBSQyBHC2qBiroyuCvuURBlQz+jQXlmUBHgARM8oP0YdZz7NCFc
- h3ULfolb9AS7iIoh71w==
-X-Proofpoint-ORIG-GUID: 3Knfs73MnLKydfQm4gWX9HIbVXb5HXY7
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=OBOuRWtVn1CyCTqyaKYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=bFCP_H2QrGi7Okbo017w:22
+X-Proofpoint-ORIG-GUID: ef7XLXAJ3OEyOVi866MTzSVhwxfPDUi9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzIzMDA3MSBTYWx0ZWRfXwBWvqdmdM6vU
+ LDo+cQtu7OeZZep/q/qhcEchOKLxBABJm+c2Wvlxxj+Dz4D97iAzH+V6n/fFzaEEMpwIibM1i9X
+ /SQL3i75aVC1GHEk4vF0iX8Bev49++la5a9fYVKXPG52aVEBT3RxWeHS2w9RvT8+Kh8j4Xq4PoR
+ jwutg4+2zQ8tLa+XVD2hJmKxCU7k0AA/6lT2kTk8w9io1LN/xtEZawmyTNwbTADZEwVvtOuO75R
+ SNtmF89UK0ZnTkJmyS1atEE1hMpOjSsy4LbDrs9VGlPJEToZBCBDmzusabwLu+qjPHeCp4dDlbq
+ 24ZjKlmCddLoLp7W1zk89XId2zVAYgc6HcIpuDzsu/cNo5kcVuGcz4zq+SyDdUJoWtOGBl9nY4G
+ 1lBBuY35mgdftSKwrzmvrutDiNq/Ob/RbKQvppW/4rZJfSi8GOHUwko0X5YkE8Xc5SEZlrhctts
+ 1SSzquodX8M77GPVrsQ==
+X-Proofpoint-GUID: ef7XLXAJ3OEyOVi866MTzSVhwxfPDUi9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-23_02,2026-03-20_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 priorityscore=1501 phishscore=0 lowpriorityscore=0
- adultscore=0 bulkscore=0 spamscore=0 suspectscore=0 malwarescore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
- definitions=main-2603230071
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+ clxscore=1015 phishscore=0 lowpriorityscore=0 bulkscore=0 priorityscore=1501
+ spamscore=0 impostorscore=0 suspectscore=0 adultscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603230071
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-99150-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,1d88000:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,1dc4000:email];
-	FREEMAIL_TO(0.00)[gondor.apana.org.au,davemloft.net,kernel.org,oss.qualcomm.com,chromium.org,google.com,gmail.com,fairphone.com,linaro.org,quicinc.com,pm.me];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[32];
-	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-99151-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FROM_NEQ_ENVFROM(0.00)[maulik.shah@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[harshal.dev@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[7];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 67F9D2EEFDD
+X-Rspamd-Queue-Id: 661212EF0EC
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Qualcomm in-line crypto engine (ICE) platform driver specifies and votes
-for its own resources. Before accessing ICE hardware during probe, to
-avoid potential unclocked register access issues (when clk_ignore_unused
-is not passed on the kernel command line), in addition to the 'core' clock
-the 'iface' clock should also be turned on by the driver. This can only be
-done if the GCC_UFS_PHY_GDSC power domain is enabled. Specify both the
-GCC_UFS_PHY_GDSC power domain and the 'iface' clock in the ICE node for
-sm8750.
 
-Fixes: b1dac789c650a ("arm64: dts: qcom: sm8750: Add ICE nodes")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Harshal Dev <harshal.dev@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/sm8750.dtsi | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8750.dtsi b/arch/arm64/boot/dts/qcom/sm8750.dtsi
-index f56b1f889b85..8c33bc3620ef 100644
---- a/arch/arm64/boot/dts/qcom/sm8750.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8750.dtsi
-@@ -2083,7 +2083,11 @@ ice: crypto@1d88000 {
- 				     "qcom,inline-crypto-engine";
- 			reg = <0x0 0x01d88000 0x0 0x18000>;
- 
--			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
-+			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>,
-+				 <&gcc GCC_UFS_PHY_AHB_CLK>;
-+			clock-names = "core",
-+				      "iface";
-+			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
- 		};
- 
- 		cryptobam: dma-controller@1dc4000 {
+On 3/20/2026 4:40 PM, Sudeep Holla wrote:
+> On Fri, Mar 20, 2026 at 11:13:08AM +0100, Lorenzo Pieralisi wrote:
+>> On Thu, Mar 19, 2026 at 04:52:18PM +0000, Sudeep Holla wrote:
+>>> On Thu, Mar 19, 2026 at 03:14:01PM +0000, Sudeep Holla wrote:
+>>>> On Mon, Mar 16, 2026 at 02:18:18PM +0530, Maulik Shah wrote:
+>>>>> Successful cpu_suspend() may not always want to return to cpu_resume() to
+>>>>> save the work and latency involved.
+>>>>>
+>>>>> consider a scenario,
+>>>>>
+>>>>> when single physical CPU (pCPU) is used on different virtual machines (VMs)
+>>>>> as virtual CPUs (vCPUs). VM-x's vCPU can request a powerdown state after
+>>>>> saving the context by invoking __cpu_suspend_enter() whereas VM-y's vCPU is
+>>>>> requesting a shallower than powerdown state. The hypervisor aggregates to a
+>>>>> non powerdown state for pCPU. A wakeup event for VM-x's vCPU may want to
+>>>>> resume the execution at the same place instead of jumping to cpu_resume()
+>>>>> as the HW never reached till powerdown state which would have lost the
+>>>>> context.
+>>>>>
+>>>>
+>>>> Though I don't fully understand the intention/use-case for presenting the
+>>>> VMs with powerdown states ....
+>>>>
+>>>>> While the vCPU of VM-x had latency impact of saving the context in suspend
+>>>>> entry path but having the return to same place saves the latency to restore
+>>>>> the context in resume path.
+>>>>>
+>>>>
+>>>> I understand the exit-latency aspect, though the register set involved is not
+>>>> very large unless the driver notifier list is sizable on some platforms. This
+>>>> is typically the case in Platform Coordinated mode.
+>>>>
+>>>>> consider another scenario,
+>>>>>
+>>>>> Newer CPUs include a feature called “powerdown abandon”. The feature is
+>>>>> based on the observation that events like GIC wakeups have a high
+>>>>> likelihood of happening while the CPU is in the middle of its powerdown
+>>>>> sequence (at wfi). Older CPUs will powerdown and immediately power back
+>>>>> up when this happens. The newer CPUs will “give up” mid way through if
+>>>>> no context has been lost yet. This is possible as the powerdown operation
+>>>>> is lengthy and a large part of it does not lose context [1].
+>>>>>
+>>>>
+>>>> When you say "large part" above, do you mean that none of the CPU context, as
+>>>> visible to software, is lost? Otherwise, we would need to discuss that "large
+>>>> part" in more detail. From the kernel point of view, this is a simple boolean:
+>>>> context is either lost or retained. Anything in between is not valid, as we do
+>>>> not support partial context loss.
+>>>>
+>>>>> As the wakeup arrived after SW powerdown is done but before HW is fully
+>>>>> powered down. From SW view this is still a successful entry to suspend
+>>>>> and since the HW did not loose the context there is no reason to return at
+>>>>> entry address cpu_resume() to restore the context.
+>>>>>
+>>>>
+>>>> Yes, that may be worth considering from an optimization perspective. However,
+>>>> if the hardware aborts the transition, then returning success regardless of the
+>>>> software state should still be counted as a failure. That would keep the
+>>>> cpuidle entry statistics more accurate than returning success. And it is
+>>>> a failure as the OS expected to enter that powerdown state but there was
+>>>> as H/W abort.
+>>>>
+>>>>> Remove forcing the failure at kernel if the execution does not resume at
+>>>>> cpu_resume() as kernel has no reason to treat such returns as failures
+>>>>> when the firmware has already filled in return as success.
+>>>>>
+>>>>
+>>>> This is not possible with the current PSCI spec:
+>>>> "Powerdown states do not return on success because restart is through the
+>>>> entry point address at wakeup."
+>>>>
+>>>
+>>> OK, my bad. Sorry for that.
+>>> For some reason, I read "do not return" as "must not return".
+>>>
+>>> The spec allows this:
+>>>   |  The caller must not assume that a powerdown request will return using the
+>>>   |  specified entry point address. The powerdown request might not complete due,
+>>>   |  for example, to pending interrupts. It is also possible that, because of
+>>>   |  coordination with other cores, the actual state entered is shallower
+>>>   |  than the one requested. Because of this it is possible for an
+>>>   |  implementation to downgrade the powerdown state request to a standby
+>>>   |  state. In the case of a downgrade to standby, the implementation
+>>>   |  returns at the instruction following the PSCI call, at the Exception
+>>>   |  level of the caller, instead of returning by the specified entry point
+>>>   |  address. The return code in this case is SUCCESS. In the case of an
+>>>   |  early return due to a pending wakeup event, the implementation can
+>>>   |  return at the next instruction, with a return code of SUCCESS, or
+>>>   |  resume at the specified entry point address
+>>>
+>>> So we need to dig and check if there was any reason for returning "NOT
+>>> SUPPORTED" when the call returned success.
+>>
+>> Because we have no clue whatsoever about what happened. We need to get
+>> back to the cpu_suspend() caller and either say "we entered state X instead
+>> of Y" or report a failure (because an interrupted power down sequence *is* a
+>> failure for Linux - unless we want to make things up), we just can't know so
+>> to me the code seems good as it is (we can debate about the error code, yes
+>> but the gist does not change).
+>>
+> 
+> Completely agreed. The current code clearly survives a successful return, so,
+> in my opinion, nothing is broken. It is really just a matter of exploring
+> whether there is a better way to express this error condition. I doubt that is
+> possible, since it is either success or error; it cannot be both.
+> 
+> Just to clarify, my earlier comment was purely about the error code, not about
+> success versus error.
+> 
+>> Is that we want to tell CPUidle that entering the state was successful even if
+>> the power down sequence was interrupted or the state demoted ?
+> 
+> That sounds like the ask to me, but that would be incorrect.
+> 
+>> That's tantamount to lying IMO and would skew the power stats, no ?
+>>
+> 
+> Yes, I agree.
+> 
+>> Let me know, I am just trying to understand this patch's goal.
+>>
+> 
+> I will let Maulik present his opinion, as I am aligned with you, Lorenzo.
+> 
 
--- 
-2.34.1
+Thank you for the review.
 
+The goal is to optimize the exit latency even if register set involved to restore
+may not be of considerable size, saving scales up with multiple CPUs and multiple
+VMs running.
+
+This is achieved when the cpu resumes the execution at the same place,
+however with this, i am seeing that idle states are rejected because of forcing the
+error from Linux.
+
+Consider an example scenario listed in commit text for multiple virtual machines,
+
+VM‑X: Power‑Down ─┐
+                  ├─ Hypervisor Aggregation to Retention
+VM‑Y: Retention ──┘
+
+A resume to the same place is today treated as failure in VM-X's cpuidle statistics,
+A cpuidle governor may then become less aggressive towards next entry to power down state
+as it has seen a error for the previously entered mode.
+
+Such a scenario should not impact VM-X to re-select a power down state for CPU,
+for this reason the VM-X need to treat the resume at the same place as "success",
+when the firmware says so.
+
+Thanks,
+Maulik
 
