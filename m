@@ -1,248 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-99583-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99584-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8ExjD1dbwmnQbwQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99583-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 10:37:27 +0100
+	id iBIqO2BbwmnQbwQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99584-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 10:37:36 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8853C305B28
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 10:37:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 70AA4305B40
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 10:37:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 8DAF43204838
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 09:24:58 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id DE62A3214A43
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 09:25:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5795E3DB659;
-	Tue, 24 Mar 2026 09:23:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 944713DE43A;
+	Tue, 24 Mar 2026 09:24:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TTlaY5lB"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="bSu0JCgA";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="RTbMzMZ8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A8D53DDDC5
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 09:23:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B71363C49
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 09:23:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774344238; cv=none; b=eu8OyE3plEmJVkvF9RUon8fsfA3kWGSvi8I4ZQrGD/GCMxql3RBj1pMuOkojLpzaOTR9mJKSuYhgwpkooqpuAjC6f0Qty9hRVM+qlC5TQ0DxjdgGvhmFrqvMnRqgCrAdTUPtMTacEwgO+4Lq+++rIbPFsK4X0+DHjwyHOA65Y+4=
+	t=1774344243; cv=none; b=gBvCDOuBKffw/ZCBW7rmUrg/QB3W8/1SZW2yUtOVySkL5DA4YeQ8fiLA/g+tN7cm1IJNbnv0068TBRK8oeYH8vzBxjzb8UklTsXjq8EW5r8mlOzy4TG2zDtbWj//nz5LxfWWyT5ZYfER6t0RFo4IFzCcMtVWTZeBhzZN67uAGAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774344238; c=relaxed/simple;
-	bh=eORHv6uMOxEZQvZKT0NGFZMJsp3s4BCbYLo0O/D16Zw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=l0p8+xtzHHhvEJ3fiYnm1rBtEain7aybV2Qpfax3O+8uH8t0Q4mnco3exycpye6zn21z0vxqqBHWQ13GZDVdhuk0R8KNeDsBboEQEhCXFQumo6TvfQHEVFAlgqxFDwmk1lx3aT0Laawxr3N/Fq5XzxRgQE9lJloGIg/9sLRw7yE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TTlaY5lB; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-486fd3a577eso31240895e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 02:23:47 -0700 (PDT)
+	s=arc-20240116; t=1774344243; c=relaxed/simple;
+	bh=m/+iU9AxYGJL4LGf5A5k7jWuFpjgTw/8f+xNacKuJac=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fbDLv2O7G0ZL2z2uDuYYYvY8mxaYGZADNUgm7WUbs45/AUIIrZwSSowD5aPzl/pzg1sqhwUHZqBnCJdaJg2C23AzvjAu3mWlDBaOkMu4MS6JAn5atNnoDdHX9s4aHSwyVI3Aq4qsXsb0jw5CGk+qQPxIVM8PPUmpi3WY51VJYFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=bSu0JCgA; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=RTbMzMZ8; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62O8xqW42323409
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 09:23:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	3YK0/akJLM7CPIvSiwDnz+wZ1B/Z9qONHpxp5SmLtKI=; b=bSu0JCgABCKgkMYl
+	0fSBF2ayYG16mbf5E/Ms8NB9PW3yyw1us/8IkABXacJQHfRdDPBvEnaJira35IyZ
+	G0F44aOHshhbJefYWYeKq3fsLxd+bkxPaqj1c8HGbsdAd+uLw83QPV3JbsaH7s1O
+	D5zof1thvlnNeI+mHENsc/ugIxxs7Ud87MfyHqhKCItm1c/XDeMkp70WHQgclnha
+	OvEJ254+G3kqkfeCyGpFvi5DJk/UqqCiWMmhZ4sM6LX8n1Yljn4pTASIAikn95FA
+	Q5KUQM3tlCKE541mK3buXLK1znYxfhjWrLyNuT8xSof6KWB2Fky+lBJoC7sta+xt
+	W4f6BQ==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d3qker3aq-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 09:23:51 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-895375da74bso46066746d6.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 02:23:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1774344226; x=1774949026; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=G5BTS4Xu7BcfhUbuvKmb6N+eqgb+/BungbccHaCogJs=;
-        b=TTlaY5lBI780CEmaF4G6s2ABEbZEWSzZ1EONPBx3jInjBgAa4HB+O5DJRlJ5WTAv3g
-         Qbewwz2/QM8/eLhZJMCr74z5dvRLdP/VBFKby9XZr1X2UsBOG+hkLeVvxjqAZ4wLLoC5
-         gPhHmj6MQdNo2IEUabVpFaqKum3i+bPb+/KXRq+xikZAmO7MWXExUU/PkDnJZdwNc23h
-         b/1f4a2QhDt27syw9Wc5FdCL2/gKPbPgaJWgoIgD8YvNqPIE0f1/lkgSt1XOA3TPEQ8Q
-         K4YVcZQelrVd9Zrzg/7yyICI4YjzFW8aXg98pKmlGX0X2TXcQw+L5les5r7NZk1EIccm
-         t/gg==
+        d=oss.qualcomm.com; s=google; t=1774344230; x=1774949030; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=3YK0/akJLM7CPIvSiwDnz+wZ1B/Z9qONHpxp5SmLtKI=;
+        b=RTbMzMZ8d7eDFBBmCrYfoXaAzDoCPrYZbFxggV5ynScO2H6H4tJjatn01MPJNBNq2p
+         LbTi6g6VjvaPmBHq5brqD3uQV0/CEPC/nbROQ6U/676FejrHsBb9/yiH/6hn8Frzi3m0
+         5zfrGEa2/81i6AMVmtSu4csmgdWiH/MY9sJM/Zmo7pKvP4ntiNlRi/JX6Ue6knZlG36x
+         Cf6I3XD1iPUF/Lukh075TBFyIUTkzJrSmku7K5dRvbiHNu4V6+pOJ39AhAE44W9jcHfJ
+         HCVSwFCiUviXp6zdCIgsLcuUsmpk15Uq8P8CAO+i7jLVtUL1l6M6WZjC0H+WAQZK0ofC
+         eH2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774344226; x=1774949026;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=G5BTS4Xu7BcfhUbuvKmb6N+eqgb+/BungbccHaCogJs=;
-        b=UDAimSH3ElkA+xmQ+GdHvsfXiUUEQzv82qh3Y3vF7UiiZFb+RWKlzNu0Dz3DsNN02f
-         /eiumBEhQJERZGfyjvu05wdWJRXsu6goZ6UjdH88F7nD+v+pp8G3PZa/h335lJxdqCm3
-         zRWF/4WQNUbWRKDO+91UGa9gTrSLzPixOZb7j8GQGC3BPw5Y07/cAb8kmQw+1TyN5Rel
-         egt1bjxQi4nmt2myNTgblKMwJstZaj7F4L/ZAfuPA/FYLjE66NKpSMGZwfQpaSbokBjI
-         8RllrOcUGVZvF5CGYWHSE8KmoZx0BCPFoafsIS/CgfHBjHCXIpXDupklAhHulw6nXNQj
-         77YA==
-X-Forwarded-Encrypted: i=1; AJvYcCUa/evJfFKrAWqWnI/spLwSsf51xfR6zjTQkkoPeVPdpOBpEWrLfitLwSMjPZSUwCCF9caUrqFSoziSPsSF@vger.kernel.org
-X-Gm-Message-State: AOJu0YyPuY4kClQar6aEF6xXWiSX2NQlrZxbW+JQqU1jwCn9I18lpD1K
-	qkuuWOo6Rk7nGFMS/KVzZ4Hj7a0T7WzjTkThgwne+bJRCZ5xNflIzkj22gBPQtgr7yU=
-X-Gm-Gg: ATEYQzzV3Na5GT138KPm0NLMZ0R7QIcHyIX+RLPX7/OOLuDQ+zdS9Ut9gjhHlufYpUS
-	TX/JqyhmHDkap8KpkFu/BseBjapAuoo7wJqOFRjxXDX89go9UXaUPNhh+B7rgfNJxbclNPOfqrh
-	5IIRrSXRHVHPsF1uqXKHBZfZRD1+vaNdpd1wb3wX0Fh13F8sHU72BIqNj1NJgRiqCYb/ZFQph03
-	8e7sQXYtIxSBbf8VPZ8dPjk09JjdahJjVA/7EVoFQLEFNaV2+S/doucHCv86ZJcEsM6G+c42Nog
-	Z/jd1Vx45yq23lCOMBIjSPd+MR+dnBbqAuhG0gm+VyoYBNCpUBtd1/R+3CRXrMHTEyY+3iKI+sG
-	uy8oJuYKj37ZD8gAFq//zZEci708sIwdYgQI3EnHfbbe69VAkQNN46clXpIlh1JNpYOsDxWP610
-	TPQG1zhU4dZ7XalLHfIwBTOIG3n5vnG8fJ+9XTtOhRXyhy
-X-Received: by 2002:a05:600c:a596:b0:486:ffa3:594 with SMTP id 5b1f17b1804b1-486ffa30b0amr132702615e9.23.1774344225686;
-        Tue, 24 Mar 2026 02:23:45 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:106d:1080:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-487116c44bfsm41808585e9.9.2026.03.24.02.23.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Mar 2026 02:23:38 -0700 (PDT)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Tue, 24 Mar 2026 10:23:22 +0100
-Subject: [PATCH v2] dt-bindings: usb: document the Renesas
- UPD720201/UPD720202 USB 3.0 xHCI Host Controller
+        d=1e100.net; s=20251104; t=1774344230; x=1774949030;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3YK0/akJLM7CPIvSiwDnz+wZ1B/Z9qONHpxp5SmLtKI=;
+        b=G5xFF9KCK9XOqS0lNBqUh333yVdVXa53exPqQPNxMO6w/FIQOBZ2ioSmsvpCYYLnmj
+         bpt30Xf1QAB23UQSeAOPGbKfsyGXTgjNgEfiRsMGXdgZvkzcLlVmJ0FGVrki3ND0a8BY
+         XShQobDesuhwd8NU1rrQW1edhw6iyte0PgYpySsK7+yJEPW+W7jHYg0N2eCmJDc/lB6l
+         cCoFo0obru00ipJsU46lT2g/dIS5dy/rlnjyvuzseaXnwy0ZfxK16ovGs+B5mJev+g6g
+         J7bAob0C2u+dXjYzA/yhiEnXO+n01UNyXoWysAqbi9e8NtZxMp01CuHoIWwgHKom8PS4
+         2VeA==
+X-Gm-Message-State: AOJu0YxkenGI6fR5vArJE/x4xDlJ6eF4dgkhx40P01Z6AEiKv+1CwDBM
+	2PKikdoapGPZaYCnh41E9/tj1WSsQ3bHw7Ydziz/I4i6TOlQadQg+ixOhgAmFJ31+DkZlA8XiUU
+	h32Qc3GWalg/MQePRCOfDC/M+3bWPEdpw8sEOlS3qtznzXjVHxWouhc9ATgB0DyrWSX6u
+X-Gm-Gg: ATEYQzy90+6TkOtYacqENGvIIk8ubrMyffr1dghy8pI+UDP6hCEsyE87YCVPIC3jFdb
+	F294V0mv55BxtkGZ9FblDOjeRNWRcg/EetAyYjovsaLctbfQhLTzJ6PCeMWjKXooMUWzZsj/iG4
+	G87v36I+uqsZaKQh3UrI8tV+eU75w+1eBBpfujZamPnXONKBnYL8SeQ5eubDMA3MbIn7dydm7AP
+	Sp6STBw6wFjjYCQwdmpWA5W09s0nvwqPmWdd935KVAKMu5PYM76t0C91feB4It6xg02k+OMhTzk
+	jmpjuNyc47reYQsyLyCtWcuIqUXqaApK7AURovO3C91QPx9yv6sfYn05eJ63RJQ8dq7hRHWhyt/
+	rvUxelKsmN5ZvvjeVBqqW686i3W0Xw401hAiupAQvqfIVLRTRijgm0pEnsrwoyfPrZ83iy8j7L2
+	+1JD4=
+X-Received: by 2002:a05:6214:d8a:b0:89a:51ad:ea14 with SMTP id 6a1803df08f44-89c85b1d077mr186848366d6.7.1774344230498;
+        Tue, 24 Mar 2026 02:23:50 -0700 (PDT)
+X-Received: by 2002:a05:6214:d8a:b0:89a:51ad:ea14 with SMTP id 6a1803df08f44-89c85b1d077mr186848196d6.7.1774344230006;
+        Tue, 24 Mar 2026 02:23:50 -0700 (PDT)
+Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b9832f440f2sm612432666b.5.2026.03.24.02.23.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Mar 2026 02:23:49 -0700 (PDT)
+Message-ID: <275cb08b-598b-43ca-a880-9681db077d16@oss.qualcomm.com>
+Date: Tue, 24 Mar 2026 10:23:46 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/msm/a6xx: Add missing aperture_lock init
+To: Rob Clark <robin.clark@oss.qualcomm.com>, dri-devel@lists.freedesktop.org
+Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
+        Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar
+ <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jesszhan0024@gmail.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20260323161603.1165108-1-robin.clark@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20260323161603.1165108-1-robin.clark@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260324-topic-sm8650-ayaneo-pocket-s2-upd-bindings-v2-1-b86a1543b76b@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAAlYwmkC/53NQQ6DIBCF4asY1p0GEIntqvdoXKAMOmkLBKypM
- d691CN0+b/F+zaWMRFmdq02lnChTMGXkKeKDZPxIwLZ0kxyqXktLjCHSAPkV6sbDmY1HgPEMDx
- whizhHS305C35MUNdi15qq1zvNCuHMaGjz4Hdu9IT5Tmk9bAX8Vv/YhYBAlqFCl2jFZfy9iRvU
- jiHNLJu3/cvQADm8uUAAAA=
-X-Change-ID: 20260319-topic-sm8650-ayaneo-pocket-s2-upd-bindings-331b26d4fbf6
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Geert Uytterhoeven <geert+renesas@glider.be>, 
- Magnus Damm <magnus.damm@gmail.com>
-Cc: linux-usb@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
- Michal Pecio <michal.pecio@gmail.com>, linux-arm-msm@vger.kernel.org, 
- Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2777;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=eORHv6uMOxEZQvZKT0NGFZMJsp3s4BCbYLo0O/D16Zw=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBpwlgUNXlsxFgShF54TYDVG1RvCpnFEmpxXa5+pnAN
- EhfuNCOJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCacJYFAAKCRB33NvayMhJ0ZAYEA
- CTtXaX+QkB8DgDMLvFTrRnE7nh8tqLti7a4LyO4nYHeud+aKpAFrzh09iL9TsRro7mPdHVa20bNJ9u
- 3Sq+qZQd3ThEBEDzeO3oXDrTE0oTpH2HshAymgxaMQpG1MfnZdFHYFMpnU27xKmo/7OYVNf4DNoM1A
- zCoDM6YBHKNuxjO01QkwtivZgSaj8MGqxDAHF6juKnTscUri0qJpo8gESOppMHz+3CThUSeUphkY0K
- XiAEEe6tGlW5nqkQljBJyUQLvKpViMFEp+rcQPc/BCMYx7+rPE+XeNBqak7xO4G+dz1HlIQlaPp9Vz
- heEswCfTFi+shHXTfxwfXfge85LQwwS3G7fsJ0CCTeLjuJ1T73JH0422eshrdxwj3Qk7FTw7kr+xFR
- 6OXhznoZxjDIvo9EwOPZKPJt7XWtdBvJeq/9YCWyg0DuR/9veDp1zBiw1AG9VsJfnZzvjD5rLu1vIH
- EV2o0UhJghb9n9EixQakI2MFilElfB6AAeNzRW6rJo354neqKYueFNtxNdbMkle/TTFze12RolMKJS
- nHRBaY8DsbBqbpa0JFEW+u+i0FP42fTqv6IfGyDWFZYIMr3kJCERDevPoX1Nxe+K/h31ykJnhuzaHC
- DylioeoldQHPsoyKVyXEoepO/MvydYe0eaxUkuFgEgmtV8UYiyV0+JB5QwBQ==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Proofpoint-GUID: __jmZhAo3tz-p0JW_0-SHIiMit_jTjIt
+X-Proofpoint-ORIG-GUID: __jmZhAo3tz-p0JW_0-SHIiMit_jTjIt
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI0MDA3NCBTYWx0ZWRfX5r0wjH8ub5mk
+ 9yAitFN2wjEjQu9o5yVQ5Wqpjj0VALEv4iWM5kw2EaRIldrqhNvdFNo3tHNJKRNUB0/iK+vwgml
+ cR8jFNBZSrrxF/kiy1YF0fj4aHpvUUBI9pyQzwtIDdB4TU8hiDsxXJ0LIMiN5MCxNdK8Fd3DEVh
+ XfsZzb2Fpu5JWKn2LDld3ut2vNngZhoYj0TIr0hRrJCPNsch3lutJvnvyWlvc/5hGutBmR9HAuR
+ XaP5YQGjDktUNiaIDpsGfhcD0t2RlDXPJPBrpHjQq42v9HkIRZpgynjJt2M7zVVRIDVpXqTCTsg
+ EMmf1+mt55+y3M92Mqy1iOjLLYV191MNE42W99+zGpqaflmTrI0VQw9i+mHq/m9hoUECAo+p8ww
+ huaVAg0Isx21wL4MkvT+yHw/g3qpgAQQT1w0EAxUq6/hrggtweCvPPM7ntpJhn5rjbs69czR6YP
+ fXCIlessmgCuKEePQlQ==
+X-Authority-Analysis: v=2.4 cv=Veb6/Vp9 c=1 sm=1 tr=0 ts=69c25827 cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=EUspDBNiAAAA:8 a=9tEP0OE30YQ_IqY-BwIA:9 a=QEXdDO2ut3YA:10
+ a=OIgjcC2v60KrkQgK7BGD:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-24_02,2026-03-23_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 impostorscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015
+ priorityscore=1501 suspectscore=0 adultscore=0 phishscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603240074
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-99583-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[linuxfoundation.org,kernel.org,glider.be,gmail.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,gmail.com,linaro.org];
-	RCPT_COUNT_TWELVE(0.00)[13];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.freedesktop.org,poorly.run,kernel.org,oss.qualcomm.com,linux.dev,gmail.com,somainline.org,ffwll.ch];
 	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-99584-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:dkim,qualcomm.com:email];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[linaro.org:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,renesas];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.0:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,devicetree.org:url,msgid.link:url]
-X-Rspamd-Queue-Id: 8853C305B28
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 70AA4305B40
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Document the Renesas UPD720201/UPD720202 USB 3.0 xHCI Host Controller,
-which connects over PCIe and requires specific power supplies to
-start up.
+On 3/23/26 5:16 PM, Rob Clark wrote:
+> Looks like this was somehow missed when introducing gen8 support.
+> 
+> Fixes: 288a93200892 ("drm/msm/adreno: Introduce A8x GPU Support")
+> Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+> ---
 
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
-- [1] https://lore.kernel.org/all/20260220-topic-sm8650-ayaneo-pocket-s2-base-v5-1-1ad79caa1efa@linaro.org/
----
-Changes in v2:
-- Added the PCI ID for uPD720202, thanks to Michal Pecio
-- Link to v1: https://patch.msgid.link/20260319-topic-sm8650-ayaneo-pocket-s2-upd-bindings-v1-1-84e4ef564022@linaro.org
----
- .../bindings/usb/renesas,upd720201-pci.yaml        | 63 ++++++++++++++++++++++
- 1 file changed, 63 insertions(+)
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-diff --git a/Documentation/devicetree/bindings/usb/renesas,upd720201-pci.yaml b/Documentation/devicetree/bindings/usb/renesas,upd720201-pci.yaml
-new file mode 100644
-index 000000000000..4e890d0d2070
---- /dev/null
-+++ b/Documentation/devicetree/bindings/usb/renesas,upd720201-pci.yaml
-@@ -0,0 +1,63 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/usb/renesas,upd720201-pci.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: UPD720201/UPD720202 USB 3.0 xHCI Host Controller (PCIe)
-+
-+maintainers:
-+  - Neil Armstrong <neil.armstrong@linaro.org>
-+
-+description:
-+  UPD720201 USB 3.0 xHCI Host Controller via PCIe x1 Gen2 interface.
-+  The UPD720202 supports up to two downstream ports, while UPD720201
-+  supports up to four downstream USB 3.0 rev1.0 ports.
-+
-+properties:
-+  compatible:
-+    enum:
-+      - pci1912,0014 # UPD720201
-+      - pci1912,0015 # UPD720202
-+
-+  reg:
-+    maxItems: 1
-+
-+  avdd33-supply:
-+    description: +3.3 V power supply for analog circuit
-+
-+  vdd10-supply:
-+    description: +1.05 V power supply
-+
-+  vdd33-supply:
-+    description: +3.3 V power supply
-+
-+required:
-+  - compatible
-+  - reg
-+  - avdd33-supply
-+  - vdd10-supply
-+  - vdd33-supply
-+
-+allOf:
-+  - $ref: usb-xhci.yaml
-+
-+additionalProperties: true
-+
-+examples:
-+  - |
-+    pcie@0 {
-+        reg = <0x0 0x1000>;
-+        ranges = <0x02000000 0x0 0x100000 0x10000000 0x0 0x0>;
-+        #address-cells = <3>;
-+        #size-cells = <2>;
-+        device_type = "pci";
-+
-+        usb-controller@0 {
-+            compatible = "pci1912,0014";
-+            reg = <0x0 0x0 0x0 0x0 0x0>;
-+            avdd33-supply = <&avdd33_reg>;
-+            vdd10-supply = <&vdd10_reg>;
-+            vdd33-supply = <&vdd33_reg>;
-+        };
-+    };
-
----
-base-commit: 8e42d2514a7e8eb8d740d0ba82339dd6c0b6463f
-change-id: 20260319-topic-sm8650-ayaneo-pocket-s2-upd-bindings-331b26d4fbf6
-
-Best regards,
--- 
-Neil Armstrong <neil.armstrong@linaro.org>
-
+Konrad
 
