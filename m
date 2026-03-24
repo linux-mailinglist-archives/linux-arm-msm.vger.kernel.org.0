@@ -1,105 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-99461-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99463-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6O4LCaLXwWkaXQQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99461-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 01:15:30 +0100
+	id 0F58HcDXwWkaXQQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99463-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 01:16:00 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF6AD2FF72D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 01:15:29 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id C7C802FF769
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 01:15:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id B0C4A30B8CFA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 00:11:54 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 2121E30C61D4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 00:12:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20B77211A05;
-	Tue, 24 Mar 2026 00:11:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA325224B04;
+	Tue, 24 Mar 2026 00:11:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="INN3nadb";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="MNZA8HQZ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="W+lHq+PP";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="QHzDio5G"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDDC919D065
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 00:11:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C12231A23
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 00:11:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774311084; cv=none; b=Yje0vxVjLdyU0gX15TSElbyyaBTDYNxlSWa5WDSnOPlqakWyEluCyDpwvbVrUh2kvjsfnil6WzmSCU1skVYvsmm4VWxkw1eR4odmJE91aEA7Rg8Pt561CMnoxX8JnPV3Jmur2Z2MtvmW55M4pJHUtLVdSpxsONBsj7YZE8Io/VU=
+	t=1774311094; cv=none; b=A8hWZX5lq7hP8fEL0dwazbDb1RrT6ims+KzM9U97Z309bCAffOsh+0e2eD7co1KPL029y4lgphNSgos+Ienz5JEUeMLhM2LkbckVHMdFjAyvWTjKpE6ZgnvzrrDgdvuNB4zCVl1Fd7bUn8YHGbkeQGD1MU1Y6xvYWsYtCKrHk/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774311084; c=relaxed/simple;
-	bh=ZWpPVJTyGZX5XAzeSYalFLMhBrxegI70Mcl/cCNi2FY=;
+	s=arc-20240116; t=1774311094; c=relaxed/simple;
+	bh=thTbKT7zb2LhTfmvVHxYz+k6KtCKwik28ydRspB/nvU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=SwF/cH44lhFmV66Ial5FBIpZ+4Z5X4hYrG0NdweRhSurWnfxAmVTvX/ncrG3hSjdXykm1CKtkW3qoam1WXxrxo/7VwfKNBKNWAsVm2BYhR9+w+yUAK8WcP1ZY+kul8S4cGfxgZ+19tMwJg3NGBUGhKpR4F+XvrWx3u5CTTWPB3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=INN3nadb; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=MNZA8HQZ; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:To:Cc; b=CjjwpjKBvhl452gbvJlv7EpPgyDvz5R5ni20vnVU5W99HjQh2x9qlATrwgHB6qsjfjO51AJcPyzY49luLkcB9rojxyTnNgehnMlvJ8agSxxSVpOoGmzAzLr7Jp4e5JO9psxqUfBVKCwwvjddjnyE01VSX1q7OF3zGBy6oUsIj3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=W+lHq+PP; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=QHzDio5G; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62NHqZBR362526
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 00:11:21 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62NIZ24C1909392
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 00:11:26 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	zhWKmPyos8mU3XZ1HkzNAW8a4RA/QyofgRQ7BpX4XV0=; b=INN3nadbUSDSPE2A
-	/7JbS9NpFT72limzNsLUt3RHi1c9cnIJSVRoQ16TYgpKuKgtHvB7IXtP1EQFvttt
-	UkKhUtIISKUGTrDChUwHgw2iYpC28IxWIEzJ/pBcea+ur8s5ELM5CTsDCJTrpvem
-	MyccZH2syleEG/5ALEG635M5ULybWnJnbfFjaKMDAulPD1HhVkLggomMFv2NJTAa
-	kzLwFxXT9R2DYr9zfSWb92w4rHRJnYNe1R3guwhG78t2YMpY75+EUV5+VtX0QxIP
-	ii1U132RUF7uyMqso+24jMVeT2RyC2fBLjdd172E0w0MvCkuGAK5Qo1bavEN/c25
-	Zx98kg==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d33k32nyq-1
+	hhddJ5kzAwXmgYNZiN6SZ9YORt+zj9k6BZUbI0WSf7c=; b=W+lHq+PPTc8C3Cy5
+	UJigw8jXEaVrAmLvcErw6PTsCSzhf49VA1ccyId0Ytnc9qpPLgveTzkSfAfQV29s
+	M+rtU0fdjt739jaZDC9YEaE0qe1DW6NiR4fSk6uP8tHAykujUQ977pKEYU7/O7xE
+	1OHD18z8qBaDBNsiLf4YnmLaRwmPwcyXaFscz/g6FF3A4jHlK59HNw+ArpFWMK2Y
+	OkVGeCv6iLdglZD/9Rsa21Fw535/Uoixl+Dg4soBYn3/xrxOv2ZMb6bir+wbosxl
+	VNUaA8nyJefkkIKSHTQPwKffdJ5R6s23mMSBnud+AFoBZJqq7L4smgJVHIzXWfA5
+	1QCgoA==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d3awyrwvu-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 00:11:20 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-50b2cbe7223so42010951cf.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2026 17:11:20 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 00:11:25 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-50b6f869676so19244011cf.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2026 17:11:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1774311080; x=1774915880; darn=vger.kernel.org;
+        d=oss.qualcomm.com; s=google; t=1774311085; x=1774915885; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=zhWKmPyos8mU3XZ1HkzNAW8a4RA/QyofgRQ7BpX4XV0=;
-        b=MNZA8HQZuIkZ/nQ1EdnbzXTaAyvbwxWMCDGnXz3uR4rgMbYsiYnQIA8BeFeDGji5bg
-         IyH/Vzg1obaiS8alKGUNhjOdrVdH35G8ZP58GECyE81CUCHNYGsNWM6XzD5cZmy5+clI
-         dGOyQdBObUAXlaye4A3/F1G8gGT347KS68kv7jSpruOw+b3p+ilf5iTWA+3fTlPnJbFs
-         xJb8oCDsffCT66/1PV7y7czT0CU+TmKG7UGL0fwWjmGV1Cz9j6YLp0MRVH2oxzPnx/Qv
-         s4UbKQM7QECeUaj2STeH8zPrSTnD7ZM0hoeJ1ueqcowGZsmPCt6+75A+EOMtilJnigMB
-         0WtA==
+        bh=hhddJ5kzAwXmgYNZiN6SZ9YORt+zj9k6BZUbI0WSf7c=;
+        b=QHzDio5GAlmeQIWSUTu0ssr2vQTEut7y534tFyoceyXWLEqxAQ+Cd4FpQIM4Y5vb3M
+         4y8r7ADGvSNjK+hRtYe2LpREYb3i67jXB1K0gmMNuA/RGFtrkixGIBLmBbGnfmh3FziQ
+         6L/wQXtow7tnBwYQ7PcfcZsCoSBao92xgTSUHArS3RrqWOuYoRcCvaDrrWiuwKvHzwv/
+         udgE9gkvS+rckf0VcFm3JsbijNiTJFK635hwMEPlZVGQp+gOwlCtmjjKQjGVODSKF4eC
+         IuHnIIEm3kZDgv3HoCniFT+bt8YHWwrM/PtPrjxh0+9boDrLC01TGlD5chQ0k9l77D4Y
+         JvPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774311080; x=1774915880;
+        d=1e100.net; s=20251104; t=1774311085; x=1774915885;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=zhWKmPyos8mU3XZ1HkzNAW8a4RA/QyofgRQ7BpX4XV0=;
-        b=X9DGRjRb6zN1Ml2C2Vdpae3/uJuBc7Z6xbeeV9zrmwUpzZ8R45g0khMFfQhf1zjfNN
-         9YHr9r6JLPxVmYFTUpX2RB409fAepkhi7b9os3bhtCfAta/zOP4pQPHyFbGwJxW66BlB
-         dzHgloQUOIulHFA01uVlbPkzIVCZ5W0qhjQFRHLxnVVPzpQLIa8W0SndgOM4HnfupyGZ
-         3RXIvecs9BN3kz4oyqJc/GSniRGEJGl3c8w7BMyTJetDzhD53bnRF7d0Cjlq6xsO4BCK
-         xp84ocO0ciZ80HcgKD8So5qS3Yao5GbwE5VRYpWVeOlcBxUcpAvEetEpznMfDyzoVlIT
-         Aa8w==
-X-Gm-Message-State: AOJu0YxH5g8mtQ9DVySAVMJNSdm/BWjANrNkCyw71qJd5KdlHpyC6Y9o
-	Fb8UhmVx9DS+E2JI0VPIR3MeqOEJF6NOK33d/NN0QgS/RK/+zBRCxqL3KJUkSkNE8Y+YafoeaGm
-	vURqc8AjhRCYoKWhPHM6pYa6j7D3xuKN6IQmv8M49AtxuCOqZPV65vZa9eMZE6B7GAiVk
-X-Gm-Gg: ATEYQzw1PozsNy4ORdmabKmDyjSrLbixtjNUlueOP00OTOYp1F5KwQ/2MDlhw870Anl
-	c2ELHEpkkB4igr2otA/waXTY2+7T9XgvMUC7TGbijjbrLhLhCPo6awMWOUZNXXfmWV8wpmDc1dh
-	/uGSu2t8vkjXo2CFXzSfEfFPznqqPMZDFMZ6BwhJrZkzwFBOc0uJAPBiRJpeBIm3iEvOvK5Cx9f
-	/zbN1HBN/zfeZM9CggrLrwnInG6Qb6MUpy0sgHjVWZWAIhRCOnGlPqxt0ZijkD8Ag6IqhCQogrR
-	IQH5GZMOPQHCxkSGiwGPN6wIHIE6xXusXrj6J53kxHUj8zMPu/egSyQgE+dUxoxds+r1aywDfH8
-	RN70xF6ytYWyy2MWpA6qQYzahucwbBHqXGWtCIAKY0XdyVORSwrrQVJxQb1Fz80EmO3OZJRBTts
-	JtVaItAgDVg8v7o63f7i2B0nckOygYWva2PQ0=
-X-Received: by 2002:ac8:5816:0:b0:50b:51f7:c660 with SMTP id d75a77b69052e-50b51f7d5c4mr123019851cf.61.1774311080106;
-        Mon, 23 Mar 2026 17:11:20 -0700 (PDT)
-X-Received: by 2002:ac8:5816:0:b0:50b:51f7:c660 with SMTP id d75a77b69052e-50b51f7d5c4mr123019611cf.61.1774311079591;
-        Mon, 23 Mar 2026 17:11:19 -0700 (PDT)
+        bh=hhddJ5kzAwXmgYNZiN6SZ9YORt+zj9k6BZUbI0WSf7c=;
+        b=Xy5u0VXYtTZs/600cWUJTzi//9Q2cPUTesvquDrHK56VmRYT/7D1orN6S5/DY8IQ2I
+         ok7om4ylnNHgurTbzjsgG/9cRESicHna6PGdpS6REmDlpf9OpnCnO1RJ0kYdVloYs69f
+         BoEYJBYQKA9vjS+WSrBtvtvB2O0CVl4JWOtjvQ9nFaasT5FdXkYu+Befni8HL5JGyMp8
+         iiqv63SdWbsrWTnSZ3ct4rLGi5vx61/3yLRnXTUSAcngKZoExPU7uCIfl3X7Cc3ThS+L
+         OfgC46hmWJfq8r+A2OOZ935T61P0vBB9nxdHQkfPU0KwgHIR3ZXEp/X0Get0U+wARs2Y
+         lUAA==
+X-Gm-Message-State: AOJu0YypBArtQMZqW7MTqw5nukOxaUbWjSQylmtjywrNchqf1wzDTJ8E
+	/gRHas5hrYYd4i7VHfToqnCX7pYEL6ZOm0y4JakbcRpGmUFH7rFtVDOY+tQz6nZixSt/G5ya2Lv
+	Ss1hu9GKrwitRygSGtF4hUa93I1qSRZ/72qrApANIwx85iN723kRjawxQTQT9Nx6LFWz4
+X-Gm-Gg: ATEYQzxGNzfgrvCv9a/MqIMerD91Fzw0YEKD8h4Zg5gdOP8dB2u4M84orTQYfQAwNJJ
+	kO5ApU1sCJRdisuBPncjuJ9RwQe/tbzQ2/Cn8PmwzjCqLV5hsqIhANeacah1HEI8QIncWpczpDb
+	kS06oSHD5wxS2IsoYPXwmZrRPmPYry2GGRFw4PSO8D1lKeIdYkL7hbVzuFcMLR8TFKqAIfyK5ZB
+	zrcsrKDV3jrPlWimxRUjvH375NrLJMHQ8qqSPdKowl19LpTbjT+/E4oEw2marzKr2JZhPW4OIxv
+	Ck5AY9pRllwn9+aXOG64JziUx0+THBRm4GTxqi/n7fpMDjQoRgZDFVHaXTZA/Jdgz5NeKEgN850
+	3PS6ATmvWapeV5tl31UQ/+jzYXKDG1pOfy3xWEgfL0wrW64tFRpVzkmWT8Rl2yQ6yC68Zk69XiN
+	oRU2fkkBVgIkMKPyYEmOZGcSkZ0Iqq9XxJCiY=
+X-Received: by 2002:a05:622a:4a07:b0:509:2053:ab60 with SMTP id d75a77b69052e-50b3753db18mr213490441cf.47.1774311084532;
+        Mon, 23 Mar 2026 17:11:24 -0700 (PDT)
+X-Received: by 2002:a05:622a:4a07:b0:509:2053:ab60 with SMTP id d75a77b69052e-50b3753db18mr213490171cf.47.1774311083916;
+        Mon, 23 Mar 2026 17:11:23 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38bf99820f6sm30339021fa.19.2026.03.23.17.11.15
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38bf99820f6sm30339021fa.19.2026.03.23.17.11.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Mar 2026 17:11:16 -0700 (PDT)
+        Mon, 23 Mar 2026 17:11:21 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Tue, 24 Mar 2026 02:10:43 +0200
-Subject: [PATCH v2 7/9] interconnect: qcom: msm8974: switch to the main
- icc-rpm driver
+Date: Tue, 24 Mar 2026 02:10:44 +0200
+Subject: [PATCH v2 8/9] interconnect: qcom: msm8974: expand DEFINE_QNODE
+ macros
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -108,7 +108,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260324-msm8974-icc-v2-7-527280043ad8@oss.qualcomm.com>
+Message-Id: <20260324-msm8974-icc-v2-8-527280043ad8@oss.qualcomm.com>
 References: <20260324-msm8974-icc-v2-0-527280043ad8@oss.qualcomm.com>
 In-Reply-To: <20260324-msm8974-icc-v2-0-527280043ad8@oss.qualcomm.com>
 To: Georgi Djakov <djakov@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
@@ -121,46 +121,46 @@ Cc: linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.15.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=15014;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=39625;
  i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
- bh=ZWpPVJTyGZX5XAzeSYalFLMhBrxegI70Mcl/cCNi2FY=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBpwdaI3lTenV7zncKDJm5AR0B0kfk6aJMyW0Vb/
- yQWMs4Fy5SJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCacHWiAAKCRCLPIo+Aiko
- 1XVTB/0bDTHNacN143azpIqnrc8H16+x78i0XMXOnVRK/m3N9u4qotwmloqY4Dm40hjy5wzZDFI
- QY0NjM7Ki/uQySWN1ezJHjluYO40hzY342N5RYF1LJ7Tq60Nfw/wl5R+ixX68AsupAb5yhTS6RU
- X38EGKu+lX/Jup7624+0LoRUukCVKrfazS+1COcJtxECJF7XFJ0ghzZ9QMdPWBrPUQoTnWatJGo
- NwNDLPz6ScREQv6kUwv4MchYRBbrFWV+CkpdnNfVDWANJU+utm4PRpBYVNkTHI8GPWgEAQCTY/B
- BbF9Ei4e22zG2PpoUxsu+8l/TopIU3sEm5dHOFTfn1de/yM5
+ bh=thTbKT7zb2LhTfmvVHxYz+k6KtCKwik28ydRspB/nvU=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBpwdaIYM5vAsl7jmE5EbmoMnOGCTZYnEEIDdYZQ
+ wMijuzvEJWJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCacHWiAAKCRCLPIo+Aiko
+ 1VviCACSnS4v4ftw36RVz+61g4LA9ULPrZSeNh3SSwuziB5iiexMAzk/XF8GmFugtZXs5N8QHi3
+ Gb+Q+p2huu4wF4qRlG5y7W3XTKS1WoYKLTNrX5mqj/i0v9Vtb5QXN3DDCYyx2Byk9Z+4X0H1/lJ
+ lv4atvxZ2kFVufln2YYTILl4iXeLkgPoybeQod931oF+vwL3yu92/Bko3nW/S5r8OaxBae4zlM8
+ PjNk0Pun15rMfojBWUyuYtWowZnx+HOUrn6CR0LInu8IOG5RlevsQm4G1Z92KeFLS1WqXttxqBH
+ SGDkhEaoLBQurDXKRjc1l7JnOgemybVyg3u7+tr1K5CFCFHn
 X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
-X-Authority-Analysis: v=2.4 cv=CYYFJbrl c=1 sm=1 tr=0 ts=69c1d6a8 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI0MDAwMCBTYWx0ZWRfX/nKKT9opgXdf
+ 37AIqt3zqKmJXa4tt7fi7y6fc9EpCtlrVmxioMrIy3qAWi0my4e6O/Ih7gHwhIygPXzU5FAq0Ii
+ yrpv7dbb0oTtCug5eefqALg8plXvonZI2krd3LAlFNPj8D4+U6n2XKC1SqllsLkhd7lkB75Eep3
+ T+kItn5e+vujofW7OCSwPS3hfRAX++ByBW3+q68u0f+M1BNaFPiRVbZL6ponH+nVmpU76ai8MjM
+ fzlTUgQd73fguDIPInf+QSK6yCnTSc9WlK9RURyzieDgSieyZdJFiogjkAD0+Gi1kU3C0/9oVKT
+ Fpd8M42kmS17fgy3EsV+USsCd6aEhsc+LaKwOq+kS6af0y5gMzdfEsY7iqZzE3ko5BnBGNxp8QO
+ amGsbaWzF5NcEIpYPoCiY5Bwen/JEEWDofiNedx7bJt7tuWslTVVBpRbBrny3cRhdX/kqU5gtpN
+ MAc5njXG310pYEdiFvw==
+X-Proofpoint-ORIG-GUID: KYhkF9t0XZ9spKXYpVfyiL1y1WG9NZPs
+X-Authority-Analysis: v=2.4 cv=KuhAGGWN c=1 sm=1 tr=0 ts=69c1d6ae cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
  a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=EUspDBNiAAAA:8
- a=vNxNlsk0RTatv9OKPSEA:9 a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI0MDAwMCBTYWx0ZWRfXxdyuAWvjX821
- PxRi/3wazZ3V8b+fwi0gZ+3+SgHTFQIBes4HNLnK7/bASKBkfZnLJR8tIBZFVRvPK7VVC1Nx9xl
- UK4ooB9P9ZCpm0RQp/vPu/9tsXEGr5vhA1ABEMuSl4pH8QKvNY+Ub3VfXN77ygl+ChFXk34DadQ
- /9MiNq4yc7PNAMbD97Sql2Si9joINr8bKm9+ZbzsZsP1akUhF6STbp8vggKBXvAe2g0+q9VPI98
- ZVKujhvGp7DxSu4aXRfzPHGEjlssi4vTafziXeVqzbYcp/KqNWvsfrr3RrfIVRih5x1STM65GIu
- GEvtKMt7sk5bkESFmMCsWLc+7/sCfXrvJEm+omWD2mBenLTCnacBTaMjcrXPhhAg3adhf1XKSpo
- n/NQXIKh1Ou1BSVKMG9QDpNrPFdjZmvAx/CC8nGDbht7JSlbFJctp1HRu91ZzmLC+yUMtpGIown
- EhdLtub32PawmM94f9A==
-X-Proofpoint-GUID: uN5nnnQU7ADXZyokWgz8MCKp9cO9TSx5
-X-Proofpoint-ORIG-GUID: uN5nnnQU7ADXZyokWgz8MCKp9cO9TSx5
+ a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22 a=EUspDBNiAAAA:8
+ a=gU3Gd9FrbIblE3rB6ncA:9 a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-GUID: KYhkF9t0XZ9spKXYpVfyiL1y1WG9NZPs
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-23_07,2026-03-23_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 clxscore=1015 spamscore=0 phishscore=0 lowpriorityscore=0
- adultscore=0 malwarescore=0 bulkscore=0 impostorscore=0 suspectscore=0
+ bulkscore=0 malwarescore=0 phishscore=0 priorityscore=1501 impostorscore=0
+ spamscore=0 adultscore=0 lowpriorityscore=0 clxscore=1015 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603240000
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
@@ -168,7 +168,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MIME_TRACE(0.00)[0:+];
 	RCPT_COUNT_TWELVE(0.00)[13];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-99461-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-99463-lists,linux-arm-msm=lfdr.de];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
@@ -177,462 +177,1409 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: AF6AD2FF72D
+X-Rspamd-Queue-Id: C7C802FF769
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-In preparation to restoring the ability of MSM8974 driver to work with
-the modern kernels, switch the driver to the main icc-rpm set of helper
-code.
+The rest of Qualcomm Interconnect drivers have stopped using
+DEFINE_QNODE long ago for the sake of readability. Stop using it inside
+the msm8974 interconnect driver too.
 
-As platform-specific workarounds, set the get_bw callback (returning 0)
-to prevent initial setup from programming INT_MAX into the RPM (which
-otherwise might hang the platform) and tell RPM programming code to
-ignore -ENXIO errors from the firmware (until the QoS programming is
-sorted out).
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Acked-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 ---
- drivers/interconnect/qcom/msm8974.c | 304 +++++-------------------------------
- 1 file changed, 43 insertions(+), 261 deletions(-)
+ drivers/interconnect/qcom/msm8974.c | 1335 +++++++++++++++++++++++++++++++----
+ 1 file changed, 1191 insertions(+), 144 deletions(-)
 
 diff --git a/drivers/interconnect/qcom/msm8974.c b/drivers/interconnect/qcom/msm8974.c
-index 3239edc37f02..144f225ec885 100644
+index 144f225ec885..c020c61126ca 100644
 --- a/drivers/interconnect/qcom/msm8974.c
 +++ b/drivers/interconnect/qcom/msm8974.c
-@@ -173,65 +173,27 @@ enum {
- 	MSM8974_SNOC_SLV_QDSS_STM,
+@@ -181,28 +181,75 @@ static int msm8974_get_bw(struct icc_node *node, u32 *avg, u32 *peak)
+ 	return 0;
  };
  
--#define to_msm8974_icc_provider(_provider) \
--	container_of(_provider, struct msm8974_icc_provider, provider)
+-#define DEFINE_QNODE(_name, _id, _buswidth, _mas_rpm_id, _slv_rpm_id,	\
+-		     ...)						\
+-		static const u16 _name ## _links[] = {			\
+-			__VA_ARGS__					\
+-		};							\
+-		static struct qcom_icc_node _name = {			\
+-		.name = #_name,						\
+-		.id = _id,						\
+-		.buswidth = _buswidth,					\
+-		.mas_rpm_id = _mas_rpm_id,				\
+-		.slv_rpm_id = _slv_rpm_id,				\
+-		.num_links = ARRAY_SIZE(_name ## _links),		\
+-		.links = _name ## _links,				\
+-	}
 -
--static const struct clk_bulk_data msm8974_icc_bus_clocks[] = {
--	{ .id = "bus" },
--	{ .id = "bus_a" },
--};
--
--/**
-- * struct msm8974_icc_provider - Qualcomm specific interconnect provider
-- * @provider: generic interconnect provider
-- * @bus_clks: the clk_bulk_data table of bus clocks
-- * @num_clks: the total number of clk_bulk_data entries
-- */
--struct msm8974_icc_provider {
--	struct icc_provider provider;
--	struct clk_bulk_data *bus_clks;
--	int num_clks;
--};
--
--#define MSM8974_ICC_MAX_LINKS	3
--
--/**
-- * struct msm8974_icc_node - Qualcomm specific interconnect nodes
-- * @name: the node name used in debugfs
-- * @id: a unique node identifier
-- * @links: an array of nodes where we can go next while traversing
-- * @num_links: the total number of @links
-- * @buswidth: width of the interconnect between a node and the bus (bytes)
-- * @mas_rpm_id:	RPM ID for devices that are bus masters
-- * @slv_rpm_id:	RPM ID for devices that are bus slaves
-- * @rate: current bus clock rate in Hz
-- */
--struct msm8974_icc_node {
--	unsigned char *name;
--	u16 id;
--	u16 links[MSM8974_ICC_MAX_LINKS];
--	u16 num_links;
--	u16 buswidth;
--	int mas_rpm_id;
--	int slv_rpm_id;
--	u64 rate;
--};
-+static int msm8974_get_bw(struct icc_node *node, u32 *avg, u32 *peak)
-+{
-+	*avg = 0;
-+	*peak = 0;
+-DEFINE_QNODE(mas_ampss_m0, MSM8974_BIMC_MAS_AMPSS_M0, 8, 0, -1);
+-DEFINE_QNODE(mas_ampss_m1, MSM8974_BIMC_MAS_AMPSS_M1, 8, 0, -1);
+-DEFINE_QNODE(mas_mss_proc, MSM8974_BIMC_MAS_MSS_PROC, 8, 1, -1);
+-DEFINE_QNODE(bimc_to_mnoc, MSM8974_BIMC_TO_MNOC, 8, 2, -1, MSM8974_BIMC_SLV_EBI_CH0);
+-DEFINE_QNODE(bimc_to_snoc, MSM8974_BIMC_TO_SNOC, 8, 3, 2, MSM8974_SNOC_TO_BIMC, MSM8974_BIMC_SLV_EBI_CH0, MSM8974_BIMC_MAS_AMPSS_M0);
+-DEFINE_QNODE(slv_ebi_ch0, MSM8974_BIMC_SLV_EBI_CH0, 8, -1, 0);
+-DEFINE_QNODE(slv_ampss_l2, MSM8974_BIMC_SLV_AMPSS_L2, 8, -1, 1);
++static struct qcom_icc_node mas_ampss_m0 = {
++	.name = "mas_ampss_m0",
++	.id = MSM8974_BIMC_MAS_AMPSS_M0,
++	.buswidth = 8,
++	.mas_rpm_id = 0,
++	.slv_rpm_id = -1,
++};
++
++static struct qcom_icc_node mas_ampss_m1 = {
++	.name = "mas_ampss_m1",
++	.id = MSM8974_BIMC_MAS_AMPSS_M1,
++	.buswidth = 8,
++	.mas_rpm_id = 0,
++	.slv_rpm_id = -1,
++};
++
++static struct qcom_icc_node mas_mss_proc = {
++	.name = "mas_mss_proc",
++	.id = MSM8974_BIMC_MAS_MSS_PROC,
++	.buswidth = 8,
++	.mas_rpm_id = 1,
++	.slv_rpm_id = -1,
++};
++
++static const u16 bimc_to_mnoc_links[] = {
++	MSM8974_BIMC_SLV_EBI_CH0
++};
++
++static struct qcom_icc_node bimc_to_mnoc = {
++	.name = "bimc_to_mnoc",
++	.id = MSM8974_BIMC_TO_MNOC,
++	.buswidth = 8,
++	.mas_rpm_id = 2,
++	.slv_rpm_id = -1,
++	.num_links = ARRAY_SIZE(bimc_to_mnoc_links),
++	.links = bimc_to_mnoc_links,
++};
++
++static const u16 bimc_to_snoc_links[] = {
++	MSM8974_SNOC_TO_BIMC,
++	MSM8974_BIMC_SLV_EBI_CH0,
++	MSM8974_BIMC_MAS_AMPSS_M0
++};
++
++static struct qcom_icc_node bimc_to_snoc = {
++	.name = "bimc_to_snoc",
++	.id = MSM8974_BIMC_TO_SNOC,
++	.buswidth = 8,
++	.mas_rpm_id = 3,
++	.slv_rpm_id = 2,
++	.num_links = ARRAY_SIZE(bimc_to_snoc_links),
++	.links = bimc_to_snoc_links,
++};
++
++static struct qcom_icc_node slv_ebi_ch0 = {
++	.name = "slv_ebi_ch0",
++	.id = MSM8974_BIMC_SLV_EBI_CH0,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 0,
++};
++
++static struct qcom_icc_node slv_ampss_l2 = {
++	.name = "slv_ampss_l2",
++	.id = MSM8974_BIMC_SLV_AMPSS_L2,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 1,
++};
  
--struct msm8974_icc_desc {
--	struct msm8974_icc_node * const *nodes;
--	size_t num_nodes;
-+	return 0;
- };
- 
- #define DEFINE_QNODE(_name, _id, _buswidth, _mas_rpm_id, _slv_rpm_id,	\
- 		     ...)						\
--		static struct msm8974_icc_node _name = {		\
-+		static const u16 _name ## _links[] = {			\
-+			__VA_ARGS__					\
-+		};							\
-+		static struct qcom_icc_node _name = {			\
- 		.name = #_name,						\
- 		.id = _id,						\
- 		.buswidth = _buswidth,					\
- 		.mas_rpm_id = _mas_rpm_id,				\
- 		.slv_rpm_id = _slv_rpm_id,				\
--		.num_links = COUNT_ARGS(__VA_ARGS__),			\
--		.links = { __VA_ARGS__ },				\
-+		.num_links = ARRAY_SIZE(_name ## _links),		\
-+		.links = _name ## _links,				\
- 	}
- 
- DEFINE_QNODE(mas_ampss_m0, MSM8974_BIMC_MAS_AMPSS_M0, 8, 0, -1);
-@@ -242,7 +204,7 @@ DEFINE_QNODE(bimc_to_snoc, MSM8974_BIMC_TO_SNOC, 8, 3, 2, MSM8974_SNOC_TO_BIMC,
- DEFINE_QNODE(slv_ebi_ch0, MSM8974_BIMC_SLV_EBI_CH0, 8, -1, 0);
- DEFINE_QNODE(slv_ampss_l2, MSM8974_BIMC_SLV_AMPSS_L2, 8, -1, 1);
- 
--static struct msm8974_icc_node * const msm8974_bimc_nodes[] = {
-+static struct qcom_icc_node * const msm8974_bimc_nodes[] = {
+ static struct qcom_icc_node * const msm8974_bimc_nodes[] = {
  	[BIMC_MAS_AMPSS_M0] = &mas_ampss_m0,
- 	[BIMC_MAS_AMPSS_M1] = &mas_ampss_m1,
- 	[BIMC_MAS_MSS_PROC] = &mas_mss_proc,
-@@ -252,9 +214,12 @@ static struct msm8974_icc_node * const msm8974_bimc_nodes[] = {
- 	[BIMC_SLV_AMPSS_L2] = &slv_ampss_l2,
+@@ -222,43 +269,301 @@ static const struct qcom_icc_desc msm8974_bimc = {
+ 	.ignore_enxio = true,
  };
  
--static const struct msm8974_icc_desc msm8974_bimc = {
-+static const struct qcom_icc_desc msm8974_bimc = {
- 	.nodes = msm8974_bimc_nodes,
- 	.num_nodes = ARRAY_SIZE(msm8974_bimc_nodes),
-+	.bus_clk_desc = &bimc_clk,
-+	.get_bw = msm8974_get_bw,
-+	.ignore_enxio = true,
- };
+-DEFINE_QNODE(mas_rpm_inst, MSM8974_CNOC_MAS_RPM_INST, 8, 45, -1);
+-DEFINE_QNODE(mas_rpm_data, MSM8974_CNOC_MAS_RPM_DATA, 8, 46, -1);
+-DEFINE_QNODE(mas_rpm_sys, MSM8974_CNOC_MAS_RPM_SYS, 8, 47, -1);
+-DEFINE_QNODE(mas_dehr, MSM8974_CNOC_MAS_DEHR, 8, 48, -1);
+-DEFINE_QNODE(mas_qdss_dap, MSM8974_CNOC_MAS_QDSS_DAP, 8, 49, -1);
+-DEFINE_QNODE(mas_spdm, MSM8974_CNOC_MAS_SPDM, 8, 50, -1);
+-DEFINE_QNODE(mas_tic, MSM8974_CNOC_MAS_TIC, 8, 51, -1);
+-DEFINE_QNODE(slv_clk_ctl, MSM8974_CNOC_SLV_CLK_CTL, 8, -1, 47);
+-DEFINE_QNODE(slv_cnoc_mss, MSM8974_CNOC_SLV_CNOC_MSS, 8, -1, 48);
+-DEFINE_QNODE(slv_security, MSM8974_CNOC_SLV_SECURITY, 8, -1, 49);
+-DEFINE_QNODE(slv_tcsr, MSM8974_CNOC_SLV_TCSR, 8, -1, 50);
+-DEFINE_QNODE(slv_tlmm, MSM8974_CNOC_SLV_TLMM, 8, -1, 51);
+-DEFINE_QNODE(slv_crypto_0_cfg, MSM8974_CNOC_SLV_CRYPTO_0_CFG, 8, -1, 52);
+-DEFINE_QNODE(slv_crypto_1_cfg, MSM8974_CNOC_SLV_CRYPTO_1_CFG, 8, -1, 53);
+-DEFINE_QNODE(slv_imem_cfg, MSM8974_CNOC_SLV_IMEM_CFG, 8, -1, 54);
+-DEFINE_QNODE(slv_message_ram, MSM8974_CNOC_SLV_MESSAGE_RAM, 8, -1, 55);
+-DEFINE_QNODE(slv_bimc_cfg, MSM8974_CNOC_SLV_BIMC_CFG, 8, -1, 56);
+-DEFINE_QNODE(slv_boot_rom, MSM8974_CNOC_SLV_BOOT_ROM, 8, -1, 57);
+-DEFINE_QNODE(slv_pmic_arb, MSM8974_CNOC_SLV_PMIC_ARB, 8, -1, 59);
+-DEFINE_QNODE(slv_spdm_wrapper, MSM8974_CNOC_SLV_SPDM_WRAPPER, 8, -1, 60);
+-DEFINE_QNODE(slv_dehr_cfg, MSM8974_CNOC_SLV_DEHR_CFG, 8, -1, 61);
+-DEFINE_QNODE(slv_mpm, MSM8974_CNOC_SLV_MPM, 8, -1, 62);
+-DEFINE_QNODE(slv_qdss_cfg, MSM8974_CNOC_SLV_QDSS_CFG, 8, -1, 63);
+-DEFINE_QNODE(slv_rbcpr_cfg, MSM8974_CNOC_SLV_RBCPR_CFG, 8, -1, 64);
+-DEFINE_QNODE(slv_rbcpr_qdss_apu_cfg, MSM8974_CNOC_SLV_RBCPR_QDSS_APU_CFG, 8, -1, 65);
+-DEFINE_QNODE(cnoc_to_snoc, MSM8974_CNOC_TO_SNOC, 8, 52, 75);
+-DEFINE_QNODE(slv_cnoc_onoc_cfg, MSM8974_CNOC_SLV_CNOC_ONOC_CFG, 8, -1, 68);
+-DEFINE_QNODE(slv_cnoc_mnoc_mmss_cfg, MSM8974_CNOC_SLV_CNOC_MNOC_MMSS_CFG, 8, -1, 58);
+-DEFINE_QNODE(slv_cnoc_mnoc_cfg, MSM8974_CNOC_SLV_CNOC_MNOC_CFG, 8, -1, 66);
+-DEFINE_QNODE(slv_pnoc_cfg, MSM8974_CNOC_SLV_PNOC_CFG, 8, -1, 69);
+-DEFINE_QNODE(slv_snoc_mpu_cfg, MSM8974_CNOC_SLV_SNOC_MPU_CFG, 8, -1, 67);
+-DEFINE_QNODE(slv_snoc_cfg, MSM8974_CNOC_SLV_SNOC_CFG, 8, -1, 70);
+-DEFINE_QNODE(slv_ebi1_dll_cfg, MSM8974_CNOC_SLV_EBI1_DLL_CFG, 8, -1, 71);
+-DEFINE_QNODE(slv_phy_apu_cfg, MSM8974_CNOC_SLV_PHY_APU_CFG, 8, -1, 72);
+-DEFINE_QNODE(slv_ebi1_phy_cfg, MSM8974_CNOC_SLV_EBI1_PHY_CFG, 8, -1, 73);
+-DEFINE_QNODE(slv_rpm, MSM8974_CNOC_SLV_RPM, 8, -1, 74);
+-DEFINE_QNODE(slv_service_cnoc, MSM8974_CNOC_SLV_SERVICE_CNOC, 8, -1, 76);
++static struct qcom_icc_node mas_rpm_inst = {
++	.name = "mas_rpm_inst",
++	.id = MSM8974_CNOC_MAS_RPM_INST,
++	.buswidth = 8,
++	.mas_rpm_id = 45,
++	.slv_rpm_id = -1,
++};
++
++static struct qcom_icc_node mas_rpm_data = {
++	.name = "mas_rpm_data",
++	.id = MSM8974_CNOC_MAS_RPM_DATA,
++	.buswidth = 8,
++	.mas_rpm_id = 46,
++	.slv_rpm_id = -1,
++};
++
++static struct qcom_icc_node mas_rpm_sys = {
++	.name = "mas_rpm_sys",
++	.id = MSM8974_CNOC_MAS_RPM_SYS,
++	.buswidth = 8,
++	.mas_rpm_id = 47,
++	.slv_rpm_id = -1,
++};
++
++static struct qcom_icc_node mas_dehr = {
++	.name = "mas_dehr",
++	.id = MSM8974_CNOC_MAS_DEHR,
++	.buswidth = 8,
++	.mas_rpm_id = 48,
++	.slv_rpm_id = -1,
++};
++
++static struct qcom_icc_node mas_qdss_dap = {
++	.name = "mas_qdss_dap",
++	.id = MSM8974_CNOC_MAS_QDSS_DAP,
++	.buswidth = 8,
++	.mas_rpm_id = 49,
++	.slv_rpm_id = -1,
++};
++
++static struct qcom_icc_node mas_spdm = {
++	.name = "mas_spdm",
++	.id = MSM8974_CNOC_MAS_SPDM,
++	.buswidth = 8,
++	.mas_rpm_id = 50,
++	.slv_rpm_id = -1,
++};
++
++static struct qcom_icc_node mas_tic = {
++	.name = "mas_tic",
++	.id = MSM8974_CNOC_MAS_TIC,
++	.buswidth = 8,
++	.mas_rpm_id = 51,
++	.slv_rpm_id = -1,
++};
++
++static struct qcom_icc_node slv_clk_ctl = {
++	.name = "slv_clk_ctl",
++	.id = MSM8974_CNOC_SLV_CLK_CTL,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 47,
++};
++
++static struct qcom_icc_node slv_cnoc_mss = {
++	.name = "slv_cnoc_mss",
++	.id = MSM8974_CNOC_SLV_CNOC_MSS,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 48,
++};
++
++static struct qcom_icc_node slv_security = {
++	.name = "slv_security",
++	.id = MSM8974_CNOC_SLV_SECURITY,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 49,
++};
++
++static struct qcom_icc_node slv_tcsr = {
++	.name = "slv_tcsr",
++	.id = MSM8974_CNOC_SLV_TCSR,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 50,
++};
++
++static struct qcom_icc_node slv_tlmm = {
++	.name = "slv_tlmm",
++	.id = MSM8974_CNOC_SLV_TLMM,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 51,
++};
++
++static struct qcom_icc_node slv_crypto_0_cfg = {
++	.name = "slv_crypto_0_cfg",
++	.id = MSM8974_CNOC_SLV_CRYPTO_0_CFG,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 52,
++};
++
++static struct qcom_icc_node slv_crypto_1_cfg = {
++	.name = "slv_crypto_1_cfg",
++	.id = MSM8974_CNOC_SLV_CRYPTO_1_CFG,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 53,
++};
++
++static struct qcom_icc_node slv_imem_cfg = {
++	.name = "slv_imem_cfg",
++	.id = MSM8974_CNOC_SLV_IMEM_CFG,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 54,
++};
++
++static struct qcom_icc_node slv_message_ram = {
++	.name = "slv_message_ram",
++	.id = MSM8974_CNOC_SLV_MESSAGE_RAM,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 55,
++};
++
++static struct qcom_icc_node slv_bimc_cfg = {
++	.name = "slv_bimc_cfg",
++	.id = MSM8974_CNOC_SLV_BIMC_CFG,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 56,
++};
++
++static struct qcom_icc_node slv_boot_rom = {
++	.name = "slv_boot_rom",
++	.id = MSM8974_CNOC_SLV_BOOT_ROM,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 57,
++};
++
++static struct qcom_icc_node slv_pmic_arb = {
++	.name = "slv_pmic_arb",
++	.id = MSM8974_CNOC_SLV_PMIC_ARB,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 59,
++};
++
++static struct qcom_icc_node slv_spdm_wrapper = {
++	.name = "slv_spdm_wrapper",
++	.id = MSM8974_CNOC_SLV_SPDM_WRAPPER,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 60,
++};
++
++static struct qcom_icc_node slv_dehr_cfg = {
++	.name = "slv_dehr_cfg",
++	.id = MSM8974_CNOC_SLV_DEHR_CFG,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 61,
++};
++
++static struct qcom_icc_node slv_mpm = {
++	.name = "slv_mpm",
++	.id = MSM8974_CNOC_SLV_MPM,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 62,
++};
++
++static struct qcom_icc_node slv_qdss_cfg = {
++	.name = "slv_qdss_cfg",
++	.id = MSM8974_CNOC_SLV_QDSS_CFG,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 63,
++};
++
++static struct qcom_icc_node slv_rbcpr_cfg = {
++	.name = "slv_rbcpr_cfg",
++	.id = MSM8974_CNOC_SLV_RBCPR_CFG,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 64,
++};
++
++static struct qcom_icc_node slv_rbcpr_qdss_apu_cfg = {
++	.name = "slv_rbcpr_qdss_apu_cfg",
++	.id = MSM8974_CNOC_SLV_RBCPR_QDSS_APU_CFG,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 65,
++};
++
++static struct qcom_icc_node cnoc_to_snoc = {
++	.name = "cnoc_to_snoc",
++	.id = MSM8974_CNOC_TO_SNOC,
++	.buswidth = 8,
++	.mas_rpm_id = 52,
++	.slv_rpm_id = 75,
++};
++
++static struct qcom_icc_node slv_cnoc_onoc_cfg = {
++	.name = "slv_cnoc_onoc_cfg",
++	.id = MSM8974_CNOC_SLV_CNOC_ONOC_CFG,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 68,
++};
++
++static struct qcom_icc_node slv_cnoc_mnoc_mmss_cfg = {
++	.name = "slv_cnoc_mnoc_mmss_cfg",
++	.id = MSM8974_CNOC_SLV_CNOC_MNOC_MMSS_CFG,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 58,
++};
++
++static struct qcom_icc_node slv_cnoc_mnoc_cfg = {
++	.name = "slv_cnoc_mnoc_cfg",
++	.id = MSM8974_CNOC_SLV_CNOC_MNOC_CFG,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 66,
++};
++
++static struct qcom_icc_node slv_pnoc_cfg = {
++	.name = "slv_pnoc_cfg",
++	.id = MSM8974_CNOC_SLV_PNOC_CFG,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 69,
++};
++
++static struct qcom_icc_node slv_snoc_mpu_cfg = {
++	.name = "slv_snoc_mpu_cfg",
++	.id = MSM8974_CNOC_SLV_SNOC_MPU_CFG,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 67,
++};
++
++static struct qcom_icc_node slv_snoc_cfg = {
++	.name = "slv_snoc_cfg",
++	.id = MSM8974_CNOC_SLV_SNOC_CFG,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 70,
++};
++
++static struct qcom_icc_node slv_ebi1_dll_cfg = {
++	.name = "slv_ebi1_dll_cfg",
++	.id = MSM8974_CNOC_SLV_EBI1_DLL_CFG,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 71,
++};
++
++static struct qcom_icc_node slv_phy_apu_cfg = {
++	.name = "slv_phy_apu_cfg",
++	.id = MSM8974_CNOC_SLV_PHY_APU_CFG,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 72,
++};
++
++static struct qcom_icc_node slv_ebi1_phy_cfg = {
++	.name = "slv_ebi1_phy_cfg",
++	.id = MSM8974_CNOC_SLV_EBI1_PHY_CFG,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 73,
++};
++
++static struct qcom_icc_node slv_rpm = {
++	.name = "slv_rpm",
++	.id = MSM8974_CNOC_SLV_RPM,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 74,
++};
++
++static struct qcom_icc_node slv_service_cnoc = {
++	.name = "slv_service_cnoc",
++	.id = MSM8974_CNOC_SLV_SERVICE_CNOC,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 76,
++};
  
- DEFINE_QNODE(mas_rpm_inst, MSM8974_CNOC_MAS_RPM_INST, 8, 45, -1);
-@@ -295,7 +260,7 @@ DEFINE_QNODE(slv_ebi1_phy_cfg, MSM8974_CNOC_SLV_EBI1_PHY_CFG, 8, -1, 73);
- DEFINE_QNODE(slv_rpm, MSM8974_CNOC_SLV_RPM, 8, -1, 74);
- DEFINE_QNODE(slv_service_cnoc, MSM8974_CNOC_SLV_SERVICE_CNOC, 8, -1, 76);
- 
--static struct msm8974_icc_node * const msm8974_cnoc_nodes[] = {
-+static struct qcom_icc_node * const msm8974_cnoc_nodes[] = {
+ static struct qcom_icc_node * const msm8974_cnoc_nodes[] = {
  	[CNOC_MAS_RPM_INST] = &mas_rpm_inst,
- 	[CNOC_MAS_RPM_DATA] = &mas_rpm_data,
- 	[CNOC_MAS_RPM_SYS] = &mas_rpm_sys,
-@@ -335,9 +300,12 @@ static struct msm8974_icc_node * const msm8974_cnoc_nodes[] = {
- 	[CNOC_SLV_SERVICE_CNOC] = &slv_service_cnoc,
+@@ -308,28 +613,211 @@ static const struct qcom_icc_desc msm8974_cnoc = {
+ 	.ignore_enxio = true,
  };
  
--static const struct msm8974_icc_desc msm8974_cnoc = {
-+static const struct qcom_icc_desc msm8974_cnoc = {
- 	.nodes = msm8974_cnoc_nodes,
- 	.num_nodes = ARRAY_SIZE(msm8974_cnoc_nodes),
-+	.bus_clk_desc = &bus_2_clk,
-+	.get_bw = msm8974_get_bw,
-+	.ignore_enxio = true,
- };
+-DEFINE_QNODE(mas_graphics_3d, MSM8974_MNOC_MAS_GRAPHICS_3D, 16, 6, -1, MSM8974_MNOC_TO_BIMC);
+-DEFINE_QNODE(mas_jpeg, MSM8974_MNOC_MAS_JPEG, 16, 7, -1, MSM8974_MNOC_TO_BIMC);
+-DEFINE_QNODE(mas_mdp_port0, MSM8974_MNOC_MAS_MDP_PORT0, 16, 8, -1, MSM8974_MNOC_TO_BIMC);
+-DEFINE_QNODE(mas_video_p0, MSM8974_MNOC_MAS_VIDEO_P0, 16, 9, -1);
+-DEFINE_QNODE(mas_video_p1, MSM8974_MNOC_MAS_VIDEO_P1, 16, 10, -1);
+-DEFINE_QNODE(mas_vfe, MSM8974_MNOC_MAS_VFE, 16, 11, -1, MSM8974_MNOC_TO_BIMC);
+-DEFINE_QNODE(mnoc_to_cnoc, MSM8974_MNOC_TO_CNOC, 16, 4, -1);
+-DEFINE_QNODE(mnoc_to_bimc, MSM8974_MNOC_TO_BIMC, 16, -1, 16, MSM8974_BIMC_TO_MNOC);
+-DEFINE_QNODE(slv_camera_cfg, MSM8974_MNOC_SLV_CAMERA_CFG, 16, -1, 3);
+-DEFINE_QNODE(slv_display_cfg, MSM8974_MNOC_SLV_DISPLAY_CFG, 16, -1, 4);
+-DEFINE_QNODE(slv_ocmem_cfg, MSM8974_MNOC_SLV_OCMEM_CFG, 16, -1, 5);
+-DEFINE_QNODE(slv_cpr_cfg, MSM8974_MNOC_SLV_CPR_CFG, 16, -1, 6);
+-DEFINE_QNODE(slv_cpr_xpu_cfg, MSM8974_MNOC_SLV_CPR_XPU_CFG, 16, -1, 7);
+-DEFINE_QNODE(slv_misc_cfg, MSM8974_MNOC_SLV_MISC_CFG, 16, -1, 8);
+-DEFINE_QNODE(slv_misc_xpu_cfg, MSM8974_MNOC_SLV_MISC_XPU_CFG, 16, -1, 9);
+-DEFINE_QNODE(slv_venus_cfg, MSM8974_MNOC_SLV_VENUS_CFG, 16, -1, 10);
+-DEFINE_QNODE(slv_graphics_3d_cfg, MSM8974_MNOC_SLV_GRAPHICS_3D_CFG, 16, -1, 11);
+-DEFINE_QNODE(slv_mmss_clk_cfg, MSM8974_MNOC_SLV_MMSS_CLK_CFG, 16, -1, 12);
+-DEFINE_QNODE(slv_mmss_clk_xpu_cfg, MSM8974_MNOC_SLV_MMSS_CLK_XPU_CFG, 16, -1, 13);
+-DEFINE_QNODE(slv_mnoc_mpu_cfg, MSM8974_MNOC_SLV_MNOC_MPU_CFG, 16, -1, 14);
+-DEFINE_QNODE(slv_onoc_mpu_cfg, MSM8974_MNOC_SLV_ONOC_MPU_CFG, 16, -1, 15);
+-DEFINE_QNODE(slv_service_mnoc, MSM8974_MNOC_SLV_SERVICE_MNOC, 16, -1, 17);
++static const u16 mas_graphics_3d_links[] = {
++	MSM8974_MNOC_TO_BIMC
++};
++
++static struct qcom_icc_node mas_graphics_3d = {
++	.name = "mas_graphics_3d",
++	.id = MSM8974_MNOC_MAS_GRAPHICS_3D,
++	.buswidth = 16,
++	.mas_rpm_id = 6,
++	.slv_rpm_id = -1,
++	.num_links = ARRAY_SIZE(mas_graphics_3d_links),
++	.links = mas_graphics_3d_links,
++};
++
++static const u16 mas_jpeg_links[] = {
++	MSM8974_MNOC_TO_BIMC
++};
++
++static struct qcom_icc_node mas_jpeg = {
++	.name = "mas_jpeg",
++	.id = MSM8974_MNOC_MAS_JPEG,
++	.buswidth = 16,
++	.mas_rpm_id = 7,
++	.slv_rpm_id = -1,
++	.num_links = ARRAY_SIZE(mas_jpeg_links),
++	.links = mas_jpeg_links,
++};
++
++static const u16 mas_mdp_port0_links[] = {
++	MSM8974_MNOC_TO_BIMC
++};
++
++static struct qcom_icc_node mas_mdp_port0 = {
++	.name = "mas_mdp_port0",
++	.id = MSM8974_MNOC_MAS_MDP_PORT0,
++	.buswidth = 16,
++	.mas_rpm_id = 8,
++	.slv_rpm_id = -1,
++	.num_links = ARRAY_SIZE(mas_mdp_port0_links),
++	.links = mas_mdp_port0_links,
++};
++
++static struct qcom_icc_node mas_video_p0 = {
++	.name = "mas_video_p0",
++	.id = MSM8974_MNOC_MAS_VIDEO_P0,
++	.buswidth = 16,
++	.mas_rpm_id = 9,
++	.slv_rpm_id = -1,
++};
++
++static struct qcom_icc_node mas_video_p1 = {
++	.name = "mas_video_p1",
++	.id = MSM8974_MNOC_MAS_VIDEO_P1,
++	.buswidth = 16,
++	.mas_rpm_id = 10,
++	.slv_rpm_id = -1,
++};
++
++static const u16 mas_vfe_links[] = {
++	MSM8974_MNOC_TO_BIMC
++};
++
++static struct qcom_icc_node mas_vfe = {
++	.name = "mas_vfe",
++	.id = MSM8974_MNOC_MAS_VFE,
++	.buswidth = 16,
++	.mas_rpm_id = 11,
++	.slv_rpm_id = -1,
++	.num_links = ARRAY_SIZE(mas_vfe_links),
++	.links = mas_vfe_links,
++};
++
++static struct qcom_icc_node mnoc_to_cnoc = {
++	.name = "mnoc_to_cnoc",
++	.id = MSM8974_MNOC_TO_CNOC,
++	.buswidth = 16,
++	.mas_rpm_id = 4,
++	.slv_rpm_id = -1,
++};
++
++static const u16 mnoc_to_bimc_links[] = {
++	MSM8974_BIMC_TO_MNOC
++};
++
++static struct qcom_icc_node mnoc_to_bimc = {
++	.name = "mnoc_to_bimc",
++	.id = MSM8974_MNOC_TO_BIMC,
++	.buswidth = 16,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 16,
++	.num_links = ARRAY_SIZE(mnoc_to_bimc_links),
++	.links = mnoc_to_bimc_links,
++};
++
++static struct qcom_icc_node slv_camera_cfg = {
++	.name = "slv_camera_cfg",
++	.id = MSM8974_MNOC_SLV_CAMERA_CFG,
++	.buswidth = 16,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 3,
++};
++
++static struct qcom_icc_node slv_display_cfg = {
++	.name = "slv_display_cfg",
++	.id = MSM8974_MNOC_SLV_DISPLAY_CFG,
++	.buswidth = 16,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 4,
++};
++
++static struct qcom_icc_node slv_ocmem_cfg = {
++	.name = "slv_ocmem_cfg",
++	.id = MSM8974_MNOC_SLV_OCMEM_CFG,
++	.buswidth = 16,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 5,
++};
++
++static struct qcom_icc_node slv_cpr_cfg = {
++	.name = "slv_cpr_cfg",
++	.id = MSM8974_MNOC_SLV_CPR_CFG,
++	.buswidth = 16,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 6,
++};
++
++static struct qcom_icc_node slv_cpr_xpu_cfg = {
++	.name = "slv_cpr_xpu_cfg",
++	.id = MSM8974_MNOC_SLV_CPR_XPU_CFG,
++	.buswidth = 16,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 7,
++};
++
++static struct qcom_icc_node slv_misc_cfg = {
++	.name = "slv_misc_cfg",
++	.id = MSM8974_MNOC_SLV_MISC_CFG,
++	.buswidth = 16,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 8,
++};
++
++static struct qcom_icc_node slv_misc_xpu_cfg = {
++	.name = "slv_misc_xpu_cfg",
++	.id = MSM8974_MNOC_SLV_MISC_XPU_CFG,
++	.buswidth = 16,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 9,
++};
++
++static struct qcom_icc_node slv_venus_cfg = {
++	.name = "slv_venus_cfg",
++	.id = MSM8974_MNOC_SLV_VENUS_CFG,
++	.buswidth = 16,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 10,
++};
++
++static struct qcom_icc_node slv_graphics_3d_cfg = {
++	.name = "slv_graphics_3d_cfg",
++	.id = MSM8974_MNOC_SLV_GRAPHICS_3D_CFG,
++	.buswidth = 16,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 11,
++};
++
++static struct qcom_icc_node slv_mmss_clk_cfg = {
++	.name = "slv_mmss_clk_cfg",
++	.id = MSM8974_MNOC_SLV_MMSS_CLK_CFG,
++	.buswidth = 16,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 12,
++};
++
++static struct qcom_icc_node slv_mmss_clk_xpu_cfg = {
++	.name = "slv_mmss_clk_xpu_cfg",
++	.id = MSM8974_MNOC_SLV_MMSS_CLK_XPU_CFG,
++	.buswidth = 16,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 13,
++};
++
++static struct qcom_icc_node slv_mnoc_mpu_cfg = {
++	.name = "slv_mnoc_mpu_cfg",
++	.id = MSM8974_MNOC_SLV_MNOC_MPU_CFG,
++	.buswidth = 16,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 14,
++};
++
++static struct qcom_icc_node slv_onoc_mpu_cfg = {
++	.name = "slv_onoc_mpu_cfg",
++	.id = MSM8974_MNOC_SLV_ONOC_MPU_CFG,
++	.buswidth = 16,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 15,
++};
++
++static struct qcom_icc_node slv_service_mnoc = {
++	.name = "slv_service_mnoc",
++	.id = MSM8974_MNOC_SLV_SERVICE_MNOC,
++	.buswidth = 16,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 17,
++};
  
- DEFINE_QNODE(mas_graphics_3d, MSM8974_MNOC_MAS_GRAPHICS_3D, 16, 6, -1, MSM8974_MNOC_TO_BIMC);
-@@ -363,7 +331,7 @@ DEFINE_QNODE(slv_mnoc_mpu_cfg, MSM8974_MNOC_SLV_MNOC_MPU_CFG, 16, -1, 14);
- DEFINE_QNODE(slv_onoc_mpu_cfg, MSM8974_MNOC_SLV_ONOC_MPU_CFG, 16, -1, 15);
- DEFINE_QNODE(slv_service_mnoc, MSM8974_MNOC_SLV_SERVICE_MNOC, 16, -1, 17);
- 
--static struct msm8974_icc_node * const msm8974_mnoc_nodes[] = {
-+static struct qcom_icc_node * const msm8974_mnoc_nodes[] = {
+ static struct qcom_icc_node * const msm8974_mnoc_nodes[] = {
  	[MNOC_MAS_GRAPHICS_3D] = &mas_graphics_3d,
- 	[MNOC_MAS_JPEG] = &mas_jpeg,
- 	[MNOC_MAS_MDP_PORT0] = &mas_mdp_port0,
-@@ -388,9 +356,11 @@ static struct msm8974_icc_node * const msm8974_mnoc_nodes[] = {
- 	[MNOC_SLV_SERVICE_MNOC] = &slv_service_mnoc,
+@@ -363,20 +851,121 @@ static const struct qcom_icc_desc msm8974_mnoc = {
+ 	.ignore_enxio = true,
  };
  
--static const struct msm8974_icc_desc msm8974_mnoc = {
-+static const struct qcom_icc_desc msm8974_mnoc = {
- 	.nodes = msm8974_mnoc_nodes,
- 	.num_nodes = ARRAY_SIZE(msm8974_mnoc_nodes),
-+	.get_bw = msm8974_get_bw,
-+	.ignore_enxio = true,
- };
+-DEFINE_QNODE(ocmem_noc_to_ocmem_vnoc, MSM8974_OCMEM_NOC_TO_OCMEM_VNOC, 16, 54, 78, MSM8974_OCMEM_SLV_OCMEM);
+-DEFINE_QNODE(mas_jpeg_ocmem, MSM8974_OCMEM_MAS_JPEG_OCMEM, 16, 13, -1);
+-DEFINE_QNODE(mas_mdp_ocmem, MSM8974_OCMEM_MAS_MDP_OCMEM, 16, 14, -1);
+-DEFINE_QNODE(mas_video_p0_ocmem, MSM8974_OCMEM_MAS_VIDEO_P0_OCMEM, 16, 15, -1);
+-DEFINE_QNODE(mas_video_p1_ocmem, MSM8974_OCMEM_MAS_VIDEO_P1_OCMEM, 16, 16, -1);
+-DEFINE_QNODE(mas_vfe_ocmem, MSM8974_OCMEM_MAS_VFE_OCMEM, 16, 17, -1);
+-DEFINE_QNODE(mas_cnoc_onoc_cfg, MSM8974_OCMEM_MAS_CNOC_ONOC_CFG, 16, 12, -1);
+-DEFINE_QNODE(slv_service_onoc, MSM8974_OCMEM_SLV_SERVICE_ONOC, 16, -1, 19);
+-DEFINE_QNODE(slv_ocmem, MSM8974_OCMEM_SLV_OCMEM, 16, -1, 18);
++static const u16 ocmem_noc_to_ocmem_vnoc_links[] = {
++	MSM8974_OCMEM_SLV_OCMEM
++};
++
++static struct qcom_icc_node ocmem_noc_to_ocmem_vnoc = {
++	.name = "ocmem_noc_to_ocmem_vnoc",
++	.id = MSM8974_OCMEM_NOC_TO_OCMEM_VNOC,
++	.buswidth = 16,
++	.mas_rpm_id = 54,
++	.slv_rpm_id = 78,
++	.num_links = ARRAY_SIZE(ocmem_noc_to_ocmem_vnoc_links),
++	.links = ocmem_noc_to_ocmem_vnoc_links,
++};
++
++static struct qcom_icc_node mas_jpeg_ocmem = {
++	.name = "mas_jpeg_ocmem",
++	.id = MSM8974_OCMEM_MAS_JPEG_OCMEM,
++	.buswidth = 16,
++	.mas_rpm_id = 13,
++	.slv_rpm_id = -1,
++};
++
++static struct qcom_icc_node mas_mdp_ocmem = {
++	.name = "mas_mdp_ocmem",
++	.id = MSM8974_OCMEM_MAS_MDP_OCMEM,
++	.buswidth = 16,
++	.mas_rpm_id = 14,
++	.slv_rpm_id = -1,
++};
++
++static struct qcom_icc_node mas_video_p0_ocmem = {
++	.name = "mas_video_p0_ocmem",
++	.id = MSM8974_OCMEM_MAS_VIDEO_P0_OCMEM,
++	.buswidth = 16,
++	.mas_rpm_id = 15,
++	.slv_rpm_id = -1,
++};
++
++static struct qcom_icc_node mas_video_p1_ocmem = {
++	.name = "mas_video_p1_ocmem",
++	.id = MSM8974_OCMEM_MAS_VIDEO_P1_OCMEM,
++	.buswidth = 16,
++	.mas_rpm_id = 16,
++	.slv_rpm_id = -1,
++};
++
++static struct qcom_icc_node mas_vfe_ocmem = {
++	.name = "mas_vfe_ocmem",
++	.id = MSM8974_OCMEM_MAS_VFE_OCMEM,
++	.buswidth = 16,
++	.mas_rpm_id = 17,
++	.slv_rpm_id = -1,
++};
++
++static struct qcom_icc_node mas_cnoc_onoc_cfg = {
++	.name = "mas_cnoc_onoc_cfg",
++	.id = MSM8974_OCMEM_MAS_CNOC_ONOC_CFG,
++	.buswidth = 16,
++	.mas_rpm_id = 12,
++	.slv_rpm_id = -1,
++};
++
++static struct qcom_icc_node slv_service_onoc = {
++	.name = "slv_service_onoc",
++	.id = MSM8974_OCMEM_SLV_SERVICE_ONOC,
++	.buswidth = 16,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 19,
++};
++
++static struct qcom_icc_node slv_ocmem = {
++	.name = "slv_ocmem",
++	.id = MSM8974_OCMEM_SLV_OCMEM,
++	.buswidth = 16,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 18,
++};
  
- DEFINE_QNODE(ocmem_noc_to_ocmem_vnoc, MSM8974_OCMEM_NOC_TO_OCMEM_VNOC, 16, 54, 78, MSM8974_OCMEM_SLV_OCMEM);
-@@ -408,7 +378,7 @@ DEFINE_QNODE(ocmem_vnoc_to_onoc, MSM8974_OCMEM_VNOC_TO_OCMEM_NOC, 16, 56, 79, MS
- DEFINE_QNODE(ocmem_vnoc_to_snoc, MSM8974_OCMEM_VNOC_TO_SNOC, 8, 57, 80);
- DEFINE_QNODE(mas_v_ocmem_gfx3d, MSM8974_OCMEM_VNOC_MAS_GFX3D, 8, 55, -1, MSM8974_OCMEM_VNOC_TO_OCMEM_NOC);
+ /* Virtual NoC is needed for connection to OCMEM */
+-DEFINE_QNODE(ocmem_vnoc_to_onoc, MSM8974_OCMEM_VNOC_TO_OCMEM_NOC, 16, 56, 79, MSM8974_OCMEM_NOC_TO_OCMEM_VNOC);
+-DEFINE_QNODE(ocmem_vnoc_to_snoc, MSM8974_OCMEM_VNOC_TO_SNOC, 8, 57, 80);
+-DEFINE_QNODE(mas_v_ocmem_gfx3d, MSM8974_OCMEM_VNOC_MAS_GFX3D, 8, 55, -1, MSM8974_OCMEM_VNOC_TO_OCMEM_NOC);
++static const u16 ocmem_vnoc_to_onoc_links[] = {
++	MSM8974_OCMEM_NOC_TO_OCMEM_VNOC
++};
++
++static struct qcom_icc_node ocmem_vnoc_to_onoc = {
++	.name = "ocmem_vnoc_to_onoc",
++	.id = MSM8974_OCMEM_VNOC_TO_OCMEM_NOC,
++	.buswidth = 16,
++	.mas_rpm_id = 56,
++	.slv_rpm_id = 79,
++	.num_links = ARRAY_SIZE(ocmem_vnoc_to_onoc_links),
++	.links = ocmem_vnoc_to_onoc_links,
++};
++
++static struct qcom_icc_node ocmem_vnoc_to_snoc = {
++	.name = "ocmem_vnoc_to_snoc",
++	.id = MSM8974_OCMEM_VNOC_TO_SNOC,
++	.buswidth = 8,
++	.mas_rpm_id = 57,
++	.slv_rpm_id = 80,
++};
++
++static const u16 mas_v_ocmem_gfx3d_links[] = {
++	MSM8974_OCMEM_VNOC_TO_OCMEM_NOC
++};
++
++static struct qcom_icc_node mas_v_ocmem_gfx3d = {
++	.name = "mas_v_ocmem_gfx3d",
++	.id = MSM8974_OCMEM_VNOC_MAS_GFX3D,
++	.buswidth = 8,
++	.mas_rpm_id = 55,
++	.slv_rpm_id = -1,
++	.num_links = ARRAY_SIZE(mas_v_ocmem_gfx3d_links),
++	.links = mas_v_ocmem_gfx3d_links,
++};
++
  
--static struct msm8974_icc_node * const msm8974_onoc_nodes[] = {
-+static struct qcom_icc_node * const msm8974_onoc_nodes[] = {
+ static struct qcom_icc_node * const msm8974_onoc_nodes[] = {
  	[OCMEM_NOC_TO_OCMEM_VNOC] = &ocmem_noc_to_ocmem_vnoc,
- 	[OCMEM_MAS_JPEG_OCMEM] = &mas_jpeg_ocmem,
- 	[OCMEM_MAS_MDP_OCMEM] = &mas_mdp_ocmem,
-@@ -423,9 +393,12 @@ static struct msm8974_icc_node * const msm8974_onoc_nodes[] = {
- 	[OCMEM_SLV_OCMEM] = &slv_ocmem,
+@@ -401,33 +990,288 @@ static const struct qcom_icc_desc msm8974_onoc = {
+ 	.ignore_enxio = true,
  };
  
--static const struct msm8974_icc_desc msm8974_onoc = {
-+static const struct qcom_icc_desc msm8974_onoc = {
- 	.nodes = msm8974_onoc_nodes,
- 	.num_nodes = ARRAY_SIZE(msm8974_onoc_nodes),
-+	.bus_clk_desc = &gpu_mem_2_clk,
-+	.get_bw = msm8974_get_bw,
-+	.ignore_enxio = true,
- };
+-DEFINE_QNODE(mas_pnoc_cfg, MSM8974_PNOC_MAS_PNOC_CFG, 8, 43, -1);
+-DEFINE_QNODE(mas_sdcc_1, MSM8974_PNOC_MAS_SDCC_1, 8, 33, -1, MSM8974_PNOC_TO_SNOC);
+-DEFINE_QNODE(mas_sdcc_3, MSM8974_PNOC_MAS_SDCC_3, 8, 34, -1, MSM8974_PNOC_TO_SNOC);
+-DEFINE_QNODE(mas_sdcc_4, MSM8974_PNOC_MAS_SDCC_4, 8, 36, -1, MSM8974_PNOC_TO_SNOC);
+-DEFINE_QNODE(mas_sdcc_2, MSM8974_PNOC_MAS_SDCC_2, 8, 35, -1, MSM8974_PNOC_TO_SNOC);
+-DEFINE_QNODE(mas_tsif, MSM8974_PNOC_MAS_TSIF, 8, 37, -1, MSM8974_PNOC_TO_SNOC);
+-DEFINE_QNODE(mas_bam_dma, MSM8974_PNOC_MAS_BAM_DMA, 8, 38, -1);
+-DEFINE_QNODE(mas_blsp_2, MSM8974_PNOC_MAS_BLSP_2, 8, 39, -1, MSM8974_PNOC_TO_SNOC);
+-DEFINE_QNODE(mas_usb_hsic, MSM8974_PNOC_MAS_USB_HSIC, 8, 40, -1, MSM8974_PNOC_TO_SNOC);
+-DEFINE_QNODE(mas_blsp_1, MSM8974_PNOC_MAS_BLSP_1, 8, 41, -1, MSM8974_PNOC_TO_SNOC);
+-DEFINE_QNODE(mas_usb_hs, MSM8974_PNOC_MAS_USB_HS, 8, 42, -1, MSM8974_PNOC_TO_SNOC);
+-DEFINE_QNODE(pnoc_to_snoc, MSM8974_PNOC_TO_SNOC, 8, 44, 45, MSM8974_SNOC_TO_PNOC, MSM8974_PNOC_SLV_PRNG);
+-DEFINE_QNODE(slv_sdcc_1, MSM8974_PNOC_SLV_SDCC_1, 8, -1, 31);
+-DEFINE_QNODE(slv_sdcc_3, MSM8974_PNOC_SLV_SDCC_3, 8, -1, 32);
+-DEFINE_QNODE(slv_sdcc_2, MSM8974_PNOC_SLV_SDCC_2, 8, -1, 33);
+-DEFINE_QNODE(slv_sdcc_4, MSM8974_PNOC_SLV_SDCC_4, 8, -1, 34);
+-DEFINE_QNODE(slv_tsif, MSM8974_PNOC_SLV_TSIF, 8, -1, 35);
+-DEFINE_QNODE(slv_bam_dma, MSM8974_PNOC_SLV_BAM_DMA, 8, -1, 36);
+-DEFINE_QNODE(slv_blsp_2, MSM8974_PNOC_SLV_BLSP_2, 8, -1, 37);
+-DEFINE_QNODE(slv_usb_hsic, MSM8974_PNOC_SLV_USB_HSIC, 8, -1, 38);
+-DEFINE_QNODE(slv_blsp_1, MSM8974_PNOC_SLV_BLSP_1, 8, -1, 39);
+-DEFINE_QNODE(slv_usb_hs, MSM8974_PNOC_SLV_USB_HS, 8, -1, 40);
+-DEFINE_QNODE(slv_pdm, MSM8974_PNOC_SLV_PDM, 8, -1, 41);
+-DEFINE_QNODE(slv_periph_apu_cfg, MSM8974_PNOC_SLV_PERIPH_APU_CFG, 8, -1, 42);
+-DEFINE_QNODE(slv_pnoc_mpu_cfg, MSM8974_PNOC_SLV_PNOC_MPU_CFG, 8, -1, 43);
+-DEFINE_QNODE(slv_prng, MSM8974_PNOC_SLV_PRNG, 8, -1, 44, MSM8974_PNOC_TO_SNOC);
+-DEFINE_QNODE(slv_service_pnoc, MSM8974_PNOC_SLV_SERVICE_PNOC, 8, -1, 46);
++static struct qcom_icc_node mas_pnoc_cfg = {
++	.name = "mas_pnoc_cfg",
++	.id = MSM8974_PNOC_MAS_PNOC_CFG,
++	.buswidth = 8,
++	.mas_rpm_id = 43,
++	.slv_rpm_id = -1,
++};
++
++static const u16 mas_sdcc_1_links[] = {
++	MSM8974_PNOC_TO_SNOC
++};
++
++static struct qcom_icc_node mas_sdcc_1 = {
++	.name = "mas_sdcc_1",
++	.id = MSM8974_PNOC_MAS_SDCC_1,
++	.buswidth = 8,
++	.mas_rpm_id = 33,
++	.slv_rpm_id = -1,
++	.num_links = ARRAY_SIZE(mas_sdcc_1_links),
++	.links = mas_sdcc_1_links,
++};
++
++static const u16 mas_sdcc_3_links[] = {
++	MSM8974_PNOC_TO_SNOC
++};
++
++static struct qcom_icc_node mas_sdcc_3 = {
++	.name = "mas_sdcc_3",
++	.id = MSM8974_PNOC_MAS_SDCC_3,
++	.buswidth = 8,
++	.mas_rpm_id = 34,
++	.slv_rpm_id = -1,
++	.num_links = ARRAY_SIZE(mas_sdcc_3_links),
++	.links = mas_sdcc_3_links,
++};
++
++static const u16 mas_sdcc_4_links[] = {
++	MSM8974_PNOC_TO_SNOC
++};
++
++static struct qcom_icc_node mas_sdcc_4 = {
++	.name = "mas_sdcc_4",
++	.id = MSM8974_PNOC_MAS_SDCC_4,
++	.buswidth = 8,
++	.mas_rpm_id = 36,
++	.slv_rpm_id = -1,
++	.num_links = ARRAY_SIZE(mas_sdcc_4_links),
++	.links = mas_sdcc_4_links,
++};
++
++static const u16 mas_sdcc_2_links[] = {
++	MSM8974_PNOC_TO_SNOC
++};
++
++static struct qcom_icc_node mas_sdcc_2 = {
++	.name = "mas_sdcc_2",
++	.id = MSM8974_PNOC_MAS_SDCC_2,
++	.buswidth = 8,
++	.mas_rpm_id = 35,
++	.slv_rpm_id = -1,
++	.num_links = ARRAY_SIZE(mas_sdcc_2_links),
++	.links = mas_sdcc_2_links,
++};
++
++static const u16 mas_tsif_links[] = {
++	MSM8974_PNOC_TO_SNOC
++};
++
++static struct qcom_icc_node mas_tsif = {
++	.name = "mas_tsif",
++	.id = MSM8974_PNOC_MAS_TSIF,
++	.buswidth = 8,
++	.mas_rpm_id = 37,
++	.slv_rpm_id = -1,
++	.num_links = ARRAY_SIZE(mas_tsif_links),
++	.links = mas_tsif_links,
++};
++
++static struct qcom_icc_node mas_bam_dma = {
++	.name = "mas_bam_dma",
++	.id = MSM8974_PNOC_MAS_BAM_DMA,
++	.buswidth = 8,
++	.mas_rpm_id = 38,
++	.slv_rpm_id = -1,
++};
++
++static const u16 mas_blsp_2_links[] = {
++	MSM8974_PNOC_TO_SNOC
++};
++
++static struct qcom_icc_node mas_blsp_2 = {
++	.name = "mas_blsp_2",
++	.id = MSM8974_PNOC_MAS_BLSP_2,
++	.buswidth = 8,
++	.mas_rpm_id = 39,
++	.slv_rpm_id = -1,
++	.num_links = ARRAY_SIZE(mas_blsp_2_links),
++	.links = mas_blsp_2_links,
++};
++
++static const u16 mas_usb_hsic_links[] = {
++	MSM8974_PNOC_TO_SNOC
++};
++
++static struct qcom_icc_node mas_usb_hsic = {
++	.name = "mas_usb_hsic",
++	.id = MSM8974_PNOC_MAS_USB_HSIC,
++	.buswidth = 8,
++	.mas_rpm_id = 40,
++	.slv_rpm_id = -1,
++	.num_links = ARRAY_SIZE(mas_usb_hsic_links),
++	.links = mas_usb_hsic_links,
++};
++
++static const u16 mas_blsp_1_links[] = {
++	MSM8974_PNOC_TO_SNOC
++};
++
++static struct qcom_icc_node mas_blsp_1 = {
++	.name = "mas_blsp_1",
++	.id = MSM8974_PNOC_MAS_BLSP_1,
++	.buswidth = 8,
++	.mas_rpm_id = 41,
++	.slv_rpm_id = -1,
++	.num_links = ARRAY_SIZE(mas_blsp_1_links),
++	.links = mas_blsp_1_links,
++};
++
++static const u16 mas_usb_hs_links[] = {
++	MSM8974_PNOC_TO_SNOC
++};
++
++static struct qcom_icc_node mas_usb_hs = {
++	.name = "mas_usb_hs",
++	.id = MSM8974_PNOC_MAS_USB_HS,
++	.buswidth = 8,
++	.mas_rpm_id = 42,
++	.slv_rpm_id = -1,
++	.num_links = ARRAY_SIZE(mas_usb_hs_links),
++	.links = mas_usb_hs_links,
++};
++
++static const u16 pnoc_to_snoc_links[] = {
++	MSM8974_SNOC_TO_PNOC,
++	MSM8974_PNOC_SLV_PRNG
++};
++
++static struct qcom_icc_node pnoc_to_snoc = {
++	.name = "pnoc_to_snoc",
++	.id = MSM8974_PNOC_TO_SNOC,
++	.buswidth = 8,
++	.mas_rpm_id = 44,
++	.slv_rpm_id = 45,
++	.num_links = ARRAY_SIZE(pnoc_to_snoc_links),
++	.links = pnoc_to_snoc_links,
++};
++
++static struct qcom_icc_node slv_sdcc_1 = {
++	.name = "slv_sdcc_1",
++	.id = MSM8974_PNOC_SLV_SDCC_1,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 31,
++};
++
++static struct qcom_icc_node slv_sdcc_3 = {
++	.name = "slv_sdcc_3",
++	.id = MSM8974_PNOC_SLV_SDCC_3,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 32,
++};
++
++static struct qcom_icc_node slv_sdcc_2 = {
++	.name = "slv_sdcc_2",
++	.id = MSM8974_PNOC_SLV_SDCC_2,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 33,
++};
++
++static struct qcom_icc_node slv_sdcc_4 = {
++	.name = "slv_sdcc_4",
++	.id = MSM8974_PNOC_SLV_SDCC_4,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 34,
++};
++
++static struct qcom_icc_node slv_tsif = {
++	.name = "slv_tsif",
++	.id = MSM8974_PNOC_SLV_TSIF,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 35,
++};
++
++static struct qcom_icc_node slv_bam_dma = {
++	.name = "slv_bam_dma",
++	.id = MSM8974_PNOC_SLV_BAM_DMA,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 36,
++};
++
++static struct qcom_icc_node slv_blsp_2 = {
++	.name = "slv_blsp_2",
++	.id = MSM8974_PNOC_SLV_BLSP_2,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 37,
++};
++
++static struct qcom_icc_node slv_usb_hsic = {
++	.name = "slv_usb_hsic",
++	.id = MSM8974_PNOC_SLV_USB_HSIC,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 38,
++};
++
++static struct qcom_icc_node slv_blsp_1 = {
++	.name = "slv_blsp_1",
++	.id = MSM8974_PNOC_SLV_BLSP_1,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 39,
++};
++
++static struct qcom_icc_node slv_usb_hs = {
++	.name = "slv_usb_hs",
++	.id = MSM8974_PNOC_SLV_USB_HS,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 40,
++};
++
++static struct qcom_icc_node slv_pdm = {
++	.name = "slv_pdm",
++	.id = MSM8974_PNOC_SLV_PDM,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 41,
++};
++
++static struct qcom_icc_node slv_periph_apu_cfg = {
++	.name = "slv_periph_apu_cfg",
++	.id = MSM8974_PNOC_SLV_PERIPH_APU_CFG,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 42,
++};
++
++static struct qcom_icc_node slv_pnoc_mpu_cfg = {
++	.name = "slv_pnoc_mpu_cfg",
++	.id = MSM8974_PNOC_SLV_PNOC_MPU_CFG,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 43,
++};
++
++static const u16 slv_prng_links[] = {
++	MSM8974_PNOC_TO_SNOC
++};
++
++static struct qcom_icc_node slv_prng = {
++	.name = "slv_prng",
++	.id = MSM8974_PNOC_SLV_PRNG,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 44,
++	.num_links = ARRAY_SIZE(slv_prng_links),
++	.links = slv_prng_links,
++};
++
++static struct qcom_icc_node slv_service_pnoc = {
++	.name = "slv_service_pnoc",
++	.id = MSM8974_PNOC_SLV_SERVICE_PNOC,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 46,
++};
  
- DEFINE_QNODE(mas_pnoc_cfg, MSM8974_PNOC_MAS_PNOC_CFG, 8, 43, -1);
-@@ -456,7 +429,7 @@ DEFINE_QNODE(slv_pnoc_mpu_cfg, MSM8974_PNOC_SLV_PNOC_MPU_CFG, 8, -1, 43);
- DEFINE_QNODE(slv_prng, MSM8974_PNOC_SLV_PRNG, 8, -1, 44, MSM8974_PNOC_TO_SNOC);
- DEFINE_QNODE(slv_service_pnoc, MSM8974_PNOC_SLV_SERVICE_PNOC, 8, -1, 46);
- 
--static struct msm8974_icc_node * const msm8974_pnoc_nodes[] = {
-+static struct qcom_icc_node * const msm8974_pnoc_nodes[] = {
+ static struct qcom_icc_node * const msm8974_pnoc_nodes[] = {
  	[PNOC_MAS_PNOC_CFG] = &mas_pnoc_cfg,
- 	[PNOC_MAS_SDCC_1] = &mas_sdcc_1,
- 	[PNOC_MAS_SDCC_3] = &mas_sdcc_3,
-@@ -486,9 +459,13 @@ static struct msm8974_icc_node * const msm8974_pnoc_nodes[] = {
- 	[PNOC_SLV_SERVICE_PNOC] = &slv_service_pnoc,
+@@ -468,30 +1312,233 @@ static const struct qcom_icc_desc msm8974_pnoc = {
+ 	.ignore_enxio = true,
  };
  
--static const struct msm8974_icc_desc msm8974_pnoc = {
-+static const struct qcom_icc_desc msm8974_pnoc = {
- 	.nodes = msm8974_pnoc_nodes,
- 	.num_nodes = ARRAY_SIZE(msm8974_pnoc_nodes),
-+	.bus_clk_desc = &bus_0_clk,
-+	.get_bw = msm8974_get_bw,
-+	.keep_alive = true,
-+	.ignore_enxio = true,
- };
+-DEFINE_QNODE(mas_lpass_ahb, MSM8974_SNOC_MAS_LPASS_AHB, 8, 18, -1);
+-DEFINE_QNODE(mas_qdss_bam, MSM8974_SNOC_MAS_QDSS_BAM, 8, 19, -1);
+-DEFINE_QNODE(mas_snoc_cfg, MSM8974_SNOC_MAS_SNOC_CFG, 8, 20, -1);
+-DEFINE_QNODE(snoc_to_bimc, MSM8974_SNOC_TO_BIMC, 8, 21, 24, MSM8974_BIMC_TO_SNOC);
+-DEFINE_QNODE(snoc_to_cnoc, MSM8974_SNOC_TO_CNOC, 8, 22, 25);
+-DEFINE_QNODE(snoc_to_pnoc, MSM8974_SNOC_TO_PNOC, 8, 29, 28, MSM8974_PNOC_TO_SNOC);
+-DEFINE_QNODE(snoc_to_ocmem_vnoc, MSM8974_SNOC_TO_OCMEM_VNOC, 8, 53, 77, MSM8974_OCMEM_VNOC_TO_OCMEM_NOC);
+-DEFINE_QNODE(mas_crypto_core0, MSM8974_SNOC_MAS_CRYPTO_CORE0, 8, 23, -1, MSM8974_SNOC_TO_BIMC);
+-DEFINE_QNODE(mas_crypto_core1, MSM8974_SNOC_MAS_CRYPTO_CORE1, 8, 24, -1);
+-DEFINE_QNODE(mas_lpass_proc, MSM8974_SNOC_MAS_LPASS_PROC, 8, 25, -1, MSM8974_SNOC_TO_OCMEM_VNOC);
+-DEFINE_QNODE(mas_mss, MSM8974_SNOC_MAS_MSS, 8, 26, -1);
+-DEFINE_QNODE(mas_mss_nav, MSM8974_SNOC_MAS_MSS_NAV, 8, 27, -1);
+-DEFINE_QNODE(mas_ocmem_dma, MSM8974_SNOC_MAS_OCMEM_DMA, 8, 28, -1);
+-DEFINE_QNODE(mas_wcss, MSM8974_SNOC_MAS_WCSS, 8, 30, -1);
+-DEFINE_QNODE(mas_qdss_etr, MSM8974_SNOC_MAS_QDSS_ETR, 8, 31, -1);
+-DEFINE_QNODE(mas_usb3, MSM8974_SNOC_MAS_USB3, 8, 32, -1, MSM8974_SNOC_TO_BIMC);
+-DEFINE_QNODE(slv_ampss, MSM8974_SNOC_SLV_AMPSS, 8, -1, 20);
+-DEFINE_QNODE(slv_lpass, MSM8974_SNOC_SLV_LPASS, 8, -1, 21);
+-DEFINE_QNODE(slv_usb3, MSM8974_SNOC_SLV_USB3, 8, -1, 22);
+-DEFINE_QNODE(slv_wcss, MSM8974_SNOC_SLV_WCSS, 8, -1, 23);
+-DEFINE_QNODE(slv_ocimem, MSM8974_SNOC_SLV_OCIMEM, 8, -1, 26);
+-DEFINE_QNODE(slv_snoc_ocmem, MSM8974_SNOC_SLV_SNOC_OCMEM, 8, -1, 27);
+-DEFINE_QNODE(slv_service_snoc, MSM8974_SNOC_SLV_SERVICE_SNOC, 8, -1, 29);
+-DEFINE_QNODE(slv_qdss_stm, MSM8974_SNOC_SLV_QDSS_STM, 8, -1, 30);
++static struct qcom_icc_node mas_lpass_ahb = {
++	.name = "mas_lpass_ahb",
++	.id = MSM8974_SNOC_MAS_LPASS_AHB,
++	.buswidth = 8,
++	.mas_rpm_id = 18,
++	.slv_rpm_id = -1,
++};
++
++static struct qcom_icc_node mas_qdss_bam = {
++	.name = "mas_qdss_bam",
++	.id = MSM8974_SNOC_MAS_QDSS_BAM,
++	.buswidth = 8,
++	.mas_rpm_id = 19,
++	.slv_rpm_id = -1,
++};
++
++static struct qcom_icc_node mas_snoc_cfg = {
++	.name = "mas_snoc_cfg",
++	.id = MSM8974_SNOC_MAS_SNOC_CFG,
++	.buswidth = 8,
++	.mas_rpm_id = 20,
++	.slv_rpm_id = -1,
++};
++
++static const u16 snoc_to_bimc_links[] = {
++	MSM8974_BIMC_TO_SNOC
++};
++
++static struct qcom_icc_node snoc_to_bimc = {
++	.name = "snoc_to_bimc",
++	.id = MSM8974_SNOC_TO_BIMC,
++	.buswidth = 8,
++	.mas_rpm_id = 21,
++	.slv_rpm_id = 24,
++	.num_links = ARRAY_SIZE(snoc_to_bimc_links),
++	.links = snoc_to_bimc_links,
++};
++
++static struct qcom_icc_node snoc_to_cnoc = {
++	.name = "snoc_to_cnoc",
++	.id = MSM8974_SNOC_TO_CNOC,
++	.buswidth = 8,
++	.mas_rpm_id = 22,
++	.slv_rpm_id = 25,
++};
++
++static const u16 snoc_to_pnoc_links[] = {
++	MSM8974_PNOC_TO_SNOC
++};
++
++static struct qcom_icc_node snoc_to_pnoc = {
++	.name = "snoc_to_pnoc",
++	.id = MSM8974_SNOC_TO_PNOC,
++	.buswidth = 8,
++	.mas_rpm_id = 29,
++	.slv_rpm_id = 28,
++	.num_links = ARRAY_SIZE(snoc_to_pnoc_links),
++	.links = snoc_to_pnoc_links,
++};
++
++static const u16 snoc_to_ocmem_vnoc_links[] = {
++	MSM8974_OCMEM_VNOC_TO_OCMEM_NOC
++};
++
++static struct qcom_icc_node snoc_to_ocmem_vnoc = {
++	.name = "snoc_to_ocmem_vnoc",
++	.id = MSM8974_SNOC_TO_OCMEM_VNOC,
++	.buswidth = 8,
++	.mas_rpm_id = 53,
++	.slv_rpm_id = 77,
++	.num_links = ARRAY_SIZE(snoc_to_ocmem_vnoc_links),
++	.links = snoc_to_ocmem_vnoc_links,
++};
++
++static const u16 mas_crypto_core0_links[] = {
++	MSM8974_SNOC_TO_BIMC
++};
++
++static struct qcom_icc_node mas_crypto_core0 = {
++	.name = "mas_crypto_core0",
++	.id = MSM8974_SNOC_MAS_CRYPTO_CORE0,
++	.buswidth = 8,
++	.mas_rpm_id = 23,
++	.slv_rpm_id = -1,
++	.num_links = ARRAY_SIZE(mas_crypto_core0_links),
++	.links = mas_crypto_core0_links,
++};
++
++static struct qcom_icc_node mas_crypto_core1 = {
++	.name = "mas_crypto_core1",
++	.id = MSM8974_SNOC_MAS_CRYPTO_CORE1,
++	.buswidth = 8,
++	.mas_rpm_id = 24,
++	.slv_rpm_id = -1,
++};
++
++static const u16 mas_lpass_proc_links[] = {
++	MSM8974_SNOC_TO_OCMEM_VNOC
++};
++
++static struct qcom_icc_node mas_lpass_proc = {
++	.name = "mas_lpass_proc",
++	.id = MSM8974_SNOC_MAS_LPASS_PROC,
++	.buswidth = 8,
++	.mas_rpm_id = 25,
++	.slv_rpm_id = -1,
++	.num_links = ARRAY_SIZE(mas_lpass_proc_links),
++	.links = mas_lpass_proc_links,
++};
++
++static struct qcom_icc_node mas_mss = {
++	.name = "mas_mss",
++	.id = MSM8974_SNOC_MAS_MSS,
++	.buswidth = 8,
++	.mas_rpm_id = 26,
++	.slv_rpm_id = -1,
++};
++
++static struct qcom_icc_node mas_mss_nav = {
++	.name = "mas_mss_nav",
++	.id = MSM8974_SNOC_MAS_MSS_NAV,
++	.buswidth = 8,
++	.mas_rpm_id = 27,
++	.slv_rpm_id = -1,
++};
++
++static struct qcom_icc_node mas_ocmem_dma = {
++	.name = "mas_ocmem_dma",
++	.id = MSM8974_SNOC_MAS_OCMEM_DMA,
++	.buswidth = 8,
++	.mas_rpm_id = 28,
++	.slv_rpm_id = -1,
++};
++
++static struct qcom_icc_node mas_wcss = {
++	.name = "mas_wcss",
++	.id = MSM8974_SNOC_MAS_WCSS,
++	.buswidth = 8,
++	.mas_rpm_id = 30,
++	.slv_rpm_id = -1,
++};
++
++static struct qcom_icc_node mas_qdss_etr = {
++	.name = "mas_qdss_etr",
++	.id = MSM8974_SNOC_MAS_QDSS_ETR,
++	.buswidth = 8,
++	.mas_rpm_id = 31,
++	.slv_rpm_id = -1,
++};
++
++static const u16 mas_usb3_links[] = {
++	MSM8974_SNOC_TO_BIMC
++};
++
++static struct qcom_icc_node mas_usb3 = {
++	.name = "mas_usb3",
++	.id = MSM8974_SNOC_MAS_USB3,
++	.buswidth = 8,
++	.mas_rpm_id = 32,
++	.slv_rpm_id = -1,
++	.num_links = ARRAY_SIZE(mas_usb3_links),
++	.links = mas_usb3_links,
++};
++
++static struct qcom_icc_node slv_ampss = {
++	.name = "slv_ampss",
++	.id = MSM8974_SNOC_SLV_AMPSS,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 20,
++};
++
++static struct qcom_icc_node slv_lpass = {
++	.name = "slv_lpass",
++	.id = MSM8974_SNOC_SLV_LPASS,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 21,
++};
++
++static struct qcom_icc_node slv_usb3 = {
++	.name = "slv_usb3",
++	.id = MSM8974_SNOC_SLV_USB3,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 22,
++};
++
++static struct qcom_icc_node slv_wcss = {
++	.name = "slv_wcss",
++	.id = MSM8974_SNOC_SLV_WCSS,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 23,
++};
++
++static struct qcom_icc_node slv_ocimem = {
++	.name = "slv_ocimem",
++	.id = MSM8974_SNOC_SLV_OCIMEM,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 26,
++};
++
++static struct qcom_icc_node slv_snoc_ocmem = {
++	.name = "slv_snoc_ocmem",
++	.id = MSM8974_SNOC_SLV_SNOC_OCMEM,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 27,
++};
++
++static struct qcom_icc_node slv_service_snoc = {
++	.name = "slv_service_snoc",
++	.id = MSM8974_SNOC_SLV_SERVICE_SNOC,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 29,
++};
++
++static struct qcom_icc_node slv_qdss_stm = {
++	.name = "slv_qdss_stm",
++	.id = MSM8974_SNOC_SLV_QDSS_STM,
++	.buswidth = 8,
++	.mas_rpm_id = -1,
++	.slv_rpm_id = 30,
++};
  
- DEFINE_QNODE(mas_lpass_ahb, MSM8974_SNOC_MAS_LPASS_AHB, 8, 18, -1);
-@@ -516,7 +493,7 @@ DEFINE_QNODE(slv_snoc_ocmem, MSM8974_SNOC_SLV_SNOC_OCMEM, 8, -1, 27);
- DEFINE_QNODE(slv_service_snoc, MSM8974_SNOC_SLV_SERVICE_SNOC, 8, -1, 29);
- DEFINE_QNODE(slv_qdss_stm, MSM8974_SNOC_SLV_QDSS_STM, 8, -1, 30);
- 
--static struct msm8974_icc_node * const msm8974_snoc_nodes[] = {
-+static struct qcom_icc_node * const msm8974_snoc_nodes[] = {
+ static struct qcom_icc_node * const msm8974_snoc_nodes[] = {
  	[SNOC_MAS_LPASS_AHB] = &mas_lpass_ahb,
- 	[SNOC_MAS_QDSS_BAM] = &mas_qdss_bam,
- 	[SNOC_MAS_SNOC_CFG] = &mas_snoc_cfg,
-@@ -543,209 +520,14 @@ static struct msm8974_icc_node * const msm8974_snoc_nodes[] = {
- 	[SNOC_SLV_QDSS_STM] = &slv_qdss_stm,
- };
- 
--static const struct msm8974_icc_desc msm8974_snoc = {
-+static const struct qcom_icc_desc msm8974_snoc = {
- 	.nodes = msm8974_snoc_nodes,
- 	.num_nodes = ARRAY_SIZE(msm8974_snoc_nodes),
-+	.bus_clk_desc = &bus_1_clk,
-+	.get_bw = msm8974_get_bw,
-+	.ignore_enxio = true,
- };
- 
--static void msm8974_icc_rpm_smd_send(struct device *dev, int rsc_type,
--				     char *name, int id, u64 val)
--{
--	int ret;
--
--	if (id == -1)
--		return;
--
--	/*
--	 * Setting the bandwidth requests for some nodes fails and this same
--	 * behavior occurs on the downstream MSM 3.4 kernel sources based on
--	 * errors like this in that kernel:
--	 *
--	 *   msm_rpm_get_error_from_ack(): RPM NACK Unsupported resource
--	 *   AXI: msm_bus_rpm_req(): RPM: Ack failed
--	 *   AXI: msm_bus_rpm_commit_arb(): RPM: Req fail: mas:32, bw:240000000
--	 *
--	 * Since there's no publicly available documentation for this hardware,
--	 * and the bandwidth for some nodes in the path can be set properly,
--	 * let's not return an error.
--	 */
--	ret = qcom_icc_rpm_smd_send(QCOM_SMD_RPM_ACTIVE_STATE, rsc_type, id,
--				    val);
--	if (ret)
--		dev_dbg(dev, "Cannot set bandwidth for node %s (%d): %d\n",
--			name, id, ret);
--}
--
--static int msm8974_icc_set(struct icc_node *src, struct icc_node *dst)
--{
--	struct msm8974_icc_node *src_qn, *dst_qn;
--	struct msm8974_icc_provider *qp;
--	u64 sum_bw, max_peak_bw, rate;
--	u32 agg_avg = 0, agg_peak = 0;
--	struct icc_provider *provider;
--	struct icc_node *n;
--	int ret, i;
--
--	src_qn = src->data;
--	dst_qn = dst->data;
--	provider = src->provider;
--	qp = to_msm8974_icc_provider(provider);
--
--	list_for_each_entry(n, &provider->nodes, node_list)
--		provider->aggregate(n, 0, n->avg_bw, n->peak_bw,
--				    &agg_avg, &agg_peak);
--
--	sum_bw = icc_units_to_bps(agg_avg);
--	max_peak_bw = icc_units_to_bps(agg_peak);
--
--	/* Set bandwidth on source node */
--	msm8974_icc_rpm_smd_send(provider->dev, RPM_BUS_MASTER_REQ,
--				 src_qn->name, src_qn->mas_rpm_id, sum_bw);
--
--	msm8974_icc_rpm_smd_send(provider->dev, RPM_BUS_SLAVE_REQ,
--				 src_qn->name, src_qn->slv_rpm_id, sum_bw);
--
--	/* Set bandwidth on destination node */
--	msm8974_icc_rpm_smd_send(provider->dev, RPM_BUS_MASTER_REQ,
--				 dst_qn->name, dst_qn->mas_rpm_id, sum_bw);
--
--	msm8974_icc_rpm_smd_send(provider->dev, RPM_BUS_SLAVE_REQ,
--				 dst_qn->name, dst_qn->slv_rpm_id, sum_bw);
--
--	rate = max(sum_bw, max_peak_bw);
--
--	do_div(rate, src_qn->buswidth);
--
--	rate = min_t(u32, rate, INT_MAX);
--
--	if (src_qn->rate == rate)
--		return 0;
--
--	for (i = 0; i < qp->num_clks; i++) {
--		ret = clk_set_rate(qp->bus_clks[i].clk, rate);
--		if (ret) {
--			dev_err(provider->dev, "%s clk_set_rate error: %d\n",
--				qp->bus_clks[i].id, ret);
--			ret = 0;
--		}
--	}
--
--	src_qn->rate = rate;
--
--	return 0;
--}
--
--static int msm8974_get_bw(struct icc_node *node, u32 *avg, u32 *peak)
--{
--	*avg = 0;
--	*peak = 0;
--
--	return 0;
--}
--
--static int msm8974_icc_probe(struct platform_device *pdev)
--{
--	const struct msm8974_icc_desc *desc;
--	struct msm8974_icc_node * const *qnodes;
--	struct msm8974_icc_provider *qp;
--	struct device *dev = &pdev->dev;
--	struct icc_onecell_data *data;
--	struct icc_provider *provider;
--	struct icc_node *node;
--	size_t num_nodes, i;
--	int ret;
--
--	/* wait for the RPM proxy */
--	if (!qcom_icc_rpm_smd_available())
--		return -EPROBE_DEFER;
--
--	desc = of_device_get_match_data(dev);
--	if (!desc)
--		return -EINVAL;
--
--	qnodes = desc->nodes;
--	num_nodes = desc->num_nodes;
--
--	qp = devm_kzalloc(dev, sizeof(*qp), GFP_KERNEL);
--	if (!qp)
--		return -ENOMEM;
--
--	data = devm_kzalloc(dev, struct_size(data, nodes, num_nodes),
--			    GFP_KERNEL);
--	if (!data)
--		return -ENOMEM;
--	data->num_nodes = num_nodes;
--
--	qp->bus_clks = devm_kmemdup(dev, msm8974_icc_bus_clocks,
--				    sizeof(msm8974_icc_bus_clocks), GFP_KERNEL);
--	if (!qp->bus_clks)
--		return -ENOMEM;
--
--	qp->num_clks = ARRAY_SIZE(msm8974_icc_bus_clocks);
--	ret = devm_clk_bulk_get(dev, qp->num_clks, qp->bus_clks);
--	if (ret)
--		return ret;
--
--	ret = clk_bulk_prepare_enable(qp->num_clks, qp->bus_clks);
--	if (ret)
--		return ret;
--
--	provider = &qp->provider;
--	provider->dev = dev;
--	provider->set = msm8974_icc_set;
--	provider->aggregate = icc_std_aggregate;
--	provider->xlate = of_icc_xlate_onecell;
--	provider->data = data;
--	provider->get_bw = msm8974_get_bw;
--
--	icc_provider_init(provider);
--
--	for (i = 0; i < num_nodes; i++) {
--		size_t j;
--
--		node = icc_node_create(qnodes[i]->id);
--		if (IS_ERR(node)) {
--			ret = PTR_ERR(node);
--			goto err_remove_nodes;
--		}
--
--		node->name = qnodes[i]->name;
--		node->data = qnodes[i];
--		icc_node_add(node, provider);
--
--		dev_dbg(dev, "registered node %s\n", node->name);
--
--		/* populate links */
--		for (j = 0; j < qnodes[i]->num_links; j++)
--			icc_link_create(node, qnodes[i]->links[j]);
--
--		data->nodes[i] = node;
--	}
--
--	ret = icc_provider_register(provider);
--	if (ret)
--		goto err_remove_nodes;
--
--	platform_set_drvdata(pdev, qp);
--
--	return 0;
--
--err_remove_nodes:
--	icc_nodes_remove(provider);
--	clk_bulk_disable_unprepare(qp->num_clks, qp->bus_clks);
--
--	return ret;
--}
--
--static void msm8974_icc_remove(struct platform_device *pdev)
--{
--	struct msm8974_icc_provider *qp = platform_get_drvdata(pdev);
--
--	icc_provider_deregister(&qp->provider);
--	icc_nodes_remove(&qp->provider);
--	clk_bulk_disable_unprepare(qp->num_clks, qp->bus_clks);
--}
--
- static const struct of_device_id msm8974_noc_of_match[] = {
- 	{ .compatible = "qcom,msm8974-bimc", .data = &msm8974_bimc},
- 	{ .compatible = "qcom,msm8974-cnoc", .data = &msm8974_cnoc},
-@@ -758,8 +540,8 @@ static const struct of_device_id msm8974_noc_of_match[] = {
- MODULE_DEVICE_TABLE(of, msm8974_noc_of_match);
- 
- static struct platform_driver msm8974_noc_driver = {
--	.probe = msm8974_icc_probe,
--	.remove = msm8974_icc_remove,
-+	.probe = qnoc_probe,
-+	.remove = qnoc_remove,
- 	.driver = {
- 		.name = "qnoc-msm8974",
- 		.of_match_table = msm8974_noc_of_match,
 
 -- 
 2.47.3
