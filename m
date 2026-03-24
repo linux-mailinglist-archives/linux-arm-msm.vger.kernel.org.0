@@ -1,57 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-99587-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99588-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MBRsCaZcwmlKcAQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99587-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 10:43:02 +0100
+	id +I7JNphcwmlKcAQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99588-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 10:42:48 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8FA3F305C94
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 10:43:01 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4681F305C75
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 10:42:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 59161302F730
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 09:35:34 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 722E030FF597
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 09:35:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 307B93D813D;
-	Tue, 24 Mar 2026 09:35:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 495E93DA7E3;
+	Tue, 24 Mar 2026 09:35:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="1FIEfZDV"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="A0Vq+uh/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from ixit.cz (ixit.cz [185.100.197.86])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0CBB38B154;
-	Tue, 24 Mar 2026 09:35:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED33B38B154;
+	Tue, 24 Mar 2026 09:35:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.100.197.86
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774344933; cv=none; b=O0QSKuVhSj7SxXeuxvlDyxAmk+51ZcknJ5H5avNtgHVnDF0Y/AYY/7VrRVdQKkzYrv1JSY0fTyJNhhT1pIDnIQiG9qImE2hhqqThhkkXbc1MlQXnUKKUA6wvRmHvC94yPRtBHsTh+r2QNsnbSj/vXQ/ubLG/9awThaWsMjML71E=
+	t=1774344938; cv=none; b=ODj+bvz//yF3wvbhAki9hsWs/C1r3szFi/bHqp/OsB5wFjMvJtLUROK30N3vLum3FHTLpLDjTplJ+m7WNyPj8iY8aYeIy8AaQm46Tg42PUXnF2w6edEwdWDheQZ6Hf2Y+YOTLYmbHw+ZCzHTOcfh0J6Boa8ZKVx5rvcB96QiG2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774344933; c=relaxed/simple;
-	bh=wGmk7oSJmYRPVUDNLUSPBuMb8aueBt9wLDFVbCU3iiI=;
+	s=arc-20240116; t=1774344938; c=relaxed/simple;
+	bh=sdip9YhglYApFxt9LeVDTcMk3MdftzEFUGVf4QW3jcs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HoQIXp3PuudyTp9Ny/xMLYzJ/8Qmf3zx9XohgkkHykTZL06/WHZ+PD2f2p73ecK943SdNFldgYJ/NjkrZruFCpXCgauwZkb12FPkZa80Oi1VeISDkgHSZY/c3mD86DqCceB9dVqibhFO3s+jZkLhmd0OD4pEqS7VtLpTKUUoIXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=1FIEfZDV; arc=none smtp.client-ip=185.100.197.86
+	 In-Reply-To:Content-Type; b=j3//XN0du/gaP0ntpjZbAcGFW47CO/ug7rwsx9Wmya2yG9H4p8iGiPDHTeDy004/36SZmo7wGwNXddOqrNsZXf9yWlsARsgWPtN0Bfh3wmhWH9AiqCfAXjkJovANKGT0iG5CdLClwz/ksUJsWEmZ4qBnT6azrk2wa7q3rw34ldg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=A0Vq+uh/; arc=none smtp.client-ip=185.100.197.86
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
 Received: from [192.168.229.16] (194-212-249-86.customers.tmcz.cz [194.212.249.86])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange x25519)
 	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 34FE65340DB3;
-	Tue, 24 Mar 2026 10:35:25 +0100 (CET)
+	by ixit.cz (Postfix) with ESMTPSA id 4119A5340DD2;
+	Tue, 24 Mar 2026 10:35:33 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1774344926;
+	t=1774344933;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=58050vNC7YLomYs0+BAyYaDY7ZSgNMB8JeP+pTIlmOg=;
-	b=1FIEfZDVKf6kB2K/6XZok+IsVVIBGcFv/EPHlslPcvlHEZor41zDCPX604+tK6j7LkJZxL
-	ifepVXBwnDxH1VOHe/tF8EWlI3xO0mVEpvVdhACDbcoBsku6siXLjSCF2A2i4DfrLirdah
-	PbqdsVnGwbQUQ2e5qOo5nNX6Zk+Qvuo=
-Message-ID: <eff25adf-c5fd-484d-a9ae-ec27c0d9c100@ixit.cz>
-Date: Tue, 24 Mar 2026 10:35:24 +0100
+	bh=2Xaf3bDCB9Er/hcvWLTt/daLKxvWcynfvfi0OLpJ+xU=;
+	b=A0Vq+uh/VfblPvLLv9/wLoUS4dV/xGyPHf/qzxx1WQMQDh66m5sFQVjQwrnto0vQut+Ray
+	i5tjsUIXGYW6X0ZObpouzkQNoQ5J3KDx0qycmJgRlYIRbq3RW1iTy+qlPc++uSFTpAmL2l
+	X3ZBLuMYIFLMQP6MMHzG7BBwRf4P22s=
+Message-ID: <42352c0c-7464-4e78-8f89-20bdf7abd988@ixit.cz>
+Date: Tue, 24 Mar 2026 10:35:32 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,24 +59,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 7/7] arm64: dts: qcom: sdm670-google-sargo: add imx355
- front camera
-To: Richard Acayan <mailingradian@gmail.com>
-Cc: Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring
- <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+Subject: Re: [PATCH v2 1/2] arm64: dts: qcom: sdm845-oneplus: Enable NFC
+To: Krzysztof Kozlowski <krzk@kernel.org>,
  Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Tianshu Qiu
- <tian.shu.qiu@intel.com>, Sakari Ailus <sakari.ailus@linux.intel.com>,
- Robert Mader <robert.mader@collabora.com>, phone-devel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-media@vger.kernel.org
-References: <20260217002738.133534-1-mailingradian@gmail.com>
- <20260217002738.133534-8-mailingradian@gmail.com>
- <1349f725-a20f-4935-a829-208c8e583ad9@ixit.cz> <acHxgIsyPiQTeqCB@rdacayan>
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Alexander Martinz <amartinz@shift.eco>
+Cc: Petr Hodina <petr.hodina@protonmail.com>,
+ biemster <l.j.beemster@gmail.com>, netdev@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, oe-linux-nfc@lists.linux.dev,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ phone-devel@vger.kernel.org
+References: <20260324-oneplus-nfc-v2-0-3eef052c9bc6@ixit.cz>
+ <20260324-oneplus-nfc-v2-1-3eef052c9bc6@ixit.cz>
+ <93505653-ab2c-4cff-905e-bd5379550019@kernel.org>
 Content-Language: en-US
 From: David Heidelberg <david@ixit.cz>
 Autocrypt: addr=david@ixit.cz; keydata=
@@ -122,7 +118,7 @@ Autocrypt: addr=david@ixit.cz; keydata=
  zRKcgRumz2Tc1ouHj6qINlzEe3a5ldctIn/dvR1l2Ko7GBTG+VGp9U5NOAEkGpxHG9yg6eeY
  fFYnMme51H/HKiyUlFiE3yd5LSmv8Dhbf+vsI4x6BOOOq4Iyop/Exavj1owGxW0hpdUGcCl1
  ovlwVPO/6l/XLAmSGwdnGqok5eGZQzSst0tj9RC9O0dXO1TZocOsf0tJ8dR2egX4kxM=
-In-Reply-To: <acHxgIsyPiQTeqCB@rdacayan>
+In-Reply-To: <93505653-ab2c-4cff-905e-bd5379550019@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spamd-Result: default: False [-0.66 / 15.00];
@@ -130,19 +126,18 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[ixit.cz,quarantine];
 	R_DKIM_ALLOW(-0.20)[ixit.cz:s=dkim];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-99588-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-99587-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[18];
+	FREEMAIL_CC(0.00)[protonmail.com,gmail.com,vger.kernel.org,lists.linux.dev];
+	RCPT_COUNT_TWELVE(0.00)[15];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[kernel.org,gmail.com,linaro.org,intel.com,linux.intel.com,collabora.com,vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
@@ -152,55 +147,41 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[1a:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,ixit.cz:dkim,ixit.cz:mid]
-X-Rspamd-Queue-Id: 8FA3F305C94
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,ixit.cz:dkim,ixit.cz:mid]
+X-Rspamd-Queue-Id: 4681F305C75
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-
-
-On 24/03/2026 03:05, Richard Acayan wrote:
-> On Fri, Mar 13, 2026 at 07:26:47PM +0100, David Heidelberg wrote:
->> On 17/02/2026 01:27, Richard Acayan wrote:
->> [...]
+On 24/03/2026 08:03, Krzysztof Kozlowski wrote:
+> On 24/03/2026 00:20, David Heidelberg via B4 Relay wrote:
+>> From: biemster <l.j.beemster@gmail.com>
 >>
->>> +&cci_i2c1 {
->>> +	camera@1a {
->>> +		compatible = "sony,imx355";
->>> +		reg = <0x1a>;
->>> +
->>> +		clocks = <&camcc CAM_CC_MCLK2_CLK>;
->>> +
->>> +		assigned-clocks = <&camcc CAM_CC_MCLK2_CLK>;
->>> +		assigned-clock-rates = <19200000>;
+>> Enable NFC controller NXP PN553, which is part of the package NXP NQ330
+>> (NFC + eSE).
 >>
->> Extract from #sdm670-mainline:erebion.eu discussion:
->> The imx355 can operate on 24 MHz (on both Pixel 3 and 3a), but Linux kernel
->> driver can operate only with 19.2 MHz.
->>
->> I assume it would be worth it mention at least by comment here.
+>> Signed-off-by: biemster <l.j.beemster@gmail.com>
 > 
-> This might set the series back because the devicetree isn't meant to be
-> written for specific software, but it's included in v11 because you
-> already asked twice.
-> 
+> Same comment as last time. We do not take anonymous contributions.
 
-I would say node with lower clock frequency is still much better than nothing or 
-placeholder saying "i2c camera here". Instead we'll have small placeholder that 
-value can be bumped to 24 MHz. Important is this can be easily improved when at 
-least one consumer of the device-tree gains support.
+ > then you just add a line saying:
+ >
+ > Signed-off-by: Random J Developer <random@developer.example.org>
+ >
+ > using a known identity (sorry, no anonymous contributions.)
 
-We have very scarce support of cameras on mobile phones in mainline, thus 
-leaving a comment that HW can do 24 MHz is reasonable compromise IMHO.
+Quoting the kernel documentation, biemster is known contributor to us (hanging 
+in sdm845-next chat room, I'm personally aware of his presence for more than ~ 2 
+years).
 
-I personally got confused why Android sets higher clock, thus it may happen to 
-other people looking at Pixel 3a as an example for their imx363 bring-up.
+I could switch Author / Co-developed-by with me in this case, but since biemster 
+did the initial work, it feels right to keep the credit.
 
 David
 
-> The frequency could also be stated as having "better software support"
-> in general without mentioning Linux as the reason.
+> 
+> Best regards,
+> Krzysztof
 
 -- 
 David Heidelberg
