@@ -1,255 +1,344 @@
-Return-Path: <linux-arm-msm+bounces-99723-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99724-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6DqNIvLnwmnnnAQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99723-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 20:37:22 +0100
+	id 4AxjKO3pwmnnnAQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99724-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 20:45:49 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2EDE331B9D8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 20:37:22 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F9C431BBF6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 20:45:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 651ED304E826
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 19:30:23 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id A12783030E32
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 19:42:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87E10248F6F;
-	Tue, 24 Mar 2026 19:30:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03E1D3101C0;
+	Tue, 24 Mar 2026 19:42:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VviMisEE";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="jiFXsKgY"
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=w_armin@gmx.de header.b="ifvPJxvA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B39B1FC0FC
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 19:30:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A425E3043DC;
+	Tue, 24 Mar 2026 19:42:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774380622; cv=none; b=pp85OU15jYG6eIEWK+Bim9weMgzBJz0bVHy+1tlD/DXCvxVztq0UoADFkI0db8aaMEQmez+A+N29REQ5OJGdQb9+BW7jjjFmOPl4PW9Wa8IXZmOpb6BlaK28KGjZaS2oZMFRaekRTbZoEz9adBNXD/Pgs8gsEZQAWrX8ABr/aW4=
+	t=1774381336; cv=none; b=Tt9bCBK+LTpfXSN9cGd7OFKwU64TPHqZD0lANIAdIvzq+coZrzJ88/q8ehn/UAPz1RSYq116h/5NKzGb20GPgEE+6/n68W/ew28KjbxVQap4BanyJNsWWlkn8nxV1RihU70aOYWng+YUB/pPaMKSjqdlAf0s4ZPKNlCienNqVRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774380622; c=relaxed/simple;
-	bh=Zt1dvzYIVftJHYLwb7Pcy1770cGtwaaqM2BsJIyroy4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OF62syGXZi2iO3iLCMdx/nNXZLPpDTEDh03EmW3nzKx1hTHEf9DZ/hGIYY6cUbgXvVrGLsfiYnANgFp2kUYiNNX+hGWKRVEGcgdSi/otnMVu2RRMTWPT3YfmDDmIsKKgol7wVt5TrYRpVx4agIn6JywbiY1xRvrVQxJhT+AVKSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VviMisEE; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=jiFXsKgY; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62OJD2ee1993226
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 19:30:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=S+PbwUMOw7pk5C5b6YJ0/miz
-	vuh+S+o9r8O5lHAOY9c=; b=VviMisEEVTf0JQKNMXS5THdDgVHtrunJMAsx/rnf
-	0DpEOxKGmTEmKBgp0trY1pfHeYJSVMHbg/Bfj3inNmShCikoFbkT55vXin9Gx9ez
-	bkCMe5Vc+zfTUzGm/6ZL0WoVj/vZpnsquH47FWKpAQvoOYIvs8uUbHDrExiUiBsM
-	ekEcB0sD7RZnSNP5SHLjvJp4GS8+JWJnZI3o8VJLpBR/24z6atamUsKAjli91ZM9
-	IdeHFzAIiEXOep5BXt/WUIWljube/c2ztJnNlhDVus1yh8+lA8QM/ESkdzUEJXTB
-	lCVKHWyCRAvK3MLIQU9iFzvDQHAQGJANyxmiUHpq4UsDYw==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d3jskujj7-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 19:30:20 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-509070bda13so7421121cf.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 12:30:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1774380619; x=1774985419; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=S+PbwUMOw7pk5C5b6YJ0/mizvuh+S+o9r8O5lHAOY9c=;
-        b=jiFXsKgYvzrFo9Lx3bzVHjwmX6qE/y0IIbGRBOaxaMouknh0sGQYylIhz2Czr6AevQ
-         O2BEB/6NzCVvuRgMwP6k5p0ea7NFzR5/oqEni9a2bB4vlBjXiu1WMqtUv6k0cPlOfYmS
-         tw/dNCGbaczB9QA3HmpOD9zxIWc+NCuMbtAN8Mc2VN6LGyh9pKZJA9rLmzwSCWpXmmN/
-         Zutqm7BxjNEvzEbdmwEF2hRB4C7fJc9RXDG/+hg65jEqgOAoAk6dvd8v8K+K3Pd9eLa7
-         lSbu7kyDFJOPcKTIu0sIS35p8nLj2emXqD5mApcdPRoQ2MsXuks/lq2SWHfdjgvJGPzw
-         aRLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774380619; x=1774985419;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=S+PbwUMOw7pk5C5b6YJ0/mizvuh+S+o9r8O5lHAOY9c=;
-        b=Qi2BMX+g7Oy6ClnDjUujLdyFXIgXiH7CbSMykddKauWseN7JEhlAYFfD5LSqgAfr+8
-         edPdiaKzEJNp9Yn8nPC0xMg5GGbU1alhhgjZ7Q1d3+f0fCUrmw5LOFZgXpEb0/vybxY9
-         0046ECevV5duain39RSmNWaDdWrgw0Bh+82u/aovelb6YoQqc/z0GS1mNivb9sO7jNHx
-         UA65XyYrznQ8E7TQ+zYX2i4/5vUbpwwta1sgDvb53aoiP54az2G8x6JjFChXDuTW3kwa
-         iWfngOruKFuoAFNBwdQ8UrTJcV3FsbDlA3mEhk5tz4S2ffyjZpxsK6RvlEsThzxFr7Ck
-         sklg==
-X-Forwarded-Encrypted: i=1; AJvYcCUEgqzQ2schgSVRsi1/0AI0cwK0g2eTHTkAkOsQfJA/EnG1UtO9KQA+X2PG3xtNu5es4cOON0jrYcWtLRWo@vger.kernel.org
-X-Gm-Message-State: AOJu0YynZiJ+qrx4I9C5xnPfs82Hglp8ZIhfVnncydF7XcMOiCkBuKdS
-	M4H7rANmta0IWdLcCniaGMHEx7bLnYoCAgW6BfShseaWanGWDvp3lhUwAhykcLQASCg6QRK8VYM
-	dhmbXaZg3sNDC+3xRp3FAGBXRGrsWM1YgHwLyE6alfvPO+GFC0ALAdCo5Li6GCAHVjkE5
-X-Gm-Gg: ATEYQzwwKw6H4LfTykECjxDwHUlD8IUQgUOl8WcIF0K/dt8j3B9XrV7miO19w79p3s9
-	Ql3EADis2PPmvcnoJddTjyZGVcO3wSjmrhWqgRkRrkExPzfed3IHkncGia/b6D1eUMaftkhULTc
-	W0+f//BgsOGuQB51iztqj4YMP/APfZurwBVL+M+rRPF13hs3APBQpyTwUh9Mmb7h/HQJglO1IJV
-	BcP2izHLzoZEw5GKy0U7oGl2NCrboduLHrt2X+ni/GXM0G78J7IUDXtr1JHCOaOGbb13UqBk+Wr
-	WWuBiBkZLpFRQtlJ0+ADfRfRy0fVkCd/PDSkSE8zTfpa0Q5nGjdelOZomJ7akzdf5YfpzhJw3DI
-	L6va3YqQIUxCDx10mThVDpbmwfUJ0j/b6vIk2wjEW5j9VTSLLOSm0itjJ8RqZ5A72JsVCHQcTQ/
-	htdoVbd/E32C2BQPngbkf+42udLAKHw5/9eWc=
-X-Received: by 2002:a05:622a:8d10:b0:50b:5743:5fca with SMTP id d75a77b69052e-50b6ef07979mr58212421cf.39.1774380619275;
-        Tue, 24 Mar 2026 12:30:19 -0700 (PDT)
-X-Received: by 2002:a05:622a:8d10:b0:50b:5743:5fca with SMTP id d75a77b69052e-50b6ef07979mr58211471cf.39.1774380618650;
-        Tue, 24 Mar 2026 12:30:18 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38c3aa03bccsm4516151fa.17.2026.03.24.12.30.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Mar 2026 12:30:17 -0700 (PDT)
-Date: Tue, 24 Mar 2026 21:30:15 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Subject: Re: [PATCH v3 31/38] drm/msm/dp: add HPD callback for dp MST
-Message-ID: <tlt2ffn2xz3mpeoojcciieh35zc6pyowlkcjtxkkrnaj32enne@mbcrdrnkmaoz>
-References: <20250825-msm-dp-mst-v3-0-01faacfcdedd@oss.qualcomm.com>
- <20250825-msm-dp-mst-v3-31-01faacfcdedd@oss.qualcomm.com>
- <pc4brjias4ixewzlsvnlhqhlz774z4p6aq7j4kldu5ze2e35sh@tsm2mtrkk3zi>
- <b5b3b1b8-ed48-429c-a87f-0278a6632313@oss.qualcomm.com>
+	s=arc-20240116; t=1774381336; c=relaxed/simple;
+	bh=CP9KQznymj/57SvemGWPkQ/5+YO2JcQjnpOOJiKqnYw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AQs8E6t8UOd74GNHRtoe26daCV/ASXCnLqnVlOBZXVk/5KgspTtRQItQA+fHLtkTJcmpbyPP+njQyfEbXsJyF9EczJd2MSg9B68/sFjx5Hytt7tNRVQesiHi50asGIpNXawfd325ygCWOmVRNAuiV4B4rw+WomBCot2ON2N/VLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=w_armin@gmx.de header.b=ifvPJxvA; arc=none smtp.client-ip=212.227.15.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1774381324; x=1774986124; i=w_armin@gmx.de;
+	bh=GGWlvb2n3V4HaO8XQjVf9hW7XhuAzhwdcuVxgB5Di8o=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=ifvPJxvAhtek8q+pCeeyITFinHZKIJzqVHZWD0oNtpjBH1VESRkcZtiJ0sFNIVvR
+	 +0tHnwJ18q+Z71ZrayUhU0vh5SiV1GPGwunmQmajPwVX4HXy1AnJ3jVQfcgYl/q0G
+	 7GpW93BfuY2TpH5ZIbrRDM1vyhuFD6vaYRPfQPHs2isrsWWvKb6H9asjxTkbrpRtL
+	 3vWhE/L/BP8v1cfiKyUpLIqIJ9UK3RIuIZtPTLzS2X0sC5ZIUWvYq6SpqamMfPhIB
+	 3LW6jjBPxIdqM4s0+mkdYOjqtI6GXvkruP0E13jFM3HajUwIRo0KgB5dciwbWvO8R
+	 RuMZmDRORvSKwwSOYw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MJE6L-1vpN8Z0wQN-00N053; Tue, 24
+ Mar 2026 20:42:04 +0100
+Message-ID: <50ed0e80-c1f3-48da-81f6-9edd2b1c35e1@gmx.de>
+Date: Tue, 24 Mar 2026 20:41:59 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b5b3b1b8-ed48-429c-a87f-0278a6632313@oss.qualcomm.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI0MDE1MSBTYWx0ZWRfX2ABqaDze+rf9
- nFmyH+BMBOKmRvUOlGl4kfwZfK1gNfx4NyulJ40jpu1FvENVXo/cIrOziwFiD04zF2Oqj8vdJsY
- 328jMtLBnJbMBihjcQPNp0XFBxusklfMIY2yIMQW8EL/h6f6syo5YHFlAO0zqRyn2pgrJ6dKkZo
- 1Bz/qQke9zDy0V2UuE3p+nFJt34Q9SsMzyhUfu9/VT6FEVNSauGf+9O4TO5TCyLrpoRooCF7dRq
- 52KjYvjhwTUb7RlmLTQe2vIBlJ7U+UTfsflmXGeKKMXmNbQIRkGGBtjvL+ZUzFv4TxEfV6yVDEh
- gF1lssGEcFLir1ab/UUMsH6vNniGjKODACZ2CKwZraY2/wdOqBKxcmVT8vPP2tGr8qiphvPhIe2
- IHmg5OyDx0v/MaiOJUC9H3wgBhWdeASUFdpm0qojDIrRICuV3L6PaLDy0f0AXQPFkndBkBKVvn2
- FB3Gsw23msCtAzc/tDg==
-X-Proofpoint-GUID: YjF4h7QyuShoMaCDlcsUiAqsniZ7rOyY
-X-Proofpoint-ORIG-GUID: YjF4h7QyuShoMaCDlcsUiAqsniZ7rOyY
-X-Authority-Analysis: v=2.4 cv=I+pohdgg c=1 sm=1 tr=0 ts=69c2e64c cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=COk6AnOGAAAA:8
- a=EUspDBNiAAAA:8 a=2DgZU2EfoQVUhze0CNQA:9 a=CjuIK1q_8ugA:10
- a=a_PwQJl-kcHnX1M80qC6:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-24_03,2026-03-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0
- phishscore=0 spamscore=0 priorityscore=1501 malwarescore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603240151
-X-Spamd-Result: default: False [-1.66 / 15.00];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 06/12] platform/wmi: use generic driver_override
+ infrastructure
+To: Danilo Krummrich <dakr@kernel.org>, Russell King <linux@armlinux.org.uk>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ "Rafael J. Wysocki" <rafael@kernel.org>,
+ Ioana Ciornei <ioana.ciornei@nxp.com>, Nipun Gupta <nipun.gupta@amd.com>,
+ Nikhil Agarwal <nikhil.agarwal@amd.com>, "K. Y. Srinivasan"
+ <kys@microsoft.com>, Haiyang Zhang <haiyangz@microsoft.com>,
+ Wei Liu <wei.liu@kernel.org>, Dexuan Cui <decui@microsoft.com>,
+ Long Li <longli@microsoft.com>, Bjorn Helgaas <bhelgaas@google.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Vineeth Vijayan <vneethv@linux.ibm.com>,
+ Peter Oberparleiter <oberpar@linux.ibm.com>,
+ Heiko Carstens <hca@linux.ibm.com>, Vasily Gorbik <gor@linux.ibm.com>,
+ Alexander Gordeev <agordeev@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Sven Schnelle <svens@linux.ibm.com>,
+ Harald Freudenberger <freude@linux.ibm.com>,
+ Holger Dengler <dengler@linux.ibm.com>, Mark Brown <broonie@kernel.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Xuan Zhuo <xuanzhuo@linux.alibaba.com>, =?UTF-8?Q?Eugenio_P=C3=A9rez?=
+ <eperezma@redhat.com>, Alex Williamson <alex@shazbot.org>,
+ Juergen Gross <jgross@suse.com>, Stefano Stabellini
+ <sstabellini@kernel.org>,
+ Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
+ "Christophe Leroy (CS GROUP)" <chleroy@kernel.org>
+Cc: linux-kernel@vger.kernel.org, driver-core@lists.linux.dev,
+ linuxppc-dev@lists.ozlabs.org, linux-hyperv@vger.kernel.org,
+ linux-pci@vger.kernel.org, platform-driver-x86@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+ linux-s390@vger.kernel.org, linux-spi@vger.kernel.org,
+ virtualization@lists.linux.dev, kvm@vger.kernel.org,
+ xen-devel@lists.xenproject.org, linux-arm-kernel@lists.infradead.org,
+ Gui-Dong Han <hanguidong02@gmail.com>
+References: <20260324005919.2408620-1-dakr@kernel.org>
+ <20260324005919.2408620-7-dakr@kernel.org>
+Content-Language: en-US
+From: Armin Wolf <W_Armin@gmx.de>
+In-Reply-To: <20260324005919.2408620-7-dakr@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:KKKjGPofriNO2Y7ny8bzLW+ogpO7D8lGPS1ezTtV32qPriElMBO
+ jvtg2QtMPBSSFpK+K9f9/W3IHaIUxxM1SjbuL+eF3f/6Z6WRzj/HQbWdJ/0smqYXW/iekvq
+ A+6iz88zZSNd21TB/fuLIMalZH7T5q5DuSXS3//CqYIoGgOXkyuC7c9IHxbPHBnE7ZSgdkY
+ FFp1rdFLmEZzrK9+h1giQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:kIvBWcj/zXQ=;/niOuXlWvI8Na8RihCaK5ylBNR/
+ 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
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[gmx.de,quarantine];
+	R_DKIM_ALLOW(-0.20)[gmx.de:s=s31663417];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-99723-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,linux.dev,poorly.run,somainline.org,gmail.com,ffwll.ch,vger.kernel.org,lists.freedesktop.org,quicinc.com];
+	TAGGED_FROM(0.00)[bounces-99724-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[quicinc.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:dkim,qualcomm.com:dkim,qualcomm.com:email];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[14];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.linux.dev,lists.ozlabs.org,lists.xenproject.org,lists.infradead.org,gmail.com];
+	FREEMAIL_FROM(0.00)[gmx.de];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[49];
+	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[W_Armin@gmx.de,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[gmx.de:+];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 2EDE331B9D8
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,gmx.de:dkim,gmx.de:email,gmx.de:mid]
+X-Rspamd-Queue-Id: 9F9C431BBF6
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Tue, Mar 24, 2026 at 09:04:24PM +0800, Yongxing Mou wrote:
-> 
-> 
-> On 8/27/2025 2:40 AM, Dmitry Baryshkov wrote:
-> > On Mon, Aug 25, 2025 at 10:16:17PM +0800, Yongxing Mou wrote:
-> > > From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> > > 
-> > > Add HPD callback for the MST module which shall be invoked from the
-> > > dp_display's HPD handler to perform MST specific operations in case
-> > > of HPD. In MST case, route the HPD messages to MST module.
-> > > 
-> > > Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> > > Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-> > > ---
-> > >   drivers/gpu/drm/msm/dp/dp_display.c | 15 ++++++++++++---
-> > >   drivers/gpu/drm/msm/dp/dp_mst_drm.c | 34 ++++++++++++++++++++++++++++++++++
-> > >   drivers/gpu/drm/msm/dp/dp_mst_drm.h |  2 ++
-> > >   3 files changed, 48 insertions(+), 3 deletions(-)
-> > > 
-> > > diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> > > index abcab3ed43b6da5ef898355cf9b7561cd9fe0404..59720e1ad4b1193e33a4fc6aad0c401eaf9cbec8 100644
-> > > --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> > > +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> > > @@ -500,9 +500,16 @@ static int msm_dp_display_handle_irq_hpd(struct msm_dp_display_private *dp)
-> > >   static int msm_dp_display_usbpd_attention_cb(struct device *dev)
-> > >   {
-> > > -	int rc = 0;
-> > > -	u32 sink_request;
-> > >   	struct msm_dp_display_private *dp = dev_get_dp_display_private(dev);
-> > > +	struct msm_dp *msm_dp_display = &dp->msm_dp_display;
-> > > +	u32 sink_request;
-> > > +	int rc = 0;
-> > > +
-> > > +	if (msm_dp_display->mst_active) {
-> > > +		if (msm_dp_aux_is_link_connected(dp->aux) != ISR_DISCONNECTED)
-> > > +			msm_dp_mst_display_hpd_irq(&dp->msm_dp_display);
-> > > +		return 0;
-> > > +	}
-> > >   	/* check for any test request issued by sink */
-> > >   	rc = msm_dp_link_process_request(dp->link);
-> > > @@ -1129,8 +1136,10 @@ static irqreturn_t msm_dp_display_irq_thread(int irq, void *dev_id)
-> > >   	if (hpd_isr_status & DP_DP_HPD_UNPLUG_INT_MASK)
-> > >   		msm_dp_display_send_hpd_notification(dp, false);
-> > > -	if (hpd_isr_status & DP_DP_IRQ_HPD_INT_MASK)
-> > > +	if (hpd_isr_status & DP_DP_IRQ_HPD_INT_MASK) {
-> > >   		msm_dp_display_send_hpd_notification(dp, true);
-> > > +		msm_dp_irq_hpd_handle(dp, 0);
-> > 
-> > Why is it a part of this patch?? It has nothing to do with MST.
-> > 
-> Emm ... maybe here we can directly call msm_dp_mst_display_hpd_irq..
-> I tried an alternative approach by calling the MST IRQ handler from
-> msm_dp_bridge_hpd_notify(). I expected that when hpd_isr_status ==
-> DP_DP_IRQ_HPD_INT_MASK, the hpd_link_status read in
-> msm_dp_bridge_hpd_notify() would be ISR_IRQ_HPD_PULSE_COUNT. That way, we
-> could handle both SST and MST interrupt paths in msm_dp_irq_hpd_handle().
-> However, hpd_link_status only reports ISR_CONNECTED. So I had to move the
-> MST IRQ handling into the IRQ thread. Do you have any suggestions on this?
+Am 24.03.26 um 01:59 schrieb Danilo Krummrich:
 
-When are the link status bits updated? Please remember, we need to
-support all three cases:
+> When a driver is probed through __driver_attach(), the bus' match()
+> callback is called without the device lock held, thus accessing the
+> driver_override field without a lock, which can cause a UAF.
+>
+> Fix this by using the driver-core driver_override infrastructure taking
+> care of proper locking internally.
+>
+> Note that calling match() from __driver_attach() without the device lock
+> held is intentional. [1]
 
-- Native DP, native DP HPD pin handling
-- Native DP, DP HPD pin not handled by the controller
-- DP AltMode, DP HPD pin not used at all
+Reviewed-by: Armin Wolf <W_Armin@gmx.de>
 
-In the second and the third cases we will not be getting the IRQs.
-Instead one of the next bridges (connector, EC, AltMode, etc.) will send
-the HPD event, which lands in the .hpd_notify() callback.
-
--- 
-With best wishes
-Dmitry
+> Link: https://lore.kernel.org/driver-core/DGRGTIRHA62X.3RY09D9SOK77P@ker=
+nel.org/ [1]
+> Reported-by: Gui-Dong Han <hanguidong02@gmail.com>
+> Closes: https://bugzilla.kernel.org/show_bug.cgi?id=3D220789
+> Fixes: 12046f8c77e0 ("platform/x86: wmi: Add driver_override support")
+> Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+> ---
+>   drivers/platform/wmi/core.c | 36 +++++-------------------------------
+>   include/linux/wmi.h         |  4 ----
+>   2 files changed, 5 insertions(+), 35 deletions(-)
+>
+> diff --git a/drivers/platform/wmi/core.c b/drivers/platform/wmi/core.c
+> index b8e6b9a421c6..750e3619724e 100644
+> --- a/drivers/platform/wmi/core.c
+> +++ b/drivers/platform/wmi/core.c
+> @@ -842,39 +842,11 @@ static ssize_t expensive_show(struct device *dev,
+>   }
+>   static DEVICE_ATTR_RO(expensive);
+>  =20
+> -static ssize_t driver_override_show(struct device *dev, struct device_a=
+ttribute *attr,
+> -				    char *buf)
+> -{
+> -	struct wmi_device *wdev =3D to_wmi_device(dev);
+> -	ssize_t ret;
+> -
+> -	device_lock(dev);
+> -	ret =3D sysfs_emit(buf, "%s\n", wdev->driver_override);
+> -	device_unlock(dev);
+> -
+> -	return ret;
+> -}
+> -
+> -static ssize_t driver_override_store(struct device *dev, struct device_=
+attribute *attr,
+> -				     const char *buf, size_t count)
+> -{
+> -	struct wmi_device *wdev =3D to_wmi_device(dev);
+> -	int ret;
+> -
+> -	ret =3D driver_set_override(dev, &wdev->driver_override, buf, count);
+> -	if (ret < 0)
+> -		return ret;
+> -
+> -	return count;
+> -}
+> -static DEVICE_ATTR_RW(driver_override);
+> -
+>   static struct attribute *wmi_attrs[] =3D {
+>   	&dev_attr_modalias.attr,
+>   	&dev_attr_guid.attr,
+>   	&dev_attr_instance_count.attr,
+>   	&dev_attr_expensive.attr,
+> -	&dev_attr_driver_override.attr,
+>   	NULL
+>   };
+>   ATTRIBUTE_GROUPS(wmi);
+> @@ -943,7 +915,6 @@ static void wmi_dev_release(struct device *dev)
+>   {
+>   	struct wmi_block *wblock =3D dev_to_wblock(dev);
+>  =20
+> -	kfree(wblock->dev.driver_override);
+>   	kfree(wblock);
+>   }
+>  =20
+> @@ -952,10 +923,12 @@ static int wmi_dev_match(struct device *dev, const=
+ struct device_driver *driver)
+>   	const struct wmi_driver *wmi_driver =3D to_wmi_driver(driver);
+>   	struct wmi_block *wblock =3D dev_to_wblock(dev);
+>   	const struct wmi_device_id *id =3D wmi_driver->id_table;
+> +	int ret;
+>  =20
+>   	/* When driver_override is set, only bind to the matching driver */
+> -	if (wblock->dev.driver_override)
+> -		return !strcmp(wblock->dev.driver_override, driver->name);
+> +	ret =3D device_match_driver_override(dev, driver);
+> +	if (ret >=3D 0)
+> +		return ret;
+>  =20
+>   	if (id =3D=3D NULL)
+>   		return 0;
+> @@ -1076,6 +1049,7 @@ static struct class wmi_bus_class =3D {
+>   static const struct bus_type wmi_bus_type =3D {
+>   	.name =3D "wmi",
+>   	.dev_groups =3D wmi_groups,
+> +	.driver_override =3D true,
+>   	.match =3D wmi_dev_match,
+>   	.uevent =3D wmi_dev_uevent,
+>   	.probe =3D wmi_dev_probe,
+> diff --git a/include/linux/wmi.h b/include/linux/wmi.h
+> index 75cb0c7cfe57..14fb644e1701 100644
+> --- a/include/linux/wmi.h
+> +++ b/include/linux/wmi.h
+> @@ -18,16 +18,12 @@
+>    * struct wmi_device - WMI device structure
+>    * @dev: Device associated with this WMI device
+>    * @setable: True for devices implementing the Set Control Method
+> - * @driver_override: Driver name to force a match; do not set directly,
+> - *		     because core frees it; use driver_set_override() to
+> - *		     set or clear it.
+>    *
+>    * This represents WMI devices discovered by the WMI driver core.
+>    */
+>   struct wmi_device {
+>   	struct device dev;
+>   	bool setable;
+> -	const char *driver_override;
+>   };
+>  =20
+>   /**
 
