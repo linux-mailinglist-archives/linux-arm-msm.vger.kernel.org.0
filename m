@@ -1,55 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-99508-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99509-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id sFHfI8PzwWmPYQQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99508-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 03:15:31 +0100
+	id uZOjIZnywWlzYQQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99509-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 03:10:33 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 94DA530106E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 03:15:30 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 33970300FD2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 03:10:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 59B17304EDDD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 02:08:32 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id A1ECF3047C84
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 02:08:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87DE0373BEB;
-	Tue, 24 Mar 2026 02:08:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EB00388396;
+	Tue, 24 Mar 2026 02:08:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="llZABWRP"
+	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="fgIRRc4b"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-177.mta1.migadu.com (out-177.mta1.migadu.com [95.215.58.177])
+Received: from out-181.mta1.migadu.com (out-181.mta1.migadu.com [95.215.58.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F207F387379
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 02:08:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC9E438836C
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 02:08:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774318085; cv=none; b=B7is2JJdUmDN6Sbboz7qcC1QsQd6dQOnhbI9rfa2D/iGkweua81BE1y/+O5uzZLZafrbmp7PPlURcKT+JNy/vMtg3Bl8K04Si6yvpvR5OmR+OXXHbdjsxp8BlSQg3s/alPBKrYRoLFpmfcnfBpvECSIZIw8qD9Z+NiS8+zvzWxI=
+	t=1774318088; cv=none; b=gj3CJneWf0vwx1Vy60aBdpcv98bbjewB8w9t6t6n2kyEusDbg+qzaGLWp0ONtsHzGTLq27rW5G15QtXOQe2k2JqfvJBGXsQUWlMuptSzEnbo2o+yPTyEDmrK3Sh8ZGR60rMCeNnhPZPKJQfehTrIujRqzS+kFraJk3mAeRK0gm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774318085; c=relaxed/simple;
-	bh=lByz5oJB84uA1YtiHT7z2YmFcS+ccrY53jFU2X6bajM=;
+	s=arc-20240116; t=1774318088; c=relaxed/simple;
+	bh=6xoFlZVlY5etAeSqVv+qkdD4WZk+2DUAtOHNeZLvqiM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=sU/qsMSgPUJ00B+SRA4oVRkBUX1iiOutC23zRW5To7+4LBDVa+QZx3dOxR0mFnHjiU5Kedy8PRBu5CUytKG+tec8lKH7rCLwX6HuuP1k9Gxd7GnJLgbmaUIAb+kCf0v+azg/f6BiPOcQ9b/HS4TfM7B9FfJRb+DDMezzSsg8U1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=llZABWRP; arc=none smtp.client-ip=95.215.58.177
+	 In-Reply-To:To:Cc; b=sEbKgnav4M3LKn6oRdDbobZ501ZbspqxwVAfUm+tN26gK+JfOmU8Xi4TbxXLeFdhgUa1r8qeC/QoVJR8ZXKilNVkniXUpfEbbyZqY/y8M/QJIR8pAERpIl3co5dRzwaQfwK2LbKLsBPiZcv0eGI7mQ9DoZHcyQ7wkDb91Xo6WFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=fgIRRc4b; arc=none smtp.client-ip=95.215.58.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=postmarketos.org
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
-	s=key1; t=1774318082;
+	s=key1; t=1774318085;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=dGHmDNlZkqk/B9ymzDdy/nd/8kG4QY0mqwL1FnpfS/k=;
-	b=llZABWRPZGYHj0M+n9TUSYO7hT3s1JLDJ12TN5eVT74QFesrt+ylh02t5OonlXPu5Hazc3
-	bjxEP2KZtoZcRmqhSQioQSzg38x0AoVTSZLZMDUvsWVkwPxI5Z9Q3UctqXPU1wT56TDCVX
-	kVE1rwPBZPH3KaVMo2k8HqJToJGNE+6k+2hla1cf5ltGdzcoLDL466jIqWv1yZnjHSmqN3
-	Kevo/LN3skSf592S4cV/bxAMhql0RHcpbeS+FXLd8837iKYxWM1MMP7TPQQvFoXE/oUmfs
-	IZ1ebLFtpKN40jG31BPB0/nI4N+hfBH165/y+K2w5hRM0cK7esX4g1FjX0JRUQ==
+	bh=sjAu9F2Ij3hY1reYG62HkcTE8+Tm43f71szHq2LLmRI=;
+	b=fgIRRc4b2N/6Z/DXSacfExKwGq31ubBmkw+OiLhmwiIiiNkl7pVkZaT+Az++yQSR5KPGcE
+	NekOb8OH4bDv+AZbkR++Aj8Gu5bE3tF5ahY7+XF4JsGdYA9vR2e7eIytFSRKG+1WocYDjv
+	RwER11ZPMZfWdoZ2rp8L78Tl0wf1G4E5vQft+qAfh8c2JBV4GlXAskls2fFj4iA77Y5LlX
+	Gy5CcfBdcScegiiR0M+YjJ6UWZgJoPF/WID4sN7Nw5I6TXr5ehc+GMKWLhvluYV03Y8DCh
+	43ibcRf/wRrJFyW0u50s0KijGiKbImb58+VhY5oFrUcpn4JwTT8ehEJ4STt52g==
 From: Paul Sajna <sajattack@postmarketos.org>
-Date: Mon, 23 Mar 2026 19:06:36 -0700
-Subject: [PATCH v6 06/15] arm64: dts: qcom: sdm845-lg-common: Add LEDs
+Date: Mon, 23 Mar 2026 19:06:37 -0700
+Subject: [PATCH v6 07/15] arm64: dts: qcom: sdm845-lg-judyln: Add lab/ibb
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,7 +58,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260323-judyln-dts-v6-6-29d70ca1651c@postmarketos.org>
+Message-Id: <20260323-judyln-dts-v6-7-29d70ca1651c@postmarketos.org>
 References: <20260323-judyln-dts-v6-0-29d70ca1651c@postmarketos.org>
 In-Reply-To: <20260323-judyln-dts-v6-0-29d70ca1651c@postmarketos.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -69,14 +69,12 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
  ~postmarketos/upstreaming@lists.sr.ht, Amir Dahan <system64fumo@tuta.io>, 
  Christopher Brown <crispybrown@gmail.com>, 
- Paul Sajna <sajattack@postmarketos.org>, 
- Amir Dahan <system64fumo@protonmail.com>, Pavel Machek <pavel@ucw.cz>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1774318055; l=1385;
+ Paul Sajna <sajattack@postmarketos.org>
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1774318055; l=1093;
  i=sajattack@postmarketos.org; s=20250422; h=from:subject:message-id;
- bh=fBkqXijux7HJPlW4KeZsWnicQmGDO3c3ikJF3qAutj4=;
- b=y7FyZz1FlVkLlNXYMSJ8s+dRJ3D8kd+lj+6tRYNn6+zTW2WmCW/JN4FNfXhtyyChl7ZMbITGP
- E5EVOQNrNRoBqGlZ7wS6WUobdM67y+niLFnYKw36PEaO9Mx6ftKwAGt
+ bh=6xoFlZVlY5etAeSqVv+qkdD4WZk+2DUAtOHNeZLvqiM=;
+ b=qQjCWciNSTceSumVkBBrDX+ycmMH3SaOYhrgWYvlyQc4ZfBvB+UFyO8z7q87ZIsdIICyCxOxw
+ PS91vX+ZjdcBIk3H+rqNUwOiIcxb9CxPE7MgjFUUsHS8cSzIzppEfrk
 X-Developer-Key: i=sajattack@postmarketos.org; a=ed25519;
  pk=TwacvEOiRJ2P2oAdEqIDrtQTL18QS4FfcHfP/zNsxkQ=
 X-Migadu-Flow: FLOW_OUT
@@ -84,92 +82,68 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[postmarketos.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	R_DKIM_ALLOW(-0.20)[postmarketos.org:s=key1];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-99508-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-99509-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[3];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,lists.sr.ht,tuta.io,gmail.com,postmarketos.org,protonmail.com,ucw.cz,oss.qualcomm.com];
-	RCPT_COUNT_TWELVE(0.00)[17];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.sr.ht,tuta.io,gmail.com,postmarketos.org];
+	RCPT_COUNT_TWELVE(0.00)[14];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_PROHIBIT(0.00)[0.0.0.4:email];
+	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[sajattack@postmarketos.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[postmarketos.org:+];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TO_DN_SOME(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tuta.io:email,0.0.0.5:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,protonmail.com:email,postmarketos.org:dkim,postmarketos.org:email,postmarketos.org:mid,qualcomm.com:email,0.0.0.3:email,ucw.cz:email]
-X-Rspamd-Queue-Id: 94DA530106E
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[postmarketos.org:dkim,postmarketos.org:email,postmarketos.org:mid,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 33970300FD2
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-From: Amir Dahan <system64fumo@protonmail.com>
+These regulators are required for the LCD
 
-Add the multicolor status LED in the phone's notch.
-
-Signed-off-by: Amir Dahan <system64fumo@tuta.io>
-Reviewed-by: Pavel Machek <pavel@ucw.cz>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi | 28 ++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-index 57badeff16a5..7b0e14d3f57e 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-@@ -6,6 +6,7 @@
-  */
- 
- #include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/leds/common.h>
- #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- 
-@@ -489,6 +490,33 @@ &pm8998_resin {
- 	status = "okay";
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts b/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
+index 55bfddab3afd..bbfa709048f7 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
+@@ -67,6 +67,23 @@ &gpu_zap_shader {
+ 	firmware-name = "qcom/sdm845/judyln/a630_zap.mbn";
  };
  
-+&pmi8998_lpg {
-+	status = "okay";
-+
-+	multi-led {
-+		color = <LED_COLOR_ID_RGB>;
-+		function = LED_FUNCTION_STATUS;
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		led@3 {
-+			reg = <3>;
-+			color = <LED_COLOR_ID_BLUE>;
-+		};
-+
-+		led@4 {
-+			reg = <4>;
-+			color = <LED_COLOR_ID_GREEN>;
-+		};
-+
-+		led@5 {
-+			reg = <5>;
-+			color = <LED_COLOR_ID_RED>;
-+		};
-+	};
++&ibb {
++	regulator-min-microvolt = <5500000>;
++	regulator-max-microvolt = <5500000>;
++	regulator-over-current-protection;
++	regulator-pull-down;
++	regulator-soft-start;
++	qcom,discharge-resistor-kohms = <300>;
 +};
 +
- &qupv3_id_0 {
- 	status = "okay";
++&lab {
++	regulator-min-microvolt = <5500000>;
++	regulator-max-microvolt = <5500000>;
++	regulator-over-current-protection;
++	regulator-pull-down;
++	regulator-soft-start;
++};
++
+ &mss_pil {
+ 	firmware-name = "qcom/sdm845/judyln/mba.mbn", "qcom/sdm845/judyln/modem.mbn";
  };
 
 -- 
