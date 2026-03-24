@@ -1,208 +1,293 @@
-Return-Path: <linux-arm-msm+bounces-99578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99579-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id CHzDCBZYwmnQbwQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 10:23:34 +0100
+	id mBmuNNdWwmnEbwQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99579-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 10:18:15 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D66930583D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 10:23:33 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6314A30574E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 10:18:15 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 43FE0301548D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 09:14:29 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 3277130090B4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 09:15:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87D5D3DBD51;
-	Tue, 24 Mar 2026 09:14:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 502863624B5;
+	Tue, 24 Mar 2026 09:15:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Nir1AA0v";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="DAT4pnlu"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="s5KFzkqE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2243E3DBD52
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 09:14:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774D537DE80;
+	Tue, 24 Mar 2026 09:15:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774343666; cv=none; b=PWQrFvyP8plLPFpTiNktbRj0Lg6xxvJUfHogkA/J6PH7d1ubfMTcKJMPk+7Iz6l26HC6HnMvnaVCm3QY+rBm1JfqnIYQ8LLt62iaNOnPpYwmSRje2eM/ipAd0ERAbB47TQ0sdhQRhdhXKIMrZUY9u3kOkrq2+1ICyok7RvGI7WM=
+	t=1774343711; cv=none; b=YuQXFndZWWujQE5Ha/2ONFdVXCvJ3ugKAF4KYpW9djdbLKE7yc+kidpIGp18pPmLCcQc65Q2hJE9ipF6K4sgChPQJLlXCqacYxDpxzj6J1reJm7KNOopC95hGZ9/vcAHg9XWKM/gj3xlFFg1Z4Clm63g/2X65e4q6AFvoltGNOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774343666; c=relaxed/simple;
-	bh=1XDBE9N5yL6q5NLh6xhTYtrhIDGBuuo9/pJd2LX09zQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tFcKBJFYNt+TXAAfxjS/kW/ReYKyrLGGxWDG40gp9FP39g8d0hOqfNtHt5oqhM4njF5yNyqowIlkEuvAb1s5QgJNOLQA+pV7pfYtB5Bp9I0ywC3pEFfuzQPoedhleH4cnbA+khD2mQDzYMCAfsaidUd3moblBtuazUrSZYDNWFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Nir1AA0v; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=DAT4pnlu; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62O7REOY2371464
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 09:14:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	0IaNJvCEdTohWyKCIT4qk+cnIi6SSrthKfIU3P72Gbk=; b=Nir1AA0vkDbjuOln
-	JtWsKJb+6DiDgxpBbDh/FWUI5eYJM/4n6gYTEHusJdda4GENhoBtpqdXvKVWtmFC
-	Wyqk297Gow8+6KecqF5UCjeoeplY0QDP8D3W71L5QsX7r4nLIms8AQW96YprNGMT
-	O7Cb4D77T896Cx+Oc3fRpuMzyLGIWOwByqqzz0LVHdyTEJi9JsVkBuvh5QizDkLB
-	/9mdw+PqyHIWXnhfNOxZHsk8MQjHA/Z+6D9+ODczYkZTA9H2zrFpm4dgal2Us01/
-	SAyu3s6/qawBAjBsAvU2XNCL5UzqqDx6pYPJXKiLm+pyiGkTtUne+NjA0Qk3yojQ
-	/Roavw==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d3p830bft-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 09:14:21 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-89a081737bbso59600116d6.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 02:14:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1774343660; x=1774948460; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0IaNJvCEdTohWyKCIT4qk+cnIi6SSrthKfIU3P72Gbk=;
-        b=DAT4pnluNxRTks16mjX0QNQdjh/9oGUFqeFzkR503/13mKICRUaVvQ9KpuWQ3HHuaq
-         gL87Ra47dCcssgIP+Em5ayMgoKbxTl1srMuO+slXYgIII5t60ZnbIpcDRgeMNJBokYBL
-         GzZNFUSHWTh8nG1QjM/m55/M4SEhsG9KObTMLz80uAmv7iDOagwyOKX/sjkG+C78qzED
-         dfwaqPdmC6lxN3a7PnHtTF2OYmdVG0ejE2CjFV8DnJs7HEtbpOHMYCNCE8CyaY2+XLrE
-         9gNAnedu4PKpQbM4h5/2F9IzL62+IJgpNV75++vJ1HNt8zc/KW0lTOl+AfVfAvX4CN5k
-         1HjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774343660; x=1774948460;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=0IaNJvCEdTohWyKCIT4qk+cnIi6SSrthKfIU3P72Gbk=;
-        b=EGHlvLvSBn8zn+JfJAGHuOT6jQjL/jMqehu5MzEB0FupwH5GzTftNT0LiceqHYgdOf
-         do/twYe9Q6T0L7G7G0OTnoOb06TIJxu8/2DbrdQLJn+Vk6D+2Ynr548Mo2SLF7USJ3Gn
-         8U4eR0VL5opOiK3jMwFU025Q8WbswQ88aFc3mzddxsnoa74eW/lowH0P9PG1fezxqdoZ
-         VTUJmo80t2yx5dL7+3EEctmA/85pv52YEDnKRNBB2BDQRUn6GJFGpg9EmOApc2pznO/t
-         s7EpSi7mUX11xVMyNbeqjURAQV0EGOVmrcWhdpxxRPkS08o/6FAQ1KTV2nU7zAYFtnRA
-         x0bQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW+tTOnNSQbLNjyQTMe0hpAqa2PJSb7B+YxJ4y+8YI83l1Pqk1BhQrtKTeQ+m+0jHnwB5MH8OhpkbvLrA7H@vger.kernel.org
-X-Gm-Message-State: AOJu0YwSdmsBQdQchRXY7+i+2VlQgeQjI7AypxWXGyQJw6avfhKOyrro
-	QF1oD/t09SXLc4/c3darLvdIXQCdnq/3r/WLyuyZ072UFZ3KIdYHNY34a4A4CS/wQAI8RrT2z7V
-	xiAdCO1xKTTzd0Yn6/2nqhXu/Yl5ZUUsXBKzQcEZrCVsGwKMR3CeY3L/gGqq1iOeJBD71lgR7QH
-	kc
-X-Gm-Gg: ATEYQzyzZmhPSzHPOAEVGhACi/J5jpFYR/DU7NHWodmIu+QwAZoah02LP7GRrXAiZFx
-	fYqwUClJguKM1TZ/nmZFFmtP3CTp5zyqqz+sC5fUahLcLe/g6WDEgTLUt6UodgpcxabwDSrWsTG
-	UReyANJaIc5hzm7y3rQP/ai0lDtopZmpKJg8Qg4B5fZcHWDJHDPxgbTtDnVGhFjG2rd1LURYRkP
-	msV2wX50J9xhKCKF/KQ+PB5ikEFlZnl6G3hfY2SELp4XvpgF75qQh/V+5iV2yRDrFNH/YHHOoej
-	AC2dXuvw77hfF6oWXdTlEf0caGOLvddyPvAaxGNqi026HirUMnqNz95b30wcOCjFoubO2zPavS8
-	QYVSeDD97tkmzg7nOyc4beqLZhgPfrYNi+Qy8FPQeo/iRvAKhIpAVif861EoUmoMrFMumn99WwM
-	8Vsqs=
-X-Received: by 2002:a05:6214:2b06:b0:89c:51d0:20df with SMTP id 6a1803df08f44-89c85a4d8afmr168526866d6.3.1774343659946;
-        Tue, 24 Mar 2026 02:14:19 -0700 (PDT)
-X-Received: by 2002:a05:6214:2b06:b0:89c:51d0:20df with SMTP id 6a1803df08f44-89c85a4d8afmr168526676d6.3.1774343659479;
-        Tue, 24 Mar 2026 02:14:19 -0700 (PDT)
-Received: from [192.168.119.254] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b9832f440f2sm610816966b.5.2026.03.24.02.14.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Mar 2026 02:14:18 -0700 (PDT)
-Message-ID: <753c4438-6450-467f-916e-b8a3f1d3940d@oss.qualcomm.com>
-Date: Tue, 24 Mar 2026 10:14:16 +0100
+	s=arc-20240116; t=1774343711; c=relaxed/simple;
+	bh=WgzQAgK038Tv7CDxhS5srauI2DIDqbquJXT4rIP1XAA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tqW4uMfwFYDZv4+m8VPcI1Ua8Edc+yASMHVGM7RZou2QZVImBJoKFNp115M8GsjhdxYzHCWi0Yzdl5+pP4oh/v+He8CgB2WCrINXY9hMRjNIx2y79k1YsjF/PyLl0t813wffo19qPxhwYn/XjsBPjl5KqadDAcJuAz0NI9lAiNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=s5KFzkqE; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=k2Hz1yOxyvLk9PND+a+O7YztgoEg7q/BSh75O/7XkQk=; b=s5KFzkqEJpNEnLHyxY19i1HjRz
+	oIU1ln9wgxsclooM8ffjWkVrEDW8zMltsHEJ4OQqNvuc1/psfQXl3c0g7VUSRqyV81+gIbw4l8fqf
+	OzGVKboQYNViO1AJASXz+H1nSFrYkTN2hUe58om3GYUrZVOgJVXwzlQ1mwpF5atRIAi7K1Hl++fCK
+	SH9LEd77cxIYw/sB52buLOmbdYsiHYYlYJEf1NHQPkcQAwRbkiveR28GQPsZCaoRR6ebnt1gT3HZ3
+	s8HYK5pWwk6AH7pVLmYhg3L61yGtYaolS3x9bM6H5fPtJui7O2eUSbdOxOe+jYsRMjrt1ufMWrnus
+	m8H3BunA==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:49582)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1w4xqX-000000001cl-0bwB;
+	Tue, 24 Mar 2026 09:14:45 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1w4xqT-000000004wa-3z8U;
+	Tue, 24 Mar 2026 09:14:41 +0000
+Date: Tue, 24 Mar 2026 09:14:41 +0000
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com, netdev@vger.kernel.org,
+	Paolo Abeni <pabeni@redhat.com>, Vinod Koul <vkoul@kernel.org>
+Subject: Re: [PATCH net-next 0/8] net: stmmac: improve PCS support
+Message-ID: <acJWAZrvvSn3G_jQ@shell.armlinux.org.uk>
+References: <abdYu864OmNWiWIW@shell.armlinux.org.uk>
+ <ablpxwGks9m38fhM@shell.armlinux.org.uk>
+ <absjNQ2s3Z5N2Zwo@oss.qualcomm.com>
+ <abtE7sDT75I7uPnk@shell.armlinux.org.uk>
+ <abvAuHFZzCFobO-V@shell.armlinux.org.uk>
+ <7566c66b-2dda-4b29-b59e-4e4a7e159e21@oss.qualcomm.com>
+ <abvy6nZyjyxUXMuf@shell.armlinux.org.uk>
+ <bcab38a5-e7f7-47c9-ab9c-99294e095c22@oss.qualcomm.com>
+ <abwSHGw39FTJGNb7@shell.armlinux.org.uk>
+ <acGhQ0oui+dVRdLY@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] clk: qcom: gcc-eliza: Enable FORCE_MEM_CORE_ON for UFS
- AXI PHY clock
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Abel Vesa <abel.vesa@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
- <sboyd@kernel.org>,
-        Taniya Das <taniya.das@oss.qualcomm.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Nitin Rawat <nitin.rawat@oss.qualcomm.com>
-References: <20260323-eliza-gcc-set-ufs-axi-phyforce-mem-core-on-v1-1-b6b7a6f3f8c5@oss.qualcomm.com>
- <26twtzbvqcevl7jq6idkhhhasf4kuu6a6p6qby2plcg4a3vola@exafx7os7jls>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <26twtzbvqcevl7jq6idkhhhasf4kuu6a6p6qby2plcg4a3vola@exafx7os7jls>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI0MDA3MyBTYWx0ZWRfX8vYVXr+oOA3d
- AhSdmpTuWHryG7FfVKJFN+QmJOGlQAZB1OstNEN6zBVcEh2YUeTDevBa9IhrYSGuv04QJ1bm5gi
- 8Eiwc9U+EpbHUyiYATzKUu/S1jaKvLUJaq+m4dVTNFiueXGNOQq0zYk4cv/uYL0oeixyywmF5EM
- KYaribRyPTPf3bSrfjomtbQtYe5wEkWsQrQC8jj6WdCYGZjeDnGH2CcKbdV6154ihUFgZtBNuRx
- L57fMDoR5AP/vQeovWiqwFPWusYLtdcD0SWfuXbzYt0b80DAmxof/qpWGVw62OjARH8vqZ2gqMb
- ODNMXSJ+QUBOeOfPR5F8ibg+xEgV73ZOqHCMuvU2k9x3YnfE72eeNPRLWVswVoAkXBgbv6Fc9jL
- L3pfpDhO9agpr2fjotXq49xUH2jOvUHKSxJeWc/ABvDpTb9RyWWZ+kZ53NwIc6DSBOxnmQCFehP
- CunNlbWazboPfuECxXw==
-X-Proofpoint-ORIG-GUID: 8pgZcxckbieleXCOGfKS59EV1jK2nIPO
-X-Authority-Analysis: v=2.4 cv=F6hat6hN c=1 sm=1 tr=0 ts=69c255ed cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=EUspDBNiAAAA:8 a=lpdi1krX-adDAkH61YkA:9 a=QEXdDO2ut3YA:10
- a=iYH6xdkBrDN1Jqds4HTS:22
-X-Proofpoint-GUID: 8pgZcxckbieleXCOGfKS59EV1jK2nIPO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-24_02,2026-03-23_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 lowpriorityscore=0 impostorscore=0 bulkscore=0
- spamscore=0 priorityscore=1501 malwarescore=0 adultscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603240073
-X-Spamd-Result: default: False [-2.16 / 15.00];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <acGhQ0oui+dVRdLY@oss.qualcomm.com>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+X-Spamd-Result: default: False [1.14 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	R_DKIM_REJECT(1.00)[armlinux.org.uk:s=pandora-2019];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
+	DMARC_POLICY_SOFTFAIL(0.10)[armlinux.org.uk : SPF not aligned (relaxed),none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
+	DKIM_TRACE(0.00)[armlinux.org.uk:-];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-99578-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-99579-lists,linux-arm-msm=lfdr.de];
 	MIME_TRACE(0.00)[0:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	FROM_NEQ_ENVFROM(0.00)[konrad.dybcio@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	RCVD_COUNT_FIVE(0.00)[5];
+	FROM_NEQ_ENVFROM(0.00)[linux@armlinux.org.uk,linux-arm-msm@vger.kernel.org];
 	PRECEDENCE_BULK(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 8D66930583D
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	NEURAL_HAM(-0.00)[-0.998];
+	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_SOME(0.00)[]
+X-Rspamd-Queue-Id: 6314A30574E
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 3/23/26 8:25 PM, Dmitry Baryshkov wrote:
-> On Mon, Mar 23, 2026 at 08:57:12PM +0200, Abel Vesa wrote:
->> According to internal documentation, the UFS AXI PHY clock requires
->> FORCE_MEM_CORE_ON to be enabled for UFS MCQ mode to work. Without this,
->> the UFS controller fails when operating in MCQ mode, which is already
->> enabled in the device tree.
->>
->> The UFS PHY ICE core clock already has this bit set, so apply the same
->> configuration to the UFS PHY AXI clock.
->>
->> Fixes: 3d356ab4a1ec ("clk: qcom: Add support for Global clock controller on Eliza")
->> Reported-by: Nitin Rawat <nitin.rawat@oss.qualcomm.com>
->> Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
->> ---
->>  drivers/clk/qcom/gcc-eliza.c | 3 ++-
->>  1 file changed, 2 insertions(+), 1 deletion(-)
+On Tue, Mar 24, 2026 at 01:53:31AM +0530, Mohd Ayaan Anwar wrote:
+> Hi,
+> On Thu, Mar 19, 2026 at 03:11:24PM +0000, Russell King (Oracle) wrote:
+> > On Thu, Mar 19, 2026 at 02:50:29PM +0100, Konrad Dybcio wrote:
+> > > On 3/19/26 1:58 PM, Russell King (Oracle) wrote:
+> > > > On Thu, Mar 19, 2026 at 11:09:33AM +0100, Konrad Dybcio wrote:
+> > > >> On 3/19/26 10:24 AM, Russell King (Oracle) wrote:
+> > > >>> On Thu, Mar 19, 2026 at 12:35:58AM +0000, Russell King (Oracle) wrote:
+> > > >>>> On Thu, Mar 19, 2026 at 03:42:05AM +0530, Mohd Ayaan Anwar wrote:
+> > > >>>>> [    8.650486] qcom-ethqos 23040000.ethernet: clk_csr value out of range (0xffffff00 exceeds mask 0x00000f00), truncating
+> > > >>>>
+> > > >>>> Please look into this first - with the MDIO bus operating at
+> > > >>>> who-knows-what frequency, this could make reading from the PHY
+> > > >>>> unreliable.
+> > > >>>
+> > > >>> My guess is clk_get_rate(priv->plat->stmmac_clk) is returning zero,
+> > > >>> which means we don't know the rate of the CSR clock.
+> > > >>>
+> > > >>> From what I can see in drivers/clk/qcom/gcc-qcs404.c and
+> > > >>> drivers/clk/qcom/gcc-sdx55.c, this looks like this case - the
+> > > >>> struct clk_branch makes no mention of any clock rate, nor does it
+> > > >>> have any parent. From what I can see, neither of these drivers
+> > > >>> specify any rates for any of their clocks, which likely means that
+> > > >>> clk_get_rate() will be zero for all of them.
+> > > >>>
+> > > >>> Sadly, when I designed the clk API, I didn't think that people would
+> > > >>> be stupid enough not to implement the API properly, more fool me.
+> > > >>>
+> > > >>> Under the old code, we would've used STMMAC_CSR_20_35M, which means
+> > > >>> we're assuming that the CSR clock is between 20 and 35MHz, even
+> > > >>> though the value is zero. Is that the case? If it's higher than
+> > > >>> 35MHz, then you've been operating the MDIO bus out of IEEE 802.3
+> > > >>> specification, which can make PHY access unrealible.
+> > > >>>
+> > > >>> In any case, please fix your clock drivers.
+> > > >>
+> > > >> I'm not 100% sure the currently-passed AXI clock is what we want
+> > > >> there and the docs aren't super helpful.. is there a synopsys-name
+> > > >> for it? What rates would you expect it to run at?
+> > > > 
+> > > > There is no easy answer to that - it depends on the bus interfaces
+> > > > and whether the CSR (register) clock is separate.
+> > > > 
+> > > > The likely possible names are hclk_i (for AHB master), aclk_i (for
+> > > > AXI master), or clk_csr_i.
+> > > > 
+> > > > It does state that the CSR clock should have a minimum frequency of
+> > > > 25MHz to allow all statistics to be properly collected.
+> > > > 
+> > > > The rate of the CSR clock needs to be known, as selecting the divider
+> > > > for generating MDC within IEEE 802.3 specifications is rather
+> > > > fundamental. You may find something there which hints at what rate
+> > > > the dwmac's CSR clock runs at.
+> > > 
+> > > If it's either AXI or AHB, in both cases their direct parent is controlled
+> > > by an entity external to Linux and their rates may change at runtime,
+> > > based on aggregated needs of the bus. They're defined as levels/corners
+> > > (abstract term for a hidden volt+freq combo).
+> > > 
+> > > It may be that the operating range for the EMAC removes that variability,
+> > > but with no concrete evidence and just anecdotal experience, that's only
+> > > the case for the AHB clock
+> > 
+> > The important thing is that the MDC doesn't exceed the max clock
+> > frequency for the PHY and any other device connected to the MDIO
+> > bus. IEEE 802.3 specifies a max frequency of 2.5MHz (minimum period
+> > for MDC shall be 400 ns). Some PHYs can operate in excess of this,
+> > but one would need to confirm that all devices on the MDIO bus
+> > supports higher frequencies before using them. In the kernel, we
+> > generally err on the side of caution and stick to IEEE 802.3.
+> > 
+> > There are two ways to achieve the divider value with stmmac.
+> > 
+> > 1. if priv->plat->csr_clk is set to a value other than -1, this
+> >    configures the hardware divisor (for "normal" cores, it takes
+> >    STMMAC_CSR_* constants that can be found in include/linux/stmmac.h)
+> > 
+> > 2. otherwise, the rate of priv->plat->stmmac_clk is used as the CSR
+> >    clock value, which is the reference clock for the divider that
+> >    generates the MDC clock, and an appropriate divider is selected.
+> >    Given the available dividers, it works out at between 1.25MHz for
+> >    a CSR clock of just over 20MHz and 2.47MHz for 800MHz. (I have a
+> >    patch which documents the ranges for each of the STMMAC_CSR_xxx
+> >    values.)
+> > 
+> > Note that the dividier constants are not the actual divider itself,
+> > as can be seen in include/linux/stmmac.h
+> > 
 > 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> As noted by Konrad, the AXI and AHB clock rates are indeed unknown to
+> the Linux kernel:
+> [    7.739389] [DBG] priv->plat->stmmac_clk rate = 0
+> [    7.739391] [DBG] priv->plat->pclk rate = 0
 > 
-> Do we need to apply the same fix to any other platform?
+> Additionally, here's what I found (focusing on QCS9100 Ride R3, but
+> most of this should be applicable to all qcom-ethqos consumers):
+> 
+> 1. clk_csr_i is connected to the SLV_AHB clock, named "pclk" in the
+>    devicetree. This is the source for the MDC. The "stmmaceth" clock,
+>    provided by AXI, is used for data transfers. It appears that the
+>    devicetree gets it in reverse as per the stmmac clock
+>    documentation added by Russell, i.e., the right order would be:
 
-Most of them, actually
+The documentation wasn't generated with some special knowledge, but by
+comparing the stmmac code with the databook and trying to work out what
+is going on. I would suggest not changing the DT description at the
+moment.
 
-Konrad
+It seems to me that the original intention was for "stmmac_clk" to be
+the "application clock", but then the Imagination Technologies
+Pistachio board came along, and "pclk" was added for possibly the slave
+interface - and thus pclk would really be more what CSR clock would be.
+
+However, the code that derives the CSR clock divider wasn't changed,
+and continued to use stmmac_clk.
+
+So now we're stuck with an utter mess, and there is no way now to work
+out exactly what was the case - I can find no documentation for this
+Pistachio board let alone the SoC. Hence:
+
+    There is confusion around stmmac_clk and pclk which can't be easily
+    resolved today as the Imagination Technologies Pistachio board that
+    pclk was introduced for has no public documentation and is likely now
+    obsolete. So the origins of pclk are lost to the winds of time.
+
+I haven't put much thought into whether this can be solved in some way.
+One passing throught is to basically deprecate the existing clock names
+and replace them with "application" and "csr-clock" which are the terms
+used in the databook.
+
+However, there's a couple of tables in the "Host (System Interface)
+Clock" section in the databook which gives the clocking for the various
+different configurations - the application clock is fairly easy to
+understand, but the CSR clock is quite complex as it depends on the
+master and slave interface configurations, as well as whether the
+designer selected the "use different clock for CSR" option.
+
+> 2. However, even with the correct naming, clk_get_rate() would return
+>    0 for both clocks since they are firmware-managed.
+> 
+> 3. For GCC_EMAC0_SLV_AHB_CLK, the hardware documentation mentions the
+>    range of 50 - 100 MHz. I am trying to check if there's any chance
+>    of it turboing to a higher rate. For now, I think we can assume
+>    this to be the working range.
+> 
+> In view of this, would setting priv->plat->clk_csr to
+> STMMAC_CSR_60_100M from the glue layer be correct?
+
+For the patch which I haven't submitted yet where I worked out the
+resulting ranges gives the following for this entry:
+
+        { CSR_F_60M,  STMMAC_CSR_60_100M },     // /42  1.43 - 2.38
+
+So, the divider is 42, which gives a range up to 2.38MHz with the
+100MHz input. At 50MHz, the MDIO clock will be 1.19MHz which is a
+little slow but 802.3 doesn't give a minimum rate. It will just
+take longer to access the PHY.
+
+The important thing is that the MDIO clock isn't too fast, as that
+will result in corrupted transfers. That said, some PHYs support
+faster MDIO clocks than 802.3 specifies, but in general it is a
+good idea that MACs stick to the 802.3 spec especially when they
+don't know what PHY (or indeed other MDIO devices) will be
+connected.
+
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
