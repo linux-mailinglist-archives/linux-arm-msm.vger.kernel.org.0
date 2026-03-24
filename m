@@ -1,210 +1,231 @@
-Return-Path: <linux-arm-msm+bounces-99466-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99467-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id CDPuMD3bwWmJXQQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99466-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 01:30:53 +0100
+	id kEmpMUbiwWmlXgQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99467-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 02:00:54 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4004C2FFAF0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 01:30:53 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 33C45300223
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 02:00:54 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 4F7E130193AA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 00:24:37 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 66DE5301950A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 00:59:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6FFA32343BE;
-	Tue, 24 Mar 2026 00:24:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 911A334DB6B;
+	Tue, 24 Mar 2026 00:59:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="a3rYBy64";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="d1AEn4w7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r79tvbMT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 353972046BA
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 00:24:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66AAB1DF26E;
+	Tue, 24 Mar 2026 00:59:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774311875; cv=none; b=D9y6OQqYRbtKp0A8hcaTfi6MRju14bMxG6rP7Ot5duo+fmsH/ftCacrmjL+0hUIM6/+5RWX1rUIRlxkFyg8gLAsy7QNAla1ircDD/9Ma1kQd5zCaotPkALLI0EQ3VyN98SR2g3R/cv524Lwjo9Vamo+Wwc9bINhP4QugWOmR+LM=
+	t=1774313972; cv=none; b=e0uMYgmfNy/rshUduBxdi0B9wUWtN3hz9m2ktjZ0O5aujPlDQyc94Q4G/4ouusribSVtlB9LDDndU6aSsebn4IeVrZp5Hg+8pQGSsDHlPXEMCBR0F/3cPvm7s/BvZH+eqdJMpOo3ouYM2NvsiTP+APg/F6EXolP+wxaukMAYkUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774311875; c=relaxed/simple;
-	bh=YK5TERRY/+6D57JFkiBOR0WLZXHTALD8xXQfc9Im0nk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O55ps+YCh4mq6tHKb3toMxjnoOpDAQTAD+09hl3VyGhdgL0Bzu4qynVpHRYk4jojMMyRFVSPP8Id3zHaJ/vqnIVzhmOHi4PNlpGuO7rP0OrwEYpfzeLydylwyiL8ULgHpM7GV+vaorgcAl8aLbpPAZBplGg9Ni8ER5iSDmVofs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=a3rYBy64; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=d1AEn4w7; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62NHqi9i2681188
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 00:24:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=wdOq8v7gZj+Ol/lCA+UFTS9F
-	QjpcXEmDJN9gqTOKAck=; b=a3rYBy64Vr8kYgpwtrvml2XWCy0dQtQF5Te+uFGO
-	BNy+2ulYf4oG0521V8UIEm+sBUoCf5QaVpQf/coDwvmmCsYNR+osn40mHey9yGOg
-	v0InnNngBsSMZ0hbZmYaDonAzGUot4sK79eloWBGGiZL/Ag6T+Lyxr/WnoMPb+MU
-	Igc5hs1H0xZBu7mpw+71xkyUThpWAjY+yJBwBbQJA9MBWE4kjXtL0AEk0jEu6ChI
-	XHgh8sAg9EYW3kDn5s8IYhZwG6G+pFpkFPKRqhDocHH4BdK/6jfW9hSq6K82nhSI
-	B0Mkjus8Bw2rx3xiQ19trQzkNmuLfECJZwrXS4eDHEpiWA==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d31p7b7r6-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 00:24:33 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-50b44f7b7bbso244902521cf.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2026 17:24:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1774311873; x=1774916673; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=wdOq8v7gZj+Ol/lCA+UFTS9FQjpcXEmDJN9gqTOKAck=;
-        b=d1AEn4w7xyvgwvUgPqAlTtGzXOWDGn5RUSjwg3fNrv6jfRWJJFgRn44Wt8sCub636O
-         9rgFKvwjnzHeKZdHC1dMZpY+FW3Yueo+qtkFb0bSr4Hy4fuMzPG8IOU+vR7cq2o+UXKV
-         V83PinWFkqEJhoM88rqc7GhHSarXbYIU5oWkvQFTdOOrTdvYd6twCntMsLs5JgqRnVT+
-         K1FSWKRuydI4uqpFdQbfpGwsNlFTu/owvc5WP0Vygxa+fpcuBQf9DinmHyWYXlvRXPyg
-         wxSwsUPkW7pAh3Xwrrtcca7mou18sGDmMs3fzNe5vfX7z5NeEeOF5vjk7aNi9+P8raTA
-         +BEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774311873; x=1774916673;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wdOq8v7gZj+Ol/lCA+UFTS9FQjpcXEmDJN9gqTOKAck=;
-        b=KYtktrDG2piwyJTiO4L55uRGJetrMmQvWIW0X9hK0tDdmpZF04CaWPufRYNev0MUah
-         yNs5Ws9nLyQLHF+QZIBvksmA1V9fpyzaiu4qBL6/TLNRSJzVlRaS5wMvT+xACJAlSu+t
-         ZNNFxKM+kxN3Ew+Xb2UEjgJbg1aTHW9Ir+bRp4d8tLJ3ysdoIIiUSp0Ln/Qrgmf/B9/O
-         8/sS/cjRUjCadCT75Sp1l8FjQeyiHClE06z2jgNSEwPa1kfmQ4VCWLwCQbI5/ZNLRCRp
-         /v7POuWZ3xyFLdWgqQLBnTeSpIfbo8b2zN3evXzbguTVSgJRa3KqhX3irNNWV+L9CGs8
-         RdmQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXg15AWWgMBIZ9Pe5afVUuRfNhkWzRHsrREHwyAcTEv8ODFfARfDtFt71XhR33YAF2pp81QsCV18e8gjVAa@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywo7Jd0IGuIpwO7piLUnP7fkTXkHBb6SVfYPyf1TdI70FM9pSfX
-	s4ruy4DYKV9Bdvk7/CT2zF1ui6jxk0yKKBfC9Qx2RyBE9YLTDkSHBs6OAfZ4bqQySh4jEnpwGvo
-	uccSTa8cNghYcXoh9kxOFhgs/tfal+G/MQtqsMxjo3JF3Jcgwla++M1GOdCXcsbGN9rjE
-X-Gm-Gg: ATEYQzzLKl17KNQ1CYS96uvhwYCwqwM8A9EyH7OVS8r/GKVvs2aABVGUSPQ/YEWQwv2
-	DNZ7amhkjUDxr7Bi8up+mxnpJl+kd9a1o9JUwgld6uXu2XYnxME8mq8IrnyXxKdMLBlqP519Oea
-	zYPGGhkFg6THJPuQZnxPPQpBjtEZCZODyZYdXzvZUUip8jWKuduTbbW5MZWIkcC1NRneyZpu67m
-	OMC0JDxVa/sSkEvy0hbtOZ9p960U1XZlicZJhP4LMv16CJ2c816MRa6BdKPqGIg+2ZY7wxWzFTc
-	2zVaChEvt+Her49aEdh9/SiguHcn6A6Z0SKEnqV9H+AMFy6EKGA/au8MU4pC7y0Q94zEfTD/ziA
-	0m6P+4Nw6Ta4hcWJv7t/cK6/+/4Vkyf65gFADX36RpWsOJtAxaYyCCCcffVZGWYUA6tECtogP4v
-	iHqXBD+TyNXYL7cGtNiutFx9CPl379+4eDCX0=
-X-Received: by 2002:a05:622a:2c1:b0:509:1568:1f16 with SMTP id d75a77b69052e-50b375d4d49mr218509851cf.71.1774311872739;
-        Mon, 23 Mar 2026 17:24:32 -0700 (PDT)
-X-Received: by 2002:a05:622a:2c1:b0:509:1568:1f16 with SMTP id d75a77b69052e-50b375d4d49mr218509601cf.71.1774311872295;
-        Mon, 23 Mar 2026 17:24:32 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a288268a0bsm2576503e87.14.2026.03.23.17.24.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Mar 2026 17:24:29 -0700 (PDT)
-Date: Tue, 24 Mar 2026 02:24:26 +0200
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Anas Iqbal <mohd.abd.6602@gmail.com>
-Cc: srini@kernel.org, gregkh@linuxfoundation.org, vkoul@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] slimbus: qcom-ngd: fix NULL pointer dereference in
- qcom_slim_ngd_xfer_msg()
-Message-ID: <5cen2dct54ghqzijo7xlrw7zgdwjjihou2jion2mld7k5kxvnq@xp6723adi4ik>
-References: <20260322124647.4246-1-mohd.abd.6602@gmail.com>
+	s=arc-20240116; t=1774313972; c=relaxed/simple;
+	bh=g9n6egUYTuF5ke2JJ6m74go1iA9dbs1LNBwQX9Kfxdo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KAB09zD+vGfQS/hpeTaOSW2W5R7Oj+LilVeml7NfvtNEMgPfwcX4Pqo0AA6CR+BsdlJ1sCGIAyO+RLXiyU3xMxMJzz0fl1j+1hyDOYTUnt6GorWD1gzPfxLmMDO0rgY9fqOo4JbrvHyl9Rzr2vKoPGA+/U1A5w/L/WbSnhW8lU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r79tvbMT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF2ECC4CEF7;
+	Tue, 24 Mar 2026 00:59:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1774313972;
+	bh=g9n6egUYTuF5ke2JJ6m74go1iA9dbs1LNBwQX9Kfxdo=;
+	h=From:To:Cc:Subject:Date:From;
+	b=r79tvbMTbzL0ftvYwrYFxtc47UR6uhBnmMbW/y7VVV1iRybB+2M4JpIoiYURI0KHc
+	 xbQi6Hae6AoFoJmbmbDJaHU6H4twMWZBNd3LQspzN5XukCR8uOrEpuyEmdRt0aOb0U
+	 mOwgSJ8cLDV9T8BHYl+ocS0L8OVgW58qmKn8ydBwrFxSGxlpZWrzAsZEqo1gSY7MVu
+	 kkOnSl/PVHu6HAiahaLq+b8nbHuZsE8hCdipD5o7lr0426ClKDJ0QYolowXlhy4fkV
+	 i8IvftFPJDTfcclR/4ZCSmDk8L1PXC7Ak76kNlhT/lIjYoVE7r0UGtOBo25YTrAjXS
+	 EFJsJ4/WWZ6pw==
+From: Danilo Krummrich <dakr@kernel.org>
+To: Russell King <linux@armlinux.org.uk>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Nipun Gupta <nipun.gupta@amd.com>,
+	Nikhil Agarwal <nikhil.agarwal@amd.com>,
+	"K. Y. Srinivasan" <kys@microsoft.com>,
+	Haiyang Zhang <haiyangz@microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
+	Dexuan Cui <decui@microsoft.com>,
+	Long Li <longli@microsoft.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Vineeth Vijayan <vneethv@linux.ibm.com>,
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Harald Freudenberger <freude@linux.ibm.com>,
+	Holger Dengler <dengler@linux.ibm.com>,
+	Mark Brown <broonie@kernel.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+	Alex Williamson <alex@shazbot.org>,
+	Juergen Gross <jgross@suse.com>,
+	Stefano Stabellini <sstabellini@kernel.org>,
+	Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	driver-core@lists.linux.dev,
+	linuxppc-dev@lists.ozlabs.org,
+	linux-hyperv@vger.kernel.org,
+	linux-pci@vger.kernel.org,
+	platform-driver-x86@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-remoteproc@vger.kernel.org,
+	linux-s390@vger.kernel.org,
+	linux-spi@vger.kernel.org,
+	virtualization@lists.linux.dev,
+	kvm@vger.kernel.org,
+	xen-devel@lists.xenproject.org,
+	linux-arm-kernel@lists.infradead.org,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 00/12] treewide: Convert buses to use generic driver_override
+Date: Tue, 24 Mar 2026 01:59:04 +0100
+Message-ID: <20260324005919.2408620-1-dakr@kernel.org>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260322124647.4246-1-mohd.abd.6602@gmail.com>
-X-Authority-Analysis: v=2.4 cv=RMC+3oi+ c=1 sm=1 tr=0 ts=69c1d9c1 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=pGLkceISAAAA:8
- a=3qz8hwSWqZ05hJhTaTIA:9 a=CjuIK1q_8ugA:10 a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-ORIG-GUID: Q_LvnT8cdfTX6JTO7TVxb8eUGVtetEss
-X-Proofpoint-GUID: Q_LvnT8cdfTX6JTO7TVxb8eUGVtetEss
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI0MDAwMSBTYWx0ZWRfX4YPrUnuqMp3B
- kZ2sNrJO3bdkJol1c/+ZRQr8jvM26+UBOvjWDiDXaRSxGv7FbhSkbwxkCVjzcWu1vHUvJ8C48NA
- rJ5sdZQxFLp5Po5AAj3RGEEqGuEmw0NtzbvOkwutOHJki4yGqGZOuulVl0vcBaKhqL5yjjsJA/g
- czOArThsvZN7IKEZhtK7Npr26E2ztzTZuoSm2N1uhTt6BH//vIqxrjbRrRcvROeITsqmisL0zIx
- CjcdgAPnnyhkgxxC0dHXTMuCVV5SEHGBGjAgBIM6yVkIj30QtdLcyvl2oiqMMUd9Fzudyc9C00t
- eq8gnEuEOheyKOjgAw+/ArPG4anTP29VFxkCT1zystEOEGs7nlF5tDr1ZGGw2p+6H5pgEUc4xhg
- ShHbTiOO7cvWvbpp2kph61/YUtpWzxR7r6IrsvSyT+NMt7r0qgnBgXqsuF3nKT36Xp5Y6yzT6e4
- /D/XB0489kn/KW7ClUw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-23_07,2026-03-23_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 phishscore=0 lowpriorityscore=0 impostorscore=0
- priorityscore=1501 bulkscore=0 spamscore=0 adultscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603240001
-X-Spamd-Result: default: False [-1.66 / 15.00];
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-99466-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:dkim];
-	FREEMAIL_TO(0.00)[gmail.com];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-99467-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	RCPT_COUNT_TWELVE(0.00)[49];
+	FREEMAIL_TO(0.00)[armlinux.org.uk,linuxfoundation.org,kernel.org,nxp.com,amd.com,microsoft.com,google.com,gmx.de,linaro.org,linux.ibm.com,redhat.com,linux.alibaba.com,shazbot.org,suse.com,epam.com];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[dakr@kernel.org,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	RCPT_COUNT_SEVEN(0.00)[7];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 4004C2FFAF0
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.com:url,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 33C45300223
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Sun, Mar 22, 2026 at 12:46:47PM +0000, Anas Iqbal wrote:
-> txn->msg is dereferenced without a prior NULL check in
-> qcom_slim_ngd_xfer_msg(), which may lead to a NULL pointer
-> dereference.
-> 
-> Although current callers initialize txn->msg, add a defensive
-> check to prevent potential crashes if a NULL pointer is passed.
+This is the follow-up of the driver_override generalization in [1], converting
+the remaining 11 busses and removing the now-unused driver_set_override()
+helper.
 
-Defensive coding is generally not appreciated in the kernel. 
+All of them (except AP, which has a different race condition) are prone to the
+potential UAF described in [2], caused by accessing the driver_override field
+from their corresponding match() callback.
 
-> 
-> Fixes: 917809e2280bb ("slimbus: ngd: Add qcom SLIMBus NGD driver")
-> Signed-off-by: Anas Iqbal <mohd.abd.6602@gmail.com>
-> ---
->  drivers/slimbus/qcom-ngd-ctrl.c | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
-> index 9aa7218b4e8d..241f5e08b582 100644
-> --- a/drivers/slimbus/qcom-ngd-ctrl.c
-> +++ b/drivers/slimbus/qcom-ngd-ctrl.c
-> @@ -805,6 +805,9 @@ static int qcom_slim_ngd_xfer_msg(struct slim_controller *sctrl,
->  	if (txn->dt == SLIM_MSG_DEST_ENUMADDR)
->  		return -EPROTONOSUPPORT;
->  
-> +	if (!txn->msg)
-> +		return -EINVAL;
-> +
->  	if (txn->msg->num_bytes > SLIM_MSGQ_BUF_LEN ||
->  			txn->rl > SLIM_MSGQ_BUF_LEN) {
->  		dev_err(ctrl->dev, "msg exceeds HW limit\n");
-> -- 
-> 2.43.0
-> 
+In order to address this, the generalized driver_override field in struct device
+is protected with a spinlock. The driver-core provides accessors, such as
+device_match_driver_override(), device_has_driver_override() and
+device_set_driver_override(), which all ensure proper locking internally.
 
+Additionally, the driver-core provides a driver_override flag in struct
+bus_type, which, once enabled, automatically registers generic sysfs callbacks,
+allowing userspace to modify the driver_override field.
+
+SPI and AP are a bit special; both print "\n" when driver_override is not set,
+whereas all other buses (and thus the driver-core) produce "(null)\n" in this
+case.
+
+Hence, SPI and AP do not take advantage of the driver_override flag in struct
+bus_type; AP additionally maintains a counter in its custom sysfs store().
+
+Technically, we could support a custom fallback string when driver_override is
+unset in struct bus_type, but only SPI would benefit from this, since AP has
+additional custom logic in store() anyways.
+
+(I'm not sure if there are userspace programs that strictly rely on this;
+driverctl seems to check for both, but I rather not break some userspace tool
+I'm not aware of. :)
+
+This series is based on v7.0-rc5 with no additional dependencies, hence those
+patches can be picked up by subsystems individually.
+
+[1] https://lore.kernel.org/driver-core/20260303115720.48783-1-dakr@kernel.org/
+[2] https://bugzilla.kernel.org/show_bug.cgi?id=220789
+[3] https://gitlab.com/driverctl/driverctl/-/blob/0.121/driverctl?ref_type=tags#L99
+
+Danilo Krummrich (12):
+  amba: use generic driver_override infrastructure
+  bus: fsl-mc: use generic driver_override infrastructure
+  cdx: use generic driver_override infrastructure
+  hv: vmbus: use generic driver_override infrastructure
+  PCI: use generic driver_override infrastructure
+  platform/wmi: use generic driver_override infrastructure
+  rpmsg: use generic driver_override infrastructure
+  vdpa: use generic driver_override infrastructure
+  s390/cio: use generic driver_override infrastructure
+  s390/ap: use generic driver_override infrastructure
+  spi: use generic driver_override infrastructure
+  driver core: remove driver_set_override()
+
+ drivers/amba/bus.c                 | 37 +++------------
+ drivers/base/driver.c              | 75 ------------------------------
+ drivers/bus/fsl-mc/fsl-mc-bus.c    | 43 +++--------------
+ drivers/cdx/cdx.c                  | 40 ++--------------
+ drivers/hv/vmbus_drv.c             | 36 ++------------
+ drivers/pci/pci-driver.c           | 11 +++--
+ drivers/pci/pci-sysfs.c            | 28 -----------
+ drivers/pci/probe.c                |  1 -
+ drivers/platform/wmi/core.c        | 36 ++------------
+ drivers/rpmsg/qcom_glink_native.c  |  2 -
+ drivers/rpmsg/rpmsg_core.c         | 43 +++--------------
+ drivers/rpmsg/virtio_rpmsg_bus.c   |  1 -
+ drivers/s390/cio/cio.h             |  5 --
+ drivers/s390/cio/css.c             | 34 ++------------
+ drivers/s390/crypto/ap_bus.c       | 34 +++++++-------
+ drivers/s390/crypto/ap_bus.h       |  1 -
+ drivers/s390/crypto/ap_queue.c     | 24 +++-------
+ drivers/spi/spi.c                  | 19 +++-----
+ drivers/vdpa/vdpa.c                | 48 ++-----------------
+ drivers/vfio/fsl-mc/vfio_fsl_mc.c  |  4 +-
+ drivers/vfio/pci/vfio_pci_core.c   |  5 +-
+ drivers/xen/xen-pciback/pci_stub.c |  6 ++-
+ include/linux/amba/bus.h           |  5 --
+ include/linux/cdx/cdx_bus.h        |  4 --
+ include/linux/device/driver.h      |  2 -
+ include/linux/fsl/mc.h             |  4 --
+ include/linux/hyperv.h             |  5 --
+ include/linux/pci.h                |  6 ---
+ include/linux/rpmsg.h              |  4 --
+ include/linux/spi/spi.h            |  5 --
+ include/linux/vdpa.h               |  4 --
+ include/linux/wmi.h                |  4 --
+ 32 files changed, 88 insertions(+), 488 deletions(-)
+
+
+base-commit: c369299895a591d96745d6492d4888259b004a9e
 -- 
-With best wishes
-Dmitry
+2.53.0
+
 
