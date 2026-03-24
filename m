@@ -1,60 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-99500-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99501-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id eAkEAnDywWkgYAQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99500-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 03:09:52 +0100
+	id mMoDOqbywWlzYQQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99501-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 03:10:46 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 55871300F90
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 03:09:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7FF32300FE0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 03:10:46 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D2EC03022FB1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 02:04:17 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E93843073F54
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 02:05:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F207737C91E;
-	Tue, 24 Mar 2026 02:04:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A5DB38552C;
+	Tue, 24 Mar 2026 02:05:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CCxaJgX/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nzYjxuNV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD3A71514E4;
-	Tue, 24 Mar 2026 02:04:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9957384232
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 02:05:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774317856; cv=none; b=qsKOOfHZhLQYPzgS2eEJCE+f0l1N+M0lQt6fKgp14WdVX7KEWqvsfykC8DeoCPq5j92Mqf9uFjI9cJkRB7cthKRJ2/ianVcohmkb9sd+g74lieKVQI0Q4TL60ynRNbutG2jQcw6j6OQKVwt6WC0Fhprej5iIDy2TCtYza7a+H0A=
+	t=1774317912; cv=none; b=un/AwI0Rxf0I6EkZGncGHEkyUMk+5l67CMbeoUKS3drbNWPi2NwUlDKn/OgFjdyiRzv0l31GSCXepgImzYXeTuJl1VwXV413DykarjgWQtAVH0Xsve0aGea0DLti2e2sBAY5KyoDlXRB+n9m8JGIg70yoCE3iS9l+Vi/fNMGqlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774317856; c=relaxed/simple;
-	bh=PPFIkVoC2rBoIdhXKT6M45k6jVgwNHb5gnHdZ0SHbFE=;
+	s=arc-20240116; t=1774317912; c=relaxed/simple;
+	bh=+ehVjjn+FFP1aRjNxMvD8VGxFjrfQtZn+7RGgcX7Sic=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gbgudW1FqCK6D8kFXhwacqpUjN89Ar8282Nqij+NQ7mikpCuPsEUxfryrw9Wvrpr1L1PJlhMKvyf3QNpzquYooysI6iW5kLib/Y95c8S/5f+7e46oF5Y13a2Mmo50NNFnTas8VIOGz+pnxLt+7Dn3IhLzvJXbQUhtFGsEQ7S+Kw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CCxaJgX/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43A2BC4CEF7;
-	Tue, 24 Mar 2026 02:04:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774317856;
-	bh=PPFIkVoC2rBoIdhXKT6M45k6jVgwNHb5gnHdZ0SHbFE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=CCxaJgX/cwReVdpq3ssAtSk5ez5SrjbHqbE4E6u8kew3DMyxZrZ3/AIa53dM2TbaE
-	 ipLfSBQDibZtdJvPyRUOFMjMzgNNbKbtooH1fv39zz7WKM7jeLZJnjKCNqwzO3w+gd
-	 CTpxub2pJHs0kWnQAMcsOfXIzLG1pd/1awLFVdIr2RZuMoyqvG3UVdfJb+jYnQ/ROc
-	 aK3yVVNZqhOaCp7jKLAlZjnNpaxKOasDA9C3/LMVCP3wsGWZT5njYlhSenuGYBJRa2
-	 AT0r0NfG/tSdjLsPuvR2tbalnztUzMCs5PNtqeKE8ztikUrrmjMy/sCv30vCa/ji9k
-	 nmUJJDi/9MYOQ==
-Date: Mon, 23 Mar 2026 21:04:11 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Ayushi Makhija <quic_amakhija@quicinc.com>
-Cc: konrad.dybcio@linaro.org, robh+dt@kernel.org, 
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, dmitry.baryshkov@linaro.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, quic_rajeevny@quicinc.com, quic_vproddut@quicinc.com
-Subject: Re: [PATCH] arm64: dts: qcom: sm8750-mtp: Set sufficient voltage for
- panel nt37801
-Message-ID: <acHwvzjcvqNxUjm3@baldur>
-References: <20260323102229.1546504-1-quic_amakhija@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=jBx+owDZTyfNEiCNHcw+1qIWfN5AzmDXnX4IcrgdeVvTbddlXD+7qciEZ2YY7bXqBkm1eMNVAVeXWqxB7wpCoiebf5Yf3kmzKp9xo9OCAeq2CHj1wliYepjOhSyGdqrcxD2WrRY9G2+QHnfTD5V4UZusNlhIvzNHHTIL9osQLtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nzYjxuNV; arc=none smtp.client-ip=209.85.222.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-8cfc5941028so496320085a.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Mar 2026 19:05:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1774317908; x=1774922708; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=WhBxiKr+CpFwBrUC+deA+ndmr0D+vf1b3ZxKGdD13Q8=;
+        b=nzYjxuNVWsy2FAJrdUup/mIJSbRkLFV8btqoBVKVP6d3j7kaRWMaVCI1a9kj5foQ6S
+         dNkE2Ur1Mcd6lE2LZ5+/gkgtKM0ls0uYRXYuAvYgnJwg+bmjKkVlRZlObOn3qVfzTN8R
+         HH4viLyYStE366bC3xc700XYNzdbUVq2FgELOFvyEMqN2gmUOAt3r4ZiWNVE20yvNN8s
+         BZDDAHTmYUNlIhCFRyC4WVuL2lmUGpr5WNwEPmhwmvgqkyhcoeiw3yGJ/gahQExhMZ+x
+         +q2lDIpIk6GrGVGXcvcrj1qxwqJSTezPv4CIOUaxx7371PuaZH8t9xo+WPcqSHRODHgI
+         XPGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774317908; x=1774922708;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=WhBxiKr+CpFwBrUC+deA+ndmr0D+vf1b3ZxKGdD13Q8=;
+        b=K8NUup9yEcL8X17Dkqi2rKfSHuXD/q8tTyO0mQC7mppwBSMdc/wYZN8pA9nnbVYh7e
+         oX37IU7G3cRnBi6wpWs8kYZvDXs7EMlRRbr055mLEazGq8uQMId+reAqHQKEfj7rV9ei
+         L/h0ASLjUcn00Ti7BcHCABfB9Y+LlezCyapWyc+LjoqfoXYXWjRJM0s7P7AplPfsVdui
+         i0JLnob/4FTM+qNL9EsxbsyF2B+o3twkLiQJfUweFcEwfXXS+xn+olDcXHCP56LGpHue
+         hRHyalJS0Co1uqPf4URPLKSfdz0JjYjiB1kHfFshPWe/S2blOIzYaasN9LNoo8ZITuCn
+         Vi7g==
+X-Forwarded-Encrypted: i=1; AJvYcCXxfCiWEZyicbl8c1VirXZAAPAjiBegxjThDgnXxGdb1NB8Fmo7yE++Mu5wrIdn4g+j0Uh0LcXr2qoZ51zZ@vger.kernel.org
+X-Gm-Message-State: AOJu0YyZR1F1Qn2FSmWFLJ0jtSmQM6lvP4oTbjTSG0kr+3jvk+HXqkef
+	RUZYeTKaqcU9rnsiTmSg6v4CS5U8Ht1m9buyNVtBRBgU0jTJ+LWf+D14
+X-Gm-Gg: ATEYQzwatNMdMO2PgPXnIhSvlVPRah4jS0SUZkMffBZzdK0Eb+ru/c8Iyb7RorfyG/3
+	hjcOmdOPKyYvVwanPKZcjITUI51xNZVexXi2bb/PstfEey0T81AdDINA8YYEVGnJDjs5znQ1u47
+	GSAxiCOrxX2KOl5vPr0Ec+GhEQ6Nx5/79b2E4gJgRPhGyzx91jzLF/YTxmVKL/84QFQ9a/ggcj2
+	sIPw3d4bQ6+u5PFJRz2080wkt522WhUEy/Zdj6NmvEqfhA389C0a/RXr6YsNGHasumffO5MVq6d
+	Lr/eWOjzDaV3OOlGyThDnc2FnvqUuaiJXyyCiQrr8fUTgHYc4RdHmxnh6B9GsaBUY7rI7vwEiz/
+	VS231c2ob7+HrksVGXl2Kya48GFkg9KgSRpsTwTNlKQeZgwSai9NTKhN8KKRywFkEPd8vit/zXy
+	5i2lcS/hLrC4gfFh/h9yT8Tt6XBzbyeCBjb2wmxISToUvAVNl6UMBDPi/KjlS4BWmjBzQOSwFD7
+	lWIEp8u7OVXMAM=
+X-Received: by 2002:a05:620a:4543:b0:8cd:bfd9:e2a2 with SMTP id af79cd13be357-8cfc7f33feemr2140906985a.43.1774317908192;
+        Mon, 23 Mar 2026 19:05:08 -0700 (PDT)
+Received: from localhost (bras-base-toroon21-grc-75-184-144-58-243.dsl.bell.ca. [184.144.58.243])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8cff5d486basm50081285a.45.2026.03.23.19.05.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Mar 2026 19:05:07 -0700 (PDT)
+Date: Mon, 23 Mar 2026 22:05:52 -0400
+From: Richard Acayan <mailingradian@gmail.com>
+To: David Heidelberg <david@ixit.cz>
+Cc: Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
+	Todor Tomov <todor.too@gmail.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Tianshu Qiu <tian.shu.qiu@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Robert Mader <robert.mader@collabora.com>,
+	phone-devel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-media@vger.kernel.org
+Subject: Re: [PATCH v9 7/7] arm64: dts: qcom: sdm670-google-sargo: add imx355
+ front camera
+Message-ID: <acHxgIsyPiQTeqCB@rdacayan>
+References: <20260217002738.133534-1-mailingradian@gmail.com>
+ <20260217002738.133534-8-mailingradian@gmail.com>
+ <1349f725-a20f-4935-a829-208c8e583ad9@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,74 +107,66 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260323102229.1546504-1-quic_amakhija@quicinc.com>
+In-Reply-To: <1349f725-a20f-4935-a829-208c8e583ad9@ixit.cz>
 X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-99500-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-99501-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	FROM_HAS_DN(0.00)[];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	RCPT_COUNT_TWELVE(0.00)[18];
+	FREEMAIL_CC(0.00)[kernel.org,gmail.com,linaro.org,intel.com,linux.intel.com,collabora.com,vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[mailingradian@gmail.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:url,quicinc.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 55871300F90
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[1a:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 7FF32300FE0
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Mon, Mar 23, 2026 at 03:52:29PM +0530, Ayushi Makhija wrote:
-> The NT37801 Sepc V1.0 chapter "5.7.1 Power On Sequence" states
-> VDDI=1.65V~1.95V, so set sufficient voltage for panel nt37801.
+On Fri, Mar 13, 2026 at 07:26:47PM +0100, David Heidelberg wrote:
+> On 17/02/2026 01:27, Richard Acayan wrote:
+> [...]
 > 
-
-Please add Fixes: tag.
-
-> Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
-
-Please start using your oss.qualcomm.com address.
-
-> ---
->  arch/arm64/boot/dts/qcom/sm8750-mtp.dts | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> > +&cci_i2c1 {
+> > +	camera@1a {
+> > +		compatible = "sony,imx355";
+> > +		reg = <0x1a>;
+> > +
+> > +		clocks = <&camcc CAM_CC_MCLK2_CLK>;
+> > +
+> > +		assigned-clocks = <&camcc CAM_CC_MCLK2_CLK>;
+> > +		assigned-clock-rates = <19200000>;
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8750-mtp.dts b/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
-> index 3837f6785320..6ba4e69bf377 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
-> @@ -462,7 +462,7 @@ vreg_l11b_1p0: ldo11 {
->  
->  		vreg_l12b_1p8: ldo12 {
->  			regulator-name = "vreg_l12b_1p8";
-> -			regulator-min-microvolt = <1200000>;
-> +			regulator-min-microvolt = <1650000>;
-
-Are you sure it's not supposed to be 1.8V, given the name of the rail?
-
-Regards,
-Bjorn
-
->  			regulator-max-microvolt = <1800000>;
->  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->  			regulator-allow-set-load;
-> -- 
-> 2.34.1
+> Extract from #sdm670-mainline:erebion.eu discussion:
+> The imx355 can operate on 24 MHz (on both Pixel 3 and 3a), but Linux kernel
+> driver can operate only with 19.2 MHz.
 > 
+> I assume it would be worth it mention at least by comment here.
+
+This might set the series back because the devicetree isn't meant to be
+written for specific software, but it's included in v11 because you
+already asked twice.
+
+The frequency could also be stated as having "better software support"
+in general without mentioning Linux as the reason.
 
