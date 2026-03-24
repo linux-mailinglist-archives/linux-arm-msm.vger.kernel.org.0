@@ -1,81 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-99541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wJ+HO3QIwmlBZAQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 04:43:49 +0100
+	id QPxmFqsIwmliZAQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 04:44:43 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 58008301C77
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 04:43:48 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id B1B72301CCA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 04:44:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 3E09230524F3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 03:42:16 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 480F730FC2D9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 03:42:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9FB5A39DBFF;
-	Tue, 24 Mar 2026 03:42:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D3BF3A1A54;
+	Tue, 24 Mar 2026 03:42:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R719frGO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F6/5/HZl"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA4B366557;
-	Tue, 24 Mar 2026 03:42:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163DD39F192;
+	Tue, 24 Mar 2026 03:42:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774323735; cv=none; b=gueujRYNUfFk3gItwyv+XB3sM3iyYPmNsfUMTwBkJJ5EjaQzoCZtVBUjJDdxY+jH3S4cFmixElB/g6LLi3/k1fe8B2oYSK95JVEAYazinqvCs9e2E4nl1/ZuFGb5SAEt5WYNWTeeKJuy0bdrwxHl+kPdielhTfWFMo6S+Nsurfk=
+	t=1774323737; cv=none; b=kHeETLeDHJmT/3FA5ZVVyh5xwEPOoqHhQ63w/z/KAcyfhOhqxpvxuH6NOjbCWd7MAyoC5ryeqTrlaivTV1JIDpPKMeepQmPULxPPirRaXxneG9Aoo76H78dKIvKDwZg3Ld+tc/xQi+wuZ/YnllnsT+dvZ5HfjlH/FNu1DLxw8HE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774323735; c=relaxed/simple;
-	bh=qpWNh+tTYj8MbrdcqgUMlZVZZhUWaYgGrvrVHLiKCBU=;
+	s=arc-20240116; t=1774323737; c=relaxed/simple;
+	bh=1RQSZ/eC9essIbPGdgGsoMnSL85ywRErC/Ci9wpgfeo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GfE3WWioYEGgsUTwcOL0a+TO4kjREcOEQBtJ3JSXFIgf4MV7YCLhJ9JQOgOZRXv58uIsLyxboqvk0P7DaSDteE+KmyP9dJ2RfUXHwNxDCIs/h+aXwJNAFqTWVHpk2GeIBhQvJtOX4CkIqS3viEpfoKfnaoXGfCv1I4nkwaeYWGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R719frGO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71660C19424;
-	Tue, 24 Mar 2026 03:42:13 +0000 (UTC)
+	 MIME-Version:Content-Type; b=pbFdQNgNx8P5HWketthV0MOvXeeAQliNJY2coq9HytsBSq5RxWqXc0sdx2GYxhS6i05bLmcFAwv8B8vONZRaXGWUpGihQxy8Djl2Y1AK/DIyCWrCbdhL8fJchvgWJc9Ks3UTNutHxe8dwyfSOSK0WBcGZQSaWz+GmYWcJelTM38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F6/5/HZl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 557C6C2BCB6;
+	Tue, 24 Mar 2026 03:42:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774323735;
-	bh=qpWNh+tTYj8MbrdcqgUMlZVZZhUWaYgGrvrVHLiKCBU=;
+	s=k20201202; t=1774323736;
+	bh=1RQSZ/eC9essIbPGdgGsoMnSL85ywRErC/Ci9wpgfeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R719frGOM/L0P7abqsQXEE2kqqXEtWJwQlWRwk1c6JSRqaOjfeYcyyOm4/lf51mLC
-	 Nv1kOwcRbCBtHThGpyOwpG0IlUfZa4kYuRSFZM1GeQjBXDL5gJJ60wgiln/9o3hAiv
-	 qGV2aOc5keMh/1LnL0lV0vPFRDnbgAhE4o0KX3+i3UQWBzuZqwy1qjRxXcULJC+P9Q
-	 /+HYAhJ4SFlqQ4BqcnW2S9x6r2MFkwLsFwM+hCAQmU4sLYkFfZzOV/Pq2IqtPM8KAf
-	 bjzY0XPVn/+ja3Em3n+8c0ghrb3PSd027BxIKGh6kcZZaqwS7RQiOoRti+dsrb2n8N
-	 mGiW3gQixOGhA==
+	b=F6/5/HZlqAcDmODucJTKiyu5zONy8FXCxPTNZ99h9hRm1qZJsqCldNUye0Aux5+6v
+	 ogSfb3CqXsXN8i3oWsdq+VDQJCyKBK4xH34hZsZON9QMgGH0lwGDLjfvZpi8tutyBy
+	 vNW4+DcebHN2nc4CrD2AQLqDfSJPpVVZ5lkDpelmFT7ftm4lxo1dw9Q4LcF4H8ZyFk
+	 J0oeLYjucKfylc+zDz683eVGuTqlxWph6Rt6Y8tC/iBK7uubol/gXSUF3RKiVnEV87
+	 sgrzdwJ6/goAXmAljVR8wikahw8qIrr9fDG4AofRlsMCFvb3i/XcQIwi9o/ixcXcmf
+	 E0gM0GeMDpIag==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Bryan O'Donoghue <bod@kernel.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	cros-qcom-dts-watchers@chromium.org,
+	Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Bartosz Golaszewski <brgl@kernel.org>,
-	Marcel Holtmann <marcel@holtmann.org>,
-	Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-	Jeff Johnson <jjohnson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
-	Matthias Kaehlcke <mka@chromium.org>,
+	Stanimir Varbanov <stanimir.varbanov@linaro.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org,
+Cc: linux-media@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-bluetooth@vger.kernel.org,
-	linux-wireless@vger.kernel.org,
-	ath10k@lists.infradead.org,
-	linux-pm@vger.kernel.org,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH v2 00/14] power: sequencing: extend WCN driver to support WCN399x device
-Date: Mon, 23 Mar 2026 22:42:01 -0500
-Message-ID: <177432372677.35532.960283784585134331.b4-ty@kernel.org>
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Subject: Re: (subset) [PATCH v4 0/5] media: qcom: flip the switch between Venus and Iris drivers
+Date: Mon, 23 Mar 2026 22:42:02 -0500
+Message-ID: <177432372685.35532.7488465406897095432.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260106-wcn3990-pwrctl-v2-0-0386204328be@oss.qualcomm.com>
-References: <20260106-wcn3990-pwrctl-v2-0-0386204328be@oss.qualcomm.com>
+In-Reply-To: <20260131-venus-iris-flip-switch-v4-0-e10b886771e1@oss.qualcomm.com>
+References: <20260131-venus-iris-flip-switch-v4-0-e10b886771e1@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,62 +79,52 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-99541-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com,kernel.org,holtmann.org,quicinc.com,chromium.org,oss.qualcomm.com];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-99542-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[20];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_TWELVE(0.00)[25];
-	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: 58008301C77
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: B1B72301CCA
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 
-On Tue, 06 Jan 2026 03:01:10 +0200, Dmitry Baryshkov wrote:
-> Qualcomm WCN3950, WCN3988 and WCN399x families of WiFi/BT chips preceed
-> the later WCN / QCA devices, but they still incorporate a very simple
-> PMU on die. It controls internal on-chip power networks, but, most
-> importantly, it also requires a certain start-up procedure (first bring
-> up VDD_IO, then bring up other voltages). In order to further unify code
-> supporting different families of QCA / WCN chips and in order to
-> maintain the required power up sequence, properly represent these chips
-> in DTs and modify drivers to use power sequencing for these chips.
+On Sat, 31 Jan 2026 15:58:49 +0200, Dmitry Baryshkov wrote:
+> As the Venus and Iris drivers are close to the "feature parity" for the
+> common platforms (SC7280, SM8250), in order to get more attention to
+> squashing bugs from the Iris driver, flip the switch and default to the
+> Iris driver if both are enabled. The Iris driver has several
+> regressions, but hopefully they can be fixed through the development
+> cycle by the respective team. Also it is better to fail the test than
+> crash the device (which Venus driver does a lot).
 > 
 > [...]
 
 Applied, thanks!
 
-[10/14] arm64: dts: qcom: qrb2210-rb1: describe WiFi/BT properly
-        commit: 2d0840e31c8a6ceebc701822889424bb1927d1a7
-[11/14] arm64: dts: qcom: qrb4210-rb2: describe WiFi/BT properly
-        commit: 1eea8321da0fa3b80eb19802ab830bf83d304519
-[12/14] arm64: dts: qcom: sda660-ifc6560: describe WiFi/BT properly
-        commit: 40a5da727ebc2a8d085feda501ab7bee4c5d9608
-[13/14] arm64: dts: qcom: sdm845-db845c: describe WiFi/BT properly
-        commit: 77648f3a7e9be4e7090bd326b2e4a4f9265b80f3
-[14/14] arm64: dts: qcom: sm8150-hdk: describe WiFi/BT properly
-        commit: d545fd1caf42a8f20531ba38c671f5bf10542720
+[1/5] arm64: dts: qcom: sc7280-chrome-common: disable Venus
+      commit: a9ca757518f35f336c43c5bc3b36856dd8d1ce54
 
 Best regards,
 -- 
