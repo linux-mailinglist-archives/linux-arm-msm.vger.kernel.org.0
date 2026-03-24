@@ -1,150 +1,200 @@
-Return-Path: <linux-arm-msm+bounces-99716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iHeJFzXSwmllmgQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 19:04:37 +0100
+	id iMYYOWLTwmllmgQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 19:09:38 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2198F31A725
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 19:04:37 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8FCCD31A872
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 19:09:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id BAFFE3021D2D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 18:04:35 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 17271301ECE0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 18:08:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 215BB34EF08;
-	Tue, 24 Mar 2026 18:04:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22DC83845BD;
+	Tue, 24 Mar 2026 18:08:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e3W+Iuw3"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="Vr26Qjxm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from ixit.cz (ixit.cz [185.100.197.86])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF70A3264F2;
-	Tue, 24 Mar 2026 18:04:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7386E38236B;
+	Tue, 24 Mar 2026 18:08:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.100.197.86
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774375472; cv=none; b=pPW6qpyYnt/dI8mebYcFCD9VzjhI/N5x+QHo0dToDBMInqjdEvj4D8iCPWbsGez3I4slX+cP3pcVzHTpaNjADwc2SQZ/ydGIJBh0V0VyovhxQGvla0cAUNgFwc/nNCqiGQ0LrVh+BwUBNNor1SqcUBtL24INVilO6h+RFnIkiXI=
+	t=1774375703; cv=none; b=Vp//XY4kkysBsO/fUc0ITocL8pBisYaa9PmhJL7an9ge/sY5h88bFCifJ6KaJRe9RNcA/aHObYSFosyZuwcU7q59/bWttYGPnlDHBD0K45er4wQycesgZqd3e+igscStRDERpmqY3+8h9W7QR2mWk943lIhY7hY7nVO4306NEsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774375472; c=relaxed/simple;
-	bh=OYZsLgQDlG26AVq4Gf0fccKiiV8nU+VV+OROLS0nlJo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mHlEl18z2MaAZWJ/ybt49CNdRu1jaILF8P81Dz07VoDUr3R+PHGvzMNS93NV5R7rXZJ4b0Mj7hM2tvKlFY5yTiz5wJunqURfaBnHGOfLKLtYI0zckGEOthrs9X+Mnc56AT7OLbgjgbPm6UAk0OLZShJDuoywXmi1wbG4l0FUBmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e3W+Iuw3; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D4CBC2BC87;
-	Tue, 24 Mar 2026 18:04:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774375471;
-	bh=OYZsLgQDlG26AVq4Gf0fccKiiV8nU+VV+OROLS0nlJo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=e3W+Iuw3rwIQrBIzzAb3EZCFdVxED+q8mDSK7V+yfLHPdRO/M5LuX1xxTduQEtrWx
-	 PGiZgh/t/1JMqxwZWkEzOO48xWHFDIUVH941aIH1WrReS698jhzj8Nj99+LU8MOLnq
-	 Zf1F1lpOsWw70LafzMB1LmBxwsuMQfJYDAQ5zGD7a6i3J+UkL7keWdGECzMsZTXOjw
-	 u7wWrTQbl8UB33l8rHxk998qGYQ5tfcZEkfyf0gmiA39kZACyajSHrEfm/fxam+FIx
-	 7L8WBB3ILlIwEUsmBE1IQBFoCmtKTY2FwtpaZVXi48Ph1PaUtf7MtBYSNy/bXUbY+z
-	 uad4o7C+QkUsg==
-Date: Tue, 24 Mar 2026 18:04:25 +0000
-From: Mark Brown <broonie@kernel.org>
-To: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	mohammad.rafi.shaik@oss.qualcomm.com, linux-sound@vger.kernel.org,
-	lgirdwood@gmail.com, perex@perex.cz, tiwai@suse.com,
-	johan@kernel.org, dmitry.baryshkov@oss.qualcomm.com,
-	konrad.dybcio@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	srini@kernel.org, val@packett.cool, mailingradian@gmail.com
-Subject: Re: [PATCH v7 01/13] ASoC: qcom: q6apm: move component registration
- to unmanaged version
-Message-ID: <981a6253-5005-4281-88fb-3ef6361dfb76@sirena.org.uk>
-References: <20260323223845.2126142-1-srinivas.kandagatla@oss.qualcomm.com>
- <20260323223845.2126142-2-srinivas.kandagatla@oss.qualcomm.com>
+	s=arc-20240116; t=1774375703; c=relaxed/simple;
+	bh=jTrLb7JBd4s9yu8G/lASN3XJUxmlRl263Pxu+j2BHQA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=K762YMrA2Z0KrDlmQeUyjdHGrFRrL48vMc8IlUsQ43PPQWhNamJT7rSeX+vz7SXfh79pEB8igCPCSQmdoWk500X0AWFdSU18IYaZx914Te4uR35ms8drRtILiQZyClOwN8TNk8VnH5tWdSc69EdMzBUWmLXSgx608+wUxghClu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=Vr26Qjxm; arc=none smtp.client-ip=185.100.197.86
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
+Received: from [192.168.88.67] (static-78-44-254-34.bb.vodafone.cz [78.44.254.34])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ixit.cz (Postfix) with ESMTPSA id A7EC55341115;
+	Tue, 24 Mar 2026 19:08:16 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+	t=1774375697;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=2hunCxtEDEfduM7cx1zjOaDE3BGKjlcSpQbHSNZsZZk=;
+	b=Vr26Qjxms3OzcG42KINOV2KdZA+42HPOryXdZ4i1k41HWxy6p8ufPMUwm7qAzSFZ692tlD
+	jK5O11jSqH5sD5Li4qabgk1VJQFnr9r2WbaQMZlepVrajJxPkDa8FNekibIxoJbe+Hy5ow
+	3jnGe0xitJvXaiIz9OQ2PZ2QvXAUJr0=
+Message-ID: <041766dd-422e-40e1-9e5d-c220580871f5@ixit.cz>
+Date: Tue, 24 Mar 2026 19:08:15 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="6dh4h213CunPYLhE"
-Content-Disposition: inline
-In-Reply-To: <20260323223845.2126142-2-srinivas.kandagatla@oss.qualcomm.com>
-X-Cookie: Forest fires cause Smokey Bears.
-X-Spamd-Result: default: False [-2.76 / 15.00];
-	SIGNED_PGP(-2.00)[];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: sdm845-shift-axolotl: Enable NFC
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Alexander Martinz <amartinz@shift.eco>
+Cc: Petr Hodina <petr.hodina@protonmail.com>,
+ biemster <l.j.beemster@gmail.com>, netdev@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, Rob Herring <robh@kernel.org>,
+ oe-linux-nfc@lists.linux.dev, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>,
+ linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+ Bjorn Andersson <andersson@kernel.org>
+References: <20260324-oneplus-nfc-v2-0-3eef052c9bc6@ixit.cz>
+ <20260324-oneplus-nfc-v2-2-3eef052c9bc6@ixit.cz>
+ <9d9ec994-c954-445d-97b2-772614d66f35@oss.qualcomm.com>
+Content-Language: en-US
+From: David Heidelberg <david@ixit.cz>
+Autocrypt: addr=david@ixit.cz; keydata=
+ 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
+In-Reply-To: <9d9ec994-c954-445d-97b2-772614d66f35@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	MIME_GOOD(-0.20)[multipart/signed,text/plain];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[ixit.cz,quarantine];
+	R_DKIM_ALLOW(-0.20)[ixit.cz:s=dkim];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
+	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-99717-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-99716-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[kernel.org,oss.qualcomm.com,vger.kernel.org,gmail.com,perex.cz,suse.com,packett.cool];
-	RCPT_COUNT_TWELVE(0.00)[18];
-	MIME_TRACE(0.00)[0:+,1:+,2:~];
+	FREEMAIL_CC(0.00)[protonmail.com,gmail.com,vger.kernel.org,kernel.org,lists.linux.dev];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	FROM_NEQ_ENVFROM(0.00)[david@ixit.cz,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[ixit.cz:+];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sirena.org.uk:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 2198F31A725
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,codeberg.org:url]
+X-Rspamd-Queue-Id: 8FCCD31A872
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 
---6dh4h213CunPYLhE
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, Mar 23, 2026 at 10:38:33PM +0000, Srinivas Kandagatla wrote:
+On 24/03/2026 14:12, Konrad Dybcio wrote:
+> On 3/24/26 12:20 AM, David Heidelberg via B4 Relay wrote:
+>> From: David Heidelberg <david@ixit.cz>
+>>
+>> Definition of the NFC.
+> 
+> "meh" commit message
+> 
+> [...]
+> 
+>> +	nfc_enable_default: nfc-enable-default-state {
+>> +		pins = "gpio12", "gpio62";
+>> +		function = "gpio";
+>> +		drive-strength = <2>;
+>> +		bias-pull-up;
+> 
+> Are you sure about pulling up an active-high pin?
 
-> --- a/sound/soc/qcom/qdsp6/q6apm.c
-> +++ b/sound/soc/qcom/qdsp6/q6apm.c
-> @@ -747,7 +747,7 @@ static int apm_probe(gpr_device_t *gdev)
-> =20
->  	q6apm_get_apm_state(apm);
-> =20
-> -	ret =3D devm_snd_soc_register_component(dev, &q6apm_audio_component, NU=
-LL, 0);
-> +	ret =3D snd_soc_register_component(dev, &q6apm_audio_component, NULL, 0=
-);
->  	if (ret < 0) {
->  		dev_err(dev, "failed to register q6apm: %d\n", ret);
->  		return ret;
-> @@ -756,6 +756,11 @@ static int apm_probe(gpr_device_t *gdev)
->  	return of_platform_populate(dev->of_node, NULL, NULL, dev);
->  }
+I'm not sure, but downstream does it (and "works for me"). Maybe Alexander would 
+know more details here.
 
-Given that of_platform_populate() can fail we now need unwinding for the
-component registration here with the removal of devm_
+David
 
---6dh4h213CunPYLhE
-Content-Type: application/pgp-signature; name="signature.asc"
+> 
+> FWIW TLMM subnodes are best sorted by pin index (although the file
+> currently doesn't really do that) as per dts coding style
 
------BEGIN PGP SIGNATURE-----
+I assume when I group the -pins into -state it doesn't apply anymore? As I don't 
+feel having pins relevant to one device / subsystem all over the place is extra 
+clean.
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmnC0igACgkQJNaLcl1U
-h9DibQf+ICzY1rSvmqjBO7MgjC//+FtF2xc5zFAiMN3e4FXppzqGg4Jz8A5a0ADO
-ORd5uLabn7rdAwYxku4pUNYA0crSnBYbk903Ei1YGVh5oNbUTiYo8bfGcub/lix7
-ClHczUIsaA/8eMEhZyRV5HvOTz8YmwbtRw4dz7qpNMGkit0kgLU4MNiD/vDepSr8
-CSWWNGLvBUD5cyJDDGUPYCTxW9dKp/52Vc3+QVn2mtlcXsBOPcdCx+dQ5+82WlAf
-2jWNlZxjti0iHbvJVHPbdl9OD1hstkb+yZaVzplr3UOjlWDTw/ds8s4lW7zwj5q/
-vQi614/QAKn1ZsMGegXRc8pXYmbwnA==
-=84GS
------END PGP SIGNATURE-----
+David
 
---6dh4h213CunPYLhE--
+P.S. before v3 code is here
+https://codeberg.org/sdm845/linux/commits/branch/b4/oneplus-nfc
+
+> 
+> Konrad
+
+-- 
+David Heidelberg
+
 
