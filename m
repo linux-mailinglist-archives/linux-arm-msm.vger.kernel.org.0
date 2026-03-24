@@ -1,62 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-99521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MN7xCSL5wWlSYgQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 03:38:26 +0100
+	id 8MwkD7H5wWlSYgQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 03:40:49 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C7F93013EA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 03:38:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 96A58301426
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 03:40:48 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id CD3F43008221
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 02:33:30 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 5C7C5303C286
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 02:36:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E80B36605A;
-	Tue, 24 Mar 2026 02:33:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5462F38642A;
+	Tue, 24 Mar 2026 02:36:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qg+lxsBT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ss9s4b6C"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF13F221FB1;
-	Tue, 24 Mar 2026 02:33:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B204285072;
+	Tue, 24 Mar 2026 02:36:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774319610; cv=none; b=Ed7Jyt4aDRWB19ZGB0PdzLaeYourZ+4igrCkm8pl4v3nAotSDyKifl/G6vaY6by0ugop4laoqaZSCz9+aTG/A9z6nc/98tjc981gA4cINBWC9ArTwmglg5hKJuNVpENDzBYjY+Bh/Wy7aWB5EvcWirs7xQwNzHk+aR3BlloTJuo=
+	t=1774319813; cv=none; b=JHOE6eZ3OWasdTa3HpfyT9/H8luLL6krlhWeRbrA3Wv/uaf8r6KtT8UHtQLSJPOmS8GDFg5Ku27MkrfAfxv6T07gpf5h9Lxsc3WFMmlxdLCnUyEN1FeQSIGByJjyj0Zk4yd0JsL+EmUvHpNCgTpZ2Go9+NdcguvCWheQfnT7DI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774319610; c=relaxed/simple;
-	bh=fBp/0Z0LpO1M67Jopgvd6AsAAdujYI1x1bo/Xt+QSds=;
+	s=arc-20240116; t=1774319813; c=relaxed/simple;
+	bh=xhPHUppt3YgV5Yf0MAsA7TMRhgcRUI0+2A82HXnTJJ4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XItMdHKpEJqM0Guqhcr9KJjdCnmWoV0ole7a+1C1I1vHsuSbBkJUCL623+UCDsshzC8A2oXbvjyGtbUdTJ/Xehm6FVA9c6SRjgoBdW6fqRIb7SD78Qm7xxWqXW5BKeR9vl9U118rfpiHCq2aIrIq9S1kx9FCyZASCh6TpX2R5MY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qg+lxsBT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFBABC4CEF7;
-	Tue, 24 Mar 2026 02:33:28 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=buh54J+xddADn1e3W3u9MgCvxfZgK97Nj3Vha29EqXYa+VgnRu56Rqo/2NXgazoA7AA+QA47/8Kt4UujmFOuFo2XgpkB+9pcn6wLW+1z7TrwtYXHr/aKy83/LGXxJrt6Ot3tSHd38peEe0ZK7e4gYCE04lJyik6WDWESvUGWKNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ss9s4b6C; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10BEBC4CEF7;
+	Tue, 24 Mar 2026 02:36:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774319609;
-	bh=fBp/0Z0LpO1M67Jopgvd6AsAAdujYI1x1bo/Xt+QSds=;
+	s=k20201202; t=1774319812;
+	bh=xhPHUppt3YgV5Yf0MAsA7TMRhgcRUI0+2A82HXnTJJ4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Qg+lxsBTZtD11oMJoC9+k/56mZYQPde6Vwak+fbcGywe6msT+CgHV0MbXOSRtq2vv
-	 9wJ1Ja/jOqi5R83EpgyIRWkz8jITnp+MRSDjl/ZYJ8nzszqm9V57IhvhgmNdHIkbJZ
-	 /fqgLkbXHeOrzsRKFnfkQLg1qwetS8YhXfuzf4cCxKvcLkcVPbkOBOiU2FHaKWfGzf
-	 9L9djIl6h3gBKUTklf9AEOYRfUTZuG1wOqiXJxLAaY3YEt6Uq8w8ZNQkdJ+s6wgMGq
-	 b7d/Yp1xDo7jc7+oGdZkmIotIpk/xJ42GSX555TkUmnVVTFDswPzldiXu0KkKJdicB
-	 jDCVmrhz4BcqA==
-Date: Mon, 23 Mar 2026 21:33:25 -0500
+	b=ss9s4b6CvGwNcIomu6b2tFVVW80RENBkvAZXxtBj3KeQJzCccGBLVu8AyjM79KlEu
+	 39OBD7Gy/4Hi5ehXRrmOySvDQZMTsy1nc+BVt4/zU0WfwNSUBi49ULpT9GrYYXjrab
+	 +43mXMZzfRUqU9BH3nWtJUpbTDx87V+4XISyr6RN2t6AQkgt5lusnMSu+Hwy4sm6Lq
+	 Rtg2aLz89OavCeAhWKalk22z0lUQOujlCwWkzpepZTToMliDJftKGNUU1NSGH8V3m3
+	 917K25P8wONAkJ5gfHnSRVyQoRF1f2bxmoepRr4D4j/g0L13TmRwfgdI+yP/tFVT2y
+	 53P4PNpXGhjjg==
+Date: Mon, 23 Mar 2026 21:36:49 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Ajit Pandey <ajit.pandey@oss.qualcomm.com>, Imran Shaik <imran.shaik@oss.qualcomm.com>, 
-	Taniya Das <taniya.das@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] clk: qcom: gcc-x1e80100: Keep GCC USB QTB clock always ON
-Message-ID: <acH2K3-qhGMgkAtX@baldur>
-References: <20260316-hamoa-usb-qtb-clk-always-on-v1-1-a29ac94f20f5@oss.qualcomm.com>
- <gvj7tsivu6w2fzfcus6oi3pwc7jcfqdrx62uuzny674mj5ftus@dpnn4pzizbqc>
- <388c4c45-2338-4520-abf6-6a15aeb5db42@oss.qualcomm.com>
+To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Cc: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>, 
+	Srinivas Kandagatla <srini@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Vinod Koul <vkoul@kernel.org>, Krzysztof Kozlowski <krzk@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	stable@vger.kernel.org
+Subject: Re: [PATCH 3/7] slimbus: qcom-ngd-ctrl: Correct PDR and SSR cleanup
+ ownership
+Message-ID: <acH4WGLAfJnyzK9H@baldur>
+References: <20260309-slim-ngd-dev-v1-0-5843e3ed62a3@oss.qualcomm.com>
+ <20260309-slim-ngd-dev-v1-3-5843e3ed62a3@oss.qualcomm.com>
+ <20260310073933.ttble7algoiy7rwq@hu-mojha-hyd.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,18 +66,18 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <388c4c45-2338-4520-abf6-6a15aeb5db42@oss.qualcomm.com>
+In-Reply-To: <20260310073933.ttble7algoiy7rwq@hu-mojha-hyd.qualcomm.com>
 X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-99521-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-99522-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
@@ -93,64 +94,75 @@ X-Spamd-Result: default: False [-1.66 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	TO_DN_SOME(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: 7C7F93013EA
+X-Rspamd-Queue-Id: 96A58301426
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Mon, Mar 23, 2026 at 10:26:53AM +0530, Jagadeesh Kona wrote:
-> 
-> 
-> On 3/16/2026 6:26 PM, Dmitry Baryshkov wrote:
-> > On Mon, Mar 16, 2026 at 04:38:21PM +0530, Jagadeesh Kona wrote:
-> >> Keep GCC USB QTB clock always ON which is required for SMMU
-> >> invalidation on X1E80100 platform.
-> >>
-> >> Signed-off-by: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
-> >> ---
-> >>  drivers/clk/qcom/gcc-x1e80100.c | 1 +
-> >>  1 file changed, 1 insertion(+)
-> >>
-> >> diff --git a/drivers/clk/qcom/gcc-x1e80100.c b/drivers/clk/qcom/gcc-x1e80100.c
-> >> index 74afd12c158c01c121d9aecd56e65c0c302d7cd0..73a2a5112623e5190f41129af7fd76a86603557b 100644
-> >> --- a/drivers/clk/qcom/gcc-x1e80100.c
-> >> +++ b/drivers/clk/qcom/gcc-x1e80100.c
-> >> @@ -7480,6 +7480,7 @@ static int gcc_x1e80100_probe(struct platform_device *pdev)
-> >>  	qcom_branch_set_clk_en(regmap, 0x32004); /* GCC_VIDEO_AHB_CLK */
-> >>  	qcom_branch_set_clk_en(regmap, 0x32030); /* GCC_VIDEO_XO_CLK */
-> >>  	qcom_branch_set_clk_en(regmap, 0x71004); /* GCC_GPU_CFG_AHB_CLK */
-> >> +	qcom_branch_set_clk_en(regmap, 0x7d01c); /* GCC_HLOS1_VOTE_AGGRE_NOC_MMU_USB_QTB_CLK */
+On Tue, Mar 10, 2026 at 01:09:33PM +0530, Mukesh Ojha wrote:
+> On Mon, Mar 09, 2026 at 11:09:04PM -0500, Bjorn Andersson wrote:
+> > PDR and SSR callbacks are registred from the controller probe function,
+> > but currently released from the child device's remove function.
 > > 
-> > Is it used during all SMMU invalidations or only for those related to
-> > the USB controller?
-> > 
+> > In the next commit the controller probe function will be modified such
+> > that the error path will unregister the child device, resulting in a
+> > double free of these resources.
 > 
-> Yes, it is required for all SMMU invalidations.
+> Change is fine, Could this not be accommodated in the next commit?
+> 
 
-What happens if it's not enabled? Why isn't problem described in the
-commit message?
+The problem solved by patch 4 relates to the oreder that we're acquiring
+the resources in probe and how the error handling of that works.
 
-If it is _required_, wouldn't that imply that this fixes a problem, and
-if so, why isn't there a Fixes: tag?
+If I squash the two patches, it seems that I would have a lengthy commit
+message talking about that part and then a "also, while at it move the
+unregister from X to Y because...".
+
+I.e. it doesn't feel like the same logical change to me.
+
+Please let me know if you disagree.
 
 Regards,
 Bjorn
 
+> > 
+> > Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
+> > Cc: stable@vger.kernel.org
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 > 
-> Thanks,
-> Jagadeesh
+> Reviewed-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 > 
-> >>  
-> >>  	/* Clear GDSC_SLEEP_ENA_VOTE to stop votes being auto-removed in sleep. */
-> >>  	regmap_write(regmap, 0x52224, 0x0);
-> >>
-> >> ---
-> >> base-commit: b84a0ebe421ca56995ff78b66307667b62b3a900
-> >> change-id: 20260316-hamoa-usb-qtb-clk-always-on-bcd4e5f3553e
-> >>
-> >> Best regards,
-> >> -- 
-> >> Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
-> >>
+> > ---
+> >  drivers/slimbus/qcom-ngd-ctrl.c | 5 +++--
+> >  1 file changed, 3 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/drivers/slimbus/qcom-ngd-ctrl.c b/drivers/slimbus/qcom-ngd-ctrl.c
+> > index b34e727bab086c95dc7e760bf1141baac9ccf6a7..09ce3299e15c25b1b9cf6b1559850adf4aa20737 100644
+> > --- a/drivers/slimbus/qcom-ngd-ctrl.c
+> > +++ b/drivers/slimbus/qcom-ngd-ctrl.c
+> > @@ -1685,6 +1685,9 @@ static void qcom_slim_ngd_ctrl_remove(struct platform_device *pdev)
+> >  {
+> >  	struct qcom_slim_ngd_ctrl *ctrl = platform_get_drvdata(pdev);
+> >  
+> > +	pdr_handle_release(ctrl->pdr);
+> > +	qcom_unregister_ssr_notifier(ctrl->notifier, &ctrl->nb);
+> > +
+> >  	qcom_slim_ngd_unregister(ctrl);
+> >  }
+> >  
+> > @@ -1693,8 +1696,6 @@ static void qcom_slim_ngd_remove(struct platform_device *pdev)
+> >  	struct qcom_slim_ngd_ctrl *ctrl = platform_get_drvdata(pdev);
+> >  
+> >  	pm_runtime_disable(&pdev->dev);
+> > -	pdr_handle_release(ctrl->pdr);
+> > -	qcom_unregister_ssr_notifier(ctrl->notifier, &ctrl->nb);
+> >  	qcom_slim_ngd_enable(ctrl, false);
+> >  	qcom_slim_ngd_exit_dma(ctrl);
+> >  	qcom_slim_ngd_qmi_svc_event_deinit(&ctrl->qmi);
+> > 
+> > -- 
+> > 2.51.0
 > > 
 > 
+> -- 
+> -Mukesh Ojha
 
