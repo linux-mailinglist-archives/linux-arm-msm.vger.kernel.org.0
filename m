@@ -1,56 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-99510-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99511-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id QMpQIgv0wWmPYQQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99510-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 03:16:43 +0100
+	id oAMXO8DywWlzYQQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99511-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 03:11:12 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 868F43010B0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 03:16:42 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 901BE300FF6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 03:11:12 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 3C45E3039F8A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 02:08:49 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 9DF9E304FCAC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 02:08:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6FE0C2571D7;
-	Tue, 24 Mar 2026 02:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18A493890F3;
+	Tue, 24 Mar 2026 02:08:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="oo2hHfIg"
+	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="d8DlUwlx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-180.mta1.migadu.com (out-180.mta1.migadu.com [95.215.58.180])
+Received: from out-172.mta1.migadu.com (out-172.mta1.migadu.com [95.215.58.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F17E1383C60
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 02:08:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3F20388E7E
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 02:08:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774318091; cv=none; b=vDNEChbI1WabZquov/+keJ1iE6nzaQTOYZvIkpCc7UB8dBn66oKlNjf9u5KDJIHt51VBAq40bXRbr/IjE1qKjdV8TrjpAhEzCfq2/w9f3poeUxq6YNKBik0iRHkxs5wpsRUCMkrIZ3WOTyEHV0zXPUVwOA+6ZYBFwyZnG0ZVTq0=
+	t=1774318094; cv=none; b=hbQ5OxbEJllgaf+IK5k5749WQLnNNtp0AuXRdBTTsQRSGprGpIBx0sqnQMhq1Do/alWCQqzB8U8CbMIjfdDkOnKoFcHiQnZ0Sa86X8CI90dRO2kNgu5ZIANpoMVLRrUmaoHuBzITSfNobANz4obpAxURacW3zGDyLq+NWYWpoaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774318091; c=relaxed/simple;
-	bh=AzKDgs0rCjBjWbO7qK+khHoY9WMVP4plAe6eQbC+yes=;
+	s=arc-20240116; t=1774318094; c=relaxed/simple;
+	bh=AUbNt9bkdLSZ5QkK/hcA+7IkrHZ2PlNCqypxIYS8Qbg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=pAyNPKs+LcpUHBtougQWPDoHOfwmb3g4L9e1eiMbTLDvo4dkd1mW1hNmRZY9uRccyHucAFA+Q5OMWC6MGPYlfRZQtSA0X6NJd9R4+uFzhE6+tH+aRHsqFvtKlD5EwRGAghmvLYYTEhd1kUpBIGKGRAF1T26Zw0QyVtm1kbdNVFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=oo2hHfIg; arc=none smtp.client-ip=95.215.58.180
+	 In-Reply-To:To:Cc; b=Q9Zido6teDUNjsxcv++s0GHWpPRm+Up7SufsfmZtURhUMuNHJ0SQlC3OSoU5tdT6/uK3lZWbVXin8GTDSYIFeZEFLzZqy9wn9OKkEERhVqV540/djqgixCeVZt4AUqzOjthOOXaAKComIYtqMZFbr2+O75U78XwpfyJob6WpkeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=d8DlUwlx; arc=none smtp.client-ip=95.215.58.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=postmarketos.org
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
-	s=key1; t=1774318088;
+	s=key1; t=1774318091;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=pMTmoqcymrxjxTJckrDC3EryZgpqLUQFBkpwITrs+cY=;
-	b=oo2hHfIgLIwrc84S9whOJ6thHWfk8r886a02o+y9F5Aa+lSbILZhNi0tW32FlJ6w/Uk3yn
-	VCB8Q8U2yJmhggWH1iYp418n6UeF+wfJ9DBTUnpvvw6Y4Wh4HnH7j1O4ntAk/hX/XpsDNW
-	uXLpX6O4bGbgbn+3GcvnRqY+0Px71vveQlHJgL+Y/11TZmAZgPLASo1jJ4G/Jv7PjICJnG
-	gBWf2xjlfW8I3OYr81h6lHmL79AyyP6RgJFOS0g2KAcVsMk2NlYJxYpJvHztUQmz8tMjXA
-	YzvSXULsQ9JAVlIO01G6+g82TarXNvsqUctDEDY5uPH5bTdFnEhws4iLR8rITQ==
+	bh=NUnX8U0vGNYbiWJDSXf/rQHLWWU9UA2ht6+fCiuJYII=;
+	b=d8DlUwlxZSJmrnPRe5RA4S2yhWWAwU73EvqEISM/aakZwU0WEyk4mP8DpChC/OtAVzHr9c
+	rYxpc6mUPKAVE0CeJldfe78eGkcWo1m6E0FNfjS3mlyEqO9Xk3MfkLr8wBhOvndh62Y22A
+	rybf8hLlYyuXeBGe6JuuMikQn512FxfyauWR3Teei90ul19OsqqQc6zE5YNISEtWGNu5FF
+	IAGFP948YFgyvXOCX0Csmu8tgFjjQHVYdHwQSFM+OOfBFTqovERFbGRyDuMb7VuhXBcZtd
+	WE9PY3MmxYMmWoh4rNEw/wDXTreIh0bHTYOmbDS2DcKJHxwXzQJlLVZ1e607+A==
 From: Paul Sajna <sajattack@postmarketos.org>
-Date: Mon, 23 Mar 2026 19:06:38 -0700
-Subject: [PATCH v6 08/15] arm64: dts: qcom: sdm845-lg-judyln: Add display
- panel
+Date: Mon, 23 Mar 2026 19:06:39 -0700
+Subject: [PATCH v6 09/15] arm64: dts: qcom: sdm845-lg-judyln: Add firmware
+ nodes, change path
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,7 +59,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260323-judyln-dts-v6-8-29d70ca1651c@postmarketos.org>
+Message-Id: <20260323-judyln-dts-v6-9-29d70ca1651c@postmarketos.org>
 References: <20260323-judyln-dts-v6-0-29d70ca1651c@postmarketos.org>
 In-Reply-To: <20260323-judyln-dts-v6-0-29d70ca1651c@postmarketos.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -70,13 +70,12 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
  ~postmarketos/upstreaming@lists.sr.ht, Amir Dahan <system64fumo@tuta.io>, 
  Christopher Brown <crispybrown@gmail.com>, 
- Paul Sajna <sajattack@postmarketos.org>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1774318055; l=3286;
+ Paul Sajna <sajattack@postmarketos.org>
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1774318055; l=2213;
  i=sajattack@postmarketos.org; s=20250422; h=from:subject:message-id;
- bh=AzKDgs0rCjBjWbO7qK+khHoY9WMVP4plAe6eQbC+yes=;
- b=ppIrOWWN5ZOrR0A6pVe+BFyqGkiCuuga5DOunmHtYhHXXBswxdoNdyth/kTGvwi8UTEb1oGzy
- Gtzioteyt39CJRDnxY3UsHRkLVP6bDv9/Puw2/nfyYx46bYPjhc+wF7
+ bh=AUbNt9bkdLSZ5QkK/hcA+7IkrHZ2PlNCqypxIYS8Qbg=;
+ b=vSHapH9YDWnRkaN4wNWSEpOF0jmRuuMn2Kb8OF+et8rzRZ9ENwC+tmGduSsDbYwG/BMVN2UrR
+ W4qrXGoO2lXA75wzeMKibLKWvrQkr6JdNuu7GZ05Pk5NFMEY3fdDQKF
 X-Developer-Key: i=sajattack@postmarketos.org; a=ed25519;
  pk=TwacvEOiRJ2P2oAdEqIDrtQTL18QS4FfcHfP/zNsxkQ=
 X-Migadu-Flow: FLOW_OUT
@@ -85,16 +84,16 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[postmarketos.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[postmarketos.org:s=key1];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-99510-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-99511-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[3];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,lists.sr.ht,tuta.io,gmail.com,postmarketos.org,oss.qualcomm.com];
-	RCPT_COUNT_TWELVE(0.00)[15];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.sr.ht,tuta.io,gmail.com,postmarketos.org];
+	RCPT_COUNT_TWELVE(0.00)[14];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
@@ -104,147 +103,91 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[sajattack@postmarketos.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[postmarketos.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,postmarketos.org:dkim,postmarketos.org:email,postmarketos.org:mid,0.0.0.5:email,tuta.io:email,qualcomm.com:email,0.0.0.0:email,9d400000:email]
-X-Rspamd-Queue-Id: 868F43010B0
+	DBL_BLOCKED_OPENRESOLVER(0.00)[postmarketos.org:dkim,postmarketos.org:email,postmarketos.org:mid,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 901BE300FF6
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Also include other supporting msm drm nodes, gpio and backlight
+Add paths for Qualcomm firmware, including:
+ipa, modem, venus, gpu
 
-Co-developed-by: Amir Dahan <system64fumo@tuta.io>
-Signed-off-by: Amir Dahan <system64fumo@tuta.io>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+GPU and bluetooth are confirmed working, others may need more
+testing/fixes
+
+But regardless they will need the firmware paths specified here
+and firmware added upstream before they will work, so might as well
+get started on it now.
+
 Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi | 13 +++--
- arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts  | 68 +++++++++++++++++++++++++-
- 2 files changed, 75 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi |  2 ++
+ arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts  | 16 ++++++++++++----
+ 2 files changed, 14 insertions(+), 4 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-index 7b0e14d3f57e..a5a04ec11eb7 100644
+index a5a04ec11eb7..dd42ed0bf63e 100644
 --- a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-@@ -450,10 +450,6 @@ &cdsp_pas {
- 	status = "okay";
- };
+@@ -464,6 +464,8 @@ &gpu {
  
--&dispcc {
--	status = "disabled";
--};
--
- &gcc {
- 	protected-clocks = <GCC_QSPI_CORE_CLK>,
- 			   <GCC_QSPI_CORE_CLK_SRC>,
-@@ -517,6 +513,15 @@ led@5 {
- 	};
- };
- 
-+&pmi8998_wled {
-+	qcom,current-limit-microamp = <20000>;
-+	qcom,ovp-millivolt = <29600>;
-+	qcom,switching-freq = <800>;
-+	qcom,num-strings = <3>;
-+	qcom,cabc;
-+	status = "okay";
-+};
+ &ipa {
+ 	qcom,gsi-loader = "modem";
++	memory-region = <&ipa_fw_mem>;
 +
- &qupv3_id_0 {
  	status = "okay";
  };
+ 
 diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts b/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
-index bbfa709048f7..46119630d721 100644
+index 46119630d721..7948fe3dbaa2 100644
 --- a/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
 +++ b/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
-@@ -21,8 +21,6 @@ framebuffer@9d400000 {
- 			height = <3120>;
- 			stride = <(1440 * 4)>;
- 			format = "a8r8g8b8";
--			lab-supply = <&lab>;
--			ibb-supply = <&ibb>;
- 		};
- 	};
- 
-@@ -67,6 +65,51 @@ &gpu_zap_shader {
- 	firmware-name = "qcom/sdm845/judyln/a630_zap.mbn";
+@@ -46,7 +46,7 @@ battery: battery {
  };
  
-+&mdss {
-+	status = "okay";
-+};
-+
-+&mdss_dsi0 {
-+	vdda-supply = <&vdda_mipi_dsi0_1p2>;
-+
-+	status = "okay";
-+
-+	display_panel: panel@0 {
-+		reg = <0>;
-+		compatible = "lg,sw49410-lh609qh1", "lg,sw49410";
-+
-+		backlight = <&pmi8998_wled>;
-+		reset-gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
-+		width-mm = <65>;
-+		height-mm = <140>;
-+
-+		vsp-supply = <&lab>;
-+		vsn-supply = <&ibb>;
-+
-+		pinctrl-0 = <&sde_dsi_active &sde_te_active_sleep>;
-+		pinctrl-1 = <&sde_dsi_sleep &sde_te_active_sleep>;
-+		pinctrl-names = "default", "sleep";
-+
-+		port {
-+			panel_in: endpoint {
-+				remote-endpoint = <&mdss_dsi0_out>;
-+			};
-+		};
-+	};
-+};
-+
-+&mdss_dsi0_phy {
-+	vdds-supply = <&vdda_mipi_dsi0_pll>;
-+
-+	status = "okay";
-+};
-+
-+&mdss_dsi0_out {
-+	data-lanes = <0 1 2 3>;
-+	remote-endpoint = <&panel_in>;
-+	qcom,te-source = "mdp_vsync_e";
-+};
-+
- &ibb {
- 	regulator-min-microvolt = <5500000>;
- 	regulator-max-microvolt = <5500000>;
-@@ -102,4 +145,25 @@ thinq_key_default: thinq-key-default-state {
- 		drive-strength = <2>;
- 		bias-pull-up;
- 	};
-+
-+	sde_dsi_active: sde-dsi-active-state {
-+		pins = "gpio6";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-disable;
-+	};
-+
-+	sde_dsi_sleep: sde-dsi-sleep-state {
-+		pins = "gpio6";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
-+	sde_te_active_sleep: sde-te-active-sleep-state {
-+		pins = "gpio10";
-+		function = "mdp_vsync";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
+ &adsp_pas {
+-	firmware-name = "qcom/sdm845/judyln/adsp.mbn";
++	firmware-name = "qcom/sdm845/LG/judyln/adsp.mbn";
  };
+ 
+ &bluetooth {
+@@ -58,11 +58,15 @@ &bluetooth {
+ };
+ 
+ &cdsp_pas {
+-	firmware-name = "qcom/sdm845/judyln/cdsp.mbn";
++	firmware-name = "qcom/sdm845/LG/judyln/cdsp.mbn";
+ };
+ 
+ &gpu_zap_shader {
+-	firmware-name = "qcom/sdm845/judyln/a630_zap.mbn";
++	firmware-name = "qcom/sdm845/LG/judyln/a630_zap.mbn";
++};
++
++&ipa {
++	firmware-name = "qcom/sdm845/LG/judyln/ipa_fws.mbn";
+ };
+ 
+ &mdss {
+@@ -128,7 +132,7 @@ &lab {
+ };
+ 
+ &mss_pil {
+-	firmware-name = "qcom/sdm845/judyln/mba.mbn", "qcom/sdm845/judyln/modem.mbn";
++	firmware-name = "qcom/sdm845/LG/judyln/mba.mbn", "qcom/sdm845/LG/judyln/modem.mbn";
+ };
+ 
+ &pmi8998_charger {
+@@ -167,3 +171,7 @@ sde_te_active_sleep: sde-te-active-sleep-state {
+ 		bias-pull-down;
+ 	};
+ };
++
++&venus {
++	firmware-name = "qcom/sdm845/LG/judyln/venus.mbn";
++};
 
 -- 
 2.53.0
