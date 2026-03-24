@@ -1,59 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-99658-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99659-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id yJeeEJ2PwmkXfAQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99658-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 14:20:29 +0100
+	id iJwUJpqOwmneewQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99659-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 14:16:10 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA28C3093E8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 14:20:28 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3DB7A30924A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 14:16:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 5655131BD46C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 13:07:59 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id E96E23040D62
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 13:08:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A9363F7E71;
-	Tue, 24 Mar 2026 13:07:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 594F53F7AB0;
+	Tue, 24 Mar 2026 13:07:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="lasowkfk"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="QcbodRRZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
+Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A14E93F1643;
-	Tue, 24 Mar 2026 13:07:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82D7C3F87FE;
+	Tue, 24 Mar 2026 13:07:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774357672; cv=none; b=jSwIzTXpQX0OFX+Zu6qKtOcgmsyTd48VTsls3J8oO05Bn6cYSToDfmXMTpuZsffzaoy5ZoEj9FJgNQc0C0VPI3lI6K3h7F83i64n6oQzPOHEkp3c1K6rbMUvjOPkAjb4KQlaKU2xVE20rbQCRoDIwsoeCJoLPo0h3ozzyssFias=
+	t=1774357676; cv=none; b=ikL3FvCbx9/u820CApNroKI4gKEf6EAO3IYZ46OTnABbyaioHjSDEFZ5xIdDugEABujkgl0bLVy7Y0ImD/X2pUxcVhhi5qfJqu2mROrkKLQg2X/ifqmEexXSBymzt+/CeiLpKjJEf9tiXaFmxOd4YbKHhvN2Ys3OpCU+6EcN4GM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774357672; c=relaxed/simple;
-	bh=D0kkGEEvgIWqvEXF3XQOv1BGYWjXImrZui2cUNlsEHo=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=hNrDRiWN+V0jE0E0Mj1+Oj53FggEr7q+tiu9Zy6D2H3y6tMo/5uPKa6/ZXatlFPX4xzhIREjSL2NcIvntRHIVCuu0dexsVyOAKX1VIqp46CJIrXbvUoxX0kCRO+U570cVb58TCFaMIFUMe5L+hUg1BYMveRpa9pSr7Hg3mCtau0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=lasowkfk; arc=none smtp.client-ip=185.171.202.116
+	s=arc-20240116; t=1774357676; c=relaxed/simple;
+	bh=3gcDvKDiofu5+UBNldcs7iRDdzjLiu7N536dnvCCZcA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=tKs7ytyoAQ+yUhqVmz/qiNTxGUEDD2Iac7V2BMZuBH+sCEQwQh+j0opvzanKC89JnHUE3+UnNm4kcU/6R2hti85QYDel3SRIDbWNmwfddddwES3dDzc8ap1stC+5z5z8xd4QsstzVHikIc/1eO6G/upY9gAmzFGtsZGDym5eM34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=QcbodRRZ; arc=none smtp.client-ip=185.246.84.56
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-04.galae.net (Postfix) with ESMTPS id 09CAEC5809A;
-	Tue, 24 Mar 2026 13:08:14 +0000 (UTC)
+	by smtpout-02.galae.net (Postfix) with ESMTPS id 1EBBE1A2FC6;
+	Tue, 24 Mar 2026 13:07:53 +0000 (UTC)
 Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id A0D5C6011D;
-	Tue, 24 Mar 2026 13:07:46 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id D3F4110451273;
-	Tue, 24 Mar 2026 14:07:33 +0100 (CET)
+	by smtpout-01.galae.net (Postfix) with ESMTPS id E5B506011D;
+	Tue, 24 Mar 2026 13:07:52 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id CC98510451277;
+	Tue, 24 Mar 2026 14:07:44 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1774357664; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding; bh=oz2n6EGzzohxeupK2HnEka+WLJWsM35paHY/3OjrXOI=;
-	b=lasowkfkGR1jPvF44IgZjk2NBlO2y0FNCjB+SkEGW4alIwhrJQJfOPfZzMT4yUoQhUMzqg
-	K7MGJqRyFTlm/3+Pi3fRvYQosVj3YHVev4QC+4Y/8yxtUk4ax7bhwO3OKXCCXSPvtrp2mi
-	zmPXG6uFwucE3VMM9yWvSJPOVnrTmg6IjswG6i29GemocuisliWWSi7aKzPUNzRhYDSa8f
-	IitiYmZuesN+f8nAm4yFp2dabTZELhgIOSfVmsFKSMB6owRGcHaUT4RXTIII13a4LE/inW
-	K3GZWVpEB/O+2XIxmxOOlUpfdbFgIBhC0HZG0hpd6AFQFnsqDuAQl9xEji1eJA==
+	t=1774357670; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:in-reply-to:references;
+	bh=fzs1pWNycSsS39sE+twHeUSR+qT4+7glSHwX8hsiv/I=;
+	b=QcbodRRZQ7IqeUKtkAQoCsXRCzX49zCQ7c/T+hCSVAXapnmgLoW9sIiyhNT46+mtFpU61J
+	gJKeSKsjZKwJOSysmrVxJF3olbTeDJZ2DqVTCNwCP9TRBajYIcDIENx5tLs+7THxp2dWu0
+	G/nuEQt7uiBb0r0BIkhRCZVn6pXSbqYfjcLzD/L4CbpSNR9WLcFeTQpZ4rS6QK/GzA8nkX
+	h9C6LEGO1+qyCWSTqAgOYNv4hY+3xqTMYTAflOF0bmF5eF20QckGAirTPjA+Op1MqF0Nv7
+	40zg4pJn5YPXFwI/uVYiiJu5XpAy2TfiMXAYQmP7sGyJ6NVFPthK0xMFXjZ6wA==
 From: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Subject: [PATCH v3] drm/atomic: protect bridge private_obj during bridge
- removal
-Date: Tue, 24 Mar 2026 14:07:29 +0100
-Message-Id: <20260324-drm-bridge-atomic-vs-remove-private_obj-v3-0-64deefe84044@bootlin.com>
+Date: Tue, 24 Mar 2026 14:07:30 +0100
+Subject: [PATCH v3] drm/atomic: drm_atomic_private_obj_fini: protect
+ private_obj removal from list
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -61,13 +62,10 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAJGMwmkC/5WQy07DMBBFfyXymkEeu0mcrvgPhJAfEzoIx8U2F
- qjqv+O2G9jB8s6VztGdkyiUmYrYDyeRqXHhtPWg7wbhD3Z7IeDQs1BSjShRQ8gRXObQG1tTZA+
- tQKaYGsExc7OVnpN7hTAvysjRkQtedNox08qfV9PjU88HLjXlr6u44eX6f0dDkICrVzQalIrkg
- 0upvvF271MUF0tTP8gK/05WgLBDZdHoZXHW/yafb4MyvX/0j9XbKuFsIeh95LofZrJyNxltunb
- yKN2sJ63dMk9Ba1qt8aiCnscOO38DQlj9HYYBAAA=
-X-Change-ID: 20251013-drm-bridge-atomic-vs-remove-private_obj-d792805bebdc
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260324-drm-bridge-atomic-vs-remove-private_obj-v3-1-64deefe84044@bootlin.com>
+References: <20260324-drm-bridge-atomic-vs-remove-private_obj-v3-0-64deefe84044@bootlin.com>
+In-Reply-To: <20260324-drm-bridge-atomic-vs-remove-private_obj-v3-0-64deefe84044@bootlin.com>
 To: Harry Wentland <harry.wentland@amd.com>, Leo Li <sunpeng.li@amd.com>, 
  Rodrigo Siqueira <siqueira@igalia.com>, 
  Alex Deucher <alexander.deucher@amd.com>, 
@@ -105,20 +103,20 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[bootlin.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	R_DKIM_ALLOW(-0.20)[bootlin.com:s=dkim];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-99658-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-99659-lists,linux-arm-msm=lfdr.de];
 	FREEMAIL_TO(0.00)[amd.com,igalia.com,gmail.com,ffwll.ch,arm.com,linux.intel.com,kernel.org,suse.de,intel.com,linaro.org,ideasonboard.com,kwiboo.se,crapouillou.net,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,nvidia.com,raspberrypi.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RECEIVED_HELO_LOCALHOST(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[41];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
@@ -129,99 +127,94 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,bootlin.com:dkim,bootlin.com:email,bootlin.com:mid,i.mx:url]
-X-Rspamd-Queue-Id: BA28C3093E8
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,bootlin.com:dkim,bootlin.com:email,bootlin.com:mid]
+X-Rspamd-Queue-Id: 3DB7A30924A
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-This series prevents a race between DRM bridge removal and usage of the
-bridge private_obj during DRM_MODESET_LOCK_ALL_BEGIN/END() and other
-locking operations.
+Currently drm_bridge_detach() expects that the bridge private_obj is not
+locked by a drm_modeset_acquire_ctx, and it warns in case that happens:
 
-== Series description
+  drm_bridge_detach()
+  -> drm_atomic_private_obj_fini()
+     -> list_del(&obj->head) // removes priv_obj from
+                             // dev->mode_config.privobj_list
+     -> obj->funcs->atomic_destroy_state()
+     -> drm_modeset_lock_fini(&obj->lock)
+        -> WARN_ON(!list_empty(&lock->head)) // warn if priv_obj->lock
+	                                     // is still in ctx->locked
 
-The need for this series emerged during testing of DRM bridge
-hot-plugging. Very rarely on hot-unplug the following warning has appeared:
+The expectation is not respected when introducing bridge hot-plugging. In
+such case the warning triggers if the bridge is being removed concurrently
+to an operation that locks the private object using a
+drm_modeset_acquire_ctx, such as in this execution scenario:
 
-  WARNING: CPU: 0 PID: 123 at include/drm/drm_modeset_lock.h:114 drm_atomic_private_obj_fini+0x64/0x80
-  ...
-  Call trace:
-   drm_atomic_private_obj_fini+0x64/0x80
-   drm_bridge_detach+0x38/0x98
+  CPU0:
+  drm_mode_obj_get_properties_ioctl() // userspace request
+  -> DRM_MODESET_LOCK_ALL_BEGIN()
+  .  -> drm_for_each_privobj() // loop on dev->mode_config.privobj_list
+  .     - lock the privobj mutex
+  .	- add priv_obj->lock to ctx->locked
+  .	  (list of locks to be released later)
+  .
+  .                         CPU1:
+  .                         drm_bridge_detach() // bridge hot-unplug
+  .		            -> WARN triggers!
+  .
+  -> DRM_MODESET_LOCK_ALL_END()
+     -> for each lock in ctx->locked
+	- remove priv_obj->lock from ctx->locked
+        - unlock the privobj mutex
 
-This series does not depend on other series.
+Prevent this potential deadlock by using DRM_MODESET_LOCK_ALL_BEGIN/END()
+around the list removal in drm_atomic_private_obj_fini(). This ensures that
+exactly one of these happens:
 
-== Grand plan
-
-This is part of the work to support hotplug of DRM bridges. The grand plan
-was discussed in [0].
-
-Here's the work breakdown (➜ marks the current series):
-
- 1. … add refcounting to DRM bridges struct drm_bridge,
-      based on devm_drm_bridge_alloc()
-    A. ✔ add new alloc API and refcounting (v6.16)
-    B. ✔ convert all bridge drivers to new API (v6.17)
-    C. ✔ kunit tests (v6.17)
-    D. ✔ add get/put to drm_bridge_add/remove() + attach/detach()
-         and warn on old allocation pattern (v6.17)
-    E. … add get/put on drm_bridge accessors
-       1. ✔ drm_bridge_chain_get_first_bridge(), add cleanup action (v6.18)
-       2. ✔ drm_bridge_get_prev_bridge() (v6.18)
-       3. ✔ drm_bridge_get_next_bridge() (v6.19)
-       4. ✔ drm_for_each_bridge_in_chain() (v6.19)
-       5. ✔ drm_bridge_connector_init (v6.19)
-       6. … protect encoder bridge chain with a mutex
-       7. … of_drm_find_bridge
-          a. ✔ add of_drm_get_bridge() (v7.0),
-	       convert basic direct users (v7.0-v7.1)
-	  b. ✔ convert direct of_drm_get_bridge() users, part 2 (v7.0)
-	  c. ✔ convert direct of_drm_get_bridge() users, part 3 (v7.0)
-	  d. ✔… convert direct of_drm_get_bridge() users, part 4
-	        (some v7.1, some pending)
-	  e.   convert bridge-only drm_of_find_panel_or_bridge() users
-       8. drm_of_find_panel_or_bridge, *_of_get_bridge
-       9. ✔ enforce drm_bridge_add before drm_bridge_attach (v6.19)
-    F. ✔ debugfs improvements
-       1. ✔ add top-level 'bridges' file (v6.16)
-       2. ✔ show refcount and list lingering bridges (v6.19)
- 2. ➜ handle gracefully atomic updates during bridge removal
-    A. ✔ Add drm_bridge_enter/exit() to protect device resources (v7.0)
-    B. ➜ protect private_obj removal from list
-    C. ✔ Add drm_bridge_clear_and_put() (v7.1)
- 3. … DSI host-device driver interaction
- 4. ✔ removing the need for the "always-disconnected" connector
- 5. … Migrate i.MX LCDIF driver to bridge-connector
- 6.   DRM bridge hotplug
-    A.   Bridge hotplug management in the DRM core
-    B.   Device tree description
-
-[0] https://lore.kernel.org/lkml/20250206-hotplug-drm-bridge-v6-0-9d6f2c9c3058@bootlin.com/#t
+ * the concurrent code (e.g. drm_mode_obj_get_properties_ioctl()) acquires
+   all the locks first, so it can execute fully and release the
+   privobj->lock before drm_atomic_private_obj_fini() calls list_del() and
+   before the WARN_ON()
+ * drm_atomic_private_obj_fini() acquires all the locks first, so it
+   removes its privobj->lock from the dev->mode_config.privobj_list; the
+   concurrent code will run afterwards and not acquire that lock because it
+   is not present anymore
 
 Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+
 ---
+
 Changes in v3:
 - Rebased on current drm-misc-next (on 7.0-rc3)
 - Small commit message clarification
-- Link to v2: https://lore.kernel.org/r/20251021-drm-bridge-atomic-vs-remove-private_obj-v2-1-412a18399bac@bootlin.com
 
 Changes in v2:
+- added 'drm/atomic:' prefix to commit title
 - Adapted to work on top of "drm/atomic: Add dev pointer to drm_private_obj"
-- Removed 'To: jessica.zhang@oss.qualcomm.com', invalid address
-- Link to v1: https://lore.kernel.org/r/20251013-drm-bridge-atomic-vs-remove-private_obj-v1-0-1fc2e58102e0@bootlin.com
-
+- Slightly improved commit message
 ---
-Luca Ceresoli (1):
-      drm/atomic: drm_atomic_private_obj_fini: protect private_obj removal from list
-
  drivers/gpu/drm/drm_atomic.c | 6 ++++++
  1 file changed, 6 insertions(+)
----
-base-commit: 7ea0468380216c10b73633b976d33efa8c12d375
-change-id: 20251013-drm-bridge-atomic-vs-remove-private_obj-d792805bebdc
 
-Best regards,
---  
-Luca Ceresoli <luca.ceresoli@bootlin.com>
+diff --git a/drivers/gpu/drm/drm_atomic.c b/drivers/gpu/drm/drm_atomic.c
+index 41c57063f3b4..0f9c2528c9ee 100644
+--- a/drivers/gpu/drm/drm_atomic.c
++++ b/drivers/gpu/drm/drm_atomic.c
+@@ -962,7 +962,13 @@ EXPORT_SYMBOL(drm_atomic_private_obj_init);
+ void
+ drm_atomic_private_obj_fini(struct drm_private_obj *obj)
+ {
++	struct drm_modeset_acquire_ctx ctx;
++	int ret = 0;
++
++	DRM_MODESET_LOCK_ALL_BEGIN(obj->dev, ctx, 0, ret);
+ 	list_del(&obj->head);
++	DRM_MODESET_LOCK_ALL_END(obj->dev, ctx, ret);
++
+ 	obj->funcs->atomic_destroy_state(obj, obj->state);
+ 	drm_modeset_lock_fini(&obj->lock);
+ }
+
+-- 
+2.53.0
 
 
