@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-99642-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99643-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id IHr2N7B+wmnqdAQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99642-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 13:08:16 +0100
+	id oJd4BL9+wmnqdAQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99643-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 13:08:31 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5CAB8307E66
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 13:08:16 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7F153307E88
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 13:08:30 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 4BB4C31A2F68
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 11:50:52 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 7D35C31A5B1D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 11:51:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 172A03F0AB3;
-	Tue, 24 Mar 2026 11:48:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B518B3F661F;
+	Tue, 24 Mar 2026 11:48:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="TAuFaoJX"
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="DjD6K1IV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-10629.protonmail.ch (mail-10629.protonmail.ch [79.135.106.29])
+Received: from mail-43103.protonmail.ch (mail-43103.protonmail.ch [185.70.43.103])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E263F54DF;
-	Tue, 24 Mar 2026 11:48:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.29
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DC913F661D
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 11:48:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.103
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774352917; cv=none; b=o49CzskWgbw5uMrNEiqxgOp0EYGjkkQ5kTJuqnChte1QB2hWSfRKvU/3b6QsJxGz5e8TRJOH4hjgbMOLYreJs+CDfO8pHTX/D+5GlIEqo9c/U9bNvj7Uc70ltGLGqdRzp4MjS7yDWFuS0k1jDWdTEJxFc3NYVe8oljcpY432boQ=
+	t=1774352932; cv=none; b=l7r8aAY+EJBW/ehAon79ZDwsCl+Jjk+x29FFRgrkyhq613JqnPBGRvEJG9syjlea72dPd/FVTT/zMi6fSVvC3+Zpu/3d9Gnobaw7NUzTPfRqGEHkI3BKNkOPuINJRtHoevTE6wOUK/egl2gJqtxmhB2fnYTWLMFKgrtqAQG5cYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774352917; c=relaxed/simple;
-	bh=mLm4IQklaR2CNzE4LbjmpJTUb6cmIq5AyTVgjPiZhVY=;
+	s=arc-20240116; t=1774352932; c=relaxed/simple;
+	bh=gDsFJ1TxNtBfjcx3CiIs7XjGfFNLGNadfmE04Ihg9l0=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=F6taptTeR+yJIDhFcskGSobKhoZMT2M/FxiFI4lEvAfxe/6vLm4B9mA56lqdueu+NJ94s6tCsPKm7jItZFOhPyOm64f/ST+l76wJGqn5+zCqGb65rlx6+ZNiVfVGg0ucSXR20eX/jb+UBD+IBAgCtVwgipUXAepn+ggh3HujDPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=TAuFaoJX; arc=none smtp.client-ip=79.135.106.29
+	 MIME-Version:Content-Type; b=OAf+IDv+1/u1Yyy43rDsMFf21UwADvm7/pbDDAMoeSO3NomlQPQ/FDsrteSp+AoXx6RjL4zbx93JEYPLz76KUl6MSiw++RLvzAShE+kcupQi3oRqgdqhU0UQGScPa3ULWA29db1IA8nGtmUhWnjXQjuqkR4y3fG7eFCSzALhbYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=DjD6K1IV; arc=none smtp.client-ip=185.70.43.103
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1774352913; x=1774612113;
-	bh=mLm4IQklaR2CNzE4LbjmpJTUb6cmIq5AyTVgjPiZhVY=;
+	s=protonmail3; t=1774352923; x=1774612123;
+	bh=GXIrZ2JeBYt7lvRrjXt7T5FwWusy32QKCFn/6PrHSYY=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector;
-	b=TAuFaoJXbFCt4FGG/aUXi3LdyncyEKNx/phaFiAhYwuzf2eYm9r4zDyoGzGvanKNJ
-	 ynMgXkrVhwflE6LmqKGIOhPsavdTxEKiwmTlwbxSiFGdpxULPZ0VlMacHOc2/vrfd1
-	 yK8j30nBaPbIaJ6sT+f6z2gzdYeP/OsfvhrMNVqpsmCD9GZQQdfQVYOF3addrl9eMY
-	 CjLhIkaTsOI0haB2RidAVPKkp8v2MoIptDspJcqpTMzZqMOfzPaFFRDlpZozkItqvr
-	 gBzZmsH6KbObx2eiL85OCk//ANvd9YJJXfKYotR36Xnv46vzdxHSPMpGJ8iXqitiA3
-	 pcwEvrlbM68cA==
-Date: Tue, 24 Mar 2026 11:48:27 +0000
+	b=DjD6K1IVe91Wnpkv7CRsxDl7ZH+inPEkt2TQtmAOT6B9aG7I23tzSxfQbHGXB/OqJ
+	 wVEPdaUK/wWs95EN0ZdnLkpJVp5ApCIUI6SkLVWwTciCg3k8Yv28+PUd8gv8RW5AsU
+	 KjdYl7/j0cwB9W+njdecWXN7SNlrpj5SsHLbUrazieszpOtHqyiuzNWKYs7F4ugHxT
+	 LIFdb8Pj7Njt5hQ1R8pDrnh+atEc/5KuPcUwxLttTS3FGx82fPPYdRbvPQe3q4D+j2
+	 3o4w4Jv1tBmC3YJgHdJY6xfM50q7+mRL5WEj8GAgVDUEKIPFvzRFKPbc7qgHaeBUCq
+	 6w0DCTLJZj8Pg==
+Date: Tue, 24 Mar 2026 11:48:38 +0000
 To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, Jeffrey Hugo <jeffrey.l.hugo@gmail.com>, Neil Armstrong <neil.armstrong@linaro.org>, Martin Blumenstingl <martin.blumenstingl@googlemail.com>
 From: Alexander Koskovich <akoskovich@pm.me>
 Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, linux-amlogic@lists.infradead.org, linux-arm-kernel@lists.infradead.org, Alexander Koskovich <akoskovich@pm.me>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: [PATCH v5 3/5] drm/msm/dsi: rename MSM8998 DSI version from V2_2_0 to V2_0_0
-Message-ID: <20260324-dsi-rgb101010-support-v5-3-ff6afc904115@pm.me>
+Subject: [PATCH v5 4/5] drm/msm/dsi: add DSI version >= comparison helper
+Message-ID: <20260324-dsi-rgb101010-support-v5-4-ff6afc904115@pm.me>
 In-Reply-To: <20260324-dsi-rgb101010-support-v5-0-ff6afc904115@pm.me>
 References: <20260324-dsi-rgb101010-support-v5-0-ff6afc904115@pm.me>
 Feedback-ID: 37836894:user:proton
-X-Pm-Message-ID: e1618d4fd2b5b0dccb180c20d1ef6e4586249b10
+X-Pm-Message-ID: 674c0e4769b4771254328c607482c756aba46263
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,12 +69,12 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
 	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-99642-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-99643-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[3];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FREEMAIL_TO(0.00)[linux.intel.com,kernel.org,suse.de,gmail.com,ffwll.ch,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,linaro.org,googlemail.com];
@@ -87,63 +87,54 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[pm.me:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	RCPT_COUNT_TWELVE(0.00)[23];
 	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: 5CAB8307E66
+X-Rspamd-Queue-Id: 7F153307E88
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-The MSM8998 DSI controller is v2.0.0 as stated in commit 7b8c9e203039
-("drm/msm/dsi: Add support for MSM8998 DSI controller"). The value was
-always correct just the name was wrong.
+Add a helper for checking if the DSI hardware version is greater
+than or equal to a given version, for use in a future change.
 
-Rename and reorder to maintain version sorting.
-
-Fixes: 7b8c9e203039 ("drm/msm/dsi: Add support for MSM8998 DSI controller")
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
 ---
- drivers/gpu/drm/msm/dsi/dsi_cfg.c | 4 ++--
- drivers/gpu/drm/msm/dsi/dsi_cfg.h | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.c b/drivers/gpu/drm/msm/dsi/ds=
-i_cfg.c
-index bd3c51c350e7..da3fe6824495 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.c
-@@ -317,10 +317,10 @@ static const struct msm_dsi_cfg_handler dsi_cfg_handl=
-ers[] =3D {
- =09=09&msm8996_dsi_cfg, &msm_dsi_6g_host_ops},
- =09{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V1_4_2,
- =09=09&msm8976_dsi_cfg, &msm_dsi_6g_host_ops},
-+=09{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_0_0,
-+=09=09&msm8998_dsi_cfg, &msm_dsi_6g_v2_host_ops},
- =09{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_1_0,
- =09=09&sdm660_dsi_cfg, &msm_dsi_6g_v2_host_ops},
--=09{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_2_0,
--=09=09&msm8998_dsi_cfg, &msm_dsi_6g_v2_host_ops},
- =09{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_2_1,
- =09=09&sdm845_dsi_cfg, &msm_dsi_6g_v2_host_ops},
- =09{MSM_DSI_VER_MAJOR_6G, MSM_DSI_6G_VER_MINOR_V2_3_0,
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.h b/drivers/gpu/drm/msm/dsi/ds=
-i_cfg.h
-index 5dc812028bd5..ccf06679608e 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-+++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
-@@ -19,8 +19,8 @@
- #define MSM_DSI_6G_VER_MINOR_V1_3_1=090x10030001
- #define MSM_DSI_6G_VER_MINOR_V1_4_1=090x10040001
- #define MSM_DSI_6G_VER_MINOR_V1_4_2=090x10040002
-+#define MSM_DSI_6G_VER_MINOR_V2_0_0=090x20000000
- #define MSM_DSI_6G_VER_MINOR_V2_1_0=090x20010000
--#define MSM_DSI_6G_VER_MINOR_V2_2_0=090x20000000
- #define MSM_DSI_6G_VER_MINOR_V2_2_1=090x20020001
- #define MSM_DSI_6G_VER_MINOR_V2_3_0=090x20030000
- #define MSM_DSI_6G_VER_MINOR_V2_3_1=090x20030001
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/d=
+si_host.c
+index db6da99375a1..b55ffe2fdec3 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -782,13 +782,21 @@ static void dsi_ctrl_disable(struct msm_dsi_host *msm=
+_host)
+ =09dsi_write(msm_host, REG_DSI_CTRL, 0);
+ }
+=20
++static bool msm_dsi_host_version_geq(struct msm_dsi_host *msm_host,
++=09=09=09=09    u32 major, u32 minor)
++{
++=09return msm_host->cfg_hnd->major > major ||
++=09       (msm_host->cfg_hnd->major =3D=3D major &&
++=09       msm_host->cfg_hnd->minor >=3D minor);
++}
++
+ bool msm_dsi_host_is_wide_bus_enabled(struct mipi_dsi_host *host)
+ {
+ =09struct msm_dsi_host *msm_host =3D to_msm_dsi_host(host);
+=20
+ =09return msm_host->dsc &&
+-=09=09(msm_host->cfg_hnd->major =3D=3D MSM_DSI_VER_MAJOR_6G &&
+-=09=09 msm_host->cfg_hnd->minor >=3D MSM_DSI_6G_VER_MINOR_V2_5_0);
++=09=09msm_dsi_host_version_geq(msm_host, MSM_DSI_VER_MAJOR_6G,
++=09=09=09=09=09MSM_DSI_6G_VER_MINOR_V2_5_0);
+ }
+=20
+ static void dsi_ctrl_enable(struct msm_dsi_host *msm_host,
 
 --=20
 2.53.0
