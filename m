@@ -1,60 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-99659-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99725-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iJwUJpqOwmneewQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99659-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 14:16:10 +0100
+	id 8Dj7EnrrwmkdnQQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99725-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 20:52:26 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3DB7A30924A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 14:16:10 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 838A631BDE8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 20:52:25 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id E96E23040D62
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 13:08:08 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id DB38D318B751
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 19:44:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 594F53F7AB0;
-	Tue, 24 Mar 2026 13:07:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38B7D392C50;
+	Tue, 24 Mar 2026 19:44:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="QcbodRRZ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q1Dz7oky"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82D7C3F87FE;
-	Tue, 24 Mar 2026 13:07:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13C4F313550;
+	Tue, 24 Mar 2026 19:44:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774357676; cv=none; b=ikL3FvCbx9/u820CApNroKI4gKEf6EAO3IYZ46OTnABbyaioHjSDEFZ5xIdDugEABujkgl0bLVy7Y0ImD/X2pUxcVhhi5qfJqu2mROrkKLQg2X/ifqmEexXSBymzt+/CeiLpKjJEf9tiXaFmxOd4YbKHhvN2Ys3OpCU+6EcN4GM=
+	t=1774381459; cv=none; b=gc2cLPWRDK5aNroTmHi37D5ZbNhafnacmUrXM5eRXFhjpLPVrBrYdRoW2NOX68oajwcfAkuAaQD8uSPAU66C/9AMo1EcNjQ+VnPzHSclBI9hQQ8PAuhjpfBwu7I51pTPKw6ryiyKDBEqeHyE+CTQSY6MXubidQqSTLJDKQZAXTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774357676; c=relaxed/simple;
-	bh=3gcDvKDiofu5+UBNldcs7iRDdzjLiu7N536dnvCCZcA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=tKs7ytyoAQ+yUhqVmz/qiNTxGUEDD2Iac7V2BMZuBH+sCEQwQh+j0opvzanKC89JnHUE3+UnNm4kcU/6R2hti85QYDel3SRIDbWNmwfddddwES3dDzc8ap1stC+5z5z8xd4QsstzVHikIc/1eO6G/upY9gAmzFGtsZGDym5eM34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=QcbodRRZ; arc=none smtp.client-ip=185.246.84.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id 1EBBE1A2FC6;
-	Tue, 24 Mar 2026 13:07:53 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id E5B506011D;
-	Tue, 24 Mar 2026 13:07:52 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id CC98510451277;
-	Tue, 24 Mar 2026 14:07:44 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1774357670; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=fzs1pWNycSsS39sE+twHeUSR+qT4+7glSHwX8hsiv/I=;
-	b=QcbodRRZQ7IqeUKtkAQoCsXRCzX49zCQ7c/T+hCSVAXapnmgLoW9sIiyhNT46+mtFpU61J
-	gJKeSKsjZKwJOSysmrVxJF3olbTeDJZ2DqVTCNwCP9TRBajYIcDIENx5tLs+7THxp2dWu0
-	G/nuEQt7uiBb0r0BIkhRCZVn6pXSbqYfjcLzD/L4CbpSNR9WLcFeTQpZ4rS6QK/GzA8nkX
-	h9C6LEGO1+qyCWSTqAgOYNv4hY+3xqTMYTAflOF0bmF5eF20QckGAirTPjA+Op1MqF0Nv7
-	40zg4pJn5YPXFwI/uVYiiJu5XpAy2TfiMXAYQmP7sGyJ6NVFPthK0xMFXjZ6wA==
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Date: Tue, 24 Mar 2026 14:07:30 +0100
-Subject: [PATCH v3] drm/atomic: drm_atomic_private_obj_fini: protect
- private_obj removal from list
+	s=arc-20240116; t=1774381459; c=relaxed/simple;
+	bh=6YVkiN0dwk+uOHaHRu7tcR/42szjVRQGmSZKx1kvIJI=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=Fc7AHd68sDyVwLSIlK8zq0FIO2S+OutP13NBuRUyPT6VvfWC2GHdbMSMPMw9LWiip2rld7WfiPj93OAZ2bN99X3EWlbqco/MreFH9/lTWrbEvmP8GArb3tkaqZP8hr64r//6IJw4O7gpU97Um0nKbxyUOEgfNm7+TlznPybK+co=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q1Dz7oky; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89F84C2BC9E;
+	Tue, 24 Mar 2026 19:44:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1774381458;
+	bh=6YVkiN0dwk+uOHaHRu7tcR/42szjVRQGmSZKx1kvIJI=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=Q1Dz7oky8MIc6W7guYe9ks0cRXopE+qOd5gl5e3jgTATmtxZ3hnOYknKqhlQGtEMl
+	 epRH6TsfOq2igVEIoVSqP9iv67UV5PWn6fy9X9sCHJpKOkqDJUZEYoQPbSTKGfHEzI
+	 i2zhVmyhbaFpj58tAyg0t61v4hAX7mKkosk+ihYEXsacxGvk6zciGgGqCzcBegUpqV
+	 M2yXkRLIA2750wxDifU+b38tKSEvO2wQNDKdUsAaNo0grPpghh3i6u8megGQtoTnbK
+	 3w4k0NFPO3trd77IEdv8uI059SsFxQr4EyZQK+sK50JQn6MH13V1SNK821mHBxLHMw
+	 U23QrYatPG8Lg==
+From: Mark Brown <broonie@kernel.org>
+To: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Cc: srini@kernel.org, lgirdwood@gmail.com, perex@perex.cz, tiwai@suse.com, 
+ dmitry.baryshkov@oss.qualcomm.com, linux-sound@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, david@ixit.cz, 
+ Stable@vger.kernel.org, Joel Selvaraj <foss@joelselvaraj.com>
+In-Reply-To: <20260323231748.2217967-1-srinivas.kandagatla@oss.qualcomm.com>
+References: <20260323231748.2217967-1-srinivas.kandagatla@oss.qualcomm.com>
+Subject: Re: [PATCH] ASoC: codecs: wcd934x: fix typo in dt parsing
+Message-Id: <177435775708.81121.1764309542515337919.b4-ty@b4>
+Date: Tue, 24 Mar 2026 13:09:17 +0000
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,158 +63,78 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260324-drm-bridge-atomic-vs-remove-private_obj-v3-1-64deefe84044@bootlin.com>
-References: <20260324-drm-bridge-atomic-vs-remove-private_obj-v3-0-64deefe84044@bootlin.com>
-In-Reply-To: <20260324-drm-bridge-atomic-vs-remove-private_obj-v3-0-64deefe84044@bootlin.com>
-To: Harry Wentland <harry.wentland@amd.com>, Leo Li <sunpeng.li@amd.com>, 
- Rodrigo Siqueira <siqueira@igalia.com>, 
- Alex Deucher <alexander.deucher@amd.com>, 
- =?utf-8?q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Liviu Dudau <liviu.dudau@arm.com>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- Andrzej Hajda <andrzej.hajda@intel.com>, 
- Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
- Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
- Paul Cercueil <paul@crapouillou.net>, 
- Rob Clark <robin.clark@oss.qualcomm.com>, 
- Dmitry Baryshkov <lumag@kernel.org>, 
- Abhinav Kumar <abhinav.kumar@linux.dev>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, 
- Thierry Reding <thierry.reding@gmail.com>, 
- Mikko Perttunen <mperttunen@nvidia.com>, 
- Jonathan Hunter <jonathanh@nvidia.com>, 
- Dave Stevenson <dave.stevenson@raspberrypi.com>, 
- =?utf-8?q?Ma=C3=ADra_Canal?= <mcanal@igalia.com>, 
- Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>
-Cc: Hui Pu <Hui.Pu@gehealthcare.com>, 
- Thomas Petazzoni <thomas.petazzoni@bootlin.com>, 
- amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org, 
- linux-kernel@vger.kernel.org, linux-mips@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
- linux-tegra@vger.kernel.org, Ian Ray <ian.ray@gehealthcare.com>, 
- Luca Ceresoli <luca.ceresoli@bootlin.com>
-X-Mailer: b4 0.15.0
-X-Last-TLS-Session-Version: TLSv1.3
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Mailer: b4 0.16-dev-6cc06
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1115; i=broonie@kernel.org;
+ h=from:subject:message-id; bh=6YVkiN0dwk+uOHaHRu7tcR/42szjVRQGmSZKx1kvIJI=;
+ b=owEBbQGS/pANAwAKASTWi3JdVIfQAcsmYgBpwumPY8dSfBrDKNqs0g+pGJri3WWDi3Iudb35G
+ KRTW5giAhqJATMEAAEKAB0WIQSt5miqZ1cYtZ/in+ok1otyXVSH0AUCacLpjwAKCRAk1otyXVSH
+ 0Dp/B/9h4MujSMn4OPjnMYbcYqdM62j5vzyGXt4nRV7Uq01jr9AIcrOgdZKQ3Z02n6syvnS0+s9
+ Oid+Jk8vF8+8jPZSA0sghZ0356QHc1LBCPTAT+NvzRn1YgOemjsiUtO4JwCTwmO6STyxIW5Xq/G
+ In2xxZdMCUfSoLPPYjLTouuzGf/gsUAaWFtsQo090jnaMy3CUL2+Gg0ow5pow7B+sG0IUp3MIyU
+ GQFAGGTorkkBZBWnSspbqQnE3IHzY+sMXDl8CHWwiDr/iyoeVZHkFccJ966nEWiO4f4eisFWGJW
+ U3huRXuwT+uVjJF4Mqtn0cVnZDiYwconZEO9UoJh1Jmt/Zrq
+X-Developer-Key: i=broonie@kernel.org; a=openpgp;
+ fpr=3F2568AAC26998F9E813A1C5C3F436CA30F5D8EB
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[bootlin.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
-	R_DKIM_ALLOW(-0.20)[bootlin.com:s=dkim];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-99725-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-99659-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_TO(0.00)[amd.com,igalia.com,gmail.com,ffwll.ch,arm.com,linux.intel.com,kernel.org,suse.de,intel.com,linaro.org,ideasonboard.com,kwiboo.se,crapouillou.net,oss.qualcomm.com,linux.dev,poorly.run,somainline.org,nvidia.com,raspberrypi.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[41];
-	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	FREEMAIL_CC(0.00)[kernel.org,gmail.com,perex.cz,suse.com,oss.qualcomm.com,vger.kernel.org,ixit.cz,joelselvaraj.com];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[6];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[luca.ceresoli@bootlin.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[bootlin.com:+];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROM(0.00)[];
 	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,bootlin.com:dkim,bootlin.com:email,bootlin.com:mid]
-X-Rspamd-Queue-Id: 3DB7A30924A
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 838A631BDE8
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Currently drm_bridge_detach() expects that the bridge private_obj is not
-locked by a drm_modeset_acquire_ctx, and it warns in case that happens:
+On Mon, 23 Mar 2026 23:17:48 +0000, Srinivas Kandagatla wrote:
+> ASoC: codecs: wcd934x: fix typo in dt parsing
 
-  drm_bridge_detach()
-  -> drm_atomic_private_obj_fini()
-     -> list_del(&obj->head) // removes priv_obj from
-                             // dev->mode_config.privobj_list
-     -> obj->funcs->atomic_destroy_state()
-     -> drm_modeset_lock_fini(&obj->lock)
-        -> WARN_ON(!list_empty(&lock->head)) // warn if priv_obj->lock
-	                                     // is still in ctx->locked
+Applied to
 
-The expectation is not respected when introducing bridge hot-plugging. In
-such case the warning triggers if the bridge is being removed concurrently
-to an operation that locks the private object using a
-drm_modeset_acquire_ctx, such as in this execution scenario:
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-7.0
 
-  CPU0:
-  drm_mode_obj_get_properties_ioctl() // userspace request
-  -> DRM_MODESET_LOCK_ALL_BEGIN()
-  .  -> drm_for_each_privobj() // loop on dev->mode_config.privobj_list
-  .     - lock the privobj mutex
-  .	- add priv_obj->lock to ctx->locked
-  .	  (list of locks to be released later)
-  .
-  .                         CPU1:
-  .                         drm_bridge_detach() // bridge hot-unplug
-  .		            -> WARN triggers!
-  .
-  -> DRM_MODESET_LOCK_ALL_END()
-     -> for each lock in ctx->locked
-	- remove priv_obj->lock from ctx->locked
-        - unlock the privobj mutex
+Thanks!
 
-Prevent this potential deadlock by using DRM_MODESET_LOCK_ALL_BEGIN/END()
-around the list removal in drm_atomic_private_obj_fini(). This ensures that
-exactly one of these happens:
+[1/1] ASoC: codecs: wcd934x: fix typo in dt parsing
+      https://git.kernel.org/broonie/sound/c/cfb385a8dc88
 
- * the concurrent code (e.g. drm_mode_obj_get_properties_ioctl()) acquires
-   all the locks first, so it can execute fully and release the
-   privobj->lock before drm_atomic_private_obj_fini() calls list_del() and
-   before the WARN_ON()
- * drm_atomic_private_obj_fini() acquires all the locks first, so it
-   removes its privobj->lock from the dev->mode_config.privobj_list; the
-   concurrent code will run afterwards and not acquire that lock because it
-   is not present anymore
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
----
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
 
-Changes in v3:
-- Rebased on current drm-misc-next (on 7.0-rc3)
-- Small commit message clarification
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
 
-Changes in v2:
-- added 'drm/atomic:' prefix to commit title
-- Adapted to work on top of "drm/atomic: Add dev pointer to drm_private_obj"
-- Slightly improved commit message
----
- drivers/gpu/drm/drm_atomic.c | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/drivers/gpu/drm/drm_atomic.c b/drivers/gpu/drm/drm_atomic.c
-index 41c57063f3b4..0f9c2528c9ee 100644
---- a/drivers/gpu/drm/drm_atomic.c
-+++ b/drivers/gpu/drm/drm_atomic.c
-@@ -962,7 +962,13 @@ EXPORT_SYMBOL(drm_atomic_private_obj_init);
- void
- drm_atomic_private_obj_fini(struct drm_private_obj *obj)
- {
-+	struct drm_modeset_acquire_ctx ctx;
-+	int ret = 0;
-+
-+	DRM_MODESET_LOCK_ALL_BEGIN(obj->dev, ctx, 0, ret);
- 	list_del(&obj->head);
-+	DRM_MODESET_LOCK_ALL_END(obj->dev, ctx, ret);
-+
- 	obj->funcs->atomic_destroy_state(obj, obj->state);
- 	drm_modeset_lock_fini(&obj->lock);
- }
-
--- 
-2.53.0
+Thanks,
+Mark
 
 
