@@ -1,80 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-99536-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99537-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id gKaCH8X/wWkjYwQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99536-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 04:06:45 +0100
+	id 6LQCGusAwmkjYwQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99537-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 04:11:39 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 278653017A0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 04:06:45 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A971301931
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 04:11:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 520BC303533A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 03:06:28 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 702B3313E55C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 03:06:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B756438F629;
-	Tue, 24 Mar 2026 03:06:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A68338B14B;
+	Tue, 24 Mar 2026 03:06:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fpjcsc0k"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pwxVuRaw"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 921F838AC8D;
-	Tue, 24 Mar 2026 03:06:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 173EE378D64;
+	Tue, 24 Mar 2026 03:06:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774321576; cv=none; b=A6R12Hm6hNiYu5vw6xj1qQ3jj/KVjOLsjFNltZWpWKfthy5H+NbFQTWe7+qb6wTqubUNAcWBnqYbWWw6I+0aRREsJ7x7Pc35JPJ5dsfCPTZLDoopkmDKUH6zSCF92LxOEs4xZ1NtmXy+wYW5LbaB77PymXwJm7MnLf9igYsZ4es=
+	t=1774321578; cv=none; b=OraFzUvqGomZPprsuQw8kS3UQ5ku6/Eh5Pbz6KKD8wQI9ALwlHQLC8uESFqfKrvw7j8aOjqa3CCb+Zs4kMFXCOqDBojH0BzTJXRWH//EFcQ+9U80cTKRBMwpPL5WmPoJA1HfxcPS2Y5YW+GOAjju0I9KakI6Qok/eN6+rSFaK7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774321576; c=relaxed/simple;
-	bh=fJksfMG3GI9YwwYtPBCDyaorDMq3olF43HqOpnW0wb8=;
+	s=arc-20240116; t=1774321578; c=relaxed/simple;
+	bh=KpKBoBnsnUcWuAVS/8GR555Tr1BdyUcqf7SxT2r6mzs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PFQSan0ivz9TkPclGER4EUdArZnSgAiDE6gxxdlq1/3RhPw34cmTScfUnP1JBU4q+B3nrZbRJhcUjxkTkTbfB3/+pBxmy/Wsi1seuhHeVVEY//gBbKvokyHqRhleLO6hvycYOMc+U2xOPaTje/+TCNG7FoEAjmTH6r27z5RqfBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fpjcsc0k; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26245C2BCB4;
-	Tue, 24 Mar 2026 03:06:14 +0000 (UTC)
+	 MIME-Version:Content-Type; b=J47Vo6t8ryl3dfSa7QFjLRXqLIcMA39POhGdDEjAfO9wiakGC1KUb6B9JQgYCBwLHEtVleLvn5lEuLsjbstHfX7h4+poc+/7opiVqKCPYOEuX4rJvTFYdgYdBLGT0rtXTsUX1XITM4h9AzWi0saWKQT6H8lKfR030t+1VsMrKac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pwxVuRaw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 751AAC2BCB0;
+	Tue, 24 Mar 2026 03:06:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774321576;
-	bh=fJksfMG3GI9YwwYtPBCDyaorDMq3olF43HqOpnW0wb8=;
+	s=k20201202; t=1774321578;
+	bh=KpKBoBnsnUcWuAVS/8GR555Tr1BdyUcqf7SxT2r6mzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fpjcsc0kyGEJjbcjL+eSVcCWhm/9pRrBG0u/DD2SsTOG97/ydhjUgQCkfKhiTCOTS
-	 5l73Ls496utFKuLkBKH3seXCDKqOMs/LFLvFzwdVr3NPRBnyAOGZU4s8v+YHYVQdib
-	 5XvMBxmjp/pVeQEkoXGiu45kA0wmq3wPcKIFzh5OWJPBXKVQRlDEXjLhl3noLPa1kP
-	 2VzPHy8rZuZhlu9rPV2dAlhrlly7HMA12HAxLj+CAFqeiehlRpPTkFWuuYhDNaseyJ
-	 lfpF/0L29ywhLLqOJC8CPhSkZXjOYiI15Z+HCTOd2CSb12AajLzyGaU47BEKlwlUtI
-	 pE/SA3hJXdsGQ==
+	b=pwxVuRaw0zmM4BMZR4vFE5NHNSD6Pratm3BGBHSLZI5wh+PPXxfmxxe86PK/TZY3V
+	 7PhLDPeo1ku7uZewgUClt4vlqmamy3+ueGWRU9qdPQqBQcnEIl8bvDz/bsOQ2GCeOi
+	 wjUPqiuoBuevdzO23WhK+LsSo4UxsDjzLbr4iquCdeOW70uom45DqpY249sLdIpq8N
+	 ELfFLhPSQ78o4/EBRnIRrKBmk1SFbdVq5z4Win6CsWeXmTyafQ+8oCnKVyOe5wPlzI
+	 ee95EDXQ1MkfLK5cf2HYOcFSjrZxlA9BKPGI5dKZMSJsJq2ib5h/zLwwH3scXhPskN
+	 61x3e3mfq7nfw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+To: Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>,
-	Bartosz Golaszewski <brgl@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Cc: linux-usb@vger.kernel.org,
+	Sarthak Garg <sarthak.garg@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org,
-	linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	KancyJoe <kancy2333@outlook.com>
-Subject: Re: (subset) [PATCH v6 0/5] arm64: dts: qcom: Add support for the Ayaneo Pocket S2
-Date: Mon, 23 Mar 2026 22:05:57 -0500
-Message-ID: <177432155636.28714.2401575051515656183.b4-ty@kernel.org>
+	quic_nguyenb@quicinc.com,
+	quic_rampraka@quicinc.com,
+	quic_pragalla@quicinc.com,
+	quic_sayalil@quicinc.com,
+	quic_nitirawa@quicinc.com,
+	quic_bhaskarv@quicinc.com,
+	kernel@oss.qualcomm.com
+Subject: Re: [PATCH] arm64: dts: qcom: purwa-iot-evk: Add SDC2 node for purwa iot evk board
+Date: Mon, 23 Mar 2026 22:05:58 -0500
+Message-ID: <177432155627.28714.10035028614227662848.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260319-topic-sm8650-ayaneo-pocket-s2-base-v6-0-797bf96df771@linaro.org>
-References: <20260319-topic-sm8650-ayaneo-pocket-s2-base-v6-0-797bf96df771@linaro.org>
+In-Reply-To: <20260323110017.2527956-1-sarthak.garg@oss.qualcomm.com>
+References: <20260323110017.2527956-1-sarthak.garg@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -87,51 +78,43 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	URIBL_MULTI_FAIL(0.00)[sto.lore.kernel.org:server fail];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-99536-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-99537-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_TO(0.00)[linuxfoundation.org,kernel.org,glider.be,gmail.com,google.com,linaro.org];
-	RCPT_COUNT_TWELVE(0.00)[24];
 	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[15];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TO_DN_SOME(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[vger.kernel.org,oss.qualcomm.com,outlook.com];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,renesas];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 278653017A0
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 0A971301931
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 
-On Thu, 19 Mar 2026 09:55:06 +0100, Neil Armstrong wrote:
-> The Ayaneo Pocket S2 is a gaming console based on the Qualcomm
-> Snapdragon 8 Gen 3. It has an internal UFS storage, WiFi,
-> Bluetooth, gaming buttons, SDCard, 2K display and USB-C
-> connector.
+On Mon, 23 Mar 2026 16:30:17 +0530, Sarthak Garg wrote:
+> Enable SD Card host controller for purwa iot evk board.
 > 
-> Product Page [1].
 > 
-> [...]
 
 Applied, thanks!
 
-[1/5] arm64: defconfig: enable pci-pwrctrl-generic as module
-      commit: fdeb077b8ae53a6ef772c5b3c4d1f3a408dac2a0
+[1/1] arm64: dts: qcom: purwa-iot-evk: Add SDC2 node for purwa iot evk board
+      commit: abbdc2876300a1e911b31e2c8e2e5ce77e14a65f
 
 Best regards,
 -- 
