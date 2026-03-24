@@ -1,239 +1,288 @@
-Return-Path: <linux-arm-msm+bounces-99660-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99661-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8PhNAP6PwmkXfAQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99660-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 14:22:06 +0100
+	id cDGaMg2PwmnDewQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99661-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 14:18:05 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 532AA3094B9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 14:22:05 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 540C03092C1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 14:18:05 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id E5683304D724
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 13:10:13 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id E4308304853C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Mar 2026 13:10:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19DED3F661F;
-	Tue, 24 Mar 2026 13:10:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6FCA3F165F;
+	Tue, 24 Mar 2026 13:10:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jw1XReow";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="E/xn/u1p"
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="FK2nnl1U"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mail-24424.protonmail.ch (mail-24424.protonmail.ch [109.224.244.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6F33E025D
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 13:10:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CCA23DFC93;
+	Tue, 24 Mar 2026 13:10:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.24
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774357813; cv=none; b=nPhNWRJzdNSN5u+WtOKlz5LD4ljjyvaZ1FgtPQ3jEpQI8tueLagoY8tYjOlBx7KYcKdpm5cUzyp6wwldXBVp0CwAfHUnlQ1t/sfTdaEmhBJYbfceZectQg3PvpXA5oYqf/Hb7MpGatItem+cc5+XNBCrSkanf+IWutd9MvrvcxY=
+	t=1774357830; cv=none; b=a/gDVtZViVBBPlAAk48XbUDtq47UMPTxffRf5tKtu6rBLgntQtdxvG7WxIkL0jPe3LnpTT12AFPniBBHSnv811fJ8ij0JaKMDjXmoVN5UAPzLHtoN7S9nJOkt6ptC+7Sb23F8p7/97d44V2WfuvxyYYVq4dov522LiO7w73/PPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774357813; c=relaxed/simple;
-	bh=XjjoBCqsPWoUyiJTSUCrVAmiqVUuemEKFjvvw3QmQ7Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TLFpiHj5n+acq0wsS+bEZlY/4GhSPs6AFneEzXguH5CcovL0oL0LUL7gqdznQBS81HZFT1eD+vgxWFCSuQDq3Rj7kgk/OywDQazvhTUdJsPMT8oiIIloeru4vD4Xrn8jW9xV2srKUAwvmJhdpOYYBCtEbjnbDrtu7mJ0d/9E5Uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jw1XReow; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=E/xn/u1p; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62OA7ihp1761789
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 13:10:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	7tmu0SBYVZeN4wXo5FDEvB7ZxNsjgyVdo+2SDD6LM7I=; b=jw1XReowrlDAzqM5
-	vdUM7VNbdTTNW1CDWT2toKrapa59pPeZUSIhI7S1je/+PsUOWWLdzJDfA1zXYaD/
-	7sYe5dH4/Ly+/hrQYAwI/9IMeNpxJ5Mp6IRPlrupH1ZcsQIZ9fYI9OLUzRtLUZRG
-	W36EzTmeC4h8jiDhlqsjYJa8sDNQ2rmXZWdnlWlF2kPHGGJW+gG5ctSAUgUSjNNI
-	9fXn9Uw7z1UQeMAVeFKO9qX3gmlervnJvAOLR7DfmfukFhDG92rSgxr5/WwtWIke
-	o7rndhkPzS60BDrRfflNHCo7UR52KU6pKWVf4cFFtDifsdKK31lJLduxDJ+zZp+I
-	LYxBrA==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d36f0ckqh-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 13:10:10 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-50b2cbe7223so76999781cf.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 06:10:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1774357810; x=1774962610; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7tmu0SBYVZeN4wXo5FDEvB7ZxNsjgyVdo+2SDD6LM7I=;
-        b=E/xn/u1pMzuAifYFHM5q1zdsEhv06VXcfqCm1Hz63rx81sAVHw6K+Bambkoy1yE+VT
-         NJr5gOUuDaN7KFNeKgUBybQRM4xjCzNGYR/s0ykkbO6/TV/HoDUPbQpVjb+iwIuMQyiY
-         sZME7ipCumd4cW0JScHyq6bZ0wf29hK1Q9hYLWMNk7r4iDYjbaRjFrYey5KL1ZjQn5D0
-         BmtOwYhsry06h5G2kZLcMRu8iFHl68VRpXhqYBWZnbkLpV7Vdvdhc4pHI5ly695bAXz5
-         wwe+eKnpmArmOIMXbvpqyw8Vms/fL3RUyH1AjN/vkq5qNQcROI48tRBt616RedNpXz04
-         cD6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774357810; x=1774962610;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7tmu0SBYVZeN4wXo5FDEvB7ZxNsjgyVdo+2SDD6LM7I=;
-        b=KHHLJIj3HkLHpa/S55XLSk+RLMbhwKbIoMV4ffn43ju0sY9u9QCFrV4vID0vgi1lG7
-         +fqMs3Oe+xktS7+7/mjDJPlxB79CvpVxYVRCxxRwTo0LllsknI7AMMXddgG0v2lzt92g
-         Y9XiYZSrS48I5jEAP2gdcXHdntiGfrf60ME9HDj21Nq0YR3WMzaQclNIao1Dz1x+DJGF
-         A2iEP6iQVatW/37q6WcriSY/L4wPlb2wEJHwD9/7P+GpXuMp4kRYvpQoVX7AmNTUaFVG
-         GkRZn48LI8ybEm0VYDOBycrbv6d+7EUoWppqXVqwyUyrzz3hmHM9bzScIe6qmNAnqDxn
-         5JUg==
-X-Forwarded-Encrypted: i=1; AJvYcCX6D9yCQMGIDbSuRN/oGZWMyOBi2u4Z8LjldSn/R80gGjhyHanlGdLOTwfqZ5z3HHs6eIbWUX1m9nn7lHPo@vger.kernel.org
-X-Gm-Message-State: AOJu0YzVi0B79sUYmY6fo7igX/3rn9B4h/5xzXh3naeyPjXXmFADrfXX
-	+TTjdODCGwRwuCmAoxBqL1zge0OqV8vrkM/s+NwUZCEPoaecsAfJkLlSy6yqpyRj8KOeXEAb1o6
-	8cvUrp0gdURkcr4DYQq/osrrLn/3EMKtaw/YQ1EeSFi0EA7SbdOfFT6bP/RHco2t2xvFf
-X-Gm-Gg: ATEYQzxW2oXeRrDfKQ2MCszNiERmASj4f0Xc677j2vN9Y+NUek9TTUJZ4U5FN4PHARw
-	rwrzMWW8NoayZQsDHkESq4zICUfsD2zrkhU+Ri7Fo9GyeVCfuDNLQWOv66h2wek5fTfC/Pf+JWv
-	/cxM2b6IwYP/dS20qW5KPTcddirZGaCWzG7YdqseZbFw+8ph0tDnaVTZmH4OfSqWE0ONT6VDJsW
-	Gz/nk1ZR5Va0Zf/+3F2fbIJNOB3ZMo4Aj+QEzZzd4a1/hbZo5jFhI3llrJof67O9XTSsUCRNd27
-	rrUHottRdrPJDokRSpRCFqkKRn5P7m5ohA3lTdY5iQE2o2X2LRT7QcCHAgHGTMaJrMMHrpeO8CV
-	PGojVc4UBLRUB1aQNNEKJgEetTPwFrGKmAQOa2JGsSTqpjeQlHf/9nKqVLVGhUdDjjhbNxfHua3
-	C47yXY3sA=
-X-Received: by 2002:ac8:5d4d:0:b0:509:1b01:8926 with SMTP id d75a77b69052e-50b3738b0eemr254227331cf.6.1774357809991;
-        Tue, 24 Mar 2026 06:10:09 -0700 (PDT)
-X-Received: by 2002:ac8:5d4d:0:b0:509:1b01:8926 with SMTP id d75a77b69052e-50b3738b0eemr254226801cf.6.1774357809508;
-        Tue, 24 Mar 2026 06:10:09 -0700 (PDT)
-Received: from [10.38.244.11] (Global_NAT1_IAD_FW.qualcomm.com. [129.46.232.65])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50b36e5cc1fsm110775811cf.22.2026.03.24.06.10.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Mar 2026 06:10:08 -0700 (PDT)
-Message-ID: <93624dae-71c0-45ac-9aca-7175d8771a32@oss.qualcomm.com>
-Date: Tue, 24 Mar 2026 21:10:01 +0800
+	s=arc-20240116; t=1774357830; c=relaxed/simple;
+	bh=0pnB0U7InhkGL9lTdgeWgS0PDvdGdURPxYWKmTb9BiU=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=fqolWaW2Add/CvrNxui+PNlVkuoUtKBVPie2sZEfXGcO4lkJn66ow7ae9gCuwSVAzVK5/X3QKh0EPz2Dqy+J06fI08JH0mSrHIOkyO4J01jS1I9gnsCEBec1J/gqfm/n3sDi/EIM5yJPBtJoJo6nv22B1XFLxsd0RLbGLDyVTxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=FK2nnl1U; arc=none smtp.client-ip=109.224.244.24
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1774357819; x=1774617019;
+	bh=d8w5CZ1DioJDLSSnZn0lUgk1zgmXdXiL/spUhVixnL4=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=FK2nnl1U1iJW2JFd3eYi+a/efk4dTWRpwXM3P/p7hU2is3URddT8zC4MxpNA0GBil
+	 JRaU88xJgM0zqXDmzB5xduxQ82vuGkkD/BnuJ4G8WJOvpvjKI6bk/7obXbO4fjU9rc
+	 AdtwnYHWSst5aiEXHqmBnGPy7LaTrHX6qjQxhMmt9uwOh4tJEZrjY7F5wd9g0MHjeH
+	 7/yhVTRsx+fZjtdRCo6R5BKnf0S+pL3r7q+HVN+WLTg3Bf/pAQfNC/Hyot9OlGfy1o
+	 nAVmdb9K0hjZBwpg2SWNOm8cwKoabMcY8fqjgo7htiOXLTZCfEz7LiY967QTcHdHCY
+	 VDqJxuTpNUfzw==
+Date: Tue, 24 Mar 2026 13:10:13 +0000
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: cristian_ci <cristian_ci@protonmail.com>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>, Jessica Zhang <jesszhan0024@gmail.com>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+Subject: Re: [PATCH v3 1/6] dt-bindings: display: panel: Add Novatek NT35532 LCD DSI
+Message-ID: <GF8zsK-szOM98Ck2jznCOZ4xjuJTl9g1b0uPc1N79Dzf7PNzOiVgewdqPFGjqF3YD7tOUa2tzdc7rG_e7iNH8yjHOJ9DobsihTxRLUk8EL4=@protonmail.com>
+In-Reply-To: <sdcfwycey5ykhn2fghun7imx3tjtnwat3ny3mut5dwstl7wvw6@maqrzlycwdn5>
+References: <20260321-rimob-new-features-v3-0-d4b8ee867de7@protonmail.com> <20260321-rimob-new-features-v3-1-d4b8ee867de7@protonmail.com> <sdcfwycey5ykhn2fghun7imx3tjtnwat3ny3mut5dwstl7wvw6@maqrzlycwdn5>
+Feedback-ID: 27475468:user:proton
+X-Pm-Message-ID: 70202603ff894e828bf88287248da08abdde0c30
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] media: qcom: camss: vfe: fix PIX subdev naming on VFE
- lite
-To: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Hans Verkuil <hverkuil@kernel.org>,
-        Gjorgji Rosikopulos <quic_grosikop@quicinc.com>,
-        Radoslav Tsvetkov <quic_rtsvetko@quicinc.com>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20260319-camss_fix-v1-1-e69a3590500e@oss.qualcomm.com>
- <CAFEp6-2XrMkKzA4KAEkYF0v7XzVefFpUEG98VYa7wNuanbZ-Xw@mail.gmail.com>
- <02ecbd98-01dc-4e56-901b-41783c55d095@oss.qualcomm.com>
- <CAFEp6-39tUEBqX_FWLdohE2jenoj1ot18Gnhi4Aop9hukGoGQw@mail.gmail.com>
-Content-Language: en-US
-From: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
-In-Reply-To: <CAFEp6-39tUEBqX_FWLdohE2jenoj1ot18Gnhi4Aop9hukGoGQw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=b+q/I9Gx c=1 sm=1 tr=0 ts=69c28d32 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=C3Dk8TwHQYyIj7nOf9RCJw==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=EUspDBNiAAAA:8 a=geiQnwYwG4LExPUYDA8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-ORIG-GUID: n5r2xtCdle7KdhG9Fi-iS7ie_YYjohoG
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI0MDEwNCBTYWx0ZWRfX4gKNE9FDkrNj
- 0GVi8nkfYP7GTsn4F6x26RQpvk7Pl1GVWD26L4btna8JgQENliKLiEfMg6VSk/YMRoYq6XY/07I
- jQrOyexTRfqrzlFfotK/deSL5Vly6y76K8l+2Gxw73CzxXridN9+YNC6qU1hKYsVRIkLLKQif7X
- kE2g14apzbBb5nKX7KfuJiAWyC8GuDJDUsxQlI4aKTmr2q8sQuCNanvSvG/AYAMFS5ppUDCe6nO
- Av3X22X4aNulYlzl3QCJ7o84TN9gp3i0HlAhi1rkPh16UdzoDc3SO4So4E6hVHSqT4jWWP47a+m
- +Pr9XnXAiBKNc6cK7zqqvO7zzEoiTw0bT6BtrFjP43a4R1//d4JImpTFnJk0YceVTpO06gCBUOJ
- Q+8k3vafJdScai7NzXVx5OT8Kj0UaXqzbbkmoRrsT5yoRpM/d3rHL4X6boQK/E10jlG1cf8o4h5
- JDiwnqxGHoYaGzI0RdA==
-X-Proofpoint-GUID: n5r2xtCdle7KdhG9Fi-iS7ie_YYjohoG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-24_03,2026-03-23_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 impostorscore=0 adultscore=0
- malwarescore=0 bulkscore=0 suspectscore=0 phishscore=0 clxscore=1015
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
- definitions=main-2603240104
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[protonmail.com,quarantine];
+	R_DKIM_ALLOW(-0.20)[protonmail.com:s=protonmail3];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[kernel.org,gmail.com,linaro.org,quicinc.com,vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-99660-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[wenmeng.liu@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	TAGGED_FROM(0.00)[bounces-99661-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[3];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_FROM(0.00)[protonmail.com];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	FREEMAIL_CC(0.00)[linaro.org,gmail.com,ffwll.ch,linux.intel.com,kernel.org,suse.de,lists.freedesktop.org,vger.kernel.org,lists.sr.ht];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[cristian_ci@protonmail.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[protonmail.com:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 532AA3094B9
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.0:email,qualcomm.com:email,gitlab.freedesktop.org:url,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 540C03092C1
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
+On Saturday, March 21st, 2026 at 17:46, Dmitry Baryshkov <dmitry.baryshkov@=
+oss.qualcomm.com> wrote:
+
+> On Sat, Mar 21, 2026 at 05:23:20PM +0100, Cristian Cozzolino via B4 Relay=
+ wrote:
+> > From: Cristian Cozzolino <cristian_ci@protonmail.com>
+> >
+> > Document Novatek NT35532-based DSI display panel.
+> >
+> > Signed-off-by: Cristian Cozzolino <cristian_ci@protonmail.com>
+> > ---
+> >  .../bindings/display/panel/novatek,nt35532.yaml    | 77 ++++++++++++++=
+++++++++
+> >  MAINTAINERS                                        |  5 ++
+> >  2 files changed, 82 insertions(+)
+>=20
+> > +allOf:
+> > +  - $ref: panel-common.yaml#
+> > +
+> > +properties:
+> > +  compatible:
+> > +    const: novatek,nt35532
+>=20
+> This is not enough to identify the panel. This name identifies the
+> controller inside the panel, however the exact settings (and the
+> behaviour) would depend on the exact TFT "glass" used with this
+> controller. Downstream usually doesn't care that much and frequently
+> just uses the controller name or the the controller with some kind of
+> "description" like ("wqhd-dsc-cmd").
+
+Ok but I just don't understand the following: I'd like to know (also=20
+considering that I find it difficult to find someone, outside of this=20
+ML, available to discuss this stuff, specifically) exactly why the=20
+current bindings are not enough.
+I mean: looking at schematics and datasheets of other similar devices=20
+and based on observations about my device, I believe the generic bindings=
+=20
+approach for nt35532 works quite well for panels.
+Novatek made the IC first and then whoever buys it can be a display=20
+vendor. If we talk about downstream, differences between panels are describ=
+ed=20
+there (i.e. my panel makes use of four supplies, while other ones could use=
+=20
+a different configuration).
+
+> What does it mean for the upstream:
+> - Try identifying the actual panel used for the phones. Sometimes
+>   googling for spare or replacement parts would reveal such a name.
+>   Sometimes it can be seen as a marking on the cable or on the backside
+>   of the panel (again, googling).
+
+It seems that 'google' approach fails, in my case :( (I only know that=20
+the vendor assigned Smartron the work to design the HW - but SW too -=20
+of the device. Nevertheless, Smartron is neither OEM nor ODM, so the=20
+company was relying, at the time, on a series of chinese manufacturers to p=
+rovide=20
+parts required for this device, including panel suppliers: in general,=20
+the list of panel suppliers for Smartron includes BOE, Tianma and other kno=
+wn=20
+companies. So, this panel may be any of those, paired with NT35532, and wor=
+k=20
+anyway). Unfortunately, even if marking on the cable is known, that doesn't=
+=20
+identify the panel but the cable itself (which is available on the market,=
+=20
+though), instead, in this case.
+
+> - If not found, come up with some artificial identifier that would
+>   identify the controller+glass combo (e.g. "tianma,fhd-video" or
+>   "lenovo,j606f-boe-nt36523w" (where lenovo,j6006f is a device name and
+>   boe is a "supplier").
+
+Assuming that resources available which I've as source of information=20
+for this panel are limited (the ones also described in v1's review thread),=
+=20
+my vendor devicetree describes the panel in  'qcom,mdss_dsi_nt35532_1080p_c=
+s_video'=20
+node and makes use of:
+
+qcom,mdss-dsi-panel-name =3D "nt35532 1080p cs video mode dsi panel";
+
+property. Until now, close-to-mainline devicetree I was using the following=
+=20
+compatible for the panel:
+
+compatible =3D "flipkart,rimob-nt35532-cs";
+
+and I'm not sure about the exact meaning of 'cs' suffix. I cannot state 'CS=
+'=20
+as panel supplier and use that upstream without proof/evidence. What do=20
+you suggest, in this regard?
 
 
-On 3/23/2026 5:55 PM, Loic Poulain wrote:
-> On Mon, Mar 23, 2026 at 3:13 AM Wenmeng Liu
-> <wenmeng.liu@oss.qualcomm.com> wrote:
->>
->>
->>
->> On 3/19/2026 10:44 PM, Loic Poulain wrote:
->>> On Thu, Mar 19, 2026 at 10:11 AM Wenmeng Liu
->>> <wenmeng.liu@oss.qualcomm.com> wrote:
->>>>
->>>> VFE lite hardware does not provide a functional PIX path, but after
->>>> the per sub-device type resource changes the PIX subdev name is still
->>>> assigned unconditionally.
->>>>
->>>> Only assign the PIX subdev name on non-lite VFE variants to avoid
->>>> exposing a misleading device name.
->>>>
->>>> Fixes: ae44829a4a97 ("media: qcom: camss: Add per sub-device type resources")
->>>> Signed-off-by: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
->>>> ---
->>>>    drivers/media/platform/qcom/camss/camss-vfe.c | 2 +-
->>>>    1 file changed, 1 insertion(+), 1 deletion(-)
->>>>
->>>> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
->>>> index 5baf0e3d4bc461df28d8dcf97a98dec04fa17ceb..2ee4f9ae0ab50e22f916736f1d1664767bdb6a36 100644
->>>> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
->>>> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
->>>> @@ -2053,7 +2053,7 @@ int msm_vfe_register_entities(struct vfe_device *vfe,
->>>>                   v4l2_subdev_init(sd, &vfe_v4l2_ops);
->>>>                   sd->internal_ops = &vfe_v4l2_internal_ops;
->>>>                   sd->flags |= V4L2_SUBDEV_FL_HAS_DEVNODE;
->>>> -               if (i == VFE_LINE_PIX)
->>>> +               if (i == VFE_LINE_PIX && vfe->res->is_lite == false)
->>>>                           snprintf(sd->name, ARRAY_SIZE(sd->name), "%s%d_%s",
->>>>                                    MSM_VFE_NAME, vfe->id, "pix");
->>>
->>> So the PIX path will be called RDI? Doesn’t that seem misleading as well?
->> when i == VFE_LINE_PIX and vfe->res->is_lite == false then vfe name is
->> pix, not rdi.
+Cristian
+=20
+> - Either use both strings for compat property:
+>   compatible =3D "tianma,fhd-video", "novatek,nt36672a"
+>   or just the first one.
+>=20
+> > +
+> > +  reg:
+> > +    maxItems: 1
+> > +
+> > +  backlight: true
+> > +  reset-gpios: true
+> > +
+> > +  avdd-supply:
+> > +    description: positive boost supply regulator
+> > +
+> > +  avee-supply:
+> > +    description: negative boost supply regulator
+> > +
+> > +  vci-supply:
+> > +    description: regulator that supplies the analog voltage
+> > +
+> > +  vddam-supply:
+> > +    description: power supply for MIPI interface
+> > +
+> > +  vddi-supply:
+> > +    description: regulator that supplies the I/O voltage
+> > +
+> > +  port: true
+> > +
+> > +required:
+> > +  - compatible
+> > +  - reg
+> > +  - reset-gpios
+> > +  - vddi-supply
+> > +  - port
+> > +
+> > +additionalProperties: false
+> > +
+> > +examples:
+> > +  - |
+> > +    #include <dt-bindings/gpio/gpio.h>
+> > +
+> > +    dsi {
+> > +        #address-cells =3D <1>;
+> > +        #size-cells =3D <0>;
+> > +
+> > +        panel@0 {
+> > +            compatible =3D "novatek,nt35532";
+> > +            reg =3D <0>;
+> > +
+> > +            backlight =3D <&pmi8950_wled>;
+> > +            reset-gpios =3D <&tlmm 61 GPIO_ACTIVE_LOW>;
+> > +            avdd-supply =3D <&lab>;
+> > +            avee-supply =3D <&ibb>;
+> > +            vci-supply =3D <&pm8953_l17>;
+> > +            vddi-supply =3D <&pm8953_l6>;
+> > +
+> > +            port {
+> > +                panel_in: endpoint {
+> > +                    remote-endpoint =3D <&dsi0_out>;
+> > +                };
+> > +            };
+> > +        };
+> > +    };
+> > +...
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index a626dee5c106..8ed2866bbd6e 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -8171,6 +8171,11 @@ T:=09git https://gitlab.freedesktop.org/drm/misc=
+/kernel.git
+> >  F:=09Documentation/devicetree/bindings/display/panel/novatek,nt35510.y=
+aml
+> >  F:=09drivers/gpu/drm/panel/panel-novatek-nt35510.c
+> >
+> > +DRM DRIVER FOR NOVATEK NT35532 PANELS
+> > +M:=09Cristian Cozzolino <cristian_ci@protonmail.com>
+> > +S:=09Maintained
+> > +F:=09Documentation/devicetree/bindings/display/panel/novatek,nt35532.y=
+aml
+> > +
+> >  DRM DRIVER FOR NOVATEK NT35560 PANELS
+> >  M:=09Linus Walleij <linusw@kernel.org>
+> >  S:=09Maintained
+> >
+> > --
+> > 2.53.0
+> >
+> >
+>=20
+> --
+> With best wishes
+> Dmitry
 > 
-> I mean when is_lite==true, we're going to name the PIX(lite) path RDI,
-> whereas it's not a raw dump interface, I guess pix-lite includes minimal
-> processing engine.
-
-For VFE Lite, only RDI paths are supported. There is no PIX output.
-
-Thanks,
-Wenmeng
-
 
