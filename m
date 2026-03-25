@@ -1,333 +1,206 @@
-Return-Path: <linux-arm-msm+bounces-99915-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99916-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id YCXcB80cxGnlwQQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99915-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 18:35:09 +0100
+	id 8OuYIWMfxGmZwgQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99916-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 18:46:11 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id A4C40329E87
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 18:35:08 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id F41CA32A12F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 18:46:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 75AAA311A1AC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 17:29:00 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 27A523025E52
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 17:39:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6ADCA405ADF;
-	Wed, 25 Mar 2026 17:28:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18D6C3DDDDA;
+	Wed, 25 Mar 2026 17:39:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="GTqwa1eW"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="Jv+70GcG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from BN8PR05CU002.outbound.protection.outlook.com (mail-eastus2azolkn19011025.outbound.protection.outlook.com [52.103.12.25])
+Received: from ixit.cz (ixit.cz [185.100.197.86])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929664035DA;
-	Wed, 25 Mar 2026 17:28:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.12.25
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774459735; cv=fail; b=oh5n9EXF67mASd51Dg5/I7omEQgWKiKYL7r84M1x1jCDzNL/Xgxask26HKMlFk4/kc3anMj994YyoMHf8778l9+Xb9l8fmBfGo4RX7vLHYQrjWz7aEFVonaFHngLZF2R9HiC0H4mwu7OQKgi/y05MCqbkBsFwz1F4KJ6/0A3dps=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774459735; c=relaxed/simple;
-	bh=wFC4dcMQGBKRsnW5GoZczi1xpYJJTze36QKPgps2Ec0=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=ksJt4VNn/VaDZWmph7fgaMaqkUNgplCM6o3hJCU/ieaqdoMD/z6y8JKnOdXbYukRLgcduC7AkdsR5rAcGEJh7JP1HZAlNxgf4rxLEPagyFbXfS4hZnFAgno2m63yMufJgN4SdWLdmUliBKQnVhxuGrc2Y0UXLg3jWF1C+gg7/og=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=GTqwa1eW; arc=fail smtp.client-ip=52.103.12.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=A7niL8dK+tae6540T7P32RBaytyVW7zolF8lluf0r4R160iZvxMe8wz0w6vbYtaQIpwAjSMDr+dMe7EGtduuKqfdos64LihelGZuCCOvseUiqQzHnwIqIsGfLAquA+kP1kaJC4nC0Juoh386GRR1UboUJt1ZJpTBqskj9+q4dqEkMD+eo37Daomf0FTM/llT3T+FkOsxf6ip5NsucUlAUbbIKFudkCTIevCZSpHq1zthYC9rHMNAlt+RoZtUcQnHPGPeFUdpTQr5dFiDq9+qd6tmTeP8UAOZQdiObQLazoX5D5aGbLZORgkibaii+N6nHQuWHwzincJVMPUJAS3QKA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=XxHfHViKfT/KJvdZf18l85ejznK+DDKKxrW5WwShbCU=;
- b=UQ+SKI6p0Uxa6vVjtOYIiFTOYBWymNEmhVqJEKQ2Ufm+ODmhzci0x2irjrsmwG64klbVF9J7sj+F2jQoHC3uAGoJ1htf8Uqhz3S0bUayiUYcr4vKyGe+wHmjOkEx2Bs9ConhKsB3+SHH7xSGCfcRuSpMJOlOXtyhPJxAKBwecZrJLzflw7mt7kQKuKe37lFnilDoVuvFx88wLp/3c8C1q9dOsSsCLXX9tPsOz9ZAYgYY6FW08a6ykjdyOCuVGAthPDR7bsWiN/7eC28/QRDASNCgLixtRiDxD1Ru8Ujfxy6iJaisNN5X6xet/Pa5o4QTajUbJcfLdjpiqUHP1Bv8Lg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=XxHfHViKfT/KJvdZf18l85ejznK+DDKKxrW5WwShbCU=;
- b=GTqwa1eWCRPC2rPEJoIg/aO0mDmO8aFoToC/PtO/QThE7d3SMDxLssVR/NFejVM+Y9Hwv6sZKhwmiGQvkBk7aD6FuxiBXjz01Bs/kDXcuattVT5iNAmikOt+xf1WFvobaERn2DKK4x5pk8fOblaBeuPQUyjxzwIKEksFKdZoX5fiLRr5njHKSqVs83dhBG3WVS2NTYEAtSFViFFeDuHowwM7hPDF4Dz2V2Lr0Lgp3bgpjvIvy2j88oZDVTzm0FVKbEAsmPQKIbfjqEP3Ttr32ZNbLlCvovbwSvq6kJ/xwEg5JXYa7qwEoHLp/iqJjT5UFZvY3jw+p+xihJljvzUALQ==
-Received: from BN7PR02MB4148.namprd02.prod.outlook.com (2603:10b6:406:f6::17)
- by SA3PR02MB11069.namprd02.prod.outlook.com (2603:10b6:806:45f::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9745.20; Wed, 25 Mar
- 2026 17:28:50 +0000
-Received: from BN7PR02MB4148.namprd02.prod.outlook.com
- ([fe80::6007:d1a1:bcf9:58ef]) by BN7PR02MB4148.namprd02.prod.outlook.com
- ([fe80::6007:d1a1:bcf9:58ef%2]) with mapi id 15.20.9745.019; Wed, 25 Mar 2026
- 17:28:49 +0000
-From: Michael Kelley <mhklinux@outlook.com>
-To: Danilo Krummrich <dakr@kernel.org>, Russell King <linux@armlinux.org.uk>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J. Wysocki"
-	<rafael@kernel.org>, Ioana Ciornei <ioana.ciornei@nxp.com>, Nipun Gupta
-	<nipun.gupta@amd.com>, Nikhil Agarwal <nikhil.agarwal@amd.com>, "K. Y.
- Srinivasan" <kys@microsoft.com>, Haiyang Zhang <haiyangz@microsoft.com>, Wei
- Liu <wei.liu@kernel.org>, Dexuan Cui <decui@microsoft.com>, Long Li
-	<longli@microsoft.com>, Bjorn Helgaas <bhelgaas@google.com>, Armin Wolf
-	<W_Armin@gmx.de>, Bjorn Andersson <andersson@kernel.org>, Mathieu Poirier
-	<mathieu.poirier@linaro.org>, Vineeth Vijayan <vneethv@linux.ibm.com>, Peter
- Oberparleiter <oberpar@linux.ibm.com>, Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>, Alexander Gordeev
-	<agordeev@linux.ibm.com>, Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>, Harald Freudenberger
-	<freude@linux.ibm.com>, Holger Dengler <dengler@linux.ibm.com>, Mark Brown
-	<broonie@kernel.org>, "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang
-	<jasowang@redhat.com>, Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	=?iso-8859-1?Q?Eugenio_P=E9rez?= <eperezma@redhat.com>, Alex Williamson
-	<alex@shazbot.org>, Juergen Gross <jgross@suse.com>, Stefano Stabellini
-	<sstabellini@kernel.org>, Oleksandr Tyshchenko
-	<oleksandr_tyshchenko@epam.com>, "Christophe Leroy (CS GROUP)"
-	<chleroy@kernel.org>
-CC: "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"driver-core@lists.linux.dev" <driver-core@lists.linux.dev>,
-	"linuxppc-dev@lists.ozlabs.org" <linuxppc-dev@lists.ozlabs.org>,
-	"linux-hyperv@vger.kernel.org" <linux-hyperv@vger.kernel.org>,
-	"linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
-	"platform-driver-x86@vger.kernel.org" <platform-driver-x86@vger.kernel.org>,
-	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-	"linux-remoteproc@vger.kernel.org" <linux-remoteproc@vger.kernel.org>,
-	"linux-s390@vger.kernel.org" <linux-s390@vger.kernel.org>,
-	"linux-spi@vger.kernel.org" <linux-spi@vger.kernel.org>,
-	"virtualization@lists.linux.dev" <virtualization@lists.linux.dev>,
-	"kvm@vger.kernel.org" <kvm@vger.kernel.org>, "xen-devel@lists.xenproject.org"
-	<xen-devel@lists.xenproject.org>, "linux-arm-kernel@lists.infradead.org"
-	<linux-arm-kernel@lists.infradead.org>, Gui-Dong Han <hanguidong02@gmail.com>
-Subject: RE: [PATCH 04/12] hv: vmbus: use generic driver_override
- infrastructure
-Thread-Topic: [PATCH 04/12] hv: vmbus: use generic driver_override
- infrastructure
-Thread-Index: AQEWuxLbDbmJwzc+SqngUlED+v4GuwG+YWLCtz2FqZA=
-Date: Wed, 25 Mar 2026 17:28:49 +0000
-Message-ID:
- <BN7PR02MB414825D0532A1DFE16F3B671D449A@BN7PR02MB4148.namprd02.prod.outlook.com>
-References: <20260324005919.2408620-1-dakr@kernel.org>
- <20260324005919.2408620-5-dakr@kernel.org>
-In-Reply-To: <20260324005919.2408620-5-dakr@kernel.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: BN7PR02MB4148:EE_|SA3PR02MB11069:EE_
-x-ms-office365-filtering-correlation-id: 3043ded6-cfcb-46d1-33ce-08de8a93fa3b
-x-microsoft-antispam:
- BCL:0;ARA:14566002|13091999003|461199028|8062599012|19110799012|8060799015|41001999006|31061999003|37011999003|15080799012|1602099012|53005399003|40105399003|31055399003|440099028|4302099013|3412199025|10035399007|102099032;
-x-microsoft-antispam-message-info:
- =?iso-8859-1?Q?xDdh4OAArEx6ipBroHecRSDruWPZ8ExFDTLtZ5cfbygyWS3S9xLqnFxe5s?=
- =?iso-8859-1?Q?a+ujbZc8vkR+pPBqoIu5ezFO7ZTQ0YMwUIho6WDhB8OHb5pGXMG44l5HxP?=
- =?iso-8859-1?Q?2vFoGJnVFSczIt6xeqUty9w+A0CzDDQjzi/ah2ScPaReFloPOT9u920x/Q?=
- =?iso-8859-1?Q?to6/PgXLfCt/+1NiOgPNFWZDryyzPWZlQXuPs5B9eLA0b/oJZLe55S1pa9?=
- =?iso-8859-1?Q?Y36FcKSy427n3M2rboUDjlP99+ndwk0CR6mUIm+t+dqAD2cOypVbw879Hi?=
- =?iso-8859-1?Q?XZIuNTaV1JlNfgfQ2T2w8eiG4zIyG1JIFswZ1DeYcdEYrMZauDEI7uGISt?=
- =?iso-8859-1?Q?C3RZ9ey0pFmhuctIIHxHUvs4oS968ub/ml+NRRJm6z8h+FzlC1Cp8KkCnt?=
- =?iso-8859-1?Q?voV3ynhpZRsb6Fjo7N+tiy2Vdvk+7L/rnHwk2/6toeLMDYknHd/nNjFhSG?=
- =?iso-8859-1?Q?6UyvYRI01YvAMZ6fpkCv2wF6CnAfZs0bcZJvXLDOvGsPbp93+DduaG9xGm?=
- =?iso-8859-1?Q?VNmNwcarrgCyoijB37EBaJbfXXLYpiPUrFJ2tWYHgjTmtbDt19IVmwgGcK?=
- =?iso-8859-1?Q?Gy5QSXMYKvy04YgQNa0RiQWKi0F9ECheTBwVoamVN5A/vj0XV4KGHdQgLa?=
- =?iso-8859-1?Q?3Rj1TcVwREklQpnpiFLI320GaEUL8JkxffxhJ8HUC5sPTYaKwwLKp3cj8Z?=
- =?iso-8859-1?Q?iwncBsf9WLRorbM8jkj+jKBb6zWet+qu83dQbCDgs0WXuaWTqnQTvSE5cy?=
- =?iso-8859-1?Q?+tm/BjYApvnbeiGnEbf/xCGzrXL55OcdWW0B6RY0Jadk7DyPAfgedFTiy3?=
- =?iso-8859-1?Q?3k+KbsMfO0zJWK9is3LGC1Vvoe7L9nrGWGQsOQPldv0fHlJaldowbAKDv4?=
- =?iso-8859-1?Q?9WNZYQdcXB4eG4iY0X5grHsh382uInTvK6EsWF4nsumGRenwLfI73pa7HL?=
- =?iso-8859-1?Q?cUP9jrZdOJlkwqHHyqi/bpuaH272HXE+UR5s2YocuLCK69o9dJOQXL1r4T?=
- =?iso-8859-1?Q?f9ObHjpDhoKGIUoEBowjh+YN0hrnlFaKaBaXFHhMhk4ktfvWaouBlSiRV/?=
- =?iso-8859-1?Q?QBwKb0V7oNXWC6MaKJYDN9MExgBx8a9akOy1PyhzXvSlPjBPuvT8dyKhFS?=
- =?iso-8859-1?Q?TMkVJyHhlyaWETFYlmQ4y4/joJuO/fBGf1cDUcsNn5dokg1D5e47+l7AbL?=
- =?iso-8859-1?Q?QKRZx67WyvRLZEzVfZIXyLC/h4GjRDfwqPs=3D?=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?mFtu/wRLMR80m+TtFnxJ48B9YizrMj6EnaIIOgVUnJ0WRooSmL4s/c64+0?=
- =?iso-8859-1?Q?BRUpvbE6jLLeEAcXqx2z4Oia+NoNpzg4qpVdbCK1F33yVfJ0zP37/uCCf6?=
- =?iso-8859-1?Q?dStD6w9DHSf0J29wLC7/fB0Iiw1A4kEzhFThe2gAQuSTaHSMPXVukYVdu5?=
- =?iso-8859-1?Q?0ZEjvHG2Mst9TO4qnhcP+dYVnrARk3WycHxGa98pqk3hMlO41QUhPYyD1S?=
- =?iso-8859-1?Q?qiMDNp3LLTXbcLVc7PkBNSzg723bKdZ9W77OvGgSz6NEe/VWl+YFcp5UXu?=
- =?iso-8859-1?Q?uWyoHtnrwG8pvZsn0GQ7kS5IyNhhZ/0CT2WlfY2vwOYM3zUkJi1WNStsrh?=
- =?iso-8859-1?Q?rEeIiWXucV3wjUiPTz/aVCxMVtn/ayI7vSFfeBMfR0D6UO1E7y2lOh+vYz?=
- =?iso-8859-1?Q?hub3yazex+VoZxOSVu39cQn/yIsTS9/T9SNsjUBnGFySpbcr4IFalfEoIo?=
- =?iso-8859-1?Q?W4yWlZVzYkmIcRmHUh3ZfHAMPQRyUImFPh1vYEa/jcoP1MDvrD9PCZICjQ?=
- =?iso-8859-1?Q?ViOywWR/g3MqPViFUdoiWfR2VlNKAKtHCqzTFtjGap7m0iH7H5Q5OLOCWa?=
- =?iso-8859-1?Q?wTgsyoosfRgaNXvKo8Blw5yxmPDzmfznJCcXqHgC+RobZac3e75k80KtCm?=
- =?iso-8859-1?Q?/ApbKF6+ybIwWQsmEbR2hNcBOa7t+ObJ8WloPHrGk3Bdp1mKuK3kQIJ49+?=
- =?iso-8859-1?Q?wmQ0tOgrN3UVjyI0mFdllicH3BNNTQQkcbVxRkGFW7MrPkCxkevIzQLH+5?=
- =?iso-8859-1?Q?N8tLzVGJXVMIl4H0Q4qgLgYLP+iPV8nHrDcJnZ6K+wpaIiULPdOS/uHLJ1?=
- =?iso-8859-1?Q?tfEdyILZHzwZrK2C2wrXMOVb2vq7gRtsLkHNMVq1lTOpJLowDRfkmaLfLo?=
- =?iso-8859-1?Q?8A+xgwdZry5BIGfYE6Q7NMsfKn+g8rIp8/yamr4R8sgTqAaWBHQESvqblI?=
- =?iso-8859-1?Q?TieTWqxSo5HJ3TDHVgkRXgC63CDxzg2dIKF1J1sKm7boa7ig7Rp84upZE+?=
- =?iso-8859-1?Q?Rs5Xq90tdKxWHNQpe29DvSEwVlQYmqVSx9LGSXuExmKIkiHKcS0Xn4z7//?=
- =?iso-8859-1?Q?lErzUgGK2FNrC9iFQzFGrg584FgJDjKQnITcprs8TI8wtoUhj+Vv8z9IM3?=
- =?iso-8859-1?Q?vFt7aNk/Y42iuZkeYSqFghCstl976KI29cqIl5P0iUo9tokW5Usfe89+od?=
- =?iso-8859-1?Q?na9qZS6uBtNnD8RDxUr2s6PkOUJQ/EhqJtxp6Kf2m2BVGLOjLK/D4E73A7?=
- =?iso-8859-1?Q?SZHPF6ZjZaVF78TnsLE8Jfcov57HBw3DxSgPk40VzlHZwuXya3ffTcEkSZ?=
- =?iso-8859-1?Q?OJ/IWTK++eEIt6tM0MpbZ31JfyDD3jp9XgyWNWJKjren3/fsE6hULgGP8l?=
- =?iso-8859-1?Q?X9qaEoQ7lAXLAsR/ksnRqKJWLh/SiBnTac7kf6PE/qG2TM4OlmzJw=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2299E3CC9F8;
+	Wed, 25 Mar 2026 17:39:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.100.197.86
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774460381; cv=none; b=jqqA43up+RhUJN4RK+Y4uR2eUm3vESg0X60Ig3UDDjpPndDXni58WtDfvnmjGDb3xlEvuzqB+B71RNvpELI1jriE+3CGlQP0/EAo28gCzvSsf2EHjB1iaPLR/T7Uivs5p3IiqmqX8FAnJdVz/NwGNu4WZpyNCXNMbvK/RWeS5q0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774460381; c=relaxed/simple;
+	bh=U1CClbbYMV3aDRX/EeYBmhygOq7XX1V8RT7YNZEpQ0U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GDyW6jqBCG5P+EZgNLEJCMN6hVFFsgOppEMK44m+T5IA2rzMDmnu4d3UIdQKAX+jkqhiZuEZaQn6i7/OLU+YR24DiMN+valKcusHn3Dz9rusx8Xs48f4BiJ6oZ2Ddd1WF6OS4WJLtXk8DfG3r7Xr+8Mad00B9FbVZ/hKL5iOO7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=Jv+70GcG; arc=none smtp.client-ip=185.100.197.86
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
+Received: from [IPV6:2a02:f000:10bd:e301::1d7] (unknown [IPv6:2a02:f000:10bd:e301::1d7])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ixit.cz (Postfix) with ESMTPSA id D057653400DE;
+	Wed, 25 Mar 2026 18:39:33 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+	t=1774460374;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=WmUIEtW5+eXkmHyv6fj0xD4LEO3YM6Y6FsgaI2ESrFA=;
+	b=Jv+70GcGKOM3rOK39+5T7uC+XF5901O5ly5/cEBZINaw2aiAPIhzJuh0/pTOHV4dF22s8c
+	zSyM8y1LA9EeW90FiTvpUsY2Lw58PjmTMJewJXHucGl21qVPehrlDNTYU7T6xdFxYukOhE
+	u0UidhPpc2o38pzzwwROQQO4Iv2XKi4=
+Message-ID: <323d5570-ae3d-4083-bbc8-8ce2ef53a34c@ixit.cz>
+Date: Wed, 25 Mar 2026 18:39:32 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BN7PR02MB4148.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3043ded6-cfcb-46d1-33ce-08de8a93fa3b
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Mar 2026 17:28:49.5574
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR02MB11069
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	ARC_REJECT(1.00)[cv is fail on i=2];
-	DMARC_POLICY_ALLOW(-0.50)[outlook.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[outlook.com:s=selector1];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/3] ath10k: Introduce a device-tree quirk to skip host
+ cap QMI requests
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Johannes Berg <johannes@sipsolutions.net>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Jeff Johnson <jjohnson@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Paul Sajna <sajattack@postmarketos.org>, Amit Pundir
+ <amit.pundir@linaro.org>, linux-wireless@vger.kernel.org,
+ devicetree@vger.kernel.org, ath10k@lists.infradead.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ phone-devel@vger.kernel.org
+References: <20260325-skip-host-cam-qmi-req-v3-0-b163cf7b3c81@ixit.cz>
+ <20260325-skip-host-cam-qmi-req-v3-2-b163cf7b3c81@ixit.cz>
+ <d6pv62kc5zyqite7krm65vbtlqnsc3v53rlrtilchyk5c7uad2@iu4yaw2ksr65>
+Content-Language: en-US
+From: David Heidelberg <david@ixit.cz>
+Autocrypt: addr=david@ixit.cz; keydata=
+ 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
+In-Reply-To: <d6pv62kc5zyqite7krm65vbtlqnsc3v53rlrtilchyk5c7uad2@iu4yaw2ksr65>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[ixit.cz,quarantine];
+	R_DKIM_ALLOW(-0.20)[ixit.cz:s=dkim];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-99915-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_FROM(0.00)[outlook.com];
-	TO_DN_SOME(0.00)[];
-	TO_DN_EQ_ADDR_SOME(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[kernel.org,armlinux.org.uk,linuxfoundation.org,nxp.com,amd.com,microsoft.com,google.com,gmx.de,linaro.org,linux.ibm.com,redhat.com,linux.alibaba.com,shazbot.org,suse.com,epam.com];
+	TAGGED_FROM(0.00)[bounces-99916-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[vger.kernel.org,lists.linux.dev,lists.ozlabs.org,lists.xenproject.org,lists.infradead.org,gmail.com];
-	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	RCPT_COUNT_GT_50(0.00)[50];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mhklinux@outlook.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[outlook.com:+];
+	RCPT_COUNT_TWELVE(0.00)[16];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,BN7PR02MB4148.namprd02.prod.outlook.com:mid,outlook.com:dkim,outlook.com:email]
-X-Rspamd-Queue-Id: A4C40329E87
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[david@ixit.cz,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[ixit.cz:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,checkpatch.pl:url,linaro.org:email]
+X-Rspamd-Queue-Id: F41CA32A12F
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-From: Danilo Krummrich <dakr@kernel.org> Sent: Monday, March 23, 2026 5:59 =
-PM
->=20
+On 25/03/2026 18:15, Dmitry Baryshkov wrote:
+> On Wed, Mar 25, 2026 at 05:41:13PM +0100, David Heidelberg via B4 Relay wrote:
+>> From: Amit Pundir <amit.pundir@linaro.org>
+>>
+>> There are firmware versions which do not support host capability QMI
+>> request. We suspect either the host cap is not implemented or there may
+>> be firmware specific issues, but apparently there seem to be a generation
+>> of firmware that has this particular behavior.
+> 
+> It needs to be explicit that this happens _before_ firmware-N.bin and
+> board-M.bin loading. As such, you can't add a quirk to the firmware.bin
+> (a standard way to handle firmware issues).
 
-In the patch "Subject" line, the prefix for changes for vmbus_drv.c has
-historically been "Drivers: hv: vmbus:".  It's a mouthful, but has been kep=
-t
-fairly consistent over time.
+Ok, let me send with updated desc :)
 
-> When a driver is probed through __driver_attach(), the bus' match()
-> callback is called without the device lock held, thus accessing the
-> driver_override field without a lock, which can cause a UAF.
->=20
-> Fix this by using the driver-core driver_override infrastructure taking
-> care of proper locking internally.
->=20
-> Note that calling match() from __driver_attach() without the device lock
-> held is intentional. [1]
+> 
+>> For example, firmware build on Xiaomi Poco F1 (sdm845) phone:
+>> "QC_IMAGE_VERSION_STRING=WLAN.HL.2.0.c3-00257-QCAHLSWMTPLZ-1"
+>>
+>> If we do not skip the host cap QMI request on Poco F1, then we get a
+>> QMI_ERR_MALFORMED_MSG_V01 error message before loading the firmware in the
+>> ath10k_qmi_host_cap_send_sync(). This error message is not fatal to the
+>> firmware nor to the ath10k driver and we can still bring up the WiFi
+>> services successfully if we just ignore it.
+>>
+>> Hence introducing this device-tree quirk to skip host capability
+>> QMI request for the devices with firmware versions which do not support
+>> this feature.
+>>
+>> Suggested-by: Bjorn Andersson <andersson@kernel.org>
+>> Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+> 
+> You are sending the patch, but it misses your SoB.
 
-I've tested this patch in a Hyper-V VM with VMBus devices. Did a simple
-VMBus driver override, listed the overrides, and then removed the override.
-All the right things happened with driver binding, unbind, etc.
+Oh, sorry bout that.
 
-Tested-by: Michael Kelley <mhklinux@outlook.com>
+checkpatch.pl could spot this kind of an issue :P
 
-Modulo updates to the comments that I've noted below (and the patch
-Subject line mentioned above):
+David>
+>> ---
+>>   drivers/net/wireless/ath/ath10k/qmi.c  | 13 ++++++++++---
+>>   drivers/net/wireless/ath/ath10k/snoc.c |  3 +++
+>>   drivers/net/wireless/ath/ath10k/snoc.h |  1 +
+>>   3 files changed, 14 insertions(+), 3 deletions(-)
+> 
 
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-
->=20
-> Link: https://lore.kernel.org/driver-core/DGRGTIRHA62X.3RY09D9SOK77P@kern=
-el.org/ [1]
-> Reported-by: Gui-Dong Han <hanguidong02@gmail.com>
-> Closes: https://bugzilla.kernel.org/show_bug.cgi?id=3D220789
-> Fixes: d765edbb301c ("vmbus: add driver_override support")
-> Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-> ---
->  drivers/hv/vmbus_drv.c | 36 +++++-------------------------------
->  include/linux/hyperv.h |  5 -----
->  2 files changed, 5 insertions(+), 36 deletions(-)
->=20
-> diff --git a/drivers/hv/vmbus_drv.c b/drivers/hv/vmbus_drv.c
-> index bc4fc1951ae1..bc8dfd136f3c 100644
-> --- a/drivers/hv/vmbus_drv.c
-> +++ b/drivers/hv/vmbus_drv.c
-
-[snip]
-
->=20
-> @@ -711,9 +682,11 @@ static const struct hv_vmbus_device_id
-> *hv_vmbus_get_id(const struct hv_driver *
->  {
->  	const guid_t *guid =3D &dev->dev_type;
->  	const struct hv_vmbus_device_id *id;
-> +	int ret;
->=20
->  	/* When driver_override is set, only bind to the matching driver */
-
-This reference to "driver_override" in the comment was originally to the
-"driver_override" field in struct hv_device, which has now gone away. Bette=
-r
-wording would be "If a driver override is set, only bind ...."
-
-> -	if (dev->driver_override && strcmp(dev->driver_override, drv->name))
-> +	ret =3D device_match_driver_override(&dev->device, &drv->driver);
-> +	if (ret =3D=3D 0)
->  		return NULL;
->=20
->  	/* Look at the dynamic ids first, before the static ones */
-> @@ -722,7 +695,7 @@ static const struct hv_vmbus_device_id *hv_vmbus_get_=
-id(const struct hv_driver *
->  		id =3D hv_vmbus_dev_match(drv->id_table, guid);
->=20
->  	/* driver_override will always match, send a dummy id */
-
-Again, the reference to "driver_override" no longer makes sense. The
-original comment is a bit opaque in its own way. Let me suggest this new
-wording:
-
-If there's a matching driver override, this function should succeed. So
-return a dummy device ID if no matching ID is found.
-
-> -	if (!id && dev->driver_override)
-> +	if (!id && ret > 0)
->  		id =3D &vmbus_device_null;
->=20
->  	return id;
-> @@ -1024,6 +997,7 @@ static const struct dev_pm_ops vmbus_pm =3D {
->  /* The one and only one */
->  static const struct bus_type  hv_bus =3D {
->  	.name =3D		"vmbus",
-> +	.driver_override =3D	true,
->  	.match =3D		vmbus_match,
->  	.shutdown =3D		vmbus_shutdown,
->  	.remove =3D		vmbus_remove,
-> diff --git a/include/linux/hyperv.h b/include/linux/hyperv.h
-> index dfc516c1c719..bf689d07d750 100644
-> --- a/include/linux/hyperv.h
-> +++ b/include/linux/hyperv.h
-> @@ -1272,11 +1272,6 @@ struct hv_device {
->  	u16 device_id;
->=20
->  	struct device device;
-> -	/*
-> -	 * Driver name to force a match.  Do not set directly, because core
-> -	 * frees it.  Use driver_set_override() to set or clear it.
-> -	 */
-> -	const char *driver_override;
->=20
->  	struct vmbus_channel *channel;
->  	struct kset	     *channels_kset;
-> --
-> 2.53.0
->=20
+-- 
+David Heidelberg
 
 
