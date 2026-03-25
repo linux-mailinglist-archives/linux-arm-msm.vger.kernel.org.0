@@ -1,166 +1,206 @@
-Return-Path: <linux-arm-msm+bounces-99945-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99946-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id +CN0GrVLxGn5xwQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99945-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 21:55:17 +0100
+	id MGBHFKNMxGn5xwQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99946-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 21:59:15 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD65B32C087
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 21:55:16 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id E9D3232C0CA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 21:59:14 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id DE78D305C6C4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 20:52:33 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 60F7330066A8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 20:59:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E93AE36404B;
-	Wed, 25 Mar 2026 20:52:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85D152957B6;
+	Wed, 25 Mar 2026 20:59:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="bJgocfdz"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TNC7nu6f"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BA363451AF;
-	Wed, 25 Mar 2026 20:52:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AE71371D1D
+	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Mar 2026 20:59:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774471952; cv=none; b=NIc7ZgdxxIwj4KPEWEUTSLoWLYcE9y7uNuOunrDDuImc4CWxLci/vuWZFlmSO8nVoQA1i2EPayCUnRce2qgHfH/oni5wDHb13OufQ/oz6/9Vw9goFRVTuYvRGuELnl7LasaMlsyZWLpksgKHuzQy33E9drc+9MeAVXPQQdQTsu8=
+	t=1774472353; cv=none; b=JfxCxp3YmgS/fiomrqs5ok7s1JuElKMAqUb/2yntXx8MnPcFlBf9koQObzF1NqgSiO5OB6vXeLlGLgJU1cMkqusH2w9mt4zriCb3MtyI4jBDBvLm94nm8DigX5/XxgJlyGa18fNpMTvD7GEEpciGBwfQFccsaM3UD5HOtZeifl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774471952; c=relaxed/simple;
-	bh=7tfnYTF1fs0ROH1wH33nuz71pGj4lwF/JonOh4LcOu4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JoF0ZjtCNVw6WKPPyzfT9ZxJVLBJfcJiROtgFBIDZG0u7xfLg8K0fcUAzxHxTLq+L/WSLBl8eZXVk4AMFU6CUjafpue+4dVlpDfwWPCId/80yvHySQ/e7FcB8Jrh8XViX/VO5GCFiAStuLckTavIpkAWZIUYq+vvnbA3K+QAt1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=bJgocfdz; arc=none smtp.client-ip=78.32.30.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=5TaF136hS7gyiN2INSsjbTVG4M1m+RcQW4RSzUAK8mc=; b=bJgocfdzLBKes2wMXa50BQ/Sgw
-	2VNxUldZJFRFO1DH1e3sWYkf+HpUKst8qeo6mEmxzisIlT9F643+8G7mP8W0cEG97CX9EddaPFnAx
-	0auvwtk71mLu472gb4M/pgwwwT7auS75QFoEuI3Ulc0t8Td1yqPpRlQhMRL9Q0sVOXjuT1KRASHvT
-	KyQkPoRHlhfR1LscoVZHueKBsDdovNbEjbfAFOMWWjTHfKoz7+lVqv6Pq5sNuqrikvfHErcf50ZxE
-	dLM4luhf9tuxdUXNx8G4p2TIcbxgKN3UURxz0Ib/Wm84DDDPrXllvWnYoO6lVBmszS+dAvfAa4kcZ
-	Cij15muw==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:36514)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1w5VD1-000000003uJ-1ODG;
-	Wed, 25 Mar 2026 20:52:11 +0000
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1w5VCy-000000006MD-0rz1;
-	Wed, 25 Mar 2026 20:52:08 +0000
-Date: Wed, 25 Mar 2026 20:52:08 +0000
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Shawn Guo <shawnguo@kernel.org>, Fabio Estevam <festevam@gmail.com>,
-	Jan Petrous <jan.petrous@oss.nxp.com>, s32@nxp.com,
-	Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>,
-	Romain Gantois <romain.gantois@bootlin.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Christophe Roullier <christophe.roullier@foss.st.com>,
-	Bartosz Golaszewski <brgl@kernel.org>,
-	Radu Rendec <rrendec@redhat.com>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org,
-	Drew Fustini <dfustini@tenstorrent.com>,
-	linux-sunxi@lists.linux.dev, linux-amlogic@lists.infradead.org,
-	linux-mips@vger.kernel.org, imx@lists.linux.dev,
-	linux-renesas-soc@vger.kernel.org,
-	linux-rockchip@lists.infradead.org, sophgo@lists.linux.dev,
-	linux-riscv@lists.infradead.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH net-next v9 5/6] net: stmmac: qcom-ethqos: split power
- management context into a separate struct
-Message-ID: <acRK-F6TACsZqEhx@shell.armlinux.org.uk>
-References: <20260316-qcom-sa8255p-emac-v9-0-c58934e76ff2@oss.qualcomm.com>
- <20260316-qcom-sa8255p-emac-v9-5-c58934e76ff2@oss.qualcomm.com>
+	s=arc-20240116; t=1774472353; c=relaxed/simple;
+	bh=OMqepNNi4k2gJtZUunl0zH6/viqlOmaZWVSdvq6mCaI=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Sdh9NlCE3unFnPyZsX31vKcaOPrFlPCdMdotkV5w6uMrqpfrxvA7wOAbw0+hRa6/U9uQtXscn12WaCUoxIpPxYblWCTZychA1vBdesCtrco2et6qntbx8hKqMXR877IrInK4vZ2wS6EhPkw5en9xQH9ePIUq4iJ1DFuY9tqTFJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TNC7nu6f; arc=none smtp.client-ip=209.85.222.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-8d0089138f0so4446385a.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Mar 2026 13:59:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1774472351; x=1775077151; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=UcxN1+YGyk5SOfq/pCcmueMhLewrBa4a5Npnjyh8K/o=;
+        b=TNC7nu6fOKW3ghOkyfU5J1ENcXrrvobjt6FS0qfXShSwE2qGOKvcqQUQTcqBG/D4Gk
+         pjghGLNIhYRUsHWlhMZz9Uw0AoVRa158GdZUwDzOmeSa9N9zhivYDix9J6kweXnbsCn2
+         elaDV9VhAHHqNahXkbjGCBGoOxp37VsLG6yq8W06zSyBmhBTUZkQng6lwY2GIHG2x/1f
+         am5+TPHgTXWafPwLrisir54SsMc61ZUwk2ImBZQjLLvGNOc7bxoZ2OIRYSlVNYzNiMVx
+         bjsrY0ai02GRkV0Txwlk5fhSXFRbycqr+GUPztrZwzCsIo4aXgZG5RbU9VDqI0KsKhKC
+         OnjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774472351; x=1775077151;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UcxN1+YGyk5SOfq/pCcmueMhLewrBa4a5Npnjyh8K/o=;
+        b=s1MYAiUVF8mPqEFArjaunArPNMr2gcy1Wm0sf2cBlsFcIQDMH4s97bttvLZ+VZkHKf
+         cf8erIOC5RYVIRxxerYPuLXXQysS36lH1Ng9HUfFhPgbPeoAoevs9wU0vpJZIrUAMsBI
+         FDfxyE0sefq52ZvA2iViOB0IkzjqeXC3oVDi4BnhmvaZ4USqt1PxaXijLLllwESO1oDD
+         bvV2rUEEb2+exzmdzRPV3r1iCWPRCIej+byhp6fcsLomS+9+PgpT3QEBkteYgQR0kNxp
+         3TJME/zfz+fh2x6dESO6GUIqUu1aWR3MZyvdyZsBe9KyXJizVrwbTIHRqDqZIfsAzENd
+         I2NQ==
+X-Gm-Message-State: AOJu0YzF/GxF/ZILTnNDnGiZZX2wlCPs2rB3Jwl3WoZQQcWDGb/aNieG
+	08YILZ2Y9qlS9sjvmpFqqKwktQ8mHcI61YiZZMl5rE76SzWCgtdy+kDI
+X-Gm-Gg: ATEYQzz+/0raDyCgsBPEXrkf9gKVYEdT9pyiNQDWduvO0nse3OBxf3uWwTr09cYLpSX
+	YD5fLgi6xDfl8SSOBXXN2JSirfTwAkX+S6xuaPWqP/yIXMCOtnhShb3PlD9C1paUQpku6ke4QKJ
+	5sojXBu4qkygCb6z4MxN4ne30OruDUr8jphexRbayZUlw40etVVwYlMyePPHvBJ39BUJBSSJ2c1
+	6rCPp27ayhvQ/B31JaamCVhEJnTxcuIoSa/KnFRCf2kklSut5fMP6Dk4kgVeUkmwvt6BP8imWx+
+	yYha21GUfmmzpeoylgnfkHJue62sJ0Qm5wvsN2yLG4xfiEYZ4Nr7Xa1T5cHZgwH/6YkhsLGS6Nv
+	gGExT12bSSXxNBosTegjIsEvpDWmcHBF1pc7u3HLksmO3XHycxlCUlw4P4ccOyhjfL9HX81eU/L
+	kHHlwpPVOPEn/QRdKQZ0DezWm/CA==
+X-Received: by 2002:a05:620a:4706:b0:8cf:df37:4f97 with SMTP id af79cd13be357-8d0010fadc5mr560312885a.7.1774472351093;
+        Wed, 25 Mar 2026 13:59:11 -0700 (PDT)
+Received: from [192.168.50.55] ([67.243.142.39])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8d00e532cfasm79548085a.44.2026.03.25.13.59.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Mar 2026 13:59:10 -0700 (PDT)
+From: Connor Abbott <cwabbott0@gmail.com>
+Date: Wed, 25 Mar 2026 16:58:37 -0400
+Subject: [PATCH] drm/msm/a6xx: Fix dumping A650+ debugbus blocks
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260316-qcom-sa8255p-emac-v9-5-c58934e76ff2@oss.qualcomm.com>
-Sender: Russell King (Oracle) <linux@armlinux.org.uk>
-X-Spamd-Result: default: False [1.14 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260325-drm-msm-a650-debugbus-v1-1-dfbf358890a7@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAHxMxGkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDYyNT3ZSiXN3c4lzdRDNTA92U1KTS9KTSYl0LA0NDyyQzEwNTs0QloN6
+ CotS0zAqwudGxtbUAQnMc92cAAAA=
+X-Change-ID: 20260325-drm-msm-a650-debugbus-80119b64056a
+To: Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Akhil P Oommen <akhilpo@oss.qualcomm.com>, 
+ Dmitry Baryshkov <lumag@kernel.org>, 
+ Abhinav Kumar <abhinav.kumar@linux.dev>, 
+ Jessica Zhang <jesszhan0024@gmail.com>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ Connor Abbott <cwabbott0@gmail.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1774472349; l=2027;
+ i=cwabbott0@gmail.com; s=20240426; h=from:subject:message-id;
+ bh=OMqepNNi4k2gJtZUunl0zH6/viqlOmaZWVSdvq6mCaI=;
+ b=20aMOCBhd3e0A8fwyna49ooZKCvRRkrMUNZ83wKTEQvpYYviGaFCZjOgRwkwXolqTYjTisao+
+ cehsZ9r3Z6oAxRt9ROK1IjVSM6jycDwu5WKbM7cBSd/VfMiTcna6SQA
+X-Developer-Key: i=cwabbott0@gmail.com; a=ed25519;
+ pk=dkpOeRSXLzVgqhy0Idr3nsBr4ranyERLMnoAgR4cHmY=
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_DKIM_REJECT(1.00)[armlinux.org.uk:s=pandora-2019];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
-	DMARC_POLICY_SOFTFAIL(0.10)[armlinux.org.uk : SPF not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-99945-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.freedesktop.org,gmail.com];
+	TAGGED_FROM(0.00)[bounces-99946-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FREEMAIL_CC(0.00)[kernel.org,lunn.ch,davemloft.net,google.com,redhat.com,gmail.com,foss.st.com,st.com,linaro.org,baylibre.com,oss.nxp.com,nxp.com,oss.qualcomm.com,bootlin.com,glider.be,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org,tenstorrent.com,lists.linux.dev];
-	RCPT_COUNT_TWELVE(0.00)[48];
-	RCVD_TLS_LAST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,poorly.run,kernel.org,linux.dev,gmail.com,somainline.org,ffwll.ch];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[armlinux.org.uk:-];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	MISSING_XM_UA(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	FREEMAIL_FROM(0.00)[gmail.com];
 	RCVD_COUNT_FIVE(0.00)[5];
-	FROM_NEQ_ENVFROM(0.00)[linux@armlinux.org.uk,linux-arm-msm@vger.kernel.org];
 	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[cwabbott0@gmail.com,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.964];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev,renesas];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[shell.armlinux.org.uk:mid,linaro.org:email,armlinux.org.uk:url,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: BD65B32C087
+	TO_DN_SOME(0.00)[]
+X-Rspamd-Queue-Id: E9D3232C0CA
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Mon, Mar 16, 2026 at 01:05:10PM +0100, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> With match data split into general and power-management sections, let's
-> now do the same with runtime device data.
+These should be appended after the existing debugbus blocks, instead of
+replacing them.
 
-As I've already said, this conflicts with work that I have in progress,
-which will remove the serdes support from this driver _if_ we can get
-forward progress on the PCS bits from Mohd - that has become dependent
-on sorting out the MDIO bus clock which seems to have been totally
-broken in this driver for quite some time so that we can have confidence
-that any testing that is done is actually being done on a setup which is
-running within correct specification (and not running the MDIO bus at
-some insane speed that may lead to data corruption.)
+Fixes: 1e05bba5e2b8 ("drm/msm/a6xx: Update a6xx gpu coredump")
+Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
+---
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+index d2d6b2fd3cba303959bd037b60796341315079a1..9699a5b4754628023b67f0eecafcda728953e8d2 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+@@ -361,7 +361,7 @@ static void a6xx_get_debugbus_blocks(struct msm_gpu *gpu,
+ 			sizeof(*a6xx_state->debugbus));
+ 
+ 	if (a6xx_state->debugbus) {
+-		int i;
++		int i, j;
+ 
+ 		for (i = 0; i < ARRAY_SIZE(a6xx_debugbus_blocks); i++)
+ 			a6xx_get_debugbus_block(gpu,
+@@ -369,8 +369,6 @@ static void a6xx_get_debugbus_blocks(struct msm_gpu *gpu,
+ 				&a6xx_debugbus_blocks[i],
+ 				&a6xx_state->debugbus[i]);
+ 
+-		a6xx_state->nr_debugbus = ARRAY_SIZE(a6xx_debugbus_blocks);
+-
+ 		/*
+ 		 * GBIF has same debugbus as of other GPU blocks, fall back to
+ 		 * default path if GPU uses GBIF, also GBIF uses exactly same
+@@ -381,17 +379,19 @@ static void a6xx_get_debugbus_blocks(struct msm_gpu *gpu,
+ 				&a6xx_gbif_debugbus_block,
+ 				&a6xx_state->debugbus[i]);
+ 
+-			a6xx_state->nr_debugbus += 1;
++			i++;
+ 		}
+ 
+ 
+ 		if (adreno_is_a650_family(to_adreno_gpu(gpu))) {
+-			for (i = 0; i < ARRAY_SIZE(a650_debugbus_blocks); i++)
++			for (j = 0; j < ARRAY_SIZE(a650_debugbus_blocks); i++, j++)
+ 				a6xx_get_debugbus_block(gpu,
+ 					a6xx_state,
+-					&a650_debugbus_blocks[i],
++					&a650_debugbus_blocks[j],
+ 					&a6xx_state->debugbus[i]);
+ 		}
++
++		a6xx_state->nr_debugbus = i;
+ 	}
+ }
+ 
+
+---
+base-commit: e4eb11b34d6c84f398d8f08d7cb4d6c38e739dd2
+change-id: 20260325-drm-msm-a650-debugbus-80119b64056a
+
+Best regards,
 -- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+Connor Abbott <cwabbott0@gmail.com>
+
 
