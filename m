@@ -1,56 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-99919-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99921-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 1h/QLScjxGljwwQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99919-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 19:02:15 +0100
+	id gOH4IuglxGm9wwQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99921-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 19:14:00 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 892D532A3C2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 19:02:14 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3AC2732A5E5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 19:14:00 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A62963053DC8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 17:57:20 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 9A57D3064F08
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 18:07:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5162A40B6D0;
-	Wed, 25 Mar 2026 17:57:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9311241B367;
+	Wed, 25 Mar 2026 18:07:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gbDVLN8F"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YGNxcxjU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29C003A6EF4;
-	Wed, 25 Mar 2026 17:57:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8122140F8CB
+	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Mar 2026 18:07:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774461438; cv=none; b=K+v7Jtr/sXPwPibAmZsNrW6I8Lo8ONdQtcxW4HLvqdWXHBbewmBaQSFLi360L6pvl5fNwZdf1oeTW+IYvet2oWGq6Q8n57oSQhi381iijvaW9jyB2LLqXVCUXPbpxJoCM1PKCTJXOnoFXolX4vZBMc1C/aoyiB4djUpJqFe3fy4=
+	t=1774462057; cv=none; b=BRZlTovWvwi9gROEFky2NMuMXZRbO1KZBq7SFEmzFpbp2VxizOUVm2cg+0aa5GMTp9KE8wR4Ovjnq3aBuy2rqCLBS5MrSPOpgBAKOGRAUMY086xzVLUC6cXg9QzJpB1+aZGIqgp0uooAhsxk8Za1IysUw07jirEL8546KG68exA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774461438; c=relaxed/simple;
-	bh=qsTEgT/W9QOLmt4TqjUxrRDazuJnu2x+qBXV69+B19g=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Xr7dpgdmKd0hjs+7Kh/xRsUlbcvhwJgIK0zz7CxBq7hlBl2w3bBQ9nrpv0tT2PTyWDixIzL1nzNsdMItJ5ba1hxCaAPg4vSZi0lwCk9Jr85lTglwaf3XT+Ai+KCuwf58thzg7Rkbr3OoKZFrLa+gB63EgXR+8f2lLGuwNaJghP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gbDVLN8F; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id D9C0CC4AF0D;
-	Wed, 25 Mar 2026 17:57:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774461437;
-	bh=qsTEgT/W9QOLmt4TqjUxrRDazuJnu2x+qBXV69+B19g=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=gbDVLN8Fpu3Y7PeQcKnWHkJUTKf7w+RjrgOa4GMGSBzumrQ3tRCcOw1dTcUkw+RJ9
-	 kNnF5Qz3on9ZZ4/8YlCe8Kej/Q6SkMbd/NoO7lntP9qggA2ZK0IaV+/8LTqcLfez7L
-	 bqcvltmDsasyZiAyCULo1aqYerh7lQTGrHCX4n1HC9OJ80YOmJLkkAgrehPhoTFl/H
-	 xod+SHD842T1SzWIrradQuinkf1r1q61sFnju1crX2dfDXVk7i/yy7e+xTNNTanYnf
-	 dQ/15NmiF0wufdYttkfRec5qB7cWXyXpKQons7uHXbzHn2+MfnjnDgqs8zSwtZFBED
-	 27V0cw/Rumj1Q==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CACA3109C04D;
-	Wed, 25 Mar 2026 17:57:17 +0000 (UTC)
-From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Date: Wed, 25 Mar 2026 18:57:17 +0100
-Subject: [PATCH v4 3/3] arm64: dts: qcom: sdm845-xiaomi-beryllium: Enable
- ath10k host-cap skip quirk
+	s=arc-20240116; t=1774462057; c=relaxed/simple;
+	bh=JX1VT9zgv0Pae5sCQylMsKS3FziR0eu/Z48DU4Modf4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=YIlSSo8bFiUUN0xPrX2fcuhL5b2waZ9L3mKj0rH5xNDUp8iH/8wrBWqVdr6zV7WS59+TNhKOkb3Hn3v3vy12FHAq2jgS8yi16/a+ROk3a5qsue0HddjcwqcAZJSuFsRBEODAd19RA+7Ut5CRbuTN+Op5/ov0OoPT2UBFkYbkyVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YGNxcxjU; arc=none smtp.client-ip=209.85.216.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-35c1a131946so210114a91.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Mar 2026 11:07:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1774462055; x=1775066855; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=28ojK3/EzMg1N1ScywDMizt5NQH1Eo8ilmYAqBf6aac=;
+        b=YGNxcxjUtxqB0bxk2tWvfN7+xR7w5l4EPzffIkE9kPmXTlICzJIeyPZ9R8Wemy0aZf
+         km5qypmOEeEiuh3nm0eKfELVG/WyEKJ/ZS+vxmpUZUg4ykLjpIfIpCH0Th+bcobdDkgg
+         M4FPuIkKLRcPUk99D/yR9Bh6/kZ0Kd4VGmnMC2uZB1oMnayFNY4hdo5QiD+p8DAFoHyJ
+         82Z7k45+bhOaVT+9oVGwkMnZgUxtvVGS+6nBTSS4EPVxD/+xVREtqLxunwogYzdC1np/
+         ttQ80lwe6wOeD52LxyW0LtjUtkMNIn+/ehhJ3XjMIl4OjKjuzUHpY7ObQJtDXdpKhZf5
+         bxIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774462055; x=1775066855;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=28ojK3/EzMg1N1ScywDMizt5NQH1Eo8ilmYAqBf6aac=;
+        b=VFNUP2iir3DZerocct1dqHKaoKiPhdeWybqaoCj1IBEWgKJ8CbBSsYvEyn+LGYh5BS
+         tTUhzk+7x+eYR+4g9FOuG9pi7qKkTK4w1uO4PukMWBiWNI/sT2auCFu+BYBDF8fin2nC
+         3zbp7PCA0FCk49cTZBqN4QlszTz7ye5hRoQ0U6xIJHToBa3JztBCVyWfgNnry5lmxDPm
+         WaYskjvwYgOgI19+h6GrAMTLvW36aXmPUBGrUaZC2yUoisvlrIu+/utezSjBbp70+FQF
+         c4d1B75QTmtzhhkkmh6brFuMHFt9dTm5smsgQeAF6e4BO1KAvMejX/iGY74sbk83A4Gk
+         /l3Q==
+X-Gm-Message-State: AOJu0Yyp0dysNJNyrmICXXAbraZWiV1DvsB6GJ+vRMektXi3CV8I2PHX
+	nQnwpWF2v8c/Vr2c7uiIrzkKhHkOTp1tk++JHbcu1FHFI7LW/7k8+JWk
+X-Gm-Gg: ATEYQzzX5dL6Hak2OjIWu3uQAh3jL5wXH8f3hI0g4sCSKxnY3Xf4gDlXrU1cGcP+uX9
+	V3UjLYozcO8/BjFWR4U6GSl1kl3SPxQeeVw8PIU30b4szF4dCjUwdmKCoIZXAqzOqQ3V9yQsMDY
+	Y2UqLA4stlmkH68zl/G91OwOmimu6gTq+jPCu4JLxXrC4/fZVPy0pC19HNY0H6TjWHAOLrCHdd5
+	OHmIpilvq1vrKlFEI9AHuiYu9VkrOP3BpnD+xC3+NMTQd7PU2CyUeCo79voG/sEhUMXcE8a4RqL
+	UApKDpdT0hr6+1/Xut7I5XLhu1yGoOFV8O9yDusAf6JHH1M+QWwY2YaUcJzwH0Ff5JGgxVXaHRY
+	4bqPYVSXuiEkY2eQ/raPSUHJK8alSSES8DWV8cvLSSibzA9+lXFMd2hYaA1i8s7qImvRRMeU4qK
+	lkNJfFb4V5jYUnX4mLBbhXhw7/m9tC
+X-Received: by 2002:a17:903:22ca:b0:2ae:cd8c:bd04 with SMTP id d9443c01a7336-2b0a4dace22mr76613765ad.10.1774462054938;
+        Wed, 25 Mar 2026 11:07:34 -0700 (PDT)
+Received: from [192.168.0.102] ([43.251.91.187])
+        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-2b0bc773b33sm5687805ad.10.2026.03.25.11.07.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Mar 2026 11:07:34 -0700 (PDT)
+From: Biswapriyo Nath <nathbappai@gmail.com>
+Subject: [PATCH 0/7] Add vibrator, IR transmitter and USB-C handling in
+ xiaomi-ginkgo
+Date: Wed, 25 Mar 2026 18:07:23 +0000
+Message-Id: <20260325-ginkgo-add-usb-ir-vib-v1-0-446c6e865ad6@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,98 +86,96 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260325-skip-host-cam-qmi-req-v4-3-bc08538487aa@ixit.cz>
-References: <20260325-skip-host-cam-qmi-req-v4-0-bc08538487aa@ixit.cz>
-In-Reply-To: <20260325-skip-host-cam-qmi-req-v4-0-bc08538487aa@ixit.cz>
-To: Johannes Berg <johannes@sipsolutions.net>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Jeff Johnson <jjohnson@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Paul Sajna <sajattack@postmarketos.org>
-Cc: Amit Pundir <amit.pundir@linaro.org>, linux-wireless@vger.kernel.org, 
- devicetree@vger.kernel.org, ath10k@lists.infradead.org, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- phone-devel@vger.kernel.org, David Heidelberg <david@ixit.cz>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=865; i=david@ixit.cz;
- h=from:subject:message-id;
- bh=7WCT4AIXs3RES5sBwcwPY1VLLZLiJwKsEh3sFLY3XeA=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpxCH731ERAs00JnGTMwhjDc7fvFNGG6zHnruKt
- CzctlaDyk6JAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCacQh+wAKCRBgAj/E00kg
- ch0UD/9bRRDJsrM0G4teP9+2n5J/36wjbkVECTL3P9N4I0zEVmBUPaHYndwRhiz2OdWQ850FzrC
- 9l3RUNEjqdi14CbA3wNDnNBlqGdS4m7pnEjPTCgz9rUa4pqqV0blSTnsxMPUkldndytGhBMwCKv
- 0FZ3HnHYNjX/9p/OrHglUWmuuSeWS7pCWZQEuTC+yNesYSgdUoFJpgQKZ/AIephysyQGo06c0Cx
- 3/5FajViggtoX8K9bYrnoRaOiBNoGs2i6iKNn6ybc++JRtcwDkUjKzhE36jVN8YpsvijHreLHyu
- 73SmHDNuQxi7fq7P6paQx6SjMpNMrhSEvQocilCvJmiUYAH1t8Q5OFXGiuDDWcvcsz80tr+o37x
- R9i5YxVJ6xDXBT8XEJWfEIyqsu97obj4TILDO3NDEKOkduvAnVPsirgFlsnxi4DSL/i08yJOf3y
- eQGFnhEqzkok4HpJyylXIqGQ0sAQHXcPijZhs0lpdUz9hnhnzdCLxl8iUBx5Wm2HrKONCex7uSz
- VTG56POA1mOSu48mQV2blAZIyNk8lM52x8t8OAE1j7Ny0ov41eHqmcBT2KYnB6c0ZV4V+8/wraS
- zazwSChKzwhWB4ku7qk80ODz/xgoYzcE/trWbyUqIeyNCwAzGWpXLJeeyZisCa4PEQLcyF8covI
- zF7BssX7Fpp7DYA==
-X-Developer-Key: i=david@ixit.cz; a=openpgp;
- fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
-X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
-X-Original-From: David Heidelberg <david@ixit.cz>
-Reply-To: david@ixit.cz
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQqDMBBA0avIrDugqQrtVaSLjJnEaSFKRkUQ7
+ 96oy7f4fwflJKzwLnZIvIrKGDOqRwH9YGNgFJcNpjRt+TQNBom/MKJ1DhcllISrENa2qci9vG9
+ rgtxOib1s17f73NaFvtzP5wyO4w+tnvDleQAAAA==
+X-Change-ID: 20260325-ginkgo-add-usb-ir-vib-4a51bd9ff64b
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>, 
+ Pavel Machek <pavel@kernel.org>, Sean Young <sean@mess.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Martin Botka <martin.botka@somainline.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-leds@vger.kernel.org, 
+ linux-clk@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
+ phone-devel@vger.kernel.org, Biswapriyo Nath <nathbappai@gmail.com>, 
+ kernel test robot <lkp@intel.com>
+X-Mailer: b4 0.15.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1774462047; l=1316;
+ i=nathbappai@gmail.com; s=20260118; h=from:subject:message-id;
+ bh=JX1VT9zgv0Pae5sCQylMsKS3FziR0eu/Z48DU4Modf4=;
+ b=FTGDeN4f4HSu3HsrxdqeKr4af3eKQ0NpAJch2iaq19oGsccNrLS+g9iaX+SYWX5PAjLHHCMD/
+ G3XSfR0V/MdAl0iw07TAOtfNpDU4LgFGi2V9fIgH6cXkpvWlUy1Kr8m
+X-Developer-Key: i=nathbappai@gmail.com; a=ed25519;
+ pk=slmb/9yXbet+KTiT3EYLCp0p0MEOYa3EdjUXP+HXfjg=
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-99921-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-99919-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
-	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[16];
 	MIME_TRACE(0.00)[0:+];
-	TO_DN_SOME(0.00)[];
-	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
-	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
-	HAS_REPLYTO(0.00)[david@ixit.cz];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.sr.ht,gmail.com,intel.com];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	RCPT_COUNT_TWELVE(0.00)[20];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FROM_NEQ_ENVFROM(0.00)[nathbappai@gmail.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,ixit.cz:email,ixit.cz:replyto,ixit.cz:mid]
-X-Rspamd-Queue-Id: 892D532A3C2
+	MID_RHS_MATCH_FROM(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 3AC2732A5E5
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-From: Amit Pundir <amit.pundir@linaro.org>
+This patch series add support for various components in Xiaomi Redmi
+Note 8.
 
-The Wi-Fi firmware used on Xiaomi Poco F1 (beryllium) phone doesn't
-support the host-capability QMI request, so add a quirk to skip it on
-this device.
+Most notably:
+- IR transmitter
+- USB-C OTG
+- Vibrator
 
-Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
-Signed-off-by: David Heidelberg <david@ixit.cz>
+Also, fix some bindings warning as reported due to previous commits.
+These are tested with linux-next tag next-20260320.
+
+Signed-off-by: Biswapriyo Nath <nathbappai@gmail.com>
 ---
- arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+Biswapriyo Nath (7):
+      arm64: dts: qcom: sm6125-xiaomi-ginkgo: Enable vibrator
+      arm64: dts: qcom: sm6125: Enable USB-C port handling
+      arm64: dts: qcom: sm6125-xiaomi-ginkgo: Add PMI632 Type-C property
+      dt-bindings: leds: irled: ir-spi-led: Add new duty-cycle value
+      arm64: dts: qcom: sm6125-xiaomi-ginkgo: Add IR transmitter
+      arm64: dts: qcom: sm6125: Use 64 bit addressing
+      dt-bindings: clock: qcom, dispcc-sm6125: Add #reset-cells property
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-index 1298485c42142..950bbcc3bf91f 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-common.dtsi
-@@ -661,5 +661,6 @@ &wifi {
- 	vdd-3.3-ch1-supply = <&vreg_l23a_3p3>;
- 
- 	qcom,calibration-variant = "xiaomi_beryllium";
-+	qcom,snoc-host-cap-skip-quirk;
- };
- 
+ .../bindings/clock/qcom,dispcc-sm6125.yaml         |   3 +
+ .../devicetree/bindings/leds/irled/ir-spi-led.yaml |   2 +-
+ .../boot/dts/qcom/sm6125-xiaomi-ginkgo-common.dtsi |  56 +++++++
+ arch/arm64/boot/dts/qcom/sm6125.dtsi               | 168 +++++++++++----------
+ 4 files changed, 152 insertions(+), 77 deletions(-)
+---
+base-commit: 785f0eb2f85decbe7c1ef9ae922931f0194ffc2e
+change-id: 20260325-ginkgo-add-usb-ir-vib-4a51bd9ff64b
 
--- 
-2.53.0
-
+Best regards,
+--  
+Biswapriyo Nath <nathbappai@gmail.com>
 
 
