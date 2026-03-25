@@ -1,159 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-99943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id mIwhFBFFxGm1xwQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 21:26:57 +0100
+	id EFtsMm1KxGn5xwQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 21:49:49 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id BBAD132BCBA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 21:26:56 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6EA8C32BFE6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 21:49:49 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 30BE230ACB54
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 20:24:31 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id F3A953024533
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 20:46:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C90A364E89;
-	Wed, 25 Mar 2026 20:24:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 923D130F95C;
+	Wed, 25 Mar 2026 20:46:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=adishatz.org header.i=@adishatz.org header.b="TxsrGjQi"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="Ve02YZRn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from adishatz.org (ns314768.ip-37-187-26.eu [37.187.26.192])
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F144640DFB7;
-	Wed, 25 Mar 2026 20:24:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=37.187.26.192
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BF5F2C3257;
+	Wed, 25 Mar 2026 20:46:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774470268; cv=none; b=aCIEcWqOJAw7zTExbD5cEgkZvoJMMZaB+rYQ01HBs6su585B6bgLoITxhW2uePVmQ/QLM7QuflOnvWxfAwYxfwIhR2LCNxuw1YjvuQG4Tq2VbCauYfl3j69VO0sEMhoKKpRhYTTN2GxSTPHEfFiPYhXaKOjJodReDOH1XeIO0lw=
+	t=1774471599; cv=none; b=SuDamM8BsFFuuSs+WX0Mgzs/AURtYNpwCsUQwJpIAsRzkIT4arG07jwqO1EsQM8zEzi6y2eNK62y6XJ5/xY6uiN7cs46WDI8iy5wjfZ4XuGrgHHdOVrkfs+gTxPqGswA+6mG5iMtWysbbQzwH5BtwK3knpPc66MsR53z4ns3H+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774470268; c=relaxed/simple;
-	bh=zU881+KYqJ2texOlCecdGNXSK2jjswW/VHW+Kr76Z1E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pc7+K9AHmxGXQehq6nMRNsqwIZ/BMOXSXHPBjkLWQ0XvrYawHIv1tNijdZswiCvaEDzUoQD1bTJpNdSfHIDOho3S0z2El0ZOyMEVtHF6DxUNxY+AeuV0ugyQBS/i8pt8OTwtvqfq6A3R8pq/PJ96vhO7FaAHeIbdhCvgNawy3Us=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=adishatz.org; spf=pass smtp.mailfrom=adishatz.org; dkim=pass (2048-bit key) header.d=adishatz.org header.i=@adishatz.org header.b=TxsrGjQi; arc=none smtp.client-ip=37.187.26.192
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=adishatz.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=adishatz.org
-Received: from [192.168.1.197] (88-167-17-4.subs.proxad.net [88.167.17.4])
-	by adishatz.org (Postfix) with ESMTPSA id AB3EE4C01F5;
-	Wed, 25 Mar 2026 21:24:16 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=adishatz.org;
-	s=mail; t=1774470257;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=+5gKYBO4fTmgruQ8a5PMivK7GbslUIKE49QDkqS/2uQ=;
-	b=TxsrGjQiWd1WVnYFA0r13YJEH2u4S67I+5Y1oSM/DHZjXsYG8d0mEJjvzuZ7dx2RKHO7KI
-	nAKaq9+XX2J1glP5bCfHGFdPgc942o5dGViyvq/yug0NJoyWd+tDCTPGjdTJIfRW8LsNes
-	LT/EbLqHUOaJoGMvatdx5fbajQ5vxvn0R8czM9Jet8xb+6LQo1BF+J5JhZcxrEufOhb4nI
-	kyzeqPTsuhN/AaSGPBUVwLcR0JAz3KRMi1bVdniTImhhWEOTq+N3Fu0yBWo4XxVT3l69S1
-	wvP/c7qKrdXLC3v5gcP2ad8Ffg8wyVf0H3cyKFq1wzXlD35HTADDlU4sNvgWhw==
-Authentication-Results: ORIGINATING;
-	auth=pass smtp.auth=cedric.bellegarde smtp.mailfrom=cedric.bellegarde@adishatz.org
-Message-ID: <b6df67d6-5999-48d4-bb4d-46853ca0aeab@adishatz.org>
-Date: Wed, 25 Mar 2026 21:24:16 +0100
+	s=arc-20240116; t=1774471599; c=relaxed/simple;
+	bh=5o1xohuKr0S+BiEvA0vQ9u8l2HBmv1np5Y69DlJp66g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=vBoHKTib1lNjLAnTGYBXa9e3eGTxu9VTDXzwK3hOhK7M1aB0clJOuCkOQZvX1/a6q1e7R/Nl+xtqcKUN+gG/CNI15rD3GOaakshuh7PlXfHaVAXn6QPDnlYdWX9ekFS+Q4pXg1zxCS6n+FiXC/XcO4tPXB7k6kGzzLCa+cUs1GY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=Ve02YZRn; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=9QKg/ec1UB4Iqjz+3XvMVVCaBUJlpvPmNLrcDpzXquo=; b=Ve02YZRnNB03ruvQ/IjMJ/1ue1
+	Bi8GDv/IOoGR1ANMgT981Oj4zKj2iU195jiS8WXu+7B+X6xJnKauwJSR4031QIWEgH+2vTwfVQr6y
+	6Uce6PdLDE3m76fpnRsKUBhpTJScPz4WkdEti7wSHIpkJlDYs4ox/dK/urm14+6tM4h1b8TQhing0
+	q3JBKDYwRFu+WNMRY0DtkGZxWIuqCxaxHYQ6kgObXg6QaE2h1AxVEp6VucVunJ22eCyC+c/8oM7Sd
+	UH972dpzdlSDv5EZv13lys3OTKfnntfc2ax0H2xncCFzdbdlgsnc4buqoC6Go4sQrHDOJ9VVuLLZ2
+	JvH2jTZA==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:46352)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1w5V7G-000000003sV-3Db4;
+	Wed, 25 Mar 2026 20:46:14 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1w5V7D-000000006M4-0GW4;
+	Wed, 25 Mar 2026 20:46:11 +0000
+Date: Wed, 25 Mar 2026 20:46:10 +0000
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Shawn Guo <shawnguo@kernel.org>, Fabio Estevam <festevam@gmail.com>,
+	Jan Petrous <jan.petrous@oss.nxp.com>, s32@nxp.com,
+	Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>,
+	Romain Gantois <romain.gantois@bootlin.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Magnus Damm <magnus.damm@gmail.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Christophe Roullier <christophe.roullier@foss.st.com>,
+	Bartosz Golaszewski <brgl@kernel.org>,
+	Radu Rendec <rrendec@redhat.com>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	netdev@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org,
+	Drew Fustini <dfustini@tenstorrent.com>,
+	linux-sunxi@lists.linux.dev, linux-amlogic@lists.infradead.org,
+	linux-mips@vger.kernel.org, imx@lists.linux.dev,
+	linux-renesas-soc@vger.kernel.org,
+	linux-rockchip@lists.infradead.org, sophgo@lists.linux.dev,
+	linux-riscv@lists.infradead.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH net-next v9 2/6] net: stmmac: qcom-ethqos: use generic
+ device properties
+Message-ID: <acRJkrKbF_lI03O4@shell.armlinux.org.uk>
+References: <20260316-qcom-sa8255p-emac-v9-0-c58934e76ff2@oss.qualcomm.com>
+ <20260316-qcom-sa8255p-emac-v9-2-c58934e76ff2@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm/msm/dsi: fix race between cmd transfer and host power
- off
-Content-Language: en-US, fr-FR
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: robin.clark@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
- jesszhan0024@gmail.com, sean@poorly.run, marijn.suijten@somainline.org,
- airlied@gmail.com, simona@ffwll.ch, antomani103@gmail.com,
- mitltlatltl@gmail.com, krzk@kernel.org, linux-arm-msm@vger.kernel.org,
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
- linux-kernel@vger.kernel.org
-References: <20260318105635.270949-1-cedric.bellegarde@adishatz.org>
- <6wu7eezhtqyatbvoryprfpwkcmofdk4albr2zedfrbnrw37amf@rx4lslum3u6b>
-From: =?UTF-8?Q?C=C3=A9dric_Bellegarde?= <cedric.bellegarde@adishatz.org>
-In-Reply-To: <6wu7eezhtqyatbvoryprfpwkcmofdk4albr2zedfrbnrw37amf@rx4lslum3u6b>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.16 / 15.00];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260316-qcom-sa8255p-emac-v9-2-c58934e76ff2@oss.qualcomm.com>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+X-Spamd-Result: default: False [1.14 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[adishatz.org,reject];
-	R_DKIM_ALLOW(-0.20)[adishatz.org:s=mail];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_DKIM_REJECT(1.00)[armlinux.org.uk:s=pandora-2019];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
+	DMARC_POLICY_SOFTFAIL(0.10)[armlinux.org.uk : SPF not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-99943-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch,vger.kernel.org,lists.freedesktop.org];
+	TAGGED_FROM(0.00)[bounces-99944-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_CC(0.00)[kernel.org,lunn.ch,davemloft.net,google.com,redhat.com,gmail.com,foss.st.com,st.com,linaro.org,baylibre.com,oss.nxp.com,nxp.com,oss.qualcomm.com,bootlin.com,glider.be,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org,tenstorrent.com,lists.linux.dev];
+	RCPT_COUNT_TWELVE(0.00)[48];
 	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[adishatz.org:+];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	RCPT_COUNT_TWELVE(0.00)[16];
+	DKIM_TRACE(0.00)[armlinux.org.uk:-];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	MISSING_XM_UA(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	FROM_NEQ_ENVFROM(0.00)[linux@armlinux.org.uk,linux-arm-msm@vger.kernel.org];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[cedric.bellegarde@adishatz.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROM(0.00)[];
+	NEURAL_HAM(-0.00)[-0.922];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev,renesas];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: BBAD132BCBA
+	DBL_BLOCKED_OPENRESOLVER(0.00)[shell.armlinux.org.uk:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,armlinux.org.uk:url,linaro.org:email]
+X-Rspamd-Queue-Id: 6EA8C32BFE6
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Le 18/03/2026 à 14:57, Dmitry Baryshkov a écrit :
-> On Wed, Mar 18, 2026 at 11:56:35AM +0100, Cédric Bellegarde wrote:
->> The transfer function dsi_host_transfer() guards against the DSI host
->> being inactive by checking msm_host->power_on. However, power_on is
->> cleared at the end of msm_dsi_host_power_off(), after clocks have
->> already been disabled. This creates a window where a concurrent DCS
->> command (e.g. a brightness update from the backlight driver) can pass
->> the power_on check, call xfer_prepare()/xfer_restore(), and toggle
->> link clocks that are already being torn down, leaving
->> disp_cc_mdss_byte0_clk stuck in the 'on' state.
->>
->> Checking enabled instead of power_on closes the race by rejecting
->> transfers as soon as the bridge starts tearing down, before any clocks
->> are touched.
+On Mon, Mar 16, 2026 at 01:05:07PM +0100, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
-> Thanks, but it is not correct. The transfer callback is documented as
-> requiring to power up the host if it is not on at the time it is
-> called. Could you please implement corresponding logic?
-> 
->>
->>
->> Signed-off-by: Cédric Bellegarde <cedric.bellegarde@adishatz.org>
->> ---
->>   drivers/gpu/drm/msm/dsi/dsi_host.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
->> index 4d75529c0e85..f66f138cfba0 100644
->> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
->> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
->> @@ -1652,7 +1652,7 @@ static ssize_t dsi_host_transfer(struct mipi_dsi_host *host,
->>   	struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
->>   	int ret;
->>   
->> -	if (!msg || !msm_host->power_on)
->> +	if (!msg || !msm_host->enabled)
->>   		return -EINVAL;
->>   
->>   	mutex_lock(&msm_host->cmd_mutex);
->> -- 
->> 2.53.0
->>
-> 
-After being able to boot linux 7.0.0 rc4, I can confirm that this issue 
-is already fixed.
+> In order to drop the dependency on CONFIG_OF, convert all device property
+> getters from OF-specific to generic device properties and stop pulling
+> in any linux/of.h symbols.
 
-Regards,
+Why is this desirable? Please see the recent discussion at
+
+https://lore.kernel.org/r/20260322-remove-device-find-by-of-node-v1-0-b72eb22a1215@gmail.com
+
+specifically replies from Andrew and myself.
+
+Merely wanting to drop a dependency is not a good enough reason for
+these kinds of conversions, because they in effect make the DT
+properties also apply to ACPI which may not be appropriate (note
+for example that MDIO busses are not represented in ACPI.)
 
 -- 
-Cédric Bellegarde
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
