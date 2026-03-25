@@ -1,81 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-99946-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99947-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MGBHFKNMxGn5xwQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99946-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 21:59:15 +0100
+	id sP1jJRpQxGljyAQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99947-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 22:14:02 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9D3232C0CA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 21:59:14 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id E4A4432C457
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 22:14:01 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 60F7330066A8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 20:59:14 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 644893184024
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 21:05:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85D152957B6;
-	Wed, 25 Mar 2026 20:59:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 535C9346E75;
+	Wed, 25 Mar 2026 21:02:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TNC7nu6f"
+	dkim=pass (2048-bit key) header.d=smankusors.com header.i=@smankusors.com header.b="VKqdalQr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from crocodile.elm.relay.mailchannels.net (crocodile.elm.relay.mailchannels.net [23.83.212.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AE71371D1D
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Mar 2026 20:59:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774472353; cv=none; b=JfxCxp3YmgS/fiomrqs5ok7s1JuElKMAqUb/2yntXx8MnPcFlBf9koQObzF1NqgSiO5OB6vXeLlGLgJU1cMkqusH2w9mt4zriCb3MtyI4jBDBvLm94nm8DigX5/XxgJlyGa18fNpMTvD7GEEpciGBwfQFccsaM3UD5HOtZeifl4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774472353; c=relaxed/simple;
-	bh=OMqepNNi4k2gJtZUunl0zH6/viqlOmaZWVSdvq6mCaI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Sdh9NlCE3unFnPyZsX31vKcaOPrFlPCdMdotkV5w6uMrqpfrxvA7wOAbw0+hRa6/U9uQtXscn12WaCUoxIpPxYblWCTZychA1vBdesCtrco2et6qntbx8hKqMXR877IrInK4vZ2wS6EhPkw5en9xQH9ePIUq4iJ1DFuY9tqTFJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TNC7nu6f; arc=none smtp.client-ip=209.85.222.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-8d0089138f0so4446385a.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Mar 2026 13:59:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774472351; x=1775077151; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=UcxN1+YGyk5SOfq/pCcmueMhLewrBa4a5Npnjyh8K/o=;
-        b=TNC7nu6fOKW3ghOkyfU5J1ENcXrrvobjt6FS0qfXShSwE2qGOKvcqQUQTcqBG/D4Gk
-         pjghGLNIhYRUsHWlhMZz9Uw0AoVRa158GdZUwDzOmeSa9N9zhivYDix9J6kweXnbsCn2
-         elaDV9VhAHHqNahXkbjGCBGoOxp37VsLG6yq8W06zSyBmhBTUZkQng6lwY2GIHG2x/1f
-         am5+TPHgTXWafPwLrisir54SsMc61ZUwk2ImBZQjLLvGNOc7bxoZ2OIRYSlVNYzNiMVx
-         bjsrY0ai02GRkV0Txwlk5fhSXFRbycqr+GUPztrZwzCsIo4aXgZG5RbU9VDqI0KsKhKC
-         OnjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774472351; x=1775077151;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UcxN1+YGyk5SOfq/pCcmueMhLewrBa4a5Npnjyh8K/o=;
-        b=s1MYAiUVF8mPqEFArjaunArPNMr2gcy1Wm0sf2cBlsFcIQDMH4s97bttvLZ+VZkHKf
-         cf8erIOC5RYVIRxxerYPuLXXQysS36lH1Ng9HUfFhPgbPeoAoevs9wU0vpJZIrUAMsBI
-         FDfxyE0sefq52ZvA2iViOB0IkzjqeXC3oVDi4BnhmvaZ4USqt1PxaXijLLllwESO1oDD
-         bvV2rUEEb2+exzmdzRPV3r1iCWPRCIej+byhp6fcsLomS+9+PgpT3QEBkteYgQR0kNxp
-         3TJME/zfz+fh2x6dESO6GUIqUu1aWR3MZyvdyZsBe9KyXJizVrwbTIHRqDqZIfsAzENd
-         I2NQ==
-X-Gm-Message-State: AOJu0YzF/GxF/ZILTnNDnGiZZX2wlCPs2rB3Jwl3WoZQQcWDGb/aNieG
-	08YILZ2Y9qlS9sjvmpFqqKwktQ8mHcI61YiZZMl5rE76SzWCgtdy+kDI
-X-Gm-Gg: ATEYQzz+/0raDyCgsBPEXrkf9gKVYEdT9pyiNQDWduvO0nse3OBxf3uWwTr09cYLpSX
-	YD5fLgi6xDfl8SSOBXXN2JSirfTwAkX+S6xuaPWqP/yIXMCOtnhShb3PlD9C1paUQpku6ke4QKJ
-	5sojXBu4qkygCb6z4MxN4ne30OruDUr8jphexRbayZUlw40etVVwYlMyePPHvBJ39BUJBSSJ2c1
-	6rCPp27ayhvQ/B31JaamCVhEJnTxcuIoSa/KnFRCf2kklSut5fMP6Dk4kgVeUkmwvt6BP8imWx+
-	yYha21GUfmmzpeoylgnfkHJue62sJ0Qm5wvsN2yLG4xfiEYZ4Nr7Xa1T5cHZgwH/6YkhsLGS6Nv
-	gGExT12bSSXxNBosTegjIsEvpDWmcHBF1pc7u3HLksmO3XHycxlCUlw4P4ccOyhjfL9HX81eU/L
-	kHHlwpPVOPEn/QRdKQZ0DezWm/CA==
-X-Received: by 2002:a05:620a:4706:b0:8cf:df37:4f97 with SMTP id af79cd13be357-8d0010fadc5mr560312885a.7.1774472351093;
-        Wed, 25 Mar 2026 13:59:11 -0700 (PDT)
-Received: from [192.168.50.55] ([67.243.142.39])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8d00e532cfasm79548085a.44.2026.03.25.13.59.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Mar 2026 13:59:10 -0700 (PDT)
-From: Connor Abbott <cwabbott0@gmail.com>
-Date: Wed, 25 Mar 2026 16:58:37 -0400
-Subject: [PATCH] drm/msm/a6xx: Fix dumping A650+ debugbus blocks
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41F843264CF;
+	Wed, 25 Mar 2026 21:02:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.212.45
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774472566; cv=pass; b=Ykkea9S0zYNFuGc15Y8WnXt06tXSw+DXyCcGipx+R5RiN8B0QU1Kf9ZsDiG3ZSnWYUTuHAR+D1ARb+4czQzkm5BbQvbCO6zGI82eNqj7d5gQ/EdEFUjxK7K/DQqHMHgMKSr88NFX0Q3UxmNAusc/TdnzYP1RpdIJ/njdSy0i3r8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774472566; c=relaxed/simple;
+	bh=wACdQNI+8zAec/s3V3rt5YY4G202YVIBUqhgbpq2kKs=;
+	h=From:Subject:Message-Id:MIME-Version:Content-Type:To:Cc:Date; b=jwrcyOWOAlYoavPT3UeicVNWRIvIsKya93ffqL8i4+xvhgJ4m5l93X3Rq8K86rfHH7pqhV62lgqO9dBCZjULP0dY4omIan0MfUci4ZAYE2rI8Km60TdXW53+6kYrXTwrxyMWBI7PhX0G95rPltMUpCzmggzW6nJditTXfsFgNP0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=smankusors.com; spf=pass smtp.mailfrom=smankusors.com; dkim=pass (2048-bit key) header.d=smankusors.com header.i=@smankusors.com header.b=VKqdalQr; arc=pass smtp.client-ip=23.83.212.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=smankusors.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smankusors.com
+X-Sender-Id: hostingeremail|x-authuser|linux@smankusors.com
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id 8452D401D86;
+	Wed, 25 Mar 2026 21:02:43 +0000 (UTC)
+Received: from fr-int-smtpout25.hostinger.io (100-96-3-148.trex-nlb.outbound.svc.cluster.local [100.96.3.148])
+	(Authenticated sender: hostingeremail)
+	by relay.mailchannels.net (Postfix) with ESMTPA id 505F54019F2;
+	Wed, 25 Mar 2026 21:02:39 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; d=mailchannels.net; s=arc-2022; cv=none;
+	t=1774472561;
+	b=yjnqidl4fAjbA1IhAlxhr5W/ECfVLMJnz2Ierlq8Lwq8y50ywrj1UfCM0lvzpJ4sZdRVDZ
+	W3scnfcJzoeQvAcXRXIfOcfmFJgDhZgIs3P9pdYLyanX+avmATX2nvm/MGBAljk2Te3vOp
+	mRbT4d87g6PKEGzqrSdfh0hrhFkNGAWdBbLrEzAvfMjmzACGJVXbFK0QbLMqXDYx785Avp
+	bdrgQKimXLaE6om+a58OwuiZL07bgOdfOBFQaxytAggm2KUq2ALArXYvjcSRro8/2Pc1Xi
+	FAh1PplYqn1u52qKx6+YM9BtWQCFapJLJFyBEUCh01AAqXSHRb9/9cLtMzzXAg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1774472561;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:dkim-signature;
+	bh=OH8COS2pCIjBs8hij3fLubn5K83F6iOpok5M1DQoARo=;
+	b=wmP/XVxmngHY+JS11NS3jW+8m5oyCvntfezWmXyArCmv8l1KU26uEYhPqpZOkN6n2mbOt1
+	DM9pZMbayy3C5Zn3nYd/t4TUi9hgpJP+xRz2k6uvHyAPn/M+9PwpEXI45c5LPXt6Z2cqKi
+	LOtqzBKZArBinXR3oeQ3rgaSU20axH/3/g+/Qa/CsLFeQoiJWZJ1v2sjwj8HJ2Ugojsfb2
+	YSYF173bRDdHaKeHnyMujosaDUAw21liNYsNgVO84E+zaGympenohPrw/6ECL+o7QsGJaj
+	ypT+ePkbdc6m1J8JQweUEcl5p6ykyHQiABsvfSiuzJ79B5ddbCZPiCbhVYyeKg==
+ARC-Authentication-Results: i=1;
+	rspamd-db964497c-g7vbt;
+	auth=pass smtp.auth=hostingeremail smtp.mailfrom=linux@smankusors.com
+X-Sender-Id: hostingeremail|x-authuser|linux@smankusors.com
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: hostingeremail|x-authuser|linux@smankusors.com
+X-MailChannels-Auth-Id: hostingeremail
+X-Bottle-Wipe: 296c16f64cb0b399_1774472563407_200871386
+X-MC-Loop-Signature: 1774472563407:3782653531
+X-MC-Ingress-Time: 1774472563407
+Received: from fr-int-smtpout25.hostinger.io (fr-int-smtpout25.hostinger.io
+ [148.222.54.38])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.96.3.148 (trex/7.1.5);
+	Wed, 25 Mar 2026 21:02:43 +0000
+Received: from [172.17.0.2] (unknown [180.253.44.220])
+	(Authenticated sender: linux@smankusors.com)
+	by smtp.hostinger.com (smtp.hostinger.com) with ESMTPSA id 4fgzrB1BDLz1xpk;
+	Wed, 25 Mar 2026 21:02:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=smankusors.com;
+	s=hostingermail-a; t=1774472557;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=OH8COS2pCIjBs8hij3fLubn5K83F6iOpok5M1DQoARo=;
+	b=VKqdalQr8k1J7BL3fktoyk+cX58ZCd/7Lz87OZTmG+Xi8L2lNUbxNNo1e0N504AG3TRc5O
+	HwkquOCOwIzYUXBtha4pG5nbkNqAqhEm/WELvsWbFJIp+stse2xRPkNeMr9qiYW44Ta7Wl
+	KTtzZJ6oY7/yKOgG7UNxamjU0TxuUVawS2+ZQJ28NcE3+9iRqAoIkXM1o1sVTaa1M+N+V1
+	RgmVoNL6io8nqtT3om29wE1OM25c//rmn5h6cOiNplpMmLUnbnSKzkLcKe3bTrVR8GC6zc
+	mjmTPeCMCX2JwPL0VBrK1DehHZABR/BFvMLGhBGLNyN0LMjLLUuTbefVkPhH2w==
+From: Antony Kurniawan Soemardi <linux@smankusors.com>
+Subject: [PATCH 0/2] iio: adc: qcom-pm8xxx-xoadc: add support for reading
+ channel labels from DT
+Message-Id: <20260326-pm8xxx-xoadc-label-v1-0-027805dad4db@smankusors.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,123 +102,99 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260325-drm-msm-a650-debugbus-v1-1-dfbf358890a7@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAHxMxGkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDYyNT3ZSiXN3c4lzdRDNTA92U1KTS9KTSYl0LA0NDyyQzEwNTs0QloN6
- CotS0zAqwudGxtbUAQnMc92cAAAA=
-X-Change-ID: 20260325-drm-msm-a650-debugbus-80119b64056a
-To: Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Akhil P Oommen <akhilpo@oss.qualcomm.com>, 
- Dmitry Baryshkov <lumag@kernel.org>, 
- Abhinav Kumar <abhinav.kumar@linux.dev>, 
- Jessica Zhang <jesszhan0024@gmail.com>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- Connor Abbott <cwabbott0@gmail.com>
+X-B4-Tracking: v=1; b=H4sIADBNxGkC/x3MSQqAMAxA0atI1gZqFaeriItoUw040YIExLtbX
+ L7F/w9EDsIR+uyBwLdEOY+EIs9gXulYGMUlgzW2NqUt8NpbVUU9yc240cQbVg155xtvauoghVd
+ gL/pPh/F9P55ww49kAAAA
+X-Change-ID: 20260321-pm8xxx-xoadc-label-47afdf7f06a9
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Jonathan Cameron <jic23@kernel.org>, 
+ David Lechner <dlechner@baylibre.com>, 
+ =?utf-8?q?Nuno_S=C3=A1?= <nuno.sa@analog.com>, 
+ Andy Shevchenko <andy@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-iio@vger.kernel.org, 
+ phone-devel@vger.kernel.org, 
+ Antony Kurniawan Soemardi <linux@smankusors.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1774472349; l=2027;
- i=cwabbott0@gmail.com; s=20240426; h=from:subject:message-id;
- bh=OMqepNNi4k2gJtZUunl0zH6/viqlOmaZWVSdvq6mCaI=;
- b=20aMOCBhd3e0A8fwyna49ooZKCvRRkrMUNZ83wKTEQvpYYviGaFCZjOgRwkwXolqTYjTisao+
- cehsZ9r3Z6oAxRt9ROK1IjVSM6jycDwu5WKbM7cBSd/VfMiTcna6SQA
-X-Developer-Key: i=cwabbott0@gmail.com; a=ed25519;
- pk=dkpOeRSXLzVgqhy0Idr3nsBr4ranyERLMnoAgR4cHmY=
-X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1774472553; l=1433;
+ i=linux@smankusors.com; s=20250609; h=from:subject:message-id;
+ bh=wACdQNI+8zAec/s3V3rt5YY4G202YVIBUqhgbpq2kKs=;
+ b=ngiU1utpjKX9QkjYMT7YkL/wUgt/0RSA9kG2krG7tk3hEMlcX7VAA1wqk9EOQuWa7SqrU7ETQ
+ QPc5aZ3y/XxCaN0nBCxgTOL0qNLNWTSsy7AkUXPqbfR83Un+3FXBSQa
+X-Developer-Key: i=linux@smankusors.com; a=ed25519;
+ pk=65wTy06fJl2/h/EJwjr704YG+yjHFhZObJBWzzK+N00=
+Date: Wed, 25 Mar 2026 21:02:33 +0000 (UTC)
+X-CM-Analysis: v=2.4 cv=UN2PHzfy c=1 sm=1 tr=0 ts=69c44d6d a=9XgiG0qChrIWxZZBWkq1Wg==:117 a=9XgiG0qChrIWxZZBWkq1Wg==:17 a=IkcTkHD0fZMA:10 a=VwQbUJbxAAAA:8 a=wxLWbCv9AAAA:8 a=zjR9frvayTJ3PP2CzHgA:9 a=QEXdDO2ut3YA:10 a=QJY96suAAestDpCc5Gi9:22
+X-CM-Envelope: MS4xfA7a2X59ChSMD813BX2eR1odEZ2qEOMwPOVe0DQZDcCg2f/jysaAd1GCL2jeNExy4PzxZ8mcVyGujDtHwKMavW9mdtXwEWqWxGa1riumiOfHYCwh0RJ0 bzY1vovyWT3+cM7a8Zk+AzsQZALioXLQnR895C7L6kKZSTkGv+qk9jwu3KtMHnrFehwOLacczz/dvqGWNs4AMR6jSx/q4RzhjjCOYRk2eolkCYC3r/7QM66a qxm7t5rp90ccnPC9SvYXOYVCUjmPLr9ixpI6g8DD0XFqKKKj5/DQltz2w6B8H010ME3WTUcg3GS16saIZ/JVAq7PTNWkk1akU4EO65H0jph3vw/rDEKmcrMc NpRNIb/A/kucF6ODvSwZ3laTdibNR+zq4eRw0cOU7bLjKtr04ehl+OijsdutgyTnjwmTO5dQu9dHovL1TJsOJzBkuhhfY5ogB3NmO99s2OOCni0hWgS0pS/K qXFyetOMQc5kiEQ69eQRloJK7LJqrwswThZxRZgwU26yg+t1P9xNC+fyNbz3TVqNYUzqXIMSePLqbIwR69b/fMSyEAgTzf0ewXtxMeKaLKHiPVPCGR01kyFf wX4uQP2UUWdYqavRNO8aw3Dv7MScSthZqFp8qFiMiyMQIkx4oTa4l5+eIeK4D005/aA=
+X-AuthUser: linux@smankusors.com
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+	DMARC_POLICY_ALLOW(-0.50)[smankusors.com,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[smankusors.com:s=hostingermail-a];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,lists.freedesktop.org,gmail.com];
-	TAGGED_FROM(0.00)[bounces-99946-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,poorly.run,kernel.org,linux.dev,gmail.com,somainline.org,ffwll.ch];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[15];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[cwabbott0@gmail.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-99947-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[smankusors.com:+];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,smankusors.com:dkim,smankusors.com:email,smankusors.com:mid];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[linux@smankusors.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: E9D3232C0CA
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: E4A4432C457
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-These should be appended after the existing debugbus blocks, instead of
-replacing them.
+This series adds support for reading channel labels from the device tree
+in the the Qualcomm PM8xxx XOADC driver, along with the corresponding
+DT updates for the PM8921 PMIC.
 
-Fixes: 1e05bba5e2b8 ("drm/msm/a6xx: Update a6xx gpu coredump")
-Signed-off-by: Connor Abbott <cwabbott0@gmail.com>
+Tested on Sony Xperia SP (PM8921):
+> cat /sys/bus/iio/devices/iio\:device0/in_voltage7_label
+usb_vbus
+> cat /sys/bus/iio/devices/iio\:device0/in_temp12_label
+ref_muxoff
+
+This patch was originally part of the larger series addressing the said
+driver improvements. As the calibration fixes are not yet ready, the
+label support is split out to allow independent review and merging.
+
+Changes since original patch:
+- The label is now read from the platform description (device tree)
+  instead of the internal datasheet name.
+- Link to original patch:
+  https://lore.kernel.org/all/20251028-pm8xxx-xoadc-fix-v1-1-b000e1036e41@smankusors.com/
+
+Signed-off-by: Antony Kurniawan Soemardi <linux@smankusors.com>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+Antony Kurniawan Soemardi (2):
+      ARM: dts: qcom: pm8921: add labels for ADC channels
+      iio: adc: qcom-pm8xxx-xoadc: add support for reading channel labels
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-index d2d6b2fd3cba303959bd037b60796341315079a1..9699a5b4754628023b67f0eecafcda728953e8d2 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-@@ -361,7 +361,7 @@ static void a6xx_get_debugbus_blocks(struct msm_gpu *gpu,
- 			sizeof(*a6xx_state->debugbus));
- 
- 	if (a6xx_state->debugbus) {
--		int i;
-+		int i, j;
- 
- 		for (i = 0; i < ARRAY_SIZE(a6xx_debugbus_blocks); i++)
- 			a6xx_get_debugbus_block(gpu,
-@@ -369,8 +369,6 @@ static void a6xx_get_debugbus_blocks(struct msm_gpu *gpu,
- 				&a6xx_debugbus_blocks[i],
- 				&a6xx_state->debugbus[i]);
- 
--		a6xx_state->nr_debugbus = ARRAY_SIZE(a6xx_debugbus_blocks);
--
- 		/*
- 		 * GBIF has same debugbus as of other GPU blocks, fall back to
- 		 * default path if GPU uses GBIF, also GBIF uses exactly same
-@@ -381,17 +379,19 @@ static void a6xx_get_debugbus_blocks(struct msm_gpu *gpu,
- 				&a6xx_gbif_debugbus_block,
- 				&a6xx_state->debugbus[i]);
- 
--			a6xx_state->nr_debugbus += 1;
-+			i++;
- 		}
- 
- 
- 		if (adreno_is_a650_family(to_adreno_gpu(gpu))) {
--			for (i = 0; i < ARRAY_SIZE(a650_debugbus_blocks); i++)
-+			for (j = 0; j < ARRAY_SIZE(a650_debugbus_blocks); i++, j++)
- 				a6xx_get_debugbus_block(gpu,
- 					a6xx_state,
--					&a650_debugbus_blocks[i],
-+					&a650_debugbus_blocks[j],
- 					&a6xx_state->debugbus[i]);
- 		}
-+
-+		a6xx_state->nr_debugbus = i;
- 	}
- }
- 
-
+ arch/arm/boot/dts/qcom/pm8921.dtsi  | 12 ++++++++++++
+ drivers/iio/adc/qcom-pm8xxx-xoadc.c | 26 +++++++++++++++++++++-----
+ 2 files changed, 33 insertions(+), 5 deletions(-)
 ---
-base-commit: e4eb11b34d6c84f398d8f08d7cb4d6c38e739dd2
-change-id: 20260325-drm-msm-a650-debugbus-80119b64056a
+base-commit: c612261bedd6bbab7109f798715e449c9d20ff2f
+change-id: 20260321-pm8xxx-xoadc-label-47afdf7f06a9
 
 Best regards,
--- 
-Connor Abbott <cwabbott0@gmail.com>
+--
+Antony Kurniawan Soemardi <linux@smankusors.com>
 
 
