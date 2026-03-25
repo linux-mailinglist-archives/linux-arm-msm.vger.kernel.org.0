@@ -1,195 +1,247 @@
-Return-Path: <linux-arm-msm+bounces-99762-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99763-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id YObVKXMyw2noowQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99762-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 01:55:15 +0100
+	id oAN+FdEzw2noowQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99763-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 02:01:05 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4A2B531E225
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 01:55:15 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB23331E2AB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 02:01:04 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 8E103304A9A5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 00:55:14 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C0E503022FB5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 00:59:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7006E202F70;
-	Wed, 25 Mar 2026 00:55:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E2CB219A8D;
+	Wed, 25 Mar 2026 00:59:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="YK6oVp5u";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="VppED3HP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from cstnet.cn (smtp81.cstnet.cn [159.226.251.81])
-	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157261D130E;
-	Wed, 25 Mar 2026 00:55:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.81
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 097081F4168
+	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Mar 2026 00:59:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774400113; cv=none; b=ctuH/l6s+LzF8CUNlJ82TubzLjQLk+jm+bP4erYVzXqgM+qC5IYmpZ+Gy9YSufy4JLhLJS5TkX9W9QNgAVC4w99t5rnD5gsQ+0SHXDWlPUnblv4CkjjXZXbWb0SCNyaCSkX5aqTFRSMoJ0NIdM0CTc3YRvJ8ZBT8zrCXq1taEk0=
+	t=1774400360; cv=none; b=jZPN4O/Rc7tj43v+/rmq8BDjl7SaCai6ftBR5lGMqNC5J99rilLEc79bHiqcfoGboqWHqNabZ9Zusvu3/zzp7A9vmrN3Azot/kzAvfmOtI5zoZ+xtYZKfmNZig24x2ssn2hMeb6LeuRbi+vczwKLuYIPAu4zEI+okxF01feB130=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774400113; c=relaxed/simple;
-	bh=qcvPTnd5deZ4iLXShrdk3IyWOpcO+tDR71cJg0w/wYA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CdmhnHztqZGHaX1ZGE0hY1j8XVqiP+4nBOkTHfvy3dAYBfo0B8BNLV5Uaa+qytQkAYN4rdL3J9cY8sFntMGMrei14yjAzF8gi2kmHNgtTEcRRVSXbnpLwdho2j3t6vpbEq4Zkj7Tq2bs69kAyJIqL9ckbwh1lTpHP+4dwv6qzWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
-Received: from localhost.localdomain (unknown [111.196.245.197])
-	by APP-03 (Coremail) with SMTP id rQCowAAnQNdpMsNpuUm5Cw--.34606S2;
-	Wed, 25 Mar 2026 08:55:05 +0800 (CST)
-From: Pengpeng Hou <pengpeng@iscas.ac.cn>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	pengpeng@iscas.ac.cn
-Subject: [PATCH v3] misc: fastrpc: validate overlap-derived invoke buffer ranges
-Date: Wed, 25 Mar 2026 08:55:05 +0800
-Message-ID: <20260325005505.98257-1-pengpeng@iscas.ac.cn>
-X-Mailer: git-send-email 2.50.1
+	s=arc-20240116; t=1774400360; c=relaxed/simple;
+	bh=4Q8HG3qt4gK3KnNvRaO69nxtaOU4iVVt3U/qYfJV6ww=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YoShxjS7dtQIXwOHGpmDOE6AoZWvMCF7F10cUmCU+18NUctumbvZc+BaowCdCI31R9grHDlwOBQ4VR6BhlJE8UA9aQwr3ZfWdj1aHUWXHkHHoOJAN2YbMCYCxEZt1wT5/rRVtPO4CFCmAGdeLFbNLCSqP4V6FQ6Yq14isKO7NVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YK6oVp5u; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=VppED3HP; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62OJCscH104360
+	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Mar 2026 00:59:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	AFXdL+w2VkJq6sfprGktd6Pg68wI7bXyhxNzZd5HSwM=; b=YK6oVp5uUaM18v7b
+	UeDkMwprPMRqz4vrdPqgOJnl7Lt+BpPYp6Jzl/Wk6Unuh22IL03YybXqbh0w+hPJ
+	bcpQOsHtzTTSEZOYJQMDXoU9PEmJmRBf6xP7xazA3Jw7CdpHxO4TwM2vvoLXvmIx
+	lrwW5hfQ1V2dU52NEYD2xyYB16f6A6aeXq+oq/xq7BeNKGf4t4h3nVc6564pl2Wk
+	F6QhCFh5IZErqswoRd5v6X1JnqK0AjPlnwHQKQD8JANB3ghYh6NygdrAnpYCy7IV
+	RiIIFXLC5KtQTb/Ltf9jiZZJGVIks2QgX2bBbz39MakuHKsv1ovI0ozk58wNIE+U
+	RIs65A==
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d3rf0k1s8-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Mar 2026 00:59:17 +0000 (GMT)
+Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-829ba0e63e8so3634807b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Mar 2026 17:59:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1774400357; x=1775005157; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=AFXdL+w2VkJq6sfprGktd6Pg68wI7bXyhxNzZd5HSwM=;
+        b=VppED3HP6Vsqgh2Y7yqfyaIocrAC9riZKXWaPKcV35lzTeGQi/c0nniPkbMKdYT7mc
+         ZFo6kaAvO9ldxpINRgn+PQTY/bs9ggeSczA1nKxYtj/7eOFjxcucmmmfHA4uJnEVr0Jt
+         6Ln2qlKRsHHLYmVLXhAd/NQ9XaemxSfWXO2lzNHOkWM0qCR+GDvmmmVK1hCEXghc2NWs
+         tjCsBh3RTuhuvHQglNe3F/Z7Iv3UFQskpA4VIIj78EYBH2FE9A3tgp6QbcfZYxONvmnR
+         zPWh211zhU3ewy0tIPUGcBKQGifbOvq+cCc7ldKDE4PAIahtX8ffSRPfwhdKJtY4UBZA
+         nQLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774400357; x=1775005157;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AFXdL+w2VkJq6sfprGktd6Pg68wI7bXyhxNzZd5HSwM=;
+        b=tQsPjBvQLEatI+Ahf4GbmSiLJ3zpixCxoIzeBbLeeoIm6CzjMYVg++fP1d/7d3lxn0
+         9GcTQyEpEkVbLLyn5WGYUAAWw9DK4Z4Vx4ouyAYu+7JZmcBAytHhDLNo7keZmGTem9s/
+         hWRvnHkGB5EB1RNGlGcPusZI/g1QGLiFCtWXWy96bMaAwDpq25Xd/o8YiK9ifW91t/56
+         6z+SjBJZTN9cuwIGOzzsJN+94VXSc4/QlgGxEMb8n68tFDo8803LEI3/VjZLVUCEfmAH
+         XILywCshcXRa4YLuFgQWksXpqrZ9SaNnBsqNL9cl4JKD+GHmzUQfWJmSuma3Se4Uz06m
+         Yzbw==
+X-Forwarded-Encrypted: i=1; AJvYcCXPiHOWLT8fwGFEIIqjZnAf1QkyZWazXODTvhQOWaGt/6NFkSOAnoBBYpfx63AkA8RTyMlQnxhBQ+uyEwku@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy4p8oLmzqmZxZKBbIjjD9UOTty8IidqHeMJ3PAGsd8OGZMl27Z
+	impksveTrS9t6PmaIjH9VxzimOgt8PWR+ajOolEOZYAnGHJgOUUlJWqs3AzX54lUQDPsoykZH4s
+	1qcxdaGEKZqtoAx1Oq0oDVr8aPMKlm3o56XDBpvlmvERL8UpjngrJwpXxgpUGgGpTMoPZ
+X-Gm-Gg: ATEYQzxydfD+REGTRgQt6MQVwk/MeemwV4xryvAnQq0FPYnL9KN6fW4FC6blKX8bIfk
+	tt0PddCM43M491I4DVNsgCa+Lka0fTP8FuF5yIALSVynYvrjFepKhfQ10fBBYeW7OBoy6TA9JQz
+	6IU52UUDWhopGkvxHxDVKyn14M9ANyuRF/RukvEZWOZpBbFB/murKAVB10wxgb9ihHgr8qdkYdu
+	B3v9x/smuWtM5sqLmii1Zyj8pKBg+NE+mdvWre7/EIulNV6pl+gUsmUlS3n1/1apRgInBdAg5Iy
+	pKsYMR+BjV1bzsVGALz3IitTp8Mxjv1ZxJY0d2T2kuVfY65IpSmNBSFY+jzdKvkHiJz43qN4C3S
+	K8ESTEE5f/KGyVO5T7UVFHZHdlUhKr8pBqIAOBvFwembcApLWdAUl79AIUjLwSO+38iMAwNLoUO
+	h082Dc7sdd/BU=
+X-Received: by 2002:a05:6a00:2997:b0:82c:6bcc:f3fa with SMTP id d2e1a72fcca58-82c6dfa5a58mr1381193b3a.35.1774400356901;
+        Tue, 24 Mar 2026 17:59:16 -0700 (PDT)
+X-Received: by 2002:a05:6a00:2997:b0:82c:6bcc:f3fa with SMTP id d2e1a72fcca58-82c6dfa5a58mr1381161b3a.35.1774400356378;
+        Tue, 24 Mar 2026 17:59:16 -0700 (PDT)
+Received: from [10.133.33.224] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82b03bc66b3sm14625504b3a.21.2026.03.24.17.59.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Mar 2026 17:59:15 -0700 (PDT)
+Message-ID: <f5959454-340d-459c-8162-fb1243ebfe1b@oss.qualcomm.com>
+Date: Wed, 25 Mar 2026 08:59:09 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID:rQCowAAnQNdpMsNpuUm5Cw--.34606S2
-X-Coremail-Antispam: 1UD129KBjvJXoWxZry7ZFWkZw1UAF1kJry3CFg_yoW5ur4fpF
-	s8Ka1rGF45Xw47GF1xZF1DuryfGws5JryUGrWfG34Sv343tFy0gFyvkFyY93W8CrZrZa4U
-	Krs8ta9IkF43ZaUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDU0xBIdaVrnRJUUUkG14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
-	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
-	1l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26r4j
-	6F4UM28EF7xvwVC2z280aVAFwI0_Cr1j6rxdM28EF7xvwVC2z280aVCY1x0267AKxVWxJr
-	0_GcWle2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E
-	2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJV
-	W8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1lc7CjxVAaw2AFwI0_
-	JF0_Jw1l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67
-	AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMIIY
-	rxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14
-	v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJVW8
-	JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x0JUBmhwUUU
-	UU=
-X-CM-SenderInfo: pshqw1xhqjqxpvfd2hldfou0/
-X-Spamd-Result: default: False [0.04 / 15.00];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] arm64: dts: qcom: glymur: add coresight nodes
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20260318-add-coresight-dt-nodes-for-glymur-v2-1-d76e08f21fa5@oss.qualcomm.com>
+ <ef89e328-fda6-43f4-b40c-8834d16e2cfd@oss.qualcomm.com>
+ <7972211e-d735-4401-ada9-b83c7b96b612@oss.qualcomm.com>
+ <a73af369-b122-43d2-b28f-e97ab33352c9@oss.qualcomm.com>
+ <f28fe058-d1b7-4d4f-8751-54117aba95f8@oss.qualcomm.com>
+ <acFGhpVWaHZtiyTq@baldur>
+ <d8ab2410-8d67-41c2-9a11-384f4a6a8f07@oss.qualcomm.com>
+ <7993130c-5de0-439b-9263-69d6f327f5ab@oss.qualcomm.com>
+Content-Language: en-US
+From: Jie Gan <jie.gan@oss.qualcomm.com>
+In-Reply-To: <7993130c-5de0-439b-9263-69d6f327f5ab@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI1MDAwNSBTYWx0ZWRfX7U83P4QPqahd
+ qPV7o2u8gOeYxWlzNzkkrs0LjERGrO4PlnpHrXva3njG+2RSI1y+3Ul/VMjOXNyHtpDYe31W4+Q
+ wTaYOv53hkZIZg9M3rVdwvVfzgAs9kOcAglXxMqzExBT4CC7r/7sHBslzCP8+Pldrr/9sqcaM4Y
+ b8zPEJ5slpocyKVYuV5dOWt1igo+c3xRvRAOaIDIMUIgZ3njwcGkBza9B9CYf7hYWg9Y7TkB5z2
+ F/zDnuXA3oHG4K4qXzyL+vBocOdQVrAk0Cw/7xX3GHPP+wIjSx1fkGj/xNJjWVehLoVRXjh5HSH
+ BrJQA6i2siS3XDzqpe8xQ9FWwzATCKBRASBJHgRMtSY+5c7DMmGPSG789QlVvIqQXRhF3Y039Xr
+ GymES0Vbb8wRAy6hWRoQESJKlnxuNZxQSjJXMdef/OLXJJgjia4cBIhM3RvEIAmEAggK9oxGE1y
+ TTs/UA4tCvHcRJsJF9Q==
+X-Authority-Analysis: v=2.4 cv=Ua9ciaSN c=1 sm=1 tr=0 ts=69c33365 cx=c_pps
+ a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=EUspDBNiAAAA:8 a=25pNCHLBOcfxwS3ibeIA:9 a=QEXdDO2ut3YA:10
+ a=IoOABgeZipijB_acs4fv:22
+X-Proofpoint-ORIG-GUID: vpQT1GcH0y-rv9LS0NjOtqcGx1JgHrBL
+X-Proofpoint-GUID: vpQT1GcH0y-rv9LS0NjOtqcGx1JgHrBL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-24_04,2026-03-24_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 lowpriorityscore=0 malwarescore=0 phishscore=0 bulkscore=0
+ spamscore=0 suspectscore=0 clxscore=1015 impostorscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603250005
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DMARC_NA(0.00)[iscas.ac.cn];
-	RCVD_COUNT_THREE(0.00)[4];
-	PRECEDENCE_BULK(0.00)[];
-	MIME_TRACE(0.00)[0:+];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	TAGGED_FROM(0.00)[bounces-99762-lists,linux-arm-msm=lfdr.de];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[pengpeng@iscas.ac.cn,linux-arm-msm@vger.kernel.org];
-	R_DKIM_NA(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_FROM(0.00)[bounces-99763-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FROM_NEQ_ENVFROM(0.00)[jie.gan@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	RCPT_COUNT_FIVE(0.00)[5];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,iscas.ac.cn:email,iscas.ac.cn:mid]
-X-Rspamd-Queue-Id: 4A2B531E225
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: AB23331E2AB
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-fastrpc_get_args() derives rpra[i].buf.pv from the overlap offset that
-was computed from user-controlled argument pointers and lengths. The
-resulting destination pointer is later passed to copy_from_user() or
-memcpy() without checking that the overlap-adjusted range still stays
-inside the allocated invoke buffer.
 
-Reject overlap-derived destinations that would point before the start of
-the invoke buffer or that would extend past the end of the allocated
-packet before storing rpra[i].buf.pv and before copying inline
-arguments into the buffer. Static code analysis of the overlap handling
-in fastrpc_get_args() identified this path.
 
-Fixes: c68cfb718c8f ("misc: fastrpc: Add support for context Invoke method")
-Signed-off-by: Pengpeng Hou <pengpeng@iscas.ac.cn>
----
-v3:
-- separate tags from the free-flow text in the commit message
-- rewrite the overlap bounds checks using explicit overflow-safe
-  start/end calculations
-- post the new revision as a new thread as requested in review
+On 3/23/2026 10:12 PM, Konrad Dybcio wrote:
+> On 3/23/26 3:09 PM, Jie Gan wrote:
+>>
+>>
+>> On 3/23/2026 10:03 PM, Bjorn Andersson wrote:
+>>> On Mon, Mar 23, 2026 at 09:27:41PM +0800, Jie Gan wrote:
+>>>>
+>>>>
+>>>> On 3/23/2026 9:02 PM, Konrad Dybcio wrote:
+>>>>> On 3/23/26 1:30 PM, Jie Gan wrote:
+>>>>>>
+>>>>>>
+>>>>>> On 3/23/2026 7:05 PM, Konrad Dybcio wrote:
+>>>>>>> On 3/18/26 12:42 PM, Jie Gan wrote:
+>>>>>>>> Add CoreSight nodes to enable trace paths like TPDM->ETF/STM->ETF.
+>>>>>>>> These devices are part of the AOSS, CDSP, QDSS, PCIe5, TraceNoc and
+>>>>>>>> some small subsystems, such as GCC, IPCC, PMU and so on.
+>>>>>>>>
+>>>>>>>> Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
+>>>>>>>> ---
+>>>>>>>> Changes in V2:
+>>>>>>>> 1. removed two cti devices due to GFX block is down
+>>>>>>>
+>>>>>>> i.e. "because GPU is not yet enabled"?
+>>>>>>
+>>>>>> Yeah, these CTI devices have clock issue for enabling due to the GPU block is not yet enabled.
+>>>>>
+>>>>> Do they need the GPU to be online, or a clock from GPU_CC, or
+>>>>> maybe something else?
+>>>>
+>>>> We need a specific debug clock inside the GPU block. The debug clock only
+>>>> can be enabled while GPU is online.
+>>>
+>>> What happens once GPU has been delivered, but for some reason is
+>>> inactive and we try to use this CTI device?
+>>
+>> We will check these devices again once GPU is available. We also will cross check with AOP team if there is a clock enable/disable requirement with the specific debug clock.
+> 
+> +Akhil for awareness, this is probably a solved problem downstream, but
+> I suppose this may be non-trivial with IFPC at play
 
- drivers/misc/fastrpc.c | 28 ++++++++++++++++++++++++++--
- 1 file changed, 26 insertions(+), 2 deletions(-)
+Regarding to the previous experience, these two CTI devices are 
+irrelevant for debugging GPU issues and GPU team has no requirement on 
+these devices on previous projects.
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 47356a5d5804..587733e6702a 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -16,6 +16,7 @@
- #include <linux/platform_device.h>
- #include <linux/sort.h>
- #include <linux/of_platform.h>
-+#include <linux/overflow.h>
- #include <linux/rpmsg.h>
- #include <linux/scatterlist.h>
- #include <linux/slab.h>
-@@ -992,7 +993,7 @@ static int fastrpc_get_args(u32 kernel, struct fastrpc_invoke_ctx *ctx)
- 	int inbufs, i, oix, err = 0;
- 	u64 len, rlen, pkt_size;
- 	u64 pg_start, pg_end;
--	uintptr_t args;
-+	uintptr_t args, buf_start, buf_end;
- 	int metalen;
- 
- 	inbufs = REMOTE_SCALARS_INBUFS(ctx->sc);
-@@ -1016,6 +1017,11 @@ static int fastrpc_get_args(u32 kernel, struct fastrpc_invoke_ctx *ctx)
- 	rpra = ctx->buf->virt;
- 	list = fastrpc_invoke_buf_start(rpra, ctx->nscalars);
- 	pages = fastrpc_phy_page_start(list, ctx->nscalars);
-+	buf_start = (uintptr_t)ctx->buf->virt;
-+	if (check_add_overflow(buf_start, (uintptr_t)pkt_size, &buf_end)) {
-+		err = -EINVAL;
-+		goto bail;
-+	}
- 	args = (uintptr_t)ctx->buf->virt + metalen;
- 	rlen = pkt_size - metalen;
- 	ctx->rpra = rpra;
-@@ -1053,6 +1059,7 @@ static int fastrpc_get_args(u32 kernel, struct fastrpc_invoke_ctx *ctx)
- 			pages[i].size = (pg_end - pg_start + 1) * PAGE_SIZE;
- 
- 		} else {
-+			uintptr_t dst, end, offset_start;
- 
- 			if (ctx->olaps[oix].offset == 0) {
- 				rlen -= ALIGN(args, FASTRPC_ALIGN) - args;
-@@ -1064,7 +1071,24 @@ static int fastrpc_get_args(u32 kernel, struct fastrpc_invoke_ctx *ctx)
- 			if (rlen < mlen)
- 				goto bail;
- 
--			rpra[i].buf.pv = args - ctx->olaps[oix].offset;
-+			if (check_add_overflow(buf_start,
-+					       (uintptr_t)ctx->olaps[oix].offset,
-+					       &offset_start) ||
-+			    offset_start > args) {
-+				err = -EINVAL;
-+				goto bail;
-+			}
-+
-+			if (check_sub_overflow(args,
-+					       (uintptr_t)ctx->olaps[oix].offset,
-+					       &dst) ||
-+			    check_add_overflow(dst, (uintptr_t)len, &end) ||
-+			    end > buf_end) {
-+				err = -EINVAL;
-+				goto bail;
-+			}
-+
-+			rpra[i].buf.pv = dst;
- 			pages[i].addr = ctx->buf->dma_addr -
- 					ctx->olaps[oix].offset +
- 					(pkt_size - rlen);
--- 
-2.50.1 (Apple Git-155)
+We will add these devices once ready.
+
+Hi Akhil,
+
+Hope we can get the confirmation from GPU team.
+
+Thanks,
+Jie
+
+> 
+> Konrad
 
 
