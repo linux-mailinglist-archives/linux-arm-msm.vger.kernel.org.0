@@ -1,225 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-99932-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 6MUIHNEqxGmZwgQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99932-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 19:34:57 +0100
+	id +OMwIGgtxGmZwgQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 19:46:00 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id E2B9932AA1E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 19:34:56 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id D425B32ABCF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 19:45:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id A4F87306A030
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 18:31:58 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7C6DE3012C53
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 18:40:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 845EF332EC5;
-	Wed, 25 Mar 2026 18:31:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82CAD33A9CB;
+	Wed, 25 Mar 2026 18:40:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="EDFwCxBz"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="alB8XlKp";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="d7ufRlwZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-43167.protonmail.ch (mail-43167.protonmail.ch [185.70.43.167])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA1A22F9DA1;
-	Wed, 25 Mar 2026 18:31:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.167
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D2EE33C182
+	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Mar 2026 18:40:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774463516; cv=none; b=ofMDF03AsiyMvZQYdxh2t/YZ9ntMUcRWP50C/+7Foek95y0OFH1gNMWNThefhqzZTpvtAHw3yVDf/pBeIAenpuSneNW6ger554HHMXxZ+Fx9fNlGDuYlN2rEUHFNrMw97+48/dbCit4LP0/DtVuVqpA0PqZbvLK2MYMyAZCXIhI=
+	t=1774464056; cv=none; b=K/8hC+WC3vJTCLqyi7RhixCrDitzJ1d/xmHTpTdg/C+Pvo0bqrKioKYXyEFSpP1M26ccOiYqYsvWWqI5IM4koano1Vu5KMuwjE5+ftDwYc4wm81fFdllJ/a9e4/vaF9CX1OM0yTv+cyDpawDyzxNTwMAH/HI66V1l9kaj0++lA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774463516; c=relaxed/simple;
-	bh=VoEoJuUr2Lj+hHN5wBOfe52hwrMPIs3kY7QEt2p4Ih0=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qdSiwHcZvc7P5pibwTU9yWEKF/RVkY5cPfFqHglTc+x3wT9s4KISTMsVkjLJKamj1Ur7VvBe9ASSmjXA1YtnPBrByYl1eTA6kjc+jnYGFL+b7UswzXD2WFN0gM/yn+IlY7pF6rCnZJrlwJ5DpSGsdmOqIxhVi6fC8N/LWPPwaSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=EDFwCxBz; arc=none smtp.client-ip=185.70.43.167
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1774463513; x=1774722713;
-	bh=j86thck0cTqsFgXxw60goLvNyAwdeaXAk0Tlweu0J7A=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=EDFwCxBz+oeTss4TdxJTaOi/GaI36MwEjl7TfA4WB3rpdj8VmPUDgXenXHZ+Xs5Vp
-	 FYua2lTAJmXiR/LEBCTiCS8ZVvICPaSG+f7cnjKmRjiiK+NHT8PQ6aU8nHPThumDyE
-	 tgYF+KDwh7TAubhbT6vUjNx8/gzHrUd4oedw4KBHV6bzp2CfDb8cDO5/QAoj9CaYox
-	 Ljn6XpU2v5U1N1qQIDqt6kZrpWH8nqOrrWMMk6q0KGzbIaaWnaJXTLShy4VHEzZ6hK
-	 hPKB2rlqj2UupFz5+9PHA80/MNApMOExCxjN7+A8o8skPdhPziayWCQjtyNlHiBrhG
-	 rvGQOQXBbGLZg==
-Date: Wed, 25 Mar 2026 18:31:47 +0000
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-From: cristian_ci <cristian_ci@protonmail.com>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>, Jessica Zhang <jesszhan0024@gmail.com>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-Subject: Re: [PATCH v3 1/6] dt-bindings: display: panel: Add Novatek NT35532 LCD DSI
-Message-ID: <E_O40YTvp6FW2yHa_lQOmzZwB1BZ7r_uCfh82T3BeO-SLK255eefzThCZDYJ2PFi3Hlnp3JXL7JWrlIU2ymh7m68wkNMTsM7jcMa8XxuxCs=@protonmail.com>
-In-Reply-To: <fh7rfswcwcrquijgjq547b6jjuq2v3wxiweh5xnnd4z5ql5n7r@gt425ujkpctu>
-References: <20260321-rimob-new-features-v3-0-d4b8ee867de7@protonmail.com> <20260321-rimob-new-features-v3-1-d4b8ee867de7@protonmail.com> <sdcfwycey5ykhn2fghun7imx3tjtnwat3ny3mut5dwstl7wvw6@maqrzlycwdn5> <GF8zsK-szOM98Ck2jznCOZ4xjuJTl9g1b0uPc1N79Dzf7PNzOiVgewdqPFGjqF3YD7tOUa2tzdc7rG_e7iNH8yjHOJ9DobsihTxRLUk8EL4=@protonmail.com> <fh7rfswcwcrquijgjq547b6jjuq2v3wxiweh5xnnd4z5ql5n7r@gt425ujkpctu>
-Feedback-ID: 27475468:user:proton
-X-Pm-Message-ID: c9e8d4bc47d850f720563065e567891a08ab9c34
+	s=arc-20240116; t=1774464056; c=relaxed/simple;
+	bh=imin10cSx0YrxDj2Z4/XJpCeru83iyKHIxpZeZ+tMEI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=em8X3QEJtMPjFQIl7zzh7yxCaPG4u54CP9LZHP2cCbfDouqNtn2CdZ+sVaMgHwV292uhQRxILNUj4rIuM9Xm1m7U/QHKgB7bJjbnFDkWzYdIvX4rS/qO80hqkzezdTFpDkfayNYT6b+vaUSUvVfZ0fXIbz0PdmGwl/QU+Ik4sgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=alB8XlKp; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=d7ufRlwZ; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62PFH8NA3628166
+	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Mar 2026 18:40:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=mvdkUSKRAO5A5qk1dmV1+LN6vXJ34iPcEA/
+	OJJ+Ig1M=; b=alB8XlKpiWAXN7LlE++Jw/vtqeVlgKNabedRgJSzMbrw9weiY+0
+	pFhM4qnkvY7YkAITdIWAaJEJJMBhH4goIivhBCWU/NmedpPjl/KYIVDcKthRoXak
+	fG3SNQA0d8tfma0H4qbTz4tf3Ly8Q9THXD1KhLX5Tqr9AyeOQJU04EAz+FtuhLL3
+	ydf7fhs2RMlB+FE8VU/PchGISiynzi4tKD36mru5QwhPdo3H5vrM7Krp/c7G9oX7
+	6sAHwcHOEP78AKDfrf+zXLFSLc9a26OIqyI21+OcoZYLp+NSx4n9IhU4twQdiTJq
+	/tvvOCC4m0XwFS05lvrdVe0z5gqRRFALk+g==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d4dmpsxpv-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Mar 2026 18:40:50 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-35b8f351debso349715a91.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Mar 2026 11:40:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1774464050; x=1775068850; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=mvdkUSKRAO5A5qk1dmV1+LN6vXJ34iPcEA/OJJ+Ig1M=;
+        b=d7ufRlwZi7COmb/5CIWwXW3y7R4eEbH4hSis8rfaATf5dEca/NZHwk7loBH+yeFrr4
+         7YJTJ/ALsSnwbdwoRy96f9Z2G80vzjd5UGlARdKMfuqujMwHI63nsiegT2T5JDeQqeBn
+         llvMYZhri8dktUB4aThfEkPvwVrCL5ZZDD+fw4Xzladn+DjMMevT17eqD8kpukY8Z11Z
+         YWfzKyO7PwWtRLyLw8QNj6N3N4r50x2KeT0tq2WcREhT0wU7o1+GPycDq80ctJO+VP4K
+         jUR/CuhDOTUBOlcveQQY/6pFJQnWHYky8cbkMVTGfVdQeJxiRrEOa/l8HMdLv+HwJRgQ
+         SIVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774464050; x=1775068850;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mvdkUSKRAO5A5qk1dmV1+LN6vXJ34iPcEA/OJJ+Ig1M=;
+        b=q59JpL6VqFQmfNHQ33nBfKWkEQOeRnDKpHCVvkTo+9turb2s8mHIogng/2vrrP8BUP
+         9yi3t+KCXD533l2CoRIZZKZ9i7fE2QuV9TDL7B03CZddRH3rznkEu+u1VT9Qa5Ot2SDK
+         WGwwvlisjRAoVKCKm3bTbpK/Kmh+49QnJDKWltDY4Yaw+k3c8mLdTcWn8v2vKDPhLLaJ
+         9xNayNdpD3D98F6PFiGugN3aP/Doh7mzse/zZxEZ+VBMo+WZnk2cnbR3srOqsqjYUXlC
+         aqoXiSClKORvGN1kLOOsIW/rfZj9ff5mxBjJtdZV+Ia7LvKRAottFjplfLvs+1/44cFp
+         /DvA==
+X-Gm-Message-State: AOJu0YxNJ6+8bWjv9VblHoChxjlr88O6mXHgV8BTuQlrVl+eZpclDY0r
+	cEnK6MAF/U9QvuegmRPWDMy7WvgdrnympMf03bMXgGBKR2vkN5VN3hRyra1ixBs6hpbrYBD51/X
+	azmygmTShP2tCoM+CyB4fYMH/GXQDUNLVntYvtqrs4FSuuIEk3/m5EFOUSDY8hdjx9keU
+X-Gm-Gg: ATEYQzwAy0kFCWNNJEgReO7UZ9ow6EJdV/8WP5pw7TqFO+KOnOtOonraUVSn34OyRlD
+	6qlXnXgC6zah/N6TuJ2tGTn0RzPIB9fHM4R9xOeJiqQKgaAk7tQYd2Sp48rxg9Wzl6eIRqHon44
+	+xpwsvYyVUR1sMlWrJIvJeCOarnktlGdwNupd+g75CeCYB2XidsQs+tb75r3ADjih+rzoISgCsu
+	qf5uqYw7WnIFiMwfpDDqeMJbPv4iEd1mxfvZe1xgSnKv2JPASzf6y35PXv0LlCTU/eQbJHL288e
+	s4q6sCfpYzPCsjh3gio+pN1kWlVkktVpR0uvzJWykBVBQjBsboexgtgCJtz8opOoESNm35HM0GZ
+	5aDEf7XCSYy5Q8VD1BL3KK2Vu/H2/oQbv
+X-Received: by 2002:a17:90b:6c3:b0:35a:1762:92ed with SMTP id 98e67ed59e1d1-35c0ddc589bmr3883530a91.24.1774464049574;
+        Wed, 25 Mar 2026 11:40:49 -0700 (PDT)
+X-Received: by 2002:a17:90b:6c3:b0:35a:1762:92ed with SMTP id 98e67ed59e1d1-35c0ddc589bmr3883507a91.24.1774464049121;
+        Wed, 25 Mar 2026 11:40:49 -0700 (PDT)
+Received: from localhost ([2601:1c0:5000:d5c:4ec8:83f5:8254:6891])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35c0e7452d8sm3198165a91.11.2026.03.25.11.40.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Mar 2026 11:40:48 -0700 (PDT)
+From: Rob Clark <robin.clark@oss.qualcomm.com>
+To: dri-devel@lists.freedesktop.org
+Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        Connor Abbott <cwabbott0@gmail.com>, Sean Paul <sean@poorly.run>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jesszhan0024@gmail.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm/a6xx: Fix HLSQ register dumpping
+Date: Wed, 25 Mar 2026 11:40:42 -0700
+Message-ID: <20260325184043.1259312-1-robin.clark@oss.qualcomm.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI1MDEzNiBTYWx0ZWRfX+S2RfiUsVG+i
+ SCrsq1ZJMkd/RG7hJ+avqslNj08NQ+6QdE+om5HqQe2gBmujCYiwgErE8Y/MeR7309ZRRRnTK8V
+ bw0Gyl+q+cRTd2cJMO95d2K2mqSQOITQ2haVPzazt5zwzBvOeoNV0AWCaZLAQ/FxZyD/VAnbSCJ
+ cv42DJZWXBvkPxehZYM9ANsGtScfq6mkvyvokqK0Dd+zyNrE/MeacKej/9tw6ZoLuQuBppYydlK
+ 6aQUf6GU9j4s6tMc2zDti7F2Od8ZF7O/vp50wbJHgcucqTzYRTotPcNns+YYBbQyYjsphm3+jX+
+ dbSQ7tk3z8gRb4z8um178bh/By7LYlqkayoz2DPCELRD517bmyq4omyb0x5/W97B9wB0+tQrCGO
+ 9CTHqGQF50LJqQdQtnqwoO5GoKBjymeL7rSrz1tpIWSHxOueKKPN/CaqZW5YQNDykDJC2HRIegr
+ kb1oR60UlC6DPnBNClA==
+X-Proofpoint-GUID: eE4N7j-Q3z-d6OZFaE2sfeSBl0nyhPar
+X-Proofpoint-ORIG-GUID: eE4N7j-Q3z-d6OZFaE2sfeSBl0nyhPar
+X-Authority-Analysis: v=2.4 cv=O7w0fR9W c=1 sm=1 tr=0 ts=69c42c32 cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=xqWC_Br6kY4A:10 a=Yq5XynenixoA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=YMgV9FUhrdKAYTUUvYB2:22 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8
+ a=AYjmxK_A9T-BKwGzHN8A:9 a=rl5im9kqc5Lf4LNbBjHf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-25_05,2026-03-24_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 lowpriorityscore=0 suspectscore=0 spamscore=0 malwarescore=0
+ priorityscore=1501 impostorscore=0 bulkscore=0 phishscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603250136
 X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[protonmail.com,quarantine];
-	R_DKIM_ALLOW(-0.20)[protonmail.com:s=protonmail3];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-99932-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[3];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_FROM(0.00)[protonmail.com];
-	RCPT_COUNT_TWELVE(0.00)[19];
-	FREEMAIL_CC(0.00)[linaro.org,gmail.com,ffwll.ch,linux.intel.com,kernel.org,suse.de,lists.freedesktop.org,vger.kernel.org,lists.sr.ht];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.freedesktop.org,oss.qualcomm.com,gmail.com,poorly.run,kernel.org,linux.dev,somainline.org,ffwll.ch];
+	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-99933-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[cristian_ci@protonmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[protonmail.com:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[protonmail.com:dkim,protonmail.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: E2B9932AA1E
+	FROM_NEQ_ENVFROM(0.00)[robin.clark@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: D425B32ABCF
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Tuesday, March 24th, 2026 at 23:20, Dmitry Baryshkov <dmitry.baryshkov@o=
-ss.qualcomm.com> wrote:
+Fix the bitfield offset of HLSQ_READ_SEL state-type bitfield.  Otherwise
+we are always reading TP state when we wanted SP or HLSQ state.
 
-> On Tue, Mar 24, 2026 at 01:10:13PM +0000, cristian_ci wrote:
-> > On Saturday, March 21st, 2026 at 17:46, Dmitry Baryshkov <dmitry.barysh=
-kov@oss.qualcomm.com> wrote:
-> >
-> > > This is not enough to identify the panel. This name identifies the
-> > > controller inside the panel, however the exact settings (and the
-> > > behaviour) would depend on the exact TFT "glass" used with this
-> > > controller. Downstream usually doesn't care that much and frequently
-> > > just uses the controller name or the the controller with some kind of
-> > > "description" like ("wqhd-dsc-cmd").
-> >
-> > Ok but I just don't understand the following: I'd like to know (also
-> > considering that I find it difficult to find someone, outside of this
-> > ML, available to discuss this stuff, specifically) exactly why the
-> > current bindings are not enough.
-> > I mean: looking at schematics and datasheets of other similar devices
-> > and based on observations about my device, I believe the generic bindin=
-gs
-> > approach for nt35532 works quite well for panels.
-> > Novatek made the IC first and then whoever buys it can be a display
-> > vendor. If we talk about downstream, differences between panels are des=
-cribed
-> > there (i.e. my panel makes use of four supplies, while other ones could=
- use
-> > a different configuration).
->=20
-> Different "glass" means different programming sequences. Take a look
-> at the existing drivers which handle multiple panels. Sequences, modes,
-> etc. are different though the DDIC (controller) is the same. For Android
-> kernels this is handled by putting all the information into the DT. This
-> approach does not align well with the upstream DT expectations /
-> guidelines / philosophy / etc.
+Reported-by: Connor Abbott <cwabbott0@gmail.com>
+Suggested-by: Connor Abbott <cwabbott0@gmail.com>
+Fixes: 1707add81551 ("drm/msm/a6xx: Add a6xx gpu state")
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+---
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-True. I completely forgot about that, my bad. Yes, vendors handle init=20
-sequences, modes and other information in the DT, while upstream puts=20
-initialization into panel driver. Now, I've looked at panel-sitronix-st7703=
-.c=20
-driver to get an example of multiple panels supported by the same DDIC=20
-driver.
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+index d2d6b2fd3cba..f7598d0c3975 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+@@ -1013,7 +1013,7 @@ static void a6xx_get_crashdumper_hlsq_registers(struct msm_gpu *gpu,
+ 	u64 out = dumper->iova + A6XX_CD_DATA_OFFSET;
+ 	int i, regcount = 0;
+ 
+-	in += CRASHDUMP_WRITE(in, REG_A6XX_HLSQ_DBG_READ_SEL, regs->val1);
++	in += CRASHDUMP_WRITE(in, REG_A6XX_HLSQ_DBG_READ_SEL, (regs->val1 & 0xff) << 8);
+ 
+ 	for (i = 0; i < regs->count; i += 2) {
+ 		u32 count = RANGE(regs->registers, i);
+-- 
+2.53.0
 
-> For example, let's take two NT35532 panels described by [1], [2]. The
-> sequences are somewhat similar, but the contents is completely
-> different. From the upstream point of view, each should be described by
-> its own compatible string (so that the kernel can identify them).
->=20
-> [1] https://github.com/eliot-shao/qcom/blob/master/display/LCM-NT35532-JM=
-55FH-1080p/kernel/arch/arm/boot/dts/qcom/dsi-panel-nt35532-jm55fh-1080p-vid=
-eo.dtsi
-> [2] https://github.com/balika011/android_kernel_xiaomi_msm8953/blob/maste=
-r/arch/arm/boot/dts/qcom/dsi-panel-nt35532-fhd-video.dtsi
->=20
-> >
-> > > What does it mean for the upstream:
-> > > - Try identifying the actual panel used for the phones. Sometimes
-> > >   googling for spare or replacement parts would reveal such a name.
-> > >   Sometimes it can be seen as a marking on the cable or on the backsi=
-de
-> > >   of the panel (again, googling).
-> >
-> > It seems that 'google' approach fails, in my case :( (I only know that
-> > the vendor assigned Smartron the work to design the HW - but SW too -
-> > of the device. Nevertheless, Smartron is neither OEM nor ODM, so the
-> > company was relying, at the time, on a series of chinese manufacturers =
-to provide
-> > parts required for this device, including panel suppliers: in general,
-> > the list of panel suppliers for Smartron includes BOE, Tianma and other=
- known
-> > companies. So, this panel may be any of those, paired with NT35532, and=
- work
-> > anyway). Unfortunately, even if marking on the cable is known, that doe=
-sn't
-> > identify the panel but the cable itself (which is available on the mark=
-et,
-> > though), instead, in this case.
-> >
-> > > - If not found, come up with some artificial identifier that would
-> > >   identify the controller+glass combo (e.g. "tianma,fhd-video" or
-> > >   "lenovo,j606f-boe-nt36523w" (where lenovo,j6006f is a device name a=
-nd
-> > >   boe is a "supplier").
-> >
-> > Assuming that resources available which I've as source of information
-> > for this panel are limited (the ones also described in v1's review thre=
-ad),
-> > my vendor devicetree describes the panel in  'qcom,mdss_dsi_nt35532_108=
-0p_cs_video'
-> > node and makes use of:
-> >
-> > qcom,mdss-dsi-panel-name =3D "nt35532 1080p cs video mode dsi panel";
-> >
-> > property. Until now, close-to-mainline devicetree I was using the follo=
-wing
-> > compatible for the panel:
-> >
-> > compatible =3D "flipkart,rimob-nt35532-cs";
->=20
-> In the lack of any information, this is probably as good as anything
-> else. Please describe in your commit message that you don't know the
-> exact vendor of the panel (nor the id of the panel).=20
-
-Ok, apart adding a new compatible ("flipkart,rimob-panel-nt35532-cs") to=20
-dt-bindings (patch 1/6) - leaving  "novatek,nt35532" as fallback - and=20
-setting that to panel node (patch 3/6), I'll have to change (patch 2/6)=20
-too, by renaming nt35532_on to rimob_panel_on and so on for nt35532_off,=20
-nt35532_mode; by adding a new struct named rimob_panel_desc defining=20
-.mode, .on, .off members and moving .lanes, .format and .mode_flags from=20
-nt35532_probe to this new desc specific struct and by adding .data argument=
-=20
-to nt35532_of_match. What about the other nt35532 functions (i.e. nt35532_r=
-eset)?
-
-> > and I'm not sure about the exact meaning of 'cs' suffix. I cannot state=
- 'CS'
-> > as panel supplier and use that upstream without proof/evidence. What do
-> > you suggest, in this regard?
-> >
-> >
->=20
-> --
-> With best wishes
-> Dmitry
-> 
 
