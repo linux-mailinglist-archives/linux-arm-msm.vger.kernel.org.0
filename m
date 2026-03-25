@@ -1,96 +1,70 @@
-Return-Path: <linux-arm-msm+bounces-99955-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99956-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id mGUXNilbxGl0ygQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99955-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 23:01:13 +0100
+	id cPbjD7xexGkkywQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99956-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 23:16:28 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8831D32CBF8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 23:01:13 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id C11FA32CD19
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 23:16:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 18EF73019928
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 22:00:11 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 3BF8F3023DAE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Mar 2026 22:16:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4966322A1E1;
-	Wed, 25 Mar 2026 22:00:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD1732C11CA;
+	Wed, 25 Mar 2026 22:16:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="5tawHl3e"
+	dkim=pass (2048-bit key) header.d=mess.org header.i=@mess.org header.b="TzDpLPyo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from gofer.mess.org (gofer.mess.org [88.97.38.141])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB379347516;
-	Wed, 25 Mar 2026 22:00:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47BEE749C;
+	Wed, 25 Mar 2026 22:16:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=88.97.38.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774476010; cv=none; b=jnM4KtmplppC6XjmED4csKWno+4/W3B4i6fEL3JOEtD1afSW8+s4arwXJ/gLu4SwHL/BTvlBLjzt7jl+lTBjg/VqHWsN7m1pK6huTX2s1UGzGtZsJqsec3tTTonKo3QOVFGIQolTpXdY3pMR0e9MjQGX2G7q6p8xgK+sJh/OrB0=
+	t=1774476973; cv=none; b=poQlw4tHQt/rX67KK8Q4DMFaGuGIoFQCmE+YswilArtekXoEByYikDLr59OtlEhcgGc4iuntI41LgpXjhgsJpR2JV9VjPwvTbZiQKh+rD4wQn0g8HA2inMCNMyBQseRjgQkWjdU/ZbAYm9RXRnp4pDTTn+7bfhNwJYiO7bLZjLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774476010; c=relaxed/simple;
-	bh=o/Lg4BCHgB0lpbo3weSyFiK/fj641jkPf+FTpsIxKE8=;
+	s=arc-20240116; t=1774476973; c=relaxed/simple;
+	bh=Z8CurjlzVO6oEEWpQW0GpyYWUWY2tf33N/Sx0Va/zj0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PFn6YYvcnU2AYtjBHZQXA1Tv0wkTf168dRSPGrvLT7IZF8VirYMoQHt3iZ3ke5nWgNpk2MJ7RjjeUYgCPz12N/+ucEza8p0LO3gHqBxMZLGXY9YQfeEaVF/sI3NtRYOVQGSbHewqB6hif9KsQTEGprfWT+Tds5Sa8eWBU50G8Ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=5tawHl3e; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=Xhr1D24nKivYP/3T0AfCxVIkR9YFjI1CmvRMS0ErUhs=; b=5tawHl3e+uz9eT1sXa8Trr9UO3
-	ROaHbvVci5+1x1gHnzDm2slDD0JaznmGKOrxGbVFDkZMzS+rmgkpFFIzI8uoZ8Vm3HM5sU74Lbgg9
-	/PopU1JjeSWjAX4u00eOPjCt0e4mbNvr581G0kAg+1PHB+QCwy6hnY76o/2fmt4nVWL0=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1w5WGR-00DMmg-Oz; Wed, 25 Mar 2026 22:59:47 +0100
-Date: Wed, 25 Mar 2026 22:59:47 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=N35regyZD+U4cU4TPKk2a8HVg2CdRy9i+0ZgFfHadt/unuyX/NB26/UE7A1j9Gow8y2kWfgLre08qA+B8cQJeuj1OagfoLARCQfvt1kGXWL31CfmfdZT5j7qBtQzgB44Zb87qkQIf9+yCjlVVr3cO2L/lAuiWfC5JMzsi4zXWyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mess.org; spf=pass smtp.mailfrom=mess.org; dkim=pass (2048-bit key) header.d=mess.org header.i=@mess.org header.b=TzDpLPyo; arc=none smtp.client-ip=88.97.38.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mess.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mess.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mess.org; s=2020;
+	t=1774476602; bh=Z8CurjlzVO6oEEWpQW0GpyYWUWY2tf33N/Sx0Va/zj0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=TzDpLPyoZ/wAHO/pPjHsoyh120LxTFaW4h80MYAM9rV7YoVt10AHClEUpkrx1kM/g
+	 fkMZE8ks/rR0fUABZs55I22AZNxepGnKZoW7aDJhDHy/BfEo8Qw5ReL1xcTb3ZLTDH
+	 hxXUqUG0QsDBLANfTNdvay/4oZJtQa6xAPnRer3FEEA1L5MeEpTF0mKmJ6F3QETR6o
+	 6kWDqOGHbLe+o80oZY49MWdiRvBr8WgHB/BtZqaoSdscGr2exqcdD3WxiVQ3fX5cKO
+	 IHbE3ovO0Hnmw/ZuJUUBiCz/hOVnJ0lZr8ZA46jMMv9QHxKvPv/vS4irV8siawmDIa
+	 eWogZfU10xOjg==
+Received: by gofer.mess.org (Postfix, from userid 1000)
+	id C198E1011B2; Wed, 25 Mar 2026 22:10:02 +0000 (GMT)
+Date: Wed, 25 Mar 2026 22:10:02 +0000
+From: Sean Young <sean@mess.org>
+To: Biswapriyo Nath <nathbappai@gmail.com>
 Cc: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-	Chen-Yu Tsai <wens@kernel.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Shawn Guo <shawnguo@kernel.org>, Fabio Estevam <festevam@gmail.com>,
-	Jan Petrous <jan.petrous@oss.nxp.com>, s32@nxp.com,
-	Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>,
-	Romain Gantois <romain.gantois@bootlin.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Christophe Roullier <christophe.roullier@foss.st.com>,
-	Bartosz Golaszewski <brgl@kernel.org>,
-	Radu Rendec <rrendec@redhat.com>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org,
-	Drew Fustini <dfustini@tenstorrent.com>,
-	linux-sunxi@lists.linux.dev, linux-amlogic@lists.infradead.org,
-	linux-mips@vger.kernel.org, imx@lists.linux.dev,
-	linux-renesas-soc@vger.kernel.org,
-	linux-rockchip@lists.infradead.org, sophgo@lists.linux.dev,
-	linux-riscv@lists.infradead.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH net-next v9 2/6] net: stmmac: qcom-ethqos: use generic
- device properties
-Message-ID: <ba85f84e-740d-47d6-a8a0-97823bf2c4d7@lunn.ch>
-References: <20260316-qcom-sa8255p-emac-v9-0-c58934e76ff2@oss.qualcomm.com>
- <20260316-qcom-sa8255p-emac-v9-2-c58934e76ff2@oss.qualcomm.com>
+	Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>,
+	Pavel Machek <pavel@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Martin Botka <martin.botka@somainline.org>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-leds@vger.kernel.org,
+	linux-clk@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+	phone-devel@vger.kernel.org, kernel test robot <lkp@intel.com>
+Subject: Re: [PATCH 0/7] Add vibrator, IR transmitter and USB-C handling in
+ xiaomi-ginkgo
+Message-ID: <acRdOmHKQmBp-RSd@gofer.mess.org>
+References: <20260325-ginkgo-add-usb-ir-vib-v1-0-446c6e865ad6@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -99,48 +73,80 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260316-qcom-sa8255p-emac-v9-2-c58934e76ff2@oss.qualcomm.com>
+In-Reply-To: <20260325-ginkgo-add-usb-ir-vib-v1-0-446c6e865ad6@gmail.com>
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[lunn.ch,none];
-	R_DKIM_ALLOW(-0.20)[lunn.ch:s=20171124];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[mess.org,none];
+	R_DKIM_ALLOW(-0.20)[mess.org:s=2020];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-99955-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-99956-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_TO(0.00)[gmail.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[kernel.org,lunn.ch,davemloft.net,google.com,redhat.com,gmail.com,foss.st.com,st.com,linaro.org,baylibre.com,oss.nxp.com,nxp.com,oss.qualcomm.com,bootlin.com,glider.be,vger.kernel.org,st-md-mailman.stormreply.com,lists.infradead.org,tenstorrent.com,lists.linux.dev];
-	RCPT_COUNT_TWELVE(0.00)[48];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[19];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[andrew@lunn.ch,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[lunn.ch:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev,renesas];
+	FROM_NEQ_ENVFROM(0.00)[sean@mess.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[mess.org:+];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,lunn.ch:dkim,lunn.ch:mid]
-X-Rspamd-Queue-Id: 8831D32CBF8
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mess.org:dkim,mess.org:email,gofer.mess.org:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: C11FA32CD19
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Mon, Mar 16, 2026 at 01:05:07PM +0100, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Wed, Mar 25, 2026 at 06:07:23PM +0000, Biswapriyo Nath wrote:
+> This patch series add support for various components in Xiaomi Redmi
+> Note 8.
 > 
-> In order to drop the dependency on CONFIG_OF, convert all device property
-> getters from OF-specific to generic device properties and stop pulling
-> in any linux/of.h symbols.
+> Most notably:
+> - IR transmitter
 
-Adding to what Russell said, please document your new binding. e.g. in
-Documentation/firmware-guide/acpi/dsd.
+For the IR stuff:
 
-	Andrew
+Signed-off-by: Sean Young <sean@mess.org>
+
+Thanks,
+Sean
+
+> - USB-C OTG
+> - Vibrator
+> 
+> Also, fix some bindings warning as reported due to previous commits.
+> These are tested with linux-next tag next-20260320.
+> 
+> Signed-off-by: Biswapriyo Nath <nathbappai@gmail.com>
+> ---
+> Biswapriyo Nath (7):
+>       arm64: dts: qcom: sm6125-xiaomi-ginkgo: Enable vibrator
+>       arm64: dts: qcom: sm6125: Enable USB-C port handling
+>       arm64: dts: qcom: sm6125-xiaomi-ginkgo: Add PMI632 Type-C property
+>       dt-bindings: leds: irled: ir-spi-led: Add new duty-cycle value
+>       arm64: dts: qcom: sm6125-xiaomi-ginkgo: Add IR transmitter
+>       arm64: dts: qcom: sm6125: Use 64 bit addressing
+>       dt-bindings: clock: qcom, dispcc-sm6125: Add #reset-cells property
+> 
+>  .../bindings/clock/qcom,dispcc-sm6125.yaml         |   3 +
+>  .../devicetree/bindings/leds/irled/ir-spi-led.yaml |   2 +-
+>  .../boot/dts/qcom/sm6125-xiaomi-ginkgo-common.dtsi |  56 +++++++
+>  arch/arm64/boot/dts/qcom/sm6125.dtsi               | 168 +++++++++++----------
+>  4 files changed, 152 insertions(+), 77 deletions(-)
+> ---
+> base-commit: 785f0eb2f85decbe7c1ef9ae922931f0194ffc2e
+> change-id: 20260325-ginkgo-add-usb-ir-vib-4a51bd9ff64b
+> 
+> Best regards,
+> --  
+> Biswapriyo Nath <nathbappai@gmail.com>
 
