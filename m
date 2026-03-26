@@ -1,83 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-100122-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100123-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id qJe5MwtKxWkU8wQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100122-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 16:00:27 +0100
+	id GLcvLppMxWkU8wQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100123-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 16:11:22 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 55604337342
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 16:00:27 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 53F4C3374FD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 16:11:22 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 2548E30C0E25
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 14:49:56 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id C05863031F3F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 14:57:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 152F43F9F43;
-	Thu, 26 Mar 2026 14:49:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 143E13FD15F;
+	Thu, 26 Mar 2026 14:57:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BGzQPXxJ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="J2M2N7wo";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="IsHi4wef"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001C03FE649
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 14:49:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB28A37E2F8
+	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 14:57:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774536566; cv=none; b=idS/34rdQNk3M6OgXKHZ3TOyZui/Zv5tuHfU3PZJ1FkBKfnjYhVK9kbPHwiUlVMrM5VpFn274sizU5KZmVLVRymjTWVRF3Q3p/B6zG4bv3frVEyjNCcPj5bY68yd0TfxRqQVpL9tzrAr88xUp4YZWYbwCLjpl35B7z4oSef9mIM=
+	t=1774537061; cv=none; b=WTX7fn6wFIFiHy0oBCmaHM0Un4brhIOnSOLvxLGS6BETK3HfqzBC3boo2uauU6BZoCck+fpAjU5LCwj3rTTf+xy27RfhhJd0k4cFICM8WYORMoMGvaVdtCEyvEXZHTRdBqsRMCcwH/7ccHrBMRQhBCTGo6ZWQNcnahVuuVwaMqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774536566; c=relaxed/simple;
-	bh=s3eHPpIMmevtACZU4/8Rv2NgKfiY6wi/fZ/Miq0U6Uo=;
+	s=arc-20240116; t=1774537061; c=relaxed/simple;
+	bh=tFy5giR59BGANCfViN3Anp2TO9bRdYEJwtPDSEpAscA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ftO0aok/evNJm3V0Vw9z3eR7C1ccS1kbgNhAKMCF6cHql3prs5ueTkCj2TEvnwZKXbNRNSmoZbXIsTa2/inc1JwrRCeg+pKYL+VqIS8rLadFq3IXs0ruJ9fdG0bF79luhN3WlCij8JfVbs/YGeqe8wLzvvsw1ZeXJRrr1SKPdpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BGzQPXxJ; arc=none smtp.client-ip=209.85.208.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-38bd95f5784so869191fa.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 07:49:23 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=IIVUrqkocJHmtstwIcK0wDiBtRLH0cf+iTsuRKt0aHhLSXRj7mKWu8nUPp8rd/aW73OMcCvRwz5PQxQMim0Ns0KU4CPH9/qIgDmLE2LicyKlJ+bilb3LzoRmzCFanBW8cJ4Ld94ZBhwNOjpBh2npqQ1ez7vSJPZlIBW9wHiPj3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=J2M2N7wo; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=IsHi4wef; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62QC5kUG1175792
+	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 14:57:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	jt4jdDfkQbJQhWE0oZ8OqglR8mliegdo/pvYwgB5H7Q=; b=J2M2N7woSXjLjInS
+	oTAvOMnkcaDaeXyYN+4DXMQGDHsL9R90bQM5LoSfJ1Z+8QDjNdFdFv3PuVYunXEl
+	D9x5yj1/+E4EMivNeiy6eFXvDmLs29cRgricN9Hxr5rGe4qMVQ10eJg0le6BdqwI
+	FkNEw3QfHeTWq5+zU8WHL52+7/VwvKHmfoKHt46uFsr6csK6AhBFn8iKU076MJtf
+	gjf0rRqx6kdLgWdiuFnJg55hZdYmbWpAi+1q9P2+h4zepvIHqrPZL+/US2+qqPuy
+	i6R62RbYeoD1zZQ4v6f3bQEjPpycyEDSyPlxWDr4tgioaoSE1194zJhIELSt6QQH
+	juh/CA==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d4q76u8y7-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 14:57:38 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-35c10c2d890so1618174a91.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 07:57:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1774536562; x=1775141362; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CNMpQGv7dZXbdCrrnUBXQzVhHThggHyeh7O8ca9pPJ0=;
-        b=BGzQPXxJhz6s+Jp/Skl5ufswJVS2b2rDxkK+YV+QXpuNOwUSspaiscOzNJvbNoB0Z5
-         DBsvO6zk5rPISJuMnolPbowlxtQKS0zFHcYfNKuBumBptIycjf+B409O8Cgp15ELaP98
-         6Gqo5Xe02xLM07FwQ+DVFxN+rfCQK/2GEQh4IkYYNRKX7WDOFw99DecSJk9J26Xnc/og
-         tnaR5i7Kg38gmVOpq9qpbdP8oYvOUvyAiGEOD4Vh7MED/cRVSxZ3Gil8yOCgGlbfog2b
-         1CsHwugp9Un/GeA/x+m04shAgh4eTRxUprr8n5tG3UvOdPkCEMhoY0boZjQSY9Fa9g19
-         scLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774536562; x=1775141362;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+        d=oss.qualcomm.com; s=google; t=1774537058; x=1775141858; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=CNMpQGv7dZXbdCrrnUBXQzVhHThggHyeh7O8ca9pPJ0=;
-        b=dLU0X/YqqRnhtrjCGBA/8Swb+tybtwxiIUyExduCsuXCToziIglzpzFBSt6DjYqmXU
-         D7K7XO8/8majlk/Ofqtr9lT4sGGj9KHnLxNWw0DIbwPA45LnqUmfFwsVUFzYq4pH4lF6
-         gVYCsoohDsgLZTbkih4juThsTCEFbS9I0YWLgRskh5YKt2EjUGbKRRkJyttxNiShS4uU
-         75/zAdThumWovkRCFkvc7O/VyiuiskW1VTysgt8AtpsjUEF/Ppj1sp1SSkM2hWzWMDU8
-         Cqz3EQ2qhuh6qMJUaxO6F36KG8JwOPYoaOZ63Uhk3Ck2HMpqC3qIF8nyvQBk6+9UmU9D
-         JnHA==
-X-Gm-Message-State: AOJu0YxQLoLe+S/vkXlihFdR2wjB7AbBclSc71gUFUqlqisNZ0BgGiAE
-	Kg8lhOLVFz/dolRAQCLOuyLgVq+6xqNSEtoD4NGMDVjt5Nr81h25h3FVaA2Xqvg2iXU=
-X-Gm-Gg: ATEYQzwfm8EI5peYFPBu9bpyY2X/WJT0J8x1h4FYxEgXpLhfrAdb83eu/KscpK6JCle
-	41d902jHDZRAitSDQnhBWBC+4Kl/qC4Vm0J/gc9Io8wwqfF4ssMGYiwiu67BZ0Vlolj9SaIEbz1
-	sBNav4jGw684Ynq0fcBhgIYDWE521fZGBdy7VJIIXTHN+SJqDGBhBvC1h0zZk/BAZQKV4TxPOl4
-	yy1jralwTKgRDZatN+MXvXZoWN3MpvQV8rYzKbdoG106FCTR6piexBp2tk8U+DiJQ9Q7ePFXHUc
-	5Hotp9Kd1WHH+bV+vVu54nLYScUUIdebHfX49jqdnxupEraEoEWK/8LFy39cZn5lx2bHk93XTB3
-	3HZGOwVL8f5jKcd6/sV7JMR743xs8FXuqQBYh15CjwU3zXn52tQ+8scRcDsJujoMPY18AdCOrEL
-	PC+KMGD1LIlcbex4kl06FtLlsh+AK6oavApoSbaUjLjARKr8TfLYKTqHj0WhMIb82968yy6afbg
-	xFUbw==
-X-Received: by 2002:a05:6512:108b:b0:5a2:a23b:c439 with SMTP id 2adb3069b0e04-5a2a23bc4fcmr493040e87.6.1774536561581;
-        Thu, 26 Mar 2026 07:49:21 -0700 (PDT)
-Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38c52fac5fcsm5793741fa.12.2026.03.26.07.49.20
+        bh=jt4jdDfkQbJQhWE0oZ8OqglR8mliegdo/pvYwgB5H7Q=;
+        b=IsHi4wefSJq/AN1yEmbJMJid06aRBsJlPDHjK8tnz+zjLuxHaqbnenjxmtHbdaOkbf
+         XP68G3Gk1fCiycv6iaX0PVKYbcrQfXmhJqh7evqE6MxxFKcuIEwS2o15IyeCF5R+aQcf
+         UpVpSPlucQhjDoI6gYNQNeviqGG3ApZjs7yjnGballBTZ/+hhLZHFD0Op8vdmdXTDOvq
+         1pgB0rhQHy55jRA9FC49xDBLeT02xZYP8Lc1wibEUbWTVn0EiJ0U+puMlFJVrEcUNPZ6
+         qloJ7eIO/2gnT9X8nLc93lg3PRdQvFUfacvkf9TaChi2on6hJGiDsCdkwLmNqYf7FDU3
+         ZkHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774537058; x=1775141858;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jt4jdDfkQbJQhWE0oZ8OqglR8mliegdo/pvYwgB5H7Q=;
+        b=sPnHhr/mPNxJpfR8tCg5giCtOTnd2zJ9cfUwKhYEQ2B0+2sLA14SB9rhxJYyPGoI4Y
+         4fVbyQUKGqGRoIp36Kifh6bZfhppwrmHBUh8gAfygI1W5/e/P9OsON1NjpMdhHsGYz7R
+         nngw/NjkHHczPQaq2eFRyZFUO/4075fMVUBLpodrG4DebzQOqegWXoohDVrctzmfLGAj
+         7gDi3BzhPd2pvf2j6RB0MAAk9lL5Yt7BTV7jjziWK3oCssoeLF16xbcytiy3XxGS20Tb
+         c2ZUoBs1R4m5maqzQSSKYWeKy/EIz0GeASqZ4h2qZ4s/MHtSBWo7Og9Ed4o5JYDW8JgD
+         N52A==
+X-Gm-Message-State: AOJu0YxhImIHCpQ1xOJIxtvFKGB+CumzNP2QRO3nVvZQqivkN/3s1fkk
+	e4yVdPFWQumKqrJLbmkOGPc1zzGR3aKHjyYcg17KIl2ZzABTWZsKnU2TKozyQJi7tcp1ZOI6qiD
+	uRsZub3x3ptuVW/h5baSrX7Arf56mtHe0M/O65zMMIqnemmeTUGAt3XYtQpe4EYzHmoCu
+X-Gm-Gg: ATEYQzxglF0qU4gK3pCTsi6G5R2Cx7TC1WPF5ZpQtyyfLjoqTJ4cyWWJULCjNr0ehZg
+	d+90tQLwPO5F4k9cjRqXPNHZ4FiWoB67EH4SoFktdrnAADlMlnEBN+iyWQK+zt92EuUVRuJPcmX
+	X+Xya3uLwETyJt7sXRUr/J/wHNrGN8CzGbGPUgCs03IGs4uJ/6lLNCoPXJE9l1cQbVIMUgsj7yh
+	+RsDAegWyiMcft24QZc4C2jmvIFjuk6wAr0QqsLpmNpbEAHBiBLklWdN3j/bVDm8fCD5lh3xsFS
+	jCDQos4VEDqIXmoaD/1ONp/Gkniblrq2TJbS108KclB3eaJHsQ32+IWwj8VsBXFQpXtpE20tdG7
+	AxBHBXom/BBQnu6Xv/FAbQqWwY0h+RTUssUU6eGyBeQA4
+X-Received: by 2002:a17:90a:d408:b0:35b:a8cf:7969 with SMTP id 98e67ed59e1d1-35c0dd0d076mr6948799a91.11.1774537058223;
+        Thu, 26 Mar 2026 07:57:38 -0700 (PDT)
+X-Received: by 2002:a17:90a:d408:b0:35b:a8cf:7969 with SMTP id 98e67ed59e1d1-35c0dd0d076mr6948750a91.11.1774537057676;
+        Thu, 26 Mar 2026 07:57:37 -0700 (PDT)
+Received: from [10.91.121.222] ([202.46.23.19])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35c22cebf63sm1853913a91.15.2026.03.26.07.57.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Mar 2026 07:49:21 -0700 (PDT)
-Message-ID: <99287afe-90cb-44d5-91db-14c6b0f729fd@linaro.org>
-Date: Thu, 26 Mar 2026 16:49:20 +0200
+        Thu, 26 Mar 2026 07:57:37 -0700 (PDT)
+Message-ID: <66b8deb8-6138-406e-a503-27cbe5dce2cc@oss.qualcomm.com>
+Date: Thu, 26 Mar 2026 20:27:30 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,351 +105,148 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/2] dt-bindings: phy: qcom: Add CSI2 C-PHY/DPHY schema
-To: Bryan O'Donoghue <bod@kernel.org>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Vinod Koul
- <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Neil Armstrong <neil.armstrong@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- linux-media@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260326-x1e-csi2-phy-v5-0-0c0fc7f5c01b@linaro.org>
- <20260326-x1e-csi2-phy-v5-1-0c0fc7f5c01b@linaro.org>
- <72ef6c9e-feb6-4e57-b8cc-7801bd748698@linaro.org>
- <f1c8c412-1d27-4c83-8c5e-76b9369ea6e9@linaro.org>
- <VwCtoebjwHqLTucsrGruvBpedA4k-Melt7C0DA0aHSVld3PeotwZdtMUm3EFpvQyScrl6yejmLaK7bY1avT1zQ==@protonmail.internalid>
- <8ac55e5f-72ed-4331-bf42-92ccf97507dd@linaro.org>
- <5d7d5bf8-4420-4d75-b928-820bb9233e52@kernel.org>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <5d7d5bf8-4420-4d75-b928-820bb9233e52@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH 02/16] drm/msm/a6xx: Switch to preemption safe AO counter
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jesszhan0024@gmail.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Antonino Maniscalco <antomani103@gmail.com>,
+        Connor Abbott <cwabbott0@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>
+References: <20260324-a8xx-gpu-batch2-v1-0-fc95b8d9c017@oss.qualcomm.com>
+ <20260324-a8xx-gpu-batch2-v1-2-fc95b8d9c017@oss.qualcomm.com>
+ <deb68834-f384-46d8-81a3-9eff88deaef7@oss.qualcomm.com>
+ <cb4543e8-dcdd-434b-85ea-561f341452de@oss.qualcomm.com>
+ <4bd0e8fb-a41b-4d56-88d0-c241d6ab431a@oss.qualcomm.com>
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <4bd0e8fb-a41b-4d56-88d0-c241d6ab431a@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=NOPYOk6g c=1 sm=1 tr=0 ts=69c54962 cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=EUspDBNiAAAA:8 a=tHuJs617m-YSc7YiAWEA:9 a=QEXdDO2ut3YA:10
+ a=rl5im9kqc5Lf4LNbBjHf:22
+X-Proofpoint-ORIG-GUID: NSeVUkky4k9hP0SMBrjC6BmaeofklI1O
+X-Proofpoint-GUID: NSeVUkky4k9hP0SMBrjC6BmaeofklI1O
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI2MDEwNSBTYWx0ZWRfX3s05onR4OtS5
+ hZk3QvKvmlYM+RWM8HSBWafij76OZ2kk3TFMWyMjh72F3qpdjVsSw/+XF/WtthWgSvaTEIjQJHw
+ 7+ecwFwHprW7DBn3wr3QQ4lnIuStqLvMQwKKmXAS+f1vBBnVoukNqeNuk6F7Wqg85SMlJGMiJF1
+ nSss5scoNba7OT/Ly+mlFOgmXCyScoYmwl3G+f4l6ynWRlENkpkTSbNVF5I7lvT3vxLYvf4GBmj
+ 3EptIFcA3sqOYTk+WveHYPdvi611JKvXl1grd1Wy4REDjy+ZxoVr0DgeopinNwHkBy1OH3Vaxfg
+ XbC10FFHauSGB3TO+Hh4FuBxBJX7PzB6zqgChOqCvoXBWup60Md/mM7Yp5JB40/+U76+FG8NNNl
+ On/GxE61dzMsIx1zSAloj1mLTpv+TrF0u0+XUa64ri4cHe9O2KLf7udnREqJWih9dK/WGQNj2IV
+ jbFdPd0fKBOgeLbG4cw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-26_03,2026-03-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 spamscore=0 clxscore=1015 priorityscore=1501 lowpriorityscore=0
+ impostorscore=0 malwarescore=0 bulkscore=0 phishscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603260105
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	TAGGED_FROM(0.00)[bounces-100122-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-100123-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.freedesktop.org,oss.qualcomm.com,poorly.run,kernel.org,linux.dev,gmail.com,somainline.org,ffwll.ch,linux.intel.com,suse.de];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[19];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[13];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[vladimir.zapolskiy@linaro.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	RCVD_COUNT_FIVE(0.00)[5];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[akhilpo@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: 55604337342
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 53F4C3374FD
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 3/26/26 16:42, Bryan O'Donoghue wrote:
-> On 26/03/2026 10:28, Vladimir Zapolskiy wrote:
->> On 3/26/26 04:03, Bryan O'Donoghue wrote:
->>> On 26/03/2026 01:46, Vladimir Zapolskiy wrote:
->>>> On 3/26/26 03:04, Bryan O'Donoghue wrote:
->>>>> Add a base schema initially compatible with x1e80100 to describe MIPI
->>>>> CSI2
->>>>> PHY devices.
->>>>>
->>>>> The hardware can support both CPHY, DPHY and a special split-mode
->>>>> DPHY. We
->>>>> capture those modes as:
->>>>>
->>>>> - PHY_QCOM_CSI2_MODE_DPHY
->>>>> - PHY_QCOM_CSI2_MODE_CPHY
->>>>> - PHY_QCOM_CSI2_MODE_SPLIT_DPHY
+On 3/26/2026 2:34 PM, Konrad Dybcio wrote:
+> On 3/25/26 10:46 PM, Akhil P Oommen wrote:
+>> On 3/24/2026 3:21 PM, Konrad Dybcio wrote:
+>>> On 3/23/26 9:12 PM, Akhil P Oommen wrote:
+>>>> CP_ALWAYS_ON_COUNTER is not save-restored during preemption, so it won't
+>>>> provide accurate data about the 'submit' when preemption is enabled.
+>>>> Switch to CP_ALWAYS_ON_CONTEXT which is preemption safe.
 >>>>
->>>> Distinction between PHY_QCOM_CSI2_MODE_DPHY and
->>>> PHY_QCOM_CSI2_MODE_SPLIT_DPHY
->>>> is
->>>> 1) insufficient in just this simplistic form, because the assignment of
->>>> particular lanes is also needed,
->>>> 2) and under the assumption that the lane mapping is set somewhere else,
->>>> then
->>>> there should be no difference between PHY_QCOM_CSI2_MODE_{DPHY,SPLIT_DPHY},
->>>> it's just DPHY, and the subtype is deductible from data-lanes property on
->>>> the consumer side.
+>>>> Fixes: e7ae83da4a28 ("drm/msm/a6xx: Implement preemption for a7xx targets")
+>>>> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+>>>> ---
+>>>>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 8 ++++----
+>>>>  1 file changed, 4 insertions(+), 4 deletions(-)
 >>>>
->>>> So far the rationale is unclear, why anything above regular PHY_TYPE_DPHY
->>>> and PHY_TYPE_CPHY is needed here, those two are sufficient.
+>>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>>>> index 14d5b5e266f7..93bf2c40bfb9 100644
+>>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>>>> @@ -345,7 +345,7 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+>>>>  	 * GPU registers so we need to add 0x1a800 to the register value on A630
+>>>>  	 * to get the right value from PM4.
+>>>>  	 */
+>>>> -	get_stats_counter(ring, REG_A6XX_CP_ALWAYS_ON_COUNTER,
+>>>> +	get_stats_counter(ring, REG_A6XX_CP_ALWAYS_ON_CONTEXT,
+>>>>  		rbmemptr_stats(ring, index, alwayson_start));
+>>>>  
+>>>>  	/* Invalidate CCU depth and color */
+>>>> @@ -386,7 +386,7 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+>>>>  
+>>>>  	get_stats_counter(ring, REG_A6XX_RBBM_PERFCTR_CP(0),
+>>>>  		rbmemptr_stats(ring, index, cpcycles_end));
+>>>> -	get_stats_counter(ring, REG_A6XX_CP_ALWAYS_ON_COUNTER,
+>>>> +	get_stats_counter(ring, REG_A6XX_CP_ALWAYS_ON_CONTEXT,
+>>>>  		rbmemptr_stats(ring, index, alwayson_end));
+>>>>  
+>>>>  	/* Write the fence to the scratch register */
+>>>> @@ -478,10 +478,10 @@ static void a7xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+>>>>  
+>>>>  	if (adreno_is_a8xx(adreno_gpu)) {
+>>>>  		rbbm_perfctr_cp0 = REG_A8XX_RBBM_PERFCTR_CP(0);
+>>>> -		cp_always_on_counter = REG_A8XX_CP_ALWAYS_ON_COUNTER;
+>>>> +		cp_always_on_counter = REG_A8XX_CP_ALWAYS_ON_CONTEXT;
 >>>
->>> Because knowing the split-mode exists and that you have asked about how
->>> such a thing would be supported, I thought about how to represent that
->>> mode right from the start, even if we don't support it.
+>>> I'm a little worried about mixing the names here - KGSL uses both of
+>>> these registers (A6XX_KERNEL_PROFILE vs A6XX_KERNEL_PROFILE_CONTEXT)
+>>> to track different fields of the struct adreno_drawobj_profile_entry
 >>
->> It is good to think about this hardware confguration in advance, however
->> the process of describing such hardware setup is incomplete.
->>
->>>
->>> To support split phy we will need to pass the parameter.
->>
->> What you call "split phy" is a DPHY, and "split phy" can not be supported
->> by adding this parameter, because it does not provide information about
->> lanes, and after removing this information it is just DPHY.
+>> But this naming aligns with the HW reg spec. So I prefer to use the same.
 > 
-> That's just not true. If you read the camx source code you can see
-> split/combo mode 2+1 1+1 data/clock mode requires special programming of
-> the PHY to support.
-
-Please do not reduce the upraised problem of proper hardware description
-to some particular realisation in camx, this is irrelevant.
-
-Here the description of hardware is done, and my point is that the new
-PHY_QCOM_CSI2_MODE_SPLIT_DPHY phy type is simply not needed, since it's
-possible to give a proper description of hardware without this invention.
-
-> https://review.lineageos.org/c/LineageOS/android_kernel_motorola_sm6375/+/423960/1/drivers/cam_sensor_module/cam_csiphy/cam_csiphy_core.c#b285
+> To make it clear, my confusion comes from:
 > 
-> There is disjunction all over this file depending on the mode.
+> cp_always_on_counter = REG_A8XX_CP_ALWAYS_ON_CONTEXT
+>              ^^^^^^^    vs                   ^^^^^^^
 > 
-> https://review.lineageos.org/c/LineageOS/android_kernel_motorola_sm6375/+/423960/1/drivers/cam_sensor_module/cam_csiphy/cam_csiphy_core.c#b767
-> 
-> And besides, think about it - you need different init sequences if one
-> of the lanes is clock instead of data...
-> 
-> If we use phy.h::PHY_TYPE_DPHY then that means to support split-mode in
-> the future we need to get that mode represented in phy.h - but really
-> this fixed split mode isn't a generic CSI2 PHY mode, its a Qualcommism.
-> 
-> Nothing wrong with that - but then the mode should reflect the fact it
-> is vendor specific and we absolutely 100% have to do different things in
-> the PHY driver whether we are in regular DPHY mode or in split DPHY mode.
-> 
-> If we use PHY_TYPE_DPHY as I did in the previous patch then we can't
-> convert to a vendor type later on as its an ABI break.
-> 
-> So we have both a sound technical reason hardware will require it to
-> differentiate between DPHY and split-mode DPHY - and we also don't want
-> to be bound to phy.h and then try to upstream a new DPHY_SPLIT_MODE here
-> which a reviewer might reasonably say "why is this special mode from a
-> specific vendor driving new defines in a shared file"
-> 
->>
->>> So we define those parameters upfront.
->>
->> This new header file has to be removed, it does not bring anything valuable.
->>
->>>>
->>>>>
->>>>> The CSIPHY devices have their own pinouts on the SoC as well as their own
->>>>> individual voltage rails.
->>>>>
->>>>> The need to model voltage rails on a per-PHY basis leads us to define
->>>>> CSIPHY devices as individual nodes.
->>>>>
->>>>> Two nice outcomes in terms of schema and DT arise from this change.
->>>>>
->>>>> 1. The ability to define on a per-PHY basis voltage rails.
->>>>> 2. The ability to require those voltage.
->>>>>
->>>>> We have had a complete bodge upstream for this where a single set of
->>>>> voltage rail for all CSIPHYs has been buried inside of CAMSS.
->>>>>
->>>>> Much like the I2C bus which is dedicated to Camera sensors - the CCI
->>>>> bus in
->>>>> CAMSS parlance, the CSIPHY devices should be individually modelled.
->>>>>
->>>>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>>>> ---
->>>>>      .../bindings/phy/qcom,x1e80100-csi2-phy.yaml       | 130 +++++++++++
->>>>> ++++++++++
->>>>>      include/dt-bindings/phy/phy-qcom-mipi-csi2.h       |  15 +++
->>>>>      2 files changed, 145 insertions(+)
->>>>>
->>>>> diff --git a/Documentation/devicetree/bindings/phy/qcom,x1e80100-csi2-
->>>>> phy.yaml b/Documentation/devicetree/bindings/phy/qcom,x1e80100-csi2-
->>>>> phy.yaml
->>>>> new file mode 100644
->>>>> index 0000000000000..63114151104b4
->>>>> --- /dev/null
->>>>> +++ b/Documentation/devicetree/bindings/phy/qcom,x1e80100-csi2-phy.yaml
->>>>> @@ -0,0 +1,130 @@
->>>>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->>>>> +%YAML 1.2
->>>>> +---
->>>>> +$id: http://devicetree.org/schemas/phy/qcom,x1e80100-csi2-phy.yaml#
->>>>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>>>> +
->>>>> +title: Qualcomm CSI2 PHY
->>>>> +
->>>>> +maintainers:
->>>>> +  - Bryan O'Donoghue <bod@kernel.org>
->>>>> +
->>>>> +description:
->>>>> +  Qualcomm MIPI CSI2 C-PHY/D-PHY combination PHY. Connects MIPI CSI2
->>>>> sensors
->>>>> +  to Qualcomm's Camera CSI Decoder. The PHY supports both C-PHY and
->>>>> D-PHY
->>>>> +  modes.
->>>>> +
->>>>> +properties:
->>>>> +  compatible:
->>>>> +    const: qcom,x1e80100-csi2-phy
->>>>> +
->>>>> +  reg:
->>>>> +    maxItems: 1
->>>>> +
->>>>> +  "#phy-cells":
->>>>> +    const: 1
->>>>> +    description:
->>>>> +      The single cell specifies the PHY operating mode.
->>>>> +      See include/dt-bindings/phy/phy-qcom-mipi-csi2.h for valid values.
->>>>
->>>> include/dt-bindings/phy/phy.h should be good enough as it's stated above.
->>>
->>> While include/dt-bindings/phy/phy.h provides generic definitions for
->>> D-PHY and C-PHY, it does not contain a definition for Qualcomm's
->>> proprietary Split D-PHY mode. Because this hardware supports a
->>
->> What Qualcomm's proprietary Split D-PHY mode is manifested by lane mapping,
->> there is no need to introduce another PHY mode, it is DPHY.
->>
->>> vendor-specific operating mode, introducing a vendor-specific header to
->>> define that state is necessary.
->>>
->>> This is exactly what we do with the QMP to support a similar use-case -
->>> the PHYs do vendor specific things, so we use vendor specific defines.
->>>
->>> If we lock to phy.h CPHY/DPHY only then we exclude the possibility of
->>> say adding split-mode to an upstream SoC as the DT ABI will not then
->>> facilitate the mode.
->>>
->>>>
->>>>> +
->>>>> +  clocks:
->>>>> +    maxItems: 2
->>>>> +
->>>>> +  clock-names:
->>>>> +    items:
->>>>> +      - const: core
->>>>> +      - const: timer
->>>>> +
->>>>> +  interrupts:
->>>>> +    maxItems: 1
->>>>> +
->>>>> +  operating-points-v2:
->>>>> +    maxItems: 1
->>>>> +
->>>>> +  power-domains:
->>>>> +    items:
->>>>> +      - description: MXC or MXA voltage rail
->>>>> +      - description: MMCX voltage rail
->>>>> +
->>>>> +  power-domain-names:
->>>>> +    items:
->>>>> +      - const: mx
->>>>> +      - const: mmcx
->>>>> +
->>>>> +  vdda-0p9-supply:
->>>>> +    description: Phandle to a 0.9V regulator supply to a PHY.
->>>>> +
->>>>> +  vdda-1p2-supply:
->>>>> +    description: Phandle to 1.2V regulator supply to a PHY.
->>>>> +
->>>>> +required:
->>>>> +  - compatible
->>>>> +  - reg
->>>>> +  - "#phy-cells"
->>>>> +  - clocks
->>>>> +  - clock-names
->>>>> +  - interrupts
->>>>> +  - operating-points-v2
->>>>> +  - power-domains
->>>>> +  - power-domain-names
->>>>> +  - vdda-0p9-supply
->>>>> +  - vdda-1p2-supply
->>>>> +
->>>>> +additionalProperties: false
->>>>> +
->>>>> +examples:
->>>>> +  - |
->>>>> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
->>>>> +    #include <dt-bindings/clock/qcom,x1e80100-camcc.h>
->>>>> +    #include <dt-bindings/clock/qcom,x1e80100-gcc.h>
->>>>> +    #include <dt-bindings/phy/phy-qcom-mipi-csi2.h>
->>>>> +    #include <dt-bindings/power/qcom,rpmhpd.h>
->>>>> +
->>>>> +    csiphy4: csiphy@ace4000 {
->>>>> +        compatible = "qcom,x1e80100-csi2-phy";
->>>>> +        reg = <0x0ace4000 0x2000>;
->>>>> +        #phy-cells = <1>;
->>>>> +
->>>>> +        clocks = <&camcc CAM_CC_CSIPHY0_CLK>,
->>>>> +                 <&camcc CAM_CC_CSI0PHYTIMER_CLK>;
->>>>> +        clock-names = "core",
->>>>> +                      "timer";
->>>>> +
->>>>> +        operating-points-v2 = <&csiphy_opp_table>;
->>>>> +
->>>>> +        interrupts = <GIC_SPI 477 IRQ_TYPE_EDGE_RISING>;
->>>>> +
->>>>> +        power-domains = <&rpmhpd RPMHPD_MX>,
->>>>> +                        <&rpmhpd RPMHPD_MMCX>;
->>>>> +        power-domain-names = "mx",
->>>>> +                             "mmcx";
->>>>> +
->>>>> +        vdda-0p9-supply = <&vreg_l2c_0p8>;
->>>>> +        vdda-1p2-supply = <&vreg_l1c_1p2>;
->>>>> +    };
->>>>> +
->>>>> +    csiphy_opp_table: opp-table {
->>>>> +        compatible = "operating-points-v2";
->>>>> +
->>>>> +        opp-300000000 {
->>>>> +            opp-hz = /bits/ 64 <300000000>;
->>>>> +            required-opps = <&rpmhpd_opp_low_svs_d1>,
->>>>> +                            <&rpmhpd_opp_low_svs_d1>;
->>>>> +        };
->>>>> +
->>>>> +        opp-400000000 {
->>>>> +            opp-hz = /bits/ 64 <400000000>;
->>>>> +            required-opps = <&rpmhpd_opp_low_svs>,
->>>>> +                            <&rpmhpd_opp_low_svs>;
->>>>> +        };
->>>>> +
->>>>> +        opp-480000000 {
->>>>> +            opp-hz = /bits/ 64 <480000000>;
->>>>> +            required-opps = <&rpmhpd_opp_low_svs>,
->>>>> +                            <&rpmhpd_opp_low_svs>;
->>>>> +        };
->>>>> +    };
->>>>> +
->>>>> +    isp@acb7000 {
->>>>> +        phys = <&csiphy4 PHY_QCOM_CSI2_MODE_DPHY>;
->>>>> +    };
->>>>
->>>> This example is incomplete in sense that it does not include CAMSS
->>>> CSIPHY IP hardware configuration in whole.
->>>
->>>
->>> No that's not the way examples work. You don't replicate entire nodes
->>> from other schemas you just give a terse reference.
->>>
->>
->> If so, then this example makes no sense and it'd be better to remove it.
-> You know you're right its not strictly necessary - its just there to be
-> helpful.
-> 
-> "Be less helpful" is not usually review feedback I give or take but,
-> I'll drop this anyway.
+> i.e. I'm not saying this is wrong, but rather that the local variable
+> could be renamed as well, to match
 > 
 
-Thank you.
+Aah! okay. Ack. :)
 
--- 
-Best wishes,
-Vladimir
+-Akhil.
+
+> Konrad
+
 
