@@ -1,147 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-100081-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100082-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GGa9IxkMxWma5wQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100081-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 11:36:09 +0100
+	id AOMKOl8MxWn05wQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100082-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 11:37:19 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2BBF03337BC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 11:36:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E769333863
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 11:37:19 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 424F6316ED39
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 10:11:34 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 30ED3318E434
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 10:14:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A35BE3932F1;
-	Thu, 26 Mar 2026 10:11:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 005B03BD629;
+	Thu, 26 Mar 2026 10:14:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pVBUjR6q"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OUQ4uH4O"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BDD838F932
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 10:11:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15353AF645;
+	Thu, 26 Mar 2026 10:14:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774519893; cv=none; b=F0oxAl6/KKN7sUx2axshfpZVIBypGOCJQW4pAS1mkj2v7YvRj9hnv+OPpCD12RB8n4B56JXfRCSbycWWVsse4xYQqwye7+BOFepQFli/czL+rl612YOegGzeWj+cTD6hBhoTJHnytLTuSBbphXIZqQ5f2x2PfpyqN0ya032gyV4=
+	t=1774520060; cv=none; b=p5U5cHRMy5ytXTPxKzuI30pR6u+bPrSbfrlvEH3L/tEq71OzoNdugJNv8t/3KV3+mxwJFpasjsmrYKepXlaKwkWeIIisl/IY5wLoxIb2Ly59zVS3Rf4iV4JvziQxFlcx3DtVAUNANvRrx+bG56T2dknXZKugTy5nngBbJZ+ZgQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774519893; c=relaxed/simple;
-	bh=QXFGyJCxVdNpF288bgk0fuzrDLWtjYWQ1ifovXx9A1Q=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sD0+dZC5ZWgTGsPPck89sWXUa9MGbDPtDCPlch+aKc4FODGYb2Ur57xr7pIkRfv93ryHLeYiB8c2mdakcjYJxYWvHV07YulQ8Ak70snutGPSI2UiBtVOrrJywBXQ9q2voeNCGN7hgj724t8FIMnJ+CVDU6oE81+6Qrxh+StNHEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pVBUjR6q; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38979C2BCB2
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 10:11:33 +0000 (UTC)
+	s=arc-20240116; t=1774520060; c=relaxed/simple;
+	bh=JwyM0QZfb86+QwRrN223Y00Z3tm2tXge4lHLjaRrDrs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NtLAHkV6ZMp1Vgjv2SKdNtjikTJkuVR5/rzvDv1guAoHtHJB+M6NEkkiHZQpCAVJr1XCMO7cBw9u5Ton1f4KmS5x61IITgLsleYqrBII08fzu5v3iPuKkCqvy94QDhXkWMi6Fil5/3J+N798L3JZ44Oq5XKXj6hRMHjV7GxuFMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OUQ4uH4O; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDBDDC116C6;
+	Thu, 26 Mar 2026 10:14:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774519893;
-	bh=QXFGyJCxVdNpF288bgk0fuzrDLWtjYWQ1ifovXx9A1Q=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=pVBUjR6qQvl8xug/BhAV8gUrM20yrEvEgrD00Sa86uqTwaK9cS2VOxvNRVmgEyGjr
-	 l1LhX+kcq9ZJgHEx5jHlDo/Dwy5x/ACJ8Nto5S0CnDBy0/GF3kyQeQbFwxPWbVCfFY
-	 cvorQ3EUbJ80gzqAEf5uMMD0vlmDAmPWh3Pb+eKn+usFxsQeftw11S3UAFM+/FvSwo
-	 EizJTRjmLK2vZwYCZWspG9FoyE1ZOxPSaL8QYkJ4QHzVT0e/Mpmdzl9rku5+TWI2b7
-	 7BFrGW+nEcgfJbsBgM7nTsf1eZ1GK8LICKQRI4bOq8LQKYwenL1b5uW4LK6X+Ne60h
-	 23atR6QRbJmpg==
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-79a535e7c00so7214707b3.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 03:11:33 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVhs2K8uoHFXtJjS52Pe0sasCD/2wS2jgF4y0rsRoyaEnrGuJsPyU4Zyi20RvskvW14P9gyRlSyyKZC6xBQ@vger.kernel.org
-X-Gm-Message-State: AOJu0YyUkzgD9EtPwbaZFDrhReHUhVEgEP/wi7Hrsc5uxj1QlcwoHLZb
-	4hcX7+h8mSytZTD9swbLWuJ8qO3Gm9eoBXinGK9EBlT7X1OWrhOYpjdBVHw6vNMska1HbXQKvqw
-	AuSZ8Z2DLgh4sti6c7LKDYKesq4ybsMs=
-X-Received: by 2002:a05:690c:c530:b0:79a:b46c:e60a with SMTP id
- 00721157ae682-79acf6c80ebmr67567397b3.44.1774519892555; Thu, 26 Mar 2026
- 03:11:32 -0700 (PDT)
+	s=k20201202; t=1774520060;
+	bh=JwyM0QZfb86+QwRrN223Y00Z3tm2tXge4lHLjaRrDrs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=OUQ4uH4OtLF/ayrZYaDD0/ue+T5UZPmoAQJG6ei1em05BJCiP1z1U88YtC6vC6I+P
+	 NYFlHzx56w7MTx83BpsnYMwMitcLmED3MpRBS1dHXYM7Me8ZXYndDX4L6ViMmUZ/R8
+	 xTj3xqevTvwI0n40vLHRwWWaEQpQpuXBm266ymKlJTg6PMOkFvw1ZJcuTqvh2Q93f+
+	 VxIpzycBlqj/pWFdHvZLlNx2L+T0Tt3sJa9jIoLJ2xkbJ9+q3SyrLZmt4PwHZMzhJ8
+	 LX5p2V5n6BdzSfynUMWNfuAuhd5tl3i/c1OspiwIv1JchefXQ+aSB3VjLs8zhWTIgq
+	 7bTr9QAgRQb4Q==
+Date: Thu, 26 Mar 2026 11:14:18 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Robert Marko <robimarko@gmail.com>, Guru Das Srinagesh <linux@gurudas.dev>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: firmware: qcom,scm: Document ipq9650 SCM
+Message-ID: <20260326-avocet-of-inevitable-gaiety-6dc8db@quoll>
+References: <20260325-ipq9650_scm-v1-1-ad6a3fe53f38@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260326-expressatt_camera_flash-v3-0-e75e5d58990f@gmail.com> <20260326-expressatt_camera_flash-v3-2-e75e5d58990f@gmail.com>
-In-Reply-To: <20260326-expressatt_camera_flash-v3-2-e75e5d58990f@gmail.com>
-From: Linus Walleij <linusw@kernel.org>
-Date: Thu, 26 Mar 2026 11:11:21 +0100
-X-Gmail-Original-Message-ID: <CAD++jLkKqmEQ+Y4w4hHkNfw8KwoBPTg4o0NP=B85JNJ1X-_Z9A@mail.gmail.com>
-X-Gm-Features: AQROBzCcPBE-367IK-ffpVZCMs_a5jdyIlj2tHpyWX11hFiACnnKCNZ3SJn6aXU
-Message-ID: <CAD++jLkKqmEQ+Y4w4hHkNfw8KwoBPTg4o0NP=B85JNJ1X-_Z9A@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] leds: flash: rt8515: Support single-GPIO flash ICs
- with vin supply
-To: guptarud@gmail.com
-Cc: Lee Jones <lee@kernel.org>, Pavel Machek <pavel@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, linux-leds@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-2.16 / 15.00];
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260325-ipq9650_scm-v1-1-ad6a3fe53f38@oss.qualcomm.com>
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	MID_RHS_NOT_FQDN(0.50)[];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_CC(0.00)[kernel.org,gmail.com,vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-100081-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-100082-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FREEMAIL_CC(0.00)[kernel.org,gmail.com,gurudas.dev,vger.kernel.org];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[15];
-	DKIM_TRACE(0.00)[kernel.org:+];
+	FROM_HAS_DN(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[linusw@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	RCPT_COUNT_SEVEN(0.00)[11];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,mail.gmail.com:mid]
-X-Rspamd-Queue-Id: 2BBF03337BC
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 5E769333863
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi Rudraksha,
+On Wed, Mar 25, 2026 at 05:09:43PM +0530, Kathiravan Thirumoorthy wrote:
+> Document the scm compatible for ipq9650 SoC.
+> 
+> Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+> ---
+>  Documentation/devicetree/bindings/firmware/qcom,scm.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 
-this is starting to look good, some remaining snags below:
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
 
-On Thu, Mar 26, 2026 at 8:57=E2=80=AFAM Rudraksha Gupta via B4 Relay
-<devnull+guptarud.gmail.com@kernel.org> wrote:
+Best regards,
+Krzysztof
 
-> -static void rt8515_gpio_brightness_commit(struct gpio_desc *gpiod,
-> -                                         int brightness)
-> +static int rt8515_set_flash_brightness(struct rt8515 *rt,
-> +                                        struct gpio_desc *gpiod,
-> +                                        int brightness)
-
-Do not change the name of the function, it's confusing.
-This is also used for setting the brightness of the torch, and after
-this change it looks like the function is just for the flash.
-
->         } else if (brightness < RT8515_TORCH_MAX) {
-> -               /* Step it up to movie mode brightness using the flash pi=
-n */
-> -               rt8515_gpio_brightness_commit(rt->enable_torch, brightnes=
-s);
-> +               /* Step it up to movie mode brightness */
-> +               ret =3D rt8515_set_flash_brightness(rt, rt->enable_torch =
-?
-> +                               rt->enable_torch : rt->enable_flash, brig=
-htness);
-> +               if (ret)
-> +                       goto out;
-
-Add a comment befor this that if we don't have a separate torch
-enable pin connected, we use the flash pin also for the torch.
-
-Yours,
-Linus Walleij
 
