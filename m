@@ -1,213 +1,243 @@
-Return-Path: <linux-arm-msm+bounces-100160-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100161-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id KA4qBIaUxWmq/gQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100160-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 21:18:14 +0100
+	id UHVBIUm+xWkeBAUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100161-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 00:16:25 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 65E3433B59E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 21:18:13 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 03FBF33CF87
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 00:16:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 5E8E73095CBD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 20:12:58 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id DDC56306D377
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 23:10:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 445C83A6EEB;
-	Thu, 26 Mar 2026 20:12:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80A1A34E769;
+	Thu, 26 Mar 2026 23:10:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GQySmhwv";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="IONOYrSG"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MwcYaqRP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C8F339EF12
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 20:12:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D1AA346A1D;
+	Thu, 26 Mar 2026 23:10:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774555975; cv=none; b=kfVCJOeTT8AplkGbJWPMDzXO9CEY8LPpPsPamTfINTWPtQeCEy7zv5jaepxB0l4AsmtzQbsCTRQLs5Gz+hRlHjtwrribGPq7J6YaDqhMlJiqu7Q1Qk/8IWNNz6D8FXvtMBZ8JBgimFyMmB3CSndIbKGgYo7uEF70cOMZznBnkkc=
+	t=1774566650; cv=none; b=Sk2FrY27xCREYq1sI1CuG6iI0WqIXzLxLA28uuvZI4vao30aGpWwKeZIBjvaMLNDwuiAJiUhcYTBczAf3N3/7mcm6t5sS+kmEt3nnO7T3D0sJptfKCRspTcp9sCgbIY1YZHJ+BFQrcLgUNiEhWn6JczYw6tdSNB8Dz7rGo4ynaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774555975; c=relaxed/simple;
-	bh=5AkZwlLSAkMrjll6QfT18fZ0Lmy5ItVLit6autosngQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nupT0cTuymFpLJnRvEI+e1bY/0E15WqwRK4K3dKwsUupZmrSJr99C+u/oZIs3RbhienPfQ7Cs10JEZzeFnzwN4TojCQUXul7gKBnj0J2okQVPbN9yvvIUy8eKg8Hno+Ab8j65Buj/Rnlxb3SURa1792brS4yfAhT5Uedie66otM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GQySmhwv; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=IONOYrSG; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62QF9mO5790018
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 20:12:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Qsmz1RtLkSbASLYXXxlZoxnDX1y/ZiflBrWH0lwDH0k=; b=GQySmhwvWr292qvQ
-	Bgk2fh9i76aQJFVMR7B5IaskHorUINoRFaADSIIgiRRUya4snLSS9ZZ8tgRpXJDT
-	EopJIzyQ/7MrCqmKr7Uo1iuUVB2H44ektweW5InsuOO6VsbW0IW7XO164/XqgpwC
-	4wR3WoaYxtR1ZL1k1WoVOOKyWNOK8aQ8KLSRB4pE27hC4PPGdevI2q+Cyw2KdJJp
-	ELW4/vEW1s8yyOxGgEM2GkI0LgjLaVyUC26YOGMbTmD7NQeWFK2Yxr0swus9ZKZk
-	X7nD92gK+luVNm+F3wKGTZ2nsKGCPjX0CeDjKSqbh1pC/wT6V2LOYd80tnNn4l7L
-	uLDauA==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d53eqhxan-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 20:12:52 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-c7651644975so930018a12.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 13:12:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1774555972; x=1775160772; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Qsmz1RtLkSbASLYXXxlZoxnDX1y/ZiflBrWH0lwDH0k=;
-        b=IONOYrSGrVVTHAZ2CDBTfLxJDPJOtCuNPvYDLIMJEbiBUahGdzgWi+foVsNkX08Akq
-         JtM9LK+/0mMOZi9d0lJhZ2G1Wrjd4aglD9eoRXdF6BWuOf2hgqVKwmKwxSZUpQ4QVRDk
-         z+veufh1Spw2i0D/1bxlWc/3l3ZJSTHBYvIGr48hAuteEbJRepsNjc5PW5NXGETAZQVY
-         lLs4VyzACvyFmvoM2o4gqD1f6JcYxRMzScofbuohNuNo0f3YOT63Alnjfmb6M1/lEXK1
-         W2omoXyHVZ9v2bcrt2AZN/s5dt9Y/MNagc7QNPUFmoM0QAdEyc03bvOVwSU9am3qJ2al
-         HZsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774555972; x=1775160772;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Qsmz1RtLkSbASLYXXxlZoxnDX1y/ZiflBrWH0lwDH0k=;
-        b=BvY9+r5GysDXceHLEnSBlZ4iCrFmjMMrIjd32oDO6fXBzDQmiysrg1r16YTClO34Aj
-         PM2irYgFF5ICSi+K9sLDvQLXZz0SgJ2cdqFpu3lizH9qbd2nhfXrkkjZI0K529AjHTHZ
-         wLHms8XqUN8dt4eh6uGvHgkj++r+R/2tOHCsbxV2J9KXIpeLrizSfivCHPusoHjTqXsh
-         ZZQ+vMgRVNxH+BZBhQ1RNRE9BOZR1nRR7H1E5HFnSxnY29yuckPfjY9cRryVWWECFKv3
-         JMZdjZyso6gFv1vZUGBbVvDWYjvtshVdxrB2Hci4QtfBB7hKgYOtgKDXnkJyh2LqTE5w
-         b08g==
-X-Gm-Message-State: AOJu0YzTg5vZNkcz+YtZJATCM/HLHwscIX5bpDnTRSgI4jWIJ3Gdnlxi
-	v4gk6OfDKTwrepLrJJfo5Urbhcejiq5+8xImP1WmiXcn4q4zx7g6PsA9xZvZxAAsxoO+HxKD7p0
-	eGkKvH+IabP99HCdYffnvRIcZ4LWe7tKzHDEOIvWP45fjCH7miQNl65jQwTS6N/MsoMko
-X-Gm-Gg: ATEYQzzPr88/JGHXB61P7PZuPoogGAGS6fC6/rGw/Uf4nscoD+RCV97WhWvIcgSqQSc
-	ub+Ap4/aeR0+s3SHlVQObiynh0a6KQsnFEY4eS55ckaplPsDNp9ISz9IeFM8CmNikS7V4JKT4Kd
-	mJt63Kn+tryFXD3apsJpLDliIAIrt3rIlsmGj9Qdb/xq6g2D8pR4dM7wW0jMzNSjUk0muCcAmQJ
-	CDqfWawbp0OkJ3FUa+BCbac5HLHIgpSkbyOySKeM4AUCisGaC7D4PnAz6+dBCSp6hL56lHJ+/Kt
-	8i0VjmfZU0hNEnzqbenMvdDVSfD915BvtR5+k01MXgffgg/bsEQIsXK1ZMHpfXPZfKJADzzaE5g
-	QxpZvn0Yhb4FVIIgCcgSHgsi2mlXWSPZvGW+uunRt+ZMK
-X-Received: by 2002:a17:90b:5109:b0:35b:9777:8bb1 with SMTP id 98e67ed59e1d1-35c0dd951a1mr7211378a91.19.1774555972210;
-        Thu, 26 Mar 2026 13:12:52 -0700 (PDT)
-X-Received: by 2002:a17:90b:5109:b0:35b:9777:8bb1 with SMTP id 98e67ed59e1d1-35c0dd951a1mr7211358a91.19.1774555971741;
-        Thu, 26 Mar 2026 13:12:51 -0700 (PDT)
-Received: from [10.91.121.222] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35c2ebe2c98sm44495a91.6.2026.03.26.13.12.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Mar 2026 13:12:51 -0700 (PDT)
-Message-ID: <7d223573-438c-4e93-b4b4-64975c4da93f@oss.qualcomm.com>
-Date: Fri, 27 Mar 2026 01:42:45 +0530
+	s=arc-20240116; t=1774566650; c=relaxed/simple;
+	bh=LFk1wAs4FKcW9griZHevwjzZHHkLSKzVhryrwFOnxvU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=YgBDAUG6Vx8uX7YslXj/0yfnkCBM7HwYHCIgmCREhWd46f3xYiX6u6F/szuUShOX3qbFbqICREPZN+sGkJN/LKnCuWk7+jfCB70FqYwAz7Tt3HQJIFYNLufpZRHMpuvuH+hWEc7xMztO5sWIsn2lF0p8tfKK/ekmFXGT1NA8SQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MwcYaqRP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02993C116C6;
+	Thu, 26 Mar 2026 23:10:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1774566649;
+	bh=LFk1wAs4FKcW9griZHevwjzZHHkLSKzVhryrwFOnxvU=;
+	h=From:Date:Subject:To:Cc:From;
+	b=MwcYaqRPw/8nhCry3tpgyZEvpGcZxGi35s+iy53G/8j1K2s9Vygwi7S6YnDtMefAg
+	 AZE//bIixrb/WykCIrXE9K1bknanZmtEIRmo5b3OA48nq9OsjXauHTrtfF/3CFv2Ry
+	 JfTsVhH5aPtIe5job4m3yC/NiiWS9eOQuE5w4zq7r/hJDVqduVbFCvneCBNBpzNSQx
+	 c3PVhFsTO0HntlmqIY1zoC91/MyO/DzFu8M011oGSz4bULM4ITzVsjD0dhAwD3pLNW
+	 Bxip6cpjr2wDc5DgyrByYtbHu9RsN225yIaA1cbPbbAdnrWpCmoKvTLmFyXjXmmlEf
+	 YCKw5AUQXPxSw==
+From: Linus Walleij <linusw@kernel.org>
+Date: Fri, 27 Mar 2026 00:10:46 +0100
+Subject: [PATCH] ASoC: wsa881x: Move custom workaround to gpiolib-of
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/16] drm/msm/a6xx: Fix gpu init from secure world
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jesszhan0024@gmail.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Antonino Maniscalco <antomani103@gmail.com>,
-        Connor Abbott <cwabbott0@gmail.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>
-References: <20260324-a8xx-gpu-batch2-v1-0-fc95b8d9c017@oss.qualcomm.com>
- <20260324-a8xx-gpu-batch2-v1-10-fc95b8d9c017@oss.qualcomm.com>
- <e44e776c-df8f-4555-a487-9a7a6fe032dd@oss.qualcomm.com>
-From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <e44e776c-df8f-4555-a487-9a7a6fe032dd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI2MDE0NSBTYWx0ZWRfX1kYZfps2Ix0+
- AlqYnyUZjPRiMND/ArP9cTEQJwDVKjACBEB1REFLD8fJbfQNpbP5VnFo8CEJkHbtXE1qwoiPvki
- KyX31JfN9jxeQt+0wmk/asEOAcY4wevf3BqIwVK0cTBLAmaoPZgdx+YwNzlfJZFS4ot1HW0qDcM
- Y6riUdDJQt2VdJVeVFe+FmL3HuiDqs/CMnZOK+tWEh7M/qwTchnpyGPtasMo+vxpmt1PDYoOjfn
- ufkKgeUTDg10P8uKKC6DtcFfGTICKbg8QQbQxkwy0ee0L1Swir0zFSkRYeFC00Zw08V05W178Sr
- KSFiFBupzTz4hpTZt/Y7F1ejV8IwUS9F+KWCcQCCsV8miviKgU3V+BClDRO1c23Y+5PAthuoxVD
- 1mfPuylqRjZBlq4QIaL1tcusoa9V+QKvGBCXVoVitSeNwYrykYJdwx9kn57DzNBYkdM4SgbYucQ
- kHOeyAOF9diwNQ858zA==
-X-Proofpoint-GUID: lYsFh7G3Myrn_yOw9g8CKics2pdeGrkN
-X-Authority-Analysis: v=2.4 cv=S4bUAYsP c=1 sm=1 tr=0 ts=69c59344 cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=EUspDBNiAAAA:8 a=SFlVdHt8JhaXNI1LWXcA:9 a=QEXdDO2ut3YA:10
- a=bFCP_H2QrGi7Okbo017w:22
-X-Proofpoint-ORIG-GUID: lYsFh7G3Myrn_yOw9g8CKics2pdeGrkN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-26_03,2026-03-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 lowpriorityscore=0 bulkscore=0 phishscore=0
- spamscore=0 impostorscore=0 clxscore=1015 adultscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603260145
+Message-Id: <20260327-asoc-wsa881x-v1-1-53dc05867e6b@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDYyMz3cTi/GTd8uJECwvDCl0zY+PkZPM0cwNDYyMloJaCotS0zAqwcdG
+ xtbUAaZevp14AAAA=
+X-Change-ID: 20260326-asoc-wsa881x-633cc7f70132
+To: Bartosz Golaszewski <brgl@kernel.org>, 
+ Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, 
+ Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>, 
+ Takashi Iwai <tiwai@suse.com>
+Cc: linux-gpio@vger.kernel.org, linux-sound@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, Linus Walleij <linusw@kernel.org>
+X-Mailer: b4 0.14.3
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCPT_COUNT_TWELVE(0.00)[19];
-	FREEMAIL_CC(0.00)[vger.kernel.org,lists.freedesktop.org,oss.qualcomm.com,poorly.run,kernel.org,linux.dev,gmail.com,somainline.org,ffwll.ch,linux.intel.com,suse.de];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-100160-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-100161-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[kernel.org,gmail.com,perex.cz,suse.com];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,qualcomm.com:dkim,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[akhilpo@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[linusw@kernel.org,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCPT_COUNT_SEVEN(0.00)[10];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 65E3433B59E
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 03FBF33CF87
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 3/24/2026 3:37 PM, Konrad Dybcio wrote:
-> On 3/23/26 9:12 PM, Akhil P Oommen wrote:
->> A7XX_GEN2 and newer GPUs requires initialization of few configurations
->> related to features/power from secure world. The SCM call to do this
->> should be triggered after GDSC and clocks are enabled. So, keep this
->> sequence to a6xx_gmu_resume instead of the probe.
->>
->> Fixes: 14b27d5df3ea ("drm/msm/a7xx: Initialize a750 "software fuse"")
->> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
->> ---
-> 
-> This now makes this happen on *every GMU resume*, which sounds
-> undesirable (kgsl does this in gen7_gmu_first_boot)
+The WSA881x codec driver has a local workaround for old device
+trees that have the "powerdown" GPIO flagged as active high,
+despite it is active low.
 
-I had this in my TODO list, but forgot to update. Will fix.
+This quirk can be replaced by a single quirk entry in
+gpiolib-of.c
 
-> 
-> Similarly, we call a8xx_gpu_get_slice_info() on *every resume*
+Drop all polarity inversion code and drop the surplus
+gpiod_direction_output() call in probe() since we now set up
+the line correctly when getting the GPIO.
 
-No. We check then slice_mask and return early.
+Also drop the inclusion of the unused <linux/gpio.h>.
 
--Akhil.
+Signed-off-by: Linus Walleij <linusw@kernel.org>
+---
+Perhaps this can be applied to ASoC directly we seldom add
+things to these quirks so I think it'll be fine.
 
-> 
-> Konrad
+I was thinking of adding Fixes: but the current code is fine,
+we don't really fix anything we just make it simpler.
+---
+ drivers/gpio/gpiolib-of.c  |  8 ++++++++
+ sound/soc/codecs/wsa881x.c | 35 ++++-------------------------------
+ 2 files changed, 12 insertions(+), 31 deletions(-)
+
+diff --git a/drivers/gpio/gpiolib-of.c b/drivers/gpio/gpiolib-of.c
+index ef1ac68b94b7..d498b2918179 100644
+--- a/drivers/gpio/gpiolib-of.c
++++ b/drivers/gpio/gpiolib-of.c
+@@ -240,6 +240,14 @@ static void of_gpio_try_fixup_polarity(const struct device_node *np,
+ 		 * treats it as "active low".
+ 		 */
+ 		{ "ti,tsc2005",		"reset-gpios",	false },
++#endif
++#if IS_ENABLED(CONFIG_SND_SOC_WSA881X)
++		/*
++		 * WSA881 powerdown is always active low, but some device trees
++		 * missed this when first contributed. It also has a very strange
++		 * compatible.
++		 */
++		{ "sdw10217201000",	"powerdown",	false },
+ #endif
+ 	};
+ 	unsigned int i;
+diff --git a/sound/soc/codecs/wsa881x.c b/sound/soc/codecs/wsa881x.c
+index 2fc234adca5f..d15fda648dad 100644
+--- a/sound/soc/codecs/wsa881x.c
++++ b/sound/soc/codecs/wsa881x.c
+@@ -3,7 +3,6 @@
+ // Copyright (c) 2019, Linaro Limited
+ 
+ #include <linux/bitops.h>
+-#include <linux/gpio.h>
+ #include <linux/gpio/consumer.h>
+ #include <linux/module.h>
+ #include <linux/regmap.h>
+@@ -672,11 +671,6 @@ struct wsa881x_priv {
+ 	struct sdw_stream_runtime *sruntime;
+ 	struct sdw_port_config port_config[WSA881X_MAX_SWR_PORTS];
+ 	struct gpio_desc *sd_n;
+-	/*
+-	 * Logical state for SD_N GPIO: high for shutdown, low for enable.
+-	 * For backwards compatibility.
+-	 */
+-	unsigned int sd_n_val;
+ 	int active_ports;
+ 	bool hw_init;
+ 	bool port_prepared[WSA881X_MAX_SWR_PORTS];
+@@ -1121,31 +1115,11 @@ static int wsa881x_probe(struct sdw_slave *pdev,
+ 	if (!wsa881x)
+ 		return -ENOMEM;
+ 
+-	wsa881x->sd_n = devm_gpiod_get_optional(dev, "powerdown", 0);
++	wsa881x->sd_n = devm_gpiod_get_optional(dev, "powerdown", GPIOD_OUT_LOW);
+ 	if (IS_ERR(wsa881x->sd_n))
+ 		return dev_err_probe(dev, PTR_ERR(wsa881x->sd_n),
+ 				     "Shutdown Control GPIO not found\n");
+ 
+-	/*
+-	 * Backwards compatibility work-around.
+-	 *
+-	 * The SD_N GPIO is active low, however upstream DTS used always active
+-	 * high.  Changing the flag in driver and DTS will break backwards
+-	 * compatibility, so add a simple value inversion to work with both old
+-	 * and new DTS.
+-	 *
+-	 * This won't work properly with DTS using the flags properly in cases:
+-	 * 1. Old DTS with proper ACTIVE_LOW, however such case was broken
+-	 *    before as the driver required the active high.
+-	 * 2. New DTS with proper ACTIVE_HIGH (intended), which is rare case
+-	 *    (not existing upstream) but possible. This is the price of
+-	 *    backwards compatibility, therefore this hack should be removed at
+-	 *    some point.
+-	 */
+-	wsa881x->sd_n_val = gpiod_is_active_low(wsa881x->sd_n);
+-	if (!wsa881x->sd_n_val)
+-		dev_warn(dev, "Using ACTIVE_HIGH for shutdown GPIO. Your DTB might be outdated or you use unsupported configuration for the GPIO.");
+-
+ 	dev_set_drvdata(dev, wsa881x);
+ 	wsa881x->slave = pdev;
+ 	wsa881x->dev = dev;
+@@ -1158,7 +1132,6 @@ static int wsa881x_probe(struct sdw_slave *pdev,
+ 	pdev->prop.sink_dpn_prop = wsa_sink_dpn_prop;
+ 	pdev->prop.scp_int1_mask = SDW_SCP_INT1_BUS_CLASH | SDW_SCP_INT1_PARITY;
+ 	pdev->prop.clk_stop_mode1 = true;
+-	gpiod_direction_output(wsa881x->sd_n, !wsa881x->sd_n_val);
+ 
+ 	wsa881x->regmap = devm_regmap_init_sdw(pdev, &wsa881x_regmap_config);
+ 	if (IS_ERR(wsa881x->regmap))
+@@ -1181,7 +1154,7 @@ static int wsa881x_runtime_suspend(struct device *dev)
+ 	struct regmap *regmap = dev_get_regmap(dev, NULL);
+ 	struct wsa881x_priv *wsa881x = dev_get_drvdata(dev);
+ 
+-	gpiod_direction_output(wsa881x->sd_n, wsa881x->sd_n_val);
++	gpiod_direction_output(wsa881x->sd_n, 1);
+ 
+ 	regcache_cache_only(regmap, true);
+ 	regcache_mark_dirty(regmap);
+@@ -1196,13 +1169,13 @@ static int wsa881x_runtime_resume(struct device *dev)
+ 	struct wsa881x_priv *wsa881x = dev_get_drvdata(dev);
+ 	unsigned long time;
+ 
+-	gpiod_direction_output(wsa881x->sd_n, !wsa881x->sd_n_val);
++	gpiod_direction_output(wsa881x->sd_n, 0);
+ 
+ 	time = wait_for_completion_timeout(&slave->initialization_complete,
+ 					   msecs_to_jiffies(WSA881X_PROBE_TIMEOUT));
+ 	if (!time) {
+ 		dev_err(dev, "Initialization not complete, timed out\n");
+-		gpiod_direction_output(wsa881x->sd_n, wsa881x->sd_n_val);
++		gpiod_direction_output(wsa881x->sd_n, 1);
+ 		return -ETIMEDOUT;
+ 	}
+ 
+
+---
+base-commit: 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f
+change-id: 20260326-asoc-wsa881x-633cc7f70132
+
+Best regards,
+-- 
+Linus Walleij <linusw@kernel.org>
 
 
