@@ -1,238 +1,221 @@
-Return-Path: <linux-arm-msm+bounces-100157-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100158-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 0H4AFb2KxWlc+wQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100157-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 20:36:29 +0100
+	id 2CPRMhONxWlG/QQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100158-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 20:46:27 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id C4E3A33AFF5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 20:36:28 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 40FBE33B1AB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 20:46:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 0FF0F3014747
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 19:33:12 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 11D7330A3788
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 19:40:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BBAC39EF2D;
-	Thu, 26 Mar 2026 19:33:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E32FF3A1E96;
+	Thu, 26 Mar 2026 19:40:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="CEpVVlGq";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="LHC+s3D1"
+	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="XTH6vNZf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from out-179.mta1.migadu.com (out-179.mta1.migadu.com [95.215.58.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C576C393DE8
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 19:33:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF373A0B24
+	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 19:40:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774553589; cv=none; b=Wbip++4FRW6gN058PJbJF5Ccf/MYSB4spc2FmMRGc5yWc7DQXIFESWS43sHOBBRi1h1QBmaecX/EBDWqlzTIsI1zW/hXUW8O78VyS0xyDjsQVQ4mpVAsHrZf1Ykz2cxCNzl/mIi1OcjqGmed0lAEnk95Qz1NMmO0T8YmWuLhUvs=
+	t=1774554012; cv=none; b=ipstpjzRHO+VHIgwrF4U33L4NEn30rEBHQGCNai+F5sabqxXdHDQM1sU0EuqRztQ07mUe01KP7E864UwYkQWKVv2OMCqTmNfLMJGflmYfi38iawSY1V6rLBiSXM/oT721h5BUK5AyrA2SX0mXLAqdRRY6BQpMHZ48y1k6cZDR1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774553589; c=relaxed/simple;
-	bh=YdOyyIGyOTHsZA+h3GJX/eAon8T4KU9DSSPmwuZosGA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QjB1o2LgSaCZdAGpM5B63KT/7W8Zz77kRrLdvOBckovPuFLTFoa6oFF/LqkYPsCf2+RG9y1j2lYaQTUUnV61pT6hsj8GhAa7BzheZTMP431p92aIdoFJEnsxBd7qTykr7ePkZSyzISNTGOjgrm7UbhKyFej0SKOxpDwtfw2VQAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=CEpVVlGq; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=LHC+s3D1; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62QF9j2G3898356
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 19:33:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	P6zDneLAI+dFgFezoOZsrgNyIkV7FoVpzC9Yw1wzYoU=; b=CEpVVlGqlQv+naoL
-	50X31IgRBH97q4IuXtxL6pQu01uS3bRCKnRw5IO4tN56vBSwf+D+FHDn1+zjlw+0
-	Qa94UPjoLxh4aANcYtTiXB+3aPnSstCjLofDMlzbfYCDGO51dYCRaDiozP8xmLc9
-	K3HOUOQB9eQLqWU9G3shYKuTt5/7ocDqWm2NKiDg1xi/M8K3BumMQPblqCh/meZC
-	JaPTqzUo4cE9Ek5rlL0zhnSy4n2VFzN9UO6PtEAlBCcephkTSQdr2EKJt1yqq/3a
-	jHmpJ+2+qgeCwynMEcEazkKNB1lhk8oP1dyf3jiHPRN4e2B6DO5sqY50KfWcwdmt
-	i0LZUA==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d50kgahww-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 19:33:06 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-82c63f85c84so968851b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 12:33:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1774553586; x=1775158386; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=P6zDneLAI+dFgFezoOZsrgNyIkV7FoVpzC9Yw1wzYoU=;
-        b=LHC+s3D1GevMcm+QXF29jSpsXCapHL3inC0BwDYYIbcsHQZlmBX2N5l4IEvY2YcRZP
-         BQ1BfSjxqXdDIITSg5ysFRybm2VKaGPn2WycXJBTmy0dRWQqYM+8++Hoes7YD0Pcrb0k
-         +Kzxce1eefqgH9EL1NUfQeaAuMlXaJcjwQpXsLadKydvVOCwGUK05USFyrOH/6nqVM7y
-         G5BEV095BBfKP9+CtLfnb0dL8BCQYUxTrpIrEGJ02O4Xm0RcwemBXA/tKQdgyGjc0a/M
-         V15DkkZtHHe7stvL4oSUBDEeBXjk0IJNVW6s1tRcu8ee/W68X7XKtIxEpH0LwBvr3fBD
-         ejrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774553586; x=1775158386;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=P6zDneLAI+dFgFezoOZsrgNyIkV7FoVpzC9Yw1wzYoU=;
-        b=iI/664fFNaHkabhcI8hrc/1z+NAk/W+biV1HzWeQMNWZomrt8M5CuOtmmydZ6TmBsn
-         QqUzgWT3h6M1FBAlmelYcVwGJs53EWxUlBAlbfjccSI0OrCQZF3cWwKlT67ypXbY43oS
-         nkDTgwQJwyOOCNs5ecegayZciIIlRO5+0Z3G4aALORNaMyhlnUWA1meT3BtksNv7q8AG
-         VKGEVsqn67xOWmijfve7+lWCgC9WzG1EIpj3IWeq+wGw/EmNlmFlg1DQAklywQiK9FIU
-         zMTAlN7p/g1yv9/YcsjkCs5x301s46b7mOdlHFTXQJfhhn8ERauw/sud1vV/7IJkDLw5
-         JZfg==
-X-Gm-Message-State: AOJu0YwBOtnhZfqmeRD25u5KoS0vTo6iR3vQCcnGLcwXgTOzwDbv9QiB
-	Kt4RjRGORKd5ReVxxWymkpet1W17H617sP7JYaB59Erov/tvFOr++uPN5RnILMjuaDa/KW4v6Y7
-	W50ztXfuvhBPMJnzGqncv5CxwEUPh1ig0xtXogcycj/CRPOUrX1OCoD32nmz42FaFJoHO
-X-Gm-Gg: ATEYQzxbFuAnOWOAz93lfasIGYWd+3U220Kg9ZRb8NhhMtTQisRX+lCbxPMxqQtj9La
-	SXoBiitN3fwdg04q4iIWFddHzyoJ4o7692RC4kx6+2HT0zMV9JJuz2HhCupz5vdmtf2CHttsZVJ
-	zsBJpvT9RorLiluNCCHd9zEygKWOlonbuic1z34IY5esdS2n3rmyYXIW5dwDVx1l2cbcgxDQk3W
-	9A3Wz4SYVHF0HRn+lX7dWCpIZnf2tzhcK+n+aikjaJxscHTzyhXm1HSPLuLXW5p3ac2SqHPDCN0
-	UeRpC3BqR2wMmJnZa8TMidsd3AWKdJfFC5B/8uz3Bba+yz1Tjt2rn2f46Zr+sv6NYRUwC1Ni+HY
-	XfvV0eUVnq8gajjURP5oHvYOZq8g+y/HP86ewJZvDingk
-X-Received: by 2002:a05:6a00:194b:b0:82a:190b:2225 with SMTP id d2e1a72fcca58-82c6df6202fmr8356395b3a.31.1774553585483;
-        Thu, 26 Mar 2026 12:33:05 -0700 (PDT)
-X-Received: by 2002:a05:6a00:194b:b0:82a:190b:2225 with SMTP id d2e1a72fcca58-82c6df6202fmr8356344b3a.31.1774553584960;
-        Thu, 26 Mar 2026 12:33:04 -0700 (PDT)
-Received: from [10.91.121.222] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82c7d1e6439sm3444265b3a.11.2026.03.26.12.32.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Mar 2026 12:33:04 -0700 (PDT)
-Message-ID: <3127ae70-f9d8-4881-ae66-5231833e61e4@oss.qualcomm.com>
-Date: Fri, 27 Mar 2026 01:02:57 +0530
+	s=arc-20240116; t=1774554012; c=relaxed/simple;
+	bh=vrl0CXld5pnl3+j2iO7woriOvcxFLATcV9RLuYGwkcU=;
+	h=MIME-Version:Date:Content-Type:From:Message-ID:Subject:To:Cc:
+	 In-Reply-To:References; b=faod7XjV3LLWvU8QKJzTYq4eJZ9NtmUkbQZ/rTiHp1kj0aaWm2IsHLJx3Vew7lQTv9yKm07mM0DwRBzShViYNywO1Xc4UQXeBfqIirmV3KNq1CuEMBdcwcqudJER8gKzVQQcdNcgwYVPPpqDcXcv3+EEC2ACZyVx4/z1oxitKGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=XTH6vNZf; arc=none smtp.client-ip=95.215.58.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=postmarketos.org
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/16] drm/msm/a8xx: Implement IFPC support for A840
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jesszhan0024@gmail.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Antonino Maniscalco <antomani103@gmail.com>,
-        Connor Abbott <cwabbott0@gmail.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>
-References: <20260324-a8xx-gpu-batch2-v1-0-fc95b8d9c017@oss.qualcomm.com>
- <20260324-a8xx-gpu-batch2-v1-13-fc95b8d9c017@oss.qualcomm.com>
- <54b03221-d21b-4582-b0b9-d2384480356b@oss.qualcomm.com>
-From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <54b03221-d21b-4582-b0b9-d2384480356b@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=SMZPlevH c=1 sm=1 tr=0 ts=69c589f2 cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=EUspDBNiAAAA:8 a=rL-UvztjHAg8Z-035zcA:9 a=QEXdDO2ut3YA:10
- a=2VI0MkxyNR6bbpdq8BZq:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI2MDE0MCBTYWx0ZWRfXw8+vh5bzQMty
- YrQ2SU0AJ1HzXTrOGKpscXRqK43/B3ZMjrz7t8GYZRU1khioWRcKx8+M1+4fXT1R4msN1uv2u+V
- MTgV3OzkGBZMlSSsobONN8EZguE1he8CLk5+YsUmqrKd1qW3iKD7tOWB9PzkcYaBHXoTHYqSqeR
- Y7IycCkNJxxS8S48QjiFW3OghoqNCT3IIWHE4k5oLysWkvCoX9yjLHthrDOScaQUWsRJu9aYCTB
- 9ch5GNYIgxMtCsmU5ygPoR5cY3jedZgfn97FqnzvK2Bnp2Pt+5z/LggUPbrMmFkHzYCjXx1PYiC
- BMOIlCVSIEewTCEgwZ53mUDJSHGdrlvnBqWpW+rStBUcJO0wIDsz/fsQsLQ5S0/fwT94fFAOoLA
- k2MJ7b5PLQOXnYbpT9b+quBXWVzLWTF0UBMQtbW04wi3MDAkQSbJWDL6G72eMiVDCC8qxhenLeU
- lCv5Z5shbLCvnj9/8rA==
-X-Proofpoint-GUID: 3U4BWmj7jewe1On4QDYRfHbjrwAOvBmi
-X-Proofpoint-ORIG-GUID: 3U4BWmj7jewe1On4QDYRfHbjrwAOvBmi
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-26_03,2026-03-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 suspectscore=0 bulkscore=0
- impostorscore=0 spamscore=0 clxscore=1015 adultscore=0 phishscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
- definitions=main-2603260140
-X-Spamd-Result: default: False [-2.16 / 15.00];
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
+	s=key1; t=1774553998;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=2sSZdOlH6LcaXmEulL+Z3vD5W8JNjS8vj1IOyQwqalY=;
+	b=XTH6vNZfTs+Rhn/5LbLqBySMN0ZX5pl6xsbTh9654tQcRAh1k+4nFg2w4G1u1qCntQiaZ8
+	A/R2MUis4bsWUAwdlxAgvsKMoCQTVTKo5FYZ+UF5W86+DpeBTmUVbgxC4++ZpZuZrgdUd4
+	CJEUl378fYQ+f+HtmI79PftGLkYVsggFhKDl/3JVteu3ZiYS8a22o8T7OP9KUtpDC4JYac
+	9CXVos/p6+ikPQVwciRBc6BdRnFiAKhP5CmwYb+nAvENQrNDTM6rf7qlh3ECM895NMgvQF
+	+ztY6H8YDr09klaAyYgCcmhSwrhKLlLhwgvTQs0BGGViqdjhMKM87IDTt2Ed8Q==
+Date: Thu, 26 Mar 2026 19:39:49 +0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: "Paul Sajna" <sajattack@postmarketos.org>
+Message-ID: <425dcdb501ed6ebb0e652c58ef2c56c78754884b@postmarketos.org>
+TLS-Required: No
+Subject: Re: [PATCH v4 2/3] ath10k: Add device-tree quirk to skip host cap
+ QMI requests
+To: david@ixit.cz, "Johannes Berg" <johannes@sipsolutions.net>, "Rob Herring"
+ <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
+ Dooley" <conor+dt@kernel.org>, "Jeff Johnson" <jjohnson@kernel.org>,
+ "Bjorn Andersson" <andersson@kernel.org>, "Konrad Dybcio"
+ <konradybcio@kernel.org>
+Cc: "Amit Pundir" <amit.pundir@linaro.org>, linux-wireless@vger.kernel.org,
+ devicetree@vger.kernel.org, ath10k@lists.infradead.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ phone-devel@vger.kernel.org, "David Heidelberg" <david@ixit.cz>
+In-Reply-To: <20260325-skip-host-cam-qmi-req-v4-2-bc08538487aa@ixit.cz>
+References: <20260325-skip-host-cam-qmi-req-v4-0-bc08538487aa@ixit.cz>
+ <20260325-skip-host-cam-qmi-req-v4-2-bc08538487aa@ixit.cz>
+X-Migadu-Flow: FLOW_OUT
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[postmarketos.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[postmarketos.org:s=key1];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCPT_COUNT_TWELVE(0.00)[19];
-	FREEMAIL_CC(0.00)[vger.kernel.org,lists.freedesktop.org,oss.qualcomm.com,poorly.run,kernel.org,linux.dev,gmail.com,somainline.org,ffwll.ch,linux.intel.com,suse.de];
-	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-100157-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-100158-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[3];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[akhilpo@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[16];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[sajattack@postmarketos.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[postmarketos.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: C4E3A33AFF5
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,ixit.cz:email]
+X-Rspamd-Queue-Id: 40FBE33B1AB
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 3/24/2026 3:43 PM, Konrad Dybcio wrote:
-> On 3/23/26 9:12 PM, Akhil P Oommen wrote:
->> Implement pwrup reglist support and add the necessary register
->> configurations to enable IFPC support on A840
->>
->> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
->> ---
-> 
-> [...]
-> 
->> +	for (u32 pipe_id = PIPE_BR; pipe_id <= PIPE_DDE_BV; pipe_id++) {
->> +		for (i = 0; i < dyn_pwrup_reglist->count; i++) {
->> +			if ((dyn_pwrup_reglist->regs[i].pipe & BIT(pipe_id)) == 0)
-> 
-> that's a nitty pet peeve, but I'd check for if (!(...)) instead
-> 
-> [...]
-> 
->> +				continue;
->> +			*dest++ = A8XX_CP_APERTURE_CNTL_HOST_PIPEID(pipe_id);
->> +			*dest++ = dyn_pwrup_reglist->regs[i].offset;
->> +			*dest++ = a8xx_read_pipe_slice(gpu,
->> +						       pipe_id,
->> +						       a8xx_get_first_slice(a6xx_gpu),
-> 
-> Only the first slice?
+March 25, 2026 at 5:57 PM, "David Heidelberg via B4 Relay" <devnull+david=
+.ixit.cz@kernel.org mailto:devnull+david.ixit.cz@kernel.org?to=3D%22David=
+%20Heidelberg%20via%20B4%20Relay%22%20%3Cdevnull%2Bdavid.ixit.cz%40kernel=
+.org%3E > wrote:
 
-Yeah. I think we just need to pass a valid slice id and
-a8xx_get_first_slice() will always return a valid one.
 
-> 
-> [...]
-> 
->> +	/* Lo address */
->> +	OUT_RING(ring, lower_32_bits(a6xx_gpu->pwrup_reglist_iova));
->> +	/* Hi address */
->> +	OUT_RING(ring, upper_32_bits(a6xx_gpu->pwrup_reglist_iova));
->> +
->> +	/* Enable dyn pwrup list with triplets (offset, value, pipe) */
->> +	OUT_RING(ring, BIT(31));
-> 
-> I believe you need to patch OUT_PKT7() with the updated cmd count
+>=20
+>=20From: Amit Pundir <amit.pundir@linaro.org>
+>=20
+>=20Some firmware versions do not support the host capability QMI request=
+.
+> Since this request occurs before firmware-N.bin and board-M.bin are
+> loaded, the quirk cannot be expressed in the firmware itself.
+>=20
+>=20The root cause is unclear, but there appears to be a generation of
+> firmware that lacks host capability support.
+>=20
+>=20Without this quirk, ath10k_qmi_host_cap_send_sync() returns
+> QMI_ERR_MALFORMED_MSG_V01 before loading the firmware. This error is no=
+t
+> fatal - Wi-Fi services still come up successfully if the request is sim=
+ply
+> skipped.
+>=20
+>=20Add a device-tree quirk to skip the host capability QMI request on de=
+vices
+> whose firmware does not support it.
+>=20
+>=20For example, firmware build
+> "QC_IMAGE_VERSION_STRING=3DWLAN.HL.2.0.c3-00257-QCAHLSWMTPLZ-1"
+> on Xiaomi Poco F1 phone requires this quirk.
+>=20
+>=20Suggested-by: Bjorn Andersson <andersson@kernel.org>
+> Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
+>  drivers/net/wireless/ath/ath10k/qmi.c | 13 ++++++++++---
+>  drivers/net/wireless/ath/ath10k/snoc.c | 3 +++
+>  drivers/net/wireless/ath/ath10k/snoc.h | 1 +
+>  3 files changed, 14 insertions(+), 3 deletions(-)
+>=20
+>=20diff --git a/drivers/net/wireless/ath/ath10k/qmi.c b/drivers/net/wire=
+less/ath/ath10k/qmi.c
+> index eebd78e7ff6bc..e7f90fd9e9b83 100644
+> --- a/drivers/net/wireless/ath/ath10k/qmi.c
+> +++ b/drivers/net/wireless/ath/ath10k/qmi.c
+> @@ -808,6 +808,7 @@ ath10k_qmi_ind_register_send_sync_msg(struct ath10k=
+_qmi *qmi)
+>  static void ath10k_qmi_event_server_arrive(struct ath10k_qmi *qmi)
+>  {
+>  struct ath10k *ar =3D qmi->ar;
+> + struct ath10k_snoc *ar_snoc =3D ath10k_snoc_priv(ar);
+>  int ret;
+>=20=20
+>=20 ret =3D ath10k_qmi_ind_register_send_sync_msg(qmi);
+> @@ -819,9 +820,15 @@ static void ath10k_qmi_event_server_arrive(struct =
+ath10k_qmi *qmi)
+>  return;
+>  }
+>=20=20
+>=20- ret =3D ath10k_qmi_host_cap_send_sync(qmi);
+> - if (ret)
+> - return;
+> + /*
+> + * Skip the host capability request for the firmware versions which
+> + * do not support this feature.
+> + */
+> + if (!test_bit(ATH10K_SNOC_FLAG_SKIP_HOST_CAP_QUIRK, &ar_snoc->flags))=
+ {
+> + ret =3D ath10k_qmi_host_cap_send_sync(qmi);
+> + if (ret)
+> + return;
+> + }
+>=20=20
+>=20 ret =3D ath10k_qmi_msa_mem_info_send_sync_msg(qmi);
+>  if (ret)
+> diff --git a/drivers/net/wireless/ath/ath10k/snoc.c b/drivers/net/wirel=
+ess/ath/ath10k/snoc.c
+> index f72f236fb9eb3..3106502275781 100644
+> --- a/drivers/net/wireless/ath/ath10k/snoc.c
+> +++ b/drivers/net/wireless/ath/ath10k/snoc.c
+> @@ -1362,6 +1362,9 @@ static void ath10k_snoc_quirks_init(struct ath10k=
+ *ar)
+>=20=20
+>=20 if (of_property_read_bool(dev->of_node, "qcom,snoc-host-cap-8bit-qui=
+rk"))
+>  set_bit(ATH10K_SNOC_FLAG_8BIT_HOST_CAP_QUIRK, &ar_snoc->flags);
+> +
+> + if (of_property_read_bool(dev->of_node, "qcom,snoc-host-cap-skip-quir=
+k"))
+> + set_bit(ATH10K_SNOC_FLAG_SKIP_HOST_CAP_QUIRK, &ar_snoc->flags);
+>  }
+>=20=20
+>=20 int ath10k_snoc_fw_indication(struct ath10k *ar, u64 type)
+> diff --git a/drivers/net/wireless/ath/ath10k/snoc.h b/drivers/net/wirel=
+ess/ath/ath10k/snoc.h
+> index 1ecae34687c21..46574fd8f84ee 100644
+> --- a/drivers/net/wireless/ath/ath10k/snoc.h
+> +++ b/drivers/net/wireless/ath/ath10k/snoc.h
+> @@ -51,6 +51,7 @@ enum ath10k_snoc_flags {
+>  ATH10K_SNOC_FLAG_MODEM_STOPPED,
+>  ATH10K_SNOC_FLAG_RECOVERY,
+>  ATH10K_SNOC_FLAG_8BIT_HOST_CAP_QUIRK,
+> + ATH10K_SNOC_FLAG_SKIP_HOST_CAP_QUIRK,
+>  };
+>=20=20
+>=20 struct clk_bulk_data;
+>=20
+>=20--=20
+>=202.53.0
+>
 
-Thanks. Fixed. I guess the mask was probably helping when I tested.
-
--Akhil.
-
-> 
-> Konrad
-
+Tested-by: Paul Sajna <sajattack@postmarketos.org>
 
