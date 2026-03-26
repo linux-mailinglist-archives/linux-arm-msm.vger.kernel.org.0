@@ -1,71 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-99993-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99994-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id KCmMJ8edxGki1gQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99993-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 03:45:27 +0100
+	id MOXxL/yexGki1gQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99994-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 03:50:36 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4489732E760
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 03:45:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 572B632E806
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 03:50:36 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 86D9C302C5EF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 02:41:03 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 747013021EAE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 02:44:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE47C38F643;
-	Thu, 26 Mar 2026 02:41:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6F8838CFFE;
+	Thu, 26 Mar 2026 02:44:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bEU0U4U1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oUiFW7Ac"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB67412F585;
-	Thu, 26 Mar 2026 02:41:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A36AD1F2380;
+	Thu, 26 Mar 2026 02:44:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774492862; cv=none; b=PGNHp/TYilhkjDi1zFIhityEQIMXx0MLRJmP8C5z3k7rd0oes88qzg74snAbf9Ch1qvlGB5Yexwpth3dL6RTDQshOKmtyVaaHcxW5Emnbw7rkI/DlkaFRBbq3TVkDKE1m5zWpsKsaV5dvBrJhwkj2YImCDboL526/NewoyvMikQ=
+	t=1774493092; cv=none; b=ZOvLYuuBvc75S1Uu8xA9URxD0HN0RWX1TffJIxlcaftpDs30tYvN5guCFkmcTiVws38I/PnFXQB1o++cHidsXpdw6fiksqkQR+Q2e4CntCis90839z27cCb7IO0FbTMUUpS34VuD3mIG2ciuxW6Mv/5mS0UZtNfJFUeQZ+BUUKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774492862; c=relaxed/simple;
-	bh=1VDBhYCJ2BETy5mGSLkU/VcwUGRUaX/Cd91vaqYUZOc=;
+	s=arc-20240116; t=1774493092; c=relaxed/simple;
+	bh=s+eNbr+lm+m4MHGpBkjbvChpcR9/fX8xfo96opgR86I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iWfzr4/b6Jl1Qs+Og4xs8ZCbaUhLI9bCEzqOkDNzHryNtTxTS4C7w8dFOpGYMNytD7t8eAfS7lDkZDrRhMVmWkODcZ7sCrhBm3aEcTz6wy7HiT3IrB77sF/YTQBALjUU/giqK+GH0PCmtpi/vL3uz6G3Pq4HMmhSvZiczwDGtl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bEU0U4U1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91BBEC2BC9E;
-	Thu, 26 Mar 2026 02:41:01 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZFlKEymdF5C29P05YjYyNzYpYaj+erA210MuCBIcoCuJe/ZnxyyfOG8FpOWbM/1XmQVdEW2qr19bV/zJjRRpKrpD/vFrctw+6wDqpoV7HKHFMxMAfjgAvJebPOmjfjyDuEeN88OGOx7gVnzp0dw3NPeXHGiJhDOZM91GMcqOL0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oUiFW7Ac; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8610C4CEF7;
+	Thu, 26 Mar 2026 02:44:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774492862;
-	bh=1VDBhYCJ2BETy5mGSLkU/VcwUGRUaX/Cd91vaqYUZOc=;
+	s=k20201202; t=1774493092;
+	bh=s+eNbr+lm+m4MHGpBkjbvChpcR9/fX8xfo96opgR86I=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bEU0U4U1mDHr6WinNDFWo8hdCj4fyDjBC1k1fz8Jd/eHg4kQrz8tvr/K5pXDSswb3
-	 qiCMDw4GjgBIdh4HfdPU+BOmHz5KJxiNGlQGHL/l5CtPeAy5A/1LhZzfY3X8xA0Oki
-	 h9Lxbx0byNMp/30jIZY7WFJ3XpVxMINApGTFuALF3KWQAYXdaxKAL2owJjvwXIs8zH
-	 T/mT4I3zU9JquiR9F/oxxWbRwFGMLYztaHRrSOwWkn/Kz+e+bdMPNvY7s4XnJy+H1e
-	 Hl4UlmbRcRyGlcyzzMOtp746vYDqDZHfvMBuYYwssJcq/5MrLS2rjwn2sUo+HV0wdg
-	 eFVY6sEpwGPYw==
-Date: Wed, 25 Mar 2026 21:40:58 -0500
+	b=oUiFW7AcSThkuSAeELCg9eaEviclBk2SB7JWr1xnLo1EcVhpvfJF1nC/8V4xMf5CG
+	 1I2WuqJ8/1gKBBlbsCqIemRPwMg7MKxLpYiC4zTXoAGs6HXlD7SZy/h6eclJIPbhWU
+	 5v/j6Y0V5L/hSj6peyBPXeiso3O8ffTHE1ZtC6eiLofMKxnkh1LglbKYXQu3ndY45q
+	 JKFW+j/2h85bGBGz++O/sQuB1ypz/NZzzZkksTzgiK/0cWBmfoxNWuz18oopdGy/Vq
+	 Lwum5C2nL5mvlhiQBTbKj6BLAJFFNmuLBM1EzIRuqX67Ln38/i7UXwv2hl0vUuK95h
+	 +2tXatroBafEg==
+Date: Wed, 25 Mar 2026 21:44:48 -0500
 From: Bjorn Andersson <andersson@kernel.org>
 To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>, 
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
 	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
 	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] arm64: dts: qcom: qcs6490-rb3gen2: Enable uPD720201
- and GL3590
-Message-ID: <acSZ8AqKC3hdaz2A@baldur>
-References: <20260323-rb3gen2-upd-gl3590-v2-1-073514bf9ed5@oss.qualcomm.com>
- <hrebrfsc4lcsrpk7thg72f7gdmi3btuiphdwh2ft7algej72xz@cijypbournvw>
+Subject: Re: [PATCH] arm64: dts: qcom: purwa: deduplicate thermal sensors
+ with Hamoa
+Message-ID: <acSdYbGX0O2oeI6O@baldur>
+References: <20260320-purwa-drop-thermals-v1-1-2c9fe046cd02@oss.qualcomm.com>
+ <f25eb68c-3877-4ce7-b3cd-0910a00be30a@oss.qualcomm.com>
+ <xy2jzlamtkpqfpcpegoysyh6u2cnfubkz5233yvuuzfutzpxkf@w3inytibm3sq>
+ <7d13d449-17e5-4838-b4bf-f9ce14e1142e@oss.qualcomm.com>
+ <ftdzj5zcxs44zm3yyhv6hfwejkmxyfqb3w3snfeey2epmfuafz@qjl6ooz2gyzc>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <hrebrfsc4lcsrpk7thg72f7gdmi3btuiphdwh2ft7algej72xz@cijypbournvw>
+In-Reply-To: <ftdzj5zcxs44zm3yyhv6hfwejkmxyfqb3w3snfeey2epmfuafz@qjl6ooz2gyzc>
 X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
@@ -76,7 +78,7 @@ X-Spamd-Result: default: False [-1.66 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-99993-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-99994-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
@@ -92,90 +94,44 @@ X-Spamd-Result: default: False [-1.66 / 15.00];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 4489732E760
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 572B632E806
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Wed, Mar 25, 2026 at 01:35:46AM +0200, Dmitry Baryshkov wrote:
-> On Mon, Mar 23, 2026 at 09:32:39PM -0500, Bjorn Andersson wrote:
-> > The QCS6490 Rb3Gen2 has a Renesas μPD720201 XHCI controller hanging off
-> > the TC9563 PCIe switch, on this a Genesys Logic GL3590 USB hub provides
-> > two USB Type-A ports and an ASIX AX88179 USB 3.0 Gigabit Ethernet
-> > interface.
+On Wed, Mar 25, 2026 at 01:13:28AM +0200, Dmitry Baryshkov wrote:
+> On Tue, Mar 24, 2026 at 10:25:30AM +0100, Konrad Dybcio wrote:
+> > On 3/23/26 5:49 PM, Dmitry Baryshkov wrote:
+> > > On Mon, Mar 23, 2026 at 04:21:00PM +0100, Konrad Dybcio wrote:
+> > >> On 3/20/26 3:33 AM, Dmitry Baryshkov wrote:
+> > >>> Hamoa and Purwa have pretty close thermal zones definitions. The major
+> > >>> difference is that several zones are absent (because of the lack of the
+> > >>> CPU cluster) and several zones use tsens2 instead of tsens3.
+> > >>>
+> > >>> Instead of completely duplicating thermal zones for Purwa, reuse themal
+> > >>> zones from Hamoa, patching them where required.
+> > >>>
+> > >>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> > >>> ---
+> > >>
+> > >> Slightly reluctantly:
+> > > 
+> > > Why? I'd really interested here.
 > > 
-> > The Renesas chip is powered by two regulators controlled through PM7250B
-> > GPIOs 1 and 4, and the power/reset pin is pulled down by PM8350C GPIO 4.
-> > The Genesys chip power is always-on, but the reset pin is controlled
-> > through TLMM GPIO 162.
-> > 
-> > Describe the Renesas chip on the PCIe bus, with supplies and reset, to
-> > allow it to be brought out of reset and discovered. Then describe the
-> > two peers of the USB hub, with its reset GPIO, to allow this to be
-> > brought out of reset.
-> > 
-> > The USB Type-A connectors are not described, as they are in no regard
-> > controlled by the operating system.
-> > 
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-> > ---
-> > Dependencies has now landed, so this provides USB Type-A and Ethernet
-> > support (when renesas_usb_fw.mem) is present.
+> > I suppose my reluctance comes from the decreased readability, but then
+> > I suppose the silicon is not going to change if we get it right once, so
+> > it's not a real concern..
 > 
-> Note, I initially applied the patch to the bit old -next (20260317) and
-> I ended up with no PCIe host at all (bare -next would still show the
-> PCIe host and the TC9563 bridge).
+> I see. My usual concern is opposite: to make sure that we don't need to
+> fix another DT if we fix something.
 > 
 
-Applied the patch to next-20260323 and tested again.
-
-> 
-> ANyway, does this actually work for you?
-
-Yes, I booted with pcie_aspm=off I have functional ethernet and I can
-plug/unplug a USB storage device and access the content on this.
-
-> The hub is detected, but the USB bus is empty.
-
-I've disconnected the USB stick again, so here's the output when only
-ethernet is present.
-
-/:  Bus 001.Port 001: Dev 001, Class=root_hub, Driver=xhci-pci-renesas/4p, 480M
-    |__ Port 001: Dev 002, If 0, Class=Hub, Driver=hub/4p, 480M
-/:  Bus 002.Port 001: Dev 001, Class=root_hub, Driver=xhci-pci-renesas/4p, 5000M
-    |__ Port 001: Dev 002, If 0, Class=Hub, Driver=hub/4p, 5000M
-        |__ Port 001: Dev 003, If 0, Class=Vendor Specific Class, Driver=ax88179_178a, 5000M
-
-> I tried plugging in several devices (includin the
-> powered USB hub) and they were completely ignored by the hub.
-> 
-
-The USB stick above was powered by the device, so that part is tested as
-well. (And schematics shows VBUS is always present on the Type-A ports).
+Which means that if you make a change to that "something" you now have
+the burden to validate the additional users.
 
 Regards,
 Bjorn
 
-> FWIW I tried both the the pcie_aspm=off and w/o it.
-> 
-> > Missing from the RFC/v1 description was the mentioning that unless I
-> > pass "pcie_aspm=off" to the kernel, the Renesas controller fails with:
-> > 
-> >   xhci-pci-renesas 0001:04:00.0: Abort failed to stop command ring: -110
-> 
-> Interesting, it "worked" in my case, having everythign built in into the
-> kernel.
-> 
-> > ---
-> > Changes in v2:
-> > - Waited for dependencies to land.
-> > - Dropped "RFC".
-> > - Link to v1: https://lore.kernel.org/r/20260212-rb3gen2-upd-gl3590-v1-1-18fb04bb32b0@oss.qualcomm.com
-> > ---
-> >  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 93 ++++++++++++++++++++++++++++
-> >  1 file changed, 93 insertions(+)
-> > 
-> 
 > -- 
 > With best wishes
 > Dmitry
