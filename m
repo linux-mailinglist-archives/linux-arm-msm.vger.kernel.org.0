@@ -1,83 +1,57 @@
-Return-Path: <linux-arm-msm+bounces-99989-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99990-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MNrUB7mWxGnn1AQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99989-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 03:15:21 +0100
+	id +N+pBUOXxGnn1AQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99990-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 03:17:39 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F87B32E44A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 03:15:20 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B3D232E4AC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 03:17:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C4EA530297AD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 02:07:57 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 4A0BB3019048
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 02:14:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33B3930DECC;
-	Thu, 26 Mar 2026 02:07:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E56F306B3B;
+	Thu, 26 Mar 2026 02:14:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="u11lRW6y"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="n8W5GLQ3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CC6F2EA72A
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 02:07:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E7116F288
+	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 02:14:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774490876; cv=none; b=UmwD/dPY1CvtUt0xGZxS0Kri2REJwpv7uLyqxPueNYDHs8lCK1ktwzgE1H0EjsGy5x/QT8MN8nls1DS9dBhlJ5oc7HRxnWzfjHF/TGgxNzWWfPKLoY2XQNQA6geMVh97JkPM5oLhGlydbDAIk7PNO8/CfD1TOHrzCnTaqux7yw8=
+	t=1774491279; cv=none; b=eWN5dbVYJJVRu8QD7XfYxVO1KDSZWfH+1tO3TjJ3XLez5q5cjwDPC97ZvNfF1RFw0d1EpdQlS4dak6eqTFhAOddFeYPw1UaVYoKHmwp7ujF7mNTECCfW+gWq0/LZOpKPuoV5Mh31HPSYl8ugoeprisajYJBQEK0lK1s5JM9UeU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774490876; c=relaxed/simple;
-	bh=fP5ca+wleAv365iglFP1lOZ6n8fv/yloi+JcxBej+bs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FHOCgQ39yIBVc+npSBXLw4lLntCbeDOJWxoP9AYhfgVNyj+qCgAWx0tVb2y2iy8Y+mQF1S9bTj1m5eSgH2yfFgL3vjLnl8zPBgQFDJZdXV5zNr9CEgP4A+79xwhhC5sl6dHoCF2nu6pU5eydOhAFDuDKRdLGK44idyKUissF0xY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=u11lRW6y; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-439bcec8613so275185f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Mar 2026 19:07:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1774490873; x=1775095673; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=IQBV0aIbBMoDV/It9TWPuN/5h+uJKLUgF07SUqXfhYk=;
-        b=u11lRW6yTU9igaZ2Yps0O7OWHzDAggN1vfYCEJe3jUvgAEWXFx2FLmsdAZ41cfHEEa
-         qwUyD6/4JCm/yti5ttjf8yONy4HtY6RAj/mGsqI24HTNmoGgi7HQ8s6821i5kxU5iems
-         eJQU6EFARhixfbBJe6zK1747JUvgpAYMfLoOEftdtW3gMVPtgMnwNnJpGgzopQBwBFiV
-         0N7gPVnHcAv/iAd2dIn4L2es/tfcfk9Px+0QQSRgG9/pQ28e3TU1wAbJ5DySJBDp+y3/
-         ucrawWKu1ShFtTQ8A0VNWj6952+tTIPBEYIFvB3YPZByWS8pg9upiTofan9Q8mBKNm79
-         aU+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774490873; x=1775095673;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=IQBV0aIbBMoDV/It9TWPuN/5h+uJKLUgF07SUqXfhYk=;
-        b=DwjYfY60kYh3/0n/DgUqBCuIAS2bv5xddsmFCGX12c3Z9NGE1bqzPSXRvUttaVkvot
-         xL3s29VVQXdYKxCyx0xMuQbTu6UuXk/cyU2tZ855wB81KmPqlTR2giaZnR+evHJNx2B7
-         RSa2HRQiNJ/YU+kpk49XSApszYqJ73fECZVoO1TPyuag6NqEuUpwA8Xnqa4hwadLM8N1
-         4WvRiki8ow6VLpknESy1x5RiaG3e5JzAVVFU9HC/L4nmalwNTJZmcj5j2B7UqBIwJEB/
-         mpJVWSV7J/UbUW/ceLPvwETO0MFpAT/sKDw0i7r5sFqgg/Lsaz/DfliyRRF5j+RbkIDs
-         j+Ng==
-X-Gm-Message-State: AOJu0YzaksAf4GnPQshXsf1gNNkCHgolnEkjcYXvlzHOMVQtw/KnKMnr
-	Gx0TxK+hcdVjtEPb8iL+GOjZMA7/Mwnp8+Ykw/uTZZFWvwN+G+JIAbENWV4CVJuzlEI=
-X-Gm-Gg: ATEYQzxtJFMfw3PQXpa+Y6Fc6Y381ui07c0SA2JVWj6yfkO17RzsMTjqeVpqVy/qm2D
-	nQZx4/pvvYY5ZWDkrTvuxi9uMJBep+wSMaC3hCBlRvWwhQiLcHTyKiVOL2La7aN8N+fYGawIBaL
-	xg2PwxjsuQRWbE2SlCv9sD68S1ufLLnwvKzwoY8+AZGrVrjORnxo8JfzlkrEiesX+qcq2Of84qa
-	CIWzI2TnahoWDX84yAIprv7AVvaxHVQr1Q205cnucQ2pUKBxvcBFI2tHV4go8IhRP3KrVyEjxmY
-	WzU7DAroOzCJrN2IegQJzaLcTitWOU4Cib9nlKxmfOF/nq6DxSJ9NFcs0kMzN7tgSJvZdDtQ8r/
-	L0VkA8ZOlvj1vm+Ygjmz8PUJWMlQM7qenjjhmPhtJUaIV5G2PE5I8mBrd0Cgg6g1y5mmnP+yPAT
-	ALms4jL8HZrjtPWEk8yl7bMEHjbB/1onbi/cE=
-X-Received: by 2002:a5d:5d07:0:b0:439:fbbc:d593 with SMTP id ffacd0b85a97d-43b88a04ff5mr8594238f8f.27.1774490872955;
-        Wed, 25 Mar 2026 19:07:52 -0700 (PDT)
-Received: from [192.168.0.35] ([109.76.163.154])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43b919e7372sm5264843f8f.34.2026.03.25.19.07.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Mar 2026 19:07:51 -0700 (PDT)
-Message-ID: <540c2a97-00ec-4358-855a-b238aab53860@linaro.org>
-Date: Thu, 26 Mar 2026 02:08:21 +0000
+	s=arc-20240116; t=1774491279; c=relaxed/simple;
+	bh=H1jHRR2IhiZ5BI9XsuZ/e6gyMqvE20b9Y4ZVRhn+HWo=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=RPVg6hdcId6Q4uEE90I2CizniAnMIsz3NgClKDsOYKF1pNMizaRtCx4X+QsOKc5OB83iusJ0Qu1B3kexBrdu4tIPv2L5RtxdXzLH1dNSw9W+03SnD61rkuBZEqclx3weAsgTx99s0xc9Deu7w9ulUVmPZ1aMRqCQ9V6VRULxKpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=n8W5GLQ3; arc=none smtp.client-ip=213.97.179.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
+	s=20170329; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:References:
+	Cc:To:Subject:From:MIME-Version:Date:Message-ID:Sender:Reply-To:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=HLWd0aWuu+4SO4K2ECmU29zf9n7Z79Y1dr8RP+/RWIA=; b=n8W5GLQ36aT7+dr9UT1liiuDnP
+	pMY4r16wgwtZ1AE+A6Z0X2sRMbwM/6d2cSowleObF+ll/POxJC24G/S7XmiCcKoxILhmMwDw2l1F5
+	DmUkymRnheSf+ntysff2oZhJ6ds9MrhtzEUklSQzPoPFj+V/boQ/eskZB+fEUTlCIi1X4Q2UjsbeF
+	wzfWU0RYvoRd/OmVCCYk4qhSoBQzzBeWBLaPtKP0LgYAnPsIibQJuLVA3ZhbFT42d9IqWb/mPV8T4
+	SuAq3SnMv39FdVBxL6Tf12wN1C3WmWohzN5AFQaHT8cI5023ql1KMfu9mE5e5zd3DRQ9T2upiT3f9
+	UTehMj6w==;
+Received: from [186.208.74.38] (helo=[192.168.18.14])
+	by fanzine2.igalia.com with esmtpsa 
+	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_128_GCM:128) (Exim)
+	id 1w5aEG-00679O-EV; Thu, 26 Mar 2026 03:13:48 +0100
+Message-ID: <197d2909-8644-4380-b752-ffef6f300faa@igalia.com>
+Date: Wed, 25 Mar 2026 23:13:40 -0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,152 +59,281 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 2/7] dt-bindings: media: qcom,x1e80100-camss: Add
- support for combo-mode endpoints
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
- <mchehab@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
- Bryan O'Donoghue <bod@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-media@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>,
- Christopher Obbard <christopher.obbard@linaro.org>
-References: <20260326-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v11-0-5b93415be6dd@linaro.org>
- <20260326-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v11-2-5b93415be6dd@linaro.org>
- <17ab70a4-1ab8-4384-8537-44dbfe31889a@linaro.org>
+From: Melissa Wen <mwen@igalia.com>
+Subject: Re: [PATCH v2 1/2] drm/atomic: track individual colorop updates
+To: "Borah, Chaitanya Kumar" <chaitanya.kumar.borah@intel.com>,
+ airlied@gmail.com, alexander.deucher@amd.com, christian.koenig@amd.com,
+ harry.wentland@amd.com, maarten.lankhorst@linux.intel.com,
+ mripard@kernel.org, simona@ffwll.ch, siqueira@igalia.com,
+ sunpeng.li@amd.com, tzimmermann@suse.de
+Cc: Alex Hung <alex.hung@amd.com>, Simon Ser <contact@emersion.fr>,
+ Uma Shankar <uma.shankar@intel.com>, Xaver Hugl <xaver.hugl@kde.org>,
+ amd-gfx@lists.freedesktop.org, kernel-dev@igalia.com,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
+ <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org
+References: <20260323131942.494217-1-mwen@igalia.com>
+ <20260323131942.494217-2-mwen@igalia.com>
+ <feea29b7-fb28-4ac1-be74-b42c52173c59@intel.com>
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <17ab70a4-1ab8-4384-8537-44dbfe31889a@linaro.org>
+In-Reply-To: <feea29b7-fb28-4ac1-be74-b42c52173c59@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.36 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	R_DKIM_REJECT(1.00)[igalia.com:s=20170329];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
+	DMARC_POLICY_SOFTFAIL(0.10)[igalia.com : SPF not aligned (relaxed),none];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-99989-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[linaro.org,kernel.org,baylibre.com,gmail.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	RCPT_COUNT_TWELVE(0.00)[19];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-99990-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	FREEMAIL_TO(0.00)[intel.com,gmail.com,amd.com,linux.intel.com,kernel.org,ffwll.ch,igalia.com,suse.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[26];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[amd.com,emersion.fr,intel.com,kde.org,lists.freedesktop.org,igalia.com,oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mwen@igalia.com,linux-arm-msm@vger.kernel.org];
+	PRECEDENCE_BULK(0.00)[];
+	DKIM_TRACE(0.00)[igalia.com:-];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.1:email,linaro.org:dkim,linaro.org:email,linaro.org:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,0.0.0.0:email]
-X-Rspamd-Queue-Id: 6F87B32E44A
+	NEURAL_SPAM(0.00)[0.395];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,amd.com:email]
+X-Rspamd-Queue-Id: 5B3D232E4AC
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 26/03/2026 01:51, Vladimir Zapolskiy wrote:
-> On 3/26/26 03:28, Bryan O'Donoghue wrote:
->> Qualcomm CSI2 PHYs support a mode where two sensors may be attached to 
->> the
->> one CSIPHY.
+
+
+On 25/03/2026 06:08, Borah, Chaitanya Kumar wrote:
+> Hi Melissa,
+>
+> On 3/23/2026 6:45 PM, Melissa Wen wrote:
+>> As we do for CRTC color mgmt properties, use color_mgmt_changed flag to
+>> track any value changes in the color pipeline of a given plane, so that
+>> drivers can update color blocks as soon as plane color pipeline or
+>> individual colorop values change.
 >>
->> When we have one endpoint we may have
->> - DPHY 1, 2 or 4 data lanes + 1 clock lane
->> - CPHY 3 wire data lane
->>
->> When we have two endpoints this indicates the special fixed combo-mode.
->> - DPHY endpoint0 => 2+1 and endpoint1 => 1+1 data-lane/clock-lane 
->> combination.
->>
->> Reviewed-by: Christopher Obbard <christopher.obbard@linaro.org>
->> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>> Reviewed-by: Harry Wentland <harry.wentland@amd.com> #v1
+>> Signed-off-by: Melissa Wen <mwen@igalia.com>
 >> ---
->>   .../bindings/media/qcom,x1e80100-camss.yaml        | 69 ++++++++++++ 
->> ++++++++--
->>   1 file changed, 65 insertions(+), 4 deletions(-)
 >>
->> diff --git a/Documentation/devicetree/bindings/media/qcom,x1e80100- 
->> camss.yaml b/Documentation/devicetree/bindings/media/qcom,x1e80100- 
->> camss.yaml
->> index c17b9757b2c86..f44138f522bba 100644
->> --- a/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml
->> +++ b/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml
->> @@ -148,7 +148,8 @@ properties:
->>       $ref: /schemas/graph.yaml#/properties/ports
->>       description:
->> -      CSI input ports.
->> +      CSI input ports. Supports either standard single sensor mode or
->> +      Qualcomm's combo mode with one sensor in 2x1 + 1x1 data-lane, 
->> clock-lane mode.
->>       patternProperties:
->>         "^port@[0-3]$":
->> @@ -156,26 +157,86 @@ properties:
->>           unevaluatedProperties: false
->>           description:
->> -          Input port for receiving CSI data from a CSIPHY.
->> +          Input port for receiving CSI data.
->>           properties:
->> -          endpoint:
->> +          endpoint@0:
->>               $ref: video-interfaces.yaml#
->>               unevaluatedProperties: false
->> +            description:
->> +              Endpoint for receiving a single sensor input (or first 
->> leg of combo).
+>>   v2: add linux types to provide bool for MSM driver (kernel bot)
+>> ---
+>>   drivers/gpu/drm/drm_atomic_uapi.c | 53 ++++++++++++++++++++++++-------
+>>   include/drm/drm_atomic_uapi.h     |  4 ++-
+>>   2 files changed, 45 insertions(+), 12 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/drm_atomic_uapi.c 
+>> b/drivers/gpu/drm/drm_atomic_uapi.c
+>> index 87de41fb4459..713fa9e81732 100644
+>> --- a/drivers/gpu/drm/drm_atomic_uapi.c
+>> +++ b/drivers/gpu/drm/drm_atomic_uapi.c
+>> @@ -265,13 +265,19 @@ EXPORT_SYMBOL(drm_atomic_set_fb_for_plane);
+>>    *
+>>    * Helper function to select the color pipeline on a plane by setting
+>>    * it to the first drm_colorop element of the pipeline.
+>> + *
+>> + * Return: true if plane color pipeline value changed, false otherwise.
+>>    */
+>> -void
+>> +bool
+>>   drm_atomic_set_colorop_for_plane(struct drm_plane_state *plane_state,
+>>                    struct drm_colorop *colorop)
+>>   {
+>>       struct drm_plane *plane = plane_state->plane;
+>>   +    /* Color pipeline didn't change */
+>> +    if (plane_state->color_pipeline == colorop)
+>> +        return false;
 >> +
->>               properties:
->>                 data-lanes:
->>                   minItems: 1
->> -                maxItems: 4
->> +                maxItems: 4 # Base max allows 4 (for D-PHY)
+>>       if (colorop)
+>>           drm_dbg_atomic(plane->dev,
+>>                      "Set [COLOROP:%d] for [PLANE:%d:%s] state %p\n",
+>> @@ -283,6 +289,8 @@ drm_atomic_set_colorop_for_plane(struct 
+>> drm_plane_state *plane_state,
+>>                      plane->base.id, plane->name, plane_state);
+>>         plane_state->color_pipeline = colorop;
 >> +
->> +              clock-lanes:
->> +                maxItems: 1
->>                 bus-type:
->>                   enum:
->>                     - 1 # MEDIA_BUS_TYPE_CSI2_CPHY
->>                     - 4 # MEDIA_BUS_TYPE_CSI2_DPHY
->> +          endpoint@1:
->> +            $ref: video-interfaces.yaml#
->> +            unevaluatedProperties: false
->> +
->> +            description:
->> +              Endpoint for receiving the second leg of a combo sensor 
->> input.
->> +
->> +            properties:
->> +              data-lanes:
->> +                maxItems: 1
->> +
->> +              clock-lanes:
->> +                maxItems: 1
->> +
->> +              bus-type:
->> +                const: 4 # Combo is D-PHY specific
->> +
-> 
-> It's unclear why both 'bus-type' and 'phys' cell argument are needed
-> at the same time, they are equal and thus one of two is redundant.
-> 
+>> +    return true;
+>>   }
+>>   EXPORT_SYMBOL(drm_atomic_set_colorop_for_plane);
+>>   @@ -600,7 +608,7 @@ static int drm_atomic_plane_set_property(struct 
+>> drm_plane *plane,
+>>           if (val && !colorop)
+>>               return -EACCES;
+>>   -        drm_atomic_set_colorop_for_plane(state, colorop);
+>> +        state->color_mgmt_changed |= 
+>> drm_atomic_set_colorop_for_plane(state, colorop);
+>>       } else if (property == config->prop_fb_damage_clips) {
+>>           ret = drm_property_replace_blob_from_id(dev,
+>>                       &state->fb_damage_clips,
+>> @@ -709,11 +717,11 @@ drm_atomic_plane_get_property(struct drm_plane 
+>> *plane,
+>>   static int drm_atomic_color_set_data_property(struct drm_colorop 
+>> *colorop,
+>>                             struct drm_colorop_state *state,
+>>                             struct drm_property *property,
+>> -                          uint64_t val)
+>> +                          uint64_t val,
+>> +                          bool *replaced)
+>>   {
+>>       ssize_t elem_size = -1;
+>>       ssize_t size = -1;
+>> -    bool replaced = false;
+>>         switch (colorop->type) {
+>>       case DRM_COLOROP_1D_LUT:
+>> @@ -735,28 +743,39 @@ static int 
+>> drm_atomic_color_set_data_property(struct drm_colorop *colorop,
+>>                            &state->data,
+>>                            val,
+>>                            -1, size, elem_size,
+>> -                         &replaced);
+>> +                         replaced);
+>>   }
+>>     static int drm_atomic_colorop_set_property(struct drm_colorop 
+>> *colorop,
+>>                          struct drm_colorop_state *state,
+>>                          struct drm_file *file_priv,
+>>                          struct drm_property *property,
+>> -                       uint64_t val)
+>> +                       uint64_t val,
+>> +                       bool *replaced)
+>>   {
+>>       if (property == colorop->bypass_property) {
+>> -        state->bypass = val;
+>> +        if (state->bypass != val) {
+>> +            state->bypass = val;
+>> +            *replaced = true;
+>> +        }
+>>       } else if (property == colorop->lut1d_interpolation_property) {
+>>           colorop->lut1d_interpolation = val;
+>>       } else if (property == colorop->curve_1d_type_property) {
+>> -        state->curve_1d_type = val;
+>> +        if (state->curve_1d_type != val) {
+>> +            state->curve_1d_type = val;
+>> +            *replaced = true;
+>> +        }
+>>       } else if (property == colorop->multiplier_property) {
+>> -        state->multiplier = val;
+>> +        if (state->multiplier != val) {
+>> +            state->multiplier = val;
+>> +            *replaced = true;
+>> +        }
+>>       } else if (property == colorop->lut3d_interpolation_property) {
+>>           colorop->lut3d_interpolation = val;
+>
+> I think it would be prudent to add this logic for both the 1dlut and 
+> 3dlut interpolation properties. Even though they have just one value 
+> exposed right now, that might change in future.
 
-bus-type lives on the CAMSS controller endpoint. It tells the V4L2 
-fwnode parser (v4l2_fwnode_endpoint_parse) how to interpret the endpoint 
-properties — DPHY has data-lanes + clock-lanes, CPHY has trios.
+I didn't include interpolations in the color_mgmt_changed logic because 
+there is a comment in `include/drm/drm_colorop.h` saying that they are 
+read-only.
+But thinking better about it, and I think we should not allow 
+`drm_atomic_colorop_set_property()` calls to change values of these 
+properties if they are read-only.
+I didn't track the discussions about what are the plans for these 
+properties, how the userspace knows they are read-only properties and 
+shouldn't set any value?
 
-PHY phandle cell lives on the phys reference. It tells the PHY driver 
-which electrical mode to configure
+>
+>>       } else if (property == colorop->data_property) {
+>>           return drm_atomic_color_set_data_property(colorop, state,
+>> -                              property, val);
+>> +                              property, val,
+>> +                              replaced);
+>>       } else {
+>>           drm_dbg_atomic(colorop->dev,
+>>                      "[COLOROP:%d:%d] unknown property [PROP:%d:%s]\n",
+>> @@ -1273,6 +1292,8 @@ int drm_atomic_set_property(struct 
+>> drm_atomic_state *state,
+>>       case DRM_MODE_OBJECT_COLOROP: {
+>>           struct drm_colorop *colorop = obj_to_colorop(obj);
+>>           struct drm_colorop_state *colorop_state;
+>> +        struct drm_plane_state *plane_state;
+>> +        bool replaced = false;
+>>             colorop_state = drm_atomic_get_colorop_state(state, 
+>> colorop);
+>>           if (IS_ERR(colorop_state)) {
+>> @@ -1281,7 +1302,17 @@ int drm_atomic_set_property(struct 
+>> drm_atomic_state *state,
+>>           }
+>>             ret = drm_atomic_colorop_set_property(colorop, 
+>> colorop_state,
+>> -                              file_priv, prop, prop_value);
+>> +                              file_priv, prop, prop_value,
+>> +                              &replaced);
+>> +        if (ret || !replaced)
+>> +            break;
+>> +
+>> +        plane_state = drm_atomic_get_plane_state(state, 
+>> colorop->plane);
+>> +        if (IS_ERR(plane_state)) {
+>> +            ret = PTR_ERR(plane_state);
+>> +            break;
+>> +        }
+>> +        plane_state->color_mgmt_changed = true;
+>
+> I am not sure if it was the intention of the uapi design but as I 
+> understand there are no guardrails for setting a colorop in an 
+> "inactive" pipeline.
+>
+> So, color_mgmt_changed  is set to true even if a colorop from a color 
+> pipeline that is not currently selected(or set to Bypass) by the 
+> user-space is changed.
+> I guess, the driver needs to be intelligent enough to ignore those 
+> colorop but should we reject it at drm core?
+>
 
----
-bod
+Thanks for pointing it out, makes sense!
+I agree that drm core should reject changes in inactive pipelines.
+
+Melissa
+
+
+> ==
+> Chaitanya
+>
+>>           break;
+>>       }
+>>       default:
+>> diff --git a/include/drm/drm_atomic_uapi.h 
+>> b/include/drm/drm_atomic_uapi.h
+>> index 436315523326..4e7e78f711e2 100644
+>> --- a/include/drm/drm_atomic_uapi.h
+>> +++ b/include/drm/drm_atomic_uapi.h
+>> @@ -29,6 +29,8 @@
+>>   #ifndef DRM_ATOMIC_UAPI_H_
+>>   #define DRM_ATOMIC_UAPI_H_
+>>   +#include <linux/types.h>
+>> +
+>>   struct drm_crtc_state;
+>>   struct drm_display_mode;
+>>   struct drm_property_blob;
+>> @@ -50,7 +52,7 @@ drm_atomic_set_crtc_for_plane(struct 
+>> drm_plane_state *plane_state,
+>>                     struct drm_crtc *crtc);
+>>   void drm_atomic_set_fb_for_plane(struct drm_plane_state *plane_state,
+>>                    struct drm_framebuffer *fb);
+>> -void drm_atomic_set_colorop_for_plane(struct drm_plane_state 
+>> *plane_state,
+>> +bool drm_atomic_set_colorop_for_plane(struct drm_plane_state 
+>> *plane_state,
+>>                         struct drm_colorop *colorop);
+>>   int __must_check
+>>   drm_atomic_set_crtc_for_connector(struct drm_connector_state 
+>> *conn_state,
+>
+
 
