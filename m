@@ -1,128 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-100114-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100115-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id mH5HFRc2xWn/8AQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100114-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 14:35:19 +0100
+	id mNp0BPQ2xWlX8QQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100115-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 14:39:00 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0F87D3360DE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 14:35:19 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D4413361E9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 14:38:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 6EF9130A0857
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 13:25:21 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B3D58301B739
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 13:31:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B67182D838C;
-	Thu, 26 Mar 2026 13:25:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8490B2DCC1C;
+	Thu, 26 Mar 2026 13:31:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KalNr4PY"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="atlSNU+x"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 930572D593E;
-	Thu, 26 Mar 2026 13:25:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 615BF2C21C2
+	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 13:31:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774531504; cv=none; b=OxBbYQA2EjXAuR2Y/ihqsQdzwxW7aIsIPkw6rZXMi9T24HoJxSfk/bsZOEHYO+rvzX30yNaWETkiEwcUVh3SSVNy3tcPp7E/Vt8FBq8pqQYsbirhe7B/bnvr578ULiqUL1oryx7v3pVKwc2aZQaRjQ3PS6Y22jD45UmqRvyV5g8=
+	t=1774531883; cv=none; b=QOcOq98rSFA6VyzzoMR8eZ+wLYc4jtwYlTv7EQstUcfDXq44oMnXVP/9x4VadvmWAeDNbcPdZeyNr3p3SCxJE0FBOe7X7IxS+fWTXenyA8mnUgiO9jSMAOBEM3zreIH16AVK21gLr4mdAfe3vmD0Cxy3UdXcd2NtAhBydZ0ouVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774531504; c=relaxed/simple;
-	bh=slZDjHDBkDBOv9ZPw6AKRurx6jWSVWj20hE5CGDhROU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GHrE5FIMSLQSOsygRL6ZXBzq0RKd+8QO7IEdTV1jJpIcG5MPQ6BcJE3VKO3x8kL53uk5AhR2ueAUPFCRvYnY5+OwR3kqlLCAGzrwCkpk3wNqmvcCiv9epj54PsxKKsrhR1wII1RpLP0wMp8nM9hsDNR2gtLj1yShJcsXdlaFE4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KalNr4PY; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46C7BC116C6;
-	Thu, 26 Mar 2026 13:25:03 +0000 (UTC)
+	s=arc-20240116; t=1774531883; c=relaxed/simple;
+	bh=si+jevF1tez+sJmAqLfZ+PpqgojMBaE2vdJxM1Sql6s=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=S44DlhAL7zHzFSA1jgtaSfjIl4SGssGYB508LL45D5DKxZqUItxPcnKphB2BX4RmumbHOktCI7+kZbfvghPXzsk8VrSHBpknT2E9TiHNyTbv6GZ5ayeOsUQDVUxk/YWwCmpnEhgiKIPuhMb3/cnuQtRZg8GiVhaaPt+YOOhEYmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=atlSNU+x; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30EDEC116C6;
+	Thu, 26 Mar 2026 13:31:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774531504;
-	bh=slZDjHDBkDBOv9ZPw6AKRurx6jWSVWj20hE5CGDhROU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=KalNr4PYE3MJeu0+hZzIon5d+NVDBpt1iDmrl+S2fli1vImkdTnVasaqt1EtdRU7r
-	 83ZAeCbbXEEMkdMh4+qoSrTQ4DKaqn9HxS19x4voL8Vr4thcJZCE2KJNXVpLnXXmHd
-	 VeRXAARxQFKREHg/0w9iLfb8CYgM+HKLbXRkdm2OcMvKS4rH+ldlJg2v83PW6WMY/R
-	 ZmLpEX5fkZY0DgSAe8mAa24xOQ87PPiwjRe7ehNpF9GsgjEV/J6H2o1k2xQwuUlNUF
-	 dRAF6LYcZYr9fx8Zq8UOXFKL7VrqCWjMlkhzXy6bXtsK2DWhxZKgfDxV6t91hjLAUT
-	 OXBNawrSDv1hw==
-Date: Thu, 26 Mar 2026 08:24:59 -0500
+	s=k20201202; t=1774531883;
+	bh=si+jevF1tez+sJmAqLfZ+PpqgojMBaE2vdJxM1Sql6s=;
+	h=From:To:Cc:Subject:Date:From;
+	b=atlSNU+xyyR3FPljR6Eqa/bAswPaibNUdndeJMiCKNuPeY2HU2Yz/k24VwHxHfoCp
+	 TbRve90y0wRkoy6xqKC3Rkegq5ce/XO1XPNvM/rZdxyDAQdIc84ve+KVmpw10Ri2h0
+	 evPvQs4GaPAW4G6G+jv3CEbV1fgQ47ZjlwEniKD8mdtaEnNfOMyHpqEO3AdFKA+Tud
+	 dI7Dybo0l2YGwDVYjBlJ9rRYZwlJyG7Ur3yPA63r9VYb9ItzmZj3Wc+zr7yZQN2E9m
+	 5DllpWAH4EzvKvnUi2MKcwwQplviH82fPBdVgLGrHOeQIg+CsSj6JPEe7HpKRRi7bX
+	 lGtT5skPuKJ6g==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Cc: konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
-	conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: monaco: extend fastrpc compute cb
-Message-ID: <acUzKYUCbUOIOrw2@baldur>
-References: <20260326125834.2758331-1-srinivas.kandagatla@oss.qualcomm.com>
+To: arm@kernel.org,
+	soc@kernel.org
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Arnd Bergmann <arnd@arndb.de>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Subject: [GIT PULL] Qualcomm driver fixes for v7.0
+Date: Thu, 26 Mar 2026 08:31:19 -0500
+Message-ID: <20260326133119.66268-1-andersson@kernel.org>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260326125834.2758331-1-srinivas.kandagatla@oss.qualcomm.com>
-X-Spamd-Result: default: False [-1.66 / 15.00];
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
+	MID_CONTAINS_FROM(1.00)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-100114-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-100115-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	MISSING_XM_UA(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[8];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	PRECEDENCE_BULK(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[7];
+	NEURAL_HAM(-0.00)[-1.000];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,b:email,c:email]
-X-Rspamd-Queue-Id: 0F87D3360DE
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 5D4413361E9
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Thu, Mar 26, 2026 at 12:58:34PM +0000, Srinivas Kandagatla wrote:
-> diff --git a/arch/arm64/boot/dts/qcom/monaco.dtsi b/arch/arm64/boot/dts/qcom/monaco.dtsi
-[..]
-> +
-> +					compute-cb@b {
 
-That doesn't match the patternProperties "(compute-)?cb@[0-9]*$".
+The following changes since commit 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f:
 
-Is the reg an index, or an "address"? Should we use base 10, or should
-we fix the yaml?
+  Linux 7.0-rc1 (2026-02-22 13:18:59 -0800)
 
-Regards,
-Bjorn
+are available in the Git repository at:
 
-> +						compatible = "qcom,fastrpc-compute-cb";
-> +						reg = <0xb>;
-> +						iommus = <&apps_smmu 0x19cb 0x0400>;
-> +						dma-coherent;
-> +					};
-> +
-> +					compute-cb@c {
-> +						compatible = "qcom,fastrpc-compute-cb";
-> +						reg = <0xc>;
-> +						iommus = <&apps_smmu 0x19cc 0x000>;
-> +						dma-coherent;
-> +					};
->  				};
->  			};
->  		};
-> -- 
-> 2.47.3
-> 
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-drivers-fixes-for-7.0
+
+for you to fetch changes up to a343fb1e03cfc9f6dc83a5efb2a8d33e9cdaf6b9:
+
+  soc: qcom: pmic_glink_altmode: Fix TBT->SAFE->!TBT transition (2026-03-18 21:51:11 -0500)
+
+----------------------------------------------------------------
+Qualcomm driver fixes for v7.0
+
+Fix the length of the PD restart reason string in pd-mapper to avoid
+QMI decoding errors, resulting in the notification being dropped.
+
+Fix the newly introduce handling of TBT/USB4 notifications in pmic_glink
+altmode driver, as it broke the handling of non-TBT/USB4 DisplayPort
+unplug events.
+
+----------------------------------------------------------------
+Konrad Dybcio (2):
+      soc: qcom: pmic_glink_altmode: Fix SVID=DP && unconnected edge case
+      soc: qcom: pmic_glink_altmode: Fix TBT->SAFE->!TBT transition
+
+Mukesh Ojha (1):
+      soc: qcom: pd-mapper: Fix element length in servreg_loc_pfr_req_ei
+
+ drivers/soc/qcom/pdr_internal.h       |  2 +-
+ drivers/soc/qcom/pmic_glink_altmode.c | 39 +++++++++++++++++++++++++----------
+ drivers/soc/qcom/qcom_pdr_msg.c       |  2 +-
+ include/linux/soc/qcom/pdr.h          |  1 +
+ 4 files changed, 31 insertions(+), 13 deletions(-)
 
