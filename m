@@ -1,148 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-100057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100058-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id AAc7MeP1xGld5QQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 10:01:23 +0100
+	id mPY/E4D4xGmC5QQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100058-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 10:12:32 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 43A2C331CD7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 10:01:23 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E9EEA332017
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 10:12:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1593B31B785D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 08:51:59 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1A538302A050
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 08:52:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5276C3C2769;
-	Thu, 26 Mar 2026 08:48:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D0A1346E57;
+	Thu, 26 Mar 2026 08:50:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ls/2dVtd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eWGx2gOL"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F7133C2798
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 08:48:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37AB929827E;
+	Thu, 26 Mar 2026 08:50:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774514913; cv=none; b=a9DEzQd+tu66q7VyZ4TlgK0qVN6NKtDFrGm3KPVwmfskWn+Fuur3hIodmcctSagOp4jIvqr4YoE63w5ZzGxAhgz6y6vTM2MPwCJznpCNuDQp8J1nt3bXVGVRyjFgfb0dEFtwS0ecoyJswW3ZGJ4V3X7ms6CiyszQFOq0zkgOHSc=
+	t=1774515019; cv=none; b=IwcTovHt5UmlAzMfoTnMkMZHlacBJ2Mq7BW+9KtxPX9gdfHoONtIgzAlYxKMSltUHS5p7TKczfacm/LFDhfE1A4sMqVNr+p0jf/Isjo9NdrWQlo4rZ9cnbw7b1fS2gg+teMH83RK0PqnUxurcMM5DatdY4cZGBbd4eoM/gxC3Uo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774514913; c=relaxed/simple;
-	bh=xDpz5toXT9+YnrNMtuCC5O0FW4S4IE6N5NmMAjyruQI=;
-	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jKU3BabBRS7yA22rXJoUyRyZeuHNVNqbOQ50cS4ovh2rSZAkccBa/wLD1bcWJP95bzydf4sFUutUYO4GyPJ8X9Oc+PX2B88vLgWCXEECRRdKHLU3Jwf28Cngx9DOT41+MBk/f+5LhQWmVNco//dZaDGA4d0Ga4jngeIBlWcVhvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ls/2dVtd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF04C2BCB8
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 08:48:32 +0000 (UTC)
+	s=arc-20240116; t=1774515019; c=relaxed/simple;
+	bh=Nk3OQJcQa7+IWGZDgf0ivm4hL2jKChEzfHAOrtGBL30=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SWM5s2p9rNuIMTwEBZ9mg6NenB/Omb+VUYMUNbJCzXVTUdvT+awH+dNvbR6HiGFo+iKgPKmJYNSPY7rQnpP4pPIpf1sWTeMjPmXowhWAexRS5B9id2/IW805gPiqHVt2ViXWtCsqfqpBjiBlJ7iD3wleENK+zgrdPzv3AW7hJn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eWGx2gOL; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42667C116C6;
+	Thu, 26 Mar 2026 08:50:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774514912;
-	bh=xDpz5toXT9+YnrNMtuCC5O0FW4S4IE6N5NmMAjyruQI=;
-	h=From:In-Reply-To:References:Date:Subject:To:Cc:From;
-	b=Ls/2dVtdnHLwYF3B4kiQyaJlXONuHLts6cQQ2mr0Co9Gd7w6hr3oBtUh9FXdCpEE6
-	 Dj381/ZxqtIOPm/DJCvMGnojS7YqXZEod4NbwHmQSkic7lpdCuoIUl2OXM9CXaj3JZ
-	 ugLAAGl/BZSvCm18UbxX6kBY9+4MtpC5ShgNgcm8eolJ9VOInYpscluQhuQ/U04M4X
-	 VzhdvUyg3zHF7Mdx/zsdQoA1m32bYH9MlCem+iPgAHU0x0c3ktkLVnjdET2uiJsjuS
-	 iG692SrWU+QRlwyhq/emAymNL5sodIdQbUS4RXjgP2RuH28Cht4Z+5orRn4rjsyFoN
-	 J2Xl2A5mj/sbg==
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-38bcdda57b0so5032321fa.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 01:48:32 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCXhKhtLO+fjCMAyXCx6PKxs3dElwyoe46q79lOfAeE4sYMw0RNgdgZoZRtLmgzByYDiJ2JNSLwmaevUn9Fv@vger.kernel.org
-X-Gm-Message-State: AOJu0YzWuBeROlQJ8wPIFAJSF03mlZQc4ezHlhi5xeWQeAA+1ewK5xAO
-	xpJvATFzcYwK/9daCsZDO5dU+Q3RuV1C4rUWy6Sn4aOBif9xQCEixbxzb/ifOj74sDHFS+07gY6
-	s9raCDTOLYQnPDImiLp3b4WUVlYsNSvzMqmIl4gVFow==
-X-Received: by 2002:a05:651c:1587:b0:38a:332c:777a with SMTP id
- 38308e7fff4ca-38c43206b02mr27254831fa.34.1774514911324; Thu, 26 Mar 2026
- 01:48:31 -0700 (PDT)
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 26 Mar 2026 01:48:29 -0700
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 26 Mar 2026 01:48:29 -0700
-From: Bartosz Golaszewski <brgl@kernel.org>
-In-Reply-To: <20260326-pci-m2-e-v7-5-43324a7866e6@oss.qualcomm.com>
+	s=k20201202; t=1774515019;
+	bh=Nk3OQJcQa7+IWGZDgf0ivm4hL2jKChEzfHAOrtGBL30=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=eWGx2gOLvfHG1xA6EpBU5XssaH7AfwFrQA3TL8MLeYvE58DFfYB+nnd8vYfaFzkd5
+	 tZa3gLuhJniQtc+eMnqm0Ci4fM8aZ8bZw0zdRPKw8aPsmlkX0QrttqDtSHEKcGgU0P
+	 eSuGGXg+6WgNmt5i6568+PjflSOR56src4Ur83Ye/WgmFoofV3I6YFNt3sF/wd8bf3
+	 4D3T+8od5S/QtunojXburPPXiBzJzjIyK4/8BljTxruiOtlHbtOQXSsvFooGr9s8mY
+	 ENWjxKH8Ox3u0OzttcoWYRmtEVP+sj1YLfb6OvbG9+iC2I2DZ6VyEUFE/c+JHNVoVu
+	 SyL5V108Zuppg==
+Date: Thu, 26 Mar 2026 14:20:01 +0530
+From: Sumit Garg <sumit.garg@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+	linux-media@vger.kernel.org, netdev@vger.kernel.org,
+	linux-wireless@vger.kernel.org, ath12k@lists.infradead.org,
+	linux-remoteproc@vger.kernel.org, andersson@kernel.org,
+	konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, robin.clark@oss.qualcomm.com, sean@poorly.run,
+	akhilpo@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
+	jesszhan0024@gmail.com, marijn.suijten@somainline.org,
+	airlied@gmail.com, simona@ffwll.ch, vikash.garodia@oss.qualcomm.com,
+	dikshita.agarwal@oss.qualcomm.com, bod@kernel.org,
+	mchehab@kernel.org, elder@kernel.org, andrew+netdev@lunn.ch,
+	davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+	pabeni@redhat.com, jjohnson@kernel.org, mathieu.poirier@linaro.org,
+	trilokkumar.soni@oss.qualcomm.com, mukesh.ojha@oss.qualcomm.com,
+	pavan.kondeti@oss.qualcomm.com, jorge.ramirez@oss.qualcomm.com,
+	tonyh@qti.qualcomm.com, vignesh.viswanathan@oss.qualcomm.com,
+	srinivas.kandagatla@oss.qualcomm.com,
+	amirreza.zarrabi@oss.qualcomm.com, jens.wiklander@linaro.org,
+	op-tee@lists.trustedfirmware.org, apurupa@qti.qualcomm.com,
+	skare@qti.qualcomm.com, Sumit Garg <sumit.garg@oss.qualcomm.com>
+Subject: Re: [PATCH 10/14] drm/msm: Switch to generic PAS TZ APIs
+Message-ID: <acTzOTUVL6uYQZwh@sumit-xelite>
+References: <20260306105027.290375-1-sumit.garg@kernel.org>
+ <20260306105027.290375-11-sumit.garg@kernel.org>
+ <v4ffww2r4ljqqbmvsc5jcr4ztqjbpfb42xryjeuz4abqiwup3a@2gfeelhjzzz4>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260326-pci-m2-e-v7-0-43324a7866e6@oss.qualcomm.com> <20260326-pci-m2-e-v7-5-43324a7866e6@oss.qualcomm.com>
-Date: Thu, 26 Mar 2026 01:48:29 -0700
-X-Gmail-Original-Message-ID: <CAMRc=MfcT2hLOQ6yVQrvdgimsA1oDzGM3e_7nAWyUAFoOyhH6A@mail.gmail.com>
-X-Gm-Features: AQROBzDDnGGEISO25bRpZEkvayXNWHPvGoERJaG_tDIkHVVI5jwB71NCISyV7hU
-Message-ID: <CAMRc=MfcT2hLOQ6yVQrvdgimsA1oDzGM3e_7nAWyUAFoOyhH6A@mail.gmail.com>
-Subject: Re: [PATCH v7 5/8] dt-bindings: connector: Add PCIe M.2 Mechanical
- Key E connector
-To: manivannan.sadhasivam@oss.qualcomm.com
-Cc: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>, 
-	linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-kbuild@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
-	linux-pm@vger.kernel.org, Stephan Gerhold <stephan.gerhold@linaro.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, linux-acpi@vger.kernel.org, 
-	Rob Herring <robh@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Jiri Slaby <jirislaby@kernel.org>, Nathan Chancellor <nathan@kernel.org>, 
-	Nicolas Schier <nicolas.schier@linux.dev>, Hans de Goede <hansg@kernel.org>, 
-	=?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
-	Mark Pearson <mpearson-lenovo@squebb.ca>, "Derek J. Clark" <derekjohn.clark@gmail.com>, 
-	Manivannan Sadhasivam <mani@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
-	Bartosz Golaszewski <brgl@bgdev.pl>, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
-	Bartosz Golaszewski <brgl@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spamd-Result: default: False [-0.66 / 15.00];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <v4ffww2r4ljqqbmvsc5jcr4ztqjbpfb42xryjeuz4abqiwup3a@2gfeelhjzzz4>
+X-Spamd-Result: default: False [-0.16 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-100057-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[kernel.org,vger.kernel.org,linaro.org,oss.qualcomm.com,linuxfoundation.org,linux.dev,linux.intel.com,squebb.ca,gmail.com,holtmann.org,bgdev.pl];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-100058-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[31];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCPT_COUNT_TWELVE(0.00)[49];
+	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.freedesktop.org,lists.infradead.org,kernel.org,oss.qualcomm.com,poorly.run,linux.dev,gmail.com,somainline.org,ffwll.ch,lunn.ch,davemloft.net,google.com,redhat.com,linaro.org,qti.qualcomm.com,lists.trustedfirmware.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,manivannan.sadhasivam.oss.qualcomm.com,dt];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[sumit.garg@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 43A2C331CD7
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: E9EEA332017
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Thu, 26 Mar 2026 09:06:33 +0100, Manivannan Sadhasivam via B4 Relay
-<devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org> said:
-> From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
->
-> Add the devicetree binding for PCIe M.2 Mechanical Key E connector defined
-> in the PCI Express M.2 Specification, r4.0, sec 5.1.2. This connector
-> provides interfaces like PCIe or SDIO to attach the WiFi devices to the
-> host machine, USB or UART+PCM interfaces to attach the Bluetooth (BT)
-> devices. Spec also provides an optional interface to connect the UIM card,
-> but that is not covered in this binding.
->
-> The connector provides a primary power supply of 3.3v, along with an
-> optional 1.8v VIO supply for the Adapter I/O buffer circuitry operating at
-> 1.8v sideband signaling.
->
-> The connector also supplies optional signals in the form of GPIOs for fine
-> grained power management.
->
-> Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> ---
+On Wed, Mar 25, 2026 at 06:34:18AM +0200, Dmitry Baryshkov wrote:
+> On Fri, Mar 06, 2026 at 04:20:23PM +0530, Sumit Garg wrote:
+> > From: Sumit Garg <sumit.garg@oss.qualcomm.com>
+> > 
+> > Switch drm/msm client drivers over to generic PAS TZ APIs. Generic PAS
+> > TZ service allows to support multiple TZ implementation backends like QTEE
+> > based SCM PAS service, OP-TEE based PAS service and any further future TZ
+> > backend service.
+> > 
+> > Signed-off-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
+> > ---
+> >  drivers/gpu/drm/msm/adreno/a5xx_gpu.c   |  4 ++--
+> >  drivers/gpu/drm/msm/adreno/adreno_gpu.c | 11 ++++++-----
+> >  2 files changed, 8 insertions(+), 7 deletions(-)
+> > 
+> > diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> > index ef9fd6171af7..3283852f9a14 100644
+> > --- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> > +++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+> > @@ -5,7 +5,7 @@
+> >  #include <linux/kernel.h>
+> >  #include <linux/types.h>
+> >  #include <linux/cpumask.h>
+> > -#include <linux/firmware/qcom/qcom_scm.h>
+> > +#include <linux/firmware/qcom/qcom_pas.h>
+> 
+> Missing `select QCOM_PAS`.
 
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Sure, I will add that in next spin.
+
+-Sumit
+
+> 
+> 
+> >  #include <linux/pm_opp.h>
+> >  #include <linux/nvmem-consumer.h>
+> >  #include <linux/slab.h>
+> > @@ -653,7 +653,7 @@ static int a5xx_zap_shader_resume(struct msm_gpu *gpu)
+> >  	if (adreno_is_a506(adreno_gpu))
+> >  		return 0;
+> >  
+> > -	ret = qcom_scm_set_remote_state(SCM_GPU_ZAP_SHADER_RESUME, GPU_PAS_ID);
+> > +	ret = qcom_pas_set_remote_state(SCM_GPU_ZAP_SHADER_RESUME, GPU_PAS_ID);
+> >  	if (ret)
+> >  		DRM_ERROR("%s: zap-shader resume failed: %d\n",
+> >  			gpu->name, ret);
+> 
+> -- 
+> With best wishes
+> Dmitry
+> 
 
