@@ -1,130 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-100056-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id CFdCIpftxGm+5AQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100056-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 09:25:59 +0100
+	id AAc7MeP1xGld5QQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 10:01:23 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D000331495
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 09:25:59 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 43A2C331CD7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 10:01:23 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 769CE3010602
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 08:25:31 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 1593B31B785D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 08:51:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 509943B7B94;
-	Thu, 26 Mar 2026 08:25:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5276C3C2769;
+	Thu, 26 Mar 2026 08:48:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ppjz8b3O"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ls/2dVtd"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D233C3B7B76;
-	Thu, 26 Mar 2026 08:25:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F7133C2798
+	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 08:48:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774513508; cv=none; b=YOzMovPhB/w1EMUFonH6hyLVD+YUB6tnxpiwSke3Al3rwLiflQJiF790JwQdCf8/g6Stp+RnV8lmwPKynHjyNADEQ4gYdqkKCiIGcAgIjxWTA3pEAhQBt4yVZBo2VtfL9FxJXHBX/RhZ24W2L30jUEYMzY+RVUzmg0M+FPwf8xE=
+	t=1774514913; cv=none; b=a9DEzQd+tu66q7VyZ4TlgK0qVN6NKtDFrGm3KPVwmfskWn+Fuur3hIodmcctSagOp4jIvqr4YoE63w5ZzGxAhgz6y6vTM2MPwCJznpCNuDQp8J1nt3bXVGVRyjFgfb0dEFtwS0ecoyJswW3ZGJ4V3X7ms6CiyszQFOq0zkgOHSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774513508; c=relaxed/simple;
-	bh=DtkcM00qstt9ezFR2/CqK/oJyo6OuKnFPtu2O07XpqY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=W/zje0TWRb2YMsnyiO9b8EzAOEX49oAcgY5e7HF1xQngxeBi3jldnDsw/AFe1wrdU3Opy76KZYBjtBdu9xLy9NmqRV2CxAi0jJ2d61Ftjebh7tCv6RY/aCxZ3RFk8oayGhgGwZKccRhYo7TwB1qfKC27oWuY4vSToosPHhZ4cWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ppjz8b3O; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA5C6C19423;
-	Thu, 26 Mar 2026 08:25:07 +0000 (UTC)
+	s=arc-20240116; t=1774514913; c=relaxed/simple;
+	bh=xDpz5toXT9+YnrNMtuCC5O0FW4S4IE6N5NmMAjyruQI=;
+	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jKU3BabBRS7yA22rXJoUyRyZeuHNVNqbOQ50cS4ovh2rSZAkccBa/wLD1bcWJP95bzydf4sFUutUYO4GyPJ8X9Oc+PX2B88vLgWCXEECRRdKHLU3Jwf28Cngx9DOT41+MBk/f+5LhQWmVNco//dZaDGA4d0Ga4jngeIBlWcVhvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ls/2dVtd; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF04C2BCB8
+	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 08:48:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774513508;
-	bh=DtkcM00qstt9ezFR2/CqK/oJyo6OuKnFPtu2O07XpqY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Ppjz8b3O39w7dT29hoR3sKCmgkIf+DqOlifxQMqapBhNE28naqdxi/3+DnIhOk4d8
-	 5DZzvwonEiLvkSxieACdn0c2xcxziCT2Jtf2Qv0QQFWU5ma5CA2MelUdSFDtETAu4A
-	 W1Jy+c2g6UaqoG5+BhBlLk+K1/6GdVlXLt8JhzfJT9MKc/p8eVcBJnaKE/t/NbmZsS
-	 hl2sj0XzGFnorRruh5aKuVjn2gwY3QdmxmK6hmCNfUgE2TvRt4WGAQ/hfAmQL6zbue
-	 tzU4yBFNrR4ah5vscigRvs6A47aj840CE0S+q4hMaVrEHKArnMkDSgXzjuv1ZlspO6
-	 JNgfWPBIcA64w==
-Date: Thu, 26 Mar 2026 09:25:05 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] dt-bindings: pinctrl: qcom: add IPQ5210 pinctrl
-Message-ID: <20260326-marvellous-premium-grouse-d1d1ad@quoll>
-References: <20260325-ipq5210_tlmm-v3-0-3a4b9bb6b1fc@oss.qualcomm.com>
- <20260325-ipq5210_tlmm-v3-1-3a4b9bb6b1fc@oss.qualcomm.com>
+	s=k20201202; t=1774514912;
+	bh=xDpz5toXT9+YnrNMtuCC5O0FW4S4IE6N5NmMAjyruQI=;
+	h=From:In-Reply-To:References:Date:Subject:To:Cc:From;
+	b=Ls/2dVtdnHLwYF3B4kiQyaJlXONuHLts6cQQ2mr0Co9Gd7w6hr3oBtUh9FXdCpEE6
+	 Dj381/ZxqtIOPm/DJCvMGnojS7YqXZEod4NbwHmQSkic7lpdCuoIUl2OXM9CXaj3JZ
+	 ugLAAGl/BZSvCm18UbxX6kBY9+4MtpC5ShgNgcm8eolJ9VOInYpscluQhuQ/U04M4X
+	 VzhdvUyg3zHF7Mdx/zsdQoA1m32bYH9MlCem+iPgAHU0x0c3ktkLVnjdET2uiJsjuS
+	 iG692SrWU+QRlwyhq/emAymNL5sodIdQbUS4RXjgP2RuH28Cht4Z+5orRn4rjsyFoN
+	 J2Xl2A5mj/sbg==
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-38bcdda57b0so5032321fa.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 01:48:32 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCXhKhtLO+fjCMAyXCx6PKxs3dElwyoe46q79lOfAeE4sYMw0RNgdgZoZRtLmgzByYDiJ2JNSLwmaevUn9Fv@vger.kernel.org
+X-Gm-Message-State: AOJu0YzWuBeROlQJ8wPIFAJSF03mlZQc4ezHlhi5xeWQeAA+1ewK5xAO
+	xpJvATFzcYwK/9daCsZDO5dU+Q3RuV1C4rUWy6Sn4aOBif9xQCEixbxzb/ifOj74sDHFS+07gY6
+	s9raCDTOLYQnPDImiLp3b4WUVlYsNSvzMqmIl4gVFow==
+X-Received: by 2002:a05:651c:1587:b0:38a:332c:777a with SMTP id
+ 38308e7fff4ca-38c43206b02mr27254831fa.34.1774514911324; Thu, 26 Mar 2026
+ 01:48:31 -0700 (PDT)
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 26 Mar 2026 01:48:29 -0700
+Received: from 969154062570 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 26 Mar 2026 01:48:29 -0700
+From: Bartosz Golaszewski <brgl@kernel.org>
+In-Reply-To: <20260326-pci-m2-e-v7-5-43324a7866e6@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260325-ipq5210_tlmm-v3-1-3a4b9bb6b1fc@oss.qualcomm.com>
-X-Spamd-Result: default: False [-1.66 / 15.00];
+References: <20260326-pci-m2-e-v7-0-43324a7866e6@oss.qualcomm.com> <20260326-pci-m2-e-v7-5-43324a7866e6@oss.qualcomm.com>
+Date: Thu, 26 Mar 2026 01:48:29 -0700
+X-Gmail-Original-Message-ID: <CAMRc=MfcT2hLOQ6yVQrvdgimsA1oDzGM3e_7nAWyUAFoOyhH6A@mail.gmail.com>
+X-Gm-Features: AQROBzDDnGGEISO25bRpZEkvayXNWHPvGoERJaG_tDIkHVVI5jwB71NCISyV7hU
+Message-ID: <CAMRc=MfcT2hLOQ6yVQrvdgimsA1oDzGM3e_7nAWyUAFoOyhH6A@mail.gmail.com>
+Subject: Re: [PATCH v7 5/8] dt-bindings: connector: Add PCIe M.2 Mechanical
+ Key E connector
+To: manivannan.sadhasivam@oss.qualcomm.com
+Cc: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>, 
+	linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-kbuild@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
+	linux-pm@vger.kernel.org, Stephan Gerhold <stephan.gerhold@linaro.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, linux-acpi@vger.kernel.org, 
+	Rob Herring <robh@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Jiri Slaby <jirislaby@kernel.org>, Nathan Chancellor <nathan@kernel.org>, 
+	Nicolas Schier <nicolas.schier@linux.dev>, Hans de Goede <hansg@kernel.org>, 
+	=?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
+	Mark Pearson <mpearson-lenovo@squebb.ca>, "Derek J. Clark" <derekjohn.clark@gmail.com>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
+	Bartosz Golaszewski <brgl@bgdev.pl>, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
+	Bartosz Golaszewski <brgl@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-100056-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-100057-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[kernel.org,vger.kernel.org,linaro.org,oss.qualcomm.com,linuxfoundation.org,linux.dev,linux.intel.com,squebb.ca,gmail.com,holtmann.org,bgdev.pl];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[31];
 	MIME_TRACE(0.00)[0:+];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	MISSING_XM_UA(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,bootlin.com:url,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 2D000331495
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,manivannan.sadhasivam.oss.qualcomm.com,dt];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 43A2C331CD7
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Wed, Mar 25, 2026 at 01:05:15PM +0530, Kathiravan Thirumoorthy wrote:
-> Add device tree bindings for IPQ5210 TLMM block.
-> 
-> Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+On Thu, 26 Mar 2026 09:06:33 +0100, Manivannan Sadhasivam via B4 Relay
+<devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org> said:
+> From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+>
+> Add the devicetree binding for PCIe M.2 Mechanical Key E connector defined
+> in the PCI Express M.2 Specification, r4.0, sec 5.1.2. This connector
+> provides interfaces like PCIe or SDIO to attach the WiFi devices to the
+> host machine, USB or UART+PCM interfaces to attach the Bluetooth (BT)
+> devices. Spec also provides an optional interface to connect the UIM card,
+> but that is not covered in this binding.
+>
+> The connector provides a primary power supply of 3.3v, along with an
+> optional 1.8v VIO supply for the Adapter I/O buffer circuitry operating at
+> 1.8v sideband signaling.
+>
+> The connector also supplies optional signals in the form of GPIOs for fine
+> grained power management.
+>
+> Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> ---
 
-I don't see any differences here and cover letter does not explain that.
-
-<form letter>
-This is a friendly reminder during the review process.
-
-It looks like you received a tag and forgot to add it.
-
-If you do not know the process, here is a short explanation:
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-versions of patchset, under or above your Signed-off-by tag, unless
-patch changed significantly (e.g. new properties added to the DT
-bindings). Tag is "received", when provided in a message replied to you
-on the mailing list. Tools like b4 can help here. However, there's no
-need to repost patches *only* to add the tags. The upstream maintainer
-will do that for tags received on the version they apply.
-
-Please read:
-https://elixir.bootlin.com/linux/v6.12-rc3/source/Documentation/process/submitting-patches.rst#L577
-
-If a tag was not added on purpose, please state in the patch changelog
-or cover letter why and what changed.
-</form letter>
-
-Best regards,
-Krzysztof
-
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 
