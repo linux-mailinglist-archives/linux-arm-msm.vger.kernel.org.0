@@ -1,238 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-100131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id ANW1EFZexWlM9wQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 17:27:02 +0100
+	id QCamNLBkxWkn+AQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 17:54:08 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7F0C13385C7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 17:27:01 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6FC7F338C27
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 17:54:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id B660A3017502
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 16:20:02 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 2BB1D3012202
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 16:53:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EE973C198C;
-	Thu, 26 Mar 2026 16:19:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 213F541C2FE;
+	Thu, 26 Mar 2026 16:53:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F8mHPbZM"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Iaoa3MPD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF67394799;
-	Thu, 26 Mar 2026 16:19:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ED4E39B967
+	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 16:53:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774541999; cv=none; b=Pt17Ym0TTJg0WF63ESf6hP0F6aRLugnspj4p4VT2WXGNPGmifrCozeaPpNbjzh+K5/3bAeUXjR+E4MZ8+QPM51cFx2jA0zzg7dcDM26KFXne1a/cRXzo3NGFEGh8FH9eUYvgY8emqG4TLkXGxohLFC+wZpbVhlSomfnTSIl9jEk=
+	t=1774544031; cv=none; b=d0C+IPfVygF04+YjIKfAkRRUWMqGnFtk/w3Lg0sSBW2PYZDOsXabi+vacSATZEgqnCXX5z8yc/WLaybFGlLL7ttPW+N7wGH5eh7Chj5RpRD6IjmSZ5F1cA+gaGrdaNaa8U1vlwLJPdgEmK5pYDoyKkbeo0LuWaQmDxCdc1cX60U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774541999; c=relaxed/simple;
-	bh=HUtRwEpymq8y1tHT5IuCcbjZ8WgelRutIBJgFxgBfwY=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=Nh3GDQ1K/Dlmns3pEiP7iu5pALHQQQhqqwlq4K48jB7ip6yfWThZYwov4EesUDfSL4MEqNqEBP5B/CYHZeoMUnTbWR//heA28XYyZndZi2OYNfN/TsVFu9kqqFYrq4AxmByJIiuSRGk+NOrdcNICw+FFIHK9xIFJuOBkVd/v0x4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F8mHPbZM; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58181C116C6;
-	Thu, 26 Mar 2026 16:19:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774541998;
-	bh=HUtRwEpymq8y1tHT5IuCcbjZ8WgelRutIBJgFxgBfwY=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=F8mHPbZMLywhR2KPKiO47GUlQve1aWTvrP9jUY2zHBn/GgXJAJ8kIosO6KRmT2xPy
-	 0IOXnbxBuiHeZMvRl+TjIGCZL+xLIklcHleCk7JhPz7DuyprdCRvXeIavUjsvsJn3u
-	 2Q1RhEo14xk900QBnukOrxjvVlgBCi/2LncSYTzSdhsFA5hJ9IBKJY83E/k7nfnIj+
-	 5lTlIF6wm86KROEBrkkqhHauUmxF3ByqGulkPiq2SUiGMalg+b2lo7okZjYoEqA7SE
-	 DQIUYImcIBQS+JZCWgUDtLEZ0SBKAUGmugBagt425A+Pxg6+wxIOHa2m/AYEY0slHj
-	 ZzEGDAJHfpMMw==
-Date: Thu, 26 Mar 2026 11:19:57 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Vijayanand Jitta <vijayanand.jitta@oss.qualcomm.com>,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Lucas Stach <l.stach@pengutronix.de>
-Cc: Nipun Gupta <nipun.gupta@amd.com>,
-	Nikhil Agarwal <nikhil.agarwal@amd.com>,
-	Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>, Marc Zyngier <maz@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Saravana Kannan <saravanak@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>, Frank Li <Frank.Li@nxp.com>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>, Juergen Gross <jgross@suse.com>,
-	Stefano Stabellini <sstabellini@kernel.org>,
-	Oleksandr Tyshchenko <oleksandr_tyshchenko@epam.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-	Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Prakash Gupta <prakash.gupta@oss.qualcomm.com>,
-	Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-	linux-kernel@vger.kernel.org, iommu@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-	linux-pci@vger.kernel.org, imx@lists.linux.dev,
-	xen-devel@lists.xenproject.org, linux-arm-msm@vger.kernel.org,
-	Charan Teja Kalla <charan.kalla@oss.qualcomm.com>
-Subject: Re: [PATCH v11 2/3] of: Factor arguments passed to of_map_id() into
- a struct
-Message-ID: <20260326161957.GA1324845@bhelgaas>
+	s=arc-20240116; t=1774544031; c=relaxed/simple;
+	bh=pht65ryf/SoqBX1Stz1wW8qdsgcvKRd5CptslYnA7iY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=lwpJyL/FtRYvfJc/XUF60Ibw4ZoEclPXW1bLJgPPTa/+XS40J8Ak2ViFXvRxMLc6ZF7+GmhPF0+tSpSfRxIRJ01JdaNaYKb342bIDkPbCF9LpIIZQ+Lvhy4sLgn10G/M3kPLu0nOdpzBbBP9ypo5dYJvje8SWQrQvMbwe0Dr3H4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Iaoa3MPD; arc=none smtp.client-ip=209.85.208.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-38a33933e99so738981fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 09:53:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1774544028; x=1775148828; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=nAVgAAmxy5RyoDPif/eI17zt71kOAmun/HAkn9gip4A=;
+        b=Iaoa3MPDyXSd8hzkOJHwYmn2iTi5e730lrXfpEUdK6KqXMZ27DU5GOsCQHtaE8Bk9/
+         QX4/i1tFininsQC5Fy6FJscJGui1hbhUbFnQuz5hbuTJaLTeFgGSpSdIe2Y14h+jrSl1
+         EVa+v1sgbhWx6jqSwrPfHekRLlZQmcQxkLJl8UCHJ4/6Q3IpWZLxrpuV76s7meRMoA+e
+         MfzMt4GhQ8BoFbystngj+5DY/9y4xJeZLOuivUQVY9/La2SKQxV4OeezxADFhZXwTf4d
+         hWVGACZ/549rU//maYD/w4Ye2H4GHJ9fAhKLN0h0UJzT0wfcRxmvp2WuZgInJ3QLcoqJ
+         brMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774544028; x=1775148828;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nAVgAAmxy5RyoDPif/eI17zt71kOAmun/HAkn9gip4A=;
+        b=ZVqXN+28ZgFgMCbwAz0y9mdFkTFSZXOVN59zcQ7AiaKAY745//nxTzhYqiTgtEoFEp
+         QYB4OsBo7/wl4WWJ08Sk7gy600zunxqNn3dlP5Lh/uZb/141rzf1wsc3GzKAF8kE7JYI
+         EdXFi3yTY3pFUAi59ERJx72ymmQeNmoix/0ADhIKwRzLiFcCVq20CdUtEBEbF896yC7n
+         Te0XuMLYXEorBGT2qf3jfWk3K8Lrv/+d1H46xuCF0RkEvE/0fZ/fClYLJ8XTBGgm988t
+         4xE5BuxogrUWOJKWItpn+W84/kPM8aBznAy1UF/6ucWNvECypTu68ZFVdiuNVHJZEEtJ
+         9JgA==
+X-Forwarded-Encrypted: i=1; AJvYcCX+Wsn0Y+lxhMYArMmTdgO8DZiFBvgD41/YiYchKCc2qasQTzKaEKl6dKEY3xFMz0UlKNqBDuRZE5wsQ4lj@vger.kernel.org
+X-Gm-Message-State: AOJu0YwT2ROwhsztobEZe46QvXSBFsMV/yCWUtLK6UCu/7esO514u2kA
+	6UCFS0umi6ghcnOmTOcE0H/oS8qc7EmpVNe4qVZAaC21/dXxD1RUqXDgPzlZWxZJ/Ag=
+X-Gm-Gg: ATEYQzz8IdWTlmQkzdEDqqpCdR82AQHISMOmthLtSsXfgCisnT5LKgzp4UVMrnqiKVT
+	k2sA7NXPq+VZonFV6DjWWelbkNfxAgdEUdpCSF+CciIB+7O3hP8yT7qnvHA6/2GvqH2gq0kNyeI
+	lkEOdMreFskC+mV3RN9KRX9ZCaQ8JPk/auvvRKjspfqlxrpU0X/uIL0qly7rRbgSsRdbmI55B4p
+	T5/EKEB8j3kcPUzJ2iCSsHwe56/fAb3UfyfT+hOMG5N/unhmJBuHvFo6kH66FnOTDH0H6LgZ6tM
+	3WPJGVxLKm+3mTSgGyfxRd3mZmc4ia5FDi/CJqS52y5tFWPKCUBprR7UVUftriVVH5HGU5o5txe
+	PK7Ro26Jpi83wH9S0886+51UMM3/EMJOS+RTbmTJ9etUuKtXIewCsJBxAsg1q14o122aAkja1hc
+	997k2eDkBen0z05sq/wSpldzoS7IZQ1VLZefRwVhpguWp1QzY8nfO5mcp/JMNJndQI3A==
+X-Received: by 2002:a2e:ab10:0:b0:38a:4199:6b03 with SMTP id 38308e7fff4ca-38c432bd095mr13606801fa.8.1774544027588;
+        Thu, 26 Mar 2026 09:53:47 -0700 (PDT)
+Received: from thyme.. (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38c52f84d94sm6630381fa.1.2026.03.26.09.53.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Mar 2026 09:53:47 -0700 (PDT)
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+To: Andi Shyti <andi.shyti@kernel.org>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Robert Foss <rfoss@kernel.org>
+Cc: linux-i2c@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH] i2c: qcom-cci: Remove unused CCI_RES_MAX macro definition
+Date: Thu, 26 Mar 2026 18:53:45 +0200
+Message-ID: <20260326165345.762807-1-vladimir.zapolskiy@linaro.org>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260325-parse_iommu_cells-v11-2-1fefa5c0e82c@oss.qualcomm.com>
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	MID_CONTAINS_FROM(1.00)[];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-100131-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
+	TAGGED_FROM(0.00)[bounces-100132-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[39];
+	RCVD_COUNT_FIVE(0.00)[5];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[amd.com,8bytes.org,kernel.org,arm.com,google.com,nxp.com,pengutronix.de,gmail.com,suse.com,epam.com,oss.qualcomm.com,vger.kernel.org,lists.linux.dev,lists.infradead.org,lists.xenproject.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	FROM_NEQ_ENVFROM(0.00)[vladimir.zapolskiy@linaro.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[helgaas@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	NEURAL_HAM(-0.00)[-1.000];
+	DKIM_TRACE(0.00)[linaro.org:+];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[iommu_spec.np:url,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: 7F0C13385C7
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	RCPT_COUNT_FIVE(0.00)[5];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,linaro.org:dkim,linaro.org:email,linaro.org:mid]
+X-Rspamd-Queue-Id: 6FC7F338C27
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-[cc->to: Richard, Lucas for pci-imx6.c question]
+Trivial change, a never used macro CCI_RES_MAX can be removed from
+the CCI driver.
 
-On Wed, Mar 25, 2026 at 04:38:23PM +0530, Vijayanand Jitta wrote:
-> From: Charan Teja Kalla <charan.kalla@oss.qualcomm.com>
-> 
-> Change of_map_id() to take a pointer to struct of_phandle_args
-> instead of passing target device node and translated IDs separately.
-> Update all callers accordingly.
-> 
-> Add an explicit filter_np parameter to of_map_id() and of_map_msi_id()
-> to separate the filter input from the output. Previously, the target
-> parameter served dual purpose: as an input filter (if non-NULL, only
-> match entries targeting that node) and as an output (receiving the
-> matched node with a reference held). Now filter_np is the explicit
-> input filter and arg->np is the pure output.
-> 
-> Previously, of_map_id() would call of_node_put() on the matched node
-> when a filter was provided, making reference ownership inconsistent.
-> Remove this internal of_node_put() call so that of_map_id() now always
-> transfers ownership of the matched node reference to the caller via
-> arg->np. Callers are now consistently responsible for releasing this
-> reference with of_node_put(arg->np) when done.
-> ...
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+---
+ drivers/i2c/busses/i2c-qcom-cci.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-Not actually part of *this* patch, and AFAICS this patch is correct
-as-is, but is it necessary to have different logic around
-of_node_put() for imx_pcie_add_lut_by_rid() and
-apple_pcie_enable_device()?
+diff --git a/drivers/i2c/busses/i2c-qcom-cci.c b/drivers/i2c/busses/i2c-qcom-cci.c
+index e631d79baf14..7f146d02e5a5 100644
+--- a/drivers/i2c/busses/i2c-qcom-cci.c
++++ b/drivers/i2c/busses/i2c-qcom-cci.c
+@@ -71,9 +71,6 @@
+ #define NUM_MASTERS	2
+ #define NUM_QUEUES	2
+ 
+-/* Max number of resources + 1 for a NULL terminator */
+-#define CCI_RES_MAX	6
+-
+ #define CCI_I2C_SET_PARAM	1
+ #define CCI_I2C_REPORT		8
+ #define CCI_I2C_WRITE		9
+-- 
+2.49.0
 
-> +++ b/drivers/pci/controller/dwc/pci-imx6.c
-> @@ -1137,6 +1137,8 @@ static void imx_pcie_remove_lut(struct imx_pcie *imx_pcie, u16 rid)
->  
->  static int imx_pcie_add_lut_by_rid(struct imx_pcie *imx_pcie, u32 rid)
->  {
-> +	struct of_phandle_args iommu_spec = {};
-> +	struct of_phandle_args msi_spec = {};
->  	struct device *dev = imx_pcie->pci->dev;
->  	struct device_node *target;
->  	u32 sid_i, sid_m;
-> @@ -1144,7 +1146,12 @@ static int imx_pcie_add_lut_by_rid(struct imx_pcie *imx_pcie, u32 rid)
->  	u32 sid = 0;
->  
->  	target = NULL;
-> -	err_i = of_map_iommu_id(dev->of_node, rid, &target, &sid_i);
-> +	err_i = of_map_iommu_id(dev->of_node, rid, &iommu_spec);
-> +	if (!err_i) {
-> +		target = iommu_spec.np;
-> +		sid_i = iommu_spec.args[0];
-> +	}
-> +
->  	if (target) {
->  		of_node_put(target);
-
-Here it's conditional on "target" even though of_node_put() checks
-internally for non-NULL, so it would be safe without the conditional
-here.
-
->  	} else {
-> @@ -1156,8 +1163,11 @@ static int imx_pcie_add_lut_by_rid(struct imx_pcie *imx_pcie, u32 rid)
->  		err_i = -EINVAL;
->  	}
->  
-> -	target = NULL;
-> -	err_m = of_map_msi_id(dev->of_node, rid, &target, &sid_m);
-> +	err_m = of_map_msi_id(dev->of_node, rid, NULL, &msi_spec);
-> +	if (!err_m) {
-> +		target = msi_spec.np;
-> +		sid_m = msi_spec.args[0];
-> +	}
->  
->  	/*
->  	 *   err_m      target
-
-And here (outside the diff context) we also call of_node_put()
-conditionally:
-
-  ...
-  else if (target)
-    of_node_put(target);
-
-> diff --git a/drivers/pci/controller/pcie-apple.c b/drivers/pci/controller/pcie-apple.c
-> index a0937b7b3c4d..c2cffc0659f4 100644
-> --- a/drivers/pci/controller/pcie-apple.c
-> +++ b/drivers/pci/controller/pcie-apple.c
-> @@ -755,6 +755,7 @@ static int apple_pcie_enable_device(struct pci_host_bridge *bridge, struct pci_d
->  {
->  	u32 sid, rid = pci_dev_id(pdev);
->  	struct apple_pcie_port *port;
-> +	struct of_phandle_args iommu_spec = {};
->  	int idx, err;
->  
->  	port = apple_pcie_get_port(pdev);
-> @@ -764,10 +765,12 @@ static int apple_pcie_enable_device(struct pci_host_bridge *bridge, struct pci_d
->  	dev_dbg(&pdev->dev, "added to bus %s, index %d\n",
->  		pci_name(pdev->bus->self), port->idx);
->  
-> -	err = of_map_iommu_id(port->pcie->dev->of_node, rid, NULL, &sid);
-> +	err = of_map_iommu_id(port->pcie->dev->of_node, rid, &iommu_spec);
->  	if (err)
->  		return err;
->  
-> +	of_node_put(iommu_spec.np);
-
-Here we call of_node_put() unconditionally.
-
-I think it would be much nicer if imx_pcie_add_lut_by_rid() used the
-same style as apple_pcie_enable_device() and did the of_node_put()
-unconditionally.  That would untangle the function a bit and make it
-easier to analyze.
-
-> +	sid = iommu_spec.args[0];
->  	mutex_lock(&port->pcie->lock);
->  
->  	idx = bitmap_find_free_region(port->sid_map, port->sid_map_sz, 0);
 
