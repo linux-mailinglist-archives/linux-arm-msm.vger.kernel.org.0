@@ -1,174 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-100059-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100060-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id kFjVCl30xGnv5AQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100059-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 09:54:53 +0100
+	id sD4gMlz1xGld5QQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100060-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 09:59:08 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 117BE331AE4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 09:54:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6BB78331C58
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 09:59:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id B7B79301D24A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 08:54:51 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 3D30E304D8A8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 08:58:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59C4037755D;
-	Thu, 26 Mar 2026 08:54:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEC593B7771;
+	Thu, 26 Mar 2026 08:58:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YagK5OW/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LsVtwG5T"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B53F374E76
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 08:54:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7FE1377550
+	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 08:58:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774515287; cv=none; b=ApqxP8TF6vdN0pN45+YMjGuXbJTF0MoNXyOtJD0YQ7R1alGvyH5sZy5AEJduxVyP3Ee8yFaeDuocc06CscK81hwn9jti93se+HetUoKsauxBPEeoIq9wDMAKBGBYlbypB49T2UYlmxIu6L2BPOG+wrUofsJulJk/PfZLANIg5z0=
+	t=1774515508; cv=none; b=TD0/79Em2axjd+T0+j3+dm0NIHDooam/hgAW4aPv6u/WnJlaWuLjO5Ebnp1phLO2zKO8YoUXhQCQCS2cy8AZFDXSmKoDTrrv+h+Z07rC2ic/7/RabA/Bec5zuPf2sYORhZypfiYGoJxIKSr+mytXTriJgaYhlQOzkxzO+R2ooAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774515287; c=relaxed/simple;
-	bh=pVOvWW6/8RbPMOuNt3in1cuWQXC6AAst+EwzEiwLSEg=;
-	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KfCQoXS68Jb87C/NWKAhi/SoEJ0qxDXp8jZUBYt4Kee1IqP0tbJvRzgfTyJuxgOglfihAfZgE18V+IpqHgxQqc4Ebzisoei1uVvSKTnR5eDcqVFgHBv4XfdOLY7YSKQ1zymLs4CqHSoabXy4smN6LDDIoOgGOOpRJVNtNDIfy5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YagK5OW/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A803C2BCF4
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 08:54:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774515287;
-	bh=pVOvWW6/8RbPMOuNt3in1cuWQXC6AAst+EwzEiwLSEg=;
-	h=From:In-Reply-To:References:Date:Subject:To:Cc:From;
-	b=YagK5OW/gMZ3YzCSyab/3HWPBs0Ini4PAPkopXeyQ6SM5R3LEUSxFGSUktMajiVqy
-	 KqJY++sfDH8Ih/RVLcVSy7OGEa+sQjgjwbr8vDLKTASbXu4hxdX17K4oMxqGm68HwJ
-	 wl/sBYugxwWjcgtfyABw66CY9Khm/SovttreMTNMHQK24dF2FeaSRZ6vAQuuC+3I91
-	 XMOJYcOovODpqO4lnd1Ld++hzTYLOl0q0z7K86YUJLD1U1MeOiTlvlgpjX9TX2yiX9
-	 tzJ5FHU6B4kwzyZ+5vS3KT7H2e0DV5AWcS4IMWwk3ve30ZlOKGSToBD8ZzcbSKs7dU
-	 BGlbQ6ZeqCNIg==
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5a27daa652fso933652e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 01:54:46 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCXoKgIEJbilkUIe+B+zKRnLmDFpUYDEj8zQdoNp91rd1/djA2h/z3izARmVFwpPdD994PC3u5MJJtMmp8h/@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzh6o183skn9vxCpbAueF9WK8f/leybyENxOxJfq/4jammoPn2V
-	ML3EkN3BFdgoL8gBvyXjzFtiFALZyrrKkRK5teRjzu8ccsgw/KWYEgWya6FaSi+GP507o8psgsM
-	AEnsFU05UDjcvLCXwzFkd220bt81c+Y1rFK9V/YBbPg==
-X-Received: by 2002:ac2:46f4:0:b0:5a2:a024:e6c2 with SMTP id
- 2adb3069b0e04-5a2a024e734mr805672e87.44.1774515285384; Thu, 26 Mar 2026
- 01:54:45 -0700 (PDT)
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 26 Mar 2026 01:54:44 -0700
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 26 Mar 2026 01:54:44 -0700
-From: Bartosz Golaszewski <brgl@kernel.org>
-In-Reply-To: <20260326-pci-m2-e-v7-0-43324a7866e6@oss.qualcomm.com>
+	s=arc-20240116; t=1774515508; c=relaxed/simple;
+	bh=QSCkfnKsrDZTYKx1YNAx8qrghSr/qzKl+1Bjc1+JQgE=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=KO46+3zoN2tSWxrTG/fUj2+uGt9mQEhXf1InvVADevVNn4Be9aco+Kf0m3SLCUH01OfyARF64Ij91bJ5I8tR3fTLW9+9IO33tP3xXhQGQKXxyanxASySQoXwOyCxrbIYf6rbSDF2/ktxovq/EoBgFcflF+vKBgzJi/14acS/7FU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LsVtwG5T; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-43b9144790dso363925f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 01:58:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1774515505; x=1775120305; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=etMGE1i0Tg9J0A4Z+04e2ur9eBZGqwTEkckx6bkXCYM=;
+        b=LsVtwG5T1mNeGhp663UJYgFUSweYfBrKfqxDtL6ojK8cb+buumXB8by9pLMtpxhpcx
+         6f6DecKQmrEEp8n20G4a5RFoPPML2sQ1BlZlBMBY2BZmpNnSpMvmqGklMGodwh39X5HA
+         6sXQohbBPB/5tGZQx1TUBx9frAtJEHcttsrkI7xW7zDhMIuBvG5/HpAQm8iY1hxU0rtT
+         DiJt2R31sCkzS1yvrFx2KtIjeg1wu6Fhlx4cqPlS5z5KNW3zUTYYpGtKuyW4LHBn3eNU
+         KPYw/KElsOAk3ZUtiUo+J+lghJd2TmGuL9CVJTrvlXWEC9zp9wfVTU8e16NUq+ANvAvG
+         j2tA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774515505; x=1775120305;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=etMGE1i0Tg9J0A4Z+04e2ur9eBZGqwTEkckx6bkXCYM=;
+        b=LVWctNfAJE4HrC7eyMuh6JeWx/60Cdh5a9LGwk346Uk2fMLFwqvBqTFJMIcJRNI83/
+         eeEZPa7bkVhNzRMjx3Bbn6mEGDhnxGMh2iVOzhcv1VGAScw7HLwHUNylDxQH5X8W4qyb
+         3XQxoq1aAhrHc2TtFN+InkHdNSlUdYcD1i2//vd45i/I/6/GXv0b6qb7BYzZDV7vaPqP
+         Mr8XlYIqshQRD7Lspn0emqx9xSMtpMnLXO/FM05KhRL2yZs8j+5Oc6HEe3hS+FS9rAv7
+         0yg0mMJyGYwN1JZanwoQPn4wCL6Kq4y7Y+Dye1PL9s0Xwe1noxHHAcYiWMnAvdSHzfJZ
+         urKA==
+X-Forwarded-Encrypted: i=1; AJvYcCX0XQxTocpzuVC5OmmZdd0yI6CHpgToICTUBQYVNzyhZMYnkyDdLyjRXp/eX0xwPVafJDa5e9i1cnBsQC7q@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy2HxbG0Qgrlz8OzGhRjXiptsx3DeucsDu9w9IyEpinR4FP6jS2
+	QTWhwiKFfBqBcK07NLA2lcYKpWRAhDDlB7u+SGG/KyklhaXpLUvhcJiEchXgUwAKeKM=
+X-Gm-Gg: ATEYQzwAelnObXWhAG9y7p/JLrqTVKLsDW4Mlel4HRCd7A+5iG2gHrG9vG7yEd6eisZ
+	u7v3S1aXmXVTjFee7trFrCicI4nTcsjPygXHV7pqH6DLWiTGFaF1rEUbsYz4tpYHb9y0H74dYI+
+	Py3Juv01+x6V1f6ieDV544blUo3sFfX0wDUDq6LPVsNjdCCvbO9U9VdRA16l5aDdH4Upz3RbXPp
+	MLv4iWxZ/RSNBu47oxvkLZ5WjHjbwz158ZoUhO1jCqMuRGojD88Vsjf90JQwl1mDCm5xzpKwOml
+	GXW27T+UvgkUk+/r49kLhJUlEwDmCXoCIneItCaMGBo9EzBMnhfSsD75Dgs6ENBbZP3KV2eeS/s
+	IXkwkK64FvnsCNdW9wmbM3kGmyiYrX9SZxacwc9GPtYmkbU52IAElEXVZvAoeHlP3NUbQAJUTls
+	telMvnXEkV6CanvE2FbWXpV51kCceurckVyXsIt8eaxIIr
+X-Received: by 2002:a05:6000:2885:b0:43b:4881:cee with SMTP id ffacd0b85a97d-43b8899d440mr10250351f8f.1.1774515504858;
+        Thu, 26 Mar 2026 01:58:24 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:106d:1080:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43b919e708asm5849382f8f.36.2026.03.26.01.58.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Mar 2026 01:58:24 -0700 (PDT)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+To: Kevin Hilman <khilman@baylibre.com>, 
+ Jerome Brunet <jbrunet@baylibre.com>, 
+ Martin Blumenstingl <martin.blumenstingl@googlemail.com>, 
+ Peter Griffin <peter.griffin@linaro.org>, 
+ =?utf-8?q?Andr=C3=A9_Draszik?= <andre.draszik@linaro.org>, 
+ Tudor Ambarus <tudor.ambarus@linaro.org>, 
+ Alim Akhtar <alim.akhtar@samsung.com>, Frank Li <Frank.Li@nxp.com>, 
+ Sascha Hauer <s.hauer@pengutronix.de>, 
+ Pengutronix Kernel Team <kernel@pengutronix.de>, 
+ Fabio Estevam <festevam@gmail.com>, Dinh Nguyen <dinguyen@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Thierry Reding <treding@nvidia.com>, 
+ Marc Zyngier <maz@kernel.org>, Geert Uytterhoeven <geert+renesas@glider.be>
+Cc: linux-arm-kernel@lists.infradead.org, linux-amlogic@lists.infradead.org, 
+ linux-samsung-soc@vger.kernel.org, imx@lists.linux.dev, 
+ linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+ linux-kernel@vger.kernel.org
+In-Reply-To: <cover.1772643434.git.geert+renesas@glider.be>
+References: <cover.1772643434.git.geert+renesas@glider.be>
+Subject: Re: (subset) [PATCH 0/7] arm64: dts: Drop CPU masks from GICv3 PPI
+ interrupts
+Message-Id: <177451550396.95191.10019790997295547194.b4-ty@linaro.org>
+Date: Thu, 26 Mar 2026 09:58:23 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260326-pci-m2-e-v7-0-43324a7866e6@oss.qualcomm.com>
-Date: Thu, 26 Mar 2026 01:54:44 -0700
-X-Gmail-Original-Message-ID: <CAMRc=MeFPpO77ew4pbPjqo0E3fjos_B=t1AgooB7xrF5CWPeJA@mail.gmail.com>
-X-Gm-Features: AQROBzCb320XuFwbgeojakGVPIHtnFnx1cQ_VrqUrXaxSXRJoOgSnNC2mrU3j3w
-Message-ID: <CAMRc=MeFPpO77ew4pbPjqo0E3fjos_B=t1AgooB7xrF5CWPeJA@mail.gmail.com>
-Subject: Re: [PATCH v7 0/8] Add support for handling PCIe M.2 Key E connectors
- in devicetree
-To: manivannan.sadhasivam@oss.qualcomm.com
-Cc: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>, 
-	linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-kbuild@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
-	linux-pm@vger.kernel.org, Stephan Gerhold <stephan.gerhold@linaro.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, linux-acpi@vger.kernel.org, 
-	Hans de Goede <johannes.goede@oss.qualcomm.com>, 
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>, 
-	Bartosz Golaszewski <brgl@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
-	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas.schier@linux.dev>, 
-	Hans de Goede <hansg@kernel.org>, =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
-	Mark Pearson <mpearson-lenovo@squebb.ca>, "Derek J. Clark" <derekjohn.clark@gmail.com>, 
-	Manivannan Sadhasivam <mani@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Marcel Holtmann <marcel@holtmann.org>, Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
-	Bartosz Golaszewski <brgl@bgdev.pl>, Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.14.3
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-100059-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_CC(0.00)[kernel.org,vger.kernel.org,linaro.org,oss.qualcomm.com,linuxfoundation.org,linux.dev,linux.intel.com,squebb.ca,gmail.com,holtmann.org,bgdev.pl];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,mail.gmail.com:mid];
+	TAGGED_FROM(0.00)[bounces-100060-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	FREEMAIL_TO(0.00)[baylibre.com,googlemail.com,linaro.org,samsung.com,nxp.com,pengutronix.de,gmail.com,kernel.org,nvidia.com,glider.be];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[33];
+	RCPT_COUNT_TWELVE(0.00)[24];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MISSING_XM_UA(0.00)[];
+	DKIM_TRACE(0.00)[linaro.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[brgl@kernel.org,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,manivannan.sadhasivam.oss.qualcomm.com,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 117BE331AE4
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,linaro.org:dkim,linaro.org:mid]
+X-Rspamd-Queue-Id: 6BB78331C58
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Thu, 26 Mar 2026 09:06:28 +0100, Manivannan Sadhasivam via B4 Relay
-<devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org> said:
-> Hi,
->
-> This series is the continuation of the series [1] that added the initial support
-> for the PCIe M.2 connectors. This series extends it by adding support for Key E
-> connectors. These connectors are used to connect the Wireless Connectivity
-> devices such as WiFi, BT, NFC and GNSS devices to the host machine over
-> interfaces such as PCIe/SDIO, USB/UART and NFC. This series adds support for
-> connectors that expose PCIe interface for WiFi and UART interface for BT. Other
-> interfaces are left for future improvements.
->
-> Serdev device support for BT
-> ============================
->
-> Adding support for the PCIe interface was mostly straightforward and a lot
-> similar to the previous Key M connector. But adding UART interface has proved to
-> be tricky. This is mostly because of the fact UART is a non-discoverable bus,
-> unlike PCIe which is discoverable. So this series relied on the PCI notifier to
-> create the serdev device for UART/BT. This means the PCIe interface will be
-> brought up first and after the PCIe device enumeration, the serdev device will
-> be created by the pwrseq driver. This logic is necessary since the connector
-> driver and DT node don't describe the device, but just the connector. So to make
-> the connector interface Plug and Play, the connector driver uses the PCIe device
-> ID to identify the card and creates the serdev device. This logic could be
-> extended in the future to support more M.2 cards. Even if the M.2 card uses SDIO
-> interface for connecting WLAN, a SDIO notifier could be added to create the
-> serdev device.
->
-> Testing
-> =======
->
-> This series, together with the devicetree changes [2] was tested on the
-> Qualcomm X1e based Lenovo Thinkpad T14s Laptop which has the WCN7850 WLAN/BT
-> 1620 LGA card connected over PCIe and UART.
->
-> Merge Strategy
-> ==============
->
-> Due to the API dependency, both the serdev and pwrseq patches need to go through
-> a single tree, maybe through pwrseq tree. So the serdev patches need Ack from
-> Greg. But Bluetooth patch can be merged separately.
+Hi,
 
-I think Rob Herring is the man in charge here. The power sequencing parts look
-good to me now so with an Ack on the serdev changes I can queue them for v7.1.
-I can also put it on an immutable branch if needed.
+On Wed, 04 Mar 2026 18:10:57 +0100, Geert Uytterhoeven wrote:
+> 	Hi all,
+> 
+> Unlike older GIC variants, the GICv3 DT bindings do not support
+> specifying a CPU mask in PPI interrupt specifiers.  Hence this patch
+> series drop all such masks where they are still present.
+> 
+> This has been compile-tested only.  But note that all such masks were
+> removed before from Renesas SoCs in commit 8b6a006c914aac17 ("arm64:
+> dts: renesas: Drop specifying the GIC_CPU_MASK_SIMPLE() for GICv3
+> systems")).
+> 
+> [...]
 
-Bart
+Thanks, Applied to https://git.kernel.org/pub/scm/linux/kernel/git/amlogic/linux.git (v7.1/arm64-dt)
+
+[1/7] arm64: dts: amlogic: s6: Drop CPU masks from GICv3 PPI interrupts
+      https://git.kernel.org/amlogic/c/ff6c02a40dc8706c0b13b3b12cfe228c38bb7857
+
+These changes has been applied on the intermediate git tree [1].
+
+The v7.1/arm64-dt branch will then be sent via a formal Pull Request to the Linux SoC maintainers
+for inclusion in their intermediate git branches in order to be sent to Linus during
+the next merge window, or sooner if it's a set of fixes.
+
+In the cases of fixes, those will be merged in the current release candidate
+kernel and as soon they appear on the Linux master branch they will be
+backported to the previous Stable and Long-Stable kernels [2].
+
+The intermediate git branches are merged daily in the linux-next tree [3],
+people are encouraged testing these pre-release kernels and report issues on the
+relevant mailing-lists.
+
+If problems are discovered on those changes, please submit a signed-off-by revert
+patch followed by a corrective changeset.
+
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/amlogic/linux.git
+[2] https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
+[3] https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git
+
+-- 
+Neil
+
 
