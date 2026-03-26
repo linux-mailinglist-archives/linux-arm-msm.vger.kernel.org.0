@@ -1,495 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-100052-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100056-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id kDQtJ3TqxGmj5AQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100052-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 09:12:36 +0100
+	id CFdCIpftxGm+5AQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100056-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 09:25:59 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3481933103F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 09:12:36 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D000331495
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 09:25:59 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id E4CC930A4575
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 08:06:52 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 769CE3010602
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 08:25:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 924DE3B8950;
-	Thu, 26 Mar 2026 08:06:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 509943B7B94;
+	Thu, 26 Mar 2026 08:25:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a03kFoVJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ppjz8b3O"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EAAF3B3C14;
-	Thu, 26 Mar 2026 08:06:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D233C3B7B76;
+	Thu, 26 Mar 2026 08:25:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774512401; cv=none; b=rt6yJZ59xUpG/qRydOHXvxUSMBjcJWNEvGxEguRWK86KwyACV0O7egoVdG83jfa7cjDLM0XCGYvCrNbx3ttov/ZN47693fUnm+iCQxOC9Xit0hHrZhxNTRziVj5zil5xLaHw0VVMQe+B7wP02VY0vjBqH+sonqR2bd1a+CYEGZM=
+	t=1774513508; cv=none; b=YOzMovPhB/w1EMUFonH6hyLVD+YUB6tnxpiwSke3Al3rwLiflQJiF790JwQdCf8/g6Stp+RnV8lmwPKynHjyNADEQ4gYdqkKCiIGcAgIjxWTA3pEAhQBt4yVZBo2VtfL9FxJXHBX/RhZ24W2L30jUEYMzY+RVUzmg0M+FPwf8xE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774512401; c=relaxed/simple;
-	bh=cUxQWPcUIxqHU9aDbacGWrwTw3HZXVXOi2watGla2fs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Lg7sYqTeOYwaS0/K2FVTXQtAmy65gOWKbO2Q4O6ijuhq1YeLuy0ofH8PW3LNPoaYF4EWT+u8FN54LnNc/E5wxqtMxN0Jy80nFqbrUGBHDPRRqR7doC+xdq74YQSXPduTge/RADAS4Tk/unxcz5TP4lCukh+OfG1ivx5lyoAls00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a03kFoVJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 03C9BC2BCB4;
-	Thu, 26 Mar 2026 08:06:41 +0000 (UTC)
+	s=arc-20240116; t=1774513508; c=relaxed/simple;
+	bh=DtkcM00qstt9ezFR2/CqK/oJyo6OuKnFPtu2O07XpqY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=W/zje0TWRb2YMsnyiO9b8EzAOEX49oAcgY5e7HF1xQngxeBi3jldnDsw/AFe1wrdU3Opy76KZYBjtBdu9xLy9NmqRV2CxAi0jJ2d61Ftjebh7tCv6RY/aCxZ3RFk8oayGhgGwZKccRhYo7TwB1qfKC27oWuY4vSToosPHhZ4cWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ppjz8b3O; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA5C6C19423;
+	Thu, 26 Mar 2026 08:25:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774512401;
-	bh=cUxQWPcUIxqHU9aDbacGWrwTw3HZXVXOi2watGla2fs=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=a03kFoVJeGxzVGsMk5IIu/GPKWipAOjxMkGQ318jubu2CkqJ/KzlBw7IIQuEsy/63
-	 j0F5Jzyrqdd7bghTEgbnQHjeV+3U0z+ccDW3iaQ1AS1JyNdxqYT5AtSxuWV0gstByU
-	 eadJh6uAVMgKvYqCr6NUvT1vLe7RvCFzCVIUrIwkix14UEkjTRDI7j8NZMVYgoRbgz
-	 hsnkWJDtqf2UCQpDqHJg356wAYtayysHnhflD6t3mxC3kooBXMF+CPxg3xE0vbYxeB
-	 GOw4X+yrmfVbVc6blCNhhGnJfk5030ZTynjwdRw2cuH++6ckdnB6KdlANkiiP1sg7L
-	 PYPdW8ryDaAhg==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE26D106F2FA;
-	Thu, 26 Mar 2026 08:06:40 +0000 (UTC)
-From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>
-Date: Thu, 26 Mar 2026 13:36:36 +0530
-Subject: [PATCH v7 8/8] power: sequencing: pcie-m2: Create serdev device
- for WCN7850 bluetooth
+	s=k20201202; t=1774513508;
+	bh=DtkcM00qstt9ezFR2/CqK/oJyo6OuKnFPtu2O07XpqY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Ppjz8b3O39w7dT29hoR3sKCmgkIf+DqOlifxQMqapBhNE28naqdxi/3+DnIhOk4d8
+	 5DZzvwonEiLvkSxieACdn0c2xcxziCT2Jtf2Qv0QQFWU5ma5CA2MelUdSFDtETAu4A
+	 W1Jy+c2g6UaqoG5+BhBlLk+K1/6GdVlXLt8JhzfJT9MKc/p8eVcBJnaKE/t/NbmZsS
+	 hl2sj0XzGFnorRruh5aKuVjn2gwY3QdmxmK6hmCNfUgE2TvRt4WGAQ/hfAmQL6zbue
+	 tzU4yBFNrR4ah5vscigRvs6A47aj840CE0S+q4hMaVrEHKArnMkDSgXzjuv1ZlspO6
+	 JNgfWPBIcA64w==
+Date: Thu, 26 Mar 2026 09:25:05 +0100
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 1/2] dt-bindings: pinctrl: qcom: add IPQ5210 pinctrl
+Message-ID: <20260326-marvellous-premium-grouse-d1d1ad@quoll>
+References: <20260325-ipq5210_tlmm-v3-0-3a4b9bb6b1fc@oss.qualcomm.com>
+ <20260325-ipq5210_tlmm-v3-1-3a4b9bb6b1fc@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260326-pci-m2-e-v7-8-43324a7866e6@oss.qualcomm.com>
-References: <20260326-pci-m2-e-v7-0-43324a7866e6@oss.qualcomm.com>
-In-Reply-To: <20260326-pci-m2-e-v7-0-43324a7866e6@oss.qualcomm.com>
-To: Rob Herring <robh@kernel.org>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Jiri Slaby <jirislaby@kernel.org>, Nathan Chancellor <nathan@kernel.org>, 
- Nicolas Schier <nicolas.schier@linux.dev>, Hans de Goede <hansg@kernel.org>, 
- =?utf-8?q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
- Mark Pearson <mpearson-lenovo@squebb.ca>, 
- "Derek J. Clark" <derekjohn.clark@gmail.com>, 
- Manivannan Sadhasivam <mani@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Marcel Holtmann <marcel@holtmann.org>, 
- Luiz Augusto von Dentz <luiz.dentz@gmail.com>, 
- Bartosz Golaszewski <brgl@bgdev.pl>, 
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
- Bartosz Golaszewski <brgl@kernel.org>
-Cc: linux-serial@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-kbuild@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
- linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org, 
- linux-pm@vger.kernel.org, Stephan Gerhold <stephan.gerhold@linaro.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- linux-acpi@vger.kernel.org, 
- Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
- Hans de Goede <johannes.goede@oss.qualcomm.com>
-X-Mailer: b4 0.15.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=10866;
- i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
- bh=idB7rpvSBQMtS24fVx41QmdeqC1DW1juy8+wOcFwZck=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBpxOkN71mkppldChBzZHIYnAftETujoQqLBzvT9
- 82WUo5Q3O+JATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCacTpDQAKCRBVnxHm/pHO
- 9flfB/97yEJg/LD7zs2qnTskC+l6aF3wo98whG0oqt3OCuFGWf7q/W1B9q0aHG9Vsw14VUXUrQO
- ibYjfB5wv4MyQQn4mCZ/I0v8CKLQ3wWRgOomiTJZ9Rc4Pt3F9ey3AZ55jPv35AnWeG+YePTt0j+
- LBjXQoZjWTCBkc1D3yiUhrgGz+H72mpIiRb/JskTOwbd7kwEWx2cfhRpTLAslBBF3gpIfrzYFAS
- T2TzZMc0vk2nCTqOuqpn1+bnm+//1khi2Y7I6A1dw+pCnUu7MYSqr4ksYPMvqSrJPnhW2kbmN5c
- KtCbV9aKK1C6s1rnfquu8/8OMACZHy15Q0iuqUcSlQObXX0V
-X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
- fpr=C668AEC3C3188E4C611465E7488550E901166008
-X-Endpoint-Received: by B4 Relay for
- manivannan.sadhasivam@oss.qualcomm.com/default with auth_id=461
-X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reply-To: manivannan.sadhasivam@oss.qualcomm.com
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260325-ipq5210_tlmm-v3-1-3a4b9bb6b1fc@oss.qualcomm.com>
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-100052-lists,linux-arm-msm=lfdr.de,manivannan.sadhasivam.oss.qualcomm.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_TO(0.00)[kernel.org,linuxfoundation.org,linux.dev,linux.intel.com,squebb.ca,gmail.com,holtmann.org,bgdev.pl];
-	TO_DN_SOME(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[31];
+	TAGGED_FROM(0.00)[bounces-100056-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
-	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	MISSING_XM_UA(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	HAS_REPLYTO(0.00)[manivannan.sadhasivam@oss.qualcomm.com];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:replyto,oss.qualcomm.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: 3481933103F
+	RCPT_COUNT_SEVEN(0.00)[10];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,bootlin.com:url,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 2D000331495
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+On Wed, Mar 25, 2026 at 01:05:15PM +0530, Kathiravan Thirumoorthy wrote:
+> Add device tree bindings for IPQ5210 TLMM block.
+> 
+> Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
 
-For supporting bluetooth over the non-discoverable UART interface of
-WCN7850, create the serdev device after enumerating the PCIe interface.
-This is mandatory since the device ID is only known after the PCIe
-enumeration and the ID is used for creating the serdev device.
+I don't see any differences here and cover letter does not explain that.
 
-Since by default there is no OF or ACPI node for the created serdev,
-create a dynamic OF 'bluetooth' node with the 'compatible' property and
-attach it to the serdev device. This will allow the serdev device to bind
-to the existing bluetooth driver.
+<form letter>
+This is a friendly reminder during the review process.
 
-Tested-by: Hans de Goede <johannes.goede@oss.qualcomm.com> # ThinkPad T14s gen6 (arm64)
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
----
- drivers/power/sequencing/Kconfig          |   3 +-
- drivers/power/sequencing/pwrseq-pcie-m2.c | 253 ++++++++++++++++++++++++++++--
- 2 files changed, 240 insertions(+), 16 deletions(-)
+It looks like you received a tag and forgot to add it.
 
-diff --git a/drivers/power/sequencing/Kconfig b/drivers/power/sequencing/Kconfig
-index f5fff84566ba..1ec142525a4a 100644
---- a/drivers/power/sequencing/Kconfig
-+++ b/drivers/power/sequencing/Kconfig
-@@ -37,7 +37,8 @@ config POWER_SEQUENCING_TH1520_GPU
- 
- config POWER_SEQUENCING_PCIE_M2
- 	tristate "PCIe M.2 connector power sequencing driver"
--	depends on OF || COMPILE_TEST
-+	depends on (PCI && OF) || COMPILE_TEST
-+	select OF_DYNAMIC if OF
- 	help
- 	  Say Y here to enable the power sequencing driver for PCIe M.2
- 	  connectors. This driver handles the power sequencing for the M.2
-diff --git a/drivers/power/sequencing/pwrseq-pcie-m2.c b/drivers/power/sequencing/pwrseq-pcie-m2.c
-index 3507cdcb1e7b..a75ca4fda2eb 100644
---- a/drivers/power/sequencing/pwrseq-pcie-m2.c
-+++ b/drivers/power/sequencing/pwrseq-pcie-m2.c
-@@ -12,9 +12,11 @@
- #include <linux/of.h>
- #include <linux/of_graph.h>
- #include <linux/of_platform.h>
-+#include <linux/pci.h>
- #include <linux/platform_device.h>
- #include <linux/pwrseq/provider.h>
- #include <linux/regulator/consumer.h>
-+#include <linux/serdev.h>
- #include <linux/slab.h>
- 
- struct pwrseq_pcie_m2_pdata {
-@@ -30,6 +32,9 @@ struct pwrseq_pcie_m2_ctx {
- 	struct notifier_block nb;
- 	struct gpio_desc *w_disable1_gpio;
- 	struct gpio_desc *w_disable2_gpio;
-+	struct serdev_device *serdev;
-+	struct of_changeset *ocs;
-+	struct device *dev;
- };
- 
- static int pwrseq_pcie_m2_vregs_enable(struct pwrseq_device *pwrseq)
-@@ -172,11 +177,202 @@ static int pwrseq_pcie_m2_match(struct pwrseq_device *pwrseq,
- 	return PWRSEQ_NO_MATCH;
- }
- 
--static void pwrseq_pcie_m2_free_regulators(void *data)
-+static int pwrseq_m2_pcie_create_bt_node(struct pwrseq_pcie_m2_ctx *ctx,
-+					struct device_node *parent)
- {
--	struct pwrseq_pcie_m2_ctx *ctx = data;
-+	struct device *dev = ctx->dev;
-+	struct device_node *np;
-+	int ret;
- 
--	regulator_bulk_free(ctx->num_vregs, ctx->regs);
-+	ctx->ocs = kzalloc_obj(*ctx->ocs);
-+	if (!ctx->ocs)
-+		return -ENOMEM;
-+
-+	of_changeset_init(ctx->ocs);
-+
-+	np = of_changeset_create_node(ctx->ocs, parent, "bluetooth");
-+	if (!np) {
-+		dev_err(dev, "Failed to create bluetooth node\n");
-+		ret = -ENODEV;
-+		goto err_destroy_changeset;
-+	}
-+
-+	ret = of_changeset_add_prop_string(ctx->ocs, np, "compatible", "qcom,wcn7850-bt");
-+	if (ret) {
-+		dev_err(dev, "Failed to add bluetooth compatible: %d\n", ret);
-+		goto err_destroy_changeset;
-+	}
-+
-+	ret = of_changeset_apply(ctx->ocs);
-+	if (ret) {
-+		dev_err(dev, "Failed to apply changeset: %d\n", ret);
-+		goto err_destroy_changeset;
-+	}
-+
-+	ret = device_add_of_node(&ctx->serdev->dev, np);
-+	if (ret) {
-+		dev_err(dev, "Failed to add OF node: %d\n", ret);
-+		goto err_revert_changeset;
-+	}
-+
-+	return 0;
-+
-+err_revert_changeset:
-+	of_changeset_revert(ctx->ocs);
-+err_destroy_changeset:
-+	of_changeset_destroy(ctx->ocs);
-+	kfree(ctx->ocs);
-+	ctx->ocs = NULL;
-+
-+	return ret;
-+}
-+
-+static int pwrseq_pcie_m2_create_serdev(struct pwrseq_pcie_m2_ctx *ctx)
-+{
-+	struct serdev_controller *serdev_ctrl;
-+	struct device *dev = ctx->dev;
-+	int ret;
-+
-+	struct device_node *serdev_parent __free(device_node) =
-+		of_graph_get_remote_node(dev_of_node(ctx->dev), 3, 0);
-+	if (!serdev_parent)
-+		return 0;
-+
-+	serdev_ctrl = of_find_serdev_controller_by_node(serdev_parent);
-+	if (!serdev_ctrl)
-+		return 0;
-+
-+	/* Bail out if the device was already attached to this controller */
-+	if (serdev_ctrl->serdev) {
-+		serdev_controller_put(serdev_ctrl);
-+		return 0;
-+	}
-+
-+	ctx->serdev = serdev_device_alloc(serdev_ctrl);
-+	if (!ctx->serdev) {
-+		ret = -ENOMEM;
-+		goto err_put_ctrl;
-+	}
-+
-+	ret = pwrseq_m2_pcie_create_bt_node(ctx, serdev_parent);
-+	if (ret)
-+		goto err_free_serdev;
-+
-+	ret = serdev_device_add(ctx->serdev);
-+	if (ret) {
-+		dev_err(dev, "Failed to add serdev for WCN7850: %d\n", ret);
-+		goto err_free_dt_node;
-+	}
-+
-+	serdev_controller_put(serdev_ctrl);
-+
-+	return 0;
-+
-+err_free_dt_node:
-+	device_remove_of_node(&ctx->serdev->dev);
-+	of_changeset_revert(ctx->ocs);
-+	of_changeset_destroy(ctx->ocs);
-+	kfree(ctx->ocs);
-+	ctx->ocs = NULL;
-+err_free_serdev:
-+	serdev_device_put(ctx->serdev);
-+	ctx->serdev = NULL;
-+err_put_ctrl:
-+	serdev_controller_put(serdev_ctrl);
-+
-+	return ret;
-+}
-+
-+static void pwrseq_pcie_m2_remove_serdev(struct pwrseq_pcie_m2_ctx *ctx)
-+{
-+	if (ctx->serdev) {
-+		device_remove_of_node(&ctx->serdev->dev);
-+		serdev_device_remove(ctx->serdev);
-+		ctx->serdev = NULL;
-+	}
-+
-+	if (ctx->ocs) {
-+		of_changeset_revert(ctx->ocs);
-+		of_changeset_destroy(ctx->ocs);
-+		kfree(ctx->ocs);
-+		ctx->ocs = NULL;
-+	}
-+}
-+
-+static int pwrseq_m2_pcie_notify(struct notifier_block *nb, unsigned long action,
-+			      void *data)
-+{
-+	struct pwrseq_pcie_m2_ctx *ctx = container_of(nb, struct pwrseq_pcie_m2_ctx, nb);
-+	struct pci_dev *pdev = to_pci_dev(data);
-+	int ret;
-+
-+	/*
-+	 * Check whether the PCI device is associated with this M.2 connector or
-+	 * not, by comparing the OF node of the PCI device parent and the Port 0
-+	 * (PCIe) remote node parent OF node.
-+	 */
-+	struct device_node *pci_parent __free(device_node) =
-+			of_graph_get_remote_node(dev_of_node(ctx->dev), 0, 0);
-+	if (!pci_parent || (pci_parent != pdev->dev.parent->of_node))
-+		return NOTIFY_DONE;
-+
-+	switch (action) {
-+	case BUS_NOTIFY_ADD_DEVICE:
-+		/* Create serdev device for WCN7850 */
-+		if (pdev->vendor == PCI_VENDOR_ID_QCOM && pdev->device == 0x1107) {
-+			ret = pwrseq_pcie_m2_create_serdev(ctx);
-+			if (ret)
-+				return notifier_from_errno(ret);
-+		}
-+		break;
-+	case BUS_NOTIFY_REMOVED_DEVICE:
-+		/* Destroy serdev device for WCN7850 */
-+		if (pdev->vendor == PCI_VENDOR_ID_QCOM && pdev->device == 0x1107)
-+			pwrseq_pcie_m2_remove_serdev(ctx);
-+
-+		break;
-+	}
-+
-+	return NOTIFY_OK;
-+}
-+
-+static bool pwrseq_pcie_m2_check_remote_node(struct device *dev, u8 port, u8 endpoint,
-+					     const char *node)
-+{
-+	struct device_node *remote __free(device_node) =
-+			of_graph_get_remote_node(dev_of_node(dev), port, endpoint);
-+
-+	if (remote && of_node_name_eq(remote, node))
-+		return true;
-+
-+	return false;
-+}
-+
-+/*
-+ * If the connector exposes a non-discoverable bus like UART, the respective
-+ * protocol device needs to be created manually with the help of the notifier
-+ * of the discoverable bus like PCIe.
-+ */
-+static int pwrseq_pcie_m2_register_notifier(struct pwrseq_pcie_m2_ctx *ctx, struct device *dev)
-+{
-+	int ret;
-+
-+	/*
-+	 * Register a PCI notifier for Key E connector that has PCIe as Port
-+	 * 0/Endpoint 0 interface and Serial as Port 3/Endpoint 0 interface.
-+	 */
-+	if (pwrseq_pcie_m2_check_remote_node(dev, 3, 0, "serial")) {
-+		if (pwrseq_pcie_m2_check_remote_node(dev, 0, 0, "pcie")) {
-+			ctx->dev = dev;
-+			ctx->nb.notifier_call = pwrseq_m2_pcie_notify;
-+			ret = bus_register_notifier(&pci_bus_type, &ctx->nb);
-+			if (ret)
-+				return dev_err_probe(dev, ret,
-+						     "Failed to register notifier for serdev\n");
-+		}
-+	}
-+
-+	return 0;
- }
- 
- static int pwrseq_pcie_m2_probe(struct platform_device *pdev)
-@@ -190,6 +386,7 @@ static int pwrseq_pcie_m2_probe(struct platform_device *pdev)
- 	if (!ctx)
- 		return -ENOMEM;
- 
-+	platform_set_drvdata(pdev, ctx);
- 	ctx->of_node = of_node_get(dev->of_node);
- 	ctx->pdata = device_get_match_data(dev);
- 	if (!ctx->pdata)
-@@ -206,21 +403,21 @@ static int pwrseq_pcie_m2_probe(struct platform_device *pdev)
- 		return dev_err_probe(dev, ret,
- 				     "Failed to get all regulators\n");
- 
-+	ctx->num_vregs = ret;
-+
- 	ctx->w_disable1_gpio = devm_gpiod_get_optional(dev, "w-disable1", GPIOD_OUT_HIGH);
--	if (IS_ERR(ctx->w_disable1_gpio))
--		return dev_err_probe(dev, PTR_ERR(ctx->w_disable1_gpio),
-+	if (IS_ERR(ctx->w_disable1_gpio)) {
-+		ret = dev_err_probe(dev, PTR_ERR(ctx->w_disable1_gpio),
- 				     "Failed to get the W_DISABLE_1# GPIO\n");
-+		goto err_free_regulators;
-+	}
- 
- 	ctx->w_disable2_gpio = devm_gpiod_get_optional(dev, "w-disable2", GPIOD_OUT_HIGH);
--	if (IS_ERR(ctx->w_disable2_gpio))
--		return dev_err_probe(dev, PTR_ERR(ctx->w_disable2_gpio),
-+	if (IS_ERR(ctx->w_disable2_gpio)) {
-+		ret = dev_err_probe(dev, PTR_ERR(ctx->w_disable2_gpio),
- 				     "Failed to get the W_DISABLE_2# GPIO\n");
--
--	ctx->num_vregs = ret;
--
--	ret = devm_add_action_or_reset(dev, pwrseq_pcie_m2_free_regulators, ctx);
--	if (ret)
--		return ret;
-+		goto err_free_regulators;
-+	}
- 
- 	config.parent = dev;
- 	config.owner = THIS_MODULE;
-@@ -229,11 +426,36 @@ static int pwrseq_pcie_m2_probe(struct platform_device *pdev)
- 	config.targets = ctx->pdata->targets;
- 
- 	ctx->pwrseq = devm_pwrseq_device_register(dev, &config);
--	if (IS_ERR(ctx->pwrseq))
--		return dev_err_probe(dev, PTR_ERR(ctx->pwrseq),
-+	if (IS_ERR(ctx->pwrseq)) {
-+		ret = dev_err_probe(dev, PTR_ERR(ctx->pwrseq),
- 				     "Failed to register the power sequencer\n");
-+		goto err_free_regulators;
-+	}
-+
-+	/*
-+	 * Register a notifier for creating protocol devices for
-+	 * non-discoverable busses like UART.
-+	 */
-+	ret = pwrseq_pcie_m2_register_notifier(ctx, dev);
-+	if (ret)
-+		goto err_free_regulators;
- 
- 	return 0;
-+
-+err_free_regulators:
-+	regulator_bulk_free(ctx->num_vregs, ctx->regs);
-+
-+	return ret;
-+}
-+
-+static void pwrseq_pcie_m2_remove(struct platform_device *pdev)
-+{
-+	struct pwrseq_pcie_m2_ctx *ctx = platform_get_drvdata(pdev);
-+
-+	bus_unregister_notifier(&pci_bus_type, &ctx->nb);
-+	pwrseq_pcie_m2_remove_serdev(ctx);
-+
-+	regulator_bulk_free(ctx->num_vregs, ctx->regs);
- }
- 
- static const struct of_device_id pwrseq_pcie_m2_of_match[] = {
-@@ -255,6 +477,7 @@ static struct platform_driver pwrseq_pcie_m2_driver = {
- 		.of_match_table = pwrseq_pcie_m2_of_match,
- 	},
- 	.probe = pwrseq_pcie_m2_probe,
-+	.remove = pwrseq_pcie_m2_remove,
- };
- module_platform_driver(pwrseq_pcie_m2_driver);
- 
+If you do not know the process, here is a short explanation:
+Please add Acked-by/Reviewed-by/Tested-by tags when posting new
+versions of patchset, under or above your Signed-off-by tag, unless
+patch changed significantly (e.g. new properties added to the DT
+bindings). Tag is "received", when provided in a message replied to you
+on the mailing list. Tools like b4 can help here. However, there's no
+need to repost patches *only* to add the tags. The upstream maintainer
+will do that for tags received on the version they apply.
 
--- 
-2.51.0
+Please read:
+https://elixir.bootlin.com/linux/v6.12-rc3/source/Documentation/process/submitting-patches.rst#L577
 
+If a tag was not added on purpose, please state in the patch changelog
+or cover letter why and what changed.
+</form letter>
+
+Best regards,
+Krzysztof
 
 
