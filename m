@@ -1,135 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-100135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8H53LRZzxWmN+QQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 18:55:34 +0100
+	id UMO3IERwxWkU+QQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 18:43:32 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B9B133993A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 18:55:33 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C31D33959D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 18:43:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id C713D31346B0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 17:40:30 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 749FC3002F50
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 17:41:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 614EF3F0750;
-	Thu, 26 Mar 2026 17:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C051041C312;
+	Thu, 26 Mar 2026 17:41:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ArEAbT+s"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GEIe77U6"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37A9329ACDB;
-	Thu, 26 Mar 2026 17:38:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 818003446CC;
+	Thu, 26 Mar 2026 17:41:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774546726; cv=none; b=liLgENEAE/l8BkfUuZm2eDH4WFrZRq+Eku8Osw9fN3/m8MoHGxEXFRdL5S6UvAJMXqDDmvCU/Ru0ifW4ziHzfK6tT/KS+3Obgkr7BS3gX1LUP07uRq1a6xq+emogMkEUY88aR7ujjRD6fb17BEGMjAcoDogTsbuZlq6P+HU5zdo=
+	t=1774546874; cv=none; b=AQvdlWsSmq1ERNOExMUry12fP235WStJQqOcMmAKu8yQnqE4HYTt5uURoQWP3vq6ZC4stYsMTjxyf19J9GtkfL/rFg8BZ+PJU0kPwI7VUA7Jdzgw/ksnuyJd9p8FmiFe6DVGTP9uCG9XrcFIxto3Ai7TEaLgA/rGKjGjnxPPmgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774546726; c=relaxed/simple;
-	bh=hAAiF8xSgL3z4E5G5/XmRxGLgvCy/D0+zQfYgHI39gw=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:To:From:Subject:
-	 References:In-Reply-To; b=IFxkvGTbEJ0T/UTVgRt9Bp2fvNusBmVhr3bEdRFBHnWbIavF2ABHatZSrw5TcXpU4z716hR8uxZcZNKMWUMfOKX4esWlUobSA5O1qzL3oJO1x5Q6L1hn7qKO+fhI4rfFnFwzBX5OESMzKajmksfNixdku8LlsU+HHXH2jfXBoRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ArEAbT+s; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64CF3C116C6;
-	Thu, 26 Mar 2026 17:38:37 +0000 (UTC)
+	s=arc-20240116; t=1774546874; c=relaxed/simple;
+	bh=y2HmnRcLJJ8HS4kuIm9lQr9tyMPyTUtfBDwLVFKrKqU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=m9iT2ziEAXjhbTACtReUuc+l+uQvG2E9DewBr58+bYBiHFLBveejKgipKDJHA8dKo8nldT4nJp0zhaMp2iXVhpNLDCnQXL8RlyOH+MqPZcio7alViWlQ1vRcJ/9Rmgt54wKWOLOdIQs2bUQiqJI/hE/7b2AhIPBsMF0GHk6ybTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GEIe77U6; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70CBCC116C6;
+	Thu, 26 Mar 2026 17:41:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774546725;
-	bh=hAAiF8xSgL3z4E5G5/XmRxGLgvCy/D0+zQfYgHI39gw=;
-	h=Date:Cc:To:From:Subject:References:In-Reply-To:From;
-	b=ArEAbT+s3n7x1zNm2qUyfultheclQsMn7Cylk1mxfVokFRrNp3WpcDfI8mmayZ+0h
-	 m2cGLs0n6Sh6ZCu8EvHXqLDxmAX8LMqlZoRnQEfHReuoiYU3xPG1brRn0xv/B7nG91
-	 dfctDdAzWRRIBz5wDeTdWGKHbyzznewMhiup0tTEhLqFpUABWkXccnP5fkKD1V8bqG
-	 AQrp8yU+1knEeWB4pCRAjqoVJNKbnXs/r4tup9fByZXD5EgZfswwbwv0q7Wo741gye
-	 MvHPzW2Tb0nrON4/+fHRtWe9N46CjKkZ5ux8WM6YRAe6n1JfA4kFbYnKDRvMa6t1Pa
-	 3vRMCPXPpyakA==
+	s=k20201202; t=1774546873;
+	bh=y2HmnRcLJJ8HS4kuIm9lQr9tyMPyTUtfBDwLVFKrKqU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=GEIe77U6Ip02xX+b0iJGz2iUhHFHIUBzkDmC77AYhSoc8RUWXJnpJr/hV4bVuFzyY
+	 xBphxVhSjCjJSE015JYnDTx4sZRgkTNPRY1iC9DTpwLSqhcJQEizXYP5p3Yt7a3Kaw
+	 R9qitskxyCRoNFJzme8kGbxp887C9poIjnYH/uJc824LxCdw+UlqTd5Miw1sr2rjtz
+	 Gtf3NFPxVRdJEJ2jZFRlQqS9SwoiJBNQALjzWe+6a4xGC0PrhJgth12/kaYjzcKIzr
+	 qo19TB6oWmdIHQDgfnRaBN5jea+y88y6UPVCesH1xceAtkOQCB/CcpOm9W4em68pHj
+	 WUrCs72uILyCQ==
+Date: Thu, 26 Mar 2026 23:10:58 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Hans Zhang <18255117159@163.com>, bhelgaas@google.com, 
+	helgaas@kernel.org
+Cc: lpieralisi@kernel.org, jingoohan1@gmail.com, kwilczynski@kernel.org, 
+	florian.fainelli@broadcom.com, jim2101024@gmail.com, robh@kernel.org, 
+	ilpo.jarvinen@linux.intel.com, linux-arm-msm@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-renesas-soc@vger.kernel.org, 
+	claudiu.beznea.uj@bp.renesas.com, linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org, 
+	linux-omap@vger.kernel.org, bcm-kernel-feedback-list@broadcom.com, linux-pci@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, shawn.lin@rock-chips.com
+Subject: Re: [PATCH v9 1/5] PCI: Add pcie_get_link_speed() helper for safe
+ array access
+Message-ID: <yxtwt2gwwasccsfrymnfahn3ruimnpa3noctqbdurei5yzi233@6j5wzkudjrb7>
+References: <20260313165522.123518-1-18255117159@163.com>
+ <20260313165522.123518-2-18255117159@163.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 26 Mar 2026 18:38:35 +0100
-Message-Id: <DHCWB6YQ7B8E.1I9WCHXJ6FBPH@kernel.org>
-Cc: "Russell King" <linux@armlinux.org.uk>, "Greg Kroah-Hartman"
- <gregkh@linuxfoundation.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
- "Ioana Ciornei" <ioana.ciornei@nxp.com>, "Nipun Gupta"
- <nipun.gupta@amd.com>, "Nikhil Agarwal" <nikhil.agarwal@amd.com>, "K. Y.
- Srinivasan" <kys@microsoft.com>, "Haiyang Zhang" <haiyangz@microsoft.com>,
- "Wei Liu" <wei.liu@kernel.org>, "Dexuan Cui" <decui@microsoft.com>, "Long
- Li" <longli@microsoft.com>, "Bjorn Helgaas" <bhelgaas@google.com>, "Armin
- Wolf" <W_Armin@gmx.de>, "Bjorn Andersson" <andersson@kernel.org>, "Mathieu
- Poirier" <mathieu.poirier@linaro.org>, "Vineeth Vijayan"
- <vneethv@linux.ibm.com>, "Peter Oberparleiter" <oberpar@linux.ibm.com>,
- "Heiko Carstens" <hca@linux.ibm.com>, "Vasily Gorbik" <gor@linux.ibm.com>,
- "Alexander Gordeev" <agordeev@linux.ibm.com>, "Christian Borntraeger"
- <borntraeger@linux.ibm.com>, "Sven Schnelle" <svens@linux.ibm.com>, "Harald
- Freudenberger" <freude@linux.ibm.com>, "Holger Dengler"
- <dengler@linux.ibm.com>, "Mark Brown" <broonie@kernel.org>, "Jason Wang"
- <jasowang@redhat.com>, "Xuan Zhuo" <xuanzhuo@linux.alibaba.com>,
- =?utf-8?q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, "Alex Williamson"
- <alex@shazbot.org>, "Juergen Gross" <jgross@suse.com>, "Stefano Stabellini"
- <sstabellini@kernel.org>, "Oleksandr Tyshchenko"
- <oleksandr_tyshchenko@epam.com>, "Christophe Leroy (CS GROUP)"
- <chleroy@kernel.org>, <linux-kernel@vger.kernel.org>,
- <driver-core@lists.linux.dev>, <linuxppc-dev@lists.ozlabs.org>,
- <linux-hyperv@vger.kernel.org>, <linux-pci@vger.kernel.org>,
- <platform-driver-x86@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
- <linux-remoteproc@vger.kernel.org>, <linux-s390@vger.kernel.org>,
- <linux-spi@vger.kernel.org>, <virtualization@lists.linux.dev>,
- <kvm@vger.kernel.org>, <xen-devel@lists.xenproject.org>,
- <linux-arm-kernel@lists.infradead.org>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-From: "Danilo Krummrich" <dakr@kernel.org>
-Subject: Re: [PATCH 00/12] treewide: Convert buses to use generic
- driver_override
-References: <20260324005919.2408620-1-dakr@kernel.org>
- <20260325052919-mutt-send-email-mst@kernel.org>
-In-Reply-To: <20260325052919-mutt-send-email-mst@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260313165522.123518-2-18255117159@163.com>
 X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MV_CASE(0.50)[];
+	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_CC(0.00)[armlinux.org.uk,linuxfoundation.org,kernel.org,nxp.com,amd.com,microsoft.com,google.com,gmx.de,linaro.org,linux.ibm.com,redhat.com,linux.alibaba.com,shazbot.org,suse.com,epam.com,vger.kernel.org,lists.linux.dev,lists.ozlabs.org,lists.xenproject.org,lists.infradead.org];
-	TAGGED_FROM(0.00)[bounces-100135-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-100136-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	FREEMAIL_TO(0.00)[163.com,google.com,kernel.org];
+	RCPT_COUNT_TWELVE(0.00)[21];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[48];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	MISSING_XM_UA(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dakr@kernel.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[kernel.org,gmail.com,broadcom.com,linux.intel.com,vger.kernel.org,lists.infradead.org,bp.renesas.com,rock-chips.com];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 1B9B133993A
+	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 7C31D33959D
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Wed Mar 25, 2026 at 10:29 AM CET, Michael S. Tsirkin wrote:
-> vdpa bits:
->
-> Acked-by: Michael S. Tsirkin <mst@redhat.com>
->
-> I assume it'll all be merged together?
+On Sat, Mar 14, 2026 at 12:55:18AM +0800, Hans Zhang wrote:
+> The pcie_link_speed[] array is indexed by PCIe generation numbers
+> (1 = 2.5 GT/s, 2 = 5 GT/s, ...).  Several drivers use it directly,
+> which can lead to out-of-bounds accesses if an invalid generation
+> number is used.
+> 
+> Introduce a helper function pcie_get_link_speed() that returns the
+> corresponding enum pci_bus_speed value for a given generation number,
+> or PCI_SPEED_UNKNOWN if the generation is out of range.  This will
+> allow us to safely handle invalid values after the range check is
+> removed from of_pci_get_max_link_speed().
+> 
 
-I can take it through the driver-core tree if you prefer, but you can also =
-pick
-it up yourself.
+Bjorn: Could you please take a look at this patch and ack if looks good? Rest of
+the patches look good to me (I might squash patch 5 with 4 while applying).
+
+- Mani
+
+> Signed-off-by: Hans Zhang <18255117159@163.com>
+> ---
+>  drivers/pci/pci.h   |  2 ++
+>  drivers/pci/probe.c | 16 ++++++++++++++++
+>  2 files changed, 18 insertions(+)
+> 
+> diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
+> index 13d998fbacce..409aca7d737a 100644
+> --- a/drivers/pci/pci.h
+> +++ b/drivers/pci/pci.h
+> @@ -108,6 +108,8 @@ struct pcie_tlp_log;
+>  				 PCI_EXP_DEVCTL_FERE | PCI_EXP_DEVCTL_URRE)
+>  
+>  extern const unsigned char pcie_link_speed[];
+> +unsigned char pcie_get_link_speed(unsigned int speed);
+> +
+>  extern bool pci_early_dump;
+>  
+>  extern struct mutex pci_rescan_remove_lock;
+> diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
+> index bccc7a4bdd79..d6592898330c 100644
+> --- a/drivers/pci/probe.c
+> +++ b/drivers/pci/probe.c
+> @@ -783,6 +783,22 @@ const unsigned char pcie_link_speed[] = {
+>  };
+>  EXPORT_SYMBOL_GPL(pcie_link_speed);
+>  
+> +/**
+> + * pcie_link_speed_value - Get speed value from PCIe generation number
+> + * @speed: PCIe speed (1-based: 1 = 2.5GT, 2 = 5GT, ...)
+> + *
+> + * Returns the speed value (e.g., PCIE_SPEED_2_5GT) if @speed is valid,
+> + * otherwise returns PCI_SPEED_UNKNOWN.
+> + */
+> +unsigned char pcie_get_link_speed(unsigned int speed)
+> +{
+> +	if (speed >= ARRAY_SIZE(pcie_link_speed))
+> +		return PCI_SPEED_UNKNOWN;
+> +
+> +	return pcie_link_speed[speed];
+> +}
+> +EXPORT_SYMBOL_GPL(pcie_get_link_speed);
+> +
+>  const char *pci_speed_string(enum pci_bus_speed speed)
+>  {
+>  	/* Indexed by the pci_bus_speed enum */
+> -- 
+> 2.34.1
+> 
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
