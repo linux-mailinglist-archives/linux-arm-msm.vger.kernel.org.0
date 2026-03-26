@@ -1,138 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-99994-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-99995-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MOXxL/yexGki1gQAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-99994-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 03:50:36 +0100
+	id WNyVCGyexGki1gQAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-99995-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 03:48:12 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 572B632E806
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 03:50:36 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8354932E7C2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 03:48:11 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 747013021EAE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 02:44:53 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 21465302F7F8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Mar 2026 02:46:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6F8838CFFE;
-	Thu, 26 Mar 2026 02:44:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DEAD5392803;
+	Thu, 26 Mar 2026 02:46:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oUiFW7Ac"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W54oi4We"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A36AD1F2380;
-	Thu, 26 Mar 2026 02:44:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45FA7391840;
+	Thu, 26 Mar 2026 02:46:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774493092; cv=none; b=ZOvLYuuBvc75S1Uu8xA9URxD0HN0RWX1TffJIxlcaftpDs30tYvN5guCFkmcTiVws38I/PnFXQB1o++cHidsXpdw6fiksqkQR+Q2e4CntCis90839z27cCb7IO0FbTMUUpS34VuD3mIG2ciuxW6Mv/5mS0UZtNfJFUeQZ+BUUKU=
+	t=1774493205; cv=none; b=SArPt23NUVz/kfaGSi7Ls5jxrkeOGRqmZjmje9igYGIvpaclAMNEkeMHV6kdgg6Aa+wRcGSdxwp/KSnb0RMa0MEoq8V38IyUTYke5LERMxQ4/ST5gJrNLpgy02X7NTnUqYvDFiuZTeqj/c5iy6H1yXgud2LdH6/OkFPZROLJ5fI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774493092; c=relaxed/simple;
-	bh=s+eNbr+lm+m4MHGpBkjbvChpcR9/fX8xfo96opgR86I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZFlKEymdF5C29P05YjYyNzYpYaj+erA210MuCBIcoCuJe/ZnxyyfOG8FpOWbM/1XmQVdEW2qr19bV/zJjRRpKrpD/vFrctw+6wDqpoV7HKHFMxMAfjgAvJebPOmjfjyDuEeN88OGOx7gVnzp0dw3NPeXHGiJhDOZM91GMcqOL0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oUiFW7Ac; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8610C4CEF7;
-	Thu, 26 Mar 2026 02:44:51 +0000 (UTC)
+	s=arc-20240116; t=1774493205; c=relaxed/simple;
+	bh=BbxAq8YVCseKwmtOIFaf6vZEz/jYaPjt4c1ImQxigf8=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=KdkDWtV+FaL61241p5HLFcZxb1i6F8eXMSPr1gbjUUpU9vyy38x1OdEdlOwEZyxLymvjW78rKxvUwSwVqBdaIBrOHhS74i+uRBhbnmUBpuxf6bXx9PTkgA3RLvvgDsP9WckTKw2tIwBFdJqggiZQyqkDpTHGrIZqltTmc+Bvf94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W54oi4We; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6461AC4CEF7;
+	Thu, 26 Mar 2026 02:46:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774493092;
-	bh=s+eNbr+lm+m4MHGpBkjbvChpcR9/fX8xfo96opgR86I=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=oUiFW7AcSThkuSAeELCg9eaEviclBk2SB7JWr1xnLo1EcVhpvfJF1nC/8V4xMf5CG
-	 1I2WuqJ8/1gKBBlbsCqIemRPwMg7MKxLpYiC4zTXoAGs6HXlD7SZy/h6eclJIPbhWU
-	 5v/j6Y0V5L/hSj6peyBPXeiso3O8ffTHE1ZtC6eiLofMKxnkh1LglbKYXQu3ndY45q
-	 JKFW+j/2h85bGBGz++O/sQuB1ypz/NZzzZkksTzgiK/0cWBmfoxNWuz18oopdGy/Vq
-	 Lwum5C2nL5mvlhiQBTbKj6BLAJFFNmuLBM1EzIRuqX67Ln38/i7UXwv2hl0vUuK95h
-	 +2tXatroBafEg==
-Date: Wed, 25 Mar 2026 21:44:48 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: purwa: deduplicate thermal sensors
- with Hamoa
-Message-ID: <acSdYbGX0O2oeI6O@baldur>
-References: <20260320-purwa-drop-thermals-v1-1-2c9fe046cd02@oss.qualcomm.com>
- <f25eb68c-3877-4ce7-b3cd-0910a00be30a@oss.qualcomm.com>
- <xy2jzlamtkpqfpcpegoysyh6u2cnfubkz5233yvuuzfutzpxkf@w3inytibm3sq>
- <7d13d449-17e5-4838-b4bf-f9ce14e1142e@oss.qualcomm.com>
- <ftdzj5zcxs44zm3yyhv6hfwejkmxyfqb3w3snfeey2epmfuafz@qjl6ooz2gyzc>
+	s=k20201202; t=1774493204;
+	bh=BbxAq8YVCseKwmtOIFaf6vZEz/jYaPjt4c1ImQxigf8=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=W54oi4Weyiq+flagJOUcRMtzL/ZL1/c7Hg6eLeYmRspR4RQvSfnV+fIx5ORYXc6IE
+	 4GwM7QzK0owiV2BOYmhpdaIfBW4WIdl2ta9ehjFK0To3ILoJ29fxPXFmOdhS9qTXab
+	 if7s8F1mX1X/6R9iK2dPrwoBiYj2dYP70uAYwXZdOYWovgDzF9f4kZTTVi/bI9U6GR
+	 SOiCEKC9f8lYKt2q3RzTxXDVccVbd1DgvjleLlPpdgODO3AbIwvJzzsN9HYJd2B3Ml
+	 55hrSLdqE810ukv9+9TDelTvKFY50BUgftDBE0tgmk24j44dtNLmcUzvhlX4MLtEBG
+	 omEQku6w/KTtw==
+Date: Wed, 25 Mar 2026 21:46:40 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ftdzj5zcxs44zm3yyhv6hfwejkmxyfqb3w3snfeey2epmfuafz@qjl6ooz2gyzc>
-X-Spamd-Result: default: False [-1.66 / 15.00];
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: linux-clk@vger.kernel.org, Robert Foss <rfoss@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org, 
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
+ Stephen Boyd <sboyd@kernel.org>, linux-media@vger.kernel.org, 
+ Krzysztof Kozlowski <krzk@kernel.org>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, 
+ Bryan O'Donoghue <bod@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Todor Tomov <todor.too@gmail.com>, Bjorn Andersson <andersson@kernel.org>
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20260326-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v11-1-5b93415be6dd@linaro.org>
+References: <20260326-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v11-0-5b93415be6dd@linaro.org>
+ <20260326-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v11-1-5b93415be6dd@linaro.org>
+Message-Id: <177449320091.827032.5601565411540937952.robh@kernel.org>
+Subject: Re: [PATCH v11 1/7] dt-bindings: media: qcom,x1e80100-camss: Add
+ optional PHY handle definitions
+X-Spamd-Result: default: False [-1.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
+	MID_CONTAINS_FROM(1.00)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-99995-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[vger.kernel.org,kernel.org,baylibre.com,linaro.org,gmail.com];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-99994-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	MISSING_XM_UA(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[18];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 572B632E806
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 8354932E7C2
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Wed, Mar 25, 2026 at 01:13:28AM +0200, Dmitry Baryshkov wrote:
-> On Tue, Mar 24, 2026 at 10:25:30AM +0100, Konrad Dybcio wrote:
-> > On 3/23/26 5:49 PM, Dmitry Baryshkov wrote:
-> > > On Mon, Mar 23, 2026 at 04:21:00PM +0100, Konrad Dybcio wrote:
-> > >> On 3/20/26 3:33 AM, Dmitry Baryshkov wrote:
-> > >>> Hamoa and Purwa have pretty close thermal zones definitions. The major
-> > >>> difference is that several zones are absent (because of the lack of the
-> > >>> CPU cluster) and several zones use tsens2 instead of tsens3.
-> > >>>
-> > >>> Instead of completely duplicating thermal zones for Purwa, reuse themal
-> > >>> zones from Hamoa, patching them where required.
-> > >>>
-> > >>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> > >>> ---
-> > >>
-> > >> Slightly reluctantly:
-> > > 
-> > > Why? I'd really interested here.
-> > 
-> > I suppose my reluctance comes from the decreased readability, but then
-> > I suppose the silicon is not going to change if we get it right once, so
-> > it's not a real concern..
+
+On Thu, 26 Mar 2026 01:28:29 +0000, Bryan O'Donoghue wrote:
+> Add optional PHY handle definitions. This will allow for supporting both
+> legacy PHY definitions as well as supporting the optional new handle based
+> approach.
 > 
-> I see. My usual concern is opposite: to make sure that we don't need to
-> fix another DT if we fix something.
+> Drop the legacy high-level 0p8 and 1p2 supplies as required, each PHY has
+> its own individual rails. The old binding is still valid but with
+> individual nodes we define the rails in the CSIPHY sub-nodes.
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
+>  .../bindings/media/qcom,x1e80100-camss.yaml        | 33 ++++++++++++++++++++--
+>  1 file changed, 31 insertions(+), 2 deletions(-)
 > 
 
-Which means that if you make a change to that "something" you now have
-the burden to validate the additional users.
+My bot found errors running 'make dt_binding_check' on your patch:
 
-Regards,
-Bjorn
+yamllint warnings/errors:
 
-> -- 
-> With best wishes
-> Dmitry
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/qcom,x1e80100-camss.yaml: Unresolvable reference: /schemas/phy/qcom,x1e80100-csi2-phy.yaml
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.kernel.org/project/devicetree/patch/20260326-b4-linux-next-25-03-13-dtsi-x1e80100-camss-v11-1-5b93415be6dd@linaro.org
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
 
