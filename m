@@ -1,55 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-100304-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100303-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aOR9OgCCxmnQLAUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100304-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 14:11:28 +0100
+	id g+3SAQGCxmkhLQUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100303-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 14:11:29 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id F03BA344D5A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 14:11:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3104A344D5B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 14:11:28 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 472FE305E9C5
+	by sin.lore.kernel.org (Postfix) with ESMTP id 7A91E305E9E1
 	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 13:07:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50C2E3E9295;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 575A03E929A;
 	Fri, 27 Mar 2026 13:07:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AukkEadI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rImuipt0"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25DF33E717D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 232463E717B;
 	Fri, 27 Mar 2026 13:07:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774616830; cv=none; b=PZ/sgjlqlxW8CZWn1YAEl95LIN9v7SZ1cOoIJ7uUXAprrdMnT4whroc7m5AYQitYPOIkZQlseEeW2KlMsnba2k7UbWLgf3IyrAn4lctWnCsCMCdMw1YV+1gEqtEsoPyLrgYCaqCJXEeJDlU6P/E4V0Ah2sw/VZlU1FrH3zsRmVQ=
+	t=1774616830; cv=none; b=rfc58uVufoDZgPKIqUNW1W9zKm/Mc1K/65nwSaSoFFBihBz3R4S054yvCT5OV0iyWAgu9cx1ly/VWAVfgep+1Se2s4tLegSGRn9x6yiJfn/JM1zsDT08l84RSCVDGoz1NvdlTFRVtc4r2Sirbrq4lTCgqILFQw3blQQ3J/CCofQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1774616830; c=relaxed/simple;
-	bh=vsEQH3xLzfJZOCoZLqMwel3/ksZeTratODrtl3DPNtU=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=U9HX9RSmiVk8TRlhcYYJwOizt5enq709aVOsAUorVZNt717hc4G66NNTGMBUoNMGscZjuWu1hleXmt8Tj97C66+ByAev8IVMN71RXPJ5rqoz/zh2HGAxZDPsdlEC1xR6fOpCjMFVit47XPUw+QImU2VPrgJR3zpHhAvtCk6wydM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AukkEadI; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 9A299C19423;
+	bh=To8Qup3MXF6u7fIYte72oP+NECphIimOxx4PV03mpZA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=K8kBCnf84SdaccHvj9tjgGVF320wh+WRtYgwmjma09N5zoKrmbDW0kjWCQDQ9gWAEEBUGpDlj4lgXpgOfohnmP3IXzQKA/8qiLnMsCt1hiKnvzf3cUyiaSoWyAyoAMQyyJdIhBlDOTdIfzUkR3J3Ezbvr/B8usTgTWwySWHXS30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rImuipt0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id BEBBFC2BC87;
 	Fri, 27 Mar 2026 13:07:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1774616829;
-	bh=vsEQH3xLzfJZOCoZLqMwel3/ksZeTratODrtl3DPNtU=;
-	h=From:Subject:Date:To:Cc:Reply-To:From;
-	b=AukkEadIKlxeYZNGLutRRaYAgQwRq1IEVeZgMUXMfkzjUbsuX2yAaXQD0VmVrLAsS
-	 3CSZ7NmBIhwE+ljqCRekQhJArvIG45FwyrojbDakO/zt3FVuIEPOy5O5kSkRfOf5Zw
-	 aCFZwl382tq62T2yG45TvX/cIexV2WzXYQU1bB51fb7yIQGrclthegrPy3qF72mJ1x
-	 OJLVB0/a2q+6w7fKPvY/GMftw6NoNaR7mNCIAiGpd07SPQ1w095XwrQ2Hct78ni6N5
-	 jTGrRjaFfMsue+QVjjA60hdFD/0sYYrNCNjQrAqbo4aFCm1RaSA4KchNr7ann0kiHm
-	 gMJykCw/mF8iA==
+	bh=To8Qup3MXF6u7fIYte72oP+NECphIimOxx4PV03mpZA=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=rImuipt002pwIfwOaIkXOp1zEJ1STqNeHSJm/JPgQbHJ1r+mjFBB4BScUtYN4e+52
+	 Ssxt+KwFIupvmmyfffhQgpErRLgWhE8Kpjco2fDV6qSwsZkFJYRtcq4CdLH094W2dz
+	 yfK0vCU1LSBv+YCl0cJtBMX0QS2Mlm5yot9snb3WWnRk2kH/P3FojcRQmWFpEt3/M+
+	 TTb7tqvG8IEF9keZ+WFkDUWgA6xMMwPzQePl6S3EJSWjTpQlFNMVLGbgQ8T6uB9DbG
+	 5TgNLcioqndTxhC+EYxEk3v31Mlqgei5rTZBO+5hn20rXPP2pojiH7WIyKXKXxyq6W
+	 3BAFn2ukxYDKQ==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C9C710ED661;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA88810ED674;
 	Fri, 27 Mar 2026 13:07:09 +0000 (UTC)
 From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Subject: [PATCH RFC 0/2] sdm845: describe the Wi-Fi hardware properly
-Date: Fri, 27 Mar 2026 14:07:07 +0100
-Message-Id: <20260327-wcn3990-pwrctl-sdm845-v1-0-3f5c34e3fdd0@ixit.cz>
+Date: Fri, 27 Mar 2026 14:07:08 +0100
+Subject: [PATCH RFC 1/2] arm64: dts: qcom: sdm845-google: Describe Wi-Fi/BT
+ properly
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,10 +59,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAPuAxmkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDYyMz3fLkPGNLSwPdgvKi5JIc3eKUXAsTU90Uo6Q042TzJEuLlBQloN6
- CotS0zAqwudFKQW7OSrG1tQCPiFHebAAAAA==
-X-Change-ID: 20260326-wcn3990-pwrctl-sdm845-d2bf3c7b98dd
+Message-Id: <20260327-wcn3990-pwrctl-sdm845-v1-1-3f5c34e3fdd0@ixit.cz>
+References: <20260327-wcn3990-pwrctl-sdm845-v1-0-3f5c34e3fdd0@ixit.cz>
+In-Reply-To: <20260327-wcn3990-pwrctl-sdm845-v1-0-3f5c34e3fdd0@ixit.cz>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -70,21 +70,21 @@ Cc: Paul Sajna <sajattack@postmarketos.org>, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
  David Heidelberg <david@ixit.cz>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=799; i=david@ixit.cz;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2285; i=david@ixit.cz;
  h=from:subject:message-id;
- bh=vsEQH3xLzfJZOCoZLqMwel3/ksZeTratODrtl3DPNtU=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpxoD8IpkxMGoq6cpKR5s5N/44xF52VjlkQ+zjr
- +IB66I0/OeJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCacaA/AAKCRBgAj/E00kg
- cmHTD/9nbrFgmtlPh+iWpXlZB8fvvhSOelws+rARRGqUxVo6wvyyqJSL1hKB9BmWlzsi2pklQ03
- f9XSjt6hha2FgxKuotBQ5csZPS3gXkSfBdqyewwBVNuB5ed0C6hvdFn9Jso16LQWb2fJDN9PnMm
- FBPtVaUvWK4lQMaRpMSaVp84VYJ4b2BKDo8waYGzzLzjLe5bPkWbtBlrOw7DQF2fYJql5Ke1EkD
- xUjFNChniPQHJePcWhqlWSnVqnR/bC+1+Hhzx93Q+RoKM6YxdPzVeOP9wl3sKbYay+t8qs62tha
- XtZMVRhHX3FXsVaHqTzcO4qM2Yg5V4boGkSC5OlXeNEB5W7M8Fc7rOoC6+CbN0heBqqrFkiifk8
- phFFmxzFTGT2Y+d0N6l8AtFOV6yZezQbNJU4jMYVCYz6qIum1bIS7MxovDMoZrfFi3Oyg8aVLLU
- yxxq2FvY7XVZOrhXDHlRLEONPsK1UjccaykGfkAM4rMzRFK5EA1JipJ2cKKaY/GD3h97kPPDI3S
- HHOGLO93shS9TtFNPMey+8ziZLJYldKeAfJxYIlwB4flRz5ZOOgLk+DDtyb6lMsh2Br7nvO3ee/
- ASDifVOxbb4SENmqsA2tQCxaHsBzw141KHbsDRawU7MVHC2FSrgD/tdMD/Pmq3Jj5HOupH8D+6M
- Q5EKQW+PQUov/Rg==
+ bh=ZdsZlqRm3/oxciwUtKAmARcIeJyJp34l/WYfXSWVTDk=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpxoD8X3UHY8pX88+zhKXwHwfDLK4KyevZawF/N
+ WB8LSP1NLOJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCacaA/AAKCRBgAj/E00kg
+ cql4D/0fFQTGC79+QPPPwY4Zs53+E9cFblgQy0wmQmkicMTkYG5vExKjTaarCUaglJ/Xfjw/1jM
+ N6rkezDgcASHcKi+9OWujRB8An1lZzyRORGc4UOhYiM1p0nAI/mavcu24SLQfub6SfEjHVx0VVd
+ 9HxISKgtDUMeLwEmv9gt+WqXNs85ILPrEdedgpGnwjTTdLRM30z2hDLEvF7yZvtM4rpd+cRDHZu
+ PXAcwNCmbO4IDr8CiqjMhdTq3M2gVEJJvhJQvC+LUsHWXesQ/aaUIzWfEHLmVeWrSYMt62rhFlN
+ 6TZhXQR/AgswhvTkqida71CU93U36v9uLyYQdvZLq3+icerOwBx8Em/5Bbw1QLJizJqDGeb6Wyo
+ FoXONlDEhUoUD3CEHJkwUFH7F3lRqTlJXU9ZIJILAoT+EuquxsEG3SvdN90h5GuxYfernAewprc
+ fxzuVxSE+w3+BL6W6VVMstOdoQv8LiE5w7QD0wy3NK6wQwakqtyL1LSnlMje6at1Cf0Ix+d0TFm
+ Otlh6DU8KTmLTBJf5jkDiwiKtZFUlBzkDkjf6M/FSMWsN885ctAKi0tLAjqOveYBwbTg2HC/V1F
+ caIHO8iZhViJvg41o8F8+K42VrhWLx9Lgx4nlFt2ZMh3ADBXRGP/4hNbxjzo3hfQk+dg/TCJ26+
+ MX3RxiMjtBWhL3A==
 X-Developer-Key: i=david@ixit.cz; a=openpgp;
  fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
 X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
@@ -99,7 +99,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-100304-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
+	TAGGED_FROM(0.00)[bounces-100303-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
 	FROM_HAS_DN(0.00)[];
 	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
 	TO_DN_SOME(0.00)[];
@@ -117,32 +117,96 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCPT_COUNT_SEVEN(0.00)[10];
 	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[ixit.cz:email,ixit.cz:replyto,ixit.cz:mid,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: F03BA344D5A
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,ixit.cz:email,ixit.cz:replyto,ixit.cz:mid]
+X-Rspamd-Queue-Id: 3104A344D5B
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Question here is, if the most of the wcn3990-pmu shouldn't rather go to
-sdm845.dtsi? At least the regulators seems to be same.
+From: David Heidelberg <david@ixit.cz>
 
-When agreed, I'll sent include all other sdm845 phones in the patchset.
+The onboard Wi-Fi / BT device, WCN3990, has a simple on-chip PMU, which
+further spreads generated voltage. Describe the PMU in the device tree
+and rewire Bluetooth and Wi-Fi supply properties to use the PMU LDO
+outputs instead of referencing the SoC regulators directly.
 
+Couldn't verify the swctrl GPIO thus omitted.
+
+Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: David Heidelberg <david@ixit.cz>
 ---
-David Heidelberg (2):
-      arm64: dts: qcom: sdm845-google: Describe Wi-Fi/BT properly
-      arm64: dts: qcom: sdm845-oneplus: Describe Wi-Fi/BT properly
+ arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi | 42 ++++++++++++++++++----
+ 1 file changed, 35 insertions(+), 7 deletions(-)
 
- arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi | 42 +++++++++++---
- .../arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 65 +++++++++++++++++++---
- 2 files changed, 91 insertions(+), 16 deletions(-)
----
-base-commit: e77a5a5cfe43b4c25bd44a3818e487033287517f
-change-id: 20260326-wcn3990-pwrctl-sdm845-d2bf3c7b98dd
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi
+index fd9788d5c3f54..6930066857768 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi
+@@ -131,6 +131,33 @@ vreg_s4a_1p8: regulator-vreg-s4a-1p8 {
+ 
+ 		vin-supply = <&vph_pwr>;
+ 	};
++
++	wcn3990-pmu {
++		compatible = "qcom,wcn3990-pmu";
++
++		vddio-supply = <&vreg_s4a_1p8>;
++		vddxo-supply = <&vreg_l7a_1p8>;
++		vddrf-supply = <&vreg_l17a_1p3>;
++		vddch0-supply = <&vreg_l25a_3p3>;
++
++		regulators {
++			vreg_pmu_io: ldo0 {
++				regulator-name = "vreg_pmu_io";
++			};
++
++			vreg_pmu_xo: ldo1 {
++				regulator-name = "vreg_pmu_xo";
++			};
++
++			vreg_pmu_rf: ldo2 {
++				regulator-name = "vreg_pmu_rf";
++			};
++
++			vreg_pmu_ch0: ldo3 {
++				regulator-name = "vreg_pmu_ch0";
++			};
++		};
++	};
+ };
+ 
+ &adsp_pas {
+@@ -462,10 +489,11 @@ &uart6 {
+ 	bluetooth {
+ 		compatible = "qcom,wcn3990-bt";
+ 
+-		vddio-supply = <&vreg_s4a_1p8>;
+-		vddxo-supply = <&vreg_l7a_1p8>;
+-		vddrf-supply = <&vreg_l17a_1p3>;
+-		vddch0-supply = <&vreg_l25a_3p3>;
++		vddio-supply = <&vreg_pmu_io>;
++		vddxo-supply = <&vreg_pmu_xo>;
++		vddrf-supply = <&vreg_pmu_rf>;
++		vddch0-supply = <&vreg_pmu_ch0>;
++
+ 		max-speed = <3200000>;
+ 	};
+ };
+@@ -526,9 +554,9 @@ &venus {
+ 
+ &wifi {
+ 	vdd-0.8-cx-mx-supply = <&vreg_l5a_0p8>;
+-	vdd-1.8-xo-supply = <&vreg_l7a_1p8>;
+-	vdd-1.3-rfa-supply = <&vreg_l17a_1p3>;
+-	vdd-3.3-ch0-supply = <&vreg_l25a_3p3>;
++	vdd-1.8-xo-supply = <&vreg_pmu_xo>;
++	vdd-1.3-rfa-supply = <&vreg_pmu_rf>;
++	vdd-3.3-ch0-supply = <&vreg_pmu_ch0>;
+ 
+ 	qcom,snoc-host-cap-8bit-quirk;
+ 
 
-Best regards,
 -- 
-David Heidelberg <david@ixit.cz>
+2.53.0
 
 
 
