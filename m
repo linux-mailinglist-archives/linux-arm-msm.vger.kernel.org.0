@@ -1,170 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-100260-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100261-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id EDtzD9taxmm+JAUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100260-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 11:24:27 +0100
+	id SH4RI21cxmm+JAUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100261-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 11:31:09 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0E3834279C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 11:24:26 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8EB4334290A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 11:31:08 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 9D8AB30B6D0D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 10:17:42 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 7DC4E304F491
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 10:18:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98BF33B47FC;
-	Fri, 27 Mar 2026 10:17:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 171003ACA52;
+	Fri, 27 Mar 2026 10:18:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s9fOKIL+"
+	dkim=pass (2048-bit key) header.d=mess.org header.i=@mess.org header.b="NpOWVYrh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from gofer.mess.org (gofer.mess.org [88.97.38.141])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 739D83B0AD7;
-	Fri, 27 Mar 2026 10:17:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AD563AA51A;
+	Fri, 27 Mar 2026 10:18:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=88.97.38.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774606642; cv=none; b=mCd2uQJsfoCwWR8NypEGIBTZrSRwunwm+zIbJxUO0HEDO8bzGX34pFmRsb95FnlnBWtzoy9FnhHGGKSON/wGUkXIaesfVWqD4zNsGfqryVzKP1UJvWOqmGrg8YFrTT0devJFyaLYGITlh9N1bbfkTAG6MkJ0M4+nTefF/lIgARI=
+	t=1774606704; cv=none; b=aj49Fa0NSPmyvbtsI4hcILIKxVUAkSY+PX/HRU/2O3g2p9WpFax6x+6GCwewyhhL7t5XxBfBS917ObdV7FGjW0mPOyqrgnJIbhcav+9FSNFZebXqj1ZAMbIW/eT9KcdXl6nxE7ofeegTE0AE7jIL1jruOn5gayC14+4cvJD5jOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774606642; c=relaxed/simple;
-	bh=bACH9bXuLwoHnf+XcfEWG6Dc4J1VuQFONU9E2meVulE=;
+	s=arc-20240116; t=1774606704; c=relaxed/simple;
+	bh=dWmyZ2OOPQ2BUCAdBYc/CUxw39MM+v14HxWKBs7iNGs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DxBo8n6crUMa4xU33VrKdj8D+fDHpoIA9e4eyL+j5LfpmnoH/dlXCk5YkeRroxbmjsxX9zce/SMMEVh/uIiU1PUcO0u6TTxn44YDoM+Vphh2TDdxLytIXWG4N71V7dO6OpzRcR0ecJT4lEyX/8FPzlt7FK6DeS0E/cu65YqiGQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s9fOKIL+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F308C19424;
-	Fri, 27 Mar 2026 10:17:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774606641;
-	bh=bACH9bXuLwoHnf+XcfEWG6Dc4J1VuQFONU9E2meVulE=;
+	 Content-Type:Content-Disposition:In-Reply-To; b=YFnMw8dseuxeSGgFZVDkHAoWtEDVzUzAIS+4uCvkqwaUq6xqstGfoUnhRC3ilkS5BQaUntbLouJibsYvXzM3wQw3gwEpZdvL+MVeIOmPocnPydBlmfIumpaGdn6oFAxWmnvdGJk4+M+ljbHcbThc9YB+lhCKoeymcJhYoGcUsAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mess.org; spf=pass smtp.mailfrom=mess.org; dkim=pass (2048-bit key) header.d=mess.org header.i=@mess.org header.b=NpOWVYrh; arc=none smtp.client-ip=88.97.38.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mess.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mess.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mess.org; s=2020;
+	t=1774606700; bh=dWmyZ2OOPQ2BUCAdBYc/CUxw39MM+v14HxWKBs7iNGs=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=s9fOKIL+dX+W4/MXW5OX2tHskObWyXv2ANnHyDH+xl/+4baLZPdd25uKJhOpyga5R
-	 AASsDavOsscwyeMGbaFi6qMvF5uTIYzQb7zLn6mpkkm2awK+eemQ/GjagQW1GwsH7W
-	 Ye984MS7w0xSKYeuW/ImHfOvf28lJpWPYvand9LA1B5rzTXkry9ELImzkleKdGrMn7
-	 bKyA33V9Q6ATrLa4VyFY+sfEpSuCLg5xRdtYQlLY8tnV8QHKt/Dp6cxn+UT7ZwvEto
-	 WRBYEjuN08VI/LK1ekpzrGjpFQFW6PZWhja6DYyWq7pszI7CCJXPAfEy/ukO5BGMjY
-	 YsrXLeZfQMO8A==
-Date: Fri, 27 Mar 2026 15:47:13 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Simon Horman <horms@kernel.org>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
-	davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, 
-	linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	andersson@kernel.org, yimingqian591@gmail.com, chris.lew@oss.qualcomm.com, 
-	stable@vger.kernel.org
-Subject: Re: [PATCH 2/2] net: qrtr: ns: Limit the maximum lookups per socket
-Message-ID: <b3i64wszqrmxmpl453z6mpaiqmuespxiioexb3wwbt3bz7mmen@rlewkfc4v25s>
-References: <20260325104415.104972-1-manivannan.sadhasivam@oss.qualcomm.com>
- <20260325104415.104972-3-manivannan.sadhasivam@oss.qualcomm.com>
- <20260327100709.GD111839@horms.kernel.org>
+	b=NpOWVYrhTtOFgRoqhdTq+HCJ0KRwrFai1osUVLS5v6ThnIrDxxSBY+kxjCiZLljIP
+	 zEQE6FseQQ+jrmLTFbP1i5OJBsvfqwia2Ns1irYB3m1c1SswiU1V+xoXWeo234RQoj
+	 eeVVI26+xns/L4OLalHxlrcdbvbaxKFJ/Mxt70mlWiiwtAaKngzQJQzb9KlRnxq1l4
+	 Q2XkGSAQGvY2se0RKqzLMk8Oni+8dXzbRW/CQou8jrcnlgK+WyRr/070khp9nJ9qyz
+	 L/7Sk8mus3vlOq5qvPBhARAcHn93kVQTkGtMCriAclPLeE4ggGNnVxkOIM5gji3uE1
+	 zssUAoa7y7aEg==
+Received: by gofer.mess.org (Postfix, from userid 1000)
+	id 217CE1011B2; Fri, 27 Mar 2026 10:18:20 +0000 (GMT)
+Date: Fri, 27 Mar 2026 10:18:20 +0000
+From: Sean Young <sean@mess.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Biswapriyo Nath <nathbappai@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>,
+	Pavel Machek <pavel@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Martin Botka <martin.botka@somainline.org>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-leds@vger.kernel.org,
+	linux-clk@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+	phone-devel@vger.kernel.org
+Subject: Re: [PATCH 4/7] dt-bindings: leds: irled: ir-spi-led: Add new
+ duty-cycle value
+Message-ID: <acZZbKhXe5kLMfTt@gofer.mess.org>
+References: <20260325-ginkgo-add-usb-ir-vib-v1-0-446c6e865ad6@gmail.com>
+ <20260325-ginkgo-add-usb-ir-vib-v1-4-446c6e865ad6@gmail.com>
+ <20260327-natural-wild-mongrel-5bcc43@quoll>
+ <acZCrqffLvUpM7AW@gofer.mess.org>
+ <ad7a0675-84cc-424a-b583-47c342f02fb0@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260327100709.GD111839@horms.kernel.org>
-X-Spamd-Result: default: False [-1.66 / 15.00];
+In-Reply-To: <ad7a0675-84cc-424a-b583-47c342f02fb0@kernel.org>
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[mess.org,none];
+	R_DKIM_ALLOW(-0.20)[mess.org:s=2020];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-100260-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-100261-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,davemloft.net,google.com,kernel.org,redhat.com,vger.kernel.org,gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[13];
+	FREEMAIL_CC(0.00)[gmail.com,kernel.org,baylibre.com,somainline.org,vger.kernel.org,lists.sr.ht];
+	RCPT_COUNT_TWELVE(0.00)[19];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[sean@mess.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[mess.org:+];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: B0E3834279C
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,gofer.mess.org:mid,mess.org:dkim,mess.org:email]
+X-Rspamd-Queue-Id: 8EB4334290A
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Fri, Mar 27, 2026 at 10:07:09AM +0000, Simon Horman wrote:
-> On Wed, Mar 25, 2026 at 04:14:15PM +0530, Manivannan Sadhasivam wrote:
-> > Current code does no bound checking on the number of lookups a client can
-> > perform per socket. Though the code restricts the lookups to local clients,
-> > there is still a possibility of a malicious local client sending a flood of
-> > NEW_LOOKUP messages over the same socket.
+On Fri, Mar 27, 2026 at 10:38:17AM +0100, Krzysztof Kozlowski wrote:
+> On 27/03/2026 09:41, Sean Young wrote:
+> > On Fri, Mar 27, 2026 at 08:51:18AM +0100, Krzysztof Kozlowski wrote:
+> >> On Wed, Mar 25, 2026 at 06:07:27PM +0000, Biswapriyo Nath wrote:
+> >>> 30 duty cycle for IR transmitter is used in Xiaomi Redmi Note 8 (ginkgo).
+> >>>
+> >>> Signed-off-by: Biswapriyo Nath <nathbappai@gmail.com>
+> >>> ---
+> >>>  Documentation/devicetree/bindings/leds/irled/ir-spi-led.yaml | 2 +-
+> >>>  1 file changed, 1 insertion(+), 1 deletion(-)
+> >>>
+> >>> diff --git a/Documentation/devicetree/bindings/leds/irled/ir-spi-led.yaml b/Documentation/devicetree/bindings/leds/irled/ir-spi-led.yaml
+> >>> index 72cadebf6e3..0297bfbb275 100644
+> >>> --- a/Documentation/devicetree/bindings/leds/irled/ir-spi-led.yaml
+> >>> +++ b/Documentation/devicetree/bindings/leds/irled/ir-spi-led.yaml
+> >>> @@ -25,7 +25,7 @@ properties:
+> >>>  
+> >>>    duty-cycle:
+> >>>      $ref: /schemas/types.yaml#/definitions/uint8
+> >>> -    enum: [50, 60, 70, 75, 80, 90]
+> >>> +    enum: [30, 50, 60, 70, 75, 80, 90]
+> >>
+> >> Hm, why is this enum, instead of 1-99, in the first place?
 > > 
-> > Fix this issue by limiting the maximum number of lookups to 64 per socket.
-> > Note that, limit of 64 is chosen based on the current platform
-> > requirements. If requirement changes in the future, this limit can be
-> > increased.
+> > Well in reality only a few different duty cycles are used by IR protocols.
+> > 30% is quite common so that should part of the list. 
 > > 
-> > Cc: stable@vger.kernel.org
-> > Fixes: 0c2204a4ad71 ("net: qrtr: Migrate nameservice to kernel from userspace")
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> > ---
-> >  net/qrtr/ns.c | 18 ++++++++++++++++--
-> >  1 file changed, 16 insertions(+), 2 deletions(-)
+> > Having said that a range of 1-99 would be nicer. Do we set this like so:
 > > 
-> > diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
-> > index fb4e8a2d370d..707fde809939 100644
-> > --- a/net/qrtr/ns.c
-> > +++ b/net/qrtr/ns.c
-> > @@ -70,10 +70,11 @@ struct qrtr_node {
-> >  	u32 server_count;
-> >  };
-> >  
-> > -/* Max server limit is chosen based on the current platform requirements. If the
-> > - * requirement changes in the future, this value can be increased.
-> > +/* Max server, lookup limits are chosen based on the current platform requirements.
-> > + * If the requirement changes in the future, these values can be increased.
-> >   */
-> >  #define QRTR_NS_MAX_SERVERS 256
-> > +#define QRTR_NS_MAX_LOOKUPS 64
-> >  
-> >  static struct qrtr_node *node_get(unsigned int node_id)
-> >  {
-> > @@ -545,11 +546,24 @@ static int ctrl_cmd_new_lookup(struct sockaddr_qrtr *from,
-> >  	struct qrtr_node *node;
-> >  	unsigned long node_idx;
-> >  	unsigned long srv_idx;
-> > +	u8 count = 0;
-> >  
-> >  	/* Accept only local observers */
-> >  	if (from->sq_node != qrtr_ns.local_node)
-> >  		return -EINVAL;
-> >  
-> > +	/* Make sure the client performs only maximum allowed lookups */
-> > +	list_for_each_entry(lookup, &qrtr_ns.lookups, li) {
-> > +		if (lookup->sq.sq_node == from->sq_node &&
-> > +		    lookup->sq.sq_port == from->sq_port)
-> > +			count++;
+> >  - minimum: 1
+> >  - maximum: 99
 > 
-> This feels like it could get quite expensive.
-> If many lookups are added, it feels like it may be O(n^2).
-> 
+> I asked, because I don't know what hardware is really there. This should
+> match reality, so if you say continuous range is never used, it does not
+> have the be changed to 1-99.
 
-Lookups are not something that'll happen very often. A client only registers
-for the lookup once per service that it depends on. That shouldn't be too
-much. And then once lookup is registered, it will be used throughout the
-lifetime of the client.
+So the transmit hardware can do an continuous range (almost). It's the
+real life usage which doesn't really use many different values.
 
-So there is no overhead associated with this check.
+The value set here is just the default duty cycle. There is also an ioctl 
+LIRC_SET_SEND_DUTY_CYCLE which sets the duty cycle for transmission.
 
-- Mani
+Most IR drivers just have a hardcoded default value for the duty cycle,
+I think ir-spi is the only one which allows this to be set via dt.
 
--- 
-மணிவண்ணன் சதாசிவம்
+I'd say allowing the default to be set via dt is not necessary. If this had
+occurred to be during review I would've asked for it to be removed. It's
+there now, so:
+
+Reviewed-by: Sean Young <sean@mess.org>
+
+Sean
 
