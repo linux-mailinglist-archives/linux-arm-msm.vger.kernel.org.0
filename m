@@ -1,134 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-100192-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100193-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SN1jK+gAxmk/FAUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100192-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 05:00:40 +0100
+	id 8LMqJ6wQxmnwFwUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100193-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 06:07:56 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4428E33EFDA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 05:00:36 +0100 (CET)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 99D7A33F364
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 06:07:55 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id CB486303663D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 03:59:51 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 37C2930379E6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 05:07:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6EF5636A036;
-	Fri, 27 Mar 2026 03:59:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B870346FA8;
+	Fri, 27 Mar 2026 05:07:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="K7oalgpK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZxhoOU5G"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-173.mta0.migadu.com (out-173.mta0.migadu.com [91.218.175.173])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AEB61C8604
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2026 03:59:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7C6EEBB;
+	Fri, 27 Mar 2026 05:07:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774583990; cv=none; b=OekS21PBBRFSaAcY2Nv8mNef+1yIPoEslFMDNLvn4v92aSm+nGO7rAtKZ8el4m2Vbd/5Rzz/BA0Dvmgc2dJnrEvnQVyMPL+U3CvcczTRszVUIT/V93IIKAEajGqaP9FzM9SqNv+VXT6KNOy/Ch6v9b0C5Kr1vToKxtO0e80hFv4=
+	t=1774588069; cv=none; b=I234lhCfxCoGOuAh/6x1kZDTaOr7Y2b8R2An+pZ2wFAiyEd3fQ8efoEWxnSiHAAo8nyCe1fIcvT56XikIk0VAofXYhqK5QOW6nDHT6cZATIBk4fjFTU6H168bewQi5jy51VgPB36ySg7+xafaphHioFrZR2+OfDDlFTO95glXXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774583990; c=relaxed/simple;
-	bh=M8yHXRrctmAptnPlUik3AXAXll3yIV1xDj26jXEAp9Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UOJksGp1M7Qf4n+DnLDpguCrsb7xPST/oOJmCCY6zplOsof5AkDweVJ3DhNK+Kc0Ninz4JK5m0txLp1ZzRkQiUViJgo3PiQEa5NXlf05lRPG6hV1j0VACIdngdSgkQfxx7YZg9eMykV8uCMg+4m3i3nlTvVVXEi++Fzf7AvJFB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=K7oalgpK; arc=none smtp.client-ip=91.218.175.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
-Message-ID: <a6cdd237-3b11-40a8-865d-cfe97f97f01b@packett.cool>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
-	s=key1; t=1774583985;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=dakhjmCQp6GVkDLoDUU4hYoePqqMLtz3QnhrzCmmiRI=;
-	b=K7oalgpKKghvuokGaQvZG5Rg8KjZLI8pdUE1bOullKLN2FfVpUl+GCPLvJewx/WuwRlAhi
-	wIZYzD4GaKnRChKSlNYQLgVFCUIIJ1aoWGRcbYLB5v2vUyAMFYdwa77aGI0lHQ5pYACRGJ
-	iDFdepE/D75H45eFCLJxBOcwVgMmQ7CzZwSZKscNmRBz73BKtMQEwecimomlgG/ussJW0D
-	LnoybeyIa8aTosgxrxqe7UwPwfM+Kz7I2oTtgN7WsGRVxMuxKbur7BqaA0SeJWNrL8d1DD
-	fPuiS/dzf6BQ4pwLVGUXWDvzwiNV7A0KIFte8HKHDFkl4eJBJwUpiPyGDI1LUA==
-Date: Fri, 27 Mar 2026 00:59:37 -0300
+	s=arc-20240116; t=1774588069; c=relaxed/simple;
+	bh=foyfzrQ1xblJ+uKERe5imDS8DSIRt3u5tExHq8ZHtuc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=b+8pBw8t7FKuBNO3E+jkaHa3px2xZ/OZR/HV/gyn0ksjBvPH4F77ZdpP4KTEQv/jcQpeBGEwThGr5UvEkgMJ5xtePGIBlmDhAWdX+2d73sU/iSnfWPv8KGCZhj07IMtKyqB8cAIVmiK/qGD1Co+88abn+mDR+h0txqZqI9mWwA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZxhoOU5G; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B001C19423;
+	Fri, 27 Mar 2026 05:07:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1774588068;
+	bh=foyfzrQ1xblJ+uKERe5imDS8DSIRt3u5tExHq8ZHtuc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ZxhoOU5Gn9wujdx8qZ18UHU/0v+DMRePW3ZbybKA9tjR4flnT0BHDJsSj1NWL6rQr
+	 8crQacM65bL9SxH9w5pIKW+jbo9jxgZ59n/LKPyAt4JPbAY+CIw4zNzzDFPYMWsGLG
+	 /Ze2bu0dm2PpNNdat28mBV1SpMtY6gVAtZonYiZ5KwNZhT2gXbdMeSHa94zn0RsUhR
+	 eNRj7DD3kt4bloOfluHvyNlOi03PZY6jIgeB8+QJZZY+4jrURiRWOdHKGXY58W/iIj
+	 a4GgGZWviXWE1OX/FnoJuJi5b/wWrvUQJKAa0pQZji01uu/dVjzqAEniQIIJS6LrQM
+	 Aa5Vr9rUTfjcA==
+Date: Fri, 27 Mar 2026 10:37:36 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Alexander Wilhelm <alexander.wilhelm@westermo.com>
+Cc: Simon Horman <horms@kernel.org>, 
+	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+	Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net v2] net: qrtr: fix endian handling of confirm_rx field
+Message-ID: <hcxmfaai3qekgvh2vihnx7qdprungsrpmeu6vzz6mmxywjzifh@tzmmcx7olpxt>
+References: <20260324-b4-qrtr-fix-confirm_rx-on-big-endian-v2-1-674fb3f4865b@westermo.com>
+ <jwqcbxfhnzbxn3iwvoe3shtfttio2pjsah3pkwknzqvjx4xfp5@nmfkkgrjxkhk>
+ <20260325180737.GM111839@horms.kernel.org>
+ <acTV86xU6piDih4B@FUE-ALEWI-WINX>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: Add the Lenovo IdeaCentre Mini X
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260325-ideacentre-v1-0-768b66aaef30@oss.qualcomm.com>
- <20260325-ideacentre-v1-2-768b66aaef30@oss.qualcomm.com>
- <41476442-648a-46f9-a9e8-f5f4f7cf7bb5@oss.qualcomm.com>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Val Packett <val@packett.cool>
-In-Reply-To: <41476442-648a-46f9-a9e8-f5f4f7cf7bb5@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
-X-Spamd-Result: default: False [-2.16 / 15.00];
+In-Reply-To: <acTV86xU6piDih4B@FUE-ALEWI-WINX>
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[packett.cool,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[packett.cool:s=key1];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-100192-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-100193-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[3];
-	DKIM_TRACE(0.00)[packett.cool:+];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[val@packett.cool,linux-arm-msm@vger.kernel.org];
+	RCVD_COUNT_THREE(0.00)[4];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
 	MISSING_XM_UA(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCPT_COUNT_SEVEN(0.00)[8];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,packett.cool:dkim,packett.cool:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 4428E33EFDA
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mani@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[10];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[westermo.com:email]
+X-Rspamd-Queue-Id: 99D7A33F364
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
+On Thu, Mar 26, 2026 at 07:45:07AM +0100, Alexander Wilhelm wrote:
+> On Wed, Mar 25, 2026 at 06:07:37PM +0000, Simon Horman wrote:
+> > On Tue, Mar 24, 2026 at 01:28:32PM +0530, Manivannan Sadhasivam wrote:
+> > > On Tue, Mar 24, 2026 at 08:50:33AM +0100, Alexander Wilhelm wrote:
+> > > > Convert confirm_rx to little endian when enqueueing and convert it back on
+> > > > receive. This fixes control flow on big endian hosts, little endian is
+> > > > unaffected.
+> > > > 
+> > > > On transmit, store confirm_rx as __le32 using cpu_to_le32(). On receive,
+> > > > apply le32_to_cpu() before using the value. !! ensures the value is 0 or 1
+> > > > in native endianness, so the conversion isn’t strictly required here, but
+> > > > it is kept for consistency and clarity.
+> > > > 
+> > > > Fixes: 5fdeb0d372ab ("net: qrtr: Implement outgoing flow control")
+> > > > Signed-off-by: Alexander Wilhelm <alexander.wilhelm@westermo.com>
+> > > 
+> > > Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+> > 
+> > Sorry if this contradicts my review of v1.
+> > 
+> > But as this isn't strictly necessary let's target net-next
+> > and drop the Fixes tag.
+> 
+> Sure, I will rebase onto the latest `net-next` repository and send out `v3`,
+> without a "Fixes" tag.
+> 
 
-On 3/26/26 7:47 AM, Konrad Dybcio wrote:
-> On 3/25/26 11:34 PM, Bjorn Andersson wrote:
->> The Lenovo IdeaCentre Mini X (Snapdragon) Desktop is a Hamoa-based
->> ultracompact desktop PC. It provides HDMI, DisplayPort, USB Type-C
->> display outputs, 5 additional USB ports, Ethernet, dual NVME slots,
->> headphone jack, WiFi, and Bluetooth.
->>
->> Introduce a DeviceTree describing this device.
->>
->> Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
->> ---
-> [...]
->
->> +&pcie3 {
->> +	pinctrl-names = "default";
->> +	pinctrl-0 = <&pcie3_default>;
->> +
->> +	perst-gpios = <&tlmm 143 GPIO_ACTIVE_LOW>;
->> +	wake-gpios = <&tlmm 145 GPIO_ACTIVE_LOW>;
-> In lieu of the recent changes, these 2 properties need to be moved
-> to the root port node under the RCs, for all of them
->
-> Konrad
+FWIW: Adding Fixes tag doesn't mean that the patch should be queued for -rcS.
 
-…and without forgetting (as I have for dell-thena until noticing in v4) 
-that under the port nodes, it's now called "reset" instead of "perst"! :)
+- Mani
 
-~val
-
+-- 
+மணிவண்ணன் சதாசிவம்
 
