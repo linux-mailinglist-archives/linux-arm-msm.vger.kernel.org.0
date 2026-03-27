@@ -1,1605 +1,193 @@
-Return-Path: <linux-arm-msm+bounces-100389-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100390-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id SJGOH5e9xmnoNwUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100389-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 18:25:43 +0100
+	id aJVBILS+xmnoNwUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100390-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 18:30:28 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF7E73484D4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 18:25:42 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D8A7E3485CC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 18:30:27 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1531F31607DE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 17:17:17 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 09FCC30107EB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 17:23:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 993323ECBDF;
-	Fri, 27 Mar 2026 17:16:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB90D396565;
+	Fri, 27 Mar 2026 17:23:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="h0j/bNBH";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="UVd7hVd4"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PJyTmmYa";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="ZEPGkmbh"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA993C5DDE
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2026 17:16:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9058A25B305
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2026 17:23:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774631810; cv=none; b=ulJqnFy8CmTjxGNqCyaL7gaOMpuXllMKRQEISEwZpKgOLkvFGi2ygV9TamXG4mAocQCXqM0r6pzTD1xmjhmxe6RP2oM58cBr68Bz3JOas7D1BzHPTkzOZJyQR4tRjacWEQLe+RZremtFoszuaGPY/qCYnSng52WjhpIE55Oy9xk=
+	t=1774632227; cv=none; b=eFrzhFqgaOBuiPVm12n6NCuazkDjuZuaQmAaN4SvrQfkHWhK6yG8Jp+/63WUct1SpEzlEr1BC3T47/6ey8CO5FwBH3KDb96EtlC+XI6aydB8y81hGueZSz32SVu7unrlmG1FZMfV213I42u2K/GCnDSf6kX6AK+AiGtGL5Y0AC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774631810; c=relaxed/simple;
-	bh=TjXhaoKmSDIiIZQX8QuSEeIHcoRENi4atdkCLLu6oh0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Gn0RW+r5qMfocArwMSCuA6PfIaZKSRzL39y9DA90u4Qg/eBnAJWmoTL87zC1kChBFsGPPpWBDnA8YR9YdXQMWSqAMV7NcAhuGaZPphkXCiMa4E9DP9iBxHSv87rrVn3K+ab/u0g3HyoOEKvWA4WiFM5pfdXlViXCScYHutKpyeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=h0j/bNBH; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=UVd7hVd4; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1774632227; c=relaxed/simple;
+	bh=oXHGouaPsU04OdEw95rRa+ejkayYWhlXw7cqQ9DL2TQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DKtllnI2p3xcbMHi8UgpCPBZN6Q5I4V9GVTLIE/UcXtVIzv7frcfq0WYru/vASJmlf96bpJO8CO+Hc8nCG0AdGHNYjPcXt2f/JBhdt48ufH5c7zuAuMBWgW37WxIEJLC6VE5IofaacN4VeBUonsMrBTjmwea8MDDCgmxIvloF7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PJyTmmYa; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=ZEPGkmbh; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62RDhQAi2769547
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2026 17:16:47 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62RDi2nn431532
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2026 17:23:46 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	I3HlpRnu8yaDAgSI1HzD3rs9meU1sUjz/+4S9QWVEGw=; b=h0j/bNBHjtRzloI7
-	ofv+vumMHQZaqzxTgvm6VaPOg8LADjDhVVa+yZcTQiIBqzZJQTwOeZq/fn1/MQnW
-	BlSCZCD/GJn5IqGLJxQ5i2hQfCO6bwn8NfW9pfo0YuRwuqZtyDkDjDHLR8BoYIJa
-	wu2WTdjh73j9uc89jHryz+4LBQJZZyI5fftxGV+RnYPyq4/+o2Jzvmxvrb8NvY2M
-	iLpa6F7O/LelL4x2DDNOd1tBXb1aGC6a4F/ZMeGNUCkmVkicL9ROr7RlOwVieSxg
-	fTddS/2ygvVPocQm0nYXCD+2T6EkzV+q2e2m8YAuv9JuxTZqG0jREeXp07vbAL6M
-	S5vJHw==
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d5bxv40uw-1
+	veP/AcaZJqvwTGjl78Yki2Fb/VKChVz/2Shqnw88esQ=; b=PJyTmmYaHO8YvRjV
+	EXqljG7SwMrM61ol95ODV/0upNI+nHCCB0N4MCYxPvrcZcp4+T+eYCWoRktndHq/
+	VFvkb5QBdAcAsh+2V8v56hqSUl0S0H2u5tcWdwL70Tpf+ksLvE+UEA4jpTfzcu9h
+	sZL/XMmuQJysz2WYr4uhJHvz1c8OPa2hh5POGesZUGWD+f4iFeTt4Nrw+dJz4Lvz
+	x2rCeeF0M5meAXnEUwQxiQZZfUUfZtzGAKvVV/n1p4Jiq0AaZxQUO4dQ2TQ3ZOar
+	3D2K7p900tmnTyBGZLWBFd3PjOXfXj4REs52W6YhbI8sYrmgtcdArPWYOIQEA2fo
+	0G74IQ==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com [74.125.82.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d5hapu3k2-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2026 17:16:46 +0000 (GMT)
-Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-c629a3276e9so4262270a12.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2026 10:16:46 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2026 17:23:45 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id 5a478bee46e88-2c189594f54so4135273eec.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2026 10:23:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1774631806; x=1775236606; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=I3HlpRnu8yaDAgSI1HzD3rs9meU1sUjz/+4S9QWVEGw=;
-        b=UVd7hVd4W5oNHQg/CmRltLjyOFmWtNMXDCoX5rB+jScrghdkV/fCLaCukHxOOu7xKT
-         JeNRMlzCAinQkirFLh6oNvFvXnvaz8qZ7IuX6gEFNMIGVsm7EyUJ2jXcfvSUsoTvPuOj
-         2zSWqd+/IKm+Exs8FvUZQRUiWQ35tQ9Q1Ps/IT/5JpRn9s2uI6zfy6sgU3i7nJUtp7PR
-         f7GbKl/FOedxe9OlyFwnle5xu05u0rqCKm4s68eWq4SDOdWVC547AVeNc1tgqWIG4jf2
-         RunDPBw9h4BJfJagnZ2stL4sYyeHhDftASME5itVKK/ZNz0KW73CFWiSr5ac7GrpIop8
-         G05g==
+        d=oss.qualcomm.com; s=google; t=1774632225; x=1775237025; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=veP/AcaZJqvwTGjl78Yki2Fb/VKChVz/2Shqnw88esQ=;
+        b=ZEPGkmbhUs88roQOgMyXnHwWAWHx/Bs0XpV6mIbVYurmb3BN1/n1GQd/6quuKzW6/S
+         DgQkuiHlcYY4y6Amx9gJ+uQ6Bi65/DsJQoynrMhv2aUTqYmatFEcDRuHi64Z04G9ENIn
+         EZYoi2o6Vlx4yDYq7dSIKrsGs8H6O76MegqYp6Gf5CDJkPmBn3zZRGz7R1aMwDxI5guH
+         47A6wrPv458Lg3s8q5pprGHYtVq465b3nOrWGYoKY3/IO5kgdMQ8XEoVtCbF2ZlCnv00
+         I87e++uRlEGItXjtkIWpXeE72m24PoIepLKgbX2xg5oFbV21gR8x3rTHV3ub0RQB9feA
+         8zlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774631806; x=1775236606;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=I3HlpRnu8yaDAgSI1HzD3rs9meU1sUjz/+4S9QWVEGw=;
-        b=GOjg8F+itTdpzM8relayycWNOXkKwbvREiC2G9FyTDmjVBKikJ1CCZTlbC43uoqtsB
-         B/yhdumAQXDX5EM7dLUNPdxlEAKn2BN6rcDYU+EhbfezJ4YdwpgDzq0OTjFGcHDcZAUD
-         rJW182qO6dRu3lNUikDG1l61jjCwMafuO2pv0b3bkkPJcAWdMAVM0G6w7f4RvvsjlAvI
-         u+EUNQ5OQ4bro/U0ZsX0BuZGEdesWYoiqvDw/kUQYmQl5N78oR0AJReuFD/R6LzWMyJR
-         RCuNjbH4sw3uBHS1p6nW7R/LBd2ZVk7yQMMDPvDMXY19jGXAx3c0owJcTx9AvUW8zbYq
-         KL3w==
-X-Gm-Message-State: AOJu0Yw/XA9pXVuF7p3n/c1G2ccp/ot/n/4AqB9Lu5QldbJNGGj8v6ye
-	voYJ3RXX0n2qhqyVQzArA0/jXN0WBWddhPtc7hy4Zt47xfHABwYPgs/1A1xEHo84VPN61syNUTb
-	HSSo9sfuxYIIgFDfsenwl8mVyXLTWYbXrQ4nz9+Q8w9ixnmK8erAp+eme6AGKYr23wSeo
-X-Gm-Gg: ATEYQzz/9POB/WRCXs17CohBD2Djyr+Pf5zEWgydwuPLScxTgzj4pt27mW322A9OMiv
-	B455KW8kGj7qiLmNRDW3/MQz6i3y7orAJ2EJFQJNaJanJuVBnpG99hv1z3o81K+T2wg5/0+uYqZ
-	hd5bQIO97+LKlfzoqHAsQwzP5YAsBd/6sGKt/mI9AZww4E0jDhloYg4KGYjn6XctmqQP8m9VrVp
-	XbaroWnN/vCGmcVJQWwuQltVbKfeiBCp8jltQShML7uemKK7p6D1nWB7SquOgymlaj6Mv60pYN0
-	KjIRP34HvJROk6ZZ+ZHwnMPxp+ol27XA6NqLLqv+Ei0WYjhilOlwr+Qt+vwvjzs/FQhHZ/W2EXv
-	lIiVTnjEJVXSF5XoRoKyafZ2x48iIt7ManF0/PSe3G5KfVY65
-X-Received: by 2002:a05:6a00:27a0:b0:81e:12f1:d8a with SMTP id d2e1a72fcca58-82c95ebecabmr3497781b3a.34.1774631804977;
-        Fri, 27 Mar 2026 10:16:44 -0700 (PDT)
-X-Received: by 2002:a05:6a00:27a0:b0:81e:12f1:d8a with SMTP id d2e1a72fcca58-82c95ebecabmr3497734b3a.34.1774631804113;
-        Fri, 27 Mar 2026 10:16:44 -0700 (PDT)
-Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82c964f9e9bsm2531517b3a.49.2026.03.27.10.16.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Mar 2026 10:16:43 -0700 (PDT)
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>, Linus Walleij <linusw@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Abel Vesa <abel.vesa@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Subject: [PATCH 2/2] pinctrl: qcom: Drop redundant intr_target_reg on modern SoCs
-Date: Fri, 27 Mar 2026 22:42:40 +0530
-Message-ID: <20260327171240.3222755-2-mukesh.ojha@oss.qualcomm.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260327171240.3222755-1-mukesh.ojha@oss.qualcomm.com>
-References: <20260327171240.3222755-1-mukesh.ojha@oss.qualcomm.com>
+        d=1e100.net; s=20251104; t=1774632225; x=1775237025;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=veP/AcaZJqvwTGjl78Yki2Fb/VKChVz/2Shqnw88esQ=;
+        b=gw2nll+a8qXxrPUjjGmQztzbUrb44M0gL/sq7/j6/e9SrdJsjPhpxPTn1/1FSWx12e
+         URVozwJWJE8sA9d7ARU8kZOa9MTmqpGW+tz9VLDz6J4t7VpIoFwFLq40hgR/eYFtAaks
+         ygC8w3sWtf8NWKX1nK4RMN7F0wsmbDyJ4ekQImdLWf1F4pAqTuA8ClhdsqlFxx7qcMRb
+         4iTRBQmANXbcXrJZj3+IaAkoYxkVlg+Q5R5T2gn6PT0LvccGWBAgBkb4el9kvpPPOKJa
+         WrcUGdW0UOJF4jK/2hMUMV02HJwP/WwBLgWROlXivJyL8zwDKr9IevjemW+zXJQs+hQA
+         +VNg==
+X-Forwarded-Encrypted: i=1; AJvYcCUt3egAacIAiQp5Kzq90jI/3NSXgNno1mjSBGZrBsCLjEMGZJPVktkX07zNv0DWxMJVLqa7IrDlYCAPEWyW@vger.kernel.org
+X-Gm-Message-State: AOJu0YyQgb1+reBQQxk3aY1omSuT21Ms9andJH7ijSlO6V7FMGi0+XoU
+	IFp9vrt2rP4cDIyguHQOAIPZGVhZk6vhaBW7NhxI76qe2VGAV+UNgmx207FuSSXk6RVprRGK8zy
+	R/EZXo7wwtxXLIcu+qrRnVUkFvw/oD69lvsThA+3ZuUKnV/ZUGau4hZFdes3h6Bg7tbz8
+X-Gm-Gg: ATEYQzwaJXiI1jZTdZEWFlTjVXHaEz/TGbOP1zQ6eQu9iZhuIbv/XeYxg3D2Kqkiwmv
+	p9xlcQGCyrHUEz9cANBvOJmvEDFaj6layqMi4tnTaGQyNo/hE3RpuVGiw9K9iLzj9HVEIWcMvao
+	RrqQZBPBX+NbW2piAKl+u3sM0tjPlBzUVARAZw6KF5J8fFgx74NyDTxZcYOrvg1/LF3viV4aAoE
+	F68TYBeiqGsRufrKWqiw72gjwT6xRTPwjOxkzGrKSxKZ6N4+OCDTBglg144GfpEeHqsymAyuQHL
+	xTBGLNqxQmYAE1IyDk6cRDrPS4+nkB178nhN3HLaI1ThSR+c8AYuZdmDT9T2ggZP2gb/HvZEA4/
+	m7WrXmCnOmzyKUQdMyHyWLR1r6Kl9PHft9h0KARFtrM/j84SBIIEXKJjq6zrmf1iPiqZ1WGetER
+	s=
+X-Received: by 2002:a05:7300:6da4:b0:2bf:1eaf:995c with SMTP id 5a478bee46e88-2c185dfe422mr1792456eec.17.1774632225066;
+        Fri, 27 Mar 2026 10:23:45 -0700 (PDT)
+X-Received: by 2002:a05:7300:6da4:b0:2bf:1eaf:995c with SMTP id 5a478bee46e88-2c185dfe422mr1792435eec.17.1774632224491;
+        Fri, 27 Mar 2026 10:23:44 -0700 (PDT)
+Received: from [10.226.59.182] (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2c16edc0436sm5589779eec.22.2026.03.27.10.23.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 27 Mar 2026 10:23:44 -0700 (PDT)
+Message-ID: <39c164d7-5d9d-41a8-8d3e-e209317ca7c2@oss.qualcomm.com>
+Date: Fri, 27 Mar 2026 11:23:42 -0600
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=A99h/qWG c=1 sm=1 tr=0 ts=69c6bb7e cx=c_pps
- a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] accel/qaic: Simplify bootlog line handling
+To: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>,
+        carl.vanderlip@oss.qualcomm.com, troy.hanson@oss.qualcomm.com,
+        zachary.mckevitt@oss.qualcomm.com
+Cc: ogabbay@kernel.org, lizhi.hou@amd.com, karol.wachowski@linux.intel.com,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org
+References: <20251223170226.2275812-1-youssef.abdulrahman@oss.qualcomm.com>
+Content-Language: en-US
+From: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+In-Reply-To: <20251223170226.2275812-1-youssef.abdulrahman@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=TqnrRTXh c=1 sm=1 tr=0 ts=69c6bd21 cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
  a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=EUspDBNiAAAA:8 a=fg8pLS6Fh3hz09fDWi0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=x9snwWr2DeNwDh03kgHS:22
-X-Proofpoint-ORIG-GUID: NrJwjIwdrQU7vFys77WjkqBSmj_NtCre
-X-Proofpoint-GUID: NrJwjIwdrQU7vFys77WjkqBSmj_NtCre
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI3MDEyMCBTYWx0ZWRfX9h60c+jckZF9
- YOWvkeaHyPxzBKyaYcedG4oKaY63pV0JffiTXRJ7Fo/uHIUt8YKG4Zw3cbnsBzle+BEbqGlmv4S
- doz4kFZru8DyN0SSPLXgpcimMd6i2WmDDDAa+mtpgltqQYifVM9zxFBKXwWgm4yDDrrNveX3QG2
- WBf0jwIxgHOvS5TklKadoLW+2/6U5Dt/KUgKySyye4tmhbjn9B7xYijwgNzG8mxI37sysriXMdU
- acAT3iX//UCNHUkG620FYrGAicRrgrzLSRK1F1BFYepwOy8VbRrhrnZjr4IvaHs/sIEbr6ZiVmc
- DorULjXPRV2JHwAIOKxKe6VBcsDNxuf5mN2q3w8QTXaIKpO0vqiI4w3MqBDMetAp+EGX0yMf1Aw
- PJCu/oDdidDZMfUBw86YdWMPEsfpcCF07xW8M5B8VthF8Ht2XPV0oaslBV5RCwuNNSxeieXEYvL
- Mb2kYn6Ed+r2ks9mbng==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=EUspDBNiAAAA:8 a=ZUs9zOJhT6POFn0piIgA:9 a=QEXdDO2ut3YA:10
+ a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI3MDEyMCBTYWx0ZWRfX+8qpW6+Pf17h
+ 2GJ3Cowtq12xlfhX2fwzOlySPU7ACigNzmvUOLAFbSMVUlygmzDf7FOmTTpFIzBUhsfDdoVN6/g
+ 5vOsyz+oXkOT/n6C8a+9CyDeOjIJvWUr6d3Q0eGgm63LzGRaf/P6VrIk/gO1/15Y/YyL+rgMPyX
+ T01SiSkloUbLWM57BtirFRCLn/EZAVp6OyP1wMX6uNYAa0Qi/MdQCAD4gYtlqJlfodAgMbYfbF5
+ 6Rjb+NJeqduqiyd6s2n09oMSuhArYXYcjeBLcjRPsuQShw5GtVFGF6X046gBQgjJvWB0Jd/XJtV
+ 8nsjVf1wOK9JvZWDg+WVX+ZqbN4XDBR/Tz5jxPY+EZ0iPmQY+BxtgPVtqp7Cq51JpB1jNcHzZhV
+ BprpZmbTnyQ2XJFlP8O2OA9O1UVyrx3dVk7rR55UzzS/RMNfpAO49vVDm8Bvbe809cHnmSdDKDw
+ hsg5fCxmRvKdpA8+2sg==
+X-Proofpoint-GUID: Y8swUlZ8yGrLmjlevKHsZ2WJ_OgKpebp
+X-Proofpoint-ORIG-GUID: Y8swUlZ8yGrLmjlevKHsZ2WJ_OgKpebp
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-27_01,2026-03-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 malwarescore=0 spamscore=0 impostorscore=0
- phishscore=0 bulkscore=0 lowpriorityscore=0 clxscore=1015 priorityscore=1501
+ clxscore=1015 impostorscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0
+ malwarescore=0 suspectscore=0 adultscore=0 phishscore=0 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603270120
-X-Spamd-Result: default: False [-1.16 / 15.00];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-100389-lists,linux-arm-msm=lfdr.de];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-100390-lists,linux-arm-msm=lfdr.de];
+	MIME_TRACE(0.00)[0:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FROM_NEQ_ENVFROM(0.00)[jeff.hugo@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mukesh.ojha@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	MID_RHS_MATCH_FROM(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
 	RCPT_COUNT_SEVEN(0.00)[9];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: CF7E73484D4
+X-Rspamd-Queue-Id: D8A7E3485CC
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On all Qualcomm TLMM generations from APQ8084 onwards, the interrupt
-target routing bits are located in the same register as the interrupt
-configuration bits (intr_cfg_reg). Only five older SoCs — APQ8064,
-IPQ8064, MDM9615, MSM8660 and MSM8960 — have a genuinely separate
-interrupt target routing register at a different offset (0x400 + 0x4 * id).
+On 12/23/2025 10:02 AM, Youssef Samir wrote:
+> From: Troy Hanson <thanson@qti.qualcomm.com>
+> 
+> Instead of storing and emitting bootlogs as individual null-terminated
+> lines, concatenate them, and later emit them to debugfs in a single call.
+> 
+> Do not insert a null terminator on messages received from the device.
+> Instead use the message length when subsequently storing the message.
+> 
+> Exclude trailing nulls to normalize AIC100 and AIC200 bootlog lines.
+> 
+> Signed-off-by: Troy Hanson <thanson@qti.qualcomm.com>
+> Signed-off-by: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
 
-Replace MSM_ACCESSOR(intr_target) with a custom accessor that falls back
-to intr_cfg_reg when intr_target_reg is zero. Apply the same fallback in
-the SCM path. Drop the now-redundant .intr_target_reg initializer from
-all SoC drivers where it duplicated intr_cfg_reg, keeping it only in
-the five drivers where it genuinely differs.
+Pushed to drm-misc-next.
 
-Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
----
- drivers/pinctrl/qcom/pinctrl-apq8084.c   |  2 --
- drivers/pinctrl/qcom/pinctrl-eliza.c     |  3 ---
- drivers/pinctrl/qcom/pinctrl-glymur.c    |  3 ---
- drivers/pinctrl/qcom/pinctrl-ipq4019.c   |  1 -
- drivers/pinctrl/qcom/pinctrl-ipq5018.c   |  1 -
- drivers/pinctrl/qcom/pinctrl-ipq5332.c   |  1 -
- drivers/pinctrl/qcom/pinctrl-ipq5424.c   |  1 -
- drivers/pinctrl/qcom/pinctrl-ipq6018.c   |  1 -
- drivers/pinctrl/qcom/pinctrl-ipq8074.c   |  1 -
- drivers/pinctrl/qcom/pinctrl-ipq9574.c   |  1 -
- drivers/pinctrl/qcom/pinctrl-kaanapali.c |  3 ---
- drivers/pinctrl/qcom/pinctrl-mdm9607.c   |  2 --
- drivers/pinctrl/qcom/pinctrl-milos.c     |  3 ---
- drivers/pinctrl/qcom/pinctrl-msm.c       | 20 ++++++++++++++++++--
- drivers/pinctrl/qcom/pinctrl-msm.h       |  6 +++++-
- drivers/pinctrl/qcom/pinctrl-msm8226.c   |  2 --
- drivers/pinctrl/qcom/pinctrl-msm8909.c   |  2 --
- drivers/pinctrl/qcom/pinctrl-msm8916.c   |  2 --
- drivers/pinctrl/qcom/pinctrl-msm8917.c   |  2 --
- drivers/pinctrl/qcom/pinctrl-msm8953.c   |  2 --
- drivers/pinctrl/qcom/pinctrl-msm8976.c   |  2 --
- drivers/pinctrl/qcom/pinctrl-msm8994.c   |  2 --
- drivers/pinctrl/qcom/pinctrl-msm8996.c   |  2 --
- drivers/pinctrl/qcom/pinctrl-msm8998.c   |  3 ---
- drivers/pinctrl/qcom/pinctrl-msm8x74.c   |  3 ---
- drivers/pinctrl/qcom/pinctrl-qcm2290.c   |  3 ---
- drivers/pinctrl/qcom/pinctrl-qcs404.c    |  2 --
- drivers/pinctrl/qcom/pinctrl-qcs615.c    |  3 ---
- drivers/pinctrl/qcom/pinctrl-qcs8300.c   |  3 ---
- drivers/pinctrl/qcom/pinctrl-qdf2xxx.c   |  1 -
- drivers/pinctrl/qcom/pinctrl-qdu1000.c   |  3 ---
- drivers/pinctrl/qcom/pinctrl-sa8775p.c   |  3 ---
- drivers/pinctrl/qcom/pinctrl-sar2130p.c  |  2 --
- drivers/pinctrl/qcom/pinctrl-sc7180.c    |  3 ---
- drivers/pinctrl/qcom/pinctrl-sc7280.c    |  3 ---
- drivers/pinctrl/qcom/pinctrl-sc8180x.c   |  3 ---
- drivers/pinctrl/qcom/pinctrl-sc8280xp.c  |  3 ---
- drivers/pinctrl/qcom/pinctrl-sdm660.c    |  2 --
- drivers/pinctrl/qcom/pinctrl-sdm670.c    |  4 ----
- drivers/pinctrl/qcom/pinctrl-sdm845.c    |  3 ---
- drivers/pinctrl/qcom/pinctrl-sdx55.c     |  2 --
- drivers/pinctrl/qcom/pinctrl-sdx65.c     |  3 ---
- drivers/pinctrl/qcom/pinctrl-sdx75.c     |  2 --
- drivers/pinctrl/qcom/pinctrl-sm4450.c    |  3 ---
- drivers/pinctrl/qcom/pinctrl-sm6115.c    |  3 ---
- drivers/pinctrl/qcom/pinctrl-sm6125.c    |  3 ---
- drivers/pinctrl/qcom/pinctrl-sm6350.c    |  3 ---
- drivers/pinctrl/qcom/pinctrl-sm6375.c    |  3 ---
- drivers/pinctrl/qcom/pinctrl-sm7150.c    |  3 ---
- drivers/pinctrl/qcom/pinctrl-sm8150.c    |  3 ---
- drivers/pinctrl/qcom/pinctrl-sm8250.c    |  3 ---
- drivers/pinctrl/qcom/pinctrl-sm8350.c    |  3 ---
- drivers/pinctrl/qcom/pinctrl-sm8450.c    |  3 ---
- drivers/pinctrl/qcom/pinctrl-sm8550.c    |  3 ---
- drivers/pinctrl/qcom/pinctrl-sm8650.c    |  3 ---
- drivers/pinctrl/qcom/pinctrl-sm8750.c    |  3 ---
- drivers/pinctrl/qcom/pinctrl-x1e80100.c  |  3 ---
- 57 files changed, 23 insertions(+), 138 deletions(-)
-
-diff --git a/drivers/pinctrl/qcom/pinctrl-apq8084.c b/drivers/pinctrl/qcom/pinctrl-apq8084.c
-index 27693cd64881..9fdbe6743512 100644
---- a/drivers/pinctrl/qcom/pinctrl-apq8084.c
-+++ b/drivers/pinctrl/qcom/pinctrl-apq8084.c
-@@ -343,7 +343,6 @@ static const unsigned int sdc2_data_pins[] = { 152 };
- 		.io_reg = 0x1004 + 0x10 * id,		\
- 		.intr_cfg_reg = 0x1008 + 0x10 * id,	\
- 		.intr_status_reg = 0x100c + 0x10 * id,	\
--		.intr_target_reg = 0x1008 + 0x10 * id,	\
- 		.mux_bit = 2,				\
- 		.pull_bit = 0,				\
- 		.drv_bit = 6,				\
-@@ -370,7 +369,6 @@ static const unsigned int sdc2_data_pins[] = { 152 };
- 		.io_reg = 0,                            \
- 		.intr_cfg_reg = 0,                      \
- 		.intr_status_reg = 0,                   \
--		.intr_target_reg = 0,                   \
- 		.mux_bit = -1,                          \
- 		.pull_bit = pull,                       \
- 		.drv_bit = drv,                         \
-diff --git a/drivers/pinctrl/qcom/pinctrl-eliza.c b/drivers/pinctrl/qcom/pinctrl-eliza.c
-index 19c706137f81..c1f756cbcdeb 100644
---- a/drivers/pinctrl/qcom/pinctrl-eliza.c
-+++ b/drivers/pinctrl/qcom/pinctrl-eliza.c
-@@ -34,7 +34,6 @@
- 		.io_reg = 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = 0x8 + REG_SIZE * id,	\
- 		.intr_status_reg = 0xc + REG_SIZE * id,	\
--		.intr_target_reg = 0x8 + REG_SIZE * id,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-@@ -64,7 +63,6 @@
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-@@ -89,7 +87,6 @@
- 		.io_reg = io,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
- 		.drv_bit = 0,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-glymur.c b/drivers/pinctrl/qcom/pinctrl-glymur.c
-index 2da3b513d31b..9838c7839923 100644
---- a/drivers/pinctrl/qcom/pinctrl-glymur.c
-+++ b/drivers/pinctrl/qcom/pinctrl-glymur.c
-@@ -21,7 +21,6 @@
- 		.io_reg = 0x4 + REG_SIZE * id,                        \
- 		.intr_cfg_reg = 0x8 + REG_SIZE * id,                  \
- 		.intr_status_reg = 0xc + REG_SIZE * id,               \
--		.intr_target_reg = 0x8 + REG_SIZE * id,               \
- 		.mux_bit = 2,                                         \
- 		.pull_bit = 0,                                        \
- 		.drv_bit = 6,                                         \
-@@ -64,7 +63,6 @@
- 		.io_reg = 0,                                         \
- 		.intr_cfg_reg = 0,                                   \
- 		.intr_status_reg = 0,                                \
--		.intr_target_reg = 0,                                \
- 		.mux_bit = -1,                                       \
- 		.pull_bit = pull,                                    \
- 		.drv_bit = drv,                                      \
-@@ -89,7 +87,6 @@
- 		.io_reg = io,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
- 		.drv_bit = 0,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-ipq4019.c b/drivers/pinctrl/qcom/pinctrl-ipq4019.c
-index 6ede3149b6e1..c5f0decc3eb3 100644
---- a/drivers/pinctrl/qcom/pinctrl-ipq4019.c
-+++ b/drivers/pinctrl/qcom/pinctrl-ipq4019.c
-@@ -242,7 +242,6 @@ DECLARE_QCA_GPIO_PINS(99);
- 		.io_reg = 0x4 + 0x1000 * id,		\
- 		.intr_cfg_reg = 0x8 + 0x1000 * id,	\
- 		.intr_status_reg = 0xc + 0x1000 * id,	\
--		.intr_target_reg = 0x8 + 0x1000 * id,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-diff --git a/drivers/pinctrl/qcom/pinctrl-ipq5018.c b/drivers/pinctrl/qcom/pinctrl-ipq5018.c
-index cbf34854f882..0698c8f0110b 100644
---- a/drivers/pinctrl/qcom/pinctrl-ipq5018.c
-+++ b/drivers/pinctrl/qcom/pinctrl-ipq5018.c
-@@ -32,7 +32,6 @@
- 		.io_reg = 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = 0x8 + REG_SIZE * id,	\
- 		.intr_status_reg = 0xc + REG_SIZE * id,	\
--		.intr_target_reg = 0x8 + REG_SIZE * id,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-diff --git a/drivers/pinctrl/qcom/pinctrl-ipq5332.c b/drivers/pinctrl/qcom/pinctrl-ipq5332.c
-index 239cbe75f198..26a7a8c818f3 100644
---- a/drivers/pinctrl/qcom/pinctrl-ipq5332.c
-+++ b/drivers/pinctrl/qcom/pinctrl-ipq5332.c
-@@ -32,7 +32,6 @@
- 		.io_reg = 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = 0x8 + REG_SIZE * id,		\
- 		.intr_status_reg = 0xc + REG_SIZE * id,	\
--		.intr_target_reg = 0x8 + REG_SIZE * id,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-diff --git a/drivers/pinctrl/qcom/pinctrl-ipq5424.c b/drivers/pinctrl/qcom/pinctrl-ipq5424.c
-index 67b452a033d6..362ad88a5386 100644
---- a/drivers/pinctrl/qcom/pinctrl-ipq5424.c
-+++ b/drivers/pinctrl/qcom/pinctrl-ipq5424.c
-@@ -33,7 +33,6 @@
- 		.io_reg = 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = 0x8 + REG_SIZE * id,	\
- 		.intr_status_reg = 0xc + REG_SIZE * id,	\
--		.intr_target_reg = 0x8 + REG_SIZE * id,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-diff --git a/drivers/pinctrl/qcom/pinctrl-ipq6018.c b/drivers/pinctrl/qcom/pinctrl-ipq6018.c
-index be177fb0a92d..cc83f9362a85 100644
---- a/drivers/pinctrl/qcom/pinctrl-ipq6018.c
-+++ b/drivers/pinctrl/qcom/pinctrl-ipq6018.c
-@@ -32,7 +32,6 @@
- 		.io_reg = 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = 0x8 + REG_SIZE * id,		\
- 		.intr_status_reg = 0xc + REG_SIZE * id,	\
--		.intr_target_reg = 0x8 + REG_SIZE * id,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-diff --git a/drivers/pinctrl/qcom/pinctrl-ipq8074.c b/drivers/pinctrl/qcom/pinctrl-ipq8074.c
-index e94de9083314..64ce8ea8f544 100644
---- a/drivers/pinctrl/qcom/pinctrl-ipq8074.c
-+++ b/drivers/pinctrl/qcom/pinctrl-ipq8074.c
-@@ -32,7 +32,6 @@
- 		.io_reg = 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = 0x8 + REG_SIZE * id,		\
- 		.intr_status_reg = 0xc + REG_SIZE * id,	\
--		.intr_target_reg = 0x8 + REG_SIZE * id,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-diff --git a/drivers/pinctrl/qcom/pinctrl-ipq9574.c b/drivers/pinctrl/qcom/pinctrl-ipq9574.c
-index 3ed093ea8eb9..09223eb166c9 100644
---- a/drivers/pinctrl/qcom/pinctrl-ipq9574.c
-+++ b/drivers/pinctrl/qcom/pinctrl-ipq9574.c
-@@ -32,7 +32,6 @@
- 		.io_reg = 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = 0x8 + REG_SIZE * id,		\
- 		.intr_status_reg = 0xc + REG_SIZE * id,	\
--		.intr_target_reg = 0x8 + REG_SIZE * id,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-diff --git a/drivers/pinctrl/qcom/pinctrl-kaanapali.c b/drivers/pinctrl/qcom/pinctrl-kaanapali.c
-index 364e6d997337..5cc45b9c55ab 100644
---- a/drivers/pinctrl/qcom/pinctrl-kaanapali.c
-+++ b/drivers/pinctrl/qcom/pinctrl-kaanapali.c
-@@ -34,7 +34,6 @@
- 		.io_reg = 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = 0x8 + REG_SIZE * id,	\
- 		.intr_status_reg = 0xc + REG_SIZE * id,	\
--		.intr_target_reg = 0x8 + REG_SIZE * id,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-@@ -64,7 +63,6 @@
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-@@ -89,7 +87,6 @@
- 		.io_reg = io,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
- 		.drv_bit = 0,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-mdm9607.c b/drivers/pinctrl/qcom/pinctrl-mdm9607.c
-index cef330547ce7..5794b0a11010 100644
---- a/drivers/pinctrl/qcom/pinctrl-mdm9607.c
-+++ b/drivers/pinctrl/qcom/pinctrl-mdm9607.c
-@@ -225,7 +225,6 @@ static const unsigned int qdsd_data3_pins[] = { 91 };
- 		.io_reg = 0x4 + 0x1000 * id,			\
- 		.intr_cfg_reg = 0x8 + 0x1000 * id,		\
- 		.intr_status_reg = 0xc + 0x1000 * id,		\
--		.intr_target_reg = 0x8 + 0x1000 * id,		\
- 		.mux_bit = 2,					\
- 		.pull_bit = 0,					\
- 		.drv_bit = 6,					\
-@@ -251,7 +250,6 @@ static const unsigned int qdsd_data3_pins[] = { 91 };
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-milos.c b/drivers/pinctrl/qcom/pinctrl-milos.c
-index 19abd5233a2c..74b5253257af 100644
---- a/drivers/pinctrl/qcom/pinctrl-milos.c
-+++ b/drivers/pinctrl/qcom/pinctrl-milos.c
-@@ -36,7 +36,6 @@
- 		.io_reg = 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = 0x8 + REG_SIZE * id,	\
- 		.intr_status_reg = 0xc + REG_SIZE * id,	\
--		.intr_target_reg = 0x8 + REG_SIZE * id,	\
- 		.mux_bit = 2,				\
- 		.pull_bit = 0,				\
- 		.drv_bit = 6,				\
-@@ -67,7 +66,6 @@
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-@@ -92,7 +90,6 @@
- 		.io_reg = io,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
- 		.drv_bit = 0,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-index e99871b90ab9..45b3a2763eb8 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-@@ -98,7 +98,22 @@ MSM_ACCESSOR(ctl)
- MSM_ACCESSOR(io)
- MSM_ACCESSOR(intr_cfg)
- MSM_ACCESSOR(intr_status)
--MSM_ACCESSOR(intr_target)
-+
-+static u32 msm_readl_intr_target(struct msm_pinctrl *pctrl,
-+				 const struct msm_pingroup *g)
-+{
-+	u32 reg = g->intr_target_reg ? g->intr_target_reg : g->intr_cfg_reg;
-+
-+	return readl(pctrl->regs[g->tile] + reg);
-+}
-+
-+static void msm_writel_intr_target(u32 val, struct msm_pinctrl *pctrl,
-+				   const struct msm_pingroup *g)
-+{
-+	u32 reg = g->intr_target_reg ? g->intr_target_reg : g->intr_cfg_reg;
-+
-+	writel(val, pctrl->regs[g->tile] + reg);
-+}
- 
- static void msm_ack_intr_status(struct msm_pinctrl *pctrl,
- 				const struct msm_pingroup *g)
-@@ -1078,7 +1093,8 @@ static int msm_gpio_irq_set_type(struct irq_data *d, unsigned int type)
- 		intr_target_mask = GENMASK(g->intr_target_width - 1, 0);
- 
- 	if (pctrl->intr_target_use_scm) {
--		u32 addr = pctrl->phys_base[0] + g->intr_target_reg;
-+		u32 reg = g->intr_target_reg ? g->intr_target_reg : g->intr_cfg_reg;
-+		u32 addr = pctrl->phys_base[0] + reg;
- 		int ret;
- 
- 		qcom_scm_io_readl(addr, &val);
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm.h b/drivers/pinctrl/qcom/pinctrl-msm.h
-index 4625fa5320a9..a4af279f748a 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm.h
-+++ b/drivers/pinctrl/qcom/pinctrl-msm.h
-@@ -52,7 +52,11 @@ struct pinctrl_pin_desc;
-  * @intr_cfg_reg:         Offset of the register holding interrupt configuration bits.
-  * @intr_status_reg:      Offset of the register holding the status bits for this group.
-  * @intr_target_reg:      Offset of the register specifying routing of the interrupts
-- *                        from this group.
-+ *                        from this group. On most SoCs this register is the same as
-+ *                        @intr_cfg_reg; leaving this field as zero causes the driver
-+ *                        to fall back to @intr_cfg_reg automatically. Only set this
-+ *                        explicitly on older SoCs where the interrupt target routing
-+ *                        lives in a separate register (e.g. APQ8064, MSM8960).
-  * @mux_bit:              Offset in @ctl_reg for the pinmux function selection.
-  * @pull_bit:             Offset in @ctl_reg for the bias configuration.
-  * @drv_bit:              Offset in @ctl_reg for the drive strength configuration.
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm8226.c b/drivers/pinctrl/qcom/pinctrl-msm8226.c
-index a81aa092ef12..d27b7599ea83 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm8226.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm8226.c
-@@ -282,7 +282,6 @@ static const unsigned int sdc2_data_pins[] = { 122 };
- 		.io_reg = 0x1004 + 0x10 * id,		\
- 		.intr_cfg_reg = 0x1008 + 0x10 * id,	\
- 		.intr_status_reg = 0x100c + 0x10 * id,	\
--		.intr_target_reg = 0x1008 + 0x10 * id,	\
- 		.mux_bit = 2,				\
- 		.pull_bit = 0,				\
- 		.drv_bit = 6,				\
-@@ -308,7 +307,6 @@ static const unsigned int sdc2_data_pins[] = { 122 };
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm8909.c b/drivers/pinctrl/qcom/pinctrl-msm8909.c
-index 544a52fb8f3d..8fa922d89101 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm8909.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm8909.c
-@@ -33,7 +33,6 @@
- 		.io_reg = 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = 0x8 + REG_SIZE * id,	\
- 		.intr_status_reg = 0xc + REG_SIZE * id,	\
--		.intr_target_reg = 0x8 + REG_SIZE * id,	\
- 		.mux_bit = 2,				\
- 		.pull_bit = 0,				\
- 		.drv_bit = 6,				\
-@@ -59,7 +58,6 @@
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm8916.c b/drivers/pinctrl/qcom/pinctrl-msm8916.c
-index b1b6934bb4b6..709c5d1d4d0a 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm8916.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm8916.c
-@@ -307,7 +307,6 @@ static const unsigned int qdsd_data3_pins[] = { 133 };
- 		.io_reg = 0x4 + 0x1000 * id,			\
- 		.intr_cfg_reg = 0x8 + 0x1000 * id,		\
- 		.intr_status_reg = 0xc + 0x1000 * id,		\
--		.intr_target_reg = 0x8 + 0x1000 * id,		\
- 		.mux_bit = 2,					\
- 		.pull_bit = 0,					\
- 		.drv_bit = 6,					\
-@@ -333,7 +332,6 @@ static const unsigned int qdsd_data3_pins[] = { 133 };
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm8917.c b/drivers/pinctrl/qcom/pinctrl-msm8917.c
-index f23d92d6615b..d1ede4891703 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm8917.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm8917.c
-@@ -333,7 +333,6 @@ static const unsigned int qdsd_data3_pins[] = { 146 };
- 		.io_reg = 0x4 + 0x1000 * id,			\
- 		.intr_cfg_reg = 0x8 + 0x1000 * id,		\
- 		.intr_status_reg = 0xc + 0x1000 * id,		\
--		.intr_target_reg = 0x8 + 0x1000 * id,		\
- 		.mux_bit = 2,					\
- 		.pull_bit = 0,					\
- 		.drv_bit = 6,					\
-@@ -359,7 +358,6 @@ static const unsigned int qdsd_data3_pins[] = { 146 };
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm8953.c b/drivers/pinctrl/qcom/pinctrl-msm8953.c
-index 67db062fdf56..02ea89f5feaa 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm8953.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm8953.c
-@@ -29,7 +29,6 @@
- 		.io_reg = 0x4 + 0x1000 * id,			\
- 		.intr_cfg_reg = 0x8 + 0x1000 * id,		\
- 		.intr_status_reg = 0xc + 0x1000 * id,		\
--		.intr_target_reg = 0x8 + 0x1000 * id,		\
- 		.mux_bit = 2,					\
- 		.pull_bit = 0,					\
- 		.drv_bit = 6,					\
-@@ -55,7 +54,6 @@
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm8976.c b/drivers/pinctrl/qcom/pinctrl-msm8976.c
-index 345539b9e696..906a90778b97 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm8976.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm8976.c
-@@ -35,7 +35,6 @@
- 		.io_reg = REG_BASE + 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = REG_BASE + 0x8 + REG_SIZE * id,		\
- 		.intr_status_reg = REG_BASE + 0xc + REG_SIZE * id,	\
--		.intr_target_reg = REG_BASE + 0x8 + REG_SIZE * id,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-@@ -61,7 +60,6 @@
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm8994.c b/drivers/pinctrl/qcom/pinctrl-msm8994.c
-index 94e042d1f4b2..ecbe6b91d1da 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm8994.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm8994.c
-@@ -33,7 +33,6 @@
- 		.io_reg = 0x1004 + 0x10 * id,		\
- 		.intr_cfg_reg = 0x1008 + 0x10 * id,	\
- 		.intr_status_reg = 0x100c + 0x10 * id,	\
--		.intr_target_reg = 0x1008 + 0x10 * id,	\
- 		.mux_bit = 2,				\
- 		.pull_bit = 0,				\
- 		.drv_bit = 6,				\
-@@ -59,7 +58,6 @@
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm8996.c b/drivers/pinctrl/qcom/pinctrl-msm8996.c
-index e5b55693d023..73b07a10a957 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm8996.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm8996.c
-@@ -33,7 +33,6 @@
- 		.io_reg = REG_BASE + 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = REG_BASE + 0x8 + REG_SIZE * id,		\
- 		.intr_status_reg = REG_BASE + 0xc + REG_SIZE * id,	\
--		.intr_target_reg = REG_BASE + 0x8 + REG_SIZE * id,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-@@ -59,7 +58,6 @@
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm8998.c b/drivers/pinctrl/qcom/pinctrl-msm8998.c
-index b727593af34a..dcf11b79e562 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm8998.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm8998.c
-@@ -35,7 +35,6 @@
- 		.io_reg = base + 0x4 + 0x1000 * id,		\
- 		.intr_cfg_reg = base + 0x8 + 0x1000 * id,	\
- 		.intr_status_reg = base + 0xc + 0x1000 * id,	\
--		.intr_target_reg = base + 0x8 + 0x1000 * id,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-@@ -61,7 +60,6 @@
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-@@ -86,7 +84,6 @@
- 		.io_reg = offset + 0x4,			\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
- 		.drv_bit = 0,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm8x74.c b/drivers/pinctrl/qcom/pinctrl-msm8x74.c
-index 202bec003e96..ff432ec5815a 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm8x74.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm8x74.c
-@@ -344,7 +344,6 @@ static const unsigned int hsic_data_pins[] = { 153 };
- 		.io_reg = 0x1004 + 0x10 * id,		\
- 		.intr_cfg_reg = 0x1008 + 0x10 * id,	\
- 		.intr_status_reg = 0x100c + 0x10 * id,	\
--		.intr_target_reg = 0x1008 + 0x10 * id,	\
- 		.mux_bit = 2,				\
- 		.pull_bit = 0,				\
- 		.drv_bit = 6,				\
-@@ -370,7 +369,6 @@ static const unsigned int hsic_data_pins[] = { 153 };
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-@@ -401,7 +399,6 @@ static const unsigned int hsic_data_pins[] = { 153 };
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = 25,				\
- 		.pull_bit = -1,				\
- 		.drv_bit = -1,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-qcm2290.c b/drivers/pinctrl/qcom/pinctrl-qcm2290.c
-index 38200957451e..3b28ac498885 100644
---- a/drivers/pinctrl/qcom/pinctrl-qcm2290.c
-+++ b/drivers/pinctrl/qcom/pinctrl-qcm2290.c
-@@ -33,7 +33,6 @@
- 		.io_reg = 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = 0x8 + REG_SIZE * id,	\
- 		.intr_status_reg = 0xc + REG_SIZE * id,	\
--		.intr_target_reg = 0x8 + REG_SIZE * id,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-@@ -61,7 +60,6 @@
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-@@ -86,7 +84,6 @@
- 		.io_reg = offset + 0x4,			\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
- 		.drv_bit = 0,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-qcs404.c b/drivers/pinctrl/qcom/pinctrl-qcs404.c
-index 0b8db2c7e58a..1048a7093b2e 100644
---- a/drivers/pinctrl/qcom/pinctrl-qcs404.c
-+++ b/drivers/pinctrl/qcom/pinctrl-qcs404.c
-@@ -43,7 +43,6 @@ enum {
- 		.io_reg = 0x1000 * id + 0x4,		\
- 		.intr_cfg_reg = 0x1000 * id + 0x8,	\
- 		.intr_status_reg = 0x1000 * id + 0xc,	\
--		.intr_target_reg = 0x1000 * id + 0x8,	\
- 		.tile = _tile,			\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
-@@ -70,7 +69,6 @@ enum {
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.tile = SOUTH,				\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
-diff --git a/drivers/pinctrl/qcom/pinctrl-qcs615.c b/drivers/pinctrl/qcom/pinctrl-qcs615.c
-index f1c827ddbfbf..0ed4332d989e 100644
---- a/drivers/pinctrl/qcom/pinctrl-qcs615.c
-+++ b/drivers/pinctrl/qcom/pinctrl-qcs615.c
-@@ -43,7 +43,6 @@ static const char * const qcs615_tiles[] = {
- 		.io_reg = 0x1000 * id + 0x4,		\
- 		.intr_cfg_reg = 0x1000 * id + 0x8,	\
- 		.intr_status_reg = 0x1000 * id + 0xc,	\
--		.intr_target_reg = 0x1000 * id + 0x8,	\
- 		.tile = _tile,			\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
-@@ -70,7 +69,6 @@ static const char * const qcs615_tiles[] = {
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.tile = _tile,				\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
-@@ -96,7 +94,6 @@ static const char * const qcs615_tiles[] = {
- 		.io_reg = offset + 0x4,			\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.tile = WEST,				\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-qcs8300.c b/drivers/pinctrl/qcom/pinctrl-qcs8300.c
-index f1af1a620684..852cd36df6d5 100644
---- a/drivers/pinctrl/qcom/pinctrl-qcs8300.c
-+++ b/drivers/pinctrl/qcom/pinctrl-qcs8300.c
-@@ -34,7 +34,6 @@
- 		.io_reg = 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = 0x8 + REG_SIZE * id,	\
- 		.intr_status_reg = 0xc + REG_SIZE * id,	\
--		.intr_target_reg = 0x8 + REG_SIZE * id,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-@@ -62,7 +61,6 @@
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-@@ -87,7 +85,6 @@
- 		.io_reg = offset + 0x4,			\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
- 		.drv_bit = 0,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-qdf2xxx.c b/drivers/pinctrl/qcom/pinctrl-qdf2xxx.c
-index 9ecc4d40e4dc..3b9edcf8780b 100644
---- a/drivers/pinctrl/qcom/pinctrl-qdf2xxx.c
-+++ b/drivers/pinctrl/qcom/pinctrl-qdf2xxx.c
-@@ -106,7 +106,6 @@ static int qdf2xxx_pinctrl_probe(struct platform_device *pdev)
- 		groups[gpio].io_reg = 0x04 + 0x10000 * gpio;
- 		groups[gpio].intr_cfg_reg = 0x08 + 0x10000 * gpio;
- 		groups[gpio].intr_status_reg = 0x0c + 0x10000 * gpio;
--		groups[gpio].intr_target_reg = 0x08 + 0x10000 * gpio;
- 
- 		groups[gpio].mux_bit = 2;
- 		groups[gpio].pull_bit = 0;
-diff --git a/drivers/pinctrl/qcom/pinctrl-qdu1000.c b/drivers/pinctrl/qcom/pinctrl-qdu1000.c
-index 7c535698a780..5125df7eb127 100644
---- a/drivers/pinctrl/qcom/pinctrl-qdu1000.c
-+++ b/drivers/pinctrl/qcom/pinctrl-qdu1000.c
-@@ -35,7 +35,6 @@
- 		.io_reg = REG_BASE + 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = REG_BASE + 0x8 + REG_SIZE * id,		\
- 		.intr_status_reg = REG_BASE + 0xc + REG_SIZE * id,	\
--		.intr_target_reg = REG_BASE + 0x8 + REG_SIZE * id,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-@@ -61,7 +60,6 @@
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-@@ -86,7 +84,6 @@
- 		.io_reg = offset + 0x4,			\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
- 		.drv_bit = 0,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-sa8775p.c b/drivers/pinctrl/qcom/pinctrl-sa8775p.c
-index 53f28b9c49ba..e9a510d3583f 100644
---- a/drivers/pinctrl/qcom/pinctrl-sa8775p.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sa8775p.c
-@@ -34,7 +34,6 @@
- 		.io_reg = REG_BASE + 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = REG_BASE + 0x8 + REG_SIZE * id,		\
- 		.intr_status_reg = REG_BASE + 0xc + REG_SIZE * id,	\
--		.intr_target_reg = REG_BASE + 0x8 + REG_SIZE * id,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-@@ -63,7 +62,6 @@
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-@@ -88,7 +86,6 @@
- 		.io_reg = offset + 0x4,			\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
- 		.drv_bit = 0,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-sar2130p.c b/drivers/pinctrl/qcom/pinctrl-sar2130p.c
-index 4a53f4ee2041..1d1b5de4eefd 100644
---- a/drivers/pinctrl/qcom/pinctrl-sar2130p.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sar2130p.c
-@@ -34,7 +34,6 @@
- 		.io_reg = 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = 0x8 + REG_SIZE * id,	\
- 		.intr_status_reg = 0xc + REG_SIZE * id,	\
--		.intr_target_reg = 0x8 + REG_SIZE * id,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-@@ -62,7 +61,6 @@
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-sc7180.c b/drivers/pinctrl/qcom/pinctrl-sc7180.c
-index 3eae51472b13..01cfcb416f33 100644
---- a/drivers/pinctrl/qcom/pinctrl-sc7180.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sc7180.c
-@@ -41,7 +41,6 @@ enum {
- 		.io_reg = 0x1000 * id + 0x4,		\
- 		.intr_cfg_reg = 0x1000 * id + 0x8,	\
- 		.intr_status_reg = 0x1000 * id + 0xc,	\
--		.intr_target_reg = 0x1000 * id + 0x8,	\
- 		.tile = _tile,			\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
-@@ -68,7 +67,6 @@ enum {
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.tile = SOUTH,				\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
-@@ -94,7 +92,6 @@ enum {
- 		.io_reg = offset + 0x4,			\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.tile = SOUTH,				\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-sc7280.c b/drivers/pinctrl/qcom/pinctrl-sc7280.c
-index 44e09608aad0..f22fd56efd89 100644
---- a/drivers/pinctrl/qcom/pinctrl-sc7280.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sc7280.c
-@@ -31,7 +31,6 @@
- 		.io_reg = 0x1000 * id + 0x4,		\
- 		.intr_cfg_reg = 0x1000 * id + 0x8,	\
- 		.intr_status_reg = 0x1000 * id + 0xc,	\
--		.intr_target_reg = 0x1000 * id + 0x8,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-@@ -59,7 +58,6 @@
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-@@ -84,7 +82,6 @@
- 		.io_reg = offset + 0x4,			\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
- 		.drv_bit = 0,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-sc8180x.c b/drivers/pinctrl/qcom/pinctrl-sc8180x.c
-index d9f9e3dd9dd1..062cb913e5ee 100644
---- a/drivers/pinctrl/qcom/pinctrl-sc8180x.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sc8180x.c
-@@ -60,7 +60,6 @@ static const struct tile_info sc8180x_tile_info[] = {
- 		.io_reg = REG_SIZE * id + 0x4 + offset,	\
- 		.intr_cfg_reg = REG_SIZE * id + 0x8 + offset,	\
- 		.intr_status_reg = REG_SIZE * id + 0xc + offset,\
--		.intr_target_reg = REG_SIZE * id + 0x8 + offset,\
- 		.tile = _tile,				\
- 		.mux_bit = 2,				\
- 		.pull_bit = 0,				\
-@@ -90,7 +89,6 @@ static const struct tile_info sc8180x_tile_info[] = {
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.tile = EAST,				\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
-@@ -116,7 +114,6 @@ static const struct tile_info sc8180x_tile_info[] = {
- 		.io_reg = 0xb6004,			\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.tile = SOUTH,				\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-sc8280xp.c b/drivers/pinctrl/qcom/pinctrl-sc8280xp.c
-index cf8297e8b8f8..4056b9fa32f8 100644
---- a/drivers/pinctrl/qcom/pinctrl-sc8280xp.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sc8280xp.c
-@@ -31,7 +31,6 @@
- 		.io_reg = 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = 0x8 + REG_SIZE * id,	\
- 		.intr_status_reg = 0xc + REG_SIZE * id,	\
--		.intr_target_reg = 0x8 + REG_SIZE * id,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-@@ -59,7 +58,6 @@
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-@@ -84,7 +82,6 @@
- 		.io_reg = offset + 0x4,			\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
- 		.drv_bit = 0,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-sdm660.c b/drivers/pinctrl/qcom/pinctrl-sdm660.c
-index 687d986de75c..ab0368653d30 100644
---- a/drivers/pinctrl/qcom/pinctrl-sdm660.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sdm660.c
-@@ -46,7 +46,6 @@ enum {
- 		.io_reg = 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = 0x8 + REG_SIZE * id,	\
- 		.intr_status_reg = 0xc + REG_SIZE * id,	\
--		.intr_target_reg = 0x8 + REG_SIZE * id,	\
- 		.tile = _tile,			\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
-@@ -73,7 +72,6 @@ enum {
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.tile = NORTH,				\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
-diff --git a/drivers/pinctrl/qcom/pinctrl-sdm670.c b/drivers/pinctrl/qcom/pinctrl-sdm670.c
-index 486b72edf7b4..533b87c39cd5 100644
---- a/drivers/pinctrl/qcom/pinctrl-sdm670.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sdm670.c
-@@ -37,7 +37,6 @@
- 		.io_reg = base + 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = base + 0x8 + REG_SIZE * id,	\
- 		.intr_status_reg = base + 0xc + REG_SIZE * id,	\
--		.intr_target_reg = base + 0x8 + REG_SIZE * id,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-@@ -67,7 +66,6 @@
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = -1,				\
- 		.drv_bit = -1,				\
-@@ -92,7 +90,6 @@
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-@@ -117,7 +114,6 @@
- 		.io_reg = offset + 0x4,			\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
- 		.drv_bit = 0,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-sdm845.c b/drivers/pinctrl/qcom/pinctrl-sdm845.c
-index 4cf8575797a0..b5ed2311b70e 100644
---- a/drivers/pinctrl/qcom/pinctrl-sdm845.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sdm845.c
-@@ -37,7 +37,6 @@
- 		.io_reg = base + 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = base + 0x8 + REG_SIZE * id,	\
- 		.intr_status_reg = base + 0xc + REG_SIZE * id,	\
--		.intr_target_reg = base + 0x8 + REG_SIZE * id,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-@@ -63,7 +62,6 @@
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-@@ -88,7 +86,6 @@
- 		.io_reg = offset + 0x4,			\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
- 		.drv_bit = 0,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-sdx55.c b/drivers/pinctrl/qcom/pinctrl-sdx55.c
-index 79a7010b73f1..3e87f5927924 100644
---- a/drivers/pinctrl/qcom/pinctrl-sdx55.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sdx55.c
-@@ -33,7 +33,6 @@
- 		.io_reg = 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = 0x8 + REG_SIZE * id,		\
- 		.intr_status_reg = 0xc + REG_SIZE * id,	\
--		.intr_target_reg = 0x8 + REG_SIZE * id,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-@@ -59,7 +58,6 @@
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-sdx65.c b/drivers/pinctrl/qcom/pinctrl-sdx65.c
-index cc8a99a6a91e..4e787341b2a2 100644
---- a/drivers/pinctrl/qcom/pinctrl-sdx65.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sdx65.c
-@@ -33,7 +33,6 @@
- 		.io_reg = REG_BASE + 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = REG_BASE + 0x8 + REG_SIZE * id,		\
- 		.intr_status_reg = REG_BASE + 0xc + REG_SIZE * id,	\
--		.intr_target_reg = REG_BASE + 0x8 + REG_SIZE * id,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-@@ -59,7 +58,6 @@
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-@@ -84,7 +82,6 @@
- 		.io_reg = offset + 0x4,			\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
- 		.drv_bit = 0,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-sdx75.c b/drivers/pinctrl/qcom/pinctrl-sdx75.c
-index 4078d83d818c..9a7e359dbd23 100644
---- a/drivers/pinctrl/qcom/pinctrl-sdx75.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sdx75.c
-@@ -19,7 +19,6 @@
- 		.io_reg = REG_BASE + 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = REG_BASE + 0x8 + REG_SIZE * id,		\
- 		.intr_status_reg = REG_BASE + 0xc + REG_SIZE * id,	\
--		.intr_target_reg = REG_BASE + 0x8 + REG_SIZE * id,	\
- 		.mux_bit = 2,						\
- 		.pull_bit = 0,						\
- 		.drv_bit = 6,						\
-@@ -60,7 +59,6 @@
- 		.io_reg = 0,						\
- 		.intr_cfg_reg = 0,					\
- 		.intr_status_reg = 0,					\
--		.intr_target_reg = 0,					\
- 		.mux_bit = -1,						\
- 		.pull_bit = pull,					\
- 		.drv_bit = drv,						\
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm4450.c b/drivers/pinctrl/qcom/pinctrl-sm4450.c
-index d51e271e3361..83650f173b01 100644
---- a/drivers/pinctrl/qcom/pinctrl-sm4450.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sm4450.c
-@@ -33,7 +33,6 @@
- 		.io_reg = 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = 0x8 + REG_SIZE * id,		\
- 		.intr_status_reg = 0xc + REG_SIZE * id,	\
--		.intr_target_reg = 0x8 + REG_SIZE * id,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-@@ -61,7 +60,6 @@
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-@@ -86,7 +84,6 @@
- 		.io_reg = offset + 0x4,			\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
- 		.drv_bit = 0,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm6115.c b/drivers/pinctrl/qcom/pinctrl-sm6115.c
-index 06700685ea2a..234451fbf47b 100644
---- a/drivers/pinctrl/qcom/pinctrl-sm6115.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sm6115.c
-@@ -43,7 +43,6 @@ enum {
- 		.io_reg = 0x4 + 0x1000 * id,		\
- 		.intr_cfg_reg = 0x8 + 0x1000 * id,	\
- 		.intr_status_reg = 0xc + 0x1000 * id,	\
--		.intr_target_reg = 0x8 + 0x1000 * id,	\
- 		.tile = _tile,			\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
-@@ -70,7 +69,6 @@ enum {
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.tile = _tile,				\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
-@@ -96,7 +94,6 @@ enum {
- 		.io_reg = offset + 0x4,			\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.tile = WEST,				\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm6125.c b/drivers/pinctrl/qcom/pinctrl-sm6125.c
-index 5d3d1e402345..2cf9136860fc 100644
---- a/drivers/pinctrl/qcom/pinctrl-sm6125.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sm6125.c
-@@ -40,7 +40,6 @@ enum {
- 		.io_reg = 0x4 + 0x1000 * id,		\
- 		.intr_cfg_reg = 0x8 + 0x1000 * id,	\
- 		.intr_status_reg = 0xc + 0x1000 * id,	\
--		.intr_target_reg = 0x8 + 0x1000 * id,	\
- 		.tile = _tile,			\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
-@@ -67,7 +66,6 @@ enum {
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.tile = _tile,				\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
-@@ -93,7 +91,6 @@ enum {
- 		.io_reg = offset + 0x4,			\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.tile = WEST,				\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm6350.c b/drivers/pinctrl/qcom/pinctrl-sm6350.c
-index 220fb582cac9..eb8cd4aa8a97 100644
---- a/drivers/pinctrl/qcom/pinctrl-sm6350.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sm6350.c
-@@ -33,7 +33,6 @@
- 		.io_reg = 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = 0x8 + REG_SIZE * id,		\
- 		.intr_status_reg = 0xc + REG_SIZE * id,	\
--		.intr_target_reg = 0x8 + REG_SIZE * id,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-@@ -59,7 +58,6 @@
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-@@ -84,7 +82,6 @@
- 		.io_reg = offset + 0x4,			\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
- 		.drv_bit = 0,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm6375.c b/drivers/pinctrl/qcom/pinctrl-sm6375.c
-index 08b8ef6efaf0..d4547dd9f21f 100644
---- a/drivers/pinctrl/qcom/pinctrl-sm6375.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sm6375.c
-@@ -34,7 +34,6 @@
- 		.io_reg = REG_SIZE * id + 0x4,		\
- 		.intr_cfg_reg = REG_SIZE * id + 0x8,	\
- 		.intr_status_reg = REG_SIZE * id + 0xc,	\
--		.intr_target_reg = REG_SIZE * id + 0x8,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-@@ -62,7 +61,6 @@
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-@@ -87,7 +85,6 @@
- 		.io_reg = offset + 0x4,			\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
- 		.drv_bit = 0,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm7150.c b/drivers/pinctrl/qcom/pinctrl-sm7150.c
-index 78dd8153a4d4..a01437c37525 100644
---- a/drivers/pinctrl/qcom/pinctrl-sm7150.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sm7150.c
-@@ -47,7 +47,6 @@ enum {
- 		.io_reg = 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = 0x8 + REG_SIZE * id,	\
- 		.intr_status_reg = 0xc + REG_SIZE * id,	\
--		.intr_target_reg = 0x8 + REG_SIZE * id,	\
- 		.tile = _tile,				\
- 		.mux_bit = 2,				\
- 		.pull_bit = 0,				\
-@@ -74,7 +73,6 @@ enum {
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.tile = _tile,				\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
-@@ -100,7 +98,6 @@ enum {
- 		.io_reg = offset + 0x4,			\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.tile = WEST,				\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm8150.c b/drivers/pinctrl/qcom/pinctrl-sm8150.c
-index ad861cd66958..0767261f5149 100644
---- a/drivers/pinctrl/qcom/pinctrl-sm8150.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sm8150.c
-@@ -43,7 +43,6 @@ enum {
- 		.io_reg = 0x1000 * id + 0x4,		\
- 		.intr_cfg_reg = 0x1000 * id + 0x8,	\
- 		.intr_status_reg = 0x1000 * id + 0xc,	\
--		.intr_target_reg = 0x1000 * id + 0x8,	\
- 		.tile = _tile,			\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
-@@ -70,7 +69,6 @@ enum {
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.tile = NORTH,				\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
-@@ -96,7 +94,6 @@ enum {
- 		.io_reg = offset + 0x4,			\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.tile = SOUTH,				\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm8250.c b/drivers/pinctrl/qcom/pinctrl-sm8250.c
-index f05361f3100d..f73f3b052de4 100644
---- a/drivers/pinctrl/qcom/pinctrl-sm8250.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sm8250.c
-@@ -44,7 +44,6 @@ enum {
- 		.io_reg = REG_SIZE * id + 0x4,		\
- 		.intr_cfg_reg = REG_SIZE * id + 0x8,	\
- 		.intr_status_reg = REG_SIZE * id + 0xc,	\
--		.intr_target_reg = REG_SIZE * id + 0x8,	\
- 		.tile = _tile,				\
- 		.mux_bit = 2,				\
- 		.pull_bit = 0,				\
-@@ -73,7 +72,6 @@ enum {
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.tile = NORTH,				\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
-@@ -99,7 +97,6 @@ enum {
- 		.io_reg = offset + 0x4,			\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.tile = SOUTH,				\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm8350.c b/drivers/pinctrl/qcom/pinctrl-sm8350.c
-index 99949b552021..377ddfc77e4f 100644
---- a/drivers/pinctrl/qcom/pinctrl-sm8350.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sm8350.c
-@@ -34,7 +34,6 @@
- 		.io_reg = REG_SIZE * id + 0x4,		\
- 		.intr_cfg_reg = REG_SIZE * id + 0x8,	\
- 		.intr_status_reg = REG_SIZE * id + 0xc,	\
--		.intr_target_reg = REG_SIZE * id + 0x8,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-@@ -60,7 +59,6 @@
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-@@ -85,7 +83,6 @@
- 		.io_reg = offset + 0x4,			\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
- 		.drv_bit = 0,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm8450.c b/drivers/pinctrl/qcom/pinctrl-sm8450.c
-index 9889fc5dc2cd..a1d84074ea49 100644
---- a/drivers/pinctrl/qcom/pinctrl-sm8450.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sm8450.c
-@@ -34,7 +34,6 @@
- 		.io_reg = 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = 0x8 + REG_SIZE * id,		\
- 		.intr_status_reg = 0xc + REG_SIZE * id,	\
--		.intr_target_reg = 0x8 + REG_SIZE * id,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-@@ -62,7 +61,6 @@
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-@@ -87,7 +85,6 @@
- 		.io_reg = offset + 0x4,			\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
- 		.drv_bit = 0,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm8550.c b/drivers/pinctrl/qcom/pinctrl-sm8550.c
-index 10a62031fdfd..cc8fbf4d5e84 100644
---- a/drivers/pinctrl/qcom/pinctrl-sm8550.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sm8550.c
-@@ -35,7 +35,6 @@
- 		.io_reg = 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = 0x8 + REG_SIZE * id,		\
- 		.intr_status_reg = 0xc + REG_SIZE * id,	\
--		.intr_target_reg = 0x8 + REG_SIZE * id,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-@@ -64,7 +63,6 @@
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-@@ -89,7 +87,6 @@
- 		.io_reg = offset + 0x4,			\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
- 		.drv_bit = 0,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm8650.c b/drivers/pinctrl/qcom/pinctrl-sm8650.c
-index e2ae03800206..ab41292e3b4e 100644
---- a/drivers/pinctrl/qcom/pinctrl-sm8650.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sm8650.c
-@@ -36,7 +36,6 @@
- 		.io_reg = 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = 0x8 + REG_SIZE * id,		\
- 		.intr_status_reg = 0xc + REG_SIZE * id,	\
--		.intr_target_reg = 0x8 + REG_SIZE * id,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-@@ -67,7 +66,6 @@
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-@@ -92,7 +90,6 @@
- 		.io_reg = io,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
- 		.drv_bit = 0,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm8750.c b/drivers/pinctrl/qcom/pinctrl-sm8750.c
-index 6f92f176edd4..4cfe73f30fac 100644
---- a/drivers/pinctrl/qcom/pinctrl-sm8750.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sm8750.c
-@@ -35,7 +35,6 @@
- 		.io_reg = 0x4 + REG_SIZE * id,                        \
- 		.intr_cfg_reg = 0x8 + REG_SIZE * id,                  \
- 		.intr_status_reg = 0xc + REG_SIZE * id,               \
--		.intr_target_reg = 0x8 + REG_SIZE * id,               \
- 		.mux_bit = 2,                                         \
- 		.pull_bit = 0,                                        \
- 		.drv_bit = 6,                                         \
-@@ -65,7 +64,6 @@
- 		.io_reg = 0,                                         \
- 		.intr_cfg_reg = 0,                                   \
- 		.intr_status_reg = 0,                                \
--		.intr_target_reg = 0,                                \
- 		.mux_bit = -1,                                       \
- 		.pull_bit = pull,                                    \
- 		.drv_bit = drv,                                      \
-@@ -90,7 +88,6 @@
- 		.io_reg = io,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
- 		.drv_bit = 0,				\
-diff --git a/drivers/pinctrl/qcom/pinctrl-x1e80100.c b/drivers/pinctrl/qcom/pinctrl-x1e80100.c
-index bb36f40b19fa..a9fe75fc45e5 100644
---- a/drivers/pinctrl/qcom/pinctrl-x1e80100.c
-+++ b/drivers/pinctrl/qcom/pinctrl-x1e80100.c
-@@ -33,7 +33,6 @@
- 		.io_reg = 0x4 + REG_SIZE * id,		\
- 		.intr_cfg_reg = 0x8 + REG_SIZE * id,		\
- 		.intr_status_reg = 0xc + REG_SIZE * id,	\
--		.intr_target_reg = 0x8 + REG_SIZE * id,	\
- 		.mux_bit = 2,			\
- 		.pull_bit = 0,			\
- 		.drv_bit = 6,			\
-@@ -62,7 +61,6 @@
- 		.io_reg = 0,				\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = pull,			\
- 		.drv_bit = drv,				\
-@@ -87,7 +85,6 @@
- 		.io_reg = offset + 0x4,			\
- 		.intr_cfg_reg = 0,			\
- 		.intr_status_reg = 0,			\
--		.intr_target_reg = 0,			\
- 		.mux_bit = -1,				\
- 		.pull_bit = 3,				\
- 		.drv_bit = 0,				\
--- 
-2.53.0
-
+-Jeff
 
