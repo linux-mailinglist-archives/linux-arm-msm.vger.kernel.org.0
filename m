@@ -1,214 +1,263 @@
-Return-Path: <linux-arm-msm+bounces-100341-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100342-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id IBMAE7aPxmlLLwUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100341-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 15:09:58 +0100
+	id /7C4CBSQxmkyMAUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100342-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 15:11:32 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id F3AAA345CB5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 15:09:57 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F974345D0D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 15:11:31 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id D963030A184F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 14:04:50 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 328AD3030B29
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 14:07:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD2373F0A9B;
-	Fri, 27 Mar 2026 14:04:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E37F3EF66D;
+	Fri, 27 Mar 2026 14:07:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="oTCSg6E1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gN1C4vUY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFECA2ED154
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2026 14:04:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C57289E06;
+	Fri, 27 Mar 2026 14:07:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774620287; cv=none; b=La9EG6j4HOAKsAeoRkQGsGMryAjMnJluEx2G/ccTXFqp0Lp7Kw+0ylHyPpg7yOfWWSbLALMZguAXp9Pu9BizTgEZf/4pAIHJbCkCMvwx92w8BKtIN3Cp8iyP54vk8IWTNUjxF2cYP+Ak7OSmDW5VyYHJUGPuZJ/P3Xvv4dEo3yc=
+	t=1774620433; cv=none; b=q9tFEd4T9/JcTwwS42N7vZXpj0W4ySje/uqDIiUfo1exXlv8/zta/H5ipNXWbjtVnSm5RYSgWIV50dXcFxwhpKhu81xN/UHEIo5ch4EUKfevJGfauFhjUurXGl514oGio6rIUR48P1WFo+Cp4gPs92+CL/WckKO1oUCj7499jvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774620287; c=relaxed/simple;
-	bh=q9V97Tr+6k2fCh537AkmCOo0/qg1EEGC6ygs46eoSNw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uykmoG4XI8w+dqZuz3omCbH7u6FKhYNIuZCdNO/p3kOxAkFEHQevCG+AtQpkhyflq6S02mA4PwaELKGIlxvy9ZTbijrMlHl12P4ns4BrSOB/o7N1l+FMDcgIxCOW6i1ENVJGM1HfFGk6U9epcJLSiEldiPK1jtuc9kCOrvRpeQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=oTCSg6E1; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-486fda2a389so17452265e9.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2026 07:04:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1774620283; x=1775225083; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=TnwOxiQgTrY2GQTcPVQdPC36P8UQNWjAuceWpM/pOE8=;
-        b=oTCSg6E1R8Drfgc/vnfQmcQJJZ5t4RwdAYzyvKsj2uVb6Q8woIlTPSShPn8E1ni2J/
-         bwW532e3faPT1djMherB3fiU6V0SHnuTpAF1NSdl2fLyeKv1LGdG2h2BOzGj0XfPEYxZ
-         WwbzKxXFtaovCGEQXSp/9/D3ebskF2IWVKZFwNThkRP8pi4v2kaYccrBfCe3FPMTRuRP
-         6EIU/zy+QI4BlCtX5Dk4fDUtaQbxgmqoO5oQP5dpUiZzPvsinCPTxeQBdbxvVA9JPgKc
-         6bN1tRPevSRHVWvh22pnXzthftR5j5igXSIMKm+WamfFDVFgiuCZlZDUcQ4gxt9lybma
-         LKUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774620283; x=1775225083;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=TnwOxiQgTrY2GQTcPVQdPC36P8UQNWjAuceWpM/pOE8=;
-        b=nVT6m+HuTcRZBsompsEn74cnBxYX1b8aNPjTDqT7FkU75bmPaWz0AsG8ce0wk+t4TY
-         zjJ610p1O0fjbWm4o96XXFJcXNcpqfn4oFlMOY8wWPNaJKxjxFWn5uoY7TSOshRro0pp
-         UNr7wiwAtZd+NtXuqZBiyyI6nRNa38dm/ZzKb3hDosiY23k7SFVRXiuzz5uyECe/92Yn
-         B3Dea3dq3tFQ3KdWtP6YAzU0p0M0EU9nIHkuQ5braeEz60o21CK8WLzfQa538P4XN1Se
-         s6J5uqWc2Pti8jqoOZpv3KoYDORXZs4tLx2VPSC7fKzdCdBMdghyMLCGSiE0eQ24bRzQ
-         djxA==
-X-Forwarded-Encrypted: i=1; AJvYcCXV357joxtqGqKfy8JNHaxekbBl0DQ+1XWH1MAJPws031gb663tPOIltUe2pnB3ix1Xy1QAqJcvjF/an2Pk@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw82Ekypc5I22yJC8cucFNjPkBSf26zLFGmC3IVK2syCgiGnyiq
-	mwaPaAmUwzyHgxiLPDki2kP1wFUxCb+7oA6vklRLcDw8rckzf6hd1LQ71oHkxxzO330=
-X-Gm-Gg: ATEYQzzRT/GjlCAYPrbiALTJZQkphQBVkhQWX9i481dV88d7x1vDAsYK51S0GVsNuUA
-	785fm867NAQ3tepAKuWEdiygYakdpitMtQsEJ9jxGr8VQMPWhPpvECWqK4Musk95e5vhnSeRz/n
-	/OFha4BARjqIKh2C5dQEyAZMnqvBR5WSMTHRlgTtM4Qb9xo96cT/qk23FR6u4w70RfnGMkGsEOm
-	WYZmTp5RCgx7UgN2Oito4M/AMrsCM9nRWLnhNeeMgU+hsD22vSd+aXyE0xU86WwBm/SitTW+pnB
-	e5mywsFTxyPVAVMvD0/r6vxj5VDSkMaFHHSr2y8/h8u7gNufVr76zv/SM2Df7MPHeSmbQHmaNfD
-	ewW6PHMSARd7fxofk/KRlJu1duaZNwd6tvUB5TcLkZYFmjSWwTNQdAzmQ3CnPeO6XB7FkEnfLDl
-	YA29ogZ7o/+okw7hXF04qj/M3iFS9WCg+CPbDZLIy+vYjVxr+euv6j9sVF0vBqpX67CnvkjA34U
-	IHXSjoJsGU1OiUD/Jv0rtI=
-X-Received: by 2002:a05:600c:3f16:b0:486:fdba:f5db with SMTP id 5b1f17b1804b1-48727c86862mr44979375e9.0.1774620283136;
-        Fri, 27 Mar 2026 07:04:43 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:106d:1080:81c2:60b3:ff00:9a5e? ([2a01:e0a:106d:1080:81c2:60b3:ff00:9a5e])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48725eb5417sm27114795e9.3.2026.03.27.07.04.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Mar 2026 07:04:42 -0700 (PDT)
-Message-ID: <7d9675e6-3f02-49e8-b65a-9785d5b6a7c7@linaro.org>
-Date: Fri, 27 Mar 2026 15:04:39 +0100
+	s=arc-20240116; t=1774620433; c=relaxed/simple;
+	bh=hWJlZNKlAaItYJvhnDmGAEIGtys9dKI210vA5dw6Gqw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UXQrFzTSvoB9lqPYc9Ga8ItcGyS91RDMil5KB6hTarHX46dVArQpl/IsOspvYKxJcijT8/E6w/b6zPB6mgIFIfKFLifjnd2/47nglfCG9o+qK3KEiBsE4o4NDmym8bB/RqGFEh5UgYhqBZ+1gwEYJVDfplJIJc8Df1NgqyT2iec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gN1C4vUY; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 846BAC19423;
+	Fri, 27 Mar 2026 14:07:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1774620433;
+	bh=hWJlZNKlAaItYJvhnDmGAEIGtys9dKI210vA5dw6Gqw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=gN1C4vUYUXB+7UEawc1PcM+V8n2yDJnE8RUs/p6dPiHH0hrRvfvdNZ6V+WGrqVpiE
+	 WjvpKR3uJl98bo9JYdDDaAmciiqnUpbLX8HKPq/ggFpHJYh80gfJbNyZV/1KebQjRK
+	 +NgkrXqvhN+gD2loKoMpnVFDOOlDpxi/X/qUK4zWDNvk5idq5pbHo/orDJGyySwOQL
+	 pJjn22TiFoR/rnyF+ZVJUBXDbgfmPb2K2C3YHqHsjqteRsXMDwXX6CWMhyVRQcoNKQ
+	 OLPZzK6vboSLI4XKmuFeWJdI+QTkto4qUzB7O2JVXrj+dnxsUTCfPXXzJnza1N84Dl
+	 1AQd9BRpLhScA==
+Date: Fri, 27 Mar 2026 15:07:04 +0100
+From: Lorenzo Pieralisi <lpieralisi@kernel.org>
+To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+Cc: Arnd Bergmann <arnd@arndb.de>, Bjorn Andersson <andersson@kernel.org>,
+	Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
+	Souvik Chakravarty <Souvik.Chakravarty@arm.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	John Stultz <john.stultz@linaro.org>,
+	Moritz Fischer <moritz.fischer@ettus.com>,
+	Bartosz Golaszewski <brgl@kernel.org>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+	Andre Draszik <andre.draszik@linaro.org>,
+	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
+	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, Srinivas Kandagatla <srini@kernel.org>
+Subject: Re: [PATCH v20 04/10] firmware: psci: Introduce command-based reset
+ in psci_sys_reset
+Message-ID: <acaPCJnX6lb9lxPy@lpieralisi>
+References: <20260304-arm-psci-system_reset2-vendor-reboots-v20-0-cf7d346b8372@oss.qualcomm.com>
+ <20260304-arm-psci-system_reset2-vendor-reboots-v20-4-cf7d346b8372@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] PCI: dwc: Add multi-port controller support
-To: Sumit Kumar <sumit.kumar@oss.qualcomm.com>,
- Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
- Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk@kernel.org>, Alim Akhtar
- <alim.akhtar@samsung.com>, Richard Zhu <hongxing.zhu@nxp.com>,
- Lucas Stach <l.stach@pengutronix.de>, Shawn Guo <shawnguo@kernel.org>,
- Sascha Hauer <s.hauer@pengutronix.de>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>, Yue Wang <yue.wang@Amlogic.com>,
- Kevin Hilman <khilman@baylibre.com>, Jerome Brunet <jbrunet@baylibre.com>,
- Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
- Paul Walmsley <paul.walmsley@sifive.com>,
- Greentime Hu <greentime.hu@sifive.com>,
- Samuel Holland <samuel.holland@sifive.com>,
- Chuanhua Lei <lchuanhua@maxlinear.com>,
- Marek Vasut <marek.vasut+renesas@gmail.com>,
- Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
- Geert Uytterhoeven <geert+renesas@glider.be>,
- Magnus Damm <magnus.damm@gmail.com>,
- Pratyush Anand <pratyush.anand@gmail.com>,
- Thierry Reding <thierry.reding@gmail.com>,
- Jonathan Hunter <jonathanh@nvidia.com>
-Cc: linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org,
- imx@lists.linux.dev, linux-amlogic@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
- linux-tegra@vger.kernel.org, linux-riscv@lists.infradead.org
-References: <20260305-dt-parser-v2-0-85836db8dc06@oss.qualcomm.com>
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Content-Language: en-GB
-In-Reply-To: <20260305-dt-parser-v2-0-85836db8dc06@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-0.66 / 15.00];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260304-arm-psci-system_reset2-vendor-reboots-v20-4-cf7d346b8372@oss.qualcomm.com>
+X-Spamd-Result: default: False [3.84 / 15.00];
+	MID_END_EQ_FROM_USER_PART(4.00)[];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	MID_RHS_NOT_FQDN(0.50)[];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-100341-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,google.com,gmail.com,kernel.org,samsung.com,nxp.com,pengutronix.de,Amlogic.com,baylibre.com,googlemail.com,sifive.com,maxlinear.com,renesas.com,glider.be,nvidia.com];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[40];
+	TAGGED_FROM(0.00)[bounces-100342-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[neil.armstrong@linaro.org,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[28];
+	FREEMAIL_CC(0.00)[arndb.de,kernel.org,arm.com,rock-chips.com,gmail.com,linaro.org,ettus.com,broadcom.com,oss.qualcomm.com,vger.kernel.org,lists.infradead.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,renesas];
-	MID_RHS_MATCH_FROM(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[lpieralisi@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[n:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,gitlab.com:url,qualcomm.com:email,linaro.org:dkim,linaro.org:email,linaro.org:mid]
-X-Rspamd-Queue-Id: F3AAA345CB5
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 8F974345D0D
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Le 05/03/2026 à 07:20, Sumit Kumar a écrit :
-> This series adds support for multi-port PCIe controllers in the DesignWare
-> driver. Currently, the driver only supports a single Root Port with
-> controller-level properties, which doesn't work for multi-port controllers
-> where each port may have different configurations.
+On Wed, Mar 04, 2026 at 11:33:04PM +0530, Shivendra Pratap wrote:
+> PSCI currently supports only COLD reset and ARCH WARM reset based on the
+> Linux reboot_mode variable. The PSCI specification now includes
+> SYSTEM_RESET2 for vendor-specific resets, but there's no mechanism to
+> issue these through psci_sys_reset.
 > 
-> This series introduces a per-port structure and parsing API that allows
-> each Root Port to be configured independently via pcie@N child nodes in
-> device tree, while maintaining backward compatibility with existing
-> single-port bindings.
+> Add a command-based reset mechanism that allows external drivers to set
+> the psci reset command via a new psci_set_reset_cmd() function.
 > 
-> Signed-off-by: Sumit Kumar <sumit.kumar@oss.qualcomm.com>
-> ---
-> Changes in v2:
-> - Fix error code preservation in dw_pcie_resume_noirq() to return actual
->    error from dw_pcie_wait_for_link() instead of hardcoded -ETIMEDOUT (Mani).
-> - Initialize ret variable to -ENOENT in dw_pcie_parse_root_ports() (Mani).
-> - dw_pcie_host_init(): Remove -ENOENT error skipping to make parsing
->    failures fatal for now, add TODO comment about making properties
->    optional later (Mani).
-> - Link to v1: https://lore.kernel.org/r/20260105-dt-parser-v1-0-b11c63cb5e2c@oss.qualcomm.com
-> 
-> ---
-> Sumit Kumar (2):
->        PCI: API changes for multi-port controller support
->        PCI: dwc: Add multi-port controller support
-> 
->   drivers/pci/controller/dwc/pci-exynos.c           |   4 +-
->   drivers/pci/controller/dwc/pci-imx6.c             |  15 +-
->   drivers/pci/controller/dwc/pci-meson.c            |   1 -
->   drivers/pci/controller/dwc/pcie-designware-host.c | 175 ++++++++++++++++++----
->   drivers/pci/controller/dwc/pcie-designware.c      |  32 ++--
->   drivers/pci/controller/dwc/pcie-designware.h      |  17 ++-
->   drivers/pci/controller/dwc/pcie-fu740.c           |   6 +-
->   drivers/pci/controller/dwc/pcie-intel-gw.c        |  13 +-
->   drivers/pci/controller/dwc/pcie-qcom-common.c     |   5 +-
->   drivers/pci/controller/dwc/pcie-qcom-ep.c         |   4 +-
->   drivers/pci/controller/dwc/pcie-qcom.c            |   4 +-
->   drivers/pci/controller/dwc/pcie-rcar-gen4.c       |  13 +-
->   drivers/pci/controller/dwc/pcie-spear13xx.c       |   5 +-
->   drivers/pci/controller/dwc/pcie-tegra194.c        |   4 +-
->   drivers/pci/of.c                                  |   6 +-
->   drivers/pci/pci.h                                 |   2 +
->   16 files changed, 232 insertions(+), 74 deletions(-)
-> ---
-> base-commit: 097a6c336d0080725c626fda118ecfec448acd0f
-> change-id: 20251010-dt-parser-98b50ce18fc1
-> 
-> Best regards,
+> The psci command-based reset is disabled by default and the
+> psci_sys_reset follows its original flow until a psci_reset command is
+> set. In kernel panic path, psci_reset command is ignored.
 
-Tested on meson-pci (boot log https://gitlab.com/amlogic-foss/abcd-linux-test/-/jobs/13677061036)
+If it is function calls you should add parenthesis (eg psci_sys_reset ->
+psci_sys_reset()).
 
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # On Bananapi M2S
+You must explain why the kernel panic path requires separate handling
+here AND in the code - think about looking at this years down the line
+and figure out why kernel panics are special here.
+
+> Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+> ---
+>  drivers/firmware/psci/psci.c | 45 ++++++++++++++++++++++++++++++++++++++++++--
+>  include/linux/psci.h         |  2 ++
+>  2 files changed, 45 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
+> index 38ca190d4a22d6e7e0f06420e8478a2b0ec2fe6f..ae6f7a0aead913d740070080d4b2a3da15b29485 100644
+> --- a/drivers/firmware/psci/psci.c
+> +++ b/drivers/firmware/psci/psci.c
+> @@ -51,6 +51,15 @@ static int resident_cpu = -1;
+>  struct psci_operations psci_ops;
+>  static enum arm_smccc_conduit psci_conduit = SMCCC_CONDUIT_NONE;
+>  
+> +struct psci_sys_reset_params {
+> +	u32 system_reset;
+> +	u32 reset_type;
+> +	u32 cookie;
+> +	bool cmd;
+> +};
+> +
+> +static struct psci_sys_reset_params psci_reset;
+> +
+>  bool psci_tos_resident_on(int cpu)
+>  {
+>  	return cpu == resident_cpu;
+> @@ -80,6 +89,28 @@ static u32 psci_cpu_suspend_feature;
+>  static bool psci_system_reset2_supported;
+>  static bool psci_system_off2_hibernate_supported;
+>  
+> +/**
+> + * psci_set_reset_cmd - Sets the psci_reset_cmd for command-based
+> + * reset which will be used in psci_sys_reset call.
+> + *
+> + * @cmd_sys_rst2: Set to true for SYSTEM_RESET2 based resets.
+> + * @cmd_reset_type: Set the reset_type argument for psci_sys_reset.
+> + * @cmd_cookie: Set the cookie argument for psci_sys_reset.
+> + */
+> +void psci_set_reset_cmd(bool cmd_sys_rst2, u32 cmd_reset_type, u32 cmd_cookie)
+> +{
+
+I don't think cmd_sys_rst2 is needed, as a replied in a different thread.
+
+> +	if (cmd_sys_rst2 && psci_system_reset2_supported) {
+> +		psci_reset.system_reset = PSCI_FN_NATIVE(1_1, SYSTEM_RESET2);
+> +		psci_reset.reset_type = cmd_reset_type;
+> +		psci_reset.cookie = cmd_cookie;
+> +	} else {
+> +		psci_reset.system_reset = PSCI_0_2_FN_SYSTEM_RESET;
+> +		psci_reset.reset_type = 0;
+> +		psci_reset.cookie = 0;
+> +	}
+> +	psci_reset.cmd = true;
+> +}
+> +
+>  static inline bool psci_has_ext_power_state(void)
+>  {
+>  	return psci_cpu_suspend_feature &
+> @@ -309,14 +340,24 @@ static int get_set_conduit_method(const struct device_node *np)
+>  static int psci_sys_reset(struct notifier_block *nb, unsigned long action,
+>  			  void *data)
+>  {
+> -	if ((reboot_mode == REBOOT_WARM || reboot_mode == REBOOT_SOFT) &&
+> -	    psci_system_reset2_supported) {
+> +	if (((reboot_mode == REBOOT_WARM || reboot_mode == REBOOT_SOFT) &&
+> +	     psci_system_reset2_supported) && (panic_in_progress() || !psci_reset.cmd)) {
+>  		/*
+>  		 * reset_type[31] = 0 (architectural)
+>  		 * reset_type[30:0] = 0 (SYSTEM_WARM_RESET)
+>  		 * cookie = 0 (ignored by the implementation)
+>  		 */
+>  		invoke_psci_fn(PSCI_FN_NATIVE(1_1, SYSTEM_RESET2), 0, 0, 0);
+> +	} else if (!panic_in_progress() && psci_reset.cmd) {
+> +		/*
+> +		 * Commands are being set in psci_set_reset_cmd
+> +		 * This issues, SYSTEM_RESET2 arch warm reset or
+> +		 * SYSTEM_RESET2 vendor-specific reset or
+> +		 * a SYSTEM_RESET cold reset in accordance with
+> +		 * the reboot-mode command.
+> +		 */
+> +		invoke_psci_fn(psci_reset.system_reset, psci_reset.reset_type,
+> +			       psci_reset.cookie, 0);
+>  	} else {
+>  		invoke_psci_fn(PSCI_0_2_FN_SYSTEM_RESET, 0, 0, 0);
+
+This is very hard to parse. IMO, what you should do is:
+
+- Split this into two different paths: reboot_mode vs psci_reset.cmd == true.
+- Document very clearly why a panic needs separate handling.
+
+Something like:
+
+if (psci_reset.cmd)
+	handle_reset_cmd();
+else
+	handle_reboot_mode();
+
+I don't think we are far from converging but I want to be able to maintain
+this code going forward.
 
 Thanks,
-Neil
+Lorenzo
+
+>  	}
+> diff --git a/include/linux/psci.h b/include/linux/psci.h
+> index 4ca0060a3fc42ba1ca751c7862fb4ad8dda35a4c..d13ceca88eab8932894051e7c86e806c2ad8a73a 100644
+> --- a/include/linux/psci.h
+> +++ b/include/linux/psci.h
+> @@ -45,8 +45,10 @@ struct psci_0_1_function_ids get_psci_0_1_function_ids(void);
+>  
+>  #if defined(CONFIG_ARM_PSCI_FW)
+>  int __init psci_dt_init(void);
+> +void psci_set_reset_cmd(bool cmd_sys_rst2, u32 cmd_reset_type, u32 cmd_cookie);
+>  #else
+>  static inline int psci_dt_init(void) { return 0; }
+> +static inline void psci_set_reset_cmd(bool cmd_sys_rst2, u32 cmd_reset_type, u32 cmd_cookie) { }
+>  #endif
+>  
+>  #if defined(CONFIG_ARM_PSCI_FW) && defined(CONFIG_ACPI)
+> 
+> -- 
+> 2.34.1
+> 
 
