@@ -1,330 +1,198 @@
-Return-Path: <linux-arm-msm+bounces-100338-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100339-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wEsrI5mNxmlLLwUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100338-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 15:00:57 +0100
+	id SPiLLjqOxmlLLwUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100339-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 15:03:38 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 26895345B1D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 15:00:57 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7360A345B83
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 15:03:38 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 04BB8309B72E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 13:55:20 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id A0C4B309CF4A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 13:56:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C629C3EDAA5;
-	Fri, 27 Mar 2026 13:55:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1FD5B1FF7C7;
+	Fri, 27 Mar 2026 13:56:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tgwEltG5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gqlqCI1l"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EABB39890F;
-	Fri, 27 Mar 2026 13:55:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81303EF67E;
+	Fri, 27 Mar 2026 13:56:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774619718; cv=none; b=SjOvhXYiCuNFesXL7k46HZjo/oXwjZ27eyLZ0O/Ncb+bOelv3Xxa8STRnjpuQUdOk1Ns/1pw3RRnWf35e71YUlD+OwqtqhK/Cfwfa22tW0ORczrVN7if676ekU95Cb7vw7YcZNSodRA+QbQT2Je3NMUANdTD8sFMe8nFeylYGP8=
+	t=1774619812; cv=none; b=YFaD1JOaGb6cmS2ihiL3/34C+tSgWYin2bppUuD90MOvA2TdoFbOKVuaNOXBl+Tci+mE8c7e69sBe08v+WVn37qeFREuQ6pw+obUoJ3vSeGVTMBsXWstddZLT2tGFdDmESlNhBE2Z9b6ScuN7PXllYZ537ojum8mYAC+xvidkWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774619718; c=relaxed/simple;
-	bh=C003phe9H2vz5oAAsl7Z69viCUeXZk962q9MneIz7g0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dBKG72XAGzqTk2uOcmGgTEq6OjEhZe1xRZ1DpoqYUx7l2rMeiPpt2crQ7E+y4x/2fdjcZPjMngQ2NvaoUd56i5dEkErP94rAOOrP16aNJpa656kwRwubkgqdWtgMmD6P1kXwtMoXmlhoV56cjpKplZTnhERb37iz5b9jW1diJxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tgwEltG5; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE259C2BC87;
-	Fri, 27 Mar 2026 13:55:12 +0000 (UTC)
+	s=arc-20240116; t=1774619812; c=relaxed/simple;
+	bh=2mf5n3dc77+mCuOXdxbyc2GEf2Wtigj7YNJ+nHFL1Tc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YdqTFlPJXraxNTEfSWXFcln8URpQlgDxrby5I8BA8Ms7o+4qgsKBrgLEgHQCg9pyzQx6ovBqPRJRyUntD7N2Y8mJZZatuTYjeObXTqy+yLoPnb/bkj11WCTE3cPw96WIdKTl/M7QyautU+EIw4Hcw+1BwiFAIeAxUNK2723zm0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gqlqCI1l; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B11FC19423;
+	Fri, 27 Mar 2026 13:56:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774619718;
-	bh=C003phe9H2vz5oAAsl7Z69viCUeXZk962q9MneIz7g0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tgwEltG5XogJq+rTsvmf8EAU5Vguv1xWGrXLZ00b1fD2wkopfCT/vcPIVpq3rEO9z
-	 vRUJ0cUZ+aeCGOBeaQplkrUSMCRqP9HTYYA1F/nl7U746HqHZi1wXwz1Z0RKspdriW
-	 paomWFRyru+IgSk57wDkjo9U2WDFzFWlJm2LpFPoQ3UTZbOcfJC1gmmOE4QgjijcrN
-	 5gEC7KfrQ4w6qYBhgdIOchELbsdhBCauDYwPJxg3uoTcdoQzVEfRHUAXtX9A+FVzha
-	 vO7RtCoRPdPDfNPqawnpWOMwaUhA6ukvV7bkBvj7rTHlRC0rvgxJrmOXRZgWnIbY7l
-	 0SdrninhJoioA==
-Date: Fri, 27 Mar 2026 14:55:10 +0100
-From: Lorenzo Pieralisi <lpieralisi@kernel.org>
-To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-Cc: Arnd Bergmann <arnd@arndb.de>, Bjorn Andersson <andersson@kernel.org>,
-	Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
-	Souvik Chakravarty <Souvik.Chakravarty@arm.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	John Stultz <john.stultz@linaro.org>,
-	Moritz Fischer <moritz.fischer@ettus.com>,
-	Bartosz Golaszewski <brgl@kernel.org>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	Andre Draszik <andre.draszik@linaro.org>,
-	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, Srinivas Kandagatla <srini@kernel.org>
-Subject: Re: [PATCH v20 06/10] power: reset: Add psci-reboot-mode driver
-Message-ID: <acaMPgRALnoUIHMC@lpieralisi>
-References: <20260304-arm-psci-system_reset2-vendor-reboots-v20-0-cf7d346b8372@oss.qualcomm.com>
- <20260304-arm-psci-system_reset2-vendor-reboots-v20-6-cf7d346b8372@oss.qualcomm.com>
+	s=k20201202; t=1774619812;
+	bh=2mf5n3dc77+mCuOXdxbyc2GEf2Wtigj7YNJ+nHFL1Tc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=gqlqCI1lFYA8l0v9f7x7r+LuraTcOCrQCqsWXfQHxTliO9u0H6NRLTSwt1PJrc2dI
+	 JzSZ7Qx97LFgd5pw5IJYTs9HohcIs9z82W9PtTLStFdtcUBXA44LYWIFEw60xB93WB
+	 Xg1IQEwKTbluRJYw21AaOQI+uhUaTx2JA6iR2D5CwyM/5WzR+pdQffXUb2sZ178cEq
+	 JkU6r4X0hjI9M0GspIsHMZJwg+EJ62Q6laoD1llzD4fcACEH/YX7yGNYJRlqPqM43D
+	 XD8AsQg4ziDw+uksS36u5xCr92h7VrFduN9+tqSK9sn1n4iTtLi7cQ+RzP7dPLige/
+	 0wMltjEFiAeqA==
+Message-ID: <a0a7269d-7a09-4a78-a4b0-b39b67bc253b@kernel.org>
+Date: Fri, 27 Mar 2026 14:56:40 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260304-arm-psci-system_reset2-vendor-reboots-v20-6-cf7d346b8372@oss.qualcomm.com>
-X-Spamd-Result: default: False [3.84 / 15.00];
-	MID_END_EQ_FROM_USER_PART(4.00)[];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 02/15] firmware: qcom: Add a generic PAS service
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Sumit Garg <sumit.garg@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ linux-media@vger.kernel.org, netdev@vger.kernel.org,
+ linux-wireless@vger.kernel.org, ath12k@lists.infradead.org,
+ linux-remoteproc@vger.kernel.org, andersson@kernel.org,
+ konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, robin.clark@oss.qualcomm.com, sean@poorly.run,
+ akhilpo@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
+ jesszhan0024@gmail.com, marijn.suijten@somainline.org, airlied@gmail.com,
+ simona@ffwll.ch, vikash.garodia@oss.qualcomm.com,
+ dikshita.agarwal@oss.qualcomm.com, bod@kernel.org, mchehab@kernel.org,
+ elder@kernel.org, andrew+netdev@lunn.ch, davem@davemloft.net,
+ edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+ jjohnson@kernel.org, mathieu.poirier@linaro.org,
+ trilokkumar.soni@oss.qualcomm.com, mukesh.ojha@oss.qualcomm.com,
+ pavan.kondeti@oss.qualcomm.com, jorge.ramirez@oss.qualcomm.com,
+ tonyh@qti.qualcomm.com, vignesh.viswanathan@oss.qualcomm.com,
+ srinivas.kandagatla@oss.qualcomm.com, amirreza.zarrabi@oss.qualcomm.com,
+ jens.wiklander@linaro.org, op-tee@lists.trustedfirmware.org,
+ apurupa@qti.qualcomm.com, skare@qti.qualcomm.com,
+ linux-kernel@vger.kernel.org, Sumit Garg <sumit.garg@oss.qualcomm.com>
+References: <20260312062756.694390-1-sumit.garg@kernel.org>
+ <20260312062756.694390-3-sumit.garg@kernel.org>
+ <28d63822-f191-400a-8005-5185dd480dbb@kernel.org>
+ <acE-kAi2tkPh2qie@sumit-xelite>
+ <5c5b49aa-7819-44c6-b5f7-19ec780d73fa@kernel.org>
+ <2e55bdc3-54a1-4f18-b9ad-fe03f21fc4da@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <2e55bdc3-54a1-4f18-b9ad-fe03f21fc4da@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	MID_RHS_NOT_FQDN(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-100338-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.freedesktop.org,lists.infradead.org,kernel.org,oss.qualcomm.com,poorly.run,linux.dev,gmail.com,somainline.org,ffwll.ch,lunn.ch,davemloft.net,google.com,redhat.com,linaro.org,qti.qualcomm.com,lists.trustedfirmware.org];
+	TAGGED_FROM(0.00)[bounces-100339-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
+	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[28];
-	FREEMAIL_CC(0.00)[arndb.de,kernel.org,arm.com,rock-chips.com,gmail.com,linaro.org,ettus.com,broadcom.com,oss.qualcomm.com,vger.kernel.org,lists.infradead.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[lpieralisi@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	TO_DN_SOME(0.00)[];
+	RCPT_COUNT_GT_50(0.00)[51];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: 26895345B1D
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 7360A345B83
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Wed, Mar 04, 2026 at 11:33:06PM +0530, Shivendra Pratap wrote:
-> PSCI supports different types of resets like COLD reset, ARCH WARM
-> reset, vendor-specific resets. Currently there is no common driver that
-> handles all supported psci resets at one place. Additionally, there is
-> no common mechanism to issue the supported psci resets from userspace.
+On 23/03/2026 15:26, Konrad Dybcio wrote:
+>>>
+>>> This pattern has been carried from the PAS API contract among kernel
+>>> clients and the SCM PAS service earlier. The clients don't hold a
+>>> reference to the PAS data like underlying platform or TEE device etc.
+>>> Hence the need to have a global data pointer to hold reference to the
+>>> ops data structure registered by drivers having different lifetime of
+>>> devices. Also, the PAS APIs can be called from very different client
+>>> driver contexts.
+>>>
+>>> Surely, avoiding global data is always better given a better alternative
+>>> is there. Do you have any better alternative proposal here?
+>>
+>> Why it cannot be part of the context?
+>>
+>> Look at your API, e.g.:
+>> qcom_pas_init_image(). It takes struct qcom_pas_context which should
+>> contain the ops.
 > 
-> Add a PSCI reboot mode driver and define two types of PSCI resets in the
-> driver as reboot-modes: predefined resets controlled by Linux
-> reboot_mode and customizable resets defined by SoC vendors in their
-> device tree under the psci:reboot-mode node.
-> 
-> Register the driver with the reboot-mode framework to interface these
-> resets to userspace. When userspace initiates a supported command, pass
-> the reset arguments to the PSCI driver to enable command-based reset.
-> 
-> This change allows userspace to issue supported PSCI reset commands
-> using the standard reboot system calls while enabling SoC vendors to
-> define their specific resets for PSCI.
-> 
-> Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-> ---
->  drivers/power/reset/Kconfig            |  10 +++
->  drivers/power/reset/Makefile           |   1 +
->  drivers/power/reset/psci-reboot-mode.c | 119 +++++++++++++++++++++++++++++++++
->  3 files changed, 130 insertions(+)
-> 
-> diff --git a/drivers/power/reset/Kconfig b/drivers/power/reset/Kconfig
-> index f6c1bcbb57deff3568d6b1b326454add3b3bbf06..529d6c7d3555601f7b7e6199acd29838030fcef2 100644
-> --- a/drivers/power/reset/Kconfig
-> +++ b/drivers/power/reset/Kconfig
-> @@ -348,6 +348,16 @@ config NVMEM_REBOOT_MODE
->  	  then the bootloader can read it and take different
->  	  action according to the mode.
->  
-> +config PSCI_REBOOT_MODE
-> +	bool "PSCI reboot mode driver"
-> +	depends on OF && ARM_PSCI_FW
-> +	select REBOOT_MODE
-> +	help
-> +	  Say y here will enable PSCI reboot mode driver. This gets
-> +          the PSCI reboot mode arguments and passes them to psci
-> +	  driver. psci driver uses these arguments for issuing
-> +	  device reset into different boot states.
-> +
->  config POWER_MLXBF
->  	tristate "Mellanox BlueField power handling driver"
->  	depends on (GPIO_MLXBF2 || GPIO_MLXBF3) && ACPI
-> diff --git a/drivers/power/reset/Makefile b/drivers/power/reset/Makefile
-> index 0e4ae6f6b5c55729cf60846d47e6fe0fec24f3cc..49774b42cdf61fd57a5b70f286c65c9d66bbc0cb 100644
-> --- a/drivers/power/reset/Makefile
-> +++ b/drivers/power/reset/Makefile
-> @@ -40,4 +40,5 @@ obj-$(CONFIG_REBOOT_MODE) += reboot-mode.o
->  obj-$(CONFIG_SYSCON_REBOOT_MODE) += syscon-reboot-mode.o
->  obj-$(CONFIG_POWER_RESET_SC27XX) += sc27xx-poweroff.o
->  obj-$(CONFIG_NVMEM_REBOOT_MODE) += nvmem-reboot-mode.o
-> +obj-$(CONFIG_PSCI_REBOOT_MODE) += psci-reboot-mode.o
->  obj-$(CONFIG_POWER_MLXBF) += pwr-mlxbf.o
-> diff --git a/drivers/power/reset/psci-reboot-mode.c b/drivers/power/reset/psci-reboot-mode.c
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..86bef195228b0924704c2936b99f6801c14ff1b1
-> --- /dev/null
-> +++ b/drivers/power/reset/psci-reboot-mode.c
-> @@ -0,0 +1,119 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> + */
-> +
-> +#include <linux/device/faux.h>
-> +#include <linux/device.h>
+> This would make the client have to select the ops. The whole point is to
+> avoid that, since the client has no clue (and is supposed not to have any).
 
-Nit: swap the two.
+Yeah, I see. The problem is that this patchset just keeps growing the
+singletons so except existing 'struct qcom_scm *__scm' in qcom_scm.c,
+this one brings at least three new: 'ops_ptr', 'qcom_pas_ops_scm' and
+'qcom_pas_ops_tee'.
 
-> +#include <linux/err.h>
-> +#include <linux/of.h>
-> +#include <linux/psci.h>
-> +#include <linux/reboot.h>
-> +#include <linux/reboot-mode.h>
-> +#include <linux/types.h>
-> +
-> +/*
-> + * Predefined reboot-modes are defined as per the values
-> + * of enum reboot_mode defined in the kernel: reboot.c.
-> + */
-> +static struct mode_info psci_resets[] = {
-> +	{ .mode = "warm", .magic = REBOOT_WARM},
-> +	{ .mode = "soft", .magic = REBOOT_SOFT},
-> +	{ .mode = "cold", .magic = REBOOT_COLD},
-> +};
-> +
-> +static void psci_reboot_mode_set_predefined_modes(struct reboot_mode_driver *reboot)
-> +{
-> +	INIT_LIST_HEAD(&reboot->predefined_modes);
-> +	for (u32 i = 0; i < ARRAY_SIZE(psci_resets); i++) {
-> +		/* Prepare the magic with arg1 as 0 and arg2 as per pre-defined mode */
-> +		psci_resets[i].magic = REBOOT_MODE_MAGIC(0, psci_resets[i].magic);
+I don't think you need all four in total, but only one which will hold
+whatever pointers are necessary.
 
-This looks weird to me, why can't we just initialize the array with the values
-directly ?
-
-> +		INIT_LIST_HEAD(&psci_resets[i].list);
-> +		list_add_tail(&psci_resets[i].list, &reboot->predefined_modes);
-> +	}
-> +}
-> +
-> +/*
-> + * arg1 is reset_type(Low 32 bit of magic).
-> + * arg2 is cookie(High 32 bit of magic).
-> + * If reset_type is 0, cookie will be used to decide the reset command.
-> + */
-> +static int psci_reboot_mode_write(struct reboot_mode_driver *reboot, u64 magic)
-> +{
-> +	u32 reset_type = REBOOT_MODE_ARG1(magic);
-> +	u32 cookie = REBOOT_MODE_ARG2(magic);
-> +
-> +	if (reset_type == 0) {
-> +		if (cookie == REBOOT_WARM || cookie == REBOOT_SOFT)
-> +			psci_set_reset_cmd(true, 0, 0);
-> +		else
-> +			psci_set_reset_cmd(false, 0, 0);
-> +	} else {
-> +		psci_set_reset_cmd(true, reset_type, cookie);
-> +	}
-
-I don't think that psci_set_reset_cmd() has the right interface (and this
-nested if is too complicated for my taste). All we need to pass is reset-type
-and cookie (and if the reset is one of the predefined ones, reset-type is 0
-and cookie is the REBOOT_* cookie).
-
-Then the PSCI firmware driver will take the action according to what
-resets are available.
-
-How does it sound ?
-
-> +
-> +	return NOTIFY_DONE;
-> +}
-> +
-> +static int psci_reboot_mode_register_device(struct faux_device *fdev)
-> +{
-> +	struct reboot_mode_driver *reboot;
-> +	int ret;
-> +
-> +	reboot = devm_kzalloc(&fdev->dev, sizeof(*reboot), GFP_KERNEL);
-> +	if (!reboot)
-> +		return -ENOMEM;
-> +
-> +	psci_reboot_mode_set_predefined_modes(reboot);
-> +	reboot->write = psci_reboot_mode_write;
-> +	reboot->dev = &fdev->dev;
-> +
-> +	ret = devm_reboot_mode_register(&fdev->dev, reboot);
-> +	if (ret) {
-> +		dev_err_probe(&fdev->dev, ret, "devm_reboot_mode_register failed %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static int __init psci_reboot_mode_init(void)
-> +{
-> +	struct device_node *psci_np;
-> +	struct faux_device *fdev;
-> +	struct device_node *np;
-> +	int ret;
-> +
-> +	psci_np = of_find_compatible_node(NULL, NULL, "arm,psci-1.0");
-> +	if (!psci_np)
-> +		return -ENODEV;
-> +	/*
-> +	 * Look for reboot-mode in the psci node. Even if the reboot-mode
-> +	 * node is not defined in psci, continue to register with the
-> +	 * reboot-mode driver and let the dev.ofnode be set as NULL.
-> +	 */
-> +	np = of_find_node_by_name(psci_np, "reboot-mode");
-> +
-> +	fdev = faux_device_create("psci-reboot-mode", NULL, NULL);
-
-Same comment as Bartosz (have you picked up his work and working towards
-a solution) ?
-
-Thanks,
-Lorenzo
-
-> +	if (!fdev) {
-> +		ret = -ENODEV;
-> +		goto error;
-> +	}
-> +
-> +	device_set_node(&fdev->dev, of_fwnode_handle(np));
-> +	ret = psci_reboot_mode_register_device(fdev);
-> +	if (ret)
-> +		goto error;
-> +
-> +	return 0;
-> +
-> +error:
-> +	of_node_put(np);
-> +	if (fdev) {
-> +		device_set_node(&fdev->dev, NULL);
-> +		faux_device_destroy(fdev);
-> +	}
-> +
-> +	return ret;
-> +}
-> +device_initcall(psci_reboot_mode_init);
-> 
-> -- 
-> 2.34.1
-> 
+Best regards,
+Krzysztof
 
