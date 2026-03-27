@@ -1,225 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-100207-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100208-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UOddLppBxmlRIAUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100207-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 09:36:42 +0100
+	id 6ER1A+NCxmlRIAUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100208-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 09:42:11 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3962E3411C7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 09:36:42 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9CA31341266
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 09:42:10 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id B6474300E394
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 08:33:19 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 07EBA3011582
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 08:41:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C5433D6674;
-	Fri, 27 Mar 2026 08:33:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 891CB3D3013;
+	Fri, 27 Mar 2026 08:41:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="CGVO9hJC"
+	dkim=pass (2048-bit key) header.d=mess.org header.i=@mess.org header.b="HclnjMe7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from gofer.mess.org (gofer.mess.org [88.97.38.141])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3246927510E;
-	Fri, 27 Mar 2026 08:33:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1391D3A453F;
+	Fri, 27 Mar 2026 08:41:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=88.97.38.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774600398; cv=none; b=qbA46qJWv3GQajdoJM0n8cOKgMWwcW/yaMEco/T/tY3oEtcQvlFeaS5Ivp1eAJAV7/G2vVFpeHAX46Vio7NdoUEAwHJ8zKFYHCIm3uFwL2n2/LcZVF5gDYUFjvhYKfYPa+lwmT3G67UPeNySTFVBR+w1Pmng6Oq0K8Qpt6Eg1k4=
+	t=1774600888; cv=none; b=CfOh69+2NbWbvHeBLAsdXsm6WdI5elxhWbsMpspGGYh2RSwdSKufVqw4wvtrQkocghEAFdIcAwLiy3mcrcfB1cv2/8q1Tu0b8gHpq5ptkbgcKXjrzu2EkQPPymI5UjCRWPIvwiFwGpWUEd65180GmPlSDuvfZnMKUOe61OLqAYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774600398; c=relaxed/simple;
-	bh=jsxDcV0C2PEIS5JTJhpYYFD6RXEuabaOLhWWItUXK5A=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=BJw4o6LhcjubUbHubxUged3ElsMgRQHMyoGOQeyxqQevzCFxgipVkUxyJisBj9Y1Cmrz84+/SWicagTiIYJlu3epd0JZ0/QNgQIn+KDPM1Kr+G7+VzhIeQFHuKE/iF7taBjyRoe8zLfWlB494QnQGaQkshqYZV9aqYAV5AihzhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=CGVO9hJC; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62R6w3g91860230;
-	Fri, 27 Mar 2026 08:33:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=zc3+2imTkru8BoSsYqgw6vL70ObmsrqAYcU
-	E6GAPSto=; b=CGVO9hJCwzAJBEbErakheDmK0/Q4q1g/v0H2axCBjPxOn3r+cNo
-	wUkFIpGnjqRvcbcO89Fzn0NTHpnCp9o8ySzy3rjuQkuUSVghnUXXWcsvLl1O5L9d
-	4rIjgENX3myC7ZuMPcqLKdqI/tKgYJPPg5OrWhmcqnT0cWVt1oTxhTHnm5qzQ62k
-	T6xBC2A9zeSILTLGuG504Wucuu53pgo4ih61zmPNP0WfA16akTDkE/2IE2W6YbI8
-	/cUqZEE9PxWCEZKTjj8Rteq5ApZzvOglutZcfjWzzk5VjZVFmKAOBiWso+EiGHen
-	tukQNKRF9Sycjy+lJ5+rczMrjgn3jEoHBBQ==
-Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d5bxv25sy-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 27 Mar 2026 08:33:04 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 62R8X2l1003162;
-	Fri, 27 Mar 2026 08:33:02 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 4d1mdn7j82-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 27 Mar 2026 08:33:02 +0000
-Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 62R8X251003152;
-	Fri, 27 Mar 2026 08:33:02 GMT
-Received: from shuaz-gv.ap.qualcomm.com (smtphost-taiwan.qualcomm.com [10.249.136.33])
-	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 62R8X1be003138
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 27 Mar 2026 08:33:02 +0000
-Received: by shuaz-gv.ap.qualcomm.com (Postfix, from userid 4467449)
-	id 034545DB; Fri, 27 Mar 2026 16:33:01 +0800 (CST)
-From: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
-To: Bartosz Golaszewski <brgl@kernel.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-kernel@vger.kernel.org, cheng.jiang@oss.qualcomm.com,
-        quic_chezhou@quicinc.com, wei.deng@oss.qualcomm.com,
-        jinwang.li@oss.qualcomm.com, mengshi.wu@oss.qualcomm.com,
-        shuai.zhang@oss.qualcomm.com, Shuai Zhang <quic_shuaz@quicinc.com>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH v4] Bluetooth: qca: Fix delayed hw_error handling due to missing wakeup during SSR
-Date: Fri, 27 Mar 2026 16:32:58 +0800
-Message-Id: <20260327083258.1398450-1-shuai.zhang@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1774600888; c=relaxed/simple;
+	bh=fq9JTGo3oNehZ2jTqn0zteRFSrcthfNS+Aevbze4JtY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EbfhdtCPhcuwLyxwXerg5UP51cHhnC57uWnZV2ebiGgjWmBGZUiP3jWMQZW0VGKcdiWzbAC+RaR6JGMBklDGMsaxUwMKomkWinDitsEGi/YbU2b94cNjJQRhknVZaqGAiVOlZUG93LY1TFS811Zr0xSScErGL5xwjE76Iofuc/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mess.org; spf=pass smtp.mailfrom=mess.org; dkim=pass (2048-bit key) header.d=mess.org header.i=@mess.org header.b=HclnjMe7; arc=none smtp.client-ip=88.97.38.141
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mess.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mess.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mess.org; s=2020;
+	t=1774600878; bh=fq9JTGo3oNehZ2jTqn0zteRFSrcthfNS+Aevbze4JtY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=HclnjMe7VqtNBdrpZhXlxga5+RCIEvcQMVmsh9nM/Z6PfKcl1JZK2ClyuZMrdmC2N
+	 VSggEUdZ+hHzzMtt8fEINQVJxxn272yBDa9LQ3a8Uackn6IxfiaECsjhC2tBdTBu1C
+	 BQ4xNshjIuPVvDkWSobi0V7cKvGLX5CfTroPpNhB5ljzb8q6wlU1ehZ7tLd4l1KRX7
+	 9DV8hPTF19oXuzwTYv89t+std2Q1zgmOVI9XrLLnSHQ/7DKBedLPf/twdYcag5MJER
+	 6pQjMynD2zUqPyT9pP0wGKbx/LHMhVV5tCscRRwkrDGvw1SIM/FaboB4nbft+tR2tI
+	 me9V2j2MoBMxw==
+Received: by gofer.mess.org (Postfix, from userid 1000)
+	id 74EAE1011B2; Fri, 27 Mar 2026 08:41:18 +0000 (GMT)
+Date: Fri, 27 Mar 2026 08:41:18 +0000
+From: Sean Young <sean@mess.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Biswapriyo Nath <nathbappai@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>,
+	Pavel Machek <pavel@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Martin Botka <martin.botka@somainline.org>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-leds@vger.kernel.org,
+	linux-clk@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+	phone-devel@vger.kernel.org
+Subject: Re: [PATCH 4/7] dt-bindings: leds: irled: ir-spi-led: Add new
+ duty-cycle value
+Message-ID: <acZCrqffLvUpM7AW@gofer.mess.org>
+References: <20260325-ginkgo-add-usb-ir-vib-v1-0-446c6e865ad6@gmail.com>
+ <20260325-ginkgo-add-usb-ir-vib-v1-4-446c6e865ad6@gmail.com>
+ <20260327-natural-wild-mongrel-5bcc43@quoll>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=A99h/qWG c=1 sm=1 tr=0 ts=69c640c0 cx=c_pps
- a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=yOCtJkima9RkubShWh1s:22 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=KKAkSRfTAAAA:8
- a=eIGlGOcC9ytwnVZZLkwA:9 a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: Wx0PmLehbzD6FHT3BPPp5uHTBoPnbYHs
-X-Proofpoint-GUID: Wx0PmLehbzD6FHT3BPPp5uHTBoPnbYHs
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI3MDA2MiBTYWx0ZWRfX4rsjX50o/5QD
- Vs2KCl77DbCg8ue6StnYUR00og2B2ggE9z4FZT5zYSZayS5ppRtZOs94XSVvdZvIS+LY9yhzTp+
- cFy/Nv5cFkreyrx+bG2UpCvuPV45uw7fh+ZJMBNo7MiDUubuOldNhBNlKSnaoomHCIVCjvKvcbM
- FcYNtkvUOpcXLnzKqyXbSGPkvfstd1gR2Bzot0itDiuBJmAK5i9v6xIOxbb5ePZfbqvnnak93Pq
- usMn6WBrvXIY1UuyONjFziArPTOZ3VhaUemdJMXHqZBVPPS4YwvkzxLdihzi1mPZfbOiY+5xgzJ
- KCR/iXyoZ9ai9WqQMl/67lm1ul7hJVKeivRTnqyhgY8ofUQR5PYrCvPhwfe+nK+RmeYBkOqcx3u
- 9VQLu6zD4IXuX8jdo4gDTN7nc1ASGnYOR6K38l05NaVSVQ2zY+lHPsUadElrNYBvh/QGKeRsqWA
- 6Fb+oPGUktYpIxv5/Rw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-26_04,2026-03-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 malwarescore=0 spamscore=0 impostorscore=0
- phishscore=0 bulkscore=0 lowpriorityscore=0 clxscore=1015 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603270062
-X-Spamd-Result: default: False [0.84 / 15.00];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260327-natural-wild-mongrel-5bcc43@quoll>
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1];
+	DMARC_POLICY_ALLOW(-0.50)[mess.org,none];
+	R_DKIM_ALLOW(-0.20)[mess.org:s=2020];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_TO(0.00)[kernel.org,holtmann.org,gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[14];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-100207-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-100208-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[gmail.com,kernel.org,baylibre.com,somainline.org,vger.kernel.org,lists.sr.ht];
+	RCPT_COUNT_TWELVE(0.00)[19];
 	MIME_TRACE(0.00)[0:+];
+	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[shuai.zhang@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:mid,qualcomm.com:dkim,quicinc.com:email];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	RCVD_COUNT_SEVEN(0.00)[10]
-X-Rspamd-Queue-Id: 3962E3411C7
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[sean@mess.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[mess.org:+];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,mess.org:dkim]
+X-Rspamd-Queue-Id: 9CA31341266
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-From: Shuai Zhang <quic_shuaz@quicinc.com>
+On Fri, Mar 27, 2026 at 08:51:18AM +0100, Krzysztof Kozlowski wrote:
+> On Wed, Mar 25, 2026 at 06:07:27PM +0000, Biswapriyo Nath wrote:
+> > 30 duty cycle for IR transmitter is used in Xiaomi Redmi Note 8 (ginkgo).
+> > 
+> > Signed-off-by: Biswapriyo Nath <nathbappai@gmail.com>
+> > ---
+> >  Documentation/devicetree/bindings/leds/irled/ir-spi-led.yaml | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/leds/irled/ir-spi-led.yaml b/Documentation/devicetree/bindings/leds/irled/ir-spi-led.yaml
+> > index 72cadebf6e3..0297bfbb275 100644
+> > --- a/Documentation/devicetree/bindings/leds/irled/ir-spi-led.yaml
+> > +++ b/Documentation/devicetree/bindings/leds/irled/ir-spi-led.yaml
+> > @@ -25,7 +25,7 @@ properties:
+> >  
+> >    duty-cycle:
+> >      $ref: /schemas/types.yaml#/definitions/uint8
+> > -    enum: [50, 60, 70, 75, 80, 90]
+> > +    enum: [30, 50, 60, 70, 75, 80, 90]
+> 
+> Hm, why is this enum, instead of 1-99, in the first place?
 
-When Bluetooth controller encounters a coredump, it triggers
-the Subsystem Restart (SSR) mechanism. The controller first
-reports the coredump data, and once the data upload is complete,
-it sends a hw_error event. The host relies on this event to
-proceed with subsequent recovery actions.
+Well in reality only a few different duty cycles are used by IR protocols.
+30% is quite common so that should part of the list. 
 
-If the host has not finished processing the coredump data
-when the hw_error event is received,
-it sets a timer to wait until either the data processing is complete
-or the timeout expires before handling the event.
+Having said that a range of 1-99 would be nicer. Do we set this like so:
 
-The current implementation lacks a wakeup trigger. As a result,
-even if the coredump data has already been processed, the host
-continues to wait until the timer expires, causing unnecessary
-delays in handling the hw_error event.
+ - minimum: 1
+ - maximum: 99
 
-To fix this issue, adds a `wake_up_bit()` call after the host finishes
-processing the coredump data. This ensures that the waiting thread is
-promptly notified and can proceed to handle the hw_error event without
-waiting for the timeout.
+?
 
-Test case:
-- Trigger controller coredump using the command: `hcitool cmd 0x3f 0c 26`.
-- Use `btmon` to capture HCI logs.
-- Observe the time interval between receiving the hw_error event
-and the execution of the power-off sequence in the HCI log.
+Thanks,
 
-Signed-off-by: Shuai Zhang <quic_shuaz@quicinc.com>
-Link: https://lore.kernel.org/stable/20251107033924.3707495-2-quic_shuaz%40quicinc.com
-Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
-Changes v4:
-- add Acked-by signoff
-- Link to v3
-  https://lore.kernel.org/all/20251107033924.3707495-1-quic_shuaz@quicinc.com/
-
-Changes v3:
-- add Fixes tag
-- Link to v2
-  https://lore.kernel.org/all/20251106140103.1406081-1-quic_shuaz@quicinc.com/
-
-Changes v2:
-- Split timeout conversion into a separate patch.
-- Clarified commit messages and added test case description.
-- Link to v1
-  https://lore.kernel.org/all/20251104112601.2670019-1-quic_shuaz@quicinc.com/
----
- drivers/bluetooth/hci_qca.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index c17a462ae..228a754a9 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1108,7 +1108,7 @@ static void qca_controller_memdump(struct work_struct *work)
- 				qca->qca_memdump = NULL;
- 				qca->memdump_state = QCA_MEMDUMP_COLLECTED;
- 				cancel_delayed_work(&qca->ctrl_memdump_timeout);
--				clear_bit(QCA_MEMDUMP_COLLECTION, &qca->flags);
-+				clear_and_wake_up_bit(QCA_MEMDUMP_COLLECTION, &qca->flags);
- 				clear_bit(QCA_IBS_DISABLED, &qca->flags);
- 				mutex_unlock(&qca->hci_memdump_lock);
- 				return;
-@@ -1186,7 +1186,7 @@ static void qca_controller_memdump(struct work_struct *work)
- 			kfree(qca->qca_memdump);
- 			qca->qca_memdump = NULL;
- 			qca->memdump_state = QCA_MEMDUMP_COLLECTED;
--			clear_bit(QCA_MEMDUMP_COLLECTION, &qca->flags);
-+			clear_and_wake_up_bit(QCA_MEMDUMP_COLLECTION, &qca->flags);
- 		}
- 
- 		mutex_unlock(&qca->hci_memdump_lock);
--- 
-2.34.1
-
+Sean
 
