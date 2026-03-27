@@ -1,175 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-100291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100292-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OHXLGMV1xmlFKgUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 13:19:17 +0100
+	id iDRVJXB2xmnSKgUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100292-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 13:22:08 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6217B3441B2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 13:19:16 +0100 (CET)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F23134423F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 13:22:07 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 2D642302096C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 12:19:12 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id A46003015844
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 12:20:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3CA139A7EC;
-	Fri, 27 Mar 2026 12:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B63A939B4A3;
+	Fri, 27 Mar 2026 12:20:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kA5KYHyR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kcGZXUAz"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C5431DBB3A;
-	Fri, 27 Mar 2026 12:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AF9034EEF2;
+	Fri, 27 Mar 2026 12:20:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774613950; cv=none; b=pRzTLR5fACSlYtrsMEWb6R5nGfCJLQszjn20ErShdSkZ68zp3BaPvV2vxeshRqBPzuOjpUanoYwSaStC78DZseDHWs/p/pCpMI+1qBwPwmeMVS13gKDvgm/WAoPWXTr+s2s8b6U0nfP+IcMLny+rNamZ/yMnuH9iPZX0KKj5tCw=
+	t=1774614019; cv=none; b=IsKHqxSHmNLD5M6QTRXLGjBzYXVin4viX2pf1WN2OGuPzLXTDa4YYjOKMLmWv15x/mjEgeA2UXbf6H03VmgFMUa1gst0NqrwsynY/DS66CWdQGCuDPkNZPIYmLiwR8Xjf2p/RdZfaNQF261clvEydCrSUlOhr72TunBBvzP6/34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774613950; c=relaxed/simple;
-	bh=WdmmxLC4uZUaxNYg07u+R61NqLzB+09CSA+9gpv6wjo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gBEuYkKztwLFmS0yDIiwgCQt5YAwDjACNu2Tz9mV8SVN6GP4Yg5iLahJVZoCxy1YPNlF6Pg9ivD2yHLezqQJ0xwYumhDFs70sAUirvTO++jW2VbWTZi2K8lZCDFGMkxI0adUGJiUF654qbFZt52eaju0bup7QWJXfrAdSqeF2MM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kA5KYHyR; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53BE0C19423;
-	Fri, 27 Mar 2026 12:18:55 +0000 (UTC)
+	s=arc-20240116; t=1774614019; c=relaxed/simple;
+	bh=zsB3v+Byim1FIpCocjgBST4WC+e7+POJuMKMy6Fwz4U=;
+	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
+	 In-Reply-To:To:Cc; b=TZeq7oU+zSutZUzRWVMmAlxR/RgGI/UWsl1bsvzAJivgB1i9BF+sY5wTayp7twCdROFY0xPsP3sosksicJmTkYDytukAylmIIzUEwLLr3RzP6v+aZ68JOc5yoarww2EdQjrQBXb39hMOu8uRDRu9Vj33SxSuX7kdnp8Yk2W3yyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kcGZXUAz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF4D4C19423;
+	Fri, 27 Mar 2026 12:20:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774613950;
-	bh=WdmmxLC4uZUaxNYg07u+R61NqLzB+09CSA+9gpv6wjo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=kA5KYHyR7h3Q8MfGqowvF8zh3gqZs2NKETp6VjzAQHFOxAoWEqN0DxyQgjKOs/s4j
-	 qXoc++EGCuN+Jk+SBWCPkkRPeNWml7CZJMT/6nIXgPViu8Dnrf5Y0JvyDOyGoeqnbI
-	 0H5VWYLLc8pldAYA4QYKHb8XZkd0dRadiA9mRFVYgx1cYMtKzVV+8iqrV7NgH528iQ
-	 NLZxMIbfgUxSiLRf8oVPOV+33glZq4ueSjniXmTt5fgoBdhmEIK2PUTDmmUKysdutE
-	 loM8mBn20nJPvqYo7NRuB1vdTTBJYMQIPAhOc/DLPCFcpNFcwr1vGOZ12458rn/B7m
-	 QhOIXoObtExuw==
-Date: Fri, 27 Mar 2026 17:48:52 +0530
-From: Sumit Garg <sumit.garg@kernel.org>
-To: Harshal Dev <harshal.dev@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-	linux-media@vger.kernel.org, netdev@vger.kernel.org,
-	linux-wireless@vger.kernel.org, ath12k@lists.infradead.org,
-	linux-remoteproc@vger.kernel.org, andersson@kernel.org,
-	konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, robin.clark@oss.qualcomm.com, sean@poorly.run,
-	akhilpo@oss.qualcomm.com, lumag@kernel.org, abhinav.kumar@linux.dev,
-	jesszhan0024@gmail.com, marijn.suijten@somainline.org,
-	airlied@gmail.com, simona@ffwll.ch, vikash.garodia@oss.qualcomm.com,
-	dikshita.agarwal@oss.qualcomm.com, bod@kernel.org,
-	mchehab@kernel.org, elder@kernel.org, andrew+netdev@lunn.ch,
-	davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-	pabeni@redhat.com, jjohnson@kernel.org, mathieu.poirier@linaro.org,
-	trilokkumar.soni@oss.qualcomm.com, mukesh.ojha@oss.qualcomm.com,
-	pavan.kondeti@oss.qualcomm.com, jorge.ramirez@oss.qualcomm.com,
-	tonyh@qti.qualcomm.com, vignesh.viswanathan@oss.qualcomm.com,
-	srinivas.kandagatla@oss.qualcomm.com,
-	amirreza.zarrabi@oss.qualcomm.com, jens.wiklander@linaro.org,
-	op-tee@lists.trustedfirmware.org, apurupa@qti.qualcomm.com,
-	skare@qti.qualcomm.com, linux-kernel@vger.kernel.org,
-	Sumit Garg <sumit.garg@oss.qualcomm.com>
-Subject: Re: [PATCH v2 03/15] firmware: qcom_scm: Migrate to generic PAS
- service
-Message-ID: <acZ1rDB5-koq8UqF@sumit-xelite>
-References: <20260312062756.694390-1-sumit.garg@kernel.org>
- <20260312062756.694390-4-sumit.garg@kernel.org>
- <bc7b116d-de41-4b9a-9c84-1010e226bac8@oss.qualcomm.com>
+	s=k20201202; t=1774614018;
+	bh=zsB3v+Byim1FIpCocjgBST4WC+e7+POJuMKMy6Fwz4U=;
+	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+	b=kcGZXUAzelDetxDDvPqKkdit6V8Eh9G5PDl+WQ60pgKQIgu4V70GPhKHZydSfy8Tb
+	 7n72nvc8Migm9q1+YkoUDDUeUjleAo1O4+8SGdx/vTshSaAxszaB49YzCKgGpbc0o6
+	 GO770D68eYTqT9600SPWMqSMeji3yMWAU93BibX7s+/kHvZGShFpWpxS3t2NrkaOUM
+	 6kzcjQRZvjNbRShn+2/uWE/laB/0S1TyWQf2EQIjQAYmjPH8IUOrCWgZfFYfIUQ/JJ
+	 cBfvlu0w9cKNbAeZAsdnTOza23RdP55pqKynpUFcmcVTO0jFHtNbsdy9bQe8N1se/h
+	 eE7AewxszURUQ==
+Received: from [10.30.226.235] (localhost [IPv6:::1])
+	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 02CF5393022E;
+	Fri, 27 Mar 2026 12:20:06 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <bc7b116d-de41-4b9a-9c84-1010e226bac8@oss.qualcomm.com>
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH net-next v3] net: qrtr: fix endian handling of confirm_rx
+ field
+From: patchwork-bot+netdevbpf@kernel.org
+Message-Id: 
+ <177461400479.3457865.940451626151313494.git-patchwork-notify@kernel.org>
+Date: Fri, 27 Mar 2026 12:20:04 +0000
+References: 
+ <20260326-b4-qrtr-fix-confirm_rx-on-big-endian-v3-1-9ea3c855ce39@westermo.com>
+In-Reply-To: 
+ <20260326-b4-qrtr-fix-confirm_rx-on-big-endian-v3-1-9ea3c855ce39@westermo.com>
+To: Alexander Wilhelm <alexander.wilhelm@westermo.com>
+Cc: mani@kernel.org, davem@davemloft.net, edumazet@google.com,
+ kuba@kernel.org, pabeni@redhat.com, horms@kernel.org, andersson@kernel.org,
+ linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-100291-lists,linux-arm-msm=lfdr.de];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	RCVD_TLS_LAST(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	TAGGED_FROM(0.00)[bounces-100292-lists,linux-arm-msm=lfdr.de,netdevbpf];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,lists.freedesktop.org,lists.infradead.org,kernel.org,oss.qualcomm.com,poorly.run,linux.dev,gmail.com,somainline.org,ffwll.ch,lunn.ch,davemloft.net,google.com,redhat.com,linaro.org,qti.qualcomm.com,lists.trustedfirmware.org];
-	RCVD_COUNT_THREE(0.00)[4];
-	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[50];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[sumit.garg@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev];
+	FROM_NO_DN(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[patchwork-bot@kernel.org,linux-arm-msm@vger.kernel.org];
 	TO_DN_SOME(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 6217B3441B2
+	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[davemloft.net:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 0F23134423F
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Fri, Mar 27, 2026 at 05:40:16PM +0530, Harshal Dev wrote:
-> 
-> 
-> On 3/12/2026 11:57 AM, Sumit Garg wrote:
-> > From: Sumit Garg <sumit.garg@oss.qualcomm.com>
-> > 
-> > With the availability of generic PAS service, let's add SCM calls as
-> > a backend to keep supporting legacy QTEE interfaces. The exported
-> > qcom_scm* wrappers will get dropped once all the client drivers get
-> > migrated as part of future patches.
-> > 
-> > Signed-off-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
-> > ---
-> >  drivers/firmware/qcom/Kconfig    |   1 +
-> >  drivers/firmware/qcom/qcom_scm.c | 336 ++++++++++++++-----------------
-> >  2 files changed, 156 insertions(+), 181 deletions(-)
-> >
-> 
-> [..]
-> 
-> > diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-> > index 8fbc96693a55..2d7937ae7c8f 100644
-> > --- a/drivers/firmware/qcom/qcom_scm.c
-> > +++ b/drivers/firmware/qcom/qcom_scm.c
-> > @@ -13,6 +13,7 @@
-> >  #include <linux/dma-mapping.h>
-> 
-> [..]
-> 
-> >  
-> > -/**
-> > - * devm_qcom_scm_pas_context_alloc() - Allocate peripheral authentication service
-> > - *				       context for a given peripheral
-> > - *
-> > - * PAS context is device-resource managed, so the caller does not need
-> > - * to worry about freeing the context memory.
-> > - *
-> > - * @dev:	  PAS firmware device
-> > - * @pas_id:	  peripheral authentication service id
-> > - * @mem_phys:	  Subsystem reserve memory start address
-> > - * @mem_size:	  Subsystem reserve memory size
-> > - *
-> > - * Returns: The new PAS context, or ERR_PTR() on failure.
-> > - */
-> 
-> Shouldn't we drop the documentation for the exported functions in this file as part of
-> patch 14/15? After this patch is applied, the devm_qcom_scm_pas_context_alloc() function
-> still remains exported and available.
+Hello:
 
-I don't see value in maintaining redundant documentation during the
-course of the patch-set. The wrappers are only maintained to keep the
-individual commits compilable such that we don't break kernel git
-bisection scripts.
+This patch was applied to netdev/net-next.git (main)
+by David S. Miller <davem@davemloft.net>:
 
--Sumit
+On Thu, 26 Mar 2026 08:17:52 +0100 you wrote:
+> Convert confirm_rx to little endian when enqueueing and convert it back on
+> receive. This fixes control flow on big endian hosts, little endian is
+> unaffected.
+> 
+> On transmit, store confirm_rx as __le32 using cpu_to_le32(). On receive,
+> apply le32_to_cpu() before using the value. !! ensures the value is 0 or 1
+> in native endianness, so the conversion isn’t strictly required here, but
+> it is kept for consistency and clarity.
+> 
+> [...]
+
+Here is the summary with links:
+  - [net-next,v3] net: qrtr: fix endian handling of confirm_rx field
+    https://git.kernel.org/netdev/net-next/c/e4cf6087cab3
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
 
