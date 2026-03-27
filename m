@@ -1,292 +1,262 @@
-Return-Path: <linux-arm-msm+bounces-100466-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100467-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id yK4BLQDsxmkIQQUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100466-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 21:43:44 +0100
+	id fa2AA0PsxmkuQQUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100467-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 21:44:51 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id DC3DC34B354
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 21:43:43 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C83D34B3A8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 21:44:50 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 5F1013085839
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 20:24:15 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 65528303FFF0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 20:26:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C6FC39184C;
-	Fri, 27 Mar 2026 20:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9BF1C391504;
+	Fri, 27 Mar 2026 20:26:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VuqQy0dF"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RqXlApiS";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="XeX1k+AI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA5B37EFE8
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2026 20:24:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.48
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774643051; cv=pass; b=MxWBdcqUz8FWv3LVEFsXCt4cxhvHkWCJUr/aja1SYgiN6za3C6Mbu+XcD9ocALXgz+A7/9fAeWiOwoaKV7mQCu1XnA/KwoKNZh9W+IfrbT3ImKpZ8z36skHk1VuTtIjWyIjfgglN3NEYvyJNcRvF8jGu2J8/+IiLgQvSAIvDnso=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774643051; c=relaxed/simple;
-	bh=fe8HYEgNDSZEJwtPnP9d7rdRK4mOuzWO1Arb10bM66I=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Yb6NcVfovtm+xS+fstGOiPLxB8KOZ968Ob9iE740ihXvaQjip5d7a+JyNVdfiWbIlji82pjfZJtQuHR6rs6ffpxI6XVSIcXhHrs9Xz9xUBFdQx+/YQYyab1srduhz9Ewnt87i9WOQKjlCaULMA27QxME/W914Nt2JSHDnnwUYK4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VuqQy0dF; arc=pass smtp.client-ip=209.85.208.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-66a33f61d80so4222555a12.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2026 13:24:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774643047; cv=none;
-        d=google.com; s=arc-20240605;
-        b=JIYUigRTBCR2jr4aLGEbyjd5mUAFKrUbTO58N1uA1DD4lLlxiF0ci2+tonFyP0lb/W
-         LnAz7sNuyZCHCez94NTcLYDonHGPelFbci3iPhH03ke66mbP987YS1T0fddhEewocvIF
-         DGUufnIfERFllyHg1B/ozYJOnjVSddEENa24lgb38WiO81Zjqc2noVIxMedAUBdMJgmP
-         UNfrU3CltNDZ9ameh+UHoPhVr2Zy9wqryInaWtdIYQLdY6rjtaWUpx08f+kZMyx2gtKD
-         S+2auWnsWqszzDPxBS8aI/IPfER0z7X907pLn8+1nMKc8iqdVu9UDCt5+B9pH95vBAK2
-         XE8Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=9WeOtA6rLKd2feImk1nWk/a5NsEeM0kN8oqqyEId0bQ=;
-        fh=PpuqcNwAAv15nUsrrwHLYh4FKCxmgWsG9JZeYlp+i/o=;
-        b=Brt5wfJDzqYWiagofx8nscpPc/KFHSGF+sjzomu/+w+IlVkYBzfogUPlLG7EGFV/yR
-         NZybQGWVrviB8aHvE7wIoNyEWap5dcNJmiVxkIlEzpS8jNbaawAEivMLl+ElIjKnI725
-         mk9jcucS0PPgoBPi7k3xLjcxIKI4a6Vk6a+fgurKBdA5CEg589PYepuLVdZIsE6jeARn
-         TInY8y5ocPGQzP5JAsn+WC4NxV8qsw6ZOIO1HPLyyIjDOaZWzBbUmeUaneGQaHh9CE/l
-         KGI3GIFmQLy4HupQT2m4jYb/XLucbz2ggd6cgryzXCC5P/KMFJbBtAfIW062GFhUSoBO
-         leYw==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0EF37E2EF
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2026 20:26:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774643188; cv=none; b=OANiI8vQV/ZNklwG+3cchItXIADRTmFkpMAdiDI75wc/8Yl5k999uJf3lSx/FYP5JYol2DDrlfF2i8vmQGjrtH946euH8cVmXKVGDwsUOL13JwvM+MuiGrY95rVCARxpM3ekAjA+VwcQFQ17VtBh6+Yf38Z3df3Z4DO/Q5xOvc0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774643188; c=relaxed/simple;
+	bh=mqrGOK3bV4+Mv816ostwLS/F3TkK5+y/o3ikizkYu1Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=s7jTwcbWcegB/uRZvbXNmbU5YXrGT/d0IE6CuWWPya8vPrH+e1jXAmO1PjMLrpLHphwJEzqX8cilfGXU9hBM2IX7f8dc6QILHPsqMuMnGs7Tw1qcFNgPr/98Ec0nN8dWXdEs+8bBrIWYPRnuvF9mispRQxgnXBu5k/7ZH/AoQz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RqXlApiS; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=XeX1k+AI; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62RI2PUA4030455
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2026 20:26:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	2/5yZyJwUuEfqme71Zell/ZV6ddYXqCBeg+PUgKv5SY=; b=RqXlApiSNP0TL7CV
+	BnwzBy2nF+SsSJjYWhr9awB9TiyL0UT6GacKh4WL5NYFAZcIGx+zIQHHF5PSgTUB
+	uWsWyZxTI2GVClnciCU9CQAQ18DkcySmcMF87GDWqWlKbPJAyDVmTgeRncayO0aV
+	RJZvsLFb4KP6PXTwQ/DisTT3hHyP9Ge5JDi/Qd6XXP4S38O80HYXL1RHADenopmr
+	w4iLcfFqzEn0eDHdjq7AvsrmK4apQ/MZJvmER/k1ZE4Y5iWmR+lwLeg9xQruMapT
+	Zc2i536hQIPR5OC2G3v2RyII7qSC7KlCD5q35JAyTBZKKUWeeVzsJkz1ABkwu221
+	DWD2+Q==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d5v6b12jx-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2026 20:26:26 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-50b4fe4ff7bso116527121cf.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2026 13:26:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1774643047; x=1775247847; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=9WeOtA6rLKd2feImk1nWk/a5NsEeM0kN8oqqyEId0bQ=;
-        b=VuqQy0dFFUKCW5LFnvEaxGiKsvA7wZMtgk9MpLPdPYNG0CjRWontr06l/oScJ9SlL1
-         r9wEtzgkdnjKi0jIFmkCWVMcUt1DKXUUnD7yfUC1jgsUScQbM2/1SadvK6JBbSkmQYv4
-         qSJ68sbS0T6VZPCTKM6GaMbq+iX9Q7TUrvklbvVXtraoXJ2iQJiNf1CCxINzF8kNLKwP
-         NOvf4x8hp0t8wrVujWooo56OYrlQ2VJYEsTv/8AoqFdQu5mfMcrvLthjlYiwU3SoH/Us
-         hlNdeZy9StxdLBHAoU7DXMvu0AqipWs5uVJE/jJHuiXn0PFfRmPiYl7JPpxJvKz+0G7z
-         /5RQ==
+        d=oss.qualcomm.com; s=google; t=1774643185; x=1775247985; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=2/5yZyJwUuEfqme71Zell/ZV6ddYXqCBeg+PUgKv5SY=;
+        b=XeX1k+AIxP1VFIk9GkmV5z8d0g+xR7itHnkWBRu/JxXdKDFPZYGlUUAllhELXUHzE7
+         ZQpYs9vzK1hicJWMIaXSLY4qdjuQLA2Vxqh35TKp5QWfZZzVKW26qGCh1u5p+gBbBO8v
+         lroM9qoid59dvFy9Vv/h03qgRYrSACfiK+sq4RzAveAiEs18JX0cic57/FPNhXcIILIH
+         IgseshUg4ZU5vSUxEvYWfO+c0NmxFODBJCbLR/6ufIeb3NuhCNxYJcQ8bgSUqin8Oj/n
+         k8LmKHjlv6ytZn0Pvw04+0iy5PZROBmVhVMWQXyQ0bKfRrcTVwPuYoSqh68h8NAwrSSK
+         yE1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774643047; x=1775247847;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9WeOtA6rLKd2feImk1nWk/a5NsEeM0kN8oqqyEId0bQ=;
-        b=bqjItGG6HohqYN4fEq/Jm5Xt/Xj7vKVW5rSOfc1aS7ugSf1lSRVJUWwVLANtRN8YWd
-         OCQlG4IH9QeQKXlwwyPPTirc4fyhUFY631eUyBfaMH2X/6X8LpKyDWagSm06v3Y+qLRl
-         V0QQDXWOUymcjryTp+zfVHVEs/pP+75SpNTEUcA9IeDtwksD51neQzwO+zwLjmpz7EAC
-         PLW2JJtgfTKH/4bu7kugDvuiIm7wbUoUGHo6ycASsLhT6Wg9sH9nmH+pvYZtlR6pfRmJ
-         1D38Nkh2YGfpP9fOaKS21f7De4SgixKKWcJHjwwl2KEGNRoVMI5XyMyy8WYeDhf82TdF
-         ffdQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWk6Kuq1idzvums6xR89QhXsEjsnHplAK6s4wqltlpp/OHfju3aujxMs+izWFBGxiDX4eeMjvG7v4dnqBBk@vger.kernel.org
-X-Gm-Message-State: AOJu0YykaEUAqzi2VQHdlQh1WKOtcSraZCS1W3sfIkSjoD3fnxhZN8tV
-	L/C04nVgwmm8su9/V1/mJ9EA6QZmNjlT8jwm2nrTMt1kD7xVoPv1h+i/sdgJ0RSvoKVbyfQNqJf
-	lfhM2kaLGwCYlK1c9MpwZ9v3aaZL//E7tkm8e8EkVgA==
-X-Gm-Gg: ATEYQzzZGSTxZay1+zOdYjDvtzRibnv8vkCVxQ2QD3DyxbK7IGczM7gvMsI5EJxSqmN
-	4swVMYJP+yw/xqDFvXElKKSzHFbXqmj7f1t9roD0ZEUfTXJJW6UCaJqz3PsgAsw8sbNR9+yYi1j
-	/BYFd7dEl7g3dqQyEEPTvYBNYRPjCp5qTT8SMXc8RrM4qdXX+tfT9cE4jlQ+7FrmnGOxBLGxNm+
-	4NMBotFYe+7OjsbvSl1cLCFVSV8nS7nHUVr/fxXw2KOk7GqkWeAU5IU8CmXL7xJSg0CsKBbL0fr
-	HAwMcByMg2cGlKK6+6gdTfzl10CUZl46CGHnKr9m
-X-Received: by 2002:a05:6402:46db:b0:66a:199d:138 with SMTP id
- 4fb4d7f45d1cf-66b28c66cbemr2039826a12.20.1774643046839; Fri, 27 Mar 2026
- 13:24:06 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1774643185; x=1775247985;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2/5yZyJwUuEfqme71Zell/ZV6ddYXqCBeg+PUgKv5SY=;
+        b=eJW6KTsWMb5eG0wtVkJJDQpk5GzZbYxBawmZaGFojxSzpX+jAR4wGB3j1p0edyV43q
+         Ef9uNuHtwNvJWYPzKC6hcNIVWC2fvOgxLsnzDqWkY7R1lpwzFAQpyut3AM52nnbvQKy+
+         BnbycGp14E9F0p2tOS3RSAtOM6KVMgEVhqoZL5RDELThKLazW9+I+p5w0+ge0L8U/tkW
+         Q5yHEeesZJf1P0a+HXhTlZ98SuuqC+VOl1BWR2lVUjlhSx/AIh9nSagYSNuF+XoAE9wl
+         SDaVlrq9jJ3LzLPhEgG76wpW+MDmT78OiftwmfuZkjVmYJcWCVxZ+jQLXdoDr8CIudKL
+         H3MQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVjOuWgI+UnPZTo2Frinj/lOiEuAk6oYJo1fi1QYXtoevu2lmMVHBlFZUnizxR1UqAc1ZD64ZenGFZ28wz2@vger.kernel.org
+X-Gm-Message-State: AOJu0YxvQMV0fjbPiryOxp7RNGrX60NE2Y3O8YL45fvrgDDqFVLkJsUS
+	IaI+T7VKZFJPaLh47Re1Owo2vQCZDlh3Gk0vXQStHwp0BgsR67VfCk5dYOc6pe7OWv6zwwWtSg1
+	HXMuaov8hqaYIDQmw05D9gFGeTYbIaol/zelsg0Hx/nhd5q8TZPLWp7AxypnSyC/X3Ixl
+X-Gm-Gg: ATEYQzyuGFyA9XU49XuyQbIxsmPNbR/6IzS0aMY+P8s3sLrrVB+nK0vRJmWva0GJfvK
+	2zKmTw3DVoneXPIvmgVCbc/h+PK9c/QkMaK1CtYiFXpCbmqE08ZktIwGKkLrSK6SMbFexmJFX1T
+	m6HhsF4AxjjhY6wIySbLeoGl5u/qvRR9COMoMW1BL8ncjMEFfAq+AT7s9nubjGqWx/EYAh0s+V+
+	oTdFxsepIga5Ouce8VaT/BAqe/y7m17Yn8OOEFym8dyCrnQS8aHOA575T2zCSVWgdiHUakRTzlJ
+	zMqihb/EaO6peiyMwRutZ2y6Xs2E2T3uw60nLpEPm0nsLa5KebuA0vQNcAi+kCIPtSDeogP3at4
+	12+ac4y16uy7bo1zpWpTc3ly3O5O83w5AcqJdJAzYSPGIlvKInfBf4NJwYFOKOLx6YJu7gBTcSi
+	kNm6FKlQVFSLc9sYN1H9SW7konLNJo9E1JBjk=
+X-Received: by 2002:a05:622a:610:b0:509:f1e:41fb with SMTP id d75a77b69052e-50b9938d03emr83047301cf.6.1774643185461;
+        Fri, 27 Mar 2026 13:26:25 -0700 (PDT)
+X-Received: by 2002:a05:622a:610:b0:509:f1e:41fb with SMTP id d75a77b69052e-50b9938d03emr83046951cf.6.1774643185005;
+        Fri, 27 Mar 2026 13:26:25 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a2b13fd035sm9785e87.18.2026.03.27.13.26.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Mar 2026 13:26:23 -0700 (PDT)
+Date: Fri, 27 Mar 2026 22:26:20 +0200
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: =?utf-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Stephan Gerhold <stephan@gerhold.net>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-remoteproc@vger.kernel.org
+Subject: Re: [PATCH 1/7] dt-bindings: power: qcom-rpmpd: Split MSM8953 and
+ SDM632
+Message-ID: <ocrzwxmr256h3ef7ifwx3z6jgtzubiha3forfi7nao6gakb6wu@recertxxhlip>
+References: <20260327-sdm632-rpmpd-v1-0-6098dc997d66@mainlining.org>
+ <20260327-sdm632-rpmpd-v1-1-6098dc997d66@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260327184706.1600329-1-vladimir.oltean@nxp.com> <20260327184706.1600329-10-vladimir.oltean@nxp.com>
-In-Reply-To: <20260327184706.1600329-10-vladimir.oltean@nxp.com>
-From: Peter Griffin <peter.griffin@linaro.org>
-Date: Fri, 27 Mar 2026 20:23:54 +0000
-X-Gm-Features: AQROBzCjrloDfUGTlNvOpQXdM4anVOjHCl2P0WQRB2XbIrpLYVg7AhYSjcExBJI
-Message-ID: <CADrjBPqMwtrae7LB9A8xipg6R0rHGewe69awQ_jJnsf=2c=eTw@mail.gmail.com>
-Subject: Re: [PATCH v6 phy-next 09/28] scsi: ufs: exynos: stop poking into
- struct phy guts
-To: Vladimir Oltean <vladimir.oltean@nxp.com>
-Cc: linux-phy@lists.infradead.org, Vinod Koul <vkoul@kernel.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-can@vger.kernel.org, 
-	linux-gpio@vger.kernel.org, linux-ide@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
-	linux-pci@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
-	linux-riscv@lists.infradead.org, linux-rockchip@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org, linux-scsi@vger.kernel.org, 
-	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org, 
-	linux-usb@vger.kernel.org, netdev@vger.kernel.org, spacemit@lists.linux.dev, 
-	UNGLinuxDriver@microchip.com, Bart Van Assche <bvanassche@acm.org>, 
-	Alim Akhtar <alim.akhtar@samsung.com>, 
-	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>, 
-	"Martin K. Petersen" <martin.petersen@oracle.com>, Krzysztof Kozlowski <krzk@kernel.org>, 
-	Chanho Park <chanho61.park@samsung.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260327-sdm632-rpmpd-v1-1-6098dc997d66@mainlining.org>
+X-Proofpoint-GUID: ZAZcPOdcJCOr25qlU1q-0r4Ku6ZBsGmj
+X-Proofpoint-ORIG-GUID: ZAZcPOdcJCOr25qlU1q-0r4Ku6ZBsGmj
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI3MDE0MyBTYWx0ZWRfXw1BgQkYaFtUl
+ 7BsyNY1u1CV3j6hE6sRbeJ6FSXQevH6c7O604cya0D1QZRdLLvQEX3hTCpl7Kci66zZP2UnpkxF
+ 7lJJW3SCJLbuLU+jxM2g35KE73mtf56CowJrT4f0K2vCLuKJLBPflNUefvdmt5v6kBqi/XX2mbM
+ whO5FAfN20yWGuGgyXW6WO66gY5n3ZcXC0RtKlMnyT18lyxuVcs2r5nBe4U+HQMnc7F5Rp58QHs
+ YS5uB8LRFkeDG9RxJFRl0dh3UqcxhVnJ76eM9vMHBGDmz+ffV4r5IUopKSFHeUvM08Y7kEtBjYK
+ vBC+p/NUot8MNP/0QxPXbdPKNHUg8I3f08vmYnr1M+BXKTEGY7drHnFwqLaX0utjkF+6oxtcq/n
+ O6T/ylToX0fb9c/L4dWEqONr5/lb7r5LuBukpx+ODYSU3lWyetZLYrxz1Qv3D16n/fwMCZMlE4A
+ T5LsffrTtdnkgGxXaPA==
+X-Authority-Analysis: v=2.4 cv=JLs2csKb c=1 sm=1 tr=0 ts=69c6e7f2 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10
+ a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22 a=OuZLqq7tAAAA:8
+ a=YuNYBjh_N-KKOh4gLCEA:9 a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10
+ a=kacYvNCVWA4VmyqE58fU:22 a=AKGiAy9iJ-JzxKVHQNES:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-27_01,2026-03-26_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 lowpriorityscore=0 phishscore=0 priorityscore=1501
+ impostorscore=0 clxscore=1015 bulkscore=0 suspectscore=0 adultscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
+ definitions=main-2603270143
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-100467-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-100466-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[4];
-	RCPT_COUNT_TWELVE(0.00)[31];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[mainlining.org:email,qualcomm.com:dkim,oss.qualcomm.com:dkim,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
 	MIME_TRACE(0.00)[0:+];
-	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
 	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[peter.griffin@linaro.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[samsung.com:email,nxp.com:email,acm.org:email,oracle.com:email,hansenpartnership.com:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,linaro.org:dkim,linaro.org:email,mail.gmail.com:mid]
-X-Rspamd-Queue-Id: DC3DC34B354
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 9C83D34B3A8
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Fri, 27 Mar 2026 at 18:48, Vladimir Oltean <vladimir.oltean@nxp.com> wrote:
->
-> The Exynos host controller driver is clearly a PHY consumer (gets the
-> ufs->phy using devm_phy_get()), but pokes into the guts of struct phy
-> to get the generic_phy->power_count.
->
-> The UFS core (specifically ufshcd_link_startup()) may call the variant
-> operation exynos_ufs_pre_link() -> exynos_ufs_phy_init() multiple times
-> if the link startup fails and needs to be retried.
->
-> However ufs-exynos shouldn't be doing what it's doing, i.e. looking at
-> the generic_phy->power_count, because in the general sense of the API, a
-> single Generic PHY may have multiple consumers. If ufs-exynos looks at
-> generic_phy->power_count, there's no guarantee that this ufs-exynos
-> instance is the one who previously bumped that power count. So it may be
-> powering down the PHY on behalf of another consumer.
->
-> The correct way in which this should be handled is ufs-exynos should
-> *remember* whether it has initialized and powered up the PHY before, and
-> power it down during link retries. Not rely on the power_count (which,
-> btw, on the writer side is modified under &phy->mutex, but on the reader
-> side is accessed unlocked). This is a discouraged pattern even if here
-> it doesn't cause functional problems.
->
-> Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-> Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-> Acked-by: Alim Akhtar <alim.akhtar@samsung.com>
-> Tested-by: Alim Akhtar <alim.akhtar@samsung.com>
+On Fri, Mar 27, 2026 at 09:11:43PM +0100, Barnabás Czémán wrote:
+> Remove modem related bindings from MSM8953 rpmpd because MSM8953 MSS
+> is using mss-supply as a regulator usually it is pm8953_s1.
+> Split SDM632 bindings from MSM8953 because SDM632 is using mss-supply
+> as a pm domain.
+> 
+> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
 > ---
+>  .../devicetree/bindings/power/qcom,rpmpd.yaml        |  1 +
+>  include/dt-bindings/power/qcom-rpmpd.h               | 20 +++++++++++++-------
+>  2 files changed, 14 insertions(+), 7 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
+> index 8174ceeab572..659936d6a46e 100644
+> --- a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
+> +++ b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
+> @@ -48,6 +48,7 @@ properties:
+>            - qcom,sc7280-rpmhpd
+>            - qcom,sc8180x-rpmhpd
+>            - qcom,sc8280xp-rpmhpd
+> +          - qcom,sdm632-rpmpd
+>            - qcom,sdm660-rpmpd
+>            - qcom,sdm670-rpmhpd
+>            - qcom,sdm845-rpmhpd
+> diff --git a/include/dt-bindings/power/qcom-rpmpd.h b/include/dt-bindings/power/qcom-rpmpd.h
+> index 4371ac941f29..2d82434b993c 100644
+> --- a/include/dt-bindings/power/qcom-rpmpd.h
+> +++ b/include/dt-bindings/power/qcom-rpmpd.h
+> @@ -84,13 +84,11 @@
+>  #define QM215_VDDMX_AO		MSM8917_VDDMX_AO
+>  
+>  /* MSM8953 Power Domain Indexes */
+> -#define MSM8953_VDDMD		0
+> -#define MSM8953_VDDMD_AO	1
+> -#define MSM8953_VDDCX		2
+> -#define MSM8953_VDDCX_AO	3
+> -#define MSM8953_VDDCX_VFL	4
+> -#define MSM8953_VDDMX		5
+> -#define MSM8953_VDDMX_AO	6
+> +#define MSM8953_VDDCX		RPMPD_VDDCX
+> +#define MSM8953_VDDCX_AO	RPMPD_VDDCX_AO
+> +#define MSM8953_VDDCX_VFL	RPMPD_VDDCX_VFL
+> +#define MSM8953_VDDMX		RPMPD_VDDMX
+> +#define MSM8953_VDDMX_AO	RPMPD_VDDMX_AO
 
-Reviewed-by: Peter Griffin <peter.griffin@linaro.org>
+Well, no. This is an ABI break. It will make previous DT to stop from
+working. You can drop unused indices, but you can not change the values
+used by the existing domains.
 
-> Cc: Alim Akhtar <alim.akhtar@samsung.com>
-> Cc: Peter Griffin <peter.griffin@linaro.org>
-> Cc: "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>
-> Cc: "Martin K. Petersen" <martin.petersen@oracle.com>
-> Cc: Krzysztof Kozlowski <krzk@kernel.org>
-> Cc: Chanho Park <chanho61.park@samsung.com>
->
-> v5->v6: collect tags from Alim Akhtar
-> v4->v5: collect tag, add "scsi: " prefix to commit title
-> v3->v4: none
-> v2->v3:
-> - add Cc Chanho Park, author of commit 3d73b200f989 ("scsi: ufs:
->   ufs-exynos: Change ufs phy control sequence")
-> v1->v2:
-> - add better ufs->phy_powered_on handling in exynos_ufs_exit(),
->   exynos_ufs_suspend() and exynos_ufs_resume() which ensures we won't
->   enter a phy->power_count underrun condition
-> ---
->  drivers/ufs/host/ufs-exynos.c | 24 ++++++++++++++++++++----
->  drivers/ufs/host/ufs-exynos.h |  1 +
->  2 files changed, 21 insertions(+), 4 deletions(-)
->
-> diff --git a/drivers/ufs/host/ufs-exynos.c b/drivers/ufs/host/ufs-exynos.c
-> index 76fee3a79c77..274e53833571 100644
-> --- a/drivers/ufs/host/ufs-exynos.c
-> +++ b/drivers/ufs/host/ufs-exynos.c
-> @@ -963,9 +963,10 @@ static int exynos_ufs_phy_init(struct exynos_ufs *ufs)
->
->         phy_set_bus_width(generic_phy, ufs->avail_ln_rx);
->
-> -       if (generic_phy->power_count) {
-> +       if (ufs->phy_powered_on) {
->                 phy_power_off(generic_phy);
->                 phy_exit(generic_phy);
-> +               ufs->phy_powered_on = false;
->         }
->
->         ret = phy_init(generic_phy);
-> @@ -979,6 +980,8 @@ static int exynos_ufs_phy_init(struct exynos_ufs *ufs)
->         if (ret)
->                 goto out_exit_phy;
->
-> +       ufs->phy_powered_on = true;
+>  
+>  /* MSM8974 Power Domain Indexes */
+>  #define MSM8974_VDDCX		0
+> @@ -156,6 +154,14 @@
+>  #define QCS404_LPIMX		5
+>  #define QCS404_LPIMX_VFL	6
+>  
+> +/* SDM632 Power Domain Indexes */
+> +#define SDM632_VDDMD		0
+> +#define SDM632_VDDCX		1
+> +#define SDM632_VDDCX_AO		2
+> +#define SDM632_VDDCX_VFL	3
+> +#define SDM632_VDDMX		4
+> +#define SDM632_VDDMX_AO		5
+
+Please use RPMHPD_* instead of introducing new entries.
+
 > +
->         return 0;
->
->  out_exit_phy:
-> @@ -1527,6 +1530,9 @@ static void exynos_ufs_exit(struct ufs_hba *hba)
->  {
->         struct exynos_ufs *ufs = ufshcd_get_variant(hba);
->
-> +       if (!ufs->phy_powered_on)
-> +               return;
-> +
->         phy_power_off(ufs->phy);
->         phy_exit(ufs->phy);
->  }
-> @@ -1728,8 +1734,10 @@ static int exynos_ufs_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op,
->         if (ufs->drv_data->suspend)
->                 ufs->drv_data->suspend(ufs);
->
-> -       if (!ufshcd_is_link_active(hba))
-> +       if (!ufshcd_is_link_active(hba) && ufs->phy_powered_on) {
->                 phy_power_off(ufs->phy);
-> +               ufs->phy_powered_on = false;
-> +       }
->
->         return 0;
->  }
-> @@ -1737,9 +1745,17 @@ static int exynos_ufs_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op,
->  static int exynos_ufs_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
->  {
->         struct exynos_ufs *ufs = ufshcd_get_variant(hba);
-> +       int err;
->
-> -       if (!ufshcd_is_link_active(hba))
-> -               phy_power_on(ufs->phy);
-> +       if (!ufshcd_is_link_active(hba) && !ufs->phy_powered_on) {
-> +               err = phy_power_on(ufs->phy);
-> +               if (err) {
-> +                       dev_err(hba->dev, "Failed to power on PHY: %pe\n",
-> +                               ERR_PTR(err));
-> +               } else {
-> +                       ufs->phy_powered_on = true;
-> +               }
-> +       }
->
->         exynos_ufs_config_smu(ufs);
->         exynos_ufs_fmp_resume(hba);
-> diff --git a/drivers/ufs/host/ufs-exynos.h b/drivers/ufs/host/ufs-exynos.h
-> index abe7e472759e..683b9150e2ba 100644
-> --- a/drivers/ufs/host/ufs-exynos.h
-> +++ b/drivers/ufs/host/ufs-exynos.h
-> @@ -227,6 +227,7 @@ struct exynos_ufs {
->         int avail_ln_rx;
->         int avail_ln_tx;
->         int rx_sel_idx;
-> +       bool phy_powered_on;
->         struct ufs_pa_layer_attr dev_req_params;
->         struct ufs_phy_time_cfg t_cfg;
->         ktime_t entry_hibern8_t;
-> --
-> 2.43.0
->
+>  /* SDM660 Power Domains */
+>  #define SDM660_VDDCX		RPMPD_VDDCX
+>  #define SDM660_VDDCX_AO		RPMPD_VDDCX_AO
+> 
+> -- 
+> 2.53.0
+> 
+
+-- 
+With best wishes
+Dmitry
 
