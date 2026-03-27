@@ -1,286 +1,335 @@
-Return-Path: <linux-arm-msm+bounces-100179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100180-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id EAnPCH7NxWm5BwUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 01:21:18 +0100
+	id 4NibGabNxWm5BwUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100180-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 01:21:58 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 92DAB33D850
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 01:21:17 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC6E933D861
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 01:21:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id E0F53312E836
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 00:16:18 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 7B0513043000
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 00:18:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 326EF23D7D4;
-	Fri, 27 Mar 2026 00:16:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4A0623C4F3;
+	Fri, 27 Mar 2026 00:18:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="S0UK5GHl";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="RX62IUo5"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dJ1cRI6C";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="VsvzohIF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8913A2550AF
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2026 00:16:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61F4115C158
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2026 00:18:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774570576; cv=none; b=QzPttXs+OV4iP5UkVRQLgYKh76Tn9Iiy1F/eQPHr0k5d8p3QE4BpUutLmfHciGU3J00qz1Vj42zbHauvqV8SaXGWCPocRXhud32xPsJHc+gtScrUYchW6tBo6y/ATGK/5b/x5/fgPojSpYZT8Yc7Brq6F4Q6RKQQbEumvVGjQW4=
+	t=1774570683; cv=none; b=hJnnkQi90Tylemw5M5nkOr0Rx+qkHgRc6zIaJNGoWHGmLoLmWf4nMLqy1SDzlw3fXtjrE7IgBOtkY4EzOHNdrcuoovlcXFUCTSwuHGfvugYsYt+9tlKX2Y+1rRe4ULtQR9wImELkA+m2ThpK/ED+YEmf1+LW1ifvw5FsBMkhXU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774570576; c=relaxed/simple;
-	bh=NUuL6+oGaUpA7JxKBFdWblIueRfnWDhrWCx2k8TSQ1M=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=HIvhe56ZGNyW0QnzXlcFVMB1o+baac0J6MulLagMQeHO+HCt5vSogTDFf7swExwysjQDMD2JlakVPsNQpuQvIvNt4s2Zo/6zUT2ESmtKeYX3RVeMqtUEkbdzaE2ubsAuwhe6qwXsW2lX63GmGzkNYBdl8BQy2Kdige7fK8Hi1nM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=S0UK5GHl; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=RX62IUo5; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1774570683; c=relaxed/simple;
+	bh=IWRpc8UG5aAzDHbxUBBEGX+ouLTTMCUDS5wShhL5Orw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=KGo/P7tyngLrDzAU+W4TRTcDEe7jo5dh73Ud37bSXHnY4z/VSW2U2NxfXL8Ll9ddA0Vt+V/YmDmLnLgqXpdRZlIkXjZpocdIz02H834nITrqqbyC4Nu6JsK03/slerUf+TX/Jd+Dt7lbwcPiFeTTS1IEUwCQ9LmjVdW+jjhBPr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dJ1cRI6C; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=VsvzohIF; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62QKY0Jw366433
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2026 00:16:13 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62QKYEEi518499
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2026 00:18:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	JyJXWO4lhEbma/Pghwnm6vVrCQrIya2bkF7i5BoSU2o=; b=S0UK5GHl9NZxZySL
-	ty2O6UilqLWQmuxjH9MFtXqQGpcawIWkHbW4pyvE0MAa8TUkkeoUWTkrfFe+6SSG
-	v5mOy7K3I56qnIHIdUyWaNCK4JrKOJ5daD2gFDBrP3Y2CNxe5HkjKg+fvzrRjYh2
-	S2JBShiy1SNFc9RLn1UiywQZzg6cTqqW+FFnI9AQHjs9nw3qvSTWUzG2ClW0aWsB
-	/O1v44a8X7uSYh01qEckEj+JrZOoGRO4w7kkvIbnN4qSCr8r/mRKoct6lgUznNKP
-	im4tXvZrluvtH+mL5kvg64vsPpAjzQQWX/LylmVuikAVjK9GPFVNp43GtQ4yH3By
-	to6o+w==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d5bxvght8-1
+	vh8ik5Yl+pBvNFbXoIfyhUJq3wlpS+a/bJ7UQeBXlWQ=; b=dJ1cRI6Ca6X+/VOg
+	Zieb1aWwkKAanPOpas1sjVntbhgqH6osC71dNlkBKnbO1oHl/vi0TX1yr1FlCOsG
+	CtnLHbNw5V75d0p6zupTwSovJ2ZDC/PHuemoo4wRp8yGKGY5ey8BV52QOtYf5m69
+	sTqLcAGev8lMRz8JoM8TGk3OIH/UFTJ78EJnC5tqVX2kVLftJLMvPR6XAlJHQfX5
+	G7XCe7I4qhGENtEbbYsbixKVNgY7nTfXVWbfOj9i3Nlx38jmEK5i61M1rMPAh6Ho
+	jOgR3KwbeIePdppjs/hbvZdcinkCyjHVpP8loEBdR1PwyesCj+Hb8JlTFisTl7ua
+	k4swmA==
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d5bxv0hcp-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2026 00:16:12 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-354bc535546so1716919a91.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 17:16:12 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2026 00:18:01 +0000 (GMT)
+Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-c738b1f630eso3507917a12.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Mar 2026 17:18:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1774570572; x=1775175372; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=JyJXWO4lhEbma/Pghwnm6vVrCQrIya2bkF7i5BoSU2o=;
-        b=RX62IUo5XmRAw7dFPWkZIgiaAM47O1y2sBEL/9FuxOc7gpGLmzs84ZqLy7JTbdSuFZ
-         7JjWEpiSf85Z3KOSL5+o4PNIs/MsjZiEfuuBsDE4BETviP0mGdzPvA8aFtieZtqERC3f
-         9WQ719DgeyRLF2Pyl9mM51cuwlGUP7aXrVahOC7Ew0hvENwVaOQbTh30yC90k8DA9M7G
-         xj+wPng5E7CpNv1OiAOB8oVzGBVFX9Mdms/48Ddqxzsw3eHirM7VnFGq4PdIikGxJSKi
-         mdsDJjbkeXdmKSWFH7FJGCh6Ht3W5VWLf1gFJVy1fcNfqAwrCWJb27YgpGThYnCW24Lv
-         sLyg==
+        d=oss.qualcomm.com; s=google; t=1774570681; x=1775175481; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vh8ik5Yl+pBvNFbXoIfyhUJq3wlpS+a/bJ7UQeBXlWQ=;
+        b=VsvzohIFYGwvEkJ4D+o4ikz+TegcBjZZwofLOOh9Zz2cm0LGdX2O5/on3JvuI5eLsE
+         HX1UFhKmMn8vVSu4Cuxkaq5VKoJtltDc+v+wWqcLlTn+oDmPQJteucPJjr6MSoZji2Cp
+         9wyE3AlIG3y/cUA1SWvj63ND8FTqARQ5WVUfllpGhA4/CLQaerPILmm1bVFGics0H8N6
+         6n48wc9ji/BmUUlmofCqVdhGvJYs1r0xEdEJzejWWgCGY9BA4O7VsSmBUMCS8fpkGfFZ
+         6KH/3CvT2Zt0TY4ZtKAamlRmMPNA3yLlf4dkRWLzETtEqpUZiy9n/4wqRT2DKYiFxiZy
+         I/Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774570572; x=1775175372;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=JyJXWO4lhEbma/Pghwnm6vVrCQrIya2bkF7i5BoSU2o=;
-        b=cY55okQ2J2vhHUCJytR+8H9rn9/ajIPb5Mec3V9a6hd7ft7VnLUdwBSjfmMkoKnCda
-         Mzf2tzB1ZUTAvMBcLh6V8YN8X4WSEymyNBli6ImIG8GBlLs2fIZtxKhDt3VmaKC+s5tz
-         dYv5p4ynPAMcA0GJPu+7Bkoc77p43xcApqkhmhDo7gXV5yAe9ZMe7drMVFZJ69++UX2b
-         vzKri3EnBHIgO9utpxefYGDKVKJImFfvDkroUp5Hp3itfDv1zTLfE7JfNzH9Ud5svmDN
-         nFXmhlPL6iDX/iy3tQNQZttpRl1NJ9oE1ELZ7uQXtxc43y+xBgOTqoXdJY0Zqk77PEef
-         qgrg==
-X-Gm-Message-State: AOJu0Yw3wDeN2Ef/EK334dVrFsHW7DGsFJZu6sczhwVeFYt5vcPLAWEq
-	njwRWS7nRg5TMRI5ZxNBOasO0audXHhsFct7N5WkYObrn02mvNETTPnP3pPYCVhFl4PNy49DwdV
-	c4Gz+2Dgh7FBE3IGNC23fRVcKqhg9jZcoDR1s10GSSSx8eXxD7Zs+1nTI91PAkKMrAeh4gJP4vB
-	UI
-X-Gm-Gg: ATEYQzzo8ED2IvXg4BGwFVyjVaJpkunJl6A40/c/zNbPDrr4pm67JTME+ogwrI+HGUB
-	/e738EyDA91H/I4eeS8SJO7MSTAeP1Fd9RBXVDABTg+f5Vi4Zp5kGOxELAjh6e02TEGNa/gnAmW
-	z1fjX+RTRj8EpuHrEtJxT3/6b/SPbU1ZrMPyl7hXjySLwZJWm8eqGcy2lqc4M/NqZd8BPiBcmk+
-	GokrYBDurfqN84Pm/hWXgsDfwRCftuqas8i9Bnb+AuYLgSpJKpTGYVB0iyRCqfjzAL4O39E12ua
-	aB8Wik8opmD9qqr3ZVsEWEJR1d/83Ms1Z4YpZXkz1GeeI5d7AcVBOoI0h3G++ZUIb22YhEOSOCz
-	FBa7QMNJYVZnirsM5WmwhiYeiNeqiBpeM3DlMwJps3OWqaw==
-X-Received: by 2002:a17:90b:518e:b0:359:ff8a:ee55 with SMTP id 98e67ed59e1d1-35c30031e44mr436072a91.14.1774570572067;
-        Thu, 26 Mar 2026 17:16:12 -0700 (PDT)
-X-Received: by 2002:a17:90b:518e:b0:359:ff8a:ee55 with SMTP id 98e67ed59e1d1-35c30031e44mr436055a91.14.1774570571533;
-        Thu, 26 Mar 2026 17:16:11 -0700 (PDT)
-Received: from hu-akhilpo-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35c2ec799eesm163155a91.10.2026.03.26.17.16.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Mar 2026 17:16:11 -0700 (PDT)
-From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Date: Fri, 27 Mar 2026 05:44:06 +0530
-Subject: [PATCH v2 17/17] drm/msm/adreno: Expose a PARAM to check AQE
- support
+        d=1e100.net; s=20251104; t=1774570681; x=1775175481;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vh8ik5Yl+pBvNFbXoIfyhUJq3wlpS+a/bJ7UQeBXlWQ=;
+        b=QRum9lVOy6cCL+nsz8q09QsAoLt7YWp5LdZnkxNAt7B7XGlpc+q7I1SODjFrittTHt
+         R88GTQmb90ubZDKlm9gZON5JNnKZX3Hy6m6ThBgjNBfcS60U+I9UO70RQ2n1mdzR9Y8t
+         m3ShWVUmBE5L5D9J1MRtSpAYYys5TfE8a6DdBFUm98xAdJVX4qlGjYe3HuDLAyi9SvQW
+         p/AvrsAQVVA9da9h8NjeYjDA7Ni/e9LXY83pHYVOkRghOeA7aknTb0BfWYEzvnBy3MA8
+         vvLpYGPAcDWhZ/Y1iijcuxCUJpM+1JCyII4G4aa0cZjFHv9mjulaOHjhvP+itxE/e9JD
+         1bGA==
+X-Forwarded-Encrypted: i=1; AJvYcCXyWFgosVb3pjUZt6KAkXqvJVBQGPlQKsYH9cKBAXo1AS4phNLW1Cs5R9dfu6LxbnCBLEvBeRs1DfFNqF8L@vger.kernel.org
+X-Gm-Message-State: AOJu0YwRAM7McSpyHj/6gATj75U8ElsBrsFqj5hkj1A/vaHMZpCtnQq8
+	Mdt2TNLeRphPFWP1zXFK9xyAN0Ll6ejHyMrz73CYH5mcD5cSP5DYKhouKlR3WFMImA0jyR/Yi+N
+	FNL7zZggdoE7lB6r4jeWloXT5nT28MwfXzEfnWZ9Lhm9jow2ctF9m/WKlN7lsWItVRyXe
+X-Gm-Gg: ATEYQzwYwWq6RDBoKpp/2dy68Pm+nYl38ufvST/FnhkXlxUU6boPKxKXa8nV/1N2XJM
+	5+PmDLkxeOI7z5SCpzd7BMiow/+31OUJ3NfJ1swUU/rnfRz6MTjzwYRRFcd0TgCONfipiYl+Bwp
+	CrRJsgkiuJ6mjLcrXL9MFo3iCzhYetnjJhwHWiRbVvDR35m7VW1AiHyDL3ajOV4wsVxgPsyrG6p
+	ewlQR1P8rmcaWFwsucVRIdnQtHbyrZUV6WFrbhhIrSKtchUilGmLuw80vuoHaqo7Lj7e7Yr+ThZ
+	mf5Q8hJSYVCmCkNHR3LaD5WHrjzW59ZS7I136KRgRpRFvmeajBr1gN8IUQatM2197fZeqGnqV/K
+	Qaxw5mcqfQ+4JxqF0ByezjgNIIs/Erq7QViMuFR1uFZf2
+X-Received: by 2002:a05:6a00:3698:b0:81e:e09d:2687 with SMTP id d2e1a72fcca58-82c95af13f9mr405552b3a.1.1774570680876;
+        Thu, 26 Mar 2026 17:18:00 -0700 (PDT)
+X-Received: by 2002:a05:6a00:3698:b0:81e:e09d:2687 with SMTP id d2e1a72fcca58-82c95af13f9mr405532b3a.1.1774570680352;
+        Thu, 26 Mar 2026 17:18:00 -0700 (PDT)
+Received: from [192.168.1.7] ([106.222.235.17])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-82c7d3ff085sm3575721b3a.57.2026.03.26.17.17.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 26 Mar 2026 17:17:59 -0700 (PDT)
+Message-ID: <fe3177bd-a3d2-4c0a-ab6f-9752eaf32fc4@oss.qualcomm.com>
+Date: Fri, 27 Mar 2026 05:47:54 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260327-a8xx-gpu-batch2-v2-17-2b53c38d2101@oss.qualcomm.com>
-References: <20260327-a8xx-gpu-batch2-v2-0-2b53c38d2101@oss.qualcomm.com>
-In-Reply-To: <20260327-a8xx-gpu-batch2-v2-0-2b53c38d2101@oss.qualcomm.com>
-To: Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jesszhan0024@gmail.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Antonino Maniscalco <antomani103@gmail.com>,
-        Connor Abbott <cwabbott0@gmail.com>,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] drm: gpu: msm: forbid mem reclaim from reset
+To: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Tomasz Figa <tfiga@chromium.org>,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
         Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
         Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Akhil P Oommen <akhilpo@oss.qualcomm.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1774570466; l=3635;
- i=akhilpo@oss.qualcomm.com; s=20240726; h=from:subject:message-id;
- bh=NUuL6+oGaUpA7JxKBFdWblIueRfnWDhrWCx2k8TSQ1M=;
- b=gL86vG67Eo3KyDePP+ZoaqPuM8GFv2ybDnVVj4+uARpKwCegOJplUrSt6DKebEt4N6vN7Y5xQ
- 5r/xxz8yOCCAW+32Da5RfazHjIwUJ7p0gTdvRMuuo8rcKQzIXfecxaL
-X-Developer-Key: i=akhilpo@oss.qualcomm.com; a=ed25519;
- pk=lmVtttSHmAUYFnJsQHX80IIRmYmXA4+CzpGcWOOsfKA=
-X-Proofpoint-GUID: epk5emGJTxhCzTNKklTLD53d_41vzCSc
-X-Proofpoint-ORIG-GUID: epk5emGJTxhCzTNKklTLD53d_41vzCSc
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI3MDAwMCBTYWx0ZWRfX2trxEf4OJX+/
- h6Xo/X8RqkW1vUEAlO1xhGK4HqdMpBMbZmVr8aw1h+SBKwR59MPvzOtLP1XVHucr1HzROZbK7uj
- N0eJLgaDkVa1dNjXHFMHj/q+WHEO+faTTXhLjlq2WuRTDPOM4z54PIfvAFtotJzSSoHhTBHd9yP
- bC7gS50HBOrExa5zmu9HAnxxJ3S/sae8ZSPUmrvdT59S510iaINYEtr4BF7ZedOsNgg0CbD0oSq
- NbQ2wBeftPQhrnYXJiajO25YLPTuBWIImXFsIhKVlhtQaB07mMAagZ2c4tSWulrL9SshD1UqGiq
- GuGWAJKIVEb47omSjsxsw9zPd4rvqTWLDX7waNCm68B4bIsgBsvedJlDacfciKSLuaqodzbRulp
- FSL/qWDucZZgfG3cTK49MkBlKktdGnOiErjO0KfwdbxMn4zw8nP0rxG7dcAwr6/D2n1q/jjbJWH
- T/pbpivXbqFKM/UB/uA==
-X-Authority-Analysis: v=2.4 cv=ToXrRTXh c=1 sm=1 tr=0 ts=69c5cc4c cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+References: <20260127073341.2862078-1-senozhatsky@chromium.org>
+ <acSRDNA8fCP7qAFJ@google.com>
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <acSRDNA8fCP7qAFJ@google.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=A99h/qWG c=1 sm=1 tr=0 ts=69c5ccb9 cx=c_pps
+ a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=yg4K9g8yQ9z8uKSC4i4MOg==:17
  a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=EUspDBNiAAAA:8 a=VDML5bnlI8VuwgTyKRQA:9 a=QEXdDO2ut3YA:10
- a=rl5im9kqc5Lf4LNbBjHf:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=cm27Pg_UAAAA:8 a=iIcgFftJmQX6hLS7D9wA:9 a=QEXdDO2ut3YA:10
+ a=_Vgx9l1VpLgwpw_dHYaR:22
+X-Proofpoint-ORIG-GUID: 3n5yQTAGjIqro2qsKKMiCFxkrln7o34C
+X-Proofpoint-GUID: 3n5yQTAGjIqro2qsKKMiCFxkrln7o34C
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI3MDAwMCBTYWx0ZWRfXyREbuxZKkCy7
+ 03ifb1XQo33HY7BP+G/DAOXChlUjQRmErS/gL5wqNjVoDgHoLtEOooM/0ITALvv1L1ABxjU/NMv
+ GIGVcXNkW2ufu222iQc1x12TZ6sSct6t9qvA6ZChQeyb1jU0dH9JXC1EMRLjMXJfsrzCSpsRqqZ
+ r2O5xoodJMLrypuzXhK8mHB/Oioti5rxJDzoqzs5j5BYrEkgMvYIUW+FJUqMCrPIXXVS9nZvw7u
+ hWBVe1tefXpWTNgkLfwFvpHTa/j76PjEOyYDyBkEVXPrVJOK8VfRcIircGKLyVZ03MPT9bXbMSo
+ DkWCyv3xa9JG7MIbxC3T3PqOtyPIgfpfa33bQ7Gos/kA9SxMtKCqloDtsMoHq+IFgm6Zvpr7aoE
+ vXBsQlO0ESB/4ADBpkjzczBxH/POBZSgBZJXHNhlHF8M9yKbK7Lo2ojEPnhVQgSzRk2MjMQpJ5a
+ Ik8+9BOjVAN0zoyqfvw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-26_04,2026-03-26_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 malwarescore=0 spamscore=0 adultscore=0
- bulkscore=0 suspectscore=0 clxscore=1015 impostorscore=0 priorityscore=1501
+ suspectscore=0 adultscore=0 malwarescore=0 spamscore=0 impostorscore=0
+ phishscore=0 bulkscore=0 lowpriorityscore=0 clxscore=1015 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603270000
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-100179-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	FREEMAIL_CC(0.00)[poorly.run,kernel.org,vger.kernel.org,lists.freedesktop.org,chromium.org,oss.qualcomm.com,linux.intel.com,suse.de,gmail.com,ffwll.ch];
+	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-100180-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,poorly.run,kernel.org,linux.dev,gmail.com,somainline.org,ffwll.ch,linux.intel.com,suse.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	RCPT_COUNT_TWELVE(0.00)[19];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,oss.qualcomm.com:dkim,oss.qualcomm.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,chromium.org:email];
 	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[akhilpo@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 92DAB33D850
+X-Rspamd-Queue-Id: BC6E933D861
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-AQE (Applicaton Qrisc Engine) is required to support VK ray-pipeline. Two
-conditions should be met to use this HW:
-  1. AQE firmware should be loaded and programmed
-  2. Preemption support
+On 3/26/2026 7:24 AM, Sergey Senozhatsky wrote:
+> On (26/01/27 16:33), Sergey Senozhatsky wrote:
+>> We sometimes get into a situtation where GPU hangcheck fails to
+>> recover GPU:
+>>
+>> [..]
+>> msm_dpu ae01000.display-controller: [drm:hangcheck_handler] *ERROR* (IPv4: 1): hangcheck detected gpu lockup rb 0!
+>> msm_dpu ae01000.display-controller: [drm:hangcheck_handler] *ERROR* (IPv4: 1): completed fence: 7840161
+>> msm_dpu ae01000.display-controller: [drm:hangcheck_handler] *ERROR* (IPv4: 1): submitted fence: 7840162
+>> msm_dpu ae01000.display-controller: [drm:hangcheck_handler] *ERROR* (IPv4: 1): hangcheck detected gpu lockup rb 0!
+>> msm_dpu ae01000.display-controller: [drm:hangcheck_handler] *ERROR* (IPv4: 1): completed fence: 7840162
+>> msm_dpu ae01000.display-controller: [drm:hangcheck_handler] *ERROR* (IPv4: 1): submitted fence: 7840163
+>> [..]
+>>
+>> The problem is that msm_job worker is blocked on gpu->lock
+>>
+>> INFO: task ring0:155 blocked for more than 122 seconds.
+>> Not tainted 6.6.99-08727-gaac38b365d2c #1
+>> task:ring0 state:D stack:0 pid:155 ppid:2 flags:0x00000008
+>> Call trace:
+>> __switch_to+0x108/0x208
+>> schedule+0x544/0x11f0
+>> schedule_preempt_disabled+0x30/0x50
+>> __mutex_lock_common+0x410/0x850
+>> __mutex_lock_slowpath+0x28/0x40
+>> mutex_lock+0x5c/0x90
+>> msm_job_run+0x9c/0x140
+>> drm_sched_main+0x514/0x938
+>> kthread+0x114/0x138
+>> ret_from_fork+0x10/0x20
+>>
+>> which is owned by recover worker, which is waiting for DMA fences
+>> from a memory reclaim path, under the very same gpu->lock
 
-Expose a new MSM_PARAM to allow userspace to query its support.
+I am still thinking if there is a better way to handle this. Btw, Rob
+had a few fixes related to this area recently. Do you think those would
+help in this scenario?
 
-Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
----
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c   | 13 +++++++++++++
- drivers/gpu/drm/msm/adreno/adreno_gpu.c |  4 ++++
- drivers/gpu/drm/msm/adreno/adreno_gpu.h |  1 +
- include/uapi/drm/msm_drm.h              |  1 +
- 4 files changed, 19 insertions(+)
+-Akhil
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 44ce02b412ca..4d2f6c4d86e3 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -2604,6 +2604,17 @@ static int a6xx_set_supported_hw(struct device *dev, struct a6xx_gpu *a6xx_gpu,
- 	return 0;
- }
- 
-+static bool a6xx_aqe_is_enabled(struct adreno_gpu *adreno_gpu)
-+{
-+	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
-+
-+	/*
-+	 * AQE uses preemption context record as scratch pad, so check if
-+	 * preemption is enabled
-+	 */
-+	return (adreno_gpu->base.nr_rings > 1) && !!a6xx_gpu->aqe_bo;
-+}
-+
- static struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
- {
- 	struct msm_drm_private *priv = dev->dev_private;
-@@ -2802,6 +2813,7 @@ const struct adreno_gpu_funcs a7xx_gpu_funcs = {
- 	.bus_halt = a6xx_bus_clear_pending_transactions,
- 	.mmu_fault_handler = a6xx_fault_handler,
- 	.gx_is_on = a7xx_gmu_gx_is_on,
-+	.aqe_is_enabled = a6xx_aqe_is_enabled,
- };
- 
- const struct adreno_gpu_funcs a8xx_gpu_funcs = {
-@@ -2830,4 +2842,5 @@ const struct adreno_gpu_funcs a8xx_gpu_funcs = {
- 	.bus_halt = a8xx_bus_clear_pending_transactions,
- 	.mmu_fault_handler = a8xx_fault_handler,
- 	.gx_is_on = a8xx_gmu_gx_is_on,
-+	.aqe_is_enabled = a6xx_aqe_is_enabled,
- };
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index f6c39aed50f2..78c348852b4b 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -444,6 +444,10 @@ int adreno_get_param(struct msm_gpu *gpu, struct msm_context *ctx,
- 	case MSM_PARAM_HAS_PRR:
- 		*value = adreno_smmu_has_prr(gpu);
- 		return 0;
-+	case MSM_PARAM_AQE:
-+		*value = !!(adreno_gpu->funcs->aqe_is_enabled &&
-+			    adreno_gpu->funcs->aqe_is_enabled(adreno_gpu));
-+		return 0;
- 	default:
- 		return UERR(EINVAL, drm, "%s: invalid param: %u", gpu->name, param);
- 	}
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-index 044ed4d49aa7..c0ee544ce257 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-@@ -84,6 +84,7 @@ struct adreno_gpu_funcs {
- 	void (*bus_halt)(struct adreno_gpu *adreno_gpu, bool gx_off);
- 	int (*mmu_fault_handler)(void *arg, unsigned long iova, int flags, void *data);
- 	bool (*gx_is_on)(struct adreno_gpu *adreno_gpu);
-+	bool (*aqe_is_enabled)(struct adreno_gpu *adreno_gpu);
- };
- 
- struct adreno_reglist {
-diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
-index 5c67294edc95..b99098792371 100644
---- a/include/uapi/drm/msm_drm.h
-+++ b/include/uapi/drm/msm_drm.h
-@@ -117,6 +117,7 @@ struct drm_msm_timespec {
-  * ioctl will throw -EPIPE.
-  */
- #define MSM_PARAM_EN_VM_BIND 0x16  /* WO, once */
-+#define MSM_PARAM_AQE	     0x17  /* RO */
- 
- /* For backwards compat.  The original support for preemption was based on
-  * a single ring per priority level so # of priority levels equals the #
-
--- 
-2.51.0
+>>
+>> INFO: task ring0:155 is blocked on a mutex likely owned by task gpu-worker:154.
+>> task:gpu-worker state:D stack:0 pid:154 ppid:2 flags:0x00000008
+>> Call trace:
+>> __switch_to+0x108/0x208
+>> schedule+0x544/0x11f0
+>> schedule_timeout+0x1f8/0x770
+>> dma_fence_default_wait+0x108/0x218
+>> dma_fence_wait_timeout+0x6c/0x1c0
+>> dma_resv_wait_timeout+0xe4/0x118
+>> active_purge+0x34/0x98
+>> drm_gem_lru_scan+0x1d0/0x388
+>> msm_gem_shrinker_scan+0x1cc/0x2e8
+>> shrink_slab+0x228/0x478
+>> shrink_node+0x380/0x730
+>> try_to_free_pages+0x204/0x510
+>> __alloc_pages_direct_reclaim+0x90/0x158
+>> __alloc_pages_slowpath+0x1d4/0x4a0
+>> __alloc_pages+0x9f0/0xc88
+>> vm_area_alloc_pages+0x17c/0x260
+>> __vmalloc_node_range+0x1c0/0x420
+>> kvmalloc_node+0xe8/0x108
+>> msm_gpu_crashstate_capture+0x1e4/0x280
+>> recover_worker+0x1c0/0x638
+>> kthread_worker_fn+0x150/0x2d8
+>> kthread+0x114/0x138
+>>
+>> So no one can make any further progress.
+>>
+>> Forbid recover/fault worker to enter memory reclaim (under
+>> gpu->lock) to address this deadlock scenario.
+>>
+>> Cc: Tomasz Figa <tfiga@chromium.org>
+>> Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+> 
+> 
+> Folks, can somebody please review/pickup this patch?  It solves a real
+> (deadlock) problem that we observe in the field.
+> 
+> // keeping the patch body just in case
+> 
+>> ---
+>>  drivers/gpu/drm/msm/msm_gpu.c | 11 +++++++++++
+>>  1 file changed, 11 insertions(+)
+>>
+>> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+>> index 995549d0bbbc..ddcd9e1c217a 100644
+>> --- a/drivers/gpu/drm/msm/msm_gpu.c
+>> +++ b/drivers/gpu/drm/msm/msm_gpu.c
+>> @@ -17,6 +17,7 @@
+>>  #include <linux/string_helpers.h>
+>>  #include <linux/devcoredump.h>
+>>  #include <linux/sched/task.h>
+>> +#include <linux/sched/mm.h>
+>>  
+>>  /*
+>>   * Power Management:
+>> @@ -469,6 +470,7 @@ static void recover_worker(struct kthread_work *work)
+>>  	struct msm_gem_submit *submit;
+>>  	struct msm_ringbuffer *cur_ring = gpu->funcs->active_ring(gpu);
+>>  	char *comm = NULL, *cmd = NULL;
+>> +	unsigned int noreclaim_flag;
+>>  	struct task_struct *task;
+>>  	int i;
+>>  
+>> @@ -506,6 +508,8 @@ static void recover_worker(struct kthread_work *work)
+>>  			msm_gem_vm_unusable(submit->vm);
+>>  	}
+>>  
+>> +	noreclaim_flag = memalloc_noreclaim_save();
+>> +
+>>  	get_comm_cmdline(submit, &comm, &cmd);
+>>  
+>>  	if (comm && cmd) {
+>> @@ -524,6 +528,8 @@ static void recover_worker(struct kthread_work *work)
+>>  	pm_runtime_get_sync(&gpu->pdev->dev);
+>>  	msm_gpu_crashstate_capture(gpu, submit, NULL, comm, cmd);
+>>  
+>> +	memalloc_noreclaim_restore(noreclaim_flag);
+>> +
+>>  	kfree(cmd);
+>>  	kfree(comm);
+>>  
+>> @@ -588,6 +594,7 @@ void msm_gpu_fault_crashstate_capture(struct msm_gpu *gpu, struct msm_gpu_fault_
+>>  	struct msm_gem_submit *submit;
+>>  	struct msm_ringbuffer *cur_ring = gpu->funcs->active_ring(gpu);
+>>  	char *comm = NULL, *cmd = NULL;
+>> +	unsigned int noreclaim_flag;
+>>  
+>>  	mutex_lock(&gpu->lock);
+>>  
+>> @@ -595,6 +602,8 @@ void msm_gpu_fault_crashstate_capture(struct msm_gpu *gpu, struct msm_gpu_fault_
+>>  	if (submit && submit->fault_dumped)
+>>  		goto resume_smmu;
+>>  
+>> +	noreclaim_flag = memalloc_noreclaim_save();
+>> +
+>>  	if (submit) {
+>>  		get_comm_cmdline(submit, &comm, &cmd);
+>>  
+>> @@ -610,6 +619,8 @@ void msm_gpu_fault_crashstate_capture(struct msm_gpu *gpu, struct msm_gpu_fault_
+>>  	msm_gpu_crashstate_capture(gpu, submit, fault_info, comm, cmd);
+>>  	pm_runtime_put_sync(&gpu->pdev->dev);
+>>  
+>> +	memalloc_noreclaim_restore(noreclaim_flag);
+>> +
+>>  	kfree(cmd);
+>>  	kfree(comm);
+>>  
+>> -- 
+>> 2.53.0.rc1.217.geba53bf80e-goog
+>>
 
 
