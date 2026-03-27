@@ -1,100 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-100348-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100328-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id eBFKBCSUxmkyMAUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100348-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 15:28:52 +0100
+	id yNKnOnWHxmlALQUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100328-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 14:34:45 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 67A4F3460E4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 15:28:51 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8EB1F3454AF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 14:34:45 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 97CF4304A5B6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 14:22:45 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id D5AF93050A40
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 13:30:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E6E434D919;
-	Fri, 27 Mar 2026 14:22:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC77634B434;
+	Fri, 27 Mar 2026 13:30:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ftK6QOdN";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="HqrJWJPC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q9DhPGOk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234DD3DBD61
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2026 14:22:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDD442F4A14;
+	Fri, 27 Mar 2026 13:30:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774621364; cv=none; b=u7zqJgomY1pkPpAyoBNTLKPgxcYv8yvpBp2/FUx82wtwTfzjCkQCoKAx2XLY+pvex7O5+2a3ZSgCtvKl48tDXiUk1mN7kSTtfK3SOXb5iWyayMZ4Flr90T4M+yuPLjPQfKu/GbUbN0XEjTzG3wk50oZDeYUggQjkK4HmDx7JfiM=
+	t=1774618218; cv=none; b=EH8G0sFWm6cTsXDaWXIHqICagxyDuQWzE3gX4s+2HptRBhfg7bSYI69QvOMKz3ZeIlt4SebLylIOTi2SHh9o5JY0ghEBqAB+sRsWsBHqBOqqiEsOZokqaH2brFSH8QtndBk53lsbGIvY6QXcpvH9QBIr/d3qsa2kGHebPQE+E/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774621364; c=relaxed/simple;
-	bh=EXXtyVL3ubYtT8z8hIMeoHRhpYmII/gnG1Id0FUfVTg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=nSNsGau2SpfcYfWdriDBY1S4X1PUSbuEsanjT3/JSTYXq05/bR/j3DzMMoFBs5Sd97nLrgJ5LJKUwiYifp12+SSdaSf6VgtqvCYBO/ihuInrowrxE+KxebkIeEi9+KxiYpaDLr46vWc5PfUq4MoOHueP2K7PaeDjwB6d0hDOke4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ftK6QOdN; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=HqrJWJPC; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62RDh68J3747817
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2026 14:22:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=0unP4a+dA/bae42KNTobuM
-	6OUVVIElujFQR6hRoxn+8=; b=ftK6QOdNlCDTT/bKZ1NYgj3BcJ4ofwsd8+faXw
-	C00HY7j3g7jG2t/eiJO7mkAVHHs/6/mk6APYNNNHFu+LhAEYcZkpZXvr7CPq8PVl
-	v047t4zj9UpOcOBAmeVfPmAFtxJCRCktImXhGzmsC0nva9CsSWbRnKQCaDhNgBdP
-	EAFzjC/iG6R3Cr0JSOz93NRKIn776utb2XX7gxjyURE5FC9upzGhgt79mUkMvN6u
-	s94WUns+w7uxV91MFnhhTYI2qqVdYlibuy8c3L/VkVaJePJ5gn8iR2m4fldSnzhL
-	Q4/XLZRyzwY0uwwUUxe2MWtMU9op+YHTtAwjuYzIlyw59+vQ==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d5sxhgc7q-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2026 14:22:42 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-50b4661881eso30364641cf.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2026 07:22:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1774621361; x=1775226161; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=0unP4a+dA/bae42KNTobuM6OUVVIElujFQR6hRoxn+8=;
-        b=HqrJWJPCZJqWmdXWfbXLdlXyJdZ4r9U25j6dOvsi3lqtBJZwNjWmbNG49vEueEI+iq
-         /EviWloQM1P4o4HuIqSmUXrtleAR2tvg5JzDfuI62Dz/fh5TCcCnn5rK5ksT4X4lk0/r
-         4BuANMVQwfMIoAWI/ozxs4o3eEW8CBlsRNoRbWFOSHWRHstZ2BvDITsnyi7BsB+MWsC0
-         vRb2vZXVQiabiznOhAbXZSR0J+C9drDJCi3VeYX9rGI3PrWDIobpfi158UOVObd9/5Tb
-         BwsV2exJRo5fdA6hZADW1VRzQe0Imv25Q8TbwnkueCiu/OFipozT8FYsVlzjBtkcC7v5
-         B4Yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774621361; x=1775226161;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0unP4a+dA/bae42KNTobuM6OUVVIElujFQR6hRoxn+8=;
-        b=Nen3i6KipJK6RJ86E23bmkF3FmjnpyQ67NM3LHwFIbRlR0f7myhUKUfDET2cvmBC8K
-         WHRWmDBCQ4BfxCuXRhaQ97x/vY/vHrhnk+AHJmhBE4gul3aBNozPZP8FnGi+2nkeFuwC
-         m/bVOI+ijqagmOz1Zd3VId7+piuxpsy2q8tu90O9uQAPUG6gfzDQTg2HWO8cOFzvKnBn
-         hLwDYmaKXKVpMNunO2N3VWHyIxJEYweSrlEDKtKtdu3P9XEHTP3lUyHNOipYsTdBH75C
-         pxtrPjRxsDSpBuyO+WTxBYb45r1WS27ZnVTWy4m5UWp5wW1YElv48dVmMBBLXos+tiGd
-         gWjw==
-X-Gm-Message-State: AOJu0Yw+kXtUVuQTICVNM0TKdIAucIUSlCqYRgCqns/qhOA7/dEUOcfZ
-	8QORPKh38qNWUxrZS3AYyEZOeelrn8ZR9BN1TiSutcDnExmMKYX02svo0AliPdMaVp5cSkKsziL
-	8dvnElI0nkjp3sHpv28Lt/zc8O/lCQtWz9uxIEPeziUvTF1G1C+sKW9eibINn4l3wBCex
-X-Gm-Gg: ATEYQzwNpTg+VrCN603bRuErQV+MWVtCXRidl6f8WvYTrSttSMet9wtfjc4LuFrhh/z
-	FK43EyD4nutqk7zr73CfgR7JypE/uFTr2CZRT7rzJtQqAinds4JCuknpySamYe4Nzywhvszpk2v
-	/xZ6GzBfPwidUGcNgL/bJ6jeZPMCYIkWsYRcLc1b8tC9amBOJ1vaeaFUIFKhg2ZBpWgb87RURu7
-	06TVkTIWu8/xoeuxdQqh1o4OzefuAySY+njdhcfe/e1MeU48n4Cui3ajR+3K7+bJ++aTFx3O6+N
-	j4h304A7xgYCNOJ6cO+g2M1hoEz8AFI7wLHAbkCHDzR8AxZ3w5wy+xKiCEj5oMAHL7dvJ6OmFvK
-	aGhjUzl2TUkoCc8WXYTANe8R8sQs=
-X-Received: by 2002:ac8:7fcc:0:b0:4f1:ba0b:90 with SMTP id d75a77b69052e-50ba38095c1mr34236351cf.8.1774621361331;
-        Fri, 27 Mar 2026 07:22:41 -0700 (PDT)
-X-Received: by 2002:ac8:7fcc:0:b0:4f1:ba0b:90 with SMTP id d75a77b69052e-50ba38095c1mr34235671cf.8.1774621360790;
-        Fri, 27 Mar 2026 07:22:40 -0700 (PDT)
-Received: from hackbox.lan ([82.79.95.133])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48722c789ecsm97055405e9.4.2026.03.27.07.22.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Mar 2026 07:22:39 -0700 (PDT)
-From: Abel Vesa <abel.vesa@oss.qualcomm.com>
-Date: Fri, 27 Mar 2026 16:22:33 +0200
-Subject: [PATCH] soc: qcom: pd-mapper: Add support for Eliza
+	s=arc-20240116; t=1774618218; c=relaxed/simple;
+	bh=h50clFkchxlz1PjbdPsQIzoGz7zeASQJbxZttgo1vUc=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=L1mEdOKJGgRDrxUaDwaKfnt8T6kEz4l/4/LZClKIUcr414vcH1RUoMRJfnJ9sSYXCoey9RRPKBADC8apzDfQs05d/yelS26uuJg7WtvrBjD+3r9ZRjQJwBzzrEpNnmeqDEDNdGK57lDm9I+eMipLwUh7HdV6w3IXWQH62WN/c50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q9DhPGOk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 68C2FC19423;
+	Fri, 27 Mar 2026 13:30:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1774618218;
+	bh=h50clFkchxlz1PjbdPsQIzoGz7zeASQJbxZttgo1vUc=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=Q9DhPGOkX7aULof7pyxGrSjXKZXfLpiU4ePfkdzEvn0PhAPfr3pHIjHoB3+vCejuu
+	 UAGwxkRMQluva9dp/A9nU15SwKsYPdA3LslCryX7IpFy8GKx0Zu+LkZXJ3P9K4CWwK
+	 yF3dNRsvnh0j/wEWIuhxnggTqcp5wQLOM6c3IavxGtHvJ+bBRbPAiSyP6HEFaswaLE
+	 evqnXatCq/b6/rMca7XtKb2uk741KeltxpN9mGoxQUFwGkmS9M5ypRnPMXlVJMMLCx
+	 PrBkX7cwlbehI2XIwxe7PlySW+gClH5sULVN8tC0kDmukKc7QKH4qye3P1lqd1y5kD
+	 XiHeh82SEbPYw==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5253A10ED661;
+	Fri, 27 Mar 2026 13:30:18 +0000 (UTC)
+From: Cristian Cozzolino via B4 Relay <devnull+cristian_ci.protonmail.com@kernel.org>
+Subject: [PATCH v4 0/6] Enable new features for flipkart-rimob
+Date: Fri, 27 Mar 2026 15:30:46 +0100
+Message-Id: <20260327-rimob-new-features-v4-0-06edff9c4509@protonmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -103,117 +58,170 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260327-eliza-soc-pd-mapper-v1-1-17334d6ab82d@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAKiSxmkC/yXMQQ6CMBBA0auQWTtJGUIxXsW4KO0gQxSaDhoC4
- e5UXL7F/xsoJ2GFW7FB4q+oTGNGeSnA9258MkrIBjJkTUUN8ktWhzp5jAHfLkZOSLV11yYEQ6W
- FXMbEnSzn9f74Wz/twH7+rWDfD4NBNH93AAAA
-X-Change-ID: 20260327-eliza-soc-pd-mapper-256a87dd0216
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Abel Vesa <abel.vesa@oss.qualcomm.com>
-X-Mailer: b4 0.15-dev-bc6c4
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1185;
- i=abel.vesa@oss.qualcomm.com; h=from:subject:message-id;
- bh=EXXtyVL3ubYtT8z8hIMeoHRhpYmII/gnG1Id0FUfVTg=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBpxpKuCqjjQkGdAfalic9BjDCQjEwvaeV/u9huQ
- VrKFNXhMo+JAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCacaSrgAKCRAbX0TJAJUV
- Vg0XD/9JaoCU0BXANyl4gkhfyjJTOmVDeA0OgKmn9KXoXo8yvU+/8xhuqu/Zp+UyZ3ldt7WAMo0
- PEPjAHRIM9g0TJHuNBBfBktvVF1jbKunu8yQ+vWD5fNbp6ORkfsv199YQ9P8P9+ppw+dhEXC8Rh
- wDuviaS2HXQyTjbg8egzZIlCZRWIcMego132V2YomEQ1AuaVnm0uGI75pr0wANtbalr89nDXvDD
- +q4IT/7QJdd22/QxdW7Q49UvGGZbnLLilAOZV7dBxYHDBqQ8ZjOjPsN9nJGz2vmUMjmzczk1yMB
- Mw7D6iRUdsSs/h1/yT7JIMO556Ar3ofaFvWzEXEsF1kTNhYz8mcMP+wbJmACss5hnNJAjWF2hT4
- 7GO5j/+ZbA5UxaGji15eJjfKIwtV/msSaw7XuP9IK2VY79/FLMOUeBlCKKKAcE6wwwchYW8VLYD
- SqHsX46DQFStfzVY7W3M/Ood2XNCjhbI8Q4eLEaKoPBVFrzyzwxNsTCpACpasR6eU9UCArjO4Dm
- AMZnCw5K2VL3/pJjhZpvNIkKO/SaCDYIIPKlV31x4NidhXZVQkw6Vwq6N6+T77Sq2TC0LgeYgs5
- CwK7jRFv1Wkz7Hqw30avIeXXFh3z7OoF8+l53w4kcdcz4W4V0TsWe1tJmQIB3bNEk1/p9bgAJRg
- yj5uOQEEk6kMUxg==
-X-Developer-Key: i=abel.vesa@oss.qualcomm.com; a=openpgp;
- fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
-X-Authority-Analysis: v=2.4 cv=QZVrf8bv c=1 sm=1 tr=0 ts=69c692b2 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=iKs3dpp2RB4k51ZqCjcyjQ==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=EUspDBNiAAAA:8 a=kjEftqUJDdny0hUQaisA:9 a=QEXdDO2ut3YA:10
- a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-ORIG-GUID: 5lzurIaYoRoRBEBHhvkZHHJYjCFxW7NA
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzI3MDA5OCBTYWx0ZWRfX3w5lp3ODLi1f
- OLfpscMc8scfU4AzO/BE12UIyxbxvIPNOwKzfDOPOFQai3+kxMA8AlSg/x8hgBYG29r6kaQ20dQ
- UA0UZd2D25yy6VN38eQ/IjfHgK5ZoySsGz77vjiSWkwbLyav1yptI3zDyOvLKkP+Py2FSH+Ze6j
- w9fEfQY3qJ8Njmdl9rzYQRfPHeDpMUfjcxIuH/b8mRknUDTlRd+BvLiXvqqc3vkHx5YcNcdrdLA
- JZiY3oBrFAKVm4tLYmLkJ5qN3/Of/umNSEfjaSTOvSnWKSOVSt9K9Os2eSTnC+UB6Jkb6Zq/2pL
- 1uhSV1f+MxyDkZu3NcDtiJiFzERWpkK1MzSvgZqaxYjzqilAVRXrPqwvGqb+rvcdU3BQRJH2+Rh
- WPmTaZHx/6IlvEN0tWGx5aEpHJSSZex76FAhu8HfqCL+njNrc7nknPUAh71lTf6wJnjP46Wm6Ox
- 1z4Xe/Y39ODsh09J00A==
-X-Proofpoint-GUID: 5lzurIaYoRoRBEBHhvkZHHJYjCFxW7NA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-26_04,2026-03-26_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 clxscore=1015 spamscore=0 adultscore=0
- priorityscore=1501 impostorscore=0 phishscore=0 lowpriorityscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
- definitions=main-2603270098
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/23N3wqCMBTH8VeRXbfYv9zsqveILuY85iA32cwK8
+ d2bQiC0y+8PzufMKEKwENG5mFGAyUbrXQpxKJDptLsDtk1qxAgrCSccB9v7Gjt44Rb0+AwQMeG
+ yEqLmumQEpcMhQGvfG3q9pe5sHH34bD8muq4/TuW4iWKCtWaGc3KSzJDLEPzoXa/t42h8j1ZzY
+ juH5h2WHEPrVlVUClFB1uE7h9Gsw5PTiFoBqFI2IP+cZVm++ykhikkBAAA=
+X-Change-ID: 20260303-rimob-new-features-037944b3a620
+To: Neil Armstrong <neil.armstrong@linaro.org>, 
+ Jessica Zhang <jesszhan0024@gmail.com>, David Airlie <airlied@gmail.com>, 
+ Simona Vetter <simona@ffwll.ch>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ Cristian Cozzolino <cristian_ci@protonmail.com>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1774621871; l=4370;
+ i=cristian_ci@protonmail.com; s=20250620; h=from:subject:message-id;
+ bh=h50clFkchxlz1PjbdPsQIzoGz7zeASQJbxZttgo1vUc=;
+ b=vITHOrrhN3QyayyzduelM8+d7whmRf/XjXHz92bxi5wZqClsw19TuBh5I9hzbuGx35b5Tz4yy
+ 4iMSJfsYBqFDP7GaO+B8u1wJ0GgAmkn+aIcnqfTMjuybFRKIlfj+vE9
+X-Developer-Key: i=cristian_ci@protonmail.com; a=ed25519;
+ pk=xH5IvIPUNHV1Q8R0/pq2CfuVFR/wTiAyuyi6IwedjZY=
+X-Endpoint-Received: by B4 Relay for cristian_ci@protonmail.com/20250620
+ with auth_id=438
+X-Original-From: Cristian Cozzolino <cristian_ci@protonmail.com>
+Reply-To: cristian_ci@protonmail.com
+X-Spamd-Result: default: False [1.34 / 15.00];
+	FREEMAIL_REPLYTO_NEQ_FROM(2.00)[];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-100328-lists,linux-arm-msm=lfdr.de,cristian_ci.protonmail.com];
+	FREEMAIL_TO(0.00)[linaro.org,gmail.com,ffwll.ch,linux.intel.com,kernel.org,suse.de];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
 	TO_DN_SOME(0.00)[];
-	TAGGED_FROM(0.00)[bounces-100348-lists,linux-arm-msm=lfdr.de];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:dkim,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
-	RCPT_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[abel.vesa@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_REPLYTO(0.00)[protonmail.com];
+	RCPT_COUNT_TWELVE(0.00)[21];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 67A4F3460E4
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
+	HAS_REPLYTO(0.00)[cristian_ci@protonmail.com];
+	RCVD_COUNT_FIVE(0.00)[5];
+	NEURAL_HAM(-0.00)[-0.992];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_CC(0.00)[lists.freedesktop.org,vger.kernel.org,lists.sr.ht,protonmail.com,oss.qualcomm.com];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 8EB1F3454AF
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Add support for the Qualcomm Eliza SoC to the protection domain mapper.
+This series enables a set of miscellaneous features for Billion Capture+ 
+(a handset using the MSM8953 SoC released in 2017):
+- Panel and GPU
+- Touchscreen
+- WiFi + Bluetooth
+- Hall sensor 
 
-It has the same exact protection domain configuration as SM8550 SoC,
-so reuse that.
+Patches 1 and 2 provide a driver for Novatek NT35532 and its corresponding
+devicetree bindings, required for enabling panel in DTS. The remaining 
+patches are all DTS changes, aimed to enable the features listed above.
 
-Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+To: Jessica Zhang <jesszhan0024@gmail.com>
+To: David Airlie <airlied@gmail.com>
+To: Simona Vetter <simona@ffwll.ch>
+To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+To: Maxime Ripard <mripard@kernel.org>
+To: Thomas Zimmermann <tzimmermann@suse.de>
+To: Rob Herring <robh@kernel.org>
+To: Krzysztof Kozlowski <krzk+dt@kernel.org>
+To: Conor Dooley <conor+dt@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: dri-devel@lists.freedesktop.org
+Cc: devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Cc: linux-arm-msm@vger.kernel.org
+Cc: ~postmarketos/upstreaming@lists.sr.ht
+Cc: phone-devel@vger.kernel.org 
+
+Signed-off-by: Cristian Cozzolino <cristian_ci@protonmail.com>
 ---
- drivers/soc/qcom/qcom_pd_mapper.c | 1 +
- 1 file changed, 1 insertion(+)
+Changes in v4:
+- (patch 1/6): added a new compatible (since it's not possible to
+  identify panel vendor/id), matching user of this device and leaving
+  novatek,nt35532 as fallback (Dmitry);
+- (patch 2/6):
+  - according to bindings changes, make panel driver handling multiple
+    panels paired with NT35532 and use specific compatible/data;
+  - due to changes applied to panel code, remove tag received previously
+    by Dmitry.
+- (patch 3/6): 
+  - use a specific panel compatible, according to bindings changes;
+  - remove 'output-high' property from panel pinctrl, since panel is not
+    reset.
+- Link to v3: https://lore.kernel.org/r/20260321-rimob-new-features-v3-0-d4b8ee867de7@protonmail.com
 
-diff --git a/drivers/soc/qcom/qcom_pd_mapper.c b/drivers/soc/qcom/qcom_pd_mapper.c
-index a18cb56de579..7bb14c20ab5d 100644
---- a/drivers/soc/qcom/qcom_pd_mapper.c
-+++ b/drivers/soc/qcom/qcom_pd_mapper.c
-@@ -578,6 +578,7 @@ static const struct of_device_id qcom_pdm_domains[] __maybe_unused = {
- 	{ .compatible = "qcom,apq8064", .data = NULL, },
- 	{ .compatible = "qcom,apq8074", .data = NULL, },
- 	{ .compatible = "qcom,apq8084", .data = NULL, },
-+	{ .compatible = "qcom,eliza", .data = sm8550_domains, },
- 	{ .compatible = "qcom,apq8096", .data = msm8996_domains, },
- 	{ .compatible = "qcom,glymur", .data = glymur_domains, },
- 	{ .compatible = "qcom,kaanapali", .data = kaanapali_domains, },
+Changes in v3:
+- (patch 1/6): removed avdd, avee and vci supplies from 'required' properties;
+- (patch 2/6):
+  - removed "select VIDEOMODE_HELPERS" from nt35532 Kconfig entry, since 
+    its functions are not used (but this option is enabled and its code 
+    compiled anyway) by nt35532 panel driver;
+  - pick up tags (Dmitry).
+- (patch 3/6): replaced a506_zap.mdt with a506_zap.mbn firmware name
+  in gpu_zap_shader (Dmitry); 
+- (patch 5/6): pick up tags (Konrad);
+- (patch 6/6): pick up tags (Konrad);
+- Link to v2: https://lore.kernel.org/r/20260318-rimob-new-features-v2-0-c1bf8917449e@protonmail.com
 
+Changes in v2:
+- (patch 1/6): define power supplies in the bindings as per datasheet  
+  and update example;
+- (patch 2/6): add blank lines where required between mipi dsi write
+  sequences in nt35532_on() function and make use of names for mipi dcs
+  commands, instead of hex numbers, to improve readibility (Dmitry); 
+- (patch 3/6): move pinctrl lines ibto panel node and get rid of
+  sleep/reset state, since panel just uses one pinctrl state for
+  default/sleep (Dmitry). Also, update power supplies according to
+  bindings; 
+- (patch 4/6): pick up tags (Konrad,Dmitry);
+- (patch 6/6): squash hall sensor node into gpio-keys (Dmitry);
+- Link to v1: https://lore.kernel.org/r/20260308-rimob-new-features-v1-0-aa2c330572c0@protonmail.com
+
+---
+Cristian Cozzolino (6):
+      dt-bindings: display: panel: Add Novatek NT35532 LCD DSI
+      drm/panel: Add driver for Novatek NT35532
+      arm64: dts: qcom: msm8953-flipkart-rimob: Enable display and GPU
+      arm64: dts: qcom: msm8953-flipkart-rimob: Enable WiFi/Bluetooth
+      arm64: dts: qcom: msm8953-flipkart-rimob: Enable touchscreen
+      arm64: dts: qcom: msm8953-flipkart-rimob: Enable Hall sensor
+
+ .../bindings/display/panel/novatek,nt35532.yaml    |  80 +++
+ MAINTAINERS                                        |   6 +
+ .../arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts | 138 +++-
+ drivers/gpu/drm/panel/Kconfig                      |  10 +
+ drivers/gpu/drm/panel/Makefile                     |   1 +
+ drivers/gpu/drm/panel/panel-novatek-nt35532.c      | 796 +++++++++++++++++++++
+ 6 files changed, 1030 insertions(+), 1 deletion(-)
 ---
 base-commit: e77a5a5cfe43b4c25bd44a3818e487033287517f
-change-id: 20260327-eliza-soc-pd-mapper-256a87dd0216
+change-id: 20260303-rimob-new-features-037944b3a620
 
 Best regards,
---  
-Abel Vesa <abel.vesa@oss.qualcomm.com>
+-- 
+Cristian Cozzolino <cristian_ci@protonmail.com>
+
 
 
