@@ -1,253 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-100394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100395-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id kJECNnbHxmm8OQUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 19:07:50 +0100
+	id 4ORjIvnDxmm8OQUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100395-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 18:52:57 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1DE15348CF9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 19:07:50 +0100 (CET)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 316FF348A9F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 18:52:57 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 029F330A1B00
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 17:52:03 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 6069C3055FDE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Mar 2026 17:52:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AF8E3FEB1E;
-	Fri, 27 Mar 2026 17:51:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E46583FF891;
+	Fri, 27 Mar 2026 17:52:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="o7AGaXO+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EcByUmB/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yx1-f53.google.com (mail-yx1-f53.google.com [74.125.224.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 984D43FEB15
-	for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2026 17:51:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.224.53
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774633918; cv=pass; b=Pr546xZzr8QUs+2H4rZvpDii0gd7WRH95fiKEmiRudQe6mNubcIWpW9CuA7O/OqbdSql3bZL4R79YMErEORa258znd8dVsM73HEuh56WeILxAlUzLGi43LhVMj++TwbW4agcVtYTU1CwQyRDqKuHluAABYC5pv02uReP/XqPWMA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774633918; c=relaxed/simple;
-	bh=3OUvfFHGuHM2QBTFO9WY8r9kR1/cxJMORvSKgUjxTqw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=czLTlCWGBpQiHgNnQVublyBnmqBq0WzJRGdoGOWBqzoafH6/w12td+9WFRuvKrOw7HJOZ0atTuJ0OJ4dRVDDAmNucOqoldDtdbEbol1yES3xcm0VOrwpA1HgE1fIu7naa5ptFyCESgdRrGnvhcUHfyjZWqvVuaqLxzxpW4Af9yQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=o7AGaXO+; arc=pass smtp.client-ip=74.125.224.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yx1-f53.google.com with SMTP id 956f58d0204a3-64c9a6d7f81so2434762d50.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Mar 2026 10:51:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774633914; cv=none;
-        d=google.com; s=arc-20240605;
-        b=U8Q4UskNPTuvIaAP02eWFdReAla5TsTliwIidSJig7+fhC6X6NiMtYqMjWJBgquuxB
-         jEZyrhNnGnQbhypLgGUJ9Vf9fu4nPzzLdoqjKpDBGs/5NuxIpjN6yKtV8w+ShsfQHNfr
-         Gk858NeG58sgM65/4MqzFzmwDC3ygL6FcbH2uMvpz4GwAgMkVP0Ad1t2SwpN+bJyKKdk
-         p5IZ8P1rxX9sSkuRvYTPtxLNX+304gNsw7xOtWedeJZi0vQ0uPWek9X6db/Ri5NKLEvB
-         LfCjgT/mzYI3M8eAi1FWQ5sdItVC62PM6UgL8DJtPRDODO9AB0u9p8QVmG1MNeoczc8Z
-         5jgg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=IF9FRhjmH8zSwIBkeE7rltrcgfchPDGu/fGIAYdHEUs=;
-        fh=U0lbhxAahVgtAAgYyCZJ4EobPcNuWlMBQMRBA2DuYtI=;
-        b=aKSnrKdZ1f6a5nEzT05MMKq+Aomrwc8jgABiEM9cRIm42sp0Qkkn3+obduMEXXCthC
-         nhbAABNfjoYb1r0n/xBc5ePaHvCXSv0T83vDI8uzQ5B9SJfKSG7TEm3Vh6t7IeDDi3Kh
-         jLAyinuyHXlHtl9TLnZDOweQlfU80jrXr5wZ6w2MNKcZdFsYSmPgIxYWPDprMkiznp99
-         Z487cs8eVtxIS5qFx16DT5OMk8bPzQFFdok4qJ6dOVu/3wTgG2J+/6R+v5zmLAGCsrM7
-         eEgBxtQJeGMCpR88+LG5hvK3zjYeQu5Oh/UMiSDeVb91hUH6zmHMEFUis4F0Qq6MVxYp
-         bVag==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774633914; x=1775238714; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IF9FRhjmH8zSwIBkeE7rltrcgfchPDGu/fGIAYdHEUs=;
-        b=o7AGaXO+wzt0deTZP0fraClJolZs1TXFkoq2w1zMzhcsV0HusSyOiJqhaXoKKtPgAD
-         Vl0PjfUhVMUKjvZzs2Velz+cr6WEeWlwb1wOX+zISLHV+OFMt5eUrOBKv0B+KzNjK6W9
-         3ceQFxcThwdMtZWnFmw+wNmvj/lkFBEUfCEYSSIXtAaNqNcN+MdoJLWPAsTi9x1CvgFB
-         ZJojy1mfJ8wmtDap/mEsd5MmAXgdpqcUdGBzrlbQjN3LYMKQks9ZpLxIu3jkqQZkxU/E
-         6UvUOkgodxO9WhfqxM5qTXWmH6hWBLm7jrXtCc38emAR0Nu+UJ4lp7AyiG4JQvvnXa+Q
-         GDCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774633914; x=1775238714;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=IF9FRhjmH8zSwIBkeE7rltrcgfchPDGu/fGIAYdHEUs=;
-        b=ccU4PzWrEimAMX2IBvvXghQRluhcn1a//ccaXXNhUAKskobGGdqmT48+oGdt20o3Ry
-         goIYTn/jQx5/vpLZOiQ+MUB0CNPlcvhLjObVEmp2SWsF2aynRt5NdYNoseufgSR7yPw7
-         eLPMCv0I4RpxHL/myAvAz5sl0z/TC8vvC3fhcdWLg7wlUXVKcDGb+YVNNFxkcsz4oP+3
-         a5C8EKj0BAjaJfovki2v2nF7BuwnmJ5EWzU13ao4JgYW7thK/GjYMlVjdmgjwHALwa7U
-         pDUIKpiW3lAfcuBOwHFq8Hr3jsKFkLKr0WnIJJuohOeEMG4kDVnr3TXO8zCG3mI+IccE
-         3vVg==
-X-Forwarded-Encrypted: i=1; AJvYcCXMVdkqEa9ZCWgFvA7JwapAdfIZuvFSrJU/JEmBG2RsEAKx3txTps08VbT8bO7+70UY57d1glvtANDkL9P3@vger.kernel.org
-X-Gm-Message-State: AOJu0YzgJqrTTRtqLSUxhwmcHdUQOif4IJmH6DxI2HP7FxERA6xWjXN3
-	xv5rzQpA34TMzYAvclqv5+s/NDbwBqs/e0mHbB7TDXiQXbW8g42UmmJ3kiFqXOmGZN5sQAPNDJO
-	b696W2U3h1i2T/9PR9GykoXAUOqSFER8=
-X-Gm-Gg: ATEYQzyBDAl9gCEXA+Wpdo6WeOj5jVWcArZDbljnWwl5Ff9rk7VALgUEkeZKr4dczpc
-	Oh/iG12fFUd18YXVvhtRnUCajkILmUFl4RHdbA9uBEful6w1gk1g9Cic+BBtujZL8HSbgJ5E/SL
-	aDdqnm7ESeEPRfitqTX5zMTJMPHc9FYZciZqQq2j+yWgEoZcYtbrk3iI1v2EkK4h3sT56BxTyKk
-	6XXzE6jwusuw/W1xM+uKRKRmhFNBbNsr/pw7oJUHAYRxRzPnO74wDJOTrsLvz70UgppMM/MKeLb
-	4yFUkjQXgWcWWcHsqCCPncIXXl88fCxEmh1UJV60v1e2ZuH1tCz0s91AHN8g/sjLImsWUw==
-X-Received: by 2002:a05:690e:4843:b0:64c:a4ab:e4d8 with SMTP id
- 956f58d0204a3-64ff720cb83mr2835610d50.20.1774633914461; Fri, 27 Mar 2026
- 10:51:54 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF236371CFE;
+	Fri, 27 Mar 2026 17:52:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774633920; cv=none; b=uBCJSqcthDFLmjIaRmPsznOjtkg5scuoX9N8op05nTbw6HpTq44t5bo/ykgzlfe1LXW4Pqeqpk0WHYPvBGYIw2RujNmpNKeTDydK4I+Dl9Rgb8FxrjAyDp6ntbYitJ8cxDHvifCGuSGaQ0ttaHUapfxMj1qO5cvCN+WuHInh96Q=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774633920; c=relaxed/simple;
+	bh=zRvA02n55H6F0ORN5r8qynowYTw/58ttft03ZFRvRRY=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=j+1PltPrmk+R3u9fMLQB1Wwr5eLkmXI9lmuCe6NMY5CgqRT2FZxxI97YPwdmp4gGQ6tToLDC0RwB/pNB6U1JNI1+5CU8uDer4t93vzmtNoLrutyhIXpvkmJGbmnw+5nqXvbDKMucxjyk6bLvHV3lfBnck/I3DSUcMULyvaz5lgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EcByUmB/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7103C19423;
+	Fri, 27 Mar 2026 17:51:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1774633920;
+	bh=zRvA02n55H6F0ORN5r8qynowYTw/58ttft03ZFRvRRY=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=EcByUmB/fhOaTUDVp1b/zq+k+LRyAaNVR6S4h9vSV8N/eofFsVaZC/p4h1A+jJNP3
+	 9rEIsTsYK+kG24THax9IbEikcfE3m5NRFmdwk6T8NP03bthRsa4BivZIuRjA2w8HGC
+	 cpBkb9abwr1Gxl6Wq0l2GFOxGRV39Z38P8Kew4q4FfPiuIvQK4eix5y07qCdOTZwTi
+	 lV4jmMWLqLErykoYKx78LUDOR7m3IxaBklGXU4Ej6Oeqwky7u2vdxYuTSqraAwgtpu
+	 6bXPg7JymaoTujsQjn2Zlg9PlLyOKbXSMSYxnxxsJvbNCL9LwQ5qIXzLPNBDR2RSQP
+	 Ov6vM4Kz7prBQ==
+Date: Fri, 27 Mar 2026 12:51:57 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260327083258.1398450-1-shuai.zhang@oss.qualcomm.com>
-In-Reply-To: <20260327083258.1398450-1-shuai.zhang@oss.qualcomm.com>
-From: Luiz Augusto von Dentz <luiz.dentz@gmail.com>
-Date: Fri, 27 Mar 2026 13:51:43 -0400
-X-Gm-Features: AQROBzDahLri4nXUWvYxFtl5RrxDtiNo6y7zoELouPOJAeBfQtf-OGwuWxOEQLk
-Message-ID: <CABBYNZKwxh1R=EcBpqNpsO=pyJ7Z47qgYUQtrpG9QSC6sK3SpA@mail.gmail.com>
-Subject: Re: [PATCH v4] Bluetooth: qca: Fix delayed hw_error handling due to
- missing wakeup during SSR
-To: Shuai Zhang <shuai.zhang@oss.qualcomm.com>
-Cc: Bartosz Golaszewski <brgl@kernel.org>, Marcel Holtmann <marcel@holtmann.org>, linux-arm-msm@vger.kernel.org, 
-	linux-bluetooth@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	cheng.jiang@oss.qualcomm.com, quic_chezhou@quicinc.com, 
-	wei.deng@oss.qualcomm.com, jinwang.li@oss.qualcomm.com, 
-	mengshi.wu@oss.qualcomm.com, Shuai Zhang <quic_shuaz@quicinc.com>, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Simona Vetter <simona@ffwll.ch>, phone-devel@vger.kernel.org, 
+ Bjorn Andersson <andersson@kernel.org>, linux-kernel@vger.kernel.org, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ Jonathan Marek <jonathan@marek.ca>, Konrad Dybcio <konradybcio@kernel.org>, 
+ Dmitry Baryshkov <lumag@kernel.org>, devicetree@vger.kernel.org, 
+ Krishna Manikandan <quic_mkrishn@quicinc.com>, 
+ ~postmarketos/upstreaming@lists.sr.ht, Sean Paul <sean@poorly.run>, 
+ Abhinav Kumar <abhinav.kumar@linux.dev>, Conor Dooley <conor+dt@kernel.org>, 
+ Jessica Zhang <jesszhan0024@gmail.com>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ David Airlie <airlied@gmail.com>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, 
+ Rob Clark <robin.clark@oss.qualcomm.com>, dri-devel@lists.freedesktop.org, 
+ linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
+ Alexander Koskovich <akoskovich@pm.me>, 
+ Thomas Zimmermann <tzimmermann@suse.de>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>
+To: Luca Weiss <luca.weiss@fairphone.com>
+In-Reply-To: <20260327-milos-mdss-v2-4-bc586683f5ca@fairphone.com>
+References: <20260327-milos-mdss-v2-0-bc586683f5ca@fairphone.com>
+ <20260327-milos-mdss-v2-4-bc586683f5ca@fairphone.com>
+Message-Id: <177463391769.3232558.4643402365403400713.robh@kernel.org>
+Subject: Re: [PATCH v2 4/9] dt-bindings: display: msm: document the Milos
+ Mobile Display Subsystem
+X-Spamd-Result: default: False [0.34 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
+	MID_CONTAINS_FROM(1.00)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	RCPT_COUNT_TWELVE(0.00)[27];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[ffwll.ch,vger.kernel.org,kernel.org,somainline.org,marek.ca,quicinc.com,lists.sr.ht,poorly.run,linux.dev,gmail.com,linaro.org,linux.intel.com,oss.qualcomm.com,lists.freedesktop.org,pm.me,suse.de];
+	TAGGED_FROM(0.00)[bounces-100395-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	TAGGED_FROM(0.00)[bounces-100394-lists,linux-arm-msm=lfdr.de];
-	FREEMAIL_FROM(0.00)[gmail.com];
-	RCPT_COUNT_TWELVE(0.00)[13];
 	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[luizdentz@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,linaro.org:email,qualcomm.com:email,sashiko.dev:url,quicinc.com:email]
-X-Rspamd-Queue-Id: 1DE15348CF9
+	FROM_NEQ_ENVFROM(0.00)[robh@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 316FF348A9F
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi Shuai,
 
-On Fri, Mar 27, 2026 at 4:33=E2=80=AFAM Shuai Zhang
-<shuai.zhang@oss.qualcomm.com> wrote:
->
-> From: Shuai Zhang <quic_shuaz@quicinc.com>
->
-> When Bluetooth controller encounters a coredump, it triggers
-> the Subsystem Restart (SSR) mechanism. The controller first
-> reports the coredump data, and once the data upload is complete,
-> it sends a hw_error event. The host relies on this event to
-> proceed with subsequent recovery actions.
->
-> If the host has not finished processing the coredump data
-> when the hw_error event is received,
-> it sets a timer to wait until either the data processing is complete
-> or the timeout expires before handling the event.
->
-> The current implementation lacks a wakeup trigger. As a result,
-> even if the coredump data has already been processed, the host
-> continues to wait until the timer expires, causing unnecessary
-> delays in handling the hw_error event.
->
-> To fix this issue, adds a `wake_up_bit()` call after the host finishes
-> processing the coredump data. This ensures that the waiting thread is
-> promptly notified and can proceed to handle the hw_error event without
-> waiting for the timeout.
->
-> Test case:
-> - Trigger controller coredump using the command: `hcitool cmd 0x3f 0c 26`=
-.
-> - Use `btmon` to capture HCI logs.
-> - Observe the time interval between receiving the hw_error event
-> and the execution of the power-off sequence in the HCI log.
->
-> Signed-off-by: Shuai Zhang <quic_shuaz@quicinc.com>
-> Link: https://lore.kernel.org/stable/20251107033924.3707495-2-quic_shuaz%=
-40quicinc.com
-> Acked-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Fri, 27 Mar 2026 17:12:23 +0100, Luca Weiss wrote:
+> Document the Mobile Display Subsystem (MDSS) on the Milos SoC.
+> 
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 > ---
-> Changes v4:
-> - add Acked-by signoff
-> - Link to v3
->   https://lore.kernel.org/all/20251107033924.3707495-1-quic_shuaz@quicinc=
-.com/
->
-> Changes v3:
-> - add Fixes tag
-> - Link to v2
->   https://lore.kernel.org/all/20251106140103.1406081-1-quic_shuaz@quicinc=
-.com/
->
-> Changes v2:
-> - Split timeout conversion into a separate patch.
-> - Clarified commit messages and added test case description.
-> - Link to v1
->   https://lore.kernel.org/all/20251104112601.2670019-1-quic_shuaz@quicinc=
-.com/
-> ---
->  drivers/bluetooth/hci_qca.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-> index c17a462ae..228a754a9 100644
-> --- a/drivers/bluetooth/hci_qca.c
-> +++ b/drivers/bluetooth/hci_qca.c
-> @@ -1108,7 +1108,7 @@ static void qca_controller_memdump(struct work_stru=
-ct *work)
->                                 qca->qca_memdump =3D NULL;
->                                 qca->memdump_state =3D QCA_MEMDUMP_COLLEC=
-TED;
->                                 cancel_delayed_work(&qca->ctrl_memdump_ti=
-meout);
-> -                               clear_bit(QCA_MEMDUMP_COLLECTION, &qca->f=
-lags);
-> +                               clear_and_wake_up_bit(QCA_MEMDUMP_COLLECT=
-ION, &qca->flags);
->                                 clear_bit(QCA_IBS_DISABLED, &qca->flags);
->                                 mutex_unlock(&qca->hci_memdump_lock);
->                                 return;
-> @@ -1186,7 +1186,7 @@ static void qca_controller_memdump(struct work_stru=
-ct *work)
->                         kfree(qca->qca_memdump);
->                         qca->qca_memdump =3D NULL;
->                         qca->memdump_state =3D QCA_MEMDUMP_COLLECTED;
-> -                       clear_bit(QCA_MEMDUMP_COLLECTION, &qca->flags);
-> +                       clear_and_wake_up_bit(QCA_MEMDUMP_COLLECTION, &qc=
-a->flags);
->                 }
->
->                 mutex_unlock(&qca->hci_memdump_lock);
-> --
-> 2.34.1
+>  .../bindings/display/msm/qcom,milos-mdss.yaml      | 283 +++++++++++++++++++++
+>  1 file changed, 283 insertions(+)
+> 
 
-https://sashiko.dev/#/patchset/20260327083258.1398450-1-shuai.zhang%40oss.q=
-ualcomm.com
+My bot found errors running 'make dt_binding_check' on your patch:
 
-Not saying the feedback is actually valid, but if there are other part
-of the code still using clear_bit(QCA_MEMDUMP_COLLECTION then perhaps
-they should be updated as well?
+yamllint warnings/errors:
 
---=20
-Luiz Augusto von Dentz
+dtschema/dtc warnings/errors:
+Lexical error: Documentation/devicetree/bindings/display/msm/qcom,milos-mdss.example.dts:36.31-51 Unexpected 'DISP_CC_MDSS_AHB_CLK'
+Lexical error: Documentation/devicetree/bindings/display/msm/qcom,milos-mdss.example.dts:37.28-47 Unexpected 'GCC_DISP_HF_AXI_CLK'
+Lexical error: Documentation/devicetree/bindings/display/msm/qcom,milos-mdss.example.dts:38.31-51 Unexpected 'DISP_CC_MDSS_MDP_CLK'
+Lexical error: Documentation/devicetree/bindings/display/msm/qcom,milos-mdss.example.dts:40.31-52 Unexpected 'DISP_CC_MDSS_CORE_BCR'
+Lexical error: Documentation/devicetree/bindings/display/msm/qcom,milos-mdss.example.dts:42.42-61 Unexpected 'QCOM_ICC_TAG_ALWAYS'
+Lexical error: Documentation/devicetree/bindings/display/msm/qcom,milos-mdss.example.dts:43.41-60 Unexpected 'QCOM_ICC_TAG_ALWAYS'
+Lexical error: Documentation/devicetree/bindings/display/msm/qcom,milos-mdss.example.dts:44.41-65 Unexpected 'QCOM_ICC_TAG_ACTIVE_ONLY'
+Lexical error: Documentation/devicetree/bindings/display/msm/qcom,milos-mdss.example.dts:45.43-67 Unexpected 'QCOM_ICC_TAG_ACTIVE_ONLY'
+Lexical error: Documentation/devicetree/bindings/display/msm/qcom,milos-mdss.example.dts:49.38-60 Unexpected 'DISP_CC_MDSS_CORE_GDSC'
+Lexical error: Documentation/devicetree/bindings/display/msm/qcom,milos-mdss.example.dts:69.32-51 Unexpected 'GCC_DISP_HF_AXI_CLK'
+Lexical error: Documentation/devicetree/bindings/display/msm/qcom,milos-mdss.example.dts:70.35-55 Unexpected 'DISP_CC_MDSS_AHB_CLK'
+Lexical error: Documentation/devicetree/bindings/display/msm/qcom,milos-mdss.example.dts:71.35-59 Unexpected 'DISP_CC_MDSS_MDP_LUT_CLK'
+Lexical error: Documentation/devicetree/bindings/display/msm/qcom,milos-mdss.example.dts:72.35-55 Unexpected 'DISP_CC_MDSS_MDP_CLK'
+Lexical error: Documentation/devicetree/bindings/display/msm/qcom,milos-mdss.example.dts:73.35-57 Unexpected 'DISP_CC_MDSS_VSYNC_CLK'
+Lexical error: Documentation/devicetree/bindings/display/msm/qcom,milos-mdss.example.dts:80.44-66 Unexpected 'DISP_CC_MDSS_VSYNC_CLK'
+Lexical error: Documentation/devicetree/bindings/display/msm/qcom,milos-mdss.example.dts:142.35-57 Unexpected 'DISP_CC_MDSS_BYTE0_CLK'
+Lexical error: Documentation/devicetree/bindings/display/msm/qcom,milos-mdss.example.dts:143.35-62 Unexpected 'DISP_CC_MDSS_BYTE0_INTF_CLK'
+Lexical error: Documentation/devicetree/bindings/display/msm/qcom,milos-mdss.example.dts:144.35-57 Unexpected 'DISP_CC_MDSS_PCLK0_CLK'
+Lexical error: Documentation/devicetree/bindings/display/msm/qcom,milos-mdss.example.dts:145.35-56 Unexpected 'DISP_CC_MDSS_ESC0_CLK'
+Lexical error: Documentation/devicetree/bindings/display/msm/qcom,milos-mdss.example.dts:146.35-55 Unexpected 'DISP_CC_MDSS_AHB_CLK'
+Lexical error: Documentation/devicetree/bindings/display/msm/qcom,milos-mdss.example.dts:147.32-51 Unexpected 'GCC_DISP_HF_AXI_CLK'
+Lexical error: Documentation/devicetree/bindings/display/msm/qcom,milos-mdss.example.dts:155.44-70 Unexpected 'DISP_CC_MDSS_BYTE0_CLK_SRC'
+Lexical error: Documentation/devicetree/bindings/display/msm/qcom,milos-mdss.example.dts:156.44-70 Unexpected 'DISP_CC_MDSS_PCLK0_CLK_SRC'
+Lexical error: Documentation/devicetree/bindings/display/msm/qcom,milos-mdss.example.dts:157.58-74 Unexpected 'DSI_BYTE_PLL_CLK'
+Lexical error: Documentation/devicetree/bindings/display/msm/qcom,milos-mdss.example.dts:158.58-75 Unexpected 'DSI_PIXEL_PLL_CLK'
+Lexical error: Documentation/devicetree/bindings/display/msm/qcom,milos-mdss.example.dts:219.35-55 Unexpected 'DISP_CC_MDSS_AHB_CLK'
+FATAL ERROR: Syntax error parsing input tree
+make[2]: *** [scripts/Makefile.dtbs:140: Documentation/devicetree/bindings/display/msm/qcom,milos-mdss.example.dtb] Error 1
+make[2]: *** Waiting for unfinished jobs....
+make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1614: dt_binding_check] Error 2
+make: *** [Makefile:248: __sub-make] Error 2
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.kernel.org/project/devicetree/patch/20260327-milos-mdss-v2-4-bc586683f5ca@fairphone.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
 
