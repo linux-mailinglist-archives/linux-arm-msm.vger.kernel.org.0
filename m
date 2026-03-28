@@ -1,148 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-100528-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100529-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iLrlLOWJx2lRYwUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100528-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Mar 2026 08:57:25 +0100
+	id GDeIAMGPx2l2ZAUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100529-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Mar 2026 09:22:25 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 489BC34DB77
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Mar 2026 08:57:25 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F39F34DCBE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Mar 2026 09:22:24 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 95D01301A78A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Mar 2026 07:57:24 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 149F4302DB73
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Mar 2026 08:22:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3381737187A;
-	Sat, 28 Mar 2026 07:57:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9AA2336AB77;
+	Sat, 28 Mar 2026 08:22:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="r644oDVy"
+	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="JxhzCGeN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+Received: from out-173.mta0.migadu.com (out-173.mta0.migadu.com [91.218.175.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5EA93F9FB;
-	Sat, 28 Mar 2026 07:57:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ADD32C21DD
+	for <linux-arm-msm@vger.kernel.org>; Sat, 28 Mar 2026 08:22:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774684642; cv=none; b=O4E8nCxZtWVhdFxFuGdC6qqCYGrJq3hWrxBNFxyQrOhSfhGCTzM5cvmXIOCRkVSn56EHjSzaKldZQuvMecAP93XPjg+9h9JBcLvMaD4PIxiwcwvcD2Fn8RosB7EacfrvMaF5aenh+i4s17FqGHb2F2UBg5r7GDJO201iarSst58=
+	t=1774686142; cv=none; b=ffcHTkzTXFtjP+jmXtSYVsuNqS5OGk23P2hM5s4BVkpgr29JrawOQGEbQFnLtpRxhwd/sOirKlFTlPY5YWPm8No6lYNkSRCX8h2kJQrGW8k2ASrT/RSZ6onovnRQEBZpG687KRCj/AdBuOQJWqujunQUV9qYa9KbO4WeciNTTv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774684642; c=relaxed/simple;
-	bh=HjeG4oMsPXrMWOovrOV1iD4NE+QRpxLuDyZiFhW+sVk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Vi5wEg8WuHKEdVsLvuLirlw72QWt2HgtlDN2K5m3FjoK6dU2hqy6/Ryuxe7AxtCitCyd0qsTIQppherv+iwOwHDU6bS7bMJsaI9Mln9x9aTEQrSDYGkF8gO6TKKOTTz+IqE/M9Jl0PjKafee46ApRUefrPnTXSulTfMYjdkZEK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=r644oDVy; arc=none smtp.client-ip=78.32.30.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=+LoOZn3v94QiOgVjPkKxzDKU/RFUoSB5XRbx6p7b+DQ=; b=r644oDVyLnyUEceUBloN04Wi1i
-	HG5BS8wP0wuCbnrBumQgdGPInRO1wusoI+THwSJvbiL/8B+X7SQyb9h3kVY/Fmee67VwJmvguxLNb
-	w5ki4vAtVY1x2nBiZrzJIE6X3yUEWjMAXX/Vw0IC/bp+T6Zrj70S+ojLcgcNHzhkesMhmU568udaJ
-	PqFIeHFUiqMVYZnbxGVWgJVjFLgfrm73T/1RY88KkX9F5SBZncWAoOdgX+3MBXYx+gFm+udexfpGp
-	JdUjZLngZvHiQOr7ojLrpKeBF2KyLXTnbrGEGJEtBxJ/iM/pGPoydZX1E0MYPmzf/0cxQqBrXrzpH
-	lpEvAaBg==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:49052)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1w6OXj-0000000072B-1RuQ;
-	Sat, 28 Mar 2026 07:57:15 +0000
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1w6OXg-000000000Ux-0mXz;
-	Sat, 28 Mar 2026 07:57:12 +0000
-Date: Sat, 28 Mar 2026 07:57:11 +0000
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: Andrew Lunn <andrew@lunn.ch>
-Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>,
-	netdev@vger.kernel.org, Paolo Abeni <pabeni@redhat.com>
-Subject: Re: [PATCH net-next v2 03/15] net: stmmac: qcom-ethqos: eliminate
- configure_func
-Message-ID: <aceJ18UxKMM_PxHk@shell.armlinux.org.uk>
-References: <acZDEg9wdjhBTHlL@shell.armlinux.org.uk>
- <E1w62n4-0000000E3C3-251S@rmk-PC.armlinux.org.uk>
+	s=arc-20240116; t=1774686142; c=relaxed/simple;
+	bh=Be+hfXS0+oA4TyoSNFCSOnIxtlg9LmLDkoiIsipDyUk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YptpOvIm+TZpe3TKjDUpBQSNafRlLOn519B45CV7GERDaJNjh5Ndco7tbYAgMiQmJjn6nhtXyXjprrIaRwpNi5Rc9D8LQY5zGim0mKn+CY/nxhtgrgxD5MYyPZGm3i5MAlyQxTembnpA7GjHOmGE6Ydt4m3yG9jsyll1iqAQO5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=JxhzCGeN; arc=none smtp.client-ip=91.218.175.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
+Message-ID: <3b968230-c64a-41dd-a145-81b4e68dd39b@packett.cool>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
+	s=key1; t=1774686128;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=fX+9bAQHy7d724x0bps6NZLEAxnQxD4hcWumn7cv9vg=;
+	b=JxhzCGeNN9XHn5nuxHyIVnEg9uUyaRhelE23HoTcYZQubWLwr9vM+6xSvOsErYc0dHq7nb
+	x+2v2inVESgxbDhojZhZeDFHYWIQAczcKupmVwpf7car2PeygWD2xJQXwqrVtZ+FWnSp2j
+	MbEx8QKrQg+lXMT3H0GOP8M7suakJM6KmPqWSNGoD4jJsFZ1RZJfM9bDffcYL0Nb18OPwu
+	Zh7RAr8x9aH7WHDIYSA3r5HOgwk+DdYLwMIIfEB1XX0PvvHF5CxrHfHPltEU/wpZxMWzI7
+	fijnPailCMVJudSj0850FV7fuyNdA8HZrySvHSLqyLDutE4Mo4IE3o75AGTfXw==
+Date: Sat, 28 Mar 2026 05:22:00 -0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <E1w62n4-0000000E3C3-251S@rmk-PC.armlinux.org.uk>
-Sender: Russell King (Oracle) <linux@armlinux.org.uk>
-X-Spamd-Result: default: False [1.14 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+Subject: Re: [PATCH v2] arm64: dts: qcom: hamoa: Add remoteproc in EL2 device
+ trees
+To: Stephan Gerhold <stephan.gerhold@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>
+Cc: Xin Liu <xin.liu@oss.qualcomm.com>, konradybcio@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, tingwei.zhang@oss.qualcomm.com,
+ jie.gan@oss.qualcomm.com
+References: <20260202055436.818098-1-xin.liu@oss.qualcomm.com>
+ <ao4jf5guszon6iuyyvzmkuaf2iaa56y3b33srx2w3whtyo2u3r@k74fxy3ktsyo>
+ <aalhik53l4ioxiLx@linaro.org>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Val Packett <val@packett.cool>
+In-Reply-To: <aalhik53l4ioxiLx@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_DKIM_REJECT(1.00)[armlinux.org.uk:s=pandora-2019];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64];
+	DMARC_POLICY_ALLOW(-0.50)[packett.cool,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[packett.cool:s=key1];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
-	DMARC_POLICY_SOFTFAIL(0.10)[armlinux.org.uk : SPF not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-100528-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[armlinux.org.uk:-];
-	RCPT_COUNT_TWELVE(0.00)[12];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-100529-lists,linux-arm-msm=lfdr.de];
+	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[3];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
-	FROM_NEQ_ENVFROM(0.00)[linux@armlinux.org.uk,linux-arm-msm@vger.kernel.org];
-	PRECEDENCE_BULK(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[12];
+	DKIM_TRACE(0.00)[packett.cool:+];
 	MISSING_XM_UA(0.00)[];
-	NEURAL_HAM(-0.00)[-0.722];
-	TAGGED_RCPT(0.00)[linux-arm-msm,netdev];
-	MID_RHS_MATCH_FROMTLD(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[armlinux.org.uk:url,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 489BC34DB77
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[val@packett.cool,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 8F39F34DCBE
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Fri, Mar 27, 2026 at 08:43:38AM +0000, Russell King (Oracle) wrote:
-> @@ -687,7 +683,7 @@ static int ethqos_clks_config(void *priv, bool enabled)
->  		/* Enable functional clock to prevent DMA reset to timeout due
->  		 * to lacking PHY clock after the hardware block has been power
->  		 * cycled. The actual configuration will be adjusted once
-> -		 * ethqos_fix_mac_speed() is invoked.
-> +		 * ethqos' fix_mac_speed() method is invoked.
 
-...
+On 3/5/26 7:57 AM, Stephan Gerhold wrote:
+> On Wed, Mar 04, 2026 at 02:16:55PM -0600, Bjorn Andersson wrote:
+>> On Sun, Feb 01, 2026 at 09:54:36PM -0800, Xin Liu wrote:
+>>> All the existing variants Hamoa boards are using Gunyah hypervisor
+>>> which means that, so far, Linux-based OS could only boot in EL1 on
+>>> those devices. However, it is possible for us to boot Linux at EL2
+>>> on these devices [1].
+>>>
+>> Lots of people are running Linux at EL2 on their Hamoa laptops, but
+>> then there's no PAS. I presume adding iommu properties won't "hurt" in
+>> that case, but can you confirm that with this change remoteproc is fully
+>> working somewhere (i.e. [1] refers to a firmware for which the Glymur
+>> PAS/PIL changes has been backported?)
+>>
+> On the contrary, I would expect that this will break the existing EL2
+> setup people have on their Hamoa laptops. I have last tested this half a
+> year ago (and I don't have a suitable device for testing this anymore),
+> but I don't think much has changed in this area:
 
-> -		ethqos->configure_func = ethqos_configure_rgmii;
-> +		plat_dat->fix_mac_speed = ethqos_fix_mac_speed_rgmii;
-...
+It did break and I just spent like 3 hours debugging before realizing I 
+shouldn't've just merged x1-el2 like that…
 
-> -		ethqos->configure_func = ethqos_configure_sgmii;
-> +		plat_dat->fix_mac_speed = ethqos_fix_mac_speed_sgmii;
+It first showed up as a "weird" hang when booting into EL2, as soon as 
+SMMU related lines started showing up on the framebuffer console it 
+slowed down to a crawl for a couple of these lines and then totally froze.
 
-AI review of this patch is still complaining about the comment above:
+Disabling qebspil (i.e. having only adsp-lite loaded) let the output 
+proceed for a little bit more and I saw the faults (tens of thousands of 
+faults, all fsr=0x402, iova=0x86b020c0, fsynr=0x600040, SID=0x1000) and 
+a hard LOCKUP being detected.
 
-  The comment still references 'fix_mac_speed() method' but the function
-  ethqos_fix_mac_speed() was removed in this patch. Should this comment be
-  updated to reference either ethqos_fix_mac_speed_rgmii() or
-  ethqos_fix_mac_speed_sgmii(), or perhaps just 'the fix_mac_speed callback'
-  to remain implementation-agnostic?
+> Since we can't start/stop remoteprocs without PAS,
+(Can someone at Qualcomm ask how Windows does it?)
+> everyone using EL2
+> with the old (non-PAS) firmware currently relies on remoteprocs that are
+> already started by the boot firmware before Linux is started. This can
+> be just the "lite" ADSP that is started by UEFI for initial charging and
+> USB-C detection, or even the full ADSP/CDSP via a custom UEFI driver
+> (qebspil [1]). All of these will stay running even if we fail to
+> stop/start them via PAS. Without extra kernel patches, we can't make use
+> of the remoteprocs, but the lite ADSP firmware will probably continue
+> doing its work in the background, i.e. it will start/stop charging as
+> needed, you just won't be able to observe the status from Linux.
+>
+> We manage the full IOMMU even when there is no PAS. The reason why
+> people are not running into issues is that the bootloader handover code
+> inside arm-smmu-qcom.c qcom_smmu_cfg_probe() configures bypass for all
+> SIDs used by the boot firmware, which includes the SIDs for all the
+> remoteprocs. Adding these SIDs in the "iommus" property of an actual
+> device will replace the bypass with a translated context, which
+> currently won't be set up anywhere for the non-PAS use case.
 
-Artifical Stupidity at its best! :/
+hm, maybe the patches supporting the handover could be updated to set up 
+the context in the non-PAS case?
 
--- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+> In addition, even on newer firmware with PAS support I would expect that
+> special care is required to "atomically" handover the IOMMU
+> configuration from the bootloader. If the lite ADSP remains running on
+> these firmware versions as well, the bypass or suitable mappings must be
+> maintained until the lite ADSP firmware is stopped.
+> […]
+Thanks,
+~val
 
