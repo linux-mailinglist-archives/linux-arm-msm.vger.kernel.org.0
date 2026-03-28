@@ -1,117 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-100542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100543-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UbEnFF7gx2mXeAUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Mar 2026 15:06:22 +0100
+	id iGPsDtLwx2lMfQUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100543-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Mar 2026 16:16:34 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id C872834E9F4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Mar 2026 15:06:21 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE67F34ED2F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Mar 2026 16:16:33 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id C798E30101F6
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Mar 2026 14:06:20 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 29F0330131E9
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Mar 2026 15:15:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F17062DB7AE;
-	Sat, 28 Mar 2026 14:06:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44B1A330D24;
+	Sat, 28 Mar 2026 15:15:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r+tXVDO7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dA+R35wl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDABC18787A;
-	Sat, 28 Mar 2026 14:06:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06105330650
+	for <linux-arm-msm@vger.kernel.org>; Sat, 28 Mar 2026 15:15:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774706777; cv=none; b=tztrvrn6DBSvERk02yFEis0NFmyYLg8uYfpG3FcstUaZRN2TRl79okE9nOEoydgb07fsN3jjyGORTt3vhRmUmMActVNiXPkBcJt1S8vXiLREE0EJkcYJQL4m4xojuA+N97y1HE5pQ+uc+PKb9CUtAnF5r675XM4VvOgoomv70+c=
+	t=1774710941; cv=none; b=lHoguEBzKxzwNYpPdcaqy4t/lV/XpNSEEEEOF+9EroF3CUFiuTXFMkywahVCZHuAwMymptlcAy2JvgUxh9wdUzt0nS5mXVayTQFsBJHZw0oZnLuwITP6CuB3OMg+UqIgiD6/GUa4Jyidq1D9WRwzey0W/2/3ezTxopLseV7mPPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774706777; c=relaxed/simple;
-	bh=r3AsAHaiY+EIeo9O20nkbuc6gADfEl6qhiOCW5IA9Qw=;
+	s=arc-20240116; t=1774710941; c=relaxed/simple;
+	bh=ICqzzqLxaQ0oD8cZsvkZ1Auyp2BNEN+4P7TyZ9353cc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=V7/UnUgYMpQqAM61MfrbuS1mzeqMTXerxk8AJyaJPXKGkxceX9tUAlSiHNHT3UX+sof/OYHQSF39mdP2nH1RDNJBceS7WXyNsDppEuMN8hFeIzeX2Xr3QNQAhQwQLSGt0uqENvBP34S45Qb2Au8LoggrpEsBFTBpYglcxIZZA04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r+tXVDO7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFD36C4CEF7;
-	Sat, 28 Mar 2026 14:06:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774706777;
-	bh=r3AsAHaiY+EIeo9O20nkbuc6gADfEl6qhiOCW5IA9Qw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=r+tXVDO7QppCVEIDirfP+cz8d3B3lDZqzuBwLYFg+V0A4nUHUZnhxTLQq5b2lRHlO
-	 JMC77OkDBSk2Ap0W8lqMBkRGF2v8Pk/tjOlrRMAayoK9LR/C5y7gumTtanQTBcU1tf
-	 mfAY6cIsUd0liaGtG4p3EKJRqY3NvJt/RQSY6S6NupUr/3ZEb09jBDV0Ydujj7Lssx
-	 NhTCmg40nhb9RCFy2f0gd6foVn1OiZr+0H7YkcksTKfUy+OozjS/x2Qc+H5tQvy5/3
-	 WXMu+kKCqLvPfuRSk8cR0ew1+Qk2XpFsdYDWhkL3d6PRYNMxUBkUQshEmBkwb0iYZ5
-	 FxSqZNXBFAfqw==
-Date: Sat, 28 Mar 2026 15:06:14 +0100
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Richard Acayan <mailingradian@gmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Srinivas Kandagatla <srini@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 1/5] dt-bindings: qcom: lpass-lpi-common: add reserved
- GPIOs property
-Message-ID: <20260328-laughing-cute-whippet-c83b56@quoll>
-References: <20260328021036.85945-1-mailingradian@gmail.com>
- <20260328021036.85945-2-mailingradian@gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=pwQE7+h//oeRFD9aImSLuEOFJDR7bC2fP81taNhUXbM3mbm1/UqsgTbOKQBCw+pP1VCGLTw1FiL6kN+hkVGyYLZHMhQQlnYqXusNSaVVBy4hScAIhOYjGihGih9ffl/cQoQkTtdbDF48lP9lOPHL8lOeZ5ziZD02GY03ppFbsH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dA+R35wl; arc=none smtp.client-ip=209.85.222.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-8cb4136d865so389751985a.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Mar 2026 08:15:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1774710939; x=1775315739; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=/kDUry0xFE9vHvVj18ny7RFWBuEEHB+W5Lxw16DJs+g=;
+        b=dA+R35wlUXZthVYGFUmdvTh3S5roPveh3Y/N6QKO297DQmVZkjvhRagCSqIcVWYsfA
+         Jf2DdqM0E9BzSrjkYKH/SiUvBSVtlCIyzbs2YsmjOJcby4VyB3/YLft/0BVno25gdlg+
+         HuDDa/S4epzZ9or/feRGuInInpPyldD7dUI9yEpDk94OEoE4g1AWrJIjWSMq86K3ZHco
+         CFM2AHFPLB/3OInhMbyxiXzyVyUWocSA5Lk853bSg9YgKzKj/9IJhRg4kCT6Iufua3Vd
+         A+SLJM3IO/8VBNdN19oB4ybvAIpCymqHbuQ8z04WUjxOm+UI7Z7DPOmeCFOMLPVid0bJ
+         Pzuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774710939; x=1775315739;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/kDUry0xFE9vHvVj18ny7RFWBuEEHB+W5Lxw16DJs+g=;
+        b=VDeBuY/pZqvBTZxTC4UD3CYWv+b430BywCmdKqBGUTY6uKllS3XiFRVCJSc5dZ4Z78
+         20arGZ2y8uUkiClvMGGY1bzG5+/s23kzdkgoIiCZCkSfcU9PjfLKBPE3mqTnf9/ONCzc
+         yIQwp0qcz1BEpXig+9ClXzRKwOUhNBQda9OnCL/pk87cwFx/sABpQeBHj2bIHt121i8N
+         WTAkBKGiM7bUsDUcD8wVQJ1Dp36VjWsB8sgfJv1W2T7+PU+Sjlg8nZiS6E/HNr7st2pT
+         gHXJNz3uOsTc4luwH7GNqpMshCL5gOSfsvT/wQZ9Ti+QFUEEwA8MB05bDxVHdw1Zku43
+         gr+g==
+X-Forwarded-Encrypted: i=1; AJvYcCXGjl3Z334/MybXRODGRC/sH9f5C33fBRdTvxASmBWaaSISLCpo0OUIaThJB3wuJPJFoYkbRp4fzIGW7ybQ@vger.kernel.org
+X-Gm-Message-State: AOJu0YxSvuFqxkqE0dhOIf0HKNsxBbvnX4iBZpXFeUuc0trosNYzNerF
+	6EsGTPeYXuuwuCssb4I6aCM1HhFqK4dpUu1VKNS41bx49QHi1X12LqR4fweZtQ==
+X-Gm-Gg: ATEYQzxrLkjLiowDG0fuWsop1wLnIH18jYOMYaj8U2bBLcu7sLi9dW/DN9p07z2CwAM
+	ffIeKr7LLbLsIUC9yaj6F1paosKvShHnkVBpW5UMLeboIf3Em8mOx4ecsbGxRrnwWVEIHoDK4nX
+	u13nRrTN0ybyOAmPXYDM8fPJ1kheO6LWDO1woNwTGIGphO5LBiLbZiPxCySOQgEGVBSz6dg8k13
+	jejP07mrDeKfIU6xgqPeBn8Mky4rfidEUOGpOxAvA2/RwfMWucxJkAC7X/FzCmHY/TTM8qli8kJ
+	TwCkd5PTac/19mfDvu5nrycDnphnT8CngWUURBRyhRtRPy9C3FqSJmumps0AXqIxVpESh8SC6qE
+	gxyUzeWFH4IVL8s/7wftl1EsdrPJmYirgk6IitnCd/7x5gkI+z5Kqhz4vnh27N3fFjQbAGJmZEh
+	0gTNOa2UAiWoVcb9H/5qBwhUklAw==
+X-Received: by 2002:a05:620a:4446:b0:8cf:e0fe:f217 with SMTP id af79cd13be357-8d01c60d34cmr849118585a.20.1774710938926;
+        Sat, 28 Mar 2026 08:15:38 -0700 (PDT)
+Received: from localhost ([184.144.58.243])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8d02808677dsm181603085a.42.2026.03.28.08.15.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 28 Mar 2026 08:15:38 -0700 (PDT)
+Date: Sat, 28 Mar 2026 11:16:14 -0400
+From: Richard Acayan <mailingradian@gmail.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: "Rafael J. Wysocki" <rafael@kernel.org>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Amit Kucheria <amitk@kernel.org>,
+	Thara Gopinath <thara.gopinath@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH v4 2/4] dt-bindings: thermal: lmh: Add SDM670 compatible
+Message-ID: <acfwvk8ptnBrGmVx@rdacayan>
+References: <20260328014041.83777-1-mailingradian@gmail.com>
+ <20260328014041.83777-3-mailingradian@gmail.com>
+ <20260328-resilient-smilodon-of-improvement-a8619f@quoll>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260328021036.85945-2-mailingradian@gmail.com>
-X-Spamd-Result: default: False [-1.66 / 15.00];
+In-Reply-To: <20260328-resilient-smilodon-of-improvement-a8619f@quoll>
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-100542-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-100543-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com];
-	RCVD_COUNT_THREE(0.00)[4];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
-	MISSING_XM_UA(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	FREEMAIL_CC(0.00)[kernel.org,intel.com,arm.com,gmail.com,vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mailingradian@gmail.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	NEURAL_HAM(-0.00)[-0.981];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MIME_TRACE(0.00)[0:+];
-	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: C872834E9F4
+	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: AE67F34ED2F
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Fri, Mar 27, 2026 at 10:10:32PM -0400, Richard Acayan wrote:
-> There can be reserved GPIOs on the LPASS LPI pin controller to possibly
-> control sensors. Add the property for reserved GPIOs so they can be
-> avoided appropriately.
+On Sat, Mar 28, 2026 at 01:20:43PM +0100, Krzysztof Kozlowski wrote:
+> On Fri, Mar 27, 2026 at 09:40:39PM -0400, Richard Acayan wrote:
+> > Document the SDM670 LMh.
+> > 
+> > Signed-off-by: Richard Acayan <mailingradian@gmail.com>
 > 
-> Adapted from the same entry in qcom,tlmm-common.yaml.
-> 
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> ---
->  .../bindings/pinctrl/qcom,lpass-lpi-common.yaml           | 8 ++++++++
->  1 file changed, 8 insertions(+)
+> Why are you sending patches already applied 18 days ago?
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+This one in particular was applied with the assumption that there were
+no driver changes to support SDM670, so I re-sent it in case the
+different CPU clusters change the suitability of the fallback
+compatible.
 
-Best regards,
-Krzysztof
-
+I'll drop them next time, and patch over this if necessary.
 
