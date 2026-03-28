@@ -1,135 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-100551-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100552-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id gK1+HGcQyGm4ggUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100551-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Mar 2026 18:31:19 +0100
+	id 1mawOPBLyGn1jgUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100552-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Mar 2026 22:45:20 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11F3734F5F4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Mar 2026 18:31:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 36C81350101
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Mar 2026 22:45:20 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 08C193023319
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Mar 2026 17:31:13 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id A5010301F7BF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Mar 2026 21:44:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 912D73A545E;
-	Sat, 28 Mar 2026 17:31:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82A93371D11;
+	Sat, 28 Mar 2026 21:44:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="JYXx2ugx"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GaqvtwxP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-24429.protonmail.ch (mail-24429.protonmail.ch [109.224.244.29])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF8A39448D
-	for <linux-arm-msm@vger.kernel.org>; Sat, 28 Mar 2026 17:31:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.29
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A84B2346AC2;
+	Sat, 28 Mar 2026 21:44:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774719069; cv=none; b=rFyiRmAxiv2c8x5csSTVdMr3ScQOTb52qlKiULLM2uSbOj4HAdfMhjgImmH7mi3r/GtPvpXxvsWHlCV4hajLBeFpGynbA8bZNbcbUdaNJwncQmM/0+9IVHcmj4zuhWV0r/OQK0JndjBxgTRhpWUJd7ofCTj/bTrWqPH7sQz2mTI=
+	t=1774734247; cv=none; b=clhb8AUlrkh0aKW9hWuVg/TBjf/K7fTSqHeD2DfZfn+182eAJSG0OKP0eY0Lui+A56W/OQUv/w2bmUIQjZMWKoQjLJanULjvDBjPipIwSjhVLCelZA219XAcoNNNNmfg2Kym5EPVY724GaOzmHq2goYATcgo7grHrABropzebXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774719069; c=relaxed/simple;
-	bh=0ez/HeqjP2d++NPPugrN+b9Byj3675ZLl57i5U+g6q0=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qD/AGT5TQAArid6GZQuPLskc1Xh5MDwMUOy9O7nm+v/C4aZw/7htxWUZ81BLu2D5mLL401m+W8PVhWEy2qLg3DopsVnlRxsnvvTyutBMne8nlayaKtH++s0J9zQ8EL9fgtDYjjhSE9n9niChBK/R3mCVXlFlCsbprfcnKpvxTpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=JYXx2ugx; arc=none smtp.client-ip=109.224.244.29
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1774719059; x=1774978259;
-	bh=sgqrW4vue2YRH/11cpwfBbkabMPf+9TeMN7abNY/hXQ=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=JYXx2ugxoLBqIhcply1iBLXBWtiOGWnNv8TPcXKMqbK0dTiKIhPDiY4fuMniIzG0c
-	 DgcG4PxASDHkVW+RCVWk1GlERuVPiwQH3xVFSHB2bS5oj6/LKbvTPgInk6MZjj08+s
-	 53RJcD5kY/AwH6oCXofd2azsDtu+4m/m0L+IpTfD6gZrrhTRrfhvhL/vV3Awwtnxks
-	 Kiyfc7ZgE8ASj4btj4yHWeM40sFaUhE1vfH8ZsAca2dhXeLw8DfEgrwkN3rs8jkBq0
-	 N9USWcLMelB9iPxGrLYHaR7DvhfOBjnhydzrUol06o/2kkHkQxIdpTxr6DC0lhzOxi
-	 GnbAJTbZVDiew==
-Date: Sat, 28 Mar 2026 17:30:53 +0000
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-From: cristian_ci <cristian_ci@protonmail.com>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>, Jessica Zhang <jesszhan0024@gmail.com>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-Subject: Re: [PATCH v4 3/6] arm64: dts: qcom: msm8953-flipkart-rimob: Enable display and GPU
-Message-ID: <O7THc5h8ZhgzNpklYKTGOnEZKlN4BtHZHjKZt2KErekNb3E-hizt2dw7xuJ8G6giEyivmvC0f6-eIfCT6fJkUA7_CVQwhAktCXfBqAVV_Zo=@protonmail.com>
-In-Reply-To: <us3ps4bgf5ekk2iudcgs2wa4b5qd4mzokec4q55pmhb6kvt6ht@qm4mmzdai2t2>
-References: <20260327-rimob-new-features-v4-0-06edff9c4509@protonmail.com> <20260327-rimob-new-features-v4-3-06edff9c4509@protonmail.com> <us3ps4bgf5ekk2iudcgs2wa4b5qd4mzokec4q55pmhb6kvt6ht@qm4mmzdai2t2>
-Feedback-ID: 27475468:user:proton
-X-Pm-Message-ID: cf18d05c5f1d325076efcda785cfdd467cb230d9
+	s=arc-20240116; t=1774734247; c=relaxed/simple;
+	bh=pTaIRF05eUSnh7ITUOAxQRdSFzmhR1m8AG4YR7CBpy8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZloWn7EuW69hNAotU/zDNX2ihvrk/UpLYkfwxrS88ksBDwCwiU2lv72MoSL+qSaqiRSb+8cOBHDvtef8ceBPyNdTWTyumZUEfT/MpeQRglg7VtSzrLOI8IU3AwrWCBYgmsAM6M/i1a4KYUuJQNOVIK7hAZ6nSGxvmdgJCUxIMpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GaqvtwxP; arc=none smtp.client-ip=198.175.65.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1774734244; x=1806270244;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=pTaIRF05eUSnh7ITUOAxQRdSFzmhR1m8AG4YR7CBpy8=;
+  b=GaqvtwxPPSmMCzwiZt/5b+l+eeRqkZxFqJC2wZKVsce07ZT82xx66+yY
+   dd6LhhosgA6/h1aPOs/44MkV0SWHAbbNmzoHUMjNTVzTltvSPbkcwdRRJ
+   d4jn52t4paetMoZOCYP50BdZJTfW39luR9Q3dbMHGnefJxzaWgrX+W67L
+   tUq84JFb+ZXVg4I5zFriomh//m9gIW3fnaqHR1/Vj0WNWGe/PEEgMHLCo
+   Bv8vPrvC9SUeW0Iax1s6lT6v51YdZaqm9kEarO0gIrscSDmz/RUnNLS5H
+   iKKwDO013l3m9IK57WYcYsZ3kGre0KSDBAwG2dFRKVdfy2Sa8Cf00QPi5
+   A==;
+X-CSE-ConnectionGUID: u1J43wbYQMuVMLdLiQ/RqQ==
+X-CSE-MsgGUID: e6QMMBcnSk6LbJAkeVoUCQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11742"; a="86078190"
+X-IronPort-AV: E=Sophos;i="6.23,146,1770624000"; 
+   d="scan'208";a="86078190"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Mar 2026 14:44:04 -0700
+X-CSE-ConnectionGUID: 4tDmfR+KTXCKh2mQvlbrHA==
+X-CSE-MsgGUID: qilT9Ai5Suyuaq+7qEE82Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,146,1770624000"; 
+   d="scan'208";a="222330962"
+Received: from lkp-server01.sh.intel.com (HELO 3905d212be1b) ([10.239.97.150])
+  by fmviesa007.fm.intel.com with ESMTP; 28 Mar 2026 14:44:01 -0700
+Received: from kbuild by 3905d212be1b with local (Exim 4.98.2)
+	(envelope-from <lkp@intel.com>)
+	id 1w6bRm-00000000Bnp-3xr8;
+	Sat, 28 Mar 2026 21:43:58 +0000
+Date: Sun, 29 Mar 2026 05:43:27 +0800
+From: kernel test robot <lkp@intel.com>
+To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Linus Walleij <linusw@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+Subject: Re: [PATCH v3 2/2] pinctrl: qcom: Introduce IPQ5210 TLMM driver
+Message-ID: <202603290505.16AYT5so-lkp@intel.com>
+References: <20260325-ipq5210_tlmm-v3-2-3a4b9bb6b1fc@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-0.66 / 15.00];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260325-ipq5210_tlmm-v3-2-3a4b9bb6b1fc@oss.qualcomm.com>
+X-Spamd-Result: default: False [0.34 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
+	MID_CONTAINS_FROM(1.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[protonmail.com,quarantine];
-	R_DKIM_ALLOW(-0.20)[protonmail.com:s=protonmail3];
+	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-100551-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[3];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[linaro.org,gmail.com,ffwll.ch,linux.intel.com,kernel.org,suse.de,lists.freedesktop.org,vger.kernel.org,lists.sr.ht];
-	RCPT_COUNT_TWELVE(0.00)[19];
+	TAGGED_FROM(0.00)[bounces-100552-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[13];
 	MIME_TRACE(0.00)[0:+];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FREEMAIL_FROM(0.00)[protonmail.com];
-	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_COUNT_FIVE(0.00)[6];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[cristian_ci@protonmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[protonmail.com:+];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[lkp@intel.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[intel.com:+];
+	NEURAL_HAM(-0.00)[-1.000];
 	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: 11F3734F5F4
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,intel.com:dkim,intel.com:email,intel.com:mid,01.org:url]
+X-Rspamd-Queue-Id: 36C81350101
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Friday, March 27th, 2026 at 23:57, Dmitry Baryshkov <dmitry.baryshkov@os=
-s.qualcomm.com> wrote:
+Hi Kathiravan,
 
-> On Fri, Mar 27, 2026 at 03:30:49PM +0100, Cristian Cozzolino via B4 Relay=
- wrote:
-> > From: Cristian Cozzolino <cristian_ci@protonmail.com>
-> >
-> > Add the description for the display panel found on this phone.
-> > And with this done we can also enable the GPU and set the zap shader
-> > firmware path.
-> >
-> > Signed-off-by: Cristian Cozzolino <cristian_ci@protonmail.com>
-> > ---
-> >  .../arm64/boot/dts/qcom/msm8953-flipkart-rimob.dts | 73 ++++++++++++++=
-++++++++
-> >  1 file changed, 73 insertions(+)
-> >
->=20
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+kernel test robot noticed the following build warnings:
 
-I wonder if I should, instead, edit the compatible property by adding a=20
-second string (for the fallback), like this:
+[auto build test WARNING on 85964cdcad0fac9a0eb7b87a0f9d88cc074b854c]
 
-compatible =3D "flipkart,rimob-panel-nt35532-cs", "novatek,nt35532";
+url:    https://github.com/intel-lab-lkp/linux/commits/Kathiravan-Thirumoorthy/dt-bindings-pinctrl-qcom-add-IPQ5210-pinctrl/20260327-002731
+base:   85964cdcad0fac9a0eb7b87a0f9d88cc074b854c
+patch link:    https://lore.kernel.org/r/20260325-ipq5210_tlmm-v3-2-3a4b9bb6b1fc%40oss.qualcomm.com
+patch subject: [PATCH v3 2/2] pinctrl: qcom: Introduce IPQ5210 TLMM driver
+config: s390-allmodconfig (https://download.01.org/0day-ci/archive/20260329/202603290505.16AYT5so-lkp@intel.com/config)
+compiler: clang version 18.1.8 (https://github.com/llvm/llvm-project 3b5b5c1ec4a3095ab096dd780e84d7ab81f3d7ff)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20260329/202603290505.16AYT5so-lkp@intel.com/reproduce)
 
-and, therefore, add "novatek,nt35532" string also to (patch 1/6)'s=20
-bindings example. Let me know what you think.
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202603290505.16AYT5so-lkp@intel.com/
 
-Thanks,
+All warnings (new ones prefixed by >>):
 
-Cristian.
+>> drivers/pinctrl/qcom/pinctrl-ipq5210.c:377:30: warning: suspicious concatenation of string literals in an array initialization; did you mean to separate the elements with a comma? [-Wstring-concatenation]
+     377 |         "gpio40", "gpio41", "gpio42""gpio43",
+         |                                     ^
+         |                                     ,
+   drivers/pinctrl/qcom/pinctrl-ipq5210.c:377:22: note: place parentheses around the string literal to silence warning
+     377 |         "gpio40", "gpio41", "gpio42""gpio43",
+         |                             ^
+   1 warning generated.
 
-> --
-> With best wishes
-> Dmitry
-> 
+
+vim +377 drivers/pinctrl/qcom/pinctrl-ipq5210.c
+
+   375	
+   376	static const char *const audio_sec_groups[] = {
+ > 377		"gpio40", "gpio41", "gpio42""gpio43",
+   378	};
+   379	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
