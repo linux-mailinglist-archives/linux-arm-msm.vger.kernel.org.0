@@ -1,170 +1,191 @@
-Return-Path: <linux-arm-msm+bounces-100529-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100530-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GDeIAMGPx2l2ZAUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100529-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Mar 2026 09:22:25 +0100
+	id ONjVHtKPx2l2ZAUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100530-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Mar 2026 09:22:42 +0100
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F39F34DCBE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Mar 2026 09:22:24 +0100 (CET)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2414A34DCDD
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Mar 2026 09:22:42 +0100 (CET)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 149F4302DB73
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Mar 2026 08:22:23 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E8262303AF28
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Mar 2026 08:22:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9AA2336AB77;
-	Sat, 28 Mar 2026 08:22:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94E3137472B;
+	Sat, 28 Mar 2026 08:22:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="JxhzCGeN"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="YII2ExQh";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="wKxJTK1t"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-173.mta0.migadu.com (out-173.mta0.migadu.com [91.218.175.173])
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ADD32C21DD
-	for <linux-arm-msm@vger.kernel.org>; Sat, 28 Mar 2026 08:22:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B876374726;
+	Sat, 28 Mar 2026 08:22:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774686142; cv=none; b=ffcHTkzTXFtjP+jmXtSYVsuNqS5OGk23P2hM5s4BVkpgr29JrawOQGEbQFnLtpRxhwd/sOirKlFTlPY5YWPm8No6lYNkSRCX8h2kJQrGW8k2ASrT/RSZ6onovnRQEBZpG687KRCj/AdBuOQJWqujunQUV9qYa9KbO4WeciNTTv0=
+	t=1774686145; cv=none; b=Gmia1xgYKR0OuPyM1Pjb0Hl+AQY7HYw/wug1wEH9j8B82iZScmxGKDo3OUMDKTftCvcDjlCC/yJ7AG1Ri5dxLgdEFlsA4kVrZ6/wF3UigyhXxR3ksAs+/HXdO4sMJ+ztEpoj+LIc6MIXTUuwUGZd7exCDtmooDmUT0PtHvWuxKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774686142; c=relaxed/simple;
-	bh=Be+hfXS0+oA4TyoSNFCSOnIxtlg9LmLDkoiIsipDyUk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YptpOvIm+TZpe3TKjDUpBQSNafRlLOn519B45CV7GERDaJNjh5Ndco7tbYAgMiQmJjn6nhtXyXjprrIaRwpNi5Rc9D8LQY5zGim0mKn+CY/nxhtgrgxD5MYyPZGm3i5MAlyQxTembnpA7GjHOmGE6Ydt4m3yG9jsyll1iqAQO5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=JxhzCGeN; arc=none smtp.client-ip=91.218.175.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
-Message-ID: <3b968230-c64a-41dd-a145-81b4e68dd39b@packett.cool>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
-	s=key1; t=1774686128;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=fX+9bAQHy7d724x0bps6NZLEAxnQxD4hcWumn7cv9vg=;
-	b=JxhzCGeNN9XHn5nuxHyIVnEg9uUyaRhelE23HoTcYZQubWLwr9vM+6xSvOsErYc0dHq7nb
-	x+2v2inVESgxbDhojZhZeDFHYWIQAczcKupmVwpf7car2PeygWD2xJQXwqrVtZ+FWnSp2j
-	MbEx8QKrQg+lXMT3H0GOP8M7suakJM6KmPqWSNGoD4jJsFZ1RZJfM9bDffcYL0Nb18OPwu
-	Zh7RAr8x9aH7WHDIYSA3r5HOgwk+DdYLwMIIfEB1XX0PvvHF5CxrHfHPltEU/wpZxMWzI7
-	fijnPailCMVJudSj0850FV7fuyNdA8HZrySvHSLqyLDutE4Mo4IE3o75AGTfXw==
-Date: Sat, 28 Mar 2026 05:22:00 -0300
+	s=arc-20240116; t=1774686145; c=relaxed/simple;
+	bh=KN9F0rAgEEeooiwR8R0K20dqkZ/BBUYU8vQkKLLJeKs=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=rO5CSJl15DD+T4Dwq1gjuIZ4Qtxk9GBSkFuIrTjrwN1t6EFbw82VB3HlmTJhxhRnhZVuW1EeugdbwTUSiucCW/BFjpSvxJmY2mkWka2UqNLymSrGKS2TwSA+9+/v3PGJQ7+URFPiUVwnvCNQUWa0QWdPpcyGbaq6jjlu3exrqZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=YII2ExQh; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=wKxJTK1t; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
+	h=Message-ID:Subject:To:From:Date; t=1774686139; bh=W0G6vVypT7WW4cj/8+0X35c
+	3ULPZjzWVK3rrCsz2NtY=; b=YII2ExQhlJZqkqhu6OacYAKhnb/ibgXffuiZdZ5kqUDwyexuOD
+	iNxw57wtIEPPJWyJ7UqSWvgSJ+/JaHZrFT9VELAsKdkkzEkuuYlIFLIWj8/6oonDLh9FNzZdmLj
+	ffkj3Vl83kM/PxWKm29/P4k0IjxRKILEhmnSLwmhmN6v1khN97OP5bZm7mWnGw3ZqUAA0iRRYfC
+	7yqPS0EtwDO7kdHXBDXmiNTXn67jOkNiMhGnUkeFyZtpxAA33nxfI60K6AhmYmAIiR2LJPYgzpg
+	BcT3JlSm8iZXJT+W7wfH56WSbirJ8jfqbvOrR8xFEoyFYnZ2VQc0PFUn28KsteiQf0Q==;
+DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
+	h=Message-ID:Subject:To:From:Date; t=1774686139; bh=W0G6vVypT7WW4cj/8+0X35c
+	3ULPZjzWVK3rrCsz2NtY=; b=wKxJTK1tLuFEEM71aPfxksWqmhXhO6ZV0qnrHl7Va3We0Onij6
+	VqQacg8iTqUJ8nttC9qGQKcaP+9uwjEG5oAw==;
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH v2] arm64: dts: qcom: hamoa: Add remoteproc in EL2 device
- trees
-To: Stephan Gerhold <stephan.gerhold@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: Xin Liu <xin.liu@oss.qualcomm.com>, konradybcio@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, tingwei.zhang@oss.qualcomm.com,
- jie.gan@oss.qualcomm.com
-References: <20260202055436.818098-1-xin.liu@oss.qualcomm.com>
- <ao4jf5guszon6iuyyvzmkuaf2iaa56y3b33srx2w3whtyo2u3r@k74fxy3ktsyo>
- <aalhik53l4ioxiLx@linaro.org>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Val Packett <val@packett.cool>
-In-Reply-To: <aalhik53l4ioxiLx@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Date: Sat, 28 Mar 2026 09:22:19 +0100
+From: =?UTF-8?Q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?=
+ <barnabas.czeman@mainlining.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Ulf Hansson <ulf.hansson@linaro.org>, Mathieu Poirier
+ <mathieu.poirier@linaro.org>, Konrad Dybcio <konradybcio@kernel.org>,
+ Stephan Gerhold <stephan@gerhold.net>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org, linux-remoteproc@vger.kernel.org
+Subject: Re: [PATCH 1/7] dt-bindings: power: qcom-rpmpd: Split MSM8953 and
+ SDM632
+In-Reply-To: <ocrzwxmr256h3ef7ifwx3z6jgtzubiha3forfi7nao6gakb6wu@recertxxhlip>
+References: <20260327-sdm632-rpmpd-v1-0-6098dc997d66@mainlining.org>
+ <20260327-sdm632-rpmpd-v1-1-6098dc997d66@mainlining.org>
+ <ocrzwxmr256h3ef7ifwx3z6jgtzubiha3forfi7nao6gakb6wu@recertxxhlip>
+Message-ID: <39a320e472ddc6d44c950a995b577e77@mainlining.org>
+X-Sender: barnabas.czeman@mainlining.org
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [0.28 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[packett.cool,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
-	R_DKIM_ALLOW(-0.20)[packett.cool:s=key1];
+	R_MIXED_CHARSET(0.94)[subject];
+	DMARC_POLICY_ALLOW(-0.50)[mainlining.org,reject];
+	R_DKIM_ALLOW(-0.20)[mainlining.org:s=202507r,mainlining.org:s=202507e];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-100529-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[3];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-100530-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	DKIM_TRACE(0.00)[packett.cool:+];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_THREE(0.00)[3];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	FROM_HAS_DN(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[val@packett.cool,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[barnabas.czeman@mainlining.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[mainlining.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TO_DN_SOME(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 8F39F34DCBE
+X-Rspamd-Queue-Id: 2414A34DCDD
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-
-On 3/5/26 7:57 AM, Stephan Gerhold wrote:
-> On Wed, Mar 04, 2026 at 02:16:55PM -0600, Bjorn Andersson wrote:
->> On Sun, Feb 01, 2026 at 09:54:36PM -0800, Xin Liu wrote:
->>> All the existing variants Hamoa boards are using Gunyah hypervisor
->>> which means that, so far, Linux-based OS could only boot in EL1 on
->>> those devices. However, it is possible for us to boot Linux at EL2
->>> on these devices [1].
->>>
->> Lots of people are running Linux at EL2 on their Hamoa laptops, but
->> then there's no PAS. I presume adding iommu properties won't "hurt" in
->> that case, but can you confirm that with this change remoteproc is fully
->> working somewhere (i.e. [1] refers to a firmware for which the Glymur
->> PAS/PIL changes has been backported?)
->>
-> On the contrary, I would expect that this will break the existing EL2
-> setup people have on their Hamoa laptops. I have last tested this half a
-> year ago (and I don't have a suitable device for testing this anymore),
-> but I don't think much has changed in this area:
-
-It did break and I just spent like 3 hours debugging before realizing I 
-shouldn't've just merged x1-el2 like that…
-
-It first showed up as a "weird" hang when booting into EL2, as soon as 
-SMMU related lines started showing up on the framebuffer console it 
-slowed down to a crawl for a couple of these lines and then totally froze.
-
-Disabling qebspil (i.e. having only adsp-lite loaded) let the output 
-proceed for a little bit more and I saw the faults (tens of thousands of 
-faults, all fsr=0x402, iova=0x86b020c0, fsynr=0x600040, SID=0x1000) and 
-a hard LOCKUP being detected.
-
-> Since we can't start/stop remoteprocs without PAS,
-(Can someone at Qualcomm ask how Windows does it?)
-> everyone using EL2
-> with the old (non-PAS) firmware currently relies on remoteprocs that are
-> already started by the boot firmware before Linux is started. This can
-> be just the "lite" ADSP that is started by UEFI for initial charging and
-> USB-C detection, or even the full ADSP/CDSP via a custom UEFI driver
-> (qebspil [1]). All of these will stay running even if we fail to
-> stop/start them via PAS. Without extra kernel patches, we can't make use
-> of the remoteprocs, but the lite ADSP firmware will probably continue
-> doing its work in the background, i.e. it will start/stop charging as
-> needed, you just won't be able to observe the status from Linux.
->
-> We manage the full IOMMU even when there is no PAS. The reason why
-> people are not running into issues is that the bootloader handover code
-> inside arm-smmu-qcom.c qcom_smmu_cfg_probe() configures bypass for all
-> SIDs used by the boot firmware, which includes the SIDs for all the
-> remoteprocs. Adding these SIDs in the "iommus" property of an actual
-> device will replace the bypass with a translated context, which
-> currently won't be set up anywhere for the non-PAS use case.
-
-hm, maybe the patches supporting the handover could be updated to set up 
-the context in the non-PAS case?
-
-> In addition, even on newer firmware with PAS support I would expect that
-> special care is required to "atomically" handover the IOMMU
-> configuration from the bootloader. If the lite ADSP remains running on
-> these firmware versions as well, the bypass or suitable mappings must be
-> maintained until the lite ADSP firmware is stopped.
-> […]
-Thanks,
-~val
+On 2026-03-27 21:26, Dmitry Baryshkov wrote:
+> On Fri, Mar 27, 2026 at 09:11:43PM +0100, Barnabás Czémán wrote:
+>> Remove modem related bindings from MSM8953 rpmpd because MSM8953 MSS
+>> is using mss-supply as a regulator usually it is pm8953_s1.
+>> Split SDM632 bindings from MSM8953 because SDM632 is using mss-supply
+>> as a pm domain.
+>> 
+>> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+>> ---
+>>  .../devicetree/bindings/power/qcom,rpmpd.yaml        |  1 +
+>>  include/dt-bindings/power/qcom-rpmpd.h               | 20 
+>> +++++++++++++-------
+>>  2 files changed, 14 insertions(+), 7 deletions(-)
+>> 
+>> diff --git a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml 
+>> b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
+>> index 8174ceeab572..659936d6a46e 100644
+>> --- a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
+>> +++ b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
+>> @@ -48,6 +48,7 @@ properties:
+>>            - qcom,sc7280-rpmhpd
+>>            - qcom,sc8180x-rpmhpd
+>>            - qcom,sc8280xp-rpmhpd
+>> +          - qcom,sdm632-rpmpd
+>>            - qcom,sdm660-rpmpd
+>>            - qcom,sdm670-rpmhpd
+>>            - qcom,sdm845-rpmhpd
+>> diff --git a/include/dt-bindings/power/qcom-rpmpd.h 
+>> b/include/dt-bindings/power/qcom-rpmpd.h
+>> index 4371ac941f29..2d82434b993c 100644
+>> --- a/include/dt-bindings/power/qcom-rpmpd.h
+>> +++ b/include/dt-bindings/power/qcom-rpmpd.h
+>> @@ -84,13 +84,11 @@
+>>  #define QM215_VDDMX_AO		MSM8917_VDDMX_AO
+>> 
+>>  /* MSM8953 Power Domain Indexes */
+>> -#define MSM8953_VDDMD		0
+>> -#define MSM8953_VDDMD_AO	1
+>> -#define MSM8953_VDDCX		2
+>> -#define MSM8953_VDDCX_AO	3
+>> -#define MSM8953_VDDCX_VFL	4
+>> -#define MSM8953_VDDMX		5
+>> -#define MSM8953_VDDMX_AO	6
+>> +#define MSM8953_VDDCX		RPMPD_VDDCX
+>> +#define MSM8953_VDDCX_AO	RPMPD_VDDCX_AO
+>> +#define MSM8953_VDDCX_VFL	RPMPD_VDDCX_VFL
+>> +#define MSM8953_VDDMX		RPMPD_VDDMX
+>> +#define MSM8953_VDDMX_AO	RPMPD_VDDMX_AO
+> 
+> Well, no. This is an ABI break. It will make previous DT to stop from
+> working. You can drop unused indices, but you can not change the values
+> used by the existing domains.
+Do these indices never can be changed?
+> 
+>> 
+>>  /* MSM8974 Power Domain Indexes */
+>>  #define MSM8974_VDDCX		0
+>> @@ -156,6 +154,14 @@
+>>  #define QCS404_LPIMX		5
+>>  #define QCS404_LPIMX_VFL	6
+>> 
+>> +/* SDM632 Power Domain Indexes */
+>> +#define SDM632_VDDMD		0
+>> +#define SDM632_VDDCX		1
+>> +#define SDM632_VDDCX_AO		2
+>> +#define SDM632_VDDCX_VFL	3
+>> +#define SDM632_VDDMX		4
+>> +#define SDM632_VDDMX_AO		5
+> 
+> Please use RPMHPD_* instead of introducing new entries.
+I do not understand completely, should I use RPHPD bindings in rpmpd 
+driver or
+I should use rpmhpd driver for SDM632?
+> 
+>> +
+>>  /* SDM660 Power Domains */
+>>  #define SDM660_VDDCX		RPMPD_VDDCX
+>>  #define SDM660_VDDCX_AO		RPMPD_VDDCX_AO
+>> 
+>> --
+>> 2.53.0
+>> 
 
