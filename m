@@ -1,84 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-100577-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8LKeLJOvyGlRowUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100577-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Mar 2026 06:50:27 +0200
+	id kJqgETWvyGlPowUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Mar 2026 06:48:53 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15E81350B74
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Mar 2026 06:50:27 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 044B9350AF5
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Mar 2026 06:48:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 7D231301AD06
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Mar 2026 04:48:24 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id A1D0E301B169
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Mar 2026 04:48:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B65C27FB3C;
-	Sun, 29 Mar 2026 04:48:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77ADD22F77B;
+	Sun, 29 Mar 2026 04:48:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="sq7ix4KJ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SiSFP0Nh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2FD626FD97
-	for <linux-arm-msm@vger.kernel.org>; Sun, 29 Mar 2026 04:48:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E263A218821
+	for <linux-arm-msm@vger.kernel.org>; Sun, 29 Mar 2026 04:48:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774759704; cv=none; b=IV0wOo3dTwA85nOuS6DeCoPk6rZ/A+SQj/3mLFF+LAiKL7j3zrKCT6u/QJfhVUAuxNmoQH/Dgbib19CxNk/uYFu/LR0W6bGKHNCdYSHS0IQ7yW+CkqWfcpYhnLUz60xBmI6idIQDS+3knK9+QOzkxCadmUyLQ6e12ltarg9TinI=
+	t=1774759711; cv=none; b=uFZwrf0CrRjmlwXSNqjZYANlYMLdhSoJOCZM45gON/8ytqxTlbv4Fi2x++jhLrvmK3SkcCxpQ3c1ntbgktmxEE6He2+PHpBo3TDblzXRqddbvQcAJjxSMy9cch4R05ESc6uo64TtIV8NFiPe8FF+h0YdmCUqS1aQv/xfotj5SoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774759704; c=relaxed/simple;
-	bh=YGygMWdzOkWxAHIhk9m2re0gLrFP4aYPlOEPoq7qYjU=;
+	s=arc-20240116; t=1774759711; c=relaxed/simple;
+	bh=mrDnR0G7mbNJho3HlF5gQvzhoEN14/C2UquKRdZ6H1k=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=u7H5heSRAGMF4u+GYKFUmc3tIAnaNlglpHp5FcPs/SfcjClBiOpe9w/XGTDw8HGfkqlH2JacnN7++JHUqZl8Wv0AyPKozYxQLeQgSNNuFkb817t2Oui5eua9bj+lHY2KYTwWjvt++Ol0YqXFKeMqjA73INNjGA7blj2qdMZgeZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=sq7ix4KJ; arc=none smtp.client-ip=209.85.210.172
+	 In-Reply-To:To:Cc; b=JhgvBa6hSoBq+sCbAe4S/vsjf+d/sGMK2TdztXn2OfOBQttytZanUqMBPAq8Z9T1UlDnQTmvcLALxSU2+mKuub45AYKHjlobIgxTR6UmrtPdksr7bzljlIXU4Nn4eV7Bwzct5iOpYJlOpYHZD8xso+EqlZo5xPxgFP6fm2gIK6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SiSFP0Nh; arc=none smtp.client-ip=209.85.215.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-824c9da9928so2326136b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Mar 2026 21:48:22 -0700 (PDT)
+Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-c7358a7a8d1so2398016a12.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Mar 2026 21:48:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774759702; x=1775364502; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1774759709; x=1775364509; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=KaL/5KIy32ApDCW/kitiQ1QT0fVd/CD5eAek3qOzYKk=;
-        b=sq7ix4KJart/CWYnJhyDwYoVpDzWUjMRMO/U/nxVlFxHmlPLSI53aEhBveCE1QIEv6
-         9k4lPmuXLwHiwleXnp6loWNQT/fpWkQSfTyJM3QJVjsEJswuaWjljhfx3HxqGfR7WGLM
-         ViXuTEW2fXWL1C/RBV0MW1xQLFC/L+Y5pbY6JSqwZPap+nBMOYsTgafWARCWsL/cXUYS
-         sMbt0KLVdl3VfXCvSGthr2BLGDxX3ytVdm+gHws50PtSjw3Hq2zWfOiSIqt89kE7uD69
-         iq69nE4uvOFQTgTKPOXBu4eN5o5G6thsoqH4bWctHYStvof7q6xGPsuVWmSFR8HnKuVz
-         XJyg==
+        bh=X72F+IYkq8vmJ6nRPI8ppD04puTmgdxZkpkri1mXXzg=;
+        b=SiSFP0NhBAJmtHnRK2BBtz3Go07NRQ13nWKVqMWzf16AJC/Z0DSvJAbFA0DXqed1LQ
+         o0OjDbJFjinHM6gFTxGD5d7FxHXM2q3dsk0Ze21Ba2RoNG1xuyHfyS27f71iBfgAeFDa
+         +gNwIbtZ1ONfXllgQRStXkxJvDU86ABwXNK+iENAUl7ybpVAW45yiscaJaJwu3VIK0zp
+         cPaZJOYKXzm+omic4bL3rxD/7TxFrNHqtll9zsubjqn70t6BcQYMPJ0gPo0MP0KFafSM
+         3C+q4GtoTYJOBAqLA481D3PoaBsOOI1JWarW10RSdvjgzLtdhCicR19mxKW1JpzZKfHW
+         v9HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774759702; x=1775364502;
+        d=1e100.net; s=20251104; t=1774759709; x=1775364509;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=KaL/5KIy32ApDCW/kitiQ1QT0fVd/CD5eAek3qOzYKk=;
-        b=WES0ZF6krBSR0URQms2OVOtlhZuC9AvssmniZ7ZrBhGs2cmbvw16GUfHpAbZ7y/64p
-         lfIEL4Dl7JKRFqnGv+DpbI3qCdNCkh4S7/uY5C8Y39FImKU4ysLCGJJzjo6QJRCV0mrb
-         Cu+FNCXWYXfUfxFff5kkj7/7pQDa2+P+f/L3YY1inHu93Rp02Mi61ZDRbKLtErStwYko
-         IoORlPiSG/7MXgAMfvzDMn+Trbtkp7SyLBzOMofPCFa4w1YTUXTxjUtkwtdEViQB1CIj
-         KAKrT1Lv8+QilRQWRxF8ZrvADFuwRab8eUNglO8z49aCdvgVCfq7b2aDuMro0FYrxC5/
-         ho4w==
-X-Gm-Message-State: AOJu0YxC7xBL6XGYyAjSF2gZewn05ErERs/3XzBszITmwqCU9QSOri10
-	nMJHvCphqt/0M1p3vhRL2qyQ8FTUNfMHgtMHk7AVGY7ZaGe1XBbL8iga
-X-Gm-Gg: ATEYQzwafmqlBFDvS+KqBtTrBbYckTUxWkTU/iYpD6zb5jN1C+K/mzu6mq9R3P8vm64
-	0/j7xYjtLd/JlFmvn3NzYgwyYwlXXyMGF+Li+RS8oWwHIm2d2Ta6FA3Pze3Ij8SR1oEkkliCK5v
-	6dRQ7VNNec3oJekQP1KTQCUcPg4kil5usrdymUoyoXPOlsrFft83eMh+e8tMDCFI2YMtqHDQp7y
-	qnpAUSWR5bGRW1g62DvF6dG3seinLULv16QjkHGcVNZf5D9151sl/iMeWe8AWboivjwbyJuKvQT
-	5Y9r1gVpx5BbsBzHrA/1oFWr14dyarpsWg7BJhj46GKrnLePbC5iSWNvvLLQew0aAZyTct4ivOe
-	9yrLEUe/RuLU0FhnWPLrbuzwFnPXoeobyYYq1yp6yJ5eFGNVwYRTCTjLYhA1W3Zb6Ir3PbNfA3Y
-	emYRqSsjfAe2HvKIzpuPHRjOE+3oE+Di9iDMd0qvc=
-X-Received: by 2002:a05:6a20:2586:b0:398:9c2b:c92c with SMTP id adf61e73a8af0-39c87958b2cmr8139178637.27.1774759702273;
-        Sat, 28 Mar 2026 21:48:22 -0700 (PDT)
+        bh=X72F+IYkq8vmJ6nRPI8ppD04puTmgdxZkpkri1mXXzg=;
+        b=AZbAXXt6copy7fmvTChIOX1mZE+5qoEa5uuNPtV7bWuAucqv4Mj/k3ET8omlcnXQ/P
+         yPAydiLJ1n+xWW2cm8Yj0g/D8ktGg/uBzjKF/4+F+uawJMVcC56eB0+AW17n7sM3G+LC
+         HXfmp5I0XHxUh4vOmmHs034Ve+3U4kI3VOJFo5f7DtwxzcvsxI2X7PPt3lljDYXMik1E
+         TrEbnpscivH4fSz6NOlzH/0F+L3Fs/Fmf3Ic2Jh/Qn3oBMjl8S0ePd8/6a9riTzr3aPV
+         2bMy31T0Wq+/9/XpdEpVoY7KH2ESWVHLbVeJJdLHbbDZtjvJj3+8Kiq5UpnOe69TpmX7
+         wpaw==
+X-Gm-Message-State: AOJu0Yy6hUMooS6WmCA1A5Ha53mQ5wKf/EhkhDqrYcqn0L56PcMJota8
+	sINFJ/yU14sfuhhphXzutpP4gPYssXj2K9WcTlX2oQxZjbYVUmNQSm3G
+X-Gm-Gg: ATEYQzzrJmK4CSfyT0c+CDJL5ibVATEOdjNKQRJyhIkzGgIOQq7HyQdRkhjFN5W1hpU
+	vX6C+ElCyzwKpq+O2lVRyxgxX/Eex9wqzugkf1m5NGqFS/HvJpMS/otl+64HWf+t/4Em2arIpUC
+	bqCuz6GoTlz8bHaNZOdRzqnTw9XSBTEGZxU3neRlFdRzzygX+gY7H7Pe1qkwwN2N+PvVDjuZb/o
+	Svb3K8PxSyYRYqwbkEdeXwXhXDTQpzVvNqO9XlQiFgxPIDqY3ph5te5uRf8O9eVhcaFfrJHUZCH
+	clCBahAPdw/McuSFFcDlBf7F7enuRUrbv9o5ZG7+7/RBVQX6r0z0r+HxAypnsSVp0gerP3+tWTq
+	nlRXgfMT0EKQZcOOSze3DdSGqdBK3PmEAmKIImtZ18rwil2q2/umT1DyeNDuFKqtFcSuavn8bBa
+	BN57d40Xw86QTkfrJ445MERTTCNrBn
+X-Received: by 2002:a05:6a20:9188:b0:394:6344:e5c4 with SMTP id adf61e73a8af0-39c877ea332mr8300548637.3.1774759709300;
+        Sat, 28 Mar 2026 21:48:29 -0700 (PDT)
 Received: from [192.168.0.101] ([43.226.29.240])
-        by smtp.googlemail.com with ESMTPSA id 41be03b00d2f7-c769179e31asm2899739a12.17.2026.03.28.21.48.15
+        by smtp.googlemail.com with ESMTPSA id 41be03b00d2f7-c769179e31asm2899739a12.17.2026.03.28.21.48.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Mar 2026 21:48:22 -0700 (PDT)
+        Sat, 28 Mar 2026 21:48:29 -0700 (PDT)
 From: Biswapriyo Nath <nathbappai@gmail.com>
-Date: Sun, 29 Mar 2026 04:47:57 +0000
-Subject: [PATCH v2 2/7] dt-bindings: clock: qcom, dispcc-sm6125: Add
- #reset-cells property
+Date: Sun, 29 Mar 2026 04:47:58 +0000
+Subject: [PATCH v2 3/7] arm64: dts: qcom: sm6125-xiaomi-ginkgo: Enable
+ vibrator
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -87,7 +87,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260329-ginkgo-add-usb-ir-vib-v2-2-870e0745e55e@gmail.com>
+Message-Id: <20260329-ginkgo-add-usb-ir-vib-v2-3-870e0745e55e@gmail.com>
 References: <20260329-ginkgo-add-usb-ir-vib-v2-0-870e0745e55e@gmail.com>
 In-Reply-To: <20260329-ginkgo-add-usb-ir-vib-v2-0-870e0745e55e@gmail.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -101,72 +101,82 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-leds@vger.kernel.org, 
  linux-clk@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
  phone-devel@vger.kernel.org, stable@vger.kernel.org, 
- Biswapriyo Nath <nathbappai@gmail.com>, kernel test robot <lkp@intel.com>
+ Biswapriyo Nath <nathbappai@gmail.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.15.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1774759680; l=994;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1774759680; l=1039;
  i=nathbappai@gmail.com; s=20260118; h=from:subject:message-id;
- bh=YGygMWdzOkWxAHIhk9m2re0gLrFP4aYPlOEPoq7qYjU=;
- b=Gerql4KQotDpznTNfzs2aU5gnMJpoN1rt7sSLUq+cuKe30nRjNFQr75AqDCx2jLHmcs9nNTXy
- 2ISOqyWJi3sAHnAPmupVbSjeKV6GV/pqFOoo2Bxq8JaMIWcuY4TAgEk
+ bh=mrDnR0G7mbNJho3HlF5gQvzhoEN14/C2UquKRdZ6H1k=;
+ b=ph9fTagfBVXtK331HF7XaRKTIzItjVo85alsUFGqPrhIYNQAXctTJbC9AbxZpAXzv901QbdE4
+ v03zR55ULznCzUwTjppN1GV1PAgNPMg6p+EkNIgfHXbZXAuTkgnD9xj
 X-Developer-Key: i=nathbappai@gmail.com; a=ed25519;
  pk=slmb/9yXbet+KTiT3EYLCp0p0MEOYa3EdjUXP+HXfjg=
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,lists.sr.ht,gmail.com,intel.com];
-	TAGGED_FROM(0.00)[bounces-100577-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-100578-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[21];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.sr.ht,gmail.com,oss.qualcomm.com];
 	FREEMAIL_FROM(0.00)[gmail.com];
+	RCPT_COUNT_TWELVE(0.00)[22];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[nathbappai@gmail.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-0.963];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
+	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TO_DN_SOME(0.00)[]
-X-Rspamd-Queue-Id: 15E81350B74
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 044B9350AF5
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-The '#reset-cells' property is permitted for the SM6125 SoC clock
-controllers, but not listed as a valid property.
+Enable the vibrator on the PMI632 which is used on this phone.
 
-Fixes: bb4d28e377cf ("arm64: dts: qcom: sm6125: Add missing MDSS core reset")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202603150629.GYoouFwZ-lkp@intel.com/
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Biswapriyo Nath <nathbappai@gmail.com>
 ---
- Documentation/devicetree/bindings/clock/qcom,dispcc-sm6125.yaml | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo-common.dtsi | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm6125.yaml b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm6125.yaml
-index ef2b1e204430..0d467c1f30ed 100644
---- a/Documentation/devicetree/bindings/clock/qcom,dispcc-sm6125.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,dispcc-sm6125.yaml
-@@ -45,6 +45,9 @@ properties:
-   '#clock-cells':
-     const: 1
+diff --git a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo-common.dtsi b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo-common.dtsi
+index 7eecd9dc3028..88691f1fa3a1 100644
+--- a/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6125-xiaomi-ginkgo-common.dtsi
+@@ -12,6 +12,7 @@
+ #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+ #include "sm6125.dtsi"
+ #include "pm6125.dtsi"
++#include "pmi632.dtsi"
  
-+  '#reset-cells':
-+    const: 1
+ /delete-node/ &adsp_pil_mem;
+ /delete-node/ &cont_splash_mem;
+@@ -115,6 +116,10 @@ &hsusb_phy1 {
+ 	status = "okay";
+ };
+ 
++&pmi632_vib {
++	status = "okay";
++};
 +
-   '#power-domain-cells':
-     const: 1
- 
+ &pon_pwrkey {
+ 	status = "okay";
+ };
 
 -- 
 2.53.0
