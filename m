@@ -1,178 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-100611-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100612-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id BZwxMUMLyWnttgUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100611-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Mar 2026 13:21:39 +0200
+	id lKu/GwwTyWkguQUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100612-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Mar 2026 13:54:52 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1AEB1351C66
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Mar 2026 13:21:38 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 67D2C351DA7
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Mar 2026 13:54:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id BD6813013D46
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Mar 2026 11:21:36 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 999393003BD1
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Mar 2026 11:54:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96D7D30C372;
-	Sun, 29 Mar 2026 11:21:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93E8E35C1AC;
+	Sun, 29 Mar 2026 11:54:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PRk0z8yR"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="mwKv0wWE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3274C2C15AC
-	for <linux-arm-msm@vger.kernel.org>; Sun, 29 Mar 2026 11:21:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D98AF9C0;
+	Sun, 29 Mar 2026 11:54:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774783295; cv=none; b=atK/GRRwB1FbVI/zPgK9qsqbBBLMP3qjuEpWIoASr7azjZFbwi62RPbhw1GPH4cnH7CkTCXHFxkuD+2h9uBbSL2ghjhQUHl9r9X2UIGEY84SQPJakBYB8Le99zhgyyzCO4B+F64yCEISuapleNeugq6hoPPNYCA3Iio5weMAzWY=
+	t=1774785285; cv=none; b=bhn6rTRDZhtM3FtrB3fkcR9GjApnHgAs4Yi81KzmWsKqVKJ5UP+YSIePQb5t5E1qBJ337DFz2mismVt9x31O3Gc28EsY3L7u9yKPhdUHfsts9emDApxIkcmMO9YajUdtEbDs6vdHy477A0qFxrUrzSxWsTAhloCaG+tJRELaI5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774783295; c=relaxed/simple;
-	bh=0wR+MgHijwGTIMJCNQj0goJOmIz68prqo+nba/9TQrc=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=lEzQyJKU57s2U5C/auQwjdgOeOTAe/yJeBkv9Ey7uyecPxqTvPtDTdt/BzmgZhrG3qNk5WCPnjZPpJVHv/ExFNut1/qZ/JnsomqFSvceX7lKabMasIiDtrX+Uslx9HjNsXcNDjRQI1Vs9JfqeEDvsoVbiZbgUqVzgfX4MlCjrgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PRk0z8yR; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-48702d51cd0so41969735e9.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 29 Mar 2026 04:21:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1774783293; x=1775388093; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :reply-to:cc:to:from:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=TwR3yI+NB25G7HZGBpVG+F40teFK60brAC7VV58HZik=;
-        b=PRk0z8yRSIwFZ6p9ut7PnccqOAOZxtNAGJE5fOb6BoheoJ/ssv7jhrgQ7Xks+IVkLo
-         WX76YAmAFEqHtUgQQ1LPOWJkyp8C6JefHDjZdwTkdVclx0UKT1gAFbdIEicyut3aBx0s
-         4HLE8OE7cpFTX5edbZ+95n2cM0g72s9EQla8hfEUuWr8d7mAACk+hPnmadKjsOcwJihX
-         zQbt2Kl2BHywtjjDlXN/8TT1iZisQMpClIhuGZjcpc+4StgY9MMHPNPY5EqPixUXeP2K
-         tvN6Wir0npo1fYgz0CQ17pNsKMqKRehjxw9TsjwX7eMI2YFrN6QwC21gGhQlvsbRE2gK
-         di0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774783293; x=1775388093;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :reply-to:cc:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=TwR3yI+NB25G7HZGBpVG+F40teFK60brAC7VV58HZik=;
-        b=ml++7ec31TCaHJj/IcnmxkPgn1ZOhfDKMP8PmVfArSA9zIVWv3uyurgeyhReovfIlV
-         C78gTiEjQ7VGI4n63mr2GZLSPaPPhNQsFpBVm4qM20zxxXoC2GEkY7nRVQa/pCMQcUrs
-         Himzy7djHQVCmwOyvTTK4IK/fTMiIwyToZhGoYWnxJm3bL8Mk9yk333DkdDUL0yK3BzH
-         MjqHdPGnG8+uEqG2b9rZsaAZd+oFewKy+t4iBYn3OvDmLmLNZLKlieL3reTqIDy+PA7i
-         UeRfP3ZvSaLoZDsVR1JYKppk+DwBZcK8M6pY1fgngXkSoTV22i1kX6zgOvSVglVdi+nU
-         xGhg==
-X-Forwarded-Encrypted: i=1; AJvYcCVgUCs2KYtaI0NhQFV3Pb6zYj2uoVgJUV/MzuMRcxLHeKaDJi2hVKGNeNkYUuyKeiRqfQV7shHVUczCsAbo@vger.kernel.org
-X-Gm-Message-State: AOJu0YyHDBfkE8+Yq67bfcaoLG0a5hPMvUyBmbCE8fT6QzJODsFAd62t
-	VWtE7xfVtxl4Fvw6C+yWF4wZ/fqQW0wSIqij5Mu9t/VmJMenZYMVHjXZ1/J4Zav2szM=
-X-Gm-Gg: ATEYQzylDG/sP3kC+ilZ/JId+oT2CJcq0sVMh3mKsT1SVPBLo4RdrJBtQjFz0dOovtZ
-	Sn3g0ioc6gDKyjoulv2qEhZGoP/R6gu+b4LjXb9LhAC0s/n7e2R8jm4HUvaNAd2UNawKH6u39gC
-	SZDiHMe07fvhSD7B0lH0UYbXbPCDu4kha/Zj0pSEssfYpgvFv2tRXVZkr3Eugb6vdlyip/zrrCu
-	lz1wt9XC5O8L8oGllVaLhdgyEb8Dfxyt8h0ADaXSll/F9kc09Zs5i4J6HKwPaHyX2tFp2N0ze7X
-	kfr+ySKRQHevkRnAh9rsTGoNOrg+72wWGGspYEDZOw4RE5Bu5Qr+JL2Lu8DnzbzKI/5xU0yDhEj
-	ksu3OPk19LKwkaFHHkSy8q1Ns3oK8U8gjEUg0vgH1nXirldT4mwIIrib8kOd/p/LdEl4DW8n+Ug
-	ELYNAgEFUgu2UBLGeDqga0rnk5ykpIyR4=
-X-Received: by 2002:a05:600c:1d15:b0:47e:e48b:506d with SMTP id 5b1f17b1804b1-48727ee9a7amr146841945e9.16.1774783292450;
-        Sun, 29 Mar 2026 04:21:32 -0700 (PDT)
-Received: from [192.168.0.35] ([64.43.41.12])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48725d9403esm84895655e9.1.2026.03.29.04.21.30
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 29 Mar 2026 04:21:31 -0700 (PDT)
-Message-ID: <7b580a09-672d-4e9a-b2df-0b931d00a5f2@linaro.org>
-Date: Sun, 29 Mar 2026 12:21:34 +0100
+	s=arc-20240116; t=1774785285; c=relaxed/simple;
+	bh=nA0NrtS7FcNLjbQ+4CdvUn+41Kn0ZDIadYiGVNnftlg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UCuw9XLzMGR1RwnonVKJPZmWw7VbXmQdFYy+Vp6zz8lf9vbwHF3+oaSpYN79VzwIFZaocXmoiUwPL/yU9yyWhFC/gIHUV4+GqZP02wcPryMXWKvAIh3F9ZB6PPxHgzyjU0Chr2l7iaKERSwSxY0gCL8A/QApnl0sMeAfLGmGtjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=mwKv0wWE; arc=none smtp.client-ip=192.198.163.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1774785284; x=1806321284;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=nA0NrtS7FcNLjbQ+4CdvUn+41Kn0ZDIadYiGVNnftlg=;
+  b=mwKv0wWE9XhaAklHBN+/V3+5xVTk6GRG0h7Fq4OyERQZQ14GHDizJ8ag
+   rGnovhuscDqiWihPGyzMU4pTPYnihfpAMrUqxwguto1b3crD525SFjisF
+   07FEMa8ikZ/LLmbDI1pjBsUEahKEPOL0v5xB1ZFF8c2oBJynN4Jfojjax
+   v89HXGdFZe5Aqw3Fy40LtOJ1ZartKaIdOHjgJCZnh/ACu4vkem68Dkhtg
+   7GsECjNF/WXK8vvbUGE34cAW/vQStXUdxmFYmYx3VsmznwhJ55flBZEhl
+   MIdBlYS0BDULM9uEeBhRhjRn+8M5T/T/zVr51wslWA9VrgSh9g2uu3357
+   w==;
+X-CSE-ConnectionGUID: avfOjLb/Tq2Er8Td6oH61Q==
+X-CSE-MsgGUID: mLxkRVL0SwyGyrPREOuTxA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11742"; a="75859576"
+X-IronPort-AV: E=Sophos;i="6.23,148,1770624000"; 
+   d="scan'208";a="75859576"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Mar 2026 04:54:44 -0700
+X-CSE-ConnectionGUID: AXiOh67CT9yl2JL8ClvKFw==
+X-CSE-MsgGUID: 5W2BZfjfRAGtVBXQyCGAXQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,148,1770624000"; 
+   d="scan'208";a="248833540"
+Received: from klitkey1-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.245.29])
+  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Mar 2026 04:54:40 -0700
+Date: Sun, 29 Mar 2026 14:54:38 +0300
+From: Andy Shevchenko <andriy.shevchenko@intel.com>
+To: Antony Kurniawan Soemardi <linux@smankusors.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Jonathan Cameron <jic23@kernel.org>,
+	David Lechner <dlechner@baylibre.com>,
+	Nuno =?iso-8859-1?Q?S=E1?= <nuno.sa@analog.com>,
+	Andy Shevchenko <andy@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-iio@vger.kernel.org, phone-devel@vger.kernel.org
+Subject: Re: [PATCH 2/2] iio: adc: qcom-pm8xxx-xoadc: add support for reading
+ channel labels
+Message-ID: <ackS_tM2P6lp5eoF@ashevche-desk.local>
+References: <20260326-pm8xxx-xoadc-label-v1-0-027805dad4db@smankusors.com>
+ <20260326-pm8xxx-xoadc-label-v1-2-027805dad4db@smankusors.com>
+ <acUIAh_r7mSfIiEB@ashevche-desk.local>
+ <0b85a229-219f-4457-8fe4-bd4b3545684f@smankusors.com>
+ <acWDMg58qxyeM5Eq@ashevche-desk.local>
+ <c8e6166f-e9fc-430e-b290-a97c2aae2b31@smankusors.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH WIP v4 8/9] media: qcom: camss: csiphy-3ph: C-PHY needs
- own lane configuration
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To: david@ixit.cz, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Luca Weiss <luca.weiss@fairphone.com>, Petr Hodina <phodina@protonmail.com>,
- Casey Connolly <casey.connolly@linaro.org>, "Dr. Git" <drgitx@gmail.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Joel Selvaraj <foss@joelselvaraj.com>, Kieran Bingham <kbingham@kernel.org>,
- Sakari Ailus <sakari.ailus@linux.intel.com>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- phone-devel@vger.kernel.org
-Reply-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-References: <20260301-qcom-cphy-v4-0-e53316d2cc65@ixit.cz>
- <20260301-qcom-cphy-v4-8-e53316d2cc65@ixit.cz>
- <nfc2CPXnL7HNGmguQY70WydVsokdSQ261I11ZurTTGfMaLnHc0UrZH-QO3J-pAeA2hV_ioU_mcW4w7DF5iQKYw==@protonmail.internalid>
- <10c3e5f1-b078-4b48-bfc6-32199270b86b@linaro.org>
-Content-Language: en-US
-In-Reply-To: <10c3e5f1-b078-4b48-bfc6-32199270b86b@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c8e6166f-e9fc-430e-b290-a97c2aae2b31@smankusors.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
+	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
-	TAGGED_FROM(0.00)[bounces-100611-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_TO(0.00)[ixit.cz,kernel.org,gmail.com,linaro.org,fairphone.com,protonmail.com];
-	MIME_TRACE(0.00)[0:+];
+	TAGGED_FROM(0.00)[bounces-100612-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	DKIM_TRACE(0.00)[linaro.org:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	HAS_REPLYTO(0.00)[bryan.odonoghue@linaro.org];
+	HAS_ORG_HEADER(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[15];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[intel.com:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	MISSING_XM_UA(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[andriy.shevchenko@intel.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
-	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	NEURAL_HAM(-0.00)[-1.000];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	REPLYTO_EQ_FROM(0.00)[]
-X-Rspamd-Queue-Id: 1AEB1351C66
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:dkim,ashevche-desk.local:mid]
+X-Rspamd-Queue-Id: 67D2C351DA7
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 03/03/2026 09:59, Bryan O'Donoghue wrote:
-> On 01/03/2026 00:51, David Heidelberg via B4 Relay wrote:
->> @bod
->> Proliferating special cases in switch statements on a per-SoC basis is
->> verboten.
+On Fri, Mar 27, 2026 at 07:05:04PM +0000, Antony Kurniawan Soemardi wrote:
+> On 3/27/2026 2:04 AM, Andy Shevchenko wrote:
+> > On Thu, Mar 26, 2026 at 12:00:52PM +0000, Antony Kurniawan Soemardi wrote:
+> > > On 3/26/2026 5:18 PM, Andy Shevchenko wrote:
+
+...
+
+> > > > > +	if (!ch) {
+> > > > > +		dev_err(adc->dev, "no such channel %lu\n", chan->address);
+> > > > > +		return -EINVAL;
+> > > > > +	}
+> > > > 
+> > > > Isn't it a dead code? Also poisoning dmesg with this recurrent message is
+> > > > not good idea to begin with (the user space will have a door to flood it,
+> > > > which might be considered as an assistance to hackers to clear immediate
+> > > > logs after a successful attack).
+> > > 
+> > > Good point about the successful attack hint! I was copying the existing
+> > > code from pm8xxx_read_raw. Do you think those checks are unnecessary for
+> > > pm8xxx_read_raw as well?
+> > 
+> > Yes, I think they are not as the returned code should be enough to identify
+> > the problem. (For no such channel I would rather see -ENOENT, but we can't
+> > simply replace that in the existing code as it's part of ABI.)
 > 
-> Hmm, your ideas are intriguing to me, and I wish to subscribe to your
-> newsletter.
-> 
-> ---
-> bod
-> 
+> Just to re-clarify, do you mean for both pm8xxx_read_label &
+> pm8xxx_read_raw:
+> 1. if the check fails, it should only return -EINVAL without any
+>    logging; or
+> 2. remove the checks because there's no way it's not found?
 
-@David.
+The first one. And yeah, -EINVAL in the both cases for the sake of consistency.
 
-I'm realising my Simpson's reference probably isn't actionable 
-development feedback ;)
+-- 
+With Best Regards,
+Andy Shevchenko
 
-How about embeddding a pointer to either a DPHY or CPHY init sequence 
-somewhere and checking that pointer ?
 
-If it the CPHY init sequence/table in this case, is NULL return 
--EOPTNOTSUPP.
-
-That way instead of constantly extending a switch for each new SoC we 
-enumerate a pointer and check that pointer's validity.
-
-Then we have nice clean code which just checks the value of a pointer, 
-instead of an ever-growing list of SoCs in a switch.
-
----
-bod
 
