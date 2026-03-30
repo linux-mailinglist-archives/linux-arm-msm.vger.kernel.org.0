@@ -1,67 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-100847-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100848-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id qKHbNLCgymmx+gUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100847-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 18:11:28 +0200
+	id 2NRpNLegymmg+QUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100848-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 18:11:35 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B19DB35E7CA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 18:11:28 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E17A35E7DC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 18:11:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id AE9DD3037C77
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 16:05:07 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id F30C63085039
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 16:05:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A35339183F;
-	Mon, 30 Mar 2026 16:02:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EC36392824;
+	Mon, 30 Mar 2026 16:02:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QqQHWYMu"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yd2UrmBq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E733914E4;
-	Mon, 30 Mar 2026 16:02:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B14B39280C;
+	Mon, 30 Mar 2026 16:02:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774886530; cv=none; b=HEJ4HhTDwf+lRpO4ker/6qAcRr3Cmk+vlNAZEPa2PCQCQSi4jLFfWGDEkI/e6tBr+rXwMNFycMhJcgWgh/d1pqsU9xod70RNWtuJXOgFNY5AWIFw2RW/7Xa3F3lk5OlM9zGXJbRyvL4tXEGSVw6Kw8DdE3KLU3C2CepJUN74kWE=
+	t=1774886531; cv=none; b=UFKathAbZMUdMANSBqa6wIF43uSDyU0atauEkK7FWOMKvYpSDN/tKkMzFlWf3atGjxYV0y0FfouMt/dkDVC5YwBM0dp+R0g1JzGL74xwM7SsuTd2kciPQUfORgp5ols4x0flIHsxmaI4DzCIi8J9cewVc/2pR1fhSpHXiLosSJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774886530; c=relaxed/simple;
-	bh=utfzMihMYmDhK3LwKI9GulPoj6iCWH7Y5EAkhalANqI=;
+	s=arc-20240116; t=1774886531; c=relaxed/simple;
+	bh=nHErpoaB21P+5U8WgdtpI9OnGAIWmOuCnQZG0K7rhgU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=m+gpWUHE/JZ9ePmrZzdPbn8YMWQsyjMRPct2shYNByivyVjHTAXDVxZQJKZCHyZ1i/HUKdOmvLyuZ7LRDeNSRRyOyjWLBYXTtUlFbgl0XMMR/XIknOmo3RI2JyKrMo5pa5ZGed8OMacnpo3PiqgWfu5dv5SfcdhcJ+o5YBAjpoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QqQHWYMu; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FC6FC4CEF7;
-	Mon, 30 Mar 2026 16:02:09 +0000 (UTC)
+	 MIME-Version:Content-Type; b=B/7FZjDvZ8BJyyRH/gpj/MODfeqOdMNhEc6rhQlAOorvpHKxeue65a0f6Dwpml3hRvvk/Mi4z3PZIbHa5ZxeCQMxDFIvkp3WgsD1rdH9lClwIlNnL4Sg16xIgFxDM/CGrmLwIVzFnfz0XU3HuQSz2znoQiG69y8WRINw0IN/xX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yd2UrmBq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FFC8C2BCB3;
+	Mon, 30 Mar 2026 16:02:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774886530;
-	bh=utfzMihMYmDhK3LwKI9GulPoj6iCWH7Y5EAkhalANqI=;
+	s=k20201202; t=1774886531;
+	bh=nHErpoaB21P+5U8WgdtpI9OnGAIWmOuCnQZG0K7rhgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QqQHWYMuA4OGyinNkHM23E7DpW1R0a+TVE8Doemk0hdGeK0D/ZU5ezCxrzRkMTz2C
-	 wjBJkfzxMOkmKPSXN6vi+dfZTt0p0PjywOm2hVVcK5H9NqykzBiBDVT3XH4j90JUsX
-	 mWEMcm+ZNj+k8V4nODkis8ivHXoS05m4koEbjnrm0IdJnlBiHR5LLxHHN9xWdl0uP8
-	 SxtupQmeTLTWUW6Yxdy3kHzGqa41CH3CS0SsE+Bvzao/UlWdKjcscqkS+R9wUbNOnL
-	 T2/slx/GMydRNnm6Kdxlf0TxSiAC0Ge9MkWAUYPVrD8EtR1h8AMhEW9n0LzUIjWJ8m
-	 I1xpGTR3MhIow==
+	b=Yd2UrmBqiSe5x+BwamEooFF0vMYKBa4FhlNmq6OkMAgudS3FPe+SLwqTPFi1fOyJS
+	 Z8YifU63oQJRIEpvKQisQfYknieerl7W0kUKORHbPClj15PhTbfhtPsu0S9kKTiVVr
+	 bVS3aYk42qOSr7pcU/vJ9YFbvcu6OErei8RP+Nf0hLJWM8qc4YkcF+26/uZfCxjJMh
+	 boIErIQ4abQXYlrQnpH5TRec0TXUNB6jcUVPBIPAa67C3ftSVMUPU3pkzqehPBGTnF
+	 BtnbdfHHFrHEWrwAMU0/IPzBkK9i9samaUQMIc6YXa4G+Ia37pKAbxnaSyGNX6jGti
+	 r5sxhpWF0URpQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Pradeep P V K <pradeep.pragallapati@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
+To: linux-arm-msm@vger.kernel.org,
+	Rosen Penev <rosenp@gmail.com>
+Cc: Konrad Dybcio <konradybcio@kernel.org>,
+	Kees Cook <kees@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
 	linux-kernel@vger.kernel.org,
-	nitin.rawat@oss.qualcomm.com
-Subject: Re: [PATCH v2] arm64: dts: qcom: purwa-iot-evk: Enable UFS
-Date: Mon, 30 Mar 2026 11:01:28 -0500
-Message-ID: <177488647771.633011.3376601666309332553.b4-ty@kernel.org>
+	linux-hardening@vger.kernel.org
+Subject: Re: [PATCH] soc: qcom: wcnss: simplify allocation of req
+Date: Mon, 30 Mar 2026 11:01:29 -0500
+Message-ID: <177488647768.633011.8570287686963490351.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260323-purwa-ufs-v2-1-58fb2c168786@oss.qualcomm.com>
-References: <20260323-purwa-ufs-v2-1-58fb2c168786@oss.qualcomm.com>
+In-Reply-To: <20260327025534.7864-1-rosenp@gmail.com>
+References: <20260327025534.7864-1-rosenp@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,48 +69,51 @@ Content-Transfer-Encoding: 8bit
 X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-100847-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-100848-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_TO(0.00)[vger.kernel.org,gmail.com];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[11];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCPT_COUNT_SEVEN(0.00)[7];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: B19DB35E7CA
+X-Rspamd-Queue-Id: 6E17A35E7DC
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 
-On Mon, 23 Mar 2026 18:17:53 +0530, Pradeep P V K wrote:
-> Enable UFS for purwa-iot-evk board.
+On Thu, 26 Mar 2026 19:55:34 -0700, Rosen Penev wrote:
+> Get rid of automatic kfree and move allocation down to where it's used.
 > 
-> This patch depends on [PATCH V5 2/3] arm64: dts: qcom: hamoa: Add UFS
-> nodes for x1e80100 SoC
-> https://lore.kernel.org/all/20260211132926.3716716-3-pradeep.pragallapati@oss.qualcomm.com/
+> Use kzalloc_flex as we're dealing with a flexible array member.
 > 
+> Use struct_size to avoid some pointer math.
+> 
+> Add __counted_by for extra runtime analysis. Move the counting variable
+> assignment to right after allocation as required by __counted_by.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: purwa-iot-evk: Enable UFS
-      commit: 7658e9b94849ca861ded82d641f52fcec303210d
+[1/1] soc: qcom: wcnss: simplify allocation of req
+      commit: 908061f0ad30aa08ce211c6a8f95d29102e570bd
 
 Best regards,
 -- 
