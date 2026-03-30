@@ -1,99 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-100866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id WD1LONGpymkG/AUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 18:50:25 +0200
+	id SMl5GjCqymkG/AUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 18:52:00 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5621135F0E3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 18:50:25 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id CA35435F119
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 18:51:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 3282F3068594
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 16:46:49 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 3C6053013249
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 16:51:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AAE13DB65A;
-	Mon, 30 Mar 2026 16:46:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E7803624B2;
+	Mon, 30 Mar 2026 16:51:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FpmxGqVB"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="pONveiMG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
+Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E173F3DB630
-	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2026 16:46:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F393D813E
+	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2026 16:51:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774889207; cv=none; b=gDhA6N0WCG0YjsX1tuhvdo6kZWKrmQg6lwe85I9w5mnjZlqXCv+Hd+amggxPIOds2IkfR6YGbXbuHPB88lstoJhfhSoGQkbDlftZ4u+7yyBVYf5MhK6+20KqMZNlWzwd3mO24B/rw7DAgvq6vQxQX2HBun+MXWi2SxnrTPsJHxg=
+	t=1774889517; cv=none; b=JkpnIoq7T4dAnsVvhyXTnYMncHg/O2louvPhEarEDIdIrRqbHTOc+qxjyefIxC49g/4jYl5Ij3RL/YrGrLrSTDoFMKDpM3RvynR6/NqHLgYV1s6dnsNMWqP12HWkgd3moHIVAFm02qT32gtVNbvuajQd4KfTOjVxDsnDwzzdnto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774889207; c=relaxed/simple;
-	bh=NwyXZR7QbGUDm1mOXnBWp7u20Y6XzKuZR4MVtnLVmfA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KMhWXpe7WJ84HehOPDZ4lbRA0IA06uaQBPmKoBnV6DtIdX5+lbxPRNs7gsq8QehGq9tEiJ3x3QIPefB2Np4nuZXfsd5KUvA+jDhyxZM+uhU8hja/7OfxX6rgzJ5q1ALE3uF551+oOxUw86nXYPSg8PoXC5ZbZj0xTGkECRM+J6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FpmxGqVB; arc=none smtp.client-ip=209.85.222.177
+	s=arc-20240116; t=1774889517; c=relaxed/simple;
+	bh=yzn1qwpZMJkPgigRBzeYMyZVhMPbZ4A5hdI7do7E8HE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fq/uAXlbyhwcoekl2Au0sw1REU7g5qlaD30B0m6m/5afOm9icgbaOSl8awPW66Ov2F7RiCVJVJvgf7+mS/ySFzIAqPiKc6oKOwhOvhOZZq6rQFqKjEw83shP38gsmwKgrCgc2uK1z6ZKqbYeagVXJ16/GY6TZM5Z/zIc5N+1d2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=pONveiMG; arc=none smtp.client-ip=209.85.160.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-8cfc795ca97so420375385a.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2026 09:46:45 -0700 (PDT)
+Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-5094e1d17d3so45973211cf.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2026 09:51:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774889205; x=1775494005; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=K8GGrYi7FgQrxm+QRG1h+SJv0fVPLGse+KqfIaRcTgM=;
-        b=FpmxGqVBiNIIVukMq+z0S4M2iJG76S5my68R780eE0C6R6EwiFOMurIf9J/0iqKg8U
-         IfJ6qp0XzpsgBKvUyty52K5a5KQ466BeWMizLMx5YBLEvVhyH6y2r8L1FBtbaKcF2TZm
-         fBNvyonAwxdaW2iMDgORhP1fSPyDjpi/trHA3B9efGCpghgsafsd6KJN+vPcG8Cdr9ka
-         01qxxpYlxQGDUibTm0/81SKDAamKwjfCviztPcURDV1YuQiH5QodklcAgGyLQ9ZLK5jQ
-         FfrhxFp9bK8Isa4UPcHGfKe0qj00DP9DECGrrNvEz95AZqkV6MVG1gMqZakJtrqGOuz6
-         fV9w==
+        d=gmail.com; s=20251104; t=1774889515; x=1775494315; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZIZbf+qqROsD0LmW3EiPB41zllSjbGoJgs0L3HB6kjY=;
+        b=pONveiMGnp+w9UO+MaWMRMfxNrvO3StceMz80q21u3D+rqPs4+Y8qXBAcVi60DkbbN
+         gFvyOdPuJEn9p8yeC6e+avYQvc2wmB7enQtBNYyE2SE7PmS9rEGWj1TfIIYO4Z172258
+         UmqXy3n9VvC5F4tE39Z1smHg326yIZLhswPlQT8yH+MWiR0uwOAbEdgBU9iGbCYuTb6Q
+         oy5v+o+0S2hwjPh/du5+WXrLWj2vGBTyOySv6WNvFRe2IZn4i2FGTcuYX7T7PP1h9GbV
+         sgZTxsvA2cihVohOKUD3IKFFb0lz20jl2KsNMt2gvfqifMQilGD4L8H3d5CKkt/UK4iK
+         rUmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774889205; x=1775494005;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=K8GGrYi7FgQrxm+QRG1h+SJv0fVPLGse+KqfIaRcTgM=;
-        b=inH3GRu2kfZAWxas1l1G+uHax3oSac5BZpgjsmbaNv/uEgpiR3Uovtt1yWKnb+n3sy
-         8n5uVaI9Nm3ZANEYeg82y45d4ohymuKyjcFQGyYyz80QAFT4RTaKXJCxAfsfPH/JtxwM
-         IXEMgdWf7AQiSsV1oMqTukG/aaAERopdDelT7RJDXK5Z/6/e5DiaEIcI4v3zTYcEOOBF
-         JbLbgDf30CAgLWgFkd4JWb+f1wlX6nqBNNEBgVaZbePF5OPKSGw/lnOLfk2eVwDU+kgn
-         QnCI0pH/5O6l8uYLW6ECy8syViA+0n5pSeU3x7LfMZ0HcK8uNFURKTT7xqad6ze6b157
-         e4lg==
-X-Forwarded-Encrypted: i=1; AJvYcCURckGEhtuq362HeseZnVNG9XR0wacmOdg+kTE/R556k5H3/P1yOCsQW99SgLtfM9HgzGR3j5KzmAo5VZ77@vger.kernel.org
-X-Gm-Message-State: AOJu0YxkWNH1HwDLesS2tsx6ufoeV4S9ejnD770fMljYGCpCIy1ibx0H
-	xwJxYUV8C0tfqWrDeCeZjTU9npmJ+ON7k2rFsv8Nj661nbEuRpNU/YfF
-X-Gm-Gg: ATEYQzx//dIghJmnrvyPCazv/PavSz7KihqT/MUaSIDID9BzPueTTb7+249e74X/dSu
-	ORK3l2XeLDTmJzIBZYPiOOeh1zDKABy4lSAXuXkCNC58szh/JnOnFWeHDKdPG8wuQIMzH1TNXc/
-	8VO4UI7ACepnPItabJnJEN0FGxLLfpnQKxN73iUESxlXYs6fTD3s3X2gOWorAMTPlLCJYHrruj1
-	gvJPtTerg/DK94FpZTkkDTlVA5LBrCBs+GQfnFhYLFTtoXmah25JIavOQuM09ClVhZ+sxOzwpmi
-	TpEHrPpQn9sLbaVO55y6FMU2pgileFry/zFC09zX+2F8C4C9CVI3M9KUlWMwEnYTEG3NjROisKB
-	nuaa8vnsxkx5PS3H+woCbJ/Pya+YbEpf6ynaVUAPqCF46Y0g8zbH4AXOb7ro7juCHbs5tU7va/I
-	GLaUzWpPA3jXO+yxTpyAQ2YCk=
-X-Received: by 2002:a05:620a:370e:b0:8cd:8f18:d1c4 with SMTP id af79cd13be357-8d01c8011afmr1722421585a.56.1774889204797;
-        Mon, 30 Mar 2026 09:46:44 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1774889515; x=1775494315;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZIZbf+qqROsD0LmW3EiPB41zllSjbGoJgs0L3HB6kjY=;
+        b=XQ+FRQuRXwcQg11bNazFT5KVVH6AQ9zf0TwTEN/lIywoCYD1DfYhKlxTkAPjCEUyPJ
+         3fRnONBs1kiQLd4j3PiCvf7ZzpBqNd1s7aspnEGervXwEKNgNK5pSiOXsCRSWnr2+u8d
+         v1lg3M5NaHNOdTW8BkVmG4/fCmSxDHhSmtS2T/9+wwaBskF2B/Jr9NuCzizVB5sYfXhd
+         Dd3jy0EJ9c7i3wqBaTa3HxOC2eC5PNys/4Elxay4kQIqZcdPbdtl8dv/bw/dGJLfdKaf
+         MIBCIGD6w4ReVRPAq+M4pW/53kEE9zgUGuL96QjHrm+mLOZAC/9uviG8a2recHz7XFdh
+         xUdw==
+X-Forwarded-Encrypted: i=1; AJvYcCVgl0h3OgGqYuQFxj0RC7qlK6sI0darjIyYD0I3NQr4qwhICGh0wAM/1R4Y2s2mq2SNFkJBbsucu+V4eUud@vger.kernel.org
+X-Gm-Message-State: AOJu0YyM/ODY0itLfmVF/YgtmFgey3eAopcv1kLVMNNa55eMXMRWNslB
+	AjoiCP5+RZu/SYSXD+VOTDISSqxIit+K0gWyrYziL5hHoiq9A4ICZjO/
+X-Gm-Gg: ATEYQzz0T90vk83ZMz1Y4diAIbdXyDdFXsk2ZTaN69ewNgKgoYZIDBJx7PRs2IccRV/
+	8y5sycx5ArkwCkuw5+jyqulpsOZi0IDxq8JW5h8zRPryIeCSNo16YnZ5qSoxIejrVfOotxXUi0/
+	306w47j/PD99xy3kmIH+2rAM7tHGZCB9BzOuFqETGqKDftQAzVB70dnwtef4DH8AjUSUoHkjxH9
+	YCALUbtht0Vkqg0N11MxKyssNV9AAB/GU69muYobhsHeqYiEW/eib60fxYbiBVXYq5DRRt5n2LG
+	vkwBK9CXFMe2Op75JJg7Fg++faysV2SP4wbR5zXe1ssLd1mf5Rk6WhKQPsI95NUaWxceU5sBO+K
+	MHS8X++KSYZdEIfxRDqWzSZvSh5u7XeKhYaL4tKXa1Lfzz2QoUUPY8BnEhbNjQvJGinAcE64AM1
+	EU2Nbwp6LyD2N3zu5OZO0X8k4=
+X-Received: by 2002:a05:622a:18a8:b0:509:20de:4ad1 with SMTP id d75a77b69052e-50ba3818222mr175000561cf.10.1774889514877;
+        Mon, 30 Mar 2026 09:51:54 -0700 (PDT)
 Received: from localhost ([199.7.157.54])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8d027ed7ed0sm686529985a.2.2026.03.30.09.46.43
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-50bb2cc79d8sm68292771cf.12.2026.03.30.09.51.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Mar 2026 09:46:44 -0700 (PDT)
+        Mon, 30 Mar 2026 09:51:54 -0700 (PDT)
 From: Richard Acayan <mailingradian@gmail.com>
 To: Bjorn Andersson <andersson@kernel.org>,
-	Linus Walleij <linusw@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Srinivas Kandagatla <srini@kernel.org>,
+	Amit Kucheria <amitk@kernel.org>,
+	Thara Gopinath <thara.gopinath@gmail.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Lukasz Luba <lukasz.luba@arm.com>,
 	linux-arm-msm@vger.kernel.org,
-	linux-gpio@vger.kernel.org,
-	devicetree@vger.kernel.org
+	devicetree@vger.kernel.org,
+	linux-pm@vger.kernel.org
 Cc: Richard Acayan <mailingradian@gmail.com>
-Subject: [PATCH v4 5/5] arm64: dts: qcom: sdm670-google: add reserved lpi gpios
-Date: Mon, 30 Mar 2026 12:47:07 -0400
-Message-ID: <20260330164707.87441-6-mailingradian@gmail.com>
+Subject: [PATCH v5 0/2] SDM670 Basic SoC thermal zones
+Date: Mon, 30 Mar 2026 12:52:35 -0400
+Message-ID: <20260330165237.101045-1-mailingradian@gmail.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260330164707.87441-1-mailingradian@gmail.com>
-References: <20260330164707.87441-1-mailingradian@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -101,63 +101,66 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	MID_CONTAINS_FROM(1.00)[];
+X-Spamd-Result: default: False [0.84 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	R_MISSING_CHARSET(0.50)[];
+	MID_CONTAINS_FROM(1.00)[];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_MISSING_CHARSET(0.50)[];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TO_DN_SOME(0.00)[];
-	FREEMAIL_CC(0.00)[gmail.com];
-	TAGGED_FROM(0.00)[bounces-100866-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_FROM(0.00)[gmail.com];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-100867-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[15];
 	MIME_TRACE(0.00)[0:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RECEIVED_HELO_LOCALHOST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_TO(0.00)[kernel.org,gmail.com,linaro.org,intel.com,arm.com,vger.kernel.org];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	TO_DN_SOME(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[mailingradian@gmail.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[gmail.com:+];
-	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	FREEMAIL_FROM(0.00)[gmail.com];
+	FREEMAIL_CC(0.00)[gmail.com];
+	NEURAL_HAM(-0.00)[-0.998];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	FROM_HAS_DN(0.00)[]
-X-Rspamd-Queue-Id: 5621135F0E3
+X-Rspamd-Queue-Id: CA35435F119
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Some of the GPIOs are reserved for sensors since the ADSP also handles
-sensors on SDM670. Add the reserved GPIOs for the LPI pin controller.
+This adds support for the thermal sensor, for thermal-based CPU
+throttling via LMh, and for thermal zones.
 
-Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/sdm670-google-common.dtsi | 4 ++++
- 1 file changed, 4 insertions(+)
+Changes since v4 (https://lore.kernel.org/r/20260328014041.83777-1-mailingradian@gmail.com):
+- use simple comparison to differentiate between cluster 0 and 1 (1/2)
+- drop applied dt-bindings patches (previously 1-2/4)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm670-google-common.dtsi b/arch/arm64/boot/dts/qcom/sdm670-google-common.dtsi
-index cf7b130ea0c4..b0da24fd1aee 100644
---- a/arch/arm64/boot/dts/qcom/sdm670-google-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm670-google-common.dtsi
-@@ -519,6 +519,10 @@ rmi4_f12: rmi4-f12@12 {
- 	};
- };
- 
-+&lpi_tlmm {
-+	gpio-reserved-ranges = <0 8>, <12 6>;
-+};
-+
- &mdss {
- 	status = "okay";
- };
+Changes since v3 (https://lore.kernel.org/r/20260310002037.1863-1-mailingradian@gmail.com):
+- support LMh clusters starting at CPU 6 (dt-bindings tag dropped) (3/4)
+
+Changes since v2 (https://lore.kernel.org/r/20260304014530.27775-1-mailingradian@gmail.com):
+- remove cooling from memory thermal zone (3/3)
+
+Changes since v1 (https://lore.kernel.org/r/20260210021607.12576-1-mailingradian@gmail.com):
+- add review tag from Krzysztof (1/3)
+- replace CPU thermal zones with lmh (2/3, 3/3)
+
+Richard Acayan (2):
+  thermal/qcom/lmh: support SDM670 and its CPU clusters
+  arm64: dts: qcom: sdm670: add thermal zones and thermal devices
+
+ arch/arm64/boot/dts/qcom/sdm670.dtsi | 400 +++++++++++++++++++++++++++
+ drivers/thermal/qcom/lmh.c           |  54 ++--
+ 2 files changed, 434 insertions(+), 20 deletions(-)
+
 -- 
 2.53.0
 
