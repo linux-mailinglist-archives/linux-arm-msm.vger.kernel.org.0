@@ -1,216 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-100727-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100728-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id cMtvJ81Iymlc7QUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100727-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 11:56:29 +0200
+	id IIRyKp5IymkQ7QUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100728-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 11:55:42 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0AD8E358AAA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 11:56:28 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1216D358A7B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 11:55:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id CDB34304F226
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 09:47:56 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 9B8A3309D3D6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 09:48:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47F5C313E36;
-	Mon, 30 Mar 2026 09:47:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A711E3822BA;
+	Mon, 30 Mar 2026 09:48:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OfAA7BBF"
+	dkim=pass (2048-bit key) header.d=vinarskis.com header.i=@vinarskis.com header.b="WC5PUIR5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-4318.protonmail.ch (mail-4318.protonmail.ch [185.70.43.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C64158DCF;
-	Mon, 30 Mar 2026 09:47:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A1C0382394;
+	Mon, 30 Mar 2026 09:48:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774864076; cv=none; b=jNPFgAaei//i8BQlX1OgLJN1DcG4qYcX6YX6NnTdCBZvqcc4wHguRz72nW4GerksuU9ZKxbsKPE0AKQBDIvQxTDwdvNk4zpaLbNJx/ppICvF73MyyEhsnz6me6dvqQtAWrv0qjh6uCgFheN/BGI0PXhO6nIzpUE51VnqhHBAXHc=
+	t=1774864094; cv=none; b=VCZIaKcnBg/b1kvYwRTXfGmtB0GZeQdc18ygC4/O8ARsLJ+RHLOjuCtJ6jo2Zz9+unCoGGkg89WoYH6E829/Fw+B79bFy2TC4XnAmxs4+fyPBls/aGrZ6jvzR9zCcLC+de4qsO/rR2OqAEnicdYkpqyaR1gm6p/6lU/d93pntfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774864076; c=relaxed/simple;
-	bh=hmH/oEBaf5x0MhGOjXg8OVLdrIBQa3C3PfA5l9X07Dg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=vEK6edrrApqM3djJQMDCr7gg/WB0NsqC/n4a2ujRnDt8u0PD5qW6mgLMo4EdKC4dgIv/e5i5P8iaYKCsRNCBjiKFm7ZJSk89I/cGWJoTWENZKOtfBWMD3zYVZNNjqPCO6cOOvdcS460rSnLAKO1hOWSzQbFPif0Wy6vZb42/JGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OfAA7BBF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0E8CC4CEF7;
-	Mon, 30 Mar 2026 09:47:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774864076;
-	bh=hmH/oEBaf5x0MhGOjXg8OVLdrIBQa3C3PfA5l9X07Dg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=OfAA7BBFrpATgYP6Eg5xG9CeGdcT70kEKTzIXueJNc7i3d6qpTMu07b/EM6+EDl4q
-	 oATftnhUHkkOisWQFv6GrSI4UJi+SP/D1icd+b1Ot8gKvDYXjA5wQNNPFCh7u12Kh+
-	 EnzMaWhDJ8v+CvdFfkDrKar/L25REAH9y7xQDgj044jSyj3nG3MqiUmIItbVnmqbP2
-	 hTGwyHeG8HeT6e0ysTsJDOGw3V0YAu0XmMvFEe3S75PWMkwHS70PzXNUSccReRPh07
-	 hR5LkiZWq00E5LA2JlJ/btSe+zXbJW6vJM/o/t0YuNa2asJIutSyOSRNbOiM58VwCn
-	 jxwOwdEY6jJTQ==
-Message-ID: <c7dcab44-68ad-48b7-9ad2-8e2b15951fa7@kernel.org>
-Date: Mon, 30 Mar 2026 11:47:50 +0200
+	s=arc-20240116; t=1774864094; c=relaxed/simple;
+	bh=1abaB16vTryQyZ4IQqf1mS0sV++tdgdjSh78e9kgecc=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=sXxqqsCXclAr6xhBamzKPvQeuIYPChkKFwcuywCWIWaK59d0Jhb2APlzU44scVdbteKVRCTzbkVTuJQPlydDdqZu4RFUn2wbOm+5pbIy+Hh5WCploYjAL0ud9zQQ3MjFlMllNuZovyIXiYwQEuwh+b2Yg3Zm4OzU4ufeN9DWdfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vinarskis.com; spf=pass smtp.mailfrom=vinarskis.com; dkim=pass (2048-bit key) header.d=vinarskis.com header.i=@vinarskis.com header.b=WC5PUIR5; arc=none smtp.client-ip=185.70.43.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vinarskis.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vinarskis.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vinarskis.com;
+	s=protonmail2; t=1774864082; x=1775123282;
+	bh=gzxU0N3gWu1fL7HeQpwNeBntcjEIP+Yb6numuEmyXEE=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=WC5PUIR5YLCGmzm6tegpr7wjtK+RINZET3Npm85Ug+edKBThXjnhM87w5tFOayqxA
+	 f46/+ZxZIn6F6n1hkYuHzHkzU0Xt1P73dqNTOGcSTS130BFFgYOblGN+CFZR6YPQnm
+	 QYDM8NlgYHrq6weAa/pFJEcdUT9kHG7xmkgxV/BJ5mwrmbv4RP1ZgKLZmhbmvtQ2TA
+	 ReskNpnMZpZwcSbnDfmU+sEZxYu7c89S7RD89faUPSleMCL90YrYrt4p4GzgJt2WMx
+	 pYapMwIsOHTWbMSKK5+meqYqLxdf1XpKVu363o/A8OzQtYuJU64RenC8gz6fSJn4x3
+	 Qccj4eIhAVfuA==
+Date: Mon, 30 Mar 2026 09:47:59 +0000
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Aleksandrs Vinarskis <alex@vinarskis.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, laurentiu.tudor1@dell.com, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: x1e80100-dell-xps13-9345: enable onboard accelerometers
+Message-ID: <k7FdikIAx-4wrznsIcDVuW7rISV6wrja4RxplvzsdmuhfLUllHI-Ge5MpdkpqoOq17qvY3_mpNxqOQ5parnIHVtb_DEA_31TqHih_QHhGMA=@vinarskis.com>
+In-Reply-To: <l3cfeezstqrabhgba2xnzciztfwp6ijunzemlb5uanpxhgmscu@kh3jdcc2dhbj>
+References: <20260228-dell-xps-9345-accel-v1-1-daf9e3b3b5ee@vinarskis.com> <630bcc07-5290-4099-bdf3-b7e37105619f@oss.qualcomm.com> <kFzSXZV8ReVKN_rvfVDZw9pOzHeLI1ia9bepKas6qG-7G4WiRKk1RcvEhMnPrKrFDvRzLMUSIZgnDY5oerb7kdSBreCjnxJEdPZG9iyYp9o=@vinarskis.com> <0ed387b7-c4ed-41e7-bccb-eb1a96064c69@oss.qualcomm.com> <l3cfeezstqrabhgba2xnzciztfwp6ijunzemlb5uanpxhgmscu@kh3jdcc2dhbj>
+Feedback-ID: 158356072:user:proton
+X-Pm-Message-ID: 7d8197a4466c05a492cbe59f937ef583135d5da6
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: Add monaco-evk-ac-sku support
-To: Umang Chheda <umang.chheda@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Richard Cochran <richardcochran@gmail.com>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260328-monaco-evk-ac-sku-v1-0-79d166fa5571@oss.qualcomm.com>
- <20260328-monaco-evk-ac-sku-v1-1-79d166fa5571@oss.qualcomm.com>
- <20260329-accelerated-pigeon-of-joy-c6c903@quoll>
- <f7e63fa7-2579-4dce-974a-8c81a1aee00f@oss.qualcomm.com>
- <7f5bfeb8-7d91-419b-981d-1f0f568f01d2@kernel.org>
- <a39ca7b7-b277-4518-ad45-1f42506b615e@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <a39ca7b7-b277-4518-ad45-1f42506b615e@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[vinarskis.com,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[vinarskis.com:s=protonmail2];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FREEMAIL_CC(0.00)[kernel.org,gmail.com,vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-100727-lists,linux-arm-msm=lfdr.de];
-	FROM_HAS_DN(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-100728-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	RCVD_COUNT_THREE(0.00)[3];
+	DKIM_TRACE(0.00)[vinarskis.com:+];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.998];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[alex@vinarskis.com,linux-arm-msm@vger.kernel.org];
+	MISSING_XM_UA(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	RCPT_COUNT_SEVEN(0.00)[11];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[10];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,bootlin.com:url]
-X-Rspamd-Queue-Id: 0AD8E358AAA
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,vinarskis.com:dkim,vinarskis.com:mid]
+X-Rspamd-Queue-Id: 1216D358A7B
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 30/03/2026 11:36, Umang Chheda wrote:
-> Hello Krzysztof,
-> 
-> On 3/30/2026 12:24 PM, Krzysztof Kozlowski wrote:
->> On 30/03/2026 08:50, Umang Chheda wrote:
->>> Hello Krzysztof,
->>>
->>> On 3/29/2026 3:22 PM, Krzysztof Kozlowski wrote:
->>>> On Sat, Mar 28, 2026 at 05:11:17PM +0530, Umang Chheda wrote:
->>>>> Introduce new bindings for the monaco-evk-ac-sku,
->>>>> an IoT board based on the QCS8300-AC variant SoC.
->>>> Please wrap commit message according to Linux coding style / submission
->>>> process (neither too early nor over the limit):
->>>> https://elixir.bootlin.com/linux/v6.4-rc1/source/Documentation/process/submitting-patches.rst#L597
->>>
->>>
->>> Ack
->>>
->>>>
->>>>> Signed-off-by: Umang Chheda <umang.chheda@oss.qualcomm.com>
->>>>> ---
->>>>>  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
->>>>>  1 file changed, 1 insertion(+)
->>>>>
->>>>> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
->>>>> index ca880c105f3b..07053cc2ac1c 100644
->>>>> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
->>>>> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
->>>>> @@ -918,6 +918,7 @@ properties:
->>>>>            - enum:
->>>>>                - arduino,monza
->>>>>                - qcom,monaco-evk
->>>>> +              - qcom,monaco-evk-ac-sku
->>>> Why adding name 'sku' to the compatible? What's the meaning here?
->>>
->>>
->>> Monaco SoC has 2 variants  - monaco-aa and monaco-ac -- "monaco-evk" board uses monaco-aa variant of SoC and this new
->>
->> so ac? or ac-sku? Decide.
->>
->>> introduced board uses the monaco-ac variant SoC. Hence added the compatible as "monaco-evk-ac-sku" to differentiate it from
->>> monaco-evk board.
->>
->> Wrap your emails.
-> 
-> Ack
->>
->> "ac" differentiates. Why do you need to say that a variant is a
->> "-variant"?
->>
-> 
-> The intent for using "-sku" here was to match the existing upstream
-> practice where boards that are otherwise identical but differ in H/W
-> configuration (SoC variant, storage etc) are represented as separate SKUs.
-> 
-> For Example:
->   - sc7180-trogdor-*-sku.dtsi
->   - sc7280-herobrine-*-sku.dtsi
->   - mt8183-kukui-jacuzzi-*-sku.dts
 
-We talk about compatible, why any of DTS names matter? You don't
-understand the meaning of sku. It makes no sense without the number/ID.
-It's like you called it "-revision"...
+On Monday, March 23rd, 2026 at 18:05, Dmitry Baryshkov <dmitry.baryshkov@os=
+s.qualcomm.com> wrote:
 
-Best regards,
-Krzysztof
+> On Mon, Mar 23, 2026 at 04:06:53PM +0100, Konrad Dybcio wrote:
+> > On 3/2/26 2:25 PM, Aleksandrs Vinarskis wrote:
+> > >
+> > > On Monday, March 2nd, 2026 at 13:14, Konrad Dybcio <konrad.dybcio@oss=
+.qualcomm.com> wrote:
+> > >
+> > >> On 2/28/26 6:46 PM, Aleksandrs Vinarskis wrote:
+> > >>> Particular laptop comes with two sets of sensors:
+> > >>> 1. Motherboard: accelerometer
+> > >>> 2. Display/Camera module: accelerometer, ambient ligth (and more)
+> > >>>    sensor
+> > >>>
+> > >>> Define both i2c busses (bitbanged), sensors and respective rotation
+> > >>> matrices.
+> > >>
+> > >> These GPIOs correspond to ADSP/SSC-bound QUPs. It may be that you're
+> > >> poking at the same bus as the DSP is, concurrently.
+> > >
+> > > Indeed, Val already pointed out that there is hexagonrpcd to access
+> > > sensors behind Sensor Core from DSP. I found corresponding .json sens=
+or
+> > > files in Windows for all x3 sensors, but could not make it work yet.
+> > >
+> > > Without these additional things in userspace it does not cause any
+> > > conflicts: I've been using this for a week now, no i2c communication
+> > > issues and device orientation information is present.
+> > >
+> > > The question is then if we want to keep this series which ignores DSP
+> > > capabilities with the advantage that it will work for everyone with
+> > > the new kernel vs doing it 'correct' way over DSP which requires
+> > > additional json (and binary blobs?) and userpsace configuration,
+> > > meaning that most users will never have these sensors?
+> >
+> > I don't know what's the endgame for sensors. Maybe +Dmitry knows whethe=
+r
+> > there's any action on that point.
+> >
+> > Going through the DSP allows you to keep aggregating the data at close
+> > to no power cost (""low power island""), notably without waking up the
+> > CPUs if there's no other work. That, plus I'm somewhat skeptical about
+> > going behind its back, since it may be that a firmware update or some
+> > other trigger makes it start trying to communicate with them.
+>=20
+> The sensors story would require DSP libraries matching the firmware,
+> sensors descriptions and several still-closed-source libraries to work.
+> There is an open-source libssc project, but I don't know if anybody has
+> tested it on this platform (and it will still require DSP libs to
+> function).
+>=20
+> >
+> > But I'm not 100% against this either
+>=20
+> I guess it is a necessary evil until we get libssc to work on it.
+
+Thanks everyone for the input.
+
+It sounds that long-term DSP is clearly a go-for solution, but at
+the current state bit-banging is acceptable way to provide this
+functionality. I will update my patch to reflect outcome of this
+discussion in v2.
+
+Regards,
+Alex
+
+>=20
+> --
+> With best wishes
+> Dmitry
+> 
 
