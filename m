@@ -1,260 +1,458 @@
-Return-Path: <linux-arm-msm+bounces-100811-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100812-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id ADCMERCFymkW9gUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100811-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 16:13:36 +0200
+	id 2FoeNr2Gymn09gUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100812-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 16:20:45 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B19F335CA03
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 16:13:35 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C8BF35CB85
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 16:20:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 4F0F2301753E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 14:09:00 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 838B6308C5C6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 14:11:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CDE83D811E;
-	Mon, 30 Mar 2026 14:08:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A8AF3D88F2;
+	Mon, 30 Mar 2026 14:11:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="W36l8p+J";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="G//hy1+T"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DDAt8lEa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC4583BED74
-	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2026 14:08:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=205.220.168.131
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774879739; cv=pass; b=eywYqcBOH7sbJnYez9SIkNVYNCEUb/oA9CDiNuD5hs46q6Ue2fSTIoEv8lmuG5iE2WSaj6jqz1+wdGpBZwjmEgVyW9+1YrUcttuLU+MrMhODMb/hT8uyivplOSCu+WKjfiBbY1wfXWSBQmOIzZ4BBbXw6wbgg1a6EXQ63h2UiyE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774879739; c=relaxed/simple;
-	bh=6j3MrGMGJ8BaZT6b2AmYMG2GmSqY2yDP1O8mNQuJISA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mdfYnM54YTBvKpD9SoFli0Ire0lziw7kn0ynNNDpnOl7UHNRiCJJ5Uop9w+7WorNELW7Ho5tuxKzGCWpr4AKRazQB+YAHvl74jQeH7hO0fWfeXjRTNTEs/bGJPTJMjEu/pR8glm9oH4epqEui4o9xGpZ77rp/C8n/ZLKgiJPJtU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=W36l8p+J; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=G//hy1+T; arc=pass smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62UCmDMi350298
-	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2026 14:08:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:to; s=
-	qcppdkim1; bh=hN8mTpKXqacUhxQzUN9IZmgWttyQCUtx5hu1tCLpHfw=; b=W3
-	6l8p+J0XWsL9jQ6AhGFi66uWIavFG8Ct733Y9ZIgxwCNIquINDtZR/ePRxVUdCMX
-	FPUZRppvkn4alPbqsV+3/p/98LYjht8A+mZ+BihLx9+HnXfGP7SItsoj+HpZU6ym
-	J6U3OHGzEK/Oh1nEiuyTL5LRaoIvy+LP/2dpkq1ea6LD7q8Yk3ABGDEf2y/qr1eD
-	0a40/LoTn1sbPLwF3tPodmJDn87TbXXubvgVwQyr1O/sRx1FaEDSzoe81BkwUAZw
-	/D+ByFFTsFLZPvsr31nEGovf/ww6S1bc2S0wMVHPry4DcASkdYo/hPn9MZyRoWLM
-	j2njOQnDP4ZScoDkp22g==
-Received: from mail-oa1-f72.google.com (mail-oa1-f72.google.com [209.85.160.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d6wqeme7c-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2026 14:08:57 +0000 (GMT)
-Received: by mail-oa1-f72.google.com with SMTP id 586e51a60fabf-415583a6862so10856288fac.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2026 07:08:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774879736; cv=none;
-        d=google.com; s=arc-20240605;
-        b=iMcAvkmoRtFa8EvuABV6srq1k+pcjSfcWxNM+11OEE7VfeLT5p974YLXdkrvYVxlRe
-         bV7ef1RL6qMD96dct95rJaE19p7i++liGv9JTd0H8brqNlba7GgOEv0KsFHbBW9PmVkO
-         OXr6mubf7/d4bOCw4263t2Qp3jZRj06zSMyWEx+DlY7WrxZbjcuoTb6PKTknRh+1G9f+
-         WmzOCdT7ePGLykD7YqX8z4WYHgJuBbZwHr/f01uWbI6UtmPoeqexywJU7qFLnPkdHk6P
-         CesaaQJ1uLx38NS6v1vObAK3Nzjxuhawkf6/N85OWAEyhgxgOVMIXIdxw4qXhU9zjN+W
-         twzA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:dkim-signature;
-        bh=hN8mTpKXqacUhxQzUN9IZmgWttyQCUtx5hu1tCLpHfw=;
-        fh=DKO72ui740PNsXBvtLHo7FSclSo+gVIO0Ku9mtR5sR0=;
-        b=Oqpme5cQOXk3ZxorEE8OpFcl+4TQO4aOBxp/fiR+muH5P66OphBqXiFjr52KyR/4YA
-         Tjz75hknf04X9fWWB8t0KM6MMn3+DLDilGyV1G/OmuchqHKV7YXZCudYliAnxRA+bPxE
-         2vp24S9dFGt+XDxJWBLgYeA9PbFyUKbDHAv76vgShlrGymKZaBP42GDTMamrHPWvBHaI
-         tS8ZrrZB7rTSSBZGVd5BNBJ1COvzAz2SDHTgi5gmyuT7y8LclZixEp+p4vvBE9Y1LjEf
-         1TgqQ7r0ng3kVgYIb4NuSSgiama2/+OLmB/0tCZEw0D2s1b3EBF+VPPNc0SkRxirIpAS
-         1nqA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1774879736; x=1775484536; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=hN8mTpKXqacUhxQzUN9IZmgWttyQCUtx5hu1tCLpHfw=;
-        b=G//hy1+TDdX2BhFYmTa8lQSWpzMCK9zRFz6w4UdBwk8VlrxsWWsf9A5ux+/FnEFW0K
-         QzJA7UNNiUXdd8im3e8L5AZ4uN8P1iXrJ6z2uzK2Qi/DHSjxH6unvvXuIcd3rtQqzdit
-         8Wos6UngNJPrywYx6bb2VTaw5MjRHxJM+sngzxXZP7xxZYolZUxJ8DkCmKzdRd902U0Y
-         KWOGW6dJaaMGFXMfb7JN9PPJ1tilLxcyXVCIAX+uD/6WUUeRotYI5282MwE4Vv4DWA94
-         VC1NF2E2eU81x1bCcoBfE0QxO4XS1auDJYdfzPAmaBxk3Wvbp2fahueYr6t61jCBYtRm
-         gDmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774879736; x=1775484536;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hN8mTpKXqacUhxQzUN9IZmgWttyQCUtx5hu1tCLpHfw=;
-        b=q1mfLdehbopAM4Q7Vexfbk9ePXF2EAI/Q+XDcv/hIS0VMVCiMG2985KYOUvHxVJDYz
-         GNKVdaNSDbmQwQ1cT//rphSNemtNRHnG/mS6pqLqG8MSEHiKIyv0Z/g9Ep4W0biKdbFN
-         SY1dCoBA3FpXlv9RNcATt6TOPEQJ9M+WrynFxpWD0g92YPsfvj0puvmYcEs7y20IyJ/3
-         NJdNDup52CHZbGDmwQSbf2UYFsm5xnfdTZOi43R0aK7rjO896RP7F85SXZyhq89jkMTN
-         bZc6tmVBKiSVseCKsGDX+qsNygv7TVwvEldOExHc5syyaphxxVjGBSxtD4D1tKywgPpA
-         x5vw==
-X-Forwarded-Encrypted: i=1; AJvYcCVDhzAfIZmKpHcqekMDTKEz+zu4RzaU5+D9FWPb1ruUJ11Au66L0KyNilCzUD2rF6lGZS6Nwh3a1UoR9oCA@vger.kernel.org
-X-Gm-Message-State: AOJu0YxvDuV0JbzJ1yeMTW7bO7yebnZL7aGmilqdsVs4ddSnBptuyjGr
-	0xO7s/fhjtS3K5EmN6h2HLveBkZPPTMOXFj/EDEubQnL7PwXTUv2ODA4z/I6eZi0DUpg9Rd8ue/
-	yQWtk/v9zZ9J2TwXajXZNkZ1P5OmKPCFwCv1X4sy2Ix2OHQEBk9Oh7ChcSVI6qNnJuoUzkkEgP6
-	HXHKfz7P1h34VxUNVH4Qu3f3MRnTnfJvwN5QDFnFN+Duw=
-X-Gm-Gg: ATEYQzxOP6uvmQNgtpvm0bxuLqTNMfr07VP2ylEiYorbua4IJp3FTygTTEX97reh/Gl
-	0WYTpvXcFY+Jh0v0+hhHoyLRmVeX2142zI7L0qOL9GCpBYFyUfSEDS4w93n6OgphszgxNWbOLB2
-	o5WRYx6QTWu8bj2KeEFCuUNY84C726NULItledaIWDn0sJcb0d/pLMRI2wyi+gLLiIpXW/RJrch
-	t0Ii7qK3VzOLzr3FsimHxIg+06HpZpCTe8Gwg==
-X-Received: by 2002:a05:6870:fb8a:b0:41c:6bae:2307 with SMTP id 586e51a60fabf-41cec63bf99mr6133540fac.12.1774879736430;
-        Mon, 30 Mar 2026 07:08:56 -0700 (PDT)
-X-Received: by 2002:a05:6870:fb8a:b0:41c:6bae:2307 with SMTP id
- 586e51a60fabf-41cec63bf99mr6133506fac.12.1774879736029; Mon, 30 Mar 2026
- 07:08:56 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4319A3D812F;
+	Mon, 30 Mar 2026 14:11:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774879913; cv=none; b=Vh3KXbDl+Y4qjqwCNokOI+AcaM3Y4vAmmXx+IvLGOPocAByyflhEAhdPe6W6Pbu9X0WvBnz3RxL0cqcWFQyEeNqg5YDVpApsJPwEZb8IXIKk4XlJIo+Aii3TJhvMV2j/XaF4HRGozoQ1UtThcUycZ8THGpgWsDUitXoMut4qUb0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774879913; c=relaxed/simple;
+	bh=DdQfCmhPcUWi4bQ8s7+gQ5IL7AJEcy9oRAld1arG6U8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GmHXnSt6YpZdPIleCe2YhDvkZNxJJRDxxtybh+ImIhEcjB5A97wtUgvSlBkU8TN5/3P3izgvh8ajHt6Lx8TRL0VDk6szj054Ks09E9RTVK11E6mA0rWgmNWJT7YzoYgiRSXcPRqk14jshMD9uOK8L+MW5SFV8RylKFCc5dfW6UM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DDAt8lEa; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 997D0C4CEF7;
+	Mon, 30 Mar 2026 14:11:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1774879912;
+	bh=DdQfCmhPcUWi4bQ8s7+gQ5IL7AJEcy9oRAld1arG6U8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=DDAt8lEaKCHubTHv1LK8oz7CcnX9RLlllngxacLZev5a0CFanfUe3y98xd6scqxBU
+	 XTlXvlgxIT49cowVEo5l9mL74sN5FH/EIjrIKa0CoTCchf/8zW2lieueu8JEguBX4c
+	 +7hSHTUe72VqdkkDR/skJZUkMBKg+tm5HPbEhGiTUCFtUU7jPn54Kghn0Vwdea+Use
+	 Qw+HHr5CQAPtA9gjsTcMvmrg6W/LfZiGXxCnccMG6zjCwEiqLypfs5362+zUGzB4ZT
+	 7NjqQnQwzveOomZMgFzbobQl07CDimRdaAjUG4BWXl6isb1va+tNYneC3BQbdUmaM/
+	 MvRMbJ2Xjb/bw==
+Date: Mon, 30 Mar 2026 09:11:48 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Pavankumar Kondeti <pavan.kondeti@oss.qualcomm.com>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, 
+	Wim Van Sebroeck <wim@linux-watchdog.org>, Guenter Roeck <linux@roeck-us.net>, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, linux-watchdog@vger.kernel.org, 
+	Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>, Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: Re: [PATCH RESEND v8 2/2] watchdog: Add driver for Gunyah Watchdog
+Message-ID: <acqEc_urKggA5s62@baldur>
+References: <20260311-gunyah_watchdog-v8-0-4c1c0689de22@oss.qualcomm.com>
+ <20260311-gunyah_watchdog-v8-2-4c1c0689de22@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260327-add-driver-for-ec-v7-0-7684c915e42c@oss.qualcomm.com>
- <45cad9a9-8bb3-4174-aa5b-7a7cb3b7603e@oss.qualcomm.com> <dcc83729-295b-4fb2-beab-bbea1daec7a2@oss.qualcomm.com>
-In-Reply-To: <dcc83729-295b-4fb2-beab-bbea1daec7a2@oss.qualcomm.com>
-Reply-To: rob.clark@oss.qualcomm.com
-From: Rob Clark <rob.clark@oss.qualcomm.com>
-Date: Mon, 30 Mar 2026 07:08:45 -0700
-X-Gm-Features: AQROBzDL6ig_KbiMSXTrORH4oZORYqMryEAtXqw9Iz3-jK_CaA9S6hXZtTmgKsE
-Message-ID: <CACSVV02B9FOqi8w1VfgZXtvUxqDmsSsHMVF21qAAZNxDFTDNfA@mail.gmail.com>
-Subject: Re: [PATCH v7 0/5] Add driver for EC found on Qualcomm reference devices
-To: Anvesh Jain P <anvesh.p@oss.qualcomm.com>
-Cc: Akhil P Oommen <akhilpo@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        platform-driver-x86@vger.kernel.org,
-        Maya Matuszczyk <maccraft123mc@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Abel Vesa <abel.vesa@oss.qualcomm.com>,
-        Gaurav Kohli <gaurav.kohli@oss.qualcomm.com>,
-        Sibi Sankar <sibi.sankar@oss.qualcomm.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Hans de Goede <hansg@kernel.org>,
-        =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Randy Dunlap <rdunlap@infradead.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Authority-Analysis: v=2.4 cv=Jo78bc4C c=1 sm=1 tr=0 ts=69ca83f9 cx=c_pps
- a=Z3eh007fzM5o9awBa1HkYQ==:117 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=YMgV9FUhrdKAYTUUvYB2:22 a=EUspDBNiAAAA:8 a=N9dVvvH9XMu6gbUqmvYA:9
- a=QEXdDO2ut3YA:10 a=eBU8X_Hb5SQ8N-bgNfv4:22
-X-Proofpoint-GUID: r24o2wzu-gX9N7dGM97oYDxNqy5ZmX4_
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzMwMDExMCBTYWx0ZWRfX0iac3fZw5d61
- roo90v+J1+RbdcCsoXrBYRof9NmmQLBMY3hx0MwNGtlXl2cznuYMw65qvpTOkgsiGG95/U2N3tw
- 9mchV1oakcL8OygXUTgdeo1RqVTRUIK5qOKfYEpREIqOEuLrgLxWRpO/5YvP3onUd/wiVPrKmMO
- AzjhR8jrUw9XLOM31PLzgyl8VqiQ1TlbhebMQ3uDmTB/feDokgMs7bXbiNLVzkz/SHNIfKZ1Dd0
- FyCY2w3BeeDyVJ7cMZmTYooO33s2tYI+OqNAJ428Ls8qaDi/dYt2Y4+0nkNhPAacodxOD05S9s1
- 0uQxNUgHRQ9EzwT86t6ga+keuJ8ce8zBypgcAhZzeGpMiEl7bI/TOs44A9qgQlAHTEBSi0uiLKP
- sCr/2xAM3VgwLFUMVg7g/Z2ll4HNII9fZaYgelvmuydYJUSPV2iw/QeQIP4X0jJascwAFR86g1n
- dgul8F303xsvfnYuvmg==
-X-Proofpoint-ORIG-GUID: r24o2wzu-gX9N7dGM97oYDxNqy5ZmX4_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-29_05,2026-03-28_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 phishscore=0 bulkscore=0 malwarescore=0 suspectscore=0
- impostorscore=0 adultscore=0 priorityscore=1501 spamscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603300110
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260311-gunyah_watchdog-v8-2-4c1c0689de22@oss.qualcomm.com>
+X-Spamd-Result: default: False [-1.66 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-100811-lists,linux-arm-msm=lfdr.de];
-	REPLYTO_DOM_EQ_TO_DOM(0.00)[];
+	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,vger.kernel.org,gmail.com,kernel.org,linux.intel.com,linaro.org,infradead.org];
-	RCPT_COUNT_TWELVE(0.00)[22];
+	TAGGED_FROM(0.00)[bounces-100812-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[12];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	HAS_REPLYTO(0.00)[rob.clark@oss.qualcomm.com];
-	RCVD_COUNT_FIVE(0.00)[6];
-	REPLYTO_ADDR_EQ_FROM(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[rob.clark@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
-	PRECEDENCE_BULK(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	NEURAL_HAM(-0.00)[-1.000];
 	MISSING_XM_UA(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[mail.gmail.com:mid,qualcomm.com:dkim,qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,oss.qualcomm.com:dkim,oss.qualcomm.com:replyto]
-X-Rspamd-Queue-Id: B19F335CA03
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,roeck-us.net:email]
+X-Rspamd-Queue-Id: 2C8BF35CB85
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Sun, Mar 29, 2026 at 11:57=E2=80=AFPM Anvesh Jain P
-<anvesh.p@oss.qualcomm.com> wrote:
->
->
->
-> On 3/29/2026 7:52 PM, Akhil P Oommen wrote:
-> > On 3/27/2026 3:38 PM, Anvesh Jain P wrote:
-> >> From: Anvesh Jain P <anvesh.p@oss.qualcomm.com>
-> >>
-> >> Add Embedded controller driver support for Hamoa/Purwa/Glymur Qualcomm
-> >> reference boards. It handles fan control, temperature sensors, access
-> >> to EC state changes and supports reporting suspend entry/exit to the E=
-C.
-> >
-> > Just a question, is it possible to force fan to run at full speed
-> > constantly? That would be helpful to keep the passive cooling minimal
-> > and get a more consistent results while doing performance profiling.
-> >
-> > I see that you are registering a cooling device in this series. So I
-> > suppose we just need to update the cooling sysfs nodes.
-> >
-> > -Akhil
-> >
->
-> Hi Akhil,
->
-> Yes, that is possible. The cooling device registered by this driver
-> exposes the standard thermal sysfs interface. You can force the fan
-> to full speed by writing the maximum cooling state directly:
->
->   # Find the max state
->   cat /sys/class/thermal/cooling_deviceX/max_state
->
->   # Set to max state (force full speed)
->   echo <max_state> > /sys/class/thermal/cooling_deviceX/cur_state
->
-> Where X is the index of the cooling device corresponding to the EC fan.
+On Wed, Mar 11, 2026 at 11:16:31AM +0530, Pavankumar Kondeti wrote:
+> From: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
+> 
+> On Qualcomm SoCs running under the Gunyah hypervisor, access to watchdog
+> through MMIO is not available on all platforms. Depending on the
+> hypervisor configuration, the watchdog is either fully emulated or
+> exposed via ARM's SMC Calling Conventions (SMCCC) through the Vendor
+> Specific Hypervisor Service Calls space.
+> 
+> Add driver to support the SMC-based watchdog provided by the Gunyah
+> Hypervisor. Device registration is done in the QCOM SCM driver after
+> checks to restrict the watchdog initialization to Qualcomm devices
+> running under Gunyah.
+> 
+> Gunyah watchdog is not a hardware but an SMC-based vendor-specific
+> hypervisor interface provided by the Gunyah hypervisor. The design
+> involving QCOM SCM driver for registering the platform device has been
+> devised to avoid adding non-hardware nodes to devicetree.
+> 
+> Tested-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+> Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Tested-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+> Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> Signed-off-by: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
+> Signed-off-by: Pavankumar Kondeti <pavan.kondeti@oss.qualcomm.com>
 
-Getting a bit off topic, but is there a good way to associated cooling
-devices and thermal sensors to the GPU device?  I could see that being
-useful for nvtop (which currently supports shows GPU load and memory
-metrics, but thermal metrics are missing for us)
+Guenter, there's no build-time dependency between the two patches. I'm
+applying patch 1 through the qcom tree, please apply this patch through
+the watchdog tree.
 
-BR,
--R
+Regards,
+Bjorn
 
-> --
-> Best Regards,
-> Anvesh
->
->
+> ---
+>  MAINTAINERS                   |   1 +
+>  drivers/watchdog/Kconfig      |  13 +++
+>  drivers/watchdog/Makefile     |   1 +
+>  drivers/watchdog/gunyah_wdt.c | 261 ++++++++++++++++++++++++++++++++++++++++++
+>  4 files changed, 276 insertions(+)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 77fdfcb55f06..842306623b1d 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -3325,6 +3325,7 @@ F:	arch/arm64/boot/dts/qcom/
+>  F:	drivers/bus/qcom*
+>  F:	drivers/firmware/qcom/
+>  F:	drivers/soc/qcom/
+> +F:	drivers/watchdog/gunyah_wdt.c
+>  F:	include/dt-bindings/arm/qcom,ids.h
+>  F:	include/dt-bindings/firmware/qcom,scm.h
+>  F:	include/dt-bindings/soc/qcom*
+> diff --git a/drivers/watchdog/Kconfig b/drivers/watchdog/Kconfig
+> index dc78729ba2a5..5f1dfb6ac41b 100644
+> --- a/drivers/watchdog/Kconfig
+> +++ b/drivers/watchdog/Kconfig
+> @@ -2354,4 +2354,17 @@ config KEEMBAY_WATCHDOG
+>  	  To compile this driver as a module, choose M here: the
+>  	  module will be called keembay_wdt.
+>  
+> +config GUNYAH_WATCHDOG
+> +	tristate "Qualcomm Gunyah Watchdog"
+> +	depends on ARCH_QCOM || COMPILE_TEST
+> +	depends on HAVE_ARM_SMCCC
+> +	select WATCHDOG_CORE
+> +	help
+> +	  Say Y here to include support for watchdog timer provided by the
+> +	  Gunyah hypervisor. The driver uses ARM SMC Calling Convention (SMCCC)
+> +	  to interact with Gunyah Watchdog.
+> +
+> +	  To compile this driver as a module, choose M here: the
+> +	  module will be called gunyah_wdt.
+> +
+>  endif # WATCHDOG
+> diff --git a/drivers/watchdog/Makefile b/drivers/watchdog/Makefile
+> index d2fb16b9f9ce..4d1547702ef0 100644
+> --- a/drivers/watchdog/Makefile
+> +++ b/drivers/watchdog/Makefile
+> @@ -103,6 +103,7 @@ obj-$(CONFIG_MSC313E_WATCHDOG) += msc313e_wdt.o
+>  obj-$(CONFIG_APPLE_WATCHDOG) += apple_wdt.o
+>  obj-$(CONFIG_SUNPLUS_WATCHDOG) += sunplus_wdt.o
+>  obj-$(CONFIG_MARVELL_GTI_WDT) += marvell_gti_wdt.o
+> +obj-$(CONFIG_GUNYAH_WATCHDOG) += gunyah_wdt.o
+>  
+>  # X86 (i386 + ia64 + x86_64) Architecture
+>  obj-$(CONFIG_ACQUIRE_WDT) += acquirewdt.o
+> diff --git a/drivers/watchdog/gunyah_wdt.c b/drivers/watchdog/gunyah_wdt.c
+> new file mode 100644
+> index 000000000000..49dfef459e84
+> --- /dev/null
+> +++ b/drivers/watchdog/gunyah_wdt.c
+> @@ -0,0 +1,261 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> + */
+> +
+> +#include <linux/arm-smccc.h>
+> +#include <linux/delay.h>
+> +#include <linux/errno.h>
+> +#include <linux/kernel.h>
+> +#include <linux/mod_devicetable.h>
+> +#include <linux/module.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/watchdog.h>
+> +
+> +#define GUNYAH_WDT_SMCCC_CALL_VAL(func_id) \
+> +	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL, ARM_SMCCC_SMC_32,\
+> +			   ARM_SMCCC_OWNER_VENDOR_HYP, func_id)
+> +
+> +/* SMCCC function IDs for watchdog operations */
+> +#define GUNYAH_WDT_CONTROL   GUNYAH_WDT_SMCCC_CALL_VAL(0x0005)
+> +#define GUNYAH_WDT_STATUS    GUNYAH_WDT_SMCCC_CALL_VAL(0x0006)
+> +#define GUNYAH_WDT_PING      GUNYAH_WDT_SMCCC_CALL_VAL(0x0007)
+> +#define GUNYAH_WDT_SET_TIME  GUNYAH_WDT_SMCCC_CALL_VAL(0x0008)
+> +
+> +/*
+> + * Control values for GUNYAH_WDT_CONTROL.
+> + * Bit 0 is used to enable or disable the watchdog. If this bit is set,
+> + * then the watchdog is enabled and vice versa.
+> + * Bit 1 should always be set to 1 as this bit is reserved in Gunyah and
+> + * it's expected to be 1.
+> + */
+> +#define WDT_CTRL_ENABLE  (BIT(1) | BIT(0))
+> +#define WDT_CTRL_DISABLE BIT(1)
+> +
+> +enum gunyah_error {
+> +	GUNYAH_ERROR_OK				= 0,
+> +	GUNYAH_ERROR_UNIMPLEMENTED		= -1,
+> +	GUNYAH_ERROR_ARG_INVAL			= 1,
+> +};
+> +
+> +/**
+> + * gunyah_error_remap() - Remap Gunyah hypervisor errors into a Linux error code
+> + * @gunyah_error: Gunyah hypercall return value
+> + */
+> +static inline int gunyah_error_remap(enum gunyah_error gunyah_error)
+> +{
+> +	switch (gunyah_error) {
+> +	case GUNYAH_ERROR_OK:
+> +		return 0;
+> +	case GUNYAH_ERROR_UNIMPLEMENTED:
+> +		return -EOPNOTSUPP;
+> +	default:
+> +		return -EINVAL;
+> +	}
+> +}
+> +
+> +static int gunyah_wdt_call(unsigned long func_id, unsigned long arg1,
+> +			   unsigned long arg2)
+> +{
+> +	struct arm_smccc_res res;
+> +
+> +	arm_smccc_1_1_smc(func_id, arg1, arg2, &res);
+> +	return gunyah_error_remap(res.a0);
+> +}
+> +
+> +static int gunyah_wdt_start(struct watchdog_device *wdd)
+> +{
+> +	unsigned int timeout_ms;
+> +	struct device *dev = wdd->parent;
+> +	int ret;
+> +
+> +	ret = gunyah_wdt_call(GUNYAH_WDT_CONTROL, WDT_CTRL_DISABLE, 0);
+> +	if (ret && watchdog_active(wdd)) {
+> +		dev_err(dev, "%s: Failed to stop gunyah wdt %d\n", __func__, ret);
+> +		return ret;
+> +	}
+> +
+> +	timeout_ms = wdd->timeout * 1000;
+> +	ret = gunyah_wdt_call(GUNYAH_WDT_SET_TIME, timeout_ms, timeout_ms);
+> +	if (ret) {
+> +		dev_err(dev, "%s: Failed to set timeout for gunyah wdt %d\n",
+> +			__func__, ret);
+> +		return ret;
+> +	}
+> +
+> +	ret = gunyah_wdt_call(GUNYAH_WDT_CONTROL, WDT_CTRL_ENABLE, 0);
+> +	if (ret)
+> +		dev_err(dev, "%s: Failed to start gunyah wdt %d\n", __func__, ret);
+> +
+> +	return ret;
+> +}
+> +
+> +static int gunyah_wdt_stop(struct watchdog_device *wdd)
+> +{
+> +	return gunyah_wdt_call(GUNYAH_WDT_CONTROL, WDT_CTRL_DISABLE, 0);
+> +}
+> +
+> +static int gunyah_wdt_ping(struct watchdog_device *wdd)
+> +{
+> +	return gunyah_wdt_call(GUNYAH_WDT_PING, 0, 0);
+> +}
+> +
+> +static int gunyah_wdt_set_timeout(struct watchdog_device *wdd,
+> +				  unsigned int timeout_sec)
+> +{
+> +	wdd->timeout = timeout_sec;
+> +
+> +	if (watchdog_active(wdd))
+> +		return gunyah_wdt_start(wdd);
+> +
+> +	return 0;
+> +}
+> +
+> +static int gunyah_wdt_get_time_since_last_ping(void)
+> +{
+> +	struct arm_smccc_res res;
+> +
+> +	arm_smccc_1_1_smc(GUNYAH_WDT_STATUS, 0, 0, &res);
+> +	if (res.a0)
+> +		return gunyah_error_remap(res.a0);
+> +
+> +	return res.a2 / 1000;
+> +}
+> +
+> +static unsigned int gunyah_wdt_get_timeleft(struct watchdog_device *wdd)
+> +{
+> +	int seconds_since_last_ping;
+> +
+> +	seconds_since_last_ping = gunyah_wdt_get_time_since_last_ping();
+> +	if (seconds_since_last_ping < 0 ||
+> +	    seconds_since_last_ping > wdd->timeout)
+> +		return 0;
+> +
+> +	return wdd->timeout - seconds_since_last_ping;
+> +}
+> +
+> +static int gunyah_wdt_restart(struct watchdog_device *wdd,
+> +			      unsigned long action, void *data)
+> +{
+> +	/* Set timeout to 1ms and send a ping */
+> +	gunyah_wdt_call(GUNYAH_WDT_CONTROL, WDT_CTRL_DISABLE, 0);
+> +	gunyah_wdt_call(GUNYAH_WDT_SET_TIME, 1, 1);
+> +	gunyah_wdt_call(GUNYAH_WDT_CONTROL, WDT_CTRL_ENABLE, 0);
+> +	gunyah_wdt_call(GUNYAH_WDT_PING, 0, 0);
+> +
+> +	/* Wait to make sure reset occurs */
+> +	mdelay(100);
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct watchdog_info gunyah_wdt_info = {
+> +	.identity = "Gunyah Watchdog",
+> +	.options = WDIOF_SETTIMEOUT
+> +		 | WDIOF_KEEPALIVEPING
+> +		 | WDIOF_MAGICCLOSE,
+> +};
+> +
+> +static const struct watchdog_ops gunyah_wdt_ops = {
+> +	.owner = THIS_MODULE,
+> +	.start = gunyah_wdt_start,
+> +	.stop = gunyah_wdt_stop,
+> +	.ping = gunyah_wdt_ping,
+> +	.set_timeout = gunyah_wdt_set_timeout,
+> +	.get_timeleft = gunyah_wdt_get_timeleft,
+> +	.restart = gunyah_wdt_restart
+> +};
+> +
+> +static int gunyah_wdt_probe(struct platform_device *pdev)
+> +{
+> +	struct watchdog_device *wdd;
+> +	struct device *dev = &pdev->dev;
+> +	int ret;
+> +
+> +	ret = gunyah_wdt_call(GUNYAH_WDT_STATUS, 0, 0);
+> +	if (ret == -EOPNOTSUPP)
+> +		return -ENODEV;
+> +
+> +	if (ret)
+> +		return dev_err_probe(dev, ret, "status check failed\n");
+> +
+> +	wdd = devm_kzalloc(dev, sizeof(*wdd), GFP_KERNEL);
+> +	if (!wdd)
+> +		return -ENOMEM;
+> +
+> +	wdd->info = &gunyah_wdt_info;
+> +	wdd->ops = &gunyah_wdt_ops;
+> +	wdd->parent = dev;
+> +
+> +	/*
+> +	 * Although Gunyah expects 16-bit unsigned int values as timeout values
+> +	 * in milliseconds, values above 0x8000 are reserved. This limits the
+> +	 * max timeout value to 32 seconds.
+> +	 */
+> +	wdd->max_timeout = 32; /* seconds */
+> +	wdd->min_timeout = 1; /* seconds */
+> +	wdd->timeout = wdd->max_timeout;
+> +
+> +	gunyah_wdt_stop(wdd);
+> +	platform_set_drvdata(pdev, wdd);
+> +	watchdog_set_restart_priority(wdd, 0);
+> +
+> +	return devm_watchdog_register_device(dev, wdd);
+> +}
+> +
+> +static void gunyah_wdt_remove(struct platform_device *pdev)
+> +{
+> +	struct watchdog_device *wdd = platform_get_drvdata(pdev);
+> +
+> +	gunyah_wdt_stop(wdd);
+> +}
+> +
+> +static int gunyah_wdt_suspend(struct device *dev)
+> +{
+> +	struct watchdog_device *wdd = dev_get_drvdata(dev);
+> +
+> +	if (watchdog_active(wdd))
+> +		gunyah_wdt_stop(wdd);
+> +
+> +	return 0;
+> +}
+> +
+> +static int gunyah_wdt_resume(struct device *dev)
+> +{
+> +	struct watchdog_device *wdd = dev_get_drvdata(dev);
+> +
+> +	if (watchdog_active(wdd))
+> +		gunyah_wdt_start(wdd);
+> +
+> +	return 0;
+> +}
+> +
+> +static DEFINE_SIMPLE_DEV_PM_OPS(gunyah_wdt_pm_ops, gunyah_wdt_suspend, gunyah_wdt_resume);
+> +
+> +/*
+> + * Gunyah watchdog is a vendor-specific hypervisor interface provided by the
+> + * Gunyah hypervisor. Using QCOM SCM driver to detect Gunyah watchdog SMCCC
+> + * hypervisor service and register platform device when the service is available
+> + * allows this driver to operate independently of the devicetree and avoids
+> + * adding the non-hardware nodes to the devicetree.
+> + */
+> +static const struct platform_device_id gunyah_wdt_id[] = {
+> +	{ .name = "gunyah-wdt" },
+> +	{}
+> +};
+> +MODULE_DEVICE_TABLE(platform, gunyah_wdt_id);
+> +
+> +static struct platform_driver gunyah_wdt_driver = {
+> +	.driver = {
+> +		.name = "gunyah-wdt",
+> +		.pm = pm_sleep_ptr(&gunyah_wdt_pm_ops),
+> +	},
+> +	.id_table = gunyah_wdt_id,
+> +	.probe = gunyah_wdt_probe,
+> +	.remove = gunyah_wdt_remove,
+> +};
+> +
+> +module_platform_driver(gunyah_wdt_driver);
+> +
+> +MODULE_DESCRIPTION("Gunyah Watchdog Driver");
+> +MODULE_LICENSE("GPL");
+> 
+> -- 
+> 2.34.1
+> 
 
