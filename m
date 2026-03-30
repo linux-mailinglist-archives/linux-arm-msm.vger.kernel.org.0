@@ -1,159 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-100860-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100861-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wMCXLSWlymmx+gUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100860-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 18:30:29 +0200
+	id qNvdOXapymmx+gUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100861-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 18:48:54 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74DAF35ED06
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 18:30:29 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8439F35F013
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 18:48:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id E7B6E300D9FA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 16:29:03 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B180C3056DBF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 16:46:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9C71379964;
-	Mon, 30 Mar 2026 16:28:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 350473DBD4D;
+	Mon, 30 Mar 2026 16:46:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P/3XWocf"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q1M6Yzng"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A6A3793D0;
-	Mon, 30 Mar 2026 16:28:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A15A3DBD40
+	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2026 16:46:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774888139; cv=none; b=ad3UZ87Atc+Dl/pvWDK+z/lXRL8Ov7hrVab+QiNPu5ZlVC9MX0oCq9ri5wrtS0jczBclwSiJ+d1TNskvmxR7WXe4adgM7n72sImtpUZWe1aNyZtSKF9h93oGVwroBSalNi0LSLRCJdNeSTgEcbBbs39Tx1s6dzmR7f6ckh6qt9I=
+	t=1774889187; cv=none; b=GrYZeVWuvQ+Pe39y+kEX5dSpEPif4iffwi6Mkj1fHbe6X9nZVWMeTMznmmZ6FV5E6XlYnpVDsQwDkTeGnVLuNjlrTEUC6aI7thUwqscDRR9TGhYMKVZwtGfw/qQGj1Cr5ZIDHlHiEJ49+iCXL0xCskvZbmxPxmp7UZdN3uo/8pE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774888139; c=relaxed/simple;
-	bh=HnR3T8HyhR5zh3UidQc9tY5GP+iCNJ+9G4eesNsn66c=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:Cc:To:From:
-	 References:In-Reply-To; b=SUDhd07PBiVBhnoqnSir44k5vwicaFjFvBEUZlOJFdDDaR8IErB8Rf9InZ6cehUx0Jd/MF34n0qqEwAsLtPANDZ6s449VHBmdImlyZ8HxHR5H3TvmMHhGk+t90Wr+vTzN8AAnX1qU4OVjpW2aSW50YKaddGsKtKhItNVDp4X2Dc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P/3XWocf; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2732FC4CEF7;
-	Mon, 30 Mar 2026 16:28:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774888138;
-	bh=HnR3T8HyhR5zh3UidQc9tY5GP+iCNJ+9G4eesNsn66c=;
-	h=Date:Subject:Cc:To:From:References:In-Reply-To:From;
-	b=P/3XWocfTvHDzL/TvgnY90VGL4nSlLd5QBe5hsYLKubBK3nWHOJaPjPq5JQAaRhM8
-	 iAGk5KjaD3ik9GNqL6YSdRdGeXxBgLs24zJtsj3e6fxOpDbi7ZZd8I/d1cyMypX8NE
-	 2XOL2YHA8im3TC/6MZc4CKSvIWYdWZeBHcvNBDXSWRJJuejsAH9jaZzQRbryV+m5kG
-	 lnPI2WxSgVXB97c4laa/t/vZgU3QAb4tmja9ypMEFSoxTNm4EFRWFco06IOLdeGzNC
-	 AdWvpkXe36xoTq6sFQYDIMUXUgS6vorYizdKVDGjM2rmv+ZiFnuwAzo46ijHVV7DUf
-	 PA+6jJae0BAbA==
+	s=arc-20240116; t=1774889187; c=relaxed/simple;
+	bh=YJin1wPk6QwSKNDkDugbrSYwGRDBzaEpXCdg+uaVnik=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ApUbxK6hlZoYiP8Sm3aG4YYyiK2W9Pa+3ZAvlxAF3QjE+dcOY88Nqcir21xVCR8JmQF5BoIlodkqIkqqfbC0QmCnz4WM4xQPAcp/RrDafM9M8Urvl8YPMEP0oYC+cSfNd3jGEcL56qNpHpTNd3TLT8FqQxVoRrgX7x2AqtOa3qU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q1M6Yzng; arc=none smtp.client-ip=209.85.222.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-8cfd44fa075so654304585a.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2026 09:46:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1774889184; x=1775493984; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=P9N0rhaxdcZ47rPdqHKXeK0NE0HClZsrO2nPTgCYshE=;
+        b=Q1M6Yzngkxn4QBqtmEAaxt6qZck+3/1f/0bchHS3raDZc17O0Wnzl9yuCf7acWtdQ5
+         wJdOjrYHEmd+9JQ16fETdX0XRd0TamBehfsLzSIMVAD2gpoZ8pLsFo3RdmeZLKvEkYVN
+         l8Dj0Ej8yuubFacsgMuRqiEOElXJUzzUrEO12tNJ3oyNWXEzfAJV1GvP602j/WDnFpHH
+         rmiI+6jz0+9gFikJX8Nm4dYRWQc3K7mw04cX9JrjZKN+mQEND1fTxyYlvHAtpAJgY+Cv
+         rbosPA+0XB+1UjvWSWlq63wh3PXnCV4gIQUFjRM6qiv2vncef4a+F+xFrGnxQTQJWN6G
+         Akxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774889184; x=1775493984;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=P9N0rhaxdcZ47rPdqHKXeK0NE0HClZsrO2nPTgCYshE=;
+        b=XHccahK693dFivmp4v7wh/meLXqNgPorAzaUOKn+HDTtbKsIH50AM5hppYpyM025si
+         ZaRV/qRi7254NLj9fXgFb4AGxwrCidZP4LfPmMtQwBSAmXFabkDGkRAyQeldRW3v2qdV
+         SS7KxUkaYpKitCpO5t3XfdnWsez5KSCztIt8/yuixP6WonVwxwIIc6Au54bFx38PTPnV
+         qF/RzB2rGdlkLAkpTWSqIOR5om3bEZ5rBSDKv4igAa1J3xgLFbjNv9DFb52obUPc0PUe
+         FLirLujz+ZNIUXeLS7zUZw1epV3TDyMl5IhuHEEN/udK0YVacS99LKlkiFfPGTtdXVBz
+         +l2w==
+X-Forwarded-Encrypted: i=1; AJvYcCXoX4Dua7l0rzXLvG/7Tge8rWTAg499Jo7ddZohRlz+hFaLyABVTBNIyT7CFUl7RYkE7U7VOsOYIPIGeg2v@vger.kernel.org
+X-Gm-Message-State: AOJu0YyCZHMOHHpL8HmBf1kq47yDy7Q26UIv7NWbx9Gkt9srnQN+9Iok
+	JGQntE4CUOlFXKS9PQKtiKt4WgG3tLegUzS7oyV2BvbOB0PoYl/iOaXtJidhJg==
+X-Gm-Gg: ATEYQzy7bcqh/dQATDxGswfhtnS+6K1pAuJ7pgxCDIOEHIXh3qvby7FR6+c8Hu/rGPH
+	ICNu+mhQvHOS1qHXPZgDmDYj4P6X9f0Wcxww93lD6KfEjpeIblBGPFy4ljcS94r9gv8RTes8ttW
+	UIiZRnUcBrRrEy7EBGdnuZsTApdIe6e/BPZvs7/xCFMn9mf0E2BmkDjxHi0oD2BsnphxIzxr6Mt
+	jmM0+I2Q5y0Ye4xgl94BG++VmVzb0bWTosOxEinL28GyfQqr/+Cv5WbaB+lRTwxKJcQAXyI6R63
+	/YjF0dx3cAFIRQDKvuAB5+E4UZ+iIPUIaMEWAaiGSlwYJWc6lQylMTmuFKUfRWQXvhE/dis3/W8
+	4eZ9uEzAA12VvMvGvJMLk9IqfVDmM2801+VpmQSSOFSVhs2ndkb7Zp4Lk7DsJSWtaTVL5QfEPm1
+	m8FrqYrqch1wJyc+HqmrNpUG0=
+X-Received: by 2002:a05:620a:1710:b0:8cd:972d:335 with SMTP id af79cd13be357-8d01c7969dcmr1595894185a.43.1774889184606;
+        Mon, 30 Mar 2026 09:46:24 -0700 (PDT)
+Received: from localhost ([199.7.157.54])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8d028086d25sm638355285a.43.2026.03.30.09.46.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Mar 2026 09:46:23 -0700 (PDT)
+From: Richard Acayan <mailingradian@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-gpio@vger.kernel.org,
+	devicetree@vger.kernel.org
+Cc: Richard Acayan <mailingradian@gmail.com>
+Subject: [PATCH v4 0/5] SDM670 LPASS LPI pin controller support
+Date: Mon, 30 Mar 2026 12:47:02 -0400
+Message-ID: <20260330164707.87441-1-mailingradian@gmail.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 30 Mar 2026 18:28:48 +0200
-Message-Id: <DHG9BXUEUEU4.2DTNLE8Z61DKX@kernel.org>
-Subject: Re: [PATCH 05/12] PCI: use generic driver_override infrastructure
-Cc: "Russell King" <linux@armlinux.org.uk>, "Greg Kroah-Hartman"
- <gregkh@linuxfoundation.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
- "Ioana Ciornei" <ioana.ciornei@nxp.com>, "Nipun Gupta"
- <nipun.gupta@amd.com>, "Nikhil Agarwal" <nikhil.agarwal@amd.com>, "K. Y.
- Srinivasan" <kys@microsoft.com>, "Haiyang Zhang" <haiyangz@microsoft.com>,
- "Wei Liu" <wei.liu@kernel.org>, "Dexuan Cui" <decui@microsoft.com>, "Long
- Li" <longli@microsoft.com>, "Bjorn Helgaas" <bhelgaas@google.com>, "Armin
- Wolf" <W_Armin@gmx.de>, "Bjorn Andersson" <andersson@kernel.org>, "Mathieu
- Poirier" <mathieu.poirier@linaro.org>, "Vineeth Vijayan"
- <vneethv@linux.ibm.com>, "Peter Oberparleiter" <oberpar@linux.ibm.com>,
- "Heiko Carstens" <hca@linux.ibm.com>, "Vasily Gorbik" <gor@linux.ibm.com>,
- "Alexander Gordeev" <agordeev@linux.ibm.com>, "Christian Borntraeger"
- <borntraeger@linux.ibm.com>, "Sven Schnelle" <svens@linux.ibm.com>, "Harald
- Freudenberger" <freude@linux.ibm.com>, "Holger Dengler"
- <dengler@linux.ibm.com>, "Mark Brown" <broonie@kernel.org>, "Michael S.
- Tsirkin" <mst@redhat.com>, "Jason Wang" <jasowang@redhat.com>, "Xuan Zhuo"
- <xuanzhuo@linux.alibaba.com>, =?utf-8?q?Eugenio_P=C3=A9rez?=
- <eperezma@redhat.com>, "Alex Williamson" <alex@shazbot.org>, "Juergen
- Gross" <jgross@suse.com>, "Stefano Stabellini" <sstabellini@kernel.org>,
- "Oleksandr Tyshchenko" <oleksandr_tyshchenko@epam.com>, "Christophe Leroy
- (CS GROUP)" <chleroy@kernel.org>, <linux-kernel@vger.kernel.org>,
- <driver-core@lists.linux.dev>, <linuxppc-dev@lists.ozlabs.org>,
- <linux-hyperv@vger.kernel.org>, <linux-pci@vger.kernel.org>,
- <platform-driver-x86@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
- <linux-remoteproc@vger.kernel.org>, <linux-s390@vger.kernel.org>,
- <linux-spi@vger.kernel.org>, <virtualization@lists.linux.dev>,
- <kvm@vger.kernel.org>, <xen-devel@lists.xenproject.org>,
- <linux-arm-kernel@lists.infradead.org>, "Gui-Dong Han"
- <hanguidong02@gmail.com>
-To: "Bjorn Helgaas" <helgaas@kernel.org>
-From: "Danilo Krummrich" <dakr@kernel.org>
-References: <20260324005919.2408620-6-dakr@kernel.org>
- <20260326180825.GA1330769@bhelgaas>
-In-Reply-To: <20260326180825.GA1330769@bhelgaas>
-X-Spamd-Result: default: False [-1.66 / 15.00];
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	MV_CASE(0.50)[];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[armlinux.org.uk,linuxfoundation.org,kernel.org,nxp.com,amd.com,microsoft.com,google.com,gmx.de,linaro.org,linux.ibm.com,redhat.com,linux.alibaba.com,shazbot.org,suse.com,epam.com,vger.kernel.org,lists.linux.dev,lists.ozlabs.org,lists.xenproject.org,lists.infradead.org,gmail.com];
-	TAGGED_FROM(0.00)[bounces-100860-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	RCPT_COUNT_GT_50(0.00)[50];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[dakr@kernel.org,linux-arm-msm@vger.kernel.org];
-	MISSING_XM_UA(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	NEURAL_HAM(-0.00)[-1.000];
+	FREEMAIL_CC(0.00)[gmail.com];
 	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-100861-lists,linux-arm-msm=lfdr.de];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FREEMAIL_FROM(0.00)[gmail.com];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mailingradian@gmail.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	RCPT_COUNT_SEVEN(0.00)[11];
+	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 74DAF35ED06
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 8439F35F013
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Thu Mar 26, 2026 at 7:08 PM CET, Bjorn Helgaas wrote:
-> On Tue, Mar 24, 2026 at 01:59:09AM +0100, Danilo Krummrich wrote:
->> When a driver is probed through __driver_attach(), the bus' match()
->> callback is called without the device lock held, thus accessing the
->> driver_override field without a lock, which can cause a UAF.
->>=20
->> Fix this by using the driver-core driver_override infrastructure taking
->> care of proper locking internally.
->>=20
->> Note that calling match() from __driver_attach() without the device lock
->> held is intentional. [1]
->>=20
->> Link: https://lore.kernel.org/driver-core/DGRGTIRHA62X.3RY09D9SOK77P@ker=
-nel.org/ [1]
->> Reported-by: Gui-Dong Han <hanguidong02@gmail.com>
->> Closes: https://bugzilla.kernel.org/show_bug.cgi?id=3D220789
->> Fixes: 782a985d7af2 ("PCI: Introduce new device binding path using pci_d=
-ev.driver_override")
->> Signed-off-by: Danilo Krummrich <dakr@kernel.org>
->> ---
->>  drivers/pci/pci-driver.c           | 11 +++++++----
->>  drivers/pci/pci-sysfs.c            | 28 ----------------------------
->>  drivers/pci/probe.c                |  1 -
->>  include/linux/pci.h                |  6 ------
->
-> For the above:
->
-> Acked-by: Bjorn Helgaas <bhelgaas@google.com>
->
-> "driver_override" is mentioned several places in
-> Documentation/ABI/testing/sysfs-bus-*.  I assume this series doesn't
-> change the behavior documented there?
+This adds support for the LPASS LPI pin controller on SDM670, which
+controls some audio pins (e.g. TDM or PDM busses). The ADSP patches are
+not sent yet.
 
-Correct, none of this is altered.
+Dependencies:
+- SDM670 Basic SoC thermal zones (devicetree nodes are touching)
+  https://lore.kernel.org/r/20260310002037.1863-1-mailingradian@gmail.com
+- Support for the Pixel 3a XL with the Tianma panel (for reserved GPIOs)
+  https://lore.kernel.org/r/20260310002606.16413-1-mailingradian@gmail.com
+
+Changes since v2 (https://lore.kernel.org/r/20260328021036.85945-1-mailingradian@gmail.com):
+- restore review tags (2-5/5)
+- add review tags (1/5)
+
+Changes since v2 (https://lore.kernel.org/r/20260310012446.32226-1-mailingradian@gmail.com):
+- add minItems and maxItems (1/5)
+- add review tags (2-5/5)
+
+Changes since v1 (https://lore.kernel.org/r/20260210021109.11906-1-mailingradian@gmail.com):
+- add LPASS in dt-bindings patch subject (2/5)
+- change pin names (2/5, 3/5, 4/5)
+- add reviewed-by from Krzysztof (2/5)
+- specify gpio-reserved-ranges (1/5, 5/5)
+
+Richard Acayan (5):
+  dt-bindings: qcom: lpass-lpi-common: add reserved GPIOs property
+  dt-bindings: pinctrl: qcom: Add SDM670 LPASS LPI pinctrl
+  pinctrl: qcom: add sdm670 lpi tlmm
+  arm64: dts: qcom: sdm670: add lpi pinctrl
+  arm64: dts: qcom: sdm670-google: add reserved lpi gpios
+
+ .../pinctrl/qcom,lpass-lpi-common.yaml        |   8 +
+ .../qcom,sdm670-lpass-lpi-pinctrl.yaml        |  81 +++++++++
+ .../boot/dts/qcom/sdm670-google-common.dtsi   |   4 +
+ arch/arm64/boot/dts/qcom/sdm670.dtsi          |  73 ++++++++
+ drivers/pinctrl/qcom/Kconfig                  |  10 ++
+ drivers/pinctrl/qcom/Makefile                 |   1 +
+ .../pinctrl/qcom/pinctrl-sdm670-lpass-lpi.c   | 166 ++++++++++++++++++
+ 7 files changed, 343 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sdm670-lpass-lpi-pinctrl.yaml
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-sdm670-lpass-lpi.c
+
+-- 
+2.53.0
+
 
