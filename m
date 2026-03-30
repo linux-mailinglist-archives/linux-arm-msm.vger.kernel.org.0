@@ -1,593 +1,404 @@
-Return-Path: <linux-arm-msm+bounces-100819-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100820-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id CC/GGwmQymlV+AUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100819-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 17:00:25 +0200
+	id aICWCBuOymn09gUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100820-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 16:52:11 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id B5CB435D579
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 17:00:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C9DD35D30A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 16:52:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id C407230AD494
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 14:34:08 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 66026308872D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 14:40:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53E612FFDE3;
-	Mon, 30 Mar 2026 14:33:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4D6428371;
+	Mon, 30 Mar 2026 14:39:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mce1AT0Q"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="LkfLKjgi";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="TEpRK6w2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EEC62EACF2;
-	Mon, 30 Mar 2026 14:33:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 337EB2E11DC
+	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2026 14:39:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774881211; cv=none; b=Y/yTS2PQqTLiPvAeSWW2bUmQ0JILdwPsh9mE/ucrCfo8Dt6NiQj8jtEiPUNb56kS9NcOI1kAG/zbmrT0b+mHx0hZJIc3PuEle0BXr+Uy3fgzcOufOmU0FMJ6XcuqHdcoxWfcmUqhKLoqeeoTolGWMA3ayL7p73GGndSgOQ5onV8=
+	t=1774881593; cv=none; b=cGqUg3lhqnoMWVrJSwImsk/HXqwjdcVgiM3Uc8ulCqzMRw64hJd1ydxg2QxqR4QBcnp/bk+o9OZjNGhrFtI8j+SQlASQDvKDYBnnTwzJD876EdVk1CgOmtwRCZpmxBhxCUF9+E/nYt7fR9NcMY6aRFaUdZyJYESxxBbPZZe744s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774881211; c=relaxed/simple;
-	bh=VNuSexgnG7KPB4i5OsVfyHCENyzgXgGesZiYynDQSRg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Cc+kSeeDDdi2ETLDpn7loOws+KRSbCMi9sxWyslCgkSV8e3djdSe8Dv9kQwV+lurTbD068keVK4r3PsMcbORemZcKMcOCqBOKMWdyWFJNqOd1T3PCEXOrhCuOdRTgiqs63wajTJeeE9SyxZ30yrfXzoDDrSD+AYCjN4VuwUxLrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mce1AT0Q; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 945BAC4CEF7;
-	Mon, 30 Mar 2026 14:33:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774881210;
-	bh=VNuSexgnG7KPB4i5OsVfyHCENyzgXgGesZiYynDQSRg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Mce1AT0QJcoE9xOJNSchvLpMEt5fgK4gGFkQLQ3ZyKV63rq3lcwzi6qsMB3vSfEK6
-	 ZETXSLaGlav3g6CkbeEnkCI/fK/PO30gfnwP4uYqnOoZ27Q6G2S0Nh9ZLxkDnHkNCR
-	 9APODYOU3n6raG11EvFGrhik0Auwtt1sOULQDG9H2gtA1pvu+P+5FZqdpF2ygp9PHv
-	 3OXSkcn/e2eYYF85xhXUmtHpMjEsEOwXyKrKLPeWD+UK35gesFQ77YJTlGndAHoPvZ
-	 VnSKSrk3zdVahSc9xtFBD9mSQqZ3/RjQcN9QkPK0bInbHKIaWIIJ5VUXo9Ja/vUGbU
-	 jgbSuZkFtpUGw==
-Date: Mon, 30 Mar 2026 09:33:26 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: webgeek1234@gmail.com
-Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Georgi Djakov <djakov@kernel.org>, Sibi Sankar <sibi.sankar@oss.qualcomm.com>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-pm@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: sm8550: add cpu OPP table with
- DDR, LLCC & L3 bandwidths
-Message-ID: <acqJWzQHi7ajuzml@baldur>
-References: <20260219-sm8550-ddr-bw-scaling-v3-0-75c19152e921@gmail.com>
- <20260219-sm8550-ddr-bw-scaling-v3-2-75c19152e921@gmail.com>
+	s=arc-20240116; t=1774881593; c=relaxed/simple;
+	bh=Ou2un0q+kwVxdytMbnTt7jxc25K1CsHTVOD4kpr9iKc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LyxnIKT9PqF4npxad2XEydou8RJcEFQ1P9mqn5mfGBr52nimOGq5C3khqfywcYwSU7DDsyJ7XnUgt/zIYw/rpt7I2o2FIj8UfWOtBcKj7Z4xV/n0SREZHBp8dPk906Hsa4zuBVc48J8cx9wavYTEGSxEysN1D/MjxQs2aBhg1d0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=LkfLKjgi; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=TEpRK6w2; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62UAGmKf3175937
+	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2026 14:39:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	wzMonzrP2PHDXqseDefwSdvKf++DvWGpSTXQTEc+mlI=; b=LkfLKjgibVq5muow
+	9xQdN1AZ/I4a/RBs1+pS28soJB1/lHTItXmX1wvnklzhTIg+8hCuWKO0+hS/SUEv
+	DhkGYDPP99ss9CmzhvY426VDIEuK1816Dd/MTVaDjbMh3LdvQp8xvA3coJN6zxph
+	s1bjOXgLVq/oYiLVQoXc12bHnikuMzwRO2+HdE++5Jyj+9Zd/cHjxqUO2+FYbiq/
+	vtiRIdwIcUTOGaTgAHc00Su7crWG3xYOYSkpttlO8qw9jr+DOidswWpCFL/JJU+u
+	TgteKpcsUm6zL8+SysRe9by/7qMfu3O2azB8NbVIC20cQLf9IxW1ZLLn8EVnu0Rv
+	RWIZIA==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d7q9h0yv0-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2026 14:39:50 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-35d99c2908cso2172028a91.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2026 07:39:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=oss.qualcomm.com; s=google; t=1774881590; x=1775486390; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wzMonzrP2PHDXqseDefwSdvKf++DvWGpSTXQTEc+mlI=;
+        b=TEpRK6w2SFWyuGwmtEPiUwhFWujeAvFnv87wZ0Q6ULSJeAyC1/Jtutwnrw3HtxT/RT
+         uqAL0FYOh/b/7P+9qyYh5FTdwNqTDAh1bca2wt0Iu7zKQVvaEtnyzKOoz4MsAQXOCuN7
+         aBSi3XScf3MCLWduE5O9FKuw0Gtdfh05EKy5AsqbKC1kca24ckI/0ZKSwr7pczYsBfTt
+         Cq/1X+3zKAk3eIiOxnvL8MYBQKmDCdXIMjue3PbOMjwaIHOyvDAe6lnEdXlRiGHJYwFz
+         lbujng2QqEMMDT4yWFK2jDqXupdrkmLmhcufPt2DBZazOPKcsi+rTqVRReOTX0OSMxWY
+         TRsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774881590; x=1775486390;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wzMonzrP2PHDXqseDefwSdvKf++DvWGpSTXQTEc+mlI=;
+        b=cB+iPnVKvgU2/jRDKiEV2AcIpa4Bd7pLQMoa0kPwQdCehmEZV/Onw3kVXsm6BdwIa6
+         VxTqJ/l1l8GSYnQ3t95S16l9s55KAt5+lzOxQR6Nz0PYsacSdr++mljcKXEoiIvlQ7PF
+         RVyGIpj1vxCM6pga/FfkADecuKUXsHPGqxlAI60mT6Id8s/z1UvfriROAPRiMunqvxoO
+         MGsxOdBQuQXbigdoAwbMDDVVJQTBcr0A3ShwbgjVZ+PJBvH8hq12qxAtVafl4t/PSFRB
+         0QHMU3PrTCSb2BDhwvx2udBo4qEVTPbHPTUqDaEXp0LePa+NOKtp1hOpeGUZi1WFVxN/
+         6PTQ==
+X-Gm-Message-State: AOJu0YzP3lNv9+umJy1ePMx7i5O0D0/tD2g0IeSHWVaxS+Q1/XPB6ekN
+	MgsKVzndkWeIdIWIOqIn1RNq0Cx33cK4J/fuGrm+j2bZN2u1nkvYfriqWWiHMdbyhZps+R5YGc9
+	A/NS8rPyQxKSEFnUxadUhKIYoLI+t7PZ9J9+ZxodZl6tTe9UBe/f+Eo6vn31f8Dd7Svfb
+X-Gm-Gg: ATEYQzy/3CA0TCv2/KRfz2azhVXV9lwB3WOR7d1c5kqDkARoKMbl/m09kKESgePjdLO
+	/r4kZliPvU2FoPZbaXmdJXweyfDnqzsZ562PNO20L+5gfjFS7N+4mb+veyn0SqOkmJDArtgu5rG
+	9PfLcwVcilRkpToiKM/3YnI82RyVuICoUygq5ce8GdA7C5j4kVOr+BJqxVMBnlhrE4uUeXkLJkD
+	w1GdNcK+ZbOHs/OOz+wYfzOUIYnTNMuW9lwC7u3rU4LTVIkHgqYj6pU/sYL8DUf+kVUVMz6O6a3
+	II8k4vkJzmIq4Kce2iTnTz2yRQwzejcPJdLPg1fyLiKRiMVGtGXISjdeC2jl5PKi3QqQQIk4STl
+	SBHczY40IeYToggHpdOl+tz8TyPxbX8uYvKzDvh4ywjV4AnmNsAY=
+X-Received: by 2002:a17:90b:2ccb:b0:354:bfb7:db1a with SMTP id 98e67ed59e1d1-35c30145afdmr11403843a91.31.1774881589943;
+        Mon, 30 Mar 2026 07:39:49 -0700 (PDT)
+X-Received: by 2002:a17:90b:2ccb:b0:354:bfb7:db1a with SMTP id 98e67ed59e1d1-35c30145afdmr11403509a91.31.1774881582117;
+        Mon, 30 Mar 2026 07:39:42 -0700 (PDT)
+Received: from [10.217.223.121] ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-c76916d26dbsm7219239a12.13.2026.03.30.07.39.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 30 Mar 2026 07:39:41 -0700 (PDT)
+Message-ID: <a616c056-f9aa-420c-a543-7f1539e9e886@oss.qualcomm.com>
+Date: Mon, 30 Mar 2026 20:09:35 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260219-sm8550-ddr-bw-scaling-v3-2-75c19152e921@gmail.com>
-X-Spamd-Result: default: False [-0.16 / 15.00];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 1/3] soc: qcom: ice: Add OPP-based clock scaling
+ support for ICE
+To: Abhinaba Rakshit <abhinaba.rakshit@oss.qualcomm.com>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Neeraj Soni <neeraj.soni@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-scsi@vger.kernel.org
+References: <20260302-enable-ufs-ice-clock-scaling-v7-0-669b96ecadd8@oss.qualcomm.com>
+ <20260302-enable-ufs-ice-clock-scaling-v7-1-669b96ecadd8@oss.qualcomm.com>
+Content-Language: en-US
+From: Harshal Dev <harshal.dev@oss.qualcomm.com>
+In-Reply-To: <20260302-enable-ufs-ice-clock-scaling-v7-1-669b96ecadd8@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzMwMDExNCBTYWx0ZWRfX2jVPu5XYcBae
+ XOfpLg6L3iEX7V+Wt/pk0LuHozTX7Cvu/CJcufi9H7bvxLg23m0EbV+37xRn2KHQBv8NeGs+4FE
+ IMdNMMxJlO0uA88CnkA2dx/8oEXnrzgzIJ6I3hJoPrQzoZr84Oj1sz8OmnOxP8u3as0jnD3o6k3
+ +mof7fsCkdOZqFlxFx/lvb+g2Tyh19a349CwziC3PuR5NwcFDhOcaGSFsqKjgDSz6kI0cTbc1b4
+ 4Ku0YEEzwRX2FrYp+XEXqcTyxN3JjW6FmxwKdCEwS4U80ICmzKcM9VqkOnilvGxrquSvArsp1Vf
+ 2bxhmbApfyp6NvokMvrJtW58K0v5ilKaNFQ00PxRODty6wKfgHXg0YEPWVFK3ccpEHOrosl4VgN
+ vxjwyd8acECpnFtQJ76BMm7V387li5DujtfGN36r9iE8YSCyVQjuRgtc2/HNqKikVAbG8vbeayJ
+ djxiJ0kNGjWeMvVo9EQ==
+X-Authority-Analysis: v=2.4 cv=AZS83nXG c=1 sm=1 tr=0 ts=69ca8b37 cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=BG8uRRCXphxkixnqWPcA:9 a=QEXdDO2ut3YA:10
+ a=rl5im9kqc5Lf4LNbBjHf:22
+X-Proofpoint-GUID: Ri3G3SXqXAyVEkSSsnL9B627E-LINx3D
+X-Proofpoint-ORIG-GUID: Ri3G3SXqXAyVEkSSsnL9B627E-LINx3D
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-29_05,2026-03-28_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 phishscore=0 priorityscore=1501 clxscore=1015
+ impostorscore=0 suspectscore=0 bulkscore=0 adultscore=0 malwarescore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
+ definitions=main-2603300114
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	MID_RHS_NOT_FQDN(0.50)[];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-100819-lists,linux-arm-msm=lfdr.de];
-	RCPT_COUNT_TWELVE(0.00)[13];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_TO(0.00)[gmail.com];
-	RCVD_COUNT_THREE(0.00)[4];
-	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-100820-lists,linux-arm-msm=lfdr.de];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:dkim,qualcomm.com:email];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	FROM_NEQ_ENVFROM(0.00)[harshal.dev@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: B5CB435D579
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 6C9DD35D30A
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Thu, Feb 19, 2026 at 10:07:40PM -0600, Aaron Kling via B4 Relay wrote:
-> From: Aaron Kling <webgeek1234@gmail.com>
-> 
-> Add the OPP tables for each CPU clusters (cpu0-1-2, cpu3-4-5-6 & cpu7)
-> to permit scaling the Last Level Cache Controller (LLCC), DDR and L3 cache
-> frequency by aggregating bandwidth requests of all CPU core with referenc
-> to the current OPP they are configured in by the LMH/EPSS hardware.
-> 
-> The effect is a proper caches & DDR frequency scaling when CPU cores
-> changes frequency.
-> 
-> The OPP tables were built using the downstream memlat ddr, llcc & l3
-> tables for each cluster types with the actual EPSS cpufreq LUT tables
-> from running a QCS8550 device.
-> 
-> Also add the OSC L3 Cache controller node.
-> 
-> Also add the interconnect entry for each cpu, with 3 different paths:
-> - CPU to Last Level Cache Controller (LLCC)
-> - Last Level Cache Controller (LLCC) to DDR
-> - L3 Cache from CPU to DDR interface
-> 
+Hi Abhinaba,
 
-"8 out of 11 hunks FAILED", it seems things moved since you wrote this.
-Can you please help me by rebasing this onto linux-next and resubmitting
-it?
+On 3/2/2026 4:19 PM, Abhinaba Rakshit wrote:
+> Register optional operation-points-v2 table for ICE device
+> during device probe.
+> 
+> Introduce clock scaling API qcom_ice_scale_clk which scale ICE
+> core clock based on the target frequency provided and if a valid
+> OPP-table is registered. Use round_ceil passed to decide on the
+> rounding of the clock freq against OPP-table. Disable clock scaling
+> if OPP-table is not registered.
+> 
+> When an ICE-device specific OPP table is available, use the PM OPP
+> framework to manage frequency scaling and maintain proper power-domain
+> constraints.
+> 
+> Also, ensure to drop the votes in suspend to prevent power/thermal
+> retention. Subsequently restore the frequency in resume from
+> core_clk_freq which stores the last ICE core clock operating frequency.
+> 
+> Signed-off-by: Abhinaba Rakshit <abhinaba.rakshit@oss.qualcomm.com>
+> ---
+>  drivers/soc/qcom/ice.c | 82 ++++++++++++++++++++++++++++++++++++++++++++++++--
+>  include/soc/qcom/ice.h |  2 ++
+>  2 files changed, 81 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/ice.c
+> index b203bc685cadd21d6f96eb1799963a13db4b2b72..7976a18d9a4cda1ad6b62b66ce011e244d0f6856 100644
+> --- a/drivers/soc/qcom/ice.c
+> +++ b/drivers/soc/qcom/ice.c
+> @@ -16,6 +16,7 @@
+>  #include <linux/of.h>
+>  #include <linux/of_platform.h>
+>  #include <linux/platform_device.h>
+> +#include <linux/pm_opp.h>
+>  
+>  #include <linux/firmware/qcom/qcom_scm.h>
+>  
+> @@ -111,6 +112,8 @@ struct qcom_ice {
+>  	bool use_hwkm;
+>  	bool hwkm_init_complete;
+>  	u8 hwkm_version;
+> +	unsigned long core_clk_freq;
+> +	bool has_opp;
+>  };
+>  
+>  static bool qcom_ice_check_supported(struct qcom_ice *ice)
+> @@ -310,6 +313,10 @@ int qcom_ice_resume(struct qcom_ice *ice)
+>  	struct device *dev = ice->dev;
+>  	int err;
+>  
+> +	/* Restore the ICE core clk freq */
+> +	if (ice->has_opp && ice->core_clk_freq)
+> +		dev_pm_opp_set_rate(ice->dev, ice->core_clk_freq);
+> +
+>  	err = clk_prepare_enable(ice->core_clk);
+>  	if (err) {
+>  		dev_err(dev, "failed to enable core clock (%d)\n",
+> @@ -324,6 +331,11 @@ EXPORT_SYMBOL_GPL(qcom_ice_resume);
+>  int qcom_ice_suspend(struct qcom_ice *ice)
+>  {
+>  	clk_disable_unprepare(ice->core_clk);
+> +
+> +	/* Drop the clock votes while suspend */
+> +	if (ice->has_opp)
+> +		dev_pm_opp_set_rate(ice->dev, 0);
+> +
+>  	ice->hwkm_init_complete = false;
+>  
+>  	return 0;
+> @@ -549,10 +561,54 @@ int qcom_ice_import_key(struct qcom_ice *ice,
+>  }
+>  EXPORT_SYMBOL_GPL(qcom_ice_import_key);
+>  
+> +/**
+> + * qcom_ice_scale_clk() - Scale ICE clock for DVFS-aware operations
+> + * @ice: ICE driver data
+> + * @target_freq: requested frequency in Hz
+> + * @round_ceil: when true, selects nearest freq >= @target_freq;
+> + *              otherwise, selects nearest freq <= @target_freq
+> + *
+> + * Selects an OPP frequency based on @target_freq and the rounding direction
+> + * specified by @round_ceil, then programs it using dev_pm_opp_set_rate(),
+> + * including any voltage or power-domain transitions handled by the OPP
+> + * framework. Updates ice->core_clk_freq on success.
+> + *
+> + * Return: 0 on success; -EOPNOTSUPP if no OPP table; -EINVAL in-case of
+> + *         incorrect flags; or error from dev_pm_opp_set_rate()/OPP lookup.
+> + */
+> +int qcom_ice_scale_clk(struct qcom_ice *ice, unsigned long target_freq,
+> +		       bool round_ceil)
+
+Any particular reason for choosing round_ceil? Using round_floor would have
+saved the need for caller to pass negation of scale_up.
+
+> +{
+> +	unsigned long ice_freq = target_freq;
+> +	struct dev_pm_opp *opp;
+> +	int ret;
+> +
+> +	if (!ice->has_opp)
+> +		return -EOPNOTSUPP;
+> +
+> +	if (round_ceil)
+> +		opp = dev_pm_opp_find_freq_ceil(ice->dev, &ice_freq);
+> +	else
+> +		opp = dev_pm_opp_find_freq_floor(ice->dev, &ice_freq);
+> +
+> +	if (IS_ERR(opp))
+> +		return PTR_ERR(opp);
+> +	dev_pm_opp_put(opp);
+> +
+> +	ret = dev_pm_opp_set_rate(ice->dev, ice_freq);
+> +	if (!ret)
+> +		ice->core_clk_freq = ice_freq;
+
+Nit: Follow same error handling pattern everywhere in the driver.
+	if (ret) {
+		dev_err(dev, "error");
+		return ret;
+	}
+
+> +
+> +	return ret;
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_ice_scale_clk);
+> +
+>  static struct qcom_ice *qcom_ice_create(struct device *dev,
+> -					void __iomem *base)
+> +					void __iomem *base,
+> +					bool is_legacy_binding)
+
+You don't need to introduce is_legacy_binding.
+
+Since you only need to add the OPP table when this function gets called from ICE probe,
+you should not touch this function. Instead, you should call devm_pm_opp_of_add_table()
+in ICE probe before calling qcom_ice_create() then once qcom_ice_create() is success, you
+can store the clk rate in the returned qcom_ice *engine ptr by calling clk_get_rate().
+
+>  {
+>  	struct qcom_ice *engine;
+> +	int err;
+>  
+>  	if (!qcom_scm_is_available())
+>  		return ERR_PTR(-EPROBE_DEFER);
+> @@ -584,6 +640,26 @@ static struct qcom_ice *qcom_ice_create(struct device *dev,
+>  	if (IS_ERR(engine->core_clk))
+>  		return ERR_CAST(engine->core_clk);
+>  
+> +	/*
+> +	 * Register the OPP table only when ICE is described as a standalone
+> +	 * device node. Older platforms place ICE inside the storage controller
+> +	 * node, so they don't need an OPP table here, as they are handled in
+> +	 * storage controller.
+> +	 */
+> +	if (!is_legacy_binding) {
+> +		/* OPP table is optional */
+> +		err = devm_pm_opp_of_add_table(dev);
+> +		if (err && err != -ENODEV) {
+> +			dev_err(dev, "Invalid OPP table in Device tree\n");
+> +			return ERR_PTR(err);
+> +		}
+> +		engine->has_opp = (err == 0);
+
+Let's keep it readable and simple. engine->has_opps = true; here and false in error handle above.
+
+> +
+> +		if (!engine->has_opp)
+> +			dev_info(dev, "ICE OPP table is not registered, please update your DT\n");
+
+Since OPP table is optional, I don't understand the reason for requesting the user to add one.
+
+> +	}
+> +
+> +	engine->core_clk_freq = clk_get_rate(engine->core_clk);
+>  	if (!qcom_ice_check_supported(engine))
+>  		return ERR_PTR(-EOPNOTSUPP);
+>  
+> @@ -628,7 +704,7 @@ static struct qcom_ice *of_qcom_ice_get(struct device *dev)
+>  			return ERR_CAST(base);
+>  
+>  		/* create ICE instance using consumer dev */
+> -		return qcom_ice_create(&pdev->dev, base);
+> +		return qcom_ice_create(&pdev->dev, base, true);
+>  	}
+>  
+>  	/*
+> @@ -725,7 +801,7 @@ static int qcom_ice_probe(struct platform_device *pdev)
+>  		return PTR_ERR(base);
+>  	}
+>  
+> -	engine = qcom_ice_create(&pdev->dev, base);
+> +	engine = qcom_ice_create(&pdev->dev, base, false);
+
+Change not needed as per above comment.
 
 Regards,
-Bjorn
+Harshal
 
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-HDK
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> Signed-off-by: Aaron Kling <webgeek1234@gmail.com>
-> ---
->  arch/arm64/boot/dts/qcom/sm8550.dtsi | 367 +++++++++++++++++++++++++++++++++++
->  1 file changed, 367 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> index e3f93f4f412ded9583a6bc9215185a0daf5f1b57..de4d43f7b8d2416997db70c98b0fc36d25f3c2a6 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> @@ -17,6 +17,7 @@
->  #include <dt-bindings/interrupt-controller/arm-gic.h>
->  #include <dt-bindings/interconnect/qcom,icc.h>
->  #include <dt-bindings/interconnect/qcom,sm8550-rpmh.h>
-> +#include <dt-bindings/interconnect/qcom,osm-l3.h>
->  #include <dt-bindings/mailbox/qcom-ipcc.h>
->  #include <dt-bindings/power/qcom-rpmpd.h>
->  #include <dt-bindings/power/qcom,rpmhpd.h>
-> @@ -78,6 +79,13 @@ cpu0: cpu@0 {
->  			qcom,freq-domain = <&cpufreq_hw 0>;
->  			capacity-dmips-mhz = <1024>;
->  			dynamic-power-coefficient = <100>;
-> +			operating-points-v2 = <&cpu0_opp_table>;
-> +			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
-> +					 &gem_noc SLAVE_LLCC QCOM_ICC_TAG_ACTIVE_ONLY>,
-> +					<&mc_virt MASTER_LLCC QCOM_ICC_TAG_ACTIVE_ONLY
-> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ACTIVE_ONLY>,
-> +					<&epss_l3 MASTER_EPSS_L3_APPS
-> +					 &epss_l3 SLAVE_EPSS_L3_SHARED>;
->  			#cooling-cells = <2>;
->  			l2_0: l2-cache {
->  				compatible = "cache";
-> @@ -104,6 +112,13 @@ cpu1: cpu@100 {
->  			qcom,freq-domain = <&cpufreq_hw 0>;
->  			capacity-dmips-mhz = <1024>;
->  			dynamic-power-coefficient = <100>;
-> +			operating-points-v2 = <&cpu0_opp_table>;
-> +			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
-> +					 &gem_noc SLAVE_LLCC QCOM_ICC_TAG_ACTIVE_ONLY>,
-> +					<&mc_virt MASTER_LLCC QCOM_ICC_TAG_ACTIVE_ONLY
-> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ACTIVE_ONLY>,
-> +					<&epss_l3 MASTER_EPSS_L3_APPS
-> +					 &epss_l3 SLAVE_EPSS_L3_SHARED>;
->  			#cooling-cells = <2>;
->  			l2_100: l2-cache {
->  				compatible = "cache";
-> @@ -125,6 +140,13 @@ cpu2: cpu@200 {
->  			qcom,freq-domain = <&cpufreq_hw 0>;
->  			capacity-dmips-mhz = <1024>;
->  			dynamic-power-coefficient = <100>;
-> +			operating-points-v2 = <&cpu0_opp_table>;
-> +			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
-> +					 &gem_noc SLAVE_LLCC QCOM_ICC_TAG_ACTIVE_ONLY>,
-> +					<&mc_virt MASTER_LLCC QCOM_ICC_TAG_ACTIVE_ONLY
-> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ACTIVE_ONLY>,
-> +					<&epss_l3 MASTER_EPSS_L3_APPS
-> +					 &epss_l3 SLAVE_EPSS_L3_SHARED>;
->  			#cooling-cells = <2>;
->  			l2_200: l2-cache {
->  				compatible = "cache";
-> @@ -146,6 +168,13 @@ cpu3: cpu@300 {
->  			qcom,freq-domain = <&cpufreq_hw 1>;
->  			capacity-dmips-mhz = <1792>;
->  			dynamic-power-coefficient = <270>;
-> +			operating-points-v2 = <&cpu3_opp_table>;
-> +			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
-> +					 &gem_noc SLAVE_LLCC QCOM_ICC_TAG_ACTIVE_ONLY>,
-> +					<&mc_virt MASTER_LLCC QCOM_ICC_TAG_ACTIVE_ONLY
-> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ACTIVE_ONLY>,
-> +					<&epss_l3 MASTER_EPSS_L3_APPS
-> +					 &epss_l3 SLAVE_EPSS_L3_SHARED>;
->  			#cooling-cells = <2>;
->  			l2_300: l2-cache {
->  				compatible = "cache";
-> @@ -167,6 +196,13 @@ cpu4: cpu@400 {
->  			qcom,freq-domain = <&cpufreq_hw 1>;
->  			capacity-dmips-mhz = <1792>;
->  			dynamic-power-coefficient = <270>;
-> +			operating-points-v2 = <&cpu3_opp_table>;
-> +			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
-> +					 &gem_noc SLAVE_LLCC QCOM_ICC_TAG_ACTIVE_ONLY>,
-> +					<&mc_virt MASTER_LLCC QCOM_ICC_TAG_ACTIVE_ONLY
-> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ACTIVE_ONLY>,
-> +					<&epss_l3 MASTER_EPSS_L3_APPS
-> +					 &epss_l3 SLAVE_EPSS_L3_SHARED>;
->  			#cooling-cells = <2>;
->  			l2_400: l2-cache {
->  				compatible = "cache";
-> @@ -188,6 +224,13 @@ cpu5: cpu@500 {
->  			qcom,freq-domain = <&cpufreq_hw 1>;
->  			capacity-dmips-mhz = <1792>;
->  			dynamic-power-coefficient = <270>;
-> +			operating-points-v2 = <&cpu3_opp_table>;
-> +			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
-> +					 &gem_noc SLAVE_LLCC QCOM_ICC_TAG_ACTIVE_ONLY>,
-> +					<&mc_virt MASTER_LLCC QCOM_ICC_TAG_ACTIVE_ONLY
-> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ACTIVE_ONLY>,
-> +					<&epss_l3 MASTER_EPSS_L3_APPS
-> +					 &epss_l3 SLAVE_EPSS_L3_SHARED>;
->  			#cooling-cells = <2>;
->  			l2_500: l2-cache {
->  				compatible = "cache";
-> @@ -209,6 +252,13 @@ cpu6: cpu@600 {
->  			qcom,freq-domain = <&cpufreq_hw 1>;
->  			capacity-dmips-mhz = <1792>;
->  			dynamic-power-coefficient = <270>;
-> +			operating-points-v2 = <&cpu3_opp_table>;
-> +			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
-> +					 &gem_noc SLAVE_LLCC QCOM_ICC_TAG_ACTIVE_ONLY>,
-> +					<&mc_virt MASTER_LLCC QCOM_ICC_TAG_ACTIVE_ONLY
-> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ACTIVE_ONLY>,
-> +					<&epss_l3 MASTER_EPSS_L3_APPS
-> +					 &epss_l3 SLAVE_EPSS_L3_SHARED>;
->  			#cooling-cells = <2>;
->  			l2_600: l2-cache {
->  				compatible = "cache";
-> @@ -230,6 +280,13 @@ cpu7: cpu@700 {
->  			qcom,freq-domain = <&cpufreq_hw 2>;
->  			capacity-dmips-mhz = <1894>;
->  			dynamic-power-coefficient = <588>;
-> +			operating-points-v2 = <&cpu7_opp_table>;
-> +			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
-> +					 &gem_noc SLAVE_LLCC QCOM_ICC_TAG_ACTIVE_ONLY>,
-> +					<&mc_virt MASTER_LLCC QCOM_ICC_TAG_ACTIVE_ONLY
-> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ACTIVE_ONLY>,
-> +					<&epss_l3 MASTER_EPSS_L3_APPS
-> +					 &epss_l3 SLAVE_EPSS_L3_SHARED>;
->  			#cooling-cells = <2>;
->  			l2_700: l2-cache {
->  				compatible = "cache";
-> @@ -397,6 +454,306 @@ memory@a0000000 {
->  		reg = <0 0xa0000000 0 0>;
->  	};
+>  	if (IS_ERR(engine))
+>  		return PTR_ERR(engine);
 >  
-> +	cpu0_opp_table: opp-table-cpu0 {
-> +		compatible = "operating-points-v2";
-> +		opp-shared;
-> +
-> +		opp-307200000 {
-> +			opp-hz = /bits/ 64 <307200000>;
-> +			opp-peak-kBps = <(300000 * 16) (547000 * 4) (307200 * 32)>;
-> +		};
-> +
-> +		opp-441600000 {
-> +			opp-hz = /bits/ 64 <441600000>;
-> +			opp-peak-kBps = <(300000 * 16) (547000 * 4) (384000 * 32)>;
-> +		};
-> +
-> +		opp-556800000 {
-> +			opp-hz = /bits/ 64 <556800000>;
-> +			opp-peak-kBps = <(300000 * 16) (547000 * 4) (499200 * 32)>;
-> +		};
-> +
-> +		opp-672000000 {
-> +			opp-hz = /bits/ 64 <672000000>;
-> +			opp-peak-kBps = <(300000 * 16) (547000 * 4) (499200 * 32)>;
-> +		};
-> +
-> +		opp-787200000 {
-> +			opp-hz = /bits/ 64 <787200000>;
-> +			opp-peak-kBps = <(300000 * 16) (547000 * 4) (729600 * 32)>;
-> +		};
-> +
-> +		opp-902400000 {
-> +			opp-hz = /bits/ 64 <902400000>;
-> +			opp-peak-kBps = <(300000 * 16) (547000 * 4) (844800 * 32)>;
-> +		};
-> +
-> +		opp-1017600000 {
-> +			opp-hz = /bits/ 64 <1017600000>;
-> +			opp-peak-kBps = <(300000 * 16) (547000 * 4) (940800 * 32)>;
-> +		};
-> +
-> +		opp-1113600000 {
-> +			opp-hz = /bits/ 64 <1113600000>;
-> +			opp-peak-kBps = <(300000 * 16) (547000 * 4) (1056000 * 32)>;
-> +		};
-> +
-> +		opp-1228800000 {
-> +			opp-hz = /bits/ 64 <1228800000>;
-> +			opp-peak-kBps = <(300000 * 16) (547000 * 4) (1152000 * 32)>;
-> +		};
-> +
-> +		opp-1344000000 {
-> +			opp-hz = /bits/ 64 <1344000000>;
-> +			opp-peak-kBps = <(300000 * 16) (547000 * 4) (1267200 * 32)>;
-> +		};
-> +
-> +		opp-1459200000 {
-> +			opp-hz = /bits/ 64 <1459200000>;
-> +			opp-peak-kBps = <(300000 * 16) (547000 * 4) (1267200 * 32)>;
-> +		};
-> +
-> +		opp-1555200000 {
-> +			opp-hz = /bits/ 64 <1555200000>;
-> +			opp-peak-kBps = <(466000 * 16) (768000 * 4) (1478400 * 32)>;
-> +		};
-> +
-> +		opp-1670400000 {
-> +			opp-hz = /bits/ 64 <1670400000>;
-> +			opp-peak-kBps = <(466000 * 16) (768000 * 4) (1478400 * 32)>;
-> +		};
-> +
-> +		opp-1785600000 {
-> +			opp-hz = /bits/ 64 <1785600000>;
-> +			opp-peak-kBps = <(466000 * 16) (768000 * 4) (1478400 * 32)>;
-> +		};
-> +
-> +		opp-1900800000 {
-> +			opp-hz = /bits/ 64 <1900800000>;
-> +			opp-peak-kBps = <(466000 * 16) (768000 * 4) (1689600 * 32)>;
-> +		};
-> +
-> +		opp-2016000000 {
-> +			opp-hz = /bits/ 64 <2016000000>;
-> +			opp-peak-kBps = <(600000 * 16) (1555000 * 4) (1804800 * 32)>;
-> +		};
-> +	};
-> +
-> +	cpu3_opp_table: opp-table-cpu3 {
-> +		compatible = "operating-points-v2";
-> +		opp-shared;
-> +
-> +		opp-499200000 {
-> +			opp-hz = /bits/ 64 <499200000>;
-> +			opp-peak-kBps = <(300000 * 16) (547000 * 4) (307200 * 32)>;
-> +		};
-> +
-> +		opp-614400000 {
-> +			opp-hz = /bits/ 64 <614400000>;
-> +			opp-peak-kBps = <(300000 * 16) (547000 * 4) (499200 * 32)>;
-> +		};
-> +
-> +		opp-729600000 {
-> +			opp-hz = /bits/ 64 <729600000>;
-> +			opp-peak-kBps = <(300000 * 16) (547000 * 4) (499200 * 32)>;
-> +		};
-> +
-> +		opp-844800000 {
-> +			opp-hz = /bits/ 64 <844800000>;
-> +			opp-peak-kBps = <(300000 * 16) (547000 * 4) (499200 * 32)>;
-> +		};
-> +
-> +		opp-940800000 {
-> +			opp-hz = /bits/ 64 <940800000>;
-> +			opp-peak-kBps = <(300000 * 16) (768000 * 4) (729600 * 32)>;
-> +		};
-> +
-> +		opp-1056000000 {
-> +			opp-hz = /bits/ 64 <1056000000>;
-> +			opp-peak-kBps = <(300000 * 16) (768000 * 4) (729600 * 32)>;
-> +		};
-> +
-> +		opp-1171200000 {
-> +			opp-hz = /bits/ 64 <1171200000>;
-> +			opp-peak-kBps = <(466000 * 16) (1555000 * 4) (940800 * 32)>;
-> +		};
-> +
-> +		opp-1286400000 {
-> +			opp-hz = /bits/ 64 <1286400000>;
-> +			opp-peak-kBps = <(466000 * 16) (1555000 * 4) (940800 * 32)>;
-> +		};
-> +
-> +		opp-1401600000 {
-> +			opp-hz = /bits/ 64 <1401600000>;
-> +			opp-peak-kBps = <(600000 * 16) (1708000 * 4) (1056000 * 32)>;
-> +		};
-> +
-> +		opp-1536000000 {
-> +			opp-hz = /bits/ 64 <1536000000>;
-> +			opp-peak-kBps = <(600000 * 16) (1708000 * 4) (1056000 * 32)>;
-> +		};
-> +
-> +		opp-1651200000 {
-> +			opp-hz = /bits/ 64 <1651200000>;
-> +			opp-peak-kBps = <(600000 * 16) (1708000 * 4) (1267200 * 32)>;
-> +		};
-> +
-> +		opp-1785600000 {
-> +			opp-hz = /bits/ 64 <1785600000>;
-> +			opp-peak-kBps = <(600000 * 16) (1708000 * 4) (1267200 * 32)>;
-> +		};
-> +
-> +		opp-1920000000 {
-> +			opp-hz = /bits/ 64 <1920000000>;
-> +			opp-peak-kBps = <(806000 * 16) (2736000 * 4) (1267200 * 32)>;
-> +		};
-> +
-> +		opp-2054400000 {
-> +			opp-hz = /bits/ 64 <2054400000>;
-> +			opp-peak-kBps = <(806000 * 16) (2736000 * 4) (1478400 * 32)>;
-> +		};
-> +
-> +		opp-2188800000 {
-> +			opp-hz = /bits/ 64 <2188800000>;
-> +			opp-peak-kBps = <(806000 * 16) (2736000 * 4) (1478400 * 32)>;
-> +		};
-> +
-> +		opp-2323200000 {
-> +			opp-hz = /bits/ 64 <2323200000>;
-> +			opp-peak-kBps = <(806000 * 16) (2736000 * 4) (1478400 * 32)>;
-> +		};
-> +
-> +		opp-2457600000 {
-> +			opp-hz = /bits/ 64 <2457600000>;
-> +			opp-peak-kBps = <(806000 * 16) (2736000 * 4) (1478400 * 32)>;
-> +		};
-> +
-> +		opp-2592000000 {
-> +			opp-hz = /bits/ 64 <2592000000>;
-> +			opp-peak-kBps = <(806000 * 16) (2736000 * 4) (1478400 * 32)>;
-> +		};
-> +
-> +		opp-2707200000 {
-> +			opp-hz = /bits/ 64 <2707200000>;
-> +			opp-peak-kBps = <(933000 * 16) (2736000 * 4) (1478400 * 32)>;
-> +		};
-> +
-> +		opp-2803200000 {
-> +			opp-hz = /bits/ 64 <2803200000>;
-> +			opp-peak-kBps = <(933000 * 16) (3686000 * 4) (1689600 * 32)>;
-> +		};
-> +	};
-> +
-> +	cpu7_opp_table: opp-table-cpu7 {
-> +		compatible = "operating-points-v2";
-> +		opp-shared;
-> +
-> +		opp-595200000 {
-> +			opp-hz = /bits/ 64 <595200000>;
-> +			opp-peak-kBps = <(300000 * 16) (547000 * 4) (307200 * 32)>;
-> +		};
-> +
-> +		opp-729600000 {
-> +			opp-hz = /bits/ 64 <729600000>;
-> +			opp-peak-kBps = <(300000 * 16) (547000 * 4) (499200 * 32)>;
-> +		};
-> +
-> +		opp-864000000 {
-> +			opp-hz = /bits/ 64 <864000000>;
-> +			opp-peak-kBps = <(300000 * 16) (547000 * 4) (499200 * 32)>;
-> +		};
-> +
-> +		opp-998400000 {
-> +			opp-hz = /bits/ 64 <998400000>;
-> +			opp-peak-kBps = <(300000 * 16) (768000 * 4) (729600 * 32)>;
-> +		};
-> +
-> +		opp-1132800000 {
-> +			opp-hz = /bits/ 64 <1132800000>;
-> +			opp-peak-kBps = <(300000 * 16) (768000 * 4) (729600 * 32)>;
-> +		};
-> +
-> +		opp-1248000000 {
-> +			opp-hz = /bits/ 64 <1248000000>;
-> +			opp-peak-kBps = <(466000 * 16) (1555000 * 4) (940800 * 32)>;
-> +		};
-> +
-> +		opp-1363200000 {
-> +			opp-hz = /bits/ 64 <1363200000>;
-> +			opp-peak-kBps = <(466000 * 16) (1555000 * 4) (940800 * 32)>;
-> +		};
-> +
-> +		opp-1478400000 {
-> +			opp-hz = /bits/ 64 <1478400000>;
-> +			opp-peak-kBps = <(600000 * 16) (1708000 * 4) (1056000 * 32)>;
-> +		};
-> +
-> +		opp-1593600000 {
-> +			opp-hz = /bits/ 64 <1593600000>;
-> +			opp-peak-kBps = <(600000 * 16) (1708000 * 4) (1056000 * 32)>;
-> +		};
-> +
-> +		opp-1708800000 {
-> +			opp-hz = /bits/ 64 <1708800000>;
-> +			opp-peak-kBps = <(600000 * 16) (1708000 * 4) (1267200 * 32)>;
-> +		};
-> +
-> +		opp-1843200000 {
-> +			opp-hz = /bits/ 64 <1843200000>;
-> +			opp-peak-kBps = <(600000 * 16) (1708000 * 4) (1267200 * 32)>;
-> +		};
-> +
-> +		opp-1977600000 {
-> +			opp-hz = /bits/ 64 <1977600000>;
-> +			opp-peak-kBps = <(806000 * 16) (2736000 * 4) (1267200 * 32)>;
-> +		};
-> +
-> +		opp-2092800000 {
-> +			opp-hz = /bits/ 64 <2092800000>;
-> +			opp-peak-kBps = <(806000 * 16) (2736000 * 4) (1478400 * 32)>;
-> +		};
-> +
-> +		opp-2227200000 {
-> +			opp-hz = /bits/ 64 <2227200000>;
-> +			opp-peak-kBps = <(806000 * 16) (2736000 * 4) (1478400 * 32)>;
-> +		};
-> +
-> +		opp-2342400000 {
-> +			opp-hz = /bits/ 64 <2342400000>;
-> +			opp-peak-kBps = <(806000 * 16) (2736000 * 4) (1478400 * 32)>;
-> +		};
-> +
-> +		opp-2476800000 {
-> +			opp-hz = /bits/ 64 <2476800000>;
-> +			opp-peak-kBps = <(806000 * 16) (2736000 * 4) (1478400 * 32)>;
-> +		};
-> +
-> +		opp-2592000000 {
-> +			opp-hz = /bits/ 64 <2592000000>;
-> +			opp-peak-kBps = <(806000 * 16) (2736000 * 4) (1478400 * 32)>;
-> +		};
-> +
-> +		opp-2726400000 {
-> +			opp-hz = /bits/ 64 <2726400000>;
-> +			opp-peak-kBps = <(933000 * 16) (3686000 * 4) (1478400 * 32)>;
-> +		};
-> +
-> +		opp-2841600000 {
-> +			opp-hz = /bits/ 64 <2841600000>;
-> +			opp-peak-kBps = <(933000 * 16) (3686000 * 4) (1689600 * 32)>;
-> +		};
-> +
-> +		opp-2956800000 {
-> +			opp-hz = /bits/ 64 <2956800000>;
-> +			opp-peak-kBps = <(933000 * 16) (3686000 * 4) (1689600 * 32)>;
-> +		};
-> +
-> +		opp-3187200000 {
-> +			opp-hz = /bits/ 64 <3187200000>;
-> +			opp-peak-kBps = <(933000 * 16) (3686000 * 4) (1689600 * 32)>;
-> +		};
-> +	};
-> +
->  	pmu-a510 {
->  		compatible = "arm,cortex-a510-pmu";
->  		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW &ppi_cluster0>;
-> @@ -5437,6 +5794,16 @@ rpmhpd_opp_turbo_l1: opp-416 {
->  			};
->  		};
+> diff --git a/include/soc/qcom/ice.h b/include/soc/qcom/ice.h
+> index 4bee553f0a59d86ec6ce20f7c7b4bce28a706415..4eb58a264d416e71228ed4b13e7f53c549261fdc 100644
+> --- a/include/soc/qcom/ice.h
+> +++ b/include/soc/qcom/ice.h
+> @@ -30,5 +30,7 @@ int qcom_ice_import_key(struct qcom_ice *ice,
+>  			const u8 *raw_key, size_t raw_key_size,
+>  			u8 lt_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE]);
+>  struct qcom_ice *devm_of_qcom_ice_get(struct device *dev);
+> +int qcom_ice_scale_clk(struct qcom_ice *ice, unsigned long target_freq,
+> +		       bool round_ceil);
 >  
-> +		epss_l3: interconnect@17d90000 {
-> +			compatible = "qcom,sm8550-epss-l3", "qcom,epss-l3";
-> +			reg = <0 0x17d90000 0 0x1000>;
-> +
-> +			clocks = <&bi_tcxo_div2>, <&gcc GCC_GPLL0>;
-> +			clock-names = "xo", "alternate";
-> +
-> +			#interconnect-cells = <1>;
-> +		};
-> +
->  		cpufreq_hw: cpufreq@17d91000 {
->  			compatible = "qcom,sm8550-cpufreq-epss", "qcom,cpufreq-epss";
->  			reg = <0 0x17d91000 0 0x1000>,
+>  #endif /* __QCOM_ICE_H__ */
 > 
-> -- 
-> 2.52.0
-> 
-> 
+
 
