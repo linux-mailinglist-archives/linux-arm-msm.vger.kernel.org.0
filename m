@@ -1,189 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-100824-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100825-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id ILKnEkCVymkR+QUAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100824-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 17:22:40 +0200
+	id 0As+O+Kfymmg+QUAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100825-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 18:08:02 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F98935DB83
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 17:22:39 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7221535E682
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 18:08:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id D515930F660B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 15:04:05 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id A6E5F3075EC5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Mar 2026 16:01:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B2CF334C1F;
-	Mon, 30 Mar 2026 15:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85A56376471;
+	Mon, 30 Mar 2026 16:01:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="I4nZllhI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P0UuEGI0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-179.mta1.migadu.com (out-179.mta1.migadu.com [95.215.58.179])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FAD3334C05
-	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Mar 2026 15:04:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39775375AC2;
+	Mon, 30 Mar 2026 16:01:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774883045; cv=none; b=XqUSANyp9+jZ45Ch1JHNrqJBA/+29ndcRYl/GH8eEbn4ICEAXYd9k3uD+oVECTOnQTBXKnx5iuw3EXhBuPWStAO9CXkI2r7u8iix96o+c4CmSPuataKKl/WlOtS6RfJbkBh0TOUea8o5yeaZMSslKDzikyx9ONSHUuhu5tb4+Uo=
+	t=1774886508; cv=none; b=p3RlZvO4DE36yfYPapYm5shmlSAh0y4stbEkKeR/TAa6fsUpDO+CoEs4NI5xdkij9BDw8fKGcW0jfocVkSM6ikC6ByzlgvrfQQImZNaYd8rg75RLqT6caqC+RuaPmHXkaFj+uI5aUGxWGq+jBIW5axU53TqfGxq4vpACsNnH+Go=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774883045; c=relaxed/simple;
-	bh=gM4Ie7Og/iKoKDDWUD6FDDjEozPqyYaDYFwjuTmOVFg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OozqAlJoB/9psJluZuZIZn7RrT9PSox0O87yQJaUzwBTb596Y41MKBFSFUqMj6+oSfpNFC9z00lUubwnjNlVtvhNcqHXm6n95R6NTU4ekARLl3dua6W2sNoaE0ZVuUjKiMRgA4W5UKoKApfId1ddaBcD3qk6v5OcH0Zy806v28Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=I4nZllhI; arc=none smtp.client-ip=95.215.58.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
-Message-ID: <8c7bb9f3-2c4f-4dde-a91c-893817070346@packett.cool>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
-	s=key1; t=1774883031;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=yUBhiMS8tYFBBVF/gWovrIjG9TCN/cpqKdIqU7eyxPE=;
-	b=I4nZllhIT5Ca5kVO2IoCNBDAxpI1XRw7Xa5hB6aGnVztKvjluPHKi8i6S9u4Ykg7eaj9a9
-	zBYfxHi6PuC193VrwF3Pqn/W0Fc4cob015AsgiYiiWNIjjXb7rYiXW1UhmqkDKH0PkuTyy
-	R4h4pJQD5Fu3AsCwC+sctdairlatPXN2ZAZbwo7em3AzD5Apf7M3ogZa1JYsRr5sVO3AHA
-	iqU5CU+O3uLnNfYAgZ+rfb5Qp4P8Rlc2lnh8PGC1SGfsYdu0JcZK7+m84OFr9FuBaq+ckg
-	BtIeXz6h8jM+BCz5xCUrMW8/5MmhjdmyH5/CIskktHioO27OlLZf//q5IlkIxg==
-Date: Mon, 30 Mar 2026 12:03:41 -0300
+	s=arc-20240116; t=1774886508; c=relaxed/simple;
+	bh=OXuMsa5n2Xm/MI0IxFyk8N0gF9byKUiTVNZlEV+LcuI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=omSk/EXGzKxRC2K+P+vcRZPAUT2go55skEBt5OqQoWzRV8JAE17JJFTdg6AYrYP9suiGziqWrDgcd3lSmQfilFThIu+0sqzXm3etEjPQFlP+wibFEVsOiXiHdAgidF0L3MegPyk+tdY70BIE7sKSIbnPggprn/rOx5ddYn7f8wg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P0UuEGI0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7377EC19423;
+	Mon, 30 Mar 2026 16:01:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1774886507;
+	bh=OXuMsa5n2Xm/MI0IxFyk8N0gF9byKUiTVNZlEV+LcuI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=P0UuEGI0jABnNRrXlv4iLb93kRFcuQ8G3Sluf6kHe18VDty1zvm6AXK8kGagwg5Dt
+	 AP56FqNfwHagcsOSWDirCbPdQalO+Vi22KeWWkPgJjP+aUFpaYCT6mZ6Ab3RfbpwQp
+	 Q0b85fn52jdtK499HkgS7Shn0CUpUg1hpNPWPu6zgKVkxjlOQT3ZK8UH6GjmzGF7YS
+	 AlGtFhZhRH1KsZt0DSvxjUT/R317hBfcFeB4DlyfhjnNqPNWDePkfNMY8ndARIOwsa
+	 aUlZYs28C4NHd05he1Cjk3w3xLwzh6n/+9FMpYuSfXwSmasSvSbh2Z2Y/Ol675qXMa
+	 x6jSYTD8Tq+hQ==
+From: Bjorn Andersson <andersson@kernel.org>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Taniya Das <taniya.das@oss.qualcomm.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@oss.qualcomm.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: (subset) [PATCH 0/2] arm64: dts: qcom: milos: Add missing CX power domain to GCC
+Date: Mon, 30 Mar 2026 11:01:06 -0500
+Message-ID: <177488647757.633011.15043645952501993441.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260327-dt-fix-milos-eliza-gcc-power-domains-v1-0-f14a22c73fe9@oss.qualcomm.com>
+References: <20260327-dt-fix-milos-eliza-gcc-power-domains-v1-0-f14a22c73fe9@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: Add Motorola edge 30 (dubai) DTS
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Kees Cook <kees@kernel.org>,
- Tony Luck <tony.luck@intel.com>, "Guilherme G. Piccoli" <gpiccoli@igalia.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260329103055.96649-1-val@packett.cool>
- <20260329103055.96649-2-val@packett.cool>
- <5c0747dc-f0de-4b78-b0fd-8f6a6690e86c@oss.qualcomm.com>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Val Packett <val@packett.cool>
-In-Reply-To: <5c0747dc-f0de-4b78-b0fd-8f6a6690e86c@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[packett.cool,quarantine];
-	R_DKIM_ALLOW(-0.20)[packett.cool:s=key1];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-100824-lists,linux-arm-msm=lfdr.de];
-	RCVD_COUNT_THREE(0.00)[3];
+	TAGGED_FROM(0.00)[bounces-100825-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[12];
+	RCPT_COUNT_TWELVE(0.00)[16];
 	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[val@packett.cool,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[packett.cool:+];
+	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.0:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,0.0.0.1:email,packett.cool:dkim,packett.cool:email,packett.cool:mid,e1000000:email]
-X-Rspamd-Queue-Id: 8F98935DB83
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 7221535E682
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 
-On 3/30/26 7:03 AM, Konrad Dybcio wrote:
-> On 3/29/26 12:16 PM, Val Packett wrote:
->> The Motorola edge 30 is a smartphone released in 2022.
->>
->> This commit has the following features working:
->> - Display (simplefb)
->> - Touchscreen
->> - Power and volume buttons
->> - Storage (UFS 3.1)
->> - Battery (ADSP battmgr)
->> - USB (Type-C, 2.0, dual-role)
->> - Wi-Fi and Bluetooth (WCN6750 hw1.0)
->>
->> Signed-off-by: Val Packett <val@packett.cool>
->> ---
+On Fri, 27 Mar 2026 14:13:39 +0200, Abel Vesa wrote:
+> Recently, on Eliza, the CX has been tied up to the GCC.
+> This leads to dt-bindings check failing.
+> 
+> So the schema needs to be fixed. But the schema is same
+> for Milos. So instead of adding an if-clause for Eliza only,
+> tie the CX power domain to the GCC on Milos as well, for the
+> same exact reasons as on Eliza.
+> 
 > [...]
->
->> +/ {
->> +	model = "Motorola edge 30";
-> nit: Google tells me the 'e' in 'Edge' is uppercase
-They do the lowercase thing a lot in the marketing materials but not 
-consistently. I guess it would make sense to ignore that and make it 
-uppercase, sure.
-> [...]
->
->> +		framebuffer0: framebuffer@e1000000 {
->> +			compatible = "simple-framebuffer";
->> +			reg = <0x0 0xe1000000 0x0 (1080 * 2400 * 4)>;
-> Let's drop reg and use the memory-region binding (also drop unit address)
-How come no one told be about memory-region for simplefb before? :D Ack
-> [...]
->> +			ports {
->> +				#address-cells = <1>;
->> +				#size-cells = <0>;
->> +
->> +				port@0 {
->> +					reg = <0>;
->> +
->> +					pmic_glink_hs_in: endpoint {
->> +						remote-endpoint = <&usb_1_dwc3_hs>;
->> +					};
->> +				};
->> +
->> +				port@1 {
->> +					reg = <1>;
-> SBU would be @2
-I was wondering about this, now I see it is specified in the bindings.. 
-Looks like many other dts should be fixed too.
->> +		cont-splash@e1000000 {
-> framebuffer@
->
-> [...]
->
->> +	thermal-zones {
->> +		cam-flash-thermal {
->> +			polling-delay-passive = <0>;
-> that's the default setting, you may drop all polling-delay(-passive) = <0>
-ack
-> [...]
->
->> +&usb_1 {
->> +	/* USB 2.0 only */
->> +	qcom,select-utmi-as-pipe-clk;
->> +	maximum-speed = "high-speed";
->> +
->> +	/* Remove USB3 phy */
->> +	phys = <&usb_1_hsphy>;
->> +	phy-names = "usb2-phy";
-> Is it really not wired up in hw, or do you perhaps have a fake cable?
 
-I didn't even try testing it myself since not even all flagships have 
-USB3 routed these days (hello oneplus) and this is a cheaper 
-upper-mid-range phone.
+Applied, thanks!
 
-USB0_{SS_*,DP_*} are actually NC on the schematic,
+[2/2] arm64: dts: qcom: milos: Add missing CX power domain to GCC
+      commit: e46b48b853122626806d989d5db4ce97eaaac2ca
 
-and in downstream dts there is maximum-speed = "high-speed" and usb-phy 
-= hsphy + nop.
-
-~val
-
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
 
