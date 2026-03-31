@@ -1,126 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-101168-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aDP/Clc6zGn7RQYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101168-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 23:19:19 +0200
+	id WPQgBhc7zGlyRgYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 23:22:31 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A1BD3718B0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 23:19:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 737FC371AA7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 23:22:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id EA6173094A9E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 21:11:27 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 890F8300A126
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 21:16:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 237044014B4;
-	Tue, 31 Mar 2026 21:11:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1600844E045;
+	Tue, 31 Mar 2026 21:16:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oruRYVRl"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o3gTmA2S"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F20EE3A382E;
-	Tue, 31 Mar 2026 21:11:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D299844E04C
+	for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 21:16:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774991487; cv=none; b=nf3QdkuZbcByps2OzovVDG8k1KyUnIJyChqgIxE1KtDoIcYmBo1OkvmAp/Uq8jOflZy1Ee+cLKtiJHQUGZhvxHunFzgH63EF2fvF5qIqGjFkc+eljy07HBkO0S3b3To+0r2lI0wnz11H7hTxinYpIyh7Z2nhNv3YHKsoIbCd52k=
+	t=1774991765; cv=none; b=GteUGni0BIVwYuOgfA66YBgLJ51VFkNES1ZuieP7T9gN4QhgapLc4xp59yCcyI25KJs9rwvYf9sFreov3qZW/x4M6uZgLvSy5clCyq92pRVssgBFnD3+ffR2ddS5UqG50vf1J4twNWEHFt49pJXv1+YPNPjKz2ZPG5WSGAqkAMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774991487; c=relaxed/simple;
-	bh=yCiNDiRwWYA8V81XUtVapuBzqhhbOLmKKLPNrR6585U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SR2rG1aNrwky6tHNlemMv66gVt2iFSaCploxAlwp9cZmEfiJxDjPY8xHq3dpkzlAaDB+V/AU+qXWRp/sH3KzWdRATxMpsGHz6dsatDOwvFfIehVHSrLxIruz5cSDWUx8C1C5ACqKNPaswtCAgcXriSFwdnaDEufgwiOJ6iUQn6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oruRYVRl; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83B19C2BC9E;
-	Tue, 31 Mar 2026 21:11:25 +0000 (UTC)
+	s=arc-20240116; t=1774991765; c=relaxed/simple;
+	bh=/Zuj465z+SJXeuy8BFVva/2T89KUCArNO4FegDfx9oE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=TTmnMxSF01PW6W5t0bEcu6KpRDzyXAbq9nQToATM27ZkC5GtlSqAdqW0tkQFUWhcvJ08KeDTR1cZCAtMWwCYEH46Mt/tOms3fNQIXgQAQWx5xNKX9NsKlCPRifWeX4haM567w2N2Wd0tyoHpVpS3D/L3MFcAQ4w7xVgIGPzWyPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o3gTmA2S; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA640C19423;
+	Tue, 31 Mar 2026 21:16:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774991486;
-	bh=yCiNDiRwWYA8V81XUtVapuBzqhhbOLmKKLPNrR6585U=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=oruRYVRl6wu9qZtxaS0vkscJBdh3H7JqzvxOuuqlDa60av5AbH+RjTctQGybXSb2I
-	 W8ghuabB9cK5Idjub07Spr9ZN0aVTUpciZ7xVhAAc8Bwg1mLl4fS//b6hsjJfIkRFC
-	 4HFVnMra2PuMxRWIRmXS571AJRDRnh0DHaTsdIfcWXzppfQRkRXcxxuyzKTXB5QXJu
-	 4MgIrxpOcGHNFMOXLqfbjKfQRyKgz1xfZAAtOPu4qlfnhuOisG8gSgZ9s8TKCg3852
-	 265q2NW+D2vBZ9spsv+X75gkaW6W7lcykFgk70fGNO16ZFxSay40jTogFN1qyASre6
-	 m73SL9Fg0nXZQ==
-Date: Tue, 31 Mar 2026 16:11:22 -0500
+	s=k20201202; t=1774991765;
+	bh=/Zuj465z+SJXeuy8BFVva/2T89KUCArNO4FegDfx9oE=;
+	h=From:To:Cc:Subject:Date:From;
+	b=o3gTmA2S/CH8s2brCacnXtwcIc8+v4oRzecEPqcJ874UO+DZ+POF0HD8aLSYjkAr+
+	 9rTKEPtsuxZNGQlLxfeqaDwJFHxcaiqwJjE4/M6EPDgeAOsoixISqzgNaDAe7rGmdr
+	 KWXpo7IWoN8CFpQJmNnXR0fcrdDbCdUX0pwfenarZ2z5NkZC2sPVriHVQjXEIPuuZ0
+	 V84O2UD1pGTuWB3nek/enBCN613qa4csw1lkt7n/D51nIATeFh3tZmGldpNxJ5quXo
+	 +agOcmOyrLfMB/pS8hE9l11Fdc0XI363OY8VCR5WCYNdvUhK5MwdFpDRj67GyEbUaX
+	 0yl6OnKwtWdDA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Vivek Aknurwar <vivek.aknurwar@oss.qualcomm.com>
-Cc: Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Taniya Das <quic_tdas@quicinc.com>, Taniya Das <taniya.das@oss.qualcomm.com>, 
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Mike Tipton <mike.tipton@oss.qualcomm.com>
-Subject: Re: [PATCH 7/7] clk: qcom: Add support for global clock controller
- on Hawi
-Message-ID: <acw4FDsIbgAUTHXo@baldur>
-References: <20260330-clk-hawi-v1-0-c2a663e1d35b@oss.qualcomm.com>
- <20260330-clk-hawi-v1-7-c2a663e1d35b@oss.qualcomm.com>
+To: arm@kernel.org,
+	soc@kernel.org
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Arnd Bergmann <arnd@arndb.de>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Rob Herring <robh@kernel.org>
+Subject: [GIT PULL] Qualcomm Arm32 DeviceTree updates for v7.1
+Date: Tue, 31 Mar 2026 16:16:02 -0500
+Message-ID: <20260331211602.959960-1-andersson@kernel.org>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260330-clk-hawi-v1-7-c2a663e1d35b@oss.qualcomm.com>
-X-Spamd-Result: default: False [-0.16 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
+	MID_CONTAINS_FROM(1.00)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_MISSING_CHARSET(0.50)[];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-101168-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-101169-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[13];
 	FROM_HAS_DN(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.999];
-	PRECEDENCE_BULK(0.00)[];
+	MIME_TRACE(0.00)[0:+];
 	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[7];
+	NEURAL_HAM(-0.00)[-0.999];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	TO_DN_SOME(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	MISSING_XM_UA(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 9A1BD3718B0
+X-Rspamd-Queue-Id: 737FC371AA7
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Mon, Mar 30, 2026 at 05:35:02PM -0700, Vivek Aknurwar wrote:
-> +++ b/drivers/clk/qcom/gcc-hawi.c
-[..]
-> +static const struct qcom_cc_desc gcc_hawi_desc = {
-> +	.config = &gcc_hawi_regmap_config,
-> +	.clks = gcc_hawi_clocks,
-> +	.num_clks = ARRAY_SIZE(gcc_hawi_clocks),
-> +	.resets = gcc_hawi_resets,
-> +	.num_resets = ARRAY_SIZE(gcc_hawi_resets),
-> +	.gdscs = gcc_hawi_gdscs,
-> +	.num_gdscs = ARRAY_SIZE(gcc_hawi_gdscs),
-> +	.driver_data = &gcc_hawi_driver_data,
 
-Sorry for not spotting this earlier, but don't we need a ".use_rpm =
-true" here?
+The following changes since commit 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f:
 
-In line with
-https://lore.kernel.org/all/20260309-glymur-fix-gcc-cx-scaling-v2-2-d7a58a0a9ecb@oss.qualcomm.com/
+  Linux 7.0-rc1 (2026-02-22 13:18:59 -0800)
 
-Regards,
-Bjorn
+are available in the Git repository at:
 
-> +};
-> +
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm32-for-7.1
+
+for you to fetch changes up to 6453ad0865b68ab0de5873c1a8bb4addbbde5c19:
+
+  ARM: dts: qcom: msm8974: Drop RPM bus clocks (2026-03-31 15:59:12 -0500)
+
+----------------------------------------------------------------
+Qualcomm Arm32 DeviceTree updates for v7.1
+
+Qualcomm APQ8084 is incomplete and hasn't seen functional contributions
+since 2016, so drop the platform (for now?). Also drop a number of
+unused IPQ-related dtsi files.
+
+Lastly clean up the RPM bus clocks in MSM8974 interconnect nodes.
+
+----------------------------------------------------------------
+Dmitry Baryshkov (2):
+      ARM: dts: qcom: drop apq8084 support
+      ARM: dts: qcom: msm8974: Drop RPM bus clocks
+
+Rob Herring (Arm) (1):
+      ARM: dts: qcom: Drop unused .dtsi
+
+ arch/arm/boot/dts/qcom/Makefile                    |   2 -
+ arch/arm/boot/dts/qcom/qcom-apq8084-ifc6540.dts    |  34 -
+ arch/arm/boot/dts/qcom/qcom-apq8084-mtp.dts        |  23 -
+ arch/arm/boot/dts/qcom/qcom-apq8084.dtsi           | 852 ---------------------
+ arch/arm/boot/dts/qcom/qcom-ipq8062-smb208.dtsi    |  37 -
+ arch/arm/boot/dts/qcom/qcom-ipq8062.dtsi           |   8 -
+ arch/arm/boot/dts/qcom/qcom-ipq8064-smb208.dtsi    |  37 -
+ .../boot/dts/qcom/qcom-ipq8064-v2.0-smb208.dtsi    |  37 -
+ arch/arm/boot/dts/qcom/qcom-ipq8065-smb208.dtsi    |  37 -
+ arch/arm/boot/dts/qcom/qcom-ipq8065.dtsi           |   8 -
+ arch/arm/boot/dts/qcom/qcom-msm8974.dtsi           |  21 +-
+ 11 files changed, 3 insertions(+), 1093 deletions(-)
+ delete mode 100644 arch/arm/boot/dts/qcom/qcom-apq8084-ifc6540.dts
+ delete mode 100644 arch/arm/boot/dts/qcom/qcom-apq8084-mtp.dts
+ delete mode 100644 arch/arm/boot/dts/qcom/qcom-apq8084.dtsi
+ delete mode 100644 arch/arm/boot/dts/qcom/qcom-ipq8062-smb208.dtsi
+ delete mode 100644 arch/arm/boot/dts/qcom/qcom-ipq8062.dtsi
+ delete mode 100644 arch/arm/boot/dts/qcom/qcom-ipq8064-smb208.dtsi
+ delete mode 100644 arch/arm/boot/dts/qcom/qcom-ipq8064-v2.0-smb208.dtsi
+ delete mode 100644 arch/arm/boot/dts/qcom/qcom-ipq8065-smb208.dtsi
+ delete mode 100644 arch/arm/boot/dts/qcom/qcom-ipq8065.dtsi
 
