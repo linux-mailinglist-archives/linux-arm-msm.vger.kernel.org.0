@@ -1,226 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-101157-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101158-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MMisIykmzGnHPgYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101157-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 21:53:13 +0200
+	id EC7FGgUqzGkmQgYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101158-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 22:09:41 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id D841A370E19
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 21:53:12 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D52A371029
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 22:09:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id E42983061CE1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 19:52:55 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 8CC163026A8B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 20:06:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C34E3A63E3;
-	Tue, 31 Mar 2026 19:52:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6969E3CCA1C;
+	Tue, 31 Mar 2026 20:06:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="TfmVuYM1"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kKuG/IaR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A549410D2C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 19:52:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A213CCA1D
+	for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 20:06:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774986773; cv=none; b=JLbxEHws+t3kzh9kqwjfOECaFvHZDNNiNcyV1cDs1iEWIHrsqSDmb4w8XZ4qgz6w7yrHiWee5ul1coaeICyC3iVQfEksCV7mZCGb3x7PmYup3baJ96zvVbv5Y5N+8sN07Qts6xZY6AiXC/Jb2JWFUGsWQmVT5KTKYP+j5UZiZ2M=
+	t=1774987579; cv=none; b=iiY7u1PiTg8PIMUiyFdrCmeLpBZfM7Bsl0p4VlQglFgnuwzbMqCUKVWMLQ4c84/35qcgfH97eOJ8RbTg3DhfKL66tHmU0uUq3n96lcYeJEGi4DsqPzIrJCdWVMrMbs9X5ZvaIxGuhfLYmz8Gbg8IJC2Gma5ZKPNrJb3+/qbNcp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774986773; c=relaxed/simple;
-	bh=nbUNWnhxtD9uSl+kq+z3SJo1UKV3e6wBk/X6kxEHQeI=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=Lze4TE5DVKamCCAtKCU19DCywvl3VVHg2auYwLjxflDpAv7M+l8sPcZeXpw05yTkV9S6L89Osmqx6Gpnb1hZGd/GuS19m7G78XBtj0VnvoCqrx0OLWzVkhtL7mRcJIimP8JuFI5aiKzsz1Zr2KepnTioAahtOr+PJxqHWP5gvQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=TfmVuYM1; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1774986772; x=1806522772;
-  h=message-id:subject:from:to:cc:date:in-reply-to:
-   references:content-transfer-encoding:mime-version;
-  bh=nbUNWnhxtD9uSl+kq+z3SJo1UKV3e6wBk/X6kxEHQeI=;
-  b=TfmVuYM18EvuNzBtDRmUJtJHNY9/JYifzFG/GL6g+kipVv9JDVfIuCgV
-   Yh/RfSXkWlL0OBH6QqZXysMmHPtVVBjnQf/mXbZw4ro7cj69EQasVZFQh
-   YWa5zRSulmiIJOuNaR8w6aI7E3dB3IwOXr+KLYhxvy6uOMB7V1nU737iq
-   zAoI73vM++bMM4xhwDGrC6+DK8p/ks5KFGVzZKLJ3ejfOhcrwvxyF0h9j
-   qBtZKv2ROkKOqkBSrBz05pYhGLKWkwmz1uAvNGTT+3gg26JWCR/TJaGCK
-   6WME/7M3Uva2imbRv04HaCjiW8JohjTgU43vbczK40Tp/yte4DIJAKqkh
-   Q==;
-X-CSE-ConnectionGUID: Lk4Nd3GxQLW6dvNWIb9n4w==
-X-CSE-MsgGUID: OCrzpagfTf+usp8r94iFoA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11745"; a="86627326"
-X-IronPort-AV: E=Sophos;i="6.23,152,1770624000"; 
-   d="scan'208";a="86627326"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Mar 2026 12:52:51 -0700
-X-CSE-ConnectionGUID: 4wP6lwCxTUSbpUETu8DyVg==
-X-CSE-MsgGUID: /K6c4WzVTHGmpaA0jZ9tfA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,152,1770624000"; 
-   d="scan'208";a="225461106"
-Received: from smoticic-mobl1.ger.corp.intel.com (HELO [10.245.244.28]) ([10.245.244.28])
-  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Mar 2026 12:52:46 -0700
-Message-ID: <bd45632be1a5bcd2ce34834b45a35254e23f7679.camel@linux.intel.com>
-Subject: Re: [PATCH 2/5] drm/msm: Remove abuse of drm_exec internals
-From: Thomas =?ISO-8859-1?Q?Hellstr=F6m?= <thomas.hellstrom@linux.intel.com>
-To: rob.clark@oss.qualcomm.com
-Cc: intel-xe@lists.freedesktop.org, Felix Kuehling <Felix.Kuehling@amd.com>,
-  Alex Deucher <alexander.deucher@amd.com>, Christian
- =?ISO-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,  David Airlie
- <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Maarten Lankhorst	
- <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
- Thomas Zimmermann <tzimmermann@suse.de>, Danilo Krummrich
- <dakr@kernel.org>, Matthew Brost <matthew.brost@intel.com>,  Alice Ryhl
- <aliceryhl@google.com>, Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar	
- <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>, Sean
- Paul	 <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org, 
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Date: Tue, 31 Mar 2026 21:52:43 +0200
-In-Reply-To: <CACSVV03FFvi0c4XMEShmH5ou4OKKZcvvni2j=0DBoYnuT55ecQ@mail.gmail.com>
-References: <20260331092023.81616-1-thomas.hellstrom@linux.intel.com>
-	 <20260331092023.81616-3-thomas.hellstrom@linux.intel.com>
-	 <CACSVV03FFvi0c4XMEShmH5ou4OKKZcvvni2j=0DBoYnuT55ecQ@mail.gmail.com>
-Organization: Intel Sweden AB, Registration Number: 556189-6027
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
+	s=arc-20240116; t=1774987579; c=relaxed/simple;
+	bh=+jfuPOfrvlJyorqipEtBDPEwBEOBADumN3Z9GVWqrm4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=lI2rQTyv3ioDimz4yRSRU2YHzSDYViC+7ugMCx98X7NHwgW5GzsjSRsekSQI1+QYgysrVsI+R2p4qfNfm5ncHnaqQ8vV47spUwpxS+XSNUbmaxmF0mBwc6jaCfGfdahyNaP9gDm8MUBlDTilDZi2aIVYVr/J7OdJpDdrk3rZHJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kKuG/IaR; arc=none smtp.client-ip=209.85.222.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-8c6f21c2d81so562440185a.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 13:06:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1774987575; x=1775592375; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=d2SuGEcofMViAjcduIJKVxzZDL5jSsKT9V5K04cwa+Y=;
+        b=kKuG/IaRBma49+MjTcXk9IOK+chvpyiQifYx4idlqsHmSyEKVcR/kz6KaplklqrIXE
+         Z3cExyZnm/xBApdxmo1Zaqgcv8j3XP2b1C1q/o+Fkb/6dsw+thjsNlAR9wNfNZcN1Tw9
+         7DGde3MH2XR0pCvX7a+QEt7uj6GgN2MCVntCzFZRDlDchS4tvqFtU4kF+ALU6I30Lc9z
+         XPgDCze2IYxQttjJj4u3CMt3FbJ+CEydxJcpw1xQDtTwiW9+kACw5OPCi2DoQSCl/Wwo
+         J502nRgmX1rx6N+qQD97hPfbaO6u2IZmC3XEZ8ifEiHaVXqiorEBXRjrhcVBqnLx4co8
+         IaJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774987575; x=1775592375;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=d2SuGEcofMViAjcduIJKVxzZDL5jSsKT9V5K04cwa+Y=;
+        b=apJCyHtHOhUFdnt2cU5CbImC+a/XXGngH30GsiCcU6pvKwNkFIaxpM0ZGjx/EGbdwm
+         bd3xQPAcYRYG4S56Yaro5q+co9saLfjGCiN2vAskAILmBqmI+4X8Zt+wApHaaL+gwAAv
+         4uUftSQMryYmA6oPvrMKnYAs/dkEiDvkxsCTiUNsGgXP+u5HE5E220cpE6V0mhlmuyDn
+         28KwbKn0lMicOoTLRtDvKG1V/mk3CMS/txo8tMMaI3dU8qb7og7WSziO3qAKjnlWaexA
+         qFAkphdglyYcYTYgs0ce2v/XFuAAytpcU6HaaOikLB6mzhaHgKCFZVjYoojFMiBGk9dV
+         EvCg==
+X-Forwarded-Encrypted: i=1; AJvYcCU5OBvioGp25e3+KREys2XE2m6XBZDGypZNA7X0G97+BJgSwlROyQPXIOz5Mjmt31J5633N+fUoDiu54Oyn@vger.kernel.org
+X-Gm-Message-State: AOJu0YyskJfDL+BGK8l+d59Dpb8exapN16mcZ+icHMSVhj6k02Ks7WIM
+	x7svhCCWpDCbLD18vd4WJW0/vNs8dZgXb5ygIMnS+VA8OxmWYBOFSHgw
+X-Gm-Gg: ATEYQzwoKGrshlLRtg0v7iKBLHGfTzH9Ee+scWcPVmAENKkfg7wdXz+blC6nAsf9Cll
+	h3zlFNDBoXx0TVOpQAlT9f0MCyoEBQEStqO+Rq1SVOybA8tMeJWWL1HVuTJPqLvOlh8rgXtGXTC
+	d+3lL8YixVSJaxYiJCb5v8NmrABb6qmhDLZenbblPNTuhJxrErgWmRQ7ZJDO1t75/IpEHtfNMLF
+	nZoPGqTGRZwEzn1jATMaeB0vZ1n6vJB5EP1xtdvRFAWzXNwqEXfZi5p+f0fECpDxSuxlqaS52gq
+	8ACnGvqj7opsEGm4ml7T8Z/9l6kwOCclx1kU8c3jGFVvipnxiBzuZDT7Nd9crDnT9OUrHBSBSe+
+	h8LyMVa9bjy71GdpVZWY9Wk8BHj2TjDexbOuA3LKBcFApues7Y03JjN4B4OSWdRnmH6k2AWY7q2
+	06Hq0g2MfpbXGAN3BcR3gfOOa3
+X-Received: by 2002:a05:620a:444e:b0:8cf:cf45:140d with SMTP id af79cd13be357-8d1b5b25471mr159346085a.29.1774987575026;
+        Tue, 31 Mar 2026 13:06:15 -0700 (PDT)
+Received: from localhost ([199.7.157.124])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8d027edc650sm913382585a.6.2026.03.31.13.06.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 Mar 2026 13:06:14 -0700 (PDT)
+From: Richard Acayan <mailingradian@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-gpio@vger.kernel.org,
+	devicetree@vger.kernel.org
+Cc: Richard Acayan <mailingradian@gmail.com>
+Subject: [PATCH v5 0/4] SDM670 LPASS LPI pin controller support
+Date: Tue, 31 Mar 2026 16:06:54 -0400
+Message-ID: <20260331200658.1306-1-mailingradian@gmail.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Spamd-Result: default: False [-2.16 / 15.00];
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
-	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[22];
-	FREEMAIL_CC(0.00)[lists.freedesktop.org,amd.com,gmail.com,ffwll.ch,linux.intel.com,kernel.org,suse.de,intel.com,google.com,linux.dev,poorly.run,somainline.org,vger.kernel.org];
-	TAGGED_FROM(0.00)[bounces-101157-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	HAS_ORG_HEADER(0.00)[];
-	DKIM_TRACE(0.00)[intel.com:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[gmail.com];
 	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-101158-lists,linux-arm-msm=lfdr.de];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	FREEMAIL_FROM(0.00)[gmail.com];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[thomas.hellstrom@linux.intel.com,linux-arm-msm@vger.kernel.org];
+	FROM_NEQ_ENVFROM(0.00)[mailingradian@gmail.com,linux-arm-msm@vger.kernel.org];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_COUNT_FIVE(0.00)[5];
-	MID_RHS_MATCH_FROM(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[11];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:dkim,intel.com:email,qualcomm.com:email,linux.intel.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: D841A370E19
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 0D52A371029
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Tue, 2026-03-31 at 12:08 -0700, Rob Clark wrote:
-> On Tue, Mar 31, 2026 at 2:21=E2=80=AFAM Thomas Hellstr=C3=B6m
-> <thomas.hellstrom@linux.intel.com> wrote:
-> >=20
-> > The code was reading drm_exec internal state to determine whether
-> > the drm_exec structure had been initialized or not, and therefore
-> > needed cleaning up, relying on undocumented behaviour.
-> >=20
-> > Instead add a bool to struct msm_gem_submit to indicate whether
-> > drm_exec cleaning up is needed.
-> >=20
-> > Signed-off-by: Thomas Hellstr=C3=B6m <thomas.hellstrom@linux.intel.com>
->=20
-> Reviewed-by: Rob Clark <rob.clark@oss.qualcomm.com>
->=20
-> This is pretty stand-alone, so I can pick it up for v7.1.=C2=A0 Or ack fo=
-r
-> landing it via drm-misc with the rest of the series if that is easier
-> for you.=C2=A0 It shouldn't conflict with anything in flight.
+This adds support for the LPASS LPI pin controller on SDM670, which
+controls some audio pins (e.g. TDM or PDM busses). The ADSP patches are
+not sent yet.
 
-Thanks Rob. Please pick it up and I'll exclude it from the next
-iteration of the series.
+Dependencies:
+- SDM670 Basic SoC thermal zones (devicetree nodes are touching)
+  https://lore.kernel.org/r/20260310002037.1863-1-mailingradian@gmail.com
+- Support for the Pixel 3a XL with the Tianma panel (for reserved GPIOs)
+  https://lore.kernel.org/r/20260310002606.16413-1-mailingradian@gmail.com
 
-Thanks,
-Thomas
+Changes since v4 (https://lore.kernel.org/r/20260330164707.87441-1-mailingradian@gmail.com):
+- squash reserved gpios patch (Dmitry's review tag dropped) (4/4, previously 5/5)
+- add review tags (3/4, 4/4)
+- correct changelog (0/4)
 
->=20
-> BR,
-> -R
->=20
-> > ---
-> > =C2=A0drivers/gpu/drm/msm/msm_gem.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 | 1 +
-> > =C2=A0drivers/gpu/drm/msm/msm_gem_submit.c | 4 +++-
-> > =C2=A02 files changed, 4 insertions(+), 1 deletion(-)
-> >=20
-> > diff --git a/drivers/gpu/drm/msm/msm_gem.h
-> > b/drivers/gpu/drm/msm/msm_gem.h
-> > index cb32093fda47..762e546d25ef 100644
-> > --- a/drivers/gpu/drm/msm/msm_gem.h
-> > +++ b/drivers/gpu/drm/msm/msm_gem.h
-> > @@ -452,6 +452,7 @@ struct msm_gem_submit {
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bool bos_pinned : 1;
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bool fault_dumped:1;/* Limit=
- devcoredump dumping to one per
-> > submit */
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bool in_rb : 1;=C2=A0=C2=A0=
-=C2=A0=C2=A0 /* "sudo" mode, copy cmds into RB */
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bool has_exec : 1;=C2=A0 /* @exec=
- is initialized. */
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 struct msm_ringbuffer *ring;
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 unsigned int nr_cmds;
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 unsigned int nr_bos;
-> > diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c
-> > b/drivers/gpu/drm/msm/msm_gem_submit.c
-> > index 75d9f3574370..26ea8a28be47 100644
-> > --- a/drivers/gpu/drm/msm/msm_gem_submit.c
-> > +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-> > @@ -278,6 +278,7 @@ static int submit_lock_objects_vmbind(struct
-> > msm_gem_submit *submit)
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 int ret =3D 0;
-> >=20
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 drm_exec_init(&submit->exec,=
- flags, submit->nr_bos);
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 submit->has_exec =3D true;
-> >=20
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 drm_exec_until_all_locked (&=
-submit->exec) {
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 ret =3D drm_gpuvm_prepare_vm(submit->vm, exec, 1);
-> > @@ -304,6 +305,7 @@ static int submit_lock_objects(struct
-> > msm_gem_submit *submit)
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 return submit_lock_objects_vmbind(submit);
-> >=20
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 drm_exec_init(&submit->exec,=
- flags, submit->nr_bos);
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 submit->has_exec =3D true;
-> >=20
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 drm_exec_until_all_locked (&=
-submit->exec) {
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 ret =3D drm_exec_lock_obj(&submit->exec,
-> > @@ -523,7 +525,7 @@ static void submit_cleanup(struct
-> > msm_gem_submit *submit, bool error)
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (error)
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 submit_unpin_objects(submit);
-> >=20
-> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (submit->exec.objects)
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (submit->has_exec)
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 drm_exec_fini(&submit->exec);
-> >=20
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* if job wasn't enqueued to=
- scheduler, early retirement:
-> > */
-> > --
-> > 2.53.0
-> >=20
+Changes since v3 (https://lore.kernel.org/r/20260328021036.85945-1-mailingradian@gmail.com):
+- restore review tags (2-5/5)
+- add review tags (1/5)
+
+Changes since v2 (https://lore.kernel.org/r/20260310012446.32226-1-mailingradian@gmail.com):
+- add minItems and maxItems (1/5)
+- add review tags (2-5/5)
+
+Changes since v1 (https://lore.kernel.org/r/20260210021109.11906-1-mailingradian@gmail.com):
+- add LPASS in dt-bindings patch subject (2/5)
+- change pin names (2/5, 3/5, 4/5)
+- add reviewed-by from Krzysztof (2/5)
+- specify gpio-reserved-ranges (1/5, 5/5)
+
+Richard Acayan (4):
+  dt-bindings: qcom: lpass-lpi-common: add reserved GPIOs property
+  dt-bindings: pinctrl: qcom: Add SDM670 LPASS LPI pinctrl
+  pinctrl: qcom: add sdm670 lpi tlmm
+  arm64: dts: qcom: sdm670: add lpi pinctrl
+
+ .../pinctrl/qcom,lpass-lpi-common.yaml        |   8 +
+ .../qcom,sdm670-lpass-lpi-pinctrl.yaml        |  81 +++++++++
+ .../boot/dts/qcom/sdm670-google-common.dtsi   |   5 +
+ arch/arm64/boot/dts/qcom/sdm670.dtsi          |  73 ++++++++
+ drivers/pinctrl/qcom/Kconfig                  |  10 ++
+ drivers/pinctrl/qcom/Makefile                 |   1 +
+ .../pinctrl/qcom/pinctrl-sdm670-lpass-lpi.c   | 166 ++++++++++++++++++
+ 7 files changed, 344 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sdm670-lpass-lpi-pinctrl.yaml
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-sdm670-lpass-lpi.c
+
+-- 
+2.53.0
+
 
