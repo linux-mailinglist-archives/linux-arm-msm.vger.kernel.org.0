@@ -1,273 +1,250 @@
-Return-Path: <linux-arm-msm+bounces-101045-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101046-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id WHdUJ2Szy2kpKAYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101045-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 13:43:32 +0200
+	id +MkXFwezy2kpKAYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101046-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 13:41:59 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id F3A13368FA7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 13:43:31 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC0D5368F40
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 13:41:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id E506830B5294
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 11:33:25 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 32AD630602E6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 11:34:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C1CD3DBD76;
-	Tue, 31 Mar 2026 11:33:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97A013DE441;
+	Tue, 31 Mar 2026 11:34:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EMd4PLnE"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KeDrD7/y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B0F346E46;
-	Tue, 31 Mar 2026 11:33:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774956803; cv=none; b=CRUUTXC5Ja5nAlO7cftXBOGfh1vBTN7BZuOHZiGHrVBndr4+vse2eYNi5YuFaznZqCkvNqUJO9LobJ8DCGY6RLws0+W/NFg1jnjVX+Q8NdmALlA4YNP2Aeb9/2LUFft2Vtok/PPOsCidtqYZDBIk6wfadFRRomUwLslvkrbKxgI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774956803; c=relaxed/simple;
-	bh=mOaMnPDgyuMsrsFoPrx7hh3B2z/mugXNaNBIZ6Il/TY=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=ViKsokzAh0VeKBkmVUMusAfN8SSX1WV29q1Cyn88uE2zGeI5nWYScBUvKugMEgGKFjUA8ttLlncSrRR0PnN1737D1qpbTqrWv1C+d2+wQZeWXKXyXvKOiL1lWvwNDOY9MHxvZNcFoIZRpedNKoLuV3Aa4H2SCNQTrnO9e8lQQPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=EMd4PLnE; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62V6a6YW2391425;
-	Tue, 31 Mar 2026 11:33:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	eIYSrlhSzunjL6LJuOo+pd3YcmHnTM0iPtojTzT1UTA=; b=EMd4PLnEvRVbDQnU
-	pZkHlViDXddtgG1L79JF4hjEU5SH0RpHigO/qtjO8aBY1ixQQFj4h+eSbTLBoA4c
-	pZQ9gd0dYm9682e4Tbg/aT3afGCBE2FZm2CYml+Z2st5SJjIns0Lj8eaIY7Ecd5f
-	ax3h9AfhQEK1wibW7W08ZdAroMexFQKTmtOowyZIFtmo6lD9TMMt5bI/CucXJMvS
-	ewbhvaHFK/9/vWmymAubJVU1dHMspdv9c8T/BMNwEn1X/PZBK9mwBfENEEoR3wK8
-	VFCuZbqrPHOx5iaRXTA57odVO5UlDuizGTjjJ21gHerw7STYhyGxtzB8tWi6iee4
-	2HKAXg==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d7ue7marc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 31 Mar 2026 11:33:13 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA02.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTPS id 62VBXDjN014348
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 31 Mar 2026 11:33:13 GMT
-Received: from [10.217.219.207] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Tue, 31 Mar
- 2026 04:33:07 -0700
-Message-ID: <ec299ca8-cfa2-4a53-93d5-4395a7cc5e7c@quicinc.com>
-Date: Tue, 31 Mar 2026 17:03:05 +0530
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB4F13D6CBD
+	for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 11:34:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.167.46
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774956855; cv=pass; b=O+fyr04EC24jfBGOMnKPmG6Km1tLv9fbqe/6+4xTTlKxTa1TUNmI0Plbvlzp73kKYQVnfTkoX/jCN8ATmWRzzP3IPEaOYV7aAZORFQ+JKmYv1ZE8eGt7wNnjzanSvuz0Iu9qjX/6Y/w6kvG++F6vounYlSBdHdQTq/Ti02wLn8s=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774956855; c=relaxed/simple;
+	bh=fvcDsk+Dh9LbyHECz4bnznmrSq+OdCpbbeM5YLbTkds=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GWxmycp4KkqszM/N8SQPNB+9X3tkjCFynZCU+caumrpTC8Vviq19YnJma9j/hIa2kW54uTA4+R35PCbDWAUm3N+hZMHAs1f/C7+L5CUm2h4d3k1QQmsYNYgiJEUobszHcEm/0zlVZztBNb3thpoei/7zXLgUfC9tFd9XXYkAAHQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KeDrD7/y; arc=pass smtp.client-ip=209.85.167.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5a0fc5e2c59so6364825e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 04:34:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774956852; cv=none;
+        d=google.com; s=arc-20240605;
+        b=MuzegSQhKTtNLMRLT4vpxeoSAYDMvqBGiU2MiLZH9opGJdEf0ox/6QsTD2rch7iQVC
+         4Mgwut0j0LpoW20dw+b9FgACzKhP6tAxvyLfoWZYc6+UmMuCW/ZjjKE+X5FmVHdMiJX0
+         eBktfi0hkkkUwVCudjrYJEULDHx5KTCqbgmL8PgXHQRebwF6B5/iEOIWtL4TVVKz9E+E
+         HAUR+Pi26hXdpnc83FzDzpEsk7CVjWJxz5/qcCxjGPb1Gevtmg1KYBu1Ji7LgAeJJknJ
+         XrtFU6/n+ChowzGaIz9e3CrUfG4sv4f9rKXACjQZzFkPuPiHQ9IdVjE7U2xgjPGy84DF
+         cOHg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=FGcYOF43Fmt+IF0mxxl7l+XSr0GQEhq288tkKBbNS6g=;
+        fh=xfMKMJF87bruM8LzR31gGT05/V8vX7c4XkNqQTdqsrU=;
+        b=Gv03PCNsLNFtqZpWtzQeDQ0aTx+RbHKkH63YXttSxLlfWTq4/HOui39uxgFdAOK4lD
+         ynnzTK6oFq9g4Q0TKdnRWZGiJGxYs0H0aqh/LEeDK4sRHt9H2IXxnLtBJVwwBpj/KNqg
+         pxhIDgB78tgPO+KMjeNj6tf35nekU/d74XTKY4PZy5I+9Fw1xTAeTQa6qasAyRJ9MANY
+         2n49KJ92Stc6a3a5BPMpKb0X/NAVVKnco39eAczoQ3LufcSBYw0bT9iXYZBIFaEcoLV+
+         NsuBv/0QvwBOPmjWES2L1Qs3Els+6S+h3vNPuvNkmBNo9xhGcJUwgg9qUeUKOViWyUte
+         8JTg==;
+        darn=vger.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1774956852; x=1775561652; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FGcYOF43Fmt+IF0mxxl7l+XSr0GQEhq288tkKBbNS6g=;
+        b=KeDrD7/yI3/16ZEeMyZnj78MqSBCa/eNWnPEkeAYhLevO8maetOMhmPI1inSAE0K+j
+         PE/CmpJAsbIIGb6mD5jZXCXs6onFAfWtTNpG1XB4E6Db/ppDhoIR0KNIvqC9HW81QAaP
+         rJjsi6XhRTS3+eCW0VXhjIK/bj7BEg7wYhkeegw3eu3FNMYiiAKDxpxSFUQwiSRcS6ei
+         XfyqZeCSDDVGL9/5nUN81RQpi96adVxov9hulCN/b4xQm2nhzhbE+/jqcXZ5xmEBKXBC
+         msWwnM1xSSv53465TfU0cJMV3IutPU1jtY9DKfI1QcygSd2ODudvJc7RIFJ6PEDG8zPR
+         bWRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774956852; x=1775561652;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=FGcYOF43Fmt+IF0mxxl7l+XSr0GQEhq288tkKBbNS6g=;
+        b=p0+varQdNq0g/+iYd0sRKgbDNgjRa+fiYsYJ1kG2Fa1DcNN6H6nWBc4R4sPPxUOKr4
+         19WVFqIMy8pEsZb6Eyza2LeFNQx877j294CTho9FDztlB08igsqXfD1z176dlIRLCL8l
+         YxqpvswJ+FqAQJjCgRhEvSQxPDTokhtl6uG4nCMm1CsL9s/PoRrwlZImwGSH1SQCZsC6
+         Fd+TEl5S8UDDMHqNjv0Ok2Mo3Azc549t6xbG3ttSZ0hh1eVlfjSLPZcNnikDxMQNZx1/
+         BxDTK8DJ9hVd9O8snJJkvzibISvGQneQ4NhEb5NJz+X2FMD0WBn41F2+HQldNwnGddGM
+         iHWA==
+X-Forwarded-Encrypted: i=1; AJvYcCWkxaK6chS91Pg4ITVGfdlGQSaTU2hkxm2w2HvtU/vw35tCauIzQmLD9RFnIZ7g5KY/Ob0FuvyvAX52Wn2A@vger.kernel.org
+X-Gm-Message-State: AOJu0YwJVuQYpMbk2I4MmdgjmTaYVEzEXhThm4JTlYsbvp6VH/ErB8Bz
+	zmGoTDMWjoQ7PBIJb0QRaFlodpGRTzpc/gjt1bSqXMvFexxZZVKENfNZAchNHNxXvPbEg1wHryw
+	/iBomqrFFlWQ84vsuSz/nLiBVITIZHDvV/4aEdz+wwg==
+X-Gm-Gg: ATEYQzzjQ3nYYhQFLnZCXEX5b3mEm8hWccrctCaoevURI7Z49Zt9SnQrsxnuiQpu38F
+	wRP4Vmmd4QrKhB3J9QvhiG+DaIjE6lg4kjxyvCfAx8h5io9Ur/KQsY3QZtT58vzlAsVxD+Jb8lX
+	uZ5EAvzBmEUu7lJVHGv5t0iLvvXOLDFrXSe8EAQ6aX5Z63RWZ3gabw/O2iEAckDWXA82gBbqH2Q
+	OMRPf2FmWlau/u0QaUM7u38f18veWCU+FOxU5ul5nUKpCUaK69RJQiwhOafX3sVMTqxEL9oPMPH
+	52L35BccCLIcCHKM5qk=
+X-Received: by 2002:a05:6512:31d6:b0:5a2:bda5:c4a3 with SMTP id
+ 2adb3069b0e04-5a2bda5c5cfmr730600e87.11.1774956851831; Tue, 31 Mar 2026
+ 04:34:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/4] dmaengine: gpi: Add Lock and Unlock TRE support to
- access I2C exclusively
-From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-To: Vinod Koul <vkoul@kernel.org>, Md Sadre Alam <quic_mdalam@quicinc.com>
-CC: <konrad.dybcio@linaro.org>, <andersson@kernel.org>,
-        <andi.shyti@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <dmaengine@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-i2c@vger.kernel.org>, <conor+dt@kernel.org>,
-        <agross@kernel.org>, <devicetree@vger.kernel.org>, <linux@treblig.org>,
-        <dan.carpenter@linaro.org>, <Frank.Li@nxp.com>,
-        <konradybcio@kernel.org>, <bryan.odonoghue@linaro.org>,
-        <krzk+dt@kernel.org>, <robh@kernel.org>, <quic_vdadhani@quicinc.com>
-References: <20241129144357.2008465-1-quic_msavaliy@quicinc.com>
- <20241129144357.2008465-3-quic_msavaliy@quicinc.com> <Z01YBLcxDXI2UwXR@vaman>
- <d49b16b2-95e5-42b4-9bc1-40cb0bfa15b1@quicinc.com> <Z1BJSbf+1G8ojTib@vaman>
- <5ef44277-6739-4e1e-af62-0f40ae081ec1@quicinc.com> <Z2qFyQFFjiHy+FvY@vaman>
- <b34e3ac0-70b4-491c-a807-dc13fac41d06@quicinc.com>
- <1566eafb-7286-4f27-922d-0bbaaab8120b@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <1566eafb-7286-4f27-922d-0bbaaab8120b@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzMxMDExMiBTYWx0ZWRfXyk82Hv1gelpN
- ZoaATjyp8P/pB4siQvJJRmUtG45l5eQgJ9qulrz1/Q+RAK+ZgRLkeO7wUbG+5AmQm9R6BsOkG5w
- RQ+NfQvubS7969UJSpfXATuK+1wOaYlbaI2xiYaMMbbIhuaOYINBaSRBg3e4mk9oDPVL+hI8Z/E
- XAaJaGfpYs8J+eiI98+UyU+c7WTHBodlyvxYKcfHSYIVhGk4PyTBm3UbxdsydkC54+aPMyVPNA2
- +bhK+F1Y5dUd1nlp39DYxLcpNSTAEy2rR2zszmtWBZizBDIER5v5S5+lR/y7t43Od1DAl5xjwad
- u/7hWEXe5aQHho9MXK14asAlveSCj64ndUkU1AQbCv0Sg0hI6QARnWdSnBPPiHRCPAJuyxrFWbE
- NWm2wzNYOoL7T9HowxQ9pT1d2ONLp5VQkWe4uLi86Csbp6ZrcDNVtYqksKgxpihslh0Vym9JVPF
- CO0Mz+AFZHwWC8w7vMg==
-X-Proofpoint-GUID: _BQQFibzR4NoAoqiE9bMqYGRhkVys2WL
-X-Authority-Analysis: v=2.4 cv=G7sR0tk5 c=1 sm=1 tr=0 ts=69cbb0f9 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=COk6AnOGAAAA:8 a=JckwoUCwfWRlAPUsidsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: _BQQFibzR4NoAoqiE9bMqYGRhkVys2WL
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-31_02,2026-03-31_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 phishscore=0 malwarescore=0 lowpriorityscore=0 bulkscore=0
- priorityscore=1501 spamscore=0 adultscore=0 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603310112
+References: <20260209-iris-venus-fix-sm8250-v5-0-0a22365d3585@oss.qualcomm.com>
+ <20260209-iris-venus-fix-sm8250-v5-2-0a22365d3585@oss.qualcomm.com>
+ <5e2635ac-35de-645b-b5e7-235923f844ce@oss.qualcomm.com> <x5gv6dxdum5klzfjyo7xjqull6o43okkmkn7avssg26epbvrz6@z2brpssbk7iv>
+ <0b41ee7c-83fe-d604-b750-8a5a0bd62bf8@oss.qualcomm.com>
+In-Reply-To: <0b41ee7c-83fe-d604-b750-8a5a0bd62bf8@oss.qualcomm.com>
+From: Ulf Hansson <ulf.hansson@linaro.org>
+Date: Tue, 31 Mar 2026 13:33:35 +0200
+X-Gm-Features: AQROBzB4ctl2c0yLSalbIIkWrD6Zd2w8t9cdNUGWWq81ZnkBTRFdQQbrOgG2lXI
+Message-ID: <CAPDyKFrO3DzfG0aW4z4w87j_iWM=3dpvp=2Wgr4MX1Bin5-6ZA@mail.gmail.com>
+Subject: Re: [PATCH v5 2/5] media: iris: scale MMCX power domain on SM8250
+To: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Taniya Das <quic_tdas@quicinc.com>, Jonathan Marek <jonathan@marek.ca>, 
+	"Rafael J. Wysocki" <rafael@kernel.org>, "Bryan O'Donoghue" <bod@kernel.org>, 
+	Vikash Garodia <vikash.garodia@oss.qualcomm.com>, 
+	Mauro Carvalho Chehab <mchehab@kernel.org>, Stanimir Varbanov <stanimir.varbanov@linaro.org>, 
+	Abhinav Kumar <abhinav.kumar@linux.dev>, Hans Verkuil <hverkuil@kernel.org>, 
+	Stefan Schmidt <stefan.schmidt@linaro.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, Dikshita Agarwal <dikshita@qti.qualcomm.com>, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-pm@vger.kernel.org, linux-media@vger.kernel.org, 
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[quicinc.com,none];
-	R_DKIM_ALLOW(-0.20)[quicinc.com:s=qcppdkim1];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-101045-lists,linux-arm-msm=lfdr.de];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[quicinc.com:dkim,quicinc.com:email,quicinc.com:mid,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns];
-	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[20];
+	TAGGED_FROM(0.00)[bounces-101046-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[quicinc.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	TO_DN_SOME(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[quic_msavaliy@quicinc.com,linux-arm-msm@vger.kernel.org];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[28];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[ulf.hansson@linaro.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[linaro.org:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: F3A13368FA7
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,huawei];
+	MISSING_XM_UA(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,mail.gmail.com:mid,linaro.org:dkim]
+X-Rspamd-Queue-Id: AC0D5368F40
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Hi Vinod, sorry for responding here much lately. I was completely away 
-from this work for long, restarting now. Will close this actively 
-following up here and I will upload V6 to share latest changes and cover 
-letter details to help review ahead with context.
+On Mon, 30 Mar 2026 at 15:06, Dikshita Agarwal
+<dikshita.agarwal@oss.qualcomm.com> wrote:
+>
+>
+>
+> On 3/30/2026 4:45 PM, Dmitry Baryshkov wrote:
+> > On Mon, Mar 30, 2026 at 10:55:02AM +0530, Dikshita Agarwal wrote:
+> >>
+> >>
+> >> On 2/9/2026 7:02 AM, Dmitry Baryshkov wrote:
+> >>> On SM8250 most of the video clocks are powered by the MMCX domain, wh=
+ile
+> >>> the PLL is powered on by the MX domain. Extend the driver to support
+> >>> scaling both power domains, while keeping compatibility with the
+> >>> existing DTs, which define only the MX domain.
+> >>>
+> >>> Fixes: 79865252acb6 ("media: iris: enable video driver probe of SM825=
+0 SoC")
+> >>> Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+> >>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> >>> ---
+> >>>  drivers/media/platform/qcom/iris/iris_platform_gen1.c | 2 +-
+> >>>  drivers/media/platform/qcom/iris/iris_probe.c         | 7 +++++++
+> >>>  2 files changed, 8 insertions(+), 1 deletion(-)
+> >>>
+> >>> diff --git a/drivers/media/platform/qcom/iris/iris_platform_gen1.c b/=
+drivers/media/platform/qcom/iris/iris_platform_gen1.c
+> >>> index df8e6bf9430e..aa71f7f53ee3 100644
+> >>> --- a/drivers/media/platform/qcom/iris/iris_platform_gen1.c
+> >>> +++ b/drivers/media/platform/qcom/iris/iris_platform_gen1.c
+> >>> @@ -281,7 +281,7 @@ static const struct bw_info sm8250_bw_table_dec[]=
+ =3D {
+> >>>
+> >>>  static const char * const sm8250_pmdomain_table[] =3D { "venus", "vc=
+odec0" };
+> >>>
+> >>> -static const char * const sm8250_opp_pd_table[] =3D { "mx" };
+> >>> +static const char * const sm8250_opp_pd_table[] =3D { "mx", "mmcx" }=
+;
+> >>>
+> >>>  static const struct platform_clk_data sm8250_clk_table[] =3D {
+> >>>     {IRIS_AXI_CLK,  "iface"        },
+> >>> diff --git a/drivers/media/platform/qcom/iris/iris_probe.c b/drivers/=
+media/platform/qcom/iris/iris_probe.c
+> >>> index 7b612ad37e4f..74ec81e3d622 100644
+> >>> --- a/drivers/media/platform/qcom/iris/iris_probe.c
+> >>> +++ b/drivers/media/platform/qcom/iris/iris_probe.c
+> >>> @@ -64,6 +64,13 @@ static int iris_init_power_domains(struct iris_cor=
+e *core)
+> >>>             return ret;
+> >>>
+> >>>     ret =3D  devm_pm_domain_attach_list(core->dev, &iris_opp_pd_data,=
+ &core->opp_pmdomain_tbl);
+> >>> +   /* backwards compatibility for incomplete ABI SM8250 */
+> >>> +   if (ret =3D=3D -ENODEV &&
+> >>> +       of_device_is_compatible(core->dev->of_node, "qcom,sm8250-venu=
+s")) {
+> >>> +           iris_opp_pd_data.num_pd_names--;
+> >>> +           ret =3D devm_pm_domain_attach_list(core->dev, &iris_opp_p=
+d_data,
+> >>> +                                            &core->opp_pmdomain_tbl)=
+;
+> >>> +   }
+> >>>     if (ret < 0)
+> >>>             return ret;
+> >>>
+> >>>
+> >>
+> >> Hitting below compilation error on latest kernel
+> >>
+> >> drivers/media/platform/qcom/iris/iris_probe.c: In function
+> >> =E2=80=98iris_init_power_domains=E2=80=99:
+> >> drivers/media/platform/qcom/iris/iris_probe.c:71:46: error: decrement =
+of
+> >> read-only member =E2=80=98num_pd_names=E2=80=99
+> >>    71 |                 iris_opp_pd_data.num_pd_names--;
+> >
+> > See commit 7ad7f43e568b ("pmdomain: de-constify fields struct
+> > dev_pm_domain_attach_data")
 
-Thanks for your time and help review this ahead.
+The intent was for this patch to be part of v7.0-rc1, but I failed
+with my pull-request to Linus.
 
-On 1/14/2025 2:48 PM, Mukesh Kumar Savaliya wrote:
-> Hi Vinod,
-> 
-> On 12/26/2024 5:52 PM, Mukesh Kumar Savaliya wrote:
->>
->>
->> On 12/24/2024 3:28 PM, Vinod Koul wrote:
->>> On 18-12-24, 18:04, Mukesh Kumar Savaliya wrote:
->>>> Hi Vinod, Thanks !  I just saw your comments now as somehow it was 
->>>> going in
->>>> some other folder and didn't realize.
->>>>
->>>> On 12/4/2024 5:51 PM, Vinod Koul wrote:
->>>>> On 02-12-24, 16:13, Mukesh Kumar Savaliya wrote:
->>>>>> Thanks for the review comments Vinod !
->>>>>>
->>>>>> On 12/2/2024 12:17 PM, Vinod Koul wrote:
->>>>>>> On 29-11-24, 20:13, Mukesh Kumar Savaliya wrote:
->>>>>>>> GSI DMA provides specific TREs(Transfer ring element) namely 
->>>>>>>> Lock and
->>>>>>>> Unlock TRE. It provides mutually exclusive access to I2C 
->>>>>>>> controller from
->>>>>>>> any of the processor(Apps,ADSP). Lock prevents other subsystems 
->>>>>>>> from
->>>>>>>> concurrently performing DMA transfers and avoids disturbance to 
->>>>>>>> data path.
->>>>>>>> Basically for shared I2C usecase, lock the SE(Serial Engine) for 
->>>>>>>> one of
->>>>>>>> the processor, complete the transfer, unlock the SE.
->>>>>>>>
->>>>>>>> Apply Lock TRE for the first transfer of shared SE and Apply Unlock
->>>>>>>> TRE for the last transfer.
->>>>>>>>
->>>>>>>> Also change MAX_TRE macro to 5 from 3 because of the two 
->>>>>>>> additional TREs.
->>>>>>>>
->>>>>>>
->>>>>>> ...
->>>>>>>
->>>>>>>> @@ -65,6 +65,9 @@ enum i2c_op {
->>>>>>>>      * @rx_len: receive length for buffer
->>>>>>>>      * @op: i2c cmd
->>>>>>>>      * @muli-msg: is part of multi i2c r-w msgs
->>>>>>>> + * @shared_se: bus is shared between subsystems
->>>>>>>> + * @bool first_msg: use it for tracking multimessage xfer
->>>>>>>> + * @bool last_msg: use it for tracking multimessage xfer
->>>>>>>>      */
->>>>>>>>     struct gpi_i2c_config {
->>>>>>>>         u8 set_config;
->>>>>>>> @@ -78,6 +81,9 @@ struct gpi_i2c_config {
->>>>>>>>         u32 rx_len;
->>>>>>>>         enum i2c_op op;
->>>>>>>>         bool multi_msg;
->>>>>>>> +    bool shared_se;
->>>>>>>
->>>>>>> Looking at this why do you need this field? It can be internal to 
->>>>>>> your
->>>>>>> i2c driver... Why not just set an enum for lock and use the 
->>>>>>> values as
->>>>>>> lock/unlock/dont care and make the interface simpler. I see no 
->>>>>>> reason to
->>>>>>> use three variables to communicate the info which can be handled in
->>>>>>> simpler way..?
->>>>>>>
->>>>>> Below was earlier reply to [PATCH V3, 2/4], please let me know if 
->>>>>> you have
->>>>>> any additional comment and need further clarifications.
->>>>>
->>>>> Looks like you misunderstood, the question is why do you need three
->>>>> variables to convey this info..? Use a single variable please
->>>> Yes, I think so. Please let me clarify.
->>>> First variable is a feature flag and it's required to be explicitly
->>>> mentioned by client (i2c/spi/etc) to GSI driver.
->>>>
->>>> Second and third, can be optimized to boolean so either first or 
->>>> last can be
->>>> passed.
->>>>
->>>> Please correct me or add simple change where you would like to make, 
->>>> i can
->>>> add that.
->>>
->>> I though we could do with a single and derive
->>>
->> Sure, so as mentioned in the other crypto BAM patch probably 
->> dmaengine.h can hold flag and that can add support for lock/unlock 
->> similar to that patch.
->> I just realized it from your shared patch. let me work internally with 
->> Md sadre and review. Thanks for the comment.
->>> Also, please see 20241212041639.4109039-3-quic_mdalam@quicinc.com, folks
->>> from same company should talk together on same solutions, please
->>> converge and come up with a single proposal which works for both drivers
->>>
-> I have discussed with Md Sadre and tried to understand and utilize the 
-> enum of lock and unlock in my changes. Below is the summary.
-> 
-> I can't use those lock and unlock enums here because it's required for 
-> first and last message respectively. intermediate transfers will not use 
-> anything. So we need to define one more enum like dma_ctrl_none.
-> 
-> if i create another internal parent structure having required 3 members, 
-> then also it will need 3 child members. So i think current one looks 
-> good to me.
-> 
-> Please help review and suggest if anything can be better here.
-> 
-I have added enum from gpi driver and set it from i2c driver. so GPI 
-driver handles the action accordingly for lock/unlock. Let me know if 
-this approach makes sense in the V6.
+Instead this will be part of v7.1-rc1, assuming everything goes as expected=
+.
 
->> Sure
->>
->>
-> 
-> 
+Is it possible to drop/defer these changes until v7.2?
 
+Kind regards
+Uffe
 
