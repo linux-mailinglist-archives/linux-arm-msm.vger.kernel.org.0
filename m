@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-101150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4D1TEfEjzGllQQYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 21:43:45 +0200
+	id uFCKMCgkzGnHPgYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 21:44:40 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5EFBD370B99
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 21:43:44 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4955E370C34
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 21:44:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id B567D3031667
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 19:39:57 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 36A2B30FFABF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 19:40:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 167733E1D09;
-	Tue, 31 Mar 2026 19:39:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7421F3C872F;
+	Tue, 31 Mar 2026 19:40:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SrTytoZV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FLmT0YeN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B067A3DFC66
-	for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 19:39:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 179643A255D
+	for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 19:40:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774985997; cv=none; b=d/t+WZLrz517fGu/3kT6WLf/RvHacj9FUVoyyLEYrkWyJNm/dYeHhz9rmoXxkihrt7uNI0MB91MqyAmuuVyO8wnjIDLw+gWSLQU8fkdXYmuCiqCT7JSHKhYEWBtOa6rHxs50cfxVGQVk+vekmYkfbbSyeODGS2w5gcQw9Em6K7M=
+	t=1774986001; cv=none; b=bpq3FsdIcrxpU0kyC7FUv6YazcJVhPW8JtHI0BtIRrepGnArZhT3RpeOKmaAogytFzKGZjWzURJZ+kJJKvALgmG9vnFzbun48Me90r8DgvrZWhq6ZW1TQJmMDwc8vLEvjuDEp8XuqXgbcf/orx8F7NJCCjRkAeFF+XzZyNGbCwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774985997; c=relaxed/simple;
-	bh=0bo180biKBnfOCqsVunQ5Bnzei9AzNH07TMj8WXExjE=;
+	s=arc-20240116; t=1774986001; c=relaxed/simple;
+	bh=r6KrEbvl1GLSeWnMetEjzYhxcsl8sRnrUbGVElKDzsc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jnWA2fTNq2LXKzIC2ru393CMNcb71+CPrwthv8pEf11F1fmlFXZ+gFnPENndVQs/3egHg2yQsht+N7xPj3zBbBHsB57cmQT4jnlp+Zc0UPX4ZaxnoBQFQjcCoAOoXXDYzHBZiBWpM0a1pIYRTKQQun5XT8oZJW/WSEuFBn4Idnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SrTytoZV; arc=none smtp.client-ip=209.85.222.179
+	 MIME-Version; b=SY5ZowoVhVXJABdfiETa8OoTTyYNCRjaMM6le8LSSgSNMKVuhFiPEs+kzeF0w6JpoknBJP+aIvglxfTs9kC14p+Y86s+ugmw8buJnvkE/5Op2HZS5SDNGgU2QmbzHGe/Bi51NoLG9rZrb4Bq2sDFyWKevmT/Mwjq8zHOOrcOH6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FLmT0YeN; arc=none smtp.client-ip=209.85.219.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-8cfc2d1fdbfso515310685a.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 12:39:55 -0700 (PDT)
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-89c43c4c383so79505826d6.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 12:39:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774985995; x=1775590795; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1774985999; x=1775590799; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hVNRywWQq5QAWWSzQU0VE+vfO8CACut7y7L2DEhMqBk=;
-        b=SrTytoZV+OFKnkDTEnL7mxcl9ps/OyGS9YkeVlH7S5qItrsMp3GfuwTcfCA7TeV9mh
-         9+kKqRVLLKZ2H+cZxO9ANxt5SeaIcfAsOX7qrNoEfz/dkZImm9XITLiNTtBi2UCWxpqV
-         9r2WLXY0groU+MSWCocvxqXsaJ1OyMI9e1uWtR3kqiygmcUaXM6/EvmXvoCmrLhNgf4I
-         xaLHiOKtPaQyoWXw1T2n8xLA7YXFWHzIFTuRaz89MF1m9+zj/3pBvMhGxMSm+V+ktYwl
-         bZ6bkf1KtwMOOH1d+LfQ6dGU9shm2XdlFrm2ADddoe/YjizrMkV2Ee5rk5aYmnASj71n
-         fBgg==
+        bh=TRuuVtxWKIEAiWCruYyr8i2X23ct6vZDIVdvMoTxjmg=;
+        b=FLmT0YeN5EQZdt4TRDZ4HKoAC8vNCrJ2HptNJPjK+tyGJtYoU6wnmrN+byW0FZMpg/
+         irKnxBViC0DLBiKnJ04kuCwuEh2DoZC9nciO9jc1Lzz9GAJyJ8GuKjWGjw0auvZHo+QG
+         6W1IQsCHUxmgOHhMLWqtvpLYt531tWj3Wf7G4J8dxzt5N23cNiZvxjVhXPZ5EcFaI3t6
+         XyoomcvCFddz0rWYdNURjQOtg9hH7teYg79HE8a4MvV5wUMWBg48VYporLEIgBcagMRW
+         lSh1ulsR1NfJb1aWE5Sf+YVZvaIxABsTv6KgS2vVCGV2+AFclBWSzbSkNUHDXcHcBksC
+         ZJvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774985995; x=1775590795;
+        d=1e100.net; s=20251104; t=1774985999; x=1775590799;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=hVNRywWQq5QAWWSzQU0VE+vfO8CACut7y7L2DEhMqBk=;
-        b=dcHzH8ZQ2E1stNSOOzk8pN/pfG9q6tfkPslYJ1cRO9PdEKdu9i/TYCpvXhmM2BIwRe
-         /U+VTU35YEk4whAuG7IwUNVQwDRhXHSPLqVXzrayiwZwEnxddu9v5oLwpNyf9zpFQ+nv
-         UPKur67D/VUvvnBhcTO//ZYbvg7raFJBVWntzNBrNjUoaKAgQrhC8DFZJs1P8FltOQLV
-         gxnZi4gPkP7dxvTVKkEDQXpWFxAjpzLUezmlri+onEV+H0hSHfeF2hDfc/SkwDGTf66D
-         NoLpkrI2Aa4iTRnxYlotfeTphuYlMUASaw1hEZJAH8BNO36fi/udv7BfaI67sCBBfXK0
-         GCrA==
-X-Forwarded-Encrypted: i=1; AJvYcCUptPQ7DVKEBFeJlIfiEDh/8UZCkNhT51GDduGMoxarmOWur0t3NYSPjbpy3Zi8N7l6d62Vwlb7H6M4j7Bp@vger.kernel.org
-X-Gm-Message-State: AOJu0YxDjpIV26swOlA9xbaNRqYJ/uzXfQT4A49BTotuduwlLOSatgYm
-	WpImzslrSHZNSJQw/DuVo+B0hIRNYsXaV8hhXZkmfRcVzSp92QUgoBDz
-X-Gm-Gg: ATEYQzx/lSpZjrWQ76lrzP5Yd8cCxKFYV7q1aNU1tITPxVEaQVYqE/jLeCE/Z3gD63I
-	SlqDsdSgMZPttu0g6KNz1QwIEfH/Cjfyw6QnjcU2fG+POSekHS925DMzxCPjyQgfDVMycjxPQnv
-	6b0fbRmwys4ZwR1dRLeHfsdamFEiJRltroizXvcIuqMsRPVpfTjKX+q9KouoePbRXqO+dmOIkeZ
-	bbBkXdVAP2978jNHrNtmRWIEE2epF5CNn7psVKDD1AfS/crHkJjOqtyjXnD/dF9ra/MqFTvm5Rv
-	/TSGZTJCsGfZJNFyAnV+2+7FhZ5WqpjzPtLSTj/U8dcQk51q55LJNG4I8LQ5p6ProCROh6rqWbw
-	R4UVehS+CZAIb/eTde6IbAVrrIfTN745WDJIzbWyzs6V2Q+tdKF9FQMwh80vl0jd9GmigAQWeyW
-	L1u+TazxMW+CEiQWN1vuwC+TOW
-X-Received: by 2002:a05:620a:170c:b0:8cf:dd4b:8a53 with SMTP id af79cd13be357-8d1b5b2436dmr156991785a.30.1774985994711;
-        Tue, 31 Mar 2026 12:39:54 -0700 (PDT)
+        bh=TRuuVtxWKIEAiWCruYyr8i2X23ct6vZDIVdvMoTxjmg=;
+        b=RHrSZ0P64p7x0OxENdPtiz5/KNiUQy8Geya7qcvCC+8RGTtRSsF+51vJmCWBA9bi44
+         Q7YDlnqjywuYAJ4b9rl9Pt+BQCM7bt7TiPSwIDfER76NfwP85EsILDro9lzoS9mx8I1G
+         0UadOI9D4dhIpq5V4O7jgpoBe9VEgqR4cUjk8H1ycape1Wuo++uReozjmstXbnSQ3qeQ
+         cmDatQ25JSfXbCX6g3XFf8uTkMFg6UY8ZY+NnHCSs/oXbnz6xXXlvzo+WaxRjQe4umYn
+         ZlXFYm1Y5u/djJAmqEEi4qkvVwqlD7jtiAjEHAvKOf/wVAZ/d+LCZeqpvvRcwDMTMs4z
+         xefw==
+X-Forwarded-Encrypted: i=1; AJvYcCV3+GROcQcutqv8z44T/5jlcHt+0SXQqhQ9Ob60XFK+X83aB62ao/5yTjvRQwMqjfd9FGnpBiD2AvysBL3+@vger.kernel.org
+X-Gm-Message-State: AOJu0YzzQu79lg+TN99OlYgHC0Uv0nER7ihqa+yBdwHxm8h7qPBcJ850
+	UPdQm4fRN3U/YhTv0k/AH1omWTA8eUKxRfX8JNw0trwg74CtgOFUe0re
+X-Gm-Gg: ATEYQzwwevLtERK0PSThnyj0mCumLYTFbIb4DT6dlwSzOm8NxDGSLLPp00ejSbqK7Af
+	Kc8IN8uyNaHhoTdXBoqPslB+JuTClaUYzCkuegrD+8QR/bqswflUddxQWXYSqY9suQM0DOHT96c
+	MYpHGgk9BJzzVazXDAiuASQpzBvN2oXitjkz5PixZ/36bE1jQGuwsPktKTmES3LjNIrRoZ6CI9i
+	BKjYOC1atZ0nZVLndfF9vdLZw/k9IoqgGM0yBfgsf5EUhwz7RCAZ2wb+OW5sc8CIvEBJfVc5azU
+	uN7ntcA9P911sPaIGnKhUE5GNs+xTvk/z/ducS1wccEwIJbgr/ZneRAqNdoFZNvnDmTnnovhZFw
+	2OiKhCNbnMJW/ltDlK/yK2HgQpwCXN/hAPC8jQedpVe3ZIAMFtQbMHQjE+xuUJ7gPXGP4IhhCLZ
+	9gAvw0eHJfqnPwyQzbkvGFV/15
+X-Received: by 2002:a05:6214:21a6:b0:89c:6252:4a4a with SMTP id 6a1803df08f44-8a43a65fc23mr13617406d6.49.1774985998777;
+        Tue, 31 Mar 2026 12:39:58 -0700 (PDT)
 Received: from localhost ([199.7.157.124])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8d028075135sm947442685a.38.2026.03.31.12.39.53
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-89ecb5cf18esm98782366d6.4.2026.03.31.12.39.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Mar 2026 12:39:54 -0700 (PDT)
+        Tue, 31 Mar 2026 12:39:58 -0700 (PDT)
 From: Richard Acayan <mailingradian@gmail.com>
 To: Srinivas Kandagatla <srini@kernel.org>,
 	Liam Girdwood <lgirdwood@gmail.com>,
@@ -101,9 +101,9 @@ Cc: Nickolay Goppen <setotau@mainlining.org>,
 	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
 	Richard Acayan <mailingradian@gmail.com>
-Subject: [PATCH v3 14/15] ASoC: msm8916-wcd-analog: add pm8953 codec
-Date: Tue, 31 Mar 2026 15:39:38 -0400
-Message-ID: <20260331193939.40636-15-mailingradian@gmail.com>
+Subject: [PATCH v3 15/15] ASoC: msm8916-wcd-analog: add quirk for cajon 2.0
+Date: Tue, 31 Mar 2026 15:39:39 -0400
+Message-ID: <20260331193939.40636-16-mailingradian@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331193939.40636-1-mailingradian@gmail.com>
 References: <20260331193939.40636-1-mailingradian@gmail.com>
@@ -120,13 +120,13 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-101150-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-101151-lists,linux-arm-msm=lfdr.de];
 	RECEIVED_HELO_LOCALHOST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FREEMAIL_FROM(0.00)[gmail.com];
@@ -143,73 +143,116 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	RCVD_COUNT_FIVE(0.00)[5];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 5EFBD370B99
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 4955E370C34
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-From: Vladimir Lypak <vladimir.lypak@gmail.com>
+The codec version CAJON_2_0 on the Snapdragon 670 requires touching the
+HPH test registers. Add the quirk so this driver can also support
+SDM670.
 
-Add regs overrides for PM8953 codec.
-
-Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
-[Adam: rename codec]
-Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Richard Acayan <mailingradian@gmail.com>
 ---
- sound/soc/codecs/msm8916-wcd-analog.c | 29 +++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ sound/soc/codecs/msm8916-wcd-analog.c | 63 ++++++++++++++++++++++++++-
+ 1 file changed, 61 insertions(+), 2 deletions(-)
 
 diff --git a/sound/soc/codecs/msm8916-wcd-analog.c b/sound/soc/codecs/msm8916-wcd-analog.c
-index 13df60409857..b9325290c28d 100644
+index b9325290c28d..87f8a47cc293 100644
 --- a/sound/soc/codecs/msm8916-wcd-analog.c
 +++ b/sound/soc/codecs/msm8916-wcd-analog.c
-@@ -755,6 +755,34 @@ static const struct wcd_reg_seq pm8950_data = {
- 	.seq_size = ARRAY_SIZE(wcd_reg_defaults_pm8950),
- };
+@@ -217,9 +217,11 @@
+ #define CDC_A_RX_HPH_BIAS_LDO_OCP	(0xf195)
+ #define CDC_A_RX_HPH_BIAS_CNP		(0xf196)
+ #define CDC_A_RX_HPH_CNP_EN		(0xf197)
++#define CDC_A_RX_HPH_L_TEST		(0xf19A)
+ #define CDC_A_RX_HPH_L_PA_DAC_CTL	(0xf19B)
+ #define RX_HPA_L_PA_DAC_CTL_DATA_RESET_MASK	BIT(1)
+ #define RX_HPA_L_PA_DAC_CTL_DATA_RESET_RESET	BIT(1)
++#define CDC_A_RX_HPH_R_TEST		(0xf19C)
+ #define CDC_A_RX_HPH_R_PA_DAC_CTL	(0xf19D)
+ #define RX_HPH_R_PA_DAC_CTL_DATA_RESET	BIT(1)
+ #define RX_HPH_R_PA_DAC_CTL_DATA_RESET_MASK BIT(1)
+@@ -705,6 +707,59 @@ static int pm8916_wcd_analog_enable_ear_pa(struct snd_soc_dapm_widget *w,
+ 	return 0;
+ }
  
-+static const struct reg_default wcd_reg_defaults_pm8953[] = {
-+	{CDC_A_RX_COM_OCP_CTL, 0xd1},
-+	{CDC_A_RX_COM_OCP_COUNT, 0xff},
-+	{CDC_D_SEC_ACCESS, 0xa5},
-+	{CDC_D_PERPH_RESET_CTL3, 0x0f},
-+	{CDC_A_TX_1_2_OPAMP_BIAS, 0x4c},
-+	{CDC_A_NCP_FBCTRL, 0xa8},
-+	{CDC_A_NCP_VCTRL, 0xa4},
-+	{CDC_A_SPKR_DRV_CTL, 0x69},
-+	{CDC_A_SPKR_DRV_DBG, 0x01},
-+	{CDC_A_SEC_ACCESS, 0xa5},
-+	{CDC_A_PERPH_RESET_CTL3, 0x0f},
-+	{CDC_A_CURRENT_LIMIT, 0xa2},
-+	{CDC_A_BYPASS_MODE, 0x18},
-+	{CDC_A_SPKR_ANA_BIAS_SET, 0x41},
-+	{CDC_A_SPKR_DAC_CTL, 0x03},
-+	{CDC_A_SPKR_OCP_CTL, 0xe1},
-+	{CDC_A_RX_HPH_BIAS_PA, 0xfa},
-+	{CDC_A_RX_EAR_STATUS, 0x10},
-+	{CDC_A_MASTER_BIAS_CTL, 0x30},
-+	{CDC_A_MICB_1_INT_RBIAS, 0x00},
-+};
++static int pm8916_wcd_analog_enable_hphl_pa(struct snd_soc_dapm_widget *w,
++					    struct snd_kcontrol *kcontrol,
++					    int event)
++{
++	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
++	struct pm8916_wcd_analog_priv *priv = dev_get_drvdata(component->dev);
 +
-+static const struct wcd_reg_seq pm8953_data = {
-+	.seq = wcd_reg_defaults_pm8953,
-+	.seq_size = ARRAY_SIZE(wcd_reg_defaults_pm8953),
-+};
++	/* This quirk is not required for revisions prior to CAJON_2_0 */
++	if (priv->codec_version < 4)
++		return 0;
 +
- static int pm8916_wcd_analog_probe(struct snd_soc_component *component)
- {
- 	struct pm8916_wcd_analog_priv *priv = dev_get_drvdata(component->dev);
-@@ -1304,6 +1332,7 @@ static int pm8916_wcd_analog_spmi_probe(struct platform_device *pdev)
- static const struct of_device_id pm8916_wcd_analog_spmi_match_table[] = {
- 	{ .compatible = "qcom,pm8916-wcd-analog-codec", .data = &pm8916_data },
- 	{ .compatible = "qcom,pm8950-wcd-analog-codec", .data = &pm8950_data },
-+	{ .compatible = "qcom,pm8953-wcd-analog-codec", .data = &pm8953_data },
- 	{ }
- };
++	switch (event) {
++	case SND_SOC_DAPM_POST_PMU:
++		usleep_range(7000, 7100);
++		snd_soc_component_update_bits(component, CDC_A_RX_HPH_L_TEST,
++				0x04, 0x04);
++		break;
++	case SND_SOC_DAPM_POST_PMD:
++		/* wait 20 ms after the digital codec has powered down */
++		msleep(20);
++		snd_soc_component_update_bits(component, CDC_A_RX_HPH_L_TEST,
++				0x04, 0x00);
++		break;
++	}
++	return 0;
++}
++
++static int pm8916_wcd_analog_enable_hphr_pa(struct snd_soc_dapm_widget *w,
++					    struct snd_kcontrol *kcontrol,
++					    int event)
++{
++	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
++	struct pm8916_wcd_analog_priv *priv = dev_get_drvdata(component->dev);
++
++	/* This quirk is not required for revisions prior to CAJON_2_0 */
++	if (priv->codec_version < 4)
++		return 0;
++
++	switch (event) {
++	case SND_SOC_DAPM_POST_PMU:
++		usleep_range(7000, 7100);
++		snd_soc_component_update_bits(component, CDC_A_RX_HPH_R_TEST,
++				0x04, 0x04);
++		break;
++	case SND_SOC_DAPM_POST_PMD:
++		msleep(20);
++		snd_soc_component_update_bits(component, CDC_A_RX_HPH_R_TEST,
++				0x04, 0x00);
++		break;
++	}
++	return 0;
++}
++
+ static const struct reg_default wcd_reg_defaults_2_0[] = {
+ 	{CDC_A_RX_COM_OCP_CTL, 0xD1},
+ 	{CDC_A_RX_COM_OCP_COUNT, 0xFF},
+@@ -954,11 +1009,15 @@ static const struct snd_soc_dapm_widget pm8916_wcd_analog_dapm_widgets[] = {
+ 	SND_SOC_DAPM_MUX("EAR_S", SND_SOC_NOPM, 0, 0, &ear_mux),
+ 	SND_SOC_DAPM_SUPPLY("EAR CP", CDC_A_NCP_EN, 4, 0, NULL, 0),
  
+-	SND_SOC_DAPM_PGA("HPHL PA", CDC_A_RX_HPH_CNP_EN, 5, 0, NULL, 0),
++	SND_SOC_DAPM_PGA_E("HPHL PA", CDC_A_RX_HPH_CNP_EN, 5, 0, NULL, 0,
++			   pm8916_wcd_analog_enable_hphl_pa,
++			   SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_POST_PMD),
+ 	SND_SOC_DAPM_MUX("HPHL", SND_SOC_NOPM, 0, 0, &hphl_mux),
+ 	SND_SOC_DAPM_MIXER("HPHL DAC", CDC_A_RX_HPH_L_PA_DAC_CTL, 3, 0, NULL,
+ 			   0),
+-	SND_SOC_DAPM_PGA("HPHR PA", CDC_A_RX_HPH_CNP_EN, 4, 0, NULL, 0),
++	SND_SOC_DAPM_PGA_E("HPHR PA", CDC_A_RX_HPH_CNP_EN, 4, 0, NULL, 0,
++			   pm8916_wcd_analog_enable_hphr_pa,
++			   SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_POST_PMD),
+ 	SND_SOC_DAPM_MUX("HPHR", SND_SOC_NOPM, 0, 0, &hphr_mux),
+ 	SND_SOC_DAPM_MIXER("HPHR DAC", CDC_A_RX_HPH_R_PA_DAC_CTL, 3, 0, NULL,
+ 			   0),
 -- 
 2.53.0
 
