@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-101145-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id MB0mCg4kzGllQQYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101145-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 21:44:14 +0200
+	id 4GZCKxAkzGllQQYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 21:44:16 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id B9388370BF6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 21:44:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6DB55370BFE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 21:44:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 414FA30EDB4B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 19:39:46 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 3D87E30F004C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 19:39:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 780F63E1D09;
-	Tue, 31 Mar 2026 19:39:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70B3E3A0E84;
+	Tue, 31 Mar 2026 19:39:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZV3v1z34"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iLlZmuDm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
+Received: from mail-qk1-f170.google.com (mail-qk1-f170.google.com [209.85.222.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF7523A0E84
-	for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 19:39:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2685938BF70
+	for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 19:39:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774985976; cv=none; b=h5FPjVfxO/3Y4bXnL63yl298wpV+JeAkUGKsMm7uFJLG2hiheokOa8nj2n/nZLfijwf2pTtm3JMBOixwTE+IdZmxA1gxjtx+0NnMuuZyFk06VlWlO02yGzaWMBfR4M8mjj8ktj0cxALbmrH46hKmYNd/yEFJdCr7qdLIOS5cnz0=
+	t=1774985980; cv=none; b=F2FJrM8CO+0FL1K/D75bjjIXaQbgx51xXuFlTFzJqkPDhhidaUKquuZ0NrVEELQIVfJZY4NZTdHkkL/W+mRnAJvYyVUr/Q6E+hLAkXsGzHobkdRrU2XhxcyQxB6BZHpRlexK0ZR9U8dCzrVLe4x+HYVgiMmf+kkqA81G8I3Jxhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774985976; c=relaxed/simple;
-	bh=NTLYLQFXzthunQAVwPc0tHdCrO0Rc+WOiGk7EDUWulU=;
+	s=arc-20240116; t=1774985980; c=relaxed/simple;
+	bh=BXCnnROK5Jr7XSfuacF1JCL6R1HVhObmmDQUVuRBs40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G9LgJj6lVnBGtUpU8HxJv8mkQDZ9dfI1AKh/tYWMCkvMICo7QSSMDXvD29ZXzUtLNX6Aiu7ckkbkyZQdpKOKqTpxsDv1xbeSr+0J7Ujj/uSFmwB4dKO6I9oggaz8N+AYX8ccDXaMBVqmDQ9SNvErCrapjH0nIlQapvJZpixy24c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZV3v1z34; arc=none smtp.client-ip=209.85.222.182
+	 MIME-Version; b=qdOHA9dSrc9mrYH3BJGwiXaXhr/Y++7LYuEAr8uGZBTIpOoEbUXHcMVcTBqRBDkhk+CTgdQdgvYjYxLdtoDKqCd+xLqC+ZSmCmRpMWGX4IEgi/VYnDkuv0f2HzRLF8G3GmrcoN8QQ9dK7omyl0tpp0Zy2Ke7SFv8w4cyQYrGfeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iLlZmuDm; arc=none smtp.client-ip=209.85.222.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-8d0288d24f6so45895885a.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 12:39:34 -0700 (PDT)
+Received: by mail-qk1-f170.google.com with SMTP id af79cd13be357-8d00cf835b7so788643985a.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 12:39:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774985974; x=1775590774; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1774985978; x=1775590778; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ko8pkaQ/h2+Vf8CzfWT1kqph029g9HoONI/ib77Rfy4=;
-        b=ZV3v1z34X64Uua4psXDTZWKwgFkDKf+a7wjFnFdWB3rga4vaBIwFUmB9cU0vjCLTGw
-         pj/Ynus3kkjH5r4bYTGW9yh+cc3ABOZcFbCxpigyTusZLI8PnEUZ6M6usInFR+BGt/hY
-         nRTP6lupSuMUjYt5G/2DlgRma8w3OJloBjRCFJXQVV7jctcUa9bl0cyYLDvBSVT15ygY
-         P1AmocTbAyQSP+6FPFRzcstSV2D4QXYkqAWqZ0P6mAtbwvWP/7v0dgiAxDLJeMROly0Y
-         aFDf5JcQywTkBEQowrmIFif6EQbG2bXGJ5fjUtx6eDJeN+eJeZT7n6cIOorgoPncV6l2
-         2Oog==
+        bh=NsXOvrBEVeyjNtjVFKrqAY0t05Kf7cmvMHwIAAt+bJU=;
+        b=iLlZmuDmZuYHLup5n1GYlUrLgsG30yGWK1dmRvP9LHymIEkH5TrKxqjw0MMaaF+bSt
+         KvzmyNyiCX3ezrH0WDV0IcffG1JMIXli3QGZ9jes3jQ5QqxWa0UzsqxyT14iZ8pNRtic
+         Y/OnmJ6wrKdaovJ9sC4e0itZfHR1JioQsclm473l4nyEPN1d4O7EMBI704pOVhXNC1Hi
+         YLWThWz+rPeG3Csvv0b+3T3Ay5Oyq631dgOjuuHOhXtzzD/WaersolRfQSWpC5xVyvHd
+         ByiKOmkEskOJ4+g5aUjQd4N5LprhKptx2MgwExqMkob/dGTQcA1yXPfAj5f9v9xhknQe
+         b5eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774985974; x=1775590774;
+        d=1e100.net; s=20251104; t=1774985978; x=1775590778;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=ko8pkaQ/h2+Vf8CzfWT1kqph029g9HoONI/ib77Rfy4=;
-        b=MBS2RF0hCJdeRDbtWV34ec4IVcUpozjIiCangbZWK7BKBjC25T/ut2WaBhlTTCjhcS
-         ybCB6JcRb9+qEuQn8VAKGSX1rHa/98OBmv080XMkmlbS9BdeHm3O6ErxKtRjtPFAA5FX
-         WDJMol9h5Yz7967cazbJmqVvTBJkQ2RHz2FphJhcOtuUqEJZ/AOinxd3Ac2rWTHtP1Sq
-         gCafCt4QSSK8Kb2RBSFZoqG0jtojO/xmMkRvWKeOvoAtAnoVrVH/pwt5Zvf182GJRGmG
-         i3Plb0+J7ly0/VHYROxjfG2aG9Z8cDUZiJNHLFxhSCDwWxMVb5IumP0lSbk1U2X/3+7m
-         KdSg==
-X-Forwarded-Encrypted: i=1; AJvYcCV8hZsxFrfjT2KcNr3hBIJus4h7Xp1XxEkOIHOvnS/LJuukAJVUG0fmWMry4M9LiMjbaTYZfIUlQsotfMH3@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxk50EviqTpQ7GMvXXkYluvt64W1MzAkvtBRTmIKIWMmwT901aV
-	cdh++GkAJQpGvCB9HYI+4ZxRPW85jKfPNfd6zgjpl4utiTqxPjoVwA6i
-X-Gm-Gg: ATEYQzzoWk62iyVVgaT1cICAttVe/Mx1UAoQK09N3l6qPJtn9xp81elzVq4WejzGVoP
-	yUo/jqcme655Z90Rste5OYGKr+Gb4xqGvKZEljSOy8qb1iP5/qy2xf15F9bYI8UUH369Q/6v0rX
-	Hz4LH5SSg5y6w+fJpDIQWdOXPWBom+9c4y5cpYeajb2mRZbs2phTWqS2sZvxIgNZNLe9osi3FOk
-	ROGzuQxlvRmv0KpcRGTRWfh3s2h/4yPKfejcdATU4ZRFAWymlJ27xXkN9yRw2Wi1jJy97koIoLX
-	4QvJ1xl2dMnATIdwtcKPiiE7nSkgpef9Bx+cig70epWXrLKHRB7DuMxjfEe5CRQs/wHtNz9bywF
-	Qn3YndasWmUFa1ps0V2HprNLm6IMjAjAMrExkhVKzyqQegPfq+XExS4eFeiXslSjVU3UqHKoC4x
-	5ryeu1h2RRa3H3jCQXkIp3qlr8
-X-Received: by 2002:a05:620a:459f:b0:8d0:38e1:4d1e with SMTP id af79cd13be357-8d1aa679b86mr657250185a.28.1774985973885;
-        Tue, 31 Mar 2026 12:39:33 -0700 (PDT)
+        bh=NsXOvrBEVeyjNtjVFKrqAY0t05Kf7cmvMHwIAAt+bJU=;
+        b=gFik9FGh0M2iNmOiaeonOPgig3tT6ovTsM99Hv9s/AIAIqByOQLK5MQhi0K1k0vuri
+         0S5n4xX/FovxRqRyfhD9dbHtKXmrp6uVVISJnpnVgc7LFIwarbSLExoK7E+LhHRgQsJO
+         ZI0ZqvLrAwqNhE4MqOqNvQg7KQW26fHMvOs5OftNLV4JCHcjRyJzUUD8MY9F7Q32FZE2
+         yB/o5HCySb9aFd+2Vgpc1ppu82UjrSgmH3C4D2jJOGV1/uZscEYHKB4eQAe1jYv7MhXu
+         n98LNXhyofoBoB0hvwWIomZyk+0QDskAy70IpVCoyvtphS7b/pu7LXPEKHL2wCJOZk0T
+         1aPw==
+X-Forwarded-Encrypted: i=1; AJvYcCXxZw+Ub1ivDV4ufqgYCPYnZudfa+D+mh4qo1drrggdAHhNmmQa4ycmW73KUmnyU7eYOexjMwdJIjV86/QX@vger.kernel.org
+X-Gm-Message-State: AOJu0YxyRW9Tnv+Ohf8c9GR8m8ZuWQtReqD3IakjlqcflhaTvkIq26Uo
+	3f9VDBBNkkAErifJIpcknCnpvx/lh5lDAogBr1FnEvyZRTpE63LXtYHV
+X-Gm-Gg: ATEYQzy5b5gEB8vfEW1mIgscasA+PR4d8UiT7AWGLTaMVE3fGGcMTMzE4l15hlHJhVz
+	BSk7uVtVyitY9bQ4E7+ebx5y+b0mRI2KghO+bYvB2ifiJpET71P1M3W87UeAqbSXp+Upyk6aa68
+	43aAaZUTI5WVJ8L2R2ZF3uZgkM+33WNj5CtnAAqzs3BXYDZzzL55DxczIIcGNqMaSn39UwNaFRR
+	jrE9xWi+6K6KX8JIONWV4brBd8UBRwZ9W2dBOZyWe4rHGXd8p3PYbfyA7YeBKsklU78LkL9gVyS
+	VwUD/OGFB0OUu1XQ8UuZOVcBMve/uFVs4m6SLjBtyZLRWmMpVxL6aOD6T9NUug1u2kcvoTCpx4A
+	/feM2ZFFVm/e+ly8bjibzxv7SU+Hgj0zxZO6v4UURTTOG9A0frMfZvlSzEm/aKCvrZQ3ss6P8IS
+	7z1JgB8eMgS12xYeU/8zMIv7aD
+X-Received: by 2002:a05:620a:4503:b0:8cf:c75d:2a0b with SMTP id af79cd13be357-8d1b5ab70cemr159538285a.6.1774985978137;
+        Tue, 31 Mar 2026 12:39:38 -0700 (PDT)
 Received: from localhost ([199.7.157.124])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-8d02803f2c9sm952299585a.23.2026.03.31.12.39.33
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8d02806d7e5sm1155303985a.36.2026.03.31.12.39.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Mar 2026 12:39:33 -0700 (PDT)
+        Tue, 31 Mar 2026 12:39:37 -0700 (PDT)
 From: Richard Acayan <mailingradian@gmail.com>
 To: Srinivas Kandagatla <srini@kernel.org>,
 	Liam Girdwood <lgirdwood@gmail.com>,
@@ -101,9 +101,9 @@ Cc: Nickolay Goppen <setotau@mainlining.org>,
 	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
 	Richard Acayan <mailingradian@gmail.com>
-Subject: [PATCH v3 09/15] ASoC: qdsp6: q6routing: add internal mi2s support
-Date: Tue, 31 Mar 2026 15:39:33 -0400
-Message-ID: <20260331193939.40636-10-mailingradian@gmail.com>
+Subject: [PATCH v3 10/15] ASoC: qdsp6: common: support headphone jacks connected to internal mi2s
+Date: Tue, 31 Mar 2026 15:39:34 -0400
+Message-ID: <20260331193939.40636-11-mailingradian@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331193939.40636-1-mailingradian@gmail.com>
 References: <20260331193939.40636-1-mailingradian@gmail.com>
@@ -126,7 +126,7 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-101145-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-101146-lists,linux-arm-msm=lfdr.de];
 	RECEIVED_HELO_LOCALHOST(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FREEMAIL_FROM(0.00)[gmail.com];
@@ -146,134 +146,31 @@ X-Spamd-Result: default: False [0.84 / 15.00];
 	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: B9388370BF6
+X-Rspamd-Queue-Id: 6DB55370BFE
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Add the ASM-AFE routing for internal MI2S ports.
+Internal MI2S ports are connected to a WCD codec which may support
+headphones. Register the headphone jack on codecs connected to the
+playback port, INT_MI2S_RX.
 
 Signed-off-by: Richard Acayan <mailingradian@gmail.com>
 ---
- sound/soc/qcom/qdsp6/q6routing.c | 78 +++++++++++++++++++++++++++++++-
- 1 file changed, 77 insertions(+), 1 deletion(-)
+ sound/soc/qcom/common.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/qcom/qdsp6/q6routing.c b/sound/soc/qcom/qdsp6/q6routing.c
-index 7386226046fa..cfb953700f14 100644
---- a/sound/soc/qcom/qdsp6/q6routing.c
-+++ b/sound/soc/qcom/qdsp6/q6routing.c
-@@ -127,7 +127,14 @@
- 	{ mix_name, "TX_CODEC_DMA_TX_2", "TX_CODEC_DMA_TX_2"},	\
- 	{ mix_name, "TX_CODEC_DMA_TX_3", "TX_CODEC_DMA_TX_3"},	\
- 	{ mix_name, "TX_CODEC_DMA_TX_4", "TX_CODEC_DMA_TX_4"},	\
--	{ mix_name, "TX_CODEC_DMA_TX_5", "TX_CODEC_DMA_TX_5"}
-+	{ mix_name, "TX_CODEC_DMA_TX_5", "TX_CODEC_DMA_TX_5"},	\
-+	{ mix_name, "INT0_MI2S_TX", "INT0_MI2S_TX" },		\
-+	{ mix_name, "INT1_MI2S_TX", "INT1_MI2S_TX" },		\
-+	{ mix_name, "INT2_MI2S_TX", "INT2_MI2S_TX" },		\
-+	{ mix_name, "INT3_MI2S_TX", "INT3_MI2S_TX" },		\
-+	{ mix_name, "INT4_MI2S_TX", "INT4_MI2S_TX" },		\
-+	{ mix_name, "INT5_MI2S_TX", "INT5_MI2S_TX" },		\
-+	{ mix_name, "INT6_MI2S_TX", "INT6_MI2S_TX" }
+diff --git a/sound/soc/qcom/common.c b/sound/soc/qcom/common.c
+index cf1f3a767cee..7e2a8745594d 100644
+--- a/sound/soc/qcom/common.c
++++ b/sound/soc/qcom/common.c
+@@ -232,6 +232,7 @@ int qcom_snd_wcd_jack_setup(struct snd_soc_pcm_runtime *rtd,
+ 	}
  
- #define Q6ROUTING_TX_MIXERS(id)						\
- 	SOC_SINGLE_EXT("PRI_MI2S_TX", PRIMARY_MI2S_TX,			\
-@@ -320,6 +327,27 @@
- 		id, 1, 0, msm_routing_get_audio_mixer,			\
- 		msm_routing_put_audio_mixer),				\
- 	SOC_SINGLE_EXT("TX_CODEC_DMA_TX_5", TX_CODEC_DMA_TX_5,		\
-+		id, 1, 0, msm_routing_get_audio_mixer,			\
-+		msm_routing_put_audio_mixer),				\
-+	SOC_SINGLE_EXT("INT0_MI2S_TX", INT0_MI2S_TX,			\
-+		id, 1, 0, msm_routing_get_audio_mixer,			\
-+		msm_routing_put_audio_mixer),				\
-+	SOC_SINGLE_EXT("INT1_MI2S_TX", INT1_MI2S_TX,			\
-+		id, 1, 0, msm_routing_get_audio_mixer,			\
-+		msm_routing_put_audio_mixer),				\
-+	SOC_SINGLE_EXT("INT2_MI2S_TX", INT2_MI2S_TX,			\
-+		id, 1, 0, msm_routing_get_audio_mixer,			\
-+		msm_routing_put_audio_mixer),				\
-+	SOC_SINGLE_EXT("INT3_MI2S_TX", INT3_MI2S_TX,			\
-+		id, 1, 0, msm_routing_get_audio_mixer,			\
-+		msm_routing_put_audio_mixer),				\
-+	SOC_SINGLE_EXT("INT4_MI2S_TX", INT4_MI2S_TX,			\
-+		id, 1, 0, msm_routing_get_audio_mixer,			\
-+		msm_routing_put_audio_mixer),				\
-+	SOC_SINGLE_EXT("INT5_MI2S_TX", INT5_MI2S_TX,			\
-+		id, 1, 0, msm_routing_get_audio_mixer,			\
-+		msm_routing_put_audio_mixer),				\
-+	SOC_SINGLE_EXT("INT6_MI2S_TX", INT6_MI2S_TX,			\
- 		id, 1, 0, msm_routing_get_audio_mixer,			\
- 		msm_routing_put_audio_mixer),
- 
-@@ -709,6 +737,26 @@ static const struct snd_kcontrol_new rxcodec_dma_rx_6_mixer_controls[] = {
- static const struct snd_kcontrol_new rx_codec_dma_rx_7_mixer_controls[] = {
- 	Q6ROUTING_RX_MIXERS(RX_CODEC_DMA_RX_7) };
- 
-+static const struct snd_kcontrol_new int0_mi2s_rx_mixer_controls[] = {
-+	Q6ROUTING_RX_MIXERS(INT0_MI2S_RX) };
-+
-+static const struct snd_kcontrol_new int1_mi2s_rx_mixer_controls[] = {
-+	Q6ROUTING_RX_MIXERS(INT1_MI2S_RX) };
-+
-+static const struct snd_kcontrol_new int2_mi2s_rx_mixer_controls[] = {
-+	Q6ROUTING_RX_MIXERS(INT2_MI2S_RX) };
-+
-+static const struct snd_kcontrol_new int3_mi2s_rx_mixer_controls[] = {
-+	Q6ROUTING_RX_MIXERS(INT3_MI2S_RX) };
-+
-+static const struct snd_kcontrol_new int4_mi2s_rx_mixer_controls[] = {
-+	Q6ROUTING_RX_MIXERS(INT4_MI2S_RX) };
-+
-+static const struct snd_kcontrol_new int5_mi2s_rx_mixer_controls[] = {
-+	Q6ROUTING_RX_MIXERS(INT5_MI2S_RX) };
-+
-+static const struct snd_kcontrol_new int6_mi2s_rx_mixer_controls[] = {
-+	Q6ROUTING_RX_MIXERS(INT6_MI2S_RX) };
- 
- static const struct snd_kcontrol_new mmul1_mixer_controls[] = {
- 	Q6ROUTING_TX_MIXERS(MSM_FRONTEND_DAI_MULTIMEDIA1) };
-@@ -938,6 +986,27 @@ static const struct snd_soc_dapm_widget msm_qdsp6_widgets[] = {
- 	SND_SOC_DAPM_MIXER("USB_RX Audio Mixer", SND_SOC_NOPM, 0, 0,
- 			   usb_rx_mixer_controls,
- 			   ARRAY_SIZE(usb_rx_mixer_controls)),
-+	SND_SOC_DAPM_MIXER("INT0_MI2S_RX Audio Mixer", SND_SOC_NOPM, 0, 0,
-+		int0_mi2s_rx_mixer_controls,
-+		ARRAY_SIZE(int0_mi2s_rx_mixer_controls)),
-+	SND_SOC_DAPM_MIXER("INT1_MI2S_RX Audio Mixer", SND_SOC_NOPM, 0, 0,
-+		int1_mi2s_rx_mixer_controls,
-+		ARRAY_SIZE(int1_mi2s_rx_mixer_controls)),
-+	SND_SOC_DAPM_MIXER("INT2_MI2S_RX Audio Mixer", SND_SOC_NOPM, 0, 0,
-+		int2_mi2s_rx_mixer_controls,
-+		ARRAY_SIZE(int2_mi2s_rx_mixer_controls)),
-+	SND_SOC_DAPM_MIXER("INT3_MI2S_RX Audio Mixer", SND_SOC_NOPM, 0, 0,
-+		int3_mi2s_rx_mixer_controls,
-+		ARRAY_SIZE(int3_mi2s_rx_mixer_controls)),
-+	SND_SOC_DAPM_MIXER("INT4_MI2S_RX Audio Mixer", SND_SOC_NOPM, 0, 0,
-+		int4_mi2s_rx_mixer_controls,
-+		ARRAY_SIZE(int4_mi2s_rx_mixer_controls)),
-+	SND_SOC_DAPM_MIXER("INT5_MI2S_RX Audio Mixer", SND_SOC_NOPM, 0, 0,
-+		int5_mi2s_rx_mixer_controls,
-+		ARRAY_SIZE(int5_mi2s_rx_mixer_controls)),
-+	SND_SOC_DAPM_MIXER("INT6_MI2S_RX Audio Mixer", SND_SOC_NOPM, 0, 0,
-+		int6_mi2s_rx_mixer_controls,
-+		ARRAY_SIZE(int6_mi2s_rx_mixer_controls)),
- 	SND_SOC_DAPM_MIXER("MultiMedia1 Mixer", SND_SOC_NOPM, 0, 0,
- 		mmul1_mixer_controls, ARRAY_SIZE(mmul1_mixer_controls)),
- 	SND_SOC_DAPM_MIXER("MultiMedia2 Mixer", SND_SOC_NOPM, 0, 0,
-@@ -1031,6 +1100,13 @@ static const struct snd_soc_dapm_route intercon[] = {
- 	Q6ROUTING_RX_DAPM_ROUTE("RX_CODEC_DMA_RX_6 Audio Mixer", "RX_CODEC_DMA_RX_6"),
- 	Q6ROUTING_RX_DAPM_ROUTE("RX_CODEC_DMA_RX_7 Audio Mixer", "RX_CODEC_DMA_RX_7"),
- 	Q6ROUTING_RX_DAPM_ROUTE("USB_RX Audio Mixer", "USB_RX"),
-+	Q6ROUTING_RX_DAPM_ROUTE("INT0_MI2S_RX Audio Mixer", "INT0_MI2S_RX"),
-+	Q6ROUTING_RX_DAPM_ROUTE("INT1_MI2S_RX Audio Mixer", "INT1_MI2S_RX"),
-+	Q6ROUTING_RX_DAPM_ROUTE("INT2_MI2S_RX Audio Mixer", "INT2_MI2S_RX"),
-+	Q6ROUTING_RX_DAPM_ROUTE("INT3_MI2S_RX Audio Mixer", "INT3_MI2S_RX"),
-+	Q6ROUTING_RX_DAPM_ROUTE("INT4_MI2S_RX Audio Mixer", "INT4_MI2S_RX"),
-+	Q6ROUTING_RX_DAPM_ROUTE("INT5_MI2S_RX Audio Mixer", "INT5_MI2S_RX"),
-+	Q6ROUTING_RX_DAPM_ROUTE("INT6_MI2S_RX Audio Mixer", "INT6_MI2S_RX"),
- 	Q6ROUTING_TX_DAPM_ROUTE("MultiMedia1 Mixer"),
- 	Q6ROUTING_TX_DAPM_ROUTE("MultiMedia2 Mixer"),
- 	Q6ROUTING_TX_DAPM_ROUTE("MultiMedia3 Mixer"),
+ 	switch (cpu_dai->id) {
++	case INT0_MI2S_RX:
+ 	case TX_CODEC_DMA_TX_0:
+ 	case TX_CODEC_DMA_TX_1:
+ 	case TX_CODEC_DMA_TX_2:
 -- 
 2.53.0
 
