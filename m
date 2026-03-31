@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-101161-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101162-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 8L5zHkwpzGkmQgYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101161-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 22:06:36 +0200
+	id AI2MBFYpzGkmQgYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101162-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 22:06:46 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC52F370FC0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 22:06:35 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 78493370FD6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 22:06:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id D979F3022F54
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 20:06:34 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 3FF3C303767D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 20:06:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 019133CF04B;
-	Tue, 31 Mar 2026 20:06:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5BE5A3CFF50;
+	Tue, 31 Mar 2026 20:06:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jiaXdFUW"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H/8XDrzE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43FC3CEBBD
-	for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 20:06:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43413CD8AB
+	for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 20:06:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774987592; cv=none; b=VRPFUixDJ7GqRX1/IXo/hZcbMAqm5jAri1F39/PPDMEHc613jVvSGFPhNCamaof/rd3qfNVFwAURSyKakVaNgJn+ym6obBIEdg6CHCa4AHW7vgc4ocvgFWlxS5ajFKpYh2Nl/G/YOCmol9OS9KkR3zbasPDJ+5YZKk3gwX1V2yI=
+	t=1774987595; cv=none; b=UioCWwuV4dRz8T73eYU0fO7wlD+9NyDbCqSwwVIXT1NxJjNHoNyL+N+QK2P4CJjI5JxktG0xsv3eAGgein6F1o5Xdw7t9kpGe58NHrBvNEI3Cg8Q2nDWxs/pw9xb/3JGTFT6JIeIWSBbKZyqwhGu0dfy2CbzHE0BmHaEoZ1azCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774987592; c=relaxed/simple;
-	bh=BXryAKX6NVFYf02Rthjzcth7RXEPffJWlfj1avyTgpY=;
+	s=arc-20240116; t=1774987595; c=relaxed/simple;
+	bh=Jsw2LZX+24ad49I5ppoLXlXypBhq0fgDlxTOnH7YRDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LspwD4wnp0lukTX9qCx03u/5uuHOL5Wg1kA5fhxZwQpi79tIgVHF7ueMWsC5RfHHM/hv4+KYwKzaVabxZDQWomFopMzKJu1FWlIL+tDd4Oz6zqm+iX36HMcrLYcGXC1W5BRf6z7NM/eVqU/HObg2Yq5FzigEu4B6r7EwjR+jMzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jiaXdFUW; arc=none smtp.client-ip=209.85.219.43
+	 MIME-Version; b=fy9PIj7V6avfwY2NNl+wBhb+pClEikJ6b5lDe/7UDPjY1VufzQe9GD4ovH0llJ4Xq5IsQy+NXaeINfQ/x/WmzbSBCOfSkSmbMZZPRqHWmRF2IyeAF3xyh4XBin/nmUJNILER9/S/cEPN7TR5YASYIJZ5rVgBkGHgpLY72jWNRSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H/8XDrzE; arc=none smtp.client-ip=209.85.222.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-8a3b0242631so9645796d6.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 13:06:28 -0700 (PDT)
+Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-8d0288d24f6so49202285a.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 13:06:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20251104; t=1774987587; x=1775592387; darn=vger.kernel.org;
+        d=gmail.com; s=20251104; t=1774987591; x=1775592391; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Fc5kWVLdAq+Q9mjEq5NdJkCNIoLw5Q3qMEUYKxUl8tY=;
-        b=jiaXdFUWp3aTODx4dtSlnx9L7OvyJVK75FJnPeYlaV5oCDiT6LxwMdEEWSWvEWVhRZ
-         83+34T7g6NqWqsA/mOktgv1PIfYHg+vt2jMQixx1Eu0JnTwnyYkFuEOGPSS9BRCSDAp2
-         ESxZs42FveGfRQB/Hc5VBzlOjMiIBupn56zfmLkrLZ0vPXjpp+YHRvttF+ls0DYit35D
-         kvPtB4BnFa9gXzIRlPEYXzISjVHHuN5W8+qVySz13nRwTb7hOBSWYdmCo95SfrzB1Qr7
-         7PF4wIEC3j800IKUBwPc07I+B3i2bpi9FVZ5dkTbKKgy60gj+yraZ1zIwG5R3mO9vNYp
-         Duxg==
+        bh=mvo58vQkpYun2pER1aP/8VK1/EjAtCoPrLClSYN1Vl0=;
+        b=H/8XDrzEjnkTZX0j3TkbF4zrSP79umb61uRp3hLK8f52G+O2gqx1/LJ4UTDWL5Rech
+         Jgz171iUsGK4cojfYMHtJugESICe5/wAdUNwz7NsV6SOjyOdOjtR4JCxLAo87robJu6D
+         7qR2JcUeAVvPCrwM3kvuPWmPwlT9ebMP6EVrmGF04DhMSvJLD5THRc1+7q9tvd07O5b7
+         nh8zim3mugahkJEV1nn6eVs3cBw4zQle3LYlZeIbkP5/Ptpc9arHOdGLlWaCN7OKUoEk
+         I0xn/8D0ATlr4sZnifHluJdq0/MPJvUQVgKqw680VXxKBgyJogGuUQGqPWkggJGGlLUH
+         Vg4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774987587; x=1775592387;
+        d=1e100.net; s=20251104; t=1774987591; x=1775592391;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Fc5kWVLdAq+Q9mjEq5NdJkCNIoLw5Q3qMEUYKxUl8tY=;
-        b=Z/1kSmeEUzMoSzVDYlm9BvUpO0v3OwokJG5SlhN/5u/P+cj7jQ1CDAt6qtZ/g2EVLP
-         /iWNdPZnnR+r7/O3WDAXbXo0rd9zh4gSJQXOxCgbQ0jIX1um9TkM58vgc1ATyddZBdAu
-         /nM8LTsJQiTUH8YIyWiTUlMNKsuwXzpMa1ilby8uF1qlGcZewfs6IlkWrA0aMf2JZsdr
-         U2fpjfKlNimfauplJYkDS/osJ+hNa/BKLniFZu9ET7pXMFExPMmFxSP9kkXn149zmw02
-         oWq55qFgr1mlgbIpoLQm+aSNgIMiPZ8xyHSNrXAJmvUc+qROkIB0bL2ovGY4/4CTTVMv
-         gZ/w==
-X-Forwarded-Encrypted: i=1; AJvYcCVKeniZvtUFhgCOfFD+UeokgxrXI1tCzleoFCgx/2xT2Uiay5biLj3EDQLMjP1ROQfjLofmwlR3LsdsbLs3@vger.kernel.org
-X-Gm-Message-State: AOJu0YzOIJFmJvP0ZwgpjAUIL3TzDvK45bkLE8z5WPY4GCqXa8NARYjG
-	tAX94LckUUqADFftiXTNEm+QiyUEyjDZydaNCEyK0MuM40R/N06A8VBM
-X-Gm-Gg: ATEYQzwvLf3JvMrrckELOw6oQFd6T8yBoaA21OPzOqcMEQS3raPeoQEfHGn4w5pt06X
-	9TztDbH8F3NdStDyyAnESafNBReej5kOE8qYUxutYX+IVJg6EDgKcDi7VZysWPW2fbvfadgHD+g
-	j7I4r0kcvddcyj1ipS8KWnxoc0aBkqERbfYQFwHwYcjz0jnlMtKpSwBihD5La5D/fPr/UOAmoOZ
-	oXaa7uq0K9iWoBTaMSx9zjES5dpr2oNfnqPOXMpZFZ/cjRnSwN88wGHeCPF5iJ7gNQcuzyARtwN
-	6PzlmGKOsMW+GNWbSBoqIJToQUtow8qYPU3zRauBYIhykWK66kg/IHBUY/KMuzXcER0QozNufDd
-	E81NX1z7zn6bVu5FCzJOiWdGMErb6bMyXL59kBc7SpWcmWsng3giCTeM/1phamPdwPwWuiYCOhV
-	eTHjVR7giS0hxE9ULLgCyfTc/R
-X-Received: by 2002:a05:6214:19c6:b0:89a:649:f88c with SMTP id 6a1803df08f44-8a43b50f422mr13570676d6.52.1774987587201;
-        Tue, 31 Mar 2026 13:06:27 -0700 (PDT)
+        bh=mvo58vQkpYun2pER1aP/8VK1/EjAtCoPrLClSYN1Vl0=;
+        b=CjQg29ApsRAMI9+ShGH6Z/RoKr08LNFShgfT9TfCT902YCcLBlpr040XpqijH38Q75
+         5a2xvW63FOvempLbPRqGDw3waba+TTQvuUzEtXN8E9M47JkUZC5+q54sun3ZOEGkhWdj
+         VuAK9gyvK4zunJBKR8hqn2v8L5//ZsGqPXVj4AFRPLpVvABbGGEql9iSY085lQaHdyrU
+         5XGn43an7HczFk4QwZXDOR2PIjfGDwjAwZverOnEC/AtA9i81Dq/adHQg4V7RStChVEv
+         /bBjh1rYhg/mot2joIabHqH+tHobPvt6takKOaUbS0fuJgvt2OvLmbg2sfaSVempzE83
+         yPsQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWlwTa8CBoeVpgfRuFdt39Po451h7cJOLJ6LB2dqccA7OjLunxjzeRUzYC/7NcI9P10udHNJOLFe7XOAfDw@vger.kernel.org
+X-Gm-Message-State: AOJu0YzDE/NMkqRoRhS+bIEV8AVeHXjJ/XTRqA37piIbB/slpEocEdU8
+	203hTXaXrqZe6QkIJ2qTI9bvNz/jDjyeRx11hsnh9IIDa3Or2HVWGaVZ
+X-Gm-Gg: ATEYQzzJD46o14u4B/4fRY2QjmoHlWZuClvlLWjDfWty6vRsquW1eO6KIwlDVqmMfHd
+	YgOXmZCWI5OzJfw4Wp2ftaVE1X0wWjaeEzyETqLZDU+Tk/PBm2p0Cutn8j2HBWintrD4K18MyQB
+	zxxvjkum+ShV86oLxq+o2JzhR6qqZ4RtHB2HcUqCUeU4iZMVhzkp/nirAWWYln5gPe+R6qIbM0l
+	+8Cks0rx96LW+oI0IuoRUBIDIxMKQnzPeaqKCLDQzxnTnXH1lzPWe64AcVypNFGVNoBUNlFRUm1
+	cRrT576zAI1uW7o78dcC3bjhyKjNoRULQalMsd5jml0d3oIIcrfkpHtOQ28y+iXpIUTxayUyAtS
+	Nb+YmtZjxmyawwLSuMtDr/LWhq5LrHXPjLZQW7U3C1szo5eI+5QQYpJnmOeybsGVYqEZUWRie+T
+	6P+KKYy4Oe8JRriyA71oNJy0oM68DFz48oqwE=
+X-Received: by 2002:a05:620a:28ca:b0:8cf:dbf0:502b with SMTP id af79cd13be357-8d1b642e06emr97471985a.31.1774987591205;
+        Tue, 31 Mar 2026 13:06:31 -0700 (PDT)
 Received: from localhost ([199.7.157.124])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-89ecf28016dsm100525066d6.25.2026.03.31.13.06.26
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8d0280428d1sm961054385a.25.2026.03.31.13.06.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Mar 2026 13:06:26 -0700 (PDT)
+        Tue, 31 Mar 2026 13:06:30 -0700 (PDT)
 From: Richard Acayan <mailingradian@gmail.com>
 To: Bjorn Andersson <andersson@kernel.org>,
 	Linus Walleij <linusw@kernel.org>,
@@ -88,9 +88,9 @@ To: Bjorn Andersson <andersson@kernel.org>,
 	linux-gpio@vger.kernel.org,
 	devicetree@vger.kernel.org
 Cc: Richard Acayan <mailingradian@gmail.com>
-Subject: [PATCH v5 3/4] pinctrl: qcom: add sdm670 lpi tlmm
-Date: Tue, 31 Mar 2026 16:06:57 -0400
-Message-ID: <20260331200658.1306-4-mailingradian@gmail.com>
+Subject: [PATCH v5 4/4] arm64: dts: qcom: sdm670: add lpi pinctrl
+Date: Tue, 31 Mar 2026 16:06:58 -0400
+Message-ID: <20260331200658.1306-5-mailingradian@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260331200658.1306-1-mailingradian@gmail.com>
 References: <20260331200658.1306-1-mailingradian@gmail.com>
@@ -106,7 +106,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MID_CONTAINS_FROM(1.00)[];
 	R_MISSING_CHARSET(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
@@ -116,10 +116,10 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	TO_DN_SOME(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-101161-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-101162-lists,linux-arm-msm=lfdr.de];
 	RECEIVED_HELO_LOCALHOST(0.00)[];
 	DKIM_TRACE(0.00)[gmail.com:+];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	FREEMAIL_FROM(0.00)[gmail.com];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[mailingradian@gmail.com,linux-arm-msm@vger.kernel.org];
@@ -130,229 +130,124 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: EC52F370FC0
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,17d78800:email,62b40000:email,0.0.0.12:email]
+X-Rspamd-Queue-Id: 78493370FD6
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-The Snapdragon 670 has an Low-Power Island (LPI) TLMM for configuring
-pins related to audio. Add the driver for this.
+The Snapdragon 670 has a separate TLMM for audio pins. Add the device
+node for it.
+
+Also add reserved GPIOs for the Pixel 3a, which blocks access to the
+sensor GPIOs.
 
 Signed-off-by: Richard Acayan <mailingradian@gmail.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 ---
- drivers/pinctrl/qcom/Kconfig                  |  10 ++
- drivers/pinctrl/qcom/Makefile                 |   1 +
- .../pinctrl/qcom/pinctrl-sdm670-lpass-lpi.c   | 166 ++++++++++++++++++
- 3 files changed, 177 insertions(+)
- create mode 100644 drivers/pinctrl/qcom/pinctrl-sdm670-lpass-lpi.c
+ .../boot/dts/qcom/sdm670-google-common.dtsi   |  5 ++
+ arch/arm64/boot/dts/qcom/sdm670.dtsi          | 73 +++++++++++++++++++
+ 2 files changed, 78 insertions(+)
 
-diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
-index f56592411cf6..eb8ed3effd58 100644
---- a/drivers/pinctrl/qcom/Kconfig
-+++ b/drivers/pinctrl/qcom/Kconfig
-@@ -89,6 +89,16 @@ config PINCTRL_SM4250_LPASS_LPI
- 	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
- 	  (Low Power Island) found on the Qualcomm Technologies Inc SM4250 platform.
+diff --git a/arch/arm64/boot/dts/qcom/sdm670-google-common.dtsi b/arch/arm64/boot/dts/qcom/sdm670-google-common.dtsi
+index 0f57b915186b..b4854801a5f5 100644
+--- a/arch/arm64/boot/dts/qcom/sdm670-google-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm670-google-common.dtsi
+@@ -522,6 +522,11 @@ rmi4_f12: rmi4-f12@12 {
+ 	};
+ };
  
-+config PINCTRL_SDM670_LPASS_LPI
-+	tristate "Qualcomm Technologies Inc SDM670 LPASS LPI pin controller driver"
-+	depends on GPIOLIB
-+	depends on ARM64 || COMPILE_TEST
-+	depends on PINCTRL_LPASS_LPI
-+	help
-+	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
-+	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
-+	  (Low Power Island) found on the Qualcomm Technologies Inc SDM670 platform.
-+
- config PINCTRL_SM6115_LPASS_LPI
- 	tristate "Qualcomm Technologies Inc SM6115 LPASS LPI pin controller driver"
- 	depends on ARM64 || COMPILE_TEST
-diff --git a/drivers/pinctrl/qcom/Makefile b/drivers/pinctrl/qcom/Makefile
-index 4269d1781015..ed2127d26912 100644
---- a/drivers/pinctrl/qcom/Makefile
-+++ b/drivers/pinctrl/qcom/Makefile
-@@ -48,6 +48,7 @@ obj-$(CONFIG_PINCTRL_SC8280XP)	+= pinctrl-sc8280xp.o
- obj-$(CONFIG_PINCTRL_SDM660)   += pinctrl-sdm660.o
- obj-$(CONFIG_PINCTRL_SDM660_LPASS_LPI) += pinctrl-sdm660-lpass-lpi.o
- obj-$(CONFIG_PINCTRL_SDM670) += pinctrl-sdm670.o
-+obj-$(CONFIG_PINCTRL_SDM670_LPASS_LPI) += pinctrl-sdm670-lpass-lpi.o
- obj-$(CONFIG_PINCTRL_SDM845) += pinctrl-sdm845.o
- obj-$(CONFIG_PINCTRL_SDX55) += pinctrl-sdx55.o
- obj-$(CONFIG_PINCTRL_SDX65) += pinctrl-sdx65.o
-diff --git a/drivers/pinctrl/qcom/pinctrl-sdm670-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sdm670-lpass-lpi.c
-new file mode 100644
-index 000000000000..6270c6d09c22
---- /dev/null
-+++ b/drivers/pinctrl/qcom/pinctrl-sdm670-lpass-lpi.c
-@@ -0,0 +1,166 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) 2023-2026, Richard Acayan. All rights reserved.
-+ */
-+
-+#include <linux/kernel.h>
-+#include <linux/module.h>
-+#include <linux/of.h>
-+#include <linux/platform_device.h>
-+#include <linux/pinctrl/pinctrl.h>
-+
-+#include "pinctrl-lpass-lpi.h"
-+
-+enum lpass_lpi_functions {
-+	LPI_MUX_comp_rx,
-+	LPI_MUX_dmic1_clk,
-+	LPI_MUX_dmic1_data,
-+	LPI_MUX_dmic2_clk,
-+	LPI_MUX_dmic2_data,
-+	LPI_MUX_i2s1_clk,
-+	LPI_MUX_i2s1_data,
-+	LPI_MUX_i2s1_ws,
-+	LPI_MUX_lpi_cdc_rst,
-+	LPI_MUX_mclk0,
-+	LPI_MUX_pdm_rx,
-+	LPI_MUX_pdm_sync,
-+	LPI_MUX_pdm_tx,
-+	LPI_MUX_slimbus_clk,
-+	LPI_MUX_gpio,
-+	LPI_MUX__,
++&lpi_tlmm {
++	/* sensor gpios are protected */
++	gpio-reserved-ranges = <0 8>, <12 6>;
 +};
 +
-+static const struct pinctrl_pin_desc sdm670_lpi_pinctrl_pins[] = {
-+	PINCTRL_PIN(0, "gpio0"),
-+	PINCTRL_PIN(1, "gpio1"),
-+	PINCTRL_PIN(2, "gpio2"),
-+	PINCTRL_PIN(3, "gpio3"),
-+	PINCTRL_PIN(4, "gpio4"),
-+	PINCTRL_PIN(5, "gpio5"),
-+	PINCTRL_PIN(6, "gpio6"),
-+	PINCTRL_PIN(7, "gpio7"),
-+	PINCTRL_PIN(8, "gpio8"),
-+	PINCTRL_PIN(9, "gpio9"),
-+	PINCTRL_PIN(10, "gpio10"),
-+	PINCTRL_PIN(11, "gpio11"),
-+	PINCTRL_PIN(12, "gpio12"),
-+	PINCTRL_PIN(13, "gpio13"),
-+	PINCTRL_PIN(14, "gpio14"),
-+	PINCTRL_PIN(15, "gpio15"),
-+	PINCTRL_PIN(16, "gpio16"),
-+	PINCTRL_PIN(17, "gpio17"),
-+	PINCTRL_PIN(18, "gpio18"),
-+	PINCTRL_PIN(19, "gpio19"),
-+	PINCTRL_PIN(20, "gpio20"),
-+	PINCTRL_PIN(21, "gpio21"),
-+	PINCTRL_PIN(22, "gpio22"),
-+	PINCTRL_PIN(23, "gpio23"),
-+	PINCTRL_PIN(24, "gpio24"),
-+	PINCTRL_PIN(25, "gpio25"),
-+	PINCTRL_PIN(26, "gpio26"),
-+	PINCTRL_PIN(27, "gpio27"),
-+	PINCTRL_PIN(28, "gpio28"),
-+	PINCTRL_PIN(29, "gpio29"),
-+	PINCTRL_PIN(30, "gpio30"),
-+	PINCTRL_PIN(31, "gpio31"),
-+};
+ &mdss {
+ 	status = "okay";
+ };
+diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
+index 5b41f8bac7bc..2d5728c75a93 100644
+--- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
+@@ -2346,6 +2346,79 @@ lmh_cluster0: lmh@17d78800 {
+ 			interrupt-controller;
+ 			#interrupt-cells = <1>;
+ 		};
 +
-+static const char * const comp_rx_groups[] = { "gpio22", "gpio24" };
-+static const char * const dmic1_clk_groups[] = { "gpio26" };
-+static const char * const dmic1_data_groups[] = { "gpio27" };
-+static const char * const dmic2_clk_groups[] = { "gpio28" };
-+static const char * const dmic2_data_groups[] = { "gpio29" };
-+static const char * const i2s1_clk_groups[] = { "gpio8" };
-+static const char * const i2s1_ws_groups[] = { "gpio9" };
-+static const char * const i2s1_data_groups[] = { "gpio10", "gpio11" };
-+static const char * const lpi_cdc_rst_groups[] = { "gpio29" };
-+static const char * const mclk0_groups[] = { "gpio19" };
-+static const char * const pdm_rx_groups[] = { "gpio21", "gpio23", "gpio25" };
-+static const char * const pdm_sync_groups[] = { "gpio19" };
-+static const char * const pdm_tx_groups[] = { "gpio20" };
-+static const char * const slimbus_clk_groups[] = { "gpio18" };
++		lpi_tlmm: pinctrl@62b40000 {
++			compatible = "qcom,sdm670-lpass-lpi-pinctrl";
++			reg = <0 0x62b40000 0 0x20000>;
++			gpio-controller;
++			#gpio-cells = <2>;
++			gpio-ranges = <&lpi_tlmm 0 0 32>;
 +
-+const struct lpi_pingroup sdm670_lpi_pinctrl_groups[] = {
-+	LPI_PINGROUP(0, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(1, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(2, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(3, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(4, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(5, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(6, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(7, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(8, LPI_NO_SLEW, _, _, i2s1_clk, _),
-+	LPI_PINGROUP(9, LPI_NO_SLEW, _, _, i2s1_ws, _),
-+	LPI_PINGROUP(10, LPI_NO_SLEW, _, _, _, i2s1_data),
-+	LPI_PINGROUP(11, LPI_NO_SLEW, _, i2s1_data, _, _),
-+	LPI_PINGROUP(12, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(13, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(14, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(15, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(16, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(17, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(18, LPI_NO_SLEW, _, slimbus_clk, _, _),
-+	LPI_PINGROUP(19, LPI_NO_SLEW, mclk0, _, pdm_sync, _),
-+	LPI_PINGROUP(20, LPI_NO_SLEW, _, pdm_tx, _, _),
-+	LPI_PINGROUP(21, LPI_NO_SLEW, _, pdm_rx, _, _),
-+	LPI_PINGROUP(22, LPI_NO_SLEW, _, comp_rx, _, _),
-+	LPI_PINGROUP(23, LPI_NO_SLEW, pdm_rx, _, _, _),
-+	LPI_PINGROUP(24, LPI_NO_SLEW, comp_rx, _, _, _),
-+	LPI_PINGROUP(25, LPI_NO_SLEW, pdm_rx, _, _, _),
-+	LPI_PINGROUP(26, LPI_NO_SLEW, dmic1_clk, _, _, _),
-+	LPI_PINGROUP(27, LPI_NO_SLEW, dmic1_data, _, _, _),
-+	LPI_PINGROUP(28, LPI_NO_SLEW, dmic2_clk, _, _, _),
-+	LPI_PINGROUP(29, LPI_NO_SLEW, dmic2_data, lpi_cdc_rst, _, _),
-+	LPI_PINGROUP(30, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(31, LPI_NO_SLEW, _, _, _, _),
-+};
++			cdc_pdm_default: cdc-pdm-default-state {
++				clk-pins {
++					pins = "gpio18";
++					function = "slimbus_clk";
++					drive-strength = <4>;
++					output-low;
++				};
 +
-+const struct lpi_function sdm670_lpi_pinctrl_functions[] = {
-+	LPI_FUNCTION(comp_rx),
-+	LPI_FUNCTION(dmic1_clk),
-+	LPI_FUNCTION(dmic1_data),
-+	LPI_FUNCTION(dmic2_clk),
-+	LPI_FUNCTION(dmic2_data),
-+	LPI_FUNCTION(i2s1_clk),
-+	LPI_FUNCTION(i2s1_data),
-+	LPI_FUNCTION(i2s1_ws),
-+	LPI_FUNCTION(lpi_cdc_rst),
-+	LPI_FUNCTION(mclk0),
-+	LPI_FUNCTION(pdm_tx),
-+	LPI_FUNCTION(pdm_rx),
-+	LPI_FUNCTION(pdm_sync),
-+	LPI_FUNCTION(slimbus_clk),
-+};
++				sync-pins {
++					pins = "gpio19";
++					function = "pdm_sync";
++					drive-strength = <4>;
++					output-low;
++				};
 +
-+static const struct lpi_pinctrl_variant_data sdm670_lpi_pinctrl_data = {
-+	.pins = sdm670_lpi_pinctrl_pins,
-+	.npins = ARRAY_SIZE(sdm670_lpi_pinctrl_pins),
-+	.groups = sdm670_lpi_pinctrl_groups,
-+	.ngroups = ARRAY_SIZE(sdm670_lpi_pinctrl_groups),
-+	.functions = sdm670_lpi_pinctrl_functions,
-+	.nfunctions = ARRAY_SIZE(sdm670_lpi_pinctrl_functions),
-+	.flags = LPI_FLAG_SLEW_RATE_SAME_REG,
-+};
++				tx-pins {
++					pins = "gpio20";
++					function = "pdm_tx";
++					drive-strength = <8>;
++				};
 +
-+static const struct of_device_id sdm670_lpi_pinctrl_of_match[] = {
-+	{
-+		.compatible = "qcom,sdm670-lpass-lpi-pinctrl",
-+		.data = &sdm670_lpi_pinctrl_data,
-+	},
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, sdm670_lpi_pinctrl_of_match);
++				rx-pins {
++					pins = "gpio21", "gpio23", "gpio25";
++					function = "pdm_rx";
++					drive-strength = <4>;
++					output-low;
++				};
++			};
 +
-+static struct platform_driver sdm670_lpi_pinctrl_driver = {
-+	.driver = {
-+		.name = "qcom-sdm670-lpass-lpi-pinctrl",
-+		.of_match_table = sdm670_lpi_pinctrl_of_match,
-+	},
-+	.probe = lpi_pinctrl_probe,
-+	.remove = lpi_pinctrl_remove,
-+};
-+module_platform_driver(sdm670_lpi_pinctrl_driver);
++			cdc_comp_default: cdc-comp-default-state {
++				pins = "gpio22", "gpio24";
++				function = "comp_rx";
++				drive-strength = <4>;
++			};
 +
-+MODULE_AUTHOR("Richard Acayan <mailingradian@gmail.com>");
-+MODULE_DESCRIPTION("QTI SDM670 LPI GPIO pin control driver");
-+MODULE_LICENSE("GPL");
++			cdc_dmic_default: cdc-dmic-default-state {
++				clk1-pins {
++					pins = "gpio26";
++					function = "dmic1_clk";
++					drive-strength = <8>;
++					output-high;
++				};
++
++				clk2-pins {
++					pins = "gpio28";
++					function = "dmic2_clk";
++					drive-strength = <8>;
++					output-high;
++				};
++
++				data1-pins {
++					pins = "gpio27";
++					function = "dmic1_data";
++					drive-strength = <8>;
++					input-enable;
++				};
++
++				data2-pins {
++					pins = "gpio29";
++					function = "dmic2_data";
++					drive-strength = <8>;
++					input-enable;
++				};
++			};
++		};
+ 	};
+ 
+ 	thermal-zones {
 -- 
 2.53.0
 
