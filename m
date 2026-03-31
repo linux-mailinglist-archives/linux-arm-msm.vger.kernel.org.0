@@ -1,51 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-101057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101058-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id gLFZKbzMy2luLwYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 15:31:40 +0200
+	id wOuBLCzMy2luLwYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101058-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 15:29:16 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 56E2336A4BC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 15:31:40 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4CBE936A43D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 15:29:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4154D30ADB92
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 13:28:03 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 6F3B930255F4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 13:29:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F3F33E7145;
-	Tue, 31 Mar 2026 13:28:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73230199EAD;
+	Tue, 31 Mar 2026 13:29:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bgUOemo4"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WpOsP9m8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7073E6DCA;
-	Tue, 31 Mar 2026 13:28:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C2493E3D93
+	for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 13:29:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774963681; cv=none; b=f2M39lt+FBss1tRv8IiKqr9gAWOOAgZS9kN9N+NAdpQliWqvEaNv1PDz3MvB4TS/U55m0fKe0dA6Ycd2EpGYnIJDWdeEWIKctWEChs6cu4+dY3+KxAkwJaCD1c8ExMt/2Pu2AUS8veC7J15m2C1MJMcswasS61tUpKjmGFPJXu4=
+	t=1774963754; cv=none; b=IFnIYqjDEzld2itPYL5e/rKyTVPVZNYxL/crVsFjSAR2kAXYS/VSfrKGwhgERoGjSgQTm5MEMN1BpIYLuAl6YKSBX/NdL/CWCekwrqAD/mpyqEw7zBNFLAZHY6s0NMyIKgxPw8JVehrKCqEljE0TzHruzuKQnR6IXjcasGZOrSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774963681; c=relaxed/simple;
-	bh=pq33bzWBdhmP4S1MwMqAvlewx9BR5zwIdaGj6Ci9cto=;
+	s=arc-20240116; t=1774963754; c=relaxed/simple;
+	bh=sjgHIlOjJIUqOmCKtxBoJhAEO+KEsYQgiP0C/Ip9OJE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HFVpqFx6M3yixk/UWRhIQUSoOT7gk/wRKWcoLu53yAqwPRHsCncj9ZP2nstGJ9KqMfq+gjwhYvMBB2sSPZw+EHtoLsVgI9uPWvvKrsUz/120sO7gEWX3ukIEoNWAVuwiYB8L+ar5MJrg3J3rz0+/OzfH3AB6AuMhpYxyTEY3gn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bgUOemo4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A53ABC19423;
-	Tue, 31 Mar 2026 13:27:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774963680;
-	bh=pq33bzWBdhmP4S1MwMqAvlewx9BR5zwIdaGj6Ci9cto=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=bgUOemo4rUkEDkfInHdzjII/jnNYMZO0nDKuPyyZknSEyvIsUojuqN12kOFYi8BL9
-	 +m61IdURICPGgpm64o10L0Ri04CCXsK/Zn2m7z+3cwgYdvEzpJABNxKHkSG2BIebU2
-	 G9qF6xl/QKV4oBZitJiYQKUvKDDkN893f6euOp0oP9C2uStM08u5uaTcBswypms9K3
-	 0qvGzuz9VR6rBlj5KLpaP1YT9pRP55j9XWBGncz4PEDqyyoNWkE/RjZoS1XT/q0nAE
-	 48LsLLgLvSBXEB0q6EWvrbL0REmyW4X7YeNvGB3/EubhyGyW9sxajzY7bxTFCtpmOv
-	 cGC2a+b54flzg==
-Message-ID: <ef16a9cb-8d05-496a-b633-996d7ab50c4a@kernel.org>
-Date: Tue, 31 Mar 2026 15:27:57 +0200
+	 In-Reply-To:Content-Type; b=Wmn7u242mbqd6xmpheb94YF11Ny1TdaaNacDkm0vYJiGaKZaefzfChAec25L6Rt3Cj5YF55Dajhp/+QxtGhpWHQUNHJYHo1+blV7mhiX6OoQTjqIU6wRYmNUK1YVqz540haMTFrlbUv0kWgEfELKAdn9W8OFokQTNGP7LY1Kw/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WpOsP9m8; arc=none smtp.client-ip=209.85.167.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5a2bf521011so53332e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 06:29:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1774963750; x=1775568550; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BbFdFY1ryYFC+hM/WPwZzfOvMcgDCJMGIGsqBBOf6+I=;
+        b=WpOsP9m8wsDKoZi0UvIdqw6AYOYuUQA8SBcB1QugxeJspgjXZUg1iMaV4/GBqDwmNK
+         xAMWy/kNfIiSY9d2DakMpdMwsxCtWZx74P+dopMXiZ3v3jbGPvzzGXjZ5aVnWdCN9MU9
+         QwDRtTRPbFu3D7yeSqZpHgvXYDr6yfN/JvHpQH8mhMwviEvyW1l64lTrOCcMXjUUG9tw
+         /m9y5EfJavMvbfUqONkju9QAcaUMEbVoWp8xWyB2xjwVNOsajX/zCD09k2BAJXcW2ZbB
+         n0xXNuk9oaFZeM4AQwUuy6lNHm+iFzlaalrfIoM8FG54ewahC9KjwzXb2F1Kk9J8GyVV
+         6qIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774963750; x=1775568550;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=BbFdFY1ryYFC+hM/WPwZzfOvMcgDCJMGIGsqBBOf6+I=;
+        b=Srq2QL8Oy6xtuRpM9PwAttHPm+7uS6eMdeqnLkQVMuLkmLcu10V4kDnqoMZNvkcDPk
+         m0tbdrWSsDsdroSK+URg1D2IIu1LYAWd2X61ewi2OsAiH3BEmNmlmJ9ju7Vjd10ehkHG
+         lDsubOvC3zug8Iu8I2VknrXbjhxdtccm8HLsSJF/UF91TEBM6NP0Q8z8fHUcspYbr1ML
+         fV1S+/vQ6rOogx+2xdoLMRSwcTvdwB1KaOR+tzCkEe64kQ8shqK/JJfWpIK/RIgVFQXb
+         xroCzh6oYcURVDxLHhUP8A25p0Vn8IT2j7wCbhApJyC+F87+x9BxhcsDEv1taxrwkDKB
+         B92w==
+X-Forwarded-Encrypted: i=1; AJvYcCX8yIU3VIUOWFgpSW3sdDhbb0STzBY4xfWf6xhX7TbiovmIwGuv11U49aXwmNufg0E/rOjOhMlJvEdtfnbD@vger.kernel.org
+X-Gm-Message-State: AOJu0YzIYFBvVeYk1ufTKO0ZObyAXKCAdBqspfe+LPORI3I4AGIAlaCv
+	XAnKndsYEXEZdliJPjpBLrfyb48xDzPTXq5xrX3txwnDqJOqPxaH/rqNU+htbZmCJ2s=
+X-Gm-Gg: ATEYQzxoBWmuGWnr4XLfV1Z1ln9Lu58RjnKcuG9a/Z/dJnyfAdOBAMYZXzmgPiujdPn
+	IfA1akvhhvQ/H9PlMYWo+WtHBfgfY6S0s2AL6udidEyjCortIWb68K7aYz3+wJwi+CWcJ67fJq4
+	5kACQS07eyoUSD7KyWgLmJKCac5k1KWeW4Soj1k/C+fnCOXkCRebK1mUuGB/4P7+e515WIzA8la
+	kohkbhPEE2cgr/QUlEcOh19rqZX0vvJMyTQ6Om5yvboSh0iZFSlCgzqShz57Z7CoNHDaSANv06+
+	YguumzHdLlpF+tUpb3JWAPiQF6umZpNnoSmQbpeotdQ9AQ44Fd48upli4sTwO3TiAOBXELPm1WD
+	1QXRpjX91lkgk1smkdf6uEALLJ6dnuGaz6YQd+Bt8rwB1n5IV4/8ogDa/8LTBRM3hqdW90CaPMT
+	yEadUwKjk7ErMbnhCiQC/5m5dG5Qa6FTjcd/ZvIyxh+Rtsrnh+fL+h7KUv19wv1mimTTNFm/qvf
+	j9EfQ==
+X-Received: by 2002:a05:6512:39d6:b0:5a2:a52a:c69e with SMTP id 2adb3069b0e04-5a2ab913ef4mr2989896e87.4.1774963750387;
+        Tue, 31 Mar 2026 06:29:10 -0700 (PDT)
+Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a2b145f040sm2447874e87.75.2026.03.31.06.29.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 31 Mar 2026 06:29:09 -0700 (PDT)
+Message-ID: <55d61750-07de-458d-8668-09f84a35220e@linaro.org>
+Date: Tue, 31 Mar 2026 16:29:08 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,113 +86,140 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: eliza-mtp: Enable USB and ADSP
- support
-To: Abel Vesa <abel.vesa@oss.qualcomm.com>,
+Subject: Re: [PATCH v4 3/3] arm64: dts: qcom: sm6350: Add CAMSS node
+To: Luca Weiss <luca.weiss@fairphone.com>
+Cc: Bryan O'Donoghue <bod@kernel.org>, Robert Foss <rfoss@kernel.org>,
+ ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
+ <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
  Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20260331-eliza-adsp-usb-v1-0-d8a251be20c3@oss.qualcomm.com>
- <20260331-eliza-adsp-usb-v1-3-d8a251be20c3@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20260331-eliza-adsp-usb-v1-3-d8a251be20c3@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+ Konrad Dybcio <konradybcio@kernel.org>
+References: <20260216-sm6350-camss-v4-0-b9df35f87edb@fairphone.com>
+ <20260216-sm6350-camss-v4-3-b9df35f87edb@fairphone.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20260216-sm6350-camss-v4-3-b9df35f87edb@fairphone.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-2.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-101057-lists,linux-arm-msm=lfdr.de];
-	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MIME_TRACE(0.00)[0:+];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[kernel.org,lists.sr.ht,vger.kernel.org,gmail.com,linaro.org];
+	TAGGED_FROM(0.00)[bounces-101058-lists,linux-arm-msm=lfdr.de];
 	FROM_HAS_DN(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[17];
+	MIME_TRACE(0.00)[0:+];
+	DKIM_TRACE(0.00)[linaro.org:+];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[vladimir.zapolskiy@linaro.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[9];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 56E2336A4BC
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,linaro.org:dkim,linaro.org:email,linaro.org:mid,0.0.0.0:email,acb3000:email]
+X-Rspamd-Queue-Id: 4CBE936A43D
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 31/03/2026 12:37, Abel Vesa wrote:
-> The Eliza MTP features a single USB Type-C port. Its USB 2.0 lines are
-> routed through an eUSB2 repeater provided by the PM7750BA PMIC.
+On 2/16/26 10:54, Luca Weiss wrote:
+> Add a node for the CAMSS on the SM6350 SoC.
 > 
-> Describe the port and repeater, and enable the USB controller and PHYs.
-> 
-> Also specify the ADSP firmware and enable the remoteproc.
-> 
-> Signed-off-by: Abel Vesa <abel.vesa@oss.qualcomm.com>
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 > ---
->  arch/arm64/boot/dts/qcom/eliza-mtp.dts | 83 ++++++++++++++++++++++++++++++++++
->  1 file changed, 83 insertions(+)
+>   arch/arm64/boot/dts/qcom/sm6350.dtsi | 233 +++++++++++++++++++++++++++++++++++
+>   1 file changed, 233 insertions(+)
 > 
+> diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+> index 9f9b9f9af0da..9ff9508c5ce6 100644
+> --- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+> @@ -2161,6 +2161,239 @@ cci1_i2c0: i2c-bus@0 {
+>   			/* SM6350 seems to have cci1_i2c1 on gpio2 & gpio3 but unused downstream */
+>   		};
+>   
+> +		camss: isp@acb3000 {
+> +			compatible = "qcom,sm6350-camss";
+> +
+> +			reg = <0x0 0x0acb3000 0x0 0x1000>,
+> +			      <0x0 0x0acba000 0x0 0x1000>,
+> +			      <0x0 0x0acc1000 0x0 0x1000>,
+> +			      <0x0 0x0acc8000 0x0 0x1000>,
+> +			      <0x0 0x0ac65000 0x0 0x1000>,
+> +			      <0x0 0x0ac66000 0x0 0x1000>,
+> +			      <0x0 0x0ac67000 0x0 0x1000>,
+> +			      <0x0 0x0ac68000 0x0 0x1000>,
+> +			      <0x0 0x0acaf000 0x0 0x4000>,
+> +			      <0x0 0x0acb6000 0x0 0x4000>,
+> +			      <0x0 0x0acbd000 0x0 0x4000>,
+> +			      <0x0 0x0acc4000 0x0 0x4000>,
+> +			      <0x0 0x0ac18000 0x0 0x3000>,
+> +			      <0x0 0x0ac00000 0x0 0x6000>,
+> +			      <0x0 0x0ac10000 0x0 0x8000>,
+> +			      <0x0 0x0ac6f000 0x0 0x8000>,
+> +			      <0x0 0x0ac42000 0x0 0x4600>,
+> +			      <0x0 0x01fc0000 0x0 0x40000>,
 
-With fix as pointed out by Konrad:
+I notice that this memory range is very distant, can somebody with
+the access to the specs confirm that it is a part of CAMSS IP?
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Tested-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+> +			      <0x0 0x0ac48000 0x0 0x1000>,
+> +			      <0x0 0x0ac40000 0x0 0x1000>,
+> +			      <0x0 0x0ac87000 0x0 0xa000>,
+> +			      <0x0 0x0ac52000 0x0 0x4000>,
+> +			      <0x0 0x0ac4e000 0x0 0x4000>,
+> +			      <0x0 0x0ac6b000 0x0 0xa00>;
+> +			reg-names = "csid0",
+> +				    "csid1",
+> +				    "csid2",
+> +				    "csid_lite",
+> +				    "csiphy0",
+> +				    "csiphy1",
+> +				    "csiphy2",
+> +				    "csiphy3",
+> +				    "vfe0",
+> +				    "vfe1",
+> +				    "vfe2",
+> +				    "vfe_lite",
+> +				    "a5_csr",
+> +				    "a5_qgic",
+> +				    "a5_sierra",
+> +				    "bps",
+> +				    "camnoc",
+> +				    "core_top_csr_tcsr",
 
-Best regards,
-Krzysztof
+Looking at the memory map I have a feeling that this "core_top_csr_tcsr"
+is not a natural part of CAMSS IPs, it should be clarified by someone
+else.
+
+> +				    "cpas_cdm",
+> +				    "cpas_top",
+> +				    "ipe",
+> +				    "jpeg_dma",
+> +				    "jpeg_enc",
+> +				    "lrme";
+> +
+
+The .dtsi change strictly follows the dt bindings description, won't
+repeat previously given concerns here, so
+
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+
+-- 
+Best wishes,
+Vladimir
 
