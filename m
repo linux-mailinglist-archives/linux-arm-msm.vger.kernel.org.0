@@ -1,190 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-100950-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-100951-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id uNl2MzFyy2k3HwYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-100950-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 09:05:21 +0200
+	id oNiCBLJ1y2k3HwYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-100951-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 09:20:18 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 31044364C15
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 09:05:21 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 856C8365028
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 09:20:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 67F3C304EAB1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 07:02:56 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 9A6693139E4E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 07:11:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7AA12377561;
-	Tue, 31 Mar 2026 07:02:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="k6afqY4r"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C674E3BC69F;
+	Tue, 31 Mar 2026 07:10:49 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 342DC146A66;
-	Tue, 31 Mar 2026 07:02:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41923146A66
+	for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 07:10:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774940575; cv=none; b=fkZX9EBg3KKdPgxjKK5uhexyFzvYAgS6EjeklqiTI5uNRgYL+37YipVoPN1aN3hJNcjD/jufVM9MgICrDOzwEMVkxu5+ftRbcnfNok3ZOqw1DgwFILiBIhdpFQAURad2OHmQUveUXc6+0lurDN79M3I5MiwQv80RnGfzJaA88O8=
+	t=1774941049; cv=none; b=LAFjqT0+ZeRnKPi/ML9AT+sBLj9Hj7fFJO+ocIv9EJTeZwobvfRjv1WHJVQ4yHtutGwg5336U9kGfOLr0pDEAN52WK+YLGghafnCRo4bDGxf/TiejMoQKVV0VVU42+r9dk66eoNdO48MH+HPtU4po4Hse3F/3uor4vT7TBeE5vc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774940575; c=relaxed/simple;
-	bh=yt9o+hP525Oxql1j/peL75RWbfKyVjlXzURR7373UqE=;
+	s=arc-20240116; t=1774941049; c=relaxed/simple;
+	bh=5gpgYRLnbSNFscf1Q1NHWRl/4eynSze1FCD1K0u1oaw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ka8VQMDc0brDnqvr459TVvzrDDRmAVQGW9KEt7YnKkNhhRex/IXd/89zU4y9lSTINUYMAs+Hj4kX2SwDl/WDl0qC+t58ez0fkG3ExashiIfqJSglxHLnYogdSNe1HYPVN7uP4lHVrmJSa1zdvGucW2GhDuPKdKAlHSiqtu43mP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=k6afqY4r; arc=none smtp.client-ip=198.175.65.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1774940574; x=1806476574;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=yt9o+hP525Oxql1j/peL75RWbfKyVjlXzURR7373UqE=;
-  b=k6afqY4rMs/43BmdKoPcayEl2a1QYA4NMGm2V8YZV3dDCYn6A6qDH3sf
-   auvLZIrpPw+75LRsTNU7Khrzs6DwjHKZSBmblc9TyHnp400T243vXf7Ob
-   9Wp2db8MFHPY7Pt9stHwbxaSfqvp+SARDEKkX6OUnT7TniXiyrEdxH+Me
-   JMV1JCRRqEYB7LEYEOF6jJLEvVb75AlD1NzH3rE6PCFRXd2rcQyc8T+Me
-   ADAB1xXXOQKnJoLj6ZcsJ5i7oZqfOzM+EZpKkOQMwkvK9vq/Tn4/06+OU
-   aCMVkJBMQP800F8hUc4xf8T8Vr6NYpDpmsXpQZun853AitZfS/31IxOHR
-   w==;
-X-CSE-ConnectionGUID: EqasG9K0TG6De97H1nFDNA==
-X-CSE-MsgGUID: VppXuF84QCysb5aqSysJBg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11744"; a="79545029"
-X-IronPort-AV: E=Sophos;i="6.23,151,1770624000"; 
-   d="scan'208";a="79545029"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Mar 2026 00:02:53 -0700
-X-CSE-ConnectionGUID: EilyfNbITeSJwrNzdhz4uA==
-X-CSE-MsgGUID: u2eMCNNLQkmmy/GQ3a7TUw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,151,1770624000"; 
-   d="scan'208";a="249494457"
-Received: from abityuts-desk.ger.corp.intel.com (HELO kekkonen.fi.intel.com) ([10.245.245.233])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Mar 2026 00:02:48 -0700
-Received: from kekkonen.localdomain (localhost [IPv6:::1])
-	by kekkonen.fi.intel.com (Postfix) with SMTP id 536DA121CF2;
-	Tue, 31 Mar 2026 10:02:55 +0300 (EEST)
-Date: Tue, 31 Mar 2026 10:02:55 +0300
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6 krs, Bertel Jungin Aukio 5, 02600 Espoo
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
-To: Richard Acayan <mailingradian@gmail.com>
-Cc: David Heidelberg <david@ixit.cz>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
-	Todor Tomov <todor.too@gmail.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Tianshu Qiu <tian.shu.qiu@intel.com>,
-	Robert Mader <robert.mader@collabora.com>,
-	phone-devel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-media@vger.kernel.org
-Subject: Re: [PATCH v9 7/7] arm64: dts: qcom: sdm670-google-sargo: add imx355
- front camera
-Message-ID: <actxn5kvN3auqCBm@kekkonen.localdomain>
-References: <20260217002738.133534-1-mailingradian@gmail.com>
- <20260217002738.133534-8-mailingradian@gmail.com>
- <1349f725-a20f-4935-a829-208c8e583ad9@ixit.cz>
- <acHxgIsyPiQTeqCB@rdacayan>
- <eff25adf-c5fd-484d-a9ae-ec27c0d9c100@ixit.cz>
- <acJuN_FRqMTGgl8C@kekkonen.localdomain>
- <acsjH0tZ-jj7N7c5@rdacayan>
+	 Content-Type:Content-Disposition:In-Reply-To; b=DzQ+0Lb9c1NS2MV8aYsq7QQwnZpjSJImpEq5QArpUWbfR69dj2Y6jOlNmzagBCXyC+6D9HzOjhT26Gw5iAbaWMB14O7SdT018Intr76zCUPFBsW6ItW46udn0sjlJU26i970J1pbmJEKZnbUkGZiUpDxVaSJKXTN24j5KNle8lE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <mkl@pengutronix.de>)
+	id 1w7TEn-0005cr-Lu; Tue, 31 Mar 2026 09:10:09 +0200
+Received: from moin.white.stw.pengutronix.de ([2a0a:edc0:0:b01:1d::7b] helo=bjornoya.blackshift.org)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <mkl@pengutronix.de>)
+	id 1w7TEm-00302T-2l;
+	Tue, 31 Mar 2026 09:10:08 +0200
+Received: from pengutronix.de (unknown [IPv6:2a0a:edc0:0:701:471e:8ea9:4bec:c12c])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(Client did not present a certificate)
+	(Authenticated sender: mkl-all@blackshift.org)
+	by smtp.blackshift.org (Postfix) with ESMTPSA id 1F944511D74;
+	Tue, 31 Mar 2026 07:10:08 +0000 (UTC)
+Date: Tue, 31 Mar 2026 09:10:07 +0200
+From: Marc Kleine-Budde <mkl@pengutronix.de>
+To: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+Cc: mani@kernel.org, thomas.kopp@microchip.com, mailhol@kernel.org, 
+	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, andersson@kernel.org, 
+	konradybcio@kernel.org, linusw@kernel.org, brgl@kernel.org, linux-can@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-gpio@vger.kernel.org, mukesh.savaliya@oss.qualcomm.com, anup.kulkarni@oss.qualcomm.com, 
+	Conor Dooley <conor@kernel.org>
+Subject: Re: [PATCH v3 1/2] dt-bindings: can: mcp251xfd: add
+ microchip,xstbyen property
+Message-ID: <20260331-shaggy-blond-weasel-1bf32b-mkl@pengutronix.de>
+X-AI: stop_reason: "refusal"
+References: <20260321135031.3107408-1-viken.dadhaniya@oss.qualcomm.com>
+ <20260321135031.3107408-2-viken.dadhaniya@oss.qualcomm.com>
+ <20260323-bonded-ranging-c9f9c4d0aacf@spud>
+ <20260323-artificial-ecstatic-collie-047169-mkl@pengutronix.de>
+ <20260323-surname-osmosis-3cceca19c824@spud>
+ <d4e092d6-5d9e-49a4-88d0-c02e2f17f36b@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="gvr3ft3j52edqxpi"
 Content-Disposition: inline
-In-Reply-To: <acsjH0tZ-jj7N7c5@rdacayan>
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+In-Reply-To: <d4e092d6-5d9e-49a4-88d0-c02e2f17f36b@oss.qualcomm.com>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: mkl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-Spamd-Result: default: False [-2.56 / 15.00];
+	SIGNED_PGP(-2.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[intel.com,none];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	R_DKIM_ALLOW(-0.20)[intel.com:s=Intel];
+	MID_CONTAINS_FROM(1.00)[];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	MIME_GOOD(-0.20)[multipart/signed,text/plain];
 	MAILLIST(-0.15)[generic];
-	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[18];
-	TAGGED_FROM(0.00)[bounces-100950-lists,linux-arm-msm=lfdr.de];
-	HAS_ORG_HEADER(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com];
+	TAGGED_FROM(0.00)[bounces-100951-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FREEMAIL_CC(0.00)[ixit.cz,kernel.org,gmail.com,linaro.org,intel.com,collabora.com,vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[19];
+	DMARC_NA(0.00)[pengutronix.de];
+	MIME_TRACE(0.00)[0:+,1:+,2:~];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[sakari.ailus@linux.intel.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[intel.com:+];
-	RCVD_COUNT_FIVE(0.00)[6];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	NEURAL_HAM(-0.00)[-0.999];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TO_DN_SOME(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,intel.com:dkim,kekkonen.localdomain:mid,1a:email]
-X-Rspamd-Queue-Id: 31044364C15
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[mkl@pengutronix.de,linux-arm-msm@vger.kernel.org];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	RCVD_COUNT_FIVE(0.00)[6];
+	R_DKIM_NA(0.00)[];
+	NEURAL_HAM(-0.00)[-0.771];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[pengutronix.de:mid,pengutronix.de:url,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 856C8365028
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Mon, Mar 30, 2026 at 09:27:59PM -0400, Richard Acayan wrote:
-> On Tue, Mar 24, 2026 at 12:57:59PM +0200, Sakari Ailus wrote:
-> > Hi David, Richard,
-> > 
-> > On Tue, Mar 24, 2026 at 10:35:24AM +0100, David Heidelberg wrote:
-> > > 
-> > > 
-> > > On 24/03/2026 03:05, Richard Acayan wrote:
-> > > > On Fri, Mar 13, 2026 at 07:26:47PM +0100, David Heidelberg wrote:
-> > > > > On 17/02/2026 01:27, Richard Acayan wrote:
-> > > > > [...]
-> > > > > 
-> > > > > > +&cci_i2c1 {
-> > > > > > +	camera@1a {
-> > > > > > +		compatible = "sony,imx355";
-> > > > > > +		reg = <0x1a>;
-> > > > > > +
-> > > > > > +		clocks = <&camcc CAM_CC_MCLK2_CLK>;
-> > > > > > +
-> > > > > > +		assigned-clocks = <&camcc CAM_CC_MCLK2_CLK>;
-> > > > > > +		assigned-clock-rates = <19200000>;
-> > > > > 
-> > > > > Extract from #sdm670-mainline:erebion.eu discussion:
-> > > > > The imx355 can operate on 24 MHz (on both Pixel 3 and 3a), but Linux kernel
-> > > > > driver can operate only with 19.2 MHz.
-> > > > > 
-> > > > > I assume it would be worth it mention at least by comment here.
-> > > > 
-> > > > This might set the series back because the devicetree isn't meant to be
-> > > > written for specific software, but it's included in v11 because you
-> > > > already asked twice.
-> > > > 
-> > > 
-> > > I would say node with lower clock frequency is still much better than
-> > > nothing or placeholder saying "i2c camera here". Instead we'll have small
-> > > placeholder that value can be bumped to 24 MHz. Important is this can be
-> > > easily improved when at least one consumer of the device-tree gains support.
-> > > 
-> > > We have very scarce support of cameras on mobile phones in mainline, thus
-> > > leaving a comment that HW can do 24 MHz is reasonable compromise IMHO.
-> > 
-> > The bindings could document the supported frequency range.
-> > 
-> > In DTS it may make sense to set the frequency the vendor uses as it may
-> > affect the link frequencies (albeit I guess they're the same in this
-> > case?).
-> 
-> Is this review relevant to v11?
 
-I'd think so: it doesn't mention the frequency should be 24 MHz.
+--gvr3ft3j52edqxpi
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v3 1/2] dt-bindings: can: mcp251xfd: add
+ microchip,xstbyen property
+MIME-Version: 1.0
 
--- 
-Sakari Ailus
+On 31.03.2026 12:15:26, Viken Dadhaniya wrote:
+> Could you please let me know if the driver change looks acceptable to be =
+merged?
+> Once merged, I will proceed with posting the device-tree change.
+
+Applied to linux-can-next. It will be included in my next PR.
+
+regards,
+Marc
+
+--=20
+Pengutronix e.K.                 | Marc Kleine-Budde          |
+Embedded Linux                   | https://www.pengutronix.de |
+Vertretung N=C3=BCrnberg              | Phone: +49-5121-206917-129 |
+Amtsgericht Hildesheim, HRA 2686 | Fax:   +49-5121-206917-9   |
+
+--gvr3ft3j52edqxpi
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQSl+MghEFFAdY3pYJLMOmT6rpmt0gUCactzTQAKCRDMOmT6rpmt
+0ljHAQCN2W7NzJyFY0dzNqqglCyalyp93y3AkcphLuv3tVojLQD/ak7VSTbgCUkv
+TSCxRH9IUqWn8Ux2NiLt5sstO3CZbAE=
+=Ic0c
+-----END PGP SIGNATURE-----
+
+--gvr3ft3j52edqxpi--
 
