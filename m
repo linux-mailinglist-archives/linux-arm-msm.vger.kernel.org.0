@@ -1,180 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-101382-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id QHOSD5pTzWkMcAYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101382-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Apr 2026 19:19:22 +0200
+	id WG7pBN0dzGnHPgYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 21:17:49 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id D117737E8BF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Apr 2026 19:19:21 +0200 (CEST)
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8070B370766
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 21:17:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id A0B0D300D0F8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2026 17:19:20 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 70836305E629
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 19:17:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 687F547CC81;
-	Wed,  1 Apr 2026 17:19:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 028453A3E71;
+	Tue, 31 Mar 2026 19:17:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Kn6aGhbV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EtmCM0uo"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403D6472777;
-	Wed,  1 Apr 2026 17:19:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D12A1377542;
+	Tue, 31 Mar 2026 19:17:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775063959; cv=none; b=ZncrQ4yhLIjgCZa20qcEWdlSTzJpBvWgNAv7vXcp0Jj1YFwoZcZ/Q3Maw4FHSHvfkYYrjiJsz8kH/yE8E+/cB/EFxVbQOoAnyw1RzD/v8Hs3EE43lyIY3XSZ5855Q5SbzpjYgaeYYUi7Iiswr7P3JNVcuUJ7Zgy7EvZ7y9wfeK0=
+	t=1774984664; cv=none; b=sH5jjN3MmYt0wopfWcxKpz1GPn/gCUGVn4LlQ3sG/nhcRtUrWQZfGqTKq7Zg8MsdkPGaT3Z5O7oX+gr2oiJpuPdVC6OSXgwVzvIhfuRrobgWSiGkCyGZlRQkiihPKD+iy5LgkhWCn/WO9fX8bnwHD9DALqTsbpCW/ulBXfWZwi4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775063959; c=relaxed/simple;
-	bh=0t1qiOT2TkAHTnIXYBg0hCbmcpZmO03o+RmNg0lRSM4=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=RDFVGtj9x65BexKxXnmsWv33Pn3VqTC5zrQ7omDbNBBE60jrjkvH+ryxrl8uryZimL+NmblIO1ocjtVn+2ppheVsnXwbLQot8psfLF9l8sPEvg81XYsFZYZ1UKmorwuXJ0OpvFkjPNIPbE78fCevVGHv40zsuLSqyIyXOa7JU1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Kn6aGhbV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE168C4CEF7;
-	Wed,  1 Apr 2026 17:19:15 +0000 (UTC)
+	s=arc-20240116; t=1774984664; c=relaxed/simple;
+	bh=/vTZy7DNheaWvuUlBmUGnqxzXfCO6SeXhGn+6yRist0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=V1ZQB6x/TrnQcdUaGLgKrU0lNEmjUVcFrb8whkJALTYRKXh25C4FjRhhazsiaH/cwcrBVBprBAxiy7W3JoTpcMw3uLN9K9psSeEfBIGHj8LiBIP8qHA7YHX7bZKifASAc1DG+rwPZs3+y1+M0Hxw95xd5+vm3PBeNdj0Z6sVNIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EtmCM0uo; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4664CC19423;
+	Tue, 31 Mar 2026 19:17:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775063959;
-	bh=0t1qiOT2TkAHTnIXYBg0hCbmcpZmO03o+RmNg0lRSM4=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=Kn6aGhbVpkCvOBVAh+SBNp2CXHHvrdBvyGduFCUxQDiR7qJe8WqoQaVr7DqqvqgS8
-	 WAcunvO+lt/tUvspqhbvEW0XNNsLGEsNSoa9fg0A2oirbdRvQH+hqXfQDK3KXLTK9E
-	 Iv9/NfeUtRxn/RgGuz+QYM3AHCFdnaFlvveEDVB8atfAPpvi+yLcoY346n+6m/oLA6
-	 0/6PCbpX7tnLEKriTVpTjM4SBfK8Zg2hikUMd1QlUvjSgxk2B6AKdMgtANqxosKIM/
-	 PeGTIuN8VVVItBNdBlx9EitcCVzrNTf+BWwEHfhXrSKABfZwNbYSaP60QdPureyXot
-	 mNcbswJ7x5TAw==
+	s=k20201202; t=1774984664;
+	bh=/vTZy7DNheaWvuUlBmUGnqxzXfCO6SeXhGn+6yRist0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=EtmCM0uoGw4csxFZJZ1yAqVNUwrjA5ZegQuGFj+/TT3WUga/CYRYUwgx18gbXjh/b
+	 hAfUJLccOk0X4i/8BbDWW4i8mn9P4qOWjXdPyqFJgCr8Tvtv3fEI3DFNRJRuu+/KZE
+	 7qcHNqUydXcRl+TIoXMnxrc1QIXmq55WNdNB3d2almoRTwOv4JUekpgA5hPPxCM8G3
+	 EzoSGcasUmnwpRWLvT/E+s/uUuztabRKLzPpoNtjIWaD2SoqTf7AJPCNMte/2WhVjJ
+	 P4P3scCqzE0FI4N19zY6lerrjhQliWP8FVWcKP6a0HjIIDgpDpgPbyihpfQX0ohxpM
+	 aifIHpYSpBOWw==
+Date: Tue, 31 Mar 2026 20:17:37 +0100
 From: Mark Brown <broonie@kernel.org>
-To: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
- Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Cc: mohammad.rafi.shaik@oss.qualcomm.com, linux-sound@vger.kernel.org, 
- lgirdwood@gmail.com, perex@perex.cz, tiwai@suse.com, johan@kernel.org, 
- dmitry.baryshkov@oss.qualcomm.com, konrad.dybcio@oss.qualcomm.com, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, srini@kernel.org, val@packett.cool, 
- mailingradian@gmail.com
-In-Reply-To: <20260330082105.278055-1-srinivas.kandagatla@oss.qualcomm.com>
+To: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+	mohammad.rafi.shaik@oss.qualcomm.com, linux-sound@vger.kernel.org,
+	lgirdwood@gmail.com, perex@perex.cz, tiwai@suse.com,
+	johan@kernel.org, dmitry.baryshkov@oss.qualcomm.com,
+	konrad.dybcio@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	srini@kernel.org, val@packett.cool, mailingradian@gmail.com
+Subject: Re: [PATCH v8 13/13] ASoC: qcom: q6apm: Add support for early buffer
+ mapping on DSP
+Message-ID: <f2bb116e-bee4-4cd1-9f57-154ea1e9f0e5@sirena.org.uk>
 References: <20260330082105.278055-1-srinivas.kandagatla@oss.qualcomm.com>
-Subject: Re: [PATCH v8 00/13] ASoC: qcom: q6dsp: few fixes and enhancements
-Message-Id: <177498454736.825035.17158629527064214797.b4-ty@b4>
-Date: Tue, 31 Mar 2026 20:15:47 +0100
+ <20260330082105.278055-14-srinivas.kandagatla@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.16-dev-7777e
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3225; i=broonie@kernel.org;
- h=from:subject:message-id; bh=0t1qiOT2TkAHTnIXYBg0hCbmcpZmO03o+RmNg0lRSM4=;
- b=owEBbQGS/pANAwAKASTWi3JdVIfQAcsmYgBpzVOSIVdmH+wSNvp/okTncJiMCIH2sFZN1OGMI
- oQu9duWOdiJATMEAAEKAB0WIQSt5miqZ1cYtZ/in+ok1otyXVSH0AUCac1TkgAKCRAk1otyXVSH
- 0CuxCACC9KKzA/fAdPwwiJumNjSTCJm8Oyl6YqXD/dZgVMqclE+DBVH8Vf05YtOXTD0b8Pjnfnx
- b01IWU3HhvUFGxnwkdP2nWiaTqsjSsfBEV8wSJ4P5gGNs7QN8WrEtQ0UlDlvUh9dNWYHEz85mJm
- YfpgaOawIy38h3vrNUWDUW769SSSWRw/hVipmfsXeq1cjZ6H58HJaafeUEfIC8P7L2mHGNNlMXB
- +pnNokNut4jcVy4ud76KTI4slp1xCwcOHQAp14ZTXOTnJd8Ope/pkJakmHXNZuruE4R7I5NveB9
- keORpL0mZWOOvApxHyoHttDbwa38FYAx6IugNIEL+ijc3t+w
-X-Developer-Key: i=broonie@kernel.org; a=openpgp;
- fpr=3F2568AAC26998F9E813A1C5C3F436CA30F5D8EB
-X-Spamd-Result: default: False [-0.16 / 15.00];
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="pFTWHHyQCqzqbyxs"
+Content-Disposition: inline
+In-Reply-To: <20260330082105.278055-14-srinivas.kandagatla@oss.qualcomm.com>
+X-Cookie: I just had a NOSE JOB!!
+X-Spamd-Result: default: False [-2.76 / 15.00];
+	SIGNED_PGP(-2.00)[];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	MIME_GOOD(-0.20)[multipart/signed,text/plain];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
-	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-101382-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-101134-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
+	FREEMAIL_CC(0.00)[kernel.org,oss.qualcomm.com,vger.kernel.org,gmail.com,perex.cz,suse.com,packett.cool];
 	RCPT_COUNT_TWELVE(0.00)[18];
+	MIME_TRACE(0.00)[0:+,1:+,2:~];
 	FROM_HAS_DN(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.999];
+	MISSING_XM_UA(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
-	FREEMAIL_CC(0.00)[oss.qualcomm.com,vger.kernel.org,gmail.com,perex.cz,suse.com,kernel.org,packett.cool];
+	DKIM_TRACE(0.00)[kernel.org:+];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: D117737E8BF
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,sirena.org.uk:mid]
+X-Rspamd-Queue-Id: 8070B370766
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Mon, 30 Mar 2026 08:20:52 +0000, Srinivas Kandagatla wrote:
-> ASoC: qcom: q6dsp: few fixes and enhancements
-> 
-> This patchset contains few fixes for the bugs hit during testing with
-> Monza EVK platform
-> - around array out of bounds access on dai ids which keep extending but
->   the drivers seems to have hardcoded some numbers, fix this and clean
-> the mess up
-> - fix few issues discovered while trying to shut down dsp.
-> - flooding rpmsg with write requests due to not resetting queue pointer,
->   fix this resetting the pointer in trigger stop.
-> - possible multiple graph opens which can result in open failures.
-> 
-> [...]
 
-Applied to
+--pFTWHHyQCqzqbyxs
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-7.1
+On Mon, Mar 30, 2026 at 08:21:05AM +0000, Srinivas Kandagatla wrote:
 
-Thanks!
+> @@ -416,9 +415,10 @@ static int q6apm_dai_close(struct snd_soc_component =
+*component,
+>  	struct snd_pcm_runtime *runtime =3D substream->runtime;
+>  	struct q6apm_dai_rtd *prtd =3D runtime->private_data;
+> =20
+> -	if (prtd->state) { /* only stop graph that is started */
+> +	if (prtd->state) {
+> +		/* only stop graph that is started */
+>  		q6apm_graph_stop(prtd->graph);
+> -		q6apm_unmap_memory_regions(prtd->graph, substream->stream);
+> +		q6apm_free_fragments(prtd->graph, substream->stream);
+>  	}
+> =20
+>  	q6apm_graph_close(prtd->graph);
 
-[01/13] ASoC: qcom: q6apm: move component registration to unmanaged version
-        https://git.kernel.org/broonie/sound/c/b918fa0009c5
-[02/13] ASoC: qcom: q6apm: remove child devices when apm is removed
-        https://git.kernel.org/broonie/sound/c/53c1971fee3e
-[03/13] ASoC: qcom: qdsp6: topology: check widget type before accessing data
-        https://git.kernel.org/broonie/sound/c/4acb0d8ae805
-[04/13] ASoC: qcom: q6apm-lpass-dai: Fix multiple graph opens
-        https://git.kernel.org/broonie/sound/c/08798200d790
-[05/13] ASoC: qcom: q6apm-dai: reset queue ptr on trigger stop
-        https://git.kernel.org/broonie/sound/c/05e5370b04c3
-[06/13] ASoC: dt-bindings: qcom: add LPASS LPI MI2S dai ids
-        https://git.kernel.org/broonie/sound/c/c6e2c74a1999
-[07/13] ASoC: qcom: qdsp6: lpass-ports: add support for LPASS LPI MI2S dais
-        https://git.kernel.org/broonie/sound/c/2d99c2869c35
-[08/13] ASoC: qcom: q6dsp: Add Senary MI2S audio interface support
-        https://git.kernel.org/broonie/sound/c/cd1716423637
-[09/13] ASoC: qcom: common: validate cpu dai id during parsing
-        https://git.kernel.org/broonie/sound/c/4847eb57fcf1
-[10/13] ASoC: qcom: qdapm-lpass-dai: correct the error message
-        https://git.kernel.org/broonie/sound/c/c4c6e17a3bd5
-[11/13] ASoC: qcom: q6apm-lpass-dai: move graph start to trigger
-        https://git.kernel.org/broonie/sound/c/dce7c38257ad
-[12/13] ASoC: qcom: qdsp6: remove search for module iid in hot path
-        https://git.kernel.org/broonie/sound/c/aeb8c96748af
-[13/13] ASoC: qcom: q6apm: Add support for early buffer mapping on DSP
-        https://git.kernel.org/broonie/sound/c/7cc1926fcd8d
+Given that we allocate the fragments before setting state it looks like
+there's a window where we might leak them.  Please send an incremental
+patch for this if you're going to fix it, I've queued things for CI and
+will merge tomorrow unless something blows up.
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+--pFTWHHyQCqzqbyxs
+Content-Type: application/pgp-signature; name="signature.asc"
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+-----BEGIN PGP SIGNATURE-----
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmnMHdAACgkQJNaLcl1U
+h9Ak8gf9HLuKkpq9Mkj48w49xYC0VDMje5Ww4RkphFcNwa+Y68pyGuch/wnk4uGy
+KfjAoflKnNsDyMPEqqOIxxh1vV8G4MAJpthYF7bfHjuad6AKl1tE7Lexnp0qw55c
+cd/1XeWOXpEq9nxA3Na5UJ06vHtbYdFdWfN7uUh13+4O1202/+L0aKSB9O9u/aV+
+7pYU/dla1ENEEf+w64agH3vsKPTmkqxy8UEkzvALDCxyTYOMVgKDNBuvUJpTixRR
+UpoB5mgwIfgqC9V9PXclCBFBdnGAJi5QbsFi+V1U+BQhD5MDru2i2UQrzjS53BiA
+BAaoYQq/6vcQnaRc5cEEoZW+jMwjHg==
+=6Oyu
+-----END PGP SIGNATURE-----
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+--pFTWHHyQCqzqbyxs--
 
