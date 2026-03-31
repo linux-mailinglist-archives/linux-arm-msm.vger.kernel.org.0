@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-101065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 0GKgCTbVy2mILwYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 16:07:50 +0200
+	id GPtxLzfVy2mILwYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 16:07:51 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id A9FFB36AAED
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 16:07:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6163836AAF4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 16:07:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id E7E6B30D0CFA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 14:02:04 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C0F0430D29C3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 14:02:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0B6F3F9F30;
-	Tue, 31 Mar 2026 14:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34E373F9F52;
+	Tue, 31 Mar 2026 14:02:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tMSRRxGU"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gEJ8WeFB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D178C3F99FD
-	for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 14:01:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE4261FCE
+	for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 14:02:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774965723; cv=none; b=afkP1Se8aae3w22H239rrIy+0Ns3jNANeaExDRlxAt9Xs/ST0tB+p/wBqYVKUx7PNX04Gq0PDWPKGgV2gqQaTRBF0yRu1d2IdRiLiLkqy5hMzxmrn9rDIsQ3nbhHi/xMeosZm0XNUkeygzB5SRQtW60gJ8itDulU6zVPXVgj2AM=
+	t=1774965723; cv=none; b=L17aBwidA1AFz0juB1xhg8UqhqMopOoVMZqDm/VXVqZaQecg6nk3hA+G2rD5U5VOffMHc/uagj5HQ+0TgvGj5IZ9Xfh618KH8ehgW9CQ2N2TM5bwo5NmnshymnCEbVGCLbe2f7+vK7+dQuOtGq5+ZNjV7hF64x5QVt1pa14oWPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1774965723; c=relaxed/simple;
-	bh=PDgD9m1sXAG6hNkensMGB8zb+sGnox1Y8gux2vXUMOo=;
+	bh=29a+QWmzRiXdRrprbsrP+/ZM7W6QdW0AI3DnrCCqPdg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gV7dpEajUC4Hdy2whHR23uzq+aJiU7GRM7JWVvsEm+CwemRGGqkIWorl2iR7nQF9FBLLelqiDoeILk933OhjwWQWrlWVm0HQEdd7bZ6FPuPyw9FaBbZQ7OxmEFUuPndGjf0SP4aaFvkRAtO8CM+wbbRIW9HrSp3uGBY+Ch4NK6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tMSRRxGU; arc=none smtp.client-ip=209.85.167.52
+	 MIME-Version; b=YfsCYYmfH8zka4/tJv8G6AEtp4jh2NJx9wBAP75jiMZcB9wimgzjDV4791WDlZz61THtayhsPNZ7Ss+isbyyV7mnw3KrceTCw5qk5x2z801gaQlnkEIYXOXoypa/hnJa9asc3YuGGH2qFMFjIkJ/wkDMxRPXyB6KLnGQpOum7Eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gEJ8WeFB; arc=none smtp.client-ip=209.85.167.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5a2bf521011so57647e87.2
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5a1438649b2so752004e87.2
         for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 07:01:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1774965717; x=1775570517; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1774965718; x=1775570518; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Ac1ZXKFRDWaQXxMIkrFurE+eC1IYhavMswMXIL5j1GU=;
-        b=tMSRRxGUgKePqVYeVnd0uxfAKgZVG6A8ssA35Yv7RC/eRcm2K0jxNkMIIl2TBqUOiP
-         YpgpRg7PphuDmCtcSkXHyPOly9iz3U8LURfcMchrC6jzsNZR4yafaNCJCBAaaltm9WlS
-         T5gn40FAfRSo6GwAZ77JQgwQ/qluuC6kfMjq4JRm2JAq1iqhlJ+4u28eHxLUXSqToTJI
-         49m4cdlDDOkpO7wqOASai6aMGOcqAKRMYOpNpbExPG1ZyqfYdMQgfSiUrcoRkuPv57uZ
-         ws2iXOO4vCCekA8vBbMROmFc3d0tNuh2tWCqDy8Kr2K+lRwC/P1zLpOXnToucI9CMIH8
-         bRPQ==
+        bh=9fRm2KLSrPDi3+vX0vzzEz5KohutdRyFsvItUKtsNxA=;
+        b=gEJ8WeFB+Ul/SASuj5zoCAW59eju+jqZmlmykK/Bb0T0Ief1m8qFlBlBNga7Hydijx
+         vW1Q5GxuzW1cVpIlrcreDA8jcscgwd2/91k+4M2geBt89OPVgLz+EPsT2PtQMkEbGBCA
+         4GfO8aVrlJZIA9zzkwMLa39NR2PdHms9E7pMvqIvKpwXE9KDdqSGSX/Coi2nqkStUlbd
+         3h7gdwX1T8LNki3hxH33n7im1Teo2BMum6HruvaD0q9iOrRHIhVVU5Ge5cEFFKDAOErr
+         Y3avWROfUYg0+PKwBU/RrByKRJNqcE2kbDDmK5Gc0x58V63Qgy/62K10cNXG/aAxqzS6
+         DdJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774965717; x=1775570517;
+        d=1e100.net; s=20251104; t=1774965718; x=1775570518;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Ac1ZXKFRDWaQXxMIkrFurE+eC1IYhavMswMXIL5j1GU=;
-        b=d/LdgFjXsa3SFgsTKBYxp0z5j5d+HSJlnWrhTBU1RhG54fmr+sBQfvNP/fwHl1jVhU
-         lASF6kNwCNih1CBmgj9OCgrNS8m1EsI0V2rdhHAgmmSebGewUyZjjZC2iafpdubHh0kX
-         G6LAx4c9qqfKR0M+0Piym084ChXor9yTwTUro6a+mXg7oK/aO/X/4TrQTh2nGNHfxPH9
-         wEz2HPfIsLRiKrTQN8pv0+4eK2n8QYSCfHp3P/Rmz4/DS4K2cGNc+FKobr2FjyEJz472
-         uYkvSdAWfe8lGFTINfSKRrQb7kNznD7o0/rfZgGmtfAueFSIofeRfGIrTiC2d4Y6C2MC
-         Ks+w==
-X-Forwarded-Encrypted: i=1; AJvYcCUHCqB8/OLzLfKh+8r0H7tRQECyKmgrtBvgpap6hmt3NXmnE0IfOqi9vTulCG3B9dOsaCSAzNXOXBHnH6H5@vger.kernel.org
-X-Gm-Message-State: AOJu0YwfreoW1/s1y7n4Bdh93vUzdhVIhkve4eJclSBCaCOdOjF2V5lY
-	JqfMZWGNvBxKixHjn+FE3GVJ3/jhqf/vdxVog2u/KFcIxjnhKTTZ7EAxqwO3waXiPlE=
-X-Gm-Gg: ATEYQzzoqLr9D/t+PkGh3LR6rtCAQsGldd53thX1XDeGBqmnbZBTlqEJCzIn652iwjg
-	bn+nX8Ttt6LHRMwyZw3hjvAOSUi3VcVKedINuwFb5MCp2mMLtYInPX8TKkhrcxm5KcgGrguMZc5
-	IEs0riTvIw/KYtoNa2snGm1BP1d/77FOJHX3fc2T54teb2sQcbTzfI44uAFhIauxcZhpmPCWnbC
-	Dvd8dJZOatRZzlbyBIbxm8FpLCQMK/W+e+uNSt173w3T/7xdIbZgCIYhF0PufV2BQVhw0PvEvpB
-	VLEuHyt2VJ8vmUmk7/7GNVnPigSiB43GIXqVy0LZsY+luuWIoIEG72X7cI6RlunaFK6GkwdfGEK
-	KaZABfYaX0j35LOgksz5s7EzLgN+IJklXRuZcg7TPVOdv+pdajgc7vEluG6RssGtLjDMlZtNMZY
-	8TD+a6KxbsG7K8gGycErgLbnS6ECLbBrvsf2ZPF+29bezFjcaMmuzFcy0o7qPdPFXLEA==
-X-Received: by 2002:a05:6512:39d6:b0:5a2:a52a:c69e with SMTP id 2adb3069b0e04-5a2ab913ef4mr3011777e87.4.1774965717147;
-        Tue, 31 Mar 2026 07:01:57 -0700 (PDT)
+        bh=9fRm2KLSrPDi3+vX0vzzEz5KohutdRyFsvItUKtsNxA=;
+        b=N4s4FE0k7x/ojkzFapAXyQVTai0LKaR35rKiSg2SB7NCBlfUBX/MDJq2Jks7+slioo
+         mVRM953ivxEDyqFo8HTdL+YUt1W5zq+H/E7ETOiLliBDpSO6jdl75WbvGcYe1V++W3QE
+         hRnz1CI3PsS0Gt9WIVDVAu6TIJej6mCDiYnpLwlO1+Niu+DnIwUWzPXeIdiDQFKioOMm
+         pjlPcIZmU7l2ShKGzYh9cukAwkbvlQSWJ9edMwD7BW8prwcs9Au/SGFab73/BRIdsz4S
+         ybguJTsyPEijMtp6PZOLZ9cdoYQxEMkj8KQtVINldAGZpLPu2TWYvrX1q759ANFEuLE1
+         UQAg==
+X-Forwarded-Encrypted: i=1; AJvYcCVSDJR6DfuNa78nOA35sfOIVY4c63nxoaO6biAnA5gumVrmD1l6ehK7MgpTsYKcmKSt0Gb1ODH3R793w/Lx@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxmu2ig53xybMaGr01K2+ehdPxGZcBqgqejYT2oBGjldXR5Jso9
+	WieqDfaR3ZC6bhorj6nYKyYv2nzaZ+EhYzCGkel1FMg5RmniQjUvoKjrM+k2zfCdWME=
+X-Gm-Gg: ATEYQzz22ztpik2kQx86mN6Zss05uIqHmxkCSbNDCjJYRo89cFfdOlg1P9tmbfC6Uf4
+	ga8zUdXcR4gz8Ta+BxsTqsD6sRlq1hQ6MnX6JY4zKb+bWu0aTAOhRYbF/fXmxg5z1o7pcIS5U6W
+	Ck3P9M4GnQL3JyDxQyUJvIMotWyCzESIBzZToIGEsilb2ImkKeEORifft9JmJsYk5thorDa9Q+F
+	gpiOibH+YGinxIVEjvB/j58JYuE5YXKVTHCQSnKf+T6WXjz6X0O4oOtvbvIUk+6Fvv8Dc8X3m0/
+	LsF1QJ+Y1Kor8F8mo8n8Ho78UaLiC6QiTWKj7p9NEwbBu34Y6+VS5z5MQKXpnS5RgHHS8gt9Hrh
+	r4i+SBKsKmN4EN7SowBIbaxluf6vKdps6rTls9wOSxPc7S0k9UZSWq/IPI/5cVG9iNHQt7rAQ3B
+	16AD7DzxWXnL1Jyc4brd25ihXQQ6UUH/kBFsm2IonEK9xx1sOfL7NllMHuiqt81VXo1Q==
+X-Received: by 2002:a05:6512:3b9f:b0:5a2:7c19:414f with SMTP id 2adb3069b0e04-5a2ab913e44mr2639870e87.3.1774965718014;
+        Tue, 31 Mar 2026 07:01:58 -0700 (PDT)
 Received: from thyme.. (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a2b1456aa2sm2434745e87.68.2026.03.31.07.01.56
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5a2b1456aa2sm2434745e87.68.2026.03.31.07.01.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Mar 2026 07:01:56 -0700 (PDT)
+        Tue, 31 Mar 2026 07:01:57 -0700 (PDT)
 From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>
 Cc: Michael Turquette <mturquette@baylibre.com>,
@@ -84,9 +84,9 @@ Cc: Michael Turquette <mturquette@baylibre.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	linux-arm-msm@vger.kernel.org,
 	linux-clk@vger.kernel.org
-Subject: [PATCH 1/2] clk: qcom: common: Add option to link clock controller to power domain
-Date: Tue, 31 Mar 2026 17:01:41 +0300
-Message-ID: <20260331140142.892579-2-vladimir.zapolskiy@linaro.org>
+Subject: [PATCH 2/2] clk: qcom: camcc: Make Titan GDSC a power domain of clock controller
+Date: Tue, 31 Mar 2026 17:01:42 +0300
+Message-ID: <20260331140142.892579-3-vladimir.zapolskiy@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20260331140142.892579-1-vladimir.zapolskiy@linaro.org>
 References: <20260331140142.892579-1-vladimir.zapolskiy@linaro.org>
@@ -110,7 +110,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MIME_TRACE(0.00)[0:+];
 	DKIM_TRACE(0.00)[linaro.org:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-101065-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-101066-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
@@ -124,77 +124,130 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
 	DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:dkim,linaro.org:email,linaro.org:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: A9FFB36AAED
+X-Rspamd-Queue-Id: 6163836AAF4
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Starting from Snapdragon 845 times CAMCC device serves as both a power
-domain provider with a special Titan GDSC as a top power domain in
-the hierarchy and as a clock controller, where the clock provider
-function of the IP strictly depends on top Titan GDSC being enabled,
-thus it makes the CAMCC clock controller to belong to Titan power domain.
+Starting from Snapdragon 845 platform CAMCC IP is a provider of GDSCs and
+clocks for a number of CAMSS IP blocks, and the clock provider controller
+requires Titan GDSC to be turned on before getting access to the CAMCC
+clocks on the clock consumer side.
 
-Today the formal hardware dependency between CAMCC power domain and clock
-controller is managed by runtime PM in every CAMCC consumer device driver
-like CAMSS and CCI, however this is terribly scalable to any future
-CAMSS IP device drivers, and unfortunately it is not scalable at all
-camera sensor drivers, which are also CAMCC clock controller consumers.
+In case of CAMSS IP (including CCI) the devices are described as requiring
+both CAMCC Titan power domain and CAMCC clocks, and the dependency between
+the power domain and clock controller is managed in the consumer device
+driver by forged runtime PM operations, which is a great complication, but
+it was dragged to the working state.
 
-The change adds an option to describe CAMCC power domain to CAMCC clock
-controller dependency properly, therefore runtime PM management can
-be simplified on the CAMCC client's side.
+Camera image sensors require to get MCLK clocks provided by CAMCC clock
+controller, however the sensors cannot be described as ones belonging to
+Titan GDSC power domain hierarchy, hence the original model of shifting
+complexity of runtime PM from the CAMCC driver to CAMCC consumer drivers
+cannot be stretched to the sensors.
+
+The change explicitly adds Titan GDSC as a power domain of CAMCC clock
+controller on a number of modern Qualcomm SoCs, where their correspondent
+CAMCC drivers are added into runtime PM framework, this allows to perform
+PM operations of sensor drivers out-of-sync and independently from CAMSS
+driver. The simplest way to reproduce the originally discivered issue is
+to attempt to unbind the sensor driver, which triggers rpm_resume():
+
+    % echo 0-0056 > /sys/bus/i2c/drivers/s5kjn1/unbind # SM8650-HDK
+    ------------[ cut here ]------------
+    cam_cc_mclk3_clk status stuck at 'off'
+    WARNING: drivers/clk/qcom/clk-branch.c:87 at clk_branch_toggle+0x168/0x188, CPU#6: sh/832
+    <snip>
+    Call trace:
+    clk_branch_toggle+0x168/0x188 (P)
+    clk_branch2_enable+0x24/0x38
+    clk_core_enable+0x7c/0x300
+    clk_enable+0x34/0x60
+    s5kjn1_power_on+0x110/0x160
+    __rpm_callback+0x50/0x1b0
+    rpm_callback+0x7c/0x90
+    rpm_resume+0x518/0x758
 
 Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 ---
- drivers/clk/qcom/common.c | 16 ++++++++++++++++
- drivers/clk/qcom/common.h |  1 +
- 2 files changed, 17 insertions(+)
+ drivers/clk/qcom/camcc-milos.c    | 1 +
+ drivers/clk/qcom/camcc-sm8450.c   | 1 +
+ drivers/clk/qcom/camcc-sm8550.c   | 1 +
+ drivers/clk/qcom/camcc-sm8650.c   | 1 +
+ drivers/clk/qcom/camcc-sm8750.c   | 1 +
+ drivers/clk/qcom/camcc-x1e80100.c | 1 +
+ 6 files changed, 6 insertions(+)
 
-diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
-index eec369d2173b..558823e220a8 100644
---- a/drivers/clk/qcom/common.c
-+++ b/drivers/clk/qcom/common.c
-@@ -144,6 +144,11 @@ static void qcom_cc_gdsc_unregister(void *data)
- 	gdsc_unregister(data);
- }
- 
-+static void qcom_cc_pm_genpd_unregister(void *data)
-+{
-+	pm_genpd_remove_device(data);
-+}
-+
- /*
-  * Backwards compatibility with old DTs. Register a pass-through factor 1/1
-  * clock to translate 'path' clk into 'name' clk and register the 'path'
-@@ -424,6 +429,17 @@ int qcom_cc_really_probe(struct device *dev,
- 	if (ret)
- 		goto put_rpm;
- 
-+	if (desc->use_rpm && desc->cc_gdsc) {
-+		ret = pm_genpd_add_device(&desc->cc_gdsc->pd, dev);
-+		if (ret)
-+			goto put_rpm;
-+
-+		ret = devm_add_action_or_reset(dev, qcom_cc_pm_genpd_unregister,
-+					       dev);
-+		if (ret)
-+			goto put_rpm;
-+	}
-+
- 	ret = qcom_cc_icc_register(dev, desc);
- 
- put_rpm:
-diff --git a/drivers/clk/qcom/common.h b/drivers/clk/qcom/common.h
-index 953c91f7b145..7661a01d8e82 100644
---- a/drivers/clk/qcom/common.h
-+++ b/drivers/clk/qcom/common.h
-@@ -48,6 +48,7 @@ struct qcom_cc_desc {
- 	const struct qcom_icc_hws_data *icc_hws;
- 	size_t num_icc_hws;
- 	unsigned int icc_first_node_id;
-+	struct gdsc *cc_gdsc;
- 	bool use_rpm;
- 	struct qcom_cc_driver_data *driver_data;
+diff --git a/drivers/clk/qcom/camcc-milos.c b/drivers/clk/qcom/camcc-milos.c
+index 0077c9c9249f..15d432859843 100644
+--- a/drivers/clk/qcom/camcc-milos.c
++++ b/drivers/clk/qcom/camcc-milos.c
+@@ -2132,6 +2132,7 @@ static const struct qcom_cc_desc cam_cc_milos_desc = {
+ 	.num_resets = ARRAY_SIZE(cam_cc_milos_resets),
+ 	.gdscs = cam_cc_milos_gdscs,
+ 	.num_gdscs = ARRAY_SIZE(cam_cc_milos_gdscs),
++	.cc_gdsc = &cam_cc_camss_top_gdsc,
+ 	.use_rpm = true,
+ 	.driver_data = &cam_cc_milos_driver_data,
+ };
+diff --git a/drivers/clk/qcom/camcc-sm8450.c b/drivers/clk/qcom/camcc-sm8450.c
+index ef8cf54d0eed..ce2d8c8a57ac 100644
+--- a/drivers/clk/qcom/camcc-sm8450.c
++++ b/drivers/clk/qcom/camcc-sm8450.c
+@@ -3045,6 +3045,7 @@ static const struct qcom_cc_desc cam_cc_sm8450_desc = {
+ 	.num_resets = ARRAY_SIZE(cam_cc_sm8450_resets),
+ 	.gdscs = cam_cc_sm8450_gdscs,
+ 	.num_gdscs = ARRAY_SIZE(cam_cc_sm8450_gdscs),
++	.cc_gdsc = &titan_top_gdsc,
+ 	.use_rpm = true,
+ 	.driver_data = &cam_cc_sm8450_driver_data,
+ };
+diff --git a/drivers/clk/qcom/camcc-sm8550.c b/drivers/clk/qcom/camcc-sm8550.c
+index b8ece8a57a8a..ae40979b2f12 100644
+--- a/drivers/clk/qcom/camcc-sm8550.c
++++ b/drivers/clk/qcom/camcc-sm8550.c
+@@ -3545,6 +3545,7 @@ static const struct qcom_cc_desc cam_cc_sm8550_desc = {
+ 	.num_resets = ARRAY_SIZE(cam_cc_sm8550_resets),
+ 	.gdscs = cam_cc_sm8550_gdscs,
+ 	.num_gdscs = ARRAY_SIZE(cam_cc_sm8550_gdscs),
++	.cc_gdsc = &cam_cc_titan_top_gdsc,
+ 	.use_rpm = true,
+ 	.driver_data = &cam_cc_sm8550_driver_data,
+ };
+diff --git a/drivers/clk/qcom/camcc-sm8650.c b/drivers/clk/qcom/camcc-sm8650.c
+index 8b388904f56f..c38dd23430fb 100644
+--- a/drivers/clk/qcom/camcc-sm8650.c
++++ b/drivers/clk/qcom/camcc-sm8650.c
+@@ -3563,6 +3563,7 @@ static const struct qcom_cc_desc cam_cc_sm8650_desc = {
+ 	.num_resets = ARRAY_SIZE(cam_cc_sm8650_resets),
+ 	.gdscs = cam_cc_sm8650_gdscs,
+ 	.num_gdscs = ARRAY_SIZE(cam_cc_sm8650_gdscs),
++	.cc_gdsc = &cam_cc_titan_top_gdsc,
+ 	.use_rpm = true,
+ 	.driver_data = &cam_cc_sm8650_driver_data,
+ };
+diff --git a/drivers/clk/qcom/camcc-sm8750.c b/drivers/clk/qcom/camcc-sm8750.c
+index a797b783d4a9..969c2c80065f 100644
+--- a/drivers/clk/qcom/camcc-sm8750.c
++++ b/drivers/clk/qcom/camcc-sm8750.c
+@@ -2681,6 +2681,7 @@ static const struct qcom_cc_desc cam_cc_sm8750_desc = {
+ 	.num_resets = ARRAY_SIZE(cam_cc_sm8750_resets),
+ 	.gdscs = cam_cc_sm8750_gdscs,
+ 	.num_gdscs = ARRAY_SIZE(cam_cc_sm8750_gdscs),
++	.cc_gdsc = &cam_cc_titan_top_gdsc,
+ 	.use_rpm = true,
+ 	.driver_data = &cam_cc_sm8750_driver_data,
+ };
+diff --git a/drivers/clk/qcom/camcc-x1e80100.c b/drivers/clk/qcom/camcc-x1e80100.c
+index cbcc1c9fcb34..32169879990a 100644
+--- a/drivers/clk/qcom/camcc-x1e80100.c
++++ b/drivers/clk/qcom/camcc-x1e80100.c
+@@ -2462,6 +2462,7 @@ static const struct qcom_cc_desc cam_cc_x1e80100_desc = {
+ 	.num_resets = ARRAY_SIZE(cam_cc_x1e80100_resets),
+ 	.gdscs = cam_cc_x1e80100_gdscs,
+ 	.num_gdscs = ARRAY_SIZE(cam_cc_x1e80100_gdscs),
++	.cc_gdsc = &cam_cc_titan_top_gdsc,
+ 	.use_rpm = true,
+ 	.driver_data = &cam_cc_x1e80100_driver_data,
  };
 -- 
 2.49.0
