@@ -1,165 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-101119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101120-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id KEScLlcTzGkvOAYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 20:32:55 +0200
+	id kEC1EJcVzGnfOAYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101120-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 20:42:31 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 253C236FFD6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 20:32:55 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 92F8F370205
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 20:42:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 9F719301410F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 18:29:08 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id DB415303FFE4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 18:40:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D6FFC37B028;
-	Tue, 31 Mar 2026 18:29:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 871D238F634;
+	Tue, 31 Mar 2026 18:40:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="FeHF9btr";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="STo4hj5f"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ALDFIw3f";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="E7z9my0O"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DDE837BE88
-	for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 18:29:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=205.220.168.131
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774981746; cv=pass; b=VZwBB7cGZCTgqCUyGfh85Om6IoE4RXQaAdC1GkQlFN3qVkp1DjXQQ1HeYNHy7K2EMtSyBAVzlTTAgDOIbSfYBtOM0H3BgH16YhQ6DlmMBCKgoUdui+YjUbv7skq73ByezK+KhX+lCsLDuSnDXRCxEZSWMNbliQFRqkxiILZ/BX4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774981746; c=relaxed/simple;
-	bh=uNJS9FAZabuqY/mFspTpzSJB9mbBNyyhkY/MkSFqocM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PRcGNk7/FvxyJ33NyaLLODIWMZeFulEUuvRaZs/MLefVVDPNLifcQrkDZ57NrQJkMfVJv3wlyr3HH0Dm0uFrMOeZ3sJVT3Hkn22xV4yxPcUP/E4+kOIIdUDUocAU79dHAHQObQtulWrjHZko43Fyfy44kKJ0ECc3PEyYpDULlhc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FeHF9btr; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=STo4hj5f; arc=pass smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76180378D87
+	for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 18:40:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774982408; cv=none; b=b6SFfEC81oLhrsy54B1jBOe2Xz+YhZ93mTRSHmeiUqGUMdhqv4BOZbux/5JpdVd8OKt25YEe6CWq91mV5DQPNsksf0Th7K4voNJIR5qIRSBMhr+3o2FmTjpWRLZA/uD018I0ZlL+Q0VXDQzJmJHgRMP7B6kqUM0viDR7BgJ5cB8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774982408; c=relaxed/simple;
+	bh=kQh4ERDhvewAzvV4JUrura1u3cYcd+i7wmebA/4KCmo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=QDzcypGNRta5hNyEIPk9u0F37hcrb2bR8Gubb8Q6TGciBgEUQClvWpRb8nqyDJDdYv2OaryPX7zFTfOGsOX1J4dWBV7KBbsMTX/hJo2g94L+Mg1kboPZigDVyiyYuQSLdNLn1VA7RLdlMUMvfNM/1TaBmZTtY6bB0NW9cvHWn9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ALDFIw3f; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=E7z9my0O; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62VGdnCB3663999
-	for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 18:29:04 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 62VGdlqL3663889
+	for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 18:40:06 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:to; s=
-	qcppdkim1; bh=sqccXtNxMUDUewBaqU0CTK7kGLsJIPlUppOXDkrqdQs=; b=Fe
-	HF9btrHUbi6HB8KI/sqrH9ChzRFBtCMnhEUFnnGLQtDFqvxxvKMtqWlHETpqKj16
-	YrNEtx5GTKNLic23vrLIz+WnSIPdlzX8SVHPTWKfDrQ0GCftaGj1yoocb8CcbpRA
-	U5floaOPZqSxnU/4FksljjWTT6jGnnZGRUMPJ84YkMGQHjnoQEHLHMjwHmQQTdyr
-	BdKQ57FRVHNgQu1NMgNGBvnecbiKcaTkqNy4bkJJhnIjp1sUASCYnTl4CXFQDAhN
-	FpxFhR9/4OstPLVEPnkRaw3CdwJnh8A94ZSb31UnxoJCiVpWt7yhxHJPrpD43xf0
-	AUN827+qxMrRgxNvhaCA==
-Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com [209.85.167.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d89ga35sy-1
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=TqrmT8vtxOr+1cGP7GmVeC+z+eOJ5SDsSF+
+	jxrUDhoA=; b=ALDFIw3fB++pHtva+y/b/UnOL0kpEXPDJJj/7tvYLA/Nmp+AoW0
+	54ibeFRuaTjDD8i7c+03SGtZ48lu3KeEfYrUY4W+FkOkyCdNkwwxpifViU3EC5PB
+	LuM/RZ2JCQxSerx2DtLjMhtjUCyhL1qaFlEv0K6maky6HvyM48GuS2wGV8XKa3Sn
+	Ip59658PzzZRX1NNHxEwcdYxB96Z55q7mzYvESHRt48TVzvuqYpaDPuwjIlEbh/Y
+	clKSNgf99jelDT+vylXmEodQCbExj67eCuBgDvb7b5hYKKTscXiQe6unlCeQzpoG
+	p3nfQ/cVLIiWOkltGWam2poBPA52VXu2jmQ==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d89ga379h-1
 	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 18:29:04 +0000 (GMT)
-Received: by mail-oi1-f200.google.com with SMTP id 5614622812f47-4670a0ad001so8242785b6e.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 11:29:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774981743; cv=none;
-        d=google.com; s=arc-20240605;
-        b=MixUSDRSZmjt6/GjQnAzKxX/4lmZTTlWxh4CLnI0xPDvOC8y4W/Y/hD5CUkcVMQW+H
-         zZTykH9BN9PQshWRM4J+gORfMD8bD1Gn3iOyjnQ5ZPghRv0sO7gBBJ+sPqAgGBAGGvew
-         ejORBug3+1GkWG1P65OZO3otp187JizB738AOHW76X7zwmuTwDo+Txc8HD40U2qDUOo/
-         PeyUUvrjBDF1Ydh1XHz2qcPDt33++DfX36JQHlKk2B8/+pWy0wT4pnRN7Y8DFjumxc4l
-         eGuO/1cbpFR2V+j9OTJv0K74/DuULKi/RBHHdzErHywxhhrjEy/mNqlsqLh6XerP4oso
-         3Mgw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:dkim-signature;
-        bh=sqccXtNxMUDUewBaqU0CTK7kGLsJIPlUppOXDkrqdQs=;
-        fh=hTINOAzVOP7+3OcWR+Dy9oKUSvlmFthc/tY3vhl24nc=;
-        b=G50EXk2Z6b20BRcTEwTzOjPypXhyzfHAi9V7RURVLsjvyBSTEySXWeVkQeYITEC19D
-         /GK6tzJhNW8ip9SS/f9SlXx6jSKGFN8Ij/gTyVeRn+RxRk+i5URzNeUGEO6MpI4vpW9g
-         UUwLwj/77EiVTBtskJhjZncVBC8inW8vvuPWutEo4L9sBkUkk0x7hF3l4W+7ldYvTEy3
-         M1n9Q3Q422KBdCsSZYp3RqVNOuDPpYCzhTfxrM3yr1uI1REV0iBOpjpChDFjpuYbsUGJ
-         Ctvp6Nm/q+AFJlAQ2xCfNW7VN4xtn6E0dEWA/UQZOYlYyuZMnAoqK7iUF9ObsKUqrDuf
-         FZfA==;
-        darn=vger.kernel.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 18:40:05 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-35da86144daso2739497a91.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Mar 2026 11:40:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1774981743; x=1775586543; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=sqccXtNxMUDUewBaqU0CTK7kGLsJIPlUppOXDkrqdQs=;
-        b=STo4hj5fdsVrKZu/ew8lEbGvB0uvUOwqe6Cy3XmFNpnvkQ9FCdeQXW38znGY1jfTM0
-         BXr2xxPVRkZIJkSazlbqDPiVVOOhuPFlVjUxAA7Qv/EdWLp0n7pxrNBsX4TMtVNeJWCM
-         tFcUzO4qOH6GShSxcRMMSfleNGIwM+prJ2S7FxYKSuNlT3jZs4B/TZR2Mg5GhLr8F0qb
-         1xSltQbsgQm0TspVayY8hSwHWypG/r8XVecfbHcAEwJR35GW4hXqCAYhQAE1NT+tYJ94
-         m2UYklPpJYcpGCVDPT28DpCa7yZgjt0AFX3ZfhvlY6JzywCmeahZMKfJ5zmGDGMOolwo
-         kgMw==
+        d=oss.qualcomm.com; s=google; t=1774982405; x=1775587205; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=TqrmT8vtxOr+1cGP7GmVeC+z+eOJ5SDsSF+jxrUDhoA=;
+        b=E7z9my0OpRDZ8NRpgxWowKRirFDM0K+IDHmPHKdh93Mk/6oTeV0SoNpLl6FpyCxKp2
+         /gTNbgcoRmMockIUPSetWz1Y4tdIhl4Tyslj9O+jkLCFyjKN9YLdnpjAco80lvu87pCQ
+         mcjNk7xJom8XxkdYFOfQtkH0sm3zAsBj7/TMpCAmkSGBkm8GqDUJN2lHyByGprS8evtP
+         BUtBz4UEeUggtNRwUH9+FCGGqFz/rmzlbJKJ6a+Fmk0JnZRUypIoEGqI3OxO79MPFyD8
+         17jzzrLbD4F27IYaZvDuP2ZcqLUMHzl7a1crZtAnoh/yD8bZnrEUsPQi9DkV+KTefUkg
+         11dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774981743; x=1775586543;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:x-gm-gg
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sqccXtNxMUDUewBaqU0CTK7kGLsJIPlUppOXDkrqdQs=;
-        b=RE20V34ZEpAfiSEi43I6z/wYedfM5aPyxxuQT25KZAWGhbBQn5L5L5sg6b/OsAslrA
-         9Phn9XY18cT9Sot3zdgQoUUl0GoeX+Jsf8Cix9KG38hcFbJ0fpPreACVd7aP/rUhVjtQ
-         JJ4GnCXzxwPlwGhm97H6ee/XvMNvQjDmtNi96SXl9wngBpVBJVOLfuB86eUsg6PvZXRW
-         bavF8G2r6afaovyLosKpdepJnJPuoqAFLNjqug3GnCji0a2sCsaOaPVXaxfnPHpVONpL
-         /XWtoHQdr9a538Y4ToaiMXRg/T3QtuV4y8aZGSzHk9aStT46VTNI2FEx5yrYcUxy5YBE
-         MFyA==
-X-Forwarded-Encrypted: i=1; AJvYcCUuA9WVFPWZjcr5b8UOBKZ05JP6vhuhp2W6Vq8rvu+pNhp1BdnWtjOxQel9/FDpmiHEcqTwRR+F0T6UrI8t@vger.kernel.org
-X-Gm-Message-State: AOJu0YwI/INJRIPRJSevs8/0ooWYKNkwakMUtAoqqFz3qNG8YPGwa807
-	/LtPPBiNj1cWGhZFztDol4ovzzYs99vsOS5vKtDxSeQa1N4Y4jK/5yAj42cRINVDE5rho7Dtf6r
-	DdAl/jToOL26l5b6JPdKa5yPz7LcLpo0QwGgjohqA9wl7Ie1dEg6L82Sk2l16IQweWuAZ8jymIy
-	KsQG5X7yfCdhrgVKTJabE57zgEXUc7BItdY10otHcX2x4=
-X-Gm-Gg: ATEYQzz/gT7nHVwTHQ2RdW+UReO2dej00+7bZhnZ9LyR7mJhzx/tgSFW7zj0t2sHhee
-	EwXjPsyrZLBPm58DzWmxWFspOnBa8aY81h9PFCBVCk/Y5MPLyUezw1WmwGEYJIguLrutrThPfgY
-	vSE3Pa4VrFlQjN5Rxrc10AJIQ+2lyYx6ShdikKQA/OyaPEHqDs2+35KmKPfAyM4ed2wlD+zEyNO
-	xUFNc1ZhKFeGTeuhYKn+NXhOeFf4xOSWWFABA==
-X-Received: by 2002:a05:6808:1b0e:b0:467:4939:9656 with SMTP id 5614622812f47-46ae022479bmr312778b6e.37.1774981743576;
-        Tue, 31 Mar 2026 11:29:03 -0700 (PDT)
-X-Received: by 2002:a05:6808:1b0e:b0:467:4939:9656 with SMTP id
- 5614622812f47-46ae022479bmr312759b6e.37.1774981743161; Tue, 31 Mar 2026
- 11:29:03 -0700 (PDT)
+        d=1e100.net; s=20251104; t=1774982405; x=1775587205;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TqrmT8vtxOr+1cGP7GmVeC+z+eOJ5SDsSF+jxrUDhoA=;
+        b=OugepRWpONToPo3bDnDIrsoB41NuHRaYCs2qebJgqBdNQHU6Fy+Owb1oeKoPEECWDR
+         ndyEBzxW+PduwjWp33sXYKm4KdvuCrJJ+Nm8VniMpmN0IeOsB802HqXcJS5GtLD8Lost
+         EwKYkmhQwFseVJEGobRnO8csbuYg8Gz91BzppJthjFj4e8EqUqs8y0F5iw2vt26x8dUb
+         pqcc6IsZY+aRuljQMqE27dSaqm2x9o9EiBxkU9PRhsBLVMbsz08eUA0TuHFDoK5pMPw0
+         9OLsy3kz4WWvV8eA3lMeB0shWd1MrObc9aC1l8pYntRMvJAQ/NsrRY/sy6XM3ji/92Vw
+         GqsA==
+X-Gm-Message-State: AOJu0Ywyu8u8kD2KRRaEExG/JJiNVYnL8uXaoerjheYLEzfBUoSTp451
+	VZJG2lxtQjeQUZrYFeTy4cKS5DJKwdZ3o00H1i8iU0ih30bbipWVX9qlQ333bP0jYz2ns//O2Vq
+	2BhJiFZGYK2QQwX3uSkczCKnwud195hgSXn3uNJ5Offs3B6u+1A02qM6iT/laSQwhr018
+X-Gm-Gg: ATEYQzyqWEwZw8pWsr9GoAmokuvanJo6dX6p6FVp5CN4SDtgIDbkijqqpDZ7myZcdFt
+	ghvqMVdDczykxz6CZYqIrwZt8swJ2n4EXqxF6bE5K4WBjvomYvjWpWDitPfnkzzV0EEtmmb0IaB
+	t3tE1SVMI5KYNHwSmLcNvGdUeZZkG5qGOlt8xzowA2ayB/K2sS2rz8zFpnRT49ltnDskL3AaLK0
+	oXONrJNBiV03qETHTnYcU//KyFW6uK8SM/+oCGJZuyySPOQ8+ZMIVPwCcuiEXKiAm+ffgqK2uxk
+	BeWTOJh/vgjhhf2/j5KA/KWwjjg1bD7lodo4tKktlcjJvU8YVHc7BUzaKTJ/rZ5tVAXqHNl+8MV
+	aCzQitGVe2FJwycjnCa9VGSZO84NZq0s5X7PNFb3AN/Lz0vii
+X-Received: by 2002:a17:90a:d406:b0:35d:972c:b3d6 with SMTP id 98e67ed59e1d1-35dc6e9dbc3mr350265a91.9.1774982405031;
+        Tue, 31 Mar 2026 11:40:05 -0700 (PDT)
+X-Received: by 2002:a17:90a:d406:b0:35d:972c:b3d6 with SMTP id 98e67ed59e1d1-35dc6e9dbc3mr350238a91.9.1774982404456;
+        Tue, 31 Mar 2026 11:40:04 -0700 (PDT)
+Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35dbe607c3esm3149693a91.4.2026.03.31.11.40.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 31 Mar 2026 11:40:04 -0700 (PDT)
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Subject: [PATCH v3 1/5] remoteproc: qcom: fix sparse warnings for __iomem annotated mem_region
+Date: Wed,  1 Apr 2026 00:09:53 +0530
+Message-ID: <20260331183957.2015440-1-mukesh.ojha@oss.qualcomm.com>
+X-Mailer: git-send-email 2.53.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20260327-a8xx-gpu-batch2-v2-0-2b53c38d2101@oss.qualcomm.com>
- <20260327-a8xx-gpu-batch2-v2-8-2b53c38d2101@oss.qualcomm.com>
- <CACSVV01RxTce4qEkt=vPb8AmPSuTLVTh5DR5gCAP2n3U3vkDqw@mail.gmail.com> <720bf565-342c-45b1-b797-3e27a7e9bb56@oss.qualcomm.com>
-In-Reply-To: <720bf565-342c-45b1-b797-3e27a7e9bb56@oss.qualcomm.com>
-Reply-To: rob.clark@oss.qualcomm.com
-From: Rob Clark <rob.clark@oss.qualcomm.com>
-Date: Tue, 31 Mar 2026 11:28:52 -0700
-X-Gm-Features: AQROBzDtrqI3f2JoaAPt5nnKoxW2Eymn4fBESv7H27PzGlJQ90cjFmRLoj1lafA
-Message-ID: <CACSVV00qWGtHFOeEwTVw5=2XV1yvvi2TfTBFDjG8tQRg4eHzhQ@mail.gmail.com>
-Subject: Re: [PATCH v2 08/17] drm/msm/adreno: Coredump on GPU/GMU init failures
-To: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Cc: Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jesszhan0024@gmail.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Antonino Maniscalco <antomani103@gmail.com>,
-        Connor Abbott <cwabbott0@gmail.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Authority-Analysis: v=2.4 cv=KJpXzVFo c=1 sm=1 tr=0 ts=69cc1270 cx=c_pps
- a=AKZTfHrQPB8q3CcvmcIuDA==:117 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
- a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
- a=Um2Pa8k9VHT-vaBCBUpS:22 a=EUspDBNiAAAA:8 a=Ex9mMNGI-Umtw2ziQKAA:9
- a=QEXdDO2ut3YA:10 a=pF_qn-MSjDawc0seGVz6:22
-X-Proofpoint-GUID: HOh74FxrlVCpphi45VYJNmOzHcToi3Rm
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzMxMDE3NyBTYWx0ZWRfX+W2SGLL5BIKF
- AAlh8hJiTLzX7BH5vRhcBjGWmH/h82NxTKZJjlBHePaMPB4DV5JOP4BMPUaVXtuh/r15T/mp8mC
- EIbjrSm6JRXC5KljGYIEQ0nJyR6J9hnCMazuTwSV2rKuutmQmk5/ZsPhtRYGdcprrluitUngZH0
- MQm0/9bPPb92zbeTweBKFMO+gidkIXAckKP+L1nq0rb2irbdih0olmm7ICRi/zFDthI5bHk4zsY
- jB410+icIhmkjOszYz+J23nUN3bmUkty7ZWbnwASE77hpg4/CYq/BaN/ydstBFcjYk6jGJJPbCU
- luYrqOiQ0Z7qJnGxoGf6YEcv7qG0PQoCZrQPmfOjD03acFgwdVeyCZcV/owqv3RrNqX8xBdDe29
- 4krhWF1rRt4UG/DKP01/TEWPAdqLCfDysHzBrAMeXXBBcZieQoEWvPvl4dbrS9ydm41hgn3QEyX
- IUwlX1hA/YokO0WN5uw==
-X-Proofpoint-ORIG-GUID: HOh74FxrlVCpphi45VYJNmOzHcToi3Rm
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=KJpXzVFo c=1 sm=1 tr=0 ts=69cc1505 cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22 a=EUspDBNiAAAA:8
+ a=ctNy7iMIxOgxZ4Gl-TwA:9 a=uKXjsCUrEbL0IQVhDsJ9:22
+X-Proofpoint-GUID: VcYJe51dMr1vS8Q5JgzaoR2puZg4obkK
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzMxMDE3OSBTYWx0ZWRfX8HaJAESMOHrX
+ QWDvx31d5Yp1PqiHD/06WL+/BVviQX+JrmuN/5I7P8hvH4oDn+NIERMnFwMxk0VXRoduWcr5OuO
+ 0doeLPY75RV9RR2iyrI9vqFa1yM1mqFL96BDsUMFFYdb9dWtybScOAbpDZr/Djs6ovc7pgZNzay
+ CyQqisQLEgsqF7oSIqLWHBVVVNxP+U9tAPB9hW+DfIkoKsWtqD0I8E+XKpn7jFEBg65h5OXMchj
+ eO6VbWv33E/V8dENqi1fb2OOjyygX6n/RPX28z1/eWpNGtGyMBsT0BPQIbB+xfpNO74mAA2Qr7Y
+ 7H57ilOaDp8fgxxBp1s/CeTfRBiGsQ4uRgooHY9OXuYxKMZvUUbWLYIVYJsdI6SQ+xu6jqkEoWS
+ VXf36X+FLUtHXvx/C1epX05Zz53Y/SjKTVSUFYQOIWMyNMK2yE5z3cg9D6gUvsUXS80KhgApzUH
+ D1Tk/UvgbDF1kMQfnbw==
+X-Proofpoint-ORIG-GUID: VcYJe51dMr1vS8Q5JgzaoR2puZg4obkK
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-31_04,2026-03-31_02,2025-10-01_01
@@ -167,194 +132,187 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  lowpriorityscore=0 bulkscore=0 priorityscore=1501 adultscore=0 spamscore=0
  suspectscore=0 malwarescore=0 clxscore=1015 impostorscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603310177
-X-Spamd-Result: default: False [-2.16 / 15.00];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603310179
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	MID_CONTAINS_FROM(1.00)[];
 	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_MISSING_CHARSET(0.50)[];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-101119-lists,linux-arm-msm=lfdr.de];
-	TO_DN_SOME(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[18];
-	REPLYTO_DOM_EQ_TO_DOM(0.00)[];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_CC(0.00)[poorly.run,kernel.org,linux.dev,gmail.com,somainline.org,ffwll.ch,linux.intel.com,suse.de,vger.kernel.org,lists.freedesktop.org];
-	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[6];
-	REPLYTO_ADDR_EQ_FROM(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[rob.clark@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-101120-lists,linux-arm-msm=lfdr.de];
+	RCVD_TLS_LAST(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_SOME(0.00)[];
 	PRECEDENCE_BULK(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	FROM_NEQ_ENVFROM(0.00)[mukesh.ojha@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:dkim,qualcomm.com:email,oss.qualcomm.com:dkim,oss.qualcomm.com:mid];
+	RCPT_COUNT_SEVEN(0.00)[7];
 	NEURAL_HAM(-0.00)[-1.000];
-	HAS_REPLYTO(0.00)[rob.clark@oss.qualcomm.com];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[oss.qualcomm.com:dkim,oss.qualcomm.com:replyto,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,mail.gmail.com:mid,qualcomm.com:dkim,qualcomm.com:email]
-X-Rspamd-Queue-Id: 253C236FFD6
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 92F8F370205
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Tue, Mar 31, 2026 at 11:05=E2=80=AFAM Akhil P Oommen
-<akhilpo@oss.qualcomm.com> wrote:
->
-> On 3/31/2026 1:21 AM, Rob Clark wrote:
-> > On Thu, Mar 26, 2026 at 5:15=E2=80=AFPM Akhil P Oommen <akhilpo@oss.qua=
-lcomm.com> wrote:
-> >>
-> >> Capture coredump on GPU or GMU errors during initialization to help in
-> >> debugging the issues. To be consistent with the locks while calling
-> >> msm_gpu_crashstate_capture(), call pm_runtime_get(gpu) always with
-> >> msm_gpu->lock.
-> >>
-> >> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-> >> ---
-> >>  drivers/gpu/drm/msm/adreno/a6xx_gmu.c      | 1 +
-> >>  drivers/gpu/drm/msm/adreno/adreno_device.c | 5 +++--
-> >>  drivers/gpu/drm/msm/adreno/adreno_gpu.c    | 5 ++++-
-> >>  drivers/gpu/drm/msm/msm_gpu.c              | 5 +++--
-> >>  drivers/gpu/drm/msm/msm_gpu.h              | 2 ++
-> >>  5 files changed, 13 insertions(+), 5 deletions(-)
-> >>
-> >> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/m=
-sm/adreno/a6xx_gmu.c
-> >> index 1b44b9e21ad8..916c5d99c4d1 100644
-> >> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> >> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> >> @@ -1335,6 +1335,7 @@ int a6xx_gmu_resume(struct a6xx_gpu *a6xx_gpu)
-> >>
-> >>  disable_irq:
-> >>         disable_irq(gmu->gmu_irq);
-> >> +       msm_gpu_crashstate_capture(gpu, NULL, NULL, NULL, NULL);
-> >>         a6xx_rpmh_stop(gmu);
-> >>  disable_clk:
-> >>         clk_bulk_disable_unprepare(gmu->nr_clocks, gmu->clocks);
-> >> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/=
-drm/msm/adreno/adreno_device.c
-> >> index 4edfe80c5be7..ca5f96e16870 100644
-> >> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-> >> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> >> @@ -105,6 +105,8 @@ struct msm_gpu *adreno_load_gpu(struct drm_device =
-*dev)
-> >>          */
-> >>         pm_runtime_enable(&pdev->dev);
-> >>
-> >> +       guard(mutex)(&gpu->lock);
-> >
-> > so, I am a fan of guard(), but I realized this means we are holding
-> > gpu->lock across the debugfs_init() (only a5xx).. which I suspect will
-> > anger lockdep, although I don't have a good way to test that atm.
->
-> Shall we drop this patch for now? I will send a respin later.
+The firmware memory regions in qcom_adsp, qcom_pas and qcom_wcnss are
+mapped using devm_ioremap_wc() / devm_ioremap_resource_wc(), which
+return void __iomem *. However, the mem_region (and dtb_mem_region)
+fields in the respective driver structs were declared as plain void *,
+causing sparse to flag address space mismatches:
 
-I think I might, esp since the db820/a5xx ci runners seem to be down atm
+qcom_q6v5_adsp.c:639:26: warning: incorrect type in assignment (different address spaces)
+qcom_q6v5_adsp.c:639:26:    expected void *mem_region
+qcom_q6v5_adsp.c:639:26:    got void [noderef] __iomem *
+qcom_q6v5_pas.c:141:45: warning: incorrect type in argument 2 (different address spaces)
+qcom_q6v5_pas.c:141:45:    expected void const volatile [noderef] __iomem *src
+qcom_q6v5_pas.c:141:45:    got void *
+qcom_q6v5_pas.c:637:25: warning: incorrect type in assignment (different address spaces)
+qcom_q6v5_pas.c:637:25:    expected void *mem_region
+qcom_q6v5_pas.c:637:25:    got void [noderef] __iomem *
+qcom_q6v5_pas.c:654:29: warning: incorrect type in assignment (different address spaces)
+qcom_q6v5_pas.c:654:29:    expected void *dtb_mem_region
+qcom_q6v5_pas.c:654:29:    got void [noderef] __iomem *
+qcom_wcnss.c:540:27: warning: incorrect type in assignment (different address spaces)
+qcom_wcnss.c:540:27:    expected void *mem_region
+qcom_wcnss.c:540:27:    got void [noderef] __iomem *
 
-BR,
--R
+Fix this by annotating the struct fields with __iomem to correctly
+reflect the address space of the underlying mapping.
 
-> -Akhil.
->
-> >
-> > BR,
-> > -R
-> >
-> >> +
-> >>         ret =3D pm_runtime_get_sync(&pdev->dev);
-> >>         if (ret < 0) {
-> >>                 pm_runtime_put_noidle(&pdev->dev);
-> >> @@ -112,10 +114,9 @@ struct msm_gpu *adreno_load_gpu(struct drm_device=
- *dev)
-> >>                 goto err_disable_rpm;
-> >>         }
-> >>
-> >> -       mutex_lock(&gpu->lock);
-> >>         ret =3D msm_gpu_hw_init(gpu);
-> >> -       mutex_unlock(&gpu->lock);
-> >>         if (ret) {
-> >> +               msm_gpu_crashstate_capture(gpu, NULL, NULL, NULL, NULL=
-);
-> >>                 DRM_DEV_ERROR(dev->dev, "gpu hw init failed: %d\n", re=
-t);
-> >>                 goto err_put_rpm;
-> >>         }
-> >> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm=
-/msm/adreno/adreno_gpu.c
-> >> index 785e99fb5bd5..8475802fdde2 100644
-> >> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> >> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> >> @@ -391,10 +391,13 @@ int adreno_get_param(struct msm_gpu *gpu, struct=
- msm_context *ctx,
-> >>                 return 0;
-> >>         case MSM_PARAM_TIMESTAMP:
-> >>                 if (adreno_gpu->funcs->get_timestamp) {
-> >> +                       mutex_lock(&gpu->lock);
-> >>                         pm_runtime_get_sync(&gpu->pdev->dev);
-> >> +
-> >>                         *value =3D adreno_gpu->funcs->get_timestamp(gp=
-u);
-> >> -                       pm_runtime_put_autosuspend(&gpu->pdev->dev);
-> >>
-> >> +                       pm_runtime_put_autosuspend(&gpu->pdev->dev);
-> >> +                       mutex_unlock(&gpu->lock);
-> >>                         return 0;
-> >>                 }
-> >>                 return -EINVAL;
-> >> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_g=
-pu.c
-> >> index 995549d0bbbc..472db2c916f9 100644
-> >> --- a/drivers/gpu/drm/msm/msm_gpu.c
-> >> +++ b/drivers/gpu/drm/msm/msm_gpu.c
-> >> @@ -361,7 +361,7 @@ static void crashstate_get_vm_logs(struct msm_gpu_=
-state *state, struct msm_gem_v
-> >>         mutex_unlock(&vm->mmu_lock);
-> >>  }
-> >>
-> >> -static void msm_gpu_crashstate_capture(struct msm_gpu *gpu,
-> >> +void msm_gpu_crashstate_capture(struct msm_gpu *gpu,
-> >>                 struct msm_gem_submit *submit, struct msm_gpu_fault_in=
-fo *fault_info,
-> >>                 char *comm, char *cmd)
-> >>  {
-> >> @@ -886,7 +886,8 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct ms=
-m_gem_submit *submit)
-> >>
-> >>         pm_runtime_get_sync(&gpu->pdev->dev);
-> >>
-> >> -       msm_gpu_hw_init(gpu);
-> >> +       if (msm_gpu_hw_init(gpu))
-> >> +               msm_gpu_crashstate_capture(gpu, NULL, NULL, NULL, NULL=
-);
-> >>
-> >>         submit->seqno =3D submit->hw_fence->seqno;
-> >>
-> >> diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_g=
-pu.h
-> >> index 666cf499b7ec..eb5b3a7b81f9 100644
-> >> --- a/drivers/gpu/drm/msm/msm_gpu.h
-> >> +++ b/drivers/gpu/drm/msm/msm_gpu.h
-> >> @@ -747,6 +747,8 @@ static inline void msm_gpu_crashstate_put(struct m=
-sm_gpu *gpu)
-> >>  }
-> >>
-> >>  void msm_gpu_fault_crashstate_capture(struct msm_gpu *gpu, struct msm=
-_gpu_fault_info *fault_info);
-> >> +void msm_gpu_crashstate_capture(struct msm_gpu *gpu, struct msm_gem_s=
-ubmit *submit,
-> >> +               struct msm_gpu_fault_info *fault_info, char *comm, cha=
-r *cmd);
-> >>
-> >>  /*
-> >>   * Simple macro to semi-cleanly add the MAP_PRIV flag for targets tha=
-t can
-> >>
-> >> --
-> >> 2.51.0
-> >>
->
+These regions are subsequently passed to qcom_mdt_load(),
+qcom_mdt_load_no_init() and qcom_mdt_pas_load(), all of which take
+void * and use plain memcpy()/memset() internally to write firmware
+segments into the region. This is intentional and safe: the mappings
+are write-combining (WC), which on arm64 permits bulk CPU stores
+without requiring the memcpy_toio()/memset_io() accessors. Changing
+the MDT loader API to accept void __iomem * would be a more invasive
+change and would affect callers.
+
+Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+---
+Changes in v3:
+ - New change to fix the sparse issue reported on v2.
+
+ drivers/remoteproc/qcom_q6v5_adsp.c |  6 +++---
+ drivers/remoteproc/qcom_q6v5_pas.c  | 10 +++++-----
+ drivers/remoteproc/qcom_wcnss.c     |  6 +++---
+ 3 files changed, 11 insertions(+), 11 deletions(-)
+
+diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
+index b5c8d6d38c9c..d2b50af6d748 100644
+--- a/drivers/remoteproc/qcom_q6v5_adsp.c
++++ b/drivers/remoteproc/qcom_q6v5_adsp.c
+@@ -105,7 +105,7 @@ struct qcom_adsp {
+ 
+ 	phys_addr_t mem_phys;
+ 	phys_addr_t mem_reloc;
+-	void *mem_region;
++	void __iomem *mem_region;
+ 	size_t mem_size;
+ 	bool has_iommu;
+ 
+@@ -318,7 +318,7 @@ static int adsp_load(struct rproc *rproc, const struct firmware *fw)
+ 	int ret;
+ 
+ 	ret = qcom_mdt_load_no_init(adsp->dev, fw, rproc->firmware,
+-				    adsp->mem_region, adsp->mem_phys,
++				    (__force void *)adsp->mem_region, adsp->mem_phys,
+ 				    adsp->mem_size, &adsp->mem_reloc);
+ 	if (ret)
+ 		return ret;
+@@ -491,7 +491,7 @@ static void *adsp_da_to_va(struct rproc *rproc, u64 da, size_t len, bool *is_iom
+ 	if (offset < 0 || offset + len > adsp->mem_size)
+ 		return NULL;
+ 
+-	return adsp->mem_region + offset;
++	return (__force void *)adsp->mem_region + offset;
+ }
+ 
+ static int adsp_parse_firmware(struct rproc *rproc, const struct firmware *fw)
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index 46204da046fa..fb22f699c571 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -100,8 +100,8 @@ struct qcom_pas {
+ 	phys_addr_t mem_reloc;
+ 	phys_addr_t dtb_mem_reloc;
+ 	phys_addr_t region_assign_phys[MAX_ASSIGN_COUNT];
+-	void *mem_region;
+-	void *dtb_mem_region;
++	void __iomem *mem_region;
++	void __iomem *dtb_mem_region;
+ 	size_t mem_size;
+ 	size_t dtb_mem_size;
+ 	size_t region_assign_size[MAX_ASSIGN_COUNT];
+@@ -241,7 +241,7 @@ static int qcom_pas_load(struct rproc *rproc, const struct firmware *fw)
+ 		}
+ 
+ 		ret = qcom_mdt_pas_load(pas->dtb_pas_ctx, pas->dtb_firmware,
+-					pas->dtb_firmware_name, pas->dtb_mem_region,
++					pas->dtb_firmware_name, (__force void *)pas->dtb_mem_region,
+ 					&pas->dtb_mem_reloc);
+ 		if (ret)
+ 			goto release_dtb_metadata;
+@@ -319,7 +319,7 @@ static int qcom_pas_start(struct rproc *rproc)
+ 	}
+ 
+ 	ret = qcom_mdt_pas_load(pas->pas_ctx, pas->firmware, rproc->firmware,
+-				pas->mem_region, &pas->mem_reloc);
++				(__force void *)pas->mem_region, &pas->mem_reloc);
+ 	if (ret)
+ 		goto release_pas_metadata;
+ 
+@@ -445,7 +445,7 @@ static void *qcom_pas_da_to_va(struct rproc *rproc, u64 da, size_t len, bool *is
+ 	if (is_iomem)
+ 		*is_iomem = true;
+ 
+-	return pas->mem_region + offset;
++	return (__force void *)pas->mem_region + offset;
+ }
+ 
+ static int qcom_pas_parse_firmware(struct rproc *rproc, const struct firmware *fw)
+diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
+index 4add9037dbd5..da68bc1903be 100644
+--- a/drivers/remoteproc/qcom_wcnss.c
++++ b/drivers/remoteproc/qcom_wcnss.c
+@@ -94,7 +94,7 @@ struct qcom_wcnss {
+ 
+ 	phys_addr_t mem_phys;
+ 	phys_addr_t mem_reloc;
+-	void *mem_region;
++	void __iomem *mem_region;
+ 	size_t mem_size;
+ 
+ 	struct qcom_rproc_subdev smd_subdev;
+@@ -158,7 +158,7 @@ static int wcnss_load(struct rproc *rproc, const struct firmware *fw)
+ 	int ret;
+ 
+ 	ret = qcom_mdt_load(wcnss->dev, fw, rproc->firmware, WCNSS_PAS_ID,
+-			    wcnss->mem_region, wcnss->mem_phys,
++			    (__force void *)wcnss->mem_region, wcnss->mem_phys,
+ 			    wcnss->mem_size, &wcnss->mem_reloc);
+ 	if (ret)
+ 		return ret;
+@@ -327,7 +327,7 @@ static void *wcnss_da_to_va(struct rproc *rproc, u64 da, size_t len, bool *is_io
+ 	if (offset < 0 || offset + len > wcnss->mem_size)
+ 		return NULL;
+ 
+-	return wcnss->mem_region + offset;
++	return (__force void *)wcnss->mem_region + offset;
+ }
+ 
+ static const struct rproc_ops wcnss_ops = {
+-- 
+2.53.0
+
 
