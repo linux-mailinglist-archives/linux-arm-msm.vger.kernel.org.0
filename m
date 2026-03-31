@@ -1,70 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-101166-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101167-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 0J2dNTE3zGn7RQYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101166-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 23:05:53 +0200
+	id +LTQGPA2zGn7RQYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101167-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 23:04:48 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 92AC83715B2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 23:05:53 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 09B7B371557
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 23:04:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id F1703306EE06
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 21:04:32 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 0056A303013D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Mar 2026 21:04:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF1F73F7868;
-	Tue, 31 Mar 2026 21:04:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8ECDA4219E9;
+	Tue, 31 Mar 2026 21:04:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r6NCaLa8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ngitMcCZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B7F7389DF3;
-	Tue, 31 Mar 2026 21:04:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B33F41B36E;
+	Tue, 31 Mar 2026 21:04:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774991069; cv=none; b=acdcd60Pil8X4ni2N+1MGn524ff+H7tnZ7DFbdxTyhKgWg1jg8LUmOkXYMY9vwmtgTmaRGsRNhFFbG7LF/M/X08cGJN7RdU5v9dyECkr9C/0BN/kfIP5GN9MJigLTZfUBItlXukO4v5xCKex0DPmeidUtOPfDsxTlAsOeWK3Sy0=
+	t=1774991071; cv=none; b=o1knk7hBLHvWkyak+Pzzw4qfvhmzXwz4cnxb4Pl3bly3fGgWK2hKkcgeHufj85+komLhFnIMjV45Hl7LwqtVXPNxyd3lU825EnBdobOFKUXW+flb43Prb29dIYYFOTgV8xeEEaRYv5Y9wib3IaPjU1cA6rTjtr1+9Y7aubOQmOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774991069; c=relaxed/simple;
-	bh=1AEdyvN2AGz9AWYdQGp5GG/ojE6U2E0V2GcjcPqLc/Q=;
+	s=arc-20240116; t=1774991071; c=relaxed/simple;
+	bh=em86yCCRyL2CVX8urGD8oO6MxC7Rij/SyBrH46i9bEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KqWDHcxmYBUATxJ5J3OwHaaYOmkRC/HX6wd5nLvJOEicbTZK7t4ZlwvNqyqGwX44CgwKT9AsxVZFpCMdUvQR+ZXwMhtqFqXpnqP/rgUZEihLpyCSANB6jfgq6ZJxUSdiXWl9sNuIHT9cebsacBJ+gxM73nWaKbPMBZ1NMLlKGTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r6NCaLa8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AB6FC19423;
-	Tue, 31 Mar 2026 21:04:28 +0000 (UTC)
+	 MIME-Version:Content-Type; b=dlQPvXTzS/1tvn5d+sSEkfOm/hy6mvAuF3CWSiahRiBrm/+voYLBbJORE2EVioTTo4tge3CV4tLsuyLyDLQknCb8Y3DbrlCB6vWRL8ULvNxh1dgyA2lA/27zM7BPXQW8jKztHrS1s4PZTsd7ACsVDKMNU9MRbtSc9xCJN4rGMYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ngitMcCZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C29EC2BCB3;
+	Tue, 31 Mar 2026 21:04:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774991069;
-	bh=1AEdyvN2AGz9AWYdQGp5GG/ojE6U2E0V2GcjcPqLc/Q=;
+	s=k20201202; t=1774991071;
+	bh=em86yCCRyL2CVX8urGD8oO6MxC7Rij/SyBrH46i9bEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r6NCaLa8/eE0url9u9kVtAdj9KlYPNrl+HdngAVYmK2mLg6rIfmET1RpQPXHQa9TG
-	 AMGtlMPJYuHvPNxy+5792LS9i0+ezQjAe5Bni68U3tY+AbedNkrO7M536P/ZRYSUVM
-	 lLbvVYJBkvOkS/rGalEVekxro72h77ulm2zh+zGqO7x5kOcOeUlk60xfl+KtcLSdKK
-	 rvJwUcC4OY+Qh6DiAz6dNVzjb9vyierp+ER5vHDffdEHcfeSinKVjNBH4a1bL94ByA
-	 0RA2aDtW2BJqRgBuf4XU+JhEwtX7s+wARA062gmVwbgop5YvaXodxY2u9CUIRLH7Rw
-	 vteMjp6XuLkyg==
+	b=ngitMcCZqK8YJPw3oMlXOXSGH6ZLumD9rVj88yWO8kXfSpvgXjwYM7h65jrgonhxv
+	 DWwbGSi4DG0i4a6P7F1VVkVd7IqhUlSHjKBd24empwrsrfJsbl2SmyL05ORkVwon7h
+	 KCx0CWbsz1eE3HUQs6ES/BjnO85ytl77jTPf2Be/Tmxae1S6yIPGV5fErj7gVvI7RF
+	 M3/HQHjQ64fBdE2RcpFv+Zn2x3BCDWkvZqloRJwoQxSB3uPFXYS8YtWCp3fezWoKDT
+	 psYytvBtV/ak+QsmPhGk8pucgZ6AgZT5iT/KzmLNsXjPrbfPFYbZO+jofRWkjOBsZM
+	 CQiKCZVuwRnEA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Georgi Djakov <djakov@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Brian Masney <masneyb@onstation.org>,
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jesszhan0024@gmail.com>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+	Bryan O'Donoghue <bod@kernel.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	devicetree@vger.kernel.org,
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Brian Masney <bmasney@redhat.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH v2 0/9] interconnect: qcom: let MSM8974 interconnect work again
-Date: Tue, 31 Mar 2026 16:04:23 -0500
-Message-ID: <177499105236.956796.3988363846970257522.b4-ty@kernel.org>
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	linux-media@vger.kernel.org,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Wangao Wang <wangao.wang@oss.qualcomm.com>
+Subject: Re: (subset) [PATCH v4 0/9] media: iris: migrate to using global UBWC config
+Date: Tue, 31 Mar 2026 16:04:24 -0500
+Message-ID: <177499105231.956796.588474423586543717.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260324-msm8974-icc-v2-0-527280043ad8@oss.qualcomm.com>
-References: <20260324-msm8974-icc-v2-0-527280043ad8@oss.qualcomm.com>
+In-Reply-To: <20260125-iris-ubwc-v4-0-1ff30644ac81@oss.qualcomm.com>
+References: <20260125-iris-ubwc-v4-0-1ff30644ac81@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,52 +82,57 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-101166-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
-	MIME_TRACE(0.00)[0:+];
+	FREEMAIL_TO(0.00)[kernel.org,oss.qualcomm.com,linux.dev,gmail.com,poorly.run,somainline.org,ffwll.ch];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[14];
+	TAGGED_FROM(0.00)[bounces-101167-lists,linux-arm-msm=lfdr.de];
+	RCPT_COUNT_TWELVE(0.00)[23];
+	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	NEURAL_HAM(-0.00)[-0.999];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 92AC83715B2
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 09B7B371557
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 
-On Tue, 24 Mar 2026 02:10:36 +0200, Dmitry Baryshkov wrote:
-> Commit d6edc31f3a68 ("clk: qcom: smd-rpm: Separate out interconnect bus
-> clocks") moved control over several RPM resources from the clk-smd-rpm
-> driver to the icc-rpm.c interconnect helpers. Most of the platforms were
-> fixed before that commit or shortly after. However the MSM8974 was left
-> as a foster child in broken state. Fix the loose ends and reenable
-> interconnects on that platform.
+On Sun, 25 Jan 2026 13:30:02 +0200, Dmitry Baryshkov wrote:
+> Having UBWC configuration in the driver is error prone. For example, the
+> driver specifies fixed values for HBB, while the actual value might
+> depend on the DDR type. Stop defining UBWC data in the iris driver and
+> use the global UBWC configuration registry.
+> 
+> Merge strategy: either merge SoC bits directly through the media tree
+> (with Bjorn's ack) or merge to the media tree through the immutable tag.
+> The drm patches will follow depending on the way the SoC patches are
+> merged.
 > 
 > [...]
 
 Applied, thanks!
 
-[9/9] ARM: dts: qcom: msm8974: Drop RPM bus clocks
-      commit: 6453ad0865b68ab0de5873c1a8bb4addbbde5c19
+[1/9] soc: qcom: ubwc: add helper to get min_acc length
+      commit: 68a66a44af6e196ca426d1250104d3018ed9e74b
+[2/9] soc: qcom: ubwc: add helpers to get programmable values
+      commit: b2571ef8d4ec9bb636889a9132090bcc3449792e
 
 Best regards,
 -- 
