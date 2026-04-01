@@ -1,678 +1,274 @@
-Return-Path: <linux-arm-msm+bounces-101325-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101326-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iF7XI+QEzWnhZQYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101325-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Apr 2026 13:43:32 +0200
+	id sOdQDfcCzWmSZQYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101326-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Apr 2026 13:35:19 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB9B2379A9D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Apr 2026 13:43:31 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id 74C3D3798AD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Apr 2026 13:35:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sin.lore.kernel.org (Postfix) with ESMTP id 5DF583157B2A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2026 11:27:38 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 30ED630447AB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2026 11:27:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C16CC4035CA;
-	Wed,  1 Apr 2026 11:26:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2A6F3FF89B;
+	Wed,  1 Apr 2026 11:26:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Wt3KrhSL"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="LroaltNi";
+	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="Ea7gLprN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94BD23FA5FF
-	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Apr 2026 11:26:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E55C3FEB1B
+	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Apr 2026 11:26:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775042785; cv=none; b=dexV1d8p9tW7UmcKjO9q+pbwsrerHyJBfZx/REPj89S2u90gvgEiqdns4g2spNV7xYN0i+4OGDa5PKJ65pPbsMIU7pA3sAgFaTinLlK/OWnepmWbb5DnILwFJGdftlhYz/yFGVw1usTbCAID9SCSaNvfX4rsCD0QyXTSTF0Z0kA=
+	t=1775042802; cv=none; b=BuVUHLjSIs5g05esnhpyBRuvRd4Glem0q7jSOIO8mFMLQCpiDruc/K1PD8vungHfA0futahFMl4lF2G8zpIWy04YoZCmobXq2uuNa+RaXLsxmtAiG8Fo8Oax+U7F79eHGit6WELv4SrjIl+zHcWlmDhx0MpP3YWhAadV08INqYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775042785; c=relaxed/simple;
-	bh=vhLuBrMnrF40MKNkHIQzolWiHY4dVmzK6aOSRid7MS0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CJBowwnL4NERiKuHTQCa3pvq/6x3UickN+jBTrPbh3YWsV1nKIT/GIWxv1xaRf3CCjCEGccyBxn0sjjEqbVEVn4EdeGEV1vY5igqLYM/QltebBECZ5Rtw7/c4KJJMryBuPU2nKr2GkcJQF/KppsRRj3wcm1AFoL+Fp+esk2N6i4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Wt3KrhSL; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-43cfde3c3f3so2662076f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Apr 2026 04:26:23 -0700 (PDT)
+	s=arc-20240116; t=1775042802; c=relaxed/simple;
+	bh=A/LjaThE4kliPnEOikB6ofrR5uG3pc3yOJx3QeAkHpU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kGvLaTruG7bh98si3z4Yq95nc7PjFUi9mYQGto0H+/DYItr648XaPM0j2G/283TnuUbzMrHMMPFI7n7X/orCMqeUwAODauCnEIG0FAZDCFMN1B4cvB9qpD56DeG04cFodrs8XH7n230qtvXDzbWB7gIQaEdi3dwx6GotU3vHI7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=LroaltNi; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=Ea7gLprN; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 6318Yipn1459604
+	for <linux-arm-msm@vger.kernel.org>; Wed, 1 Apr 2026 11:26:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=wRQDTkPOw0QqZKbK/WbPq1sg
+	HEfIuzydEfvDEGqlxVE=; b=LroaltNiOWla6/N5KJ08WTt4TT4t7x/J3cEFbtaY
+	c/Pcctin+dhI+1sEuTwIsp3qDPyJ8ZCbgwqv32G9T/6zucv2kZu80haF+Q1uhnfn
+	g5F91/4X32sJ6juxuexMgs4IfJI5dmWMenL1bk+M4IiC2xsjZuFeuy1TbC/3W70w
+	gzs4X3PHJEa4a6yVai0IYH9lKh3LTqLTiTIpmSMSbybTFMvCHoudUbHTavWCTXOu
+	kGd83ALylAfC9G0+BMEPFA2lTj6pAQ40NfcQT/KlZaPDy6b+5h0WUc7SaUF+kJNv
+	aFTDKEn6v//66po97iFkUxtvjlbacE9hauG2tikw2AwP0g==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d8uhg1ttt-1
+	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 01 Apr 2026 11:26:40 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-5090e08dcfcso76237871cf.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Apr 2026 04:26:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1775042782; x=1775647582; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6O4f7mQin+EJczN3uHPfMRBqqdkD+tZyPecD+mtO9Lc=;
-        b=Wt3KrhSLWvDJMkrPcHaU08iOArhlGWZxjqZOdy09iblUPLZntLgGGDq6ql9IP5M71o
-         s77OgMtCtrUW9PH0co736pI9L3b5JXp+Fn+NqRalN7jlwGC2xUIryYJ+vYfN1WYOEiIL
-         FV3h4CXyp7U/L99BzO8x3xiKkkE9+Sk7zZtazaC7BkxtKwJRKvpSsosyrqHXA+sYroXK
-         N87UFrC8+cWfPCETdtIeeb3S+bcWi13iYiFzBTmktSPHJRmaOnLG7RqXmNNFhNrXEEJ2
-         Dq3ZI3EmnlEhNhgp8G3TSw3jalEnZTOvfYSAM3RNVAYHV3E+H+N5klSM19V5GOj29nzj
-         EMXQ==
+        d=oss.qualcomm.com; s=google; t=1775042800; x=1775647600; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=wRQDTkPOw0QqZKbK/WbPq1sgHEfIuzydEfvDEGqlxVE=;
+        b=Ea7gLprN3Y+YFgD+kgjYNUC4vjdtwEmJxeVp2cfRaHZRHryBUm/qTN/rcWNxjXlJ2o
+         NSuwsFsaWmgxKs7MRT+uGW+H4vx99vByEFebnX0Nxgg9ZZufkm2Vd3qk1abhYoBlVtiE
+         fl+0o8hsmQBCy+S8y8b7Tr8DCSFyA8cyVx0ffCAqL4rIq2GexFZlEHNdlqdM8a9jwrk0
+         w0YpAkYu5jzVAn24BqCwFWjOo9KmY3y1SHIOWNrcp/BAQG1QOOnfVrESqDa0nOKxwBYQ
+         sc8ja4o87y/yM/j2b49LSd75ezjorjz/YPo1c37cMgUWkmmeGnPQfM+tjBTFQPQdOgUm
+         PN9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775042782; x=1775647582;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6O4f7mQin+EJczN3uHPfMRBqqdkD+tZyPecD+mtO9Lc=;
-        b=RChbsyBRpx+YIzq3mmr+vkkfLEhu4aQbXB6bh2iINOv7BNSaXJLwhb0pNclaws2ER8
-         fyVACLa9tSbMYg7Sgvw3LSSzyuWB9e1QR08MESPiqSg32QjWvWzLTvO+Y9MXGy13oMmJ
-         FEePreR/K76UmV+eFZPLDgMK6QWTJogRhMmtt6izRnkvC1qP6FOj2526FuM39ZegFItd
-         m/Lc41xAyY+ioxq6XrB0MkBuHE+uczgaKb4O3ayNrrCVh2oqnbvGqnjYYbgXCJBaRMgA
-         A43FJJcEIAQO/2GzxBPPRjMEYxTGkXGRkDYP1lokrY3Mn4+Bum59G+VWFlMnwW5GYF4Q
-         L2aw==
-X-Forwarded-Encrypted: i=1; AJvYcCWnAqubHYD1JNTFwVkkR1S+vABln9tAwGC97wku+3RRXWpnKnLPFZXFrYz6h8yuaea6/IKnJzi298wM6Oip@vger.kernel.org
-X-Gm-Message-State: AOJu0YxOwWEtpmKjJDxlARFi9yLt1H7xqxngwG/hO0lLsaOHPXBVheyk
-	OBUQ6REXSyhkdmg4hCWHLywjfvLKY6Dj0LjCxbcQFH76ogHKnP3lVEZVFAJC/lqBbuzsFdSzbTE
-	62YRY
-X-Gm-Gg: ATEYQzztA9qEJ44E9JnK9XKHst+kbbuAPJYcS5onuzN/W6x9tZzUFlO704eNEGXFzTG
-	tJ8Mz5HULfzQF1WRpjbQ3e2bKsw+HLFmD0kncY+PZckXJBdVO2by9qVMOwOJPplfCpqG2/TW0PP
-	ABsfaUWz9YCsZPuRCTJOeOLL+o9kwma85g3vGwMTng7CixquBOBWGq6JKomdj9c3VtC52SgxMYb
-	bLqB2kg5ajxkIdGFpXF6+U3FC7IOoQO3DhfQTG0Bx/6GXnR79YUXhf3VdNCMs9t47dekvsJM0pY
-	ig4nQpmW5hcXUwOK3sLT6ktzRqDbpp2sEPDDKWONKrHLMYh62KI0po3UwVtOjj7gLbn+F4SYcZq
-	d04ZeCAcwO5h0ubWQz04tInJKUIqDSnWB/hBZG10ttlfVxXk7ynUNKU2mdcKHOgKh3bUdQ9Cr7Y
-	zfYM2b1Pg7bcK2Yx079vVYQhQxxtzeBlIo4lJIjrT8C8MiyA==
-X-Received: by 2002:a05:6000:2007:b0:43c:ff58:35d3 with SMTP id ffacd0b85a97d-43d150565f4mr5973314f8f.17.1775042781759;
-        Wed, 01 Apr 2026 04:26:21 -0700 (PDT)
-Received: from [192.168.0.167] ([109.76.235.19])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-43cf330872asm32772618f8f.17.2026.04.01.04.26.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 Apr 2026 04:26:21 -0700 (PDT)
-Message-ID: <45b99cc4-5382-4af4-9098-3fc36999eda1@linaro.org>
-Date: Wed, 1 Apr 2026 12:26:20 +0100
+        d=1e100.net; s=20251104; t=1775042800; x=1775647600;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=wRQDTkPOw0QqZKbK/WbPq1sgHEfIuzydEfvDEGqlxVE=;
+        b=gvQwS2/Weuz5ZduoSv87i0JnWmhyMAPOml4zwPt2d0ESlGepPIaESRFw1zrW9xuKLi
+         MZC5+eoPoCWrbV3xZOqbd2z3jxgDC2sT8hu6MJhjciatBzPCGz16JBPQwTqLqnIO765u
+         bgyWkj/PJMT1FdPNo0o64yXR+QJEM0JTGtaB61FMCPdHJ/O0E29yFDRO9t+FlbQEsPPI
+         t24m4qmuaQPS4U+jCVhHkQR9hOsqSbxOqvvpKzNNas7BAcdQHrHxP4i+e4+xzTElGvlr
+         CD9esp3rwdMe40AZ5Tqo8Bk10VeN7dIi8kTz2ih2eGngyyTgc2zlhcZNtZN05i9C1UKX
+         qKUg==
+X-Forwarded-Encrypted: i=1; AJvYcCXBflewgeCMY9GDTfbcb911qD8qnTvaKzyzVY0dAFm26jOgj0RsxA/yVdXHKoJ1/bR1RXFzi2RZlI0Hotac@vger.kernel.org
+X-Gm-Message-State: AOJu0YxGxOgoztW6dGO7s2bsY/1HSS9AhV2tH7pUgoevajnOPicBYKag
+	w1yBMIw7b2EuA0N05ka8c9+ybFnvV5jHxxdjqPusvDvO8lrKwVLQyMKxT/SKjaBw6XWdniCKy83
+	RJtSSqgdMARtkp1mA7nPwrqDJ6QliDsH8kwAEAe2j4dS2eDgrma3tfobMolpUqYav66Ow
+X-Gm-Gg: ATEYQzw2gasJ6cBzu395Fy3tSVsxtR6XXWZnee5cMFR6dAWQMwaZftVhd9Tbxokj/4C
+	FRh8MIYyGCMw2Om/bX3xRBvHP+HfktFCnURymC7o/ekm+nr1uhiRIABFzFrFbLe9By7z9THdLI0
+	hzk87dCCWY9KgxO2oPPlgx99wf8vtgeZA9OJp/S5lSr8t1fDb9zL33mjsBFYroJqNUGPFoS6Snq
+	j3Ud8N526/Nb5SmlOZRjojwDELTt+Bpadi9WCYNmXSCxSS9YIT8BcbA9S1VTqPmVQSCysvnPQ5+
+	z5dWAAyQp7pEDwGePENwBV4uwTzn3fLheF6EETHwt6zvnYdFsZLSnBbK4jMXUTe8LuCBFHdxKQ1
+	M8NdLL07tXa6Q3gl5GFq5k6wbWAyrmkQfBsblqD/Lnv4mGmeL78V8MHBD710U18Cuw5tHRY6Onz
+	ywWrML8zNXqMKzsXeKV6DxQ0l/KyjlSQmkWzw=
+X-Received: by 2002:a05:622a:4c12:b0:509:5dd4:7192 with SMTP id d75a77b69052e-50d3bdef817mr41599901cf.54.1775042799814;
+        Wed, 01 Apr 2026 04:26:39 -0700 (PDT)
+X-Received: by 2002:a05:622a:4c12:b0:509:5dd4:7192 with SMTP id d75a77b69052e-50d3bdef817mr41599411cf.54.1775042799138;
+        Wed, 01 Apr 2026 04:26:39 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a073-af00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a073:af00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38c836d42e2sm28282001fa.5.2026.04.01.04.26.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Apr 2026 04:26:37 -0700 (PDT)
+Date: Wed, 1 Apr 2026 14:26:36 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Subject: Re: [PATCH v3 15/38] drm/msm/dp: use stream_id to change offsets in
+ dp_catalog
+Message-ID: <wbnb77ookesmar5fitx6hnfej4pih4gpwfoigfqgnjsnnpzule@ybcvwqbp55b3>
+References: <20250825-msm-dp-mst-v3-0-01faacfcdedd@oss.qualcomm.com>
+ <20250825-msm-dp-mst-v3-15-01faacfcdedd@oss.qualcomm.com>
+ <vrbxqjfvg6urywwmehoykz463vphfg6c2qiryedulvlrcbvals@55lm4fmgf3in>
+ <0037ba69-c104-488c-a388-8d31dcbbc78f@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 3/3] media: qcom: camss: tpg: Add TPG support for
- multiple targets
-To: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>, Robert Foss
- <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20260317-camss_tpg-v10-0-b4cfa85c2e1b@oss.qualcomm.com>
- <20260317-camss_tpg-v10-3-b4cfa85c2e1b@oss.qualcomm.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260317-camss_tpg-v10-3-b4cfa85c2e1b@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-0.66 / 15.00];
-	SUSPICIOUS_RECIPS(1.50)[];
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0037ba69-c104-488c-a388-8d31dcbbc78f@oss.qualcomm.com>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDAxMDEwNSBTYWx0ZWRfXzvhEk8hw5Z9Y
+ pHyEixnVbwq2Lt3arD8nleFhXw/tvNCCKxmdU9zl/Y3JSZCOt9A9rwkkIaZCKvUn510d0vIqNyZ
+ QJillYNydZzrNqq06bY4PYJuG89EnwDJ+ziPvJHssHbjxbl4Z9P5byv3spBBzmH9AYsc1m+qS2F
+ Ga6dscCMk8Gc1fmWmgUjm9azgI4bZnpsKP/ZAIBoWzwbUFonC3CKp+GdjPexvJzyg+SaQ7350DB
+ uNo5KwAtgWEslJPte29Pr74fz0qi2P+X+d5uhheR2Gcvkh7+iHybURQ4qby865fV4yeJrYo+vpc
+ mR9rR0QPIBsC1HYd9Lboc29zyjaQXqDqtzH0YQgnejdaebLWCjyV6zOdYEXN7rfYNrcrw+6W+ai
+ lOi7ove5AwgesH8pnIrADRop4G1F+qmBh2I+xf+3ZKpSMZFJouZ3eLYOeBKj4oz27SOD03mCWSK
+ OZlJYZ6nbOisO5Uhhig==
+X-Authority-Analysis: v=2.4 cv=YcawJgRf c=1 sm=1 tr=0 ts=69cd00f0 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22 a=COk6AnOGAAAA:8
+ a=EUspDBNiAAAA:8 a=QyJMuQZcD86jedyQ44sA:9 a=CjuIK1q_8ugA:10
+ a=kacYvNCVWA4VmyqE58fU:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: uMmBIjYN0D8xiwOI8yLaX2q8N4ovuFHr
+X-Proofpoint-ORIG-GUID: uMmBIjYN0D8xiwOI8yLaX2q8N4ovuFHr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-01_03,2026-04-01_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 priorityscore=1501 adultscore=0 clxscore=1015 suspectscore=0
+ malwarescore=0 impostorscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2604010105
+X-Spamd-Result: default: False [-1.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[linaro.org,none];
-	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
-	R_DKIM_ALLOW(-0.20)[linaro.org:s=google];
+	MID_RHS_NOT_FQDN(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[qualcomm.com,reject];
+	R_DKIM_ALLOW(-0.20)[qualcomm.com:s=qcppdkim1,oss.qualcomm.com:s=google];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,gmail.com,linaro.org];
-	TAGGED_FROM(0.00)[bounces-101325-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[linaro.org:+];
+	TAGGED_FROM(0.00)[bounces-101326-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,kernel.org,linux.dev,poorly.run,somainline.org,gmail.com,ffwll.ch,vger.kernel.org,lists.freedesktop.org,quicinc.com];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[quicinc.com:email,qualcomm.com:dkim,qualcomm.com:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,oss.qualcomm.com:dkim];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[14];
+	DKIM_TRACE(0.00)[qualcomm.com:+,oss.qualcomm.com:+];
+	MISSING_XM_UA(0.00)[];
 	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[bryan.odonoghue@linaro.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
-	NEURAL_HAM(-0.00)[-0.996];
-	RCPT_COUNT_SEVEN(0.00)[8];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[dmitry.baryshkov@oss.qualcomm.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	NEURAL_HAM(-0.00)[-1.000];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,linaro.org:dkim,linaro.org:email,linaro.org:mid]
-X-Rspamd-Queue-Id: AB9B2379A9D
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	RCVD_COUNT_SEVEN(0.00)[7]
+X-Rspamd-Queue-Id: 74C3D3798AD
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 17/03/2026 10:05, Wenmeng Liu wrote:
-> Add support for TPG found on LeMans, Monaco, Hamoa.
+On Wed, Apr 01, 2026 at 02:33:49PM +0800, Yongxing Mou wrote:
 > 
-> Signed-off-by: Wenmeng Liu <wenmeng.liu@oss.qualcomm.com>
-> ---
->   drivers/media/platform/qcom/camss/Makefile         |   1 +
->   drivers/media/platform/qcom/camss/camss-csid-680.c |  14 +-
->   .../media/platform/qcom/camss/camss-csid-gen3.c    |  14 +-
->   drivers/media/platform/qcom/camss/camss-tpg-gen1.c | 231 +++++++++++++++++++++
->   drivers/media/platform/qcom/camss/camss.c          | 117 ++++++++++-
->   5 files changed, 371 insertions(+), 6 deletions(-)
 > 
-> diff --git a/drivers/media/platform/qcom/camss/Makefile b/drivers/media/platform/qcom/camss/Makefile
-> index d747aa7db3c12ad27d986e0b2b85a44870f89ad3..27898b3cc7d3c8f275567f81f0952e2a0e18f189 100644
-> --- a/drivers/media/platform/qcom/camss/Makefile
-> +++ b/drivers/media/platform/qcom/camss/Makefile
-> @@ -16,6 +16,7 @@ qcom-camss-objs += \
->   		camss-format.o \
->   		camss-ispif.o \
->   		camss-tpg.o \
-> +		camss-tpg-gen1.o \
->   		camss-vfe.o \
->   		camss-vfe-4-1.o \
->   		camss-vfe-4-7.o \
-> diff --git a/drivers/media/platform/qcom/camss/camss-csid-680.c b/drivers/media/platform/qcom/camss/camss-csid-680.c
-> index 3ad3a174bcfb8c0d319930d0010df92308cb5ae4..2e4547455d229227ba7cc339a13271fb28e103a5 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csid-680.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csid-680.c
-> @@ -103,6 +103,8 @@
->   #define		CSI2_RX_CFG0_PHY_NUM_SEL			20
->   #define		CSI2_RX_CFG0_PHY_SEL_BASE_IDX			1
->   #define		CSI2_RX_CFG0_PHY_TYPE_SEL			24
-> +#define		CSI2_RX_CFG0_TPG_MUX_EN				BIT(27)
-> +#define		CSI2_RX_CFG0_TPG_MUX_SEL			GENMASK(29, 28)
->   
->   #define CSID_CSI2_RX_CFG1					0x204
->   #define		CSI2_RX_CFG1_PACKET_ECC_CORRECTION_EN		BIT(0)
-> @@ -185,10 +187,20 @@ static void __csid_configure_rx(struct csid_device *csid,
->   				struct csid_phy_config *phy, int vc)
->   {
->   	u32 val;
-> +	struct camss *camss;
->   
-> +	camss = csid->camss;
->   	val = (phy->lane_cnt - 1) << CSI2_RX_CFG0_NUM_ACTIVE_LANES;
->   	val |= phy->lane_assign << CSI2_RX_CFG0_DL0_INPUT_SEL;
-> -	val |= (phy->csiphy_id + CSI2_RX_CFG0_PHY_SEL_BASE_IDX) << CSI2_RX_CFG0_PHY_NUM_SEL;
-> +
-> +	if (camss->tpg && csid->tpg_linked &&
-> +	    camss->tpg[phy->csiphy_id].testgen.mode != TPG_PAYLOAD_MODE_DISABLED) {
-> +		val |= FIELD_PREP(CSI2_RX_CFG0_TPG_MUX_SEL, phy->csiphy_id + 1);
-> +		val |= CSI2_RX_CFG0_TPG_MUX_EN;
-> +	} else {
-> +		val |= (phy->csiphy_id + CSI2_RX_CFG0_PHY_SEL_BASE_IDX)
-> +			<< CSI2_RX_CFG0_PHY_NUM_SEL;
-> +	}
->   
->   	writel(val, csid->base + CSID_CSI2_RX_CFG0);
->   
-> diff --git a/drivers/media/platform/qcom/camss/camss-csid-gen3.c b/drivers/media/platform/qcom/camss/camss-csid-gen3.c
-> index 664245cf6eb0cac662b02f8b920cd1c72db0aeb2..40d79d94068d1ee1c2dfe1c6a01f3c692144e473 100644
-> --- a/drivers/media/platform/qcom/camss/camss-csid-gen3.c
-> +++ b/drivers/media/platform/qcom/camss/camss-csid-gen3.c
-> @@ -66,6 +66,8 @@
->   #define		CSI2_RX_CFG0_VC_MODE		3
->   #define		CSI2_RX_CFG0_DL0_INPUT_SEL	4
->   #define		CSI2_RX_CFG0_PHY_NUM_SEL	20
-> +#define		CSI2_RX_CFG0_TPG_MUX_EN		BIT(27)
-> +#define		CSI2_RX_CFG0_TPG_MUX_SEL	GENMASK(29, 28)
->   
->   #define CSID_CSI2_RX_CFG1		0x204
->   #define		CSI2_RX_CFG1_ECC_CORRECTION_EN	BIT(0)
-> @@ -109,10 +111,20 @@ static void __csid_configure_rx(struct csid_device *csid,
->   				struct csid_phy_config *phy, int vc)
->   {
->   	int val;
-> +	struct camss *camss;
->   
-> +	camss = csid->camss;
->   	val = (phy->lane_cnt - 1) << CSI2_RX_CFG0_NUM_ACTIVE_LANES;
->   	val |= phy->lane_assign << CSI2_RX_CFG0_DL0_INPUT_SEL;
-> -	val |= (phy->csiphy_id + CSI2_RX_CFG0_PHY_SEL_BASE_IDX) << CSI2_RX_CFG0_PHY_NUM_SEL;
-> +
-> +	if (camss->tpg && csid->tpg_linked &&
-> +	    camss->tpg[phy->csiphy_id].testgen.mode != TPG_PAYLOAD_MODE_DISABLED) {
-> +		val |= FIELD_PREP(CSI2_RX_CFG0_TPG_MUX_SEL, phy->csiphy_id + 1);
-> +		val |= CSI2_RX_CFG0_TPG_MUX_EN;
-> +	} else {
-> +		val |= (phy->csiphy_id + CSI2_RX_CFG0_PHY_SEL_BASE_IDX)
-> +			<< CSI2_RX_CFG0_PHY_NUM_SEL;
-> +	}
->   
->   	writel(val, csid->base + CSID_CSI2_RX_CFG0);
->   
-> diff --git a/drivers/media/platform/qcom/camss/camss-tpg-gen1.c b/drivers/media/platform/qcom/camss/camss-tpg-gen1.c
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..d29de5f93c18ee3c1778dc0626e8c198f354eb1f
-> --- /dev/null
-> +++ b/drivers/media/platform/qcom/camss/camss-tpg-gen1.c
-> @@ -0,0 +1,231 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + *
-> + * Qualcomm MSM Camera Subsystem - TPG (Test Pattern Generator) Module
-> + *
-> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> + */
-> +#include <linux/io.h>
-> +#include <linux/kernel.h>
-> +
-> +#include "camss-tpg.h"
-> +#include "camss.h"
-> +
-> +/* TPG global registers */
-> +#define TPG_HW_VERSION		0x0
-> +# define HW_VERSION_STEPPING		GENMASK(15, 0)
-> +# define HW_VERSION_REVISION		GENMASK(27, 16)
-> +# define HW_VERSION_GENERATION		GENMASK(31, 28)
-> +
-> +#define TPG_HW_VER(gen, rev, step) \
-> +	(((u32)(gen) << 28) | ((u32)(rev) << 16) | (u32)(step))
-> +
-> +#define TPG_HW_VER_2_0_0                TPG_HW_VER(2, 0, 0)
-> +#define TPG_HW_VER_2_1_0                TPG_HW_VER(2, 1, 0)
-> +
-> +#define TPG_HW_STATUS		0x4
-> +
-> +#define TPG_CTRL		0x64
-> +# define TPG_CTRL_TEST_EN		BIT(0)
-> +# define TPG_CTRL_PHY_SEL		BIT(3)
-> +# define TPG_CTRL_NUM_ACTIVE_LANES	GENMASK(5, 4)
-> +# define TPG_CTRL_VC_DT_PATTERN_ID	GENMASK(8, 6)
-> +# define TPG_CTRL_OVERLAP_SHDR_EN	BIT(10)
-> +# define TPG_CTRL_NUM_ACTIVE_VC		GENMASK(31, 30)
-> +
-> +#define TPG_CLEAR		0x1F4
-> +
-> +/* TPG VC-based registers */
-> +#define TPG_VC_n_GAIN_CFG(n)		(0x60 + (n) * 0x60)
-> +
-> +#define TPG_VC_n_CFG0(n)	(0x68 + (n) * 0x60)
-> +# define TPG_VC_n_CFG0_VC_NUM			GENMASK(4, 0)
-> +# define TPG_VC_n_CFG0_NUM_ACTIVE_DT		GENMASK(9, 8)
-> +# define TPG_VC_n_CFG0_NUM_BATCH		GENMASK(15, 12)
-> +# define TPG_VC_n_CFG0_NUM_FRAMES		GENMASK(31, 16)
-> +
-> +#define TPG_VC_n_LSFR_SEED(n)	(0x6C + (n) * 0x60)
-> +#define TPG_VC_n_HBI_CFG(n)	(0x70 + (n) * 0x60)
-> +#define TPG_VC_n_VBI_CFG(n)	(0x74 + (n) * 0x60)
-> +
-> +#define TPG_VC_n_COLOR_BARS_CFG(n)		(0x78 + (n) * 0x60)
-> +# define TPG_VC_n_COLOR_BARS_CFG_PIX_PATTERN		GENMASK(2, 0)
-> +# define TPG_VC_n_COLOR_BARS_CFG_QCFA_EN		BIT(3)
-> +# define TPG_VC_n_COLOR_BARS_CFG_SPLIT_EN		BIT(4)
-> +# define TPG_VC_n_COLOR_BARS_CFG_NOISE_EN		BIT(5)
-> +# define TPG_VC_n_COLOR_BARS_CFG_ROTATE_PERIOD		GENMASK(13, 8)
-> +# define TPG_VC_n_COLOR_BARS_CFG_XCFA_EN		BIT(16)
-> +# define TPG_VC_n_COLOR_BARS_CFG_SIZE_X			GENMASK(26, 24)
-> +# define TPG_VC_n_COLOR_BARS_CFG_SIZE_Y			GENMASK(30, 28)
-> +
-> +/* TPG DT-based registers */
-> +#define TPG_VC_m_DT_n_CFG_0(m, n)		(0x7C + (m) * 0x60 + (n) * 0xC)
-> +# define TPG_VC_m_DT_n_CFG_0_FRAME_HEIGHT	GENMASK(15, 0)
-> +# define TPG_VC_m_DT_n_CFG_0_FRAME_WIDTH	GENMASK(31, 16)
-> +
-> +#define TPG_VC_m_DT_n_CFG_1(m, n)		(0x80 + (m) * 0x60 + (n) * 0xC)
-> +# define TPG_VC_m_DT_n_CFG_1_DATA_TYPE		GENMASK(5, 0)
-> +# define TPG_VC_m_DT_n_CFG_1_ECC_XOR_MASK	GENMASK(13, 8)
-> +# define TPG_VC_m_DT_n_CFG_1_CRC_XOR_MASK	GENMASK(31, 16)
-> +
-> +#define TPG_VC_m_DT_n_CFG_2(m, n)		(0x84 + (m) * 0x60 + (n) * 0xC)
-> +# define TPG_VC_m_DT_n_CFG_2_PAYLOAD_MODE		GENMASK(3, 0)
-> +/* v2.0.0: USER[19:4], ENC[23:20] */
-> +# define TPG_V2_0_0_VC_m_DT_n_CFG_2_USER_SPECIFIED_PAYLOAD		GENMASK(19, 4)
-> +# define TPG_V2_0_0_VC_m_DT_n_CFG_2_ENCODE_FORMAT			GENMASK(23, 20)
-> +/* v2.1.0: USER[27:4], ENC[31:28] */
-> +# define TPG_V2_1_0_VC_m_DT_n_CFG_2_USER_SPECIFIED_PAYLOAD	GENMASK(27, 4)
-> +# define TPG_V2_1_0_VC_m_DT_n_CFG_2_ENCODE_FORMAT			GENMASK(31, 28)
-> +
-> +#define TPG_HBI_PCT_DEFAULT			545	/* 545% */
-> +#define TPG_VBI_PCT_DEFAULT			10	/* 10% */
-> +#define PERCENT_BASE				100
-> +
-> +/* Default user-specified payload for TPG test generator.
-> + * Keep consistent with CSID TPG default: 0xBE.
-> + */
-> +#define TPG_USER_SPECIFIED_PAYLOAD_DEFAULT	0xBE
-> +#define TPG_LFSR_SEED_DEFAULT			0x12345678
-> +#define TPG_COLOR_BARS_CFG_STANDARD \
-> +	FIELD_PREP(TPG_VC_n_COLOR_BARS_CFG_ROTATE_PERIOD, 0xA)
-> +
-> +static const char * const testgen_payload_modes[] = {
-> +	[TPG_PAYLOAD_MODE_DISABLED]		= "Disabled",
-> +	[TPG_PAYLOAD_MODE_INCREMENTING]		= "Incrementing",
-> +	[TPG_PAYLOAD_MODE_ALTERNATING_55_AA]	= "Alternating 0x55/0xAA",
-> +	[TPG_PAYLOAD_MODE_RANDOM]		= "Pseudo-random Data",
-> +	[TPG_PAYLOAD_MODE_USER_SPECIFIED]	= "User Specified",
-> +	[TPG_PAYLOAD_MODE_COLOR_BARS]		= "Color bars",
-> +};
-> +
-> +static int tpg_stream_on(struct tpg_device *tpg)
-> +{
-> +	struct tpg_testgen_config *tg = &tpg->testgen;
-> +	struct v4l2_mbus_framefmt *input_format;
-> +	const struct tpg_format_info *format;
-> +	u8 payload_mode = (tg->mode > TPG_PAYLOAD_MODE_DISABLED) ?
-> +			   tg->mode - 1 : 0;
-> +	u8 lane_cnt = tpg->res->lane_cnt;
-> +	u8 vc, dt, last_vc = 0;
-> +	u32 val;
-> +
-> +	for (vc = 0; vc <= MSM_TPG_ACTIVE_VC; vc++) {
-> +		last_vc = vc;
-> +
-> +		input_format = &tpg->fmt;
-> +		format = tpg_get_fmt_entry(tpg->res->formats->formats,
-> +					   tpg->res->formats->nformats,
-> +					   input_format->code);
-> +		if (IS_ERR(format))
-> +			return -EINVAL;
-> +
-> +		/* VC configuration */
-> +		val = FIELD_PREP(TPG_VC_n_CFG0_NUM_ACTIVE_DT, MSM_TPG_ACTIVE_DT) |
-> +		      FIELD_PREP(TPG_VC_n_CFG0_NUM_FRAMES, 0);
-> +		writel(val, tpg->base + TPG_VC_n_CFG0(vc));
-> +
-> +		writel(TPG_LFSR_SEED_DEFAULT, tpg->base + TPG_VC_n_LSFR_SEED(vc));
-> +
-> +		val = DIV_ROUND_UP(input_format->width * format->bpp * TPG_HBI_PCT_DEFAULT,
-> +				   BITS_PER_BYTE * lane_cnt * PERCENT_BASE);
-> +		writel(val, tpg->base + TPG_VC_n_HBI_CFG(vc));
-> +
-> +		val = input_format->height * TPG_VBI_PCT_DEFAULT / PERCENT_BASE;
-> +		writel(val, tpg->base + TPG_VC_n_VBI_CFG(vc));
-> +
-> +		writel(TPG_COLOR_BARS_CFG_STANDARD, tpg->base + TPG_VC_n_COLOR_BARS_CFG(vc));
-> +
-> +		/* DT configuration */
-> +		for (dt = 0; dt <= MSM_TPG_ACTIVE_DT; dt++) {
-> +			val = FIELD_PREP(TPG_VC_m_DT_n_CFG_0_FRAME_HEIGHT,
-> +					 input_format->height & 0xffff) |
-> +			      FIELD_PREP(TPG_VC_m_DT_n_CFG_0_FRAME_WIDTH,
-> +					 input_format->width & 0xffff);
-> +			writel(val, tpg->base + TPG_VC_m_DT_n_CFG_0(vc, dt));
-> +
-> +			val = FIELD_PREP(TPG_VC_m_DT_n_CFG_1_DATA_TYPE, format->data_type);
-> +			writel(val, tpg->base + TPG_VC_m_DT_n_CFG_1(vc, dt));
-> +
-> +			if (tpg->hw_version == TPG_HW_VER_2_0_0) {
-> +				val = FIELD_PREP(TPG_VC_m_DT_n_CFG_2_PAYLOAD_MODE, payload_mode) |
-> +				      FIELD_PREP(TPG_V2_0_0_VC_m_DT_n_CFG_2_USER_SPECIFIED_PAYLOAD,
-> +						 TPG_USER_SPECIFIED_PAYLOAD_DEFAULT) |
-> +				      FIELD_PREP(TPG_V2_0_0_VC_m_DT_n_CFG_2_ENCODE_FORMAT,
-> +						 format->encode_format);
-> +			} else if (tpg->hw_version >= TPG_HW_VER_2_1_0) {
-> +				val = FIELD_PREP(TPG_VC_m_DT_n_CFG_2_PAYLOAD_MODE, payload_mode) |
-> +				      FIELD_PREP(TPG_V2_1_0_VC_m_DT_n_CFG_2_USER_SPECIFIED_PAYLOAD,
-> +						 TPG_USER_SPECIFIED_PAYLOAD_DEFAULT) |
-> +				      FIELD_PREP(TPG_V2_1_0_VC_m_DT_n_CFG_2_ENCODE_FORMAT,
-> +						 format->encode_format);
-> +			}
-> +			writel(val, tpg->base + TPG_VC_m_DT_n_CFG_2(vc, dt));
-> +		}
-> +	}
-> +
-> +	/* Global TPG control */
-> +	val = FIELD_PREP(TPG_CTRL_TEST_EN, 1) |
-> +	      FIELD_PREP(TPG_CTRL_NUM_ACTIVE_LANES, lane_cnt - 1) |
-> +	      FIELD_PREP(TPG_CTRL_NUM_ACTIVE_VC, last_vc);
-> +	writel(val, tpg->base + TPG_CTRL);
-> +
-> +	return 0;
-> +}
-> +
-> +static int tpg_reset(struct tpg_device *tpg)
-> +{
-> +	writel(0, tpg->base + TPG_CTRL);
-> +	writel(1, tpg->base + TPG_CLEAR);
-> +
-> +	return 0;
-> +}
-> +
-> +static void tpg_stream_off(struct tpg_device *tpg)
-> +{
-> +	tpg_reset(tpg);
-> +}
-> +
-> +static int tpg_configure_stream(struct tpg_device *tpg, u8 enable)
-> +{
-> +	if (enable)
-> +		return tpg_stream_on(tpg);
-> +
-> +	tpg_stream_off(tpg);
-> +
-> +	return 0;
-> +}
-> +
-> +static int tpg_configure_testgen_pattern(struct tpg_device *tpg, s32 val)
-> +{
-> +	if (val >= 0 && val <= TPG_PAYLOAD_MODE_COLOR_BARS)
-> +		tpg->testgen.mode = val;
-> +
-> +	return 0;
-> +}
-> +
-> +static u32 tpg_hw_version(struct tpg_device *tpg)
-> +{
-> +	u32 hw_version = readl(tpg->base + TPG_HW_VERSION);
-> +
-> +	tpg->hw_version = hw_version;
-> +	dev_dbg(tpg->camss->dev, "tpg HW Version = %u.%u.%u\n",
-> +		(u32)FIELD_GET(HW_VERSION_GENERATION, hw_version),
-> +		(u32)FIELD_GET(HW_VERSION_REVISION, hw_version),
-> +		(u32)FIELD_GET(HW_VERSION_STEPPING, hw_version));
-> +
-> +	return hw_version;
-> +}
-> +
-> +static void tpg_subdev_init(struct tpg_device *tpg)
-> +{
-> +	tpg->testgen.modes = testgen_payload_modes;
-> +	tpg->testgen.nmodes = TPG_PAYLOAD_MODE_NUM_SUPPORTED_GEN1;
-> +}
-> +
-> +const struct tpg_hw_ops tpg_ops_gen1 = {
-> +	.configure_stream = tpg_configure_stream,
-> +	.configure_testgen_pattern = tpg_configure_testgen_pattern,
-> +	.hw_version = tpg_hw_version,
-> +	.reset = tpg_reset,
-> +	.subdev_init = tpg_subdev_init,
-> +};
-> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-> index 1de35bcd8e5fc6eaa9dab537960520b2c07dd830..bb4efeae55ceea2a6e0109b64decd3be11dd26d5 100644
-> --- a/drivers/media/platform/qcom/camss/camss.c
-> +++ b/drivers/media/platform/qcom/camss/camss.c
-> @@ -3559,6 +3559,54 @@ static const struct camss_subdev_resources csiphy_res_8775p[] = {
->   	},
->   };
->   
-> +static const struct camss_subdev_resources tpg_res_8775p[] = {
-> +	/* TPG0 */
-> +	{
-> +		.regulators = {},
-> +		.clock = { "cpas_ahb", "csiphy_rx" },
-> +		.clock_rate = {
-> +			{ 0 },
-> +			{ 400000000 },
-> +		},
-> +		.reg = { "tpg0" },
-> +		.tpg = {
-> +			.lane_cnt = 4,
-> +			.formats = &tpg_formats_gen1,
-> +			.hw_ops = &tpg_ops_gen1
-> +		}
-> +	},
-> +	/* TPG1 */
-> +	{
-> +		.regulators = {},
-> +		.clock = { "cpas_ahb", "csiphy_rx" },
-> +		.clock_rate = {
-> +			{ 0 },
-> +			{ 400000000 },
-> +		},
-> +		.reg = { "tpg1" },
-> +		.tpg = {
-> +			.lane_cnt = 4,
-> +			.formats = &tpg_formats_gen1,
-> +			.hw_ops = &tpg_ops_gen1
-> +		}
-> +	},
-> +	/* TPG2 */
-> +	{
-> +		.regulators = {},
-> +		.clock = { "cpas_ahb", "csiphy_rx" },
-> +		.clock_rate = {
-> +			{ 0 },
-> +			{ 400000000 },
-> +		},
-> +		.reg = { "tpg2" },
-> +		.tpg = {
-> +			.lane_cnt = 4,
-> +			.formats = &tpg_formats_gen1,
-> +			.hw_ops = &tpg_ops_gen1
-> +		}
-> +	},
-> +};
-> +
->   static const struct camss_subdev_resources csid_res_8775p[] = {
->   	/* CSID0 */
->   	{
-> @@ -3963,6 +4011,54 @@ static const struct camss_subdev_resources csiphy_res_x1e80100[] = {
->   	},
->   };
->   
-> +static const struct camss_subdev_resources tpg_res_x1e80100[] = {
-> +	/* TPG0 */
-> +	{
-> +		.regulators = {},
-> +		.clock = { "cpas_ahb", "csid_csiphy_rx" },
-> +		.clock_rate = {
-> +			{ 0 },
-> +			{ 400000000 },
-> +		},
-> +		.reg = { "csitpg0" },
-> +		.tpg = {
-> +			.lane_cnt = 4,
-> +			.formats = &tpg_formats_gen1,
-> +			.hw_ops = &tpg_ops_gen1
-> +		}
-> +	},
-> +	/* TPG1 */
-> +	{
-> +		.regulators = {},
-> +		.clock = { "cpas_ahb", "csid_csiphy_rx" },
-> +		.clock_rate = {
-> +			{ 0 },
-> +			{ 400000000 },
-> +		},
-> +		.reg = { "csitpg1" },
-> +		.tpg = {
-> +			.lane_cnt = 4,
-> +			.formats = &tpg_formats_gen1,
-> +			.hw_ops = &tpg_ops_gen1
-> +		}
-> +	},
-> +	/* TPG2 */
-> +	{
-> +		.regulators = {},
-> +		.clock = { "cpas_ahb", "csid_csiphy_rx" },
-> +		.clock_rate = {
-> +			{ 0 },
-> +			{ 400000000 },
-> +		},
-> +		.reg = { "csitpg2" },
-> +		.tpg = {
-> +			.lane_cnt = 4,
-> +			.formats = &tpg_formats_gen1,
-> +			.hw_ops = &tpg_ops_gen1
-> +		}
-> +	},
-> +};
-> +
->   static const struct camss_subdev_resources csid_res_x1e80100[] = {
->   	/* CSID0 */
->   	{
-> @@ -4076,7 +4172,7 @@ static const struct camss_subdev_resources vfe_res_x1e80100[] = {
->   		.clock = {"camnoc_rt_axi", "camnoc_nrt_axi", "cpas_ahb",
->   			  "cpas_fast_ahb", "cpas_vfe0", "vfe0_fast_ahb",
->   			  "vfe0" },
-> -		.clock_rate = { { 0 },
-> +		.clock_rate = { { 400000000 },
->   				{ 0 },
->   				{ 0 },
->   				{ 0 },
-> @@ -4100,7 +4196,7 @@ static const struct camss_subdev_resources vfe_res_x1e80100[] = {
->   		.clock = { "camnoc_rt_axi", "camnoc_nrt_axi", "cpas_ahb",
->   			   "cpas_fast_ahb", "cpas_vfe1", "vfe1_fast_ahb",
->   			   "vfe1"  },
-> -		.clock_rate = { { 0 },
-> +		.clock_rate = { { 400000000 },
->   				{ 0 },
->   				{ 0 },
->   				{ 0 },
-> @@ -4124,7 +4220,7 @@ static const struct camss_subdev_resources vfe_res_x1e80100[] = {
->   		.clock = { "camnoc_rt_axi", "camnoc_nrt_axi", "cpas_ahb",
->   			   "vfe_lite_ahb", "cpas_vfe_lite", "vfe_lite",
->   			   "vfe_lite_csid" },
-> -		.clock_rate = { { 0 },
-> +		.clock_rate = { { 400000000 },
->   				{ 0 },
->   				{ 0 },
->   				{ 0 },
-> @@ -4147,7 +4243,7 @@ static const struct camss_subdev_resources vfe_res_x1e80100[] = {
->   		.clock = { "camnoc_rt_axi", "camnoc_nrt_axi", "cpas_ahb",
->   			   "vfe_lite_ahb", "cpas_vfe_lite", "vfe_lite",
->   			   "vfe_lite_csid" },
-> -		.clock_rate = { { 0 },
-> +		.clock_rate = { { 400000000 },
->   				{ 0 },
->   				{ 0 },
->   				{ 0 },
-> @@ -5030,6 +5126,13 @@ static int camss_probe(struct platform_device *pdev)
->   	if (!camss->csiphy)
->   		return -ENOMEM;
->   
-> +	if (camss->res->tpg_num > 0) {
-> +		camss->tpg = devm_kcalloc(dev, camss->res->tpg_num,
-> +					  sizeof(*camss->tpg), GFP_KERNEL);
-> +		if (!camss->tpg)
-> +			return -ENOMEM;
-> +	}
-> +
->   	camss->csid = devm_kcalloc(dev, camss->res->csid_num, sizeof(*camss->csid),
->   				   GFP_KERNEL);
->   	if (!camss->csid)
-> @@ -5219,11 +5322,13 @@ static const struct camss_resources qcs8300_resources = {
->   	.version = CAMSS_8300,
->   	.pd_name = "top",
->   	.csiphy_res = csiphy_res_8300,
-> +	.tpg_res = tpg_res_8775p,
->   	.csid_res = csid_res_8775p,
->   	.csid_wrapper_res = &csid_wrapper_res_sm8550,
->   	.vfe_res = vfe_res_8775p,
->   	.icc_res = icc_res_qcs8300,
->   	.csiphy_num = ARRAY_SIZE(csiphy_res_8300),
-> +	.tpg_num = ARRAY_SIZE(tpg_res_8775p),
->   	.csid_num = ARRAY_SIZE(csid_res_8775p),
->   	.vfe_num = ARRAY_SIZE(vfe_res_8775p),
->   	.icc_path_num = ARRAY_SIZE(icc_res_qcs8300),
-> @@ -5233,11 +5338,13 @@ static const struct camss_resources sa8775p_resources = {
->   	.version = CAMSS_8775P,
->   	.pd_name = "top",
->   	.csiphy_res = csiphy_res_8775p,
-> +	.tpg_res = tpg_res_8775p,
->   	.csid_res = csid_res_8775p,
->   	.csid_wrapper_res = &csid_wrapper_res_sm8550,
->   	.vfe_res = vfe_res_8775p,
->   	.icc_res = icc_res_sa8775p,
->   	.csiphy_num = ARRAY_SIZE(csiphy_res_8775p),
-> +	.tpg_num = ARRAY_SIZE(tpg_res_8775p),
->   	.csid_num = ARRAY_SIZE(csid_res_8775p),
->   	.vfe_num = ARRAY_SIZE(vfe_res_8775p),
->   	.icc_path_num = ARRAY_SIZE(icc_res_sa8775p),
-> @@ -5360,12 +5467,14 @@ static const struct camss_resources x1e80100_resources = {
->   	.version = CAMSS_X1E80100,
->   	.pd_name = "top",
->   	.csiphy_res = csiphy_res_x1e80100,
-> +	.tpg_res = tpg_res_x1e80100,
->   	.csid_res = csid_res_x1e80100,
->   	.vfe_res = vfe_res_x1e80100,
->   	.csid_wrapper_res = &csid_wrapper_res_x1e80100,
->   	.icc_res = icc_res_x1e80100,
->   	.icc_path_num = ARRAY_SIZE(icc_res_x1e80100),
->   	.csiphy_num = ARRAY_SIZE(csiphy_res_x1e80100),
-> +	.tpg_num = ARRAY_SIZE(tpg_res_x1e80100),
->   	.csid_num = ARRAY_SIZE(csid_res_x1e80100),
->   	.vfe_num = ARRAY_SIZE(vfe_res_x1e80100),
->   };
+> On 8/26/2025 2:01 AM, Dmitry Baryshkov wrote:
+> > On Mon, Aug 25, 2025 at 10:16:01PM +0800, Yongxing Mou wrote:
+> > > From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> > > 
+> > > Use the dp_panel's stream_id to adjust the offsets for stream 1
+> > > which will be used for MST in the dp_catalog. Stream 1 share the
+> > > same link clk with stream 0 with different reg offset. Also add
+> > 
+> > Shares what? How do we handle streams 2 and 3?
+> > 
+> Stream 0 and stream 1 are controlled by *_DPTX0_LCLK, stream 2 uses
+> *_MST_2_LCLK, and stream 3 uses *_MST_3_LCLK. Will update commit message.
+
+So, we might need some better interface for updating those regs.
+
+> > > additional register defines for stream 1.
+> > > 
+> > > Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> > > Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+> > > ---
+> > >   drivers/gpu/drm/msm/dp/dp_ctrl.c  | 24 ++++++++++---
+> > >   drivers/gpu/drm/msm/dp/dp_panel.c | 72 +++++++++++++++++++++++++++------------
+> > >   drivers/gpu/drm/msm/dp/dp_reg.h   |  9 +++++
+> > >   3 files changed, 79 insertions(+), 26 deletions(-)
+> > > 
+> > > diff --git a/drivers/gpu/drm/msm/dp/dp_reg.h b/drivers/gpu/drm/msm/dp/dp_reg.h
+> > > index b851efc132ea03884ce2563990fbc24c9577e724..43a9ce0539906e1f185abf250fdf161e462d9645 100644
+> > > --- a/drivers/gpu/drm/msm/dp/dp_reg.h
+> > > +++ b/drivers/gpu/drm/msm/dp/dp_reg.h
+> > > @@ -141,6 +141,7 @@
+> > >   #define DP_STATE_CTRL_PUSH_IDLE			(0x00000100)
+> > >   #define REG_DP_CONFIGURATION_CTRL		(0x00000008)
+> > > +#define REG_DP1_CONFIGURATION_CTRL		(0x00000400)
+
+I think the file is (mostly) logically sorted. Please don't insert new
+entries in the middle of it, breaking the sort order.
+
+> > >   #define DP_CONFIGURATION_CTRL_SYNC_ASYNC_CLK	(0x00000001)
+> > >   #define DP_CONFIGURATION_CTRL_STATIC_DYNAMIC_CN (0x00000002)
+> > >   #define DP_CONFIGURATION_CTRL_P_INTERLACED	(0x00000004)
+> > > @@ -159,11 +160,15 @@
+> > >   #define REG_DP_SOFTWARE_MVID			(0x00000010)
+> > >   #define REG_DP_SOFTWARE_NVID			(0x00000018)
+> > >   #define REG_DP_TOTAL_HOR_VER			(0x0000001C)
+> > > +#define REG_DP1_SOFTWARE_MVID			(0x00000414)
+> > > +#define REG_DP1_SOFTWARE_NVID			(0x00000418)
+> > > +#define REG_DP1_TOTAL_HOR_VER			(0x0000041C)
+> > >   #define REG_DP_START_HOR_VER_FROM_SYNC		(0x00000020)
+> > >   #define REG_DP_HSYNC_VSYNC_WIDTH_POLARITY	(0x00000024)
+> > >   #define REG_DP_ACTIVE_HOR_VER			(0x00000028)
+> > >   #define REG_DP_MISC1_MISC0			(0x0000002C)
+> > > +#define REG_DP1_MISC1_MISC0			(0x0000042C)
+> > >   #define DP_MISC0_SYNCHRONOUS_CLK		(0x00000001)
+> > >   #define DP_MISC0_COLORIMETRY_CFG_SHIFT		(0x00000001)
+> > >   #define DP_MISC0_TEST_BITS_DEPTH_SHIFT		(0x00000005)
+> > > @@ -230,8 +235,10 @@
+> > >   #define MMSS_DP_AUDIO_CTRL_RESET		(0x00000214)
+> > >   #define MMSS_DP_SDP_CFG				(0x00000228)
+> > > +#define MMSS_DP1_SDP_CFG			(0x000004E0)
+> > >   #define GEN0_SDP_EN				(0x00020000)
+> > >   #define MMSS_DP_SDP_CFG2			(0x0000022C)
+> > > +#define MMSS_DP1_SDP_CFG2			(0x000004E4)
+> > >   #define MMSS_DP_AUDIO_TIMESTAMP_0		(0x00000230)
+> > >   #define MMSS_DP_AUDIO_TIMESTAMP_1		(0x00000234)
+> > >   #define GENERIC0_SDPSIZE_VALID			(0x00010000)
+> > > @@ -240,6 +247,7 @@
+> > >   #define MMSS_DP_AUDIO_STREAM_1			(0x00000244)
+> > >   #define MMSS_DP_SDP_CFG3			(0x0000024c)
+> > > +#define MMSS_DP1_SDP_CFG3			(0x000004E8)
+> > >   #define UPDATE_SDP				(0x00000001)
+> > >   #define MMSS_DP_EXTENSION_0			(0x00000250)
+> > > @@ -288,6 +296,7 @@
+> > >   #define MMSS_DP_GENERIC1_7			(0x00000344)
+> > >   #define MMSS_DP_GENERIC1_8			(0x00000348)
+> > >   #define MMSS_DP_GENERIC1_9			(0x0000034C)
+> > > +#define MMSS_DP1_GENERIC0_0			(0x00000490)
+> > >   #define MMSS_DP_VSCEXT_0			(0x000002D0)
+> > >   #define MMSS_DP_VSCEXT_1			(0x000002D4)
+> > > 
+> > > -- 
+> > > 2.34.1
+> > > 
+> > 
 > 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org> # Dell Inpsiron14p
+
+-- 
+With best wishes
+Dmitry
 
