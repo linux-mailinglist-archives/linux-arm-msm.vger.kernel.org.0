@@ -1,140 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-101380-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101381-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 4AslIdVRzWmnbwYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101380-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Apr 2026 19:11:49 +0200
+	id 6CDCDJxVzWk5cAYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101381-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Apr 2026 19:27:56 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id D27F937E729
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Apr 2026 19:11:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 81E6F37EA59
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Apr 2026 19:27:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id B6D3A305AD56
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2026 16:56:30 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id DC2A63018298
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2026 17:19:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB1C147AF4D;
-	Wed,  1 Apr 2026 16:56:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4565633ADAD;
+	Wed,  1 Apr 2026 17:19:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jEOFVcEm"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KDhfO3Yg"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C584779BF;
-	Wed,  1 Apr 2026 16:56:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D0324E4C6;
+	Wed,  1 Apr 2026 17:19:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775062589; cv=none; b=a5bMbrTwpywRnmEG5XQ58J/J4+WmGJOOs0i6RvPVacPiKnSmF64mV4CK1OWGfJoKabhBfuJ7afFDDSDxiAezI/FkpeC17HES+TXDa2ClggYAIanvvbcPnJfFNDw1renHmoqq4mjTd2bFcuNl6I6HObvR32BYah/gHgbC53AJmck=
+	t=1775063944; cv=none; b=TpabCB5/xjTDnYK8+xaHt/JiV/O2/KUexIrUfDAMB6lmzlDHm8HMNL2BsH/+QY9rJBCUt2AZ+2nIqhvvRENALNXgKSWgBQSOAF2VWTA57FCl1cgyM3e2tCXiMjNwETgkNlCoOPQFEFHG+tkZfPKvsigAfiJG4FKInpsLlXbBlrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775062589; c=relaxed/simple;
-	bh=JtuP7vPnFffiZdmEnggWNONBs26JwGvGwJ7IAIpurQs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hajwmL3DPhHoX5TZA3yQFSUk2uh8AwmTbxw8+WH8cG029dnueVj9TIPxrPzGgf4qb7QRdz7VTPELlAm+b3HMXfnm7IVl8Up3mtmWSVqBjRN8oQBrNw6EXy4lVj5aVs8Hw+AaWT6N8RJbaP7gbbaWaVTjzUUfTwX3v/FunFxupZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jEOFVcEm; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A54C4CEF7;
-	Wed,  1 Apr 2026 16:56:25 +0000 (UTC)
+	s=arc-20240116; t=1775063944; c=relaxed/simple;
+	bh=M+bVbssourcdFCDBjWFXjmwefz7AGX01HmgNDSTKY+0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=EEVFwpLs5Bja/Th9GuXBUtAHOkkB9+2S121rndjyfSWzIpIEsEITpTUUJAa661AqoUHMW3aYAa0nhxO2r7jfwbx0GLQ5VYZWqmP/5uZ+MgcnDoJ8axkFtURUzyPoGD7+/QaQfAFyAYHcUjfYnTTxmwGQQJcAdoCsPhpkcLtYtGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KDhfO3Yg; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5989EC4CEF7;
+	Wed,  1 Apr 2026 17:19:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775062589;
-	bh=JtuP7vPnFffiZdmEnggWNONBs26JwGvGwJ7IAIpurQs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jEOFVcEmkejqemYu9gD1QVBBnGGdJ6a5183yyH7vg94RAvsTzp/3hIIZlQctGkcs7
-	 MHQssxvOFXFUGX6IAa79WgQBtLqlItM2F0SBu054JQuNmuAQNxNth8RC1KFpwDVUCj
-	 nvbK52HUEAV57Xw45y+qqwCuRfmYrJiNMUo/pvrqFGDDC6Gok5uSw62IL4XO9oFsAI
-	 4nYfR39/sqtCO5MbVCBGluuFSyBiw3KH03tFpAHivrWtF+TUUEk8KZT6euRf4F5Knz
-	 35U0yhUEGLClRV9IiuEbZdM++sdU5KGGhYam2zSlU1KaDF7Fif6TvL0E3gXOm7wuX/
-	 Wn6tV6B7hUM7Q==
-Date: Wed, 1 Apr 2026 17:56:23 +0100
+	s=k20201202; t=1775063944;
+	bh=M+bVbssourcdFCDBjWFXjmwefz7AGX01HmgNDSTKY+0=;
+	h=From:Date:Subject:To:Cc:From;
+	b=KDhfO3YguzoTJS1HkRDB5bXjhxd/j6iIIe3cYLrcuEfagpqey9T13NwqWGNbiIMe2
+	 qy6GlGdUdTYkEd+7+rrg61rrjd7gVvzTP8ndxpCMhLJZ2ogfSHErR9j83/vaBsgOs+
+	 m5EoCctcHbq/nVWmJnK3pmbXRPWH+k7UxlPm/3xLRdlAKEvl6dD/Pq1rWVwShGMa/M
+	 Pbp5sBDNQZ1osex3RLeiCUb/JATF4Xt5xoXaxfDyA8KdlPFQ1pEpZz1zSqr3ffNqje
+	 T+X4B70/ftD680BJXOQqhqOcKW+LbVutqzKlnwxAVCyeKYhaxUkUrF2j+OgtBs3k3v
+	 IEL25QYAa2Q5g==
 From: Mark Brown <broonie@kernel.org>
-To: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	mohammad.rafi.shaik@oss.qualcomm.com, linux-sound@vger.kernel.org,
-	lgirdwood@gmail.com, perex@perex.cz, tiwai@suse.com,
-	johan@kernel.org, dmitry.baryshkov@oss.qualcomm.com,
-	konrad.dybcio@oss.qualcomm.com, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	srini@kernel.org, val@packett.cool, mailingradian@gmail.com
-Subject: Re: [PATCH v8 08/13] ASoC: qcom: q6dsp: Add Senary MI2S audio
- interface support
-Message-ID: <f226a03d-f2d2-4a85-9a63-5ac93b665740@sirena.org.uk>
-References: <20260330082105.278055-1-srinivas.kandagatla@oss.qualcomm.com>
- <20260330082105.278055-9-srinivas.kandagatla@oss.qualcomm.com>
- <38eb807e-8467-4d7b-9094-3007d0ba9c89@sirena.org.uk>
- <6be87f21-1da0-412a-8662-ef05ca32f3c4@oss.qualcomm.com>
+Date: Wed, 01 Apr 2026 18:18:03 +0100
+Subject: [PATCH] ASoC: qcom: qdsp6: Reject pointer operations on
+ unconfigured streams
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="xUit4U/rWLaTNSx6"
-Content-Disposition: inline
-In-Reply-To: <6be87f21-1da0-412a-8662-ef05ca32f3c4@oss.qualcomm.com>
-X-Cookie: "Yo baby yo baby yo."
-X-Spamd-Result: default: False [-2.76 / 15.00];
-	SIGNED_PGP(-2.00)[];
-	SUSPICIOUS_RECIPS(1.50)[];
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260401-asoc-qcom-qdsp6-robustness-v1-1-3a72991096bb@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAEpTzWkC/yXMwQqDMAwA0F+RnA20CqL7leHBpNnMYK02Ogbiv
+ 6/bju/yDjDJKgaX6oAsLzVNscDXFfA8xbughmJoXNO5tvU4WWJcOT1xDbZ0mBPttkUxw97T0LM
+ LJI6gBEuWm75/+XX823Z6CG/fEc7zA/xm5S1+AAAA
+X-Change-ID: 20260331-asoc-qcom-qdsp6-robustness-81b98c0dbe0b
+To: Srinivas Kandagatla <srini@kernel.org>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, 
+ Takashi Iwai <tiwai@suse.com>
+Cc: linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ =?utf-8?q?P=C3=A9ter_Ujfalusi?= <peter.ujfalusi@linux.intel.com>, 
+ Mark Brown <broonie@kernel.org>
+X-Mailer: b4 0.16-dev-7777e
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1256; i=broonie@kernel.org;
+ h=from:subject:message-id; bh=M+bVbssourcdFCDBjWFXjmwefz7AGX01HmgNDSTKY+0=;
+ b=owEBbQGS/pANAwAKASTWi3JdVIfQAcsmYgBpzVOFAcFXZXhGATV5nMn5yYhd8Fq3BDi7NyLC1
+ 6vbZUJ9jtaJATMEAAEKAB0WIQSt5miqZ1cYtZ/in+ok1otyXVSH0AUCac1ThQAKCRAk1otyXVSH
+ 0KaPB/9gUogg9o7bqYR3roLLqauKpihkOPxEc2/lkEw6p1YYusrDViOAZuvupnO7I8n+9bCjMwV
+ C/VGJujFcoIB2CvQg9udhqpXYRg1x48gBxYMSy+tpQZE98XVlmYu8j6H+ZTjlSZ56FDQzKjge0n
+ gZ2UwvlV1UZO9yc17Q5MZ+8MpzlyUgcMLYoQRwJ0ew00QdlVlx9rgcKjJe/Gak2v6UBK7bzGPVP
+ eZThQQWNxcjMVx01ScZVKMC1G+S8nuziqldn7ONKVXXlIlagIygYIpqB9jhgyhDF3RONZQEB3Gz
+ BwNcdecH4cSLRJ2ZfMtyJ2lwiGBiFD9AEjjzloqLr5cPhwUe
+X-Developer-Key: i=broonie@kernel.org; a=openpgp;
+ fpr=3F2568AAC26998F9E813A1C5C3F436CA30F5D8EB
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
-	MIME_GOOD(-0.20)[multipart/signed,text/plain];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
+	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-101381-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-101380-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
+	FREEMAIL_TO(0.00)[kernel.org,gmail.com,perex.cz,suse.com];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[kernel.org,oss.qualcomm.com,vger.kernel.org,gmail.com,perex.cz,suse.com,packett.cool];
-	RCPT_COUNT_TWELVE(0.00)[18];
-	MIME_TRACE(0.00)[0:+,1:+,2:~];
-	FROM_HAS_DN(0.00)[];
-	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	NEURAL_HAM(-0.00)[-0.999];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[broonie@kernel.org,linux-arm-msm@vger.kernel.org];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	MID_RHS_MATCH_FROM(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCPT_COUNT_SEVEN(0.00)[9];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: D27F937E729
+	DBL_BLOCKED_OPENRESOLVER(0.00)[intel.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 81E6F37EA59
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
+The QDSP6 driver reports the current byte offset by dividing the current
+copied data total by pcm_size, but pcm_size is only configured as part of
+set_params() so if we manage to do a pointer operation before that happens
+we will divide by 0. There is no sensible reason to do so, add an error
+check for robustness.
 
---xUit4U/rWLaTNSx6
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Reported-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+---
+ sound/soc/qcom/qdsp6/q6apm-dai.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-On Wed, Apr 01, 2026 at 04:54:00PM +0000, Srinivas Kandagatla wrote:
-> On 4/1/26 11:25 AM, Mark Brown wrote:
+diff --git a/sound/soc/qcom/qdsp6/q6apm-dai.c b/sound/soc/qcom/qdsp6/q6apm-dai.c
+index 168c166c960d..833d4782c68f 100644
+--- a/sound/soc/qcom/qdsp6/q6apm-dai.c
++++ b/sound/soc/qcom/qdsp6/q6apm-dai.c
+@@ -582,6 +582,9 @@ static int q6apm_dai_compr_pointer(struct snd_soc_component *component,
+ 	guard(spinlock_irqsave)(&prtd->lock);
+ 	tstamp->copied_total = prtd->copied_total;
+ 	temp_copied_total = tstamp->copied_total;
++
++	if (!prtd->pcm_size)
++		return -EINVAL;
+ 	tstamp->byte_offset = do_div(temp_copied_total, prtd->pcm_size);
+ 
+ 	return 0;
 
-> [PATCH v8 09/13] ASoC: qcom: common: validate cpu dai id during parsing
+---
+base-commit: 7aaa8047eafd0bd628065b15757d9b48c5f9c07d
+change-id: 20260331-asoc-qcom-qdsp6-robustness-81b98c0dbe0b
 
-> re-ordering these two patches, should fix the issue.
+Best regards,
+--  
+Mark Brown <broonie@kernel.org>
 
-> Sorry about this, Is it fine if I send this reorder in v9?
-
-Yes, it was otherwise fine.
-
---xUit4U/rWLaTNSx6
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmnNTjYACgkQJNaLcl1U
-h9BCSgf+LQqr/13SpqYuSRvPKSn7plrzehU/l1FCowf22rsrd115KRv6RPjbTO9z
-GzlmlOzhfNRXdqzum8D0NE0puZB++7IB8+jeMiI8UgPcT7nhVX2uZmgWg208S706
-MdyE4m5i0rfatTJziLap2Npd6YOotbiey8W/JGdrKclg4ffn36CmyOiBO4deQPzD
-/ogS+YwAfxM4pK3kQj+7bashffpssNRxhz3NhvDGnAkSlSpAMs9QMiuW43Wvo5ag
-itW43O2iv4c+0y9WsHguPVlZlDtj5m6npTjkKEEMVVnmdXeTLtzdlFJYhRtWVDpF
-RHNQHx2UFnHA9+B7+ls1QFr48rmoVA==
-=kifs
------END PGP SIGNATURE-----
-
---xUit4U/rWLaTNSx6--
 
