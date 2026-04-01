@@ -1,84 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-101364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101365-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GHv5Dpk1zWlwawYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Apr 2026 17:11:21 +0200
+	id aBmpIAMyzWn0agYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101365-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Apr 2026 16:56:03 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6674437CC5D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Apr 2026 17:11:20 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7DAB137C88A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Apr 2026 16:56:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 47B7A307BF19
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2026 14:39:42 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 839AD309D316
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2026 14:42:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC2A92D0C82;
-	Wed,  1 Apr 2026 14:39:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B94C472791;
+	Wed,  1 Apr 2026 14:41:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gYikEbSL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WsX83Rib"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8CE4212542;
-	Wed,  1 Apr 2026 14:39:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B6DA472789;
+	Wed,  1 Apr 2026 14:41:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775054381; cv=none; b=jhkkzEyamyyNLqENoa6F9w9HbB1PfusiQhUuBP3CyXGfZo3dM36Pjk8JzpD7QhLRqDKSYzf4O0gVa27+Jt0B7lfiD6Ca7PwDZUwuLLf5mXzlAwYBXhSoBjvcWTQIWDonUCGRCoBcCurDZG7ykBvPYbHZk//7YGOBobvUyKlBd1U=
+	t=1775054467; cv=none; b=Zqzofm7sk5PbCKa9A2yPvTIrsYcw9lPqqLMd6sKX0Yk97qI3dD+yDXZ74hBvFNymrDysvTIpAbssW2LRujDmBiZpvQsRC1kt9NDIlzzycJDmmMT2zds5TgZzQy357EMg1Y0gwbiJoyBO13RXgRNjEA4svYuv/3unJpyHTR1Edao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775054381; c=relaxed/simple;
-	bh=0OU5ZO5Mkon1L7K95clfrg2Ou6vHfXePsExrM8t9768=;
+	s=arc-20240116; t=1775054467; c=relaxed/simple;
+	bh=TgjfJ9DwxAIF8WY3udzvv+dr98Azs03jjfDQs703n+k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XlcvyzlrJ+gtBLE2Hr8VWokx4sPv2N2CzCLSRMoN5v07MSyHT11UrO/eZKxWSK8TsuMc6rol03O9vI8CF8GUgiSH0kXEaJCywfKYdKfeuBPJCgcEOwfBWSxrOmp0GpNYDIcwBPsWqMNanF0GK8qZ3trLSEPYcwOetT85BBMBI94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gYikEbSL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F60C2BCB4;
-	Wed,  1 Apr 2026 14:39:40 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=m0T3m5XaO7qQkUcuHKT3iGMU2uE50NdZ0XyC5xsyOQF4sfuQA9uYmUjEUl8ZAZeC7069lEtwUN4/VvWopa0f6nhu/QP6jdWkG8RG3aEt/knNWDZhthUqNzWz7+Mpuqhso7f/yq/OC8mXPfT2r5J7bIPAf1TR/0VFRggUWKOPaKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WsX83Rib; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6581AC19423;
+	Wed,  1 Apr 2026 14:41:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775054381;
-	bh=0OU5ZO5Mkon1L7K95clfrg2Ou6vHfXePsExrM8t9768=;
+	s=k20201202; t=1775054467;
+	bh=TgjfJ9DwxAIF8WY3udzvv+dr98Azs03jjfDQs703n+k=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=gYikEbSLZasTRXX3lrih+5SAQDRzskNNCZMs+7fIYr2Y+2P45J8zCT3fih2JNHaSK
-	 M3pKUDU9inyliwRCgoXSBUTPVjVyvWpSOB+Nj9qH6BUR/xaCHw1cUWbxV2r+Ap11Nw
-	 u0V4k5T2//nOaIw8WIZVduu6qpQ6vGnLdxR8TuiRKvogfoviq5Pxy7WRiQpS71xuE+
-	 UMctokot7Wj257DEXHU+36xzs2Jx+oT+YZJ4Y2DJaafYLaZkGAwsRFHmZs83gQJO+a
-	 RzDEFKz9s0olqvi0aGh7PDFekf4mqMtcZQuX5yNTsqR/MX6IskcfofFPlnmGa9rk6y
-	 9DbJX0/QG0mJQ==
-Date: Wed, 1 Apr 2026 09:39:38 -0500
+	b=WsX83Ribv38zaI3V2htPkFLab4N/Sjjucxt8ccy274mnMKq9dKvywOvb2Hs1SROrW
+	 xL3+P+Gyw2Q2qA5JzyhaEhCm6p+VIjVNqXAdOsRCjS5/IvDQ71PdMZGtNvNctnmyU1
+	 OKTeGIUehPf4V2S8bdo7aHepS9EfD36cBofs75fVJdywXXGFuPf74qJ6GWz+Ui3vQK
+	 UyMYELBU70577ZABGHU19vg69mFNjeN4gk30F1Lh1qD8wLqJ0AzpzrR/v+404ncu1v
+	 zeHzj0oFEsxAf6bdb+SgPAEyUuryvSD61jULa1p6Syew/83lfILSLrOGdPzhwpB1VD
+	 GN3G2ZlHxlBZw==
+Date: Wed, 1 Apr 2026 09:41:03 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Lee Jones <lee@kernel.org>
-Cc: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>, 
-	Srinivas Kandagatla <srini@kernel.org>, Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mfd: wcd934x: Unroll regmap and irqchip on removal
-Message-ID: <acyRJJZGsjoF0BaJ@baldur>
-References: <20260309-wcd934x-unroll-regmap-v1-1-9a5fb305540e@oss.qualcomm.com>
- <20260319151154.GM554736@google.com>
+To: Qiang Yu <qiang.yu@oss.qualcomm.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+	Vinod Koul <vkoul@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 4/5] phy: qcom: qmp-pcie: Add Gen5 8-lanes mode for
+ Glymur
+Message-ID: <ac0ubhTTsUNKHD__@baldur>
+References: <20260323-glymur_gen5x8_phy_0323-v2-0-ce0fc07f0e52@oss.qualcomm.com>
+ <20260323-glymur_gen5x8_phy_0323-v2-4-ce0fc07f0e52@oss.qualcomm.com>
+ <x3ts7to7c4qnorloahe7cgup3uekn4wolmmorqa3b3bjfslqfn@eijnzdp2ops3>
+ <acua8Me0zo3v/CBi@hu-qianyu-lv.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260319151154.GM554736@google.com>
-X-Spamd-Result: default: False [-1.66 / 15.00];
+In-Reply-To: <acua8Me0zo3v/CBi@hu-qianyu-lv.qualcomm.com>
+X-Spamd-Result: default: False [-0.16 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-101365-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-101364-lists,linux-arm-msm=lfdr.de];
-	TO_DN_SOME(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
 	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
@@ -86,122 +91,89 @@ X-Spamd-Result: default: False [-1.66 / 15.00];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[andersson@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCPT_COUNT_FIVE(0.00)[6];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email]
-X-Rspamd-Queue-Id: 6674437CC5D
+	RCPT_COUNT_TWELVE(0.00)[13];
+	TO_DN_SOME(0.00)[]
+X-Rspamd-Queue-Id: 7DAB137C88A
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Thu, Mar 19, 2026 at 03:11:54PM +0000, Lee Jones wrote:
-> On Mon, 09 Mar 2026, Bjorn Andersson wrote:
+On Tue, Mar 31, 2026 at 02:59:12AM -0700, Qiang Yu wrote:
+> On Tue, Mar 24, 2026 at 11:23:19PM +0200, Dmitry Baryshkov wrote:
+> > On Mon, Mar 23, 2026 at 12:15:31AM -0700, Qiang Yu wrote:
+> > > The third PCIe controller on Glymur SoC supports 8-lane operation via
+> > > bifurcation of two PHYs (each requires separate power domian, resets and
+> > > aux clk).
+> > > 
+> > > Add dedicated reset/no_csr reset list ("phy_b", "phy_b_nocsr") and
+> > > clock ("phy_b_aux") required for 8-lane operation. Introduce new
+> > > glymur_qmp_gen5x8_pciephy_cfg configuration to enable PCIe Gen5 x8 mode.
+> > > 
+> > > Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
+> > > ---
+> > >  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 30 +++++++++++++++++++++++++++++-
+> > >  1 file changed, 29 insertions(+), 1 deletion(-)
+> > > 
+> > > @@ -4705,6 +4713,23 @@ static const struct qmp_phy_cfg glymur_qmp_gen4x2_pciephy_cfg = {
+> > >  	.phy_status		= PHYSTATUS_4_20,
+> > >  };
+> > >  
+> > > +static const struct qmp_phy_cfg glymur_qmp_gen5x8_pciephy_cfg = {
+> > > +	.lanes = 8,
+> > > +
+> > > +	.offsets		= &qmp_pcie_offsets_v8_50,
+> > > +
+> > > +	.reset_list		= glymur_pciephy_reset_l,
+> > > +	.num_resets		= ARRAY_SIZE(glymur_pciephy_reset_l),
+> > > +	.nocsr_reset_list	= glymur_pciephy_nocsr_reset_l,
+> > > +	.num_nocsr_resets	= ARRAY_SIZE(glymur_pciephy_nocsr_reset_l),
+> > 
+> > Just for my understanding. If it was not the NOCSR case and had to
+> > program the registers, would we have needed to program anything in the
+> > PCIe3B space?
 > 
-> > When the slimbus-up event is handled a new regmap is created, an IRQ
-> > chip is registered on this regmap and then the MFD devices are added.
-> > 
-> > But the regmap is left dangling if either any of those operations are
-> > failing or if the slimbus-down event ever comes. Which manifest itself
-> > as an error print from debugfs once the next slimbus-up event happens.
-> > 
-> > Likewise, if for some reason a slimbus-down event would be followed by
-> > a slimbus-up event without the MFD being torn down by the slimbus
-> > controller inbetween, we're going to have a dangling irq_chip.
-> > 
-> > Add cleanup of the registered resources on failure and on removal.
-> > 
-> > Fixes: 6ac7e4d7ad70 ("mfd: wcd934x: Add support to wcd9340/wcd9341 codec")
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-> > ---
-> >  drivers/mfd/wcd934x.c | 49 ++++++++++++++++++++++++++++++++++++++-----------
-> >  1 file changed, 38 insertions(+), 11 deletions(-)
-> > 
-> > diff --git a/drivers/mfd/wcd934x.c b/drivers/mfd/wcd934x.c
-> > index 3c3080e8c8cf7ecaaa62e255c7e01a850e65e9ad..b03cc91cc3a6a114a34efdb278420ae3dfa016eb 100644
-> > --- a/drivers/mfd/wcd934x.c
-> > +++ b/drivers/mfd/wcd934x.c
-> > @@ -170,29 +170,56 @@ static int wcd934x_slim_status_up(struct slim_device *sdev)
-> >  	ret = wcd934x_bring_up(ddata);
-> >  	if (ret) {
-> >  		dev_err(dev, "Failed to bring up WCD934X: err = %d\n", ret);
-> > -		return ret;
-> > +		goto err_regmap_exit;
-> >  	}
-> >  
-> > -	ret = devm_regmap_add_irq_chip(dev, ddata->regmap, ddata->irq,
-> > -				       IRQF_TRIGGER_HIGH, 0,
-> > -				       &wcd934x_regmap_irq_chip,
-> > -				       &ddata->irq_data);
-> > +	ret = regmap_add_irq_chip(ddata->regmap, ddata->irq,
-> > +				  IRQF_TRIGGER_HIGH, 0,
-> > +				  &wcd934x_regmap_irq_chip,
-> > +				  &ddata->irq_data);
-> >  	if (ret) {
-> >  		dev_err(dev, "Failed to add IRQ chip: err = %d\n", ret);
-> > -		return ret;
-> > +		goto err_regmap_exit;
-> >  	}
-> >  
-> >  	ret = mfd_add_devices(dev, PLATFORM_DEVID_AUTO, wcd934x_devices,
-> >  			      ARRAY_SIZE(wcd934x_devices), NULL, 0, NULL);
-> >  	if (ret) {
-> > -		dev_err(dev, "Failed to add child devices: err = %d\n",
-> > -			ret);
-> > -		return ret;
-> > +		dev_err(dev, "Failed to add child devices: err = %d\n", ret);
-> > +		goto err_del_irq_chip;
-> >  	}
-> >  
-> > +	return 0;
-> > +
-> > +err_del_irq_chip:
-> > +	regmap_del_irq_chip(ddata->irq, ddata->irq_data);
-> > +	ddata->irq_data = NULL;
-> > +err_regmap_exit:
-> > +	regmap_exit(ddata->regmap);
-> > +	ddata->regmap = NULL;
-> >  	return ret;
-> >  }
-> >  
-> > +static void wcd934x_slim_status_down(struct slim_device *sdev)
-> > +{
-> > +	struct device *dev = &sdev->dev;
-> > +	struct wcd934x_ddata *ddata;
-> > +
-> > +	ddata = dev_get_drvdata(dev);
-> 
-> Is this guaranteed to be populated?
-> 
-> If this fails for any reason, we'll nul-ptr-deref below.
-> 
+> The PCIe3B PHY registers need to be programmed.
 
-The intent is that slim_device_update_status() will only be called
-between a successful probe() and the invocation of remove().
-
-The case where this I'm still trying to convince myself about is if
-we have a race between removal of the grandparent controller and the
-restart of the audio DSP; but that should be addressed in the slimbus
-framework and not here.
+Why?
 
 Regards,
 Bjorn
 
-> > +	mfd_remove_devices(&sdev->dev);
-> > +
-> > +	if (ddata->irq_data) {
-> > +		regmap_del_irq_chip(ddata->irq, ddata->irq_data);
-> > +		ddata->irq_data = NULL;
-> > +	}
-> > +
-> > +	if (ddata->regmap) {
-> > +		regmap_exit(ddata->regmap);
-> > +		ddata->regmap = NULL;
-> > +	}
-> > +}
+> But we don't need to do it explicitly because there are also broadcast
+> registers: writing to these registers will automatically write the same
+> offset and value to both PHY ports simultaneously.
 > 
-> [...]
-> 
-> -- 
-> Lee Jones [李琼斯]
+> - Qiang Yu
+> > 
+> > > +	.vreg_list		= qmp_phy_vreg_l,
+> > > +	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+> > > +
+> > > +	.regs			= pciephy_v8_50_regs_layout,
+> > > +
+> > > +	.phy_status		= PHYSTATUS_4_20,
+> > > +};
+> > > +
+> > >  static void qmp_pcie_init_port_b(struct qmp_pcie *qmp, const struct qmp_phy_cfg_tbls *tbls)
+> > >  {
+> > >  	const struct qmp_phy_cfg *cfg = qmp->cfg;
+> > > @@ -5483,6 +5508,9 @@ static const struct of_device_id qmp_pcie_of_match_table[] = {
+> > >  	}, {
+> > >  		.compatible = "qcom,glymur-qmp-gen5x4-pcie-phy",
+> > >  		.data = &glymur_qmp_gen5x4_pciephy_cfg,
+> > > +	}, {
+> > > +		.compatible = "qcom,glymur-qmp-gen5x8-pcie-phy",
+> > > +		.data = &glymur_qmp_gen5x8_pciephy_cfg,
+> > >  	}, {
+> > >  		.compatible = "qcom,ipq6018-qmp-pcie-phy",
+> > >  		.data = &ipq6018_pciephy_cfg,
+> > > 
+> > > -- 
+> > > 2.34.1
+> > > 
+> > 
+> > -- 
+> > With best wishes
+> > Dmitry
 
