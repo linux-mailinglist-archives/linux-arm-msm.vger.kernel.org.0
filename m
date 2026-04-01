@@ -1,56 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-101261-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101259-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id aCivKdXZzGnnWwYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101261-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Apr 2026 10:39:49 +0200
+	id OH/bHNbZzGnnWwYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101259-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Apr 2026 10:39:50 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E5FA376F3F
+Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D4FD6376F47
 	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Apr 2026 10:39:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id AD71F3179CEA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2026 08:29:03 +0000 (UTC)
+	by tor.lore.kernel.org (Postfix) with ESMTP id 338493179CC2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2026 08:29:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B52B03AF675;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4B423AF667;
 	Wed,  1 Apr 2026 08:28:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JvAf8aB1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jfWnvE86"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F22A3AE184;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F1743AD538;
 	Wed,  1 Apr 2026 08:28:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775032129; cv=none; b=JE+jswV49QD0kf1U1EaeEdVq9wvsdLwDKeGctfAb4s4BtVDfao6jo54ov6DUifMIixzAjr9xe9WNaRqyXF6wXK9A26gbW27ecOz313NJganMMoOmnJCmBNoNXNtvurVysvaZZAJiXyOrr9i/vQg1mCebK6U8vtak9oiFolh3aBo=
+	t=1775032129; cv=none; b=Egh2FkWdnAPp7J6NXqEFd3/tMIzkC8CYozjOzU5zlhSjKYeGLZirBexUgvvFI8pR9vIXAoC8XARx+6ineL15XubsPlWc5sydDa4m/hgs0wYG23ELbDyrrbhqCL6zDP1D9uAJjupUwbYtDd3VeTZlBJGShFUiPD2vX2zhjJn1yS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1775032129; c=relaxed/simple;
-	bh=ijyWGc7cgC5C8+2EsFh8eAzQCX0rxyLF1iEbqDPqQQo=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=pX3/IrDwHcs5oKBZhOqT0k+goNCqwUjzwFyudJaNUb2HaRrkmj2tD1RKpjbu6y2sFt8idfQFUxRiqfhxLo463uU1DCm6NpmYY2lc3uoa9q96+mKIFSHRmovUPy+nJ2xLtcXoh26u4Uh6NiOe/bl3jR+ki6oYEH0CAZrLA6zxbGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JvAf8aB1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 332ABC2BCB2;
+	bh=SiZxbBEOsyuCGsPP7EiYPMWvFe+geOEjDxFcviM+I78=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=NW4wPPsVpFhyVnSL8WZAdoXlJHeAB1L/vF3i6Jo6dQpdogtqDwbVbwhGr8jdmf3+3E3E8SH3mqd48ylDZd34wwHynFoZVkIHeKcFJ12r1P8kUAgfBmGeH0yns+CgEEVBDtVKTuHAAlN5mIVIpJvaBhtmMUUsEuBGspXD7jmoefQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jfWnvE86; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 4A75AC2BCB4;
 	Wed,  1 Apr 2026 08:28:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1775032129;
-	bh=ijyWGc7cgC5C8+2EsFh8eAzQCX0rxyLF1iEbqDPqQQo=;
-	h=From:Subject:Date:To:Cc:Reply-To:From;
-	b=JvAf8aB11iYfWtQKqXurNWxSAh+0em4CBKRYdqWAG5UJIqnVGFLbPomJ9NwjuCAI0
-	 dylUHgCUiEELvkRWHwcl+N2giRtw2+fc8yTFPGduJAZ85Y/4TJPaVL5ATd80BXJO87
-	 uyTKTRWG1H1eDLmFY5viXyhM1vYjk4l0qcOwD+I83dMWNwqGU80+DvBDwqY75WzSVD
-	 2WfgfCCPhvp3sEqe1WMbLTCnTYtPKVvdXf1IGCyrAN6vx6OJ/944e8N73wcBLm8EpY
-	 MCP/2YXM0L2T6QnfDfoj+dSVtARSmSXiA7M881E4dTw1T84Yl4Wve+aIq+iFj4MohP
-	 OeBb75q+02AfA==
+	bh=SiZxbBEOsyuCGsPP7EiYPMWvFe+geOEjDxFcviM+I78=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=jfWnvE869T0Pr5tsrshi62jYO8oXW1sJ9nFE53g1v+n9GfwjKcEIEihUHpQNT+BT/
+	 kToMdh/u8Ip5ztvsfGIIhJ2so8EmiXY5x5HYS+95VYHvEx+uq6D4VR5RC3VNPU+0GA
+	 3ScSIXGDSwbM5Xh6yJB+Hk0EmLzigXsyUrFm19uM/7vuU9QdtDxgOGNk8oX4pBoQoX
+	 dCB+CT4GA2WfB9QoXSWk42GE4rhLmVHtcNJoWuX5G5Gnz3Aws4EpJ7te7fr3GuD2Zh
+	 hWu16iaW3RtDVoj/KpFoXtycy9x87ugc6H18SY/BhuCh68BveWkCQzhEfzcCUTdFjU
+	 a/iiz13twhnTw==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28134D35151;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D84DD35157;
 	Wed,  1 Apr 2026 08:28:49 +0000 (UTC)
 From: Rudraksha Gupta via B4 Relay <devnull+guptarud.gmail.com@kernel.org>
-Subject: [PATCH v2 0/3] Reorganize DTS and add fuel-gauge to
- samsung-expressatt
-Date: Wed, 01 Apr 2026 01:28:47 -0700
-Message-Id: <20260401-expressatt_fuel_guage-v2-0-947922834df1@gmail.com>
+Date: Wed, 01 Apr 2026 01:28:48 -0700
+Subject: [PATCH v2 1/3] ARM: dts: qcom: msm8960: expressatt: Sort node
+ references and includes
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,16 +58,10 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/4WS6WocMRCEX2WY35GRWq1rCcHvkZhFR/fO4B2vP
- Rc2Zt/d2llM4gOCfpWo+tRU67WdaOxpanfNazvS2k/96aEK+NG0uYsPBxJ9qboFCVZqrQQ9P44
- 0TXGe97zQcX9YYjWhNYWTZu9iamu2erh/3ri/7656pKel4ufrZfsY59xV+O7PArLCuRRJHA2Va
- BQkREjeV6iXzmFR0UntCrsN/h5tFBQIlr3OOalUJ/BF2uiA0NnERkUyjGTzx1QMTsbMIL1UqBm
- rTQZtSoFsXEpOsUmstf+Quo7JBQwTG2+kzoZMZodALiQFGNBnxzYFX8I3UetrgdF6maoVlDMBK
- yuDD2QVZ0R94eVyiQ6Xhrfud83PWn1tRJp/qhfzacndPb2IVYl6EDEFcDmwvj0MsT/e5NPw6zv
- SlyXmONAY93yMUydWFFKwohAYHRr1mZbiRKKKoZ93zWpvVGgv2+36aT6NL9snWtW23v/8l21s0
- EUVb8AmG/4+1N6dz+c3SoA/0ZgCAAA=
-X-Change-ID: 20260331-expressatt_fuel_guage-465dfb3f87ab
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260401-expressatt_fuel_guage-v2-1-947922834df1@gmail.com>
+References: <20260401-expressatt_fuel_guage-v2-0-947922834df1@gmail.com>
+In-Reply-To: <20260401-expressatt_fuel_guage-v2-0-947922834df1@gmail.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -75,11 +69,11 @@ To: Bjorn Andersson <andersson@kernel.org>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, Rudraksha Gupta <guptarud@gmail.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1775032128; l=2193;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1775032128; l=11794;
  i=guptarud@gmail.com; s=20240916; h=from:subject:message-id;
- bh=ijyWGc7cgC5C8+2EsFh8eAzQCX0rxyLF1iEbqDPqQQo=;
- b=MmgwvXuLziahm10UT8nqenr/+BUb7r8SSOxtPl16o+nfZOWv8d7ZJ2FHHUV5zKZeAnhDtnlwG
- UsQEACoEga3C90WXtCwQoAqnRhloxGewGyMajyXy0ijRXz5bBPNFOM4
+ bh=Nw/R7tbD2R3cgIAnGsQB6z+2ikH8l/TaJNuRjCzGFB4=;
+ b=zcgR3PVX0RMDhNPb0xo8rbaCliy1IzTzcrDmFDrQfIEaczlmBUEKx9TqGQmdwkwUFNYBCDGJ0
+ a8RGQ1ssmTRBvyqie+Glt+tqJbSLin03YH7G+BVnlD+AdezX2dW6Gpo
 X-Developer-Key: i=guptarud@gmail.com; a=ed25519;
  pk=ETrudRugWAtOpr0OhRiheQ1lXM4Kk4KGFnBySlKDi2I=
 X-Endpoint-Received: by B4 Relay for guptarud@gmail.com/20240916 with
@@ -90,13 +84,13 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	FREEMAIL_REPLYTO_NEQ_FROM(2.00)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-101261-lists,linux-arm-msm=lfdr.de,guptarud.gmail.com];
+	TAGGED_FROM(0.00)[bounces-101259-lists,linux-arm-msm=lfdr.de,guptarud.gmail.com];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	FREEMAIL_REPLYTO(0.00)[gmail.com];
@@ -110,62 +104,550 @@ X-Spamd-Result: default: False [-0.16 / 15.00];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	NEURAL_HAM(-0.00)[-0.849];
+	NEURAL_HAM(-0.00)[-0.991];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	RCPT_COUNT_SEVEN(0.00)[9];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 1E5FA376F3F
+	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[4a:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,0.0.0.20:email,2e:email,0.0.0.39:email,0.0.0.18:email]
+X-Rspamd-Queue-Id: D4FD6376F47
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Reorganized the samsung-expressatt DTS to be more in line with mainline
-standards.
+From: Rudraksha Gupta <guptarud@gmail.com>
 
-Tested battery by doing `cat /sys/class/power_supply/battery/capacity`
-in upstream Linux and comparing the value with downstream Linux. Booted
-on upstream Linux first, as the upstream Linux seems to use a lot
-more battery than downstream, and then put the battery into another
-expressatt running downstream Android to compare values. There are
-some slight differences, but overall seems to line up pretty well with
-downstream.
+Reorganize the DTS file for consistency with other msm8960 board files.
 
+Assisted-by: Claude:claude-opus-4.6
 Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
 ---
-Changes in v2:
-- Previous changes were based on some outdated dependencies. Update them
-- Reorganized expressatt DTS
-- Switch to GSBI5
-- Link to v1: https://lore.kernel.org/r/20260331-expressatt_fuel_guage-v1-1-23d1d8526b69@gmail.com
+ .../dts/qcom/qcom-msm8960-samsung-expressatt.dts   | 400 ++++++++++-----------
+ 1 file changed, 200 insertions(+), 200 deletions(-)
 
----
-Rudraksha Gupta (3):
-      ARM: dts: qcom: msm8960: expressatt: Sort node references and includes
-      ARM: dts: qcom: msm8960: Add GSBI5 I2C controller
-      ARM: dts: qcom: msm8960: expressatt: Add MAX17048 fuel gauge
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts b/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
+index 35514fd53e3d..ed913ca5b825 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
++++ b/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
+@@ -1,13 +1,13 @@
+ // SPDX-License-Identifier: GPL-2.0
++#include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/input/gpio-keys.h>
+ #include <dt-bindings/input/input.h>
+ #include <dt-bindings/leds/common.h>
++#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+ #include <dt-bindings/reset/qcom,gcc-msm8960.h>
+ 
+ #include "qcom-msm8960.dtsi"
+ #include "pm8921.dtsi"
+-#include <dt-bindings/gpio/gpio.h>
+-#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+-#include <dt-bindings/input/gpio-keys.h>
+ 
+ / {
+ 	model = "Samsung Galaxy Express SGH-I437";
+@@ -27,8 +27,8 @@ chosen {
+ 	gpio-keys {
+ 		compatible = "gpio-keys";
+ 
+-		pinctrl-names = "default";
+ 		pinctrl-0 = <&gpio_keys_pin_a>;
++		pinctrl-names = "default";
+ 
+ 		key-home {
+ 			label = "Home";
+@@ -54,48 +54,14 @@ key-volume-down {
+ 		};
+ 	};
+ 
+-	touchkey_enable: touchkey-enable {
+-		compatible = "regulator-fixed";
+-		regulator-name = "touchkey_enable";
+-		gpio = <&tlmm 51 GPIO_ACTIVE_HIGH>;
+-		enable-active-high;
+-		regulator-boot-on;
+-	};
+-
+-	vreg_flash: regulator-flash {
+-		compatible = "regulator-fixed";
+-		regulator-name = "VREG_FLASH_3P3";
+-		regulator-min-microvolt = <3300000>;
+-		regulator-max-microvolt = <3300000>;
+-		gpio = <&pm8921_mpps 4 GPIO_ACTIVE_HIGH>;
+-		enable-active-high;
+-		pinctrl-0 = <&flash_led_unlock>;
+-		pinctrl-names = "default";
+-	};
+-
+-	led-controller {
+-		compatible = "richtek,rt8515";
+-		enf-gpios = <&tlmm 3 GPIO_ACTIVE_HIGH>;
+-		vin-supply = <&vreg_flash>;
+-		richtek,rfs-ohms = <16000>;
+-		pinctrl-0 = <&cam_flash_en>;
+-		pinctrl-names = "default";
+-
+-		led {
+-			function = LED_FUNCTION_FLASH;
+-			color = <LED_COLOR_ID_WHITE>;
+-			flash-max-timeout-us = <250000>;
+-		};
+-	};
+-
+ 	i2c-gpio-touchkey {
+ 		compatible = "i2c-gpio";
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 		sda-gpios = <&tlmm 71 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+ 		scl-gpios = <&tlmm 72 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+-		pinctrl-names = "default";
+ 		pinctrl-0 = <&touchkey_i2c_pins>;
++		pinctrl-names = "default";
+ 		status = "okay";
+ 		i2c-gpio,delay-us = <2>;
+ 
+@@ -104,8 +70,8 @@ touchkey@20 {
+ 			reg = <0x20>;
+ 
+ 			interrupts-extended = <&tlmm 52 IRQ_TYPE_EDGE_FALLING>;
+-			pinctrl-names = "default";
+ 			pinctrl-0 = <&touchkey_irq_pin>;
++			pinctrl-names = "default";
+ 
+ 			vddio-supply = <&touchkey_enable>;
+ 			vdd-supply = <&pm8921_l29>;
+@@ -114,6 +80,51 @@ touchkey@20 {
+ 			linux,keycodes = <KEY_MENU KEY_BACK>;
+ 		};
+ 	};
++
++	led-controller {
++		compatible = "richtek,rt8515";
++		enf-gpios = <&tlmm 3 GPIO_ACTIVE_HIGH>;
++		vin-supply = <&vreg_flash>;
++		richtek,rfs-ohms = <16000>;
++		pinctrl-0 = <&cam_flash_en>;
++		pinctrl-names = "default";
++
++		led {
++			function = LED_FUNCTION_FLASH;
++			color = <LED_COLOR_ID_WHITE>;
++			flash-max-timeout-us = <250000>;
++		};
++	};
++
++	vreg_flash: regulator-flash {
++		compatible = "regulator-fixed";
++		regulator-name = "VREG_FLASH_3P3";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++		gpio = <&pm8921_mpps 4 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++		pinctrl-0 = <&flash_led_unlock>;
++		pinctrl-names = "default";
++	};
++
++	touchkey_enable: touchkey-enable {
++		compatible = "regulator-fixed";
++		regulator-name = "touchkey_enable";
++		gpio = <&tlmm 51 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++		regulator-boot-on;
++	};
++};
++
++&gsbi1 {
++	qcom,mode = <GSBI_PROT_SPI>;
++	pinctrl-0 = <&spi1_default>;
++	pinctrl-names = "default";
++	status = "okay";
++};
++
++&gsbi1_spi {
++	status = "okay";
+ };
+ 
+ &gsbi2 {
+@@ -141,42 +152,6 @@ light-sensor@39 {
+ 	};
+ };
+ 
+-&gsbi5 {
+-	qcom,mode = <GSBI_PROT_I2C_UART>;
+-	status = "okay";
+-};
+-
+-&gsbi5_serial {
+-	status = "okay";
+-};
+-
+-&sdcc1 {
+-	vmmc-supply = <&pm8921_l5>;
+-	status = "okay";
+-};
+-
+-&sdcc3 {
+-	vmmc-supply = <&pm8921_l6>;
+-	vqmmc-supply = <&pm8921_l7>;
+-
+-	pinctrl-0 = <&sdcc3_default_state>;
+-	pinctrl-1 = <&sdcc3_sleep_state>;
+-	pinctrl-names = "default", "sleep";
+-
+-	status = "okay";
+-};
+-
+-&gsbi1 {
+-	qcom,mode = <GSBI_PROT_SPI>;
+-	pinctrl-0 = <&spi1_default>;
+-	pinctrl-names = "default";
+-	status = "okay";
+-};
+-
+-&gsbi1_spi {
+-	status = "okay";
+-};
+-
+ &gsbi3 {
+ 	qcom,mode = <GSBI_PROT_I2C>;
+ 	status = "okay";
+@@ -193,93 +168,68 @@ touchscreen@4a {
+ 		interrupts = <11 IRQ_TYPE_EDGE_FALLING>;
+ 		vdda-supply = <&pm8921_lvs6>;
+ 		vdd-supply = <&pm8921_l17>;
+-		pinctrl-names = "default";
+ 		pinctrl-0 = <&touchscreen>;
++		pinctrl-names = "default";
+ 	};
+ };
+ 
+-&tlmm {
+-	cam_flash_en: cam-flash-en-state {
+-		pins = "gpio3";
+-		function = "gpio";
+-		drive-strength = <16>;
+-		bias-pull-down;
+-	};
++&gsbi5 {
++	qcom,mode = <GSBI_PROT_I2C_UART>;
++	status = "okay";
++};
+ 
+-	spi1_default: spi1-default-state {
+-		mosi-pins {
+-			pins = "gpio6";
+-			function = "gsbi1";
+-			drive-strength = <12>;
+-			bias-disable;
+-		};
++&gsbi5_serial {
++	status = "okay";
++};
+ 
+-		miso-pins {
+-			pins = "gpio7";
+-			function = "gsbi1";
+-			drive-strength = <12>;
+-			bias-disable;
+-		};
++&gsbi7 {
++	qcom,mode = <GSBI_PROT_I2C>;
+ 
+-		cs-pins {
+-			pins = "gpio8";
+-			function = "gsbi1";
+-			drive-strength = <12>;
+-			bias-disable;
+-			output-low;
+-		};
++	status = "okay";
++};
+ 
+-		clk-pins {
+-			pins = "gpio9";
+-			function = "gsbi1";
+-			drive-strength = <12>;
+-			bias-disable;
+-		};
+-	};
++&gsbi7_i2c {
++	status = "okay";
+ 
+-	gpio_keys_pin_a: gpio-keys-active-state {
+-		pins = "gpio40", "gpio50", "gpio81";
+-		function = "gpio";
+-		drive-strength = <8>;
+-		bias-disable;
+-	};
++	nfc@2b {
++		compatible = "nxp,pn544-i2c";
++		reg = <0x2b>;
++		interrupts-extended = <&tlmm 106 IRQ_TYPE_EDGE_RISING>;
++		enable-gpios = <&pm8921_gpio 21 GPIO_ACTIVE_HIGH>;
++		firmware-gpios = <&tlmm 92 GPIO_ACTIVE_HIGH>;
+ 
+-	touchscreen: touchscreen-int-state {
+-		pins = "gpio11";
+-		function = "gpio";
+-		output-enable;
+-		bias-disable;
+-		drive-strength = <2>;
++		pinctrl-0 = <&nfc_default &nfc_enable>;
++		pinctrl-names = "default";
+ 	};
++};
+ 
+-	nfc_default: nfc-default-state {
+-		irq-pins {
+-			pins = "gpio106";
+-			function = "gpio";
+-			drive-strength = <2>;
+-			bias-pull-down;
+-		};
++&gsbi12 {
++	qcom,mode = <GSBI_PROT_I2C>;
+ 
+-		firmware-pins {
+-			pins = "gpio92";
+-			function = "gpio";
+-			drive-strength = <2>;
+-			bias-disable;
+-		};
+-	};
++	status = "okay";
++};
+ 
+-	touchkey_i2c_pins: touchkey-i2c-state {
+-		pins = "gpio71", "gpio72";
+-		function = "gpio";
+-		drive-strength = <2>;
+-		bias-disable;
++&gsbi12_i2c {
++	status = "okay";
++
++	accelerometer@18 {
++		compatible = "bosch,bma254";
++		reg = <0x18>;
++		vdd-supply = <&pm8921_l9>;
++		vddio-supply = <&pm8921_lvs4>;
++
++		mount-matrix =  "-1", "0", "0",
++				"0",  "-1", "0",
++				"0",  "0", "1";
+ 	};
+ 
+-	touchkey_irq_pin: touchkey-irq-state {
+-		pins = "gpio52";
+-		function = "gpio";
+-		drive-strength = <2>;
+-		bias-disable;
++	magnetometer@2e {
++		compatible = "yamaha,yas532";
++		reg = <0x2e>;
++		vdd-supply = <&pm8921_l9>;
++		iovdd-supply = <&pm8921_lvs4>;
++
++		/* TODO: Figure out Mount Matrix */
+ 	};
+ };
+ 
+@@ -288,18 +238,27 @@ &pm8921 {
+ };
+ 
+ &pm8921_gpio {
++	nfc_enable: nfc-enable-state {
++		pins = "gpio21";
++		function = "normal";
++		bias-disable;
++		qcom,drive-strength = <PMIC_GPIO_STRENGTH_LOW>;
++		power-source = <PM8921_GPIO_S4>;
++	};
++
+ 	prox_sensor_int: prox-sensor-int-state {
+ 		pins = "gpio6";
+ 		function = "normal";
+ 		input-enable;
+ 		bias-disable;
+ 	};
++};
+ 
+-	nfc_enable: nfc-enable-state {
+-		pins = "gpio21";
+-		function = "normal";
+-		bias-disable;
+-		qcom,drive-strength = <PMIC_GPIO_STRENGTH_LOW>;
++&pm8921_mpps {
++	flash_led_unlock: flash-led-unlock-state {
++		pins = "mpp4";
++		function = "digital";
++		output-low;
+ 		power-source = <PM8921_GPIO_S4>;
+ 	};
+ };
+@@ -546,72 +505,113 @@ pm8921_ncp: ncp {
+ 	};
+ };
+ 
+-&usb_hs1_phy {
+-	v3p3-supply = <&pm8921_l3>;
+-	v1p8-supply = <&pm8921_l4>;
+-};
+-
+-&usb1 {
+-	dr_mode = "otg";
++&sdcc1 {
++	vmmc-supply = <&pm8921_l5>;
+ 	status = "okay";
+ };
+ 
+-&gsbi7 {
+-	qcom,mode = <GSBI_PROT_I2C>;
++&sdcc3 {
++	vmmc-supply = <&pm8921_l6>;
++	vqmmc-supply = <&pm8921_l7>;
++
++	pinctrl-0 = <&sdcc3_default_state>;
++	pinctrl-1 = <&sdcc3_sleep_state>;
++	pinctrl-names = "default", "sleep";
+ 
+ 	status = "okay";
+ };
+ 
+-&gsbi7_i2c {
+-	status = "okay";
++&tlmm {
++	cam_flash_en: cam-flash-en-state {
++		pins = "gpio3";
++		function = "gpio";
++		drive-strength = <16>;
++		bias-pull-down;
++	};
+ 
+-	nfc@2b {
+-		compatible = "nxp,pn544-i2c";
+-		reg = <0x2b>;
+-		interrupts-extended = <&tlmm 106 IRQ_TYPE_EDGE_RISING>;
+-		enable-gpios = <&pm8921_gpio 21 GPIO_ACTIVE_HIGH>;
+-		firmware-gpios = <&tlmm 92 GPIO_ACTIVE_HIGH>;
++	spi1_default: spi1-default-state {
++		mosi-pins {
++			pins = "gpio6";
++			function = "gsbi1";
++			drive-strength = <12>;
++			bias-disable;
++		};
+ 
+-		pinctrl-0 = <&nfc_default &nfc_enable>;
+-		pinctrl-names = "default";
+-	};
+-};
++		miso-pins {
++			pins = "gpio7";
++			function = "gsbi1";
++			drive-strength = <12>;
++			bias-disable;
++		};
+ 
+-&gsbi12 {
+-	qcom,mode = <GSBI_PROT_I2C>;
++		cs-pins {
++			pins = "gpio8";
++			function = "gsbi1";
++			drive-strength = <12>;
++			bias-disable;
++			output-low;
++		};
+ 
+-	status = "okay";
+-};
++		clk-pins {
++			pins = "gpio9";
++			function = "gsbi1";
++			drive-strength = <12>;
++			bias-disable;
++		};
++	};
+ 
+-&gsbi12_i2c {
+-	status = "okay";
++	touchscreen: touchscreen-int-state {
++		pins = "gpio11";
++		function = "gpio";
++		output-enable;
++		bias-disable;
++		drive-strength = <2>;
++	};
+ 
+-	accelerometer@18 {
+-		compatible = "bosch,bma254";
+-		reg = <0x18>;
+-		vdd-supply = <&pm8921_l9>;
+-		vddio-supply = <&pm8921_lvs4>;
++	gpio_keys_pin_a: gpio-keys-active-state {
++		pins = "gpio40", "gpio50", "gpio81";
++		function = "gpio";
++		drive-strength = <8>;
++		bias-disable;
++	};
+ 
+-		mount-matrix =  "-1", "0", "0",
+-				"0",  "-1", "0",
+-				"0",  "0", "1";
++	touchkey_irq_pin: touchkey-irq-state {
++		pins = "gpio52";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
+ 	};
+ 
+-	magnetometer@2e {
+-		compatible = "yamaha,yas532";
+-		reg = <0x2e>;
+-		vdd-supply = <&pm8921_l9>;
+-		iovdd-supply = <&pm8921_lvs4>;
++	touchkey_i2c_pins: touchkey-i2c-state {
++		pins = "gpio71", "gpio72";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
+ 
+-		/* TODO: Figure out Mount Matrix */
++	nfc_default: nfc-default-state {
++		firmware-pins {
++			pins = "gpio92";
++			function = "gpio";
++			drive-strength = <2>;
++			bias-disable;
++		};
++
++		irq-pins {
++			pins = "gpio106";
++			function = "gpio";
++			drive-strength = <2>;
++			bias-pull-down;
++		};
+ 	};
+ };
+ 
+-&pm8921_mpps {
+-	flash_led_unlock: flash-led-unlock-state {
+-		pins = "mpp4";
+-		function = "digital";
+-		output-low;
+-		power-source = <PM8921_GPIO_S4>;
+-	};
++&usb_hs1_phy {
++	v3p3-supply = <&pm8921_l3>;
++	v1p8-supply = <&pm8921_l4>;
++};
++
++&usb1 {
++	dr_mode = "otg";
++	status = "okay";
+ };
 
- .../dts/qcom/qcom-msm8960-samsung-expressatt.dts   | 420 +++++++++++----------
- arch/arm/boot/dts/qcom/qcom-msm8960.dtsi           |  35 ++
- 2 files changed, 257 insertions(+), 198 deletions(-)
----
-base-commit: e9ec05addd1a067fc7cb218f20ecdc1b1b0898c0
-change-id: 20260331-expressatt_fuel_guage-465dfb3f87ab
-prerequisite-patch-id: 6fdd0efa5eda512b442b885df80774d1a7037df7
-prerequisite-patch-id: 12d296f83ccb1bdfb8d06a72e476bf51ae5f4e6c
-prerequisite-patch-id: a970acf2080143f41ae0935dd2c57bb71f5bf338
-prerequisite-patch-id: fd25fef58503c5e5cf742e79b124948c7f6b98d9
-prerequisite-patch-id: 68603a680b24921759425fc289e61fc4435e5ccd
-prerequisite-message-id: <20251205-expressatt-touchkey-v1-1-1444b927c9f3@gmail.com>
-prerequisite-patch-id: 8de4de7909722ccaf385c4224f25a623eaa72c28
-prerequisite-message-id: <20260331-expressatt_camera_flash-v4-0-f1e99f474513@gmail.com>
-prerequisite-patch-id: ab8b8d87fd2d518c4c5b5dace3f22238d1abbe49
-prerequisite-patch-id: 47e32e653e520a27770bb05d99135694b0128ba0
-prerequisite-patch-id: 7ef7df61e7ef6476a35811d765f522f793d9ecc7
-
-Best regards,
 -- 
-Rudraksha Gupta <guptarud@gmail.com>
+2.53.0
 
 
 
