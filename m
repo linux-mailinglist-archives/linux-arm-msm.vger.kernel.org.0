@@ -1,55 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-101203-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101200-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 0GrkNfOOzGnXTwYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101203-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Apr 2026 05:20:19 +0200
+	id gKM/C7WOzGn+TwYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101200-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Apr 2026 05:19:17 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0F6F37433A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Apr 2026 05:20:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 15D993742FA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Apr 2026 05:19:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id B72593070014
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2026 03:16:30 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 090A0304C945
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2026 03:16:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 21F093806B8;
-	Wed,  1 Apr 2026 03:16:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD58B25FA29;
+	Wed,  1 Apr 2026 03:15:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="lFv8scxc"
+	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="rNZ37vFi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-171.mta0.migadu.com (out-171.mta0.migadu.com [91.218.175.171])
+Received: from out-181.mta0.migadu.com (out-181.mta0.migadu.com [91.218.175.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C9FE37F8D3
-	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Apr 2026 03:16:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 343EA37D10D
+	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Apr 2026 03:15:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775013365; cv=none; b=thK/xPnM37ywUvSBQ9k/WQg6NwBgHvhiD7OqH4zB7eGmrPYUNPMxN09FV1oCKGSsbRJyiwJmHqXJpdAvHSWg2e1oC72MFiNw7pgCylcQe8sqiA7kquD77kG7zL5Cb9al7XmmWxfs53FAvAVIxVK7UrU9bVS/2lW7dZw9iFflCeo=
+	t=1775013359; cv=none; b=OWBxfW4Cuf2iThknlZEzTqx1qgwZMdLyfjP+Uom56x90f/bTLkmlDNPg6hVtzG7gnMO5YGbnq1vzSARRB0/+th2HLriJ87NU49E7DZZjh7OQbfj/d6OcipCeYYCJY3LHpsXnOOshO5z7prJUGElB9TYEAWUKJ/of81gkfoqh9ec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775013365; c=relaxed/simple;
-	bh=3Cg+LNqweQ6c1bsyjxzyjVlWx4GC5+id9Gc5bYkRg2U=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=A66gjEvnJFhZhW0WsZpsHkwiI/5uEB36afqWxo7zsQJTyFIbXCh+7mYEnuAOWn3PAal9uiOqS84oMJ35dYz+rcD+9e6EDwiGGWOxG1ivgD0o6m15rgskXoqqZYSEmAd9y8Vx5PU63pvTbPAgFmq4KgDgVUw4kVwegf/PUSVeUZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=lFv8scxc; arc=none smtp.client-ip=91.218.175.171
+	s=arc-20240116; t=1775013359; c=relaxed/simple;
+	bh=sfr5sGWKLV+7cUgvRiDdpIW68jelrwa3IWn9b6yAFYg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=s/xHv08hPLVRRphCtA7niVv0uL6YqjfIZdTp5V2reLd0+NB/vA0/KKhwsJwYcvkWOkiO0uHLX5rUk0VapuhFQsYM3eEpKFWwwoRDqHGiz2CoIugTAhYP6/1SCcGkzy6pEqHG9cdrHVXpXc8/ePtt6YDlQWoODapDkwO4q6XtUw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=rNZ37vFi; arc=none smtp.client-ip=91.218.175.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=postmarketos.org
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
-	s=key1; t=1775013351;
+	s=key1; t=1775013354;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=jT1Ep2dNDtPyO+bNApnNtdUbbiWrC7hl5nQUJtP/iqo=;
-	b=lFv8scxcK11ddki7+05AhL9tJYA0ycEFjAducqb3KRG0Rflzdzd0XX6qxVd8q0GiLT3SYa
-	huWEsKhv1urPq9jqxtf6aTZ9p+wz9wbVj7FLfcn6Bhbvqf+PL14JSRSShOmneHESwhn3hK
-	PQdSe9fRyItRoeo632tIFhfN6Yg9+YcJMGjlqd1tqD5DbQDE9ZjkdjsivjSeme8aRLQFGx
-	gFHF8ZNmPYQw5rFXpc2JdsJ5zVNLLwiru/wXKFk5oVRW4IngRVLH3oL4Ly3Z4OQ3ee/Pbb
-	yFBm1i4ko4IlhDnGYUl6f9MKnW+gk5dIEZL+b4IL1FpXRK3u3CLNyepJ2CibYw==
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=vS032EvzVpRtfXSTOpPqWmTUv6U6bvbz7aB2vYumwkc=;
+	b=rNZ37vFiVJ7a52a8JvW1yYb1biVPo2psn3XbM4MHLjKnNOGarZ6PUomSTaYVtpElG3yny/
+	yiir48NXO3o569slUh7m/iv5+NwJLPtzbozBv3pHLkQ/EJsA+/fLmav52W+g12ghPvsC1T
+	sztNbm5myVnEW+lCl4i9/q5VeP78aQEqwbJM6qJeriUcKGF5vw8IOI1NKgR1F0FmaM1PrK
+	BKAFdp3nT9m12i+wRxSoHTX8w5uOrKs+YmSYOXDe0B3ANeRupMt1ERz5CSXAqfw9o08mrv
+	v5vusvycj1lrsXWoASpH7cZZqtuFGSezAuOWW2hrj7UvYaqE2p6sBQrtXE9aWQ==
 From: Paul Sajna <sajattack@postmarketos.org>
-Subject: [PATCH v7 00/15] arm64: dts: qcom: sdm845-lg: Improve hardware
- support in devicetree
-Date: Tue, 31 Mar 2026 20:15:05 -0700
-Message-Id: <20260331-judyln-dts-v7-0-87217b15fefb@postmarketos.org>
+Date: Tue, 31 Mar 2026 20:15:06 -0700
+Subject: [PATCH v7 01/15] arm64: dts: qcom: sdm845-lg-common: Sort nodes
+ and properties
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,13 +59,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/3XQ3U7DMAwF4FeZck2Qnd92Qoj3QFwkqbsVtnYkX
- cU07d3Jug1WQS+PLX+yzpElig0ltlwcWaShSU3X5mAfFiysXbsi3lQ5MwFCQ4nI3/fVYdPyqk8
- cbVBIuqwC1Cwf7CLVzdeIvb5dcqTPfTb7y5BtKSU3msvF05WEG7lzLW34gBx5IXSwSoH03r/su
- tRvXfygvkuPXVw9szO+blLfxcP4+ICjfgXl/Y+ZAy6kV97aEqpAf7hRG8S9YCaCyIImNGRAGOn
- qGUHeCaKYCDILHlWoSypdXs4I6kdAFHoiqCw47QxoAC+MnRH0ryBg2oPOQgEB6zq4QhVzgrkJB
- qSYCubcZFlZCA6NxvCPcDqdvgG6VnFRUgIAAA==
-X-Change-ID: 20250911-judyln-dts-17c41e59dc0f
+Message-Id: <20260331-judyln-dts-v7-1-87217b15fefb@postmarketos.org>
+References: <20260331-judyln-dts-v7-0-87217b15fefb@postmarketos.org>
+In-Reply-To: <20260331-judyln-dts-v7-0-87217b15fefb@postmarketos.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -75,13 +72,12 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  Christopher Brown <crispybrown@gmail.com>, 
  Paul Sajna <sajattack@postmarketos.org>, 
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- Pavel Machek <pavel@ucw.cz>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1775013347; l=5079;
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1775013347; l=4272;
  i=sajattack@postmarketos.org; s=20250422; h=from:subject:message-id;
- bh=3Cg+LNqweQ6c1bsyjxzyjVlWx4GC5+id9Gc5bYkRg2U=;
- b=LffKWDeRCXRS3cGke62M5mJhKqYPYnDFkRK0sAIcvxg6R4g3tfyv2gOcGS/Hw8reN+FjNQnur
- VpGGWEXZYz2CePmbZHWLiTk2SGJT0ZU5bTMnMd7MpbOfLXfmSuIWbDW
+ bh=sfr5sGWKLV+7cUgvRiDdpIW68jelrwa3IWn9b6yAFYg=;
+ b=r3QHidy0VWifypBap8f7UPyRoEJHS3ntq/kvsPXjjSCzmY95s330JxvBf/5Ce/mhMmpyg5P89
+ vu9zx2RMdAwDv3eDyzu/c6jO/7Tmz33fCord4cM2wRkO1ljUgvpnCE9
 X-Developer-Key: i=sajattack@postmarketos.org; a=ed25519;
  pk=TwacvEOiRJ2P2oAdEqIDrtQTL18QS4FfcHfP/zNsxkQ=
 X-Migadu-Flow: FLOW_OUT
@@ -95,16 +91,16 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-101203-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-101200-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[3];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,lists.sr.ht,tuta.io,gmail.com,postmarketos.org,oss.qualcomm.com,ucw.cz];
-	RCPT_COUNT_TWELVE(0.00)[17];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.sr.ht,tuta.io,gmail.com,postmarketos.org,oss.qualcomm.com];
+	RCPT_COUNT_TWELVE(0.00)[16];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
+	NEURAL_HAM(-0.00)[-0.995];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[sajattack@postmarketos.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[postmarketos.org:+];
@@ -112,134 +108,192 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,tuta.io:email,postmarketos.org:dkim,postmarketos.org:email,postmarketos.org:mid]
-X-Rspamd-Queue-Id: B0F6F37433A
+	DBL_BLOCKED_OPENRESOLVER(0.00)[b2000000:email,9d400000:email,qualcomm.com:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 15D993742FA
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Rollup of improved hardware support via devicetree for LG G7 ThinQ
-(judyln) from sdm845-mainline kernel fork
+Improve adherance to style guidelines below:
+https://docs.kernel.org/devicetree/bindings/dts-coding-style.html
 
-Notably, this patch-series enables full DRM acceleration and wifi,
-among other small improvements in individual commits
-
-after this patch-series the main things that remain to be worked
-on include touchscreen, audio, and modem.
-
-Depends upon panel driver patch-series https://lore.kernel.org/all/20250910-judyln-panel-v1-1-825c74403bbb@postmarketos.org/T/#r9a976ca01e309b6c03100e984a26a0ffc2fe2002
-
-Co-developed-by: Amir Dahan <system64fumo@tuta.io>
-Co-developed-by: Christopher Brown <crispybrown@gmail.com>
-Signed-off-by: Amir Dahan <system64fumo@tuta.io>
-Signed-off-by: Christopher Brown <crispybrown@gmail.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
 ---
-Changes in v7:
-- Reorganize commits
-- Add firmware-paths for judyp
-- Reword framebuffer reference commit message
-- Squash qups and dma-controllers commits
-- Link to v6: https://lore.kernel.org/r/20260323-judyln-dts-v6-0-29d70ca1651c@postmarketos.org
+ arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi | 124 ++++++++++++-------------
+ 1 file changed, 62 insertions(+), 62 deletions(-)
 
-Changes in v6:
-- Mistakes were made with b4 and branch was rebuilt, hopefully correctly
-- Split more things that got mixed into the sort commit (qups and venus)
-- Added more backlight properties from downstream
-- Framebuffer added back in
-- Update compatible for panel
-- Add qcom,te-source
-- Reference memory region in framebuffer instead of reg
-- Correction to rmtfs_mem
-- Set lab/ibb to 5.5V
-- Fixed flashlight/torch
-- Update commit message for gsi-loader=self
-- Update LG to capitalized in firmware paths
-- Remove qcom,snoc-host-cap-skip-quirk dependency (break wifi)
-- Enable dma controllers
-- Link to v5: https://lore.kernel.org/r/20251203-judyln-dts-v5-0-80c1ffca8487@postmarketos.org
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+index 0ee2f4b99fbd..93ed8f240461 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+@@ -38,11 +38,6 @@ reserved-memory {
+ 		#size-cells = <2>;
+ 		ranges;
+ 
+-		qseecom_mem: memory@b2000000 {
+-			reg = <0 0xb2000000 0 0x1800000>;
+-			no-map;
+-		};
+-
+ 		gpu_mem: memory@8c415000 {
+ 			reg = <0 0x8c415000 0 0x2000>;
+ 			no-map;
+@@ -99,6 +94,11 @@ memory@9d400000 {
+ 			no-map;
+ 		};
+ 
++		qseecom_mem: memory@b2000000 {
++			reg = <0 0xb2000000 0 0x1800000>;
++			no-map;
++		};
++
+ 		rmtfs_mem: rmtfs-region@f0800000 {
+ 			compatible = "qcom,rmtfs-mem";
+ 			reg = <0 0xf0800000 0 0x202000>;
+@@ -467,14 +467,22 @@ &mss_pil {
+ 	status = "okay";
+ };
+ 
++&pm8998_gpios {
++	vol_up_pin_a: vol-up-active-state {
++		pins = "gpio6";
++		function = "normal";
++		input-enable;
++		bias-pull-up;
++		qcom,drive-strength = <PMIC_GPIO_STRENGTH_NO>;
++	};
++};
++
+ &pm8998_resin {
+ 	linux,code = <KEY_VOLUMEDOWN>;
+ 	status = "okay";
+ };
+ 
+ &sdhc_2 {
+-	status = "okay";
+-
+ 	cd-gpios = <&tlmm 126 GPIO_ACTIVE_LOW>;
+ 
+ 	pinctrl-names = "default";
+@@ -482,55 +490,8 @@ &sdhc_2 {
+ 
+ 	vmmc-supply = <&vreg_l21a_2p95>;
+ 	vqmmc-supply = <&vddpx_2>;
+-};
+-
+-/*
+- * UFS works partially and only with clk_ignore_unused.
+- * Sometimes it crashes with I/O errors.
+- */
+-&ufs_mem_hc {
+-	status = "okay";
+-
+-	reset-gpios = <&tlmm 150 GPIO_ACTIVE_LOW>;
+-
+-	vcc-supply = <&vreg_l20a_2p95>;
+-	vcc-max-microamp = <600000>;
+-};
+-
+-&ufs_mem_phy {
+-	status = "okay";
+-
+-	vdda-phy-supply = <&vdda_ufs1_core>;
+-	vdda-pll-supply = <&vdda_ufs1_1p2>;
+-};
+-
+-&usb_1 {
+-	status = "okay";
+-};
+-
+-&usb_1_dwc3 {
+-	/* TODO: these devices have usb id pin */
+-	dr_mode = "peripheral";
+-};
+-
+-&usb_1_hsphy {
+-	status = "okay";
+-
+-	vdd-supply = <&vdda_usb1_ss_core>;
+-	vdda-pll-supply = <&vdda_qusb_hs0_1p8>;
+-	vdda-phy-dpdm-supply = <&vdda_qusb_hs0_3p1>;
+-
+-	qcom,imp-res-offset-value = <8>;
+-	qcom,hstx-trim-value = <QUSB2_V2_HSTX_TRIM_21_6_MA>;
+-	qcom,preemphasis-level = <QUSB2_V2_PREEMPHASIS_5_PERCENT>;
+-	qcom,preemphasis-width = <QUSB2_V2_PREEMPHASIS_WIDTH_HALF_BIT>;
+-};
+ 
+-&usb_1_qmpphy {
+ 	status = "okay";
+-
+-	vdda-phy-supply = <&vdda_usb1_ss_1p2>;
+-	vdda-pll-supply = <&vdda_usb1_ss_core>;
+ };
+ 
+ /* PINCTRL - additions to nodes defined in sdm845.dtsi */
+@@ -571,12 +532,51 @@ sd_card_det_n: sd-card-det-n-state {
+ 	};
+ };
+ 
+-&pm8998_gpios {
+-	vol_up_pin_a: vol-up-active-state {
+-		pins = "gpio6";
+-		function = "normal";
+-		input-enable;
+-		bias-pull-up;
+-		qcom,drive-strength = <PMIC_GPIO_STRENGTH_NO>;
+-	};
++/*
++ * UFS works partially and only with clk_ignore_unused.
++ * Sometimes it crashes with I/O errors.
++ */
++&ufs_mem_hc {
++	reset-gpios = <&tlmm 150 GPIO_ACTIVE_LOW>;
++
++	vcc-supply = <&vreg_l20a_2p95>;
++	vcc-max-microamp = <600000>;
++
++	status = "okay";
++};
++
++&ufs_mem_phy {
++	vdda-phy-supply = <&vdda_ufs1_core>;
++	vdda-pll-supply = <&vdda_ufs1_1p2>;
++
++	status = "okay";
++};
++
++&usb_1 {
++	status = "okay";
++};
++
++&usb_1_dwc3 {
++	/* TODO: these devices have usb id pin */
++	dr_mode = "peripheral";
++};
++
++&usb_1_hsphy {
++	vdd-supply = <&vdda_usb1_ss_core>;
++	vdda-pll-supply = <&vdda_qusb_hs0_1p8>;
++	vdda-phy-dpdm-supply = <&vdda_qusb_hs0_3p1>;
++
++	qcom,imp-res-offset-value = <8>;
++	qcom,hstx-trim-value = <QUSB2_V2_HSTX_TRIM_21_6_MA>;
++	qcom,preemphasis-level = <QUSB2_V2_PREEMPHASIS_5_PERCENT>;
++	qcom,preemphasis-width = <QUSB2_V2_PREEMPHASIS_WIDTH_HALF_BIT>;
++
++	status = "okay";
++};
++
++&usb_1_qmpphy {
++	vdda-phy-supply = <&vdda_usb1_ss_1p2>;
++	vdda-pll-supply = <&vdda_usb1_ss_core>;
++
++	status = "okay";
+ };
 
-Changes in v5:
-- update system64's email
-- reduce lab/ibb voltage range
-- status should go last
-- remove rebase leftovers
-- fix flashlight
-- Link to v4: https://lore.kernel.org/r/20251125-judyln-dts-v4-0-a5a60500b267@postmarketos.org
-
-Changes in v4:
-- add panel identifier in addition to ddic
-- make sde_te pull-down
-- fixup flash current
-- remove framebuffer reserved-mem
-- remove manual lower guard
-- depend upon https://lore.kernel.org/all/20251110-skip-host-cam-qmi-req-v2-0-0daf485a987a@ixit.cz/T
-- reword commits
-- Link to v3: https://lore.kernel.org/r/20250928-judyln-dts-v3-0-b14cf9e9a928@postmarketos.org
-
-Changes in v3:
-- change firmware paths to lowercase 'lg' (matching dt-bindings)
-- fix signoffs
-- add wifi dmesg to commit message
-- remove regulator-always-on from ibb
-- remove framebuffer
-- remove msm ids
-- don't continue commit subject into commit messages
-- split bluetooth node
-- add sbu uart details to commit message
-- change ipa gsi-loader to self
-- Link to v2: https://lore.kernel.org/r/20250916-judyln-dts-v2-0-5e16e60263af@postmarketos.org
-
-Changes in v2:
-- sort at the start
-- drop unnecessary labels
-- drop unnecessary gmu
-- multi-led
-- split fb-panel changes
-- expand upon firmware commit message
-- use qcom,calibration-variant instead of
-  qcom,ath10k-calibration-variant
-- change firmware paths to include "LG"
-- remove framebuffer reservation
-- add lab/ibb
-
-- Link to v1: https://lore.kernel.org/r/20250913-judyln-dts-v1-0-23b4b7790dce@postmarketos.org
-
----
-Amir Dahan (1):
-      arm64: dts: qcom: sdm845-lg-common: Add LEDs
-
-Christopher Brown (1):
-      arm64: dts: qcom: sdm845-lg-judyln: Add battery and charger
-
-Paul Sajna (13):
-      arm64: dts: qcom: sdm845-lg-common: Sort nodes and properties
-      arm64: dts: qcom: sdm845-lg-judyln: Add firmware nodes, change path
-      arm64: dts: qcom: sdm845-lg-judyp: Define firmware paths for judyp
-      arm64: dts: qcom: sdm845-lg-common: Enable venus
-      arm64: dts: qcom: sdm845-lg-common: Enable qups and their dma controllers
-      arm64: dts: qcom: sdm845-lg: Add uarts and Bluetooth
-      arm64: dts: qcom: sdm845-lg-judyln: Add lab/ibb
-      arm64: dts: qcom: sdm845-lg-judyln: Add display panel
-      arm64: dts: qcom: sdm845-lg: Add wifi nodes
-      arm64: dts: qcom: sdm845-lg-common: Add chassis-type
-      arm64: dts: qcom: sdm845-lg-common: Add camera flash
-      arm64: dts: qcom: sdm845-lg-common: Change ipa gsi-loader to 'self', add memory-region
-      arm64: dts: qcom: sdm845-lg-{judyln, judyp}: Reference memory region in fb
-
- arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi | 228 +++++++++++++++++++------
- arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts  | 129 +++++++++++++-
- arch/arm64/boot/dts/qcom/sdm845-lg-judyp.dts   |  30 +++-
- 3 files changed, 319 insertions(+), 68 deletions(-)
----
-base-commit: 674feabdc26e80c4dbc884d7b6e2d2a4b93919e6
-change-id: 20250911-judyln-dts-17c41e59dc0f
-prerequisite-message-id: <20250910-judyln-panel-v1-1-825c74403bbb@postmarketos.org>
-prerequisite-patch-id: e51151ea7f8fdad6ad7d90713febc5c6b6fc4f9c
-prerequisite-patch-id: b3dd44250da9cd12bc5b2d0d7e865dbe19ceed92
-prerequisite-patch-id: fd6c8077806cb03fcf37d0e0d730314c2760e334
-
-Best regards,
 -- 
-Paul Sajna <sajattack@postmarketos.org>
+2.53.0
 
 
