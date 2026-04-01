@@ -1,113 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-101312-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101313-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id eHttF1L6zGnRYgYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101312-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Apr 2026 12:58:26 +0200
+	id OLRMIX/+zGnRYgYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101313-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Apr 2026 13:16:15 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4596B378F28
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Apr 2026 12:58:26 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8644337936E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Apr 2026 13:16:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id D047D307DAA3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2026 10:56:24 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id A6C29311B51F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2026 11:02:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 595593F7E65;
-	Wed,  1 Apr 2026 10:55:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC8A03F9F35;
+	Wed,  1 Apr 2026 10:58:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k02IpKij"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Dq/N1i4Z"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CB593DDDCE;
-	Wed,  1 Apr 2026 10:55:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8766C3AA515;
+	Wed,  1 Apr 2026 10:58:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775040929; cv=none; b=jUwsgdKLIGu7EJKT0OGMzkJLpbtj4XI18Q28sIAuTzXXW7PUYoSHkiVYRUwGYfRNRbIr5lw/KeYEFBJjOQvfQVsRgLiPuwb1tDgjpNIysE1EXGfgGK+OGKA1O2h2mm0S4KWl4YS0v9HffUeDZeoxKlUOUTnUM9k7hGK4J4imDGY=
+	t=1775041118; cv=none; b=XcvUE16bZDV2cO6Gt2DvJaRtpPluWqIWLU/cKGVJMBfIimtO3Kbm3ke3a/VtcevuSbtMyvkUn5OGpqSEWanKpQV6A2OyAMVxf3uqivi0Q92kNSAZ4MOb5z5t5lVcgf7y/VC+BWSmpbpjEAa9Z4Q5uiLV3LZsf2lC68rlacL3Gew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775040929; c=relaxed/simple;
-	bh=FifC0TABefbI8m3DHxVVECYbxBgXfp7dc9pcZyU+ZnA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZvuXNRmzSr+kPvedpCIpviui/XaNCLQ1eY3+/XusD/wjyD+IH49dw1PiUAlmzH1iOFm4zncobDsTbKoLndE5ivXpuRdHxkFTMh6qxBD1YlGBCeA9hxEZnLlVmlM7fNh8JkRaQERoEZy5Pbtv22KOCyq/XMKy6FZqSq/MO3rilNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k02IpKij; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40B66C4CEF7;
-	Wed,  1 Apr 2026 10:55:28 +0000 (UTC)
+	s=arc-20240116; t=1775041118; c=relaxed/simple;
+	bh=ezAK9PaYoZAhT535h1VMNEVISlErLQCrCvU6o7x3R68=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DOy0Ja8AreKuAJmHvlKP3DXXewmo+cwuUjzmg7hVY/uDIHpLGsUuMLs7XKm8BuyLBfVmE6U4HfmE4rnlWfikSRkNm0dA0uHibwMh8HOOleTNS0ewvgU3GJYWlKN043yJZx8eegVzEYljKnU+8GuzGqgVxr99pFQmESCcOAmBG54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Dq/N1i4Z; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55473C2BCB0;
+	Wed,  1 Apr 2026 10:58:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775040928;
-	bh=FifC0TABefbI8m3DHxVVECYbxBgXfp7dc9pcZyU+ZnA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=k02IpKijT0IG0969pYGr58wi6gZ5ZLK1AUh4K6Kkn5a3q139VgyRL/SJofXet3BQV
-	 e8onBoAukteqOl3vWxM2mjFt4u+TipMxjSnQXdjSO+tGvktHHJjorCCVozFKCq+vFe
-	 QRmeTLdVEYM07mHag2aFTj34ERwnuhty4xIgcpZoL96EwghhUQkAu9vF93iKwdJcm/
-	 FMFWigO5Bw0xwPgKDOjKasFP8y29yaHPJk2L/IdwR3JUEsLMQZGJXGCfclWZZjOc/m
-	 mgpUNJou9uSOyQd9v2rLqjPXIEE8lCZqv//920gEaGtXchhPOdrvNVeC5P+zeLnS+c
-	 RdpaHeWnBhmCQ==
-Date: Wed, 1 Apr 2026 12:55:26 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Alexander Koskovich <akoskovich@pm.me>
-Cc: Srinivas Kandagatla <srini@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Luca Weiss <luca.weiss@fairphone.com>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: nvmem: qfprom: Add Milos compatible
-Message-ID: <20260401-sceptical-jackdaw-of-awe-a9876b@quoll>
-References: <20260331-milos-qfprom-v1-0-36017cc642db@pm.me>
- <20260331-milos-qfprom-v1-1-36017cc642db@pm.me>
+	s=k20201202; t=1775041118;
+	bh=ezAK9PaYoZAhT535h1VMNEVISlErLQCrCvU6o7x3R68=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Dq/N1i4ZnrHe0pMbN5reUt2GDufBmtpBpsfq/DDQ2a3MP/Z2EgKxDEYtKi4nzW7I5
+	 hVrvwbAos9bZiMu/rjKLTS8oT6DvqQjuP193KeJMlzu7trXicBWvb9te9OljSiCxMX
+	 +YnBBzrDUftBY3MmeGNoSmDoyjTC9P2yHMwqujxIXHRY6lfEH1AkK2bZ5pdNplD8Xl
+	 VNqaab13PNuM21gZZCF7DU7AjCZOjwVCN7K+eTI32z2bl71+jZWQwgqL+OHeJq8vuA
+	 qjbsxcVwkBG3dqqkx2DqrJCZwgShhJBLR3+two6iRGm/H96ktDpvDDpHHK1jxxkElJ
+	 piyHUZDlOwKaQ==
+Message-ID: <39b31606-b4e1-48bb-b9cc-911c1ac350fc@kernel.org>
+Date: Wed, 1 Apr 2026 11:58:30 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260331-milos-qfprom-v1-1-36017cc642db@pm.me>
-X-Spamd-Result: default: False [-0.16 / 15.00];
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 2/5] media: iris: scale MMCX power domain on SM8250
+To: Ulf Hansson <ulf.hansson@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
+ Jonathan Marek <jonathan@marek.ca>, "Rafael J. Wysocki" <rafael@kernel.org>,
+ Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>, Hans Verkuil <hverkuil@kernel.org>,
+ Stefan Schmidt <stefan.schmidt@linaro.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Dikshita Agarwal <dikshita@qti.qualcomm.com>, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-media@vger.kernel.org,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+References: <20260209-iris-venus-fix-sm8250-v5-0-0a22365d3585@oss.qualcomm.com>
+ <20260209-iris-venus-fix-sm8250-v5-2-0a22365d3585@oss.qualcomm.com>
+ <5e2635ac-35de-645b-b5e7-235923f844ce@oss.qualcomm.com>
+ <x5gv6dxdum5klzfjyo7xjqull6o43okkmkn7avssg26epbvrz6@z2brpssbk7iv>
+ <0b41ee7c-83fe-d604-b750-8a5a0bd62bf8@oss.qualcomm.com>
+ <CAPDyKFrO3DzfG0aW4z4w87j_iWM=3dpvp=2Wgr4MX1Bin5-6ZA@mail.gmail.com>
+ <6yfn6ux3gbin2dtopdxxv4okinspueryuey5vfdq633gsewc6r@ttp56brnpgvr>
+ <gX7v5Lyaw6K_7HLFrWAPRIukMU5BJ9bGDg4RNePhYxZ4A9KcMe1HWULG-XqG1czNCzN3e2BMPQV85a2184NwPQ==@protonmail.internalid>
+ <CAPDyKFpm7ujNw51dVpPaHCwssjgYe1JVBEyrQ_1CsPbDJuW0Ww@mail.gmail.com>
+From: Bryan O'Donoghue <bod@kernel.org>
+Content-Language: en-US
+In-Reply-To: <CAPDyKFpm7ujNw51dVpPaHCwssjgYe1JVBEyrQ_1CsPbDJuW0Ww@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_RHS_NOT_FQDN(0.50)[];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-101312-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-101313-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[kernel.org:+];
-	MISSING_XM_UA(0.00)[];
-	TO_DN_SOME(0.00)[];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[28];
+	FROM_HAS_DN(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RCPT_COUNT_SEVEN(0.00)[11];
+	FROM_NEQ_ENVFROM(0.00)[bod@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,pm.me:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 4596B378F28
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,huawei];
+	TO_DN_SOME(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 8644337936E
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Wed, Apr 01, 2026 at 02:24:57AM +0000, Alexander Koskovich wrote:
-> Document compatible string for the QFPROM on Milos platform.
+On 01/04/2026 11:46, Ulf Hansson wrote:
+>>> The intent was for this patch to be part of v7.0-rc1, but I failed
+>>> with my pull-request to Linus.
+>>>
+>>> Instead this will be part of v7.1-rc1, assuming everything goes as expected.
+>>>
+>>> Is it possible to drop/defer these changes until v7.2?
+>> It would be very sad.
+> Right.
 > 
-> Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
-> ---
->  Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml | 1 +
->  1 file changed, 1 insertion(+)
+> Since it's my mistake, let me reconsider. If I rebase my branch and
+> share the necessary commit through an immutable branch that you can
+> pull in. Would that work for you?
+> 
+> Kind regards
+> Uffe
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+Yes. Please go ahead.
 
-Best regards,
-Krzysztof
-
+---
+bod
 
