@@ -1,56 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-101207-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101208-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id YO93LhOQzGnXTwYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101207-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Apr 2026 05:25:07 +0200
+	id SD2dCiKQzGnXTwYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101208-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Apr 2026 05:25:22 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 431BC3744F1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Apr 2026 05:25:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5FCDD37450E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Apr 2026 05:25:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 8594E30AA17C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2026 03:17:17 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 36A1A313E522
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Apr 2026 03:17:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7917382F2B;
-	Wed,  1 Apr 2026 03:16:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 909CC35AC36;
+	Wed,  1 Apr 2026 03:16:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="Tv4Iqk5O"
+	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="kFE7mbMO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-184.mta0.migadu.com (out-184.mta0.migadu.com [91.218.175.184])
+Received: from out-173.mta0.migadu.com (out-173.mta0.migadu.com [91.218.175.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68968382F1F
-	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Apr 2026 03:16:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.184
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37BFC37FF56
+	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Apr 2026 03:16:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775013377; cv=none; b=Ffk7+fn9XO/n/SMEuFdivyZNOHz0wSPpC0szWZX2jv3yoNfabaOzZbR8EYyuX7ZLsP+flyFPqQGaVdXNtJchFclpJoknY4D4dFPM1RYwJmTVLTTVUUUlfHqON9qKM6C1RUD8d0YKKLWTM0MlSN1pgxVY+yxs6IUPb4mdoiwS5hs=
+	t=1775013381; cv=none; b=h/f//JDTcTS8+rKQBDkG+8MMtFjH1lvuEqSkA0t8G/sX0B8LTjOa2b67uVMhqvJEjGEFKzOHuaax9UfxZIpVFlbrSr40XvJx2CmY5P+262Jl0czNVYB/CBhEsQah/CetuDDvtXSQSlJKP0eT97euZ2rr7PnDRvTQANPEczM+jNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775013377; c=relaxed/simple;
-	bh=vHcmJbJnFiriXlFNhyWcvijfXUxqMdaq/h0SYf7nGzM=;
+	s=arc-20240116; t=1775013381; c=relaxed/simple;
+	bh=2OZZUVrxmCnuiImJ91NAO4ZXnGPXGDfivM1k6ood+Do=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=dH3OD4gvGTGUvxLCaa90CG0ZbQfHkyPCHPu4yfrBAHiiDXzPNOd2Qc5WRed53+bguaqRKvowpX3hZnDvcxtpiWY6zkcI/1k07527Z4UWVztM5npVTssdqgA3Y6JjeSh/NKkUCRcgEezGJ1txSk6L0VEW5qlPnyRfYvcEwC6j0gI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=Tv4Iqk5O; arc=none smtp.client-ip=91.218.175.184
+	 In-Reply-To:To:Cc; b=oZNNfO4VG1eCqua78qaHJv6lC2TORAcGBzvRTokUMsRKPo8sJvoD2cK1ZZGnuFXPfBGvHlW7iowgEi83kHLenJk/u78jvJ6NJ3t69j9tQsGKGcw1rSWdkmeAssBq8MmRmvWfu3GzJ8+ZdxtNTSJWlxSvW7ptICpr3B5Hm/Z9WcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=kFE7mbMO; arc=none smtp.client-ip=91.218.175.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=postmarketos.org
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
-	s=key1; t=1775013374;
+	s=key1; t=1775013378;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=KXAlRMGR7jghkP+lnXdIYmzb8QsrY+DHKf9ZcHe2wtQ=;
-	b=Tv4Iqk5Ol3JBmq7hWu77bZNlpNIRSa+dzJ3Ih8i6Pap4KzVQhMrnILbiSC6LgUzX1Vyxwc
-	7J+1IDUN/EHCE63O2KXV0FhTwbP8cQeBpD5BoNYutX+f2PdiPvA732tj7/5GCis/4JjN0Y
-	3OHPANHxCDJFaLBoOhZk2GvI0vFSLqFRgpi01fb3Vm12tIWRxhQoQBfEQvirfImIeN8CQ4
-	5Wsmn28pcQCa8hoKjTKcOgi087ba8aoGfB2EbFVOoiAXdgY/gspNr1j/6gMp0DXWpIoeBv
-	WVOsDGJXc3Jbr0Ew2/4iIi1ofKbkcdysGb0TrbmyzwhxGiChrsK9ZhBu/gZsZw==
+	bh=PzExXl/EHRF/VL3fZKD3Wfza2ZqXaYA4mFIw7BUnBQI=;
+	b=kFE7mbMO6DrBN+wo6ZU7/nVvE0JCi8PGGlRaZ4oO6dkSLSJK/3LYIWIwUOWcsce0CZ2z2N
+	zR4kdHhyCi+OH7ieQkn8STaJfSI9jTuF6LBZui2S2VwzR7Wr32qocmftrTIBer97P6n8EZ
+	1BrFNK7HOAR/G/QkDb6f3AaYW7PjXHqLFmOBuIG9hYFfTQFfuzbw13HTQlv1zP32TSIoS9
+	OFiWPYCwdDv29xS2yeExvR9dfsLfrYccjksD1ij0eWoxiUNHM7cVNrHh8a9X1PsMO4kuBC
+	IiiiEErRPFgaxOD1OIv2rCYuWinWBWvcdBJXI4mevjMPfOYsTV6m/UkXazuKEA==
 From: Paul Sajna <sajattack@postmarketos.org>
-Date: Tue, 31 Mar 2026 20:15:12 -0700
-Subject: [PATCH v7 07/15] arm64: dts: qcom: sdm845-lg-judyln: Add battery
- and charger
+Date: Tue, 31 Mar 2026 20:15:13 -0700
+Subject: [PATCH v7 08/15] arm64: dts: qcom: sdm845-lg-common: Add LEDs
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,7 +58,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260331-judyln-dts-v7-7-87217b15fefb@postmarketos.org>
+Message-Id: <20260331-judyln-dts-v7-8-87217b15fefb@postmarketos.org>
 References: <20260331-judyln-dts-v7-0-87217b15fefb@postmarketos.org>
 In-Reply-To: <20260331-judyln-dts-v7-0-87217b15fefb@postmarketos.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -70,13 +69,13 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
  ~postmarketos/upstreaming@lists.sr.ht, Amir Dahan <system64fumo@tuta.io>, 
  Christopher Brown <crispybrown@gmail.com>, 
- Paul Sajna <sajattack@postmarketos.org>, 
+ Paul Sajna <sajattack@postmarketos.org>, Pavel Machek <pavel@ucw.cz>, 
  Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1775013347; l=1347;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1775013347; l=1385;
  i=sajattack@postmarketos.org; s=20250422; h=from:subject:message-id;
- bh=Ei6IXsIEZhjjI+rjDZqYmLKiYsgQWaTi16fUGmKfGLE=;
- b=6qtnKkQm2ZecTg6r/vtk9T73N5mw57k8nfMKDe9gIxoqUn5BEgIjZX/KT68yvouKTVdmxpwkI
- OX6r1hcpSTwDNSiuVPqxS4EV7ZrM55PBddKdxtiK3r9vAwAE2WaRBGe
+ bh=34eT61AAHtgeebYRAnh4RtcK/L2H9WQuYQajrBpPHng=;
+ b=Di7J3bkYj9QYrO6IC3UyyHEFwaB3c6ETk4CN4zaO+p/k+7OfdAUUknLLUwquWhYahJ6MS7Bd0
+ JWaQvANHHgdA/h3IacbKCmAztzxzTRj2VivMy0KWb+pgim7Z+DZSWAk
 X-Developer-Key: i=sajattack@postmarketos.org; a=ed25519;
  pk=TwacvEOiRJ2P2oAdEqIDrtQTL18QS4FfcHfP/zNsxkQ=
 X-Migadu-Flow: FLOW_OUT
@@ -84,79 +83,93 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[postmarketos.org,quarantine];
-	R_DKIM_ALLOW(-0.20)[postmarketos.org:s=key1];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_DKIM_ALLOW(-0.20)[postmarketos.org:s=key1];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
+	TAGGED_FROM(0.00)[bounces-101208-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-101207-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[3];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[vger.kernel.org,lists.sr.ht,tuta.io,gmail.com,postmarketos.org,oss.qualcomm.com];
-	RCPT_COUNT_TWELVE(0.00)[15];
+	FREEMAIL_CC(0.00)[vger.kernel.org,lists.sr.ht,tuta.io,gmail.com,postmarketos.org,ucw.cz,oss.qualcomm.com];
+	RCPT_COUNT_TWELVE(0.00)[16];
 	MIME_TRACE(0.00)[0:+];
 	FROM_HAS_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.993];
+	DBL_PROHIBIT(0.00)[0.0.0.4:email];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[sajattack@postmarketos.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[postmarketos.org:+];
-	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[postmarketos.org:dkim,postmarketos.org:email,postmarketos.org:mid,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 431BC3744F1
+	MID_RHS_MATCH_FROM(0.00)[];
+	TO_DN_SOME(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,postmarketos.org:dkim,postmarketos.org:email,postmarketos.org:mid,tuta.io:email,ucw.cz:email,0.0.0.5:email,0.0.0.3:email]
+X-Rspamd-Queue-Id: 5FCDD37450E
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-From: Christopher Brown <crispybrown@gmail.com>
+From: Amir Dahan <system64fumo@tuta.io>
 
-Values based on lineageos kernel
+Add the multicolor status LED in the phone's notch.
 
-https://github.com/LineageOS/android_kernel_lge_sdm845/blob/lineage-22.2/arch/arm64/boot/dts/lge/sdm845-battery/LGE_BLT39_LGC_3000mAh.dtsi
-
-Signed-off-by: Christopher Brown <crispybrown@gmail.com>
+Signed-off-by: Amir Dahan <system64fumo@tuta.io>
+Reviewed-by: Pavel Machek <pavel@ucw.cz>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi | 28 ++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts b/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
-index 90dd5a2a6f30..6b837da4ef21 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
-@@ -37,6 +37,14 @@ key-thinq {
- 			interrupts = <89 IRQ_TYPE_LEVEL_LOW>;
- 		};
- 	};
-+
-+	battery: battery {
-+		compatible = "simple-battery";
-+
-+		charge-full-design-microamp-hours = <3000000>;
-+		voltage-min-design-microvolt = <3200000>;
-+		voltage-max-design-microvolt = <4400000>;
-+	};
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+index 27221b3afb30..51cd930488a9 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+@@ -6,6 +6,7 @@
+  */
+ 
+ #include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/leds/common.h>
+ #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+ #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+ 
+@@ -497,6 +498,33 @@ &pm8998_resin {
+ 	status = "okay";
  };
  
- &adsp_pas {
-@@ -67,6 +75,12 @@ &mss_pil {
- 	firmware-name = "qcom/sdm845/LG/judyln/mba.mbn", "qcom/sdm845/LG/judyln/modem.mbn";
- };
- 
-+&pmi8998_charger {
-+	monitored-battery = <&battery>;
-+
++&pmi8998_lpg {
 +	status = "okay";
++
++	multi-led {
++		color = <LED_COLOR_ID_RGB>;
++		function = LED_FUNCTION_STATUS;
++
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		led@3 {
++			reg = <3>;
++			color = <LED_COLOR_ID_BLUE>;
++		};
++
++		led@4 {
++			reg = <4>;
++			color = <LED_COLOR_ID_GREEN>;
++		};
++
++		led@5 {
++			reg = <5>;
++			color = <LED_COLOR_ID_RED>;
++		};
++	};
 +};
 +
- &tlmm {
- 	thinq_key_default: thinq-key-default-state {
- 		pins = "gpio89";
+ &qupv3_id_0 {
+ 	status = "okay";
+ };
 
 -- 
 2.53.0
