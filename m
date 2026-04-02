@@ -1,56 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-101519-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101517-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id AC/XCI4+zmkImQYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101519-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Apr 2026 12:01:50 +0200
+	id sPZ/JIU+zmkImQYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101517-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Apr 2026 12:01:41 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 469C438760C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Apr 2026 12:01:47 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id D86043875F6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Apr 2026 12:01:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id A761B30AB8F7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Apr 2026 09:55:48 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 2D17D3024D79
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Apr 2026 09:55:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B86043E3DA5;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F3F63E2756;
 	Thu,  2 Apr 2026 09:54:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C0Q8IE5r"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OBV1rY8T"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2C8D3DCD80;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAA6F3E025A;
 	Thu,  2 Apr 2026 09:54:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775123650; cv=none; b=IUfufNtHwnWo7d3VZJQ6LR/qXVoYnA8k7H89F9Ig/JvHIaxC8NTGdwt9LGibtEbABWASgIN1ywAxqrhs7ekwL6WvFNlZ00RtZh7PoEJvBY/yMxTrejxH4q7J0+BsOK21myVL+Frifl6/RzGrEcilqNoH8jn/nDrTT5Mlmzu6wfw=
+	t=1775123649; cv=none; b=JGYVMphrE5jynDUO/Y8UTo6vFZFdxtvfpVV9ClV5xCOxxiym2UFwOyUmfZByLKjTIPPO97/MSz6brXCwwMRxYb/HB0NnNzRWvlfFKRDuFaGnRP3cAL7QiDuTw0FDn63zQ/oZ6zNw53zGQxQajJnyixdS9s7xD5M1HpWiBWL/VeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775123650; c=relaxed/simple;
-	bh=g8X7jdbCgWRJVgbstnTrfuS11/pgXSaoaMN5ZccW5G8=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=YHemcUIwaU/19T0q3IDnae31AlsbzyfEweDXReZhnH9kyf6a3fck/E7SwLcoAbVUyOPesdFtuEL+7wlh6Fn3dr1TGMHcMlwePb+RTZt3o49T8DVN0QIb570ZjlolV0liR57caos9/1ShuDpSGNBjcP9q+JOAWWd78ZTpfXppjEA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C0Q8IE5r; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 75A08C19423;
+	s=arc-20240116; t=1775123649; c=relaxed/simple;
+	bh=j5OlzKptvN8u5/K4ZJFqd4aGwQnSIp1riZZ0iQazIj4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=cFEymAnoTt6+DedW75MSFUxoTrjqk4eILRkKKrCGVlcbgJTqTdBvWPPf8Q3eAB7TfYVyk6dLanVFNbNa4m60McvA7CjbW+TPOG+2GcnAqBYTvl/bzUCkkkVsvHzr378kxWl4pymDfWjNJtWsNPNcO/SsZEcfWbFrwMVneCowBuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OBV1rY8T; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 93C58C2BCB1;
 	Thu,  2 Apr 2026 09:54:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1775123649;
-	bh=g8X7jdbCgWRJVgbstnTrfuS11/pgXSaoaMN5ZccW5G8=;
-	h=From:Subject:Date:To:Cc:Reply-To:From;
-	b=C0Q8IE5raY66RLgtk/htIln0tWdIfEVazxwz+tH7oSRyXPyJVO+37TOQLvRbw5A/l
-	 FafXDtIWcZgZcgTsgZFgxLqHLg9QXykFl3GhOZOa1S+hWkauYgrJKU+mJXIP4o/vNy
-	 ZsFNQNP1Fi1xqvfNPAOe0B7VQDXrZAwkym+tXOGuHMa60PWbQdZQVPXRkyI97ybhLZ
-	 UlfLjG8JqX6U45WPUCQEy4uqqvvsyj9DO1AxK6VqRJH7GJpBjWNacRX7facteTZ9mX
-	 FvZsRUmvtvqvAuhJzhdocO4FGQtRMkI8CUfyWdMa/wZ4BruZ+lh7PEpBFHWKDMCWeS
-	 uHe5JdnXsnIvw==
+	bh=j5OlzKptvN8u5/K4ZJFqd4aGwQnSIp1riZZ0iQazIj4=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
+	b=OBV1rY8ToYV8u+Jm5FfsNSJafhRffvdNR/7lSud86NoFDxUlUPElQAAUFaHwjtAk5
+	 azes2YHFnRJq03IkVlq+1xAr27BGBBMoKCLxSQyssdCHv/o4lD40LDEsjn7XbSyUyM
+	 AqZlEJFinkt0zXKmW/H8SDbVvEdcn/aFnqnpnQwMGstsy2NRRdSLOJHyPbBdCV+Odz
+	 uV1JZVUD/RZKLH3gDEOcIPTuOT8nnuJpi5MS+5k48MlQ+d6Z0C18ltiLCMfq4JuIDF
+	 dVrdr/BRGi9lP8lRXMgkAE96R0QjXj0DKc1rCs10Fz8aoq0d84tE/ozRZ0pW6GemBO
+	 xbgALR8Ic+KkQ==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61A78D39408;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A6C4D39406;
 	Thu,  2 Apr 2026 09:54:09 +0000 (UTC)
 From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Subject: [PATCH v3 0/3] SHIFT 6MQ SD-card support, improved responsivness
- of touchscreen, and codec
-Date: Thu, 02 Apr 2026 11:54:05 +0200
-Message-Id: <20260402-axolotl-misc-p1-v3-0-8934e9db6831@ixit.cz>
+Date: Thu, 02 Apr 2026 11:54:06 +0200
+Subject: [PATCH v3 1/3] arm64: dts: qcom: sdm845-shift-axolotl: Enable
+ sdcard
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,11 +59,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAL08zmkC/3WNwQqDMBAFf0Vybspmo6I9+R+lBxOTumCNJBJsx
- X9v9OKh9DgPZt7KgvFkArtlK/MmUiA3JpCXjOm+HZ+GU5eYIWAJEoG3ixvcPPAXBc0nwUsQXV6
- BxqKzLFmTN5aWo3h/JO4pzM6/j4Mo9vV/KwoOvKp1rQqjFZamoYXmq/6wvRTxtHMQvzYm28rWy
- ipXShVw2tu2fQHemk386gAAAA==
-X-Change-ID: 20260320-axolotl-misc-p1-601d480c25df
+Message-Id: <20260402-axolotl-misc-p1-v3-1-8934e9db6831@ixit.cz>
+References: <20260402-axolotl-misc-p1-v3-0-8934e9db6831@ixit.cz>
+In-Reply-To: <20260402-axolotl-misc-p1-v3-0-8934e9db6831@ixit.cz>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -76,21 +74,21 @@ Cc: linux-arm-msm@vger.kernel.org, Petr Hodina <phodina@protonmail.com>,
  linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
  David Heidelberg <david@ixit.cz>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1146; i=david@ixit.cz;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1907; i=david@ixit.cz;
  h=from:subject:message-id;
- bh=g8X7jdbCgWRJVgbstnTrfuS11/pgXSaoaMN5ZccW5G8=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpzjy/pvCpctAMVvZY8W5n9dTG/nudXwKmeTXHn
- nL+UMXqjIuJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCac48vwAKCRBgAj/E00kg
- coJjD/4uCUKkiei3H4sL5HGCOEslH6+dfqYlpBJOdXAX5M125RAh6AjVsldTUClwWP5JsYabSDA
- HlHP2CrERCZ5gE+adrPCvcRB1bcMylD3GgYIu9mIHIqQQ9P1Ep98Yf9jrqneIrximq8YwrEpP5Y
- vr+XXWrNjxVHQZDqodnoL/lebmBwGGVb1w3GqUwMfd8rQYMi7v07hm9X87nVxRNVs8zcOT7JLXd
- zT0AX9fkNe8pZlS+q61n65kU7J02L88Od4s8QloelzLZEHvREPP8gjqFSUJk5WDA3pEy0eox9cd
- ZofYqRSelqvEGHG6o2UpaW6DIH5hBsIbnZJMhxoW/3AnkoXGJ37vNx0wGEWFbmSupPfGISVQ23C
- E9LjQsCSnjkH7fpQfpHW/q0GPHPa462JdXNQg1a/6Mm8X7hIV6eLALL8qCRDts6xregdgkkPlK2
- 91Cq1Ju7vNrD6fUC4EXfjrsn8xuv1FqeaTs3anMZWcTiU+Jmo+nnMJVok3k4AxavqYDbUCgIcjF
- nxHxoH6UMZJY0Qx4b8LRNaDNsW8hq+h8yM7EayjMu1ZjF+rmZ7wuEKCpYNXr1MlVIaasguz7uFo
- eRdSuhHXK3GWoR9hP8ddzelZyQLt8bsAfFxBDNwajNbVaqrpQTUwQuJMzoMK+lsjNqVl8r/k58t
- ylTa7v5dVyitv8A==
+ bh=V/gyVRb9byz8QAK00Y2utu0dDrgjEkYddluW8kKLmCI=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpzjy/ODMr9JJWu8/h28lbADOj7k6TlOFsmgBlC
+ UTHKz3K7KiJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCac48vwAKCRBgAj/E00kg
+ cg3gD/47qV6iwykb7g2169k9tBKeTaX8ux9jAVV5exnXWBlUlnh1iJ5HoaEHvxATqNENLoMtyQR
+ gAGlApQ7AWZxwmsQK8rojwv1PONIk4c9rI6McTrO77b5shBOvVKx/D45S03FpSUds/EghW+Cbx7
+ Nk+OYYjtwET9G9m4QV+jb7wz/p18KMOQLO9winY1FoKBqT03w16RR3W/7o6IVf2FCmIv0XAGg9r
+ tr8vrm2fgBEw5kUMXVHrCGJAqnB8nSPE5GAGS3nVIrUVMEB2KDXCvnIe5cSil2Qf9BgvYDsRAaZ
+ fHUvNZIhOJPjLdB/Pqb2HyldrMEADF3MpisS2Vog/aW1dw6ueUc67lbJGHTGml2Q6Fwn5YBj7t/
+ OmANWoXdSGJzzhqRoP8mOsHy6xw+9PowYF/PEj8huUfsWZ0zxANeVkkKZ8cMpvXVmcuI7Z4QauQ
+ 0JiS8nsqJMqH26GfnrmviAulBG+i7IjbGsIAee2Qysir05t+F14yga2uUOp2XszfHCzZg03UQJc
+ oyeaFW8HF/KWZc74UiuHMGsaQdDq8J2xLpCmkWhYl0RI9ptXZ2H0wxCCafjnI3YePi7WdTEIcS3
+ /3YFeKSOZc8WPnUxybIbTdzdup67uSMhYo34a/ZZ3+pcL6+EwgIcMk1lrUrhi1di8rpcV5VP7tu
+ vK46/J5IKbiFMJQ==
 X-Developer-Key: i=david@ixit.cz; a=openpgp;
  fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
 X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
@@ -101,12 +99,12 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-101519-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
+	TAGGED_FROM(0.00)[bounces-101517-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[16];
@@ -119,48 +117,93 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
 	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
-	NEURAL_HAM(-0.00)[-0.996];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	NEURAL_HAM(-0.00)[-0.999];
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	HAS_REPLYTO(0.00)[david@ixit.cz];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[ixit.cz:email,ixit.cz:replyto,ixit.cz:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 469C438760C
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,linaro.org:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,ixit.cz:email,ixit.cz:replyto,ixit.cz:mid]
+X-Rspamd-Queue-Id: D86043875F6
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-I've tested that SD card and touchscreen works well, the codec does too,
-but for complete enablement needs soundcard support which isn't fully
-finished.
+From: Casey Connolly <casey.connolly@linaro.org>
 
+The SHIFT6mq features an sdcard slot, add it.
+
+Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Co-developed-by: David Heidelberg <david@ixit.cz>
 Signed-off-by: David Heidelberg <david@ixit.cz>
 ---
-Changes in v3:
-- sdcard property sorting (Konrad)
-- Link to v2: https://lore.kernel.org/r/20260401-axolotl-misc-p1-v2-0-f3af384bbb50@ixit.cz
+ arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts | 44 +++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
 
-Changes in v2:
-- Changed bias-pull-up to bias-disable for SD card detection, since the
-  mechanism doesn't work, we can just save few uA. (Casey)
-- Link to v1: https://lore.kernel.org/r/20260320-axolotl-misc-p1-v1-0-89c9b5ecb26e@ixit.cz
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+index 740eb22550724..b05f04a621e5b 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+@@ -600,6 +600,24 @@ &qupv3_id_1 {
+ 	status = "okay";
+ };
+ 
++&sdhc_2 {
++	pinctrl-0 = <&sdc2_default_state &sdc2_card_det_n>;
++	pinctrl-names = "default";
++
++	vmmc-supply = <&vreg_l21a_2p95>;
++	vqmmc-supply = <&vreg_l13a_2p95>;
++
++	bus-width = <4>;
++	/*
++	 * Card detection is broken, but because the battery must be removed
++	 * to insert the card, we use this rather than the broken-cd property
++	 * which would just waste CPU cycles polling.
++	 */
++	non-removable;
++
++	status = "okay";
++};
++
+ &slpi_pas {
+ 	firmware-name = "qcom/sdm845/SHIFT/axolotl/slpi.mbn";
+ 
+@@ -609,6 +627,32 @@ &slpi_pas {
+ &tlmm {
+ 	gpio-reserved-ranges = <0 4>, <81 4>;
+ 
++	sdc2_default_state: sdc2-default-state {
++		clk-pins {
++			pins = "sdc2_clk";
++			drive-strength = <16>;
++			bias-disable;
++		};
++
++		cmd-pins {
++			pins = "sdc2_cmd";
++			drive-strength = <10>;
++			bias-pull-up;
++		};
++
++		data-pins {
++			pins = "sdc2_data";
++			drive-strength = <10>;
++			bias-pull-up;
++		};
++	};
++
++	sdc2_card_det_n: sd-card-det-n-state {
++		pins = "gpio126";
++		function = "gpio";
++		bias-disable;
++	};
++
+ 	sde_dsi_active: sde-dsi-active-state {
+ 		pins = "gpio6", "gpio11";
+ 		function = "gpio";
 
----
-Alexander Martinz (1):
-      arm64: dts: qcom: sdm845-shift-axolotl: Enable TFA9890 codec
-
-Casey Connolly (2):
-      arm64: dts: qcom: sdm845-shift-axolotl: Enable sdcard
-      arm64: dts: qcom: sdm845-shift-axolotl: Set higher touchscreen i2c clock
-
- arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts | 59 +++++++++++++++++++++++
- 1 file changed, 59 insertions(+)
----
-base-commit: bd0f139e5fc11182777b81cefc3893ea508544ec
-change-id: 20260320-axolotl-misc-p1-601d480c25df
-
-Best regards,
 -- 
-David Heidelberg <david@ixit.cz>
+2.53.0
 
 
 
