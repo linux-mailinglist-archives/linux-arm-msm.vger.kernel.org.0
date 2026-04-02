@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-101572-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id kKdwKrCyzml+pQYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101572-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Apr 2026 20:17:20 +0200
+	id sCZ4JGW0zmlVpgYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Apr 2026 20:24:37 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5006638CFC7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Apr 2026 20:17:20 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32E8C38D0CA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Apr 2026 20:24:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id 864F530458FA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Apr 2026 18:17:07 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id B627A300F539
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Apr 2026 18:18:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A98D035AC1B;
-	Thu,  2 Apr 2026 18:17:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14951370D75;
+	Thu,  2 Apr 2026 18:18:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vH3hrJn6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CvKp0BHy"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83F7A314B73;
-	Thu,  2 Apr 2026 18:17:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E47ED76025;
+	Thu,  2 Apr 2026 18:18:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775153823; cv=none; b=PcvV3w1q4ZKdPuaP7SA3CzMHI3eunFMOomswvhIjczZP78ej3DAiUjhuHtCgPwDEK1cjoZUPf9/HgnV1KAEUl0H9u7OOGQEqBYmDc6rgAqKBNjJTj5scTxLBjs7TyceCNX7kUnOcRtI+TZ0WzVQWpBEakTb9EFVxnnM6OU1aMLM=
+	t=1775153905; cv=none; b=kU0K1c7P1t8vL0K9q0BTimz9Bbs/okbLNbY6Wp3H7HyCSQ3QD2lwU/wFtQ14zrBf/kS9qeC9rEIyp3TmaFdDnEkFJFdtSfpxErVcI3ZRMS1dupTAD6BRWTY0n1EeUInr8BUK/8MbYNrufltsXk/bsV6ar82vPJmvxyDRsaYamKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775153823; c=relaxed/simple;
-	bh=p//QQQQ+BvwJCn0uxShUdy3A3b+cFTn3ja/39jq8wXQ=;
+	s=arc-20240116; t=1775153905; c=relaxed/simple;
+	bh=Tf2Kp1jgjSPwCnmONv8P9pixGo0QMU+jy5wlrFyEb4w=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rfet3qhCPJmLbIjEKUs2mxh+bW0MZO/3qp0DDJuDHXpYTvhMMbbFyV4EGTUwI6wLdF5PdhFdmw8NQ5M72vKDvvY0sx0aHdONB1bGqNnrI4NzXMtTbJgvAJ0io2iNe7zMjCYI7cqy/DPaFD2mFknlwA0ltkCoyG6u4+E0kBhSnVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vH3hrJn6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 089AEC116C6;
-	Thu,  2 Apr 2026 18:16:59 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=R7oek7CWy4bEdeMPaGa8iosbIR2p5k8PWxCvTY3QWNdYjDaJcqr45kHx6CIt926MZ+YdPNzU7mRkL0PHdZV9nKB6HaI5oxLKYLkoxnnX4mk2D7qqwodtc/S0Hpd4D8t9QGFyLhnB5LNk30KCkHXyR7BnCBl24d0Npx3gLQilLig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CvKp0BHy; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BDBDC116C6;
+	Thu,  2 Apr 2026 18:18:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775153823;
-	bh=p//QQQQ+BvwJCn0uxShUdy3A3b+cFTn3ja/39jq8wXQ=;
+	s=k20201202; t=1775153904;
+	bh=Tf2Kp1jgjSPwCnmONv8P9pixGo0QMU+jy5wlrFyEb4w=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=vH3hrJn69/Q/45F+be8fn/fmh6HqvAWjdKoODAWriMUkPnifkKc/u3YY5kDlVR/9L
-	 51o4RZK5awnBSsZ+5JzE4vIvLwoLQblrAMNMO87dRzN4RhV1EO481xdMVXdb4RLZ0d
-	 e9I1wlllArgMp4GOB8dXwDH4dmnH8FRYlofQ9ZNLLSOwFGFJmbQ3qUsXbrpS9yjUYR
-	 47QUFYkEHju3yjwFS7pIXqPVL+C1X1GRUH8QaXptQdPCw5LLNFUr0rDJvYOp4GUqvK
-	 zBy6s3uqWZEGTTKhJayi5ztExzURdOsE/5FtsoGrbD2dyK9cuonxDA5m9DxNU1YdRB
-	 6/Uz54HQglDEA==
-Message-ID: <7b76c9a3-e0ec-4c3b-a04b-fb21a6ac217c@kernel.org>
-Date: Thu, 2 Apr 2026 20:16:58 +0200
+	b=CvKp0BHyEBX7BXjk0OCRxbGug+YtQLJ5OVqD9ex2Esf0J672IFSVb1i5fAM2I7XEv
+	 jjzkHOnw1u9gBdl0sC4HlTUzkWnF/5BpkYWOGTT6V06mRv9xog035jtDdsQnOjnANP
+	 2YkquFp7T3fVl+xXiXHYh/fqVBUYjjtZYNEPThft7hz2tq0TDqraqjNJvUFiV9CDpU
+	 t3/gK3du9AQe6Bl/csaum5F6TR7YOPP92Q8KFhaiymJ+RNm7Nh8HtV3Tz4AKUsE3QS
+	 iz3chMAQDSIdD/cTs/ogtrr/VUD1SkrHS31nxi5ybYzgV31Cc6KcHc/X9WDUTG9B0x
+	 OHU2RmpAhizaA==
+Message-ID: <6eeb24a9-e2ee-4727-af25-5dfbb95bad59@kernel.org>
+Date: Thu, 2 Apr 2026 20:18:19 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,8 +53,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] dt-bindings: clock: qcom: Add Glymur camera clock
- controller
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: glymur: Add camera clock controller
+ support
 To: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
@@ -68,7 +68,7 @@ Cc: Ajit Pandey <ajit.pandey@oss.qualcomm.com>,
  linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20260402-glymur_camcc-v1-0-e8da05a21da7@oss.qualcomm.com>
- <20260402-glymur_camcc-v1-1-e8da05a21da7@oss.qualcomm.com>
+ <20260402-glymur_camcc-v1-3-e8da05a21da7@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -114,7 +114,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20260402-glymur_camcc-v1-1-e8da05a21da7@oss.qualcomm.com>
+In-Reply-To: <20260402-glymur_camcc-v1-3-e8da05a21da7@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spamd-Result: default: False [-0.66 / 15.00];
@@ -122,18 +122,18 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-101572-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-101573-lists,linux-arm-msm=lfdr.de];
 	RCVD_COUNT_THREE(0.00)[4];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCPT_COUNT_TWELVE(0.00)[16];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
@@ -143,20 +143,41 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 5006638CFC7
+	DBL_BLOCKED_OPENRESOLVER(0.00)[ade0000:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,a400000:email,qualcomm.com:email]
+X-Rspamd-Queue-Id: 32E8C38D0CA
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 On 02/04/2026 08:15, Jagadeesh Kona wrote:
-> Add device tree bindings for the camera clock controller on
-> Qualcomm Glymur SoC.
+> Add support for camera clock controller for camera clients to
+> be able to request for camera clocks on Glymur SoC's.
 > 
 > Signed-off-by: Jagadeesh Kona <jagadeesh.kona@oss.qualcomm.com>
 > ---
+>  arch/arm64/boot/dts/qcom/glymur.dtsi | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/glymur.dtsi b/arch/arm64/boot/dts/qcom/glymur.dtsi
+> index f23cf81ddb77a4138deeb4e00dd8b316930a2feb..c32f0b84db2f38ec567485e36e8e50529e886775 100644
+> --- a/arch/arm64/boot/dts/qcom/glymur.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/glymur.dtsi
+> @@ -4163,6 +4163,22 @@ usb_mp: usb@a400000 {
+>  			status = "disabled";
+>  		};
+>  
+> +		camcc: clock-controller@ade0000 {
+> +			compatible = "qcom,glymur-camcc";
+> +			reg = <0 0x0ade0000 0 0x20000>;
 
+Please use hex, also for '0'.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+> +			clocks = <&gcc GCC_CAMERA_AHB_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK_A>,
+> +				 <&sleep_clk>;
+
+> 
+
 
 Best regards,
 Krzysztof
