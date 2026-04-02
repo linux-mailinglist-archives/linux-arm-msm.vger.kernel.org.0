@@ -1,184 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-101546-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101547-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id 0IvpFK5gzmnvnAYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101546-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Apr 2026 14:27:26 +0200
+	id 2BJmLHJozmmpngYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101547-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Apr 2026 15:00:34 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id EFD553890EB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Apr 2026 14:27:25 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0396B38955A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Apr 2026 15:00:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 4DD56306B839
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Apr 2026 12:25:04 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id E5F57309F6B5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Apr 2026 12:52:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A500A3E1CE3;
-	Thu,  2 Apr 2026 12:25:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E57363C277E;
+	Thu,  2 Apr 2026 12:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="fI58aKgq"
+	dkim=pass (2048-bit key) header.d=vinarskis.com header.i=@vinarskis.com header.b="P0Wc0tR/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-06.mail-europe.com (mail-06.mail-europe.com [85.9.210.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F074E3DD535
-	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Apr 2026 12:25:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98DB2D3ED2;
+	Thu,  2 Apr 2026 12:52:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.9.210.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775132702; cv=none; b=fzcoGzDz9CLavGnekAvGmMZkfRoVyT/yY0IXaL0v2rUpaNHpvIDcQx7A3VSeAzzq0DE/agzdaUqP1+eNbzgFEvPFNPQeNVdxOgRAcUjOGxC/NUZBLlA1TSJnrCHMxtt/tsdE9+V4tMucmuU+9/w0eYYRMm3y68o8XKeeuuX2VOQ=
+	t=1775134371; cv=none; b=mmc6GxQ6voYBap0cc/X94GuNHKPe84QxrWVg7Fj2Fvc7GcRaVsJ9oV8UxVEYpVLp4hcAWUJs1R+fwArGVlkapQGSeAR26WPA6C5JG1GXiHmI4v+kSM3u0jHG5vcCmHQHmefz/QoBtuBeHmOlPHtJyM3nKogWjvfXhb0bBN2/JYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775132702; c=relaxed/simple;
-	bh=VFq9AWUrc9CcWHC7ojF6xOAibaAgS5IkinF3nAaUdvg=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
-	 References:In-Reply-To; b=PhaxsZRTNPoXDcMiSmBEeN3png8nSEMo/QcM6RMex38LAqFpZ+NB103IId9JgirwWEOROjmMS/iTUKnfA49kMMlx5dNdqCyGOIiDQ4WVSdOyMO1Yd7Ksor8BSOAajmd5oX8SHGuiKYf5aMo6Lu3Ezott9eFiSCPaQknfVINkvSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=fI58aKgq; arc=none smtp.client-ip=209.85.208.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-66dd0531d01so1187630a12.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Apr 2026 05:25:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1775132699; x=1775737499; darn=vger.kernel.org;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kV57QUhm1LJKEL7ZZkpUHcm6gesGlh2s479uzYXuMeM=;
-        b=fI58aKgq/aSY+7Z0jlFsYNSi0x5D4tu+9WTXceYNuambD3bAFsdlKg+qirj7dcEuts
-         2v6YPKNa8OvP4Q7GCGxf1TuI4QzsFq80O3AaW6VRUSXcLv+fbSOX1mrYLq1I1n2OffSm
-         LRO/YU1TqqOJH/j7lTGWNq3X1VFAE7eJdX+gYbcZT7u1iKu+PeWoeWkywwQor1wOf2Pa
-         Cr9P09ugasZw5iSDqQbL3uNM9akYymOkgikzPomeRz7eP19/hAg/jeGdQLSXplIWEq+Z
-         vLGF0FQMrG26vj1ZdGrZUHWBi3QhQRgaNZjHYftVLgAVAckyxfvkfX+XqpNcpjpD1rJP
-         33Hw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775132699; x=1775737499;
-        h=in-reply-to:references:subject:cc:to:from:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=kV57QUhm1LJKEL7ZZkpUHcm6gesGlh2s479uzYXuMeM=;
-        b=YnAX+P82wv7pJcMtabuTApHMN0IdGL6tAh8woJI5iDXdRMGKKWFVnOhiW77BqUD0Vv
-         DaOcd2ATel/40SNKuWQI1i3/trbEfhJM6TBg6qGNytYhjj+0/Kbxw3cv4k1KqDBxL+4/
-         7QpErYq3nT2RZsM1HMzzEx2E7jJWebvvVMrjWtME7HVOTjVyoUHxqT8fve55vsjErxh0
-         ykW6v1ScBchPXS6+J+W8yTnm7lv2dM0ERebfnun7YC9TUQcWO4+VzEUDkwzGpkstG/o1
-         zp7/EIyZ4Nt2hJ9ASrcN6kcKS4PSLianggcyY1VXQ8CaR3k1vrallrFGUmmRvh0+fqw0
-         j+Gg==
-X-Forwarded-Encrypted: i=1; AJvYcCUuiK7dNpnbwU3PGsULpD3JXGldySuq7e6z8NHD0XUVay0lETZaME0Irsoq1/X4+yiNd0GkIQKYV59T+yiD@vger.kernel.org
-X-Gm-Message-State: AOJu0YxkTcXjZtM5q6PAY9maWu0QPtVuRW1Wr71nIMN6OyY+3kAd8BNi
-	xGyahyOdpi9NvU8gu3t/QAl6wvujRCIJ4svyl+Qzs36gyaoa2y8uK3x0ng9JH05OJFo=
-X-Gm-Gg: ATEYQzy+zigcb8AZFVy20dtKWLy3zmIJTKJbOctCXl7CXUjSxLCOw8r2uI8G9qSRP/j
-	mkTnD8fD/q3IymUcwpcJheC8h8NjnzTwV9d6xlF/mVieWaFeXd+Lxb1gTPNqNhyLFTJ5+8KMmue
-	yYMdK8K0IzFURMEYbunJ3vEl6il57b2F5YbmZg0PAyzjGy/tdDultkPSHvudmSHd1byGgDXWGSJ
-	S8rEpZF2BC8euEkja/ClVIPFwawpccmSvPFLZWl2v96qrC1wACJDXfVThXp+49o5zoDOe2pXKV7
-	VygEPErHMGd/0ozxb7ad62AgnChm9NK2qKYX/YxEy4gypj2XDpSbeYvvechSg7c4l7wLHIRfTAR
-	2sH2WVnvo2CWOzZlsFNaAz+j9dE6PEo0wYbFCECcpLOiOi69EFfY37H94X9JrDHdkuj+8RFE6iy
-	SINWrfkJmivvwI9V+VzGUs+v06BCpXn1/hVouB0GXbLFfP3SAXaOoYhCnT3dK5cIuOGErIubYcb
-	ZiUe7SOBHlZNe3Q3hhrXFPVe4FL1IjzBS5XOYuxHaNDgko=
-X-Received: by 2002:a17:907:3895:b0:b97:c968:d9ba with SMTP id a640c23a62f3a-b9c1378f46emr488650466b.5.1775132699170;
-        Thu, 02 Apr 2026 05:24:59 -0700 (PDT)
-Received: from localhost (2001-1c00-3b89-c600-71a4-084f-6409-1447.cable.dynamic.v6.ziggo.nl. [2001:1c00:3b89:c600:71a4:84f:6409:1447])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b9c3c99ec6esm82792766b.16.2026.04.02.05.24.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Apr 2026 05:24:58 -0700 (PDT)
+	s=arc-20240116; t=1775134371; c=relaxed/simple;
+	bh=YaYkHV68ueuCuVnlneM4pYTtYtlVoSbxAbJZANjLJ+8=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=h6Ee0nKN8OrUP2eFX1nccrHKTMiyizFxaN/aj1P2qPcU7mOg0jUIhKmVStQ2oouOM8o1aNmYqbnxWbFmexKVhoCf8rGBi7yYPalDEAdt3UfzfiH4q03ISTNTOZUnSRmS/tTDaK+nWQNw6jeke48iha43RYpvVvBTSfsJTKZiiYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vinarskis.com; spf=pass smtp.mailfrom=vinarskis.com; dkim=pass (2048-bit key) header.d=vinarskis.com header.i=@vinarskis.com header.b=P0Wc0tR/; arc=none smtp.client-ip=85.9.210.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vinarskis.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vinarskis.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vinarskis.com;
+	s=protonmail2; t=1775134347; x=1775393547;
+	bh=RlaTN/KkUD6yChDb6Sv3mvP3VzxU5+g5V+ry08YJuw0=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=P0Wc0tR/8ajzIrgrb9l2iy0QFyAF1hHCQ0V6csPhkHugoFfSyTn/2FbwKQySmD2+F
+	 E+8SSPfNgn3hFa0lkRCBpJpVeGUspE7JsRk28WcT4rN2HFRMA1YURHBBEa0PPDGCtr
+	 s+mDV/sJqIAg3XCfonJnpHU2v3pGyePctrek2IPnGzCZ89qM78aPUyxCgXVGSqZ3rT
+	 1kQQR3FC6fXW3hlSqovRvrYF1Lu3lVJfXSUi0wppXQe+aQ2XwZdDM9eS01NiefcKZa
+	 EHdbK3WQ3pv6xNy0bSPzEt05957Pt8ThjyFgglsLMD/kOiIxb+Z9KSTq8R5ksoL1MU
+	 3/s3VLzODYZjw==
+Date: Thu, 02 Apr 2026 12:52:23 +0000
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Aleksandrs Vinarskis <alex@vinarskis.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Hans de Goede <hansg@kernel.org>, =?utf-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, platform-driver-x86@vger.kernel.org, laurentiu.tudor1@dell.com, Abel Vesa <abel.vesa@oss.qualcomm.com>, Tobias Heider <tobias.heider@canonical.com>, Val Packett <val@packett.cool>
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: x1e80100-dell-xps13-9345: introduce EC
+Message-ID: <oZ3ETRlKitLSlV93KwI5jlHnDIykdpHxhzThD4pT8FVvY48Y0jrPqDuwI81Zrwy8nwXe7DR0ZUKBTEN9SO8bsPa5xBNWlaNS8u_DG6Kcntc=@vinarskis.com>
+In-Reply-To: <e9826e27-da9e-4cd5-b368-be3e56f62072@oss.qualcomm.com>
+References: <20260401-dell-xps-9345-ec-v1-0-afa5cacd49be@vinarskis.com> <20260401-dell-xps-9345-ec-v1-4-afa5cacd49be@vinarskis.com> <e9826e27-da9e-4cd5-b368-be3e56f62072@oss.qualcomm.com>
+Feedback-ID: 158356072:user:proton
+X-Pm-Message-ID: 65fa30d0570072eda59ab799a400fd797eda2907
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 02 Apr 2026 14:24:57 +0200
-Message-Id: <DHIO0VFBOHNX.381P06A2CRHAZ@fairphone.com>
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Krzysztof Kozlowski" <krzk@kernel.org>, "Luca Weiss"
- <luca.weiss@fairphone.com>
-Cc: "Bjorn Andersson" <andersson@kernel.org>, "Michael Turquette"
- <mturquette@baylibre.com>, "Stephen Boyd" <sboyd@kernel.org>, "Rob Herring"
- <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
- Dooley" <conor+dt@kernel.org>, "Konrad Dybcio" <konradybcio@kernel.org>,
- <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
- <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 1/3] dt-bindings: clock: qcom: document the Milos GX
- clock controller
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260306-milos-gxclkctl-v1-0-00b09ee159a7@fairphone.com>
- <20260306-milos-gxclkctl-v1-1-00b09ee159a7@fairphone.com>
- <20260307-inventive-stingray-of-pride-5c2216@quoll>
- <768180d0-bab6-466f-9f5f-54b36f353bd6@kernel.org>
-In-Reply-To: <768180d0-bab6-466f-9f5f-54b36f353bd6@kernel.org>
-X-Spamd-Result: default: False [-0.16 / 15.00];
+X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[fairphone.com,quarantine];
-	MV_CASE(0.50)[];
-	R_DKIM_ALLOW(-0.20)[fairphone.com:s=fair];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	DMARC_POLICY_ALLOW(-0.50)[vinarskis.com,quarantine];
+	R_DKIM_ALLOW(-0.20)[vinarskis.com:s=protonmail2];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[15];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-101546-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-101547-lists,linux-arm-msm=lfdr.de];
+	RCVD_COUNT_THREE(0.00)[3];
 	MIME_TRACE(0.00)[0:+];
-	DKIM_TRACE(0.00)[fairphone.com:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[17];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[luca.weiss@fairphone.com,linux-arm-msm@vger.kernel.org];
+	MISSING_XM_UA(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	NEURAL_HAM(-0.00)[-1.000];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[alex@vinarskis.com,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[vinarskis.com:+];
+	MID_RHS_MATCH_FROM(0.00)[];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	TO_DN_SOME(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,fairphone.com:dkim,fairphone.com:mid]
-X-Rspamd-Queue-Id: EFD553890EB
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,vinarskis.com:dkim,vinarskis.com:email,vinarskis.com:mid]
+X-Rspamd-Queue-Id: 0396B38955A
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Thu Apr 2, 2026 at 10:23 AM CEST, Krzysztof Kozlowski wrote:
-> On 07/03/2026 16:30, Krzysztof Kozlowski wrote:
->>> +
->>> +properties:
->>> +  compatible:
->>> +    enum:
->>> +      - qcom,milos-gxclkctl
->>> +
->>> +  power-domains:
->>> +    description:
->>> +      Power domains required for the clock controller to operate
->>> +    items:
->>> +      - description: GFX power domain
->>> +      - description: GPUCC(CX) power domain
->>> +
->>> +  '#power-domain-cells':
->>> +    const: 1
->>> +
->>> +  reg:
->>> +    maxItems: 1
->>=20
->> reg should be the second property, like you have it in "required" part.
->> I guess you copied it from kaanapali-gxclkctl.yaml, so lesson - qcom
->> bindings have acceptable quality, but not good enough to take as correct
->> starting point.
->>=20
+
+On Wednesday, April 1st, 2026 at 11:21, Konrad Dybcio <konrad.dybcio@oss.qu=
+alcomm.com> wrote:
+
+> On 4/1/26 9:33 AM, Aleksandrs Vinarskis wrote:
+> > Describe embedded controller, its interrupt and required thermal zones.
+> > Add EC's reset GPIO to reserved range, as triggering it during device
+> > operation leads to unrecoverable and unusable state.
+> >
+> > Signed-off-by: Aleksandrs Vinarskis <alex@vinarskis.com>
+> > ---
 >
-> OTOH, why this entire binding cannot be squashed in Kaanapali one?
-> What's the difference?
+> [...]
+>
+> > +=09=09io-channels =3D <&pmk8550_vadc PM8350_ADC7_GPIO3_100K_PU(1)>,
+> > +=09=09=09      <&pmk8550_vadc PM8350_ADC7_GPIO4_100K_PU(1)>,
+> > +=09=09=09      <&pmk8550_vadc PM8350_ADC7_AMUX_THM1_100K_PU(1)>,
+> > +=09=09=09      <&pmk8550_vadc PM8350_ADC7_AMUX_THM2_100K_PU(1)>,
+> > +=09=09=09      <&pmk8550_vadc PM8350_ADC7_AMUX_THM3_100K_PU(1)>,
+> > +=09=09=09      <&pmk8550_vadc PM8350_ADC7_AMUX_THM4_100K_PU(1)>,
+> > +=09=09=09      <&pmk8550_vadc PM8350_ADC7_AMUX_THM5_100K_PU(1)>;
+> > +
+> > +=09=09io-channel-names =3D "sys_therm0", "sys_therm1", "sys_therm2",
+> > +=09=09=09=09   "sys_therm3", "sys_therm4", "sys_therm5",
+> > +=09=09=09=09   "sys_therm6";
+>
+> nit: one a line please, without a separating \n between x and x-names
 
-There's no GMXC power domain on Milos. Apart from that they're
-compatible from a bindings perspective.
+Will drop \n. One a line as in:
+io-channel-names =3D "sys_therm0",
+                   "sys_therm1",
+                   "sys_therm2",
+                    ...
+?
 
-However it can re-use include/dt-bindings/clock/qcom,kaanapali-gxclkctl.h
-because the GX_CLKCTL_GX_GDSC definition would be identical.
+>
+> [...]
+>
+> > +&pmk8550_vadc {
+> > +=09/* sys_therm0, around DRAM */
+>
+> another nit: I think repeating the name set in the label in each comment
+> is a little excessive
 
-And also the driver (which can be used as-is) would be identical. In
-that driver qcom,kaanapali-gxclkctl.h is used so it makes sense to keep
-with the kaanapali header, or not? Making a qcom,milos-gxclkctl.h with
-the same definition is not wanted?
+Will drop,
 
-Regards
-Luca
+>
+> [...]
+>
+> >  &tlmm {
+> >  =09gpio-reserved-ranges =3D <44 4>,  /* SPI11 (TPM) */
+> > +=09=09=09       <65 1>,  /* EC Reset */
+>
+> Is that a "this may not be accessed" or rather "you can, but it has dire
+> consequences"?
+
+The latter. Triggering EC reset appears to leave it in un-initialized state=
+.
+When analyzing i2c dumps I noticed UEFI sends some data to EC prior to
+Windows driver loading, I am assuming its required for EC configuration.
+When resetting EC from userpsace:
+- Keyboard, Trackpad, touch-row power is out. WiFi connection drops. Dell's
+  UEFI allows disabling many peripherals, EC can 'veto' their resets and/or
+  power supplies. It appears in default reset state it kill some/all output=
+s
+- Holding power button does not reboot laptop, it looks as if it asserts an=
+d
+  holds EC in reset until released. During this time fans spin to max speed=
+.
+- Device can be recovered only by disassembly and battery removal.
+
+>
+> Would the EC driver/binding benefit from having a reference to that pin?
+
+It will not be used by the driver, and it would greatly inconvenience user
+if triggered manually. I would make the reset pin as inaccessible as
+possible, but if you say its cleaner to reference it to EC driver and just
+not use it, I could do that as well.
+
+Thanks for fast review,
+Alex =20
+
+>
+> Konrad
+>
 
