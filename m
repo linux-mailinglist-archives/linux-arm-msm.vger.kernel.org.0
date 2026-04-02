@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-101590-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101591-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id IISJO6b3zmn7sAYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101590-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Apr 2026 01:11:34 +0200
+	id cEqrK9j3zmn7sAYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101591-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Apr 2026 01:12:24 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 54C6D38F09E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Apr 2026 01:11:34 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4DA9B38F0BB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Apr 2026 01:12:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 9FA8D302A2EE
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Apr 2026 23:09:37 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 082473033FBE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Apr 2026 23:09:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F03739937B;
-	Thu,  2 Apr 2026 23:09:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 235423CA4A8;
+	Thu,  2 Apr 2026 23:09:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="JoyHTrVk"
+	dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b="OXP1FSyt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-244123.protonmail.ch (mail-244123.protonmail.ch [109.224.244.123])
+Received: from mail-43100.protonmail.ch (mail-43100.protonmail.ch [185.70.43.100])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E76386C1A
-	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Apr 2026 23:09:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.123
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D40783AA4F7;
+	Thu,  2 Apr 2026 23:09:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.100
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775171377; cv=none; b=tmESnjoqQZT9CfPcMiKx8dBqc8rE1BVzQIM+5rhJ6JewqJ+u6kOe5R8+Cd95z7GqZ9OMZEOuMAacXuxD+x1rKZ39s5a3yKOqfMEFxbFr0u+Af7BU/CLs3Syo/BKGT5zIzR3PTV5nc0qoGdjgNlxHlub7znbi4aTIdQ/0EO+11rA=
+	t=1775171387; cv=none; b=lVrDV7AIhYF1xbAfUE5gCGd4ukS0vMsSQxQf8eE09pnGTsu2v4Uo8yi3IGEyNc+Asvsmnr+7Z5jVWNBuiJGe7L14IRzSAcmi7n9iRYl1IAWijhBM6RB7OlAUKbiacXGt7NyxiICxzlEX9PYkbzuMfqHKgVdG2hacGLtHy6ELTB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775171377; c=relaxed/simple;
-	bh=RlRxXYvppzZ7bfcFYOsZIhZMx/pbVhFUDd7ZxUpM630=;
+	s=arc-20240116; t=1775171387; c=relaxed/simple;
+	bh=sjTb348AHUewwGk80X2mbrV7aXERcHAbGOkvX3abnHk=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lJZAg1uD1ePSFHx6G0KKYaopqNF1/l2vxS4W3EXVKWke2qfP19P3D8D0Qt9/3awMLyFvnvvHJ2znCrevepPZtav2zQBnGDlCSX73kcaA31mh/5us2/SSF+Xl2CEmtTuA/KXgFz70E3kYT+/DBKxNeky6uDs3yXkcoPcByxyXFjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=JoyHTrVk; arc=none smtp.client-ip=109.224.244.123
+	 MIME-Version:Content-Type; b=JRTDs8GNccZl3l0ynVDZbLMYh2bzwpQMvHqHsVI6RhS/9/8wMYyERokBb/f9F2tsKqg0LbELzD7AMyrs1cDFYRIGDzmSPMGoenimOnrr9j9sHasvOA2b9O75mjxePHygC6gvTt3Y5FBWLg6mT46honJMNlW1noO1PjJk6rVacTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me; spf=pass smtp.mailfrom=pm.me; dkim=pass (2048-bit key) header.d=pm.me header.i=@pm.me header.b=OXP1FSyt; arc=none smtp.client-ip=185.70.43.100
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=pm.me
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pm.me
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pm.me;
-	s=protonmail3; t=1775171370; x=1775430570;
-	bh=RlRxXYvppzZ7bfcFYOsZIhZMx/pbVhFUDd7ZxUpM630=;
+	s=protonmail3; t=1775171377; x=1775430577;
+	bh=sjTb348AHUewwGk80X2mbrV7aXERcHAbGOkvX3abnHk=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector;
-	b=JoyHTrVkwrzjxR3KbpaDI2/WX7U+KXlgCMBInfBTcgsxlwrAl03lR1NIJgAf/Hop/
-	 hs3k2ooGDVJHxpS5Tu5is6xpAFsJm1vl52dU/u7NoRs1IVK8PHakZOX58uIJHBCest
-	 fy0ZOZAfIfxDJyev0K2ig1jfwIFe9HmXS0jxIyZKTIUU4VMmg79Vax9Yt24wdKdJwd
-	 c1EfcZ75zDF8oorrbaZNzyi/1orc8+tF7/mNB+W+ulWE11GvbxBH6YmR2uGWxrNXGP
-	 M7rI9azwcBj41VAuPxub1vWxyp/zSb7onf0nhIfKMgvQ/XWejv0+mSTu0KyCxfju6X
-	 6KXRXK613I7PA==
-Date: Thu, 02 Apr 2026 23:09:24 +0000
+	b=OXP1FSytZr2lVqzBVwut/DZqHEuUY8BolFD8t+2wIa0aKrAFMTWOhmJYQT+02szT6
+	 l2VujR0UU+kXhbMoA0cYCQt+qB5ZOVpgXAFQ/JkPaw6AwBYIE8I2DKpP8bkv5BUL4M
+	 0YEvdoeTOF/WQBqe9TNGKKtWuN50ya4LXCb7h1tEYFjXFUBzSFWjIQwxNuCp9doTJu
+	 0rS62ZvsfewuODCd3VREMveMbv3injRnwW/HkTQeb9zc148fy0BX0VDSJGrsScYoVp
+	 zDondzzufj/AFXcpBgNovr6PL/QcVn6SHeQUO5k2efqgKSMTommW0iROYIAYcV7Hm1
+	 9bvG5vofKLN8g==
+Date: Thu, 02 Apr 2026 23:09:32 +0000
 To: Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang <jesszhan0024@gmail.com>, Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Akhil P Oommen <akhilpo@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>
 From: Alexander Koskovich <akoskovich@pm.me>
 Cc: Luca Weiss <luca.weiss@fairphone.com>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Alexander Koskovich <akoskovich@pm.me>, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: [PATCH RFC v2 3/6] drm/msm/adreno: set cx_misc_mmio regardless of if platform has LLCC
-Message-ID: <20260402-adreno-810-v2-3-ce337ca87a9e@pm.me>
+Subject: [PATCH RFC v2 4/6] drm/msm/a8xx: use pipe protect slot 15 for last-span-unbound feature
+Message-ID: <20260402-adreno-810-v2-4-ce337ca87a9e@pm.me>
 In-Reply-To: <20260402-adreno-810-v2-0-ce337ca87a9e@pm.me>
 References: <20260402-adreno-810-v2-0-ce337ca87a9e@pm.me>
 Feedback-ID: 37836894:user:proton
-X-Pm-Message-ID: 86696d82bda1591138d3e8a6205702be2b36a3fb
+X-Pm-Message-ID: b8def7380ff3b80ea1b49ff0111db2fc670cb38b
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,12 +69,12 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[pm.me,quarantine];
 	R_DKIM_ALLOW(-0.20)[pm.me:s=protonmail3];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
 	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-101590-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-101591-lists,linux-arm-msm=lfdr.de];
 	FREEMAIL_TO(0.00)[oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,linux.intel.com,suse.de,ffwll.ch];
 	FORGED_SENDER_MAILLIST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[3];
@@ -88,121 +88,52 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[akoskovich@pm.me,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[pm.me:+];
 	MID_RHS_MATCH_FROM(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MISSING_XM_UA(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[pm.me:dkim,pm.me:email,pm.me:mid,qualcomm.com:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 54C6D38F09E
+	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,pm.me:dkim,pm.me:email,pm.me:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: 4DA9B38F0BB
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Platforms without a LLCC (e.g. milos) still need to be able to read and
-write to the cx_mem region. Previously if LLCC slices were unavailable
-the cx_misc_mmio mapping was overwritten with ERR_PTR, causing a crash
-when the GMU later accessed cx_mem.
+A8XX GPUs have two sets of protect registers: 64 global slots and 16
+pipe specific slots. The last-span-unbound feature is only available
+on pipe protect registers, and should always target pipe slot 15.
 
-Move the cx_misc_mmio mapping out of a6xx_llc_slices_init() into
-a6xx_gpu_init() so that cx_mem mapping is independent of LLCC.
+This matches the downstream driver which hardcodes pipe slot 15 for
+all A8XX GPUs (GRAPHICS.LA.15.0.r1) and resolves protect errors on
+A810.
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 38 ++++++++++++++++---------------=
-----
- 1 file changed, 17 insertions(+), 21 deletions(-)
+ drivers/gpu/drm/msm/adreno/a8xx_gpu.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/ad=
-reno/a6xx_gpu.c
-index 9847f83b92af..d691ad1f88b3 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -2039,7 +2039,7 @@ static void a6xx_llc_activate(struct a6xx_gpu *a6xx_g=
-pu)
- =09struct msm_gpu *gpu =3D &adreno_gpu->base;
- =09u32 cntl1_regval =3D 0;
+diff --git a/drivers/gpu/drm/msm/adreno/a8xx_gpu.c b/drivers/gpu/drm/msm/ad=
+reno/a8xx_gpu.c
+index 8b4b022d9a6b..102d5e751536 100644
+--- a/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
+@@ -252,11 +252,12 @@ static void a8xx_set_cp_protect(struct msm_gpu *gpu)
+ =09}
 =20
--=09if (IS_ERR(a6xx_gpu->cx_misc_mmio))
-+=09if (IS_ERR_OR_NULL(a6xx_gpu->llc_slice) && IS_ERR_OR_NULL(a6xx_gpu->htw=
-_llc_slice))
- =09=09return;
+ =09/*
+-=09 * Last span feature is only supported on PIPE specific register.
+-=09 * So update those here
++=09 * Last span setting is only being applied to the last pipe specific
++=09 * register. Hence duplicate the last span from protect reg into the
++=09 * BR and BV protect reg pipe 15.
+ =09 */
+-=09a8xx_write_pipe(gpu, PIPE_BR, REG_A8XX_CP_PROTECT_PIPE(protect->count_m=
+ax), final_cfg);
+-=09a8xx_write_pipe(gpu, PIPE_BV, REG_A8XX_CP_PROTECT_PIPE(protect->count_m=
+ax), final_cfg);
++=09a8xx_write_pipe(gpu, PIPE_BR, REG_A8XX_CP_PROTECT_PIPE(15), final_cfg);
++=09a8xx_write_pipe(gpu, PIPE_BV, REG_A8XX_CP_PROTECT_PIPE(15), final_cfg);
 =20
- =09if (!llcc_slice_activate(a6xx_gpu->llc_slice)) {
-@@ -2098,7 +2098,7 @@ static void a7xx_llc_activate(struct a6xx_gpu *a6xx_g=
-pu)
- =09struct adreno_gpu *adreno_gpu =3D &a6xx_gpu->base;
- =09struct msm_gpu *gpu =3D &adreno_gpu->base;
-=20
--=09if (IS_ERR(a6xx_gpu->cx_misc_mmio))
-+=09if (IS_ERR_OR_NULL(a6xx_gpu->llc_slice) && IS_ERR_OR_NULL(a6xx_gpu->htw=
-_llc_slice))
- =09=09return;
-=20
- =09if (!llcc_slice_activate(a6xx_gpu->llc_slice)) {
-@@ -2135,31 +2135,12 @@ static void a6xx_llc_slices_destroy(struct a6xx_gpu=
- *a6xx_gpu)
- static void a6xx_llc_slices_init(struct platform_device *pdev,
- =09=09struct a6xx_gpu *a6xx_gpu, bool is_a7xx)
- {
--=09struct device_node *phandle;
--
- =09/* No LLCC on non-RPMh (and by extension, non-GMU) SoCs */
- =09if (adreno_has_gmu_wrapper(&a6xx_gpu->base))
- =09=09return;
-=20
--=09/*
--=09 * There is a different programming path for A6xx targets with an
--=09 * mmu500 attached, so detect if that is the case
--=09 */
--=09phandle =3D of_parse_phandle(pdev->dev.of_node, "iommus", 0);
--=09a6xx_gpu->have_mmu500 =3D (phandle &&
--=09=09of_device_is_compatible(phandle, "arm,mmu-500"));
--=09of_node_put(phandle);
--
--=09if (is_a7xx || !a6xx_gpu->have_mmu500)
--=09=09a6xx_gpu->cx_misc_mmio =3D msm_ioremap(pdev, "cx_mem");
--=09else
--=09=09a6xx_gpu->cx_misc_mmio =3D NULL;
--
- =09a6xx_gpu->llc_slice =3D llcc_slice_getd(LLCC_GPU);
- =09a6xx_gpu->htw_llc_slice =3D llcc_slice_getd(LLCC_GPUHTW);
--
--=09if (IS_ERR_OR_NULL(a6xx_gpu->llc_slice) && IS_ERR_OR_NULL(a6xx_gpu->htw=
-_llc_slice))
--=09=09a6xx_gpu->cx_misc_mmio =3D ERR_PTR(-EINVAL);
+ =09a8xx_aperture_clear(gpu);
  }
-=20
- #define GBIF_CLIENT_HALT_MASK=09=09BIT(0)
-@@ -2621,6 +2602,7 @@ static struct msm_gpu *a6xx_gpu_init(struct drm_devic=
-e *dev)
- =09struct platform_device *pdev =3D priv->gpu_pdev;
- =09struct adreno_platform_config *config =3D pdev->dev.platform_data;
- =09const struct adreno_info *info =3D config->info;
-+=09struct device_node *phandle;
- =09struct device_node *node;
- =09struct a6xx_gpu *a6xx_gpu;
- =09struct adreno_gpu *adreno_gpu;
-@@ -2656,6 +2638,20 @@ static struct msm_gpu *a6xx_gpu_init(struct drm_devi=
-ce *dev)
-=20
- =09a6xx_llc_slices_init(pdev, a6xx_gpu, is_a7xx);
-=20
-+=09/*
-+=09 * There is a different programming path for A6xx targets with an
-+=09 * mmu500 attached, so detect if that is the case
-+=09 */
-+=09phandle =3D of_parse_phandle(pdev->dev.of_node, "iommus", 0);
-+=09a6xx_gpu->have_mmu500 =3D (phandle &&
-+=09=09of_device_is_compatible(phandle, "arm,mmu-500"));
-+=09of_node_put(phandle);
-+
-+=09if (is_a7xx || !a6xx_gpu->have_mmu500)
-+=09=09a6xx_gpu->cx_misc_mmio =3D msm_ioremap(pdev, "cx_mem");
-+=09else
-+=09=09a6xx_gpu->cx_misc_mmio =3D NULL;
-+
- =09ret =3D a6xx_set_supported_hw(&pdev->dev, a6xx_gpu, info);
- =09if (ret) {
- =09=09a6xx_llc_slices_destroy(a6xx_gpu);
 
 --=20
 2.53.0
