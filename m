@@ -1,250 +1,206 @@
-Return-Path: <linux-arm-msm+bounces-101512-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101516-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id +J18OJs+zmkImQYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101512-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Apr 2026 12:02:03 +0200
+	id wFxyL5o9zmkImQYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101516-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Apr 2026 11:57:46 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [IPv6:2600:3c04:e001:36c::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1857838762C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Apr 2026 12:02:02 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC1E63874D1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Apr 2026 11:57:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 854A730E6A3D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Apr 2026 09:50:31 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 5FA8E30DD2F8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Apr 2026 09:52:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D3983DEAF9;
-	Thu,  2 Apr 2026 09:49:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A271E3E63B6;
+	Thu,  2 Apr 2026 09:50:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gWwxHjwE"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="b3fqVzCa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9087D3DEAEC;
-	Thu,  2 Apr 2026 09:49:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593EA3E51CB;
+	Thu,  2 Apr 2026 09:50:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775123389; cv=none; b=IUH3Lg2s2Bx4DLMforjDbE9axK2A//HtTf8N//Klq4mJHBKxgHfdL4hQMMNkCP8OqhG1m/N67hEIHPHkvn2vbtOqbApGDs2xUBiVdDSMK+p7JulmkezKvuR7FM2EECRCaVFl94XuUQIIpv+Iifj5DtwtAqwpituTn+UVtaXye0w=
+	t=1775123451; cv=none; b=sbuF8+0LXds6+0o0VD2J/WY3sY9rX/0ff+qUUg9ICt6MtctS7ikKbzuiA2mix9aVe0b1pnkUvGf5wwFO038vOQMy2hoN1N+92+eP93BRnHeqFgB4PJ+nGefUeKEo+Bm3ngMIqOmVsFxY+XX+LZZBbjfeQ7jd60cikaKvKvBibrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775123389; c=relaxed/simple;
-	bh=Oj+5uBOFgp5Zzmr5HPFcAx2HeD+3q8NmM1W/70Z/BqE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sO3JgSIKqh/DuVudt9anTo9dol65uS/jScB+VeNgwzDBwgLMSeuD2qymxR9P4BWAx1X2XhufbDg/scS4v5i+IbYOUXQCM2EApxPJt0zZpKTockLujgJVyAoklIsHInydZnM0HPnmoOnYtvPPKzMrVghwKFK+CgL0JJkfaL2QI3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gWwxHjwE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B19C19423;
-	Thu,  2 Apr 2026 09:49:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1775123389;
-	bh=Oj+5uBOFgp5Zzmr5HPFcAx2HeD+3q8NmM1W/70Z/BqE=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=gWwxHjwEPBoxmXzZuynaETkXQUV9+daANbNJTNRxoC9ka4MetOO6Ui9KBI+0fi56K
-	 YahQuoyXlfmSXgMjOOO5fhKBfWvIjmpQyin/pvw613snEWoB1NLFHdOxrjEXIw0F8h
-	 aHIlltfdS5pj7kSs8Y+SBn+EAhFdp8NAF8+vVn+Px9/WforBtTH27w2t+ZKU+/4gB+
-	 3vRKpVPGzMFmRKfgC4vfjrDzuefZgcSK5BNrJdEp2b03hYd2juSn7d74FDcMYL3iRO
-	 8Hc44vQPos63kwWV2jR/Ms7dCAgMkAe2en6mgPF2/XjscvPv4GEJ0p7EF/Rsf7tYlt
-	 9GTLfwrvp/91Q==
-Message-ID: <4eb95523-c811-4702-b6e7-2e3f801dc754@kernel.org>
-Date: Thu, 2 Apr 2026 11:49:44 +0200
+	s=arc-20240116; t=1775123451; c=relaxed/simple;
+	bh=aTJtw+gTSSwZda3cnVzFIA16Y2ThY2RkBpnuHg5et5U=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=LhMEsu3NyogAg/pw9ieurxWRugIp1iCtmWU7DKAtjN6oiYUrTD9DyYHi1qk0iulhAVMn4oSZAp7VikurNsjzMKnsRMBQk5682M81TNqi3qY/WDMskDdBUSlnfmbY/FIpX4MkI6iuDffDKSGcodO1jn0LyD1oiIe7ofultqR6Zt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=b3fqVzCa; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 63277ier3044208;
+	Thu, 2 Apr 2026 09:50:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=O8f/+miE3jil4DGaMUWbI1gUjHJGqg6T+HZ
+	U+N1NLIo=; b=b3fqVzCa2pjxbNmb+PV/IjBB3X30+qlipBw30evNccbmM7r9OuD
+	AbHAZ3DA4JNyame0ZQJQKeLuuQmk+/YlVBPze9RXQYUGi+8X5CQc6GlLm3Aj1jw0
+	FFuDvdLRT0iABB7KKZ/eyqK1glJbRt8TX38xXYMw5DsZWsfp9IBxHPsXXsuSuRgt
+	54o8umCHu7ta7hMcJ72YeBnHFj3/fc2n8gLPDNxQ0p99qphu6F4Pf26J4UI6fDpq
+	yWuuQYcbG0v35u+DVXDUWNG+FjBs24iTK6BHoIjb3/Glmtt1BCvZ/cBDHdl3osFo
+	N9ycs2ZirmPNWi28Z0YXlCprhZjOmhonsYg==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4d9483v8fm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 02 Apr 2026 09:50:20 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTP id 6329oGQL004380;
+	Thu, 2 Apr 2026 09:50:16 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 4d6qk2m86m-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 02 Apr 2026 09:50:16 +0000 (GMT)
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 6329oGNt004363;
+	Thu, 2 Apr 2026 09:50:16 GMT
+Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-mkuntuma-hyd.qualcomm.com [10.213.97.145])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 6329oGgH004355
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 02 Apr 2026 09:50:16 +0000 (GMT)
+Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 4582077)
+	id A5DD3465; Thu,  2 Apr 2026 15:20:15 +0530 (+0530)
+From: Mani Chandana Ballary Kuntumalla <quic_mkuntuma@quicinc.com>
+To: dmitry.baryshkov@oss.qualcomm.com, marijn.suijten@somainline.org,
+        swboyd@chromium.org, mripard@kernel.org, abel.vesa@linaro.org,
+        andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, robin.clark@oss.qualcomm.com,
+        jessica.zhang@oss.qualcomm.com, abhinav.kumar@linux.dev,
+        sean@poorly.run, airlied@gmail.com, simona@ffwll.ch,
+        alex.vinarskis@gmail.com
+Cc: Mani Chandana Ballary Kuntumalla <quic_mkuntuma@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        quic_rajeevny@quicinc.com, quic_vproddut@quicinc.com,
+        quic_riteshk@quicinc.com
+Subject: [PATCH v5 0/3] Enable mdss1 Display Port for Qualcomm lemans-ride platform
+Date: Thu,  2 Apr 2026 15:20:00 +0530
+Message-Id: <20260402095003.3758176-1-quic_mkuntuma@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 1/2] arm64: dts: qcom: eliza: Add display (MDSS) with
- Display CC
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@oss.qualcomm.com>
-References: <20260331-dts-qcom-eliza-display-v1-0-856f0b66b282@oss.qualcomm.com>
- <20260331-dts-qcom-eliza-display-v1-1-856f0b66b282@oss.qualcomm.com>
- <6488e6e7-726c-4f0b-a6b0-2914b04e118a@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <6488e6e7-726c-4f0b-a6b0-2914b04e118a@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spamd-Result: default: False [-2.16 / 15.00];
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Authority-Analysis: v=2.4 cv=RYydyltv c=1 sm=1 tr=0 ts=69ce3bdc cx=c_pps
+ a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=yOCtJkima9RkubShWh1s:22 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
+ a=e5mUnYsNAAAA:8 a=kyufpZre07lEBfj0WjwA:9 a=TjNXssC_j7lpFel5tvFf:22
+ a=Vxmtnl_E_bksehYqCbjh:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDAyMDA4OCBTYWx0ZWRfX9GswskdlKLhD
+ FLWAJhUJ44ea63EfEMZUCtQ0pBof1MmR2xUktaLB1dPqrY211BhGEqnAMKFJAoQIgaaT4gZTfO6
+ e+E4l2CizIfXcuLEONQr0ANuHAW/oEFVrs+Qg8qIEfXoQsxfVka8m+pDe6X/KH5MxAvGcExQNyj
+ t/pVmAwNfm7wEL6+yIFYE46a/9DvC69eqGpSfOIiBhhCvyfqAr4wQo1srFAsC3dcz7ia6IcrOu7
+ ev+3zunYYJyX1sNIwVHI6QtF46egoXP7+iS71iVVsRR8DNBcl9FssoV1qeVbPNZViCkWggSLaxY
+ 0Bc0LIMSZSmGmaRqSatt4zukI2uTdK9J1RNDbIzBZbEG0FQ3rR84Pcxk+gMmZ8BDg5cK8a3jfpT
+ 5MddmhY5M4ok3A4bs+duoY3vUt5TKmENLJgGL5t/UpJ9TOT4hiC2jmhyaD4NHkyk8WOndRwpNlm
+ ubyME31bKl1Vrukp/xw==
+X-Proofpoint-ORIG-GUID: WPRj92rFS_u_oeE-0OpxDhrsZBumql4_
+X-Proofpoint-GUID: WPRj92rFS_u_oeE-0OpxDhrsZBumql4_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-02_01,2026-04-02_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 suspectscore=0 clxscore=1015 adultscore=0 bulkscore=0
+ spamscore=0 phishscore=0 impostorscore=0 lowpriorityscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2604020088
+X-Spamd-Result: default: False [0.84 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c04:e001:36c::/64:c];
-	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	MID_CONTAINS_FROM(1.00)[];
+	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[quicinc.com,none];
+	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74:c];
+	R_DKIM_ALLOW(-0.20)[quicinc.com:s=qcppdkim1];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-101512-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_TO(0.00)[oss.qualcomm.com,somainline.org,chromium.org,kernel.org,linaro.org,linux.dev,poorly.run,gmail.com,ffwll.ch];
+	RCPT_COUNT_TWELVE(0.00)[27];
 	RCVD_TLS_LAST(0.00)[];
-	RCVD_COUNT_THREE(0.00)[4];
+	TAGGED_FROM(0.00)[bounces-101516-lists,linux-arm-msm=lfdr.de];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	DKIM_TRACE(0.00)[kernel.org:+];
 	MIME_TRACE(0.00)[0:+];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_HAS_DN(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-1.000];
 	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[krzk@kernel.org,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c04::/32, country:SG];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[quic_mkuntuma@quicinc.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[quicinc.com:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[quicinc.com:dkim,quicinc.com:mid,gitlab.freedesktop.org:url,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	RCPT_COUNT_SEVEN(0.00)[11];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[qualcomm.com:email,tor.lore.kernel.org:helo,tor.lore.kernel.org:rdns,ae95000:email,ae01000:email,af54000:email]
-X-Rspamd-Queue-Id: 1857838762C
+	NEURAL_HAM(-0.00)[-0.999];
+	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
+	RCVD_COUNT_SEVEN(0.00)[10]
+X-Rspamd-Queue-Id: AC1E63874D1
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 02/04/2026 11:42, Konrad Dybcio wrote:
-> On 3/31/26 4:02 PM, Krzysztof Kozlowski wrote:
->> Add device nodes for almost entire display: MDSS, DPU, DSI, DSI PHYs,
->> DisplayPort and Display Clock Controller.
->>
->> Missing pieces are HDMI PHY and HDMI controller.
->>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
->>
->> ---
-> 
-> [...]
-> 
->> +			mdss_mdp: display-controller@ae01000 {
->> +				compatible = "qcom,eliza-dpu";
->> +				reg = <0x0 0x0ae01000 0x0 0x93000>,
->> +				      <0x0 0x0aeb0000 0x0 0x2008>;
-> 
-> sz=0x3000
-> 
-> [...]
+This series adds the DPTX0 and DPTX1 nodes, as a part of mdss1
+on Qualcomm lemans SoC. It also enables Display Port on Qualcomm
+lemans-ride and lemans-evk-ifp-mezzanine platforms.
 
-Thanks, I will double check with spec.
+---
+This series is dependent on below series:
+https://lore.kernel.org/all/20260128114853.2543416-1-quic_riteshk@quicinc.com/
 
-> 
->> +			mdss_dsi0: dsi@ae94000 {
->> +				compatible = "qcom,eliza-dsi-ctrl", "qcom,sm8750-dsi-ctrl", "qcom,mdss-dsi-ctrl";
-> 
-> linebreak?
-> 
->> +				reg = <0x0 0x0ae94000 0x0 0x400>;
->> +				reg-names = "dsi_ctrl";
->> +
->> +				interrupts-extended = <&mdss 4>;
->> +
->> +				clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK>,
->> +					 <&dispcc DISP_CC_MDSS_BYTE0_INTF_CLK>,
->> +					 <&dispcc DISP_CC_MDSS_PCLK0_CLK>,
->> +					 <&dispcc DISP_CC_MDSS_ESC0_CLK>,
->> +					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
->> +					 <&gcc GCC_DISP_HF_AXI_CLK>,
->> +					 <&mdss_dsi0_phy DSI_PIXEL_PLL_CLK>,
->> +					 <&mdss_dsi0_phy DSI_BYTE_PLL_CLK>,
->> +					 <&dispcc DISP_CC_ESYNC0_CLK>,
->> +					 <&dispcc DISP_CC_OSC_CLK>,
->> +					 <&dispcc DISP_CC_MDSS_BYTE0_CLK_SRC>,
->> +					 <&dispcc DISP_CC_MDSS_PCLK0_CLK_SRC>;
-> 
-> Why the source clocks?
+Change in v5:
+- Moved OPP tables inside the mdss0 and mdss0_dp0 nodes and reused them for other nodes. [Konrad]
+- Added newline before subnode. [Konrad]
+- Included lemans-evk-ifp-mezzanine patch: https://lore.kernel.org/lkml/20260219-enable-edp2-3-lemans-evk-mezzanine-v1-1-969316806538@oss.qualcomm.com/ [Konrad]
+- Link to v4: https://lore.kernel.org/all/20260226111322.250176-1-quic_mkuntuma@quicinc.com/
 
-Short answer: because SM8750 binding requires it and that's the
-same/derivative as indicated by compatibles.
+Change in v4:
+- Moved the OPP tables for DP and MDP one level up to make them common for both nodes. [Dmitry]
+- Added an explanation for enabling dispcc1 in the commit message. [Dmitry]
+- Removed unnecessary blank lines preceding 'reg'. [Konrad]
+- Link to v3: https://lore.kernel.org/all/20260217071420.2240380-1-mkuntuma@qti.qualcomm.com/
 
-Typical mailing list answer when people do not have any arguments: But
-Kaanapali has the same!
+Change in v3:
+- Patchset v2 [1/3] got merged
+  https://gitlab.freedesktop.org/lumag/msm/-/commit/1338e8ae4084
+- Rebased on top of linux-next and picked the latest patch from the dependent series.
+- Removed additional instance of opp table [Dmitry]
+- Link to v2: https://lore.kernel.org/all/20251125105622.1755651-1-quic_mkuntuma@quicinc.com/
 
-Long answer: because that's how we represent the parent clocks in ABI
-for the kernel. IOW, assigned-clocks do not work :(.
+Change in v2:
+- Added fixes tag for the DP driver patch [Dmitry]
+- Included below patch in this series after addressing comments [Dmitry and Konrad]
+  https://lore.kernel.org/all/20250925-lemans_dual-v1-1-9c371803198d@oss.qualcomm.com/
+	- Removed the misleading comment: "same path used twice" [Konrad]
+	- Removed unused label in 'display-controller' [Dmitry]
+- Removed extra zeroes in dispcc1 node [Konrad]
+- Enbaled dispcc1 by default in main dtsi file [Dmitry]
+- Added EDP ref clock and updated dependency series.
+- Link to v1: https://lore.kernel.org/all/20250926085956.2346179-1-quic_mkuntuma@quicinc.com/
 
-Rationale is in the 34bdf809a567ccefa1984ccda010c4b5de6c68c8 commit.
+---
 
-> 
-> [...]
-> 
->> +			mdss_dsi0_phy: phy@ae95000 {
->> +				compatible = "qcom,eliza-dsi-phy-4nm", "qcom,sm8650-dsi-phy-4nm";
->> +				reg = <0x0 0x0ae95000 0x0 0x200>,
->> +				      <0x0 0x0ae95200 0x0 0x280>,
-> 
-> sz=0x300
-> 
-> [...]
-> 
->> +			mdss_dp0: displayport-controller@af54000 {
->> +				compatible = "qcom,eliza-dp", "qcom,sm8650-dp";
->> +				reg = <0x0 0xaf54000 0x0 0x104>,
-> 
-> please pad the addr to 8 hex digits
-> 
-> sz=0x200
-> 
->> +				      <0x0 0xaf54200 0x0 0xc0>,
-> 
-> sz=0x200
-> 
->> +				      <0x0 0xaf55000 0x0 0x770>,
-> 
-> sz=0xc00
->> +				      <0x0 0xaf56000 0x0 0x9c>,
-> 
-> sz=0x400
->> +				      <0x0 0xaf57000 0x0 0x9c>;
-> 
-> sz=0x400
-> 
-> Also missing regs for quad-MST (Pixel2/3 @ 0x0af5_[89]000, each 0x400-long
-> and MST2/3_link @ 0x0af5_[ab]000, 0x600-long). I don't know if the DPU can
-> do quad-MST but there's registers..
+Mani Chandana Ballary Kuntumalla (2):
+  arm64: dts: qcom: lemans: add mdss1 display device nodes
+  arm64: dts: qcom: lemans-ride: Enable mdss1 display Port
 
-OK, let me look at datasheet again.
+Vishnu Saini (1):
+  arm64: dts: qcom: lemans-evk-ifp-mezzanine: Enable mdss1 display Port
 
+ .../dts/qcom/lemans-evk-ifp-mezzanine.dtso    |  74 +++++
+ .../boot/dts/qcom/lemans-ride-common.dtsi     |  80 +++++
+ arch/arm64/boot/dts/qcom/lemans.dtsi          | 289 ++++++++++++++++--
+ 3 files changed, 416 insertions(+), 27 deletions(-)
 
-Best regards,
-Krzysztof
+-- 
+2.34.1
+
 
