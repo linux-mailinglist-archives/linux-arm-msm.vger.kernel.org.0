@@ -1,56 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-101518-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id COAAA4c+zmkImQYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101518-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Apr 2026 12:01:43 +0200
+	id KP4UAaE+zmkImQYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Apr 2026 12:02:09 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8E493875EE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Apr 2026 12:01:37 +0200 (CEST)
+Received: from sto.lore.kernel.org (sto.lore.kernel.org [IPv6:2600:3c09:e001:a7::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 954CC38763D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Apr 2026 12:02:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 2E20630A4DA5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Apr 2026 09:55:44 +0000 (UTC)
+	by sto.lore.kernel.org (Postfix) with ESMTP id 3263130411D8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Apr 2026 09:55:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 584603E2777;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4C3E3E3DA2;
 	Thu,  2 Apr 2026 09:54:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X2oDBz3j"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oTk/nOnp"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F289F3C65E8;
-	Thu,  2 Apr 2026 09:54:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47DFB3E2747;
+	Thu,  2 Apr 2026 09:54:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775123650; cv=none; b=EZNDNyOg4o4lbclbYo2UcNH01pIFLOBPg56/ZtC0HJRegNqcoC1mOVsdkdLXkAwn2OMggGePDI8UYJdtGwTxfZSHbj7BwFHLTv9RFBthQ1Y4ydNouoG8RTo8y2/3onXrrei6uSVz9NTH9h/ZFr93XTBNe+SqxD10mtgKq46NSzk=
+	t=1775123650; cv=none; b=L0yyxwtZp+qKUpUsxwJ9jRrSySD+GTu1kl4O0aKsGO2laTBhI1spkYI+sfjlnOT8bbu+3/0UhfWjWOYce+VqsDhvt6MUYQrXBBmwLSb2a7m6oOxyS1qte7+bOkqyvtjs/rDNuULlUeE2LTGp80+pNqVp4kaeEM94nN+TOloLOOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1775123650; c=relaxed/simple;
-	bh=/vXwbUx/wEI5emVC0Vt6ADYW+CUqAJYC1yC9sW31Rl4=;
+	bh=NoZ7PGTWOVR+0jHtvhI4clP5Zfpg6jucXXmbKq5WJuE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ky/SuG3IztUjZHGSW29eIDmTr7KezEC3aIr4plFndVMqwK07RISxOnr+5/YA88auV3gA94SQP6wbBiKWdssCwcor4CK3E4s9e2K5HUSRsZz3yk/8nOco4tIKTqYIhKhBMPmy9urViCC6bjJMCAQZR6pLM94duq503BivBRJIuZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X2oDBz3j; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 9A09CC2BCB2;
+	 In-Reply-To:To:Cc; b=DzravVVSY2PHNTp3j13r1gdpqsiNMvvLow847out8RqtPgTh1gFe8y/ksrIOIVsgl8dIKX9jQhOtdPfQfjODSO71uuZLOmSkv2EsNyGl/JiVIBGWN9CtxTA9gpzqAOiNASN6bPHxR4cfJFy1CHtPKP3UZ6//HihBmquIYzU6d4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oTk/nOnp; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id B6591C2BCB3;
 	Thu,  2 Apr 2026 09:54:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1775123649;
-	bh=/vXwbUx/wEI5emVC0Vt6ADYW+CUqAJYC1yC9sW31Rl4=;
+	bh=NoZ7PGTWOVR+0jHtvhI4clP5Zfpg6jucXXmbKq5WJuE=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=X2oDBz3jzvUgU2Hoq+th/MyBPdPIE41kdkxWZaBJs/e+w2o2xw863dLO9xr4kBTEt
-	 kSChwjOebw1hMT1QrImpQ63K2Gv+5jps5b5u7yW5XK2gioT0hm7AXYjxOq4IaL4d3D
-	 pfXpHXW/Ut6FEku1cOm6XQR+4BVSDPcmyUZgDCeWdBqPlwGPP9GgfQUHDXx1Vmyhdm
-	 42yHuSGN5C6Bsjyo06UQFxdVUIC2dfOk+t8EOjBne0s5FrOG824nsAVomNXWsihYYC
-	 Of+k5iZ03aDZ6x3zPgcLOFLlqLuxOtyFzsOXA3TNDyij3jONZGOO3W9tP46nxfEh42
-	 h1sM6OrxrXxfw==
+	b=oTk/nOnpLmaMYGwZl10APJdHhtwz0U6L/RlWE8+OtZRyeh3CgFvUe5yYDCX1H7lOx
+	 1WxprsxnBIUj+bLI7EX4w9ihA0zxtxybVBwrp/0fncLS+BuLbzK1w6l30NLSiKx3nv
+	 zjhuQ5F+OOCwwBLUFWXut/XAmh6vXeuDEHj/jHKNLSfQbzlG/0M8Bmn89/VFjbxJvT
+	 n1kPq+98CEuNPH0LXJNZsGIQ+JwKGqCT0UbrBEVyIHlf6gMIRm5Ojj1JvBKycPAICV
+	 NwbtzdFbLQw87V+hDqtGkZugq4N/RNP8QsBDbSPXeGmQMKkGuYN2t3tNr/HX/o871B
+	 VV7HIFBOda0HA==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91B70D3940A;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A4E34D3940B;
 	Thu,  2 Apr 2026 09:54:09 +0000 (UTC)
 From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Date: Thu, 02 Apr 2026 11:54:07 +0200
-Subject: [PATCH v3 2/3] arm64: dts: qcom: sdm845-shift-axolotl: Set higher
- touchscreen i2c clock
+Date: Thu, 02 Apr 2026 11:54:08 +0200
+Subject: [PATCH v3 3/3] arm64: dts: qcom: sdm845-shift-axolotl: Enable
+ TFA9890 codec
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,7 +59,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260402-axolotl-misc-p1-v3-2-8934e9db6831@ixit.cz>
+Message-Id: <20260402-axolotl-misc-p1-v3-3-8934e9db6831@ixit.cz>
 References: <20260402-axolotl-misc-p1-v3-0-8934e9db6831@ixit.cz>
 In-Reply-To: <20260402-axolotl-misc-p1-v3-0-8934e9db6831@ixit.cz>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -74,21 +74,21 @@ Cc: linux-arm-msm@vger.kernel.org, Petr Hodina <phodina@protonmail.com>,
  linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
  David Heidelberg <david@ixit.cz>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=838; i=david@ixit.cz;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1039; i=david@ixit.cz;
  h=from:subject:message-id;
- bh=9p+K/F4jbKx5IwsqTA3jbf55J7M/QFSo8brdWdbijrI=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpzjy/9xJHnhjNT6Qk2yPhnOGmFdNSYXM8WMu+4
- AjEBa0p2eqJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCac48vwAKCRBgAj/E00kg
- csNFD/9YMHUrBa9PsOyayLViCNbx138tHBJuuRTyMd6t/fwcAphniB0+7EWjeqiGNgz35AaLREZ
- VmU1rHJstEP8yz/bb0G0AIC4TlAW1FQH6XhPbn2m0Pj2gafflIsJYKoo4nqjteTgK9IYdQQpLTK
- BA1VJY0ginDt8VcXABSryfjlTYbrzYaTjrwDbxofBriKvGppo4mUk1MFb3YNkLLUmO8mROAC0GH
- ZlPW7wfBY6KhAynqcjkXWP8nWiAHFUC3jbYRK4qT31J8nLdSaeZpgo4Q2hiHCASwn1Cit4X3q6N
- m/xkHbCj5m4tf+a2xnWnF1YPghd26BnHvv7KQjCiumkyVcUemYirRd74To4ocnXTJipRwZ5nO+I
- JkCKkpqy2Q2FzPWTGllyG2elsXPfZMh18BUo+RRxQqO0qXpQe8hvErYaQZpCRhAlPFGxFxqbOai
- l4YMrhs2EYZjzETNW8e711a7j0yi1V4lrUr23fOcnTxpv99DRnUrT04UgS7nV+B3W+24wI2NF9a
- 6uzEOoLLPVc0fzcOBRCij8jWk4Szy2j096Lcyvsu6T1jPhqsbGmtu506YbhzLTUeSJ14XFBHTBL
- 6f5TBkvZGs0Pkcqe0m5VmW8iX1JkWzyqD/6V1SyRHe0Csti5AUatIp7crFUv8ukxp7o0ggsuwmO
- qHcTh23gzCAWGXA==
+ bh=/tLVCDMeEyd1l4XS4gK2AEpm3lRrSe36wHl8GBumRLY=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpzjy/UCJDjV9x3+R3aAu7WmjW1VThG7KIJDH8A
+ XtyRUdHwPSJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCac48vwAKCRBgAj/E00kg
+ cjiaD/9CRnzArTwe+BEjDI349N1KrFDtNd67osObrTnPgTU0xnzfkvFd2sZVXPX0LZ3F5X0uReG
+ qBbsOS89FBJgpB8l2o5YVU6adBFufp7TwpMnqqw2IwqH1qWt7p/sZpYq4PtNmxQiVJM5eYaZ8od
+ qudSOGeBycBJH4oDAJvavvaDMaVmQ6+ATP30EIHxRgTLrDU9lTUSgDrYjtjUousK28RfrEhnvDs
+ GmnWrLT0sO5UslWy4cA4CwcO2lizcY0CJ+WlSbLPi1vVXrsAwRfIc7vX+Wfx5bJX4jWjEibxSol
+ LKiLgxxSiDtltYVWJySy++p6IxgL9fUStbd/FaRFG60nToFy7GReYOqmQMuFdfDln7VdlNWgWPF
+ ik17n2heKgE5KAlFmhZ0XNxWTzDH9ppl1bp/PgDC8J1bq158ckMob9H0xRJEskIDHVar0GNGpQ2
+ GknWomPuDxWN2Rr6z2qrWKAOJK5Fvq6eFUyPxK+2b3nI3BEKhtDXAurGewde2Dyq+6HdK/U8nbr
+ I0Ie4GXrL10pbIW4B1GxPw0D2ew4ulHc/DMe00xfgSkgtC6lf0u/iVjbkH0jr3jc+YvlGwsp4oj
+ oXHz3CEx3BrRREzSOJDSBzEfmXzNiuEMvgl0NuFrciBonH2b/eUJ8UoxdcF+KsxI/tcl8G7lh/n
+ nuZvOZHRjxJYjQw==
 X-Developer-Key: i=david@ixit.cz; a=openpgp;
  fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
 X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
@@ -99,11 +99,11 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.234.253.10:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c09:e001:a7::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-101518-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
+	TAGGED_FROM(0.00)[bounces-101520-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
 	RCVD_TLS_LAST(0.00)[];
 	FROM_HAS_DN(0.00)[];
 	FORGED_SENDER_MAILLIST(0.00)[];
@@ -118,42 +118,52 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
-	NEURAL_HAM(-0.00)[-0.999];
-	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
+	DBL_PROHIBIT(0.00)[0.0.0.12:email];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	NEURAL_HAM(-0.00)[-0.999];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	RSPAMD_EMAILBL_FAIL(0.00)[dmitry.baryshkov.oss.qualcomm.com:query timed out];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,qualcomm.com:email,ixit.cz:email,ixit.cz:replyto,ixit.cz:mid,0.0.0.38:email]
-X-Rspamd-Queue-Id: A8E493875EE
+	ASN(0.00)[asn:63949, ipnet:2600:3c09::/32, country:SG];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.34:email,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns,shiftphones.com:email,qualcomm.com:email,ixit.cz:email,ixit.cz:replyto,ixit.cz:mid]
+X-Rspamd-Queue-Id: 954CC38763D
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-From: Casey Connolly <casey.connolly@linaro.org>
+From: Alexander Martinz <amartinz@shiftphones.com>
 
-Sets a higher rate than the default for good responsiveness of
-touchscreen.
+Audio amplifier TFA9890 is present on the board.
 
-Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Alexander Martinz <amartinz@shiftphones.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: David Heidelberg <david@ixit.cz>
 ---
- arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-index b05f04a621e5b..f26079398e07b 100644
+index f26079398e07b..7d81198bc499c 100644
 --- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
 +++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-@@ -432,6 +432,8 @@ &gpu_zap_shader {
+@@ -459,6 +459,19 @@ &i2c10 {
+ 	/* SMB1355@0x0C */
  };
  
- &i2c5 {
++&i2c11 {
 +	clock-frequency = <400000>;
 +
- 	status = "okay";
- 
- 	touchscreen@38 {
++	status = "okay";
++
++	audio-codec@34 {
++		compatible = "nxp,tfa9890";
++		reg = <0x34>;
++		vddd-supply = <&vreg_s4a_1p8>;
++		#sound-dai-cells = <0>;
++	};
++};
++
+ &ipa {
+ 	qcom,gsi-loader = "self";
+ 	memory-region = <&ipa_fw_mem>;
 
 -- 
 2.53.0
