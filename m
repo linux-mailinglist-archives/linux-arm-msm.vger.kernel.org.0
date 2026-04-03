@@ -1,85 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-101688-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101689-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id OKD3DNDvz2mt1wYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101688-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Apr 2026 18:50:24 +0200
+	id 2BRDFhTwz2mt1wYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101689-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Apr 2026 18:51:32 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 842203969B3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Apr 2026 18:50:23 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [104.64.211.4])
+	by mail.lfdr.de (Postfix) with ESMTPS id 602683969E0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Apr 2026 18:51:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 75DB430937E0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Apr 2026 16:44:08 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id B7383301962B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Apr 2026 16:44:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F20143CEBA2;
-	Fri,  3 Apr 2026 16:44:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E3233CF047;
+	Fri,  3 Apr 2026 16:44:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="mhVywkwu"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="etF5eNW8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0AA03C455E
-	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Apr 2026 16:44:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54DCA3CD8DE
+	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Apr 2026 16:44:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775234645; cv=none; b=qVFEGodY7WVdw4BksTVfaJ5GWbBWS9BHgdjSTtuH2alZihu9ehztTkpVBP6BQHt1u1SjvSaVGt+XjTuk9NV2pIYR9J+xUiELLbvYMkxSqoeCxw2ahUFuTr4yn6dXP6VreiZUVqkJ1zBqfq/Q9dYMzQlb/O1W3opbfj+eULx236w=
+	t=1775234647; cv=none; b=C1YDzKY5lAPAJvjz7IKqegatIL/h8DSxeqZ5uuKgxAdIxWTdcIMZfkqRSneCAqck38hRi2USvWKWjOJF4Mbud7oW9Pq2MDktTPnm7m9PloQgVZ9bsi4qEy5uiKtloCtb43CtQM3xmyorHy/voCFEdtJK9dNWooT+1erTdxmaGos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775234645; c=relaxed/simple;
-	bh=i4p562E6xl+MsawXqPrNM2npLjWfOncAEU+VEhgYYCg=;
+	s=arc-20240116; t=1775234647; c=relaxed/simple;
+	bh=c9ud9hMSAb29AtftWqh2+ul+32jl5aytaub0XxdrYew=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Q7kLEtaLs/2hTqZMEGCTppYe063liCqJ2CjTkbe1DyHu0v+9QLO+ai9QsashJb8M1aTHrvVVO1bDkhz6GzFMzz/ah5IeAEthjXldfERgf0Y4cKXGyRqVQ1JxqMhbNR/zFqkfYjqAyIgU5N5S5SDk0p+xoRywGamtbZdK8F9WQJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=mhVywkwu; arc=none smtp.client-ip=209.85.218.50
+	 In-Reply-To:To:Cc; b=ONNfkjENjVWtQmU6EPIP2ho4VBUrFERrKyuoeIUB9WlgAA9h8ORzO5aYpQ64Ex0jJAZ35z+jgnERfwHn30zxFBxI0T7lmjyZtMFII6hpkLojH6T9PdWsvxE0hzA4h34WdHKwIqjZuPkE8Ym3e8X9rV6CJRLAMcHi+9KRSfD1+bs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=etF5eNW8; arc=none smtp.client-ip=209.85.218.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-b9c04152730so312680366b.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Apr 2026 09:44:03 -0700 (PDT)
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-b932fe2e1a7so266483066b.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Apr 2026 09:44:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1775234642; x=1775839442; darn=vger.kernel.org;
+        d=fairphone.com; s=fair; t=1775234644; x=1775839444; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=CTjtCff7Q4DiiNPMLHxYW0+3ALVFBVM6wubHOseE9mU=;
-        b=mhVywkwuJvhO3WlBYE1/OaMAZo+a//kPHAerR2H7xcZmilHNo1HFI1aL5wsGO1cqt1
-         8nu3eZoHOYwNGej3Z/DTHBvDzqA9gU84/jq7TQyPD8/9QEuskruHPVbahFKHRQLyUBBG
-         gZga5ZP+WLNa2rrwSKbJwso4fT/zcCC/+5jYvtx9TpETIsZ6gILSXNK2SZmDspAeKBLc
-         H0bHMNLiY4rW1rIkFMw+blYwSUiIKhu0D9Fp3IxL4b0o4gbYg61bJKRNxjh90yR3Clw5
-         JZBegqsnMrDZzgZJIM/H/KCCEPW7rmI01tc4kcCMHJgTNdWdDqKq6GnqSERy1Hmp5Is3
-         qv3Q==
+        bh=kqZBtqbXpsXcGM064lzho6jfnaB+LmMlvvuZ2cyPGYA=;
+        b=etF5eNW8Jg6DicZwBnIiQit9sNj0mTP2qqkZ9o3YXuaiaV6380KVNJvQCmdEBHsXe8
+         ytw3jLrliwUR3/Hlmm+kslPIgZvGe9U2CWHO9YWDYQLRIleJcBBZAj2r3ii00uh5aTB5
+         HGNgjGMs9U+izmMAcQRInpSK1OeBIo/hkfj66rwF/qiIGPvqIoVbZ1k1yIdtFgSNw1YC
+         V2KKiAFgJHo5x/W6Z+b+YEwkmSjF9CI4IQmzfryfVq4/cMBQHTO70PBFUqvB/BS0qvzl
+         YATmZ9GG3I2xx7bgbJ6zaBautH0TLY/2/q4A7gsjvLKPtopV3D78lsUJ8uAFYhmlPK2A
+         R7Fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775234642; x=1775839442;
+        d=1e100.net; s=20251104; t=1775234644; x=1775839444;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=CTjtCff7Q4DiiNPMLHxYW0+3ALVFBVM6wubHOseE9mU=;
-        b=JB8yuMipe6TF+l6jf8GLH71wLOoBju2Ymj1ddqfWNepRdVOMgzZ5f8hDU6wcXldXkw
-         qOEMeduvQoTAJm/jyvVesa33VeavwyZWXxnAXaq5kuQWq8uQt3XkVs2GfUsvW7B6Etwq
-         Pd3tHmH648MIFBu4hfRQDkM9vOz6gKJ2AN7c36/4cl7k2a0u4RuDst/ZggLLJ/F3f0QO
-         0q7FUV28N7rL5PRvCQdfaP2vW/LLglxy2HFH3RarSZPGCP7tuFv+i2+QGyGa52hGi2vW
-         yq0HV1KP1TWRVKJBsfr4F4rSl5CKuVtBJcmr8ufbxW/ZMxftXCFao+MWDdcXWNTVM5Ug
-         LrCg==
-X-Forwarded-Encrypted: i=1; AJvYcCVw7F0vxiDe1jICRV6LT6+xjWyL9hqRBTmcxnsVHREbaTgFrFD8+6Mdm8EpqQ0FEDkqcgYKV76eZBCARgEN@vger.kernel.org
-X-Gm-Message-State: AOJu0YxO41C/GHBywDb/bzvBv3anF0SJEi4aD3hfZHjQKsuHk5K2PizF
-	QYaez5MNBF56B5Lh6H6RrBInYYadGU0MVVBfZRtIfbpbG8brFGnXK4c6OpUAkX2v1fU=
-X-Gm-Gg: AeBDieucDc/czo3R1i9wEyvcdw3Qlkzl7bUDFntsUSi7pck8ThddZ6g8aw13e1ykC+H
-	svEBJ6R9E4qOqx4oAFkMOYoVrr6lcaLVjvIOqkLMIRNdHl6mnPk2mh08hDt90E0L6aRNPnYT6yh
-	pixJAvPb5rKB0Rb632cQ9LE8VRLxuWGV6F8YJ4OacVXTelhjqNtcQytvqzQGR7QguaFG9MydvKB
-	9eaHdeSth+Rp1lyJjcRHJWT5a8c3vZY6JAWZI6j29rkv3GQQQWd5jDAXaH07iRiyXjXtEXugd06
-	eXFlbE2erV4GOj1VRZ8sT2YZEQoBz1XEZ4g+SIauUrH/ryrIJudPA18BmnmSU/EZeSAZg/VsKV4
-	gPydgDb3OXmxSCiS5SX6UeBEwJzUtzVDVFUQEQ+pojh8aUQwhG3q4/JvsurMz+REzYcfxv/NLp2
-	InnGaEI+XTrxOQDNRRmdwFpmK1FcSYwknlDB/3Iko/wcUdES9JteE0o+SP7AcOFBVf3oQMcAE8D
-	GXNE6lPHtaJjVAhNpvIBZxeqXJJoYFgO67Egw==
-X-Received: by 2002:a17:907:c002:b0:b97:a1ca:e100 with SMTP id a640c23a62f3a-b9c67951901mr190889766b.32.1775234642271;
-        Fri, 03 Apr 2026 09:44:02 -0700 (PDT)
+        bh=kqZBtqbXpsXcGM064lzho6jfnaB+LmMlvvuZ2cyPGYA=;
+        b=eBRHlC1LovtKbxD4tl99QrLs3oKUWd+0EqgJijtGbqioFKRa97D0WdkA7/I0bhrwp7
+         Rj5VR5K/sKcLKq9omIs1x+ACiXhMoseNRCG+T+iKc51STofznB74Fby7ehbMQP3HLh7X
+         Rkt+Pf2kaED0KaBoVE0/RBBXvdsOtEZzIG5xEsjabcLsDdDKEUdDlXDNSnjbMD5BlFC+
+         NDmlHItTsGQvmzLALjlUbM7Yn6Gs5u3NgjJ1zj2lS/kUUzA9UYkoltG8dTARmh5SUtRM
+         d/Y+xldbjKeCnBavWuQEuPQ4HJI+o4VW24kgkRm8697/s6rTZwj29Sj1uVMBFawSMI+I
+         b5Lg==
+X-Forwarded-Encrypted: i=1; AJvYcCV7KJCSpJRV+slqOgfUuOJogTcceBw+lhryR+9OhV+BgyBWaNUR9poYvOoZybhPUOJ0LP853/hNjkoVeGzN@vger.kernel.org
+X-Gm-Message-State: AOJu0YwN4qZ1FvoT05QnhRhBqXOsMkdPNL815p8/keph6HLfJNLoUIV+
+	3n13ABwLDViFdRM2lPTx25nwwSoJIIis9wUXACsWTl7Zmckp9xk4iLfDLzEaxiPv/iU=
+X-Gm-Gg: AeBDiesYO95LAXrbYBF1jStU9Ha/IffSTNefdZttE1xRqIYzU+Hr7sKyTq6rCaGgi22
+	yWRbvmdK52uchFOGIsRkjNJi2lwG0kx+v/M99IYbvb3k9o2zBcIvUzdXFy/6ttPOVqhAYjtqbw2
+	jEnpA1P5NtTfx7WLsQlUCPeJjUfI1g5Rmbs2016jTPUa3AdIsAIEmnoYB+nO/SN0d0+sM34lSd1
+	vvYVaYOHsZ0qzcg8jf7qSLqvh82ZQDeP2g96XdOcE6WIQdgvqnkUCb1Z9FVTedygzmtjG33xZT8
+	S0w5KbQOQe6YhCSuv5OLmcyYHol1OXo9m1WgNEwm014Q6cYHYWuvxoVz+iUvRxzxNEdnMTXQjwM
+	G5E2Hiu83HBqJnn57XRYuCk+QOcUgmWQY8da3xVWqXVKROgTV0IMiOrrIHDzClMPN/OAIhXQhEo
+	jzvxHDQSZEN0qSC33LUGYayyrjSh21Yy9b9Vlb/oBgD55jtRTDs2t3/j2IvlxDJZ8MAShrUF7Ib
+	g6xn3Z+uRMkSuW0y5W+89xG2U9lLlJjC99nyQ==
+X-Received: by 2002:a17:907:3e9f:b0:b97:ca81:e89a with SMTP id a640c23a62f3a-b9c66e8f0admr191031366b.0.1775234643574;
+        Fri, 03 Apr 2026 09:44:03 -0700 (PDT)
 Received: from otso.local (2001-1c00-3b89-c600-71a4-084f-6409-1447.cable.dynamic.v6.ziggo.nl. [2001:1c00:3b89:c600:71a4:84f:6409:1447])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b9c3ca9a145sm213492566b.25.2026.04.03.09.44.00
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b9c3ca9a145sm213492566b.25.2026.04.03.09.44.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Apr 2026 09:44:01 -0700 (PDT)
+        Fri, 03 Apr 2026 09:44:02 -0700 (PDT)
 From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Fri, 03 Apr 2026 18:43:47 +0200
-Subject: [PATCH 1/6] net: ipa: fix GENERIC_CMD register field masks for IPA
+Date: Fri, 03 Apr 2026 18:43:48 +0200
+Subject: [PATCH 2/6] net: ipa: fix event ring index not programmed for IPA
  v5.0+
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -89,7 +89,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260403-milos-ipa-v1-1-01e9e4e03d3e@fairphone.com>
+Message-Id: <20260403-milos-ipa-v1-2-01e9e4e03d3e@fairphone.com>
 References: <20260403-milos-ipa-v1-0-01e9e4e03d3e@fairphone.com>
 In-Reply-To: <20260403-milos-ipa-v1-0-01e9e4e03d3e@fairphone.com>
 To: Alex Elder <elder@kernel.org>, Andrew Lunn <andrew+netdev@lunn.ch>, 
@@ -104,18 +104,18 @@ Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  Luca Weiss <luca.weiss@fairphone.com>
 X-Mailer: b4 0.15.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1775234639; l=1275;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1775234639; l=1402;
  i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
- bh=wVWwdatovjkVmj3hE2xttOnjurwQ7/UkaxiXvhYrMnw=;
- b=6f7dlNEqx/WgDEZTogxKVUxQuHWi4Gkbilt5KzzC4a4NlQluDwn1CvyiwdceB4Yn7NRmtQsWP
- oYcEdeFiz8oClMj8bu54iIa6PvIYpJRVe8H7ObjLR1rRgq5uRxrnorj
+ bh=niHCtM98CmwGu9tGXQ1iV8G8OUNt7CyQAHGOy0w2ztg=;
+ b=96TjL2CndxnnjLRlVhkbxUrsefNcmkkxoxcUib1ZyUIjblzrlIaLz8j/6EGfZLBeALxZc02AG
+ rCUST7ZUZePDpYuFSjdZWozuZDKvMxsQvBPjxu48IEQqCxKA26ZqcEw
 X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
  pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
 X-Spamd-Result: default: False [-0.66 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[fairphone.com,quarantine];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
+	R_SPF_ALLOW(-0.20)[+ip4:104.64.211.4:c];
 	R_DKIM_ALLOW(-0.20)[fairphone.com:s=fair];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
@@ -123,7 +123,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MIME_TRACE(0.00)[0:+];
 	RCPT_COUNT_TWELVE(0.00)[19];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-101688-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-101689-lists,linux-arm-msm=lfdr.de];
 	DKIM_TRACE(0.00)[fairphone.com:+];
 	RCVD_TLS_LAST(0.00)[];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
@@ -132,49 +132,51 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	RCVD_COUNT_FIVE(0.00)[5];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[luca.weiss@fairphone.com,linux-arm-msm@vger.kernel.org];
-	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	ASN(0.00)[asn:63949, ipnet:104.64.192.0/19, country:SG];
 	NEURAL_HAM(-0.00)[-1.000];
 	TAGGED_RCPT(0.00)[linux-arm-msm,netdev,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[pm.me:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,fairphone.com:dkim,fairphone.com:email,fairphone.com:mid]
-X-Rspamd-Queue-Id: 842203969B3
+	DBL_BLOCKED_OPENRESOLVER(0.00)[pm.me:email,sin.lore.kernel.org:helo,sin.lore.kernel.org:rdns,fairphone.com:dkim,fairphone.com:email,fairphone.com:mid]
+X-Rspamd-Queue-Id: 602683969E0
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 From: Alexander Koskovich <akoskovich@pm.me>
 
-Fix the field masks to match the hardware layout documented in
-downstream GSI (GSI_V3_0_EE_n_GSI_EE_GENERIC_CMD_*).
+For IPA v5.0+, the event ring index field moved from CH_C_CNTXT_0 to
+CH_C_CNTXT_1. The v5.0 register definition intended to define this
+field in the CH_C_CNTXT_1 fmask array but used the old identifier of
+ERINDEX instead of CH_ERINDEX.
 
-Notably this fixes a WARN I was seeing when I tried to send "stop"
-to the MPSS remoteproc while IPA was up.
+Without a valid event ring, GSI channels could never signal transfer
+completions. This caused gsi_channel_trans_quiesce() to block
+forever in wait_for_completion().
+
+At least for IPA v5.2 this resolves an issue seen where runtime
+suspend, system suspend, and remoteproc stop all hanged forever. It
+also meant the IPA data path was completely non functional.
 
 Fixes: faf0678ec8a0 ("net: ipa: add IPA v5.0 GSI register definitions")
 Signed-off-by: Alexander Koskovich <akoskovich@pm.me>
 Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 ---
- drivers/net/ipa/reg/gsi_reg-v5.0.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/ipa/reg/gsi_reg-v5.0.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/ipa/reg/gsi_reg-v5.0.c b/drivers/net/ipa/reg/gsi_reg-v5.0.c
-index 36d1e65df71b..3334d8e20ad2 100644
+index 3334d8e20ad2..6c4a7fbe4de9 100644
 --- a/drivers/net/ipa/reg/gsi_reg-v5.0.c
 +++ b/drivers/net/ipa/reg/gsi_reg-v5.0.c
-@@ -156,9 +156,10 @@ REG_FIELDS(EV_CH_CMD, ev_ch_cmd, 0x00025010 + 0x12000 * GSI_EE_AP);
+@@ -30,7 +30,7 @@ REG_STRIDE_FIELDS(CH_C_CNTXT_0, ch_c_cntxt_0,
  
- static const u32 reg_generic_cmd_fmask[] = {
- 	[GENERIC_OPCODE]				= GENMASK(4, 0),
--	[GENERIC_CHID]					= GENMASK(9, 5),
--	[GENERIC_EE]					= GENMASK(13, 10),
--						/* Bits 14-31 reserved */
-+	[GENERIC_CHID]					= GENMASK(12, 5),
-+	[GENERIC_EE]					= GENMASK(16, 13),
-+						/* Bits 17-23 reserved */
-+	[GENERIC_PARAMS]				= GENMASK(31, 24),
+ static const u32 reg_ch_c_cntxt_1_fmask[] = {
+ 	[CH_R_LENGTH]					= GENMASK(23, 0),
+-	[ERINDEX]					= GENMASK(31, 24),
++	[CH_ERINDEX]					= GENMASK(31, 24),
  };
  
- REG_FIELDS(GENERIC_CMD, generic_cmd, 0x00025018 + 0x12000 * GSI_EE_AP);
+ REG_STRIDE_FIELDS(CH_C_CNTXT_1, ch_c_cntxt_1,
 
 -- 
 2.53.0
