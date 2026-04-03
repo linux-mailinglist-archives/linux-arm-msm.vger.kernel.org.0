@@ -1,56 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-101657-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101656-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id GPnSEVXIz2lH0QYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101657-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Apr 2026 16:01:57 +0200
+	id +NyrJPDIz2lH0QYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101656-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Apr 2026 16:04:32 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from tor.lore.kernel.org (tor.lore.kernel.org [172.105.105.114])
-	by mail.lfdr.de (Postfix) with ESMTPS id C209E394E28
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Apr 2026 16:01:56 +0200 (CEST)
+Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 365EE394EB6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Apr 2026 16:04:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by tor.lore.kernel.org (Postfix) with ESMTP id 03DA33013897
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Apr 2026 13:59:16 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id C25D1307AFF5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Apr 2026 13:59:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 495893ACF18;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FD403AEF33;
 	Fri,  3 Apr 2026 13:58:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zzcx1kmQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mii2qDml"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82BFA330B0E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6010037FF56;
 	Fri,  3 Apr 2026 13:58:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775224734; cv=none; b=ieFmZzz6snYZCR+sW0sAqYxoba1i1CFvd/SRTctiXoriF2SMedU5U9ma0VeJ5or5sWrBojnw58x3eARcoK/sRlD7+WGwcoSBmXG6xzmLtB15zuLJFqVDTK+zqQeHh/QvifGlUiC0L3onjbgLpf5ghMMbeZeqhtEhkz7CHT+LPL4=
+	t=1775224734; cv=none; b=DRoos/9OORO7gzXsM+HhdKleYd1wB3nfLahcGXuDNNk/+/ED2NHUYPTHW1FIFpJaaVx44mt2NWCgKfklkSLL+jp5QUFxubP4UvVWXkM0GTYu6BeLmiNHBi8K9aZhtL3ErfUQutY4VFWAIBrHHfBMP2NJK+RBl/IPRWn1RyLURq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1775224734; c=relaxed/simple;
-	bh=lZ/Jdqhu/D5fzSK65stiDbxUGT/qsPhk0sKr0RAYSL8=;
+	bh=rmJTbzK4IDzritBYdCx+sZj1Nkzl6sMVuKHMhZwu9Fc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=EEMzBfkHqMw6JKiaB1jkRfVo9LeP2crv22JQYnpkLAiMg4+5Za9NFn9EfQDXTxDzxxi9ZDZxkIrumOwXoGOm5mC0jcGxVNvuunfSOXifMFu/i8TSXysRmkGhWx7sy7O3LpRh2C07oHTT6Nnsw3xpwvbYYMmyaYPucl6rSPNXTn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zzcx1kmQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id EFF81C2BCB1;
-	Fri,  3 Apr 2026 13:58:53 +0000 (UTC)
+	 In-Reply-To:To:Cc; b=dyXDZEd4rCxOJOb4vFSoHzC3hhdkoK1rX7ZQT0OCDRE5YLf7dsVgxLZ9LI/hRXO0MszatOWfvurbpUttvJbTcMvVCVyrPUGgWc7NvxJRC+sNMqL+/1I7slXzVBvSUstvW45dd2fhWEih5jqkM83kc7cGQSDpDIaI772Qgs+1axI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mii2qDml; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 12D14C2BCB0;
+	Fri,  3 Apr 2026 13:58:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1775224734;
-	bh=lZ/Jdqhu/D5fzSK65stiDbxUGT/qsPhk0sKr0RAYSL8=;
+	bh=rmJTbzK4IDzritBYdCx+sZj1Nkzl6sMVuKHMhZwu9Fc=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=Zzcx1kmQkt2IiL8gCWe48RluJCzNGPcHMOu51rYjnFlpAK1hg673TbuKcATzCz+zu
-	 b4jaZK7MQCOQoveJceid+ZMDRtl/0zF+9CdL3lJzQprHKKYLGXNZRzBNo/bi0/9D6Q
-	 fEucPEpohHaF8RAk3zghdTc7mSid5z0h1f/kaYDAD3B+DWzXHRv8BfU2bysZ1raxnf
-	 63rZXInxFjMlLp8xjEU5+V/kzD81UFwuwxEOilHvZRWBGNKn336F05sr7OntVz5Pd+
-	 85xR8PUdSkLDmoCcm3CHNgiKwHa8KSjbpvtnViOyKcdP9Me5ppCK/6qZqVWVfJvufr
-	 2gObt/F73giHw==
+	b=Mii2qDmlPyKDWEa+4VtTKGhv37BX3sGEXQJrDe1dPwAwBp3HJPgZooRffYX4GRLxk
+	 KlaFxaq7dC3rP9qVYzuAIeHyJFIc5GVYQ3X/lyxWI5rrJbrwyZq+oc+sMQokgCdnwP
+	 hhalHKQWY2XcGifElkhRfqcLVUkXgP/A5F0xAg019JviwtzGFTqOBCHtL2AKfzXx14
+	 GmrDKBXFNAd5QtRH7ZUtmStPcPbtFbK0dcIaKzmut2QTecSiuy4uv9DTPjIxIcrtTg
+	 /xLaY6fXc5F65hMP81l1fzDZ1IqvANRC8bxHt0GlU+aFHLvzMeP9dVNfOuxc/lYHYc
+	 /RZBFTB0wK+pg==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E62B0E85373;
-	Fri,  3 Apr 2026 13:58:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 093D3E85372;
+	Fri,  3 Apr 2026 13:58:54 +0000 (UTC)
 From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Date: Fri, 03 Apr 2026 15:58:48 +0200
-Subject: [PATCH v3 3/5] arm64: dts: qcom: sdm845-shift-axolotl: Correct
- touchscreen sleep state
+Date: Fri, 03 Apr 2026 15:58:49 +0200
+Subject: [PATCH v3 4/5] arm64: dts: qcom: sdm845-shift-axolotl: Enable NFC
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,7 +58,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260403-oneplus-nfc-v3-3-fbdce57d63c1@ixit.cz>
+Message-Id: <20260403-oneplus-nfc-v3-4-fbdce57d63c1@ixit.cz>
 References: <20260403-oneplus-nfc-v3-0-fbdce57d63c1@ixit.cz>
 In-Reply-To: <20260403-oneplus-nfc-v3-0-fbdce57d63c1@ixit.cz>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -78,21 +77,21 @@ Cc: Petr Hodina <petr.hodina@protonmail.com>,
  phone-devel@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>, 
  David Heidelberg <david@ixit.cz>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=928; i=david@ixit.cz;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1823; i=david@ixit.cz;
  h=from:subject:message-id;
- bh=3p89nuzWMcLg3xFnxiidibI8l/wXleSjVbWxGiy6epA=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpz8ebx4SmbawhVTwGcmD5aeTpVlKAwXUN9BFhw
- il9hg1v4WmJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCac/HmwAKCRBgAj/E00kg
- crlbEACv+62mnegW2bXxUSY6S+Ho+OdsRXU58kz9iSpMeQv7uSoNdUP7YYhA7cRxEd1OVR5OGu5
- zEvo/0FEtb97tsjc6aYz2Adz86uNyju5Zdg8tgB/vc74/RwizMIL5FJm1YYkxV8GvEqR1aybDQ8
- Fpjwgo1/Q8aoCVVtaET6cHHw31oQzdO4m7A6QfokYx/ymPOa4RM8NifKareBSAFor8roSUX01ru
- W08+RRSXBX28zCA8+cHldHHDHTljhpBZJm4OJUL4F4m38nm9rdW9JrnxwrEAxaFZiGtb+bOdyUF
- i2ZTC4bhO6Dx1dXCJ0iIim5P2ciCqNBdma/goSc7QTdcCjwMCkdOi8MzlgbSSJmrxvXxyQy3f8E
- 81MlFwEQVWOcbtrbJU67cmTmNhpHUKvmI0sMs07//8uBv7H6p2kr+0Fi3WvmZiMnxZLPpCDUS8H
- VADfUNFT7Wyu88YAWx+nbMh4NpPLRGBhTN/MGjdDE+MRm8KA6YJmLhhK2C3U5NpRLiZN9mORYlA
- E9sqCJnKdxW943hRlytLJcmf8x5BNtB72FRrCr3TaoY0M3gatG6uE1SICcpaVgUwWrMjPpKAkFb
- XiAc2pwnM58TZty4ummFQBD3p9bY+VW1aYs4yordJxM7ZIqevkFXwMlBWYRCbzxOIBlQ0tX2eS1
- jqi5Vb6OP1PTl/A==
+ bh=s22pJ5rTEtiXwSmEEiYHretFehUi77jUBIFY7CCGWZE=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpz8eb82gH++yptm6T8ADjzBk2D5EZflA3/byGV
+ 1ebat1IbiiJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCac/HmwAKCRBgAj/E00kg
+ ci5FD/kBnCx6eNjtESPBu0C549OsGknPfQK1othvKtMzd6Z+vLl/Z1Z3ugvieA/f9w+e5w22n8f
+ ovkUW1jx7Y2+2y0w7wx6gcS6oO52HG2d4D8GlhrGUxJXXpd1/vxz1Mn3To2o0fP+DLutnQI/k4A
+ /apctd1AaoXKSmx9IG7vw6eFIYTmH/K1i9/uDIP3ZX4034FPKcqBSyeqwyw3V1oUaLkAgjrTcJ6
+ rw2zzAmdEq91c78pTFuc4Bx22pEOSmdfXRBlIuBDeSbdDytI+S+LuzMjbDA428128GouJVx9wwW
+ N9Ifaq/f26mvwNNrN7EmpuS7+H/yvIcDv48hLxInxNPr3ftqx+gsOJ4LS/Sc5VOpjnOCTBePj1X
+ Mnx0D4nEPxCIhYtxI+zMJidbAfs9kT1X6630r5r3YaPbPp7VI6+pWVzM1Mbu+kBv84BLWPy5Tl0
+ xSmFawwM+RVYYY8BON5qh17SZtwGEAcX65xxC9uVXnmPyOsqKmv3wayxazSQlJErcXqxZ/SVoNp
+ 55L/qToeWFqvELDOyUFD3tnLMqNE/BCC4WwlyDWhriCP0u9Fv0usFeb28N5jXQKa7nNw3zgmV/L
+ DGncZq8l8C9viTYjjxXPpbidGE6iGm/gIjPHEmDOqDuM6Y75vBbG6xKuecJ1zImeCIYM3KNptd9
+ /f9WSc6bLIioWEg==
 X-Developer-Key: i=david@ixit.cz; a=openpgp;
  fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
 X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
@@ -103,11 +102,11 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
 	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
 	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
-	R_SPF_ALLOW(-0.20)[+ip4:172.105.105.114:c];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-101657-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
+	TAGGED_FROM(0.00)[bounces-101656-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
 	FROM_HAS_DN(0.00)[];
 	FREEMAIL_CC(0.00)[protonmail.com,gmail.com,vger.kernel.org,lists.linux.dev,kernel.org,ixit.cz];
 	RCPT_COUNT_TWELVE(0.00)[23];
@@ -122,38 +121,93 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[kernel.org:+];
 	NEURAL_HAM(-0.00)[-1.000];
-	ASN(0.00)[asn:63949, ipnet:172.105.96.0/20, country:SG];
+	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
 	HAS_REPLYTO(0.00)[david@ixit.cz]
-X-Rspamd-Queue-Id: C209E394E28
+X-Rspamd-Queue-Id: 365EE394EB6
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
 From: David Heidelberg <david@ixit.cz>
 
-There is no suspend state in the mainline kernel, use the sleep state
-intended for this purpose.
+Enable NFC controller NXP PN553.
 
-Fixes: 45882459159d ("arm64: dts: qcom: sdm845: add device tree for SHIFT6mq")
 Signed-off-by: David Heidelberg <david@ixit.cz>
 ---
- arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts | 52 +++++++++++++++++++++++
+ 1 file changed, 52 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-index 740eb22550724..783d66cf5b0f8 100644
+index 783d66cf5b0f8..101597c666332 100644
 --- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
 +++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-@@ -446,7 +446,7 @@ touchscreen@38 {
+@@ -431,6 +431,26 @@ &gpu_zap_shader {
+ 	firmware-name = "qcom/sdm845/SHIFT/axolotl/a630_zap.mbn";
+ };
  
- 		pinctrl-0 = <&ts_int_active &ts_reset_active>;
- 		pinctrl-1 = <&ts_int_suspend &ts_reset_suspend>;
--		pinctrl-names = "default", "suspend";
++&i2c3 {
++	clock-frequency = <400000>;
++
++	status = "okay";
++
++	nfc@28 {
++		compatible = "nxp,pn553", "nxp,nxp-nci-i2c";
++		reg = <0x28>;
++
++		interrupts-extended = <&tlmm 63 IRQ_TYPE_EDGE_RISING>;
++
++		enable-gpios = <&tlmm 12 GPIO_ACTIVE_HIGH>;
++		firmware-gpios = <&tlmm 62 GPIO_ACTIVE_HIGH>;
++
++		pinctrl-0 = <&nfc_default>;
++		pinctrl-1 = <&nfc_sleep>;
 +		pinctrl-names = "default", "sleep";
++	};
++};
++
+ &i2c5 {
+ 	status = "okay";
  
- 		touchscreen-size-x = <1080>;
- 		touchscreen-size-y = <2160>;
+@@ -609,6 +629,38 @@ &slpi_pas {
+ &tlmm {
+ 	gpio-reserved-ranges = <0 4>, <81 4>;
+ 
++	nfc_default: nfc-default-state {
++		enable-pins {
++			pins = "gpio12", "gpio62";
++			function = "gpio";
++			drive-strength = <2>;
++			bias-pull-up;
++		};
++
++		int-pins {
++			pins = "gpio63";
++			function = "gpio";
++			drive-strength = <2>;
++			bias-pull-up;
++		};
++	};
++
++	nfc_sleep: nfc-sleep-state {
++		enable-pins {
++			pins = "gpio12", "gpio62";
++			function = "gpio";
++			drive-strength = <2>;
++			bias-disable;
++		};
++
++		int-pins {
++			pins = "gpio63";
++			function = "gpio";
++			drive-strength = <2>;
++			bias-pull-up;
++		};
++	};
++
+ 	sde_dsi_active: sde-dsi-active-state {
+ 		pins = "gpio6", "gpio11";
+ 		function = "gpio";
 
 -- 
 2.53.0
