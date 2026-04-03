@@ -1,174 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-101612-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101613-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id wEifL/V4z2mvwgYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101612-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Apr 2026 10:23:17 +0200
+	id uFR+JKl7z2mvwgYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101613-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Apr 2026 10:34:49 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
-Received: from sto.lore.kernel.org (sto.lore.kernel.org [172.232.135.74])
-	by mail.lfdr.de (Postfix) with ESMTPS id 86FE33920BD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Apr 2026 10:23:17 +0200 (CEST)
+Received: from sin.lore.kernel.org (sin.lore.kernel.org [IPv6:2600:3c15:e001:75::12fc:5321])
+	by mail.lfdr.de (Postfix) with ESMTPS id 93A2A3921FC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Apr 2026 10:34:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sto.lore.kernel.org (Postfix) with ESMTP id A15403029FE1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Apr 2026 08:23:16 +0000 (UTC)
+	by sin.lore.kernel.org (Postfix) with ESMTP id 26331301A432
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Apr 2026 08:30:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F3D7371D14;
-	Fri,  3 Apr 2026 08:23:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C373137B416;
+	Fri,  3 Apr 2026 08:30:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="x281Uxd+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BJx9s9Ij"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3770B285406
-	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Apr 2026 08:23:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E9492E1F06;
+	Fri,  3 Apr 2026 08:30:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775204595; cv=none; b=NyHwqiLDZj5lFMzxmfBOC3QwpYkasbt+cEpIdpDzfRcYobNQLZAZ8ZdzG+1M0qiUePfl5rWvU6GrwbAFFu1TMbXCA1NoBwf0Z8ApumX/OrNfAgfohtb+Eccrrl58QmAJsMXE0SL/Kr3zRRxXGYTrq+rQ/1k4AWPXwcEnYrTsoHg=
+	t=1775205014; cv=none; b=kFuN93iFC6Rhw+Ta2buLKeHx/ciqIpprFwijB0iOUufBqF88c97luroPUydAhJf+WrMPbin7Up9HwpnETygUQt95EriSKCM94Jw5OFYuuwtCvJkbwt+MDqYXENY/Q2Q6kpR6yLjfDk3dnfBAEWky4Xly7q8TMI5l4gTCgfIE7kk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775204595; c=relaxed/simple;
-	bh=23lg71SS1ypLE/10It2aQYW4KhKP+2cYmx1DGLGdzjA=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=P5BJtvg/+WiYh5+T/Y7nX8As8cPe20wVn4rdX8LafaqNA8CMEXJljmjQ1L4QsX9LXKF9Zo6+gC/2GNLEZExOJ67ElcpG9mY0ckRYnnb3Vrv/EdnvnsPPb8uDVrP2MkvjLRAXwn69IvxW2gNmSW2b0/9+SkvflJ3Al0ocPUOkVaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=x281Uxd+; arc=none smtp.client-ip=209.85.218.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-b9c11eba219so212100666b.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Apr 2026 01:23:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1775204593; x=1775809393; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=23lg71SS1ypLE/10It2aQYW4KhKP+2cYmx1DGLGdzjA=;
-        b=x281Uxd+O1epRbfuICmVyPJkXA5SYdzMCZSDDYsaDeMWFjMZydJgqdSsBiP4QkdMTH
-         wdwKFSAQ7txNW6HyUljdoUrfpaGIzbIL8Bd4WlM1ry+xIUjOlpPr48DdUXY9Lvu58rTc
-         O74XJFcQG7oAytQiloE4qjmhbU1siHb+95qe+uXBaLqAfpLPhAJpLeUhqAWeKprmhtia
-         zHIe2TK9cg/K07gEjcgtRR/e3fjO2HTYc5OZbziBYtWFctlonKUrc6ZD1JZNY0PIa3eO
-         M4/wUPjbs5zxDjzf3g25tDZhbg0hUrf2dAOMw/W+2yXnG7EMOd1EGrOJR4v2pLWagNS0
-         ujKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1775204593; x=1775809393;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=23lg71SS1ypLE/10It2aQYW4KhKP+2cYmx1DGLGdzjA=;
-        b=eu2bnnv0bpEoELH3k3mFoo40O4t2FhW9+2DT8Uu77PpVsK4rRrnxwM4Ccw8a569PCh
-         GjGGswt/mqNZF7gY3R18LNyhp3SJBssQ4RUmS/tNS/Ftrwf8cF+EoUlPY3Kcr+WPF7sp
-         Cx8XoY5TzPLMqYMlS7qJdr1wjCSLFTUTXD6SIKc2kAe3J7RT3SOqFGi2W8AKdCzG+zZg
-         sDtpshO8dBgDqQksJxqCocq05H4/Yxrl8Ua3W90qV06ZKM3WlfgV3aoRj05AHpUv08iY
-         eZe+3P3iM2YPJgqewURgRC6XMGAfsGPOkujCf6hd0t31fFNDZNsRCZSmvZNVhGPhmDqd
-         ZGSw==
-X-Forwarded-Encrypted: i=1; AJvYcCUP5Ne0xVSXiaCo2IkhP79pQkONhd2HSpParBExiu+cq7XF+u1YvdjMq9SdRZsjFeDDBNp11yUKBZp2krgi@vger.kernel.org
-X-Gm-Message-State: AOJu0YxTjL1mDvtepuQqAXSpSvjtTAh18FYd7DFnF80xHwisC2Erw5uP
-	KP6m6clm79+YUfer9zi/36pSo1NVePu5rbKiRG42IxvQZuZsfQf4aPB4FQIaQBQHr8g=
-X-Gm-Gg: ATEYQzxF1iteQkFPCkVD4cpJtzBz9saFNJqjsC7CxYbsyGSVZNXsvAdNOAhK5M43yUa
-	TcTWnbZTEVLeDbdm+BRic0wkpiHioTevJH+8/YyJ1R2jb620r1UmgaaJYAbZDRxqAgabodfU6PR
-	6H3DtwagkzPhb9K4O9d2PPR5WbmDvw9v6K88UeLRCxuc3iOrkHhr7AiNL70EHix5jy7gVXUb8De
-	DAjEKDE9aIY6ij9tQbTDsl5LN8CsNsKGEcAloXeLe8rsPGXM5SImJAFxYZfAY7hzofzhgEryMeA
-	oVopvu2GL7qUWctCm0gdxM4luilzE7NYMICPLt3xSfUUC5SvPRFqfoRfM4EsljhJNVDLG8RRqXM
-	0BP2JPvGG1Smwhh3Vp/a0EJxrevOWWojuYgVHr7Q7O/pbH+PIGilP1QYDk8ZWEktO5KvA/evVPY
-	ssZWLrSVTVBvHP+et1OVx/R6G3UUwqbatlaMZMNDIrKZYohXZG15S7Ib0ZhUsZtYD0oockUaBKY
-	jiz4L2m/2Bumw9YNBMy0+c3J5gX3b23l/NI
-X-Received: by 2002:a17:906:b391:b0:b96:e593:fd32 with SMTP id a640c23a62f3a-b9c67308377mr71993466b.12.1775204592537;
-        Fri, 03 Apr 2026 01:23:12 -0700 (PDT)
-Received: from localhost (2001-1c04-0504-7401-4b2e-1820-6d24-b264.cable.dynamic.v6.ziggo.nl. [2001:1c04:504:7401:4b2e:1820:6d24:b264])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-66e034d60desm1398832a12.31.2026.04.03.01.23.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Apr 2026 01:23:11 -0700 (PDT)
+	s=arc-20240116; t=1775205014; c=relaxed/simple;
+	bh=Cd1EZ76xkf/x2fz9/IYK6lBMjtKYjfEikACFflOtBW0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ofIJwxykgjjocwz9CclgkIMnHt+Y0rqaHknIvRt3BD+M54s3KLMCw3HnHQb13TVvG6kbZmuP5NslntULeFeKOUxlcmN8/+KbzeHrWTXXt2zkUZEcKWD7a7G1m1DXL6PPGvhBmdV1VEtkYnoIxHAIHK2e1xqfcqM4+3KDNL2qztQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BJx9s9Ij; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E91EEC4CEF7;
+	Fri,  3 Apr 2026 08:30:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1775205014;
+	bh=Cd1EZ76xkf/x2fz9/IYK6lBMjtKYjfEikACFflOtBW0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=BJx9s9Ijnd3WYIlzq+9eC5jyjv5XIWfpQzQ5SvH7iVQcsBHm6h3SN2ad1110jvuWd
+	 bMnVTfBPmFp7gUltNJ2jUKy5HVCDcwMaqWPq8u05RCXMBx3rB0BePm65f0lM+i8FTW
+	 jrginlok22FrxLXRsBNqv3l2I4Wtmdzr2fJFxtqaBCNz61Zq81BLWhx6ApV8HC9PRD
+	 9hL/udhzm/BoqyKQlXBQg8t2syDTeWxK+5ZOpeYMgH9CWxI5UD15xSIXxgsQal2pFJ
+	 F8syoL7Ugpx/zV0Snia938z1XZWEeVrbtX0WJIDHIlaD7jGjQL97cmZlprkXWSQsHT
+	 WTFku4cedjzRA==
+Date: Fri, 3 Apr 2026 09:30:09 +0100
+From: Simon Horman <horms@kernel.org>
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+	davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+	pabeni@redhat.com, linux-arm-msm@vger.kernel.org,
+	netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+	andersson@kernel.org, yimingqian591@gmail.com,
+	chris.lew@oss.qualcomm.com, stable@vger.kernel.org
+Subject: Re: [PATCH 1/2] net: qrtr: ns: Limit the maximum server registration
+ per node
+Message-ID: <20260403083009.GA11973@horms.kernel.org>
+References: <20260325104415.104972-1-manivannan.sadhasivam@oss.qualcomm.com>
+ <20260325104415.104972-2-manivannan.sadhasivam@oss.qualcomm.com>
+ <20260327095832.GC111839@horms.kernel.org>
+ <as3zucfwr4z2x5pxww6ognmqcujkwnhppulm7jquex6fy6sqn5@qa33h5mxxdz7>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 03 Apr 2026 10:23:11 +0200
-Message-Id: <DHJDIAVJ89XO.2OH312F9UMLXN@fairphone.com>
-Cc: "Griffin Kroah-Hartman" <griffin.kroah@fairphone.com>, "Rob Herring"
- <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
- Dooley" <conor+dt@kernel.org>, "Bjorn Andersson" <andersson@kernel.org>,
- "Konrad Dybcio" <konradybcio@kernel.org>, <linux-input@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH v4 3/4] Input: aw86938 - add driver for Awinic AW86938
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Dmitry Torokhov" <dmitry.torokhov@gmail.com>, "Luca Weiss"
- <luca.weiss@fairphone.com>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20260302-aw86938-driver-v4-0-92c865df9cca@fairphone.com>
- <20260302-aw86938-driver-v4-3-92c865df9cca@fairphone.com>
- <aae7fRYaoDHMptyu@google.com> <DHHWDE7QEOTO.1AQ85UBLO8IQG@fairphone.com>
- <ac1DclNOl3ZA5bUg@google.com>
-In-Reply-To: <ac1DclNOl3ZA5bUg@google.com>
-X-Spamd-Result: default: False [-1.66 / 15.00];
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <as3zucfwr4z2x5pxww6ognmqcujkwnhppulm7jquex6fy6sqn5@qa33h5mxxdz7>
+X-Spamd-Result: default: False [-2.16 / 15.00];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	DMARC_POLICY_ALLOW(-0.50)[fairphone.com,quarantine];
-	MV_CASE(0.50)[];
-	R_DKIM_ALLOW(-0.20)[fairphone.com:s=fair];
-	R_SPF_ALLOW(-0.20)[+ip4:172.232.135.74];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c15:e001:75::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	RCVD_TLS_LAST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-101612-lists,linux-arm-msm=lfdr.de];
-	RECEIVED_HELO_LOCALHOST(0.00)[];
-	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_TO(0.00)[gmail.com,fairphone.com];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[12];
-	DKIM_TRACE(0.00)[fairphone.com:+];
+	TAGGED_FROM(0.00)[bounces-101613-lists,linux-arm-msm=lfdr.de];
+	FREEMAIL_CC(0.00)[oss.qualcomm.com,davemloft.net,google.com,kernel.org,redhat.com,vger.kernel.org,gmail.com];
 	FROM_HAS_DN(0.00)[];
-	ASN(0.00)[asn:63949, ipnet:172.232.128.0/19, country:SG];
-	RCVD_COUNT_FIVE(0.00)[5];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[luca.weiss@fairphone.com,linux-arm-msm@vger.kernel.org];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
+	RCVD_COUNT_THREE(0.00)[4];
+	RCVD_TLS_LAST(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FORGED_SENDER_MAILLIST(0.00)[];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	ASN(0.00)[asn:63949, ipnet:2600:3c15::/32, country:SG];
+	MISSING_XM_UA(0.00)[];
 	NEURAL_HAM(-0.00)[-1.000];
-	TO_DN_SOME(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[horms@kernel.org,linux-arm-msm@vger.kernel.org];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	MID_RHS_MATCH_FROMTLD(0.00)[];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[fairphone.com:dkim,fairphone.com:email,fairphone.com:mid,sto.lore.kernel.org:helo,sto.lore.kernel.org:rdns]
-X-Rspamd-Queue-Id: 86FE33920BD
+	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCPT_COUNT_TWELVE(0.00)[13];
+	TO_DN_SOME(0.00)[]
+X-Rspamd-Queue-Id: 93A2A3921FC
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On Wed Apr 1, 2026 at 6:11 PM CEST, Dmitry Torokhov wrote:
-> On Wed, Apr 01, 2026 at 04:44:47PM +0200, Luca Weiss wrote:
->> Hi Dmitry,
->>=20
->> On Wed Mar 4, 2026 at 5:56 AM CET, Dmitry Torokhov wrote:
->> > On Mon, Mar 02, 2026 at 11:50:27AM +0100, Griffin Kroah-Hartman wrote:
->> >> Add support for the I2C-connected Awinic AW86938 LRA haptic driver.
->> >>=20
->> >> The AW86938 has a similar but slightly different register layout. In
->> >> particular, the boost mode register values.
->> >> The AW86938 also has some extra features that aren't implemented
->> >> in this driver yet.
->> >>=20
->> >> Signed-off-by: Griffin Kroah-Hartman <griffin.kroah@fairphone.com>
->> >
->> > Applied, thank you.
->>=20
->> I'm curious, where did you apply these patches? linux-next doesn't have
->> it and I don't see it in your kernel.org repo either.
->> https://git.kernel.org/pub/scm/linux/kernel/git/dtor/input.git/
->>=20
->> Did this slip through the cracks or will these patches still appear
->> there?
->
-> My bad, I think there was a conflict with Dan Carpenter's patch and as a
-> result the series got stuck in my internal queue. My apologies.
->
-> Should be out in 'next' branch now.
->
-> Thanks.
+On Fri, Mar 27, 2026 at 03:40:01PM +0530, Manivannan Sadhasivam wrote:
+> On Fri, Mar 27, 2026 at 09:58:32AM +0000, Simon Horman wrote:
+> > On Wed, Mar 25, 2026 at 04:14:14PM +0530, Manivannan Sadhasivam wrote:
+> > > Current code does no bound checking on the number of servers added per
+> > > node. A malicious client can flood NEW_SERVER messages and exhaust memory.
+> > > 
+> > > Fix this issue by limiting the maximum number of server registrations to
+> > > 256 per node. If the NEW_SERVER message is received for an old port, then
+> > > don't restrict it as it will get replaced.
+> > > 
+> > > Note that the limit of 256 is chosen based on the current platform
+> > > requirements. If requirement changes in the future, this limit can be
+> > > increased.
+> > > 
+> > > Cc: stable@vger.kernel.org
+> > > Fixes: 0c2204a4ad71 ("net: qrtr: Migrate nameservice to kernel from userspace")
+> > > Reported-by: Yiming Qian <yimingqian591@gmail.com>
+> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> > 
+> > Reviewed-by: Simon Horman <horms@kernel.org>
+> > 
+> > > ---
+> > >  net/qrtr/ns.c | 24 ++++++++++++++++++++----
+> > >  1 file changed, 20 insertions(+), 4 deletions(-)
+> > > 
+> > > diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
+> > > index 3203b2220860..fb4e8a2d370d 100644
+> > > --- a/net/qrtr/ns.c
+> > > +++ b/net/qrtr/ns.c
+> > > @@ -67,8 +67,14 @@ struct qrtr_server {
+> > >  struct qrtr_node {
+> > >  	unsigned int id;
+> > >  	struct xarray servers;
+> > > +	u32 server_count;
+> > >  };
+> > >  
+> > > +/* Max server limit is chosen based on the current platform requirements. If the
+> > > + * requirement changes in the future, this value can be increased.
+> > > + */
+> > > +#define QRTR_NS_MAX_SERVERS 256
+> > > +
+> > >  static struct qrtr_node *node_get(unsigned int node_id)
+> > >  {
+> > >  	struct qrtr_node *node;
+> > > @@ -229,6 +235,17 @@ static struct qrtr_server *server_add(unsigned int service,
+> > >  	if (!service || !port)
+> > >  		return NULL;
+> > >  
+> > > +	node = node_get(node_id);
+> > > +	if (!node)
+> > > +		return NULL;
+> > 
+> > This is not new behaviour added by patch, but If I understand things
+> > correctly, node_get will allocate a new node if one doesn't already exist
+> > for the node_id.
+> > 
+> 
+> Yes!
+> 
+> > I am wondering if any bounds are placed on the number of nodes that can be
+> > created. And, if not, is this a point of concern from a memory exhaustion
+> > perspective?
+> > 
+> 
+> That's true. I plan to send a followup for that. This series just limits the
+> scope in addressing the reported issue.
 
-Thanks, appreciate it!
+Thanks, sounds good to me.
 
-Regards
-Luca
+For this patch, feel free to add:
+
+Reviewed-by: Simon Horman <horms@kernel.org>
 
