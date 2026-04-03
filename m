@@ -1,164 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-101665-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101654-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id UGUnCrnJz2lH0QYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101665-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Apr 2026 16:07:53 +0200
+	id mOcmIu/Iz2lH0QYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101654-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Apr 2026 16:04:31 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 95355394F6E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Apr 2026 16:07:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 030D9394EAE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Apr 2026 16:04:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 25817311D5C8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Apr 2026 14:01:12 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 409873068F0F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Apr 2026 13:58:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 856FB3A7F57;
-	Fri,  3 Apr 2026 14:00:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7FBC39C639;
+	Fri,  3 Apr 2026 13:58:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b="bIu2lDQk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L4pKeBMt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from fanzine2.igalia.com (fanzine2.igalia.com [213.97.179.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721A43ACF1F
-	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Apr 2026 14:00:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.97.179.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0CF33B6D1;
+	Fri,  3 Apr 2026 13:58:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775224840; cv=none; b=Ku92Ol9kOeKem5ZKK4XvAFzDEFm3JGBQuuRLrH17JE7DMCUTgjAT9iEoEsmOwIibggX6sIyBNDYNms9O9/dVouvZrOtzbznv+vXlAFd7enivW0COfnoRMBMItry+KSL1TsindqPCD/9PYjv2Pioh+mopHK0VXjv4Ms0oOmj1V0c=
+	t=1775224734; cv=none; b=glbRKbVErbhwfuOtl/XdSY3yUdbyaTbmP7Ozf2fQH3eCbEYTWbWl0smI08aKMhkoTwTkcz3tj93sO1wi8e/ZXjhx3qnHJ3004OLx3S8m3d9ttb663ir0lhcti2jgbHcvwNz4ILpTI3iUWruIsOZ7bh9VyphaaZnyQ8oOqVjG6h8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775224840; c=relaxed/simple;
-	bh=r0mzpn4vFjp4BP8sLH0/SIfj1TZ+tl6aon3BJx2EGM4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rQ8KxQ0k8db2teDaTtufyRKAGfWbYrGJ0d0Z07RLoZrLib4lvluFopFg4lVZ7QWVaUM6ZpCfDllXtik/CAqvKln+HGHuxOI0LERr9lFmXC+XCJGQHVytlaFWogr9yUBXtAYOUTsCd1Rc3emt3JyLjnf/pdtnVj9asEYcw8dfpaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com; spf=pass smtp.mailfrom=igalia.com; dkim=pass (2048-bit key) header.d=igalia.com header.i=@igalia.com header.b=bIu2lDQk; arc=none smtp.client-ip=213.97.179.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=igalia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=igalia.com
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com;
-	s=20170329; h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
-	Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=zxYLcIrcoA7v1clFAKhxi3kayX2UKsq7I74WmBV7qKQ=; b=bIu2lDQkgLY9ClFSznqbMUZ7p1
-	/uVm2zO/VoBJcHedvFBjX8Ft/yjlDZDYc5TIFAEIJSBZLH+//DqehoqJ++RthbYgBCQMFzm5uVdEe
-	P7lq9zjuiJ5LJkMVZsxUj0Hbrq2v48AXprWJd6xVqNmqwQufDnV2leqsPWonBtPzxqVcyrlwqc5uC
-	WZdryc4jkDXd6wHIiUIfNc8vLfdF0HsosY2upq1zaidVTZWOHRhF4TEgrSTDlcRQH2ILIO9IrQW1b
-	FR1fRDYWjwh+7lyM270KhqZDJnFJR+VU/1MFojhqMQswk3jXSJy0sIKQHNt4ZNQoajyQ/musCnfdc
-	YfH3wJ1g==;
-Received: from [189.89.58.26] (helo=killbill.home)
-	by fanzine2.igalia.com with esmtpsa 
-	(Cipher TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
-	id 1w8f47-00AtJL-IE; Fri, 03 Apr 2026 16:00:03 +0200
-From: Melissa Wen <mwen@igalia.com>
-To: airlied@gmail.com,
-	alexander.deucher@amd.com,
-	christian.koenig@amd.com,
-	harry.wentland@amd.com,
-	maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org,
-	simona@ffwll.ch,
-	siqueira@igalia.com,
-	sunpeng.li@amd.com,
-	tzimmermann@suse.de
-Cc: Alex Hung <alex.hung@amd.com>,
-	Simon Ser <contact@emersion.fr>,
-	Uma Shankar <uma.shankar@intel.com>,
-	Xaver Hugl <xaver.hugl@kde.org>,
-	Pekka Paalanen <pekka.paalanen@collabora.com>,
-	amd-gfx@lists.freedesktop.org,
-	kernel-dev@igalia.com,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jesszhan0024@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH v3 6/6] drm/amd/display: use plane color_mgmt_changed to track colorop changes
-Date: Fri,  3 Apr 2026 10:58:30 -0300
-Message-ID: <20260403135909.214378-7-mwen@igalia.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260403135909.214378-1-mwen@igalia.com>
-References: <20260403135909.214378-1-mwen@igalia.com>
+	s=arc-20240116; t=1775224734; c=relaxed/simple;
+	bh=dXC2Ls22VsTuntAg533+4rpSlzX0Ms0eP5VcFmrXtfk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=QQQ9RRUSHzQN4ZmCA0tIo9muOgnirUX0ft4ppctX9nSdYPzZ7M5c9/OE+VMAunQtkc12+EjImC6fJxtjlllHLw7QdBbc250q9wbV29mr88hRk5LlKDHAw3udm8MWj4Q2jLY1RLb1se+t6d9WN9eE9QmTuLm30IvAgr62i37gf74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L4pKeBMt; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id B80D3C4CEF7;
+	Fri,  3 Apr 2026 13:58:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1775224733;
+	bh=dXC2Ls22VsTuntAg533+4rpSlzX0Ms0eP5VcFmrXtfk=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=L4pKeBMt3oVlmgHqSo7Tr5zXtpXKdtn7FNCKQSoFiW0K5EOJezn4h36X9Iv1rHfKZ
+	 xrVOzTIDVANCDgn7a4vY3M1RIMjWw+MD/7a/vQGgCz1c7OgTYzKkSRXBopQLS5cywr
+	 2SnYHbzFto/c4bR8WK0S8wjIVv9Kpq/ZXvLfeMEFctsGEuNKFc4AiFHNGEfsx71SVN
+	 QEBqoMCelctaXvDB4AK6IpR6JPsBSM5dbFe9SsuyeWlUByQeN58TyCxji229h0pIEc
+	 10pOt9H1NEgHzXCGxGJMEGpfhRgS4ZT7SyfTiKmA8JOIoGrPS/rsS3x4xvuoM9hcu9
+	 zHjezSNCF2kwg==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3CDCE85370;
+	Fri,  3 Apr 2026 13:58:53 +0000 (UTC)
+From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
+Subject: [PATCH v3 0/5] NFC support for five Qualcomm SDM845 phones
+Date: Fri, 03 Apr 2026 15:58:45 +0200
+Message-Id: <20260403-oneplus-nfc-v3-0-fbdce57d63c1@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [1.14 / 15.00];
-	R_DKIM_REJECT(1.00)[igalia.com:s=20170329];
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJXHz2kC/1XMQQ6CMBCF4auQrq1pB0rEFfcwLqDMyCSmkBYbl
+ HB3Cxtl+V7yf4sI6BmDuGaL8Bg58ODSyE+ZsH3jHii5S1uAAqO1vsjB4fh8BenISqsUkrYdNVU
+ rUjF6JJ537XZPu+cwDf6941Fv7+aUKgc4OFFLJQ0BkCkKUgg1zzyd7UdsSoT/sjiWkMockZQBW
+ 7W2/JXrun4BT7IzEN4AAAA=
+X-Change-ID: 20251118-oneplus-nfc-c00ef1cdfa9b
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Alexander Martinz <amartinz@shift.eco>, 
+ Andrew Lunn <andrew+netdev@lunn.ch>, 
+ "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
+ Casey Connolly <casey.connolly@linaro.org>, 
+ Alexander Martinz <amartinz@shiftphones.com>
+Cc: Petr Hodina <petr.hodina@protonmail.com>, 
+ biemster <l.j.beemster@gmail.com>, netdev@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, oe-linux-nfc@lists.linux.dev, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ phone-devel@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>, 
+ David Heidelberg <david@ixit.cz>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1943; i=david@ixit.cz;
+ h=from:subject:message-id;
+ bh=dXC2Ls22VsTuntAg533+4rpSlzX0Ms0eP5VcFmrXtfk=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBpz8eakJsX6gGd+ScB5FPM+p/JQi2wBwOsMnUt/
+ Y+mx1bVEZCJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCac/HmgAKCRBgAj/E00kg
+ cvw2EACQpcKTZBTFP8x4aSpZdX/7zbcUPaMqqAgc1LEA1RcNxdW/5+v8cSHgTE69USU73OadJiR
+ YBvX6FjhraJ+XpV0J9QJVAntl4yaUJUX/N7pHYo0DTGsvAa1xkTVNO7XIoDWm8OYBxB1c5cfiDh
+ HP1bDeVfCet7LBkAGF41xLFYX478bo3PXUTWgPEp+EUpsHQ/mmpGbt+H3Br8w2M7vqcELo1r3FC
+ kpyzezb7jQfsQSRXxbAZEE3JHqSnO/CVxBohOw1q5E1ncaubymGFMHwXOvU3MEa/MY4XUqd+62F
+ lrV0Le1/DB+3Xp16aIhu5AC1igPEeLPLKV/2G225RAaJleEwOQOkbDa2pNPoa01hBH3M7L+Z+A1
+ VFMi31buq9YJJXqid2bmT+s7uwEq3waDXSpV8qksH0Ysw6G7yIucbg/LaGCCsR0N5cilcKb0Axn
+ mniYlTwKKSfmFTmWSkuMc5lvQiRR056g98KOHYxRBDc1BziFmR87P0QW4hg6wWSJaSSx5cCybdJ
+ tJfDy+5EbkS1aK3kQZXGVfDFbgbHBpjMB0nbnGT/WExn7/jemnAIjD7TrPDBFPd9wuU3mUx4OeN
+ nAzVrPuFC9trE09Ac5jp3St6IqwhhjeXzAUTVNt28/cP170+VPKRo7CD5PPpPHBebxUGR8Gu1Ah
+ XgRMuOG02rDEUGA==
+X-Developer-Key: i=david@ixit.cz; a=openpgp;
+ fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
+X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
+X-Original-From: David Heidelberg <david@ixit.cz>
+Reply-To: david@ixit.cz
+X-Spamd-Result: default: False [-0.66 / 15.00];
+	SUSPICIOUS_RECIPS(1.50)[];
 	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[kernel.org,quarantine];
+	R_DKIM_ALLOW(-0.20)[kernel.org:s=k20201202];
 	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
-	DMARC_POLICY_SOFTFAIL(0.10)[igalia.com : SPF not aligned (relaxed),none];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-101665-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-101654-lists,linux-arm-msm=lfdr.de,david.ixit.cz];
+	FROM_HAS_DN(0.00)[];
+	FREEMAIL_CC(0.00)[protonmail.com,gmail.com,vger.kernel.org,lists.linux.dev,kernel.org,ixit.cz];
+	RCPT_COUNT_TWELVE(0.00)[23];
 	RCVD_TLS_LAST(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[26];
 	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_TO(0.00)[gmail.com,amd.com,linux.intel.com,kernel.org,ffwll.ch,igalia.com,suse.de];
-	RCVD_COUNT_THREE(0.00)[4];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	FREEMAIL_CC(0.00)[amd.com,emersion.fr,intel.com,kde.org,collabora.com,lists.freedesktop.org,igalia.com,oss.qualcomm.com,kernel.org,linux.dev,gmail.com,poorly.run,somainline.org,vger.kernel.org];
-	DKIM_TRACE(0.00)[igalia.com:-];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[mwen@igalia.com,linux-arm-msm@vger.kernel.org];
-	PRECEDENCE_BULK(0.00)[];
+	REPLYTO_DOM_NEQ_FROM_DOM(0.00)[];
+	REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
 	TO_DN_SOME(0.00)[];
-	NEURAL_HAM(-0.00)[-0.996];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[linux-arm-msm];
+	RCVD_COUNT_FIVE(0.00)[5];
+	PRECEDENCE_BULK(0.00)[];
+	FROM_NEQ_ENVFROM(0.00)[devnull@kernel.org,linux-arm-msm@vger.kernel.org];
+	DKIM_TRACE(0.00)[kernel.org:+];
+	NEURAL_HAM(-0.00)[-1.000];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
-	FROM_HAS_DN(0.00)[]
-X-Rspamd-Queue-Id: 95355394F6E
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,netdev];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	HAS_REPLYTO(0.00)[david@ixit.cz]
+X-Rspamd-Queue-Id: 030D9394EAE
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Ensure the driver tracks changes in any colorop property of a plane
-color pipeline by using the same mechanism of CRTC color management and
-update plane color blocks when any colorop property changes. It fixes an
-issue observed on gamescope settings for night mode which is done via
-shaper/3D-LUT updates.
+- OnePlus 6 / 6T
+ - Pixel 3 / 3 XL
+ - SHIFT 6MQ
 
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Melissa Wen <mwen@igalia.com>
+Verified with NFC card using neard:
+
+systemctl enable --now neard
+nfctool --device nfc0 -1
+nfctool -d nfc0 -p
+gdbus introspect --system --dest org.neard --object-path /org/neard/nfc0/tag0/record0
+
+or use gNFC:
+  https://gitlab.gnome.org/dh/gnfc/
+
+successfully detecting and reading a tag.
+
+Signed-off-by: David Heidelberg <david@ixit.cz>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+Changes in v3:
+- Added Pixel 3 / 3 XL support.
+- Lower drive-strength from <6>, to <2> which downstream kernel uses.
+- Took full ownership of OnePlus 6 NFC patch as original author prefer to keep annonymous. (Krzysztof)
+- Enable sleep states (pinctrl).
+- Link to v2: https://lore.kernel.org/r/20260324-oneplus-nfc-v2-0-3eef052c9bc6@ixit.cz
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 69fe3f5421e8..37022d68b5fc 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -10077,7 +10077,7 @@ static void amdgpu_dm_commit_planes(struct drm_atomic_state *state,
- 			continue;
- 
- 		bundle->surface_updates[planes_count].surface = dc_plane;
--		if (new_pcrtc_state->color_mgmt_changed) {
-+		if (new_pcrtc_state->color_mgmt_changed || new_plane_state->color_mgmt_changed) {
- 			bundle->surface_updates[planes_count].gamma = &dc_plane->gamma_correction;
- 			bundle->surface_updates[planes_count].in_transfer_func = &dc_plane->in_transfer_func;
- 			bundle->surface_updates[planes_count].gamut_remap_matrix = &dc_plane->gamut_remap_matrix;
-@@ -11818,6 +11818,10 @@ static bool should_reset_plane(struct drm_atomic_state *state,
- 	if (new_crtc_state->color_mgmt_changed)
- 		return true;
- 
-+	/* Plane color pipeline or its colorop changes. */
-+	if (new_plane_state->color_mgmt_changed)
-+		return true;
-+
- 	/*
- 	 * On zpos change, planes need to be reordered by removing and re-adding
- 	 * them one by one to the dc state, in order of descending zpos.
+Changes in v2:
+- Use interrupts-extended. (Konrad)
+- Dropped QUESTION prefix, as it's verified this settings work.
+- Added compatible for OnePlus 6 based on schematics.
+- Corrected axolotl NFC compatible based on information from Alexander (SHIFT).
+- Link to v1: https://lore.kernel.org/r/20260322-oneplus-nfc-v1-0-5f22f544f0e2@ixit.cz
+
+---
+David Heidelberg (5):
+      dt-bindings: nfc: nxp,nci: Document PN557 compatible
+      arm64: dts: qcom: sdm845-oneplus: Enable NFC
+      arm64: dts: qcom: sdm845-shift-axolotl: Correct touchscreen sleep state
+      arm64: dts: qcom: sdm845-shift-axolotl: Enable NFC
+      arm64: dts: qcom: sdm845-google-common: Enable NFC
+
+ .../devicetree/bindings/net/nfc/nxp,nci.yaml       |  1 +
+ arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi | 31 ++++++++++++
+ .../arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 57 ++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts  | 54 +++++++++++++++++++-
+ 4 files changed, 142 insertions(+), 1 deletion(-)
+---
+base-commit: cc13002a9f984d37906e9476f3e532a8cdd126f5
+change-id: 20251118-oneplus-nfc-c00ef1cdfa9b
+
+Best regards,
 -- 
-2.53.0
+David Heidelberg <david@ixit.cz>
+
 
 
