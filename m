@@ -1,55 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-101780-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101779-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id iGgSDGMK0WlBEAcAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101780-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Apr 2026 14:56:03 +0200
+	id aKTiJGcK0WlfEAcAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101779-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Apr 2026 14:56:07 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [172.234.253.10])
-	by mail.lfdr.de (Postfix) with ESMTPS id 846C239B23D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Apr 2026 14:56:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2230D39B24B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Apr 2026 14:56:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id EF3943014BD0
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Apr 2026 12:55:41 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id 711D33016C81
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Apr 2026 12:55:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFB7D30C606;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCC6A2DB7BF;
 	Sat,  4 Apr 2026 12:55:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=vinarskis.com header.i=@vinarskis.com header.b="Pe7GKaDb"
+	dkim=pass (2048-bit key) header.d=vinarskis.com header.i=@vinarskis.com header.b="El4+mzS0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-43172.protonmail.ch (mail-43172.protonmail.ch [185.70.43.172])
+Received: from mail-106111.protonmail.ch (mail-106111.protonmail.ch [79.135.106.111])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1944526A1CF;
-	Sat,  4 Apr 2026 12:55:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E10EA318EE6;
+	Sat,  4 Apr 2026 12:55:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.111
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775307340; cv=none; b=UnKEpo3e1ZQkAoiGTWpoDB7Lady7TuBYhb5DOl2EId6ul9MKETR+O/dhhQ2z7MAIsz7wFTMQfzDtuCTHz57PdhVUJM+gB3Q4cy1H/WNv9/NUNDIWsUyC1wseqtRVc8u7ivujRu+Sapxw8VBARdGeMnVxVUOyY5Es2ZNNiaoxySQ=
+	t=1775307340; cv=none; b=rNw571emflZfRUn+w1bDqRtnlu4sK4uhZC+kGdBSKqp42hWJC3rutZ8q5qi5fCFS3HjEDu3Be0GhufpR35AGTj6RrrAHKGX7ZQUFq7gujryZorotfgfRPo5cFzkwjdSTb8v87mOB7WtOO1aRyjA+u6Kizk9hnJx50p88vYZCoFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1775307340; c=relaxed/simple;
-	bh=6lCzzmT04bUXxFeCDCTdNr4L1nRMzf4mXgZ5vVaXvm4=;
+	bh=NNw89viHCAluudQ5hHl3RTCj23fU/KFs0wnqyKyi6Ks=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=tfuUlQPrFZO0fO1V9CLQc9JQWDoOtvilxSTvSOizOZ1fCmTZg7HhMNob8becU5gTWXd5GiJ7hdX4NBIiwLBGlRodjSMwxmFr6sZepns6YnWha0x5TPgar1KoKsk37ASs/wg/j77M/RGxLt65uD65LkkEpBaMh1KEbj9XqklwFxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vinarskis.com; spf=pass smtp.mailfrom=vinarskis.com; dkim=pass (2048-bit key) header.d=vinarskis.com header.i=@vinarskis.com header.b=Pe7GKaDb; arc=none smtp.client-ip=185.70.43.172
+	 In-Reply-To:To:Cc; b=iRhbeNBClHeOjAYooivWC42UOYfqF1i7H3txYLejLEGeatSp3n15astS9XuxpJjcOAtWd0mNsrJ7Gv0+hrkGNAaIoO1uUhqsLyMExG/fHkLNVHVgGCoZrmEkehBaC2ZMVIL9glLuW2yKZDLCv4isTRDnWjdjGsfFN5OBJ7oMUSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vinarskis.com; spf=pass smtp.mailfrom=vinarskis.com; dkim=pass (2048-bit key) header.d=vinarskis.com header.i=@vinarskis.com header.b=El4+mzS0; arc=none smtp.client-ip=79.135.106.111
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vinarskis.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vinarskis.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vinarskis.com;
-	s=protonmail2; t=1775307328; x=1775566528;
-	bh=yN+ZowQkunJWeqIT+q24edOeFG11gt12c7AirgxSOfM=;
+	s=protonmail2; t=1775307329; x=1775566529;
+	bh=oCTPVX4/Ad1LLXg3NGfYhCwqJCIY4GkH6bCOQnVy2bw=;
 	h=From:Date:Subject:Message-Id:References:In-Reply-To:To:Cc:From:To:
 	 Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=Pe7GKaDbfMZ/MH+QlPfSY7gsUGjAkyBJc0ox2Q3jzaVp62iRVqAGd0M1Jt+IGIZam
-	 ePjhr6wQznMab2s70embFmnrYi/PsE5uZ1I9P6LeViuWISR/lJca547flpmtSLpFY4
-	 JRVH8JCR6X36qDy430jC+mAKqGAKcN1U8W21cUQIbsLTNAHds8Ly0b06BW24IYTZBs
-	 teEC65ii5GxHXAfpdLJCFhOM+lAkUX0yt2E8PMnMwxQWQUExM+L4n8ncuBSguRY6vL
-	 sduCJ6TDidplxkbXK7vlBjn1vHjnC6loajGiQSi+rptN0m/aUQ2f9ifY/0Ro877UYC
-	 iC+KlH7QBkKTg==
-X-Pm-Submission-Id: 4fnwYW0f3Cz1DDWf
+	b=El4+mzS0MR2i3gQ7Kp1Va5y1KwS0HbOzRpIZQd2X+vQGxa/p1qBRPhCHiW2B84Vyh
+	 Ax+W/bFEjVHUvFzT5xBGxDI/415RbzLZov6IjPWQU48KvmnCC9C54nAsBtQ/Afil8c
+	 /p13tTuguZZDwUig/3cUSkc2AGAzf8AMsNydAEfS16DlDYPfD1E0oyNAAYppGCDNfk
+	 c3xWbe1w2lE/uep8ZjIfKwPJSJ3CwXIMKCWtdyv6sgHGs3BsuoDjCMUPwIeXdu2L1E
+	 SjY3EjueKZwHLWf0TFCbiojXMx0D6rDAUKMP/PYyIDlxjIATgRF+f/wx0Sh937bOea
+	 ZxHzAlQtYHSBg==
+X-Pm-Submission-Id: 4fnwYX4znBz1DDLg
 From: Aleksandrs Vinarskis <alex@vinarskis.com>
-Date: Sat, 04 Apr 2026 14:55:16 +0200
-Subject: [PATCH v2 3/4] arm64: dts: qcom: hamoa-pmics: define VADC for
- pmk8550
+Date: Sat, 04 Apr 2026 14:55:17 +0200
+Subject: [PATCH v2 4/4] arm64: dts: qcom: x1e80100-dell-xps13-9345:
+ introduce EC
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,7 +58,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260404-dell-xps-9345-ec-v2-3-c977c3caa81f@vinarskis.com>
+Message-Id: <20260404-dell-xps-9345-ec-v2-4-c977c3caa81f@vinarskis.com>
 References: <20260404-dell-xps-9345-ec-v2-0-c977c3caa81f@vinarskis.com>
 In-Reply-To: <20260404-dell-xps-9345-ec-v2-0-c977c3caa81f@vinarskis.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -72,12 +72,12 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  laurentiu.tudor1@dell.com, Abel Vesa <abel.vesa@oss.qualcomm.com>, 
  Tobias Heider <tobias.heider@canonical.com>, Val Packett <val@packett.cool>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1415; i=alex@vinarskis.com;
- h=from:subject:message-id; bh=6lCzzmT04bUXxFeCDCTdNr4L1nRMzf4mXgZ5vVaXvm4=;
- b=owGbwMvMwCX2dl3hIv4AZgHG02pJDJkXucw1CxalZp77dFKnRn3J5ZeTAk89Cp/entv5quyT6
- gerfqOzHaUsDGJcDLJiiizdf76mdS2au5bhusY3mDmsTCBDGLg4BWAiUgEM/+z8306Oz0lkeCB5
- uC4rZNH/nviWed8b53r7Ok/1Z7vmpsnI0Dh/p/iPKQkb2cXv3r8jGH34vurHF+94/+WIsb9jfnH
- vMB8A
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4034; i=alex@vinarskis.com;
+ h=from:subject:message-id; bh=NNw89viHCAluudQ5hHl3RTCj23fU/KFs0wnqyKyi6Ks=;
+ b=owGbwMvMwCX2dl3hIv4AZgHG02pJDJkXuSxkft/JrFB4USjUWWy0fNWqcn7btDlfJFVDzh56t
+ rjc20i+o5SFQYyLQVZMkaX7z9e0rkVz1zJc1/gGM4eVCWQIAxenAEwkuoPhv8cWbh5vi7tLbi4v
+ mycm4fz59Tbpxud3A7fZdikrrnD5sYmR4UyJgZXarzMbV4Qc6fjAOU//ixoTV51g+Jbbe8ttFSy
+ sGQE=
 X-Developer-Key: i=alex@vinarskis.com; a=openpgp;
  fpr=8E21FAE2D2967BB123303E8C684FD4BA28133815
 X-Spamd-Result: default: False [-0.66 / 15.00];
@@ -89,7 +89,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	TAGGED_FROM(0.00)[bounces-101780-lists,linux-arm-msm=lfdr.de];
+	TAGGED_FROM(0.00)[bounces-101779-lists,linux-arm-msm=lfdr.de];
 	RCVD_TLS_LAST(0.00)[];
 	RCVD_COUNT_THREE(0.00)[3];
 	MIME_TRACE(0.00)[0:+];
@@ -98,7 +98,7 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	FROM_HAS_DN(0.00)[];
 	ASN(0.00)[asn:63949, ipnet:172.234.224.0/19, country:SG];
 	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_PROHIBIT(0.00)[0.0.0.44:email,0.0.35.40:email];
+	DBL_PROHIBIT(0.00)[0.0.0.144:email];
 	PRECEDENCE_BULK(0.00)[];
 	FROM_NEQ_ENVFROM(0.00)[alex@vinarskis.com,linux-arm-msm@vger.kernel.org];
 	DKIM_TRACE(0.00)[vinarskis.com:+];
@@ -106,56 +106,153 @@ X-Spamd-Result: default: False [-0.66 / 15.00];
 	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
 	MID_RHS_MATCH_FROM(0.00)[];
 	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.3:email,vinarskis.com:dkim,vinarskis.com:email,vinarskis.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,0.0.23.212:email]
-X-Rspamd-Queue-Id: 846C239B23D
+	DBL_BLOCKED_OPENRESOLVER(0.00)[0.0.0.145:email,14d:email,14c:email,0.0.0.147:email,vinarskis.com:dkim,vinarskis.com:email,vinarskis.com:mid,3b:email,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns,0.0.0.146:email]
+X-Rspamd-Queue-Id: 2230D39B24B
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-Follow pattern of pmk8350 to add missing pmk8550 VADC to hamoa.
-Register address of 0x9000 matches example schema for spmi-adc5-gen3.
+Describe embedded controller, its interrupt and required thermal zones.
+Add EC's reset GPIO to reserved range, as triggering it during device
+operation leads to unrecoverable and unusable state.
 
 Signed-off-by: Aleksandrs Vinarskis <alex@vinarskis.com>
 ---
- arch/arm64/boot/dts/qcom/hamoa-pmics.dtsi | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ .../boot/dts/qcom/x1e80100-dell-xps13-9345.dts     | 94 +++++++++++++++++++++-
+ 1 file changed, 92 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/hamoa-pmics.dtsi b/arch/arm64/boot/dts/qcom/hamoa-pmics.dtsi
-index 6a31a0adf8be472badea502a916cdbc9477e9f2b..cc69d299bc356d90aa1483f347f5eee43b853e45 100644
---- a/arch/arm64/boot/dts/qcom/hamoa-pmics.dtsi
-+++ b/arch/arm64/boot/dts/qcom/hamoa-pmics.dtsi
-@@ -218,6 +218,32 @@ pon_resin: resin {
- 			};
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts b/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
+index ce7b10ea89b6dcb2a4a65c114037f4c90a4b0c6d..fe7e069f0ef56c6fdc3b495dd78dacd1b96c1c95 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
++++ b/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
+@@ -7,6 +7,7 @@
+ /dts-v1/;
  
-+		pmk8550_vadc: adc@9000 {
-+			compatible = "qcom,spmi-adc5-gen3";
-+			reg = <0x9000>, <0x9100>;
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			interrupts = <0x0 0x90 0x1 IRQ_TYPE_EDGE_RISING>,
-+				     <0x0 0x91 0x1 IRQ_TYPE_EDGE_RISING>;
-+			#io-channel-cells = <1>;
-+			#thermal-sensor-cells = <1>;
+ #include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/iio/qcom,spmi-adc7-pm8350.h>
+ #include <dt-bindings/input/gpio-keys.h>
+ #include <dt-bindings/input/input.h>
+ #include <dt-bindings/leds/common.h>
+@@ -759,8 +760,32 @@ retimer_ss0_con_sbu_out: endpoint {
+ 
+ &i2c5 {
+ 	clock-frequency = <100000>;
+-	status = "disabled";
+-	/* EC @0x3b */
++	status = "okay";
 +
-+			channel@3 {
-+				reg = <0x3>;
-+				label = "pmk8550_die_temp";
-+				qcom,pre-scaling = <1 1>;
-+			};
++	embedded-controller@3b {
++		compatible = "dell,xps13-9345-ec";
++		reg = <0x3b>;
 +
-+			channel@44 {
-+				reg = <0x44>;
-+				label = "pmk8550_xo_therm";
-+				qcom,pre-scaling = <1 1>;
-+				qcom,ratiometric;
-+				qcom,hw-settle-time = <200>;
-+				qcom,adc-tm;
-+			};
-+		};
++		interrupts-extended = <&tlmm 66 IRQ_TYPE_LEVEL_LOW>;
 +
- 		pmk8550_rtc: rtc@6100 {
- 			compatible = "qcom,pmk8350-rtc";
- 			reg = <0x6100>, <0x6200>;
++		pinctrl-0 = <&ec_int_n_default>;
++		pinctrl-names = "default";
++
++		io-channels = <&pmk8550_vadc PM8350_ADC7_GPIO3_100K_PU(1)>,
++			      <&pmk8550_vadc PM8350_ADC7_GPIO4_100K_PU(1)>,
++			      <&pmk8550_vadc PM8350_ADC7_AMUX_THM1_100K_PU(1)>,
++			      <&pmk8550_vadc PM8350_ADC7_AMUX_THM2_100K_PU(1)>,
++			      <&pmk8550_vadc PM8350_ADC7_AMUX_THM3_100K_PU(1)>,
++			      <&pmk8550_vadc PM8350_ADC7_AMUX_THM4_100K_PU(1)>,
++			      <&pmk8550_vadc PM8350_ADC7_AMUX_THM5_100K_PU(1)>;
++		io-channel-names = "sys_therm0",
++				   "sys_therm1",
++				   "sys_therm2",
++				   "sys_therm3",
++				   "sys_therm4",
++				   "sys_therm5",
++				   "sys_therm6";
++	};
+ };
+ 
+ &i2c7 {
+@@ -1025,6 +1050,64 @@ rtmr0_1p8_reg_en: rtmr0-1p8-reg-en-state {
+ 	};
+ };
+ 
++&pmk8550_vadc {
++	/* Around DRAM */
++	channel@14c {
++		reg = <PM8350_ADC7_GPIO3_100K_PU(1)>;
++		qcom,hw-settle-time = <200>;
++		qcom,ratiometric;
++		label = "sys_therm0";
++	};
++
++	/* Around left Type-C charging controller */
++	channel@14d {
++		reg = <PM8350_ADC7_GPIO4_100K_PU(1)>;
++		qcom,hw-settle-time = <200>;
++		qcom,ratiometric;
++		label = "sys_therm1";
++	};
++
++	/* Around upper-left side of motherboard */
++	channel@144 {
++		reg = <PM8350_ADC7_AMUX_THM1_100K_PU(1)>;
++		qcom,hw-settle-time = <200>;
++		qcom,ratiometric;
++		label = "sys_therm2";
++	};
++
++	/* Around right Type-C charging controller */
++	channel@145 {
++		reg = <PM8350_ADC7_AMUX_THM2_100K_PU(1)>;
++		qcom,hw-settle-time = <200>;
++		qcom,ratiometric;
++		label = "sys_therm3";
++	};
++
++	/* Around SSD connector */
++	channel@146 {
++		reg = <PM8350_ADC7_AMUX_THM3_100K_PU(1)>;
++		qcom,hw-settle-time = <200>;
++		qcom,ratiometric;
++		label = "sys_therm4";
++	};
++
++	/* Around battery charging circuit */
++	channel@147 {
++		reg = <PM8350_ADC7_AMUX_THM4_100K_PU(1)>;
++		qcom,hw-settle-time = <200>;
++		qcom,ratiometric;
++		label = "sys_therm5";
++	};
++
++	/* Around keyboard */
++	channel@148 {
++		reg = <PM8350_ADC7_AMUX_THM5_100K_PU(1)>;
++		qcom,hw-settle-time = <200>;
++		qcom,ratiometric;
++		label = "sys_therm6";
++	};
++};
++
+ &qupv3_0 {
+ 	status = "okay";
+ };
+@@ -1071,6 +1154,7 @@ &smb2360_1_eusb2_repeater {
+ 
+ &tlmm {
+ 	gpio-reserved-ranges = <44 4>,  /* SPI11 (TPM) */
++			       <65 1>,  /* EC Reset, accessible but yields system unusable */
+ 			       <76 4>,  /* SPI19 (TZ Protected) */
+ 			       <238 1>; /* UFS Reset */
+ 
+@@ -1081,6 +1165,12 @@ cam_indicator_en: cam-indicator-en-state {
+ 		bias-disable;
+ 	};
+ 
++	ec_int_n_default: ec-int-n-state {
++		pins = "gpio66";
++		function = "gpio";
++		bias-disable;
++	};
++
+ 	edp_bl_en: edp-bl-en-state {
+ 		pins = "gpio74";
+ 		function = "gpio";
 
 -- 
 2.53.0
