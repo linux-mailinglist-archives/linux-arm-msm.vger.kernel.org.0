@@ -1,170 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-101747-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-101748-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from mail.lfdr.de
 	by lfdr with LMTP
-	id YE9dG4WF0GkW8gYAu9opvQ
-	(envelope-from <linux-arm-msm+bounces-101747-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Apr 2026 05:29:09 +0200
+	id iM1MA0yG0Glz8gYAu9opvQ
+	(envelope-from <linux-arm-msm+bounces-101748-lists+linux-arm-msm=lfdr.de@vger.kernel.org>)
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Apr 2026 05:32:28 +0200
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Received: from sea.lore.kernel.org (sea.lore.kernel.org [IPv6:2600:3c0a:e001:db::12fc:5321])
-	by mail.lfdr.de (Postfix) with ESMTPS id 89D18399BE1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Apr 2026 05:29:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A04CC399C10
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Apr 2026 05:32:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (conduit.subspace.kernel.org [100.90.174.1])
-	by sea.lore.kernel.org (Postfix) with ESMTP id 1B622303A840
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Apr 2026 03:26:49 +0000 (UTC)
+	by sea.lore.kernel.org (Postfix) with ESMTP id ED351303638A
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Apr 2026 03:31:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 174843218BA;
-	Sat,  4 Apr 2026 03:26:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EDF0E329E47;
+	Sat,  4 Apr 2026 03:31:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=smankusors.com header.i=@smankusors.com header.b="jqsBbXoG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nb/Kuj2y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from buffalo.tulip.relay.mailchannels.net (buffalo.tulip.relay.mailchannels.net [23.83.218.24])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C26283FCF;
-	Sat,  4 Apr 2026 03:26:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.218.24
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1775273208; cv=pass; b=hNFVbY8I+VtWzSb5V8Cd2Br1Sa5WN3nSDRGVUmup70pUhqLgoCu4QerL1JHXIYRLWP77a6DRSM+s/vJBfAiH+Wf48zVXWo2Gkn82dhufJccHuUkzLQd6IBQFC8/7EZb9uUuthORGZldZ6SNdPp/YOvzm+UmL3S7hksdIlWQBj6A=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1775273208; c=relaxed/simple;
-	bh=1E9VasZ2IQGVmx6ceE65CfzEGp2ECKQjTNIsETs5rmo=;
-	h=Message-ID:MIME-Version:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:Date; b=Gp0fEfGGdWDI1mgAini+FlqATsFmkG1jbIrWf6bRwJKxTbX/PkEsdWiWwNfM1w4PNfyJiatcrkBQLXswfHsZkd2WvMFXllNaVJomAaMez6honcUWLgRh8cPnUEvRnas3zwm3FhyebAy+pR9lBK9gRdNsOe6BvLLcAjPNj4YZ+xU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=smankusors.com; spf=pass smtp.mailfrom=smankusors.com; dkim=pass (2048-bit key) header.d=smankusors.com header.i=@smankusors.com header.b=jqsBbXoG; arc=pass smtp.client-ip=23.83.218.24
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=smankusors.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smankusors.com
-X-Sender-Id: hostingeremail|x-authuser|linux@smankusors.com
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id 8FEA8401E14;
-	Sat, 04 Apr 2026 03:26:40 +0000 (UTC)
-Received: from fr-int-smtpout23.hostinger.io (100-99-26-167.trex-nlb.outbound.svc.cluster.local [100.99.26.167])
-	(Authenticated sender: hostingeremail)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 843BD401DFC;
-	Sat, 04 Apr 2026 03:26:37 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; d=mailchannels.net; s=arc-2022; cv=none;
-	t=1775273200;
-	b=9hg/kyVPjnEE1MiiG8z/l7Q8G1bVxT+KTK19B2iWybMCzkknKeaB+9WDX+DA1vEt/dwSn7
-	CpEjuwEPyTznmbVUaB8mzFxboNIvWHQj8VHkDIwiL1Lkyp8tGlFeKOw9NcUChRMLIdDm3Y
-	XuYUC9QnSmCSG/vTdvqlNoYvkGWO/tKNi6+SPra/dnI7qCXWluZZuDSV1cB6G5nEJeMwE7
-	MP2ZXNmKXPXuGQ5lU21DgbUNj92DXiPKIZ4K62qc3rXfTLvxgrmVnEEP1XA7pMs6qY+qWm
-	DxxqCay4filQMpT6aCuNiUF8JM9uvo2Jn1eB6whyv7OZ409Qkx/mVA0LS5MTnw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net;
-	s=arc-2022; t=1775273200;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:dkim-signature;
-	bh=R1SQ7fjo7+ZRuM2rzox3k9F/SpcRYsArVKq/Hhgx5MM=;
-	b=iwEBNnD9+zS2ELnF8SD0PP+OYCUbVsGYtKXAgV4IjnG7VNNIl6GcH7csMuB/MJsOHOQDtH
-	84XTXvDGrFN9dgzLaM0uuYROokD63tiC0rOWzYf3ZFBHUcYhVQTpPHpyw4srG0CvW12C7D
-	+dfX14ZHMt+BBBRmLyWqhZjEskjq6B//nMxHq9UgItV8pwce6X0UDXKU1ApHStkmAK+tBn
-	beIAlj3Zj1q58A7lk7iYS3Xm74D3NbJ4zNRhl2PpmySuqlyO3aOeSG0cZFny/Fw9pjZXHv
-	gJAALlYSLoCP0QgIrqRjyqolJyi8XRpi+lEhf17VZec5/qAfrpWS2ETMVM0cgA==
-ARC-Authentication-Results: i=1;
-	rspamd-bd48b9d95-tphdt;
-	auth=pass smtp.auth=hostingeremail smtp.mailfrom=linux@smankusors.com
-X-Sender-Id: hostingeremail|x-authuser|linux@smankusors.com
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: hostingeremail|x-authuser|linux@smankusors.com
-X-MailChannels-Auth-Id: hostingeremail
-X-Ski-Industry: 53c10f4b7fe8dd5b_1775273200370_2538399836
-X-MC-Loop-Signature: 1775273200369:1964789207
-X-MC-Ingress-Time: 1775273200369
-Received: from fr-int-smtpout23.hostinger.io (fr-int-smtpout23.hostinger.io
- [148.222.54.29])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.99.26.167 (trex/7.1.5);
-	Sat, 04 Apr 2026 03:26:40 +0000
-Received: from [IPV6:2001:448a:502c:15d9:9c4f:9add:4209:3123] (unknown [IPv6:2001:448a:502c:15d9:9c4f:9add:4209:3123])
-	(Authenticated sender: linux@smankusors.com)
-	by smtp.hostinger.com (smtp.hostinger.com) with ESMTPSA id 4fngx44rPsz1xnm;
-	Sat,  4 Apr 2026 03:26:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=smankusors.com;
-	s=hostingermail-a; t=1775273195;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=R1SQ7fjo7+ZRuM2rzox3k9F/SpcRYsArVKq/Hhgx5MM=;
-	b=jqsBbXoG1rC99vrEaa8FBhONnFnaAMFprZT8yns7gyEIaUgLvbk88nTIbO5GVTVzZZ29xR
-	cEE4VS5YkTsZyz9yGfJH5Ens0K4W8NKt+ok+KZ8JePI0MZARKCoGhMlMMsaXUeTET8dCFM
-	uPn7tNIbzao4LhJ54DyI7HF99D0d93m6241lAWFwpYkSk3F/7cdYGDvHAKGs42Zun8RlZG
-	LymHPMvhzT5HXgD3UTev7NcuUHEYizCMgnyYiqxp9fmqa1usRtGUvGuIuMo+S69B2m3wT4
-	IFeWcjpQOxB4poKZfukIlF/pbhkDmpYgvj6m99txbkYYkXaZ99kKlC2NtQOICQ==
-Message-ID: <1b47a581-3a2b-490c-8a39-7a2cd0ddf8f2@smankusors.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD8B3246EB
+	for <linux-arm-msm@vger.kernel.org>; Sat,  4 Apr 2026 03:31:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.177
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1775273509; cv=none; b=e6CuQfWM1zBSDcC4iMOmMVlzThY2/1YlDMVUwfhkJJM6K5k377E+GIq/cKQhydQq7g2/30lOa6CO62bEN1kgP56dST1zJ0rrAGrviXKbqeCwLgraL2z/rCORKiSqniFJyvppDOY7GeXKDthfu+HBSYG4ZjCsKsjNMP/ILRppNEY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1775273509; c=relaxed/simple;
+	bh=myvzOKJS1/6TEZHDz+FEt5uniMoDvWvsRV444R4b1j4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=YSRxBqbUL7td4nl0p6jxQxaKRLA8Bq1U7w8mGn15HtbyoG2QqEuXrjSvnfqkj5AIM53bx/fBYYR81t4RkzryOf2Rn9iihXQtDzYv3PyuUydalrkTRS0xPylphdQfJDfpXCJZ4xOj85N9uRldj8fA1ICsiZ1CUdOxS0bWzZb9Feo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nb/Kuj2y; arc=none smtp.client-ip=209.85.167.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-464bba3a9easo1427764b6e.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Apr 2026 20:31:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20251104; t=1775273507; x=1775878307; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EX07zznhycTuQQH6RFzBjYERCchLRChoAhRkTbUlVg0=;
+        b=nb/Kuj2yCWkT74txP7r85wmHhJWBMiPmEvkIh3WfF0TQytQu5QdHhn8sZlouiNEQbD
+         KFi6Ou7fzr5BU7kTgxzDrEiazNSBneednr8m4WpmCsb9JnJscQMxyyC7J8JxkdbtByEB
+         hsKkWzw5wBHFUd4dB+nd0AKqJ3p5NKWgX61gXsjPwrOB/cWFZwrj2un0AfvqQtXw52dL
+         MNpH2yFFLIQkd2DtsksjEMoM1YH1agGnUSnVRjXkuFiXU++pccR6Lm23Re5R6pdslBIn
+         579vh1kffRyJxJNSDPlQR6la3HWXVujE89hjApec3qy26CGmLrWLvC1kg43v9AyWsGca
+         7J+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1775273507; x=1775878307;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=EX07zznhycTuQQH6RFzBjYERCchLRChoAhRkTbUlVg0=;
+        b=NM+ATte7hsOTjTAd48Jd39ZXVwwxWvJnn+9qNH4vVrwb4MTaRK8Tb0oLPGT2w5oL7J
+         TiUDA27MOrOp6Rnr+8B83HcLGJd4agLtmfkaDSyEH6poJOe3CUaP7/3RNP5QSlQywiUM
+         7jr9ZL9nmaPqty9bFu628+pS6i3bJGCwiW1lvLpVGcb83kv4/YB9yTiiLlFHXLldP+4O
+         tox/Y96B1Aln5BK8uNkCZt8VnY5GFnUD9Xal0lK/NQDcXmaMeQ3PaXB1+CPD8p/QWv9r
+         LV9Lr8HXKwq2z/Z0bDZDP/1ArpmddawplHGQolx5D242R2WVzv2lWEzp2z61/IlY8I17
+         qaXQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWuAiHTBoWnEsU78vh/cl18e3jMJjUDd8BlSYFZA64YFbBP2bdYA+M/HO6YTB4KveckZD8L6Uqdr7To1S+F@vger.kernel.org
+X-Gm-Message-State: AOJu0YxXP9rOVH+WQ/L/Pj6zBCvFmDdGkcaVxkMGNjuPMZteWYrrcpxT
+	ZrQ2HaNpv1xE+mr/nekrdKWB5qTxQr03zUh18Xta9vWIuSWlPktXc1Zx
+X-Gm-Gg: ATEYQzyG0LTc3/0C6wRfOXqr9JAiaRLHajP9qj+myjAHlpUikw0hdz7eXmnkgqwkHOS
+	x4atMS+iUNqgM/YIXdWuDzZ65xbtFn4IVqNtZga5g+5UTXpgtq4OltaoeA6s6ruFdKw3KgAUlmc
+	Ro9f4xQr5xYzYBoPxIWvhr/wNHU2wcJJ9Z2qiEZiSf3R6JId6kE8GDOvbMnU5WyT5+ItZHWNZ3I
+	SkfNc2kKEWynMqDd8NXE/95yVIcSPFaRNVTHLxHd5sF0pAZT+MFwL5Z3rNnkwENJ3Eo68+y8jt2
+	21VvY8HxPCJpXxLO+4z6SmLOUHzO11EbvPHue1ED/+n+/9AdfXppdUGOtRPczOgD2qq8rxK9AUn
+	UPzWELpTRTe8gjB2bCajCn0BjvDvsTS4dCzz/60G379R6gQvo2PZN0/6GQL8MnN0xn/gtkm/Kud
+	NydhRtnfxWsQPGa/C+dLKMkVjVHxPOeQ8EcK+gk0PFNSdJHSSdaqXc52BgfON6arKfXHcOLpk=
+X-Received: by 2002:a05:6808:320f:b0:460:f435:2a70 with SMTP id 5614622812f47-46ef8845559mr3005591b6e.47.1775273507365;
+        Fri, 03 Apr 2026 20:31:47 -0700 (PDT)
+Received: from localhost (104-48-214-220.lightspeed.snantx.sbcglobal.net. [104.48.214.220])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-46d90447177sm4485675b6e.7.2026.04.03.20.31.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Apr 2026 20:31:46 -0700 (PDT)
+From: Steev Klimaszewski <threeway@gmail.com>
+To: dmitry.baryshkov@oss.qualcomm.com
+Cc: abhinav.kumar@linux.dev,
+	andersson@kernel.org,
+	bod@kernel.org,
+	bryan.odonoghue@linaro.org,
+	conor+dt@kernel.org,
+	david@ixit.cz,
+	devicetree@vger.kernel.org,
+	dikshita.agarwal@oss.qualcomm.com,
+	johan+linaro@kernel.org,
+	konrad.dybcio@oss.qualcomm.com,
+	konradybcio@kernel.org,
+	krzk+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-media@vger.kernel.org,
+	mchehab@kernel.org,
+	robh@kernel.org,
+	stanimir.varbanov@linaro.org,
+	threeway@gmail.com,
+	vikash.garodia@oss.qualcomm.com
+Subject: Re: media: iris: enable SM8350 and SC8280XP support
+Date: Fri,  3 Apr 2026 22:31:45 -0500
+Message-ID: <20260404033145.10625-1-threeway@gmail.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <CAO9ioeUjYrR6fWSxm2DP-AhEMa8ZxSKE5CfQq=s9BhAqWA-5=A@mail.gmail.com>
+References: <CAO9ioeUjYrR6fWSxm2DP-AhEMa8ZxSKE5CfQq=s9BhAqWA-5=A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] iio: adc: qcom-pm8xxx-xoadc: remove redundant
- error logging in pm8xxx_read_raw
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Jonathan Cameron <jic23@kernel.org>,
- David Lechner <dlechner@baylibre.com>, =?UTF-8?Q?Nuno_S=C3=A1?=
- <nuno.sa@analog.com>, Andy Shevchenko <andy@kernel.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-iio@vger.kernel.org,
- phone-devel@vger.kernel.org
-References: <20260403-pm8xxx-xoadc-label-v2-0-29b50bf821e6@smankusors.com>
- <20260403-pm8xxx-xoadc-label-v2-2-29b50bf821e6@smankusors.com>
- <35urrjc3koye5zhlxatdsr7t2djuml5ueyhhazcucow3q3g5f2@pomnrrcwu7qr>
-Content-Language: en-US
-From: Antony Kurniawan Soemardi <linux@smankusors.com>
-In-Reply-To: <35urrjc3koye5zhlxatdsr7t2djuml5ueyhhazcucow3q3g5f2@pomnrrcwu7qr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Date: Sat,  4 Apr 2026 03:26:32 +0000 (UTC)
-X-CM-Envelope: MS4xfDFr6qI1yLueSnYLSLZutcUNO4z6ua4xADNS38k/3ticZ91XT9Ns+eGsGeS/1wLwCn9JesiboKqwRgjlhIU+Duy5JptvWVXe8fZgTiy93+ahtmNeGjc7 iKWtt4z0WLQDwiotx+fPLtLBS6hb5dfXdtNC90CaEhKce51VnyycNTzU+NWl9PJjey1dmVLD1aAuisIeRIf/+YJ/StfmwqC818akYwBCWnWtk8AMnT26VQ1n K1QDUV2d0J/cQSPKBxm7c5kxr85NeEcX8mr6vMwMW/AjPOJ/Rw+vXiiFdveMdZMUIURKa3OFIDfK4SpjIQInbD2xqmNtkfODmqlY+WAzUx+3fy3AeHvI7tnU LegwfBWMYFT+YqnICKkxukKvOGYdtARnSsYr/NV7RXyctrt506M4NdTdCpIfZPUuHOhNXciMI5xsGrAqfWnnYpvcEVJ2pxRa12zpKDt2FJO4YFxE6Gaq/xAG M6dK++7v0C/6JVkYevm11fPm6yemq3AqfQ2Cbq12WwNMh4MvuONv8HAGHj0bF9UORo+C6z4WCO41tDKsqpaAFdeaFGup6KxdnLv7emfKuYO0auA5qIvU/vcj GMYtA1J2mKx2bJI0c2WWuWf6VmZpeShUFZq1OMaknYn1GZT6EA9Vf/1aBjRP0gkNkp0UdcgHRjJn1uSXMgEejmKYuEeIie4lBy6nmMG1FzelMFRgW8WoQthR NYfbgxCdovQt0fkQbNs+RdUJ/v2z0ylN1YMO9tgoVNqdqbTPAApzFoKbTp+J9Q+091jnzM0IzeU=
-X-CM-Analysis: v=2.4 cv=GMJaEfNK c=1 sm=1 tr=0 ts=69d084eb a=cSRZGm2KIti/amQDCKp9sg==:617 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=ehOGM-R9AHx4QcEzjFoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-AuthUser: linux@smankusors.com
-X-Spamd-Result: default: False [-0.66 / 15.00];
+X-Spamd-Result: default: False [0.84 / 15.00];
 	SUSPICIOUS_RECIPS(1.50)[];
-	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=2];
-	DMARC_POLICY_ALLOW(-0.50)[smankusors.com,none];
-	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64];
-	R_DKIM_ALLOW(-0.20)[smankusors.com:s=hostingermail-a];
+	MID_CONTAINS_FROM(1.00)[];
+	ARC_ALLOW(-1.00)[subspace.kernel.org:s=arc-20240116:i=1];
+	R_MISSING_CHARSET(0.50)[];
+	DMARC_POLICY_ALLOW(-0.50)[gmail.com,none];
+	R_DKIM_ALLOW(-0.20)[gmail.com:s=20251104];
+	R_SPF_ALLOW(-0.20)[+ip6:2600:3c0a:e001:db::/64:c];
 	MAILLIST(-0.15)[generic];
 	MIME_GOOD(-0.10)[text/plain];
 	HAS_LIST_UNSUB(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	RCPT_COUNT_TWELVE(0.00)[15];
+	RCPT_COUNT_TWELVE(0.00)[21];
+	FREEMAIL_CC(0.00)[linux.dev,kernel.org,linaro.org,ixit.cz,vger.kernel.org,oss.qualcomm.com,gmail.com];
 	FORGED_SENDER_MAILLIST(0.00)[];
-	TAGGED_FROM(0.00)[bounces-101747-lists,linux-arm-msm=lfdr.de];
-	DKIM_TRACE(0.00)[smankusors.com:+];
+	MIME_TRACE(0.00)[0:+];
 	RCVD_TLS_LAST(0.00)[];
-	FORGED_RECIPIENTS_MAILLIST(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[smankusors.com:dkim,smankusors.com:mid,sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns];
-	TO_DN_SOME(0.00)[];
-	PRECEDENCE_BULK(0.00)[];
-	FROM_NEQ_ENVFROM(0.00)[linux@smankusors.com,linux-arm-msm@vger.kernel.org];
-	FROM_HAS_DN(0.00)[];
+	RECEIVED_HELO_LOCALHOST(0.00)[];
+	TAGGED_FROM(0.00)[bounces-101748-lists,linux-arm-msm=lfdr.de];
 	ASN(0.00)[asn:63949, ipnet:2600:3c0a::/32, country:SG];
+	FORGED_RECIPIENTS_MAILLIST(0.00)[];
+	PRECEDENCE_BULK(0.00)[];
+	RCVD_COUNT_FIVE(0.00)[5];
+	FROM_NEQ_ENVFROM(0.00)[threeway@gmail.com,linux-arm-msm@vger.kernel.org];
+	FROM_HAS_DN(0.00)[];
+	DKIM_TRACE(0.00)[gmail.com:+];
+	TO_DN_NONE(0.00)[];
+	TAGGED_RCPT(0.00)[linux-arm-msm,dt,linaro];
 	NEURAL_HAM(-0.00)[-1.000];
-	TAGGED_RCPT(0.00)[linux-arm-msm,dt];
-	MID_RHS_MATCH_FROM(0.00)[];
+	FREEMAIL_FROM(0.00)[gmail.com];
 	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCVD_COUNT_SEVEN(0.00)[7]
-X-Rspamd-Queue-Id: 89D18399BE1
+	DBL_BLOCKED_OPENRESOLVER(0.00)[sea.lore.kernel.org:helo,sea.lore.kernel.org:rdns]
+X-Rspamd-Queue-Id: A04CC399C10
 X-Rspamd-Action: no action
 X-Rspamd-Server: lfdr
 
-On 4/4/2026 4:54 AM, Dmitry Baryshkov wrote:
-> Does it also prevent users from spamming the dmesg?
+Hi Bryan, Dmitry, Vikash,
 
-It should be for no such channel case. The only remaining error logs
-from pm8xxx_read_raw are timeout errors, which I don’t think would
-result in immediate spamming. Or should we remove the dev_err (at
-pm8xxx_read_channel_rsv) on timeout errors too?
+> > > But these logs don't capture, which buffers are causing the IOMMU error.
+> >
+> > I'd be interested to see if we can run this test on venus - instead of iris.
 
--- 
-Thanks,
-Antony K. S.
+> At least when I tried testing it, venus wouldn't even boot the
+> firmware on SC8280XP, citing UC_REGION error:
+
+> 2026-04-03T01:51:05.376407+03:00 rohan kernel: qcom-venus
+> aa00000.video-codec: non legacy binding
+> 2026-04-03T01:51:05.437232+03:00 rohan kernel: qcom-venus
+> aa00000.video-codec: invalid setting for UC_REGION
+> 2026-04-03T01:51:05.437838+03:00 rohan kernel: qcom-venus
+> aa00000.video-codec: failed to reset venus core
+> 2026-04-03T01:51:05.437850+03:00 rohan kernel: qcom-venus
+> aa00000.video-codec: probe with driver qcom-venus failed with error
+> -22
+
+The same is observed on the X13s, so venus doesn't load.
+
+>  I think it was captured by Steev:
+
+> > This is much better than the previous venus patchset where accessing the
+> > hardware decoding would cause the machine to hard reset at least!
+
+Indeed, the older venus patches would simply force the system to hard reset in
+EL1, and in EL2 there is a fault (but the system recovers without the hard
+reset.)
+
+I do have a further question, isn't the information we need somewhere inside a
+TZ managed context bank?  Can we even see in there from userspace?  I really am
+out of my league here, but I'm willing to do any testing needed on the hardware
+and I can use b4 with the best of them ;)
+
+-- steev
 
